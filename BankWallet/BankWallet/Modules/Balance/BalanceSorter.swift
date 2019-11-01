@@ -11,7 +11,7 @@ class BalanceSorter: IBalanceSorter {
 
             return items.sorted { item, item2 in
                 guard let balance = item.balance, let balance2 = item2.balance else {
-                    return true
+                    return item.balance != nil
                 }
 
                 guard let rate = item.marketInfo?.rate, let rate2 = item2.marketInfo?.rate else {
@@ -27,7 +27,7 @@ class BalanceSorter: IBalanceSorter {
         case .percentGrowth:
             return items.sorted { item, item2 in
                 guard let diff = item.marketInfo?.diff, let diff2 = item2.marketInfo?.diff else {
-                    return true
+                    return item.marketInfo?.diff != nil
                 }
 
                 return diff > diff2

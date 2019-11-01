@@ -25,8 +25,12 @@ class BalanceInteractor {
         self.rateManager = rateManager
     }
 
-    private func onUpdateWallets() {
-        delegate?.didUpdate(wallets: walletManager.wallets)
+    private func onUpdate(wallets: [Wallet]) {
+        delegate?.didUpdate(wallets: wallets)
+    }
+
+    private func onAdaptersReady() {
+        delegate?.didPrepareAdapters()
     }
 
     private func onUpdateCurrency() {
@@ -62,24 +66,25 @@ extension BalanceInteractor: IBalanceInteractor {
     }
 
     func subscribeToWallets() {
-        walletManager.walletsUpdatedSignal
-                .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] in
-                    self?.onUpdateWallets()
+        walletManager.walletsUpdatedObservable
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .subscribe(onNext: { [weak self] wallets in
+                    self?.onUpdate(wallets: wallets)
                 })
                 .disposed(by: disposeBag)
 
         adapterManager.adaptersReadySignal
-                .observeOn(MainScheduler.instance)
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .subscribe(onNext: { [weak self] in
-                    self?.onUpdateWallets()
+                    self?.onAdaptersReady()
                 })
                 .disposed(by: disposeBag)
     }
 
     func subscribeToBaseCurrency() {
         currencyManager.baseCurrencyUpdatedSignal
-                .observeOn(MainScheduler.instance)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .subscribe(onNext: { [weak self] in
                     self?.onUpdateCurrency()
                 })
@@ -95,16 +100,14 @@ extension BalanceInteractor: IBalanceInteractor {
             }
 
             adapter.balanceUpdatedObservable
-                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                    .observeOn(MainScheduler.instance)
+                    .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                     .subscribe(onNext: { [weak self] in
                         self?.delegate?.didUpdate(balance: adapter.balance, wallet: wallet)
                     })
                     .disposed(by: adaptersDisposeBag)
 
             adapter.stateUpdatedObservable
-                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                    .observeOn(MainScheduler.instance)
+                    .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                     .subscribe(onNext: { [weak self] in
                         self?.delegate?.didUpdate(state: adapter.state, wallet: wallet)
                     })
@@ -116,8 +119,8 @@ extension BalanceInteractor: IBalanceInteractor {
         marketInfoDisposeBag = DisposeBag()
 
         rateManager.marketInfosObservable(currencyCode: currencyCode)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .observeOn(MainScheduler.instance)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .subscribe(onNext: { [weak self] marketInfos in
                     self?.delegate?.didUpdate(marketInfos: marketInfos)
                 })
@@ -129,17 +132,15 @@ extension BalanceInteractor: IBalanceInteractor {
 
         for coinCode in coinCodes {
             rateManager.chartInfoObservable(coinCode: coinCode, currencyCode: currencyCode, chartType: .day)
-                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                    .observeOn(MainScheduler.instance)
+                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                    .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                     .subscribe(onNext: { [weak self] chartInfo in
                         self?.delegate?.didUpdate(chartInfo: chartInfo, coinCode: coinCode)
+                    }, onError: { [weak self] _ in
+                        self?.delegate?.didFailChartInfo(coinCode: coinCode)
                     })
                     .disposed(by: chartsDisposeBag)
         }
-    }
-
-    func unsubscribeFromChartInfo() {
-        chartsDisposeBag = DisposeBag()
     }
 
     var sortType: BalanceSortType {
@@ -150,7 +151,7 @@ extension BalanceInteractor: IBalanceInteractor {
         adapterManager.refresh()
         rateManager.refresh()
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + 1) {
             self.delegate?.didRefresh()
         }
     }

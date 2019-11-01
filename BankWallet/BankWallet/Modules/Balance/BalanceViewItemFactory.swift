@@ -2,7 +2,7 @@ import Foundation
 
 class BalanceViewItemFactory: IBalanceViewItemFactory {
 
-    func viewItem(item: BalanceItem, currency: Currency, isStatsOn: Bool) -> BalanceViewItem {
+    func viewItem(item: BalanceItem, currency: Currency) -> BalanceViewItem {
         var exchangeValue: CurrencyValue?
         var currencyValue: CurrencyValue?
 
@@ -23,7 +23,7 @@ class BalanceViewItemFactory: IBalanceViewItemFactory {
                 currencyValue: currencyValue,
                 state: item.state ?? .notReady,
                 marketInfoExpired: item.marketInfo?.expired ?? false,
-                chartInfo: isStatsOn ? item.chartInfo : nil
+                chartInfoState: item.chartInfoState
         )
     }
 

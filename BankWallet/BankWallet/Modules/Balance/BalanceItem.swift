@@ -8,7 +8,7 @@ class BalanceItem {
     var balance: Decimal?
     var state: AdapterState?
     var marketInfo: MarketInfo?
-    var chartInfo: ChartInfo?
+    var chartInfoState: ChartInfoState = .loading
 
     init(wallet: Wallet) {
         self.wallet = wallet

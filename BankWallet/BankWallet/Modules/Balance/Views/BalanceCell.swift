@@ -186,7 +186,7 @@ class BalanceCell: CardCell {
             maker.top.equalToSuperview().offset(CGFloat.margin2x)
             maker.trailing.equalToSuperview()
             maker.height.equalTo(38)
-            maker.width.equalTo(0)
+            maker.width.equalTo(72)
         }
 
         chartView.isUserInteractionEnabled = false
@@ -289,28 +289,24 @@ class BalanceCell: CardCell {
         sendButton.isEnabled = item.state == .synced && item.coinValue.value > 0
         receiveButton.isEnabled = item.state != .notReady
 
-        if let chartInfo = item.chartInfo {
-            chartHolder.isHidden = false
-            chartHolder.snp.updateConstraints { maker in
-                maker.width.equalTo(72)
-            }
+        switch item.chartInfoState {
+        case .loading:
+            chartView.isHidden = true
+            notAvailableLabel.isHidden = true
+            chartHolder.isUserInteractionEnabled = false
+        case let .loaded(chartInfo):
+            chartView.isHidden = false
+            notAvailableLabel.isHidden = true
+            chartHolder.isUserInteractionEnabled = true
 
-            if chartInfo.points.isEmpty {
-                chartView.clear()
-            } else {
-                let points = chartInfo.points.map {
-                    ChartPointPosition(timestamp: $0.timestamp, value: $0.value)
-                }
-                chartView.set(gridIntervalType: GridIntervalConverter.convert(chartType: ChartType.day), data: points, start: chartInfo.startTimestamp, end: chartInfo.endTimestamp, animated: false)
+            let points = chartInfo.points.map {
+                ChartPointPosition(timestamp: $0.timestamp, value: $0.value)
             }
-
-            notAvailableLabel.isHidden = !chartInfo.points.isEmpty
-            chartHolder.isUserInteractionEnabled = !chartInfo.points.isEmpty
-        } else {
-            chartHolder.isHidden = true
-            chartHolder.snp.updateConstraints { maker in
-                maker.width.equalTo(0)
-            }
+            chartView.set(gridIntervalType: GridIntervalConverter.convert(chartType: ChartType.day), data: points, start: chartInfo.startTimestamp, end: chartInfo.endTimestamp, animated: false)
+        case .failed:
+            chartView.isHidden = true
+            notAvailableLabel.isHidden = false
+            chartHolder.isUserInteractionEnabled = false
         }
     }
 

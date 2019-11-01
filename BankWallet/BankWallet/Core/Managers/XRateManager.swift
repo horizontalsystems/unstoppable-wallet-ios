@@ -13,12 +13,12 @@ class XRateManager {
         self.walletManager = walletManager
         self.currencyManager = currencyManager
 
-        kit = XRatesKit.instance(currencyCode: currencyManager.baseCurrency.code)
+        kit = XRatesKit.instance(currencyCode: currencyManager.baseCurrency.code, marketInfoExpirationInterval: 10 * 60)
 
-        walletManager.walletsUpdatedSignal
+        walletManager.walletsUpdatedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .subscribe(onNext: { [weak self] in
-                    self?.onWalletsUpdated()
+                .subscribe(onNext: { [weak self] wallets in
+                    self?.onUpdate(wallets: wallets)
                 })
                 .disposed(by: disposeBag)
 
@@ -30,8 +30,8 @@ class XRateManager {
                 .disposed(by: disposeBag)
     }
 
-    private func onWalletsUpdated() {
-        kit.set(coinCodes: walletManager.wallets.map { $0.coin.code })
+    private func onUpdate(wallets: [Wallet]) {
+        kit.set(coinCodes: wallets.map { $0.coin.code })
     }
 
     private func onBaseCurrencyUpdated() {

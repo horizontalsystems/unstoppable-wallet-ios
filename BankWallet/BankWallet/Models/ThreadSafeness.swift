@@ -1,29 +1,41 @@
 import Foundation
 
-public class SynchronizedDictionary<KeyType: Hashable, ValueType> {
+class SynchronizedDictionary<KeyType: Hashable, ValueType> {
     private var dictionary: [KeyType: ValueType] = [:]
-    private let accessQueue = DispatchQueue(label: "SynchronizedDictionaryAccess", attributes: .concurrent)
-
-    func removeValue(forKey key: KeyType) {
-        self.accessQueue.async(flags:.barrier) {
-            self.dictionary.removeValue(forKey: key)
-        }
-    }
+    private let queue = DispatchQueue(label: "SynchronizedDictionaryAccess", attributes: .concurrent)
 
     subscript(key: KeyType) -> ValueType? {
         set {
-            self.accessQueue.async(flags:.barrier) {
+            queue.async(flags: .barrier) {
                 self.dictionary[key] = newValue
             }
         }
         get {
-            var element: ValueType!
-            self.accessQueue.sync(flags: .barrier) {
-                element = dictionary[key]
+            queue.sync {
+                dictionary[key]
             }
-            return element
         }
     }
+
+    var rawDictionary: [KeyType: ValueType] {
+        set {
+            queue.async(flags: .barrier) {
+                self.dictionary = newValue
+            }
+        }
+        get {
+            queue.sync {
+                dictionary
+            }
+        }
+    }
+
+    func removeValue(forKey key: KeyType) {
+        queue.async(flags: .barrier) {
+            self.dictionary.removeValue(forKey: key)
+        }
+    }
+
 }
 
 public class SynchronizedArray<T> {

@@ -11,7 +11,7 @@ struct BalanceViewItem {
     let currencyValue: CurrencyValue?
     let state: AdapterState
     let marketInfoExpired: Bool
-    let chartInfo: ChartInfo?
+    let chartInfoState: ChartInfoState
 }
 
 extension BalanceViewItem: DiffAware {
@@ -28,7 +28,7 @@ extension BalanceViewItem: DiffAware {
                 a.currencyValue == b.currencyValue &&
                 a.state == b.state &&
                 a.marketInfoExpired == b.marketInfoExpired &&
-                a.chartInfo?.points == b.chartInfo?.points
+                a.chartInfoState == b.chartInfoState
     }
 
 }
