@@ -12,12 +12,12 @@ class TransactionsInteractor {
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
     private let currencyManager: ICurrencyManager
-    private let rateManager: IRateManager
+    private let rateManager: IXRateManager
     private let reachabilityManager: IReachabilityManager
 
     private var requestedTimestamps = [(Coin, Date)]()
 
-    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyManager: ICurrencyManager, rateManager: IRateManager, reachabilityManager: IReachabilityManager) {
+    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyManager: ICurrencyManager, rateManager: IXRateManager, reachabilityManager: IReachabilityManager) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.currencyManager = currencyManager
@@ -160,7 +160,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
 
         let currency = currencyManager.baseCurrency
 
-        rateManager.timestampRateValueObservable(coinCode: coin.code, currencyCode: currency.code, date: date)
+        rateManager.historicalRate(coinCode: coin.code, currencyCode: currency.code, timestamp: date.timeIntervalSince1970)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onSuccess: { [weak self] rateValue in
