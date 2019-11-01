@@ -10,12 +10,10 @@ class ChartInteractor {
 
     private let rateManager: IXRateManager
     private let chartTypeStorage: IChartTypeStorage
-    private let rateStorage: IRateStorage
 
-    init(rateManager: IXRateManager, chartTypeStorage: IChartTypeStorage, rateStorage: IRateStorage) {
+    init(rateManager: IXRateManager, chartTypeStorage: IChartTypeStorage) {
         self.rateManager = rateManager
         self.chartTypeStorage = chartTypeStorage
-        self.rateStorage = rateStorage
     }
 
 }

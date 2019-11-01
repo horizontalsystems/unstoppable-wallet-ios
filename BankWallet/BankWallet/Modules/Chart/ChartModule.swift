@@ -44,10 +44,6 @@ protocol IChartInteractorDelegate: class {
     func onError()
 }
 
-protocol IChartRateConverter {
-    func convert(chartRateData: ChartRateData) -> [ChartPointPosition]
-}
-
 protocol IChartRateFactory {
     func chartViewItem(type: ChartType, chartInfo: ChartInfo, currency: Currency) throws -> ChartInfoViewItem
     func marketInfoViewItem(marketInfo: MarketInfo, coin: Coin, currency: Currency) -> MarketInfoViewItem

@@ -3,7 +3,7 @@ class App {
 
     let localStorage: ILocalStorage & IChartTypeStorage
     let secureStorage: ISecureStorage
-    let storage: IRateStorage & IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage
+    let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage
 
     let themeManager: IThemeManager
     let appConfigProvider: IAppConfigProvider
@@ -30,7 +30,6 @@ class App {
     let currencyManager: ICurrencyManager
 
     let xRateManager: IXRateManager
-    let rateManager: RateManager
 
     let feeCoinProvider: IFeeCoinProvider
     let feeRateProviderFactory: FeeRateProviderFactory
@@ -46,7 +45,6 @@ class App {
 
     private let testModeIndicator: TestModeIndicator
     private let walletRemover: WalletRemover
-    private let rateSyncScheduler: RateSyncScheduler
 
     let priceAlertManager: IPriceAlertManager
     let backgroundPriceAlertManager: IBackgroundPriceAlertManager
@@ -94,10 +92,6 @@ class App {
 
         xRateManager = XRateManager(walletManager: walletManager, currencyManager: currencyManager)
 
-        let ipfsApiProvider = IpfsApiProvider(appConfigProvider: appConfigProvider)
-        let rateApiProvider: IRateApiProvider = RateApiProvider(networkManager: networkManager, ipfsApiProvider: ipfsApiProvider)
-        rateManager = RateManager(storage: storage, apiProvider: rateApiProvider, walletManager: walletManager, reachabilityManager: reachabilityManager, currencyManager: currencyManager)
-
         feeCoinProvider = FeeCoinProvider(appConfigProvider: appConfigProvider)
         feeRateProviderFactory = FeeRateProviderFactory()
 
@@ -122,7 +116,6 @@ class App {
 
         testModeIndicator = TestModeIndicator(appConfigProvider: appConfigProvider)
         walletRemover = WalletRemover(accountManager: accountManager, walletManager: walletManager)
-        rateSyncScheduler = RateSyncScheduler(rateManager: rateManager, walletManager: walletManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)
 
         let priceAlertStorage: IPriceAlertStorage = PriceAlertStorage(appConfigProvider: appConfigProvider, storage: storage)
         priceAlertManager = PriceAlertManager(walletManager: walletManager, storage: priceAlertStorage)
@@ -134,7 +127,7 @@ class App {
         #if DEBUG
             debugBackgroundLogger = DebugBackgroundLogger(localStorage: localStorage, dateProvider: CurrentDateProvider())
         #endif
-        backgroundPriceAlertManager = BackgroundPriceAlertManager(rateManager: xRateManager, currencyManager: currencyManager, rateStorage: storage, priceAlertStorage: priceAlertStorage, priceAlertHandler: priceAlertHandler, debugBackgroundLogger: debugBackgroundLogger)
+        backgroundPriceAlertManager = BackgroundPriceAlertManager(rateManager: xRateManager, currencyManager: currencyManager, priceAlertStorage: priceAlertStorage, priceAlertHandler: priceAlertHandler, debugBackgroundLogger: debugBackgroundLogger)
 
         appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage, predefinedAccountTypeManager: predefinedAccountTypeManager, walletManager: walletManager, adapterManager: adapterManager, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager)
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, localStorage: localStorage)

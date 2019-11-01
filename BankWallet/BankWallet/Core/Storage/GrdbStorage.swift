@@ -19,21 +19,6 @@ class GrdbStorage {
     var migrator: DatabaseMigrator {
         var migrator = DatabaseMigrator()
 
-        migrator.registerMigration("createRate") { db in
-            try db.create(table: RateOld.databaseTableName) { t in
-                t.column(RateOld.Columns.coinCode.name, .text).notNull()
-                t.column(RateOld.Columns.currencyCode.name, .text).notNull()
-                t.column(RateOld.Columns.value.name, .text).notNull()
-                t.column(RateOld.Columns.isLatest.name, .boolean).notNull()
-
-                t.primaryKey([
-                    RateOld.Columns.coinCode.name,
-                    RateOld.Columns.currencyCode.name,
-                    RateOld.Columns.isLatest.name
-                ], onConflict: .replace)
-            }
-        }
-
         migrator.registerMigration("createAccountRecordsTable") { db in
             try db.create(table: AccountRecord.databaseTableName) { t in
                 t.column(AccountRecord.Columns.id.name, .text).notNull()
@@ -99,24 +84,6 @@ class GrdbStorage {
             try db.drop(table: "enabled_coins")
         }
 
-        migrator.registerMigration("timestampToDateRates") { db in
-            try db.drop(table: RateOld.databaseTableName)
-            try db.create(table: RateOld.databaseTableName) { t in
-                t.column(RateOld.Columns.coinCode.name, .text).notNull()
-                t.column(RateOld.Columns.currencyCode.name, .text).notNull()
-                t.column(RateOld.Columns.value.name, .text).notNull()
-                t.column(RateOld.Columns.date.name, .double).notNull()
-                t.column(RateOld.Columns.isLatest.name, .boolean).notNull()
-
-                t.primaryKey([
-                    RateOld.Columns.coinCode.name,
-                    RateOld.Columns.currencyCode.name,
-                    RateOld.Columns.date.name,
-                    RateOld.Columns.isLatest.name
-                ], onConflict: .replace)
-            }
-        }
-
         migrator.registerMigration("createPriceAlertRecordsTable") { db in
             try db.create(table: PriceAlertRecord.databaseTableName) { t in
                 t.column(PriceAlertRecord.Columns.coinCode.name, .text).notNull()
@@ -149,52 +116,6 @@ class GrdbStorage {
         }
 
         return migrator
-    }
-
-}
-
-extension GrdbStorage: IRateStorage {
-
-    func latestRate(coinCode: CoinCode, currencyCode: String) -> RateOld? {
-        return try! dbPool.read { db in
-            let request = RateOld.filter(RateOld.Columns.coinCode == coinCode && RateOld.Columns.currencyCode == currencyCode && RateOld.Columns.isLatest == true)
-            return try request.fetchOne(db)
-        }
-    }
-
-    func latestRateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<RateOld> {
-        let request = RateOld.filter(RateOld.Columns.coinCode == coinCode && RateOld.Columns.currencyCode == currencyCode && RateOld.Columns.isLatest == true)
-        return request.rx.observeFirst(in: dbPool)
-                .flatMap { $0.map(Observable.just) ?? Observable.empty() }
-    }
-
-    func timestampRateObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Observable<RateOld?> {
-        let request = RateOld.filter(RateOld.Columns.coinCode == coinCode && RateOld.Columns.currencyCode == currencyCode && RateOld.Columns.date == date && RateOld.Columns.isLatest == false)
-        return request.rx.observeFirst(in: dbPool)
-    }
-
-    func zeroValueTimestampRatesObservable(currencyCode: String) -> Observable<[RateOld]> {
-        let request = RateOld.filter(RateOld.Columns.currencyCode == currencyCode && RateOld.Columns.value == 0 && RateOld.Columns.isLatest == false)
-        return request.rx.observeAll(in: dbPool)
-    }
-
-    func save(latestRate: RateOld) {
-        _ = try? dbPool.write { db in
-            try RateOld.filter(RateOld.Columns.coinCode == latestRate.coinCode && RateOld.Columns.currencyCode == latestRate.currencyCode && RateOld.Columns.isLatest == true).deleteAll(db)
-            try latestRate.insert(db)
-        }
-    }
-
-    func save(rate: RateOld) {
-        _ = try? dbPool.write { db in
-            try rate.insert(db)
-        }
-    }
-
-    func clearRates() {
-        _ = try? dbPool.write { db in
-            try RateOld.deleteAll(db)
-        }
     }
 
 }

@@ -10,7 +10,6 @@ class ChartPresenter {
 
     private var chartInfo: ChartInfo?
     private var marketInfo: MarketInfo?
-    private var rate: RateOld?
 
     let coin: Coin
 

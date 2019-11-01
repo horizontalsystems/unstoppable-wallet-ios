@@ -5,15 +5,13 @@ class BackgroundPriceAlertManager {
 
     private let rateManager: IXRateManager
     private let currencyManager: ICurrencyManager
-    private let rateStorage: IRateStorage
     private let priceAlertStorage: IPriceAlertStorage
     private let priceAlertHandler: IPriceAlertHandler
     private let debugBackgroundLogger: IDebugBackgroundLogger?
 
-    init(rateManager: IXRateManager, currencyManager: ICurrencyManager, rateStorage: IRateStorage, priceAlertStorage: IPriceAlertStorage, priceAlertHandler: IPriceAlertHandler, debugBackgroundLogger: IDebugBackgroundLogger?) {
+    init(rateManager: IXRateManager, currencyManager: ICurrencyManager, priceAlertStorage: IPriceAlertStorage, priceAlertHandler: IPriceAlertHandler, debugBackgroundLogger: IDebugBackgroundLogger?) {
         self.rateManager = rateManager
         self.currencyManager = currencyManager
-        self.rateStorage = rateStorage
         self.priceAlertStorage = priceAlertStorage
         self.priceAlertHandler = priceAlertHandler
         self.debugBackgroundLogger = debugBackgroundLogger
@@ -24,16 +22,16 @@ class BackgroundPriceAlertManager {
 extension BackgroundPriceAlertManager: IBackgroundPriceAlertManager {
 
     func didEnterBackground() {
-        let alerts = priceAlertStorage.activePriceAlerts
-        let currency = currencyManager.baseCurrency
-
-        alerts.forEach { alert in
-            if let rate = rateStorage.latestRate(coinCode: alert.coin.code, currencyCode: currency.code) {
-                alert.lastRate = rate.value
-            }
-        }
-
-        priceAlertStorage.save(priceAlerts: alerts)
+//        let alerts = priceAlertStorage.activePriceAlerts
+//        let currency = currencyManager.baseCurrency
+//
+//        alerts.forEach { alert in
+//            if let rate = rateStorage.latestRate(coinCode: alert.coin.code, currencyCode: currency.code) {
+//                alert.lastRate = rate.value
+//            }
+//        }
+//
+//        priceAlertStorage.save(priceAlerts: alerts)
     }
 
     func fetchRates(onComplete: @escaping (Bool) -> ()) {
