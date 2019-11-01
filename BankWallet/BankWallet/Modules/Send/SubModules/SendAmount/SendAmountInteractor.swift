@@ -1,9 +1,11 @@
+import Foundation
+
 class SendAmountInteractor {
     private let localStorage: ILocalStorage
-    private let rateManager: IRateManager
+    private let rateManager: IXRateManager
     private let currencyManager: ICurrencyManager
 
-    init(localStorage: ILocalStorage, rateManager: IRateManager, currencyManager: ICurrencyManager) {
+    init(localStorage: ILocalStorage, rateManager: IXRateManager, currencyManager: ICurrencyManager) {
         self.localStorage = localStorage
         self.rateManager = rateManager
         self.currencyManager = currencyManager
@@ -14,7 +16,7 @@ class SendAmountInteractor {
 extension SendAmountInteractor: ISendAmountInteractor {
 
     var defaultInputType: SendInputType {
-        return localStorage.sendInputType ?? .coin
+        localStorage.sendInputType ?? .coin
     }
 
     func set(inputType: SendInputType) {
@@ -22,11 +24,11 @@ extension SendAmountInteractor: ISendAmountInteractor {
     }
 
     var baseCurrency: Currency {
-        return currencyManager.baseCurrency
+        currencyManager.baseCurrency
     }
 
-    func rate(coinCode: CoinCode, currencyCode: String) -> RateOld? {
-        return rateManager.nonExpiredLatestRate(coinCode: coinCode, currencyCode: currencyCode)
+    func nonExpiredRateValue(coinCode: CoinCode, currencyCode: String) -> Decimal? {
+        rateManager.marketInfo(coinCode: coinCode, currencyCode: currencyCode)?.rate
     }
 
 }

@@ -11,7 +11,7 @@ class SendAmountPresenter {
 
     private let coin: Coin
     private let currency: Currency
-    private let rate: RateOld?
+    private let rateValue: Decimal?
 
     private var amount: Decimal?
     private var availableBalance: Decimal?
@@ -25,9 +25,9 @@ class SendAmountPresenter {
         self.decimalParser = decimalParser
 
         currency = interactor.baseCurrency
-        rate = interactor.rate(coinCode: coin.code, currencyCode: currency.code)
+        rateValue = interactor.nonExpiredRateValue(coinCode: coin.code, currencyCode: currency.code)
 
-        if rate == nil {
+        if rateValue == nil {
             inputType = .coin
         } else {
             inputType = interactor.defaultInputType
@@ -42,7 +42,7 @@ class SendAmountPresenter {
     }
 
     private func syncSwitchButton() {
-        view?.set(switchButtonEnabled: rate != nil)
+        view?.set(switchButtonEnabled: rateValue != nil)
     }
 
     private func syncMaxButton() {
@@ -78,8 +78,8 @@ class SendAmountPresenter {
         case .coin:
             return .coinValue(coinValue: CoinValue(coin: coin, value: amount))
         case .currency:
-            if let rate = rate {
-                return .currencyValue(currencyValue: CurrencyValue(currency: currency, value: amount * rate.value))
+            if let rateValue = rateValue {
+                return .currencyValue(currencyValue: CurrencyValue(currency: currency, value: amount * rateValue))
             } else {
                 fatalError("Invalid state")
             }
@@ -91,8 +91,8 @@ class SendAmountPresenter {
         case .coin:
             return .coinValue(coinValue: CoinValue(coin: coin, value: amount))
         case .currency:
-            if let rate = rate {
-                return .currencyValue(currencyValue: CurrencyValue(currency: currency, value: amount * rate.value))
+            if let rateValue = rateValue {
+                return .currencyValue(currencyValue: CurrencyValue(currency: currency, value: amount * rateValue))
             } else {
                 return nil
             }
@@ -118,8 +118,8 @@ class SendAmountPresenter {
             case .coin:
                 throw ValidationError.insufficientBalance(availableBalance: .coinValue(coinValue: CoinValue(coin: coin, value: availableBalance)))
             case .currency:
-                if let rate = rate {
-                    throw ValidationError.insufficientBalance(availableBalance: .currencyValue(currencyValue: CurrencyValue(currency: currency, value: availableBalance * rate.value)))
+                if let rateValue = rateValue {
+                    throw ValidationError.insufficientBalance(availableBalance: .currencyValue(currencyValue: CurrencyValue(currency: currency, value: availableBalance * rateValue)))
                 } else {
                     fatalError("Invalid state")
                 }
@@ -135,8 +135,8 @@ class SendAmountPresenter {
             case .coin:
                 throw ValidationError.tooFewAmount(minimumAmount: .coinValue(coinValue: CoinValue(coin: coin, value: minimumAmount)))
             case .currency:
-                if let rate = rate {
-                    throw ValidationError.tooFewAmount(minimumAmount: .currencyValue(currencyValue: CurrencyValue(currency: currency, value: minimumAmount * rate.value)))
+                if let rateValue = rateValue {
+                    throw ValidationError.tooFewAmount(minimumAmount: .currencyValue(currencyValue: CurrencyValue(currency: currency, value: minimumAmount * rateValue)))
                 } else {
                     fatalError("Invalid state")
                 }
@@ -226,8 +226,8 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
             amount = enteredAmount
         case .currency:
             if let enteredAmount = enteredAmount {
-                if let rate = rate {
-                    amount = enteredAmount / rate.value
+                if let rateValue = rateValue {
+                    amount = enteredAmount / rateValue
                 } else {
                     fatalError("Invalid state")
                 }

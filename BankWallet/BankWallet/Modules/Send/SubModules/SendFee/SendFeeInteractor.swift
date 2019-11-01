@@ -1,9 +1,11 @@
+import Foundation
+
 class SendFeeInteractor {
-    private let rateManager: IRateManager
+    private let rateManager: IXRateManager
     private let currencyManager: ICurrencyManager
     private let feeCoinProvider: IFeeCoinProvider
 
-    init(rateManager: IRateManager, currencyManager: ICurrencyManager, feeCoinProvider: IFeeCoinProvider) {
+    init(rateManager: IXRateManager, currencyManager: ICurrencyManager, feeCoinProvider: IFeeCoinProvider) {
         self.rateManager = rateManager
         self.currencyManager = currencyManager
         self.feeCoinProvider = feeCoinProvider
@@ -14,19 +16,19 @@ class SendFeeInteractor {
 extension SendFeeInteractor: ISendFeeInteractor {
 
     var baseCurrency: Currency {
-        return currencyManager.baseCurrency
+        currencyManager.baseCurrency
     }
 
-    func rate(coinCode: CoinCode, currencyCode: String) -> RateOld? {
-        return rateManager.nonExpiredLatestRate(coinCode: coinCode, currencyCode: currencyCode)
+    func nonExpiredRateValue(coinCode: CoinCode, currencyCode: String) -> Decimal? {
+        rateManager.marketInfo(coinCode: coinCode, currencyCode: currencyCode)?.rate
     }
 
     func feeCoin(coin: Coin) -> Coin? {
-        return feeCoinProvider.feeCoin(coin: coin)
+        feeCoinProvider.feeCoin(coin: coin)
     }
 
     func feeCoinProtocol(coin: Coin) -> String? {
-        return feeCoinProvider.feeCoinProtocol(coin: coin)
+        feeCoinProvider.feeCoinProtocol(coin: coin)
     }
 
 }
