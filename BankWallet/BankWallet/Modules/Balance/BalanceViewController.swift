@@ -54,7 +54,6 @@ class BalanceViewController: WalletViewController {
         refreshControl.tintColor = .appLeah
         refreshControl.alpha = 0.6
         refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
-        tableView.refreshControl = refreshControl
 
         headerView.onClickSort = { [weak self] in
             self?.delegate.onSortTypeChange()
@@ -86,11 +85,12 @@ class BalanceViewController: WalletViewController {
         updateIndexes.forEach {
             bind(at: IndexPath(row: $0, section: balanceSection))
         }
+    }
 
-//        UIView.performWithoutAnimation {
-//            self.tableView.beginUpdates()
-//            self.tableView.endUpdates()
-//        }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        tableView.refreshControl = refreshControl
     }
 
     private func bind(cell: BalanceCell, viewItem: BalanceViewItem, animated: Bool = false) {
