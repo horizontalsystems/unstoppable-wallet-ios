@@ -9,14 +9,12 @@ class RateListInteractor {
     private let currencyManager: ICurrencyManager
     private let walletManager: IWalletManager
     private let appConfigProvider: IAppConfigProvider
-    private let rateListSorter: IRateListSorter
 
-    init(rateManager: IXRateManager, currencyManager: ICurrencyManager, walletManager: IWalletManager, appConfigProvider: IAppConfigProvider, rateListSorter: IRateListSorter) {
+    init(rateManager: IXRateManager, currencyManager: ICurrencyManager, walletManager: IWalletManager, appConfigProvider: IAppConfigProvider) {
         self.rateManager = rateManager
         self.currencyManager = currencyManager
         self.walletManager = walletManager
         self.appConfigProvider = appConfigProvider
-        self.rateListSorter = rateListSorter
     }
 
 }
@@ -27,8 +25,12 @@ extension RateListInteractor: IRateListInteractor {
         currencyManager.baseCurrency
     }
 
-    var coins: [Coin] {
-        rateListSorter.smartSort(for: walletManager.wallets.map { $0.coin }, featuredCoins: appConfigProvider.featuredCoins)
+    var wallets: [Wallet] {
+        walletManager.wallets
+    }
+
+    var featuredCoins: [Coin] {
+        appConfigProvider.featuredCoins
     }
 
     func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo? {

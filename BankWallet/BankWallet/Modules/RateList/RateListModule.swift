@@ -11,7 +11,8 @@ protocol IRateListViewDelegate {
 
 protocol IRateListInteractor {
     var currency: Currency { get }
-    var coins: [Coin] { get }
+    var wallets: [Wallet] { get }
+    var featuredCoins: [Coin] { get }
 
     func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo?
     func subscribeToMarketInfos(currencyCode: String)
@@ -25,7 +26,7 @@ protocol IRateListRouter {
 }
 
 protocol IRateListFactory {
-    func marketInfoViewItem(coins: [Coin], currency: Currency, marketInfos: [CoinCode: MarketInfo]) -> RateListViewItem
+    func rateListViewItem(coins: [Coin], currency: Currency, marketInfos: [CoinCode: MarketInfo]) -> RateListViewItem
 }
 
 protocol IRateListSorter {
@@ -34,7 +35,7 @@ protocol IRateListSorter {
 
 struct RateListViewItem {
     let currentDate: Date
-    let lastUpdateTimestamp: TimeInterval
+    let lastUpdateTimestamp: TimeInterval?
     let rateViewItems: [RateViewItem]
 }
 
