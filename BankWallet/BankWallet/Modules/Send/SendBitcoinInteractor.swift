@@ -23,6 +23,16 @@ extension SendBitcoinInteractor: ISendBitcoinInteractor {
         }
     }
 
+    func fetchMinimumAmount(address: String?) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let amount = self.adapter.minimumSendAmount(address: address)
+
+            DispatchQueue.main.async {
+                self.delegate?.didFetch(minimumAmount: amount)
+            }
+        }
+    }
+
     func validate(address: String) throws {
         try adapter.validate(address: address)
     }

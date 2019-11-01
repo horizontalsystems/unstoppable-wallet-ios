@@ -2,6 +2,7 @@ import UIKit
 
 protocol ISendAmountView: class {
     func set(amountType: String)
+    func set(availableBalance: AmountInfo?)
     func set(amount: AmountInfo?)
     func set(hint: AmountInfo?)
     func set(error: Error?)
@@ -45,6 +46,7 @@ protocol ISendAmountModule: AnyObject {
 
     func set(amount: Decimal)
     func set(availableBalance: Decimal)
+    func set(minimumAmount: Decimal)
 }
 
 protocol ISendAmountDelegate: class {

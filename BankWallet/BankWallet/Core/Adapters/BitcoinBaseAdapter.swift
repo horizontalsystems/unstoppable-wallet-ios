@@ -160,7 +160,12 @@ extension BitcoinBaseAdapter: IBalanceAdapter {
 extension BitcoinBaseAdapter {
 
     func availableBalance(feeRate: Int, address: String?) -> Decimal {
-        return max(0, balance - fee(amount: balance, feeRate: feeRate, address: address))
+        let amount = (try? abstractKit.maxSpendableValue(toAddress: address, feeRate: feeRate)) ?? 0
+        return Decimal(amount) / coinRate
+    }
+
+    func minimumSendAmount(address: String?) -> Decimal {
+        Decimal(abstractKit.minSpendableValue(toAddress: address)) / coinRate
     }
 
     func validate(address: String) throws {

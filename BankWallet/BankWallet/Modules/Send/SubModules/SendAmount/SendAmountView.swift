@@ -9,6 +9,8 @@ class SendAmountView: UIView {
 
     private let holderView = UIView()
 
+    private let availableBalanceTitleLabel = UILabel()
+    private let availableBalanceValueLabel = UILabel()
     private let amountTypeLabel = UILabel()
     private let inputField = UITextField()
     private let lineView = UIView()
@@ -35,6 +37,22 @@ class SendAmountView: UIView {
 
         backgroundColor = .clear
 
+        addSubview(availableBalanceTitleLabel)
+        availableBalanceTitleLabel.text = "send.available_balance".localized
+        availableBalanceTitleLabel.font = SendTheme.availableAmountTitleFont
+        availableBalanceTitleLabel.textColor = SendTheme.availableAmountTitleColor
+        availableBalanceTitleLabel.snp.makeConstraints { maker in
+            maker.top.equalToSuperview().offset(CGFloat.margin2x)
+            maker.leading.equalToSuperview().offset(SendTheme.margin)
+        }
+        
+        addSubview(availableBalanceValueLabel)
+        availableBalanceValueLabel.font = SendTheme.availableAmountValueFont
+        availableBalanceValueLabel.textColor = SendTheme.availableAmountValueColor
+        availableBalanceValueLabel.snp.makeConstraints { maker in
+            maker.centerY.equalTo(availableBalanceTitleLabel.snp.centerY)
+            maker.trailing.equalToSuperview().offset(-SendTheme.margin)
+        }
 
         addSubview(holderView)
 
@@ -55,6 +73,7 @@ class SendAmountView: UIView {
             maker.leading.equalToSuperview().offset(SendTheme.margin)
             maker.trailing.equalToSuperview().offset(-SendTheme.margin)
             maker.height.equalTo(SendTheme.amountHolderHeight)
+            maker.top.equalTo(availableBalanceTitleLabel.snp.bottom).offset(CGFloat.margin3x)
             maker.bottom.equalToSuperview()
         }
 
@@ -191,6 +210,24 @@ extension SendAmountView: ISendAmountView {
             inputField.text = format(coinValue: coinValue)
         case .currencyValue(let currencyValue):
             inputField.text = format(currencyValue: currencyValue)
+        }
+    }
+
+    func set(availableBalance: AmountInfo?) {
+        guard let availableBalance = availableBalance else {
+            availableBalanceValueLabel.text = nil
+            return
+        }
+
+        switch availableBalance {
+        case .coinValue(let coinValue):
+            if let valueStr = format(coinValue: coinValue) {
+                availableBalanceValueLabel.text = "\(valueStr) \(coinValue.coin.code)"
+            }
+        case .currencyValue(let currencyValue):
+            if let valueStr = format(currencyValue: currencyValue) {
+                availableBalanceValueLabel.text = currencyValue.currency.symbol + valueStr
+            }
         }
     }
 

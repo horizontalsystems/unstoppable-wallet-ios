@@ -140,6 +140,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "send.duration.within" = "within %@";
 "send.duration.hours" = "%d h.";
 "send.duration.minutes" = "%d min.";
+"send.available_balance" = "Available Balance";
 "send.max_button" = "Max";
 "send.next_button" = "Next";
 "send.error.invalid_address" = "Invalid Address";
@@ -154,6 +155,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "Send";
 "send.amount_error.balance" = "Balance %@";
+"send.amount_error.minimum_amount" = "Minimum amount %@";
 "send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
 
 // Transactions
