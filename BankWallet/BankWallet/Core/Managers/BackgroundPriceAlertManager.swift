@@ -3,13 +3,13 @@ import RxSwift
 class BackgroundPriceAlertManager {
     private let disposeBag = DisposeBag()
 
-    private let rateManager: IXRateManager
+    private let rateManager: IRateManager
     private let currencyManager: ICurrencyManager
     private let priceAlertStorage: IPriceAlertStorage
     private let priceAlertHandler: IPriceAlertHandler
     private let debugBackgroundLogger: IDebugBackgroundLogger?
 
-    init(rateManager: IXRateManager, currencyManager: ICurrencyManager, priceAlertStorage: IPriceAlertStorage, priceAlertHandler: IPriceAlertHandler, debugBackgroundLogger: IDebugBackgroundLogger?) {
+    init(rateManager: IRateManager, currencyManager: ICurrencyManager, priceAlertStorage: IPriceAlertStorage, priceAlertHandler: IPriceAlertHandler, debugBackgroundLogger: IDebugBackgroundLogger?) {
         self.rateManager = rateManager
         self.currencyManager = currencyManager
         self.priceAlertStorage = priceAlertStorage

@@ -5,12 +5,12 @@ class RateListInteractor {
     private let disposeBag = DisposeBag()
     weak var delegate: IRateListInteractorDelegate?
 
-    private let rateManager: IXRateManager
+    private let rateManager: IRateManager
     private let currencyManager: ICurrencyManager
     private let walletManager: IWalletManager
     private let appConfigProvider: IAppConfigProvider
 
-    init(rateManager: IXRateManager, currencyManager: ICurrencyManager, walletManager: IWalletManager, appConfigProvider: IAppConfigProvider) {
+    init(rateManager: IRateManager, currencyManager: ICurrencyManager, walletManager: IWalletManager, appConfigProvider: IAppConfigProvider) {
         self.rateManager = rateManager
         self.currencyManager = currencyManager
         self.walletManager = walletManager

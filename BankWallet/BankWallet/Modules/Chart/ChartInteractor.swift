@@ -8,10 +8,10 @@ class ChartInteractor {
     private let disposeBag = DisposeBag()
     private var chartsDisposeBag = DisposeBag()
 
-    private let rateManager: IXRateManager
+    private let rateManager: IRateManager
     private let chartTypeStorage: IChartTypeStorage
 
-    init(rateManager: IXRateManager, chartTypeStorage: IChartTypeStorage) {
+    init(rateManager: IRateManager, chartTypeStorage: IChartTypeStorage) {
         self.rateManager = rateManager
         self.chartTypeStorage = chartTypeStorage
     }

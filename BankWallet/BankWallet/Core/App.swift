@@ -29,7 +29,7 @@ class App {
 
     let currencyManager: ICurrencyManager
 
-    let xRateManager: IXRateManager
+    let rateManager: IRateManager
 
     let feeCoinProvider: IFeeCoinProvider
     let feeRateProviderFactory: FeeRateProviderFactory
@@ -90,7 +90,7 @@ class App {
 
         currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 
-        xRateManager = XRateManager(walletManager: walletManager, currencyManager: currencyManager)
+        rateManager = RateManager(walletManager: walletManager, currencyManager: currencyManager)
 
         feeCoinProvider = FeeCoinProvider(appConfigProvider: appConfigProvider)
         feeRateProviderFactory = FeeRateProviderFactory()
@@ -127,7 +127,7 @@ class App {
         #if DEBUG
             debugBackgroundLogger = DebugBackgroundLogger(localStorage: localStorage, dateProvider: CurrentDateProvider())
         #endif
-        backgroundPriceAlertManager = BackgroundPriceAlertManager(rateManager: xRateManager, currencyManager: currencyManager, priceAlertStorage: priceAlertStorage, priceAlertHandler: priceAlertHandler, debugBackgroundLogger: debugBackgroundLogger)
+        backgroundPriceAlertManager = BackgroundPriceAlertManager(rateManager: rateManager, currencyManager: currencyManager, priceAlertStorage: priceAlertStorage, priceAlertHandler: priceAlertHandler, debugBackgroundLogger: debugBackgroundLogger)
 
         appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage, predefinedAccountTypeManager: predefinedAccountTypeManager, walletManager: walletManager, adapterManager: adapterManager, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager)
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, localStorage: localStorage)

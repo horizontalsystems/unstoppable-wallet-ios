@@ -2,10 +2,10 @@ import Foundation
 
 class SendAmountInteractor {
     private let localStorage: ILocalStorage
-    private let rateManager: IXRateManager
+    private let rateManager: IRateManager
     private let currencyManager: ICurrencyManager
 
-    init(localStorage: ILocalStorage, rateManager: IXRateManager, currencyManager: ICurrencyManager) {
+    init(localStorage: ILocalStorage, rateManager: IRateManager, currencyManager: ICurrencyManager) {
         self.localStorage = localStorage
         self.rateManager = rateManager
         self.currencyManager = currencyManager

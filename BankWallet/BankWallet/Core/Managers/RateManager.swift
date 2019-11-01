@@ -1,7 +1,7 @@
 import RxSwift
 import XRatesKit
 
-class XRateManager {
+class RateManager {
     private let disposeBag = DisposeBag()
 
     private let walletManager: IWalletManager
@@ -40,7 +40,7 @@ class XRateManager {
 
 }
 
-extension XRateManager: IXRateManager {
+extension RateManager: IRateManager {
 
     func refresh() {
         kit.refresh()

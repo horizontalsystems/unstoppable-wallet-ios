@@ -1,11 +1,11 @@
 import Foundation
 
 class SendFeeInteractor {
-    private let rateManager: IXRateManager
+    private let rateManager: IRateManager
     private let currencyManager: ICurrencyManager
     private let feeCoinProvider: IFeeCoinProvider
 
-    init(rateManager: IXRateManager, currencyManager: ICurrencyManager, feeCoinProvider: IFeeCoinProvider) {
+    init(rateManager: IRateManager, currencyManager: ICurrencyManager, feeCoinProvider: IFeeCoinProvider) {
         self.rateManager = rateManager
         self.currencyManager = currencyManager
         self.feeCoinProvider = feeCoinProvider

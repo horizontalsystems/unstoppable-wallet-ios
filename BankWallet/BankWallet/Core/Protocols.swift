@@ -242,7 +242,7 @@ protocol BiometricManagerDelegate: class {
     func didFailToValidate()
 }
 
-protocol IXRateManager {
+protocol IRateManager {
     func refresh()
     func marketInfo(coinCode: String, currencyCode: String) -> MarketInfo?
     func marketInfoObservable(coinCode: String, currencyCode: String) -> Observable<MarketInfo>
