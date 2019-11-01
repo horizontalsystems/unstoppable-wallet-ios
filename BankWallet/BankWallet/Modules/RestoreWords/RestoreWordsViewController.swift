@@ -3,8 +3,9 @@ import RxSwift
 import SnapKit
 
 class RestoreWordsViewController: WalletViewController {
-    private static let minimalTextViewHeight: CGFloat = 88
-    private static let textViewInset: CGFloat = .margin3x
+    private let minimalTextViewHeight: CGFloat = 88
+    private let textViewInset: CGFloat = .margin3x
+    private let textViewFont: UIFont = .appBody
 
     private let disposeBag = DisposeBag()
     private let delegate: IRestoreWordsViewDelegate
@@ -34,8 +35,6 @@ class RestoreWordsViewController: WalletViewController {
             maker.leading.trailing.bottom.equalToSuperview()
         }
 
-        let textViewFont: UIFont = .appBody
-
         textView.keyboardAppearance = App.theme.keyboardAppearance
         textView.backgroundColor = .crypto_SteelDark_White
         textView.layer.cornerRadius = .cornerRadius8
@@ -44,19 +43,18 @@ class RestoreWordsViewController: WalletViewController {
         textView.textColor = .appOz
         textView.font = textViewFont
         textView.tintColor = .appJacob
-        textView.textContainerInset = UIEdgeInsets(top: RestoreWordsViewController.textViewInset, left: RestoreWordsViewController.textViewInset, bottom: RestoreWordsViewController.textViewInset, right: RestoreWordsViewController.textViewInset)
+        textView.textContainerInset = UIEdgeInsets(top: textViewInset, left: textViewInset, bottom: textViewInset, right: textViewInset)
         textView.autocapitalizationType = .none
 
         textView.delegate = self
 
         containerView.addSubview(textView)
-        textView.snp.remakeConstraints { maker in
+        textView.snp.makeConstraints { maker in
             maker.leading.trailing.equalTo(view).inset(CGFloat.margin4x)
             maker.top.equalToSuperview().offset(CGFloat.margin3x)
-            maker.height.greaterThanOrEqualTo(RestoreWordsViewController.minimalTextViewHeight).priority(.required)
-            maker.height.equalTo(height(text: "")).priority(.low)
+            maker.height.greaterThanOrEqualTo(minimalTextViewHeight).priority(.required)
+            maker.height.equalTo(0).priority(.low)
         }
-        view.layoutIfNeeded()
 
         // temp solution until multi-wallet feature is implemented
         let predefinedAccountType: IPredefinedAccountType = delegate.wordsCount == 12 ? UnstoppableAccountType() : BinanceAccountType()
@@ -72,11 +70,11 @@ class RestoreWordsViewController: WalletViewController {
             maker.bottom.lessThanOrEqualToSuperview()
         }
 
-        NotificationCenter.default.rx.notification(UIResponder.keyboardWillChangeFrameNotification).subscribe(onNext: { [weak self] notification in
-            self?.keyboardWillChangeFrame(notification: notification)
-        }).disposed(by: disposeBag)
-
-        containerView.layoutIfNeeded()
+        NotificationCenter.default.rx.notification(UIResponder.keyboardWillChangeFrameNotification)
+                .subscribe(onNext: { [weak self] notification in
+                    self?.keyboardWillChangeFrame(notification: notification)
+                })
+                .disposed(by: disposeBag)
 
         delegate.viewDidLoad()
     }
@@ -124,14 +122,16 @@ class RestoreWordsViewController: WalletViewController {
     }
 
     private func height(text: String) -> CGFloat {
-        let textHeight = text.height(forContainerWidth: textView.bounds.width - 2 * RestoreWordsViewController.textViewInset, font: UIFont.appBody)
-        return textHeight + 3 * RestoreWordsViewController.textViewInset
+        let containerWidth = textView.bounds.width - 2 * textViewInset - 2 * textView.textContainer.lineFragmentPadding
+        let textHeight = text.height(forContainerWidth: containerWidth, font: textViewFont)
+        return textHeight + 2 * textViewInset
     }
 
     private func updateTextViewConstraints(for text: String, animated: Bool = true) {
         textView.snp.updateConstraints { maker in
             maker.height.equalTo(height(text: text)).priority(.low)
         }
+
         if animated {
             UIView.animate(withDuration: AppTheme.defaultAnimationDuration) {
                 self.view.layoutIfNeeded()
@@ -172,7 +172,9 @@ extension RestoreWordsViewController: IRestoreWordsView {
         let words = defaultWords.joined(separator: " ")
         textView.text = words
 
-        updateTextViewConstraints(for: words, animated: false)
+        DispatchQueue.main.async {
+            self.updateTextViewConstraints(for: words, animated: false)
+        }
     }
 
     func show(error: Error) {
