@@ -33,7 +33,6 @@ class CaptionValueView: UIView {
         captionLabel.text = caption
     }
 
-
     func set(value: String?, accent: Bool = false, font: UIFont = .appSubhead2) {
         valueLabel.text = value
         valueLabel.font = font
