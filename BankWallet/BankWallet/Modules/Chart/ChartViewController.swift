@@ -3,6 +3,14 @@ import ActionSheet
 import XRatesKit
 
 class ChartViewController: ActionSheetController {
+    private let coinFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.roundingMode = .halfUp
+        formatter.maximumFractionDigits = 0
+        return formatter
+    }()
+
     private let delegate: IChartViewDelegate
 
     private let titleItem: AlertTitleItem
@@ -109,7 +117,16 @@ class ChartViewController: ActionSheetController {
             marketCapItem.setCirculation?(nil)
             return
         }
-        marketCapItem.setCirculation?(ValueFormatter.instance.format(coinValue: supplyValue))
+
+        marketCapItem.setCirculation?(roundedFormat(coinValue: supplyValue))
+    }
+
+    private func roundedFormat(coinValue: CoinValue) -> String? {
+        guard let formattedValue = coinFormatter.string(from: coinValue.value as NSNumber) else {
+            return nil
+        }
+
+        return "\(formattedValue) \(coinValue.coin.code)"
     }
 
     private func title(for chartType: ChartType) -> String {
