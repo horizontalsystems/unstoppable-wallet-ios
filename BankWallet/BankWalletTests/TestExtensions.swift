@@ -29,12 +29,6 @@ extension BalanceViewItem: Equatable {
     }
 }
 
-extension LatestRateData: Equatable {
-    public static func ==(lhs: LatestRateData, rhs: LatestRateData) -> Bool {
-        return lhs.values == rhs.values && lhs.date == rhs.date
-    }
-}
-
 extension AmountInfo: Equatable {
     public static func ==(lhs: AmountInfo, rhs: AmountInfo) -> Bool {
         switch (lhs, rhs) {

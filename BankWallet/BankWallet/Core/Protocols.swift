@@ -242,14 +242,6 @@ protocol BiometricManagerDelegate: class {
     func didFailToValidate()
 }
 
-protocol IRateManager {
-    func nonExpiredLatestRate(coinCode: CoinCode, currencyCode: String) -> RateOld?
-    func syncLatestRatesSingle() -> Single<LatestRateData>
-    func syncLatestRates()
-    func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Single<Decimal>
-    func clear()
-}
-
 protocol IXRateManager {
     func refresh()
     func marketInfo(coinCode: String, currencyCode: String) -> MarketInfo?
@@ -258,11 +250,6 @@ protocol IXRateManager {
     func historicalRate(coinCode: String, currencyCode: String, timestamp: TimeInterval) -> Single<Decimal>
     func chartInfo(coinCode: String, currencyCode: String, chartType: ChartType) -> ChartInfo?
     func chartInfoObservable(coinCode: String, currencyCode: String, chartType: ChartType) -> Observable<ChartInfo>
-}
-
-protocol IRateStatsManager {
-    var statsObservable: Observable<StatsResponse> { get }
-    func syncStats(coinCode: CoinCode, currencyCode: String)
 }
 
 protocol ISystemInfoManager {
@@ -320,25 +307,6 @@ protocol IIpfsApiProvider {
     func gatewaysSingle<T>(singleProvider: @escaping (String, TimeInterval) -> Single<T>) -> Single<T>
 }
 
-protocol IRateApiProvider {
-    func getLatestRateData(currencyCode: String) -> Single<LatestRateData>
-    func getRate(coinCode: String, currencyCode: String, date: Date) -> Single<Decimal>
-}
-
-protocol IRatesStatsApiProvider {
-    func getRateStatsData(coinCode: String, currencyCode: String) -> Single<RateStatsData>
-}
-
-protocol IRateStorage {
-    func latestRate(coinCode: CoinCode, currencyCode: String) -> RateOld?
-    func latestRateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<RateOld>
-    func timestampRateObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Observable<RateOld?>
-    func zeroValueTimestampRatesObservable(currencyCode: String) -> Observable<[RateOld]>
-    func save(latestRate: RateOld)
-    func save(rate: RateOld)
-    func clearRates()
-}
-
 protocol IEnabledWalletStorage {
     var enabledWallets: [EnabledWallet] { get }
     func save(enabledWallets: [EnabledWallet])
@@ -372,7 +340,7 @@ protocol IBackgroundPriceAlertManager {
 }
 
 protocol IPriceAlertHandler {
-    func handleAlerts(with latestRatesData: LatestRateData)
+//    func handleAlerts(with latestRatesData: LatestRateData)
 }
 
 protocol INotificationFactory {
