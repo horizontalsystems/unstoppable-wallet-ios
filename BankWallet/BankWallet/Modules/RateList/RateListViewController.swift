@@ -7,6 +7,8 @@ class RateListViewController: WalletViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
 
+    private var item: RateListViewItem?
+
     init(delegate: IRateListViewDelegate) {
         self.delegate = delegate
 
@@ -55,26 +57,42 @@ class RateListViewController: WalletViewController {
         view.layer.mask = gradient
     }
 
+    private func lastUpdateText(item: RateListViewItem?) -> String? {
+        guard let item = item else {
+            return nil
+        }
+        guard item.lastUpdateTimestamp > 0 else {
+            return nil
+        }
+        let formattedTime = DateHelper.instance.formatTimeOnly(from: Date(timeIntervalSince1970: item.lastUpdateTimestamp))
+        return "rate_list.updated".localized + "\n" + formattedTime
+    }
+
 }
 
 extension RateListViewController: SectionsDataSource {
 
     public func buildSections() -> [SectionProtocol] {
+        guard let item = item else {
+            return []
+        }
         var sections = [SectionProtocol]()
-
         var rows = [RowProtocol]()
-        let count = delegate.itemCount
 
+        let count = item.rateViewItems.count
         for index in 0..<count {
-            let item = delegate.item(at: index)
+            let item = item.rateViewItems[index]
             rows.append(Row<RateListCell>(id: "rate_\(index)", hash: item.hash, height: CGFloat.heightDoubleLineCell, autoDeselect: true, bind: { cell, _ in
                 cell.bind(viewItem: item, last: index == count - 1)
             }))
         }
         let width = view.bounds.width
-        let headerText = DateHelper.instance.formatRateListTitle(from: delegate.currentDate)
+
+        let headerText = DateHelper.instance.formatRateListTitle(from: item.currentDate)
+        let lastUpdatedText = lastUpdateText(item: item)
+
         let titleHeader: ViewState<RateListHeaderView> = .cellType(hash: "rate_list_header", binder: { view in
-            view.bind(title: headerText)
+            view.bind(title: headerText, lastUpdated: lastUpdatedText)
         }, dynamicHeight: { _ in RateListHeaderView.height(forContainerWidth: width, text: headerText) })
 
         sections.append(Section(id: "rate_list_section", headerState: titleHeader, footerState: .margin(height: CGFloat.margin4x), rows: rows))
@@ -85,7 +103,9 @@ extension RateListViewController: SectionsDataSource {
 
 extension RateListViewController: IRateListView {
 
-    func reload() {
+    func show(item: RateListViewItem) {
+        self.item = item
+
         tableView.reload(animated: true)
     }
 

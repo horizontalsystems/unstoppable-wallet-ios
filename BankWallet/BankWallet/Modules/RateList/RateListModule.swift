@@ -1,49 +1,41 @@
 import Foundation
+import XRatesKit
 
 protocol IRateListView: class {
-    func reload()
+    func show(item: RateListViewItem)
 }
 
 protocol IRateListViewDelegate {
     func viewDidLoad()
-
-    var currentDate: Date { get }
-    var itemCount: Int { get }
-    func item(at index: Int) -> RateViewItem
 }
 
 protocol IRateListInteractor {
     var currency: Currency { get }
     var coins: [Coin] { get }
-    var currentDate: Date { get }
 
-    func fetchRates(currencyCode: String, coinCodes: [CoinCode])
-    func getRateStats(currencyCode: String, coinCodes: [CoinCode])
+    func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo?
+    func subscribeToMarketInfos(currencyCode: String)
 }
 
 protocol IRateListInteractorDelegate: class {
-    func didBecomeActive()
-
-    func didReceive(chartData: ChartData)
-    func didFailStats(for coinCode: CoinCode)
-    func didUpdate(rate: RateOld)
+    func didReceive(marketInfos: [String: MarketInfo])
 }
 
 protocol IRateListRouter {
 }
 
-protocol IRateListItemDataSource {
-    var items: [RateViewItem] { get }
-    var coinCodes: [CoinCode] { get }
-
-    func set(coins: [Coin])
-    func set(chartData: ChartData)
-    func set(rate: RateOld, with currency: Currency)
-    func setStatsFailed(coinCode: CoinCode)
+protocol IRateListFactory {
+    func marketInfoViewItem(coins: [Coin], currency: Currency, marketInfos: [CoinCode: MarketInfo]) -> RateListViewItem
 }
 
 protocol IRateListSorter {
     func smartSort(for coins: [Coin], featuredCoins: [Coin]) -> [Coin]
+}
+
+struct RateListViewItem {
+    let currentDate: Date
+    let lastUpdateTimestamp: TimeInterval
+    let rateViewItems: [RateViewItem]
 }
 
 struct RateViewItem {
@@ -51,7 +43,6 @@ struct RateViewItem {
     var rateExpired: Bool
     var rate: CurrencyValue?
     var diff: Decimal?
-    var loadingStatus: RateLoadingStatus
 
     var hash: String {
         var fields = [String]()
@@ -63,14 +54,7 @@ struct RateViewItem {
         if let diff = diff {
             fields.append(diff.description)
         }
-        fields.append("\(loadingStatus.rawValue)")
         return fields.joined(separator: "_")
     }
 
-}
-
-enum RateLoadingStatus: Int {
-    case loading
-    case loaded
-    case failed
 }

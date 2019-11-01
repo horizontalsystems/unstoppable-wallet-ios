@@ -63,7 +63,11 @@ public class DateHelper {
     }
 
     public func formatRateListTitle(from date: Date) -> String {
-        getFormatter(forFormat: "MMMM d").string(from: date)
+        getFormatter(forFormat: "MMM d").string(from: date)
+    }
+
+    public func formatTimeOnly(from date: Date) -> String {
+        timeOnly().string(from: date)
     }
 
     public func formatFullTime(from date: Date) -> String {
