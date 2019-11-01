@@ -14,9 +14,9 @@ class BalanceInteractor {
     private let currencyManager: ICurrencyManager
     private let localStorage: ILocalStorage
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
-    private let rateManager: IXRateManager
+    private let rateManager: IRateManager
 
-    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyManager: ICurrencyManager, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager, rateManager: IXRateManager) {
+    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyManager: ICurrencyManager, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager, rateManager: IRateManager) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.currencyManager = currencyManager
