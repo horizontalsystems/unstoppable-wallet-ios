@@ -72,7 +72,7 @@ protocol IAdapterFactory {
 
 protocol IWalletManager: class {
     var wallets: [Wallet] { get }
-    var walletsUpdatedSignal: Signal { get }
+    var walletsUpdatedObservable: Observable<[Wallet]> { get }
     func wallet(coin: Coin) -> Wallet?
 
     func preloadWallets()

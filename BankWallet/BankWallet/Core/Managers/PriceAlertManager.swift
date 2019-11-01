@@ -10,17 +10,17 @@ class PriceAlertManager {
         self.walletManager = walletManager
         self.storage = storage
 
-        walletManager.walletsUpdatedSignal
+        walletManager.walletsUpdatedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] in
-                    self?.onUpdateWallets()
+                .subscribe(onNext: { [weak self] wallets in
+                    self?.onUpdate(wallets: wallets)
                 })
                 .disposed(by: disposeBag)
     }
 
-    private func onUpdateWallets() {
-        let coinCodes = walletManager.wallets.map { $0.coin.code }
+    private func onUpdate(wallets: [Wallet]) {
+        let coinCodes = wallets.map { $0.coin.code }
 
         storage.deleteExcluding(coinCodes: coinCodes)
     }

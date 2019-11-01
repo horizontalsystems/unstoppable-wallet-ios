@@ -1,4 +1,3 @@
-import RxSwift
 import XRatesKit
 
 class BalancePresenter {
@@ -15,9 +14,11 @@ class BalancePresenter {
     var walletToBackup: Wallet?
 
     private var items = [BalanceItem]()
+    private var viewItems = [BalanceViewItem]()
     private var currency: Currency
     private var sortType: BalanceSortType
-    private var isStatsOn = false
+
+    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.balance_presenter", qos: .utility)
 
     init(interactor: IBalanceInteractor, router: IBalanceRouter, factory: IBalanceViewItemFactory, sorter: IBalanceSorter, sortingOnThreshold: Int = BalancePresenter.sortingOnThreshold) {
         self.interactor = interactor
@@ -31,47 +32,61 @@ class BalancePresenter {
     }
 
     private func handleUpdate(wallets: [Wallet]) {
-        items = interactor.wallets.map { BalanceItem(wallet: $0) }
+        items = wallets.map { BalanceItem(wallet: $0) }
+
+        handleAdaptersReady()
+        handleRates()
+        handleStats()
+
+        view?.set(sortIsOn: items.count >= sortingOnThreshold)
+    }
+
+    private func handleAdaptersReady() {
+        interactor.subscribeToAdapters(wallets: items.map { $0.wallet })
 
         for item in items {
             item.balance = interactor.balance(wallet: item.wallet)
             item.state = interactor.state(wallet: item.wallet)
         }
-
-        interactor.subscribeToAdapters(wallets: wallets)
-
-        handleRates()
-        handleStats()
-
-        view?.set(sortIsOn: items.count >= sortingOnThreshold)
-        updateStatsButtonState()
     }
 
     private func handleRates() {
+        interactor.subscribeToMarketInfo(currencyCode: currency.code)
+
         for item in items {
             item.marketInfo = interactor.marketInfo(coinCode: item.wallet.coin.code, currencyCode: currency.code)
         }
-
-        interactor.subscribeToMarketInfo(currencyCode: currency.code)
     }
 
     private func handleStats() {
-        if isStatsOn {
-            for item in items {
-                item.chartInfo = interactor.chartInfo(coinCode: item.wallet.coin.code, currencyCode: currency.code)
-            }
+        interactor.subscribeToChartInfo(coinCodes: items.map { $0.wallet.coin.code }, currencyCode: currency.code)
 
-            interactor.subscribeToChartInfo(coinCodes: items.map { $0.wallet.coin.code }, currencyCode: currency.code)
-        } else {
-            interactor.unsubscribeFromChartInfo()
+        for item in items {
+            if let chartInfo = interactor.chartInfo(coinCode: item.wallet.coin.code, currencyCode: currency.code) {
+                item.chartInfoState = .loaded(chartInfo: chartInfo)
+            } else {
+                item.chartInfoState = .loading
+            }
         }
+    }
+
+    private func updateItem(wallet: Wallet, updateBlock: (BalanceItem) -> ()) {
+        guard let index = items.firstIndex(where: { $0.wallet == wallet }) else {
+            return
+        }
+
+        let item = items[index]
+        updateBlock(item)
+        viewItems[index] = factory.viewItem(item: item, currency: currency)
+
+        view?.set(viewItems: viewItems)
     }
 
     private func updateViewItems() {
         items = sorter.sort(items: items, sort: sortType)
 
-        let viewItems = items.map {
-            factory.viewItem(item: $0, currency: currency, isStatsOn: isStatsOn)
+        viewItems = items.map {
+            factory.viewItem(item: $0, currency: currency)
         }
 
         view?.set(viewItems: viewItems)
@@ -82,29 +97,15 @@ class BalancePresenter {
         view?.set(headerViewItem: viewItem)
     }
 
-    private func updateStatsButtonState() {
-        let statsButtonState: StatsButtonState
-
-        if items.isEmpty {
-            statsButtonState = .hidden
-        } else if isStatsOn {
-            statsButtonState = .selected
-        } else {
-            statsButtonState = .normal
-        }
-
-        view?.set(statsButtonState: statsButtonState)
-    }
-
 }
 
 extension BalancePresenter: IBalanceViewDelegate {
 
     func viewDidLoad() {
-        handleUpdate(wallets: interactor.wallets)
-
         interactor.subscribeToWallets()
         interactor.subscribeToBaseCurrency()
+
+        handleUpdate(wallets: interactor.wallets)
 
         updateViewItems()
         updateHeaderViewItem()
@@ -114,8 +115,8 @@ extension BalancePresenter: IBalanceViewDelegate {
         interactor.refresh()
     }
 
-    func onReceive(index: Int) {
-        let wallet = items[index].wallet
+    func onReceive(viewItem: BalanceViewItem) {
+        let wallet = viewItem.wallet
 
         if wallet.account.backedUp {
             router.openReceive(for: wallet)
@@ -125,12 +126,12 @@ extension BalancePresenter: IBalanceViewDelegate {
         }
     }
 
-    func onPay(index: Int) {
-        router.openSend(wallet: items[index].wallet)
+    func onPay(viewItem: BalanceViewItem) {
+        router.openSend(wallet: viewItem.wallet)
     }
 
-    func onChart(index: Int) {
-        router.showChart(for: items[index].wallet.coin.code)
+    func onChart(viewItem: BalanceViewItem) {
+        router.showChart(for: viewItem.wallet.coin.code)
     }
 
     func onOpenManageWallets() {
@@ -145,16 +146,8 @@ extension BalancePresenter: IBalanceViewDelegate {
         guard let wallet = walletToBackup, let predefinedAccountType = interactor.predefinedAccountType(wallet: wallet) else {
             return
         }
+
         router.openBackup(wallet: wallet, predefinedAccountType: predefinedAccountType)
-    }
-
-    func onStatsSwitch() {
-        isStatsOn = !isStatsOn
-
-        handleStats()
-
-        updateViewItems()
-        updateStatsButtonState()
     }
 
 }
@@ -162,64 +155,95 @@ extension BalancePresenter: IBalanceViewDelegate {
 extension BalancePresenter: IBalanceInteractorDelegate {
 
     func didUpdate(wallets: [Wallet]) {
-        handleUpdate(wallets: wallets)
+        queue.async {
+            self.handleUpdate(wallets: wallets)
 
-        updateViewItems()
-        updateHeaderViewItem()
+            self.updateViewItems()
+            self.updateHeaderViewItem()
+        }
+    }
+
+    func didPrepareAdapters() {
+        queue.async {
+            self.handleAdaptersReady()
+
+            self.updateViewItems()
+            self.updateHeaderViewItem()
+        }
     }
 
     func didUpdate(balance: Decimal, wallet: Wallet) {
-        guard let item = items.first(where: { $0.wallet == wallet }) else {
-            return
+        queue.async {
+            self.updateItem(wallet: wallet) { item in
+                item.balance = balance
+            }
+
+            self.updateHeaderViewItem()
         }
-
-        item.balance = balance
-
-        updateViewItems()
-        updateHeaderViewItem()
     }
 
     func didUpdate(state: AdapterState, wallet: Wallet) {
-        guard let item = items.first(where: { $0.wallet == wallet }) else {
-            return
+        queue.async {
+            self.updateItem(wallet: wallet) { item in
+                item.state = state
+            }
+
+            self.updateHeaderViewItem()
         }
-
-        item.state = state
-
-        updateViewItems()
-        updateHeaderViewItem()
     }
 
     func didUpdate(currency: Currency) {
-        self.currency = currency
-        handleRates()
-        handleStats()
+        queue.async {
+            self.currency = currency
 
-        updateViewItems()
-        updateHeaderViewItem()
+            self.handleRates()
+            self.handleStats()
+
+            self.updateViewItems()
+            self.updateHeaderViewItem()
+        }
     }
 
     func didUpdate(marketInfos: [CoinCode: MarketInfo]) {
-        for (coinCode, marketInfo) in marketInfos {
-            for item in items {
-                if item.wallet.coin.code == coinCode {
-                    item.marketInfo = marketInfo
+        queue.async {
+            for (coinCode, marketInfo) in marketInfos {
+                for (index, item) in self.items.enumerated() {
+                    if item.wallet.coin.code == coinCode {
+                        item.marketInfo = marketInfo
+                        self.viewItems[index] = self.factory.viewItem(item: item, currency: self.currency)
+                    }
                 }
             }
-        }
 
-        updateViewItems()
-        updateHeaderViewItem()
+            self.view?.set(viewItems: self.viewItems)
+            self.updateHeaderViewItem()
+        }
     }
 
     func didUpdate(chartInfo: ChartInfo, coinCode: CoinCode) {
-        for item in items {
-            if item.wallet.coin.code == coinCode {
-                item.chartInfo = chartInfo
+        queue.async {
+            for (index, item) in self.items.enumerated() {
+                if item.wallet.coin.code == coinCode {
+                    item.chartInfoState = .loaded(chartInfo: chartInfo)
+                    self.viewItems[index] = self.factory.viewItem(item: item, currency: self.currency)
+                }
             }
-        }
 
-        updateViewItems()
+            self.view?.set(viewItems: self.viewItems)
+        }
+    }
+
+    func didFailChartInfo(coinCode: CoinCode) {
+        queue.async {
+            for (index, item) in self.items.enumerated() {
+                if item.wallet.coin.code == coinCode {
+                    item.chartInfoState = .failed
+                    self.viewItems[index] = self.factory.viewItem(item: item, currency: self.currency)
+                }
+            }
+
+            self.view?.set(viewItems: self.viewItems)
+        }
     }
 
     func didRefresh() {
@@ -231,16 +255,11 @@ extension BalancePresenter: IBalanceInteractorDelegate {
 extension BalancePresenter: ISortTypeDelegate {
 
     func onSelect(sort: BalanceSortType) {
-        sortType = sort
+        queue.async {
+            self.sortType = sort
 
-        if sort == .percentGrowth && isStatsOn == false {
-            isStatsOn = true
-            handleStats()
-
-            updateStatsButtonState()
+            self.updateViewItems()
         }
-
-        updateViewItems()
     }
 
 }

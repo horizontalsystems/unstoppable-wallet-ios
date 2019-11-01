@@ -9,8 +9,7 @@ class AdapterManager {
     private let binanceKitManager: BinanceKitManager
     private let walletManager: IWalletManager
 
-    private var adaptersMap = [Wallet: IAdapter]()
-    private let adaptersQueue = DispatchQueue(label: "Adapters Queue", qos: .background)
+    private var adapters = SynchronizedDictionary<Wallet, IAdapter>()
     let adaptersReadySignal = Signal()
 
     init(adapterFactory: IAdapterFactory, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager, walletManager: IWalletManager) {
@@ -20,39 +19,44 @@ class AdapterManager {
         self.binanceKitManager = binanceKitManager
         self.walletManager = walletManager
 
-        walletManager.walletsUpdatedSignal
+        walletManager.walletsUpdatedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] in
-                    self?.initAdapters()
+                .observeOn(SerialDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] wallets in
+                    self?.initAdapters(wallets: wallets)
                 })
                 .disposed(by: disposeBag)
     }
 
-    private func initAdapters() {
-        adaptersQueue.async {
-            let wallets = self.walletManager.wallets
-            let oldWallets = Array(self.adaptersMap.keys)
-            
-            for wallet in wallets {
-                if self.adaptersMap[wallet] != nil {
-                    continue
-                }
-                
-                if let adapter = self.adapterFactory.adapter(wallet: wallet) {
-                    self.adaptersMap[wallet] = adapter
-                    adapter.start()
-                }
+    private func initAdapters(wallets: [Wallet]) {
+        var newAdapters: [Wallet: IAdapter] = adapters.rawDictionary
+
+        for wallet in wallets {
+            guard newAdapters[wallet] == nil else {
+                continue
             }
-            
-            self.adaptersReadySignal.notify()
-            
-            for oldWallet in oldWallets {
-                if !wallets.contains(where: { $0 == oldWallet }) {
-                    self.adaptersMap[oldWallet]?.stop()
-                    self.adaptersMap.removeValue(forKey: oldWallet)
-                }
+
+            if let adapter = adapterFactory.adapter(wallet: wallet) {
+                newAdapters[wallet] = adapter
+                adapter.start()
             }
+        }
+
+        var removedAdapters = [IAdapter]()
+
+        for wallet in Array(newAdapters.keys) {
+            guard !wallets.contains(wallet), let adapter = newAdapters.removeValue(forKey: wallet) else {
+                continue
+            }
+
+            removedAdapters.append(adapter)
+        }
+
+        adapters.rawDictionary = newAdapters
+        adaptersReadySignal.notify()
+
+        removedAdapters.forEach { adapter in
+            adapter.stop()
         }
     }
 
@@ -61,41 +65,23 @@ class AdapterManager {
 extension AdapterManager: IAdapterManager {
 
     func adapter(for wallet: Wallet) -> IAdapter? {
-        return adaptersQueue.sync { adaptersMap[wallet] }
+        adapters[wallet]
     }
 
     func balanceAdapter(for wallet: Wallet) -> IBalanceAdapter? {
-        return adaptersQueue.sync {
-            if let adapter = adaptersMap[wallet], let balanceAdapter = adapter as? IBalanceAdapter {
-                return balanceAdapter
-            }
-
-            return nil
-        }
+        adapters[wallet] as? IBalanceAdapter
     }
 
     func transactionsAdapter(for wallet: Wallet) -> ITransactionsAdapter? {
-        return adaptersQueue.sync {
-            if let adapter = adaptersMap[wallet], let transactionsAdapter = adapter as? ITransactionsAdapter {
-                return transactionsAdapter
-            }
-
-            return nil
-        }
+        adapters[wallet] as? ITransactionsAdapter
     }
 
     func depositAdapter(for wallet: Wallet) -> IDepositAdapter? {
-        return adaptersQueue.sync {
-            if let adapter = adaptersMap[wallet], let depositAdapter = adapter as? IDepositAdapter {
-                return depositAdapter
-            }
-
-            return nil
-        }
+        adapters[wallet] as? IDepositAdapter
     }
 
     func refresh() {
-        for (_, adapter) in adaptersMap {
+        for (_, adapter) in adapters.rawDictionary {
             adapter.refresh()
         }
 

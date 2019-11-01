@@ -7,7 +7,7 @@ class WalletManager {
     private let cache: WalletsCache = WalletsCache()
 
     private let disposeBag = DisposeBag()
-    let walletsUpdatedSignal = Signal()
+    private let walletsUpdatedSubject = PublishSubject<[Wallet]>()
 
     init(accountManager: IAccountManager, walletFactory: IWalletFactory, storage: IWalletStorage) {
         self.accountManager = accountManager
@@ -23,6 +23,10 @@ extension WalletManager: IWalletManager {
         return cache.wallets
     }
 
+    var walletsUpdatedObservable: Observable<[Wallet]> {
+        walletsUpdatedSubject.asObservable()
+    }
+
     func wallet(coin: Coin) -> Wallet? {
         guard let account = accountManager.account(coinType: coin.type) else {
             return nil
@@ -32,14 +36,15 @@ extension WalletManager: IWalletManager {
     }
 
     func preloadWallets() {
-        cache.set(wallets: storage.wallets(accounts: accountManager.accounts))
-        walletsUpdatedSignal.notify()
+        let wallets = storage.wallets(accounts: accountManager.accounts)
+        cache.set(wallets: wallets)
+        walletsUpdatedSubject.onNext(wallets)
     }
 
     func enable(wallets: [Wallet]) {
         storage.save(wallets: wallets)
         cache.set(wallets: wallets)
-        walletsUpdatedSignal.notify()
+        walletsUpdatedSubject.onNext(wallets)
     }
 
 }

@@ -5,7 +5,6 @@ import XRatesKit
 protocol IBalanceView: class {
     func set(viewItems: [BalanceViewItem])
     func set(headerViewItem: BalanceHeaderViewItem)
-    func set(statsButtonState: StatsButtonState)
     func set(sortIsOn: Bool)
     func showBackupRequired(coin: Coin, predefinedAccountType: IPredefinedAccountType)
     func didRefresh()
@@ -16,15 +15,14 @@ protocol IBalanceViewDelegate {
 
     func refresh()
 
-    func onReceive(index: Int)
-    func onPay(index: Int)
-    func onChart(index: Int)
+    func onReceive(viewItem: BalanceViewItem)
+    func onPay(viewItem: BalanceViewItem)
+    func onChart(viewItem: BalanceViewItem)
 
     func onOpenManageWallets()
 
     func onSortTypeChange()
     func didRequestBackup()
-    func onStatsSwitch()
 }
 
 protocol IBalanceInteractor {
@@ -42,7 +40,6 @@ protocol IBalanceInteractor {
 
     func subscribeToMarketInfo(currencyCode: String)
     func subscribeToChartInfo(coinCodes: [CoinCode], currencyCode: String)
-    func unsubscribeFromChartInfo()
 
     var sortType: BalanceSortType { get }
 
@@ -52,12 +49,15 @@ protocol IBalanceInteractor {
 
 protocol IBalanceInteractorDelegate: class {
     func didUpdate(wallets: [Wallet])
+    func didPrepareAdapters()
     func didUpdate(balance: Decimal, wallet: Wallet)
     func didUpdate(state: AdapterState, wallet: Wallet)
 
     func didUpdate(currency: Currency)
     func didUpdate(marketInfos: [CoinCode: MarketInfo])
+
     func didUpdate(chartInfo: ChartInfo, coinCode: CoinCode)
+    func didFailChartInfo(coinCode: CoinCode)
 
     func didRefresh()
 }
@@ -72,7 +72,7 @@ protocol IBalanceRouter {
 }
 
 protocol IBalanceViewItemFactory {
-    func viewItem(item: BalanceItem, currency: Currency, isStatsOn: Bool) -> BalanceViewItem
+    func viewItem(item: BalanceItem, currency: Currency) -> BalanceViewItem
     func headerViewItem(items: [BalanceItem], currency: Currency) -> BalanceHeaderViewItem
 }
 
@@ -86,8 +86,21 @@ enum BalanceSortType: Int {
     case percentGrowth
 }
 
-enum StatsButtonState {
-    case normal
-    case hidden
-    case selected
+enum ChartInfoState {
+    case loading
+    case loaded(chartInfo: ChartInfo)
+    case failed
+}
+
+extension ChartInfoState: Equatable {
+
+    public static func ==(lhs: ChartInfoState, rhs: ChartInfoState) -> Bool {
+        switch (lhs, rhs) {
+        case (.loading, .loading): return true
+        case let (.loaded(lhsChartInfo), .loaded(rhsChartInfo)): return lhsChartInfo.points == rhsChartInfo.points
+        case (.failed, .failed): return true
+        default: return false
+        }
+    }
+
 }

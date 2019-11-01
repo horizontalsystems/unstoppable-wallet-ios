@@ -5,9 +5,9 @@ class BalanceHeaderView: UIView {
     static let height: CGFloat = .heightSingleLineCell
 
     private let amountLabel = UILabel()
-    private let statsSwitchButton = UIButton()
+    private let sortButton = UIButton()
 
-    var onStatsSwitch: (() -> ())?
+    var onClickSort: (() -> ())?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,14 +33,11 @@ class BalanceHeaderView: UIView {
             maker.centerY.equalToSuperview()
         }
 
-        statsSwitchButton.isHidden = true
-        statsSwitchButton.setImage(UIImage(named: "Stats Switch Button")?.tinted(with: .appGray), for: .normal)
-        statsSwitchButton.setImage(UIImage(named: "Stats Switch Button")?.tinted(with: .appJacob), for: .selected)
-        statsSwitchButton.setImage(UIImage(named: "Stats Switch Button")?.tinted(with: .appYellow50), for: .highlighted)
-        statsSwitchButton.addTarget(self, action: #selector(onSwitch), for: .touchUpInside)
+        sortButton.setImage(UIImage(named: "Balance Sort Icon")?.tinted(with: .appJacob), for: .normal)
+        sortButton.addTarget(self, action: #selector(onSortClicked), for: .touchUpInside)
 
-        wrapperView.addSubview(statsSwitchButton)
-        statsSwitchButton.snp.makeConstraints { maker in
+        wrapperView.addSubview(sortButton)
+        sortButton.snp.makeConstraints { maker in
             maker.top.trailing.bottom.equalToSuperview()
             maker.width.equalTo(60)
         }
@@ -50,26 +47,17 @@ class BalanceHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(amount: String?, upToDate: Bool, statsIsOn: Bool) {
-        amountLabel.text = amount
-        amountLabel.textColor = upToDate ? .appJacob : .appYellow50
+    func bind(viewItem: BalanceHeaderViewItem) {
+        amountLabel.text = ValueFormatter.instance.format(currencyValue: viewItem.currencyValue)
+        amountLabel.textColor = viewItem.upToDate ? .appJacob : .appYellow50
     }
 
-    @objc func onSwitch() {
-        onStatsSwitch?()
+    func setSortButton(hidden: Bool) {
+        sortButton.isHidden = hidden
     }
 
-    func set(statsButtonState: StatsButtonState) {
-        switch statsButtonState {
-        case .normal:
-            statsSwitchButton.isHidden = false
-            statsSwitchButton.isSelected = false
-        case .selected:
-            statsSwitchButton.isHidden = false
-            statsSwitchButton.isSelected = true
-        case .hidden:
-            statsSwitchButton.isHidden = true
-        }
+    @objc func onSortClicked() {
+        onClickSort?()
     }
 
 }
