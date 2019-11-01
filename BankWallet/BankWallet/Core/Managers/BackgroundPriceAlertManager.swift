@@ -3,14 +3,14 @@ import RxSwift
 class BackgroundPriceAlertManager {
     private let disposeBag = DisposeBag()
 
-    private let rateManager: IRateManager
+    private let rateManager: IXRateManager
     private let currencyManager: ICurrencyManager
     private let rateStorage: IRateStorage
     private let priceAlertStorage: IPriceAlertStorage
     private let priceAlertHandler: IPriceAlertHandler
     private let debugBackgroundLogger: IDebugBackgroundLogger?
 
-    init(rateManager: IRateManager, currencyManager: ICurrencyManager, rateStorage: IRateStorage, priceAlertStorage: IPriceAlertStorage, priceAlertHandler: IPriceAlertHandler, debugBackgroundLogger: IDebugBackgroundLogger?) {
+    init(rateManager: IXRateManager, currencyManager: ICurrencyManager, rateStorage: IRateStorage, priceAlertStorage: IPriceAlertStorage, priceAlertHandler: IPriceAlertHandler, debugBackgroundLogger: IDebugBackgroundLogger?) {
         self.rateManager = rateManager
         self.currencyManager = currencyManager
         self.rateStorage = rateStorage
@@ -38,14 +38,14 @@ extension BackgroundPriceAlertManager: IBackgroundPriceAlertManager {
 
     func fetchRates(onComplete: @escaping (Bool) -> ()) {
         debugBackgroundLogger?.add(log: "did fetch rates")
-        rateManager.syncLatestRatesSingle()
-                .subscribe(onSuccess: { [weak self] latestRatesData in
-                    self?.priceAlertHandler.handleAlerts(with: latestRatesData)
-                    onComplete(true)
-                }, onError: { error in
-                    onComplete(false)
-                })
-                .disposed(by: disposeBag)
+//        rateManager.syncLatestRatesSingle()
+//                .subscribe(onSuccess: { [weak self] latestRatesData in
+//                    self?.priceAlertHandler.handleAlerts(with: latestRatesData)
+//                    onComplete(true)
+//                }, onError: { error in
+//                    onComplete(false)
+//                })
+//                .disposed(by: disposeBag)
     }
 
 }
