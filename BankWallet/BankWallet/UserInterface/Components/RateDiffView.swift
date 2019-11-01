@@ -37,6 +37,7 @@ class RateDiffView: UIView {
     func set(value: Decimal?) {
         guard let value = value else {
             label.text = nil
+            imageView.image = nil
             return
         }
         let color: UIColor = value.isSignMinus ? .cryptoRed : .cryptoGreen

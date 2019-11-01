@@ -1,16 +1,17 @@
 import Foundation
+import XRatesKit
 
 class RateListPresenter {
     weak var view: IRateListView?
 
     private let interactor: IRateListInteractor
     private let router: IRateListRouter
-    private var dataSource: IRateListItemDataSource
+    private let factory: IRateListFactory
 
-    init(interactor: IRateListInteractor, router: IRateListRouter, dataSource: IRateListItemDataSource) {
+    init(interactor: IRateListInteractor, router: IRateListRouter, factory: IRateListFactory) {
         self.interactor = interactor
         self.router = router
-        self.dataSource = dataSource
+        self.factory = factory
     }
 
 }
@@ -18,49 +19,26 @@ class RateListPresenter {
 extension RateListPresenter: IRateListViewDelegate {
 
     func viewDidLoad() {
-        dataSource.set(coins: interactor.coins)
+        let coins = interactor.coins
+        let currency = interactor.currency
 
-        let coinCodes = dataSource.coinCodes
+        var marketInfos = [CoinCode: MarketInfo]()
+        coins.forEach { coin in
+            marketInfos[coin.code] = interactor.marketInfo(coinCode: coin.code, currencyCode: currency.code)
+        }
+        let item = factory.marketInfoViewItem(coins: coins, currency: currency, marketInfos: marketInfos)
+        view?.show(item: item)
 
-        interactor.fetchRates(currencyCode: interactor.currency.code, coinCodes: coinCodes)
-        interactor.getRateStats(currencyCode: interactor.currency.code, coinCodes: coinCodes)
-
-        view?.reload()
-    }
-
-    var currentDate: Date {
-        return interactor.currentDate
-    }
-
-    var itemCount: Int {
-        return dataSource.items.count
-    }
-
-    func item(at index: Int) -> RateViewItem {
-        return dataSource.items[index]
+        interactor.subscribeToMarketInfos(currencyCode: currency.code)
     }
 
 }
 
 extension RateListPresenter: IRateListInteractorDelegate {
 
-    func didBecomeActive() {
-        interactor.getRateStats(currencyCode: interactor.currency.code, coinCodes: dataSource.coinCodes)
-    }
-
-    func didUpdate(rate: RateOld) {
-        dataSource.set(rate: rate, with: interactor.currency)
-        view?.reload()
-    }
-
-    func didReceive(chartData: ChartData) {
-        dataSource.set(chartData: chartData)
-        view?.reload()
-    }
-
-    func didFailStats(for coinCode: CoinCode) {
-        dataSource.setStatsFailed(coinCode: coinCode)
-        view?.reload()
+    func didReceive(marketInfos: [String: MarketInfo]) {
+        let item = factory.marketInfoViewItem(coins: interactor.coins, currency: interactor.currency, marketInfos: marketInfos)
+        view?.show(item: item)
     }
 
 }

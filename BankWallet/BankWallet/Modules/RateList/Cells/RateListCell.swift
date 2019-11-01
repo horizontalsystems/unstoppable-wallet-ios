@@ -44,23 +44,14 @@ class RateListCell: AppCell {
         let rateString: String?
         let rateColor: UIColor
         if let rate = viewItem.rate {
-            rateString = ValueFormatter.instance.format(currencyValue: rate)
-            rateColor = .appLeah
+            rateString = ValueFormatter.instance.format(currencyValue: rate, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
+            rateColor = viewItem.rateExpired ? .appGray50 : .appLeah
         } else {
-            rateString = viewItem.loadingStatus != .loading ? "n/a".localized : " "
+            rateString = "n/a".localized
             rateColor = .appGray50
         }
 
-        let diffString: String
-        let diffColor: UIColor
-        if let diff = viewItem.diff {
-            diffString = ChartRateTheme.formatted(percentDelta: diff)
-            diffColor = diff.isSignMinus ? .appLucian : .appRemus
-        } else {
-            diffString = "----"
-            diffColor = .appGray
-        }
-        rightView.bind(loading: viewItem.loadingStatus == .loading, rate: rateString, rateColor: rateColor, diff: diffString, diffColor: diffColor)
+        rightView.bind(rate: rateString, rateColor: rateColor, diff: !viewItem.rateExpired ? viewItem.diff : nil)
     }
 
 }

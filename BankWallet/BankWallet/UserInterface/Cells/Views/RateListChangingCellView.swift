@@ -4,13 +4,8 @@ import HUD
 
 class RateListChangingCellView: UIView {
     private let rateLabel = UILabel()
-    private let diffLabel = UILabel()
-
-    private let processSpinner = HUDProgressView(
-            strokeLineWidth: CGFloat.cornerRadius2,
-            radius: CGFloat.cornerRadius8 - CGFloat.cornerRadius2,
-            strokeColor: .appGray
-    )
+    private let diffPlaceholderLabel = UILabel()
+    private let rateDiffView = RateDiffView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,24 +22,27 @@ class RateListChangingCellView: UIView {
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
-        diffLabel.font = .appHeadline2
-        diffLabel.textAlignment = .right
-        diffLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        diffLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+        rateDiffView.font = .appSubhead1
+        rateDiffView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        rateDiffView.setContentCompressionResistancePriority(.required, for: .horizontal)
 
-        addSubview(diffLabel)
-        diffLabel.snp.makeConstraints { maker in
+        addSubview(rateDiffView)
+        rateDiffView.snp.makeConstraints { maker in
             maker.top.equalTo(rateLabel.snp.bottom).offset(CGFloat.margin1x)
-            maker.leading.equalToSuperview()
+            maker.leading.greaterThanOrEqualToSuperview()
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
-        addSubview(processSpinner)
-        processSpinner.snp.makeConstraints { maker in
-            maker.left.greaterThanOrEqualToSuperview()
-            maker.bottom.equalToSuperview().inset(10)
-            maker.right.equalToSuperview().inset(CGFloat.margin4x + CGFloat.margin1x)
-            maker.size.equalTo(CGFloat.cornerRadius8 * 2)
+        diffPlaceholderLabel.textColor = .appGray
+        diffPlaceholderLabel.font = .appSubhead1
+        diffPlaceholderLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        diffPlaceholderLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+
+        addSubview(diffPlaceholderLabel)
+        diffPlaceholderLabel.snp.makeConstraints { maker in
+            maker.top.equalTo(rateLabel.snp.bottom).offset(CGFloat.margin1x)
+            maker.leading.greaterThanOrEqualToSuperview()
+            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
     }
 
@@ -52,20 +50,17 @@ class RateListChangingCellView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(loading: Bool, rate: String?, rateColor: UIColor, diff: String?, diffColor: UIColor) {
-        rateLabel.isHidden = loading
-        diffLabel.isHidden = loading
-        processSpinner.isHidden = !loading
-        if loading {
-            processSpinner.startAnimating()
-        } else {
-            processSpinner.stopAnimating()
-        }
+    func bind(rate: String?, rateColor: UIColor, diff: Decimal?) {
         rateLabel.text = rate
         rateLabel.textColor = rateColor
 
-        diffLabel.text = diff
-        diffLabel.textColor = diffColor
+        let showDiff = diff != nil
+
+        rateDiffView.set(value: diff)
+        rateDiffView.set(hidden: !showDiff)
+
+        diffPlaceholderLabel.text = showDiff ? nil : "----"
+        diffPlaceholderLabel.set(hidden: showDiff)
     }
 
 }
