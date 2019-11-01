@@ -31,7 +31,6 @@ class App {
 
     let xRateManager: IXRateManager
     let rateManager: RateManager
-    let rateStatsManager: IRateStatsManager
 
     let feeCoinProvider: IFeeCoinProvider
     let feeRateProviderFactory: FeeRateProviderFactory
@@ -98,10 +97,6 @@ class App {
         let ipfsApiProvider = IpfsApiProvider(appConfigProvider: appConfigProvider)
         let rateApiProvider: IRateApiProvider = RateApiProvider(networkManager: networkManager, ipfsApiProvider: ipfsApiProvider)
         rateManager = RateManager(storage: storage, apiProvider: rateApiProvider, walletManager: walletManager, reachabilityManager: reachabilityManager, currencyManager: currencyManager)
-
-        let chartApiProvider = RatesStatsApiProvider(networkManager: networkManager, ipfsApiProvider: ipfsApiProvider)
-        let chartRateConverter = ChartRateDataConverter()
-        rateStatsManager = RateStatsManager(apiProvider: chartApiProvider, rateStorage: storage, chartRateConverter: chartRateConverter)
 
         feeCoinProvider = FeeCoinProvider(appConfigProvider: appConfigProvider)
         feeRateProviderFactory = FeeRateProviderFactory()
