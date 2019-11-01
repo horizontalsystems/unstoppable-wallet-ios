@@ -28,7 +28,7 @@ protocol ISendAmountInteractor {
     func set(inputType: SendInputType)
 
     var baseCurrency: Currency { get }
-    func rate(coinCode: CoinCode, currencyCode: String) -> RateOld?
+    func nonExpiredRateValue(coinCode: CoinCode, currencyCode: String) -> Decimal?
 }
 
 protocol ISendAmountModule: AnyObject {

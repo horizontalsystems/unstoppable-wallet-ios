@@ -10,7 +10,7 @@ class SendFeePresenter {
     private let feeCoin: Coin?
     private let feeCoinProtocol: String?
     private let currency: Currency
-    private var rate: RateOld?
+    private var rateValue: Decimal?
 
     private var fee: Decimal = 0
     private var availableFeeBalance: Decimal?
@@ -25,7 +25,7 @@ class SendFeePresenter {
         feeCoin = interactor.feeCoin(coin: coin)
         feeCoinProtocol = interactor.feeCoinProtocol(coin: coin)
         currency = interactor.baseCurrency
-        rate = interactor.rate(coinCode: self.coin.code, currencyCode: currency.code)
+        rateValue = interactor.nonExpiredRateValue(coinCode: self.coin.code, currencyCode: currency.code)
     }
 
     private var coin: Coin {
@@ -78,8 +78,8 @@ extension SendFeePresenter: ISendFeeModule {
         case .coin:
             return .coinValue(coinValue: CoinValue(coin: coin, value: fee))
         case .currency:
-            if let rate = rate {
-                return .currencyValue(currencyValue: CurrencyValue(currency: currency, value: fee * rate.value))
+            if let rateValue = rateValue {
+                return .currencyValue(currencyValue: CurrencyValue(currency: currency, value: fee * rateValue))
             } else {
                 fatalError("Invalid state")
             }
@@ -91,8 +91,8 @@ extension SendFeePresenter: ISendFeeModule {
         case .coin:
             return .coinValue(coinValue: CoinValue(coin: coin, value: fee))
         case .currency:
-            if let rate = rate {
-                return .currencyValue(currencyValue: CurrencyValue(currency: currency, value: fee * rate.value))
+            if let rateValue = rateValue {
+                return .currencyValue(currencyValue: CurrencyValue(currency: currency, value: fee * rateValue))
             } else {
                 return nil
             }
@@ -104,8 +104,8 @@ extension SendFeePresenter: ISendFeeModule {
     }
 
     var currencyValue: CurrencyValue? {
-        if let rate = rate {
-            return CurrencyValue(currency: currency, value: fee * rate.value)
+        if let rateValue = rateValue {
+            return CurrencyValue(currency: currency, value: fee * rateValue)
         } else {
             return nil
         }
