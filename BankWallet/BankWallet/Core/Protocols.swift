@@ -113,6 +113,7 @@ protocol ITransactionsAdapter {
 
 protocol ISendBitcoinAdapter {
     func availableBalance(feeRate: Int, address: String?) -> Decimal
+    func minimumSendAmount(address: String?) -> Decimal
     func validate(address: String) throws
     func fee(amount: Decimal, feeRate: Int, address: String?) -> Decimal
     func sendSingle(amount: Decimal, address: String, feeRate: Int) -> Single<Void>

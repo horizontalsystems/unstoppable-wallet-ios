@@ -15,6 +15,7 @@ class SendAmountPresenter {
 
     private var amount: Decimal?
     private var availableBalance: Decimal?
+    private var minimumAmount: Decimal?
 
     private(set) var inputType: SendInputType
 
@@ -61,6 +62,15 @@ class SendAmountPresenter {
         }
 
         view?.set(amount: primaryAmountInfo(amount: amount))
+    }
+
+    private func syncAvailableBalance() {
+        guard let availableBalance = availableBalance else {
+            view?.set(availableBalance: nil)
+            return
+        }
+
+        view?.set(availableBalance: primaryAmountInfo(amount: availableBalance))
     }
 
     private func primaryAmountInfo(amount: Decimal) -> AmountInfo {
@@ -114,7 +124,23 @@ class SendAmountPresenter {
                     fatalError("Invalid state")
                 }
             }
+        }
 
+        guard let minimumAmount = minimumAmount else {
+            return
+        }
+
+        if minimumAmount > amount {
+            switch inputType {
+            case .coin:
+                throw ValidationError.tooFewAmount(minimumAmount: .coinValue(coinValue: CoinValue(coin: coin, value: minimumAmount)))
+            case .currency:
+                if let rate = rate {
+                    throw ValidationError.tooFewAmount(minimumAmount: .currencyValue(currencyValue: CurrencyValue(currency: currency, value: minimumAmount * rate.value)))
+                } else {
+                    fatalError("Invalid state")
+                }
+            }
         }
     }
 
@@ -161,6 +187,12 @@ extension SendAmountPresenter: ISendAmountModule {
 
     func set(availableBalance: Decimal) {
         self.availableBalance = availableBalance
+        syncAvailableBalance()
+        syncError()
+    }
+
+    func set(minimumAmount: Decimal) {
+        self.minimumAmount = minimumAmount
         syncError()
     }
 
@@ -179,6 +211,7 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
         interactor.set(inputType: inputType)
         delegate?.onChange(inputType: inputType)
 
+        syncAvailableBalance()
         syncAmountType()
         syncAmount()
         syncHint()
@@ -243,6 +276,7 @@ extension SendAmountPresenter {
     private enum ValidationError: Error, LocalizedError {
         case emptyValue
         case insufficientBalance(availableBalance: AmountInfo)
+        case tooFewAmount(minimumAmount: AmountInfo)
 
         var errorDescription: String? {
             switch self {
@@ -250,6 +284,8 @@ extension SendAmountPresenter {
                 return "send.amount_error.empty".localized
             case .insufficientBalance(let availableBalance):
                 return "send.amount_error.balance".localized(availableBalance.formattedString ?? "")
+            case .tooFewAmount(let minimumAmount):
+                return "send.amount_error.minimum_amount".localized(minimumAmount.formattedString ?? "")
             }
         }
     }

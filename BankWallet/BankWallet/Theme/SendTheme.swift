@@ -29,7 +29,11 @@ class SendTheme {
     static let titleFont = UIFont.appHeadline2
     static var titleColor: UIColor { return .crypto_White_Black }
 
-    static let amountHeight: CGFloat = 72
+    static let availableAmountTitleFont: UIFont = UIFont.appSubhead2
+    static let availableAmountTitleColor: UIColor = .appGray
+    static let availableAmountValueFont: UIFont = UIFont.appSubhead1
+    static let availableAmountValueColor: UIColor = .appLeah
+    static let amountHeight: CGFloat = 97
     static let amountHolderHeight: CGFloat = 60
     static let amountFont: UIFont = .appBody
     static var amountColor: UIColor { return .crypto_Bars_Dark }

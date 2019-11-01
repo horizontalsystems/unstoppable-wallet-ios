@@ -35,6 +35,10 @@ class SendBitcoinHandler {
         interactor.fetchAvailableBalance(feeRate: feePriorityModule.feeRate, address: addressModule.currentAddress)
     }
 
+    private func syncMinimumAmount() {
+        interactor.fetchMinimumAmount(address: addressModule.currentAddress)
+    }
+
     private func syncFee() {
         interactor.fetchFee(amount: amountModule.currentAmount, feeRate: feePriorityModule.feeRate, address: addressModule.currentAddress)
     }
@@ -49,6 +53,7 @@ extension SendBitcoinHandler: ISendHandler {
 
     func onViewDidLoad() {
         syncAvailableBalance()
+        syncMinimumAmount()
         syncFeeDuration()
     }
 
@@ -74,6 +79,11 @@ extension SendBitcoinHandler: ISendBitcoinInteractorDelegate {
 
     func didFetch(availableBalance: Decimal) {
         amountModule.set(availableBalance: availableBalance)
+        syncValidation()
+    }
+    
+    func didFetch(minimumAmount: Decimal) {
+        amountModule.set(minimumAmount: minimumAmount)
         syncValidation()
     }
 
@@ -104,6 +114,7 @@ extension SendBitcoinHandler: ISendAddressDelegate {
 
     func onUpdateAddress() {
         syncAvailableBalance()
+        syncMinimumAmount()
         syncFee()
     }
 
