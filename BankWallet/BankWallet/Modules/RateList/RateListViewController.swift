@@ -58,13 +58,11 @@ class RateListViewController: WalletViewController {
     }
 
     private func lastUpdateText(item: RateListViewItem?) -> String? {
-        guard let item = item else {
+        guard let lastTimestamp = item?.lastUpdateTimestamp else {
             return nil
         }
-        guard item.lastUpdateTimestamp > 0 else {
-            return nil
-        }
-        let formattedTime = DateHelper.instance.formatTimeOnly(from: Date(timeIntervalSince1970: item.lastUpdateTimestamp))
+
+        let formattedTime = DateHelper.instance.formatTimeOnly(from: Date(timeIntervalSince1970: lastTimestamp))
         return "rate_list.updated".localized + "\n" + formattedTime
     }
 
