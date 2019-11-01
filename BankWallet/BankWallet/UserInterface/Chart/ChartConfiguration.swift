@@ -1,13 +1,5 @@
 import UIKit
 
-enum ChartTypeOld: String, CaseIterable {
-    case day = "DAILY"
-    case week = "WEEKLY"
-    case month = "MONTHLY"
-    case halfYear = "MONTHLY6"
-    case year = "MONTHLY18"
-}
-
 class ChartConfiguration {
     var showGrid: Bool = true
 
