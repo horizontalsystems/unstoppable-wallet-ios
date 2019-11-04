@@ -9,9 +9,8 @@ class PriorityRouter {
 extension PriorityRouter: IPriorityRouter {
 
     func dismiss(with priority: FeeRatePriority) {
-        viewController?.dismiss(animated: true) { [weak self] in
-            self?.priorityDelegate?.onSelect(priority: priority)
-        }
+        priorityDelegate?.onSelect(priority: priority)
+        viewController?.dismiss(animated: true)
     }
 
 }

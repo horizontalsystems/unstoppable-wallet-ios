@@ -221,13 +221,9 @@ extension SendAmountView: ISendAmountView {
 
         switch availableBalance {
         case .coinValue(let coinValue):
-            if let valueStr = format(coinValue: coinValue) {
-                availableBalanceValueLabel.text = "\(valueStr) \(coinValue.coin.code)"
-            }
+            availableBalanceValueLabel.text = ValueFormatter.instance.format(coinValue: coinValue)
         case .currencyValue(let currencyValue):
-            if let valueStr = format(currencyValue: currencyValue) {
-                availableBalanceValueLabel.text = currencyValue.currency.symbol + valueStr
-            }
+            availableBalanceValueLabel.text = ValueFormatter.instance.format(currencyValue: currencyValue)
         }
     }
 

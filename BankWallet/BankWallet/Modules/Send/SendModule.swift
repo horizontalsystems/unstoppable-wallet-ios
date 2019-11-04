@@ -62,6 +62,7 @@ protocol ISendBitcoinInteractorDelegate: class {
 
 protocol ISendDashInteractor {
     func fetchAvailableBalance(address: String?)
+    func fetchMinimumAmount(address: String?)
     func validate(address: String) throws
     func fetchFee(amount: Decimal, address: String?)
     func sendSingle(amount: Decimal, address: String) -> Single<Void>
@@ -69,6 +70,7 @@ protocol ISendDashInteractor {
 
 protocol ISendDashInteractorDelegate: class {
     func didFetch(availableBalance: Decimal)
+    func didFetch(minimumAmount: Decimal)
     func didFetch(fee: Decimal)
 }
 
