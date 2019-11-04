@@ -121,6 +121,7 @@ protocol ISendBitcoinAdapter {
 
 protocol ISendDashAdapter {
     func availableBalance(address: String?) -> Decimal
+    func minimumSendAmount(address: String?) -> Decimal
     func validate(address: String) throws
     func fee(amount: Decimal, address: String?) -> Decimal
     func sendSingle(amount: Decimal, address: String) -> Single<Void>

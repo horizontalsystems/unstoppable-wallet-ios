@@ -33,6 +33,10 @@ class SendDashHandler {
         interactor.fetchAvailableBalance(address: addressModule.currentAddress)
     }
 
+    private func syncMinimumAmount() {
+        interactor.fetchMinimumAmount(address: addressModule.currentAddress)
+    }
+
     private func syncFee() {
         interactor.fetchFee(amount: amountModule.currentAmount, address: addressModule.currentAddress)
     }
@@ -43,6 +47,7 @@ extension SendDashHandler: ISendHandler {
 
     func onViewDidLoad() {
         syncAvailableBalance()
+        syncMinimumAmount()
     }
 
     func showKeyboard() {
@@ -66,6 +71,11 @@ extension SendDashHandler: ISendDashInteractorDelegate {
 
     func didFetch(availableBalance: Decimal) {
         amountModule.set(availableBalance: availableBalance)
+        syncValidation()
+    }
+
+    func didFetch(minimumAmount: Decimal) {
+        amountModule.set(minimumAmount: minimumAmount)
         syncValidation()
     }
 
