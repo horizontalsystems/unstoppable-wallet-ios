@@ -31,11 +31,27 @@ class RateManager {
     }
 
     private func onUpdate(wallets: [Wallet]) {
-        kit.set(coinCodes: wallets.map { $0.coin.code })
+        kit.set(coinCodes: wallets.map { converted(coinCode: $0.coin.code) })
     }
 
     private func onBaseCurrencyUpdated() {
         kit.set(currencyCode: currencyManager.baseCurrency.code)
+    }
+
+    private func converted(coinCode: String) -> String {
+        if coinCode == "HOT" {
+            return "HOLO"
+        }
+
+        return coinCode
+    }
+
+    private func unconverted(coinCode: String) -> String {
+        if coinCode == "HOLO" {
+            return "HOT"
+        }
+
+        return coinCode
     }
 
 }
@@ -47,27 +63,35 @@ extension RateManager: IRateManager {
     }
 
     func marketInfo(coinCode: String, currencyCode: String) -> MarketInfo? {
-        kit.marketInfo(coinCode: coinCode, currencyCode: currencyCode)
+        kit.marketInfo(coinCode: converted(coinCode: coinCode), currencyCode: currencyCode)
     }
 
     func marketInfoObservable(coinCode: String, currencyCode: String) -> Observable<MarketInfo> {
-        kit.marketInfoObservable(coinCode: coinCode, currencyCode: currencyCode)
+        kit.marketInfoObservable(coinCode: converted(coinCode: coinCode), currencyCode: currencyCode)
     }
 
     func marketInfosObservable(currencyCode: String) -> Observable<[String: MarketInfo]> {
-        kit.marketInfosObservable(currencyCode: currencyCode)
+        kit.marketInfosObservable(currencyCode: currencyCode).map { [unowned self] marketInfos in
+            var unconvertedMarketInfos = [String: MarketInfo]()
+
+            for (coinCode, marketInfo) in marketInfos {
+                unconvertedMarketInfos[self.unconverted(coinCode: coinCode)] = marketInfo
+            }
+
+            return unconvertedMarketInfos
+        }
     }
 
     func historicalRate(coinCode: String, currencyCode: String, timestamp: TimeInterval) -> Single<Decimal> {
-        kit.historicalRate(coinCode: coinCode, currencyCode: currencyCode, timestamp: timestamp)
+        kit.historicalRate(coinCode: converted(coinCode: coinCode), currencyCode: currencyCode, timestamp: timestamp)
     }
 
     func chartInfo(coinCode: String, currencyCode: String, chartType: ChartType) -> ChartInfo? {
-        kit.chartInfo(coinCode: coinCode, currencyCode: currencyCode, chartType: chartType)
+        kit.chartInfo(coinCode: converted(coinCode: coinCode), currencyCode: currencyCode, chartType: chartType)
     }
 
     func chartInfoObservable(coinCode: String, currencyCode: String, chartType: ChartType) -> Observable<ChartInfo> {
-        kit.chartInfoObservable(coinCode: coinCode, currencyCode: currencyCode, chartType: chartType)
+        kit.chartInfoObservable(coinCode: converted(coinCode: coinCode), currencyCode: currencyCode, chartType: chartType)
     }
 
 }
