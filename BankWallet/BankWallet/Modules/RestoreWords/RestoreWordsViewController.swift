@@ -118,7 +118,7 @@ class RestoreWordsViewController: WalletViewController {
         let text = textView.text ?? ""
         let components = text.components(separatedBy: .whitespacesAndNewlines)
 
-        return components.filter { !$0.isEmpty }
+        return components.filter { !$0.isEmpty }.map { $0.lowercased() }
     }
 
     private func height(text: String) -> CGFloat {
