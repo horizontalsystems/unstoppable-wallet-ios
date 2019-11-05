@@ -160,6 +160,10 @@ extension BitcoinBaseAdapter {
         return Decimal(amount) / coinRate
     }
 
+    func maximumSendAmount(pluginData: [UInt8: IBitcoinPluginData] = [:]) -> Decimal? {
+        try? abstractKit.maxSpendLimit(pluginData: pluginData).flatMap { Decimal($0) / coinRate }
+    }
+
     func minimumSendAmount(address: String?) -> Decimal {
         Decimal(abstractKit.minSpendableValue(toAddress: address)) / coinRate
     }

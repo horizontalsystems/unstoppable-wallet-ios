@@ -23,6 +23,16 @@ extension SendBitcoinInteractor: ISendBitcoinInteractor {
         }
     }
 
+    func fetchMaximumAmount(pluginData: [UInt8: IBitcoinPluginData] = [:]) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let amount = self.adapter.maximumSendAmount(pluginData: pluginData)
+
+            DispatchQueue.main.async {
+                self.delegate?.didFetch(maximumAmount: amount)
+            }
+        }
+    }
+
     func fetchMinimumAmount(address: String?) {
         DispatchQueue.global(qos: .userInitiated).async {
             let amount = self.adapter.minimumSendAmount(address: address)

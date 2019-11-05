@@ -15,6 +15,7 @@ class SendAmountPresenter {
 
     private var amount: Decimal?
     private var availableBalance: Decimal?
+    private var maximumAmount: Decimal?
     private var minimumAmount: Decimal?
     private var minimumRequiredBalance: Decimal = 0
 
@@ -115,40 +116,55 @@ class SendAmountPresenter {
     }
 
     private func validate() throws {
-        guard let amount = amount, let availableBalance = availableBalance, !amount.isZero else {
+        guard let amount = amount, !amount.isZero else {
             return
         }
 
-        if availableBalance < amount {
-            switch inputType {
-            case .coin:
-                throw ValidationError.insufficientBalance(availableBalance: .coinValue(coinValue: CoinValue(coin: coin, value: availableBalance)))
-            case .currency:
-                if let rateValue = rateValue {
-                    throw ValidationError.insufficientBalance(availableBalance: .currencyValue(currencyValue: CurrencyValue(currency: currency, value: availableBalance * rateValue)))
-                } else {
-                    fatalError("Invalid state")
+        if let availableBalance = availableBalance {
+            if availableBalance < amount {
+                switch inputType {
+                case .coin:
+                    throw ValidationError.insufficientBalance(availableBalance: .coinValue(coinValue: CoinValue(coin: coin, value: availableBalance)))
+                case .currency:
+                    if let rateValue = rateValue {
+                        throw ValidationError.insufficientBalance(availableBalance: .currencyValue(currencyValue: CurrencyValue(currency: currency, value: availableBalance * rateValue)))
+                    } else {
+                        fatalError("Invalid state")
+                    }
+                }
+            }
+
+            if availableBalance - amount < minimumRequiredBalance {
+                throw ValidationError.noMinimumRequiredBalance(minimumRequiredBalance: .coinValue(coinValue: CoinValue(coin: coin, value: minimumRequiredBalance)))
+            }
+        }
+
+        if let maximumAmount = maximumAmount {
+            if maximumAmount < amount {
+                switch inputType {
+                case .coin:
+                    throw ValidationError.maximumAmountExceeded(maximumAmount: .coinValue(coinValue: CoinValue(coin: coin, value: maximumAmount)))
+                case .currency:
+                    if let rateValue = rateValue {
+                        throw ValidationError.maximumAmountExceeded(maximumAmount: .currencyValue(currencyValue: CurrencyValue(currency: currency, value: maximumAmount * rateValue)))
+                    } else {
+                        fatalError("Invalid state")
+                    }
                 }
             }
         }
 
-        if availableBalance - amount < minimumRequiredBalance {
-            throw ValidationError.noMinimumRequiredBalance(minimumRequiredBalance: .coinValue(coinValue: CoinValue(coin: coin, value: minimumRequiredBalance)))
-        }
-
-        guard let minimumAmount = minimumAmount else {
-            return
-        }
-
-        if minimumAmount > amount {
-            switch inputType {
-            case .coin:
-                throw ValidationError.tooFewAmount(minimumAmount: .coinValue(coinValue: CoinValue(coin: coin, value: minimumAmount)))
-            case .currency:
-                if let rateValue = rateValue {
-                    throw ValidationError.tooFewAmount(minimumAmount: .currencyValue(currencyValue: CurrencyValue(currency: currency, value: minimumAmount * rateValue)))
-                } else {
-                    fatalError("Invalid state")
+        if let minimumAmount = minimumAmount {
+            if minimumAmount > amount {
+                switch inputType {
+                case .coin:
+                    throw ValidationError.tooFewAmount(minimumAmount: .coinValue(coinValue: CoinValue(coin: coin, value: minimumAmount)))
+                case .currency:
+                    if let rateValue = rateValue {
+                        throw ValidationError.tooFewAmount(minimumAmount: .currencyValue(currencyValue: CurrencyValue(currency: currency, value: minimumAmount * rateValue)))
+                    } else {
+                        fatalError("Invalid state")
+                    }
                 }
             }
         }
@@ -199,6 +215,11 @@ extension SendAmountPresenter: ISendAmountModule {
         self.availableBalance = availableBalance
         syncMaxButton()
         syncAvailableBalance()
+        syncError()
+    }
+
+    func set(maximumAmount: Decimal?) {
+        self.maximumAmount = maximumAmount
         syncError()
     }
 
@@ -293,6 +314,7 @@ extension SendAmountPresenter {
         case emptyValue
         case insufficientBalance(availableBalance: AmountInfo)
         case noMinimumRequiredBalance(minimumRequiredBalance: AmountInfo)
+        case maximumAmountExceeded(maximumAmount: AmountInfo)
         case tooFewAmount(minimumAmount: AmountInfo)
 
         var errorDescription: String? {
@@ -303,6 +325,8 @@ extension SendAmountPresenter {
                 return "send.amount_error.balance".localized(availableBalance.formattedString ?? "")
             case .noMinimumRequiredBalance(let minimumRequiredBalance):
                 return "send.amount_error.min_required_balance".localized(minimumRequiredBalance.formattedString ?? "")
+            case .maximumAmountExceeded(let maximumAmount):
+                return "send.amount_error.maximum_amount".localized(maximumAmount.formattedString ?? "")
             case .tooFewAmount(let minimumAmount):
                 return "send.amount_error.minimum_amount".localized(minimumAmount.formattedString ?? "")
             }
