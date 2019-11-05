@@ -13,9 +13,9 @@ class SendBitcoinInteractor {
 
 extension SendBitcoinInteractor: ISendBitcoinInteractor {
 
-    func fetchAvailableBalance(feeRate: Int, address: String?) {
+    func fetchAvailableBalance(feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData]) {
         DispatchQueue.global(qos: .userInitiated).async {
-            let balance = self.adapter.availableBalance(feeRate: feeRate, address: address)
+            let balance = self.adapter.availableBalance(feeRate: feeRate, address: address, pluginData: pluginData)
 
             DispatchQueue.main.async {
                 self.delegate?.didFetch(availableBalance: balance)
@@ -37,9 +37,9 @@ extension SendBitcoinInteractor: ISendBitcoinInteractor {
         try adapter.validate(address: address)
     }
 
-    func fetchFee(amount: Decimal, feeRate: Int, address: String?) {
+    func fetchFee(amount: Decimal, feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData]) {
         DispatchQueue.global(qos: .userInitiated).async {
-            let fee = self.adapter.fee(amount: amount, feeRate: feeRate, address: address)
+            let fee = self.adapter.fee(amount: amount, feeRate: feeRate, address: address, pluginData: pluginData)
 
             DispatchQueue.main.async {
                 self.delegate?.didFetch(fee: fee)
@@ -47,8 +47,8 @@ extension SendBitcoinInteractor: ISendBitcoinInteractor {
         }
     }
 
-    func sendSingle(amount: Decimal, address: String, feeRate: Int) -> Single<Void> {
-        return adapter.sendSingle(amount: amount, address: address, feeRate: feeRate)
+    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData]) -> Single<Void> {
+        adapter.sendSingle(amount: amount, address: address, feeRate: feeRate, pluginData: pluginData)
     }
 
 }

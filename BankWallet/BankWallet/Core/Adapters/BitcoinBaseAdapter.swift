@@ -43,7 +43,7 @@ class BitcoinBaseAdapter {
     }
 
     func createSendError(from: Error) -> Error {
-        return SendTransactionError.connection
+        SendTransactionError.connection
     }
 
     private func convertToSatoshi(value: Decimal) -> Int {
@@ -100,10 +100,6 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
     func transactionsDeleted(hashes: [String]) {
     }
 
-    func balanceUpdated(balance: Int) {
-        balanceUpdatedSignal.notify()
-    }
-
     func lastBlockInfoUpdated(lastBlockInfo: BlockInfo) {
         lastBlockHeightUpdatedSignal.notify()
     }
@@ -144,23 +140,23 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
 extension BitcoinBaseAdapter: IBalanceAdapter {
 
     var stateUpdatedObservable: Observable<Void> {
-        return stateUpdatedSignal.asObservable()
+        stateUpdatedSignal.asObservable()
     }
 
     var balanceUpdatedObservable: Observable<Void> {
-        return balanceUpdatedSignal.asObservable()
+        balanceUpdatedSignal.asObservable()
     }
 
     var balance: Decimal {
-        return Decimal(abstractKit.balance.spendable) / coinRate
+        Decimal(abstractKit.balance.spendable) / coinRate
     }
 
 }
 
 extension BitcoinBaseAdapter {
 
-    func availableBalance(feeRate: Int, address: String?) -> Decimal {
-        let amount = (try? abstractKit.maxSpendableValue(toAddress: address, feeRate: feeRate)) ?? 0
+    func availableBalance(feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData] = [:]) -> Decimal {
+        let amount = (try? abstractKit.maxSpendableValue(toAddress: address, feeRate: feeRate, pluginData: pluginData)) ?? 0
         return Decimal(amount) / coinRate
     }
 
@@ -172,23 +168,23 @@ extension BitcoinBaseAdapter {
         try abstractKit.validate(address: address)
     }
 
-    func fee(amount: Decimal, feeRate: Int, address: String?) -> Decimal {
+    func fee(amount: Decimal, feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData] = [:]) -> Decimal {
         do {
             let amount = convertToSatoshi(value: amount)
-            let fee = try abstractKit.fee(for: amount, toAddress: address, feeRate: feeRate)
+            let fee = try abstractKit.fee(for: amount, toAddress: address, feeRate: feeRate, pluginData: pluginData)
             return Decimal(fee) / coinRate
         } catch {
             return 0
         }
     }
 
-    func sendSingle(amount: Decimal, address: String, feeRate: Int) -> Single<Void> {
+    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData] = [:]) -> Single<Void> {
         let satoshiAmount = convertToSatoshi(value: amount)
 
         return Single.create { [weak self] observer in
             do {
                 if let adapter = self {
-                    _ = try adapter.abstractKit.send(to: address, value: satoshiAmount, feeRate: feeRate)
+                    _ = try adapter.abstractKit.send(to: address, value: satoshiAmount, feeRate: feeRate, pluginData: pluginData)
                 }
                 observer(.success(()))
             } catch {
@@ -208,25 +204,25 @@ extension BitcoinBaseAdapter {
 extension BitcoinBaseAdapter: ITransactionsAdapter {
 
     var confirmationsThreshold: Int {
-        return BitcoinBaseAdapter.defaultConfirmationsThreshold
+        BitcoinBaseAdapter.defaultConfirmationsThreshold
     }
 
     var lastBlockHeight: Int? {
-        return abstractKit.lastBlockInfo?.height
+        abstractKit.lastBlockInfo?.height
     }
 
     var lastBlockHeightUpdatedObservable: Observable<Void> {
-        return lastBlockHeightUpdatedSignal.asObservable()
+        lastBlockHeightUpdatedSignal.asObservable()
     }
 
     var transactionRecordsObservable: Observable<[TransactionRecord]> {
-        return transactionRecordsSubject.asObservable()
+        transactionRecordsSubject.asObservable()
     }
 
     func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
-        return abstractKit.transactions(fromHash: from?.hash, limit: limit)
+        abstractKit.transactions(fromHash: from?.hash, limit: limit)
                 .map { [weak self] transactions -> [TransactionRecord] in
-                    return transactions.compactMap {
+                    transactions.compactMap {
                         self?.transactionRecord(fromTransaction: $0)
                     }
                 }
@@ -237,7 +233,7 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
 extension BitcoinBaseAdapter: IDepositAdapter {
 
     var receiveAddress: String {
-        return abstractKit.receiveAddress()
+        abstractKit.receiveAddress()
     }
 
 }

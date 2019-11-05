@@ -47,11 +47,11 @@ protocol ISendHandlerDelegate: AnyObject {
 }
 
 protocol ISendBitcoinInteractor {
-    func fetchAvailableBalance(feeRate: Int, address: String?)
+    func fetchAvailableBalance(feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData])
     func fetchMinimumAmount(address: String?)
     func validate(address: String) throws
-    func fetchFee(amount: Decimal, feeRate: Int, address: String?)
-    func sendSingle(amount: Decimal, address: String, feeRate: Int) -> Single<Void>
+    func fetchFee(amount: Decimal, feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData])
+    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData]) -> Single<Void>
 }
 
 protocol ISendBitcoinInteractorDelegate: class {

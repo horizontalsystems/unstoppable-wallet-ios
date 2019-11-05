@@ -148,6 +148,12 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "send.error.invalid_account" = "Invalid Account";
 "send.error.no_address" = "No Address";
 "send.error.no_amount" = "No Amount";
+"send.hodler_locktime" = "Lock Time";
+"send.hodler_locktime_hour" = "Hour";
+"send.hodler_locktime_month" = "Month";
+"send.hodler_locktime_half_year" = "6 months";
+"send.hodler_locktime_year" = "Year";
+"send.hodler_locktime_off" = "Off";
 
 "send.confirmation.title" = "Confirm";
 "send.confirmation.to" = "To";
