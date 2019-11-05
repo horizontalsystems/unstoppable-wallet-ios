@@ -9,6 +9,10 @@ enum CoinType {
     case eos(token: String, symbol: String)
     case binance(symbol: String)
 
+    init(erc20Address: String, fee: Decimal = 0, gasLimit: Int = 100_000, minimumRequiredBalance: Decimal? = nil) {
+        self = .erc20(address: erc20Address, fee: fee, gasLimit: gasLimit, minimumRequiredBalance: minimumRequiredBalance)
+    }
+
     func canSupport(accountType: AccountType) -> Bool {
         switch self {
         case .bitcoin, .bitcoinCash, .dash, .ethereum, .erc20:
