@@ -19,7 +19,7 @@ extension SendEthereumInteractor: ISendEthereumInteractor {
         adapter.ethereumBalance
     }
 
-    var minimumRequiredBalance: Decimal? {
+    var minimumRequiredBalance: Decimal {
         adapter.minimumRequiredBalance
     }
 

@@ -99,8 +99,8 @@ extension EthereumAdapter: ISendEthereumAdapter {
         balance
     }
 
-    var minimumRequiredBalance: Decimal? {
-        nil
+    var minimumRequiredBalance: Decimal {
+        0
     }
 
     func fee(gasPrice: Int) -> Decimal {
