@@ -93,15 +93,15 @@ extension EosAdapter: IBalanceAdapter {
     }
 
     var stateUpdatedObservable: Observable<Void> {
-        return asset.syncStateObservable.map { _ in () }
+        asset.syncStateObservable.map { _ in () }
     }
 
     var balance: Decimal {
-        return asset.balance
+        asset.balance
     }
 
     var balanceUpdatedObservable: Observable<Void> {
-        return asset.balanceObservable.map { _ in () }
+        asset.balanceObservable.map { _ in () }
     }
 
 }
@@ -109,7 +109,7 @@ extension EosAdapter: IBalanceAdapter {
 extension EosAdapter: ISendEosAdapter {
 
     var availableBalance: Decimal {
-        return asset.balance
+        asset.balance
     }
 
     func validate(account: String) throws {
@@ -117,7 +117,7 @@ extension EosAdapter: ISendEosAdapter {
     }
 
     func sendSingle(amount: Decimal, account: String, memo: String?) -> Single<Void> {
-        return eosKit.sendSingle(asset: asset, to: account, amount: amount, memo: memo ?? "")
+        eosKit.sendSingle(asset: asset, to: account, amount: amount, memo: memo ?? "")
                 .map { _ in () }
     }
 
@@ -126,25 +126,25 @@ extension EosAdapter: ISendEosAdapter {
 extension EosAdapter: ITransactionsAdapter {
 
     var confirmationsThreshold: Int {
-        return irreversibleThreshold
+        irreversibleThreshold
     }
 
     var lastBlockHeight: Int? {
-        return eosKit.irreversibleBlockHeight.map { $0 + irreversibleThreshold }
+        eosKit.irreversibleBlockHeight.map { $0 + irreversibleThreshold }
     }
 
     var lastBlockHeightUpdatedObservable: Observable<Void> {
-        return eosKit.irreversibleBlockHeightObservable.map { _ in () }
+        eosKit.irreversibleBlockHeightObservable.map { _ in () }
     }
 
     var transactionRecordsObservable: Observable<[TransactionRecord]> {
-        return asset.transactionsObservable.map { [weak self] in
+        asset.transactionsObservable.map { [weak self] in
             $0.compactMap { self?.transactionRecord(fromTransaction: $0) }
         }
     }
 
     func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
-        return eosKit.transactionsSingle(asset: asset, fromActionSequence: from?.interTransactionIndex, limit: limit)
+        eosKit.transactionsSingle(asset: asset, fromActionSequence: from?.interTransactionIndex, limit: limit)
                 .map { [weak self] transactions -> [TransactionRecord] in
                     return transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
                 }
@@ -155,7 +155,7 @@ extension EosAdapter: ITransactionsAdapter {
 extension EosAdapter: IDepositAdapter {
 
     var receiveAddress: String {
-        return eosKit.account
+        eosKit.account
     }
 
 }

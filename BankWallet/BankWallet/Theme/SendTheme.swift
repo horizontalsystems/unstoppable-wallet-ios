@@ -5,52 +5,24 @@ class SendTheme {
     static let margin: CGFloat = 16
     static let mediumMargin: CGFloat = 12
     static let smallMargin: CGFloat = 8
-    static let tinyMargin: CGFloat = 5
 
     static let holderCornerRadius: CGFloat = 8
     static let holderBorderWidth: CGFloat = 1
     static let holderBorderColor: UIColor = .cryptoSteel20
-    static var holderBackground: UIColor { return .crypto_SteelDark_White }
-    static let holderLeadingPadding: CGFloat = 12
-    static let holderTopPadding: CGFloat = 9
+    static var holderBackground: UIColor { .crypto_SteelDark_White }
 
-    static var buttonBackground: RespondButton.Style { return [.active: .crypto_Steel20_LightBackground, .selected: .crypto_Steel40_LightGray, .disabled: UIColor.crypto_Steel20_LightBackground] }
+    static var buttonBackground: RespondButton.Style { [.active: .crypto_Steel20_LightBackground, .selected: .crypto_Steel40_LightGray, .disabled: UIColor.crypto_Steel20_LightBackground] }
     static let buttonBorderColor = UIColor.cryptoSteel20
     static let buttonCornerRadius: CGFloat = 4
-    static var buttonIconColor: UIColor { return .crypto_White_Black }
-    static let buttonIconColorDisabled: UIColor = .cryptoSteel20
+    static var buttonIconColor: UIColor { .crypto_White_Black }
     static let buttonSize: CGFloat = 32
     static let scanButtonWidth: CGFloat = 36
-    static let buttonFont: UIFont = .systemFont(ofSize: 14, weight: .semibold)
-    static let errorFont: UIFont = .systemFont(ofSize: 12, weight: .medium)
     static let errorColor: UIColor = .cryptoRed
-
-    static let titleHeight: CGFloat = 48
-    static let titleFont = UIFont.appHeadline2
-    static var titleColor: UIColor { return .crypto_White_Black }
-
-    static let availableAmountTitleFont: UIFont = UIFont.appSubhead2
-    static let availableAmountTitleColor: UIColor = .appGray
-    static let availableAmountValueFont: UIFont = UIFont.appSubhead1
-    static let availableAmountValueColor: UIColor = .appLeah
-    static let amountHeight: CGFloat = 97
-    static let amountHolderHeight: CGFloat = 60
-    static let amountFont: UIFont = .appBody
-    static var amountColor: UIColor { return .crypto_Bars_Dark }
-    static let amountPlaceholderColor: UIColor = .cryptoSteel40
-    static let amountLineColor: UIColor = .cryptoSteel20
-    static let amountLineTopMargin: CGFloat = 5
-    static let amountLineHeight: CGFloat = 1
-    static let amountInputTintColor: UIColor = .cryptoYellow
-    static let amountHintFont: UIFont = .appCaption
-    static let amountHintColor: UIColor = .cryptoGray
-    static let amountTopMargin: CGFloat = 5
-    static let amountErrorLabelTopMargin: CGFloat = 4
 
     static let addressHeight: CGFloat = 56
     static let addressHolderHeight: CGFloat = 44
     static let addressFont: UIFont = .appBody
-    static var addressColor: UIColor { return .crypto_Bars_Dark }
+    static var addressColor: UIColor { .crypto_Bars_Dark }
     static let addressHintColor: UIColor = .cryptoSteel40
     static let addressTextViewLineHeight: Int = 22
     static let addressErrorTopMargin: CGFloat = 1
@@ -67,7 +39,7 @@ class SendTheme {
     static let feePriorityTitleColor: UIColor = .cryptoGray
     static let feePriorityTitleTopMargin: CGFloat = 28
     static let feePriorityValueFont: UIFont = UIFont.appSubhead1
-    static var feePriorityValueColor: UIColor { return .crypto_SteelDark_LightGray }
+    static var feePriorityValueColor: UIColor { .crypto_SteelDark_LightGray }
     static let feePriorityValueTopMargin: CGFloat = 29
     static let feePriorityValueLeftMargin: CGFloat = 10
     static let feePriorityValueRightMargin: CGFloat = 8
@@ -76,7 +48,7 @@ class SendTheme {
     static let feePriorityLineColor: UIColor = .cryptoSteel20
     static let feePriorityLineTopMargin: CGFloat = 13
 
-    static let switchRightMargin: CGFloat = 6
+    static let sendSmallButtonMargin: CGFloat = 6
 
     static let sendButtonHolderHeight: CGFloat = 74
     static let sendButtonHeight: CGFloat = 50

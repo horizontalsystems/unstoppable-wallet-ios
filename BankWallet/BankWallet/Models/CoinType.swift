@@ -5,7 +5,7 @@ enum CoinType {
     case bitcoinCash
     case dash
     case ethereum
-    case erc20(address: String, fee: Decimal, gasLimit: Int)
+    case erc20(address: String, fee: Decimal, gasLimit: Int, minimumRequiredBalance: Decimal?)
     case eos(token: String, symbol: String)
     case binance(symbol: String)
 
@@ -44,7 +44,7 @@ extension CoinType: Equatable {
         case (.bitcoinCash, .bitcoinCash): return true
         case (.dash, .dash): return true
         case (.ethereum, .ethereum): return true
-        case (.erc20(let lhsAddress, let lhsFee, let lhsGasLimit), .erc20(let rhsAddress, let rhsFee, let rhsGasLimit)):
+        case (.erc20(let lhsAddress, let lhsFee, let lhsGasLimit, _), .erc20(let rhsAddress, let rhsFee, let rhsGasLimit, _)):
             return lhsAddress == rhsAddress && lhsFee == rhsFee && lhsGasLimit == rhsGasLimit
         case (.eos(let lhsToken, let lhsSymbol), .eos(let rhsToken, let rhsSymbol)):
             return lhsToken == rhsToken && lhsSymbol == rhsSymbol

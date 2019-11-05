@@ -47,6 +47,7 @@ protocol ISendAmountModule: AnyObject {
     func set(amount: Decimal)
     func set(availableBalance: Decimal)
     func set(minimumAmount: Decimal)
+    func set(minimumRequiredBalance: Decimal?)
 }
 
 protocol ISendAmountDelegate: class {

@@ -16,6 +16,7 @@ class SendAmountPresenter {
     private var amount: Decimal?
     private var availableBalance: Decimal?
     private var minimumAmount: Decimal?
+    private var minimumRequiredBalance: Decimal?
 
     private(set) var inputType: SendInputType
 
@@ -46,7 +47,10 @@ class SendAmountPresenter {
     }
 
     private func syncMaxButton() {
-        view?.set(maxButtonVisible: amount == nil)
+        let lowAvailableBalance = (availableBalance ?? 0) - (minimumRequiredBalance ?? 0) <= 0
+
+        let hideButton = amount != nil || lowAvailableBalance
+        view?.set(maxButtonVisible: !hideButton)
     }
 
     private func syncHint() {
@@ -126,6 +130,10 @@ class SendAmountPresenter {
             }
         }
 
+        if let minimumRequiredBalance = minimumRequiredBalance, availableBalance - amount < minimumRequiredBalance {
+            throw ValidationError.noMinimumRequiredBalance(minimumRequiredBalance: .coinValue(coinValue: CoinValue(coin: coin, value: minimumRequiredBalance)))
+        }
+
         guard let minimumAmount = minimumAmount else {
             return
         }
@@ -159,15 +167,15 @@ extension SendAmountPresenter: ISendAmountModule {
     }
 
     var currentAmount: Decimal {
-        return amount ?? 0
+        amount ?? 0
     }
 
     func primaryAmountInfo() throws -> AmountInfo {
-        return primaryAmountInfo(amount: try validAmount())
+        primaryAmountInfo(amount: try validAmount())
     }
 
     func secondaryAmountInfo() throws -> AmountInfo? {
-        return secondaryAmountInfo(amount: try validAmount())
+        secondaryAmountInfo(amount: try validAmount())
     }
 
     func showKeyboard() {
@@ -187,12 +195,18 @@ extension SendAmountPresenter: ISendAmountModule {
 
     func set(availableBalance: Decimal) {
         self.availableBalance = availableBalance
+        syncMaxButton()
         syncAvailableBalance()
         syncError()
     }
 
     func set(minimumAmount: Decimal) {
         self.minimumAmount = minimumAmount
+        syncError()
+    }
+
+    func set(minimumRequiredBalance: Decimal?) {
+        self.minimumRequiredBalance = minimumRequiredBalance
         syncError()
     }
 
@@ -248,7 +262,7 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
             return
         }
 
-        amount = availableBalance
+        amount = availableBalance - (minimumRequiredBalance ?? 0)
 
         syncAmount()
         syncHint()
@@ -276,6 +290,7 @@ extension SendAmountPresenter {
     private enum ValidationError: Error, LocalizedError {
         case emptyValue
         case insufficientBalance(availableBalance: AmountInfo)
+        case noMinimumRequiredBalance(minimumRequiredBalance: AmountInfo)
         case tooFewAmount(minimumAmount: AmountInfo)
 
         var errorDescription: String? {
@@ -284,6 +299,8 @@ extension SendAmountPresenter {
                 return "send.amount_error.empty".localized
             case .insufficientBalance(let availableBalance):
                 return "send.amount_error.balance".localized(availableBalance.formattedString ?? "")
+            case .noMinimumRequiredBalance(let minimumRequiredBalance):
+                return "send.amount_error.min_required_balance".localized(minimumRequiredBalance.formattedString ?? "")
             case .tooFewAmount(let minimumAmount):
                 return "send.amount_error.minimum_amount".localized(minimumAmount.formattedString ?? "")
             }

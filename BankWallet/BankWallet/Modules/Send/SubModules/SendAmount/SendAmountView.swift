@@ -32,26 +32,27 @@ class SendAmountView: UIView {
         super.init(frame: .zero)
 
         self.snp.makeConstraints { maker in
-            maker.height.equalTo(SendTheme.amountHeight)
+            maker.height.equalTo(112)
         }
 
         backgroundColor = .clear
 
         addSubview(availableBalanceTitleLabel)
         availableBalanceTitleLabel.text = "send.available_balance".localized
-        availableBalanceTitleLabel.font = SendTheme.availableAmountTitleFont
-        availableBalanceTitleLabel.textColor = SendTheme.availableAmountTitleColor
+        availableBalanceTitleLabel.font = .appSubhead2
+        availableBalanceTitleLabel.textColor = .appGray
         availableBalanceTitleLabel.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(CGFloat.margin2x)
-            maker.leading.equalToSuperview().offset(SendTheme.margin)
+            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
         }
         
         addSubview(availableBalanceValueLabel)
-        availableBalanceValueLabel.font = SendTheme.availableAmountValueFont
-        availableBalanceValueLabel.textColor = SendTheme.availableAmountValueColor
+        availableBalanceValueLabel.font = .appSubhead1
+
+        availableBalanceValueLabel.textColor = .appLeah
         availableBalanceValueLabel.snp.makeConstraints { maker in
             maker.centerY.equalTo(availableBalanceTitleLabel.snp.centerY)
-            maker.trailing.equalToSuperview().offset(-SendTheme.margin)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
         addSubview(holderView)
@@ -65,74 +66,73 @@ class SendAmountView: UIView {
         holderView.addSubview(errorLabel)
         switchButton.addSubview(switchButtonIcon)
 
-        holderView.layer.cornerRadius = SendTheme.holderCornerRadius
-        holderView.layer.borderWidth = SendTheme.holderBorderWidth
-        holderView.layer.borderColor = SendTheme.holderBorderColor.cgColor
-        holderView.backgroundColor = SendTheme.holderBackground
+        holderView.layer.cornerRadius = CGFloat.cornerRadius8
+        holderView.layer.borderWidth = CGFloat.heightOneDp
+        holderView.layer.borderColor = UIColor.cryptoSteel20.cgColor
+        holderView.backgroundColor = .crypto_SteelDark_White
         holderView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SendTheme.margin)
-            maker.trailing.equalToSuperview().offset(-SendTheme.margin)
-            maker.height.equalTo(SendTheme.amountHolderHeight)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.height.equalTo(75)
             maker.top.equalTo(availableBalanceTitleLabel.snp.bottom).offset(CGFloat.margin3x)
             maker.bottom.equalToSuperview()
         }
 
-        amountTypeLabel.font = SendTheme.amountFont
-        amountTypeLabel.textColor = SendTheme.amountColor
+        amountTypeLabel.font = .appBody
+        amountTypeLabel.textColor = .crypto_Bars_Dark
         amountTypeLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        amountTypeLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         amountTypeLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SendTheme.holderLeadingPadding)
+            maker.leading.equalToSuperview().offset(CGFloat.margin3x)
+            maker.top.equalToSuperview().offset(CGFloat.margin3x)
         }
 
-        lineView.backgroundColor = SendTheme.amountLineColor
+        lineView.backgroundColor = .cryptoSteel20
         lineView.snp.makeConstraints { maker in
-            maker.leading.equalTo(amountTypeLabel)
-            maker.top.equalTo(inputField.snp.bottom).offset(SendTheme.amountLineTopMargin)
-            maker.height.equalTo(SendTheme.amountLineHeight)
+            maker.leading.equalToSuperview().offset(CGFloat.margin2x)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin2x)
+            maker.top.equalTo(switchButton.snp.bottom).offset(SendTheme.sendSmallButtonMargin)
+            maker.height.equalTo(CGFloat.heightOneDp)
         }
 
         maxButton.titleLabel.text = "send.max_button".localized
-        maxButton.borderWidth = 1 / UIScreen.main.scale
-        maxButton.borderColor = SendTheme.buttonBorderColor
-        maxButton.cornerRadius = SendTheme.buttonCornerRadius
+        maxButton.borderWidth = CGFloat.heightOnePixel
+        maxButton.borderColor = .cryptoSteel20
+        maxButton.cornerRadius = CGFloat.cornerRadius4
         maxButton.backgrounds = SendTheme.buttonBackground
-        maxButton.textColors = [.active: SendTheme.buttonIconColor, .selected: SendTheme.buttonIconColor]
-        maxButton.titleLabel.font = SendTheme.buttonFont
+        maxButton.textColors = [.active: .crypto_White_Black, .selected: .crypto_White_Black]
+        maxButton.titleLabel.font = .appSubhead1
         maxButton.titleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         maxButton.wrapperView.snp.remakeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SendTheme.smallMargin)
+            maker.leading.equalToSuperview().offset(CGFloat.margin2x)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin2x)
             maker.top.bottom.equalToSuperview()
-            maker.trailing.equalToSuperview().offset(-SendTheme.smallMargin)
         }
         maxButton.snp.makeConstraints { maker in //constraints need to be set on init
-            maker.leading.equalTo(lineView.snp.trailing).offset(SendTheme.smallMargin)
-            maker.centerY.equalToSuperview()
-            maker.height.equalTo(SendTheme.buttonSize)
-            maker.trailing.equalTo(switchButton.snp.leading).offset(-SendTheme.smallMargin)
+            maker.top.equalTo(switchButton.snp.top)
+            maker.height.equalTo(CGFloat.heightButtonSecondary)
+            maker.trailing.equalTo(switchButton.snp.leading).offset(-CGFloat.margin2x)
         }
 
         inputField.delegate = self
-        inputField.font = SendTheme.amountFont
-        inputField.textColor = SendTheme.amountColor
-        inputField.attributedPlaceholder = NSAttributedString(string: "send.amount_placeholder".localized, attributes: [NSAttributedString.Key.foregroundColor: SendTheme.amountPlaceholderColor])
+        inputField.font = .appBody
+        inputField.textColor = .crypto_Bars_Dark
+        inputField.attributedPlaceholder = NSAttributedString(string: "send.amount_placeholder".localized, attributes: [NSAttributedString.Key.foregroundColor: UIColor.cryptoSteel40])
         inputField.keyboardAppearance = App.theme.keyboardAppearance
         inputField.keyboardType = .decimalPad
-        inputField.tintColor = SendTheme.amountInputTintColor
+        inputField.tintColor = .cryptoYellow
         inputField.snp.makeConstraints { maker in
-            maker.centerY.equalTo(amountTypeLabel.snp.centerY).offset(1 / UIScreen.main.scale)
-            maker.leading.equalTo(amountTypeLabel.snp.trailing).offset(SendTheme.tinyMargin)
-            maker.top.equalToSuperview().offset(SendTheme.holderTopPadding)
-            maker.trailing.equalTo(lineView)
+            maker.centerY.equalTo(amountTypeLabel.snp.centerY).offset(CGFloat.heightOnePixel)
+            maker.leading.equalTo(amountTypeLabel.snp.trailing).offset(CGFloat.margin1x)
+            maker.trailing.equalTo(maxButton.snp.leading).offset(-CGFloat.margin1x)
         }
 
-        switchButton.borderWidth = 1 / UIScreen.main.scale
-        switchButton.borderColor = SendTheme.buttonBorderColor
-        switchButton.cornerRadius = SendTheme.buttonCornerRadius
+        switchButton.borderWidth = CGFloat.heightOnePixel
+        switchButton.borderColor = .cryptoSteel20
+        switchButton.cornerRadius = CGFloat.cornerRadius4
         switchButton.backgrounds = SendTheme.buttonBackground
         switchButton.snp.makeConstraints { maker in
-            maker.trailing.equalToSuperview().offset(-SendTheme.switchRightMargin)
-            maker.centerY.equalToSuperview()
-            maker.size.equalTo(SendTheme.buttonSize)
+            maker.top.trailing.equalToSuperview().inset(SendTheme.sendSmallButtonMargin)
+            maker.size.equalTo(CGFloat.heightButtonSecondary)
         }
 
         switchButtonIcon.image = UIImage(named: "Send Switch Icon")
@@ -140,20 +140,20 @@ class SendAmountView: UIView {
             maker.center.equalToSuperview()
         }
 
-        hintLabel.font = SendTheme.amountHintFont
-        hintLabel.textColor = SendTheme.amountHintColor
+        hintLabel.font = .appCaption
+        hintLabel.textColor = .cryptoGray
         hintLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SendTheme.holderLeadingPadding)
-            maker.top.equalTo(lineView).offset(SendTheme.amountTopMargin)
+            maker.leading.equalToSuperview().offset(CGFloat.margin3x)
+            maker.top.equalTo(lineView).offset(CGFloat.margin2x)
             maker.trailing.equalTo(lineView)
         }
 
-        errorLabel.font = SendTheme.errorFont
-        errorLabel.textColor = SendTheme.errorColor
-        errorLabel.backgroundColor = SendTheme.holderBackground
+        errorLabel.font = .appCaption
+        errorLabel.textColor = .cryptoRed
+        errorLabel.backgroundColor = .crypto_SteelDark_White
         errorLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SendTheme.holderLeadingPadding)
-            maker.top.equalTo(lineView).offset(SendTheme.amountErrorLabelTopMargin)
+            maker.leading.equalToSuperview().offset(CGFloat.margin3x)
+            maker.top.equalTo(lineView).offset(CGFloat.margin2x)
             maker.trailing.equalTo(lineView)
         }
 
@@ -238,29 +238,27 @@ extension SendAmountView: ISendAmountView {
 
     func set(switchButtonEnabled: Bool) {
         switchButton.state = switchButtonEnabled ? .active : .disabled
-        switchButtonIcon.tintColor = switchButtonEnabled ? SendTheme.buttonIconColor : SendTheme.buttonIconColorDisabled
+        switchButtonIcon.tintColor = switchButtonEnabled ? .crypto_White_Black : .cryptoSteel20
     }
 
     func set(maxButtonVisible: Bool) {
         maxButton.snp.remakeConstraints { maker in
             if maxButtonVisible {
-                maker.leading.equalTo(lineView.snp.trailing).offset(SendTheme.smallMargin)
-                maker.centerY.equalToSuperview()
+                maker.top.equalToSuperview().inset(SendTheme.sendSmallButtonMargin)
+                maker.trailing.equalTo(switchButton.snp.leading).offset(-CGFloat.margin2x)
                 maker.height.equalTo(SendTheme.buttonSize)
             } else {
-                maker.leading.equalTo(lineView.snp.trailing).offset(0)
-                maker.centerY.equalToSuperview()
-                maker.height.equalTo(SendTheme.buttonSize)
+                maker.top.equalToSuperview().inset(SendTheme.sendSmallButtonMargin)
+                maker.trailing.equalTo(switchButton.snp.leading)
+                maker.height.equalTo(CGFloat.heightButtonSecondary)
                 maker.width.equalTo(0)
             }
-            maker.trailing.equalTo(switchButton.snp.leading).offset(-SendTheme.smallMargin)
 
             maxButton.wrapperView.snp.remakeConstraints { maker in
                 if maxButtonVisible {
-                    maker.leading.equalToSuperview().offset(SendTheme.smallMargin)
-                    maker.trailing.equalToSuperview().offset(-SendTheme.smallMargin)
+                    maker.leading.trailing.equalToSuperview().inset(CGFloat.margin2x)
                 } else {
-                    maker.leading.equalToSuperview().offset(0)
+                    maker.leading.trailing.equalToSuperview().offset(0)
                 }
                 maker.top.bottom.equalToSuperview()
             }
