@@ -10,14 +10,19 @@ class SendBitcoinHandler {
     private let addressModule: ISendAddressModule
     private let feeModule: ISendFeeModule
     private let feePriorityModule: ISendFeePriorityModule
+    private let hodlerModule: ISendHodlerModule
 
-    init(interactor: ISendBitcoinInteractor, amountModule: ISendAmountModule, addressModule: ISendAddressModule, feeModule: ISendFeeModule, feePriorityModule: ISendFeePriorityModule) {
+    private var pluginData = [UInt8: IBitcoinPluginData]()
+
+    init(interactor: ISendBitcoinInteractor, amountModule: ISendAmountModule, addressModule: ISendAddressModule,
+         feeModule: ISendFeeModule, feePriorityModule: ISendFeePriorityModule, hodlerModule: ISendHodlerModule) {
         self.interactor = interactor
 
         self.amountModule = amountModule
         self.addressModule = addressModule
         self.feeModule = feeModule
         self.feePriorityModule = feePriorityModule
+        self.hodlerModule = hodlerModule
     }
 
     private func syncValidation() {
@@ -32,7 +37,7 @@ class SendBitcoinHandler {
     }
 
     private func syncAvailableBalance() {
-        interactor.fetchAvailableBalance(feeRate: feePriorityModule.feeRate, address: addressModule.currentAddress)
+        interactor.fetchAvailableBalance(feeRate: feePriorityModule.feeRate, address: addressModule.currentAddress, pluginData: pluginData)
     }
 
     private func syncMinimumAmount() {
@@ -40,7 +45,7 @@ class SendBitcoinHandler {
     }
 
     private func syncFee() {
-        interactor.fetchFee(amount: amountModule.currentAmount, feeRate: feePriorityModule.feeRate, address: addressModule.currentAddress)
+        interactor.fetchFee(amount: amountModule.currentAmount, feeRate: feePriorityModule.feeRate, address: addressModule.currentAddress, pluginData: pluginData)
     }
 
     private func syncFeeDuration() {
@@ -62,7 +67,7 @@ extension SendBitcoinHandler: ISendHandler {
     }
 
     func confirmationViewItems() throws -> [ISendConfirmationViewItemNew] {
-        return [
+        [
             SendConfirmationAmountViewItem(primaryInfo: try amountModule.primaryAmountInfo(), secondaryInfo: try amountModule.secondaryAmountInfo(), receiver: try addressModule.validAddress()),
             SendConfirmationFeeViewItem(primaryInfo: feeModule.primaryAmountInfo, secondaryInfo: feeModule.secondaryAmountInfo),
             SendConfirmationDurationViewItem(timeInterval: feePriorityModule.duration)
@@ -70,7 +75,7 @@ extension SendBitcoinHandler: ISendHandler {
     }
 
     func sendSingle() throws -> Single<Void> {
-        return interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress(), feeRate: feePriorityModule.feeRate)
+        interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress(), feeRate: feePriorityModule.feeRate, pluginData: pluginData)
     }
 
 }
@@ -127,7 +132,7 @@ extension SendBitcoinHandler: ISendAddressDelegate {
 extension SendBitcoinHandler: ISendFeeDelegate {
 
     var inputType: SendInputType {
-        return amountModule.inputType
+        amountModule.inputType
     }
 
 }
@@ -138,6 +143,16 @@ extension SendBitcoinHandler: ISendFeePriorityDelegate {
         syncAvailableBalance()
         syncFee()
         syncFeeDuration()
+    }
+
+}
+
+extension SendBitcoinHandler: ISendHodlerDelegate {
+
+    func onUpdateLockTimeInterval() {
+        pluginData = hodlerModule.pluginData
+        syncAvailableBalance()
+        syncFee()
     }
 
 }
