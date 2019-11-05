@@ -246,7 +246,7 @@ extension BalanceViewController: IBalanceView {
         }
     }
 
-    func didRefresh() {
+    func hideRefresh() {
         DispatchQueue.main.async {
             self.refreshControl.endRefreshing()
         }
@@ -256,6 +256,21 @@ extension BalanceViewController: IBalanceView {
         DispatchQueue.main.async {
             self.headerView.setSortButton(hidden: !sortIsOn)
         }
+    }
+
+    func showSortType(selectedSortType: BalanceSortType) {
+        let sortTypes = BalanceSortType.allCases
+
+        let alertController = AlertViewControllerNew(
+                header: "balance.sort.header".localized,
+                rows: sortTypes.map { sortType in
+                    AlertRow(text: sortType.title, selected: sortType == selectedSortType)
+                }
+        ) { [weak self] selectedIndex in
+            self?.delegate.onSelect(sortType: sortTypes[selectedIndex])
+        }
+
+        present(alertController, animated: true)
     }
 
     func showBackupRequired(coin: Coin, predefinedAccountType: IPredefinedAccountType) {

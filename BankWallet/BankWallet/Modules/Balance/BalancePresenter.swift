@@ -28,7 +28,7 @@ class BalancePresenter {
         self.sortingOnThreshold = sortingOnThreshold
 
         currency = interactor.baseCurrency
-        sortType = interactor.sortType
+        sortType = interactor.sortType ?? .name
     }
 
     private func handleUpdate(wallets: [Wallet]) {
@@ -141,7 +141,16 @@ extension BalancePresenter: IBalanceViewDelegate {
     }
 
     func onTapSortType() {
-        router.openSortType(selected: sortType)
+        view?.showSortType(selectedSortType: sortType)
+    }
+
+    func onSelect(sortType: BalanceSortType) {
+        queue.async {
+            self.sortType = sortType
+            self.interactor.sortType = sortType
+
+            self.updateViewItems()
+        }
     }
 
     func onRequestBackup() {
@@ -249,19 +258,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
     }
 
     func didRefresh() {
-        view?.didRefresh()
-    }
-
-}
-
-extension BalancePresenter: ISortTypeDelegate {
-
-    func onSelect(sort: BalanceSortType) {
-        queue.async {
-            self.sortType = sort
-
-            self.updateViewItems()
-        }
+        view?.hideRefresh()
     }
 
 }
