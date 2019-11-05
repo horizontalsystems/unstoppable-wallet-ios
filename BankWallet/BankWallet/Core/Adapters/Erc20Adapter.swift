@@ -6,9 +6,9 @@ import class Erc20Kit.TransactionInfo
 class Erc20Adapter: EthereumBaseAdapter {
     private let erc20Kit: Erc20Kit
     private let fee: Decimal
-    private(set) var minimumRequiredBalance: Decimal?
+    private(set) var minimumRequiredBalance: Decimal
 
-    init(ethereumKit: EthereumKit, contractAddress: String, decimal: Int, fee: Decimal, gasLimit: Int, minimumRequiredBalance: Decimal?) throws {
+    init(ethereumKit: EthereumKit, contractAddress: String, decimal: Int, fee: Decimal, gasLimit: Int, minimumRequiredBalance: Decimal) throws {
         self.erc20Kit = try Erc20Kit.instance(ethereumKit: ethereumKit, contractAddress: contractAddress, gasLimit: gasLimit)
         self.fee = fee
         self.minimumRequiredBalance = minimumRequiredBalance

@@ -77,7 +77,7 @@ protocol ISendDashInteractorDelegate: class {
 protocol ISendEthereumInteractor {
     func availableBalance(gasPrice: Int) -> Decimal
     var ethereumBalance: Decimal { get }
-    var minimumRequiredBalance: Decimal? { get }
+    var minimumRequiredBalance: Decimal { get }
     func validate(address: String) throws
     func fee(gasPrice: Int) -> Decimal
     func sendSingle(amount: Decimal, address: String, gasPrice: Int) -> Single<Void>
