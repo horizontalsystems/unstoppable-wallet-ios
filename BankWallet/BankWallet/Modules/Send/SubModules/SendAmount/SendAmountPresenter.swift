@@ -115,7 +115,7 @@ class SendAmountPresenter {
     }
 
     private func validate() throws {
-        guard let amount = amount, let availableBalance = availableBalance else {
+        guard let amount = amount, let availableBalance = availableBalance, !amount.isZero else {
             return
         }
 
