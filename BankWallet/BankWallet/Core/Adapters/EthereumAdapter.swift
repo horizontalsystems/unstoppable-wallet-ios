@@ -92,15 +92,19 @@ extension EthereumAdapter: IBalanceAdapter {
 extension EthereumAdapter: ISendEthereumAdapter {
 
     func availableBalance(gasPrice: Int) -> Decimal {
-        return max(0, balance - fee(gasPrice: gasPrice))
+        max(0, balance - fee(gasPrice: gasPrice))
     }
 
     var ethereumBalance: Decimal {
-        return balance
+        balance
+    }
+
+    var minimumRequiredBalance: Decimal? {
+        nil
     }
 
     func fee(gasPrice: Int) -> Decimal {
-        return ethereumKit.fee(gasPrice: gasPrice) / pow(10, EthereumAdapter.decimal)
+        ethereumKit.fee(gasPrice: gasPrice) / pow(10, EthereumAdapter.decimal)
     }
 
 }
@@ -108,15 +112,15 @@ extension EthereumAdapter: ISendEthereumAdapter {
 extension EthereumAdapter: ITransactionsAdapter {
 
     var transactionRecordsObservable: Observable<[TransactionRecord]> {
-        return ethereumKit.transactionsObservable.map { [weak self] in
+        ethereumKit.transactionsObservable.map { [weak self] in
             $0.compactMap { self?.transactionRecord(fromTransaction: $0) }
         }
     }
 
     func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
-        return ethereumKit.transactionsSingle(fromHash: from?.hash, limit: limit)
+        ethereumKit.transactionsSingle(fromHash: from?.hash, limit: limit)
                 .map { [weak self] transactions -> [TransactionRecord] in
-                    return transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
+                    transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
                 }
     }
 

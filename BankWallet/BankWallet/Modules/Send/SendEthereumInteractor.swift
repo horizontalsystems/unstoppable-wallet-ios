@@ -12,11 +12,15 @@ class SendEthereumInteractor {
 extension SendEthereumInteractor: ISendEthereumInteractor {
 
     func availableBalance(gasPrice: Int) -> Decimal {
-        return adapter.availableBalance(gasPrice: gasPrice)
+        adapter.availableBalance(gasPrice: gasPrice)
     }
 
     var ethereumBalance: Decimal {
-        return adapter.ethereumBalance
+        adapter.ethereumBalance
+    }
+
+    var minimumRequiredBalance: Decimal? {
+        adapter.minimumRequiredBalance
     }
 
     func validate(address: String) throws {
@@ -24,11 +28,11 @@ extension SendEthereumInteractor: ISendEthereumInteractor {
     }
 
     func fee(gasPrice: Int) -> Decimal {
-        return adapter.fee(gasPrice: gasPrice)
+        adapter.fee(gasPrice: gasPrice)
     }
 
     func sendSingle(amount: Decimal, address: String, gasPrice: Int) -> Single<Void> {
-        return adapter.sendSingle(amount: amount, address: address, gasPrice: gasPrice)
+        adapter.sendSingle(amount: amount, address: address, gasPrice: gasPrice)
     }
 
 }

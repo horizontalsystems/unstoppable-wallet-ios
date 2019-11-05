@@ -48,6 +48,7 @@ class SendEthereumHandler {
 extension SendEthereumHandler: ISendHandler {
 
     func onViewDidLoad() {
+        amountModule.set(minimumRequiredBalance: interactor.minimumRequiredBalance)
         syncAvailableBalance()
 
         feeModule.set(availableFeeBalance: interactor.ethereumBalance)

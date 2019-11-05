@@ -77,7 +77,7 @@ class AddressInputField: UIView {
         }
         placeholderLabel.text = placeholder
 
-        errorLabel.font = SendTheme.errorFont
+        errorLabel.font = .appCaption
         errorLabel.textColor = SendTheme.errorColor
 
         pasteButton.borderWidth = 1 / UIScreen.main.scale
@@ -86,10 +86,10 @@ class AddressInputField: UIView {
         pasteButton.backgrounds = SendTheme.buttonBackground
         pasteButton.textColors = [.active: SendTheme.buttonIconColor, .selected: SendTheme.buttonIconColor]
         pasteButton.titleLabel.text = "button.paste".localized
-        pasteButton.titleLabel.font = SendTheme.buttonFont
+        pasteButton.titleLabel.font = .appSubhead1
         pasteButton.titleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         pasteButton.snp.makeConstraints { maker in
-            maker.trailing.equalToSuperview().offset(-SendTheme.switchRightMargin)
+            maker.trailing.equalToSuperview().inset(SendTheme.sendSmallButtonMargin)
             maker.centerY.equalToSuperview()
             maker.height.equalTo(SendTheme.buttonSize)
         }
