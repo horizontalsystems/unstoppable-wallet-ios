@@ -1046,12 +1046,14 @@
 		2FA5D6E8DEC6F59A95FE4BA0 /* LeftImageCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D0D9574C669B3A69F4E9 /* LeftImageCellView.swift */; };
 		2FA5D73715BE820783EEFF24 /* BitcoinCore+Hodler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D33978B54432713B047C /* BitcoinCore+Hodler.swift */; };
 		2FA5D79D2528516F8134C029 /* LockTimeIntervalModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DA98810214BD276E6016 /* LockTimeIntervalModule.swift */; };
+		2FA5D7DA336C8025BB2B9EE2 /* TransactionLockInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D11954688FDC8AEC549C /* TransactionLockInfo.swift */; };
 		2FA5D8321219916C8BA3C2B3 /* LockTimeIntervalModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DA98810214BD276E6016 /* LockTimeIntervalModule.swift */; };
 		2FA5D89A543E5413BC2E6C51 /* TransactionNoteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D1CE44E89A1B00FB6A5C /* TransactionNoteItem.swift */; };
 		2FA5D933A77ED9AC77FDE2A5 /* LockTimeIntervalRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D87E12D52A6AF9BBAED9 /* LockTimeIntervalRouter.swift */; };
 		2FA5D98D7EE8F90744430243 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D6E7A21AAD357C6D8EEA /* TimeInterval.swift */; };
 		2FA5D9E360618E837ED018C1 /* BinanceOrgProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D2EEE72F93D0AD61C2BC /* BinanceOrgProvider.swift */; };
 		2FA5DA090638C6810DAE40F3 /* BlockdozerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D82E6E66E2BB85636BD0 /* BlockdozerProvider.swift */; };
+		2FA5DA3D15F168E6E25F4C35 /* TransactionLockInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D11954688FDC8AEC549C /* TransactionLockInfo.swift */; };
 		2FA5DA496EA180A42F716C83 /* SendHodlerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D28E8178D1FB4706011E /* SendHodlerPresenter.swift */; };
 		2FA5DA5C9188AA17B01953E7 /* SelectableValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DE415A04A29B90C59105 /* SelectableValueView.swift */; };
 		2FA5DAA169EF4E6B0EFB3626 /* TransactionNoteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D1CE44E89A1B00FB6A5C /* TransactionNoteItem.swift */; };
@@ -1070,6 +1072,7 @@
 		2FA5DCDE177D10C66B2E2384 /* PriorityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DF1C45F237D00E11A4F6 /* PriorityPresenter.swift */; };
 		2FA5DCDE4DC5AB5241331F77 /* RestoreOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEB51242EA05A0F298BA /* RestoreOptionCell.swift */; };
 		2FA5DCF34A8723FF6494CB98 /* TransactionNoteItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D8F9E8651CCE54199D91 /* TransactionNoteItemView.swift */; };
+		2FA5DD0FAED2F1366550E302 /* TransactionLockInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D11954688FDC8AEC549C /* TransactionLockInfo.swift */; };
 		2FA5DD18B3869199E0BEF72A /* KitCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D02D8F5C2AE32C6FF923 /* KitCleaner.swift */; };
 		2FA5DD6C7834F6A2D205DFD5 /* PriorityModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D3F30DDE54243B7CD54E /* PriorityModule.swift */; };
 		2FA5DD93A28FF177DC4918B0 /* BinanceTransactionInfoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D2A075A681B3BFBF21F6 /* BinanceTransactionInfoAdapter.swift */; };
@@ -2326,6 +2329,7 @@
 		2E5EF2D9FB41FF086B3953AA /* Pods-Bank.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank.release.xcconfig"; path = "Target Support Files/Pods-Bank/Pods-Bank.release.xcconfig"; sourceTree = "<group>"; };
 		2FA5D02D8F5C2AE32C6FF923 /* KitCleaner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KitCleaner.swift; sourceTree = "<group>"; };
 		2FA5D0D9574C669B3A69F4E9 /* LeftImageCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftImageCellView.swift; sourceTree = "<group>"; };
+		2FA5D11954688FDC8AEC549C /* TransactionLockInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionLockInfo.swift; sourceTree = "<group>"; };
 		2FA5D1CE44E89A1B00FB6A5C /* TransactionNoteItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionNoteItem.swift; sourceTree = "<group>"; };
 		2FA5D28E8178D1FB4706011E /* SendHodlerPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendHodlerPresenter.swift; sourceTree = "<group>"; };
 		2FA5D2A075A681B3BFBF21F6 /* BinanceTransactionInfoAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinanceTransactionInfoAdapter.swift; sourceTree = "<group>"; };
@@ -3013,6 +3017,7 @@
 				1A5648F4CBE5575C4D6C40BA /* Differ.swift */,
 				11B3527356625950A5C0358D /* TransactionViewItem.swift */,
 				11B358E4D11420A3D0B7A283 /* TransactionViewItemFactory.swift */,
+				2FA5D11954688FDC8AEC549C /* TransactionLockInfo.swift */,
 			);
 			path = Transactions;
 			sourceTree = "<group>";
@@ -5232,6 +5237,7 @@
 				2FA5D2B473710B00DE2A9D73 /* LockTimeIntervalRouter.swift in Sources */,
 				2FA5D0B3F0A0DF3185A4B804 /* LockTimeIntervalPresenter.swift in Sources */,
 				2FA5DCD15BDA0BD44D14E85D /* LockTimeIntervalModule.swift in Sources */,
+				2FA5DD0FAED2F1366550E302 /* TransactionLockInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5880,6 +5886,7 @@
 				2FA5D933A77ED9AC77FDE2A5 /* LockTimeIntervalRouter.swift in Sources */,
 				2FA5D13D9F174E812829FD6F /* LockTimeIntervalPresenter.swift in Sources */,
 				2FA5D79D2528516F8134C029 /* LockTimeIntervalModule.swift in Sources */,
+				2FA5D7DA336C8025BB2B9EE2 /* TransactionLockInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6480,6 +6487,7 @@
 				2FA5DEE1481E063E2C78F27D /* LockTimeIntervalRouter.swift in Sources */,
 				2FA5D4986B5CE0A09D70F34E /* LockTimeIntervalPresenter.swift in Sources */,
 				2FA5D8321219916C8BA3C2B3 /* LockTimeIntervalModule.swift in Sources */,
+				2FA5DA3D15F168E6E25F4C35 /* TransactionLockInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

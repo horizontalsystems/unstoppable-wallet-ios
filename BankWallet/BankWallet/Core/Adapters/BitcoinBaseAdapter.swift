@@ -22,11 +22,11 @@ class BitcoinBaseAdapter {
 
     func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
         let fromAddresses = transaction.from.map {
-            TransactionAddress(address: $0.address, mine: $0.mine)
+            TransactionAddress(address: $0.address, mine: $0.mine, pluginData: $0.pluginData)
         }
 
         let toAddresses = transaction.to.map {
-            TransactionAddress(address: $0.address, mine: $0.mine)
+            TransactionAddress(address: $0.address, mine: $0.mine, pluginData: $0.pluginData)
         }
 
         return TransactionRecord(
