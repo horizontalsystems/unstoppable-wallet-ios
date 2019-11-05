@@ -11,7 +11,7 @@ class BalanceViewController: WalletViewController {
     private let delegate: IBalanceViewDelegate
 
     private let tableView = UITableView()
-    private var headerView = BalanceHeaderView(frame: .zero)
+    private let headerView = BalanceHeaderView(frame: .zero)
     private let refreshControl = UIRefreshControl()
 
     private var viewItems = [BalanceViewItem]()
@@ -55,15 +55,15 @@ class BalanceViewController: WalletViewController {
         refreshControl.alpha = 0.6
         refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
 
-        headerView.onClickSort = { [weak self] in
-            self?.delegate.onSortTypeChange()
+        headerView.onTapSortType = { [weak self] in
+            self?.delegate.onTapSortType()
         }
 
-        delegate.viewDidLoad()
+        delegate.onLoad()
     }
 
     @objc func onRefresh() {
-        delegate.refresh()
+        delegate.onTriggerRefresh()
     }
 
     private func reload(with diff: [Change<BalanceViewItem>]) {
@@ -99,13 +99,13 @@ class BalanceViewController: WalletViewController {
                 selected: viewItem.wallet == selectedWallet,
                 animated: animated,
                 onReceive: { [weak self] in
-                    self?.delegate.onReceive(viewItem: viewItem)
+                    self?.delegate.onTapReceive(viewItem: viewItem)
                 },
                 onPay: { [weak self] in
-                    self?.delegate.onPay(viewItem: viewItem)
+                    self?.delegate.onTapPay(viewItem: viewItem)
                 },
                 onChart: { [weak self] in
-                    self?.delegate.onChart(viewItem: viewItem)
+                    self?.delegate.onTapChart(viewItem: viewItem)
                 }
         )
     }
@@ -150,7 +150,7 @@ extension BalanceViewController: UITableViewDelegate, UITableViewDataSource {
             bind(cell: cell, viewItem: viewItems[indexPath.row])
         } else if let cell = cell as? BalanceEditCell {
             cell.onTap = { [weak self] in
-                self?.delegate.onOpenManageWallets()
+                self?.delegate.onTapAddCoin()
             }
         }
     }
@@ -261,7 +261,7 @@ extension BalanceViewController: IBalanceView {
     func showBackupRequired(coin: Coin, predefinedAccountType: IPredefinedAccountType) {
         DispatchQueue.main.async {
             let controller = BackupRequiredViewController(subtitle: predefinedAccountType.title, text: "receive_alert.not_backed_up_description".localized(predefinedAccountType.title, coin.title), onBackup: { [weak self] in
-                self?.delegate.didRequestBackup()
+                self?.delegate.onRequestBackup()
             })
 
             self.present(controller, animated: true)

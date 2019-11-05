@@ -7,7 +7,7 @@ class BalanceHeaderView: UIView {
     private let amountLabel = UILabel()
     private let sortButton = UIButton()
 
-    var onClickSort: (() -> ())?
+    var onTapSortType: (() -> ())?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,7 +34,7 @@ class BalanceHeaderView: UIView {
         }
 
         sortButton.setImage(UIImage(named: "Balance Sort Icon")?.tinted(with: .appJacob), for: .normal)
-        sortButton.addTarget(self, action: #selector(onSortClicked), for: .touchUpInside)
+        sortButton.addTarget(self, action: #selector(_onTapSortType), for: .touchUpInside)
 
         wrapperView.addSubview(sortButton)
         sortButton.snp.makeConstraints { maker in
@@ -56,8 +56,8 @@ class BalanceHeaderView: UIView {
         sortButton.isHidden = hidden
     }
 
-    @objc func onSortClicked() {
-        onClickSort?()
+    @objc func _onTapSortType() {
+        onTapSortType?()
     }
 
 }

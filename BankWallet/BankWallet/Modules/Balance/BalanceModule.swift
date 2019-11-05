@@ -11,18 +11,18 @@ protocol IBalanceView: class {
 }
 
 protocol IBalanceViewDelegate {
-    func viewDidLoad()
+    func onLoad()
 
-    func refresh()
+    func onTriggerRefresh()
 
-    func onReceive(viewItem: BalanceViewItem)
-    func onPay(viewItem: BalanceViewItem)
-    func onChart(viewItem: BalanceViewItem)
+    func onTapReceive(viewItem: BalanceViewItem)
+    func onTapPay(viewItem: BalanceViewItem)
+    func onTapChart(viewItem: BalanceViewItem)
 
-    func onOpenManageWallets()
+    func onTapAddCoin()
 
-    func onSortTypeChange()
-    func didRequestBackup()
+    func onTapSortType()
+    func onRequestBackup()
 }
 
 protocol IBalanceInteractor {

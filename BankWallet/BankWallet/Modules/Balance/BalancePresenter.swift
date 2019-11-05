@@ -101,21 +101,23 @@ class BalancePresenter {
 
 extension BalancePresenter: IBalanceViewDelegate {
 
-    func viewDidLoad() {
-        interactor.subscribeToWallets()
-        interactor.subscribeToBaseCurrency()
+    func onLoad() {
+        queue.async {
+            self.interactor.subscribeToWallets()
+            self.interactor.subscribeToBaseCurrency()
 
-        handleUpdate(wallets: interactor.wallets)
+            self.handleUpdate(wallets: self.interactor.wallets)
 
-        updateViewItems()
-        updateHeaderViewItem()
+            self.updateViewItems()
+            self.updateHeaderViewItem()
+        }
     }
 
-    func refresh() {
+    func onTriggerRefresh() {
         interactor.refresh()
     }
 
-    func onReceive(viewItem: BalanceViewItem) {
+    func onTapReceive(viewItem: BalanceViewItem) {
         let wallet = viewItem.wallet
 
         if wallet.account.backedUp {
@@ -126,23 +128,23 @@ extension BalancePresenter: IBalanceViewDelegate {
         }
     }
 
-    func onPay(viewItem: BalanceViewItem) {
+    func onTapPay(viewItem: BalanceViewItem) {
         router.openSend(wallet: viewItem.wallet)
     }
 
-    func onChart(viewItem: BalanceViewItem) {
+    func onTapChart(viewItem: BalanceViewItem) {
         router.showChart(for: viewItem.wallet.coin.code)
     }
 
-    func onOpenManageWallets() {
+    func onTapAddCoin() {
         router.openManageWallets()
     }
 
-    func onSortTypeChange() {
+    func onTapSortType() {
         router.openSortType(selected: sortType)
     }
 
-    func didRequestBackup() {
+    func onRequestBackup() {
         guard let wallet = walletToBackup, let predefinedAccountType = interactor.predefinedAccountType(wallet: wallet) else {
             return
         }
