@@ -48,6 +48,7 @@ protocol ISendHandlerDelegate: AnyObject {
 
 protocol ISendBitcoinInteractor {
     func fetchAvailableBalance(feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData])
+    func fetchMaximumAmount(pluginData: [UInt8: IBitcoinPluginData])
     func fetchMinimumAmount(address: String?)
     func validate(address: String) throws
     func fetchFee(amount: Decimal, feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData])
@@ -56,6 +57,7 @@ protocol ISendBitcoinInteractor {
 
 protocol ISendBitcoinInteractorDelegate: class {
     func didFetch(availableBalance: Decimal)
+    func didFetch(maximumAmount: Decimal?)
     func didFetch(minimumAmount: Decimal)
     func didFetch(fee: Decimal)
 }

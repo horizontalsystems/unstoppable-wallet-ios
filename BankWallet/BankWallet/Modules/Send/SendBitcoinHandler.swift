@@ -40,6 +40,10 @@ class SendBitcoinHandler {
         interactor.fetchAvailableBalance(feeRate: feePriorityModule.feeRate, address: addressModule.currentAddress, pluginData: pluginData)
     }
 
+    private func syncMaximumAmount() {
+        interactor.fetchMaximumAmount(pluginData: pluginData)
+    }
+
     private func syncMinimumAmount() {
         interactor.fetchMinimumAmount(address: addressModule.currentAddress)
     }
@@ -87,6 +91,11 @@ extension SendBitcoinHandler: ISendBitcoinInteractorDelegate {
         syncValidation()
     }
     
+    func didFetch(maximumAmount: Decimal?) {
+        amountModule.set(maximumAmount: maximumAmount)
+        syncValidation()
+    }
+
     func didFetch(minimumAmount: Decimal) {
         amountModule.set(minimumAmount: minimumAmount)
         syncValidation()
@@ -152,6 +161,7 @@ extension SendBitcoinHandler: ISendHodlerDelegate {
     func onUpdateLockTimeInterval() {
         pluginData = hodlerModule.pluginData
         syncAvailableBalance()
+        syncMaximumAmount()
         syncFee()
     }
 

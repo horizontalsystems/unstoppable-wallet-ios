@@ -162,6 +162,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "Send";
 "send.amount_error.balance" = "Balance %@";
+"send.amount_error.maximum_amount" = "Maximum amount %@";
 "send.amount_error.minimum_amount" = "Minimum amount %@";
 "send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
