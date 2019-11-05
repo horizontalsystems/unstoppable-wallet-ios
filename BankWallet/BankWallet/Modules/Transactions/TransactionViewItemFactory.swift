@@ -34,10 +34,14 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
         let incoming = record.amount > 0
         var from: String?
         var to: String?
+        var lockInfo: TransactionLockInfo?
         if incoming {
             from = record.from.first(where: { $0.mine == false })?.address
         } else {
             to = record.to.first(where: { $0.mine == false })?.address
+            if let toAddress = record.to.first {
+                lockInfo = TransactionLockInfo(pluginData: toAddress.pluginData)
+            }
         }
         let sentToSelf = !record.from.contains(where: { !$0.mine }) && !record.to.contains(where: { !$0.mine })
 
@@ -54,11 +58,12 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
                 showFromAddress: showFromAddress(for: coin.type),
                 date: record.date,
                 status: status,
-                rate: rate
+                rate: rate,
+                lockInfo: lockInfo
         )
     }
 
     private func showFromAddress(for type: CoinType) -> Bool {
-        return !(type == .bitcoin || type == .bitcoinCash || type == .dash)
+        !(type == .bitcoin || type == .bitcoinCash || type == .dash)
     }
 }

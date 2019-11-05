@@ -16,6 +16,14 @@ struct TransactionRecord {
 struct TransactionAddress {
     let address: String
     let mine: Bool
+    let pluginData: [UInt8: Any]?
+    
+    init(address: String, mine: Bool, pluginData: [UInt8: Any]? = nil) {
+        self.address = address
+        self.mine = mine
+        self.pluginData = pluginData
+    }
+
 }
 
 extension TransactionRecord: Comparable {

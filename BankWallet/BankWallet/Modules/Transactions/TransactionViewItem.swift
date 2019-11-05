@@ -15,8 +15,11 @@ class TransactionViewItem {
     let date: Date
     let status: TransactionStatus
     let rate: CurrencyValue?
+    let lockInfo: TransactionLockInfo?
 
-    init(wallet: Wallet, transactionHash: String, coinValue: CoinValue, feeCoinValue: CoinValue?, currencyValue: CurrencyValue?, from: String?, to: String?, incoming: Bool, sentToSelf: Bool, showFromAddress: Bool, date: Date, status: TransactionStatus, rate: CurrencyValue?) {
+    init(wallet: Wallet, transactionHash: String, coinValue: CoinValue, feeCoinValue: CoinValue?,
+         currencyValue: CurrencyValue?, from: String?, to: String?, incoming: Bool, sentToSelf: Bool,
+         showFromAddress: Bool, date: Date, status: TransactionStatus, rate: CurrencyValue?, lockInfo: TransactionLockInfo?) {
         self.wallet = wallet
         self.transactionHash = transactionHash
         self.coinValue = coinValue
@@ -30,18 +33,18 @@ class TransactionViewItem {
         self.date = date
         self.status = status
         self.rate = rate
+        self.lockInfo = lockInfo
     }
 }
 
 extension TransactionViewItem: DiffAware {
 
     public var diffId: String {
-        return transactionHash
+        transactionHash
     }
 
     public static func compareContent(_ a: TransactionViewItem, _ b: TransactionViewItem) -> Bool {
-        return
-                a.date == b.date &&
+        a.date == b.date &&
                 a.currencyValue == b.currencyValue &&
                 a.rate == b.rate &&
                 a.status == b.status
