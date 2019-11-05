@@ -2,7 +2,6 @@ import UIKit
 
 class BalanceRouter {
     weak var viewController: UIViewController?
-    weak var sortTypeDelegate: ISortTypeDelegate?
 }
 
 extension BalanceRouter: IBalanceRouter {
@@ -25,10 +24,6 @@ extension BalanceRouter: IBalanceRouter {
         viewController?.present(ManageWalletsRouter.module(), animated: true)
     }
 
-    func openSortType(selected sort: BalanceSortType) {
-        viewController?.present(SortTypeRouter.module(sortTypeDelegate: sortTypeDelegate, sort: sort), animated: true)
-    }
-
     func openBackup(wallet: Wallet, predefinedAccountType: IPredefinedAccountType) {
         viewController?.present(BackupRouter.module(account: wallet.account, predefinedAccountType: predefinedAccountType), animated: true)
     }
@@ -46,7 +41,6 @@ extension BalanceRouter {
         interactor.delegate = presenter
         presenter.view = viewController
         router.viewController = viewController
-        router.sortTypeDelegate = presenter
 
         return viewController
     }

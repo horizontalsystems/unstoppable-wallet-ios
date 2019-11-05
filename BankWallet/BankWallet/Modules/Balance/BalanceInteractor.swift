@@ -143,8 +143,13 @@ extension BalanceInteractor: IBalanceInteractor {
         }
     }
 
-    var sortType: BalanceSortType {
-        localStorage.balanceSortType ?? .name
+    var sortType: BalanceSortType? {
+        get {
+            localStorage.balanceSortType
+        }
+        set {
+            localStorage.balanceSortType = newValue
+        }
     }
 
     func refresh() {
