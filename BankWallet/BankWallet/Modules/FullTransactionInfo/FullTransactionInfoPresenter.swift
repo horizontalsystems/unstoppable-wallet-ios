@@ -28,27 +28,27 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoViewDelegate {
     }
 
     var providerName: String? {
-        return state.transactionRecord?.providerName
+        state.transactionRecord?.providerName
     }
 
     var haveBlockExplorer: Bool {
-        return state.transactionRecord?.haveBlockExplorer ?? false
+        interactor.url(for: state.transactionHash) != nil
     }
 
     func numberOfSections() -> Int {
-        return state.transactionRecord?.sections.count ?? 0
+        state.transactionRecord?.sections.count ?? 0
     }
 
     func numberOfRows(inSection section: Int) -> Int {
-        return state.transactionRecord?.sections[section].items.count ?? 0
+        state.transactionRecord?.sections[section].items.count ?? 0
     }
 
     func section(_ section: Int) -> FullTransactionSection? {
-        return state.transactionRecord?.sections[section]
+        state.transactionRecord?.sections[section]
     }
 
     var transactionHash: String {
-        return state.transactionHash
+        state.transactionHash
     }
 
     func onRetryLoad() {
