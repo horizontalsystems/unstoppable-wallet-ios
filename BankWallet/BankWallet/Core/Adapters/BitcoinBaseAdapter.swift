@@ -100,11 +100,15 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
     func transactionsDeleted(hashes: [String]) {
     }
 
+    func balanceUpdated(balance: BalanceInfo) {
+        balanceUpdatedSignal.notify()
+    }
+
     func lastBlockInfoUpdated(lastBlockInfo: BlockInfo) {
         lastBlockHeightUpdatedSignal.notify()
     }
 
-    public func kitStateUpdated(state: BitcoinCore.KitState) {
+    func kitStateUpdated(state: BitcoinCore.KitState) {
         switch state {
         case .synced:
             if case .synced = self.state {
