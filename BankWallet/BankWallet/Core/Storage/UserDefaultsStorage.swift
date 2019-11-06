@@ -21,6 +21,7 @@ class UserDefaultsStorage {
     private let mainShownOnceKey = "main_shown_once_key"
     private let backgroundFetchLogKey = "background_fetch_key"
     private let keyAppVersions = "app_versions"
+    private let keyLockTimeEnabled = "lock_time_enabled"
 
     private func value<T>(for key: String) -> T? {
         UserDefaults.standard.value(forKey: key) as? T
@@ -148,6 +149,11 @@ extension UserDefaultsStorage: ILocalStorage {
         set {
             UserDefaults.standard.set(try? JSONEncoder().encode(newValue), forKey: keyAppVersions)
         }
+    }
+
+    var lockTimeEnabled: Bool {
+        get { value(for: keyLockTimeEnabled) ?? false }
+        set { set(value: newValue, for: keyLockTimeEnabled) }
     }
 
 }

@@ -28,7 +28,7 @@ class TitleCell: AppCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(titleIcon: UIImage?, title: String, titleColor: UIColor = SettingsTheme.textColor, showDisclosure: Bool = false, last: Bool = false) {
+    func bind(titleIcon: UIImage? = nil, title: String, titleColor: UIColor = SettingsTheme.textColor, showDisclosure: Bool = false, last: Bool = false) {
         super.bind(showDisclosure: showDisclosure, last: last)
 
         iconImageView.snp.updateConstraints { maker in

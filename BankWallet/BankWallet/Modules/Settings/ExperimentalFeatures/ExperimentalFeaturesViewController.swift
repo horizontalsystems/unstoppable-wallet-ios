@@ -3,10 +3,12 @@ import SectionsTableView
 
 class ExperimentalFeaturesViewController: WalletViewController {
     private let delegate: IExperimentalFeaturesViewDelegate
+
     private let tableView = SectionsTableView(style: .grouped)
 
     init(delegate: IExperimentalFeaturesViewDelegate) {
         self.delegate = delegate
+
         super.init()
 
         hidesBottomBarWhenPushed = true
@@ -57,9 +59,8 @@ extension ExperimentalFeaturesViewController: SectionsDataSource {
                         Row<TitleCell>(
                                 id: "bitcoin_hodling",
                                 height: SettingsTheme.cellHeight,
-                                autoDeselect: true,
                                 bind: { cell, _ in
-                                    cell.bind(titleIcon: nil, title: "settings.experimental_features.bitcoin_hodling".localized, showDisclosure: true, last: true)
+                                    cell.bind(title: "settings.experimental_features.bitcoin_hodling".localized, showDisclosure: true, last: true)
                                 },
                                 action: { [weak self] _ in
                                     self?.delegate.didTapBitcoinHodling()
@@ -70,7 +71,4 @@ extension ExperimentalFeaturesViewController: SectionsDataSource {
         ]
     }
 
-}
-
-extension ExperimentalFeaturesViewController: IExperimentalFeaturesView {
 }
