@@ -26,7 +26,7 @@ extension SendFeePriorityRouter {
 extension SendFeePriorityRouter: ISendFeePriorityRouter {
 
     func openPriorities(items: [PriorityItem], onSelect: @escaping (PriorityItem) -> ()) {
-        let alertController = AlertViewControllerNew(
+        let alertController = AlertViewController(
                 header: "send.tx_speed".localized,
                 rows: items.map { item in
                     AlertRow(text: "\(item.priority.title) (< \(item.duration.approximateHoursOrMinutes))", selected: item.selected)

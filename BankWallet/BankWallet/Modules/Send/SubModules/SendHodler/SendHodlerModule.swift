@@ -9,7 +9,7 @@ protocol ISendHodlerViewDelegate {
 }
 
 protocol ISendHodlerRouter {
-    func openLockTimeIntervals(selected: HodlerPlugin.LockTimeInterval?, lockTimeIntervalDelegate: ILockTimeIntervalDelegate)
+    func openLockTimeIntervals(selected: HodlerPlugin.LockTimeInterval?, onSelect: @escaping (HodlerPlugin.LockTimeInterval?) -> ())
 }
 
 protocol ISendHodlerDelegate: class {
@@ -19,4 +19,17 @@ protocol ISendHodlerDelegate: class {
 protocol ISendHodlerModule: AnyObject {
     var delegate: ISendHodlerDelegate? { get set }
     var pluginData: [UInt8: IBitcoinPluginData] { get }
+}
+
+extension HodlerPlugin.LockTimeInterval {
+
+    var title: String {
+        switch self {
+        case .hour: return "send.hodler_locktime_hour".localized
+        case .month: return "send.hodler_locktime_month".localized
+        case .halfYear: return "send.hodler_locktime_half_year".localized
+        case .year: return "send.hodler_locktime_year".localized
+        }
+    }
+
 }

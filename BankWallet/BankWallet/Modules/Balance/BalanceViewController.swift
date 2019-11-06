@@ -261,7 +261,7 @@ extension BalanceViewController: IBalanceView {
     func showSortType(selectedSortType: BalanceSortType) {
         let sortTypes = BalanceSortType.allCases
 
-        let alertController = AlertViewControllerNew(
+        let alertController = AlertViewController(
                 header: "balance.sort.header".localized,
                 rows: sortTypes.map { sortType in
                     AlertRow(text: sortType.title, selected: sortType == selectedSortType)
