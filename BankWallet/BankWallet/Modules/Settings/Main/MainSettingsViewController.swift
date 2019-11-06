@@ -103,7 +103,7 @@ class MainSettingsViewController: WalletViewController {
             }),
 
             Row<ToggleCell>(id: "light_mode", height: SettingsTheme.cellHeight, bind: { [unowned self] cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.light_mode".localized, isOn: self.lightMode, showDisclosure: false, last: true, onToggle: { [weak self] isOn in
+                cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.light_mode".localized, isOn: self.lightMode, last: true, onToggle: { [weak self] isOn in
                     self?.delegate.didSwitch(lightMode: isOn)
                 })
             })

@@ -15,7 +15,7 @@ extension MainSettingsRouter: IMainSettingsRouter {
     }
 
     func showExperimentalFeatures() {
-        viewController?.present(ExperimentalFeaturesRouter.module(), animated: true)
+        viewController?.navigationController?.pushViewController(ExperimentalFeaturesRouter.module(), animated: true)
     }
 
     func showNotificationSettings() {

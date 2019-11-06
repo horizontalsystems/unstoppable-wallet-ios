@@ -24,8 +24,8 @@ class ToggleCell: TitleCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(titleIcon: UIImage?, title: String, isOn: Bool, showDisclosure: Bool = false, last: Bool = false, onToggle: ((Bool) -> ())? = nil) {
-        super.bind(titleIcon: titleIcon, title: title, showDisclosure: showDisclosure, last: last)
+    func bind(titleIcon: UIImage? = nil, title: String, isOn: Bool, last: Bool = false, onToggle: ((Bool) -> ())? = nil) {
+        super.bind(titleIcon: titleIcon, title: title, last: last)
         self.onToggle = onToggle
         toggleView.isOn = isOn
     }

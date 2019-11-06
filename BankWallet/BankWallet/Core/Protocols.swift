@@ -27,6 +27,7 @@ protocol ILocalStorage: class {
     var sendInputType: SendInputType? { get set }
     var mainShownOnce: Bool { get set }
     var appVersions: [AppVersion] { get set }
+    var lockTimeEnabled: Bool { get set }
 }
 
 protocol IChartTypeStorage: class {
