@@ -11,7 +11,7 @@ class SendFeePriorityView: UIView {
         super.init(frame: .zero)
 
         selectableValueView.delegate = self
-        selectableValueView.set(value: text(priority: delegate.feeRatePriority))
+        selectableValueView.set(value: delegate.feeRatePriority.title)
 
         snp.makeConstraints { maker in
             maker.height.equalTo(SendTheme.feePriorityHeight)
@@ -28,20 +28,12 @@ class SendFeePriorityView: UIView {
         fatalError("not implemented")
     }
 
-    private func text(priority: FeeRatePriority) -> String {
-        switch priority {
-        case .high: return "send.tx_speed_high".localized
-        case .medium: return "send.tx_speed_medium".localized
-        case .low: return "send.tx_speed_low".localized            
-        }
-    }
-
 }
 
 extension SendFeePriorityView: ISendFeePriorityView {
 
     func setPriority() {
-        selectableValueView.set(value: text(priority: delegate.feeRatePriority))
+        selectableValueView.set(value: delegate.feeRatePriority.title)
     }
 
 }
