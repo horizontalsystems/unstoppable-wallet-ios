@@ -22,11 +22,11 @@ class SendFeePriorityPresenter {
 extension SendFeePriorityPresenter: ISendFeePriorityModule {
 
     var feeRate: Int {
-        return interactor.feeRate(priority: feeRatePriority)
+        interactor.feeRate(priority: feeRatePriority)
     }
 
     var duration: TimeInterval {
-        return interactor.duration(priority: feeRatePriority)
+        interactor.duration(priority: feeRatePriority)
     }
 
 }
@@ -34,17 +34,19 @@ extension SendFeePriorityPresenter: ISendFeePriorityModule {
 extension SendFeePriorityPresenter: ISendFeePriorityViewDelegate {
 
     func onFeePrioritySelectorTap() {
-        router.openPriorities(selected: feeRatePriority, coin: coin, priorityDelegate: self)
-    }
+        let items = FeeRatePriority.allCases.map { priority in
+            PriorityItem(
+                    priority: priority,
+                    duration: interactor.duration(priority: priority),
+                    selected: priority == feeRatePriority
+            )
+        }
 
-}
-
-extension SendFeePriorityPresenter: IPriorityDelegate {
-
-    func onSelect(priority: FeeRatePriority) {
-        feeRatePriority = priority
-        view?.setPriority()
-        delegate?.onUpdateFeePriority()
+        router.openPriorities(items: items) { [weak self] selectedItem in
+            self?.feeRatePriority = selectedItem.priority
+            self?.view?.setPriority()
+            self?.delegate?.onUpdateFeePriority()
+        }
     }
 
 }

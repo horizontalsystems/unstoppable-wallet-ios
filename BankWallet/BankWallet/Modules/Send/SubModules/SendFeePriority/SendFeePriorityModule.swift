@@ -15,7 +15,7 @@ protocol ISendFeePriorityInteractor {
 }
 
 protocol ISendFeePriorityRouter {
-    func openPriorities(selected: FeeRatePriority, coin: Coin, priorityDelegate: IPriorityDelegate)
+    func openPriorities(items: [PriorityItem], onSelect: @escaping (PriorityItem) -> ())
 }
 
 protocol ISendFeePriorityDelegate: class {
@@ -26,4 +26,10 @@ protocol ISendFeePriorityModule: AnyObject {
     var delegate: ISendFeePriorityDelegate? { get set }
     var feeRate: Int { get }
     var duration: TimeInterval { get }
+}
+
+struct PriorityItem {
+    let priority: FeeRatePriority
+    let duration: TimeInterval
+    let selected: Bool
 }
