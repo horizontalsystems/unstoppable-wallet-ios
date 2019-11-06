@@ -21,6 +21,7 @@
 "alert.copied" = "Copied";
 "alert.no_internet" = "No Internet";
 "alert.network_issue" = "Network issues. Try again in a short moment";
+"alert.unknown_error" = "Unknown Error";
 
 "n/a" = "N/A";
 

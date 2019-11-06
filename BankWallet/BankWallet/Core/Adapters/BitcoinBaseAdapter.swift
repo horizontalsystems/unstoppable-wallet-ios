@@ -42,10 +42,6 @@ class BitcoinBaseAdapter {
         )
     }
 
-    func createSendError(from: Error) -> Error {
-        SendTransactionError.connection
-    }
-
     private func convertToSatoshi(value: Decimal) -> Int {
         let coinValue: Decimal = value * coinRate
         let handler = NSDecimalNumberHandler(roundingMode: .plain, scale: Int16(truncatingIfNeeded: 0), raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
@@ -196,7 +192,7 @@ extension BitcoinBaseAdapter {
                 }
                 observer(.success(()))
             } catch {
-                observer(.error(self?.createSendError(from: error) ?? error))
+                observer(.error(error))
             }
 
             return Disposables.create()
