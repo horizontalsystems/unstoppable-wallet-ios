@@ -220,6 +220,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "settings.tab_bar_item" = "Settings";
 "settings.security_center" = "Security Center";
 "settings.manage_coins" = "Manage Coins";
+"settings.experimental_features" = "Experimental Features";
 "settings.notifications" = "Notifications";
 "settings.base_currency" = "Base Currency";
 "settings.language" = "Language";
@@ -254,6 +255,12 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "manage_coins.add_coin.text" = "You don't have a wallet that can store %@ (%@). The app can generate a new wallet for you. Use the Create button below to generate a new wallet.\n\nYou will be able to use the new wallet for the following coins: %@.\n\nYou may also use the existing %@ Wallet key if you have one. Use the Restore button for that.";
 "manage_coins.add_coin.create" = "Create";
 "manage_coins.add_coin.restore" = "Restore";
+
+// Settings -> Experimental Features
+
+"settings.experimental_features.title" = "Experimental";
+"settings.experimental_features.description" = "The features below are experimental and should be used with caution. While we have throughly tested these features using our own crypto funds we can not guarantee they work as expected in all possible cases.";
+"settings.experimental_features.bitcoin_hodling" = "Bitcoin HODLing";
 
 // Settings -> About
 
