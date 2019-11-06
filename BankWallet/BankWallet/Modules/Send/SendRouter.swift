@@ -61,17 +61,44 @@ extension SendRouter {
     }
 
     private static func module(coin: Coin, adapter: ISendBitcoinAdapter) -> (ISendHandler, [UIView], [ISendSubRouter])? {
+        let interactor = SendBitcoinInteractor(adapter: adapter, localStorage: App.shared.localStorage)
+
+        var views = [UIView]()
+        var routers = [ISendSubRouter]()
+
         let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
+        views.append(amountView)
+
         let (addressView, addressModule, addressRouter) = SendAddressRouter.module(coin: coin)
-        let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
-        let (hodlerView, hodlerModule, hodlerRouter) = SendHodlerRouter.module()
+        views.append(addressView)
+        routers.append(addressRouter)
 
         guard let (feePriorityView, feePriorityModule, feePriorityRouter) = SendFeePriorityRouter.module(coin: coin) else {
             return nil
         }
+        views.append(feePriorityView)
+        routers.append(feePriorityRouter)
 
-        let interactor = SendBitcoinInteractor(adapter: adapter)
-        let presenter = SendBitcoinHandler(interactor: interactor, amountModule: amountModule, addressModule: addressModule, feeModule: feeModule, feePriorityModule: feePriorityModule, hodlerModule: hodlerModule)
+        var hodlerModule: ISendHodlerModule?
+
+        if interactor.lockTimeEnabled {
+            let (hodlerView, module, hodlerRouter) = SendHodlerRouter.module()
+            hodlerModule = module
+            views.append(hodlerView)
+            routers.append(hodlerRouter)
+        }
+
+        let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
+        views.append(feeView)
+
+        let presenter = SendBitcoinHandler(
+                interactor: interactor,
+                amountModule: amountModule,
+                addressModule: addressModule,
+                feeModule: feeModule,
+                feePriorityModule: feePriorityModule,
+                hodlerModule: hodlerModule
+        )
 
         interactor.delegate = presenter
 
@@ -79,9 +106,9 @@ extension SendRouter {
         addressModule.delegate = presenter
         feeModule.delegate = presenter
         feePriorityModule.delegate = presenter
-        hodlerModule.delegate = presenter
+        hodlerModule?.delegate = presenter
 
-        return (presenter, [amountView, addressView, feePriorityView, hodlerView, feeView], [addressRouter, feePriorityRouter, hodlerRouter])
+        return (presenter, views, routers)
     }
 
     private static func module(coin: Coin, adapter: ISendDashAdapter) -> (ISendHandler, [UIView], [ISendSubRouter]) {

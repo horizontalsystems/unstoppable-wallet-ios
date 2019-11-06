@@ -4,14 +4,20 @@ class SendBitcoinInteractor {
     weak var delegate: ISendBitcoinInteractorDelegate?
 
     private let adapter: ISendBitcoinAdapter
+    private let localStorage: ILocalStorage
 
-    init(adapter: ISendBitcoinAdapter) {
+    init(adapter: ISendBitcoinAdapter, localStorage: ILocalStorage) {
         self.adapter = adapter
+        self.localStorage = localStorage
     }
 
 }
 
 extension SendBitcoinInteractor: ISendBitcoinInteractor {
+
+    var lockTimeEnabled: Bool {
+        localStorage.lockTimeEnabled
+    }
 
     func fetchAvailableBalance(feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData]) {
         DispatchQueue.global(qos: .userInitiated).async {

@@ -10,12 +10,12 @@ class SendBitcoinHandler {
     private let addressModule: ISendAddressModule
     private let feeModule: ISendFeeModule
     private let feePriorityModule: ISendFeePriorityModule
-    private let hodlerModule: ISendHodlerModule
+    private let hodlerModule: ISendHodlerModule?
 
     private var pluginData = [UInt8: IBitcoinPluginData]()
 
     init(interactor: ISendBitcoinInteractor, amountModule: ISendAmountModule, addressModule: ISendAddressModule,
-         feeModule: ISendFeeModule, feePriorityModule: ISendFeePriorityModule, hodlerModule: ISendHodlerModule) {
+         feeModule: ISendFeeModule, feePriorityModule: ISendFeePriorityModule, hodlerModule: ISendHodlerModule?) {
         self.interactor = interactor
 
         self.amountModule = amountModule
@@ -159,6 +159,10 @@ extension SendBitcoinHandler: ISendFeePriorityDelegate {
 extension SendBitcoinHandler: ISendHodlerDelegate {
 
     func onUpdateLockTimeInterval() {
+        guard let hodlerModule = hodlerModule else {
+            return
+        }
+
         pluginData = hodlerModule.pluginData
         syncAvailableBalance()
         syncMaximumAmount()
