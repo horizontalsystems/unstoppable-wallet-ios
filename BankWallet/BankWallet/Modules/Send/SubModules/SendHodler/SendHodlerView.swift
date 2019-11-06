@@ -30,16 +30,7 @@ class SendHodlerView: UIView {
     }
 
     private func text(lockTimeInterval: HodlerPlugin.LockTimeInterval?) -> String {
-        if let lockTimeInterval = lockTimeInterval {
-            switch lockTimeInterval {
-            case .hour: return "send.hodler_locktime_hour".localized
-            case .month: return "send.hodler_locktime_month".localized
-            case .halfYear: return "send.hodler_locktime_half_year".localized
-            case .year: return "send.hodler_locktime_year".localized
-            }
-        } else {
-            return "send.hodler_locktime_off".localized
-        }
+        lockTimeInterval.map { $0.title } ?? "send.hodler_locktime_off".localized
     }
 
 }
