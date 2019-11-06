@@ -47,6 +47,7 @@ protocol ISendHandlerDelegate: AnyObject {
 }
 
 protocol ISendBitcoinInteractor {
+    var lockTimeEnabled: Bool { get }
     func fetchAvailableBalance(feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData])
     func fetchMaximumAmount(pluginData: [UInt8: IBitcoinPluginData])
     func fetchMinimumAmount(address: String?)
