@@ -73,7 +73,7 @@ extension FullTransactionInfoInteractor: IFullTransactionInfoInteractor {
     }
 
     func url(for hash: String) -> String? {
-        return provider?.url(for: hash)
+        provider?.url(for: hash)
     }
 
     func copyToPasteboard(value: String) {

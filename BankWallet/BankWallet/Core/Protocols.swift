@@ -11,6 +11,7 @@ protocol IRandomManager {
 protocol ILocalStorage: class {
     var baseCurrencyCode: String? { get set }
     var baseBitcoinProvider: String? { get set }
+    var baseBitcoinCashProvider: String? { get set }
     var baseDashProvider: String? { get set }
     var baseBinanceProvider: String? { get set }
     var baseEosProvider: String? { get set }

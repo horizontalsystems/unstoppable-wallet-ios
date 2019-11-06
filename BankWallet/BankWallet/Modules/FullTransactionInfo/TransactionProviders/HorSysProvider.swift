@@ -2,28 +2,26 @@ import ObjectMapper
 
 class HorSysBitcoinProvider: IBitcoinForksProvider {
     let name = "HorizontalSystems.xyz"
-    private let url: String
     private let apiUrl: String
 
     func url(for hash: String) -> String? {
-        return url + hash
+        nil
     }
 
     func reachabilityUrl(for hash: String) -> String {
-        return apiUrl + hash
+        apiUrl + hash
     }
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        return .get(url: apiUrl + hash, params: nil)
+        .get(url: apiUrl + hash, params: nil)
     }
 
     init(testMode: Bool) {
-        url = testMode ? "http://btc-testnet.horizontalsystems.xyz/tx/" : "https://btc.horizontalsystems.xyz/tx/"
         apiUrl = testMode ? "http://btc-testnet.horizontalsystems.xyz/apg/tx/" : "https://btc.horizontalsystems.xyz/apg/tx/"
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
-        return try? HorSysBitcoinResponse(JSONObject: json)
+        try? HorSysBitcoinResponse(JSONObject: json)
     }
 }
 
@@ -88,15 +86,15 @@ class HorSysEthereumProvider: IEthereumForksProvider {
     private let apiUrl: String
 
     func url(for hash: String) -> String? {
-        return url + hash
+        url + hash
     }
 
     func reachabilityUrl(for hash: String) -> String {
-        return apiUrl + hash
+        apiUrl + hash
     }
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        return .get(url: apiUrl + hash, params: nil)
+        .get(url: apiUrl + hash, params: nil)
     }
 
     init(testMode: Bool) {
@@ -105,7 +103,7 @@ class HorSysEthereumProvider: IEthereumForksProvider {
     }
 
     func convert(json: [String: Any]) -> IEthereumResponse? {
-        return try? HorSysEthereumResponse(JSONObject: json)
+        try? HorSysEthereumResponse(JSONObject: json)
     }
 
 }

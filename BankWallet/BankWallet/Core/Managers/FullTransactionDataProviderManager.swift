@@ -83,9 +83,13 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
     }
 
     func baseProvider(for coin: Coin) -> IProvider {
-        if coin.type == .bitcoin || coin.type == .bitcoinCash {
+        if coin.type == .bitcoin {
             let name = localStorage.baseBitcoinProvider ?? bitcoinProviders[0].name
             return bitcoin(for: name)
+        }
+        if coin.type == .bitcoinCash {
+            let name = localStorage.baseBitcoinCashProvider ?? bitcoinCashProviders[0].name
+            return bitcoinCash(for: name)
         }
         if coin.type == .dash {
             let name = localStorage.baseDashProvider ?? dashProviders[0].name
@@ -104,8 +108,10 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
     }
 
     func setBaseProvider(name: String, for coin: Coin) {
-        if coin.type == .bitcoin || coin.type == .bitcoinCash {
+        if coin.type == .bitcoin {
             localStorage.baseBitcoinProvider = name
+        } else if coin.type == .bitcoinCash {
+            localStorage.baseBitcoinCashProvider = name
         } else if coin.type == .dash {
             localStorage.baseDashProvider = name
         } else if case .binance = coin.type {
