@@ -12,6 +12,7 @@ protocol IMainSettingsViewDelegate {
     func viewDidLoad()
     func didTapSecurity()
     func didTapManageCoins()
+    func didTapExperimentalFeatures()
     func didTapNotifications()
     func didTapBaseCurrency()
     func didTapLanguage()
@@ -41,6 +42,7 @@ protocol IMainSettingsInteractorDelegate: class {
 protocol IMainSettingsRouter {
     func showSecuritySettings()
     func showManageCoins()
+    func showExperimentalFeatures()
     func showNotificationSettings()
     func showBaseCurrencySettings()
     func showLanguageSettings()

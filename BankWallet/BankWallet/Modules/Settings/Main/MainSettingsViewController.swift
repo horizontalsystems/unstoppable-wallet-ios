@@ -67,11 +67,17 @@ class MainSettingsViewController: WalletViewController {
             }),
 
             Row<TitleCell>(id: "manage_coins", height: SettingsTheme.cellHeight, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Manage Coins Icon"), title: "settings.manage_coins".localized, showDisclosure: true, last: true)
+                cell.bind(titleIcon: UIImage(named: "Manage Coins Icon"), title: "settings.manage_coins".localized, showDisclosure: true)
             }, action: { [weak self] _ in
                 DispatchQueue.main.async {
                     self?.delegate.didTapManageCoins()
                 }
+            }),
+
+            Row<TitleCell>(id: "experimental_features", height: SettingsTheme.cellHeight, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Experimental Features Icon"), title: "settings.experimental_features".localized, showDisclosure: true, last: true)
+            }, action: { [weak self] _ in
+                self?.delegate.didTapExperimentalFeatures()
             })
         ]
     }
