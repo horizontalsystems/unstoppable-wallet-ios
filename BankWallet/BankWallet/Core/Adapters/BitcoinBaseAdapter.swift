@@ -73,7 +73,7 @@ extension BitcoinBaseAdapter: IAdapter {
     }
 
     func refresh() {
-        // not called
+        abstractKit.start()
     }
 
 }
