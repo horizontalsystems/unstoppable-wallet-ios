@@ -29,7 +29,6 @@ class TransactionInfoTheme {
     static let coinNameColor: UIColor = .cryptoGray
     static let coinNameTopMargin: CGFloat = 3
 
-    static let amountHeight: CGFloat = 92
     static let amountFont = UIFont.appSubhead1
     static var amountColor: UIColor { return .crypto_Bars_Dark }
     static let amountTopMargin: CGFloat = 7
