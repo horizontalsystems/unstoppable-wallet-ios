@@ -38,8 +38,8 @@ class TransactionInfoViewController: ActionSheetController {
 
         if let lockInfo = item.lockInfo {
             let lockedDate = DateHelper.instance.formatFullDateOnly(from: lockInfo.lockedUntil)
-            let lockDateItem = TransactionValueActionItem(title: "tx_info.locked_until".localized, value: lockedDate, tag: 2, iconName: "Transaction Info Icon") { 
-                //TODO open lockInfo view
+            let lockDateItem = TransactionValueActionItem(title: "tx_info.locked_until".localized, value: lockedDate, tag: 2, iconName: "Transaction Info Icon") { [weak self] in
+                self?.delegate.openLockInfo()
             }
             model.addItemView(lockDateItem)
         }

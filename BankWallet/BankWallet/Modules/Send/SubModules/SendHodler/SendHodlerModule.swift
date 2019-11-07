@@ -19,6 +19,7 @@ protocol ISendHodlerDelegate: class {
 protocol ISendHodlerModule: AnyObject {
     var delegate: ISendHodlerDelegate? { get set }
     var pluginData: [UInt8: IBitcoinPluginData] { get }
+    var lockTimeInterval: HodlerPlugin.LockTimeInterval? { get }
 }
 
 extension HodlerPlugin.LockTimeInterval {

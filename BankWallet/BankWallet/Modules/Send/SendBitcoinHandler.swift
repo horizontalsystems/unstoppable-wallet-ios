@@ -71,11 +71,15 @@ extension SendBitcoinHandler: ISendHandler {
     }
 
     func confirmationViewItems() throws -> [ISendConfirmationViewItemNew] {
-        [
+        var items: [ISendConfirmationViewItemNew] = [
             SendConfirmationAmountViewItem(primaryInfo: try amountModule.primaryAmountInfo(), secondaryInfo: try amountModule.secondaryAmountInfo(), receiver: try addressModule.validAddress()),
             SendConfirmationFeeViewItem(primaryInfo: feeModule.primaryAmountInfo, secondaryInfo: feeModule.secondaryAmountInfo),
             SendConfirmationDurationViewItem(timeInterval: feePriorityModule.duration)
         ]
+        if let lockValue = hodlerModule?.lockTimeInterval?.title {
+            items.append(SendConfirmationLockUntilViewItem(lockValue: lockValue))
+        }
+        return items
     }
 
     func sendSingle() throws -> Single<Void> {

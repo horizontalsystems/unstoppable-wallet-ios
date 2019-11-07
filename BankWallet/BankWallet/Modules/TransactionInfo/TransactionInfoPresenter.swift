@@ -24,6 +24,10 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
         router.openFullInfo(transactionHash: viewItem.transactionHash, wallet: viewItem.wallet)
     }
 
+    func openLockInfo() {
+        router.openLockInfo()
+    }
+
 }
 
 extension TransactionInfoPresenter: ITransactionInfoInteractorDelegate {
