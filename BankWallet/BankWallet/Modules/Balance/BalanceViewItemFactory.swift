@@ -3,27 +3,31 @@ import Foundation
 class BalanceViewItemFactory: IBalanceViewItemFactory {
 
     func viewItem(item: BalanceItem, currency: Currency) -> BalanceViewItem {
+        let balanceTotal = item.balanceTotal ?? 0
+        let balanceLocked = item.balanceLocked ?? 0
+
         var exchangeValue: CurrencyValue?
-        var currencyValue: CurrencyValue?
+        var currencyValueTotal: CurrencyValue?
+        var currencyValueLocked: CurrencyValue?
 
         if let marketInfo = item.marketInfo {
             exchangeValue = CurrencyValue(currency: currency, value: marketInfo.rate)
-
-            if let balance = item.balance {
-                currencyValue = CurrencyValue(currency: currency, value: balance * marketInfo.rate)
-            }
+            currencyValueTotal = CurrencyValue(currency: currency, value: balanceTotal * marketInfo.rate)
+            currencyValueLocked = CurrencyValue(currency: currency, value: balanceLocked * marketInfo.rate)
         }
 
         return BalanceViewItem(
                 wallet: item.wallet,
                 coin: item.wallet.coin,
-                coinValue: CoinValue(coin: item.wallet.coin, value: item.balance ?? 0),
+                coinValue: CoinValue(coin: item.wallet.coin, value: balanceTotal),
                 exchangeValue: exchangeValue,
                 diff: item.marketInfo?.diff,
-                currencyValue: currencyValue,
+                currencyValue: currencyValueTotal,
                 state: item.state ?? .notReady,
                 marketInfoExpired: item.marketInfo?.expired ?? false,
-                chartInfoState: item.chartInfoState
+                chartInfoState: item.chartInfoState,
+                coinValueLocked: CoinValue(coin: item.wallet.coin, value: balanceLocked),
+                currencyValueLocked: currencyValueLocked
         )
     }
 
@@ -31,9 +35,9 @@ class BalanceViewItemFactory: IBalanceViewItemFactory {
         var total: Decimal = 0
         var upToDate = true
 
-        for item in items {
-            if let balance = item.balance, let marketInfo = item.marketInfo {
-                total += balance * marketInfo.rate
+        items.forEach { item in
+            if let balanceTotal = item.balanceTotal, let marketInfo = item.marketInfo {
+                total += balanceTotal * marketInfo.rate
 
                 if marketInfo.expired {
                     upToDate = false

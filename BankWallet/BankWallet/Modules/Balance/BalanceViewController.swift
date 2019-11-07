@@ -129,7 +129,22 @@ extension BalanceViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == balanceSection {
-            return (viewItems[indexPath.row].wallet == selectedWallet ? BalanceCell.expandedHeight : BalanceCell.height) + CGFloat.margin2x
+            var height = CGFloat.zero
+            if viewItems[indexPath.row].wallet == selectedWallet {
+                var syncing = false
+                if case .syncing = viewItems[indexPath.row].state {
+                    syncing = true
+                }
+
+                if !syncing, viewItems[indexPath.row].coinValueLocked.value != 0 {
+                    height += BalanceCell.expandedLockedHeight
+                } else {
+                    height += BalanceCell.expandedHeight
+                }
+            } else {
+                height += BalanceCell.height
+            }
+            return height + CGFloat.margin2x
         } else if indexPath.section == editSection {
             return BalanceEditCell.height
         }

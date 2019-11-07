@@ -7,8 +7,11 @@ import XRatesKit
 class BalanceCell: CardCell {
     static let height: CGFloat = 100
     static let expandedHeight: CGFloat = 160
+    static let expandedLockedHeight: CGFloat = 188
     static let animationDuration = 0.15
-    private static let minimumProgress = 10
+
+    private let minimumProgress = 10
+    private let lockedInfoVisibleHeight = 29
 
     private let coinIconImageView = UIImageView()
     private let syncSpinner = HUDProgressView(
@@ -26,6 +29,11 @@ class BalanceCell: CardCell {
 
     private let currencyValueLabel = UILabel()
     private let coinValueLabel = UILabel()
+
+    private let lockedInfoHolder = UIView()
+    private let coinLockedIcon = UIImageView(image: UIImage(named: "Transaction Lock Icon"))
+    private let currencyLockedValueLabel = UILabel()
+    private let coinLockedValueLabel = UILabel()
 
     private let syncingLabel = UILabel()
     private let syncedUntilLabel = UILabel()
@@ -136,6 +144,41 @@ class BalanceCell: CardCell {
             maker.bottom.equalTo(coinValueLabel.snp.bottom)
         }
 
+        clippingView.addSubview(lockedInfoHolder)
+        lockedInfoHolder.backgroundColor = .clear
+        lockedInfoHolder.addSubview(coinLockedIcon)
+        lockedInfoHolder.addSubview(coinLockedValueLabel)
+        lockedInfoHolder.addSubview(currencyLockedValueLabel)
+
+        lockedInfoHolder.clipsToBounds = true
+        lockedInfoHolder.snp.makeConstraints { maker in
+            maker.height.equalTo(lockedInfoVisibleHeight)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin3x)
+            maker.top.equalTo(coinValueLabel.snp.bottom)
+        }
+
+        coinLockedIcon.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        coinLockedIcon.snp.makeConstraints { maker in
+            maker.leading.bottom.equalToSuperview()
+        }
+
+        coinLockedValueLabel.snp.makeConstraints { maker in
+            maker.leading.equalTo(coinLockedIcon.snp.trailing)
+            maker.bottom.equalToSuperview()
+        }
+
+        currencyLockedValueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        currencyLockedValueLabel.snp.makeConstraints { maker in
+            maker.leading.equalTo(coinLockedValueLabel.snp.trailing)
+            maker.trailing.bottom.equalToSuperview()
+        }
+
+        coinLockedValueLabel.font = .appSubhead2
+        coinLockedValueLabel.textColor = .appGray
+
+        currencyLockedValueLabel.font = .appSubhead1
+        currencyLockedValueLabel.textColor = .appLeah
+
         syncingLabel.font = .appSubhead2
         syncingLabel.textColor = .appGray
 
@@ -162,7 +205,7 @@ class BalanceCell: CardCell {
         clippingView.addSubview(receiveButton)
         receiveButton.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin2x)
-            maker.top.equalTo(coinValueLabel.snp.bottom).offset(CGFloat.margin3x)
+            maker.top.equalTo(lockedInfoHolder.snp.bottom).offset(CGFloat.margin3x)
             maker.height.equalTo(CGFloat.heightButton)
         }
 
@@ -257,6 +300,10 @@ class BalanceCell: CardCell {
             syncingLabel.isHidden = false
             syncedUntilLabel.isHidden = false
 
+            lockedInfoHolder.snp.updateConstraints { maker in
+                maker.height.equalTo(0)
+            }
+
             if let lastBlockDate = lastBlockDate {
                 syncingLabel.text = "balance.syncing_percent".localized("\(progress)%")
                 syncedUntilLabel.text = "balance.synced_through".localized(DateHelper.instance.formatSyncedThroughDate(from: lastBlockDate))
@@ -281,6 +328,24 @@ class BalanceCell: CardCell {
 
             coinValueLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue, fractionPolicy: .threshold(high: 0.01, low: 0))
             coinValueLabel.textColor = syncedBalance ? .appLeah : .appGray50
+
+            if item.coinValueLocked.value != 0 {
+                coinLockedValueLabel.text = ValueFormatter.instance.format(coinValue: item.coinValueLocked, fractionPolicy: .threshold(high: 0.01, low: 0))
+
+                if let value = item.currencyValueLocked, value.value != 0 {
+                    currencyLockedValueLabel.text = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.01))
+                } else {
+                    currencyValueLabel.text = nil
+                }
+
+                lockedInfoHolder.snp.updateConstraints { maker in
+                    maker.height.equalTo(lockedInfoVisibleHeight)
+                }
+            } else {
+                lockedInfoHolder.snp.updateConstraints { maker in
+                    maker.height.equalTo(0)
+                }
+            }
         }
 
         receiveButton.set(hidden: !selected, animated: animated, duration: BalanceCell.animationDuration)

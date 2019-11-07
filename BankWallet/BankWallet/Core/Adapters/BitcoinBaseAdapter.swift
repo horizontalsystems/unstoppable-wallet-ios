@@ -151,6 +151,10 @@ extension BitcoinBaseAdapter: IBalanceAdapter {
         Decimal(abstractKit.balance.spendable) / coinRate
     }
 
+    var balanceLocked: Decimal {
+        Decimal(abstractKit.balance.unspendable) / coinRate
+    }
+
 }
 
 extension BitcoinBaseAdapter {
