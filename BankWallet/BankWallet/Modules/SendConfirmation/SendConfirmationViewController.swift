@@ -96,32 +96,8 @@ class SendConfirmationViewController: WalletViewController, SectionsDataSource {
 extension SendConfirmationViewController: ISendConfirmationView {
 
     func show(viewItem: SendConfirmationAmountViewItem) {
-        let primaryText: String?
-        let primaryTitleText: String?
-        var secondaryText: String? = nil
-        var secondaryTitleText: String? = nil
-
-        switch viewItem.primaryInfo {
-        case .coinValue(let coinValue):
-            primaryText = ValueFormatter.instance.format(coinValue: coinValue)
-            primaryTitleText = coinValue.coin.title
-        case .currencyValue(let currencyValue):
-            primaryText = ValueFormatter.instance.format(currencyValue: currencyValue)
-            primaryTitleText = currencyValue.currency.code
-        }
-
-        if let secondaryInfo = viewItem.secondaryInfo {
-            switch secondaryInfo {
-            case .coinValue(let coinValue):
-                secondaryText = ValueFormatter.instance.format(coinValue: coinValue)
-                secondaryTitleText = coinValue.coin.title
-            case .currencyValue(let currencyValue):
-                secondaryText = ValueFormatter.instance.format(currencyValue: currencyValue)
-                secondaryTitleText = currencyValue.currency.code
-            }
-        }
         let primaryRow = Row<SendConfirmationAmountCell>(id: "send_primary_row", height: SendTheme.confirmationPrimaryHeight, bind: { cell, _ in
-            cell.bind(primaryTitle: primaryTitleText, primaryAmount: primaryText, secondaryTitle: secondaryTitleText, secondaryAmount: secondaryText)
+            cell.bind(primaryAmountInfo: viewItem.primaryInfo, secondaryAmountInfo: viewItem.secondaryInfo)
         })
         let receiverRow = Row<SendConfirmationReceiverCell>(id: "send_receiver_row", height: SendConfirmationReceiverCell.height(forContainerWidth: view.bounds.width, text: viewItem.receiver), bind: { [weak self] cell, _ in
             cell.bind(receiver: viewItem.receiver, last: self?.noMemo ?? false) { [weak self] in

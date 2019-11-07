@@ -15,8 +15,10 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
             let feeCoin = feeCoinProvider.feeCoin(coin: coin) ?? coin
             return CoinValue(coin: feeCoin, value: $0)
         }
-
-        let currencyValue = rate.map { CurrencyValue(currency: $0.currency, value: $0.value * record.amount) }
+        let absoluteAmount: Decimal = abs(record.amount)
+        let currencyValue = rate.map {
+            CurrencyValue(currency: $0.currency, value: $0.value * absoluteAmount)
+        }
 
         var status: TransactionStatus = .pending
 
@@ -39,16 +41,16 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
             from = record.from.first(where: { $0.mine == false })?.address
         } else {
             to = record.to.first(where: { $0.mine == false })?.address
-            if let toAddress = record.to.first {
-                lockInfo = TransactionLockInfo(pluginData: toAddress.pluginData)
-            }
+        }
+        if let toAddress = record.to.first {
+            lockInfo = TransactionLockInfo(pluginData: toAddress.pluginData)
         }
         let sentToSelf = !record.from.contains(where: { !$0.mine }) && !record.to.contains(where: { !$0.mine })
 
         return TransactionViewItem(
                 wallet: item.wallet,
                 transactionHash: record.transactionHash,
-                coinValue: CoinValue(coin: coin, value: record.amount),
+                coinValue: CoinValue(coin: coin, value: absoluteAmount),
                 feeCoinValue: feeCoinValue,
                 currencyValue: currencyValue,
                 from: from,
