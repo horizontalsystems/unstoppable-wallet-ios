@@ -184,4 +184,8 @@ struct SendConfirmationDurationViewItem: ISendConfirmationViewItemNew {
     let timeInterval: TimeInterval?
 }
 
+struct SendConfirmationLockUntilViewItem: ISendConfirmationViewItemNew {
+    let lockValue: String
+}
+
 

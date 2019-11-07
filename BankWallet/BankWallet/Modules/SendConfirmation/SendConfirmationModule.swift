@@ -9,6 +9,7 @@ protocol ISendConfirmationView: class {
     func show(viewItem: SendConfirmationFeeViewItem)
     func show(viewItem: SendConfirmationTotalViewItem)
     func show(viewItem: SendConfirmationDurationViewItem)
+    func show(viewItem: SendConfirmationLockUntilViewItem)
 
     func buildData()
     func showCopied()

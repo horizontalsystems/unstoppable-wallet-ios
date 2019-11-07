@@ -14,6 +14,7 @@ class TransactionCell: AppCell {
     var completedView = TransactionCompletedView()
 
     var currencyAmountLabel = UILabel()
+    var lockImageView = UIImageView()
     var amountLabel = UILabel()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -51,8 +52,17 @@ class TransactionCell: AppCell {
         currencyAmountLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.dateLabel.snp.trailing).offset(TransactionsTheme.cellMediumMargin)
             maker.top.equalToSuperview().offset(TransactionsTheme.cellMediumMargin)
-            maker.trailing.equalTo(contentView.snp.trailingMargin)
         }
+
+        lockImageView.image = UIImage(named: "Transaction Lock Icon")
+        contentView.addSubview(lockImageView)
+        lockImageView.snp.makeConstraints { maker in
+            maker.leading.equalTo(currencyAmountLabel.snp.trailing)
+            maker.trailing.equalTo(contentView.snp.trailingMargin)
+            maker.top.equalToSuperview().inset(CGFloat.margin4x)
+            maker.size.equalTo(0)
+        }
+        lockImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         amountLabel.font = TransactionsTheme.amountLabelFont
         amountLabel.textAlignment = .right
@@ -108,6 +118,21 @@ class TransactionCell: AppCell {
             currencyAmountLabel.text = nil
         }
 
+        if item.lockInfo != nil {
+            lockImageView.snp.remakeConstraints { maker in
+                maker.leading.equalTo(currencyAmountLabel.snp.trailing).offset(CGFloat.margin1x)
+                maker.trailing.equalTo(contentView.snp.trailingMargin)
+                maker.top.equalToSuperview().inset(CGFloat.margin4x)
+            }
+        } else {
+            lockImageView.snp.makeConstraints { maker in
+                maker.leading.equalTo(currencyAmountLabel.snp.trailing)
+                maker.trailing.equalTo(contentView.snp.trailingMargin)
+                maker.top.equalToSuperview().inset(CGFloat.margin4x)
+                maker.size.equalTo(0)
+            }
+        }
+
         switch status {
         case .pending:
             pendingView.startAnimating()
@@ -134,7 +159,6 @@ class TransactionCell: AppCell {
             pendingView.isHidden = true
             processingView.stopAnimating()
             processingView.isHidden = true
-
         }
     }
 

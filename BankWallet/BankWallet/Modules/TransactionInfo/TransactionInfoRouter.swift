@@ -11,6 +11,10 @@ extension TransactionInfoRouter: ITransactionInfoRouter {
         viewController?.present(FullTransactionInfoRouter.module(transactionHash: transactionHash, wallet: wallet), animated: true)
     }
 
+    func openLockInfo() {
+        viewController?.present(InfoRouter.module(title: "lock_info.title".localized, text: "lock_info.text".localized), animated: true)
+    }
+
 }
 
 extension TransactionInfoRouter {

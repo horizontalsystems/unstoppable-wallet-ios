@@ -391,3 +391,8 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "price_notification.up" = "up";
 "price_notification.down" = "down";
 "price_notification.multi_title" = "Notifications";
+
+// Lock Info
+
+"lock_info.title" = "Info";
+"lock_info.text" = "The sender sent these funds with a spending lock that will expire on Aug 29, 2019.\n\nNo worries, the received Bitcoins are already yours but until the lock period expires you can not spend them on the Bitcoin network.";
