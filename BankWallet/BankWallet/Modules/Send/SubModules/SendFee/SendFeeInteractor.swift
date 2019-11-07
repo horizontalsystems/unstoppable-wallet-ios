@@ -20,7 +20,10 @@ extension SendFeeInteractor: ISendFeeInteractor {
     }
 
     func nonExpiredRateValue(coinCode: CoinCode, currencyCode: String) -> Decimal? {
-        rateManager.marketInfo(coinCode: coinCode, currencyCode: currencyCode)?.rate
+        guard let marketInfo = rateManager.marketInfo(coinCode: coinCode, currencyCode: currencyCode), !marketInfo.expired else {
+            return nil
+        }
+        return marketInfo.rate
     }
 
     func feeCoin(coin: Coin) -> Coin? {

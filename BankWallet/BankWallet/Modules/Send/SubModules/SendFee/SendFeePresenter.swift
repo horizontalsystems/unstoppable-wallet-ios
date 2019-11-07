@@ -74,33 +74,31 @@ extension SendFeePresenter: ISendFeeModule {
     }
 
     var primaryAmountInfo: AmountInfo {
+        guard let rateValue = rateValue else {
+            return .coinValue(coinValue: CoinValue(coin: coin, value: fee))
+        }
         switch inputType {
         case .coin:
             return .coinValue(coinValue: CoinValue(coin: coin, value: fee))
         case .currency:
-            if let rateValue = rateValue {
-                return .currencyValue(currencyValue: CurrencyValue(currency: currency, value: fee * rateValue))
-            } else {
-                fatalError("Invalid state")
-            }
+            return .currencyValue(currencyValue: CurrencyValue(currency: currency, value: fee * rateValue))
         }
     }
 
     var secondaryAmountInfo: AmountInfo? {
+        guard let rateValue = rateValue else {
+            return nil
+        }
         switch inputType.reversed {
         case .coin:
             return .coinValue(coinValue: CoinValue(coin: coin, value: fee))
         case .currency:
-            if let rateValue = rateValue {
-                return .currencyValue(currencyValue: CurrencyValue(currency: currency, value: fee * rateValue))
-            } else {
-                return nil
-            }
+            return .currencyValue(currencyValue: CurrencyValue(currency: currency, value: fee * rateValue))
         }
     }
 
     var coinValue: CoinValue {
-        return CoinValue(coin: coin, value: fee)
+        CoinValue(coin: coin, value: fee)
     }
 
     var currencyValue: CurrencyValue? {
