@@ -91,7 +91,7 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "BNT",       title: "Bancor",                code: "BNT",     decimal: 18, type: CoinType(erc20Address: "0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C")),
         Coin(id: "BAT",       title: "Basic Attention Token", code: "BAT",     decimal: 18, type: CoinType(erc20Address: "0x0D8775F648430679A709E98d2b0Cb6250d2887EF")),
         Coin(id: "BNB-ERC20", title: "Binance Token",         code: "BNB",     decimal: 18, type: CoinType(erc20Address: "0xB8c77482e45F1F44dE1745F52C74426C631bDD52")),
-        Coin(id: "BUSD",      title: "Binance USD",           code: "BUSD",    decimal: 8,  type: .binance(symbol: "BUSD")),
+        Coin(id: "BUSD",      title: "Binance USD",           code: "BUSD",    decimal: 8,  type: .binance(symbol: "BUSD-BD1")),
         Coin(id: "BTCB",      title: "Bitcoin BEP2",          code: "BTCB",    decimal: 8,  type: .binance(symbol: "BTCB-1DE")),
         Coin(id: "CAS",       title: "Cashaa",                code: "CAS",     decimal: 8,  type: .binance(symbol: "CAS-167")),
         Coin(id: "LINK",      title: "ChainLink",             code: "LINK",    decimal: 18, type: CoinType(erc20Address: "0x514910771AF9Ca656af840dff83E8264EcF986CA")),
