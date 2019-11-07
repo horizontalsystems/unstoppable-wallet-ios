@@ -1208,6 +1208,7 @@
 		58AAA3BE2D0DEF53CE6CEE97 /* EthereumKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC5B00009B199A687EF3 /* EthereumKitManager.swift */; };
 		58AAA3BEAF334CC8B07FC3E2 /* FullTransactionInfoStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA2F49CD663006371EF2A /* FullTransactionInfoStateTests.swift */; };
 		58AAA3C125C2CEEDFA1F5F03 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA17E98A75B51993953F8 /* ChartViewController.swift */; };
+		58AAA3CFF20D3AA530FFDB90 /* MaxSupplyMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB7A3593CAFEA65729C2 /* MaxSupplyMap.swift */; };
 		58AAA3D3904C7703445A9098 /* SendConfirmationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA36CC6CD40E00CDF9662 /* SendConfirmationPresenter.swift */; };
 		58AAA3DAFE5384FD60DEE304 /* SendAddressPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8B716A3F70CFB8A0FFE /* SendAddressPresenter.swift */; };
 		58AAA3E5C080A32A6A6B0E6D /* BtcComProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA58097EB8413FEA75EE8 /* BtcComProvider.swift */; };
@@ -1270,6 +1271,7 @@
 		58AAA58ED4B9DF77A5EED3E9 /* ChartPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA54C0CDDBE5FEEFC08B0 /* ChartPresenter.swift */; };
 		58AAA5930B8040CE9D9119CF /* BackupConfirmationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA2D3E1840EA8931E12D0 /* BackupConfirmationRouter.swift */; };
 		58AAA5A3B8E3D00CB0F5E504 /* TransactionInfoDescriptionTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA98833B2412BBE860CA5 /* TransactionInfoDescriptionTheme.swift */; };
+		58AAA5B439E08563952F1388 /* MaxSupplyMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB7A3593CAFEA65729C2 /* MaxSupplyMap.swift */; };
 		58AAA5BAC927BD8C5524F4C4 /* FullTransactionInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA687FC0253AD175BA756 /* FullTransactionInfoInteractor.swift */; };
 		58AAA5BD7844035810B6DAF4 /* BackupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5F63E9C788A68C8AF5A /* BackupPresenter.swift */; };
 		58AAA5C19051293C7F7568B7 /* FullTransactionProviderLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA330AD0FF6644BD4510C /* FullTransactionProviderLinkCell.swift */; };
@@ -1448,6 +1450,7 @@
 		58AAAC8295AE849F12826FED /* BackupConfirmationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA46DB06FFD38AD574E4E /* BackupConfirmationController.swift */; };
 		58AAAC932FCD8F3A61640752 /* FullTransactionInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA687FC0253AD175BA756 /* FullTransactionInfoInteractor.swift */; };
 		58AAAC939B0D62B4D1230C75 /* AmountInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF4E453A954DBFA84E89 /* AmountInfoView.swift */; };
+		58AAAC9D265EE3AA6751604A /* MaxSupplyMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB7A3593CAFEA65729C2 /* MaxSupplyMap.swift */; };
 		58AAACA87940BF3CC5401691 /* FullTransactionInfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD82EF02D5AA6E8ED4CB /* FullTransactionInfoProvider.swift */; };
 		58AAACAE27F2D974C6B37A90 /* DataProviderSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA390E4B59B8CB7C2D2E8 /* DataProviderSettingsModule.swift */; };
 		58AAACB46A71DBC1572AEE3F /* SendConfirmationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7E197A27A5C394A51F9 /* SendConfirmationInteractor.swift */; };
@@ -2498,6 +2501,7 @@
 		58AAAB2A7397DE3BBC456E96 /* DataProviderSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProviderSettingsViewController.swift; sourceTree = "<group>"; };
 		58AAAB2FE6078D42455148C5 /* SendConfirmationRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendConfirmationRouter.swift; sourceTree = "<group>"; };
 		58AAAB5515ECA96D506F56C3 /* LockScreenRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockScreenRouter.swift; sourceTree = "<group>"; };
+		58AAAB7A3593CAFEA65729C2 /* MaxSupplyMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaxSupplyMap.swift; sourceTree = "<group>"; };
 		58AAABE2FEDF83E81BC54940 /* RateListFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateListFactory.swift; sourceTree = "<group>"; };
 		58AAABE9392D032E7F4D0C73 /* ChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		58AAABEC00FE5DB3E113643E /* SectionHeaderFooterTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderFooterTextView.swift; sourceTree = "<group>"; };
@@ -3940,6 +3944,7 @@
 				58AAA17E98A75B51993953F8 /* ChartViewController.swift */,
 				58AAAAA2E81C192F6356ADCD /* CurrencyCompactFormatter.swift */,
 				58AAA28ABE08D74D89C2BF50 /* ChartRateFactory.swift */,
+				58AAAB7A3593CAFEA65729C2 /* MaxSupplyMap.swift */,
 			);
 			path = Chart;
 			sourceTree = "<group>";
@@ -5244,6 +5249,7 @@
 				58AAA7D4D6C1EB510525DC4E /* TransactionValueActionItemView.swift in Sources */,
 				58AAA4C5A0EBD39B1286AF9E /* InfoRouter.swift in Sources */,
 				58AAA792EE279A108B0EABC6 /* InfoViewController.swift in Sources */,
+				58AAA3CFF20D3AA530FFDB90 /* MaxSupplyMap.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5894,6 +5900,7 @@
 				58AAAC750F60C3AA7C454A00 /* TransactionValueActionItemView.swift in Sources */,
 				58AAA7D4E5166917E8A3F527 /* InfoRouter.swift in Sources */,
 				58AAAA3BF3090104BBCFEE0A /* InfoViewController.swift in Sources */,
+				58AAA5B439E08563952F1388 /* MaxSupplyMap.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6496,6 +6503,7 @@
 				58AAA67CFF77A4478DBDFBDD /* TransactionValueActionItemView.swift in Sources */,
 				58AAA360B9A6EF6BCCE0BE52 /* InfoRouter.swift in Sources */,
 				58AAA16CF43FA4D9FBBAFD4F /* InfoViewController.swift in Sources */,
+				58AAAC9D265EE3AA6751604A /* MaxSupplyMap.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -22,6 +22,7 @@ struct MarketInfoViewItem {
 
     public let volumeValue: CurrencyValue?
     public let supplyValue: CoinValue
+    public let maxSupplyValue: CoinValue?
 }
 
 class ChartRateFactory: IChartRateFactory {
@@ -59,7 +60,9 @@ class ChartRateFactory: IChartRateFactory {
         let volume = CurrencyValue(currency: currency, value: marketInfo.volume)
         let supply = CoinValue(coin: coin, value: marketInfo.supply)
 
-        return MarketInfoViewItem(timestamp: marketInfo.timestamp, rateValue: rateValue, marketCapValue: marketCapValue, volumeValue: volume, supplyValue: supply)
+        let maxSupply = MaxSupplyMap.maxSupplies[coin.code].map { CoinValue(coin: coin, value: $0) }
+
+        return MarketInfoViewItem(timestamp: marketInfo.timestamp, rateValue: rateValue, marketCapValue: marketCapValue, volumeValue: volume, supplyValue: supply, maxSupplyValue: maxSupply)
     }
 
 }

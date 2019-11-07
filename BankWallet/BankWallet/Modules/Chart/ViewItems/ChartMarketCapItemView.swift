@@ -9,7 +9,7 @@ class ChartMarketCapItemView: BaseActionItemView {
     private let volumeView = CaptionValueView()
     private let marketCapView = CaptionValueView()
     private let circulationView = CaptionValueView()
-//    private let totalView = CaptionValueView()
+    private let totalView = CaptionValueView()
     private let sourceView = CaptionValueView()
 
     override var item: ChartMarketCapItem? {
@@ -66,21 +66,20 @@ class ChartMarketCapItemView: BaseActionItemView {
             maker.top.equalTo(marketCapView.snp.bottom).offset(CGFloat.margin2x)
         }
 
-//        totalView.set(caption: "chart.total".localized)
+        totalView.set(caption: "chart.max_supply".localized)
 
-//        addSubview(totalView)
-//        totalView.snp.makeConstraints { maker in
-//            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-//            maker.top.equalTo(circulationView.snp.bottom).offset(CGFloat.margin2x)
-//        }
+        addSubview(totalView)
+        totalView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalTo(circulationView.snp.bottom).offset(CGFloat.margin2x)
+        }
 
         sourceView.set(value: "@CryptoCompare.com", font: .appCaption)
 
         addSubview(sourceView)
         sourceView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(circulationView.snp.bottom).offset(CGFloat.margin2x)
-//            maker.top.equalTo(totalView.snp.bottom).offset(CGFloat.margin2x)
+            maker.top.equalTo(totalView.snp.bottom).offset(CGFloat.margin2x)
         }
 
         item?.setTypeTitle = { [weak self] title in
@@ -108,9 +107,9 @@ class ChartMarketCapItemView: BaseActionItemView {
             self?.circulationView.set(value: value, accent: true)
         }
 
-//        item?.setTotal = { [weak self] value in
-//            self?.totalView.set(value: value, accent: true)
-//        }
+        item?.setTotal = { [weak self] value in
+            self?.totalView.set(value: value, accent: true)
+        }
     }
 
 }
