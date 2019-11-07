@@ -1,24 +1,31 @@
 import RxSwift
 
 class FullTransactionDataProviderManager {
+
     private var bitcoinProviders: [IBitcoinForksProvider] {
-        return appConfigProvider.testMode ? [HorSysBitcoinProvider(testMode: true)] : [
+        appConfigProvider.testMode ? [
+            HorSysBitcoinProvider(testMode: true)
+        ] : [
             HorSysBitcoinProvider(testMode: false),
             BlockChairBitcoinProvider(),
 //            BlockExplorerBitcoinProvider(),
             BtcComBitcoinProvider()
         ]
     }
+
     private var bitcoinCashProviders: [IBitcoinForksProvider] {
-        return appConfigProvider.testMode ? [BlockdozerBitcoinCashProvider(testMode: true)] : [
+        appConfigProvider.testMode ? [
+            BlockdozerBitcoinCashProvider(testMode: true)
+        ] : [
             BlockdozerBitcoinCashProvider(testMode: false),
             BlockChairBitcoinCashProvider(),
 //            BlockExplorerBitcoinCashProvider(),
             BtcComBitcoinCashProvider()
         ]
     }
+
     private var ethereumProviders: [IEthereumForksProvider] {
-        return appConfigProvider.testMode ? [
+        appConfigProvider.testMode ? [
 //            HorSysEthereumProvider(testMode: true),
             EtherscanEthereumProvider(testMode: true)
         ] : [
@@ -29,7 +36,7 @@ class FullTransactionDataProviderManager {
     }
 
     private var dashProviders: [IBitcoinForksProvider] {
-        return appConfigProvider.testMode ? [
+        appConfigProvider.testMode ? [
             HorSysDashProvider(testMode: true),
         ] : [
             HorSysDashProvider(testMode: false),
@@ -39,14 +46,14 @@ class FullTransactionDataProviderManager {
     }
 
     private var eosProviders: [IEosProvider] {
-        return [
-            EosInfraProvider(),
+        [
+//            EosInfraProvider(),
             EosGreymassProvider()
         ]
     }
 
     private var binanceProviders: [IBinanceProvider] {
-        return appConfigProvider.testMode ? [
+        appConfigProvider.testMode ? [
             BinanceOrgProvider(testMode: true),
         ] : [
             BinanceOrgProvider(testMode: false)
