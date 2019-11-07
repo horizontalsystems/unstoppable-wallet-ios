@@ -113,16 +113,15 @@ class ChartViewController: ActionSheetController {
     }
 
     private func show(supplyValue: CoinValue?) {
-        guard let supplyValue = supplyValue else {
-            marketCapItem.setCirculation?(nil)
-            return
-        }
-
         marketCapItem.setCirculation?(roundedFormat(coinValue: supplyValue))
     }
 
-    private func roundedFormat(coinValue: CoinValue) -> String? {
-        guard let formattedValue = coinFormatter.string(from: coinValue.value as NSNumber) else {
+    private func show(maxSupply: CoinValue?) {
+        marketCapItem.setTotal?(roundedFormat(coinValue: maxSupply) ?? "n/a".localized)
+    }
+
+    private func roundedFormat(coinValue: CoinValue?) -> String? {
+        guard let coinValue = coinValue, let formattedValue = coinFormatter.string(from: coinValue.value as NSNumber) else {
             return nil
         }
 
@@ -158,6 +157,7 @@ extension ChartViewController: IChartView {
         show(marketCapValue: viewItem.marketCapValue)
         show(volumeValue: viewItem.volumeValue)
         show(supplyValue: viewItem.supplyValue)
+        show(maxSupply: viewItem.maxSupplyValue)
     }
 
     func addTypeButtons(types: [ChartType]) {
