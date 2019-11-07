@@ -25,14 +25,14 @@ class TransactionProcessingView: UIView {
 
         processingLabel.font = .appSubhead2
         processingLabel.textColor = .appGray
-        processingLabel.text = "transactions.processing".localized
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(progress: Double) {
+    func bind(incoming: Bool, progress: Double) {
+        processingLabel.text = incoming ? "transactions.receiving".localized : "transactions.sending".localized
         barsProgressView.set(progress: progress)
     }
 
