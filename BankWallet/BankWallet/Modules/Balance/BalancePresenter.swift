@@ -44,8 +44,9 @@ class BalancePresenter {
     private func handleAdaptersReady() {
         interactor.subscribeToAdapters(wallets: items.map { $0.wallet })
 
-        for item in items {
+        items.forEach { item in
             item.balance = interactor.balance(wallet: item.wallet)
+            item.balanceLocked = interactor.balanceLocked(wallet: item.wallet)
             item.state = interactor.state(wallet: item.wallet)
         }
     }
@@ -183,10 +184,11 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         }
     }
 
-    func didUpdate(balance: Decimal, wallet: Wallet) {
+    func didUpdate(balance: Decimal, balanceLocked: Decimal, wallet: Wallet) {
         queue.async {
             self.updateItem(wallet: wallet) { item in
                 item.balance = balance
+                item.balanceLocked = balanceLocked
             }
 
             self.updateHeaderViewItem()
