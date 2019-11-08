@@ -5,6 +5,7 @@ enum AdapterState {
     case syncing(progress: Int, lastBlockDate: Date?)
     case notSynced
     case notReady
+
 }
 
 extension AdapterState: Equatable {

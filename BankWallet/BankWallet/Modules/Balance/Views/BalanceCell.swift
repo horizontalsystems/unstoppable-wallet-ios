@@ -10,7 +10,7 @@ class BalanceCell: CardCell {
     static let expandedLockedHeight: CGFloat = 188
     static let animationDuration = 0.15
 
-    private let minimumProgress = 10
+    private static let minimumProgress = 10
     private let lockedInfoVisibleHeight = 29
 
     private let coinIconImageView = UIImageView()
@@ -145,36 +145,36 @@ class BalanceCell: CardCell {
         }
 
         clippingView.addSubview(lockedInfoHolder)
-        lockedInfoHolder.backgroundColor = .clear
-        lockedInfoHolder.addSubview(coinLockedIcon)
-        lockedInfoHolder.addSubview(coinLockedValueLabel)
-        lockedInfoHolder.addSubview(currencyLockedValueLabel)
-
-        lockedInfoHolder.clipsToBounds = true
         lockedInfoHolder.snp.makeConstraints { maker in
             maker.height.equalTo(lockedInfoVisibleHeight)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin3x)
             maker.top.equalTo(coinValueLabel.snp.bottom)
         }
 
+        lockedInfoHolder.backgroundColor = .clear
+        lockedInfoHolder.clipsToBounds = true
+
+        lockedInfoHolder.addSubview(coinLockedIcon)
         coinLockedIcon.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         coinLockedIcon.snp.makeConstraints { maker in
             maker.leading.bottom.equalToSuperview()
         }
 
+        lockedInfoHolder.addSubview(coinLockedValueLabel)
         coinLockedValueLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(coinLockedIcon.snp.trailing)
+            maker.leading.equalTo(coinLockedIcon.snp.trailing).offset(CGFloat.margin1x)
             maker.bottom.equalToSuperview()
         }
 
+        coinLockedValueLabel.font = .appSubhead2
+        coinLockedValueLabel.textColor = .appGray
+
+        lockedInfoHolder.addSubview(currencyLockedValueLabel)
         currencyLockedValueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         currencyLockedValueLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(coinLockedValueLabel.snp.trailing)
             maker.trailing.bottom.equalToSuperview()
         }
-
-        coinLockedValueLabel.font = .appSubhead2
-        coinLockedValueLabel.textColor = .appGray
 
         currencyLockedValueLabel.font = .appSubhead1
         currencyLockedValueLabel.textColor = .appLeah
