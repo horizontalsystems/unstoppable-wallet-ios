@@ -12,17 +12,16 @@
 "button.done" = "Fait";
 "button.restore" = "Restaurer";
 "button.next" = "Suivant";
-"button.remove" = "Supprimer";
 "button.share" = "Partager";
-"button.save" = "Sauvegarder";
 "button.sync" = "Sync";
 "button.paste" = "Coller";
 "button.backup" = "Sauvegarde";
-"button.back" = "Retour";
+"button.copy" = "Copy";
 
 "alert.copied" = "Copié";
 "alert.no_internet" = "Aucune connexion Internet";
 "alert.network_issue" = "Problèmes réseau. Réessayez";
+"alert.unknown_error" = "Unknown Error";
 
 "n/a" = "S. O.";
 
@@ -42,9 +41,11 @@
 // Restore
 
 "restore.title" = "Restaurer à partir de";
+"restore.enter_key" = "Enter Key";
 "restore.item_title" = "%@ Portefeuille";
 "restore.description" = "Pour restaurer un portefeuille existant, vous devez entrer une clé privée pour ce portefeuille.\n\nUne fois que vous avez restauré un portefeuille, vous pourrez en restaurer d'autres via la section Gérer les portefeuilles dans les paramètres Sécurité de l'application.";
 "restore.words.description" = "Entrez la clé privée pour le portefeuille %@";
+"restore.eos.description" = "Enter your private key for %@ wallet.";
 "restore.validation_failed" = "Clé incorrect";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
@@ -62,9 +63,6 @@
 "restore_options.derivation.after_update" = "Après novembre 2019";
 "restore_options.derivation.bip44" = "BIP-44";
 "restore_options.derivation.bip49" = "BIP-49";
-"restore_options.alert.header" = "Attention";
-"restore_options.alert.text" = "Cette action va rééquilibrer votre solde de porte-monnaie pour chaque de blockchain. Elle peut prendre plusieurs heures pour terminer.";
-"restore_options.erc20" = "Sync mode same as Ethereum";
 
 // Backup
 
@@ -90,9 +88,6 @@
 "error.send_eos.unknown" = "Quelque chose s'est mal passé: %@";
 
 "backup.confirmation.title" = "Vérification...";
-"backup.confirmation.secret_key" = "Je comprends que je suis propriétaire d'une clé secrète privée de 12 mots, qui est stockée en toute sécurité sur mon téléphone portable et me permet de contrôler les fonds sur mon porte-monnaie.";
-"backup.confirmation.delete_app_warn" = "Je comprends que si cette appli ne fonction plus, est déplacée vers un autre appareil ou supprimée, mon porte-monnaie ne peut être récupéré qu'avec la clé secrète.";
-"backup.confirmation.disclaimer" = "Je comprends que les développeurs de cette application ne peuvent pas être responsables de tout bogue ou problème non désiré qui pourrait apparaître lors de l'utilisation de cette application.";
 
 "words_validator.empty_words" = "Tous les mots ne sont pas entrés";
 "words_validator.invalid_confirmation" = "Les mots ne correspondent pas";
@@ -104,13 +99,15 @@
 "balance.send" = "Envoyer";
 "balance.deposit" = "Recevoir";
 "balance.rate_per_coin" = "%@ par %@";
-"balance.synced_through" = "jusqu'à: %@";
 "balance.syncing" = "Synchronisation...";
-"balance.add_coins" = "Ajouter des coins";
+"balance.syncing_percent" = "Syncing... %@";
+"balance.synced_through" = "jusqu'à: %@";
+"balance.add_coin" = "Add Coin";
 "balance.sort.header" = "Trier par";
 "balance.sort.valueHighToLow" = "Balance";
 "balance.sort.az" = "Nom";
 "balance.sort.24h_change" = "Changement 24h";
+
 // Deposit
 
 "deposit.receive_coin" = "Recevoir %@";
@@ -122,6 +119,7 @@
 
 "send.title" = "Envoyer %@";
 "send.amount_placeholder" = "Montant";
+"send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.address_placeholder" = "Adresse";
 "send.account_placeholder" = "Account";
 "send.fee" = "Frais";
@@ -134,28 +132,36 @@
 "send.duration.within" = "dans la limite de %@";
 "send.duration.hours" = "%d h.";
 "send.duration.minutes" = "%d min.";
+"send.available_balance" = "Available Balance";
 "send.max_button" = "Max";
 "send.next_button" = "Suivant";
 "send.error.invalid_address" = "Addresse invalide";
-"send.error.invalid_account" = "Compte invalide";
-"send.error.no_address" = "Aucune adresse";
-"send.error.no_amount" = "Aucun montant";
+"send.hodler_locktime" = "Lock Time";
+"send.hodler_locktime_hour" = "1 hour";
+"send.hodler_locktime_month" = "1 month";
+"send.hodler_locktime_half_year" = "6 months";
+"send.hodler_locktime_year" = "1 year";
+"send.hodler_locktime_off" = "Off";
 
 "send.confirmation.title" = "Confirmer";
-"send.confirmation.to" = "À";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total";
-"send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "Envoyer";
 "send.amount_error.balance" = "Balance %@";
+"send.amount_error.maximum_amount" = "Maximum amount %@";
+"send.amount_error.minimum_amount" = "Minimum amount %@";
+"send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.token.insufficient_fee_alert" = "Frais de transaction pour %@ (%@) payé en %@. Il est nécessaire %@.";
 
+"send.lock_time" = "Lock Time";
 // Transactions
 
 "transactions.title" = "Transactions";
 "transactions.tab_bar_item" = "Transactions";
 "transactions.filter_all" = "Tous";
 "transactions.empty_text" = "Vous n'avez encore aucune transaction en cours ou passée";
+"transactions.pending" = "Pending";
+"transactions.processing" = "Processing";
 
 // Transaction Info
 
@@ -170,6 +176,8 @@
 "tx_info.rate" = "Taux historique";
 "tx_info.fee" = "Frais";
 "tx_info.note" = "La valeur de cette transaction apparaît comme 0 car elle a été envoyée à votre propre adresse";
+"tx_info.locked_until" = "Locked until";
+"tx_info.recipient_hash" = "Recipient";
 
 // Full Info
 
@@ -214,6 +222,7 @@
 "settings.tab_bar_item" = "Paramètres";
 "settings.security_center" = "Centre de Sécurité";
 "settings.manage_coins" = "Gérer les coins";
+"settings.experimental_features" = "Experimental Features";
 "settings.notifications" = "Notifications";
 "settings.base_currency" = "Devise de Base";
 "settings.language" = "Langue";
@@ -249,6 +258,18 @@
 "manage_coins.add_coin.create" = "Créer";
 "manage_coins.add_coin.restore" = "Restaurer";
 
+// Settings -> Experimental Features
+
+"settings.experimental_features.title" = "Experimental";
+"settings.experimental_features.description" = "The features below are experimental and should be used with caution. While we have throughly tested these features using our own crypto funds we can not guarantee they work as expected in all possible cases.";
+"settings.experimental_features.bitcoin_hodling" = "Bitcoin HODLing";
+
+// Settings -> Experimental Features -> Bitcoin HODLing
+
+"settings.bitcoin_hodling.title" = "Bitcoin HODLing";
+"settings.bitcoin_hodling.lock_time" = "Lock Time";
+"settings.bitcoin_hodling.description" = "Enables you to send Bitcoins that can not be spent until specified date.\n\nThe receiver of such transaction should use Unstoppable wallet.\n\nOnly Unstoppable wallet can correctly identify such transactions on Bitcoin network as well as enable receiver to spend those Bitcoins after the lock period expires.\n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transaction to yourself.\n\nBeing an experimental feature the maximum amount per transaction is limited to 0.5 BTC.";
+
 // Settings -> About
 
 "settings_about.title" = "À propos de";
@@ -274,6 +295,7 @@
 // Settings -> Report Problem
 
 "settings.report_problem.title" = "Signaler un problème";
+"settings.report_problem.app_status" = "App Status";
 "settings.report_problem.email" = "E-mail";
 "settings.report_problem.telegram" = "Telegram";
 
@@ -316,6 +338,7 @@
 "unlock_pin.info" = "Code";
 "unlock_pin.cant_save_pin" = "Oops! Nous ne pouvons pas enregistrer votre code, veuillez nous contacter au plus vite!";
 "unlock_pin.blocked_until" = "Désactivé jusqu'à: %@";
+"rate_list.updated" = "updated";
 
 // No Passcode
 
@@ -338,7 +361,6 @@
 "chart.time_duration.day" = "1J";
 "chart.time_duration.week" = "7J";
 "chart.time_duration.month" = "1M";
-"chart.time_duration.quartal" = "3M";
 "chart.time_duration.halyear" = "6M";
 "chart.time_duration.year" = "1A";
 
@@ -350,6 +372,9 @@
 "chart.high" = "Élevée";
 "chart.low" = "Faible";
 "chart.volume" = "Volume";
+"chart.circulation" = "In Circulation";
+"chart.total" = "Total";
+"chart.source" = "Source";
 "chart.error.not_available" = "Graphique non disponible";
 
 // Create Wallet
@@ -361,3 +386,8 @@
 "price_notification.up" = "monter";
 "price_notification.down" = "descendre";
 "price_notification.multi_title" = "Notifications";
+
+// Lock Info
+
+"lock_info.title" = "Info";
+"lock_info.text" = "The sender sent these funds with a spending lock that will expire on Aug 29, 2019.\n\nNo worries, the received Bitcoins are already yours but until the lock period expires you can not spend them on the Bitcoin network.";
