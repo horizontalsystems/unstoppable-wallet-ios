@@ -144,6 +144,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "send.hodler_locktime_half_year" = "6 months";
 "send.hodler_locktime_year" = "1 year";
 "send.hodler_locktime_off" = "Off";
+"send.hodler_error.unsupported_address" = "Time locking works only with P2PKH addresses (starting with 1)";
 
 "send.confirmation.title" = "Confirm";
 "send.confirmation.memo_placeholder" = "Memo";

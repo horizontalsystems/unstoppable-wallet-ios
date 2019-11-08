@@ -79,6 +79,7 @@ class AddressInputField: UIView {
 
         errorLabel.font = .appCaption
         errorLabel.textColor = SendTheme.errorColor
+        errorLabel.numberOfLines = 0
 
         pasteButton.borderWidth = 1 / UIScreen.main.scale
         pasteButton.borderColor = SendTheme.buttonBorderColor
@@ -233,7 +234,7 @@ class AddressInputField: UIView {
     }
 
     override func becomeFirstResponder() -> Bool {
-        return addressField.becomeFirstResponder()
+        addressField.becomeFirstResponder()
     }
 
 }

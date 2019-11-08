@@ -127,7 +127,7 @@ extension SendBitcoinHandler: ISendAmountDelegate {
 extension SendBitcoinHandler: ISendAddressDelegate {
 
     func validate(address: String) throws {
-        try interactor.validate(address: address)
+        try interactor.validate(address: address, pluginData: pluginData)
     }
 
     func onUpdateAddress() {
@@ -171,6 +171,7 @@ extension SendBitcoinHandler: ISendHodlerDelegate {
         syncAvailableBalance()
         syncMaximumAmount()
         syncFee()
+        syncValidation()
     }
 
 }

@@ -49,8 +49,8 @@ extension SendBitcoinInteractor: ISendBitcoinInteractor {
         }
     }
 
-    func validate(address: String) throws {
-        try adapter.validate(address: address)
+    func validate(address: String, pluginData: [UInt8: IBitcoinPluginData]) throws {
+        try adapter.validate(address: address, pluginData: pluginData)
     }
 
     func fetchFee(amount: Decimal, feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData]) {
