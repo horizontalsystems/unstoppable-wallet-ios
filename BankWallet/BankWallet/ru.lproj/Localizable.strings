@@ -16,12 +16,12 @@
 "button.sync" = "Синхр.";
 "button.paste" = "Вставить";
 "button.backup" = "Резервная копия";
-"button.copy" = "Copy";
+"button.copy" = "Скопировать";
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет интернета";
 "alert.network_issue" = "Проблемы с сетью. Попробуйте еще раз ";
-"alert.unknown_error" = "Unknown Error";
+"alert.unknown_error" = "Неизвестная Ошибка";
 
 "n/a" = "Нет данных";
 
@@ -40,12 +40,12 @@
 
 // Restore
 
-"restore.title" = "Восстановить Из";
-"restore.enter_key" = "Enter Key";
+"restore.title" = "Восстановить ";
+"restore.enter_key" = "Введите Ключ";
 "restore.item_title" = "%@ Кошелек";
 "restore.description" = "Чтобы восстановить существующий кошелек вам нужно ввести приватный ключ для этого кошелька.\n\nКак только вы восстановите один кошелек, вы сможете восстановить больше кошельков, перейдя в раздел \"Управление Кошельками\" в настройках приложения.";
 "restore.words.description" = "Введите приватный ключ для кошелька %@";
-"restore.eos.description" = "Enter your private key for %@ wallet.";
+"restore.eos.description" = "Введите приватный ключ для %@ кошелька.";
 "restore.validation_failed" = "Неверный Ключ";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
@@ -100,9 +100,9 @@
 "balance.deposit" = "Получить";
 "balance.rate_per_coin" = "%@ за %@";
 "balance.syncing" = "Синхронизация...";
-"balance.syncing_percent" = "Syncing... %@";
+"balance.syncing_percent" = "Синхронизация... %@";
 "balance.synced_through" = "до: %@";
-"balance.add_coin" = "Add Coin";
+"balance.add_coin" = "Добавить Валюту";
 "balance.sort.header" = "Сортировать по";
 "balance.sort.valueHighToLow" = "Балансу";
 "balance.sort.az" = "Названию";
@@ -132,16 +132,16 @@
 "send.duration.within" = "в течение %@";
 "send.duration.hours" = "%d ч.";
 "send.duration.minutes" = "%d мин.";
-"send.available_balance" = "Available Balance";
+"send.available_balance" = "Доступный Баланс";
 "send.max_button" = "Макс.";
 "send.next_button" = "Далее";
 "send.error.invalid_address" = "Неверный Адрес";
-"send.hodler_locktime" = "Lock Time";
-"send.hodler_locktime_hour" = "1 hour";
-"send.hodler_locktime_month" = "1 month";
-"send.hodler_locktime_half_year" = "6 months";
-"send.hodler_locktime_year" = "1 year";
-"send.hodler_locktime_off" = "Off";
+"send.hodler_locktime" = "Время Блокировки";
+"send.hodler_locktime_hour" = "1 час";
+"send.hodler_locktime_month" = "1 месяц";
+"send.hodler_locktime_half_year" = "6 месяцев";
+"send.hodler_locktime_year" = "1 год";
+"send.hodler_locktime_off" = "Выкл.";
 
 "send.confirmation.title" = "Подтвердить";
 "send.confirmation.memo_placeholder" = "Memo";
@@ -153,7 +153,7 @@
 "send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.token.insufficient_fee_alert" = "Комиссия за отправку %@ (%@) взымается в %@. Необходимо %@.";
 
-"send.lock_time" = "Lock Time";
+"send.lock_time" = "Время Блокировки";
 // Transactions
 
 "transactions.title" = "Транзакции";
@@ -161,7 +161,8 @@
 "transactions.filter_all" = "Все";
 "transactions.empty_text" = "У Вас ещё нет ожидаемых или прошлых транзакций ";
 "transactions.pending" = "Pending";
-"transactions.processing" = "Processing";
+"transactions.receiving" = "Receiving";
+"transactions.sending" = "Sending";
 
 // Transaction Info
 
@@ -176,7 +177,7 @@
 "tx_info.rate" = "Исторический Курс";
 "tx_info.fee" = "Комиссия";
 "tx_info.note" = "Значение этой транзакции выглядит как 0, потому что она была отправлена на свой собственный адрес";
-"tx_info.locked_until" = "Locked until";
+"tx_info.locked_until" = "Заблокировано до";
 "tx_info.recipient_hash" = "Recipient";
 
 // Full Info
@@ -222,7 +223,7 @@
 "settings.tab_bar_item" = "Настройки";
 "settings.security_center" = "Центр Безопасности";
 "settings.manage_coins" = "Управление Токенами";
-"settings.experimental_features" = "Experimental Features";
+"settings.experimental_features" = "Экспериментальные Функции";
 "settings.notifications" = "Уведомления ";
 "settings.base_currency" = "Базовая Валюта";
 "settings.language" = "Язык";
@@ -262,12 +263,12 @@
 
 "settings.experimental_features.title" = "Experimental";
 "settings.experimental_features.description" = "The features below are experimental and should be used with caution. While we have throughly tested these features using our own crypto funds we can not guarantee they work as expected in all possible cases.";
-"settings.experimental_features.bitcoin_hodling" = "Bitcoin HODLing";
+"settings.experimental_features.bitcoin_hodling" = "Lock Bitcoins";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
-"settings.bitcoin_hodling.title" = "Bitcoin HODLing";
-"settings.bitcoin_hodling.lock_time" = "Lock Time";
+"settings.bitcoin_hodling.title" = "Lock Bitcoins";
+"settings.bitcoin_hodling.lock_time" = "Время Блокировки";
 "settings.bitcoin_hodling.description" = "Enables you to send Bitcoins that can not be spent until specified date.\n\nThe receiver of such transaction should use Unstoppable wallet.\n\nOnly Unstoppable wallet can correctly identify such transactions on Bitcoin network as well as enable receiver to spend those Bitcoins after the lock period expires.\n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transaction to yourself.\n\nBeing an experimental feature the maximum amount per transaction is limited to 0.5 BTC.";
 
 // Settings -> About
@@ -295,7 +296,7 @@
 // Settings -> Report Problem
 
 "settings.report_problem.title" = "Наши Контакты";
-"settings.report_problem.app_status" = "App Status";
+"settings.report_problem.app_status" = "Статус Приложения";
 "settings.report_problem.email" = "Эл. почта";
 "settings.report_problem.telegram" = "Telegram ";
 
@@ -338,7 +339,7 @@
 "unlock_pin.info" = "Код Доступа";
 "unlock_pin.cant_save_pin" = "Ой! Мы не можем сохранить ваш код. Пожалуйста, свяжитесь с нами как можно скорее!";
 "unlock_pin.blocked_until" = "Отключено до: %@";
-"rate_list.updated" = "updated";
+"rate_list.updated" = "обновлено";
 
 // No Passcode
 
@@ -357,7 +358,7 @@
 
 // Key Types
 
-"chart.title" = "%@ Курс";
+"chart.title" = "%@ Price";
 "chart.time_duration.day" = "1Д";
 "chart.time_duration.week" = "7Д";
 "chart.time_duration.month" = "1М";
@@ -369,12 +370,13 @@
 "chart.market_cap.million" = "%@ млн.";
 "chart.market_cap.billion" = "%@ млр.";
 "chart.market_cap.trillion" = "%@ трил.";
-"chart.high" = "Макс.";
-"chart.low" = "Мин.";
+"chart.high" = "%@ Макс.";
+"chart.low" = "%@ Мин.";
 "chart.volume" = "Объём";
 "chart.circulation" = "In Circulation";
-"chart.total" = "Total";
-"chart.source" = "Source";
+"chart.max_supply" = "Max.Supply";
+"chart.total" = "Итого";
+"chart.source" = "Источник";
 "chart.error.not_available" = "График недоступен";
 
 // Create Wallet
@@ -390,4 +392,4 @@
 // Lock Info
 
 "lock_info.title" = "Info";
-"lock_info.text" = "The sender sent these funds with a spending lock that will expire on Aug 29, 2019.\n\nNo worries, the received Bitcoins are already yours but until the lock period expires you can not spend them on the Bitcoin network.";
+"lock_info.text" = "The sender sent these funds with a spending lock that will expire on shown date.\n\nNo worries, the received Bitcoins are already yours but until the lock period expires you can not spend them on the Bitcoin network.";
