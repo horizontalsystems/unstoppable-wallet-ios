@@ -76,6 +76,8 @@ class RestoreWordsViewController: WalletViewController {
                 })
                 .disposed(by: disposeBag)
 
+        view.layoutIfNeeded()
+
         delegate.viewDidLoad()
     }
 
