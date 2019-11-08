@@ -83,13 +83,3 @@ extension ChartRateFactory.FactoryError: LocalizedError {
         }
     }
 }
-
-extension HodlerPluginError: LocalizedError {
-    public var errorDescription: String? {
-        switch self {
-        case .unsupportedAddress: return "send.hodler_error.unsupported_address".localized
-        case .invalidData: return "send.hodler_error.invalid_data".localized
-        case .lockedValueLimitExceeded: return "send.hodler_error.locked_value_limit_exceeded".localized
-        }
-    }
-}
