@@ -16,7 +16,7 @@
 "button.sync" = "Sync";
 "button.paste" = "粘帖";
 "button.backup" = "备份";
-"button.copy" = "Copy";
+"button.copy" = "复制";
 
 "alert.copied" = "已复制";
 "alert.no_internet" = "没有网络";
@@ -41,7 +41,7 @@
 // Restore
 
 "restore.title" = "恢复自";
-"restore.enter_key" = "Enter Key";
+"restore.enter_key" = "输入密钥";
 "restore.item_title" = "%@钱包";
 "restore.description" = "要恢复现有钱包，您必须输入该钱包的私钥。\n\n恢复钱包后，您可以通过应用的“安全”设置中的“管理钱包”恢复其他钱包。";
 "restore.words.description" = "输入%@钱包的私钥";
@@ -121,7 +121,7 @@
 "send.amount_placeholder" = "金额";
 "send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.address_placeholder" = "地址";
-"send.account_placeholder" = "Account";
+"send.account_placeholder" = "账户";
 "send.fee" = "费用";
 "send.tx_speed" = "交易速度";
 "send.tx_speed_low" = "低";
@@ -141,7 +141,7 @@
 "send.hodler_locktime_month" = "1 month";
 "send.hodler_locktime_half_year" = "6 months";
 "send.hodler_locktime_year" = "1 year";
-"send.hodler_locktime_off" = "Off";
+"send.hodler_locktime_off" = "关";
 
 "send.confirmation.title" = "确认";
 "send.confirmation.memo_placeholder" = "Memo";
@@ -160,8 +160,9 @@
 "transactions.tab_bar_item" = "交易";
 "transactions.filter_all" = "全部";
 "transactions.empty_text" = "您还没有任何待定或成功的交易";
-"transactions.pending" = "Pending";
-"transactions.processing" = "Processing";
+"transactions.pending" = "待处理";
+"transactions.receiving" = "Receiving";
+"transactions.sending" = "正在发送";
 
 // Transaction Info
 
@@ -203,7 +204,7 @@
 "full_info.milli_seconds" = "%@ μs";
 "full_info.bytes" = "%@ Bytes";
 
-"full_info.gas_limit" = "Gas Limit";
+"full_info.gas_limit" = "Gas Limit ";
 "full_info.gas_used" = "Gas Used";
 "full_info.gas_price" = "Gas Price";
 
@@ -262,11 +263,11 @@
 
 "settings.experimental_features.title" = "Experimental";
 "settings.experimental_features.description" = "The features below are experimental and should be used with caution. While we have throughly tested these features using our own crypto funds we can not guarantee they work as expected in all possible cases.";
-"settings.experimental_features.bitcoin_hodling" = "Bitcoin HODLing";
+"settings.experimental_features.bitcoin_hodling" = "Lock Bitcoins";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
-"settings.bitcoin_hodling.title" = "Bitcoin HODLing";
+"settings.bitcoin_hodling.title" = "Lock Bitcoins";
 "settings.bitcoin_hodling.lock_time" = "Lock Time";
 "settings.bitcoin_hodling.description" = "Enables you to send Bitcoins that can not be spent until specified date.\n\nThe receiver of such transaction should use Unstoppable wallet.\n\nOnly Unstoppable wallet can correctly identify such transactions on Bitcoin network as well as enable receiver to spend those Bitcoins after the lock period expires.\n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transaction to yourself.\n\nBeing an experimental feature the maximum amount per transaction is limited to 0.5 BTC.";
 
@@ -357,7 +358,7 @@
 
 // Key Types
 
-"chart.title" = "%@价格";
+"chart.title" = "%@ Price";
 "chart.time_duration.day" = "1天";
 "chart.time_duration.week" = "7天";
 "chart.time_duration.month" = "1个月";
@@ -373,8 +374,9 @@
 "chart.low" = "低";
 "chart.volume" = "量";
 "chart.circulation" = "In Circulation";
-"chart.total" = "Total";
-"chart.source" = "Source";
+"chart.max_supply" = "Max.Supply";
+"chart.total" = "总额";
+"chart.source" = "源";
 "chart.error.not_available" = "无可用图表";
 
 // Create Wallet
@@ -390,4 +392,4 @@
 // Lock Info
 
 "lock_info.title" = "Info";
-"lock_info.text" = "The sender sent these funds with a spending lock that will expire on Aug 29, 2019.\n\nNo worries, the received Bitcoins are already yours but until the lock period expires you can not spend them on the Bitcoin network.";
+"lock_info.text" = "The sender sent these funds with a spending lock that will expire on shown date.\n\nNo worries, the received Bitcoins are already yours but until the lock period expires you can not spend them on the Bitcoin network.";
