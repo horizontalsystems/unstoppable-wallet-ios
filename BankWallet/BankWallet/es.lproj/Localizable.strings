@@ -161,7 +161,8 @@
 "transactions.filter_all" = "Todo";
 "transactions.empty_text" = "Todavía no tienes transacciones pendientes o pasadas";
 "transactions.pending" = "Pending";
-"transactions.processing" = "Processing";
+"transactions.receiving" = "Receiving";
+"transactions.sending" = "Sending";
 
 // Transaction Info
 
@@ -262,11 +263,11 @@
 
 "settings.experimental_features.title" = "Experimental";
 "settings.experimental_features.description" = "The features below are experimental and should be used with caution. While we have throughly tested these features using our own crypto funds we can not guarantee they work as expected in all possible cases.";
-"settings.experimental_features.bitcoin_hodling" = "Bitcoin HODLing";
+"settings.experimental_features.bitcoin_hodling" = "Lock Bitcoins";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
-"settings.bitcoin_hodling.title" = "Bitcoin HODLing";
+"settings.bitcoin_hodling.title" = "Lock Bitcoins";
 "settings.bitcoin_hodling.lock_time" = "Lock Time";
 "settings.bitcoin_hodling.description" = "Enables you to send Bitcoins that can not be spent until specified date.\n\nThe receiver of such transaction should use Unstoppable wallet.\n\nOnly Unstoppable wallet can correctly identify such transactions on Bitcoin network as well as enable receiver to spend those Bitcoins after the lock period expires.\n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transaction to yourself.\n\nBeing an experimental feature the maximum amount per transaction is limited to 0.5 BTC.";
 
@@ -357,7 +358,7 @@
 
 // Key Types
 
-"chart.title" = "%@ Tarifa";
+"chart.title" = "%@ Price";
 "chart.time_duration.day" = "1 D";
 "chart.time_duration.week" = "7 D";
 "chart.time_duration.month" = "1M";
@@ -373,6 +374,7 @@
 "chart.low" = "Bajo";
 "chart.volume" = "Volumen";
 "chart.circulation" = "In Circulation";
+"chart.max_supply" = "Max.Supply";
 "chart.total" = "Total";
 "chart.source" = "Source";
 "chart.error.not_available" = "Gráfico no disponible";
@@ -390,4 +392,4 @@
 // Lock Info
 
 "lock_info.title" = "Info";
-"lock_info.text" = "The sender sent these funds with a spending lock that will expire on Aug 29, 2019.\n\nNo worries, the received Bitcoins are already yours but until the lock period expires you can not spend them on the Bitcoin network.";
+"lock_info.text" = "The sender sent these funds with a spending lock that will expire on shown date.\n\nNo worries, the received Bitcoins are already yours but until the lock period expires you can not spend them on the Bitcoin network.";
