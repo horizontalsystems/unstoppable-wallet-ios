@@ -16,12 +16,12 @@
 "button.sync" = "Sync";
 "button.paste" = "Coller";
 "button.backup" = "Sauvegarde";
-"button.copy" = "Copy";
+"button.copy" = "Copier";
 
 "alert.copied" = "Copié";
 "alert.no_internet" = "Aucune connexion Internet";
 "alert.network_issue" = "Problèmes réseau. Réessayez";
-"alert.unknown_error" = "Unknown Error";
+"alert.unknown_error" = "Erreur inconnue";
 
 "n/a" = "S. O.";
 
@@ -41,7 +41,7 @@
 // Restore
 
 "restore.title" = "Restaurer à partir de";
-"restore.enter_key" = "Enter Key";
+"restore.enter_key" = "Entrez la clé";
 "restore.item_title" = "%@ Portefeuille";
 "restore.description" = "Pour restaurer un portefeuille existant, vous devez entrer une clé privée pour ce portefeuille.\n\nUne fois que vous avez restauré un portefeuille, vous pourrez en restaurer d'autres via la section Gérer les portefeuilles dans les paramètres Sécurité de l'application.";
 "restore.words.description" = "Entrez la clé privée pour le portefeuille %@";
@@ -100,9 +100,9 @@
 "balance.deposit" = "Recevoir";
 "balance.rate_per_coin" = "%@ par %@";
 "balance.syncing" = "Synchronisation...";
-"balance.syncing_percent" = "Syncing... %@";
+"balance.syncing_percent" = "Synchronisation... %@";
 "balance.synced_through" = "jusqu'à: %@";
-"balance.add_coin" = "Add Coin";
+"balance.add_coin" = "Ajouter des coins";
 "balance.sort.header" = "Trier par";
 "balance.sort.valueHighToLow" = "Balance";
 "balance.sort.az" = "Nom";
@@ -119,7 +119,7 @@
 
 "send.title" = "Envoyer %@";
 "send.amount_placeholder" = "Montant";
-"send.amount_error.min_required_balance" = "Min. required remainder %@";
+"send.amount_error.min_required_balance" = "Minimum requis %@ restant";
 "send.address_placeholder" = "Adresse";
 "send.account_placeholder" = "Account";
 "send.fee" = "Frais";
@@ -161,7 +161,8 @@
 "transactions.filter_all" = "Tous";
 "transactions.empty_text" = "Vous n'avez encore aucune transaction en cours ou passée";
 "transactions.pending" = "Pending";
-"transactions.processing" = "Processing";
+"transactions.receiving" = "Receiving";
+"transactions.sending" = "Sending";
 
 // Transaction Info
 
@@ -262,11 +263,11 @@
 
 "settings.experimental_features.title" = "Experimental";
 "settings.experimental_features.description" = "The features below are experimental and should be used with caution. While we have throughly tested these features using our own crypto funds we can not guarantee they work as expected in all possible cases.";
-"settings.experimental_features.bitcoin_hodling" = "Bitcoin HODLing";
+"settings.experimental_features.bitcoin_hodling" = "Lock Bitcoins";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
-"settings.bitcoin_hodling.title" = "Bitcoin HODLing";
+"settings.bitcoin_hodling.title" = "Lock Bitcoins";
 "settings.bitcoin_hodling.lock_time" = "Lock Time";
 "settings.bitcoin_hodling.description" = "Enables you to send Bitcoins that can not be spent until specified date.\n\nThe receiver of such transaction should use Unstoppable wallet.\n\nOnly Unstoppable wallet can correctly identify such transactions on Bitcoin network as well as enable receiver to spend those Bitcoins after the lock period expires.\n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transaction to yourself.\n\nBeing an experimental feature the maximum amount per transaction is limited to 0.5 BTC.";
 
@@ -357,7 +358,7 @@
 
 // Key Types
 
-"chart.title" = "Taux %@";
+"chart.title" = "%@ Price";
 "chart.time_duration.day" = "1J";
 "chart.time_duration.week" = "7J";
 "chart.time_duration.month" = "1M";
@@ -373,6 +374,7 @@
 "chart.low" = "Faible";
 "chart.volume" = "Volume";
 "chart.circulation" = "In Circulation";
+"chart.max_supply" = "Max.Supply";
 "chart.total" = "Total";
 "chart.source" = "Source";
 "chart.error.not_available" = "Graphique non disponible";
@@ -390,4 +392,4 @@
 // Lock Info
 
 "lock_info.title" = "Info";
-"lock_info.text" = "The sender sent these funds with a spending lock that will expire on Aug 29, 2019.\n\nNo worries, the received Bitcoins are already yours but until the lock period expires you can not spend them on the Bitcoin network.";
+"lock_info.text" = "The sender sent these funds with a spending lock that will expire on shown date.\n\nNo worries, the received Bitcoins are already yours but until the lock period expires you can not spend them on the Bitcoin network.";
