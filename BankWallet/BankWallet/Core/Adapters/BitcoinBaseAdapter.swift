@@ -172,8 +172,8 @@ extension BitcoinBaseAdapter {
         Decimal(abstractKit.minSpendableValue(toAddress: address)) / coinRate
     }
 
-    func validate(address: String) throws {
-        try abstractKit.validate(address: address)
+    func validate(address: String, pluginData: [UInt8: IBitcoinPluginData] = [:]) throws {
+        try abstractKit.validate(address: address, pluginData: pluginData)
     }
 
     func fee(amount: Decimal, feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData] = [:]) -> Decimal {

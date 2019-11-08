@@ -3,6 +3,7 @@ import HSHDWalletKit
 import EosKit
 import BitcoinCore
 import BinanceChainKit
+import Hodler
 
 extension WordsValidator.ValidationError: LocalizedError {
     public var errorDescription: String? {
@@ -79,6 +80,16 @@ extension ChartRateFactory.FactoryError: LocalizedError {
         switch self {
         case .noChartPoints: return "chart.error.no_statistics".localized
         case .noPercentDelta: return "chart.error.no_percentDelta".localized
+        }
+    }
+}
+
+extension HodlerPluginError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .unsupportedAddress: return "send.hodler_error.unsupported_address".localized
+        case .invalidData: return "send.hodler_error.invalid_data".localized
+        case .lockedValueLimitExceeded: return "send.hodler_error.locked_value_limit_exceeded".localized
         }
     }
 }

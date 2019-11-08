@@ -7,9 +7,13 @@ class SendAddressPresenter {
     private let interactor: ISendAddressInteractor
     private let router: ISendAddressRouter
 
+    private var enteredAddress: String?
+
     var currentAddress: String? {
-        didSet {
-            delegate?.onUpdateAddress()
+        do {
+            return try validAddress()
+        } catch {
+            return nil
         }
     }
 
@@ -21,18 +25,12 @@ class SendAddressPresenter {
     private func onEnter(address: String) {
         let (parsedAddress, amount) = interactor.parse(address: address)
 
-        do {
-            try delegate?.validate(address: parsedAddress)
+        enteredAddress = parsedAddress
+        try? validAddress()
 
-            view?.set(address: parsedAddress, error: nil)
-            self.currentAddress = parsedAddress
-
-            if let amount = amount {
-                delegate?.onUpdate(amount: amount)
-            }
-        } catch {
-            view?.set(address: parsedAddress, error: ValidationError.invalidAddress)
-            self.currentAddress = nil
+        delegate?.onUpdateAddress()
+        if let amount = amount {
+            delegate?.onUpdate(amount: amount)
         }
     }
 
@@ -52,7 +50,8 @@ extension SendAddressPresenter: ISendAddressViewDelegate {
 
     func onAddressDeleteClicked() {
         view?.set(address: nil, error: nil)
-        currentAddress = nil
+        enteredAddress = nil
+        delegate?.onUpdateAddress()
     }
 
 }
@@ -60,11 +59,19 @@ extension SendAddressPresenter: ISendAddressViewDelegate {
 extension SendAddressPresenter: ISendAddressModule {
 
     func validAddress() throws -> String {
-        guard let validAddress = currentAddress else {
+        guard let address = enteredAddress else {
             throw ValidationError.invalidAddress
         }
 
-        return validAddress
+        do {
+            try delegate?.validate(address: address)
+            view?.set(address: address, error: nil)
+        } catch {
+            view?.set(address: address, error: error)
+            throw error
+        }
+
+        return address
     }
 
 }

@@ -42,15 +42,19 @@ extension DashAdapter: DashKitDelegate {
 extension DashAdapter: ISendDashAdapter {
 
     func availableBalance(address: String?) -> Decimal {
-        return availableBalance(feeRate: feeRate, address: address)
+        availableBalance(feeRate: feeRate, address: address)
+    }
+
+    func validate(address: String) throws {
+        try validate(address: address, pluginData: [:])
     }
 
     func fee(amount: Decimal, address: String?) -> Decimal {
-        return fee(amount: amount, feeRate: feeRate, address: address)
+        fee(amount: amount, feeRate: feeRate, address: address)
     }
 
     func sendSingle(amount: Decimal, address: String) -> Single<Void> {
-        return sendSingle(amount: amount, address: address, feeRate: feeRate)
+        sendSingle(amount: amount, address: address, feeRate: feeRate)
     }
 
 }

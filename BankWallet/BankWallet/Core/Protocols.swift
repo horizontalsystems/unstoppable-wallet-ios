@@ -122,7 +122,7 @@ protocol ISendBitcoinAdapter {
     func availableBalance(feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData]) -> Decimal
     func maximumSendAmount(pluginData: [UInt8: IBitcoinPluginData]) -> Decimal?
     func minimumSendAmount(address: String?) -> Decimal
-    func validate(address: String) throws
+    func validate(address: String, pluginData: [UInt8: IBitcoinPluginData]) throws
     func fee(amount: Decimal, feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData]) -> Decimal
     func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData]) -> Single<Void>
 }

@@ -51,7 +51,7 @@ protocol ISendBitcoinInteractor {
     func fetchAvailableBalance(feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData])
     func fetchMaximumAmount(pluginData: [UInt8: IBitcoinPluginData])
     func fetchMinimumAmount(address: String?)
-    func validate(address: String) throws
+    func validate(address: String, pluginData: [UInt8: IBitcoinPluginData]) throws
     func fetchFee(amount: Decimal, feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData])
     func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData]) -> Single<Void>
 }
