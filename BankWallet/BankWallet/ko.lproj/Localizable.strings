@@ -12,17 +12,16 @@
 "button.done" = "완료";
 "button.restore" = "복구";
 "button.next" = "다음";
-"button.remove" = "삭제";
 "button.share" = "공유";
-"button.save" = "저장";
 "button.sync" = "동기화";
 "button.paste" = "불여넣기";
 "button.backup" = "백업";
-"button.back" = "뒤로";
+"button.copy" = "Copy";
 
 "alert.copied" = "복사됨";
 "alert.no_internet" = "인터넷에 연결되지 않음";
 "alert.network_issue" = "네트워크에 문제가 있습니다. 잠시 후 다시 시도해 주세요";
+"alert.unknown_error" = "Unknown Error";
 
 "n/a" = "해당 없음 ";
 
@@ -42,9 +41,11 @@
 // Restore
 
 "restore.title" = "다음에서 복원하기";
+"restore.enter_key" = "Enter Key";
 "restore.item_title" = "%@ 지갑";
 "restore.description" = "기존으 지갑을 복원시키려면 귀하께서는 개인 암호를 입력 하셔야 합니다.\n\n하나의 지갑을 복원 시키시면 다른 지갑들도 앱의 보안 설정에서 지갑 관리 섹션을 통해 복원 하실 수 있습니다.";
 "restore.words.description" = "개인 암호를 %@지갑에 입력해 주십시오";
+"restore.eos.description" = "Enter your private key for %@ wallet.";
 "restore.validation_failed" = "틀린 암호 입니다";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
@@ -62,9 +63,6 @@
 "restore_options.derivation.after_update" = "2019년 11월 후에";
 "restore_options.derivation.bip44" = "BIP-44";
 "restore_options.derivation.bip49" = "BIP-49";
-"restore_options.alert.header" = "주목";
-"restore_options.alert.text" = "이 작업은 각 블록체인의 지갑 잔액을 동기화합니다. 수행하는데 몇 시간 정도 걸릴 수 있습니다.";
-"restore_options.erc20" = "Ethereum의 모드와 같이 동기화";
 
 // Backup
 
@@ -90,9 +88,6 @@
 "error.send_eos.unknown" = "무언가 잘못 됐습니다: %@";
 
 "backup.confirmation.title" = "확인 중...";
-"backup.confirmation.secret_key" = "본인은 본인의 휴대폰에 안전하게 저장되어 있으며 지갑에 있는 자금을 통제할 수 있는 사적인 12자리 비밀 암호의 유일한 소유자라는 것을 이해합니다.";
-"backup.confirmation.delete_app_warn" = "이 앱의 이동, 삭제 또는 오작동의 경우, 본인은 지갑에 대한 접근은 이 비밀 암호를 통해서만 복구될 수 있다는 점을 이해합니다.";
-"backup.confirmation.disclaimer" = "본인은 의도치 않은 버그나 앱을 사용하면서 일어날 수 있는 문제들에 대해서 이 앱의 계발자들은 어떠한 책임도 없다는 것을 이해합니다.";
 
 "words_validator.empty_words" = "모든 단어가 입력되지 않았습니다";
 "words_validator.invalid_confirmation" = "암호가 일치하지 않습니다";
@@ -104,13 +99,15 @@
 "balance.send" = "전송";
 "balance.deposit" = "수신";
 "balance.rate_per_coin" = "%@ 당 %@";
-"balance.synced_through" = "%@ 까지";
 "balance.syncing" = "동기화 중입니다...";
-"balance.add_coins" = "코인 추가";
+"balance.syncing_percent" = "Syncing... %@";
+"balance.synced_through" = "%@ 까지";
+"balance.add_coin" = "Add Coin";
 "balance.sort.header" = "정렬 기준";
 "balance.sort.valueHighToLow" = "잔액";
 "balance.sort.az" = "이름";
 "balance.sort.24h_change" = "24h 변동";
+
 // Deposit
 
 "deposit.receive_coin" = "수신%@";
@@ -122,6 +119,7 @@
 
 "send.title" = "전송 %@";
 "send.amount_placeholder" = "양";
+"send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.address_placeholder" = "주소";
 "send.account_placeholder" = "Account";
 "send.fee" = "수수료";
@@ -134,28 +132,36 @@
 "send.duration.within" = "%@ 안에";
 "send.duration.hours" = "%d 시";
 "send.duration.minutes" = "%d 분";
+"send.available_balance" = "Available Balance";
 "send.max_button" = "최대";
 "send.next_button" = "다음";
 "send.error.invalid_address" = "잘못된 주소";
-"send.error.invalid_account" = "계정이 존재하지 않습니다.";
-"send.error.no_address" = "주소 없음";
-"send.error.no_amount" = "금액 없음";
+"send.hodler_locktime" = "Lock Time";
+"send.hodler_locktime_hour" = "1 hour";
+"send.hodler_locktime_month" = "1 month";
+"send.hodler_locktime_half_year" = "6 months";
+"send.hodler_locktime_year" = "1 year";
+"send.hodler_locktime_off" = "Off";
 
 "send.confirmation.title" = "확인";
-"send.confirmation.to" = "에게";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "합계";
-"send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "전송";
 "send.amount_error.balance" = "잔액%@";
+"send.amount_error.maximum_amount" = "Maximum amount %@";
+"send.amount_error.minimum_amount" = "Minimum amount %@";
+"send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.token.insufficient_fee_alert" = "%@ (%@) 에 대한 거래 수수료는 %@로 지불되었습니다. 귀하는 %@가 필요합니다.";
 
+"send.lock_time" = "Lock Time";
 // Transactions
 
 "transactions.title" = "거래기록";
 "transactions.tab_bar_item" = "거래기록";
 "transactions.filter_all" = "모든";
 "transactions.empty_text" = "당신은 아직 보류 중 또는 과거에 완료된 거래가 없습니다";
+"transactions.pending" = "Pending";
+"transactions.processing" = "Processing";
 
 // Transaction Info
 
@@ -170,6 +176,8 @@
 "tx_info.rate" = "과거 환율";
 "tx_info.fee" = "수수료";
 "tx_info.note" = "이 거래의 가치는 귀하의 주소로 전송되었으므로 0으로 나타납니다";
+"tx_info.locked_until" = "Locked until";
+"tx_info.recipient_hash" = "Recipient";
 
 // Full Info
 
@@ -214,6 +222,7 @@
 "settings.tab_bar_item" = "설정";
 "settings.security_center" = "보안 센터";
 "settings.manage_coins" = "코인 관리";
+"settings.experimental_features" = "Experimental Features";
 "settings.notifications" = "알림";
 "settings.base_currency" = "기초 통화";
 "settings.language" = "언어";
@@ -249,6 +258,18 @@
 "manage_coins.add_coin.create" = "만들기";
 "manage_coins.add_coin.restore" = "복구";
 
+// Settings -> Experimental Features
+
+"settings.experimental_features.title" = "Experimental";
+"settings.experimental_features.description" = "The features below are experimental and should be used with caution. While we have throughly tested these features using our own crypto funds we can not guarantee they work as expected in all possible cases.";
+"settings.experimental_features.bitcoin_hodling" = "Bitcoin HODLing";
+
+// Settings -> Experimental Features -> Bitcoin HODLing
+
+"settings.bitcoin_hodling.title" = "Bitcoin HODLing";
+"settings.bitcoin_hodling.lock_time" = "Lock Time";
+"settings.bitcoin_hodling.description" = "Enables you to send Bitcoins that can not be spent until specified date.\n\nThe receiver of such transaction should use Unstoppable wallet.\n\nOnly Unstoppable wallet can correctly identify such transactions on Bitcoin network as well as enable receiver to spend those Bitcoins after the lock period expires.\n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transaction to yourself.\n\nBeing an experimental feature the maximum amount per transaction is limited to 0.5 BTC.";
+
 // Settings -> About
 
 "settings_about.title" = "에 대해";
@@ -274,6 +295,7 @@
 // Settings -> Report Problem
 
 "settings.report_problem.title" = "문제점 보고";
+"settings.report_problem.app_status" = "App Status";
 "settings.report_problem.email" = "E-mail";
 "settings.report_problem.telegram" = "Telegram";
 
@@ -316,6 +338,7 @@
 "unlock_pin.info" = "비밀번호";
 "unlock_pin.cant_save_pin" = "아야! 우리는 당신의 암호를 저장할 수 없습니다 저희에 게 가능한 빨리 연락 하시기 바랍니다!";
 "unlock_pin.blocked_until" = "~때까지 사용 안 함: %@";
+"rate_list.updated" = "updated";
 
 // No Passcode
 
@@ -338,7 +361,6 @@
 "chart.time_duration.day" = "하루";
 "chart.time_duration.week" = "일주일";
 "chart.time_duration.month" = "한 달";
-"chart.time_duration.quartal" = "3개월";
 "chart.time_duration.halyear" = "6개월";
 "chart.time_duration.year" = "1년";
 
@@ -350,6 +372,9 @@
 "chart.high" = "높음";
 "chart.low" = "낮음";
 "chart.volume" = "음량";
+"chart.circulation" = "In Circulation";
+"chart.total" = "Total";
+"chart.source" = "Source";
 "chart.error.not_available" = "차트 이용불가";
 
 // Create Wallet
@@ -361,3 +386,8 @@
 "price_notification.up" = "위로";
 "price_notification.down" = "아래로";
 "price_notification.multi_title" = "알림";
+
+// Lock Info
+
+"lock_info.title" = "Info";
+"lock_info.text" = "The sender sent these funds with a spending lock that will expire on Aug 29, 2019.\n\nNo worries, the received Bitcoins are already yours but until the lock period expires you can not spend them on the Bitcoin network.";
