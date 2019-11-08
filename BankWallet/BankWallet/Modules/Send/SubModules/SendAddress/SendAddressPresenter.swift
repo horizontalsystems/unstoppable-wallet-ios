@@ -1,4 +1,5 @@
 import Foundation
+import Hodler
 
 class SendAddressPresenter {
     weak var view: ISendAddressView?
@@ -26,12 +27,20 @@ class SendAddressPresenter {
         let (parsedAddress, amount) = interactor.parse(address: address)
 
         enteredAddress = parsedAddress
-        try? validAddress()
+        _ = try? validAddress()
 
         delegate?.onUpdateAddress()
         if let amount = amount {
             delegate?.onUpdate(amount: amount)
         }
+    }
+
+    private func createSendError(from error: Error) -> Error {
+        if let error = error as? HodlerPluginError, error == HodlerPluginError.unsupportedAddress {
+            return ValidationError.notSupportedByHodler
+        }
+
+        return ValidationError.invalidAddress
     }
 
 }
@@ -67,7 +76,7 @@ extension SendAddressPresenter: ISendAddressModule {
             try delegate?.validate(address: address)
             view?.set(address: address, error: nil)
         } catch {
-            view?.set(address: address, error: error)
+            view?.set(address: address, error: createSendError(from: error))
             throw error
         }
 
@@ -88,11 +97,14 @@ extension SendAddressPresenter {
 
     private enum ValidationError: Error, LocalizedError {
         case invalidAddress
+        case notSupportedByHodler
 
         var errorDescription: String? {
             switch self {
             case .invalidAddress:
                 return "send.error.invalid_address".localized
+            case .notSupportedByHodler:
+                return "send.hodler_error.unsupported_address".localized
             }
         }
     }
