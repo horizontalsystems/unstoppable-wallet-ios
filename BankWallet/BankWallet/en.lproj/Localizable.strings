@@ -382,6 +382,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "chart.low" = "%@ Low";
 "chart.volume" = "Volume";
 "chart.circulation" = "In Circulation";
+"chart.max_supply" = "Max.Supply";
 "chart.total" = "Total";
 "chart.source" = "Source";
 "chart.error.not_available" = "Chart not available";
