@@ -11,6 +11,8 @@ class AddressTextView: UITextView {
 }
 
 class AddressInputField: UIView {
+    private let errorFont: UIFont = .appCaption
+
     private let addressWrapperView = UIView()
     private let addressField = AddressTextView()
     private let placeholderLabel = UILabel()
@@ -77,7 +79,7 @@ class AddressInputField: UIView {
         }
         placeholderLabel.text = placeholder
 
-        errorLabel.font = .appCaption
+        errorLabel.font = errorFont
         errorLabel.textColor = SendTheme.errorColor
         errorLabel.numberOfLines = 0
 
@@ -184,10 +186,11 @@ class AddressInputField: UIView {
             copyButton.isHidden = rightButtonMode == .copy ? false : true
 
             addressWrapperView.snp.remakeConstraints { maker in
+                maker.top.bottom.equalToSuperview()
                 maker.leading.equalToSuperview().offset(SendTheme.mediumMargin)
-                maker.centerY.equalTo(deleteButton.snp.centerY).offset(textViewCenterFixOffset)
-
                 maker.trailing.equalTo(deleteButton.snp.leading).offset(-SendTheme.mediumMargin)
+                maker.centerY.equalTo(deleteButton.snp.centerY).offset(textViewCenterFixOffset)
+                maker.height.greaterThanOrEqualTo(SendTheme.addressHolderHeight)
             }
         } else {
             placeholderLabel.isHidden = false
@@ -198,8 +201,10 @@ class AddressInputField: UIView {
             copyButton.isHidden = true
 
             addressWrapperView.snp.remakeConstraints { maker in
+                maker.top.bottom.equalToSuperview()
                 maker.leading.equalToSuperview().offset(SendTheme.mediumMargin)
                 maker.centerY.equalTo(pasteButton.snp.centerY).offset(textViewCenterFixOffset)
+                maker.height.greaterThanOrEqualTo(SendTheme.addressHolderHeight)
 
                 if showQrButton {
                     maker.trailing.equalTo(scanButton.snp.leading).offset(-SendTheme.mediumMargin)
@@ -209,17 +214,19 @@ class AddressInputField: UIView {
             }
         }
 
-        if let error = error {
+        if let errorDescription = error?.localizedDescription {
             errorLabel.isHidden = false
-            errorLabel.text = error.localizedDescription
+            errorLabel.text = errorDescription
 
             addressField.snp.remakeConstraints { maker in
-                maker.leading.top.trailing.equalToSuperview()
+                maker.top.equalToSuperview().offset(CGFloat.margin05x)
+                maker.leading.trailing.equalToSuperview()
                 maker.height.equalTo(SendTheme.addressTextViewLineHeight * numberOfLines)
             }
             errorLabel.snp.remakeConstraints { maker in
                 maker.leading.trailing.equalToSuperview()
                 maker.top.equalTo(addressField.snp.bottom).offset(SendTheme.addressErrorTopMargin)
+                maker.height.equalTo(errorFieldHeight(text: errorDescription))
                 maker.bottom.equalToSuperview().offset(-SendTheme.addressErrorBottomMargin)
             }
         } else {
@@ -231,6 +238,11 @@ class AddressInputField: UIView {
             }
         }
 
+    }
+
+    private func errorFieldHeight(text: String) -> CGFloat {
+        let textHeight = text.height(forContainerWidth: addressWrapperView.bounds.width, font: errorFont)
+        return textHeight
     }
 
     override func becomeFirstResponder() -> Bool {

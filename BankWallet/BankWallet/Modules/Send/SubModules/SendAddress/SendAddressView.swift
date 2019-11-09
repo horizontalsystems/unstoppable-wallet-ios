@@ -11,18 +11,12 @@ class SendAddressView: UIView {
 
         super.init(frame: .zero)
 
-        self.snp.makeConstraints { maker in
-            maker.height.equalTo(SendTheme.addressHeight)
-        }
-
         backgroundColor = .clear
 
         addSubview(addressInputField)
         addressInputField.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SendTheme.margin)
-            maker.trailing.equalToSuperview().offset(-SendTheme.margin)
-            maker.height.equalTo(SendTheme.addressHolderHeight)
-            maker.bottom.equalToSuperview()
+            maker.top.bottom.equalToSuperview().inset(CGFloat.margin3x)
+            maker.leading.trailing.equalToSuperview().inset(SendTheme.margin)
         }
         addressInputField.onScan = { [weak self] in
             self?.delegate.onAddressScanClicked()
