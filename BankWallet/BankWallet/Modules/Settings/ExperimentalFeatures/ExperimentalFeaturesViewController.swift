@@ -38,6 +38,10 @@ class ExperimentalFeaturesViewController: WalletViewController {
         tableView.buildSections()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
+    }
+
 }
 
 extension ExperimentalFeaturesViewController: SectionsDataSource {
