@@ -108,7 +108,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "balance.sort.header" = "Sort by";
 "balance.sort.valueHighToLow" = "Balance";
 "balance.sort.az" = "Name";
-"balance.sort.24h_change"  = "24h Change";
+"balance.sort.24h_change"  = "24h Price(%)";
 
 // Deposit
 
@@ -383,7 +383,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "chart.low" = "%@ Low";
 "chart.volume" = "Volume";
 "chart.circulation" = "In Circulation";
-"chart.max_supply" = "Max.Supply";
+"chart.max_supply" = "Total Supply";
 "chart.total" = "Total";
 "chart.source" = "Source";
 "chart.error.not_available" = "Chart not available";
