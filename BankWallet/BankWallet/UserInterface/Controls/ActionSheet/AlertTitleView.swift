@@ -40,9 +40,10 @@ class AlertTitleView: UIView {
         closeButton.addTarget(self, action: #selector(onTapClose), for: .touchUpInside)
         closeButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         closeButton.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.titleLabel.snp.trailing).offset(AppTheme.alertMediumMargin)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin2x)
-            maker.top.equalToSuperview().offset(CGFloat.margin2x)
+            maker.leading.equalTo(self.titleLabel.snp.trailing).offset(CGFloat.margin1x)
+            maker.trailing.equalToSuperview()
+            maker.top.equalToSuperview()
+            maker.size.equalTo(24 + CGFloat.margin2x * 2)
         }
     }
 
