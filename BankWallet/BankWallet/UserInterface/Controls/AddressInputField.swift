@@ -213,31 +213,31 @@ class AddressInputField: UIView {
                 }
             }
         }
+        layoutSubviews()
 
         if let errorDescription = error?.localizedDescription {
             errorLabel.isHidden = false
             errorLabel.text = errorDescription
 
             addressField.snp.remakeConstraints { maker in
-                maker.top.equalToSuperview().offset(CGFloat.margin05x)
+                maker.top.equalToSuperview().offset(CGFloat.margin3x)
                 maker.leading.trailing.equalToSuperview()
                 maker.height.equalTo(SendTheme.addressTextViewLineHeight * numberOfLines)
             }
             errorLabel.snp.remakeConstraints { maker in
                 maker.leading.trailing.equalToSuperview()
-                maker.top.equalTo(addressField.snp.bottom).offset(SendTheme.addressErrorTopMargin)
+                maker.top.equalTo(addressField.snp.bottom).offset(CGFloat.margin1x)
                 maker.height.equalTo(errorFieldHeight(text: errorDescription))
-                maker.bottom.equalToSuperview().offset(-SendTheme.addressErrorBottomMargin)
+                maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
             }
         } else {
             errorLabel.isHidden = true
             errorLabel.snp.removeConstraints()
             addressField.snp.remakeConstraints { maker in
-                maker.leading.top.bottom.trailing.equalToSuperview()
+                maker.leading.trailing.centerY.equalToSuperview()
                 maker.height.equalTo(SendTheme.addressTextViewLineHeight * numberOfLines)
             }
         }
-
     }
 
     private func errorFieldHeight(text: String) -> CGFloat {

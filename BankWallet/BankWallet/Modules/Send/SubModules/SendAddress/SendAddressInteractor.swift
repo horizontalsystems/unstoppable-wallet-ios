@@ -14,7 +14,7 @@ class SendAddressInteractor {
 extension SendAddressInteractor: ISendAddressInteractor {
 
     var valueFromPasteboard: String? {
-        return pasteboardManager.value
+        pasteboardManager.value
     }
 
     func parse(address: String) -> (String, Decimal?) {
