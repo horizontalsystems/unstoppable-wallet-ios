@@ -19,6 +19,7 @@ protocol ISendAddressModule: AnyObject {
     var delegate: ISendAddressDelegate? { get set }
 
     var currentAddress: String? { get }
+    func validateAddress() throws
     func validAddress() throws -> String
 }
 

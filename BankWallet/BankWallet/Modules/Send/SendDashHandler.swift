@@ -21,7 +21,7 @@ class SendDashHandler {
     private func syncValidation() {
         do {
             _ = try amountModule.validAmount()
-            _ = try addressModule.validAddress()
+            try addressModule.validateAddress()
 
             delegate?.onChange(isValid: true)
         } catch {

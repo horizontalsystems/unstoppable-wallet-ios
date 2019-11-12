@@ -9,14 +9,7 @@ class SendAddressPresenter {
     private let router: ISendAddressRouter
 
     private var enteredAddress: String?
-
-    var currentAddress: String? {
-        do {
-            return try validAddress()
-        } catch {
-            return nil
-        }
-    }
+    var currentAddress: String?
 
     init(interactor: ISendAddressInteractor, router: ISendAddressRouter) {
         self.interactor = interactor
@@ -27,7 +20,7 @@ class SendAddressPresenter {
         let (parsedAddress, amount) = interactor.parse(address: address)
 
         enteredAddress = parsedAddress
-        _ = try? validAddress()
+        try? validateAddress()
 
         delegate?.onUpdateAddress()
         if let amount = amount {
@@ -67,17 +60,26 @@ extension SendAddressPresenter: ISendAddressViewDelegate {
 
 extension SendAddressPresenter: ISendAddressModule {
 
-    func validAddress() throws -> String {
+    func validateAddress() throws {
         guard let address = enteredAddress else {
+            currentAddress = nil
             throw ValidationError.invalidAddress
         }
 
         do {
             try delegate?.validate(address: address)
+            currentAddress = address
             view?.set(address: address, error: nil)
         } catch {
+            currentAddress = nil
             view?.set(address: address, error: createSendError(from: error))
             throw error
+        }
+    }
+
+    func validAddress() throws -> String {
+        guard let address = currentAddress else {
+            throw ValidationError.invalidAddress
         }
 
         return address
