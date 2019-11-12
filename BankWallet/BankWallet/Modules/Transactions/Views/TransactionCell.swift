@@ -125,7 +125,7 @@ class TransactionCell: AppCell {
                 maker.top.equalToSuperview().inset(CGFloat.margin4x)
             }
         } else {
-            lockImageView.snp.makeConstraints { maker in
+            lockImageView.snp.remakeConstraints { maker in
                 maker.leading.equalTo(currencyAmountLabel.snp.trailing)
                 maker.trailing.equalTo(contentView.snp.trailingMargin)
                 maker.top.equalToSuperview().inset(CGFloat.margin4x)
