@@ -28,7 +28,7 @@ class SendBitcoinHandler {
     private func syncValidation() {
         do {
             _ = try amountModule.validAmount()
-            _ = try addressModule.validAddress()
+            try addressModule.validateAddress()
 
             delegate?.onChange(isValid: true)
         } catch {
@@ -168,10 +168,10 @@ extension SendBitcoinHandler: ISendHodlerDelegate {
         }
 
         pluginData = hodlerModule.pluginData
+        syncValidation()
         syncAvailableBalance()
         syncMaximumAmount()
         syncFee()
-        syncValidation()
     }
 
 }
