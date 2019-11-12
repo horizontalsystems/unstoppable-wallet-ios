@@ -25,8 +25,6 @@ class SendTheme {
     static var addressColor: UIColor { .crypto_Bars_Dark }
     static let addressHintColor: UIColor = .cryptoSteel40
     static let addressTextViewLineHeight: Int = 22
-    static let addressErrorTopMargin: CGFloat = 1
-    static let addressErrorBottomMargin: CGFloat = 4
 
     static let feeHeight: CGFloat = 54
     static let feeTitleTopMargin: CGFloat = 12
