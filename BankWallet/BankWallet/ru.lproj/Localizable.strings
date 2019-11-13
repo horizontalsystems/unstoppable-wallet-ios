@@ -287,7 +287,7 @@
 // Settings -> Security
 
 "settings_security.title" = "Безопасность";
-"settings_security.manage_accounts" = "Управление Кошельками";
+"settings_security.manage_accounts" = "Управление Токенами";
 "settings_security.passcode" = "Код Доступа";
 "settings_security.change_pin" = "Изменить Код";
 "settings_security.touch_id" = "Touch ID";
@@ -303,7 +303,7 @@
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Управление Кошельками";
+"settings_manage_keys.title" = "Управление Токенами";
 "settings_manage_keys.item_title" = "%@ Кошелек";
 "settings_manage_keys.add_wallet" = "Добавить Токены";
 "settings_manage_keys.description" = "Ниже выделены ваши активные кошельки, где каждый кошелек отвечает за разный набор криптовалют.\n\nВы должны сделать резервную копию каждого выделенного кошелька, записав его приватный ключ. Этот ключ - единственный способ восстановить ваши средства, если ваш телефон потерян, украден, сломан и тд";
