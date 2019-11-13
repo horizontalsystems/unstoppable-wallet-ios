@@ -136,7 +136,7 @@
 "send.max_button" = "Máx.";
 "send.next_button" = "Siguiente";
 "send.error.invalid_address" = "Dirección inválida";
-"send.hodler_locktime" = "Bloqueo de tiempo";
+"send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 hora";
 "send.hodler_locktime_month" = "1 mes";
 "send.hodler_locktime_half_year" = "6 meses";
@@ -154,7 +154,7 @@
 "send.amount_error.min_required_balance" = "Min. requerido restante %@";
 "send.token.insufficient_fee_alert" = "Las comisiones de transacción para %@ (%@) pagado en %@. Es necesario %@.";
 
-"send.lock_time" = "Bloqueo de tiempo";
+"send.lock_time" = "TimeLock";
 // Transactions
 
 "transactions.title" = "Transacciones";
@@ -269,7 +269,7 @@
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "Bloquear Bitcoins";
-"settings.bitcoin_hodling.lock_time" = "Bloqueo de tiempo";
+"settings.bitcoin_hodling.lock_time" = "TimeLock";
 "settings.bitcoin_hodling.description" = "Permite enviar Bitcoins que no se pueden gastar hasta la fecha establecida.\n\nEl receptor de dicha transacción debe utilizar el monedero Unstoppable.\n\nSólo el monedero Unstoppable puede identificar correctamente tales transacciones en la red Bitcoin, así como permitir que el receptor gaste esos Bitcoins después de que expire el período de bloqueo.\n\nSi eres un HODLer, puedes usar esta función para obligarte a retener tus Bitcoins enviándote dicha transacción a ti mismo.\n\nPor ser característica experimental, la cantidad máxima por transacción está limitada a 0.5 BTC.";
 
 // Settings -> About
