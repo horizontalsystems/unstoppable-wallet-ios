@@ -138,7 +138,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "send.max_button" = "Max";
 "send.next_button" = "Next";
 "send.error.invalid_address" = "Invalid Address";
-"send.hodler_locktime" = "Time Lock";
+"send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 hour";
 "send.hodler_locktime_month" = "1 month";
 "send.hodler_locktime_half_year" = "6 months";
@@ -156,7 +156,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
 
-"send.lock_time" = "Time Lock";
+"send.lock_time" = "TimeLock";
 // Transactions
 
 "transactions.title" = "Transactions";
@@ -271,7 +271,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "Lock Bitcoins";
-"settings.bitcoin_hodling.lock_time" = "Time Lock";
+"settings.bitcoin_hodling.lock_time" = "TimeLock";
 "settings.bitcoin_hodling.description" = "Enables you to send Bitcoins that can not be spent until specified date.\n\nThe receiver of such transaction should use Unstoppable wallet.\n\nOnly Unstoppable wallet can correctly identify such transactions on Bitcoin network as well as enable receiver to spend those Bitcoins after the lock period expires.\n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transaction to yourself.\n\nBeing an experimental feature the maximum amount per transaction is limited to 0.5 BTC.";
 
 // Settings -> About
