@@ -2,9 +2,9 @@ PODS:
   - ActionSheet.swift (1.0):
     - SnapKit (~> 5.0)
     - UIExtensions.swift
-  - Alamofire (4.9.0)
-  - AlamofireImage (3.5.2):
-    - Alamofire (~> 4.8)
+  - Alamofire (4.9.1)
+  - AlamofireImage (3.6.0):
+    - Alamofire (~> 4.9)
   - BigInt (4.0.0)
   - BinanceChainKit.swift (0.1.1):
     - Alamofire (~> 4.0)
@@ -44,9 +44,9 @@ PODS:
   - BlueSocket (1.0.50)
   - CryptoBLS.swift (1.1)
   - CryptoX11.swift (1.1)
-  - Cuckoo (1.2.0):
-    - Cuckoo/Swift (= 1.2.0)
-  - Cuckoo/Swift (1.2.0)
+  - Cuckoo (1.3.0):
+    - Cuckoo/Swift (= 1.3.0)
+  - Cuckoo/Swift (1.3.0)
   - DashKit.swift (0.9.0):
     - Alamofire (~> 4.0)
     - BigInt (~> 4.0)
@@ -58,7 +58,7 @@ PODS:
     - HSHDWalletKit (~> 1.2)
     - ObjectMapper (~> 3.0)
     - RxSwift (~> 5.0)
-  - DeepDiff (2.2.0)
+  - DeepDiff (2.3.1)
   - EosioSwift (0.1.3):
     - BigInt (~> 4.0)
     - PromiseKit (~> 6.8)
@@ -95,9 +95,9 @@ PODS:
     - Alamofire (~> 4.0)
     - GRDB.swift (~> 4.0)
     - RxSwift (~> 5.0)
-  - GRDB.swift (4.5.0):
-    - GRDB.swift/standard (= 4.5.0)
-  - GRDB.swift/standard (4.5.0)
+  - GRDB.swift (4.6.1):
+    - GRDB.swift/standard (= 4.6.1)
+  - GRDB.swift/standard (4.6.1)
   - GRKOpenSSLFramework (1.0.2.16)
   - Hodler.swift (0.9.0):
     - BitcoinCore.swift (~> 0.9.0)
@@ -108,20 +108,20 @@ PODS:
   - HUD.swift (1.0):
     - SnapKit (~> 5.0)
     - UIExtensions.swift
-  - KeychainAccess (3.2.1)
+  - KeychainAccess (4.1.0)
   - Nimble (8.0.4)
   - ObjectMapper (3.5.1)
-  - PromiseKit (6.11.0):
-    - PromiseKit/CorePromise (= 6.11.0)
-    - PromiseKit/Foundation (= 6.11.0)
-    - PromiseKit/UIKit (= 6.11.0)
-  - PromiseKit/CorePromise (6.11.0)
-  - PromiseKit/Foundation (6.11.0):
+  - PromiseKit (6.12.0):
+    - PromiseKit/CorePromise (= 6.12.0)
+    - PromiseKit/Foundation (= 6.12.0)
+    - PromiseKit/UIKit (= 6.12.0)
+  - PromiseKit/CorePromise (6.12.0)
+  - PromiseKit/Foundation (6.12.0):
     - PromiseKit/CorePromise
-  - PromiseKit/UIKit (6.11.0):
+  - PromiseKit/UIKit (6.12.0):
     - PromiseKit/CorePromise
   - Quick (2.2.0)
-  - RxCocoa (5.0.0):
+  - RxCocoa (5.0.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
   - RxGRDB (0.17.0):
@@ -130,9 +130,9 @@ PODS:
   - RxGRDB/default (0.17.0):
     - GRDB.swift (~> 4.1)
     - RxSwift (~> 5.0)
-  - RxRelay (5.0.0):
+  - RxRelay (5.0.1):
     - RxSwift (~> 5)
-  - RxSwift (5.0.0)
+  - RxSwift (5.0.1)
   - SectionsTableView.swift (1.0):
     - SnapKit (~> 5.0)
     - UIExtensions.swift
@@ -162,7 +162,7 @@ DEPENDENCIES:
   - EosKit.swift (from `https://github.com/horizontalsystems/eos-kit-ios/`)
   - Erc20Kit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios/`)
   - EthereumKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios/`)
-  - FeeRateKit.swift (from `https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios`)
+  - FeeRateKit.swift (from `https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios`, commit `faa6eafcce30b372ebda62e3d4ca51f07cb794ec`)
   - GRDB.swift
   - Hodler.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios/`)
   - HSHDWalletKit (from `https://github.com/horizontalsystems/hd-wallet-kit-ios`)
@@ -230,6 +230,7 @@ EXTERNAL SOURCES:
   EthereumKit.swift:
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
   FeeRateKit.swift:
+    :commit: faa6eafcce30b372ebda62e3d4ca51f07cb794ec
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
   Hodler.swift:
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
@@ -273,7 +274,7 @@ CHECKOUT OPTIONS:
     :commit: f569f3fc8a95e49fad8c87cfd03d1ed36e64bca8
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
   EthereumKit.swift:
-    :commit: b239f289f6d6bf529211b5bcb6646b1799b59c65
+    :commit: f569f3fc8a95e49fad8c87cfd03d1ed36e64bca8
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
   FeeRateKit.swift:
     :commit: faa6eafcce30b372ebda62e3d4ca51f07cb794ec
@@ -299,8 +300,8 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   ActionSheet.swift: 988572dd9330a64d2e461610bb73f5ff66a255e5
-  Alamofire: afc3e7c6db61476cb45cdd23fed06bad03bbc321
-  AlamofireImage: 63cfe3baf1370be6c498149687cf6db3e3b00999
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  AlamofireImage: be9963c6582d68b39e89191f64c82a7d7bf40fdd
   BigInt: 2aad1a9942dc932ec8b84290d2c564a3d76f97ab
   BinanceChainKit.swift: e054bc79543e74f8f143306c5a2a1062555d2f65
   BitcoinCashKit.swift: 653ced2f22b379d6f2371980f1a107f2c870a140
@@ -309,9 +310,9 @@ SPEC CHECKSUMS:
   BlueSocket: bdcd73947c651d5abdda3212ecc847eb0c522877
   CryptoBLS.swift: 89828d8e3013e45ce4f913d26008b91fc5d0f3a0
   CryptoX11.swift: 8f0ca5fbfefbe49126220ce23b5de106928cf0f0
-  Cuckoo: f5f4e7c308c512cc2dedbdce23f5dc6985cb5173
+  Cuckoo: 4045c5a8ce378c919c20c5ff3d6dd11ded0ec699
   DashKit.swift: a27f7e1d3b1ee057238d1c3d3f5fad45807a3d6f
-  DeepDiff: e329bc46dd14ca788d8ec08d34420799ba1d77f2
+  DeepDiff: e5ae6c50d0321568e4508cec5930b9f10bb293fc
   EosioSwift: 629bb731f0c4121a7b54bd1a18dda87c19f08824
   EosioSwiftAbieosSerializationProvider: 6726a56aedd9cc6b5ec3636dd68945f44a48e311
   EosioSwiftEcc: 41934ba819a5bedb6563d58a6d08aa389fb5903a
@@ -320,21 +321,21 @@ SPEC CHECKSUMS:
   Erc20Kit.swift: e1498e1f6f43bca28d1fd46e84bd44c496c30cc9
   EthereumKit.swift: 7b56ebc1f6358b83ef05cb5caac817eb56a2d29a
   FeeRateKit.swift: dd6bdac1ca89e7d4944f25f34a74046e176a6653
-  GRDB.swift: f9c4cabfb4d1266685e80b1f6ea433eb61c7950c
+  GRDB.swift: 5e9a23bb3b8786329bef6cae80644b3b86b006c0
   GRKOpenSSLFramework: 35944e317e6336b2944ad70b059d84db6b2d8532
   Hodler.swift: f56f6076f67740af23fe35c7b0ce3c29c9d70c7f
   HSCryptoKit: 514a3111fd37ad18b7261d4a55271daaba3b0eb9
   HSHDWalletKit: 6f5d5b1f9b1f950c948bdff13f5f52e5c5bcb7bb
   HUD.swift: 006cc6e105bce8050c3c3f44d9111474c5c26c35
-  KeychainAccess: d5470352939ced6d6f7fb51cb2e67aae51fc294f
+  KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
   Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
-  PromiseKit: e4863d06976e7dee5e41c04fc7371c16b3600292
+  PromiseKit: c06835ba442ce5454ce3cdde470232804a6e4ff8
   Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
-  RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
+  RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
   RxGRDB: 5da4352c217300df8204faeb7881fc523161342b
-  RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
-  RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
+  RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
+  RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
   SectionsTableView.swift: 5ef2f3ae4a3b3aef91190cae7c0cb8655d4d8148
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftProtobuf: 4fd9645e69b72cbae6ec8da5be0cdd20ca6565dd
@@ -342,6 +343,6 @@ SPEC CHECKSUMS:
   UIExtensions.swift: 9f5a209e4e30f1ccfbf3eab01f02ffd8a20365d0
   XRatesKit.swift: 8dbe5614295a5f9ef51c8ce13fc6c76d4c6e5681
 
-PODFILE CHECKSUM: be67a829374c36bacc12b87f24dfe9b8830f6832
+PODFILE CHECKSUM: 96349cbda4fe41d922953d69e91d93fe8549a1f4
 
 COCOAPODS: 1.7.5
