@@ -136,7 +136,7 @@
 "send.max_button" = "Azami";
 "send.next_button" = "İleri";
 "send.error.invalid_address" = "Geçersiz Adres";
-"send.hodler_locktime" = "Zamanlı Kilit";
+"send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 saat";
 "send.hodler_locktime_month" = "1 ay";
 "send.hodler_locktime_half_year" = "6 ay";
@@ -154,7 +154,7 @@
 "send.amount_error.min_required_balance" = "Min. gerekli bakiye %@";
 "send.token.insufficient_fee_alert" = "%@ (%@) için ișlem ücreti %@ hesabından ödenir. Asgari %@ gerekiyor.";
 
-"send.lock_time" = "Zamanlı Kilit";
+"send.lock_time" = "TimeLock";
 // Transactions
 
 "transactions.title" = "Hesap işlemleri";
@@ -269,7 +269,7 @@
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "Kilitli Bitcoins";
-"settings.bitcoin_hodling.lock_time" = "Zamanlı Kilit";
+"settings.bitcoin_hodling.lock_time" = "TimeLock";
 "settings.bitcoin_hodling.description" = "Belirtilen tarihe kadar harcanmamış Bitcoin'leri göndermenize olanak verir.\n\nBu tür bir işlemin alıcısı Unstoppable cüzdan kullanmalıdır.\n\nSadece Unstoppable cüzdan, Bitcoin ağındaki bu tür işlemleri doğru bir şekilde tanımlayabilir ve kilitleme süresi dolduktan sonra da alıcının bu Bitcoin'leri harcamasını sağlayabilir.\n\nEğer bir HODLer iseniz, kendinize böyle bir işlem göndererek, bu özelliği Bitcoin'lerinizi zarar etmeden uzun süre elinizde tutmaya zorlamak için kullanabilirsiniz.\n\nDeneysel bir özellik olduğundan, işlem başına maksimum tutar 0.5 BTC ile sınırlandırılmıştır.";
 
 // Settings -> About
@@ -374,7 +374,7 @@
 "chart.high" = "Yüksek";
 "chart.low" = "Düşük";
 "chart.volume" = "Birim";
-"chart.circulation" = "Tedavüldeki";
+"chart.circulation" = "Dolaşan Arz	";
 "chart.max_supply" = "Toplam Arz";
 "chart.total" = "Toplam";
 "chart.source" = "Kaynak";
