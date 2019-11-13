@@ -289,7 +289,7 @@ class BalanceCell: CardCell {
 
         if let diff = item.diff {
             rateDiffView.isHidden = false
-            rateDiffView.set(value: diff)
+            rateDiffView.set(value: diff, highlightText: false)
         } else {
             rateDiffView.isHidden = true
         }
