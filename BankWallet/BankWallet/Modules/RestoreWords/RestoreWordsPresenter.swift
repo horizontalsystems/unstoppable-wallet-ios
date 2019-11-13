@@ -7,7 +7,7 @@ class RestoreWordsPresenter {
     private let appConfigProvider: IAppConfigProvider
 
     private var words: [String]?
-    var wordsCount: Int
+    let wordsCount: Int
     private let showRestoreOptions: Bool
 
     init(mode: RestoreRouter.PresentationMode, router: IRestoreWordsRouter, wordsCount: Int, showRestoreOptions: Bool, wordsManager: IWordsManager, appConfigProvider: IAppConfigProvider) {
@@ -47,7 +47,7 @@ extension RestoreWordsPresenter: IRestoreWordsViewDelegate {
 
     func didTapRestore(words: [String]) {
         do {
-            try wordsManager.validate(words: words)
+            try wordsManager.validate(words: words, requiredWordsCount: wordsCount)
 
             if showRestoreOptions {
                 self.words = words

@@ -74,7 +74,7 @@ class App {
         languageManager = LanguageManager(localStorage: localStorage)
 
         pinManager = PinManager(secureStorage: secureStorage, localStorage: localStorage)
-        wordsManager = WordsManager(localStorage: localStorage)
+        wordsManager = WordsManager()
 
         let accountStorage: IAccountStorage = AccountStorage(secureStorage: secureStorage, storage: storage)
         accountManager = AccountManager(storage: accountStorage)
@@ -156,7 +156,7 @@ class App {
 extension App {
 
     static var theme: ITheme {
-        return App.shared.themeManager.currentTheme
+        App.shared.themeManager.currentTheme
     }
 
 }
