@@ -70,10 +70,6 @@ extension MainSettingsPresenter: IMainSettingsViewDelegate {
         router.open(link: interactor.companyWebPageLink)
     }
 
-    func didTapDebugLog() {
-        router.showDebugLog()
-    }
-
 }
 
 extension MainSettingsPresenter: IMainSettingsInteractorDelegate {

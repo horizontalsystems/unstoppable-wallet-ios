@@ -2,7 +2,7 @@ import UIKit
 import ActionSheet
 import XRatesKit
 
-class ChartViewController: ActionSheetController {
+class ChartViewController: WalletActionSheetController {
     private let coinFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal

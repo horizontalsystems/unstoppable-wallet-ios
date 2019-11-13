@@ -9,6 +9,8 @@ class WalletViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         modalPresentationStyle = .fullScreen
+
+        App.shared.debugLogger?.add(log: "Init \(String(describing: type(of: self)))")
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -17,6 +19,8 @@ class WalletViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        App.shared.debugLogger?.add(log: "Load \(String(describing: type(of: self)))")
 
         guard gradient else {
             return
@@ -35,6 +39,10 @@ class WalletViewController: UIViewController {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         App.theme.statusBarStyle
+    }
+
+    deinit {
+        App.shared.debugLogger?.add(log: "Deinit \(String(describing: type(of: self)))")
     }
 
 }

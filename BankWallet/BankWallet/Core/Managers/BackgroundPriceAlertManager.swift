@@ -7,9 +7,9 @@ class BackgroundPriceAlertManager {
     private let currencyManager: ICurrencyManager
     private let priceAlertStorage: IPriceAlertStorage
     private let priceAlertHandler: IPriceAlertHandler
-    private let debugBackgroundLogger: IDebugBackgroundLogger?
+    private let debugBackgroundLogger: IDebugLogger?
 
-    init(rateManager: IRateManager, currencyManager: ICurrencyManager, priceAlertStorage: IPriceAlertStorage, priceAlertHandler: IPriceAlertHandler, debugBackgroundLogger: IDebugBackgroundLogger?) {
+    init(rateManager: IRateManager, currencyManager: ICurrencyManager, priceAlertStorage: IPriceAlertStorage, priceAlertHandler: IPriceAlertHandler, debugBackgroundLogger: IDebugLogger?) {
         self.rateManager = rateManager
         self.currencyManager = currencyManager
         self.priceAlertStorage = priceAlertStorage

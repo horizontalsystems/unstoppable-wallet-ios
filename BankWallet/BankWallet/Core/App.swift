@@ -49,7 +49,7 @@ class App {
     let priceAlertManager: IPriceAlertManager
     let backgroundPriceAlertManager: IBackgroundPriceAlertManager
     let notificationManager: INotificationManager
-    var debugBackgroundLogger: IDebugBackgroundLogger?
+    var debugLogger: IDebugLogger?
 
     let appStatusManager: IAppStatusManager
     let appVersionManager: IAppVersionManager
@@ -67,6 +67,9 @@ class App {
         appConfigProvider = AppConfigProvider()
         systemInfoManager = SystemInfoManager()
         biometryManager = BiometryManager(systemInfoManager: systemInfoManager)
+        if appConfigProvider.officeMode {
+            debugLogger = DebugLogger(localStorage: localStorage, dateProvider: CurrentDateProvider())
+        }
 
         pasteboardManager = PasteboardManager()
         reachabilityManager = ReachabilityManager(appConfigProvider: appConfigProvider)
@@ -124,10 +127,7 @@ class App {
         let notificationFactory = NotificationFactory(emojiHelper: EmojiHelper())
         let priceAlertHandler = PriceAlertHandler(priceAlertStorage: priceAlertStorage, notificationManager: notificationManager, notificationFactory: notificationFactory)
 
-        #if DEBUG
-            debugBackgroundLogger = DebugBackgroundLogger(localStorage: localStorage, dateProvider: CurrentDateProvider())
-        #endif
-        backgroundPriceAlertManager = BackgroundPriceAlertManager(rateManager: rateManager, currencyManager: currencyManager, priceAlertStorage: priceAlertStorage, priceAlertHandler: priceAlertHandler, debugBackgroundLogger: debugBackgroundLogger)
+        backgroundPriceAlertManager = BackgroundPriceAlertManager(rateManager: rateManager, currencyManager: currencyManager, priceAlertStorage: priceAlertStorage, priceAlertHandler: priceAlertHandler, debugBackgroundLogger: debugLogger)
 
         appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage, predefinedAccountTypeManager: predefinedAccountTypeManager, walletManager: walletManager, adapterManager: adapterManager, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager)
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, localStorage: localStorage)
@@ -146,7 +146,7 @@ class App {
                 localStorage: localStorage,
                 secureStorage: secureStorage,
                 kitCleaner: kitCleaner,
-                debugBackgroundLogger: debugBackgroundLogger,
+                debugLogger: debugLogger,
                 appVersionManager: appVersionManager
         )
     }

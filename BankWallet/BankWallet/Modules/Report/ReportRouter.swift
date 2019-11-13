@@ -35,6 +35,10 @@ extension ReportRouter: IReportRouter {
         viewController?.navigationController?.pushViewController(AppStatusRouter.module(), animated: true)
     }
 
+    func showDebugLog() {
+        viewController?.navigationController?.pushViewController(DebugRouter.module(), animated: true)
+    }
+
 }
 
 extension ReportRouter: MFMailComposeViewControllerDelegate {

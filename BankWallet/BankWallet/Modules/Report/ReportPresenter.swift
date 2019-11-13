@@ -35,4 +35,8 @@ extension ReportPresenter: IReportViewDelegate {
         router.openStatus()
     }
 
+    func didTapDebugLog() {
+        router.showDebugLog()
+    }
+
 }

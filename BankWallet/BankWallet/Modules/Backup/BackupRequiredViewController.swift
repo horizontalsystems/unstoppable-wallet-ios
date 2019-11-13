@@ -1,7 +1,7 @@
 import UIKit
 import ActionSheet
 
-class BackupRequiredViewController: ActionSheetController {
+class BackupRequiredViewController: WalletActionSheetController {
 
     init(subtitle: String, text: String, onBackup: @escaping () -> ()) {
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)

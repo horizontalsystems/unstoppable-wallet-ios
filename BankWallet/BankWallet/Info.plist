@@ -51,6 +51,8 @@
 	<string>We need access to camera to scan QR codes.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>We use Face ID to unlock wallet.</string>
+	<key>OfficeMode</key>
+	<string>${OfficeMode}</string>
 	<key>ShowBuildNumber</key>
 	<string>${ShowBuildNumber}</string>
 	<key>TestMode</key>

@@ -10,6 +10,9 @@ class LockRouter: ILockRouter {
             controller = presentedController
         }
 
+        let some: Any = controller ?? "nil"
+        App.shared.debugLogger?.add(log: "LockRouter will present lock from controller: \(some)")
+
         controller?.present(LockScreenRouter.module(delegate: delegate), animated: true)
     }
 

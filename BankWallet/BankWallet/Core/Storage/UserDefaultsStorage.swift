@@ -19,7 +19,7 @@ class UserDefaultsStorage {
     private let keySendInputType = "send_input_type_key"
     private let keyChartType = "chart_type_key"
     private let mainShownOnceKey = "main_shown_once_key"
-    private let backgroundFetchLogKey = "background_fetch_key"
+    private let debugLogKey = "debug_log_key"
     private let keyAppVersions = "app_versions"
     private let keyLockTimeEnabled = "lock_time_enabled"
 
@@ -45,9 +45,9 @@ extension UserDefaultsStorage: ILocalStorage {
         set { set(value: newValue, for: keyCurrentLanguage) }
     }
 
-    var backgroundFetchLog: String? {
-        get { value(for: backgroundFetchLogKey) }
-        set { set(value: newValue, for: backgroundFetchLogKey) }
+    var debugLog: String? {
+        get { value(for: debugLogKey) }
+        set { set(value: newValue, for: debugLogKey) }
     }
 
     var lastExitDate: Double {
