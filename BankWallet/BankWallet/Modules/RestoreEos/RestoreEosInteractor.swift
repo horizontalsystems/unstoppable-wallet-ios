@@ -13,7 +13,7 @@ class RestoreEosInteractor {
 extension RestoreEosInteractor: IRestoreEosInteractor {
 
     var defaultCredentials: (String, String) {
-        return appConfigProvider.defaultEosCredentials
+        appConfigProvider.defaultEosCredentials
     }
 
     var valueFromPasteboard: String? {

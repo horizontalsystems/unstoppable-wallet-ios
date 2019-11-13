@@ -189,7 +189,7 @@ class AddressInputField: UIView {
                 maker.top.bottom.equalToSuperview()
                 maker.leading.equalToSuperview().offset(SendTheme.mediumMargin)
                 maker.trailing.equalTo(deleteButton.snp.leading).offset(-SendTheme.mediumMargin)
-                maker.centerY.equalTo(deleteButton.snp.centerY).offset(textViewCenterFixOffset)
+                maker.centerY.equalTo(deleteButton.snp.centerY)
                 maker.height.greaterThanOrEqualTo(SendTheme.addressHolderHeight)
             }
         } else {
@@ -203,7 +203,7 @@ class AddressInputField: UIView {
             addressWrapperView.snp.remakeConstraints { maker in
                 maker.top.bottom.equalToSuperview()
                 maker.leading.equalToSuperview().offset(SendTheme.mediumMargin)
-                maker.centerY.equalTo(pasteButton.snp.centerY).offset(textViewCenterFixOffset)
+                maker.centerY.equalTo(pasteButton.snp.centerY)
                 maker.height.greaterThanOrEqualTo(SendTheme.addressHolderHeight)
 
                 if showQrButton {
@@ -245,7 +245,7 @@ class AddressInputField: UIView {
         return textHeight
     }
 
-    override func becomeFirstResponder() -> Bool {
+    @discardableResult override func becomeFirstResponder() -> Bool {
         addressField.becomeFirstResponder()
     }
 
