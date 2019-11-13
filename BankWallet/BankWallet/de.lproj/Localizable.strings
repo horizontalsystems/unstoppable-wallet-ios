@@ -106,7 +106,7 @@
 "balance.sort.header" = "Sortieren nach";
 "balance.sort.valueHighToLow" = "Guthaben";
 "balance.sort.az" = "Name";
-"balance.sort.24h_change" = "24h Price(%)";
+"balance.sort.24h_change" = "24h Preis(%)";
 
 // Deposit
 
@@ -136,7 +136,7 @@
 "send.max_button" = "Max.";
 "send.next_button" = "Weiter";
 "send.error.invalid_address" = "Ungültige Adresse";
-"send.hodler_locktime" = "Sperrzeit";
+"send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 Stunde";
 "send.hodler_locktime_month" = "1 Monat";
 "send.hodler_locktime_half_year" = "6 Monate";
@@ -154,7 +154,7 @@
 "send.amount_error.min_required_balance" = "Mindestens erforderlicher Rest %@";
 "send.token.insufficient_fee_alert" = "Transaktionsgebühren für %@ %@ in %@ bezahlt. Du brauchst %@.";
 
-"send.lock_time" = "Sperrzeit";
+"send.lock_time" = "TimeLock";
 // Transactions
 
 "transactions.title" = "Transaktionen";
@@ -256,7 +256,7 @@
 
 "manage_coins.title" = "Coin Manager";
 "manage_coins.add_coin.title" = "%@ hinzufügen ";
-"manage_coins.add_coin.text" = "Sie haben kein Wallet, das %@ (%@) speichern kann. Die App kann ein neues Wallet für Sie anlegen. Nutzen Sie den \"Erstellen Button\" unten, um ein neues Wallet anzulegen.\nSie können das Wallet für die folgenden Coins verwenden: %@.\nSie können auch den bestehenden %@ Wallet-Schlüssel nehmen, wenn Sie einen besitzen. Nutzen sie den Button \"Wiederherstellen\" dafür.";
+"manage_coins.add_coin.text" = "Sie haben kein Wallet, das %@ (%@) speichern kann. Die App kann ein neues Wallet für Sie anlegen. Nutzen Sie den \"Erstellen Button\" unten, um ein neues Wallet anzulegen.\n\nSie können das Wallet für die folgenden Coins verwenden: %@.\n\nSie können auch den bestehenden %@ Wallet-Schlüssel nehmen, wenn Sie einen besitzen. Nutzen sie den Button \"Wiederherstellen\" dafür.";
 "manage_coins.add_coin.create" = "Erstellen";
 "manage_coins.add_coin.restore" = "Wiederherstellen";
 
@@ -269,7 +269,7 @@
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "Bitcoins sperren";
-"settings.bitcoin_hodling.lock_time" = "Sperrzeit";
+"settings.bitcoin_hodling.lock_time" = "TimeLock";
 "settings.bitcoin_hodling.description" = "Damit können Sie Bitcoins, die sie versendet haben, sperren, sodass sie bis zu einem bestimmten Datum nicht ausgegeben werden können.\n\nDer Empfänger einer solchen Transaktion sollte das Unstoppable Wallet benutzen.\n\nNur das Unstoppable Wallet kann solche Transaktionen korrekt für Bitcoin identifizieren und es dem Empfänger ermöglichen, diese Bitcoins nach der Sperrzeit zu nutzen.\n\nWenn Sie ein HODLER sind, können Sie diese Feature auch für sich selbst nutzen, indem Sie sich selbst eine solche Transaktion schicken.\n\nDa es sich um ein experimentelles Feature handelt, liegt der maximale Betrag bei 0,5 BTC.";
 
 // Settings -> About
@@ -374,8 +374,8 @@
 "chart.high" = "Hoch";
 "chart.low" = "Niedrig";
 "chart.volume" = "Lautstärke";
-"chart.circulation" = "Im Umlauf";
-"chart.max_supply" = "Total Supply";
+"chart.circulation" = "Umlaufversorgung	";
+"chart.max_supply" = "Gesamtversorgung";
 "chart.total" = "Insgesamt";
 "chart.source" = "Quelle";
 "chart.error.not_available" = "Diagramm nicht verfügbar";
