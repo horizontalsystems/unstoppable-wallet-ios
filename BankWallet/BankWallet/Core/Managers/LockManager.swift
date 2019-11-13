@@ -23,6 +23,7 @@ extension LockManager: ILockManager {
             return
         }
 
+        App.shared.debugLogger?.add(log: "LockManager set lastExitDate")
         localStorage.lastExitDate = Date().timeIntervalSince1970
     }
 
@@ -35,6 +36,7 @@ extension LockManager: ILockManager {
         let now = Date().timeIntervalSince1970
 
         guard now - exitTimestamp > lockTimeout else {
+            App.shared.debugLogger?.add(log: "LockManager lock time not reached")
             return
         }
 
@@ -42,6 +44,8 @@ extension LockManager: ILockManager {
     }
 
     func lock() {
+        App.shared.debugLogger?.add(log: "LockManager want to lock")
+
         guard pinManager.isPinSet else {
             return
         }

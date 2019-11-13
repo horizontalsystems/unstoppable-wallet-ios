@@ -1,7 +1,7 @@
 import UIKit
 import ActionSheet
 
-class UnlinkViewController: ActionSheetController {
+class UnlinkViewController: WalletActionSheetController {
     private let delegate: IUnlinkViewDelegate
     private var items = [ConfirmationCheckboxItem]()
     private var buttonItem: AlertButtonItem?

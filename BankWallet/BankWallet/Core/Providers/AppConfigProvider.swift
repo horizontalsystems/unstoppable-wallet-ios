@@ -15,7 +15,11 @@ class AppConfigProvider: IAppConfigProvider {
     let reachabilityHost = "ipfs.horizontalsystems.xyz"
 
     var testMode: Bool {
-        return Bundle.main.object(forInfoDictionaryKey: "TestMode") as? String == "true"
+        Bundle.main.object(forInfoDictionaryKey: "TestMode") as? String == "true"
+    }
+
+    var officeMode: Bool {
+        Bundle.main.object(forInfoDictionaryKey: "OfficeMode") as? String == "true"
     }
 
     func defaultWords(count: Int) -> [String] {

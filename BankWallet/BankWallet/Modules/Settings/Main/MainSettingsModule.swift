@@ -21,7 +21,6 @@ protocol IMainSettingsViewDelegate {
     func didTapTellFriends()
     func didTapReportProblem()
     func didTapCompanyLink()
-    func didTapDebugLog()
 }
 
 protocol IMainSettingsInteractor: AnyObject {
@@ -49,7 +48,6 @@ protocol IMainSettingsRouter {
     func showAbout()
     func showShare(appWebPageLink: String)
     func showReportProblem()
-    func showDebugLog()
     func open(link: String)
     func reloadAppInterface()
 }

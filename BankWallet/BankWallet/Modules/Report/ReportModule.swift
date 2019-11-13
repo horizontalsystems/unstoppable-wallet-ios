@@ -9,6 +9,7 @@ protocol IReportViewDelegate {
     func didTapEmail()
     func didTapTelegram()
     func didTapStatus()
+    func didTapDebugLog()
 }
 
 protocol IReportInteractor {
@@ -22,4 +23,5 @@ protocol IReportRouter {
     func openSendMail(recipient: String)
     func openTelegram(group: String)
     func openStatus()
+    func showDebugLog()
 }

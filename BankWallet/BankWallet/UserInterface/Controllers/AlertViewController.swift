@@ -6,7 +6,7 @@ struct AlertRow {
     let selected: Bool
 }
 
-class AlertViewController: ActionSheetController {
+class AlertViewController: WalletActionSheetController {
     private var items = [TextSelectItem]()
     private let onSelect: (Int) -> ()
 

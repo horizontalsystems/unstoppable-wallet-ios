@@ -13,7 +13,7 @@ class AppManager {
     private let localStorage: ILocalStorage
     private let secureStorage: ISecureStorage
     private let kitCleaner: IKitCleaner
-    private let debugBackgroundLogger: IDebugBackgroundLogger?
+    private let debugBackgroundLogger: IDebugLogger?
     private let appVersionManager: IAppVersionManager
 
     private let didBecomeActiveSubject = PublishSubject<()>()
@@ -22,7 +22,7 @@ class AppManager {
     init(accountManager: IAccountManager, walletManager: IWalletManager, adapterManager: IAdapterManager, lockManager: ILockManager,
          passcodeLockManager: IPasscodeLockManager, biometryManager: IBiometryManager, blurManager: IBlurManager,
          notificationManager: INotificationManager, backgroundPriceAlertManager: IBackgroundPriceAlertManager,
-         localStorage: ILocalStorage, secureStorage: ISecureStorage, kitCleaner: IKitCleaner, debugBackgroundLogger: IDebugBackgroundLogger?,
+         localStorage: ILocalStorage, secureStorage: ISecureStorage, kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
          appVersionManager: IAppVersionManager
     ) {
         self.accountManager = accountManager
@@ -37,7 +37,7 @@ class AppManager {
         self.localStorage = localStorage
         self.secureStorage = secureStorage
         self.kitCleaner = kitCleaner
-        self.debugBackgroundLogger = debugBackgroundLogger
+        self.debugBackgroundLogger = debugLogger
         self.appVersionManager = appVersionManager
     }
 

@@ -1,7 +1,7 @@
 import UIKit
 import ActionSheet
 
-class TransactionInfoViewController: ActionSheetController {
+class TransactionInfoViewController: WalletActionSheetController {
     private let delegate: ITransactionInfoViewDelegate
 
     init(delegate: ITransactionInfoViewDelegate) {

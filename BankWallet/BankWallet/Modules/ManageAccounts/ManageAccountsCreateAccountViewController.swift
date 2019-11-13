@@ -1,7 +1,7 @@
 import UIKit
 import ActionSheet
 
-class ManageAccountsCreateAccountViewController: ActionSheetController {
+class ManageAccountsCreateAccountViewController: WalletActionSheetController {
 
     init(title: String, subtitle: String, coinCodes: String, onCreate: @escaping () -> ()) {
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)

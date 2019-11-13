@@ -44,10 +44,6 @@ extension MainSettingsRouter: IMainSettingsRouter {
         viewController?.navigationController?.pushViewController(ReportRouter.module(), animated: true)
     }
 
-    func showDebugLog() {
-        viewController?.navigationController?.pushViewController(DebugRouter.module(), animated: true)
-    }
-
     func open(link: String) {
         if let url = URL(string: link) {
             UIApplication.shared.open(url)

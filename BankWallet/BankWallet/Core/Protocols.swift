@@ -21,7 +21,7 @@ protocol ILocalStorage: class {
     var balanceSortType: BalanceSortType? { get set }
     var isBiometricOn: Bool { get set }
     var currentLanguage: String? { get set }
-    var backgroundFetchLog: String? { get set }
+    var debugLog: String? { get set }
     var lastExitDate: Double { get set }
     var didLaunchOnce: Bool { get set }
     var sendInputType: SendInputType? { get set }
@@ -287,6 +287,7 @@ protocol IAppConfigProvider {
 
     var reachabilityHost: String { get }
     var testMode: Bool { get }
+    var officeMode: Bool { get }
     var infuraCredentials: (id: String, secret: String?) { get }
     var etherscanKey: String { get }
     var currencies: [Currency] { get }
@@ -562,7 +563,7 @@ protocol INotificationManager {
     func removeNotifications()
 }
 
-protocol IDebugBackgroundLogger {
+protocol IDebugLogger {
     var logs: [String] { get }
 
     func logFinishLaunching()

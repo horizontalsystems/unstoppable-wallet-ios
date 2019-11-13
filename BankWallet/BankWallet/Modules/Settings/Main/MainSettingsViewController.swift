@@ -138,11 +138,6 @@ class MainSettingsViewController: WalletViewController {
                 cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Show Realm Info", showDisclosure: false, last: false)
             }, action: { [weak self] _ in
                 self?.showRealmInfo()
-            }),
-            Row<TitleCell>(id: "debug_background_log", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
-                cell.bind(titleIcon: nil, title: "Show Log", showDisclosure: false, last: true)
-            }, action: { [weak self] _ in
-                self?.showDebugLog()
             })
         ]
     }
@@ -164,10 +159,6 @@ class MainSettingsViewController: WalletViewController {
                 print(adapter.debugInfo)
             }
         }
-    }
-
-    private func showDebugLog() {
-        delegate.didTapDebugLog()
     }
 
 }

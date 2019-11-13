@@ -1,7 +1,7 @@
 import UIKit
 import ActionSheet
 
-class DepositViewController: ActionSheetController {
+class DepositViewController: WalletActionSheetController {
     private let delegate: IDepositViewDelegate
 
     private var currentPage = 0

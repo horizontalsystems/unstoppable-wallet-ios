@@ -1,7 +1,7 @@
 import UIKit
 import ActionSheet
 
-class ManageWalletsNoAccountViewController: ActionSheetController {
+class ManageWalletsNoAccountViewController: WalletActionSheetController {
 
     init(coin: Coin, predefinedAccountType: IPredefinedAccountType, onSelectNew: @escaping () -> (), onSelectRestore: @escaping () -> ()) {
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
