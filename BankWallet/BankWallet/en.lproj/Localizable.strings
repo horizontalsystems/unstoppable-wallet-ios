@@ -156,7 +156,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
 
-"send.lock_time" = "Time Lock";
+"send.lock_time" = "TimeLock";
 // Transactions
 
 "transactions.title" = "Transactions";
