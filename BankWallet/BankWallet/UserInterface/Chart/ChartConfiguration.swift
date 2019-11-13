@@ -11,13 +11,13 @@ class ChartConfiguration {
     var curveWidth: CGFloat = 1
     var curvePositiveColor: UIColor = .cryptoGreen
     var curveNegativeColor: UIColor = .cryptoRed
-    var curveIncompleteColor: UIColor = .crypto_Bars_Dark
+    var curveIncompleteColor: UIColor = .appGray50
 
     var curveVerticalOffset: Decimal = 0.05
 
     var gradientPositiveColor: UIColor = .cryptoGreen
     var gradientNegativeColor: UIColor = .cryptoRed
-    var gradientIncompleteColor: UIColor = .crypto_Bars_Dark
+    var gradientIncompleteColor: UIColor = .appGray50
     var gradientStartTransparency: CGFloat = 0.8
     var gradientFinishTransparency: CGFloat = 0.05
 
