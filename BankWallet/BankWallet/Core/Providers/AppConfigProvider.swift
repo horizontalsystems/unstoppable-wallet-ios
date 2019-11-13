@@ -88,9 +88,9 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "ELF",       title: "Aelf",                  code: "ELF",     decimal: 18, type: CoinType(erc20Address: "0xbf2179859fc6D5BEE9Bf9158632Dc51678a4100e")),
         Coin(id: "ANKR",      title: "Ankr Network",          code: "ANKR",    decimal: 8,  type: .binance(symbol: "ANKR-E97")),
         Coin(id: "AURA",      title: "Aurora DAO",            code: "AURA",    decimal: 18, type: CoinType(erc20Address: "0xCdCFc0f66c522Fd086A1b725ea3c0Eeb9F9e8814")),
-        Coin(id: "BNT",       title: "Bancor",                code: "BNT",     decimal: 18, type: CoinType(erc20Address: "0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C")),
+        Coin(id: "BNT",       title: "Bancor ERC20",          code: "BNT",     decimal: 18, type: CoinType(erc20Address: "0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C")),
         Coin(id: "BAT",       title: "Basic Attention Token", code: "BAT",     decimal: 18, type: CoinType(erc20Address: "0x0D8775F648430679A709E98d2b0Cb6250d2887EF")),
-        Coin(id: "BNB-ERC20", title: "Binance Token",         code: "BNB",     decimal: 18, type: CoinType(erc20Address: "0xB8c77482e45F1F44dE1745F52C74426C631bDD52")),
+        Coin(id: "BNB-ERC20", title: "Binance ERC20",         code: "BNB",     decimal: 18, type: CoinType(erc20Address: "0xB8c77482e45F1F44dE1745F52C74426C631bDD52")),
         Coin(id: "BUSD",      title: "Binance USD",           code: "BUSD",    decimal: 8,  type: .binance(symbol: "BUSD-BD1")),
         Coin(id: "BTCB",      title: "Bitcoin BEP2",          code: "BTCB",    decimal: 8,  type: .binance(symbol: "BTCB-1DE")),
         Coin(id: "CAS",       title: "Cashaa",                code: "CAS",     decimal: 8,  type: .binance(symbol: "CAS-167")),
@@ -111,7 +111,7 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "HOT",       title: "Holo",                  code: "HOT",     decimal: 18, type: CoinType(erc20Address: "0x6c6EE5e31d828De241282B9606C8e98Ea48526E2")),
         Coin(id: "HT",        title: "Huobi Token",           code: "HT",      decimal: 18, type: CoinType(erc20Address: "0x6f259637dcD74C767781E37Bc6133cd6A68aa161")),
         Coin(id: "IDXM",      title: "IDEX Membership",       code: "IDXM",    decimal: 8,  type: CoinType(erc20Address: "0xCc13Fc627EFfd6E35D2D2706Ea3C4D7396c610ea")),
-        Coin(id: "IDEX",      title: "IDEX Token",            code: "IDEX",    decimal: 18, type: CoinType(erc20Address: "0xB705268213D593B8FD88d3FDEFF93AFF5CbDcfAE")),
+        Coin(id: "IDEX",      title: "IDEX",                  code: "IDEX",    decimal: 18, type: CoinType(erc20Address: "0xB705268213D593B8FD88d3FDEFF93AFF5CbDcfAE")),
         Coin(id: "KCS",       title: "KuCoin Shares",         code: "KCS",     decimal: 6,  type: CoinType(erc20Address: "0x039B5649A59967e3e936D7471f9c3700100Ee1ab", minimumRequiredBalance: 0.001)),
         Coin(id: "KNC",       title: "Kyber Network",         code: "KNC",     decimal: 18, type: CoinType(erc20Address: "0xdd974D5C2e2928deA5F71b9825b8b646686BD200")),
         Coin(id: "LOOM",      title: "Loom",                  code: "LOOM",    decimal: 18, type: CoinType(erc20Address: "0xA4e8C3Ec456107eA67d3075bF9e3DF3A75823DB0")),
@@ -140,8 +140,6 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "TUSD",      title: "TrueUSD",               code: "TUSD",    decimal: 18, type: CoinType(erc20Address: "0x0000000000085d4780B73119b644AE5ecd22b376")),
         Coin(id: "USDC",      title: "USD Coin",              code: "USDC",    decimal: 6,  type: CoinType(erc20Address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48")),
         Coin(id: "WTC",       title: "Walton",                code: "WTC",     decimal: 18, type: CoinType(erc20Address: "0xb7cB1C96dB6B22b0D3d9536E0108d062BD488F74")),
-        Coin(id: "WAX",       title: "Wax Token",             code: "WAX",     decimal: 8,  type: CoinType(erc20Address: "0x39Bb259F66E1C59d5ABEF88375979b4D20D98022")),
-        Coin(id: "ZIL",       title: "Zilliqa",               code: "ZIL",     decimal: 12, type: CoinType(erc20Address: "0x05f4a42e251f2d52b8ed15E9FEdAacFcEF1FAD27")),
     ]
 
     let predefinedAccountTypes: [IPredefinedAccountType] = [
