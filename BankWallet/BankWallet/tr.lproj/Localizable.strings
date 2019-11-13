@@ -12,17 +12,16 @@
 "button.done" = "Bitti";
 "button.restore" = "Geri Yükle";
 "button.next" = "İleri";
-"button.remove" = "Kaldır";
 "button.share" = "Paylaş";
-"button.save" = "Kaydet";
 "button.sync" = "Eşitle";
 "button.paste" = "Yapıştır";
 "button.backup" = "Yedekle";
-"button.back" = "Geri";
+"button.copy" = "Kopyala";
 
 "alert.copied" = "Kopyalandı";
 "alert.no_internet" = "Internet Bağlantısı Yok";
 "alert.network_issue" = "Ağ sorunu. Tekrar deneyin.";
+"alert.unknown_error" = "Bilinmeyen Hata";
 
 "n/a" = "N/A";
 
@@ -42,9 +41,11 @@
 // Restore
 
 "restore.title" = "Bundan geri yükle";
+"restore.enter_key" = "Anahtarı girin";
 "restore.item_title" = "%@ Cüzdanı";
 "restore.description" = "Cüzdanı geri yüklemek için o cüzdanın gizli anahtarını girmelisiniz.\n\nDaha fazla cüzdanı geri yüklemek için bir cüzdanı geri yükledikten sonra Ayarlardaki Anahtarları Yönet bölümüne gidin.";
 "restore.words.description" = "%@ cüzdanı için gizli anahtarı gir";
+"restore.eos.description" = "%@ cüzdanı için kişisel anahtarınızı girin.";
 "restore.validation_failed" = "Yanlış Anahtar";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
@@ -62,9 +63,6 @@
 "restore_options.derivation.after_update" = "Kasım 2019’dan sonra";
 "restore_options.derivation.bip44" = "BIP-44";
 "restore_options.derivation.bip49" = "BIP-49";
-"restore_options.alert.header" = "Dikkat";
-"restore_options.alert.text" = "Bu eylem cüzdanınızı her block zincir ile tekrar eşliyecek. Tamamlanması birkaç saat sürebilir.";
-"restore_options.erc20" = "Ethereum ile aynı Senkronizasyon modu";
 
 // Backup
 
@@ -90,9 +88,6 @@
 "error.send_eos.unknown" = "Beklenmeyen bir hata oluştu: %@";
 
 "backup.confirmation.title" = "Kontrol etme ...";
-"backup.confirmation.secret_key" = "Cüzdanıma erişmemi sağlayan 12 kelimeli Gizli Anahtarın tek sahibinin olduğumu ve bu anahtarın telefonumun güvenli hafızasında tutulduğunu kabul ediyorum.";
-"backup.confirmation.delete_app_warn" = "Uygulamanın silinmesi, hatalı davranması, taşınması ve benzeri bir durumda hesabıma ulaşamadığımda, hesabımı kurtarmanın tek yolunun Gizli Anahtar olduğunu biliyourum.";
-"backup.confirmation.disclaimer" = "Uygulama geliştiricilerinin, istenmeyen herhangi bir hatadan veya bu uygulamayı kullanırken ortaya çıkabilecek sorunlardan sorumlu tutulamayacağını kabul ediyorum.";
 
 "words_validator.empty_words" = "Her kelime girilmedi";
 "words_validator.invalid_confirmation" = "Kelimeler eşleşmiyor";
@@ -104,13 +99,15 @@
 "balance.send" = "Gönder";
 "balance.deposit" = "Al";
 "balance.rate_per_coin" = "%@ = 1 %@";
-"balance.synced_through" = "%@ kadar";
 "balance.syncing" = "Eşitleniyor...";
-"balance.add_coins" = "Kripto Para Ekle";
+"balance.syncing_percent" = "Senkronize ediliyor... %@";
+"balance.synced_through" = "%@ kadar";
+"balance.add_coin" = "Para Ekle";
 "balance.sort.header" = "Sıralama şekli";
 "balance.sort.valueHighToLow" = "Bakiye";
 "balance.sort.az" = "İsim";
-"balance.sort.24h_change" = "24 saat Değişiklik";
+"balance.sort.24h_change" = "24 saat Fiyat(%)";
+
 // Deposit
 
 "deposit.receive_coin" = "%@ al";
@@ -122,6 +119,7 @@
 
 "send.title" = "%@ gönder";
 "send.amount_placeholder" = "Tutar";
+"send.amount_error.min_required_balance" = "Min. gerekli bakiye %@";
 "send.address_placeholder" = "Adres";
 "send.account_placeholder" = "Account";
 "send.fee" = "Masraf";
@@ -134,28 +132,38 @@
 "send.duration.within" = "%@ içinde";
 "send.duration.hours" = "%d sa.";
 "send.duration.minutes" = "%d dk.";
+"send.available_balance" = "Mevcut Bakiye";
 "send.max_button" = "Azami";
 "send.next_button" = "İleri";
 "send.error.invalid_address" = "Geçersiz Adres";
-"send.error.invalid_account" = "Geçersiz Hesap";
-"send.error.no_address" = "Adres Yok";
-"send.error.no_amount" = "Miktar yok";
+"send.hodler_locktime" = "TimeLock";
+"send.hodler_locktime_hour" = "1 saat";
+"send.hodler_locktime_month" = "1 ay";
+"send.hodler_locktime_half_year" = "6 ay";
+"send.hodler_locktime_year" = "1 yıl";
+"send.hodler_locktime_off" = "Kapat";
+"send.hodler_error.unsupported_address" = "Zaman kilitleme sadece P2PKH adresleriyle çalışır (1 ile başlayan)";
 
 "send.confirmation.title" = "Onayla";
-"send.confirmation.to" = "Alan";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Toplam";
-"send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "Gönder";
 "send.amount_error.balance" = "%@ Bakiye";
+"send.amount_error.maximum_amount" = "Maksimum miktar %@";
+"send.amount_error.minimum_amount" = "Minimum miktar %@";
+"send.amount_error.min_required_balance" = "Min. gerekli bakiye %@";
 "send.token.insufficient_fee_alert" = "%@ (%@) için ișlem ücreti %@ hesabından ödenir. Asgari %@ gerekiyor.";
 
+"send.lock_time" = "TimeLock";
 // Transactions
 
 "transactions.title" = "Hesap işlemleri";
 "transactions.tab_bar_item" = "Hesap işlemleri";
 "transactions.filter_all" = "Hepsi";
 "transactions.empty_text" = "Henüz herhangi bir bekleyen veya geçmiş işlem yok";
+"transactions.pending" = "Bekleyen";
+"transactions.receiving" = "Alınıyor";
+"transactions.sending" = "Gönderiliyor";
 
 // Transaction Info
 
@@ -170,6 +178,8 @@
 "tx_info.rate" = "Geçmiş Kur";
 "tx_info.fee" = "Ücret";
 "tx_info.note" = "Kendi adresinize gönderildiğinden bu işlemin değeri 0 olarak görünür";
+"tx_info.locked_until" = "Şu zamana kadar kitlendi";
+"tx_info.recipient_hash" = "Alıcı";
 
 // Full Info
 
@@ -214,6 +224,7 @@
 "settings.tab_bar_item" = "Ayarlar";
 "settings.security_center" = "Güvenlik Merkezi";
 "settings.manage_coins" = "Kripto Paraları Yönet";
+"settings.experimental_features" = "Deneysel Özellikler";
 "settings.notifications" = "Bildirimler";
 "settings.base_currency" = "Para birimi";
 "settings.language" = "Dil";
@@ -249,6 +260,18 @@
 "manage_coins.add_coin.create" = "Oluştur";
 "manage_coins.add_coin.restore" = "Geri Yükle";
 
+// Settings -> Experimental Features
+
+"settings.experimental_features.title" = "Deneysel";
+"settings.experimental_features.description" = "Aşağıdaki özellikler deneyseldir ve dikkatli kullanılmalıdır. Bu özellikleri kendi kripto fonlarımızı kullanarak baştan sona test etmemize rağmen, olası tüm durumlarda beklendiği gibi çalışmalarını garanti edemeyiz.";
+"settings.experimental_features.bitcoin_hodling" = "Kilitli Bitcoins";
+
+// Settings -> Experimental Features -> Bitcoin HODLing
+
+"settings.bitcoin_hodling.title" = "Kilitli Bitcoins";
+"settings.bitcoin_hodling.lock_time" = "TimeLock";
+"settings.bitcoin_hodling.description" = "Belirtilen tarihe kadar harcanmamış Bitcoin'leri göndermenize olanak verir.\n\nBu tür bir işlemin alıcısı Unstoppable cüzdan kullanmalıdır.\n\nSadece Unstoppable cüzdan, Bitcoin ağındaki bu tür işlemleri doğru bir şekilde tanımlayabilir ve kilitleme süresi dolduktan sonra da alıcının bu Bitcoin'leri harcamasını sağlayabilir.\n\nEğer bir HODLer iseniz, kendinize böyle bir işlem göndererek, bu özelliği Bitcoin'lerinizi zarar etmeden uzun süre elinizde tutmaya zorlamak için kullanabilirsiniz.\n\nDeneysel bir özellik olduğundan, işlem başına maksimum tutar 0.5 BTC ile sınırlandırılmıştır.";
+
 // Settings -> About
 
 "settings_about.title" = "Hakkında";
@@ -274,6 +297,7 @@
 // Settings -> Report Problem
 
 "settings.report_problem.title" = "Sorunu Bildir";
+"settings.report_problem.app_status" = "Uygulama Durumu";
 "settings.report_problem.email" = "E-posta";
 "settings.report_problem.telegram" = "Telegram";
 
@@ -316,6 +340,7 @@
 "unlock_pin.info" = "Kod";
 "unlock_pin.cant_save_pin" = "Eyvah! Şifre çalışmadı, ACİLEN bize ulaşın!";
 "unlock_pin.blocked_until" = "Engellendi: %@";
+"rate_list.updated" = "güncellendi";
 
 // No Passcode
 
@@ -334,11 +359,10 @@
 
 // Key Types
 
-"chart.title" = "%@ kur";
+"chart.title" = "%@ Fiyat";
 "chart.time_duration.day" = "1G";
 "chart.time_duration.week" = "7G";
 "chart.time_duration.month" = "1A";
-"chart.time_duration.quartal" = "3A";
 "chart.time_duration.halyear" = "6Ay";
 "chart.time_duration.year" = "1Yıl";
 
@@ -350,6 +374,10 @@
 "chart.high" = "Yüksek";
 "chart.low" = "Düşük";
 "chart.volume" = "Birim";
+"chart.circulation" = "Dolaşan Arz	";
+"chart.max_supply" = "Toplam Arz";
+"chart.total" = "Toplam";
+"chart.source" = "Kaynak";
 "chart.error.not_available" = "Grafik yok";
 
 // Create Wallet
@@ -361,3 +389,8 @@
 "price_notification.up" = "yukarı";
 "price_notification.down" = "aşağı";
 "price_notification.multi_title" = "Bildirimler";
+
+// Lock Info
+
+"lock_info.title" = "Bilgi";
+"lock_info.text" = "Gönderici bu fonları belirtilen tarihte sona erecek şekilde bir harcama kilidiyle gönderdi.\n\nEndişelenmeyin, alınan Bitcoin'ler zaten sizindir ancak kilitleme süresi sona erene kadar bunları Bitcoin ağında harcayamazsınız.";

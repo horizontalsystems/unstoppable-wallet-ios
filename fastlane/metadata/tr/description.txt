@@ -1,15 +1,15 @@
-Blockchain'lere yatırım yapmak için sınırsız erişime ihtiyaç duyan ve kripto yatırımlarınız üzerinde koşulsuz kontrol gerektiren bir kişiyseniz, bu cüzdan tam size göre.
+If you’re a type of person who needs unrestricted access to invest in blockchains and require unconditional control over your crypto investments this wallet is for you.
 
-Bu cüzdan, yasal düzenlemelerden bağımsız olarak, özel bir şekilde, herhangi bir sınırlama olmaksızın, kripto para portföyünü yatırım yapma ve büyütme özgürlüğünü seven herhangi bir özgürlüğü mümkün kılmak için oluşturulmuştur.
+This wallet was built to enable any freedom loving individual to invest and grow crypto currency portfolio without limitations, in a private manner, regardless of regulatory landscape.
 
-Varlıklarınız üzerinde tam koşulsuz kontrol uygulayın. Bitcoin, Ethereum, Dash ve diğer kripto varlıkları.
+Exercise full unconditional control over your assets. Bitcoin, Ethereum, Dash and other crypto assets.
 
  Why Unstoppable Wallet
 
-Kripto varlıklarını cihazınızda güvenli tutar
+It keeps crypto assets safe on your device
 It can only be controlled by yourself
-Kim olunduğun bilinmiyor
-Hiçbir veri toplamaz
+It doesn’t know who you are
+It doesn’t collect any data
 It's easy to migrate to/from
 It’s not dependent on any entity to function
 It integrates blockchains in a decentralized manner
@@ -65,7 +65,7 @@ https://github.com/horizontalsystems/unstoppable-wallet-ios
 (8) SUPPORTED CURRENCIES
 
 Bitcoin
-Etereum
+Ethereum
 Dash
 Bitcoin Cash
 50+ ERC20 tokens
