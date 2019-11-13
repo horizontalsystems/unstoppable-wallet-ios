@@ -136,7 +136,7 @@
 "send.max_button" = "Max";
 "send.next_button" = "Suivant";
 "send.error.invalid_address" = "Addresse invalide";
-"send.hodler_locktime" = "Time Lock";
+"send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 heure";
 "send.hodler_locktime_month" = "1 mois";
 "send.hodler_locktime_half_year" = "6 mois";
@@ -154,7 +154,7 @@
 "send.amount_error.min_required_balance" = "Minimum requis %@ restant";
 "send.token.insufficient_fee_alert" = "Frais de transaction pour %@ (%@) payé en %@. Il est nécessaire %@.";
 
-"send.lock_time" = "Time Lock";
+"send.lock_time" = "TimeLock";
 // Transactions
 
 "transactions.title" = "Transactions";
@@ -269,7 +269,7 @@
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "Verrouiller les Bitcoins";
-"settings.bitcoin_hodling.lock_time" = "Time Lock";
+"settings.bitcoin_hodling.lock_time" = "TimeLock";
 "settings.bitcoin_hodling.description" = "Permet d'envoyer des Bitcoins qui ne peuvent pas être dépensées avant la date spécifiée.\n\nLe destinataire d'une telle transaction devrait utiliser un portefeuille Unstoppable.\n\nSeul un portefeuille Unstoppable peut identifier correctement de telles transactions sur le réseau Bitcoin ainsi que permettre au destinataire de dépenser ces Bitcoins après l'expiration de la période de verrouillage.\n\nSi vous êtes un HODLer, vous pouvez utiliser cette fonction pour vous obliger à garder vos Bitcoins en vous envoyant une telle transaction à vous-même.\n\nPuisqu'il s'agit d'une fonctionnalité expérimentale, le montant maximum par transaction est limité à 0,5 BTC.";
 
 // Settings -> About
@@ -374,7 +374,7 @@
 "chart.high" = "Élevée";
 "chart.low" = "Faible";
 "chart.volume" = "Volume";
-"chart.circulation" = "En circulation";
+"chart.circulation" = "Offre en Circulation	";
 "chart.max_supply" = "Offre totale";
 "chart.total" = "Total";
 "chart.source" = "Source";
