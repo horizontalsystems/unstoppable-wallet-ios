@@ -142,7 +142,7 @@
 "send.hodler_locktime_half_year" = "6 Monate";
 "send.hodler_locktime_year" = "1 Jahr";
 "send.hodler_locktime_off" = "Aus";
-"send.hodler_error.unsupported_address" = "Time locking works only with P2PKH addresses (starting with 1)";
+"send.hodler_error.unsupported_address" = "Zeitsperre funktioniert nur mit P2PKH-Adressen (beginnend mit 1) ";
 
 "send.confirmation.title" = "Bestätigen";
 "send.confirmation.memo_placeholder" = "Memo";
@@ -162,8 +162,8 @@
 "transactions.filter_all" = "Alle";
 "transactions.empty_text" = "Transaktionsliste ist leer";
 "transactions.pending" = "In Bearbeitung";
-"transactions.receiving" = "Receiving";
-"transactions.sending" = "Sending";
+"transactions.receiving" = "Empfangen";
+"transactions.sending" = "Senden";
 
 // Transaction Info
 
