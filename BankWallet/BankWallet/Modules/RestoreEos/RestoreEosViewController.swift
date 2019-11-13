@@ -70,8 +70,14 @@ class RestoreEosViewController: WalletViewController {
         }
 
         delegate.viewDidLoad()
+    }
 
-        _ = accountNameField.becomeFirstResponder()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        DispatchQueue.main.async  {
+            self.accountNameField.becomeFirstResponder()
+        }
     }
 
     @objc func doneDidTap() {
