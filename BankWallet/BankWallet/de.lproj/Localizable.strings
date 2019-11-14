@@ -44,7 +44,7 @@
 "restore.enter_key" = "Schlüssel Eingeben";
 "restore.item_title" = "%@ Wallet";
 "restore.description" = "Um ein bestehendes Wallet wiederherzustellen, müssen Sie einen geheimen Schlüssel für das Wallet eingeben. \n\nSobald Sie ein Wallet wiederhergestellt haben, können Sie andere Wallete über den Abschnitt Wallet Manager in den Sicherheitseinstellungen der App wiederherstellen.";
-"restore.words.description" = "Geben Sie den privaten Schlüssel für %@ Wallet ein";
+"restore.words.description" = "Geben Sie Ihren privaten Schlüssel für %@ Wallet ein, der aus %@ Wörtern besteht. Die Wörter müssen in korrekter Reihenfolge eingegeben und durch Leerzeichen getrennt werden.";
 "restore.eos.description" = "Geben Sie Ihren privaten Schlüsel für das %@ Wallet ein.";
 "restore.validation_failed" = "Falscher Schlüssel";
 "restore.placeholder.account_name" = "Account Name";
