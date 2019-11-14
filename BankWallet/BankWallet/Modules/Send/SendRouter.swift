@@ -81,7 +81,7 @@ extension SendRouter {
 
         var hodlerModule: ISendHodlerModule?
 
-        if interactor.lockTimeEnabled {
+        if interactor.lockTimeEnabled && coin.type == .bitcoin {
             let (hodlerView, module, hodlerRouter) = SendHodlerRouter.module()
             hodlerModule = module
             views.append(hodlerView)
