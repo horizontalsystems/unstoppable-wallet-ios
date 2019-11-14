@@ -374,8 +374,8 @@
 "chart.high" = "%@ Макс.";
 "chart.low" = "%@ Мин.";
 "chart.volume" = "Объём";
-"chart.circulation" = "Циркуляция";
-"chart.max_supply" = "Общее предл.";
+"chart.circulation" = "Выпущено";
+"chart.max_supply" = "Макс.выпуск";
 "chart.total" = "Итого";
 "chart.source" = "Источник";
 "chart.error.not_available" = "График недоступен";
