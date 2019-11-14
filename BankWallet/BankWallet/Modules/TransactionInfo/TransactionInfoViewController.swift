@@ -95,6 +95,8 @@ class TransactionInfoViewController: WalletActionSheetController {
 
         backgroundColor = .crypto_Dark_Bars
         model.hideInBackground = false
+
+        model.reload?()
     }
 
 }
