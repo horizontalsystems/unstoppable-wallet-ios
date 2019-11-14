@@ -44,7 +44,7 @@
 "restore.enter_key" = "Entrez la clé";
 "restore.item_title" = "%@ Portefeuille";
 "restore.description" = "Pour restaurer un portefeuille existant, vous devez entrer une clé privée pour ce portefeuille.\n\nUne fois que vous avez restauré un portefeuille, vous pourrez en restaurer d'autres via la section Gérer les portefeuilles dans les paramètres Sécurité de l'application.";
-"restore.words.description" = "Entrez la clé privée pour le portefeuille %@";
+"restore.words.description" = "Entrez votre clé privée pour %@ Portefeuille qui se compose de %@ mots. Les mots doivent être entrés dans l'ordre correct et séparés par des espaces.";
 "restore.eos.description" = "Entrez votre clé privée pour le portefeuille %@.";
 "restore.validation_failed" = "Clé incorrect";
 "restore.placeholder.account_name" = "Account Name";
