@@ -268,7 +268,7 @@
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
-"settings.bitcoin_hodling.title" = "Временно заблокировать";
+"settings.bitcoin_hodling.title" = "Заблокировать Биткойны";
 "settings.bitcoin_hodling.lock_time" = "TimeLock";
 "settings.bitcoin_hodling.description" = "Позволяет отправлять биткойны, которые могут быть потрачены только после указанной даты.\n\nПолучатель такой транзакции должен быть пользователем кошелька Unstoppable.\n\nТолько кошелек Unstoppable может правильно распознать и обработать такие транзакции в сети Bitcoin, и позволить получателю тратить эти биткойны по истечении периода блокировки.\n\nЕсли вы HODLer (долгосрочный инвестор), то вы можете использовать эту функцию отправив биткойны себе. \n\nТак как это экспериментальная функция, максимальная сумма транзакции ограничена 0,5 BTC.";
 
@@ -374,7 +374,7 @@
 "chart.high" = "%@ Макс.";
 "chart.low" = "%@ Мин.";
 "chart.volume" = "Объём";
-"chart.circulation" = "Циркулирующее предл.";
+"chart.circulation" = "Циркуляция";
 "chart.max_supply" = "Общее предл.";
 "chart.total" = "Итого";
 "chart.source" = "Источник";
