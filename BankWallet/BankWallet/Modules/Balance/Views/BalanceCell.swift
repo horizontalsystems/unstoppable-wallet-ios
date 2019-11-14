@@ -390,4 +390,18 @@ class BalanceCell: CardCell {
         onChart?()
     }
 
+    static func height(item: BalanceViewItem, selectedWallet: Wallet?) -> CGFloat {
+        let height: CGFloat
+        if item.wallet == selectedWallet {
+            if item.coinValueLocked.value.isZero {
+                height = BalanceCell.expandedHeight
+            } else {
+                height = BalanceCell.expandedLockedHeight
+            }
+        } else {
+            height = BalanceCell.height
+        }
+        return height
+    }
+
 }
