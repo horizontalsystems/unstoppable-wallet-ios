@@ -34,7 +34,7 @@ class RateDiffView: UIView {
          }
     }
 
-    func set(value: Decimal?) {
+    func set(value: Decimal?, highlightText: Bool = true) {
         guard let value = value else {
             label.text = nil
             imageView.image = nil
@@ -47,7 +47,7 @@ class RateDiffView: UIView {
 
         let formattedDiff = RateDiffView.formatter.string(from: abs(value) as NSNumber)
 
-        label.textColor = color
+        label.textColor = highlightText ? color : .appGray
         label.text = formattedDiff.map { "\($0)%" }
     }
 
