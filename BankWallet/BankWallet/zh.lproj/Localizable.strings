@@ -44,7 +44,7 @@
 "restore.enter_key" = "输入密钥";
 "restore.item_title" = "%@钱包";
 "restore.description" = "要恢复现有钱包，您必须输入该钱包的私钥。\n\n恢复钱包后，您可以通过应用的“安全”设置中的“管理钱包”恢复其他钱包。";
-"restore.words.description" = "输入%@钱包的私钥";
+"restore.words.description" = "Enter your private key for %@ wallet which consists of %@ words. The words needs to be entered in correct order and separated by spaces.";
 "restore.eos.description" = "输入 %@ 钱包的私钥。";
 "restore.validation_failed" = "密钥不正确";
 "restore.placeholder.account_name" = "Account Name";
