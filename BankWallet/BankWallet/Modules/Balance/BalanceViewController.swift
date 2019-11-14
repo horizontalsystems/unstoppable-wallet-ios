@@ -129,19 +129,7 @@ extension BalanceViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == balanceSection {
-            let item = viewItems[indexPath.row]
-
-            let height: CGFloat
-            if item.wallet == selectedWallet {
-                if item.coinValueLocked.value.isZero {
-                    height = BalanceCell.expandedHeight
-                } else {
-                    height = BalanceCell.expandedLockedHeight
-                }
-            } else {
-                height = BalanceCell.height
-            }
-            return height + .margin2x
+            return BalanceCell.height(item: viewItems[indexPath.row], selectedWallet: selectedWallet) + .margin2x
         } else if indexPath.section == editSection {
             return BalanceEditCell.height
         }
@@ -230,10 +218,22 @@ extension BalanceViewController: IBalanceView {
             var forceReload = false
 
             if let selectedWallet = self.selectedWallet {
+                var selectedIndexChange = false
+                var heightChange = false
+
                 let oldSelectedIndex = self.viewItems.firstIndex(where: { $0.wallet == selectedWallet })
                 let newSelectedIndex = viewItems.firstIndex(where: { $0.wallet == selectedWallet })
 
-                forceReload = newSelectedIndex != oldSelectedIndex
+                selectedIndexChange = newSelectedIndex != oldSelectedIndex
+
+                if !selectedIndexChange, let oldItem = self.viewItems.first(where: { $0.wallet == selectedWallet }), let newItem = viewItems.first(where: { $0.wallet == selectedWallet }) {
+                    let oldHeight = BalanceCell.height(item: oldItem, selectedWallet: selectedWallet)
+                    let newHeight = BalanceCell.height(item: newItem, selectedWallet: selectedWallet)
+
+                    heightChange = oldHeight != newHeight
+                }
+
+                forceReload = selectedIndexChange || heightChange
             }
 
             if forceReload {
