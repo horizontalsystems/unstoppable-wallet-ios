@@ -133,6 +133,14 @@ PODS:
   - RxRelay (5.0.1):
     - RxSwift (~> 5)
   - RxSwift (5.0.1)
+  - RxSwiftExt (5.1.1):
+    - RxSwiftExt/Core (= 5.1.1)
+    - RxSwiftExt/RxCocoa (= 5.1.1)
+  - RxSwiftExt/Core (5.1.1):
+    - RxSwift (~> 5.0)
+  - RxSwiftExt/RxCocoa (5.1.1):
+    - RxCocoa (~> 5.0)
+    - RxSwiftExt/Core
   - SectionsTableView.swift (1.0):
     - SnapKit (~> 5.0)
     - UIExtensions.swift
@@ -145,6 +153,7 @@ PODS:
     - GRDB.swift (~> 4.0)
     - ObjectMapper (~> 3.5)
     - RxSwift (~> 5.0)
+    - RxSwiftExt (~> 5)
 
 DEPENDENCIES:
   - ActionSheet.swift (from `https://github.com/horizontalsystems/gui-kit`)
@@ -204,6 +213,7 @@ SPEC REPOS:
     - RxGRDB
     - RxRelay
     - RxSwift
+    - RxSwiftExt
     - SnapKit
     - SwiftProtobuf
     - SwiftyJSON
@@ -295,7 +305,7 @@ CHECKOUT OPTIONS:
     :commit: 22d90aa409044e4ee82e4fcc3ec5a89e7066bf93
     :git: https://github.com/horizontalsystems/gui-kit
   XRatesKit.swift:
-    :commit: 2017c0a385760f7f6b4db45fbfbd9b431e129496
+    :commit: e90f469223231f8d8a2f5c1c794fc2dd93ba64df
     :git: https://github.com/horizontalsystems/xrates-kit-ios
 
 SPEC CHECKSUMS:
@@ -336,12 +346,13 @@ SPEC CHECKSUMS:
   RxGRDB: 5da4352c217300df8204faeb7881fc523161342b
   RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
+  RxSwiftExt: 0d2fd77523a169d1459be34961b996a194bdef0e
   SectionsTableView.swift: 5ef2f3ae4a3b3aef91190cae7c0cb8655d4d8148
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftProtobuf: 4fd9645e69b72cbae6ec8da5be0cdd20ca6565dd
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   UIExtensions.swift: 9f5a209e4e30f1ccfbf3eab01f02ffd8a20365d0
-  XRatesKit.swift: 8dbe5614295a5f9ef51c8ce13fc6c76d4c6e5681
+  XRatesKit.swift: e17a410299b48deede78ae15a893b0467343a348
 
 PODFILE CHECKSUM: 96349cbda4fe41d922953d69e91d93fe8549a1f4
 
