@@ -38,6 +38,23 @@ enum CoinType {
         }
     }
 
+    var blockchainType: String? {
+        switch self {
+        case .erc20: return "ERC20"
+        case .eos(let token, _):
+            if token != "eosio.token" {
+                return "EOSIO"
+            }
+        case .binance(let symbol):
+            if symbol != "BNB" {
+                return "BEP2"
+            }
+        default: ()
+        }
+
+        return nil
+    }
+
 }
 
 extension CoinType: Equatable {

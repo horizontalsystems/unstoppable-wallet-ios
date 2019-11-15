@@ -6,6 +6,7 @@ struct BalanceViewItem {
     let wallet: Wallet
     let coin: Coin
     let coinValue: CoinValue
+    let blockchainBadge: String?
     let exchangeValue: CurrencyValue?
     let diff: Decimal?
     let currencyValue: CurrencyValue?
@@ -25,6 +26,7 @@ extension BalanceViewItem: DiffAware {
     static func compareContent(_ a: BalanceViewItem, _ b: BalanceViewItem) -> Bool {
         a.coin == b.coin &&
                 a.coinValue == b.coinValue &&
+                a.blockchainBadge == b.blockchainBadge &&
                 a.exchangeValue == b.exchangeValue &&
                 a.diff == b.diff &&
                 a.currencyValue == b.currencyValue &&

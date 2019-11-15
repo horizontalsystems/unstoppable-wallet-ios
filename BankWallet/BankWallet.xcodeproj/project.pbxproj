@@ -319,6 +319,7 @@
 		11B35751F696373A51EE433E /* CoinType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35878592C2E37DA1EBE1E /* CoinType.swift */; };
 		11B35756FB327E32E447B4AD /* NotificationSettingsSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359C638A7FC7D2287850D /* NotificationSettingsSelectorViewController.swift */; };
 		11B3575A20705FAEC1A01086 /* DarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356267EA921272D50608A /* DarkTheme.swift */; };
+		11B3576D1E589AD032D82FFD /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C167FC6400D527C5634 /* BadgeView.swift */; };
 		11B3577193A4BD719E12CE2E /* EnabledWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BDC2E3F845A52C442AD /* EnabledWallet.swift */; };
 		11B35773F8C014B160CCF4F6 /* BalanceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A0A1E69943CD3203FF9 /* BalanceItem.swift */; };
 		11B3578220DC4C309555C585 /* BottomDescriptionHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353EF58BFC1C5DDEAD1A5 /* BottomDescriptionHeaderFooterView.swift */; };
@@ -367,6 +368,7 @@
 		11B3586B8B2C99BCFDF2C40B /* AccountCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F26989959D83D337249 /* AccountCreator.swift */; };
 		11B3586C81A2285407207ED0 /* ToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3522E27EF551DF60B6047 /* ToggleCell.swift */; };
 		11B358711BD2BF0C238F0F41 /* NoPasscodeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3578C241CB83AF2FD50A9 /* NoPasscodeTheme.swift */; };
+		11B358725A3B46D07616EA3A /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C167FC6400D527C5634 /* BadgeView.swift */; };
 		11B35877FB8483FFA1037F98 /* TransactionItemDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350DFDC2CC98086520BFA /* TransactionItemDataSource.swift */; };
 		11B3587A9E1820E262446F12 /* AppCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353DDB13B6BC937C4AACC /* AppCell.swift */; };
 		11B3587CBC5FD74C216E4768 /* BinanceAccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35473B5D087C8C234D390 /* BinanceAccountType.swift */; };
@@ -389,6 +391,7 @@
 		11B358CB8E47D049CC361084 /* ConfirmationCheckboxItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EC60329833B8D6CA1E0 /* ConfirmationCheckboxItem.swift */; };
 		11B358D149EE936C82ABE32E /* DashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358CA18471A93188933B4 /* DashAdapter.swift */; };
 		11B358D1687049E5DACEBC96 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352884D47E0B23DCF2C2C /* AppManager.swift */; };
+		11B358E370059A9F95B8D1FB /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C167FC6400D527C5634 /* BadgeView.swift */; };
 		11B358E64A093C3B4E38A3C4 /* ReportPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3567992CE96357AD7BE7C /* ReportPresenter.swift */; };
 		11B358EB4EC30EDFFEBFCF29 /* WalletManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35570FD93AFB406434D20 /* WalletManager.swift */; };
 		11B358EF9A56A05015181CA7 /* BalanceHeaderViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D1D60E1D0A206C70490 /* BalanceHeaderViewItem.swift */; };
@@ -2088,6 +2091,7 @@
 		11B35C0C1945B0A9BFBF0AF9 /* RestoreAccountCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreAccountCell.swift; sourceTree = "<group>"; };
 		11B35C104035EBC5B0B13592 /* BaseCurrencySettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCurrencySettingsModule.swift; sourceTree = "<group>"; };
 		11B35C1528814607B0474707 /* PriceAlertRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceAlertRecord.swift; sourceTree = "<group>"; };
+		11B35C167FC6400D527C5634 /* BadgeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeView.swift; sourceTree = "<group>"; };
 		11B35C181EB4CA85BD80228C /* HudHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HudHelper.swift; sourceTree = "<group>"; };
 		11B35C1B8AB15392007B563E /* CreateWalletPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateWalletPresenter.swift; sourceTree = "<group>"; };
 		11B35C37163A7D74BB1AC9EB /* NoPasscodeInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoPasscodeInteractor.swift; sourceTree = "<group>"; };
@@ -3247,6 +3251,7 @@
 				11B35C8E5281BF85C421CB73 /* RateDiffView.swift */,
 				11B359824DCDF3B05413CDD2 /* CaptionValueView.swift */,
 				2FA5DE415A04A29B90C59105 /* SelectableValueView.swift */,
+				11B35C167FC6400D527C5634 /* BadgeView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -5256,6 +5261,7 @@
 				58AAA792EE279A108B0EABC6 /* InfoViewController.swift in Sources */,
 				58AAA3CFF20D3AA530FFDB90 /* MaxSupplyMap.swift in Sources */,
 				1A5642378FC10586EA896C85 /* WalletActionSheetController.swift in Sources */,
+				11B3576D1E589AD032D82FFD /* BadgeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5908,6 +5914,7 @@
 				58AAAA3BF3090104BBCFEE0A /* InfoViewController.swift in Sources */,
 				58AAA5B439E08563952F1388 /* MaxSupplyMap.swift in Sources */,
 				1A564E7119F15E258CF21C43 /* WalletActionSheetController.swift in Sources */,
+				11B358E370059A9F95B8D1FB /* BadgeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6512,6 +6519,7 @@
 				58AAA16CF43FA4D9FBBAFD4F /* InfoViewController.swift in Sources */,
 				58AAAC9D265EE3AA6751604A /* MaxSupplyMap.swift in Sources */,
 				1A564D9E3F201645C3C8167F /* WalletActionSheetController.swift in Sources */,
+				11B358725A3B46D07616EA3A /* BadgeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
