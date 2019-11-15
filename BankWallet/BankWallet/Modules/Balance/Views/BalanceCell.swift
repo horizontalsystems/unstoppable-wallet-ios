@@ -28,7 +28,10 @@ class BalanceCell: CardCell {
     private let rateDiffView = RateDiffView()
 
     private let currencyValueLabel = UILabel()
+
+    private let coinValueWrapper = UIView()
     private let coinValueLabel = UILabel()
+    private let blockchainBadgeView = BadgeView()
 
     private let lockedInfoHolder = UIView()
     private let coinLockedIcon = UIImageView(image: UIImage(named: "Transaction Lock Icon"))
@@ -126,12 +129,24 @@ class BalanceCell: CardCell {
             maker.height.equalTo(CGFloat.heightOnePixel)
         }
 
-        coinValueLabel.font = .appSubhead2
-
-        clippingView.addSubview(coinValueLabel)
-        coinValueLabel.snp.makeConstraints { maker in
+        clippingView.addSubview(coinValueWrapper)
+        coinValueWrapper.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin3x)
             maker.top.equalTo(separatorView.snp.bottom).offset(CGFloat.margin3x)
+        }
+
+        coinValueWrapper.addSubview(coinValueLabel)
+        coinValueLabel.snp.makeConstraints { maker in
+            maker.leading.top.bottom.equalToSuperview()
+        }
+
+        coinValueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        coinValueLabel.font = .appSubhead2
+
+        coinValueWrapper.addSubview(blockchainBadgeView)
+        blockchainBadgeView.snp.makeConstraints { maker in
+            maker.leading.equalTo(coinValueLabel.snp.trailing).offset(CGFloat.margin1x)
+            maker.trailing.centerY.equalToSuperview()
         }
 
         currencyValueLabel.font = .appHeadline2
@@ -139,16 +154,16 @@ class BalanceCell: CardCell {
 
         clippingView.addSubview(currencyValueLabel)
         currencyValueLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(coinValueLabel.snp.trailing).offset(CGFloat.margin2x)
+            maker.leading.equalTo(coinValueWrapper.snp.trailing).offset(CGFloat.margin2x)
             maker.trailing.equalToSuperview().inset(CGFloat.margin3x)
-            maker.bottom.equalTo(coinValueLabel.snp.bottom)
+            maker.bottom.equalTo(coinValueWrapper.snp.bottom)
         }
 
         clippingView.addSubview(lockedInfoHolder)
         lockedInfoHolder.snp.makeConstraints { maker in
             maker.height.equalTo(lockedInfoVisibleHeight)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin3x)
-            maker.top.equalTo(coinValueLabel.snp.bottom)
+            maker.top.equalTo(coinValueWrapper.snp.bottom)
         }
 
         lockedInfoHolder.backgroundColor = .clear
@@ -296,7 +311,7 @@ class BalanceCell: CardCell {
 
         if case let .syncing(progress, lastBlockDate) = item.state, !selected {
             currencyValueLabel.isHidden = true
-            coinValueLabel.isHidden = true
+            coinValueWrapper.isHidden = true
             syncingLabel.isHidden = false
             syncedUntilLabel.isHidden = false
 
@@ -313,7 +328,7 @@ class BalanceCell: CardCell {
             }
         } else {
             currencyValueLabel.isHidden = false
-            coinValueLabel.isHidden = false
+            coinValueWrapper.isHidden = false
             syncingLabel.isHidden = true
             syncedUntilLabel.isHidden = true
 
@@ -328,6 +343,9 @@ class BalanceCell: CardCell {
 
             coinValueLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue, fractionPolicy: .threshold(high: 0.01, low: 0))
             coinValueLabel.textColor = syncedBalance ? .appLeah : .appGray50
+
+            blockchainBadgeView.set(text: item.blockchainBadge)
+            blockchainBadgeView.isHidden = item.blockchainBadge == nil
 
             if item.coinValueLocked.value != 0 {
                 coinLockedValueLabel.text = ValueFormatter.instance.format(coinValue: item.coinValueLocked, fractionPolicy: .threshold(high: 0.01, low: 0))

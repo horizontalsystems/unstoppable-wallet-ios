@@ -20,6 +20,7 @@ class BalanceViewItemFactory: IBalanceViewItemFactory {
                 wallet: item.wallet,
                 coin: item.wallet.coin,
                 coinValue: CoinValue(coin: item.wallet.coin, value: balanceTotal),
+                blockchainBadge: item.wallet.coin.type.blockchainType,
                 exchangeValue: exchangeValue,
                 diff: item.marketInfo?.diff,
                 currencyValue: currencyValueTotal,

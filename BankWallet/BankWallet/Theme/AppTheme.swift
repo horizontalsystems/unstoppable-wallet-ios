@@ -105,6 +105,7 @@ extension UIFont {
     static let appSubhead2: UIFont = .systemFont(ofSize: 14, weight: .regular)
     static let appCaption: UIFont = .systemFont(ofSize: 12, weight: .regular)
     static let appMicro: UIFont = .systemFont(ofSize: 10, weight: .regular)
+    static let appMicroSB: UIFont = .systemFont(ofSize: 10, weight: .semibold)
 }
 
 extension CGFloat {
