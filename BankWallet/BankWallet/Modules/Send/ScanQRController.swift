@@ -8,6 +8,8 @@ class ScanQRController: UIViewController {
     private var captureSession: AVCaptureSession!
     private var initiallySetUp = false
 
+    private var willAppear = false
+
     init(delegate: IScanQrCodeDelegate) {
         self.delegate = delegate
 
@@ -57,6 +59,11 @@ class ScanQRController: UIViewController {
         if let captureSession = captureSession, !captureSession.isRunning {
             captureSession.startRunning()
         }
+
+        willAppear = true
+        UIView.animate(withDuration: 0.5) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -77,10 +84,15 @@ class ScanQRController: UIViewController {
         if let captureSession = captureSession, captureSession.isRunning {
             captureSession.stopRunning()
         }
+
+        willAppear = false
+        UIView.animate(withDuration: 0.5) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
     }
 
     override var prefersStatusBarHidden: Bool {
-        return true
+        willAppear
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
