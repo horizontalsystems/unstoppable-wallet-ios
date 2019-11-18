@@ -263,16 +263,16 @@ CHECKOUT OPTIONS:
     :commit: c0921266438ded53b137b0c6024ee28bde9a2174
     :git: https://github.com/horizontalsystems/binance-chain-kit-ios
   BitcoinCashKit.swift:
-    :commit: 8662aec3907d16a719e453ed604792a8453bdc7b
+    :commit: 9095a2db7cf96c9e33d2584821b22266a196fac5
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   BitcoinCore.swift:
-    :commit: 8662aec3907d16a719e453ed604792a8453bdc7b
+    :commit: 9095a2db7cf96c9e33d2584821b22266a196fac5
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   BitcoinKit.swift:
-    :commit: 8662aec3907d16a719e453ed604792a8453bdc7b
+    :commit: 9095a2db7cf96c9e33d2584821b22266a196fac5
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   DashKit.swift:
-    :commit: 8662aec3907d16a719e453ed604792a8453bdc7b
+    :commit: 9095a2db7cf96c9e33d2584821b22266a196fac5
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   EosioSwift:
     :commit: f80fe0a8e543b2d49b5d75f46248802615ee0e8d
@@ -290,7 +290,7 @@ CHECKOUT OPTIONS:
     :commit: faa6eafcce30b372ebda62e3d4ca51f07cb794ec
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
   Hodler.swift:
-    :commit: 8662aec3907d16a719e453ed604792a8453bdc7b
+    :commit: 9095a2db7cf96c9e33d2584821b22266a196fac5
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   HSHDWalletKit:
     :commit: cfd20333ec537d9d312611845dea8cc0be924d42
