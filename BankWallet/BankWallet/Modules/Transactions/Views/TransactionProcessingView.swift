@@ -33,6 +33,7 @@ class TransactionProcessingView: UIView {
 
     func bind(incoming: Bool, progress: Double) {
         processingLabel.text = incoming ? "transactions.receiving".localized : "transactions.sending".localized
+        barsProgressView.set(filledColor: incoming ? .appGreenD : .appYellowD)
         barsProgressView.set(progress: progress)
     }
 

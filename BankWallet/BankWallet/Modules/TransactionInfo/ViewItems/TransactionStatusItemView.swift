@@ -4,43 +4,78 @@ import ActionSheet
 import SnapKit
 
 class TransactionStatusItemView: BaseActionItemView {
-    let titleLabel = UILabel()
-    let statusTextLabel = UILabel()
-    let iconImageView = UIImageView()
-    let barsProgressView = BarsProgressView(barWidth: TransactionInfoTheme.barsProgressBarWidth, color: TransactionInfoTheme.barsProgressColor, inactiveColor: TransactionInfoTheme.barsProgressInactiveColor)
+    private let titleLabel = UILabel()
 
-    override var item: TransactionStatusItem? { return _item as? TransactionStatusItem }
+    private let completedWrapper = UIView()
+    private let completedLabel = UILabel()
+    private let completedIcon = UIImageView()
+
+    private let processingWrapper = UIView()
+    private let processingLabel = UILabel()
+    private let barsProgressView = BarsProgressView(barWidth: 4, color: .clear, inactiveColor: .cryptoSteel20)
+
+    override var item: TransactionStatusItem? {
+        _item as? TransactionStatusItem
+    }
 
     override func initView() {
         super.initView()
 
         backgroundColor = TransactionInfoTheme.itemBackground
 
-        titleLabel.font = TransactionInfoTheme.itemTitleFont
-        titleLabel.textColor = TransactionInfoTheme.itemTitleColor
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.leading.equalToSuperview().offset(TransactionInfoTheme.regularMargin)
         }
 
-        addSubview(iconImageView)
-        iconImageView.snp.makeConstraints { maker in
+        titleLabel.text = "tx_info.status".localized
+        titleLabel.font = TransactionInfoTheme.itemTitleFont
+        titleLabel.textColor = TransactionInfoTheme.itemTitleColor
+
+        addSubview(completedWrapper)
+        completedWrapper.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
-            maker.trailing.equalToSuperview().offset(-TransactionInfoTheme.regularMargin)
+            maker.trailing.equalToSuperview().inset(TransactionInfoTheme.regularMargin)
         }
 
-        statusTextLabel.font = TransactionInfoTheme.statusTextFont
-        addSubview(statusTextLabel)
-        statusTextLabel.snp.makeConstraints { maker in
-            maker.centerY.equalToSuperview()
-            maker.trailing.equalTo(self.iconImageView.snp.leading).offset(-TransactionInfoTheme.smallMargin)
+        completedWrapper.addSubview(completedLabel)
+        completedLabel.snp.makeConstraints { maker in
+            maker.leading.top.bottom.equalToSuperview()
         }
 
-        addSubview(barsProgressView)
+        completedLabel.text = "tx_info.status.confirmed".localized
+        completedLabel.textColor = TransactionInfoTheme.completeStatusColor
+        completedLabel.font = TransactionInfoTheme.statusTextFont
+
+        completedWrapper.addSubview(completedIcon)
+        completedIcon.snp.makeConstraints { maker in
+            maker.leading.equalTo(completedLabel.snp.trailing).offset(TransactionInfoTheme.smallMargin)
+            maker.centerY.equalToSuperview()
+            maker.trailing.equalToSuperview()
+        }
+
+        completedIcon.image = UIImage(named: "Transaction Info Completed Icon")?.tinted(with: .cryptoGreen)
+
+        addSubview(processingWrapper)
+        processingWrapper.snp.makeConstraints { maker in
+            maker.centerY.equalToSuperview()
+            maker.trailing.equalToSuperview().inset(TransactionInfoTheme.regularMargin)
+        }
+
+        processingWrapper.addSubview(processingLabel)
+        processingLabel.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview()
+            maker.centerY.equalToSuperview()
+        }
+
+        processingLabel.textColor = TransactionInfoTheme.completeStatusColor
+        processingLabel.font = TransactionInfoTheme.statusTextFont
+
+        processingWrapper.addSubview(barsProgressView)
         barsProgressView.snp.makeConstraints { maker in
-            maker.centerY.equalToSuperview()
-            maker.trailing.equalToSuperview().offset(-TransactionInfoTheme.regularMargin)
+            maker.leading.equalTo(processingLabel.snp.trailing).offset(CGFloat.margin2x)
+            maker.top.trailing.bottom.equalToSuperview()
             maker.height.equalTo(TransactionInfoTheme.barsProgressHeight)
         }
 
@@ -50,22 +85,22 @@ class TransactionStatusItemView: BaseActionItemView {
     override func updateView() {
         super.updateView()
 
-        titleLabel.text = item?.title
-        statusTextLabel.text = item?.statusText
-        statusTextLabel.textColor = item?.statusColor ?? TransactionInfoTheme.statusTextColor
-
-        if let icon = item?.icon {
-            iconImageView.isHidden = false
-            iconImageView.image = icon
-        } else {
-            iconImageView.isHidden = true
+        guard let item = item else {
+            return
         }
 
-        if let progress = item?.progress {
-            barsProgressView.isHidden = false
+        if let progress = item.progress {
+            processingWrapper.isHidden = false
+            completedWrapper.isHidden = true
+
+            processingLabel.text = item.incoming ? "transactions.receiving".localized : "transactions.sending".localized
+
+            barsProgressView.set(filledColor: item.incoming ? .appGreenD : .appYellowD)
             barsProgressView.set(progress: progress)
         } else {
-            barsProgressView.isHidden = true
+            completedWrapper.isHidden = false
+            processingWrapper.isHidden = true
+
         }
     }
 

@@ -3,26 +3,26 @@ import UIExtensions
 import SnapKit
 
 class TransactionCell: AppCell {
-    var highlightBackground = UIView()
+    private let highlightBackground = UIView()
 
-    var inOutImageView = UIImageView()
+    private let inOutImageView = UIImageView()
 
-    var dateLabel = UILabel()
+    private let dateLabel = UILabel()
 
-    var pendingView = TransactionPendingView()
-    var processingView = TransactionProcessingView()
-    var completedView = TransactionCompletedView()
+    private let processingView = TransactionProcessingView()
+    private let completedView = TransactionCompletedView()
 
-    var currencyAmountLabel = UILabel()
-    var lockImageView = UIImageView()
-    var amountLabel = UILabel()
+    private let currencyAmountLabel = UILabel()
+    private let lockImageView = UIImageView()
+    private let amountLabel = UILabel()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = .clear
-        contentView.backgroundColor = TransactionsTheme.cellBackground
 
-        highlightBackground.backgroundColor = TransactionsTheme.cellHighlightBackgroundColor
+        backgroundColor = .clear
+        contentView.backgroundColor = .crypto_Dark_White
+
+        highlightBackground.backgroundColor = .cryptoSteel20
         highlightBackground.alpha = 0
         contentView.addSubview(highlightBackground)
         highlightBackground.snp.makeConstraints { maker in
@@ -31,27 +31,27 @@ class TransactionCell: AppCell {
 
         contentView.addSubview(inOutImageView)
         inOutImageView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(TransactionsTheme.cellMediumMargin)
-            maker.top.equalToSuperview().offset(TransactionsTheme.cellMediumMargin)
+            maker.leading.equalToSuperview().offset(CGFloat.margin3x)
+            maker.top.equalToSuperview().offset(CGFloat.margin3x)
         }
         inOutImageView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         inOutImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
-        dateLabel.font = TransactionsTheme.dateLabelFont
+        dateLabel.font = .appBody
         dateLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         dateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(inOutImageView.snp.trailing).offset(TransactionsTheme.cellMediumMargin)
-            maker.top.equalToSuperview().offset(TransactionsTheme.cellMediumMargin)
+            maker.leading.equalTo(inOutImageView.snp.trailing).offset(CGFloat.margin3x)
+            maker.top.equalToSuperview().offset(CGFloat.margin3x)
         }
 
-        currencyAmountLabel.font = TransactionsTheme.currencyAmountLabelFont
+        currencyAmountLabel.font = .systemFont(ofSize: 22, weight: .semibold)
         currencyAmountLabel.textAlignment = .right
         contentView.addSubview(currencyAmountLabel)
         currencyAmountLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.dateLabel.snp.trailing).offset(TransactionsTheme.cellMediumMargin)
-            maker.top.equalToSuperview().offset(TransactionsTheme.cellMediumMargin)
+            maker.leading.equalTo(self.dateLabel.snp.trailing).offset(CGFloat.margin3x)
+            maker.top.equalToSuperview().offset(CGFloat.margin3x)
         }
 
         lockImageView.image = UIImage(named: "Transaction Lock Icon")
@@ -64,19 +64,12 @@ class TransactionCell: AppCell {
         }
         lockImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
-        amountLabel.font = TransactionsTheme.amountLabelFont
+        amountLabel.font = .appSubhead2
         amountLabel.textAlignment = .right
         contentView.addSubview(amountLabel)
         amountLabel.snp.makeConstraints { maker in
-            maker.bottom.equalToSuperview().offset(-TransactionsTheme.cellMediumMargin)
+            maker.bottom.equalToSuperview().offset(-CGFloat.margin3x)
             maker.trailing.equalTo(contentView.snp.trailingMargin)
-        }
-
-        contentView.addSubview(pendingView)
-        pendingView.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        pendingView.snp.makeConstraints { maker in
-            maker.leading.equalTo(inOutImageView.snp.trailing).offset(CGFloat.margin3x)
-            maker.centerY.equalTo(amountLabel)
         }
 
         contentView.addSubview(processingView)
@@ -101,11 +94,9 @@ class TransactionCell: AppCell {
 
         let status = item.status
 
-        dateLabel.textColor = status == .pending ? TransactionsTheme.dateLabelTextColor50 : TransactionsTheme.dateLabelTextColor
-        let incomingTextColor = status == .pending ? TransactionsTheme.incomingTextColor50 : TransactionsTheme.incomingTextColor
-        let outgoingTextColor = status == .pending ? TransactionsTheme.outgoingTextColor50 : TransactionsTheme.outgoingTextColor
-        currencyAmountLabel.textColor = item.incoming ? incomingTextColor : outgoingTextColor
-        amountLabel.textColor = status == .pending ? TransactionsTheme.fiatAmountLabelColor50 : TransactionsTheme.fiatAmountLabelColor
+        dateLabel.textColor = .crypto_Silver_Black
+        currencyAmountLabel.textColor = item.incoming ? .appRemus : .appJacob
+        amountLabel.textColor = .cryptoGray
 
         dateLabel.text = DateHelper.instance.formatTransactionDate(from: item.date).uppercased()
         amountLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue, fractionPolicy: .threshold(high: 0.01, low: 0))
@@ -135,11 +126,10 @@ class TransactionCell: AppCell {
 
         switch status {
         case .pending:
-            pendingView.startAnimating()
-            pendingView.isHidden = false
+            processingView.bind(incoming: item.incoming, progress: 0)
+            processingView.startAnimating()
+            processingView.isHidden = false
 
-            processingView.stopAnimating()
-            processingView.isHidden = true
             completedView.isHidden = true
 
         case .processing(let progress):
@@ -147,16 +137,12 @@ class TransactionCell: AppCell {
             processingView.startAnimating()
             processingView.isHidden = false
 
-            pendingView.stopAnimating()
-            pendingView.isHidden = true
             completedView.isHidden = true
 
         case .completed:
             completedView.bind(date: item.date)
             completedView.isHidden = false
 
-            pendingView.stopAnimating()
-            pendingView.isHidden = true
             processingView.stopAnimating()
             processingView.isHidden = true
         }

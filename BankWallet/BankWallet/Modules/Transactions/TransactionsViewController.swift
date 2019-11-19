@@ -133,7 +133,7 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: cellName, for: indexPath)
+        tableView.dequeueReusableCell(withIdentifier: cellName, for: indexPath)
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -158,15 +158,15 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return TransactionsTheme.cellHeight
+        72
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return filterHeaderView.filters.isEmpty ? 0 : TransactionsFilterTheme.filterHeaderHeight
+        filterHeaderView.filters.isEmpty ? 0 : TransactionsFilterTheme.filterHeaderHeight
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return filterHeaderView
+        filterHeaderView
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
