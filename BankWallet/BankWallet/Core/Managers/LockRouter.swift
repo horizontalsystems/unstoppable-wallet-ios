@@ -10,7 +10,12 @@ class LockRouter: ILockRouter {
             controller = presentedController
         }
 
-        controller?.present(LockScreenRouter.module(delegate: delegate), animated: true)
+        if let controller = controller {
+            controller.present(LockScreenRouter.module(delegate: delegate), animated: true)
+        } else {
+            let baseController: Any = viewController ?? "nil"
+            UIAlertController.showSimpleAlert(message: "Failed to show Pin Lock module: top presented view controller not found.\nBase controller: \(baseController)")
+        }
     }
 
 }
