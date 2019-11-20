@@ -8,8 +8,6 @@ class DoubleLineCellView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        titleLabel.font = .appBody
-        titleLabel.textColor = .appOz
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
@@ -17,14 +15,18 @@ class DoubleLineCellView: UIView {
             maker.top.equalToSuperview().offset(10)
         }
 
-        subtitleLabel.font = .appSubhead2
-        subtitleLabel.textColor = .appGray
+        titleLabel.font = .appBody
+        titleLabel.textColor = .appOz
+
         addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
             maker.trailing.equalToSuperview().offset(-CGFloat.margin4x)
             maker.top.equalTo(titleLabel.snp.bottom).offset(5)
         }
+
+        subtitleLabel.font = .appSubhead2
+        subtitleLabel.textColor = .appGray
     }
 
     required init?(coder aDecoder: NSCoder) {

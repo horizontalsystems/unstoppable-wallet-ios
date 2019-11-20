@@ -104,7 +104,7 @@ extension RateListViewController: IRateListView {
     func show(item: RateListViewItem) {
         self.item = item
 
-        tableView.reload(animated: true)
+        tableView.reload()
     }
 
 }
