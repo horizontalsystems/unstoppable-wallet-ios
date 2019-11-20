@@ -9,7 +9,7 @@ class LaunchRouter {
         switch presenter.launchMode {
         case .noPasscode: return NoPasscodeRouter.module()
         case .welcome: return WelcomeScreenRouter.module()
-        case .unlock: return LockScreenRouter.module(appStart: true)
+        case .unlock: return LockScreenRouter.module(delegate: App.shared.lockManager, appStart: true)
         case .main: return MainRouter.module()
         }
     }

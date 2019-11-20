@@ -8,26 +8,27 @@ protocol IUnlockDelegate: class {
 class UnlockPinRouter {
     weak var viewController: UIViewController?
 
-    private let appStart: Bool
-    private var delegate: IUnlockDelegate?
+    private let delegate: IUnlockDelegate
 
-    init(appStart: Bool, delegate: IUnlockDelegate?) {
-        self.appStart = appStart
+    private let unlockMode: UnlockMode
+
+    init(unlockMode: UnlockMode, delegate: IUnlockDelegate) {
+        self.unlockMode = unlockMode
         self.delegate = delegate
     }
+
 }
 
 extension UnlockPinRouter: IUnlockPinRouter {
 
     func dismiss(didUnlock: Bool) {
-        if appStart {
-            UIApplication.shared.keyWindow?.set(newRootController: MainRouter.module())
+        if didUnlock {
+            delegate.onUnlock()
         } else {
-            if didUnlock {
-                delegate?.onUnlock()
-            } else {
-                delegate?.onCancelUnlock()
-            }
+            delegate.onCancelUnlock()
+        }
+
+        if unlockMode == .simple {
             viewController?.dismiss(animated: false)
         }
     }
@@ -36,14 +37,14 @@ extension UnlockPinRouter: IUnlockPinRouter {
 
 extension UnlockPinRouter {
 
-    static func module(delegate: IUnlockDelegate? = nil, enableBiometry: Bool = true, appStart: Bool = false, unlockMode: UnlockMode = .complex) -> UIViewController {
+    static func module(delegate: IUnlockDelegate, enableBiometry: Bool, unlockMode: UnlockMode) -> UIViewController {
         let biometricManager = BiometricManager()
         let lockoutUntilDateFactory = LockoutUntilDateFactory(currentDateProvider: CurrentDateProvider())
         let uptimeProvider = UptimeProvider()
         let lockoutManager = LockoutManager(secureStorage: App.shared.secureStorage, uptimeProvider: uptimeProvider, lockoutTimeFrameFactory: lockoutUntilDateFactory)
         let timer = OneTimeTimer()
 
-        let router = UnlockPinRouter(appStart: appStart, delegate: delegate)
+        let router = UnlockPinRouter(unlockMode: unlockMode, delegate: delegate)
         let interactor = UnlockPinInteractor(pinManager: App.shared.pinManager, biometricManager: biometricManager, lockoutManager: lockoutManager, timer: timer, secureStorage: App.shared.secureStorage)
         let presenter = UnlockPinPresenter(interactor: interactor, router: router, configuration: .init(cancellable: unlockMode == .simple, enableBiometry: enableBiometry))
 
