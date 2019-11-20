@@ -6,12 +6,14 @@ class LockManager {
     private let lockRouter: ILockRouter
 
     private let lockTimeout: Double = 60
-    private(set) var isLocked: Bool = false
+    private(set) var isLocked: Bool
 
     init(pinManager: IPinManager, localStorage: ILocalStorage, lockRouter: ILockRouter) {
         self.pinManager = pinManager
         self.localStorage = localStorage
         self.lockRouter = lockRouter
+
+        isLocked = pinManager.isPinSet
     }
 
 }

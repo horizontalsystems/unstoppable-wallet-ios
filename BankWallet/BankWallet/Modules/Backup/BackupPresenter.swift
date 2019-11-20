@@ -31,7 +31,7 @@ extension BackupPresenter: IBackupViewDelegate {
 
     func proceedDidTap() {
         if interactor.isPinSet {
-            router.showUnlock()
+            router.showUnlock(delegate: self)
         } else {
             router.showBackup(account: account, predefinedAccountType: predefinedAccountType, delegate: self)
         }
