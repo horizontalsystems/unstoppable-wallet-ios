@@ -37,6 +37,7 @@ class App {
     let adapterManager: IAdapterManager
 
     let lockRouter: LockRouter
+    let lockManager: ILockManager & IUnlockDelegate
 
     let passcodeLockManager: IPasscodeLockManager
 
@@ -106,7 +107,7 @@ class App {
         adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager)
 
         lockRouter = LockRouter()
-        let lockManager: ILockManager = LockManager(pinManager: pinManager, localStorage: localStorage, lockRouter: lockRouter)
+        lockManager = LockManager(pinManager: pinManager, localStorage: localStorage, lockRouter: lockRouter)
         let blurManager: IBlurManager = BlurManager(lockManager: lockManager)
 
         let passcodeLockRouter: IPasscodeLockRouter = PasscodeLockRouter()

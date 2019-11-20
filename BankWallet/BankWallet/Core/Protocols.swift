@@ -235,7 +235,7 @@ protocol IPinManager: class {
 }
 
 protocol ILockRouter {
-    func showUnlock(delegate: IUnlockDelegate?)
+    func showUnlock(delegate: IUnlockDelegate)
 }
 
 protocol IPasscodeLockRouter {

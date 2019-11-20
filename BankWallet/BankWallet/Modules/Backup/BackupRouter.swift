@@ -2,13 +2,12 @@ import UIKit
 
 class BackupRouter {
     weak var viewController: UIViewController?
-    weak var unlockDelegate: IUnlockDelegate?
 }
 
 extension BackupRouter: IBackupRouter {
 
-    func showUnlock() {
-        viewController?.present(UnlockPinRouter.module(delegate: unlockDelegate, enableBiometry: false, unlockMode: .simple), animated: true)
+    func showUnlock(delegate: IUnlockDelegate) {
+        viewController?.present(UnlockPinRouter.module(delegate: delegate, enableBiometry: false, unlockMode: .simple), animated: true)
     }
 
     func showBackup(account: Account, predefinedAccountType: IPredefinedAccountType, delegate: IBackupDelegate) {
@@ -36,7 +35,6 @@ extension BackupRouter {
         let navigationViewController = WalletNavigationController(rootViewController: viewController)
 
         router.viewController = viewController
-        router.unlockDelegate = presenter
 
         return navigationViewController
     }

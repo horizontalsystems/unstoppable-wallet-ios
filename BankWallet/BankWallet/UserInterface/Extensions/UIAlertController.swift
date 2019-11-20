@@ -1,5 +1,7 @@
 import UIKit
 
+private var window: UIWindow!
+
 extension UIAlertController {
 
     public static func showSimpleAlert(fromController: UIViewController? = nil, title: String? = nil, message: String? = nil) {
@@ -13,7 +15,6 @@ extension UIAlertController {
 
     public func show(forView view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil, fromController: UIViewController? = nil, sourceRect: CGRect? = nil) {
 
-        let window: UIWindow
         if fromController != nil, let keyWindow = UIApplication.shared.keyWindow {
             fromController?.view.endEditing(true)
             window = keyWindow
@@ -36,6 +37,11 @@ extension UIAlertController {
         } else {
             window.rootViewController?.present(self, animated: true, completion: nil)
         }
+    }
+
+    open override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        window = nil
     }
 
 }
