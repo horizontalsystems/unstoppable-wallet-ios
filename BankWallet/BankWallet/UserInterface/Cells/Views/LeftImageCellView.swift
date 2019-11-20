@@ -8,12 +8,13 @@ class LeftImageCellView: UIView {
         super.init(frame: frame)
 
         addSubview(imageView)
-        imageView.setContentHuggingPriority(.required, for: .horizontal)
         imageView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
             maker.trailing.equalToSuperview()
         }
+
+        imageView.setContentHuggingPriority(.required, for: .horizontal)
     }
 
     required init?(coder aDecoder: NSCoder) {

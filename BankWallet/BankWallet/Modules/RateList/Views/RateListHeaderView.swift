@@ -7,31 +7,29 @@ class RateListHeaderView: UITableViewHeaderFooterView {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
 
-        backgroundColor = .clear
-
-        currentDateLabel.textColor = .appOz
-        currentDateLabel.font = .appTitle1
-
         contentView.addSubview(currentDateLabel)
-        currentDateLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         currentDateLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin6x)
             maker.top.equalToSuperview().offset(CGFloat.margin6x)
         }
 
-        lastUpdateLabel.textColor = .appGray
-        lastUpdateLabel.font = .appCaption
-        lastUpdateLabel.numberOfLines = 2
-        lastUpdateLabel.textAlignment = .right
+        currentDateLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        currentDateLabel.textColor = .appOz
+        currentDateLabel.font = .appTitle1
 
         contentView.addSubview(lastUpdateLabel)
-        lastUpdateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        lastUpdateLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         lastUpdateLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(currentDateLabel.snp.trailing).offset(CGFloat.margin4x)
             maker.trailing.equalToSuperview().inset(CGFloat.margin6x)
             maker.bottom.equalToSuperview().inset(CGFloat.margin4x)
         }
+
+        lastUpdateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        lastUpdateLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        lastUpdateLabel.textColor = .appGray
+        lastUpdateLabel.font = .appCaption
+        lastUpdateLabel.numberOfLines = 2
+        lastUpdateLabel.textAlignment = .right
     }
 
     required init?(coder aDecoder: NSCoder) {
