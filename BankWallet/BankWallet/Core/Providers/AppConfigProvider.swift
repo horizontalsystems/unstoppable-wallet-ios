@@ -109,7 +109,7 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "DAI",       title: "Dai",                   code: "DAI",     decimal: 18, type: CoinType(erc20Address: "0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359")),
         Coin(id: "MANA",      title: "Decentraland",          code: "MANA",    decimal: 18, type: CoinType(erc20Address: "0x0F5D2fB29fb7d3CFeE444a200298f468908cC942")),
         Coin(id: "DGD",       title: "Digix DAO",             code: "DGD",     decimal: 9,  type: CoinType(erc20Address: "0xE0B7927c4aF23765Cb51314A0E0521A9645F0E2A")),
-        Coin(id: "DGX",       title: "Digix Gold",            code: "DGX",     decimal: 9,  type: CoinType(erc20Address: "0x4f3AfEC4E5a3F2A6a1A411DEF7D7dFe50eE057bF", gasLimit: 300_000)),
+        Coin(id: "DGX",       title: "Digix Gold",            code: "DGX",     decimal: 9,  type: CoinType(erc20Address: "0x4f3AfEC4E5a3F2A6a1A411DEF7D7dFe50eE057bF")),
         Coin(id: "ENJ",       title: "Enjin Coin",            code: "ENJ",     decimal: 18, type: CoinType(erc20Address: "0xF629cBd94d3791C9250152BD8dfBDF380E2a3B9c")),
         Coin(id: "EOSDT",     title: "EOSDT",                 code: "EOSDT",   decimal: 9,  type: .eos(token: "eosdtsttoken", symbol: "EOSDT")),
         Coin(id: "IQ",        title: "Everipedia",            code: "IQ",      decimal: 3,  type: .eos(token: "everipediaiq", symbol: "IQ")),

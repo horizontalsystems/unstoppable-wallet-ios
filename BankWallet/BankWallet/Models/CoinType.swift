@@ -5,11 +5,11 @@ enum CoinType {
     case bitcoinCash
     case dash
     case ethereum
-    case erc20(address: String, fee: Decimal, gasLimit: Int, minimumRequiredBalance: Decimal)
+    case erc20(address: String, fee: Decimal, gasLimit: Int?, minimumRequiredBalance: Decimal)
     case eos(token: String, symbol: String)
     case binance(symbol: String)
 
-    init(erc20Address: String, fee: Decimal = 0, gasLimit: Int = 100_000, minimumRequiredBalance: Decimal = 0) {
+    init(erc20Address: String, fee: Decimal = 0, gasLimit: Int? = nil, minimumRequiredBalance: Decimal = 0) {
         self = .erc20(address: erc20Address, fee: fee, gasLimit: gasLimit, minimumRequiredBalance: minimumRequiredBalance)
     }
 
