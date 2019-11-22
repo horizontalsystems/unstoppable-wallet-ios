@@ -7,12 +7,14 @@ class Erc20Adapter: EthereumBaseAdapter {
     private let erc20Kit: Erc20Kit
     private let contractAddress: String
     private let fee: Decimal
+    private let gasLimit: Int?
     private(set) var minimumRequiredBalance: Decimal
 
-    init(ethereumKit: EthereumKit, contractAddress: String, decimal: Int, fee: Decimal, minimumRequiredBalance: Decimal) throws {
+    init(ethereumKit: EthereumKit, contractAddress: String, decimal: Int, fee: Decimal, gasLimit: Int? = nil, minimumRequiredBalance: Decimal) throws {
         self.erc20Kit = try Erc20Kit.instance(ethereumKit: ethereumKit, contractAddress: contractAddress)
         self.contractAddress = contractAddress
         self.fee = fee
+        self.gasLimit = gasLimit
         self.minimumRequiredBalance = minimumRequiredBalance
 
         super.init(ethereumKit: ethereumKit, decimal: decimal)
@@ -70,7 +72,10 @@ class Erc20Adapter: EthereumBaseAdapter {
     }
 
     override func estimateGasLimit(to address: String, value: Decimal, gasPrice: Int?) -> Single<Int> {
-        erc20Kit.estimateGas(to: address, contractAddress: contractAddress, value: value.roundedString(decimal: decimal), gasPrice: gasPrice)
+        if let gasLimit = gasLimit {
+            return Single.just(gasLimit)
+        }
+        return erc20Kit.estimateGas(to: address, contractAddress: contractAddress, value: value.roundedString(decimal: decimal), gasPrice: gasPrice)
     }
 
 }
