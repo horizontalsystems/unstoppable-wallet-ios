@@ -14,9 +14,10 @@ class SendFeePresenter {
 
     private var fee: Decimal = 0
     private var availableFeeBalance: Decimal?
-    private var duration: TimeInterval?
 
     private(set) var inputType: SendInputType = .coin
+
+    private var externalError: Error?
 
     init(coin: Coin, interactor: ISendFeeInteractor) {
         baseCoin = coin
@@ -29,15 +30,19 @@ class SendFeePresenter {
     }
 
     private var coin: Coin {
-        return feeCoin ?? baseCoin
+        feeCoin ?? baseCoin
     }
 
     private func syncFeeLabels() {
-        view?.set(duration: duration)
         view?.set(fee: primaryAmountInfo, convertedFee: secondaryAmountInfo)
     }
 
     private func syncError() {
+        guard externalError == nil else {
+            view?.set(error: externalError)
+            return
+        }
+
         do {
             try validate()
             view?.set(error: nil)
@@ -97,16 +102,13 @@ extension SendFeePresenter: ISendFeeModule {
         }
     }
 
-    var coinValue: CoinValue {
-        CoinValue(coin: coin, value: fee)
+    func set(loading: Bool) {
+        view?.set(loading: loading)
     }
 
-    var currencyValue: CurrencyValue? {
-        if let rateValue = rateValue {
-            return CurrencyValue(currency: currency, value: fee * rateValue)
-        } else {
-            return nil
-        }
+    func set(externalError: Error?) {
+        self.externalError = externalError
+        syncError()
     }
 
     func set(fee: Decimal) {
@@ -118,11 +120,6 @@ extension SendFeePresenter: ISendFeeModule {
     func set(availableFeeBalance: Decimal) {
         self.availableFeeBalance = availableFeeBalance
         syncError()
-    }
-
-    func set(duration: TimeInterval) {
-        self.duration = duration
-        syncFeeLabels()
     }
 
     func update(inputType: SendInputType) {

@@ -20,6 +20,7 @@
 
 "alert.copied" = "Copied";
 "alert.no_internet" = "No Internet";
+"alert.no_fee" = "Wrong Fee";
 "alert.network_issue" = "Network issues. Try again in a short moment";
 "alert.unknown_error" = "Unknown Error";
 
@@ -155,6 +156,22 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "send.amount_error.minimum_amount" = "Minimum amount %@";
 "send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
+
+"fee_error.invalid_url" = "Fee rate URL is invalid";
+"fee_error.mapping_error" = "Fee response can not be mapped";
+"fee_error.no_connection" = "Fee module has no access to network";
+"fee_error.server_error" = "Fee server responded with error: %@";
+
+"erc20_error.invalid_address" = "ERC20 address error invalid";
+"erc20_error.invalid_contract_address" = "ERC20 contract address invalid";
+"erc20_error.invalid_value" = "ERC20 value invalid";
+
+"ethereum_error.invalid_data" = "Infura response can not be mapped";
+
+"ethereum_error.invalid_url" = "Ethereum invalid url";
+"ethereum_error.mapping_error" = "Ethereum response can not be mapped";
+"ethereum_error.no_connection" = "Ethereum has no connection";
+"ethereum_error.server_error" = "Ethereum server responded with error: %@";
 
 "send.lock_time" = "TimeLock";
 // Transactions

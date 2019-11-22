@@ -4,6 +4,18 @@ class SendInteractor {
     weak var delegate: ISendInteractorDelegate?
 
     private let disposeBag = DisposeBag()
+
+    init(reachabilityManager: IReachabilityManager) {
+        reachabilityManager.reachabilitySignal
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] in
+                    if reachabilityManager.isReachable {
+                        self?.delegate?.sync()
+                    }
+                })
+                .disposed(by: disposeBag)
+    }
+
 }
 
 extension SendInteractor: ISendInteractor {

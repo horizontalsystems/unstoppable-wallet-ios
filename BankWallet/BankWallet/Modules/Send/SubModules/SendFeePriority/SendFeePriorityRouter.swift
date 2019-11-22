@@ -16,6 +16,7 @@ extension SendFeePriorityRouter {
         let presenter = SendFeePriorityPresenter(interactor: interactor, router: router, coin: coin, feeRatePriority: .medium)
         let view = SendFeePriorityView(delegate: presenter)
 
+        interactor.delegate = presenter
         presenter.view = view
 
         return (view, presenter, router)

@@ -1,6 +1,7 @@
 import UIKit
 
 protocol ISendAmountView: class {
+    func set(loading: Bool)
     func set(amountType: String)
     func set(availableBalance: AmountInfo?)
     func set(amount: AmountInfo?)
@@ -17,7 +18,9 @@ protocol ISendAmountViewDelegate {
     func viewDidLoad()
 
     func isValid(text: String) -> Bool
-    func onChanged(amountText: String?)
+
+    func willChangeAmount(text: String?)
+    func didChangeAmount()
 
     func onSwitchClicked()
     func onMaxClicked()
@@ -44,6 +47,7 @@ protocol ISendAmountModule: AnyObject {
 
     func showKeyboard()
 
+    func set(loading: Bool)
     func set(amount: Decimal)
     func set(availableBalance: Decimal)
     func set(maximumAmount: Decimal?)

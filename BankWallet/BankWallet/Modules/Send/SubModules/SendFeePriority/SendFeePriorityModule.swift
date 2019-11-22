@@ -2,6 +2,8 @@ import UIKit
 
 protocol ISendFeePriorityView: class {
     func setPriority()
+    func set(enabled: Bool)
+    func set(duration: TimeInterval?)
 }
 
 protocol ISendFeePriorityViewDelegate {
@@ -10,8 +12,12 @@ protocol ISendFeePriorityViewDelegate {
 }
 
 protocol ISendFeePriorityInteractor {
-    func feeRate(priority: FeeRatePriority) -> Int
-    func duration(priority: FeeRatePriority) -> TimeInterval
+    func syncFeeRate(priority: FeeRatePriority)
+}
+
+protocol ISendFeePriorityInteractorDelegate {
+    func didUpdate(feeRate: FeeRate)
+    func didReceiveError(error: Error)
 }
 
 protocol ISendFeePriorityRouter {
@@ -24,8 +30,12 @@ protocol ISendFeePriorityDelegate: class {
 
 protocol ISendFeePriorityModule: AnyObject {
     var delegate: ISendFeePriorityDelegate? { get set }
-    var feeRate: Int { get }
-    var duration: TimeInterval { get }
+    var feeRateState: FeeState { get }
+
+    var feeRate: Int? { get }
+    var duration: TimeInterval? { get }
+
+    func fetchFeeRate()
 }
 
 struct PriorityItem {

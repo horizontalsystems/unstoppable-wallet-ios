@@ -14,14 +14,9 @@ class SendHodlerView: UIView {
         selectableValueView.delegate = self
         selectableValueView.set(value: text(lockTimeInterval: nil))
 
-        snp.makeConstraints { maker in
-            maker.height.equalTo(SendTheme.hodlerHeight)
-        }
-
         addSubview(selectableValueView)
         selectableValueView.snp.makeConstraints { maker in
-            maker.top.equalToSuperview()
-            maker.leading.trailing.equalToSuperview()
+            maker.edges.equalToSuperview()
         }
     }
 

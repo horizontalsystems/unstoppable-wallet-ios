@@ -36,6 +36,8 @@
 	<string>${infura_project_id}</string>
 	<key>InfuraProjectSecret</key>
 	<string>${infura_project_secret}</string>
+	<key>BtcCoreRpcUrl</key>
+	<string>${btc_core_rpc_url}</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>tg</string>

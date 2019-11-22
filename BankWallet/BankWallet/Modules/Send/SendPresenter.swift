@@ -56,6 +56,10 @@ extension SendPresenter: ISendHandlerDelegate {
 
 extension SendPresenter: ISendInteractorDelegate {
 
+    func sync() {
+        handler.sync()
+    }
+
     func didSend() {
         view?.dismissWithSuccess()
     }

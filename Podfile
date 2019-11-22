@@ -23,7 +23,7 @@ def appPods
   pod 'HSHDWalletKit', git: 'https://github.com/horizontalsystems/hd-wallet-kit-ios'
 
   pod 'XRatesKit.swift', git: 'https://github.com/horizontalsystems/xrates-kit-ios'
-  pod 'FeeRateKit.swift', git: 'https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios', commit: "faa6eafcce30b372ebda62e3d4ca51f07cb794ec"
+  pod 'FeeRateKit.swift', git: 'https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios'
 
   pod 'Alamofire'
   pod 'AlamofireImage'

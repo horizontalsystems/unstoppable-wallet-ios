@@ -1,4 +1,5 @@
 import RxSwift
+import EthereumKit
 
 class SendEthereumInteractor {
     private let adapter: ISendEthereumAdapter
@@ -11,8 +12,8 @@ class SendEthereumInteractor {
 
 extension SendEthereumInteractor: ISendEthereumInteractor {
 
-    func availableBalance(gasPrice: Int) -> Decimal {
-        adapter.availableBalance(gasPrice: gasPrice)
+    func availableBalance(gasPrice: Int, gasLimit: Int?) -> Decimal {
+        adapter.availableBalance(gasPrice: gasPrice, gasLimit: gasLimit)
     }
 
     var ethereumBalance: Decimal {
@@ -27,12 +28,16 @@ extension SendEthereumInteractor: ISendEthereumInteractor {
         try adapter.validate(address: address)
     }
 
-    func fee(gasPrice: Int) -> Decimal {
-        adapter.fee(gasPrice: gasPrice)
+    func fee(gasPrice: Int, gasLimit: Int) -> Decimal {
+        adapter.fee(gasPrice: gasPrice, gasLimit: gasLimit)
     }
 
-    func sendSingle(amount: Decimal, address: String, gasPrice: Int) -> Single<Void> {
-        adapter.sendSingle(amount: amount, address: address, gasPrice: gasPrice)
+    func estimateGasLimit(to address: String, value: Decimal, gasPrice: Int?) -> Single<Int> {
+        adapter.estimateGasLimit(to: address, value: value, gasPrice: gasPrice)
+    }
+
+    func sendSingle(amount: Decimal, address: String, gasPrice: Int, gasLimit: Int) -> Single<Void> {
+        adapter.sendSingle(amount: amount, address: address, gasPrice: gasPrice, gasLimit: gasLimit)
     }
 
 }

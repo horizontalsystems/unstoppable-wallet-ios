@@ -5,8 +5,6 @@ class SendFeeView: UIView {
 
     private let feeTitleLabel = UILabel()
     private let feeValueLabel = UILabel()
-    private let durationTitleLabel = UILabel()
-    private let durationValueLabel = UILabel()
     private let errorLabel = UILabel()
 
     public init(delegate: ISendFeeViewDelegate) {
@@ -14,41 +12,19 @@ class SendFeeView: UIView {
 
         super.init(frame: .zero)
 
-        self.snp.makeConstraints { maker in
-            maker.height.equalTo(SendTheme.feeHeight)
-        }
-
         backgroundColor = .clear
 
-        addSubview(durationTitleLabel)
-        addSubview(durationValueLabel)
         addSubview(feeTitleLabel)
         addSubview(errorLabel)
         addSubview(feeValueLabel)
-
-        durationTitleLabel.text = "send.tx_duration".localized
-        durationTitleLabel.font = SendTheme.feeFont
-        durationTitleLabel.textColor = SendTheme.feeColor
-        durationTitleLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SendTheme.margin)
-            maker.top.equalToSuperview().offset(SendTheme.feeTitleTopMargin)
-        }
-
-        durationValueLabel.font = SendTheme.feeFont
-        durationValueLabel.textColor = SendTheme.feeColor
-        durationValueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        durationValueLabel.snp.makeConstraints { maker in
-            maker.centerY.equalTo(durationTitleLabel.snp.centerY)
-            maker.trailing.equalToSuperview().offset(-SendTheme.margin)
-            maker.leading.equalTo(durationTitleLabel.snp.trailing).offset(SendTheme.margin)
-        }
 
         feeTitleLabel.text = "send.fee".localized
         feeTitleLabel.font = SendTheme.feeFont
         feeTitleLabel.textColor = SendTheme.feeColor
         feeTitleLabel.snp.makeConstraints { maker in
+            maker.top.equalToSuperview().offset(CGFloat.margin2x)
             maker.leading.equalToSuperview().offset(SendTheme.margin)
-            maker.top.equalTo(durationTitleLabel.snp.bottom).offset(SendTheme.feeTitleTopMargin)
+            maker.bottom.lessThanOrEqualToSuperview()
         }
 
         feeValueLabel.font = SendTheme.feeFont
@@ -56,17 +32,18 @@ class SendFeeView: UIView {
         feeValueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         feeValueLabel.snp.makeConstraints { maker in
             maker.centerY.equalTo(feeTitleLabel.snp.centerY)
-            maker.trailing.equalToSuperview().offset(-SendTheme.margin)
-            maker.leading.equalTo(feeTitleLabel.snp.trailing).offset(SendTheme.margin)
+            maker.leading.equalTo(feeTitleLabel.snp.trailing).offset(CGFloat.margin4x)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.bottom.lessThanOrEqualToSuperview()
         }
 
         errorLabel.numberOfLines = 0
         errorLabel.font = .appCaption
         errorLabel.textColor = SendTheme.errorColor
         errorLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SendTheme.margin)
-            maker.top.equalTo(durationTitleLabel.snp.bottom).offset(SendTheme.smallMargin)
-            maker.trailing.equalToSuperview().offset(-SendTheme.margin)
+            maker.top.equalToSuperview().offset(CGFloat.margin2x)
+            maker.leading.trailing.equalToSuperview().inset(SendTheme.margin)
+            maker.bottom.lessThanOrEqualToSuperview()
         }
     }
 
@@ -84,6 +61,10 @@ class SendFeeView: UIView {
 
 extension SendFeeView: ISendFeeView {
 
+    func set(loading: Bool) {
+        feeValueLabel.text = loading ? "Loading..." : nil
+    }
+
     func set(fee: AmountInfo, convertedFee: AmountInfo?) {
         guard let formattedFeeString = fee.formattedString else {
             feeValueLabel.text = nil
@@ -96,10 +77,6 @@ extension SendFeeView: ISendFeeView {
         }
 
         feeValueLabel.text = "\(formattedFeeString)"
-    }
-
-    func set(duration: TimeInterval?) {
-        durationValueLabel.text = duration.map { "send.duration.within".localized($0.approximateHoursOrMinutes) } ?? "send.duration.instant".localized
     }
 
     func set(error: Error?) {

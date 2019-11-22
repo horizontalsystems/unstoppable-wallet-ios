@@ -57,8 +57,11 @@ extension SendEosHandler: ISendHandler {
         return viewItems
     }
 
+    func sync() {
+    }
+
     func sendSingle() throws -> Single<Void> {
-        return interactor.sendSingle(amount: try amountModule.validAmount(), account: try accountModule.validAccount(), memo: memoModule.memo)
+        interactor.sendSingle(amount: try amountModule.validAmount(), account: try accountModule.validAccount(), memo: memoModule.memo)
     }
 
 }

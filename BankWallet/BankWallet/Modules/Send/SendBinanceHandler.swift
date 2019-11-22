@@ -59,8 +59,11 @@ extension SendBinanceHandler: ISendHandler {
         return viewItems
     }
 
+    func sync() {
+    }
+
     func sendSingle() throws -> Single<Void> {
-        return interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress(), memo: memoModule.memo)
+        interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress(), memo: memoModule.memo)
     }
 
 }
