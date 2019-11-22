@@ -1,65 +1,35 @@
 import FeeRateKit
+import RxSwift
 
 class FeeRateProvider {
-    let feeRateKit = FeeRateKit.instance()
+    private let feeRateKit: FeeRateKit.Kit
 
-    private func feeRate(from feeRate: FeeRate, priority: FeeRatePriority) -> Int {
-        switch priority {
-        case .low:
-            return feeRate.low
-        case .medium:
-            return feeRate.medium
-        case .high:
-            return feeRate.high
-        }
-    }
-
-    private func transactionSendDuration(from feeRate: FeeRate, priority: FeeRatePriority) -> TimeInterval {
-        switch priority {
-        case .low:
-            return feeRate.lowPriorityDuration
-        case .medium:
-            return feeRate.mediumPriorityDuration
-        case .high:
-            return feeRate.highPriorityDuration
-        }
+    init(appConfigProvider: IAppConfigProvider) {
+        let providerConfig = FeeProviderConfig(infuraProjectId: appConfigProvider.infuraCredentials.id,
+                infuraProjectSecret: appConfigProvider.infuraCredentials.secret,
+                btcCoreRpcUrl: appConfigProvider.btcCoreRpcUrl,
+                btcCoreRpcUser: nil,
+                btcCoreRpcPassword: nil
+        )
+        feeRateKit = FeeRateKit.Kit.instance(providerConfig: providerConfig, minLogLevel: .error)
     }
 
     // Fee rates
 
-    func ethereumGasPrice(for priority: FeeRatePriority) -> Int {
-        return feeRate(from: feeRateKit.ethereum, priority: priority)
+    func ethereumGasPrice(for priority: FeeRatePriority) -> Single<FeeRate> {
+        feeRateKit.ethereum.map { FeeRate(feeRate: $0) }
     }
 
-    func bitcoinFeeRate(for priority: FeeRatePriority) -> Int {
-        return feeRate(from: feeRateKit.bitcoin, priority: priority)
+    func bitcoinFeeRate(for priority: FeeRatePriority) -> Single<FeeRate> {
+        feeRateKit.bitcoin.map { FeeRate(feeRate: $0) }
     }
 
-    func bitcoinCashFeeRate(for priority: FeeRatePriority) -> Int {
-        return feeRate(from: feeRateKit.bitcoinCash, priority: priority)
+    func bitcoinCashFeeRate(for priority: FeeRatePriority) -> Single<FeeRate> {
+        feeRateKit.bitcoinCash.map { FeeRate(feeRate: $0) }
     }
 
-    func dashFeeRate(for priority: FeeRatePriority) -> Int {
-        return feeRate(from: feeRateKit.dash, priority: priority)
-    }
-
-
-    // Transaction inclusion in block durations
-
-    func bitcoinTransactionSendDuration(for priority: FeeRatePriority) -> TimeInterval {
-        return transactionSendDuration(from: feeRateKit.bitcoin, priority: priority)
-    }
-
-    func bitcoinCashTransactionSendDuration(for priority: FeeRatePriority) -> TimeInterval {
-        return transactionSendDuration(from: feeRateKit.bitcoinCash, priority: priority)
-    }
-
-    func dashTransactionSendDuration(for priority: FeeRatePriority) -> TimeInterval {
-        return transactionSendDuration(from: feeRateKit.dash, priority: priority)
-    }
-
-    func ethereumTransactionSendDuration(for priority: FeeRatePriority) -> TimeInterval {
-        return transactionSendDuration(from: feeRateKit.ethereum, priority: priority)
+    func dashFeeRate(for priority: FeeRatePriority) -> Single<FeeRate> {
+        feeRateKit.dash.map { FeeRate(feeRate: $0) }
     }
 
 }
@@ -71,12 +41,8 @@ class BitcoinFeeRateProvider: IFeeRateProvider {
         self.feeRateProvider = feeRateProvider
     }
 
-    func feeRate(for priority: FeeRatePriority) -> Int {
-        return feeRateProvider.bitcoinFeeRate(for: priority)
-    }
-
-    func duration(priority: FeeRatePriority) -> TimeInterval {
-        return feeRateProvider.bitcoinTransactionSendDuration(for: priority)
+    func feeRate(for priority: FeeRatePriority) -> Single<FeeRate> {
+        feeRateProvider.bitcoinFeeRate(for: priority)
     }
 
 }
@@ -88,12 +54,8 @@ class BitcoinCashFeeRateProvider: IFeeRateProvider {
         self.feeRateProvider = feeRateProvider
     }
 
-    func feeRate(for priority: FeeRatePriority) -> Int {
-        return feeRateProvider.bitcoinCashFeeRate(for: priority)
-    }
-
-    func duration(priority: FeeRatePriority) -> TimeInterval {
-        return feeRateProvider.bitcoinCashTransactionSendDuration(for: priority)
+    func feeRate(for priority: FeeRatePriority) -> Single<FeeRate> {
+        feeRateProvider.bitcoinCashFeeRate(for: priority)
     }
 
 }
@@ -105,12 +67,8 @@ class EthereumFeeRateProvider: IFeeRateProvider {
         self.feeRateProvider = feeRateProvider
     }
 
-    func feeRate(for priority: FeeRatePriority) -> Int {
-        return feeRateProvider.ethereumGasPrice(for: priority)
-    }
-
-    func duration(priority: FeeRatePriority) -> TimeInterval {
-        return feeRateProvider.ethereumTransactionSendDuration(for: priority)
+    func feeRate(for priority: FeeRatePriority) -> Single<FeeRate> {
+        feeRateProvider.ethereumGasPrice(for: priority)
     }
 
 }
@@ -122,12 +80,8 @@ class DashFeeRateProvider: IFeeRateProvider {
         self.feeRateProvider = feeRateProvider
     }
 
-    func feeRate(for priority: FeeRatePriority) -> Int {
-        return feeRateProvider.dashFeeRate(for: priority)
-    }
-
-    func duration(priority: FeeRatePriority) -> TimeInterval {
-        return feeRateProvider.dashTransactionSendDuration(for: priority)
+    func feeRate(for priority: FeeRatePriority) -> Single<FeeRate> {
+        feeRateProvider.dashFeeRate(for: priority)
     }
 
 }

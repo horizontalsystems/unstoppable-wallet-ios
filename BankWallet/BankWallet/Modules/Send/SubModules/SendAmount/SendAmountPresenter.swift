@@ -200,6 +200,10 @@ extension SendAmountPresenter: ISendAmountModule {
         view?.showKeyboard()
     }
 
+    func set(loading: Bool) {
+        view?.set(loading: loading)
+    }
+
     func set(amount: Decimal) {
         self.amount = amount
 
@@ -255,8 +259,8 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
         syncError()
     }
 
-    func onChanged(amountText: String?) {
-        let enteredAmount = decimalParser.parseAnyDecimal(from: amountText)
+    func willChangeAmount(text: String?) {
+        let enteredAmount = decimalParser.parseAnyDecimal(from: text)
 
         switch inputType {
         case .coin:
@@ -276,7 +280,9 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
         syncHint()
         syncMaxButton()
         syncError()
+    }
 
+    func didChangeAmount() {
         delegate?.onChangeAmount()
     }
 

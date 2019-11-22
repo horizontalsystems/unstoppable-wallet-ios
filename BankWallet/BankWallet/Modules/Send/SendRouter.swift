@@ -46,7 +46,7 @@ extension SendRouter {
             return nil
         }
 
-        let interactor = SendInteractor()
+        let interactor = SendInteractor(reachabilityManager: App.shared.reachabilityManager)
         let presenter = SendPresenter(coin: wallet.coin, handler: handler, interactor: interactor, router: router)
         let viewController = SendViewController(delegate: presenter, views: subViews)
 
@@ -73,12 +73,6 @@ extension SendRouter {
         views.append(addressView)
         routers.append(addressRouter)
 
-        guard let (feePriorityView, feePriorityModule, feePriorityRouter) = SendFeePriorityRouter.module(coin: coin) else {
-            return nil
-        }
-        views.append(feePriorityView)
-        routers.append(feePriorityRouter)
-
         var hodlerModule: ISendHodlerModule?
 
         if interactor.lockTimeEnabled && coin.type == .bitcoin {
@@ -87,6 +81,12 @@ extension SendRouter {
             views.append(hodlerView)
             routers.append(hodlerRouter)
         }
+
+        guard let (feePriorityView, feePriorityModule, feePriorityRouter) = SendFeePriorityRouter.module(coin: coin) else {
+            return nil
+        }
+        views.append(feePriorityView)
+        routers.append(feePriorityRouter)
 
         let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
         views.append(feeView)

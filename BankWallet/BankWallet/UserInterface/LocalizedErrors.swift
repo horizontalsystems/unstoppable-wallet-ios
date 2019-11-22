@@ -1,8 +1,11 @@
 import Foundation
-import HSHDWalletKit
-import EosKit
 import BitcoinCore
 import BinanceChainKit
+import FeeRateKit
+import EosKit
+import Erc20Kit
+import EthereumKit
+import HSHDWalletKit
 import Hodler
 
 extension WordsValidator.ValidationError: LocalizedError {
@@ -47,6 +50,7 @@ extension SendTransactionError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .connection: return "alert.no_internet".localized
+        case .noFee: return "alert.no_fee".localized
         case .unknown: return "alert.network_issue".localized
         }
     }
@@ -80,6 +84,60 @@ extension ChartRateFactory.FactoryError: LocalizedError {
         switch self {
         case .noChartPoints: return "chart.error.no_statistics".localized
         case .noPercentDelta: return "chart.error.no_percentDelta".localized
+        }
+    }
+}
+
+extension FeeRateKit.NetworkError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .invalidUrl:
+            return "fee_error.invalid_url".localized
+        case .mappingError:
+            return "fee_error.mapping_error".localized
+        case .noConnection:
+            return "fee_error.no_connection".localized
+        case .serverError(let status, let data):
+            let stringData = "\(status) : " + "\(data.map { $0 } ?? "no data")"
+            return "fee_error.server_error".localized(stringData)
+        }
+    }
+}
+
+extension Erc20Kit.ValidationError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .invalidAddress:
+            return "erc20_error.invalid_address".localized
+        case .invalidContractAddress:
+            return "erc20_error.invalid_contract_address".localized
+        case .invalidValue:
+            return "erc20_error.invalid_value".localized
+        }
+    }
+}
+
+extension EthereumKit.ApiError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .invalidData:
+            return "ethereum_error.invalid_data".localized
+        }
+    }
+}
+
+extension EthereumKit.NetworkError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .invalidUrl:
+            return "ethereum_error.invalid_url".localized
+        case .mappingError:
+            return "ethereum_error.mapping_error".localized
+        case .noConnection:
+            return "ethereum_error.no_connection".localized
+        case .serverError(let status, let data):
+            let stringData = "\(status) : " + "\(data.map { $0 } ?? "no data")"
+            return "ethereum_error.server_error".localized(stringData)
         }
     }
 }

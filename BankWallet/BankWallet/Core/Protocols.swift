@@ -136,12 +136,13 @@ protocol ISendDashAdapter {
 }
 
 protocol ISendEthereumAdapter {
-    func availableBalance(gasPrice: Int) -> Decimal
+    func availableBalance(gasPrice: Int, gasLimit: Int?) -> Decimal
     var ethereumBalance: Decimal { get }
     var minimumRequiredBalance: Decimal { get }
     func validate(address: String) throws
-    func fee(gasPrice: Int) -> Decimal
-    func sendSingle(amount: Decimal, address: String, gasPrice: Int) -> Single<Void>
+    func estimateGasLimit(to address: String, value: Decimal, gasPrice: Int?) -> Single<Int>
+    func fee(gasPrice: Int, gasLimit: Int) -> Decimal
+    func sendSingle(amount: Decimal, address: String, gasPrice: Int, gasLimit: Int) -> Single<Void>
 }
 
 protocol ISendEosAdapter {
@@ -289,6 +290,7 @@ protocol IAppConfigProvider {
     var testMode: Bool { get }
     var officeMode: Bool { get }
     var infuraCredentials: (id: String, secret: String?) { get }
+    var btcCoreRpcUrl: String { get }
     var etherscanKey: String { get }
     var currencies: [Currency] { get }
 
@@ -503,8 +505,7 @@ protocol IAddressParser {
 }
 
 protocol IFeeRateProvider {
-    func feeRate(for priority: FeeRatePriority) -> Int
-    func duration(priority: FeeRatePriority) -> TimeInterval
+    func feeRate(for priority: FeeRatePriority) -> Single<FeeRate>
 }
 
 protocol IEncryptionManager {

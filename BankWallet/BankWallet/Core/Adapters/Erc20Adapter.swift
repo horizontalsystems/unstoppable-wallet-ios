@@ -5,11 +5,13 @@ import class Erc20Kit.TransactionInfo
 
 class Erc20Adapter: EthereumBaseAdapter {
     private let erc20Kit: Erc20Kit
+    private let contractAddress: String
     private let fee: Decimal
     private(set) var minimumRequiredBalance: Decimal
 
-    init(ethereumKit: EthereumKit, contractAddress: String, decimal: Int, fee: Decimal, gasLimit: Int, minimumRequiredBalance: Decimal) throws {
-        self.erc20Kit = try Erc20Kit.instance(ethereumKit: ethereumKit, contractAddress: contractAddress, gasLimit: gasLimit)
+    init(ethereumKit: EthereumKit, contractAddress: String, decimal: Int, fee: Decimal, minimumRequiredBalance: Decimal) throws {
+        self.erc20Kit = try Erc20Kit.instance(ethereumKit: ethereumKit, contractAddress: contractAddress)
+        self.contractAddress = contractAddress
         self.fee = fee
         self.minimumRequiredBalance = minimumRequiredBalance
 
@@ -55,9 +57,9 @@ class Erc20Adapter: EthereumBaseAdapter {
         )
     }
 
-    override func sendSingle(to address: String, value: String, gasPrice: Int) -> Single<Void> {
+    override func sendSingle(to address: String, value: String, gasPrice: Int, gasLimit: Int) -> Single<Void> {
         do {
-            return try erc20Kit.sendSingle(to: address, value: value, gasPrice: gasPrice)
+            return try erc20Kit.sendSingle(to: address, value: value, gasPrice: gasPrice, gasLimit: gasLimit)
                     .map { _ in ()}
                     .catchError { [weak self] error in
                         Single.error(self?.createSendError(from: error) ?? error)
@@ -65,6 +67,10 @@ class Erc20Adapter: EthereumBaseAdapter {
         } catch {
             return Single.error(error)
         }
+    }
+
+    override func estimateGasLimit(to address: String, value: Decimal, gasPrice: Int?) -> Single<Int> {
+        erc20Kit.estimateGas(to: address, contractAddress: contractAddress, value: value.roundedString(decimal: decimal), gasPrice: gasPrice)
     }
 
 }
@@ -107,7 +113,7 @@ extension Erc20Adapter: IBalanceAdapter {
 
 extension Erc20Adapter: ISendEthereumAdapter {
 
-    func availableBalance(gasPrice: Int) -> Decimal {
+    func availableBalance(gasPrice: Int, gasLimit: Int?) -> Decimal {
         max(0, balance - fee)
     }
 
@@ -115,8 +121,9 @@ extension Erc20Adapter: ISendEthereumAdapter {
         balanceDecimal(balanceString: ethereumKit.balance, decimal: EthereumAdapter.decimal)
     }
 
-    func fee(gasPrice: Int) -> Decimal {
-        erc20Kit.fee(gasPrice: gasPrice) / pow(10, EthereumAdapter.decimal)
+    func fee(gasPrice: Int, gasLimit: Int) -> Decimal {
+        let value = Decimal(gasPrice) * Decimal(gasLimit)
+        return value / pow(10, EthereumAdapter.decimal)
     }
 
 }

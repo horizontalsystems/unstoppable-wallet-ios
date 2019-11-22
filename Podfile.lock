@@ -77,13 +77,13 @@ PODS:
     - EosioSwiftSoftkeySignatureProvider (~> 0.1.3)
     - GRDB.swift (~> 4.0)
     - RxSwift (~> 5.0)
-  - Erc20Kit.swift (0.6.2):
+  - Erc20Kit.swift (0.7.2):
     - BigInt (~> 4.0)
     - EthereumKit.swift (~> 0.6)
     - GRDB.swift (~> 4.0)
     - HSCryptoKit (~> 1.4)
     - RxSwift (~> 5.0)
-  - EthereumKit.swift (0.6.4):
+  - EthereumKit.swift (0.7.2):
     - Alamofire (~> 4.0)
     - BigInt (~> 4.0)
     - BlueSocket (~> 1.0)
@@ -91,9 +91,8 @@ PODS:
     - HSCryptoKit (~> 1.4)
     - HSHDWalletKit (~> 1.1)
     - RxSwift (~> 5.0)
-  - FeeRateKit.swift (0.2):
+  - FeeRateKit.swift (0.3):
     - Alamofire (~> 4.0)
-    - GRDB.swift (~> 4.0)
     - RxSwift (~> 5.0)
   - GRDB.swift (4.6.1):
     - GRDB.swift/standard (= 4.6.1)
@@ -171,7 +170,7 @@ DEPENDENCIES:
   - EosKit.swift (from `https://github.com/horizontalsystems/eos-kit-ios/`)
   - Erc20Kit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios/`)
   - EthereumKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios/`)
-  - FeeRateKit.swift (from `https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios`, commit `faa6eafcce30b372ebda62e3d4ca51f07cb794ec`)
+  - FeeRateKit.swift (from `https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios`)
   - GRDB.swift
   - Hodler.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios/`)
   - HSHDWalletKit (from `https://github.com/horizontalsystems/hd-wallet-kit-ios`)
@@ -240,7 +239,6 @@ EXTERNAL SOURCES:
   EthereumKit.swift:
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
   FeeRateKit.swift:
-    :commit: faa6eafcce30b372ebda62e3d4ca51f07cb794ec
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
   Hodler.swift:
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
@@ -281,13 +279,13 @@ CHECKOUT OPTIONS:
     :commit: 4970283803a29c25ce8e8f51ddd137dee224e185
     :git: https://github.com/horizontalsystems/eos-kit-ios/
   Erc20Kit.swift:
-    :commit: f569f3fc8a95e49fad8c87cfd03d1ed36e64bca8
+    :commit: ac01c20c533b4d94dfd1c96644ccf514aa3f3682
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
   EthereumKit.swift:
-    :commit: f569f3fc8a95e49fad8c87cfd03d1ed36e64bca8
+    :commit: ac01c20c533b4d94dfd1c96644ccf514aa3f3682
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
   FeeRateKit.swift:
-    :commit: faa6eafcce30b372ebda62e3d4ca51f07cb794ec
+    :commit: 1f662230843a71b921b11f63f275c6211e60ee14
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
   Hodler.swift:
     :commit: 8662aec3907d16a719e453ed604792a8453bdc7b
@@ -328,9 +326,9 @@ SPEC CHECKSUMS:
   EosioSwiftEcc: 41934ba819a5bedb6563d58a6d08aa389fb5903a
   EosioSwiftSoftkeySignatureProvider: dbbcc7f9cf170f801a13afb8f5a203699bd92621
   EosKit.swift: 60dd07d91004f7074f435a23b02812eef9426b59
-  Erc20Kit.swift: e1498e1f6f43bca28d1fd46e84bd44c496c30cc9
-  EthereumKit.swift: 7b56ebc1f6358b83ef05cb5caac817eb56a2d29a
-  FeeRateKit.swift: dd6bdac1ca89e7d4944f25f34a74046e176a6653
+  Erc20Kit.swift: d40049d4335cb2457348f8433f12d814913d7adc
+  EthereumKit.swift: 5f50f193776c458cbe749ea19f18f0974cc4bb9b
+  FeeRateKit.swift: 9c14e5550d6e96c5d658a365f522735670afbc90
   GRDB.swift: 5e9a23bb3b8786329bef6cae80644b3b86b006c0
   GRKOpenSSLFramework: 35944e317e6336b2944ad70b059d84db6b2d8532
   Hodler.swift: f56f6076f67740af23fe35c7b0ce3c29c9d70c7f
@@ -354,6 +352,6 @@ SPEC CHECKSUMS:
   UIExtensions.swift: 9f5a209e4e30f1ccfbf3eab01f02ffd8a20365d0
   XRatesKit.swift: e17a410299b48deede78ae15a893b0467343a348
 
-PODFILE CHECKSUM: 96349cbda4fe41d922953d69e91d93fe8549a1f4
+PODFILE CHECKSUM: be67a829374c36bacc12b87f24dfe9b8830f6832
 
 COCOAPODS: 1.7.5

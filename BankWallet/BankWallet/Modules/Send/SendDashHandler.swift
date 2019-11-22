@@ -55,14 +55,17 @@ extension SendDashHandler: ISendHandler {
     }
 
     func confirmationViewItems() throws -> [ISendConfirmationViewItemNew] {
-        return [
+        [
             SendConfirmationAmountViewItem(primaryInfo: try amountModule.primaryAmountInfo(), secondaryInfo: try amountModule.secondaryAmountInfo(), receiver: try addressModule.validAddress()),
             SendConfirmationFeeViewItem(primaryInfo: feeModule.primaryAmountInfo, secondaryInfo: feeModule.secondaryAmountInfo),
         ]
     }
 
+    func sync() {
+    }
+
     func sendSingle() throws -> Single<Void> {
-        return interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress())
+        interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress())
     }
 
 }
@@ -118,7 +121,7 @@ extension SendDashHandler: ISendAddressDelegate {
 extension SendDashHandler: ISendFeeDelegate {
 
     var inputType: SendInputType {
-        return amountModule.inputType
+        amountModule.inputType
     }
 
 }

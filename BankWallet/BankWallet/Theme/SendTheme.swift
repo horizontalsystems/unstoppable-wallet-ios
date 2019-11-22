@@ -26,13 +26,9 @@ class SendTheme {
     static let addressHintColor: UIColor = .cryptoSteel40
     static let addressTextViewLineHeight: Int = 22
 
-    static let feeHeight: CGFloat = 54
-    static let feeTitleTopMargin: CGFloat = 12
     static let feeFont: UIFont = .systemFont(ofSize: 14)
     static let feeColor: UIColor = .cryptoGray
 
-    static let feePriorityTopMargin: CGFloat = 15
-    static let feePriorityHeight: CGFloat = 60.5
     static let hodlerHeight: CGFloat = 44
 
     static let sendSmallButtonMargin: CGFloat = 6

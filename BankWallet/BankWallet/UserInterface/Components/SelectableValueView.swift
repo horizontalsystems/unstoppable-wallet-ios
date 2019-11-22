@@ -52,7 +52,7 @@ class SelectableValueView: UIView {
             maker.height.equalToSuperview()
         }
 
-        dropDownImageView.image = UIImage(named: "Down")
+        dropDownImageView.image = UIImage(named: "Down")?.tinted(with: .appGray)
         dropDownImageView.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview()
             maker.centerY.equalToSuperview()
@@ -77,6 +77,13 @@ class SelectableValueView: UIView {
 
     func set(value: String) {
         valueLabel.text = value
+    }
+
+    func set(enabled: Bool) {
+        wrapperView.isUserInteractionEnabled = enabled
+
+        valueLabel.textColor = enabled ? .crypto_SteelDark_LightGray : .appGray50
+        dropDownImageView.tintColor = enabled ? .appGray : .appGray50
     }
 
 }

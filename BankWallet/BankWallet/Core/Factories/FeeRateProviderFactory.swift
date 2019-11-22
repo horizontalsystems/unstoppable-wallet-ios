@@ -1,5 +1,9 @@
 class FeeRateProviderFactory {
-    private let feeRateProvider = FeeRateProvider()
+    private let feeRateProvider: FeeRateProvider
+
+    init(appConfigProvider: IAppConfigProvider) {
+        feeRateProvider = FeeRateProvider(appConfigProvider: appConfigProvider)
+    }
 
     func provider(coin: Coin) -> IFeeRateProvider? {
         switch coin.type {

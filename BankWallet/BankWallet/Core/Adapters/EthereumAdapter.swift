@@ -47,12 +47,16 @@ class EthereumAdapter: EthereumBaseAdapter {
         )
     }
 
-    override func sendSingle(to address: String, value: String, gasPrice: Int) -> Single<Void> {
-        return ethereumKit.sendSingle(to: address, value: value, gasPrice: gasPrice)
+    override func sendSingle(to address: String, value: String, gasPrice: Int, gasLimit: Int) -> Single<Void> {
+        ethereumKit.sendSingle(to: address, value: value, gasPrice: gasPrice, gasLimit: gasLimit)
                 .map { _ in ()}
                 .catchError { [weak self] error in
-                    return Single.error(self?.createSendError(from: error) ?? error)
+                    Single.error(self?.createSendError(from: error) ?? error)
                 }
+    }
+
+    override func estimateGasLimit(to address: String, value: Decimal, gasPrice: Int?) -> Single<Int> {
+        Single.just(ethereumKit.gasLimit)
     }
 
 }
@@ -76,23 +80,26 @@ extension EthereumAdapter: IBalanceAdapter {
     }
 
     var stateUpdatedObservable: Observable<Void> {
-        return ethereumKit.syncStateObservable.map { _ in () }
+        ethereumKit.syncStateObservable.map { _ in () }
     }
 
     var balance: Decimal {
-        return balanceDecimal(balanceString: ethereumKit.balance, decimal: EthereumAdapter.decimal)
+        balanceDecimal(balanceString: ethereumKit.balance, decimal: EthereumAdapter.decimal)
     }
 
     var balanceUpdatedObservable: Observable<Void> {
-        return ethereumKit.balanceObservable.map { _ in () }
+        ethereumKit.balanceObservable.map { _ in () }
     }
 
 }
 
 extension EthereumAdapter: ISendEthereumAdapter {
 
-    func availableBalance(gasPrice: Int) -> Decimal {
-        max(0, balance - fee(gasPrice: gasPrice))
+    func availableBalance(gasPrice: Int, gasLimit: Int?) -> Decimal {
+        guard let gasLimit = gasLimit else {
+            return balance
+        }
+        return max(0, balance - fee(gasPrice: gasPrice, gasLimit: gasLimit))
     }
 
     var ethereumBalance: Decimal {
@@ -103,7 +110,7 @@ extension EthereumAdapter: ISendEthereumAdapter {
         0
     }
 
-    func fee(gasPrice: Int) -> Decimal {
+    func fee(gasPrice: Int, gasLimit: Int) -> Decimal {
         ethereumKit.fee(gasPrice: gasPrice) / pow(10, EthereumAdapter.decimal)
     }
 

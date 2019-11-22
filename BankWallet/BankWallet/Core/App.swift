@@ -96,7 +96,7 @@ class App {
         rateManager = RateManager(walletManager: walletManager, currencyManager: currencyManager)
 
         feeCoinProvider = FeeCoinProvider(appConfigProvider: appConfigProvider)
-        feeRateProviderFactory = FeeRateProviderFactory()
+        feeRateProviderFactory = FeeRateProviderFactory(appConfigProvider: appConfigProvider)
 
         let ethereumKitManager = EthereumKitManager(appConfigProvider: appConfigProvider)
         let eosKitManager = EosKitManager(appConfigProvider: appConfigProvider)

@@ -1,6 +1,10 @@
 import Foundation
+import RxSwift
 
 class SendFeePriorityInteractor {
+    var delegate: ISendFeePriorityInteractorDelegate?
+
+    private var disposeBag = DisposeBag()
     private let provider: IFeeRateProvider
 
     init(provider: IFeeRateProvider) {
@@ -11,12 +15,13 @@ class SendFeePriorityInteractor {
 
 extension SendFeePriorityInteractor: ISendFeePriorityInteractor {
 
-    func feeRate(priority: FeeRatePriority) -> Int {
-        return provider.feeRate(for: priority)
-    }
-
-    func duration(priority: FeeRatePriority) -> TimeInterval {
-        return provider.duration(priority: priority)
+    func syncFeeRate(priority: FeeRatePriority) {
+        disposeBag = DisposeBag()
+        provider.feeRate(for: priority)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onSuccess: delegate?.didUpdate, onError: delegate?.didReceiveError)
+                .disposed(by: disposeBag)
     }
 
 }

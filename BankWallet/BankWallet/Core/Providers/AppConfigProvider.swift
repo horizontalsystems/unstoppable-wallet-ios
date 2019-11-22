@@ -44,6 +44,10 @@ class AppConfigProvider: IAppConfigProvider {
         return (id: id, secret: secret)
     }
 
+    var btcCoreRpcUrl: String {
+        (Bundle.main.object(forInfoDictionaryKey: "BtcCoreRpcUrl") as? String) ?? ""
+    }
+
     var etherscanKey: String {
         return (Bundle.main.object(forInfoDictionaryKey: "EtherscanApiKey") as? String) ?? ""
     }

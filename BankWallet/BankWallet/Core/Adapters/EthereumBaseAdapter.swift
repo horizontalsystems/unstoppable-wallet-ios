@@ -18,7 +18,11 @@ class EthereumBaseAdapter {
         return 0
     }
 
-    func sendSingle(to address: String, value: String, gasPrice: Int) -> Single<Void> {
+    func sendSingle(to address: String, value: String, gasPrice: Int, gasLimit: Int) -> Single<Void> {
+        fatalError("Method should be overridden in child class")
+    }
+
+    func estimateGasLimit(to address: String, value: Decimal, gasPrice: Int?) -> Single<Int> {
         fatalError("Method should be overridden in child class")
     }
 
@@ -63,14 +67,14 @@ extension EthereumBaseAdapter {
 // ISendEthereumAdapter
 extension EthereumBaseAdapter {
 
-    func sendSingle(amount: Decimal, address: String, gasPrice: Int) -> Single<Void> {
+    func sendSingle(amount: Decimal, address: String, gasPrice: Int, gasLimit: Int) -> Single<Void> {
         let poweredDecimal = amount * pow(10, decimal)
         let handler = NSDecimalNumberHandler(roundingMode: .plain, scale: 0, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
         let roundedDecimal = NSDecimalNumber(decimal: poweredDecimal).rounding(accordingToBehavior: handler).decimalValue
 
         let amountString = String(describing: roundedDecimal)
 
-        return sendSingle(to: address, value: amountString, gasPrice: gasPrice)
+        return sendSingle(to: address, value: amountString, gasPrice: gasPrice, gasLimit: gasLimit)
     }
 
     func validate(address: String) throws {
@@ -88,15 +92,15 @@ extension EthereumBaseAdapter {
 extension EthereumBaseAdapter {
 
     var confirmationsThreshold: Int {
-        return 12
+        12
     }
 
     var lastBlockHeight: Int? {
-        return ethereumKit.lastBlockHeight
+        ethereumKit.lastBlockHeight
     }
 
     var lastBlockHeightUpdatedObservable: Observable<Void> {
-        return ethereumKit.lastBlockHeightObservable.map { _ in () }
+        ethereumKit.lastBlockHeightObservable.map { _ in () }
     }
 
 }
@@ -104,7 +108,7 @@ extension EthereumBaseAdapter {
 extension EthereumBaseAdapter: IDepositAdapter {
 
     var receiveAddress: String {
-        return ethereumKit.receiveAddress
+        ethereumKit.receiveAddress
     }
 
 }

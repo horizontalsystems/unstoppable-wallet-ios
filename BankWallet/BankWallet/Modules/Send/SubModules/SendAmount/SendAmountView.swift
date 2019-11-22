@@ -1,8 +1,12 @@
 import UIKit
 import SnapKit
 import RxSwift
+import HUD
 
 class SendAmountView: UIView {
+    private static let spinnerRadius: CGFloat = 8
+    private static let spinnerLineWidth: CGFloat = 2
+
     private let delegate: ISendAmountViewDelegate
 
     private var disposeBag = DisposeBag()
@@ -11,6 +15,12 @@ class SendAmountView: UIView {
 
     private let availableBalanceTitleLabel = UILabel()
     private let availableBalanceValueLabel = UILabel()
+    private let processSpinner = HUDProgressView(
+            strokeLineWidth: SendAmountView.spinnerLineWidth,
+            radius: SendAmountView.spinnerRadius,
+            strokeColor: .appOz
+    )
+
     private let amountTypeLabel = UILabel()
     private let inputField = UITextField()
     private let lineView = UIView()
@@ -54,6 +64,14 @@ class SendAmountView: UIView {
             maker.centerY.equalTo(availableBalanceTitleLabel.snp.centerY)
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
+
+        addSubview(processSpinner)
+        processSpinner.snp.makeConstraints { maker in
+            maker.centerY.equalTo(availableBalanceTitleLabel.snp.centerY)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.width.height.equalTo(SendAmountView.spinnerRadius * 2 + SendAmountView.spinnerLineWidth)
+        }
+        processSpinner.isHidden = true
 
         addSubview(holderView)
 
@@ -158,8 +176,13 @@ class SendAmountView: UIView {
         }
 
         inputField.rx.controlEvent(.editingChanged)
+                .asObservable()
+                .do(onNext: { [weak self] _ in
+                    self?.delegate.willChangeAmount(text: self?.inputField.text)
+                })
+                .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
                 .subscribe(onNext: { [weak self] _ in
-                    self?.delegate.onChanged(amountText: self?.inputField.text)
+                    self?.delegate.didChangeAmount()
                 })
                 .disposed(by: disposeBag)
 
@@ -211,6 +234,12 @@ extension SendAmountView: ISendAmountView {
         case .currencyValue(let currencyValue):
             inputField.text = format(currencyValue: currencyValue)
         }
+    }
+
+    func set(loading: Bool) {
+        availableBalanceValueLabel.isHidden = loading
+        processSpinner.isHidden = !loading
+        processSpinner.startAnimating()
     }
 
     func set(availableBalance: AmountInfo?) {
