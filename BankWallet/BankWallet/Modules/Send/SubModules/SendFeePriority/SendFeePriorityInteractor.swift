@@ -18,7 +18,7 @@ extension SendFeePriorityInteractor: ISendFeePriorityInteractor {
     func syncFeeRate(priority: FeeRatePriority) {
         disposeBag = DisposeBag()
         provider.feeRate(for: priority)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onSuccess: delegate?.didUpdate, onError: delegate?.didReceiveError)
                 .disposed(by: disposeBag)
