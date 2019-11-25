@@ -31,15 +31,13 @@ class AppStatusManager {
 
             var status = [(String, Any)]()
 
-            if case let .mnemonic(words, derivation, _) = account.type {
+            status.append(("origin", "\(account.origin)"))
+
+            if case let .mnemonic(words, _) = account.type {
                 status.append(("type", "mnemonic (\(words.count) words)"))
-                status.append(("derivation", derivation.rawValue))
             }
             if case let .eos(account, _) = account.type {
                 status.append(("name", account))
-            }
-            if let syncMode = account.defaultSyncMode {
-                status.append(("sync mode", syncMode.rawValue))
             }
 
             return ($0.title, status)

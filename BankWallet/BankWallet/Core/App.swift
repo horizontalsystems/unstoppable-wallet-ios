@@ -55,6 +55,8 @@ class App {
     let appStatusManager: IAppStatusManager
     let appVersionManager: IAppVersionManager
 
+    let coinSettingsManager: ICoinSettingsManager
+
     let appManager: AppManager
 
     init() {
@@ -88,9 +90,8 @@ class App {
         let walletStorage: IWalletStorage = WalletStorage(appConfigProvider: appConfigProvider, walletFactory: walletFactory, storage: storage)
         walletManager = WalletManager(accountManager: accountManager, walletFactory: walletFactory, storage: walletStorage)
 
-        let defaultWalletCreator: IDefaultWalletCreator = DefaultWalletCreator(walletManager: walletManager, appConfigProvider: appConfigProvider, walletFactory: walletFactory)
-        accountCreator = AccountCreator(accountManager: accountManager, accountFactory: AccountFactory(), wordsManager: wordsManager, defaultWalletCreator: defaultWalletCreator)
-        predefinedAccountTypeManager = PredefinedAccountTypeManager(appConfigProvider: appConfigProvider, accountManager: accountManager, accountCreator: accountCreator)
+        accountCreator = AccountCreator(accountFactory: AccountFactory(), wordsManager: wordsManager)
+        predefinedAccountTypeManager = PredefinedAccountTypeManager(appConfigProvider: appConfigProvider, accountManager: accountManager)
 
         currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 
@@ -132,6 +133,8 @@ class App {
 
         appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage, predefinedAccountTypeManager: predefinedAccountTypeManager, walletManager: walletManager, adapterManager: adapterManager, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager)
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, localStorage: localStorage)
+
+        coinSettingsManager = CoinSettingsManager()
 
         let kitCleaner = KitCleaner(accountManager: accountManager)
         appManager = AppManager(

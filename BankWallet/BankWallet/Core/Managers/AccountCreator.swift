@@ -1,75 +1,48 @@
 class AccountCreator {
-    private let accountManager: IAccountManager
     private let accountFactory: IAccountFactory
     private let wordsManager: IWordsManager
-    private let defaultWalletCreator: IDefaultWalletCreator
 
-    init(accountManager: IAccountManager, accountFactory: IAccountFactory, wordsManager: IWordsManager, defaultWalletCreator: IDefaultWalletCreator) {
-        self.accountManager = accountManager
+    init(accountFactory: IAccountFactory, wordsManager: IWordsManager) {
         self.accountFactory = accountFactory
         self.wordsManager = wordsManager
-        self.defaultWalletCreator = defaultWalletCreator
     }
 
-    private func createNewAccount(defaultAccountType: DefaultAccountType) throws -> Account {
-        let accountType = try createAccountType(defaultAccountType: defaultAccountType)
-        return createAccount(accountType: accountType, backedUp: false, defaultSyncMode: .new)
-    }
-
-    private func createAccount(accountType: AccountType, backedUp: Bool, defaultSyncMode: SyncMode?) -> Account {
-        let account = accountFactory.account(
-                type: accountType,
-                backedUp: backedUp,
-                defaultSyncMode: defaultSyncMode
-        )
-
-        accountManager.create(account: account)
-
-        return account
-    }
-
-    private func createAccountType(defaultAccountType: DefaultAccountType) throws -> AccountType {
-        switch defaultAccountType {
-        case let .mnemonic(wordsCount):
-            return try createMnemonicAccountType(wordsCount: wordsCount)
+    private func accountType(predefinedAccountType: PredefinedAccountType) throws -> AccountType {
+        switch predefinedAccountType {
+        case .standard:
+            return try createMnemonicAccountType(wordsCount: 12)
         case .eos:
             throw CreateError.eosNotSupported
+        case .binance:
+            return try createMnemonicAccountType(wordsCount: 24)
         }
     }
 
     private func createMnemonicAccountType(wordsCount: Int) throws -> AccountType {
         let words = try wordsManager.generateWords(count: wordsCount)
-        return .mnemonic(words: words, derivation: words.count == 12 ? .bip49 : .bip44, salt: nil)
+        return .mnemonic(words: words, salt: nil)
     }
 
 }
 
 extension AccountCreator: IAccountCreator {
 
-    func createNewAccount(defaultAccountType: DefaultAccountType, createDefaultWallets: Bool) throws -> Account {
-        let account = try createNewAccount(defaultAccountType: defaultAccountType)
+    func newAccount(predefinedAccountType: PredefinedAccountType) throws -> Account {
+        let accountType = try self.accountType(predefinedAccountType: predefinedAccountType)
 
-        if createDefaultWallets {
-            defaultWalletCreator.createWallets(account: account)
-        }
-
-        return account
+        return accountFactory.account(
+                type: accountType,
+                origin: .created,
+                backedUp: false
+        )
     }
 
-    func createNewAccount(coin: Coin) throws {
-        let account = try createNewAccount(defaultAccountType: coin.type.defaultAccountType)
-
-        defaultWalletCreator.createWallet(account: account, coin: coin)
-    }
-
-    func createRestoredAccount(accountType: AccountType, defaultSyncMode: SyncMode?, createDefaultWallets: Bool) -> Account {
-        let account = createAccount(accountType: accountType, backedUp: true, defaultSyncMode: defaultSyncMode)
-
-        if createDefaultWallets {
-            defaultWalletCreator.createWallets(account: account)
-        }
-
-        return account
+    func restoredAccount(accountType: AccountType) -> Account {
+        accountFactory.account(
+                type: accountType,
+                origin: .restored,
+                backedUp: true
+        )
     }
 
 }

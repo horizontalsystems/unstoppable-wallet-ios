@@ -35,7 +35,7 @@ class PasscodeLockManager {
         locked = true
 
         accountManager.clear()
-        walletManager.enable(wallets: [])
+        walletManager.clearWallets()
     }
 
 }

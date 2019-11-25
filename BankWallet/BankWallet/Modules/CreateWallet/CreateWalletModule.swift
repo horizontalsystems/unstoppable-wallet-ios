@@ -1,30 +1,47 @@
 protocol ICreateWalletView: class {
-    func set(viewItems: [CreateWalletViewItem])
+    func setCancelButton(visible: Bool)
+    func set(featuredViewItems: [CoinToggleViewItem], viewItems: [CoinToggleViewItem])
+    func setCreateButton(enabled: Bool)
     func show(error: Error)
 }
 
 protocol ICreateWalletViewDelegate {
-    func viewDidLoad()
-    func didTap(index: Int)
-    func didTapCreateButton()
+    func onLoad()
+    func onEnable(viewItem: CoinToggleViewItem)
+    func onDisable(viewItem: CoinToggleViewItem)
+    func onTapCreateButton()
+    func onTapCancelButton()
 }
 
 protocol ICreateWalletInteractor {
+    var coins: [Coin] { get }
     var featuredCoins: [Coin] { get }
-    func createWallet(coin: Coin) throws
+
+    func account(predefinedAccountType: PredefinedAccountType) throws -> Account
+
+    func create(accounts: [Account])
+    func save(wallets: [Wallet])
+
+    func coinSettingsToRequest(coin: Coin, accountOrigin: AccountOrigin) -> CoinSettings
+    func coinSettingsToSave(coin: Coin, accountOrigin: AccountOrigin, requestedCoinSettings: CoinSettings) -> CoinSettings
 }
 
 protocol ICreateWalletRouter {
+    func showCoinSettings(coin: Coin, coinSettings: CoinSettings, delegate: ICoinSettingsDelegate)
     func showMain()
+    func close()
 }
 
-struct CreateWalletViewItem {
-    let title: String
-    let code: String
-    let selected: Bool
+struct CreateWalletEnabledCoin {
+    let coin: Coin
+    let coinSettings: [CoinSetting: Any]
 }
 
-class CreateWalletState {
-    var coins: [Coin] = []
-    var selectedIndex: Int = 0
+class CreateWalletModule {
+
+    enum PresentationMode {
+        case initial
+        case inApp
+    }
+
 }

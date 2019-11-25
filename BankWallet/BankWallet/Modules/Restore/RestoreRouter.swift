@@ -2,35 +2,21 @@ import UIKit
 
 class RestoreRouter {
     weak var viewController: UIViewController?
-
-    private let delegate: IRestoreDelegate
-
-    init(delegate: IRestoreDelegate) {
-        self.delegate = delegate
-    }
-
 }
 
 extension RestoreRouter: IRestoreRouter {
 
-    func showRestore(defaultAccountType: DefaultAccountType, delegate: IRestoreAccountTypeDelegate) {
-        guard let module = RestoreRouter.module(defaultAccountType: defaultAccountType, mode: .pushed, delegate: delegate) else {
-            return
-        }
-
+    func showRestoreCoins(predefinedAccountType: PredefinedAccountType) {
+        let module = RestoreCoinsRouter.module(presentationMode: .initial, predefinedAccountType: predefinedAccountType)
         viewController?.navigationController?.pushViewController(module, animated: true)
-    }
-
-    func notifyRestored(account: Account) {
-        delegate.didRestore(account: account)
     }
 
 }
 
 extension RestoreRouter {
 
-    static func module(delegate: IRestoreDelegate) -> UIViewController {
-        let router = RestoreRouter(delegate: delegate)
+    static func module() -> UIViewController {
+        let router = RestoreRouter()
         let presenter = RestorePresenter(router: router, accountCreator: App.shared.accountCreator, predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager)
         let viewController = RestoreViewController(delegate: presenter)
 
@@ -40,12 +26,14 @@ extension RestoreRouter {
         return viewController
     }
 
-    static func module(defaultAccountType: DefaultAccountType, mode: PresentationMode, delegate: IRestoreAccountTypeDelegate) -> UIViewController? {
-        switch defaultAccountType {
-        case .mnemonic(let wordsCount):
-            let showRestoreOptions = wordsCount == 12
-            return RestoreWordsRouter.module(mode: mode, wordsCount: wordsCount, showRestoreOptions: showRestoreOptions, delegate: delegate)
-        case .eos: return RestoreEosRouter.module(mode: mode, delegate: delegate)
+    static func module(predefinedAccountType: PredefinedAccountType, mode: PresentationMode, delegate: IRestoreAccountTypeDelegate) -> UIViewController {
+        switch predefinedAccountType {
+        case .standard:
+            return RestoreWordsRouter.module(mode: mode, wordsCount: 12, delegate: delegate)
+        case .eos:
+            return RestoreEosRouter.module(mode: mode, delegate: delegate)
+        case .binance:
+            return RestoreWordsRouter.module(mode: mode, wordsCount: 24, delegate: delegate)
         }
     }
 

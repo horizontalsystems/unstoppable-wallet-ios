@@ -13,7 +13,6 @@ protocol IWelcomeScreenInteractor {
 }
 
 protocol IWelcomeScreenRouter {
-    func showMain()
     func showCreateWallet()
-    func showRestore(delegate: IRestoreDelegate)
+    func showRestoreWallet()
 }

@@ -7,7 +7,7 @@ protocol IBalanceView: class {
     func set(headerViewItem: BalanceHeaderViewItem)
     func set(sortIsOn: Bool)
     func showSortType(selectedSortType: BalanceSortType)
-    func showBackupRequired(coin: Coin, predefinedAccountType: IPredefinedAccountType)
+    func showBackupRequired(coin: Coin, predefinedAccountType: PredefinedAccountType)
     func hideRefresh()
 }
 
@@ -48,7 +48,7 @@ protocol IBalanceInteractor: AnyObject {
     var sortType: BalanceSortType? { get set }
 
     func refresh()
-    func predefinedAccountType(wallet: Wallet) -> IPredefinedAccountType?
+    func predefinedAccountType(wallet: Wallet) -> PredefinedAccountType?
 }
 
 protocol IBalanceInteractorDelegate: class {
@@ -71,7 +71,7 @@ protocol IBalanceRouter {
     func openSend(wallet: Wallet)
     func showChart(for coinCode: CoinCode)
     func openManageWallets()
-    func openBackup(wallet: Wallet, predefinedAccountType: IPredefinedAccountType)
+    func openBackup(wallet: Wallet, predefinedAccountType: PredefinedAccountType)
 }
 
 protocol IBalanceViewItemFactory {

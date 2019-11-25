@@ -11,7 +11,7 @@ class BackupWordsRouter {
 
 extension BackupWordsRouter: IBackupWordsRouter {
 
-    func showConfirmation(delegate: IBackupConfirmationDelegate, words: [String], predefinedAccountType: IPredefinedAccountType) {
+    func showConfirmation(delegate: IBackupConfirmationDelegate, words: [String], predefinedAccountType: PredefinedAccountType) {
         viewController?.navigationController?.pushViewController(BackupConfirmationRouter.module(delegate: delegate, words: words, predefinedAccountType: predefinedAccountType), animated: true)
     }
 
@@ -27,7 +27,7 @@ extension BackupWordsRouter: IBackupWordsRouter {
 
 extension BackupWordsRouter {
 
-    static func module(delegate: IBackupDelegate, predefinedAccountType: IPredefinedAccountType, words: [String], isBackedUp: Bool) -> UIViewController {
+    static func module(delegate: IBackupDelegate, predefinedAccountType: PredefinedAccountType, words: [String], isBackedUp: Bool) -> UIViewController {
         let router = BackupWordsRouter(delegate: delegate)
         let presenter = BackupWordsPresenter(router: router, predefinedAccountType: predefinedAccountType, words: words, isBackedUp: isBackedUp)
 

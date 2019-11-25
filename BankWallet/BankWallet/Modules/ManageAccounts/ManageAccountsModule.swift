@@ -2,9 +2,8 @@ protocol IManageAccountsView: class {
     func set(viewItems: [ManageAccountViewItem])
     func showDoneButton()
     func show(error: Error)
-    func showCreateConfirmation(title: String, coinCodes: String)
     func showSuccess()
-    func showBackupRequired(predefinedAccountType: IPredefinedAccountType)
+    func showBackupRequired(predefinedAccountType: PredefinedAccountType)
 }
 
 protocol IManageAccountsViewDelegate {
@@ -12,21 +11,17 @@ protocol IManageAccountsViewDelegate {
 
     func didTapUnlink(index: Int)
     func didTapBackup(index: Int)
-    func didTapShowKey(index: Int)
     func didTapCreate(index: Int)
     func didTapRestore(index: Int)
 
-    func didConfirmCreate()
     func didRequestBackup()
 
     func didTapDone()
 }
 
 protocol IManageAccountsInteractor {
-    var predefinedAccountTypes: [IPredefinedAccountType] { get }
-    func account(predefinedAccountType: IPredefinedAccountType) -> Account?
-    func createAccount(predefinedAccountType: IPredefinedAccountType) throws
-    func restoreAccount(accountType: AccountType, syncMode: SyncMode?)
+    var predefinedAccountTypes: [PredefinedAccountType] { get }
+    func account(predefinedAccountType: PredefinedAccountType) -> Account?
 }
 
 protocol IManageAccountsInteractorDelegate: class {
@@ -34,15 +29,15 @@ protocol IManageAccountsInteractorDelegate: class {
 }
 
 protocol IManageAccountsRouter {
-    func showUnlink(account: Account, predefinedAccountType: IPredefinedAccountType)
-    func showBackup(account: Account, predefinedAccountType: IPredefinedAccountType)
-    func showKey(account: Account)
-    func showRestore(defaultAccountType: DefaultAccountType, delegate: IRestoreAccountTypeDelegate)
+    func showUnlink(account: Account, predefinedAccountType: PredefinedAccountType)
+    func showBackup(account: Account, predefinedAccountType: PredefinedAccountType)
+    func showCreateWallet(predefinedAccountType: PredefinedAccountType)
+    func showRestore(predefinedAccountType: PredefinedAccountType)
     func close()
 }
 
 struct ManageAccountItem {
-    let predefinedAccountType: IPredefinedAccountType
+    let predefinedAccountType: PredefinedAccountType
     let account: Account?
 }
 

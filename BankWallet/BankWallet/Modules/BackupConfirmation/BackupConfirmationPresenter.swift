@@ -7,11 +7,11 @@ class BackupConfirmationPresenter: IBackupConfirmationPresenter {
     private let router: IBackupConfirmationRouter
 
     private let words: [String]
-    private let predefinedAccountType: IPredefinedAccountType
+    private let predefinedAccountType: PredefinedAccountType
 
     private(set) var indexes = [Int]()
 
-    init(interactor: IBackupConfirmationInteractor, router: IBackupConfirmationRouter, words: [String], predefinedAccountType: IPredefinedAccountType) {
+    init(interactor: IBackupConfirmationInteractor, router: IBackupConfirmationRouter, words: [String], predefinedAccountType: PredefinedAccountType) {
         self.interactor = interactor
         self.router = router
         self.words = words

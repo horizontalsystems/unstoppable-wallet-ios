@@ -58,7 +58,7 @@ class RestoreEosViewController: WalletViewController {
         }
 
         // temp solution until multi-wallet feature is implemented
-        let predefinedAccountType: IPredefinedAccountType = EosAccountType()
+        let predefinedAccountType: PredefinedAccountType = .eos
 
         let descriptionView = BottomDescriptionView()
         descriptionView.bind(text: "restore.eos.description".localized(predefinedAccountType.title))

@@ -18,8 +18,8 @@ class WalletRemover {
     }
 
     private func handleDelete(account: Account) {
-        let remainingWallets = walletManager.wallets.filter { $0.account != account }
-        walletManager.enable(wallets: remainingWallets)
+        let accountWallets = walletManager.wallets.filter { $0.account == account }
+        walletManager.delete(wallets: accountWallets)
     }
 
 }

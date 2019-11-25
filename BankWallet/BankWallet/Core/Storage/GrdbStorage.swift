@@ -23,11 +23,10 @@ class GrdbStorage {
             try db.create(table: AccountRecord.databaseTableName) { t in
                 t.column(AccountRecord.Columns.id.name, .text).notNull()
                 t.column(AccountRecord.Columns.name.name, .text).notNull()
-                t.column(AccountRecord.Columns.type.name, .integer).notNull()
+                t.column(AccountRecord.Columns.type.name, .text).notNull()
+                t.column(AccountRecord.Columns.origin.name, .text).notNull()
                 t.column(AccountRecord.Columns.backedUp.name, .boolean).notNull()
-                t.column(AccountRecord.Columns.defaultSyncMode.name, .text)
                 t.column(AccountRecord.Columns.wordsKey.name, .text)
-                t.column(AccountRecord.Columns.derivation.name, .integer)
                 t.column(AccountRecord.Columns.saltKey.name, .text)
                 t.column(AccountRecord.Columns.dataKey.name, .text)
                 t.column(AccountRecord.Columns.eosAccount.name, .text)
@@ -43,7 +42,6 @@ class GrdbStorage {
                 t.column("coinCode", .text).notNull()
                 t.column(EnabledWallet.Columns.accountId.name, .text).notNull()
                 t.column(EnabledWallet.Columns.syncMode.name, .text)
-                t.column(EnabledWallet.Columns.walletOrder.name, .integer).notNull()
 
                 t.primaryKey(["coinCode", EnabledWallet.Columns.accountId.name], onConflict: .replace)
             }
@@ -67,7 +65,7 @@ class GrdbStorage {
             }
 
             let wordsKey = "mnemonic_\(uuid)_words"
-            let accountRecord = AccountRecord(id: uuid, name: uuid, type: "mnemonic", backedUp: isBackedUp, defaultSyncMode: syncMode.rawValue, wordsKey: wordsKey, derivation: "bip44", saltKey: nil, dataKey: nil, eosAccount: nil)
+            let accountRecord = AccountRecord(id: uuid, name: uuid, type: "mnemonic", origin: "restored", backedUp: isBackedUp, wordsKey: wordsKey, saltKey: nil, dataKey: nil, eosAccount: nil)
             try accountRecord.insert(db)
 
             try? keychain.set(authData.words.joined(separator: ","), key: wordsKey)
@@ -78,7 +76,7 @@ class GrdbStorage {
 
             let accountId = accountRecord.id
             try db.execute(sql: """
-                                INSERT INTO \(EnabledWallet.databaseTableName)(`coinCode`, `\(EnabledWallet.Columns.accountId.name)`, `\(EnabledWallet.Columns.syncMode.name)`, `\(EnabledWallet.Columns.walletOrder.name)`)
+                                INSERT INTO \(EnabledWallet.databaseTableName)(`coinCode`, `\(EnabledWallet.Columns.accountId.name)`, `\(EnabledWallet.Columns.syncMode.name)`, `walletOrder`)
                                 SELECT `coinCode`, '\(accountId)', '\(syncMode)', `coinOrder` FROM enabled_coins
                                 """)
             try db.drop(table: "enabled_coins")
@@ -100,15 +98,15 @@ class GrdbStorage {
             try db.create(table: tempTableName) { t in
                 t.column(EnabledWallet.Columns.coinId.name, .text).notNull()
                 t.column(EnabledWallet.Columns.accountId.name, .text).notNull()
+                t.column(EnabledWallet.Columns.derivation.name, .text)
                 t.column(EnabledWallet.Columns.syncMode.name, .text)
-                t.column(EnabledWallet.Columns.walletOrder.name, .integer).notNull()
 
                 t.primaryKey([EnabledWallet.Columns.coinId.name, EnabledWallet.Columns.accountId.name], onConflict: .replace)
             }
 
             try db.execute(sql: """
-                                INSERT INTO \(tempTableName)(`\(EnabledWallet.Columns.coinId.name)`, `\(EnabledWallet.Columns.accountId.name)`, `\(EnabledWallet.Columns.syncMode.name)`, `\(EnabledWallet.Columns.walletOrder.name)`)
-                                SELECT `coinCode`, `accountId`, `syncMode`, `walletOrder` FROM \(EnabledWallet.databaseTableName)
+                                INSERT INTO \(tempTableName)(`\(EnabledWallet.Columns.coinId.name)`, `\(EnabledWallet.Columns.accountId.name)`, `\(EnabledWallet.Columns.syncMode.name)`)
+                                SELECT `coinCode`, `accountId`, `syncMode` FROM \(EnabledWallet.databaseTableName)
                                 """)
 
             try db.drop(table: EnabledWallet.databaseTableName)
@@ -123,17 +121,23 @@ class GrdbStorage {
 extension GrdbStorage: IEnabledWalletStorage {
 
     var enabledWallets: [EnabledWallet] {
-        return try! dbPool.read { db in
-            try EnabledWallet.order(EnabledWallet.Columns.walletOrder).fetchAll(db)
+        try! dbPool.read { db in
+            try EnabledWallet.fetchAll(db)
         }
     }
 
     func save(enabledWallets: [EnabledWallet]) {
         _ = try! dbPool.write { db in
-            try EnabledWallet.deleteAll(db)
-
             for enabledWallet in enabledWallets {
                 try enabledWallet.insert(db)
+            }
+        }
+    }
+
+    func delete(enabledWallets: [EnabledWallet]) {
+        _ = try! dbPool.write { db in
+            for enabledWallet in enabledWallets {
+                try EnabledWallet.filter(EnabledWallet.Columns.coinId == enabledWallet.coinId && EnabledWallet.Columns.accountId == enabledWallet.accountId).deleteAll(db)
             }
         }
     }

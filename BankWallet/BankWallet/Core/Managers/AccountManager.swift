@@ -44,7 +44,7 @@ extension AccountManager: IAccountManager {
         accountsSubject.onNext(accounts)
     }
 
-    func create(account: Account) {
+    func save(account: Account) {
         storage.save(account: account)
         cache.insert(account: account)
 

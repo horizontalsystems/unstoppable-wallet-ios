@@ -78,7 +78,10 @@ protocol IWalletManager: class {
     func wallet(coin: Coin) -> Wallet?
 
     func preloadWallets()
-    func enable(wallets: [Wallet])
+
+    func save(wallets: [Wallet])
+    func delete(wallets: [Wallet])
+    func clearWallets()
 }
 
 protocol IPriceAlertManager {
@@ -178,7 +181,7 @@ protocol IAccountManager {
 
     func preloadAccounts()
     func update(account: Account)
-    func create(account: Account)
+    func save(account: Account)
     func delete(account: Account)
     func clear()
 }
@@ -190,17 +193,16 @@ protocol IBackupManager {
 }
 
 protocol IAccountCreator {
-    func createNewAccount(defaultAccountType: DefaultAccountType, createDefaultWallets: Bool) throws -> Account
-    func createNewAccount(coin: Coin) throws
-    func createRestoredAccount(accountType: AccountType, defaultSyncMode: SyncMode?, createDefaultWallets: Bool) -> Account
+    func newAccount(predefinedAccountType: PredefinedAccountType) throws -> Account
+    func restoredAccount(accountType: AccountType) -> Account
 }
 
 protocol IAccountFactory {
-    func account(type: AccountType, backedUp: Bool, defaultSyncMode: SyncMode?) -> Account
+    func account(type: AccountType, origin: AccountOrigin, backedUp: Bool) -> Account
 }
 
 protocol IWalletFactory {
-    func wallet(coin: Coin, account: Account, syncMode: SyncMode?) -> Wallet
+    func wallet(coin: Coin, account: Account, coinSettings: [CoinSetting: Any]) -> Wallet
 }
 
 protocol IRestoreAccountDataSource {
@@ -298,11 +300,8 @@ protocol IAppConfigProvider {
     var defaultEosCredentials: (String, String) { get }
     var disablePinLock: Bool { get }
 
-    var defaultCoinCodes: [CoinCode] { get }
     var featuredCoins: [Coin] { get }
     var coins: [Coin] { get }
-
-    var predefinedAccountTypes: [IPredefinedAccountType] { get }
 }
 
 protocol IFullTransactionInfoProvider {
@@ -323,6 +322,8 @@ protocol IIpfsApiProvider {
 protocol IEnabledWalletStorage {
     var enabledWallets: [EnabledWallet] { get }
     func save(enabledWallets: [EnabledWallet])
+    func delete(enabledWallets: [EnabledWallet])
+    func clearEnabledWallets()
 }
 
 protocol IAccountStorage {
@@ -518,18 +519,9 @@ protocol IUUIDProvider {
 }
 
 protocol IPredefinedAccountTypeManager {
-    var allTypes: [IPredefinedAccountType] { get }
-    func account(predefinedAccountType: IPredefinedAccountType) -> Account?
-    func predefinedAccountType(accountType: AccountType) -> IPredefinedAccountType?
-    func predefinedAccountType(coin: Coin) -> IPredefinedAccountType?
-    func createAccount(predefinedAccountType: IPredefinedAccountType) throws
-}
-
-protocol IPredefinedAccountType {
-    var title: String { get }
-    var coinCodes: String { get }
-    var defaultAccountType: DefaultAccountType { get }
-    func supports(accountType: AccountType) -> Bool
+    var allTypes: [PredefinedAccountType] { get }
+    func account(predefinedAccountType: PredefinedAccountType) -> Account?
+    func predefinedAccountType(accountType: AccountType) -> PredefinedAccountType?
 }
 
 protocol IAppManager {
@@ -540,6 +532,8 @@ protocol IAppManager {
 protocol IWalletStorage {
     func wallets(accounts: [Account]) -> [Wallet]
     func save(wallets: [Wallet])
+    func delete(wallets: [Wallet])
+    func clearWallets()
 }
 
 protocol IDefaultWalletCreator {

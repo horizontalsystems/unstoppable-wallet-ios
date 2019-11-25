@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-class RestoreOptionCell: AppCell {
+class CoinSettingCell: AppCell {
     private let leftView = DoubleLineCellView()
     private let rightView = CheckmarkCellView()
 

@@ -1,6 +1,5 @@
 protocol IRestoreWordsView: class {
     func showCancelButton()
-    func showNextButton()
     func showRestoreButton()
 
     func show(defaultWords: [String])
@@ -15,8 +14,7 @@ protocol IRestoreWordsViewDelegate {
 }
 
 protocol IRestoreWordsRouter {
-    func showRestoreOptions(delegate: IRestoreOptionsDelegate)
-    func notifyRestored(accountType: AccountType, syncMode: SyncMode?)
-    func dismissAndNotify(accountType: AccountType, syncMode: SyncMode?)
+    func notifyRestored(accountType: AccountType)
+    func dismissAndNotify(accountType: AccountType)
     func dismiss()
 }

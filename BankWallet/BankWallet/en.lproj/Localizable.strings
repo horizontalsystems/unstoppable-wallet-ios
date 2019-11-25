@@ -53,19 +53,17 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
-//Coin Sync Modes
+// Coin Settings
 
-"restore_options.title" = "Restore Options";
-"restore_options.sync.text" = "Fast: Restores your past transactions via secure third party server. For users with transactions involving large sums this method may pose privacy risks.\n\nSlow: Restores your past transactions directly from the blockchain. More private but very slow. If it takes too long, go to Manage Wallets in Settings, delete the the Unstoppable entry and repeat the process with Fast option.";
-"restore_options.sync.fast" = "Fast";
-"restore_options.sync.recommended" = "0-2 hours (Recommended)";
-"restore_options.sync.slow" = "Slow";
-"restore_options.sync.more_private" = "1-12 hours (More Private)";
-"restore_options.derivation.text" = "Select the time period when you first created the wallet in Unstoppable.";
-"restore_options.derivation.before_update" = "Before November 2019";
-"restore_options.derivation.after_update" = "After November 2019";
-"restore_options.derivation.bip44" = "BIP-44";
-"restore_options.derivation.bip49" = "BIP-49";
+"coin_settings.enable_button" = "Enable";
+"coin_settings.derivation.title" = "Address Format";
+"coin_settings.derivation.description" = "If you're creating a new wallet and not sure about this setting feel free to select either BIP-44 or BIP-49.\n\nIf you're restoring an existing wallet with bitcoins on it then you should select the correct address type.";
+"coin_settings.sync_mode.title" = "Network Synchronization";
+"coin_settings.sync_mode.fast.title" = "Fast";
+"coin_settings.sync_mode.slow.title" = "Slow";
+"coin_settings.sync_mode.fast.description" = "0-2 hours (Recommended)";
+"coin_settings.sync_mode.slow.description" = "1-12 hours (More Private)";
+"coin_settings.sync_mode.description" = "Fast: Restores wallet transactions history via secure third party server. For users with a history of transactions with large sums this method may pose privacy risks.\n\nSlow: Restores wallet transactions history directly from the blockchain. More private but very slow.";
 
 // Backup
 
@@ -343,7 +341,6 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "settings_manage_keys.delete.confirmation_disable" = "Coins that will be disabled: %@";
 "settings_manage_keys.delete.confirmation_loose" = "If you didn't backup the private key for this wallet, you will lose access to your funds.";
 "error.cant_create_eos" = "At this point, the wallet is not able to create new EOS wallet accounts. You're only able to restore the existing one.";
-"settings_manage_keys.create.text" = "This action will generate a new wallet for the following coins:\n\n%@";
 "error.invalid_eos_key" = "Invalid key";
 "error.invalid_eos_account" = "Invalid account";
 
@@ -409,7 +406,11 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 "create_wallet.title" = "New Wallet";
 "create_wallet.create_button" = "Create";
-"create_wallet.description" = "Select one cryptocurrency to start. You will be able to add other cryptocurrencies later.";
+
+// Select Coins
+
+"select_coins.description" = "Select cryptocurrencies for the wallet. You will be able to add or remove coins later as well.";
+"select_coins.proceed_button" = "Proceed";
 
 "price_notification.up" = "up";
 "price_notification.down" = "down";

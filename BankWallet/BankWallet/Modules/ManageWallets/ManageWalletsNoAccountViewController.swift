@@ -3,7 +3,7 @@ import ActionSheet
 
 class ManageWalletsNoAccountViewController: WalletActionSheetController {
 
-    init(coin: Coin, predefinedAccountType: IPredefinedAccountType, onSelectNew: @escaping () -> (), onSelectRestore: @escaping () -> ()) {
+    init(coin: Coin, predefinedAccountType: PredefinedAccountType, onSelectNew: @escaping () -> (), onSelectRestore: @escaping () -> ()) {
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
 
         let titleItem = AlertTitleItem(

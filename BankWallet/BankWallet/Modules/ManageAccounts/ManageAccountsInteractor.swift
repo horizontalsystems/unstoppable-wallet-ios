@@ -24,20 +24,12 @@ class ManageAccountsInteractor {
 
 extension ManageAccountsInteractor: IManageAccountsInteractor {
 
-    var predefinedAccountTypes: [IPredefinedAccountType] {
-        return predefinedAccountTypeManager.allTypes
+    var predefinedAccountTypes: [PredefinedAccountType] {
+        predefinedAccountTypeManager.allTypes
     }
 
-    func account(predefinedAccountType: IPredefinedAccountType) -> Account? {
-        return predefinedAccountTypeManager.account(predefinedAccountType: predefinedAccountType)
-    }
-
-    func createAccount(predefinedAccountType: IPredefinedAccountType) throws {
-        try predefinedAccountTypeManager.createAccount(predefinedAccountType: predefinedAccountType)
-    }
-
-    func restoreAccount(accountType: AccountType, syncMode: SyncMode?) {
-        _ = accountCreator.createRestoredAccount(accountType: accountType, defaultSyncMode: syncMode, createDefaultWallets: true)
+    func account(predefinedAccountType: PredefinedAccountType) -> Account? {
+        predefinedAccountTypeManager.account(predefinedAccountType: predefinedAccountType)
     }
 
 }

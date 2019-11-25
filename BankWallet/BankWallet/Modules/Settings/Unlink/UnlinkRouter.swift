@@ -14,7 +14,7 @@ extension UnlinkRouter: IUnlinkRouter {
 
 extension UnlinkRouter {
 
-    static func module(account: Account, predefinedAccountType: IPredefinedAccountType) -> UIViewController {
+    static func module(account: Account, predefinedAccountType: PredefinedAccountType) -> UIViewController {
         let router = UnlinkRouter()
         let interactor = UnlinkInteractor(accountManager: App.shared.accountManager)
         let presenter = UnlinkPresenter(router: router, interactor: interactor, account: account, predefinedAccountType: predefinedAccountType)

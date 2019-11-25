@@ -8,8 +8,7 @@ protocol IRestoreViewDelegate {
 }
 
 protocol IRestoreRouter {
-    func showRestore(defaultAccountType: DefaultAccountType, delegate: IRestoreAccountTypeDelegate)
-    func notifyRestored(account: Account)
+    func showRestoreCoins(predefinedAccountType: PredefinedAccountType)
 }
 
 protocol IRestoreDelegate: AnyObject {
@@ -17,7 +16,7 @@ protocol IRestoreDelegate: AnyObject {
 }
 
 protocol IRestoreAccountTypeDelegate: AnyObject {
-    func didRestore(accountType: AccountType, syncMode: SyncMode?)
+    func didRestore(accountType: AccountType)
     func didCancelRestore()
 }
 
