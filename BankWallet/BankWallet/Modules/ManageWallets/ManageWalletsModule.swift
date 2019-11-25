@@ -1,27 +1,19 @@
 protocol IManageWalletsView: class {
-    func updateUI()
-    func showNoAccount(coin: Coin, predefinedAccountType: IPredefinedAccountType)
+    func set(featuredViewItems: [CoinToggleViewItem], viewItems: [CoinToggleViewItem])
+
+    func showNoAccount(coin: Coin, predefinedAccountType: PredefinedAccountType)
     func show(error: Error)
     func showSuccess()
 }
 
 protocol IManageWalletsViewDelegate {
-    func viewDidLoad()
+    func onLoad()
 
-    var popularItemsCount: Int { get }
-    func popularItem(index: Int) -> ManageWalletViewItem
+    func onEnable(viewItem: CoinToggleViewItem)
+    func onDisable(viewItem: CoinToggleViewItem)
+    func onSelect(viewItem: CoinToggleViewItem)
 
-    var itemsCount: Int { get }
-    func item(index: Int) -> ManageWalletViewItem
-
-    func enablePopularItem(index: Int)
-    func disablePopularItem(index: Int)
-
-    func enableItem(index: Int)
-    func disableItem(index: Int)
-
-    func saveChanges()
-    func close()
+    func onTapCloseButton()
 
     func didTapNew()
     func didTapRestore()
@@ -30,20 +22,28 @@ protocol IManageWalletsViewDelegate {
 
 protocol IManageWalletsInteractor {
     var coins: [Coin] { get }
+    var featuredCoins: [Coin] { get }
+    var accounts: [Account] { get }
     var wallets: [Wallet] { get }
     func wallet(coin: Coin) -> Wallet?
-    func enable(wallets: [Wallet])
-    func createAccount(defaultAccountType: DefaultAccountType) throws -> Account
-    func createRestoredAccount(accountType: AccountType, defaultSyncMode: SyncMode?) -> Account
+
+    func save(wallet: Wallet)
+    func delete(wallet: Wallet)
+
+    func createAccount(predefinedAccountType: PredefinedAccountType) throws -> Account
+    func createRestoredAccount(accountType: AccountType) -> Account
     func createWallet(coin: Coin, account: Account) -> Wallet
-    func predefinedAccountType(coin: Coin) -> IPredefinedAccountType?
+
+    func coinSettingsToRequest(coin: Coin, accountOrigin: AccountOrigin) -> CoinSettings
+    func coinSettingsToSave(coin: Coin, accountOrigin: AccountOrigin, requestedCoinSettings: CoinSettings) -> CoinSettings
 }
 
 protocol IManageWalletsInteractorDelegate: class {
 }
 
 protocol IManageWalletsRouter {
-    func showRestore(defaultAccountType: DefaultAccountType, delegate: IRestoreAccountTypeDelegate)
+    func showCoinSettings(coin: Coin, coinSettings: CoinSettings, delegate: ICoinSettingsDelegate)
+    func showRestore(predefinedAccountType: PredefinedAccountType, delegate: IRestoreAccountTypeDelegate)
     func close()
 }
 
@@ -56,17 +56,20 @@ protocol IManageWalletsPresenterState {
     func move(from: Int, to: Int)
 }
 
-class ManageWalletItem {
+struct CoinToggleViewItem {
     let coin: Coin
-    var wallet: Wallet?
-
-    init(coin: Coin, wallet: Wallet?) {
-        self.coin = coin
-        self.wallet = wallet
-    }
+    let state: CoinToggleViewItemState
 }
 
-struct ManageWalletViewItem {
-    let coin: Coin
-    let enabled: Bool
+enum CoinToggleViewItemState: CustomStringConvertible {
+    case toggleHidden
+    case toggleVisible(enabled: Bool)
+
+    var description: String {
+        switch self {
+        case .toggleHidden: return "hidden"
+        case .toggleVisible(let enabled): return "visible_\(enabled)"
+        }
+    }
+
 }

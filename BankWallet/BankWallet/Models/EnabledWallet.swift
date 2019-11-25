@@ -3,29 +3,38 @@ import GRDB
 class EnabledWallet: Record {
     let coinId: String
     let accountId: String
-    var syncMode: SyncMode?
-    let order: Int
 
-    init(coinId: String, accountId: String, syncMode: SyncMode?, order: Int) {
+    var derivation: MnemonicDerivation?
+    var syncMode: SyncMode?
+
+    init(coinId: String, accountId: String, derivation: MnemonicDerivation?, syncMode: SyncMode?) {
         self.coinId = coinId
         self.accountId = accountId
+
+        self.derivation = derivation
         self.syncMode = syncMode
-        self.order = order
 
         super.init()
     }
 
+    override class var databaseTableName: String {
+        "enabled_wallets"
+    }
+
     enum Columns: String, ColumnExpression {
-        case coinId, accountId, syncMode, walletOrder
+        case coinId, accountId, derivation, syncMode
     }
 
     required init(row: Row) {
         coinId = row[Columns.coinId]
         accountId = row[Columns.accountId]
-        order = row[Columns.walletOrder]
 
         if let rawSyncMode: String = row[Columns.syncMode] {
             syncMode = SyncMode(rawValue: rawSyncMode)
+        }
+
+        if let rawDerivation: String = row[Columns.derivation] {
+            derivation = MnemonicDerivation(rawValue: rawDerivation)
         }
 
         super.init(row: row)
@@ -34,12 +43,9 @@ class EnabledWallet: Record {
     override func encode(to container: inout PersistenceContainer) {
         container[Columns.coinId] = coinId
         container[Columns.accountId] = accountId
-        container[Columns.syncMode] = syncMode?.rawValue
-        container[Columns.walletOrder] = order
-    }
 
-    override class var databaseTableName: String {
-        "enabled_wallets"
+        container[Columns.syncMode] = syncMode?.rawValue
+        container[Columns.derivation] = derivation?.rawValue
     }
 
 }

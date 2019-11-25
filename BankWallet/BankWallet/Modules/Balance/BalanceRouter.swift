@@ -24,7 +24,7 @@ extension BalanceRouter: IBalanceRouter {
         viewController?.present(ManageWalletsRouter.module(), animated: true)
     }
 
-    func openBackup(wallet: Wallet, predefinedAccountType: IPredefinedAccountType) {
+    func openBackup(wallet: Wallet, predefinedAccountType: PredefinedAccountType) {
         viewController?.present(BackupRouter.module(account: wallet.account, predefinedAccountType: predefinedAccountType), animated: true)
     }
 

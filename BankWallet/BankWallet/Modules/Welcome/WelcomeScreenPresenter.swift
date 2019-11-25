@@ -22,14 +22,6 @@ extension WelcomeScreenPresenter: IWelcomeScreenViewDelegate {
     }
 
     func didTapRestore() {
-        router.showRestore(delegate: self)
+        router.showRestoreWallet()
     }
-}
-
-extension WelcomeScreenPresenter: IRestoreDelegate {
-
-    func didRestore(account: Account) {
-        router.showMain()
-    }
-
 }

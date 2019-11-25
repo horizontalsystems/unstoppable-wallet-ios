@@ -14,12 +14,12 @@ class RestoreEosRouter {
 extension RestoreEosRouter: IRestoreEosRouter {
 
     func notifyRestored(accountType: AccountType) {
-        delegate.didRestore(accountType: accountType, syncMode: nil)
+        delegate.didRestore(accountType: accountType)
     }
 
     func dismissAndNotify(accountType: AccountType) {
         viewController?.dismiss(animated: true) { [weak self] in
-            self?.delegate.didRestore(accountType: accountType, syncMode: nil)
+            self?.delegate.didRestore(accountType: accountType)
         }
     }
 

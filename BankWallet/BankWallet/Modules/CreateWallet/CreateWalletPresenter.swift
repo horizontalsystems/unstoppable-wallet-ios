@@ -1,47 +1,138 @@
 class CreateWalletPresenter {
     weak var view: ICreateWalletView?
 
+    private let presentationMode: CreateWalletModule.PresentationMode
+    private var predefinedAccountType: PredefinedAccountType?
     private let interactor: ICreateWalletInteractor
     private let router: ICreateWalletRouter
-    private let state: CreateWalletState
-    private let viewItemFactory: CreateWalletViewItemFactory
 
-    init(interactor: ICreateWalletInteractor, router: ICreateWalletRouter, state: CreateWalletState = .init(), viewItemFactory: CreateWalletViewItemFactory = .init()) {
+    private var accounts = [PredefinedAccountType: Account]()
+    private var wallets = [Coin: Wallet]()
+
+    init(presentationMode: CreateWalletModule.PresentationMode, predefinedAccountType: PredefinedAccountType?, interactor: ICreateWalletInteractor, router: ICreateWalletRouter) {
+        self.presentationMode = presentationMode
+        self.predefinedAccountType = predefinedAccountType
         self.interactor = interactor
         self.router = router
-        self.state = state
-        self.viewItemFactory = viewItemFactory
+    }
+
+    private func filteredCoins(coins: [Coin]) -> [Coin] {
+        guard let predefinedAccountType = predefinedAccountType else {
+            return coins
+        }
+
+        return coins.filter { $0.type.predefinedAccountType == predefinedAccountType }
+    }
+
+    private func viewItem(coin: Coin) -> CoinToggleViewItem {
+        let enabled = wallets[coin] != nil
+        return CoinToggleViewItem(coin: coin, state: .toggleVisible(enabled: enabled))
+    }
+
+    private func syncViewItems() {
+        let featuredCoins = filteredCoins(coins: interactor.featuredCoins)
+        let coins = filteredCoins(coins: interactor.coins).filter { !featuredCoins.contains($0) }
+
+        let featuredViewItems = featuredCoins.map { viewItem(coin: $0) }
+        let viewItems = coins.map { viewItem(coin: $0) }
+
+        view?.set(featuredViewItems: featuredViewItems, viewItems: viewItems)
+    }
+
+    private func syncCreateButton() {
+        view?.setCreateButton(enabled: !wallets.isEmpty)
+    }
+
+    private func resolveAccount(predefinedAccountType: PredefinedAccountType) throws -> Account {
+        if let account = accounts[predefinedAccountType] {
+            return account
+        }
+
+        let account = try interactor.account(predefinedAccountType: predefinedAccountType)
+        accounts[predefinedAccountType] = account
+        return account
+    }
+
+    private func createWallet(coin: Coin, account: Account, requestedCoinSettings: CoinSettings) {
+        let coinSettings = interactor.coinSettingsToSave(coin: coin, accountOrigin: .created, requestedCoinSettings: requestedCoinSettings)
+
+        wallets[coin] = Wallet(coin: coin, account: account, coinSettings: coinSettings)
+
+        syncCreateButton()
     }
 
 }
 
 extension CreateWalletPresenter: ICreateWalletViewDelegate {
 
-    func viewDidLoad() {
-        let initialSelectedIndex = 0
-        let featuredCoins = interactor.featuredCoins
+    func onLoad() {
+        view?.setCancelButton(visible: presentationMode == .inApp)
 
-        state.coins = featuredCoins
-        state.selectedIndex = initialSelectedIndex
-
-        let viewItems = viewItemFactory.viewItems(coins: featuredCoins, selectedIndex: initialSelectedIndex)
-        view?.set(viewItems: viewItems)
+        syncViewItems()
+        syncCreateButton()
     }
 
-    func didTap(index: Int) {
-        state.selectedIndex = index
+    func onEnable(viewItem: CoinToggleViewItem) {
+        let coin = viewItem.coin
 
-        let viewItems = viewItemFactory.viewItems(coins: state.coins, selectedIndex: index)
-        view?.set(viewItems: viewItems)
-    }
-
-    func didTapCreateButton() {
         do {
-            try interactor.createWallet(coin: state.coins[state.selectedIndex])
-            router.showMain()
+            let account = try resolveAccount(predefinedAccountType: coin.type.predefinedAccountType)
+
+            let coinSettingsToRequest = interactor.coinSettingsToRequest(coin: coin, accountOrigin: .created)
+
+            if coinSettingsToRequest.isEmpty {
+                createWallet(coin: coin, account: account, requestedCoinSettings: [:])
+            } else {
+                router.showCoinSettings(coin: coin, coinSettings: coinSettingsToRequest, delegate: self)
+            }
         } catch {
             view?.show(error: error)
+            syncViewItems()
         }
+    }
+
+    func onDisable(viewItem: CoinToggleViewItem) {
+        wallets.removeValue(forKey: viewItem.coin)
+        syncCreateButton()
+    }
+
+    func onTapCreateButton() {
+        guard !wallets.isEmpty else {
+            return
+        }
+
+        let accounts = Array(Set(wallets.values.map { $0.account }))
+        interactor.create(accounts: accounts)
+
+        interactor.save(wallets: Array(wallets.values))
+
+        switch presentationMode {
+        case .initial:
+            router.showMain()
+        case .inApp:
+            router.close()
+        }
+    }
+
+    func onTapCancelButton() {
+        router.close()
+    }
+
+}
+
+extension CreateWalletPresenter: ICoinSettingsDelegate {
+
+    func onSelect(coinSettings: CoinSettings, coin: Coin) {
+        guard let account = accounts[coin.type.predefinedAccountType] else {
+            syncViewItems()
+            return
+        }
+
+        createWallet(coin: coin, account: account, requestedCoinSettings: coinSettings)
+    }
+
+    func onCancelSelectingCoinSettings() {
+        syncViewItems()
     }
 
 }

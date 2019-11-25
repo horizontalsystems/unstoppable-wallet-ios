@@ -2,15 +2,15 @@ import Foundation
 
 class AccountFactory: IAccountFactory {
 
-    func account(type: AccountType, backedUp: Bool, defaultSyncMode: SyncMode?) -> Account {
+    func account(type: AccountType, origin: AccountOrigin, backedUp: Bool) -> Account {
         let id = UUID().uuidString
 
         return Account(
                 id: id,
                 name: id,
                 type: type,
-                backedUp: backedUp,
-                defaultSyncMode: defaultSyncMode
+                origin: origin,
+                backedUp: backedUp
         )
     }
 

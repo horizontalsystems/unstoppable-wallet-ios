@@ -14,7 +14,7 @@ class BinanceKitManager {
             return binanceKit
         }
 
-        guard case let .mnemonic(words, _, _) = account.type else {
+        guard case let .mnemonic(words, _) = account.type else {
             throw AdapterError.unsupportedAccount
         }
 

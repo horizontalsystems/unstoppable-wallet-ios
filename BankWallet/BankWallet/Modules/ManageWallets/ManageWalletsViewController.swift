@@ -1,15 +1,14 @@
 import UIKit
-import UIExtensions
+import SectionsTableView
 import SnapKit
 
 class ManageWalletsViewController: WalletViewController {
-    private let numberOfSections = 2
-    private let popularItemsSection = 0
-    private let itemsSection = 1
-
     private let delegate: IManageWalletsViewDelegate
 
-    let tableView = UITableView(frame: .zero, style: .grouped)
+    private var featuredViewItems = [CoinToggleViewItem]()
+    private var viewItems = [CoinToggleViewItem]()
+
+    private let tableView = SectionsTableView(style: .grouped)
 
     init(delegate: IManageWalletsViewDelegate) {
         self.delegate = delegate
@@ -26,42 +25,87 @@ class ManageWalletsViewController: WalletViewController {
 
         title = "manage_coins.title".localized
 
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(close))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(done))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapCloseButton))
 
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.registerCell(forClass: ManageWalletCell.self)
-        tableView.allowsSelection = false
-        tableView.tableFooterView = UIView()
-        tableView.separatorStyle = .none
+        tableView.registerCell(forClass: CoinToggleCell.self)
+        tableView.sectionDataSource = self
+
         tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
 
-        delegate.viewDidLoad()
+        delegate.onLoad()
+
+        tableView.buildSections()
     }
 
-    @objc func close() {
-        delegate.close()
+    @objc func onTapCloseButton() {
+        delegate.onTapCloseButton()
     }
 
-    @objc func done() {
-        delegate.saveChanges()
+    private func rows(viewItems: [CoinToggleViewItem]) -> [RowProtocol] {
+        viewItems.enumerated().map { (index, viewItem) in
+            Row<CoinToggleCell>(
+                    id: "coin_\(viewItem.coin.id)",
+                    hash: "coin_\(viewItem.state)",
+                    height: .heightDoubleLineCell,
+                    autoDeselect: true,
+                    bind: { [weak self] cell, _ in
+                        cell.bind(
+                                coin: viewItem.coin,
+                                state: viewItem.state,
+                                last: index == viewItems.count - 1
+                        ) { enabled in
+                            if enabled {
+                                self?.delegate.onEnable(viewItem: viewItem)
+                            } else {
+                                self?.delegate.onDisable(viewItem: viewItem)
+                            }
+                        }
+                    },
+                    action: { [weak self] _ in
+                        self?.delegate.onSelect(viewItem: viewItem)
+                    }
+            )
+        }
+    }
+
+}
+
+extension ManageWalletsViewController: SectionsDataSource {
+
+    func buildSections() -> [SectionProtocol] {
+        [
+            Section(
+                    id: "featured_coins",
+                    headerState: .margin(height: .margin3x),
+                    footerState: .margin(height: .margin8x),
+                    rows: rows(viewItems: featuredViewItems)
+            ),
+            Section(
+                    id: "coins",
+                    footerState: .margin(height: .margin8x),
+                    rows: rows(viewItems: viewItems)
+            )
+        ]
     }
 
 }
 
 extension ManageWalletsViewController: IManageWalletsView {
 
-    func updateUI() {
-        tableView.reloadData()
+    func set(featuredViewItems: [CoinToggleViewItem], viewItems: [CoinToggleViewItem]) {
+        self.featuredViewItems = featuredViewItems
+        self.viewItems = viewItems
+
+        tableView.reload()
     }
 
-    func showNoAccount(coin: Coin, predefinedAccountType: IPredefinedAccountType) {
+    func showNoAccount(coin: Coin, predefinedAccountType: PredefinedAccountType) {
         let controller = ManageWalletsNoAccountViewController(coin: coin, predefinedAccountType: predefinedAccountType, onSelectNew: { [weak self] in
             self?.delegate.didTapNew()
         }, onSelectRestore: { [weak self] in
@@ -81,86 +125,6 @@ extension ManageWalletsViewController: IManageWalletsView {
 
     func showSuccess() {
         HudHelper.instance.showSuccess()
-    }
-
-}
-
-extension ManageWalletsViewController: UITableViewDataSource, UITableViewDelegate {
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return numberOfSections
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return numberOfRows(in: section)
-    }
-
-    func numberOfRows(in section: Int) -> Int {
-        if section == popularItemsSection {
-            return delegate.popularItemsCount
-        } else if section == itemsSection {
-            return delegate.itemsCount
-        }
-        return 0
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: String(describing: ManageWalletCell.self), for: indexPath)
-    }
-
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let cell = cell as? ManageWalletCell else {
-            return
-        }
-
-        let first = indexPath.row == 0
-        let last = numberOfRows(in: indexPath.section) == indexPath.row + 1
-
-        if indexPath.section == popularItemsSection {
-            cell.bind(item: delegate.popularItem(index: indexPath.row), first: first, last: last) { [weak self] isOn in
-                if isOn {
-                    self?.delegate.enablePopularItem(index: indexPath.row)
-                } else {
-                    self?.delegate.disablePopularItem(index: indexPath.row)
-                }
-            }
-        } else if indexPath.section == itemsSection {
-            cell.bind(item: delegate.item(index: indexPath.row), first: first, last: last) { [weak self] isOn in
-                if isOn {
-                    self?.delegate.enableItem(index: indexPath.row)
-                } else {
-                    self?.delegate.disableItem(index: indexPath.row)
-                }
-            }
-        }
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return ManageWalletsTheme.rowHeight
-    }
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return UIView()
-    }
-
-    public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return UIView()
-    }
-
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == popularItemsSection {
-            return ManageWalletsTheme.topHeaderHeight
-        } else if section == itemsSection {
-            return ManageWalletsTheme.headerHeight
-        }
-        return 0
-    }
-
-    public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if section == itemsSection {
-            return ManageWalletsTheme.footerHeight
-        }
-        return 0
     }
 
 }

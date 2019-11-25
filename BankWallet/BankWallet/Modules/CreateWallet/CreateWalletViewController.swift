@@ -4,8 +4,10 @@ import SectionsTableView
 class CreateWalletViewController: WalletViewController {
     private let delegate: ICreateWalletViewDelegate
 
+    private var featuredViewItems = [CoinToggleViewItem]()
+    private var viewItems = [CoinToggleViewItem]()
+
     private let tableView = SectionsTableView(style: .grouped)
-    private var viewItems = [CreateWalletViewItem]()
 
     init(delegate: ICreateWalletViewDelegate) {
         self.delegate = delegate
@@ -21,13 +23,15 @@ class CreateWalletViewController: WalletViewController {
         super.viewDidLoad()
 
         title = "create_wallet.title".localized
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "create_wallet.create_button".localized, style: .done, target: self, action: #selector(onTapCreate))
 
-        tableView.registerCell(forClass: ImageDoubleLineCheckmarkCell.self)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "create_wallet.create_button".localized, style: .done, target: self, action: #selector(onTapCreateButton))
+
+        tableView.registerCell(forClass: CoinToggleCell.self)
         tableView.registerHeaderFooter(forClass: TopDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
+        tableView.allowsSelection = false
         tableView.separatorStyle = .none
 
         view.addSubview(tableView)
@@ -35,12 +39,40 @@ class CreateWalletViewController: WalletViewController {
             maker.edges.equalToSuperview()
         }
 
-        delegate.viewDidLoad()
+        delegate.onLoad()
+
         tableView.buildSections()
     }
 
-    @objc func onTapCreate() {
-        delegate.didTapCreateButton()
+    @objc func onTapCreateButton() {
+        delegate.onTapCreateButton()
+    }
+
+    @objc func onTapCancelButton() {
+        delegate.onTapCancelButton()
+    }
+
+    private func rows(viewItems: [CoinToggleViewItem]) -> [RowProtocol] {
+        viewItems.enumerated().map { (index, viewItem) in
+            Row<CoinToggleCell>(
+                    id: "coin_\(viewItem.coin.id)",
+                    hash: "coin_\(viewItem.state)",
+                    height: .heightDoubleLineCell,
+                    bind: { [weak self] cell, _ in
+                        cell.bind(
+                                coin: viewItem.coin,
+                                state: viewItem.state,
+                                last: index == viewItems.count - 1
+                        ) { enabled in
+                            if enabled {
+                                self?.delegate.onEnable(viewItem: viewItem)
+                            } else {
+                                self?.delegate.onDisable(viewItem: viewItem)
+                            }
+                        }
+                    }
+            )
+        }
     }
 
 }
@@ -48,7 +80,7 @@ class CreateWalletViewController: WalletViewController {
 extension CreateWalletViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        let descriptionText = "create_wallet.description".localized
+        let descriptionText = "select_coins.description".localized
 
         let headerState: ViewState<TopDescriptionHeaderFooterView> = .cellType(hash: "top_description", binder: { view in
             view.bind(text: descriptionText)
@@ -58,29 +90,15 @@ extension CreateWalletViewController: SectionsDataSource {
 
         return [
             Section(
-                    id: "coins",
+                    id: "featured_coins",
                     headerState: headerState,
-                    footerState: .margin(height: CGFloat.margin8x),
-                    rows: viewItems.enumerated().map { (index, viewItem) in
-                        Row<ImageDoubleLineCheckmarkCell>(
-                                id: "coin_\(viewItem.code)",
-                                hash: "coin_\(viewItem.selected)",
-                                height: CGFloat.heightDoubleLineCell,
-                                autoDeselect: true,
-                                bind: { [unowned self] cell, _ in
-                                    cell.bind(
-                                            image: UIImage(named: "\(viewItem.code.lowercased())")?.tinted(with: AppTheme.coinIconColor),
-                                            title: viewItem.title,
-                                            subtitle: viewItem.code,
-                                            checkmarkVisible: viewItem.selected,
-                                            last: index == self.viewItems.count - 1
-                                    )
-                                },
-                                action: { [weak self] _ in
-                                    self?.delegate.didTap(index: index)
-                                }
-                        )
-                    }
+                    footerState: .margin(height: .margin8x),
+                    rows: rows(viewItems: featuredViewItems)
+            ),
+            Section(
+                    id: "coins",
+                    footerState: .margin(height: .margin8x),
+                    rows: rows(viewItems: viewItems)
             )
         ]
     }
@@ -89,9 +107,23 @@ extension CreateWalletViewController: SectionsDataSource {
 
 extension CreateWalletViewController: ICreateWalletView {
 
-    func set(viewItems: [CreateWalletViewItem]) {
+    func setCancelButton(visible: Bool) {
+        if visible {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancelButton))
+        } else {
+            navigationItem.leftBarButtonItem = nil
+        }
+    }
+
+    func set(featuredViewItems: [CoinToggleViewItem], viewItems: [CoinToggleViewItem]) {
+        self.featuredViewItems = featuredViewItems
         self.viewItems = viewItems
-        tableView.reload(animated: true)
+
+        tableView.reload()
+    }
+
+    func setCreateButton(enabled: Bool) {
+        navigationItem.rightBarButtonItem?.isEnabled = enabled
     }
 
     func show(error: Error) {

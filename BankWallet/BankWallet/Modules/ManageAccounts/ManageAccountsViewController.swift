@@ -107,19 +107,11 @@ extension ManageAccountsViewController: IManageAccountsView {
         HudHelper.instance.showError(title: error.localizedDescription)
     }
 
-    func showCreateConfirmation(title: String, coinCodes: String) {
-        let controller = ManageAccountsCreateAccountViewController(title: "settings_manage_keys.add_wallet".localized, subtitle: title, coinCodes: coinCodes, onCreate: { [weak self] in
-            self?.delegate.didConfirmCreate()
-        })
-
-        present(controller, animated: true)
-    }
-
     func showSuccess() {
         HudHelper.instance.showSuccess()
     }
 
-    func showBackupRequired(predefinedAccountType: IPredefinedAccountType) {
+    func showBackupRequired(predefinedAccountType: PredefinedAccountType) {
         let controller = BackupRequiredViewController(subtitle: predefinedAccountType.title, text: "settings_manage_keys.delete.cant_delete".localized, onBackup: { [weak self] in
             self?.delegate.didRequestBackup()
         })

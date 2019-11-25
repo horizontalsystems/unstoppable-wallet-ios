@@ -7,13 +7,17 @@ class DashAdapter: BitcoinBaseAdapter {
     private let dashKit: DashKit
 
     init(wallet: Wallet, testMode: Bool) throws {
-        guard case let .mnemonic(words, _, _) = wallet.account.type else {
+        guard case let .mnemonic(words, _) = wallet.account.type else {
             throw AdapterError.unsupportedAccount
         }
 
+        guard let walletSyncMode = wallet.coinSettings[.syncMode] as? SyncMode else {
+            throw AdapterError.wrongParameters
+        }
 
         let networkType: DashKit.NetworkType = testMode ? .testNet : .mainNet
-        dashKit = try DashKit(withWords: words, walletId: wallet.account.id, syncMode: BitcoinBaseAdapter.kitMode(from: wallet.syncMode ?? .fast), networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.defaultConfirmationsThreshold, minLogLevel: .error)
+
+        dashKit = try DashKit(withWords: words, walletId: wallet.account.id, syncMode: BitcoinBaseAdapter.kitMode(from: walletSyncMode), networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.defaultConfirmationsThreshold, minLogLevel: .error)
 
         super.init(abstractKit: dashKit)
 

@@ -165,7 +165,7 @@ extension BalanceInteractor: IBalanceInteractor {
         }
     }
 
-    func predefinedAccountType(wallet: Wallet) -> IPredefinedAccountType? {
+    func predefinedAccountType(wallet: Wallet) -> PredefinedAccountType? {
         predefinedAccountTypeManager.predefinedAccountType(accountType: wallet.account.type)
     }
 

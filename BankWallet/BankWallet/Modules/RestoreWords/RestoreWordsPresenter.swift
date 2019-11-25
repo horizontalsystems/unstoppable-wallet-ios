@@ -6,25 +6,22 @@ class RestoreWordsPresenter {
     private var wordsManager: IWordsManager
     private let appConfigProvider: IAppConfigProvider
 
-    private var words: [String]?
     let wordsCount: Int
-    private let showRestoreOptions: Bool
 
-    init(mode: RestoreRouter.PresentationMode, router: IRestoreWordsRouter, wordsCount: Int, showRestoreOptions: Bool, wordsManager: IWordsManager, appConfigProvider: IAppConfigProvider) {
+    init(mode: RestoreRouter.PresentationMode, router: IRestoreWordsRouter, wordsCount: Int, wordsManager: IWordsManager, appConfigProvider: IAppConfigProvider) {
         self.mode = mode
         self.router = router
         self.wordsCount = wordsCount
-        self.showRestoreOptions = showRestoreOptions
         self.wordsManager = wordsManager
         self.appConfigProvider = appConfigProvider
     }
 
-    private func notify(words: [String], syncMode: SyncMode?, derivation: MnemonicDerivation) {
-        let accountType: AccountType = .mnemonic(words: words, derivation: derivation, salt: nil)
+    private func notify(words: [String]) {
+        let accountType: AccountType = .mnemonic(words: words, salt: nil)
 
         switch mode {
-        case .pushed: router.notifyRestored(accountType: accountType, syncMode: syncMode)
-        case .presented: router.dismissAndNotify(accountType: accountType, syncMode: syncMode)
+        case .pushed: router.notifyRestored(accountType: accountType)
+        case .presented: router.dismissAndNotify(accountType: accountType)
         }
     }
 }
@@ -36,25 +33,14 @@ extension RestoreWordsPresenter: IRestoreWordsViewDelegate {
             view?.showCancelButton()
         }
 
-        if showRestoreOptions {
-            view?.showNextButton()
-        } else {
-            view?.showRestoreButton()
-        }
-
+        view?.showRestoreButton()
         view?.show(defaultWords: appConfigProvider.defaultWords(count: wordsCount))
     }
 
     func didTapRestore(words: [String]) {
         do {
             try wordsManager.validate(words: words, requiredWordsCount: wordsCount)
-
-            if showRestoreOptions {
-                self.words = words
-                router.showRestoreOptions(delegate: self)
-            } else {
-                notify(words: words, syncMode: nil, derivation: .bip44)
-            }
+            notify(words: words)
         } catch {
             view?.show(error: error)
         }
@@ -62,15 +48,6 @@ extension RestoreWordsPresenter: IRestoreWordsViewDelegate {
 
     func didTapCancel() {
         router.dismiss()
-    }
-
-}
-
-extension RestoreWordsPresenter: IRestoreOptionsDelegate {
-
-    func onSelectRestoreOptions(syncMode: SyncMode, derivation: MnemonicDerivation) {
-        guard let words = words else { return }
-        notify(words: words, syncMode: syncMode, derivation: derivation)
     }
 
 }

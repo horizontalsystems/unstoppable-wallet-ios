@@ -16,25 +16,25 @@ enum CoinType {
     func canSupport(accountType: AccountType) -> Bool {
         switch self {
         case .bitcoin, .bitcoinCash, .dash, .ethereum, .erc20:
-            if case let .mnemonic(words, _, salt) = accountType, words.count == 12, salt == nil { return true }
+            if case let .mnemonic(words, salt) = accountType, words.count == 12, salt == nil { return true }
             return false
         case .eos:
             if case .eos = accountType { return true }
             return false
         case .binance:
-            if case let .mnemonic(words, _, salt) = accountType, words.count == 24, salt == nil { return true }
+            if case let .mnemonic(words, salt) = accountType, words.count == 24, salt == nil { return true }
             return false
         }
     }
 
-    var defaultAccountType: DefaultAccountType {
+    var predefinedAccountType: PredefinedAccountType {
         switch self {
         case .bitcoin, .bitcoinCash, .dash, .ethereum, .erc20:
-            return .mnemonic(wordsCount: 12)
+            return .standard
         case .eos:
             return .eos
         case .binance:
-            return .mnemonic(wordsCount: 24)
+            return .binance
         }
     }
 
@@ -53,6 +53,17 @@ enum CoinType {
         }
 
         return nil
+    }
+
+    var settings: [CoinSetting] {
+        switch self {
+        case .bitcoin: return [.derivation, .syncMode]
+        case .bitcoinCash: return [.syncMode]
+        case .dash: return [.syncMode]
+        default: ()
+        }
+
+        return []
     }
 
 }
@@ -75,4 +86,11 @@ extension CoinType: Equatable {
         }
     }
 
+}
+
+typealias CoinSettings = [CoinSetting: Any]
+
+enum CoinSetting {
+    case derivation
+    case syncMode
 }

@@ -4,9 +4,9 @@ class BackupPresenter: IBackupPresenter {
     private let router: IBackupRouter
     private let interactor: IBackupInteractor
     private let account: Account
-    private let predefinedAccountType: IPredefinedAccountType
+    private let predefinedAccountType: PredefinedAccountType
 
-    init(interactor: IBackupInteractor, router: IBackupRouter, account: Account, predefinedAccountType: IPredefinedAccountType) {
+    init(interactor: IBackupInteractor, router: IBackupRouter, account: Account, predefinedAccountType: PredefinedAccountType) {
         self.interactor = interactor
         self.router = router
         self.account = account

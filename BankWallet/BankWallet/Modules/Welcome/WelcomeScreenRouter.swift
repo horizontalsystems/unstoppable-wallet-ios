@@ -6,16 +6,12 @@ class WelcomeScreenRouter {
 
 extension WelcomeScreenRouter: IWelcomeScreenRouter {
 
-    func showMain() {
-        UIApplication.shared.keyWindow?.set(newRootController: MainRouter.module(selectedTab: .balance))
-    }
-
     func showCreateWallet() {
-        viewController?.navigationController?.pushViewController(CreateWalletRouter.module(), animated: true)
+        viewController?.navigationController?.pushViewController(CreateWalletRouter.module(presentationMode: .initial), animated: true)
     }
 
-    func showRestore(delegate: IRestoreDelegate) {
-        viewController?.navigationController?.pushViewController(RestoreRouter.module(delegate: delegate), animated: true)
+    func showRestoreWallet() {
+        viewController?.navigationController?.pushViewController(RestoreRouter.module(), animated: true)
     }
 
 }

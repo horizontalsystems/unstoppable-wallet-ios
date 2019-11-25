@@ -11,6 +11,15 @@ class WalletStorage {
         self.storage = storage
     }
 
+    private func enabledWallet(wallet: Wallet) -> EnabledWallet {
+        EnabledWallet(
+                coinId: wallet.coin.id,
+                accountId: wallet.account.id,
+                derivation: wallet.coinSettings[.derivation] as? MnemonicDerivation,
+                syncMode: wallet.coinSettings[.syncMode] as? SyncMode
+        )
+    }
+
 }
 
 extension WalletStorage: IWalletStorage {
@@ -27,18 +36,32 @@ extension WalletStorage: IWalletStorage {
                 return nil
             }
 
-            return walletFactory.wallet(coin: coin, account: account, syncMode: enabledWallet.syncMode)
+            var coinSettings = [CoinSetting: Any]()
+
+            if let derivation = enabledWallet.derivation {
+                coinSettings[.derivation] = derivation
+            }
+
+            if let syncMode = enabledWallet.syncMode {
+                coinSettings[.syncMode] = syncMode
+            }
+
+            return walletFactory.wallet(coin: coin, account: account, coinSettings: coinSettings)
         }
     }
 
     func save(wallets: [Wallet]) {
-        var enabledWallets = [EnabledWallet]()
-
-        for (order, wallet) in wallets.enumerated() {
-            enabledWallets.append(EnabledWallet(coinId: wallet.coin.id, accountId: wallet.account.id, syncMode: wallet.syncMode, order: order))
-        }
-
+        let enabledWallets = wallets.map { enabledWallet(wallet: $0) }
         storage.save(enabledWallets: enabledWallets)
+    }
+
+    func delete(wallets: [Wallet]) {
+        let enabledWallets = wallets.map { enabledWallet(wallet: $0) }
+        storage.delete(enabledWallets: enabledWallets)
+    }
+
+    func clearWallets() {
+        storage.clearEnabledWallets()
     }
 
 }

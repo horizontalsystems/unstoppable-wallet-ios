@@ -6,7 +6,7 @@ class RestorePresenter {
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let viewItemsFactory: AccountTypeViewItemFactory
 
-    private var predefinedAccountTypes = [IPredefinedAccountType]()
+    private var predefinedAccountTypes = [PredefinedAccountType]()
 
     init(router: IRestoreRouter, accountCreator: IAccountCreator, predefinedAccountTypeManager: IPredefinedAccountTypeManager, viewItemsFactory: AccountTypeViewItemFactory = .init()) {
         self.router = router
@@ -25,17 +25,7 @@ extension RestorePresenter: IRestoreViewDelegate {
     }
 
     func didSelect(index: Int) {
-        router.showRestore(defaultAccountType: predefinedAccountTypes[index].defaultAccountType, delegate: self)
-    }
-
-}
-
-extension RestorePresenter: IRestoreAccountTypeDelegate {
-
-    func didRestore(accountType: AccountType, syncMode: SyncMode?) {
-        let account = accountCreator.createRestoredAccount(accountType: accountType, defaultSyncMode: syncMode, createDefaultWallets: true)
-
-        router.notifyRestored(account: account)
+        router.showRestoreCoins(predefinedAccountType: predefinedAccountTypes[index])
     }
 
 }

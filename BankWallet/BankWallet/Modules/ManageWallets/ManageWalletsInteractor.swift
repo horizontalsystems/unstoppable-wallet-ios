@@ -6,13 +6,15 @@ class ManageWalletsInteractor {
     private let walletFactory: IWalletFactory
     private let accountCreator: IAccountCreator
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
+    private let coinSettingsManager: ICoinSettingsManager
 
-    init(appConfigProvider: IAppConfigProvider, walletManager: IWalletManager, walletFactory: IWalletFactory, accountCreator: IAccountCreator, predefinedAccountTypeManager: IPredefinedAccountTypeManager) {
+    init(appConfigProvider: IAppConfigProvider, walletManager: IWalletManager, walletFactory: IWalletFactory, accountCreator: IAccountCreator, predefinedAccountTypeManager: IPredefinedAccountTypeManager, coinSettingsManager: ICoinSettingsManager) {
         self.appConfigProvider = appConfigProvider
         self.walletManager = walletManager
         self.walletFactory = walletFactory
         self.accountCreator = accountCreator
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
+        self.coinSettingsManager = coinSettingsManager
     }
 
 }
@@ -20,35 +22,51 @@ class ManageWalletsInteractor {
 extension ManageWalletsInteractor: IManageWalletsInteractor {
 
     var coins: [Coin] {
-        return appConfigProvider.coins
+        appConfigProvider.coins
+    }
+
+    var featuredCoins: [Coin] {
+        appConfigProvider.featuredCoins
+    }
+
+    var accounts: [Account] {
+        App.shared.accountManager.accounts
     }
 
     var wallets: [Wallet] {
-        return walletManager.wallets
+        walletManager.wallets
     }
 
     func wallet(coin: Coin) -> Wallet? {
-        return walletManager.wallet(coin: coin)
+        walletManager.wallet(coin: coin)
     }
 
-    func enable(wallets: [Wallet]) {
-        walletManager.enable(wallets: wallets)
+    func save(wallet: Wallet) {
+        walletManager.save(wallets: [wallet])
     }
 
-    func createAccount(defaultAccountType: DefaultAccountType) throws -> Account {
-        return try accountCreator.createNewAccount(defaultAccountType: defaultAccountType, createDefaultWallets: false)
+    func delete(wallet: Wallet) {
+        walletManager.delete(wallets: [wallet])
     }
 
-    func createRestoredAccount(accountType: AccountType, defaultSyncMode: SyncMode?) -> Account {
-        return accountCreator.createRestoredAccount(accountType: accountType, defaultSyncMode: defaultSyncMode, createDefaultWallets: false)
+    func createAccount(predefinedAccountType: PredefinedAccountType) throws -> Account {
+        try accountCreator.newAccount(predefinedAccountType: predefinedAccountType)
+    }
+
+    func createRestoredAccount(accountType: AccountType) -> Account {
+        accountCreator.restoredAccount(accountType: accountType)
     }
 
     func createWallet(coin: Coin, account: Account) -> Wallet {
-        return walletFactory.wallet(coin: coin, account: account, syncMode: account.defaultSyncMode)
+        walletFactory.wallet(coin: coin, account: account, coinSettings: [:])
     }
 
-    func predefinedAccountType(coin: Coin) -> IPredefinedAccountType? {
-        return predefinedAccountTypeManager.predefinedAccountType(coin: coin)
+    func coinSettingsToRequest(coin: Coin, accountOrigin: AccountOrigin) -> CoinSettings {
+        coinSettingsManager.coinSettingsToRequest(coin: coin, accountOrigin: accountOrigin)
+    }
+
+    func coinSettingsToSave(coin: Coin, accountOrigin: AccountOrigin, requestedCoinSettings: CoinSettings) -> CoinSettings {
+        coinSettingsManager.coinSettingsToSave(coin: coin, accountOrigin: accountOrigin, requestedCoinSettings: requestedCoinSettings)
     }
 
 }

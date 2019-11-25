@@ -64,35 +64,14 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
         router.showBackup(account: account, predefinedAccountType: item.predefinedAccountType)
     }
 
-    func didTapShowKey(index: Int) {
-        guard let account = items[index].account else {
-            return
-        }
-
-        router.showKey(account: account)
-    }
-
     func didTapCreate(index: Int) {
         let item = items[index]
         currentItem = item
-        view?.showCreateConfirmation(title: item.predefinedAccountType.title, coinCodes: item.predefinedAccountType.coinCodes)
+        router.showCreateWallet(predefinedAccountType: item.predefinedAccountType)
     }
 
     func didTapRestore(index: Int) {
-        router.showRestore(defaultAccountType: items[index].predefinedAccountType.defaultAccountType, delegate: self)
-    }
-
-    func didConfirmCreate() {
-        guard let item = currentItem else {
-            return
-        }
-
-        do {
-            try interactor.createAccount(predefinedAccountType: item.predefinedAccountType)
-            view?.showSuccess()
-        } catch {
-            view?.show(error: error)
-        }
+        router.showRestore(predefinedAccountType: items[index].predefinedAccountType)
     }
 
     func didTapDone() {
@@ -114,14 +93,6 @@ extension ManageAccountsPresenter: IManageAccountsInteractorDelegate {
     func didUpdateAccounts() {
         buildItems()
         updateView()
-    }
-
-}
-
-extension ManageAccountsPresenter: IRestoreAccountTypeDelegate {
-
-    func didRestore(accountType: AccountType, syncMode: SyncMode?) {
-        interactor.restoreAccount(accountType: accountType, syncMode: syncMode)
     }
 
 }

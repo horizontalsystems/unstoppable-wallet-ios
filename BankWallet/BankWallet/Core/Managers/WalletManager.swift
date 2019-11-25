@@ -15,12 +15,16 @@ class WalletManager {
         self.storage = storage
     }
 
+    private func notify() {
+        walletsUpdatedSubject.onNext(cache.wallets)
+    }
+
 }
 
 extension WalletManager: IWalletManager {
 
     var wallets: [Wallet] {
-        return cache.wallets
+        cache.wallets
     }
 
     var walletsUpdatedObservable: Observable<[Wallet]> {
@@ -32,19 +36,29 @@ extension WalletManager: IWalletManager {
             return nil
         }
 
-        return walletFactory.wallet(coin: coin, account: account, syncMode: account.defaultSyncMode)
+        return walletFactory.wallet(coin: coin, account: account, coinSettings: [:])
     }
 
     func preloadWallets() {
         let wallets = storage.wallets(accounts: accountManager.accounts)
-        cache.set(wallets: wallets)
-        walletsUpdatedSubject.onNext(wallets)
+        cache.wallets = wallets
+        notify()
     }
 
-    func enable(wallets: [Wallet]) {
+    func save(wallets: [Wallet]) {
         storage.save(wallets: wallets)
-        cache.set(wallets: wallets)
-        walletsUpdatedSubject.onNext(wallets)
+        cache.append(wallets: wallets)
+        notify()
+    }
+
+    func delete(wallets: [Wallet]) {
+        storage.delete(wallets: wallets)
+        cache.remove(wallets: wallets)
+        notify()
+    }
+
+    func clearWallets() {
+        storage.clearWallets()
     }
 
 }
@@ -55,12 +69,22 @@ extension WalletManager {
         private var array = [Wallet]()
 
         var wallets: [Wallet] {
-            return array
+            get {
+                array
+            }
+            set {
+                array = newValue
+            }
         }
 
-        func set(wallets: [Wallet]) {
-            array = wallets
+        func append(wallets: [Wallet]) {
+            array.append(contentsOf: wallets)
         }
+
+        func remove(wallets: [Wallet]) {
+            array.removeAll { wallets.contains($0) }
+        }
+
     }
 
 }

@@ -2,11 +2,11 @@ class UnlinkPresenter {
     private let router: IUnlinkRouter
     private let interactor: IUnlinkInteractor
     private let account: Account
-    private let predefinedAccountType: IPredefinedAccountType
+    private let predefinedAccountType: PredefinedAccountType
 
     weak var view: IUnlinkView?
 
-    init(router: IUnlinkRouter, interactor: IUnlinkInteractor, account: Account, predefinedAccountType: IPredefinedAccountType) {
+    init(router: IUnlinkRouter, interactor: IUnlinkInteractor, account: Account, predefinedAccountType: PredefinedAccountType) {
         self.router = router
         self.interactor = interactor
         self.account = account

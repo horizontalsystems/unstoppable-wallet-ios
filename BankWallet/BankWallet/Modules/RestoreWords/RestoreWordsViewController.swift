@@ -57,7 +57,7 @@ class RestoreWordsViewController: WalletViewController {
         }
 
         // temp solution until multi-wallet feature is implemented
-        let predefinedAccountType: IPredefinedAccountType = delegate.wordsCount == 12 ? UnstoppableAccountType() : BinanceAccountType()
+        let predefinedAccountType: PredefinedAccountType = delegate.wordsCount == 12 ? .standard : .binance
 
         let descriptionView = BottomDescriptionView()
         descriptionView.bind(text: "restore.words.description".localized(predefinedAccountType.title, String(delegate.wordsCount)))
@@ -160,10 +160,6 @@ extension RestoreWordsViewController: IRestoreWordsView {
 
     func showCancelButton() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(cancelDidTap))
-    }
-
-    func showNextButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .plain, target: self, action: #selector(restoreDidTap))
     }
 
     func showRestoreButton() {

@@ -6,25 +6,23 @@ class ManageAccountsRouter {
 
 extension ManageAccountsRouter: IManageAccountsRouter {
 
-    func showUnlink(account: Account, predefinedAccountType: IPredefinedAccountType) {
+    func showUnlink(account: Account, predefinedAccountType: PredefinedAccountType) {
         viewController?.present(UnlinkRouter.module(account: account, predefinedAccountType: predefinedAccountType), animated: true)
     }
 
-    func showBackup(account: Account, predefinedAccountType: IPredefinedAccountType) {
+    func showBackup(account: Account, predefinedAccountType: PredefinedAccountType) {
         let module = BackupRouter.module(account: account, predefinedAccountType: predefinedAccountType)
         viewController?.present(module, animated: true)
     }
 
-    func showKey(account: Account) {
-
+    func showCreateWallet(predefinedAccountType: PredefinedAccountType) {
+        let module = CreateWalletRouter.module(presentationMode: .inApp, predefinedAccountType: predefinedAccountType)
+        viewController?.present(module, animated: true)
     }
 
-    func showRestore(defaultAccountType: DefaultAccountType, delegate: IRestoreAccountTypeDelegate) {
-        guard let module = RestoreRouter.module(defaultAccountType: defaultAccountType, mode: .presented, delegate: delegate) else {
-            return
-        }
-
-        viewController?.present(WalletNavigationController(rootViewController: module), animated: true)
+    func showRestore(predefinedAccountType: PredefinedAccountType) {
+        let module = RestoreCoinsRouter.module(presentationMode: .inApp, predefinedAccountType: predefinedAccountType)
+        viewController?.present(module, animated: true)
     }
 
     func close() {
