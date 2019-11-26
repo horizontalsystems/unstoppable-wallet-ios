@@ -132,14 +132,7 @@ extension SendViewController: ISendView {
     }
 
     func show(error: Error) {
-        let errorString: String
-        if let localizedError = error as? LocalizedError {
-            errorString = localizedError.localizedDescription
-        } else {
-            errorString = "\("alert.unknown_error".localized) \(String(reflecting: error))"
-        }
-
-        HudHelper.instance.showError(title: errorString)
+        HudHelper.instance.showError(title: error.localizedDescription)
     }
 
     func showProgress() {

@@ -65,7 +65,7 @@ extension SendPresenter: ISendInteractorDelegate {
     }
 
     func didFailToSend(error: Error) {
-        view?.show(error: error)
+        view?.show(error: error.convertedError)
     }
 
 }

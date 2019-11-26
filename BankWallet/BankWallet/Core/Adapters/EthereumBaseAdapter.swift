@@ -27,11 +27,7 @@ class EthereumBaseAdapter {
     }
 
     func createSendError(from error: Error) -> Error {
-        if let error = error as? EthereumKit.NetworkError, case .noConnection = error {
-            return SendTransactionError.connection
-        } else {
-            return SendTransactionError.unknown
-        }
+        error.convertedError
     }
 
 }
