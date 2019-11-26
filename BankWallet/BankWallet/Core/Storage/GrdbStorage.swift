@@ -68,10 +68,8 @@ class GrdbStorage {
 
             let wordsKey = "mnemonic_\(uuid)_words"
 
-            try db.execute(sql: """
-                                INSERT INTO \(AccountRecord_v_0_10.databaseTableName)(`\(AccountRecord_v_0_10.Columns.id.name)`, `\(AccountRecord_v_0_10.Columns.name.name)`, `\(AccountRecord_v_0_10.Columns.type.name)`, `\(AccountRecord_v_0_10.Columns.backedUp.name)`, `\(AccountRecord_v_0_10.Columns.defaultSyncMode.name)`, `\(AccountRecord_v_0_10.Columns.wordsKey.name)`, `\(AccountRecord_v_0_10.Columns.derivation.name)`, `\(AccountRecord_v_0_10.Columns.saltKey.name)`, `\(AccountRecord_v_0_10.Columns.dataKey.name)`, `\(AccountRecord_v_0_10.Columns.eosAccount.name)`)
-                                SELECT '\(uuid)', '\(uuid)', 'mnemonic', 'created', '\(isBackedUp)', '\(syncMode.rawValue)', '\(wordsKey)', 'bip44', NULL, NULL, NULL FROM \(AccountRecord.databaseTableName)
-                                """)
+            let accountRecord = AccountRecord_v_0_10(id: uuid, name: uuid, type: "mnemonic", backedUp: isBackedUp, defaultSyncMode: syncMode.rawValue, wordsKey: wordsKey, derivation: "bip44", saltKey: nil, dataKey: nil, eosAccount: nil)
+            try accountRecord.insert(db)
 
             try? keychain.set(authData.words.joined(separator: ","), key: wordsKey)
 
@@ -79,7 +77,7 @@ class GrdbStorage {
                 return
             }
 
-            let accountId = uuid
+            let accountId = accountRecord.id
             try db.execute(sql: """
                                 INSERT INTO \(EnabledWallet_v_0_10.databaseTableName)(`coinCode`, `\(EnabledWallet_v_0_10.Columns.accountId.name)`, `\(EnabledWallet_v_0_10.Columns.syncMode.name)`, `\(EnabledWallet_v_0_10.Columns.walletOrder.name)`)
                                 SELECT `coinCode`, '\(accountId)', '\(syncMode)', `coinOrder` FROM enabled_coins
