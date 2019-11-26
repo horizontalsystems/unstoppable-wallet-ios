@@ -90,7 +90,7 @@ extension SendFeePriorityPresenter: ISendFeePriorityInteractorDelegate {
     }
 
     func didReceiveError(error: Error) {
-        self.error = error
+        self.error = error.convertedError
 
         delegate?.onUpdateFeePriority()
     }

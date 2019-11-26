@@ -185,7 +185,7 @@ extension SendEthereumHandler {
     }
 
     func onGasLimitError(_ error: Error) {
-        estimateGasLimitState = .error(error)
+        estimateGasLimitState = .error(error.convertedError)
 
         syncState()
         syncValidation()
