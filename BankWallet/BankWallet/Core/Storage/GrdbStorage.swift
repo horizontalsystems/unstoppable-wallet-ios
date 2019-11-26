@@ -197,6 +197,22 @@ class GrdbStorage {
             }
         }
 
+        migrator.registerMigration("renameDaiCoinToSai") { db in
+            guard let wallet = try EnabledWallet.filter(EnabledWallet.Columns.coinId == "DAI").fetchOne(db) else {
+                return
+            }
+
+            let newWallet = EnabledWallet(
+                    coinId: "SAI",
+                    accountId: wallet.accountId,
+                    derivation: wallet.derivation,
+                    syncMode: wallet.syncMode
+            )
+
+            try wallet.delete(db)
+            try newWallet.save(db)
+        }
+
         return migrator
     }
 

@@ -42,6 +42,9 @@ class RateManager {
         if coinCode == "HOT" {
             return "HOLO"
         }
+        if coinCode == "SAI" {
+            return "DAI"
+        }
 
         return coinCode
     }
@@ -49,6 +52,9 @@ class RateManager {
     private func unconverted(coinCode: String) -> String {
         if coinCode == "HOLO" {
             return "HOT"
+        }
+        if coinCode == "DAI" {
+            return "SAI"
         }
 
         return coinCode
