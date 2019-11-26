@@ -23,7 +23,7 @@ extension ManageWalletsRouter: IManageWalletsRouter {
 
 extension ManageWalletsRouter {
 
-    static func module() -> UIViewController {
+    static func module(presentationMode: ManageWalletsModule.PresentationMode) -> UIViewController {
         let router = ManageWalletsRouter()
         let interactor = ManageWalletsInteractor(
                 appConfigProvider: App.shared.appConfigProvider,
@@ -34,14 +34,17 @@ extension ManageWalletsRouter {
                 predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager,
                 coinSettingsManager: App.shared.coinSettingsManager
         )
-        let presenter = ManageWalletsPresenter(interactor: interactor, router: router)
+        let presenter = ManageWalletsPresenter(presentationMode: presentationMode, interactor: interactor, router: router)
         let viewController = ManageWalletsViewController(delegate: presenter)
 
         interactor.delegate = presenter
         presenter.view = viewController
         router.viewController = viewController
 
-        return WalletNavigationController(rootViewController: viewController)
+        switch presentationMode {
+        case .presented: return WalletNavigationController(rootViewController: viewController)
+        case .pushed: return viewController
+        }
     }
 
 }

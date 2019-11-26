@@ -1,4 +1,5 @@
 protocol IManageWalletsView: class {
+    func setCloseButton(visible: Bool)
     func set(featuredViewItems: [CoinToggleViewItem], viewItems: [CoinToggleViewItem])
 
     func showNoAccount(coin: Coin, predefinedAccountType: PredefinedAccountType)
@@ -68,6 +69,15 @@ enum CoinToggleViewItemState: CustomStringConvertible {
         case .toggleHidden: return "hidden"
         case .toggleVisible(let enabled): return "visible_\(enabled)"
         }
+    }
+
+}
+
+class ManageWalletsModule {
+
+    enum PresentationMode {
+        case presented
+        case pushed
     }
 
 }
