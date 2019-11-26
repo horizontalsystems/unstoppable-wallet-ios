@@ -14,6 +14,8 @@ class ManageWalletsViewController: WalletViewController {
         self.delegate = delegate
 
         super.init()
+
+        hidesBottomBarWhenPushed = true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -24,8 +26,6 @@ class ManageWalletsViewController: WalletViewController {
         super.viewDidLoad()
 
         title = "manage_coins.title".localized
-
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapCloseButton))
 
         tableView.registerCell(forClass: CoinToggleCell.self)
         tableView.sectionDataSource = self
@@ -97,6 +97,14 @@ extension ManageWalletsViewController: SectionsDataSource {
 }
 
 extension ManageWalletsViewController: IManageWalletsView {
+
+    func setCloseButton(visible: Bool) {
+        if visible {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapCloseButton))
+        } else {
+            navigationItem.leftBarButtonItem = nil
+        }
+    }
 
     func set(featuredViewItems: [CoinToggleViewItem], viewItems: [CoinToggleViewItem]) {
         self.featuredViewItems = featuredViewItems

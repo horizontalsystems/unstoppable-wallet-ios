@@ -11,7 +11,7 @@ extension MainSettingsRouter: IMainSettingsRouter {
     }
 
     func showManageCoins() {
-        viewController?.present(ManageWalletsRouter.module(), animated: true)
+        viewController?.navigationController?.pushViewController(ManageWalletsRouter.module(presentationMode: .pushed), animated: true)
     }
 
     func showExperimentalFeatures() {

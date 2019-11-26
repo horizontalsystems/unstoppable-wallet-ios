@@ -1,12 +1,14 @@
 class ManageWalletsPresenter {
     weak var view: IManageWalletsView?
 
+    private let presentationMode: ManageWalletsModule.PresentationMode
     private let interactor: IManageWalletsInteractor
     private let router: IManageWalletsRouter
 
     private var wallets = [Coin: Wallet]()
 
-    init(interactor: IManageWalletsInteractor, router: IManageWalletsRouter) {
+    init(presentationMode: ManageWalletsModule.PresentationMode, interactor: IManageWalletsInteractor, router: IManageWalletsRouter) {
+        self.presentationMode = presentationMode
         self.interactor = interactor
         self.router = router
     }
@@ -53,6 +55,8 @@ class ManageWalletsPresenter {
 extension ManageWalletsPresenter: IManageWalletsViewDelegate {
 
     func onLoad() {
+        view?.setCloseButton(visible: presentationMode == .presented)
+
         for wallet in interactor.wallets {
             wallets[wallet.coin] = wallet
         }
