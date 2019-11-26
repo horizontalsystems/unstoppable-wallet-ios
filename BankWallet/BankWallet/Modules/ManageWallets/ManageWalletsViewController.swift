@@ -49,7 +49,15 @@ class ManageWalletsViewController: WalletViewController {
 
     private func rows(viewItems: [CoinToggleViewItem]) -> [RowProtocol] {
         viewItems.enumerated().map { (index, viewItem) in
-            Row<CoinToggleCell>(
+            var action: ((CoinToggleCell) -> ())?
+
+            if case .toggleHidden = viewItem.state {
+                action = { [weak self] _ in
+                    self?.delegate.onSelect(viewItem: viewItem)
+                }
+            }
+
+            return Row<CoinToggleCell>(
                     id: "coin_\(viewItem.coin.id)",
                     hash: "coin_\(viewItem.state)",
                     height: .heightDoubleLineCell,
@@ -67,9 +75,7 @@ class ManageWalletsViewController: WalletViewController {
                             }
                         }
                     },
-                    action: { [weak self] _ in
-                        self?.delegate.onSelect(viewItem: viewItem)
-                    }
+                    action: action
             )
         }
     }
