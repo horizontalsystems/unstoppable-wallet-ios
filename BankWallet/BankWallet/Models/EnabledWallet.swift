@@ -4,10 +4,10 @@ class EnabledWallet: Record {
     let coinId: String
     let accountId: String
 
-    var derivation: MnemonicDerivation?
-    var syncMode: SyncMode?
+    var derivation: String?
+    var syncMode: String?
 
-    init(coinId: String, accountId: String, derivation: MnemonicDerivation?, syncMode: SyncMode?) {
+    init(coinId: String, accountId: String, derivation: String?, syncMode: String?) {
         self.coinId = coinId
         self.accountId = accountId
 
@@ -28,14 +28,8 @@ class EnabledWallet: Record {
     required init(row: Row) {
         coinId = row[Columns.coinId]
         accountId = row[Columns.accountId]
-
-        if let rawSyncMode: String = row[Columns.syncMode] {
-            syncMode = SyncMode(rawValue: rawSyncMode)
-        }
-
-        if let rawDerivation: String = row[Columns.derivation] {
-            derivation = MnemonicDerivation(rawValue: rawDerivation)
-        }
+        derivation = row[Columns.derivation]
+        syncMode = row[Columns.syncMode]
 
         super.init(row: row)
     }
@@ -43,9 +37,8 @@ class EnabledWallet: Record {
     override func encode(to container: inout PersistenceContainer) {
         container[Columns.coinId] = coinId
         container[Columns.accountId] = accountId
-
-        container[Columns.syncMode] = syncMode?.rawValue
-        container[Columns.derivation] = derivation?.rawValue
+        container[Columns.derivation] = derivation
+        container[Columns.syncMode] = syncMode
     }
 
 }
