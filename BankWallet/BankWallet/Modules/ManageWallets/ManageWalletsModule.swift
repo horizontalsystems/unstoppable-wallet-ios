@@ -15,9 +15,8 @@ protocol IManageWalletsViewDelegate {
 
     func onTapCloseButton()
 
-    func didTapNew()
-    func didTapRestore()
-    func didCancelCreate()
+    func onSelectNewAccount(predefinedAccountType: PredefinedAccountType)
+    func onSelectRestoreAccount(predefinedAccountType: PredefinedAccountType)
 }
 
 protocol IManageWalletsInteractor {
@@ -25,14 +24,13 @@ protocol IManageWalletsInteractor {
     var featuredCoins: [Coin] { get }
     var accounts: [Account] { get }
     var wallets: [Wallet] { get }
-    func wallet(coin: Coin) -> Wallet?
 
     func save(wallet: Wallet)
     func delete(wallet: Wallet)
 
     func createAccount(predefinedAccountType: PredefinedAccountType) throws -> Account
     func createRestoredAccount(accountType: AccountType) -> Account
-    func createWallet(coin: Coin, account: Account) -> Wallet
+    func save(account: Account)
 
     func coinSettingsToRequest(coin: Coin, accountOrigin: AccountOrigin) -> CoinSettings
     func coinSettingsToSave(coin: Coin, accountOrigin: AccountOrigin, requestedCoinSettings: CoinSettings) -> CoinSettings

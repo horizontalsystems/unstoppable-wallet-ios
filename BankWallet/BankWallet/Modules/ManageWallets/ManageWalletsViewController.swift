@@ -107,14 +107,10 @@ extension ManageWalletsViewController: IManageWalletsView {
 
     func showNoAccount(coin: Coin, predefinedAccountType: PredefinedAccountType) {
         let controller = ManageWalletsNoAccountViewController(coin: coin, predefinedAccountType: predefinedAccountType, onSelectNew: { [weak self] in
-            self?.delegate.didTapNew()
+            self?.delegate.onSelectNewAccount(predefinedAccountType: predefinedAccountType)
         }, onSelectRestore: { [weak self] in
-            self?.delegate.didTapRestore()
+            self?.delegate.onSelectRestoreAccount(predefinedAccountType: predefinedAccountType)
         })
-
-        controller.onDismiss = { [weak self] _ in
-            self?.delegate.didCancelCreate()
-        }
 
         present(controller, animated: true)
     }

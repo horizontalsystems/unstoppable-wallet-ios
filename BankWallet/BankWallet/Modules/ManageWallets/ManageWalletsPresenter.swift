@@ -41,14 +41,12 @@ class ManageWalletsPresenter {
         wallets[coin] = wallet
     }
 
-    //    private func enable(item: ManageWalletItem) {
-//        if let wallet = interactor.wallet(coin: item.coin) {
-//            item.wallet = wallet
-//        } else if let predefinedAccountType = interactor.predefinedAccountType(coin: item.coin) {
-//            currentItem = item
-//            view?.showNoAccount(coin: item.coin, predefinedAccountType: predefinedAccountType)
-//        }
-//    }
+    private func handleCreated(account: Account) {
+        interactor.save(account: account)
+
+        syncViewItems()
+        view?.showSuccess()
+    }
 
 }
 
@@ -90,38 +88,25 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
     }
 
     func onSelect(viewItem: CoinToggleViewItem) {
-
+        view?.showNoAccount(coin: viewItem.coin, predefinedAccountType: viewItem.coin.type.predefinedAccountType)
     }
 
     func onTapCloseButton() {
         router.close()
     }
 
-    func didTapNew() {
-//        guard let currentItem = currentItem else {
-//            return
-//        }
-//
-//        do {
-//            let account = try interactor.createAccount(defaultAccountType: currentItem.coin.type.defaultAccountType)
-//            currentItem.wallet = interactor.createWallet(coin: currentItem.coin, account: account)
-//            view?.showSuccess()
-//        } catch {
-//            view?.updateUI()
-//            view?.show(error: error)
-//        }
+    func onSelectNewAccount(predefinedAccountType: PredefinedAccountType) {
+        do {
+            let account = try interactor.createAccount(predefinedAccountType: predefinedAccountType)
+            handleCreated(account: account)
+        } catch {
+            syncViewItems()
+            view?.show(error: error)
+        }
     }
 
-    func didTapRestore() {
-//        guard let currentItem = currentItem else {
-//            return
-//        }
-//
-//        router.showRestore(defaultAccountType: currentItem.coin.type.defaultAccountType, delegate: self)
-    }
-
-    func didCancelCreate() {
-//        view?.updateUI()
+    func onSelectRestoreAccount(predefinedAccountType: PredefinedAccountType) {
+        router.showRestore(predefinedAccountType: predefinedAccountType, delegate: self)
     }
 
 }
@@ -141,6 +126,15 @@ extension ManageWalletsPresenter: ICoinSettingsDelegate {
 
     func onCancelSelectingCoinSettings() {
         syncViewItems()
+    }
+
+}
+
+extension ManageWalletsPresenter: IRestoreAccountTypeDelegate {
+
+    func didRestore(accountType: AccountType) {
+        let account = interactor.createRestoredAccount(accountType: accountType)
+        handleCreated(account: account)
     }
 
 }
