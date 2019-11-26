@@ -20,28 +20,30 @@ class GrdbStorage {
         var migrator = DatabaseMigrator()
 
         migrator.registerMigration("createAccountRecordsTable") { db in
-            try db.create(table: AccountRecord.databaseTableName) { t in
-                t.column(AccountRecord.Columns.id.name, .text).notNull()
-                t.column(AccountRecord.Columns.name.name, .text).notNull()
-                t.column(AccountRecord.Columns.type.name, .text).notNull()
-                t.column(AccountRecord.Columns.origin.name, .text).notNull()
-                t.column(AccountRecord.Columns.backedUp.name, .boolean).notNull()
-                t.column(AccountRecord.Columns.wordsKey.name, .text)
-                t.column(AccountRecord.Columns.saltKey.name, .text)
-                t.column(AccountRecord.Columns.dataKey.name, .text)
-                t.column(AccountRecord.Columns.eosAccount.name, .text)
+            try db.create(table: AccountRecord_v_0_10.databaseTableName) { t in
+                t.column(AccountRecord_v_0_10.Columns.id.name, .text).notNull()
+                t.column(AccountRecord_v_0_10.Columns.name.name, .text).notNull()
+                t.column(AccountRecord_v_0_10.Columns.type.name, .integer).notNull()
+                t.column(AccountRecord_v_0_10.Columns.backedUp.name, .boolean).notNull()
+                t.column(AccountRecord_v_0_10.Columns.defaultSyncMode.name, .text)
+                t.column(AccountRecord_v_0_10.Columns.wordsKey.name, .text)
+                t.column(AccountRecord_v_0_10.Columns.derivation.name, .integer)
+                t.column(AccountRecord_v_0_10.Columns.saltKey.name, .text)
+                t.column(AccountRecord_v_0_10.Columns.dataKey.name, .text)
+                t.column(AccountRecord_v_0_10.Columns.eosAccount.name, .text)
 
                 t.primaryKey([
-                    AccountRecord.Columns.id.name
+                    AccountRecord_v_0_10.Columns.id.name
                 ], onConflict: .replace)
             }
         }
 
         migrator.registerMigration("createEnabledWalletsTable") { db in
-            try db.create(table: EnabledWallet.databaseTableName) { t in
+            try db.create(table: EnabledWallet_v_0_10.databaseTableName) { t in
                 t.column("coinCode", .text).notNull()
-                t.column(EnabledWallet.Columns.accountId.name, .text).notNull()
-                t.column(EnabledWallet.Columns.syncMode.name, .text)
+                t.column(EnabledWallet_v_0_10.Columns.accountId.name, .text).notNull()
+                t.column(EnabledWallet_v_0_10.Columns.syncMode.name, .text)
+                t.column(EnabledWallet_v_0_10.Columns.walletOrder.name, .integer).notNull()
 
                 t.primaryKey(["coinCode", EnabledWallet.Columns.accountId.name], onConflict: .replace)
             }
@@ -65,8 +67,11 @@ class GrdbStorage {
             }
 
             let wordsKey = "mnemonic_\(uuid)_words"
-            let accountRecord = AccountRecord(id: uuid, name: uuid, type: "mnemonic", origin: "restored", backedUp: isBackedUp, wordsKey: wordsKey, saltKey: nil, dataKey: nil, eosAccount: nil)
-            try accountRecord.insert(db)
+
+            try db.execute(sql: """
+                                INSERT INTO \(AccountRecord_v_0_10.databaseTableName)(`\(AccountRecord_v_0_10.Columns.id.name)`, `\(AccountRecord_v_0_10.Columns.name.name)`, `\(AccountRecord_v_0_10.Columns.type.name)`, `\(AccountRecord_v_0_10.Columns.backedUp.name)`, `\(AccountRecord_v_0_10.Columns.defaultSyncMode.name)`, `\(AccountRecord_v_0_10.Columns.wordsKey.name)`, `\(AccountRecord_v_0_10.Columns.derivation.name)`, `\(AccountRecord_v_0_10.Columns.saltKey.name)`, `\(AccountRecord_v_0_10.Columns.dataKey.name)`, `\(AccountRecord_v_0_10.Columns.eosAccount.name)`)
+                                SELECT '\(uuid)', '\(uuid)', 'mnemonic', 'created', '\(isBackedUp)', '\(syncMode.rawValue)', '\(wordsKey)', 'bip44', NULL, NULL, NULL FROM \(AccountRecord.databaseTableName)
+                                """)
 
             try? keychain.set(authData.words.joined(separator: ","), key: wordsKey)
 
@@ -74,9 +79,9 @@ class GrdbStorage {
                 return
             }
 
-            let accountId = accountRecord.id
+            let accountId = uuid
             try db.execute(sql: """
-                                INSERT INTO \(EnabledWallet.databaseTableName)(`coinCode`, `\(EnabledWallet.Columns.accountId.name)`, `\(EnabledWallet.Columns.syncMode.name)`, `walletOrder`)
+                                INSERT INTO \(EnabledWallet_v_0_10.databaseTableName)(`coinCode`, `\(EnabledWallet_v_0_10.Columns.accountId.name)`, `\(EnabledWallet_v_0_10.Columns.syncMode.name)`, `\(EnabledWallet_v_0_10.Columns.walletOrder.name)`)
                                 SELECT `coinCode`, '\(accountId)', '\(syncMode)', `coinOrder` FROM enabled_coins
                                 """)
             try db.drop(table: "enabled_coins")
@@ -96,6 +101,73 @@ class GrdbStorage {
             let tempTableName = "enabled_wallets_temp"
 
             try db.create(table: tempTableName) { t in
+                t.column(EnabledWallet_v_0_10.Columns.coinId.name, .text).notNull()
+                t.column(EnabledWallet_v_0_10.Columns.accountId.name, .text).notNull()
+                t.column(EnabledWallet_v_0_10.Columns.syncMode.name, .text)
+                t.column(EnabledWallet_v_0_10.Columns.walletOrder.name, .integer).notNull()
+
+                t.primaryKey([EnabledWallet_v_0_10.Columns.coinId.name, EnabledWallet_v_0_10.Columns.accountId.name], onConflict: .replace)
+            }
+
+            try db.execute(sql: """
+                                INSERT INTO \(tempTableName)(`\(EnabledWallet_v_0_10.Columns.coinId.name)`, `\(EnabledWallet_v_0_10.Columns.accountId.name)`, `\(EnabledWallet_v_0_10.Columns.syncMode.name)`, `\(EnabledWallet_v_0_10.Columns.walletOrder.name)`)
+                                SELECT `coinCode`, `accountId`, `syncMode`, `walletOrder` FROM \(EnabledWallet_v_0_10.databaseTableName)
+                                """)
+
+            try db.drop(table: EnabledWallet_v_0_10.databaseTableName)
+            try db.rename(table: tempTableName, to: EnabledWallet_v_0_10.databaseTableName)
+        }
+
+        migrator.registerMigration("moveCoinSettingsFromAccountToWallet") { db in
+            var oldDerivation: String?
+            var oldSyncMode: String?
+
+            let oldAccounts = try AccountRecord_v_0_10.fetchAll(db)
+
+            try db.drop(table: AccountRecord_v_0_10.databaseTableName)
+
+            try db.create(table: AccountRecord.databaseTableName) { t in
+                t.column(AccountRecord.Columns.id.name, .text).notNull()
+                t.column(AccountRecord.Columns.name.name, .text).notNull()
+                t.column(AccountRecord.Columns.type.name, .text).notNull()
+                t.column(AccountRecord.Columns.origin.name, .text).notNull()
+                t.column(AccountRecord.Columns.backedUp.name, .boolean).notNull()
+                t.column(AccountRecord.Columns.wordsKey.name, .text)
+                t.column(AccountRecord.Columns.saltKey.name, .text)
+                t.column(AccountRecord.Columns.dataKey.name, .text)
+                t.column(AccountRecord.Columns.eosAccount.name, .text)
+
+                t.primaryKey([AccountRecord.Columns.id.name], onConflict: .replace)
+            }
+
+            for oldAccount in oldAccounts {
+                let origin = oldAccount.defaultSyncMode == "new" ? "created" : "restored"
+
+                let newAccount = AccountRecord(
+                        id: oldAccount.id,
+                        name: oldAccount.name,
+                        type: oldAccount.type,
+                        origin: origin,
+                        backedUp: oldAccount.backedUp,
+                        wordsKey: oldAccount.wordsKey,
+                        saltKey: oldAccount.saltKey,
+                        dataKey: oldAccount.dataKey,
+                        eosAccount: oldAccount.eosAccount
+                )
+
+                try newAccount.insert(db)
+
+                if let defaultSyncMode = oldAccount.defaultSyncMode, let derivation = oldAccount.derivation {
+                    oldDerivation = derivation
+                    oldSyncMode = defaultSyncMode
+                }
+            }
+
+            let oldWallets = try EnabledWallet_v_0_10.fetchAll(db)
+
+            try db.drop(table: EnabledWallet_v_0_10.databaseTableName)
+
+            try db.create(table: EnabledWallet.databaseTableName) { t in
                 t.column(EnabledWallet.Columns.coinId.name, .text).notNull()
                 t.column(EnabledWallet.Columns.accountId.name, .text).notNull()
                 t.column(EnabledWallet.Columns.derivation.name, .text)
@@ -104,13 +176,27 @@ class GrdbStorage {
                 t.primaryKey([EnabledWallet.Columns.coinId.name, EnabledWallet.Columns.accountId.name], onConflict: .replace)
             }
 
-            try db.execute(sql: """
-                                INSERT INTO \(tempTableName)(`\(EnabledWallet.Columns.coinId.name)`, `\(EnabledWallet.Columns.accountId.name)`, `\(EnabledWallet.Columns.syncMode.name)`)
-                                SELECT `coinCode`, `accountId`, `syncMode` FROM \(EnabledWallet.databaseTableName)
-                                """)
+            for oldWallet in oldWallets {
+                var derivation: String?
+                var syncMode: String?
 
-            try db.drop(table: EnabledWallet.databaseTableName)
-            try db.rename(table: tempTableName, to: EnabledWallet.databaseTableName)
+                if let oldDerivation = oldDerivation, oldWallet.coinId == "BTC" {
+                    derivation = oldDerivation
+                }
+
+                if let oldSyncMode = oldSyncMode, (oldWallet.coinId == "BTC" || oldWallet.coinId == "BCH" || oldWallet.coinId == "DASH") {
+                    syncMode = oldSyncMode
+                }
+
+                let newWallet = EnabledWallet(
+                        coinId: oldWallet.coinId,
+                        accountId: oldWallet.accountId,
+                        derivation: derivation,
+                        syncMode: syncMode
+                )
+
+                try newWallet.insert(db)
+            }
         }
 
         return migrator
