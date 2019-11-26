@@ -4,14 +4,16 @@ class ManageWalletsInteractor {
     private let appConfigProvider: IAppConfigProvider
     private let walletManager: IWalletManager
     private let walletFactory: IWalletFactory
+    private let accountManager: IAccountManager
     private let accountCreator: IAccountCreator
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let coinSettingsManager: ICoinSettingsManager
 
-    init(appConfigProvider: IAppConfigProvider, walletManager: IWalletManager, walletFactory: IWalletFactory, accountCreator: IAccountCreator, predefinedAccountTypeManager: IPredefinedAccountTypeManager, coinSettingsManager: ICoinSettingsManager) {
+    init(appConfigProvider: IAppConfigProvider, walletManager: IWalletManager, walletFactory: IWalletFactory, accountManager: IAccountManager, accountCreator: IAccountCreator, predefinedAccountTypeManager: IPredefinedAccountTypeManager, coinSettingsManager: ICoinSettingsManager) {
         self.appConfigProvider = appConfigProvider
         self.walletManager = walletManager
         self.walletFactory = walletFactory
+        self.accountManager = accountManager
         self.accountCreator = accountCreator
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
         self.coinSettingsManager = coinSettingsManager
@@ -30,15 +32,11 @@ extension ManageWalletsInteractor: IManageWalletsInteractor {
     }
 
     var accounts: [Account] {
-        App.shared.accountManager.accounts
+        accountManager.accounts
     }
 
     var wallets: [Wallet] {
         walletManager.wallets
-    }
-
-    func wallet(coin: Coin) -> Wallet? {
-        walletManager.wallet(coin: coin)
     }
 
     func save(wallet: Wallet) {
@@ -57,8 +55,8 @@ extension ManageWalletsInteractor: IManageWalletsInteractor {
         accountCreator.restoredAccount(accountType: accountType)
     }
 
-    func createWallet(coin: Coin, account: Account) -> Wallet {
-        walletFactory.wallet(coin: coin, account: account, coinSettings: [:])
+    func save(account: Account) {
+        accountManager.save(account: account)
     }
 
     func coinSettingsToRequest(coin: Coin, accountOrigin: AccountOrigin) -> CoinSettings {

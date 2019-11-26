@@ -29,6 +29,7 @@ extension ManageWalletsRouter {
                 appConfigProvider: App.shared.appConfigProvider,
                 walletManager: App.shared.walletManager,
                 walletFactory: App.shared.walletFactory,
+                accountManager: App.shared.accountManager,
                 accountCreator: App.shared.accountCreator,
                 predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager,
                 coinSettingsManager: App.shared.coinSettingsManager
