@@ -5,9 +5,9 @@ enum MnemonicDerivation: String, CaseIterable {
 
     var title: String {
         switch self {
-        case .bip44: return "BIP-44"
-        case .bip49: return "BIP-49"
-        case .bip84: return "BIP-84"
+        case .bip44: return "BIP44"
+        case .bip49: return "BIP49"
+        case .bip84: return "BIP84"
         }
     }
 
