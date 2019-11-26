@@ -145,7 +145,7 @@ extension UIButton {
         button.titleLabel?.font = .appHeadline2
         button.setTitleColor(.black, for: .normal)
         button.setTitleColor(.appGray50, for: .disabled)
-        button.setBackgroundColor(color: .appJacob, gradient: (colors: [UIColor(white: 1, alpha: 0.5), UIColor(white: 1, alpha: 0)], height: .heightButton), forState: .normal)
+        button.setBackgroundColor(color: .appJacob, gradient: (colors: [UIColor(white: 1, alpha: 0.4), UIColor(white: 1, alpha: 0)], height: .heightButton), forState: .normal)
         button.setBackgroundColor(color: .appJacob, forState: .highlighted)
         button.setBackgroundColor(color: .appSteel20, forState: .disabled)
         button.cornerRadius = .cornerRadius8
@@ -159,7 +159,7 @@ extension UIButton {
         button.titleLabel?.font = .appHeadline2
         button.setTitleColor(.black, for: .normal)
         button.setTitleColor(.appGray50, for: .disabled)
-        button.setBackgroundColor(color: .appRemus, gradient: (colors: [UIColor(white: 1, alpha: 0.5), UIColor(white: 1, alpha: 0)], height: .heightButton), forState: .normal)
+        button.setBackgroundColor(color: .appRemus, gradient: (colors: [UIColor(white: 1, alpha: 0.4), UIColor(white: 1, alpha: 0)], height: .heightButton), forState: .normal)
         button.setBackgroundColor(color: .appRemus, forState: .highlighted)
         button.setBackgroundColor(color: .appSteel20, forState: .disabled)
         button.cornerRadius = .cornerRadius8
@@ -173,7 +173,7 @@ extension UIButton {
         button.titleLabel?.font = .appHeadline2
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.appGray50, for: .disabled)
-        button.setBackgroundColor(color: .appLucian, gradient: (colors: [UIColor(white: 1, alpha: 0.5), UIColor(white: 1, alpha: 0)], height: .heightButton), forState: .normal)
+        button.setBackgroundColor(color: .appLucian, gradient: (colors: [UIColor(white: 1, alpha: 0.4), UIColor(white: 1, alpha: 0)], height: .heightButton), forState: .normal)
         button.setBackgroundColor(color: .appLucian, forState: .highlighted)
         button.setBackgroundColor(color: .appSteel20, forState: .disabled)
         button.cornerRadius = .cornerRadius8
