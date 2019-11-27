@@ -62,7 +62,7 @@ class Erc20Adapter: EthereumBaseAdapter {
 
     override func sendSingle(to address: String, value: String, gasPrice: Int, gasLimit: Int) -> Single<Void> {
         do {
-            return try erc20Kit.sendSingle(to: address, value: value, gasPrice: gasPrice, gasLimit: 30000)
+            return try erc20Kit.sendSingle(to: address, value: value, gasPrice: gasPrice, gasLimit: gasLimit)
                     .map { _ in ()}
                     .catchError { [weak self] error in
                         Single.error(self?.createSendError(from: error) ?? error)
