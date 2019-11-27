@@ -6,9 +6,9 @@ import SnapKit
 class TransactionStatusItemView: BaseActionItemView {
     private let titleLabel = UILabel()
 
-    private let completedWrapper = UIView()
-    private let completedLabel = UILabel()
-    private let completedIcon = UIImageView()
+    private let finalStatusWrapper = UIView()
+    private let finalStatusLabel = UILabel()
+    private let finalStatusIcon = UIImageView()
 
     private let processingWrapper = UIView()
     private let processingLabel = UILabel()
@@ -31,31 +31,27 @@ class TransactionStatusItemView: BaseActionItemView {
 
         titleLabel.text = "tx_info.status".localized
         titleLabel.font = TransactionInfoTheme.itemTitleFont
-        titleLabel.textColor = TransactionInfoTheme.itemTitleColor
 
-        addSubview(completedWrapper)
-        completedWrapper.snp.makeConstraints { maker in
+        addSubview(finalStatusWrapper)
+        finalStatusWrapper.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.trailing.equalToSuperview().inset(TransactionInfoTheme.regularMargin)
         }
 
-        completedWrapper.addSubview(completedLabel)
-        completedLabel.snp.makeConstraints { maker in
+        finalStatusWrapper.addSubview(finalStatusLabel)
+        finalStatusLabel.snp.makeConstraints { maker in
             maker.leading.top.bottom.equalToSuperview()
         }
 
-        completedLabel.text = "tx_info.status.confirmed".localized
-        completedLabel.textColor = TransactionInfoTheme.completeStatusColor
-        completedLabel.font = TransactionInfoTheme.statusTextFont
+        finalStatusLabel.font = TransactionInfoTheme.statusTextFont
+        finalStatusLabel.textColor = .crypto_Bars_Dark
 
-        completedWrapper.addSubview(completedIcon)
-        completedIcon.snp.makeConstraints { maker in
-            maker.leading.equalTo(completedLabel.snp.trailing).offset(TransactionInfoTheme.smallMargin)
+        finalStatusWrapper.addSubview(finalStatusIcon)
+        finalStatusIcon.snp.makeConstraints { maker in
+            maker.leading.equalTo(finalStatusLabel.snp.trailing).offset(TransactionInfoTheme.smallMargin)
             maker.centerY.equalToSuperview()
             maker.trailing.equalToSuperview()
         }
-
-        completedIcon.image = UIImage(named: "Transaction Info Completed Icon")?.tinted(with: .cryptoGreen)
 
         addSubview(processingWrapper)
         processingWrapper.snp.makeConstraints { maker in
@@ -69,7 +65,7 @@ class TransactionStatusItemView: BaseActionItemView {
             maker.centerY.equalToSuperview()
         }
 
-        processingLabel.textColor = TransactionInfoTheme.completeStatusColor
+        processingLabel.textColor = .crypto_Bars_Dark
         processingLabel.font = TransactionInfoTheme.statusTextFont
 
         processingWrapper.addSubview(barsProgressView)
@@ -89,18 +85,30 @@ class TransactionStatusItemView: BaseActionItemView {
             return
         }
 
-        if let progress = item.progress {
+        if item.failed {
+            processingWrapper.isHidden = true
+            finalStatusWrapper.isHidden = false
+
+            finalStatusIcon.image = UIImage(named: "Transaction Info Failed Icon")?.tinted(with: .appLucian)
+
+            finalStatusLabel.text = "tx_info.status.failed".localized
+
+        } else if let progress = item.progress {
             processingWrapper.isHidden = false
-            completedWrapper.isHidden = true
+            finalStatusWrapper.isHidden = true
 
             processingLabel.text = item.incoming ? "transactions.receiving".localized : "transactions.sending".localized
 
             barsProgressView.set(filledColor: item.incoming ? .appGreenD : .appYellowD)
             barsProgressView.set(progress: progress)
+
         } else {
-            completedWrapper.isHidden = false
+            finalStatusWrapper.isHidden = false
             processingWrapper.isHidden = true
 
+            finalStatusIcon.image = UIImage(named: "Transaction Info Completed Icon")?.tinted(with: .cryptoGreen)
+
+            finalStatusLabel.text = "tx_info.status.confirmed".localized
         }
     }
 

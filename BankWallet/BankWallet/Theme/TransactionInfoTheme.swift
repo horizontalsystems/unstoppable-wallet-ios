@@ -20,7 +20,6 @@ class TransactionInfoTheme {
     static let coinIconLeftMargin: CGFloat = 12
     static let itemTitleFont: UIFont = .appSubhead2
     static let itemNoteFont: UIFont = .appSubhead2
-    static var completeStatusColor: UIColor { return .crypto_Bars_Dark }
     static let itemTitleColor = UIColor.cryptoGray
     static let itemNoteColor = UIColor.cryptoYellow
     static let itemValueFont: UIFont = .appSubhead1
