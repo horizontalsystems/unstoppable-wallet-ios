@@ -2,6 +2,7 @@ import Foundation
 import DeepDiff
 
 enum TransactionStatus {
+    case failed
     case pending
     case processing(progress: Double)
     case completed

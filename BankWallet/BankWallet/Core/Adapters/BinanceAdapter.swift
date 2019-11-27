@@ -40,6 +40,7 @@ class BinanceAdapter {
                 amount: amount,
                 fee: BinanceAdapter.transferFee,
                 date: transaction.date,
+                failed: false,
                 from: [from],
                 to: [to]
         )

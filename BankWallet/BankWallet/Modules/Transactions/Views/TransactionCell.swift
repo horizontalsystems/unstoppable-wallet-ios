@@ -11,6 +11,7 @@ class TransactionCell: AppCell {
 
     private let processingView = TransactionProcessingView()
     private let completedView = TransactionCompletedView()
+    private let failedView = TransactionFailedView()
 
     private let currencyAmountLabel = UILabel()
     private let lockImageView = UIImageView()
@@ -83,6 +84,12 @@ class TransactionCell: AppCell {
             maker.leading.equalTo(inOutImageView.snp.trailing).offset(CGFloat.margin3x)
             maker.centerY.equalTo(amountLabel)
         }
+
+        contentView.addSubview(failedView)
+        failedView.snp.makeConstraints { maker in
+            maker.leading.equalTo(inOutImageView.snp.trailing).offset(CGFloat.margin3x)
+            maker.centerY.equalTo(amountLabel)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -125,12 +132,20 @@ class TransactionCell: AppCell {
         }
 
         switch status {
+        case .failed:
+            failedView.isHidden = false
+
+            processingView.stopAnimating()
+            processingView.isHidden = true
+            completedView.isHidden = true
+
         case .pending:
             processingView.bind(incoming: item.incoming, progress: 0)
             processingView.startAnimating()
             processingView.isHidden = false
 
             completedView.isHidden = true
+            failedView.isHidden = true
 
         case .processing(let progress):
             processingView.bind(incoming: item.incoming, progress: progress)
@@ -138,6 +153,7 @@ class TransactionCell: AppCell {
             processingView.isHidden = false
 
             completedView.isHidden = true
+            failedView.isHidden = true
 
         case .completed:
             completedView.bind(date: item.date)
@@ -145,6 +161,7 @@ class TransactionCell: AppCell {
 
             processingView.stopAnimating()
             processingView.isHidden = true
+            failedView.isHidden = true
         }
     }
 

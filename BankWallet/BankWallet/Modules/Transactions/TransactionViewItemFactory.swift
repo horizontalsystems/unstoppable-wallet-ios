@@ -22,7 +22,9 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
 
         var status: TransactionStatus = .pending
 
-        if let blockHeight = record.blockHeight, let lastBlockHeight = lastBlockHeight {
+        if item.record.failed {
+            status = .failed
+        } else if let blockHeight = record.blockHeight, let lastBlockHeight = lastBlockHeight {
             let threshold = threshold ?? 1
             let confirmations = lastBlockHeight - blockHeight + 1
 

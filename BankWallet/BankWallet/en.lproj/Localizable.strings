@@ -180,6 +180,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "transactions.empty_text" = "You don't have any pending or past transactions yet";
 "transactions.pending" = "Pending";
 "transactions.receiving" = "Receiving";
+"transactions.failed" = "Failed";
 "transactions.sending" = "Sending";
 
 // Transaction Info

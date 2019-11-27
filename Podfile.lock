@@ -41,7 +41,7 @@ PODS:
     - HSHDWalletKit (~> 1.2)
     - ObjectMapper (~> 3.0)
     - RxSwift (~> 5.0)
-  - BlueSocket (1.0.50)
+  - BlueSocket (1.0.52)
   - CryptoBLS.swift (1.1)
   - CryptoX11.swift (1.1)
   - Cuckoo (1.3.0):
@@ -279,10 +279,10 @@ CHECKOUT OPTIONS:
     :commit: 4970283803a29c25ce8e8f51ddd137dee224e185
     :git: https://github.com/horizontalsystems/eos-kit-ios/
   Erc20Kit.swift:
-    :commit: ac01c20c533b4d94dfd1c96644ccf514aa3f3682
+    :commit: b01ccd04b2decec921e9e437cbf36a25e3cc3e9d
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
   EthereumKit.swift:
-    :commit: ac01c20c533b4d94dfd1c96644ccf514aa3f3682
+    :commit: b01ccd04b2decec921e9e437cbf36a25e3cc3e9d
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
   FeeRateKit.swift:
     :commit: 1f662230843a71b921b11f63f275c6211e60ee14
@@ -315,7 +315,7 @@ SPEC CHECKSUMS:
   BitcoinCashKit.swift: 653ced2f22b379d6f2371980f1a107f2c870a140
   BitcoinCore.swift: 3f0f51e11cc92eb0167e95768af9c49d01cfe16c
   BitcoinKit.swift: 200b3ee17e5a7f22f0dc5b2ee73dc3a03ec205f3
-  BlueSocket: bdcd73947c651d5abdda3212ecc847eb0c522877
+  BlueSocket: 1acd943acb07b55905291d608649fcfbf8cbd57d
   CryptoBLS.swift: 89828d8e3013e45ce4f913d26008b91fc5d0f3a0
   CryptoX11.swift: 8f0ca5fbfefbe49126220ce23b5de106928cf0f0
   Cuckoo: 4045c5a8ce378c919c20c5ff3d6dd11ded0ec699

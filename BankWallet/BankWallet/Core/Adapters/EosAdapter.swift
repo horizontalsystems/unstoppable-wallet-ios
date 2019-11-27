@@ -32,6 +32,7 @@ class EosAdapter {
                 amount: transaction.quantity.amount * (from.mine ? -1 : 1),
                 fee: nil,
                 date: transaction.date,
+                failed: false,
                 from: [from],
                 to: [to]
         )

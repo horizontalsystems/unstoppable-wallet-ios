@@ -4,7 +4,7 @@ import RxSwift
 class EthereumAdapter: EthereumBaseAdapter {
     static let decimal = 18
 
-    init(ethereumKit: EthereumKit) {
+    init(ethereumKit: EthereumKit.Kit) {
         super.init(ethereumKit: ethereumKit, decimal: EthereumAdapter.decimal)
     }
 
@@ -33,7 +33,7 @@ class EthereumAdapter: EthereumBaseAdapter {
                 amount += transactionAmount
             }
         }
-
+        let failed = (transaction.isError ?? 0) != 0
         return TransactionRecord(
                 transactionHash: transaction.hash,
                 transactionIndex: transaction.transactionIndex ?? 0,
@@ -42,6 +42,7 @@ class EthereumAdapter: EthereumBaseAdapter {
                 amount: amount,
                 fee: transaction.gasUsed.map { Decimal(sign: .plus, exponent: -decimal, significand: Decimal($0 * transaction.gasPrice)) },
                 date: Date(timeIntervalSince1970: transaction.timestamp),
+                failed: failed,
                 from: [from],
                 to: [to]
         )
@@ -64,7 +65,7 @@ class EthereumAdapter: EthereumBaseAdapter {
 extension EthereumAdapter {
 
     static func clear(except excludedWalletIds: [String]) throws {
-        try EthereumKit.clear(exceptFor: excludedWalletIds)
+        try EthereumKit.Kit.clear(exceptFor: excludedWalletIds)
     }
 
 }

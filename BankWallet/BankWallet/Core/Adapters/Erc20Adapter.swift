@@ -4,14 +4,14 @@ import RxSwift
 import class Erc20Kit.TransactionInfo
 
 class Erc20Adapter: EthereumBaseAdapter {
-    private let erc20Kit: Erc20Kit
+    private let erc20Kit: Erc20Kit.Kit
     private let contractAddress: String
     private let fee: Decimal
     private let gasLimit: Int?
     private(set) var minimumRequiredBalance: Decimal
 
-    init(ethereumKit: EthereumKit, contractAddress: String, decimal: Int, fee: Decimal, gasLimit: Int? = nil, minimumRequiredBalance: Decimal) throws {
-        self.erc20Kit = try Erc20Kit.instance(ethereumKit: ethereumKit, contractAddress: contractAddress)
+    init(ethereumKit: EthereumKit.Kit, contractAddress: String, decimal: Int, fee: Decimal, gasLimit: Int? = nil, minimumRequiredBalance: Decimal) throws {
+        self.erc20Kit = try Erc20Kit.Kit.instance(ethereumKit: ethereumKit, contractAddress: contractAddress)
         self.contractAddress = contractAddress
         self.fee = fee
         self.gasLimit = gasLimit
@@ -54,6 +54,7 @@ class Erc20Adapter: EthereumBaseAdapter {
                 amount: amount,
                 fee: nil,
                 date: Date(timeIntervalSince1970: transaction.timestamp),
+                failed: transaction.isError,
                 from: [from],
                 to: [to]
         )
@@ -61,7 +62,7 @@ class Erc20Adapter: EthereumBaseAdapter {
 
     override func sendSingle(to address: String, value: String, gasPrice: Int, gasLimit: Int) -> Single<Void> {
         do {
-            return try erc20Kit.sendSingle(to: address, value: value, gasPrice: gasPrice, gasLimit: gasLimit)
+            return try erc20Kit.sendSingle(to: address, value: value, gasPrice: gasPrice, gasLimit: 30000)
                     .map { _ in ()}
                     .catchError { [weak self] error in
                         Single.error(self?.createSendError(from: error) ?? error)
@@ -83,7 +84,7 @@ class Erc20Adapter: EthereumBaseAdapter {
 extension Erc20Adapter {
 
     static func clear(except excludedWalletIds: [String]) throws {
-        try Erc20Kit.clear(exceptFor: excludedWalletIds)
+        try Erc20Kit.Kit.clear(exceptFor: excludedWalletIds)
     }
 
 }
