@@ -4,13 +4,13 @@ import Erc20Kit
 
 class EthereumKitManager {
     private let appConfigProvider: IAppConfigProvider
-    weak var ethereumKit: EthereumKit?
+    weak var ethereumKit: EthereumKit.Kit?
 
     init(appConfigProvider: IAppConfigProvider) {
         self.appConfigProvider = appConfigProvider
     }
 
-    func ethereumKit(account: Account) throws -> EthereumKit {
+    func ethereumKit(account: Account) throws -> EthereumKit.Kit {
         if let ethereumKit = self.ethereumKit {
             return ethereumKit
         }
@@ -19,7 +19,7 @@ class EthereumKitManager {
             throw AdapterError.unsupportedAccount
         }
 
-        let ethereumKit = try EthereumKit.instance(
+        let ethereumKit = try EthereumKit.Kit.instance(
                 words: words,
                 syncMode: .api,
                 networkType: appConfigProvider.testMode ? .ropsten : .mainNet,

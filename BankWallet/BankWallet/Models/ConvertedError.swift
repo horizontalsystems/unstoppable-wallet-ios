@@ -39,7 +39,7 @@ extension EthereumKit.NetworkError: ConvertibleError {
 
     var convertedError: Error {
         switch self {
-        case .noConnection: return NetworkError.noConnection
+        case .noConnection: return NetworkManager.NetworkError.noConnection
         default: return self
         }
     }
@@ -50,7 +50,7 @@ extension FeeRateKit.NetworkError {
 
     var convertedError: Error {
         switch self {
-        case .noConnection: return NetworkError.noConnection
+        case .noConnection: return NetworkManager.NetworkError.noConnection
         default: return self
         }
     }

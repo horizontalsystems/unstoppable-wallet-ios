@@ -2,11 +2,11 @@ import EthereumKit
 import RxSwift
 
 class EthereumBaseAdapter {
-    let ethereumKit: EthereumKit
+    let ethereumKit: EthereumKit.Kit
 
     let decimal: Int
 
-    init(ethereumKit: EthereumKit, decimal: Int) {
+    init(ethereumKit: EthereumKit.Kit, decimal: Int) {
         self.ethereumKit = ethereumKit
         self.decimal = decimal
     }

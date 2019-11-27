@@ -14,7 +14,7 @@ class TransactionStatusItem: BaseActionItem {
             progress = 0
         case .processing(let progress):
             self.progress = progress
-        case .completed: ()
+        case .completed, .failed: ()
         }
 
         height = TransactionInfoTheme.itemHeight

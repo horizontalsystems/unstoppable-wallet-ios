@@ -8,6 +8,7 @@ struct TransactionRecord {
     let amount: Decimal
     let fee: Decimal?
     let date: Date
+    let failed: Bool
 
     let from: [TransactionAddress]
     let to: [TransactionAddress]
