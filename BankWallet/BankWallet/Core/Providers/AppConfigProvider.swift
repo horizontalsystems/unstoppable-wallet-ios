@@ -102,6 +102,7 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "CRPT",      title: "Crypterium",            code: "CRPT",    decimal: 8,  type: .binance(symbol: "CRPT-8C9")),
         Coin(id: "MCO",       title: "Crypto.com",            code: "MCO",     decimal: 8,  type: CoinType(erc20Address: "0xB63B606Ac810a52cCa15e44bB630fd42D8d1d83d")),
         Coin(id: "CRO",       title: "Crypto.com Chain",      code: "CRO",     decimal: 8,  type: CoinType(erc20Address: "0xA0b73E1Ff0B80914AB6fe0444E65848C4C34450b")),
+        Coin(id: "DAI",       title: "Dai Stablecoin",        code: "DAI",     decimal: 18, type: CoinType(erc20Address: "0x6b175474e89094c44da98b954eedeac495271d0f")),
         Coin(id: "MANA",      title: "Decentraland",          code: "MANA",    decimal: 18, type: CoinType(erc20Address: "0x0F5D2fB29fb7d3CFeE444a200298f468908cC942")),
         Coin(id: "DGD",       title: "Digix DAO",             code: "DGD",     decimal: 9,  type: CoinType(erc20Address: "0xE0B7927c4aF23765Cb51314A0E0521A9645F0E2A")),
         Coin(id: "DGX",       title: "Digix Gold",            code: "DGX",     decimal: 9,  type: CoinType(erc20Address: "0x4f3AfEC4E5a3F2A6a1A411DEF7D7dFe50eE057bF")),
