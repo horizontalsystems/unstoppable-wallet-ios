@@ -9,7 +9,7 @@ protocol IRestoreCoinsViewDelegate {
     func onLoad()
     func onEnable(viewItem: CoinToggleViewItem)
     func onDisable(viewItem: CoinToggleViewItem)
-    func onTapProceedButton()
+    func onTapNextButton()
     func onTapCancelButton()
 }
 

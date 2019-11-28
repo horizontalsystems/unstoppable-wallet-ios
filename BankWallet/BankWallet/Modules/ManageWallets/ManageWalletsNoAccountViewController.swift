@@ -8,7 +8,7 @@ class ManageWalletsNoAccountViewController: WalletActionSheetController {
 
         let titleItem = AlertTitleItem(
                 title: "manage_coins.add_coin.title".localized(coin.title),
-                subtitle: predefinedAccountType.title,
+                subtitle: "manage_coins.add_coin.subtitle".localized(predefinedAccountType.title),
                 icon: UIImage(coin: coin),
                 iconTintColor: AppTheme.coinIconColor,
                 tag: 0,
@@ -17,7 +17,7 @@ class ManageWalletsNoAccountViewController: WalletActionSheetController {
                 }
         )
 
-        let textItem = AlertTextItem(text: "manage_coins.add_coin.text".localized(coin.title, coin.code, predefinedAccountType.coinCodes, predefinedAccountType.title), tag: 1)
+        let textItem = AlertTextItem(text: "manage_coins.add_coin.text".localized(predefinedAccountType.title, coin.title, predefinedAccountType.title, predefinedAccountType.coinCodes), tag: 1)
 
         model.addItemView(titleItem)
         model.addItemView(textItem)

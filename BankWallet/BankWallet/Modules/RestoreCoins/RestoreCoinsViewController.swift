@@ -22,7 +22,7 @@ class RestoreCoinsViewController: WalletViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "select_coins.proceed_button".localized, style: .done, target: self, action: #selector(onTapProceedButton))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "select_coins.next_button".localized, style: .done, target: self, action: #selector(onTapNextButton))
 
         tableView.registerCell(forClass: CoinToggleCell.self)
         tableView.registerHeaderFooter(forClass: TopDescriptionHeaderFooterView.self)
@@ -42,8 +42,8 @@ class RestoreCoinsViewController: WalletViewController {
         tableView.buildSections()
     }
 
-    @objc func onTapProceedButton() {
-        delegate.onTapProceedButton()
+    @objc func onTapNextButton() {
+        delegate.onTapNextButton()
     }
 
     @objc func onTapCancelButton() {

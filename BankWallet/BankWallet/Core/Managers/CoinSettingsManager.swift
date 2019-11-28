@@ -4,6 +4,8 @@ protocol ICoinSettingsManager {
 }
 
 class CoinSettingsManager: ICoinSettingsManager {
+    private let defaultDerivation: MnemonicDerivation = .bip49
+    private let defaultSyncMode: SyncMode = .fast
 
     func coinSettingsToRequest(coin: Coin, accountOrigin: AccountOrigin) -> CoinSettings {
         var coinSettings = CoinSettings()
@@ -11,10 +13,10 @@ class CoinSettingsManager: ICoinSettingsManager {
         for setting in coin.type.settings {
             switch setting {
             case .derivation:
-                coinSettings[.derivation] = MnemonicDerivation.bip44
+                coinSettings[.derivation] = defaultDerivation
             case .syncMode:
                 if accountOrigin == .restored {
-                    coinSettings[.syncMode] = SyncMode.fast
+                    coinSettings[.syncMode] = defaultSyncMode
                 }
             }
         }
