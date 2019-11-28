@@ -11,7 +11,8 @@ class BalancePresenter {
     private let sorter: IBalanceSorter
     private let sortingOnThreshold: Int
 
-    var walletToBackup: Wallet?
+    private var walletToBackup: Wallet?
+    private var expandedWallet: Wallet?
 
     private var items = [BalanceItem]()
     private var viewItems = [BalanceViewItem]()
@@ -78,24 +79,32 @@ class BalancePresenter {
 
         let item = items[index]
         updateBlock(item)
-        viewItems[index] = factory.viewItem(item: item, currency: currency)
+        viewItems[index] = viewItem(item: item)
 
-        view?.set(viewItems: viewItems)
+        refreshView()
     }
 
     private func updateViewItems() {
         items = sorter.sort(items: items, sort: sortType)
 
         viewItems = items.map {
-            factory.viewItem(item: $0, currency: currency)
+            viewItem(item: $0)
         }
 
-        view?.set(viewItems: viewItems)
+        refreshView()
     }
 
     private func updateHeaderViewItem() {
         let viewItem = factory.headerViewItem(items: items, currency: currency)
         view?.set(headerViewItem: viewItem)
+    }
+
+    private func viewItem(item: BalanceItem) -> BalanceViewItem {
+        factory.viewItem(item: item, currency: currency, expanded: item.wallet == expandedWallet)
+    }
+
+    private func refreshView() {
+        view?.set(viewItems: viewItems)
     }
 
 }
@@ -116,6 +125,39 @@ extension BalancePresenter: IBalanceViewDelegate {
 
     func onTriggerRefresh() {
         interactor.refresh()
+    }
+
+    func onTap(viewItem: BalanceViewItem) {
+        queue.async {
+            if self.expandedWallet == viewItem.wallet, let index = self.items.firstIndex(where: { $0.wallet == viewItem.wallet }) {
+                self.expandedWallet = nil
+                self.viewItems[index] = self.viewItem(item: self.items[index])
+            } else {
+                var oldIndex: Int?
+                var newIndex: Int?
+
+                for (index, item) in self.items.enumerated() {
+                    if item.wallet == self.expandedWallet {
+                        oldIndex = index
+                    }
+                    if item.wallet == viewItem.wallet {
+                        newIndex = index
+                    }
+                }
+
+                self.expandedWallet = viewItem.wallet
+
+                if let oldIndex = oldIndex {
+                    self.viewItems[oldIndex] = self.viewItem(item: self.items[oldIndex])
+                }
+
+                if let newIndex = newIndex {
+                    self.viewItems[newIndex] = self.viewItem(item: self.items[newIndex])
+                }
+            }
+
+            self.refreshView()
+        }
     }
 
     func onTapReceive(viewItem: BalanceViewItem) {
@@ -184,7 +226,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         }
     }
 
-    func didUpdate(balance: Decimal, balanceLocked: Decimal, wallet: Wallet) {
+    func didUpdate(balance: Decimal, balanceLocked: Decimal?, wallet: Wallet) {
         queue.async {
             self.updateItem(wallet: wallet) { item in
                 item.balance = balance
@@ -223,12 +265,12 @@ extension BalancePresenter: IBalanceInteractorDelegate {
                 for (index, item) in self.items.enumerated() {
                     if item.wallet.coin.code == coinCode {
                         item.marketInfo = marketInfo
-                        self.viewItems[index] = self.factory.viewItem(item: item, currency: self.currency)
+                        self.viewItems[index] = self.viewItem(item: item)
                     }
                 }
             }
 
-            self.view?.set(viewItems: self.viewItems)
+            self.refreshView()
             self.updateHeaderViewItem()
         }
     }
@@ -238,11 +280,11 @@ extension BalancePresenter: IBalanceInteractorDelegate {
             for (index, item) in self.items.enumerated() {
                 if item.wallet.coin.code == coinCode {
                     item.chartInfoState = .loaded(chartInfo: chartInfo)
-                    self.viewItems[index] = self.factory.viewItem(item: item, currency: self.currency)
+                    self.viewItems[index] = self.viewItem(item: item)
                 }
             }
 
-            self.view?.set(viewItems: self.viewItems)
+            self.refreshView()
         }
     }
 
@@ -251,11 +293,11 @@ extension BalancePresenter: IBalanceInteractorDelegate {
             for (index, item) in self.items.enumerated() {
                 if item.wallet.coin.code == coinCode {
                     item.chartInfoState = .failed
-                    self.viewItems[index] = self.factory.viewItem(item: item, currency: self.currency)
+                    self.viewItems[index] = self.viewItem(item: item)
                 }
             }
 
-            self.view?.set(viewItems: self.viewItems)
+            self.refreshView()
         }
     }
 

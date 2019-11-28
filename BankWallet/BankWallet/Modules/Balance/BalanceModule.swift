@@ -16,6 +16,7 @@ protocol IBalanceViewDelegate {
 
     func onTriggerRefresh()
 
+    func onTap(viewItem: BalanceViewItem)
     func onTapReceive(viewItem: BalanceViewItem)
     func onTapPay(viewItem: BalanceViewItem)
     func onTapChart(viewItem: BalanceViewItem)
@@ -54,7 +55,7 @@ protocol IBalanceInteractor: AnyObject {
 protocol IBalanceInteractorDelegate: class {
     func didUpdate(wallets: [Wallet])
     func didPrepareAdapters()
-    func didUpdate(balance: Decimal, balanceLocked: Decimal, wallet: Wallet)
+    func didUpdate(balance: Decimal, balanceLocked: Decimal?, wallet: Wallet)
     func didUpdate(state: AdapterState, wallet: Wallet)
 
     func didUpdate(currency: Currency)
@@ -75,7 +76,7 @@ protocol IBalanceRouter {
 }
 
 protocol IBalanceViewItemFactory {
-    func viewItem(item: BalanceItem, currency: Currency) -> BalanceViewItem
+    func viewItem(item: BalanceItem, currency: Currency, expanded: Bool) -> BalanceViewItem
     func headerViewItem(items: [BalanceItem], currency: Currency) -> BalanceHeaderViewItem
 }
 

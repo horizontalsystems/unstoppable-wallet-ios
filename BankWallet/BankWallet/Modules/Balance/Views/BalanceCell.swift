@@ -10,12 +10,11 @@ class BalanceCell: CardCell {
     static let expandedLockedHeight: CGFloat = 188
     static let animationDuration = 0.15
 
-    private static let minimumProgress = 10
     private let lockedInfoVisibleHeight = 29
 
     private let coinIconImageView = UIImageView()
     private let syncSpinner = HUDProgressView(
-            progress: Float(BalanceCell.minimumProgress) / 100,
+            progress: 0,
             strokeLineWidth: 2,
             radius: 15,
             strokeColor: .appGray,
@@ -270,127 +269,137 @@ class BalanceCell: CardCell {
         fatalError("not implemented")
     }
 
-    func bind(item: BalanceViewItem, selected: Bool, animated: Bool = false, onReceive: @escaping (() -> ()), onPay: @escaping (() -> ()), onChart: @escaping (() -> ())) {
+    func bind(item: BalanceViewItem, animated: Bool = false, onReceive: @escaping (() -> ()), onPay: @escaping (() -> ()), onChart: @escaping (() -> ())) {
         self.onPay = onPay
         self.onReceive = onReceive
         self.onChart = onChart
 
-        bindView(item: item, selected: selected, animated: animated)
+        bindView(item: item, animated: animated)
     }
 
-    func bindView(item: BalanceViewItem, selected: Bool, animated: Bool = false) {
-        coinIconImageView.image = UIImage(coin: item.coin)?.withRenderingMode(.alwaysTemplate)
-        coinIconImageView.isHidden = item.state == .notSynced
+    func bindView(item: BalanceViewItem, animated: Bool = false) {
+        if let coinIconCode = item.coinIconCode {
+            coinIconImageView.image = UIImage(named: "\(coinIconCode.lowercased())")?.withRenderingMode(.alwaysTemplate)
+            coinIconImageView.isHidden = false
+        } else {
+            coinIconImageView.isHidden = true
+        }
 
-        if case let .syncing(progress, _) = item.state {
+        if let syncSpinnerProgress = item.syncSpinnerProgress {
+            syncSpinner.set(progress: Float(syncSpinnerProgress) / 100)
             syncSpinner.isHidden = false
-            syncSpinner.set(progress: Float(max(BalanceCell.minimumProgress, progress)) / 100)
             syncSpinner.startAnimating()
         } else {
             syncSpinner.isHidden = true
             syncSpinner.stopAnimating()
         }
 
-        failedImageView.isHidden = item.state != .notSynced
+        failedImageView.isHidden = !item.failedImageViewVisible
 
-        nameLabel.text = item.coin.title.localized
+        nameLabel.text = item.coinTitle
 
-        if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false) {
-            rateLabel.text = item.diff != nil ? formattedValue : "balance.rate_per_coin".localized(formattedValue, item.coinValue.coin.code)
-            rateLabel.textColor = item.marketInfoExpired ? .appGray50 : .appGray
+        if let rateValue = item.rateValue {
+            rateLabel.text = rateValue.text
+            rateLabel.textColor = rateValue.dimmed ? .appGray50 : .appGray
         } else {
             rateLabel.text = " " // space required for constraints
         }
 
         if let diff = item.diff {
-            rateDiffView.isHidden = false
             rateDiffView.set(value: diff, highlightText: false)
+            rateDiffView.isHidden = false
         } else {
             rateDiffView.isHidden = true
         }
 
-        if case let .syncing(progress, lastBlockDate) = item.state, !selected {
-            currencyValueLabel.isHidden = true
+        if let currencyValue = item.currencyValue {
+            currencyValueLabel.text = currencyValue.text
+            currencyValueLabel.textColor = currencyValue.dimmed ? .appYellow50 : .appJacob
+        } else {
+            currencyValueLabel.text = nil
+        }
+
+        if let coinValue = item.coinValue {
+            coinValueLabel.text = coinValue.text
+            coinValueLabel.textColor = coinValue.dimmed ? .appGray50 : .appLeah
+            coinValueWrapper.isHidden = false
+        } else {
             coinValueWrapper.isHidden = true
+        }
+
+        if let blockchainBadge = item.blockchainBadge {
+            blockchainBadgeView.set(text: blockchainBadge)
+            blockchainBadgeView.isHidden = false
+        } else {
+            blockchainBadgeView.isHidden = true
+        }
+
+        if let syncingInfo = item.syncingInfo {
+            if let progress = syncingInfo.progress {
+                syncingLabel.text = "balance.syncing_percent".localized("\(progress)%")
+            } else {
+                syncingLabel.text = "balance.syncing".localized
+            }
+
+            if let syncedUntil = syncingInfo.syncedUntil {
+                syncedUntilLabel.text = "balance.synced_through".localized(syncedUntil)
+            } else {
+                syncedUntilLabel.text = nil
+            }
+
             syncingLabel.isHidden = false
             syncedUntilLabel.isHidden = false
+        } else {
+            syncingLabel.isHidden = true
+            syncedUntilLabel.isHidden = true
+        }
 
+        if let lockedCoinValue = item.lockedCoinValue {
+            coinLockedValueLabel.text = lockedCoinValue.text
+
+            if let lockedCurrencyValue = item.lockedCurrencyValue {
+                currencyLockedValueLabel.text = lockedCurrencyValue.text
+            } else {
+                currencyLockedValueLabel.text = nil
+            }
+
+            lockedInfoHolder.snp.updateConstraints { maker in
+                maker.height.equalTo(lockedInfoVisibleHeight)
+            }
+        } else {
             lockedInfoHolder.snp.updateConstraints { maker in
                 maker.height.equalTo(0)
             }
-
-            if let lastBlockDate = lastBlockDate {
-                syncingLabel.text = "balance.syncing_percent".localized("\(progress)%")
-                syncedUntilLabel.text = "balance.synced_through".localized(DateHelper.instance.formatSyncedThroughDate(from: lastBlockDate))
-            } else {
-                syncingLabel.text = "balance.syncing".localized
-                syncedUntilLabel.text = nil
-            }
-        } else {
-            currencyValueLabel.isHidden = false
-            coinValueWrapper.isHidden = false
-            syncingLabel.isHidden = true
-            syncedUntilLabel.isHidden = true
-
-            let syncedBalance = item.state == .synced || item.state == .notReady
-
-            if let value = item.currencyValue, value.value != 0 {
-                currencyValueLabel.text = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.01))
-                currencyValueLabel.textColor = item.marketInfoExpired || !syncedBalance ? .appYellow50 : .appJacob
-            } else {
-                currencyValueLabel.text = nil
-            }
-
-            coinValueLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue, fractionPolicy: .threshold(high: 0.01, low: 0))
-            coinValueLabel.textColor = syncedBalance ? .appLeah : .appGray50
-
-            blockchainBadgeView.set(text: item.blockchainBadge)
-            blockchainBadgeView.isHidden = item.blockchainBadge == nil
-
-            if item.coinValueLocked.value != 0 {
-                coinLockedValueLabel.text = ValueFormatter.instance.format(coinValue: item.coinValueLocked, fractionPolicy: .threshold(high: 0.01, low: 0))
-
-                if let value = item.currencyValueLocked, value.value != 0 {
-                    currencyLockedValueLabel.text = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.01))
-                } else {
-                    currencyValueLabel.text = nil
-                }
-
-                lockedInfoHolder.snp.updateConstraints { maker in
-                    maker.height.equalTo(lockedInfoVisibleHeight)
-                }
-            } else {
-                lockedInfoHolder.snp.updateConstraints { maker in
-                    maker.height.equalTo(0)
-                }
-            }
         }
 
-        receiveButton.set(hidden: !selected, animated: animated, duration: BalanceCell.animationDuration)
-        sendButton.set(hidden: !selected, animated: animated, duration: BalanceCell.animationDuration)
+        if let enabled = item.receiveButtonEnabled {
+            receiveButton.set(hidden: false, animated: animated, duration: BalanceCell.animationDuration)
+            receiveButton.isEnabled = enabled
+        } else {
+            receiveButton.set(hidden: true, animated: animated, duration: BalanceCell.animationDuration)
+        }
 
-        sendButton.isEnabled = item.state == .synced && item.coinValue.value > 0
-        receiveButton.isEnabled = item.state != .notReady
+        if let enabled = item.sendButtonEnabled {
+            sendButton.set(hidden: false, animated: animated, duration: BalanceCell.animationDuration)
+            sendButton.isEnabled = enabled
+        } else {
+            sendButton.set(hidden: true, animated: animated, duration: BalanceCell.animationDuration)
+        }
 
-        switch item.chartInfoState {
-        case .loading:
-            chartView.isHidden = true
-            notAvailableLabel.isHidden = true
-            chartHolder.isUserInteractionEnabled = false
-        case let .loaded(chartInfo):
-            chartView.isHidden = false
-            notAvailableLabel.isHidden = true
-            chartHolder.isUserInteractionEnabled = true
-
+        if let chartInfo = item.chartInfo {
             let points = chartInfo.points.map {
                 ChartPointPosition(timestamp: $0.timestamp, value: $0.value)
             }
+
             chartView.set(gridIntervalType: GridIntervalConverter.convert(chartType: ChartType.day), data: points, start: chartInfo.startTimestamp, end: chartInfo.endTimestamp, animated: false)
-        case .failed:
+            chartView.isHidden = false
+            chartHolder.isUserInteractionEnabled = true
+        } else {
             chartView.isHidden = true
-            notAvailableLabel.isHidden = false
             chartHolder.isUserInteractionEnabled = false
         }
+
+        notAvailableLabel.isHidden = !item.chartNotAvailableVisible
     }
 
     func unbind() {
@@ -408,18 +417,16 @@ class BalanceCell: CardCell {
         onChart?()
     }
 
-    static func height(item: BalanceViewItem, selectedWallet: Wallet?) -> CGFloat {
-        let height: CGFloat
-        if item.wallet == selectedWallet {
-            if item.coinValueLocked.value.isZero {
-                height = BalanceCell.expandedHeight
+    static func height(item: BalanceViewItem) -> CGFloat {
+        if item.expanded {
+            if item.lockedCoinValue != nil {
+                return BalanceCell.expandedLockedHeight
             } else {
-                height = BalanceCell.expandedLockedHeight
+                return BalanceCell.expandedHeight
             }
         } else {
-            height = BalanceCell.height
+            return BalanceCell.height
         }
-        return height
     }
 
 }
