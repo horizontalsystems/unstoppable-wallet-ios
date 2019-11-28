@@ -1278,6 +1278,7 @@
 		58AAA65D8E09804D4BF11D96 /* LockScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA05D182333BAE6FB3C0B /* LockScreenPresenter.swift */; };
 		58AAA66470395CBB69F801D6 /* RateListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8ECDCC9F9F76149028E /* RateListHeaderView.swift */; };
 		58AAA6684E6A1D6FCD429B5A /* ChartRateTypeItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD4516FF571E6B9BBEC0 /* ChartRateTypeItemView.swift */; };
+		58AAA66F0A948A51C26A4151 /* ConnectionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA610E99CF0429135DD1D /* ConnectionError.swift */; };
 		58AAA67CFF77A4478DBDFBDD /* TransactionValueActionItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA05C441ECA13AAF1ED79 /* TransactionValueActionItemView.swift */; };
 		58AAA681DBD060BC84D56CD9 /* SendAmountModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA82DAFCCEBBC7BEBB80B /* SendAmountModule.swift */; };
 		58AAA688351BEAF1B154C0F8 /* BtcComProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA58097EB8413FEA75EE8 /* BtcComProvider.swift */; };
@@ -1287,6 +1288,7 @@
 		58AAA6A986F3254E480B232E /* SendAmountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAEB485F977A3723BE738 /* SendAmountRouter.swift */; };
 		58AAA6ABD4F748833A6D1F09 /* SendConfirmationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7E197A27A5C394A51F9 /* SendConfirmationInteractor.swift */; };
 		58AAA6B67B8FD1ABBA513FEB /* SendAmountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAEB485F977A3723BE738 /* SendAmountRouter.swift */; };
+		58AAA6BA6516314DE5153AF1 /* ConnectionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA610E99CF0429135DD1D /* ConnectionError.swift */; };
 		58AAA6D081B20EA97A0F3180 /* BackupWordsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC411BF9546AD24CDE23 /* BackupWordsController.swift */; };
 		58AAA6D40A2C4447AB85A285 /* SendConfirmationAmountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAFA9479D63145A24BD9C /* SendConfirmationAmountCell.swift */; };
 		58AAA6ECE042DAD0D4137ECA /* FullTransactionHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC123E3138007B4D6E05 /* FullTransactionHeaderCell.swift */; };
@@ -1366,6 +1368,7 @@
 		58AAA9BA091AA128A6D5BF08 /* IpfsApiProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA67C8CDCEF467711963B /* IpfsApiProvider.swift */; };
 		58AAA9D8644BDECCE4525AF2 /* ChartCurveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD8DBC0B7BBA1ECAC15E /* ChartCurveView.swift */; };
 		58AAA9E965507E040D6FEF8E /* CurrencyCompactFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAAA2E81C192F6356ADCD /* CurrencyCompactFormatter.swift */; };
+		58AAA9EB37923915A52CFFFF /* ConnectionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA610E99CF0429135DD1D /* ConnectionError.swift */; };
 		58AAA9EFD7F9CB98975F26E7 /* HorSysProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA976A6B67FD47D5958E8 /* HorSysProvider.swift */; };
 		58AAA9F1B2A551603B6C9B6F /* LockScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB5515ECA96D506F56C3 /* LockScreenRouter.swift */; };
 		58AAAA1D8D1A355F870E2751 /* TimestampLinesLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8426364CE906D4B6ADF /* TimestampLinesLayer.swift */; };
@@ -2473,6 +2476,7 @@
 		58AAA5F63E9C788A68C8AF5A /* BackupPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupPresenter.swift; sourceTree = "<group>"; };
 		58AAA6019104A6B70BD3523C /* TimelineHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineHelper.swift; sourceTree = "<group>"; };
 		58AAA6021E4709D0ED818A18 /* ChartInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartInteractor.swift; sourceTree = "<group>"; };
+		58AAA610E99CF0429135DD1D /* ConnectionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionError.swift; sourceTree = "<group>"; };
 		58AAA61AB92EBB7DB83B3CE4 /* RateListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateListCell.swift; sourceTree = "<group>"; };
 		58AAA6205C47965E48E4BAC3 /* SendFeeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeeView.swift; sourceTree = "<group>"; };
 		58AAA641B5453CCB1699290A /* ChartCurrentRateItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartCurrentRateItem.swift; sourceTree = "<group>"; };
@@ -3133,6 +3137,7 @@
 				11B3526E3BCED7FF55C3CAD2 /* Deprecated */,
 				1A564A6A5C4F3080690AE93F /* ConvertedError.swift */,
 				1A564827EFE2555CF7DC2A78 /* EosBackendError.swift */,
+				58AAA610E99CF0429135DD1D /* ConnectionError.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -5320,6 +5325,7 @@
 				1A564EBFAD48713464580190 /* ConvertedError.swift in Sources */,
 				1A564CC6009976A3BE4A6C2A /* EosBackendError.swift in Sources */,
 				58AAA4C2A78C655FBAC961CD /* TransactionFailedView.swift in Sources */,
+				58AAA66F0A948A51C26A4151 /* ConnectionError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5981,6 +5987,7 @@
 				1A564512989CEBC48ABCB94E /* ConvertedError.swift in Sources */,
 				1A56476E02FE9C719E5F610E /* EosBackendError.swift in Sources */,
 				58AAADD9C01BCE82870B52F0 /* TransactionFailedView.swift in Sources */,
+				58AAA6BA6516314DE5153AF1 /* ConnectionError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6594,6 +6601,7 @@
 				1A564665243CEEBF646D1328 /* ConvertedError.swift in Sources */,
 				1A564FDC737AC99938B7FB25 /* EosBackendError.swift in Sources */,
 				58AAA546972B9FD79E7CA5E0 /* TransactionFailedView.swift in Sources */,
+				58AAA9EB37923915A52CFFFF /* ConnectionError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

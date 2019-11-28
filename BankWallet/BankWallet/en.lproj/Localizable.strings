@@ -87,6 +87,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "error.send_eos.account_not_exist" = "Target account does not exist";
 "error.send_eos.insufficient_ram" = "Your EOS account doesn't have enough RAM to send this token. You need to increase RAM stake to proceed.";
 "error.send_eos.unknown" = "Something went wrong: %@";
+"error.send_ethereum.wrong_parameters" = "Wrong parameters";
 
 "backup.confirmation.title" = "Check ...";
 
