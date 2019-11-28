@@ -42,8 +42,8 @@ class RateManager {
         if coinCode == "HOT" {
             return "HOLO"
         }
-        if coinCode == "SAI" {
-            return "DAI"
+        if coinCode == "SAI" || coinCode == "DAI" {
+            return "AI-DAI"
         }
 
         return coinCode
@@ -53,8 +53,8 @@ class RateManager {
         if coinCode == "HOLO" {
             return "HOT"
         }
-        if coinCode == "DAI" {
-            return "SAI"
+        if coinCode == "SAI" || coinCode == "DAI" {
+            return "AI-DAI"
         }
 
         return coinCode
