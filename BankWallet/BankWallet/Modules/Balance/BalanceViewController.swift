@@ -15,7 +15,6 @@ class BalanceViewController: WalletViewController {
     private let refreshControl = UIRefreshControl()
 
     private var viewItems = [BalanceViewItem]()
-    private var selectedWallet: Wallet?
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.balance_view", qos: .userInitiated)
 
@@ -62,41 +61,77 @@ class BalanceViewController: WalletViewController {
         delegate.onLoad()
     }
 
-    @objc func onRefresh() {
-        delegate.onTriggerRefresh()
-    }
-
-    private func reload(with diff: [Change<BalanceViewItem>]) {
-        let changes = IndexPathConverter().convert(changes: diff, section: 0)
-
-        guard changes.deletes.isEmpty && changes.inserts.isEmpty else {
-            tableView.reloadData()
-            return
-        }
-
-        var updateIndexes = changes.moves.reduce([Int]()) {
-            var updates = $0
-            updates.append($1.from.row)
-            updates.append($1.to.row)
-            return updates
-        }
-        updateIndexes.append(contentsOf: changes.replaces.map { $0.row })
-
-        updateIndexes.forEach {
-            bind(at: IndexPath(row: $0, section: balanceSection))
-        }
-    }
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         tableView.refreshControl = refreshControl
     }
 
+    @objc func onRefresh() {
+        delegate.onTriggerRefresh()
+    }
+
+    private func handle(newViewItems: [BalanceViewItem]) {
+        let changes = diff(old: viewItems, new: newViewItems)
+
+        if changes.contains(where: {
+            if case .insert = $0 { return true }
+            if case .delete = $0 { return true }
+            return false
+        }) {
+            DispatchQueue.main.sync {
+                self.viewItems = newViewItems
+                self.tableView.reloadData()
+            }
+            return
+        }
+
+        var heightChange = false
+
+        for (index, oldViewItem) in viewItems.enumerated() {
+            let newViewItem = newViewItems[index]
+
+            let oldHeight = BalanceCell.height(item: oldViewItem)
+            let newHeight = BalanceCell.height(item: newViewItem)
+
+            if oldHeight != newHeight {
+                heightChange = true
+                break
+            }
+        }
+
+        var updateIndexes = Set<Int>()
+
+        for change in changes {
+            switch change {
+            case .move(let move):
+                updateIndexes.insert(move.fromIndex)
+                updateIndexes.insert(move.toIndex)
+            case .replace(let replace):
+                updateIndexes.insert(replace.index)
+            default: ()
+            }
+        }
+
+        DispatchQueue.main.sync {
+            self.viewItems = newViewItems
+
+            updateIndexes.forEach {
+                bind(at: IndexPath(row: $0, section: balanceSection), animated: heightChange)
+            }
+
+            if heightChange {
+                UIView.animate(withDuration: BalanceCell.animationDuration) {
+                    self.tableView.beginUpdates()
+                    self.tableView.endUpdates()
+                }
+            }
+        }
+    }
+
     private func bind(cell: BalanceCell, viewItem: BalanceViewItem, animated: Bool = false) {
         cell.bind(
                 item: viewItem,
-                selected: viewItem.wallet == selectedWallet,
                 animated: animated,
                 onReceive: { [weak self] in
                     self?.delegate.onTapReceive(viewItem: viewItem)
@@ -129,7 +164,7 @@ extension BalanceViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == balanceSection {
-            return BalanceCell.height(item: viewItems[indexPath.row], selectedWallet: selectedWallet) + .margin2x
+            return BalanceCell.height(item: viewItems[indexPath.row]) + .margin2x
         } else if indexPath.section == editSection {
             return BalanceEditCell.height
         }
@@ -162,36 +197,13 @@ extension BalanceViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if selectedWallet == nil {
-            selectedWallet = viewItems[indexPath.row].wallet
-            bind(at: indexPath, heightChange: true)
-        } else if selectedWallet == viewItems[indexPath.row].wallet {
-            selectedWallet = nil
-            bind(at: indexPath, heightChange: true)
-        } else {
-            let previousIndex = viewItems.firstIndex(where: { $0.wallet == selectedWallet })
-            selectedWallet = viewItems[indexPath.row].wallet
-
-            if let previousIndex = previousIndex {
-                bind(at: IndexPath(row: previousIndex, section: balanceSection), heightChange: true)
-            }
-
-            bind(at: indexPath, heightChange: true)
-        }
-
+        delegate.onTap(viewItem: viewItems[indexPath.row])
         return nil
     }
 
-    func bind(at indexPath: IndexPath, heightChange: Bool = false) {
+    func bind(at indexPath: IndexPath, animated: Bool = false) {
         if let cell = tableView.cellForRow(at: indexPath) as? BalanceCell {
-            bind(cell: cell, viewItem: viewItems[indexPath.row], animated: heightChange)
-
-            if heightChange {
-                UIView.animate(withDuration: BalanceCell.animationDuration) {
-                    self.tableView.beginUpdates()
-                    self.tableView.endUpdates()
-                }
-            }
+            bind(cell: cell, viewItem: viewItems[indexPath.row], animated: animated)
         }
     }
 
@@ -215,40 +227,7 @@ extension BalanceViewController: IBalanceView {
 
     func set(viewItems: [BalanceViewItem]) {
         queue.async {
-            var forceReload = false
-
-            if let selectedWallet = self.selectedWallet {
-                var selectedIndexChange = false
-                var heightChange = false
-
-                let oldSelectedIndex = self.viewItems.firstIndex(where: { $0.wallet == selectedWallet })
-                let newSelectedIndex = viewItems.firstIndex(where: { $0.wallet == selectedWallet })
-
-                selectedIndexChange = newSelectedIndex != oldSelectedIndex
-
-                if !selectedIndexChange, let oldItem = self.viewItems.first(where: { $0.wallet == selectedWallet }), let newItem = viewItems.first(where: { $0.wallet == selectedWallet }) {
-                    let oldHeight = BalanceCell.height(item: oldItem, selectedWallet: selectedWallet)
-                    let newHeight = BalanceCell.height(item: newItem, selectedWallet: selectedWallet)
-
-                    heightChange = oldHeight != newHeight
-                }
-
-                forceReload = selectedIndexChange || heightChange
-            }
-
-            if forceReload {
-                DispatchQueue.main.sync {
-                    self.viewItems = viewItems
-                    self.tableView.reloadData()
-                }
-            } else {
-                let changes = diff(old: self.viewItems, new: viewItems)
-
-                DispatchQueue.main.sync {
-                    self.viewItems = viewItems
-                    self.reload(with: changes)
-                }
-            }
+            self.handle(newViewItems: viewItems)
         }
     }
 

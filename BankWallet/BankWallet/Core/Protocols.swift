@@ -101,12 +101,12 @@ protocol IBalanceAdapter {
     var state: AdapterState { get }
     var stateUpdatedObservable: Observable<Void> { get }
     var balance: Decimal { get }
-    var balanceLocked: Decimal { get }
+    var balanceLocked: Decimal? { get }
     var balanceUpdatedObservable: Observable<Void> { get }
 }
 
 extension IBalanceAdapter {
-    var balanceLocked: Decimal { 0 }
+    var balanceLocked: Decimal? { nil }
 }
 
 protocol IDepositAdapter {
