@@ -72,7 +72,7 @@ extension RestoreCoinsPresenter: IRestoreCoinsViewDelegate {
         syncProceedButton()
     }
 
-    func onTapProceedButton() {
+    func onTapNextButton() {
         guard !enabledCoins.isEmpty else {
             return
         }

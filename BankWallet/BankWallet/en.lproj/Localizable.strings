@@ -57,13 +57,13 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 "coin_settings.enable_button" = "Enable";
 "coin_settings.derivation.title" = "Address Format";
-"coin_settings.derivation.description" = "If you're creating a new wallet and not sure about this setting feel free to select either BIP44 or BIP49.\n\nIf you're restoring an existing wallet with bitcoins on it then you should select the correct address type.";
+"coin_settings.derivation.description" = "If you're creating a new wallet and not sure about this setting than select BIP49.\n\nIf you're restoring an existing wallet with bitcoins on it then you should select the correct address type.";
 "coin_settings.sync_mode.title" = "Network Synchronization";
 "coin_settings.sync_mode.fast.title" = "Fast";
 "coin_settings.sync_mode.slow.title" = "Slow";
 "coin_settings.sync_mode.fast.description" = "0-2 hours (Recommended)";
 "coin_settings.sync_mode.slow.description" = "1-12 hours (More Private)";
-"coin_settings.sync_mode.description" = "Fast: Restores wallet transactions history via secure third party server. For users with a history of transactions with large sums this method may pose privacy risks.\n\nSlow: Restores wallet transactions history directly from the blockchain. More private but very slow.";
+"coin_settings.sync_mode.description" = "Fast: Restores wallet transaction history via secure third party server. Less private but fast.\n\nSlow: Restores wallet transaction history directly from the blockchain. More private but very slow.";
 
 // Backup
 
@@ -275,8 +275,9 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "Coin Manager";
-"manage_coins.add_coin.title" = "Add %@ ";
-"manage_coins.add_coin.text" = "You don't have a wallet that can store %@ (%@). The app can generate a new wallet for you. Use the Create button below to generate a new wallet.\n\nYou will be able to use the new wallet for the following coins: %@.\n\nYou may also use the existing %@ Wallet key if you have one. Use the Restore button for that.";
+"manage_coins.add_coin.title" = "Add %@";
+"manage_coins.add_coin.subtitle" = "%@ Wallet";
+"manage_coins.add_coin.text" = "You need to set up %@ wallet to be able to send or receive %@.\n\nUse the Create button below to set up a new %@ wallet, or Restore button to import the existing one.\n\nYou will be able to use this wallet for: %@.";
 "manage_coins.add_coin.create" = "Create";
 "manage_coins.add_coin.restore" = "Restore";
 
@@ -332,7 +333,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "settings_manage_keys.title" = "Manage Wallets";
 "settings_manage_keys.item_title" = "%@ Wallet";
 "settings_manage_keys.add_wallet" = "Add Wallet";
-"settings_manage_keys.description" = "Highlighted below are your active wallets where each wallet responsible for different set of crypto currencies.\n\nYou should backup each highlighted wallets by backing up the private key for that wallet. This key is the only way to restore your funds if your phone is ever lost, stolen, broken etc.";
+"settings_manage_keys.description" = "Highlighted below are your active wallets where each wallet controls a set of cryptocurrencies.\n\nYou must backup each highlighted wallet by backing up the private key for it. This key is the only way to restore and access your funds if your phone is ever lost, stolen or the app malfunctions.";
 "settings_manage_keys.delete" = "Delete";
 "settings_manage_keys.backup" = "Backup";
 "settings_manage_keys.show" = "Show";
@@ -413,7 +414,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Select Coins
 
 "select_coins.description" = "Select cryptocurrencies for the wallet. You will be able to add or remove coins later as well.";
-"select_coins.proceed_button" = "Proceed";
+"select_coins.next_button" = "Next";
 
 "price_notification.up" = "up";
 "price_notification.down" = "down";
