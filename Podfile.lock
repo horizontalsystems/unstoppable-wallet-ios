@@ -282,7 +282,7 @@ CHECKOUT OPTIONS:
     :commit: b01ccd04b2decec921e9e437cbf36a25e3cc3e9d
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
   EthereumKit.swift:
-    :commit: b01ccd04b2decec921e9e437cbf36a25e3cc3e9d
+    :commit: 3c59fb174f5f46b05b7410ec0e66e502df2cbf82
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
   FeeRateKit.swift:
     :commit: 1f662230843a71b921b11f63f275c6211e60ee14

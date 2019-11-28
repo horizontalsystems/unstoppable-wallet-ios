@@ -67,7 +67,7 @@ class SendEthereumHandler {
     }
 
     private func syncEstimateGasLimit() {
-        guard let address = try? addressModule.validAddress() else {
+        guard let address = try? addressModule.validAddress(), !amountModule.currentAmount.isZero else {
             onReceive(gasLimit: 0)
             return
         }

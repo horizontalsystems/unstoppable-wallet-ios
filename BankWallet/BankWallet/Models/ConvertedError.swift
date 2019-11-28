@@ -24,8 +24,8 @@ extension Error {
 extension Error {
 
     var localizedDescription: String {
-        if let localizedError = self as? LocalizedError {
-            return localizedError.localizedDescription
+        if let localizedError = self as? LocalizedError, let errorDescription = localizedError.errorDescription {
+            return errorDescription
         } else {
             return "\("alert.unknown_error".localized) \(String(reflecting: self))"
         }
@@ -39,7 +39,7 @@ extension EthereumKit.NetworkError: ConvertibleError {
 
     var convertedError: Error {
         switch self {
-        case .noConnection: return NetworkManager.NetworkError.noConnection
+        case .noConnection: return ConnectionError.noConnection
         default: return self
         }
     }
@@ -50,7 +50,18 @@ extension FeeRateKit.NetworkError {
 
     var convertedError: Error {
         switch self {
-        case .noConnection: return NetworkManager.NetworkError.noConnection
+        case .noConnection: return ConnectionError.noConnection
+        default: return self
+        }
+    }
+
+}
+
+extension NetworkManager.NetworkError {
+
+    var convertedError: Error {
+        switch self {
+        case .noConnection: return ConnectionError.noConnection
         default: return self
         }
     }
