@@ -69,6 +69,7 @@ class AddressInputField: UIView {
         addressField.textContainer.lineFragmentPadding = 0
         addressField.textContainerInset = .zero
         addressField.backgroundColor = .clear
+        addressField.autocorrectionType = .no
         addressField.onPaste = { [weak self] in
             self?.onPaste?()
         }

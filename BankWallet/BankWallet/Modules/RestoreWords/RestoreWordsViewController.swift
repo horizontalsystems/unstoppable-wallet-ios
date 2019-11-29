@@ -45,6 +45,7 @@ class RestoreWordsViewController: WalletViewController {
         textView.tintColor = .appJacob
         textView.textContainerInset = UIEdgeInsets(top: textViewInset, left: textViewInset, bottom: textViewInset, right: textViewInset)
         textView.autocapitalizationType = .none
+        textView.autocorrectionType = .no
 
         textView.delegate = self
 
