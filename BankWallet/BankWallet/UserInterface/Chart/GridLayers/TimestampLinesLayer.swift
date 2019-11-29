@@ -23,13 +23,6 @@ class TimestampLinesLayer: CAShapeLayer {
             verticalPath.move(to: CGPoint(x: insets.left + pointOffsetX + edgeOffset, y: insets.top))
             verticalPath.addLine(to: CGPoint(x: insets.left + pointOffsetX + edgeOffset, y: height))
         }
-        // add left line
-        verticalPath.move(to: CGPoint(x: insets.left + edgeOffset, y: insets.top))
-        verticalPath.addLine(to: CGPoint(x: insets.left + edgeOffset, y: height))
-
-        // add right line
-        verticalPath.move(to: CGPoint(x: floor(width) +  3 * edgeOffset, y: insets.top))        // last line must be shifted more on 1.5 * scale
-        verticalPath.addLine(to: CGPoint(x: floor(width) + 3 * edgeOffset, y: height))
 
         verticalPath.close()
 

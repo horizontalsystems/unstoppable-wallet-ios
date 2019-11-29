@@ -1,21 +1,12 @@
 import UIKit
 import SnapKit
 
-protocol IChartDataSource: class {
-    var chartData: [ChartPointPosition] { get }
-    var chartFrame: ChartFrame  { get }
-    var gridIntervalType: GridIntervalType { get }
-}
-
-protocol IChartIndicatorDelegate: class {
-    func didTap(chartPoint: ChartPointPosition)
-    func didFinishTap()
-}
-
 class ChartView: UIView {
     private(set) var gridIntervalType: GridIntervalType
     private let configuration: ChartConfiguration
-    private let scaleHelper: ChartScaleHelper
+
+    private let scaleHelper: ValueScaleHelper
+    private let timelineHelper: TimelineHelper
 
     private weak var indicatorDelegate: IChartIndicatorDelegate?
 
@@ -24,7 +15,7 @@ class ChartView: UIView {
     private(set) var curveInsets: UIEdgeInsets = .zero
 
     private let curveView: ChartCurveView
-    private var gridView: GridView?
+    private var gridViews = [IGridView]()
     private var indicatorView: ChartIndicatorView?
 
     public init(configuration: ChartConfiguration, gridIntervalType: GridIntervalType, indicatorDelegate: IChartIndicatorDelegate? = nil) {
@@ -32,22 +23,19 @@ class ChartView: UIView {
         self.gridIntervalType = gridIntervalType
         self.indicatorDelegate = indicatorDelegate
 
-        self.scaleHelper = ChartScaleHelper(valueScaleLines: configuration.gridHorizontalLineCount, valueOffsetPercent: configuration.curveVerticalOffset, maxScale: configuration.gridMaxScale, textFont: configuration.gridTextFont, textVerticalMargin: configuration.gridTextMargin, textLeftMargin: configuration.gridTextMargin, textRightMargin: configuration.gridTextRightMargin)
-        self.curveView = ChartCurveView(configuration: configuration)
-        if configuration.showGrid {
-            self.gridView = GridView(configuration: configuration)
-        }
+        scaleHelper = ValueScaleHelper(valueScaleLines: configuration.gridHorizontalLineCount, valueOffsetPercent: configuration.curveVerticalOffset, maxScale: configuration.gridMaxScale, textFont: configuration.gridTextFont, textVerticalMargin: configuration.gridTextMargin, textLeftMargin: configuration.gridTextMargin, textRightMargin: configuration.gridTextRightMargin)
+        timelineHelper = TimelineHelper()
+        curveView = ChartCurveView(configuration: configuration)
 
         super.init(frame: .zero)
 
-        self.backgroundColor = configuration.backgroundColor
+        backgroundColor = configuration.backgroundColor
 
         if indicatorDelegate != nil {
             indicatorView = ChartIndicatorView(configuration: configuration, delegate: self)
         }
 
         curveView.dataSource = self
-        gridView?.dataSource = self
         indicatorView?.dataSource = self
         commonInit()
     }
@@ -57,16 +45,42 @@ class ChartView: UIView {
     }
 
     private func commonInit() {
-        if let gridView = gridView {
-            addSubview(gridView)
-            gridView.snp.makeConstraints { maker in
+        if configuration.showGrid {
+            let timestampGridView = TimestampsGridView(timelineHelper: timelineHelper, configuration: configuration)
+            timestampGridView.dataSource = self
+            addSubview(timestampGridView)
+            timestampGridView.snp.makeConstraints { maker in
                 maker.top.equalToSuperview().offset(configuration.chartInsets.top)
                 maker.left.equalToSuperview().offset(configuration.chartInsets.left)
                 maker.bottom.equalToSuperview().offset(-configuration.chartInsets.bottom)
                 maker.right.equalToSuperview().offset(-configuration.chartInsets.right)
             }
+            gridViews.append(timestampGridView)
+
+            let frameGridView = FrameGridView(configuration: configuration)
+            addSubview(frameGridView)
+            frameGridView.snp.makeConstraints { maker in
+                maker.top.equalToSuperview().offset(configuration.chartInsets.top)
+                maker.left.equalToSuperview().offset(configuration.chartInsets.left)
+                maker.bottom.equalToSuperview().offset(-configuration.chartInsets.bottom)
+                maker.right.equalToSuperview().offset(-configuration.chartInsets.right)
+            }
+            gridViews.append(frameGridView)
         }
         addSubview(curveView)
+        if configuration.showLimitValues {
+            let limitGridView = LimitsGridView(configuration: configuration)
+            limitGridView.dataSource = self
+
+            addSubview(limitGridView)
+            limitGridView.snp.makeConstraints { maker in
+                maker.top.equalToSuperview().offset(configuration.chartInsets.top)
+                maker.left.equalToSuperview().offset(configuration.chartInsets.left)
+                maker.bottom.equalToSuperview().offset(-configuration.chartInsets.bottom)
+                maker.right.equalToSuperview().offset(-configuration.chartInsets.right)
+            }
+            gridViews.append(limitGridView)
+        }
         if let indicatorView = indicatorView {
             addSubview(indicatorView)
         }
@@ -82,12 +96,7 @@ class ChartView: UIView {
         curveView.refreshCurve(animated: animated)
 
         indicatorView?.layoutSubviews()
-        gridView?.refreshGrid()
-    }
-
-    public func clear() {
-        curveView.clear()
-        gridView?.clear()
+        gridViews.forEach { $0.refreshGrid() }
     }
 
     private func updateChartFrame(startTimestamp: TimeInterval? = nil, endTimestamp: TimeInterval? = nil) {
@@ -118,31 +127,31 @@ class ChartView: UIView {
         } else {
             chartColorType = .incomplete
         }
-        chartFrame = ChartFrame(left: startTimestamp ?? minimumTimestamp, right: endTimestamp ?? maximumTimestamp, top: scale.topValue, bottom: scale.topValue - Decimal(configuration.gridHorizontalLineCount - 1) * scale.delta, scale: scale.decimal, chartColorType: chartColorType)
+        chartFrame = ChartFrame(left: startTimestamp ?? minimumTimestamp, right: endTimestamp ?? maximumTimestamp,
+                top: scale.topValue, bottom: scale.topValue - Decimal(configuration.gridHorizontalLineCount - 1) * scale.delta,
+                minValue: minValue, maxValue: maxValue,
+                scale: scale.decimal, chartColorType: chartColorType)
     }
 
     private func updateInsets() {
-        // calculate deltas with insets. Summary insets in percent must be less than 0.5 (to show graphic)
-        var textScaleSize: CGSize = .zero
-        if let gridView = gridView {
-            textScaleSize = scaleHelper.scaleSize(min: chartFrame.bottom, max: chartFrame.top)
+        let bottomTextPadding: CGFloat = configuration.showGrid ? ceil(configuration.gridTextFont.lineHeight + CGFloat.margin1x) : .zero
 
-            gridView.scaleOffsetSize = textScaleSize
-        }
-
-        curveInsets = UIEdgeInsets(top: 0, left: 0, bottom: ceil(textScaleSize.height), right: ceil(textScaleSize.width))
+        curveInsets = UIEdgeInsets(top: 0, left: 0, bottom: bottomTextPadding, right: 0)
 
         curveView.frame = bounds.inset(by: curveInsets).inset(by: configuration.chartInsets)
         indicatorView?.frame = bounds.inset(by: curveInsets).inset(by: configuration.chartInsets)
 
-        gridView?.layoutSubviews()
+        gridViews.forEach {
+            $0.update(bottomPadding: bottomTextPadding)
+            $0.layoutSubviews()
+        }
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
 
         updateInsets()
-        gridView?.refreshGrid()
+        gridViews.forEach { $0.refreshGrid() }
     }
 
 }
@@ -154,6 +163,8 @@ extension ChartView: IChartIndicatorDelegate {
     func didTap(chartPoint: ChartPointPosition) {
         indicatorDelegate?.didTap(chartPoint: chartPoint)
         curveView.set(curveColor: configuration.selectedCurveColor, gradientColor: configuration.selectedGradientColor)
+
+        gridViews.forEach { $0.on(select: true) }
     }
 
     func didFinishTap() {
@@ -172,6 +183,7 @@ extension ChartView: IChartIndicatorDelegate {
             gradientColor = configuration.gradientIncompleteColor
         }
         curveView.set(curveColor: curveColor, gradientColor: gradientColor)
+        gridViews.forEach { $0.on(select: false) }
     }
 
 }

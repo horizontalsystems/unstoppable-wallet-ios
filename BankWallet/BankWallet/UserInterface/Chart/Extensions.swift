@@ -47,4 +47,16 @@ extension Decimal {
         return count
     }
 
+    var cgFloatValue: CGFloat {
+        CGFloat(truncating: self as NSNumber)
+    }
+
+}
+
+extension CGFloat {
+
+    var decimalValue: Decimal {
+        (self as NSNumber).decimalValue
+    }
+
 }

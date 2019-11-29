@@ -22,6 +22,7 @@ class LightTheme: ITheme {
     let colorLawrence: UIColor = .appWhite
     let colorClaude: UIColor = .appWhite
     let colorAndy: UIColor = .appSteel20
+    let colorNina: UIColor = .appBlack50
 
     let alphaSecondaryButtonGradient: CGFloat = 1
 }

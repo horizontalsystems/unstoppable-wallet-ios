@@ -6,7 +6,7 @@ enum GridIntervalType {
     case month(Int)
 }
 
-class TimelineHelper {
+class TimelineHelper: ITimelineHelper {
 
     // return timestamps in minutes for grid vertical lines
     func timestamps(frame: ChartFrame, gridIntervalType: GridIntervalType) -> [TimeInterval] {

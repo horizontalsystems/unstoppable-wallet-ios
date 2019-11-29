@@ -13,15 +13,15 @@ class TimestampTextLayer: CATextLayer {
         let delta = width / CGFloat(chartFrame.width)
 
         for timestamp in timestamps {
+            let text = TimestampFormatter.text(timestamp: timestamp, gridIntervalType: gridIntervalType)
+            let textSize = (text as NSString).size(withAttributes: [NSAttributedString.Key.font: configuration.gridTextFont])
+
             var pointOffsetX = CGFloat(timestamp - chartFrame.left) * delta
             if pointOffsetX < configuration.gridNonVisibleLineDeltaX {
                 pointOffsetX = 0
-            } else if abs(width - pointOffsetX) < configuration.gridNonVisibleLineDeltaX {
-                pointOffsetX = width
+            } else if abs(pointOffsetX + textSize.width + configuration.gridNonVisibleLineDeltaX) > width {
+                pointOffsetX = width - textSize.width
             }
-
-            let text = TimestampFormatter.text(timestamp: timestamp, gridIntervalType: gridIntervalType)
-            let textSize = (text as NSString).size(withAttributes: [NSAttributedString.Key.font: configuration.gridTextFont])
 
             let textLayer = CATextLayer()
             textLayer.contentsScale = UIScreen.main.scale
@@ -29,8 +29,8 @@ class TimestampTextLayer: CATextLayer {
             textLayer.foregroundColor = configuration.gridTextColor.cgColor
             textLayer.font = CTFontCreateWithFontDescriptor(configuration.gridTextFont.fontDescriptor, configuration.gridTextFont.pointSize, nil)
             textLayer.fontSize = configuration.gridTextFont.pointSize
-
             textLayer.string = text
+
             textLayer.removeAllAnimations()
 
             addSublayer(textLayer)
