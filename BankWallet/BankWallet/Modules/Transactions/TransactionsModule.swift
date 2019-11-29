@@ -92,6 +92,6 @@ protocol IDiffer {
 
 struct FetchData {
     let wallet: Wallet
-    let from: (hash: String, interTransactionIndex: Int)?
+    let from: (uid: String, hash: String, interTransactionIndex: Int)?
     let limit: Int
 }

@@ -25,6 +25,7 @@ class EosAdapter {
         )
 
         return TransactionRecord(
+                uid: transaction.id,
                 transactionHash: transaction.id,
                 transactionIndex: 0,
                 interTransactionIndex: transaction.actionSequence,
@@ -144,10 +145,10 @@ extension EosAdapter: ITransactionsAdapter {
         }
     }
 
-    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(from: (uid: String, hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
         eosKit.transactionsSingle(asset: asset, fromActionSequence: from?.interTransactionIndex, limit: limit)
                 .map { [weak self] transactions -> [TransactionRecord] in
-                    return transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
+                    transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
                 }
     }
 

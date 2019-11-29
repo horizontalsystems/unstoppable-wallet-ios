@@ -35,6 +35,7 @@ class EthereumAdapter: EthereumBaseAdapter {
         }
         let failed = (transaction.isError ?? 0) != 0
         return TransactionRecord(
+                uid: transaction.hash,
                 transactionHash: transaction.hash,
                 transactionIndex: transaction.transactionIndex ?? 0,
                 interTransactionIndex: 0,
@@ -125,7 +126,7 @@ extension EthereumAdapter: ITransactionsAdapter {
         }
     }
 
-    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(from: (uid: String, hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
         ethereumKit.transactionsSingle(fromHash: from?.hash, limit: limit)
                 .map { [weak self] transactions -> [TransactionRecord] in
                     transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
