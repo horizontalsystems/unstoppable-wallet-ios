@@ -3,8 +3,6 @@ import ActionSheet
 import SnapKit
 
 class ChartMarketCapItemView: BaseActionItemView {
-    private let highView = CaptionValueView()
-    private let lowView = CaptionValueView()
     private let separator = UIView()
     private let volumeView = CaptionValueView()
     private let marketCapView = CaptionValueView()
@@ -19,26 +17,12 @@ class ChartMarketCapItemView: BaseActionItemView {
     override func initView() {
         super.initView()
 
-        addSubview(highView)
-        highView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
-            maker.top.equalToSuperview()
-        }
-
-        addSubview(lowView)
-        lowView.snp.makeConstraints { maker in
-            maker.leading.equalTo(highView.snp.trailing).offset(CGFloat.margin6x)
-            maker.top.equalToSuperview()
-            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.width.equalTo(highView.snp.width)
-        }
-
         separator.backgroundColor = .appSteel20
 
         addSubview(separator)
         separator.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(highView.snp.bottom).offset(CGFloat.margin2x)
+            maker.top.equalToSuperview().offset(CGFloat.margin2x)
             maker.height.equalTo(CGFloat.heightOnePixel)
         }
 
@@ -80,19 +64,6 @@ class ChartMarketCapItemView: BaseActionItemView {
         sourceView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.top.equalTo(totalView.snp.bottom).offset(CGFloat.margin2x)
-        }
-
-        item?.setTypeTitle = { [weak self] title in
-            self?.highView.set(caption: "chart.high".localized(title))
-            self?.lowView.set(caption: "chart.low".localized(title))
-        }
-
-        item?.setHigh = { [weak self] value in
-            self?.highView.set(value: value, accent: true)
-        }
-
-        item?.setLow = { [weak self] value in
-            self?.lowView.set(value: value, accent: true)
         }
 
         item?.setVolume = { [weak self] value in

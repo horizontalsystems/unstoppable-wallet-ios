@@ -30,8 +30,7 @@ class ChartRateItemView: BaseActionItemView {
         addSubview(chartView)
         chartView.snp.makeConstraints { maker in
             maker.top.equalToSuperview()
-            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
-            maker.trailing.equalToSuperview()
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.height.equalTo(210)
         }
 

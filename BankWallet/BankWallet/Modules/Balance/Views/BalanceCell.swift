@@ -54,6 +54,7 @@ class BalanceCell: CardCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         let configuration = ChartConfiguration()
         configuration.showGrid = false
+        configuration.showLimitValues = false
         chartView = ChartView(configuration: configuration, gridIntervalType: GridIntervalConverter.convert(chartType: .day))
 
         super.init(style: style, reuseIdentifier: reuseIdentifier)

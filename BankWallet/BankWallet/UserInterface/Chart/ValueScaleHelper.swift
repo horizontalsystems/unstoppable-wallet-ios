@@ -1,6 +1,6 @@
 import UIKit
 
-class ChartScaleHelper {
+class ValueScaleHelper: IValueScaleHelper {
     static let formatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -89,7 +89,7 @@ class ChartScaleHelper {
 
 
     private func textHolderSize(maxValue: Decimal, scale: Int) -> CGSize {
-        let formatter = ChartScaleHelper.formatter
+        let formatter = ValueScaleHelper.formatter
         formatter.maximumFractionDigits = max(0, scale)
         formatter.minimumFractionDigits = max(0, scale)
 

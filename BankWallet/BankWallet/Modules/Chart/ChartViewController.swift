@@ -85,25 +85,6 @@ class ChartViewController: WalletActionSheetController {
         currentRateItem.bindDiff?(diff)
     }
 
-    private func show(lowValue: CurrencyValue?) {
-        guard let lowValue = lowValue else {
-            marketCapItem.setLow?(nil)
-            return
-        }
-
-        let formattedValue = ValueFormatter.instance.format(currencyValue: lowValue, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
-        marketCapItem.setLow?(formattedValue)
-    }
-
-    private func show(highValue: CurrencyValue?) {
-        guard let highValue = highValue else {
-            marketCapItem.setHigh?(nil)
-            return
-        }
-        let formattedValue = ValueFormatter.instance.format(currencyValue: highValue, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
-        marketCapItem.setHigh?(formattedValue)
-    }
-
     private func show(marketCapValue: CurrencyValue?) {
         marketCapItem.setMarketCap?(CurrencyCompactFormatter.instance.format(currencyValue: marketCapValue))
     }
@@ -145,9 +126,6 @@ extension ChartViewController: IChartView {
     func show(chartViewItem viewItem: ChartInfoViewItem) {
         show(diff: viewItem.diff)
         chartRateItem?.bind?(viewItem.gridIntervalType, viewItem.points, viewItem.startTimestamp, viewItem.endTimestamp, true)
-
-        show(highValue: viewItem.highValue)
-        show(lowValue: viewItem.lowValue)
     }
 
     func show(marketInfoViewItem viewItem: MarketInfoViewItem) {
@@ -165,7 +143,6 @@ extension ChartViewController: IChartView {
             let typeTitle = title(for: type)
             chartRateTypeItem.bindButton?(typeTitle, type.rawValue) { [weak self] in
                 self?.delegate.onSelect(type: type)
-                self?.marketCapItem.setTypeTitle?(typeTitle)
             }
         }
     }
@@ -176,7 +153,6 @@ extension ChartViewController: IChartView {
 
     func set(chartType: ChartType) {
         chartRateTypeItem.setSelected?(chartType.rawValue)
-        marketCapItem.setTypeTitle?(title(for: chartType))
     }
 
     func showSelectedPoint(chartType: ChartType, timestamp: TimeInterval, value: CurrencyValue) {

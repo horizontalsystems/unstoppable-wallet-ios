@@ -2,6 +2,7 @@ import UIKit
 
 class ChartConfiguration {
     var showGrid: Bool = true
+    var showLimitValues: Bool = true
 
     var animationDuration: TimeInterval = 0.3
 
@@ -25,12 +26,18 @@ class ChartConfiguration {
     var gridHorizontalLineCount: Int = 5
     var gridMaxScale: Int = 4
 
+    var limitColor: UIColor = .appNina
+
     var gridColor: UIColor = .cryptoSteel20
     var gridTextColor: UIColor = .cryptoGray
     var gridTextFont: UIFont = .systemFont(ofSize: 12)
 
-    var gridTextMargin: CGFloat = 4
-    var gridTextRightMargin: CGFloat = 16
+    var gridTextMargin: CGFloat = .margin1x
+    var gridTextRightMargin: CGFloat = .margin4x
+
+    var limitTextFont: UIFont = .appSubhead1
+    var limitTextColor: UIColor = .appLeah
+    var limitTextLeftMargin: CGFloat = .margin4x
 
     var selectedCircleRadius: CGFloat = 5.5
     var selectedIndicatorColor: UIColor = .crypto_Bars_Dark
