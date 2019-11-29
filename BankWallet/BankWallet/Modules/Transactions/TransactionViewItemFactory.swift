@@ -45,7 +45,7 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
             to = record.to.first(where: { $0.mine == false })?.address
         }
         if let toAddress = record.to.first {
-            lockInfo = TransactionLockInfo(pluginData: toAddress.pluginData)
+            lockInfo = TransactionLockInfo(pluginId: toAddress.pluginId, pluginData: toAddress.pluginData)
         }
         let sentToSelf = !record.from.contains(where: { !$0.mine }) && !record.to.contains(where: { !$0.mine })
 

@@ -22,14 +22,15 @@ class BitcoinBaseAdapter {
 
     func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
         let fromAddresses = transaction.from.map {
-            TransactionAddress(address: $0.address, mine: $0.mine, pluginData: $0.pluginData)
+            TransactionAddress(address: $0.address, mine: $0.mine, pluginId: $0.pluginId, pluginData: $0.pluginData)
         }
 
         let toAddresses = transaction.to.map {
-            TransactionAddress(address: $0.address, mine: $0.mine, pluginData: $0.pluginData)
+            TransactionAddress(address: $0.address, mine: $0.mine, pluginId: $0.pluginId, pluginData: $0.pluginData)
         }
 
         return TransactionRecord(
+                uid: transaction.uid,
                 transactionHash: transaction.transactionHash,
                 transactionIndex: transaction.transactionIndex,
                 interTransactionIndex: 0,
@@ -37,7 +38,7 @@ class BitcoinBaseAdapter {
                 amount: Decimal(transaction.amount) / coinRate,
                 fee: transaction.fee.map { Decimal($0) / coinRate },
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-                failed: false,
+                failed: transaction.status == .invalid,
                 from: fromAddresses,
                 to: toAddresses
         )
@@ -229,8 +230,8 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
         transactionRecordsSubject.asObservable()
     }
 
-    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
-        abstractKit.transactions(fromHash: from?.hash, limit: limit)
+    func transactionsSingle(from: (uid: String, hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
+        abstractKit.transactions(fromUid: from?.uid, limit: limit)
                 .map { [weak self] transactions -> [TransactionRecord] in
                     transactions.compactMap {
                         self?.transactionRecord(fromTransaction: $0)

@@ -118,7 +118,7 @@ protocol ITransactionsAdapter {
     var lastBlockHeight: Int? { get }
     var lastBlockHeightUpdatedObservable: Observable<Void> { get }
     var transactionRecordsObservable: Observable<[TransactionRecord]> { get }
-    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]>
+    func transactionsSingle(from: (uid: String, hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]>
 }
 
 protocol ISendBitcoinAdapter {

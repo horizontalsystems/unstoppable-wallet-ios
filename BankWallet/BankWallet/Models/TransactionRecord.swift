@@ -1,6 +1,7 @@
 import Foundation
 
 struct TransactionRecord {
+    let uid: String
     let transactionHash: String
     let transactionIndex: Int
     let interTransactionIndex: Int
@@ -17,11 +18,13 @@ struct TransactionRecord {
 struct TransactionAddress {
     let address: String
     let mine: Bool
-    let pluginData: [UInt8: Any]?
-    
-    init(address: String, mine: Bool, pluginData: [UInt8: Any]? = nil) {
+    let pluginId: UInt8?
+    let pluginData: Any?
+
+    init(address: String, mine: Bool, pluginId: UInt8? = nil, pluginData: Any? = nil) {
         self.address = address
         self.mine = mine
+        self.pluginId = pluginId
         self.pluginData = pluginData
     }
 
@@ -42,7 +45,7 @@ extension TransactionRecord: Comparable {
     }
 
     public static func ==(lhs: TransactionRecord, rhs: TransactionRecord) -> Bool {
-        return lhs.transactionHash == rhs.transactionHash && lhs.interTransactionIndex == rhs.interTransactionIndex
+        lhs.uid == rhs.uid
     }
 
 }

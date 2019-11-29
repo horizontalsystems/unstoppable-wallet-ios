@@ -33,6 +33,7 @@ class BinanceAdapter {
         }
 
         return TransactionRecord(
+                uid: transaction.hash,
                 transactionHash: transaction.hash,
                 transactionIndex: 0,
                 interTransactionIndex: 0,
@@ -91,15 +92,15 @@ extension BinanceAdapter: IBalanceAdapter {
     }
 
     var stateUpdatedObservable: Observable<Void> {
-        return binanceKit.syncStateObservable.map { _ in () }
+        binanceKit.syncStateObservable.map { _ in () }
     }
 
     var balance: Decimal {
-        return asset.balance
+        asset.balance
     }
 
     var balanceUpdatedObservable: Observable<Void> {
-        return asset.balanceObservable.map { _ in () }
+        asset.balanceObservable.map { _ in () }
     }
 
 }
@@ -115,7 +116,7 @@ extension BinanceAdapter: ISendBinanceAdapter {
     }
 
     var availableBinanceBalance: Decimal {
-        return binanceKit.binanceBalance
+        binanceKit.binanceBalance
     }
 
     func validate(address: String) throws {
@@ -128,11 +129,11 @@ extension BinanceAdapter: ISendBinanceAdapter {
     }
 
     var fee: Decimal {
-        return BinanceAdapter.transferFee
+        BinanceAdapter.transferFee
     }
 
     func sendSingle(amount: Decimal, address: String, memo: String?) -> Single<Void> {
-        return binanceKit.sendSingle(symbol: asset.symbol, to: address, amount: amount, memo: memo ?? "")
+        binanceKit.sendSingle(symbol: asset.symbol, to: address, amount: amount, memo: memo ?? "")
                 .map { _ in () }
     }
 
@@ -140,29 +141,29 @@ extension BinanceAdapter: ISendBinanceAdapter {
 
 extension BinanceAdapter: ITransactionsAdapter {
     var confirmationsThreshold: Int {
-        return 1
+        1
     }
 
     var lastBlockHeight: Int? {
-        return binanceKit.lastBlockHeight
+        binanceKit.lastBlockHeight
     }
 
     var lastBlockHeightUpdatedObservable: Observable<Void> {
-        return binanceKit.lastBlockHeightObservable.map { _ in () }
+        binanceKit.lastBlockHeightObservable.map { _ in () }
     }
 
     var transactionRecordsObservable: Observable<[TransactionRecord]> {
-        return asset.transactionsObservable.map { [weak self] in
+        asset.transactionsObservable.map { [weak self] in
             $0.compactMap {
                 self?.transactionRecord(fromTransaction: $0)
             }
         }
     }
 
-    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
-        return binanceKit.transactionsSingle(symbol: asset.symbol, fromTransactionHash: from?.hash, limit: limit)
+    func transactionsSingle(from: (uid: String, hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
+        binanceKit.transactionsSingle(symbol: asset.symbol, fromTransactionHash: from?.hash, limit: limit)
                 .map { [weak self] transactions -> [TransactionRecord] in
-                    return transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
+                    transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
                 }
     }
 
@@ -171,7 +172,7 @@ extension BinanceAdapter: ITransactionsAdapter {
 extension BinanceAdapter: IDepositAdapter {
 
     var receiveAddress: String {
-        return binanceKit.account
+        binanceKit.account
     }
 
 }
