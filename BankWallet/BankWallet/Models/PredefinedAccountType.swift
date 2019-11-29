@@ -38,6 +38,13 @@ enum PredefinedAccountType: CaseIterable {
         return false
     }
 
+    var createSupported: Bool {
+        switch self {
+        case .standard, .binance: return true
+        case .eos: return false
+        }
+    }
+
 }
 
 extension PredefinedAccountType: Hashable {

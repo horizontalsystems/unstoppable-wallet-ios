@@ -344,7 +344,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "settings_manage_keys.delete.confirmation_remove" = "The action will delete the %@ Wallet from this device.";
 "settings_manage_keys.delete.confirmation_disable" = "Coins that will be disabled: %@";
 "settings_manage_keys.delete.confirmation_loose" = "If you didn't backup the private key for this wallet, you will lose access to your funds.";
-"error.cant_create_eos" = "At this point, the wallet is not able to create new EOS wallet accounts. You're only able to restore the existing one.";
+"error.cant_create_wallet" = "At this point, the wallet is not able to create new %@ wallet accounts. You're only able to restore the existing one.";
 "error.invalid_eos_key" = "Invalid key";
 "error.invalid_eos_account" = "Invalid account";
 

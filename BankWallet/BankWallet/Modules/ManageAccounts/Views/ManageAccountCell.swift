@@ -93,8 +93,9 @@ class ManageAccountCell: CardCell {
         }
 
         switch viewItem.leftButtonState {
-        case .create:
+        case .create(let enabled):
             leftButton.setTitle("settings_manage_keys.create".localized, for: .normal)
+            leftButton.isEnabled = enabled
             onTapLeft = onTapCreate
         case .delete:
             leftButton.setTitle("settings_manage_keys.delete".localized, for : .normal)

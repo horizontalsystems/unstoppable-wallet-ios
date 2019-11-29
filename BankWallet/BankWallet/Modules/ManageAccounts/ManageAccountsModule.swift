@@ -50,7 +50,7 @@ struct ManageAccountViewItem {
 }
 
 enum ManageAccountLeftButtonState {
-    case create
+    case create(enabled: Bool)
     case delete
 }
 
