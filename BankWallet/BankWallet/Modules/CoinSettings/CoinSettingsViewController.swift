@@ -6,6 +6,8 @@ class CoinSettingsViewController: WalletViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
 
+    private var coinTitle: String = ""
+
     private var derivation: MnemonicDerivation?
     private var syncMode: SyncMode?
 
@@ -153,7 +155,7 @@ extension CoinSettingsViewController: SectionsDataSource {
             sections.append(Section(
                     id: "sync_mode",
                     headerState: header(hash: "sync_mode_header", text: "coin_settings.sync_mode.title".localized),
-                    footerState: footer(hash: "sync_mode_footer", text: "coin_settings.sync_mode.description".localized),
+                    footerState: footer(hash: "sync_mode_footer", text: "coin_settings.sync_mode.description".localized(coinTitle, coinTitle)),
                     rows: syncModeRows(selectedSyncMode: syncMode)
             ))
         }
@@ -165,8 +167,9 @@ extension CoinSettingsViewController: SectionsDataSource {
 
 extension CoinSettingsViewController: ICoinSettingsView {
 
-    func set(coin: Coin) {
-        title = coin.title
+    func set(coinTitle: String) {
+        self.coinTitle = coinTitle
+        title = coinTitle
     }
 
     func set(syncMode: SyncMode) {
