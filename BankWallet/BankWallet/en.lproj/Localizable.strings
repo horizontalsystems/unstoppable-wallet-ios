@@ -63,7 +63,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "coin_settings.sync_mode.slow.title" = "Slow";
 "coin_settings.sync_mode.fast.description" = "0-2 hours (Recommended)";
 "coin_settings.sync_mode.slow.description" = "1-12 hours (More Private)";
-"coin_settings.sync_mode.description" = "Fast: Restores wallet transaction history via secure third party server. Less private but fast.\n\nSlow: Restores wallet transaction history directly from the blockchain. More private but very slow.";
+"coin_settings.sync_mode.description" = "Fast: Restores %@ transaction history via secure third party server. Less private but fast.\n\nSlow: Restores %@ transaction history directly from the blockchain. More private but slow.";
 
 // Backup
 

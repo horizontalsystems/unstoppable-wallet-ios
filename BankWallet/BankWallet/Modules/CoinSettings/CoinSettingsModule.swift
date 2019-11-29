@@ -1,5 +1,5 @@
 protocol ICoinSettingsView: class {
-    func set(coin: Coin)
+    func set(coinTitle: String)
     func set(derivation: MnemonicDerivation)
     func set(syncMode: SyncMode)
 }

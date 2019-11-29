@@ -16,7 +16,7 @@ class CoinSettingsPresenter {
 extension CoinSettingsPresenter: ICoinSettingsViewDelegate {
 
     func onLoad() {
-        view?.set(coin: coin)
+        view?.set(coinTitle: coin.title)
 
         for (setting, value) in coinSettings {
             switch setting {
