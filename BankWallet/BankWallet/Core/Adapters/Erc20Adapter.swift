@@ -9,13 +9,15 @@ class Erc20Adapter: EthereumBaseAdapter {
     private let fee: Decimal
     private let gasLimit: Int?
     private(set) var minimumRequiredBalance: Decimal
+    private(set) var minimumSpendableAmount: Decimal?
 
-    init(ethereumKit: EthereumKit.Kit, contractAddress: String, decimal: Int, fee: Decimal, gasLimit: Int? = nil, minimumRequiredBalance: Decimal) throws {
+    init(ethereumKit: EthereumKit.Kit, contractAddress: String, decimal: Int, fee: Decimal, gasLimit: Int? = nil, minimumRequiredBalance: Decimal, minimumSpendableAmount: Decimal?) throws {
         self.erc20Kit = try Erc20Kit.Kit.instance(ethereumKit: ethereumKit, contractAddress: contractAddress)
         self.contractAddress = contractAddress
         self.fee = fee
         self.gasLimit = gasLimit
         self.minimumRequiredBalance = minimumRequiredBalance
+        self.minimumSpendableAmount = minimumSpendableAmount
 
         super.init(ethereumKit: ethereumKit, decimal: decimal)
     }

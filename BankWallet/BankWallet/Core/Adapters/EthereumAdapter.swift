@@ -112,6 +112,10 @@ extension EthereumAdapter: ISendEthereumAdapter {
         0
     }
 
+    var minimumSpendableAmount: Decimal? {
+        nil
+    }
+
     func fee(gasPrice: Int, gasLimit: Int) -> Decimal {
         ethereumKit.fee(gasPrice: gasPrice) / pow(10, EthereumAdapter.decimal)
     }

@@ -92,6 +92,9 @@ extension SendEthereumHandler: ISendHandler {
         feePriorityModule.fetchFeeRate()
 
         amountModule.set(minimumRequiredBalance: interactor.minimumRequiredBalance)
+        if let minimumSpendableAmount = interactor.minimumSpendableAmount {
+            amountModule.set(minimumAmount: minimumSpendableAmount)
+        }
 
         feeModule.set(availableFeeBalance: interactor.ethereumBalance)
         syncState()

@@ -24,6 +24,10 @@ extension SendEthereumInteractor: ISendEthereumInteractor {
         adapter.minimumRequiredBalance
     }
 
+    var minimumSpendableAmount: Decimal? {
+        adapter.minimumSpendableAmount
+    }
+
     func validate(address: String) throws {
         try adapter.validate(address: address)
     }
