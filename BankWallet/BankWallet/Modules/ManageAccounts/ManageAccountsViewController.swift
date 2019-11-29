@@ -85,6 +85,7 @@ extension ManageAccountsViewController: SectionsDataSource {
             Section(
                     id: "wallets",
                     headerState: header,
+                    footerState: .margin(height: .margin6x),
                     rows: rows
             )
         ]
