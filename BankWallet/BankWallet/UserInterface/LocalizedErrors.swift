@@ -28,15 +28,6 @@ extension Mnemonic.ValidationError: LocalizedError {
     }
 }
 
-extension AccountCreator.CreateError: LocalizedError {
-    public var errorDescription: String? {
-        switch self {
-        case .eosNotSupported:
-            return "error.cant_create_eos".localized
-        }
-    }
-}
-
 extension EosKit.ValidationError: LocalizedError {
     public var errorDescription: String? {
         switch self {

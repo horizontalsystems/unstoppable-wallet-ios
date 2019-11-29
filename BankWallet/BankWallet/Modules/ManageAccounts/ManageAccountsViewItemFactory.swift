@@ -13,7 +13,7 @@ class ManageAccountsViewItemFactory {
                 title: item.predefinedAccountType.title,
                 coinCodes: item.predefinedAccountType.coinCodes,
                 highlighted: item.account != nil,
-                leftButtonState: item.account == nil ? .create : .delete,
+                leftButtonState: item.account == nil ? .create(enabled: item.predefinedAccountType.createSupported) : .delete,
                 rightButtonState: rightButtonState
         )
     }

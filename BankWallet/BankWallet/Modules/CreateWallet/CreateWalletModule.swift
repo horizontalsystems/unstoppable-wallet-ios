@@ -2,13 +2,18 @@ protocol ICreateWalletView: class {
     func setCancelButton(visible: Bool)
     func set(featuredViewItems: [CoinToggleViewItem], viewItems: [CoinToggleViewItem])
     func setCreateButton(enabled: Bool)
+
+    func showNotSupported(coin: Coin, predefinedAccountType: PredefinedAccountType)
     func show(error: Error)
 }
 
 protocol ICreateWalletViewDelegate {
     func onLoad()
+
     func onEnable(viewItem: CoinToggleViewItem)
     func onDisable(viewItem: CoinToggleViewItem)
+    func onSelect(viewItem: CoinToggleViewItem)
+
     func onTapCreateButton()
     func onTapCancelButton()
 }

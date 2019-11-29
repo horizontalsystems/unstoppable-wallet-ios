@@ -31,7 +31,6 @@ class CreateWalletViewController: WalletViewController {
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
-        tableView.allowsSelection = false
         tableView.separatorStyle = .none
 
         view.addSubview(tableView)
@@ -54,10 +53,19 @@ class CreateWalletViewController: WalletViewController {
 
     private func rows(viewItems: [CoinToggleViewItem]) -> [RowProtocol] {
         viewItems.enumerated().map { (index, viewItem) in
-            Row<CoinToggleCell>(
+            var action: ((CoinToggleCell) -> ())?
+
+            if case .toggleHidden = viewItem.state {
+                action = { [weak self] _ in
+                    self?.delegate.onSelect(viewItem: viewItem)
+                }
+            }
+
+            return Row<CoinToggleCell>(
                     id: "coin_\(viewItem.coin.id)",
                     hash: "coin_\(viewItem.state)",
                     height: .heightDoubleLineCell,
+                    autoDeselect: true,
                     bind: { [weak self] cell, _ in
                         cell.bind(
                                 coin: viewItem.coin,
@@ -70,7 +78,8 @@ class CreateWalletViewController: WalletViewController {
                                 self?.delegate.onDisable(viewItem: viewItem)
                             }
                         }
-                    }
+                    },
+                    action: action
             )
         }
     }
@@ -124,6 +133,11 @@ extension CreateWalletViewController: ICreateWalletView {
 
     func setCreateButton(enabled: Bool) {
         navigationItem.rightBarButtonItem?.isEnabled = enabled
+    }
+
+    func showNotSupported(coin: Coin, predefinedAccountType: PredefinedAccountType) {
+        let controller = CreateWalletNotSupportedViewController(coin: coin, predefinedAccountType: predefinedAccountType)
+        present(controller, animated: true)
     }
 
     func show(error: Error) {

@@ -32,7 +32,7 @@ class ManageWalletsNoAccountViewController: WalletActionSheetController {
                 onSelectNew()
             }
         }
-        newItem.isEnabled = true
+        newItem.isEnabled = predefinedAccountType.createSupported
 
         model.addItemView(newItem)
 

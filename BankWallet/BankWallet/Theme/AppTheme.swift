@@ -203,7 +203,7 @@ extension UIButton {
         button.setTitleColor(.appGray50, for: .disabled)
         button.setBackgroundColor(color: .appElena, gradient: (colors: [UIColor(white: 1, alpha: App.theme.alphaSecondaryButtonGradient), UIColor(white: 1, alpha: 0)], height: .heightButtonSecondary), forState: .normal)
         button.setBackgroundColor(color: .appElena, forState: .highlighted)
-        button.setBackgroundColor(color: .appElena, forState: .disabled)
+        button.setBackgroundColor(color: .appJeremy, forState: .disabled)
         button.cornerRadius = .cornerRadius4
         button.borderColor = .appSteel20
         button.borderWidth = 1

@@ -25,8 +25,16 @@ class CreateWalletPresenter {
     }
 
     private func viewItem(coin: Coin) -> CoinToggleViewItem {
-        let enabled = wallets[coin] != nil
-        return CoinToggleViewItem(coin: coin, state: .toggleVisible(enabled: enabled))
+        let state: CoinToggleViewItemState
+
+        if coin.type.predefinedAccountType.createSupported {
+            let enabled = wallets[coin] != nil
+            state = .toggleVisible(enabled: enabled)
+        } else {
+            state = .toggleHidden
+        }
+
+        return CoinToggleViewItem(coin: coin, state: state)
     }
 
     private func syncViewItems() {
@@ -94,6 +102,10 @@ extension CreateWalletPresenter: ICreateWalletViewDelegate {
     func onDisable(viewItem: CoinToggleViewItem) {
         wallets.removeValue(forKey: viewItem.coin)
         syncCreateButton()
+    }
+
+    func onSelect(viewItem: CoinToggleViewItem) {
+        view?.showNotSupported(coin: viewItem.coin, predefinedAccountType: viewItem.coin.type.predefinedAccountType)
     }
 
     func onTapCreateButton() {
