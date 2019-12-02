@@ -9,8 +9,10 @@ class AdapterManager {
     private let binanceKitManager: BinanceKitManager
     private let walletManager: IWalletManager
 
-    private var adapters = SynchronizedDictionary<Wallet, IAdapter>()
-    let adaptersReadySignal = Signal()
+    private let subject = PublishSubject<Void>()
+
+    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.adapter_manager", qos: .userInitiated)
+    private var adapters = [Wallet: IAdapter]()
 
     init(adapterFactory: IAdapterFactory, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager, walletManager: IWalletManager) {
         self.adapterFactory = adapterFactory
@@ -29,7 +31,7 @@ class AdapterManager {
     }
 
     private func initAdapters(wallets: [Wallet]) {
-        var newAdapters: [Wallet: IAdapter] = adapters.rawDictionary
+        var newAdapters = queue.sync { adapters }
 
         for wallet in wallets {
             guard newAdapters[wallet] == nil else {
@@ -52,8 +54,10 @@ class AdapterManager {
             removedAdapters.append(adapter)
         }
 
-        adapters.rawDictionary = newAdapters
-        adaptersReadySignal.notify()
+        queue.async {
+            self.adapters = newAdapters
+            self.subject.onNext(())
+        }
 
         removedAdapters.forEach { adapter in
             adapter.stop()
@@ -64,25 +68,31 @@ class AdapterManager {
 
 extension AdapterManager: IAdapterManager {
 
+    var adaptersReadyObservable: Observable<Void> {
+        subject.asObservable()
+    }
+
     func adapter(for wallet: Wallet) -> IAdapter? {
-        adapters[wallet]
+        queue.sync { adapters[wallet] }
     }
 
     func balanceAdapter(for wallet: Wallet) -> IBalanceAdapter? {
-        adapters[wallet] as? IBalanceAdapter
+        queue.sync { adapters[wallet] as? IBalanceAdapter }
     }
 
     func transactionsAdapter(for wallet: Wallet) -> ITransactionsAdapter? {
-        adapters[wallet] as? ITransactionsAdapter
+        queue.sync { adapters[wallet] as? ITransactionsAdapter }
     }
 
     func depositAdapter(for wallet: Wallet) -> IDepositAdapter? {
-        adapters[wallet] as? IDepositAdapter
+        queue.sync { adapters[wallet] as? IDepositAdapter }
     }
 
     func refresh() {
-        for (_, adapter) in adapters.rawDictionary {
-            adapter.refresh()
+        queue.async {
+            for adapter in self.adapters.values {
+                adapter.refresh()
+            }
         }
 
         ethereumKitManager.ethereumKit?.refresh()
