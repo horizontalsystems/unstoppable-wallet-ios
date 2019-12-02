@@ -11,15 +11,6 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
         let record = item.record
         let coin = item.wallet.coin
 
-        let feeCoinValue: CoinValue? = item.record.fee.map {
-            let feeCoin = feeCoinProvider.feeCoin(coin: coin) ?? coin
-            return CoinValue(coin: feeCoin, value: $0)
-        }
-        let absoluteAmount: Decimal = abs(record.amount)
-        let currencyValue = rate.map {
-            CurrencyValue(currency: $0.currency, value: $0.value * absoluteAmount)
-        }
-
         var status: TransactionStatus = .pending
 
         if item.record.failed {
@@ -35,24 +26,37 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
             }
         }
 
-        let incoming = record.amount > 0
+        var amount = record.amount
+        let incoming = amount > 0
         var from: String?
         var to: String?
-        var lockInfo: TransactionLockInfo?
         if incoming {
             from = record.from.first(where: { $0.mine == false })?.address
         } else {
             to = record.to.first(where: { $0.mine == false })?.address
         }
-        if let toAddress = record.to.first {
-            lockInfo = TransactionLockInfo(pluginId: toAddress.pluginId, pluginData: toAddress.pluginData)
-        }
+
         let sentToSelf = !record.from.contains(where: { !$0.mine }) && !record.to.contains(where: { !$0.mine })
+
+        let lockInfo = record.lockInfo
+        if let lockInfo = lockInfo {
+            amount = lockInfo.lockedValue
+        }
+
+        let absoluteAmount: Decimal = abs(amount)
+        let currencyValue = rate.map {
+            CurrencyValue(currency: $0.currency, value: $0.value * absoluteAmount)
+        }
+        let coinValue = CoinValue(coin: coin, value: absoluteAmount)
+        let feeCoinValue: CoinValue? = item.record.fee.map {
+            let feeCoin = feeCoinProvider.feeCoin(coin: coin) ?? coin
+            return CoinValue(coin: feeCoin, value: $0)
+        }
 
         return TransactionViewItem(
                 wallet: item.wallet,
                 transactionHash: record.transactionHash,
-                coinValue: CoinValue(coin: coin, value: absoluteAmount),
+                coinValue: coinValue,
                 feeCoinValue: feeCoinValue,
                 currencyValue: currencyValue,
                 from: from,

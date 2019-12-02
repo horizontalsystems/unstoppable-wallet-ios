@@ -10,6 +10,7 @@ struct TransactionRecord {
     let fee: Decimal?
     let date: Date
     let failed: Bool
+    let lockInfo: TransactionLockInfo?
 
     let from: [TransactionAddress]
     let to: [TransactionAddress]
@@ -18,14 +19,10 @@ struct TransactionRecord {
 struct TransactionAddress {
     let address: String
     let mine: Bool
-    let pluginId: UInt8?
-    let pluginData: Any?
 
-    init(address: String, mine: Bool, pluginId: UInt8? = nil, pluginData: Any? = nil) {
+    init(address: String, mine: Bool) {
         self.address = address
         self.mine = mine
-        self.pluginId = pluginId
-        self.pluginData = pluginData
     }
 
 }

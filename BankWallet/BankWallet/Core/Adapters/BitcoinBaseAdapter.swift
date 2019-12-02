@@ -1,4 +1,5 @@
 import BitcoinCore
+import Hodler
 import RxSwift
 
 class BitcoinBaseAdapter {
@@ -22,12 +23,26 @@ class BitcoinBaseAdapter {
 
     func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
         let fromAddresses = transaction.from.map {
-            TransactionAddress(address: $0.address, mine: $0.mine, pluginId: $0.pluginId, pluginData: $0.pluginData)
+            TransactionAddress(address: $0.address, mine: $0.mine)
         }
 
         let toAddresses = transaction.to.map {
-            TransactionAddress(address: $0.address, mine: $0.mine, pluginId: $0.pluginId, pluginData: $0.pluginData)
+            TransactionAddress(address: $0.address, mine: $0.mine)
         }
+
+        let lockInfo: TransactionLockInfo? = transaction.to.compactMap { address in
+            guard let pluginId = address.pluginId, pluginId == HodlerPlugin.id,
+                  let hodlerOutputData = address.pluginData as? HodlerOutputData,
+                  let approximateUnlockTime = hodlerOutputData.approximateUnlockTime else {
+                return nil
+            }
+
+            return TransactionLockInfo(
+                    lockedUntil: Date(timeIntervalSince1970: Double(approximateUnlockTime)),
+                    originalAddress: hodlerOutputData.addressString,
+                    lockedValue: Decimal(hodlerOutputData.lockedValue) / coinRate
+            )
+        }.first
 
         return TransactionRecord(
                 uid: transaction.uid,
@@ -39,6 +54,7 @@ class BitcoinBaseAdapter {
                 fee: transaction.fee.map { Decimal($0) / coinRate },
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
                 failed: transaction.status == .invalid,
+                lockInfo: lockInfo,
                 from: fromAddresses,
                 to: toAddresses
         )

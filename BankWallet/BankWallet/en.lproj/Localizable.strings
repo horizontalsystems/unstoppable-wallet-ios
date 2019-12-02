@@ -197,7 +197,8 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "tx_info.button_verify" = "Verify";
 "tx_info.rate" = "Historical Rate";
 "tx_info.fee" = "Fee";
-"tx_info.note" = "The value of this transaction appears as 0 because it was sent to your own address";
+"tx_info.to_self_note" = "The value of this transaction appears as 0 because it was sent to your own address";
+"tx_info.locked_to_self_note" = "This transaction was sent to your own address";
 "tx_info.locked_until" = "Locked until";
 "tx_info.recipient_hash" = "Recipient";
 

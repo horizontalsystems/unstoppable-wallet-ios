@@ -37,7 +37,7 @@ class TransactionInfoViewController: WalletActionSheetController {
         model.addItemView(amountItem)
 
         if let lockInfo = item.lockInfo {
-            let lockedDate = DateHelper.instance.formatFullDateOnly(from: lockInfo.lockedUntil)
+            let lockedDate = DateHelper.instance.formatFullDateWithHour(from: lockInfo.lockedUntil)
             let lockDateItem = TransactionValueActionItem(title: "tx_info.locked_until".localized, value: lockedDate, tag: 2, iconName: "Transaction Info Icon") { [weak self] in
                 self?.delegate.openLockInfo()
             }
@@ -80,7 +80,8 @@ class TransactionInfoViewController: WalletActionSheetController {
         }))
 
         if item.sentToSelf {
-            let infoItem = TransactionNoteItem(note: "* " + "tx_info.note".localized, tag: 10)
+            let note = item.lockInfo == nil ? "tx_info.to_self_note".localized : "tx_info.locked_to_self_note".localized
+            let infoItem = TransactionNoteItem(note: "* " + note, tag: 10)
             model.addItemView(infoItem)
         }
 

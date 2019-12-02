@@ -6,16 +6,10 @@ struct TransactionLockInfo {
     let originalAddress: String
     let lockedValue: Decimal
 
-    init?(pluginId: UInt8?, pluginData: Any?) {
-        guard let pluginId = pluginId, let pluginData = pluginData,
-              pluginId == HodlerPlugin.id, let hodlerOutputData = pluginData as? HodlerOutputData,
-              let lockUntil = hodlerOutputData.approximateUnlockTime else {
-            return nil
-        }
-
-        lockedUntil = Date(timeIntervalSince1970: Double(lockUntil))
-        originalAddress = hodlerOutputData.addressString
-        lockedValue = Decimal(hodlerOutputData.lockedValue)
+    init?(lockedUntil: Date, originalAddress: String, lockedValue: Decimal) {
+        self.lockedUntil = lockedUntil
+        self.originalAddress = originalAddress
+        self.lockedValue = lockedValue
     }
 
 }

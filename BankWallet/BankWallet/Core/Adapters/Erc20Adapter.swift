@@ -58,6 +58,7 @@ class Erc20Adapter: EthereumBaseAdapter {
                 fee: nil,
                 date: Date(timeIntervalSince1970: transaction.timestamp),
                 failed: transaction.isError,
+                lockInfo: nil,
                 from: [from],
                 to: [to]
         )
