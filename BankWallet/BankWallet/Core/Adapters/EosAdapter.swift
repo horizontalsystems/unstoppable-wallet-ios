@@ -34,6 +34,7 @@ class EosAdapter {
                 fee: nil,
                 date: transaction.date,
                 failed: false,
+                lockInfo: nil,
                 from: [from],
                 to: [to]
         )

@@ -42,6 +42,7 @@ class BinanceAdapter {
                 fee: BinanceAdapter.transferFee,
                 date: transaction.date,
                 failed: false,
+                lockInfo: nil,
                 from: [from],
                 to: [to]
         )

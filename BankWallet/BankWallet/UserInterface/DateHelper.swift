@@ -80,6 +80,11 @@ public class DateHelper {
         return formatter.string(from: date)
     }
 
+    public func formatFullDateWithHour(from date: Date) -> String {
+        let formatter = getFormatter(forFormat: "MMM d, yyyy, \(DateHelper.correctedSystemHourFormat)")
+        return formatter.string(from: date)
+    }
+
     public func formatDayOfWeek(from date: Date) -> String {
         let formatter = getFormatter(forFormat: "E")
         return formatter.string(from: date)

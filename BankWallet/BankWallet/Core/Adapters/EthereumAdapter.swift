@@ -44,6 +44,7 @@ class EthereumAdapter: EthereumBaseAdapter {
                 fee: transaction.gasUsed.map { Decimal(sign: .plus, exponent: -decimal, significand: Decimal($0 * transaction.gasPrice)) },
                 date: Date(timeIntervalSince1970: transaction.timestamp),
                 failed: failed,
+                lockInfo: nil,
                 from: [from],
                 to: [to]
         )
