@@ -389,7 +389,7 @@ class BalanceCell: CardCell {
 
         if let chartInfo = item.chartInfo {
             let points = chartInfo.points.map {
-                ChartPointPosition(timestamp: $0.timestamp, value: $0.value)
+                ChartPoint(timestamp: $0.timestamp, value: $0.value)
             }
 
             chartView.set(gridIntervalType: GridIntervalConverter.convert(chartType: ChartType.day), data: points, start: chartInfo.startTimestamp, end: chartInfo.endTimestamp, animated: false)

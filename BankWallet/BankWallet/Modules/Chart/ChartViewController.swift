@@ -11,6 +11,13 @@ class ChartViewController: WalletActionSheetController {
         return formatter
     }()
 
+    private let currencyFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.maximumFractionDigits = 8
+        return formatter
+    }()
+
     private let delegate: IChartViewDelegate
 
     private let titleItem: AlertTitleItem
@@ -158,7 +165,11 @@ extension ChartViewController: IChartView {
     func showSelectedPoint(chartType: ChartType, timestamp: TimeInterval, value: CurrencyValue) {
         let date = Date(timeIntervalSince1970: timestamp)
         let formattedDate = [ChartType.month, ChartType.halfYear, ChartType.year].contains(chartType) ? DateHelper.instance.formatFullDateOnly(from: date) : DateHelper.instance.formatFullTime(from: date)
-        let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
+
+
+        currencyFormatter.currencyCode = value.currency.code
+        currencyFormatter.currencySymbol = value.currency.symbol
+        let formattedValue = currencyFormatter.string(from: value.value as NSNumber)
 
         chartRateTypeItem.showPoint?(formattedDate, formattedValue)
     }
@@ -183,7 +194,7 @@ extension ChartViewController: IChartView {
 
 extension ChartViewController: IChartIndicatorDelegate {
 
-    func didTap(chartPoint: ChartPointPosition) {
+    func didTap(chartPoint: ChartPoint) {
         delegate.chartTouchSelect(timestamp: chartPoint.timestamp, value: chartPoint.value)
     }
 

@@ -7,10 +7,11 @@ class ChartView: UIView {
 
     private let scaleHelper: ValueScaleHelper
     private let timelineHelper: TimelineHelper
+    private let pointConverter: IPointConverter
 
     private weak var indicatorDelegate: IChartIndicatorDelegate?
 
-    private(set) var chartData = [ChartPointPosition]()
+    private(set) var chartData = [ChartPoint]()
     private(set) var chartFrame: ChartFrame = .zero
     private(set) var curveInsets: UIEdgeInsets = .zero
 
@@ -23,16 +24,21 @@ class ChartView: UIView {
         self.gridIntervalType = gridIntervalType
         self.indicatorDelegate = indicatorDelegate
 
-        scaleHelper = ValueScaleHelper(valueScaleLines: configuration.gridHorizontalLineCount, valueOffsetPercent: configuration.curveVerticalOffset, maxScale: configuration.gridMaxScale, textFont: configuration.gridTextFont, textVerticalMargin: configuration.gridTextMargin, textLeftMargin: configuration.gridTextMargin, textRightMargin: configuration.gridTextRightMargin)
+        scaleHelper = ValueScaleHelper(valueDigitDiff: configuration.valueDigitDiff, maxScale: configuration.gridMaxScale)
         timelineHelper = TimelineHelper()
-        curveView = ChartCurveView(configuration: configuration)
+
+        let percentPadding = configuration.showGrid ? 0 : configuration.curvePercentPadding
+        let pixelsMargin = configuration.showLimitValues ? (configuration.limitTextFont.lineHeight + 2 * CGFloat.margin1x) : 0
+        pointConverter = PointConverter(percentPadding: percentPadding, pixelsMargin: pixelsMargin)
+
+        curveView = ChartCurveView(configuration: configuration, pointConverter: pointConverter)
 
         super.init(frame: .zero)
 
         backgroundColor = configuration.backgroundColor
 
         if indicatorDelegate != nil {
-            indicatorView = ChartIndicatorView(configuration: configuration, delegate: self)
+            indicatorView = ChartIndicatorView(configuration: configuration, pointConverter: pointConverter, delegate: self)
         }
 
         curveView.dataSource = self
@@ -48,6 +54,7 @@ class ChartView: UIView {
         if configuration.showGrid {
             let timestampGridView = TimestampsGridView(timelineHelper: timelineHelper, configuration: configuration)
             timestampGridView.dataSource = self
+
             addSubview(timestampGridView)
             timestampGridView.snp.makeConstraints { maker in
                 maker.top.equalToSuperview().offset(configuration.chartInsets.top)
@@ -69,15 +76,12 @@ class ChartView: UIView {
         }
         addSubview(curveView)
         if configuration.showLimitValues {
-            let limitGridView = LimitsGridView(configuration: configuration)
+            let limitGridView = LimitsGridView(configuration: configuration, pointConverter: pointConverter)
             limitGridView.dataSource = self
 
             addSubview(limitGridView)
             limitGridView.snp.makeConstraints { maker in
-                maker.top.equalToSuperview().offset(configuration.chartInsets.top)
-                maker.left.equalToSuperview().offset(configuration.chartInsets.left)
-                maker.bottom.equalToSuperview().offset(-configuration.chartInsets.bottom)
-                maker.right.equalToSuperview().offset(-configuration.chartInsets.right)
+                maker.edges.equalToSuperview().inset(configuration.chartInsets)
             }
             gridViews.append(limitGridView)
         }
@@ -86,7 +90,7 @@ class ChartView: UIView {
         }
     }
 
-    public func set(gridIntervalType: GridIntervalType, data: [ChartPointPosition], start: TimeInterval? = nil, end: TimeInterval? = nil, animated: Bool = true) {
+    public func set(gridIntervalType: GridIntervalType, data: [ChartPoint], start: TimeInterval? = nil, end: TimeInterval? = nil, animated: Bool = true) {
         self.gridIntervalType = gridIntervalType
         self.chartData = data
 
@@ -119,7 +123,7 @@ class ChartView: UIView {
             return
         }
 
-        let scale = scaleHelper.scale(minValue: minValue, maxValue: maxValue)
+        let scale = scaleHelper.scale(min: minValue, max: maxValue)
         let chartColorType: ChartColorType
 
         if endTimestamp ?? maximumTimestamp == maximumTimestamp {
@@ -128,9 +132,9 @@ class ChartView: UIView {
             chartColorType = .incomplete
         }
         chartFrame = ChartFrame(left: startTimestamp ?? minimumTimestamp, right: endTimestamp ?? maximumTimestamp,
-                top: scale.topValue, bottom: scale.topValue - Decimal(configuration.gridHorizontalLineCount - 1) * scale.delta,
+                top: maxValue, bottom: minValue,
                 minValue: minValue, maxValue: maxValue,
-                scale: scale.decimal, chartColorType: chartColorType)
+                scale: scale, chartColorType: chartColorType)
     }
 
     private func updateInsets() {
@@ -160,8 +164,10 @@ extension ChartView: IChartDataSource {}
 
 extension ChartView: IChartIndicatorDelegate {
 
-    func didTap(chartPoint: ChartPointPosition) {
-        indicatorDelegate?.didTap(chartPoint: chartPoint)
+    func didTap(chartPoint: ChartPoint) {
+        let correctedValuePoint = ChartPoint(timestamp: chartPoint.timestamp, value: chartPoint.value)
+
+        indicatorDelegate?.didTap(chartPoint: correctedValuePoint)
         curveView.set(curveColor: configuration.selectedCurveColor, gradientColor: configuration.selectedGradientColor)
 
         gridViews.forEach { $0.on(select: true) }

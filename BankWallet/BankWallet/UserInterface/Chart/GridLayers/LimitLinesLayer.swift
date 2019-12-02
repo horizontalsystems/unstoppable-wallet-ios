@@ -2,23 +2,23 @@ import UIKit
 
 class LimitLinesLayer: CAShapeLayer {
 
-    func refresh(configuration: ChartConfiguration, insets: UIEdgeInsets, chartFrame: ChartFrame) {
+    func refresh(configuration: ChartConfiguration, pointConverter: IPointConverter, insets: UIEdgeInsets, chartFrame: ChartFrame) {
         guard !bounds.isEmpty else {
             return
         }
         self.sublayers?.removeAll()
 
-        let deltaY = (bounds.height - insets.height).decimalValue / chartFrame.height
-        let minHeight = deltaY * (chartFrame.top - chartFrame.minValue)
-        let maxHeight = deltaY * (chartFrame.top - chartFrame.maxValue)
-
         let horizontalPath = UIBezierPath()
 
-        let maxPointOffsetY = floor(insets.top + maxHeight.cgFloatValue)
+        let frameBounds = bounds.inset(by: insets)
+        let maxPointOffsetY = pointConverter.convert(chartPoint: ChartPoint(timestamp: 0, value: chartFrame.maxValue),
+                viewBounds: frameBounds, chartFrame: chartFrame, retinaShift: false).y
+        let minPointOffsetY = pointConverter.convert(chartPoint: ChartPoint(timestamp: 0, value: chartFrame.minValue),
+                viewBounds: frameBounds, chartFrame: chartFrame, retinaShift: false).y
+
         horizontalPath.move(to: CGPoint(x: insets.left, y: maxPointOffsetY))
         horizontalPath.addLine(to: CGPoint(x: bounds.width - insets.right, y: maxPointOffsetY))
 
-        let minPointOffsetY = floor(insets.top + minHeight.cgFloatValue)
         horizontalPath.move(to: CGPoint(x: insets.left, y: minPointOffsetY))
         horizontalPath.addLine(to: CGPoint(x: bounds.width - insets.right, y: minPointOffsetY))
 

@@ -24,14 +24,12 @@ class ChartRateItemView: BaseActionItemView {
         guard let item = item else {
             return
         }
-
         let chartView = ChartView(configuration: item.chartConfiguration, gridIntervalType: GridIntervalConverter.convert(chartType: .day), indicatorDelegate: item.indicatorDelegate)
         self.chartView = chartView
         addSubview(chartView)
         chartView.snp.makeConstraints { maker in
-            maker.top.equalToSuperview()
+            maker.top.bottom.equalToSuperview()
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.height.equalTo(210)
         }
 
         addSubview(processSpinner)

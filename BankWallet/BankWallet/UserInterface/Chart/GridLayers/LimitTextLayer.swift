@@ -3,23 +3,17 @@ import UIKit
 class LimitTextLayer: CATextLayer {
     private let verticalMargin: CGFloat = .margin1x
 
-    func refresh(configuration: ChartConfiguration, insets: UIEdgeInsets, chartFrame: ChartFrame) {
+    func refresh(configuration: ChartConfiguration, pointConverter: IPointConverter, insets: UIEdgeInsets, chartFrame: ChartFrame) {
         guard !bounds.isEmpty else {
             return
         }
         self.sublayers?.removeAll()
 
-        let deltaY = (bounds.height - insets.height).decimalValue / chartFrame.height
-
-        let maxHeight = deltaY * (chartFrame.top - chartFrame.maxValue)
-        let maxPointOffsetY = floor(insets.top + maxHeight.cgFloatValue + verticalMargin)
-
-        let minHeight = deltaY * (chartFrame.top - chartFrame.minValue)
-        var minPointOffsetY = floor(insets.top + minHeight.cgFloatValue + verticalMargin)
-
-        if minPointOffsetY > bounds.height - insets.height - UIFont.appSubhead1.lineHeight - verticalMargin {      // maxValue can't fit under line
-            minPointOffsetY = insets.top + minHeight.cgFloatValue - verticalMargin - configuration.limitTextFont.lineHeight
-        }
+        let frameBounds = bounds.inset(by: insets)
+        let maxPointOffsetY = pointConverter.convert(chartPoint: ChartPoint(timestamp: 0, value: chartFrame.maxValue),
+                viewBounds: frameBounds, chartFrame: chartFrame, retinaShift: false).y - configuration.limitTextFont.lineHeight - verticalMargin
+        let minPointOffsetY = pointConverter.convert(chartPoint: ChartPoint(timestamp: 0, value: chartFrame.minValue),
+                viewBounds: frameBounds, chartFrame: chartFrame, retinaShift: false).y + verticalMargin
 
         let formatter = ValueScaleHelper.formatter
         formatter.minimumFractionDigits = 0

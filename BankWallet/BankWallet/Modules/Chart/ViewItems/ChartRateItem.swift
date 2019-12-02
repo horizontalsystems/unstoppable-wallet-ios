@@ -5,7 +5,7 @@ class ChartRateItem: BaseActionItem {
     let chartConfiguration: ChartConfiguration
     weak var indicatorDelegate: IChartIndicatorDelegate?
 
-    var bind: ((GridIntervalType, [ChartPointPosition], TimeInterval?, TimeInterval?, Bool) -> ())?
+    var bind: ((GridIntervalType, [ChartPoint], TimeInterval?, TimeInterval?, Bool) -> ())?
     var showSpinner: (() -> ())?
     var hideSpinner: (() -> ())?
     var showError: ((String) -> ())?
@@ -17,7 +17,7 @@ class ChartRateItem: BaseActionItem {
         super.init(cellType: ChartRateItemView.self, tag: tag, required: true)
 
         showSeparator = false
-        height = 218
+        height = 210
     }
 
 }

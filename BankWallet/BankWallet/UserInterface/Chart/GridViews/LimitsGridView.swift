@@ -7,10 +7,13 @@ class LimitsGridView: UIView {
     weak var dataSource: IChartDataSource?
 
     private let configuration: ChartConfiguration
+    private let pointConverter: IPointConverter
+
     var bottomPadding: CGFloat = .zero
 
-    public init(configuration: ChartConfiguration) {
+    public init(configuration: ChartConfiguration, pointConverter: IPointConverter) {
         self.configuration = configuration
+        self.pointConverter = pointConverter
 
         super.init(frame: .zero)
 
@@ -51,8 +54,8 @@ extension LimitsGridView: IGridView {
         var insets = UIEdgeInsets.zero
         insets.bottom = bottomPadding
 
-        limitLinesLayer.refresh(configuration: configuration, insets: insets, chartFrame: chartFrame)
-        limitTextLayer.refresh(configuration: configuration, insets: insets, chartFrame: chartFrame)
+        limitLinesLayer.refresh(configuration: configuration, pointConverter: pointConverter, insets: insets, chartFrame: chartFrame)
+        limitTextLayer.refresh(configuration: configuration, pointConverter: pointConverter, insets: insets, chartFrame: chartFrame)
     }
 
     func update(bottomPadding: CGFloat) {
