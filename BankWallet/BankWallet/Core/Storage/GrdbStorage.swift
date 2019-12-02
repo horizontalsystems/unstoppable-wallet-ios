@@ -51,7 +51,7 @@ class GrdbStorage {
 
         migrator.registerMigration("migrateAuthData") { db in
             let keychain = Keychain(service: "io.horizontalsystems.bank.dev")
-            guard let data = try? keychain.getData("auth_data_keychain_key"), let authData = NSKeyedUnarchiver.unarchiveObject(with: data) as? AuthData else {
+            guard let data = try? keychain.getData("auth_data_keychain_key"), let authData = try? NSKeyedUnarchiver.unarchivedObject(ofClass: AuthData.self, from: data) else {
                 return
             }
             try? keychain.remove("auth_data_keychain_key")
