@@ -77,7 +77,7 @@ extension BalanceInteractor: IBalanceInteractor {
                 })
                 .disposed(by: disposeBag)
 
-        adapterManager.adaptersReadySignal
+        adapterManager.adaptersReadyObservable
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .subscribe(onNext: { [weak self] in
                     self?.onAdaptersReady()

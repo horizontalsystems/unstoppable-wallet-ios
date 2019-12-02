@@ -60,7 +60,7 @@ protocol ILanguageManager {
 }
 
 protocol IAdapterManager: class {
-    var adaptersReadySignal: Signal { get }
+    var adaptersReadyObservable: Observable<Void> { get }
     func adapter(for wallet: Wallet) -> IAdapter?
     func balanceAdapter(for wallet: Wallet) -> IBalanceAdapter?
     func transactionsAdapter(for wallet: Wallet) -> ITransactionsAdapter?
