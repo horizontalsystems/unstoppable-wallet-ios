@@ -52,22 +52,18 @@ class TransactionsViewController: WalletViewController {
         tableView.estimatedRowHeight = 0
         tableView.delaysContentTouches = false
 
-        let emptyView = UIView()
-        emptyView.backgroundColor = .clear
-        tableView.backgroundView = emptyView
-
-        view.layoutIfNeeded()
-        emptyLabel.text = "transactions.empty_text".localized
-        emptyLabel.numberOfLines = 0
-        emptyLabel.font = .systemFont(ofSize: 14)
-        emptyLabel.textColor = .cryptoGray
-        emptyLabel.textAlignment = .center
-        emptyView.addSubview(emptyLabel)
+        view.addSubview(emptyLabel)
         emptyLabel.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.leading.equalToSuperview().offset(50)
             maker.trailing.equalToSuperview().offset(-50)
         }
+
+        emptyLabel.text = "transactions.empty_text".localized
+        emptyLabel.numberOfLines = 0
+        emptyLabel.font = .systemFont(ofSize: 14)
+        emptyLabel.textColor = .cryptoGray
+        emptyLabel.textAlignment = .center
 
         delegate.viewDidLoad()
     }
