@@ -3,7 +3,7 @@ import UIKit
 class ChartCurveView: UIView {
     private let configuration: ChartConfiguration
     public weak var dataSource: IChartDataSource?
-    private let pointConverter: PointConverter
+    private let pointConverter: IPointConverter
 
     private let linesLayer = CAShapeLayer()
     private let gradientLayer = CAGradientLayer()
@@ -13,9 +13,9 @@ class ChartCurveView: UIView {
 
     private var animated: Bool = false
 
-    public init(configuration: ChartConfiguration) {
+    public init(configuration: ChartConfiguration, pointConverter: IPointConverter) {
         self.configuration = configuration
-        self.pointConverter = PointConverter()
+        self.pointConverter = pointConverter
 
         super.init(frame: .zero)
         commonInit()

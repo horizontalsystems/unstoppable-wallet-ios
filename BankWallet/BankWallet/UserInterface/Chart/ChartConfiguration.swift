@@ -14,7 +14,7 @@ class ChartConfiguration {
     var curveNegativeColor: UIColor = .cryptoRed
     var curveIncompleteColor: UIColor = .appGray50
 
-    var curveVerticalOffset: Decimal = 0.05
+    var curvePercentPadding: CGFloat = 0.1
 
     var gradientPositiveColor: UIColor = .cryptoGreen
     var gradientNegativeColor: UIColor = .cryptoRed
@@ -23,8 +23,8 @@ class ChartConfiguration {
     var gradientFinishTransparency: CGFloat = 0.05
 
     var gridNonVisibleLineDeltaX: CGFloat = 5                           // if timestamp line drawing near sides lines we must draw only sides line
-    var gridHorizontalLineCount: Int = 5
-    var gridMaxScale: Int = 4
+    var valueDigitDiff: Int = 5
+    var gridMaxScale: Int = 8
 
     var limitColor: UIColor = .appNina
 
@@ -33,7 +33,6 @@ class ChartConfiguration {
     var gridTextFont: UIFont = .systemFont(ofSize: 12)
 
     var gridTextMargin: CGFloat = .margin1x
-    var gridTextRightMargin: CGFloat = .margin4x
 
     var limitTextFont: UIFont = .appSubhead1
     var limitTextColor: UIColor = .appLeah

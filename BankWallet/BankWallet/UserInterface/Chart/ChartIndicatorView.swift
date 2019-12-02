@@ -8,15 +8,16 @@ class ChartIndicatorView: UIView {
     private let configuration: ChartConfiguration
 
     private var gestureRecognizer: UILongPressGestureRecognizer?
-    private let pointConverter = PointConverter()
+    private let pointConverter: IPointConverter
     private let indicatorLayer: IndicatorLayer
 
     private var deltaTimestamp: CGFloat = 0
-    private var selectedPoint: ChartPointPosition?
+    private var selectedPoint: ChartPoint?
 
-    public init(configuration: ChartConfiguration, delegate: IChartIndicatorDelegate?) {
+    public init(configuration: ChartConfiguration, pointConverter: IPointConverter, delegate: IChartIndicatorDelegate?) {
         self.indicatorDelegate = delegate
         self.configuration = configuration
+        self.pointConverter = pointConverter
         indicatorLayer = IndicatorLayer(configuration: configuration)
 
         super.init(frame: .zero)
@@ -56,7 +57,7 @@ class ChartIndicatorView: UIView {
         }
     }
 
-    private func findPoint(x: CGFloat) -> ChartPointPosition? {
+    private func findPoint(x: CGFloat) -> ChartPoint? {
         guard !bounds.isEmpty, let dataSource = dataSource, deltaTimestamp > .ulpOfOne else {
             return nil
         }
@@ -87,7 +88,7 @@ class ChartIndicatorView: UIView {
         return nearestPoint
     }
 
-    private func change(point: ChartPointPosition) {
+    private func change(point: ChartPoint) {
         guard selectedPoint != point, let dataSource = dataSource else {
             return
         }
