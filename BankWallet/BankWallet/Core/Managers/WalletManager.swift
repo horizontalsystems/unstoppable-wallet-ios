@@ -4,10 +4,12 @@ class WalletManager {
     private let accountManager: IAccountManager
     private let walletFactory: IWalletFactory
     private let storage: IWalletStorage
-    private let cache: WalletsCache = WalletsCache()
 
     private let disposeBag = DisposeBag()
-    private let walletsUpdatedSubject = PublishSubject<[Wallet]>()
+    private let subject = PublishSubject<[Wallet]>()
+
+    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet_manager", qos: .userInitiated)
+    private var cachedWallets = [Wallet]()
 
     init(accountManager: IAccountManager, walletFactory: IWalletFactory, storage: IWalletStorage) {
         self.accountManager = accountManager
@@ -16,7 +18,7 @@ class WalletManager {
     }
 
     private func notify() {
-        walletsUpdatedSubject.onNext(cache.wallets)
+        subject.onNext(cachedWallets)
     }
 
 }
@@ -24,11 +26,11 @@ class WalletManager {
 extension WalletManager: IWalletManager {
 
     var wallets: [Wallet] {
-        cache.wallets
+        queue.sync { cachedWallets }
     }
 
     var walletsUpdatedObservable: Observable<[Wallet]> {
-        walletsUpdatedSubject.asObservable()
+        subject.asObservable()
     }
 
     func wallet(coin: Coin) -> Wallet? {
@@ -41,50 +43,33 @@ extension WalletManager: IWalletManager {
 
     func preloadWallets() {
         let wallets = storage.wallets(accounts: accountManager.accounts)
-        cache.wallets = wallets
-        notify()
+
+        queue.async {
+            self.cachedWallets = wallets
+            self.notify()
+        }
     }
 
     func save(wallets: [Wallet]) {
         storage.save(wallets: wallets)
-        cache.append(wallets: wallets)
-        notify()
+
+        queue.async {
+            self.cachedWallets.append(contentsOf: wallets)
+            self.notify()
+        }
     }
 
     func delete(wallets: [Wallet]) {
         storage.delete(wallets: wallets)
-        cache.remove(wallets: wallets)
-        notify()
+
+        queue.async {
+            self.cachedWallets.removeAll { wallets.contains($0) }
+            self.notify()
+        }
     }
 
     func clearWallets() {
         storage.clearWallets()
-    }
-
-}
-
-extension WalletManager {
-
-    private class WalletsCache {
-        private var array = [Wallet]()
-
-        var wallets: [Wallet] {
-            get {
-                array
-            }
-            set {
-                array = newValue
-            }
-        }
-
-        func append(wallets: [Wallet]) {
-            array.append(contentsOf: wallets)
-        }
-
-        func remove(wallets: [Wallet]) {
-            array.removeAll { wallets.contains($0) }
-        }
-
     }
 
 }

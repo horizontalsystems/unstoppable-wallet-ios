@@ -16,7 +16,7 @@ class RateManager {
         kit = XRatesKit.instance(currencyCode: currencyManager.baseCurrency.code, marketInfoExpirationInterval: 10 * 60)
 
         walletManager.walletsUpdatedObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .subscribe(onNext: { [weak self] wallets in
                     self?.onUpdate(wallets: wallets)
                 })
