@@ -12,6 +12,7 @@ class SendViewController: WalletViewController {
     private let iconImageView = UIImageView()
     private let sendHolderView = UIView()
     private let sendButton: UIButton = .appYellow
+    private var keyboardShown = false
 
     private let views: [UIView]
 
@@ -78,7 +79,10 @@ class SendViewController: WalletViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        delegate.showKeyboard()
+        if !keyboardShown {
+            keyboardShown = true
+            delegate.showKeyboard()
+        }
     }
 
     private func buildViews() {
