@@ -55,7 +55,7 @@ class SendAmountView: UIView {
             maker.top.equalToSuperview().offset(CGFloat.margin2x)
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
         }
-        
+
         addSubview(availableBalanceValueLabel)
         availableBalanceValueLabel.font = .appSubhead1
 
@@ -295,9 +295,7 @@ extension SendAmountView: ISendAmountView {
     }
 
     func showKeyboard() {
-        DispatchQueue.main.async {
-            self.inputField.becomeFirstResponder()
-        }
+        inputField.becomeFirstResponder()
     }
 
 }
