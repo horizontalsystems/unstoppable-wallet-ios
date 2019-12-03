@@ -3,37 +3,52 @@ import UIExtensions
 import HUD
 import SnapKit
 
-class DataProviderCell: UITableViewCell {
-    let titleLabel = UILabel()
-    let subtitleLabel = UILabel()
-    let checkmarkImageView = TintImageView(image: UIImage(named: "Transaction Success Icon"), tintColor: SettingsTheme.checkmarkTintColor, selectedTintColor: SettingsTheme.checkmarkTintColor)
-    let spinnerView = HUDProgressView(strokeLineWidth: SettingsTheme.spinnerLineWidth, radius: SettingsTheme.spinnerSideSize / 2 - SettingsTheme.spinnerLineWidth / 2, strokeColor: UIColor.cryptoGray)
+class DataProviderCell: AppCell {
+    private static let spinnerSize: CGFloat = 12
+    private static let spinnerStrokeWidth: CGFloat = 2
+
+    private let titleLabel = UILabel()
+    private let subtitleLabel = UILabel()
+
+    private let checkmarkImageView = TintImageView(
+            image: UIImage(named: "Transaction Success Icon"),
+            tintColor: .cryptoYellow,
+            selectedTintColor: .cryptoYellow
+    )
+
+    private let spinnerView = HUDProgressView(
+            strokeLineWidth: DataProviderCell.spinnerStrokeWidth,
+            radius: DataProviderCell.spinnerSize / 2 - DataProviderCell.spinnerStrokeWidth / 2,
+            strokeColor: .cryptoGray
+    )
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = SettingsTheme.cellBackground
-        contentView.backgroundColor = .clear
-        selectionStyle = .none
 
-        titleLabel.font = SettingsTheme.titleFont
-        titleLabel.textColor = SettingsTheme.titleColor
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(contentView.snp.leadingMargin)
-            maker.top.equalToSuperview().offset(SettingsTheme.cellMiddleMargin)
+            maker.top.equalToSuperview().offset(CGFloat.margin2x)
         }
-        subtitleLabel.font = SettingsTheme.subtitleFont
+
+        titleLabel.font = .appBody
+        titleLabel.textColor = .crypto_White_Black
+
         contentView.addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(contentView.snp.leadingMargin)
-            maker.top.equalTo(self.titleLabel.snp.bottom).offset(SettingsTheme.subtitleTopMargin)
+            maker.top.equalTo(titleLabel.snp.bottom).offset(3)
         }
+
+        subtitleLabel.font = .appSubhead2
+
         contentView.addSubview(spinnerView)
         spinnerView.snp.makeConstraints { maker in
             maker.leading.equalTo(contentView.snp.leadingMargin)
-            maker.size.equalTo(SettingsTheme.spinnerSideSize)
-            maker.top.equalTo(self.titleLabel.snp.bottom).offset(SettingsTheme.spinnerTopMargin)
+            maker.size.equalTo(DataProviderCell.spinnerSize)
+            maker.top.equalTo(self.titleLabel.snp.bottom).offset(6)
         }
+
         contentView.addSubview(checkmarkImageView)
         checkmarkImageView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
@@ -41,11 +56,13 @@ class DataProviderCell: UITableViewCell {
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError()
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(title: String, online: Bool, checking: Bool, selected: Bool) {
+    func bind(title: String, online: Bool, checking: Bool, selected: Bool, last: Bool) {
+        super.bind(last: last)
+
         titleLabel.text = title
 
         subtitleLabel.isHidden = checking
@@ -58,12 +75,14 @@ class DataProviderCell: UITableViewCell {
 
             if online {
                 subtitleLabel.text = "full_info.source.online".localized
-                subtitleLabel.textColor = SettingsTheme.onlineSubtitleColor
+                subtitleLabel.textColor = .cryptoGreen
             } else {
                 subtitleLabel.text = "full_info.source.offline".localized
-                subtitleLabel.textColor = SettingsTheme.offlineSubtitleColor
+                subtitleLabel.textColor = .cryptoRed
             }
         }
+
         checkmarkImageView.isHidden = !selected
     }
+
 }

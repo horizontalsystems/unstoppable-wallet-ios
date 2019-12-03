@@ -60,13 +60,13 @@ class MainSettingsViewController: WalletViewController {
         let securityAttentionImage = allBackedUp ? nil : UIImage(named: "Attention Icon")
 
         return [
-            Row<RightImageCell>(id: "security_center", hash: "security_center.\(allBackedUp)", height: SettingsTheme.cellHeight, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.security_center".localized, rightImage: securityAttentionImage, rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true)
+            Row<RightImageCell>(id: "security_center", hash: "security_center.\(allBackedUp)", height: .heightSingleLineCell, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.security_center".localized, rightImage: securityAttentionImage, rightImageTintColor: .cryptoRed, showDisclosure: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapSecurity()
             }),
 
-            Row<TitleCell>(id: "manage_coins", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            Row<TitleCell>(id: "manage_coins", height: .heightSingleLineCell, bind: { cell, _ in
                 cell.bind(titleIcon: UIImage(named: "Manage Coins Icon"), title: "settings.manage_coins".localized, showDisclosure: true)
             }, action: { [weak self] _ in
                 DispatchQueue.main.async {
@@ -74,7 +74,7 @@ class MainSettingsViewController: WalletViewController {
                 }
             }),
 
-            Row<TitleCell>(id: "experimental_features", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            Row<TitleCell>(id: "experimental_features", height: .heightSingleLineCell, bind: { cell, _ in
                 cell.bind(titleIcon: UIImage(named: "Experimental Features Icon"), title: "settings.experimental_features".localized, showDisclosure: true, last: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapExperimentalFeatures()
@@ -90,19 +90,19 @@ class MainSettingsViewController: WalletViewController {
 //                self?.delegate.didTapNotifications()
 //            }),
 
-            Row<RightLabelCell>(id: "base_currency", height: SettingsTheme.cellHeight, bind: { [weak self] cell, _ in
+            Row<RightLabelCell>(id: "base_currency", height: .heightSingleLineCell, bind: { [weak self] cell, _ in
                 cell.bind(titleIcon: UIImage(named: "Currency Icon"), title: "settings.base_currency".localized, rightText: self?.currentBaseCurrency, showDisclosure: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapBaseCurrency()
             }),
 
-            Row<RightLabelCell>(id: "language", height: SettingsTheme.cellHeight, bind: { [weak self] cell, _ in
+            Row<RightLabelCell>(id: "language", height: .heightSingleLineCell, bind: { [weak self] cell, _ in
                 cell.bind(titleIcon: UIImage(named: "Language Icon"), title: "settings.language".localized, rightText: self?.currentLanguage, showDisclosure: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapLanguage()
             }),
 
-            Row<ToggleCell>(id: "light_mode", height: SettingsTheme.cellHeight, bind: { [unowned self] cell, _ in
+            Row<ToggleCell>(id: "light_mode", height: .heightSingleLineCell, bind: { [unowned self] cell, _ in
                 cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.light_mode".localized, isOn: self.lightMode, last: true, onToggle: { [weak self] isOn in
                     self?.delegate.didSwitch(lightMode: isOn)
                 })
@@ -112,19 +112,19 @@ class MainSettingsViewController: WalletViewController {
 
     private var aboutRows: [RowProtocol] {
         [
-            Row<TitleCell>(id: "about", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            Row<TitleCell>(id: "about", height: .heightSingleLineCell, bind: { cell, _ in
                 cell.bind(titleIcon: UIImage(named: "About Icon"), title: "settings.about".localized, showDisclosure: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapAbout()
             }),
 
-            Row<TitleCell>(id: "tell_friends", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
+            Row<TitleCell>(id: "tell_friends", height: .heightSingleLineCell, autoDeselect: true, bind: { cell, _ in
                 cell.bind(titleIcon: UIImage(named: "Tell Friends Icon"), title: "settings.tell_friends".localized, showDisclosure: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapTellFriends()
             }),
 
-            Row<TitleCell>(id: "report_problem", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            Row<TitleCell>(id: "report_problem", height: .heightSingleLineCell, bind: { cell, _ in
                 cell.bind(titleIcon: UIImage(named: "Report Problem Icon"), title: "settings.report_problem".localized, showDisclosure: true, last: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapReportProblem()
@@ -134,7 +134,7 @@ class MainSettingsViewController: WalletViewController {
 
     private var debugRows: [RowProtocol] {
         [
-            Row<TitleCell>(id: "debug_realm_info", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
+            Row<TitleCell>(id: "debug_realm_info", height: .heightSingleLineCell, autoDeselect: true, bind: { cell, _ in
                 cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Show Realm Info", showDisclosure: false, last: false)
             }, action: { [weak self] _ in
                 self?.showRealmInfo()
@@ -148,7 +148,7 @@ class MainSettingsViewController: WalletViewController {
                 self?.delegate.didTapCompanyLink()
             }
         }, dynamicHeight: { _ in
-            SettingsTheme.infoFooterHeight
+            194
         })
     }
 
@@ -167,9 +167,9 @@ extension MainSettingsViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
-            Section(id: "security_settings", headerState: .margin(height: SettingsTheme.topHeaderHeight), rows: securityRows),
-            Section(id: "appearance_settings", headerState: .margin(height: SettingsTheme.headerHeight), rows: appearanceRows),
-            Section(id: "about", headerState: .margin(height: SettingsTheme.headerHeight), footerState: footer, rows: aboutRows)
+            Section(id: "security_settings", headerState: .margin(height: .margin3x), rows: securityRows),
+            Section(id: "appearance_settings", headerState: .margin(height: .margin8x), rows: appearanceRows),
+            Section(id: "about", headerState: .margin(height: .margin8x), footerState: footer, rows: aboutRows)
         ]
 
         #if DEBUG

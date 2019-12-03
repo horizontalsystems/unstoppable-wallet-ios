@@ -13,8 +13,6 @@ class CoinToggleCell: AppCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        backgroundColor = ManageWalletsTheme.cellBackground
-
         contentView.addSubview(coinImageView)
         coinImageView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
@@ -51,7 +49,7 @@ class CoinToggleCell: AppCell {
             maker.centerY.equalToSuperview()
         }
 
-        toggleView.tintColor = SettingsTheme.switchTintColor
+        toggleView.tintColor = .cryptoSteel20
         toggleView.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
     }
 

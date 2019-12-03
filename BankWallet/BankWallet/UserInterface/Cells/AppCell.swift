@@ -17,27 +17,30 @@ class AppCell: UITableViewCell {
         contentView.backgroundColor = .clear
         separatorInset.left = 0
 
-        topSeparatorView.backgroundColor = AppTheme.separatorColor
         contentView.addSubview(topSeparatorView)
         topSeparatorView.snp.makeConstraints { maker in
             maker.leading.top.trailing.equalToSuperview()
             maker.height.equalTo(1 / UIScreen.main.scale)
         }
 
-        bottomSeparatorView.backgroundColor = AppTheme.separatorColor
+        topSeparatorView.backgroundColor = AppTheme.separatorColor
+
         contentView.addSubview(bottomSeparatorView)
         bottomSeparatorView.snp.makeConstraints { maker in
             maker.leading.bottom.trailing.equalToSuperview()
             maker.height.equalTo(0)
         }
 
-        selectView.backgroundColor = .appSteel20
+        bottomSeparatorView.backgroundColor = AppTheme.separatorColor
+
         contentView.addSubview(selectView)
         selectView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(self.topSeparatorView.snp.bottom)
-            maker.bottom.equalTo(self.bottomSeparatorView.snp.top)
+            maker.top.equalTo(topSeparatorView.snp.bottom)
+            maker.bottom.equalTo(bottomSeparatorView.snp.top)
         }
+
+        selectView.backgroundColor = .appSteel20
         selectView.alpha = 0
 
         contentView.addSubview(disclosureImageView)
@@ -51,7 +54,7 @@ class AppCell: UITableViewCell {
         disclosureImageView.isHidden = !showDisclosure
         disclosureImageView.snp.remakeConstraints { maker in
             maker.trailing.equalTo(contentView.snp.trailingMargin)
-            maker.size.equalTo(showDisclosure ? SettingsTheme.disclosureSize : 0)
+            maker.size.equalTo(showDisclosure ? CGSize(width: 8, height: 13) : 0)
             maker.centerY.equalToSuperview()
         }
 
@@ -62,6 +65,7 @@ class AppCell: UITableViewCell {
 
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         guard selectionStyle != .none else { return }
+
         if animated {
             UIView.animate(withDuration: AppTheme.defaultAnimationDuration) {
                 self.selectView.alpha = highlighted ? 1 : 0
@@ -73,6 +77,7 @@ class AppCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         guard selectionStyle != .none else { return }
+
         if animated {
             UIView.animate(withDuration: AppTheme.defaultAnimationDuration) {
                 self.selectView.alpha = selected ? 1 : 0
