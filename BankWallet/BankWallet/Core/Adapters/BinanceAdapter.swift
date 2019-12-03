@@ -14,21 +14,14 @@ class BinanceAdapter {
     }
 
     private func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
-        let from = TransactionAddress(
-                address: transaction.from,
-                mine: transaction.from == binanceKit.account
-        )
-
-        let to = TransactionAddress(
-                address: transaction.to,
-                mine: transaction.to == binanceKit.account
-        )
-
+        let outgoing = transaction.from == binanceKit.account
+        let incoming = transaction.to == binanceKit.account
         var amount: Decimal = 0
-        if from.mine {
+
+        if outgoing {
             amount -= transaction.amount
         }
-        if to.mine {
+        if incoming {
             amount += transaction.amount
         }
 
@@ -42,9 +35,10 @@ class BinanceAdapter {
                 fee: BinanceAdapter.transferFee,
                 date: transaction.date,
                 failed: false,
-                lockInfo: nil,
-                from: [from],
-                to: [to]
+                from: transaction.from,
+                to: transaction.to,
+                sentToSelf: outgoing && incoming,
+                lockInfo: nil
         )
     }
 

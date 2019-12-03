@@ -22,27 +22,55 @@ class BitcoinBaseAdapter {
     }
 
     func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
-        let fromAddresses = transaction.from.map {
-            TransactionAddress(address: $0.address, mine: $0.mine)
+        var myInputsTotalValue: Int = 0
+        var myOutputsTotalValue: Int = 0
+        var allInputsMine = true
+        var lockInfo: TransactionLockInfo?
+        let inputs = transaction.inputs
+        let outputs = transaction.outputs.filter({ $0.address != nil })
+
+        for input in inputs {
+            if input.mine, let value = input.value {
+                myInputsTotalValue += value
+            } else {
+                allInputsMine = false
+            }
         }
 
-        let toAddresses = transaction.to.map {
-            TransactionAddress(address: $0.address, mine: $0.mine)
-        }
-
-        let lockInfo: TransactionLockInfo? = transaction.to.compactMap { address in
-            guard let pluginId = address.pluginId, pluginId == HodlerPlugin.id,
-                  let hodlerOutputData = address.pluginData as? HodlerOutputData,
-                  let approximateUnlockTime = hodlerOutputData.approximateUnlockTime else {
-                return nil
+        for output in outputs {
+            if output.mine {
+                myOutputsTotalValue += output.value
             }
 
-            return TransactionLockInfo(
-                    lockedUntil: Date(timeIntervalSince1970: Double(approximateUnlockTime)),
-                    originalAddress: hodlerOutputData.addressString,
-                    lockedValue: Decimal(hodlerOutputData.lockedValue) / coinRate
-            )
-        }.first
+            if let pluginId = output.pluginId, pluginId == HodlerPlugin.id,
+               let hodlerOutputData = output.pluginData as? HodlerOutputData,
+               let approximateUnlockTime = hodlerOutputData.approximateUnlockTime {
+
+                lockInfo = TransactionLockInfo(
+                        lockedUntil: Date(timeIntervalSince1970: Double(approximateUnlockTime)),
+                        originalAddress: hodlerOutputData.addressString
+                )
+            }
+        }
+
+        var amount = myOutputsTotalValue - myInputsTotalValue
+
+        var resolvedFee: Int? = nil
+        if allInputsMine {
+            let fee = myInputsTotalValue - outputs.reduce(0) { totalOutput, output in totalOutput + output.value }
+            amount += fee
+            resolvedFee = fee
+        }
+
+        let incoming = amount > 0
+        let sentToSelf = allInputsMine && !outputs.contains(where: { !$0.mine })
+
+        if sentToSelf {
+            amount = -1 * outputs.filter({ !$0.changeOutput }).reduce(0) { totalOutput, output in totalOutput + output.value }
+        }
+
+        let from = incoming ? inputs.filter({ !$0.mine }).compactMap({ $0.address }).first : nil
+        let to = allInputsMine ? outputs.filter({ !$0.mine }).compactMap({ $0.address }).first : nil
 
         return TransactionRecord(
                 uid: transaction.uid,
@@ -50,13 +78,14 @@ class BitcoinBaseAdapter {
                 transactionIndex: transaction.transactionIndex,
                 interTransactionIndex: 0,
                 blockHeight: transaction.blockHeight,
-                amount: Decimal(transaction.amount) / coinRate,
-                fee: transaction.fee.map { Decimal($0) / coinRate },
+                amount: Decimal(amount) / coinRate,
+                fee: resolvedFee.map { Decimal($0) / coinRate },
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
                 failed: transaction.status == .invalid,
-                lockInfo: lockInfo,
-                from: fromAddresses,
-                to: toAddresses
+                from: from,
+                to: to,
+                sentToSelf: sentToSelf,
+                lockInfo: lockInfo
         )
     }
 

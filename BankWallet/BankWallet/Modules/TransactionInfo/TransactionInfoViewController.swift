@@ -80,8 +80,7 @@ class TransactionInfoViewController: WalletActionSheetController {
         }))
 
         if item.sentToSelf {
-            let note = item.lockInfo == nil ? "tx_info.to_self_note".localized : "tx_info.locked_to_self_note".localized
-            let infoItem = TransactionNoteItem(note: "* " + note, tag: 10)
+            let infoItem = TransactionNoteItem(note: "* " + "tx_info.to_self_note".localized, tag: 10)
             model.addItemView(infoItem)
         }
 
