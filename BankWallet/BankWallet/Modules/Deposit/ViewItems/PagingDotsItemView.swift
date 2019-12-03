@@ -4,22 +4,25 @@ import ActionSheet
 import SnapKit
 
 class PagingDotsItemView: BaseActionItemView {
+    private let pageControl = UIPageControl()
 
-    var pageControl = UIPageControl()
-
-    override var item: PagingDotsItem? { return _item as? PagingDotsItem }
+    override var item: PagingDotsItem? {
+        _item as? PagingDotsItem
+    }
 
     override func initView() {
         super.initView()
-        pageControl.isUserInteractionEnabled = false
-        pageControl.pageIndicatorTintColor = DepositTheme.pageIndicatorTintColor
-        pageControl.currentPageIndicatorTintColor = DepositTheme.pageIndicatorSelectedTintColor
+
         addSubview(pageControl)
         pageControl.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(DepositTheme.pagingDotsTopMargin)
             maker.leading.trailing.equalToSuperview()
-            maker.height.equalTo(DepositTheme.pagingDotsHeight)
+            maker.top.equalToSuperview().offset(23)
+            maker.height.equalTo(7)
         }
+
+        pageControl.isUserInteractionEnabled = false
+        pageControl.pageIndicatorTintColor = .cryptoSteel20
+        pageControl.currentPageIndicatorTintColor = .cryptoGreen
         pageControl.numberOfPages = item?.pagesCount ?? 0
 
         item?.updateView = { [weak self] in

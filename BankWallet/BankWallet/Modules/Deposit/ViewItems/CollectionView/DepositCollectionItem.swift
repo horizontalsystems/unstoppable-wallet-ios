@@ -2,7 +2,6 @@ import UIKit
 import ActionSheet
 
 class DepositCollectionItem: BaseActionItem {
-
     var addresses: [AddressItem]
     var onPageChange: ((Int) -> ())?
     var onCopy: (() -> ())?
@@ -17,7 +16,7 @@ class DepositCollectionItem: BaseActionItem {
         super.init(cellType: DepositCollectionItemView.self, tag: tag, required: true)
 
         showSeparator = false
-        height = DepositTheme.collectionHeight
+        height = 273
     }
 
 }
