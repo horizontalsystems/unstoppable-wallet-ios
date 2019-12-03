@@ -31,6 +31,7 @@ class TransactionStatusItemView: BaseActionItemView {
 
         titleLabel.text = "tx_info.status".localized
         titleLabel.font = TransactionInfoTheme.itemTitleFont
+        titleLabel.textColor = .cryptoGray
 
         addSubview(finalStatusWrapper)
         finalStatusWrapper.snp.makeConstraints { maker in
