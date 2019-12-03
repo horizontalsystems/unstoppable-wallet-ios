@@ -60,8 +60,8 @@ class SecuritySettingsViewController: WalletViewController {
         let securityAttentionImage = backupAlertVisible ? UIImage(named: "Attention Icon") : nil
 
         return [
-            Row<RightImageCell>(id: "manage_accounts", height: SettingsTheme.cellHeight, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Key Icon"), title: "settings_security.manage_accounts".localized, rightImage: securityAttentionImage, rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true, last: true)
+            Row<RightImageCell>(id: "manage_accounts", height: .heightSingleLineCell, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Key Icon"), title: "settings_security.manage_accounts".localized, rightImage: securityAttentionImage, rightImageTintColor: .cryptoRed, showDisclosure: true, last: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapManageAccounts()
             })
@@ -70,7 +70,7 @@ class SecuritySettingsViewController: WalletViewController {
 
     private var pinRows: [RowProtocol] {
         var rows: [RowProtocol] = [
-            Row<ToggleCell>(id: "pin", height: SettingsTheme.cellHeight, bind: { [unowned self] cell, _ in
+            Row<ToggleCell>(id: "pin", height: .heightSingleLineCell, bind: { [unowned self] cell, _ in
                 cell.bind(titleIcon: UIImage(named: "Passcode Icon"), title: "settings_security.passcode".localized, isOn: self.pinSet, last: !self.editPinVisible, onToggle: { [weak self] isOn in
                     self?.delegate.didSwitch(pinSet: isOn)
                 })
@@ -78,7 +78,7 @@ class SecuritySettingsViewController: WalletViewController {
         ]
 
         if editPinVisible {
-            rows.append(Row<TitleCell>(id: "edit_pin", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            rows.append(Row<TitleCell>(id: "edit_pin", height: .heightSingleLineCell, bind: { cell, _ in
                 cell.bind(titleIcon: nil, title: "settings_security.change_pin".localized, showDisclosure: true, last: true)
             }, action: { [weak self] _ in
                 DispatchQueue.main.async {
@@ -99,7 +99,7 @@ class SecuritySettingsViewController: WalletViewController {
     }
 
     private func createBiometryRow(title: String, icon: String) -> RowProtocol {
-        return Row<ToggleCell>(id: "biometry", height: SettingsTheme.cellHeight, bind: { [unowned self] cell, _ in
+        return Row<ToggleCell>(id: "biometry", height: .heightSingleLineCell, bind: { [unowned self] cell, _ in
             cell.bind(titleIcon: UIImage(named: icon), title: title, isOn: self.biometryEnabled, last: true, onToggle: { [weak self] isOn in
                 self?.delegate.didSwitch(biometryEnabled: isOn)
             })
@@ -112,12 +112,12 @@ extension SecuritySettingsViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
-            Section(id: "manage_accounts", headerState: .margin(height: SettingsTheme.topHeaderHeight), rows: manageAccountsRows),
-            Section(id: "pin", headerState: .margin(height: SettingsTheme.headerHeight), rows: pinRows)
+            Section(id: "manage_accounts", headerState: .margin(height: .margin3x), rows: manageAccountsRows),
+            Section(id: "pin", headerState: .margin(height: .margin8x), rows: pinRows)
         ]
 
         if biometryVisible, let biometryRow = biometryRow {
-            sections.append(Section(id: "biometry", headerState: .margin(height: SettingsTheme.headerHeight), rows: [biometryRow]))
+            sections.append(Section(id: "biometry", headerState: .margin(height: .margin8x), rows: [biometryRow]))
         }
 
         return sections

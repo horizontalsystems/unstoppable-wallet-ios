@@ -10,7 +10,7 @@ class RightImageCell: TitleCell {
 
         contentView.addSubview(rightImageView)
         rightImageView.snp.makeConstraints { maker in
-            maker.trailing.equalTo(self.disclosureImageView.snp.leading).offset(-SettingsTheme.cellBigMargin)
+            maker.trailing.equalTo(disclosureImageView.snp.leading).offset(-CGFloat.margin4x)
             maker.centerY.equalToSuperview()
         }
     }

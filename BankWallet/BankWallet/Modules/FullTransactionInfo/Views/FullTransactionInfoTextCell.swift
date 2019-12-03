@@ -6,19 +6,18 @@ class FullTransactionInfoTextCell: TitleCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = FullTransactionInfoTheme.cellBackground
-        contentView.backgroundColor = .clear
 
         titleLabel.font = FullTransactionInfoTheme.font
         titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
 
         iconImageView.tintColor = TransactionInfoDescriptionTheme.buttonIconColor
+
         contentView.addSubview(descriptionView)
         descriptionView.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.titleLabel.snp.trailing).offset(FullTransactionInfoTheme.margin)
+            maker.leading.equalTo(titleLabel.snp.trailing).offset(FullTransactionInfoTheme.margin)
             maker.centerY.equalToSuperview()
-            maker.trailing.equalTo(self.disclosureImageView.snp.leading).offset(-SettingsTheme.cellBigMargin)
+            maker.trailing.equalTo(disclosureImageView.snp.leading).inset(CGFloat.margin4x)
         }
     }
 

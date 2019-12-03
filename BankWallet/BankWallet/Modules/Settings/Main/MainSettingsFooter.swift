@@ -13,32 +13,32 @@ class MainSettingsFooter: UITableViewHeaderFooterView {
 
         contentView.addSubview(versionLabel)
         versionLabel.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(SettingsTheme.versionLabelTopMargin)
+            maker.top.equalToSuperview().offset(CGFloat.margin8x)
             maker.centerX.equalToSuperview()
         }
-        versionLabel.textColor = SettingsTheme.versionColor
-        versionLabel.font = SettingsTheme.versionFont
+        versionLabel.textColor = .cryptoGray
+        versionLabel.font = .appCaption
 
         let separatorView = UIView()
-        separatorView.backgroundColor = SettingsTheme.infoFooterSeparatorColor
+        separatorView.backgroundColor = .cryptoGray
         contentView.addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
             maker.leading.trailing.equalTo(versionLabel)
-            maker.top.equalTo(versionLabel.snp.bottom).offset(SettingsTheme.separatorMargin)
+            maker.top.equalTo(versionLabel.snp.bottom).offset(CGFloat.margin1x)
             maker.height.equalTo(1 / UIScreen.main.scale)
         }
 
         let titleLabel = UILabel()
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(separatorView.snp.bottom).offset(SettingsTheme.infoTitleTopMargin)
+            maker.top.equalTo(separatorView.snp.bottom).offset(CGFloat.margin1x)
             maker.centerX.equalToSuperview()
         }
-        titleLabel.textColor = SettingsTheme.infoTitleColor
-        titleLabel.font = SettingsTheme.infoTitleFont
+        titleLabel.textColor = .cryptoGray
+        titleLabel.font = .appCaption
         titleLabel.text = "settings.info_subtitle".localized
 
-        let imageView: TintImageView = TintImageView(image: UIImage(named: "Logo Image"), tintColor: SettingsTheme.logoTintColor, selectedTintColor: SettingsTheme.logoSelectedTintColor)
+        let imageView: TintImageView = TintImageView(image: UIImage(named: "Logo Image"), tintColor: .cryptoGray, selectedTintColor: .cryptoSilver)
         logoButton.addSubview(imageView)
         imageView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
@@ -47,7 +47,7 @@ class MainSettingsFooter: UITableViewHeaderFooterView {
 
         contentView.addSubview(logoButton)
         logoButton.snp.makeConstraints { maker in
-            maker.top.equalTo(titleLabel.snp.bottom).offset(SettingsTheme.infoImageTopMargin)
+            maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin8x)
             maker.centerX.equalToSuperview()
         }
     }

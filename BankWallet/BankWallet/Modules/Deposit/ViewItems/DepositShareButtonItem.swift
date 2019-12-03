@@ -10,7 +10,7 @@ class DepositShareButtonItem: BaseButtonItem {
 
         self.onTap = onTap
 
-        height = 50 + 16 * 2
+        height = CGFloat.heightButton + CGFloat.margin4x * 2
         showSeparator = false
     }
 

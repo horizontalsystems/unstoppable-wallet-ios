@@ -23,17 +23,17 @@ class ExperimentalFeaturesViewController: WalletViewController {
 
         title = "settings.experimental_features.title".localized
 
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
         tableView.registerCell(forClass: TitleCell.self)
         tableView.registerHeaderFooter(forClass: TopDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
-
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
-        }
 
         tableView.buildSections()
     }
@@ -62,7 +62,7 @@ extension ExperimentalFeaturesViewController: SectionsDataSource {
                     rows: [
                         Row<TitleCell>(
                                 id: "bitcoin_hodling",
-                                height: SettingsTheme.cellHeight,
+                                height: .heightSingleLineCell,
                                 bind: { cell, _ in
                                     cell.bind(title: "settings.experimental_features.bitcoin_hodling".localized, showDisclosure: true, last: true)
                                 },

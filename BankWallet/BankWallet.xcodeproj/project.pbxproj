@@ -977,7 +977,6 @@
 		1A564F41635CE7EB9B441040 /* LockoutUntilDateFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641ABEF9064B6FCC8DF87 /* LockoutUntilDateFactory.swift */; };
 		1A564F47697F6E6CFEE3975E /* BackupTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645D738FD93B79628E5E5 /* BackupTheme.swift */; };
 		1A564F49F9F41134ED1442EE /* MessageItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BFA2FB7E31EFFD11EAF /* MessageItemView.swift */; };
-		1A564F4AA83DC47DC9840A69 /* SettingsTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F747A4D0B78E5DF6F1B /* SettingsTheme.swift */; };
 		1A564F505E9F7C2F783D43E0 /* RestoreEosPresenterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640BBA9B55A4F39BE16CB /* RestoreEosPresenterState.swift */; };
 		1A564F614653FD09B495400A /* CoinToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56478E08D96F36DD17D8C8 /* CoinToggleCell.swift */; };
 		1A564F707048DC88C8183D77 /* AppStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56420928E5E0E9BC27E67B /* AppStatusViewController.swift */; };
@@ -1671,7 +1670,6 @@
 		D3840558218317DF007D50AD /* TransactionInfoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643996D67B74F800DFFE4 /* TransactionInfoModule.swift */; };
 		D3840559218317DF007D50AD /* TransactionInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647DBF15322999B5A1D04 /* TransactionInfoInteractor.swift */; };
 		D384055A218317DF007D50AD /* TransactionInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564091A9C12F224A18B740 /* TransactionInfoPresenter.swift */; };
-		D384055C218317DF007D50AD /* SettingsTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F747A4D0B78E5DF6F1B /* SettingsTheme.swift */; };
 		D384055D218317DF007D50AD /* TransactionAmountItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56464DB0EEF75F63C91760 /* TransactionAmountItem.swift */; };
 		D384055E218317DF007D50AD /* TransactionAmountItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642EFA8A991436AED3B44 /* TransactionAmountItemView.swift */; };
 		D3840565218317DF007D50AD /* FullTransactionInfoTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56428DB7E042907CD4252D /* FullTransactionInfoTheme.swift */; };
@@ -1816,7 +1814,6 @@
 		D384064721831B3D007D50AD /* TransactionInfoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643996D67B74F800DFFE4 /* TransactionInfoModule.swift */; };
 		D384064821831B3D007D50AD /* TransactionInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647DBF15322999B5A1D04 /* TransactionInfoInteractor.swift */; };
 		D384064921831B3D007D50AD /* TransactionInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564091A9C12F224A18B740 /* TransactionInfoPresenter.swift */; };
-		D384064B21831B3D007D50AD /* SettingsTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F747A4D0B78E5DF6F1B /* SettingsTheme.swift */; };
 		D384064C21831B3D007D50AD /* TransactionAmountItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56464DB0EEF75F63C91760 /* TransactionAmountItem.swift */; };
 		D384064D21831B3D007D50AD /* TransactionAmountItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642EFA8A991436AED3B44 /* TransactionAmountItemView.swift */; };
 		D384065421831B3D007D50AD /* FullTransactionInfoTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56428DB7E042907CD4252D /* FullTransactionInfoTheme.swift */; };
@@ -2361,7 +2358,6 @@
 		1A564F3B10EF814E1D330CAD /* DepositShareButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositShareButtonItem.swift; sourceTree = "<group>"; };
 		1A564F5CDA92DD8EC7EC9B0D /* ManageWalletsPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageWalletsPresenterTests.swift; sourceTree = "<group>"; };
 		1A564F627224BDD3E99C582B /* LaunchPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchPresenter.swift; sourceTree = "<group>"; };
-		1A564F747A4D0B78E5DF6F1B /* SettingsTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTheme.swift; sourceTree = "<group>"; };
 		1A564F7564667D6BC7CEF6D3 /* TransactionViewItemLoaderState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionViewItemLoaderState.swift; sourceTree = "<group>"; };
 		1A564F82C9A85F306271CF3A /* WalletActionSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletActionSheetController.swift; sourceTree = "<group>"; };
 		1A564F9B9F89F533BC520074 /* BalanceSorterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceSorterTests.swift; sourceTree = "<group>"; };
@@ -3496,7 +3492,6 @@
 				1A564D7FA287326CBE96353A /* ButtonTheme.swift */,
 				1A564077BF075C35B6FF3BCB /* SendTheme.swift */,
 				1A5645F926B14580B1644164 /* TransactionInfoTheme.swift */,
-				1A564F747A4D0B78E5DF6F1B /* SettingsTheme.swift */,
 				1A56428DB7E042907CD4252D /* FullTransactionInfoTheme.swift */,
 				503320AA214679EB00F64AAA /* PinTheme.swift */,
 				11B35BFD94DA13D66AD6A86D /* NumPadTheme.swift */,
@@ -4813,7 +4808,6 @@
 				1A564E0A6E37A68995364D81 /* TransactionInfoInteractor.swift in Sources */,
 				3AF4739D21D38F380005A458 /* FullTransactionInfoViewController.swift in Sources */,
 				1A564B096FFE228DF453A66D /* TransactionInfoPresenter.swift in Sources */,
-				1A564F4AA83DC47DC9840A69 /* SettingsTheme.swift in Sources */,
 				1A56457504BE4C7269493002 /* TransactionAmountItem.swift in Sources */,
 				1A5642E08D676598AE0F0F70 /* TransactionAmountItemView.swift in Sources */,
 				1A5647968B12B0FB16F149B2 /* FullTransactionInfoTheme.swift in Sources */,
@@ -5478,7 +5472,6 @@
 				D3840559218317DF007D50AD /* TransactionInfoInteractor.swift in Sources */,
 				3AF4739E21D38F380005A458 /* FullTransactionInfoViewController.swift in Sources */,
 				D384055A218317DF007D50AD /* TransactionInfoPresenter.swift in Sources */,
-				D384055C218317DF007D50AD /* SettingsTheme.swift in Sources */,
 				D384055D218317DF007D50AD /* TransactionAmountItem.swift in Sources */,
 				D384055E218317DF007D50AD /* TransactionAmountItemView.swift in Sources */,
 				D3840565218317DF007D50AD /* FullTransactionInfoTheme.swift in Sources */,
@@ -6096,7 +6089,6 @@
 				D384064821831B3D007D50AD /* TransactionInfoInteractor.swift in Sources */,
 				3AF4739F21D38F380005A458 /* FullTransactionInfoViewController.swift in Sources */,
 				D384064921831B3D007D50AD /* TransactionInfoPresenter.swift in Sources */,
-				D384064B21831B3D007D50AD /* SettingsTheme.swift in Sources */,
 				D384064C21831B3D007D50AD /* TransactionAmountItem.swift in Sources */,
 				D384064D21831B3D007D50AD /* TransactionAmountItemView.swift in Sources */,
 				D384065421831B3D007D50AD /* FullTransactionInfoTheme.swift in Sources */,

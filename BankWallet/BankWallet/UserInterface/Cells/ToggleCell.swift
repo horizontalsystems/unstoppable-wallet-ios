@@ -11,13 +11,14 @@ class ToggleCell: TitleCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
 
-        toggleView.tintColor = SettingsTheme.switchTintColor
-        toggleView.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
         contentView.addSubview(toggleView)
         toggleView.snp.makeConstraints { maker in
-            maker.trailing.equalTo(self.disclosureImageView.snp.leading).offset(-SettingsTheme.toggleRightMargin)
+            maker.trailing.equalTo(disclosureImageView.snp.leading).inset(1.6)
             maker.centerY.equalToSuperview()
         }
+
+        toggleView.tintColor = .cryptoSteel20
+        toggleView.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
     }
 
     required init?(coder aDecoder: NSCoder) {

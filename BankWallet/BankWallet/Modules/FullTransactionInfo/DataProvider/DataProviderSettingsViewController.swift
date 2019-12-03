@@ -6,18 +6,12 @@ class DataProviderSettingsViewController: WalletViewController, SectionsDataSour
 
     private var items = [DataProviderItem]()
 
-    let tableView = SectionsTableView(style: .grouped)
+    private let tableView = SectionsTableView(style: .grouped)
 
     init(delegate: IDataProviderSettingsViewDelegate) {
         self.delegate = delegate
 
         super.init()
-
-        tableView.registerCell(forClass: DataProviderCell.self)
-        tableView.sectionDataSource = self
-        tableView.separatorColor = SettingsTheme.cellSelectBackground
-
-        hidesBottomBarWhenPushed = true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -29,11 +23,16 @@ class DataProviderSettingsViewController: WalletViewController, SectionsDataSour
 
         title = "full_info.source.title".localized
 
-        tableView.backgroundColor = .clear
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
+
+        tableView.registerCell(forClass: DataProviderCell.self)
+        tableView.sectionDataSource = self
+
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
 
         delegate.viewDidLoad()
     }
@@ -47,13 +46,29 @@ class DataProviderSettingsViewController: WalletViewController, SectionsDataSour
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        sections.append(Section(id: "providers", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: items.map { item in
-            Row<DataProviderCell>(id: item.name, height: SettingsTheme.doubleLineCellHeight, bind: { cell, _ in
-                cell.bind(title: item.name, online: item.online, checking: item.checking, selected: item.selected)
-            }, action: { [weak self] _ in
-                self?.delegate.didSelect(item: item)
-            })
-        }))
+        sections.append(Section(
+                id: "providers",
+                headerState: .margin(height: .margin3x),
+                footerState: .margin(height: .margin8x),
+                rows: items.enumerated().map { (index, item) in
+                    Row<DataProviderCell>(
+                            id: item.name,
+                            height: .heightDoubleLineCell,
+                            bind: { [unowned self] cell, _ in
+                                cell.bind(
+                                        title: item.name,
+                                        online: item.online,
+                                        checking: item.checking,
+                                        selected: item.selected,
+                                        last: index == self.items.count - 1
+                                )
+                            },
+                            action: { [weak self] _ in
+                                self?.delegate.didSelect(item: item)
+                            }
+                    )
+                }
+        ))
 
         return sections
     }

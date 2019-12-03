@@ -46,7 +46,7 @@ class ReportViewController: WalletViewController {
         [
             Row<ImageDoubleLineCell>(
                     id: "email",
-                    height: SettingsTheme.doubleLineCellHeight,
+                    height: .heightDoubleLineCell,
                     autoDeselect: true,
                     bind: { [weak self] cell, _ in
                         cell.bind(
@@ -61,7 +61,7 @@ class ReportViewController: WalletViewController {
             ),
             Row<ImageDoubleLineCell>(
                     id: "telegram",
-                    height: SettingsTheme.doubleLineCellHeight,
+                    height: .heightDoubleLineCell,
                     autoDeselect: true,
                     bind: { [weak self] cell, _ in
                         cell.bind(
@@ -82,7 +82,7 @@ class ReportViewController: WalletViewController {
         [
             Row<TitleCell>(
                     id: "status",
-                    height: SettingsTheme.cellHeight,
+                    height: .heightSingleLineCell,
                     autoDeselect: true,
                     bind: { cell, _ in
                         cell.bind(titleIcon: nil, title: "settings.report_problem.app_status".localized, showDisclosure: true, last: true)
@@ -96,7 +96,7 @@ class ReportViewController: WalletViewController {
 
     private var debugRows: [RowProtocol] {
         [
-            Row<TitleCell>(id: "debug_background_log", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
+            Row<TitleCell>(id: "debug_background_log", height: .heightSingleLineCell, autoDeselect: true, bind: { cell, _ in
                 cell.bind(titleIcon: nil, title: "Show Log", showDisclosure: false, last: true)
             }, action: { [weak self] _ in
                 self?.showDebugLog()
@@ -114,8 +114,8 @@ extension ReportViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
-            Section(id: "report_section", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: reportRows),
-            Section(id: "status_section", headerState: .margin(height: SettingsTheme.headerHeight), rows: statusRows)
+            Section(id: "report_section", headerState: .margin(height: .margin3x), rows: reportRows),
+            Section(id: "status_section", headerState: .margin(height: .margin8x), rows: statusRows)
         ]
 
         if App.shared.appConfigProvider.officeMode {

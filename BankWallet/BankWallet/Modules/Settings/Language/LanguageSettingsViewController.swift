@@ -52,7 +52,7 @@ extension LanguageSettingsViewController: SectionsDataSource {
                     rows: items.enumerated().map { (index, item) in
                         Row<ImageDoubleLineCheckmarkCell>(
                                 id: item.language,
-                                height: SettingsTheme.doubleLineCellHeight,
+                                height: .heightDoubleLineCell,
                                 bind: { [unowned self] cell, _ in
                                     cell.bind(
                                             image: UIImage(named: item.language),
