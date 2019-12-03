@@ -14,15 +14,8 @@ class EosAdapter {
     }
 
     private func transactionRecord(fromTransaction transaction: Transaction) -> TransactionRecord {
-        let from = TransactionAddress(
-                address: transaction.from,
-                mine: transaction.from == eosKit.account
-        )
-
-        let to = TransactionAddress(
-                address: transaction.to,
-                mine: transaction.to == eosKit.account
-        )
+        let outgoing = transaction.from == eosKit.account
+        let incoming = transaction.to == eosKit.account
 
         return TransactionRecord(
                 uid: transaction.id,
@@ -30,13 +23,14 @@ class EosAdapter {
                 transactionIndex: 0,
                 interTransactionIndex: transaction.actionSequence,
                 blockHeight: transaction.blockNumber,
-                amount: transaction.quantity.amount * (from.mine ? -1 : 1),
+                amount: transaction.quantity.amount * (outgoing ? -1 : 1),
                 fee: nil,
                 date: transaction.date,
                 failed: false,
-                lockInfo: nil,
-                from: [from],
-                to: [to]
+                from: transaction.from,
+                to: transaction.to,
+                sentToSelf: outgoing && incoming,
+                lockInfo: nil
         )
     }
 

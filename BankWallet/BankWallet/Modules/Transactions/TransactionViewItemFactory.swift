@@ -26,24 +26,8 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
             }
         }
 
-        var amount = record.amount
-        let incoming = amount > 0
-        var from: String?
-        var to: String?
-        if incoming {
-            from = record.from.first(where: { $0.mine == false })?.address
-        } else {
-            to = record.to.first(where: { $0.mine == false })?.address
-        }
-
-        let sentToSelf = !record.from.contains(where: { !$0.mine }) && !record.to.contains(where: { !$0.mine })
-
-        let lockInfo = record.lockInfo
-        if let lockInfo = lockInfo {
-            amount = lockInfo.lockedValue
-        }
-
-        let absoluteAmount: Decimal = abs(amount)
+        let incoming = record.amount > 0
+        let absoluteAmount: Decimal = abs(record.amount)
         let currencyValue = rate.map {
             CurrencyValue(currency: $0.currency, value: $0.value * absoluteAmount)
         }
@@ -59,15 +43,15 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
                 coinValue: coinValue,
                 feeCoinValue: feeCoinValue,
                 currencyValue: currencyValue,
-                from: from,
-                to: to,
+                from: record.from,
+                to: record.to,
                 incoming: incoming,
-                sentToSelf: sentToSelf,
+                sentToSelf: record.sentToSelf,
                 showFromAddress: showFromAddress(for: coin.type),
                 date: record.date,
                 status: status,
                 rate: rate,
-                lockInfo: lockInfo
+                lockInfo: record.lockInfo
         )
     }
 

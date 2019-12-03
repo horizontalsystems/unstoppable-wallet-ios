@@ -10,21 +10,10 @@ struct TransactionRecord {
     let fee: Decimal?
     let date: Date
     let failed: Bool
+    let from: String?
+    let to: String?
+    let sentToSelf: Bool
     let lockInfo: TransactionLockInfo?
-
-    let from: [TransactionAddress]
-    let to: [TransactionAddress]
-}
-
-struct TransactionAddress {
-    let address: String
-    let mine: Bool
-
-    init(address: String, mine: Bool) {
-        self.address = address
-        self.mine = mine
-    }
-
 }
 
 extension TransactionRecord: Comparable {

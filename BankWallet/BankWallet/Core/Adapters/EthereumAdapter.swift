@@ -10,30 +10,22 @@ class EthereumAdapter: EthereumBaseAdapter {
 
     private func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
         let mineAddress = ethereumKit.receiveAddress.lowercased()
-
-        let from = TransactionAddress(
-                address: transaction.from,
-                mine: transaction.from.lowercased() == mineAddress
-        )
-
-        let to = TransactionAddress(
-                address: transaction.to,
-                mine: transaction.to.lowercased() == mineAddress
-        )
-
+        let outgoing = transaction.from.lowercased() == mineAddress
+        let incoming = transaction.to.lowercased() == mineAddress
         var amount: Decimal = 0
 
         if let significand = Decimal(string: transaction.value) {
             let transactionAmount = Decimal(sign: .plus, exponent: -decimal, significand: significand)
 
-            if from.mine {
+            if outgoing {
                 amount -= transactionAmount
             }
-            if to.mine {
+            if incoming {
                 amount += transactionAmount
             }
         }
         let failed = (transaction.isError ?? 0) != 0
+
         return TransactionRecord(
                 uid: transaction.hash,
                 transactionHash: transaction.hash,
@@ -44,9 +36,10 @@ class EthereumAdapter: EthereumBaseAdapter {
                 fee: transaction.gasUsed.map { Decimal(sign: .plus, exponent: -decimal, significand: Decimal($0 * transaction.gasPrice)) },
                 date: Date(timeIntervalSince1970: transaction.timestamp),
                 failed: failed,
-                lockInfo: nil,
-                from: [from],
-                to: [to]
+                from: transaction.from,
+                to: transaction.to,
+                sentToSelf: outgoing && incoming,
+                lockInfo: nil
         )
     }
 

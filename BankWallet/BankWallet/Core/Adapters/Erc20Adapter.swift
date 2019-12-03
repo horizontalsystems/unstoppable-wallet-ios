@@ -24,26 +24,17 @@ class Erc20Adapter: EthereumBaseAdapter {
 
     private func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
         let mineAddress = ethereumKit.receiveAddress
-
-        let from = TransactionAddress(
-                address: transaction.from,
-                mine: transaction.from == mineAddress
-        )
-
-        let to = TransactionAddress(
-                address: transaction.to,
-                mine: transaction.to == mineAddress
-        )
-
+        let outgoing = transaction.from == mineAddress
+        let incoming = transaction.to == mineAddress
         var amount: Decimal = 0
 
         if let significand = Decimal(string: transaction.value) {
             let transactionAmount = Decimal(sign: .plus, exponent: -decimal, significand: significand)
 
-            if from.mine {
+            if outgoing {
                 amount -= transactionAmount
             }
-            if to.mine {
+            if incoming {
                 amount += transactionAmount
             }
         }
@@ -58,9 +49,10 @@ class Erc20Adapter: EthereumBaseAdapter {
                 fee: nil,
                 date: Date(timeIntervalSince1970: transaction.timestamp),
                 failed: transaction.isError,
-                lockInfo: nil,
-                from: [from],
-                to: [to]
+                from: transaction.from,
+                to: transaction.to,
+                sentToSelf: outgoing && incoming,
+                lockInfo: nil
         )
     }
 
