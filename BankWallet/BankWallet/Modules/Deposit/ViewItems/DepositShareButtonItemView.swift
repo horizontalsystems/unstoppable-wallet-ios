@@ -4,18 +4,17 @@ import SnapKit
 
 class DepositShareButtonItemView: BaseButtonItemView {
 
-    override var item: DepositShareButtonItem? { return _item as? DepositShareButtonItem
+    override var item: DepositShareButtonItem? {
+        _item as? DepositShareButtonItem
     }
 
     override func initView() {
         super.initView()
 
-        button.cornerRadius = DepositTheme.shareButtonCornerRadius
+        button.cornerRadius = .cornerRadius8
         button.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(DepositTheme.regularMargin)
-            maker.top.equalToSuperview().offset(DepositTheme.regularMargin)
-            maker.trailing.equalToSuperview().offset(-DepositTheme.regularMargin)
-            maker.height.equalTo(DepositTheme.shareButtonHeight)
+            maker.leading.trailing.top.equalToSuperview().inset(CGFloat.margin4x)
+            maker.height.equalTo(CGFloat.heightButton)
         }
     }
 

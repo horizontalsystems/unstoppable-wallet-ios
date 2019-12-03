@@ -9,7 +9,8 @@ class DepositShareButtonItem: BaseButtonItem {
         super.init(cellType: DepositShareButtonItemView.self, tag: tag, required: true)
 
         self.onTap = onTap
-        height = DepositTheme.shareButtonItemHeight
+
+        height = 50 + 16 * 2
         showSeparator = false
     }
 
