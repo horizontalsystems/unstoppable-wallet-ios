@@ -275,7 +275,7 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
         transactionRecordsSubject.asObservable()
     }
 
-    func transactionsSingle(from: (uid: String, hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(from: TransactionRecord?, limit: Int) -> Single<[TransactionRecord]> {
         abstractKit.transactions(fromUid: from?.uid, limit: limit)
                 .map { [weak self] transactions -> [TransactionRecord] in
                     transactions.compactMap {

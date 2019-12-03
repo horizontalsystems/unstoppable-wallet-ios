@@ -138,9 +138,9 @@ extension Erc20Adapter: ITransactionsAdapter {
         }
     }
 
-    func transactionsSingle(from: (uid: String, hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(from: TransactionRecord?, limit: Int) -> Single<[TransactionRecord]> {
         do {
-            return try erc20Kit.transactionsSingle(from: from.flatMap { (hash: $0.hash, interTransactionIndex: $0.interTransactionIndex) }, limit: limit)
+            return try erc20Kit.transactionsSingle(from: from.flatMap { (hash: $0.transactionHash, interTransactionIndex: $0.interTransactionIndex) }, limit: limit)
                     .map { [weak self] transactions -> [TransactionRecord] in
                         transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
                     }

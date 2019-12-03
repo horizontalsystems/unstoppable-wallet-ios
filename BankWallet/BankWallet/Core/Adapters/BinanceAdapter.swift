@@ -155,8 +155,8 @@ extension BinanceAdapter: ITransactionsAdapter {
         }
     }
 
-    func transactionsSingle(from: (uid: String, hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
-        binanceKit.transactionsSingle(symbol: asset.symbol, fromTransactionHash: from?.hash, limit: limit)
+    func transactionsSingle(from: TransactionRecord?, limit: Int) -> Single<[TransactionRecord]> {
+        binanceKit.transactionsSingle(symbol: asset.symbol, fromTransactionHash: from?.transactionHash, limit: limit)
                 .map { [weak self] transactions -> [TransactionRecord] in
                     transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
                 }

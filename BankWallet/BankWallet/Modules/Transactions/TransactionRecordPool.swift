@@ -40,10 +40,9 @@ class TransactionRecordPool {
             return nil
         }
 
-        let from = state.records.last.map { (uid: $0.uid, hash: $0.transactionHash, interTransactionIndex: $0.interTransactionIndex) }
         let fetchLimit = limit + 1 - unusedRecordsCount
 
-        return FetchData(wallet: state.wallet, from: from, limit: fetchLimit)
+        return FetchData(wallet: state.wallet, from: state.records.last, limit: fetchLimit)
     }
 
     func add(records: [TransactionRecord]) {

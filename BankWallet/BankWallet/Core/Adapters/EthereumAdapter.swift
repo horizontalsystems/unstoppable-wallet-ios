@@ -124,8 +124,8 @@ extension EthereumAdapter: ITransactionsAdapter {
         }
     }
 
-    func transactionsSingle(from: (uid: String, hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
-        ethereumKit.transactionsSingle(fromHash: from?.hash, limit: limit)
+    func transactionsSingle(from: TransactionRecord?, limit: Int) -> Single<[TransactionRecord]> {
+        ethereumKit.transactionsSingle(fromHash: from?.transactionHash, limit: limit)
                 .map { [weak self] transactions -> [TransactionRecord] in
                     transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
                 }
