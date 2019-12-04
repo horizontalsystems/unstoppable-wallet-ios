@@ -8,7 +8,7 @@ class SendConfirmationAmountCell: AppCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        contentView.backgroundColor = SendTheme.holderBackground
+        contentView.backgroundColor = .appLawrence
         backgroundColor = .clear
         selectionStyle = .none
 

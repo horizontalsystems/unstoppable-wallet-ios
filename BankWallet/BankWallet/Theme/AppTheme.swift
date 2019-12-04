@@ -56,7 +56,6 @@ class AppTheme {
     static let alertCellFont: UIFont = .appHeadline2
     static let alertMessageFont: UIFont = .appSubhead1
     static var alertCellHighlightColor: UIColor = .cryptoYellow
-    static var alertCellDefaultColor: UIColor { return .crypto_Bars_Dark }
     static var alertMessageDefaultColor: UIColor { return .crypto_Bars_Black }
 
     static let alertSideMargin: CGFloat = 61

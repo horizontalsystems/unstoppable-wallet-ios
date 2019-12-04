@@ -71,7 +71,7 @@ class AlertViewController: WalletActionSheetController {
         let item = TextSelectItem(
                 text: row.text,
                 font: AppTheme.alertCellFont,
-                color: AppTheme.alertCellDefaultColor,
+                color: .appOz,
                 height: AppTheme.alertCellHeight,
                 selected: row.selected,
                 tag: index

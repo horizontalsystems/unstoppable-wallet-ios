@@ -23,13 +23,11 @@ class TransactionInfoTheme {
     static let itemTitleColor = UIColor.cryptoGray
     static let itemNoteColor = UIColor.cryptoYellow
     static let itemValueFont: UIFont = .appSubhead1
-    static var itemValueColor: UIColor { return .crypto_Bars_Dark }
     static let coinNameFont: UIFont = .appCaption
     static let coinNameColor: UIColor = .cryptoGray
     static let coinNameTopMargin: CGFloat = 3
 
     static let amountFont = UIFont.appSubhead1
-    static var amountColor: UIColor { return .crypto_Bars_Dark }
     static let amountTopMargin: CGFloat = 7
     static let incomingAmountColor = UIColor.cryptoGreen
     static let outgoingAmountColor = UIColor.cryptoYellow

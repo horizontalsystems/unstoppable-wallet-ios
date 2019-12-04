@@ -38,5 +38,5 @@ class BackupTheme {
     static var gradientTransparent: UIColor { return UIColor.crypto_Dark_MidLightBackground.withAlphaComponent(0) }
     static var gradientSolid: UIColor { return .crypto_Dark_MidLightBackground }
 
-    static let alertColor = UIColor.cryptoRed
+    static let alertColor = UIColor.appLucian
 }

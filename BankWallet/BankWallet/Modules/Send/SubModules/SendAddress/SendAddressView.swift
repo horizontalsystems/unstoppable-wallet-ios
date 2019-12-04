@@ -15,8 +15,9 @@ class SendAddressView: UIView {
 
         addSubview(addressInputField)
         addressInputField.snp.makeConstraints { maker in
-            maker.top.bottom.equalToSuperview().inset(CGFloat.margin3x)
-            maker.leading.trailing.equalToSuperview().inset(SendTheme.margin)
+            maker.top.equalToSuperview().inset(CGFloat.margin3x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.bottom.equalToSuperview()
         }
         addressInputField.onScan = { [weak self] in
             self?.delegate.onAddressScanClicked()

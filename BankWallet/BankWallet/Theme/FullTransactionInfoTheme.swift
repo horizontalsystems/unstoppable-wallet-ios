@@ -3,8 +3,6 @@ import UIKit
 class FullTransactionInfoTheme {
     static let font = UIFont.appSubhead2
     static let titleColor = UIColor.cryptoGray
-    static var descriptionColor: UIColor { return .crypto_Bars_Dark }
-    static var linkLabelColor: UIColor { return .crypto_Bars_Dark }
     static let linkLabelUnderlineStyle: NSNumber = 1
     static let linkLabelFont = UIFont.appSubhead1
 

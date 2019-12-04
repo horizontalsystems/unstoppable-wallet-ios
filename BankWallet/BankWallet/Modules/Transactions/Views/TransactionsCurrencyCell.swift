@@ -47,7 +47,7 @@ class TransactionsCurrencyCell: UICollectionViewCell {
     }
 
     func bind(selected: Bool) {
-        nameLabel.textColor = selected ? TransactionsFilterTheme.selectedNameColor : TransactionsFilterTheme.deselectedNameColor
+        nameLabel.textColor = selected ? TransactionsFilterTheme.selectedNameColor : .appOz
         roundedView.backgroundColor = selected ? TransactionsFilterTheme.selectedBackgroundColor : TransactionsFilterTheme.deselectedBackgroundColor
     }
 

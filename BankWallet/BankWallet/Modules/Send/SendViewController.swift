@@ -23,17 +23,20 @@ class SendViewController: WalletViewController {
         super.init()
 
         sendHolderView.addSubview(sendButton)
+
         sendHolderView.backgroundColor = .clear
         sendHolderView.snp.makeConstraints { maker in
-            maker.height.equalTo(SendTheme.sendButtonHolderHeight)
+            maker.height.equalTo(74)
         }
-        sendButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(SendTheme.margin)
-            maker.bottom.equalToSuperview()
-            maker.height.equalTo(SendTheme.sendButtonHeight)
-        }
-        sendButton.addTarget(self, action: #selector(onSendTouchUp), for: .touchUpInside)
+
         sendButton.setTitle("send.next_button".localized, for: .normal)
+        sendButton.addTarget(self, action: #selector(onSendTouchUp), for: .touchUpInside)
+
+        sendButton.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.bottom.equalToSuperview()
+            maker.height.equalTo(50)
+        }
     }
 
     @objc func onClose() {

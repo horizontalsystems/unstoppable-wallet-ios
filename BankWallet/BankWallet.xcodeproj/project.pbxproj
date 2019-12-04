@@ -707,7 +707,6 @@
 		1A564163B9A2408A19736CCA /* TransactionPendingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D94926FEAF120CF71D7 /* TransactionPendingView.swift */; };
 		1A564166E898429B13366134 /* EosInfraProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564AE1D7E6000C057642B7 /* EosInfraProvider.swift */; };
 		1A56416B9DC6DA281AD34575 /* AdapterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647ACB8A65C250F62E07D /* AdapterState.swift */; };
-		1A564191A16F15B25768FF30 /* SendTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564077BF075C35B6FF3BCB /* SendTheme.swift */; };
 		1A5641B71D4E85714B332D6F /* MessageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BAA72DF141198FD5B86 /* MessageItem.swift */; };
 		1A5641BD2DA1FB1803D3B044 /* DepositInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648DA32EA5FC27E4CEF64 /* DepositInteractor.swift */; };
 		1A5641C3B8E88DA8E54FEFEB /* PinDotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564326AB442FFB65E1CA29 /* PinDotsView.swift */; };
@@ -1656,7 +1655,6 @@
 		D3840532218317DF007D50AD /* DepositShareButtonItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DA173BE95B4681E5395 /* DepositShareButtonItemView.swift */; };
 		D3840533218317DF007D50AD /* SendModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641C2FAD616C358A319A0 /* SendModule.swift */; };
 		D3840536218317DF007D50AD /* SendRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56474B516F0AFBAAFB3AE2 /* SendRouter.swift */; };
-		D384053A218317DF007D50AD /* SendTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564077BF075C35B6FF3BCB /* SendTheme.swift */; };
 		D3840545218317DF007D50AD /* ScanQRController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647D980D08E2E4359861B /* ScanQRController.swift */; };
 		D3840546218317DF007D50AD /* TransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356738853E2305B5CC34B /* TransactionRecord.swift */; };
 		D3840548218317DF007D50AD /* WordsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35ADD30196056A9C6407C /* WordsManager.swift */; };
@@ -1800,7 +1798,6 @@
 		D384062121831B3D007D50AD /* DepositShareButtonItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DA173BE95B4681E5395 /* DepositShareButtonItemView.swift */; };
 		D384062221831B3D007D50AD /* SendModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641C2FAD616C358A319A0 /* SendModule.swift */; };
 		D384062521831B3D007D50AD /* SendRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56474B516F0AFBAAFB3AE2 /* SendRouter.swift */; };
-		D384062921831B3D007D50AD /* SendTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564077BF075C35B6FF3BCB /* SendTheme.swift */; };
 		D384063421831B3D007D50AD /* ScanQRController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647D980D08E2E4359861B /* ScanQRController.swift */; };
 		D384063521831B3D007D50AD /* TransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356738853E2305B5CC34B /* TransactionRecord.swift */; };
 		D384063721831B3D007D50AD /* WordsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35ADD30196056A9C6407C /* WordsManager.swift */; };
@@ -2196,7 +2193,6 @@
 		1A56404690D0235A5183C12D /* Coin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
 		1A56404C1C16B85434117DB7 /* AppStatusModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStatusModule.swift; sourceTree = "<group>"; };
 		1A5640528EFD15137E218EA3 /* MainSettingsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsPresenter.swift; sourceTree = "<group>"; };
-		1A564077BF075C35B6FF3BCB /* SendTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendTheme.swift; sourceTree = "<group>"; };
 		1A564082B28C17265B23D88A /* SecuritySettingsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecuritySettingsInteractor.swift; sourceTree = "<group>"; };
 		1A564083CF8DF7A89314820D /* UnlockPinInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlockPinInteractorTests.swift; sourceTree = "<group>"; };
 		1A56408C8281C80FD365E5BE /* LaunchModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchModule.swift; sourceTree = "<group>"; };
@@ -3490,7 +3486,6 @@
 				1A5647CE5852E959DA7EB89A /* TransactionsFilterTheme.swift */,
 				1A564E77730537D108E31276 /* ConfirmationTheme.swift */,
 				1A564D7FA287326CBE96353A /* ButtonTheme.swift */,
-				1A564077BF075C35B6FF3BCB /* SendTheme.swift */,
 				1A5645F926B14580B1644164 /* TransactionInfoTheme.swift */,
 				1A56428DB7E042907CD4252D /* FullTransactionInfoTheme.swift */,
 				503320AA214679EB00F64AAA /* PinTheme.swift */,
@@ -4792,7 +4787,6 @@
 				1A564497DCA3CD398FFF0045 /* DepositShareButtonItemView.swift in Sources */,
 				1A56427D41F16B2D9C7B5F88 /* SendModule.swift in Sources */,
 				1A564822346BD715C453E612 /* SendRouter.swift in Sources */,
-				1A564191A16F15B25768FF30 /* SendTheme.swift in Sources */,
 				D35B518A21942E7A00504FBA /* AboutSettingsViewController.swift in Sources */,
 				1A5645103DC28216716EB7A6 /* ScanQRController.swift in Sources */,
 				11B358C53045F204FA0D12FB /* TransactionRecord.swift in Sources */,
@@ -5456,7 +5450,6 @@
 				D3840532218317DF007D50AD /* DepositShareButtonItemView.swift in Sources */,
 				D3840533218317DF007D50AD /* SendModule.swift in Sources */,
 				D3840536218317DF007D50AD /* SendRouter.swift in Sources */,
-				D384053A218317DF007D50AD /* SendTheme.swift in Sources */,
 				D35B518B21942E7A00504FBA /* AboutSettingsViewController.swift in Sources */,
 				D3840545218317DF007D50AD /* ScanQRController.swift in Sources */,
 				D3840546218317DF007D50AD /* TransactionRecord.swift in Sources */,
@@ -6073,7 +6066,6 @@
 				D384062121831B3D007D50AD /* DepositShareButtonItemView.swift in Sources */,
 				D384062221831B3D007D50AD /* SendModule.swift in Sources */,
 				D384062521831B3D007D50AD /* SendRouter.swift in Sources */,
-				D384062921831B3D007D50AD /* SendTheme.swift in Sources */,
 				D35B518C21942E7A00504FBA /* AboutSettingsViewController.swift in Sources */,
 				D384063421831B3D007D50AD /* ScanQRController.swift in Sources */,
 				D384063521831B3D007D50AD /* TransactionRecord.swift in Sources */,

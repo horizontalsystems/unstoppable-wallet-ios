@@ -12,9 +12,9 @@ class SendButtonCell: UITableViewCell {
         selectionStyle = .none
         addSubview(sendButton)
         sendButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(SendTheme.margin)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.bottom.equalToSuperview()
-            maker.height.equalTo(SendTheme.sendButtonHeight)
+            maker.height.equalTo(CGFloat.heightButton)
         }
         sendButton.setTitle("send.confirmation.send_button".localized, for: .normal)
         sendButton.addTarget(self, action: #selector(onSendTouchUp), for: .touchUpInside)

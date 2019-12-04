@@ -43,7 +43,7 @@ class HashView: RespondButton {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(value: String?, font: UIFont = HashViewTheme.font, color: UIColor = HashViewTheme.color, showExtra: ShowExtra = .none, onTap: (() -> ())? = nil) {
+    func bind(value: String?, font: UIFont = HashViewTheme.font, color: UIColor = .appOz, showExtra: ShowExtra = .none, onTap: (() -> ())? = nil) {
         if let onTap = onTap {
             self.onTap = onTap
             backgrounds = [RespondButton.State.active: TransactionInfoDescriptionTheme.buttonBackground, RespondButton.State.selected: TransactionInfoDescriptionTheme.buttonBackgroundSelected]

@@ -41,7 +41,7 @@ class FullTransactionInfoTextCell: TitleCell {
             }
         }
 
-        descriptionView.bind(value: item.value, color: item.titleColor ?? FullTransactionInfoTheme.descriptionColor, showExtra: item.showExtra, onTap: onTap)
+        descriptionView.bind(value: item.value, color: item.titleColor ?? .appOz, showExtra: item.showExtra, onTap: onTap)
         descriptionView.isUserInteractionEnabled = onTap != nil
     }
 

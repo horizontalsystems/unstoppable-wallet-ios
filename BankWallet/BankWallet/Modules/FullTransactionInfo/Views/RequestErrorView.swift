@@ -43,7 +43,7 @@ class RequestErrorView: UIView {
 
             subtitleLabel.numberOfLines = 1
             subtitleLabel.font = .appBody
-            subtitleLabel.textColor = .cryptoRed
+            subtitleLabel.textColor = .appLucian
             subtitleLabel.textAlignment = .center
             subtitleLabel.text = subtitle
             bottomView = subtitleLabel
@@ -64,7 +64,7 @@ class RequestErrorView: UIView {
             button.snp.makeConstraints { maker in
                 maker.centerX.equalToSuperview()
                 maker.top.equalTo(bottomView.snp.bottom).offset(RequestErrorTheme.buttonMargin)
-                maker.height.equalTo(SendTheme.buttonSize)
+                maker.height.equalTo(CGFloat.heightButtonSecondary)
             }
             button.titleLabel.snp.remakeConstraints { maker in
                 maker.leading.equalToSuperview().offset(RequestErrorTheme.buttonTitleHorizontalMargin)

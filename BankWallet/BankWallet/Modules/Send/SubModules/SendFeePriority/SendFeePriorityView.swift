@@ -25,8 +25,8 @@ class SendFeePriorityView: UIView {
 
         addSubview(durationTitleLabel)
         durationTitleLabel.text = "send.tx_duration".localized
-        durationTitleLabel.font = SendTheme.feeFont
-        durationTitleLabel.textColor = SendTheme.feeColor
+        durationTitleLabel.font = .appSubhead2
+        durationTitleLabel.textColor = .appGray
         durationTitleLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
             maker.top.equalTo(selectableValueView.snp.bottom).offset(CGFloat.margin3x)
@@ -34,8 +34,8 @@ class SendFeePriorityView: UIView {
         }
 
         addSubview(durationValueLabel)
-        durationValueLabel.font = SendTheme.feeFont
-        durationValueLabel.textColor = SendTheme.feeColor
+        durationValueLabel.font = .appSubhead2
+        durationValueLabel.textColor = .appGray
         durationValueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         durationValueLabel.snp.makeConstraints { maker in
             maker.centerY.equalTo(durationTitleLabel.snp.centerY)
