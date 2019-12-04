@@ -6,6 +6,9 @@ import SnapKit
 import RxSwift
 
 class FullTransactionInfoViewController: WalletViewController, SectionsDataSource {
+    static let spinnerLineWidth: CGFloat = 4
+    static let spinnerSideSize: CGFloat = 32
+
     private let cellName = String(describing: FullTransactionInfoTextCell.self)
     private let closeButtonImage = UIImage(named: "Close Icon")
     private let shareButtonImage = UIImage(named: "Share Full Transaction Icon")
@@ -19,7 +22,9 @@ class FullTransactionInfoViewController: WalletViewController, SectionsDataSourc
     private let closeButton = UIButton(frame: .zero)
 
     private var errorView: RequestErrorView?
-    private let loadingView = HUDProgressView(strokeLineWidth: FullTransactionInfoTheme.spinnerLineWidth, radius: FullTransactionInfoTheme.spinnerSideSize / 2 - FullTransactionInfoTheme.spinnerLineWidth / 2, strokeColor: UIColor.cryptoGray)
+    private let loadingView = HUDProgressView(strokeLineWidth: FullTransactionInfoViewController.spinnerLineWidth,
+            radius: FullTransactionInfoViewController.spinnerSideSize / 2 - FullTransactionInfoViewController.spinnerLineWidth / 2,
+            strokeColor: .appGray)
 
     init(delegate: IFullTransactionInfoViewDelegate) {
         self.delegate = delegate
@@ -68,8 +73,7 @@ class FullTransactionInfoViewController: WalletViewController, SectionsDataSourc
             view.addSubview(errorView)
 
             errorView.snp.makeConstraints { maker in
-                maker.top.leading.equalToSuperview().offset(FullTransactionInfoTheme.errorViewMargin)
-                maker.trailing.bottom.equalToSuperview().offset(-FullTransactionInfoTheme.errorViewMargin)
+                maker.edges.equalToSuperview().inset(CGFloat.margin6x)
             }
             errorView.set(hidden: true)
         }
@@ -95,11 +99,11 @@ class FullTransactionInfoViewController: WalletViewController, SectionsDataSourc
             view.bind(value: hash, onTap: {
                 self?.onTapHash()
             })
-        }, dynamicHeight: { _ in FullTransactionInfoTheme.hashHeaderHeight })
+        }, dynamicHeight: { _ in 56 })
 
         if let providerName = delegate.providerName {
             rows.append(
-                Row<FullTransactionInfoTextCell>(id: "resource", height: FullTransactionInfoTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
+                Row<FullTransactionInfoTextCell>(id: "resource", height: .heightSingleLineCell, autoDeselect: true, bind: { cell, _ in
                     let item = FullTransactionItem(title: "full_info.source.title".localized, value: providerName)
                     cell.bind(item: item, selectionStyle: .default, showDisclosure: true, last: true)
                 }, action: { [weak self] cell in
@@ -114,16 +118,16 @@ class FullTransactionInfoViewController: WalletViewController, SectionsDataSourc
             }
             if let title = section.title {
                 rows.append(
-                        Row<FullTransactionHeaderCell>(id: "header_\(title)", height: FullTransactionInfoTheme.sectionHeight, bind: { cell, _ in
+                        Row<FullTransactionHeaderCell>(id: "header_\(title)", height: 44, bind: { cell, _ in
                             cell.bind(title: title)
                         })
                 )
             } else {
-                rows.append(Row<FullTransactionHeaderCell>(id: "header_\(sectionIndex)", height: FullTransactionInfoTheme.sectionEmptyMargin))
+                rows.append(Row<FullTransactionHeaderCell>(id: "header_\(sectionIndex)", height: .margin8x))
             }
             for (rowIndex, item) in section.items.enumerated() {
                 rows.append(
-                        Row<FullTransactionInfoTextCell>(id: "section_\(sectionIndex)_row_\(rowIndex)", height: FullTransactionInfoTheme.cellHeight, bind: { [weak self] cell, _ in
+                        Row<FullTransactionInfoTextCell>(id: "section_\(sectionIndex)_row_\(rowIndex)", height: .heightSingleLineCell, bind: { [weak self] cell, _ in
                     cell.bind(item: item, last: rowIndex == section.items.count - 1, onTap: item.clickable ? {
                         self?.onTap(item: item)
                     } : nil)
@@ -132,9 +136,9 @@ class FullTransactionInfoViewController: WalletViewController, SectionsDataSourc
         }
 
         if let providerName = delegate.providerName, delegate.haveBlockExplorer {
-            rows.append(Row<FullTransactionHeaderCell>(id: "provider_header", height: FullTransactionInfoTheme.sectionEmptyMargin))
+            rows.append(Row<FullTransactionHeaderCell>(id: "provider_header", height: .margin8x))
             rows.append(
-                    Row<FullTransactionProviderLinkCell>(id: "link_cell", height: FullTransactionInfoTheme.linkCellHeight, bind: { [weak self] cell, _ in
+                    Row<FullTransactionProviderLinkCell>(id: "link_cell", height: 20, bind: { [weak self] cell, _ in
                     cell.bind(text: providerName) {
                         self?.onTapProviderLink()
                     }
@@ -142,7 +146,7 @@ class FullTransactionInfoViewController: WalletViewController, SectionsDataSourc
             )
         }
 
-        return [Section(id: "section", headerState: hashHeader, footerState: .marginColor(height: FullTransactionInfoTheme.sectionEmptyMargin, color: .clear), rows: rows)]
+        return [Section(id: "section", headerState: hashHeader, footerState: .marginColor(height: .margin8x, color: .clear), rows: rows)]
     }
 
     func didScroll() {

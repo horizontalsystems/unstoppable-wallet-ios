@@ -10,7 +10,7 @@ class TransactionIdItem: BaseActionItem {
 
         super.init(cellType: TransactionIdItemView.self, tag: tag, required: true)
 
-        height = TransactionInfoTheme.itemHeight
+        height = .heightSingleLineCell
     }
 
 }

@@ -14,7 +14,7 @@ class FullTransactionHashHeaderView: UITableViewHeaderFooterView {
         contentView.addSubview(descriptionView)
         descriptionView.snp.makeConstraints { maker in
             maker.leading.equalTo(contentView.snp.leadingMargin)
-            maker.top.equalToSuperview().offset(FullTransactionInfoTheme.hashTopMargin)
+            maker.top.equalToSuperview().offset(CGFloat.margin2x)
             maker.trailing.equalTo(contentView.snp.trailingMargin)
         }
     }
@@ -23,7 +23,7 @@ class FullTransactionHashHeaderView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(value: String?, color: UIColor = FullTransactionInfoTheme.sectionTitleColor, onTap: (() -> ())?) {
+    func bind(value: String?, color: UIColor = .appGray, onTap: (() -> ())?) {
         descriptionView.bind(value: value, showExtra: .hash, onTap: onTap)
     }
 

@@ -21,59 +21,60 @@ class TransactionStatusItemView: BaseActionItemView {
     override func initView() {
         super.initView()
 
-        backgroundColor = TransactionInfoTheme.itemBackground
+        backgroundColor = .appLawrence
 
         addSubview(titleLabel)
+        addSubview(finalStatusWrapper)
+        finalStatusWrapper.addSubview(finalStatusLabel)
+        finalStatusWrapper.addSubview(finalStatusIcon)
+        addSubview(processingWrapper)
+        processingWrapper.addSubview(processingLabel)
+        processingWrapper.addSubview(barsProgressView)
+
         titleLabel.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
-            maker.leading.equalToSuperview().offset(TransactionInfoTheme.regularMargin)
+            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
         }
 
         titleLabel.text = "tx_info.status".localized
-        titleLabel.font = TransactionInfoTheme.itemTitleFont
+        titleLabel.font = .appSubhead2
         titleLabel.textColor = .cryptoGray
 
-        addSubview(finalStatusWrapper)
         finalStatusWrapper.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
-            maker.trailing.equalToSuperview().inset(TransactionInfoTheme.regularMargin)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
-        finalStatusWrapper.addSubview(finalStatusLabel)
         finalStatusLabel.snp.makeConstraints { maker in
             maker.leading.top.bottom.equalToSuperview()
         }
 
-        finalStatusLabel.font = TransactionInfoTheme.statusTextFont
+        finalStatusLabel.font = .appSubhead1
         finalStatusLabel.textColor = .appOz
 
-        finalStatusWrapper.addSubview(finalStatusIcon)
         finalStatusIcon.snp.makeConstraints { maker in
-            maker.leading.equalTo(finalStatusLabel.snp.trailing).offset(TransactionInfoTheme.smallMargin)
+            maker.leading.equalTo(finalStatusLabel.snp.trailing).offset(CGFloat.margin1x)
             maker.centerY.equalToSuperview()
             maker.trailing.equalToSuperview()
         }
 
-        addSubview(processingWrapper)
         processingWrapper.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
-            maker.trailing.equalToSuperview().inset(TransactionInfoTheme.regularMargin)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
-        processingWrapper.addSubview(processingLabel)
         processingLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview()
             maker.centerY.equalToSuperview()
         }
 
         processingLabel.textColor = .appOz
-        processingLabel.font = TransactionInfoTheme.statusTextFont
+        processingLabel.font = .appSubhead1
 
-        processingWrapper.addSubview(barsProgressView)
         barsProgressView.snp.makeConstraints { maker in
             maker.leading.equalTo(processingLabel.snp.trailing).offset(CGFloat.margin2x)
             maker.top.trailing.bottom.equalToSuperview()
-            maker.height.equalTo(TransactionInfoTheme.barsProgressHeight)
+            maker.height.equalTo(20)
         }
 
         barsProgressView.set(barsCount: AppTheme.progressStepsCount)

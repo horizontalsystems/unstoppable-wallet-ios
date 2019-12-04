@@ -17,14 +17,14 @@ class FullTransactionHeaderCell: UITableViewCell {
 
         contentView.addSubview(titleHolder)
         titleHolder.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(FullTransactionInfoTheme.sectionTitleTopMargin)
             maker.leading.equalTo(contentView.snp.leadingMargin)
             maker.trailing.equalTo(contentView.snp.trailingMargin)
             maker.bottom.equalToSuperview()
         }
+
         titleHolder.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.leadingMargin.trailingMargin.top.equalToSuperview()
+            maker.leadingMargin.trailingMargin.top.bottom.equalToSuperview()
         }
     }
 
@@ -32,7 +32,7 @@ class FullTransactionHeaderCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(title: String? = nil, font: UIFont = FullTransactionInfoTheme.sectionTitleFont, color: UIColor = FullTransactionInfoTheme.sectionTitleColor) {
+    func bind(title: String? = nil, font: UIFont = .appSubhead1, color: UIColor = .appGray) {
         titleLabel.text = title
         titleLabel.font = font
         titleLabel.textColor = color

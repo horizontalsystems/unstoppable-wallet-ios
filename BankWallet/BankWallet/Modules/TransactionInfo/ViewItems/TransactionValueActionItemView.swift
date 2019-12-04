@@ -14,36 +14,39 @@ class TransactionValueActionItemView: BaseActionItemView {
     override func initView() {
         super.initView()
 
-        backgroundColor = TransactionInfoTheme.itemBackground
+        backgroundColor = .appLawrence
 
         addSubview(titleLabel)
         addSubview(valueLabel)
         addSubview(actionButton)
 
-        titleLabel.font = .appSubhead2
-        titleLabel.textColor = .cryptoGray
-        titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         titleLabel.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
         }
 
-        valueLabel.font = .appSubhead1
-        valueLabel.textColor = .appLeah
-        valueLabel.textAlignment = .right
+        titleLabel.font = .appSubhead2
+        titleLabel.textColor = .cryptoGray
+        titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+
         valueLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.titleLabel.snp.trailing).offset(CGFloat.margin8x)
             maker.centerY.equalToSuperview()
             maker.trailing.equalTo(actionButton.snp.leading)
         }
 
-        actionButton.addTarget(self, action: #selector(onActionClicked), for: .touchUpInside)
+        valueLabel.font = .appSubhead1
+        valueLabel.textColor = .appLeah
+        valueLabel.textAlignment = .right
+
         actionButton.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.top.bottom.equalToSuperview()
             maker.width.equalTo(0)
         }
+
+        actionButton.addTarget(self, action: #selector(onActionClicked), for: .touchUpInside)
     }
 
     @objc func onActionClicked() {

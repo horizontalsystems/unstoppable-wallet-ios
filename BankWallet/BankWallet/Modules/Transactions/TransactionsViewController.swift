@@ -158,7 +158,7 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        filterHeaderView.filters.isEmpty ? 0 : TransactionsFilterTheme.filterHeaderHeight
+        filterHeaderView.filters.isEmpty ? 0 : TransactionCurrenciesHeaderView.headerHeight
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
