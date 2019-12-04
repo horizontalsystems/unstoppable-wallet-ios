@@ -75,10 +75,10 @@ class DataProviderCell: AppCell {
 
             if online {
                 subtitleLabel.text = "full_info.source.online".localized
-                subtitleLabel.textColor = .cryptoGreen
+                subtitleLabel.textColor = .appRemus
             } else {
                 subtitleLabel.text = "full_info.source.offline".localized
-                subtitleLabel.textColor = .cryptoRed
+                subtitleLabel.textColor = .appLucian
             }
         }
 

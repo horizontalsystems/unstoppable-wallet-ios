@@ -19,7 +19,7 @@ class SendConfirmationFieldCell: UITableViewCell {
         titleLabel.font = .appSubhead2
 
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SendTheme.margin)
+            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
             maker.bottom.equalToSuperview()
         }
 
@@ -30,8 +30,8 @@ class SendConfirmationFieldCell: UITableViewCell {
         fieldTextLabel.font = .appSubhead2
 
         fieldTextLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(titleLabel.snp.trailing).offset(SendTheme.smallMargin)
-            maker.trailing.equalToSuperview().offset(-SendTheme.margin)
+            maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin2x)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.bottom.equalToSuperview()
         }
 

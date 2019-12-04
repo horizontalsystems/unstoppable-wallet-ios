@@ -30,9 +30,9 @@ class FullTransactionLinkView: UIView {
 
     func bind(text: String, onTap: (() -> ())? = nil) {
         let attributedString = NSAttributedString(string: text, attributes: [.font: FullTransactionInfoTheme.linkLabelFont,
-                                                                             .foregroundColor: FullTransactionInfoTheme.linkLabelColor,
+                                                                             .foregroundColor: UIColor.appOz,
                                                                              .underlineStyle: FullTransactionInfoTheme.linkLabelUnderlineStyle,
-                                                                             .underlineColor: FullTransactionInfoTheme.linkLabelColor])
+                                                                             .underlineColor: UIColor.appOz])
         linkLabel.attributedText = attributedString
         linkWrapper.handleTouch = onTap
     }

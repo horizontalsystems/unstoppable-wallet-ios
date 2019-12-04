@@ -12,25 +12,29 @@ class AddressTextView: UITextView {
 
 class AddressInputField: UIView {
     private let errorFont: UIFont = .appCaption
+    private let addressFieldFont: UIFont = .appBody
+    private let textViewCenterFixOffset: CGFloat = 1
 
     private let addressWrapperView = UIView()
     private let addressField = AddressTextView()
     private let placeholderLabel = UILabel()
     private let errorLabel = UILabel()
-    private let scanButton = RespondButton()
-    private let scanButtonIcon = UIImageView()
-    private let deleteButton = RespondButton()
-    private let deleteButtonIcon = UIImageView()
-    private let pasteButton = RespondButton()
-    private let copyButton = RespondButton()
-    private let copyButtonIcon = UIImageView()
-    private let textViewCenterFixOffset: CGFloat = 1
+    private let scanButton = UIButton.appSecondary
+    private let deleteButton = UIButton.appSecondary
+    private let pasteButton = UIButton.appSecondary
+    private let copyButton = UIButton.appSecondary
 
     private let placeholder: String?
     private let numberOfLines: Int
     private let showQrButton: Bool
     private let canEdit: Bool
     private let rightButtonMode: RightButtonMode
+
+    var onPaste: (() -> ())?
+    var onScan: (() -> ())?
+    var onDelete: (() -> ())?
+    var onCopy: (() -> ())?
+    var onTextChange: ((String?) -> ())?
 
     init(frame: CGRect, placeholder: String?, numberOfLines: Int = 1, showQrButton: Bool, canEdit: Bool, lineBreakMode: NSLineBreakMode, rightButtonMode: RightButtonMode = .delete) {
         self.placeholder = placeholder
@@ -45,17 +49,14 @@ class AddressInputField: UIView {
         addressWrapperView.addSubview(errorLabel)
         addressField.addSubview(placeholderLabel)
         addSubview(scanButton)
-        scanButton.addSubview(scanButtonIcon)
         addSubview(deleteButton)
-        deleteButton.addSubview(deleteButtonIcon)
         addSubview(copyButton)
-        copyButton.addSubview(copyButtonIcon)
         addSubview(pasteButton)
 
-        layer.cornerRadius = SendTheme.holderCornerRadius
-        layer.borderWidth = SendTheme.holderBorderWidth
-        layer.borderColor = SendTheme.holderBorderColor.cgColor
-        backgroundColor = SendTheme.holderBackground
+        layer.cornerRadius = CGFloat.cornerRadius8
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.cryptoSteel20.cgColor
+        backgroundColor = .appLawrence
 
         addressField.delegate = self
         addressField.tintColor = AppTheme.textFieldTintColor
@@ -63,8 +64,9 @@ class AddressInputField: UIView {
         addressField.autocapitalizationType = .none
         addressField.isUserInteractionEnabled = canEdit
         addressField.textContainer.maximumNumberOfLines = numberOfLines
-        addressField.textColor = SendTheme.addressColor
-        addressField.font = SendTheme.addressFont
+        addressField.textColor = .appOz
+
+        addressField.font = addressFieldFont
         addressField.textContainer.lineBreakMode = lineBreakMode
         addressField.textContainer.lineFragmentPadding = 0
         addressField.textContainerInset = .zero
@@ -73,7 +75,7 @@ class AddressInputField: UIView {
         addressField.onPaste = { [weak self] in
             self?.onPaste?()
         }
-        placeholderLabel.textColor = SendTheme.addressHintColor
+        placeholderLabel.textColor = .appGray50
         placeholderLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview()
             maker.centerY.equalToSuperview()
@@ -81,101 +83,68 @@ class AddressInputField: UIView {
         placeholderLabel.text = placeholder
 
         errorLabel.font = errorFont
-        errorLabel.textColor = SendTheme.errorColor
+        errorLabel.textColor = .appLucian
         errorLabel.numberOfLines = 0
 
-        pasteButton.borderWidth = 1 / UIScreen.main.scale
-        pasteButton.borderColor = SendTheme.buttonBorderColor
-        pasteButton.cornerRadius = SendTheme.buttonCornerRadius
-        pasteButton.backgrounds = SendTheme.buttonBackground
-        pasteButton.textColors = [.active: SendTheme.buttonIconColor, .selected: SendTheme.buttonIconColor]
-        pasteButton.titleLabel.text = "button.paste".localized
-        pasteButton.titleLabel.font = .appSubhead1
-        pasteButton.titleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         pasteButton.snp.makeConstraints { maker in
-            maker.trailing.equalToSuperview().inset(SendTheme.sendSmallButtonMargin)
+            maker.trailing.equalToSuperview().inset(6)
             maker.centerY.equalToSuperview()
-            maker.height.equalTo(SendTheme.buttonSize)
+            maker.height.equalTo(CGFloat.heightButtonSecondary)
         }
-        pasteButton.wrapperView.snp.remakeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SendTheme.smallMargin)
-            maker.top.bottom.equalToSuperview()
-            maker.trailing.equalToSuperview().offset(-SendTheme.smallMargin)
+
+        pasteButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        pasteButton.setTitle("button.paste".localized, for: .normal)
+        pasteButton.addTarget(self, action: #selector(onTapPaste), for: .touchUpInside)
+
+        scanButton.snp.makeConstraints { maker in
+            maker.trailing.equalTo(pasteButton.snp.leading).offset(-CGFloat.margin2x)
+            maker.centerY.equalTo(pasteButton.snp.centerY)
+            maker.height.equalTo(CGFloat.heightButtonSecondary)
+            maker.width.equalTo(36)
         }
 
         scanButton.isHidden = !showQrButton
-        scanButton.borderWidth = 1 / UIScreen.main.scale
-        scanButton.borderColor = SendTheme.buttonBorderColor
-        scanButton.cornerRadius = SendTheme.buttonCornerRadius
-        scanButton.backgrounds = SendTheme.buttonBackground
-        scanButton.snp.makeConstraints { maker in
-            maker.trailing.equalTo(pasteButton.snp.leading).offset(-SendTheme.smallMargin)
-            maker.centerY.equalTo(pasteButton.snp.centerY)
-            maker.height.equalTo(SendTheme.buttonSize)
-            maker.width.equalTo(SendTheme.scanButtonWidth)
-        }
+        scanButton.setImage(UIImage(named: "Send Scan Icon")?.tinted(with: .appOz), for: .normal)
+        scanButton.addTarget(self, action: #selector(onTapScan), for: .touchUpInside)
 
-        scanButtonIcon.image = UIImage(named: "Send Scan Icon")?.tinted(with: SendTheme.buttonIconColor)
-        scanButtonIcon.snp.makeConstraints { maker in
-            maker.center.equalToSuperview()
-        }
-
-        deleteButton.borderWidth = 1 / UIScreen.main.scale
-        deleteButton.borderColor = SendTheme.buttonBorderColor
-        deleteButton.cornerRadius = SendTheme.buttonCornerRadius
-        deleteButton.backgrounds = SendTheme.buttonBackground
         deleteButton.snp.makeConstraints { maker in
             maker.trailing.equalTo(self.pasteButton)
             maker.centerY.equalTo(pasteButton.snp.centerY)
-            maker.size.equalTo(SendTheme.buttonSize)
+            maker.size.equalTo(CGFloat.heightButtonSecondary)
         }
 
-        deleteButtonIcon.image = UIImage(named: "Send Delete Icon")?.tinted(with: SendTheme.buttonIconColor)
-        deleteButtonIcon.snp.makeConstraints { maker in
-            maker.center.equalToSuperview()
-        }
+        deleteButton.setImage(UIImage(named: "Send Delete Icon")?.tinted(with: .appOz), for: .normal)
+        deleteButton.addTarget(self, action: #selector(onTapDelete), for: .touchUpInside)
 
-        copyButton.borderWidth = 1 / UIScreen.main.scale
-        copyButton.borderColor = SendTheme.buttonBorderColor
-        copyButton.cornerRadius = SendTheme.buttonCornerRadius
-        copyButton.backgrounds = SendTheme.buttonBackground
         copyButton.snp.makeConstraints { maker in
             maker.edges.equalTo(deleteButton)
         }
 
-        copyButtonIcon.image = UIImage(named: "Address Field Copy Icon")?.tinted(with: SendTheme.buttonIconColor)
-        copyButtonIcon.snp.makeConstraints { maker in
-            maker.center.equalToSuperview()
-        }
+        copyButton.setImage(UIImage(named: "Address Field Copy Icon")?.tinted(with: .appOz), for: .normal)
+        copyButton.addTarget(self, action: #selector(onTapCopy), for: .touchUpInside)
 
         bind(address: nil, error: nil)
+    }
+
+    @objc private func onTapPaste() {
+        onPaste?()
+    }
+
+    @objc private func onTapScan() {
+        onScan?()
+    }
+
+    @objc private func onTapDelete() {
+        onDelete?()
+    }
+
+    @objc private func onTapCopy() {
+        onCopy?()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    var onPaste: (() -> ())? {
-        didSet {
-            pasteButton.onTap = onPaste
-        }
-    }
-    var onScan: (() -> ())? {
-        didSet {
-            scanButton.onTap = onScan
-        }
-    }
-    var onDelete: (() -> ())? {
-        didSet {
-            deleteButton.onTap = onDelete
-        }
-    }
-    var onCopy: (() -> ())? {
-        didSet {
-            copyButton.onTap = onCopy
-        }
-    }
-    var onTextChange: ((String?) -> ())?
 
     func bind(address: String?, error: Error?) {
         if let address = address, !address.isEmpty {
@@ -188,10 +157,10 @@ class AddressInputField: UIView {
 
             addressWrapperView.snp.remakeConstraints { maker in
                 maker.top.bottom.equalToSuperview()
-                maker.leading.equalToSuperview().offset(SendTheme.mediumMargin)
-                maker.trailing.equalTo(deleteButton.snp.leading).offset(-SendTheme.mediumMargin)
+                maker.leading.equalToSuperview().inset(CGFloat.margin3x)
+                maker.trailing.equalTo(deleteButton.snp.leading).offset(-CGFloat.margin3x)
                 maker.centerY.equalTo(deleteButton.snp.centerY)
-                maker.height.greaterThanOrEqualTo(SendTheme.addressHolderHeight)
+                maker.height.greaterThanOrEqualTo(44)
             }
         } else {
             placeholderLabel.isHidden = false
@@ -203,27 +172,27 @@ class AddressInputField: UIView {
 
             addressWrapperView.snp.remakeConstraints { maker in
                 maker.top.bottom.equalToSuperview()
-                maker.leading.equalToSuperview().offset(SendTheme.mediumMargin)
+                maker.leading.equalToSuperview().offset(CGFloat.margin3x)
                 maker.centerY.equalTo(pasteButton.snp.centerY)
-                maker.height.greaterThanOrEqualTo(SendTheme.addressHolderHeight)
+                maker.height.greaterThanOrEqualTo(44)
 
                 if showQrButton {
-                    maker.trailing.equalTo(scanButton.snp.leading).offset(-SendTheme.mediumMargin)
+                    maker.trailing.equalTo(scanButton.snp.leading).offset(-CGFloat.margin3x)
                 } else {
-                    maker.trailing.equalTo(pasteButton.snp.leading).offset(-SendTheme.mediumMargin)
+                    maker.trailing.equalTo(pasteButton.snp.leading).offset(-CGFloat.margin3x)
                 }
             }
         }
         layoutSubviews()
+        let height = addressFieldFont.lineHeight * CGFloat(numberOfLines)
 
         if let error = error {
             errorLabel.isHidden = false
             errorLabel.text = error.localizedDescription
-
             addressField.snp.remakeConstraints { maker in
                 maker.top.equalToSuperview().offset(CGFloat.margin3x)
                 maker.leading.trailing.equalToSuperview()
-                maker.height.equalTo(SendTheme.addressTextViewLineHeight * numberOfLines)
+                maker.height.equalTo(height)
             }
             errorLabel.snp.remakeConstraints { maker in
                 maker.leading.trailing.equalToSuperview()
@@ -236,7 +205,7 @@ class AddressInputField: UIView {
             errorLabel.snp.removeConstraints()
             addressField.snp.remakeConstraints { maker in
                 maker.leading.trailing.centerY.equalToSuperview()
-                maker.height.equalTo(SendTheme.addressTextViewLineHeight * numberOfLines)
+                maker.height.equalTo(height)
             }
         }
     }

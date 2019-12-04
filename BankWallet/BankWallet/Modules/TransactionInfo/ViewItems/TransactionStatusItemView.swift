@@ -45,7 +45,7 @@ class TransactionStatusItemView: BaseActionItemView {
         }
 
         finalStatusLabel.font = TransactionInfoTheme.statusTextFont
-        finalStatusLabel.textColor = .crypto_Bars_Dark
+        finalStatusLabel.textColor = .appOz
 
         finalStatusWrapper.addSubview(finalStatusIcon)
         finalStatusIcon.snp.makeConstraints { maker in
@@ -66,7 +66,7 @@ class TransactionStatusItemView: BaseActionItemView {
             maker.centerY.equalToSuperview()
         }
 
-        processingLabel.textColor = .crypto_Bars_Dark
+        processingLabel.textColor = .appOz
         processingLabel.font = TransactionInfoTheme.statusTextFont
 
         processingWrapper.addSubview(barsProgressView)

@@ -88,7 +88,7 @@ class IndexedInputField: UIView, UITextFieldDelegate {
     }
 
     func commonInit() {
-        backgroundColor = .crypto_SteelDark_White
+        backgroundColor = .appLawrence
 
         clearTextButton.addTarget(self, action: #selector(onClearText), for: .touchUpInside)
 

@@ -9,9 +9,9 @@ class ChartConfiguration {
     var backgroundColor: UIColor = .clear
 
     var chartInsets: UIEdgeInsets = .zero
-    var curveWidth: CGFloat = 1
+    var curveWidth: CGFloat = .heightOneDp
     var curvePositiveColor: UIColor = .cryptoGreen
-    var curveNegativeColor: UIColor = .cryptoRed
+    var curveNegativeColor: UIColor = .appLucian
     var curveIncompleteColor: UIColor = .appGray50
 
     var curvePercentPadding: CGFloat = 0.1
@@ -39,7 +39,7 @@ class ChartConfiguration {
     var limitTextLeftMargin: CGFloat = .margin4x
 
     var selectedCircleRadius: CGFloat = 5.5
-    var selectedIndicatorColor: UIColor = .crypto_Bars_Dark
-    var selectedCurveColor: UIColor = .crypto_Bars_Dark
-    var selectedGradientColor: UIColor = .crypto_Bars_Dark
+    var selectedIndicatorColor: UIColor = .appOz
+    var selectedCurveColor: UIColor = .appOz
+    var selectedGradientColor: UIColor = .appOz
 }

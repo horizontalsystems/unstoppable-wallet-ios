@@ -12,7 +12,6 @@ class TransactionsFilterTheme {
     static let spacing: CGFloat = 8
 
     static let selectedNameColor: UIColor = .cryptoDark
-    static var deselectedNameColor: UIColor { return .crypto_Bars_Dark }
     static let selectedBackgroundColor: UIColor = .cryptoYellow
     static var deselectedBackgroundColor: UIColor { return .crypto_Steel20_LightBackground }
 

@@ -6,6 +6,7 @@ import HUD
 class SendAmountView: UIView {
     private static let spinnerRadius: CGFloat = 8
     private static let spinnerLineWidth: CGFloat = 2
+    private let sendSmallButtonMargin: CGFloat = 6
 
     private let delegate: ISendAmountViewDelegate
 
@@ -24,11 +25,10 @@ class SendAmountView: UIView {
     private let amountTypeLabel = UILabel()
     private let inputField = UITextField()
     private let lineView = UIView()
-    private let maxButton = RespondButton()
+    private let maxButton = UIButton.appSecondary
     private let hintLabel = UILabel()
     private let errorLabel = UILabel()
-    private let switchButton = RespondButton()
-    private let switchButtonIcon = UIImageView()
+    private let switchButton = UIButton.appSecondary
 
     private let decimalFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -82,12 +82,11 @@ class SendAmountView: UIView {
         holderView.addSubview(switchButton)
         holderView.addSubview(hintLabel)
         holderView.addSubview(errorLabel)
-        switchButton.addSubview(switchButtonIcon)
 
         holderView.layer.cornerRadius = CGFloat.cornerRadius8
         holderView.layer.borderWidth = CGFloat.heightOneDp
         holderView.layer.borderColor = UIColor.cryptoSteel20.cgColor
-        holderView.backgroundColor = .crypto_SteelDark_White
+        holderView.backgroundColor = .appLawrence
         holderView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.height.equalTo(75)
@@ -96,7 +95,7 @@ class SendAmountView: UIView {
         }
 
         amountTypeLabel.font = .appBody
-        amountTypeLabel.textColor = .crypto_Bars_Dark
+        amountTypeLabel.textColor = .appOz
         amountTypeLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         amountTypeLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         amountTypeLabel.snp.makeConstraints { maker in
@@ -108,32 +107,23 @@ class SendAmountView: UIView {
         lineView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin2x)
             maker.trailing.equalToSuperview().inset(CGFloat.margin2x)
-            maker.top.equalTo(switchButton.snp.bottom).offset(SendTheme.sendSmallButtonMargin)
+            maker.top.equalTo(switchButton.snp.bottom).offset(sendSmallButtonMargin)
             maker.height.equalTo(CGFloat.heightOneDp)
         }
 
-        maxButton.titleLabel.text = "send.max_button".localized
-        maxButton.borderWidth = CGFloat.heightOnePixel
-        maxButton.borderColor = .cryptoSteel20
-        maxButton.cornerRadius = CGFloat.cornerRadius4
-        maxButton.backgrounds = SendTheme.buttonBackground
-        maxButton.textColors = [.active: .crypto_White_Black, .selected: .crypto_White_Black]
-        maxButton.titleLabel.font = .appSubhead1
-        maxButton.titleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        maxButton.wrapperView.snp.remakeConstraints { maker in
-            maker.leading.equalToSuperview().offset(CGFloat.margin2x)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin2x)
-            maker.top.bottom.equalToSuperview()
-        }
         maxButton.snp.makeConstraints { maker in //constraints need to be set on init
             maker.top.equalTo(switchButton.snp.top)
-            maker.height.equalTo(CGFloat.heightButtonSecondary)
             maker.trailing.equalTo(switchButton.snp.leading).offset(-CGFloat.margin2x)
+            maker.height.equalTo(CGFloat.heightButtonSecondary)
         }
+
+        maxButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        maxButton.setTitle("send.max_button".localized, for: .normal)
+        maxButton.addTarget(self, action: #selector(onTapMax), for: .touchUpInside)
 
         inputField.delegate = self
         inputField.font = .appBody
-        inputField.textColor = .crypto_Bars_Dark
+        inputField.textColor = .appOz
         inputField.attributedPlaceholder = NSAttributedString(string: "send.amount_placeholder".localized, attributes: [NSAttributedString.Key.foregroundColor: UIColor.cryptoSteel40])
         inputField.keyboardAppearance = App.theme.keyboardAppearance
         inputField.keyboardType = .decimalPad
@@ -144,19 +134,14 @@ class SendAmountView: UIView {
             maker.trailing.equalTo(maxButton.snp.leading).offset(-CGFloat.margin1x)
         }
 
-        switchButton.borderWidth = CGFloat.heightOnePixel
-        switchButton.borderColor = .cryptoSteel20
-        switchButton.cornerRadius = CGFloat.cornerRadius4
-        switchButton.backgrounds = SendTheme.buttonBackground
         switchButton.snp.makeConstraints { maker in
-            maker.top.trailing.equalToSuperview().inset(SendTheme.sendSmallButtonMargin)
+            maker.top.trailing.equalToSuperview().inset(sendSmallButtonMargin)
             maker.size.equalTo(CGFloat.heightButtonSecondary)
         }
 
-        switchButtonIcon.image = UIImage(named: "Send Switch Icon")
-        switchButtonIcon.snp.makeConstraints { maker in
-            maker.center.equalToSuperview()
-        }
+        switchButton.setImage(UIImage(named: "Send Switch Icon")?.tinted(with: .appOz), for: .normal)
+        switchButton.setImage(UIImage(named: "Send Switch Icon")?.tinted(with: .appGray50), for: .disabled)
+        switchButton.addTarget(self, action: #selector(onTapSwitch), for: .touchUpInside)
 
         hintLabel.font = .appCaption
         hintLabel.textColor = .cryptoGray
@@ -167,8 +152,7 @@ class SendAmountView: UIView {
         }
 
         errorLabel.font = .appCaption
-        errorLabel.textColor = .cryptoRed
-        errorLabel.backgroundColor = .crypto_SteelDark_White
+        errorLabel.textColor = .appLucian
         errorLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin3x)
             maker.top.equalTo(lineView).offset(CGFloat.margin2x)
@@ -185,13 +169,6 @@ class SendAmountView: UIView {
                     self?.delegate.didChangeAmount()
                 })
                 .disposed(by: disposeBag)
-
-        switchButton.onTap = { [weak self] in
-            self?.delegate.onSwitchClicked()
-        }
-        maxButton.onTap = { [weak self] in
-            self?.delegate.onMaxClicked()
-        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -202,6 +179,14 @@ class SendAmountView: UIView {
         super.didMoveToSuperview()
 
         delegate.viewDidLoad()
+    }
+
+    @objc private func onTapMax() {
+        delegate.onMaxClicked()
+    }
+
+    @objc private func onTapSwitch() {
+        delegate.onSwitchClicked()
     }
 
     private func format(coinValue: CoinValue) -> String? {
@@ -262,35 +247,24 @@ extension SendAmountView: ISendAmountView {
 
     func set(error: Error?) {
         errorLabel.isHidden = error == nil
+        hintLabel.isHidden = error != nil
         errorLabel.text = error?.localizedDescription
     }
 
     func set(switchButtonEnabled: Bool) {
-        switchButton.state = switchButtonEnabled ? .active : .disabled
-        switchButtonIcon.tintColor = switchButtonEnabled ? .crypto_White_Black : .cryptoSteel20
+        switchButton.isEnabled = switchButtonEnabled
     }
 
     func set(maxButtonVisible: Bool) {
         maxButton.snp.remakeConstraints { maker in
             if maxButtonVisible {
-                maker.top.equalToSuperview().inset(SendTheme.sendSmallButtonMargin)
                 maker.trailing.equalTo(switchButton.snp.leading).offset(-CGFloat.margin2x)
-                maker.height.equalTo(SendTheme.buttonSize)
             } else {
-                maker.top.equalToSuperview().inset(SendTheme.sendSmallButtonMargin)
                 maker.trailing.equalTo(switchButton.snp.leading)
-                maker.height.equalTo(CGFloat.heightButtonSecondary)
                 maker.width.equalTo(0)
             }
-
-            maxButton.wrapperView.snp.remakeConstraints { maker in
-                if maxButtonVisible {
-                    maker.leading.trailing.equalToSuperview().inset(CGFloat.margin2x)
-                } else {
-                    maker.leading.trailing.equalToSuperview().offset(0)
-                }
-                maker.top.bottom.equalToSuperview()
-            }
+            maker.top.equalToSuperview().inset(sendSmallButtonMargin)
+            maker.height.equalTo(CGFloat.heightButtonSecondary)
         }
     }
 

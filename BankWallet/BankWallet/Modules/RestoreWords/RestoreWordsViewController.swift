@@ -36,7 +36,7 @@ class RestoreWordsViewController: WalletViewController {
         }
 
         textView.keyboardAppearance = App.theme.keyboardAppearance
-        textView.backgroundColor = .crypto_SteelDark_White
+        textView.backgroundColor = .appLawrence
         textView.layer.cornerRadius = .cornerRadius8
         textView.layer.borderWidth = .heightOnePixel
         textView.layer.borderColor = UIColor.appSteel20.cgColor

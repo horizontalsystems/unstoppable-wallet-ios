@@ -3,6 +3,7 @@ import SnapKit
 
 class SendMemoView: UIView {
     private let delegate: ISendMemoViewDelegate
+    private let inputFieldFont = UIFont.appSubhead1I
 
     private let holderView = UIView()
     private let memoInputField = UITextField()
@@ -14,37 +15,33 @@ class SendMemoView: UIView {
 
         backgroundColor = .clear
 
-        self.snp.makeConstraints { maker in
-            maker.height.equalTo(SendTheme.memoHeight)
-        }
-
         addSubview(holderView)
         holderView.addSubview(memoInputField)
 
         holderView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SendTheme.margin)
-            maker.trailing.equalToSuperview().offset(-SendTheme.margin)
-            maker.top.equalToSuperview().offset(SendTheme.memoHolderTopMargin)
+            maker.top.equalToSuperview().offset(CGFloat.margin3x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.bottom.equalToSuperview()
         }
 
-        holderView.layer.cornerRadius = SendTheme.holderCornerRadius
-
-        holderView.layer.borderWidth = SendTheme.holderBorderWidth
-        holderView.layer.borderColor = SendTheme.holderBorderColor.cgColor
-        holderView.backgroundColor = SendTheme.holderBackground
-
-        memoInputField.textColor = .crypto_Bars_Dark
-        memoInputField.font = .appSubhead1I
-        memoInputField.attributedPlaceholder = NSAttributedString(string: "send.confirmation.memo_placeholder".localized, attributes: [NSAttributedString.Key.foregroundColor: SendTheme.confirmationMemoPlaceholderColor])
-        memoInputField.keyboardAppearance = App.theme.keyboardAppearance
-        memoInputField.tintColor = SendTheme.confirmationMemoInputTintColor
+        holderView.layer.cornerRadius = CGFloat.cornerRadius8
+        holderView.layer.borderWidth = .heightOneDp
+        holderView.layer.borderColor = UIColor.appSteel20.cgColor
+        holderView.backgroundColor = .appLawrence
 
         memoInputField.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SendTheme.memoInputFieldMargin)
-            maker.trailing.equalToSuperview().offset(-SendTheme.memoInputFieldMargin)
+            maker.top.bottom.equalToSuperview()
+            maker.leading.trailing.equalToSuperview().offset(CGFloat.margin3x)
             maker.centerY.equalToSuperview()
+            maker.height.equalTo(inputFieldFont.lineHeight + CGFloat.margin3x * 2)
         }
+
+        memoInputField.textColor = .appOz
+        memoInputField.font = inputFieldFont
+        memoInputField.attributedPlaceholder = NSAttributedString(string: "send.confirmation.memo_placeholder".localized, attributes: [NSAttributedString.Key.foregroundColor: UIColor.appGray50])
+        memoInputField.keyboardAppearance = App.theme.keyboardAppearance
+        memoInputField.tintColor = .appJacob
+
         memoInputField.delegate = self
     }
 
@@ -57,7 +54,7 @@ class SendMemoView: UIView {
 extension SendMemoView: ISendMemoView {
 
     var memo: String? {
-        return memoInputField.text
+        memoInputField.text
     }
 
 }

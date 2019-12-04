@@ -19,16 +19,16 @@ class SendFeeView: UIView {
         addSubview(feeValueLabel)
 
         feeTitleLabel.text = "send.fee".localized
-        feeTitleLabel.font = SendTheme.feeFont
-        feeTitleLabel.textColor = SendTheme.feeColor
+        feeTitleLabel.font = .appSubhead2
+        feeTitleLabel.textColor = .appGray
         feeTitleLabel.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(CGFloat.margin2x)
-            maker.leading.equalToSuperview().offset(SendTheme.margin)
+            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
             maker.bottom.lessThanOrEqualToSuperview()
         }
 
-        feeValueLabel.font = SendTheme.feeFont
-        feeValueLabel.textColor = SendTheme.feeColor
+        feeValueLabel.font = .appSubhead2
+        feeValueLabel.textColor = .appGray
         feeValueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         feeValueLabel.snp.makeConstraints { maker in
             maker.centerY.equalTo(feeTitleLabel.snp.centerY)
@@ -39,10 +39,10 @@ class SendFeeView: UIView {
 
         errorLabel.numberOfLines = 0
         errorLabel.font = .appCaption
-        errorLabel.textColor = SendTheme.errorColor
+        errorLabel.textColor = .appLucian
         errorLabel.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(CGFloat.margin2x)
-            maker.leading.trailing.equalToSuperview().inset(SendTheme.margin)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.bottom.lessThanOrEqualToSuperview()
         }
     }
