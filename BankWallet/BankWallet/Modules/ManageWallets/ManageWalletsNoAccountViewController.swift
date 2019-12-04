@@ -26,7 +26,7 @@ class ManageWalletsNoAccountViewController: WalletActionSheetController {
                 tag: 2,
                 title: "manage_coins.add_coin.create".localized,
                 createButton: { .appYellow },
-                insets: UIEdgeInsets(top: ButtonTheme.verticalMargin, left: ButtonTheme.margin, bottom: ButtonTheme.insideMargin, right: ButtonTheme.margin)
+                insets: UIEdgeInsets(top: CGFloat.margin4x, left: CGFloat.margin4x, bottom: 6, right: CGFloat.margin4x)
         ) { [weak self] in
             self?.dismiss(animated: true) {
                 onSelectNew()
@@ -40,7 +40,7 @@ class ManageWalletsNoAccountViewController: WalletActionSheetController {
                 tag: 3,
                 title: "manage_coins.add_coin.restore".localized,
                 createButton: { .appGray },
-                insets: UIEdgeInsets(top: ButtonTheme.insideMargin, left: ButtonTheme.margin, bottom: ButtonTheme.verticalMargin, right: ButtonTheme.margin)
+                insets: UIEdgeInsets(top: 6, left: CGFloat.margin4x, bottom: CGFloat.margin4x, right: CGFloat.margin4x)
         ) { [weak self] in
             self?.dismiss(animated: true) {
                 onSelectRestore()

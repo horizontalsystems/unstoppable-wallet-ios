@@ -17,8 +17,8 @@ class ConfirmationCheckboxItem: BaseActionItem {
     }
 
     class func height(for string: NSAttributedString) -> CGFloat {
-        let textHeight: CGFloat = string.boundingRect(with: CGSize(width: UIScreen.main.bounds.width - 2 * ConfirmationTheme.bigMargin - ConfirmationTheme.smallMargin - ConfirmationTheme.checkboxSize - ActionSheetTheme.sideMargin * 2, height: .greatestFiniteMagnitude), options: [.usesFontLeading, .usesLineFragmentOrigin], context: nil).size.height
-        return ceil(max(textHeight, ConfirmationTheme.checkboxSize) + ConfirmationTheme.bigMargin)
+        let textHeight: CGFloat = string.boundingRect(with: CGSize(width: UIScreen.main.bounds.width - 2 * CGFloat.margin6x - CGFloat.margin4x - ConfirmationCheckboxView.checkboxSize - ActionSheetTheme.sideMargin * 2, height: .greatestFiniteMagnitude), options: [.usesFontLeading, .usesLineFragmentOrigin], context: nil).size.height
+        return ceil(max(textHeight, ConfirmationCheckboxView.checkboxSize) + CGFloat.margin6x)
     }
 
 }

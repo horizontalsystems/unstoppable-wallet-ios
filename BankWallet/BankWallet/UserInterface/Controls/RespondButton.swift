@@ -9,7 +9,7 @@ class RespondButton: UIView, RespondViewDelegate {
         case disabled, selected, active
     }
 
-    var touchTransparent: Bool { return false }
+    var touchTransparent: Bool { false }
     var changeBackground: Bool = true
 
     private let view = RespondView()
@@ -61,8 +61,8 @@ class RespondButton: UIView, RespondViewDelegate {
         view.addSubview(wrapperView)
         wrapperView.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
-            maker.trailing.lessThanOrEqualToSuperview().offset(-ButtonTheme.margin)
-            maker.leading.greaterThanOrEqualToSuperview().offset(ButtonTheme.margin)
+            maker.trailing.lessThanOrEqualToSuperview().offset(-CGFloat.margin4x)
+            maker.leading.greaterThanOrEqualToSuperview().offset(CGFloat.margin4x)
         }
         wrapperView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
@@ -70,7 +70,7 @@ class RespondButton: UIView, RespondViewDelegate {
         imageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         titleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         titleLabel.textAlignment = .center
-        titleLabel.font = ButtonTheme.font
+        titleLabel.font = .appHeadline2
         wrapperView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
@@ -118,7 +118,7 @@ class RespondButton: UIView, RespondViewDelegate {
                 maker.centerY.equalToSuperview()
             }
             titleLabel.snp.remakeConstraints { maker in
-                maker.leading.equalTo(imageView.snp.trailing).offset(ButtonTheme.insideMargin)
+                maker.leading.equalTo(imageView.snp.trailing).offset(6)
                 maker.top.bottom.equalToSuperview()
                 maker.trailing.equalToSuperview()
             }

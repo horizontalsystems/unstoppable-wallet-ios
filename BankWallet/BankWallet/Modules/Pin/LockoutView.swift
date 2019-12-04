@@ -2,6 +2,8 @@ import UIKit
 import SnapKit
 
 class LockoutView: UIView {
+    private let lockoutIconBackgroundSideSize: CGFloat = 94
+
     let iconBackgroundView = UIView()
     let lockIcon = UIImageView(image: UIImage(named: "Lockout Icon"))
     let infoLabel = UILabel()
@@ -11,12 +13,12 @@ class LockoutView: UIView {
         backgroundColor = AppTheme.controllerBackground
 
         addSubview(iconBackgroundView)
-        iconBackgroundView.backgroundColor = PinTheme.lockoutIconBackground
-        iconBackgroundView.layer.cornerRadius = PinTheme.lockoutIconBackgroundSideSize / 2
+        iconBackgroundView.backgroundColor = .appJeremy
+        iconBackgroundView.layer.cornerRadius = lockoutIconBackgroundSideSize / 2
         iconBackgroundView.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
             maker.centerY.equalToSuperview().multipliedBy(0.66)
-            maker.size.equalTo(PinTheme.lockoutIconBackgroundSideSize)
+            maker.size.equalTo(lockoutIconBackgroundSideSize)
         }
 
         addSubview(lockIcon)
@@ -27,14 +29,14 @@ class LockoutView: UIView {
         addSubview(infoLabel)
         infoLabel.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
-            maker.top.equalTo(self.iconBackgroundView.snp.bottom).offset(PinTheme.lockoutLabelTopMargin)
-            maker.leading.equalTo(self.snp.leading).offset(PinTheme.lockoutLabelSideMargin)
-            maker.trailing.equalTo(self.snp.trailing).offset(-PinTheme.lockoutLabelSideMargin)
+            maker.top.equalTo(self.iconBackgroundView.snp.bottom).offset(CGFloat.margin6x)
+            maker.leading.equalTo(self.snp.leading).offset(CGFloat.margin8x)
+            maker.trailing.equalTo(self.snp.trailing).offset(-CGFloat.margin8x)
         }
         infoLabel.numberOfLines = 0
         infoLabel.textAlignment = .center
-        infoLabel.font = PinTheme.lockoutLabelFont
-        infoLabel.textColor = PinTheme.lockoutLabelColor
+        infoLabel.font = .appBody
+        infoLabel.textColor = .appGray
     }
 
     required init?(coder aDecoder: NSCoder) {
