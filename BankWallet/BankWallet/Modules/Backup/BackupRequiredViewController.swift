@@ -26,7 +26,7 @@ class BackupRequiredViewController: WalletActionSheetController {
                 tag: 2,
                 title: "settings_manage_keys.backup".localized,
                 createButton: { .appYellow },
-                insets: UIEdgeInsets(top: ButtonTheme.verticalMargin, left: ButtonTheme.margin, bottom: ButtonTheme.verticalMargin, right: ButtonTheme.margin)
+                insets: UIEdgeInsets(top: CGFloat.margin4x, left: CGFloat.margin4x, bottom: CGFloat.margin4x, right: CGFloat.margin4x)
         ) { [weak self] in
             self?.dismiss(animated: true) {
                 onBackup()

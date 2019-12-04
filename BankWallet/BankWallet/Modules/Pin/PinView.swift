@@ -6,7 +6,7 @@ class PinView: UIView {
     let pinDotsView = PinDotsView()
     private let topLabel = UILabel()
     private let cancelButtonView = UIView()
-    private let cancelButton = UIButton()
+    private let cancelButton = UIButton.appTertiary
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -17,15 +17,15 @@ class PinView: UIView {
             maker.centerY.equalToSuperview().offset(CGFloat.margin6x)
         }
 
+        addSubview(topLabel)
+        topLabel.snp.makeConstraints { maker in
+            maker.bottom.equalTo(self.pinDotsView.snp.top).offset(-CGFloat.margin4x)
+            maker.leading.trailing.equalToSuperview().inset(44)
+        }
+
         topLabel.lineBreakMode = .byWordWrapping
         topLabel.numberOfLines = 0
         topLabel.textAlignment = .center
-        addSubview(topLabel)
-        topLabel.snp.makeConstraints { maker in
-            maker.bottom.equalTo(self.pinDotsView.snp.top).offset(-PinTheme.infoVerticalMargin)
-            maker.leading.equalToSuperview().offset(PinTheme.infoHorizontalMargin)
-            maker.trailing.equalToSuperview().offset(-PinTheme.infoHorizontalMargin)
-        }
 
         addSubview(cancelButtonView)
         cancelButtonView.snp.makeConstraints { maker in
@@ -33,14 +33,13 @@ class PinView: UIView {
             maker.leading.bottom.trailing.equalToSuperview()
         }
 
-        cancelButton.setTitle("button.cancel".localized, for: .normal)
-        cancelButton.setTitleColor(PinTheme.cancelColor, for: .normal)
-        cancelButton.setTitleColor(PinTheme.cancelSelectedColor, for: .highlighted)
-        cancelButton.isHidden = true
         cancelButtonView.addSubview(cancelButton)
         cancelButton.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
         }
+
+        cancelButton.setTitle("button.cancel".localized, for: .normal)
+        cancelButton.isHidden = true
     }
 
     required init(coder aDecoder: NSCoder) {

@@ -32,7 +32,7 @@ class UnlinkViewController: WalletActionSheetController {
 
         var texts = [NSAttributedString]()
 
-        let attributes = [NSAttributedString.Key.foregroundColor: ConfirmationTheme.textColor, NSAttributedString.Key.font: ConfirmationTheme.regularFont]
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.appOz, NSAttributedString.Key.font: UIFont.appSubhead2]
         texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_remove".localized(delegate.title), attributes: attributes))
         texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_disable".localized(delegate.coinCodes), attributes: attributes))
         texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_loose".localized(delegate.title), attributes: attributes))

@@ -2,7 +2,7 @@ import UIKit
 import ActionSheet
 
 class AlertButtonItem: BaseButtonItem {
-    private static let defaultInsets = UIEdgeInsets(top: ConfirmationTheme.buttonTopMargin, left: ConfirmationTheme.smallMargin, bottom: ConfirmationTheme.smallMargin, right: ConfirmationTheme.smallMargin)
+    private static let defaultInsets = UIEdgeInsets(top: CGFloat.margin8x, left: CGFloat.margin4x, bottom: CGFloat.margin4x, right: CGFloat.margin4x)
 
     private let _createButton: (() -> (UIButton))
     private let _title: String
@@ -21,7 +21,7 @@ class AlertButtonItem: BaseButtonItem {
 
         self.onTap = onTap
         isEnabled = false
-        height = _insets.top + ConfirmationTheme.buttonHeight + _insets.bottom
+        height = _insets.top + CGFloat.heightButton + _insets.bottom
         showSeparator = false
     }
 

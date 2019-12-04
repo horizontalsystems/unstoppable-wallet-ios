@@ -2,6 +2,11 @@ import UIKit
 import SnapKit
 
 class NumPad: UICollectionView {
+    private let columnCount: CGFloat = 3
+    private let rowCount: CGFloat = 4
+
+    private let itemSizeRatio: CGFloat = 1.2
+    private let itemLineSpacingRatio: CGFloat = 5
 
     private enum Cell {
         case number(number: String, letters: String?, filled: Bool, action: () -> ())
@@ -61,27 +66,27 @@ class NumPad: UICollectionView {
     }
 
     private var itemWidth: CGFloat {
-        return floor(bounds.width / (NumPadTheme.columnCount * NumPadTheme.itemSizeRatio))      // Width for column count digit items
+        floor(bounds.width / (columnCount * itemSizeRatio))      // Width for column count digit items
     }
 
     private var interitemSpacing: CGFloat {
-        return floor((bounds.width - NumPadTheme.columnCount * bounds.width / (NumPadTheme.columnCount * NumPadTheme.itemSizeRatio)) / (NumPadTheme.columnCount - 1)) // width witout items divided on interitem spacing count
+        floor((bounds.width - columnCount * bounds.width / (columnCount * itemSizeRatio)) / (columnCount - 1)) // width witout items divided on interitem spacing count
     }
 
     private var lineSpacing: CGFloat {
-        return floor(bounds.width / (NumPadTheme.columnCount * NumPadTheme.itemSizeRatio) / NumPadTheme.itemLineSpacingRatio)   // height for line spacing
+        floor(bounds.width / (columnCount * itemSizeRatio) / itemLineSpacingRatio)   // height for line spacing
     }
 
     private func letters(for index: Int) -> String? {
-        return style.contains(.letters) ? "numpad_\(index)".localized : nil
+        style.contains(.letters) ? "numpad_\(index)".localized : nil
     }
 
     private func format(number: Int) -> String {
-        return formatter.string(from: number as NSNumber) ?? ""
+        formatter.string(from: number as NSNumber) ?? ""
     }
 
     public func height(for width: CGFloat) -> CGFloat {
-        return ceil(NumPadTheme.rowCount * width / (NumPadTheme.columnCount * NumPadTheme.itemSizeRatio) + (NumPadTheme.rowCount - 1) * width / (NumPadTheme.columnCount * NumPadTheme.itemSizeRatio) /  NumPadTheme.itemLineSpacingRatio) // sum of item heights and line spacing between them
+        ceil(rowCount * width / (columnCount * itemSizeRatio) + (rowCount - 1) * width / (columnCount * itemSizeRatio) /  itemLineSpacingRatio) // sum of item heights and line spacing between them
     }
 
 }
@@ -149,12 +154,14 @@ class NumPadNumberCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        button.borderWidth = NumPadTheme.itemBorderWidth
-        button.cornerRadius = NumPadTheme.itemCornerRadius
         addSubview(button)
         button.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
+
+        button.borderWidth = .heightOneDp
+        button.cornerRadius = 36
+
         button.addSubview(textHolderView)
         textHolderView.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
@@ -162,13 +169,13 @@ class NumPadNumberCell: UICollectionViewCell {
             maker.trailing.lessThanOrEqualToSuperview()
         }
 
-        numberLabel.font = NumPadTheme.numberFont
-        numberLabel.textColor = NumPadTheme.numberColor
         textHolderView.addSubview(numberLabel)
+        numberLabel.font = .appTitle2R
+        numberLabel.textColor = .appLeah
 
-        lettersLabel.font = NumPadTheme.lettersFont
-        lettersLabel.textColor = NumPadTheme.lettersColor
         textHolderView.addSubview(lettersLabel)
+        lettersLabel.font = .appMicro
+        lettersLabel.textColor = .appGray50
 
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
     }
@@ -180,9 +187,9 @@ class NumPadNumberCell: UICollectionViewCell {
     func bind(number: String, letters: String?, filled: Bool, cornerRadius: CGFloat, onTap: @escaping () -> ()) {
         button.cornerRadius = cornerRadius
         if filled {
-            button.borderColor = NumPadTheme.itemBorderColor
-            button.setBackgroundColor(color: NumPadTheme.buttonBackgroundColor, forState: .normal)
-            button.setBackgroundColor(color: NumPadTheme.buttonBackgroundColorHighlighted, forState: .highlighted)
+            button.borderColor = .appSteel20
+            button.setBackgroundColor(color: .clear, forState: .normal)
+            button.setBackgroundColor(color: .appLawrence, forState: .highlighted)
         } else {
             button.borderColor = .clear
             button.setBackgroundColor(color: .clear, forState: .normal)
@@ -208,7 +215,7 @@ class NumPadNumberCell: UICollectionViewCell {
             maker.centerX.equalToSuperview()
 
             if letters != nil {
-                maker.top.equalTo(numberLabel.snp.bottom).offset(-NumPadTheme.letteredNumberTopMargin)
+                maker.top.equalTo(numberLabel.snp.bottom).offset(-3)
                 maker.bottom.equalToSuperview()
             }
         }

@@ -2,6 +2,8 @@ import UIKit
 import SnapKit
 
 class PinViewController: WalletViewController {
+    private let keyboardSideMargin: CGFloat = UIScreen.main.bounds.width <= 320 ? 32 : 48 // decrease margin only for small screen
+
     let delegate: IPinViewDelegate
 
     private let holderView = UIScrollView()
@@ -47,9 +49,9 @@ class PinViewController: WalletViewController {
             let constraint: ConstraintRelatableTarget = useSafeAreaLayoutGuide ? self.view.safeAreaLayoutGuide.snp.bottom : self.view
             maker.top.equalTo(self.holderView.snp.bottom)
             maker.bottom.equalTo(constraint).inset(insets.bottom)
-            maker.leading.equalToSuperview().offset(PinTheme.keyboardSideMargin + insets.left)
-            maker.trailing.equalToSuperview().inset(PinTheme.keyboardSideMargin + insets.right)
-            maker.height.equalTo(numPad.height(for: view.bounds.width - 2 * PinTheme.keyboardSideMargin - insets.width))
+            maker.leading.equalToSuperview().offset(keyboardSideMargin + insets.left)
+            maker.trailing.equalToSuperview().inset(keyboardSideMargin + insets.right)
+            maker.height.equalTo(numPad.height(for: view.bounds.width - 2 * keyboardSideMargin - insets.width))
         }
 
         numPad.numPadDelegate = self
