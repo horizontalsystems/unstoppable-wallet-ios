@@ -12,19 +12,20 @@ class TransactionNoteItemView: BaseActionItemView {
     override func initView() {
         super.initView()
 
-        backgroundColor = TransactionInfoTheme.itemBackground
+        backgroundColor = .appLawrence
 
-        noteLabel.font = TransactionInfoTheme.itemNoteFont
-        noteLabel.textColor = TransactionInfoTheme.itemNoteColor
+        addSubview(noteLabel)
+
+        noteLabel.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+        }
+
+        noteLabel.font = .appSubhead2
+        noteLabel.textColor = .appJacob
         noteLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         noteLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         noteLabel.numberOfLines = 0
-        addSubview(noteLabel)
-        noteLabel.snp.makeConstraints { maker in
-            maker.center.equalToSuperview()
-            maker.leading.equalToSuperview().offset(TransactionInfoTheme.regularMargin)
-            maker.trailing.equalToSuperview().offset(-TransactionInfoTheme.regularMargin)
-        }
     }
 
     override func updateView() {

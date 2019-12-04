@@ -20,7 +20,7 @@ class TransactionStatusItem: BaseActionItem {
         case .completed: ()
         }
 
-        height = TransactionInfoTheme.itemHeight
+        height = .heightSingleLineCell
     }
 
 }

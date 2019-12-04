@@ -11,7 +11,7 @@ class TransactionAmountItemView: BaseActionItemView {
     override func initView() {
         super.initView()
 
-        backgroundColor = TransactionInfoTheme.itemBackground
+        backgroundColor = .appLawrence
 
         addSubview(amountInfoView)
         amountInfoView.snp.makeConstraints { maker in

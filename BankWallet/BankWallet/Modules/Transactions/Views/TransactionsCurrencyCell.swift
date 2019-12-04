@@ -2,28 +2,30 @@ import UIKit
 import SnapKit
 
 class TransactionsCurrencyCell: UICollectionViewCell {
+    private static let nameLabelFont = UIFont.appSubhead2
     private let roundedView = UIView()
     private let nameLabel = UILabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        roundedView.layer.cornerRadius = TransactionsFilterTheme.cornerRadius
-        roundedView.layer.borderColor = TransactionsFilterTheme.borderColor.cgColor
-        roundedView.layer.borderWidth = TransactionsFilterTheme.borderWidth
-        roundedView.clipsToBounds = true
-
         contentView.addSubview(roundedView)
+        roundedView.addSubview(nameLabel)
+
         roundedView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.bottom.equalToSuperview().inset(UIEdgeInsets(top: TransactionsFilterTheme.nameVerticalMargin, left: 0, bottom: TransactionsFilterTheme.nameVerticalMargin, right: 0))
+            maker.edges.equalToSuperview().inset(UIEdgeInsets(top: CGFloat.margin2x, left: 0, bottom: CGFloat.margin2x, right: 0))
         }
 
-        roundedView.addSubview(nameLabel)
-        nameLabel.font = TransactionsFilterTheme.nameFont
+        roundedView.layer.cornerRadius = 14             // (TransactionCurrenciesHeaderView.headerHeight - .margin2x * 2) / 2
+        roundedView.layer.borderColor = UIColor.appSteel20.cgColor
+        roundedView.layer.borderWidth = .heightOneDp
+        roundedView.clipsToBounds = true
+
         nameLabel.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
         }
+
+        nameLabel.font = TransactionsCurrencyCell.nameLabelFont
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -32,7 +34,7 @@ class TransactionsCurrencyCell: UICollectionViewCell {
 
     override var isSelected: Bool {
         get {
-            return super.isSelected
+            super.isSelected
         }
         set {
             super.isSelected = newValue
@@ -47,14 +49,14 @@ class TransactionsCurrencyCell: UICollectionViewCell {
     }
 
     func bind(selected: Bool) {
-        nameLabel.textColor = selected ? TransactionsFilterTheme.selectedNameColor : .appOz
-        roundedView.backgroundColor = selected ? TransactionsFilterTheme.selectedBackgroundColor : TransactionsFilterTheme.deselectedBackgroundColor
+        nameLabel.textColor = selected ? .appDark : .appOz
+        roundedView.backgroundColor = selected ? .appJacob : .appJeremy
     }
 
     static func size(for title: String) -> CGSize {
-        let size = title.size(containerWidth: .greatestFiniteMagnitude, font: TransactionsFilterTheme.nameFont)
-        let calculatedWidth = size.width + 2 * TransactionsFilterTheme.nameHorizontalMargin
-        return CGSize(width: max(calculatedWidth, TransactionsFilterTheme.nameMinWidth), height: TransactionsFilterTheme.filterHeaderHeight)
+        let size = title.size(containerWidth: .greatestFiniteMagnitude, font: TransactionsCurrencyCell.nameLabelFont)
+        let calculatedWidth = size.width + 2 * .margin8x
+        return CGSize(width: max(calculatedWidth, 88), height: TransactionCurrenciesHeaderView.headerHeight)
     }
 
 }

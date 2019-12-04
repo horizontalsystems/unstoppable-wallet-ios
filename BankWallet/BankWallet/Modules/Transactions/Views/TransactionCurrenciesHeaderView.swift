@@ -2,6 +2,7 @@ import UIKit
 import SnapKit
 
 class TransactionCurrenciesHeaderView: UIView, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    static let headerHeight: CGFloat = 44
 
     var filters = [Wallet?]()
     var collectionView: UICollectionView
@@ -53,7 +54,7 @@ class TransactionCurrenciesHeaderView: UIView, UICollectionViewDelegateFlowLayou
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return TransactionsFilterTheme.spacing
+        .margin2x
     }
 
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {

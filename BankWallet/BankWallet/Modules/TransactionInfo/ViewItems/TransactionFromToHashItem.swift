@@ -14,7 +14,7 @@ class TransactionFromToHashItem: BaseActionItem {
 
         super.init(cellType: TransactionFromToHashItemView.self, tag: tag, hidden: hidden, required: required, action: action)
 
-        height = TransactionInfoTheme.itemHeight
+        height = .heightSingleLineCell
     }
 
 }

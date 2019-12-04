@@ -9,8 +9,8 @@ class TransactionNoteItem: BaseActionItem {
 
         super.init(cellType: TransactionNoteItemView.self, tag: tag, required: true)
 
-        let textHeight = note.height(forContainerWidth: UIScreen.main.bounds.width - 2 * TransactionInfoTheme.regularMargin - 2 * ActionSheetTheme.sideMargin, font: TransactionInfoTheme.itemNoteFont)
-        height = textHeight + 2 * TransactionInfoTheme.regularMargin
+        let textHeight = note.height(forContainerWidth: UIScreen.main.bounds.width - 2 * CGFloat.margin4x - 2 * ActionSheetTheme.sideMargin, font: .appSubhead2)
+        height = textHeight + 2 * CGFloat.margin4x
     }
 
 }

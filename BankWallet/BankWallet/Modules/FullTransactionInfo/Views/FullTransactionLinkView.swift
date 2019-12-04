@@ -19,8 +19,7 @@ class FullTransactionLinkView: UIView {
         linkLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
         linkLabel.snp.makeConstraints { maker in
             maker.top.bottom.equalToSuperview()
-            maker.leading.equalToSuperview().offset(FullTransactionInfoTheme.linkCellHorizontalMargin)
-            maker.trailing.equalToSuperview().offset(-FullTransactionInfoTheme.linkCellHorizontalMargin)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin2x)
         }
     }
 
@@ -29,9 +28,9 @@ class FullTransactionLinkView: UIView {
     }
 
     func bind(text: String, onTap: (() -> ())? = nil) {
-        let attributedString = NSAttributedString(string: text, attributes: [.font: FullTransactionInfoTheme.linkLabelFont,
+        let attributedString = NSAttributedString(string: text, attributes: [.font: UIFont.appSubhead1,
                                                                              .foregroundColor: UIColor.appOz,
-                                                                             .underlineStyle: FullTransactionInfoTheme.linkLabelUnderlineStyle,
+                                                                             .underlineStyle: 1,
                                                                              .underlineColor: UIColor.appOz])
         linkLabel.attributedText = attributedString
         linkWrapper.handleTouch = onTap

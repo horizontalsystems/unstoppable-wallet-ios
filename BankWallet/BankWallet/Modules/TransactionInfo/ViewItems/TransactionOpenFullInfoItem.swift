@@ -8,7 +8,7 @@ class TransactionOpenFullInfoItem: BaseButtonItem {
         super.init(cellType: TransactionOpenFullInfoItemView.self, tag: tag, hidden: hidden, required: required)
 
         self.onTap = onTap
-        height = TransactionInfoTheme.openFullInfoHeight
+        height = 52
         showSeparator = false
     }
 

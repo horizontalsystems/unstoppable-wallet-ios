@@ -11,25 +11,26 @@ class TransactionIdItemView: BaseActionItemView {
     override func initView() {
         super.initView()
 
-        backgroundColor = TransactionInfoTheme.itemBackground
-
-        titleLabel.font = TransactionInfoTheme.itemTitleFont
-        titleLabel.textColor = TransactionInfoTheme.itemTitleColor
-        titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
-        titleLabel.text = "tx_info.transaction_id".localized
+        backgroundColor = .appLawrence
 
         addSubview(titleLabel)
+        addSubview(hashView)
+
         titleLabel.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
-            maker.leading.equalToSuperview().offset(TransactionInfoTheme.regularMargin)
+            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
         }
 
-        addSubview(hashView)
+        titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+        titleLabel.font = .appSubhead2
+        titleLabel.textColor = .appGray
+        titleLabel.text = "tx_info.transaction_id".localized
+
         hashView.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.titleLabel.snp.trailing).offset(TransactionInfoTheme.hashViewMargin)
+            maker.leading.equalTo(self.titleLabel.snp.trailing).offset(CGFloat.margin12x)
             maker.centerY.equalToSuperview()
-            maker.trailing.equalToSuperview().offset(-TransactionInfoTheme.regularMargin)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
     }
 
