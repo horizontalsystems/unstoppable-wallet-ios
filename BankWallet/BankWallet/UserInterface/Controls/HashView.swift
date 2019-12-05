@@ -2,7 +2,8 @@ import UIKit
 import SnapKit
 
 class HashView: RespondButton {
-    static private let avatarWidth = UIImage(named: "Transaction Info Avatar Placeholder")?.size.width ?? 0 
+    private static let avatarWidth = UIImage(named: "Transaction Info Avatar Placeholder")?.size.width ?? 0
+    private static let textVerticalMargin: CGFloat = 6
 
     private let avatarImageView = UIImageView()
     private let valueLabel = UILabel()
@@ -11,17 +12,26 @@ class HashView: RespondButton {
         super.init()
 
         let wrapperView = UIView()
-        wrapperView.backgroundColor = .clear
-        wrapperView.isUserInteractionEnabled = false
         addSubview(wrapperView)
         wrapperView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
 
+        wrapperView.backgroundColor = .clear
+        wrapperView.isUserInteractionEnabled = false
+
         titleLabel.removeFromSuperview()
+
         wrapperView.addSubview(avatarImageView)
         avatarImageView.snp.makeConstraints { maker in
-            maker.top.leading.equalToSuperview().offset(TransactionInfoDescriptionTheme.margin)
+            maker.top.leading.equalToSuperview().offset(CGFloat.margin2x)
+        }
+
+        wrapperView.addSubview(valueLabel)
+        valueLabel.snp.makeConstraints { maker in
+            maker.top.bottom.equalToSuperview().inset(HashView.textVerticalMargin)
+            maker.leading.equalTo(self.avatarImageView.snp.trailing).offset(CGFloat.margin2x)
+            maker.trailing.equalToSuperview().offset(-CGFloat.margin2x)
         }
 
         if singleLine {
@@ -30,26 +40,19 @@ class HashView: RespondButton {
             valueLabel.lineBreakMode = .byCharWrapping
             valueLabel.numberOfLines = 3
         }
-        wrapperView.addSubview(valueLabel)
-        valueLabel.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(TransactionInfoDescriptionTheme.textVerticalMargin)
-            maker.bottom.equalToSuperview().offset(-TransactionInfoDescriptionTheme.textVerticalMargin)
-            maker.leading.equalTo(self.avatarImageView.snp.trailing).offset(TransactionInfoDescriptionTheme.margin)
-            maker.trailing.equalToSuperview().offset(-TransactionInfoDescriptionTheme.margin)
-        }
     }
 
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(value: String?, font: UIFont = HashViewTheme.font, color: UIColor = .appOz, showExtra: ShowExtra = .none, onTap: (() -> ())? = nil) {
+    func bind(value: String?, font: UIFont = .appSubhead1, color: UIColor = .appOz, showExtra: ShowExtra = .none, onTap: (() -> ())? = nil) {
         if let onTap = onTap {
             self.onTap = onTap
-            backgrounds = [RespondButton.State.active: TransactionInfoDescriptionTheme.buttonBackground, RespondButton.State.selected: TransactionInfoDescriptionTheme.buttonBackgroundSelected]
-            borderColor = TransactionInfoDescriptionTheme.buttonBorderColor
+            backgrounds = [RespondButton.State.active: .appJeremy, RespondButton.State.selected: .appJeremy]
+            borderColor = .appSteel20
             borderWidth = 1 / UIScreen.main.scale
-            cornerRadius = TransactionInfoDescriptionTheme.buttonCornerRadius
+            cornerRadius = .cornerRadius4
         } else {
             backgrounds = [RespondButton.State.active: .clear, RespondButton.State.selected: .clear]
             borderColor = .clear
@@ -71,7 +74,7 @@ class HashView: RespondButton {
         case .hash: image = UIImage(named: "Hash Icon")
         default: image = UIImage(named: "Transaction Info Token Placeholder")
         }
-        avatarImageView.image = image?.tinted(with: TransactionInfoDescriptionTheme.buttonIconColor)
+        avatarImageView.image = image?.tinted(with: .appGray)
 
         avatarImageView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         avatarImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
@@ -82,13 +85,13 @@ class HashView: RespondButton {
             } else {
                 maker.width.equalTo(image?.size.width ?? 0)
             }
-            maker.leadingMargin.equalToSuperview().offset(showImage ? TransactionInfoDescriptionTheme.margin : 0)
-            maker.top.equalToSuperview().offset(TransactionInfoDescriptionTheme.margin)
+            maker.leadingMargin.equalToSuperview().offset(showImage ? CGFloat.margin2x : 0)
+            maker.top.equalToSuperview().offset(CGFloat.margin2x)
         }
     }
 
     class var textInsets: UIEdgeInsets {
-        return UIEdgeInsets(top: TransactionInfoDescriptionTheme.textVerticalMargin, left: 2 * TransactionInfoDescriptionTheme.margin + HashView.avatarWidth, bottom: TransactionInfoDescriptionTheme.textVerticalMargin, right: TransactionInfoDescriptionTheme.margin)
+        UIEdgeInsets(top: HashView.textVerticalMargin, left: 2 * CGFloat.margin2x + HashView.avatarWidth, bottom: HashView.textVerticalMargin, right: CGFloat.margin2x)
     }
 
 }

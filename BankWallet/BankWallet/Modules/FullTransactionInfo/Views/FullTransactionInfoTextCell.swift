@@ -11,7 +11,7 @@ class FullTransactionInfoTextCell: TitleCell {
         titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
 
-        iconImageView.tintColor = TransactionInfoDescriptionTheme.buttonIconColor
+        iconImageView.tintColor = .appGray
 
         contentView.addSubview(descriptionView)
         descriptionView.snp.makeConstraints { maker in
