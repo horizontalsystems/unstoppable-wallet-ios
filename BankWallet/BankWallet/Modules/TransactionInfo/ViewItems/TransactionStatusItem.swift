@@ -3,10 +3,10 @@ import ActionSheet
 class TransactionStatusItem: BaseActionItem {
     var progress: Double?
     var failed: Bool = false
-    let incoming: Bool
+    let type: TransactionType
 
     init(item: TransactionViewItem, tag: Int? = nil) {
-        incoming = item.incoming
+        type = item.type
 
         super.init(cellType: TransactionStatusItemView.self, tag: tag, required: true)
 

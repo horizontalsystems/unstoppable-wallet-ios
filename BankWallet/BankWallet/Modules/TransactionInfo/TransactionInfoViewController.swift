@@ -18,8 +18,8 @@ class TransactionInfoViewController: WalletActionSheetController {
     func initItems() {
         let item = delegate.viewItem
 
-        let iconImage = item.incoming ? UIImage(named: "Transaction In Icon") : UIImage(named: "Transaction Out Icon")
-        let iconTintColor: UIColor = item.incoming ? .appRemus : .appJacob
+        let iconImage = item.type == .incoming ? UIImage(named: "Transaction In Icon") : UIImage(named: "Transaction Out Icon")
+        let iconTintColor: UIColor = item.type == .incoming ? .appRemus : .appJacob
 
         let titleItem = AlertTitleItem(
                 title: "tx_info.title".localized,
@@ -69,7 +69,7 @@ class TransactionInfoViewController: WalletActionSheetController {
             }))
         }
 
-        if !item.incoming, let recipientAddress = item.lockInfo?.originalAddress {
+        if item.type == .outgoing, let recipientAddress = item.lockInfo?.originalAddress {
             model.addItemView(TransactionFromToHashItem(title: "tx_info.recipient_hash".localized, value: recipientAddress, tag: 8, required: true, onHashTap: { [weak self] in
                 self?.delegate.onCopy(value: recipientAddress)
             }))
@@ -79,7 +79,7 @@ class TransactionInfoViewController: WalletActionSheetController {
             self?.delegate.onCopy(value: item.transactionHash)
         }))
 
-        if item.sentToSelf {
+        if item.type == .sentToSelf {
             let infoItem = TransactionNoteItem(note: "* " + "tx_info.to_self_note".localized, tag: 10)
             model.addItemView(infoItem)
         }

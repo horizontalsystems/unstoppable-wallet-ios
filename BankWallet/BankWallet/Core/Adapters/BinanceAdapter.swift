@@ -14,15 +14,16 @@ class BinanceAdapter {
     }
 
     private func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
-        let outgoing = transaction.from == binanceKit.account
-        let incoming = transaction.to == binanceKit.account
-        var amount: Decimal = 0
+        let type: TransactionType
+        let fromMine = transaction.from == binanceKit.account
+        let toMine = transaction.to == binanceKit.account
 
-        if outgoing {
-            amount -= transaction.amount
-        }
-        if incoming {
-            amount += transaction.amount
+        if fromMine && !toMine {
+            type = .outgoing
+        } else if !fromMine && toMine {
+            type = .incoming
+        } else {
+            type = .sentToSelf
         }
 
         return TransactionRecord(
@@ -30,14 +31,14 @@ class BinanceAdapter {
                 transactionHash: transaction.hash,
                 transactionIndex: 0,
                 interTransactionIndex: 0,
+                type: type,
                 blockHeight: transaction.blockHeight,
-                amount: amount,
+                amount: transaction.amount,
                 fee: BinanceAdapter.transferFee,
                 date: transaction.date,
                 failed: false,
                 from: transaction.from,
                 to: transaction.to,
-                sentToSelf: outgoing && incoming,
                 lockInfo: nil
         )
     }

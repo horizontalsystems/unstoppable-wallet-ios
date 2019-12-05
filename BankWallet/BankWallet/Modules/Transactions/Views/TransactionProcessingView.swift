@@ -31,9 +31,9 @@ class TransactionProcessingView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(incoming: Bool, progress: Double) {
-        processingLabel.text = incoming ? "transactions.receiving".localized : "transactions.sending".localized
-        barsProgressView.set(filledColor: incoming ? .appGreenD : .appYellowD)
+    func bind(type: TransactionType, progress: Double) {
+        processingLabel.text = type == .incoming ? "transactions.receiving".localized : "transactions.sending".localized
+        barsProgressView.set(filledColor: type == .incoming ? .appGreenD : .appYellowD)
         barsProgressView.set(progress: progress)
     }
 

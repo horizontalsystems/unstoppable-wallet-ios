@@ -5,8 +5,7 @@ class TransactionAmountItem: BaseActionItem {
 
     let primaryAmountInfo: AmountInfo
     var secondaryAmountInfo: AmountInfo?
-    let sentToSelf: Bool
-    let incoming: Bool
+    let type: TransactionType
     let locked: Bool
 
     var customPrimaryFractionPolicy: ValueFormatter.FractionPolicy?
@@ -21,9 +20,7 @@ class TransactionAmountItem: BaseActionItem {
             primaryAmountInfo = .coinValue(coinValue: item.coinValue)
         }
 
-        sentToSelf = item.sentToSelf
-        incoming = item.incoming
-
+        type = item.type
         locked = item.lockInfo != nil
 
         super.init(cellType: TransactionAmountItemView.self, tag: tag, required: true)
