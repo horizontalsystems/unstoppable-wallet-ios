@@ -102,13 +102,13 @@ class TransactionCell: AppCell {
         let status = item.status
 
         dateLabel.textColor = .crypto_Silver_Black
-        currencyAmountLabel.textColor = item.incoming ? .appRemus : .appJacob
+        currencyAmountLabel.textColor = item.type == .incoming ? .appRemus : .appJacob
         amountLabel.textColor = .cryptoGray
 
         dateLabel.text = DateHelper.instance.formatTransactionDate(from: item.date).uppercased()
         amountLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue, fractionPolicy: .threshold(high: 0.01, low: 0))
 
-        inOutImageView.image = item.incoming ? UIImage(named: "Transaction In Icon") : UIImage(named: "Transaction Out Icon")
+        inOutImageView.image = item.type == .incoming ? UIImage(named: "Transaction In Icon") : UIImage(named: "Transaction Out Icon")
 
         if let value = item.currencyValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.01)) {
             currencyAmountLabel.text = formattedValue
@@ -140,7 +140,7 @@ class TransactionCell: AppCell {
             completedView.isHidden = true
 
         case .pending:
-            processingView.bind(incoming: item.incoming, progress: 0)
+            processingView.bind(type: item.type, progress: 0)
             processingView.startAnimating()
             processingView.isHidden = false
 
@@ -148,7 +148,7 @@ class TransactionCell: AppCell {
             failedView.isHidden = true
 
         case .processing(let progress):
-            processingView.bind(incoming: item.incoming, progress: progress)
+            processingView.bind(type: item.type, progress: progress)
             processingView.startAnimating()
             processingView.isHidden = false
 

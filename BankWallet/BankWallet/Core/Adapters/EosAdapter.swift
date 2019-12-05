@@ -14,22 +14,30 @@ class EosAdapter {
     }
 
     private func transactionRecord(fromTransaction transaction: Transaction) -> TransactionRecord {
-        let outgoing = transaction.from == eosKit.account
-        let incoming = transaction.to == eosKit.account
+        var type: TransactionType
+
+        if transaction.from == eosKit.account {
+            type = .outgoing
+        } else if transaction.to == eosKit.account {
+            type = .incoming
+        } else {
+            // EOS funds cannot be sent to self, so this is practically impossible
+            type = .sentToSelf
+        }
 
         return TransactionRecord(
                 uid: transaction.id,
                 transactionHash: transaction.id,
                 transactionIndex: 0,
                 interTransactionIndex: transaction.actionSequence,
+                type: type,
                 blockHeight: transaction.blockNumber,
-                amount: transaction.quantity.amount * (outgoing ? -1 : 1),
+                amount: transaction.quantity.amount,
                 fee: nil,
                 date: transaction.date,
                 failed: false,
                 from: transaction.from,
                 to: transaction.to,
-                sentToSelf: outgoing && incoming,
                 lockInfo: nil
         )
     }

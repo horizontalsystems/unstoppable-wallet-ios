@@ -32,8 +32,7 @@ class TransactionAmountItemView: BaseActionItemView {
 
         amountInfoView.bind(primaryAmountInfo: item.primaryAmountInfo,
                 secondaryAmountInfo: item.secondaryAmountInfo,
-                incoming: item.incoming,
-                sentToSelf: item.sentToSelf,
+                type: item.type,
                 locked: item.locked)
     }
 

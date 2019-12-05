@@ -24,22 +24,41 @@ class BitcoinBaseAdapter {
     func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
         var myInputsTotalValue: Int = 0
         var myOutputsTotalValue: Int = 0
+        var myChangeOutputsTotalValue: Int = 0
+        var outputsTotalValue: Int = 0
         var allInputsMine = true
-        var lockInfo: TransactionLockInfo?
-        let inputs = transaction.inputs
-        let outputs = transaction.outputs.filter({ $0.address != nil })
 
-        for input in inputs {
-            if input.mine, let value = input.value {
-                myInputsTotalValue += value
+        var lockInfo: TransactionLockInfo?
+        var type: TransactionType
+        var anyNotMineFromAddress: String?
+        var anyNotMineToAddress: String?
+
+        for input in transaction.inputs {
+            if input.mine {
+                if let value = input.value {
+                    myInputsTotalValue += value
+                }
             } else {
                 allInputsMine = false
             }
+
+            if anyNotMineFromAddress == nil, let address = input.address {
+                anyNotMineFromAddress = address
+            }
         }
 
-        for output in outputs {
+        for output in transaction.outputs {
+            guard output.value > 0 else {
+                continue
+            }
+
+            outputsTotalValue += output.value
+
             if output.mine {
                 myOutputsTotalValue += output.value
+                if output.changeOutput {
+                    myChangeOutputsTotalValue += output.value
+                }
             }
 
             if let pluginId = output.pluginId, pluginId == HodlerPlugin.id,
@@ -51,40 +70,39 @@ class BitcoinBaseAdapter {
                         originalAddress: hodlerOutputData.addressString
                 )
             }
+            if anyNotMineToAddress == nil, let address = output.address {
+                anyNotMineToAddress = address
+            }
         }
 
         var amount = myOutputsTotalValue - myInputsTotalValue
 
-        var resolvedFee: Int? = nil
-        if allInputsMine {
-            let fee = myInputsTotalValue - outputs.reduce(0) { totalOutput, output in totalOutput + output.value }
+        if allInputsMine, let fee = transaction.fee {
             amount += fee
-            resolvedFee = fee
         }
 
-        let incoming = amount > 0
-        let sentToSelf = allInputsMine && !outputs.contains(where: { !$0.mine })
-
-        if sentToSelf {
-            amount = -1 * outputs.filter({ !$0.changeOutput }).reduce(0) { totalOutput, output in totalOutput + output.value }
+        if amount > 0 {
+            type = .incoming
+        } else if amount < 0 {
+            type = .outgoing
+        } else {
+            amount = myOutputsTotalValue - myChangeOutputsTotalValue
+            type = .sentToSelf
         }
-
-        let from = incoming ? inputs.filter({ !$0.mine }).compactMap({ $0.address }).first : nil
-        let to = allInputsMine ? outputs.filter({ !$0.mine }).compactMap({ $0.address }).first : nil
 
         return TransactionRecord(
                 uid: transaction.uid,
                 transactionHash: transaction.transactionHash,
                 transactionIndex: transaction.transactionIndex,
                 interTransactionIndex: 0,
+                type: type,
                 blockHeight: transaction.blockHeight,
-                amount: Decimal(amount) / coinRate,
-                fee: resolvedFee.map { Decimal($0) / coinRate },
+                amount: Decimal(abs(amount)) / coinRate,
+                fee: transaction.fee.map { Decimal($0) / coinRate },
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
                 failed: transaction.status == .invalid,
-                from: from,
-                to: to,
-                sentToSelf: sentToSelf,
+                from: type == .incoming ? anyNotMineFromAddress : nil,
+                to: type == .outgoing ? anyNotMineToAddress : nil,
                 lockInfo: lockInfo
         )
     }

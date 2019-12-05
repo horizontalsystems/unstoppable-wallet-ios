@@ -5,6 +5,7 @@ struct TransactionRecord {
     let transactionHash: String
     let transactionIndex: Int
     let interTransactionIndex: Int
+    let type: TransactionType
     let blockHeight: Int?
     let amount: Decimal
     let fee: Decimal?
@@ -12,7 +13,6 @@ struct TransactionRecord {
     let failed: Bool
     let from: String?
     let to: String?
-    let sentToSelf: Bool
     let lockInfo: TransactionLockInfo?
 }
 
@@ -35,3 +35,5 @@ extension TransactionRecord: Comparable {
     }
 
 }
+
+enum TransactionType: Equatable { case incoming, outgoing, sentToSelf }

@@ -26,12 +26,10 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
             }
         }
 
-        let incoming = record.amount > 0
-        let absoluteAmount: Decimal = abs(record.amount)
         let currencyValue = rate.map {
-            CurrencyValue(currency: $0.currency, value: $0.value * absoluteAmount)
+            CurrencyValue(currency: $0.currency, value: $0.value * record.amount)
         }
-        let coinValue = CoinValue(coin: coin, value: absoluteAmount)
+        let coinValue = CoinValue(coin: coin, value: record.amount)
         let feeCoinValue: CoinValue? = item.record.fee.map {
             let feeCoin = feeCoinProvider.feeCoin(coin: coin) ?? coin
             return CoinValue(coin: feeCoin, value: $0)
@@ -45,8 +43,7 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
                 currencyValue: currencyValue,
                 from: record.from,
                 to: record.to,
-                incoming: incoming,
-                sentToSelf: record.sentToSelf,
+                type: record.type,
                 showFromAddress: showFromAddress(for: coin.type),
                 date: record.date,
                 status: status,

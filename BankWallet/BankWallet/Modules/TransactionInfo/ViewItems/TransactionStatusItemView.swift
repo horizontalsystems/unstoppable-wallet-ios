@@ -99,9 +99,9 @@ class TransactionStatusItemView: BaseActionItemView {
             processingWrapper.isHidden = false
             finalStatusWrapper.isHidden = true
 
-            processingLabel.text = item.incoming ? "transactions.receiving".localized : "transactions.sending".localized
+            processingLabel.text = item.type == .incoming ? "transactions.receiving".localized : "transactions.sending".localized
 
-            barsProgressView.set(filledColor: item.incoming ? .appGreenD : .appYellowD)
+            barsProgressView.set(filledColor: item.type == .incoming ? .appGreenD : .appYellowD)
             barsProgressView.set(progress: progress)
 
         } else {

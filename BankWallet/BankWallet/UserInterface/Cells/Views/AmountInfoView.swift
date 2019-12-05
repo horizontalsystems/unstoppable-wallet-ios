@@ -70,8 +70,8 @@ class AmountInfoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, incoming: Bool = false, sentToSelf: Bool = false, locked: Bool = false) {
-        primaryAmountLabel.textColor = incoming ? .appRemus : .appJacob
+    func bind(primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, type: TransactionType = .outgoing, locked: Bool = false) {
+        primaryAmountLabel.textColor = type == .incoming ? .appRemus : .appJacob
 
         let amountLabel: String?
         switch primaryAmountInfo {
@@ -82,7 +82,13 @@ class AmountInfoView: UIView {
             primaryAmountTitleLabel.text = currencyValue.currency.code
             amountLabel = ValueFormatter.instance.format(currencyValue: currencyValue, fractionPolicy: customPrimaryFractionPolicy, trimmable: primaryFormatTrimmable)
         }
-        primaryAmountLabel.text = amountLabel.map { $0 + (sentToSelf ? "*" : "") }
+        primaryAmountLabel.text = amountLabel.map {
+            var postfix = ""
+            if type == .sentToSelf {
+                postfix = "*"
+            }
+            return $0 + postfix
+        }
 
         guard let secondaryAmountInfo = secondaryAmountInfo else {
             return
