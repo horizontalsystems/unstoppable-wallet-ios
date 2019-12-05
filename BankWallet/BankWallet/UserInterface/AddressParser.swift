@@ -6,10 +6,10 @@ class AddressParser: IAddressParser {
     fileprivate static let parameterLabel = "label"
     fileprivate static let parameterMessage = "message"
 
-    private let validScheme: String
+    private let validScheme: String?
     private let removeScheme: Bool
 
-    init(validScheme: String, removeScheme: Bool) {
+    init(validScheme: String?, removeScheme: Bool) {
         self.validScheme = validScheme
         self.removeScheme = removeScheme
     }
@@ -29,7 +29,7 @@ class AddressParser: IAddressParser {
         let schemeSeparatedParts = paymentAddress.components(separatedBy: ":")
         // check exist scheme. If scheme equal network scheme, remove scheme as stated in flag. Otherwise, leave wrong scheme to make throw in validator
         if schemeSeparatedParts.count >= 2 {
-            if schemeSeparatedParts[0].lowercased() == validScheme {
+            if  validScheme == nil || schemeSeparatedParts[0].lowercased() == validScheme {
                 parsedString = removeScheme ? schemeSeparatedParts[1] : paymentAddress
             } else {
                 parsedString = paymentAddress
