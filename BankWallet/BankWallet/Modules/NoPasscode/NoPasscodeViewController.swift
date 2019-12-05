@@ -30,28 +30,27 @@ class NoPasscodeViewController: WalletViewController {
             make.centerY.equalToSuperview()
         }
 
-        iconImageView.contentMode = .center
-        iconImageView.image = UIImage(named: "No Passcode Icon")?.withRenderingMode(.alwaysTemplate)
-        iconImageView.tintColor = NoPasscodeTheme.iconColor
-
         iconImageView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.centerX.equalToSuperview()
-            make.size.equalTo(NoPasscodeTheme.iconSize)
+            make.size.equalTo(72)
         }
 
-        infoLabel.textColor = NoPasscodeTheme.infoLabelTextColor
-        infoLabel.textAlignment = .center
-        infoLabel.numberOfLines = 0
-        infoLabel.font = NoPasscodeTheme.infoLabelFont
-        infoLabel.text = "no_passcode.info_text".localized
+        iconImageView.contentMode = .center
+        iconImageView.image = UIImage(named: "No Passcode Icon")?.withRenderingMode(.alwaysTemplate)
+        iconImageView.tintColor = .appGray
 
         infoLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(NoPasscodeTheme.infoLabelHorizontalMargin)
-            make.trailing.equalToSuperview().offset(-NoPasscodeTheme.infoLabelHorizontalMargin)
-            make.top.equalTo(self.iconImageView.snp.bottom).offset(NoPasscodeTheme.iconBottomMargin)
+            make.leading.trailing.equalToSuperview().inset(42)
+            make.top.equalTo(self.iconImageView.snp.bottom).offset(CGFloat.margin8x)
             make.bottom.equalToSuperview()
         }
+
+        infoLabel.textColor = .appGray
+        infoLabel.textAlignment = .center
+        infoLabel.numberOfLines = 0
+        infoLabel.font = .appBody
+        infoLabel.text = "no_passcode.info_text".localized
     }
 
 }

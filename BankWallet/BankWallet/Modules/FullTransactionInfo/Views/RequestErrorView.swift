@@ -6,8 +6,10 @@ class RequestErrorView: UIView {
     private let imageView = UIImageView(image: UIImage(named: "Error Icon", in: Bundle(for: RequestErrorView.self), compatibleWith: nil))
     private let titleLabel = UILabel(frame: .zero)
     private var subtitleLabel: UILabel?
-    private var button: RespondButton?
+    private var button: UIButton?
     private var linkView = FullTransactionLinkView()
+
+    private var action: (() -> ())?
 
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -22,11 +24,13 @@ class RequestErrorView: UIView {
         imageView.snp.makeConstraints { maker in
             maker.top.centerX.equalToSuperview()
         }
+
         holderView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(imageView.snp.bottom).offset(RequestErrorTheme.titleMargin)
+            maker.top.equalTo(imageView.snp.bottom).offset(CGFloat.margin6x)
             maker.leading.trailing.equalToSuperview()
         }
+
         titleLabel.numberOfLines = 1
         titleLabel.font = .appBody
         titleLabel.textColor = .crypto_White_Black
@@ -37,7 +41,7 @@ class RequestErrorView: UIView {
             let subtitleLabel = UILabel(frame: .zero)
             holderView.addSubview(subtitleLabel)
             subtitleLabel.snp.makeConstraints { maker in
-                maker.top.equalTo(bottomView.snp.bottom).offset(RequestErrorTheme.subtitleMargin)
+                maker.top.equalTo(bottomView.snp.bottom).offset(CGFloat.margin1x)
                 maker.leading.trailing.equalToSuperview()
             }
 
@@ -50,34 +54,24 @@ class RequestErrorView: UIView {
             self.subtitleLabel = subtitleLabel
         }
         if let buttonText = buttonText {
-            let button = RespondButton(onTap: onTapButton)
+            let button = UIButton.appSecondary
             holderView.addSubview(button)
 
-            button.borderWidth = 1 / UIScreen.main.scale
-            button.borderColor = RequestErrorTheme.buttonBorderColor
-            button.cornerRadius = RequestErrorTheme.buttonCornerRadius
-            button.backgrounds = RequestErrorTheme.buttonBackground
-            button.textColors = [.active: RequestErrorTheme.buttonIconColor, .selected: RequestErrorTheme.buttonIconColor]
-            button.titleLabel.text = buttonText
-            button.titleLabel.font = RequestErrorTheme.buttonFont
-            button.titleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
             button.snp.makeConstraints { maker in
                 maker.centerX.equalToSuperview()
-                maker.top.equalTo(bottomView.snp.bottom).offset(RequestErrorTheme.buttonMargin)
+                maker.top.equalTo(bottomView.snp.bottom).offset(CGFloat.margin4x)
                 maker.height.equalTo(CGFloat.heightButtonSecondary)
             }
-            button.titleLabel.snp.remakeConstraints { maker in
-                maker.leading.equalToSuperview().offset(RequestErrorTheme.buttonTitleHorizontalMargin)
-                maker.top.bottom.equalToSuperview()
-                maker.trailing.equalToSuperview().offset(-RequestErrorTheme.buttonTitleHorizontalMargin)
-            }
 
+            button.setTitle(buttonText, for: .normal)
+            button.addTarget(self, action: #selector(tapButton), for: .touchUpInside)
+            action = onTapButton
             bottomView = button
         }
         holderView.addSubview(linkView)
         linkView.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
-            maker.top.equalTo(bottomView.snp.bottom).offset(RequestErrorTheme.linkMargin)
+            maker.top.equalTo(bottomView.snp.bottom).offset(CGFloat.margin6x)
         }
         linkView.bind(text: linkText, onTap: onTapLink)
         bottomView = linkView
@@ -90,13 +84,17 @@ class RequestErrorView: UIView {
         }
     }
 
+    @objc private func tapButton() {
+        action?()
+    }
+
     public func set(title: String?) {
         titleLabel.text = title
         setNeedsDisplay()
     }
 
     public func set(action: (() -> ())?) {
-        button?.onTap = action
+        self.action = action
     }
 
 }

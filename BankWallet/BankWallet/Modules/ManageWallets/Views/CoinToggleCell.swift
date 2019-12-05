@@ -16,26 +16,26 @@ class CoinToggleCell: AppCell {
         contentView.addSubview(coinImageView)
         coinImageView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
-            maker.leading.equalToSuperview().offset(ManageWalletsTheme.regularOffset)
+            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
         }
 
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.coinImageView.snp.trailing).offset(ManageWalletsTheme.regularOffset)
-            maker.top.equalToSuperview().offset(ManageWalletsTheme.smallOffset)
+            maker.leading.equalTo(self.coinImageView.snp.trailing).offset(CGFloat.margin4x)
+            maker.top.equalToSuperview().offset(CGFloat.margin2x)
         }
 
-        titleLabel.textColor = ManageWalletsTheme.titleColor
-        titleLabel.font = ManageWalletsTheme.titleFont
+        titleLabel.textColor = .appOz
+        titleLabel.font = .appBody
 
         contentView.addSubview(coinLabel)
         coinLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.titleLabel)
-            maker.top.equalTo(self.titleLabel.snp.bottom).offset(ManageWalletsTheme.coinLabelTopMargin)
+            maker.top.equalTo(self.titleLabel.snp.bottom).offset(3)
         }
 
-        coinLabel.textColor = ManageWalletsTheme.coinLabelColor
-        coinLabel.font = ManageWalletsTheme.coinLabelFont
+        coinLabel.textColor = .appGray
+        coinLabel.font = .appBody
 
         contentView.addSubview(blockchainBadgeView)
         blockchainBadgeView.snp.makeConstraints { maker in
@@ -45,7 +45,7 @@ class CoinToggleCell: AppCell {
 
         contentView.addSubview(toggleView)
         toggleView.snp.makeConstraints { maker in
-            maker.trailing.equalToSuperview().offset(-ManageWalletsTheme.regularOffset)
+            maker.trailing.equalToSuperview().offset(-CGFloat.margin4x)
             maker.centerY.equalToSuperview()
         }
 

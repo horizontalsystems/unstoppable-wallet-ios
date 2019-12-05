@@ -18,6 +18,7 @@ class SendConfirmationReceiverCell: AppCell {
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
             maker.trailing.lessThanOrEqualToSuperview().inset(CGFloat.margin4x)
         }
+
         hashView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         hashView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
     }
@@ -33,7 +34,7 @@ class SendConfirmationReceiverCell: AppCell {
 
     static func height(forContainerWidth containerWidth: CGFloat, text: String) -> CGFloat {
         let insets = HashView.textInsets
-        return ceil(text.height(forContainerWidth: containerWidth - 2 * CGFloat.margin4x - insets.width, font: HashViewTheme.font)) + insets.height + 2 * .margin2x
+        return ceil(text.height(forContainerWidth: containerWidth - 2 * CGFloat.margin4x - insets.width, font: .appSubhead1)) + insets.height + 2 * .margin2x
     }
 
 }
