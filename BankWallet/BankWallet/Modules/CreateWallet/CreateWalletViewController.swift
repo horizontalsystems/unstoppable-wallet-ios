@@ -71,16 +71,22 @@ class CreateWalletViewController: WalletViewController {
                                 coin: viewItem.coin,
                                 state: viewItem.state,
                                 last: index == viewItems.count - 1
-                        ) { enabled in
-                            if enabled {
-                                self?.delegate.onEnable(viewItem: viewItem)
-                            } else {
-                                self?.delegate.onDisable(viewItem: viewItem)
-                            }
+                        ) { [weak self] enabled in
+                            self?.onToggle(viewItem: viewItem, enabled: enabled)
                         }
                     },
                     action: action
             )
+        }
+    }
+
+    private func onToggle(viewItem: CoinToggleViewItem, enabled: Bool) {
+        viewItem.state = .toggleVisible(enabled: enabled)
+
+        if enabled {
+            delegate.onEnable(viewItem: viewItem)
+        } else {
+            delegate.onDisable(viewItem: viewItem)
         }
     }
 

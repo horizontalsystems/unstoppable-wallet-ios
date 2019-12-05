@@ -55,9 +55,14 @@ protocol IManageWalletsPresenterState {
     func move(from: Int, to: Int)
 }
 
-struct CoinToggleViewItem {
+class CoinToggleViewItem {
     let coin: Coin
-    let state: CoinToggleViewItemState
+    var state: CoinToggleViewItemState
+
+    init(coin: Coin, state: CoinToggleViewItemState) {
+        self.coin = coin
+        self.state = state
+    }
 }
 
 enum CoinToggleViewItemState: CustomStringConvertible {
