@@ -139,7 +139,7 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "R",         title: "Revain",                code: "R",       decimal: 0,  type: CoinType(erc20Address: "0x48f775EFBE4F5EcE6e0DF2f7b5932dF56823B990")),
         Coin(id: "XRP",       title: "Ripple",                code: "XRP",     decimal: 8,  type: .binance(symbol: "XRP-BF2")),
         Coin(id: "SAI",       title: "Sai Stablecoin",        code: "SAI",     decimal: 18, type: CoinType(erc20Address: "0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359")),
-        Coin(id: "EURS",      title: "STASIS EURS",           code: "EURS",    decimal: 2,  type: CoinType(erc20Address: "0xdB25f211AB05b1c97D595516F45794528a807ad8", fee: 0.5)),
+        Coin(id: "EURS",      title: "STASIS EURS",           code: "EURS",    decimal: 2,  type: CoinType(erc20Address: "0xdB25f211AB05b1c97D595516F45794528a807ad8")),
         Coin(id: "SNT",       title: "Status",                code: "SNT",     decimal: 18, type: CoinType(erc20Address: "0x744d70FDBE2Ba4CF95131626614a1763DF805B9E")),
         Coin(id: "USDT",      title: "Tether USD",            code: "USDT",    decimal: 6,  type: CoinType(erc20Address: "0xdAC17F958D2ee523a2206206994597C13D831ec7")),
         Coin(id: "TUSD",      title: "TrueUSD",               code: "TUSD",    decimal: 18, type: CoinType(erc20Address: "0x0000000000085d4780B73119b644AE5ecd22b376")),
