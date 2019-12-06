@@ -885,7 +885,6 @@
 		1A564B57AF9E132BBE3DA4A0 /* BackupEosInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648732652025B65889928 /* BackupEosInteractor.swift */; };
 		1A564B6E513269FED43EA6F2 /* ManageWalletsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FD2BE42EF4AADB0372C /* ManageWalletsModule.swift */; };
 		1A564B76F1F041C3397EF39C /* TransactionPendingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D94926FEAF120CF71D7 /* TransactionPendingView.swift */; };
-		1A564B8F25AB6515F509B10D /* BackupTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645D738FD93B79628E5E5 /* BackupTheme.swift */; };
 		1A564B90E3F1D1D7BB8F336D /* AlertTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FE6E6C1D33D793A57FD /* AlertTitleView.swift */; };
 		1A564BC84E6A4F836994ABD3 /* AdapterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564504718E7D19F379A9F7 /* AdapterError.swift */; };
 		1A564BD87A3DD4FCC7B27B5E /* ChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A481A683B1A6FA774D2 /* ChartData.swift */; };
@@ -959,14 +958,12 @@
 		1A564F222B7DA0AC1299BB4D /* AddressParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E38A79F3308EC1B437A /* AddressParser.swift */; };
 		1A564F2D363CB805A486F4A5 /* OneTimeTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56468BE2370BCAA8BDA2FC /* OneTimeTimer.swift */; };
 		1A564F41635CE7EB9B441040 /* LockoutUntilDateFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641ABEF9064B6FCC8DF87 /* LockoutUntilDateFactory.swift */; };
-		1A564F47697F6E6CFEE3975E /* BackupTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645D738FD93B79628E5E5 /* BackupTheme.swift */; };
 		1A564F49F9F41134ED1442EE /* MessageItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BFA2FB7E31EFFD11EAF /* MessageItemView.swift */; };
 		1A564F505E9F7C2F783D43E0 /* RestoreEosPresenterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640BBA9B55A4F39BE16CB /* RestoreEosPresenterState.swift */; };
 		1A564F614653FD09B495400A /* CoinToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56478E08D96F36DD17D8C8 /* CoinToggleCell.swift */; };
 		1A564F707048DC88C8183D77 /* AppStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56420928E5E0E9BC27E67B /* AppStatusViewController.swift */; };
 		1A564F73B7FE144D39DEA34F /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56447C12D91108517ED217 /* UIDevice.swift */; };
 		1A564F8A0C4A6B53D3D653BA /* RestoreEosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642583B39220896DDDF98 /* RestoreEosViewController.swift */; };
-		1A564FAB22A9E25646FC542A /* BackupTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645D738FD93B79628E5E5 /* BackupTheme.swift */; };
 		1A564FB62EBBA50489895BEF /* BalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B746C8A6451D81B27D4 /* BalanceCell.swift */; };
 		1A564FBBE3324B1D8EDA3232 /* PinInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640B8B65EAECA3A36F89E /* PinInteractor.swift */; };
 		1A564FD21968E2B4C1CB4AF5 /* ManageWalletsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642992929CF74471FE0B4 /* ManageWalletsViewController.swift */; };
@@ -2215,7 +2212,6 @@
 		1A5645B289EFBDB3EAB27E3A /* PinManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinManager.swift; sourceTree = "<group>"; };
 		1A5645BE7DACEC78A2FAEFB5 /* DepositCollectionItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositCollectionItem.swift; sourceTree = "<group>"; };
 		1A5645D25F2DB148CD0C16B5 /* MainSettingsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsRouter.swift; sourceTree = "<group>"; };
-		1A5645D738FD93B79628E5E5 /* BackupTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupTheme.swift; sourceTree = "<group>"; };
 		1A56463AFF1D05E33BA25C8A /* BalanceHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceHeaderView.swift; sourceTree = "<group>"; };
 		1A56464DB0EEF75F63C91760 /* TransactionAmountItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionAmountItem.swift; sourceTree = "<group>"; };
 		1A56468820A5F894EC599A44 /* BalanceDataSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceDataSourceTests.swift; sourceTree = "<group>"; };
@@ -3434,7 +3430,6 @@
 			children = (
 				1A5649DB879A57761C09842E /* AppTheme.swift */,
 				1A564939814A9D9F47D41EEB /* InputFieldTheme.swift */,
-				1A5645D738FD93B79628E5E5 /* BackupTheme.swift */,
 				1A5643F3885EC0449557A72E /* Extensions */,
 			);
 			path = Theme;
@@ -4858,7 +4853,6 @@
 				11B35267BB7BFACBBF5C030F /* GrdbStorage.swift in Sources */,
 				11B35542BB8470BFD140E73D /* AuthData.swift in Sources */,
 				11B35DDA0A9C1FA06BC006DF /* Signal.swift in Sources */,
-				1A564F47697F6E6CFEE3975E /* BackupTheme.swift in Sources */,
 				58AAA8F04A9FEBEF44DDCE6C /* FullTransactionInfoModule.swift in Sources */,
 				58AAA142672488EC001B2B37 /* FullTransactionInfoRouter.swift in Sources */,
 				58AAA0A54A64F5548C65F5F1 /* FullTransactionInfoInteractor.swift in Sources */,
@@ -5507,7 +5501,6 @@
 				11B357FE4C2E1EC8E26ED68F /* GrdbStorage.swift in Sources */,
 				11B35406710372339144C92D /* AuthData.swift in Sources */,
 				11B35B79EDF41D1B2178AADD /* Signal.swift in Sources */,
-				1A564B8F25AB6515F509B10D /* BackupTheme.swift in Sources */,
 				58AAA0B04B8E3BD80EC3085E /* FullTransactionInfoModule.swift in Sources */,
 				58AAAC1F6C9D7F092ECFF261 /* FullTransactionInfoRouter.swift in Sources */,
 				58AAA5BAC927BD8C5524F4C4 /* FullTransactionInfoInteractor.swift in Sources */,
@@ -6110,7 +6103,6 @@
 				11B35133B5C8937A33A0208C /* GrdbStorage.swift in Sources */,
 				11B35A3495FF00B1A3FF4197 /* AuthData.swift in Sources */,
 				11B35D7FBD8CBF3D92A03EFF /* Signal.swift in Sources */,
-				1A564FAB22A9E25646FC542A /* BackupTheme.swift in Sources */,
 				58AAA9B84E2A8DCC4177DAEC /* FullTransactionInfoModule.swift in Sources */,
 				58AAA7539516E70428514119 /* FullTransactionInfoRouter.swift in Sources */,
 				58AAAC932FCD8F3A61640752 /* FullTransactionInfoInteractor.swift in Sources */,

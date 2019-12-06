@@ -126,6 +126,8 @@ extension CGFloat {
 
     static let marginButtonSide: CGFloat = 44
 
+    static let marginTextSide: CGFloat = 44
+
     static let heightOnePixel: CGFloat = 1 / UIScreen.main.scale
     static let heightOneDp: CGFloat = 1
     static let heightSingleLineCell: CGFloat = 44
@@ -134,6 +136,8 @@ extension CGFloat {
     static let heightDoubleLineInput: CGFloat = 66
     static let heightButton: CGFloat = 50
     static let heightButtonSecondary: CGFloat = 32
+    static let heightBottomCancel: CGFloat = 126
+    static let heightGradient: CGFloat = 16
 }
 
 extension UIButton {

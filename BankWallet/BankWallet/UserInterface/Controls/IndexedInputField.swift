@@ -130,8 +130,9 @@ class IndexedInputField: UIView, UITextFieldDelegate {
         addSubview(textField)
         textField.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(InputFieldTheme.inputFieldRightMargin)
-            maker.top.bottom.equalToSuperview()
+            maker.top.bottom.equalToSuperview().inset(CGFloat.margin3x)
             maker.trailing.equalTo(self.clearWrapperView.snp.leading)
+            maker.height.equalTo(InputFieldTheme.indexFont.lineHeight)
         }
     }
 

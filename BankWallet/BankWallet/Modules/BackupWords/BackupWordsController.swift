@@ -7,7 +7,7 @@ class BackupWordsController: WalletViewController {
     private let scrollView = UIScrollView()
     private let wordsLabel = UILabel()
 
-    private let proceedButtonHolder = GradientView(gradientHeight: BackupTheme.gradientHeight, viewHeight: BackupTheme.cancelHolderHeight, fromColor: BackupTheme.gradientTransparent, toColor: BackupTheme.gradientSolid)
+    private let proceedButtonHolder = GradientView(gradientHeight: CGFloat.heightGradient, viewHeight: .heightBottomCancel, fromColor: UIColor.appTyler.withAlphaComponent(0), toColor: .appTyler)
     private let proceedButton: UIButton = .appYellow
 
     init(delegate: IBackupWordsViewDelegate) {
@@ -35,32 +35,29 @@ class BackupWordsController: WalletViewController {
         scrollView.alwaysBounceVertical = true
         scrollView.snp.makeConstraints { maker in
             maker.top.equalToSuperview()
-            maker.leading.equalToSuperview().offset(BackupTheme.sideMargin)
-            maker.trailing.equalToSuperview().offset(-BackupTheme.sideMargin)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.marginTextSide)
             maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
 
         wordsLabel.numberOfLines = 0
         wordsLabel.snp.makeConstraints { maker in
             maker.leading.trailing.equalTo(self.scrollView)
-            maker.top.equalTo(self.scrollView).offset(BackupTheme.wordsTopMargin)
-            maker.bottom.equalTo(self.scrollView.snp.bottom).offset(-BackupTheme.cancelHolderHeight)
+            maker.top.equalTo(self.scrollView).offset(CGFloat.margin2x)
+            maker.bottom.equalTo(self.scrollView.snp.bottom).inset(CGFloat.heightBottomCancel)
         }
 
         proceedButtonHolder.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
-            maker.height.equalTo(BackupTheme.cancelHolderHeight)
+            maker.height.equalTo(CGFloat.heightBottomCancel)
         }
 
         proceedButton.setTitle(delegate.isBackedUp ? "backup.close".localized : "button.next".localized, for: .normal)
         proceedButton.addTarget(self, action: #selector(nextDidTap), for: .touchUpInside)
 
         proceedButton.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(BackupTheme.sideMargin)
-            maker.trailing.equalToSuperview().offset(-BackupTheme.sideMargin)
-            maker.bottom.equalToSuperview().offset(-BackupTheme.sideMargin)
-            maker.height.equalTo(BackupTheme.buttonHeight)
+            maker.leading.trailing.bottom.equalToSuperview().inset(CGFloat.marginButtonSide)
+            maker.height.equalTo(CGFloat.heightButton)
         }
 
 
