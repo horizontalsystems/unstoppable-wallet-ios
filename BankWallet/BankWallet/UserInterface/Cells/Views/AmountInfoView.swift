@@ -3,6 +3,7 @@ import UIKit
 class AmountInfoView: UIView {
     private let primaryAmountLabel = UILabel()
     private let lockImageView = UIImageView()
+    private let sentToSelfImageView = UIImageView()
     private let primaryAmountTitleLabel = UILabel()
     private let secondaryAmountLabel = UILabel()
     private let secondaryAmountTitleLabel = UILabel()
@@ -17,6 +18,7 @@ class AmountInfoView: UIView {
 
         addSubview(primaryAmountLabel)
         addSubview(lockImageView)
+        addSubview(sentToSelfImageView)
         addSubview(primaryAmountTitleLabel)
         addSubview(secondaryAmountLabel)
         addSubview(secondaryAmountTitleLabel)
@@ -31,10 +33,18 @@ class AmountInfoView: UIView {
         lockImageView.image = UIImage(named: "Transaction Lock Icon")
         lockImageView.snp.makeConstraints { maker in
             maker.leading.equalTo(primaryAmountLabel.snp.trailing)
-            maker.top.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalToSuperview().inset(CGFloat.margin4x)
             maker.size.equalTo(0)
         }
         lockImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        
+        sentToSelfImageView.image = UIImage(named: "Transaction In Icon")
+        sentToSelfImageView.snp.makeConstraints { maker in
+            maker.leading.equalTo(lockImageView.snp.trailing)
+            maker.top.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.size.equalTo(0)
+        }
+        sentToSelfImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         primaryAmountTitleLabel.font = .appSubhead2
         primaryAmountTitleLabel.textColor = .appGray
@@ -82,13 +92,7 @@ class AmountInfoView: UIView {
             primaryAmountTitleLabel.text = currencyValue.currency.code
             amountLabel = ValueFormatter.instance.format(currencyValue: currencyValue, fractionPolicy: customPrimaryFractionPolicy, trimmable: primaryFormatTrimmable)
         }
-        primaryAmountLabel.text = amountLabel.map {
-            var postfix = ""
-            if type == .sentToSelf {
-                postfix = "*"
-            }
-            return $0 + postfix
-        }
+        primaryAmountLabel.text = amountLabel
 
         guard let secondaryAmountInfo = secondaryAmountInfo else {
             return
@@ -103,11 +107,25 @@ class AmountInfoView: UIView {
         if locked {
             lockImageView.snp.remakeConstraints { maker in
                 maker.leading.equalTo(primaryAmountLabel.snp.trailing).offset(CGFloat.margin1x)
-                maker.top.trailing.equalToSuperview().inset(CGFloat.margin4x)
+                maker.top.equalToSuperview().inset(CGFloat.margin4x)
             }
         } else {
             lockImageView.snp.remakeConstraints { maker in
                 maker.leading.equalTo(primaryAmountLabel.snp.trailing)
+                maker.top.equalToSuperview().inset(CGFloat.margin4x)
+                maker.size.equalTo(0)
+            }
+        }
+
+        if type == .sentToSelf {
+            sentToSelfImageView.snp.remakeConstraints { maker in
+                maker.leading.equalTo(lockImageView.snp.trailing).offset(CGFloat.margin1x)
+                maker.top.trailing.equalToSuperview().inset(CGFloat.margin4x)
+                maker.size.equalTo(16)
+            }
+        } else {
+            sentToSelfImageView.snp.remakeConstraints { maker in
+                maker.leading.equalTo(lockImageView.snp.trailing)
                 maker.top.trailing.equalToSuperview().inset(CGFloat.margin4x)
                 maker.size.equalTo(0)
             }

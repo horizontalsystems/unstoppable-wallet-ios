@@ -14,8 +14,10 @@ class TransactionCell: AppCell {
     private let failedView = TransactionFailedView()
 
     private let currencyAmountLabel = UILabel()
-    private let lockImageView = UIImageView()
     private let amountLabel = UILabel()
+
+    private let lockImageView = UIImageView()
+    private let sentToSelfImageView = UIImageView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -59,11 +61,20 @@ class TransactionCell: AppCell {
         contentView.addSubview(lockImageView)
         lockImageView.snp.makeConstraints { maker in
             maker.leading.equalTo(currencyAmountLabel.snp.trailing)
-            maker.trailing.equalTo(contentView.snp.trailingMargin)
             maker.top.equalToSuperview().inset(CGFloat.margin4x)
             maker.size.equalTo(0)
         }
         lockImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+
+        sentToSelfImageView.image = UIImage(named: "Transaction In Icon")
+        contentView.addSubview(sentToSelfImageView)
+        sentToSelfImageView.snp.makeConstraints { maker in
+            maker.leading.equalTo(lockImageView.snp.trailing)
+            maker.trailing.equalTo(contentView.snp.trailingMargin)
+            maker.top.equalToSuperview().inset(CGFloat.margin4x)
+            maker.size.equalTo(0)
+        }
+        sentToSelfImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         amountLabel.font = .appSubhead2
         amountLabel.textAlignment = .right
@@ -119,12 +130,26 @@ class TransactionCell: AppCell {
         if item.lockInfo != nil {
             lockImageView.snp.remakeConstraints { maker in
                 maker.leading.equalTo(currencyAmountLabel.snp.trailing).offset(CGFloat.margin1x)
-                maker.trailing.equalTo(contentView.snp.trailingMargin)
                 maker.top.equalToSuperview().inset(CGFloat.margin4x)
             }
         } else {
             lockImageView.snp.remakeConstraints { maker in
                 maker.leading.equalTo(currencyAmountLabel.snp.trailing)
+                maker.top.equalToSuperview().inset(CGFloat.margin4x)
+                maker.size.equalTo(0)
+            }
+        }
+
+        if item.type == .sentToSelf {
+            sentToSelfImageView.snp.remakeConstraints { maker in
+                maker.leading.equalTo(lockImageView.snp.trailing).offset(CGFloat.margin1x)
+                maker.trailing.equalTo(contentView.snp.trailingMargin)
+                maker.top.equalToSuperview().inset(CGFloat.margin4x)
+                maker.size.equalTo(16)
+            }
+        } else {
+            sentToSelfImageView.snp.remakeConstraints { maker in
+                maker.leading.equalTo(lockImageView.snp.trailing)
                 maker.trailing.equalTo(contentView.snp.trailingMargin)
                 maker.top.equalToSuperview().inset(CGFloat.margin4x)
                 maker.size.equalTo(0)
