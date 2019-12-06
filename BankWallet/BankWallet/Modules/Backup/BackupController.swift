@@ -27,13 +27,12 @@ class BackupController: WalletViewController {
 
         view.addSubview(subtitleLabel)
         subtitleLabel.text = "backup.intro.subtitle".localized(delegate.coinCodes)
-        subtitleLabel.font = BackupTheme.descriptionFont
-        subtitleLabel.textColor = BackupTheme.descriptionColor
+        subtitleLabel.font = .appBody
+        subtitleLabel.textColor = .appGray
         subtitleLabel.numberOfLines = 0
         subtitleLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(BackupTheme.sideMargin)
-            maker.trailing.equalToSuperview().offset(-BackupTheme.sideMargin)
-            maker.top.equalTo(self.view.snp.topMargin).offset(BackupTheme.introDescriptionTopMargin)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.marginTextSide)
+            maker.top.equalTo(self.view.snp.topMargin).offset(CGFloat.margin6x)
         }
 
         view.addSubview(cancelButton)
@@ -41,9 +40,9 @@ class BackupController: WalletViewController {
         cancelButton.addTarget(self, action: #selector(cancelDidTap), for: .touchUpInside)
 
         cancelButton.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(BackupTheme.sideMargin)
-            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-BackupTheme.sideMargin)
-            maker.size.equalTo(CGSize(width: BackupTheme.laterButtonWidth, height: BackupTheme.buttonHeight))
+            maker.leading.equalToSuperview().offset(CGFloat.marginButtonSide)
+            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(CGFloat.marginButtonSide)
+            maker.size.equalTo(CGSize(width: 85, height: CGFloat.heightButton))
         }
 
         view.addSubview(proceedButton)
@@ -51,10 +50,10 @@ class BackupController: WalletViewController {
         proceedButton.addTarget(self, action: #selector(proceedDidTap), for: .touchUpInside)
 
         proceedButton.snp.makeConstraints { maker in
-            maker.leading.equalTo(cancelButton.snp.trailing).offset(BackupTheme.buttonsGap)
-            maker.trailing.equalToSuperview().offset(-BackupTheme.sideMargin)
-            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-BackupTheme.sideMargin)
-            maker.height.equalTo(BackupTheme.buttonHeight)
+            maker.leading.equalTo(cancelButton.snp.trailing).offset(10)
+            maker.trailing.equalToSuperview().inset(CGFloat.marginButtonSide)
+            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(CGFloat.marginButtonSide)
+            maker.height.equalTo(CGFloat.heightButton)
         }
     }
 

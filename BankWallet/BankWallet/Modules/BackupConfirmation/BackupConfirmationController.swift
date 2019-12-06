@@ -28,12 +28,11 @@ class BackupConfirmationController: WalletViewController {
 
         view.addSubview(descriptionLabel)
         descriptionLabel.text = "backup.words.confirmation_description".localized(delegate.predefinedAccountTitle)
-        descriptionLabel.font = BackupTheme.confirmLabelFont
-        descriptionLabel.textColor = BackupTheme.confirmLabelColor
+        descriptionLabel.font = .appSubhead2
+        descriptionLabel.textColor = .cryptoGray
         descriptionLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(self.view.snp.topMargin).offset(BackupTheme.confirmLabelTopMargin)
-            maker.leading.equalToSuperview().offset(BackupTheme.confirmSideMargin)
-            maker.trailing.equalToSuperview().offset(-BackupTheme.confirmSideMargin)
+            maker.top.equalTo(self.view.snp.topMargin).offset(CGFloat.margin1x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
         view.addSubview(firstIndexedInputField)
@@ -41,14 +40,12 @@ class BackupConfirmationController: WalletViewController {
         firstIndexedInputField.onReturn = { [weak self] in
             self?.secondIndexedInputField.textField.becomeFirstResponder()
         }
-        firstIndexedInputField.cornerRadius = BackupTheme.buttonCornerRadius
-        firstIndexedInputField.borderColor = BackupTheme.inputBorderColor
+        firstIndexedInputField.cornerRadius = CGFloat.cornerRadius8
+        firstIndexedInputField.borderColor = .appSteel20
         firstIndexedInputField.borderWidth = 1 / UIScreen.main.scale
         firstIndexedInputField.snp.makeConstraints { maker in
-            maker.top.equalTo(self.descriptionLabel.snp.bottom).offset(BackupTheme.wordsBottomMargin)
-            maker.leading.equalToSuperview().offset(BackupTheme.confirmSideMargin)
-            maker.trailing.equalToSuperview().offset(-BackupTheme.confirmSideMargin)
-            maker.height.equalTo(BackupTheme.confirmInputHeight)
+            maker.top.equalTo(self.descriptionLabel.snp.bottom).offset(CGFloat.margin4x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
         view.addSubview(secondIndexedInputField)
@@ -56,14 +53,12 @@ class BackupConfirmationController: WalletViewController {
         secondIndexedInputField.onReturn = { [weak self] in
             self?.doneDidTap()
         }
-        secondIndexedInputField.cornerRadius = BackupTheme.buttonCornerRadius
-        secondIndexedInputField.borderColor = BackupTheme.inputBorderColor
+        secondIndexedInputField.cornerRadius = CGFloat.cornerRadius8
+        secondIndexedInputField.borderColor = .appSteel20
         secondIndexedInputField.borderWidth = 1 / UIScreen.main.scale
         secondIndexedInputField.snp.makeConstraints { maker in
-            maker.top.equalTo(self.firstIndexedInputField.snp.bottom).offset(BackupTheme.wordsBottomMargin)
-            maker.leading.equalToSuperview().offset(BackupTheme.confirmSideMargin)
-            maker.trailing.equalToSuperview().offset(-BackupTheme.confirmSideMargin)
-            maker.height.equalTo(BackupTheme.confirmInputHeight)
+            maker.top.equalTo(self.firstIndexedInputField.snp.bottom).offset(CGFloat.margin4x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
     }
 

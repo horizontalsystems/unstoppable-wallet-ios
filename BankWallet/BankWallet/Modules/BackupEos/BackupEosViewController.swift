@@ -14,8 +14,8 @@ class BackupEosViewController: WalletViewController {
     private let hintLabel = UILabel()
     private let qrCodeImageView = UIImageView()
 
-    private let closeButtonHolder = GradientView(gradientHeight: BackupTheme.gradientHeight, viewHeight: BackupTheme.cancelHolderHeight, fromColor: BackupTheme.gradientTransparent, toColor: BackupTheme.gradientSolid)
-    private let closeButton = UIButton()
+    private let closeButtonHolder = GradientView(gradientHeight: CGFloat.heightGradient, viewHeight: .heightBottomCancel, fromColor: UIColor.appTyler.withAlphaComponent(0), toColor: .appTyler)
+    private let closeButton: UIButton = .appYellow
 
     init(delegate: IBackupEosViewDelegate) {
         self.delegate = delegate
@@ -56,83 +56,75 @@ class BackupEosViewController: WalletViewController {
         view.addSubview(closeButtonHolder)
         closeButtonHolder.addSubview(closeButton)
 
-        accountLabel.text = "backup.eos.account_name".localized
-        accountLabel.font = BackupTheme.eosTextFont
-        accountLabel.textColor = BackupTheme.eosTextColor
+        accountLabel.text = "backup.eos.account_name".localized.uppercased()
+        accountLabel.font = .appSubhead1
+        accountLabel.textColor = .appGray
         accountLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(BackupTheme.eosRegularMargin + BackupTheme.eosSubtitleHorizontalMargin)
-            maker.top.equalToSuperview().offset(BackupTheme.accountTopMargin)
+            maker.leading.equalToSuperview().offset(CGFloat.margin6x)
+            maker.top.equalToSuperview().offset(CGFloat.margin3x + CGFloat.margin2x) // simulate placement in header
         }
         accountField.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.view.snp.leading).offset(BackupTheme.eosRegularMargin)
-            maker.trailing.equalTo(self.view.snp.trailing).offset(-BackupTheme.eosRegularMargin)
-            maker.top.equalTo(self.accountLabel.snp.bottom).offset(BackupTheme.eosSmallMargin)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalTo(self.accountLabel.snp.bottom).offset(CGFloat.margin2x)
             maker.height.equalTo(44)
         }
         accountField.onCopy = { [weak self] in
             self?.delegate.onCopyAddress()
         }
 
-        activePrivateKeyLabel.text = "backup.eos.active_private_key".localized
-        activePrivateKeyLabel.font = BackupTheme.eosTextFont
-        activePrivateKeyLabel.textColor = BackupTheme.eosTextColor
+        activePrivateKeyLabel.text = "backup.eos.active_private_key".localized.uppercased()
+        activePrivateKeyLabel.font = .appSubhead1
+        activePrivateKeyLabel.textColor = .appGray
         activePrivateKeyLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(BackupTheme.eosRegularMargin + BackupTheme.eosSubtitleHorizontalMargin)
-            maker.top.equalTo(self.accountField.snp.bottom).offset(BackupTheme.activePrivateKeyLabelTopMargin)
+            maker.leading.equalToSuperview().offset(CGFloat.margin6x)
+            maker.top.equalTo(self.accountField.snp.bottom).offset(CGFloat.margin3x + CGFloat.margin2x) // simulate placement in header
         }
         activePrivateKeyField.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.view.snp.leading).offset(BackupTheme.eosRegularMargin)
-            maker.trailing.equalTo(self.view.snp.trailing).offset(-BackupTheme.eosRegularMargin)
-            maker.top.equalTo(self.activePrivateKeyLabel.snp.bottom).offset(BackupTheme.eosSmallMargin)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalTo(self.activePrivateKeyLabel.snp.bottom).offset(CGFloat.margin2x)
             maker.height.equalTo(66)
         }
         activePrivateKeyField.onCopy = { [weak self] in
             self?.delegate.onCopyPrivateKey()
         }
 
+        hintLabel.snp.makeConstraints { maker in
+            maker.leading.trailing.equalTo(self.view).inset(CGFloat.margin6x)
+            maker.top.equalTo(self.activePrivateKeyField.snp.bottom).offset(CGFloat.margin3x)
+        }
+
         hintLabel.text = "backup.eos.hint".localized
         hintLabel.numberOfLines = 0
-        hintLabel.font = BackupTheme.eosTextFont
-        hintLabel.textColor = BackupTheme.eosTextColor
-        hintLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.view.snp.leading).offset(BackupTheme.eosRegularMargin)
-            maker.trailing.equalTo(self.view.snp.trailing).offset(-BackupTheme.eosRegularMargin)
-            maker.top.equalTo(self.activePrivateKeyField.snp.bottom).offset(BackupTheme.eosRegularMargin)
-        }
+        hintLabel.font = .appSubhead2
+        hintLabel.textColor = .appGray
 
         qrCodeImageView.backgroundColor = .white
         qrCodeImageView.contentMode = .center
         qrCodeImageView.clipsToBounds = true
-        qrCodeImageView.layer.cornerRadius = BackupTheme.eosQrCodeCornerRadius
+        qrCodeImageView.layer.cornerRadius = .cornerRadius4
         qrCodeImageView.snp.makeConstraints { maker in
             maker.centerX.equalTo(self.view)
-            maker.top.equalTo(hintLabel.snp.bottom).offset(BackupTheme.eosQrCodeTopMargin)
-            maker.size.equalTo(BackupTheme.eosQrCodeSize)
-            maker.bottom.equalToSuperview().offset(-BackupTheme.cancelHolderHeight)
+            maker.top.equalTo(hintLabel.snp.bottom).offset(CGFloat.margin6x)
+            maker.size.equalTo(120)
+            maker.bottom.equalToSuperview().inset(CGFloat.heightBottomCancel)
         }
 
         closeButtonHolder.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.height.equalTo(BackupTheme.cancelHolderHeight)
+            maker.height.equalTo(CGFloat.heightBottomCancel)
             maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
 
         closeButton.setTitle("backup.close".localized, for: .normal)
         closeButton.addTarget(self, action: #selector(didTapClose), for: .touchUpInside)
-        closeButton.setBackgroundColor(color: BackupTheme.backupButtonBackground, forState: .normal)
-        closeButton.setTitleColor(BackupTheme.buttonTitleColor, for: .normal)
-        closeButton.titleLabel?.font = BackupTheme.buttonTitleFont
-        closeButton.cornerRadius = BackupTheme.buttonCornerRadius
         closeButton.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(BackupTheme.sideMargin)
-            maker.trailing.equalToSuperview().offset(-BackupTheme.sideMargin)
-            maker.bottom.equalToSuperview().offset(-BackupTheme.sideMargin)
-            maker.height.equalTo(BackupTheme.buttonHeight)
+            maker.leading.trailing.bottom.equalToSuperview().inset(CGFloat.marginButtonSide)
+            maker.height.equalTo(CGFloat.heightButton)
         }
 
         accountField.bind(address: delegate.account, error: nil)
         activePrivateKeyField.bind(address: delegate.activePrivateKey, error: nil)
-        qrCodeImageView.asyncSetImage { UIImage(qrCodeString: self.delegate.activePrivateKey, size: BackupTheme.eosQrCodeSize) }
+        qrCodeImageView.asyncSetImage { UIImage(qrCodeString: self.delegate.activePrivateKey, size: 120) }
     }
 
     @objc func didTapClose() {
