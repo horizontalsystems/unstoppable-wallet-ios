@@ -7,7 +7,7 @@ enum MnemonicDerivation: String, CaseIterable {
         switch self {
         case .bip44: return "BIP44 | Legacy"
         case .bip49: return "BIP49 | SegWit"
-        case .bip84: return "BIP84 | Native Segwit"
+        case .bip84: return "BIP84 | Native SegWit"
         }
     }
 
