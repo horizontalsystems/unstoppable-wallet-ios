@@ -7,7 +7,7 @@ class BackupWordsController: WalletViewController {
     private let scrollView = UIScrollView()
     private let wordsLabel = UILabel()
 
-    private let proceedButtonHolder = GradientView(gradientHeight: CGFloat.heightGradient, viewHeight: .heightBottomCancel, fromColor: UIColor.appTyler.withAlphaComponent(0), toColor: .appTyler)
+    private let proceedButtonHolder = GradientView(gradientHeight: .margin4x, viewHeight: .heightBottomWrapperBar, fromColor: UIColor.appTyler.withAlphaComponent(0), toColor: .appTyler)
     private let proceedButton: UIButton = .appYellow
 
     init(delegate: IBackupWordsViewDelegate) {
@@ -43,13 +43,13 @@ class BackupWordsController: WalletViewController {
         wordsLabel.snp.makeConstraints { maker in
             maker.leading.trailing.equalTo(self.scrollView)
             maker.top.equalTo(self.scrollView).offset(CGFloat.margin2x)
-            maker.bottom.equalTo(self.scrollView.snp.bottom).inset(CGFloat.heightBottomCancel)
+            maker.bottom.equalTo(self.scrollView.snp.bottom).inset(CGFloat.heightBottomWrapperBar)
         }
 
         proceedButtonHolder.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
-            maker.height.equalTo(CGFloat.heightBottomCancel)
+            maker.height.equalTo(CGFloat.heightBottomWrapperBar)
         }
 
         proceedButton.setTitle(delegate.isBackedUp ? "backup.close".localized : "button.next".localized, for: .normal)
