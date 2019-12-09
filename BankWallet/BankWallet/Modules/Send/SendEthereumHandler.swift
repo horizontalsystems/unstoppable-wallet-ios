@@ -37,7 +37,7 @@ class SendEthereumHandler {
     }
 
     private func processFee(error: Error) {
-        feeModule.set(externalError: error is Erc20Kit.ValidationError ? nil : error)
+        feeModule.set(externalError: error is EthereumKit.ValidationError ? nil : error)
     }
 
     private func syncState() {
