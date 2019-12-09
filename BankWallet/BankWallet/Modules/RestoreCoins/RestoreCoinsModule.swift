@@ -1,5 +1,4 @@
 protocol IRestoreCoinsView: class {
-    func set(predefinedAccountType: PredefinedAccountType)
     func setCancelButton(visible: Bool)
     func set(featuredViewItems: [CoinToggleViewItem], viewItems: [CoinToggleViewItem])
     func setProceedButton(enabled: Bool)

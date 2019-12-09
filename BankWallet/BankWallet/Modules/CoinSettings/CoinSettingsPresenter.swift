@@ -17,6 +17,7 @@ extension CoinSettingsPresenter: ICoinSettingsViewDelegate {
 
     func onLoad() {
         view?.set(coinTitle: coin.title)
+        view?.set(restoreUrl: coin.type.restoreUrl)
 
         for (setting, value) in coinSettings {
             switch setting {
@@ -46,6 +47,10 @@ extension CoinSettingsPresenter: ICoinSettingsViewDelegate {
 
     func onTapCancelButton() {
         router.notifyCancelledAndClose()
+    }
+
+    func onTapLink() {
+        router.open(url: coin.type.restoreUrl)
     }
 
 }

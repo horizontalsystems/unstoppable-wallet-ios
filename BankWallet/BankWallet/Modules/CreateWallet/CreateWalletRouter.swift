@@ -7,7 +7,7 @@ class CreateWalletRouter {
 extension CreateWalletRouter: ICreateWalletRouter {
 
     func showCoinSettings(coin: Coin, coinSettings: CoinSettings, delegate: ICoinSettingsDelegate) {
-        viewController?.present(CoinSettingsRouter.module(coin: coin, coinSettings: coinSettings, delegate: delegate), animated: true)
+        viewController?.present(CoinSettingsRouter.module(coin: coin, coinSettings: coinSettings, mode: .create, delegate: delegate), animated: true)
     }
 
     func showMain() {

@@ -76,7 +76,7 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
         if coinSettingsToRequest.isEmpty {
             createWallet(coin: coin, account: account, requestedCoinSettings: [:])
         } else {
-            router.showCoinSettings(coin: coin, coinSettings: coinSettingsToRequest, delegate: self)
+            router.showCoinSettings(coin: coin, coinSettings: coinSettingsToRequest, accountOrigin: account.origin, delegate: self)
         }
     }
 

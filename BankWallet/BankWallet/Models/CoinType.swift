@@ -60,10 +60,17 @@ enum CoinType {
         case .bitcoin: return [.derivation, .syncMode]
         case .bitcoinCash: return [.syncMode]
         case .dash: return [.syncMode]
-        default: ()
+        default: return []
         }
+    }
 
-        return []
+    var restoreUrl: String {
+        switch self {
+        case .bitcoin: return "https://btc.horizontalsystems.xyz/apg"
+        case .bitcoinCash: return "https://blockdozer.com"
+        case .dash: return "https://dash.horizontalsystems.xyz"
+        default: return ""
+        }
     }
 
 }

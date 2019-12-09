@@ -41,7 +41,7 @@ protocol IManageWalletsInteractorDelegate: class {
 }
 
 protocol IManageWalletsRouter {
-    func showCoinSettings(coin: Coin, coinSettings: CoinSettings, delegate: ICoinSettingsDelegate)
+    func showCoinSettings(coin: Coin, coinSettings: CoinSettings, accountOrigin: AccountOrigin, delegate: ICoinSettingsDelegate)
     func showRestore(predefinedAccountType: PredefinedAccountType, delegate: IRestoreAccountTypeDelegate)
     func close()
 }
