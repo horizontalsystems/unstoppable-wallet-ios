@@ -22,12 +22,11 @@ class CreateWalletViewController: WalletViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "create_wallet.title".localized
+        title = "select_coins.choose_crypto".localized
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "create_wallet.create_button".localized, style: .done, target: self, action: #selector(onTapCreateButton))
 
         tableView.registerCell(forClass: CoinToggleCell.self)
-        tableView.registerHeaderFooter(forClass: TopDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -95,18 +94,10 @@ class CreateWalletViewController: WalletViewController {
 extension CreateWalletViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        let descriptionText = "select_coins.description".localized
-
-        let headerState: ViewState<TopDescriptionHeaderFooterView> = .cellType(hash: "top_description", binder: { view in
-            view.bind(text: descriptionText)
-        }, dynamicHeight: { [unowned self] _ in
-            TopDescriptionHeaderFooterView.height(containerWidth: self.tableView.bounds.width, text: descriptionText)
-        })
-
-        return [
+        [
             Section(
                     id: "featured_coins",
-                    headerState: headerState,
+                    headerState: .margin(height: .margin3x),
                     footerState: .margin(height: .margin8x),
                     rows: rows(viewItems: featuredViewItems)
             ),

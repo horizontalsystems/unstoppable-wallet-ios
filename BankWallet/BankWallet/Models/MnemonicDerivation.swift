@@ -5,18 +5,14 @@ enum MnemonicDerivation: String, CaseIterable {
 
     var title: String {
         switch self {
-        case .bip44: return "BIP44"
-        case .bip49: return "BIP49"
-        case .bip84: return "BIP84"
+        case .bip44: return "BIP44 | Legacy"
+        case .bip49: return "BIP49 | SegWit"
+        case .bip84: return "BIP84 | Native Segwit"
         }
     }
 
     var description: String {
-        switch self {
-        case .bip44: return "Legacy"
-        case .bip49: return "SegWit compatible"
-        case .bip84: return "Native SegWit"
-        }
+        "coin_settings.derivation.description_\(self)".localized
     }
 
 }

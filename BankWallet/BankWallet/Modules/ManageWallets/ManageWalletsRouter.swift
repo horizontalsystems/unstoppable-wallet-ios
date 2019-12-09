@@ -6,8 +6,15 @@ class ManageWalletsRouter {
 
 extension ManageWalletsRouter: IManageWalletsRouter {
 
-    func showCoinSettings(coin: Coin, coinSettings: CoinSettings, delegate: ICoinSettingsDelegate) {
-        viewController?.present(CoinSettingsRouter.module(coin: coin, coinSettings: coinSettings, delegate: delegate), animated: true)
+    func showCoinSettings(coin: Coin, coinSettings: CoinSettings, accountOrigin: AccountOrigin, delegate: ICoinSettingsDelegate) {
+        let mode: CoinSettingsModule.Mode
+
+        switch accountOrigin {
+        case .created: mode = .create
+        case .restored: mode = .restore
+        }
+
+        viewController?.present(CoinSettingsRouter.module(coin: coin, coinSettings: coinSettings, mode: mode, delegate: delegate), animated: true)
     }
 
     func showRestore(predefinedAccountType: PredefinedAccountType, delegate: IRestoreAccountTypeDelegate) {

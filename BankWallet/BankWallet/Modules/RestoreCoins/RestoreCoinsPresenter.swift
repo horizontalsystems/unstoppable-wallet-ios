@@ -48,7 +48,6 @@ class RestoreCoinsPresenter {
 extension RestoreCoinsPresenter: IRestoreCoinsViewDelegate {
 
     func onLoad() {
-        view?.set(predefinedAccountType: predefinedAccountType)
         view?.setCancelButton(visible: presentationMode == .inApp)
 
         syncViewItems()

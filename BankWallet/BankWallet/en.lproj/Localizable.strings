@@ -17,6 +17,7 @@
 "button.paste" = "Paste";
 "button.backup" = "Backup";
 "button.copy" = "Copy";
+"button.back" = "Back";
 
 "alert.copied" = "Copied";
 "alert.no_internet" = "No Internet";
@@ -46,7 +47,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "restore.title" = "Restore";
 "restore.enter_key" = "Enter Key";
 "restore.item_title" = "%@ Wallet";
-"restore.description" = "To restore existing wallet you need to enter a private key for that wallet.\n\nOnce you restore one wallet you will be able to restore other wallets via Manage Wallets section in Security settings of the app.";
+"restore.description" = "Choose a wallet you want to restore. You will need a private key for that wallet.";
 "restore.words.description" = "Enter your private key for %@ wallet which consists of %@ words. The words needs to be entered in correct order and separated by spaces.";
 "restore.eos.description" = "Enter your private key for %@ wallet.";
 "restore.validation_failed" = "Incorrect Key";
@@ -56,14 +57,16 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Coin Settings
 
 "coin_settings.enable_button" = "Enable";
-"coin_settings.derivation.title" = "Address Format";
-"coin_settings.derivation.description" = "If you're creating a new wallet and not sure about this setting than select BIP49.\n\nIf you're restoring an existing wallet with bitcoins on it then you should select the correct address type.";
-"coin_settings.sync_mode.title" = "Network Synchronization";
-"coin_settings.sync_mode.fast.title" = "Fast";
-"coin_settings.sync_mode.slow.title" = "Slow";
-"coin_settings.sync_mode.fast.description" = "0-2 hours (Recommended)";
-"coin_settings.sync_mode.slow.description" = "1-12 hours (More Private)";
-"coin_settings.sync_mode.description" = "Fast: Restores %@ transaction history via secure third party server. Less private but fast.\n\nSlow: Restores %@ transaction history directly from the blockchain. More private but slow.";
+"coin_settings.derivation.title" = "Choose Address Format";
+"coin_settings.derivation.description_bip44" = "Older. Addresses start with 1...";
+"coin_settings.derivation.description_bip49" = "Popular. Addresses start with 3...";
+"coin_settings.derivation.description_bip84" = "Newest. Addresses start with bc1...";
+"coin_settings.derivation.description_create" = "This setting controls the address format for the Bitcoin in this wallet. We recommend using BIP49 if not sure.";
+"coin_settings.derivation.description_restore" = "Select the address format for the Bitcoin in the wallet you're trying to restore.";
+"coin_settings.sync_mode.title" = "Restore Parameters";
+"coin_settings.sync_mode.fast.description" = "0-2 hours, Recommended";
+"coin_settings.sync_mode.slow.description" = "1-12 hours";
+"coin_settings.sync_mode.description" = "Select the source the Unstoppable should use to download your balance and transactions.\n\nHorizontal Systems %@ API:";
 
 // Backup
 
@@ -344,7 +347,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "settings_manage_keys.delete.confirmation_remove" = "The action will delete the %@ Wallet from this device.";
 "settings_manage_keys.delete.confirmation_disable" = "Coins that will be disabled: %@";
 "settings_manage_keys.delete.confirmation_loose" = "If you didn't backup the private key for this wallet, you will lose access to your funds.";
-"error.cant_create_wallet" = "At this point, the wallet is not able to create new %@ wallet accounts. You're only able to restore the existing one.";
+"error.cant_create_wallet" = "At this point Unstoppable is not able to create new EOS wallets. You’re only able to restore the existing one.";
 "error.invalid_eos_key" = "Invalid key";
 "error.invalid_eos_account" = "Invalid account";
 
@@ -413,7 +416,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 // Select Coins
 
-"select_coins.description" = "Select cryptocurrencies for the wallet. You will be able to add or remove coins later as well.";
+"select_coins.choose_crypto" = "Choose Crypto";
 "select_coins.next_button" = "Next";
 
 "price_notification.up" = "up";

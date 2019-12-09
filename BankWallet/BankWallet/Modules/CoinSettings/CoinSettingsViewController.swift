@@ -3,16 +3,20 @@ import SectionsTableView
 
 class CoinSettingsViewController: WalletViewController {
     private let delegate: ICoinSettingsViewDelegate
+    private let mode: CoinSettingsModule.Mode
 
     private let tableView = SectionsTableView(style: .grouped)
 
     private var coinTitle: String = ""
+    private var restoreUrl: String = ""
 
     private var derivation: MnemonicDerivation?
     private var syncMode: SyncMode?
 
-    init(delegate: ICoinSettingsViewDelegate) {
+    init(delegate: ICoinSettingsViewDelegate, mode: CoinSettingsModule.Mode) {
         self.delegate = delegate
+        self.mode = mode
+
         super.init()
     }
 
@@ -29,6 +33,7 @@ class CoinSettingsViewController: WalletViewController {
         tableView.registerCell(forClass: CoinSettingCell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
+        tableView.registerHeaderFooter(forClass: CoinSettingsHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -89,6 +94,7 @@ class CoinSettingsViewController: WalletViewController {
 
     private func syncModeRows(selectedSyncMode: SyncMode) -> [RowProtocol] {
         let syncModes =  [SyncMode.fast, SyncMode.slow]
+        let coinTitle = self.coinTitle
 
         return syncModes.enumerated().map { (index, syncMode) in
             Row<CoinSettingCell>(
@@ -98,7 +104,7 @@ class CoinSettingsViewController: WalletViewController {
                     autoDeselect: true,
                     bind: { cell, _ in
                         cell.bind(
-                                title: "coin_settings.sync_mode.\(syncMode.rawValue).title".localized,
+                                title: syncMode.title(coinTitle: coinTitle),
                                 subtitle: "coin_settings.sync_mode.\(syncMode.rawValue).description".localized,
                                 selected: syncMode == selectedSyncMode,
                                 last: index == syncModes.count - 1
@@ -135,6 +141,20 @@ class CoinSettingsViewController: WalletViewController {
         )
     }
 
+    private func urlFooter(hash: String, text: String, url: String) -> ViewState<CoinSettingsHeaderFooterView> {
+        .cellType(
+                hash: hash,
+                binder: { view in
+                    view.bind(text: text, url: url) { [weak self] in
+                        self?.delegate.onTapLink()
+                    }
+                },
+                dynamicHeight: { [unowned self] _ in
+                    CoinSettingsHeaderFooterView.height(containerWidth: self.tableView.bounds.width, text: text, url: url)
+                }
+        )
+    }
+
 }
 
 extension CoinSettingsViewController: SectionsDataSource {
@@ -146,7 +166,7 @@ extension CoinSettingsViewController: SectionsDataSource {
             sections.append(Section(
                     id: "derivation",
                     headerState: header(hash: "derivation_header", text: "coin_settings.derivation.title".localized, additionalMargin: .margin3x),
-                    footerState: footer(hash: "derivation_footer", text: "coin_settings.derivation.description".localized),
+                    footerState: footer(hash: "derivation_footer", text: "coin_settings.derivation.description_\(mode)".localized),
                     rows: derivationRows(selectedDerivation: derivation)
             ))
         }
@@ -155,7 +175,7 @@ extension CoinSettingsViewController: SectionsDataSource {
             sections.append(Section(
                     id: "sync_mode",
                     headerState: header(hash: "sync_mode_header", text: "coin_settings.sync_mode.title".localized),
-                    footerState: footer(hash: "sync_mode_footer", text: "coin_settings.sync_mode.description".localized(coinTitle, coinTitle)),
+                    footerState: urlFooter(hash: "sync_mode_footer", text: "coin_settings.sync_mode.description".localized(coinTitle), url: restoreUrl),
                     rows: syncModeRows(selectedSyncMode: syncMode)
             ))
         }
@@ -170,6 +190,10 @@ extension CoinSettingsViewController: ICoinSettingsView {
     func set(coinTitle: String) {
         self.coinTitle = coinTitle
         title = coinTitle
+    }
+
+    func set(restoreUrl: String) {
+        self.restoreUrl = restoreUrl
     }
 
     func set(syncMode: SyncMode) {

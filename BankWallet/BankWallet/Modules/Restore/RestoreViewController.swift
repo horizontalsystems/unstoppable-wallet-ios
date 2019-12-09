@@ -22,6 +22,7 @@ class RestoreViewController: WalletViewController {
         super.viewDidLoad()
 
         title = "restore.title".localized
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "button.back".localized, style: .plain, target: nil, action: nil)
 
         tableView.registerCell(forClass: RestoreAccountCell.self)
         tableView.registerHeaderFooter(forClass: TopDescriptionHeaderFooterView.self)
