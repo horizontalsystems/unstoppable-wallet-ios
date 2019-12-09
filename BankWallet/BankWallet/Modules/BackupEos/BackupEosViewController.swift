@@ -14,7 +14,7 @@ class BackupEosViewController: WalletViewController {
     private let hintLabel = UILabel()
     private let qrCodeImageView = UIImageView()
 
-    private let closeButtonHolder = GradientView(gradientHeight: CGFloat.heightGradient, viewHeight: .heightBottomCancel, fromColor: UIColor.appTyler.withAlphaComponent(0), toColor: .appTyler)
+    private let closeButtonHolder = GradientView(gradientHeight: .margin4x, viewHeight: .heightBottomWrapperBar, fromColor: UIColor.appTyler.withAlphaComponent(0), toColor: .appTyler)
     private let closeButton: UIButton = .appYellow
 
     init(delegate: IBackupEosViewDelegate) {
@@ -106,12 +106,12 @@ class BackupEosViewController: WalletViewController {
             maker.centerX.equalTo(self.view)
             maker.top.equalTo(hintLabel.snp.bottom).offset(CGFloat.margin6x)
             maker.size.equalTo(120)
-            maker.bottom.equalToSuperview().inset(CGFloat.heightBottomCancel)
+            maker.bottom.equalToSuperview().inset(CGFloat.heightBottomWrapperBar)
         }
 
         closeButtonHolder.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightBottomCancel)
+            maker.height.equalTo(CGFloat.heightBottomWrapperBar)
             maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
 

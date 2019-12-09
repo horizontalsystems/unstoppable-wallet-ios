@@ -136,8 +136,7 @@ extension CGFloat {
     static let heightDoubleLineInput: CGFloat = 66
     static let heightButton: CGFloat = 50
     static let heightButtonSecondary: CGFloat = 32
-    static let heightBottomCancel: CGFloat = 126
-    static let heightGradient: CGFloat = 16
+    static let heightBottomWrapperBar: CGFloat = 126
 }
 
 extension UIButton {
