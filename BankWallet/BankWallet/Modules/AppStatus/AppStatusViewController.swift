@@ -14,7 +14,6 @@ class AppStatusViewController: WalletViewController {
 
         hidesBottomBarWhenPushed = true
 
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         dateFormatter.dateFormat = "dd MMM yyyy, hh:mm"
     }
 
