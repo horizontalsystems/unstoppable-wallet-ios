@@ -14,7 +14,7 @@ class AppStatusViewController: WalletViewController {
 
         hidesBottomBarWhenPushed = true
 
-        dateFormatter.dateFormat = "dd MMM yyyy, hh:mm"
+        dateFormatter.dateFormat = "dd MMM yyyy, HH:mm"
     }
 
     required init?(coder aDecoder: NSCoder) {
