@@ -17,6 +17,8 @@ class MainSettingsViewController: WalletViewController {
         self.delegate = delegate
 
         super.init()
+
+        tabBarItem = UITabBarItem(title: "settings.tab_bar_item".localized, image: UIImage(named: "settings.tab_bar_item"), tag: 0)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -28,8 +30,6 @@ class MainSettingsViewController: WalletViewController {
 
         title = "settings.title".localized
         navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
-
-        tabBarItem = UITabBarItem(title: "settings.tab_bar_item".localized, image: UIImage(named: "settings.tab_bar_item"), tag: 0)
 
         tableView.registerCell(forClass: TitleCell.self)
         tableView.registerCell(forClass: RightImageCell.self)
