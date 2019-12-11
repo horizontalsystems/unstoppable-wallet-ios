@@ -17,9 +17,11 @@
 "button.paste" = "불여넣기";
 "button.backup" = "백업";
 "button.copy" = "복사";
+"button.back" = "Back";
 
 "alert.copied" = "복사됨";
 "alert.no_internet" = "인터넷에 연결되지 않음";
+"alert.no_fee" = "Wrong Fee";
 "alert.network_issue" = "네트워크에 문제가 있습니다. 잠시 후 다시 시도해 주세요";
 "alert.unknown_error" = "알수없는 오류";
 
@@ -50,19 +52,19 @@
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
-//Coin Sync Modes
+// Coin Settings
 
-"restore_options.title" = "옵션 복구";
-"restore_options.sync.text" = "빠른: 귀하의 과거 거래내역을 보안 암호와 서버를 통해 복원합니다. 많은 양의 거래내역을 가지고 계신 사용자께서는 이 방법은 개인정보보호 침해의 위험을 야기할 수 있습니다.\n\n느린: 블록 체인으로 부터 귀하의 과거 거래내역을 복원합니다. 더 사적이지만 굉장히 느립니다. 만약 너무 느리게 간다면, 설정에서 지갑 관리하기에 가신후, Unstoppable 입장을 삭제하시고 빠른 선택의 과정을 반복 하십시오.";
-"restore_options.sync.fast" = "빠르게";
-"restore_options.sync.recommended" = "0-2시간 (권장)";
-"restore_options.sync.slow" = "느리게";
-"restore_options.sync.more_private" = "1-12시간 (더욱 사적임)";
-"restore_options.derivation.text" = "귀하께서 처음으로 Unstoppable에서 지갑을 생성하셨을 때 시간 주기를 선택 하십시오.";
-"restore_options.derivation.before_update" = "2019년 11월 전에";
-"restore_options.derivation.after_update" = "2019년 11월 후에";
-"restore_options.derivation.bip44" = "BIP-44";
-"restore_options.derivation.bip49" = "BIP-49";
+"coin_settings.enable_button" = "Enable";
+"coin_settings.derivation.title" = "Choose Address Format";
+"coin_settings.derivation.description_bip44" = "Older. Addresses start with 1...";
+"coin_settings.derivation.description_bip49" = "Popular. Addresses start with 3...";
+"coin_settings.derivation.description_bip84" = "Newest. Addresses start with bc1...";
+"coin_settings.derivation.description_create" = "This setting controls the address format for the Bitcoin in this wallet. We recommend using BIP49 if not sure.";
+"coin_settings.derivation.description_restore" = "Select the address format for the Bitcoin in the wallet you're trying to restore.";
+"coin_settings.sync_mode.title" = "Restore Parameters";
+"coin_settings.sync_mode.fast.description" = "0-2 hours, Recommended";
+"coin_settings.sync_mode.slow.description" = "1-12 hours";
+"coin_settings.sync_mode.description" = "Select the source the Unstoppable should use to download your balance and transactions.\n\nHorizontal Systems %@ API:";
 
 // Backup
 
@@ -86,6 +88,7 @@
 "error.send_eos.account_not_exist" = "회원 계정이 존재하지 않습니다";
 "error.send_eos.insufficient_ram" = "귀하의 EOS계정은 이 토큰을 보내기엔 RAM이 충분하지 않습니다. 진행하시려면 RAM량을 늘리셔야 합니다.";
 "error.send_eos.unknown" = "무언가 잘못 됐습니다: %@";
+"error.send_ethereum.wrong_parameters" = "Wrong parameters";
 
 "backup.confirmation.title" = "확인 중...";
 
@@ -151,8 +154,24 @@
 "send.amount_error.balance" = "잔액%@";
 "send.amount_error.maximum_amount" = "최대 %@ 금액";
 "send.amount_error.minimum_amount" = "최소 %@ 금액";
-"send.amount_error.min_required_balance" = "최소 %@ 만큼의 필요 잔여금";
+"send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.token.insufficient_fee_alert" = "%@ (%@) 에 대한 거래 수수료는 %@로 지불되었습니다. 귀하는 %@가 필요합니다.";
+
+"fee_error.invalid_url" = "Fee rate URL is invalid";
+"fee_error.mapping_error" = "Fee response can not be mapped";
+"fee_error.no_connection" = "Fee module has no access to network";
+"fee_error.server_error" = "Fee server responded with error: %@";
+
+"erc20_error.invalid_address" = "ERC20 address error invalid";
+"erc20_error.invalid_contract_address" = "ERC20 contract address invalid";
+"erc20_error.invalid_value" = "ERC20 value invalid";
+
+"ethereum_error.invalid_data" = "Infura response can not be mapped";
+
+"ethereum_error.invalid_url" = "Ethereum invalid url";
+"ethereum_error.mapping_error" = "Ethereum response can not be mapped";
+"ethereum_error.no_connection" = "Ethereum has no connection";
+"ethereum_error.server_error" = "Ethereum server responded with error: %@";
 
 "send.lock_time" = "시간 자물쇠";
 // Transactions
@@ -163,6 +182,7 @@
 "transactions.empty_text" = "당신은 아직 보류 중 또는 과거에 완료된 거래가 없습니다";
 "transactions.pending" = "보류 중";
 "transactions.receiving" = "수신 중";
+"transactions.failed" = "Failed";
 "transactions.sending" = "전송중";
 
 // Transaction Info
@@ -171,13 +191,14 @@
 "tx_info.status" = "상태";
 "tx_info.status.pending" = "보류 중";
 "tx_info.status.confirmed" = "확인";
+"tx_info.status.failed" = "Failed";
 "tx_info.from_hash" = "로 부터";
 "tx_info.transaction_id" = "거래 ID";
 "tx_info.to_hash" = "에게";
 "tx_info.button_verify" = "확인";
 "tx_info.rate" = "과거 환율";
 "tx_info.fee" = "수수료";
-"tx_info.note" = "이 거래의 가치는 귀하의 주소로 전송되었으므로 0으로 나타납니다";
+"tx_info.to_self_note" = "This transaction was sent to your own address";
 "tx_info.locked_until" = "까지 잠그기";
 "tx_info.recipient_hash" = "수령인";
 
@@ -256,6 +277,7 @@
 
 "manage_coins.title" = "코인 매니저";
 "manage_coins.add_coin.title" = "%@ 추가 ";
+"manage_coins.add_coin.subtitle" = "%@ Wallet";
 "manage_coins.add_coin.text" = "귀하께서는 %@(%@)를 저장할 수 있는 지갑을 가지고 계시지 않습니다. 이 앱은 귀하를 위해 새로운 지갑을 만들어 드릴 수 있습니다. 새로운 지갑을 만들기 위해 밑에있는 생성하기 버튼을 사용하십시오.\n\n귀하께서는 다음 %@에 대한 새로운 지갑을 사용 하실 수 있을 것 입니다.\n\n귀하께서는 또한 기존에 가지고 계셨던%@ 지갑 암호를 사용하실 수 있습니다. 복원하기 버튼을 누르십시오.";
 "manage_coins.add_coin.create" = "만들기";
 "manage_coins.add_coin.restore" = "복구";
@@ -317,8 +339,7 @@
 "settings_manage_keys.delete.confirmation_remove" = "이 행동은 %@ 지갑을 장치에서 삭제합니다.";
 "settings_manage_keys.delete.confirmation_disable" = "비활성화될 코인: %@";
 "settings_manage_keys.delete.confirmation_loose" = "지갑에서 개인 암호를 백업 시키지 않으셨을 경우, 귀하께서는 자금 접근에 제한이 있을 것 입니다.";
-"error.cant_create_eos" = "현재 지갑에서 새 EOS 지갑 계정을 만들 수 없습니다. 기존 파일만 복원할 수 있습니다.";
-"settings_manage_keys.create.text" = "이 행동은 다음 코인에 대한 새로운 지갑을 생성합니다:\n\n%@";
+"error.cant_create_wallet" = "At this point Unstoppable is not able to create new EOS wallets. You’re only able to restore the existing one.";
 "error.invalid_eos_key" = "잘못된 암호입니다";
 "error.invalid_eos_account" = "계정이 존재하지 않습니다.";
 
@@ -384,7 +405,11 @@
 
 "create_wallet.title" = "새 지갑";
 "create_wallet.create_button" = "만들기";
-"create_wallet.description" = "시작하려면 한가지의 가상화폐를 선택하십시오. 귀하께서는 나중에 다른 가상화폐를 추가하실 수 있습니다.";
+
+// Select Coins
+
+"select_coins.choose_crypto" = "Choose Crypto";
+"select_coins.next_button" = "Next";
 
 "price_notification.up" = "위로";
 "price_notification.down" = "아래로";
