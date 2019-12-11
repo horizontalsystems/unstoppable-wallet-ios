@@ -17,9 +17,11 @@
 "button.paste" = "粘帖";
 "button.backup" = "备份";
 "button.copy" = "复制";
+"button.back" = "Back";
 
 "alert.copied" = "已复制";
 "alert.no_internet" = "没有网络";
+"alert.no_fee" = "Wrong Fee";
 "alert.network_issue" = "网络问题。请稍后再试\n\n";
 "alert.unknown_error" = "未知错误";
 
@@ -50,19 +52,19 @@
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
-//Coin Sync Modes
+// Coin Settings
 
-"restore_options.title" = "恢复选项";
-"restore_options.sync.text" = "快：通过安全的第三方服务器恢复您过往的交易。对于拥有大额交易的用户，此方法可能会带来隐私风险。\n\n慢：直接从区块链恢复您过往的交易。如果耗时过长，请前往“设置”中的“管理钱包”，删除Unstoppable条目并使用“快”选项重复此过程。";
-"restore_options.sync.fast" = "快";
-"restore_options.sync.recommended" = "0-2小时（推荐）";
-"restore_options.sync.slow" = "慢";
-"restore_options.sync.more_private" = "1-12小时（更私密）";
-"restore_options.derivation.text" = "当首次在Unstoppable中创建钱包时选择时间周期。";
-"restore_options.derivation.before_update" = "2019年11月之前";
-"restore_options.derivation.after_update" = "2019年11月之后";
-"restore_options.derivation.bip44" = "BIP-44";
-"restore_options.derivation.bip49" = "BIP-49";
+"coin_settings.enable_button" = "Enable";
+"coin_settings.derivation.title" = "Choose Address Format";
+"coin_settings.derivation.description_bip44" = "Older. Addresses start with 1...";
+"coin_settings.derivation.description_bip49" = "Popular. Addresses start with 3...";
+"coin_settings.derivation.description_bip84" = "Newest. Addresses start with bc1...";
+"coin_settings.derivation.description_create" = "This setting controls the address format for the Bitcoin in this wallet. We recommend using BIP49 if not sure.";
+"coin_settings.derivation.description_restore" = "Select the address format for the Bitcoin in the wallet you're trying to restore.";
+"coin_settings.sync_mode.title" = "Restore Parameters";
+"coin_settings.sync_mode.fast.description" = "0-2 hours, Recommended";
+"coin_settings.sync_mode.slow.description" = "1-12 hours";
+"coin_settings.sync_mode.description" = "Select the source the Unstoppable should use to download your balance and transactions.\n\nHorizontal Systems %@ API:";
 
 // Backup
 
@@ -86,6 +88,7 @@
 "error.send_eos.account_not_exist" = "目标账户不存在";
 "error.send_eos.insufficient_ram" = "您的EOS账户没有足够的RAM来发送此令牌。您必须增加RAM才能继续。";
 "error.send_eos.unknown" = "出错了：%@";
+"error.send_ethereum.wrong_parameters" = "Wrong parameters";
 
 "backup.confirmation.title" = "正在检查...";
 
@@ -151,8 +154,24 @@
 "send.amount_error.balance" = "余额%@";
 "send.amount_error.maximum_amount" = "最大金额 %@";
 "send.amount_error.minimum_amount" = "最小金额 %@";
-"send.amount_error.min_required_balance" = "最小要求剩余 %@";
+"send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.token.insufficient_fee_alert" = "%@（%@）的交易费用以%@支付。您需要%@。";
+
+"fee_error.invalid_url" = "Fee rate URL is invalid";
+"fee_error.mapping_error" = "Fee response can not be mapped";
+"fee_error.no_connection" = "Fee module has no access to network";
+"fee_error.server_error" = "Fee server responded with error: %@";
+
+"erc20_error.invalid_address" = "ERC20 address error invalid";
+"erc20_error.invalid_contract_address" = "ERC20 contract address invalid";
+"erc20_error.invalid_value" = "ERC20 value invalid";
+
+"ethereum_error.invalid_data" = "Infura response can not be mapped";
+
+"ethereum_error.invalid_url" = "Ethereum invalid url";
+"ethereum_error.mapping_error" = "Ethereum response can not be mapped";
+"ethereum_error.no_connection" = "Ethereum has no connection";
+"ethereum_error.server_error" = "Ethereum server responded with error: %@";
 
 "send.lock_time" = "时间锁定";
 // Transactions
@@ -163,6 +182,7 @@
 "transactions.empty_text" = "您还没有任何待定或成功的交易";
 "transactions.pending" = "待处理";
 "transactions.receiving" = "正在接收";
+"transactions.failed" = "Failed";
 "transactions.sending" = "正在发送";
 
 // Transaction Info
@@ -171,13 +191,14 @@
 "tx_info.status" = "状态";
 "tx_info.status.pending" = "待处理";
 "tx_info.status.confirmed" = "已确认";
+"tx_info.status.failed" = "Failed";
 "tx_info.from_hash" = "发件人";
 "tx_info.transaction_id" = "交易ID";
 "tx_info.to_hash" = "接收人";
 "tx_info.button_verify" = "验证";
 "tx_info.rate" = "历史价格";
 "tx_info.fee" = "费用";
-"tx_info.note" = "该交易的值似乎为0，因为它发送至您自己的地址";
+"tx_info.to_self_note" = "This transaction was sent to your own address";
 "tx_info.locked_until" = "锁定至";
 "tx_info.recipient_hash" = "收款人";
 
@@ -256,6 +277,7 @@
 
 "manage_coins.title" = "代币管理器";
 "manage_coins.add_coin.title" = "添加%@ ";
+"manage_coins.add_coin.subtitle" = "%@ Wallet";
 "manage_coins.add_coin.text" = "您没有可恢复%@（%@）的钱包。应用可以为您生成新的钱包。使用下方的“创建”按钮生成新钱包。\n\n您将可以为以下代币使用新钱包：%@。\n\n如果您已有钱包，那么您也可以使用现有的%@钱包。为此使用“恢复”按钮。";
 "manage_coins.add_coin.create" = "创建";
 "manage_coins.add_coin.restore" = "恢复";
@@ -317,8 +339,7 @@
 "settings_manage_keys.delete.confirmation_remove" = "该操作将从此设备删除%@钱包。";
 "settings_manage_keys.delete.confirmation_disable" = "将被禁用的代币：%@";
 "settings_manage_keys.delete.confirmation_loose" = "如果您尚未对此钱包备份私钥，您将失去您的资金。";
-"error.cant_create_eos" = "此时，钱包无法创建新的EOS钱包帐户。您只能恢复现有账户。\n";
-"settings_manage_keys.create.text" = "该操作将为以下代币生成新钱包：\n\n%@";
+"error.cant_create_wallet" = "At this point Unstoppable is not able to create new EOS wallets. You’re only able to restore the existing one.";
 "error.invalid_eos_key" = "错误密钥";
 "error.invalid_eos_account" = "无效账户";
 
@@ -384,7 +405,11 @@
 
 "create_wallet.title" = "新钱包";
 "create_wallet.create_button" = "创建";
-"create_wallet.description" = "选择一种加密货币开始使用。您可以在以后添加其他加密货币。";
+
+// Select Coins
+
+"select_coins.choose_crypto" = "Choose Crypto";
+"select_coins.next_button" = "Next";
 
 "price_notification.up" = "上";
 "price_notification.down" = "下";
