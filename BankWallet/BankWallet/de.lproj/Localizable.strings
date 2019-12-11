@@ -17,9 +17,11 @@
 "button.paste" = "Einsetzen";
 "button.backup" = "Sicherung";
 "button.copy" = "Kopieren";
+"button.back" = "Back";
 
 "alert.copied" = "Kopiert";
 "alert.no_internet" = "Kein Internet";
+"alert.no_fee" = "Wrong Fee";
 "alert.network_issue" = "Netzwerkprobleme. Bitte noch einmal versuchen.";
 "alert.unknown_error" = "Unbekannter Fehler";
 
@@ -50,19 +52,19 @@
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
-//Coin Sync Modes
+// Coin Settings
 
-"restore_options.title" = "Optionen ";
-"restore_options.sync.text" = "Schnell: Stellt Ihre vergangenen Transaktionen über einen sicheren Drittserver her. Für Nutzer, die Transaktionen mit großen Summen haben, könnte diese Methode Datenschutzrisiken bergen.\n\nLangsam: Stellt Ihre vergangenen Transaktionen direkt aus der Blockchain her. Mehr Datenschutz, aber sehr langsam. Wenn es zu lange dauert, gehen Sie in den Einstellungen zu Wallets verwalten und löschen Sie den Eintrag Unstoppable. Wiederholen Sie den Prozess mit der Option \"Schnell\".";
-"restore_options.sync.fast" = "Schnell";
-"restore_options.sync.recommended" = "0-2 Stunden (Empfohlen)";
-"restore_options.sync.slow" = "Langsam";
-"restore_options.sync.more_private" = "1-12 Stunden (Mehr Datenschutz)";
-"restore_options.derivation.text" = "Wählen Sie den Zeitraum, in dem Sie Ihr Wallet im Unstoppable Wallet das erste Mal erstellt haben.";
-"restore_options.derivation.before_update" = "Vor November 2019";
-"restore_options.derivation.after_update" = "Nach November 2019";
-"restore_options.derivation.bip44" = "BIP-44";
-"restore_options.derivation.bip49" = "BIP-49";
+"coin_settings.enable_button" = "Enable";
+"coin_settings.derivation.title" = "Choose Address Format";
+"coin_settings.derivation.description_bip44" = "Older. Addresses start with 1...";
+"coin_settings.derivation.description_bip49" = "Popular. Addresses start with 3...";
+"coin_settings.derivation.description_bip84" = "Newest. Addresses start with bc1...";
+"coin_settings.derivation.description_create" = "This setting controls the address format for the Bitcoin in this wallet. We recommend using BIP49 if not sure.";
+"coin_settings.derivation.description_restore" = "Select the address format for the Bitcoin in the wallet you're trying to restore.";
+"coin_settings.sync_mode.title" = "Restore Parameters";
+"coin_settings.sync_mode.fast.description" = "0-2 hours, Recommended";
+"coin_settings.sync_mode.slow.description" = "1-12 hours";
+"coin_settings.sync_mode.description" = "Select the source the Unstoppable should use to download your balance and transactions.\n\nHorizontal Systems %@ API:";
 
 // Backup
 
@@ -86,6 +88,7 @@
 "error.send_eos.account_not_exist" = "Der Zielkonto existiert nicht";
 "error.send_eos.insufficient_ram" = "Ihr EOS-Konto hat nicht genügend RAM, um diesen Token zu senden. Sie müssen den RAM-Anteil erhöhen, um fortzufahren.";
 "error.send_eos.unknown" = "Etwas ist schief gelaufen: %@";
+"error.send_ethereum.wrong_parameters" = "Wrong parameters";
 
 "backup.confirmation.title" = "Prüfen …";
 
@@ -151,8 +154,24 @@
 "send.amount_error.balance" = "Guthaben %@";
 "send.amount_error.maximum_amount" = "Maximaler Betrag %@";
 "send.amount_error.minimum_amount" = "Minimaler Betrag %@";
-"send.amount_error.min_required_balance" = "Mindestens erforderlicher Rest %@";
+"send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.token.insufficient_fee_alert" = "Transaktionsgebühren für %@ %@ in %@ bezahlt. Du brauchst %@.";
+
+"fee_error.invalid_url" = "Fee rate URL is invalid";
+"fee_error.mapping_error" = "Fee response can not be mapped";
+"fee_error.no_connection" = "Fee module has no access to network";
+"fee_error.server_error" = "Fee server responded with error: %@";
+
+"erc20_error.invalid_address" = "ERC20 address error invalid";
+"erc20_error.invalid_contract_address" = "ERC20 contract address invalid";
+"erc20_error.invalid_value" = "ERC20 value invalid";
+
+"ethereum_error.invalid_data" = "Infura response can not be mapped";
+
+"ethereum_error.invalid_url" = "Ethereum invalid url";
+"ethereum_error.mapping_error" = "Ethereum response can not be mapped";
+"ethereum_error.no_connection" = "Ethereum has no connection";
+"ethereum_error.server_error" = "Ethereum server responded with error: %@";
 
 "send.lock_time" = "TimeLock";
 // Transactions
@@ -163,6 +182,7 @@
 "transactions.empty_text" = "Transaktionsliste ist leer";
 "transactions.pending" = "In Bearbeitung";
 "transactions.receiving" = "Empfangen";
+"transactions.failed" = "Failed";
 "transactions.sending" = "Senden";
 
 // Transaction Info
@@ -171,13 +191,14 @@
 "tx_info.status" = "Status";
 "tx_info.status.pending" = "Anstehend";
 "tx_info.status.confirmed" = "Bestätigt";
+"tx_info.status.failed" = "Failed";
 "tx_info.from_hash" = "Von";
 "tx_info.transaction_id" = "Transaktion ID";
 "tx_info.to_hash" = "An";
 "tx_info.button_verify" = "Prüfen";
 "tx_info.rate" = "Historischer Rate";
 "tx_info.fee" = "Gebühr";
-"tx_info.note" = "Der Wert dieser Transaktion ist gleich 0, da die Transaktion an Ihre eigene Adresse gesendet wurde";
+"tx_info.to_self_note" = "This transaction was sent to your own address";
 "tx_info.locked_until" = "Gesperrt bis";
 "tx_info.recipient_hash" = "Empfänger";
 
@@ -256,6 +277,7 @@
 
 "manage_coins.title" = "Coin Manager";
 "manage_coins.add_coin.title" = "%@ hinzufügen ";
+"manage_coins.add_coin.subtitle" = "%@ Wallet";
 "manage_coins.add_coin.text" = "Sie haben kein Wallet, das %@ (%@) speichern kann. Die App kann ein neues Wallet für Sie anlegen. Nutzen Sie den \"Erstellen Button\" unten, um ein neues Wallet anzulegen.\n\nSie können das Wallet für die folgenden Coins verwenden: %@.\n\nSie können auch den bestehenden %@ Wallet-Schlüssel nehmen, wenn Sie einen besitzen. Nutzen sie den Button \"Wiederherstellen\" dafür.";
 "manage_coins.add_coin.create" = "Erstellen";
 "manage_coins.add_coin.restore" = "Wiederherstellen";
@@ -317,8 +339,7 @@
 "settings_manage_keys.delete.confirmation_remove" = "Damit wird das %@ Wallet von Ihrem Gerät gelöscht.";
 "settings_manage_keys.delete.confirmation_disable" = "Coins, die entfernt werden: %@";
 "settings_manage_keys.delete.confirmation_loose" = "Wenn Sie den privaten Schlüssel für dieses Wallet nicht gesichert haben, verlieren Sie den Zugang zu Ihrem Guthaben.";
-"error.cant_create_eos" = "Im Moment kann das Wallet keine neuen EOS-Wallet-Accounts anlegen. Sie können nur bestehende wiederherstellen.";
-"settings_manage_keys.create.text" = "Damit erzeugen Sie ein neues Wallet für folgende Coins:\n %@";
+"error.cant_create_wallet" = "At this point Unstoppable is not able to create new EOS wallets. You’re only able to restore the existing one.";
 "error.invalid_eos_key" = "Ungültiger Schlüssel";
 "error.invalid_eos_account" = "Ungültiger Account";
 
@@ -384,7 +405,11 @@
 
 "create_wallet.title" = "Neues Wallet";
 "create_wallet.create_button" = "Erstellen";
-"create_wallet.description" = "Wählen Sie eine Kryptowährung. Sie können später weitere Kryptowährungen hinzufügen.";
+
+// Select Coins
+
+"select_coins.choose_crypto" = "Choose Crypto";
+"select_coins.next_button" = "Next";
 
 "price_notification.up" = "hoch";
 "price_notification.down" = "runter";
