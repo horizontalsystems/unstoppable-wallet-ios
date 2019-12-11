@@ -1,9 +1,6 @@
 "coin.BTC" = "Bitcoin";
 "coin.BCH" = "Bitcoin Cash";
 "coin.ETH" = "Ethereum";
-"coin.BTCt" = "Bitcoin T";
-"coin.BCHt" = "Bitcoin Cash T";
-"coin.ETHt" = "Ethereum T";
 
 "button.ok" = "OK";
 "button.cancel" = "Cancel";
@@ -400,13 +397,9 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "chart.market_cap.million" = "%@ M";
 "chart.market_cap.billion" = "%@ B";
 "chart.market_cap.trillion" = "%@ T";
-"chart.high" = "%@ High";
-"chart.low" = "%@ Low";
 "chart.volume" = "Volume";
 "chart.circulation" = "In Circulation";
 "chart.max_supply" = "Total Supply";
-"chart.total" = "Total";
-"chart.source" = "Source";
 "chart.error.not_available" = "Chart not available";
 
 // Create Wallet
