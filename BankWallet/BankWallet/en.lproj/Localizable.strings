@@ -200,7 +200,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "tx_info.button_verify" = "Verify";
 "tx_info.rate" = "Historical Rate";
 "tx_info.fee" = "Fee";
-"tx_info.to_self_note" = "This transaction was sent to your own address";
+"tx_info.to_self_note" = "This transaction sent to own address";
 "tx_info.locked_until" = "Locked until %@";
 "tx_info.recipient_hash" = "Recipient";
 
@@ -383,7 +383,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "numpad_5" = "J K L";
 "numpad_6" = "M N O";
 "numpad_7" = "P Q R S";
-"numpad_8" = "T U V";
+"numpad_8" = "T U V";F
 "numpad_9" = "W X Y Z";
 
 // Key Types
