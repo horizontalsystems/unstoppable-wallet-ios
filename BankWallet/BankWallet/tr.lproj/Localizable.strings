@@ -17,9 +17,11 @@
 "button.paste" = "Yapıştır";
 "button.backup" = "Yedekle";
 "button.copy" = "Kopyala";
+"button.back" = "Back";
 
 "alert.copied" = "Kopyalandı";
 "alert.no_internet" = "Internet Bağlantısı Yok";
+"alert.no_fee" = "Wrong Fee";
 "alert.network_issue" = "Ağ sorunu. Tekrar deneyin.";
 "alert.unknown_error" = "Bilinmeyen Hata";
 
@@ -50,19 +52,19 @@
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
-//Coin Sync Modes
+// Coin Settings
 
-"restore_options.title" = "Geri yüklemeyi seç";
-"restore_options.sync.text" = "Hızlı: Geçmişte yaptığınız işlemleri güvenli üçüncü taraf sunucu üzerinden geri yükler. Büyük meblağlar içeren işlemlere sahip kullanıcılar için bu yöntem gizlilik riskleri oluşturabilir.\n\nYavaş: Geçmiş işlemlerinizi doğrudan blok zincirinden geri yükler. Daha özel ve güvenli ama çok yavaş. Çok uzun sürerse, Ayarlar'daki Cüzdanları Yönet'e gidin, Unstoppable girişini silin ve Hızlı seçeneğiyle işlemi tekrarlayın.";
-"restore_options.sync.fast" = "Hızlı";
-"restore_options.sync.recommended" = "0-2 saat (Tavsiye edilen)";
-"restore_options.sync.slow" = "Yavaş";
-"restore_options.sync.more_private" = "1-12 saat (Daha Gizli)";
-"restore_options.derivation.text" = "Unstoppable uygulamasında cüzdanı ilk oluşturduğunuz süreyi seçin.";
-"restore_options.derivation.before_update" = "Kasım 2019’dan önce";
-"restore_options.derivation.after_update" = "Kasım 2019’dan sonra";
-"restore_options.derivation.bip44" = "BIP-44";
-"restore_options.derivation.bip49" = "BIP-49";
+"coin_settings.enable_button" = "Enable";
+"coin_settings.derivation.title" = "Choose Address Format";
+"coin_settings.derivation.description_bip44" = "Older. Addresses start with 1...";
+"coin_settings.derivation.description_bip49" = "Popular. Addresses start with 3...";
+"coin_settings.derivation.description_bip84" = "Newest. Addresses start with bc1...";
+"coin_settings.derivation.description_create" = "This setting controls the address format for the Bitcoin in this wallet. We recommend using BIP49 if not sure.";
+"coin_settings.derivation.description_restore" = "Select the address format for the Bitcoin in the wallet you're trying to restore.";
+"coin_settings.sync_mode.title" = "Restore Parameters";
+"coin_settings.sync_mode.fast.description" = "0-2 hours, Recommended";
+"coin_settings.sync_mode.slow.description" = "1-12 hours";
+"coin_settings.sync_mode.description" = "Select the source the Unstoppable should use to download your balance and transactions.\n\nHorizontal Systems %@ API:";
 
 // Backup
 
@@ -86,6 +88,7 @@
 "error.send_eos.account_not_exist" = "Hedef hesap yok";
 "error.send_eos.insufficient_ram" = "EOS hesabınızda bu kripto parayı göndermek için yeterli RAM bulunmuyor. Devam etmek için EOS RAM hissenizi arttırmak gerekiyor.";
 "error.send_eos.unknown" = "Beklenmeyen bir hata oluştu: %@";
+"error.send_ethereum.wrong_parameters" = "Wrong parameters";
 
 "backup.confirmation.title" = "Kontrol etme ...";
 
@@ -151,8 +154,24 @@
 "send.amount_error.balance" = "%@ Bakiye";
 "send.amount_error.maximum_amount" = "Maksimum miktar %@";
 "send.amount_error.minimum_amount" = "Minimum miktar %@";
-"send.amount_error.min_required_balance" = "Min. gerekli bakiye %@";
+"send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.token.insufficient_fee_alert" = "%@ (%@) için ișlem ücreti %@ hesabından ödenir. Asgari %@ gerekiyor.";
+
+"fee_error.invalid_url" = "Fee rate URL is invalid";
+"fee_error.mapping_error" = "Fee response can not be mapped";
+"fee_error.no_connection" = "Fee module has no access to network";
+"fee_error.server_error" = "Fee server responded with error: %@";
+
+"erc20_error.invalid_address" = "ERC20 address error invalid";
+"erc20_error.invalid_contract_address" = "ERC20 contract address invalid";
+"erc20_error.invalid_value" = "ERC20 value invalid";
+
+"ethereum_error.invalid_data" = "Infura response can not be mapped";
+
+"ethereum_error.invalid_url" = "Ethereum invalid url";
+"ethereum_error.mapping_error" = "Ethereum response can not be mapped";
+"ethereum_error.no_connection" = "Ethereum has no connection";
+"ethereum_error.server_error" = "Ethereum server responded with error: %@";
 
 "send.lock_time" = "TimeLock";
 // Transactions
@@ -163,6 +182,7 @@
 "transactions.empty_text" = "Henüz herhangi bir bekleyen veya geçmiş işlem yok";
 "transactions.pending" = "Bekleyen";
 "transactions.receiving" = "Alınıyor";
+"transactions.failed" = "Failed";
 "transactions.sending" = "Gönderiliyor";
 
 // Transaction Info
@@ -171,13 +191,14 @@
 "tx_info.status" = "Durum";
 "tx_info.status.pending" = "Devam ediyor";
 "tx_info.status.confirmed" = "Onaylandı";
+"tx_info.status.failed" = "Failed";
 "tx_info.from_hash" = "Gönderen";
 "tx_info.transaction_id" = "İşlem ID'si";
 "tx_info.to_hash" = "Alan";
 "tx_info.button_verify" = "Doğrula";
 "tx_info.rate" = "Geçmiş Kur";
 "tx_info.fee" = "Ücret";
-"tx_info.note" = "Kendi adresinize gönderildiğinden bu işlemin değeri 0 olarak görünür";
+"tx_info.to_self_note" = "This transaction was sent to your own address";
 "tx_info.locked_until" = "Şu zamana kadar kitlendi";
 "tx_info.recipient_hash" = "Alıcı";
 
@@ -256,6 +277,7 @@
 
 "manage_coins.title" = "Kripto Para yöneticisi";
 "manage_coins.add_coin.title" = "%@ ekle ";
+"manage_coins.add_coin.subtitle" = "%@ Wallet";
 "manage_coins.add_coin.text" = "%@ (%@) saklayabilen bir cüzdanınız yok. Uygulamanın sizin için yeni bir cüzdan oluşturabilir. Yeni bir cüzdan oluşturmak için aşağıdaki Oluştur düğmesini kullanın.\n\nYeni cüzdanı aşağıdaki paralar için kullanabileceksiniz: %@.\n\nVarsa, mevcut %@ Cüzdan anahtarını da kullanabilirsiniz. Bunun için Geri Yükle düğmesini kullanın.";
 "manage_coins.add_coin.create" = "Oluştur";
 "manage_coins.add_coin.restore" = "Geri Yükle";
@@ -317,8 +339,7 @@
 "settings_manage_keys.delete.confirmation_remove" = "Bu işlem %@ Cüzdanını bu cihazdan kaldıracak.";
 "settings_manage_keys.delete.confirmation_disable" = "Etkisizleştirilecek cüzdanlar: %@";
 "settings_manage_keys.delete.confirmation_loose" = "Bu cüzdanın özel anahtarını yedeklemediyseniz, fonlarınıza erişiminizi kaybedersiniz.";
-"error.cant_create_eos" = "Uygulama henüz EOS cüzdanı oluşturamamaktadır. Sadece var olan cüzda geri yüklenebilir.";
-"settings_manage_keys.create.text" = "Bu işlem, şu kripto paralar için yeni Cüzdan oluşturacak:\n\n%@";
+"error.cant_create_wallet" = "At this point Unstoppable is not able to create new EOS wallets. You’re only able to restore the existing one.";
 "error.invalid_eos_key" = "Geçersiz anahtar";
 "error.invalid_eos_account" = "Geçersiz hesap";
 
@@ -384,7 +405,11 @@
 
 "create_wallet.title" = "Yeni Cüzdan";
 "create_wallet.create_button" = "Oluştur";
-"create_wallet.description" = "Başlamak için bir kripto para birimi seçin. Daha sonra başka kripto para birimleri ekleyebileceksiniz.";
+
+// Select Coins
+
+"select_coins.choose_crypto" = "Choose Crypto";
+"select_coins.next_button" = "Next";
 
 "price_notification.up" = "yukarı";
 "price_notification.down" = "aşağı";
