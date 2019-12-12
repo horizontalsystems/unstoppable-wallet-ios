@@ -1,9 +1,6 @@
 "coin.BTC" = "Bitcoin";
 "coin.BCH" = "Bitcoin Cash";
 "coin.ETH" = "Ethereum";
-"coin.BTCt" = "Bitcoin T";
-"coin.BCHt" = "Bitcoin Cash T";
-"coin.ETHt" = "Ethereum T";
 
 "button.ok" = "OK";
 "button.cancel" = "Cancel";
@@ -60,7 +57,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "coin_settings.derivation.title" = "Choose Address Format";
 "coin_settings.derivation.description_bip44" = "Older (start with 1...)";
 "coin_settings.derivation.description_bip49" = "Popular (start with 3...)";
-"coin_settings.derivation.description_bip84" = "Newest. (start with bc1...)";
+"coin_settings.derivation.description_bip84" = "Newest (start with bc1...)";
 "coin_settings.derivation.description_create" = "This setting controls the address format for the Bitcoin in this wallet. We recommend using BIP49 if not sure.";
 "coin_settings.derivation.description_restore" = "Select the address format for the Bitcoin in the wallet you're trying to restore.";
 "coin_settings.sync_mode.title" = "Restore Parameters";
@@ -160,7 +157,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
 
 "fee_error.invalid_url" = "Fee rate URL is invalid";
-"fee_error.mapping_error" = "Fee response can not be mapped";
+"fee_error.mapping_error" = "Fee response cannot be mapped";
 "fee_error.no_connection" = "Fee module has no access to network";
 "fee_error.server_error" = "Fee server responded with error: %@";
 
@@ -168,10 +165,10 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "erc20_error.invalid_contract_address" = "ERC20 contract address invalid";
 "erc20_error.invalid_value" = "ERC20 value invalid";
 
-"ethereum_error.invalid_data" = "Infura response can not be mapped";
+"ethereum_error.invalid_data" = "Infura response cannot be mapped";
 
 "ethereum_error.invalid_url" = "Ethereum invalid url";
-"ethereum_error.mapping_error" = "Ethereum response can not be mapped";
+"ethereum_error.mapping_error" = "Ethereum response cannot be mapped";
 "ethereum_error.no_connection" = "Ethereum has no connection";
 "ethereum_error.server_error" = "Ethereum server responded with error: %@";
 
@@ -200,7 +197,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "tx_info.button_verify" = "Verify";
 "tx_info.rate" = "Historical Rate";
 "tx_info.fee" = "Fee";
-"tx_info.to_self_note" = "This transaction was sent to your own address";
+"tx_info.to_self_note" = "This transaction sent to own address";
 "tx_info.locked_until" = "Locked until %@";
 "tx_info.recipient_hash" = "Recipient";
 
@@ -287,14 +284,14 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Settings -> Experimental Features
 
 "settings.experimental_features.title" = "Experimental";
-"settings.experimental_features.description" = "The features below are experimental and should be used with caution. While we have throughly tested these features using our own crypto funds we can not guarantee they work as expected in all possible cases.";
+"settings.experimental_features.description" = "The features below are experimental and should be used with caution. While we have throughly tested these features using our own crypto funds we cannot guarantee they work as expected in all possible cases.";
 "settings.experimental_features.bitcoin_hodling" = "Lock Bitcoins";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "Lock Bitcoins";
 "settings.bitcoin_hodling.lock_time" = "TimeLock";
-"settings.bitcoin_hodling.description" = "Enables you to send Bitcoins that can not be spent until specified date.\n\nThe receiver of such transaction should use Unstoppable wallet app version 0.10 or newer with BIP44 address format for the Bitcoin.\n\nOnly Unstoppable wallet can correctly identify such transactions on Bitcoin network as well as enable receiver to spend those Bitcoins after the lock period expires.\n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transaction to yourself.\n\nBeing an experimental feature the maximum amount per transaction is limited to 0.5 BTC.";
+"settings.bitcoin_hodling.description" = "Enables you to send Bitcoins that cannot be spent until specified date.\n\nThe receiver of such transaction should use Unstoppable wallet app version 0.10 or newer with BIP44 address format for the Bitcoin.\n\nOnly Unstoppable wallet can correctly identify such transactions on Bitcoin network as well as enable receiver to spend those Bitcoins after the lock period expires.\n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transaction to yourself.\n\nBeing an experimental feature the maximum amount per transaction is limited to 0.5 BTC.";
 
 // Settings -> About
 
@@ -367,7 +364,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Unlock PIN
 
 "unlock_pin.info" = "Passcode";
-"unlock_pin.cant_save_pin" = "Ouch! We cant save your passcode, please contact us asap!";
+"unlock_pin.cant_save_pin" = "Ouch! We cannot save your passcode, please contact us asap!";
 "unlock_pin.blocked_until" = "Disabled until: %@";
 "rate_list.updated" = "updated";
 
@@ -400,13 +397,9 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "chart.market_cap.million" = "%@ M";
 "chart.market_cap.billion" = "%@ B";
 "chart.market_cap.trillion" = "%@ T";
-"chart.high" = "%@ High";
-"chart.low" = "%@ Low";
 "chart.volume" = "Volume";
 "chart.circulation" = "In Circulation";
 "chart.max_supply" = "Total Supply";
-"chart.total" = "Total";
-"chart.source" = "Source";
 "chart.error.not_available" = "Chart not available";
 
 // Create Wallet
@@ -426,4 +419,4 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Lock Info
 
 "lock_info.title" = "Info";
-"lock_info.text" = "The sender sent these funds with a spending lock that will expire on shown date.\n\nNo worries, the received Bitcoins are already yours but until the lock period expires you can not spend them on the Bitcoin network.";
+"lock_info.text" = "The sender sent these funds with a spending lock that will expire on shown date.\n\nNo worries, the received Bitcoins are already yours but until the lock period expires you cannot spend them on the Bitcoin network.";
