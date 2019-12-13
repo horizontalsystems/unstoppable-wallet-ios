@@ -180,7 +180,7 @@
 "tx_info.rate" = "历史价格";
 "tx_info.fee" = "费用";
 "tx_info.to_self_note" = "交易已发送至自有地址";
-"tx_info.locked_until" = "锁定至";
+"tx_info.locked_until" = "锁定至 %@";
 "tx_info.recipient_hash" = "收款人";
 
 // Full Info

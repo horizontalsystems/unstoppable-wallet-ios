@@ -180,7 +180,7 @@
 "tx_info.rate" = "Historischer Rate";
 "tx_info.fee" = "Gebühr";
 "tx_info.to_self_note" = "Diese Transaktion wurde an die eigene Adresse gesendet";
-"tx_info.locked_until" = "Gesperrt bis";
+"tx_info.locked_until" = "Gesperrt bis %@";
 "tx_info.recipient_hash" = "Empfänger";
 
 // Full Info

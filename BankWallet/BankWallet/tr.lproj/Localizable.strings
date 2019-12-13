@@ -180,7 +180,7 @@
 "tx_info.rate" = "Geçmiş Kur";
 "tx_info.fee" = "Ücret";
 "tx_info.to_self_note" = "Bu işlem kendi adresine gönderildi";
-"tx_info.locked_until" = "Şu zamana kadar kitlendi";
+"tx_info.locked_until" = "Şu zamana kadar kitlendi %@";
 "tx_info.recipient_hash" = "Alıcı";
 
 // Full Info
