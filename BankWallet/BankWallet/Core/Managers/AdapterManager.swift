@@ -22,8 +22,7 @@ class AdapterManager {
         self.walletManager = walletManager
 
         walletManager.walletsUpdatedObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .observeOn(SerialDispatchQueueScheduler(qos: .userInitiated))
+                .observeOn(SerialDispatchQueueScheduler(qos: .utility))
                 .subscribe(onNext: { [weak self] wallets in
                     self?.initAdapters(wallets: wallets)
                 })
