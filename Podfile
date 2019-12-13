@@ -6,21 +6,21 @@ inhibit_all_warnings!
 project 'BankWallet/BankWallet'
 
 def appPods
-  pod 'BitcoinCore.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios/'
-  pod 'BitcoinKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios/'
-  pod 'BitcoinCashKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios/'
-  pod 'DashKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios/'
-  pod 'Hodler.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios/'
+  pod 'BitcoinKit.swift'
+  pod 'BitcoinCashKit.swift'
+  pod 'DashKit.swift'
+  pod 'Hodler.swift'
 
-  pod 'EthereumKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios/'
-  pod 'Erc20Kit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios/'
+  pod 'EthereumKit.swift'
+  pod 'Erc20Kit.swift'
 
-  pod 'EosKit.swift', git: 'https://github.com/horizontalsystems/eos-kit-ios/'
+  pod 'EosKit.swift'
   pod 'EosioSwift', git: 'https://github.com/horizontalsystems/eosio-swift'
+  pod 'EosioSwiftAbieosSerializationProvider', git: 'https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git'
 
-  pod 'BinanceChainKit.swift', git: 'https://github.com/horizontalsystems/binance-chain-kit-ios'
+  pod 'BinanceChainKit.swift'
 
-  pod 'HSHDWalletKit', git: 'https://github.com/horizontalsystems/hd-wallet-kit-ios'
+  pod 'HSHDWalletKit'
 
   pod 'XRatesKit.swift', git: 'https://github.com/horizontalsystems/xrates-kit-ios'
   pod 'FeeRateKit.swift', git: 'https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios'
