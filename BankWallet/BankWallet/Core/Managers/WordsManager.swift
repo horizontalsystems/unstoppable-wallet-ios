@@ -1,4 +1,4 @@
-import HSHDWalletKit
+import HdWalletKit
 
 class WordsManager {
 }
