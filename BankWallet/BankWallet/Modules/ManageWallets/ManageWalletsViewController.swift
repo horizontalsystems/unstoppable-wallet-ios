@@ -112,7 +112,7 @@ extension ManageWalletsViewController: IManageWalletsView {
 
     func setCloseButton(visible: Bool) {
         if visible {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapCloseButton))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .plain, target: self, action: #selector(onTapCloseButton))
         } else {
             navigationItem.rightBarButtonItem = nil
         }
