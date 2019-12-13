@@ -1,9 +1,6 @@
 "coin.BTC" = "Bitcoin";
 "coin.BCH" = "Bitcoin Cash";
 "coin.ETH" = "Ethereum";
-"coin.BTCt" = "Bitcoin T";
-"coin.BCHt" = "Bitcoin Cash T";
-"coin.ETHt" = "Ethereum T";
 
 "button.ok" = "OK";
 "button.cancel" = "Annuler";
@@ -17,9 +14,11 @@
 "button.paste" = "Coller";
 "button.backup" = "Sauvegarde";
 "button.copy" = "Copier";
+"button.back" = "Retour";
 
 "alert.copied" = "Copié";
 "alert.no_internet" = "Aucune connexion Internet";
+"alert.no_fee" = "Commission incorrecte";
 "alert.network_issue" = "Problèmes réseau. Réessayez";
 "alert.unknown_error" = "Erreur inconnue";
 
@@ -50,19 +49,19 @@
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
-//Coin Sync Modes
+// Coin Settings
 
-"restore_options.title" = "Restaurer les options";
-"restore_options.sync.text" = "Rapide : Restaure vos transactions passées via un serveur tiers sécurisé. Pour les utilisateurs dont les transactions portent sur des sommes importantes, cette méthode peut présenter des risques pour la protection de la confidentialité.\n\nLent : Restaure vos transactions passées directement à partir de la blockchain. Plus privé mais très lent. Si cela prend trop de temps, allez dans Gérer les portefeuilles dans Paramètres, supprimez l'entrée Inéluctable et répétez l'opération avec l'option Rapide.";
-"restore_options.sync.fast" = "Rapide";
-"restore_options.sync.recommended" = "0-2 heures (Recommandé)";
-"restore_options.sync.slow" = "Lente";
-"restore_options.sync.more_private" = "1-12 heures (Plus Privé)";
-"restore_options.derivation.text" = "Sélectionnez la période pendant laquelle vous avez créé le portefeuille pour la première fois dans Unstoppable.";
-"restore_options.derivation.before_update" = "Avant novembre 2019";
-"restore_options.derivation.after_update" = "Après novembre 2019";
-"restore_options.derivation.bip44" = "BIP-44";
-"restore_options.derivation.bip49" = "BIP-49";
+"coin_settings.enable_button" = "Activer";
+"coin_settings.derivation.title" = "Choisir le format de l'adresse";
+"coin_settings.derivation.description_bip44" = "Plus ancient (commence par 1...)";
+"coin_settings.derivation.description_bip49" = "Populaire (commence par 3...)";
+"coin_settings.derivation.description_bip84" = "Plus récent (commence par bc1...)";
+"coin_settings.derivation.description_create" = "Ce paramètre contrôle le format de l'adresse du Bitcoin dans ce portefeuille. Nous recommandons d'utiliser BIP49 en cas de doute.";
+"coin_settings.derivation.description_restore" = "Sélectionnez le format de l'adresse du Bitcoin dans le portefeuille que vous essayez de restaurer.";
+"coin_settings.sync_mode.title" = "Restaurer les paramètres";
+"coin_settings.sync_mode.fast.description" = "0 - 2 heures, recommandé";
+"coin_settings.sync_mode.slow.description" = "1-12 heures";
+"coin_settings.sync_mode.description" = "Sélectionnez la source que Unstoppable doit utiliser pour télécharger votre solde et vos transactions.\n\nHorizontal Systems %@ API :";
 
 // Backup
 
@@ -86,6 +85,7 @@
 "error.send_eos.account_not_exist" = "Ce compte n'existe pas";
 "error.send_eos.insufficient_ram" = "Votre compte EOS ne dispose pas de suffisamment de RAM pour envoyer ce token. Vous devez augmenter la participation RAM pour continuer.";
 "error.send_eos.unknown" = "Quelque chose s'est mal passé: %@";
+"error.send_ethereum.wrong_parameters" = "Paramètres erronés";
 
 "backup.confirmation.title" = "Vérification...";
 
@@ -121,7 +121,7 @@
 "send.amount_placeholder" = "Montant";
 "send.amount_error.min_required_balance" = "Minimum requis %@ restant";
 "send.address_placeholder" = "Adresse";
-"send.account_placeholder" = "Account";
+"send.account_placeholder" = "Compte ";
 "send.fee" = "Frais";
 "send.tx_speed" = "Vitesse de transaction ";
 "send.tx_speed_low" = "Faible";
@@ -163,6 +163,7 @@
 "transactions.empty_text" = "Vous n'avez encore aucune transaction en cours ou passée";
 "transactions.pending" = "En attente";
 "transactions.receiving" = "En réception";
+"transactions.failed" = "Échec";
 "transactions.sending" = "Envoi en cours";
 
 // Transaction Info
@@ -171,13 +172,14 @@
 "tx_info.status" = "Statut";
 "tx_info.status.pending" = "En attente";
 "tx_info.status.confirmed" = "Confirmé";
+"tx_info.status.failed" = "Échec";
 "tx_info.from_hash" = "De";
 "tx_info.transaction_id" = "ID de transaction";
 "tx_info.to_hash" = "À";
 "tx_info.button_verify" = "Vérifiez";
 "tx_info.rate" = "Taux historique";
 "tx_info.fee" = "Frais";
-"tx_info.note" = "La valeur de cette transaction apparaît comme 0 car elle a été envoyée à votre propre adresse";
+"tx_info.to_self_note" = "Cette transaction a été envoyée à votre propre adresse";
 "tx_info.locked_until" = "Verrouillé jusqu'au";
 "tx_info.recipient_hash" = "Destinataire";
 
@@ -256,6 +258,7 @@
 
 "manage_coins.title" = "Portefeuilles";
 "manage_coins.add_coin.title" = "Ajouter %@ ";
+"manage_coins.add_coin.subtitle" = "%@ Portefeuille";
 "manage_coins.add_coin.text" = "Vous n'avez pas de portefeuille pouvant stocker %@ (%@). Vous pouvez générer un nouveau portefeuille avec l'application. Utilisez le bouton Créer ci-dessous pour générer un nouveau portefeuille.\n\nVous pourrez utiliser le nouveau portefeuille pour les pièces suivantes : %@. \n\nVous pouvez également utiliser la clé %@ existante si vous en avez une. Pour cela, utilisez le bouton de restauration.";
 "manage_coins.add_coin.create" = "Créer";
 "manage_coins.add_coin.restore" = "Restaurer";
@@ -317,8 +320,7 @@
 "settings_manage_keys.delete.confirmation_remove" = "Cette action supprimera le portefeuille %@ de cet appareil.";
 "settings_manage_keys.delete.confirmation_disable" = "Coins qui seront désactivées : %@";
 "settings_manage_keys.delete.confirmation_loose" = "Si vous n'avez pas sauvegardé la clé privée de ce portefeuille, vous perdrez l'accès à vos fonds.";
-"error.cant_create_eos" = "À cet étape, le porte-monnaie n'est pas capable de créer de nouveaux comptes de porte-monnaies EOS. Vous n'êtes que capable de restaurer celui existant.";
-"settings_manage_keys.create.text" = "Cette action générera un nouveau portefeuille pour les pièces suivantes: \n%@";
+"error.cant_create_wallet" = "À ce stade, Unstoppable n'est pas en mesure de créer de nouveaux portefeuilles EOS. Vous ne pouvez restaurer que celui déjà existant.";
 "error.invalid_eos_key" = "Clé invalide";
 "error.invalid_eos_account" = "Compte invalide";
 
@@ -371,20 +373,20 @@
 "chart.market_cap.million" = "%@ M";
 "chart.market_cap.billion" = "%@ G";
 "chart.market_cap.trillion" = "%@ T";
-"chart.high" = "Élevée";
-"chart.low" = "Faible";
 "chart.volume" = "Volume";
 "chart.circulation" = "Offre en Circulation	";
 "chart.max_supply" = "Offre totale";
-"chart.total" = "Total";
-"chart.source" = "Source";
 "chart.error.not_available" = "Graphique non disponible";
 
 // Create Wallet
 
 "create_wallet.title" = "Nouveau porte-monnaie";
 "create_wallet.create_button" = "Créer";
-"create_wallet.description" = "Sélectionnez une cryptomonnaie pour commencer. Vous pourrez ajouter d'autres cryptomonnaies plus tard.";
+
+// Select Coins
+
+"select_coins.choose_crypto" = "Nouveau portefeuille";
+"select_coins.next_button" = "Suivant";
 
 "price_notification.up" = "monter";
 "price_notification.down" = "descendre";

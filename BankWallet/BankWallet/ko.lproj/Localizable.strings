@@ -1,9 +1,6 @@
 "coin.BTC" = "Bitcoin";
 "coin.BCH" = "Bitcoin Cash ";
 "coin.ETH" = "Ethereum";
-"coin.BTCt" = "Bitcoin T";
-"coin.BCHt" = "Bitcoin Cash T";
-"coin.ETHt" = "Ethereum T";
 
 "button.ok" = "확인";
 "button.cancel" = "취소";
@@ -17,9 +14,11 @@
 "button.paste" = "불여넣기";
 "button.backup" = "백업";
 "button.copy" = "복사";
+"button.back" = "뒤로";
 
 "alert.copied" = "복사됨";
 "alert.no_internet" = "인터넷에 연결되지 않음";
+"alert.no_fee" = "잘못된 요금";
 "alert.network_issue" = "네트워크에 문제가 있습니다. 잠시 후 다시 시도해 주세요";
 "alert.unknown_error" = "알수없는 오류";
 
@@ -50,19 +49,19 @@
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
-//Coin Sync Modes
+// Coin Settings
 
-"restore_options.title" = "옵션 복구";
-"restore_options.sync.text" = "빠른: 귀하의 과거 거래내역을 보안 암호와 서버를 통해 복원합니다. 많은 양의 거래내역을 가지고 계신 사용자께서는 이 방법은 개인정보보호 침해의 위험을 야기할 수 있습니다.\n\n느린: 블록 체인으로 부터 귀하의 과거 거래내역을 복원합니다. 더 사적이지만 굉장히 느립니다. 만약 너무 느리게 간다면, 설정에서 지갑 관리하기에 가신후, Unstoppable 입장을 삭제하시고 빠른 선택의 과정을 반복 하십시오.";
-"restore_options.sync.fast" = "빠르게";
-"restore_options.sync.recommended" = "0-2시간 (권장)";
-"restore_options.sync.slow" = "느리게";
-"restore_options.sync.more_private" = "1-12시간 (더욱 사적임)";
-"restore_options.derivation.text" = "귀하께서 처음으로 Unstoppable에서 지갑을 생성하셨을 때 시간 주기를 선택 하십시오.";
-"restore_options.derivation.before_update" = "2019년 11월 전에";
-"restore_options.derivation.after_update" = "2019년 11월 후에";
-"restore_options.derivation.bip44" = "BIP-44";
-"restore_options.derivation.bip49" = "BIP-49";
+"coin_settings.enable_button" = "활성화";
+"coin_settings.derivation.title" = "주소 형식을 선택해 주세요";
+"coin_settings.derivation.description_bip44" = "더 오래된 (1부터 시작)";
+"coin_settings.derivation.description_bip49" = "인기있는 (3부터 시작)";
+"coin_settings.derivation.description_bip84" = "최신 (bc1부터 시작)";
+"coin_settings.derivation.description_create" = "이 설정은 지갑에서 비트코인 주소 형식을 통제 합니다. 확실하지 않는 경우에는 BIP49를 사용하시는 것을 추천해드립니다.";
+"coin_settings.derivation.description_restore" = "복원을 하려는 지갑에서 비트코인의 주소 형식을 선택해 주세요.";
+"coin_settings.sync_mode.title" = "매개 변수 복원";
+"coin_settings.sync_mode.fast.description" = "0-2 시간, 권장";
+"coin_settings.sync_mode.slow.description" = "1-12 시간";
+"coin_settings.sync_mode.description" = "언스탑퍼블이 귀하의 잔액 및 거래 내역을 다운로드 하는데 사용하는 소스를 선택해 주세요.\n\n수평 시스템 %@ API:";
 
 // Backup
 
@@ -86,6 +85,7 @@
 "error.send_eos.account_not_exist" = "회원 계정이 존재하지 않습니다";
 "error.send_eos.insufficient_ram" = "귀하의 EOS계정은 이 토큰을 보내기엔 RAM이 충분하지 않습니다. 진행하시려면 RAM량을 늘리셔야 합니다.";
 "error.send_eos.unknown" = "무언가 잘못 됐습니다: %@";
+"error.send_ethereum.wrong_parameters" = "잘못된 매개 변수";
 
 "backup.confirmation.title" = "확인 중...";
 
@@ -121,7 +121,7 @@
 "send.amount_placeholder" = "양";
 "send.amount_error.min_required_balance" = "최소 %@ 만큼의 필요 잔여금";
 "send.address_placeholder" = "주소";
-"send.account_placeholder" = "Account";
+"send.account_placeholder" = "계정";
 "send.fee" = "수수료";
 "send.tx_speed" = "거래 속도";
 "send.tx_speed_low" = "낮음";
@@ -163,6 +163,7 @@
 "transactions.empty_text" = "당신은 아직 보류 중 또는 과거에 완료된 거래가 없습니다";
 "transactions.pending" = "보류 중";
 "transactions.receiving" = "수신 중";
+"transactions.failed" = "실패";
 "transactions.sending" = "전송중";
 
 // Transaction Info
@@ -171,13 +172,14 @@
 "tx_info.status" = "상태";
 "tx_info.status.pending" = "보류 중";
 "tx_info.status.confirmed" = "확인";
+"tx_info.status.failed" = "실패";
 "tx_info.from_hash" = "로 부터";
 "tx_info.transaction_id" = "거래 ID";
 "tx_info.to_hash" = "에게";
 "tx_info.button_verify" = "확인";
 "tx_info.rate" = "과거 환율";
 "tx_info.fee" = "수수료";
-"tx_info.note" = "이 거래의 가치는 귀하의 주소로 전송되었으므로 0으로 나타납니다";
+"tx_info.to_self_note" = "이 거래는 귀하의 주소로 전송이 되었습니다";
 "tx_info.locked_until" = "까지 잠그기";
 "tx_info.recipient_hash" = "수령인";
 
@@ -256,6 +258,7 @@
 
 "manage_coins.title" = "코인 매니저";
 "manage_coins.add_coin.title" = "%@ 추가 ";
+"manage_coins.add_coin.subtitle" = "%@ 지갑";
 "manage_coins.add_coin.text" = "귀하께서는 %@(%@)를 저장할 수 있는 지갑을 가지고 계시지 않습니다. 이 앱은 귀하를 위해 새로운 지갑을 만들어 드릴 수 있습니다. 새로운 지갑을 만들기 위해 밑에있는 생성하기 버튼을 사용하십시오.\n\n귀하께서는 다음 %@에 대한 새로운 지갑을 사용 하실 수 있을 것 입니다.\n\n귀하께서는 또한 기존에 가지고 계셨던%@ 지갑 암호를 사용하실 수 있습니다. 복원하기 버튼을 누르십시오.";
 "manage_coins.add_coin.create" = "만들기";
 "manage_coins.add_coin.restore" = "복구";
@@ -263,14 +266,14 @@
 // Settings -> Experimental Features
 
 "settings.experimental_features.title" = "실험적인";
-"settings.experimental_features.description" = "아래의 특징들은 실험적인 것이므로 주의해서 사용해 주십시오. 저희는 자체 암호화 자금을 쓰면서 이러한 특징들을 실험해보고 있기때문에 모든 경우들이 다 예상대로 작동 한다는 보장을 할 수 없습니다.";
+"settings.experimental_features.description" = "아래 기능은 실험용이므로 사용하실때 주의를 해주시기 바랍니다. 저희 자체 암호와 자금을 사용하여 철저히 실험을 하였지만 모든 경우들에 있어 전부다 예상대로 작동한다고 보장할 수 없습니다.";
 "settings.experimental_features.bitcoin_hodling" = "비트코인 잠그기";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "비트코인 잠그기";
 "settings.bitcoin_hodling.lock_time" = "시간 자물쇠";
-"settings.bitcoin_hodling.description" = "지정일 까지 사용할 수 없는 비트코인을 보낼 수 있게 해드립니다.\n\n이러한 거래의 수령자는 언스토퍼블 지갑을 사용해야 합니다.\n\n언스토퍼블 지갑만이 비트코인 네트워크에서 이러한 거래들을 올바르게 확인 할 수 있고 잠금 기간이 만료된 후에 수령자들이 비트코인을 사용할 수 있게 할 수 있습니다.\n\n귀하께서 호들러 이시면, 이 기능을 쓸 수 있고 이러한 거래를 귀하께 보냄으로써 귀하의 비트코인을 강제적으로 호들링 하게 할 수 있습니다.\n\n실험적인 기능의 한번의 최대 거래 양은 0.5 비트코인으로 제한되있습니다.";
+"settings.bitcoin_hodling.description" = "명시된 날짜까지 사용할수 없는 비트코인을 보낼 수 있습니다.\n\n이러한 거래의 수진자는 비트코인 사용에 대해 언스탑퍼플 지갑 앱 버젼 0.10 또는 더 새로운 BIP44 주소 형식을 사용해야 합니다.\n\n언스탑퍼블 지갑만이 비트코인 네트워크에서 이런 거래들을 올바르게 확인할 수 있고 또 수신자가 잠금 기간 만료 후에도 비트코인을 사용할 수 있게 할 수 있습니다.\n\n귀하께서 호들러 이시면, 이 기능을 사용하여 귀하에게 이러한 거래를 보냄으로써 호들링할 수 있습니다.\n\n실험적인 기능으로 거래당 최대 0.5 BTC로 제한이 되있습니다.";
 
 // Settings -> About
 
@@ -317,8 +320,7 @@
 "settings_manage_keys.delete.confirmation_remove" = "이 행동은 %@ 지갑을 장치에서 삭제합니다.";
 "settings_manage_keys.delete.confirmation_disable" = "비활성화될 코인: %@";
 "settings_manage_keys.delete.confirmation_loose" = "지갑에서 개인 암호를 백업 시키지 않으셨을 경우, 귀하께서는 자금 접근에 제한이 있을 것 입니다.";
-"error.cant_create_eos" = "현재 지갑에서 새 EOS 지갑 계정을 만들 수 없습니다. 기존 파일만 복원할 수 있습니다.";
-"settings_manage_keys.create.text" = "이 행동은 다음 코인에 대한 새로운 지갑을 생성합니다:\n\n%@";
+"error.cant_create_wallet" = "언스탑퍼블은 현재 새로운 EOS 지갑을 만들 수 없습니다. 귀하께서는 기존 항목만 복원이 가능합니다.";
 "error.invalid_eos_key" = "잘못된 암호입니다";
 "error.invalid_eos_account" = "계정이 존재하지 않습니다.";
 
@@ -338,7 +340,7 @@
 // Unlock PIN
 
 "unlock_pin.info" = "비밀번호";
-"unlock_pin.cant_save_pin" = "아야! 우리는 당신의 암호를 저장할 수 없습니다 저희에 게 가능한 빨리 연락 하시기 바랍니다!";
+"unlock_pin.cant_save_pin" = "아야! 저희는 귀하의 비밀번호를 저장할 수 없습니다, 가능한 빨리 연락해 주시기 바랍니다!";
 "unlock_pin.blocked_until" = "~때까지 사용 안 함: %@";
 "rate_list.updated" = "업데이트되었습니다.";
 
@@ -371,20 +373,20 @@
 "chart.market_cap.million" = "%@ 백만";
 "chart.market_cap.billion" = "%@ 십억";
 "chart.market_cap.trillion" = "%@ 조";
-"chart.high" = "높음";
-"chart.low" = "낮음";
 "chart.volume" = "음량";
 "chart.circulation" = "유통";
 "chart.max_supply" = "총 발행량";
-"chart.total" = "합계";
-"chart.source" = "원천, 자료";
 "chart.error.not_available" = "차트 이용불가";
 
 // Create Wallet
 
 "create_wallet.title" = "새 지갑";
 "create_wallet.create_button" = "만들기";
-"create_wallet.description" = "시작하려면 한가지의 가상화폐를 선택하십시오. 귀하께서는 나중에 다른 가상화폐를 추가하실 수 있습니다.";
+
+// Select Coins
+
+"select_coins.choose_crypto" = "암호화를 선택해 주세요";
+"select_coins.next_button" = "다음";
 
 "price_notification.up" = "위로";
 "price_notification.down" = "아래로";
