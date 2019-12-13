@@ -180,7 +180,7 @@
 "tx_info.rate" = "과거 환율";
 "tx_info.fee" = "수수료";
 "tx_info.to_self_note" = "이 거래는 귀하의 주소로 전송이 되었습니다";
-"tx_info.locked_until" = "까지 잠그기";
+"tx_info.locked_until" = "까지 잠그기 %@";
 "tx_info.recipient_hash" = "수령인";
 
 // Full Info
