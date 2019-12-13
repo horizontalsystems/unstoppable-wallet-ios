@@ -1,5 +1,5 @@
 platform :ios, '12'
-use_frameworks!
+use_modular_headers!
 
 inhibit_all_warnings!
 

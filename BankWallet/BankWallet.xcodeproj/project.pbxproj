@@ -976,7 +976,7 @@
 		1A564FD718DF1DD5F82D7B1E /* ManageWalletsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FD2BE42EF4AADB0372C /* ManageWalletsModule.swift */; };
 		1A564FDC737AC99938B7FB25 /* EosBackendError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564827EFE2555CF7DC2A78 /* EosBackendError.swift */; };
 		1A564FEE11A00F6D86B5616D /* ManageWalletsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56471ECC51CB5E5572DBD8 /* ManageWalletsRouter.swift */; };
-		1DAF804348DC57346AD76212 /* Pods_Bank_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002E1CB4E2C578B04D487B78 /* Pods_Bank_Tests.framework */; };
+		240381A8B93D66743CE5CE8F /* libPods-Bank Dev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7963994F4B1524F62927279C /* libPods-Bank Dev.a */; };
 		2FA5D054F6232020989D5D1F /* AccountTypeViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEB366CB0938CD5F07AB /* AccountTypeViewItem.swift */; };
 		2FA5D09868B3EF53D640C1D8 /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DBBCD9A5C60E7AD8E3F8 /* CardCell.swift */; };
 		2FA5D0C24A9235653B9D1AA7 /* AccountTypeViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD3849740D749F93B5BD /* AccountTypeViewItemFactory.swift */; };
@@ -1051,6 +1051,7 @@
 		3AF4739D21D38F380005A458 /* FullTransactionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF4739C21D38F380005A458 /* FullTransactionInfoViewController.swift */; };
 		3AF4739E21D38F380005A458 /* FullTransactionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF4739C21D38F380005A458 /* FullTransactionInfoViewController.swift */; };
 		3AF4739F21D38F380005A458 /* FullTransactionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF4739C21D38F380005A458 /* FullTransactionInfoViewController.swift */; };
+		3B36F44365D89847D9565A7B /* libPods-Bank.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E39A00F2634512ECE6B20B5 /* libPods-Bank.a */; };
 		3C7B908FFAF30C34C67B7142 /* BackupConfirmationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94C6548A52D8576B8138 /* BackupConfirmationInteractor.swift */; };
 		3C7B90996EF221A34CC4E5E0 /* WelcomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B956E27165EB2D682C2D7 /* WelcomeScreenViewController.swift */; };
 		3C7B90BA0514E3C7298B1B86 /* WelcomeScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B95EF8087307F8266483C /* WelcomeScreenRouter.swift */; };
@@ -1072,7 +1073,6 @@
 		3C7B9F0AC922D7433A5F4058 /* WelcomeScreenModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B92FD9F4CEC1CBB31B5A7 /* WelcomeScreenModule.swift */; };
 		3C7B9F2A51BC2B8872C41DD8 /* WelcomeScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B99396FD9BBA3E8E3715F /* WelcomeScreenInteractor.swift */; };
 		3C7B9F51D15FBB02710E5EEB /* WelcomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B956E27165EB2D682C2D7 /* WelcomeScreenViewController.swift */; };
-		4C3FE55AAD8B1B3A2B6C8C1B /* Pods_Bank.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E5FF99B059EDDA0E73B80D6 /* Pods_Bank.framework */; };
 		5002C0962294165700E88585 /* ThreadSafeness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002C0952294165700E88585 /* ThreadSafeness.swift */; };
 		5002C0972294165700E88585 /* ThreadSafeness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002C0952294165700E88585 /* ThreadSafeness.swift */; };
 		5002C0982294165700E88585 /* ThreadSafeness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002C0952294165700E88585 /* ThreadSafeness.swift */; };
@@ -1526,8 +1526,8 @@
 		58AAAFCA4B4DAA062BD93C4F /* LockScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB5515ECA96D506F56C3 /* LockScreenRouter.swift */; };
 		58AAAFEEC27E71FF55CBE115 /* SendConfirmationAmountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAFA9479D63145A24BD9C /* SendConfirmationAmountCell.swift */; };
 		58AAAFF746E489C4419778B3 /* DataProviderSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA68D36E8424BBE757B88 /* DataProviderSettingsPresenter.swift */; };
-		8B08DCF319E030DCE0EA62AD /* Pods_Bank_Dev_T.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15591E054C00F9C8F061008B /* Pods_Bank_Dev_T.framework */; };
-		9BBD70FEB2D3E8D9426E781C /* Pods_Bank_Dev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D4C951B3C0DF0AE0F6EDC6F /* Pods_Bank_Dev.framework */; };
+		689BADA2E1B5AA6D12B470FA /* libPods-Bank Dev T.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91313FFFF6C7224E6A56128F /* libPods-Bank Dev T.a */; };
+		7578E795EA4B20757D34CF23 /* libPods-Bank Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6780B4D9235F52AABA48348 /* libPods-Bank Tests.a */; };
 		D0E2C4DD231E29F3003010C0 /* EosAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E2C4DC231E29F3003010C0 /* EosAction.swift */; };
 		D0E2C4DE231E29F3003010C0 /* EosAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E2C4DC231E29F3003010C0 /* EosAction.swift */; };
 		D0E2C4DF231E29F3003010C0 /* EosAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E2C4DC231E29F3003010C0 /* EosAction.swift */; };
@@ -1889,7 +1889,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		002E1CB4E2C578B04D487B78 /* Pods_Bank_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bank_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		11B35004F40CBF9E8A786786 /* DisclosureCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisclosureCellView.swift; sourceTree = "<group>"; };
 		11B350097B17D90CD768125E /* SendBitcoinInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendBitcoinInteractor.swift; sourceTree = "<group>"; };
 		11B3504AB2C44D79FDB6883B /* CreateWalletModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateWalletModule.swift; sourceTree = "<group>"; };
@@ -2155,7 +2154,6 @@
 		11B35FCB0C9375B426F06D95 /* SendEthereumInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendEthereumInteractor.swift; sourceTree = "<group>"; };
 		11B35FD12A549055D69D3162 /* SingleLineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLineCell.swift; sourceTree = "<group>"; };
 		11B35FD3263E331D704EA771 /* Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signal.swift; sourceTree = "<group>"; };
-		15591E054C00F9C8F061008B /* Pods_Bank_Dev_T.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bank_Dev_T.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		199F954B4256D1DFD73465F3 /* Pods-Bank Dev T.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank Dev T.debug.xcconfig"; path = "Target Support Files/Pods-Bank Dev T/Pods-Bank Dev T.debug.xcconfig"; sourceTree = "<group>"; };
 		1A56404690D0235A5183C12D /* Coin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
 		1A56404C1C16B85434117DB7 /* AppStatusModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStatusModule.swift; sourceTree = "<group>"; };
@@ -2320,7 +2318,6 @@
 		1A564FD2BE42EF4AADB0372C /* ManageWalletsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageWalletsModule.swift; sourceTree = "<group>"; };
 		1A564FE6E6C1D33D793A57FD /* AlertTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertTitleView.swift; sourceTree = "<group>"; };
 		1A564FE8D247C36C2478C6B5 /* TransactionCurrenciesHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCurrenciesHeaderView.swift; sourceTree = "<group>"; };
-		1E5FF99B059EDDA0E73B80D6 /* Pods_Bank.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bank.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E5EF2D9FB41FF086B3953AA /* Pods-Bank.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank.release.xcconfig"; path = "Target Support Files/Pods-Bank/Pods-Bank.release.xcconfig"; sourceTree = "<group>"; };
 		2FA5D02D8F5C2AE32C6FF923 /* KitCleaner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KitCleaner.swift; sourceTree = "<group>"; };
 		2FA5D0D9574C669B3A69F4E9 /* LeftImageCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftImageCellView.swift; sourceTree = "<group>"; };
@@ -2529,9 +2526,12 @@
 		58AAAF5D0242DF2FE5D79926 /* SendAddressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendAddressView.swift; sourceTree = "<group>"; };
 		58AAAFA9479D63145A24BD9C /* SendConfirmationAmountCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendConfirmationAmountCell.swift; sourceTree = "<group>"; };
 		58AAAFB5311E9A9A28C76CAF /* ChartRateTypeItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartRateTypeItem.swift; sourceTree = "<group>"; };
-		7D4C951B3C0DF0AE0F6EDC6F /* Pods_Bank_Dev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bank_Dev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7963994F4B1524F62927279C /* libPods-Bank Dev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Bank Dev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		80CDA83935388AD28C60FDE9 /* Pods-Bank Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank Tests.debug.xcconfig"; path = "Target Support Files/Pods-Bank Tests/Pods-Bank Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		834C0A90F5FAB9FB04DDF395 /* Pods-Bank Dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank Dev.debug.xcconfig"; path = "Target Support Files/Pods-Bank Dev/Pods-Bank Dev.debug.xcconfig"; sourceTree = "<group>"; };
+		91313FFFF6C7224E6A56128F /* libPods-Bank Dev T.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Bank Dev T.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9E39A00F2634512ECE6B20B5 /* libPods-Bank.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Bank.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6780B4D9235F52AABA48348 /* libPods-Bank Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Bank Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACC581D2DD2F43535FA2C718 /* Pods-Bank Dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank Dev.release.xcconfig"; path = "Target Support Files/Pods-Bank Dev/Pods-Bank Dev.release.xcconfig"; sourceTree = "<group>"; };
 		C3B4A52DAB1FE47056A8634B /* Pods-Bank Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank Tests.release.xcconfig"; path = "Target Support Files/Pods-Bank Tests/Pods-Bank Tests.release.xcconfig"; sourceTree = "<group>"; };
 		D0E2C4DC231E29F3003010C0 /* EosAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EosAction.swift; sourceTree = "<group>"; };
@@ -2593,7 +2593,7 @@
 			files = (
 				50AB06AE2158E2EE00A01E4A /* LocalAuthentication.framework in Frameworks */,
 				D3373D9520BEC7B30082BC4A /* AVFoundation.framework in Frameworks */,
-				8B08DCF319E030DCE0EA62AD /* Pods_Bank_Dev_T.framework in Frameworks */,
+				689BADA2E1B5AA6D12B470FA /* libPods-Bank Dev T.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2601,7 +2601,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1DAF804348DC57346AD76212 /* Pods_Bank_Tests.framework in Frameworks */,
+				7578E795EA4B20757D34CF23 /* libPods-Bank Tests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2611,7 +2611,7 @@
 			files = (
 				D38405B8218317DF007D50AD /* LocalAuthentication.framework in Frameworks */,
 				D38405B9218317DF007D50AD /* AVFoundation.framework in Frameworks */,
-				9BBD70FEB2D3E8D9426E781C /* Pods_Bank_Dev.framework in Frameworks */,
+				240381A8B93D66743CE5CE8F /* libPods-Bank Dev.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2621,7 +2621,7 @@
 			files = (
 				D38406A721831B3D007D50AD /* LocalAuthentication.framework in Frameworks */,
 				D38406A821831B3D007D50AD /* AVFoundation.framework in Frameworks */,
-				4C3FE55AAD8B1B3A2B6C8C1B /* Pods_Bank.framework in Frameworks */,
+				3B36F44365D89847D9565A7B /* libPods-Bank.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4141,10 +4141,10 @@
 			children = (
 				50AB06AD2158E2EE00A01E4A /* LocalAuthentication.framework */,
 				D3373D9420BEC7B30082BC4A /* AVFoundation.framework */,
-				1E5FF99B059EDDA0E73B80D6 /* Pods_Bank.framework */,
-				7D4C951B3C0DF0AE0F6EDC6F /* Pods_Bank_Dev.framework */,
-				15591E054C00F9C8F061008B /* Pods_Bank_Dev_T.framework */,
-				002E1CB4E2C578B04D487B78 /* Pods_Bank_Tests.framework */,
+				9E39A00F2634512ECE6B20B5 /* libPods-Bank.a */,
+				7963994F4B1524F62927279C /* libPods-Bank Dev.a */,
+				91313FFFF6C7224E6A56128F /* libPods-Bank Dev T.a */,
+				A6780B4D9235F52AABA48348 /* libPods-Bank Tests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -4304,6 +4304,7 @@
 				D3285F3F20BD158E00644076 /* Frameworks */,
 				D3285F4020BD158E00644076 /* Resources */,
 				E63DBE96B681F4C8ECD5A013 /* [CP] Embed Pods Frameworks */,
+				1D09B56443B6A4E255C3AA49 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -4323,7 +4324,6 @@
 				D3373DBB20C658660082BC4A /* Sources */,
 				D3373DBC20C658660082BC4A /* Frameworks */,
 				D3373DBD20C658660082BC4A /* Resources */,
-				9D9FA6BF7085610C10DB534E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -4344,6 +4344,7 @@
 				D38405B7218317DF007D50AD /* Frameworks */,
 				D38405BB218317DF007D50AD /* Resources */,
 				CF30C9C8FC841D3492BFD232 /* [CP] Embed Pods Frameworks */,
+				4FC7245BB48E1C978DC0B3F6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -4363,6 +4364,7 @@
 				D38406A621831B3D007D50AD /* Frameworks */,
 				D38406AB21831B3D007D50AD /* Resources */,
 				A80CA631A41AC9B79ED1D620 /* [CP] Embed Pods Frameworks */,
+				CC91886EDA8C7EA192059F90 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -4485,6 +4487,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1D09B56443B6A4E255C3AA49 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Bank Dev T/Pods-Bank Dev T-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Bank Dev T/Pods-Bank Dev T-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bank Dev T/Pods-Bank Dev T-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		3836D659925BAB14009755A3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -4529,21 +4548,21 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9D9FA6BF7085610C10DB534E /* [CP] Embed Pods Frameworks */ = {
+		4FC7245BB48E1C978DC0B3F6 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Bank Tests/Pods-Bank Tests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Bank Dev/Pods-Bank Dev-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Bank Tests/Pods-Bank Tests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Bank Dev/Pods-Bank Dev-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bank Tests/Pods-Bank Tests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bank Dev/Pods-Bank Dev-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A16B0AE66FD0F0D083D0FB87 /* [CP] Check Pods Manifest.lock */ = {
@@ -4605,6 +4624,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bank/Pods-Bank-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CC91886EDA8C7EA192059F90 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Bank/Pods-Bank-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Bank/Pods-Bank-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bank/Pods-Bank-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CF30C9C8FC841D3492BFD232 /* [CP] Embed Pods Frameworks */ = {

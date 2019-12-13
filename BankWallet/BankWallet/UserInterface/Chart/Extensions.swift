@@ -1,12 +1,5 @@
 import UIKit
 
-extension UIEdgeInsets {
-
-    var width: CGFloat { return self.left + self.right }
-    var height: CGFloat { return self.top + self.bottom }
-
-}
-
 extension Date {
 
     var startOfHour: Date? {
