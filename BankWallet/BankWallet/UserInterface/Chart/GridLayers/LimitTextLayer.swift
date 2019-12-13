@@ -15,7 +15,7 @@ class LimitTextLayer: CATextLayer {
         let minPointOffsetY = pointConverter.convert(chartPoint: ChartPoint(timestamp: 0, value: chartFrame.minValue),
                 viewBounds: frameBounds, chartFrame: chartFrame, retinaShift: false).y + verticalMargin
 
-        let formatter = ValueScaleHelper.formatter
+        let formatter = configuration.limitTextFormatter ?? ValueScaleHelper.formatter
         formatter.minimumFractionDigits = 0
         formatter.maximumFractionDigits = max(0, chartFrame.scale)
 

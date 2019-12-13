@@ -37,6 +37,7 @@ class ChartConfiguration {
     var limitTextFont: UIFont = .appSubhead1
     var limitTextColor: UIColor = .appLeah
     var limitTextLeftMargin: CGFloat = .margin4x
+    var limitTextFormatter: NumberFormatter?
 
     var selectedCircleRadius: CGFloat = 5.5
     var selectedIndicatorColor: UIColor = .appOz

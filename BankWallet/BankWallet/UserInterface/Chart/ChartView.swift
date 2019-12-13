@@ -28,7 +28,7 @@ class ChartView: UIView {
         timelineHelper = TimelineHelper()
 
         let percentPadding = configuration.showGrid ? 0 : configuration.curvePercentPadding
-        let pixelsMargin = configuration.showLimitValues ? (configuration.limitTextFont.lineHeight + 2 * CGFloat.margin1x) : 0
+        let pixelsMargin = configuration.showLimitValues ? (configuration.limitTextFont.lineHeight + CGFloat.margin1x + CGFloat.margin2x) : 0
         pointConverter = PointConverter(percentPadding: percentPadding, pixelsMargin: pixelsMargin)
 
         curveView = ChartCurveView(configuration: configuration, pointConverter: pointConverter)
