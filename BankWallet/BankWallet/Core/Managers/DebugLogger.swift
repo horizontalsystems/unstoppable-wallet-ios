@@ -1,6 +1,10 @@
+import Foundation
+
 class DebugLogger {
     private let localStorage: ILocalStorage
     private let dateProvider: ICurrentDateProvider
+
+    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.debug_logger", qos: .background)
 
     init(localStorage: ILocalStorage, dateProvider: ICurrentDateProvider) {
         self.localStorage = localStorage
@@ -8,11 +12,13 @@ class DebugLogger {
     }
 
     private func updateLogs(with log: String) {
-        var fullLog = [localStorage.debugLog ?? ""]
-        let datePrefix = DateHelper.instance.formatDebug(date: dateProvider.currentDate)
-        fullLog.append(datePrefix + " : " + log)
+        queue.async {
+            var fullLog = [self.localStorage.debugLog ?? ""]
+            let datePrefix = DateHelper.instance.formatDebug(date: self.dateProvider.currentDate)
+            fullLog.append(datePrefix + " : " + log)
 
-        localStorage.debugLog = fullLog.joined(separator: "|")
+            self.localStorage.debugLog = fullLog.joined(separator: "|")
+        }
     }
 
 }
