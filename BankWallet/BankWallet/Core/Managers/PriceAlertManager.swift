@@ -12,7 +12,7 @@ class PriceAlertManager {
 
         walletManager.walletsUpdatedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .observeOn(MainScheduler.instance)
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .subscribe(onNext: { [weak self] wallets in
                     self?.onUpdate(wallets: wallets)
                 })

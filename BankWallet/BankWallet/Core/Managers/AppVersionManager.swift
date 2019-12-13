@@ -8,11 +8,8 @@ class AppVersionManager {
         self.systemInfoManager = systemInfoManager
         self.localStorage = localStorage
     }
-}
 
-extension AppVersionManager: IAppVersionManager {
-
-    func checkLatestVersion() {
+    private func addLatestVersion() {
         let latestVersion = AppVersion(version: systemInfoManager.appVersion, date: Date())
         var appVersions = localStorage.appVersions
         guard let lastVersion = appVersions.last else {
@@ -23,6 +20,16 @@ extension AppVersionManager: IAppVersionManager {
         if lastVersion.version != latestVersion.version {
             appVersions.append(latestVersion)
             localStorage.appVersions = appVersions
+        }
+    }
+
+}
+
+extension AppVersionManager: IAppVersionManager {
+
+    func checkLatestVersion() {
+        DispatchQueue.global(qos: .background).async {
+            self.addLatestVersion()
         }
     }
 
