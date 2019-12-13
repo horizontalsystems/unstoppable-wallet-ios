@@ -180,7 +180,7 @@
 "tx_info.rate" = "Tasa histórica";
 "tx_info.fee" = "Comisión";
 "tx_info.to_self_note" = "Esta transacción fue enviada a su propia dirección";
-"tx_info.locked_until" = "Bloqueado hasta";
+"tx_info.locked_until" = "Bloqueado hasta %@";
 "tx_info.recipient_hash" = "Destinatario";
 
 // Full Info
