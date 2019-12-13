@@ -15,6 +15,7 @@ class AppManager {
     private let kitCleaner: IKitCleaner
     private let debugBackgroundLogger: IDebugLogger?
     private let appVersionManager: IAppVersionManager
+    private let launchManager: ILaunchManager
 
     private let didBecomeActiveSubject = PublishSubject<()>()
     private let willEnterForegroundSubject = PublishSubject<()>()
@@ -23,7 +24,7 @@ class AppManager {
          passcodeLockManager: IPasscodeLockManager, biometryManager: IBiometryManager, blurManager: IBlurManager,
          notificationManager: INotificationManager, backgroundPriceAlertManager: IBackgroundPriceAlertManager,
          localStorage: ILocalStorage, secureStorage: ISecureStorage, kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
-         appVersionManager: IAppVersionManager
+         appVersionManager: IAppVersionManager, launchManager: ILaunchManager
     ) {
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -39,13 +40,7 @@ class AppManager {
         self.kitCleaner = kitCleaner
         self.debugBackgroundLogger = debugLogger
         self.appVersionManager = appVersionManager
-    }
-
-    private func handleFirstLaunch() {
-        if !localStorage.didLaunchOnce {
-            try? secureStorage.clear()
-            localStorage.didLaunchOnce = true
-        }
+        self.launchManager = launchManager
     }
 
 }
@@ -54,7 +49,7 @@ extension AppManager {
 
     func didFinishLaunching() {
         debugBackgroundLogger?.logFinishLaunching()
-        handleFirstLaunch()
+        launchManager.handleFirstLaunch()
 
         passcodeLockManager.didFinishLaunching()
         accountManager.preloadAccounts()
@@ -103,11 +98,11 @@ extension AppManager {
 extension AppManager: IAppManager {
 
     var didBecomeActiveObservable: Observable<()> {
-        return didBecomeActiveSubject.asObservable()
+        didBecomeActiveSubject.asObservable()
     }
 
     var willEnterForegroundObservable: Observable<()> {
-        return willEnterForegroundSubject.asObservable()
+        willEnterForegroundSubject.asObservable()
     }
 
 }

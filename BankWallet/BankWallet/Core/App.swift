@@ -136,6 +136,8 @@ class App {
 
         coinSettingsManager = CoinSettingsManager()
 
+        let launchManager: ILaunchManager = LaunchManager(localStorage: localStorage, secureStorage: secureStorage)
+
         let kitCleaner = KitCleaner(accountManager: accountManager)
         appManager = AppManager(
                 accountManager: accountManager,
@@ -151,7 +153,8 @@ class App {
                 secureStorage: secureStorage,
                 kitCleaner: kitCleaner,
                 debugLogger: debugLogger,
-                appVersionManager: appVersionManager
+                appVersionManager: appVersionManager,
+                launchManager: launchManager
         )
     }
 
