@@ -180,7 +180,7 @@
 "tx_info.rate" = "Исторический Курс";
 "tx_info.fee" = "Комиссия";
 "tx_info.to_self_note" = "Эта транзакция отправлена на свой адрес";
-"tx_info.locked_until" = "Заблокировано до";
+"tx_info.locked_until" = "Заблокировано до %@";
 "tx_info.recipient_hash" = "Получатель";
 
 // Full Info
