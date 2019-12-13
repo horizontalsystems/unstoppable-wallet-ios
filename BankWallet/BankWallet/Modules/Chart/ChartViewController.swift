@@ -55,7 +55,7 @@ class ChartViewController: WalletActionSheetController {
         model.addItemView(currentRateItem)
         model.addItemView(chartRateTypeItem)
 
-        let chartRateItem = ChartRateItem(tag: 3, chartConfiguration: ChartConfiguration(), indicatorDelegate: self)
+        let chartRateItem = ChartRateItem(tag: 3, chartConfiguration: ChartConfiguration.fullChart(currency: delegate.currency), indicatorDelegate: self)
         self.chartRateItem = chartRateItem
 
         model.addItemView(chartRateItem)

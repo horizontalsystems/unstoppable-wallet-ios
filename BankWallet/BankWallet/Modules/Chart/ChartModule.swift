@@ -21,6 +21,7 @@ protocol IChartView: class {
 
 protocol IChartViewDelegate {
     var coin: Coin { get }
+    var currency: Currency { get }
 
     func viewDidLoad()
 

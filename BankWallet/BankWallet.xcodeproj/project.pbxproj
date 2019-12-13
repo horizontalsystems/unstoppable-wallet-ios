@@ -1130,6 +1130,7 @@
 		58AAA1FCADBF67D0BCD2F7EA /* SendFeeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC59C52CC49964D03D08 /* SendFeeInteractor.swift */; };
 		58AAA2012C93040B2D78BC46 /* FrameGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0A788E7DA20C525AA7C /* FrameGridView.swift */; };
 		58AAA205C9236EDC387A885B /* RateListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA31FF3C379E7AFD16C94 /* RateListViewController.swift */; };
+		58AAA2100166FDFB110FA6D0 /* ChartConfigurationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9D5D29115C5F435CF1B /* ChartConfigurationExtension.swift */; };
 		58AAA2150F02CE149A62F27B /* SendConfirmationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0C4B0224DD8A8A57AD9 /* SendConfirmationModule.swift */; };
 		58AAA22371FA0D34328AA01D /* BackupConfirmationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA46DB06FFD38AD574E4E /* BackupConfirmationController.swift */; };
 		58AAA228E8B8FF2FB92A0429 /* ChartRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5945ADC3279D803E8FC /* ChartRouter.swift */; };
@@ -1166,6 +1167,7 @@
 		58AAA32FD82A1DB3352FA524 /* UnlockMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA05B8CC14764E7FDF106 /* UnlockMode.swift */; };
 		58AAA333A9EA37C6F2BA96FD /* SendFeeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6205C47965E48E4BAC3 /* SendFeeView.swift */; };
 		58AAA33A40BCBC3279C13367 /* DataProviderSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA68D36E8424BBE757B88 /* DataProviderSettingsPresenter.swift */; };
+		58AAA34F0F6195DF86596A41 /* ChartConfigurationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9D5D29115C5F435CF1B /* ChartConfigurationExtension.swift */; };
 		58AAA353E10924254F2B6E58 /* RateListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0AF9C516BDA8CF5C476 /* RateListRouter.swift */; };
 		58AAA3563C2803AD9926A8FB /* ChartModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA744EE8408F5FF940B9A /* ChartModule.swift */; };
 		58AAA360B9A6EF6BCCE0BE52 /* InfoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5B7C08CA010C863F6AA /* InfoRouter.swift */; };
@@ -1398,6 +1400,7 @@
 		58AAAB6C9699F02DC27892FA /* SendConfirmationMemoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5D396A321E46E3A8D99 /* SendConfirmationMemoCell.swift */; };
 		58AAAB8E36AEE5EFB93DE617 /* BackupConfirmationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA2D3E1840EA8931E12D0 /* BackupConfirmationRouter.swift */; };
 		58AAAB92C2ABB375E76223C8 /* AmountInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF4E453A954DBFA84E89 /* AmountInfoView.swift */; };
+		58AAAB97145C7C427DB27067 /* ChartConfigurationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9D5D29115C5F435CF1B /* ChartConfigurationExtension.swift */; };
 		58AAABB4991882979199CA1F /* FullTransactionInfoProviderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA72A3BACDB574838A8CC /* FullTransactionInfoProviderFactory.swift */; };
 		58AAABC32912EA811A6A2D47 /* BackupWordsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA18351C448F8AF3ED17C /* BackupWordsRouter.swift */; };
 		58AAABC88FD6E1B12EEE16C7 /* SendButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8DE852A97AD326B68E0 /* SendButtonCell.swift */; };
@@ -2481,6 +2484,7 @@
 		58AAA983616E7156D55B8CDB /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		58AAA99E9AFCD09F3332C556 /* PointConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointConverter.swift; sourceTree = "<group>"; };
 		58AAA9BCCC35CC3B5CA58BB7 /* RateListInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateListInteractor.swift; sourceTree = "<group>"; };
+		58AAA9D5D29115C5F435CF1B /* ChartConfigurationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartConfigurationExtension.swift; sourceTree = "<group>"; };
 		58AAA9E43BB1F4A9472DFED4 /* SendConfirmationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendConfirmationViewController.swift; sourceTree = "<group>"; };
 		58AAAA6EA2DAD95D2CB417FD /* DebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugViewController.swift; sourceTree = "<group>"; };
 		58AAAAA2E81C192F6356ADCD /* CurrencyCompactFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyCompactFormatter.swift; sourceTree = "<group>"; };
@@ -2808,6 +2812,7 @@
 				11B3570D7EEAB2DE4E6A5D74 /* UIImageView.swift */,
 				2FA5D6E7A21AAD357C6D8EEA /* TimeInterval.swift */,
 				1A56447C12D91108517ED217 /* UIDevice.swift */,
+				58AAA9D5D29115C5F435CF1B /* ChartConfigurationExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -5314,6 +5319,7 @@
 				58AAA14D6B3981C235D3888E /* FrameGridView.swift in Sources */,
 				11B351F76680187F1BC4D971 /* CoinSettingsHeaderFooterView.swift in Sources */,
 				11B3532DF70E6694DA2C66DE /* LaunchManager.swift in Sources */,
+				58AAAB97145C7C427DB27067 /* ChartConfigurationExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5967,6 +5973,7 @@
 				58AAA01CB6DD49269F558A36 /* FrameGridView.swift in Sources */,
 				11B35A0E1C299136E5508F9A /* CoinSettingsHeaderFooterView.swift in Sources */,
 				11B3563AADFECF1F34487D84 /* LaunchManager.swift in Sources */,
+				58AAA34F0F6195DF86596A41 /* ChartConfigurationExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6572,6 +6579,7 @@
 				58AAA2012C93040B2D78BC46 /* FrameGridView.swift in Sources */,
 				11B35B26DBE29F89D266FC16 /* CoinSettingsHeaderFooterView.swift in Sources */,
 				11B351FAB5DC10A5A8CA17A4 /* LaunchManager.swift in Sources */,
+				58AAA2100166FDFB110FA6D0 /* ChartConfigurationExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

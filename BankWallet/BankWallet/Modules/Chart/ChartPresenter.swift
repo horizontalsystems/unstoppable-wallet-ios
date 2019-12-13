@@ -6,12 +6,12 @@ class ChartPresenter {
 
     private var interactor: IChartInteractor
     private let factory: IChartRateFactory
-    private let currency: Currency
 
     private var chartInfo: ChartInfo?
     private var marketInfo: MarketInfo?
 
     let coin: Coin
+    let currency: Currency
 
     private var chartType: ChartType
 
