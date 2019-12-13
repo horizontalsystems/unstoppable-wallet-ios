@@ -269,7 +269,7 @@ CHECKOUT OPTIONS:
     :commit: cbc81420564b9687794ba488bbf49acc134ed624
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
   HUD.swift:
-    :commit: 22d90aa409044e4ee82e4fcc3ec5a89e7066bf93
+    :commit: e60fb1d2d8e4fb29d4c4be887862a8a33892eeba
     :git: https://github.com/horizontalsystems/gui-kit
   SectionsTableView.swift:
     :commit: 22d90aa409044e4ee82e4fcc3ec5a89e7066bf93
@@ -307,7 +307,7 @@ SPEC CHECKSUMS:
   GRKOpenSSLFramework: 4abc733a8fcbc37060619a86a54202d2938dd70e
   Hodler.swift: e2b47048111311a49c28f76442f2e01b32fdeee1
   HSHDWalletKit: 32f4be6c71cd986dcbdcd057d224638d0ff80445
-  HUD.swift: 006cc6e105bce8050c3c3f44d9111474c5c26c35
+  HUD.swift: 707b7fff9f85e6dc1b35d8158b8bfe233d023264
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
   Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
@@ -328,6 +328,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: e17a410299b48deede78ae15a893b0467343a348
 
-PODFILE CHECKSUM: 19157045ffd817b509d90ed7c620cfa816d72002
+PODFILE CHECKSUM: e6fc271c780ae1eddce034f930f3eba15c9aacc7
 
 COCOAPODS: 1.8.4
