@@ -15,12 +15,11 @@ def appPods
   pod 'Erc20Kit.swift'
 
   pod 'EosKit.swift'
-  pod 'EosioSwift', git: 'https://github.com/horizontalsystems/eosio-swift'
   pod 'EosioSwiftAbieosSerializationProvider', git: 'https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git'
 
   pod 'BinanceChainKit.swift'
 
-  pod 'HSHDWalletKit'
+  pod 'HdWalletKit.swift'
 
   pod 'XRatesKit.swift', git: 'https://github.com/horizontalsystems/xrates-kit-ios'
   pod 'FeeRateKit.swift', git: 'https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios'

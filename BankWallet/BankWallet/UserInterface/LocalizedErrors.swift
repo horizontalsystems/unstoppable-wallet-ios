@@ -5,7 +5,7 @@ import FeeRateKit
 import EosKit
 import Erc20Kit
 import EthereumKit
-import HSHDWalletKit
+import HdWalletKit
 import Hodler
 
 extension WordsValidator.ValidationError: LocalizedError {
