@@ -1,9 +1,6 @@
 "coin.BTC" = "Bitcoin";
 "coin.BCH" = "Bitcoin Cash";
 "coin.ETH" = "Ethereum";
-"coin.BTCt" = "Bitcoin T";
-"coin.BCHt" = "Bitcoin Cash Т";
-"coin.ETHt" = "Ethereum Т";
 
 "button.ok" = "OK";
 "button.cancel" = "Отменить";
@@ -21,7 +18,7 @@
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет интернета";
-"alert.no_fee" = "Wrong Fee";
+"alert.no_fee" = "Неправильная комиссия";
 "alert.network_issue" = "Проблемы с сетью. Попробуйте еще раз ";
 "alert.unknown_error" = "Неизвестная Ошибка";
 
@@ -54,17 +51,17 @@
 
 // Coin Settings
 
-"coin_settings.enable_button" = "Enable";
-"coin_settings.derivation.title" = "Choose Address Format";
-"coin_settings.derivation.description_bip44" = "Older. Addresses start with 1...";
-"coin_settings.derivation.description_bip49" = "Popular. Addresses start with 3...";
-"coin_settings.derivation.description_bip84" = "Newest. Addresses start with bc1...";
-"coin_settings.derivation.description_create" = "This setting controls the address format for the Bitcoin in this wallet. We recommend using BIP49 if not sure.";
-"coin_settings.derivation.description_restore" = "Select the address format for the Bitcoin in the wallet you're trying to restore.";
-"coin_settings.sync_mode.title" = "Restore Parameters";
-"coin_settings.sync_mode.fast.description" = "0-2 hours, Recommended";
-"coin_settings.sync_mode.slow.description" = "1-12 hours";
-"coin_settings.sync_mode.description" = "Select the source the Unstoppable should use to download your balance and transactions.\n\nHorizontal Systems %@ API:";
+"coin_settings.enable_button" = "Активировать";
+"coin_settings.derivation.title" = "Выберите формат адреса";
+"coin_settings.derivation.description_bip44" = "Старые (начинается с 1...)";
+"coin_settings.derivation.description_bip49" = "Популярные (начинается с 3...)";
+"coin_settings.derivation.description_bip84" = "Новый (начинается с bc1...)";
+"coin_settings.derivation.description_create" = "Этот параметр определяет формат адреса Bitcoin кошелька. Мы рекомендуем использовать BIP49.";
+"coin_settings.derivation.description_restore" = "Выберите формат адреса для Bitcoin кошелька, который вы пытаетесь восстановить.";
+"coin_settings.sync_mode.title" = "Опции восстановления";
+"coin_settings.sync_mode.fast.description" = "0-2 ч, Рекомендуется";
+"coin_settings.sync_mode.slow.description" = "1-12 часов";
+"coin_settings.sync_mode.description" = "Выберите, какой источник нужно использовать для загрузки вашего баланса и транзакций.\n \nHorizontal Systems %@ API:";
 
 // Backup
 
@@ -88,7 +85,7 @@
 "error.send_eos.account_not_exist" = "Этот аккаунт не существует";
 "error.send_eos.insufficient_ram" = "У вашего аккаунта EOS недостаточно оперативной памяти для отправки этого токена. Для продолжения необходимо увеличить ставку RAM.";
 "error.send_eos.unknown" = "Что-то пошло не так: %@ ";
-"error.send_ethereum.wrong_parameters" = "Wrong parameters";
+"error.send_ethereum.wrong_parameters" = "Неверные параметры";
 
 "backup.confirmation.title" = "Проверка...";
 
@@ -154,24 +151,8 @@
 "send.amount_error.balance" = "Баланс %@";
 "send.amount_error.maximum_amount" = "Макс. сумма %@";
 "send.amount_error.minimum_amount" = "Мин. сумма %@";
-"send.amount_error.min_required_balance" = "Min. required remainder %@";
-"send.token.insufficient_fee_alert" = "Комиссия за отправку %@ (%@) взымается в %@. Необходимо %@.";
-
-"fee_error.invalid_url" = "Fee rate URL is invalid";
-"fee_error.mapping_error" = "Fee response can not be mapped";
-"fee_error.no_connection" = "Fee module has no access to network";
-"fee_error.server_error" = "Fee server responded with error: %@";
-
-"erc20_error.invalid_address" = "ERC20 address error invalid";
-"erc20_error.invalid_contract_address" = "ERC20 contract address invalid";
-"erc20_error.invalid_value" = "ERC20 value invalid";
-
-"ethereum_error.invalid_data" = "Infura response can not be mapped";
-
-"ethereum_error.invalid_url" = "Ethereum invalid url";
-"ethereum_error.mapping_error" = "Ethereum response can not be mapped";
-"ethereum_error.no_connection" = "Ethereum has no connection";
-"ethereum_error.server_error" = "Ethereum server responded with error: %@";
+"send.amount_error.min_required_balance" = "Мин. обязательный остаток %@";
+"send.token.insufficient_fee_alert" = "Комиссия за отправку %@ (%@) взимается в %@. Необходимо %@.";
 
 "send.lock_time" = "TimeLock";
 // Transactions
@@ -182,7 +163,7 @@
 "transactions.empty_text" = "У Вас ещё нет ожидаемых или прошлых транзакций ";
 "transactions.pending" = "В процессе";
 "transactions.receiving" = "Получение";
-"transactions.failed" = "Failed";
+"transactions.failed" = "Не удалось";
 "transactions.sending" = "Отправка";
 
 // Transaction Info
@@ -191,14 +172,14 @@
 "tx_info.status" = "Статус";
 "tx_info.status.pending" = "В процессе";
 "tx_info.status.confirmed" = "Подтверждено";
-"tx_info.status.failed" = "Failed";
+"tx_info.status.failed" = "Не удалось";
 "tx_info.from_hash" = "От";
 "tx_info.transaction_id" = "ID Транзакции";
 "tx_info.to_hash" = "Кому";
 "tx_info.button_verify" = "Проверить";
 "tx_info.rate" = "Исторический Курс";
 "tx_info.fee" = "Комиссия";
-"tx_info.to_self_note" = "This transaction was sent to your own address";
+"tx_info.to_self_note" = "Эта транзакция отправлена на свой адрес";
 "tx_info.locked_until" = "Заблокировано до";
 "tx_info.recipient_hash" = "Получатель";
 
@@ -277,7 +258,7 @@
 
 "manage_coins.title" = "Токены";
 "manage_coins.add_coin.title" = "Добавить %@";
-"manage_coins.add_coin.subtitle" = "%@ Wallet";
+"manage_coins.add_coin.subtitle" = "%@ Кошелек";
 "manage_coins.add_coin.text" = "У вас нет кошелька, который может хранить %@ (%@). Приложение может создать для вас новый кошелек. Используйте кнопку \"Создать\" ниже, чтобы создать новый кошелек.\n\nВы сможете использовать новый кошелек для следующих монет: %@.\n\nВы также можете использовать существующий ключ кошелька %@ , если он у вас есть. Используйте кнопку \"Восстановить\" для этого.";
 "manage_coins.add_coin.create" = "Создать";
 "manage_coins.add_coin.restore" = "Восстановить";
@@ -339,7 +320,7 @@
 "settings_manage_keys.delete.confirmation_remove" = "Это действие удалит ваш %@ Кошелек с этого устройства.";
 "settings_manage_keys.delete.confirmation_disable" = "Монеты, которые будут отключены: %@";
 "settings_manage_keys.delete.confirmation_loose" = "Если вы не сделали резервную копию приватного ключа для этого кошелька, вы потеряете доступ к вашим средствам.";
-"error.cant_create_wallet" = "At this point Unstoppable is not able to create new EOS wallets. You’re only able to restore the existing one.";
+"error.cant_create_wallet" = "В данный момент кошелек не может создать новые учетные записи EOS. Вы можете восстановить только существующий.";
 "error.invalid_eos_key" = "Неверный Ключ";
 "error.invalid_eos_account" = "Неверный Аккаунт";
 
@@ -392,13 +373,9 @@
 "chart.market_cap.million" = "%@ млн.";
 "chart.market_cap.billion" = "%@ млр.";
 "chart.market_cap.trillion" = "%@ трил.";
-"chart.high" = "%@ Макс.";
-"chart.low" = "%@ Мин.";
 "chart.volume" = "Объём";
 "chart.circulation" = "Выпущено";
 "chart.max_supply" = "Макс.выпуск";
-"chart.total" = "Итого";
-"chart.source" = "Источник";
 "chart.error.not_available" = "График недоступен";
 
 // Create Wallet
@@ -408,8 +385,8 @@
 
 // Select Coins
 
-"select_coins.choose_crypto" = "Choose Crypto";
-"select_coins.next_button" = "Next";
+"select_coins.choose_crypto" = "Выберите Валюту";
+"select_coins.next_button" = "Далее";
 
 "price_notification.up" = "вверх";
 "price_notification.down" = "вниз";
