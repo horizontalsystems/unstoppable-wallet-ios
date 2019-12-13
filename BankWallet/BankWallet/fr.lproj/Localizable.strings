@@ -180,7 +180,7 @@
 "tx_info.rate" = "Taux historique";
 "tx_info.fee" = "Frais";
 "tx_info.to_self_note" = "Cette transaction a été envoyée à votre propre adresse";
-"tx_info.locked_until" = "Verrouillé jusqu'au";
+"tx_info.locked_until" = "Verrouillé jusqu'au %@";
 "tx_info.recipient_hash" = "Destinataire";
 
 // Full Info
