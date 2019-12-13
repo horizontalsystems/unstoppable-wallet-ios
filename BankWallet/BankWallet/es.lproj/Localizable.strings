@@ -1,9 +1,6 @@
 "coin.BTC" = "Bitcoin";
-"coin.BCH" = "Bitcoin Cash";
+"coin.BCH" = "Efectivo Bitcoin";
 "coin.ETH" = "Ethereum";
-"coin.BTCt" = "Bitcoin T";
-"coin.BCHt" = "Bitcoin Cash T";
-"coin.ETHt" = "Ethereum T";
 
 "button.ok" = "Aceptar";
 "button.cancel" = "Cancelar";
@@ -17,11 +14,11 @@
 "button.paste" = "Pegar";
 "button.backup" = "Copia de seguridad";
 "button.copy" = "Copiar";
-"button.back" = "Back";
+"button.back" = "Atrás";
 
 "alert.copied" = "Copiado";
 "alert.no_internet" = "Sin conexión a Internet";
-"alert.no_fee" = "Wrong Fee";
+"alert.no_fee" = "Tarifa incorrecta";
 "alert.network_issue" = "Problemas de red. Inténtelo de nuevo";
 "alert.unknown_error" = "Error desconocido";
 
@@ -54,17 +51,17 @@
 
 // Coin Settings
 
-"coin_settings.enable_button" = "Enable";
-"coin_settings.derivation.title" = "Choose Address Format";
-"coin_settings.derivation.description_bip44" = "Older. Addresses start with 1...";
-"coin_settings.derivation.description_bip49" = "Popular. Addresses start with 3...";
-"coin_settings.derivation.description_bip84" = "Newest. Addresses start with bc1...";
-"coin_settings.derivation.description_create" = "This setting controls the address format for the Bitcoin in this wallet. We recommend using BIP49 if not sure.";
-"coin_settings.derivation.description_restore" = "Select the address format for the Bitcoin in the wallet you're trying to restore.";
-"coin_settings.sync_mode.title" = "Restore Parameters";
-"coin_settings.sync_mode.fast.description" = "0-2 hours, Recommended";
-"coin_settings.sync_mode.slow.description" = "1-12 hours";
-"coin_settings.sync_mode.description" = "Select the source the Unstoppable should use to download your balance and transactions.\n\nHorizontal Systems %@ API:";
+"coin_settings.enable_button" = "Habilitar";
+"coin_settings.derivation.title" = "Elija un formato de dirección";
+"coin_settings.derivation.description_bip44" = "Más antiguo (comenzar con 1...)";
+"coin_settings.derivation.description_bip49" = "Popular (comenzar con 3...)";
+"coin_settings.derivation.description_bip84" = "Más nuevo (comenzar con bc1...)";
+"coin_settings.derivation.description_create" = "Esta configuración controla el formato de la dirección para este monedero de Bitcoin. Recomendamos usar BIP49 si no está seguro.";
+"coin_settings.derivation.description_restore" = "Seleccione el formato de dirección para el Bitcoin en el monedero que intenta restaurar.";
+"coin_settings.sync_mode.title" = "Restaurar los parámetros";
+"coin_settings.sync_mode.fast.description" = "0-2 horas, Recomendado";
+"coin_settings.sync_mode.slow.description" = "1-12 horas";
+"coin_settings.sync_mode.description" = "Selecciones la fuente que Unstoppable debe usar para descargar su saldo y transacciones.\n\nSistemas horizontales %@ API:";
 
 // Backup
 
@@ -88,7 +85,7 @@
 "error.send_eos.account_not_exist" = "La cuenta de destino no existe";
 "error.send_eos.insufficient_ram" = "Su cuenta EOS no tiene suficiente memoria RAM para enviar este token. Necesita aumentar la capacidad RAM para continuar.";
 "error.send_eos.unknown" = "Algo ha fallado: %@";
-"error.send_ethereum.wrong_parameters" = "Wrong parameters";
+"error.send_ethereum.wrong_parameters" = "Parámetros incorrectos";
 
 "backup.confirmation.title" = "Comprobar";
 
@@ -124,7 +121,7 @@
 "send.amount_placeholder" = "Importe";
 "send.amount_error.min_required_balance" = "Min. requerido restante %@";
 "send.address_placeholder" = "Dirección";
-"send.account_placeholder" = "Account";
+"send.account_placeholder" = "Cuenta";
 "send.fee" = "Comisión";
 "send.tx_speed" = "Velocidad de transacción";
 "send.tx_speed_low" = "Bajo";
@@ -154,24 +151,8 @@
 "send.amount_error.balance" = "Saldo %@";
 "send.amount_error.maximum_amount" = "Monto máximo %@";
 "send.amount_error.minimum_amount" = "Monto mínimo %@";
-"send.amount_error.min_required_balance" = "Min. required remainder %@";
+"send.amount_error.min_required_balance" = "Min. requerido restante %@";
 "send.token.insufficient_fee_alert" = "Las comisiones de transacción para %@ (%@) pagado en %@. Es necesario %@.";
-
-"fee_error.invalid_url" = "Fee rate URL is invalid";
-"fee_error.mapping_error" = "Fee response can not be mapped";
-"fee_error.no_connection" = "Fee module has no access to network";
-"fee_error.server_error" = "Fee server responded with error: %@";
-
-"erc20_error.invalid_address" = "ERC20 address error invalid";
-"erc20_error.invalid_contract_address" = "ERC20 contract address invalid";
-"erc20_error.invalid_value" = "ERC20 value invalid";
-
-"ethereum_error.invalid_data" = "Infura response can not be mapped";
-
-"ethereum_error.invalid_url" = "Ethereum invalid url";
-"ethereum_error.mapping_error" = "Ethereum response can not be mapped";
-"ethereum_error.no_connection" = "Ethereum has no connection";
-"ethereum_error.server_error" = "Ethereum server responded with error: %@";
 
 "send.lock_time" = "TimeLock";
 // Transactions
@@ -182,7 +163,7 @@
 "transactions.empty_text" = "Todavía no tienes transacciones pendientes o pasadas";
 "transactions.pending" = "Pendiente";
 "transactions.receiving" = "Recibiendo";
-"transactions.failed" = "Failed";
+"transactions.failed" = "Falla";
 "transactions.sending" = "Enviando";
 
 // Transaction Info
@@ -191,14 +172,14 @@
 "tx_info.status" = "Estado";
 "tx_info.status.pending" = "Pendiente";
 "tx_info.status.confirmed" = "Confirmado";
-"tx_info.status.failed" = "Failed";
+"tx_info.status.failed" = "Falla";
 "tx_info.from_hash" = "Desde ";
 "tx_info.transaction_id" = "Identificación de la transacción";
 "tx_info.to_hash" = "Para";
 "tx_info.button_verify" = "Verificar";
 "tx_info.rate" = "Tasa histórica";
 "tx_info.fee" = "Comisión";
-"tx_info.to_self_note" = "This transaction was sent to your own address";
+"tx_info.to_self_note" = "Esta transacción fue enviada a su propia dirección";
 "tx_info.locked_until" = "Bloqueado hasta";
 "tx_info.recipient_hash" = "Destinatario";
 
@@ -277,7 +258,7 @@
 
 "manage_coins.title" = "Gestor de monedas";
 "manage_coins.add_coin.title" = "Añadir %@ ";
-"manage_coins.add_coin.subtitle" = "%@ Wallet";
+"manage_coins.add_coin.subtitle" = "%@ Monedero";
 "manage_coins.add_coin.text" = "Usted no tiene un monedero que pueda restaurar %@(%@). La aplicación puede generar un nuevo monedero para usted. Use el botón de crear, que se encuentra abajo, para generar un nuevo monedero.\n\nPodrá usar el nuevo monedero para las siguientes monedas: %@.\n\nUsted también piede utilizar el la clave existente del monedero %@ si ya tiene uno. Use el botón restaurar para hacerlo.";
 "manage_coins.add_coin.create" = "Crear";
 "manage_coins.add_coin.restore" = "Restaurar";
@@ -339,7 +320,7 @@
 "settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará los monederos %@ de este dispositivo.";
 "settings_manage_keys.delete.confirmation_disable" = "Monedas que serán deshabilitadas: %@";
 "settings_manage_keys.delete.confirmation_loose" = "Si usted no respaldó la clave privada para este monedero, perderá el acceso a sus fondos.";
-"error.cant_create_wallet" = "At this point Unstoppable is not able to create new EOS wallets. You’re only able to restore the existing one.";
+"error.cant_create_wallet" = "En este momento Unstoppable no es capaz de crear nuevas cuentas de monederos EOS. Solo puede restaurar la existente.";
 "error.invalid_eos_key" = "Clave inválida";
 "error.invalid_eos_account" = "Cuenta inválida";
 
@@ -392,13 +373,9 @@
 "chart.market_cap.million" = "%@ M";
 "chart.market_cap.billion" = "%@ B";
 "chart.market_cap.trillion" = "%@ T";
-"chart.high" = "Alto";
-"chart.low" = "Bajo";
 "chart.volume" = "Volumen";
 "chart.circulation" = "En circulación";
 "chart.max_supply" = "Suministro total";
-"chart.total" = "Total";
-"chart.source" = "Origen";
 "chart.error.not_available" = "Gráfico no disponible";
 
 // Create Wallet
@@ -408,8 +385,8 @@
 
 // Select Coins
 
-"select_coins.choose_crypto" = "Choose Crypto";
-"select_coins.next_button" = "Next";
+"select_coins.choose_crypto" = "Elegir Cripto";
+"select_coins.next_button" = "Siguiente";
 
 "price_notification.up" = "arriba";
 "price_notification.down" = "abajo";
