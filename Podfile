@@ -21,30 +21,27 @@ def appPods
 
   pod 'HdWalletKit.swift'
 
-  pod 'XRatesKit.swift', git: 'https://github.com/horizontalsystems/xrates-kit-ios'
-  pod 'FeeRateKit.swift', git: 'https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios'
+  pod 'XRatesKit.swift'
+  pod 'FeeRateKit.swift'
+
+  pod 'UIExtensions.swift'
+  pod 'ActionSheet.swift'
+  pod 'HUD.swift'
+  pod 'SectionsTableView.swift'
 
   pod 'Alamofire'
   pod 'AlamofireImage'
   pod 'ObjectMapper'
 
-  pod 'RxSwift'
-
-  pod 'BigInt'
-
-  pod 'UIExtensions.swift', git: 'https://github.com/horizontalsystems/gui-kit'
-  pod 'ActionSheet.swift', git: 'https://github.com/horizontalsystems/gui-kit'
-  pod 'HUD.swift', git: 'https://github.com/horizontalsystems/gui-kit'
-  pod 'SectionsTableView.swift', git: 'https://github.com/horizontalsystems/gui-kit'
-
-  pod 'KeychainAccess'
-
-  pod 'RxCocoa'
-  pod 'SnapKit'
-
   pod 'GRDB.swift'
+
+  pod 'RxSwift'
+  pod 'RxCocoa'
   pod 'RxGRDB'
 
+  pod 'BigInt'
+  pod 'KeychainAccess'
+  pod 'SnapKit'
   pod 'DeepDiff'
 end
 
