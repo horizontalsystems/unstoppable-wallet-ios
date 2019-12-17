@@ -19,7 +19,7 @@
 "alert.copied" = "Kopiert";
 "alert.no_internet" = "Kein Internet";
 "alert.no_fee" = "Falsche Gebühr";
-"alert.network_issue" = "Netzwerkprobleme. Bitte noch einmal versuchen.";
+"alert.network_issue" = "Es sind Netzwerkprobleme aufgetreten. Bitte versuchen Sie es erneut.";
 "alert.unknown_error" = "Unbekannter Fehler";
 
 "n/a" = "N/A";
@@ -28,7 +28,7 @@
 
 // Access Camera
 
-"access_camera.message" = "Wir brauchen Zugriff auf deine Kamera um QR-code scannen.\nRufe die Einstellungen auf, um den Zugriff auf die Kamera zu erlauben";
+"access_camera.message" = "Unstoppable muss Zugriff auf Ihre Kamera haben, um den QR-Code zu scannen.\n\nGehen Sie auf „Einstellungen“, dann auf „Unstoppable“ und erlauben Sie dort den Zugriff auf die Kamera.";
 "access_camera.settings" = "Einstellungen";
 
 // Welcome
@@ -42,9 +42,9 @@
 "restore.title" = "Wiederherstellen aus";
 "restore.enter_key" = "Schlüssel Eingeben";
 "restore.item_title" = "%@ Wallet";
-"restore.description" = "Um ein bestehendes Wallet wiederherzustellen, müssen Sie einen geheimen Schlüssel für das Wallet eingeben. \n\nSobald Sie ein Wallet wiederhergestellt haben, können Sie andere Wallete über den Abschnitt Wallet Manager in den Sicherheitseinstellungen der App wiederherstellen.";
-"restore.words.description" = "Geben Sie Ihren privaten Schlüssel für %@ Wallet ein, der aus %@ Wörtern besteht. Die Wörter müssen in korrekter Reihenfolge eingegeben und durch Leerzeichen getrennt werden.";
-"restore.eos.description" = "Geben Sie Ihren privaten Schlüsel für das %@ Wallet ein.";
+"restore.description" = "Wählen Sie ein Wallet, das Sie wiederherstellen möchten. Sie benötigen dazu einen Private Key für das Wallet.";
+"restore.words.description" = "Geben Sie Ihren Private Key für %@ Wallet ein, der aus %@ Wörtern besteht. Die Wörter müssen in der korrekten Reihenfolge eingegeben und durch Leerzeichen getrennt werden.";
+"restore.eos.description" = "Geben Sie Ihren Private Key für das %@ Wallet ein.";
 "restore.validation_failed" = "Falscher Schlüssel";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
@@ -80,10 +80,10 @@
 
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
-"backup.eos.hint" = "Den Schlüssel mit \"Kopieren\" zu kopieren, ist riskant, da Sie womöglich Zwischenablage-Management-Apps oder andere Apps nutzen, die Zugriff auf die Daten in der Zwischenablage haben.";
+"backup.eos.hint" = "Den Key einfach mit „Kopieren“ zu kopieren, ist riskant, da Sie womöglich Zwischenablage-Management-Apps oder andere Apps nutzen, die Zugriff auf die Daten in der Zwischenablage haben. Ein Hacker könnte so heimlich auf Ihre Zwischenablage zugreifen und Ihre Coins stehlen. Das gilt es natürlich zu vermeiden.";
 "error.send_eos.self_transfer" = "Token kann nicht auf das eigene Konto übertragen werden";
-"error.send_eos.account_not_exist" = "Der Zielkonto existiert nicht";
-"error.send_eos.insufficient_ram" = "Ihr EOS-Konto hat nicht genügend RAM, um diesen Token zu senden. Sie müssen den RAM-Anteil erhöhen, um fortzufahren.";
+"error.send_eos.account_not_exist" = "Das Zielkonto existiert nicht";
+"error.send_eos.insufficient_ram" = "Ihr EOS-Konto hat nicht genügend RAM, um dieses Token zu senden. Um fortfahren zu können, müssen Sie den RAM-Stake erhöhen.";
 "error.send_eos.unknown" = "Etwas ist schief gelaufen: %@";
 "error.send_ethereum.wrong_parameters" = "Falsche Parameter";
 
@@ -113,7 +113,7 @@
 "deposit.receive_coin" = "%@ Anfordern ";
 "deposit.your_address" = "Deine Adresse";
 "deposit.your_account" = "Dein Konto";
-"receive_alert.not_backed_up_description" = "Sie müssen das %@ Wallet sichern, bevor Sie %@ erhalten können.";
+"receive_alert.not_backed_up_description" = "Sie müssen das %@ Wallet sichern, bevor Sie %@ empfangen können.";
 
 // Send
 
@@ -240,10 +240,10 @@
 // Settings -> Notifications
 
 "settings_notifications.title" = "Benachrichtigungen";
-"settings_notifications.description" = "Legen Sie einen Preisänderungsalarm für die Coins fest, die Sie beobachten möchten.\nSie werden benachrichtigt, wenn die Preisänderung in den letzten 24 die gewählte Grenze übersteigt.";
+"settings_notifications.description" = "Legen Sie einen Preisänderungsalarm für die Coins fest, die Sie beobachten möchten.\n\nSie werden benachrichtigt, wenn die Preisänderung in den letzten 24 Stunden die von Ihnen festgesetzte Grenze übersteigt.";
 "settings_notifications.alert_off" = "Aus";
 "settings.notifications.deactivate_all" = "Alle deaktivieren";
-"settings.notifications.disabled_text" = "Die Benachrichtigungen für das Unstoppable Wallet sind ausgeschaltet. Sie müssen die Benachrichtigungen einschalten und eine Aktualisierung im Hintergrund erlauben, um Benachrichtigungen bei Preisänderungn zu erhalten.";
+"settings.notifications.disabled_text" = "Die Benachrichtigungen für das Unstoppable-Wallet sind ausgeschaltet. Sie müssen die Benachrichtigungen einschalten und eine Aktualisierung der App im Hintergrund erlauben, um Benachrichtigungen bei Preisänderungen zu erhalten.";
 "settings.notifications.settings_button" = "In Einstellungen einschalten";
 
 // Settings -> Base Currency
@@ -259,21 +259,21 @@
 "manage_coins.title" = "Coin Manager";
 "manage_coins.add_coin.title" = "%@ hinzufügen ";
 "manage_coins.add_coin.subtitle" = "%@ Wallet";
-"manage_coins.add_coin.text" = "Sie haben kein Wallet, das %@ (%@) speichern kann. Die App kann ein neues Wallet für Sie anlegen. Nutzen Sie den \"Erstellen Button\" unten, um ein neues Wallet anzulegen.\n\nSie können das Wallet für die folgenden Coins verwenden: %@.\n\nSie können auch den bestehenden %@ Wallet-Schlüssel nehmen, wenn Sie einen besitzen. Nutzen sie den Button \"Wiederherstellen\" dafür.";
+"manage_coins.add_coin.text" = "Sie müssen das %@ Wallet einrichten, um %@ senden oder empfangen zu können.\n\nTippen Sie auf den Button „Erstellen“, um ein neues %@ Wallet zu erstellen. Sie können auch auf den Button „Wiederherstellen“ tippen, um ein bereits bestehendes Wallet zu importieren.\n\nSie können dieses Wallet benutzen für: %@.";
 "manage_coins.add_coin.create" = "Erstellen";
 "manage_coins.add_coin.restore" = "Wiederherstellen";
 
 // Settings -> Experimental Features
 
 "settings.experimental_features.title" = "Experimentell";
-"settings.experimental_features.description" = "Die unteren Features sind experimentell, und sollten mit Vorsicht eingestzt werden. Wir haben sie zwar ausführlich mit unserem eigenen Kryptoguthaben getestet, aber wir können nicht garantieren, dass sie in allen möglichen Fällen funktionieren.";
+"settings.experimental_features.description" = "Die unten aufgeführten Funktionen sind experimentell und sollten mit Vorsicht eingesetzt werden. Wir haben sie zwar ausführlich mit unserem eigenen Kryptoguthaben getestet, aber wir können noch nicht garantieren, dass sie in allen denkbaren Fällen funktionieren.";
 "settings.experimental_features.bitcoin_hodling" = "Bitcoins sperren";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "Bitcoins sperren";
 "settings.bitcoin_hodling.lock_time" = "TimeLock";
-"settings.bitcoin_hodling.description" = "Damit können Sie Bitcoins, die sie versendet haben, sperren, sodass sie bis zu einem bestimmten Datum nicht ausgegeben werden können.\n\nDer Empfänger einer solchen Transaktion sollte das Unstoppable Wallet benutzen.\n\nNur das Unstoppable Wallet kann solche Transaktionen korrekt für Bitcoin identifizieren und es dem Empfänger ermöglichen, diese Bitcoins nach der Sperrzeit zu nutzen.\n\nWenn Sie ein HODLER sind, können Sie diese Feature auch für sich selbst nutzen, indem Sie sich selbst eine solche Transaktion schicken.\n\nDa es sich um ein experimentelles Feature handelt, liegt der maximale Betrag bei 0,5 BTC.";
+"settings.bitcoin_hodling.description" = "Damit können Sie gesendete Bitcoins sperren, sodass sie bis zu dem festgesetzten Datum nicht ausgegeben werden können.\n\nDer Empfänger einer solchen Transaktion sollte das Unstoppable-Wallet in der Version 0.10 (oder neuer) sowie das Bitcoin-Adressformat BIP44 verwenden.\n\nNur das Unstoppable-Wallet erkennt solche Transaktionen im Bitcoin-Netzwerk korrekt und ermöglicht es dem Empfänger, die Bitcoins nach der Sperrzeit zu auszugeben.\n\nWenn Sie ein HODLer* sind, können Sie diese Funktion auch für sich selbst nutzen, indem Sie sich selbst eine solche Transaktion schicken und so ihre Bitcoin für sich selbst zeitlich sperren.\n\nDa es sich noch um eine experimentelle Funktion handelt, liegt der maximale Betrag bei 0,5 BTC.\n";
 
 // Settings -> About
 
@@ -281,11 +281,11 @@
 "settings_about.app_title" = "Unstoppable";
 "settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "ANB & Datenschutz:";
-"settings_about.terms_privacy_text" = "Diese App ist Peer-to-Peer. Sie häng von keinem Webserver oder Tech-Support-Personal ab, um zu funktionierten.\n\nSie funktioniert überall, solang Sie Internetzugang haben. Niemand kann die App stoppen oder Sie davon abhalten, sie zu nutzen.\n\nIhre Guthaben sind sicher auf dem Telefon gespeichert, nirgendwo sonst.\n\nEs liegt in Ihrer Verantwortung, den geheimen Schlüssel zu sichern und ihn geheim aufzubewahren. Zeigen Sie ihn niemandem. Wenn er verloren geht, Sie ihn vergessen oder er gestohlen wird, kann Ihr Guthaben von demjenigen ausgegeben werden, der den Schlüssel hat.\n\nFühren Sie auf Ihrem Telefon keinen Jailbreak durch. Installieren Sie keine Apps von unbekannter (nicht vertrauenswürdiger) Quelle. Geben Sie das Telefon keiner nicht vertrauenswürdigen Person und aktualisieren Sie das Betriebssystem Ihres Telefons regelmäßig. Die Sicherheit Ihres Wallets hängt davon ab.\n\nDer gesamte Code dieser App ist seit Anfang an öffentlich einsehbar. Wir haben versucht, das sicherste und dezentralisierteste Wallet zu bauen. Allerdings gibt es keine Garantie, dass keine unvorhergesehenen Softwareprobleme auftreten. Trotzdem ist dieses Wallet wahrscheinlich deutlich sicherer als jede andere Smartphone-App.\n\nManche generischen, nicht geheimen App-Daten wie Währungswechselkurse werden in dezentralen Speichern (IPFS) gespeichert.";
+"settings_about.terms_privacy_text" = "Diese App basiert auf dem Peer-to-Peer-Prinzip. Das bietet den Vorteil, dass die App zum Funktionieren nicht auf bestimmte Webserver oder technischem Supportpersonal abhängig ist.\n\nDie App funktioniert überall. Sie benötigen nur einen Internetzugang. Niemand kann die App stoppen oder Sie davon abhalten, sie zu nutzen.\n\nIhre Guthaben sind sicher auf Ihrem Telefon gespeichert, nirgendwo sonst.\n\nEs liegt in Ihrer Verantwortung, den Private Key/Secret Key zu sichern und ihn gut aufzubewahren. Zeigen Sie ihn niemandem. Wenn er verloren geht, Sie ihn vergessen oder er gestohlen wird, kann Ihr Guthaben von demjenigen ausgegeben werden, der den Key besitzt.\n\nFühren Sie auf Ihrem Telefon keinen Jailbreak durch. Installieren Sie keine Apps aus unbekannten (nicht vertrauenswürdigen) Quellen. Geben Sie das Telefon keiner nicht vertrauenswürdigen Person und aktualisieren Sie das Betriebssystem Ihres Telefons regelmäßig. Die Sicherheit Ihres Wallets hängt davon ab.\n\nDer gesamte Code dieser App ist seit Anfang an öffentlich einsehbar. Wir haben versucht, das sicherste und dezentralisierteste Wallet zu programmieren. Allerdings gibt es keine Garantie, dass keine unvorhergesehenen Softwareprobleme auftreten. Trotzdem ist dieses Wallet wahrscheinlich deutlich sicherer als jede andere Smartphone-App.\n\nHinweis: Manche generischen, nicht geheimen App-Daten (wie Währungswechselkurse) werden in einem dezentralen Netzwerken (IPFS) gespeichert.";
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Unstoppable Wallet - eine krypto Wallet, die ich empfehle";
+"settings_tell_friends.text" = "Hi! Schau mal hier, das Unstoppable-Wallet. Das ist das Krypta-Wallet, dass ich dir empfehle.";
 
 // Settings -> Security
 
@@ -309,27 +309,27 @@
 "settings_manage_keys.title" = "Wallets verwalten";
 "settings_manage_keys.item_title" = "%@ Wallet";
 "settings_manage_keys.add_wallet" = "Wallet hinzufügen";
-"settings_manage_keys.description" = "Aktive Wallets sind hervorgehoben. Diese sind für verschiedene Kryptowährungen verantwortlich.\n\nSie sollten für jedes hervorgehobene Wallet den privaten Schlüssel sichern. \n\nDieser Schlüssel ist die einzige Möglichkeit, Ihr Guthaben wiederherzustellen, wenn Ihr Telefon verloren geht, gestohlen wird oder kaputt geht.";
+"settings_manage_keys.description" = "Unten sind die aktiven Wallets hervorgehoben. Jedes dieser Wallets ist für einen Satz von Kryptowährungen vorgesehen.\n\nSie sollten jedes hervorgehobene Wallet sichern, indem Sie den jeweiligen Private Key sichern. \n\nDiese Keys sind die einzige Möglichkeit, Ihr Guthaben wiederherzustellen, wenn Ihr Telefon verloren geht, gestohlen wird oder die App nicht mehr funktioniert.";
 "settings_manage_keys.delete" = "Löschen";
 "settings_manage_keys.backup" = "Sicherung";
 "settings_manage_keys.show" = "Anzeigen";
 "settings_manage_keys.create" = "Erstellen";
 "settings_manage_keys.restore" = "Wiederherstellen";
-"settings_manage_keys.delete.cant_delete" = "Sie müssen den privaten Schlüssel für dieses Wallet sichern, bevor Sie es von diesem Telefon löschen können.";
+"settings_manage_keys.delete.cant_delete" = "Sie müssen den Private Key für dieses Wallet sichern, bevor Sie es von diesem Telefon löschen können.";
 "settings_manage_keys.delete.title" = "Wallet löschen";
-"settings_manage_keys.delete.confirmation_remove" = "Damit wird das %@ Wallet von Ihrem Gerät gelöscht.";
-"settings_manage_keys.delete.confirmation_disable" = "Coins, die entfernt werden: %@";
-"settings_manage_keys.delete.confirmation_loose" = "Wenn Sie den privaten Schlüssel für dieses Wallet nicht gesichert haben, verlieren Sie den Zugang zu Ihrem Guthaben.";
-"error.cant_create_wallet" = "Im Moment kann das Wallet keine neuen EOS-Wallet-Accounts anlegen. Sie können nur bestehende wiederherstellen.";
+"settings_manage_keys.delete.confirmation_remove" = "Damit wird das %@ Wallet von diesem Gerät gelöscht.";
+"settings_manage_keys.delete.confirmation_disable" = "Diese Coins werden entfernt: %@";
+"settings_manage_keys.delete.confirmation_loose" = "ACHTUNG: Wenn Sie den privaten Private Key für dieses Wallet nicht gesichert haben, verlieren Sie den Zugriff auf Ihr Guthaben.";
+"error.cant_create_wallet" = "Im Moment kann das Unstoppable leider keine neuen EOS-Wallets anlegen. Sie können nur bestehende Wallets wiederherstellen.";
 "error.invalid_eos_key" = "Ungültiger Schlüssel";
 "error.invalid_eos_account" = "Ungültiger Account";
 
 // Set PIN
 
 "set_pin.title" = "Code";
-"set_pin.info" = "Dein Code wird verwendet werden, um deinen Wallet zu entsperren und Geld schicken";
+"set_pin.info" = "Dein Code ist notwendig, um deinen Wallet zu entsperren und Geld zu schicken";
 "set_pin.confirm.info" = "Bestätigen";
-"set_pin.wrong_confirmation" = "Code stimmt nicht überein. Bitte noch einmal versuchen.";
+"set_pin.wrong_confirmation" = "Der eingegebene Code scheint nicht richtig zu sein. Bitte versuchen Sie es erneut.";
 
 // Edit PIN
 
@@ -340,13 +340,13 @@
 // Unlock PIN
 
 "unlock_pin.info" = "Code";
-"unlock_pin.cant_save_pin" = "Autsch! Wir können den Code nicht speichern, kontaktier uns bitte so schnell wie möglich!";
+"unlock_pin.cant_save_pin" = "Hoppla! Wir können den Code nicht speichern - bitte kontaktieren Sie uns so schnell wie möglich.";
 "unlock_pin.blocked_until" = "Deaktiviert bis: %@ ";
 "rate_list.updated" = "aktualisiert";
 
 // No Passcode
 
-"no_passcode.info_text" = "Diese App erfordert, dass die Zugangssperre (Bildschirmsperre) aktiviert ist.\nSie können dies in den iOS-Einstellungen vornehmen.\nBitte beachten Sie, wenn Sie PIN auf dem OS ausgeschaltete haben, wurden die Sicherheitsmaßnahmen im Safe Storage Ihres Telefons für vorher gespeicherte Daten ungültig. Sie müssen Ihre Wallet-Schlüssel wiederherstellen, um an Ihr Wallet zu gelangen.";
+"no_passcode.info_text" = "Für diese App ist es erforderlich, dass auf diesem Telefon die Zugangssperre (Bildschirmsperre) aktiviert ist.\n\nSie können die Bildschirmsperre in den iOS-Einstellungen ein- und ausschalten.\n\nBitte beachten Sie: Wenn Sie die PIN im Betriebssystem (dem OS Ihres Telefons) ausgeschaltet haben, sind die Sicherheitsmaßnahmen im Safe Storage Ihres Telefons für vorher gespeicherte Daten ungültig geworden. Sie müssen daher Ihre Wallet-Keys wiederherstellen, um an Ihr Wallet zu gelangen.";
 
 //NumPad
 
@@ -395,4 +395,4 @@
 // Lock Info
 
 "lock_info.title" = "Info";
-"lock_info.text" = "Der Sender hat dieses Guthaben mit einer Ausgabesperre versehen, die zu dem angezeigten Datum abläuft.\n\nKeine Sorge, die erhaltenen Bitcoin sind bereits Ihre. Aber bis zum Ablauf der Sperrzeit können Sie sie nicht im Bitcoin-Netzwerk ausgeben.";
+"lock_info.text" = "Der Sender hat dieses Guthaben mit einer Ausgabesperre versehen, die zu dem angezeigten Datum abläuft.\n\nKeine Sorge, die erhaltenen Bitcoin sind bereits Ihre. Die Bitcoins sind nur zeitweise gesperrt, so dass Sie sie erst nach Ablauf der Sperrzeit im Bitcoin-Netzwerk ausgeben können.";
