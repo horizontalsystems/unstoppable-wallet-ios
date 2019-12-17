@@ -389,7 +389,7 @@ class BalanceCell: CardCell {
                 ChartPoint(timestamp: $0.timestamp, value: $0.value)
             }
 
-            chartView.set(gridIntervalType: GridIntervalConverter.convert(chartType: ChartType.day), data: points, start: chartInfo.startTimestamp, end: chartInfo.endTimestamp, animated: false)
+            chartView.set(gridIntervalType: GridIntervalConverter.convert(chartType: ChartType.day), data: points, start: chartInfo.startTimestamp, end: chartInfo.endTimestamp, animated: true)
             chartView.isHidden = false
             chartHolder.isUserInteractionEnabled = true
         } else {
