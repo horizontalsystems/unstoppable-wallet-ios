@@ -20,10 +20,6 @@ class BalanceSorter: IBalanceSorter {
     func sort(items: [BalanceItem], sort: BalanceSortType) -> [BalanceItem] {
         switch sort {
         case .value:
-            guard items.allSatisfy({ $0.state == .synced }) else {
-                return items
-            }
-
             let nonZeroItems = items.filter { !($0.balance ?? 0).isZero }
             let zeroItems = items.filter{ ($0.balance ?? 0).isZero }
 
