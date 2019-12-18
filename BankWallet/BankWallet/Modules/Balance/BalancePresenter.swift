@@ -37,7 +37,6 @@ class BalancePresenter {
 
         handleAdaptersReady()
         handleRates()
-        handleStats()
 
         view?.set(sortIsOn: items.count >= sortingOnThreshold)
     }
@@ -57,18 +56,6 @@ class BalancePresenter {
 
         for item in items {
             item.marketInfo = interactor.marketInfo(coinCode: item.wallet.coin.code, currencyCode: currency.code)
-        }
-    }
-
-    private func handleStats() {
-        interactor.subscribeToChartInfo(coinCodes: items.map { $0.wallet.coin.code }, currencyCode: currency.code)
-
-        for item in items {
-            if let chartInfo = interactor.chartInfo(coinCode: item.wallet.coin.code, currencyCode: currency.code) {
-                item.chartInfoState = .loaded(chartInfo: chartInfo)
-            } else {
-                item.chartInfoState = .loading
-            }
         }
     }
 
@@ -252,7 +239,6 @@ extension BalancePresenter: IBalanceInteractorDelegate {
             self.currency = currency
 
             self.handleRates()
-            self.handleStats()
 
             self.updateViewItems()
             self.updateHeaderViewItem()
@@ -272,32 +258,6 @@ extension BalancePresenter: IBalanceInteractorDelegate {
 
             self.refreshView()
             self.updateHeaderViewItem()
-        }
-    }
-
-    func didUpdate(chartInfo: ChartInfo, coinCode: CoinCode) {
-        queue.async {
-            for (index, item) in self.items.enumerated() {
-                if item.wallet.coin.code == coinCode {
-                    item.chartInfoState = .loaded(chartInfo: chartInfo)
-                    self.viewItems[index] = self.viewItem(item: item)
-                }
-            }
-
-            self.refreshView()
-        }
-    }
-
-    func didFailChartInfo(coinCode: CoinCode) {
-        queue.async {
-            for (index, item) in self.items.enumerated() {
-                if item.wallet.coin.code == coinCode {
-                    item.chartInfoState = .failed
-                    self.viewItems[index] = self.viewItem(item: item)
-                }
-            }
-
-            self.refreshView()
         }
     }
 

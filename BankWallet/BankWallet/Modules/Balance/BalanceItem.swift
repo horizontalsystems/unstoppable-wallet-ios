@@ -1,5 +1,4 @@
 import Foundation
-import DeepDiff
 import XRatesKit
 
 class BalanceItem {
@@ -9,7 +8,6 @@ class BalanceItem {
     var balanceLocked: Decimal?
     var state: AdapterState?
     var marketInfo: MarketInfo?
-    var chartInfoState: ChartInfoState = .loading
 
     var balanceTotal: Decimal? {
         guard let balance = balance else {

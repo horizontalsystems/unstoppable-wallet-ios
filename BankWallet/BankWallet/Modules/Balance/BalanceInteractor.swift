@@ -6,7 +6,6 @@ class BalanceInteractor {
 
     private var disposeBag = DisposeBag()
     private var marketInfoDisposeBag = DisposeBag()
-    private var chartsDisposeBag = DisposeBag()
     private var adaptersDisposeBag = DisposeBag()
 
     private let walletManager: IWalletManager
@@ -51,10 +50,6 @@ extension BalanceInteractor: IBalanceInteractor {
 
     func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo? {
         rateManager.marketInfo(coinCode: coinCode, currencyCode: currencyCode)
-    }
-
-    func chartInfo(coinCode: CoinCode, currencyCode: String) -> ChartInfo? {
-        rateManager.chartInfo(coinCode: coinCode, currencyCode: currencyCode, chartType: .day)
     }
 
     func balance(wallet: Wallet) -> Decimal? {
@@ -129,22 +124,6 @@ extension BalanceInteractor: IBalanceInteractor {
                     self?.delegate?.didUpdate(marketInfos: marketInfos)
                 })
                 .disposed(by: marketInfoDisposeBag)
-    }
-
-    func subscribeToChartInfo(coinCodes: [CoinCode], currencyCode: String) {
-        chartsDisposeBag = DisposeBag()
-
-        for coinCode in coinCodes {
-            rateManager.chartInfoObservable(coinCode: coinCode, currencyCode: currencyCode, chartType: .day)
-                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                    .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                    .subscribe(onNext: { [weak self] chartInfo in
-                        self?.delegate?.didUpdate(chartInfo: chartInfo, coinCode: coinCode)
-                    }, onError: { [weak self] _ in
-                        self?.delegate?.didFailChartInfo(coinCode: coinCode)
-                    })
-                    .disposed(by: chartsDisposeBag)
-        }
     }
 
     var sortType: BalanceSortType? {

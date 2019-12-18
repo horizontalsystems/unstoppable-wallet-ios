@@ -103,17 +103,6 @@ class BalanceViewItemFactory {
         return state == .synced
     }
 
-    private func chartInfo(state: ChartInfoState) -> ChartInfo? {
-        switch state {
-        case let .loaded(chartInfo): return chartInfo
-        default: return nil
-        }
-    }
-
-    private func chartNotAvailableVisible(state: ChartInfoState) -> Bool {
-        state == .failed
-    }
-
 }
 
 extension BalanceViewItemFactory: IBalanceViewItemFactory {
@@ -136,8 +125,6 @@ extension BalanceViewItemFactory: IBalanceViewItemFactory {
                 lockedCurrencyValue: currencyValue(state: state, balance: item.balanceLocked, currency: currency, marketInfo: marketInfo, expanded: expanded),
                 rateValue: rateValue(currency: currency, marketInfo: marketInfo),
                 diff: marketInfo?.diff,
-                chartInfo: chartInfo(state: item.chartInfoState),
-                chartNotAvailableVisible: chartNotAvailableVisible(state: item.chartInfoState),
 
                 syncSpinnerProgress: syncSpinnerProgress(state: state),
                 failedImageViewVisible: failedImageViewVisible(state: state),
