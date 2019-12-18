@@ -159,7 +159,7 @@ PODS:
   - SwiftyJSON (4.3.0)
   - UIExtensions.swift (1.1)
   - X11Kit.swift (1.0)
-  - XRatesKit.swift (0.4):
+  - XRatesKit.swift (0.4.1):
     - Alamofire (~> 4.0)
     - GRDB.swift (~> 4.0)
     - ObjectMapper (~> 3.5)
@@ -302,7 +302,7 @@ SPEC CHECKSUMS:
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   UIExtensions.swift: b3852a339a81c730d98b3342ae0275e807703782
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
-  XRatesKit.swift: 44f04b20699f855a4e3550797232084a240a8690
+  XRatesKit.swift: 23c713115f7b327aa8691c8a429b4cc094affa7e
 
 PODFILE CHECKSUM: 7af51396bc0c4f9e796e0d60728a86db29169619
 

@@ -89,7 +89,7 @@ extension RateManager: IRateManager {
     }
 
     func historicalRate(coinCode: String, currencyCode: String, timestamp: TimeInterval) -> Single<Decimal> {
-        kit.historicalRate(coinCode: converted(coinCode: coinCode), currencyCode: currencyCode, timestamp: timestamp)
+        kit.historicalRateSingle(coinCode: converted(coinCode: coinCode), currencyCode: currencyCode, timestamp: timestamp)
     }
 
     func chartInfo(coinCode: String, currencyCode: String, chartType: ChartType) -> ChartInfo? {
