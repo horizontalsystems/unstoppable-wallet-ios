@@ -60,14 +60,7 @@ class AppConfigProvider: IAppConfigProvider {
         Currency(code: "USD", symbol: "\u{0024}", decimal: 2),
         Currency(code: "EUR", symbol: "\u{20AC}", decimal: 2),
         Currency(code: "GBP", symbol: "\u{00A3}", decimal: 2),
-        Currency(code: "JPY", symbol: "\u{00A5}", decimal: 2),
-        Currency(code: "AUD", symbol: "\u{20B3}", decimal: 2),
-        Currency(code: "CAD", symbol: "\u{0024}", decimal: 2),
-        Currency(code: "CHF", symbol: "\u{20A3}", decimal: 2),
-        Currency(code: "CNY", symbol: "\u{00A5}", decimal: 2),
-        Currency(code: "KRW", symbol: "\u{20A9}", decimal: 2),
-        Currency(code: "RUB", symbol: "\u{20BD}", decimal: 2),
-        Currency(code: "TRY", symbol: "\u{20BA}", decimal: 2)
+        Currency(code: "JPY", symbol: "\u{00A5}", decimal: 2)
     ]
 
     var featuredCoins: [Coin] {
