@@ -1,4 +1,5 @@
 import ActionSheet
+import Chart
 
 class ChartRateItem: BaseActionItem {
 

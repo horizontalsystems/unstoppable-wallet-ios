@@ -1,6 +1,7 @@
 import UIKit
 import ActionSheet
 import XRatesKit
+import Chart
 
 class ChartViewController: WalletActionSheetController {
     private let coinFormatter: NumberFormatter = {
@@ -194,7 +195,7 @@ extension ChartViewController: IChartView {
 
 extension ChartViewController: IChartIndicatorDelegate {
 
-    func didTap(chartPoint: ChartPoint) {
+    func didTap(chartPoint: Chart.ChartPoint) {
         delegate.chartTouchSelect(timestamp: chartPoint.timestamp, value: chartPoint.value)
     }
 

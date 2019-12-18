@@ -2,6 +2,7 @@ import UIKit
 import UIExtensions
 import ActionSheet
 import HUD
+import Chart
 import SnapKit
 
 class ChartRateItemView: BaseActionItemView {

@@ -1,5 +1,6 @@
 import UIKit
 import HUD
+import Chart
 import RxSwift
 import SnapKit
 import XRatesKit
