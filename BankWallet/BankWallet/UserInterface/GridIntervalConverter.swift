@@ -1,4 +1,5 @@
 import XRatesKit
+import Chart
 
 class GridIntervalConverter {
 

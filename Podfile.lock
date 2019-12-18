@@ -47,6 +47,8 @@ PODS:
     - Secp256k1Kit.swift (~> 1.0)
   - BlsKit.swift (1.0)
   - BlueSocket (1.0.52)
+  - Chart.swift (1.0):
+    - SnapKit (~> 5.0)
   - Cuckoo (1.3.0):
     - Cuckoo/Swift (= 1.3.0)
   - Cuckoo/Swift (1.3.0)
@@ -172,6 +174,7 @@ DEPENDENCIES:
   - BinanceChainKit.swift
   - BitcoinCashKit.swift
   - BitcoinKit.swift
+  - Chart.swift
   - Cuckoo
   - DashKit.swift
   - DeepDiff
@@ -208,6 +211,7 @@ SPEC REPOS:
     - BitcoinKit.swift
     - BlsKit.swift
     - BlueSocket
+    - Chart.swift
     - Cuckoo
     - DashKit.swift
     - DeepDiff
@@ -263,6 +267,7 @@ SPEC CHECKSUMS:
   BitcoinKit.swift: 8873619a4e834fc0ccf6688756e9e04bcfb4bc0d
   BlsKit.swift: 533e494e0068f9ad2cf211a31fe9279f688af123
   BlueSocket: 1acd943acb07b55905291d608649fcfbf8cbd57d
+  Chart.swift: 0016b521cd6b627dd8394274f2fb3605e1e32496
   Cuckoo: 4045c5a8ce378c919c20c5ff3d6dd11ded0ec699
   DashKit.swift: 071210ae28fe52d227c9f5f9d7106e123222fff6
   DeepDiff: e5ae6c50d0321568e4508cec5930b9f10bb293fc
@@ -299,6 +304,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: 44f04b20699f855a4e3550797232084a240a8690
 
-PODFILE CHECKSUM: a4add655b3ffbc12b27ea09bb77419b516d0bd2b
+PODFILE CHECKSUM: 7af51396bc0c4f9e796e0d60728a86db29169619
 
 COCOAPODS: 1.8.4

@@ -1,5 +1,6 @@
 import Foundation
 import XRatesKit
+import Chart
 
 struct ChartInfoViewItem {
     let lowValue: CurrencyValue
@@ -9,7 +10,7 @@ struct ChartInfoViewItem {
 
     let gridIntervalType: GridIntervalType
 
-    let points: [ChartPoint]
+    let points: [Chart.ChartPoint]
     let startTimestamp: TimeInterval
     let endTimestamp: TimeInterval
 }

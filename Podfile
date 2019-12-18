@@ -27,6 +27,7 @@ def appPods
   pod 'UIExtensions.swift'
   pod 'ActionSheet.swift'
   pod 'HUD.swift'
+  pod 'Chart.swift'
   pod 'SectionsTableView.swift'
 
   pod 'Alamofire'
