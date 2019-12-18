@@ -15,8 +15,6 @@ struct BalanceViewItem {
     let lockedCurrencyValue: (text: String, dimmed: Bool)?
     let rateValue: (text: String, dimmed: Bool)?
     let diff: Decimal?
-    let chartInfo: ChartInfo?
-    let chartNotAvailableVisible: Bool
 
     let syncSpinnerProgress: Int?
     let failedImageViewVisible: Bool
@@ -51,9 +49,7 @@ extension BalanceViewItem: DiffAware {
                 a.lockedCurrencyValue?.dimmed == b.lockedCurrencyValue?.dimmed &&
                 a.rateValue?.text == b.rateValue?.text &&
                 a.rateValue?.dimmed == b.rateValue?.dimmed &&
-                a.diff == b.diff &&
-                a.chartInfo?.points == b.chartInfo?.points &&
-                a.chartNotAvailableVisible == b.chartNotAvailableVisible
+                a.diff == b.diff
 
         let compareOther =
                 a.syncSpinnerProgress == b.syncSpinnerProgress &&

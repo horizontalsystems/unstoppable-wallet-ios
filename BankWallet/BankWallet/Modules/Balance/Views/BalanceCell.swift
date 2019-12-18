@@ -1,6 +1,5 @@
 import UIKit
 import HUD
-import Chart
 import RxSwift
 import SnapKit
 import XRatesKit
@@ -44,17 +43,11 @@ class BalanceCell: CardCell {
     private let receiveButton = UIButton.appGreen
     private let sendButton = UIButton.appYellow
 
-    private let chartHolder = UIButton()
-    private let chartView: ChartView
-    private let notAvailableLabel = UILabel()
-
     private var onPay: (() -> ())?
     private var onReceive: (() -> ())?
     private var onChart: (() -> ())?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        chartView = ChartView(configuration: ChartConfiguration.balanceChart, gridIntervalType: GridIntervalConverter.convert(chartType: .day))
-
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         selectionStyle = .none
@@ -233,35 +226,6 @@ class BalanceCell: CardCell {
             maker.width.equalTo(receiveButton.snp.width)
             maker.height.equalTo(CGFloat.heightButton)
         }
-
-        chartHolder.addTarget(self, action: #selector(onChartTap), for: .touchUpInside)
-
-        clippingView.addSubview(chartHolder)
-        chartHolder.snp.makeConstraints { maker in
-            maker.leading.equalTo(nameLabel.snp.trailing).offset(CGFloat.margin3x)
-            maker.top.equalToSuperview().offset(CGFloat.margin2x)
-            maker.trailing.equalToSuperview()
-            maker.height.equalTo(38)
-            maker.width.equalTo(72)
-        }
-
-        chartView.isUserInteractionEnabled = false
-
-        chartHolder.addSubview(chartView)
-        chartView.snp.makeConstraints { maker in
-            maker.leading.top.bottom.equalToSuperview()
-            maker.trailing.equalToSuperview().inset(CGFloat.margin3x).priority(.low)
-        }
-
-        notAvailableLabel.font = .appSubhead2
-        notAvailableLabel.textColor = .appGray50
-        notAvailableLabel.text = "n/a".localized
-
-        chartHolder.addSubview(notAvailableLabel)
-        notAvailableLabel.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin1x)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
-        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -384,21 +348,6 @@ class BalanceCell: CardCell {
         } else {
             sendButton.set(hidden: true, animated: animated, duration: BalanceCell.animationDuration)
         }
-
-        if let chartInfo = item.chartInfo {
-            let points = chartInfo.points.map {
-                ChartPoint(timestamp: $0.timestamp, value: $0.value)
-            }
-
-            chartView.set(gridIntervalType: GridIntervalConverter.convert(chartType: ChartType.day), data: points, start: chartInfo.startTimestamp, end: chartInfo.endTimestamp, animated: true)
-            chartView.isHidden = false
-            chartHolder.isUserInteractionEnabled = true
-        } else {
-            chartView.isHidden = true
-            chartHolder.isUserInteractionEnabled = false
-        }
-
-        notAvailableLabel.isHidden = !item.chartNotAvailableVisible
     }
 
     func unbind() {

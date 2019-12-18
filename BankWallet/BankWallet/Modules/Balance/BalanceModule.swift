@@ -34,7 +34,6 @@ protocol IBalanceInteractor: AnyObject {
     var baseCurrency: Currency { get }
 
     func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo?
-    func chartInfo(coinCode: CoinCode, currencyCode: String) -> ChartInfo?
     func balance(wallet: Wallet) -> Decimal?
     func balanceLocked(wallet: Wallet) -> Decimal?
     func state(wallet: Wallet) -> AdapterState?
@@ -44,7 +43,6 @@ protocol IBalanceInteractor: AnyObject {
     func subscribeToAdapters(wallets: [Wallet])
 
     func subscribeToMarketInfo(currencyCode: String)
-    func subscribeToChartInfo(coinCodes: [CoinCode], currencyCode: String)
 
     var sortType: BalanceSortType? { get set }
 
@@ -60,9 +58,6 @@ protocol IBalanceInteractorDelegate: class {
 
     func didUpdate(currency: Currency)
     func didUpdate(marketInfos: [CoinCode: MarketInfo])
-
-    func didUpdate(chartInfo: ChartInfo, coinCode: CoinCode)
-    func didFailChartInfo(coinCode: CoinCode)
 
     func didRefresh()
 }
@@ -94,25 +89,6 @@ enum BalanceSortType: Int, CaseIterable {
         case .value: return "balance.sort.valueHighToLow".localized
         case .name: return "balance.sort.az".localized
         case .percentGrowth: return "balance.sort.24h_change".localized
-        }
-    }
-
-}
-
-enum ChartInfoState {
-    case loading
-    case loaded(chartInfo: ChartInfo)
-    case failed
-}
-
-extension ChartInfoState: Equatable {
-
-    public static func ==(lhs: ChartInfoState, rhs: ChartInfoState) -> Bool {
-        switch (lhs, rhs) {
-        case (.loading, .loading): return true
-        case let (.loaded(lhsChartInfo), .loaded(rhsChartInfo)): return lhsChartInfo.points == rhsChartInfo.points
-        case (.failed, .failed): return true
-        default: return false
         }
     }
 
