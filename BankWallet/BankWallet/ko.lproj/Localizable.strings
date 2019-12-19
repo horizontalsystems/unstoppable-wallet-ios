@@ -216,6 +216,7 @@
 "full_info.source.offline" = "오프라인";
 
 "full_info.error.subtitle" = "오프라인";
+"full_info.error.transaction_not_found" = "거래를 찾을 수 없습니다";
 "full_info.error.retry" = "재시도";
 "full_info.error.change_source" = "출처를 변경하다";
 "full_info.no_address" = "빈 주소";

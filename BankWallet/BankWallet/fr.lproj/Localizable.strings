@@ -216,6 +216,7 @@
 "full_info.source.offline" = "déconnecté";
 
 "full_info.error.subtitle" = "déconnecté";
+"full_info.error.transaction_not_found" = "La transaction est introuvable";
 "full_info.error.retry" = "Réessayer";
 "full_info.error.change_source" = "Changer la Source";
 "full_info.no_address" = "Adresse vide";
