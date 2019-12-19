@@ -4,19 +4,19 @@ class BlockExplorerBitcoinProvider: IBitcoinForksProvider {
     let name = "BlockExplorer.com"
 
     func url(for hash: String) -> String? {
-        return "https://blockexplorer.com/tx/" + hash
+        "https://blockexplorer.com/tx/" + hash
     }
 
-    func reachabilityUrl(for hash: String) -> String {
-        return "https://blockexplorer.com/api/tx/" + hash
+    var reachabilityUrl: String {
+        "https://blockexplorer.com/api/block/0"
     }
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        return .get(url: "https://blockexplorer.com/api/tx/" + hash, params: nil)
+        .get(url: "https://blockexplorer.com/api/tx/" + hash, params: nil)
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
-        return try? BlockExplorerBitcoinResponse(JSONObject: json)
+        try? BlockExplorerBitcoinResponse(JSONObject: json)
     }
 
 }
@@ -25,19 +25,19 @@ class BlockExplorerBitcoinCashProvider: IBitcoinForksProvider {
     let name = "BlockExplorer.com"
 
     func url(for hash: String) -> String? {
-        return "https://bitcoincash.blockexplorer.com/tx/" + hash
+        "https://bitcoincash.blockexplorer.com/tx/" + hash
     }
 
-    func reachabilityUrl(for hash: String) -> String {
-        return "https://bitcoincash.blockexplorer.com/api/tx/" + hash
+    var reachabilityUrl: String {
+        "https://bitcoincash.blockexplorer.com/api/block/0"
     }
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        return .get(url: "https://bitcoincash.blockexplorer.com/api/tx/" + hash, params: nil)
+        .get(url: "https://bitcoincash.blockexplorer.com/api/tx/" + hash, params: nil)
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
-        return try? BlockExplorerBitcoinResponse(JSONObject: json)
+        try? BlockExplorerBitcoinResponse(JSONObject: json)
     }
 
 }
@@ -57,6 +57,9 @@ class BlockExplorerBitcoinResponse: IBitcoinResponse, ImmutableMappable {
 
     required init(map: Map) throws {
         txId = try? map.value("txid")
+        guard txId != nil else {
+            throw MapError(key: "txId", currentValue: "nil", reason: "wrong data")
+        }
         blockTime = try? map.value("blocktime")
         blockHeight = try? map.value("blockheight")
         confirmations = try? map.value("confirmations")

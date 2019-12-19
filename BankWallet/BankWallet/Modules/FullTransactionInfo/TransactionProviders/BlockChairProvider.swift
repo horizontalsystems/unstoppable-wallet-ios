@@ -5,19 +5,19 @@ class BlockChairBitcoinProvider: IBitcoinForksProvider {
     let name = "BlockChair.com"
 
     func url(for hash: String) -> String? {
-        return "https://blockchair.com/bitcoin/transaction/" + hash
+        "https://blockchair.com/bitcoin/transaction/" + hash
     }
 
-    func reachabilityUrl(for hash: String) -> String {
-        return "https://api.blockchair.com/bitcoin/dashboards/transaction/" + hash
+    var reachabilityUrl: String {
+        "https://api.blockchair.com/bitcoin/stats"
     }
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        return .get(url: "https://api.blockchair.com/bitcoin/dashboards/transaction/" + hash, params: nil)
+        .get(url: "https://api.blockchair.com/bitcoin/dashboards/transaction/" + hash, params: nil)
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
-        return try? BlockChairBitcoinResponse(JSONObject: json)
+        try? BlockChairBitcoinResponse(JSONObject: json)
     }
 
 }
@@ -26,19 +26,19 @@ class BlockChairBitcoinCashProvider: IBitcoinForksProvider {
     let name = "BlockChair.com"
 
     func url(for hash: String) -> String? {
-        return "https://blockchair.com/bitcoin-cash/transaction/" + hash
+        "https://blockchair.com/bitcoin-cash/transaction/" + hash
     }
 
-    func reachabilityUrl(for hash: String) -> String {
-        return "https://api.blockchair.com/bitcoin-cash/dashboards/transaction/" + hash
+    var reachabilityUrl: String {
+        "https://api.blockchair.com/bitcoin-cash/stats"
     }
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        return .get(url: "https://api.blockchair.com/bitcoin-cash/dashboards/transaction/" + hash, params: nil)
+        .get(url: "https://api.blockchair.com/bitcoin-cash/dashboards/transaction/" + hash, params: nil)
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
-        return try? BlockChairBitcoinResponse(JSONObject: json)
+        try? BlockChairBitcoinResponse(JSONObject: json)
     }
 
 }
@@ -47,19 +47,19 @@ class BlockChairDashProvider: IBitcoinForksProvider {
     let name = "BlockChair.com"
 
     func url(for hash: String) -> String? {
-        return "https://blockchair.com/dash/transaction/" + hash
+        "https://blockchair.com/dash/transaction/" + hash
     }
 
-    func reachabilityUrl(for hash: String) -> String {
-        return "https://api.blockchair.com/dash/dashboards/transaction/" + hash
+    var reachabilityUrl: String {
+        "https://api.blockchair.com/dash/stats"
     }
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        return .get(url: "https://api.blockchair.com/dash/dashboards/transaction/" + hash, params: nil)
+        .get(url: "https://api.blockchair.com/dash/dashboards/transaction/" + hash, params: nil)
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
-        return try? BlockChairBitcoinResponse(JSONObject: json)
+        try? BlockChairBitcoinResponse(JSONObject: json)
     }
 
 }
@@ -68,19 +68,19 @@ class BlockChairEthereumProvider: IEthereumForksProvider {
     let name = "BlockChair.com"
 
     func url(for hash: String) -> String? {
-        return "https://blockchair.com/ethereum/transaction/" + hash
+        "https://blockchair.com/ethereum/transaction/" + hash
     }
 
-    func reachabilityUrl(for hash: String) -> String {
-        return "https://api.blockchair.com/ethereum/dashboards/transaction/" + hash
+    var reachabilityUrl: String {
+        "https://api.blockchair.com/ethereum/stats"
     }
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        return .get(url: "https://api.blockchair.com/ethereum/dashboards/transaction/" + hash, params: nil)
+        .get(url: "https://api.blockchair.com/ethereum/dashboards/transaction/" + hash, params: nil)
     }
 
     func convert(json: [String: Any]) -> IEthereumResponse? {
-        return try? BlockChairEthereumResponse(JSONObject: json)
+        try? BlockChairEthereumResponse(JSONObject: json)
     }
 
 }
@@ -100,7 +100,7 @@ class BlockChairBitcoinResponse: IBitcoinResponse, ImmutableMappable {
 
     required init(map: Map) throws {
         guard let data: [String: Any] = try? map.value("data"), let key = data.keys.first else {
-            return
+            throw MapError(key: "tx", currentValue: "nil", reason: "wrong data")
         }
         txId = try? map.value("data.\(key).transaction.hash")
 
@@ -160,10 +160,9 @@ class BlockChairEthereumResponse: IEthereumResponse, ImmutableMappable {
 
     required init(map: Map) throws {
         guard let data: [String: Any] = try? map.value("data"), let key = data.keys.first else {
-            return
+            throw MapError(key: "tx", currentValue: "nil", reason: "wrong data")
         }
         txId = try? map.value("data.\(key).transaction.hash")
-
 
         if let dateString: String = try? map.value("data.\(key).transaction.time") {
 

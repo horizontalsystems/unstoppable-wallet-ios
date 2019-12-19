@@ -3,22 +3,22 @@ import ObjectMapper
 class EosInfraProvider: IEosProvider {
 
     func convert(json: [String: Any], account: String) -> IEosResponse? {
-        return try? EosResponse(JSONObject: json, context: EosResponse.AccountContext(account: account))
+        try? EosResponse(JSONObject: json, context: EosResponse.AccountContext(account: account))
     }
 
     var name: String = "Eosnode.tools"
 
     func url(for hash: String) -> String? {
-        return nil
-//        return "https://bloks.io/transaction/\(hash)"
+        nil
+//        "https://bloks.io/transaction/\(hash)"
     }
 
-    func reachabilityUrl(for hash: String) -> String {
-        return "https://public.eosinfra.io"
+    var reachabilityUrl: String {
+        "https://public.eosinfra.io"
     }
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        return .post(url: "https://public.eosinfra.io/v1/history/get_transaction", params: ["id": hash])
+        .post(url: "https://public.eosinfra.io/v1/history/get_transaction", params: ["id": hash])
     }
 
 }
@@ -26,22 +26,22 @@ class EosInfraProvider: IEosProvider {
 class EosGreymassProvider: IEosProvider {
 
     func convert(json: [String: Any], account: String) -> IEosResponse? {
-        return try? EosResponse(JSONObject: json, context: EosResponse.AccountContext(account: account))
+        try? EosResponse(JSONObject: json, context: EosResponse.AccountContext(account: account))
     }
 
     var name: String = "Greymass.com"
 
     func url(for hash: String) -> String? {
-        return nil
-//        return "https://bloks.io/transaction/\(hash)"
+        nil
+//        "https://bloks.io/transaction/\(hash)"
     }
 
-    func reachabilityUrl(for hash: String) -> String {
-        return "https://eos.greymass.com"
+    var reachabilityUrl: String {
+        "https://eos.greymass.com"
     }
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        return .post(url: "https://eos.greymass.com/v1/history/get_transaction", params: ["id": hash])
+        .post(url: "https://eos.greymass.com/v1/history/get_transaction", params: ["id": hash])
     }
 
 }
@@ -58,6 +58,9 @@ class EosResponse: IEosResponse, ImmutableMappable {
 
     required init(map: Map) throws {
         txId = try? map.value("id")
+        guard txId != nil else {
+            throw MapError(key: "txId", currentValue: "nil", reason: "wrong data")
+        }
         status = try? map.value("trx.receipt.status")
         cpuUsage = try? map.value("trx.receipt.cpu_usage_us")
         netUsage = try? map.value("trx.receipt.net_usage_words")

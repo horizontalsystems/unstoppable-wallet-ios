@@ -475,8 +475,8 @@ protocol ISettingsProviderMap {
 
 protocol IProvider {
     var name: String { get }
+    var reachabilityUrl: String { get }
     func url(for hash: String) -> String?
-    func reachabilityUrl(for hash: String) -> String
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject
 }
 

@@ -5,26 +5,24 @@ class BinanceOrgProvider: IBinanceProvider {
     let name: String = "Binance.org"
     private let url: String
     private let apiUrl: String
+    let reachabilityUrl: String
 
     func url(for hash: String) -> String? {
-        return url + hash
-    }
-
-    func reachabilityUrl(for hash: String) -> String {
-        return apiUrl + hash + "?format=json"
+        url + hash
     }
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        return .get(url: apiUrl + hash + "?format=json", params: nil)
+        .get(url: apiUrl + hash + "?format=json", params: nil)
     }
 
     init(testMode: Bool) {
         url = testMode ? "https://testnet-explorer.binance.org/tx/" : "https://explorer.binance.org/tx/"
         apiUrl = testMode ? "https://testnet-dex.binance.org/api/v1/tx/" : "https://dex.binance.org/api/v1/tx/"
+        reachabilityUrl = testMode ? "https://testnet-dex.binance.org/api/v1/node-info" : "https://dex.binance.org/api/v1/node-info"
     }
 
     func convert(json: [String: Any]) -> IBinanceResponse? {
-        return try? BinanceOrgBinanceResponse(JSONObject: json)
+        try? BinanceOrgBinanceResponse(JSONObject: json)
     }
 
 }

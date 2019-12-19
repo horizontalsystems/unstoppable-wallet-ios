@@ -4,19 +4,19 @@ class InsightDashProvider: IBitcoinForksProvider {
     let name = "Insight.dash.org"
 
     func url(for hash: String) -> String? {
-        return "https://insight.dash.org/insight/tx/" + hash 
+        "https://insight.dash.org/insight/tx/" + hash 
     }
 
-    func reachabilityUrl(for hash: String) -> String {
-        return "https://insight.dash.org/insight-api/tx/" + hash 
+    var reachabilityUrl: String {
+        "https://insight.dash.org/insight-api/block/0" 
     }
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        return .get(url: "https://insight.dash.org/insight-api/tx/" + hash, params: nil)
+        .get(url: "https://insight.dash.org/insight-api/tx/" + hash, params: nil)
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
-        return try? InsightResponse(JSONObject: json)
+        try? InsightResponse(JSONObject: json)
     }
 
 }
@@ -36,6 +36,9 @@ class InsightResponse: IBitcoinResponse, ImmutableMappable {
 
     required init(map: Map) throws {
         txId = try? map.value("txid")
+        guard txId != nil else {
+            throw MapError(key: "txId", currentValue: "nil", reason: "wrong data")
+        }
         blockTime = try? map.value("time")
         blockHeight = try? map.value("height")
         confirmations = try? map.value("confirmations")

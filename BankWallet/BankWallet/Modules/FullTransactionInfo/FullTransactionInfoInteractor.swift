@@ -23,7 +23,11 @@ class FullTransactionInfoInteractor {
     }
 
     private func showError() {
-        delegate?.onError(providerName: provider?.providerName)
+        delegate?.onTransactionNotFound(providerName: provider?.providerName)
+    }
+
+    private func showOffline() {
+        delegate?.onProviderOffline(providerName: provider?.providerName)
     }
 
 }
@@ -67,8 +71,12 @@ extension FullTransactionInfoInteractor: IFullTransactionInfoInteractor {
             } else {
                 self?.showError()
             }
-        }, onError: { [weak self] _ in
-            self?.showError()
+        }, onError: { [weak self] error in
+            if let error = error as? NetworkManager.NetworkError, case .noConnection = error {
+                self?.showOffline()
+            } else {
+                self?.showError()
+            }
         }).disposed(by: disposeBag)
     }
 
