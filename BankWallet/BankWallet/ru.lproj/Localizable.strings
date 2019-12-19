@@ -216,6 +216,7 @@
 "full_info.source.offline" = "недоступен";
 
 "full_info.error.subtitle" = "недоступен";
+"full_info.error.transaction_not_found" = "Транзакция не обнаружена";
 "full_info.error.retry" = "Повторить";
 "full_info.error.change_source" = "Сменить Источник";
 "full_info.no_address" = "Пустой Адрес";
