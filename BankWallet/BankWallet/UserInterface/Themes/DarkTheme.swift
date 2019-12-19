@@ -14,7 +14,8 @@ class DarkTheme: ITheme {
     let colorLeah: UIColor = .appSteelLight
     let colorJeremy: UIColor = .appSteel20
     let colorElena: UIColor = .appSteel20
-    let colorLawrence: UIColor = .appSteel20
+    let colorLawrence: UIColor = .appSteelDark
+    let colorLawrencePressed: UIColor = .appLawrencePressedD
     let colorClaude: UIColor = .appDark
     let colorAndy: UIColor = .appBlack50
     let colorTyler: UIColor = .appDark

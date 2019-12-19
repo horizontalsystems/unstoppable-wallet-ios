@@ -5,12 +5,12 @@ import SnapKit
 import XRatesKit
 
 class BalanceCell: CardCell {
-    static let height: CGFloat = 100
-    static let expandedHeight: CGFloat = 160
-    static let expandedLockedHeight: CGFloat = 188
+    static let height: CGFloat = 107
+    static let expandedHeight: CGFloat = 165
+    static let expandedLockedHeight: CGFloat = 190
     static let animationDuration = 0.15
 
-    private let lockedInfoVisibleHeight = 29
+    private let lockedInfoVisibleHeight = 25
 
     private let coinIconImageView = UIImageView()
     private let syncSpinner = HUDProgressView(
@@ -23,14 +23,13 @@ class BalanceCell: CardCell {
     private let failedImageView = UIImageView()
 
     private let nameLabel = UILabel()
-    private let rateLabel = UILabel()
-    private let rateDiffView = RateDiffView()
-
-    private let currencyValueLabel = UILabel()
-
-    private let coinValueWrapper = UIView()
-    private let coinValueLabel = UILabel()
     private let blockchainBadgeView = BadgeView()
+
+    private let rateLabel = UILabel()
+    private let rateDiffButton = RateDiffButton()
+
+    private let coinValueLabel = UILabel()
+    private let currencyValueLabel = UILabel()
 
     private let lockedInfoHolder = UIView()
     private let coinLockedIcon = UIImageView(image: UIImage(named: "Transaction Lock Icon"))
@@ -53,32 +52,39 @@ class BalanceCell: CardCell {
         selectionStyle = .none
 
         let coinIconWrapper = UIView()
-        coinIconWrapper.backgroundColor = .appJeremy
-        coinIconWrapper.cornerRadius = .cornerRadius8
 
         clippingView.addSubview(coinIconWrapper)
         coinIconWrapper.snp.makeConstraints { maker in
             maker.leading.top.equalToSuperview().offset(CGFloat.margin2x)
-            maker.width.height.equalTo(CGFloat.heightSingleLineCell)
+            maker.width.height.equalTo(46)
         }
 
-        coinIconImageView.tintColor = .appGray
+        coinIconWrapper.backgroundColor = .appJeremy
+        coinIconWrapper.cornerRadius = .cornerRadius8
 
         coinIconWrapper.addSubview(coinIconImageView)
         coinIconImageView.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
         }
 
+        coinIconImageView.tintColor = .appGray
+
         coinIconWrapper.addSubview(syncSpinner)
         syncSpinner.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
 
-        failedImageView.image = UIImage(named: "Attention Icon")
-
         coinIconWrapper.addSubview(failedImageView)
         failedImageView.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
+        }
+
+        failedImageView.image = UIImage(named: "Attention Icon")
+
+        clippingView.addSubview(nameLabel)
+        nameLabel.snp.makeConstraints { maker in
+            maker.leading.equalTo(coinIconWrapper.snp.trailing).offset(CGFloat.margin2x)
+            maker.top.equalToSuperview().offset(CGFloat.margin3x)
         }
 
         nameLabel.font = .appHeadline2
@@ -86,85 +92,78 @@ class BalanceCell: CardCell {
         nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-        clippingView.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(coinIconWrapper.snp.trailing).offset(CGFloat.margin2x)
-            maker.top.equalTo(coinIconWrapper.snp.top).offset(CGFloat.margin05x)
+        clippingView.addSubview(blockchainBadgeView)
+        blockchainBadgeView.snp.makeConstraints { maker in
+            maker.leading.equalTo(nameLabel.snp.trailing).offset(CGFloat.margin1x)
+            maker.centerY.equalTo(nameLabel.snp.centerY)
+        }
+
+        clippingView.addSubview(rateLabel)
+        rateLabel.snp.makeConstraints { maker in
+            maker.leading.equalTo(nameLabel.snp.leading)
+            maker.bottom.equalTo(coinIconWrapper.snp.bottom)
         }
 
         rateLabel.font = .appSubhead2
         rateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         rateLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-        clippingView.addSubview(rateLabel)
-        rateLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(nameLabel.snp.leading)
-            maker.top.equalTo(nameLabel.snp.bottom).offset(CGFloat.margin1x)
+        clippingView.addSubview(rateDiffButton)
+        rateDiffButton.snp.makeConstraints { maker in
+            maker.leading.greaterThanOrEqualTo(blockchainBadgeView.snp.trailing).offset(CGFloat.margin2x)
+            maker.top.trailing.equalToSuperview().inset(CGFloat.margin3x)
+            maker.width.equalTo(72)
+            maker.height.equalTo(42)
         }
 
-        rateDiffView.font = .appSubhead2
-
-        clippingView.addSubview(rateDiffView)
-        rateDiffView.snp.makeConstraints { maker in
-            maker.leading.equalTo(rateLabel.snp.trailing).offset(CGFloat.margin1x)
-            maker.centerY.equalTo(rateLabel.snp.centerY)
-        }
+        rateDiffButton.addTarget(self, action: #selector(onTapChart), for: .touchUpInside)
 
         let separatorView = UIView()
-        separatorView.backgroundColor = .appSteel20
 
         clippingView.addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin2x)
-            maker.top.equalTo(coinIconWrapper.snp.bottom).offset(CGFloat.margin2x)
+            maker.top.equalTo(coinIconWrapper.snp.bottom).offset(CGFloat.margin3x)
             maker.height.equalTo(CGFloat.heightOnePixel)
         }
 
-        clippingView.addSubview(coinValueWrapper)
-        coinValueWrapper.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(CGFloat.margin3x)
-            maker.top.equalTo(separatorView.snp.bottom).offset(CGFloat.margin3x)
-        }
+        separatorView.backgroundColor = .appSteel20
 
-        coinValueWrapper.addSubview(coinValueLabel)
+        clippingView.addSubview(coinValueLabel)
         coinValueLabel.snp.makeConstraints { maker in
-            maker.leading.top.bottom.equalToSuperview()
+            maker.leading.equalToSuperview().offset(CGFloat.margin3x)
+            maker.top.equalTo(separatorView.snp.top).offset(CGFloat.margin3x)
         }
 
-        coinValueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         coinValueLabel.font = .appSubhead2
+        coinValueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
-        coinValueWrapper.addSubview(blockchainBadgeView)
-        blockchainBadgeView.snp.makeConstraints { maker in
-            maker.leading.equalTo(coinValueLabel.snp.trailing).offset(CGFloat.margin1x)
-            maker.trailing.centerY.equalToSuperview()
+        clippingView.addSubview(currencyValueLabel)
+        currencyValueLabel.snp.makeConstraints { maker in
+            maker.leading.equalTo(coinValueLabel.snp.trailing).offset(CGFloat.margin2x)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin3x)
+            maker.bottom.equalTo(coinValueLabel.snp.bottom)
         }
 
         currencyValueLabel.font = .appHeadline2
         currencyValueLabel.textAlignment = .right
 
-        clippingView.addSubview(currencyValueLabel)
-        currencyValueLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(coinValueWrapper.snp.trailing).offset(CGFloat.margin2x)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin3x)
-            maker.bottom.equalTo(coinValueWrapper.snp.bottom)
-        }
-
         clippingView.addSubview(lockedInfoHolder)
         lockedInfoHolder.snp.makeConstraints { maker in
             maker.height.equalTo(lockedInfoVisibleHeight)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin3x)
-            maker.top.equalTo(coinValueWrapper.snp.bottom)
+            maker.top.equalTo(coinValueLabel.snp.bottom)
         }
 
         lockedInfoHolder.backgroundColor = .clear
         lockedInfoHolder.clipsToBounds = true
 
         lockedInfoHolder.addSubview(coinLockedIcon)
-        coinLockedIcon.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         coinLockedIcon.snp.makeConstraints { maker in
             maker.leading.bottom.equalToSuperview()
         }
+
+        coinLockedIcon.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         lockedInfoHolder.addSubview(coinLockedValueLabel)
         coinLockedValueLabel.snp.makeConstraints { maker in
@@ -176,17 +175,14 @@ class BalanceCell: CardCell {
         coinLockedValueLabel.textColor = .appGray
 
         lockedInfoHolder.addSubview(currencyLockedValueLabel)
-        currencyLockedValueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         currencyLockedValueLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(coinLockedValueLabel.snp.trailing)
+            maker.leading.equalTo(coinLockedValueLabel.snp.trailing).offset(CGFloat.margin2x)
             maker.trailing.bottom.equalToSuperview()
         }
 
         currencyLockedValueLabel.font = .appSubhead1
         currencyLockedValueLabel.textColor = .appLeah
-
-        syncingLabel.font = .appSubhead2
-        syncingLabel.textColor = .appGray
+        currencyLockedValueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         clippingView.addSubview(syncingLabel)
         syncingLabel.snp.makeConstraints { maker in
@@ -194,9 +190,8 @@ class BalanceCell: CardCell {
             maker.top.equalTo(separatorView.snp.bottom).offset(CGFloat.margin3x)
         }
 
-        syncedUntilLabel.font = .appSubhead2
-        syncedUntilLabel.textColor = .appGray
-        syncedUntilLabel.textAlignment = .right
+        syncingLabel.font = .appSubhead2
+        syncingLabel.textColor = .appGray
 
         clippingView.addSubview(syncedUntilLabel)
         syncedUntilLabel.snp.makeConstraints { maker in
@@ -205,8 +200,9 @@ class BalanceCell: CardCell {
             maker.bottom.equalTo(syncingLabel.snp.bottom)
         }
 
-        receiveButton.setTitle("balance.deposit".localized, for: .normal)
-        receiveButton.addTarget(self, action: #selector(onTapReceive), for: .touchUpInside)
+        syncedUntilLabel.font = .appSubhead2
+        syncedUntilLabel.textColor = .appGray
+        syncedUntilLabel.textAlignment = .right
 
         clippingView.addSubview(receiveButton)
         receiveButton.snp.makeConstraints { maker in
@@ -215,8 +211,8 @@ class BalanceCell: CardCell {
             maker.height.equalTo(CGFloat.heightButton)
         }
 
-        sendButton.setTitle("balance.send".localized, for: .normal)
-        sendButton.addTarget(self, action: #selector(onTapSend), for: .touchUpInside)
+        receiveButton.setTitle("balance.deposit".localized, for: .normal)
+        receiveButton.addTarget(self, action: #selector(onTapReceive), for: .touchUpInside)
 
         clippingView.addSubview(sendButton)
         sendButton.snp.makeConstraints { maker in
@@ -226,6 +222,9 @@ class BalanceCell: CardCell {
             maker.width.equalTo(receiveButton.snp.width)
             maker.height.equalTo(CGFloat.heightButton)
         }
+
+        sendButton.setTitle("balance.send".localized, for: .normal)
+        sendButton.addTarget(self, action: #selector(onTapSend), for: .touchUpInside)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -269,25 +268,25 @@ class BalanceCell: CardCell {
         }
 
         if let diff = item.diff {
-            rateDiffView.set(value: diff, highlightText: false)
-            rateDiffView.isHidden = false
+            rateDiffButton.show(value: diff.value, dimmed: diff.dimmed)
         } else {
-            rateDiffView.isHidden = true
+            rateDiffButton.showNotAvailable()
         }
 
         if let currencyValue = item.currencyValue {
+            currencyValueLabel.set(hidden: false, animated: animated, duration: BalanceCell.animationDuration)
             currencyValueLabel.text = currencyValue.text
             currencyValueLabel.textColor = currencyValue.dimmed ? .appYellow50 : .appJacob
         } else {
-            currencyValueLabel.text = nil
+            currencyValueLabel.set(hidden: true, animated: animated, duration: BalanceCell.animationDuration)
         }
 
         if let coinValue = item.coinValue {
+            coinValueLabel.set(hidden: false, animated: animated, duration: BalanceCell.animationDuration)
             coinValueLabel.text = coinValue.text
             coinValueLabel.textColor = coinValue.dimmed ? .appGray50 : .appLeah
-            coinValueWrapper.isHidden = false
         } else {
-            coinValueWrapper.isHidden = true
+            coinValueLabel.set(hidden: true, animated: animated, duration: BalanceCell.animationDuration)
         }
 
         if let blockchainBadge = item.blockchainBadge {
@@ -310,14 +309,20 @@ class BalanceCell: CardCell {
                 syncedUntilLabel.text = nil
             }
 
-            syncingLabel.isHidden = false
-            syncedUntilLabel.isHidden = false
+            syncingLabel.set(hidden: false, animated: animated, duration: BalanceCell.animationDuration)
+            syncedUntilLabel.set(hidden: false, animated: animated, duration: BalanceCell.animationDuration)
         } else {
-            syncingLabel.isHidden = true
-            syncedUntilLabel.isHidden = true
+            syncingLabel.set(hidden: true, animated: animated, duration: BalanceCell.animationDuration)
+            syncedUntilLabel.set(hidden: true, animated: animated, duration: BalanceCell.animationDuration)
+        }
+
+        lockedInfoHolder.snp.updateConstraints { maker in
+            maker.height.equalTo(item.lockedVisible ? lockedInfoVisibleHeight : 0)
         }
 
         if let lockedCoinValue = item.lockedCoinValue {
+            lockedInfoHolder.set(hidden: false, animated: animated, duration: BalanceCell.animationDuration)
+
             coinLockedValueLabel.text = lockedCoinValue.text
 
             if let lockedCurrencyValue = item.lockedCurrencyValue {
@@ -325,14 +330,8 @@ class BalanceCell: CardCell {
             } else {
                 currencyLockedValueLabel.text = nil
             }
-
-            lockedInfoHolder.snp.updateConstraints { maker in
-                maker.height.equalTo(lockedInfoVisibleHeight)
-            }
         } else {
-            lockedInfoHolder.snp.updateConstraints { maker in
-                maker.height.equalTo(0)
-            }
+            lockedInfoHolder.set(hidden: true, animated: animated, duration: BalanceCell.animationDuration)
         }
 
         if let enabled = item.receiveButtonEnabled {
@@ -361,7 +360,7 @@ class BalanceCell: CardCell {
         onPay?()
     }
 
-    @objc func onChartTap() {
+    @objc func onTapChart() {
         onChart?()
     }
 

@@ -39,6 +39,14 @@ class BalanceViewItemFactory {
         return (text: formattedValue, dimmed: marketInfo.expired)
     }
 
+    private func diff(marketInfo: MarketInfo?) -> (value: Decimal, dimmed: Bool)? {
+        guard let marketInfo = marketInfo else {
+            return nil
+        }
+
+        return (value: marketInfo.diff, dimmed: marketInfo.expired)
+    }
+
     private func coinValue(state: AdapterState?, balance: Decimal?, coin: Coin, expanded: Bool) -> (text: String, dimmed: Bool)? {
         guard let state = state, let balance = balance else {
             return nil
@@ -49,6 +57,24 @@ class BalanceViewItemFactory {
         }
 
         let coinValue = CoinValue(coin: coin, value: balance)
+
+        guard let formattedValue = ValueFormatter.instance.format(coinValue: coinValue, fractionPolicy: .threshold(high: 0.01, low: 0)) else {
+            return nil
+        }
+
+        return (text: formattedValue, dimmed: state != .synced)
+    }
+
+    private func coinValueLocked(state: AdapterState?, balanceLocked: Decimal?, coin: Coin, expanded: Bool) -> (text: String, dimmed: Bool)? {
+        guard let state = state, let balanceLocked = balanceLocked else {
+            return nil
+        }
+
+        if !expanded {
+            return nil
+        }
+
+        let coinValue = CoinValue(coin: coin, value: balanceLocked)
 
         guard let formattedValue = ValueFormatter.instance.format(coinValue: coinValue, fractionPolicy: .threshold(high: 0.01, low: 0)) else {
             return nil
@@ -118,13 +144,14 @@ extension BalanceViewItemFactory: IBalanceViewItemFactory {
                 coinIconCode: coinIconCode(coin: coin, state: state),
                 coinTitle: coin.title,
                 coinValue: coinValue(state: state, balance: item.balanceTotal, coin: coin, expanded: expanded),
-                lockedCoinValue: coinValue(state: state, balance: item.balanceLocked, coin: coin, expanded: expanded),
+                lockedCoinValue: coinValueLocked(state: state, balanceLocked: item.balanceLocked, coin: coin, expanded: expanded),
+                lockedVisible: item.balanceLocked != nil,
                 blockchainBadge: coin.type.blockchainType,
 
                 currencyValue: currencyValue(state: state, balance: item.balanceTotal, currency: currency, marketInfo: marketInfo, expanded: expanded),
                 lockedCurrencyValue: currencyValue(state: state, balance: item.balanceLocked, currency: currency, marketInfo: marketInfo, expanded: expanded),
                 rateValue: rateValue(currency: currency, marketInfo: marketInfo),
-                diff: marketInfo?.diff,
+                diff: diff(marketInfo: marketInfo),
 
                 syncSpinnerProgress: syncSpinnerProgress(state: state),
                 failedImageViewVisible: failedImageViewVisible(state: state),

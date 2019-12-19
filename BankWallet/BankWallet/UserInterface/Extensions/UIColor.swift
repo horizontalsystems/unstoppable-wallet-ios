@@ -70,6 +70,7 @@ extension UIColor {
     static var appJeremy: UIColor { App.theme.colorJeremy }
     static var appElena: UIColor { App.theme.colorElena }
     static var appLawrence: UIColor { App.theme.colorLawrence }
+    static var appLawrencePressed: UIColor { App.theme.colorLawrencePressed }
     static var appClaude: UIColor { App.theme.colorClaude }
     static var appAndy: UIColor { App.theme.colorAndy }
     static var appTyler: UIColor { App.theme.colorTyler }
@@ -95,4 +96,6 @@ extension UIColor {
     static let appGray50: UIColor = UIColor(named: "App Gray 50")!
     static let appYellow50: UIColor = UIColor(named: "App Yellow 50")!
     static let appGreen50: UIColor = UIColor(named: "App Green 50")!
+    static let appLawrencePressedD: UIColor = UIColor(named: "App Lawrence Pressed D")!
+    static let appLawrencePressedL: UIColor = UIColor(named: "App Lawrence Pressed L")!
 }

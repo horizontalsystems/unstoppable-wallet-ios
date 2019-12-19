@@ -9,12 +9,13 @@ struct BalanceViewItem {
     let coinTitle: String
     let coinValue: (text: String, dimmed: Bool)?
     let lockedCoinValue: (text: String, dimmed: Bool)?
+    let lockedVisible: Bool
     let blockchainBadge: String?
 
     let currencyValue: (text: String, dimmed: Bool)?
     let lockedCurrencyValue: (text: String, dimmed: Bool)?
     let rateValue: (text: String, dimmed: Bool)?
-    let diff: Decimal?
+    let diff: (value: Decimal, dimmed: Bool)?
 
     let syncSpinnerProgress: Int?
     let failedImageViewVisible: Bool
@@ -47,9 +48,11 @@ extension BalanceViewItem: DiffAware {
                 a.currencyValue?.dimmed == b.currencyValue?.dimmed &&
                 a.lockedCurrencyValue?.text == b.lockedCurrencyValue?.text &&
                 a.lockedCurrencyValue?.dimmed == b.lockedCurrencyValue?.dimmed &&
+                a.lockedVisible == b.lockedVisible &&
                 a.rateValue?.text == b.rateValue?.text &&
                 a.rateValue?.dimmed == b.rateValue?.dimmed &&
-                a.diff == b.diff
+                a.diff?.value == b.diff?.value &&
+                a.diff?.dimmed == b.diff?.dimmed
 
         let compareOther =
                 a.syncSpinnerProgress == b.syncSpinnerProgress &&
