@@ -20,6 +20,7 @@ class LightTheme: ITheme {
     let colorJeremy: UIColor = .appSteelLight
     let colorElena: UIColor = .appLightGray
     let colorLawrence: UIColor = .appWhite
+    let colorLawrencePressed: UIColor = .appLawrencePressedL
     let colorClaude: UIColor = .appWhite
     let colorAndy: UIColor = .appSteel20
     let colorTyler: UIColor = .appLight

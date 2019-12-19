@@ -15,6 +15,7 @@ protocol ITheme {
     var colorJeremy: UIColor { get }
     var colorElena: UIColor { get }
     var colorLawrence: UIColor { get }
+    var colorLawrencePressed: UIColor { get }
     var colorClaude: UIColor { get }
     var colorAndy: UIColor { get }
     var colorTyler: UIColor { get }
