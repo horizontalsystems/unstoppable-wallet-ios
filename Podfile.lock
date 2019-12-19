@@ -34,28 +34,28 @@ PODS:
     - OpenSslKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
     - Secp256k1Kit.swift (~> 1.0)
-  - BitcoinKit.swift (0.12.0):
+  - BitcoinKit.swift (0.12.1):
     - Alamofire (~> 4.0)
     - BigInt (~> 5.0)
-    - BitcoinCore.swift (~> 0.12.0)
+    - BitcoinCore.swift (~> 0.12.1)
     - GRDB.swift (~> 4.0)
     - HdWalletKit.swift (~> 1.4)
-    - Hodler.swift (~> 0.12.0)
+    - Hodler.swift (~> 0.12.1)
     - ObjectMapper (~> 3.0)
     - OpenSslKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
     - Secp256k1Kit.swift (~> 1.0)
   - BlsKit.swift (1.0)
   - BlueSocket (1.0.52)
-  - Chart.swift (1.0):
+  - Chart.swift (1.1):
     - SnapKit (~> 5.0)
   - Cuckoo (1.3.0):
     - Cuckoo/Swift (= 1.3.0)
   - Cuckoo/Swift (1.3.0)
-  - DashKit.swift (0.12.0):
+  - DashKit.swift (0.12.1):
     - Alamofire (~> 4.0)
     - BigInt (~> 5.0)
-    - BitcoinCore.swift (~> 0.12.0)
+    - BitcoinCore.swift (~> 0.12.1)
     - BlsKit.swift (~> 1.0)
     - GRDB.swift (~> 4.0)
     - HdWalletKit.swift (~> 1.4)
@@ -102,9 +102,9 @@ PODS:
   - FeeRateKit.swift (0.4):
     - Alamofire (~> 4.0)
     - RxSwift (~> 5.0)
-  - GRDB.swift (4.6.2):
-    - GRDB.swift/standard (= 4.6.2)
-  - GRDB.swift/standard (4.6.2)
+  - GRDB.swift (4.7.0):
+    - GRDB.swift/standard (= 4.7.0)
+  - GRDB.swift/standard (4.7.0)
   - GRKOpenSSLFramework (1.0.2.19)
   - HdWalletKit.swift (1.4):
     - OpenSslKit.swift (~> 1.0)
@@ -113,7 +113,7 @@ PODS:
     - BitcoinCore.swift (~> 0.12.1)
     - OpenSslKit.swift (~> 1.0)
     - Secp256k1Kit.swift (~> 1.0)
-  - HUD.swift (1.1):
+  - HUD.swift (1.2):
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1)
   - KeychainAccess (4.1.0)
@@ -264,12 +264,12 @@ SPEC CHECKSUMS:
   BinanceChainKit.swift: c9ff25cd635d5487c7788a18a6a2545d8f1cf760
   BitcoinCashKit.swift: 5abc9de043061a754d0c695a6a29fcc04698a74b
   BitcoinCore.swift: dae1031179a65745b9cbed37b84c9b379dff650a
-  BitcoinKit.swift: 8873619a4e834fc0ccf6688756e9e04bcfb4bc0d
+  BitcoinKit.swift: f2363936f6aef17d14659aa05ee73fe61f5925da
   BlsKit.swift: 533e494e0068f9ad2cf211a31fe9279f688af123
   BlueSocket: 1acd943acb07b55905291d608649fcfbf8cbd57d
-  Chart.swift: 0016b521cd6b627dd8394274f2fb3605e1e32496
+  Chart.swift: 624c06cd56533968098928e93980d90ff4918ce0
   Cuckoo: 4045c5a8ce378c919c20c5ff3d6dd11ded0ec699
-  DashKit.swift: 071210ae28fe52d227c9f5f9d7106e123222fff6
+  DashKit.swift: 28b812e15176f1352f1bd75921bd44922bf88bab
   DeepDiff: e5ae6c50d0321568e4508cec5930b9f10bb293fc
   EosioSwift: 21ca0d61e7928a982a64c82b623e7342d7dd86dc
   EosioSwiftAbieosSerializationProvider: f5fc013dde26b49d037d9b827fc66c905c22de50
@@ -279,11 +279,11 @@ SPEC CHECKSUMS:
   Erc20Kit.swift: 6b2e531860457ace083f30762db0a6b9e76bfbd5
   EthereumKit.swift: 409a1beedd2e414e9f40f662668b0294b206c575
   FeeRateKit.swift: a2e4b9994cd67d321b32c5b99084bf7e664c4ebc
-  GRDB.swift: 258520e10b49ff55307cbb0bec701af0742ae621
+  GRDB.swift: 0df1953957f179bff46fccb8402a196e3b7a77f5
   GRKOpenSSLFramework: 4abc733a8fcbc37060619a86a54202d2938dd70e
   HdWalletKit.swift: 45af883b0aa722a56ed9a0de82121ba6c43cce3f
   Hodler.swift: 65e5ee8442e0baebd9f14ca724b4395894719a9c
-  HUD.swift: e1ea518a902ad7be1289c8710a48ca98d13b6759
+  HUD.swift: 0b9d074f07f601891878f87ff10ad867eed3182b
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
   Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
