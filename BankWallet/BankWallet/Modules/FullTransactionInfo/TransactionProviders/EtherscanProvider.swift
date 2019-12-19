@@ -5,26 +5,24 @@ class EtherscanEthereumProvider: IEthereumForksProvider {
     let name: String = "Etherscan.io"
     private let url: String
     private let apiUrl: String
+    let reachabilityUrl: String
 
     func url(for hash: String) -> String? {
-        return url + hash
-    }
-
-    func reachabilityUrl(for hash: String) -> String {
-        return apiUrl + hash
+        url + hash
     }
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        return .get(url: apiUrl + hash, params: nil)
+        .get(url: apiUrl + hash, params: nil)
     }
 
     init(testMode: Bool) {
         url = testMode ? "https://ropsten.etherscan.io/tx/" : "https://etherscan.io/tx/"
         apiUrl = testMode ? "https://api-ropsten.etherscan.io/api?module=proxy&action=eth_getTransactionByHash&txhash=" : "https://api.etherscan.io/api?module=proxy&action=eth_getTransactionByHash&txhash="
+        reachabilityUrl = testMode ? "https://api-ropsten.etherscan.io/api?module=stats&action=ethprice" : "https://api.etherscan.io/api?module=stats&action=ethprice"
     }
 
     func convert(json: [String: Any]) -> IEthereumResponse? {
-        return try? EtherscanEthereumResponse(JSONObject: json)
+        try? EtherscanEthereumResponse(JSONObject: json)
     }
 
 }
@@ -50,7 +48,9 @@ class EtherscanEthereumResponse: IEthereumResponse, ImmutableMappable {
 
     required init(map: Map) throws {
         txId = try? map.value("result.hash")
-
+        guard txId != nil else {
+            throw MapError(key: "txId", currentValue: "nil", reason: "wrong data")
+        }
         if let heightString: String = try? map.value("result.blockNumber") {
             blockHeight = Int(heightString.replacingOccurrences(of: "0x", with: ""), radix: 16)
         }

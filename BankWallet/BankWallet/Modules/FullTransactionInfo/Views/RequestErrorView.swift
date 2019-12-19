@@ -3,10 +3,10 @@ import SnapKit
 
 class RequestErrorView: UIView {
     private let holderView =  UIView()
-    private let imageView = UIImageView(image: UIImage(named: "Error Icon", in: Bundle(for: RequestErrorView.self), compatibleWith: nil))
+    private let imageView = UIImageView()
     private let titleLabel = UILabel(frame: .zero)
-    private var subtitleLabel: UILabel?
-    private var button: UIButton?
+    private var subtitleLabel = UILabel()
+    private var button = UIButton.appSecondary
     private var linkView = FullTransactionLinkView()
 
     private var action: (() -> ())?
@@ -15,10 +15,12 @@ class RequestErrorView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    required public init(subtitle: String?, buttonText: String?, linkText: String, onTapButton: (() -> ())? = nil, onTapLink: (() -> ())? = nil) {
+    required public init() {
         super.init(frame: CGRect.zero)
 
         backgroundColor = .clear
+
+        addSubview(holderView)
 
         holderView.addSubview(imageView)
         imageView.snp.makeConstraints { maker in
@@ -27,60 +29,62 @@ class RequestErrorView: UIView {
 
         holderView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(imageView.snp.bottom).offset(CGFloat.margin6x)
+            maker.top.equalTo(imageView.snp.bottom).offset(CGFloat.margin3x)
             maker.leading.trailing.equalToSuperview()
         }
 
         titleLabel.numberOfLines = 1
-        titleLabel.font = .appBody
-        titleLabel.textColor = .crypto_White_Black
+        titleLabel.font = .appSubhead2
+        titleLabel.textColor = .appGray
         titleLabel.textAlignment = .center
 
-        var bottomView: UIView = titleLabel
-        if let subtitle = subtitle {
-            let subtitleLabel = UILabel(frame: .zero)
-            holderView.addSubview(subtitleLabel)
-            subtitleLabel.snp.makeConstraints { maker in
-                maker.top.equalTo(bottomView.snp.bottom).offset(CGFloat.margin1x)
-                maker.leading.trailing.equalToSuperview()
-            }
-
-            subtitleLabel.numberOfLines = 1
-            subtitleLabel.font = .appBody
-            subtitleLabel.textColor = .appLucian
-            subtitleLabel.textAlignment = .center
-            subtitleLabel.text = subtitle
-            bottomView = subtitleLabel
-            self.subtitleLabel = subtitleLabel
-        }
-        if let buttonText = buttonText {
-            let button = UIButton.appSecondary
-            holderView.addSubview(button)
-
-            button.snp.makeConstraints { maker in
-                maker.centerX.equalToSuperview()
-                maker.top.equalTo(bottomView.snp.bottom).offset(CGFloat.margin4x)
-                maker.height.equalTo(CGFloat.heightButtonSecondary)
-            }
-
-            button.setTitle(buttonText, for: .normal)
-            button.addTarget(self, action: #selector(tapButton), for: .touchUpInside)
-            action = onTapButton
-            bottomView = button
-        }
+        holderView.addSubview(subtitleLabel)
+        holderView.addSubview(button)
         holderView.addSubview(linkView)
-        linkView.snp.makeConstraints { maker in
-            maker.centerX.equalToSuperview()
-            maker.top.equalTo(bottomView.snp.bottom).offset(CGFloat.margin6x)
-        }
-        linkView.bind(text: linkText, onTap: onTapLink)
-        bottomView = linkView
 
-        addSubview(holderView)
+        updateConstraints(showSubtitle: false, showButton: false)
+
+        subtitleLabel.numberOfLines = 1
+        subtitleLabel.font = .appBody
+        subtitleLabel.textColor = .appLucian
+        subtitleLabel.textAlignment = .center
+
         holderView.snp.makeConstraints { maker in
-            maker.bottom.equalTo(bottomView.snp.bottom)
             maker.leading.trailing.equalToSuperview()
             maker.center.equalToSuperview()
+        }
+    }
+
+    func updateConstraints(showSubtitle: Bool, showButton: Bool) {
+        if showSubtitle {
+            subtitleLabel.snp.remakeConstraints { maker in
+                maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin4x)
+                maker.leading.trailing.equalToSuperview()
+            }
+        } else {
+            subtitleLabel.snp.remakeConstraints { maker in
+                maker.top.equalTo(titleLabel.snp.bottom)
+                maker.leading.trailing.equalToSuperview()
+                maker.height.equalTo(0)
+            }
+        }
+        if showButton {
+            button.snp.remakeConstraints { maker in
+                maker.centerX.equalToSuperview()
+                maker.top.equalTo(subtitleLabel.snp.bottom).offset(CGFloat.margin4x)
+                maker.height.equalTo(CGFloat.heightButtonSecondary)
+            }
+        } else {
+            button.snp.remakeConstraints { maker in
+                maker.centerX.equalToSuperview()
+                maker.top.equalTo(subtitleLabel.snp.bottom)
+                maker.height.equalTo(0)
+            }
+        }
+        linkView.snp.remakeConstraints { maker in
+            maker.centerX.equalToSuperview()
+            maker.top.equalTo(button.snp.bottom).offset(CGFloat.margin4x)
+            maker.bottom.equalToSuperview()
         }
     }
 
@@ -88,13 +92,18 @@ class RequestErrorView: UIView {
         action?()
     }
 
-    public func set(title: String?) {
+    public func bind(image: UIImage?, title: String, subtitle: String? = nil, buttonText: String? = nil, linkText: String, onTapButton: (() -> ())? = nil, onTapLink: (() -> ())? = nil) {
+        imageView.image = image
         titleLabel.text = title
-        setNeedsDisplay()
-    }
 
-    public func set(action: (() -> ())?) {
-        self.action = action
+        subtitleLabel.text = subtitle
+        button.setTitle(buttonText, for: .normal)
+
+        linkView.bind(text: linkText, onTap: onTapLink)
+        action = onTapButton
+
+        updateConstraints(showSubtitle: subtitle != nil, showButton: buttonText != nil)
+        setNeedsDisplay()
     }
 
 }

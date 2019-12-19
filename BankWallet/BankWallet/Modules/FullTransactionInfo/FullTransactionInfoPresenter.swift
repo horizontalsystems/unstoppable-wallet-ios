@@ -24,6 +24,7 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoViewDelegate {
         interactor.didLoad()
         interactor.updateProvider(for: state.wallet)
 
+        view?.reload()
         tryLoadInfo()
     }
 
@@ -115,7 +116,12 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoInteractorDelegate {
         view?.reload()
     }
 
-    func onError(providerName: String?) {
+    func onProviderOffline(providerName: String?) {
+        view?.hideLoading()
+        view?.showOffline(providerName: providerName)
+    }
+
+    func onTransactionNotFound(providerName: String?) {
         view?.hideLoading()
         view?.showError(providerName: providerName)
     }

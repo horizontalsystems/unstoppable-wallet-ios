@@ -3,13 +3,10 @@ import ObjectMapper
 class HorSysBitcoinProvider: IBitcoinForksProvider {
     let name = "HorizontalSystems.xyz"
     private let apiUrl: String
+    let reachabilityUrl: String
 
     func url(for hash: String) -> String? {
         nil
-    }
-
-    func reachabilityUrl(for hash: String) -> String {
-        apiUrl + hash
     }
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
@@ -18,6 +15,7 @@ class HorSysBitcoinProvider: IBitcoinForksProvider {
 
     init(testMode: Bool) {
         apiUrl = testMode ? "http://btc-testnet.horizontalsystems.xyz/apg/tx/" : "https://btc.horizontalsystems.xyz/apg/tx/"
+        reachabilityUrl = testMode ? "http://btc-testnet.horizontalsystems.xyz/apg/block/0" : "https://btc.horizontalsystems.xyz/apg/block/0"
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
@@ -29,13 +27,10 @@ class HorSysBitcoinCashProvider: IBitcoinForksProvider {
     let name: String = "HorizontalSystems.xyz"
     private let url: String
     private let apiUrl: String
+    let reachabilityUrl: String
 
     func url(for hash: String) -> String? {
         return url + hash
-    }
-
-    func reachabilityUrl(for hash: String) -> String {
-        return apiUrl + hash
     }
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
@@ -45,6 +40,7 @@ class HorSysBitcoinCashProvider: IBitcoinForksProvider {
     init(testMode: Bool) {
         url = testMode ? "http://bch-testnet.horizontalsystems.xyz/apg/tx/" : "https://bch.horizontalsystems.xyz/apg/tx/"
         apiUrl = url
+        reachabilityUrl = testMode ? "http://bch-testnet.horizontalsystems.xyz/apg/block/0" : "https://bch.horizontalsystems.xyz/apg/block/0"
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
@@ -57,13 +53,10 @@ class HorSysDashProvider: IBitcoinForksProvider {
     let name = "HorizontalSystems.xyz"
     private let url: String
     private let apiUrl: String
+    let reachabilityUrl: String
 
     func url(for hash: String) -> String? {
         return url + hash
-    }
-
-    func reachabilityUrl(for hash: String) -> String {
-        return apiUrl + hash
     }
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
@@ -73,6 +66,7 @@ class HorSysDashProvider: IBitcoinForksProvider {
     init(testMode: Bool) {
         url = testMode ? "http://dash-testnet.horizontalsystems.xyz/insight/tx/" : "https://dash.horizontalsystems.xyz/insight/tx/"
         apiUrl = testMode ? "http://dash-testnet.horizontalsystems.xyz/apg/tx/" : "https://dash.horizontalsystems.xyz/apg/tx/"
+        reachabilityUrl = testMode ? "http://dash-testnet.horizontalsystems.xyz/apg/block/0" : "https://dash.horizontalsystems.xyz/apg/block/0"
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
@@ -84,13 +78,10 @@ class HorSysEthereumProvider: IEthereumForksProvider {
     let name: String = "HorizontalSystems.xyz"
     private let url: String
     private let apiUrl: String
+    let reachabilityUrl: String
 
     func url(for hash: String) -> String? {
         url + hash
-    }
-
-    func reachabilityUrl(for hash: String) -> String {
-        apiUrl + hash
     }
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
@@ -100,6 +91,7 @@ class HorSysEthereumProvider: IEthereumForksProvider {
     init(testMode: Bool) {
         url = testMode ? "http://eth-ropsten.horizontalsystems.xyz/tx/" : "https://eth.horizontalsystems.xyz/tx/"
         apiUrl = testMode ? "http://eth-ropsten.horizontalsystems.xyz/api?module=transaction&action=gettxinfo&txhash=" : "https://eth.horizontalsystems.xyz/api?module=transaction&action=gettxinfo&txhash="
+        reachabilityUrl = testMode ? "http://eth-ropsten.horizontalsystems.xyz/apg/block/0" : "https://eth.horizontalsystems.xyz/apg/block/0"
     }
 
     func convert(json: [String: Any]) -> IEthereumResponse? {
@@ -123,6 +115,9 @@ class HorSysBitcoinResponse: IBitcoinResponse, ImmutableMappable {
 
     required init(map: Map) throws {
         txId = try? map.value("hash")
+        guard txId != nil else {
+            throw MapError(key: "txId", currentValue: "nil", reason: "wrong data")
+        }
         blockTime = try? map.value("time")
         blockHeight = try? map.value("height")
         confirmations = try? map.value("confirmations")
@@ -178,7 +173,9 @@ class HorSysEthereumResponse: IEthereumResponse, ImmutableMappable {
 
     required init(map: Map) throws {
         txId = try? map.value("result.hash")
-
+        guard txId != nil else {
+            throw MapError(key: "txId", currentValue: "nil", reason: "wrong data")
+        }
         if let blockTimeString: String = try? map.value("result.timeStamp") {
             blockTime = Int(blockTimeString)
         }

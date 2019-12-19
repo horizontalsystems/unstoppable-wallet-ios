@@ -1,5 +1,6 @@
 protocol IFullTransactionInfoView: class {
 
+    func showOffline(providerName: String?)
     func showError(providerName: String?)
     func hideError()
 
@@ -53,7 +54,8 @@ protocol IFullTransactionInfoInteractorDelegate: class {
     func onProviderChanged()
 
     func didReceive(transactionRecord: FullTransactionRecord)
-    func onError(providerName: String?)
+    func onProviderOffline(providerName: String?)
+    func onTransactionNotFound(providerName: String?)
 
     func onConnectionChanged()
 }

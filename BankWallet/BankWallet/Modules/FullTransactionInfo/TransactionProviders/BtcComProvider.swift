@@ -4,19 +4,19 @@ class BtcComBitcoinProvider: IBitcoinForksProvider {
     let name = "Btc.com"
 
     func url(for hash: String) -> String? {
-        return "https://btc.com/" + hash 
+        "https://btc.com/" + hash 
     }
 
-    func reachabilityUrl(for hash: String) -> String {
-        return "https://chain.api.btc.com/v3/tx/" + hash 
+    var reachabilityUrl: String {
+        "https://chain.api.btc.com/v3/block/0"
     }
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        return .get(url: "https://chain.api.btc.com/v3/tx/" + hash, params: nil)
+        .get(url: "https://chain.api.btc.com/v3/tx/" + hash, params: nil)
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
-        return try? BtcComBitcoinResponse(JSONObject: json)
+        try? BtcComBitcoinResponse(JSONObject: json)
     }
 
 }
@@ -25,19 +25,19 @@ class BtcComBitcoinCashProvider: IBitcoinForksProvider {
     let name = "Btc.com"
 
     func url(for hash: String) -> String? {
-        return "https://bch.btc.com/" + hash 
+        "https://bch.btc.com/" + hash 
     }
 
-    func reachabilityUrl(for hash: String) -> String {
-        return "https://bch-chain.api.btc.com/v3/tx/" + hash 
+    var reachabilityUrl: String {
+        "https://bch-chain.api.btc.com/v3/block/0"
     }
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        return .get(url: "https://bch-chain.api.btc.com/v3/tx/" + hash, params: nil)
+        .get(url: "https://bch-chain.api.btc.com/v3/tx/" + hash, params: nil)
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
-        return try? BtcComBitcoinResponse(JSONObject: json)
+        try? BtcComBitcoinResponse(JSONObject: json)
     }
 
 }
@@ -57,6 +57,9 @@ class BtcComBitcoinResponse: IBitcoinResponse, ImmutableMappable {
 
     required init(map: Map) throws {
         txId = try? map.value("data.hash")
+        guard txId != nil else {
+            throw MapError(key: "txId", currentValue: "nil", reason: "wrong data")
+        }
         blockTime = try? map.value("data.block_time")
         blockHeight = try? map.value("data.block_height")
         confirmations = try? map.value("data.confirmations")

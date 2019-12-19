@@ -6,15 +6,15 @@ class BlockdozerBitcoinCashProvider: IBitcoinForksProvider {
     private let apiUrl: String
 
     func url(for hash: String) -> String? {
-        return url + hash
+        url + hash
     }
 
-    func reachabilityUrl(for hash: String) -> String {
-        return apiUrl + hash
+    var reachabilityUrl: String {
+        apiUrl //TODO blockdozer is down, maybe we should remove blockdozer provider
     }
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        return .get(url: apiUrl + hash, params: nil)
+        .get(url: apiUrl + hash, params: nil)
     }
 
     init(testMode: Bool) {
@@ -24,7 +24,7 @@ class BlockdozerBitcoinCashProvider: IBitcoinForksProvider {
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
-        return try? InsightResponse(JSONObject: json)
+        try? InsightResponse(JSONObject: json)
     }
 
 }

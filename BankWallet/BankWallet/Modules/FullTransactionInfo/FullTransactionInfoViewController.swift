@@ -12,6 +12,8 @@ class FullTransactionInfoViewController: WalletViewController, SectionsDataSourc
     private let cellName = String(describing: FullTransactionInfoTextCell.self)
     private let closeButtonImage = UIImage(named: "Close Icon")
     private let shareButtonImage = UIImage(named: "Share Full Transaction Icon")
+    private let attentionImage = UIImage(named: "Attention Icon Large", in: Bundle(for: RequestErrorView.self), compatibleWith: nil)?.tinted(with: .appGray)
+    private let errorImage =  UIImage(named: "Error Icon", in: Bundle(for: RequestErrorView.self), compatibleWith: nil)?.tinted(with: .appGray)
 
     private let delegate: IFullTransactionInfoViewDelegate
 
@@ -20,8 +22,7 @@ class FullTransactionInfoViewController: WalletViewController, SectionsDataSourc
     private weak var hashHeaderView: FullTransactionHashHeaderView?
 
     private let closeButton = UIButton(frame: .zero)
-
-    private var errorView: RequestErrorView?
+    private let errorView = RequestErrorView()
     private let loadingView = HUDProgressView(strokeLineWidth: FullTransactionInfoViewController.spinnerLineWidth,
             radius: FullTransactionInfoViewController.spinnerSideSize / 2 - FullTransactionInfoViewController.spinnerLineWidth / 2,
             strokeColor: .appGray)
@@ -29,12 +30,6 @@ class FullTransactionInfoViewController: WalletViewController, SectionsDataSourc
     init(delegate: IFullTransactionInfoViewDelegate) {
         self.delegate = delegate
         super.init()
-
-        errorView = RequestErrorView(subtitle: "full_info.error.subtitle".localized, buttonText: "full_info.error.retry".localized, linkText: "full_info.error.change_source".localized, onTapButton: { [weak self] in
-            self?.onRetry()
-        }, onTapLink: { [weak self] in
-            self?.onTapChangeResource()
-        })
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -69,14 +64,12 @@ class FullTransactionInfoViewController: WalletViewController, SectionsDataSourc
         }
         loadingView.set(hidden: true)
 
-        if let errorView = errorView {
-            view.addSubview(errorView)
+        view.addSubview(errorView)
 
-            errorView.snp.makeConstraints { maker in
-                maker.edges.equalToSuperview().inset(CGFloat.margin6x)
-            }
-            errorView.set(hidden: true)
+        errorView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview().inset(CGFloat.margin6x)
         }
+        errorView.set(hidden: true)
 
         delegate.viewDidLoad()
     }
@@ -212,13 +205,18 @@ extension FullTransactionInfoViewController: IFullTransactionInfoView {
         }
     }
 
+    func showOffline(providerName: String?) {
+        errorView.bind(image: errorImage, title: "full_info.error.server_offline".localized, buttonText: "full_info.error.retry".localized, linkText: "full_info.error.change_source".localized, onTapButton: onRetry, onTapLink: onTapChangeResource)
+        errorView.set(hidden: false, animated: true)
+    }
+
     func showError(providerName: String?) {
-        errorView?.set(title: providerName)
-        errorView?.set(hidden: false, animated: true)
+        errorView.bind(image: attentionImage, title: "full_info.error.transaction_not_found".localized, linkText: "full_info.error.change_source".localized, onTapLink: onTapChangeResource)
+        errorView.set(hidden: false, animated: true)
     }
 
     func hideError() {
-        errorView?.set(hidden: true, animated: false)
+        errorView.set(hidden: true, animated: false)
     }
 
 }
