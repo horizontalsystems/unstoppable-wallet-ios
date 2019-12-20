@@ -9,7 +9,7 @@ class ChartMarketCapItem: BaseActionItem {
     init(tag: Int) {
         super.init(cellType: ChartMarketCapItemView.self, tag: tag, required: true)
 
-        height = 170
+        height = 143
     }
 
 }

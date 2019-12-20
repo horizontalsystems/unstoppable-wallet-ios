@@ -1,7 +1,7 @@
 import ObjectMapper
 
-class BlockdozerBitcoinCashProvider: IBitcoinForksProvider {
-    let name = "Blockdozer.com"
+class CoinSpaceBitcoinCashProvider: IBitcoinForksProvider {
+    let name = "Coin.space"
     private let url: String
     private let apiUrl: String
 
@@ -10,7 +10,7 @@ class BlockdozerBitcoinCashProvider: IBitcoinForksProvider {
     }
 
     var reachabilityUrl: String {
-        apiUrl //TODO blockdozer is down, maybe we should remove blockdozer provider
+        "https://bch.coin.space/api/sync" //TODO blockdozer is down, maybe we should remove blockdozer provider
     }
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
@@ -18,7 +18,7 @@ class BlockdozerBitcoinCashProvider: IBitcoinForksProvider {
     }
 
     init(testMode: Bool) {
-        let baseUrl = testMode ? "https://tbch.blockdozer.com" : "https://blockdozer.com" 
+        let baseUrl = testMode ? "https://tbch.blockdozer.com" : "https://bch.coin.space" 
         url = "\(baseUrl)/tx/"
         apiUrl = "\(baseUrl)/api/tx/"
     }
