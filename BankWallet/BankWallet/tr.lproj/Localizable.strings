@@ -215,7 +215,7 @@
 "full_info.source.online" = "çevrimiçi";
 "full_info.source.offline" = "çevrimdışı";
 
-"full_info.error.subtitle" = "çevrimdışı";
+"full_info.error.server_offline" = "çevrimdışı";
 "full_info.error.transaction_not_found" = "İşlem bulunamadı";
 "full_info.error.retry" = "Yeniden Dene";
 "full_info.error.change_source" = "Kaynağı Değiştir";
