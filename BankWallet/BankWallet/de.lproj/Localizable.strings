@@ -215,7 +215,7 @@
 "full_info.source.online" = "online";
 "full_info.source.offline" = "offline";
 
-"full_info.error.subtitle" = "offline";
+"full_info.error.server_offline" = "offline";
 "full_info.error.transaction_not_found" = "Transaktion wurde nicht gefunden";
 "full_info.error.retry" = "Wiederholen";
 "full_info.error.change_source" = "Quelle ändern";
