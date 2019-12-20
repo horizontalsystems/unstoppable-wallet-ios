@@ -215,7 +215,7 @@
 "full_info.source.online" = "在线";
 "full_info.source.offline" = "离线";
 
-"full_info.error.subtitle" = "离线";
+"full_info.error.server_offline" = "离线";
 "full_info.error.transaction_not_found" = "找不到交易";
 "full_info.error.retry" = "重试";
 "full_info.error.change_source" = "更改源";
