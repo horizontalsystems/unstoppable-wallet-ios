@@ -10,17 +10,16 @@ class CoinSpaceBitcoinCashProvider: IBitcoinForksProvider {
     }
 
     var reachabilityUrl: String {
-        "https://bch.coin.space/api/sync" //TODO blockdozer is down, maybe we should remove blockdozer provider
+        "https://bch.coin.space/api/sync"
     }
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
         .get(url: apiUrl + hash, params: nil)
     }
 
-    init(testMode: Bool) {
-        let baseUrl = testMode ? "https://tbch.blockdozer.com" : "https://bch.coin.space" 
-        url = "\(baseUrl)/tx/"
-        apiUrl = "\(baseUrl)/api/tx/"
+    init() {
+        url = "https://bch.coin.space/tx/"
+        apiUrl = "https://bch.coin.space/api/tx/"
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
