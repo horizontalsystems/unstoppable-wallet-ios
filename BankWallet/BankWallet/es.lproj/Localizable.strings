@@ -215,7 +215,7 @@
 "full_info.source.online" = "en línea";
 "full_info.source.offline" = "desconectado";
 
-"full_info.error.subtitle" = "desconectado";
+"full_info.error.server_offline" = "desconectado";
 "full_info.error.transaction_not_found" = "Transacción no encontrada";
 "full_info.error.retry" = "Reintentar";
 "full_info.error.change_source" = "Cambiar origen";
