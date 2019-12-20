@@ -108,16 +108,6 @@ class BalanceCell: CardCell {
         rateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         rateLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-        clippingView.addSubview(rateDiffButton)
-        rateDiffButton.snp.makeConstraints { maker in
-            maker.leading.greaterThanOrEqualTo(blockchainBadgeView.snp.trailing).offset(CGFloat.margin2x)
-            maker.top.trailing.equalToSuperview().inset(CGFloat.margin3x)
-            maker.width.equalTo(72)
-            maker.height.equalTo(42)
-        }
-
-        rateDiffButton.addTarget(self, action: #selector(onTapChart), for: .touchUpInside)
-
         let separatorView = UIView()
 
         clippingView.addSubview(separatorView)
@@ -128,6 +118,16 @@ class BalanceCell: CardCell {
         }
 
         separatorView.backgroundColor = .appSteel20
+
+        clippingView.addSubview(rateDiffButton)
+        rateDiffButton.snp.makeConstraints { maker in
+            maker.leading.greaterThanOrEqualTo(blockchainBadgeView.snp.trailing).offset(CGFloat.margin2x)
+            maker.top.trailing.equalToSuperview().inset(CGFloat.margin3x)
+            maker.bottom.equalTo(separatorView.snp.top).offset(-CGFloat.margin3x)
+            maker.width.equalTo(80)
+        }
+
+        rateDiffButton.addTarget(self, action: #selector(onTapChart), for: .touchUpInside)
 
         clippingView.addSubview(coinValueLabel)
         coinValueLabel.snp.makeConstraints { maker in

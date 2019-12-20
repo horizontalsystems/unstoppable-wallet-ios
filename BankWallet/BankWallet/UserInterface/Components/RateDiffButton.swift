@@ -11,7 +11,7 @@ class RateDiffButton: UIButton {
 
         clipsToBounds = true
         layer.borderColor = UIColor.appSteel20.cgColor
-        layer.borderWidth = .heightOnePixel
+        layer.borderWidth = .heightOneDp
         layer.cornerRadius = .cornerRadius4
 
         setBackgroundColor(color: .appLawrence, forState: .normal)
@@ -28,8 +28,8 @@ class RateDiffButton: UIButton {
         addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
             maker.leading.equalTo(iconImageView.snp.trailing).offset(CGFloat.margin1x)
-            maker.top.bottom.equalToSuperview().inset(CGFloat.margin1x)
-            maker.width.equalTo(CGFloat.heightOnePixel)
+            maker.top.bottom.equalToSuperview().inset(CGFloat.margin2x)
+            maker.width.equalTo(CGFloat.heightOneDp)
         }
 
         separatorView.backgroundColor = .appSteel20
@@ -41,7 +41,7 @@ class RateDiffButton: UIButton {
         }
 
         label.textAlignment = .center
-        label.font = .appCaption
+        label.font = .appCaptionSB
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -56,7 +56,7 @@ class RateDiffButton: UIButton {
 
         let formattedDiff = RateDiffButton.formatter.string(from: abs(value) as NSNumber)
 
-        label.textColor = dimmed ? .appGray50 : .appGray
+        label.textColor = dimmed ? .appGray50 : .appLeah
         label.text = formattedDiff.map { "\($0)%" }
     }
 
