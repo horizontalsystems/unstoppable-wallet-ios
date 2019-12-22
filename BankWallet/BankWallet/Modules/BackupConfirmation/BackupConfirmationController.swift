@@ -26,15 +26,6 @@ class BackupConfirmationController: WalletViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .plain, target: self, action: #selector(doneDidTap))
         title = "backup.confirmation.title".localized
 
-        view.addSubview(descriptionLabel)
-        descriptionLabel.text = "backup.words.confirmation_description".localized(delegate.predefinedAccountTitle)
-        descriptionLabel.font = .appSubhead2
-        descriptionLabel.textColor = .cryptoGray
-        descriptionLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(self.view.snp.topMargin).offset(CGFloat.margin1x)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-        }
-
         view.addSubview(firstIndexedInputField)
         firstIndexedInputField.textField.returnKeyType = .next
         firstIndexedInputField.onReturn = { [weak self] in
@@ -44,7 +35,7 @@ class BackupConfirmationController: WalletViewController {
         firstIndexedInputField.borderColor = .appSteel20
         firstIndexedInputField.borderWidth = 1 / UIScreen.main.scale
         firstIndexedInputField.snp.makeConstraints { maker in
-            maker.top.equalTo(self.descriptionLabel.snp.bottom).offset(CGFloat.margin4x)
+            maker.top.equalTo(self.view.snp.topMargin).offset(CGFloat.margin3x)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
@@ -59,6 +50,15 @@ class BackupConfirmationController: WalletViewController {
         secondIndexedInputField.snp.makeConstraints { maker in
             maker.top.equalTo(self.firstIndexedInputField.snp.bottom).offset(CGFloat.margin4x)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+        }
+
+        view.addSubview(descriptionLabel)
+        descriptionLabel.text = "backup.words.confirmation_description".localized(delegate.predefinedAccountTitle)
+        descriptionLabel.font = .appSubhead2
+        descriptionLabel.textColor = .cryptoGray
+        descriptionLabel.snp.makeConstraints { maker in
+            maker.top.equalTo(self.secondIndexedInputField.snp.bottom).offset(CGFloat.margin2x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
         }
     }
 
