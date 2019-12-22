@@ -883,7 +883,6 @@
 		1A564AB936D91E4E5FBBAA4C /* BalanceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56463AFF1D05E33BA25C8A /* BalanceHeaderView.swift */; };
 		1A564ACAD8825F7A94B08DF2 /* AppStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56420928E5E0E9BC27E67B /* AppStatusViewController.swift */; };
 		1A564AF044871B706A39C467 /* LockoutState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56488B2051E9529CE8742E /* LockoutState.swift */; };
-		1A564AFE8103BA974943D4E7 /* InputFieldTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564939814A9D9F47D41EEB /* InputFieldTheme.swift */; };
 		1A564B096FFE228DF453A66D /* TransactionInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564091A9C12F224A18B740 /* TransactionInfoPresenter.swift */; };
 		1A564B148862CA99776CE235 /* Differ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F4CBE5575C4D6C40BA /* Differ.swift */; };
 		1A564B3340086D250666A933 /* RestoreEosInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E95E2CCF97680C920F0 /* RestoreEosInteractor.swift */; };
@@ -1548,7 +1547,6 @@
 		D384050B218317DF007D50AD /* CurrencyValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3589DC1945CAFBEEB1EED /* CurrencyValue.swift */; };
 		D384050C218317DF007D50AD /* CoinValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B466B8FF6754E47DACD /* CoinValue.swift */; };
 		D384050E218317DF007D50AD /* TransactionsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BEF7ABBE155593B4DBE /* TransactionsInteractor.swift */; };
-		D3840511218317DF007D50AD /* InputFieldTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564939814A9D9F47D41EEB /* InputFieldTheme.swift */; };
 		D3840512218317DF007D50AD /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649DB879A57761C09842E /* AppTheme.swift */; };
 		D3840513218317DF007D50AD /* BalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B746C8A6451D81B27D4 /* BalanceCell.swift */; };
 		D3840514218317DF007D50AD /* BalanceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56463AFF1D05E33BA25C8A /* BalanceHeaderView.swift */; };
@@ -1685,7 +1683,6 @@
 		D38405FA21831B3D007D50AD /* CurrencyValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3589DC1945CAFBEEB1EED /* CurrencyValue.swift */; };
 		D38405FB21831B3D007D50AD /* CoinValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B466B8FF6754E47DACD /* CoinValue.swift */; };
 		D38405FD21831B3D007D50AD /* TransactionsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BEF7ABBE155593B4DBE /* TransactionsInteractor.swift */; };
-		D384060021831B3D007D50AD /* InputFieldTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564939814A9D9F47D41EEB /* InputFieldTheme.swift */; };
 		D384060121831B3D007D50AD /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649DB879A57761C09842E /* AppTheme.swift */; };
 		D384060221831B3D007D50AD /* BalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B746C8A6451D81B27D4 /* BalanceCell.swift */; };
 		D384060321831B3D007D50AD /* BalanceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56463AFF1D05E33BA25C8A /* BalanceHeaderView.swift */; };
@@ -2197,7 +2194,6 @@
 		1A564901BE8CB514936E47AF /* BiometricManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BiometricManager.swift; sourceTree = "<group>"; };
 		1A56490AEC0BDFCA98275B49 /* PinModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinModule.swift; sourceTree = "<group>"; };
 		1A5649276CA421D7B080BE56 /* AddressParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressParserTests.swift; sourceTree = "<group>"; };
-		1A564939814A9D9F47D41EEB /* InputFieldTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputFieldTheme.swift; sourceTree = "<group>"; };
 		1A564948450C4AADB2679AC0 /* PinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
 		1A564996AA2AE3468D2992E5 /* EditPinPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPinPresenterTests.swift; sourceTree = "<group>"; };
 		1A5649C6FFC694CD18A8B39A /* AddressData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressData.swift; sourceTree = "<group>"; };
@@ -3355,7 +3351,6 @@
 			isa = PBXGroup;
 			children = (
 				1A5649DB879A57761C09842E /* AppTheme.swift */,
-				1A564939814A9D9F47D41EEB /* InputFieldTheme.swift */,
 				1A5643F3885EC0449557A72E /* Extensions */,
 			);
 			path = Theme;
@@ -4615,7 +4610,6 @@
 				11B35CE6041F88972EBB3CDE /* CurrencyValue.swift in Sources */,
 				11B35ADC65D620B9F7C2608E /* CoinValue.swift in Sources */,
 				11B354E052C02470D2DB1F92 /* TransactionsInteractor.swift in Sources */,
-				1A564AFE8103BA974943D4E7 /* InputFieldTheme.swift in Sources */,
 				5002C0962294165700E88585 /* ThreadSafeness.swift in Sources */,
 				1A56465CE6EFDADE3365DF98 /* AppTheme.swift in Sources */,
 				1A564FB62EBBA50489895BEF /* BalanceCell.swift in Sources */,
@@ -5246,7 +5240,6 @@
 				D384050B218317DF007D50AD /* CurrencyValue.swift in Sources */,
 				D384050C218317DF007D50AD /* CoinValue.swift in Sources */,
 				D384050E218317DF007D50AD /* TransactionsInteractor.swift in Sources */,
-				D3840511218317DF007D50AD /* InputFieldTheme.swift in Sources */,
 				D3840512218317DF007D50AD /* AppTheme.swift in Sources */,
 				5002C0972294165700E88585 /* ThreadSafeness.swift in Sources */,
 				D3840513218317DF007D50AD /* BalanceCell.swift in Sources */,
@@ -5830,7 +5823,6 @@
 				D38405FA21831B3D007D50AD /* CurrencyValue.swift in Sources */,
 				D38405FB21831B3D007D50AD /* CoinValue.swift in Sources */,
 				D38405FD21831B3D007D50AD /* TransactionsInteractor.swift in Sources */,
-				D384060021831B3D007D50AD /* InputFieldTheme.swift in Sources */,
 				D384060121831B3D007D50AD /* AppTheme.swift in Sources */,
 				5002C0982294165700E88585 /* ThreadSafeness.swift in Sources */,
 				D384060221831B3D007D50AD /* BalanceCell.swift in Sources */,
