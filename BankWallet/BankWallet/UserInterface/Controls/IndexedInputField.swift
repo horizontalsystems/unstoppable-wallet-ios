@@ -3,63 +3,12 @@ import SnapKit
 
 @IBDesignable
 class IndexedInputField: UIView, UITextFieldDelegate {
+    let textFont = UIFont.appBody
 
     var textField: UITextField
     var indexLabel: UILabel
 
-    var clearWrapperView: UIView
-    var clearTextButton: UIButton
-    var clearTextImageView: UIImageView
-
-    var _clearButtonIsHidden = false
-    var clearButtonIsHidden: Bool {
-        set {
-            _clearButtonIsHidden = newValue
-            clearWrapperView.isHidden = newValue
-            clearWrapperView.snp.updateConstraints { maker in
-                maker.width.equalTo(newValue ? InputFieldTheme.cancelableRightMargin : InputFieldTheme.nonCancelableRightMargin)
-            }
-        }
-        get {
-            return _clearButtonIsHidden
-        }
-    }
-
-//    @IBInspectable var contentBackgroundColor: UIColor? {
-//        get {
-//            return backgroundColor
-//        }
-//        set {
-//            backgroundColor = newValue
-//        }
-//    }
-//
-//    @IBInspectable var cornerRadius: CGFloat {
-//        get {
-//            return layer.cornerRadius
-//        }
-//        set {
-//            layer.cornerRadius = newValue
-//            layer.masksToBounds = newValue != 0
-//        }
-//    }
-//    @IBInspectable var borderWidth: CGFloat {
-//        get {
-//            return layer.borderWidth
-//        }
-//        set {
-//            layer.borderWidth = newValue
-//        }
-//    }
-//    @IBInspectable var borderColor: UIColor? {
-//        get {
-//            guard let color = layer.borderColor else { return nil }
-//            return UIColor(cgColor: color)
-//        }
-//        set {
-//            layer.borderColor = newValue?.cgColor
-//        }
-//    }
+    var clearTextButton = UIButton.appSecondary
 
     var onReturn: (() -> ())?
     var onSpaceKey: (() -> Bool)?
@@ -69,84 +18,67 @@ class IndexedInputField: UIView, UITextFieldDelegate {
         indexLabel = UILabel()
         textField = UITextField()
 
-        clearWrapperView = UIView()
-        clearTextButton = UIButton()
-        clearTextImageView = UIImageView(image: UIImage(named: "Cancel Input Icon"))
+        clearTextButton.setImage(UIImage(named: "Send Delete Icon")?.tinted(with: .appOz), for: .normal)
         super.init(frame: frame)
         commonInit()
     }
 
     required init?(coder aDecoder: NSCoder) {
-        indexLabel = UILabel()
-        textField = UITextField()
-
-        clearWrapperView = UIView()
-        clearTextButton = UIButton()
-        clearTextImageView = UIImageView(image: UIImage(named: "Cancel Input Icon"))
-        super.init(coder: aDecoder)
-        commonInit()
+        fatalError("init(coder:) has not been implemented")
     }
 
     func commonInit() {
         backgroundColor = .appLawrence
 
-        clearTextButton.addTarget(self, action: #selector(onClearText), for: .touchUpInside)
 
-        clearWrapperView.isHidden = true
-        clearWrapperView.addSubview(clearTextImageView)
-        clearWrapperView.addSubview(clearTextButton)
+        addSubview(clearTextButton)
         clearTextButton.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
-        }
-        clearTextImageView.snp.makeConstraints { maker in
-            maker.width.height.equalTo(InputFieldTheme.clearTextIconSideSize)
             maker.centerY.equalToSuperview()
-            maker.trailing.equalToSuperview().offset(-InputFieldTheme.clearTextIconRightMargin)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin2x)
+            maker.size.equalTo(CGFloat.heightButtonSecondary)
         }
-        addSubview(clearWrapperView)
-        clearWrapperView.snp.makeConstraints { maker in
-            maker.top.trailing.bottom.equalToSuperview()
-            maker.width.equalTo(InputFieldTheme.nonCancelableRightMargin)
-        }
+
+        clearTextButton.addTarget(self, action: #selector(onClearText), for: .touchUpInside)
+        clearTextButton.isHidden = true
 
         addSubview(indexLabel)
         indexLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(InputFieldTheme.indexMargin)
+            maker.leading.equalToSuperview().offset(CGFloat.margin3x)
             maker.centerY.equalToSuperview()
-            maker.width.equalTo(InputFieldTheme.indexWidth)
+            maker.width.equalTo(26)
         }
-        indexLabel.textColor = InputFieldTheme.indexColor
-        indexLabel.font = InputFieldTheme.indexFont
+        indexLabel.textColor = .appGray50
+        indexLabel.font = textFont
 
         textField.keyboardAppearance = App.theme.keyboardAppearance
         textField.autocorrectionType = .yes
         textField.autocapitalizationType = .none
         textField.tintColor = AppTheme.textFieldTintColor
-        textField.font = InputFieldTheme.indexFont
+        textField.font = textFont
 
         textField.addTarget(self, action: #selector(textChange), for: .editingChanged)
-        textField.textColor = InputFieldTheme.textColor
+        textField.textColor = .appOz
         textField.delegate = self
         addSubview(textField)
         textField.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(InputFieldTheme.inputFieldRightMargin)
+            maker.leading.equalTo(self.indexLabel.snp.trailing)
             maker.top.bottom.equalToSuperview().inset(CGFloat.margin3x)
-            maker.trailing.equalTo(self.clearWrapperView.snp.leading)
-            maker.height.equalTo(InputFieldTheme.indexFont.lineHeight)
+            maker.trailing.equalTo(self.clearTextButton.snp.leading).inset(CGFloat.margin3x)
+            maker.height.equalTo(textFont.lineHeight)
         }
     }
 
     @objc func onClearText() {
         textField.text = nil
-        clearWrapperView.isHidden = true
+        clearTextButton.isHidden = true
     }
 
     @objc func textChange(textField: UITextField) {
-        clearWrapperView.isHidden = _clearButtonIsHidden || (textField.text?.isEmpty ?? true)
+        clearTextButton.isHidden = textField.text?.isEmpty ?? true
     }
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        clearWrapperView.isHidden = _clearButtonIsHidden || (textField.text?.isEmpty ?? true)
+        clearTextButton.isHidden = textField.text?.isEmpty ?? true
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -156,7 +88,7 @@ class IndexedInputField: UIView, UITextFieldDelegate {
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         onTextChange?(textField.text)
-        clearWrapperView.isHidden = true
+        clearTextButton.isHidden = true
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
