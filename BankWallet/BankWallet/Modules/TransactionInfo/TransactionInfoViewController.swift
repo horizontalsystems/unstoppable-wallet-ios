@@ -70,7 +70,7 @@ class TransactionInfoViewController: WalletActionSheetController {
         model.addItemView(TransactionIdItem(value: item.transactionHash, tag: 8, onHashTap: { [weak self] in
             self?.delegate.onCopy(value: item.transactionHash)
         }))
-        
+
         if let lockInfo = item.lockInfo {
             let lockedDate = DateHelper.instance.formatFullDateWithHour(from: lockInfo.lockedUntil)
             let lockDateItem = TransactionNoteItem(note: "tx_info.locked_until".localized(lockedDate), imageName: "Transaction Lock Icon", tag: 9, iconName: "Transaction Info Icon") { [weak self] in
@@ -93,7 +93,7 @@ class TransactionInfoViewController: WalletActionSheetController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        backgroundColor = .crypto_Dark_Bars
+        backgroundColor = AppTheme.actionSheetBackgroundColor
         model.hideInBackground = false
 
         model.reload?()

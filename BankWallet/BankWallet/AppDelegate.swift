@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
 
-        window?.backgroundColor = AppTheme.controllerBackground
+        window?.backgroundColor = AppTheme.controllerBackgroundFromGradient
         window?.rootViewController = LaunchRouter.module()
 
         UIApplication.shared.setMinimumBackgroundFetchInterval(3600)

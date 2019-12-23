@@ -31,7 +31,7 @@ class SelectableValueView: UIView {
 
         titleLabel.text = title
         titleLabel.font = UIFont.appSubhead1
-        titleLabel.textColor = .cryptoGray
+        titleLabel.textColor = .appGray
         titleLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
             maker.top.equalToSuperview().offset(14)
@@ -44,7 +44,7 @@ class SelectableValueView: UIView {
         }
 
         valueLabel.font = UIFont.appSubhead1
-        valueLabel.textColor = .crypto_SteelDark_LightGray
+        valueLabel.textColor = .appLightGray
         valueLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(10)
             maker.trailing.equalTo(dropDownImageView.snp.leading).offset(-CGFloat.margin2x)
@@ -58,7 +58,7 @@ class SelectableValueView: UIView {
             maker.centerY.equalToSuperview()
         }
 
-        lineView.backgroundColor = .cryptoSteel20
+        lineView.backgroundColor = .appSteel20
         lineView.snp.makeConstraints { maker in
             maker.height.equalTo(0.5)
             maker.leading.equalToSuperview()
@@ -82,7 +82,7 @@ class SelectableValueView: UIView {
     func set(enabled: Bool) {
         wrapperView.isUserInteractionEnabled = enabled
 
-        valueLabel.textColor = enabled ? .crypto_SteelDark_LightGray : .appGray50
+        valueLabel.textColor = enabled ? .appLightGray : .appGray50
         dropDownImageView.tintColor = enabled ? .appGray : .appGray50
     }
 

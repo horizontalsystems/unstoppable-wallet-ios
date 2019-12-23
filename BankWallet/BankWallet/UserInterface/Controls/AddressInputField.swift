@@ -55,7 +55,7 @@ class AddressInputField: UIView {
 
         layer.cornerRadius = CGFloat.cornerRadius8
         layer.borderWidth = 1
-        layer.borderColor = UIColor.cryptoSteel20.cgColor
+        layer.borderColor = UIColor.appSteel20.cgColor
         backgroundColor = .appLawrence
 
         addressField.delegate = self
@@ -75,7 +75,7 @@ class AddressInputField: UIView {
         addressField.onPaste = { [weak self] in
             self?.onPaste?()
         }
-        placeholderLabel.textColor = .appGray50
+        placeholderLabel.textColor = AppTheme.textPlaceholderColor
         placeholderLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview()
             maker.centerY.equalToSuperview()

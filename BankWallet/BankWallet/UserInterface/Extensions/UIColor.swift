@@ -1,67 +1,6 @@
 import UIKit
 
 extension UIColor {
-    static var crypto_Dark_MidLightBackground: UIColor { App.shared.themeManager.lightMode ? .cryptoMidLightBackground : .cryptoDark }
-    static var crypto_Dark_LightBackground: UIColor { App.shared.themeManager.lightMode ? .cryptoLightBackground : .cryptoDark }
-    static var crypto_Dark_Bars: UIColor { App.shared.themeManager.lightMode ? .cryptoBars : .cryptoDark }
-    static var crypto_Dark96_Bars96: UIColor { App.shared.themeManager.lightMode ? .cryptoBars96 : .cryptoDark96 }
-    static var crypto_Steel20_White: UIColor { App.shared.themeManager.lightMode ? .white : .cryptoSteel20 }
-    static var crypto_Steel40OnDark_Steel20: UIColor { App.shared.themeManager.lightMode ? .cryptoSteel20 : .cryptoSteel40OnDark }
-    static var crypto_Steel20_Steel40: UIColor { App.shared.themeManager.lightMode ? .cryptoSteel20 : .cryptoSteel40 }
-    static var crypto_Steel20_Clear: UIColor { App.shared.themeManager.lightMode ? .cryptoSteel20 : .clear }
-    static var crypto_White_Black: UIColor { App.shared.themeManager.lightMode ? .black : white } // .appOz
-    static var crypto_Bars_Black: UIColor { App.shared.themeManager.lightMode ? .black : cryptoBars }
-    static var crypto_Black_Bars: UIColor { App.shared.themeManager.lightMode ? .cryptoBars : black }
-    static var crypto_White_Steel20: UIColor { App.shared.themeManager.lightMode ? .white : cryptoSteel20 }
-    static var crypto_Clear_White: UIColor { App.shared.themeManager.lightMode ? .white : .clear }
-    static var crypto_Silver_Black: UIColor { App.shared.themeManager.lightMode ? .black : .cryptoSilver }
-    static var crypto_Steel20_LightBackground: UIColor { App.shared.themeManager.lightMode ? .cryptoLightBackground : .cryptoSteel20 } // .appJeremy
-    static var crypto_Steel40_LightGray: UIColor { App.shared.themeManager.lightMode ? .cryptoLightGray : .cryptoSteel40 }  // .appElena ?
-    static var crypto_White_Gray: UIColor { App.shared.themeManager.lightMode ? .white : .cryptoGray }
-    static var crypto_Dark_White: UIColor { App.shared.themeManager.lightMode ? .white: .cryptoDark }
-    static var crypto_Dark50_White50: UIColor { App.shared.themeManager.lightMode ? .cryptoWhite50: .cryptoDark50 }
-    static var crypto_SteelDark_Bars: UIColor { App.shared.themeManager.lightMode ? .cryptoBars: .cryptoSteelDark }
-    static var crypto_LightGray_SteelDark: UIColor { App.shared.themeManager.lightMode ? .cryptoLightGray: .cryptoSteelDark }
-    static var crypto_SteelDark_LightGray: UIColor { App.shared.themeManager.lightMode ? .cryptoSteelDark : .cryptoLightGray }
-    static var crypto_Black20_Steel20: UIColor { App.shared.themeManager.lightMode ? .cryptoSteel20: .cryptoBlack20 }
-    static var crypto_Black50_Steel20: UIColor { App.shared.themeManager.lightMode ? .cryptoSteel20: .cryptoBlack50 }
-
-    static var crypto_Silver_Dark50: UIColor { App.shared.themeManager.lightMode ? .cryptoDark50 : .cryptoSilver50 }
-
-    static let cryptoBars: UIColor = UIColor(named: "Bars") ?? .black
-    static let cryptoBars96: UIColor = UIColor(named: "Bars96") ?? .black
-    static let cryptoDark: UIColor = UIColor(named: "Dark") ?? .black
-    static let cryptoDark50: UIColor = UIColor(named: "Dark50") ?? .black
-    static let cryptoDark96: UIColor = UIColor(named: "Dark96") ?? .black
-    static let cryptoGray: UIColor = UIColor(named: "Gray") ?? .black
-    static let cryptoGray50: UIColor = UIColor(named: "Gray50") ?? .black
-    static let cryptoGreen: UIColor = UIColor(named: "Green") ?? .black
-    static let cryptoGreen50: UIColor = UIColor(named: "Green50") ?? .black
-    static let cryptoGreenPressed: UIColor = UIColor(named: "GreenPressed") ?? .black
-    static let cryptoGreen20: UIColor = UIColor(named: "Green20") ?? .black
-    static let cryptoMidLightBackground: UIColor = UIColor(named: "MidLightBackground") ?? .black
-    static let cryptoLightBackground: UIColor = UIColor(named: "LightBackground") ?? .black
-    static let cryptoLightGray: UIColor = UIColor(named: "LightGray") ?? .black
-    static let cryptoRed: UIColor = UIColor(named: "Red") ?? .black
-    static let cryptoRedPressed: UIColor = UIColor(named: "RedPressed") ?? .black
-    static let cryptoSilver: UIColor = UIColor(named: "Silver") ?? .black
-    static let cryptoSilver50: UIColor = UIColor(named: "Silver50") ?? .black
-    static let cryptoSteel20: UIColor = UIColor(named: "Steel20") ?? .black
-    static let cryptoSteel20OnDark: UIColor = UIColor(named: "Steel20OnDark") ?? .black
-    static let cryptoSteel40OnDark: UIColor = UIColor(named: "Steel40OnDark") ?? .black
-    static let cryptoBlack20: UIColor = UIColor(named: "Black20") ?? .black
-    static let cryptoBlack50: UIColor = UIColor(named: "Black50") ?? .black
-    static let cryptoSteel40: UIColor = UIColor(named: "Steel40") ?? .black
-    static let cryptoSteelDark: UIColor = UIColor(named: "SteelDark") ?? .black
-    static let cryptoWhite50: UIColor = UIColor(named: "White50") ?? .black
-    static let cryptoWhite60: UIColor = UIColor(named: "White60") ?? .black
-    static let cryptoYellow: UIColor = UIColor(named: "Yellow") ?? .black
-    static let cryptoYellow50: UIColor = UIColor(named: "Yellow50") ?? .black
-    static let cryptoYellow40: UIColor = UIColor(named: "Yellow40") ?? .black
-    static let cryptoYellowPressed: UIColor = UIColor(named: "YellowPressed") ?? .black
-}
-
-extension UIColor {
     static var appJacob: UIColor { App.theme.colorJacob }
     static var appRemus: UIColor { App.theme.colorRemus }
     static var appLucian: UIColor { App.theme.colorLucian }
@@ -75,6 +14,7 @@ extension UIColor {
     static var appAndy: UIColor { App.theme.colorAndy }
     static var appTyler: UIColor { App.theme.colorTyler }
     static var appNina: UIColor { App.theme.colorNina }
+    static var appHelsing: UIColor { App.theme.colorHelsing }
 
     static let appYellowD: UIColor = UIColor(named: "App Yellow D")!
     static let appYellowL: UIColor = UIColor(named: "App Yellow L")!

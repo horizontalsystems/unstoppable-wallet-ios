@@ -23,9 +23,9 @@ class TransactionCell: AppCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         backgroundColor = .clear
-        contentView.backgroundColor = .crypto_Dark_White
+        contentView.backgroundColor = .appClaude
 
-        highlightBackground.backgroundColor = .cryptoSteel20
+        highlightBackground.backgroundColor = .appSteel20
         highlightBackground.alpha = 0
         contentView.addSubview(highlightBackground)
         highlightBackground.snp.makeConstraints { maker in
@@ -112,9 +112,9 @@ class TransactionCell: AppCell {
 
         let status = item.status
 
-        dateLabel.textColor = .crypto_Silver_Black
+        dateLabel.textColor = .appLeah
         currencyAmountLabel.textColor = item.type == .incoming ? .appRemus : .appJacob
-        amountLabel.textColor = .cryptoGray
+        amountLabel.textColor = .appGray
 
         dateLabel.text = DateHelper.instance.formatTransactionDate(from: item.date).uppercased()
         amountLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue, fractionPolicy: .threshold(high: 0.01, low: 0))

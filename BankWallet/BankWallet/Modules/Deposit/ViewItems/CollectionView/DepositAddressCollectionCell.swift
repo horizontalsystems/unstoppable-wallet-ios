@@ -27,7 +27,7 @@ class DepositAddressCollectionCell: UICollectionViewCell {
             maker.height.equalTo(CGFloat.heightOnePixel)
         }
 
-        separatorView.backgroundColor = .cryptoSteel20
+        separatorView.backgroundColor = .appSteel20
 
         contentView.addSubview(qrCodeImageView)
         qrCodeImageView.snp.makeConstraints { maker in
@@ -48,7 +48,7 @@ class DepositAddressCollectionCell: UICollectionViewCell {
         }
 
         addressTitleLabel.font = .appCaption
-        addressTitleLabel.textColor = .cryptoGray
+        addressTitleLabel.textColor = .appGray
         addressTitleLabel.textAlignment = .center
 
         contentView.addSubview(addressButton)

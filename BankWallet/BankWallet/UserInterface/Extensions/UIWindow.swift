@@ -3,7 +3,7 @@ import UIKit
 extension UIWindow {
 
     func set(newRootController: UIViewController) {
-        backgroundColor = AppTheme.controllerBackground
+        backgroundColor = AppTheme.controllerBackgroundFromGradient
 
         let transition = CATransition()
         transition.type = CATransitionType.fade

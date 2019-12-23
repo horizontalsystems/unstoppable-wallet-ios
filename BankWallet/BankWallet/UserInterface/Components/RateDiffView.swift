@@ -40,7 +40,7 @@ class RateDiffView: UIView {
             imageView.image = nil
             return
         }
-        let color: UIColor = value.isSignMinus ? .appLucian : .cryptoGreen
+        let color: UIColor = value.isSignMinus ? .appLucian : .appRemus
         let imageName = value.isSignMinus ? "Down" : "Up"
 
         imageView.image = UIImage(named: imageName)?.tinted(with: color)

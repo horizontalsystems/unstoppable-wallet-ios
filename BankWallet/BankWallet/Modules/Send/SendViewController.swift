@@ -65,7 +65,7 @@ class SendViewController: WalletViewController {
             maker.top.bottom.equalTo(self.scrollView)
         }
 
-        iconImageView.tintColor = .cryptoGray
+        iconImageView.tintColor = .appGray
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onClose))

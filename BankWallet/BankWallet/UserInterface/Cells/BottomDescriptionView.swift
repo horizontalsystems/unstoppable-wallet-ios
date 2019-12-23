@@ -14,7 +14,7 @@ class BottomDescriptionView: UIView {
 
         label.numberOfLines = 0
         label.font = BottomDescriptionView.font
-        label.textColor = .cryptoGray
+        label.textColor = .appGray
 
         addSubview(label)
         label.snp.makeConstraints { maker in

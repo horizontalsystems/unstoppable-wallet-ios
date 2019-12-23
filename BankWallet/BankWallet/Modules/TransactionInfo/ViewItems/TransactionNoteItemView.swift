@@ -26,14 +26,14 @@ class TransactionNoteItemView: BaseActionItemView {
             maker.size.equalTo(16)
         }
         imageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        
+
         noteLabel.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.leading.equalTo(imageView.snp.trailing).offset(11)
         }
 
         noteLabel.font = .appSubhead2
-        noteLabel.textColor = .cryptoGray
+        noteLabel.textColor = .appGray
         noteLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         noteLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         noteLabel.numberOfLines = 0
@@ -47,7 +47,7 @@ class TransactionNoteItemView: BaseActionItemView {
 
         actionButton.addTarget(self, action: #selector(onActionClicked), for: .touchUpInside)
     }
-    
+
     @objc func onActionClicked() {
         item?.onTap?()
     }
