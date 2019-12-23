@@ -18,7 +18,7 @@ class CoinSettingsHeaderFooterView: UITableViewHeaderFooterView {
 
         label.numberOfLines = 0
         label.font = CoinSettingsHeaderFooterView.font
-        label.textColor = .cryptoGray
+        label.textColor = .appGray
 
         addSubview(label)
         label.snp.makeConstraints { maker in

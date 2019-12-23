@@ -15,7 +15,7 @@ class SendConfirmationFieldCell: UITableViewCell {
         addSubview(titleLabel)
         addSubview(fieldTextLabel)
 
-        titleLabel.textColor = .cryptoGray
+        titleLabel.textColor = .appGray
         titleLabel.font = .appSubhead2
 
         titleLabel.snp.makeConstraints { maker in
@@ -26,7 +26,7 @@ class SendConfirmationFieldCell: UITableViewCell {
         titleLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
 
-        fieldTextLabel.textColor = .cryptoGray
+        fieldTextLabel.textColor = .appGray
         fieldTextLabel.font = .appSubhead2
 
         fieldTextLabel.snp.makeConstraints { maker in

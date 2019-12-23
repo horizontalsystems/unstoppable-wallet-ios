@@ -61,7 +61,7 @@ class SecuritySettingsViewController: WalletViewController {
 
         return [
             Row<RightImageCell>(id: "manage_accounts", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Key Icon"), title: "settings_security.manage_accounts".localized, rightImage: securityAttentionImage, rightImageTintColor: .cryptoRed, showDisclosure: true, last: true)
+                cell.bind(titleIcon: UIImage(named: "Key Icon"), title: "settings_security.manage_accounts".localized, rightImage: securityAttentionImage, rightImageTintColor: .appLucian, showDisclosure: true, last: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapManageAccounts()
             })

@@ -45,7 +45,7 @@ class ChartRateItemView: BaseActionItemView {
         errorLabel.textAlignment = .center
         errorLabel.numberOfLines = 0
         errorLabel.font = .appSubhead1
-        errorLabel.textColor = .cryptoGray
+        errorLabel.textColor = .appGray
         errorLabel.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
             maker.width.equalToSuperview().inset(CGFloat.margin6x)

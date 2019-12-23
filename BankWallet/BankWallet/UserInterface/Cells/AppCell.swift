@@ -3,6 +3,8 @@ import UIExtensions
 import SnapKit
 
 class AppCell: UITableViewCell {
+    private let separatorColor: UIColor = .appSteel20
+
     private let selectView = UIView()
 
     private let topSeparatorView = UIView()
@@ -23,7 +25,7 @@ class AppCell: UITableViewCell {
             maker.height.equalTo(1 / UIScreen.main.scale)
         }
 
-        topSeparatorView.backgroundColor = AppTheme.separatorColor
+        topSeparatorView.backgroundColor = separatorColor
 
         contentView.addSubview(bottomSeparatorView)
         bottomSeparatorView.snp.makeConstraints { maker in
@@ -31,7 +33,7 @@ class AppCell: UITableViewCell {
             maker.height.equalTo(0)
         }
 
-        bottomSeparatorView.backgroundColor = AppTheme.separatorColor
+        bottomSeparatorView.backgroundColor = separatorColor
 
         contentView.addSubview(selectView)
         selectView.snp.makeConstraints { maker in

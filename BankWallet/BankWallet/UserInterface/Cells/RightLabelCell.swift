@@ -7,7 +7,7 @@ class RightLabelCell: TitleCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        rightLabel.textColor = .cryptoGray
+        rightLabel.textColor = .appGray
         contentView.addSubview(rightLabel)
         rightLabel.snp.makeConstraints { maker in
             maker.trailing.equalTo(disclosureImageView.snp.leading).offset(-CGFloat.margin4x)

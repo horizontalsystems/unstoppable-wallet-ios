@@ -1,7 +1,6 @@
 import UIKit
 
 class DarkTheme: ITheme {
-    let actionSheetBlurStyle: UIBlurEffect.Style = .light
     let hudBlurStyle: UIBlurEffect.Style = .dark
     let keyboardAppearance: UIKeyboardAppearance = .dark
     let navigationBarStyle: UIBarStyle = .blackTranslucent
@@ -20,6 +19,7 @@ class DarkTheme: ITheme {
     let colorAndy: UIColor = .appBlack50
     let colorTyler: UIColor = .appDark
     let colorNina: UIColor = .appWhite50
+    let colorHelsing: UIColor = .appDark
 
     let alphaSecondaryButtonGradient: CGFloat = 0.2
 }

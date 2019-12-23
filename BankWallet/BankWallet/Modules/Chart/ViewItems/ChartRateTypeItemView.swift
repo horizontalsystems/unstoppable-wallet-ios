@@ -30,7 +30,7 @@ class ChartRateTypeItemView: BaseActionItemView {
         }
 
         dateLabel.font = .appCaption
-        dateLabel.textColor = .cryptoGray
+        dateLabel.textColor = .appGray
 
         addSubview(dateLabel)
         dateLabel.snp.makeConstraints { maker in

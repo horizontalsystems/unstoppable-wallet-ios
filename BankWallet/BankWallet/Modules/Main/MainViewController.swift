@@ -29,8 +29,8 @@ class MainViewController: UITabBarController {
         tabBar.barTintColor = .clear
         tabBar.backgroundImage = UIImage(color: AppTheme.navigationBarBackgroundColor)
 
-        tabBar.tintColor = .cryptoYellow
-        tabBar.unselectedItemTintColor = .cryptoGray
+        tabBar.tintColor = .appJacob
+        tabBar.unselectedItemTintColor = .appGray
 
         viewDelegate.viewDidLoad()
     }

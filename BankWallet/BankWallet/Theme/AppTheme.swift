@@ -2,28 +2,26 @@ import UIKit
 import ActionSheet
 
 class AppTheme {
-    static var textFieldTintColor: UIColor { return .cryptoYellow }
+    static var textFieldTintColor: UIColor { .appJacob }
 
     public static let defaultAnimationDuration = 0.3
 
-    static var actionSheetBackgroundColor: UIColor { return .crypto_Dark_Bars }
-    static var controllerBackground: UIColor { return .crypto_Dark_Bars }
-    static var controllerBackgroundFromGradient: UIColor { return .crypto_Dark_Bars }
-    static var controllerBackgroundToGradient: UIColor { return .crypto_Dark_LightBackground }
-    static let tabBarSeparatorColor: UIColor = .cryptoSteel20
-    static var navigationBarTintColor = UIColor.cryptoYellow
-    static var navigationBarBackgroundColor: UIColor { return .crypto_Dark96_Bars96 }
-
-    static let separatorColor = UIColor.cryptoSteel20
+    static var actionSheetBackgroundColor: UIColor { .appLawrence }
+    static var controllerBackgroundFromGradient: UIColor { .appTyler }
+    static var controllerBackgroundToGradient: UIColor { .appHelsing }
+    static let tabBarSeparatorColor: UIColor = .appSteel20
+    static var navigationBarTintColor: UIColor = .appJacob
+    static var navigationBarBackgroundColor: UIColor { UIColor.appTyler.withAlphaComponent(0.96) }
 
     static var actionSheetConfig: ActionSheetThemeConfig {
         get {
-            return ActionSheetThemeConfig(
+            ActionSheetThemeConfig(
                     actionStyle: .sheet(showDismiss: false),
                     topMargin: 0,
                     cornerRadius: 16,
-                    separatorColor: UIColor.cryptoSteel20,
-                    backgroundStyle: .blur(intensity: 0.55, style: App.theme.actionSheetBlurStyle))
+                    separatorColor: .appSteel20,
+                    backgroundStyle: .color(color: .appBlack50)
+            )
         }
     }
     static let viewMargin: CGFloat = 16
@@ -32,47 +30,47 @@ class AppTheme {
     static let alertMediumMargin: CGFloat = 12
     static let alertBigMargin: CGFloat = 20
 
-    static var alertBackgroundColor: UIColor { return .crypto_SteelDark_Bars }
+    static var alertBackgroundColor: UIColor { .appLawrence }
     static let alertHeaderHeight: CGFloat = 40
     static let alertHeaderFont: UIFont = .appSubhead1
-    static let alertHeaderColor: UIColor = .cryptoGray
+    static let alertHeaderColor: UIColor = .appGray
 
     static let alertTitleHeight: CGFloat = 62
     static let alertTitleFont: UIFont = .appHeadline2
-    static var alertTitleColor: UIColor { return .crypto_White_Black }
+    static var alertTitleColor: UIColor { .appOz }
     static let alertSubtitleTopMargin: CGFloat = 3
     static var alertSubtitleFont: UIFont = .appSubhead2
-    static var alertSubtitleColor: UIColor  = .cryptoGray
+    static var alertSubtitleColor: UIColor  = .appGray
 
     static let alertTextMargin: CGFloat = 16
     static let alertTextFont: UIFont = .appSubhead1
-    static var alertTextColor: UIColor = .cryptoGray
+    static var alertTextColor: UIColor = .appGray
 
     static let footerTextMargin: CGFloat = 16
-    static let footerTextColor: UIColor = .cryptoGray
+    static let footerTextColor: UIColor = .appGray
     static let footerTextFont: UIFont = .appSubhead2
 
     static let alertCellHeight: CGFloat = 53
     static let alertCellFont: UIFont = .appHeadline2
     static let alertMessageFont: UIFont = .appSubhead1
-    static var alertCellHighlightColor: UIColor = .cryptoYellow
-    static var alertMessageDefaultColor: UIColor { return .crypto_Bars_Black }
+    static var alertCellHighlightColor: UIColor = .appJacob
+    static var alertMessageDefaultColor: UIColor { .appOz }
 
     static let alertSideMargin: CGFloat = 61
     static var alertConfig: ActionSheetThemeConfig {
-        return ActionSheetThemeConfig(
+        ActionSheetThemeConfig(
                 actionStyle: .alert,
                 sideMargin: AppTheme.alertSideMargin,
                 cornerRadius: 16,
-                separatorColor: UIColor.cryptoBlack20,
-                backgroundStyle: .color(color: .cryptoBlack50)
+                separatorColor: .appSteel20,
+                backgroundStyle: .color(color: .appBlack50)
         )
     }
 
-    static let coinIconColor: UIColor = .cryptoGray
+    static let coinIconColor: UIColor = .appGray
     static let coinIconSize: CGFloat = 24
 
-    static let closeButtonColor: UIColor = .cryptoGray
+    static let textPlaceholderColor: UIColor = .appGray50
 
     static let progressStepsCount = 3
 

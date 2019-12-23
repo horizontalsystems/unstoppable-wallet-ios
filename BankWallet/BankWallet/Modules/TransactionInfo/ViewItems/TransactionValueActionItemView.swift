@@ -24,7 +24,7 @@ class TransactionValueActionItemView: BaseActionItemView {
         }
 
         titleLabel.font = .appSubhead2
-        titleLabel.textColor = .cryptoGray
+        titleLabel.textColor = .appGray
         titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
 

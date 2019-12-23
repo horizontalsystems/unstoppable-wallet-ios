@@ -38,7 +38,7 @@ class RateListCell: AppCell {
     func bind(viewItem: RateViewItem, last: Bool = false) {
         super.bind(last: last)
 
-        leftView.bind(image: UIImage(named: "\(viewItem.coin.code.lowercased())")?.tinted(with: .cryptoGray))
+        leftView.bind(image: UIImage(named: "\(viewItem.coin.code.lowercased())")?.tinted(with: .appGray))
         middleView.bind(title: viewItem.coin.code, subtitle: viewItem.coin.title)
 
         let rateString: String?

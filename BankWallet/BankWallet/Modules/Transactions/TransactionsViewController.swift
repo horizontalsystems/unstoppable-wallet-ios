@@ -62,7 +62,7 @@ class TransactionsViewController: WalletViewController {
         emptyLabel.text = "transactions.empty_text".localized
         emptyLabel.numberOfLines = 0
         emptyLabel.font = .systemFont(ofSize: 14)
-        emptyLabel.textColor = .cryptoGray
+        emptyLabel.textColor = .appGray
         emptyLabel.textAlignment = .center
 
         delegate.viewDidLoad()

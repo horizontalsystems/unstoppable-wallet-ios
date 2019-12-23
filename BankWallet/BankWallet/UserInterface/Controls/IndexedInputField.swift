@@ -3,7 +3,7 @@ import SnapKit
 
 @IBDesignable
 class IndexedInputField: UIView, UITextFieldDelegate {
-    let textFont = UIFont.appBody
+    private let textFont = UIFont.appBody
 
     var textField: UITextField
     var indexLabel: UILabel

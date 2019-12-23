@@ -85,7 +85,7 @@ class SendAmountView: UIView {
 
         holderView.layer.cornerRadius = CGFloat.cornerRadius8
         holderView.layer.borderWidth = CGFloat.heightOneDp
-        holderView.layer.borderColor = UIColor.cryptoSteel20.cgColor
+        holderView.layer.borderColor = UIColor.appSteel20.cgColor
         holderView.backgroundColor = .appLawrence
         holderView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
@@ -103,7 +103,7 @@ class SendAmountView: UIView {
             maker.top.equalToSuperview().offset(CGFloat.margin3x)
         }
 
-        lineView.backgroundColor = .cryptoSteel20
+        lineView.backgroundColor = .appSteel20
         lineView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin2x)
             maker.trailing.equalToSuperview().inset(CGFloat.margin2x)
@@ -124,10 +124,10 @@ class SendAmountView: UIView {
         inputField.delegate = self
         inputField.font = .appBody
         inputField.textColor = .appOz
-        inputField.attributedPlaceholder = NSAttributedString(string: "send.amount_placeholder".localized, attributes: [NSAttributedString.Key.foregroundColor: UIColor.cryptoSteel40])
+        inputField.attributedPlaceholder = NSAttributedString(string: "send.amount_placeholder".localized, attributes: [NSAttributedString.Key.foregroundColor: AppTheme.textPlaceholderColor])
         inputField.keyboardAppearance = App.theme.keyboardAppearance
         inputField.keyboardType = .decimalPad
-        inputField.tintColor = .cryptoYellow
+        inputField.tintColor = AppTheme.textFieldTintColor
         inputField.snp.makeConstraints { maker in
             maker.centerY.equalTo(amountTypeLabel.snp.centerY).offset(CGFloat.heightOnePixel)
             maker.leading.equalTo(amountTypeLabel.snp.trailing).offset(CGFloat.margin1x)
@@ -144,7 +144,7 @@ class SendAmountView: UIView {
         switchButton.addTarget(self, action: #selector(onTapSwitch), for: .touchUpInside)
 
         hintLabel.font = .appCaption
-        hintLabel.textColor = .cryptoGray
+        hintLabel.textColor = .appGray
         hintLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin3x)
             maker.top.equalTo(lineView).offset(CGFloat.margin2x)

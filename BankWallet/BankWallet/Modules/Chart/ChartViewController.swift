@@ -66,7 +66,7 @@ class ChartViewController: WalletActionSheetController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        backgroundColor = .crypto_Dark_Bars
+        backgroundColor = AppTheme.actionSheetBackgroundColor
         model.hideInBackground = false
 
         delegate.viewDidLoad()

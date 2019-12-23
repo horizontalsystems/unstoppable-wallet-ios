@@ -12,14 +12,14 @@ class DataProviderCell: AppCell {
 
     private let checkmarkImageView = TintImageView(
             image: UIImage(named: "Transaction Success Icon"),
-            tintColor: .cryptoYellow,
-            selectedTintColor: .cryptoYellow
+            tintColor: .appJacob,
+            selectedTintColor: .appJacob
     )
 
     private let spinnerView = HUDProgressView(
             strokeLineWidth: DataProviderCell.spinnerStrokeWidth,
             radius: DataProviderCell.spinnerSize / 2 - DataProviderCell.spinnerStrokeWidth / 2,
-            strokeColor: .cryptoGray
+            strokeColor: .appGray
     )
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -32,7 +32,7 @@ class DataProviderCell: AppCell {
         }
 
         titleLabel.font = .appBody
-        titleLabel.textColor = .crypto_White_Black
+        titleLabel.textColor = .appOz
 
         contentView.addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { maker in
