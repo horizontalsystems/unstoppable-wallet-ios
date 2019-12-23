@@ -15,17 +15,17 @@ PODS:
     - Secp256k1Kit.swift (~> 1.0)
     - SwiftProtobuf (~> 1.6)
     - SwiftyJSON (~> 4.3)
-  - BitcoinCashKit.swift (0.12.2):
+  - BitcoinCashKit.swift (0.12.3):
     - Alamofire (~> 4.0)
     - BigInt (~> 5.0)
-    - BitcoinCore.swift (~> 0.12.2)
+    - BitcoinCore.swift (~> 0.12.3)
     - GRDB.swift (~> 4.0)
     - HdWalletKit.swift (~> 1.4)
     - ObjectMapper (~> 3.0)
     - OpenSslKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
     - Secp256k1Kit.swift (~> 1.0)
-  - BitcoinCore.swift (0.12.2):
+  - BitcoinCore.swift (0.12.3):
     - Alamofire (~> 4.0)
     - BigInt (~> 5.0)
     - GRDB.swift (~> 4.0)
@@ -34,10 +34,10 @@ PODS:
     - OpenSslKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
     - Secp256k1Kit.swift (~> 1.0)
-  - BitcoinKit.swift (0.12.2):
+  - BitcoinKit.swift (0.12.3):
     - Alamofire (~> 4.0)
     - BigInt (~> 5.0)
-    - BitcoinCore.swift (~> 0.12.2)
+    - BitcoinCore.swift (~> 0.12.3)
     - GRDB.swift (~> 4.0)
     - HdWalletKit.swift (~> 1.4)
     - Hodler.swift (~> 0.12.1)
@@ -52,10 +52,10 @@ PODS:
   - Cuckoo (1.3.0):
     - Cuckoo/Swift (= 1.3.0)
   - Cuckoo/Swift (1.3.0)
-  - DashKit.swift (0.12.2):
+  - DashKit.swift (0.12.3):
     - Alamofire (~> 4.0)
     - BigInt (~> 5.0)
-    - BitcoinCore.swift (~> 0.12.2)
+    - BitcoinCore.swift (~> 0.12.3)
     - BlsKit.swift (~> 1.0)
     - GRDB.swift (~> 4.0)
     - HdWalletKit.swift (~> 1.4)
@@ -262,14 +262,14 @@ SPEC CHECKSUMS:
   AlamofireImage: be9963c6582d68b39e89191f64c82a7d7bf40fdd
   BigInt: 74b4d88367b0e819d9f77393549226d36faeb0d8
   BinanceChainKit.swift: c9ff25cd635d5487c7788a18a6a2545d8f1cf760
-  BitcoinCashKit.swift: 706979eea023c5a8bc05bede3ee173d3a4caa49b
-  BitcoinCore.swift: bbb34e580330c2ac31d691e90c55df744ad58108
-  BitcoinKit.swift: 12abea91c01228a38204ff1ab378b2e587fa0c3d
+  BitcoinCashKit.swift: 1872d947604aefaeed67cb6e43015541adf72ab6
+  BitcoinCore.swift: eb49503ecaaebbd6ddc904f4d97a8fb4d431324c
+  BitcoinKit.swift: 608926c25e25c4da7ee04d322ec7e021ea319482
   BlsKit.swift: 533e494e0068f9ad2cf211a31fe9279f688af123
   BlueSocket: 1acd943acb07b55905291d608649fcfbf8cbd57d
   Chart.swift: 624c06cd56533968098928e93980d90ff4918ce0
   Cuckoo: 4045c5a8ce378c919c20c5ff3d6dd11ded0ec699
-  DashKit.swift: d2c0043b6470984c3f5210ba4871a784ab693b92
+  DashKit.swift: cfd61145f203a66019ed0c64192fe6b9d88f62e8
   DeepDiff: e5ae6c50d0321568e4508cec5930b9f10bb293fc
   EosioSwift: 21ca0d61e7928a982a64c82b623e7342d7dd86dc
   EosioSwiftAbieosSerializationProvider: f5fc013dde26b49d037d9b827fc66c905c22de50
