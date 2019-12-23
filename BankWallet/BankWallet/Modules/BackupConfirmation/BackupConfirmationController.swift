@@ -55,7 +55,7 @@ class BackupConfirmationController: WalletViewController {
         view.addSubview(descriptionLabel)
         descriptionLabel.text = "backup.words.confirmation_description".localized(delegate.predefinedAccountTitle)
         descriptionLabel.font = .appSubhead2
-        descriptionLabel.textColor = .cryptoGray
+        descriptionLabel.textColor = .appGray
         descriptionLabel.snp.makeConstraints { maker in
             maker.top.equalTo(self.secondIndexedInputField.snp.bottom).offset(CGFloat.margin2x)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)

@@ -36,7 +36,7 @@ class AlertTitleView: UIView {
 
         addSubview(closeButton)
         closeButton.setImage(UIImage(named: "Close Icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        closeButton.tintColor = AppTheme.closeButtonColor
+        closeButton.tintColor = .appGray
         closeButton.addTarget(self, action: #selector(onTapClose), for: .touchUpInside)
         closeButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         closeButton.snp.makeConstraints { maker in

@@ -18,7 +18,7 @@ class TitleCell: AppCell {
             maker.centerY.equalToSuperview()
         }
 
-        iconImageView.tintColor = .cryptoYellow
+        iconImageView.tintColor = .appJacob
 
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
@@ -33,7 +33,7 @@ class TitleCell: AppCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(titleIcon: UIImage? = nil, title: String, titleColor: UIColor = .crypto_White_Black, showDisclosure: Bool = false, last: Bool = false) {
+    func bind(titleIcon: UIImage? = nil, title: String, titleColor: UIColor = .appOz, showDisclosure: Bool = false, last: Bool = false) {
         super.bind(showDisclosure: showDisclosure, last: last)
 
         iconImageView.snp.updateConstraints { maker in

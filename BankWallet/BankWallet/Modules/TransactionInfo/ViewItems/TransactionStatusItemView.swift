@@ -12,7 +12,7 @@ class TransactionStatusItemView: BaseActionItemView {
 
     private let processingWrapper = UIView()
     private let processingLabel = UILabel()
-    private let barsProgressView = BarsProgressView(barWidth: 4, color: .clear, inactiveColor: .cryptoSteel20)
+    private let barsProgressView = BarsProgressView(barWidth: 4, color: .clear, inactiveColor: .appSteel20)
 
     override var item: TransactionStatusItem? {
         _item as? TransactionStatusItem
@@ -38,7 +38,7 @@ class TransactionStatusItemView: BaseActionItemView {
 
         titleLabel.text = "tx_info.status".localized
         titleLabel.font = .appSubhead2
-        titleLabel.textColor = .cryptoGray
+        titleLabel.textColor = .appGray
 
         finalStatusWrapper.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
@@ -108,7 +108,7 @@ class TransactionStatusItemView: BaseActionItemView {
             finalStatusWrapper.isHidden = false
             processingWrapper.isHidden = true
 
-            finalStatusIcon.image = UIImage(named: "Transaction Info Completed Icon")?.tinted(with: .cryptoGreen)
+            finalStatusIcon.image = UIImage(named: "Transaction Info Completed Icon")?.tinted(with: .appRemus)
 
             finalStatusLabel.text = "tx_info.status.confirmed".localized
         }

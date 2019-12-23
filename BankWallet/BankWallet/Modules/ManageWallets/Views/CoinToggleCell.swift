@@ -49,7 +49,7 @@ class CoinToggleCell: AppCell {
             maker.centerY.equalToSuperview()
         }
 
-        toggleView.tintColor = .cryptoSteel20
+        toggleView.tintColor = .appSteel20
         toggleView.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
     }
 

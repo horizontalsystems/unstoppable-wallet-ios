@@ -54,9 +54,9 @@ class PinView: UIView {
         style.lineSpacing = 2.2
         style.alignment = .center
         let font: UIFont = page.isTitle ? .appHeadline1 : .appSubhead2
-        let color: UIColor = page.isTitle ? .appOz : .cryptoGray
+        let color: UIColor = page.isTitle ? .appOz : .appGray
         let attributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.foregroundColor: error.isEmpty ? color : .cryptoRed,
+            NSAttributedString.Key.foregroundColor: error.isEmpty ? color : .appLucian,
             NSAttributedString.Key.font: font,
             NSAttributedString.Key.paragraphStyle: style,
             NSAttributedString.Key.kern: -0.1

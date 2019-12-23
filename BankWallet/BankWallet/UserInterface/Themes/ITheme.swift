@@ -1,7 +1,6 @@
 import UIKit
 
 protocol ITheme {
-    var actionSheetBlurStyle: UIBlurEffect.Style { get }
     var hudBlurStyle: UIBlurEffect.Style { get }
     var keyboardAppearance: UIKeyboardAppearance { get }
     var navigationBarStyle: UIBarStyle { get }
@@ -20,6 +19,7 @@ protocol ITheme {
     var colorAndy: UIColor { get }
     var colorTyler: UIColor { get }
     var colorNina: UIColor { get }
+    var colorHelsing: UIColor { get }
 
     var alphaSecondaryButtonGradient: CGFloat { get }
 }

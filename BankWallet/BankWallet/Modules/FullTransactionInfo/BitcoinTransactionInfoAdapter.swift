@@ -50,11 +50,11 @@ class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
             transactionItems.append(FullTransactionItem(title: "full_info.fee".localized, value: ValueFormatter.instance.format(coinValue: feeValue)))
         }
         if let size = txResponse.size {
-            transactionItems.append(FullTransactionItem(title: "full_info.size".localized, titleColor: .cryptoGray, value: "\(size) (bytes)"))
+            transactionItems.append(FullTransactionItem(title: "full_info.size".localized, titleColor: .appGray, value: "\(size) (bytes)"))
         }
         if let feeRate = txResponse.feePerByte, let formattedValue = BitcoinTransactionInfoAdapter.feeRateFormatter.string(from: feeRate as NSNumber) {
             let feeRateValue = "\(formattedValue) (\(unitName))"
-            transactionItems.append(FullTransactionItem(title: "full_info.rate".localized, titleColor: .cryptoGray, value: feeRateValue))
+            transactionItems.append(FullTransactionItem(title: "full_info.rate".localized, titleColor: .appGray, value: feeRateValue))
         }
         if !transactionItems.isEmpty {
             sections.append(FullTransactionSection(title: nil, items: transactionItems))

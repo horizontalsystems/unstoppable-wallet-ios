@@ -29,20 +29,20 @@ extension ChartConfiguration {
         configuration.dateFormatter = dateFormatter
         return configuration
     }
-    
+
     private func setCryptoColors() {
-        curvePositiveColor = .cryptoGreen
+        curvePositiveColor = .appRemus
         curveNegativeColor = .appLucian
         curveIncompleteColor = .appGray50
 
-        gradientPositiveColor = .cryptoGreen
-        gradientNegativeColor = .cryptoRed
+        gradientPositiveColor = .appRemus
+        gradientNegativeColor = .appLucian
         gradientIncompleteColor = .appGray50
 
         limitColor = .appNina
 
-        gridColor = .cryptoSteel20
-        gridTextColor = .cryptoGray
+        gridColor = .appSteel20
+        gridTextColor = .appGray
 
         limitTextFont = .appSubhead1
         limitTextColor = .appLeah

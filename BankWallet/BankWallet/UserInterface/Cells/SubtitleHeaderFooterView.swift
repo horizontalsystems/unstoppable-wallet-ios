@@ -14,7 +14,7 @@ class SubtitleHeaderFooterView: UITableViewHeaderFooterView {
         }
 
         label.font = .appSubhead1
-        label.textColor = .cryptoGray
+        label.textColor = .appGray
     }
 
     required init?(coder aDecoder: NSCoder) {
