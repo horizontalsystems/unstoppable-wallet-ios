@@ -15,7 +15,7 @@ public class DateHelper {
         return "hh"
     }()
     static var correctedSystemHourFormat: String {
-        return DateHelper.twelveHoursAllowed.contains(App.shared.languageManager.currentLanguage) ? DateHelper.systemHourFormat : "HH"
+        DateHelper.twelveHoursAllowed.contains(App.shared.languageManager.currentLanguage) ? DateHelper.systemHourFormat : "HH"
     }
 
     private func getFormatter(forFormat format: String) -> DateFormatter {
@@ -77,11 +77,6 @@ public class DateHelper {
 
     public func formatFullDateOnly(from date: Date) -> String {
         let formatter = getFormatter(forFormat: "MMM d, yyyy")
-        return formatter.string(from: date)
-    }
-
-    public func formatFullDateWithHour(from date: Date) -> String {
-        let formatter = getFormatter(forFormat: "MMM d, yyyy, \(DateHelper.correctedSystemHourFormat)")
         return formatter.string(from: date)
     }
 
