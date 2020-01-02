@@ -106,7 +106,7 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         if wallets.count < 2 {
             view?.show(filters: [])
         } else {
-            view?.show(filters: [nil] + wallets)
+            view?.show(filters: [nil] + wallets.sorted { wallet, wallet2 in wallet.coin.code < wallet2.coin.code })
         }
 
         loader.handleUpdate(wallets: wallets)
