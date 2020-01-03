@@ -44,7 +44,7 @@ class SelectableValueView: UIView {
         }
 
         valueLabel.font = UIFont.appSubhead1
-        valueLabel.textColor = .appLightGray
+        valueLabel.textColor = .appLeah
         valueLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(10)
             maker.trailing.equalTo(dropDownImageView.snp.leading).offset(-CGFloat.margin2x)
@@ -82,7 +82,7 @@ class SelectableValueView: UIView {
     func set(enabled: Bool) {
         wrapperView.isUserInteractionEnabled = enabled
 
-        valueLabel.textColor = enabled ? .appLightGray : .appGray50
+        valueLabel.textColor = enabled ? .appLeah : .appGray50
         dropDownImageView.tintColor = enabled ? .appGray : .appGray50
     }
 
