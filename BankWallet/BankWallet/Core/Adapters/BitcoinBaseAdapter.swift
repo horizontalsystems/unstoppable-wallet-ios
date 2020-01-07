@@ -103,7 +103,8 @@ class BitcoinBaseAdapter {
                 failed: transaction.status == .invalid,
                 from: type == .incoming ? anyNotMineFromAddress : nil,
                 to: type == .outgoing ? anyNotMineToAddress : nil,
-                lockInfo: lockInfo
+                lockInfo: lockInfo,
+                conflictingHash: transaction.conflictingHash
         )
     }
 

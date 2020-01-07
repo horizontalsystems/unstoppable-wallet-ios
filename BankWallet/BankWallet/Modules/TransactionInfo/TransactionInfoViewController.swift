@@ -84,7 +84,14 @@ class TransactionInfoViewController: WalletActionSheetController {
             model.addItemView(infoItem)
         }
 
-        let openFullInfoItem = TransactionOpenFullInfoItem(tag: 11, required: true, onTap: { [weak self] in
+        if item.conflictingTxHash != nil {
+            let doubleSpendItem = TransactionNoteItem(note: "tx_info.double_spent_note".localized, imageName: "Transaction Double Spend Icon", tag: 11, iconName: "Transaction Info Icon") { [weak self] in
+                self?.delegate.openDoubleSpendInfo()
+            }
+            model.addItemView(doubleSpendItem)
+        }
+
+        let openFullInfoItem = TransactionOpenFullInfoItem(tag: 12, required: true, onTap: { [weak self] in
             self?.delegate.openFullInfo()
         })
         model.addItemView(openFullInfoItem)

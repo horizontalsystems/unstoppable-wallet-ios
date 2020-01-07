@@ -6,6 +6,7 @@ class TransactionCell: AppCell {
     private let highlightBackground = UIView()
 
     private let inOutImageView = UIImageView()
+    private let doubleSpendImageView = UIImageView()
 
     private let dateLabel = UILabel()
 
@@ -39,6 +40,16 @@ class TransactionCell: AppCell {
         }
         inOutImageView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         inOutImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+
+        contentView.addSubview(doubleSpendImageView)
+        doubleSpendImageView.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
+            maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
+        }
+        doubleSpendImageView.image = UIImage(named: "Transaction Double Spend Icon")
+        doubleSpendImageView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        doubleSpendImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        doubleSpendImageView.isHidden = true
 
         dateLabel.font = .appBody
         dateLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
@@ -119,6 +130,7 @@ class TransactionCell: AppCell {
         dateLabel.text = DateHelper.instance.formatTransactionDate(from: item.date).uppercased()
         amountLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue, fractionPolicy: .threshold(high: 0.01, low: 0))
 
+        doubleSpendImageView.isHidden = item.conflictingTxHash == nil
         inOutImageView.image = item.type == .incoming ? UIImage(named: "Transaction In Icon") : UIImage(named: "Transaction Out Icon")
 
         if let value = item.currencyValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.01)) {

@@ -41,7 +41,8 @@ class EthereumAdapter: EthereumBaseAdapter {
                 failed: failed,
                 from: transaction.from,
                 to: transaction.to,
-                lockInfo: nil
+                lockInfo: nil,
+                conflictingHash: nil
         )
     }
 

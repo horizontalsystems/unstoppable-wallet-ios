@@ -14,6 +14,7 @@ struct TransactionRecord {
     let from: String?
     let to: String?
     let lockInfo: TransactionLockInfo?
+    let conflictingHash: String?
 }
 
 extension TransactionRecord: Comparable {

@@ -39,7 +39,8 @@ class BinanceAdapter {
                 failed: false,
                 from: transaction.from,
                 to: transaction.to,
-                lockInfo: nil
+                lockInfo: nil,
+                conflictingHash: nil
         )
     }
 

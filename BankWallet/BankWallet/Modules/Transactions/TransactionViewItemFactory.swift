@@ -48,7 +48,8 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
                 date: record.date,
                 status: status,
                 rate: rate,
-                lockInfo: record.lockInfo
+                lockInfo: record.lockInfo,
+                conflictingTxHash: item.record.conflictingHash
         )
     }
 

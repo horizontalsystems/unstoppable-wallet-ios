@@ -15,10 +15,11 @@ class TransactionViewItem {
     let status: TransactionStatus
     let rate: CurrencyValue?
     let lockInfo: TransactionLockInfo?
+    let conflictingTxHash: String?
 
     init(wallet: Wallet, transactionHash: String, coinValue: CoinValue, feeCoinValue: CoinValue?,
          currencyValue: CurrencyValue?, from: String?, to: String?, type: TransactionType,
-         showFromAddress: Bool, date: Date, status: TransactionStatus, rate: CurrencyValue?, lockInfo: TransactionLockInfo?) {
+         showFromAddress: Bool, date: Date, status: TransactionStatus, rate: CurrencyValue?, lockInfo: TransactionLockInfo?, conflictingTxHash: String?) {
         self.wallet = wallet
         self.transactionHash = transactionHash
         self.coinValue = coinValue
@@ -32,6 +33,7 @@ class TransactionViewItem {
         self.status = status
         self.rate = rate
         self.lockInfo = lockInfo
+        self.conflictingTxHash = conflictingTxHash
     }
 }
 
