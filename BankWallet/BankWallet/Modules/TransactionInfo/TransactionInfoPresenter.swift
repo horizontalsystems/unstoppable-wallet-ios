@@ -28,6 +28,10 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
         router.openLockInfo()
     }
 
+    func openDoubleSpendInfo() {
+        router.openDoubleSpendInfo(txHash: viewItem.transactionHash, conflictingTxHash: viewItem.conflictingTxHash)
+    }
+
 }
 
 extension TransactionInfoPresenter: ITransactionInfoInteractorDelegate {

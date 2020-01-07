@@ -53,7 +53,8 @@ class Erc20Adapter: EthereumBaseAdapter {
                 failed: transaction.isError,
                 from: transaction.from,
                 to: transaction.to,
-                lockInfo: nil
+                lockInfo: nil,
+                conflictingHash: nil
         )
     }
 

@@ -15,6 +15,10 @@ extension TransactionInfoRouter: ITransactionInfoRouter {
         viewController?.present(InfoRouter.module(title: "lock_info.title".localized, text: "lock_info.text".localized), animated: true)
     }
 
+    func openDoubleSpendInfo(txHash: String, conflictingTxHash: String?) {
+        viewController?.present(DoubleSpendInfoRouter.module(txHash: txHash, conflictingTxHash: conflictingTxHash), animated: true)
+    }
+
 }
 
 extension TransactionInfoRouter {
