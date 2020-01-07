@@ -45,4 +45,19 @@ class FullTransactionInfoTextCell: TitleCell {
         descriptionView.isUserInteractionEnabled = onTap != nil
     }
 
+    func bind(title: String, hash: String, last: Bool, onTap: (() -> ())? = nil) {
+        super.bind(titleIcon: nil, title: title, titleColor: .appGray, last: last)
+
+        descriptionView.snp.remakeConstraints { maker in
+            maker.leading.equalTo(self.titleLabel.snp.trailing).offset(CGFloat.margin12x)
+            maker.centerY.equalToSuperview()
+
+            let descriptionBackgroundOffset = onTap == nil ? CGFloat.margin2x : 0
+            maker.trailing.equalTo(contentView.snp.trailingMargin).offset(descriptionBackgroundOffset)
+        }
+
+        descriptionView.bind(value: hash, color: .appOz, onTap: onTap)
+        descriptionView.isUserInteractionEnabled = onTap != nil
+    }
+
 }

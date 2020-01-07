@@ -182,6 +182,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "tx_info.rate" = "Historical Rate";
 "tx_info.fee" = "Fee";
 "tx_info.to_self_note" = "This transaction sent to own address";
+"tx_info.double_spent_note" = "Double Spend Risk!";
 "tx_info.locked_until" = "Locked until %@";
 "tx_info.recipient_hash" = "Recipient";
 
@@ -404,4 +405,12 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Lock Info
 
 "lock_info.title" = "Info";
-"lock_info.text" = "The sender sent these funds with a spending lock that will expire on shown date.\n\nNo worries, the received Bitcoins are already yours but until the lock period expires you cannot spend them on the Bitcoin network.";
+"lock_info.description" = "The sender sent these funds with a spending lock that will expire on shown date.\n\nNo worries, the received Bitcoins are already yours but until the lock period expires you cannot spend them on the Bitcoin network.";
+
+// Double Spend Info
+
+"double_spend_info.title" = "Double Spend";
+"double_spend_info.header" = "Double Spend Risk! There is another transaction on blockchain that trying to spend inputs used in this transaction. Only one transaction will be accepted by the network";
+"double_spend_info.this_hash" = "This Tx";
+"double_spend_info.conflicting_hash" = "Conflicting Tx";
+
