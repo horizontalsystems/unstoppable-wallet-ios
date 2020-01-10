@@ -12,23 +12,27 @@ class TransactionsLoader {
     }
 
     var itemsCount: Int {
-        return dataSource.itemsCount
+        dataSource.itemsCount
     }
 
     func item(forIndex index: Int) -> TransactionItem {
-        return dataSource.item(forIndex: index)
+        dataSource.item(forIndex: index)
     }
 
     var allRecordsData: [Wallet: [TransactionRecord]] {
-        return dataSource.allRecordsData
+        dataSource.allRecordsData
     }
 
     func itemIndexes(coin: Coin, date: Date) -> [Int] {
-        return dataSource.itemIndexes(coin: coin, date: date)
+        dataSource.itemIndexes(coin: coin, date: date)
     }
 
     func itemIndexesForPending(wallet: Wallet, blockHeight: Int) -> [Int] {
-        return dataSource.itemIndexesForPending(wallet: wallet, blockHeight: blockHeight)
+        dataSource.itemIndexesForPending(wallet: wallet, blockHeight: blockHeight)
+    }
+
+    func itemIndexesForLocked(wallet: Wallet, blockTimestamp: Int, oldBlockTimestamp: Int?) -> [Int] {
+        dataSource.itemIndexesForLocked(wallet: wallet, blockTimestamp: blockTimestamp, oldBlockTimestamp: oldBlockTimestamp)
     }
 
     func set(wallets: [Wallet]) {

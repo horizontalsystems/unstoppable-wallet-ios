@@ -15,11 +15,12 @@ class TransactionViewItem {
     let status: TransactionStatus
     let rate: CurrencyValue?
     let lockInfo: TransactionLockInfo?
+    let unlocked: Bool
     let conflictingTxHash: String?
 
     init(wallet: Wallet, transactionHash: String, coinValue: CoinValue, feeCoinValue: CoinValue?,
          currencyValue: CurrencyValue?, from: String?, to: String?, type: TransactionType,
-         showFromAddress: Bool, date: Date, status: TransactionStatus, rate: CurrencyValue?, lockInfo: TransactionLockInfo?, conflictingTxHash: String?) {
+         showFromAddress: Bool, date: Date, status: TransactionStatus, rate: CurrencyValue?, lockInfo: TransactionLockInfo?, unlocked: Bool = true, conflictingTxHash: String?) {
         self.wallet = wallet
         self.transactionHash = transactionHash
         self.coinValue = coinValue
@@ -33,6 +34,7 @@ class TransactionViewItem {
         self.status = status
         self.rate = rate
         self.lockInfo = lockInfo
+        self.unlocked = unlocked
         self.conflictingTxHash = conflictingTxHash
     }
 }
@@ -47,7 +49,8 @@ extension TransactionViewItem: DiffAware {
         a.date == b.date &&
                 a.currencyValue == b.currencyValue &&
                 a.rate == b.rate &&
-                a.status == b.status
+                a.status == b.status &&
+                a.unlocked == b.unlocked
     }
 
 }

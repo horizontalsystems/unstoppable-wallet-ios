@@ -68,7 +68,6 @@ class TransactionCell: AppCell {
             maker.top.equalToSuperview().offset(CGFloat.margin3x)
         }
 
-        lockImageView.image = UIImage(named: "Transaction Lock Icon")
         contentView.addSubview(lockImageView)
         lockImageView.snp.makeConstraints { maker in
             maker.leading.equalTo(currencyAmountLabel.snp.trailing)
@@ -140,6 +139,7 @@ class TransactionCell: AppCell {
         }
 
         if item.lockInfo != nil {
+            lockImageView.image = item.unlocked ? UIImage(named: "Transaction Unlock Icon") : UIImage(named: "Transaction Lock Icon")
             lockImageView.snp.remakeConstraints { maker in
                 maker.leading.equalTo(currencyAmountLabel.snp.trailing).offset(CGFloat.margin1x)
                 maker.top.equalToSuperview().inset(CGFloat.margin4x)

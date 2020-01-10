@@ -42,19 +42,23 @@ class TransactionRecordDataSource {
     }
 
     func item(forIndex index: Int) -> TransactionItem {
-        return itemsDataSource.item(forIndex: index)
+        itemsDataSource.item(forIndex: index)
     }
 
     func itemIndexes(coin: Coin, date: Date) -> [Int] {
-        return itemsDataSource.itemIndexes(coin: coin, date: date)
+        itemsDataSource.itemIndexes(coin: coin, date: date)
     }
 
     func itemIndexesForPending(wallet: Wallet, blockHeight: Int) -> [Int] {
-        return itemsDataSource.recordIndexes(greaterThan: blockHeight, wallet: wallet)
+        itemsDataSource.recordIndexes(greaterThan: blockHeight, wallet: wallet)
+    }
+
+    func itemIndexesForLocked(wallet: Wallet, blockTimestamp: Int, oldBlockTimestamp: Int?) -> [Int] {
+        itemsDataSource.recordIndexes(unlockingBefore: blockTimestamp, oldBlockTimestamp: oldBlockTimestamp, wallet: wallet)
     }
 
     var fetchDataList: [FetchData] {
-        return poolRepo.activePools.compactMap { pool in
+        poolRepo.activePools.compactMap { pool in
             pool.getFetchData(limit: limit)
         }
     }

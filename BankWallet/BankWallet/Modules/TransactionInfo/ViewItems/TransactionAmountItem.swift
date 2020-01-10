@@ -6,7 +6,7 @@ class TransactionAmountItem: BaseActionItem {
     let primaryAmountInfo: AmountInfo
     var secondaryAmountInfo: AmountInfo?
     let type: TransactionType
-    let locked: Bool
+    let locked: Bool?
 
     var customPrimaryFractionPolicy: ValueFormatter.FractionPolicy?
 
@@ -21,7 +21,7 @@ class TransactionAmountItem: BaseActionItem {
         }
 
         type = item.type
-        locked = item.lockInfo != nil
+        locked = item.lockInfo.map { _ in !item.unlocked }
 
         super.init(cellType: TransactionAmountItemView.self, tag: tag, required: true)
 

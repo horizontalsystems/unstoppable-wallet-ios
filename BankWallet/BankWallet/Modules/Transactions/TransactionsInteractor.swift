@@ -27,11 +27,11 @@ class TransactionsInteractor {
 
     private func onUpdateCoinsData() {
         transactionRecordsDisposeBag = DisposeBag()
-        var walletsData = [(Wallet, Int, Int?)]()
+        var walletsData = [(Wallet, Int, LastBlockInfo?)]()
 
         for wallet in walletManager.wallets {
             if let adapter = adapterManager.transactionsAdapter(for: wallet) {
-                walletsData.append((wallet, adapter.confirmationsThreshold, adapter.lastBlockHeight))
+                walletsData.append((wallet, adapter.confirmationsThreshold, adapter.lastBlockInfo))
 
                 adapter.transactionRecordsObservable
                         .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -91,13 +91,13 @@ extension TransactionsInteractor: ITransactionsInteractor {
                 continue
             }
 
-            adapter.lastBlockHeightUpdatedObservable
+            adapter.lastBlockUpdatedObservable
                     .throttle(.seconds(3), latest: true, scheduler: ConcurrentDispatchQueueScheduler(qos: .background))
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { [weak self] in
-                        if let lastBlockHeight = adapter.lastBlockHeight {
-                            self?.delegate?.onUpdate(lastBlockHeight: lastBlockHeight, wallet: wallet)
+                        if let lastBlockInfo = adapter.lastBlockInfo {
+                            self?.delegate?.onUpdate(lastBlockInfo: lastBlockInfo, wallet: wallet)
                         }
                     })
                     .disposed(by: lastBlockHeightsDisposeBag)

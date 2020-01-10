@@ -91,11 +91,11 @@ extension EthereumBaseAdapter {
         12
     }
 
-    var lastBlockHeight: Int? {
-        ethereumKit.lastBlockHeight
+    var lastBlockInfo: LastBlockInfo? {
+        ethereumKit.lastBlockHeight.map { LastBlockInfo(height: $0, timestamp: nil) }
     }
 
-    var lastBlockHeightUpdatedObservable: Observable<Void> {
+    var lastBlockUpdatedObservable: Observable<Void> {
         ethereumKit.lastBlockHeightObservable.map { _ in () }
     }
 
