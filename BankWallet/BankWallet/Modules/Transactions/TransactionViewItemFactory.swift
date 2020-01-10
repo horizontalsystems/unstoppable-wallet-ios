@@ -7,7 +7,7 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
         self.feeCoinProvider = feeCoinProvider
     }
 
-    func viewItem(fromItem item: TransactionItem, lastBlockHeight: Int? = nil, threshold: Int? = nil, rate: CurrencyValue? = nil) -> TransactionViewItem {
+    func viewItem(fromItem item: TransactionItem, lastBlockInfo: LastBlockInfo? = nil, threshold: Int? = nil, rate: CurrencyValue? = nil) -> TransactionViewItem {
         let record = item.record
         let coin = item.wallet.coin
 
@@ -15,7 +15,7 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
 
         if item.record.failed {
             status = .failed
-        } else if let blockHeight = record.blockHeight, let lastBlockHeight = lastBlockHeight {
+        } else if let blockHeight = record.blockHeight, let lastBlockHeight = lastBlockInfo?.height {
             let threshold = threshold ?? 1
             let confirmations = lastBlockHeight - blockHeight + 1
 
@@ -35,6 +35,12 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
             return CoinValue(coin: feeCoin, value: $0)
         }
 
+        var unlocked = record.lockInfo == nil
+        
+        if let lastBlockTimestamp = lastBlockInfo?.timestamp, let lockedUntil = record.lockInfo?.lockedUntil.timeIntervalSince1970 {
+            unlocked = Double(lastBlockTimestamp) > lockedUntil
+        }
+
         return TransactionViewItem(
                 wallet: item.wallet,
                 transactionHash: record.transactionHash,
@@ -49,6 +55,7 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
                 status: status,
                 rate: rate,
                 lockInfo: record.lockInfo,
+                unlocked: unlocked,
                 conflictingTxHash: item.record.conflictingHash
         )
     }

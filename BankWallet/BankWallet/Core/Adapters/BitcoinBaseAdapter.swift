@@ -8,7 +8,7 @@ class BitcoinBaseAdapter {
     private let abstractKit: AbstractKit
     private let coinRate: Decimal = pow(10, 8)
 
-    private let lastBlockHeightUpdatedSignal = Signal()
+    private let lastBlockUpdatedSignal = Signal()
     private let stateUpdatedSignal = Signal()
     private let balanceUpdatedSignal = Signal()
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
@@ -167,7 +167,7 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
     }
 
     func lastBlockInfoUpdated(lastBlockInfo: BlockInfo) {
-        lastBlockHeightUpdatedSignal.notify()
+        lastBlockUpdatedSignal.notify()
     }
 
     func kitStateUpdated(state: BitcoinCore.KitState) {
@@ -282,12 +282,12 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
         BitcoinBaseAdapter.defaultConfirmationsThreshold
     }
 
-    var lastBlockHeight: Int? {
-        abstractKit.lastBlockInfo?.height
+    var lastBlockInfo: LastBlockInfo? {
+        abstractKit.lastBlockInfo.map { LastBlockInfo(height: $0.height, timestamp: $0.timestamp) }
     }
 
-    var lastBlockHeightUpdatedObservable: Observable<Void> {
-        lastBlockHeightUpdatedSignal.asObservable()
+    var lastBlockUpdatedObservable: Observable<Void> {
+        lastBlockUpdatedSignal.asObservable()
     }
 
     var transactionRecordsObservable: Observable<[TransactionRecord]> {

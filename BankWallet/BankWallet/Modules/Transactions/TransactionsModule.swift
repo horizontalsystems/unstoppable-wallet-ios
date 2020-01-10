@@ -48,10 +48,10 @@ protocol ITransactionsInteractor {
 
 protocol ITransactionsInteractorDelegate: class {
     func onUpdate(selectedCoins: [Wallet])
-    func onUpdate(walletsData: [(Wallet, Int, Int?)])
+    func onUpdate(walletsData: [(Wallet, Int, LastBlockInfo?)])
     func onUpdateBaseCurrency()
 
-    func onUpdate(lastBlockHeight: Int, wallet: Wallet)
+    func onUpdate(lastBlockInfo: LastBlockInfo, wallet: Wallet)
 
     func didUpdate(records: [TransactionRecord], wallet: Wallet)
 
@@ -71,7 +71,7 @@ protocol ITransactionLoaderDelegate: class {
 }
 
 protocol ITransactionViewItemFactory {
-    func viewItem(fromItem item: TransactionItem, lastBlockHeight: Int?, threshold: Int?, rate: CurrencyValue?) -> TransactionViewItem
+    func viewItem(fromItem item: TransactionItem, lastBlockInfo: LastBlockInfo?, threshold: Int?, rate: CurrencyValue?) -> TransactionViewItem
 }
 
 protocol ITransactionViewItemLoader {

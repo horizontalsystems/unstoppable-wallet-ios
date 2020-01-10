@@ -25,10 +25,10 @@ class TransactionsPresenter {
 extension TransactionsPresenter: ITransactionViewItemLoaderDelegate {
 
     func createViewItem(for item: TransactionItem) -> TransactionViewItem {
-        let lastBlockHeight = dataSource.lastBlockHeight(wallet: item.wallet)
+        let lastBlockInfo = dataSource.lastBlockInfo(wallet: item.wallet)
         let threshold = dataSource.threshold(wallet: item.wallet)
         let rate = dataSource.rate(coin: item.wallet.coin, date: item.record.date)
-        return factory.viewItem(fromItem: item, lastBlockHeight: lastBlockHeight, threshold: threshold, rate: rate)
+        return factory.viewItem(fromItem: item, lastBlockInfo: lastBlockInfo, threshold: threshold, rate: rate)
     }
 
     func reload(with diff: [Change<TransactionViewItem>], items: [TransactionViewItem], animated: Bool) {
@@ -89,15 +89,15 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         loader.loadNext(initial: true)
     }
 
-    func onUpdate(walletsData: [(Wallet, Int, Int?)]) {
+    func onUpdate(walletsData: [(Wallet, Int, LastBlockInfo?)]) {
         var wallets = [Wallet]()
 
-        for (wallet, threshold, lastBlockHeight) in walletsData {
+        for (wallet, threshold, lastBlockInfo) in walletsData {
             wallets.append(wallet)
             dataSource.set(threshold: threshold, wallet: wallet)
 
-            if let lastBlockHeight = lastBlockHeight {
-                dataSource.set(lastBlockHeight: lastBlockHeight, wallet: wallet)
+            if let lastBlockInfo = lastBlockInfo {
+                dataSource.set(lastBlockInfo: lastBlockInfo, wallet: wallet)
             }
         }
 
@@ -118,17 +118,25 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         viewItemLoader.reloadAll()
     }
 
-    func onUpdate(lastBlockHeight: Int, wallet: Wallet) {
-        let oldLastBlockHeight = dataSource.lastBlockHeight(wallet: wallet)
+    func onUpdate(lastBlockInfo: LastBlockInfo, wallet: Wallet) {
+        let oldLastBlockInfo = dataSource.lastBlockInfo(wallet: wallet)
+        var needToReloadIndexes = [Int]()
+        dataSource.set(lastBlockInfo: lastBlockInfo, wallet: wallet)
 
-        dataSource.set(lastBlockHeight: lastBlockHeight, wallet: wallet)
+        if let timestamp = lastBlockInfo.timestamp {
+            let indexes = loader.itemIndexesForLocked(wallet: wallet, blockTimestamp: timestamp, oldBlockTimestamp: oldLastBlockInfo?.timestamp)
 
-        if let threshold = dataSource.threshold(wallet: wallet), let oldLastBlockHeight = oldLastBlockHeight {
+            needToReloadIndexes.append(contentsOf: indexes)
+        }
+
+        if let threshold = dataSource.threshold(wallet: wallet), let oldLastBlockHeight = oldLastBlockInfo?.height {
             let indexes = loader.itemIndexesForPending(wallet: wallet, blockHeight: oldLastBlockHeight - threshold)
 
-            if !indexes.isEmpty {
-                viewItemLoader.reload(indexes: indexes)
-            }
+            needToReloadIndexes.append(contentsOf: indexes)
+        }
+
+        if !needToReloadIndexes.isEmpty {
+            viewItemLoader.reload(indexes: needToReloadIndexes)
         }
     }
 
