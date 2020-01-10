@@ -135,11 +135,11 @@ extension EosAdapter: ITransactionsAdapter {
         irreversibleThreshold
     }
 
-    var lastBlockHeight: Int? {
-        eosKit.irreversibleBlockHeight.map { $0 + irreversibleThreshold }
+    var lastBlockInfo: LastBlockInfo? {
+        eosKit.irreversibleBlockHeight.map { LastBlockInfo(height: $0 + irreversibleThreshold, timestamp: nil) }
     }
 
-    var lastBlockHeightUpdatedObservable: Observable<Void> {
+    var lastBlockUpdatedObservable: Observable<Void> {
         eosKit.irreversibleBlockHeightObservable.map { _ in () }
     }
 

@@ -5,11 +5,11 @@ class TransactionItemDataSource {
     var items = [TransactionItem]()
 
     var count: Int {
-        return items.count
+        items.count
     }
 
     func item(forIndex index: Int) -> TransactionItem {
-        return items[index]
+        items[index]
     }
 
     func shouldInsert(record: TransactionRecord) -> Bool {
@@ -47,6 +47,21 @@ class TransactionItemDataSource {
             if let blockHeight = item.record.blockHeight, item.wallet == wallet && blockHeight > thresholdBlockHeight {
                 indexes.append(index)
             } else if item.record.blockHeight == nil {
+                indexes.append(index)
+            }
+        }
+
+        return indexes
+    }
+
+    func recordIndexes(unlockingBefore blockTimestamp: Int, oldBlockTimestamp: Int?, wallet: Wallet) -> [Int] {
+        var indexes = [Int]()
+
+        for (index, item) in items.enumerated() {
+            if let lockTime = item.record.lockInfo?.lockedUntil.timeIntervalSince1970,
+               lockTime > Double(oldBlockTimestamp ?? 0),
+               lockTime <= Double(blockTimestamp),
+               item.wallet == wallet {
                 indexes.append(index)
             }
         }

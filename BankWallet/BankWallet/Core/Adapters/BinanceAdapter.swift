@@ -141,11 +141,11 @@ extension BinanceAdapter: ITransactionsAdapter {
         1
     }
 
-    var lastBlockHeight: Int? {
-        binanceKit.lastBlockHeight
+    var lastBlockInfo: LastBlockInfo? {
+        binanceKit.lastBlockHeight.map { LastBlockInfo(height: $0, timestamp: nil) }
     }
 
-    var lastBlockHeightUpdatedObservable: Observable<Void> {
+    var lastBlockUpdatedObservable: Observable<Void> {
         binanceKit.lastBlockHeightObservable.map { _ in () }
     }
 

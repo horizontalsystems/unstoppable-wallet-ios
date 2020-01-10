@@ -1164,6 +1164,7 @@
 		58AAA377293C8A04C01B664E /* SendFeeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA48AE934E928E9CC0099 /* SendFeeRouter.swift */; };
 		58AAA38CFBCC6D377BDE404E /* SendConfirmationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0C4B0224DD8A8A57AD9 /* SendConfirmationModule.swift */; };
 		58AAA396029F9F435D35CEB2 /* IpfsApiProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA67C8CDCEF467711963B /* IpfsApiProvider.swift */; };
+		58AAA39A983D2E97066C3959 /* LastBlockInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9D55F97CE089EC67766 /* LastBlockInfo.swift */; };
 		58AAA3B7668B1B989B5F8065 /* BackupWordsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8FCF190F71C5494E5C5 /* BackupWordsModule.swift */; };
 		58AAA3BD3B4D9D1CE8764B71 /* LockScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA05D182333BAE6FB3C0B /* LockScreenPresenter.swift */; };
 		58AAA3BE2D0DEF53CE6CEE97 /* EthereumKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC5B00009B199A687EF3 /* EthereumKitManager.swift */; };
@@ -1272,6 +1273,7 @@
 		58AAA72BF33F0AF251128499 /* PingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA3CCBFC02D7F6438DE3E /* PingManager.swift */; };
 		58AAA73C535D82C9DD991417 /* FullTransactionInfoInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA12F81B0D2587DB52D94 /* FullTransactionInfoInteractorTests.swift */; };
 		58AAA745D76A13D06800BDD1 /* EthereumKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC5B00009B199A687EF3 /* EthereumKitManager.swift */; };
+		58AAA747269D5AE1BBDDA2F7 /* LastBlockInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9D55F97CE089EC67766 /* LastBlockInfo.swift */; };
 		58AAA75358DF98C1D7191B81 /* DoubleSpendInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA72BD42697A894C2383C /* DoubleSpendInfoViewController.swift */; };
 		58AAA7539516E70428514119 /* FullTransactionInfoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA842D6734B75D88E578C /* FullTransactionInfoRouter.swift */; };
 		58AAA75A994A2F0EC891D68B /* BackupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA04194E7E2B466F92828 /* BackupInteractor.swift */; };
@@ -1399,6 +1401,7 @@
 		58AAACAE27F2D974C6B37A90 /* DataProviderSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA390E4B59B8CB7C2D2E8 /* DataProviderSettingsModule.swift */; };
 		58AAACB46A71DBC1572AEE3F /* SendConfirmationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7E197A27A5C394A51F9 /* SendConfirmationInteractor.swift */; };
 		58AAACB5C1F6CFCECC00EAF0 /* SendConfirmationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB2FE6078D42455148C5 /* SendConfirmationRouter.swift */; };
+		58AAACB9409D23B076794CA4 /* LastBlockInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9D55F97CE089EC67766 /* LastBlockInfo.swift */; };
 		58AAACCCD9524201C7A1AB15 /* ChartRateTypeItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD4516FF571E6B9BBEC0 /* ChartRateTypeItemView.swift */; };
 		58AAACD466D35AD65205C535 /* ChartMarketCapItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA75CCD44D20DED397137 /* ChartMarketCapItem.swift */; };
 		58AAACE27A231109F09B1276 /* DataProviderSettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA56AA98F7B0DB2E97971 /* DataProviderSettingsRouter.swift */; };
@@ -2417,6 +2420,7 @@
 		58AAA976A6B67FD47D5958E8 /* HorSysProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorSysProvider.swift; sourceTree = "<group>"; };
 		58AAA983616E7156D55B8CDB /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		58AAA9BCCC35CC3B5CA58BB7 /* RateListInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateListInteractor.swift; sourceTree = "<group>"; };
+		58AAA9D55F97CE089EC67766 /* LastBlockInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastBlockInfo.swift; sourceTree = "<group>"; };
 		58AAA9D5D29115C5F435CF1B /* ChartConfigurationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartConfigurationExtension.swift; sourceTree = "<group>"; };
 		58AAA9E43BB1F4A9472DFED4 /* SendConfirmationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendConfirmationViewController.swift; sourceTree = "<group>"; };
 		58AAAA6EA2DAD95D2CB417FD /* DebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugViewController.swift; sourceTree = "<group>"; };
@@ -3034,6 +3038,7 @@
 				1A564A6A5C4F3080690AE93F /* ConvertedError.swift */,
 				1A564827EFE2555CF7DC2A78 /* EosBackendError.swift */,
 				58AAA610E99CF0429135DD1D /* ConnectionError.swift */,
+				58AAA9D55F97CE089EC67766 /* LastBlockInfo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -5196,6 +5201,7 @@
 				58AAA6099C361C5E89AAA7A0 /* DoubleSpendInfoInteractor.swift in Sources */,
 				58AAA9A8500A0F1D8967F3F1 /* DoubleSpendModule.swift in Sources */,
 				58AAA4818FEE1D4DBF823A51 /* DoubleSpendInfoPresenter.swift in Sources */,
+				58AAACB9409D23B076794CA4 /* LastBlockInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5832,6 +5838,7 @@
 				58AAA82A7449A4C48D9364D7 /* DoubleSpendInfoInteractor.swift in Sources */,
 				58AAA609E483EC150926CDC6 /* DoubleSpendModule.swift in Sources */,
 				58AAA1C3902FAD9527A78DA7 /* DoubleSpendInfoPresenter.swift in Sources */,
+				58AAA747269D5AE1BBDDA2F7 /* LastBlockInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6420,6 +6427,7 @@
 				58AAAFBCA1D0C1DEA7412048 /* DoubleSpendInfoInteractor.swift in Sources */,
 				58AAAAF4A46837B302186E73 /* DoubleSpendModule.swift in Sources */,
 				58AAA2B47548D5655651FF8D /* DoubleSpendInfoPresenter.swift in Sources */,
+				58AAA39A983D2E97066C3959 /* LastBlockInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

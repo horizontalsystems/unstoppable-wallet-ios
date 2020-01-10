@@ -1,24 +1,24 @@
 import Foundation
 
 class TransactionsMetadataDataSource {
-    private var lastBlockHeights = SynchronizedDictionary<Wallet, Int>()
+    private var lastBlockInfos = SynchronizedDictionary<Wallet, LastBlockInfo>()
     private var thresholds = SynchronizedDictionary<Wallet, Int>()
     private var rates = SynchronizedDictionary<Coin, SynchronizedDictionary<Date, CurrencyValue>>()
 
-    func lastBlockHeight(wallet: Wallet) -> Int? {
-        return lastBlockHeights[wallet]
+    func lastBlockInfo(wallet: Wallet) -> LastBlockInfo? {
+        lastBlockInfos[wallet]
     }
 
     func threshold(wallet: Wallet) -> Int? {
-        return thresholds[wallet]
+        thresholds[wallet]
     }
 
     func rate(coin: Coin, date: Date) -> CurrencyValue? {
-        return rates[coin]?[date]
+        rates[coin]?[date]
     }
 
-    func set(lastBlockHeight: Int, wallet: Wallet) {
-        lastBlockHeights[wallet] = lastBlockHeight
+    func set(lastBlockInfo: LastBlockInfo, wallet: Wallet) {
+        lastBlockInfos[wallet] = lastBlockInfo
     }
 
     func set(threshold: Int, wallet: Wallet) {
