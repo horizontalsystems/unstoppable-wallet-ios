@@ -6,13 +6,15 @@ import SnapKit
 class TransactionStatusItemView: BaseActionItemView {
     private let titleLabel = UILabel()
 
-    private let finalStatusWrapper = UIView()
-    private let finalStatusLabel = UILabel()
-    private let finalStatusIcon = UIImageView()
+    private let completeStatusWrapper = UIView()
+    private let completeStatusLabel = UILabel()
+    private let completeStatusIcon = UIImageView()
 
     private let processingWrapper = UIView()
     private let processingLabel = UILabel()
     private let barsProgressView = BarsProgressView(barWidth: 4, color: .clear, inactiveColor: .appSteel20)
+
+    private let failedLabel = UILabel()
 
     override var item: TransactionStatusItem? {
         _item as? TransactionStatusItem
@@ -24,12 +26,13 @@ class TransactionStatusItemView: BaseActionItemView {
         backgroundColor = .appLawrence
 
         addSubview(titleLabel)
-        addSubview(finalStatusWrapper)
-        finalStatusWrapper.addSubview(finalStatusLabel)
-        finalStatusWrapper.addSubview(finalStatusIcon)
+        addSubview(completeStatusWrapper)
+        completeStatusWrapper.addSubview(completeStatusLabel)
+        completeStatusWrapper.addSubview(completeStatusIcon)
         addSubview(processingWrapper)
         processingWrapper.addSubview(processingLabel)
         processingWrapper.addSubview(barsProgressView)
+        addSubview(failedLabel)
 
         titleLabel.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
@@ -40,23 +43,25 @@ class TransactionStatusItemView: BaseActionItemView {
         titleLabel.font = .appSubhead2
         titleLabel.textColor = .appGray
 
-        finalStatusWrapper.snp.makeConstraints { maker in
+        completeStatusWrapper.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
-        finalStatusLabel.snp.makeConstraints { maker in
+        completeStatusLabel.snp.makeConstraints { maker in
             maker.leading.top.bottom.equalToSuperview()
         }
 
-        finalStatusLabel.font = .appSubhead1
-        finalStatusLabel.textColor = .appOz
+        completeStatusLabel.font = .appSubhead1
+        completeStatusLabel.textColor = .appOz
+        completeStatusLabel.text = "tx_info.status.confirmed".localized
 
-        finalStatusIcon.snp.makeConstraints { maker in
-            maker.leading.equalTo(finalStatusLabel.snp.trailing).offset(CGFloat.margin1x)
+        completeStatusIcon.snp.makeConstraints { maker in
+            maker.leading.equalTo(completeStatusLabel.snp.trailing).offset(CGFloat.margin1x)
             maker.centerY.equalToSuperview()
             maker.trailing.equalToSuperview()
         }
+        completeStatusIcon.image = UIImage(named: "Transaction Info Completed Icon")?.tinted(with: .appRemus)
 
         processingWrapper.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
@@ -68,8 +73,8 @@ class TransactionStatusItemView: BaseActionItemView {
             maker.centerY.equalToSuperview()
         }
 
-        processingLabel.textColor = .appOz
         processingLabel.font = .appSubhead1
+        processingLabel.textColor = .appOz
 
         barsProgressView.snp.makeConstraints { maker in
             maker.leading.equalTo(processingLabel.snp.trailing).offset(CGFloat.margin2x)
@@ -78,6 +83,15 @@ class TransactionStatusItemView: BaseActionItemView {
         }
 
         barsProgressView.set(barsCount: AppTheme.progressStepsCount)
+
+        failedLabel.snp.makeConstraints { maker in
+            maker.centerY.equalToSuperview()
+            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
+        }
+
+        failedLabel.font = .appSubhead1
+        failedLabel.textColor = .appLucian
+        failedLabel.text = "tx_info.status.failed".localized
     }
 
     override func updateView() {
@@ -89,15 +103,13 @@ class TransactionStatusItemView: BaseActionItemView {
 
         if item.failed {
             processingWrapper.isHidden = true
-            finalStatusWrapper.isHidden = false
-
-            finalStatusIcon.image = UIImage(named: "Transaction Info Failed Icon")?.tinted(with: .appLucian)
-
-            finalStatusLabel.text = "tx_info.status.failed".localized
+            completeStatusWrapper.isHidden = true
+            failedLabel.isHidden = false
 
         } else if let progress = item.progress {
             processingWrapper.isHidden = false
-            finalStatusWrapper.isHidden = true
+            completeStatusWrapper.isHidden = true
+            failedLabel.isHidden = true
 
             processingLabel.text = item.type == .incoming ? "transactions.receiving".localized : "transactions.sending".localized
 
@@ -105,12 +117,9 @@ class TransactionStatusItemView: BaseActionItemView {
             barsProgressView.set(progress: progress)
 
         } else {
-            finalStatusWrapper.isHidden = false
+            completeStatusWrapper.isHidden = false
             processingWrapper.isHidden = true
-
-            finalStatusIcon.image = UIImage(named: "Transaction Info Completed Icon")?.tinted(with: .appRemus)
-
-            finalStatusLabel.text = "tx_info.status.confirmed".localized
+            failedLabel.isHidden = true
         }
     }
 

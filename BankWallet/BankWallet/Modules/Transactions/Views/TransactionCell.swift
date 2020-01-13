@@ -12,7 +12,7 @@ class TransactionCell: AppCell {
 
     private let processingView = TransactionProcessingView()
     private let completedView = TransactionCompletedView()
-    private let failedView = TransactionFailedView()
+    private let failedLabel = UILabel()
 
     private let currencyAmountLabel = UILabel()
     private let amountLabel = UILabel()
@@ -106,11 +106,15 @@ class TransactionCell: AppCell {
             maker.centerY.equalTo(amountLabel)
         }
 
-        contentView.addSubview(failedView)
-        failedView.snp.makeConstraints { maker in
+        contentView.addSubview(failedLabel)
+        failedLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(inOutImageView.snp.trailing).offset(CGFloat.margin3x)
             maker.centerY.equalTo(amountLabel)
         }
+
+        failedLabel.font = .appSubhead2
+        failedLabel.textColor = .appLucian
+        failedLabel.text = "transactions.failed".localized
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -170,7 +174,7 @@ class TransactionCell: AppCell {
 
         switch status {
         case .failed:
-            failedView.isHidden = false
+            failedLabel.isHidden = false
 
             processingView.stopAnimating()
             processingView.isHidden = true
@@ -182,7 +186,7 @@ class TransactionCell: AppCell {
             processingView.isHidden = false
 
             completedView.isHidden = true
-            failedView.isHidden = true
+            failedLabel.isHidden = true
 
         case .processing(let progress):
             processingView.bind(type: item.type, progress: progress)
@@ -190,7 +194,7 @@ class TransactionCell: AppCell {
             processingView.isHidden = false
 
             completedView.isHidden = true
-            failedView.isHidden = true
+            failedLabel.isHidden = true
 
         case .completed:
             completedView.bind(date: item.date)
@@ -198,7 +202,7 @@ class TransactionCell: AppCell {
 
             processingView.stopAnimating()
             processingView.isHidden = true
-            failedView.isHidden = true
+            failedLabel.isHidden = true
         }
     }
 
