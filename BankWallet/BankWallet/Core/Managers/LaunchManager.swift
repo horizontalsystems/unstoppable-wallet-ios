@@ -21,9 +21,7 @@ class LaunchManager {
 extension LaunchManager: ILaunchManager {
 
     func handleFirstLaunch() {
-        DispatchQueue.global(qos: .background).async {
-            self.handleDidLaunchOnce()
-        }
+        self.handleDidLaunchOnce()
     }
 
 }
