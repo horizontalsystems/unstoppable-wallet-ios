@@ -6674,6 +6674,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5026FFF921C3CA280023EEA2 /* Bank.debug.xcconfig */;
 			buildSettings = {
+				MARKETING_VERSION = 0.11.2;
 				OfficeMode = false;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_MODULE_NAME = Bank;
@@ -6686,6 +6687,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5026FFF621C3CA280023EEA2 /* Bank.release.xcconfig */;
 			buildSettings = {
+				MARKETING_VERSION = 0.11.2;
 				OfficeMode = false;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_MODULE_NAME = Bank;
