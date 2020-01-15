@@ -50,7 +50,8 @@ extension TransactionViewItem: DiffAware {
                 a.currencyValue == b.currencyValue &&
                 a.rate == b.rate &&
                 a.status == b.status &&
-                a.unlocked == b.unlocked
+                a.unlocked == b.unlocked &&
+                a.conflictingTxHash == b.conflictingTxHash
     }
 
 }

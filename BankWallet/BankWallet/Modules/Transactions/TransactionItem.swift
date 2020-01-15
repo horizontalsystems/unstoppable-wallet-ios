@@ -27,7 +27,8 @@ extension TransactionItem: DiffAware {
         a.record.date == b.record.date &&
                 a.record.interTransactionIndex == b.record.interTransactionIndex &&
                 a.record.blockHeight == b.record.blockHeight &&
-                a.record.failed == b.record.failed
+                a.record.failed == b.record.failed &&
+                a.record.conflictingHash == b.record.conflictingHash
     }
 
 }
