@@ -25,7 +25,7 @@ PODS:
     - OpenSslKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
     - Secp256k1Kit.swift (~> 1.0)
-  - BitcoinCore.swift (0.13.3):
+  - BitcoinCore.swift (0.13.5):
     - Alamofire (~> 4.0)
     - BigInt (~> 5.0)
     - GRDB.swift (~> 4.0)
@@ -263,7 +263,7 @@ SPEC CHECKSUMS:
   BigInt: 74b4d88367b0e819d9f77393549226d36faeb0d8
   BinanceChainKit.swift: c9ff25cd635d5487c7788a18a6a2545d8f1cf760
   BitcoinCashKit.swift: 91e981ddc6e663d598130c65a1e756393058a2e7
-  BitcoinCore.swift: 79de4c2c601f928f76b8ac7655dfca1167e05a2c
+  BitcoinCore.swift: 35a868409611704fe1bceb3048d690ee036c9692
   BitcoinKit.swift: 1d216c95eed1a8fcfa997e4d86fe10559d84f56c
   BlsKit.swift: 533e494e0068f9ad2cf211a31fe9279f688af123
   BlueSocket: 1acd943acb07b55905291d608649fcfbf8cbd57d
