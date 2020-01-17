@@ -41,6 +41,7 @@ class BalanceCell: CardCell {
 
     private let receiveButton = UIButton.appGreen
     private let sendButton = UIButton.appYellow
+    private let sendButtonWrapper = UIControl()     // disable touch events throw cell to tableView
 
     private var onPay: (() -> ())?
     private var onReceive: (() -> ())?
@@ -214,13 +215,18 @@ class BalanceCell: CardCell {
         receiveButton.setTitle("balance.deposit".localized, for: .normal)
         receiveButton.addTarget(self, action: #selector(onTapReceive), for: .touchUpInside)
 
-        clippingView.addSubview(sendButton)
-        sendButton.snp.makeConstraints { maker in
+        clippingView.addSubview(sendButtonWrapper)
+        sendButtonWrapper.snp.makeConstraints { maker in
             maker.leading.equalTo(receiveButton.snp.trailing).offset(CGFloat.margin2x)
             maker.top.equalTo(receiveButton.snp.top)
             maker.trailing.equalToSuperview().inset(CGFloat.margin2x)
             maker.width.equalTo(receiveButton.snp.width)
             maker.height.equalTo(CGFloat.heightButton)
+        }
+
+        clippingView.addSubview(sendButton)
+        sendButton.snp.makeConstraints { maker in
+            maker.edges.equalTo(sendButtonWrapper.snp.edges)
         }
 
         sendButton.setTitle("balance.send".localized, for: .normal)
