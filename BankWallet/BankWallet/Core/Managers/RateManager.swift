@@ -42,7 +42,7 @@ class RateManager {
         if coinCode == "HOT" {
             return "HOLO"
         }
-        if coinCode == "SAI" || coinCode == "DAI" {
+        if coinCode == "PGL" || coinCode == "PPT" {
             return "AI-DAI"
         }
 
@@ -53,7 +53,7 @@ class RateManager {
         if coinCode == "HOLO" {
             return "HOT"
         }
-        if coinCode == "SAI" || coinCode == "DAI" {
+        if coinCode == "PGL" || coinCode == "PPT" {
             return "AI-DAI"
         }
 
