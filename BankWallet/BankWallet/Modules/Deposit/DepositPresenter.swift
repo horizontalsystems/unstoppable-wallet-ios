@@ -16,7 +16,9 @@ class DepositPresenter {
 
         addressItems = wallets.compactMap { wallet in
             if let adapter = interactor.adapter(forWallet: wallet) {
-                return AddressItem(coin: wallet.coin, address: adapter.receiveAddress)
+                return AddressItem(coin: wallet.coin,
+                                   addressType: (wallet.coinSettings[.derivation] as? MnemonicDerivation)?.addressType,
+                                   address: adapter.receiveAddress)
             }
             return nil
         }

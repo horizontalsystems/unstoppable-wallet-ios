@@ -44,10 +44,10 @@ class DepositAddressCollectionCell: UICollectionViewCell {
         contentView.addSubview(addressTitleLabel)
         addressTitleLabel.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(qrCodeImageView.snp.bottom).offset(CGFloat.margin3x)
+            maker.top.equalTo(qrCodeImageView.snp.bottom).offset(CGFloat.margin4x)
         }
 
-        addressTitleLabel.font = .appCaption
+        addressTitleLabel.font = .appSubhead2
         addressTitleLabel.textColor = .appGray
         addressTitleLabel.textAlignment = .center
 
@@ -72,7 +72,11 @@ class DepositAddressCollectionCell: UICollectionViewCell {
                 onClose: onClose
         )
 
-        addressTitleLabel.text = addressTitle(coin: address.coin)
+        var title = addressTitle(coin: address.coin)
+        if let addressType = address.addressType {
+            title += " (\(addressType))"
+        }
+        addressTitleLabel.text = title
         addressButton.bind(value: address.address, showExtra: .icon, onTap: onCopy)
 
         qrCodeImageView.asyncSetImage { UIImage(qrCodeString: address.address, size: self.qrCodeSideSize) }
