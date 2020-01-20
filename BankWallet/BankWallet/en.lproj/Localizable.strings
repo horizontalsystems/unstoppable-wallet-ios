@@ -383,7 +383,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "chart.market_cap.million" = "%@ M";
 "chart.market_cap.billion" = "%@ B";
 "chart.market_cap.trillion" = "%@ T";
-"chart.volume" = "Volume";
+"chart.volume" = "Volume (24h)";
 "chart.circulation" = "In Circulation";
 "chart.max_supply" = "Total Supply";
 "chart.error.not_available" = "Chart not available";
