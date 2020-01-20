@@ -4,6 +4,8 @@ import ActionSheet
 import SnapKit
 
 class TransactionNoteItemView: BaseActionItemView {
+    private static let leftImageSize: CGFloat = 16
+    private static let rightButtonSize: CGFloat = 24
 
     private let noteLabel = UILabel()
     private let imageView = UIImageView()
@@ -23,13 +25,13 @@ class TransactionNoteItemView: BaseActionItemView {
         imageView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.leading.equalToSuperview().inset(CGFloat.margin4x)
-            maker.size.equalTo(16)
+            maker.size.equalTo(TransactionNoteItemView.leftImageSize)
         }
         imageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         noteLabel.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
-            maker.leading.equalTo(imageView.snp.trailing).offset(11)
+            maker.leading.equalTo(imageView.snp.trailing).offset(CGFloat.margin3x)
         }
 
         noteLabel.font = .appSubhead2
@@ -62,7 +64,7 @@ class TransactionNoteItemView: BaseActionItemView {
             actionButton.setImage(UIImage(named: iconName)?.tinted(with: .appJacob), for: .normal)
             actionButton.snp.updateConstraints { maker in
                 maker.trailing.equalToSuperview()
-                maker.width.equalTo(24 + CGFloat.margin4x + CGFloat.margin2x)
+                maker.width.equalTo(TransactionNoteItemView.rightButtonSize + CGFloat.margin4x + CGFloat.margin2x)
             }
         } else {
             actionButton.snp.updateConstraints { maker in
@@ -70,6 +72,17 @@ class TransactionNoteItemView: BaseActionItemView {
                 maker.width.equalTo(0)
             }
         }
+    }
+
+}
+
+extension TransactionNoteItemView {
+
+    static func noteHeight(note: String, showRightButton: Bool) -> CGFloat {
+        let leftMargin = CGFloat.margin4x + TransactionNoteItemView.leftImageSize + CGFloat.margin3x
+        let rightMargin = showRightButton ? (TransactionNoteItemView.rightButtonSize + CGFloat.margin4x + CGFloat.margin2x) : CGFloat.margin4x
+
+        return note.height(forContainerWidth: UIScreen.main.bounds.width - leftMargin - rightMargin - 2 * ActionSheetTheme.sideMargin, font: .appSubhead2)
     }
 
 }
