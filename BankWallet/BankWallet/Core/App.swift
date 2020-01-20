@@ -56,6 +56,7 @@ class App {
     let appVersionManager: IAppVersionManager
 
     let coinSettingsManager: ICoinSettingsManager
+    let rateCoinMapper: RateCoinMapper
 
     let appManager: AppManager
 
@@ -95,7 +96,8 @@ class App {
 
         currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 
-        rateManager = RateManager(walletManager: walletManager, currencyManager: currencyManager)
+        rateCoinMapper = RateCoinMapper()
+        rateManager = RateManager(walletManager: walletManager, currencyManager: currencyManager, rateCoinMapper: rateCoinMapper)
 
         feeCoinProvider = FeeCoinProvider(appConfigProvider: appConfigProvider)
         feeRateProviderFactory = FeeRateProviderFactory(appConfigProvider: appConfigProvider)

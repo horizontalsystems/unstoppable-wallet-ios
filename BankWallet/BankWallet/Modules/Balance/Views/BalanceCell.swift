@@ -47,6 +47,8 @@ class BalanceCell: CardCell {
     private var onReceive: (() -> ())?
     private var onChart: (() -> ())?
 
+    private var blockChart: Bool = false
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -241,6 +243,7 @@ class BalanceCell: CardCell {
         self.onPay = onPay
         self.onReceive = onReceive
         self.onChart = onChart
+        self.blockChart = item.blockChart
 
         bindView(item: item, animated: animated)
     }
@@ -367,7 +370,9 @@ class BalanceCell: CardCell {
     }
 
     @objc func onTapChart() {
-        onChart?()
+        if !blockChart {
+            onChart?()
+        }
     }
 
     static func height(item: BalanceViewItem) -> CGFloat {

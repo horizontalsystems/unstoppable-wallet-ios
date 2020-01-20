@@ -16,6 +16,7 @@ struct BalanceViewItem {
     let lockedCurrencyValue: (text: String, dimmed: Bool)?
     let rateValue: (text: String, dimmed: Bool)?
     let diff: (value: Decimal, dimmed: Bool)?
+    let blockChart: Bool
 
     let syncSpinnerProgress: Int?
     let failedImageViewVisible: Bool
