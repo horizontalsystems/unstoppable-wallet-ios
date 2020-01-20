@@ -3,6 +3,11 @@ import XRatesKit
 
 class BalanceViewItemFactory {
     private let minimumProgress = 10
+    private let blockedChartCoins: IBlockedChartCoins
+
+    init(blockedChartCoins: IBlockedChartCoins) {
+        self.blockedChartCoins = blockedChartCoins
+    }
 
     private func coinIconCode(coin: Coin, state: AdapterState?) -> String? {
         if let state = state, case .notSynced = state {
@@ -152,6 +157,7 @@ extension BalanceViewItemFactory: IBalanceViewItemFactory {
                 lockedCurrencyValue: currencyValue(state: state, balance: item.balanceLocked, currency: currency, marketInfo: marketInfo, expanded: expanded),
                 rateValue: rateValue(currency: currency, marketInfo: marketInfo),
                 diff: diff(marketInfo: marketInfo),
+                blockChart: blockedChartCoins.blockedCoins.contains(coin.code),
 
                 syncSpinnerProgress: syncSpinnerProgress(state: state),
                 failedImageViewVisible: failedImageViewVisible(state: state),

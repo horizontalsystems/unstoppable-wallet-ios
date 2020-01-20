@@ -6,12 +6,14 @@ class RateManager {
 
     private let walletManager: IWalletManager
     private let currencyManager: ICurrencyManager
+    private let rateCoinMapper: IRateCoinMapper
 
     private let kit: XRatesKit
 
-    init(walletManager: IWalletManager, currencyManager: ICurrencyManager) {
+    init(walletManager: IWalletManager, currencyManager: ICurrencyManager, rateCoinMapper: IRateCoinMapper) {
         self.walletManager = walletManager
         self.currencyManager = currencyManager
+        self.rateCoinMapper = rateCoinMapper
 
         kit = XRatesKit.instance(currencyCode: currencyManager.baseCurrency.code, marketInfoExpirationInterval: 10 * 60)
 
@@ -28,6 +30,18 @@ class RateManager {
                     self?.onBaseCurrencyUpdated()
                 })
                 .disposed(by: disposeBag)
+
+        initMapper()
+    }
+
+    private func initMapper() {
+        rateCoinMapper.addCoin(direction: .convert, from: "HOT", to: "HOLO")
+        rateCoinMapper.addCoin(direction: .unconvert, from: "HOLO", to: "HOT")
+
+        rateCoinMapper.addCoin(direction: .convert, from: "PGL", to: nil)
+        rateCoinMapper.addCoin(direction: .convert, from: "PPT", to: nil)
+        rateCoinMapper.addCoin(direction: .unconvert, from: "PGL", to: nil)
+        rateCoinMapper.addCoin(direction: .unconvert, from: "PPT", to: nil)
     }
 
     private func onUpdate(wallets: [Wallet]) {
@@ -39,25 +53,11 @@ class RateManager {
     }
 
     private func converted(coinCode: String) -> String {
-        if coinCode == "HOT" {
-            return "HOLO"
-        }
-        if coinCode == "PGL" || coinCode == "PPT" {
-            return "AI-DAI"
-        }
-
-        return coinCode
+        rateCoinMapper.convertCoinMap[coinCode] ?? coinCode
     }
 
     private func unconverted(coinCode: String) -> String {
-        if coinCode == "HOLO" {
-            return "HOT"
-        }
-        if coinCode == "PGL" || coinCode == "PPT" {
-            return "AI-DAI"
-        }
-
-        return coinCode
+        rateCoinMapper.unconvertCoinMap[coinCode] ?? coinCode
     }
 
 }

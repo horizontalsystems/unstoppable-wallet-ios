@@ -266,6 +266,17 @@ protocol IRateManager {
     func chartInfoObservable(coinCode: String, currencyCode: String, chartType: ChartType) -> Observable<ChartInfo>
 }
 
+protocol IRateCoinMapper {
+    var convertCoinMap: [String: String] { get }
+    var unconvertCoinMap: [String: String] { get }
+
+    func addCoin(direction: RateDirectionMap, from: String, to: String?)
+}
+
+protocol IBlockedChartCoins {
+    var blockedCoins: Set<String> { get }
+}
+
 protocol ISystemInfoManager {
     var appVersion: String { get }
     var biometryType: Single<BiometryType> { get }
