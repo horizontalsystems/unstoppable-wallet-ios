@@ -10,7 +10,7 @@ class LeftImageCellView: UIView {
         addSubview(imageView)
         imageView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
-            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
+            maker.leading.equalToSuperview().offset(CGFloat.margin6x)
             maker.trailing.equalToSuperview()
         }
 

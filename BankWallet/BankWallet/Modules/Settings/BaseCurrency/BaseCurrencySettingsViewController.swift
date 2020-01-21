@@ -25,6 +25,7 @@ class BaseCurrencySettingsViewController: WalletViewController {
         title = "settings_base_currency.title".localized
 
         tableView.registerCell(forClass: ImageDoubleLineCheckmarkCell.self)
+        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -43,12 +44,24 @@ class BaseCurrencySettingsViewController: WalletViewController {
 
 extension BaseCurrencySettingsViewController: SectionsDataSource {
 
+    private func footer(hash: String, text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
+        .cellType(
+                hash: hash,
+                binder: { view in
+                    view.bind(text: text)
+                },
+                dynamicHeight: { [unowned self] _ in
+                    BottomDescriptionHeaderFooterView.height(containerWidth: self.tableView.bounds.width, text: text)
+                }
+        )
+    }
+
     func buildSections() -> [SectionProtocol] {
         return [
             Section(
                     id: "currencies",
                     headerState: .margin(height: .margin3x),
-                    footerState: .margin(height: .margin8x),
+                    footerState: footer(hash: "currencies_footer", text: "settings_base_currency.provided_by".localized),
                     rows: items.enumerated().map { (index, item) in
                         Row<ImageDoubleLineCheckmarkCell>(
                                 id: item.code,
