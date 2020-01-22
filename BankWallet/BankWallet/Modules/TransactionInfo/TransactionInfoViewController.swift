@@ -41,8 +41,11 @@ class TransactionInfoViewController: WalletActionSheetController {
             model.addItemView(rateItem)
         }
 
-        if let feeCoinValue = item.feeCoinValue, let formattedValue = ValueFormatter.instance.format(coinValue: feeCoinValue) {
-            let feeItem = TransactionValueActionItem(title: "tx_info.fee".localized, value: formattedValue, tag: 3)
+        if let feeCoinValue = item.feeCoinValue, let formattedCoinValue = ValueFormatter.instance.format(coinValue: feeCoinValue) {
+            let formattedCurrencyValue = item.rate.flatMap { ValueFormatter.instance.format(currencyValue: CurrencyValue(currency: $0.currency, value: $0.value * feeCoinValue.value)) }
+            let joinedValues = [formattedCoinValue, formattedCurrencyValue != nil ? "|" : nil, formattedCurrencyValue].compactMap { $0 }.joined(separator: " ")
+
+            let feeItem = TransactionValueActionItem(title: "tx_info.fee".localized, value: joinedValues, tag: 3)
             model.addItemView(feeItem)
         }
 
