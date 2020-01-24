@@ -1,24 +1,27 @@
-protocol IReportView: class {
+protocol IContactView: class {
     func set(email: String)
-    func set(telegramGroup: String)
+    func set(telegramWalletHelperGroup: String)
+    func set(telegramDevelopersGroup: String)
     func showCopied()
 }
 
-protocol IReportViewDelegate {
+protocol IContactViewDelegate {
     func viewDidLoad()
     func didTapEmail()
-    func didTapTelegram()
+    func didTapTelegramWalletHelp()
+    func didTapTelegramDevelopers()
     func didTapStatus()
     func didTapDebugLog()
 }
 
-protocol IReportInteractor {
+protocol IContactInteractor {
     var email: String { get }
-    var telegramGroup: String { get }
+    var telegramWalletHelperGroup: String { get }
+    var telegramDevelopersGroup: String { get }
     func copyToClipboard(string: String)
 }
 
-protocol IReportRouter {
+protocol IContactRouter {
     var canSendMail: Bool { get }
     func openSendMail(recipient: String)
     func openTelegram(group: String)

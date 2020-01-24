@@ -236,7 +236,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "settings.language" = "Language";
 "settings.about" = "About";
 "settings.tell_friends" = "Tell Friends";
-"settings.report_problem" = "Report Problem";
+"settings.contact" = "Contact";
 "settings.light_mode" = "Light Mode";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -308,12 +308,13 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "settings_security.face_id" = "Face ID";
 "security_settings.delete_alert_button" = "Delete from Phone";
 
-// Settings -> Report Problem
+// Settings -> Contact
 
-"settings.report_problem.title" = "Report Problem";
-"settings.report_problem.app_status" = "App Status";
-"settings.report_problem.email" = "E-mail";
-"settings.report_problem.telegram" = "Telegram";
+"settings.contact.title" = "Contact";
+"settings.contact.app_status" = "App Status";
+"settings.contact.email" = "E-mail";
+"settings.contact.telegram_wallet" = "Telegram (Wallet Help)";
+"settings.contact.telegram_developers" = "Telegram (Developers)";
 
 // Manage Keys
 
