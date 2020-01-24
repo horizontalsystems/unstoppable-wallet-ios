@@ -1,14 +1,14 @@
 import UIKit
 import MessageUI
 
-class ReportRouter: NSObject {
+class ContactRouter: NSObject {
     weak var viewController: UIViewController?
 }
 
-extension ReportRouter: IReportRouter {
+extension ContactRouter: IContactRouter {
 
     var canSendMail: Bool {
-        return MFMailComposeViewController.canSendMail()
+        MFMailComposeViewController.canSendMail()
     }
 
     func openSendMail(recipient: String) {
@@ -41,7 +41,7 @@ extension ReportRouter: IReportRouter {
 
 }
 
-extension ReportRouter: MFMailComposeViewControllerDelegate {
+extension ContactRouter: MFMailComposeViewControllerDelegate {
 
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true)
@@ -49,13 +49,13 @@ extension ReportRouter: MFMailComposeViewControllerDelegate {
 
 }
 
-extension ReportRouter {
+extension ContactRouter {
 
     static func module() -> UIViewController {
-        let router = ReportRouter()
-        let interactor = ReportInteractor(appConfigProvider: App.shared.appConfigProvider, pasteboardManager: App.shared.pasteboardManager)
-        let presenter = ReportPresenter(interactor: interactor, router: router)
-        let viewController = ReportViewController(delegate: presenter)
+        let router = ContactRouter()
+        let interactor = ContactInteractor(appConfigProvider: App.shared.appConfigProvider, pasteboardManager: App.shared.pasteboardManager)
+        let presenter = ContactPresenter(interactor: interactor, router: router)
+        let viewController = ContactViewController(delegate: presenter)
 
         presenter.view = viewController
         router.viewController = viewController

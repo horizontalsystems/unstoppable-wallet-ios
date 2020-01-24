@@ -124,10 +124,10 @@ class MainSettingsViewController: WalletViewController {
                 self?.delegate.didTapTellFriends()
             }),
 
-            Row<TitleCell>(id: "report_problem", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Report Problem Icon"), title: "settings.report_problem".localized, showDisclosure: true, last: true)
+            Row<TitleCell>(id: "contact", height: .heightSingleLineCell, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Contact Icon"), title: "settings.contact".localized, showDisclosure: true, last: true)
             }, action: { [weak self] _ in
-                self?.delegate.didTapReportProblem()
+                self?.delegate.didTapContact()
             })
         ]
     }

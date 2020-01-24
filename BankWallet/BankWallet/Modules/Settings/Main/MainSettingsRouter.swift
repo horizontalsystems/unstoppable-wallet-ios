@@ -40,8 +40,8 @@ extension MainSettingsRouter: IMainSettingsRouter {
         viewController?.present(activityViewController, animated: true, completion: nil)
     }
 
-    func showReportProblem() {
-        viewController?.navigationController?.pushViewController(ReportRouter.module(), animated: true)
+    func showContact() {
+        viewController?.navigationController?.pushViewController(ContactRouter.module(), animated: true)
     }
 
     func open(link: String) {

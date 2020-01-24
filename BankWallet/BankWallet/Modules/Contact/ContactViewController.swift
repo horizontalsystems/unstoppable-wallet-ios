@@ -1,15 +1,16 @@
 import UIKit
 import SectionsTableView
 
-class ReportViewController: WalletViewController {
-    private let delegate: IReportViewDelegate
+class ContactViewController: WalletViewController {
+    private let delegate: IContactViewDelegate
 
     private let tableView = SectionsTableView(style: .grouped)
 
     private var email: String?
-    private var telegramGroup: String?
+    private var telegramWalletHelperGroup: String?
+    private var telegramDevelopersGroup: String?
 
-    init(delegate: IReportViewDelegate) {
+    init(delegate: IContactViewDelegate) {
         self.delegate = delegate
 
         super.init()
@@ -24,7 +25,7 @@ class ReportViewController: WalletViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "settings.report_problem.title".localized
+        title = "settings.contact.title".localized
 
         tableView.registerCell(forClass: ImageDoubleLineCell.self)
         tableView.registerCell(forClass: TitleCell.self)
@@ -51,7 +52,7 @@ class ReportViewController: WalletViewController {
                     bind: { [weak self] cell, _ in
                         cell.bind(
                                 image: UIImage(named: "Email Icon")?.tinted(with: .appJacob),
-                                title: "settings.report_problem.email".localized,
+                                title: "settings.contact.email".localized,
                                 subtitle: self?.email
                         )
                     },
@@ -60,19 +61,35 @@ class ReportViewController: WalletViewController {
                     }
             ),
             Row<ImageDoubleLineCell>(
-                    id: "telegram",
+                    id: "telegram_wallet",
                     height: .heightDoubleLineCell,
                     autoDeselect: true,
                     bind: { [weak self] cell, _ in
                         cell.bind(
                                 image: UIImage(named: "Telegram Icon")?.tinted(with: .appJacob),
-                                title: "settings.report_problem.telegram".localized,
-                                subtitle: self?.telegramGroup,
+                                title: "settings.contact.telegram_wallet".localized,
+                                subtitle: self?.telegramWalletHelperGroup,
                                 last: true
                         )
                     },
                     action: { [weak self] _ in
-                        self?.delegate.didTapTelegram()
+                        self?.delegate.didTapTelegramWalletHelp()
+                    }
+            ),
+            Row<ImageDoubleLineCell>(
+                    id: "telegram_developers",
+                    height: .heightDoubleLineCell,
+                    autoDeselect: true,
+                    bind: { [weak self] cell, _ in
+                        cell.bind(
+                                image: UIImage(named: "Telegram Icon")?.tinted(with: .appJacob),
+                                title: "settings.contact.telegram_developers".localized,
+                                subtitle: self?.telegramDevelopersGroup,
+                                last: true
+                        )
+                    },
+                    action: { [weak self] _ in
+                        self?.delegate.didTapTelegramDevelopers()
                     }
             )
         ]
@@ -85,7 +102,7 @@ class ReportViewController: WalletViewController {
                     height: .heightSingleLineCell,
                     autoDeselect: true,
                     bind: { cell, _ in
-                        cell.bind(titleIcon: nil, title: "settings.report_problem.app_status".localized, showDisclosure: true, last: true)
+                        cell.bind(titleIcon: nil, title: "settings.contact.app_status".localized, showDisclosure: true, last: true)
                     },
                     action: { [weak self] _ in
                         self?.delegate.didTapStatus()
@@ -110,7 +127,7 @@ class ReportViewController: WalletViewController {
 
 }
 
-extension ReportViewController: SectionsDataSource {
+extension ContactViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
@@ -127,14 +144,18 @@ extension ReportViewController: SectionsDataSource {
 
 }
 
-extension ReportViewController: IReportView {
+extension ContactViewController: IContactView {
 
     func set(email: String) {
         self.email = email
     }
 
-    func set(telegramGroup: String) {
-        self.telegramGroup = telegramGroup
+    func set(telegramWalletHelperGroup: String) {
+        self.telegramWalletHelperGroup = telegramWalletHelperGroup
+    }
+
+    func set(telegramDevelopersGroup: String) {
+        self.telegramDevelopersGroup = telegramDevelopersGroup
     }
 
     func showCopied() {

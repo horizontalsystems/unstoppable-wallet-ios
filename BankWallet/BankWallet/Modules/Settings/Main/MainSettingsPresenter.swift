@@ -62,8 +62,8 @@ extension MainSettingsPresenter: IMainSettingsViewDelegate {
         router.showShare(appWebPageLink: interactor.appWebPageLink)
     }
 
-    func didTapReportProblem() {
-        router.showReportProblem()
+    func didTapContact() {
+        router.showContact()
     }
 
     func didTapCompanyLink() {

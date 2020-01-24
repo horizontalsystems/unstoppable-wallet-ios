@@ -298,7 +298,8 @@ protocol IAppConfigProvider {
     var companyWebPageLink: String { get }
     var appWebPageLink: String { get }
     var reportEmail: String { get }
-    var reportTelegramGroup: String { get }
+    var telegramWalletHelperGroup: String { get }
+    var telegramDevelopersGroup: String { get }
 
     var reachabilityHost: String { get }
     var testMode: Bool { get }

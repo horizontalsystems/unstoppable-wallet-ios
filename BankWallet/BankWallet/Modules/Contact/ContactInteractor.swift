@@ -1,4 +1,4 @@
-class ReportInteractor {
+class ContactInteractor {
     private let appConfigProvider: IAppConfigProvider
     private let pasteboardManager: IPasteboardManager
 
@@ -9,14 +9,18 @@ class ReportInteractor {
 
 }
 
-extension ReportInteractor: IReportInteractor {
+extension ContactInteractor: IContactInteractor {
 
     var email: String {
-        return appConfigProvider.reportEmail
+        appConfigProvider.reportEmail
     }
 
-    var telegramGroup: String {
-        return appConfigProvider.reportTelegramGroup
+    var telegramWalletHelperGroup: String {
+        appConfigProvider.telegramWalletHelperGroup
+    }
+
+    var telegramDevelopersGroup: String {
+        appConfigProvider.telegramDevelopersGroup
     }
 
     func copyToClipboard(string: String) {

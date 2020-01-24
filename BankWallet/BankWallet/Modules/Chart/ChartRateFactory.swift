@@ -49,7 +49,7 @@ class ChartRateFactory: IChartRateFactory {
         let lowValue = CurrencyValue(currency: currency, value: minimumValue)
         let highValue = CurrencyValue(currency: currency, value: maximumValue)
 
-        let points = chartInfo.points.map { ChartPoint(timestamp: $0.timestamp, value: $0.value) }
+        let points = chartInfo.points.map { ChartPoint(timestamp: $0.timestamp, value: $0.value, volume: $0.volume) }
         return ChartInfoViewItem(lowValue: lowValue, highValue: highValue, diff: diff,
                 gridIntervalType: GridIntervalConverter.convert(chartType: type), points: points,
                 startTimestamp: chartInfo.startTimestamp, endTimestamp: chartInfo.endTimestamp)
