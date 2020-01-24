@@ -47,7 +47,7 @@ PODS:
     - Secp256k1Kit.swift (~> 1.0)
   - BlsKit.swift (1.0)
   - BlueSocket (1.0.52)
-  - Chart.swift (1.1):
+  - Chart.swift (1.2):
     - SnapKit (~> 5.0)
   - Cuckoo (1.3.0):
     - Cuckoo/Swift (= 1.3.0)
@@ -159,7 +159,7 @@ PODS:
   - SwiftyJSON (4.3.0)
   - UIExtensions.swift (1.1)
   - X11Kit.swift (1.0)
-  - XRatesKit.swift (0.4.1):
+  - XRatesKit.swift (0.5):
     - Alamofire (~> 4.0)
     - GRDB.swift (~> 4.0)
     - ObjectMapper (~> 3.5)
@@ -267,7 +267,7 @@ SPEC CHECKSUMS:
   BitcoinKit.swift: 1d216c95eed1a8fcfa997e4d86fe10559d84f56c
   BlsKit.swift: 533e494e0068f9ad2cf211a31fe9279f688af123
   BlueSocket: 1acd943acb07b55905291d608649fcfbf8cbd57d
-  Chart.swift: 624c06cd56533968098928e93980d90ff4918ce0
+  Chart.swift: 2634973317e2637347d160b99992b7b21cbf7644
   Cuckoo: 4045c5a8ce378c919c20c5ff3d6dd11ded0ec699
   DashKit.swift: 6ee100d9c2f847c7564c5bf5cfbfbd738393c92b
   DeepDiff: e5ae6c50d0321568e4508cec5930b9f10bb293fc
@@ -302,7 +302,7 @@ SPEC CHECKSUMS:
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   UIExtensions.swift: b3852a339a81c730d98b3342ae0275e807703782
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
-  XRatesKit.swift: 23c713115f7b327aa8691c8a429b4cc094affa7e
+  XRatesKit.swift: 568660675ce881653095645bc9e30dbc1abc5578
 
 PODFILE CHECKSUM: 7af51396bc0c4f9e796e0d60728a86db29169619
 

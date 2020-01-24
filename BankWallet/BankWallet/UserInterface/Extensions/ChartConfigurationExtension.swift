@@ -50,6 +50,8 @@ extension ChartConfiguration {
         selectedIndicatorColor = .appOz
         selectedCurveColor = .appOz
         selectedGradientColor = .appOz
+
+        volumeBarColor = .appSteel20
     }
 
 }
