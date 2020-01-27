@@ -35,24 +35,23 @@ class BackupController: WalletViewController {
             maker.top.equalTo(self.view.snp.topMargin).offset(CGFloat.margin6x)
         }
 
-        view.addSubview(cancelButton)
-        cancelButton.setTitle(delegate.isBackedUp ? "backup.close".localized : "backup.intro.later".localized, for: .normal)
-        cancelButton.addTarget(self, action: #selector(cancelDidTap), for: .touchUpInside)
-
-        cancelButton.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(CGFloat.marginButtonSide)
-            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(CGFloat.marginButtonSide)
-            maker.size.equalTo(CGSize(width: 85, height: CGFloat.heightButton))
-        }
-
         view.addSubview(proceedButton)
         proceedButton.setTitle(delegate.isBackedUp ? "backup.intro.show_key".localized : "backup.intro.backup_now".localized, for: .normal)
         proceedButton.addTarget(self, action: #selector(proceedDidTap), for: .touchUpInside)
 
         proceedButton.snp.makeConstraints { maker in
-            maker.leading.equalTo(cancelButton.snp.trailing).offset(10)
-            maker.trailing.equalToSuperview().inset(CGFloat.marginButtonSide)
-            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(CGFloat.marginButtonSide)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
+            maker.height.equalTo(CGFloat.heightButton)
+        }
+
+        view.addSubview(cancelButton)
+        cancelButton.setTitle(delegate.isBackedUp ? "backup.close".localized : "backup.intro.later".localized, for: .normal)
+        cancelButton.addTarget(self, action: #selector(cancelDidTap), for: .touchUpInside)
+
+        cancelButton.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
+            maker.top.equalTo(proceedButton.snp.bottom).offset(CGFloat.margin4x)
+            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(CGFloat.margin8x)
             maker.height.equalTo(CGFloat.heightButton)
         }
     }
