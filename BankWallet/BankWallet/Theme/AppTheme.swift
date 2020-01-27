@@ -123,8 +123,6 @@ extension CGFloat {
     static let margin10x: CGFloat = 40
     static let margin12x: CGFloat = 48
 
-    static let marginButtonSide: CGFloat = 44
-
     static let marginTextSide: CGFloat = 44
 
     static let heightOnePixel: CGFloat = 1 / UIScreen.main.scale
@@ -146,8 +144,8 @@ extension UIButton {
         button.titleLabel?.font = .appHeadline2
         button.setTitleColor(.black, for: .normal)
         button.setTitleColor(.appGray50, for: .disabled)
-        button.setBackgroundColor(color: .appJacob, gradient: (colors: [UIColor(white: 1, alpha: 0.4), UIColor(white: 1, alpha: 0)], height: .heightButton), forState: .normal)
-        button.setBackgroundColor(color: .appJacob, forState: .highlighted)
+        button.setBackgroundColor(color: .appYellowD, gradient: (colors: [UIColor(white: 1, alpha: 0.4), UIColor(white: 1, alpha: 0)], height: .heightButton), forState: .normal)
+        button.setBackgroundColor(color: .appYellowD, forState: .highlighted)
         button.setBackgroundColor(color: .appSteel20, forState: .disabled)
         button.cornerRadius = .cornerRadius8
 
@@ -160,8 +158,8 @@ extension UIButton {
         button.titleLabel?.font = .appHeadline2
         button.setTitleColor(.black, for: .normal)
         button.setTitleColor(.appGray50, for: .disabled)
-        button.setBackgroundColor(color: .appRemus, gradient: (colors: [UIColor(white: 1, alpha: 0.4), UIColor(white: 1, alpha: 0)], height: .heightButton), forState: .normal)
-        button.setBackgroundColor(color: .appRemus, forState: .highlighted)
+        button.setBackgroundColor(color: .appGreenD, gradient: (colors: [UIColor(white: 1, alpha: 0.4), UIColor(white: 1, alpha: 0)], height: .heightButton), forState: .normal)
+        button.setBackgroundColor(color: .appGreenD, forState: .highlighted)
         button.setBackgroundColor(color: .appSteel20, forState: .disabled)
         button.cornerRadius = .cornerRadius8
 

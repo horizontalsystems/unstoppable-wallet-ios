@@ -4,14 +4,18 @@ import SnapKit
 class BackupWordsController: WalletViewController {
     private let delegate: IBackupWordsViewDelegate
 
-    private let scrollView = UIScrollView()
-    private let wordsLabel = UILabel()
+    private let collectionView: UICollectionView
 
     private let proceedButtonHolder = GradientView(gradientHeight: .margin4x, viewHeight: .heightBottomWrapperBar, fromColor: UIColor.appTyler.withAlphaComponent(0), toColor: .appTyler)
     private let proceedButton: UIButton = .appYellow
 
     init(delegate: IBackupWordsViewDelegate) {
         self.delegate = delegate
+
+        let layout = UICollectionViewFlowLayout()
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+
+        collectionView.register(BackupWordsCell.self, forCellWithReuseIdentifier: String(describing: BackupWordsCell.self))
 
         super.init()
     }
@@ -25,26 +29,22 @@ class BackupWordsController: WalletViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         title = "backup.private_key".localized
 
-        view.addSubview(scrollView)
+        view.addSubview(collectionView)
 
         view.addSubview(proceedButtonHolder)
         proceedButtonHolder.addSubview(proceedButton)
-        scrollView.addSubview(wordsLabel)
 
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.alwaysBounceVertical = true
-        scrollView.snp.makeConstraints { maker in
+        collectionView.snp.makeConstraints { maker in
             maker.top.equalToSuperview()
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.marginTextSide)
-            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
+            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(CGFloat.heightBottomWrapperBar - CGFloat.margin8x)
         }
-
-        wordsLabel.numberOfLines = 0
-        wordsLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalTo(self.scrollView)
-            maker.top.equalTo(self.scrollView).offset(CGFloat.margin2x)
-            maker.bottom.equalTo(self.scrollView.snp.bottom).inset(CGFloat.heightBottomWrapperBar)
-        }
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.contentInset = UIEdgeInsets(top: CGFloat.margin3x, left: 0, bottom: CGFloat.margin8x, right: 0)
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.alwaysBounceVertical = true
+        collectionView.backgroundColor = .clear
 
         proceedButtonHolder.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
@@ -56,21 +56,56 @@ class BackupWordsController: WalletViewController {
         proceedButton.addTarget(self, action: #selector(nextDidTap), for: .touchUpInside)
 
         proceedButton.snp.makeConstraints { maker in
-            maker.leading.trailing.bottom.equalToSuperview().inset(CGFloat.marginButtonSide)
+            maker.leading.trailing.bottom.equalToSuperview().inset(CGFloat.margin6x)
+            maker.bottom.equalToSuperview().inset(CGFloat.margin8x)
             maker.height.equalTo(CGFloat.heightButton)
         }
+    }
 
-
-        let joinedWords = delegate.words.enumerated().map { "\($0 + 1). \($1)" }.joined(separator: "\n")
-        let attributedText = NSMutableAttributedString(string: joinedWords)
-        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.appHeadline1, range: NSMakeRange(0, joinedWords.count))
-        attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.appOz, range: NSMakeRange(0, joinedWords.count))
-        wordsLabel.attributedText = attributedText
-
+    private func words(for index: Int) -> [String] {
+        Array(delegate.words.suffix(from: index * BackupWordsCell.maxWordsCount).prefix(BackupWordsCell.maxWordsCount))
     }
 
     @objc func nextDidTap() {
         delegate.didTapProceed()
+    }
+
+}
+
+extension BackupWordsController: UICollectionViewDataSource {
+
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        delegate.words.count / BackupWordsCell.maxWordsCount + (delegate.words.count % BackupWordsCell.maxWordsCount != 0 ? 1 : 0)
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: BackupWordsCell.self), for: indexPath)
+    }
+
+}
+
+extension BackupWordsController: UICollectionViewDelegate {
+
+    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let cell = cell as? BackupWordsCell {
+            cell.bind(startIndex: indexPath.row * BackupWordsCell.maxWordsCount + 1, words: words(for: indexPath.row))
+        }
+    }
+
+}
+
+extension BackupWordsController: UICollectionViewDelegateFlowLayout {
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        CGSize(width: collectionView.width / 2, height: BackupWordsCell.heightFor(words: words(for: indexPath.row)))
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        0
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        CGFloat.margin6x
     }
 
 }
