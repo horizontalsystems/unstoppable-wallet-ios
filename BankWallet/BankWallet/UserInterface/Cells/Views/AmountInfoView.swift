@@ -23,7 +23,7 @@ class AmountInfoView: UIView {
         addSubview(secondaryAmountLabel)
         addSubview(secondaryAmountTitleLabel)
 
-        primaryAmountLabel.font = .appHeadline1
+        primaryAmountLabel.font = .headline1
         primaryAmountLabel.textAlignment = .right
         primaryAmountLabel.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(CGFloat.margin3x)
@@ -45,8 +45,8 @@ class AmountInfoView: UIView {
         }
         sentToSelfImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
-        primaryAmountTitleLabel.font = .appSubhead2
-        primaryAmountTitleLabel.textColor = .appGray
+        primaryAmountTitleLabel.font = .subhead2
+        primaryAmountTitleLabel.textColor = .themeGray
         primaryAmountTitleLabel.textAlignment = .right
         primaryAmountTitleLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(secondaryAmountLabel.snp.trailing).offset(CGFloat.margin4x)
@@ -54,15 +54,15 @@ class AmountInfoView: UIView {
             maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
         }
 
-        secondaryAmountTitleLabel.font = .appHeadline2
-        secondaryAmountTitleLabel.textColor = .appOz
+        secondaryAmountTitleLabel.font = .headline2
+        secondaryAmountTitleLabel.textColor = .themeOz
         secondaryAmountTitleLabel.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(CGFloat.margin3x)
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
         }
 
-        secondaryAmountLabel.font = .appSubhead2
-        secondaryAmountLabel.textColor = .appGray
+        secondaryAmountLabel.font = .subhead2
+        secondaryAmountLabel.textColor = .themeGray
         secondaryAmountLabel.snp.makeConstraints { maker in
             maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
@@ -80,7 +80,7 @@ class AmountInfoView: UIView {
     }
 
     func bind(primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, type: TransactionType = .outgoing, locked: Bool? = nil) {
-        primaryAmountLabel.textColor = type == .incoming ? .appRemus : .appJacob
+        primaryAmountLabel.textColor = type == .incoming ? .themeRemus : .themeJacob
 
         let amountLabel: String?
         switch primaryAmountInfo {

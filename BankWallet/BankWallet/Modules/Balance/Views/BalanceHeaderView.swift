@@ -24,7 +24,7 @@ class BalanceHeaderView: UIView {
             maker.height.equalTo(BalanceHeaderView.height)
         }
 
-        amountLabel.font = .appTitle3
+        amountLabel.font = .title3
         amountLabel.preservesSuperviewLayoutMargins = true
 
         wrapperView.addSubview(amountLabel)
@@ -33,7 +33,7 @@ class BalanceHeaderView: UIView {
             maker.centerY.equalToSuperview()
         }
 
-        sortButton.setImage(UIImage(named: "Balance Sort Icon")?.tinted(with: .appJacob), for: .normal)
+        sortButton.setImage(UIImage(named: "Balance Sort Icon")?.tinted(with: .themeJacob), for: .normal)
         sortButton.addTarget(self, action: #selector(_onTapSortType), for: .touchUpInside)
 
         wrapperView.addSubview(sortButton)
@@ -49,7 +49,7 @@ class BalanceHeaderView: UIView {
 
     func bind(viewItem: BalanceHeaderViewItem) {
         amountLabel.text = ValueFormatter.instance.format(currencyValue: viewItem.currencyValue)
-        amountLabel.textColor = viewItem.upToDate ? .appJacob : .appYellow50
+        amountLabel.textColor = viewItem.upToDate ? .themeJacob : .themeYellow50
     }
 
     func setSortButton(hidden: Bool) {

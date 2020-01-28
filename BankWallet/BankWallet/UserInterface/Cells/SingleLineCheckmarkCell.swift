@@ -1,11 +1,12 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
-class SingleLineCheckmarkCell: AppCell {
+class SingleLineCheckmarkCell: ThemeCell {
     private let leftView = SingleLineCellView()
     private let rightView = CheckmarkCellView()
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         contentView.addSubview(leftView)

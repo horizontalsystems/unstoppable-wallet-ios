@@ -1,7 +1,8 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
-class InfoViewController: WalletViewController {
+class InfoViewController: ThemeViewController {
     private let viewTitle: String
     private let viewText: String
 
@@ -39,8 +40,8 @@ class InfoViewController: WalletViewController {
         let textLabel = UILabel()
         textLabel.text = viewText.localized
         textLabel.numberOfLines = 0
-        textLabel.font = .appSubhead2
-        textLabel.textColor = .appGray
+        textLabel.font = .subhead2
+        textLabel.textColor = .themeGray
 
         container.addSubview(textLabel)
         textLabel.snp.makeConstraints { maker in

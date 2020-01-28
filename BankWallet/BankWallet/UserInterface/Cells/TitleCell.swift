@@ -1,14 +1,15 @@
 import UIKit
 import UIExtensions
 import SnapKit
+import ThemeKit
 
-class TitleCell: AppCell {
+class TitleCell: ThemeCell {
     private let iconSize: CGFloat = 24
 
     var iconImageView = TintImageView()
     var titleLabel = UILabel()
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         contentView.addSubview(iconImageView)
@@ -18,7 +19,7 @@ class TitleCell: AppCell {
             maker.centerY.equalToSuperview()
         }
 
-        iconImageView.tintColor = .appJacob
+        iconImageView.tintColor = .themeJacob
 
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
@@ -26,14 +27,14 @@ class TitleCell: AppCell {
             maker.centerY.equalToSuperview()
         }
 
-        titleLabel.font = .appBody
+        titleLabel.font = .body
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(titleIcon: UIImage? = nil, title: String, titleColor: UIColor = .appOz, showDisclosure: Bool = false, last: Bool = false) {
+    func bind(titleIcon: UIImage? = nil, title: String, titleColor: UIColor = .themeOz, showDisclosure: Bool = false, last: Bool = false) {
         super.bind(showDisclosure: showDisclosure, last: last)
 
         iconImageView.snp.updateConstraints { maker in

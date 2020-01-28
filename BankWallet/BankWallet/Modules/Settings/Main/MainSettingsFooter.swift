@@ -16,11 +16,11 @@ class MainSettingsFooter: UITableViewHeaderFooterView {
             maker.top.equalToSuperview().offset(CGFloat.margin8x)
             maker.centerX.equalToSuperview()
         }
-        versionLabel.textColor = .appGray
-        versionLabel.font = .appCaption
+        versionLabel.textColor = .themeGray
+        versionLabel.font = .caption
 
         let separatorView = UIView()
-        separatorView.backgroundColor = .appGray
+        separatorView.backgroundColor = .themeGray
         contentView.addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
             maker.leading.trailing.equalTo(versionLabel)
@@ -34,11 +34,11 @@ class MainSettingsFooter: UITableViewHeaderFooterView {
             maker.top.equalTo(separatorView.snp.bottom).offset(CGFloat.margin1x)
             maker.centerX.equalToSuperview()
         }
-        titleLabel.textColor = .appGray
-        titleLabel.font = .appCaption
+        titleLabel.textColor = .themeGray
+        titleLabel.font = .caption
         titleLabel.text = "settings.info_subtitle".localized
 
-        let imageView: TintImageView = TintImageView(image: UIImage(named: "Logo Image"), tintColor: .appGray, selectedTintColor: .appSteelLight)
+        let imageView: TintImageView = TintImageView(image: UIImage(named: "Logo Image"), tintColor: .themeGray, selectedTintColor: .themeSteelLight)
         logoButton.addSubview(imageView)
         imageView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()

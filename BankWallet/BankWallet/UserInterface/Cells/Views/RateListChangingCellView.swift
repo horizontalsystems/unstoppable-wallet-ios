@@ -19,7 +19,7 @@ class RateListChangingCellView: UIView {
 
         rateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         rateLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
-        rateLabel.font = .appSubhead1
+        rateLabel.font = .subhead1
         rateLabel.textAlignment = .right
 
         addSubview(rateDiffView)
@@ -31,7 +31,7 @@ class RateListChangingCellView: UIView {
 
         rateDiffView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         rateDiffView.setContentCompressionResistancePriority(.required, for: .horizontal)
-        rateDiffView.font = .appSubhead1
+        rateDiffView.font = .subhead1
 
         addSubview(diffPlaceholderLabel)
         diffPlaceholderLabel.snp.makeConstraints { maker in
@@ -42,8 +42,8 @@ class RateListChangingCellView: UIView {
 
         diffPlaceholderLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         diffPlaceholderLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
-        diffPlaceholderLabel.textColor = .appGray
-        diffPlaceholderLabel.font = .appSubhead1
+        diffPlaceholderLabel.textColor = .themeGray
+        diffPlaceholderLabel.font = .subhead1
     }
 
     required init?(coder aDecoder: NSCoder) {

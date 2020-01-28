@@ -1,10 +1,11 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
-class SingleLineCell: AppCell {
+class SingleLineCell: ThemeCell {
     private let leftView = SingleLineCellView()
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         contentView.addSubview(leftView)

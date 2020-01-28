@@ -7,8 +7,8 @@ class SingleLineCellView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        label.font = .appBody
-        label.textColor = .appOz
+        label.font = .body
+        label.textColor = .themeOz
 
         addSubview(label)
         label.snp.makeConstraints { maker in

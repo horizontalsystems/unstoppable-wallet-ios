@@ -15,20 +15,20 @@ class AlertTitleView: UIView {
 
         addSubview(iconImageView)
         iconImageView.snp.makeConstraints { maker in
-            maker.leading.top.equalToSuperview().offset(AppTheme.alertMediumMargin)
+            maker.leading.top.equalToSuperview().offset(CGFloat.margin3x)
             maker.size.equalTo(AppTheme.coinIconSize)
         }
 
         addSubview(titleLabel)
-        titleLabel.font = AppTheme.alertTitleFont
-        titleLabel.textColor = AppTheme.alertTitleColor
+        titleLabel.font = .headline2
+        titleLabel.textColor = .themeOz
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.iconImageView.snp.trailing).offset(AppTheme.alertSmallMargin)
-            maker.top.equalToSuperview().offset(AppTheme.alertMediumMargin)
+            maker.leading.equalTo(self.iconImageView.snp.trailing).offset(CGFloat.margin2x)
+            maker.top.equalToSuperview().offset(CGFloat.margin3x)
         }
         addSubview(subtitleLabel)
-        subtitleLabel.font = AppTheme.alertSubtitleFont
-        subtitleLabel.textColor = AppTheme.alertSubtitleColor
+        subtitleLabel.font = .subhead2
+        subtitleLabel.textColor = .themeGray
         subtitleLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.titleLabel)
             maker.top.equalTo(self.titleLabel.snp.bottom).offset(AppTheme.alertSubtitleTopMargin)
@@ -36,7 +36,7 @@ class AlertTitleView: UIView {
 
         addSubview(closeButton)
         closeButton.setImage(UIImage(named: "Close Icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        closeButton.tintColor = .appGray
+        closeButton.tintColor = .themeGray
         closeButton.addTarget(self, action: #selector(onTapClose), for: .touchUpInside)
         closeButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         closeButton.snp.makeConstraints { maker in

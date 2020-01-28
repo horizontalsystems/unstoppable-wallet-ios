@@ -1,7 +1,8 @@
 import UIKit
 import SectionsTableView
+import ThemeKit
 
-class LanguageSettingsViewController: WalletViewController {
+class LanguageSettingsViewController: ThemeViewController {
     private let delegate: ILanguageSettingsViewDelegate
 
     private var items = [LanguageViewItem]()

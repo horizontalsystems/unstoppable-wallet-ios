@@ -13,7 +13,14 @@ class AlertViewController: WalletActionSheetController {
     init(header: String? = nil, message: String? = nil, rows: [AlertRow], onSelect: @escaping (Int) -> ()) {
         self.onSelect = onSelect
 
-        super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.alertConfig)
+        let config = ActionSheetThemeConfig(
+                actionStyle: .alert,
+                sideMargin: AppTheme.alertSideMargin,
+                cornerRadius: .margin4x,
+                separatorColor: .themeSteel20,
+                backgroundStyle: .color(color: .themeBlack50)
+        )
+        super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: config)
 
         if let header = header {
             addHeader(text: header)
@@ -41,15 +48,15 @@ class AlertViewController: WalletActionSheetController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        backgroundColor = AppTheme.alertBackgroundColor
+        backgroundColor = .themeLawrence
         contentBackgroundColor = .white
     }
 
     private func addHeader(text: String) {
         let item = TextSelectItem(
                 text: text,
-                font: AppTheme.alertHeaderFont,
-                color: AppTheme.alertHeaderColor,
+                font: .subhead1,
+                color: .themeGray,
                 height: AppTheme.alertHeaderHeight,
                 tag: -1
         )
@@ -60,8 +67,8 @@ class AlertViewController: WalletActionSheetController {
     private func addMessage(text: String) {
         let item = MessageItem(
                 text: text,
-                font: AppTheme.alertMessageFont,
-                color: AppTheme.alertMessageDefaultColor
+                font: .subhead1,
+                color: .themeOz
         )
 
         model.addItemView(item)
@@ -70,9 +77,9 @@ class AlertViewController: WalletActionSheetController {
     private func addRow(index: Int, row: AlertRow) {
         let item = TextSelectItem(
                 text: row.text,
-                font: AppTheme.alertCellFont,
-                color: .appOz,
-                height: AppTheme.alertCellHeight,
+                font: .headline2,
+                color: .themeOz,
+                height: 53,
                 selected: row.selected,
                 tag: index
         ) { [weak self] view in

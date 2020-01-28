@@ -1,7 +1,8 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
-class NoPasscodeViewController: WalletViewController {
+class NoPasscodeViewController: ThemeViewController {
     private let delegate: INoPasscodeViewDelegate
 
     private let wrapperView = UIView()
@@ -38,7 +39,7 @@ class NoPasscodeViewController: WalletViewController {
 
         iconImageView.contentMode = .center
         iconImageView.image = UIImage(named: "No Passcode Icon")?.withRenderingMode(.alwaysTemplate)
-        iconImageView.tintColor = .appGray
+        iconImageView.tintColor = .themeGray
 
         infoLabel.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(42)
@@ -46,10 +47,10 @@ class NoPasscodeViewController: WalletViewController {
             make.bottom.equalToSuperview()
         }
 
-        infoLabel.textColor = .appGray
+        infoLabel.textColor = .themeGray
         infoLabel.textAlignment = .center
         infoLabel.numberOfLines = 0
-        infoLabel.font = .appBody
+        infoLabel.font = .body
         infoLabel.text = "no_passcode.info_text".localized
     }
 

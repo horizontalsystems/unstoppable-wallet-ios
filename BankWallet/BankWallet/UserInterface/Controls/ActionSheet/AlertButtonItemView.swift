@@ -7,7 +7,7 @@ class AlertButtonItemView: BaseButtonItemView {
     override func initView() {
         super.initView()
 
-        button.cornerRadius = .cornerRadius8
+        button.cornerRadius = .cornerRadius2x
         button.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(item?.insets.left ?? CGFloat.margin4x)
             maker.top.equalToSuperview().offset(item?.insets.top ?? CGFloat.margin8x)

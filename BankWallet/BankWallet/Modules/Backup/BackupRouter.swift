@@ -1,4 +1,5 @@
 import UIKit
+import ThemeKit
 
 class BackupRouter {
     weak var viewController: UIViewController?
@@ -32,7 +33,7 @@ extension BackupRouter {
         let presenter = BackupPresenter(interactor: interactor, router: router, account: account, predefinedAccountType: predefinedAccountType)
 
         let viewController = BackupController(delegate: presenter)
-        let navigationViewController = WalletNavigationController(rootViewController: viewController)
+        let navigationViewController = ThemeNavigationController(rootViewController: viewController)
 
         router.viewController = viewController
 

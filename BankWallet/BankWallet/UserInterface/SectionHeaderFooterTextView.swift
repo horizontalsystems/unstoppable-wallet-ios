@@ -11,7 +11,7 @@ public class SectionHeaderFooterTextView: UITableViewHeaderFooterView {
 
         label.numberOfLines = 0
         label.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(AppTheme.footerTextMargin)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.top.bottom.equalToSuperview()
         }
     }
@@ -20,7 +20,7 @@ public class SectionHeaderFooterTextView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(title: String, font: UIFont = AppTheme.footerTextFont, color: UIColor = AppTheme.footerTextColor, topMargin: CGFloat, bottomMargin: CGFloat) {
+    func bind(title: String, font: UIFont = .subhead2, color: UIColor = .themeGray, topMargin: CGFloat, bottomMargin: CGFloat) {
         label.text = title
         label.font = font
         label.textColor = color
@@ -32,8 +32,8 @@ public class SectionHeaderFooterTextView: UITableViewHeaderFooterView {
         label.setNeedsUpdateConstraints()
     }
 
-    static func textHeight(forContainerWidth containerWidth: CGFloat, text: String, font: UIFont = AppTheme.footerTextFont) -> CGFloat {
-        return ceil(text.height(forContainerWidth: containerWidth - 2 * AppTheme.footerTextMargin, font: font))
+    static func textHeight(forContainerWidth containerWidth: CGFloat, text: String, font: UIFont = .subhead2) -> CGFloat {
+        ceil(text.height(forContainerWidth: containerWidth - 2 * CGFloat.margin4x, font: font))
     }
 
 }

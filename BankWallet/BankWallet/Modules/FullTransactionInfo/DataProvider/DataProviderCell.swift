@@ -2,8 +2,9 @@ import UIKit
 import UIExtensions
 import HUD
 import SnapKit
+import ThemeKit
 
-class DataProviderCell: AppCell {
+class DataProviderCell: ThemeCell {
     private static let spinnerSize: CGFloat = 12
     private static let spinnerStrokeWidth: CGFloat = 2
 
@@ -12,17 +13,17 @@ class DataProviderCell: AppCell {
 
     private let checkmarkImageView = TintImageView(
             image: UIImage(named: "Transaction Success Icon"),
-            tintColor: .appJacob,
-            selectedTintColor: .appJacob
+            tintColor: .themeJacob,
+            selectedTintColor: .themeJacob
     )
 
     private let spinnerView = HUDProgressView(
             strokeLineWidth: DataProviderCell.spinnerStrokeWidth,
             radius: DataProviderCell.spinnerSize / 2 - DataProviderCell.spinnerStrokeWidth / 2,
-            strokeColor: .appGray
+            strokeColor: .themeGray
     )
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         contentView.addSubview(titleLabel)
@@ -31,8 +32,8 @@ class DataProviderCell: AppCell {
             maker.top.equalToSuperview().offset(CGFloat.margin2x)
         }
 
-        titleLabel.font = .appBody
-        titleLabel.textColor = .appOz
+        titleLabel.font = .body
+        titleLabel.textColor = .themeOz
 
         contentView.addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { maker in
@@ -40,7 +41,7 @@ class DataProviderCell: AppCell {
             maker.top.equalTo(titleLabel.snp.bottom).offset(3)
         }
 
-        subtitleLabel.font = .appSubhead2
+        subtitleLabel.font = .subhead2
 
         contentView.addSubview(spinnerView)
         spinnerView.snp.makeConstraints { maker in
@@ -75,10 +76,10 @@ class DataProviderCell: AppCell {
 
             if online {
                 subtitleLabel.text = "full_info.source.online".localized
-                subtitleLabel.textColor = .appRemus
+                subtitleLabel.textColor = .themeRemus
             } else {
                 subtitleLabel.text = "full_info.source.offline".localized
-                subtitleLabel.textColor = .appLucian
+                subtitleLabel.textColor = .themeLucian
             }
         }
 

@@ -21,8 +21,8 @@ class PagingDotsItemView: BaseActionItemView {
         }
 
         pageControl.isUserInteractionEnabled = false
-        pageControl.pageIndicatorTintColor = .appSteel20
-        pageControl.currentPageIndicatorTintColor = .appRemus
+        pageControl.pageIndicatorTintColor = .themeSteel20
+        pageControl.currentPageIndicatorTintColor = .themeRemus
         pageControl.numberOfPages = item?.pagesCount ?? 0
 
         item?.updateView = { [weak self] in

@@ -13,7 +13,7 @@ class LockoutView: UIView {
         backgroundColor = AppTheme.controllerBackgroundFromGradient
 
         addSubview(iconBackgroundView)
-        iconBackgroundView.backgroundColor = .appJeremy
+        iconBackgroundView.backgroundColor = .themeJeremy
         iconBackgroundView.layer.cornerRadius = lockoutIconBackgroundSideSize / 2
         iconBackgroundView.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
@@ -35,8 +35,8 @@ class LockoutView: UIView {
         }
         infoLabel.numberOfLines = 0
         infoLabel.textAlignment = .center
-        infoLabel.font = .appBody
-        infoLabel.textColor = .appGray
+        infoLabel.font = .body
+        infoLabel.textColor = .themeGray
     }
 
     required init?(coder aDecoder: NSCoder) {

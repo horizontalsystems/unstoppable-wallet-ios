@@ -2,8 +2,9 @@ import UIKit
 import UIExtensions
 import SectionsTableView
 import RxSwift
+import ThemeKit
 
-class SecuritySettingsViewController: WalletViewController {
+class SecuritySettingsViewController: ThemeViewController {
     private let delegate: ISecuritySettingsViewDelegate
 
     private let tableView = SectionsTableView(style: .grouped)
@@ -61,7 +62,7 @@ class SecuritySettingsViewController: WalletViewController {
 
         return [
             Row<RightImageCell>(id: "manage_accounts", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Key Icon"), title: "settings_security.manage_accounts".localized, rightImage: securityAttentionImage, rightImageTintColor: .appLucian, showDisclosure: true, last: true)
+                cell.bind(titleIcon: UIImage(named: "Key Icon"), title: "settings_security.manage_accounts".localized, rightImage: securityAttentionImage, rightImageTintColor: .themeLucian, showDisclosure: true, last: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapManageAccounts()
             })

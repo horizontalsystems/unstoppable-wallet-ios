@@ -24,8 +24,8 @@ class LockScreenController: UIPageViewController {
         // Set pageIndicatorTintColor and currentPageIndicatorTintColor
         // only for the following stack of UIViewControllers
         let pageControl = UIPageControl.appearance()
-        pageControl.pageIndicatorTintColor = .appSteel20
-        pageControl.currentPageIndicatorTintColor = App.theme.colorJacob
+        pageControl.pageIndicatorTintColor = .themeSteel20
+        pageControl.currentPageIndicatorTintColor = .themeJacob
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -33,7 +33,7 @@ class LockScreenController: UIPageViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        App.theme.statusBarStyle
+        .themeDefault
     }
 
 }

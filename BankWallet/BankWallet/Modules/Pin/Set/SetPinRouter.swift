@@ -1,4 +1,5 @@
 import UIKit
+import ThemeKit
 
 class SetPinRouter {
     weak var viewController: UIViewController?
@@ -35,7 +36,7 @@ extension SetPinRouter {
         presenter.view = viewController
         router.viewController = viewController
 
-        return WalletNavigationController(rootViewController: viewController)
+        return ThemeNavigationController(rootViewController: viewController)
     }
 
 }

@@ -1,4 +1,5 @@
 import UIKit
+import ThemeKit
 
 class RestoreCoinsRouter {
     weak var viewController: UIViewController?
@@ -44,7 +45,7 @@ extension RestoreCoinsRouter {
 
         switch presentationMode {
         case .initial: return viewController
-        case .inApp: return WalletNavigationController(rootViewController: viewController)
+        case .inApp: return ThemeNavigationController(rootViewController: viewController)
         }
     }
 

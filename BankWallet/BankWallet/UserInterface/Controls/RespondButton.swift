@@ -70,7 +70,7 @@ class RespondButton: UIView, RespondViewDelegate {
         imageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         titleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         titleLabel.textAlignment = .center
-        titleLabel.font = .appHeadline2
+        titleLabel.font = .headline2
         wrapperView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()

@@ -1,4 +1,5 @@
 import UIKit
+import ThemeKit
 
 class CoinSettingsRouter {
     weak var viewController: UIViewController?
@@ -43,7 +44,7 @@ extension CoinSettingsRouter {
         presenter.view = viewController
         router.viewController = viewController
 
-        return WalletNavigationController(rootViewController: viewController)
+        return ThemeNavigationController(rootViewController: viewController)
     }
 
 }

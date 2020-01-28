@@ -1,4 +1,5 @@
 import UIKit
+import ThemeKit
 
 class CreateWalletRouter {
     weak var viewController: UIViewController?
@@ -39,7 +40,7 @@ extension CreateWalletRouter {
 
         switch presentationMode {
         case .initial: return viewController
-        case .inApp: return WalletNavigationController(rootViewController: viewController)
+        case .inApp: return ThemeNavigationController(rootViewController: viewController)
         }
     }
 

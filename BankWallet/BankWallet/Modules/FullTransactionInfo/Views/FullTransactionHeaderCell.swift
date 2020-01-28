@@ -32,7 +32,7 @@ class FullTransactionHeaderCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(title: String? = nil, font: UIFont = .appSubhead1, color: UIColor = .appGray) {
+    func bind(title: String? = nil, font: UIFont = .subhead1, color: UIColor = .themeGray) {
         titleLabel.text = title
         titleLabel.font = font
         titleLabel.textColor = color

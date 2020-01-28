@@ -24,7 +24,8 @@ def appPods
   pod 'XRatesKit.swift'
   pod 'FeeRateKit.swift'
 
-  pod 'UIExtensions.swift'
+  pod 'UIExtensions.swift', path: '../gui-kit/'
+  pod 'ThemeKit.swift', path: '../component-kit-ios/'
   pod 'ActionSheet.swift'
   pod 'HUD.swift'
   pod 'Chart.swift'

@@ -34,8 +34,8 @@ class RequestErrorView: UIView {
         }
 
         titleLabel.numberOfLines = 1
-        titleLabel.font = .appSubhead2
-        titleLabel.textColor = .appGray
+        titleLabel.font = .subhead2
+        titleLabel.textColor = .themeGray
         titleLabel.textAlignment = .center
 
         holderView.addSubview(subtitleLabel)
@@ -45,8 +45,8 @@ class RequestErrorView: UIView {
         updateConstraints(showSubtitle: false, showButton: false)
 
         subtitleLabel.numberOfLines = 1
-        subtitleLabel.font = .appBody
-        subtitleLabel.textColor = .appLucian
+        subtitleLabel.font = .body
+        subtitleLabel.textColor = .themeLucian
         subtitleLabel.textAlignment = .center
 
         holderView.snp.makeConstraints { maker in

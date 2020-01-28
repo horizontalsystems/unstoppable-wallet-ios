@@ -1,4 +1,5 @@
 import UIKit
+import ThemeKit
 
 class EditPinRouter {
     weak var viewController: UIViewController?
@@ -20,9 +21,7 @@ extension EditPinRouter {
         let presenter = EditPinPresenter(interactor: interactor, router: router)
         let controller = PinViewController(delegate: presenter)
 
-        let navigationController = WalletNavigationController(rootViewController: controller)
-        navigationController.navigationBar.barStyle = App.theme.navigationBarStyle
-        navigationController.navigationBar.tintColor = AppTheme.navigationBarTintColor
+        let navigationController = ThemeNavigationController(rootViewController: controller)
         navigationController.navigationBar.prefersLargeTitles = true
 
         interactor.delegate = presenter

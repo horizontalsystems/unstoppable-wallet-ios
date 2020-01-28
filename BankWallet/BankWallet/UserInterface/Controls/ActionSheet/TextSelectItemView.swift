@@ -15,14 +15,14 @@ class TextSelectItemView: BaseActionItemView {
         titleLabel.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
         }
-        titleLabel.font = item?.font ?? AppTheme.alertCellFont
+        titleLabel.font = item?.font ?? .headline2
         titleLabel.numberOfLines = 0
         titleLabel.text = item?.text
     }
 
     func updateSelected() {
         if let item = item {
-            titleLabel.textColor = item.selected ? AppTheme.alertCellHighlightColor : item.color
+            titleLabel.textColor = item.selected ? .themeJacob : item.color
         }
     }
 

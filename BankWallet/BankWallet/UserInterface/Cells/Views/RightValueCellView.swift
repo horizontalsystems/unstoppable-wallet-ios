@@ -7,7 +7,7 @@ class RightValueCellView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        label.font = .appSubhead1
+        label.font = .subhead1
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         label.setContentHuggingPriority(.required, for: .horizontal)
 
@@ -24,7 +24,7 @@ class RightValueCellView: UIView {
 
     func bind(text: String?, highlighted: Bool = false) {
         label.text = text
-        label.textColor = highlighted ? .appOz : .appGray
+        label.textColor = highlighted ? .themeOz : .themeGray
     }
 
 }

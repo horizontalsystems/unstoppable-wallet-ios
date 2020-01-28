@@ -17,7 +17,7 @@ class ToggleCell: TitleCell {
             maker.centerY.equalToSuperview()
         }
 
-        toggleView.tintColor = .appSteel20
+        toggleView.tintColor = .themeSteel20
         toggleView.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
     }
 

@@ -5,7 +5,7 @@ class TopDescriptionView: UIView {
     private static let sideMargin: CGFloat = .margin6x
     private static let topMargin: CGFloat = .margin3x
     private static let bottomMargin: CGFloat = .margin6x
-    private static let font: UIFont = .appSubhead2
+    private static let font: UIFont = .subhead2
 
     private let label = UILabel()
 
@@ -14,7 +14,7 @@ class TopDescriptionView: UIView {
 
         label.numberOfLines = 0
         label.font = TopDescriptionView.font
-        label.textColor = .appGray
+        label.textColor = .themeGray
 
         addSubview(label)
         label.snp.makeConstraints { maker in

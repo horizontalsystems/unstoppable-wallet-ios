@@ -13,8 +13,8 @@ class SubtitleHeaderFooterView: UITableViewHeaderFooterView {
             maker.bottom.equalToSuperview().inset(CGFloat.margin2x)
         }
 
-        label.font = .appSubhead1
-        label.textColor = .appGray
+        label.font = .subhead1
+        label.textColor = .themeGray
     }
 
     required init?(coder aDecoder: NSCoder) {

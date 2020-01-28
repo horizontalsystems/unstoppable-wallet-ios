@@ -26,8 +26,8 @@ class BackupWordsCell: UICollectionViewCell {
                 }
             }
             
-            indexLabel.textColor = .appGray
-            indexLabel.font = .appHeadline2
+            indexLabel.textColor = .themeGray
+            indexLabel.font = .headline2
             lastIndexLabel = indexLabel
 
             indexLabels.append(indexLabel)
@@ -45,8 +45,8 @@ class BackupWordsCell: UICollectionViewCell {
                 }
             }
 
-            wordLabel.textColor = .appOz
-            wordLabel.font = .appHeadline2
+            wordLabel.textColor = .themeOz
+            wordLabel.font = .headline2
             lastWordLabel = wordLabel
 
             wordLabels.append(wordLabel)
@@ -68,7 +68,7 @@ class BackupWordsCell: UICollectionViewCell {
         var height: CGFloat = 0
         let maxWords = words.prefix(BackupWordsCell.maxWordsCount)
         for word in maxWords {
-            height += word.height(forContainerWidth: CGFloat.greatestFiniteMagnitude, font: .appHeadline2)
+            height += word.height(forContainerWidth: CGFloat.greatestFiniteMagnitude, font: .headline2)
         }
         return height + CGFloat.margin1x * CGFloat(max(0, maxWords.count - 1))
     }

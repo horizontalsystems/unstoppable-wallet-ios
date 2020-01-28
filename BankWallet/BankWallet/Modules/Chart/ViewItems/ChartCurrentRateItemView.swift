@@ -15,8 +15,8 @@ class ChartCurrentRateItemView: BaseActionItemView {
         super.initView()
 
         addSubview(currentRateLabel)
-        currentRateLabel.font = .appHeadline2
-        currentRateLabel.textColor = .appOz
+        currentRateLabel.font = .headline2
+        currentRateLabel.textColor = .themeOz
         currentRateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         currentRateLabel.snp.makeConstraints { maker in
@@ -24,7 +24,7 @@ class ChartCurrentRateItemView: BaseActionItemView {
             maker.top.equalToSuperview().offset(CGFloat.margin3x)
         }
 
-        rateDiffView.font = .appSubhead1
+        rateDiffView.font = .subhead1
 
         addSubview(rateDiffView)
         rateDiffView.snp.makeConstraints { maker in

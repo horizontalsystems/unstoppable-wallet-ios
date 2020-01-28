@@ -1,14 +1,15 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
-class SendConfirmationAmountCell: AppCell {
+class SendConfirmationAmountCell: ThemeCell {
 
     private let amountInfoView = AmountInfoView()
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        contentView.backgroundColor = .appLawrence
+        contentView.backgroundColor = .themeLawrence
         backgroundColor = .clear
         selectionStyle = .none
 

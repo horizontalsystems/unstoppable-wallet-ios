@@ -1,8 +1,9 @@
 import UIKit
 import RxSwift
 import SnapKit
+import ThemeKit
 
-class SendViewController: WalletViewController {
+class SendViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private let delegate: ISendViewDelegate
@@ -65,7 +66,7 @@ class SendViewController: WalletViewController {
             maker.top.bottom.equalTo(self.scrollView)
         }
 
-        iconImageView.tintColor = .appGray
+        iconImageView.tintColor = .themeGray
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onClose))

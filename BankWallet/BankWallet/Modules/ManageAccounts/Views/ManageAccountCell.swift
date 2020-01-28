@@ -26,7 +26,7 @@ class ManageAccountCell: CardCell {
 
         clippingView.layer.shouldRasterize = true
         clippingView.layer.rasterizationScale = UIScreen.main.scale
-        clippingView.borderColor = .appJacob
+        clippingView.borderColor = .themeJacob
 
         activeKeyIcon.image = ManageAccountCell.keyIcon?.withRenderingMode(.alwaysTemplate)
         activeKeyIcon.setContentHuggingPriority(.defaultHigh, for: .horizontal)
@@ -85,10 +85,10 @@ class ManageAccountCell: CardCell {
 
         if viewItem.highlighted {
             clippingView.borderWidth = 2 / UIScreen.main.scale
-            activeKeyIcon.tintColor = .appJacob
+            activeKeyIcon.tintColor = .themeJacob
         } else {
             clippingView.borderWidth = 0
-            activeKeyIcon.tintColor = .appGray50
+            activeKeyIcon.tintColor = .themeGray50
 
         }
 
@@ -105,7 +105,7 @@ class ManageAccountCell: CardCell {
         switch viewItem.rightButtonState {
         case .backup:
             rightButton.setTitle("settings_manage_keys.backup".localized, for: .normal)
-            rightButton.setImage(UIImage(named: "Attention Icon Small")?.tinted(with: .appLucian), for: .normal)
+            rightButton.setImage(UIImage(named: "Attention Icon Small")?.tinted(with: .themeLucian), for: .normal)
             onTapRight = onTapBackup
         case .show:
             rightButton.setTitle("settings_manage_keys.show".localized, for: .normal)

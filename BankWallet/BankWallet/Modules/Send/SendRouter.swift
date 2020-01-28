@@ -1,4 +1,5 @@
 import UIKit
+import ThemeKit
 
 class SendRouter {
     weak var viewController: UIViewController?
@@ -57,7 +58,7 @@ extension SendRouter {
         router.viewController = viewController
         subRouters.forEach { $0.viewController = viewController }
 
-        return WalletNavigationController(rootViewController: viewController)
+        return ThemeNavigationController(rootViewController: viewController)
     }
 
     private static func module(coin: Coin, adapter: ISendBitcoinAdapter) -> (ISendHandler, [UIView], [ISendSubRouter])? {
