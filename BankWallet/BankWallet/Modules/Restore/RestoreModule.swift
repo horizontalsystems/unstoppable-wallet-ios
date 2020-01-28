@@ -8,21 +8,12 @@ protocol IRestoreViewDelegate {
 }
 
 protocol IRestoreRouter {
-    func showRestoreCoins(predefinedAccountType: PredefinedAccountType)
+    func showRestore(predefinedAccountType: PredefinedAccountType, delegate: ICredentialsCheckDelegate)
+    func showSettings(delegate: ICoinSettingsDelegate)
+    func showRestoreCoins(predefinedAccountType: PredefinedAccountType, accountType: AccountType, delegate: IRestoreCoinsDelegate)
+    func showMain()
 }
 
 protocol IRestoreDelegate: AnyObject {
     func didRestore(account: Account)
-}
-
-protocol IRestoreAccountTypeDelegate: AnyObject {
-    func didRestore(accountType: AccountType)
-    func didCancelRestore()
-}
-
-extension IRestoreAccountTypeDelegate {
-
-    func didCancelRestore() {
-    }
-
 }

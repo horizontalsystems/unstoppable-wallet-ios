@@ -18,6 +18,7 @@ class RestoreWordsViewController: ThemeKit.RestoreWordsViewController {
         super.viewDidLoad()
 
         title = "restore.enter_key".localized
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "button.back".localized, style: .plain, target: nil, action: nil)
 
         delegate.viewDidLoad()
     }
@@ -44,6 +45,10 @@ extension RestoreWordsViewController: IRestoreWordsView {
 
     func showCancelButton() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(cancelDidTap))
+    }
+
+    func showNextButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .plain, target: self, action: #selector(restoreDidTap))
     }
 
     func showRestoreButton() {

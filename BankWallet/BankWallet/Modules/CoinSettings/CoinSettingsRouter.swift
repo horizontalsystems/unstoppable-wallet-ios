@@ -14,13 +14,8 @@ class CoinSettingsRouter {
 
 extension CoinSettingsRouter: ICoinSettingsRouter {
 
-    func notifySelectedAndClose(coinSettings: CoinSettings, coin: Coin) {
-        delegate.onSelect(coinSettings: coinSettings, coin: coin)
-        viewController?.dismiss(animated: true)
-    }
-
-    func notifyCancelledAndClose() {
-        delegate.onCancelSelectingCoinSettings()
+    func notifySelected() {
+        delegate.onSelect()
         viewController?.dismiss(animated: true)
     }
 
@@ -36,15 +31,16 @@ extension CoinSettingsRouter: ICoinSettingsRouter {
 
 extension CoinSettingsRouter {
 
-    static func module(coin: Coin, coinSettings: CoinSettings, mode: CoinSettingsModule.Mode, delegate: ICoinSettingsDelegate) -> UIViewController {
+    static func module(proceedMode: RestoreRouter.ProceedMode, delegate: ICoinSettingsDelegate) -> UIViewController {
         let router = CoinSettingsRouter(delegate: delegate)
-        let presenter = CoinSettingsPresenter(coin: coin, coinSettings: coinSettings, router: router)
-        let viewController = CoinSettingsViewController(delegate: presenter, mode: mode)
+        let interactor = CoinSettingsInteractor(coinSettingsManager: App.shared.coinSettingsManager)
+        let presenter = CoinSettingsPresenter(proceedMode: proceedMode, router: router, interactor: interactor)
+        let viewController = CoinSettingsViewController(delegate: presenter)
 
         presenter.view = viewController
         router.viewController = viewController
 
-        return ThemeNavigationController(rootViewController: viewController)
+        return viewController
     }
 
 }

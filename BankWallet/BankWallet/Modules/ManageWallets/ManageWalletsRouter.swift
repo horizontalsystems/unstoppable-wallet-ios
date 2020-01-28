@@ -3,28 +3,29 @@ import ThemeKit
 
 class ManageWalletsRouter {
     weak var viewController: UIViewController?
+
+    weak var navigationController: UINavigationController?
 }
 
 extension ManageWalletsRouter: IManageWalletsRouter {
 
-    func showCoinSettings(coin: Coin, coinSettings: CoinSettings, accountOrigin: AccountOrigin, delegate: ICoinSettingsDelegate) {
-        let mode: CoinSettingsModule.Mode
-
-        switch accountOrigin {
-        case .created: mode = .create
-        case .restored: mode = .restore
-        }
-
-        viewController?.present(CoinSettingsRouter.module(coin: coin, coinSettings: coinSettings, mode: mode, delegate: delegate), animated: true)
+    func showSettings(delegate: ICoinSettingsDelegate) {
+        navigationController?.pushViewController(CoinSettingsRouter.module(proceedMode: .restore, delegate: delegate), animated: true)
     }
 
-    func showRestore(predefinedAccountType: PredefinedAccountType, delegate: IRestoreAccountTypeDelegate) {
+    func showRestore(predefinedAccountType: PredefinedAccountType, delegate: ICredentialsCheckDelegate) {
         let module = RestoreRouter.module(predefinedAccountType: predefinedAccountType, mode: .presented, delegate: delegate)
-        viewController?.present(ThemeNavigationController(rootViewController: module), animated: true)
+        let controller = ThemeNavigationController(rootViewController: module)
+        navigationController = controller
+        viewController?.present(controller, animated: true)
     }
 
     func close() {
         viewController?.dismiss(animated: true)
+    }
+
+    func closePresented() {
+        navigationController?.dismiss(animated: true)
     }
 
 }

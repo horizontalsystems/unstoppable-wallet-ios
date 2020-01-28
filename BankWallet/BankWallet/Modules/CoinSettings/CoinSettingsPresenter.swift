@@ -1,14 +1,14 @@
 class CoinSettingsPresenter {
     weak var view: ICoinSettingsView?
 
-    private let coin: Coin
-    private var coinSettings: CoinSettings
+    private let proceedMode: RestoreRouter.ProceedMode
     private let router: ICoinSettingsRouter
+    private let interactor: ICoinSettingsInteractor
 
-    init(coin: Coin, coinSettings: CoinSettings, router: ICoinSettingsRouter) {
-        self.coin = coin
-        self.coinSettings = coinSettings
+    init(proceedMode: RestoreRouter.ProceedMode, router: ICoinSettingsRouter, interactor: ICoinSettingsInteractor) {
+        self.proceedMode = proceedMode
         self.router = router
+        self.interactor = interactor
     }
 
 }
@@ -16,41 +16,26 @@ class CoinSettingsPresenter {
 extension CoinSettingsPresenter: ICoinSettingsViewDelegate {
 
     func onLoad() {
-        view?.set(coinTitle: coin.title)
-        view?.set(restoreUrl: coin.type.restoreUrl)
-
-        for (setting, value) in coinSettings {
-            switch setting {
-            case .derivation:
-                if let derivation = value as? MnemonicDerivation {
-                    view?.set(derivation: derivation)
-                }
-            case .syncMode:
-                if let syncMode = value as? SyncMode {
-                    view?.set(syncMode: syncMode)
-                }
-            }
+        if proceedMode == .next {
+            view?.showNextButton()
+        } else {
+            view?.showRestoreButton()
         }
+
+        view?.set(derivation: interactor.bitcoinDerivation)
+        view?.set(syncMode: interactor.syncMode)
     }
 
     func onSelect(derivation: MnemonicDerivation) {
-        coinSettings[.derivation] = derivation
+        interactor.bitcoinDerivation = derivation
     }
 
     func onSelect(syncMode: SyncMode) {
-        coinSettings[.syncMode] = syncMode
+        interactor.syncMode = syncMode
     }
 
-    func onTapEnableButton() {
-        router.notifySelectedAndClose(coinSettings: coinSettings, coin: coin)
-    }
-
-    func onTapCancelButton() {
-        router.notifyCancelledAndClose()
-    }
-
-    func onTapLink() {
-        router.open(url: coin.type.restoreUrl)
+    func onTapNextButton() {
+        router.notifySelected()
     }
 
 }
