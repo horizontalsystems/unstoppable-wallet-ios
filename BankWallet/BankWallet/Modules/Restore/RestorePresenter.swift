@@ -8,6 +8,9 @@ class RestorePresenter {
 
     private var predefinedAccountTypes = [PredefinedAccountType]()
 
+    private var predefinedAccountType: PredefinedAccountType?
+    private var accountType: AccountType?
+
     init(router: IRestoreRouter, accountCreator: IAccountCreator, predefinedAccountTypeManager: IPredefinedAccountTypeManager, viewItemsFactory: AccountTypeViewItemFactory = .init()) {
         self.router = router
         self.accountCreator = accountCreator
@@ -25,7 +28,49 @@ extension RestorePresenter: IRestoreViewDelegate {
     }
 
     func didSelect(index: Int) {
-        router.showRestoreCoins(predefinedAccountType: predefinedAccountTypes[index])
+        predefinedAccountType = predefinedAccountTypes[index]
+
+        router.showRestore(predefinedAccountType: predefinedAccountTypes[index], delegate: self)
+    }
+
+}
+
+extension RestorePresenter: ICredentialsCheckDelegate {
+
+    func didCheck(accountType: AccountType) {
+        self.accountType = accountType
+        guard let predefinedAccountType = predefinedAccountType else {
+            return
+        }
+
+        if predefinedAccountType == .standard {
+            router.showSettings(delegate: self)
+        } else {
+            router.showRestoreCoins(predefinedAccountType: predefinedAccountType, accountType: accountType, delegate: self)
+        }
+    }
+
+}
+
+extension RestorePresenter: ICoinSettingsDelegate {
+
+    func onSelect() {
+        guard let accountType = accountType else {
+            return
+        }
+        guard let predefinedAccountType = predefinedAccountType else {
+            return
+        }
+
+        router.showRestoreCoins(predefinedAccountType: predefinedAccountType, accountType: accountType, delegate: self)
+    }
+
+}
+
+extension RestorePresenter: IRestoreCoinsDelegate {
+
+    func didRestore() {
+        router.showMain()
     }
 
 }

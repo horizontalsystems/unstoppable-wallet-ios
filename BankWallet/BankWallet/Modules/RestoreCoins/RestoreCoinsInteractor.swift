@@ -37,12 +37,8 @@ extension RestoreCoinsInteractor: IRestoreCoinsInteractor {
         walletManager.save(wallets: wallets)
     }
 
-    func coinSettingsToRequest(coin: Coin, accountOrigin: AccountOrigin) -> CoinSettings {
-        coinSettingsManager.coinSettingsToRequest(coin: coin, accountOrigin: accountOrigin)
-    }
-
-    func coinSettingsToSave(coin: Coin, accountOrigin: AccountOrigin, requestedCoinSettings: CoinSettings) -> CoinSettings {
-        coinSettingsManager.coinSettingsToSave(coin: coin, accountOrigin: accountOrigin, requestedCoinSettings: requestedCoinSettings)
+    func coinSettings(coinType: CoinType) -> CoinSettings {
+        coinSettingsManager.coinSettings(coinType: coinType)
     }
 
 }

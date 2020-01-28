@@ -1,5 +1,7 @@
 protocol IRestoreEosView: class {
     func showCancelButton()
+    func showNextButton()
+    func showRestoreButton()
     func set(account: String?)
     func set(key: String?)
     func show(error: Error)
@@ -20,7 +22,6 @@ protocol IRestoreEosViewDelegate {
 
 protocol IRestoreEosRouter {
     func notifyRestored(accountType: AccountType)
-    func dismissAndNotify(accountType: AccountType)
     func dismiss()
 }
 

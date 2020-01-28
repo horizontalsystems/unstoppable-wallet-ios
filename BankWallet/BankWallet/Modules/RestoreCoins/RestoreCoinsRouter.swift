@@ -3,33 +3,27 @@ import ThemeKit
 
 class RestoreCoinsRouter {
     weak var viewController: UIViewController?
+
+    weak var delegate: IRestoreCoinsDelegate?
+
+    init(delegate: IRestoreCoinsDelegate) {
+        self.delegate = delegate
+    }
+
 }
 
 extension RestoreCoinsRouter: IRestoreCoinsRouter {
 
-    func showCoinSettings(coin: Coin, coinSettings: CoinSettings, delegate: ICoinSettingsDelegate) {
-        viewController?.present(CoinSettingsRouter.module(coin: coin, coinSettings: coinSettings, mode: .restore, delegate: delegate), animated: true)
-    }
-
-    func showRestore(predefinedAccountType: PredefinedAccountType, delegate: IRestoreAccountTypeDelegate) {
-        let module = RestoreRouter.module(predefinedAccountType: predefinedAccountType, mode: .pushed, delegate: delegate)
-        viewController?.navigationController?.pushViewController(module, animated: true)
-    }
-
-    func showMain() {
-        UIApplication.shared.keyWindow?.set(newRootController: MainRouter.module(selectedTab: .balance))
-    }
-
-    func close() {
-        viewController?.dismiss(animated: true)
+    func notifyRestored() {
+        delegate?.didRestore()
     }
 
 }
 
 extension RestoreCoinsRouter {
 
-    static func module(presentationMode: RestoreCoinsModule.PresentationMode, predefinedAccountType: PredefinedAccountType) -> UIViewController {
-        let router = RestoreCoinsRouter()
+    static func module(predefinedAccountType: PredefinedAccountType, accountType: AccountType, delegate: IRestoreCoinsDelegate) -> UIViewController {
+        let router = RestoreCoinsRouter(delegate: delegate)
         let interactor = RestoreCoinsInteractor(
                 appConfigProvider: App.shared.appConfigProvider,
                 accountCreator: App.shared.accountCreator,
@@ -37,16 +31,13 @@ extension RestoreCoinsRouter {
                 walletManager: App.shared.walletManager,
                 coinSettingsManager: App.shared.coinSettingsManager
         )
-        let presenter = RestoreCoinsPresenter(presentationMode: presentationMode, predefinedAccountType: predefinedAccountType, interactor: interactor, router: router)
+        let presenter = RestoreCoinsPresenter(predefinedAccountType: predefinedAccountType, accountType: accountType, interactor: interactor, router: router)
         let viewController = RestoreCoinsViewController(delegate: presenter)
 
         presenter.view = viewController
         router.viewController = viewController
 
-        switch presentationMode {
-        case .initial: return viewController
-        case .inApp: return ThemeNavigationController(rootViewController: viewController)
-        }
+        return viewController
     }
 
 }

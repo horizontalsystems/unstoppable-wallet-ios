@@ -21,8 +21,9 @@ extension ManageAccountsRouter: IManageAccountsRouter {
     }
 
     func showRestore(predefinedAccountType: PredefinedAccountType) {
-        let module = RestoreCoinsRouter.module(presentationMode: .inApp, predefinedAccountType: predefinedAccountType)
-        viewController?.present(module, animated: true)
+        //todo
+//        let module = RestoreCoinsRouter.module(presentationMode: .inApp, predefinedAccountType: predefinedAccountType)
+//        viewController?.present(module, animated: true)
     }
 
     func close() {

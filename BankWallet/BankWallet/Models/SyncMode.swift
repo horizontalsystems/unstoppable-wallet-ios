@@ -3,10 +3,10 @@ enum SyncMode: String {
     case slow
     case new
 
-    func title(coinTitle: String) -> String {
+    var title: String {
         switch self {
-        case .fast: return "Horizontal Systems API"
-        case .slow: return "\(coinTitle) Blockchain"
+        case .fast: return "API"
+        case .slow: return "sync_mode.from_blockchain".localized
         case .new: return ""
         }
     }
