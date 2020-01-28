@@ -11,13 +11,12 @@ class AlertTextItemView: BaseActionItemView {
         super.initView()
 
         addSubview(textLabel)
-        textLabel.font = AppTheme.alertTextFont
-        textLabel.textColor = AppTheme.alertTextColor
+        textLabel.font = .subhead1
+        textLabel.textColor = .themeGray
         textLabel.numberOfLines = 0
         textLabel.snp.makeConstraints { maker in
             maker.top.bottom.equalToSuperview()
-            maker.leading.equalToSuperview().offset(AppTheme.alertTextMargin)
-            maker.trailing.equalToSuperview().offset(-AppTheme.alertTextMargin)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
         textLabel.text = item?.text

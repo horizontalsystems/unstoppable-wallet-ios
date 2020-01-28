@@ -7,11 +7,11 @@ class FullTransactionInfoTextCell: TitleCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        titleLabel.font = .appSubhead2
+        titleLabel.font = .subhead2
         titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
 
-        iconImageView.tintColor = .appGray
+        iconImageView.tintColor = .themeGray
 
         contentView.addSubview(descriptionView)
         descriptionView.snp.makeConstraints { maker in
@@ -26,7 +26,7 @@ class FullTransactionInfoTextCell: TitleCell {
     }
 
     func bind(item: FullTransactionItem, selectionStyle: SelectionStyle = .none, showDisclosure: Bool = false, last: Bool = false, onTap: (() -> ())? = nil) {
-        super.bind(titleIcon: item.icon.flatMap { UIImage(named: $0) }, title: item.title, titleColor: .appGray, showDisclosure: showDisclosure, last: last)
+        super.bind(titleIcon: item.icon.flatMap { UIImage(named: $0) }, title: item.title, titleColor: .themeGray, showDisclosure: showDisclosure, last: last)
         self.selectionStyle = selectionStyle
 
         descriptionView.snp.remakeConstraints { maker in
@@ -41,12 +41,12 @@ class FullTransactionInfoTextCell: TitleCell {
             }
         }
 
-        descriptionView.bind(value: item.value, color: item.titleColor ?? .appOz, showExtra: item.showExtra, onTap: onTap)
+        descriptionView.bind(value: item.value, color: item.titleColor ?? .themeOz, showExtra: item.showExtra, onTap: onTap)
         descriptionView.isUserInteractionEnabled = onTap != nil
     }
 
     func bind(title: String, hash: String, last: Bool, onTap: (() -> ())? = nil) {
-        super.bind(titleIcon: nil, title: title, titleColor: .appGray, last: last)
+        super.bind(titleIcon: nil, title: title, titleColor: .themeGray, last: last)
 
         descriptionView.snp.remakeConstraints { maker in
             maker.leading.equalTo(self.titleLabel.snp.trailing).offset(CGFloat.margin12x)
@@ -56,7 +56,7 @@ class FullTransactionInfoTextCell: TitleCell {
             maker.trailing.equalTo(contentView.snp.trailingMargin).offset(descriptionBackgroundOffset)
         }
 
-        descriptionView.bind(value: hash, color: .appOz, onTap: onTap)
+        descriptionView.bind(value: hash, color: .themeOz, onTap: onTap)
         descriptionView.isUserInteractionEnabled = onTap != nil
     }
 

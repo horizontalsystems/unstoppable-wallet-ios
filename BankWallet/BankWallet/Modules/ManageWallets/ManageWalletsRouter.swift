@@ -1,4 +1,5 @@
 import UIKit
+import ThemeKit
 
 class ManageWalletsRouter {
     weak var viewController: UIViewController?
@@ -19,7 +20,7 @@ extension ManageWalletsRouter: IManageWalletsRouter {
 
     func showRestore(predefinedAccountType: PredefinedAccountType, delegate: IRestoreAccountTypeDelegate) {
         let module = RestoreRouter.module(predefinedAccountType: predefinedAccountType, mode: .presented, delegate: delegate)
-        viewController?.present(WalletNavigationController(rootViewController: module), animated: true)
+        viewController?.present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 
     func close() {
@@ -49,7 +50,7 @@ extension ManageWalletsRouter {
         router.viewController = viewController
 
         switch presentationMode {
-        case .presented: return WalletNavigationController(rootViewController: viewController)
+        case .presented: return ThemeNavigationController(rootViewController: viewController)
         case .pushed: return viewController
         }
     }

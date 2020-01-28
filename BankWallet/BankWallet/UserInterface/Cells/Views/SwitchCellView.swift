@@ -8,7 +8,7 @@ class SwitchCellView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        switchView.tintColor = .appSteel20
+        switchView.tintColor = .themeSteel20
         switchView.setContentCompressionResistancePriority(.required, for: .horizontal)
         switchView.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
         addSubview(switchView)

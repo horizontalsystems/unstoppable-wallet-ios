@@ -1,4 +1,5 @@
 import UIKit
+import ThemeKit
 
 class FullTransactionInfoRouter {
     weak var viewController: UINavigationController?
@@ -48,7 +49,7 @@ extension FullTransactionInfoRouter {
         interactor.delegate = presenter
         presenter.view = viewController
 
-        let navigationController = WalletNavigationController(rootViewController: viewController)
+        let navigationController = ThemeNavigationController(rootViewController: viewController)
         router.viewController = navigationController
         return navigationController
     }

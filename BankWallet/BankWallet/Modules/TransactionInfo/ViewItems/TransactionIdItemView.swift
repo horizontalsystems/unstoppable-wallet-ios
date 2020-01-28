@@ -11,7 +11,7 @@ class TransactionIdItemView: BaseActionItemView {
     override func initView() {
         super.initView()
 
-        backgroundColor = .appLawrence
+        backgroundColor = .themeLawrence
 
         addSubview(titleLabel)
         addSubview(hashView)
@@ -23,8 +23,8 @@ class TransactionIdItemView: BaseActionItemView {
 
         titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
-        titleLabel.font = .appSubhead2
-        titleLabel.textColor = .appGray
+        titleLabel.font = .subhead2
+        titleLabel.textColor = .themeGray
         titleLabel.text = "tx_info.transaction_id".localized
 
         hashView.snp.makeConstraints { maker in

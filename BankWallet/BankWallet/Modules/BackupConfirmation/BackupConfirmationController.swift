@@ -1,8 +1,9 @@
 import UIKit
 import ActionSheet
 import SnapKit
+import ThemeKit
 
-class BackupConfirmationController: WalletViewController {
+class BackupConfirmationController: ThemeViewController {
 
     let delegate: IBackupConfirmationViewDelegate
 
@@ -31,8 +32,8 @@ class BackupConfirmationController: WalletViewController {
         firstIndexedInputField.onReturn = { [weak self] in
             self?.secondIndexedInputField.textField.becomeFirstResponder()
         }
-        firstIndexedInputField.cornerRadius = CGFloat.cornerRadius8
-        firstIndexedInputField.borderColor = .appSteel20
+        firstIndexedInputField.cornerRadius = CGFloat.cornerRadius2x
+        firstIndexedInputField.borderColor = .themeSteel20
         firstIndexedInputField.borderWidth = 1 / UIScreen.main.scale
         firstIndexedInputField.snp.makeConstraints { maker in
             maker.top.equalTo(self.view.snp.topMargin).offset(CGFloat.margin3x)
@@ -44,8 +45,8 @@ class BackupConfirmationController: WalletViewController {
         secondIndexedInputField.onReturn = { [weak self] in
             self?.doneDidTap()
         }
-        secondIndexedInputField.cornerRadius = CGFloat.cornerRadius8
-        secondIndexedInputField.borderColor = .appSteel20
+        secondIndexedInputField.cornerRadius = CGFloat.cornerRadius2x
+        secondIndexedInputField.borderColor = .themeSteel20
         secondIndexedInputField.borderWidth = 1 / UIScreen.main.scale
         secondIndexedInputField.snp.makeConstraints { maker in
             maker.top.equalTo(self.firstIndexedInputField.snp.bottom).offset(CGFloat.margin4x)
@@ -54,8 +55,8 @@ class BackupConfirmationController: WalletViewController {
 
         view.addSubview(descriptionLabel)
         descriptionLabel.text = "backup.words.confirmation_description".localized(delegate.predefinedAccountTitle)
-        descriptionLabel.font = .appSubhead2
-        descriptionLabel.textColor = .appGray
+        descriptionLabel.font = .subhead2
+        descriptionLabel.textColor = .themeGray
         descriptionLabel.snp.makeConstraints { maker in
             maker.top.equalTo(self.secondIndexedInputField.snp.bottom).offset(CGFloat.margin2x)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)

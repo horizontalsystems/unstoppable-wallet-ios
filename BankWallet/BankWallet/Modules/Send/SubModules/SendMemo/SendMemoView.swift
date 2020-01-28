@@ -3,7 +3,7 @@ import SnapKit
 
 class SendMemoView: UIView {
     private let delegate: ISendMemoViewDelegate
-    private let inputFieldFont = UIFont.appSubhead1I
+    private let inputFieldFont = UIFont.subhead1I
 
     private let holderView = UIView()
     private let memoInputField = UITextField()
@@ -24,10 +24,10 @@ class SendMemoView: UIView {
             maker.bottom.equalToSuperview()
         }
 
-        holderView.layer.cornerRadius = CGFloat.cornerRadius8
+        holderView.layer.cornerRadius = CGFloat.cornerRadius2x
         holderView.layer.borderWidth = .heightOneDp
-        holderView.layer.borderColor = UIColor.appSteel20.cgColor
-        holderView.backgroundColor = .appLawrence
+        holderView.layer.borderColor = UIColor.themeSteel20.cgColor
+        holderView.backgroundColor = .themeLawrence
 
         memoInputField.snp.makeConstraints { maker in
             maker.top.bottom.equalToSuperview()
@@ -36,10 +36,10 @@ class SendMemoView: UIView {
             maker.height.equalTo(inputFieldFont.lineHeight + CGFloat.margin3x * 2)
         }
 
-        memoInputField.textColor = .appOz
+        memoInputField.textColor = .themeOz
         memoInputField.font = inputFieldFont
-        memoInputField.attributedPlaceholder = NSAttributedString(string: "send.confirmation.memo_placeholder".localized, attributes: [NSAttributedString.Key.foregroundColor: UIColor.appGray50])
-        memoInputField.keyboardAppearance = App.theme.keyboardAppearance
+        memoInputField.attributedPlaceholder = NSAttributedString(string: "send.confirmation.memo_placeholder".localized, attributes: [NSAttributedString.Key.foregroundColor: UIColor.themeGray50])
+        memoInputField.keyboardAppearance = .themeDefault
         memoInputField.tintColor = AppTheme.textFieldTintColor
 
         memoInputField.delegate = self

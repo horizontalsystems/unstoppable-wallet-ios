@@ -1,7 +1,8 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
-class CoinToggleCell: AppCell {
+class CoinToggleCell: ThemeCell {
     private let coinImageView = CoinIconImageView()
     private let titleLabel = UILabel()
     private let coinLabel = UILabel()
@@ -10,7 +11,7 @@ class CoinToggleCell: AppCell {
 
     private var onToggle: ((Bool) -> ())?
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         contentView.addSubview(coinImageView)
@@ -25,8 +26,8 @@ class CoinToggleCell: AppCell {
             maker.top.equalToSuperview().offset(CGFloat.margin2x)
         }
 
-        titleLabel.textColor = .appOz
-        titleLabel.font = .appBody
+        titleLabel.textColor = .themeOz
+        titleLabel.font = .body
 
         contentView.addSubview(coinLabel)
         coinLabel.snp.makeConstraints { maker in
@@ -34,8 +35,8 @@ class CoinToggleCell: AppCell {
             maker.top.equalTo(self.titleLabel.snp.bottom).offset(3)
         }
 
-        coinLabel.textColor = .appGray
-        coinLabel.font = .appBody
+        coinLabel.textColor = .themeGray
+        coinLabel.font = .body
 
         contentView.addSubview(blockchainBadgeView)
         blockchainBadgeView.snp.makeConstraints { maker in
@@ -49,7 +50,7 @@ class CoinToggleCell: AppCell {
             maker.centerY.equalToSuperview()
         }
 
-        toggleView.tintColor = .appSteel20
+        toggleView.tintColor = .themeSteel20
         toggleView.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
     }
 

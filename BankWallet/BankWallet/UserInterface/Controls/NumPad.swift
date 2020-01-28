@@ -170,12 +170,12 @@ class NumPadNumberCell: UICollectionViewCell {
         }
 
         textHolderView.addSubview(numberLabel)
-        numberLabel.font = .appTitle2R
-        numberLabel.textColor = .appLeah
+        numberLabel.font = .title2R
+        numberLabel.textColor = .themeLeah
 
         textHolderView.addSubview(lettersLabel)
-        lettersLabel.font = .appMicro
-        lettersLabel.textColor = .appGray50
+        lettersLabel.font = .micro
+        lettersLabel.textColor = .themeGray50
 
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
     }
@@ -187,9 +187,9 @@ class NumPadNumberCell: UICollectionViewCell {
     func bind(number: String, letters: String?, filled: Bool, cornerRadius: CGFloat, onTap: @escaping () -> ()) {
         button.cornerRadius = cornerRadius
         if filled {
-            button.borderColor = .appSteel20
+            button.borderColor = .themeSteel20
             button.setBackgroundColor(color: .clear, forState: .normal)
-            button.setBackgroundColor(color: .appLawrence, forState: .highlighted)
+            button.setBackgroundColor(color: .themeLawrence, forState: .highlighted)
         } else {
             button.borderColor = .clear
             button.setBackgroundColor(color: .clear, forState: .normal)

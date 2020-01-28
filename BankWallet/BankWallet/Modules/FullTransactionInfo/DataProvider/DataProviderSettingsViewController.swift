@@ -1,7 +1,8 @@
 import UIKit
 import SectionsTableView
+import ThemeKit
 
-class DataProviderSettingsViewController: WalletViewController, SectionsDataSource {
+class DataProviderSettingsViewController: ThemeViewController, SectionsDataSource {
     private let delegate: IDataProviderSettingsViewDelegate
 
     private var items = [DataProviderItem]()

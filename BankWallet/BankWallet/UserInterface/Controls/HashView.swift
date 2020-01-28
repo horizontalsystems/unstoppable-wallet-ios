@@ -46,13 +46,13 @@ class HashView: RespondButton {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(value: String?, font: UIFont = .appSubhead1, color: UIColor = .appOz, showExtra: ShowExtra = .none, onTap: (() -> ())? = nil) {
+    func bind(value: String?, font: UIFont = .subhead1, color: UIColor = .themeOz, showExtra: ShowExtra = .none, onTap: (() -> ())? = nil) {
         if let onTap = onTap {
             self.onTap = onTap
-            backgrounds = [RespondButton.State.active: .appJeremy, RespondButton.State.selected: .appJeremy]
-            borderColor = .appSteel20
+            backgrounds = [RespondButton.State.active: .themeJeremy, RespondButton.State.selected: .themeJeremy]
+            borderColor = .themeSteel20
             borderWidth = 1 / UIScreen.main.scale
-            cornerRadius = .cornerRadius4
+            cornerRadius = .cornerRadius1x
         } else {
             backgrounds = [RespondButton.State.active: .clear, RespondButton.State.selected: .clear]
             borderColor = .clear
@@ -74,7 +74,7 @@ class HashView: RespondButton {
         case .hash: image = UIImage(named: "Hash Icon")
         default: image = UIImage(named: "Transaction Info Token Placeholder")
         }
-        avatarImageView.image = image?.tinted(with: .appGray)
+        avatarImageView.image = image?.tinted(with: .themeGray)
 
         avatarImageView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         avatarImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)

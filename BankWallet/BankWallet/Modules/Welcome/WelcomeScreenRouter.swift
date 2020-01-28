@@ -1,4 +1,5 @@
 import UIKit
+import ThemeKit
 
 class WelcomeScreenRouter {
     weak var viewController: UIViewController?
@@ -27,7 +28,7 @@ extension WelcomeScreenRouter {
         presenter.view = viewController
         router.viewController = viewController
 
-        return WalletNavigationController(rootViewController: viewController)
+        return ThemeNavigationController(rootViewController: viewController)
     }
 
 }

@@ -1,7 +1,8 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
-class AboutSettingsViewController: WalletViewController {
+class AboutSettingsViewController: ThemeViewController {
 
     init() {
         super.init()
@@ -44,8 +45,8 @@ class AboutSettingsViewController: WalletViewController {
 
         let titleLabel = UILabel()
         titleLabel.text = "settings_about.app_title".localized
-        titleLabel.font = .appHeadline1
-        titleLabel.textColor = .appOz
+        titleLabel.font = .headline1
+        titleLabel.textColor = .themeOz
 
         container.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
@@ -56,8 +57,8 @@ class AboutSettingsViewController: WalletViewController {
 
         let subtitleLabel = UILabel()
         subtitleLabel.text = "settings_about.app_subtitle".localized
-        subtitleLabel.font = .appSubhead2
-        subtitleLabel.textColor = .appGray
+        subtitleLabel.font = .subhead2
+        subtitleLabel.textColor = .themeGray
 
         container.addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { maker in
@@ -67,7 +68,7 @@ class AboutSettingsViewController: WalletViewController {
         }
 
         let separatorView = UIView()
-        separatorView.backgroundColor = .appSteel20
+        separatorView.backgroundColor = .themeSteel20
 
         container.addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
@@ -78,8 +79,8 @@ class AboutSettingsViewController: WalletViewController {
 
         let headerLabel = UILabel()
         headerLabel.text = "settings_about.terms_privacy_subtitle".localized
-        headerLabel.font = .appHeadline2
-        headerLabel.textColor = .appJacob
+        headerLabel.font = .headline2
+        headerLabel.textColor = .themeJacob
 
         container.addSubview(headerLabel)
         headerLabel.snp.makeConstraints { maker in
@@ -90,8 +91,8 @@ class AboutSettingsViewController: WalletViewController {
         let textLabel = UILabel()
         textLabel.text = "settings_about.terms_privacy_text".localized
         textLabel.numberOfLines = 0
-        textLabel.font = .appBody
-        textLabel.textColor = .appLeah
+        textLabel.font = .body
+        textLabel.textColor = .themeLeah
 
         container.addSubview(textLabel)
         textLabel.snp.makeConstraints { maker in

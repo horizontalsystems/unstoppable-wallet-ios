@@ -10,12 +10,12 @@ class RateDiffButton: UIButton {
         super.init(frame: frame)
 
         clipsToBounds = true
-        layer.borderColor = UIColor.appSteel20.cgColor
+        layer.borderColor = UIColor.themeSteel20.cgColor
         layer.borderWidth = .heightOneDp
-        layer.cornerRadius = .cornerRadius4
+        layer.cornerRadius = .cornerRadius1x
 
-        setBackgroundColor(color: .appLawrence, forState: .normal)
-        setBackgroundColor(color: .appLawrencePressed, forState: .highlighted)
+        setBackgroundColor(color: .themeLawrence, forState: .normal)
+        setBackgroundColor(color: .themeLawrencePressed, forState: .highlighted)
 
         addSubview(iconImageView)
         iconImageView.snp.makeConstraints { maker in
@@ -32,7 +32,7 @@ class RateDiffButton: UIButton {
             maker.width.equalTo(CGFloat.heightOneDp)
         }
 
-        separatorView.backgroundColor = .appSteel20
+        separatorView.backgroundColor = .themeSteel20
 
         addSubview(label)
         label.snp.makeConstraints { maker in
@@ -41,7 +41,7 @@ class RateDiffButton: UIButton {
         }
 
         label.textAlignment = .center
-        label.font = .appCaptionSB
+        label.font = .captionSB
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -49,20 +49,20 @@ class RateDiffButton: UIButton {
     }
 
     func show(value: Decimal, dimmed: Bool) {
-        let color: UIColor = dimmed ? .appGray50 : (value.isSignMinus ? .appLucian : .appRemus)
+        let color: UIColor = dimmed ? .themeGray50 : (value.isSignMinus ? .themeLucian : .themeRemus)
         let imageName = value.isSignMinus ? "Down" : "Up"
 
         iconImageView.image = UIImage(named: imageName)?.tinted(with: color)
 
         let formattedDiff = RateDiffButton.formatter.string(from: abs(value) as NSNumber)
 
-        label.textColor = dimmed ? .appGray50 : .appLeah
+        label.textColor = dimmed ? .themeGray50 : .themeLeah
         label.text = formattedDiff.map { "\($0)%" }
     }
 
     func showNotAvailable() {
-        iconImageView.image = UIImage(named: "Up")?.tinted(with: .appGray50)
-        label.textColor = .appGray50
+        iconImageView.image = UIImage(named: "Up")?.tinted(with: .themeGray50)
+        label.textColor = .themeGray50
         label.text = "n/a"
     }
 

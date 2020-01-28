@@ -1,7 +1,8 @@
 import UIKit
 import SectionsTableView
+import ThemeKit
 
-class RestoreCoinsViewController: WalletViewController {
+class RestoreCoinsViewController: ThemeViewController {
     private let delegate: IRestoreCoinsViewDelegate
 
     private var featuredViewItems = [CoinToggleViewItem]()

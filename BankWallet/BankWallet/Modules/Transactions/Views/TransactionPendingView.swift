@@ -27,8 +27,8 @@ class TransactionPendingView: UIView {
             maker.top.bottom.trailing.equalToSuperview()
         }
 
-        pendingLabel.font = .appSubhead2
-        pendingLabel.textColor = .appGray
+        pendingLabel.font = .subhead2
+        pendingLabel.textColor = .themeGray
     }
 
     required init?(coder aDecoder: NSCoder) {

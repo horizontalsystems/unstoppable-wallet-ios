@@ -1,7 +1,8 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
-class PinViewController: WalletViewController {
+class PinViewController: ThemeViewController {
     private let keyboardSideMargin: CGFloat = UIScreen.main.bounds.width <= 320 ? 32 : 48 // decrease margin only for small screen
 
     let delegate: IPinViewDelegate

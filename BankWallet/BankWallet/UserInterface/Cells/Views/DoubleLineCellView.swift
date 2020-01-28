@@ -15,8 +15,8 @@ class DoubleLineCellView: UIView {
             maker.top.equalToSuperview().offset(10)
         }
 
-        titleLabel.font = .appBody
-        titleLabel.textColor = .appOz
+        titleLabel.font = .body
+        titleLabel.textColor = .themeOz
 
         addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { maker in
@@ -25,8 +25,8 @@ class DoubleLineCellView: UIView {
             maker.top.equalTo(titleLabel.snp.bottom).offset(5)
         }
 
-        subtitleLabel.font = .appSubhead2
-        subtitleLabel.textColor = .appGray
+        subtitleLabel.font = .subhead2
+        subtitleLabel.textColor = .themeGray
     }
 
     required init?(coder aDecoder: NSCoder) {

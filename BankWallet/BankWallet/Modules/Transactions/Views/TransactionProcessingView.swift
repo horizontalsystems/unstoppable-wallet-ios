@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 
 class TransactionProcessingView: UIView {
-    private let barsProgressView = BarsProgressView(barWidth: 4, color: .appGray50, inactiveColor: .appSteel20)
+    private let barsProgressView = BarsProgressView(barWidth: 4, color: .themeGray50, inactiveColor: .themeSteel20)
     private let processingLabel = UILabel()
 
     init() {
@@ -23,8 +23,8 @@ class TransactionProcessingView: UIView {
 
         barsProgressView.set(barsCount: AppTheme.progressStepsCount)
 
-        processingLabel.font = .appSubhead2
-        processingLabel.textColor = .appGray
+        processingLabel.font = .subhead2
+        processingLabel.textColor = .themeGray
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -33,7 +33,7 @@ class TransactionProcessingView: UIView {
 
     func bind(type: TransactionType, progress: Double) {
         processingLabel.text = type == .incoming ? "transactions.receiving".localized : "transactions.sending".localized
-        barsProgressView.set(filledColor: type == .incoming ? .appGreenD : .appYellowD)
+        barsProgressView.set(filledColor: type == .incoming ? .themeGreenD : .themeYellowD)
         barsProgressView.set(progress: progress)
     }
 

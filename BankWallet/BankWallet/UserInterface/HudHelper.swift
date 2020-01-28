@@ -14,7 +14,7 @@ class HudHelper {
         let statusImage: UIImage?
         switch type {
         case .success: statusImage = HudHelper.successImage
-        case .error: statusImage = HudHelper.errorImage?.tinted(with: .appOz)
+        case .error: statusImage = HudHelper.errorImage?.tinted(with: .themeOz)
         case .attention: statusImage = HudHelper.attentionImage
         }
         guard let image = statusImage else {
@@ -62,7 +62,7 @@ class HudHelper {
         statusConfig.customShowCancelInterval = nil
 
         statusConfig.customProgressValue = nil
-        statusConfig.customProgressColor = .appOz
+        statusConfig.customProgressColor = .themeOz
         statusConfig.customProgressRadius = 21
         statusConfig.customProgressLineWidth = 5
 
@@ -84,19 +84,19 @@ class HudHelper {
         config.startAdjustSize = 0.8
         config.finishAdjustSize = 0.8
         config.preferredSize = CGSize(width: 146, height: 114)
-        config.backgroundColor = UIColor.appTyler.withAlphaComponent(0.4)
-        config.blurEffectStyle = App.theme.hudBlurStyle
+        config.backgroundColor = UIColor.themeTyler.withAlphaComponent(0.4)
+        config.blurEffectStyle = .themeHud
 
         return config
     }
 
     private func configStatusModel() -> HUDStatusModel {
         let config = HUDStatusFactory.instance.config
-        config.titleLabelFont = .appSubhead1
-        config.titleLabelColor = .appOz
+        config.titleLabelFont = .subhead1
+        config.titleLabelColor = .themeOz
 
-        config.subtitleLabelFont = .appSubhead1
-        config.subtitleLabelColor = .appOz
+        config.subtitleLabelFont = .subhead1
+        config.subtitleLabelColor = .themeOz
 
         return config
     }

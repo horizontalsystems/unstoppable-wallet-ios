@@ -53,10 +53,10 @@ class PinView: UIView {
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 2.2
         style.alignment = .center
-        let font: UIFont = page.isTitle ? .appHeadline1 : .appSubhead2
-        let color: UIColor = page.isTitle ? .appOz : .appGray
+        let font: UIFont = page.isTitle ? .headline1 : .subhead2
+        let color: UIColor = page.isTitle ? .themeOz : .themeGray
         let attributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.foregroundColor: error.isEmpty ? color : .appLucian,
+            NSAttributedString.Key.foregroundColor: error.isEmpty ? color : .themeLucian,
             NSAttributedString.Key.font: font,
             NSAttributedString.Key.paragraphStyle: style,
             NSAttributedString.Key.kern: -0.1

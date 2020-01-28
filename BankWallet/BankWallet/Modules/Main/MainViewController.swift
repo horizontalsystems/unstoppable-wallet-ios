@@ -1,6 +1,7 @@
 import UIKit
+import ThemeKit
 
-class MainViewController: UITabBarController {
+class MainViewController: ThemeTabBarController {
 
     let viewDelegate: IMainViewDelegate
 
@@ -21,29 +22,13 @@ class MainViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tabBar.shadowImage = UIImage()
-        let separator = UIView(frame: CGRect(x: 0, y: 0, width: 10000, height: 1 / UIScreen.main.scale))
-        separator.backgroundColor = AppTheme.tabBarSeparatorColor
-        tabBar.addSubview(separator)
-
-        tabBar.barTintColor = .clear
-        tabBar.backgroundImage = UIImage(color: AppTheme.navigationBarBackgroundColor)
-
-        tabBar.tintColor = .appJacob
-        tabBar.unselectedItemTintColor = .appGray
-
         viewDelegate.viewDidLoad()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        App.theme.statusBarStyle
+        .themeDefault
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        tabBar.superview?.setNeedsLayout()
-    }
 }
 
 extension MainViewController: IMainView {

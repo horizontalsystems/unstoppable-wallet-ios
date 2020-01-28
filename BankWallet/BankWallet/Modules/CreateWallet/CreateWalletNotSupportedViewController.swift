@@ -10,7 +10,7 @@ class CreateWalletNotSupportedViewController: WalletActionSheetController {
                 title: "manage_coins.add_coin.title".localized(coin.title),
                 subtitle: "manage_coins.add_coin.subtitle".localized(predefinedAccountType.title),
                 icon: UIImage(coin: coin),
-                iconTintColor: AppTheme.coinIconColor,
+                iconTintColor: .themeGray,
                 tag: 0,
                 onClose: { [weak self] in
                     self?.dismiss(byFade: false)

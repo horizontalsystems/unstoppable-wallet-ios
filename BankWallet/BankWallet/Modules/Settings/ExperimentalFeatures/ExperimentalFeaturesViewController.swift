@@ -1,7 +1,8 @@
 import UIKit
 import SectionsTableView
+import ThemeKit
 
-class ExperimentalFeaturesViewController: WalletViewController {
+class ExperimentalFeaturesViewController: ThemeViewController {
     private let delegate: IExperimentalFeaturesViewDelegate
 
     private let tableView = SectionsTableView(style: .grouped)

@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 
 class TransactionsCurrencyCell: UICollectionViewCell {
-    private static let nameLabelFont = UIFont.appSubhead2
+    private static let nameLabelFont = UIFont.subhead2
     private let roundedView = UIView()
     private let nameLabel = UILabel()
 
@@ -17,7 +17,7 @@ class TransactionsCurrencyCell: UICollectionViewCell {
         }
 
         roundedView.layer.cornerRadius = 14             // (TransactionCurrenciesHeaderView.headerHeight - .margin2x * 2) / 2
-        roundedView.layer.borderColor = UIColor.appSteel20.cgColor
+        roundedView.layer.borderColor = UIColor.themeSteel20.cgColor
         roundedView.layer.borderWidth = .heightOneDp
         roundedView.clipsToBounds = true
 
@@ -49,8 +49,8 @@ class TransactionsCurrencyCell: UICollectionViewCell {
     }
 
     func bind(selected: Bool) {
-        nameLabel.textColor = selected ? .appDark : .appOz
-        roundedView.backgroundColor = selected ? .appJacob : .appJeremy
+        nameLabel.textColor = selected ? .themeDark : .themeOz
+        roundedView.backgroundColor = selected ? .themeJacob : .themeJeremy
     }
 
     static func size(for title: String) -> CGSize {

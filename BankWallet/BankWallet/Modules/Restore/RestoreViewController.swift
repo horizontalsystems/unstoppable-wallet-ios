@@ -2,8 +2,9 @@ import UIKit
 import UIExtensions
 import SnapKit
 import SectionsTableView
+import ThemeKit
 
-class RestoreViewController: WalletViewController {
+class RestoreViewController: ThemeViewController {
     private let delegate: IRestoreViewDelegate
 
     private let tableView = SectionsTableView(style: .grouped)

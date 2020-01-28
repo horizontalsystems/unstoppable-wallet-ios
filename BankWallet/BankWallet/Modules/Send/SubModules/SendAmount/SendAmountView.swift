@@ -19,7 +19,7 @@ class SendAmountView: UIView {
     private let processSpinner = HUDProgressView(
             strokeLineWidth: SendAmountView.spinnerLineWidth,
             radius: SendAmountView.spinnerRadius,
-            strokeColor: .appOz
+            strokeColor: .themeOz
     )
 
     private let amountTypeLabel = UILabel()
@@ -49,17 +49,17 @@ class SendAmountView: UIView {
 
         addSubview(availableBalanceTitleLabel)
         availableBalanceTitleLabel.text = "send.available_balance".localized
-        availableBalanceTitleLabel.font = .appSubhead2
-        availableBalanceTitleLabel.textColor = .appGray
+        availableBalanceTitleLabel.font = .subhead2
+        availableBalanceTitleLabel.textColor = .themeGray
         availableBalanceTitleLabel.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(CGFloat.margin2x)
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
         }
 
         addSubview(availableBalanceValueLabel)
-        availableBalanceValueLabel.font = .appSubhead1
+        availableBalanceValueLabel.font = .subhead1
 
-        availableBalanceValueLabel.textColor = .appLeah
+        availableBalanceValueLabel.textColor = .themeLeah
         availableBalanceValueLabel.snp.makeConstraints { maker in
             maker.centerY.equalTo(availableBalanceTitleLabel.snp.centerY)
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
@@ -83,10 +83,10 @@ class SendAmountView: UIView {
         holderView.addSubview(hintLabel)
         holderView.addSubview(errorLabel)
 
-        holderView.layer.cornerRadius = CGFloat.cornerRadius8
+        holderView.layer.cornerRadius = CGFloat.cornerRadius2x
         holderView.layer.borderWidth = CGFloat.heightOneDp
-        holderView.layer.borderColor = UIColor.appSteel20.cgColor
-        holderView.backgroundColor = .appLawrence
+        holderView.layer.borderColor = UIColor.themeSteel20.cgColor
+        holderView.backgroundColor = .themeLawrence
         holderView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.height.equalTo(75)
@@ -94,8 +94,8 @@ class SendAmountView: UIView {
             maker.bottom.equalToSuperview()
         }
 
-        amountTypeLabel.font = .appBody
-        amountTypeLabel.textColor = .appOz
+        amountTypeLabel.font = .body
+        amountTypeLabel.textColor = .themeOz
         amountTypeLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         amountTypeLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         amountTypeLabel.snp.makeConstraints { maker in
@@ -103,7 +103,7 @@ class SendAmountView: UIView {
             maker.top.equalToSuperview().offset(CGFloat.margin3x)
         }
 
-        lineView.backgroundColor = .appSteel20
+        lineView.backgroundColor = .themeSteel20
         lineView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin2x)
             maker.trailing.equalToSuperview().inset(CGFloat.margin2x)
@@ -122,10 +122,10 @@ class SendAmountView: UIView {
         maxButton.addTarget(self, action: #selector(onTapMax), for: .touchUpInside)
 
         inputField.delegate = self
-        inputField.font = .appBody
-        inputField.textColor = .appOz
-        inputField.attributedPlaceholder = NSAttributedString(string: "send.amount_placeholder".localized, attributes: [NSAttributedString.Key.foregroundColor: AppTheme.textPlaceholderColor])
-        inputField.keyboardAppearance = App.theme.keyboardAppearance
+        inputField.font = .body
+        inputField.textColor = .themeOz
+        inputField.attributedPlaceholder = NSAttributedString(string: "send.amount_placeholder".localized, attributes: [NSAttributedString.Key.foregroundColor: UIColor.themeGray50])
+        inputField.keyboardAppearance = .themeDefault
         inputField.keyboardType = .decimalPad
         inputField.tintColor = AppTheme.textFieldTintColor
         inputField.snp.makeConstraints { maker in
@@ -139,20 +139,20 @@ class SendAmountView: UIView {
             maker.size.equalTo(CGFloat.heightButtonSecondary)
         }
 
-        switchButton.setImage(UIImage(named: "Send Switch Icon")?.tinted(with: .appOz), for: .normal)
-        switchButton.setImage(UIImage(named: "Send Switch Icon")?.tinted(with: .appGray50), for: .disabled)
+        switchButton.setImage(UIImage(named: "Send Switch Icon")?.tinted(with: .themeOz), for: .normal)
+        switchButton.setImage(UIImage(named: "Send Switch Icon")?.tinted(with: .themeGray50), for: .disabled)
         switchButton.addTarget(self, action: #selector(onTapSwitch), for: .touchUpInside)
 
-        hintLabel.font = .appCaption
-        hintLabel.textColor = .appGray
+        hintLabel.font = .caption
+        hintLabel.textColor = .themeGray
         hintLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin3x)
             maker.top.equalTo(lineView).offset(CGFloat.margin2x)
             maker.trailing.equalTo(lineView)
         }
 
-        errorLabel.font = .appCaption
-        errorLabel.textColor = .appLucian
+        errorLabel.font = .caption
+        errorLabel.textColor = .themeLucian
         errorLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin3x)
             maker.top.equalTo(lineView).offset(CGFloat.margin2x)

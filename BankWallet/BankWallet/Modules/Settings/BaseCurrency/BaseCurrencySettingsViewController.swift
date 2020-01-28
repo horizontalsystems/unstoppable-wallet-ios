@@ -1,7 +1,8 @@
 import UIKit
 import SectionsTableView
+import ThemeKit
 
-class BaseCurrencySettingsViewController: WalletViewController {
+class BaseCurrencySettingsViewController: ThemeViewController {
     private let delegate: IBaseCurrencySettingsViewDelegate
 
     private var items = [CurrencyViewItem]()

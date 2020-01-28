@@ -1,7 +1,8 @@
 import UIKit
 import SectionsTableView
+import ThemeKit
 
-class NotificationSettingsViewController: WalletViewController {
+class NotificationSettingsViewController: ThemeViewController {
     private let delegate: INotificationSettingsViewDelegate
 
     private var viewItems = [PriceAlertViewItem]()
@@ -49,8 +50,8 @@ class NotificationSettingsViewController: WalletViewController {
 
         let warningLabel = UILabel()
         warningLabel.numberOfLines = 0
-        warningLabel.font = .appSubhead2
-        warningLabel.textColor = .appGray
+        warningLabel.font = .subhead2
+        warningLabel.textColor = .themeGray
         warningLabel.text = "settings.notifications.disabled_text".localized
 
         warningView.addSubview(warningLabel)
@@ -106,7 +107,7 @@ extension NotificationSettingsViewController: SectionsDataSource {
                                 height: CGFloat.heightDoubleLineCell,
                                 bind: { [unowned self] cell, _ in
                                     cell.bind(
-                                            image: UIImage(named: "\(item.code.lowercased())")?.tinted(with: .appGray),
+                                            image: UIImage(named: "\(item.code.lowercased())")?.tinted(with: .themeGray),
                                             title: item.title,
                                             subtitle: item.code,
                                             value: "\(item.state)",

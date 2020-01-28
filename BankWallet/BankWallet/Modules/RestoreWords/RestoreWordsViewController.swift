@@ -1,11 +1,12 @@
 import UIKit
 import RxSwift
 import SnapKit
+import ThemeKit
 
-class RestoreWordsViewController: WalletViewController {
+class RestoreWordsViewController: ThemeViewController {
     private let minimalTextViewHeight: CGFloat = 88
     private let textViewInset: CGFloat = .margin3x
-    private let textViewFont: UIFont = .appBody
+    private let textViewFont: UIFont = .body
 
     private let disposeBag = DisposeBag()
     private let delegate: IRestoreWordsViewDelegate
@@ -35,14 +36,14 @@ class RestoreWordsViewController: WalletViewController {
             maker.leading.trailing.bottom.equalToSuperview()
         }
 
-        textView.keyboardAppearance = App.theme.keyboardAppearance
-        textView.backgroundColor = .appLawrence
-        textView.layer.cornerRadius = .cornerRadius8
+        textView.keyboardAppearance = .themeDefault
+        textView.backgroundColor = .themeLawrence
+        textView.layer.cornerRadius = .cornerRadius2x
         textView.layer.borderWidth = .heightOnePixel
-        textView.layer.borderColor = UIColor.appSteel20.cgColor
-        textView.textColor = .appOz
+        textView.layer.borderColor = UIColor.themeSteel20.cgColor
+        textView.textColor = .themeOz
         textView.font = textViewFont
-        textView.tintColor = .appJacob
+        textView.tintColor = .themeJacob
         textView.textContainerInset = UIEdgeInsets(top: textViewInset, left: textViewInset, bottom: textViewInset, right: textViewInset)
         textView.autocapitalizationType = .none
         textView.autocorrectionType = .no

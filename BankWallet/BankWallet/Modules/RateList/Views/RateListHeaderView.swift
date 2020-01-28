@@ -14,8 +14,8 @@ class RateListHeaderView: UITableViewHeaderFooterView {
         }
 
         currentDateLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        currentDateLabel.textColor = .appOz
-        currentDateLabel.font = .appTitle1
+        currentDateLabel.textColor = .themeOz
+        currentDateLabel.font = .title1
 
         contentView.addSubview(lastUpdateLabel)
         lastUpdateLabel.snp.makeConstraints { maker in
@@ -26,8 +26,8 @@ class RateListHeaderView: UITableViewHeaderFooterView {
 
         lastUpdateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         lastUpdateLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        lastUpdateLabel.textColor = .appGray
-        lastUpdateLabel.font = .appCaption
+        lastUpdateLabel.textColor = .themeGray
+        lastUpdateLabel.font = .caption
         lastUpdateLabel.numberOfLines = 2
         lastUpdateLabel.textAlignment = .right
     }
@@ -46,7 +46,7 @@ class RateListHeaderView: UITableViewHeaderFooterView {
 extension RateListHeaderView {
 
     static func height(forContainerWidth containerWidth: CGFloat, text: String) -> CGFloat {
-        text.height(forContainerWidth: containerWidth, font: .appTitle1) + CGFloat.margin6x + CGFloat.margin4x
+        text.height(forContainerWidth: containerWidth, font: .title1) + CGFloat.margin6x + CGFloat.margin4x
     }
 
 }

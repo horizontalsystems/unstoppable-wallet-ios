@@ -1,4 +1,5 @@
 import UIKit
+import ThemeKit
 
 class DoubleSpendInfoRouter {
 
@@ -9,7 +10,7 @@ class DoubleSpendInfoRouter {
 
         presenter.view = viewController
 
-        return WalletNavigationController(rootViewController: viewController)
+        return ThemeNavigationController(rootViewController: viewController)
     }
 
 }

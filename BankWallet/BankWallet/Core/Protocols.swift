@@ -1,6 +1,7 @@
 import RxSwift
 import GRDB
 import XRatesKit
+import ThemeKit
 
 typealias CoinCode = String
 
@@ -557,11 +558,6 @@ protocol IDefaultWalletCreator {
 protocol IFeeCoinProvider {
     func feeCoin(coin: Coin) -> Coin?
     func feeCoinProtocol(coin: Coin) -> String?
-}
-
-protocol IThemeManager: AnyObject {
-    var currentTheme: ITheme { get }
-    var lightMode: Bool { get set }
 }
 
 protocol INotificationManager {

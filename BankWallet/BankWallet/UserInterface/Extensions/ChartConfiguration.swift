@@ -31,27 +31,27 @@ extension ChartConfiguration {
     }
 
     private func setCryptoColors() {
-        curvePositiveColor = .appRemus
-        curveNegativeColor = .appLucian
-        curveIncompleteColor = .appGray50
+        curvePositiveColor = .themeRemus
+        curveNegativeColor = .themeLucian
+        curveIncompleteColor = .themeGray50
 
-        gradientPositiveColor = .appRemus
-        gradientNegativeColor = .appLucian
-        gradientIncompleteColor = .appGray50
+        gradientPositiveColor = .themeRemus
+        gradientNegativeColor = .themeLucian
+        gradientIncompleteColor = .themeGray50
 
-        limitColor = .appNina
+        limitColor = .themeNina
 
-        gridColor = .appSteel20
-        gridTextColor = .appGray
+        gridColor = .themeSteel20
+        gridTextColor = .themeGray
 
-        limitTextFont = .appSubhead1
-        limitTextColor = .appLeah
+        limitTextFont = .subhead1
+        limitTextColor = .themeLeah
 
-        selectedIndicatorColor = .appOz
-        selectedCurveColor = .appOz
-        selectedGradientColor = .appOz
+        selectedIndicatorColor = .themeOz
+        selectedCurveColor = .themeOz
+        selectedGradientColor = .themeOz
 
-        volumeBarColor = .appSteel20
+        volumeBarColor = .themeSteel20
     }
 
 }

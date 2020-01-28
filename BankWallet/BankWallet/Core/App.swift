@@ -1,3 +1,5 @@
+import ThemeKit
+
 class App {
     static let shared = App()
 
@@ -5,7 +7,7 @@ class App {
     let secureStorage: ISecureStorage
     let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage
 
-    let themeManager: IThemeManager
+    let themeManager: ThemeManager
     let appConfigProvider: IAppConfigProvider
     let systemInfoManager: ISystemInfoManager
     let biometryManager: IBiometryManager
@@ -67,7 +69,7 @@ class App {
         secureStorage = KeychainStorage()
         storage = GrdbStorage()
 
-        themeManager = ThemeManager(localStorage: localStorage)
+        themeManager = ThemeManager.shared
         appConfigProvider = AppConfigProvider()
         systemInfoManager = SystemInfoManager()
         biometryManager = BiometryManager(systemInfoManager: systemInfoManager)
@@ -158,14 +160,6 @@ class App {
                 appVersionManager: appVersionManager,
                 launchManager: launchManager
         )
-    }
-
-}
-
-extension App {
-
-    static var theme: ITheme {
-        App.shared.themeManager.currentTheme
     }
 
 }

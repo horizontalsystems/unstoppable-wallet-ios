@@ -1,7 +1,8 @@
 import UIKit
 import SectionsTableView
+import ThemeKit
 
-class ContactViewController: WalletViewController {
+class ContactViewController: ThemeViewController {
     private let delegate: IContactViewDelegate
 
     private let tableView = SectionsTableView(style: .grouped)
@@ -51,7 +52,7 @@ class ContactViewController: WalletViewController {
                     autoDeselect: true,
                     bind: { [weak self] cell, _ in
                         cell.bind(
-                                image: UIImage(named: "Email Icon")?.tinted(with: .appJacob),
+                                image: UIImage(named: "Email Icon")?.tinted(with: .themeJacob),
                                 title: "settings.contact.email".localized,
                                 subtitle: self?.email
                         )
@@ -66,7 +67,7 @@ class ContactViewController: WalletViewController {
                     autoDeselect: true,
                     bind: { [weak self] cell, _ in
                         cell.bind(
-                                image: UIImage(named: "Telegram Icon")?.tinted(with: .appJacob),
+                                image: UIImage(named: "Telegram Icon")?.tinted(with: .themeJacob),
                                 title: "settings.contact.telegram_wallet".localized,
                                 subtitle: self?.telegramWalletHelperGroup,
                                 last: true
@@ -82,7 +83,7 @@ class ContactViewController: WalletViewController {
                     autoDeselect: true,
                     bind: { [weak self] cell, _ in
                         cell.bind(
-                                image: UIImage(named: "Telegram Icon")?.tinted(with: .appJacob),
+                                image: UIImage(named: "Telegram Icon")?.tinted(with: .themeJacob),
                                 title: "settings.contact.telegram_developers".localized,
                                 subtitle: self?.telegramDevelopersGroup,
                                 last: true

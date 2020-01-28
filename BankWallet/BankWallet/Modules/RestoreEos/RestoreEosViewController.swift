@@ -1,7 +1,8 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
-class RestoreEosViewController: WalletViewController {
+class RestoreEosViewController: ThemeViewController {
     private let delegate: IRestoreEosViewDelegate
 
     private let accountNameField = AddressInputField(frame: .zero, placeholder: "restore.placeholder.account_name".localized, showQrButton: false, canEdit: true, lineBreakMode: .byWordWrapping)

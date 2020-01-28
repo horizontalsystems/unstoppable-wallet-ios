@@ -1,12 +1,13 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
-class BackupWordsController: WalletViewController {
+class BackupWordsController: ThemeViewController {
     private let delegate: IBackupWordsViewDelegate
 
     private let collectionView: UICollectionView
 
-    private let proceedButtonHolder = GradientView(gradientHeight: .margin4x, viewHeight: .heightBottomWrapperBar, fromColor: UIColor.appTyler.withAlphaComponent(0), toColor: .appTyler)
+    private let proceedButtonHolder = GradientView(gradientHeight: .margin4x, viewHeight: .heightBottomWrapperBar, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: .themeTyler)
     private let proceedButton: UIButton = .appYellow
 
     init(delegate: IBackupWordsViewDelegate) {

@@ -1,13 +1,14 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
-class ImageDoubleLineValueCell: AppCell {
+class ImageDoubleLineValueCell: ThemeCell {
     private let leftView = LeftImageCellView()
     private let middleView = DoubleLineCellView()
     private let rightView = RightValueCellView()
     private let disclosureView = DisclosureCellView()
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         contentView.addSubview(leftView)

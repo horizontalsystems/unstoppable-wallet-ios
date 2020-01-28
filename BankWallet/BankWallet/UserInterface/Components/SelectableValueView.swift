@@ -30,8 +30,8 @@ class SelectableValueView: UIView {
         wrapperView.addSubview(dropDownImageView)
 
         titleLabel.text = title
-        titleLabel.font = UIFont.appSubhead1
-        titleLabel.textColor = .appGray
+        titleLabel.font = UIFont.subhead1
+        titleLabel.textColor = .themeGray
         titleLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
             maker.top.equalToSuperview().offset(14)
@@ -43,8 +43,8 @@ class SelectableValueView: UIView {
             maker.centerY.equalTo(titleLabel.snp.centerY)
         }
 
-        valueLabel.font = UIFont.appSubhead1
-        valueLabel.textColor = .appLeah
+        valueLabel.font = UIFont.subhead1
+        valueLabel.textColor = .themeLeah
         valueLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(10)
             maker.trailing.equalTo(dropDownImageView.snp.leading).offset(-CGFloat.margin2x)
@@ -52,13 +52,13 @@ class SelectableValueView: UIView {
             maker.height.equalToSuperview()
         }
 
-        dropDownImageView.image = UIImage(named: "Down")?.tinted(with: .appGray)
+        dropDownImageView.image = UIImage(named: "Down")?.tinted(with: .themeGray)
         dropDownImageView.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview()
             maker.centerY.equalToSuperview()
         }
 
-        lineView.backgroundColor = .appSteel20
+        lineView.backgroundColor = .themeSteel20
         lineView.snp.makeConstraints { maker in
             maker.height.equalTo(0.5)
             maker.leading.equalToSuperview()
@@ -82,8 +82,8 @@ class SelectableValueView: UIView {
     func set(enabled: Bool) {
         wrapperView.isUserInteractionEnabled = enabled
 
-        valueLabel.textColor = enabled ? .appLeah : .appGray50
-        dropDownImageView.tintColor = enabled ? .appGray : .appGray50
+        valueLabel.textColor = enabled ? .themeLeah : .themeGray50
+        dropDownImageView.tintColor = enabled ? .themeGray : .themeGray50
     }
 
 }

@@ -52,8 +52,8 @@ class WelcomeScreenViewController: UIViewController {
             maker.height.equalTo(CGFloat.heightButton)
         }
 
-        versionLabel.textColor = .appGray
-        versionLabel.font = .appCaption
+        versionLabel.textColor = .themeGray
+        versionLabel.font = .caption
 
         view.addSubview(versionLabel)
         versionLabel.snp.makeConstraints { maker in

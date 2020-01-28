@@ -58,16 +58,16 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
             feeGasItems.append(FullTransactionItem(title: "full_info.size".localized, value: "\(size) (bytes)"))
         }
         if let gasLimit = txResponse.gasLimit {
-            feeGasItems.append(FullTransactionItem(title: "full_info.gas_limit".localized, titleColor: .appGray, value: "\(gasLimit)"))
+            feeGasItems.append(FullTransactionItem(title: "full_info.gas_limit".localized, titleColor: .themeGray, value: "\(gasLimit)"))
         }
 
         if let gasPrice = txResponse.gasPrice {
             let gWeiCoin = Coin(id: "", title: "", code: "gWei", decimal: 0, type: .ethereum)
             let gasValue = CoinValue(coin: gWeiCoin, value: gasPrice)
-            feeGasItems.append(FullTransactionItem(title: "full_info.gas_price".localized, titleColor: .appGray, value: ValueFormatter.instance.format(coinValue: gasValue)))
+            feeGasItems.append(FullTransactionItem(title: "full_info.gas_price".localized, titleColor: .themeGray, value: ValueFormatter.instance.format(coinValue: gasValue)))
         }
         if let gasUsed = txResponse.gasUsed {
-            feeGasItems.append(FullTransactionItem(title: "full_info.gas_used".localized, titleColor: .appGray, value: "\(gasUsed)"))
+            feeGasItems.append(FullTransactionItem(title: "full_info.gas_used".localized, titleColor: .themeGray, value: "\(gasUsed)"))
         }
         if !feeGasItems.isEmpty {
             sections.append(FullTransactionSection(title: nil, items: feeGasItems))

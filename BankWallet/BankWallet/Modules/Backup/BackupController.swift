@@ -1,7 +1,8 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
-class BackupController: WalletViewController {
+class BackupController: ThemeViewController {
     private let delegate: IBackupViewDelegate
 
     private let subtitleLabel = UILabel()
@@ -27,8 +28,8 @@ class BackupController: WalletViewController {
 
         view.addSubview(subtitleLabel)
         subtitleLabel.text = "backup.intro.subtitle".localized(delegate.coinCodes)
-        subtitleLabel.font = .appBody
-        subtitleLabel.textColor = .appGray
+        subtitleLabel.font = .body
+        subtitleLabel.textColor = .themeGray
         subtitleLabel.numberOfLines = 0
         subtitleLabel.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.marginTextSide)

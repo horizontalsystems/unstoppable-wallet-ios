@@ -34,7 +34,7 @@ class ChartViewController: WalletActionSheetController {
         titleItem = AlertTitleItem(
                 title: "chart.title".localized(coin.title),
                 icon: UIImage(coin: coin),
-                iconTintColor: AppTheme.coinIconColor,
+                iconTintColor: .themeGray,
                 tag: 0
         )
 

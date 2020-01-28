@@ -10,7 +10,7 @@ class BackupRequiredViewController: WalletActionSheetController {
                 title: "backup.backup_required".localized,
                 subtitle: subtitle,
                 icon: UIImage(named: "Attention Icon")?.withRenderingMode(.alwaysTemplate),
-                iconTintColor: .appLucian,
+                iconTintColor: .themeLucian,
                 tag: 0,
                 onClose: { [weak self] in
                     self?.dismiss(byFade: false)

@@ -40,14 +40,14 @@ class RateDiffView: UIView {
             imageView.image = nil
             return
         }
-        let color: UIColor = value.isSignMinus ? .appLucian : .appRemus
+        let color: UIColor = value.isSignMinus ? .themeLucian : .themeRemus
         let imageName = value.isSignMinus ? "Down" : "Up"
 
         imageView.image = UIImage(named: imageName)?.tinted(with: color)
 
         let formattedDiff = RateDiffView.formatter.string(from: abs(value) as NSNumber)
 
-        label.textColor = highlightText ? color : .appGray
+        label.textColor = highlightText ? color : .themeGray
         label.text = formattedDiff.map { "\($0)%" }
     }
 

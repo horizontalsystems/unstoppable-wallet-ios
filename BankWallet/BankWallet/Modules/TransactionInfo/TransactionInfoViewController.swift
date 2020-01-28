@@ -19,7 +19,7 @@ class TransactionInfoViewController: WalletActionSheetController {
         let item = delegate.viewItem
 
         let iconImage = item.type == .incoming ? UIImage(named: "Transaction In Icon") : UIImage(named: "Transaction Out Icon")
-        let iconTintColor: UIColor = item.type == .incoming ? .appRemus : .appJacob
+        let iconTintColor: UIColor = item.type == .incoming ? .themeRemus : .themeJacob
 
         let titleItem = AlertTitleItem(
                 title: "tx_info.title".localized,

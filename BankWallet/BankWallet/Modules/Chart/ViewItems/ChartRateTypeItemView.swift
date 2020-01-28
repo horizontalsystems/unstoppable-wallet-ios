@@ -20,8 +20,8 @@ class ChartRateTypeItemView: BaseActionItemView {
     override func initView() {
         super.initView()
 
-        valueLabel.font = .appSubhead1
-        valueLabel.textColor = .appOz
+        valueLabel.font = .subhead1
+        valueLabel.textColor = .themeOz
 
         addSubview(valueLabel)
         valueLabel.snp.makeConstraints { maker in
@@ -29,8 +29,8 @@ class ChartRateTypeItemView: BaseActionItemView {
             maker.centerX.equalToSuperview()
         }
 
-        dateLabel.font = .appCaption
-        dateLabel.textColor = .appGray
+        dateLabel.font = .caption
+        dateLabel.textColor = .themeGray
 
         addSubview(dateLabel)
         dateLabel.snp.makeConstraints { maker in
@@ -86,14 +86,14 @@ class ChartRateTypeItemView: BaseActionItemView {
         }
 
         let button = RespondButton(onTap: toggleAction)
-        button.cornerRadius = .cornerRadius12
+        button.cornerRadius = .cornerRadius3x
         button.changeBackground = false
         button.tag = tag
         button.state = .active
-        button.textColors = [.active: .appLeah, .selected: .appJacob, .disabled: .appGray50]
-        button.backgrounds = [.selected: .appJeremy]
+        button.textColors = [.active: .themeLeah, .selected: .themeJacob, .disabled: .themeGray50]
+        button.backgrounds = [.selected: .themeJeremy]
         button.titleLabel.text = title.localized
-        button.titleLabel.font = .appSubhead1
+        button.titleLabel.font = .subhead1
         button.titleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         button.wrapperView.snp.remakeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin2x)

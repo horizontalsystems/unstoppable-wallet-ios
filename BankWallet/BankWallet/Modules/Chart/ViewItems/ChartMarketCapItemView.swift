@@ -17,7 +17,7 @@ class ChartMarketCapItemView: BaseActionItemView {
     override func initView() {
         super.initView()
 
-        separator.backgroundColor = .appSteel20
+        separator.backgroundColor = .themeSteel20
 
         addSubview(separator)
         separator.snp.makeConstraints { maker in
@@ -58,7 +58,7 @@ class ChartMarketCapItemView: BaseActionItemView {
             maker.top.equalTo(circulationView.snp.bottom).offset(CGFloat.margin2x)
         }
 
-        sourceView.set(value: "@CryptoCompare.com", font: .appCaption)
+        sourceView.set(value: "@CryptoCompare.com", font: .caption)
 
         addSubview(sourceView)
         sourceView.snp.makeConstraints { maker in

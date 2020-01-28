@@ -7,7 +7,7 @@ class CoinIconImageView: UIImageView {
     init() {
         super.init(frame: .zero)
 
-        tintColor = AppTheme.coinIconColor
+        tintColor = .themeGray
         layer.cornerRadius = AppTheme.coinIconSize / 2
 
         snp.makeConstraints { maker in

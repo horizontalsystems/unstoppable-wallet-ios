@@ -14,7 +14,7 @@ class TransactionFromToHashItemView: BaseActionItemView {
     override func initView() {
         super.initView()
 
-        backgroundColor = .appLawrence
+        backgroundColor = .themeLawrence
 
         addSubview(titleLabel)
         addSubview(hashView)
@@ -26,8 +26,8 @@ class TransactionFromToHashItemView: BaseActionItemView {
 
         titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
-        titleLabel.font = .appSubhead2
-        titleLabel.textColor = .appGray
+        titleLabel.font = .subhead2
+        titleLabel.textColor = .themeGray
 
         hashView.snp.makeConstraints { maker in
             maker.leading.equalTo(self.titleLabel.snp.trailing).offset(CGFloat.margin12x)

@@ -4,8 +4,9 @@ import UIExtensions
 import HUD
 import SnapKit
 import RxSwift
+import ThemeKit
 
-class DoubleSpendInfoViewController: WalletViewController, SectionsDataSource {
+class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
     private let delegate: IDoubleSpendInfoViewDelegate
 
     let tableView = SectionsTableView(style: .grouped)
