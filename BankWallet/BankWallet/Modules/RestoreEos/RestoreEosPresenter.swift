@@ -1,14 +1,16 @@
 class RestoreEosPresenter {
     weak var view: IRestoreEosView?
 
-    private let mode: RestoreRouter.PresentationMode
+    private let presentationMode: RestoreRouter.PresentationMode
+    private let proceedMode: RestoreRouter.ProceedMode
     private let interactor: IRestoreEosInteractor
     private let router: IRestoreEosRouter
 
     private var state: RestoreEosPresenterState
 
-    init(mode: RestoreRouter.PresentationMode, interactor: IRestoreEosInteractor, router: IRestoreEosRouter, state: RestoreEosPresenterState) {
-        self.mode = mode
+    init(presentationMode: RestoreRouter.PresentationMode, proceedMode: RestoreRouter.ProceedMode, interactor: IRestoreEosInteractor, router: IRestoreEosRouter, state: RestoreEosPresenterState) {
+        self.presentationMode = presentationMode
+        self.proceedMode = proceedMode
         self.interactor = interactor
         self.router = router
         self.state = state
@@ -33,8 +35,13 @@ class RestoreEosPresenter {
 extension RestoreEosPresenter: IRestoreEosViewDelegate {
 
     func viewDidLoad() {
-        if mode == .presented {
+        if presentationMode == .presented {
             view?.showCancelButton()
+        }
+        if proceedMode == .next {
+            view?.showNextButton()
+        } else {
+            view?.showRestoreButton()
         }
 
         let (account, activePrivateKey) = interactor.defaultCredentials
@@ -84,10 +91,11 @@ extension RestoreEosPresenter: IRestoreEosViewDelegate {
 
             let accountType: AccountType = .eos(account: account, activePrivateKey: privateKey)
 
-            switch mode {
-            case .pushed: router.notifyRestored(accountType: accountType)
-            case .presented: router.dismissAndNotify(accountType: accountType)
-            }
+            router.notifyRestored(accountType: accountType)
+//            switch presentationMode {
+//            case .pushed: router.notifyRestored(accountType: accountType)
+//            case .presented: router.dismissAndNotify(accountType: accountType)
+//            }
         } catch {
             view?.show(error: error)
         }

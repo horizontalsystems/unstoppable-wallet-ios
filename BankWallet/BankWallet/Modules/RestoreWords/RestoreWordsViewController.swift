@@ -11,6 +11,7 @@ class RestoreWordsViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
     private let delegate: IRestoreWordsViewDelegate
 
+    private let hackView = UIView() // fixes apple bug related to scroll view and large title
     private let containerView = UIView()
     private let textView = UITextView()
 
@@ -27,12 +28,19 @@ class RestoreWordsViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.largeTitleDisplayMode = .never
         title = "restore.enter_key".localized
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "button.back".localized, style: .plain, target: nil, action: nil)
+
+        view.addSubview(hackView)
+        hackView.snp.makeConstraints { maker in
+            maker.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+            maker.leading.trailing.equalToSuperview()
+            maker.height.equalTo(0)
+        }
 
         view.addSubview(containerView)
         containerView.snp.makeConstraints { maker in
-            maker.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+            maker.top.equalTo(hackView)
             maker.leading.trailing.bottom.equalToSuperview()
         }
 
@@ -162,6 +170,10 @@ extension RestoreWordsViewController: IRestoreWordsView {
 
     func showCancelButton() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(cancelDidTap))
+    }
+
+    func showNextButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .plain, target: self, action: #selector(restoreDidTap))
     }
 
     func showRestoreButton() {

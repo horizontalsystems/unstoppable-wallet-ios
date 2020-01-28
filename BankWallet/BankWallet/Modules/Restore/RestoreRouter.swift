@@ -6,9 +6,29 @@ class RestoreRouter {
 
 extension RestoreRouter: IRestoreRouter {
 
-    func showRestoreCoins(predefinedAccountType: PredefinedAccountType) {
-        let module = RestoreCoinsRouter.module(presentationMode: .initial, predefinedAccountType: predefinedAccountType)
-        viewController?.navigationController?.pushViewController(module, animated: true)
+    func showRestore(predefinedAccountType: PredefinedAccountType, delegate: ICredentialsCheckDelegate) {
+        let restoreController: UIViewController
+        switch predefinedAccountType {
+        case .standard:
+            restoreController = RestoreWordsRouter.module(presentationMode: .pushed, proceedMode: .next, wordsCount: 12, delegate: delegate)
+        case .eos:
+            restoreController = RestoreEosRouter.module(presentationMode: .pushed, proceedMode: .next, delegate: delegate)
+        case .binance:
+            restoreController = RestoreWordsRouter.module(presentationMode: .pushed, proceedMode: .next, wordsCount: 24, delegate: delegate)
+        }
+        viewController?.navigationController?.pushViewController(restoreController, animated: true)
+    }
+
+    func showSettings(delegate: ICoinSettingsDelegate) {
+        viewController?.navigationController?.pushViewController(CoinSettingsRouter.module(proceedMode: .next, delegate: delegate), animated: true)
+    }
+
+    func showRestoreCoins(predefinedAccountType: PredefinedAccountType, accountType: AccountType, delegate: IRestoreCoinsDelegate) {
+        viewController?.navigationController?.pushViewController(RestoreCoinsRouter.module(predefinedAccountType: predefinedAccountType, accountType: accountType, delegate: delegate), animated: true)
+    }
+
+    func showMain() {
+        UIApplication.shared.keyWindow?.set(newRootController: MainRouter.module(selectedTab: .balance))
     }
 
 }
@@ -26,20 +46,25 @@ extension RestoreRouter {
         return viewController
     }
 
-    static func module(predefinedAccountType: PredefinedAccountType, mode: PresentationMode, delegate: IRestoreAccountTypeDelegate) -> UIViewController {
+    static func module(predefinedAccountType: PredefinedAccountType, mode: RestoreRouter.PresentationMode, delegate: ICredentialsCheckDelegate) -> UIViewController {
         switch predefinedAccountType {
         case .standard:
-            return RestoreWordsRouter.module(mode: mode, wordsCount: 12, delegate: delegate)
+            return RestoreWordsRouter.module(presentationMode: mode, proceedMode: .next, wordsCount: 12, delegate: delegate)
         case .eos:
-            return RestoreEosRouter.module(mode: mode, delegate: delegate)
+            return RestoreEosRouter.module(presentationMode: mode, proceedMode: .restore, delegate: delegate)
         case .binance:
-            return RestoreWordsRouter.module(mode: mode, wordsCount: 24, delegate: delegate)
+            return RestoreWordsRouter.module(presentationMode: mode, proceedMode: .restore, wordsCount: 24, delegate: delegate)
         }
     }
 
     enum PresentationMode {
         case pushed
         case presented
+    }
+
+    enum ProceedMode {
+        case next
+        case restore
     }
 
 }

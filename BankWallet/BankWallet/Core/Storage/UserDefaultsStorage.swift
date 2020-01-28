@@ -22,6 +22,8 @@ class UserDefaultsStorage {
     private let debugLogKey = "debug_log_key"
     private let keyAppVersions = "app_versions"
     private let keyLockTimeEnabled = "lock_time_enabled"
+    private let keyBitcoinDerivation = "bitcoin_derivation"
+    private let keySyncMode = "sync_mode"
 
     private func value<T>(for key: String) -> T? {
         UserDefaults.standard.value(forKey: key) as? T
@@ -154,6 +156,30 @@ extension UserDefaultsStorage: ILocalStorage {
     var lockTimeEnabled: Bool {
         get { value(for: keyLockTimeEnabled) ?? false }
         set { set(value: newValue, for: keyLockTimeEnabled) }
+    }
+
+    var bitcoinDerivation: MnemonicDerivation? {
+        get {
+            if let rawValue: String = value(for: keyBitcoinDerivation), let value = MnemonicDerivation(rawValue: rawValue) {
+                return value
+            }
+            return nil
+        }
+        set {
+            set(value: newValue?.rawValue, for: keyBitcoinDerivation)
+        }
+    }
+
+    var syncMode: SyncMode? {
+        get {
+            if let rawValue: String = value(for: keySyncMode), let value = SyncMode(rawValue: rawValue) {
+                return value
+            }
+            return nil
+        }
+        set {
+            set(value: newValue?.rawValue, for: keySyncMode)
+        }
     }
 
 }

@@ -53,17 +53,21 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 // Coin Settings
 
-"coin_settings.enable_button" = "Enable";
 "coin_settings.derivation.title" = "Choose Address Format";
 "coin_settings.derivation.description_bip44" = "Older (start with 1...)";
 "coin_settings.derivation.description_bip49" = "Popular (start with 3...)";
 "coin_settings.derivation.description_bip84" = "Newest (start with bc1...)";
 "coin_settings.derivation.description_create" = "This setting controls the address format for the Bitcoin in this wallet. We recommend using BIP49 if not sure.";
 "coin_settings.derivation.description_restore" = "Select the address format for the Bitcoin in the wallet you're trying to restore.";
-"coin_settings.sync_mode.title" = "Restore Parameters";
+"coin_settings.title" = "Blockchain Settings";
+"coin_settings.sync_mode.title" = "Restore Source";
 "coin_settings.sync_mode.fast.description" = "0-2 hours, Recommended";
-"coin_settings.sync_mode.slow.description" = "1-12 hours";
-"coin_settings.sync_mode.description" = "Select the source the Unstoppable should use to download your balance and transactions.\n\nHorizontal Systems %@ API:";
+"coin_settings.sync_mode.slow.description" = "1-24 hours";
+"coin_settings.sync_mode.description" = "API sources links:
+btc.horizontalsystems.xyz/apg
+dash.horizontalsystems.xyz/apg
+bch.horizontalsystems.xyz/apg";
+"sync_mode.from_blockchain" = "From Blockchain";
 
 // Backup
 

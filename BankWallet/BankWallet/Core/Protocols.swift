@@ -29,6 +29,8 @@ protocol ILocalStorage: class {
     var mainShownOnce: Bool { get set }
     var appVersions: [AppVersion] { get set }
     var lockTimeEnabled: Bool { get set }
+    var bitcoinDerivation: MnemonicDerivation? { get set }
+    var syncMode: SyncMode? { get set }
 }
 
 protocol IChartTypeStorage: class {

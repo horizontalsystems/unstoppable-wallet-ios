@@ -1,16 +1,16 @@
 class RestoreCoinsPresenter {
     weak var view: IRestoreCoinsView?
 
-    private let presentationMode: RestoreCoinsModule.PresentationMode
     private let predefinedAccountType: PredefinedAccountType
+    private let accountType: AccountType
     private let interactor: IRestoreCoinsInteractor
     private let router: IRestoreCoinsRouter
 
-    private var enabledCoins = [Coin: CoinSettings]()
+    private var enabledCoins = Set<Coin>()
 
-    init(presentationMode: RestoreCoinsModule.PresentationMode, predefinedAccountType: PredefinedAccountType, interactor: IRestoreCoinsInteractor, router: IRestoreCoinsRouter) {
-        self.presentationMode = presentationMode
+    init(predefinedAccountType: PredefinedAccountType, accountType: AccountType, interactor: IRestoreCoinsInteractor, router: IRestoreCoinsRouter) {
         self.predefinedAccountType = predefinedAccountType
+        self.accountType = accountType
         self.interactor = interactor
         self.router = router
     }
@@ -20,7 +20,7 @@ class RestoreCoinsPresenter {
     }
 
     private func viewItem(coin: Coin) -> CoinToggleViewItem {
-        let enabled = enabledCoins[coin] != nil
+        let enabled = enabledCoins.contains(coin)
         return CoinToggleViewItem(coin: coin, state: .toggleVisible(enabled: enabled))
     }
 
@@ -39,7 +39,7 @@ class RestoreCoinsPresenter {
     }
 
     private func enable(coin: Coin, requestedCoinSettings: CoinSettings) {
-        enabledCoins[coin] = interactor.coinSettingsToSave(coin: coin, accountOrigin: .restored, requestedCoinSettings: requestedCoinSettings)
+        enabledCoins.insert(coin)
         syncProceedButton()
     }
 
@@ -48,73 +48,35 @@ class RestoreCoinsPresenter {
 extension RestoreCoinsPresenter: IRestoreCoinsViewDelegate {
 
     func onLoad() {
-        view?.setCancelButton(visible: presentationMode == .inApp)
-
         syncViewItems()
         syncProceedButton()
     }
 
     func onEnable(viewItem: CoinToggleViewItem) {
-        let coin = viewItem.coin
-
-        let coinSettingsToRequest = interactor.coinSettingsToRequest(coin: coin, accountOrigin: .restored)
-
-        if coinSettingsToRequest.isEmpty {
-            enable(coin: coin, requestedCoinSettings: [:])
-        } else {
-            router.showCoinSettings(coin: coin, coinSettings: coinSettingsToRequest, delegate: self)
-        }
+        enable(coin: viewItem.coin, requestedCoinSettings: [:])
     }
 
     func onDisable(viewItem: CoinToggleViewItem) {
-        enabledCoins.removeValue(forKey: viewItem.coin)
+        enabledCoins.remove(viewItem.coin)
         syncProceedButton()
     }
 
-    func onTapNextButton() {
+    func onTapRestore() {
         guard !enabledCoins.isEmpty else {
             return
         }
 
-        router.showRestore(predefinedAccountType: predefinedAccountType, delegate: self)
-    }
-
-    func onTapCancelButton() {
-        router.close()
-    }
-
-}
-
-extension RestoreCoinsPresenter: ICoinSettingsDelegate {
-
-    func onSelect(coinSettings: CoinSettings, coin: Coin) {
-        enable(coin: coin, requestedCoinSettings: coinSettings)
-    }
-
-    func onCancelSelectingCoinSettings() {
-        syncViewItems()
-    }
-
-}
-
-extension RestoreCoinsPresenter: IRestoreAccountTypeDelegate {
-
-    func didRestore(accountType: AccountType) {
         let account = interactor.account(accountType: accountType)
         interactor.create(account: account)
 
-        let wallets = enabledCoins.map { (coin, coinSettings) in
-            Wallet(coin: coin, account: account, coinSettings: coinSettings)
+        let wallets: [Wallet] = enabledCoins.map { coin in
+            let coinSettings = interactor.coinSettings(coinType: coin.type)
+            return Wallet(coin: coin, account: account, coinSettings: coinSettings)
         }
 
         interactor.save(wallets: wallets)
 
-        switch presentationMode {
-        case .initial:
-            router.showMain()
-        case .inApp:
-            router.close()
-        }
+        router.notifyRestored()
     }
 
 }

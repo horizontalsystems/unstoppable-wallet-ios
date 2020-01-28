@@ -27,12 +27,10 @@ protocol ICreateWalletInteractor {
     func create(accounts: [Account])
     func save(wallets: [Wallet])
 
-    func coinSettingsToRequest(coin: Coin, accountOrigin: AccountOrigin) -> CoinSettings
-    func coinSettingsToSave(coin: Coin, accountOrigin: AccountOrigin, requestedCoinSettings: CoinSettings) -> CoinSettings
+    func coinSettings(coin: Coin) -> CoinSettings
 }
 
 protocol ICreateWalletRouter {
-    func showCoinSettings(coin: Coin, coinSettings: CoinSettings, delegate: ICoinSettingsDelegate)
     func showMain()
     func close()
 }

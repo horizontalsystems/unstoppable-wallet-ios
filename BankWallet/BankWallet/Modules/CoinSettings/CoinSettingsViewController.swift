@@ -4,19 +4,20 @@ import ThemeKit
 
 class CoinSettingsViewController: ThemeViewController {
     private let delegate: ICoinSettingsViewDelegate
-    private let mode: CoinSettingsModule.Mode
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    private var coinTitle: String = ""
-    private var restoreUrl: String = ""
+    private var restoreUrls = [
+        "btc.horizontalsystems.xyz/apg",
+        "dash.horizontalsystems.xyz/apg",
+        "bch.horizontalsystems.xyz/apg"
+    ]
 
     private var derivation: MnemonicDerivation?
     private var syncMode: SyncMode?
 
-    init(delegate: ICoinSettingsViewDelegate, mode: CoinSettingsModule.Mode) {
+    init(delegate: ICoinSettingsViewDelegate) {
         self.delegate = delegate
-        self.mode = mode
 
         super.init()
     }
@@ -28,13 +29,11 @@ class CoinSettingsViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancelButton))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "coin_settings.enable_button".localized, style: .done, target: self, action: #selector(onTapEnableButton))
+        title = "coin_settings.title".localized
 
         tableView.registerCell(forClass: CoinSettingCell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
-        tableView.registerHeaderFooter(forClass: CoinSettingsHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -49,12 +48,8 @@ class CoinSettingsViewController: ThemeViewController {
         tableView.buildSections()
     }
 
-    @objc func onTapEnableButton() {
-        delegate.onTapEnableButton()
-    }
-
-    @objc func onTapCancelButton() {
-        delegate.onTapCancelButton()
+    @objc func onTapNextButton() {
+        delegate.onTapNextButton()
     }
 
     private func handleSelect(derivation: MnemonicDerivation) {
@@ -95,7 +90,6 @@ class CoinSettingsViewController: ThemeViewController {
 
     private func syncModeRows(selectedSyncMode: SyncMode) -> [RowProtocol] {
         let syncModes =  [SyncMode.fast, SyncMode.slow]
-        let coinTitle = self.coinTitle
 
         return syncModes.enumerated().map { (index, syncMode) in
             Row<CoinSettingCell>(
@@ -105,7 +99,7 @@ class CoinSettingsViewController: ThemeViewController {
                     autoDeselect: true,
                     bind: { cell, _ in
                         cell.bind(
-                                title: syncMode.title(coinTitle: coinTitle),
+                                title: syncMode.title,
                                 subtitle: "coin_settings.sync_mode.\(syncMode.rawValue).description".localized,
                                 selected: syncMode == selectedSyncMode,
                                 last: index == syncModes.count - 1
@@ -142,20 +136,6 @@ class CoinSettingsViewController: ThemeViewController {
         )
     }
 
-    private func urlFooter(hash: String, text: String, url: String) -> ViewState<CoinSettingsHeaderFooterView> {
-        .cellType(
-                hash: hash,
-                binder: { view in
-                    view.bind(text: text, url: url) { [weak self] in
-                        self?.delegate.onTapLink()
-                    }
-                },
-                dynamicHeight: { [unowned self] _ in
-                    CoinSettingsHeaderFooterView.height(containerWidth: self.tableView.bounds.width, text: text, url: url)
-                }
-        )
-    }
-
 }
 
 extension CoinSettingsViewController: SectionsDataSource {
@@ -166,8 +146,8 @@ extension CoinSettingsViewController: SectionsDataSource {
         if let derivation = derivation {
             sections.append(Section(
                     id: "derivation",
-                    headerState: header(hash: "derivation_header", text: "coin_settings.derivation.title".localized, additionalMargin: .margin3x),
-                    footerState: footer(hash: "derivation_footer", text: "coin_settings.derivation.description_\(mode)".localized),
+                    headerState: header(hash: "derivation_header", text: "coin_settings.derivation.title".localized, additionalMargin: .margin2x),
+                    footerState: .margin(height: .margin8x),
                     rows: derivationRows(selectedDerivation: derivation)
             ))
         }
@@ -176,7 +156,7 @@ extension CoinSettingsViewController: SectionsDataSource {
             sections.append(Section(
                     id: "sync_mode",
                     headerState: header(hash: "sync_mode_header", text: "coin_settings.sync_mode.title".localized),
-                    footerState: urlFooter(hash: "sync_mode_footer", text: "coin_settings.sync_mode.description".localized(coinTitle), url: restoreUrl),
+                    footerState: footer(hash: "sync_mode_footer", text: "coin_settings.sync_mode.description".localized),
                     rows: syncModeRows(selectedSyncMode: syncMode)
             ))
         }
@@ -188,13 +168,12 @@ extension CoinSettingsViewController: SectionsDataSource {
 
 extension CoinSettingsViewController: ICoinSettingsView {
 
-    func set(coinTitle: String) {
-        self.coinTitle = coinTitle
-        title = coinTitle
+    func showNextButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .plain, target: self, action: #selector(onTapNextButton))
     }
 
-    func set(restoreUrl: String) {
-        self.restoreUrl = restoreUrl
+    func showRestoreButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.restore".localized, style: .done, target: self, action: #selector(onTapNextButton))
     }
 
     func set(syncMode: SyncMode) {

@@ -134,7 +134,7 @@ class App {
         appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage, predefinedAccountTypeManager: predefinedAccountTypeManager, walletManager: walletManager, adapterManager: adapterManager, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager)
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, localStorage: localStorage)
 
-        coinSettingsManager = CoinSettingsManager()
+        coinSettingsManager = CoinSettingsManager(localStorage: localStorage)
 
         let launchManager: ILaunchManager = LaunchManager(localStorage: localStorage, secureStorage: secureStorage)
 

@@ -1,35 +1,28 @@
 protocol ICoinSettingsView: class {
-    func set(coinTitle: String)
-    func set(restoreUrl: String)
+    func showNextButton()
+    func showRestoreButton()
+
     func set(derivation: MnemonicDerivation)
     func set(syncMode: SyncMode)
+}
+
+protocol ICoinSettingsInteractor: class {
+    var bitcoinDerivation: MnemonicDerivation { get set }
+    var syncMode: SyncMode { get set }
 }
 
 protocol ICoinSettingsViewDelegate {
     func onLoad()
     func onSelect(derivation: MnemonicDerivation)
     func onSelect(syncMode: SyncMode)
-    func onTapEnableButton()
-    func onTapCancelButton()
-    func onTapLink()
+    func onTapNextButton()
 }
 
 protocol ICoinSettingsRouter {
-    func notifySelectedAndClose(coinSettings: CoinSettings, coin: Coin)
-    func notifyCancelledAndClose()
+    func notifySelected()
     func open(url: String)
 }
 
 protocol ICoinSettingsDelegate: class {
-    func onSelect(coinSettings: CoinSettings, coin: Coin)
-    func onCancelSelectingCoinSettings()
-}
-
-class CoinSettingsModule {
-
-    enum Mode {
-        case create
-        case restore
-    }
-
+    func onSelect()
 }

@@ -10,7 +10,7 @@ class DoubleLineCellView: UIView {
 
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
+            maker.leading.equalToSuperview().offset(CGFloat.margin6x)
             maker.trailing.equalToSuperview().offset(-CGFloat.margin4x)
             maker.top.equalToSuperview().offset(10)
         }
@@ -20,7 +20,7 @@ class DoubleLineCellView: UIView {
 
         addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
+            maker.leading.equalToSuperview().offset(CGFloat.margin6x)
             maker.trailing.equalToSuperview().offset(-CGFloat.margin4x)
             maker.top.equalTo(titleLabel.snp.bottom).offset(5)
         }

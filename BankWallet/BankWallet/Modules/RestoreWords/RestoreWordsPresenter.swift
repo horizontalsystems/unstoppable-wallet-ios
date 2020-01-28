@@ -1,15 +1,17 @@
 class RestoreWordsPresenter {
     weak var view: IRestoreWordsView?
 
-    private let mode: RestoreRouter.PresentationMode
+    private let presentationMode: RestoreRouter.PresentationMode
+    private let proceedMode: RestoreRouter.ProceedMode
     private let router: IRestoreWordsRouter
     private var wordsManager: IWordsManager
     private let appConfigProvider: IAppConfigProvider
 
     let wordsCount: Int
 
-    init(mode: RestoreRouter.PresentationMode, router: IRestoreWordsRouter, wordsCount: Int, wordsManager: IWordsManager, appConfigProvider: IAppConfigProvider) {
-        self.mode = mode
+    init(presentationMode: RestoreRouter.PresentationMode, proceedMode: RestoreRouter.ProceedMode, router: IRestoreWordsRouter, wordsCount: Int, wordsManager: IWordsManager, appConfigProvider: IAppConfigProvider) {
+        self.presentationMode = presentationMode
+        self.proceedMode = proceedMode
         self.router = router
         self.wordsCount = wordsCount
         self.wordsManager = wordsManager
@@ -19,21 +21,22 @@ class RestoreWordsPresenter {
     private func notify(words: [String]) {
         let accountType: AccountType = .mnemonic(words: words, salt: nil)
 
-        switch mode {
-        case .pushed: router.notifyRestored(accountType: accountType)
-        case .presented: router.dismissAndNotify(accountType: accountType)
-        }
+        router.notifyChecked(accountType: accountType)
     }
 }
 
 extension RestoreWordsPresenter: IRestoreWordsViewDelegate {
 
     func viewDidLoad() {
-        if mode == .presented {
+        if presentationMode == .presented {
             view?.showCancelButton()
         }
+        if proceedMode == .next {
+            view?.showNextButton()
+        } else {
+            view?.showRestoreButton()
+        }
 
-        view?.showRestoreButton()
         view?.show(defaultWords: appConfigProvider.defaultWords(count: wordsCount))
     }
 
