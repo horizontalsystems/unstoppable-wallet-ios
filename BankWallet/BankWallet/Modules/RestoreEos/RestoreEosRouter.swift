@@ -3,9 +3,9 @@ import UIKit
 class RestoreEosRouter {
     weak var viewController: UIViewController?
 
-    private let delegate: IRestoreAccountTypeDelegate
+    private let delegate: ICredentialsCheckDelegate
 
-    init(delegate: IRestoreAccountTypeDelegate) {
+    init(delegate: ICredentialsCheckDelegate) {
         self.delegate = delegate
     }
 
@@ -14,17 +14,10 @@ class RestoreEosRouter {
 extension RestoreEosRouter: IRestoreEosRouter {
 
     func notifyRestored(accountType: AccountType) {
-        delegate.didRestore(accountType: accountType)
-    }
-
-    func dismissAndNotify(accountType: AccountType) {
-        viewController?.dismiss(animated: true) { [weak self] in
-            self?.delegate.didRestore(accountType: accountType)
-        }
+        delegate.didCheck(accountType: accountType)
     }
 
     func dismiss() {
-        delegate.didCancelRestore()
         viewController?.dismiss(animated: true)
     }
 
@@ -32,10 +25,10 @@ extension RestoreEosRouter: IRestoreEosRouter {
 
 extension RestoreEosRouter {
 
-    static func module(mode: RestoreRouter.PresentationMode, delegate: IRestoreAccountTypeDelegate) -> UIViewController {
+    static func module(presentationMode: RestoreRouter.PresentationMode, proceedMode: RestoreRouter.ProceedMode, delegate: ICredentialsCheckDelegate) -> UIViewController {
         let router = RestoreEosRouter(delegate: delegate)
         let interactor = RestoreEosInteractor(pasteboardManager: App.shared.pasteboardManager, appConfigProvider: App.shared.appConfigProvider)
-        let presenter = RestoreEosPresenter(mode: mode, interactor: interactor, router: router, state: RestoreEosPresenterState())
+        let presenter = RestoreEosPresenter(presentationMode: presentationMode, proceedMode: proceedMode, interactor: interactor, router: router, state: RestoreEosPresenterState())
         let viewController = RestoreEosViewController(delegate: presenter)
 
         interactor.delegate = presenter

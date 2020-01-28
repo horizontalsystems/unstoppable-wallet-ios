@@ -62,7 +62,7 @@ class CreateWalletPresenter {
     }
 
     private func createWallet(coin: Coin, account: Account, requestedCoinSettings: CoinSettings) {
-        let coinSettings = interactor.coinSettingsToSave(coin: coin, accountOrigin: .created, requestedCoinSettings: requestedCoinSettings)
+        let coinSettings = interactor.coinSettings(coin: coin)
 
         wallets[coin] = Wallet(coin: coin, account: account, coinSettings: coinSettings)
 
@@ -85,14 +85,7 @@ extension CreateWalletPresenter: ICreateWalletViewDelegate {
 
         do {
             let account = try resolveAccount(predefinedAccountType: coin.type.predefinedAccountType)
-
-            let coinSettingsToRequest = interactor.coinSettingsToRequest(coin: coin, accountOrigin: .created)
-
-            if coinSettingsToRequest.isEmpty {
-                createWallet(coin: coin, account: account, requestedCoinSettings: [:])
-            } else {
-                router.showCoinSettings(coin: coin, coinSettings: coinSettingsToRequest, delegate: self)
-            }
+            createWallet(coin: coin, account: account, requestedCoinSettings: [:])
         } catch {
             view?.show(error: error)
             syncViewItems()
@@ -128,23 +121,6 @@ extension CreateWalletPresenter: ICreateWalletViewDelegate {
 
     func onTapCancelButton() {
         router.close()
-    }
-
-}
-
-extension CreateWalletPresenter: ICoinSettingsDelegate {
-
-    func onSelect(coinSettings: CoinSettings, coin: Coin) {
-        guard let account = accounts[coin.type.predefinedAccountType] else {
-            syncViewItems()
-            return
-        }
-
-        createWallet(coin: coin, account: account, requestedCoinSettings: coinSettings)
-    }
-
-    func onCancelSelectingCoinSettings() {
-        syncViewItems()
     }
 
 }

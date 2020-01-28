@@ -33,17 +33,17 @@ protocol IManageWalletsInteractor {
     func createRestoredAccount(accountType: AccountType) -> Account
     func save(account: Account)
 
-    func coinSettingsToRequest(coin: Coin, accountOrigin: AccountOrigin) -> CoinSettings
-    func coinSettingsToSave(coin: Coin, accountOrigin: AccountOrigin, requestedCoinSettings: CoinSettings) -> CoinSettings
+    func coinSettings(coinType: CoinType) -> CoinSettings
 }
 
 protocol IManageWalletsInteractorDelegate: class {
 }
 
 protocol IManageWalletsRouter {
-    func showCoinSettings(coin: Coin, coinSettings: CoinSettings, accountOrigin: AccountOrigin, delegate: ICoinSettingsDelegate)
-    func showRestore(predefinedAccountType: PredefinedAccountType, delegate: IRestoreAccountTypeDelegate)
+    func showSettings(delegate: ICoinSettingsDelegate)
+    func showRestore(predefinedAccountType: PredefinedAccountType, delegate: ICredentialsCheckDelegate)
     func close()
+    func closePresented()
 }
 
 protocol IManageWalletsPresenterState {

@@ -1,39 +1,58 @@
 protocol ICoinSettingsManager {
-    func coinSettingsToRequest(coin: Coin, accountOrigin: AccountOrigin) -> CoinSettings
-    func coinSettingsToSave(coin: Coin, accountOrigin: AccountOrigin, requestedCoinSettings: CoinSettings) -> CoinSettings
+    var bitcoinDerivation: MnemonicDerivation { get set }
+    var syncMode: SyncMode { get set }
+
+    func coinSettingsForCreate(coinType: CoinType) -> CoinSettings
+    func coinSettings(coinType: CoinType) -> CoinSettings
 }
 
 class CoinSettingsManager: ICoinSettingsManager {
     private let defaultDerivation: MnemonicDerivation = .bip49
     private let defaultSyncMode: SyncMode = .fast
 
-    func coinSettingsToRequest(coin: Coin, accountOrigin: AccountOrigin) -> CoinSettings {
-        var coinSettings = CoinSettings()
+    let localStorage: ILocalStorage
 
-        for setting in coin.type.settings {
-            switch setting {
-            case .derivation:
-                coinSettings[.derivation] = defaultDerivation
-            case .syncMode:
-                if accountOrigin == .restored {
-                    coinSettings[.syncMode] = defaultSyncMode
-                }
-            }
-        }
-
-        return coinSettings
+    init (localStorage: ILocalStorage) {
+        self.localStorage = localStorage
     }
 
-    func coinSettingsToSave(coin: Coin, accountOrigin: AccountOrigin, requestedCoinSettings: CoinSettings) -> CoinSettings {
-        var coinSettings = requestedCoinSettings
+    var bitcoinDerivation: MnemonicDerivation {
+        get {
+            localStorage.bitcoinDerivation ?? defaultDerivation
+        }
+        set {
+            localStorage.bitcoinDerivation = newValue
+        }
+    }
+    var syncMode: SyncMode {
+        get {
+            localStorage.syncMode ?? defaultSyncMode
+        }
+        set {
+            localStorage.syncMode = newValue
+        }
+    }
 
-        for setting in coin.type.settings {
+    func coinSettingsForCreate(coinType: CoinType) -> CoinSettings {
+        coinType.settings.reduce (CoinSettings()) { coinSettings, value in
+            var coinSettings = coinSettings
+            switch value {
+            case .derivation: coinSettings[CoinSetting.derivation] = defaultDerivation
+            case .syncMode: coinSettings[CoinSetting.syncMode] = SyncMode.new
+            }
+            return coinSettings
+        }
+    }
+
+    func coinSettings(coinType: CoinType) -> CoinSettings {
+        var coinSettings = CoinSettings()
+
+        for setting in coinType.settings {
             switch setting {
+            case .derivation:
+                coinSettings[.derivation] = bitcoinDerivation
             case .syncMode:
-                if accountOrigin == .created {
-                    coinSettings[.syncMode] = SyncMode.new
-                }
-            default: ()
+                coinSettings[.syncMode] = syncMode
             }
         }
 

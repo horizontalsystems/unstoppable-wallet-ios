@@ -21,10 +21,8 @@ class RestoreEosViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.largeTitleDisplayMode = .never
         title = "restore.enter_key".localized
-
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.restore".localized, style: .done, target: self, action: #selector(doneDidTap))
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "button.back".localized, style: .plain, target: nil, action: nil)
 
         view.addSubview(accountNameField)
         accountNameField.snp.makeConstraints { maker in
@@ -100,6 +98,14 @@ extension RestoreEosViewController: IRestoreEosView {
 
     func showCancelButton() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(cancelDidTap))
+    }
+
+    func showNextButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .plain, target: self, action: #selector(doneDidTap))
+    }
+
+    func showRestoreButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.restore".localized, style: .done, target: self, action: #selector(doneDidTap))
     }
 
     func set(account: String?) {

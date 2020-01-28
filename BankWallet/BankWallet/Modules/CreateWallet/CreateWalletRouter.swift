@@ -7,10 +7,6 @@ class CreateWalletRouter {
 
 extension CreateWalletRouter: ICreateWalletRouter {
 
-    func showCoinSettings(coin: Coin, coinSettings: CoinSettings, delegate: ICoinSettingsDelegate) {
-        viewController?.present(CoinSettingsRouter.module(coin: coin, coinSettings: coinSettings, mode: .create, delegate: delegate), animated: true)
-    }
-
     func showMain() {
         UIApplication.shared.keyWindow?.set(newRootController: MainRouter.module(selectedTab: .balance))
     }
