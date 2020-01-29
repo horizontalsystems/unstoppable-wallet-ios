@@ -15,14 +15,14 @@ protocol ICoinSettingsViewDelegate {
     func onLoad()
     func onSelect(derivation: MnemonicDerivation)
     func onSelect(syncMode: SyncMode)
-    func onTapNextButton()
+    func onConfirm()
 }
 
 protocol ICoinSettingsRouter {
-    func notifySelected()
+    func notifyConfirm()
     func open(url: String)
 }
 
 protocol ICoinSettingsDelegate: class {
-    func onSelect()
+    func onConfirm()
 }
