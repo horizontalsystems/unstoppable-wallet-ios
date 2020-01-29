@@ -1,11 +1,11 @@
-class CoinSettingsPresenter {
-    weak var view: ICoinSettingsView?
+class BlockchainSettingsPresenter {
+    weak var view: IBlockchainSettingsView?
 
     private let proceedMode: RestoreRouter.ProceedMode
-    private let router: ICoinSettingsRouter
-    private let interactor: ICoinSettingsInteractor
+    private let router: IBlockchainSettingsRouter
+    private let interactor: IBlockchainSettingsInteractor
 
-    init(proceedMode: RestoreRouter.ProceedMode, router: ICoinSettingsRouter, interactor: ICoinSettingsInteractor) {
+    init(proceedMode: RestoreRouter.ProceedMode, router: IBlockchainSettingsRouter, interactor: IBlockchainSettingsInteractor) {
         self.proceedMode = proceedMode
         self.router = router
         self.interactor = interactor
@@ -13,7 +13,7 @@ class CoinSettingsPresenter {
 
 }
 
-extension CoinSettingsPresenter: ICoinSettingsViewDelegate {
+extension BlockchainSettingsPresenter: IBlockchainSettingsViewDelegate {
 
     func onLoad() {
         switch proceedMode {

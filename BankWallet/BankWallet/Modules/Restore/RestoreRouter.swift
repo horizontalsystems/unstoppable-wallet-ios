@@ -19,8 +19,8 @@ extension RestoreRouter: IRestoreRouter {
         viewController?.navigationController?.pushViewController(restoreController, animated: true)
     }
 
-    func showSettings(delegate: ICoinSettingsDelegate) {
-        viewController?.navigationController?.pushViewController(CoinSettingsRouter.module(proceedMode: .next, delegate: delegate), animated: true)
+    func showSettings(delegate: IBlockchainSettingsDelegate) {
+        viewController?.navigationController?.pushViewController(BlockchainSettingsRouter.module(proceedMode: .next, delegate: delegate), animated: true)
     }
 
     func showRestoreCoins(predefinedAccountType: PredefinedAccountType, accountType: AccountType, delegate: IRestoreCoinsDelegate) {

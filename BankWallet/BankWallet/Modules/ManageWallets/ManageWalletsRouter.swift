@@ -9,8 +9,8 @@ class ManageWalletsRouter {
 
 extension ManageWalletsRouter: IManageWalletsRouter {
 
-    func showSettings(delegate: ICoinSettingsDelegate) {
-        navigationController?.pushViewController(CoinSettingsRouter.module(proceedMode: .restore, delegate: delegate), animated: true)
+    func showSettings(delegate: IBlockchainSettingsDelegate) {
+        navigationController?.pushViewController(BlockchainSettingsRouter.module(proceedMode: .restore, delegate: delegate), animated: true)
     }
 
     func showRestore(predefinedAccountType: PredefinedAccountType, delegate: ICredentialsCheckDelegate) {

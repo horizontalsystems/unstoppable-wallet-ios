@@ -1,4 +1,4 @@
-class CoinSettingsInteractor {
+class BlockchainSettingsInteractor {
     private var coinSettingsManager: ICoinSettingsManager
 
     init(coinSettingsManager: ICoinSettingsManager) {
@@ -7,7 +7,7 @@ class CoinSettingsInteractor {
 
 }
 
-extension CoinSettingsInteractor: ICoinSettingsInteractor {
+extension BlockchainSettingsInteractor: IBlockchainSettingsInteractor {
 
     var bitcoinDerivation: MnemonicDerivation {
         get {

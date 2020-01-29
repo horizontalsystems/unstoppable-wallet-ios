@@ -9,7 +9,7 @@ protocol IRestoreViewDelegate {
 
 protocol IRestoreRouter {
     func showRestore(predefinedAccountType: PredefinedAccountType, delegate: ICredentialsCheckDelegate)
-    func showSettings(delegate: ICoinSettingsDelegate)
+    func showSettings(delegate: IBlockchainSettingsDelegate)
     func showRestoreCoins(predefinedAccountType: PredefinedAccountType, accountType: AccountType, delegate: IRestoreCoinsDelegate)
     func showMain()
 }

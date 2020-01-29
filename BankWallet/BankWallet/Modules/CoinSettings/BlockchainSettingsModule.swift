@@ -1,4 +1,4 @@
-protocol ICoinSettingsView: class {
+protocol IBlockchainSettingsView: class {
     func showNextButton()
     func showRestoreButton()
 
@@ -6,23 +6,23 @@ protocol ICoinSettingsView: class {
     func set(syncMode: SyncMode)
 }
 
-protocol ICoinSettingsInteractor: class {
+protocol IBlockchainSettingsInteractor: class {
     var bitcoinDerivation: MnemonicDerivation { get set }
     var syncMode: SyncMode { get set }
 }
 
-protocol ICoinSettingsViewDelegate {
+protocol IBlockchainSettingsViewDelegate {
     func onLoad()
     func onSelect(derivation: MnemonicDerivation)
     func onSelect(syncMode: SyncMode)
     func onConfirm()
 }
 
-protocol ICoinSettingsRouter {
+protocol IBlockchainSettingsRouter {
     func notifyConfirm()
     func open(url: String)
 }
 
-protocol ICoinSettingsDelegate: class {
+protocol IBlockchainSettingsDelegate: class {
     func onConfirm()
 }
