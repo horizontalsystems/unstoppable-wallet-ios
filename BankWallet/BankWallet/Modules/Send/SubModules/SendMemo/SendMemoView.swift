@@ -40,7 +40,7 @@ class SendMemoView: UIView {
         memoInputField.font = inputFieldFont
         memoInputField.attributedPlaceholder = NSAttributedString(string: "send.confirmation.memo_placeholder".localized, attributes: [NSAttributedString.Key.foregroundColor: UIColor.themeGray50])
         memoInputField.keyboardAppearance = .themeDefault
-        memoInputField.tintColor = AppTheme.textFieldTintColor
+        memoInputField.tintColor = .themeInputFieldTintColor
 
         memoInputField.delegate = self
     }

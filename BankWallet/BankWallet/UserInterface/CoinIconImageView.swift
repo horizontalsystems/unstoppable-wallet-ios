@@ -8,11 +8,9 @@ class CoinIconImageView: UIImageView {
         super.init(frame: .zero)
 
         tintColor = .themeGray
-        layer.cornerRadius = AppTheme.coinIconSize / 2
 
-        snp.makeConstraints { maker in
-            maker.size.equalTo(AppTheme.coinIconSize)
-        }
+        setContentHuggingPriority(.required, for: .horizontal)
+        setContentHuggingPriority(.required, for: .vertical)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -21,7 +19,13 @@ class CoinIconImageView: UIImageView {
 
     func bind(coin: Coin) {
         backgroundColor = .clear
-        image = UIImage(named: "\(coin.code.lowercased())")?.withRenderingMode(.alwaysTemplate)
+
+        if let image = UIImage(named: "\(coin.code.lowercased())") {
+            layer.cornerRadius = image.size.width
+            self.image = image.withRenderingMode(.alwaysTemplate)
+        } else {
+            image = nil
+        }
     }
 
 }

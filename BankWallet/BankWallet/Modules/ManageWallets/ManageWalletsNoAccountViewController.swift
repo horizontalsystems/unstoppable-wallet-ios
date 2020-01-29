@@ -4,7 +4,7 @@ import ActionSheet
 class ManageWalletsNoAccountViewController: WalletActionSheetController {
 
     init(coin: Coin, predefinedAccountType: PredefinedAccountType, onSelectNew: @escaping () -> (), onSelectRestore: @escaping () -> ()) {
-        super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
+        super.init()
 
         let titleItem = AlertTitleItem(
                 title: "manage_coins.add_coin.title".localized(coin.title),
@@ -58,7 +58,6 @@ class ManageWalletsNoAccountViewController: WalletActionSheetController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        backgroundColor = AppTheme.actionSheetBackgroundColor
         contentBackgroundColor = .white
     }
 

@@ -82,7 +82,7 @@ class TransactionStatusItemView: BaseActionItemView {
             maker.height.equalTo(20)
         }
 
-        barsProgressView.set(barsCount: AppTheme.progressStepsCount)
+        barsProgressView.set(barsCount: BarsProgressView.progressStepsCount)
 
         failedLabel.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()

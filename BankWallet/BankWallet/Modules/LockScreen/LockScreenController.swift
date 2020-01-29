@@ -1,4 +1,5 @@
 import UIKit
+import ThemeKit
 
 class LockScreenController: UIPageViewController {
     private let controllers: [UIViewController]
@@ -19,7 +20,7 @@ class LockScreenController: UIPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        GradientLayer.appendLayer(to: view, fromColor: AppTheme.controllerBackgroundFromGradient, toColor: AppTheme.controllerBackgroundToGradient)
+        GradientLayer.appendLayer(to: view, fromColor: .themeBackgroundFromGradient, toColor: .themeBackgroundToGradient)
 
         // Set pageIndicatorTintColor and currentPageIndicatorTintColor
         // only for the following stack of UIViewControllers

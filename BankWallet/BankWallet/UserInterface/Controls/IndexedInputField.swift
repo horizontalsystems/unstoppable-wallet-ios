@@ -53,7 +53,7 @@ class IndexedInputField: UIView, UITextFieldDelegate {
         textField.keyboardAppearance = .themeDefault
         textField.autocorrectionType = .yes
         textField.autocapitalizationType = .none
-        textField.tintColor = AppTheme.textFieldTintColor
+        textField.tintColor = .themeInputFieldTintColor
         textField.font = textFont
 
         textField.addTarget(self, action: #selector(textChange), for: .editingChanged)

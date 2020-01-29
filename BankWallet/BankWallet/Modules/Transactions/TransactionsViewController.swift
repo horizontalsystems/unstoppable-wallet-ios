@@ -168,7 +168,7 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if let headerBackgroundTriggerOffset = headerBackgroundTriggerOffset {
-            filterHeaderView.backgroundColor = scrollView.contentOffset.y > headerBackgroundTriggerOffset ? AppTheme.navigationBarBackgroundColor : .clear
+            filterHeaderView.backgroundColor = scrollView.contentOffset.y > headerBackgroundTriggerOffset ? .themeNavigationBarBackground : .clear
         }
     }
 

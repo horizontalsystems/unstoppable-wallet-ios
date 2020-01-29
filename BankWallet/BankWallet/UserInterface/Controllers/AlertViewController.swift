@@ -7,6 +7,8 @@ struct AlertRow {
 }
 
 class AlertViewController: WalletActionSheetController {
+    static let sideMargin: CGFloat = 61
+
     private var items = [TextSelectItem]()
     private let onSelect: (Int) -> ()
 
@@ -15,7 +17,7 @@ class AlertViewController: WalletActionSheetController {
 
         let config = ActionSheetThemeConfig(
                 actionStyle: .alert,
-                sideMargin: AppTheme.alertSideMargin,
+                sideMargin: AlertViewController.sideMargin,
                 cornerRadius: .margin4x,
                 separatorColor: .themeSteel20,
                 backgroundStyle: .color(color: .themeBlack50)
@@ -48,7 +50,6 @@ class AlertViewController: WalletActionSheetController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        backgroundColor = .themeLawrence
         contentBackgroundColor = .white
     }
 
@@ -57,7 +58,7 @@ class AlertViewController: WalletActionSheetController {
                 text: text,
                 font: .subhead1,
                 color: .themeGray,
-                height: AppTheme.alertHeaderHeight,
+                height: 40,
                 tag: -1
         )
 

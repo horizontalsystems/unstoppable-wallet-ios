@@ -8,7 +8,7 @@ class UnlinkViewController: WalletActionSheetController {
 
     init(delegate: IUnlinkViewDelegate) {
         self.delegate = delegate
-        super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
+        super.init()
 
         initItems()
     }
@@ -61,7 +61,6 @@ class UnlinkViewController: WalletActionSheetController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        backgroundColor = AppTheme.actionSheetBackgroundColor
         contentBackgroundColor = .white
     }
 

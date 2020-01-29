@@ -59,7 +59,7 @@ class AddressInputField: UIView {
         backgroundColor = .themeLawrence
 
         addressField.delegate = self
-        addressField.tintColor = AppTheme.textFieldTintColor
+        addressField.tintColor = .themeInputFieldTintColor
         addressField.keyboardAppearance = .themeDefault
         addressField.autocapitalizationType = .none
         addressField.isUserInteractionEnabled = canEdit

@@ -21,7 +21,7 @@ class TransactionProcessingView: UIView {
             maker.top.bottom.trailing.equalToSuperview()
         }
 
-        barsProgressView.set(barsCount: AppTheme.progressStepsCount)
+        barsProgressView.set(barsCount: BarsProgressView.progressStepsCount)
 
         processingLabel.font = .subhead2
         processingLabel.textColor = .themeGray

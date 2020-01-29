@@ -16,8 +16,9 @@ class AlertTitleView: UIView {
         addSubview(iconImageView)
         iconImageView.snp.makeConstraints { maker in
             maker.leading.top.equalToSuperview().offset(CGFloat.margin3x)
-            maker.size.equalTo(AppTheme.coinIconSize)
         }
+        iconImageView.setContentHuggingPriority(.required, for: .horizontal)
+        iconImageView.setContentHuggingPriority(.required, for: .vertical)
 
         addSubview(titleLabel)
         titleLabel.font = .headline2
@@ -31,7 +32,7 @@ class AlertTitleView: UIView {
         subtitleLabel.textColor = .themeGray
         subtitleLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.titleLabel)
-            maker.top.equalTo(self.titleLabel.snp.bottom).offset(AppTheme.alertSubtitleTopMargin)
+            maker.top.equalTo(self.titleLabel.snp.bottom).offset(3)
         }
 
         addSubview(closeButton)

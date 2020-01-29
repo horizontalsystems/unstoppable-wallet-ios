@@ -145,7 +145,7 @@ class FullTransactionInfoViewController: ThemeViewController, SectionsDataSource
 
     func didScroll() {
         if let headerBackgroundTriggerOffset = headerBackgroundTriggerOffset {
-            hashHeaderView?.backgroundView?.backgroundColor = tableView.contentOffset.y > headerBackgroundTriggerOffset ? AppTheme.navigationBarBackgroundColor : .clear
+            hashHeaderView?.backgroundView?.backgroundColor = tableView.contentOffset.y > headerBackgroundTriggerOffset ? .themeNavigationBarBackground : .clear
         }
     }
 

@@ -1,8 +1,9 @@
 import UIKit
 
 extension UIView {
+    static let defaultAnimationDuration: TimeInterval = 0.3
 
-    func set(hidden: Bool, animated: Bool = false, duration: TimeInterval = AppTheme.defaultAnimationDuration, completion: ((Bool) -> ())? = nil) {
+    func set(hidden: Bool, animated: Bool = false, duration: TimeInterval = UIView.defaultAnimationDuration, completion: ((Bool) -> ())? = nil) {
         if isHidden == hidden {
             return
         }

@@ -18,7 +18,7 @@ class AlertTitleItem: BaseActionItem {
 
         super.init(cellType: AlertTitleItemView.self, tag: tag, required: true)
 
-        height = AppTheme.alertTitleHeight
+        height = 62
     }
 
 }

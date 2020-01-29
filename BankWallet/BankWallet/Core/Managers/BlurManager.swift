@@ -1,5 +1,6 @@
 import UIKit
 import UIExtensions
+import ThemeKit
 
 class BlurManager {
     private let blurView = CustomIntensityVisualEffectView(effect: UIBlurEffect(style: .light), intensity: 0.4)
@@ -12,7 +13,7 @@ class BlurManager {
     }
 
     private func show() {
-        hideView.backgroundColor = AppTheme.controllerBackgroundFromGradient.withAlphaComponent(0.99)
+        hideView.backgroundColor = UIColor.themeBackgroundFromGradient.withAlphaComponent(0.99)
 
         let window = UIApplication.shared.keyWindow
         let frame = window?.frame ?? UIScreen.main.bounds

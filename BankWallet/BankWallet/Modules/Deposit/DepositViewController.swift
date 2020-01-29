@@ -9,7 +9,7 @@ class DepositViewController: WalletActionSheetController {
 
     init(delegate: IDepositViewDelegate) {
         self.delegate = delegate
-        super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
+        super.init()
 
         initItems()
     }
@@ -47,7 +47,6 @@ class DepositViewController: WalletActionSheetController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        backgroundColor = AppTheme.actionSheetBackgroundColor
         model.hideInBackground = false
     }
 

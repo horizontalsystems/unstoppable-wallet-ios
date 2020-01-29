@@ -4,7 +4,7 @@ import ActionSheet
 class BackupRequiredViewController: WalletActionSheetController {
 
     init(subtitle: String, text: String, onBackup: @escaping () -> ()) {
-        super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
+        super.init()
 
         let titleItem = AlertTitleItem(
                 title: "backup.backup_required".localized,
@@ -44,7 +44,6 @@ class BackupRequiredViewController: WalletActionSheetController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        backgroundColor = AppTheme.actionSheetBackgroundColor
         contentBackgroundColor = .white
     }
 
