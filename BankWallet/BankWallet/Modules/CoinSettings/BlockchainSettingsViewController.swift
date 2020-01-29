@@ -2,8 +2,8 @@ import UIKit
 import SectionsTableView
 import ThemeKit
 
-class CoinSettingsViewController: ThemeViewController {
-    private let delegate: ICoinSettingsViewDelegate
+class BlockchainSettingsViewController: ThemeViewController {
+    private let delegate: IBlockchainSettingsViewDelegate
 
     private let tableView = SectionsTableView(style: .grouped)
 
@@ -16,7 +16,7 @@ class CoinSettingsViewController: ThemeViewController {
     private var derivation: MnemonicDerivation?
     private var syncMode: SyncMode?
 
-    init(delegate: ICoinSettingsViewDelegate) {
+    init(delegate: IBlockchainSettingsViewDelegate) {
         self.delegate = delegate
 
         super.init()
@@ -31,7 +31,7 @@ class CoinSettingsViewController: ThemeViewController {
 
         title = "coin_settings.title".localized
 
-        tableView.registerCell(forClass: CoinSettingCell.self)
+        tableView.registerCell(forClass: BlockchainSettingCell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
@@ -68,7 +68,7 @@ class CoinSettingsViewController: ThemeViewController {
         let derivations = MnemonicDerivation.allCases
 
         return derivations.enumerated().map { (index, derivation) in
-            Row<CoinSettingCell>(
+            Row<BlockchainSettingCell>(
                     id: derivation.rawValue,
                     hash: "\(derivation == selectedDerivation)",
                     height: .heightDoubleLineCell,
@@ -92,7 +92,7 @@ class CoinSettingsViewController: ThemeViewController {
         let syncModes =  [SyncMode.fast, SyncMode.slow]
 
         return syncModes.enumerated().map { (index, syncMode) in
-            Row<CoinSettingCell>(
+            Row<BlockchainSettingCell>(
                     id: syncMode.rawValue,
                     hash: "\(syncMode == selectedSyncMode)",
                     height: .heightDoubleLineCell,
@@ -138,7 +138,7 @@ class CoinSettingsViewController: ThemeViewController {
 
 }
 
-extension CoinSettingsViewController: SectionsDataSource {
+extension BlockchainSettingsViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
@@ -166,7 +166,7 @@ extension CoinSettingsViewController: SectionsDataSource {
 
 }
 
-extension CoinSettingsViewController: ICoinSettingsView {
+extension BlockchainSettingsViewController: IBlockchainSettingsView {
 
     func showNextButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .plain, target: self, action: #selector(onTapRightBarButton))

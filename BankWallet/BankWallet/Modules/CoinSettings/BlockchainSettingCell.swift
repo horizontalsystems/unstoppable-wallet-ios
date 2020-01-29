@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 import ThemeKit
 
-class CoinSettingCell: ThemeCell {
+class BlockchainSettingCell: ThemeCell {
     private let leftView = DoubleLineCellView()
     private let rightView = CheckmarkCellView()
 
