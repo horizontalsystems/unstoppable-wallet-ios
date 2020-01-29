@@ -52,14 +52,6 @@ protocol ISecureStorage: class {
     func clear() throws
 }
 
-protocol ILanguageManager {
-    var currentLanguage: String { get set }
-    var availableLanguages: [String] { get }
-    var currentLanguageDisplayName: String? { get }
-    func displayName(language: String) -> String?
-    func nativeDisplayName(language: String) -> String?
-}
-
 protocol IAdapterManager: class {
     var adaptersReadyObservable: Observable<Void> { get }
     func adapter(for wallet: Wallet) -> IAdapter?

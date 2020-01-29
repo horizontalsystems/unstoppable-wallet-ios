@@ -1,4 +1,5 @@
 import UIKit
+import LanguageKit
 
 class MainSettingsRouter {
     weak var viewController: UIViewController?
@@ -62,7 +63,7 @@ extension MainSettingsRouter {
         let router = MainSettingsRouter()
         let interactor = MainSettingsInteractor(
                 backupManager: App.shared.backupManager,
-                languageManager: App.shared.languageManager,
+                languageManager: LanguageManager.shared,
                 themeManager: App.shared.themeManager,
                 systemInfoManager: App.shared.systemInfoManager,
                 currencyManager: App.shared.currencyManager,

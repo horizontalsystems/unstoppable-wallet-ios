@@ -1,3 +1,5 @@
+import LanguageKit
+
 class LanguageSettingsInteractor {
     private var languageManager: ILanguageManager
 
