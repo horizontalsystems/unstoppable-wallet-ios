@@ -52,7 +52,7 @@ extension RestorePresenter: ICredentialsCheckDelegate {
 
 }
 
-extension RestorePresenter: ICoinSettingsDelegate {
+extension RestorePresenter: IBlockchainSettingsDelegate {
 
     func onConfirm() {
         guard let accountType = accountType else {
