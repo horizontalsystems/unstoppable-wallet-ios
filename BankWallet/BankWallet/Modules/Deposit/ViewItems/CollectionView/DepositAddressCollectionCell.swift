@@ -17,7 +17,7 @@ class DepositAddressCollectionCell: UICollectionViewCell {
         contentView.addSubview(titleView)
         titleView.snp.makeConstraints { maker in
             maker.top.leading.trailing.equalToSuperview()
-            maker.height.equalTo(AppTheme.alertTitleHeight)
+            maker.height.equalTo(62)
         }
 
         contentView.addSubview(separatorView)

@@ -127,7 +127,7 @@ class SendAmountView: UIView {
         inputField.attributedPlaceholder = NSAttributedString(string: "send.amount_placeholder".localized, attributes: [NSAttributedString.Key.foregroundColor: UIColor.themeGray50])
         inputField.keyboardAppearance = .themeDefault
         inputField.keyboardType = .decimalPad
-        inputField.tintColor = AppTheme.textFieldTintColor
+        inputField.tintColor = .themeInputFieldTintColor
         inputField.snp.makeConstraints { maker in
             maker.centerY.equalTo(amountTypeLabel.snp.centerY).offset(CGFloat.heightOnePixel)
             maker.leading.equalTo(amountTypeLabel.snp.trailing).offset(CGFloat.margin1x)

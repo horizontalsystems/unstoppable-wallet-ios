@@ -10,7 +10,7 @@ class LockoutView: UIView {
 
     init() {
         super.init(frame: .zero)
-        backgroundColor = AppTheme.controllerBackgroundFromGradient
+        backgroundColor = .themeBackgroundFromGradient
 
         addSubview(iconBackgroundView)
         iconBackgroundView.backgroundColor = .themeJeremy

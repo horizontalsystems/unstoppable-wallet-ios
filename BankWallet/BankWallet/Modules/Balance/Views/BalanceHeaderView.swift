@@ -16,7 +16,7 @@ class BalanceHeaderView: UIView {
         preservesSuperviewLayoutMargins = true
 
         let wrapperView = UIView()
-        wrapperView.backgroundColor = AppTheme.navigationBarBackgroundColor
+        wrapperView.backgroundColor = .themeNavigationBarBackground
 
         addSubview(wrapperView)
         wrapperView.snp.makeConstraints { maker in

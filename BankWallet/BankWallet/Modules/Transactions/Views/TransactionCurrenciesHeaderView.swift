@@ -14,7 +14,7 @@ class TransactionCurrenciesHeaderView: UIView, UICollectionViewDelegateFlowLayou
         layout.sectionInset = .zero
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         super.init(frame: .zero)
-        backgroundColor = AppTheme.navigationBarBackgroundColor
+        backgroundColor = .themeNavigationBarBackground
 
         collectionView.delegate = self
         collectionView.dataSource = self

@@ -137,7 +137,7 @@ class RestoreWordsViewController: ThemeViewController {
         }
 
         if animated {
-            UIView.animate(withDuration: AppTheme.defaultAnimationDuration) {
+            UIView.animate(withDuration: UIView.defaultAnimationDuration) {
                 self.view.layoutIfNeeded()
             }
         } else {

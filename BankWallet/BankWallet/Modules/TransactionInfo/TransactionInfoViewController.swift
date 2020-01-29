@@ -6,7 +6,7 @@ class TransactionInfoViewController: WalletActionSheetController {
 
     init(delegate: ITransactionInfoViewDelegate) {
         self.delegate = delegate
-        super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
+        super.init()
 
         initItems()
     }
@@ -104,7 +104,6 @@ class TransactionInfoViewController: WalletActionSheetController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        backgroundColor = AppTheme.actionSheetBackgroundColor
         model.hideInBackground = false
 
         model.reload?()
