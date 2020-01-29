@@ -48,8 +48,8 @@ class CoinSettingsViewController: ThemeViewController {
         tableView.buildSections()
     }
 
-    @objc func onTapNextButton() {
-        delegate.onTapNextButton()
+    @objc func onTapRightBarButton() {
+        delegate.onConfirm()
     }
 
     private func handleSelect(derivation: MnemonicDerivation) {
@@ -169,11 +169,11 @@ extension CoinSettingsViewController: SectionsDataSource {
 extension CoinSettingsViewController: ICoinSettingsView {
 
     func showNextButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .plain, target: self, action: #selector(onTapNextButton))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .plain, target: self, action: #selector(onTapRightBarButton))
     }
 
     func showRestoreButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.restore".localized, style: .done, target: self, action: #selector(onTapNextButton))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.restore".localized, style: .done, target: self, action: #selector(onTapRightBarButton))
     }
 
     func set(syncMode: SyncMode) {

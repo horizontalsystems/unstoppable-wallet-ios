@@ -4,9 +4,9 @@ import ThemeKit
 class CoinSettingsRouter {
     weak var viewController: UIViewController?
 
-    private let delegate: ICoinSettingsDelegate
+    private let delegate: ICoinSettingsDelegate?
 
-    init(delegate: ICoinSettingsDelegate) {
+    init(delegate: ICoinSettingsDelegate? = nil) {
         self.delegate = delegate
     }
 
@@ -14,9 +14,8 @@ class CoinSettingsRouter {
 
 extension CoinSettingsRouter: ICoinSettingsRouter {
 
-    func notifySelected() {
-        delegate.onSelect()
-        viewController?.dismiss(animated: true)
+    func notifyConfirm() {
+        delegate?.onConfirm()
     }
 
     func open(url: String) {
@@ -31,7 +30,7 @@ extension CoinSettingsRouter: ICoinSettingsRouter {
 
 extension CoinSettingsRouter {
 
-    static func module(proceedMode: RestoreRouter.ProceedMode, delegate: ICoinSettingsDelegate) -> UIViewController {
+    static func module(proceedMode: RestoreRouter.ProceedMode, delegate: ICoinSettingsDelegate? = nil) -> UIViewController {
         let router = CoinSettingsRouter(delegate: delegate)
         let interactor = CoinSettingsInteractor(coinSettingsManager: App.shared.coinSettingsManager)
         let presenter = CoinSettingsPresenter(proceedMode: proceedMode, router: router, interactor: interactor)

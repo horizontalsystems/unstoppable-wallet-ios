@@ -65,6 +65,7 @@ extension RestoreRouter {
     enum ProceedMode {
         case next
         case restore
+        case none
     }
 
 }
