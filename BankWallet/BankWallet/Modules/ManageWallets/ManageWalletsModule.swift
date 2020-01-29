@@ -40,7 +40,7 @@ protocol IManageWalletsInteractorDelegate: class {
 }
 
 protocol IManageWalletsRouter {
-    func showSettings(delegate: ICoinSettingsDelegate)
+    func showSettings(delegate: IBlockchainSettingsDelegate)
     func showRestore(predefinedAccountType: PredefinedAccountType, delegate: ICredentialsCheckDelegate)
     func close()
     func closePresented()

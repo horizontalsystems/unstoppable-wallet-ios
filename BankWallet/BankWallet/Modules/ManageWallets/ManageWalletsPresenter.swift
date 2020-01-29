@@ -117,7 +117,7 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
 extension ManageWalletsPresenter: IManageWalletsInteractorDelegate {
 }
 
-extension ManageWalletsPresenter: ICoinSettingsDelegate {
+extension ManageWalletsPresenter: IBlockchainSettingsDelegate {
 
     func onConfirm() {
         guard let accountType = accountType else {
