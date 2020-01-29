@@ -54,7 +54,7 @@ extension RestorePresenter: ICredentialsCheckDelegate {
 
 extension RestorePresenter: ICoinSettingsDelegate {
 
-    func onSelect() {
+    func onConfirm() {
         guard let accountType = accountType else {
             return
         }

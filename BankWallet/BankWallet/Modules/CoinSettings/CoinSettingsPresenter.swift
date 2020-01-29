@@ -16,10 +16,12 @@ class CoinSettingsPresenter {
 extension CoinSettingsPresenter: ICoinSettingsViewDelegate {
 
     func onLoad() {
-        if proceedMode == .next {
+        switch proceedMode {
+        case .next:
             view?.showNextButton()
-        } else {
+        case .restore:
             view?.showRestoreButton()
+        case .none: ()
         }
 
         view?.set(derivation: interactor.bitcoinDerivation)
@@ -34,8 +36,8 @@ extension CoinSettingsPresenter: ICoinSettingsViewDelegate {
         interactor.syncMode = syncMode
     }
 
-    func onTapNextButton() {
-        router.notifySelected()
+    func onConfirm() {
+        router.notifyConfirm()
     }
 
 }
