@@ -102,9 +102,9 @@ PODS:
   - FeeRateKit.swift (0.4):
     - Alamofire (~> 4.0)
     - RxSwift (~> 5.0)
-  - GRDB.swift (4.7.0):
-    - GRDB.swift/standard (= 4.7.0)
-  - GRDB.swift/standard (4.7.0)
+  - GRDB.swift (4.9.0):
+    - GRDB.swift/standard (= 4.9.0)
+  - GRDB.swift/standard (4.9.0)
   - GRKOpenSSLFramework (1.0.2.19)
   - HdWalletKit.swift (1.4):
     - OpenSslKit.swift (~> 1.0)
@@ -117,17 +117,19 @@ PODS:
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1)
   - KeychainAccess (4.1.0)
+  - LanguageKit.swift (1.0):
+    - UIExtensions.swift (~> 1.1)
   - Nimble (8.0.5)
   - ObjectMapper (3.5.1)
   - OpenSslKit.swift (1.0)
-  - PromiseKit (6.12.0):
-    - PromiseKit/CorePromise (= 6.12.0)
-    - PromiseKit/Foundation (= 6.12.0)
-    - PromiseKit/UIKit (= 6.12.0)
-  - PromiseKit/CorePromise (6.12.0)
-  - PromiseKit/Foundation (6.12.0):
+  - PromiseKit (6.13.1):
+    - PromiseKit/CorePromise (= 6.13.1)
+    - PromiseKit/Foundation (= 6.13.1)
+    - PromiseKit/UIKit (= 6.13.1)
+  - PromiseKit/CorePromise (6.13.1)
+  - PromiseKit/Foundation (6.13.1):
     - PromiseKit/CorePromise
-  - PromiseKit/UIKit (6.12.0):
+  - PromiseKit/UIKit (6.13.1):
     - PromiseKit/CorePromise
   - Quick (2.2.0)
   - RxCocoa (5.0.1):
@@ -155,7 +157,7 @@ PODS:
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1)
   - SnapKit (5.0.1)
-  - SwiftProtobuf (1.7.0)
+  - SwiftProtobuf (1.8.0)
   - SwiftyJSON (4.3.0)
   - ThemeKit.swift (1.0):
     - SnapKit (~> 5.0)
@@ -191,6 +193,7 @@ DEPENDENCIES:
   - Hodler.swift
   - HUD.swift
   - KeychainAccess
+  - LanguageKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - Nimble
   - ObjectMapper
   - Quick
@@ -199,8 +202,8 @@ DEPENDENCIES:
   - RxSwift
   - SectionsTableView.swift
   - SnapKit
-  - ThemeKit.swift (from `../component-kit-ios/`)
-  - UIExtensions.swift (from `../gui-kit/`)
+  - ThemeKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
+  - UIExtensions.swift (from `https://github.com/horizontalsystems/gui-kit/`)
   - XRatesKit.swift
 
 SPEC REPOS:
@@ -253,15 +256,26 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   EosioSwiftAbieosSerializationProvider:
     :git: https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git
+  LanguageKit.swift:
+    :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :path: "../component-kit-ios/"
+    :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
-    :path: "../gui-kit/"
+    :git: https://github.com/horizontalsystems/gui-kit/
 
 CHECKOUT OPTIONS:
   EosioSwiftAbieosSerializationProvider:
     :commit: 7ac04899e62012e225e0ea48a96951de0b72ad08
     :git: https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git
+  LanguageKit.swift:
+    :commit: 312fd2fbfdc0ad035e3dfc9e6f4499be33e16fa6
+    :git: https://github.com/horizontalsystems/component-kit-ios/
+  ThemeKit.swift:
+    :commit: 312fd2fbfdc0ad035e3dfc9e6f4499be33e16fa6
+    :git: https://github.com/horizontalsystems/component-kit-ios/
+  UIExtensions.swift:
+    :commit: 36c456a9d6f9ff8b978b8397a50eeb4d22b75d00
+    :git: https://github.com/horizontalsystems/gui-kit/
 
 SPEC CHECKSUMS:
   ActionSheet.swift: 5352dbbab9b2cf408341e85c15642a52495c7fd6
@@ -286,16 +300,17 @@ SPEC CHECKSUMS:
   Erc20Kit.swift: 6b2e531860457ace083f30762db0a6b9e76bfbd5
   EthereumKit.swift: 409a1beedd2e414e9f40f662668b0294b206c575
   FeeRateKit.swift: a2e4b9994cd67d321b32c5b99084bf7e664c4ebc
-  GRDB.swift: 0df1953957f179bff46fccb8402a196e3b7a77f5
+  GRDB.swift: 4a6aab0c6f492db0ed42c76efdd5733245516db4
   GRKOpenSSLFramework: 4abc733a8fcbc37060619a86a54202d2938dd70e
   HdWalletKit.swift: 45af883b0aa722a56ed9a0de82121ba6c43cce3f
   Hodler.swift: 19c22fbea5f44cc6479df18fbc8c29233e9a5c2d
   HUD.swift: 0b9d074f07f601891878f87ff10ad867eed3182b
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
+  LanguageKit.swift: ce8d428ef08f9651dbd3ef188312c94e138b2f05
   Nimble: 4ab1aeb9b45553c75b9687196b0fa0713170a332
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
   OpenSslKit.swift: 6e699e0d69fae6b306eaca0b8971c59bc45546ab
-  PromiseKit: c06835ba442ce5454ce3cdde470232804a6e4ff8
+  PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
   RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
   RxGRDB: 41dfd8f987aad7a7bdd7c420319d3eb23ee383f3
@@ -305,13 +320,13 @@ SPEC CHECKSUMS:
   Secp256k1Kit.swift: 93b1bfbb8909c12605666cc3b1e59d1d1fde7322
   SectionsTableView.swift: 91f2235b63405f938621b7df040149d7c65b355d
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
-  SwiftProtobuf: 4fd9645e69b72cbae6ec8da5be0cdd20ca6565dd
+  SwiftProtobuf: 2cbd9409689b7df170d82a92a33443c8e3e14a70
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
-  ThemeKit.swift: 1b2cf1ee30f8912d88c5258e2c0341048e8dc3b1
+  ThemeKit.swift: dd8566bf70dd4931471e60846c939dc72bfa8cd0
   UIExtensions.swift: b3852a339a81c730d98b3342ae0275e807703782
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: 568660675ce881653095645bc9e30dbc1abc5578
 
-PODFILE CHECKSUM: f69de0dd27994158d5e3dc8d4366e627ab36b99a
+PODFILE CHECKSUM: ffe2bb4799fbbcc65782249d49bb938a4b823d01
 
 COCOAPODS: 1.8.4

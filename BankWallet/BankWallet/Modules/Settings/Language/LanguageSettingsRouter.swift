@@ -1,4 +1,5 @@
 import UIKit
+import LanguageKit
 
 class LanguageSettingsRouter {
     weak var viewController: UIViewController?
@@ -20,7 +21,7 @@ extension LanguageSettingsRouter {
 
     static func module() -> UIViewController {
         let router = LanguageSettingsRouter()
-        let interactor = LanguageSettingsInteractor(languageManager: App.shared.languageManager)
+        let interactor = LanguageSettingsInteractor(languageManager: LanguageManager.shared)
         let presenter = LanguageSettingsPresenter(router: router, interactor: interactor)
         let view = LanguageSettingsViewController(delegate: presenter)
 
