@@ -30,6 +30,10 @@ extension SecuritySettingsPresenter: ISecuritySettingsViewDelegate {
         router.showManageAccounts()
     }
 
+    func didTapBlockchainSettings() {
+        router.showBlockchainSettings()
+    }
+
     func didSwitch(pinSet: Bool) {
         if pinSet {
             router.showSetPin(delegate: self)

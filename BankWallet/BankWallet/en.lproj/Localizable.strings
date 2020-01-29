@@ -301,7 +301,8 @@ bch.horizontalsystems.xyz/apg";
 // Settings -> Security
 
 "settings_security.title" = "Security Center";
-"settings_security.manage_accounts" = "Manage Wallets";
+"settings_security.manage_accounts" = "Wallet Settings";
+"settings_security.blockchain_settings" = "Blockchain Settings";
 "settings_security.passcode" = "Passcode";
 "settings_security.change_pin" = "Edit Passcode";
 "settings_security.touch_id" = "Touch ID";

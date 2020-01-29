@@ -62,9 +62,15 @@ class SecuritySettingsViewController: ThemeViewController {
 
         return [
             Row<RightImageCell>(id: "manage_accounts", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Key Icon"), title: "settings_security.manage_accounts".localized, rightImage: securityAttentionImage, rightImageTintColor: .themeLucian, showDisclosure: true, last: true)
+                cell.bind(titleIcon: UIImage(named: "Wallet Icon"), title: "settings_security.manage_accounts".localized, rightImage: securityAttentionImage, rightImageTintColor: .themeLucian, showDisclosure: true, last: false)
             }, action: { [weak self] _ in
                 self?.delegate.didTapManageAccounts()
+            }),
+
+            Row<TitleCell>(id: "blockchain_settings", height: .heightSingleLineCell, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Block Icon"), title: "settings_security.blockchain_settings".localized, showDisclosure: true, last: true)
+            }, action: { [weak self] _ in
+                self?.delegate.didTapBlockchainSettings()
             })
         ]
     }

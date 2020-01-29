@@ -10,6 +10,10 @@ extension SecuritySettingsRouter: ISecuritySettingsRouter {
         viewController?.navigationController?.pushViewController(ManageAccountsRouter.module(mode: .pushed), animated: true)
     }
 
+    func showBlockchainSettings() {
+        viewController?.navigationController?.pushViewController(CoinSettingsRouter.module(proceedMode: .none), animated: true)
+    }
+
     func showSetPin(delegate: ISetPinDelegate) {
         viewController?.present(SetPinRouter.module(delegate: delegate), animated: true)
     }

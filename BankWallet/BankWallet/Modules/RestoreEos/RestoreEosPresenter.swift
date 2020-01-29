@@ -38,10 +38,12 @@ extension RestoreEosPresenter: IRestoreEosViewDelegate {
         if presentationMode == .presented {
             view?.showCancelButton()
         }
-        if proceedMode == .next {
+        switch proceedMode {
+        case .next:
             view?.showNextButton()
-        } else {
+        case .restore:
             view?.showRestoreButton()
+        case .none: ()
         }
 
         let (account, activePrivateKey) = interactor.defaultCredentials

@@ -31,10 +31,12 @@ extension RestoreWordsPresenter: IRestoreWordsViewDelegate {
         if presentationMode == .presented {
             view?.showCancelButton()
         }
-        if proceedMode == .next {
+        switch proceedMode {
+        case .next:
             view?.showNextButton()
-        } else {
+        case .restore:
             view?.showRestoreButton()
+        case .none: ()
         }
 
         view?.show(defaultWords: appConfigProvider.defaultWords(count: wordsCount))
