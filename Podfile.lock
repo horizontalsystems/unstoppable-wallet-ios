@@ -118,6 +118,8 @@ PODS:
     - UIExtensions.swift (~> 1.1)
   - KeychainAccess (4.1.0)
   - LanguageKit.swift (1.0):
+    - SectionsTableView.swift (~> 1.1)
+    - ThemeKit.swift (~> 1.0)
     - UIExtensions.swift (~> 1.1)
   - Nimble (8.0.5)
   - ObjectMapper (3.5.1)
@@ -268,10 +270,10 @@ CHECKOUT OPTIONS:
     :commit: 7ac04899e62012e225e0ea48a96951de0b72ad08
     :git: https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git
   LanguageKit.swift:
-    :commit: 312fd2fbfdc0ad035e3dfc9e6f4499be33e16fa6
+    :commit: ab81d04f6a511cce7fa7154d62b39dd2a621456c
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: 3352d0710f82eb986a729cabcda161662fe4e92d
+    :commit: ab81d04f6a511cce7fa7154d62b39dd2a621456c
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :commit: 36c456a9d6f9ff8b978b8397a50eeb4d22b75d00
@@ -306,7 +308,7 @@ SPEC CHECKSUMS:
   Hodler.swift: 19c22fbea5f44cc6479df18fbc8c29233e9a5c2d
   HUD.swift: 0b9d074f07f601891878f87ff10ad867eed3182b
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
-  LanguageKit.swift: ce8d428ef08f9651dbd3ef188312c94e138b2f05
+  LanguageKit.swift: 39368faf0c6522431b47cdae06cbf68a908f87ab
   Nimble: 4ab1aeb9b45553c75b9687196b0fa0713170a332
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
   OpenSslKit.swift: 6e699e0d69fae6b306eaca0b8971c59bc45546ab
@@ -327,6 +329,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: 568660675ce881653095645bc9e30dbc1abc5578
 
-PODFILE CHECKSUM: ffe2bb4799fbbcc65782249d49bb938a4b823d01
+PODFILE CHECKSUM: 48ab20d9243b621ed0509cad72e6db28c1e5ef53
 
 COCOAPODS: 1.8.4
