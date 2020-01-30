@@ -251,10 +251,6 @@
 
 "settings_base_currency.title" = "기초 통화";
 
-// Settings -> Language
-
-"settings_language.title" = "언어";
-
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "코인 매니저";

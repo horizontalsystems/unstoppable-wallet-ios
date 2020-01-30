@@ -255,10 +255,6 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "settings_base_currency.title" = "Base Currency";
 "settings_base_currency.provided_by" = "Real-time and historical exchange rates provided by CryptoCompare.com";
 
-// Settings -> Language
-
-"settings_language.title" = "Language";
-
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "Coin Manager";
