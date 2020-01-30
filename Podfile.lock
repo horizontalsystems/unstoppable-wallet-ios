@@ -270,10 +270,10 @@ CHECKOUT OPTIONS:
     :commit: 7ac04899e62012e225e0ea48a96951de0b72ad08
     :git: https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git
   LanguageKit.swift:
-    :commit: ab81d04f6a511cce7fa7154d62b39dd2a621456c
+    :commit: 522ff49d8916e267d0402197cabce7d15e228d94
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: ab81d04f6a511cce7fa7154d62b39dd2a621456c
+    :commit: 522ff49d8916e267d0402197cabce7d15e228d94
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :commit: 36c456a9d6f9ff8b978b8397a50eeb4d22b75d00
@@ -308,7 +308,7 @@ SPEC CHECKSUMS:
   Hodler.swift: 19c22fbea5f44cc6479df18fbc8c29233e9a5c2d
   HUD.swift: 0b9d074f07f601891878f87ff10ad867eed3182b
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
-  LanguageKit.swift: 39368faf0c6522431b47cdae06cbf68a908f87ab
+  LanguageKit.swift: b8963a3d1a8c1b0a1f9f0e3d93e003bd815d4c89
   Nimble: 4ab1aeb9b45553c75b9687196b0fa0713170a332
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
   OpenSslKit.swift: 6e699e0d69fae6b306eaca0b8971c59bc45546ab

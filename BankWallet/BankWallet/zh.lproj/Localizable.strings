@@ -251,10 +251,6 @@
 
 "settings_base_currency.title" = "基本货币";
 
-// Settings -> Language
-
-"settings_language.title" = "语言";
-
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "代币管理器";

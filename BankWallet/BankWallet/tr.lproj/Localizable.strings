@@ -251,10 +251,6 @@
 
 "settings_base_currency.title" = "Para birimi";
 
-// Settings -> Language
-
-"settings_language.title" = "Dil";
-
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "Kripto Para yöneticisi";
