@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
 class FullTransactionInfoTextCell: TitleCell {
     private let descriptionView = HashView()

@@ -28,7 +28,8 @@ extension MainSettingsRouter: IMainSettingsRouter {
     }
 
     func showLanguageSettings() {
-        viewController?.navigationController?.pushViewController(LanguageSettingsRouter.module(), animated: true)
+        let module = LanguageSettingsRouter.module { MainRouter.module(selectedTab: .settings) }
+        viewController?.navigationController?.pushViewController(module, animated: true)
     }
 
     func showAbout() {

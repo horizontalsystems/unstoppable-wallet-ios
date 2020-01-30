@@ -2,6 +2,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import ThemeKit
 
 class ToggleCell: TitleCell {
     var toggleView = UISwitch()
