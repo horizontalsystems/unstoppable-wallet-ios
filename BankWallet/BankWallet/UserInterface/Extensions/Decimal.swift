@@ -6,11 +6,9 @@ extension Decimal {
         max(-exponent, 0)
     }
 
-    func significantDecimalCount(threshold: Int, maxDecimals: Int) -> Int {
-        let thresholdRange = pow(10, threshold - 1)
-
+    func significantDecimalCount(threshold: Decimal, maxDecimals: Int) -> Int {
         for decimalCount in 0..<maxDecimals {
-            if self * pow(10, decimalCount) >= thresholdRange {
+            if self * pow(10, decimalCount) >= threshold {
                 return decimalCount
             }
         }
