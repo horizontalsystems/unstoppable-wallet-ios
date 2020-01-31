@@ -28,6 +28,10 @@ class BackupConfirmationController: ThemeViewController {
         title = "backup.confirmation.title".localized
 
         view.addSubview(firstIndexedInputField)
+        firstIndexedInputField.snp.makeConstraints { maker in
+            maker.top.equalTo(self.view.snp.topMargin).offset(CGFloat.margin3x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+        }
         firstIndexedInputField.textField.returnKeyType = .next
         firstIndexedInputField.onReturn = { [weak self] in
             self?.secondIndexedInputField.textField.becomeFirstResponder()
@@ -35,12 +39,12 @@ class BackupConfirmationController: ThemeViewController {
         firstIndexedInputField.cornerRadius = CGFloat.cornerRadius2x
         firstIndexedInputField.borderColor = .themeSteel20
         firstIndexedInputField.borderWidth = 1 / UIScreen.main.scale
-        firstIndexedInputField.snp.makeConstraints { maker in
-            maker.top.equalTo(self.view.snp.topMargin).offset(CGFloat.margin3x)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-        }
 
         view.addSubview(secondIndexedInputField)
+        secondIndexedInputField.snp.makeConstraints { maker in
+            maker.top.equalTo(self.firstIndexedInputField.snp.bottom).offset(CGFloat.margin4x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+        }
         secondIndexedInputField.textField.returnKeyType = .done
         secondIndexedInputField.onReturn = { [weak self] in
             self?.doneDidTap()
@@ -48,19 +52,15 @@ class BackupConfirmationController: ThemeViewController {
         secondIndexedInputField.cornerRadius = CGFloat.cornerRadius2x
         secondIndexedInputField.borderColor = .themeSteel20
         secondIndexedInputField.borderWidth = 1 / UIScreen.main.scale
-        secondIndexedInputField.snp.makeConstraints { maker in
-            maker.top.equalTo(self.firstIndexedInputField.snp.bottom).offset(CGFloat.margin4x)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-        }
 
         view.addSubview(descriptionLabel)
-        descriptionLabel.text = "backup.words.confirmation_description".localized(delegate.predefinedAccountTitle)
-        descriptionLabel.font = .subhead2
-        descriptionLabel.textColor = .themeGray
         descriptionLabel.snp.makeConstraints { maker in
             maker.top.equalTo(self.secondIndexedInputField.snp.bottom).offset(CGFloat.margin2x)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
         }
+        descriptionLabel.text = "backup.words.confirmation_description".localized(delegate.predefinedAccountTitle)
+        descriptionLabel.font = .subhead2
+        descriptionLabel.textColor = .themeGray
     }
 
     override func viewWillAppear(_ animated: Bool) {

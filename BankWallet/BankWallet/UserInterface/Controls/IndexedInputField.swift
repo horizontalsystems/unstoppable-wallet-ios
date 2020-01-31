@@ -50,15 +50,6 @@ class IndexedInputField: UIView, UITextFieldDelegate {
         indexLabel.textColor = .themeGray50
         indexLabel.font = textFont
 
-        textField.keyboardAppearance = .themeDefault
-        textField.autocorrectionType = .yes
-        textField.autocapitalizationType = .none
-        textField.tintColor = .themeInputFieldTintColor
-        textField.font = textFont
-
-        textField.addTarget(self, action: #selector(textChange), for: .editingChanged)
-        textField.textColor = .themeOz
-        textField.delegate = self
         addSubview(textField)
         textField.snp.makeConstraints { maker in
             maker.leading.equalTo(self.indexLabel.snp.trailing)
@@ -66,6 +57,15 @@ class IndexedInputField: UIView, UITextFieldDelegate {
             maker.trailing.equalTo(self.clearTextButton.snp.leading).inset(CGFloat.margin3x)
             maker.height.equalTo(textFont.lineHeight)
         }
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
+        textField.keyboardAppearance = .themeDefault
+        textField.tintColor = .themeInputFieldTintColor
+        textField.font = textFont
+
+        textField.addTarget(self, action: #selector(textChange), for: .editingChanged)
+        textField.textColor = .themeOz
+        textField.delegate = self
     }
 
     @objc func onClearText() {
