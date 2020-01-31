@@ -36,7 +36,7 @@ extension WalletStorage: IWalletStorage {
                 return nil
             }
 
-            var coinSettings = [CoinSetting: Any]()
+            var coinSettings = CoinSettings()
 
             if let rawDerivation = enabledWallet.derivation, let derivation = MnemonicDerivation(rawValue: rawDerivation) {
                 coinSettings[.derivation] = derivation
