@@ -68,7 +68,12 @@ btc.horizontalsystems.xyz/apg
 dash.horizontalsystems.xyz/apg
 bch.horizontalsystems.xyz/apg";
 "sync_mode.from_blockchain" = "From Blockchain";
-
+"blockchain_settings.change_alert.title" = "Address Format";
+"blockchain_settings.change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin blockchain. Your current Bitcoin transactions will no longer be visible. Changing it back to previous setting will bring everything back after the app resyncs with blockchain.";
+"blockchain_settings.change_alert.action_button_text" = "Change to %@";
+"blockchain_settings.sync_mode_change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin, Bitcoin Cash and Dash blockchains, if you have enabled any of these tokens. Your balance or transactions won\'t be affected.\n\nWe recommend not to change this setting if not sure what it does.";
+"blockchain_settings.sync_mode.blockchain" = "Blockchain";
+"blockchain_settings.sync_mode.api" = "API";
 // Backup
 
 "backup.close" = "Close";

@@ -4,6 +4,7 @@ class WalletManager {
     private let accountManager: IAccountManager
     private let walletFactory: IWalletFactory
     private let storage: IWalletStorage
+    private let kitCleaner: IKitCleaner
 
     private let disposeBag = DisposeBag()
     private let subject = PublishSubject<[Wallet]>()
@@ -11,10 +12,11 @@ class WalletManager {
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet_manager", qos: .userInitiated)
     private var cachedWallets = [Wallet]()
 
-    init(accountManager: IAccountManager, walletFactory: IWalletFactory, storage: IWalletStorage) {
+    init(accountManager: IAccountManager, walletFactory: IWalletFactory, storage: IWalletStorage, kitCleaner: IKitCleaner) {
         self.accountManager = accountManager
         self.walletFactory = walletFactory
         self.storage = storage
+        self.kitCleaner = kitCleaner
     }
 
     private func notify() {
@@ -33,14 +35,6 @@ extension WalletManager: IWalletManager {
         subject.asObservable()
     }
 
-    func wallet(coin: Coin) -> Wallet? {
-        guard let account = accountManager.account(coinType: coin.type) else {
-            return nil
-        }
-
-        return walletFactory.wallet(coin: coin, account: account, coinSettings: [:])
-    }
-
     func preloadWallets() {
         let wallets = storage.wallets(accounts: accountManager.accounts)
 
@@ -57,6 +51,34 @@ extension WalletManager: IWalletManager {
             self.cachedWallets.append(contentsOf: wallets)
             self.notify()
         }
+    }
+
+    func update(derivation: MnemonicDerivation, in wallets: [Wallet]) {
+        delete(wallets: wallets)
+
+        let wallets: [Wallet] = wallets.map {
+            var coinSettings = $0.coinSettings
+            coinSettings[CoinSetting.derivation] = derivation
+
+            return Wallet(coin: $0.coin, account: $0.account, coinSettings: coinSettings)
+        }
+
+        save(wallets: wallets)
+        kitCleaner.clear()
+    }
+
+    func update(syncMode: SyncMode, in wallets: [Wallet]) {
+        delete(wallets: wallets)
+
+        let wallets: [Wallet] = wallets.map {
+            var coinSettings = $0.coinSettings
+            coinSettings[CoinSetting.syncMode] = syncMode
+
+            return Wallet(coin: $0.coin, account: $0.account, coinSettings: coinSettings)
+        }
+
+        save(wallets: wallets)
+        kitCleaner.clear()
     }
 
     func delete(wallets: [Wallet]) {

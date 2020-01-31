@@ -53,15 +53,11 @@ class BlockchainSettingsViewController: ThemeViewController {
     }
 
     private func handleSelect(derivation: MnemonicDerivation) {
-        self.derivation = derivation
         delegate.onSelect(derivation: derivation)
-        tableView.reload(animated: true)
     }
 
     private func handleSelect(syncMode: SyncMode) {
-        self.syncMode = syncMode
         delegate.onSelect(syncMode: syncMode)
-        tableView.reload(animated: true)
     }
 
     private func derivationRows(selectedDerivation: MnemonicDerivation) -> [RowProtocol] {
@@ -178,10 +174,34 @@ extension BlockchainSettingsViewController: IBlockchainSettingsView {
 
     func set(syncMode: SyncMode) {
         self.syncMode = syncMode
+        tableView.reload(animated: true)
     }
 
     func set(derivation: MnemonicDerivation) {
         self.derivation = derivation
+        tableView.reload(animated: true)
+    }
+
+    func showChangeAlert(derivation: MnemonicDerivation) {
+        let derivationText = derivation.rawValue.uppercased()
+        present(BottomAlertViewController(items: [
+            .title(title: "blockchain_settings.change_alert.title".localized, subtitle: derivationText, icon: UIImage(named: "Attention Icon"), iconTint: .themeJacob),
+            .description(text: "blockchain_settings.change_alert.content".localized),
+            .button(title: "blockchain_settings.change_alert.action_button_text".localized(derivationText), button: .appYellow, onTap: { [weak self] in
+                self?.delegate.proceedChange(derivation: derivation)
+            })
+        ]), animated: true)
+    }
+
+    func showChangeAlert(syncMode: SyncMode) {
+        let syncModeText = syncMode == .slow ? "blockchain_settings.sync_mode.blockchain".localized : "blockchain_settings.sync_mode.api".localized
+        present(BottomAlertViewController(items: [
+            .title(title: "blockchain_settings.change_alert.title".localized, subtitle: syncModeText, icon: UIImage(named: "Attention Icon"), iconTint: .themeJacob),
+            .description(text: "blockchain_settings.sync_mode_change_alert.content".localized),
+            .button(title: "blockchain_settings.change_alert.action_button_text".localized(syncModeText), button: .appYellow, onTap: { [weak self] in
+                self?.delegate.proceedChange(syncMode: syncMode)
+            })
+        ]), animated: true)
     }
 
 }
