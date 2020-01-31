@@ -184,7 +184,7 @@ class AddressInputField: UIView {
             }
         }
         layoutSubviews()
-        let height = addressFieldFont.lineHeight * CGFloat(numberOfLines)
+        let height = ceil(addressFieldFont.lineHeight) * CGFloat(numberOfLines)
 
         if let error = error {
             errorLabel.isHidden = false
