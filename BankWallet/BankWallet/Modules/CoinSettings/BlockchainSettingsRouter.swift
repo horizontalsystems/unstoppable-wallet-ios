@@ -32,7 +32,7 @@ extension BlockchainSettingsRouter {
 
     static func module(proceedMode: RestoreRouter.ProceedMode, delegate: IBlockchainSettingsDelegate? = nil) -> UIViewController {
         let router = BlockchainSettingsRouter(delegate: delegate)
-        let interactor = BlockchainSettingsInteractor(coinSettingsManager: App.shared.coinSettingsManager)
+        let interactor = BlockchainSettingsInteractor(coinSettingsManager: App.shared.coinSettingsManager, walletManager: App.shared.walletManager)
         let presenter = BlockchainSettingsPresenter(proceedMode: proceedMode, router: router, interactor: interactor)
         let viewController = BlockchainSettingsViewController(delegate: presenter)
 

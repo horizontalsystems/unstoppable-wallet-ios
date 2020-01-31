@@ -49,11 +49,14 @@ protocol IAdapterFactory {
 protocol IWalletManager: class {
     var wallets: [Wallet] { get }
     var walletsUpdatedObservable: Observable<[Wallet]> { get }
-    func wallet(coin: Coin) -> Wallet?
 
     func preloadWallets()
 
     func save(wallets: [Wallet])
+
+    func update(derivation: MnemonicDerivation, in wallets: [Wallet])
+    func update(syncMode: SyncMode, in wallets: [Wallet])
+
     func delete(wallets: [Wallet])
     func clearWallets()
 }
@@ -179,7 +182,7 @@ protocol IAccountFactory {
 }
 
 protocol IWalletFactory {
-    func wallet(coin: Coin, account: Account, coinSettings: [CoinSetting: Any]) -> Wallet
+    func wallet(coin: Coin, account: Account, coinSettings: CoinSettings) -> Wallet
 }
 
 protocol IRestoreAccountDataSource {
