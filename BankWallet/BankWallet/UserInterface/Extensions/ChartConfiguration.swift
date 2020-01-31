@@ -1,5 +1,6 @@
 import Foundation
 import Chart
+import LanguageKit
 
 extension ChartConfiguration {
 
@@ -23,7 +24,7 @@ extension ChartConfiguration {
         currencyFormatter.currencySymbol = currency.symbol
 
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale.appCurrent
+        dateFormatter.locale = LanguageManager.shared.currentLocale
 
         configuration.limitTextFormatter = currencyFormatter
         configuration.dateFormatter = dateFormatter
