@@ -1,5 +1,6 @@
 import UIKit
 import ActionSheet
+import ThemeKit
 
 class DepositViewController: WalletActionSheetController {
     private let delegate: IDepositViewDelegate

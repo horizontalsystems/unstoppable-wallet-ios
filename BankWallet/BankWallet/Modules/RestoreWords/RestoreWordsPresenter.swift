@@ -1,3 +1,5 @@
+import ThemeKit
+
 class RestoreWordsPresenter {
     weak var view: IRestoreWordsView?
 

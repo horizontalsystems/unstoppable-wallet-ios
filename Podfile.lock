@@ -162,6 +162,7 @@ PODS:
   - SwiftProtobuf (1.8.0)
   - SwiftyJSON (4.3.0)
   - ThemeKit.swift (1.0):
+    - HUD.swift (~> 1.2)
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1)
   - UIExtensions.swift (1.1)
@@ -270,10 +271,10 @@ CHECKOUT OPTIONS:
     :commit: 7ac04899e62012e225e0ea48a96951de0b72ad08
     :git: https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git
   LanguageKit.swift:
-    :commit: f4854ee5744b379f09c33033e98aedad482f7e03
+    :commit: 3ab979cc35466a08b88812c9cc64d130f9a77257
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: f4854ee5744b379f09c33033e98aedad482f7e03
+    :commit: 3ab979cc35466a08b88812c9cc64d130f9a77257
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :commit: 36c456a9d6f9ff8b978b8397a50eeb4d22b75d00
@@ -324,7 +325,7 @@ SPEC CHECKSUMS:
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftProtobuf: 2cbd9409689b7df170d82a92a33443c8e3e14a70
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
-  ThemeKit.swift: dd8566bf70dd4931471e60846c939dc72bfa8cd0
+  ThemeKit.swift: ab5c081b10f6a80149d37751f3ee98f1292bf497
   UIExtensions.swift: b3852a339a81c730d98b3342ae0275e807703782
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: 568660675ce881653095645bc9e30dbc1abc5578
