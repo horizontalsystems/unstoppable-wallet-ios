@@ -714,6 +714,7 @@
 		1A5643DC7E7AFC0CE5285AD9 /* RestoreEosPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643548366535C44A06F07 /* RestoreEosPresenter.swift */; };
 		1A5643E6840438AB993854E1 /* ERC20InputParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56475812F17EAE44BF6D34 /* ERC20InputParser.swift */; };
 		1A5643EBCA934158AD7B4C4B /* DepositPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645371B2FC499500DCA93 /* DepositPresenter.swift */; };
+		1A56441711ACBC3302873FEC /* BottomAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5644B245A62181E34F521D /* BottomAlertViewController.swift */; };
 		1A564419CB78DB8E2F512CA8 /* EosInfraProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564AE1D7E6000C057642B7 /* EosInfraProvider.swift */; };
 		1A5644221B70078D2AE40AF4 /* UnlockPinRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5644EDACA3F1843C8194F7 /* UnlockPinRouter.swift */; };
 		1A5644277DA6314C2E6B6E72 /* TransactionViewItemLoaderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F7564667D6BC7CEF6D3 /* TransactionViewItemLoaderState.swift */; };
@@ -839,12 +840,14 @@
 		1A564AB07F3C5D0534D0D8A3 /* TextSelectItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648E17213DF77DCA2EE42 /* TextSelectItemView.swift */; };
 		1A564AB936D91E4E5FBBAA4C /* BalanceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56463AFF1D05E33BA25C8A /* BalanceHeaderView.swift */; };
 		1A564ACAD8825F7A94B08DF2 /* AppStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56420928E5E0E9BC27E67B /* AppStatusViewController.swift */; };
+		1A564AEC44B618BE6DAC55C7 /* BottomAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5644B245A62181E34F521D /* BottomAlertViewController.swift */; };
 		1A564AF044871B706A39C467 /* LockoutState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56488B2051E9529CE8742E /* LockoutState.swift */; };
 		1A564B096FFE228DF453A66D /* TransactionInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564091A9C12F224A18B740 /* TransactionInfoPresenter.swift */; };
 		1A564B148862CA99776CE235 /* Differ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F4CBE5575C4D6C40BA /* Differ.swift */; };
 		1A564B3340086D250666A933 /* RestoreEosInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E95E2CCF97680C920F0 /* RestoreEosInteractor.swift */; };
 		1A564B4707376C1247517418 /* AppStatusPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564827B8F8D94DC4D7CC0F /* AppStatusPresenter.swift */; };
 		1A564B49C052D4BF6C53DE7F /* BalanceInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564EA89D7182D3D3F669C3 /* BalanceInteractorTests.swift */; };
+		1A564B5400ABF86AE6C85E19 /* BottomAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5644B245A62181E34F521D /* BottomAlertViewController.swift */; };
 		1A564B57AF9E132BBE3DA4A0 /* BackupEosInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648732652025B65889928 /* BackupEosInteractor.swift */; };
 		1A564B6E513269FED43EA6F2 /* ManageWalletsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FD2BE42EF4AADB0372C /* ManageWalletsModule.swift */; };
 		1A564B76F1F041C3397EF39C /* TransactionPendingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D94926FEAF120CF71D7 /* TransactionPendingView.swift */; };
@@ -2079,6 +2082,7 @@
 		1A56446DB0696819B2ABC567 /* AppStatusRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStatusRouter.swift; sourceTree = "<group>"; };
 		1A56446DB62F52AC4C3C2C30 /* SecuritySettingsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecuritySettingsPresenter.swift; sourceTree = "<group>"; };
 		1A56447C12D91108517ED217 /* UIDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
+		1A5644B245A62181E34F521D /* BottomAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomAlertViewController.swift; sourceTree = "<group>"; };
 		1A5644C4CCD9EBD71BD69D40 /* ManageWalletsInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageWalletsInteractorTests.swift; sourceTree = "<group>"; };
 		1A5644EDACA3F1843C8194F7 /* UnlockPinRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlockPinRouter.swift; sourceTree = "<group>"; };
 		1A564504718E7D19F379A9F7 /* AdapterError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterError.swift; sourceTree = "<group>"; };
@@ -3989,6 +3993,7 @@
 				D31C4769238BF18D008CB818 /* BlockchainSettingsPresenter.swift */,
 				D31C476C238BF18D008CB818 /* BlockchainSettingsViewController.swift */,
 				D31C476D238BF18D008CB818 /* BlockchainSettingCell.swift */,
+				1A5644B245A62181E34F521D /* BottomAlertViewController.swift */,
 			);
 			path = CoinSettings;
 			sourceTree = "<group>";
@@ -5051,6 +5056,7 @@
                 58AAA8B3937A2D8DF75A9AE0 /* UITextView.swift in Sources */,
 				1A56410B1575F9DAFDB3EFA0 /* CoinSettingsInteractor.swift in Sources */,
 				1A56410B1575F9DAFDB3EFA0 /* BlockchainSettingsInteractor.swift in Sources */,
+				1A564B5400ABF86AE6C85E19 /* BottomAlertViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5669,6 +5675,7 @@
 				58AAA4A4D0D7398E7184E7AB /* UITextView.swift in Sources */,
 				1A564A868B2F209317A2AD5F /* CoinSettingsInteractor.swift in Sources */,
 				1A564A868B2F209317A2AD5F /* BlockchainSettingsInteractor.swift in Sources */,
+				1A564AEC44B618BE6DAC55C7 /* BottomAlertViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6239,6 +6246,7 @@
 				58AAA550B894B6F8FC8DA1B1 /* UITextView.swift in Sources */,
 				1A564C2FE881EA9BD8A04AD0 /* CoinSettingsInteractor.swift in Sources */,
 				1A564C2FE881EA9BD8A04AD0 /* BlockchainSettingsInteractor.swift in Sources */,
+				1A56441711ACBC3302873FEC /* BottomAlertViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

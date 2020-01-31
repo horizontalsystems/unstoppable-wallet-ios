@@ -82,7 +82,8 @@ class BalanceCell: CardCell {
             maker.center.equalToSuperview()
         }
 
-        failedImageView.image = UIImage(named: "Attention Icon")
+        failedImageView.image = UIImage(named: "Attention Icon")?.withRenderingMode(.alwaysTemplate)
+        failedImageView.tintColor = .themeLucian
 
         clippingView.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { maker in

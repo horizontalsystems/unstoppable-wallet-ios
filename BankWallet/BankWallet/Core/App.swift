@@ -58,6 +58,8 @@ class App {
     let coinSettingsManager: ICoinSettingsManager
     let rateCoinMapper: RateCoinMapper
 
+    let kitCleaner: IKitCleaner
+
     let appManager: AppManager
 
     init() {
@@ -85,9 +87,11 @@ class App {
         accountManager = AccountManager(storage: accountStorage)
         backupManager = BackupManager(accountManager: accountManager)
 
+        kitCleaner = KitCleaner(accountManager: accountManager)
+
         walletFactory = WalletFactory()
         let walletStorage: IWalletStorage = WalletStorage(appConfigProvider: appConfigProvider, walletFactory: walletFactory, storage: storage)
-        walletManager = WalletManager(accountManager: accountManager, walletFactory: walletFactory, storage: walletStorage)
+        walletManager = WalletManager(accountManager: accountManager, walletFactory: walletFactory, storage: walletStorage, kitCleaner: kitCleaner)
 
         accountCreator = AccountCreator(accountFactory: AccountFactory(), wordsManager: wordsManager)
         predefinedAccountTypeManager = PredefinedAccountTypeManager(appConfigProvider: appConfigProvider, accountManager: accountManager)
@@ -138,7 +142,6 @@ class App {
 
         let launchManager: ILaunchManager = LaunchManager(localStorage: localStorage, secureStorage: secureStorage)
 
-        let kitCleaner = KitCleaner(accountManager: accountManager)
         appManager = AppManager(
                 accountManager: accountManager,
                 walletManager: walletManager,

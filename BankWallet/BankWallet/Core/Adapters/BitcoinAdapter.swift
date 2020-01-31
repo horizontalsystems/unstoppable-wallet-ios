@@ -32,7 +32,7 @@ class BitcoinAdapter: BitcoinBaseAdapter {
 }
 
 extension BitcoinAdapter {
-    
+
     private static func bip(from derivation: MnemonicDerivation) -> Bip {
         switch derivation {
         case .bip44: return Bip.bip44
@@ -40,7 +40,7 @@ extension BitcoinAdapter {
         case .bip84: return Bip.bip84
         }
     }
-    
+
 }
 
 extension BitcoinAdapter: ISendBitcoinAdapter {
