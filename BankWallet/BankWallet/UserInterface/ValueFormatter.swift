@@ -65,7 +65,7 @@ class ValueFormatter {
             if trimmable {
                 formatter.maximumFractionDigits = absoluteValue > high ? 0 : 2
             } else {
-                formatter.maximumFractionDigits = absoluteValue.significantDecimalCount(threshold: 4, maxDecimals: 8)
+                formatter.maximumFractionDigits = absoluteValue.significantDecimalCount(threshold: high, maxDecimals: 8)
             }
             formatter.minimumFractionDigits = 0
 
