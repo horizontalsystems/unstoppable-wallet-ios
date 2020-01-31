@@ -210,7 +210,7 @@ class TransactionCell: ThemeCell {
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         guard selectionStyle != .none else { return }
         if animated {
-            UIView.animate(withDuration: UIView.defaultAnimationDuration) {
+            UIView.animate(withDuration: .themeAnimationDuration) {
                 self.highlightBackground.alpha = highlighted ? 1 : 0
             }
         } else {
@@ -221,7 +221,7 @@ class TransactionCell: ThemeCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         guard selectionStyle != .none else { return }
         if animated {
-            UIView.animate(withDuration: UIView.defaultAnimationDuration) {
+            UIView.animate(withDuration: .themeAnimationDuration) {
                 self.highlightBackground.alpha = selected ? 1 : 0
             }
         } else {

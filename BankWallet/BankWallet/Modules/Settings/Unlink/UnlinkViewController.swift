@@ -1,5 +1,6 @@
 import UIKit
 import ActionSheet
+import ThemeKit
 
 class UnlinkViewController: WalletActionSheetController {
     private let delegate: IUnlinkViewDelegate

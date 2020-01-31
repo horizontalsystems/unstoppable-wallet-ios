@@ -55,7 +55,7 @@ class CardCell: UITableViewCell {
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         guard selectionStyle != .none else { return }
         if animated {
-            UIView.animate(withDuration: UIView.defaultAnimationDuration) {
+            UIView.animate(withDuration: .themeAnimationDuration) {
                 self.selectView.alpha = highlighted ? 1 : 0
             }
         } else {
@@ -66,7 +66,7 @@ class CardCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         guard selectionStyle != .none else { return }
         if animated {
-            UIView.animate(withDuration: UIView.defaultAnimationDuration) {
+            UIView.animate(withDuration: .themeAnimationDuration) {
                 self.selectView.alpha = selected ? 1 : 0
             }
         } else {
