@@ -15,7 +15,7 @@ class BottomAlertViewController: WalletActionSheetController {
     private var buttonItems = [AlertButtonItem]()
 
     init(items: [BottomAlertItemType]) {
-        super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
+        super.init(withModel: BaseAlertModel())
 
         items.enumerated().forEach { index, item in
             switch item {
@@ -65,7 +65,6 @@ class BottomAlertViewController: WalletActionSheetController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        backgroundColor = AppTheme.actionSheetBackgroundColor
         contentBackgroundColor = .white
     }
 

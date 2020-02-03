@@ -94,10 +94,6 @@ extension RestoreEosPresenter: IRestoreEosViewDelegate {
             let accountType: AccountType = .eos(account: account, activePrivateKey: privateKey)
 
             router.notifyRestored(accountType: accountType)
-//            switch presentationMode {
-//            case .pushed: router.notifyRestored(accountType: accountType)
-//            case .presented: router.dismissAndNotify(accountType: accountType)
-//            }
         } catch {
             view?.show(error: error)
         }
