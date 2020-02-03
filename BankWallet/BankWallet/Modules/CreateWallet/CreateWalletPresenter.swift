@@ -61,7 +61,7 @@ class CreateWalletPresenter {
         return account
     }
 
-    private func createWallet(coin: Coin, account: Account, requestedCoinSettings: CoinSettings) {
+    private func createWallet(coin: Coin, account: Account) {
         let coinSettings = interactor.coinSettings(coin: coin)
 
         wallets[coin] = Wallet(coin: coin, account: account, coinSettings: coinSettings)
@@ -85,7 +85,7 @@ extension CreateWalletPresenter: ICreateWalletViewDelegate {
 
         do {
             let account = try resolveAccount(predefinedAccountType: coin.type.predefinedAccountType)
-            createWallet(coin: coin, account: account, requestedCoinSettings: [:])
+            createWallet(coin: coin, account: account)
         } catch {
             view?.show(error: error)
             syncViewItems()
