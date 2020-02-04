@@ -2,13 +2,13 @@ import Foundation
 
 class LockoutManager: ILockoutManager {
 
-    private var secureStorage: ISecureStorage
+    private var secureStorage: IPinSecureStorage
     private var uptimeProvider: IUptimeProvider
     private var lockoutUntilDateFactory: ILockoutUntilDateFactory
 
     private let lockoutThreshold = 5
 
-    init(secureStorage: ISecureStorage, uptimeProvider: IUptimeProvider, lockoutTimeFrameFactory: ILockoutUntilDateFactory) {
+    init(secureStorage: IPinSecureStorage, uptimeProvider: IUptimeProvider, lockoutTimeFrameFactory: ILockoutUntilDateFactory) {
         self.secureStorage = secureStorage
         self.uptimeProvider = uptimeProvider
         self.lockoutUntilDateFactory = lockoutTimeFrameFactory

@@ -1,12 +1,12 @@
 import RxSwift
 
 class PinManager {
-    private let secureStorage: ISecureStorage
+    private let secureStorage: IPinSecureStorage
     private let localStorage: ILocalStorage
 
     private let isPinSetSubject = PublishSubject<Bool>()
 
-    init(secureStorage: ISecureStorage, localStorage: ILocalStorage) {
+    init(secureStorage: IPinSecureStorage, localStorage: ILocalStorage) {
         self.secureStorage = secureStorage
         self.localStorage = localStorage
     }

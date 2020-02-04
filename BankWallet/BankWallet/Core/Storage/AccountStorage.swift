@@ -1,4 +1,4 @@
-import KeychainAccess
+import StorageKit
 
 class AccountStorage {
     private let secureStorage: ISecureStorage
@@ -96,12 +96,12 @@ class AccountStorage {
 
         switch account.type {
         case .mnemonic:
-            try secureStorage.remove(for: secureKey(id: id, typeName: .mnemonic, keyName: .words))
-            try secureStorage.remove(for: secureKey(id: id, typeName: .mnemonic, keyName: .salt))
+            try secureStorage.removeValue(for: secureKey(id: id, typeName: .mnemonic, keyName: .words))
+            try secureStorage.removeValue(for: secureKey(id: id, typeName: .mnemonic, keyName: .salt))
         case .privateKey:
-            try secureStorage.remove(for: secureKey(id: id, typeName: .privateKey, keyName: .data))
+            try secureStorage.removeValue(for: secureKey(id: id, typeName: .privateKey, keyName: .data))
         case .eos:
-            try secureStorage.remove(for: secureKey(id: id, typeName: .eos, keyName: .privateKey))
+            try secureStorage.removeValue(for: secureKey(id: id, typeName: .eos, keyName: .privateKey))
         }
     }
 
@@ -115,13 +115,13 @@ class AccountStorage {
 
     private func store(string: String?, id: String, typeName: TypeName, keyName: KeyName) throws -> String {
         let key = secureKey(id: id, typeName: typeName, keyName: keyName)
-        try secureStorage.set(value: string, forKey: key)
+        try secureStorage.set(value: string, for: key)
         return key
     }
 
     private func store(data: Data, id: String, typeName: TypeName, keyName: KeyName) throws -> String {
         let key = secureKey(id: id, typeName: typeName, keyName: keyName)
-        try secureStorage.set(value: data, forKey: key)
+        try secureStorage.set(value: data, for: key)
         return key
     }
 
@@ -131,12 +131,12 @@ class AccountStorage {
 
     private func recoverString(id: String, typeName: TypeName, keyName: KeyName) -> String? {
         let key = secureKey(id: id, typeName: typeName, keyName: keyName)
-        return secureStorage.getString(forKey: key)
+        return secureStorage.value(for: key)
     }
 
     private func recoverData(id: String, typeName: TypeName, keyName: KeyName) -> Data? {
         let key = secureKey(id: id, typeName: typeName, keyName: keyName)
-        return secureStorage.getData(forKey: key)
+        return secureStorage.value(for: key)
     }
 
 }
@@ -144,7 +144,7 @@ class AccountStorage {
 extension AccountStorage: IAccountStorage {
 
     var allAccounts: [Account] {
-        return storage.allAccountRecords.compactMap { createAccount(record: $0) }
+        storage.allAccountRecords.compactMap { createAccount(record: $0) }
     }
 
     func save(account: Account) {
