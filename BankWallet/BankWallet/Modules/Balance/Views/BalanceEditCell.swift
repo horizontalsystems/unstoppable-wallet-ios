@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 
 class BalanceEditCell: UITableViewCell {
-    static let height: CGFloat = 80
+    static let height: CGFloat = 72
 
     private let button = UIButton()
 

@@ -20,6 +20,14 @@ extension SendRouter: ISendRouter {
 
 extension SendRouter {
 
+    static var marginView: UIView {
+        let view = UIView()
+        view.snp.makeConstraints { maker in
+            maker.height.equalTo(CGFloat.margin4x)
+        }
+        return view
+    }
+
     static func module(wallet: Wallet) -> UIViewController? {
         guard let adapter = App.shared.adapterManager.adapter(for: wallet) else {
             return nil
@@ -76,6 +84,8 @@ extension SendRouter {
 
         var hodlerModule: ISendHodlerModule?
 
+        views.append(SendRouter.marginView)
+
         if interactor.lockTimeEnabled && coin.type == .bitcoin {
             let (hodlerView, module, hodlerRouter) = SendHodlerRouter.module()
             hodlerModule = module
@@ -126,7 +136,7 @@ extension SendRouter {
         addressModule.delegate = presenter
         feeModule.delegate = presenter
 
-        return (presenter, [amountView, addressView, feeView], [addressRouter])
+        return (presenter, [amountView, addressView, SendRouter.marginView, feeView], [addressRouter])
     }
 
     private static func module(coin: Coin, adapter: ISendEthereumAdapter) -> (ISendHandler, [UIView], [ISendSubRouter])? {
@@ -146,7 +156,7 @@ extension SendRouter {
         feeModule.delegate = presenter
         feePriorityModule.delegate = presenter
 
-        return (presenter, [amountView, addressView, feePriorityView, feeView], [addressRouter, feePriorityRouter])
+        return (presenter, [amountView, addressView, SendRouter.marginView, feePriorityView, feeView], [addressRouter, feePriorityRouter])
     }
 
     private static func module(coin: Coin, adapter: ISendEosAdapter) -> (ISendHandler, [UIView], [ISendSubRouter]) {
@@ -176,7 +186,7 @@ extension SendRouter {
         addressModule.delegate = presenter
         feeModule.delegate = presenter
 
-        return (presenter, [amountView, addressView, memoView, feeView], [addressRouter])
+        return (presenter, [amountView, addressView, memoView, SendRouter.marginView, feeView], [addressRouter])
     }
 
 }

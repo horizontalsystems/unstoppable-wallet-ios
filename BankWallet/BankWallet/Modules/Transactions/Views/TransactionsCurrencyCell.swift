@@ -5,6 +5,7 @@ class TransactionsCurrencyCell: UICollectionViewCell {
     private static let nameLabelFont = UIFont.subhead2
     private let roundedView = UIView()
     private let nameLabel = UILabel()
+    private let verticalMargin: CGFloat = 6
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -13,7 +14,7 @@ class TransactionsCurrencyCell: UICollectionViewCell {
         roundedView.addSubview(nameLabel)
 
         roundedView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview().inset(UIEdgeInsets(top: CGFloat.margin2x, left: 0, bottom: CGFloat.margin2x, right: 0))
+            maker.edges.equalToSuperview().inset(UIEdgeInsets(top: verticalMargin, left: 0, bottom: verticalMargin, right: 0))
         }
 
         roundedView.layer.cornerRadius = 14             // (TransactionCurrenciesHeaderView.headerHeight - .margin2x * 2) / 2
@@ -50,13 +51,13 @@ class TransactionsCurrencyCell: UICollectionViewCell {
 
     func bind(selected: Bool) {
         nameLabel.textColor = selected ? .themeDark : .themeOz
-        roundedView.backgroundColor = selected ? .themeJacob : .themeJeremy
+        roundedView.backgroundColor = selected ? .themeYellowD : .themeJeremy
     }
 
     static func size(for title: String) -> CGSize {
         let size = title.size(containerWidth: .greatestFiniteMagnitude, font: TransactionsCurrencyCell.nameLabelFont)
         let calculatedWidth = size.width + 2 * .margin8x
-        return CGSize(width: max(calculatedWidth, 88), height: TransactionCurrenciesHeaderView.headerHeight)
+        return CGSize(width: max(calculatedWidth, 80), height: TransactionCurrenciesHeaderView.headerHeight)
     }
 
 }

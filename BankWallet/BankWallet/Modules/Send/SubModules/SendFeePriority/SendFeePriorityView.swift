@@ -43,7 +43,6 @@ class SendFeePriorityView: UIView {
             maker.leading.equalTo(durationTitleLabel.snp.trailing).offset(CGFloat.margin4x)
             maker.bottom.equalToSuperview()
         }
-
     }
 
     required init?(coder aDecoder: NSCoder) {
