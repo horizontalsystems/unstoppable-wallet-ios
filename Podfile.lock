@@ -159,6 +159,8 @@ PODS:
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1)
   - SnapKit (5.0.1)
+  - StorageKit.swift (1.0):
+    - KeychainAccess (~> 4.1)
   - SwiftProtobuf (1.8.0)
   - SwiftyJSON (4.3.0)
   - ThemeKit.swift (1.0):
@@ -205,6 +207,7 @@ DEPENDENCIES:
   - RxSwift
   - SectionsTableView.swift
   - SnapKit
+  - StorageKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - ThemeKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - UIExtensions.swift (from `https://github.com/horizontalsystems/gui-kit/`)
   - XRatesKit.swift
@@ -261,6 +264,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git
   LanguageKit.swift:
     :git: https://github.com/horizontalsystems/component-kit-ios/
+  StorageKit.swift:
+    :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
@@ -271,10 +276,13 @@ CHECKOUT OPTIONS:
     :commit: 7ac04899e62012e225e0ea48a96951de0b72ad08
     :git: https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git
   LanguageKit.swift:
-    :commit: 3ab979cc35466a08b88812c9cc64d130f9a77257
+    :commit: 66c436ebb63ad027acb94bfb1a68d89594ddc7ce
+    :git: https://github.com/horizontalsystems/component-kit-ios/
+  StorageKit.swift:
+    :commit: 66c436ebb63ad027acb94bfb1a68d89594ddc7ce
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: 3ab979cc35466a08b88812c9cc64d130f9a77257
+    :commit: 66c436ebb63ad027acb94bfb1a68d89594ddc7ce
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :commit: d2831ee47e270f98c931e1dae9d0e5b86b48a84a
@@ -309,7 +317,7 @@ SPEC CHECKSUMS:
   Hodler.swift: 19c22fbea5f44cc6479df18fbc8c29233e9a5c2d
   HUD.swift: 0b9d074f07f601891878f87ff10ad867eed3182b
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
-  LanguageKit.swift: b8963a3d1a8c1b0a1f9f0e3d93e003bd815d4c89
+  LanguageKit.swift: f1105c75fe9d04f482d2ab55e48eb91ed008abef
   Nimble: 4ab1aeb9b45553c75b9687196b0fa0713170a332
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
   OpenSslKit.swift: 6e699e0d69fae6b306eaca0b8971c59bc45546ab
@@ -323,6 +331,7 @@ SPEC CHECKSUMS:
   Secp256k1Kit.swift: 93b1bfbb8909c12605666cc3b1e59d1d1fde7322
   SectionsTableView.swift: 91f2235b63405f938621b7df040149d7c65b355d
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  StorageKit.swift: bdebf72def7870665d8e57b2c5d3e28585bdeb6b
   SwiftProtobuf: 2cbd9409689b7df170d82a92a33443c8e3e14a70
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   ThemeKit.swift: ab5c081b10f6a80149d37751f3ee98f1292bf497
@@ -330,6 +339,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: 568660675ce881653095645bc9e30dbc1abc5578
 
-PODFILE CHECKSUM: 48ab20d9243b621ed0509cad72e6db28c1e5ef53
+PODFILE CHECKSUM: 557133e8d7194c2cd09b271f6ec01c09fed4b007
 
 COCOAPODS: 1.8.4

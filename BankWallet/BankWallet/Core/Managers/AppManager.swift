@@ -11,11 +11,10 @@ class AppManager {
     private let notificationManager: INotificationManager
     private let backgroundPriceAlertManager: IBackgroundPriceAlertManager
     private let localStorage: ILocalStorage
-    private let secureStorage: ISecureStorage
+    private let secureStorage: IPinSecureStorage
     private let kitCleaner: IKitCleaner
     private let debugBackgroundLogger: IDebugLogger?
     private let appVersionManager: IAppVersionManager
-    private let launchManager: ILaunchManager
 
     private let didBecomeActiveSubject = PublishSubject<()>()
     private let willEnterForegroundSubject = PublishSubject<()>()
@@ -23,8 +22,8 @@ class AppManager {
     init(accountManager: IAccountManager, walletManager: IWalletManager, adapterManager: IAdapterManager, lockManager: ILockManager,
          passcodeLockManager: IPasscodeLockManager, biometryManager: IBiometryManager, blurManager: IBlurManager,
          notificationManager: INotificationManager, backgroundPriceAlertManager: IBackgroundPriceAlertManager,
-         localStorage: ILocalStorage, secureStorage: ISecureStorage, kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
-         appVersionManager: IAppVersionManager, launchManager: ILaunchManager
+         localStorage: ILocalStorage, secureStorage: IPinSecureStorage, kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
+         appVersionManager: IAppVersionManager
     ) {
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -40,7 +39,6 @@ class AppManager {
         self.kitCleaner = kitCleaner
         self.debugBackgroundLogger = debugLogger
         self.appVersionManager = appVersionManager
-        self.launchManager = launchManager
     }
 
 }
@@ -49,7 +47,6 @@ extension AppManager {
 
     func didFinishLaunching() {
         debugBackgroundLogger?.logFinishLaunching()
-        launchManager.handleFirstLaunch()
 
         passcodeLockManager.didFinishLaunching()
         accountManager.preloadAccounts()

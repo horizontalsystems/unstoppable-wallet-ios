@@ -1,10 +1,13 @@
 import ThemeKit
+import StorageKit
 
 class App {
     static let shared = App()
 
+    let secureStorage: StorageKit.ISecureStorage
+
     let localStorage: ILocalStorage & IChartTypeStorage
-    let secureStorage: ISecureStorage
+    let pinSecureStorage: IPinSecureStorage
     let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage
 
     let themeManager: ThemeManager
@@ -63,8 +66,10 @@ class App {
     init() {
         let networkManager = NetworkManager()
 
-        localStorage = UserDefaultsStorage()
-        secureStorage = KeychainStorage()
+        secureStorage = StorageKit.Kit.secureStorage(service: "io.horizontalsystems.bank.dev")
+
+        localStorage = LocalStorage()
+        pinSecureStorage = PinSecureStorage(secureStorage: secureStorage)
         storage = GrdbStorage()
 
         themeManager = ThemeManager.shared
@@ -78,7 +83,7 @@ class App {
         pasteboardManager = PasteboardManager()
         reachabilityManager = ReachabilityManager(appConfigProvider: appConfigProvider)
 
-        pinManager = PinManager(secureStorage: secureStorage, localStorage: localStorage)
+        pinManager = PinManager(secureStorage: pinSecureStorage, localStorage: localStorage)
         wordsManager = WordsManager()
 
         let accountStorage: IAccountStorage = AccountStorage(secureStorage: secureStorage, storage: storage)
@@ -136,8 +141,6 @@ class App {
 
         coinSettingsManager = CoinSettingsManager()
 
-        let launchManager: ILaunchManager = LaunchManager(localStorage: localStorage, secureStorage: secureStorage)
-
         let kitCleaner = KitCleaner(accountManager: accountManager)
         appManager = AppManager(
                 accountManager: accountManager,
@@ -150,11 +153,10 @@ class App {
                 notificationManager: notificationManager,
                 backgroundPriceAlertManager: backgroundPriceAlertManager,
                 localStorage: localStorage,
-                secureStorage: secureStorage,
+                secureStorage: pinSecureStorage,
                 kitCleaner: kitCleaner,
                 debugLogger: debugLogger,
-                appVersionManager: appVersionManager,
-                launchManager: launchManager
+                appVersionManager: appVersionManager
         )
     }
 

@@ -17,14 +17,11 @@ protocol ILocalStorage: class {
     var baseBinanceProvider: String? { get set }
     var baseEosProvider: String? { get set }
     var baseEthereumProvider: String? { get set }
-    var lightMode: Bool { get set }
     var agreementAccepted: Bool { get set }
     var balanceSortType: BalanceSortType? { get set }
     var isBiometricOn: Bool { get set }
-    var currentLanguage: String? { get set }
     var debugLog: String? { get set }
     var lastExitDate: Double { get set }
-    var didLaunchOnce: Bool { get set }
     var sendInputType: SendInputType? { get set }
     var mainShownOnce: Bool { get set }
     var appVersions: [AppVersion] { get set }
@@ -35,21 +32,13 @@ protocol IChartTypeStorage: class {
     var chartType: ChartType? { get set }
 }
 
-protocol ISecureStorage: class {
+protocol IPinSecureStorage: class {
     var pin: String? { get }
     func set(pin: String?) throws
     var unlockAttempts: Int? { get }
     func set(unlockAttempts: Int?) throws
     var lockoutTimestamp: TimeInterval? { get }
     func set(lockoutTimestamp: TimeInterval?) throws
-
-    func getString(forKey key: String) -> String?
-    func set(value: String?, forKey key: String) throws
-    func getData(forKey key: String) -> Data?
-    func set(value: Data?, forKey key: String) throws
-    func remove(for key: String) throws
-
-    func clear() throws
 }
 
 protocol IAdapterManager: class {
