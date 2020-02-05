@@ -19,13 +19,6 @@ extension SendFeeInteractor: ISendFeeInteractor {
         currencyManager.baseCurrency
     }
 
-    func nonExpiredRateValue(coinCode: CoinCode, currencyCode: String) -> Decimal? {
-        guard let marketInfo = rateManager.marketInfo(coinCode: coinCode, currencyCode: currencyCode), !marketInfo.expired else {
-            return nil
-        }
-        return marketInfo.rate
-    }
-
     func feeCoin(coin: Coin) -> Coin? {
         feeCoinProvider.feeCoin(coin: coin)
     }

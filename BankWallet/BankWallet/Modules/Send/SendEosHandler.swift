@@ -60,6 +60,14 @@ extension SendEosHandler: ISendHandler {
     func sync() {
     }
 
+    func sync(rateValue: Decimal?) {
+        amountModule.set(rateValue: rateValue)
+    }
+
+    func sync(inputType: SendInputType) {
+        amountModule.set(inputType: inputType)
+    }
+
     func sendSingle() throws -> Single<Void> {
         interactor.sendSingle(amount: try amountModule.validAmount(), account: try accountModule.validAccount(), memo: memoModule.memo)
     }

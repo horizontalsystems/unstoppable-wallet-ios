@@ -100,6 +100,16 @@ extension SendBitcoinHandler: ISendHandler {
         }
     }
 
+    func sync(rateValue: Decimal?) {
+        amountModule.set(rateValue: rateValue)
+        feeModule.set(rateValue: rateValue)
+    }
+
+    func sync(inputType: SendInputType) {
+        amountModule.set(inputType: inputType)
+        feeModule.update(inputType: inputType)
+    }
+
     func sendSingle() throws -> Single<Void> {
         guard let feeRate = feePriorityModule.feeRate else {
             throw SendTransactionError.noFee
@@ -115,7 +125,7 @@ extension SendBitcoinHandler: ISendBitcoinInteractorDelegate {
         amountModule.set(availableBalance: availableBalance)
         syncValidation()
     }
-    
+
     func didFetch(maximumAmount: Decimal?) {
         amountModule.set(maximumAmount: maximumAmount)
         syncValidation()
@@ -158,14 +168,6 @@ extension SendBitcoinHandler: ISendAddressDelegate {
 
     func onUpdate(amount: Decimal) {
         amountModule.set(amount: amount)
-    }
-
-}
-
-extension SendBitcoinHandler: ISendFeeDelegate {
-
-    var inputType: SendInputType {
-        amountModule.inputType
     }
 
 }

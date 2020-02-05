@@ -62,6 +62,16 @@ extension SendBinanceHandler: ISendHandler {
     func sync() {
     }
 
+    func sync(rateValue: Decimal?) {
+        amountModule.set(rateValue: rateValue)
+        feeModule.set(rateValue: rateValue)
+    }
+
+    func sync(inputType: SendInputType) {
+        amountModule.set(inputType: inputType)
+        feeModule.update(inputType: inputType)
+    }
+
     func sendSingle() throws -> Single<Void> {
         interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress(), memo: memoModule.memo)
     }
@@ -92,14 +102,6 @@ extension SendBinanceHandler: ISendAddressDelegate {
 
     func onUpdate(amount: Decimal) {
         amountModule.set(amount: amount)
-    }
-
-}
-
-extension SendBinanceHandler: ISendFeeDelegate {
-
-    var inputType: SendInputType {
-        return amountModule.inputType
     }
 
 }
