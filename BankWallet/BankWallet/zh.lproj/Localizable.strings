@@ -341,10 +341,6 @@
 "unlock_pin.blocked_until" = "禁用至: %@";
 "rate_list.updated" = "已更新";
 
-// No Passcode
-
-"no_passcode.info_text" = "此应用要求电话已启用密码（屏幕锁定）。\n\n您可以在iOS设置中启用密码。\n\n请注意，禁用操作系统级别的PIN码后，电话的安全存储保障措施将使以前保存的数据无效。您必须恢复您的钱包密钥才能回到您的钱包。";
-
 //NumPad
 
 "numpad_2" = "A B C";

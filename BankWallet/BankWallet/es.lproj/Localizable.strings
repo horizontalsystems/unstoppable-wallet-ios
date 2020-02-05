@@ -341,10 +341,6 @@
 "unlock_pin.blocked_until" = "Inhabilitado hasta: %@";
 "rate_list.updated" = "actualizado";
 
-// No Passcode
-
-"no_passcode.info_text" = "Esta aplicación require que el teléfono tenga el código de acceso (bloqueo de pantalla) habilitado.\n\nLo puedes habilitar en los ajustes de iOS.\n\nTome en cuenta que cuando desahabilita el PIN en el nivel OS, las medidas de seguridad en el almacenamiento seguro de su teléfono hace que la información previamente almacenada no sea válida. Usted necesita restaurar las claves de sus monederos para poder volver a su monedero.";
-
 //NumPad
 
 "numpad_2" = "A B C";

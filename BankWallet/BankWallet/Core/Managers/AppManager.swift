@@ -1,17 +1,16 @@
 import RxSwift
+import StorageKit
 
 class AppManager {
     private let accountManager: IAccountManager
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
     private let lockManager: ILockManager
-    private let passcodeLockManager: IPasscodeLockManager
+    private let keychainKit: IKeychainKit
     private let biometryManager: IBiometryManager
     private let blurManager: IBlurManager
     private let notificationManager: INotificationManager
     private let backgroundPriceAlertManager: IBackgroundPriceAlertManager
-    private let localStorage: ILocalStorage
-    private let secureStorage: IPinSecureStorage
     private let kitCleaner: IKitCleaner
     private let debugBackgroundLogger: IDebugLogger?
     private let appVersionManager: IAppVersionManager
@@ -20,22 +19,20 @@ class AppManager {
     private let willEnterForegroundSubject = PublishSubject<()>()
 
     init(accountManager: IAccountManager, walletManager: IWalletManager, adapterManager: IAdapterManager, lockManager: ILockManager,
-         passcodeLockManager: IPasscodeLockManager, biometryManager: IBiometryManager, blurManager: IBlurManager,
+         keychainKit: IKeychainKit, biometryManager: IBiometryManager, blurManager: IBlurManager,
          notificationManager: INotificationManager, backgroundPriceAlertManager: IBackgroundPriceAlertManager,
-         localStorage: ILocalStorage, secureStorage: IPinSecureStorage, kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
+         kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
          appVersionManager: IAppVersionManager
     ) {
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.lockManager = lockManager
-        self.passcodeLockManager = passcodeLockManager
+        self.keychainKit = keychainKit
         self.biometryManager = biometryManager
         self.blurManager = blurManager
         self.notificationManager = notificationManager
         self.backgroundPriceAlertManager = backgroundPriceAlertManager
-        self.localStorage = localStorage
-        self.secureStorage = secureStorage
         self.kitCleaner = kitCleaner
         self.debugBackgroundLogger = debugLogger
         self.appVersionManager = appVersionManager
@@ -48,7 +45,7 @@ extension AppManager {
     func didFinishLaunching() {
         debugBackgroundLogger?.logFinishLaunching()
 
-        passcodeLockManager.didFinishLaunching()
+        keychainKit.handleLaunch()
         accountManager.preloadAccounts()
         walletManager.preloadWallets()
         biometryManager.refresh()
@@ -79,7 +76,7 @@ extension AppManager {
         debugBackgroundLogger?.logEnterForeground()
         willEnterForegroundSubject.onNext(())
 
-        passcodeLockManager.willEnterForeground()
+        keychainKit.handleForeground()
         lockManager.willEnterForeground()
         notificationManager.removeNotifications()
         adapterManager.refresh()

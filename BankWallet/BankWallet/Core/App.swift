@@ -4,7 +4,7 @@ import StorageKit
 class App {
     static let shared = App()
 
-    let secureStorage: StorageKit.ISecureStorage
+    let keychainKit: IKeychainKit
 
     let localStorage: ILocalStorage & IChartTypeStorage
     let pinSecureStorage: IPinSecureStorage
@@ -42,8 +42,6 @@ class App {
     let lockRouter: LockRouter
     let lockManager: ILockManager & IUnlockDelegate
 
-    let passcodeLockManager: IPasscodeLockManager
-
     let dataProviderManager: IFullTransactionDataProviderManager
     let fullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactory
 
@@ -61,15 +59,17 @@ class App {
     let coinSettingsManager: ICoinSettingsManager
     let rateCoinMapper: RateCoinMapper
 
+    let keychainKitDelegate: KeychainKitDelegate
+
     let appManager: AppManager
 
     init() {
         let networkManager = NetworkManager()
 
-        secureStorage = StorageKit.Kit.secureStorage(service: "io.horizontalsystems.bank.dev")
+        keychainKit = KeychainKit(service: "io.horizontalsystems.bank.dev") 
 
-        localStorage = LocalStorage()
-        pinSecureStorage = PinSecureStorage(secureStorage: secureStorage)
+        localStorage = LocalStorage(storage: StorageKit.LocalStorage.default)
+        pinSecureStorage = PinSecureStorage(secureStorage: keychainKit.secureStorage)
         storage = GrdbStorage()
 
         themeManager = ThemeManager.shared
@@ -86,7 +86,7 @@ class App {
         pinManager = PinManager(secureStorage: pinSecureStorage, localStorage: localStorage)
         wordsManager = WordsManager()
 
-        let accountStorage: IAccountStorage = AccountStorage(secureStorage: secureStorage, storage: storage)
+        let accountStorage: IAccountStorage = AccountStorage(secureStorage: keychainKit.secureStorage, storage: storage)
         accountManager = AccountManager(storage: accountStorage)
         backupManager = BackupManager(accountManager: accountManager)
 
@@ -116,9 +116,6 @@ class App {
         lockManager = LockManager(pinManager: pinManager, localStorage: localStorage, lockRouter: lockRouter)
         let blurManager: IBlurManager = BlurManager(lockManager: lockManager)
 
-        let passcodeLockRouter: IPasscodeLockRouter = PasscodeLockRouter()
-        passcodeLockManager = PasscodeLockManager(systemInfoManager: systemInfoManager, accountManager: accountManager, walletManager: walletManager, router: passcodeLockRouter)
-
         dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 
         let jsonApiProvider: IJsonApiProvider = JsonApiProvider(networkManager: networkManager)
@@ -141,19 +138,20 @@ class App {
 
         coinSettingsManager = CoinSettingsManager()
 
+        keychainKitDelegate = KeychainKitDelegate(accountManager: accountManager, walletManager: walletManager)
+        keychainKit.set(delegate: keychainKitDelegate)
+
         let kitCleaner = KitCleaner(accountManager: accountManager)
         appManager = AppManager(
                 accountManager: accountManager,
                 walletManager: walletManager,
                 adapterManager: adapterManager,
                 lockManager: lockManager,
-                passcodeLockManager: passcodeLockManager,
+                keychainKit: keychainKit,
                 biometryManager: biometryManager,
                 blurManager: blurManager,
                 notificationManager: notificationManager,
                 backgroundPriceAlertManager: backgroundPriceAlertManager,
-                localStorage: localStorage,
-                secureStorage: pinSecureStorage,
                 kitCleaner: kitCleaner,
                 debugLogger: debugLogger,
                 appVersionManager: appVersionManager

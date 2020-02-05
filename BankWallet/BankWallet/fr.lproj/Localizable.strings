@@ -341,10 +341,6 @@
 "unlock_pin.blocked_until" = "Désactivé jusqu'à: %@";
 "rate_list.updated" = "mis à jour";
 
-// No Passcode
-
-"no_passcode.info_text" = "Cette application nécessite que le passcode (verrou d'écran) soit activé.\n\nVous pouvez l'activer dans les paramètres iOS.\n\nVeuillez noter que lorsque vous avez désactivé le code PIN au niveau de l'OS, les mesures de sécurité dans le stockage sûr de votre portable ont rendu les données précédemment stockées invalides. Vous devrez restaurer vos clés de porte-monnaies pour revenir à votre porte-monnaie.";
-
 //NumPad
 
 "numpad_2" = "A B C";
