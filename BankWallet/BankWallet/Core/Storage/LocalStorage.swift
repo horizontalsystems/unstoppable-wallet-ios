@@ -20,109 +20,116 @@ class LocalStorage {
     private let debugLogKey = "debug_log_key"
     private let keyAppVersions = "app_versions"
     private let keyLockTimeEnabled = "lock_time_enabled"
+
+    private let storage: StorageKit.ILocalStorage
+
+    init(storage: StorageKit.ILocalStorage) {
+        self.storage = storage
+    }
+
 }
 
 extension LocalStorage: ILocalStorage {
 
     var debugLog: String? {
-        get { Kit.localStorage.value(for: debugLogKey) }
-        set { Kit.localStorage.set(value: newValue, for: debugLogKey) }
+        get { storage.value(for: debugLogKey) }
+        set { storage.set(value: newValue, for: debugLogKey) }
     }
 
     var lastExitDate: Double {
-        get { Kit.localStorage.value(for: lastExitDateKey) ?? 0 }
-        set { Kit.localStorage.set(value: newValue, for: lastExitDateKey) }
+        get { storage.value(for: lastExitDateKey) ?? 0 }
+        set { storage.set(value: newValue, for: lastExitDateKey) }
     }
 
     var baseCurrencyCode: String? {
-        get { Kit.localStorage.value(for: keyBaseCurrencyCode) }
-        set { Kit.localStorage.set(value: newValue, for: keyBaseCurrencyCode) }
+        get { storage.value(for: keyBaseCurrencyCode) }
+        set { storage.set(value: newValue, for: keyBaseCurrencyCode) }
     }
 
     var baseBitcoinProvider: String? {
-        get { Kit.localStorage.value(for: keyBaseBitcoinProvider) }
-        set { Kit.localStorage.set(value: newValue, for: keyBaseBitcoinProvider) }
+        get { storage.value(for: keyBaseBitcoinProvider) }
+        set { storage.set(value: newValue, for: keyBaseBitcoinProvider) }
     }
 
     var baseBitcoinCashProvider: String? {
-        get { Kit.localStorage.value(for: keyBaseBitcoinCashProvider) }
-        set { Kit.localStorage.set(value: newValue, for: keyBaseBitcoinCashProvider) }
+        get { storage.value(for: keyBaseBitcoinCashProvider) }
+        set { storage.set(value: newValue, for: keyBaseBitcoinCashProvider) }
     }
 
     var baseDashProvider: String? {
-        get { Kit.localStorage.value(for: keyBaseDashProvider) }
-        set { Kit.localStorage.set(value: newValue, for: keyBaseDashProvider) }
+        get { storage.value(for: keyBaseDashProvider) }
+        set { storage.set(value: newValue, for: keyBaseDashProvider) }
     }
 
     var baseBinanceProvider: String? {
-        get { Kit.localStorage.value(for: keyBaseBinanceProvider) }
-        set { Kit.localStorage.set(value: newValue, for: keyBaseBinanceProvider) }
+        get { storage.value(for: keyBaseBinanceProvider) }
+        set { storage.set(value: newValue, for: keyBaseBinanceProvider) }
     }
 
     var baseEosProvider: String? {
-        get { Kit.localStorage.value(for: keyBaseEosProvider) }
-        set { Kit.localStorage.set(value: newValue, for: keyBaseEosProvider) }
+        get { storage.value(for: keyBaseEosProvider) }
+        set { storage.set(value: newValue, for: keyBaseEosProvider) }
     }
 
     var baseEthereumProvider: String? {
-        get { Kit.localStorage.value(for: keyBaseEthereumProvider) }
-        set { Kit.localStorage.set(value: newValue, for: keyBaseEthereumProvider) }
+        get { storage.value(for: keyBaseEthereumProvider) }
+        set { storage.set(value: newValue, for: keyBaseEthereumProvider) }
     }
 
     var agreementAccepted: Bool {
-        get { Kit.localStorage.value(for: agreementAcceptedKey) ?? false }
-        set { Kit.localStorage.set(value: newValue, for: agreementAcceptedKey) }
+        get { storage.value(for: agreementAcceptedKey) ?? false }
+        set { storage.set(value: newValue, for: agreementAcceptedKey) }
     }
 
     var balanceSortType: BalanceSortType? {
         get {
-            guard let sortRawValue: Int = Kit.localStorage.value(for: balanceSortKey) else {
+            guard let sortRawValue: Int = storage.value(for: balanceSortKey) else {
                 return nil
             }
             return BalanceSortType(rawValue: sortRawValue)
         }
         set {
-            Kit.localStorage.set(value: newValue?.rawValue, for: balanceSortKey)
+            storage.set(value: newValue?.rawValue, for: balanceSortKey)
         }
     }
 
     var isBiometricOn: Bool {
-        get { Kit.localStorage.value(for: biometricOnKey) ?? false }
-        set { Kit.localStorage.set(value: newValue, for: biometricOnKey) }
+        get { storage.value(for: biometricOnKey) ?? false }
+        set { storage.set(value: newValue, for: biometricOnKey) }
     }
 
     var sendInputType: SendInputType? {
         get {
-            if let rawValue: String = Kit.localStorage.value(for: keySendInputType), let value = SendInputType(rawValue: rawValue) {
+            if let rawValue: String = storage.value(for: keySendInputType), let value = SendInputType(rawValue: rawValue) {
                 return value
             }
             return nil
         }
         set {
-            Kit.localStorage.set(value: newValue?.rawValue, for: keySendInputType)
+            storage.set(value: newValue?.rawValue, for: keySendInputType)
         }
     }
 
     var mainShownOnce: Bool {
-        get { Kit.localStorage.value(for: mainShownOnceKey) ?? false }
-        set { Kit.localStorage.set(value: newValue, for: mainShownOnceKey) }
+        get { storage.value(for: mainShownOnceKey) ?? false }
+        set { storage.set(value: newValue, for: mainShownOnceKey) }
     }
 
     var appVersions: [AppVersion] {
         get {
-            guard let data: Data = Kit.localStorage.value(for: keyAppVersions), let versions = try? JSONDecoder().decode([AppVersion].self, from: data) else {
+            guard let data: Data = storage.value(for: keyAppVersions), let versions = try? JSONDecoder().decode([AppVersion].self, from: data) else {
                 return []
             }
             return versions
         }
         set {
-            Kit.localStorage.set(value: try? JSONEncoder().encode(newValue), for: keyAppVersions)
+            storage.set(value: try? JSONEncoder().encode(newValue), for: keyAppVersions)
         }
     }
 
     var lockTimeEnabled: Bool {
-        get { Kit.localStorage.value(for: keyLockTimeEnabled) ?? false }
-        set { Kit.localStorage.set(value: newValue, for: keyLockTimeEnabled) }
+        get { storage.value(for: keyLockTimeEnabled) ?? false }
+        set { storage.set(value: newValue, for: keyLockTimeEnabled) }
     }
 
 }
@@ -131,13 +138,13 @@ extension LocalStorage: IChartTypeStorage {
 
     var chartType: ChartType? {
         get {
-            if let rawValue: Int = Kit.localStorage.value(for: keyChartType), let type = ChartType(rawValue: rawValue) {
+            if let rawValue: Int = storage.value(for: keyChartType), let type = ChartType(rawValue: rawValue) {
                 return type
             }
             return nil
         }
         set {
-            Kit.localStorage.set(value: newValue?.rawValue, for: keyChartType)
+            storage.set(value: newValue?.rawValue, for: keyChartType)
         }
     }
 
