@@ -55,7 +55,7 @@ extension SendRouter {
             return nil
         }
 
-        let interactor = SendInteractor(reachabilityManager: App.shared.reachabilityManager)
+        let interactor = SendInteractor(reachabilityManager: App.shared.reachabilityManager, rateManager: App.shared.rateManager, currencyManager: App.shared.currencyManager, localStorage: App.shared.localStorage)
         let presenter = SendPresenter(coin: wallet.coin, handler: handler, interactor: interactor, router: router)
         let viewController = SendViewController(delegate: presenter, views: subViews)
 
@@ -115,7 +115,6 @@ extension SendRouter {
 
         amountModule.delegate = presenter
         addressModule.delegate = presenter
-        feeModule.delegate = presenter
         feePriorityModule.delegate = presenter
         hodlerModule?.delegate = presenter
 
@@ -134,7 +133,6 @@ extension SendRouter {
 
         amountModule.delegate = presenter
         addressModule.delegate = presenter
-        feeModule.delegate = presenter
 
         return (presenter, [amountView, addressView, SendRouter.marginView, feeView], [addressRouter])
     }
@@ -153,7 +151,6 @@ extension SendRouter {
 
         amountModule.delegate = presenter
         addressModule.delegate = presenter
-        feeModule.delegate = presenter
         feePriorityModule.delegate = presenter
 
         return (presenter, [amountView, addressView, SendRouter.marginView, feePriorityView, feeView], [addressRouter, feePriorityRouter])
@@ -184,7 +181,6 @@ extension SendRouter {
 
         amountModule.delegate = presenter
         addressModule.delegate = presenter
-        feeModule.delegate = presenter
 
         return (presenter, [amountView, addressView, memoView, SendRouter.marginView, feeView], [addressRouter])
     }

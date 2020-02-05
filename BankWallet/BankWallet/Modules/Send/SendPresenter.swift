@@ -1,5 +1,6 @@
 import Foundation
 import RxSwift
+import XRatesKit
 
 class SendPresenter {
     weak var view: ISendView?
@@ -25,6 +26,20 @@ extension SendPresenter: ISendViewDelegate {
     func onViewDidLoad() {
         view?.set(coin: coin)
         handler.onViewDidLoad()
+
+        interactor.subscribeToMarketInfo(coinCode: coin.code, currencyCode: interactor.baseCurrency.code)
+
+        let rateValue = interactor.nonExpiredRateValue(coinCode: coin.code, currencyCode: interactor.baseCurrency.code)
+        handler.sync(rateValue: rateValue)
+
+        var inputType: SendInputType
+        if rateValue == nil {
+            inputType = .coin
+        } else {
+            inputType = interactor.defaultInputType
+        }
+
+        handler.sync(inputType: inputType)
     }
 
     func showKeyboard() {
@@ -66,6 +81,13 @@ extension SendPresenter: ISendInteractorDelegate {
 
     func didFailToSend(error: Error) {
         view?.show(error: error.convertedError)
+    }
+
+    func didReceive(marketInfo: MarketInfo) {
+        if !marketInfo.expired {
+            handler.sync(rateValue: marketInfo.rate)
+        }
+        handler.sync(rateValue: nil)
     }
 
 }

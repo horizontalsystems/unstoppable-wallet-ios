@@ -121,6 +121,16 @@ extension SendEthereumHandler: ISendHandler {
         }
     }
 
+    func sync(rateValue: Decimal?) {
+        amountModule.set(rateValue: rateValue)
+        feeModule.set(rateValue: rateValue)
+    }
+
+    func sync(inputType: SendInputType) {
+        amountModule.set(inputType: inputType)
+        feeModule.update(inputType: inputType)
+    }
+
     func sendSingle() throws -> Single<Void> {
         guard let feeRate = feePriorityModule.feeRate, case let .value(gasLimit) = estimateGasLimitState else {
             throw SendTransactionError.noFee
@@ -156,14 +166,6 @@ extension SendEthereumHandler: ISendAddressDelegate {
 
     func onUpdate(amount: Decimal) {
         amountModule.set(amount: amount)
-    }
-
-}
-
-extension SendEthereumHandler: ISendFeeDelegate {
-
-    var inputType: SendInputType {
-        amountModule.inputType
     }
 
 }
