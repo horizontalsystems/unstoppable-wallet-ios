@@ -2,13 +2,12 @@ import UIKit
 import ThemeKit
 
 class MainViewController: ThemeTabBarController {
-
     let viewDelegate: IMainViewDelegate
 
     init(viewDelegate: IMainViewDelegate, viewControllers: [UIViewController], selectedIndex: Int) {
         self.viewDelegate = viewDelegate
 
-        super.init(nibName: String(describing: MainViewController.self), bundle: nil)
+        super.init()
 
         self.viewControllers = viewControllers
 
@@ -23,10 +22,6 @@ class MainViewController: ThemeTabBarController {
         super.viewDidLoad()
 
         viewDelegate.viewDidLoad()
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .themeDefault
     }
 
 }

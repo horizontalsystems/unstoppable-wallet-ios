@@ -278,13 +278,13 @@ CHECKOUT OPTIONS:
     :commit: 7ac04899e62012e225e0ea48a96951de0b72ad08
     :git: https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git
   LanguageKit.swift:
-    :commit: f13023bd96de64e093375d9a268824ab347d1042
+    :commit: 8e0c355484d6ff49913817f2d7ac0a575c8203d0
     :git: https://github.com/horizontalsystems/component-kit-ios/
   StorageKit.swift:
-    :commit: f13023bd96de64e093375d9a268824ab347d1042
+    :commit: 8e0c355484d6ff49913817f2d7ac0a575c8203d0
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: f13023bd96de64e093375d9a268824ab347d1042
+    :commit: 8e0c355484d6ff49913817f2d7ac0a575c8203d0
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :commit: d2831ee47e270f98c931e1dae9d0e5b86b48a84a
