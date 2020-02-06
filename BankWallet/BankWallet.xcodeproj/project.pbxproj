@@ -1596,7 +1596,6 @@
 		D38405BC218317DF007D50AD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3373DB120C52F640082BC4A /* LaunchScreen.xib */; };
 		D38405BD218317DF007D50AD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50AB06B5215A269200A01E4A /* InfoPlist.strings */; };
 		D38405C0218317DF007D50AD /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A9D20CA88BF005A9F80 /* Colors.xcassets */; };
-		D38405C1218317DF007D50AD /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A8920CA40DC005A9F80 /* MainViewController.xib */; };
 		D38405C3218317DF007D50AD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A9C20CA73A0005A9F80 /* Localizable.strings */; };
 		D38405C9218317DF007D50AD /* BaseTwinItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11B35B5CE0ED32CD93DFBB56 /* BaseTwinItemView.xib */; };
 		D38405D321831B3D007D50AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3285F4520BD158E00644076 /* AppDelegate.swift */; };
@@ -1722,7 +1721,6 @@
 		D38406AC21831B3D007D50AD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3373DB120C52F640082BC4A /* LaunchScreen.xib */; };
 		D38406AD21831B3D007D50AD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50AB06B5215A269200A01E4A /* InfoPlist.strings */; };
 		D38406B021831B3D007D50AD /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A9D20CA88BF005A9F80 /* Colors.xcassets */; };
-		D38406B121831B3D007D50AD /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A8920CA40DC005A9F80 /* MainViewController.xib */; };
 		D38406B321831B3D007D50AD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A9C20CA73A0005A9F80 /* Localizable.strings */; };
 		D38406B521831B3D007D50AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3285F4C20BD158F00644076 /* Assets.xcassets */; };
 		D38406B921831B3D007D50AD /* BaseTwinItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11B35B5CE0ED32CD93DFBB56 /* BaseTwinItemView.xib */; };
@@ -1736,7 +1734,6 @@
 		D3B491EF21F1ECC600DAE203 /* TransactionsMetadataDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B491E721F1ECC600DAE203 /* TransactionsMetadataDataSource.swift */; };
 		D3B491F221F1ECC600DAE203 /* TransactionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B491E821F1ECC600DAE203 /* TransactionItem.swift */; };
 		D3B62A8A20CA40DC005A9F80 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A8820CA40DC005A9F80 /* MainViewController.swift */; };
-		D3B62A8B20CA40DC005A9F80 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A8920CA40DC005A9F80 /* MainViewController.xib */; };
 		D3B62A8E20CA436F005A9F80 /* BalanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A8C20CA436F005A9F80 /* BalanceViewController.swift */; };
 		D3B62A9220CA467E005A9F80 /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A9020CA467E005A9F80 /* TransactionsViewController.swift */; };
 		D3B62A9A20CA73A0005A9F80 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A9C20CA73A0005A9F80 /* Localizable.strings */; };
@@ -2398,7 +2395,6 @@
 		D3B491E721F1ECC600DAE203 /* TransactionsMetadataDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsMetadataDataSource.swift; sourceTree = "<group>"; };
 		D3B491E821F1ECC600DAE203 /* TransactionItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionItem.swift; sourceTree = "<group>"; };
 		D3B62A8820CA40DC005A9F80 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		D3B62A8920CA40DC005A9F80 /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		D3B62A8C20CA436F005A9F80 /* BalanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewController.swift; sourceTree = "<group>"; };
 		D3B62A9020CA467E005A9F80 /* TransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
 		D3B62A9B20CA73A0005A9F80 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -2794,7 +2790,6 @@
 				11B35B88A2D6C85E1600F3AF /* MainInteractor.swift */,
 				11B359E7A75E6B92D1305F40 /* MainPresenter.swift */,
 				D3B62A8820CA40DC005A9F80 /* MainViewController.swift */,
-				D3B62A8920CA40DC005A9F80 /* MainViewController.xib */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -4160,7 +4155,6 @@
 				D38406C021832751007D50AD /* Assets.xcassets in Resources */,
 				D38406C721832862007D50AD /* AppIconDevT.xcassets in Resources */,
 				D3B62A9E20CA88BF005A9F80 /* Colors.xcassets in Resources */,
-				D3B62A8B20CA40DC005A9F80 /* MainViewController.xib in Resources */,
 				D3B62A9A20CA73A0005A9F80 /* Localizable.strings in Resources */,
 				11B35ADC6467645C9545C89E /* BaseTwinItemView.xib in Resources */,
 			);
@@ -4181,7 +4175,6 @@
 				D38405BD218317DF007D50AD /* InfoPlist.strings in Resources */,
 				D38406C221832757007D50AD /* Assets.xcassets in Resources */,
 				D38405C0218317DF007D50AD /* Colors.xcassets in Resources */,
-				D38405C1218317DF007D50AD /* MainViewController.xib in Resources */,
 				D38405C3218317DF007D50AD /* Localizable.strings in Resources */,
 				D38406C921832968007D50AD /* AppIconDev.xcassets in Resources */,
 				D38405C9218317DF007D50AD /* BaseTwinItemView.xib in Resources */,
@@ -4196,7 +4189,6 @@
 				D38406AD21831B3D007D50AD /* InfoPlist.strings in Resources */,
 				D38406B021831B3D007D50AD /* Colors.xcassets in Resources */,
 				D38406C5218327E3007D50AD /* AppIcon.xcassets in Resources */,
-				D38406B121831B3D007D50AD /* MainViewController.xib in Resources */,
 				D38406B321831B3D007D50AD /* Localizable.strings in Resources */,
 				D38406B521831B3D007D50AD /* Assets.xcassets in Resources */,
 				D38406B921831B3D007D50AD /* BaseTwinItemView.xib in Resources */,
