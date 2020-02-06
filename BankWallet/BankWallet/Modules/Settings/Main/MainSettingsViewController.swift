@@ -2,6 +2,7 @@ import UIKit
 import SectionsTableView
 import SnapKit
 import ThemeKit
+import UIExtensions
 
 class MainSettingsViewController: ThemeViewController {
     private let delegate: IMainSettingsViewDelegate
