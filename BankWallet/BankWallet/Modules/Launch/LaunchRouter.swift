@@ -6,7 +6,7 @@ class LaunchRouter {
     static func module() -> UIViewController {
         let interactor: ILaunchInteractor = LaunchInteractor(
                 accountManager: App.shared.accountManager,
-                pinManager: App.shared.pinManager,
+                pinKit: App.shared.pinKit,
                 keychainKit: App.shared.keychainKit,
                 localStorage: App.shared.localStorage
         )
@@ -15,7 +15,7 @@ class LaunchRouter {
         switch presenter.launchMode {
         case .noPasscode: return NoPasscodeViewController()
         case .welcome: return WelcomeScreenRouter.module()
-        case .unlock: return LockScreenRouter.module(delegate: App.shared.lockManager, appStart: true)
+        case .unlock: return LockScreenRouter.module(pinKit: App.shared.pinKit, appStart: true)
         case .main: return MainRouter.module()
         }
     }

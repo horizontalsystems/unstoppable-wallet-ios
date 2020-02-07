@@ -1,4 +1,5 @@
 import UIKit
+import PinKit
 
 class SecuritySettingsRouter {
     weak var viewController: UIViewController?
@@ -11,15 +12,15 @@ extension SecuritySettingsRouter: ISecuritySettingsRouter {
     }
 
     func showSetPin(delegate: ISetPinDelegate) {
-        viewController?.present(SetPinRouter.module(delegate: delegate), animated: true)
+        viewController?.present(App.shared.pinKit.setPinModule(delegate: delegate), animated: true)
     }
 
     func showEditPin() {
-        viewController?.present(EditPinRouter.module(), animated: true)
+        viewController?.present(App.shared.pinKit.editPinModule, animated: true)
     }
 
     func showUnlock(delegate: IUnlockDelegate) {
-        viewController?.present(UnlockPinRouter.module(delegate: delegate, enableBiometry: false, unlockMode: .simple), animated: true)
+        viewController?.present(App.shared.pinKit.unlockPinModule(delegate: delegate, enableBiometry: false, unlockMode: .simple), animated: true)
     }
 
 }
@@ -28,7 +29,7 @@ extension SecuritySettingsRouter {
 
     static func module() -> UIViewController {
         let router = SecuritySettingsRouter()
-        let interactor = SecuritySettingsInteractor(backupManager: App.shared.backupManager, biometryManager: App.shared.biometryManager, pinManager: App.shared.pinManager)
+        let interactor = SecuritySettingsInteractor(backupManager: App.shared.backupManager, biometryManager: App.shared.biometryManager, pinKit: App.shared.pinKit)
         let presenter = SecuritySettingsPresenter(router: router, interactor: interactor)
         let view = SecuritySettingsViewController(delegate: presenter)
 

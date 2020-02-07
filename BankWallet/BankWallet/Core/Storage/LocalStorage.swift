@@ -36,11 +36,6 @@ extension LocalStorage: ILocalStorage {
         set { storage.set(value: newValue, for: debugLogKey) }
     }
 
-    var lastExitDate: Double {
-        get { storage.value(for: lastExitDateKey) ?? 0 }
-        set { storage.set(value: newValue, for: lastExitDateKey) }
-    }
-
     var baseCurrencyCode: String? {
         get { storage.value(for: keyBaseCurrencyCode) }
         set { storage.set(value: newValue, for: keyBaseCurrencyCode) }
@@ -91,11 +86,6 @@ extension LocalStorage: ILocalStorage {
         set {
             storage.set(value: newValue?.rawValue, for: balanceSortKey)
         }
-    }
-
-    var isBiometricOn: Bool {
-        get { storage.value(for: biometricOnKey) ?? false }
-        set { storage.set(value: newValue, for: biometricOnKey) }
     }
 
     var sendInputType: SendInputType? {

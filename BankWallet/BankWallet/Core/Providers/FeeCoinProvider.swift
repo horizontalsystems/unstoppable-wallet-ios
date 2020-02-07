@@ -6,11 +6,11 @@ class FeeCoinProvider {
     }
 
     private var erc20FeeCoin: Coin? {
-        return appConfigProvider.coins.first(where: { $0.type == .ethereum })
+        appConfigProvider.coins.first(where: { $0.type == .ethereum })
     }
 
     private var erc20FeeCoinProtocol: String {
-        return "ERC20"
+        "ERC20"
     }
 
     private func binanceFeeCoin(symbol: String) -> Coin? {

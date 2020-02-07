@@ -1,11 +1,12 @@
 import RxSwift
 import StorageKit
+import PinKit
 
 class AppManager {
     private let accountManager: IAccountManager
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
-    private let lockManager: ILockManager
+    private let pinKit: IPinKit
     private let keychainKit: IKeychainKit
     private let biometryManager: IBiometryManager
     private let blurManager: IBlurManager
@@ -18,7 +19,7 @@ class AppManager {
     private let didBecomeActiveSubject = PublishSubject<()>()
     private let willEnterForegroundSubject = PublishSubject<()>()
 
-    init(accountManager: IAccountManager, walletManager: IWalletManager, adapterManager: IAdapterManager, lockManager: ILockManager,
+    init(accountManager: IAccountManager, walletManager: IWalletManager, adapterManager: IAdapterManager, pinKit: IPinKit,
          keychainKit: IKeychainKit, biometryManager: IBiometryManager, blurManager: IBlurManager,
          notificationManager: INotificationManager, backgroundPriceAlertManager: IBackgroundPriceAlertManager,
          kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
@@ -27,7 +28,7 @@ class AppManager {
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.adapterManager = adapterManager
-        self.lockManager = lockManager
+        self.pinKit = pinKit
         self.keychainKit = keychainKit
         self.biometryManager = biometryManager
         self.blurManager = blurManager
@@ -68,7 +69,7 @@ extension AppManager {
     func didEnterBackground() {
         debugBackgroundLogger?.logEnterBackground()
 
-        lockManager.didEnterBackground()
+        pinKit.didEnterBackground()
 //        backgroundPriceAlertManager.didEnterBackground()
     }
 
@@ -77,7 +78,7 @@ extension AppManager {
         willEnterForegroundSubject.onNext(())
 
         keychainKit.handleForeground()
-        lockManager.willEnterForeground()
+        pinKit.willEnterForeground()
         notificationManager.removeNotifications()
         adapterManager.refresh()
         biometryManager.refresh()

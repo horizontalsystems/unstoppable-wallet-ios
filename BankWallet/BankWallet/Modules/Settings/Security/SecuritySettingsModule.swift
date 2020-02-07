@@ -1,3 +1,5 @@
+import PinKit
+
 protocol ISecuritySettingsView: class {
     func refresh()
 

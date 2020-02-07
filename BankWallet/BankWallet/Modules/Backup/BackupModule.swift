@@ -1,3 +1,5 @@
+import PinKit
+
 protocol IBackupViewDelegate {
     var isBackedUp: Bool { get }
     var coinCodes: String { get }

@@ -1,4 +1,5 @@
 import RxSwift
+import PinKit
 
 class SecuritySettingsInteractor {
     private let disposeBag = DisposeBag()
@@ -7,12 +8,12 @@ class SecuritySettingsInteractor {
 
     private let backupManager: IBackupManager
     private let biometryManager: IBiometryManager
-    private let pinManager: IPinManager
+    private let pinKit: IPinKit
 
-    init(backupManager: IBackupManager, biometryManager: IBiometryManager, pinManager: IPinManager) {
+    init(backupManager: IBackupManager, biometryManager: IBiometryManager, pinKit: IPinKit) {
         self.backupManager = backupManager
         self.biometryManager = biometryManager
-        self.pinManager = pinManager
+        self.pinKit = pinKit
 
         backupManager.allBackedUpObservable
                 .observeOn(MainScheduler.instance)
@@ -21,7 +22,7 @@ class SecuritySettingsInteractor {
                 })
                 .disposed(by: disposeBag)
 
-        pinManager.isPinSetObservable
+        pinKit.isPinSetObservable
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] isPinSet in
                     self?.delegate?.didUpdate(pinSet: isPinSet)
@@ -41,28 +42,28 @@ class SecuritySettingsInteractor {
 extension SecuritySettingsInteractor: ISecuritySettingsInteractor {
 
     var allBackedUp: Bool {
-        return backupManager.allBackedUp
+        backupManager.allBackedUp
     }
 
     var biometryType: BiometryType {
-        return biometryManager.biometryType
+        biometryManager.biometryType
     }
 
     var pinSet: Bool {
-        return pinManager.isPinSet
+        pinKit.isPinSet
     }
 
     var biometryEnabled: Bool {
         get {
-            return pinManager.biometryEnabled
+            pinKit.biometryEnabled
         }
         set {
-            pinManager.biometryEnabled = newValue
+            pinKit.biometryEnabled = newValue
         }
     }
 
     func disablePin() throws {
-        try pinManager.clear()
+        try pinKit.clear()
     }
 
 }
