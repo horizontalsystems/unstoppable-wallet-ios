@@ -8,8 +8,6 @@ class App {
     let keychainKit: IKeychainKit
     let pinKit: IPinKit
 
-    let lockProvider: ILockProvider
-
     let localStorage: ILocalStorage & IChartTypeStorage
     let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage
 
@@ -59,6 +57,7 @@ class App {
     let rateCoinMapper: RateCoinMapper
 
     let keychainKitDelegate: KeychainKitDelegate
+    let pinKitDelegate: PinKitDelegate
 
     let appManager: AppManager
 
@@ -109,8 +108,7 @@ class App {
         let adapterFactory: IAdapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager)
         adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager)
 
-        lockProvider = LockProvider()
-        pinKit = PinKit.Kit(secureStorage: keychainKit.secureStorage, localStorage: StorageKit.LocalStorage.default, lockProvider: lockProvider)
+        pinKit = PinKit.Kit(secureStorage: keychainKit.secureStorage, localStorage: StorageKit.LocalStorage.default)
         let blurManager: IBlurManager = BlurManager(pinKit: pinKit)
 
         dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
@@ -137,6 +135,9 @@ class App {
 
         keychainKitDelegate = KeychainKitDelegate(accountManager: accountManager, walletManager: walletManager)
         keychainKit.set(delegate: keychainKitDelegate)
+
+        pinKitDelegate = PinKitDelegate()
+        pinKit.set(delegate: pinKitDelegate)
 
         let kitCleaner = KitCleaner(accountManager: accountManager)
         appManager = AppManager(

@@ -31,7 +31,7 @@ extension MainRouter {
         presenter.view = viewController
         router.viewController = viewController
 
-        App.shared.lockProvider.viewController = viewController
+        App.shared.pinKitDelegate.viewController = viewController
 
         return viewController
     }
