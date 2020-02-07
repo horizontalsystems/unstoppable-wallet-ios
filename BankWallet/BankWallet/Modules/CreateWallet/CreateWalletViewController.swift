@@ -1,7 +1,8 @@
 import UIKit
 import SectionsTableView
+import ThemeKit
 
-class CreateWalletViewController: WalletViewController {
+class CreateWalletViewController: ThemeViewController {
     private let delegate: ICreateWalletViewDelegate
 
     private var featuredViewItems = [CoinToggleViewItem]()

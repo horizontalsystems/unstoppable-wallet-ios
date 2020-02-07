@@ -251,10 +251,6 @@
 
 "settings_base_currency.title" = "Währung";
 
-// Settings -> Language
-
-"settings_language.title" = "Sprache";
-
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "Coin Manager";
@@ -344,10 +340,6 @@
 "unlock_pin.cant_save_pin" = "Hoppla! Wir können den Code nicht speichern - bitte kontaktieren Sie uns so schnell wie möglich.";
 "unlock_pin.blocked_until" = "Deaktiviert bis: %@ ";
 "rate_list.updated" = "aktualisiert";
-
-// No Passcode
-
-"no_passcode.info_text" = "Für diese App ist es erforderlich, dass auf diesem Telefon die Zugangssperre (Bildschirmsperre) aktiviert ist.\n\nSie können die Bildschirmsperre in den iOS-Einstellungen ein- und ausschalten.\n\nBitte beachten Sie: Wenn Sie die PIN im Betriebssystem (dem OS Ihres Telefons) ausgeschaltet haben, sind die Sicherheitsmaßnahmen im Safe Storage Ihres Telefons für vorher gespeicherte Daten ungültig geworden. Sie müssen daher Ihre Wallet-Keys wiederherstellen, um an Ihr Wallet zu gelangen.";
 
 //NumPad
 

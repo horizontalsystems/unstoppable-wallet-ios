@@ -1,6 +1,7 @@
 import UIKit
+import ThemeKit
 
-class DebugViewController: WalletViewController {
+class DebugViewController: ThemeViewController {
     private let delegate: IDebugViewDelegate
 
     private let textView = UITextView.appDebug

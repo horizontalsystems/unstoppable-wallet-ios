@@ -1,8 +1,8 @@
 import UIKit
 
 class AccountDoubleLineCellView: UIView {
-    private static let titleFont: UIFont = .appHeadline2
-    private static let subtitleFont: UIFont = .appSubhead2
+    private static let titleFont: UIFont = .headline2
+    private static let subtitleFont: UIFont = .subhead2
     private static let verticalMargin: CGFloat = .margin2x
 
     private let titleLabel = UILabel()
@@ -12,7 +12,7 @@ class AccountDoubleLineCellView: UIView {
         super.init(frame: frame)
 
         titleLabel.font = AccountDoubleLineCellView.titleFont
-        titleLabel.textColor = .appOz
+        titleLabel.textColor = .themeOz
 
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
@@ -21,7 +21,7 @@ class AccountDoubleLineCellView: UIView {
         }
 
         subtitleLabel.font = AccountDoubleLineCellView.subtitleFont
-        subtitleLabel.textColor = .appGray
+        subtitleLabel.textColor = .themeGray
         subtitleLabel.numberOfLines = 0
 
         addSubview(subtitleLabel)

@@ -1,8 +1,9 @@
 import UIKit
 import SnapKit
 import SectionsTableView
+import ThemeKit
 
-class SendConfirmationViewController: WalletViewController, SectionsDataSource {
+class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
     private let confirmationFieldHeight: CGFloat = 24
 
     private let delegate: ISendConfirmationViewDelegate

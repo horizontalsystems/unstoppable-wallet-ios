@@ -13,7 +13,7 @@ class ChartRateItemView: BaseActionItemView {
     private let processSpinner = HUDProgressView(
             strokeLineWidth: ChartRateItemView.spinnerLineWidth,
             radius: ChartRateItemView.spinnerRadius,
-            strokeColor: .appOz
+            strokeColor: .themeOz
     )
     private let errorLabel = UILabel()
 
@@ -44,8 +44,8 @@ class ChartRateItemView: BaseActionItemView {
         errorLabel.contentMode = .center
         errorLabel.textAlignment = .center
         errorLabel.numberOfLines = 0
-        errorLabel.font = .appSubhead1
-        errorLabel.textColor = .appGray
+        errorLabel.font = .subhead1
+        errorLabel.textColor = .themeGray
         errorLabel.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
             maker.width.equalToSuperview().inset(CGFloat.margin6x)

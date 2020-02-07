@@ -11,17 +11,13 @@ class SendAccountView: UIView {
 
         super.init(frame: .zero)
 
-        self.snp.makeConstraints { maker in
-            maker.height.equalTo(56)
-        }
-
         backgroundColor = .clear
 
         addSubview(addressInputField)
         addressInputField.snp.makeConstraints { maker in
+            maker.top.equalToSuperview().inset(CGFloat.margin3x)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.bottom.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightSingleLineInput)
         }
         addressInputField.onScan = { [weak self] in
             self?.delegate.onScanClicked()

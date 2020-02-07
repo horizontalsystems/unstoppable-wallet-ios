@@ -1,7 +1,8 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
-class BackupEosViewController: WalletViewController {
+class BackupEosViewController: ThemeViewController {
     private let delegate: IBackupEosViewDelegate
 
     private let scrollView = UIScrollView()
@@ -14,7 +15,7 @@ class BackupEosViewController: WalletViewController {
     private let hintLabel = UILabel()
     private let qrCodeImageView = UIImageView()
 
-    private let closeButtonHolder = GradientView(gradientHeight: .margin4x, viewHeight: .heightBottomWrapperBar, fromColor: UIColor.appTyler.withAlphaComponent(0), toColor: .appTyler)
+    private let closeButtonHolder = GradientView(gradientHeight: .margin4x, viewHeight: .heightBottomWrapperBar, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: .themeTyler)
     private let closeButton: UIButton = .appYellow
 
     init(delegate: IBackupEosViewDelegate) {
@@ -57,8 +58,8 @@ class BackupEosViewController: WalletViewController {
         closeButtonHolder.addSubview(closeButton)
 
         accountLabel.text = "backup.eos.account_name".localized.uppercased()
-        accountLabel.font = .appSubhead1
-        accountLabel.textColor = .appGray
+        accountLabel.font = .subhead1
+        accountLabel.textColor = .themeGray
         accountLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin6x)
             maker.top.equalToSuperview().offset(CGFloat.margin3x + CGFloat.margin2x) // simulate placement in header
@@ -73,8 +74,8 @@ class BackupEosViewController: WalletViewController {
         }
 
         activePrivateKeyLabel.text = "backup.eos.active_private_key".localized.uppercased()
-        activePrivateKeyLabel.font = .appSubhead1
-        activePrivateKeyLabel.textColor = .appGray
+        activePrivateKeyLabel.font = .subhead1
+        activePrivateKeyLabel.textColor = .themeGray
         activePrivateKeyLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin6x)
             maker.top.equalTo(self.accountField.snp.bottom).offset(CGFloat.margin3x + CGFloat.margin2x) // simulate placement in header
@@ -95,13 +96,13 @@ class BackupEosViewController: WalletViewController {
 
         hintLabel.text = "backup.eos.hint".localized
         hintLabel.numberOfLines = 0
-        hintLabel.font = .appSubhead2
-        hintLabel.textColor = .appGray
+        hintLabel.font = .subhead2
+        hintLabel.textColor = .themeGray
 
         qrCodeImageView.backgroundColor = .white
         qrCodeImageView.contentMode = .center
         qrCodeImageView.clipsToBounds = true
-        qrCodeImageView.layer.cornerRadius = .cornerRadius4
+        qrCodeImageView.layer.cornerRadius = .cornerRadius1x
         qrCodeImageView.snp.makeConstraints { maker in
             maker.centerX.equalTo(self.view)
             maker.top.equalTo(hintLabel.snp.bottom).offset(CGFloat.margin6x)
@@ -111,14 +112,15 @@ class BackupEosViewController: WalletViewController {
 
         closeButtonHolder.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightBottomWrapperBar)
             maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+            maker.height.equalTo(CGFloat.heightBottomWrapperBar)
         }
 
         closeButton.setTitle("backup.close".localized, for: .normal)
         closeButton.addTarget(self, action: #selector(didTapClose), for: .touchUpInside)
         closeButton.snp.makeConstraints { maker in
-            maker.leading.trailing.bottom.equalToSuperview().inset(CGFloat.marginButtonSide)
+            maker.leading.trailing.bottom.equalToSuperview().inset(CGFloat.margin6x)
+            maker.bottom.equalToSuperview().inset(CGFloat.margin8x)
             maker.height.equalTo(CGFloat.heightButton)
         }
 

@@ -1,5 +1,6 @@
 import UIKit
 import ActionSheet
+import ThemeKit
 
 class UnlinkViewController: WalletActionSheetController {
     private let delegate: IUnlinkViewDelegate
@@ -8,7 +9,7 @@ class UnlinkViewController: WalletActionSheetController {
 
     init(delegate: IUnlinkViewDelegate) {
         self.delegate = delegate
-        super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
+        super.init()
 
         initItems()
     }
@@ -22,7 +23,7 @@ class UnlinkViewController: WalletActionSheetController {
                 title: "settings_manage_keys.delete.title".localized,
                 subtitle: delegate.title,
                 icon: UIImage(named: "Attention Icon")?.withRenderingMode(.alwaysTemplate),
-                iconTintColor: .appLucian,
+                iconTintColor: .themeLucian,
                 tag: 0,
                 onClose: { [weak self] in
                     self?.dismiss(byFade: false)
@@ -32,7 +33,7 @@ class UnlinkViewController: WalletActionSheetController {
 
         var texts = [NSAttributedString]()
 
-        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.appOz, NSAttributedString.Key.font: UIFont.appSubhead2]
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.themeOz, NSAttributedString.Key.font: UIFont.subhead2]
         texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_remove".localized(delegate.title), attributes: attributes))
         texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_disable".localized(delegate.coinCodes), attributes: attributes))
         texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_loose".localized(delegate.title), attributes: attributes))
@@ -61,7 +62,6 @@ class UnlinkViewController: WalletActionSheetController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        backgroundColor = AppTheme.actionSheetBackgroundColor
         contentBackgroundColor = .white
     }
 

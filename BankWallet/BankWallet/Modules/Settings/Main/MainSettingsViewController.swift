@@ -1,8 +1,10 @@
 import UIKit
 import SectionsTableView
 import SnapKit
+import ThemeKit
+import UIExtensions
 
-class MainSettingsViewController: WalletViewController {
+class MainSettingsViewController: ThemeViewController {
     private let delegate: IMainSettingsViewDelegate
 
     private let tableView = SectionsTableView(style: .grouped)
@@ -61,7 +63,7 @@ class MainSettingsViewController: WalletViewController {
 
         return [
             Row<RightImageCell>(id: "security_center", hash: "security_center.\(allBackedUp)", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.security_center".localized, rightImage: securityAttentionImage, rightImageTintColor: .appLucian, showDisclosure: true)
+                cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.security_center".localized, rightImage: securityAttentionImage, rightImageTintColor: .themeLucian, showDisclosure: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapSecurity()
             }),
@@ -124,10 +126,10 @@ class MainSettingsViewController: WalletViewController {
                 self?.delegate.didTapTellFriends()
             }),
 
-            Row<TitleCell>(id: "report_problem", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Report Problem Icon"), title: "settings.report_problem".localized, showDisclosure: true, last: true)
+            Row<TitleCell>(id: "contact", height: .heightSingleLineCell, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Contact Icon"), title: "settings.contact".localized, showDisclosure: true, last: true)
             }, action: { [weak self] _ in
-                self?.delegate.didTapReportProblem()
+                self?.delegate.didTapContact()
             })
         ]
     }

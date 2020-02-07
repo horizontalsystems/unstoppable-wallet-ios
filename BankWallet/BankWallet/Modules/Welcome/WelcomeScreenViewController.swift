@@ -38,7 +38,7 @@ class WelcomeScreenViewController: UIViewController {
 
         view.addSubview(createButton)
         createButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.marginButtonSide)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
             maker.height.equalTo(CGFloat.heightButton)
         }
 
@@ -47,13 +47,13 @@ class WelcomeScreenViewController: UIViewController {
 
         view.addSubview(restoreButton)
         restoreButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.marginButtonSide)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
             maker.top.equalTo(createButton.snp.bottom).offset(CGFloat.margin4x)
             maker.height.equalTo(CGFloat.heightButton)
         }
 
-        versionLabel.textColor = .appGray
-        versionLabel.font = .appCaption
+        versionLabel.textColor = .themeGray
+        versionLabel.font = .caption
 
         view.addSubview(versionLabel)
         versionLabel.snp.makeConstraints { maker in

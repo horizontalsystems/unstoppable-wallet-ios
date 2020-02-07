@@ -236,7 +236,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "settings.language" = "Language";
 "settings.about" = "About";
 "settings.tell_friends" = "Tell Friends";
-"settings.report_problem" = "Report Problem";
+"settings.contact" = "Contact";
 "settings.light_mode" = "Light Mode";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -253,10 +253,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Settings -> Base Currency
 
 "settings_base_currency.title" = "Base Currency";
-
-// Settings -> Language
-
-"settings_language.title" = "Language";
+"settings_base_currency.provided_by" = "Real-time and historical exchange rates provided by CryptoCompare.com";
 
 // Settings -> Manage Wallet
 
@@ -307,12 +304,13 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "settings_security.face_id" = "Face ID";
 "security_settings.delete_alert_button" = "Delete from Phone";
 
-// Settings -> Report Problem
+// Settings -> Contact
 
-"settings.report_problem.title" = "Report Problem";
-"settings.report_problem.app_status" = "App Status";
-"settings.report_problem.email" = "E-mail";
-"settings.report_problem.telegram" = "Telegram";
+"settings.contact.title" = "Contact";
+"settings.contact.app_status" = "App Status";
+"settings.contact.email" = "E-mail";
+"settings.contact.telegram_wallet" = "Telegram (Wallet Help)";
+"settings.contact.telegram_developers" = "Telegram (Developers)";
 
 // Manage Keys
 
@@ -353,10 +351,6 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "unlock_pin.cant_save_pin" = "Ouch! We cannot save your passcode, please contact us asap!";
 "unlock_pin.blocked_until" = "Disabled until: %@";
 "rate_list.updated" = "updated";
-
-// No Passcode
-
-"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
 
 //NumPad
 

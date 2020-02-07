@@ -1,12 +1,13 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
-class SendConfirmationMemoCell: AppCell {
+class SendConfirmationMemoCell: ThemeCell {
 
     private let memoLabel = UILabel()
     private let memoTitleLabel = UILabel()
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         backgroundColor = .clear
@@ -15,7 +16,7 @@ class SendConfirmationMemoCell: AppCell {
         contentView.snp.makeConstraints { maker in
             maker.height.equalTo(CGFloat.heightSingleLineCell)
         }
-        contentView.backgroundColor = .appLawrence
+        contentView.backgroundColor = .themeLawrence
 
         addSubview(memoLabel)
         addSubview(memoTitleLabel)
@@ -26,8 +27,8 @@ class SendConfirmationMemoCell: AppCell {
             maker.centerY.equalToSuperview()
         }
 
-        memoLabel.font = .appSubhead1I
-        memoLabel.textColor = .appOz
+        memoLabel.font = .subhead1I
+        memoLabel.textColor = .themeOz
         memoLabel.textAlignment = .right
 
         memoTitleLabel.snp.makeConstraints { maker in
@@ -35,8 +36,8 @@ class SendConfirmationMemoCell: AppCell {
             maker.centerY.equalToSuperview()
         }
 
-        memoTitleLabel.font = .appSubhead1
-        memoTitleLabel.textColor = .appGray
+        memoTitleLabel.font = .subhead1
+        memoTitleLabel.textColor = .themeGray
         memoTitleLabel.text = "send.confirmation.memo_placeholder".localized
 
         memoTitleLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)

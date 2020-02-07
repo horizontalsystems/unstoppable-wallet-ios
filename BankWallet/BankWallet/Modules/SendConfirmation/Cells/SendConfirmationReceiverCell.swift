@@ -1,13 +1,14 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
-class SendConfirmationReceiverCell: AppCell {
+class SendConfirmationReceiverCell: ThemeCell {
     private let hashView = HashView(singleLine: false)
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        contentView.backgroundColor = .appLawrence
+        contentView.backgroundColor = .themeLawrence
         backgroundColor = .clear
         selectionStyle = .none
 
@@ -34,7 +35,7 @@ class SendConfirmationReceiverCell: AppCell {
 
     static func height(forContainerWidth containerWidth: CGFloat, text: String) -> CGFloat {
         let insets = HashView.textInsets
-        return ceil(text.height(forContainerWidth: containerWidth - 2 * CGFloat.margin4x - insets.width, font: .appSubhead1)) + insets.height + 2 * .margin2x
+        return ceil(text.height(forContainerWidth: containerWidth - 2 * CGFloat.margin4x - insets.width, font: .subhead1)) + insets.height + 2 * .margin2x
     }
 
 }

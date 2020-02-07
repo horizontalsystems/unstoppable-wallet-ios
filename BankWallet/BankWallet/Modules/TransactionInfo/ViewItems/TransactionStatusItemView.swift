@@ -12,7 +12,7 @@ class TransactionStatusItemView: BaseActionItemView {
 
     private let processingWrapper = UIView()
     private let processingLabel = UILabel()
-    private let barsProgressView = BarsProgressView(barWidth: 4, color: .clear, inactiveColor: .appSteel20)
+    private let barsProgressView = BarsProgressView(barWidth: 4, color: .clear, inactiveColor: .themeSteel20)
 
     private let failedLabel = UILabel()
 
@@ -23,7 +23,7 @@ class TransactionStatusItemView: BaseActionItemView {
     override func initView() {
         super.initView()
 
-        backgroundColor = .appLawrence
+        backgroundColor = .themeLawrence
 
         addSubview(titleLabel)
         addSubview(completeStatusWrapper)
@@ -40,8 +40,8 @@ class TransactionStatusItemView: BaseActionItemView {
         }
 
         titleLabel.text = "tx_info.status".localized
-        titleLabel.font = .appSubhead2
-        titleLabel.textColor = .appGray
+        titleLabel.font = .subhead2
+        titleLabel.textColor = .themeGray
 
         completeStatusWrapper.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
@@ -52,8 +52,8 @@ class TransactionStatusItemView: BaseActionItemView {
             maker.leading.top.bottom.equalToSuperview()
         }
 
-        completeStatusLabel.font = .appSubhead1
-        completeStatusLabel.textColor = .appOz
+        completeStatusLabel.font = .subhead1
+        completeStatusLabel.textColor = .themeOz
         completeStatusLabel.text = "tx_info.status.confirmed".localized
 
         completeStatusIcon.snp.makeConstraints { maker in
@@ -61,7 +61,7 @@ class TransactionStatusItemView: BaseActionItemView {
             maker.centerY.equalToSuperview()
             maker.trailing.equalToSuperview()
         }
-        completeStatusIcon.image = UIImage(named: "Transaction Info Completed Icon")?.tinted(with: .appRemus)
+        completeStatusIcon.image = UIImage(named: "Transaction Info Completed Icon")?.tinted(with: .themeRemus)
 
         processingWrapper.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
@@ -73,8 +73,8 @@ class TransactionStatusItemView: BaseActionItemView {
             maker.centerY.equalToSuperview()
         }
 
-        processingLabel.font = .appSubhead1
-        processingLabel.textColor = .appOz
+        processingLabel.font = .subhead1
+        processingLabel.textColor = .themeOz
 
         barsProgressView.snp.makeConstraints { maker in
             maker.leading.equalTo(processingLabel.snp.trailing).offset(CGFloat.margin2x)
@@ -82,15 +82,15 @@ class TransactionStatusItemView: BaseActionItemView {
             maker.height.equalTo(20)
         }
 
-        barsProgressView.set(barsCount: AppTheme.progressStepsCount)
+        barsProgressView.set(barsCount: BarsProgressView.progressStepsCount)
 
         failedLabel.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
-        failedLabel.font = .appSubhead1
-        failedLabel.textColor = .appLucian
+        failedLabel.font = .subhead1
+        failedLabel.textColor = .themeLucian
         failedLabel.text = "tx_info.status.failed".localized
     }
 
@@ -113,7 +113,7 @@ class TransactionStatusItemView: BaseActionItemView {
 
             processingLabel.text = item.type == .incoming ? "transactions.receiving".localized : "transactions.sending".localized
 
-            barsProgressView.set(filledColor: item.type == .incoming ? .appGreenD : .appYellowD)
+            barsProgressView.set(filledColor: item.type == .incoming ? .themeGreenD : .themeYellowD)
             barsProgressView.set(progress: progress)
 
         } else {

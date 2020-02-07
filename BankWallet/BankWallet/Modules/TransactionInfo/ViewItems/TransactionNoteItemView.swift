@@ -16,7 +16,7 @@ class TransactionNoteItemView: BaseActionItemView {
     override func initView() {
         super.initView()
 
-        backgroundColor = .appLawrence
+        backgroundColor = .themeLawrence
 
         addSubview(noteLabel)
         addSubview(imageView)
@@ -34,8 +34,8 @@ class TransactionNoteItemView: BaseActionItemView {
             maker.leading.equalTo(imageView.snp.trailing).offset(CGFloat.margin3x)
         }
 
-        noteLabel.font = .appSubhead2
-        noteLabel.textColor = .appGray
+        noteLabel.font = .subhead2
+        noteLabel.textColor = .themeGray
         noteLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         noteLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         noteLabel.numberOfLines = 0
@@ -61,7 +61,7 @@ class TransactionNoteItemView: BaseActionItemView {
         imageView.image = item.flatMap { UIImage(named: $0.imageName) }
 
         if let iconName = item?.iconName {
-            actionButton.setImage(UIImage(named: iconName)?.tinted(with: .appJacob), for: .normal)
+            actionButton.setImage(UIImage(named: iconName)?.tinted(with: .themeJacob), for: .normal)
             actionButton.snp.updateConstraints { maker in
                 maker.trailing.equalToSuperview()
                 maker.width.equalTo(TransactionNoteItemView.rightButtonSize + CGFloat.margin4x + CGFloat.margin2x)
@@ -82,7 +82,7 @@ extension TransactionNoteItemView {
         let leftMargin = CGFloat.margin4x + TransactionNoteItemView.leftImageSize + CGFloat.margin3x
         let rightMargin = showRightButton ? (TransactionNoteItemView.rightButtonSize + CGFloat.margin4x + CGFloat.margin2x) : CGFloat.margin4x
 
-        return note.height(forContainerWidth: UIScreen.main.bounds.width - leftMargin - rightMargin - 2 * ActionSheetTheme.sideMargin, font: .appSubhead2)
+        return note.height(forContainerWidth: UIScreen.main.bounds.width - leftMargin - rightMargin - 2 * ActionSheetTheme.sideMargin, font: .subhead2)
     }
 
 }

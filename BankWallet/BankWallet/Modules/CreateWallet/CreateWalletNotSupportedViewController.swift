@@ -4,13 +4,13 @@ import ActionSheet
 class CreateWalletNotSupportedViewController: WalletActionSheetController {
 
     init(coin: Coin, predefinedAccountType: PredefinedAccountType) {
-        super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
+        super.init()
 
         let titleItem = AlertTitleItem(
                 title: "manage_coins.add_coin.title".localized(coin.title),
                 subtitle: "manage_coins.add_coin.subtitle".localized(predefinedAccountType.title),
                 icon: UIImage(coin: coin),
-                iconTintColor: AppTheme.coinIconColor,
+                iconTintColor: .themeGray,
                 tag: 0,
                 onClose: { [weak self] in
                     self?.dismiss(byFade: false)
@@ -30,7 +30,6 @@ class CreateWalletNotSupportedViewController: WalletActionSheetController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        backgroundColor = AppTheme.actionSheetBackgroundColor
         contentBackgroundColor = .white
     }
 

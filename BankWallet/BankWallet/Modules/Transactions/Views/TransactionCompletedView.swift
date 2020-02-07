@@ -21,8 +21,8 @@ class TransactionCompletedView: UIView {
 
         completedImageView.image = UIImage(named: "Transaction Success Icon")
 
-        timeLabel.textColor = .appGray
-        timeLabel.font = .appSubhead2
+        timeLabel.textColor = .themeGray
+        timeLabel.font = .subhead2
     }
 
     required init?(coder aDecoder: NSCoder) {

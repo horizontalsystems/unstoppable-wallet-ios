@@ -2,8 +2,9 @@ import UIKit
 import SnapKit
 import ActionSheet
 import DeepDiff
+import ThemeKit
 
-class TransactionsViewController: WalletViewController {
+class TransactionsViewController: ThemeViewController {
     let delegate: ITransactionsViewDelegate
 
     let tableView = UITableView(frame: .zero, style: .plain)
@@ -62,7 +63,7 @@ class TransactionsViewController: WalletViewController {
         emptyLabel.text = "transactions.empty_text".localized
         emptyLabel.numberOfLines = 0
         emptyLabel.font = .systemFont(ofSize: 14)
-        emptyLabel.textColor = .appGray
+        emptyLabel.textColor = .themeGray
         emptyLabel.textAlignment = .center
 
         delegate.viewDidLoad()
@@ -167,7 +168,7 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if let headerBackgroundTriggerOffset = headerBackgroundTriggerOffset {
-            filterHeaderView.backgroundColor = scrollView.contentOffset.y > headerBackgroundTriggerOffset ? AppTheme.navigationBarBackgroundColor : .clear
+            filterHeaderView.backgroundColor = scrollView.contentOffset.y > headerBackgroundTriggerOffset ? .themeNavigationBarBackground : .clear
         }
     }
 

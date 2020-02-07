@@ -4,16 +4,17 @@ import UIExtensions
 import HUD
 import SnapKit
 import RxSwift
+import ThemeKit
 
-class FullTransactionInfoViewController: WalletViewController, SectionsDataSource {
+class FullTransactionInfoViewController: ThemeViewController, SectionsDataSource {
     static let spinnerLineWidth: CGFloat = 4
     static let spinnerSideSize: CGFloat = 32
 
     private let cellName = String(describing: FullTransactionInfoTextCell.self)
     private let closeButtonImage = UIImage(named: "Close Icon")
     private let shareButtonImage = UIImage(named: "Share Full Transaction Icon")
-    private let attentionImage = UIImage(named: "Attention Icon Large", in: Bundle(for: RequestErrorView.self), compatibleWith: nil)?.tinted(with: .appGray)
-    private let errorImage =  UIImage(named: "Error Icon", in: Bundle(for: RequestErrorView.self), compatibleWith: nil)?.tinted(with: .appGray)
+    private let attentionImage = UIImage(named: "Attention Icon Large", in: Bundle(for: RequestErrorView.self), compatibleWith: nil)?.tinted(with: .themeGray)
+    private let errorImage =  UIImage(named: "Error Icon", in: Bundle(for: RequestErrorView.self), compatibleWith: nil)?.tinted(with: .themeGray)
 
     private let delegate: IFullTransactionInfoViewDelegate
 
@@ -25,7 +26,7 @@ class FullTransactionInfoViewController: WalletViewController, SectionsDataSourc
     private let errorView = RequestErrorView()
     private let loadingView = HUDProgressView(strokeLineWidth: FullTransactionInfoViewController.spinnerLineWidth,
             radius: FullTransactionInfoViewController.spinnerSideSize / 2 - FullTransactionInfoViewController.spinnerLineWidth / 2,
-            strokeColor: .appGray)
+            strokeColor: .themeGray)
 
     init(delegate: IFullTransactionInfoViewDelegate) {
         self.delegate = delegate
@@ -144,7 +145,7 @@ class FullTransactionInfoViewController: WalletViewController, SectionsDataSourc
 
     func didScroll() {
         if let headerBackgroundTriggerOffset = headerBackgroundTriggerOffset {
-            hashHeaderView?.backgroundView?.backgroundColor = tableView.contentOffset.y > headerBackgroundTriggerOffset ? AppTheme.navigationBarBackgroundColor : .clear
+            hashHeaderView?.backgroundView?.backgroundColor = tableView.contentOffset.y > headerBackgroundTriggerOffset ? .themeNavigationBarBackground : .clear
         }
     }
 

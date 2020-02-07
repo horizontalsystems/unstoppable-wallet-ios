@@ -1,4 +1,5 @@
 import UIKit
+import ThemeKit
 
 class MainRouter {
     weak var viewController: UIViewController?
@@ -30,21 +31,21 @@ extension MainRouter {
         presenter.view = viewController
         router.viewController = viewController
 
-        App.shared.lockRouter.viewController = viewController
+        App.shared.lockProvider.viewController = viewController
 
         return viewController
     }
 
     private static var balanceNavigation: UIViewController {
-        return WalletNavigationController(rootViewController: BalanceRouter.module())
+        ThemeNavigationController(rootViewController: BalanceRouter.module())
     }
 
     private static var transactionsNavigation: UIViewController {
-        return WalletNavigationController(rootViewController: TransactionsRouter.module())
+        ThemeNavigationController(rootViewController: TransactionsRouter.module())
     }
 
     private static var settingsNavigation: UIViewController {
-        return WalletNavigationController(rootViewController: MainSettingsRouter.module())
+        ThemeNavigationController(rootViewController: MainSettingsRouter.module())
     }
 
 }

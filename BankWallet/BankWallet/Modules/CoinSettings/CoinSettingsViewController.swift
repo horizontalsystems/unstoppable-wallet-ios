@@ -1,7 +1,8 @@
 import UIKit
 import SectionsTableView
+import ThemeKit
 
-class CoinSettingsViewController: WalletViewController {
+class CoinSettingsViewController: ThemeViewController {
     private let delegate: ICoinSettingsViewDelegate
     private let mode: CoinSettingsModule.Mode
 

@@ -1,7 +1,8 @@
 import UIKit
 import SectionsTableView
+import ThemeKit
 
-class NotificationSettingsSelectorViewController: WalletViewController {
+class NotificationSettingsSelectorViewController: ThemeViewController {
     private let onSelect: (AlertState) -> ()
 
     private let selectedState: AlertState

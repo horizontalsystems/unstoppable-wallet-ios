@@ -1,4 +1,5 @@
 import UIKit
+import ThemeKit
 
 class SendRouter {
     weak var viewController: UIViewController?
@@ -18,6 +19,14 @@ extension SendRouter: ISendRouter {
 }
 
 extension SendRouter {
+
+    static var marginView: UIView {
+        let view = UIView()
+        view.snp.makeConstraints { maker in
+            maker.height.equalTo(CGFloat.margin4x)
+        }
+        return view
+    }
 
     static func module(wallet: Wallet) -> UIViewController? {
         guard let adapter = App.shared.adapterManager.adapter(for: wallet) else {
@@ -46,7 +55,7 @@ extension SendRouter {
             return nil
         }
 
-        let interactor = SendInteractor(reachabilityManager: App.shared.reachabilityManager)
+        let interactor = SendInteractor(reachabilityManager: App.shared.reachabilityManager, rateManager: App.shared.rateManager, currencyManager: App.shared.currencyManager, localStorage: App.shared.localStorage)
         let presenter = SendPresenter(coin: wallet.coin, handler: handler, interactor: interactor, router: router)
         let viewController = SendViewController(delegate: presenter, views: subViews)
 
@@ -57,7 +66,7 @@ extension SendRouter {
         router.viewController = viewController
         subRouters.forEach { $0.viewController = viewController }
 
-        return WalletNavigationController(rootViewController: viewController)
+        return ThemeNavigationController(rootViewController: viewController)
     }
 
     private static func module(coin: Coin, adapter: ISendBitcoinAdapter) -> (ISendHandler, [UIView], [ISendSubRouter])? {
@@ -74,6 +83,8 @@ extension SendRouter {
         routers.append(addressRouter)
 
         var hodlerModule: ISendHodlerModule?
+
+        views.append(SendRouter.marginView)
 
         if interactor.lockTimeEnabled && coin.type == .bitcoin {
             let (hodlerView, module, hodlerRouter) = SendHodlerRouter.module()
@@ -104,7 +115,6 @@ extension SendRouter {
 
         amountModule.delegate = presenter
         addressModule.delegate = presenter
-        feeModule.delegate = presenter
         feePriorityModule.delegate = presenter
         hodlerModule?.delegate = presenter
 
@@ -123,9 +133,8 @@ extension SendRouter {
 
         amountModule.delegate = presenter
         addressModule.delegate = presenter
-        feeModule.delegate = presenter
 
-        return (presenter, [amountView, addressView, feeView], [addressRouter])
+        return (presenter, [amountView, addressView, SendRouter.marginView, feeView], [addressRouter])
     }
 
     private static func module(coin: Coin, adapter: ISendEthereumAdapter) -> (ISendHandler, [UIView], [ISendSubRouter])? {
@@ -142,10 +151,9 @@ extension SendRouter {
 
         amountModule.delegate = presenter
         addressModule.delegate = presenter
-        feeModule.delegate = presenter
         feePriorityModule.delegate = presenter
 
-        return (presenter, [amountView, addressView, feePriorityView, feeView], [addressRouter, feePriorityRouter])
+        return (presenter, [amountView, addressView, SendRouter.marginView, feePriorityView, feeView], [addressRouter, feePriorityRouter])
     }
 
     private static func module(coin: Coin, adapter: ISendEosAdapter) -> (ISendHandler, [UIView], [ISendSubRouter]) {
@@ -173,9 +181,8 @@ extension SendRouter {
 
         amountModule.delegate = presenter
         addressModule.delegate = presenter
-        feeModule.delegate = presenter
 
-        return (presenter, [amountView, addressView, memoView, feeView], [addressRouter])
+        return (presenter, [amountView, addressView, memoView, SendRouter.marginView, feeView], [addressRouter])
     }
 
 }

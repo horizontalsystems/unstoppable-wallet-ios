@@ -1,46 +1,42 @@
 import RxSwift
+import StorageKit
+import PinKit
 
 class AppManager {
     private let accountManager: IAccountManager
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
-    private let lockManager: ILockManager
-    private let passcodeLockManager: IPasscodeLockManager
+    private let pinKit: IPinKit
+    private let keychainKit: IKeychainKit
     private let biometryManager: IBiometryManager
     private let blurManager: IBlurManager
     private let notificationManager: INotificationManager
     private let backgroundPriceAlertManager: IBackgroundPriceAlertManager
-    private let localStorage: ILocalStorage
-    private let secureStorage: ISecureStorage
     private let kitCleaner: IKitCleaner
     private let debugBackgroundLogger: IDebugLogger?
     private let appVersionManager: IAppVersionManager
-    private let launchManager: ILaunchManager
 
     private let didBecomeActiveSubject = PublishSubject<()>()
     private let willEnterForegroundSubject = PublishSubject<()>()
 
-    init(accountManager: IAccountManager, walletManager: IWalletManager, adapterManager: IAdapterManager, lockManager: ILockManager,
-         passcodeLockManager: IPasscodeLockManager, biometryManager: IBiometryManager, blurManager: IBlurManager,
+    init(accountManager: IAccountManager, walletManager: IWalletManager, adapterManager: IAdapterManager, pinKit: IPinKit,
+         keychainKit: IKeychainKit, biometryManager: IBiometryManager, blurManager: IBlurManager,
          notificationManager: INotificationManager, backgroundPriceAlertManager: IBackgroundPriceAlertManager,
-         localStorage: ILocalStorage, secureStorage: ISecureStorage, kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
-         appVersionManager: IAppVersionManager, launchManager: ILaunchManager
+         kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
+         appVersionManager: IAppVersionManager
     ) {
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.adapterManager = adapterManager
-        self.lockManager = lockManager
-        self.passcodeLockManager = passcodeLockManager
+        self.pinKit = pinKit
+        self.keychainKit = keychainKit
         self.biometryManager = biometryManager
         self.blurManager = blurManager
         self.notificationManager = notificationManager
         self.backgroundPriceAlertManager = backgroundPriceAlertManager
-        self.localStorage = localStorage
-        self.secureStorage = secureStorage
         self.kitCleaner = kitCleaner
         self.debugBackgroundLogger = debugLogger
         self.appVersionManager = appVersionManager
-        self.launchManager = launchManager
     }
 
 }
@@ -49,9 +45,8 @@ extension AppManager {
 
     func didFinishLaunching() {
         debugBackgroundLogger?.logFinishLaunching()
-        launchManager.handleFirstLaunch()
 
-        passcodeLockManager.didFinishLaunching()
+        keychainKit.handleLaunch()
         accountManager.preloadAccounts()
         walletManager.preloadWallets()
         biometryManager.refresh()
@@ -74,7 +69,7 @@ extension AppManager {
     func didEnterBackground() {
         debugBackgroundLogger?.logEnterBackground()
 
-        lockManager.didEnterBackground()
+        pinKit.didEnterBackground()
 //        backgroundPriceAlertManager.didEnterBackground()
     }
 
@@ -82,8 +77,8 @@ extension AppManager {
         debugBackgroundLogger?.logEnterForeground()
         willEnterForegroundSubject.onNext(())
 
-        passcodeLockManager.willEnterForeground()
-        lockManager.willEnterForeground()
+        keychainKit.handleForeground()
+        pinKit.willEnterForeground()
         notificationManager.removeNotifications()
         adapterManager.refresh()
         biometryManager.refresh()

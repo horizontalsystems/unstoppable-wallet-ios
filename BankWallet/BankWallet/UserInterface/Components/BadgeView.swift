@@ -11,8 +11,8 @@ class BadgeView: UIView {
             maker.height.equalTo(15)
         }
 
-        layer.cornerRadius = .cornerRadius4
-        backgroundColor = .appJeremy
+        layer.cornerRadius = .cornerRadius1x
+        backgroundColor = .themeJeremy
 
         addSubview(label)
         label.snp.makeConstraints { maker in
@@ -22,8 +22,8 @@ class BadgeView: UIView {
 
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         label.setContentHuggingPriority(.required, for: .horizontal)
-        label.textColor = .appGray
-        label.font = .appMicroSB
+        label.textColor = .themeGray
+        label.font = .microSB
     }
 
     required init?(coder aDecoder: NSCoder) {

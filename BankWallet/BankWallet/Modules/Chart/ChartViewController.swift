@@ -34,11 +34,11 @@ class ChartViewController: WalletActionSheetController {
         titleItem = AlertTitleItem(
                 title: "chart.title".localized(coin.title),
                 icon: UIImage(coin: coin),
-                iconTintColor: AppTheme.coinIconColor,
+                iconTintColor: .themeGray,
                 tag: 0
         )
 
-        super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
+        super.init()
 
         titleItem.onClose = { [weak self] in
             self?.dismiss(byFade: false)
@@ -66,7 +66,6 @@ class ChartViewController: WalletActionSheetController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        backgroundColor = AppTheme.actionSheetBackgroundColor
         model.hideInBackground = false
 
         delegate.viewDidLoad()

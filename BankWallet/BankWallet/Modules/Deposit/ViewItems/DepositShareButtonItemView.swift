@@ -11,7 +11,7 @@ class DepositShareButtonItemView: BaseButtonItemView {
     override func initView() {
         super.initView()
 
-        button.cornerRadius = .cornerRadius8
+        button.cornerRadius = .cornerRadius2x
         button.snp.makeConstraints { maker in
             maker.leading.trailing.top.equalToSuperview().inset(CGFloat.margin4x)
             maker.height.equalTo(CGFloat.heightButton)

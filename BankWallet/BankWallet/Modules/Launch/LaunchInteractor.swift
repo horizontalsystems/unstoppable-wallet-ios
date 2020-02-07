@@ -1,13 +1,16 @@
+import StorageKit
+import PinKit
+
 class LaunchInteractor {
     private let accountManager: IAccountManager
-    private let pinManager: IPinManager
-    private let passcodeLockManager: IPasscodeLockManager
+    private let pinKit: IPinKit
+    private let keychainKit: IKeychainKit
     private let localStorage: ILocalStorage
 
-    init(accountManager: IAccountManager, pinManager: IPinManager, passcodeLockManager: IPasscodeLockManager, localStorage: ILocalStorage) {
+    init(accountManager: IAccountManager, pinKit: IPinKit, keychainKit: IKeychainKit, localStorage: ILocalStorage) {
         self.accountManager = accountManager
-        self.pinManager = pinManager
-        self.passcodeLockManager = passcodeLockManager
+        self.pinKit = pinKit
+        self.keychainKit = keychainKit
         self.localStorage = localStorage
     }
 
@@ -16,19 +19,19 @@ class LaunchInteractor {
 extension LaunchInteractor: ILaunchInteractor {
 
     var hasAccounts: Bool {
-        return !accountManager.accounts.isEmpty
+        !accountManager.accounts.isEmpty
     }
 
     var passcodeLocked: Bool {
-        return passcodeLockManager.locked
+        keychainKit.locked
     }
 
     var isPinSet: Bool {
-        return pinManager.isPinSet
+        pinKit.isPinSet
     }
 
     var mainShownOnce: Bool {
-        return localStorage.mainShownOnce
+        localStorage.mainShownOnce
     }
 
 }

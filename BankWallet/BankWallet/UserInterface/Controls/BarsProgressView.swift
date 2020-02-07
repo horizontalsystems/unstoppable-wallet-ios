@@ -3,6 +3,8 @@ import SnapKit
 import RxSwift
 
 class BarsProgressView: UIView {
+    static let progressStepsCount = 3
+
     private let animationDelay = 400
     private let disposeBag = DisposeBag()
     private var animateDisposable: Disposable?

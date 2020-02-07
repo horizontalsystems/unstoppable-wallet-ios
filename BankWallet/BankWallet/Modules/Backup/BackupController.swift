@@ -1,7 +1,8 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
-class BackupController: WalletViewController {
+class BackupController: ThemeViewController {
     private let delegate: IBackupViewDelegate
 
     private let subtitleLabel = UILabel()
@@ -27,22 +28,12 @@ class BackupController: WalletViewController {
 
         view.addSubview(subtitleLabel)
         subtitleLabel.text = "backup.intro.subtitle".localized(delegate.coinCodes)
-        subtitleLabel.font = .appBody
-        subtitleLabel.textColor = .appGray
+        subtitleLabel.font = .body
+        subtitleLabel.textColor = .themeGray
         subtitleLabel.numberOfLines = 0
         subtitleLabel.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.marginTextSide)
             maker.top.equalTo(self.view.snp.topMargin).offset(CGFloat.margin6x)
-        }
-
-        view.addSubview(cancelButton)
-        cancelButton.setTitle(delegate.isBackedUp ? "backup.close".localized : "backup.intro.later".localized, for: .normal)
-        cancelButton.addTarget(self, action: #selector(cancelDidTap), for: .touchUpInside)
-
-        cancelButton.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(CGFloat.marginButtonSide)
-            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(CGFloat.marginButtonSide)
-            maker.size.equalTo(CGSize(width: 85, height: CGFloat.heightButton))
         }
 
         view.addSubview(proceedButton)
@@ -50,9 +41,18 @@ class BackupController: WalletViewController {
         proceedButton.addTarget(self, action: #selector(proceedDidTap), for: .touchUpInside)
 
         proceedButton.snp.makeConstraints { maker in
-            maker.leading.equalTo(cancelButton.snp.trailing).offset(10)
-            maker.trailing.equalToSuperview().inset(CGFloat.marginButtonSide)
-            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(CGFloat.marginButtonSide)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
+            maker.height.equalTo(CGFloat.heightButton)
+        }
+
+        view.addSubview(cancelButton)
+        cancelButton.setTitle(delegate.isBackedUp ? "backup.close".localized : "backup.intro.later".localized, for: .normal)
+        cancelButton.addTarget(self, action: #selector(cancelDidTap), for: .touchUpInside)
+
+        cancelButton.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
+            maker.top.equalTo(proceedButton.snp.bottom).offset(CGFloat.margin4x)
+            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(CGFloat.margin8x)
             maker.height.equalTo(CGFloat.heightButton)
         }
     }

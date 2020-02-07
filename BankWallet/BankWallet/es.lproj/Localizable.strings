@@ -251,10 +251,6 @@
 
 "settings_base_currency.title" = "Moneda principal";
 
-// Settings -> Language
-
-"settings_language.title" = "Idioma";
-
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "Gestor de monedas";
@@ -344,10 +340,6 @@
 "unlock_pin.cant_save_pin" = "¡Ups! ¡No podemos guardar su código, póngase en contacto con nosotros lo antes posible!";
 "unlock_pin.blocked_until" = "Inhabilitado hasta: %@";
 "rate_list.updated" = "actualizado";
-
-// No Passcode
-
-"no_passcode.info_text" = "Esta aplicación require que el teléfono tenga el código de acceso (bloqueo de pantalla) habilitado.\n\nLo puedes habilitar en los ajustes de iOS.\n\nTome en cuenta que cuando desahabilita el PIN en el nivel OS, las medidas de seguridad en el almacenamiento seguro de su teléfono hace que la información previamente almacenada no sea válida. Usted necesita restaurar las claves de sus monederos para poder volver a su monedero.";
 
 //NumPad
 

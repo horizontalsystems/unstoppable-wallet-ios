@@ -2,7 +2,6 @@ import Foundation
 
 class SendFeePresenter {
     weak var view: ISendFeeView?
-    weak var delegate: ISendFeeDelegate?
 
     private let interactor: ISendFeeInteractor
 
@@ -15,7 +14,7 @@ class SendFeePresenter {
     private var fee: Decimal = 0
     private var availableFeeBalance: Decimal?
 
-    private(set) var inputType: SendInputType = .coin
+    private var inputType: SendInputType = .coin
 
     private var externalError: Error?
 
@@ -26,7 +25,6 @@ class SendFeePresenter {
         feeCoin = interactor.feeCoin(coin: coin)
         feeCoinProtocol = interactor.feeCoinProtocol(coin: coin)
         currency = interactor.baseCurrency
-        rateValue = interactor.nonExpiredRateValue(coinCode: self.coin.code, currencyCode: currency.code)
     }
 
     private var coin: Coin {
@@ -122,6 +120,11 @@ extension SendFeePresenter: ISendFeeModule {
         syncError()
     }
 
+    func set(rateValue: Decimal?) {
+        self.rateValue = rateValue
+        syncFeeLabels()
+    }
+
     func update(inputType: SendInputType) {
         self.inputType = inputType
         syncFeeLabels()
@@ -132,7 +135,6 @@ extension SendFeePresenter: ISendFeeModule {
 extension SendFeePresenter: ISendFeeViewDelegate {
 
     func viewDidLoad() {
-        inputType = delegate?.inputType ?? .coin
         syncFeeLabels()
         syncError()
     }

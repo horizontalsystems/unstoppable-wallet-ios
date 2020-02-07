@@ -1,4 +1,6 @@
 import UIKit
+import ThemeKit
+import PinKit
 
 class BackupRouter {
     weak var viewController: UIViewController?
@@ -7,7 +9,7 @@ class BackupRouter {
 extension BackupRouter: IBackupRouter {
 
     func showUnlock(delegate: IUnlockDelegate) {
-        viewController?.present(UnlockPinRouter.module(delegate: delegate, enableBiometry: false, unlockMode: .simple), animated: true)
+        viewController?.present(App.shared.pinKit.unlockPinModule(delegate: delegate, enableBiometry: false, unlockMode: .simple), animated: true)
     }
 
     func showBackup(account: Account, predefinedAccountType: PredefinedAccountType, delegate: IBackupDelegate) {
@@ -28,11 +30,11 @@ extension BackupRouter {
 
     static func module(account: Account, predefinedAccountType: PredefinedAccountType) -> UIViewController {
         let router = BackupRouter()
-        let interactor = BackupInteractor(backupManager: App.shared.backupManager, pinManager: App.shared.pinManager)
+        let interactor = BackupInteractor(backupManager: App.shared.backupManager, pinKit: App.shared.pinKit)
         let presenter = BackupPresenter(interactor: interactor, router: router, account: account, predefinedAccountType: predefinedAccountType)
 
         let viewController = BackupController(delegate: presenter)
-        let navigationViewController = WalletNavigationController(rootViewController: viewController)
+        let navigationViewController = ThemeNavigationController(rootViewController: viewController)
 
         router.viewController = viewController
 

@@ -64,6 +64,16 @@ extension SendDashHandler: ISendHandler {
     func sync() {
     }
 
+    func sync(rateValue: Decimal?) {
+        amountModule.set(rateValue: rateValue)
+        feeModule.set(rateValue: rateValue)
+    }
+
+    func sync(inputType: SendInputType) {
+        amountModule.set(inputType: inputType)
+        feeModule.update(inputType: inputType)
+    }
+
     func sendSingle() throws -> Single<Void> {
         interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress())
     }
@@ -114,14 +124,6 @@ extension SendDashHandler: ISendAddressDelegate {
 
     func onUpdate(amount: Decimal) {
         amountModule.set(amount: amount)
-    }
-
-}
-
-extension SendDashHandler: ISendFeeDelegate {
-
-    var inputType: SendInputType {
-        amountModule.inputType
     }
 
 }

@@ -1,6 +1,7 @@
 import UIKit
+import ThemeKit
 
-class AppStatusViewController: WalletViewController {
+class AppStatusViewController: ThemeViewController {
     private let delegate: IAppStatusViewDelegate
 
     private let textView = UITextView.appDebug
@@ -24,7 +25,7 @@ class AppStatusViewController: WalletViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "settings.report_problem.app_status".localized
+        title = "settings.contact.app_status".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.copy".localized, style: .plain, target: self, action: #selector(didTapButton))
 
         view.addSubview(textView)

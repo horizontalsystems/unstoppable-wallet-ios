@@ -1,7 +1,8 @@
 import UIKit
 import SectionsTableView
+import ThemeKit
 
-class BitcoinHodlingViewController: WalletViewController {
+class BitcoinHodlingViewController: ThemeViewController {
     private let delegate: IBitcoinHodlingViewDelegate
 
     private let tableView = SectionsTableView(style: .grouped)

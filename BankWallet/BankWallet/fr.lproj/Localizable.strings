@@ -251,10 +251,6 @@
 
 "settings_base_currency.title" = "Devise de Base";
 
-// Settings -> Language
-
-"settings_language.title" = "Langue";
-
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "Portefeuilles";
@@ -344,10 +340,6 @@
 "unlock_pin.cant_save_pin" = "Oops! Nous ne pouvons pas enregistrer votre code, veuillez nous contacter au plus vite!";
 "unlock_pin.blocked_until" = "Désactivé jusqu'à: %@";
 "rate_list.updated" = "mis à jour";
-
-// No Passcode
-
-"no_passcode.info_text" = "Cette application nécessite que le passcode (verrou d'écran) soit activé.\n\nVous pouvez l'activer dans les paramètres iOS.\n\nVeuillez noter que lorsque vous avez désactivé le code PIN au niveau de l'OS, les mesures de sécurité dans le stockage sûr de votre portable ont rendu les données précédemment stockées invalides. Vous devrez restaurer vos clés de porte-monnaies pour revenir à votre porte-monnaie.";
 
 //NumPad
 

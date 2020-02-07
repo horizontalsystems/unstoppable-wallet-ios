@@ -19,11 +19,11 @@ class MessageItem: BaseActionItem  {
 
     class func height(for string: String) -> CGFloat {
         let attributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.font: AppTheme.alertMessageFont
+            NSAttributedString.Key.font: UIFont.subhead1
         ]
         let string = NSAttributedString(string: string, attributes: attributes)
-        let textHeight: CGFloat = string.boundingRect(with: CGSize(width: UIScreen.main.bounds.width - 2 * AppTheme.alertSideMargin - 2 * AppTheme.alertTextMargin, height: .greatestFiniteMagnitude), options: [.usesFontLeading, .usesLineFragmentOrigin], context: nil).size.height
-        return ceil(textHeight + AppTheme.alertBigMargin + AppTheme.alertBigMargin)
+        let textHeight: CGFloat = string.boundingRect(with: CGSize(width: UIScreen.main.bounds.width - 2 * AlertViewController.sideMargin - 2 * CGFloat.margin4x, height: .greatestFiniteMagnitude), options: [.usesFontLeading, .usesLineFragmentOrigin], context: nil).size.height
+        return ceil(textHeight + MessageItemView.bigMargin + MessageItemView.bigMargin)
     }
 
 }

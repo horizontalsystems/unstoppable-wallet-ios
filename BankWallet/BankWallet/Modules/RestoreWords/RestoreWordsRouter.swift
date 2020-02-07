@@ -1,4 +1,5 @@
 import UIKit
+import ThemeKit
 
 class RestoreWordsRouter {
     weak var viewController: UIViewController?

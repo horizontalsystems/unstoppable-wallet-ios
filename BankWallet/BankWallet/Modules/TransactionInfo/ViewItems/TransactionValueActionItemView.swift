@@ -13,7 +13,7 @@ class TransactionValueActionItemView: BaseActionItemView {
     override func initView() {
         super.initView()
 
-        backgroundColor = .appLawrence
+        backgroundColor = .themeLawrence
 
         addSubview(titleLabel)
         addSubview(valueLabel)
@@ -23,8 +23,8 @@ class TransactionValueActionItemView: BaseActionItemView {
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
         }
 
-        titleLabel.font = .appSubhead2
-        titleLabel.textColor = .appGray
+        titleLabel.font = .subhead2
+        titleLabel.textColor = .themeGray
         titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
 
@@ -34,8 +34,8 @@ class TransactionValueActionItemView: BaseActionItemView {
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
-        valueLabel.font = .appSubhead1
-        valueLabel.textColor = .appLeah
+        valueLabel.font = .subhead1
+        valueLabel.textColor = .themeLeah
         valueLabel.textAlignment = .right
     }
 

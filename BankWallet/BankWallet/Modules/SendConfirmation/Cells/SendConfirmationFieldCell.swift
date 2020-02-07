@@ -15,8 +15,8 @@ class SendConfirmationFieldCell: UITableViewCell {
         addSubview(titleLabel)
         addSubview(fieldTextLabel)
 
-        titleLabel.textColor = .appGray
-        titleLabel.font = .appSubhead2
+        titleLabel.textColor = .themeGray
+        titleLabel.font = .subhead2
 
         titleLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
@@ -26,8 +26,8 @@ class SendConfirmationFieldCell: UITableViewCell {
         titleLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
 
-        fieldTextLabel.textColor = .appGray
-        fieldTextLabel.font = .appSubhead2
+        fieldTextLabel.textColor = .themeGray
+        fieldTextLabel.font = .subhead2
 
         fieldTextLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin2x)

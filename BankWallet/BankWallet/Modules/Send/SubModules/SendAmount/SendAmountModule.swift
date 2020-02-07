@@ -27,11 +27,9 @@ protocol ISendAmountViewDelegate {
 }
 
 protocol ISendAmountInteractor {
-    var defaultInputType: SendInputType { get }
     func set(inputType: SendInputType)
 
     var baseCurrency: Currency { get }
-    func nonExpiredRateValue(coinCode: CoinCode, currencyCode: String) -> Decimal?
 }
 
 protocol ISendAmountModule: AnyObject {
@@ -40,8 +38,6 @@ protocol ISendAmountModule: AnyObject {
     var currentAmount: Decimal { get }
     func validAmount() throws -> Decimal
 
-    var inputType: SendInputType { get }
-
     func primaryAmountInfo() throws -> AmountInfo
     func secondaryAmountInfo() throws -> AmountInfo?
 
@@ -49,6 +45,8 @@ protocol ISendAmountModule: AnyObject {
 
     func set(loading: Bool)
     func set(amount: Decimal)
+    func set(rateValue: Decimal?)
+    func set(inputType: SendInputType)
     func set(availableBalance: Decimal)
     func set(maximumAmount: Decimal?)
     func set(minimumAmount: Decimal)

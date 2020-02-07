@@ -23,7 +23,7 @@ class FullTransactionHashHeaderView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(value: String?, color: UIColor = .appGray, onTap: (() -> ())?) {
+    func bind(value: String?, color: UIColor = .themeGray, onTap: (() -> ())?) {
         descriptionView.bind(value: value, showExtra: .hash, onTap: onTap)
     }
 

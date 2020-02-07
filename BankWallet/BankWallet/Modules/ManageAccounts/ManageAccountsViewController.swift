@@ -1,7 +1,8 @@
 import UIKit
 import SectionsTableView
+import ThemeKit
 
-class ManageAccountsViewController: WalletViewController {
+class ManageAccountsViewController: ThemeViewController {
     private let delegate: IManageAccountsViewDelegate
 
     private let tableView = SectionsTableView(style: .grouped)

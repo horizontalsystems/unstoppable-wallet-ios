@@ -1,12 +1,13 @@
 import UIKit
 import ActionSheet
+import ThemeKit
 
 class TransactionInfoViewController: WalletActionSheetController {
     private let delegate: ITransactionInfoViewDelegate
 
     init(delegate: ITransactionInfoViewDelegate) {
         self.delegate = delegate
-        super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
+        super.init()
 
         initItems()
     }
@@ -19,7 +20,7 @@ class TransactionInfoViewController: WalletActionSheetController {
         let item = delegate.viewItem
 
         let iconImage = item.type == .incoming ? UIImage(named: "Transaction In Icon") : UIImage(named: "Transaction Out Icon")
-        let iconTintColor: UIColor = item.type == .incoming ? .appRemus : .appJacob
+        let iconTintColor: UIColor = item.type == .incoming ? .themeRemus : .themeJacob
 
         let titleItem = AlertTitleItem(
                 title: "tx_info.title".localized,
@@ -41,8 +42,11 @@ class TransactionInfoViewController: WalletActionSheetController {
             model.addItemView(rateItem)
         }
 
-        if let feeCoinValue = item.feeCoinValue, let formattedValue = ValueFormatter.instance.format(coinValue: feeCoinValue) {
-            let feeItem = TransactionValueActionItem(title: "tx_info.fee".localized, value: formattedValue, tag: 3)
+        if let feeCoinValue = item.feeCoinValue, let formattedCoinValue = ValueFormatter.instance.format(coinValue: feeCoinValue) {
+            let formattedCurrencyValue = item.rate.flatMap { ValueFormatter.instance.format(currencyValue: CurrencyValue(currency: $0.currency, value: $0.value * feeCoinValue.value)) }
+            let joinedValues = [formattedCoinValue, formattedCurrencyValue != nil ? "|" : nil, formattedCurrencyValue].compactMap { $0 }.joined(separator: " ")
+
+            let feeItem = TransactionValueActionItem(title: "tx_info.fee".localized, value: joinedValues, tag: 3)
             model.addItemView(feeItem)
         }
 
@@ -101,7 +105,6 @@ class TransactionInfoViewController: WalletActionSheetController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        backgroundColor = AppTheme.actionSheetBackgroundColor
         model.hideInBackground = false
 
         model.reload?()

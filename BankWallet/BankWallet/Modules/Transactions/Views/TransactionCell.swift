@@ -1,8 +1,9 @@
 import UIKit
 import UIExtensions
 import SnapKit
+import ThemeKit
 
-class TransactionCell: AppCell {
+class TransactionCell: ThemeCell {
     private let highlightBackground = UIView()
 
     private let inOutImageView = UIImageView()
@@ -20,13 +21,13 @@ class TransactionCell: AppCell {
     private let lockImageView = UIImageView()
     private let sentToSelfImageView = UIImageView()
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         backgroundColor = .clear
-        contentView.backgroundColor = .appClaude
+        contentView.backgroundColor = .themeClaude
 
-        highlightBackground.backgroundColor = .appSteel20
+        highlightBackground.backgroundColor = .themeSteel20
         highlightBackground.alpha = 0
         contentView.addSubview(highlightBackground)
         highlightBackground.snp.makeConstraints { maker in
@@ -51,7 +52,7 @@ class TransactionCell: AppCell {
         doubleSpendImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         doubleSpendImageView.isHidden = true
 
-        dateLabel.font = .appBody
+        dateLabel.font = .body
         dateLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         dateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         contentView.addSubview(dateLabel)
@@ -86,7 +87,7 @@ class TransactionCell: AppCell {
         }
         sentToSelfImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
-        amountLabel.font = .appSubhead2
+        amountLabel.font = .subhead2
         amountLabel.textAlignment = .right
         contentView.addSubview(amountLabel)
         amountLabel.snp.makeConstraints { maker in
@@ -112,8 +113,8 @@ class TransactionCell: AppCell {
             maker.centerY.equalTo(amountLabel)
         }
 
-        failedLabel.font = .appSubhead2
-        failedLabel.textColor = .appLucian
+        failedLabel.font = .subhead2
+        failedLabel.textColor = .themeLucian
         failedLabel.text = "transactions.failed".localized
     }
 
@@ -126,9 +127,9 @@ class TransactionCell: AppCell {
 
         let status = item.status
 
-        dateLabel.textColor = .appLeah
-        currencyAmountLabel.textColor = item.type == .incoming ? .appRemus : .appJacob
-        amountLabel.textColor = .appGray
+        dateLabel.textColor = .themeLeah
+        currencyAmountLabel.textColor = item.type == .incoming ? .themeRemus : .themeJacob
+        amountLabel.textColor = .themeGray
 
         dateLabel.text = DateHelper.instance.formatTransactionDate(from: item.date).uppercased()
         amountLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue, fractionPolicy: .threshold(high: 0.01, low: 0))
@@ -209,7 +210,7 @@ class TransactionCell: AppCell {
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         guard selectionStyle != .none else { return }
         if animated {
-            UIView.animate(withDuration: AppTheme.defaultAnimationDuration) {
+            UIView.animate(withDuration: .themeAnimationDuration) {
                 self.highlightBackground.alpha = highlighted ? 1 : 0
             }
         } else {
@@ -220,7 +221,7 @@ class TransactionCell: AppCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         guard selectionStyle != .none else { return }
         if animated {
-            UIView.animate(withDuration: AppTheme.defaultAnimationDuration) {
+            UIView.animate(withDuration: .themeAnimationDuration) {
                 self.highlightBackground.alpha = selected ? 1 : 0
             }
         } else {

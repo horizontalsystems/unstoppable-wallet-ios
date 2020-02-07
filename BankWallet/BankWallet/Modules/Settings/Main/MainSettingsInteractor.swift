@@ -1,4 +1,6 @@
 import RxSwift
+import LanguageKit
+import ThemeKit
 
 class MainSettingsInteractor {
     private let disposeBag = DisposeBag()
@@ -6,15 +8,13 @@ class MainSettingsInteractor {
     weak var delegate: IMainSettingsInteractorDelegate?
 
     private let backupManager: IBackupManager
-    private let languageManager: ILanguageManager
-    private let themeManager: IThemeManager
+    private let themeManager: ThemeManager
     private let systemInfoManager: ISystemInfoManager
     private let currencyManager: ICurrencyManager
     private let appConfigProvider: IAppConfigProvider
 
-    init(backupManager: IBackupManager, languageManager: ILanguageManager, themeManager: IThemeManager, systemInfoManager: ISystemInfoManager, currencyManager: ICurrencyManager, appConfigProvider: IAppConfigProvider) {
+    init(backupManager: IBackupManager, themeManager: ThemeManager, systemInfoManager: ISystemInfoManager, currencyManager: ICurrencyManager, appConfigProvider: IAppConfigProvider) {
         self.backupManager = backupManager
-        self.languageManager = languageManager
         self.themeManager = themeManager
         self.systemInfoManager = systemInfoManager
         self.currencyManager = currencyManager
@@ -54,7 +54,7 @@ extension MainSettingsInteractor: IMainSettingsInteractor {
     }
 
     var currentLanguageDisplayName: String? {
-        languageManager.currentLanguageDisplayName
+        LanguageManager.shared.currentLanguageDisplayName
     }
 
     var baseCurrency: Currency {

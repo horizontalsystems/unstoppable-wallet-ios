@@ -1,4 +1,5 @@
 import UIKit
+import LanguageKit
 
 class MainSettingsRouter {
     weak var viewController: UIViewController?
@@ -27,7 +28,8 @@ extension MainSettingsRouter: IMainSettingsRouter {
     }
 
     func showLanguageSettings() {
-        viewController?.navigationController?.pushViewController(LanguageSettingsRouter.module(), animated: true)
+        let module = LanguageSettingsRouter.module { MainRouter.module(selectedTab: .settings) }
+        viewController?.navigationController?.pushViewController(module, animated: true)
     }
 
     func showAbout() {
@@ -40,8 +42,8 @@ extension MainSettingsRouter: IMainSettingsRouter {
         viewController?.present(activityViewController, animated: true, completion: nil)
     }
 
-    func showReportProblem() {
-        viewController?.navigationController?.pushViewController(ReportRouter.module(), animated: true)
+    func showContact() {
+        viewController?.navigationController?.pushViewController(ContactRouter.module(), animated: true)
     }
 
     func open(link: String) {
@@ -62,7 +64,6 @@ extension MainSettingsRouter {
         let router = MainSettingsRouter()
         let interactor = MainSettingsInteractor(
                 backupManager: App.shared.backupManager,
-                languageManager: App.shared.languageManager,
                 themeManager: App.shared.themeManager,
                 systemInfoManager: App.shared.systemInfoManager,
                 currencyManager: App.shared.currencyManager,

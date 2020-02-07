@@ -1,11 +1,19 @@
+import ThemeKit
+import StorageKit
+import PinKit
+
 class App {
     static let shared = App()
 
+    let keychainKit: IKeychainKit
+    let pinKit: IPinKit
+
+    let lockProvider: ILockProvider
+
     let localStorage: ILocalStorage & IChartTypeStorage
-    let secureStorage: ISecureStorage
     let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage
 
-    let themeManager: IThemeManager
+    let themeManager: ThemeManager
     let appConfigProvider: IAppConfigProvider
     let systemInfoManager: ISystemInfoManager
     let biometryManager: IBiometryManager
@@ -13,9 +21,6 @@ class App {
     let pasteboardManager: IPasteboardManager
     let reachabilityManager: IReachabilityManager
 
-    let languageManager: LanguageManager
-
-    let pinManager: IPinManager
     let wordsManager: IWordsManager
 
     let accountManager: IAccountManager
@@ -36,11 +41,6 @@ class App {
 
     let adapterManager: IAdapterManager
 
-    let lockRouter: LockRouter
-    let lockManager: ILockManager & IUnlockDelegate
-
-    let passcodeLockManager: IPasscodeLockManager
-
     let dataProviderManager: IFullTransactionDataProviderManager
     let fullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactory
 
@@ -56,17 +56,21 @@ class App {
     let appVersionManager: IAppVersionManager
 
     let coinSettingsManager: ICoinSettingsManager
+    let rateCoinMapper: RateCoinMapper
+
+    let keychainKitDelegate: KeychainKitDelegate
 
     let appManager: AppManager
 
     init() {
         let networkManager = NetworkManager()
 
-        localStorage = UserDefaultsStorage()
-        secureStorage = KeychainStorage()
+        keychainKit = KeychainKit(service: "io.horizontalsystems.bank.dev") 
+
+        localStorage = LocalStorage(storage: StorageKit.LocalStorage.default)
         storage = GrdbStorage()
 
-        themeManager = ThemeManager(localStorage: localStorage)
+        themeManager = ThemeManager.shared
         appConfigProvider = AppConfigProvider()
         systemInfoManager = SystemInfoManager()
         biometryManager = BiometryManager(systemInfoManager: systemInfoManager)
@@ -77,12 +81,9 @@ class App {
         pasteboardManager = PasteboardManager()
         reachabilityManager = ReachabilityManager(appConfigProvider: appConfigProvider)
 
-        languageManager = LanguageManager(localStorage: localStorage)
-
-        pinManager = PinManager(secureStorage: secureStorage, localStorage: localStorage)
         wordsManager = WordsManager()
 
-        let accountStorage: IAccountStorage = AccountStorage(secureStorage: secureStorage, storage: storage)
+        let accountStorage: IAccountStorage = AccountStorage(secureStorage: keychainKit.secureStorage, storage: storage)
         accountManager = AccountManager(storage: accountStorage)
         backupManager = BackupManager(accountManager: accountManager)
 
@@ -95,7 +96,8 @@ class App {
 
         currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 
-        rateManager = RateManager(walletManager: walletManager, currencyManager: currencyManager)
+        rateCoinMapper = RateCoinMapper()
+        rateManager = RateManager(walletManager: walletManager, currencyManager: currencyManager, rateCoinMapper: rateCoinMapper)
 
         feeCoinProvider = FeeCoinProvider(appConfigProvider: appConfigProvider)
         feeRateProviderFactory = FeeRateProviderFactory(appConfigProvider: appConfigProvider)
@@ -107,12 +109,9 @@ class App {
         let adapterFactory: IAdapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager)
         adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager)
 
-        lockRouter = LockRouter()
-        lockManager = LockManager(pinManager: pinManager, localStorage: localStorage, lockRouter: lockRouter)
-        let blurManager: IBlurManager = BlurManager(lockManager: lockManager)
-
-        let passcodeLockRouter: IPasscodeLockRouter = PasscodeLockRouter()
-        passcodeLockManager = PasscodeLockManager(systemInfoManager: systemInfoManager, accountManager: accountManager, walletManager: walletManager, router: passcodeLockRouter)
+        lockProvider = LockProvider()
+        pinKit = PinKit.Kit(secureStorage: keychainKit.secureStorage, localStorage: StorageKit.LocalStorage.default, lockProvider: lockProvider)
+        let blurManager: IBlurManager = BlurManager(pinKit: pinKit)
 
         dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 
@@ -136,34 +135,24 @@ class App {
 
         coinSettingsManager = CoinSettingsManager()
 
-        let launchManager: ILaunchManager = LaunchManager(localStorage: localStorage, secureStorage: secureStorage)
+        keychainKitDelegate = KeychainKitDelegate(accountManager: accountManager, walletManager: walletManager)
+        keychainKit.set(delegate: keychainKitDelegate)
 
         let kitCleaner = KitCleaner(accountManager: accountManager)
         appManager = AppManager(
                 accountManager: accountManager,
                 walletManager: walletManager,
                 adapterManager: adapterManager,
-                lockManager: lockManager,
-                passcodeLockManager: passcodeLockManager,
+                pinKit: pinKit,
+                keychainKit: keychainKit,
                 biometryManager: biometryManager,
                 blurManager: blurManager,
                 notificationManager: notificationManager,
                 backgroundPriceAlertManager: backgroundPriceAlertManager,
-                localStorage: localStorage,
-                secureStorage: secureStorage,
                 kitCleaner: kitCleaner,
                 debugLogger: debugLogger,
-                appVersionManager: appVersionManager,
-                launchManager: launchManager
+                appVersionManager: appVersionManager
         )
-    }
-
-}
-
-extension App {
-
-    static var theme: ITheme {
-        App.shared.themeManager.currentTheme
     }
 
 }

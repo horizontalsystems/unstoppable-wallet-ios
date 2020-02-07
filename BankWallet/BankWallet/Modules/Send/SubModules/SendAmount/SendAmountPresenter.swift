@@ -11,7 +11,7 @@ class SendAmountPresenter {
 
     private let coin: Coin
     private let currency: Currency
-    private let rateValue: Decimal?
+    private var rateValue: Decimal?
 
     private var amount: Decimal?
     private var availableBalance: Decimal?
@@ -19,7 +19,7 @@ class SendAmountPresenter {
     private var minimumAmount: Decimal?
     private var minimumRequiredBalance: Decimal = 0
 
-    private(set) var inputType: SendInputType
+    private(set) var inputType: SendInputType = .coin
 
     init(coin: Coin, interactor: ISendAmountInteractor, decimalParser: ISendAmountDecimalParser) {
         self.coin = coin
@@ -27,13 +27,6 @@ class SendAmountPresenter {
         self.decimalParser = decimalParser
 
         currency = interactor.baseCurrency
-        rateValue = interactor.nonExpiredRateValue(coinCode: coin.code, currencyCode: currency.code)
-
-        if rateValue == nil {
-            inputType = .coin
-        } else {
-            inputType = interactor.defaultInputType
-        }
     }
 
     private func syncAmountType() {
@@ -213,6 +206,27 @@ extension SendAmountPresenter: ISendAmountModule {
         syncError()
 
         delegate?.onChangeAmount()
+    }
+
+    func set(rateValue: Decimal?) {
+         self.rateValue = rateValue
+
+        syncSwitchButton()
+
+        if rateValue == nil {
+            set(inputType: .coin)
+            delegate?.onChange(inputType: inputType)
+        }
+    }
+
+    func set(inputType: SendInputType) {
+        self.inputType = inputType
+
+        syncAvailableBalance()
+        syncAmountType()
+        syncAmount()
+        syncHint()
+        syncError()
     }
 
     func set(availableBalance: Decimal) {

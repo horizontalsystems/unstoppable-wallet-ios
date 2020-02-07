@@ -1,18 +1,20 @@
 import UIKit
 import UIExtensions
+import ThemeKit
+import PinKit
 
 class BlurManager {
     private let blurView = CustomIntensityVisualEffectView(effect: UIBlurEffect(style: .light), intensity: 0.4)
     private let hideView = UIView()
 
-    private let lockManager: ILockManager
+    private let pinKit: IPinKit
 
-    init(lockManager: ILockManager) {
-        self.lockManager = lockManager
+    init(pinKit: IPinKit) {
+        self.pinKit = pinKit
     }
 
     private func show() {
-        hideView.backgroundColor = AppTheme.controllerBackgroundFromGradient.withAlphaComponent(0.99)
+        hideView.backgroundColor = UIColor.themeBackgroundFromGradient.withAlphaComponent(0.99)
 
         let window = UIApplication.shared.keyWindow
         let frame = window?.frame ?? UIScreen.main.bounds
@@ -44,7 +46,7 @@ class BlurManager {
 extension BlurManager: IBlurManager {
 
     func willResignActive() {
-        if !lockManager.isLocked {
+        if !pinKit.isLocked {
             show()
         }
     }

@@ -2,8 +2,9 @@ import UIKit
 import SnapKit
 import DeepDiff
 import ActionSheet
+import ThemeKit
 
-class BalanceViewController: WalletViewController {
+class BalanceViewController: ThemeViewController {
     private let numberOfSections = 2
     private let balanceSection = 0
     private let editSection = 1
@@ -50,7 +51,7 @@ class BalanceViewController: WalletViewController {
         tableView.registerCell(forClass: BalanceCell.self)
         tableView.registerCell(forClass: BalanceEditCell.self)
 
-        refreshControl.tintColor = .appLeah
+        refreshControl.tintColor = .themeLeah
         refreshControl.alpha = 0.6
         refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
 

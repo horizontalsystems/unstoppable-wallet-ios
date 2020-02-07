@@ -16,10 +16,10 @@ class CardCell: UITableViewCell {
         contentView.backgroundColor = .clear
         backgroundColor = .clear
 
-        roundedBackground.backgroundColor = .appLawrence
-        roundedBackground.layer.cornerRadius = .cornerRadius16
-        roundedBackground.layer.shadowColor = UIColor.appAndy.cgColor
-        roundedBackground.layer.shadowRadius = .cornerRadius4
+        roundedBackground.backgroundColor = .themeLawrence
+        roundedBackground.layer.cornerRadius = .cornerRadius4x
+        roundedBackground.layer.shadowColor = UIColor.themeAndy.cgColor
+        roundedBackground.layer.shadowRadius = .cornerRadius1x
         roundedBackground.layer.shadowOffset = CGSize(width: 0, height: 4)
         roundedBackground.layer.shadowOpacity = 1
 
@@ -32,14 +32,14 @@ class CardCell: UITableViewCell {
 
         clippingView.backgroundColor = .clear
         clippingView.clipsToBounds = true
-        clippingView.layer.cornerRadius = .cornerRadius16
+        clippingView.layer.cornerRadius = .cornerRadius4x
 
         roundedBackground.addSubview(clippingView)
         clippingView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
 
-        selectView.backgroundColor = .appSteel20
+        selectView.backgroundColor = .themeSteel20
         selectView.alpha = 0
 
         clippingView.addSubview(selectView)
@@ -55,7 +55,7 @@ class CardCell: UITableViewCell {
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         guard selectionStyle != .none else { return }
         if animated {
-            UIView.animate(withDuration: AppTheme.defaultAnimationDuration) {
+            UIView.animate(withDuration: .themeAnimationDuration) {
                 self.selectView.alpha = highlighted ? 1 : 0
             }
         } else {
@@ -66,7 +66,7 @@ class CardCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         guard selectionStyle != .none else { return }
         if animated {
-            UIView.animate(withDuration: AppTheme.defaultAnimationDuration) {
+            UIView.animate(withDuration: .themeAnimationDuration) {
                 self.selectView.alpha = selected ? 1 : 0
             }
         } else {

@@ -1,8 +1,9 @@
 import UIKit
 import SnapKit
 import SectionsTableView
+import ThemeKit
 
-class RateListViewController: WalletViewController {
+class RateListViewController: ThemeViewController {
     private let delegate: IRateListViewDelegate
 
     private let tableView = SectionsTableView(style: .grouped)

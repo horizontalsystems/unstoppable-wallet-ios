@@ -17,7 +17,7 @@ class BalanceCell: CardCell {
             progress: 0,
             strokeLineWidth: 2,
             radius: 15,
-            strokeColor: .appGray,
+            strokeColor: .themeGray,
             duration: 2
     )
     private let failedImageView = UIImageView()
@@ -47,6 +47,8 @@ class BalanceCell: CardCell {
     private var onReceive: (() -> ())?
     private var onChart: (() -> ())?
 
+    private var blockChart: Bool = false
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -60,15 +62,15 @@ class BalanceCell: CardCell {
             maker.width.height.equalTo(46)
         }
 
-        coinIconWrapper.backgroundColor = .appJeremy
-        coinIconWrapper.cornerRadius = .cornerRadius8
+        coinIconWrapper.backgroundColor = .themeJeremy
+        coinIconWrapper.cornerRadius = .cornerRadius2x
 
         coinIconWrapper.addSubview(coinIconImageView)
         coinIconImageView.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
         }
 
-        coinIconImageView.tintColor = .appGray
+        coinIconImageView.tintColor = .themeGray
 
         coinIconWrapper.addSubview(syncSpinner)
         syncSpinner.snp.makeConstraints { maker in
@@ -88,8 +90,8 @@ class BalanceCell: CardCell {
             maker.top.equalToSuperview().offset(CGFloat.margin3x)
         }
 
-        nameLabel.font = .appHeadline2
-        nameLabel.textColor = .appLeah
+        nameLabel.font = .headline2
+        nameLabel.textColor = .themeLeah
         nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
@@ -105,7 +107,7 @@ class BalanceCell: CardCell {
             maker.bottom.equalTo(coinIconWrapper.snp.bottom)
         }
 
-        rateLabel.font = .appSubhead2
+        rateLabel.font = .subhead2
         rateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         rateLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
@@ -118,7 +120,7 @@ class BalanceCell: CardCell {
             maker.height.equalTo(CGFloat.heightOnePixel)
         }
 
-        separatorView.backgroundColor = .appSteel20
+        separatorView.backgroundColor = .themeSteel20
 
         clippingView.addSubview(rateDiffButton)
         rateDiffButton.snp.makeConstraints { maker in
@@ -136,7 +138,7 @@ class BalanceCell: CardCell {
             maker.top.equalTo(separatorView.snp.top).offset(CGFloat.margin3x)
         }
 
-        coinValueLabel.font = .appSubhead2
+        coinValueLabel.font = .subhead2
         coinValueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         clippingView.addSubview(currencyValueLabel)
@@ -146,7 +148,7 @@ class BalanceCell: CardCell {
             maker.bottom.equalTo(coinValueLabel.snp.bottom)
         }
 
-        currencyValueLabel.font = .appHeadline2
+        currencyValueLabel.font = .headline2
         currencyValueLabel.textAlignment = .right
 
         clippingView.addSubview(lockedInfoHolder)
@@ -172,8 +174,8 @@ class BalanceCell: CardCell {
             maker.bottom.equalToSuperview()
         }
 
-        coinLockedValueLabel.font = .appSubhead2
-        coinLockedValueLabel.textColor = .appGray
+        coinLockedValueLabel.font = .subhead2
+        coinLockedValueLabel.textColor = .themeGray
 
         lockedInfoHolder.addSubview(currencyLockedValueLabel)
         currencyLockedValueLabel.snp.makeConstraints { maker in
@@ -181,8 +183,8 @@ class BalanceCell: CardCell {
             maker.trailing.bottom.equalToSuperview()
         }
 
-        currencyLockedValueLabel.font = .appSubhead1
-        currencyLockedValueLabel.textColor = .appLeah
+        currencyLockedValueLabel.font = .subhead1
+        currencyLockedValueLabel.textColor = .themeLeah
         currencyLockedValueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         clippingView.addSubview(syncingLabel)
@@ -191,8 +193,8 @@ class BalanceCell: CardCell {
             maker.top.equalTo(separatorView.snp.bottom).offset(CGFloat.margin3x)
         }
 
-        syncingLabel.font = .appSubhead2
-        syncingLabel.textColor = .appGray
+        syncingLabel.font = .subhead2
+        syncingLabel.textColor = .themeGray
 
         clippingView.addSubview(syncedUntilLabel)
         syncedUntilLabel.snp.makeConstraints { maker in
@@ -201,8 +203,8 @@ class BalanceCell: CardCell {
             maker.bottom.equalTo(syncingLabel.snp.bottom)
         }
 
-        syncedUntilLabel.font = .appSubhead2
-        syncedUntilLabel.textColor = .appGray
+        syncedUntilLabel.font = .subhead2
+        syncedUntilLabel.textColor = .themeGray
         syncedUntilLabel.textAlignment = .right
 
         clippingView.addSubview(receiveButton)
@@ -241,6 +243,7 @@ class BalanceCell: CardCell {
         self.onPay = onPay
         self.onReceive = onReceive
         self.onChart = onChart
+        self.blockChart = item.blockChart
 
         bindView(item: item, animated: animated)
     }
@@ -268,7 +271,7 @@ class BalanceCell: CardCell {
 
         if let rateValue = item.rateValue {
             rateLabel.text = rateValue.text
-            rateLabel.textColor = rateValue.dimmed ? .appGray50 : .appGray
+            rateLabel.textColor = rateValue.dimmed ? .themeGray50 : .themeGray
         } else {
             rateLabel.text = " " // space required for constraints
         }
@@ -282,7 +285,7 @@ class BalanceCell: CardCell {
         if let currencyValue = item.currencyValue {
             currencyValueLabel.set(hidden: false, animated: animated, duration: BalanceCell.animationDuration)
             currencyValueLabel.text = currencyValue.text
-            currencyValueLabel.textColor = currencyValue.dimmed ? .appYellow50 : .appJacob
+            currencyValueLabel.textColor = currencyValue.dimmed ? .themeYellow50 : .themeJacob
         } else {
             currencyValueLabel.set(hidden: true, animated: animated, duration: BalanceCell.animationDuration)
         }
@@ -290,7 +293,7 @@ class BalanceCell: CardCell {
         if let coinValue = item.coinValue {
             coinValueLabel.set(hidden: false, animated: animated, duration: BalanceCell.animationDuration)
             coinValueLabel.text = coinValue.text
-            coinValueLabel.textColor = coinValue.dimmed ? .appGray50 : .appLeah
+            coinValueLabel.textColor = coinValue.dimmed ? .themeGray50 : .themeLeah
         } else {
             coinValueLabel.set(hidden: true, animated: animated, duration: BalanceCell.animationDuration)
         }
@@ -367,7 +370,9 @@ class BalanceCell: CardCell {
     }
 
     @objc func onTapChart() {
-        onChart?()
+        if !blockChart {
+            onChart?()
+        }
     }
 
     static func height(item: BalanceViewItem) -> CGFloat {

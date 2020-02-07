@@ -1,10 +1,12 @@
+import PinKit
+
 class BackupInteractor {
     private let backupManager: IBackupManager
-    private let pinManager: IPinManager
+    private let pinKit: IPinKit
 
-    init(backupManager: IBackupManager, pinManager: IPinManager) {
+    init(backupManager: IBackupManager, pinKit: IPinKit) {
         self.backupManager = backupManager
-        self.pinManager = pinManager
+        self.pinKit = pinKit
     }
 
 }
@@ -12,7 +14,7 @@ class BackupInteractor {
 extension BackupInteractor: IBackupInteractor {
 
     var isPinSet: Bool {
-        return pinManager.isPinSet
+        pinKit.isPinSet
     }
 
     func setBackedUp(accountId: String) {

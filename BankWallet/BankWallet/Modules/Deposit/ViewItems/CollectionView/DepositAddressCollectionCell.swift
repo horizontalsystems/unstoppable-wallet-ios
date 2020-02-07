@@ -17,7 +17,7 @@ class DepositAddressCollectionCell: UICollectionViewCell {
         contentView.addSubview(titleView)
         titleView.snp.makeConstraints { maker in
             maker.top.leading.trailing.equalToSuperview()
-            maker.height.equalTo(AppTheme.alertTitleHeight)
+            maker.height.equalTo(62)
         }
 
         contentView.addSubview(separatorView)
@@ -27,7 +27,7 @@ class DepositAddressCollectionCell: UICollectionViewCell {
             maker.height.equalTo(CGFloat.heightOnePixel)
         }
 
-        separatorView.backgroundColor = .appSteel20
+        separatorView.backgroundColor = .themeSteel20
 
         contentView.addSubview(qrCodeImageView)
         qrCodeImageView.snp.makeConstraints { maker in
@@ -39,7 +39,7 @@ class DepositAddressCollectionCell: UICollectionViewCell {
         qrCodeImageView.backgroundColor = .white
         qrCodeImageView.contentMode = .center
         qrCodeImageView.clipsToBounds = true
-        qrCodeImageView.layer.cornerRadius = .cornerRadius4
+        qrCodeImageView.layer.cornerRadius = .cornerRadius1x
 
         contentView.addSubview(addressTitleLabel)
         addressTitleLabel.snp.makeConstraints { maker in
@@ -47,8 +47,8 @@ class DepositAddressCollectionCell: UICollectionViewCell {
             maker.top.equalTo(qrCodeImageView.snp.bottom).offset(CGFloat.margin4x)
         }
 
-        addressTitleLabel.font = .appSubhead2
-        addressTitleLabel.textColor = .appGray
+        addressTitleLabel.font = .subhead2
+        addressTitleLabel.textColor = .themeGray
         addressTitleLabel.textAlignment = .center
 
         contentView.addSubview(addressButton)

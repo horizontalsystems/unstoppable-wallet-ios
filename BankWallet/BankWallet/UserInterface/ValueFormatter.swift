@@ -62,8 +62,11 @@ class ValueFormatter {
             formatter.maximumFractionDigits = currencyValue.currency.decimal
             formatter.minimumFractionDigits = currencyValue.currency.decimal
         case let .threshold(high, low):
-            formatter.maximumFractionDigits = absoluteValue > high ? 0 : 2
-            formatter.maximumFractionDigits = !trimmable && absoluteValue < low ? 4 : formatter.maximumFractionDigits
+            if trimmable {
+                formatter.maximumFractionDigits = absoluteValue > high ? 0 : 2
+            } else {
+                formatter.maximumFractionDigits = absoluteValue.significantDecimalCount(threshold: high, maxDecimals: 8)
+            }
             formatter.minimumFractionDigits = 0
 
             if absoluteValue > 0 && absoluteValue < low && trimmable {

@@ -1,14 +1,13 @@
 import UIKit
+import PinKit
 
 class LockScreenRouter {
     weak var viewController: UIViewController?
 
     private let appStart: Bool
-    private let delegate: IUnlockDelegate
 
-    init(appStart: Bool, delegate: IUnlockDelegate) {
+    init(appStart: Bool) {
         self.appStart = appStart
-        self.delegate = delegate
     }
 
 }
@@ -17,8 +16,6 @@ class LockScreenRouter {
 extension LockScreenRouter: ILockScreenRouter {
 
     func dismiss() {
-        delegate.onUnlock()
-
         if appStart {
             UIApplication.shared.keyWindow?.set(newRootController: MainRouter.module())
         } else {
@@ -30,12 +27,12 @@ extension LockScreenRouter: ILockScreenRouter {
 
 extension LockScreenRouter {
 
-    static func module(delegate: IUnlockDelegate, appStart: Bool) -> UIViewController {
-        let router = LockScreenRouter(appStart: appStart, delegate: delegate)
+    static func module(pinKit: IPinKit, appStart: Bool) -> UIViewController {
+        let router = LockScreenRouter(appStart: appStart)
         let presenter = LockScreenPresenter(router: router)
 
         let rateListController = RateListRouter.module()
-        let unlockController = UnlockPinRouter.module(delegate: presenter, enableBiometry: true, unlockMode: .complex)
+        let unlockController = pinKit.unlockPinModule(delegate: presenter, enableBiometry: true, unlockMode: .complex)
 
         let viewController = LockScreenController(viewControllers: [unlockController, rateListController])
         router.viewController = viewController

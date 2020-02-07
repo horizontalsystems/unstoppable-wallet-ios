@@ -11,8 +11,8 @@ class AddressTextView: UITextView {
 }
 
 class AddressInputField: UIView {
-    private let errorFont: UIFont = .appCaption
-    private let addressFieldFont: UIFont = .appBody
+    private let errorFont: UIFont = .caption
+    private let addressFieldFont: UIFont = .body
     private let textViewCenterFixOffset: CGFloat = 1
 
     private let addressWrapperView = UIView()
@@ -53,18 +53,18 @@ class AddressInputField: UIView {
         addSubview(copyButton)
         addSubview(pasteButton)
 
-        layer.cornerRadius = CGFloat.cornerRadius8
+        layer.cornerRadius = CGFloat.cornerRadius2x
         layer.borderWidth = 1
-        layer.borderColor = UIColor.appSteel20.cgColor
-        backgroundColor = .appLawrence
+        layer.borderColor = UIColor.themeSteel20.cgColor
+        backgroundColor = .themeLawrence
 
         addressField.delegate = self
-        addressField.tintColor = AppTheme.textFieldTintColor
-        addressField.keyboardAppearance = App.theme.keyboardAppearance
+        addressField.tintColor = .themeInputFieldTintColor
+        addressField.keyboardAppearance = .themeDefault
         addressField.autocapitalizationType = .none
         addressField.isUserInteractionEnabled = canEdit
         addressField.textContainer.maximumNumberOfLines = numberOfLines
-        addressField.textColor = .appOz
+        addressField.textColor = .themeOz
 
         addressField.font = addressFieldFont
         addressField.textContainer.lineBreakMode = lineBreakMode
@@ -75,7 +75,7 @@ class AddressInputField: UIView {
         addressField.onPaste = { [weak self] in
             self?.onPaste?()
         }
-        placeholderLabel.textColor = AppTheme.textPlaceholderColor
+        placeholderLabel.textColor = .themeGray50
         placeholderLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview()
             maker.centerY.equalToSuperview()
@@ -83,7 +83,7 @@ class AddressInputField: UIView {
         placeholderLabel.text = placeholder
 
         errorLabel.font = errorFont
-        errorLabel.textColor = .appLucian
+        errorLabel.textColor = .themeLucian
         errorLabel.numberOfLines = 0
 
         pasteButton.snp.makeConstraints { maker in
@@ -104,7 +104,7 @@ class AddressInputField: UIView {
         }
 
         scanButton.isHidden = !showQrButton
-        scanButton.setImage(UIImage(named: "Send Scan Icon")?.tinted(with: .appOz), for: .normal)
+        scanButton.setImage(UIImage(named: "Send Scan Icon")?.tinted(with: .themeOz), for: .normal)
         scanButton.addTarget(self, action: #selector(onTapScan), for: .touchUpInside)
 
         deleteButton.snp.makeConstraints { maker in
@@ -113,14 +113,14 @@ class AddressInputField: UIView {
             maker.size.equalTo(CGFloat.heightButtonSecondary)
         }
 
-        deleteButton.setImage(UIImage(named: "Send Delete Icon")?.tinted(with: .appOz), for: .normal)
+        deleteButton.setImage(UIImage(named: "Send Delete Icon")?.tinted(with: .themeOz), for: .normal)
         deleteButton.addTarget(self, action: #selector(onTapDelete), for: .touchUpInside)
 
         copyButton.snp.makeConstraints { maker in
             maker.edges.equalTo(deleteButton)
         }
 
-        copyButton.setImage(UIImage(named: "Address Field Copy Icon")?.tinted(with: .appOz), for: .normal)
+        copyButton.setImage(UIImage(named: "Address Field Copy Icon")?.tinted(with: .themeOz), for: .normal)
         copyButton.addTarget(self, action: #selector(onTapCopy), for: .touchUpInside)
 
         bind(address: nil, error: nil)
@@ -184,7 +184,7 @@ class AddressInputField: UIView {
             }
         }
         layoutSubviews()
-        let height = addressFieldFont.lineHeight * CGFloat(numberOfLines)
+        let height = ceil(addressFieldFont.lineHeight) * CGFloat(numberOfLines)
 
         if let error = error {
             errorLabel.isHidden = false

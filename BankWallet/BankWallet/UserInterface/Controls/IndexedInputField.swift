@@ -3,7 +3,7 @@ import SnapKit
 
 @IBDesignable
 class IndexedInputField: UIView, UITextFieldDelegate {
-    private let textFont = UIFont.appBody
+    private let textFont = UIFont.body
 
     var textField: UITextField
     var indexLabel: UILabel
@@ -18,7 +18,7 @@ class IndexedInputField: UIView, UITextFieldDelegate {
         indexLabel = UILabel()
         textField = UITextField()
 
-        clearTextButton.setImage(UIImage(named: "Send Delete Icon")?.tinted(with: .appOz), for: .normal)
+        clearTextButton.setImage(UIImage(named: "Send Delete Icon")?.tinted(with: .themeOz), for: .normal)
         super.init(frame: frame)
         commonInit()
     }
@@ -28,7 +28,7 @@ class IndexedInputField: UIView, UITextFieldDelegate {
     }
 
     func commonInit() {
-        backgroundColor = .appLawrence
+        backgroundColor = .themeLawrence
 
 
         addSubview(clearTextButton)
@@ -47,18 +47,9 @@ class IndexedInputField: UIView, UITextFieldDelegate {
             maker.centerY.equalToSuperview()
             maker.width.equalTo(26)
         }
-        indexLabel.textColor = .appGray50
+        indexLabel.textColor = .themeGray50
         indexLabel.font = textFont
 
-        textField.keyboardAppearance = App.theme.keyboardAppearance
-        textField.autocorrectionType = .yes
-        textField.autocapitalizationType = .none
-        textField.tintColor = AppTheme.textFieldTintColor
-        textField.font = textFont
-
-        textField.addTarget(self, action: #selector(textChange), for: .editingChanged)
-        textField.textColor = .appOz
-        textField.delegate = self
         addSubview(textField)
         textField.snp.makeConstraints { maker in
             maker.leading.equalTo(self.indexLabel.snp.trailing)
@@ -66,6 +57,15 @@ class IndexedInputField: UIView, UITextFieldDelegate {
             maker.trailing.equalTo(self.clearTextButton.snp.leading).inset(CGFloat.margin3x)
             maker.height.equalTo(textFont.lineHeight)
         }
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
+        textField.keyboardAppearance = .themeDefault
+        textField.tintColor = .themeInputFieldTintColor
+        textField.font = textFont
+
+        textField.addTarget(self, action: #selector(textChange), for: .editingChanged)
+        textField.textColor = .themeOz
+        textField.delegate = self
     }
 
     @objc func onClearText() {

@@ -24,7 +24,16 @@ def appPods
   pod 'XRatesKit.swift'
   pod 'FeeRateKit.swift'
 
-  pod 'UIExtensions.swift'
+  pod 'UIExtensions.swift', git: 'https://github.com/horizontalsystems/gui-kit/'
+  # pod 'UIExtensions.swift', path: '../gui-kit/'
+  pod 'ThemeKit.swift', git: 'https://github.com/horizontalsystems/component-kit-ios/'
+  # pod 'ThemeKit.swift', path: '../component-kit-ios/'
+  pod 'LanguageKit.swift', git: 'https://github.com/horizontalsystems/component-kit-ios/'
+  # pod 'LanguageKit.swift', path: '../component-kit-ios/'
+  pod 'StorageKit.swift', git: 'https://github.com/horizontalsystems/component-kit-ios/'
+  # pod 'StorageKit.swift', path: '../component-kit-ios/'
+  pod 'PinKit.swift', git: 'https://github.com/horizontalsystems/component-kit-ios/'
+
   pod 'ActionSheet.swift'
   pod 'HUD.swift'
   pod 'Chart.swift'

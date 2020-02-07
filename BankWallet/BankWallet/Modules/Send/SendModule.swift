@@ -1,6 +1,7 @@
 import UIKit
 import Foundation
 import RxSwift
+import XRatesKit
 
 protocol ISendView: class {
     func set(coin: Coin)
@@ -25,13 +26,19 @@ protocol ISendViewDelegate: AnyObject {
 }
 
 protocol ISendInteractor {
+    var baseCurrency: Currency { get }
+    var defaultInputType: SendInputType { get }
+
+    func nonExpiredRateValue(coinCode: CoinCode, currencyCode: String) -> Decimal?
     func send(single: Single<Void>)
+    func subscribeToMarketInfo(coinCode: CoinCode, currencyCode: String)
 }
 
 protocol ISendInteractorDelegate: AnyObject {
     func sync()
     func didSend()
     func didFailToSend(error: Error)
+    func didReceive(marketInfo: MarketInfo)
 }
 
 protocol ISendHandler: AnyObject {
@@ -40,6 +47,8 @@ protocol ISendHandler: AnyObject {
     func showKeyboard()
 
     func sync()
+    func sync(rateValue: Decimal?)
+    func sync(inputType: SendInputType)
     func confirmationViewItems() throws -> [ISendConfirmationViewItemNew]
     func sendSingle() throws -> Single<Void>
 }

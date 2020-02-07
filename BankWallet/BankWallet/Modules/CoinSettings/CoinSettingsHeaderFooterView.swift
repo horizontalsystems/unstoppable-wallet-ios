@@ -6,7 +6,7 @@ class CoinSettingsHeaderFooterView: UITableViewHeaderFooterView {
     private static let topMargin: CGFloat = .margin2x
     private static let bottomMargin: CGFloat = .margin12x
     private static let buttonHeight: CGFloat = ceil(font.lineHeight)
-    private static let font: UIFont = .appSubhead2
+    private static let font: UIFont = .subhead2
 
     private let label = UILabel()
     private let button = UIButton()
@@ -18,7 +18,7 @@ class CoinSettingsHeaderFooterView: UITableViewHeaderFooterView {
 
         label.numberOfLines = 0
         label.font = CoinSettingsHeaderFooterView.font
-        label.textColor = .appGray
+        label.textColor = .themeGray
 
         addSubview(label)
         label.snp.makeConstraints { maker in
@@ -47,8 +47,8 @@ class CoinSettingsHeaderFooterView: UITableViewHeaderFooterView {
 
     func bind(text: String, url: String, onTap: (() -> ())?) {
         label.text = text
-        button.setAttributedTitle(urlString(url: url, color: .appOz), for: .normal)
-        button.setAttributedTitle(urlString(url: url, color: .appGray50), for: .highlighted)
+        button.setAttributedTitle(urlString(url: url, color: .themeOz), for: .normal)
+        button.setAttributedTitle(urlString(url: url, color: .themeGray50), for: .highlighted)
 
         self.onTap = onTap
     }

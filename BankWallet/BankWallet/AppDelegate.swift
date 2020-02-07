@@ -1,4 +1,5 @@
 import UIKit
+import ThemeKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -8,12 +9,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         App.shared.appManager.didFinishLaunching()
-        AppTheme.updateNavigationBarTheme()
+        Theme.updateNavigationBarTheme()
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
 
-        window?.backgroundColor = AppTheme.controllerBackgroundFromGradient
+        window?.backgroundColor = .themeTyler
         window?.rootViewController = LaunchRouter.module()
 
         UIApplication.shared.setMinimumBackgroundFetchInterval(3600)

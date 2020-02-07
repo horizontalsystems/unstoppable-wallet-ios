@@ -8,8 +8,8 @@ class CaptionValueView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        captionLabel.font = .appSubhead2
-        captionLabel.textColor = .appGray
+        captionLabel.font = .subhead2
+        captionLabel.textColor = .themeGray
 
         addSubview(captionLabel)
         captionLabel.snp.makeConstraints { maker in
@@ -33,10 +33,10 @@ class CaptionValueView: UIView {
         captionLabel.text = caption
     }
 
-    func set(value: String?, accent: Bool = false, font: UIFont = .appSubhead2) {
+    func set(value: String?, accent: Bool = false, font: UIFont = .subhead2) {
         valueLabel.text = value
         valueLabel.font = font
-        valueLabel.textColor = accent ? .appLeah : .appGray
+        valueLabel.textColor = accent ? .themeLeah : .themeGray
     }
 
 }
