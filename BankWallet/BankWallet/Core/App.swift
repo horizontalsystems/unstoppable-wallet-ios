@@ -1,13 +1,16 @@
 import ThemeKit
 import StorageKit
+import PinKit
 
 class App {
     static let shared = App()
 
     let keychainKit: IKeychainKit
+    let pinKit: IPinKit
+
+    let lockProvider: ILockProvider
 
     let localStorage: ILocalStorage & IChartTypeStorage
-    let pinSecureStorage: IPinSecureStorage
     let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage
 
     let themeManager: ThemeManager
@@ -18,7 +21,6 @@ class App {
     let pasteboardManager: IPasteboardManager
     let reachabilityManager: IReachabilityManager
 
-    let pinManager: IPinManager
     let wordsManager: IWordsManager
 
     let accountManager: IAccountManager
@@ -38,9 +40,6 @@ class App {
     let feeRateProviderFactory: FeeRateProviderFactory
 
     let adapterManager: IAdapterManager
-
-    let lockRouter: LockRouter
-    let lockManager: ILockManager & IUnlockDelegate
 
     let dataProviderManager: IFullTransactionDataProviderManager
     let fullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactory
@@ -69,7 +68,6 @@ class App {
         keychainKit = KeychainKit(service: "io.horizontalsystems.bank.dev") 
 
         localStorage = LocalStorage(storage: StorageKit.LocalStorage.default)
-        pinSecureStorage = PinSecureStorage(secureStorage: keychainKit.secureStorage)
         storage = GrdbStorage()
 
         themeManager = ThemeManager.shared
@@ -83,7 +81,6 @@ class App {
         pasteboardManager = PasteboardManager()
         reachabilityManager = ReachabilityManager(appConfigProvider: appConfigProvider)
 
-        pinManager = PinManager(secureStorage: pinSecureStorage, localStorage: localStorage)
         wordsManager = WordsManager()
 
         let accountStorage: IAccountStorage = AccountStorage(secureStorage: keychainKit.secureStorage, storage: storage)
@@ -112,9 +109,9 @@ class App {
         let adapterFactory: IAdapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager)
         adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager)
 
-        lockRouter = LockRouter()
-        lockManager = LockManager(pinManager: pinManager, localStorage: localStorage, lockRouter: lockRouter)
-        let blurManager: IBlurManager = BlurManager(lockManager: lockManager)
+        lockProvider = LockProvider()
+        pinKit = PinKit.Kit(secureStorage: keychainKit.secureStorage, localStorage: StorageKit.LocalStorage.default, lockProvider: lockProvider)
+        let blurManager: IBlurManager = BlurManager(pinKit: pinKit)
 
         dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 
@@ -146,7 +143,7 @@ class App {
                 accountManager: accountManager,
                 walletManager: walletManager,
                 adapterManager: adapterManager,
-                lockManager: lockManager,
+                pinKit: pinKit,
                 keychainKit: keychainKit,
                 biometryManager: biometryManager,
                 blurManager: blurManager,

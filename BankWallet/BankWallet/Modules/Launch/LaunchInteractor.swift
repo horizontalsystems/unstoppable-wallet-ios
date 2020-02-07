@@ -1,14 +1,15 @@
 import StorageKit
+import PinKit
 
 class LaunchInteractor {
     private let accountManager: IAccountManager
-    private let pinManager: IPinManager
+    private let pinKit: IPinKit
     private let keychainKit: IKeychainKit
     private let localStorage: ILocalStorage
 
-    init(accountManager: IAccountManager, pinManager: IPinManager, keychainKit: IKeychainKit, localStorage: ILocalStorage) {
+    init(accountManager: IAccountManager, pinKit: IPinKit, keychainKit: IKeychainKit, localStorage: ILocalStorage) {
         self.accountManager = accountManager
-        self.pinManager = pinManager
+        self.pinKit = pinKit
         self.keychainKit = keychainKit
         self.localStorage = localStorage
     }
@@ -26,7 +27,7 @@ extension LaunchInteractor: ILaunchInteractor {
     }
 
     var isPinSet: Bool {
-        pinManager.isPinSet
+        pinKit.isPinSet
     }
 
     var mainShownOnce: Bool {

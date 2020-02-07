@@ -19,9 +19,7 @@ protocol ILocalStorage: class {
     var baseEthereumProvider: String? { get set }
     var agreementAccepted: Bool { get set }
     var balanceSortType: BalanceSortType? { get set }
-    var isBiometricOn: Bool { get set }
     var debugLog: String? { get set }
-    var lastExitDate: Double { get set }
     var sendInputType: SendInputType? { get set }
     var mainShownOnce: Bool { get set }
     var appVersions: [AppVersion] { get set }
@@ -30,15 +28,6 @@ protocol ILocalStorage: class {
 
 protocol IChartTypeStorage: class {
     var chartType: ChartType? { get set }
-}
-
-protocol IPinSecureStorage: class {
-    var pin: String? { get }
-    func set(pin: String?) throws
-    var unlockAttempts: Int? { get }
-    func set(unlockAttempts: Int?) throws
-    var lockoutTimestamp: TimeInterval? { get }
-    func set(lockoutTimestamp: TimeInterval?) throws
 }
 
 protocol IAdapterManager: class {
@@ -192,50 +181,9 @@ protocol IRestoreAccountDataSource {
     var restoreAccounts: [Account] { get }
 }
 
-protocol ILockManager {
-    var isLocked: Bool { get }
-    func lock()
-    func didEnterBackground()
-    func willEnterForeground()
-}
-
-protocol IPasscodeLockManager {
-    var locked: Bool { get }
-    func didFinishLaunching()
-    func willEnterForeground()
-}
-
 protocol IBlurManager {
     func willResignActive()
     func didBecomeActive()
-}
-
-protocol IPinManager: class {
-    var isPinSet: Bool { get }
-    var biometryEnabled: Bool { get set }
-    func store(pin: String) throws
-    func validate(pin: String) -> Bool
-    func clear() throws
-
-    var isPinSetObservable: Observable<Bool> { get }
-}
-
-protocol ILockRouter {
-    func showUnlock(delegate: IUnlockDelegate)
-}
-
-protocol IPasscodeLockRouter {
-    func showNoPasscode()
-    func showLaunch()
-}
-
-protocol IBiometricManager {
-    func validate(reason: String)
-}
-
-protocol BiometricManagerDelegate: class {
-    func didValidate()
-    func didFailToValidate()
 }
 
 protocol IRateManager {
@@ -433,15 +381,6 @@ protocol IReachabilityManager {
     var reachabilitySignal: Signal { get }
 }
 
-protocol IOneTimeTimer {
-    var delegate: IPeriodicTimerDelegate? { get set }
-    func schedule(date: Date)
-}
-
-protocol IPeriodicTimerDelegate: class {
-    func onFire()
-}
-
 protocol ITransactionRateSyncer {
     func sync(currencyCode: String)
     func cancelCurrentSync()
@@ -474,26 +413,8 @@ protocol IProvider {
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject
 }
 
-protocol ILockoutManager {
-    var currentState: LockoutState { get }
-    func didFailUnlock()
-    func dropFailedAttempts()
-}
-
-protocol ILockoutUntilDateFactory {
-    func lockoutUntilDate(failedAttempts: Int, lockoutTimestamp: TimeInterval, uptime: TimeInterval) -> Date
-}
-
 protocol ICurrentDateProvider {
     var currentDate: Date { get }
-}
-
-protocol IUptimeProvider {
-    var uptime: TimeInterval { get }
-}
-
-protocol ILockoutTimeFrameFactory {
-    func lockoutTimeFrame(failedAttempts: Int, lockoutTimestamp: TimeInterval, uptime: TimeInterval) -> TimeInterval
 }
 
 protocol IAddressParser {
