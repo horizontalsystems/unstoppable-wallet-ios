@@ -8,7 +8,6 @@ class AppManager {
     private let adapterManager: IAdapterManager
     private let pinKit: IPinKit
     private let keychainKit: IKeychainKit
-    private let biometryManager: IBiometryManager
     private let blurManager: IBlurManager
     private let notificationManager: INotificationManager
     private let backgroundPriceAlertManager: IBackgroundPriceAlertManager
@@ -20,9 +19,8 @@ class AppManager {
     private let willEnterForegroundSubject = PublishSubject<()>()
 
     init(accountManager: IAccountManager, walletManager: IWalletManager, adapterManager: IAdapterManager, pinKit: IPinKit,
-         keychainKit: IKeychainKit, biometryManager: IBiometryManager, blurManager: IBlurManager,
-         notificationManager: INotificationManager, backgroundPriceAlertManager: IBackgroundPriceAlertManager,
-         kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
+         keychainKit: IKeychainKit, blurManager: IBlurManager, notificationManager: INotificationManager,
+         backgroundPriceAlertManager: IBackgroundPriceAlertManager, kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
          appVersionManager: IAppVersionManager
     ) {
         self.accountManager = accountManager
@@ -30,7 +28,6 @@ class AppManager {
         self.adapterManager = adapterManager
         self.pinKit = pinKit
         self.keychainKit = keychainKit
-        self.biometryManager = biometryManager
         self.blurManager = blurManager
         self.notificationManager = notificationManager
         self.backgroundPriceAlertManager = backgroundPriceAlertManager
@@ -49,7 +46,7 @@ extension AppManager {
         keychainKit.handleLaunch()
         accountManager.preloadAccounts()
         walletManager.preloadWallets()
-        biometryManager.refresh()
+        pinKit.didFinishLaunching()
         notificationManager.removeNotifications()
         kitCleaner.clear()
 
@@ -81,7 +78,6 @@ extension AppManager {
         pinKit.willEnterForeground()
         notificationManager.removeNotifications()
         adapterManager.refresh()
-        biometryManager.refresh()
     }
 
     func willTerminate() {

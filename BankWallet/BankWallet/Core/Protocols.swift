@@ -208,16 +208,9 @@ protocol IBlockedChartCoins {
 
 protocol ISystemInfoManager {
     var appVersion: String { get }
-    var biometryType: Single<BiometryType> { get }
     var passcodeSet: Bool { get }
     var deviceModel: String { get }
     var osVersion: String { get }
-}
-
-protocol IBiometryManager {
-    var biometryType: BiometryType { get }
-    var biometryTypeObservable: Observable<BiometryType> { get }
-    func refresh()
 }
 
 protocol IAppConfigProvider {

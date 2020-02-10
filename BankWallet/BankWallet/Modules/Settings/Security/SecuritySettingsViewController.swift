@@ -3,6 +3,7 @@ import UIExtensions
 import SectionsTableView
 import RxSwift
 import ThemeKit
+import PinKit
 
 class SecuritySettingsViewController: ThemeViewController {
     private let delegate: ISecuritySettingsViewDelegate
@@ -100,7 +101,7 @@ class SecuritySettingsViewController: ThemeViewController {
     }
 
     private func createBiometryRow(title: String, icon: String) -> RowProtocol {
-        return Row<ToggleCell>(id: "biometry", height: .heightSingleLineCell, bind: { [unowned self] cell, _ in
+        Row<ToggleCell>(id: "biometry", height: .heightSingleLineCell, bind: { [unowned self] cell, _ in
             cell.bind(titleIcon: UIImage(named: icon), title: title, isOn: self.biometryEnabled, last: true, onToggle: { [weak self] isOn in
                 self?.delegate.didSwitch(biometryEnabled: isOn)
             })
