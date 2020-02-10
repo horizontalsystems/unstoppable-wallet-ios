@@ -1,4 +1,5 @@
 import XRatesKit
+import CurrencyKit
 
 class BalancePresenter {
     private static let sortingOnThreshold: Int = 5

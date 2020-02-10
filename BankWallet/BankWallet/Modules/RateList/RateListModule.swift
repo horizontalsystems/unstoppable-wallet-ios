@@ -1,5 +1,6 @@
 import Foundation
 import XRatesKit
+import CurrencyKit
 
 protocol IRateListView: class {
     func show(item: RateListViewItem)

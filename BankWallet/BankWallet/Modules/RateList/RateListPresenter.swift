@@ -1,5 +1,6 @@
 import Foundation
 import XRatesKit
+import CurrencyKit
 
 class RateListPresenter {
     weak var view: IRateListView?

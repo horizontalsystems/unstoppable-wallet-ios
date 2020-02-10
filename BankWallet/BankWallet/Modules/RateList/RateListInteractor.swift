@@ -1,18 +1,19 @@
 import RxSwift
 import XRatesKit
+import CurrencyKit
 
 class RateListInteractor {
     private let disposeBag = DisposeBag()
     weak var delegate: IRateListInteractorDelegate?
 
     private let rateManager: IRateManager
-    private let currencyManager: ICurrencyManager
+    private let currencyKit: ICurrencyKit
     private let walletManager: IWalletManager
     private let appConfigProvider: IAppConfigProvider
 
-    init(rateManager: IRateManager, currencyManager: ICurrencyManager, walletManager: IWalletManager, appConfigProvider: IAppConfigProvider) {
+    init(rateManager: IRateManager, currencyKit: ICurrencyKit, walletManager: IWalletManager, appConfigProvider: IAppConfigProvider) {
         self.rateManager = rateManager
-        self.currencyManager = currencyManager
+        self.currencyKit = currencyKit
         self.walletManager = walletManager
         self.appConfigProvider = appConfigProvider
     }
@@ -22,7 +23,7 @@ class RateListInteractor {
 extension RateListInteractor: IRateListInteractor {
 
     var currency: Currency {
-        currencyManager.baseCurrency
+        currencyKit.baseCurrency
     }
 
     var wallets: [Wallet] {

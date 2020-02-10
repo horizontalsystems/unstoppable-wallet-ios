@@ -1,6 +1,7 @@
 import Foundation
 import DeepDiff
 import XRatesKit
+import CurrencyKit
 
 protocol IBalanceView: class {
     func set(viewItems: [BalanceViewItem])

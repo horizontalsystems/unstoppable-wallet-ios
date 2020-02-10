@@ -1,4 +1,5 @@
 import Foundation
+import CurrencyKit
 
 class ValueFormatter {
     static let instance = ValueFormatter()

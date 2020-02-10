@@ -1,6 +1,7 @@
 import Foundation
 import XRatesKit
 import Chart
+import CurrencyKit
 
 struct ChartInfoViewItem {
     let lowValue: CurrencyValue

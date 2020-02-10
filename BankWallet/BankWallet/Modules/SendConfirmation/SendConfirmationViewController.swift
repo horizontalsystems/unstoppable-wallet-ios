@@ -2,6 +2,7 @@ import UIKit
 import SnapKit
 import SectionsTableView
 import ThemeKit
+import CurrencyKit
 
 class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
     private let confirmationFieldHeight: CGFloat = 24

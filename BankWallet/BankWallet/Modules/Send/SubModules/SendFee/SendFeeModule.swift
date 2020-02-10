@@ -1,4 +1,5 @@
 import UIKit
+import CurrencyKit
 
 protocol ISendFeeView: class {
     func set(loading: Bool)

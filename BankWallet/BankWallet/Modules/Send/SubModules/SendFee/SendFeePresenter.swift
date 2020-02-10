@@ -1,4 +1,5 @@
 import Foundation
+import CurrencyKit
 
 class SendFeePresenter {
     weak var view: ISendFeeView?

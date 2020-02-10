@@ -1,13 +1,14 @@
 import Foundation
+import CurrencyKit
 
 class SendFeeInteractor {
     private let rateManager: IRateManager
-    private let currencyManager: ICurrencyManager
+    private let currencyKit: ICurrencyKit
     private let feeCoinProvider: IFeeCoinProvider
 
-    init(rateManager: IRateManager, currencyManager: ICurrencyManager, feeCoinProvider: IFeeCoinProvider) {
+    init(rateManager: IRateManager, currencyKit: ICurrencyKit, feeCoinProvider: IFeeCoinProvider) {
         self.rateManager = rateManager
-        self.currencyManager = currencyManager
+        self.currencyKit = currencyKit
         self.feeCoinProvider = feeCoinProvider
     }
 
@@ -16,7 +17,7 @@ class SendFeeInteractor {
 extension SendFeeInteractor: ISendFeeInteractor {
 
     var baseCurrency: Currency {
-        currencyManager.baseCurrency
+        currencyKit.baseCurrency
     }
 
     func feeCoin(coin: Coin) -> Coin? {

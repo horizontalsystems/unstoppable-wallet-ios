@@ -1,5 +1,6 @@
 import RxSwift
 import XRatesKit
+import CurrencyKit
 
 class BalanceInteractor {
     weak var delegate: IBalanceInteractorDelegate?
@@ -10,15 +11,15 @@ class BalanceInteractor {
 
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
-    private let currencyManager: ICurrencyManager
+    private let currencyKit: ICurrencyKit
     private let localStorage: ILocalStorage
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let rateManager: IRateManager
 
-    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyManager: ICurrencyManager, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager, rateManager: IRateManager) {
+    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyKit: ICurrencyKit, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager, rateManager: IRateManager) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
-        self.currencyManager = currencyManager
+        self.currencyKit = currencyKit
         self.localStorage = localStorage
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
         self.rateManager = rateManager
@@ -32,8 +33,8 @@ class BalanceInteractor {
         delegate?.didPrepareAdapters()
     }
 
-    private func onUpdateCurrency() {
-        delegate?.didUpdate(currency: currencyManager.baseCurrency)
+    private func onUpdate(baseCurrency: Currency) {
+        delegate?.didUpdate(currency: baseCurrency)
     }
 
 }
@@ -45,7 +46,7 @@ extension BalanceInteractor: IBalanceInteractor {
     }
 
     var baseCurrency: Currency {
-        currencyManager.baseCurrency
+        currencyKit.baseCurrency
     }
 
     func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo? {
@@ -81,11 +82,11 @@ extension BalanceInteractor: IBalanceInteractor {
     }
 
     func subscribeToBaseCurrency() {
-        currencyManager.baseCurrencyUpdatedSignal
+        currencyKit.baseCurrencyUpdatedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onNext: { [weak self] in
-                    self?.onUpdateCurrency()
+                .subscribe(onNext: { [weak self] baseCurrency in
+                    self?.onUpdate(baseCurrency: baseCurrency)
                 })
                 .disposed(by: disposeBag)
     }
