@@ -1,4 +1,5 @@
 import Foundation
+import CurrencyKit
 
 class TransactionsMetadataDataSource {
     private var lastBlockInfos = SynchronizedDictionary<Wallet, LastBlockInfo>()

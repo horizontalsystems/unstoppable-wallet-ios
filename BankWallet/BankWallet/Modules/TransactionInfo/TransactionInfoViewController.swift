@@ -1,6 +1,7 @@
 import UIKit
 import ActionSheet
 import ThemeKit
+import CurrencyKit
 
 class TransactionInfoViewController: WalletActionSheetController {
     private let delegate: ITransactionInfoViewDelegate

@@ -1,5 +1,6 @@
 import Foundation
 import XRatesKit
+import CurrencyKit
 
 class RateListFactory {
     private let currentDateProvider: ICurrentDateProvider

@@ -1,21 +1,22 @@
 import RxSwift
+import CurrencyKit
 import XRatesKit
 
 class RateManager {
     private let disposeBag = DisposeBag()
 
     private let walletManager: IWalletManager
-    private let currencyManager: ICurrencyManager
+    private let currencyKit: ICurrencyKit
     private let rateCoinMapper: IRateCoinMapper
 
     private let kit: XRatesKit
 
-    init(walletManager: IWalletManager, currencyManager: ICurrencyManager, rateCoinMapper: IRateCoinMapper) {
+    init(walletManager: IWalletManager, currencyKit: ICurrencyKit, rateCoinMapper: IRateCoinMapper) {
         self.walletManager = walletManager
-        self.currencyManager = currencyManager
+        self.currencyKit = currencyKit
         self.rateCoinMapper = rateCoinMapper
 
-        kit = XRatesKit.instance(currencyCode: currencyManager.baseCurrency.code, marketInfoExpirationInterval: 10 * 60)
+        kit = XRatesKit.instance(currencyCode: currencyKit.baseCurrency.code, marketInfoExpirationInterval: 10 * 60)
 
         walletManager.walletsUpdatedObservable
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -24,10 +25,10 @@ class RateManager {
                 })
                 .disposed(by: disposeBag)
 
-        currencyManager.baseCurrencyUpdatedSignal
+        currencyKit.baseCurrencyUpdatedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .subscribe(onNext: { [weak self] in
-                    self?.onBaseCurrencyUpdated()
+                .subscribe(onNext: { [weak self] baseCurrency in
+                    self?.onUpdate(baseCurrency: baseCurrency)
                 })
                 .disposed(by: disposeBag)
 
@@ -50,8 +51,8 @@ class RateManager {
         kit.set(coinCodes: wallets.map { converted(coinCode: $0.coin.code) })
     }
 
-    private func onBaseCurrencyUpdated() {
-        kit.set(currencyCode: currencyManager.baseCurrency.code)
+    private func onUpdate(baseCurrency: Currency) {
+        kit.set(currencyCode: baseCurrency.code)
     }
 
     private func converted(coinCode: String) -> String {

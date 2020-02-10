@@ -1,5 +1,6 @@
 import Foundation
 import XRatesKit
+import CurrencyKit
 
 protocol IChartView: class {
     func showSpinner()

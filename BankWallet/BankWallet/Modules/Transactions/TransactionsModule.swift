@@ -1,5 +1,6 @@
 import Foundation
 import DeepDiff
+import CurrencyKit
 
 enum TransactionStatus {
     case failed

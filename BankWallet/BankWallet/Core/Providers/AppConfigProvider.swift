@@ -57,12 +57,7 @@ class AppConfigProvider: IAppConfigProvider {
         Bundle.main.object(forInfoDictionaryKey: "DisablePinLock") as? String == "true"
     }
 
-    let currencies: [Currency] = [
-        Currency(code: "USD", symbol: "\u{0024}", decimal: 2),
-        Currency(code: "EUR", symbol: "\u{20AC}", decimal: 2),
-        Currency(code: "GBP", symbol: "\u{00A3}", decimal: 2),
-        Currency(code: "JPY", symbol: "\u{00A5}", decimal: 2)
-    ]
+    let currencyCodes: [String] = ["USD", "EUR", "GBP", "JPY"]
 
     var featuredCoins: [Coin] {
         [

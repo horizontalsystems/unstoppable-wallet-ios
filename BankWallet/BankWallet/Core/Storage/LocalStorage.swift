@@ -3,7 +3,6 @@ import StorageKit
 import XRatesKit
 
 class LocalStorage {
-    private let keyBaseCurrencyCode = "base_currency_code"
     private let keyBaseBitcoinProvider = "base_bitcoin_provider"
     private let keyBaseBitcoinCashProvider = "base_bitcoin_cash_provider"
     private let keyBaseDashProvider = "base_dash_provider"
@@ -34,11 +33,6 @@ extension LocalStorage: ILocalStorage {
     var debugLog: String? {
         get { storage.value(for: debugLogKey) }
         set { storage.set(value: newValue, for: debugLogKey) }
-    }
-
-    var baseCurrencyCode: String? {
-        get { storage.value(for: keyBaseCurrencyCode) }
-        set { storage.set(value: newValue, for: keyBaseCurrencyCode) }
     }
 
     var baseBitcoinProvider: String? {

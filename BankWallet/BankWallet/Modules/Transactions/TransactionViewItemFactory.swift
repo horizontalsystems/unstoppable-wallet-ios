@@ -1,4 +1,5 @@
 import Foundation
+import CurrencyKit
 
 class TransactionViewItemFactory: ITransactionViewItemFactory {
     private let feeCoinProvider: IFeeCoinProvider

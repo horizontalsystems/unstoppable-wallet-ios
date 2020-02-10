@@ -1,5 +1,6 @@
 import Foundation
 import XRatesKit
+import CurrencyKit
 
 class BalanceViewItemFactory {
     private let minimumProgress = 10

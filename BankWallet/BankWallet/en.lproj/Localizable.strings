@@ -250,11 +250,6 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "settings.notifications.disabled_text" = "The notifications for Unstoppable Wallet app are disabled. You need to turn on Notifications and allow background app refresh in order to be able to receive price change alerts.";
 "settings.notifications.settings_button" = "Turn on in Settings";
 
-// Settings -> Base Currency
-
-"settings_base_currency.title" = "Base Currency";
-"settings_base_currency.provided_by" = "Real-time and historical exchange rates provided by CryptoCompare.com";
-
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "Coin Manager";

@@ -10,7 +10,6 @@ protocol IRandomManager {
 }
 
 protocol ILocalStorage: class {
-    var baseCurrencyCode: String? { get set }
     var baseBitcoinProvider: String? { get set }
     var baseBitcoinCashProvider: String? { get set }
     var baseDashProvider: String? { get set }
@@ -237,7 +236,7 @@ protocol IAppConfigProvider {
     var infuraCredentials: (id: String, secret: String?) { get }
     var btcCoreRpcUrl: String { get }
     var etherscanKey: String { get }
-    var currencies: [Currency] { get }
+    var currencyCodes: [String] { get }
 
     func defaultWords(count: Int) -> [String]
     var defaultEosCredentials: (String, String) { get }
@@ -333,12 +332,6 @@ protocol ITransactionRecordStorage {
 
     func update(records: [TransactionRecord])
     func clearRecords()
-}
-
-protocol ICurrencyManager: AnyObject {
-    var baseCurrency: Currency { get set }
-    var currencies: [Currency] { get }
-    var baseCurrencyUpdatedSignal: Signal { get }
 }
 
 protocol IFullTransactionDataProviderManager {

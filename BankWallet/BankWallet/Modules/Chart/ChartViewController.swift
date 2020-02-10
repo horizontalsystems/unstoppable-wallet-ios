@@ -2,6 +2,7 @@ import UIKit
 import ActionSheet
 import XRatesKit
 import Chart
+import CurrencyKit
 
 class ChartViewController: WalletActionSheetController {
     private let coinFormatter: NumberFormatter = {

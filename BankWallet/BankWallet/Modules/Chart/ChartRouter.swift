@@ -10,7 +10,7 @@ class ChartRouter {
 
         let chartRateFactory = ChartRateFactory()
         let interactor = ChartInteractor(rateManager: App.shared.rateManager, chartTypeStorage: App.shared.localStorage)
-        let presenter = ChartPresenter(interactor: interactor, factory: chartRateFactory, coin: wallet.coin, currency: App.shared.currencyManager.baseCurrency)
+        let presenter = ChartPresenter(interactor: interactor, factory: chartRateFactory, coin: wallet.coin, currency: App.shared.currencyKit.baseCurrency)
         let viewController = ChartViewController(delegate: presenter)
 
         interactor.delegate = presenter

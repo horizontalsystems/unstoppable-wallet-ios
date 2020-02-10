@@ -1,6 +1,6 @@
 import UIKit
-import Foundation
 import RxSwift
+import CurrencyKit
 import XRatesKit
 
 protocol ISendView: class {

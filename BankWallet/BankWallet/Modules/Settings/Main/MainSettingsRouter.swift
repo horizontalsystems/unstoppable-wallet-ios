@@ -1,5 +1,6 @@
 import UIKit
 import LanguageKit
+import CurrencyKit
 
 class MainSettingsRouter {
     weak var viewController: UIViewController?
@@ -24,7 +25,7 @@ extension MainSettingsRouter: IMainSettingsRouter {
     }
 
     func showBaseCurrencySettings() {
-        viewController?.navigationController?.pushViewController(BaseCurrencySettingsRouter.module(), animated: true)
+        viewController?.navigationController?.pushViewController(App.shared.currencyKit.baseCurrencySettingsModule, animated: true)
     }
 
     func showLanguageSettings() {
@@ -66,7 +67,7 @@ extension MainSettingsRouter {
                 backupManager: App.shared.backupManager,
                 themeManager: App.shared.themeManager,
                 systemInfoManager: App.shared.systemInfoManager,
-                currencyManager: App.shared.currencyManager,
+                currencyKit: App.shared.currencyKit,
                 appConfigProvider: App.shared.appConfigProvider
         )
         let presenter = MainSettingsPresenter(router: router, interactor: interactor)
