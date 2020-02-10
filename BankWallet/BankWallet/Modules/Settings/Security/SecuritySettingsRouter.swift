@@ -20,7 +20,7 @@ extension SecuritySettingsRouter: ISecuritySettingsRouter {
     }
 
     func showUnlock(delegate: IUnlockDelegate) {
-        viewController?.present(App.shared.pinKit.unlockPinModule(delegate: delegate, enableBiometry: false, unlockMode: .simple), animated: true)
+        viewController?.present(App.shared.pinKit.unlockPinModule(delegate: delegate, enableBiometry: false, presentationStyle: .simple, cancellable: true), animated: true)
     }
 
 }

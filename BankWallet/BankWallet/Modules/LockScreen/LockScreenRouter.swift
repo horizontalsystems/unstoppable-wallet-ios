@@ -32,7 +32,7 @@ extension LockScreenRouter {
         let presenter = LockScreenPresenter(router: router)
 
         let rateListController = RateListRouter.module()
-        let unlockController = pinKit.unlockPinModule(delegate: presenter, enableBiometry: true, unlockMode: .complex)
+        let unlockController = pinKit.unlockPinModule(delegate: presenter, enableBiometry: true, presentationStyle: .complex, cancellable: false)
 
         let viewController = LockScreenController(viewControllers: [unlockController, rateListController])
         router.viewController = viewController
