@@ -2611,7 +2611,6 @@
 				1A5643953F416DA3DA5DFBC3 /* FeeRatePriority.swift */,
 				1A56422C196B48931CDE1445 /* SendTransactionError.swift */,
 				1A564504718E7D19F379A9F7 /* AdapterError.swift */,
-				11B35903160F1842AB240417 /* Currency.swift */,
 				11B354D8E4373408B5249B70 /* AlertState.swift */,
 				11B35394931A964455585870 /* PriceAlert.swift */,
 				11B35C1528814607B0474707 /* PriceAlertRecord.swift */,
