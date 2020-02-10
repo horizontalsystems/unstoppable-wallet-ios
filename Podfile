@@ -33,6 +33,7 @@ def appPods
   pod 'StorageKit.swift', git: 'https://github.com/horizontalsystems/component-kit-ios/'
   # pod 'StorageKit.swift', path: '../component-kit-ios/'
   pod 'PinKit.swift', git: 'https://github.com/horizontalsystems/component-kit-ios/'
+  # pod 'PinKit.swift', path: '../component-kit-ios/'
 
   pod 'ActionSheet.swift'
   pod 'HUD.swift'
