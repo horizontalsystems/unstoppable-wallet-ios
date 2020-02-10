@@ -302,7 +302,7 @@ CHECKOUT OPTIONS:
     :commit: ee2fd2f8f530a68ba33dfc8ff0b4f70c9742df0e
     :git: https://github.com/horizontalsystems/component-kit-ios/
   PinKit.swift:
-    :commit: ee2fd2f8f530a68ba33dfc8ff0b4f70c9742df0e
+    :commit: f601d8b4e3e91f46f7bc26a90dcb279ce203ccd2
     :git: https://github.com/horizontalsystems/component-kit-ios/
   StorageKit.swift:
     :commit: ee2fd2f8f530a68ba33dfc8ff0b4f70c9742df0e

@@ -15,7 +15,6 @@ class App {
     let themeManager: ThemeManager
     let appConfigProvider: IAppConfigProvider
     let systemInfoManager: ISystemInfoManager
-    let biometryManager: IBiometryManager
 
     let pasteboardManager: IPasteboardManager
     let reachabilityManager: IReachabilityManager
@@ -73,7 +72,6 @@ class App {
         themeManager = ThemeManager.shared
         appConfigProvider = AppConfigProvider()
         systemInfoManager = SystemInfoManager()
-        biometryManager = BiometryManager(systemInfoManager: systemInfoManager)
         if appConfigProvider.officeMode {
             debugLogger = DebugLogger(localStorage: localStorage, dateProvider: CurrentDateProvider())
         }
@@ -147,7 +145,6 @@ class App {
                 adapterManager: adapterManager,
                 pinKit: pinKit,
                 keychainKit: keychainKit,
-                biometryManager: biometryManager,
                 blurManager: blurManager,
                 notificationManager: notificationManager,
                 backgroundPriceAlertManager: backgroundPriceAlertManager,
