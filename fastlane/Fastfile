@@ -5,7 +5,7 @@ lane :dev_t do |options|
   sigh(app_identifier: "io.horizontalsystems.bank-wallet.dev.testnet", force: true, adhoc: true, username: ENV['ITUNES_CONNECT_USERNAME'], team_id: options[:dp_team_id])
   gym(scheme: "Bank Dev T", export_method: "ad-hoc", silent: true, clean: true, export_options: { compileBitcode: false })
 
-  upload_to_hockey(options[:hockey_api_token])
+  upload_to_app_center(options[:app_center_api_token])
 end
 
 lane :dev do |options|
@@ -15,7 +15,7 @@ lane :dev do |options|
   sigh(app_identifier: "io.horizontalsystems.bank-wallet.dev", force: true, adhoc: true, username: ENV['ITUNES_CONNECT_USERNAME'], team_id: options[:dp_team_id])
   gym(scheme: "Bank Dev", export_method: "ad-hoc", silent: true, clean: true, export_options: { compileBitcode: false })
 
-  upload_to_hockey(options[:hockey_api_token])
+  upload_to_app_center(options[:app_center_api_token])
 end
 
 def prepare_environment
@@ -36,9 +36,13 @@ def prepare_environment
   cocoapods(repo_update: true)
 end
 
-def upload_to_hockey(api_token)
-  hockey(
+def upload_to_app_center(api_token)
+  appcenter_upload(
     api_token: api_token,
-    notes: last_git_commit[:message]
+    owner_name: "Horizontal-Systems",
+    owner_type: "organization",
+    app_name: "Unstoppable-Dev",
+    notify_testers: true,
+    release_notes: last_git_commit[:message]
   )
 end
