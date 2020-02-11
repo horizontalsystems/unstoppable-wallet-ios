@@ -41,7 +41,7 @@ def upload_to_app_center(api_token)
     api_token: api_token,
     owner_name: "Horizontal-Systems",
     owner_type: "organization",
-    app_name: "Unstoppable-Dev",
+    app_name: "Unstoppable",
     notify_testers: true,
     release_notes: last_git_commit[:message]
   )
