@@ -8,6 +8,7 @@ class CoinToggleCell: ThemeCell {
     private let coinLabel = UILabel()
     private let blockchainBadgeView = BadgeView()
     private let toggleView = UISwitch()
+    private let addImageView = UIImageView()
 
     private var onToggle: ((Bool) -> ())?
 
@@ -52,6 +53,15 @@ class CoinToggleCell: ThemeCell {
 
         toggleView.tintColor = .themeSteel20
         toggleView.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
+
+        contentView.addSubview(addImageView)
+        addImageView.snp.makeConstraints { maker in
+            maker.trailing.equalToSuperview().offset(-CGFloat.margin4x)
+            maker.centerY.equalToSuperview()
+        }
+
+        addImageView.image = UIImage(named: "Edit Coins Icon")?.withRenderingMode(.alwaysTemplate)
+        addImageView.tintColor = .themeGray
     }
 
     @objc func switchChanged() {
@@ -65,13 +75,15 @@ class CoinToggleCell: ThemeCell {
     func bind(coin: Coin, state: CoinToggleViewItemState, last: Bool, onToggle: ((Bool) -> ())? = nil) {
         switch state {
         case .toggleHidden:
-            super.bind(showDisclosure: true, last: last)
+            super.bind(last: last)
 
+            addImageView.isHidden = false
             toggleView.isHidden = true
             selectionStyle = .default
         case .toggleVisible(let enabled):
             super.bind(last: last)
 
+            addImageView.isHidden = true
             toggleView.isHidden = false
             toggleView.setOn(enabled, animated: false)
             selectionStyle = .none
