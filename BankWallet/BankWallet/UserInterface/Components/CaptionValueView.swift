@@ -33,10 +33,10 @@ class CaptionValueView: UIView {
         captionLabel.text = caption
     }
 
-    func set(value: String?, accent: Bool = false, font: UIFont = .subhead2) {
+    func set(value: String?, accent: Bool = true, font: UIFont = .subhead2) {
         valueLabel.text = value
         valueLabel.font = font
-        valueLabel.textColor = accent ? .themeLeah : .themeGray
+        valueLabel.textColor = accent ? .themeLeah : .themeGray50
     }
 
 }

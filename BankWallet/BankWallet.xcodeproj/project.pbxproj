@@ -895,14 +895,17 @@
 		58AAA09CAEB6AF43CA020636 /* FullTransactionInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA823D090E4B3E0D03A91 /* FullTransactionInfoPresenter.swift */; };
 		58AAA0A4B15F591F75068D2F /* RateListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA28AAA6976AA8A84D918 /* RateListPresenter.swift */; };
 		58AAA0A54A64F5548C65F5F1 /* FullTransactionInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA687FC0253AD175BA756 /* FullTransactionInfoInteractor.swift */; };
+		58AAA0AA1FA9ABB84FF07D88 /* ChartTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA87888EF1F40C49AB7F5 /* ChartTypeCell.swift */; };
 		58AAA0B04B8E3BD80EC3085E /* FullTransactionInfoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA79D129F7B3E64598E5F /* FullTransactionInfoModule.swift */; };
 		58AAA0BEEC3EF61DCB80C6BA /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAA6EA2DAD95D2CB417FD /* DebugViewController.swift */; };
 		58AAA0E6D41D7226655EDFB8 /* SendAddressInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4AA0649BE4CBC876A76 /* SendAddressInteractor.swift */; };
 		58AAA0E8388C917EB1D4E022 /* FullTransactionInfoProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC944A9DCACFAF1DDA15 /* FullTransactionInfoProtocols.swift */; };
+		58AAA0EC9F26BCEFE0666585 /* DoubleLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA68E59622ED7B1FCB3D7 /* DoubleLineView.swift */; };
 		58AAA0F1D02B37DE78431771 /* CurrencyCompactFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAAA2E81C192F6356ADCD /* CurrencyCompactFormatter.swift */; };
 		58AAA109348EF36940B08F54 /* DoubleSpendInfoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5AE34C515816D2D4977 /* DoubleSpendInfoRouter.swift */; };
 		58AAA10B3852EDA5DC15901F /* DataProviderSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA390E4B59B8CB7C2D2E8 /* DataProviderSettingsModule.swift */; };
 		58AAA10D41F576F7653C1132 /* ChartMarketCapItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA75CCD44D20DED397137 /* ChartMarketCapItem.swift */; };
+		58AAA11AE1B3F80947CCBDD7 /* ChartTypeSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA668E92B6E7F37958024 /* ChartTypeSelectView.swift */; };
 		58AAA12167F3BC03D0FA55DF /* PinKitDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA16E4AB334B67FFD891A /* PinKitDelegate.swift */; };
 		58AAA12F931DF9C1FE5DDBCB /* DataProviderSettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA56AA98F7B0DB2E97971 /* DataProviderSettingsRouter.swift */; };
 		58AAA13AFEBDAF457B040A56 /* BackupWordsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA39FF58FB74DC374C5C1 /* BackupWordsPresenter.swift */; };
@@ -991,12 +994,14 @@
 		58AAA43FBBBFE1B4A6C7F49D /* RateListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0AF9C516BDA8CF5C476 /* RateListRouter.swift */; };
 		58AAA443FB98F47C63BC6E36 /* ChartCurrentRateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA641B5453CCB1699290A /* ChartCurrentRateItem.swift */; };
 		58AAA445D49128211BC917DD /* SendConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9E43BB1F4A9472DFED4 /* SendConfirmationViewController.swift */; };
+		58AAA446685F1F10E520F244 /* ChartTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA87888EF1F40C49AB7F5 /* ChartTypeCell.swift */; };
 		58AAA44CE435B4B79E4AC3A5 /* SendFeeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA898435C21331DE0890C /* SendFeeModule.swift */; };
 		58AAA44E41D159AF6395CB7F /* FullTransactionDataProviderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7F8DA30F2F95B9DC758 /* FullTransactionDataProviderManager.swift */; };
 		58AAA44FC19684B426489776 /* GridIntervalConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8CCC7252ECFFDC51578 /* GridIntervalConverter.swift */; };
 		58AAA45157793305C4BD8E63 /* ChartCurrentRateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA641B5453CCB1699290A /* ChartCurrentRateItem.swift */; };
 		58AAA45240AA8969546B34A2 /* EthereumTransactionInfoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA01DEF6280C1A0F1DA2D /* EthereumTransactionInfoAdapter.swift */; };
 		58AAA4578B59022BBFEC60A6 /* SendFeeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA48AE934E928E9CC0099 /* SendFeeRouter.swift */; };
+		58AAA45AF7993D2D2D9F2699 /* ChartPointInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA027443FAAF10179C3B1 /* ChartPointInfoView.swift */; };
 		58AAA45B492078E0E731FD91 /* BackupConfirmationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE75A33F6C7304A3F8EE /* BackupConfirmationPresenter.swift */; };
 		58AAA4612DA9DA200C500F8F /* FullTransactionLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA407F55E644523FC8EF8 /* FullTransactionLinkView.swift */; };
 		58AAA4641125F69AAFEF1558 /* BitcoinTransactionInfoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA1C151E737B0B32208B4 /* BitcoinTransactionInfoAdapter.swift */; };
@@ -1086,6 +1091,7 @@
 		58AAA7539516E70428514119 /* FullTransactionInfoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA842D6734B75D88E578C /* FullTransactionInfoRouter.swift */; };
 		58AAA75A994A2F0EC891D68B /* BackupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA04194E7E2B466F92828 /* BackupInteractor.swift */; };
 		58AAA75CA2565C0E3DAADFCB /* DebugRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA905C4D766F902C08B65 /* DebugRouter.swift */; };
+		58AAA77AAD431E6B58B05922 /* ChartPointInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA027443FAAF10179C3B1 /* ChartPointInfoView.swift */; };
 		58AAA792EE279A108B0EABC6 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA983616E7156D55B8CDB /* InfoViewController.swift */; };
 		58AAA7ACE289E7B0E845BB83 /* SendConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9E43BB1F4A9472DFED4 /* SendConfirmationViewController.swift */; };
 		58AAA7BF63EEB776A0256C61 /* BackupModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA88D3ED8D5570474B589 /* BackupModule.swift */; };
@@ -1131,6 +1137,7 @@
 		58AAA93AB94910AE98EDFDBF /* ChartCurrentRateItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE52DBBA59FBD3DA6F43 /* ChartCurrentRateItemView.swift */; };
 		58AAA93B19192D8AE2590A4F /* DebugRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA905C4D766F902C08B65 /* DebugRouter.swift */; };
 		58AAA93F847D0D2857434FF6 /* ChartRateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA2338C4E70212D3620BD /* ChartRateItem.swift */; };
+		58AAA942212AD8F9A0207458 /* ChartTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA87888EF1F40C49AB7F5 /* ChartTypeCell.swift */; };
 		58AAA960F63F58292EDBE8A7 /* CurrencyCompactFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAAA2E81C192F6356ADCD /* CurrencyCompactFormatter.swift */; };
 		58AAA968A557089285DBA907 /* SendConfirmationMemoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5D396A321E46E3A8D99 /* SendConfirmationMemoCell.swift */; };
 		58AAA96EE54FCE113749FE93 /* BlockExplorerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAEB2610B22FF5C9E9A41 /* BlockExplorerProvider.swift */; };
@@ -1147,6 +1154,7 @@
 		58AAA9EB37923915A52CFFFF /* ConnectionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA610E99CF0429135DD1D /* ConnectionError.swift */; };
 		58AAA9EFD7F9CB98975F26E7 /* HorSysProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA976A6B67FD47D5958E8 /* HorSysProvider.swift */; };
 		58AAA9F1B2A551603B6C9B6F /* LockScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB5515ECA96D506F56C3 /* LockScreenRouter.swift */; };
+		58AAAA10D028F74A2A0ECD08 /* DoubleLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA68E59622ED7B1FCB3D7 /* DoubleLineView.swift */; };
 		58AAAA2E5B50D77CF62FA49A /* BackupWordsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8FCF190F71C5494E5C5 /* BackupWordsModule.swift */; };
 		58AAAA314057BB3F1AF02230 /* NotificationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA877A5390D40976258F0 /* NotificationFactory.swift */; };
 		58AAAA3B88DEB23FE98E034F /* SendAddressRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA047F8B03E37F51F6AC1 /* SendAddressRouter.swift */; };
@@ -1161,6 +1169,7 @@
 		58AAAA94D9E06694F544AD3E /* RateListModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD1CD72812BF23180D65 /* RateListModule.swift */; };
 		58AAAA94F5304022710A57B5 /* LockScreenModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5B9EF4DD882EF4020C5 /* LockScreenModule.swift */; };
 		58AAAAA1620B9AC40C46D4A2 /* EmojiHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5B958B9F7D75D37A42A /* EmojiHelperTests.swift */; };
+		58AAAAA3417C1377B727D042 /* DoubleLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA68E59622ED7B1FCB3D7 /* DoubleLineView.swift */; };
 		58AAAAAE312B4839ECDB4C87 /* RequestErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF286BB3532AF94E4EB8 /* RequestErrorView.swift */; };
 		58AAAAB80DA77E4F776870DC /* SendButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8DE852A97AD326B68E0 /* SendButtonCell.swift */; };
 		58AAAAC587B54002789A555A /* BackupModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA88D3ED8D5570474B589 /* BackupModule.swift */; };
@@ -1173,6 +1182,7 @@
 		58AAAB10F0E9BB522BAB92A4 /* SendAmountPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0DEFC3C5CD097CF3FF4 /* SendAmountPresenter.swift */; };
 		58AAAB1C88165A1E936A46A5 /* DoubleSpendInfoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5AE34C515816D2D4977 /* DoubleSpendInfoRouter.swift */; };
 		58AAAB270D67FD8214631D87 /* RateListFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAABE2FEDF83E81BC54940 /* RateListFactory.swift */; };
+		58AAAB2E80E8A78DEBF8C211 /* ChartPointInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA027443FAAF10179C3B1 /* ChartPointInfoView.swift */; };
 		58AAAB42CEE76284092D4097 /* TransactionValueActionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA67FCFDD02AE7A4900BC /* TransactionValueActionItem.swift */; };
 		58AAAB45621FAF77A7C091C3 /* FullTransactionInfoProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC944A9DCACFAF1DDA15 /* FullTransactionInfoProtocols.swift */; };
 		58AAAB5986803913FCF8EC23 /* PinKitDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA16E4AB334B67FFD891A /* PinKitDelegate.swift */; };
@@ -1220,6 +1230,7 @@
 		58AAACD466D35AD65205C535 /* ChartMarketCapItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA75CCD44D20DED397137 /* ChartMarketCapItem.swift */; };
 		58AAACE27A231109F09B1276 /* DataProviderSettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA56AA98F7B0DB2E97971 /* DataProviderSettingsRouter.swift */; };
 		58AAACEDCB8C71F78A4EE72D /* LockScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4A027BD92BD062748CC /* LockScreenController.swift */; };
+		58AAACF0342AD1CF1EADC603 /* ChartTypeSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA668E92B6E7F37958024 /* ChartTypeSelectView.swift */; };
 		58AAACF69195400BFD9AE04E /* BackupModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA88D3ED8D5570474B589 /* BackupModule.swift */; };
 		58AAAD0C92357E3222DBE14A /* ChartRateTypeItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD4516FF571E6B9BBEC0 /* ChartRateTypeItemView.swift */; };
 		58AAAD265215F49A17256435 /* BackupConfirmationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE75A33F6C7304A3F8EE /* BackupConfirmationPresenter.swift */; };
@@ -1238,6 +1249,7 @@
 		58AAAD9F13C23490001E7687 /* BackupWordsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA39FF58FB74DC374C5C1 /* BackupWordsPresenter.swift */; };
 		58AAADA919A827B84C9623D1 /* BlockChairProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA839E98781BFF8AEB2B3 /* BlockChairProvider.swift */; };
 		58AAADAA107E2FA36671B987 /* NotificationFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE13528FF0F1CD7067A5 /* NotificationFactoryTests.swift */; };
+		58AAADB3341A0CAD6AC2ECEB /* ChartTypeSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA668E92B6E7F37958024 /* ChartTypeSelectView.swift */; };
 		58AAADC7A68B2EBEE20C8E10 /* SendConfirmationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB2FE6078D42455148C5 /* SendConfirmationRouter.swift */; };
 		58AAADD168939A9A7614EAD6 /* SendFeePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6C29584EFCDD8209363 /* SendFeePresenter.swift */; };
 		58AAADD4A8BA1090780CEA11 /* FullTransactionInfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD82EF02D5AA6E8ED4CB /* FullTransactionInfoProvider.swift */; };
@@ -1974,6 +1986,7 @@
 		50EED191218822FA00E200AD /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		50EED192218822FA00E200AD /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		58AAA01DEF6280C1A0F1DA2D /* EthereumTransactionInfoAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumTransactionInfoAdapter.swift; sourceTree = "<group>"; };
+		58AAA027443FAAF10179C3B1 /* ChartPointInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartPointInfoView.swift; sourceTree = "<group>"; };
 		58AAA02A5C8C597ABDCFB27E /* RateCoinMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateCoinMapper.swift; sourceTree = "<group>"; };
 		58AAA04194E7E2B466F92828 /* BackupInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupInteractor.swift; sourceTree = "<group>"; };
 		58AAA047F8B03E37F51F6AC1 /* SendAddressRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendAddressRouter.swift; sourceTree = "<group>"; };
@@ -2042,10 +2055,12 @@
 		58AAA6205C47965E48E4BAC3 /* SendFeeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeeView.swift; sourceTree = "<group>"; };
 		58AAA641B5453CCB1699290A /* ChartCurrentRateItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartCurrentRateItem.swift; sourceTree = "<group>"; };
 		58AAA656A81B2C12F618FB44 /* EthereumBaseAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumBaseAdapter.swift; sourceTree = "<group>"; };
+		58AAA668E92B6E7F37958024 /* ChartTypeSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartTypeSelectView.swift; sourceTree = "<group>"; };
 		58AAA67C8CDCEF467711963B /* IpfsApiProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IpfsApiProvider.swift; sourceTree = "<group>"; };
 		58AAA67FCFDD02AE7A4900BC /* TransactionValueActionItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionValueActionItem.swift; sourceTree = "<group>"; };
 		58AAA687FC0253AD175BA756 /* FullTransactionInfoInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoInteractor.swift; sourceTree = "<group>"; };
 		58AAA68D36E8424BBE757B88 /* DataProviderSettingsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProviderSettingsPresenter.swift; sourceTree = "<group>"; };
+		58AAA68E59622ED7B1FCB3D7 /* DoubleLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleLineView.swift; sourceTree = "<group>"; };
 		58AAA6C29584EFCDD8209363 /* SendFeePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeePresenter.swift; sourceTree = "<group>"; };
 		58AAA72A3BACDB574838A8CC /* FullTransactionInfoProviderFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoProviderFactory.swift; sourceTree = "<group>"; };
 		58AAA72BD42697A894C2383C /* DoubleSpendInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSpendInfoViewController.swift; sourceTree = "<group>"; };
@@ -2062,6 +2077,7 @@
 		58AAA842D6734B75D88E578C /* FullTransactionInfoRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoRouter.swift; sourceTree = "<group>"; };
 		58AAA8529A2BB02062FD1732 /* RateListChangingCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateListChangingCellView.swift; sourceTree = "<group>"; };
 		58AAA877A5390D40976258F0 /* NotificationFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationFactory.swift; sourceTree = "<group>"; };
+		58AAA87888EF1F40C49AB7F5 /* ChartTypeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartTypeCell.swift; sourceTree = "<group>"; };
 		58AAA88D3ED8D5570474B589 /* BackupModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupModule.swift; sourceTree = "<group>"; };
 		58AAA898435C21331DE0890C /* SendFeeModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeeModule.swift; sourceTree = "<group>"; };
 		58AAA89DB3DE36B5C227C1C1 /* SendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendViewController.swift; sourceTree = "<group>"; };
@@ -3332,6 +3348,8 @@
 				58AAAAA2E81C192F6356ADCD /* CurrencyCompactFormatter.swift */,
 				58AAA28ABE08D74D89C2BF50 /* ChartRateFactory.swift */,
 				58AAAB7A3593CAFEA65729C2 /* MaxSupplyMap.swift */,
+				58AAA4EF55533226DDE79DC8 /* Views */,
+				58AAA9A4D3876B28E5E3DB52 /* Cells */,
 			);
 			path = Chart;
 			sourceTree = "<group>";
@@ -3345,6 +3363,16 @@
 				58AAA4A027BD92BD062748CC /* LockScreenController.swift */,
 			);
 			path = LockScreen;
+			sourceTree = "<group>";
+		};
+		58AAA4EF55533226DDE79DC8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				58AAA668E92B6E7F37958024 /* ChartTypeSelectView.swift */,
+				58AAA027443FAAF10179C3B1 /* ChartPointInfoView.swift */,
+				58AAA68E59622ED7B1FCB3D7 /* DoubleLineView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		58AAA545999B677BDB1B19DB /* Cells */ = {
@@ -3441,6 +3469,14 @@
 				58AAAECBAC12D39B09F0D0A7 /* Cells */,
 			);
 			path = SendConfirmation;
+			sourceTree = "<group>";
+		};
+		58AAA9A4D3876B28E5E3DB52 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				58AAA87888EF1F40C49AB7F5 /* ChartTypeCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		58AAAA2940BA2CD302668C3E /* UserInterface */ = {
@@ -4608,6 +4644,10 @@
 				58AAA8B3937A2D8DF75A9AE0 /* UITextView.swift in Sources */,
 				11B35CA53151EDE9264F4F57 /* KeychainKitDelegate.swift in Sources */,
 				58AAAB5986803913FCF8EC23 /* PinKitDelegate.swift in Sources */,
+				58AAACF0342AD1CF1EADC603 /* ChartTypeSelectView.swift in Sources */,
+				58AAA446685F1F10E520F244 /* ChartTypeCell.swift in Sources */,
+				58AAAB2E80E8A78DEBF8C211 /* ChartPointInfoView.swift in Sources */,
+				58AAAAA3417C1377B727D042 /* DoubleLineView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5159,6 +5199,10 @@
 				58AAA4A4D0D7398E7184E7AB /* UITextView.swift in Sources */,
 				11B359CC4B492477E14339B2 /* KeychainKitDelegate.swift in Sources */,
 				58AAA12167F3BC03D0FA55DF /* PinKitDelegate.swift in Sources */,
+				58AAA11AE1B3F80947CCBDD7 /* ChartTypeSelectView.swift in Sources */,
+				58AAA942212AD8F9A0207458 /* ChartTypeCell.swift in Sources */,
+				58AAA45AF7993D2D2D9F2699 /* ChartPointInfoView.swift in Sources */,
+				58AAAA10D028F74A2A0ECD08 /* DoubleLineView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5663,6 +5707,10 @@
 				58AAA550B894B6F8FC8DA1B1 /* UITextView.swift in Sources */,
 				11B3503093D40D5FA0675FA7 /* KeychainKitDelegate.swift in Sources */,
 				58AAA8E5EA8901CF69DDE43D /* PinKitDelegate.swift in Sources */,
+				58AAADB3341A0CAD6AC2ECEB /* ChartTypeSelectView.swift in Sources */,
+				58AAA0AA1FA9ABB84FF07D88 /* ChartTypeCell.swift in Sources */,
+				58AAA77AAD431E6B58B05922 /* ChartPointInfoView.swift in Sources */,
+				58AAA0EC9F26BCEFE0666585 /* DoubleLineView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

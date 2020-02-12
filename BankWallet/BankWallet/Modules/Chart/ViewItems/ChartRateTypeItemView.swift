@@ -8,10 +8,9 @@ class ChartRateTypeItemView: BaseActionItemView {
     private let buttonDefaultWidth: CGFloat = 60
     private let buttonTopMargin: CGFloat = 10
 
-    private var buttons = [RespondButton]()
+    private let chartTypeSelectView = ChartTypeSelectView()
 
-    private let dateLabel = UILabel()
-    private let valueLabel = UILabel()
+    private let selectedPointInfoView = ChartPointInfoView()
 
     override var item: ChartRateTypeItem? {
         _item as? ChartRateTypeItem
@@ -20,119 +19,48 @@ class ChartRateTypeItemView: BaseActionItemView {
     override func initView() {
         super.initView()
 
-        valueLabel.font = .subhead1
-        valueLabel.textColor = .themeOz
-
-        addSubview(valueLabel)
-        valueLabel.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(6)
-            maker.centerX.equalToSuperview()
+        addSubview(selectedPointInfoView)
+        selectedPointInfoView.snp.makeConstraints { maker in
+            maker.top.equalToSuperview().inset(9)
+            maker.bottom.equalToSuperview().inset(6)
+            maker.trailing.leading.equalToSuperview().inset(CGFloat.margin4x)
         }
 
-        dateLabel.font = .caption
-        dateLabel.textColor = .themeGray
-
-        addSubview(dateLabel)
-        dateLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(valueLabel.snp.bottom).offset(1)
-            maker.centerX.equalToSuperview()
+        addSubview(chartTypeSelectView)
+        chartTypeSelectView.snp.makeConstraints { maker in
+            maker.top.bottom.equalToSuperview().inset(10)
+            maker.trailing.leading.equalToSuperview().inset(CGFloat.margin4x)
         }
-
-        item?.bindButton = { [weak self] (title, tag, action) in
-            self?.addButton(title: title, tag: tag, action: action)
+        chartTypeSelectView.onSelectIndex = { [weak self] index in
+            self?.item?.didSelect?(index)
         }
-        item?.setSelected = { [weak self] tag in
-            self?.setSelected(tag: tag)
+        item?.setTitles = {[weak self] titles in
+            self?.set(titles: titles)
         }
-        item?.setEnabled = { [weak self] tag in
-            self?.setEnabled(tag: tag)
+        item?.setSelected = { [weak self] index in
+            self?.setSelected(index: index)
         }
-        item?.showPoint = { [weak self] date, value in
-            self?.showPoint(date: date, value: value)
+        item?.showPoint = { [weak self] date, time, price, volume in
+            self?.showPoint(date: date, time: time, price: price, volume: volume)
         }
     }
 
-    private func showPoint(date: String?, value: String?) {
-        dateLabel.text = date
-        valueLabel.text = value
-        showButtons(date == nil || value == nil)
+    private func showPoint(date: String?, time: String?, price: String?, volume: String?) {
+        selectedPointInfoView.bind(date: date, time: time, price: price, volume: volume)
+        showButtons(date == nil || price == nil)
     }
 
     private func showButtons(_ show: Bool) {
-        dateLabel.isHidden = show
-        valueLabel.isHidden = show
-        buttons.forEach { $0.isHidden = !show }
+        selectedPointInfoView.isHidden = show
+        chartTypeSelectView.isHidden = !show
     }
 
-    private func setSelected(tag: Int) {
-        buttons.forEach { button in
-            let nonSelectedState: RespondButton.State = button.state == .disabled ? .disabled : .active
-            button.state = button.tag == tag ? .selected : nonSelectedState
-        }
+    private func setSelected(index: Int) {
+        chartTypeSelectView.select(index: index)
     }
 
-    public func setEnabled(tag: Int) {
-        buttons.forEach { button in
-            if button.tag == tag {
-                button.state = button.state == .selected ? .selected : .active
-            }
-        }
-    }
-
-    private func addButton(title: String, tag: Int, action: (() -> ())?) {
-        let toggleAction = { [weak self] in
-            self?.setSelected(tag: tag)
-            action?()
-        }
-
-        let button = RespondButton(onTap: toggleAction)
-        button.cornerRadius = .cornerRadius3x
-        button.changeBackground = false
-        button.tag = tag
-        button.state = .active
-        button.textColors = [.active: .themeLeah, .selected: .themeJacob, .disabled: .themeGray50]
-        button.backgrounds = [.selected: .themeJeremy]
-        button.titleLabel.text = title.localized
-        button.titleLabel.font = .subhead1
-        button.titleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        button.wrapperView.snp.remakeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin2x)
-            maker.top.bottom.equalToSuperview()
-        }
-
-        addSubview(button)
-        buttons.append(button)
-
-        updateButtonConstraints()
-    }
-
-    private func updateButtonConstraints() {
-        guard buttons.count != 0 else {
-            return
-        }
-
-        var lastButton: UIView = buttons[0]
-        lastButton.snp.remakeConstraints { maker in
-            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
-            maker.top.equalToSuperview().offset(buttonTopMargin)
-            maker.height.equalTo(buttonHeight)
-            if buttons.count == 1 { // just one button
-                maker.width.equalTo(buttonDefaultWidth)
-            }
-        }
-
-        for i in 1..<buttons.count {
-            buttons[i].snp.remakeConstraints { maker in
-                maker.leading.equalTo(lastButton.snp.trailing).offset(CGFloat.margin2x)
-                maker.top.equalToSuperview().offset(buttonTopMargin)
-                maker.height.equalTo(buttonHeight)
-                maker.width.equalTo(lastButton.snp.width)
-                if buttons.count == i + 1 { // last button right constraint
-                    maker.right.equalToSuperview().inset(CGFloat.margin4x)
-                }
-            }
-            lastButton = buttons[i]
-        }
+    private func set(titles: [String]) {
+        chartTypeSelectView.reload(titles: titles)
     }
 
 }

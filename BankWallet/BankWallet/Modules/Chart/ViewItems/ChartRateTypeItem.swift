@@ -1,11 +1,13 @@
 import ActionSheet
+import Chart
 
 class ChartRateTypeItem: BaseActionItem {
 
-    var bindButton: ((String, Int, (() -> ())?) -> ())?
+    var setTitles: (([String]) -> ())?
     var setSelected: ((Int) -> ())?
-    var setEnabled: ((Int) -> ())?
-    var showPoint: ((String?, String?) -> ())?
+    var showPoint: ((String?, String?, String?, String?) -> ())?         // Date, Time, Price, Volume
+
+    var didSelect: ((Int) -> ())?
 
     init(tag: Int) {
 
