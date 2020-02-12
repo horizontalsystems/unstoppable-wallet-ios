@@ -58,7 +58,7 @@ class ChartMarketCapItemView: BaseActionItemView {
             maker.top.equalTo(circulationView.snp.bottom).offset(CGFloat.margin2x)
         }
 
-        sourceView.set(value: "@CryptoCompare.com", font: .caption)
+        sourceView.set(value: "@CryptoCompare.com", accent: false, font: .caption)
 
         addSubview(sourceView)
         sourceView.snp.makeConstraints { maker in
@@ -67,19 +67,19 @@ class ChartMarketCapItemView: BaseActionItemView {
         }
 
         item?.setVolume = { [weak self] value in
-            self?.volumeView.set(value: value, accent: true)
+            self?.volumeView.set(value: value)
         }
 
         item?.setMarketCap = { [weak self] value in
-            self?.marketCapView.set(value: value, accent: true)
+            self?.marketCapView.set(value: value)
         }
 
         item?.setCirculation = { [weak self] value in
-            self?.circulationView.set(value: value, accent: true)
+            self?.circulationView.set(value: value)
         }
 
         item?.setTotal = { [weak self] value in
-            self?.totalView.set(value: value, accent: true)
+            self?.totalView.set(value: value)
         }
     }
 

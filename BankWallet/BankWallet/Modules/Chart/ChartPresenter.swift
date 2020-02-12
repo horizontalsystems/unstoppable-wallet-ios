@@ -61,7 +61,7 @@ class ChartPresenter {
 extension ChartPresenter: IChartViewDelegate {
 
     func viewDidLoad() {
-        view?.addTypeButtons(types: ChartType.allCases)
+        view?.set(types: ChartType.allCases)
         view?.set(chartType: chartType)
 
         marketInfo = interactor.marketInfo(coinCode: coin.code, currencyCode: currency.code)
@@ -84,9 +84,10 @@ extension ChartPresenter: IChartViewDelegate {
         fetchChartInfo()
     }
 
-    func chartTouchSelect(timestamp: TimeInterval, value: Decimal) {
+    func chartTouchSelect(timestamp: TimeInterval, value: Decimal, volume: Decimal?) {
         let currencyValue = CurrencyValue(currency: currency, value: value)
-        view?.showSelectedPoint(chartType: chartType, timestamp: timestamp, value: currencyValue)
+        let volumeValue = volume.map { CurrencyValue(currency: currency, value: $0) }
+        view?.showSelectedPoint(chartType: chartType, timestamp: timestamp, value: currencyValue, volume: volumeValue)
     }
 
 }

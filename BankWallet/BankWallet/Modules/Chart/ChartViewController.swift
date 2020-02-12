@@ -4,6 +4,22 @@ import XRatesKit
 import Chart
 import CurrencyKit
 
+extension ChartType {
+
+    var title: String {
+        switch self {
+            case .day: return "chart.time_duration.day".localized
+            case .week: return "chart.time_duration.week".localized
+            case .month: return "chart.time_duration.month".localized
+            case .month3: return "chart.time_duration.month3".localized
+            case .halfYear: return "chart.time_duration.halyear".localized
+            case .year: return "chart.time_duration.year".localized
+            case .year2: return "chart.time_duration.year2".localized
+        }
+    }
+
+}
+
 class ChartViewController: WalletActionSheetController {
     private let coinFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -27,6 +43,8 @@ class ChartViewController: WalletActionSheetController {
     private let chartRateTypeItem = ChartRateTypeItem(tag: 2)
     private var chartRateItem: ChartRateItem?
     private var marketCapItem = ChartMarketCapItem(tag: 4)
+
+    private var types = [ChartType]()
 
     init(delegate: IChartViewDelegate) {
         self.delegate = delegate
@@ -69,6 +87,9 @@ class ChartViewController: WalletActionSheetController {
 
         model.hideInBackground = false
 
+        chartRateTypeItem.didSelect = { [weak self] index in
+            self?.didSelect(index: index)
+        }
         delegate.viewDidLoad()
     }
 
@@ -117,14 +138,11 @@ class ChartViewController: WalletActionSheetController {
         return "\(formattedValue) \(coinValue.coin.code)"
     }
 
-    private func title(for chartType: ChartType) -> String {
-        switch chartType {
-        case .day: return "chart.time_duration.day".localized
-        case .week: return "chart.time_duration.week".localized
-        case .month: return "chart.time_duration.month".localized
-        case .halfYear: return "chart.time_duration.halyear".localized
-        case .year: return "chart.time_duration.year".localized
+    private func didSelect(index: Int) {
+        guard types.count > index else {
+            return
         }
+        delegate.onSelect(type: types[index])
     }
 
 }
@@ -146,33 +164,27 @@ extension ChartViewController: IChartView {
         show(maxSupply: viewItem.maxSupplyValue)
     }
 
-    func addTypeButtons(types: [ChartType]) {
-        for type in types {
-            let typeTitle = title(for: type)
-            chartRateTypeItem.bindButton?(typeTitle, type.rawValue) { [weak self] in
-                self?.delegate.onSelect(type: type)
-            }
-        }
-    }
-
-    func setChartTypeEnabled(tag: Int) {
-        chartRateTypeItem.setEnabled?(tag)
+    func set(types: [ChartType]) {
+        self.types = types
+        chartRateTypeItem.setTitles?(types.map { $0.title })
     }
 
     func set(chartType: ChartType) {
-        chartRateTypeItem.setSelected?(chartType.rawValue)
+        if let index = types.firstIndex(of: chartType) {
+            chartRateTypeItem.setSelected?(index)
+        }
     }
 
-    func showSelectedPoint(chartType: ChartType, timestamp: TimeInterval, value: CurrencyValue) {
+    func showSelectedPoint(chartType: ChartType, timestamp: TimeInterval, value: CurrencyValue, volume: CurrencyValue?) {
         let date = Date(timeIntervalSince1970: timestamp)
-        let formattedDate = [ChartType.month, ChartType.halfYear, ChartType.year].contains(chartType) ? DateHelper.instance.formatFullDateOnly(from: date) : DateHelper.instance.formatFullTime(from: date)
-
+        let formattedTime = [ChartType.day, ChartType.week].contains(chartType) ? DateHelper.instance.formatTimeOnly(from: date) : nil
+        let formattedDate = DateHelper.instance.formateShortDateOnly(date: date)
 
         currencyFormatter.currencyCode = value.currency.code
         currencyFormatter.currencySymbol = value.currency.symbol
         let formattedValue = currencyFormatter.string(from: value.value as NSNumber)
 
-        chartRateTypeItem.showPoint?(formattedDate, formattedValue)
+        chartRateTypeItem.showPoint?(formattedDate, formattedTime, formattedValue, CurrencyCompactFormatter.instance.format(currencyValue: volume))
     }
 
     func reloadAllModels() {
@@ -196,11 +208,11 @@ extension ChartViewController: IChartView {
 extension ChartViewController: IChartIndicatorDelegate {
 
     func didTap(chartPoint: Chart.ChartPoint) {
-        delegate.chartTouchSelect(timestamp: chartPoint.timestamp, value: chartPoint.value)
+        delegate.chartTouchSelect(timestamp: chartPoint.timestamp, value: chartPoint.value, volume: chartPoint.volume)
     }
 
     func didFinishTap() {
-        chartRateTypeItem.showPoint?(nil, nil)
+        chartRateTypeItem.showPoint?(nil, nil, nil, nil)
     }
 
 }

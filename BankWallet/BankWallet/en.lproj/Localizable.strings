@@ -364,8 +364,10 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "chart.time_duration.day" = "1D";
 "chart.time_duration.week" = "7D";
 "chart.time_duration.month" = "1M";
+"chart.time_duration.month3" = "3M";
 "chart.time_duration.halyear" = "6M";
 "chart.time_duration.year" = "1Y";
+"chart.time_duration.year2" = "2Y";
 
 "chart.market_cap" = "Market Cap";
 "chart.market_cap.thousand" = "%@ k";
@@ -376,6 +378,8 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "chart.circulation" = "In Circulation";
 "chart.max_supply" = "Total Supply";
 "chart.error.not_available" = "Chart not available";
+"chart.selected.price" = "Price";
+"chart.selected.volume" = "Volume";
 
 // Create Wallet
 

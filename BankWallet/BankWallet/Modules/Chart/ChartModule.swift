@@ -7,17 +7,16 @@ protocol IChartView: class {
     func hideSpinner()
 
     func set(chartType: ChartType)
-    func setChartTypeEnabled(tag: Int)
 
     func show(chartViewItem: ChartInfoViewItem)
     func show(marketInfoViewItem: MarketInfoViewItem)
 
-    func showSelectedPoint(chartType: ChartType, timestamp: TimeInterval, value: CurrencyValue)
+    func showSelectedPoint(chartType: ChartType, timestamp: TimeInterval, value: CurrencyValue, volume: CurrencyValue?)
 
     func showError()
 
     func reloadAllModels()
-    func addTypeButtons(types: [ChartType])
+    func set(types: [ChartType])
 }
 
 protocol IChartViewDelegate {
@@ -27,7 +26,7 @@ protocol IChartViewDelegate {
     func viewDidLoad()
 
     func onSelect(type: ChartType)
-    func chartTouchSelect(timestamp: TimeInterval, value: Decimal)
+    func chartTouchSelect(timestamp: TimeInterval, value: Decimal, volume: Decimal?)
 }
 
 protocol IChartInteractor {

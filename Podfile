@@ -22,6 +22,7 @@ def appPods
   pod 'HdWalletKit.swift'
 
   pod 'XRatesKit.swift', git: 'https://github.com/horizontalsystems/xrates-kit-ios/'
+  # pod 'XRatesKit.swift', path: '../xrates-kit-ios/'
   pod 'FeeRateKit.swift'
 
   pod 'UIExtensions.swift', git: 'https://github.com/horizontalsystems/gui-kit/'
@@ -39,7 +40,8 @@ def appPods
 
   pod 'ActionSheet.swift'
   pod 'HUD.swift'
-  pod 'Chart.swift'
+  pod 'Chart.swift', git: 'https://github.com/horizontalsystems/gui-kit/'
+  # pod 'Chart.swift', path: '../gui-kit/'
   pod 'SectionsTableView.swift'
 
   pod 'Alamofire'

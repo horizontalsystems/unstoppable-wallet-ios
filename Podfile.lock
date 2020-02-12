@@ -198,7 +198,7 @@ DEPENDENCIES:
   - BinanceChainKit.swift
   - BitcoinCashKit.swift
   - BitcoinKit.swift
-  - Chart.swift
+  - Chart.swift (from `https://github.com/horizontalsystems/gui-kit/`)
   - Cuckoo
   - CurrencyKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - DashKit.swift
@@ -240,7 +240,6 @@ SPEC REPOS:
     - BitcoinKit.swift
     - BlsKit.swift
     - BlueSocket
-    - Chart.swift
     - Cuckoo
     - DashKit.swift
     - DeepDiff
@@ -275,6 +274,8 @@ SPEC REPOS:
     - X11Kit.swift
 
 EXTERNAL SOURCES:
+  Chart.swift:
+    :git: https://github.com/horizontalsystems/gui-kit/
   CurrencyKit.swift:
     :git: https://github.com/horizontalsystems/component-kit-ios/
   EosioSwiftAbieosSerializationProvider:
@@ -293,6 +294,9 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
 
 CHECKOUT OPTIONS:
+  Chart.swift:
+    :commit: f05dfafb3742eb6ea6fa7f6840f64e88b12a6d3a
+    :git: https://github.com/horizontalsystems/gui-kit/
   CurrencyKit.swift:
     :commit: ee2fd2f8f530a68ba33dfc8ff0b4f70c9742df0e
     :git: https://github.com/horizontalsystems/component-kit-ios/
@@ -315,7 +319,7 @@ CHECKOUT OPTIONS:
     :commit: 037a537bbc19b596a32635c4e9146d0e28bb1074
     :git: https://github.com/horizontalsystems/gui-kit/
   XRatesKit.swift:
-    :commit: 9d8f883ebd107aee276c13ab170d388528b7c29e
+    :commit: 1c49d0fc781ec7894b3969f2eed45d1800165a70
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
 
 SPEC CHECKSUMS:
@@ -371,6 +375,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: 568660675ce881653095645bc9e30dbc1abc5578
 
-PODFILE CHECKSUM: d1a16052f563ca6824845d093aeae6a500bd39a5
+PODFILE CHECKSUM: 5daca0991242594c6f6e72c29742219105cb324b
 
 COCOAPODS: 1.8.4
