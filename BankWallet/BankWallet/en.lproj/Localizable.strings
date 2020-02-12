@@ -393,8 +393,8 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 // Lock Info
 
-"lock_info.title" = "Info";
-"lock_info.description" = "The sender sent these funds with a spending lock that will expire on shown date.\n\nNo worries, the received Bitcoins are already yours but until the lock period expires you cannot spend them on the Bitcoin network.";
+"lock_info.title" = "TimeLock";
+"lock_info.text" = "The sender sent these funds with a spending lock that will expire on shown date.\n\nNo worries, the received Bitcoins are already yours but until the lock period expires you cannot spend them on the Bitcoin network.";
 
 // Double Spend Info
 
