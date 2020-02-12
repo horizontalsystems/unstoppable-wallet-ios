@@ -226,7 +226,7 @@ DEPENDENCIES:
   - StorageKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - ThemeKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - UIExtensions.swift (from `https://github.com/horizontalsystems/gui-kit/`)
-  - XRatesKit.swift
+  - XRatesKit.swift (from `https://github.com/horizontalsystems/xrates-kit-ios/`)
 
 SPEC REPOS:
   trunk:
@@ -273,7 +273,6 @@ SPEC REPOS:
     - SwiftProtobuf
     - SwiftyJSON
     - X11Kit.swift
-    - XRatesKit.swift
 
 EXTERNAL SOURCES:
   CurrencyKit.swift:
@@ -290,6 +289,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :git: https://github.com/horizontalsystems/gui-kit/
+  XRatesKit.swift:
+    :git: https://github.com/horizontalsystems/xrates-kit-ios/
 
 CHECKOUT OPTIONS:
   CurrencyKit.swift:
@@ -313,6 +314,9 @@ CHECKOUT OPTIONS:
   UIExtensions.swift:
     :commit: 037a537bbc19b596a32635c4e9146d0e28bb1074
     :git: https://github.com/horizontalsystems/gui-kit/
+  XRatesKit.swift:
+    :commit: 9d8f883ebd107aee276c13ab170d388528b7c29e
+    :git: https://github.com/horizontalsystems/xrates-kit-ios/
 
 SPEC CHECKSUMS:
   ActionSheet.swift: 5352dbbab9b2cf408341e85c15642a52495c7fd6
@@ -367,6 +371,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: 568660675ce881653095645bc9e30dbc1abc5578
 
-PODFILE CHECKSUM: 9a718d9c1102fdb1bced77cbf1fb76c63d8e2c6e
+PODFILE CHECKSUM: d1a16052f563ca6824845d093aeae6a500bd39a5
 
 COCOAPODS: 1.8.4
