@@ -1,4 +1,5 @@
 import XRatesKit
+import CurrencyKit
 
 class BalancePresenter {
     private static let sortingOnThreshold: Int = 5
@@ -19,7 +20,7 @@ class BalancePresenter {
     private var currency: Currency
     private var sortType: BalanceSortType
 
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.balance_presenter", qos: .utility)
+    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.balance_presenter", qos: .userInteractive)
 
     init(interactor: IBalanceInteractor, router: IBalanceRouter, factory: IBalanceViewItemFactory, sorter: IBalanceSorter, sortingOnThreshold: Int = BalancePresenter.sortingOnThreshold) {
         self.interactor = interactor
@@ -36,7 +37,7 @@ class BalancePresenter {
         items = wallets.map { BalanceItem(wallet: $0) }
 
         handleAdaptersReady()
-        handleRates()
+        fillLatestRates()
 
         view?.set(sortIsOn: items.count >= sortingOnThreshold)
     }
@@ -51,9 +52,11 @@ class BalancePresenter {
         }
     }
 
-    private func handleRates() {
+    private func subscribeRates() {
         interactor.subscribeToMarketInfo(currencyCode: currency.code)
+    }
 
+    private func fillLatestRates() {
         for item in items {
             item.marketInfo = interactor.marketInfo(coinCode: item.wallet.coin.code, currencyCode: currency.code)
         }
@@ -104,6 +107,8 @@ extension BalancePresenter: IBalanceViewDelegate {
             self.interactor.subscribeToBaseCurrency()
 
             self.handleUpdate(wallets: self.interactor.wallets)
+            self.subscribeRates()
+            self.fillLatestRates()
 
             self.updateViewItems()
             self.updateHeaderViewItem()
@@ -238,7 +243,8 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         queue.async {
             self.currency = currency
 
-            self.handleRates()
+            self.subscribeRates()
+            self.fillLatestRates()
 
             self.updateViewItems()
             self.updateHeaderViewItem()

@@ -2,6 +2,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import HUD
+import CurrencyKit
 
 class SendAmountView: UIView {
     private static let spinnerRadius: CGFloat = 8

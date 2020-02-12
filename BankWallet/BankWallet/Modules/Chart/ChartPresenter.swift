@@ -1,5 +1,6 @@
 import UIKit
 import XRatesKit
+import CurrencyKit
 
 class ChartPresenter {
     weak var view: IChartView?

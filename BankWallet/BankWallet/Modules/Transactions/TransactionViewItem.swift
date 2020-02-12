@@ -1,5 +1,6 @@
 import Foundation
 import DeepDiff
+import CurrencyKit
 
 class TransactionViewItem {
     let wallet: Wallet

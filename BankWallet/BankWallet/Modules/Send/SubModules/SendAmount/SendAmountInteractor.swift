@@ -1,14 +1,15 @@
 import Foundation
+import CurrencyKit
 
 class SendAmountInteractor {
     private let localStorage: ILocalStorage
     private let rateManager: IRateManager
-    private let currencyManager: ICurrencyManager
+    private let currencyKit: ICurrencyKit
 
-    init(localStorage: ILocalStorage, rateManager: IRateManager, currencyManager: ICurrencyManager) {
+    init(localStorage: ILocalStorage, rateManager: IRateManager, currencyKit: ICurrencyKit) {
         self.localStorage = localStorage
         self.rateManager = rateManager
-        self.currencyManager = currencyManager
+        self.currencyKit = currencyKit
     }
 
 }
@@ -20,7 +21,7 @@ extension SendAmountInteractor: ISendAmountInteractor {
     }
 
     var baseCurrency: Currency {
-        currencyManager.baseCurrency
+        currencyKit.baseCurrency
     }
 
 }

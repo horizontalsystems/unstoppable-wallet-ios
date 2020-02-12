@@ -1,6 +1,7 @@
 import Foundation
 import Chart
 import LanguageKit
+import CurrencyKit
 
 extension ChartConfiguration {
 

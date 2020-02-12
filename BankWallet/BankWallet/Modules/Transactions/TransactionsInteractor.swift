@@ -1,5 +1,6 @@
 import Foundation
 import RxSwift
+import CurrencyKit
 
 class TransactionsInteractor {
     private let disposeBag = DisposeBag()
@@ -11,16 +12,16 @@ class TransactionsInteractor {
 
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
-    private let currencyManager: ICurrencyManager
+    private let currencyKit: ICurrencyKit
     private let rateManager: IRateManager
     private let reachabilityManager: IReachabilityManager
 
     private var requestedTimestamps = [(Coin, Date)]()
 
-    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyManager: ICurrencyManager, rateManager: IRateManager, reachabilityManager: IReachabilityManager) {
+    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyKit: ICurrencyKit, rateManager: IRateManager, reachabilityManager: IReachabilityManager) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
-        self.currencyManager = currencyManager
+        self.currencyKit = currencyKit
         self.rateManager = rateManager
         self.reachabilityManager = reachabilityManager
     }
@@ -66,10 +67,10 @@ extension TransactionsInteractor: ITransactionsInteractor {
                 })
                 .disposed(by: disposeBag)
 
-        currencyManager.baseCurrencyUpdatedSignal
+        currencyKit.baseCurrencyUpdatedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] in
+                .subscribe(onNext: { [weak self] _ in
                     self?.ratesDisposeBag = DisposeBag()
                     self?.requestedTimestamps = []
                     self?.delegate?.onUpdateBaseCurrency()
@@ -158,7 +159,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
 
         requestedTimestamps.append((coin, date))
 
-        let currency = currencyManager.baseCurrency
+        let currency = currencyKit.baseCurrency
 
         rateManager.historicalRate(coinCode: coin.code, currencyCode: currency.code, timestamp: date.timeIntervalSince1970)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))

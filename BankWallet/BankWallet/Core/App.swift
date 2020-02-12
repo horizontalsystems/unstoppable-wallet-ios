@@ -1,6 +1,7 @@
 import ThemeKit
 import StorageKit
 import PinKit
+import CurrencyKit
 
 class App {
     static let shared = App()
@@ -8,15 +9,12 @@ class App {
     let keychainKit: IKeychainKit
     let pinKit: IPinKit
 
-    let lockProvider: ILockProvider
-
     let localStorage: ILocalStorage & IChartTypeStorage
     let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage
 
     let themeManager: ThemeManager
     let appConfigProvider: IAppConfigProvider
     let systemInfoManager: ISystemInfoManager
-    let biometryManager: IBiometryManager
 
     let pasteboardManager: IPasteboardManager
     let reachabilityManager: IReachabilityManager
@@ -32,7 +30,7 @@ class App {
     let accountCreator: IAccountCreator
     let predefinedAccountTypeManager: IPredefinedAccountTypeManager
 
-    let currencyManager: ICurrencyManager
+    let currencyKit: ICurrencyKit
 
     let rateManager: IRateManager
 
@@ -59,6 +57,7 @@ class App {
     let rateCoinMapper: RateCoinMapper
 
     let keychainKitDelegate: KeychainKitDelegate
+    let pinKitDelegate: PinKitDelegate
 
     let appManager: AppManager
 
@@ -73,7 +72,6 @@ class App {
         themeManager = ThemeManager.shared
         appConfigProvider = AppConfigProvider()
         systemInfoManager = SystemInfoManager()
-        biometryManager = BiometryManager(systemInfoManager: systemInfoManager)
         if appConfigProvider.officeMode {
             debugLogger = DebugLogger(localStorage: localStorage, dateProvider: CurrentDateProvider())
         }
@@ -94,10 +92,10 @@ class App {
         accountCreator = AccountCreator(accountFactory: AccountFactory(), wordsManager: wordsManager)
         predefinedAccountTypeManager = PredefinedAccountTypeManager(appConfigProvider: appConfigProvider, accountManager: accountManager)
 
-        currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
+        currencyKit = CurrencyKit.Kit(localStorage: StorageKit.LocalStorage.default, currencyCodes: appConfigProvider.currencyCodes)
 
         rateCoinMapper = RateCoinMapper()
-        rateManager = RateManager(walletManager: walletManager, currencyManager: currencyManager, rateCoinMapper: rateCoinMapper)
+        rateManager = RateManager(walletManager: walletManager, currencyKit: currencyKit, rateCoinMapper: rateCoinMapper)
 
         feeCoinProvider = FeeCoinProvider(appConfigProvider: appConfigProvider)
         feeRateProviderFactory = FeeRateProviderFactory(appConfigProvider: appConfigProvider)
@@ -109,8 +107,7 @@ class App {
         let adapterFactory: IAdapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager)
         adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager)
 
-        lockProvider = LockProvider()
-        pinKit = PinKit.Kit(secureStorage: keychainKit.secureStorage, localStorage: StorageKit.LocalStorage.default, lockProvider: lockProvider)
+        pinKit = PinKit.Kit(secureStorage: keychainKit.secureStorage, localStorage: StorageKit.LocalStorage.default)
         let blurManager: IBlurManager = BlurManager(pinKit: pinKit)
 
         dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
@@ -128,7 +125,7 @@ class App {
         let notificationFactory = NotificationFactory(emojiHelper: EmojiHelper())
         let priceAlertHandler = PriceAlertHandler(priceAlertStorage: priceAlertStorage, notificationManager: notificationManager, notificationFactory: notificationFactory)
 
-        backgroundPriceAlertManager = BackgroundPriceAlertManager(rateManager: rateManager, currencyManager: currencyManager, priceAlertStorage: priceAlertStorage, priceAlertHandler: priceAlertHandler, debugBackgroundLogger: debugLogger)
+        backgroundPriceAlertManager = BackgroundPriceAlertManager(rateManager: rateManager, priceAlertStorage: priceAlertStorage, priceAlertHandler: priceAlertHandler, debugBackgroundLogger: debugLogger)
 
         appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage, predefinedAccountTypeManager: predefinedAccountTypeManager, walletManager: walletManager, adapterManager: adapterManager, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager)
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, localStorage: localStorage)
@@ -138,6 +135,9 @@ class App {
         keychainKitDelegate = KeychainKitDelegate(accountManager: accountManager, walletManager: walletManager)
         keychainKit.set(delegate: keychainKitDelegate)
 
+        pinKitDelegate = PinKitDelegate()
+        pinKit.set(delegate: pinKitDelegate)
+
         let kitCleaner = KitCleaner(accountManager: accountManager)
         appManager = AppManager(
                 accountManager: accountManager,
@@ -145,7 +145,6 @@ class App {
                 adapterManager: adapterManager,
                 pinKit: pinKit,
                 keychainKit: keychainKit,
-                biometryManager: biometryManager,
                 blurManager: blurManager,
                 notificationManager: notificationManager,
                 backgroundPriceAlertManager: backgroundPriceAlertManager,

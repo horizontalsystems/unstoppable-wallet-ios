@@ -1,17 +1,18 @@
 import RxSwift
+import CurrencyKit
 
 class SendInteractor {
     weak var delegate: ISendInteractorDelegate?
 
     private let rateManager: IRateManager
-    private let currencyManager: ICurrencyManager
+    private let currencyKit: ICurrencyKit
     private let localStorage: ILocalStorage
 
     private let disposeBag = DisposeBag()
 
-    init(reachabilityManager: IReachabilityManager, rateManager: IRateManager, currencyManager: ICurrencyManager, localStorage: ILocalStorage) {
+    init(reachabilityManager: IReachabilityManager, rateManager: IRateManager, currencyKit: ICurrencyKit, localStorage: ILocalStorage) {
         self.rateManager = rateManager
-        self.currencyManager = currencyManager
+        self.currencyKit = currencyKit
         self.localStorage = localStorage
 
         reachabilityManager.reachabilitySignal
@@ -29,7 +30,7 @@ class SendInteractor {
 extension SendInteractor: ISendInteractor {
 
     var baseCurrency: Currency {
-        currencyManager.baseCurrency
+        currencyKit.baseCurrency
     }
 
     var defaultInputType: SendInputType {

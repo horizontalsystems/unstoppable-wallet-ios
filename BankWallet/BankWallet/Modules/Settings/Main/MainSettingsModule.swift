@@ -1,3 +1,5 @@
+import CurrencyKit
+
 protocol IMainSettingsView: class {
     func refresh()
 

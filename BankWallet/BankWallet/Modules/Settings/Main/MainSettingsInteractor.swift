@@ -1,6 +1,7 @@
 import RxSwift
 import LanguageKit
 import ThemeKit
+import CurrencyKit
 
 class MainSettingsInteractor {
     private let disposeBag = DisposeBag()
@@ -10,14 +11,14 @@ class MainSettingsInteractor {
     private let backupManager: IBackupManager
     private let themeManager: ThemeManager
     private let systemInfoManager: ISystemInfoManager
-    private let currencyManager: ICurrencyManager
+    private let currencyKit: ICurrencyKit
     private let appConfigProvider: IAppConfigProvider
 
-    init(backupManager: IBackupManager, themeManager: ThemeManager, systemInfoManager: ISystemInfoManager, currencyManager: ICurrencyManager, appConfigProvider: IAppConfigProvider) {
+    init(backupManager: IBackupManager, themeManager: ThemeManager, systemInfoManager: ISystemInfoManager, currencyKit: ICurrencyKit, appConfigProvider: IAppConfigProvider) {
         self.backupManager = backupManager
         self.themeManager = themeManager
         self.systemInfoManager = systemInfoManager
-        self.currencyManager = currencyManager
+        self.currencyKit = currencyKit
         self.appConfigProvider = appConfigProvider
 
         backupManager.allBackedUpObservable
@@ -28,10 +29,10 @@ class MainSettingsInteractor {
                 })
                 .disposed(by: disposeBag)
 
-        currencyManager.baseCurrencyUpdatedSignal
+        currencyKit.baseCurrencyUpdatedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] in
+                .subscribe(onNext: { [weak self] _ in
                     self?.delegate?.didUpdateBaseCurrency()
                 })
                 .disposed(by: disposeBag)
@@ -58,7 +59,7 @@ extension MainSettingsInteractor: IMainSettingsInteractor {
     }
 
     var baseCurrency: Currency {
-        currencyManager.baseCurrency
+        currencyKit.baseCurrency
     }
 
     var lightMode: Bool {
