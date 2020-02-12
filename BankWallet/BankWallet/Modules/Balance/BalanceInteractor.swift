@@ -67,7 +67,7 @@ extension BalanceInteractor: IBalanceInteractor {
 
     func subscribeToWallets() {
         walletManager.walletsUpdatedObservable
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInteractive))
                 .subscribe(onNext: { [weak self] wallets in
                     self?.onUpdate(wallets: wallets)
                 })

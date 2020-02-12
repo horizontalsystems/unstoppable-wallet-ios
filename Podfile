@@ -21,7 +21,7 @@ def appPods
 
   pod 'HdWalletKit.swift'
 
-  pod 'XRatesKit.swift'
+  pod 'XRatesKit.swift', git: 'https://github.com/horizontalsystems/xrates-kit-ios/'
   pod 'FeeRateKit.swift'
 
   pod 'UIExtensions.swift', git: 'https://github.com/horizontalsystems/gui-kit/'
