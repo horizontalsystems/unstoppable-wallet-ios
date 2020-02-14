@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 import ThemeKit
+import UIExtensions
 
 class BackupEosViewController: ThemeViewController {
     private let delegate: IBackupEosViewDelegate
@@ -15,7 +16,7 @@ class BackupEosViewController: ThemeViewController {
     private let hintLabel = UILabel()
     private let qrCodeImageView = UIImageView()
 
-    private let closeButtonHolder = GradientView(gradientHeight: .margin4x, viewHeight: .heightBottomWrapperBar, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: .themeTyler)
+    private let closeButtonHolder = GradientView(gradientHeight: .margin4x, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: .themeTyler)
     private let closeButton: UIButton = .appYellow
 
     init(delegate: IBackupEosViewDelegate) {
