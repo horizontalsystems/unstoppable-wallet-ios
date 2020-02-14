@@ -316,7 +316,7 @@ CHECKOUT OPTIONS:
     :commit: ee2fd2f8f530a68ba33dfc8ff0b4f70c9742df0e
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
-    :commit: 037a537bbc19b596a32635c4e9146d0e28bb1074
+    :commit: 0a1cc8f0ec54fdf82de9a30de5a65f5146513990
     :git: https://github.com/horizontalsystems/gui-kit/
   XRatesKit.swift:
     :commit: 1c49d0fc781ec7894b3969f2eed45d1800165a70
