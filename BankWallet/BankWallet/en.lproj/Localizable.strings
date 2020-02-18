@@ -219,7 +219,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "full_info.source.offline" = "offline";
 
 "full_info.error.server_offline" = "offline";
-"full_info.error.transaction_not_found" = "Transaction not found";
+"full_info.error.transaction_not_found" = "Transaction can not be found on the blockchain";
 "full_info.error.retry" = "Retry";
 "full_info.error.change_source" = "Change Source";
 "full_info.no_address" = "Empty Address";
