@@ -6,7 +6,7 @@ PODS:
   - AlamofireImage (3.6.0):
     - Alamofire (~> 4.9)
   - BigInt (5.0.0)
-  - BinanceChainKit.swift (0.3):
+  - BinanceChainKit.swift (0.3.1):
     - Alamofire (~> 4.0)
     - GRDB.swift (~> 4.0)
     - HdWalletKit.swift (~> 1.4)
@@ -327,7 +327,7 @@ SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   AlamofireImage: be9963c6582d68b39e89191f64c82a7d7bf40fdd
   BigInt: 74b4d88367b0e819d9f77393549226d36faeb0d8
-  BinanceChainKit.swift: c9ff25cd635d5487c7788a18a6a2545d8f1cf760
+  BinanceChainKit.swift: 93284bbe850c76963bc984b8b344b6bcdf5d87c1
   BitcoinCashKit.swift: 91e981ddc6e663d598130c65a1e756393058a2e7
   BitcoinCore.swift: b2498d398bbf39b1d568980deaf1fe372df509dc
   BitcoinKit.swift: 1d216c95eed1a8fcfa997e4d86fe10559d84f56c
