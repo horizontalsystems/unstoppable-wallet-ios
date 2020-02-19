@@ -8,6 +8,16 @@ import EthereumKit
 import HdWalletKit
 import Hodler
 
+extension BinanceError: LocalizedError {
+    public var errorDescription: String? {
+        if message == "receiver requires non-empty memo in transfer transaction" {
+            return "error.send_binance.memo_required".localized
+        } else {
+            return nil
+        }
+    }
+}
+
 extension WordsValidator.ValidationError: LocalizedError {
     public var errorDescription: String? {
         switch self {
