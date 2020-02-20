@@ -10,8 +10,10 @@ import Hodler
 
 extension BinanceError: LocalizedError {
     public var errorDescription: String? {
-        if message == "receiver requires non-empty memo in transfer transaction" {
+        if message.contains("requires non-empty memo in transfer transaction") {
             return "error.send_binance.memo_required".localized
+        } else if message.contains("requires the memo contains only digits") {
+            return "error.send_binance.only_digits_allowed".localized
         } else {
             return nil
         }
