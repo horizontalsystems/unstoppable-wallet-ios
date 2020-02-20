@@ -89,6 +89,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "error.send_eos.unknown" = "Something went wrong: %@";
 "error.send_ethereum.wrong_parameters" = "Wrong parameters";
 "error.send_binance.memo_required" = "Provide memo text for transaction";
+"error.send_binance.only_digits_allowed" = "The memo text may contain digits only";
 
 "backup.confirmation.title" = "Check ...";
 
