@@ -196,12 +196,13 @@ DEPENDENCIES:
   - AlamofireImage
   - BigInt
   - BinanceChainKit.swift
-  - BitcoinCashKit.swift
-  - BitcoinKit.swift
+  - BitcoinCashKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
+  - BitcoinCore.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
+  - BitcoinKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
   - Chart.swift (from `https://github.com/horizontalsystems/gui-kit/`)
   - Cuckoo
   - CurrencyKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
-  - DashKit.swift
+  - DashKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
   - DeepDiff
   - EosioSwiftAbieosSerializationProvider (from `https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git`)
   - EosKit.swift
@@ -210,7 +211,7 @@ DEPENDENCIES:
   - FeeRateKit.swift
   - GRDB.swift
   - HdWalletKit.swift
-  - Hodler.swift
+  - Hodler.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
   - HUD.swift
   - KeychainAccess
   - LanguageKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
@@ -235,13 +236,9 @@ SPEC REPOS:
     - AlamofireImage
     - BigInt
     - BinanceChainKit.swift
-    - BitcoinCashKit.swift
-    - BitcoinCore.swift
-    - BitcoinKit.swift
     - BlsKit.swift
     - BlueSocket
     - Cuckoo
-    - DashKit.swift
     - DeepDiff
     - EosioSwift
     - EosioSwiftEcc
@@ -253,7 +250,6 @@ SPEC REPOS:
     - GRDB.swift
     - GRKOpenSSLFramework
     - HdWalletKit.swift
-    - Hodler.swift
     - HUD.swift
     - KeychainAccess
     - Nimble
@@ -274,12 +270,22 @@ SPEC REPOS:
     - X11Kit.swift
 
 EXTERNAL SOURCES:
+  BitcoinCashKit.swift:
+    :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
+  BitcoinCore.swift:
+    :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
+  BitcoinKit.swift:
+    :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
     :git: https://github.com/horizontalsystems/gui-kit/
   CurrencyKit.swift:
     :git: https://github.com/horizontalsystems/component-kit-ios/
+  DashKit.swift:
+    :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   EosioSwiftAbieosSerializationProvider:
     :git: https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git
+  Hodler.swift:
+    :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   LanguageKit.swift:
     :git: https://github.com/horizontalsystems/component-kit-ios/
   PinKit.swift:
@@ -294,15 +300,30 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
 
 CHECKOUT OPTIONS:
+  BitcoinCashKit.swift:
+    :commit: 8474e16aca47e46338a5589a40289e48c7b92065
+    :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
+  BitcoinCore.swift:
+    :commit: 8474e16aca47e46338a5589a40289e48c7b92065
+    :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
+  BitcoinKit.swift:
+    :commit: 8474e16aca47e46338a5589a40289e48c7b92065
+    :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
     :commit: f05dfafb3742eb6ea6fa7f6840f64e88b12a6d3a
     :git: https://github.com/horizontalsystems/gui-kit/
   CurrencyKit.swift:
     :commit: ee2fd2f8f530a68ba33dfc8ff0b4f70c9742df0e
     :git: https://github.com/horizontalsystems/component-kit-ios/
+  DashKit.swift:
+    :commit: 8474e16aca47e46338a5589a40289e48c7b92065
+    :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   EosioSwiftAbieosSerializationProvider:
     :commit: 7ac04899e62012e225e0ea48a96951de0b72ad08
     :git: https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git
+  Hodler.swift:
+    :commit: 8474e16aca47e46338a5589a40289e48c7b92065
+    :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   LanguageKit.swift:
     :commit: ee2fd2f8f530a68ba33dfc8ff0b4f70c9742df0e
     :git: https://github.com/horizontalsystems/component-kit-ios/
@@ -375,6 +396,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: 568660675ce881653095645bc9e30dbc1abc5578
 
-PODFILE CHECKSUM: 5daca0991242594c6f6e72c29742219105cb324b
+PODFILE CHECKSUM: af793a25b52af7810efeedd05fe11c5eb6d03e56
 
 COCOAPODS: 1.8.4
