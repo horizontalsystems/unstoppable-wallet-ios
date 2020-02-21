@@ -86,6 +86,8 @@
 "error.send_eos.insufficient_ram" = "Su cuenta EOS no tiene suficiente memoria RAM para enviar este token. Necesita aumentar la capacidad RAM para continuar.";
 "error.send_eos.unknown" = "Algo ha fallado: %@";
 "error.send_ethereum.wrong_parameters" = "Parámetros incorrectos";
+"error.send_binance.memo_required" = "Receiver requires non-empty memo in transfer transaction";
+"error.send_binance.only_digits_allowed" = "Requires the memo to contain only digits";
 
 "backup.confirmation.title" = "Comprobar";
 
@@ -151,7 +153,7 @@
 "send.amount_error.balance" = "Saldo %@";
 "send.amount_error.maximum_amount" = "Monto máximo %@";
 "send.amount_error.minimum_amount" = "Monto mínimo %@";
-"send.amount_error.min_required_balance" = "Min. requerido restante %@";
+"send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.token.insufficient_fee_alert" = "Las comisiones de transacción para %@ (%@) pagado en %@. Es necesario %@.";
 
 "send.lock_time" = "TimeLock";
@@ -180,6 +182,7 @@
 "tx_info.rate" = "Tasa histórica";
 "tx_info.fee" = "Comisión";
 "tx_info.to_self_note" = "Esta transacción fue enviada a su propia dirección";
+"tx_info.double_spent_note" = "Double Spend Risk!";
 "tx_info.locked_until" = "Bloqueado hasta %@";
 "tx_info.recipient_hash" = "Destinatario";
 
@@ -216,7 +219,7 @@
 "full_info.source.offline" = "desconectado";
 
 "full_info.error.server_offline" = "desconectado";
-"full_info.error.transaction_not_found" = "Transacción no encontrada";
+"full_info.error.transaction_not_found" = "Transaction can not be found on the blockchain";
 "full_info.error.retry" = "Reintentar";
 "full_info.error.change_source" = "Cambiar origen";
 "full_info.no_address" = "Dirección vacía";
@@ -233,7 +236,7 @@
 "settings.language" = "Idioma";
 "settings.about" = "Acerca de";
 "settings.tell_friends" = "Recomendar a un amigo";
-"settings.report_problem" = "Reportar el problema";
+"settings.contact" = "Contact";
 "settings.light_mode" = "Modo ligero";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "app descentralizada";
@@ -246,10 +249,6 @@
 "settings.notifications.deactivate_all" = "Desactivar todo";
 "settings.notifications.disabled_text" = "Las notificaciones para la aplicación del Monedero Unstoppable están desactivadas. Necesita activarlas para poder recibir alertas de cambio de precios.";
 "settings.notifications.settings_button" = "Activar en ajustes";
-
-// Settings -> Base Currency
-
-"settings_base_currency.title" = "Moneda principal";
 
 // Settings -> Manage Wallet
 
@@ -264,12 +263,12 @@
 
 "settings.experimental_features.title" = "Experimental";
 "settings.experimental_features.description" = "Las siguientes características son experimentales y deben utilizarse con precaución. Aunque hemos probado a fondo estas características usando nuestros propios fondos criptográficos, no podemos garantizar que funcionen como se espera en todos los casos posibles.";
-"settings.experimental_features.bitcoin_hodling" = "Bloquear Bitcoins";
+"settings.experimental_features.bitcoin_hodling" = "TimeLock";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
-"settings.bitcoin_hodling.title" = "Bloquear Bitcoins";
-"settings.bitcoin_hodling.lock_time" = "TimeLock";
+"settings.bitcoin_hodling.title" = "TimeLock";
+"settings.bitcoin_hodling.lock_time" = "Activate";
 "settings.bitcoin_hodling.description" = "Permite enviar Bitcoins que no se pueden gastar hasta la fecha establecida.\n\nEl receptor de dicha transacción debe utilizar el monedero Unstoppable.\n\nSólo el monedero Unstoppable puede identificar correctamente tales transacciones en la red Bitcoin, así como permitir que el receptor gaste esos Bitcoins después de que expire el período de bloqueo.\n\nSi eres un HODLer, puedes usar esta función para obligarte a retener tus Bitcoins enviándote dicha transacción a ti mismo.\n\nPor ser característica experimental, la cantidad máxima por transacción está limitada a 0.5 BTC.";
 
 // Settings -> About
@@ -294,12 +293,13 @@
 "settings_security.face_id" = "Identificación de caras";
 "security_settings.delete_alert_button" = "Eliminar del teléfono";
 
-// Settings -> Report Problem
+// Settings -> Contact
 
-"settings.report_problem.title" = "Reportar el problema";
-"settings.report_problem.app_status" = "Estado de la aplicación";
-"settings.report_problem.email" = "E-mail";
-"settings.report_problem.telegram" = "Telegram";
+"settings.contact.title" = "Contact";
+"settings.contact.app_status" = "App Status";
+"settings.contact.email" = "E-mail";
+"settings.contact.telegram_wallet" = "Telegram (Wallet Help)";
+"settings.contact.telegram_developers" = "Telegram (Developers)";
 
 // Manage Keys
 
@@ -358,8 +358,10 @@
 "chart.time_duration.day" = "1 D";
 "chart.time_duration.week" = "7 D";
 "chart.time_duration.month" = "1M";
+"chart.time_duration.month3" = "3M";
 "chart.time_duration.halyear" = "6M";
 "chart.time_duration.year" = "1A";
+"chart.time_duration.year2" = "2Y";
 
 "chart.market_cap" = "Cap. de Mercado";
 "chart.market_cap.thousand" = "%@ k";
@@ -370,6 +372,8 @@
 "chart.circulation" = "En circulación";
 "chart.max_supply" = "Suministro total";
 "chart.error.not_available" = "Gráfico no disponible";
+"chart.selected.price" = "Price";
+"chart.selected.volume" = "Volume";
 
 // Create Wallet
 
@@ -387,5 +391,12 @@
 
 // Lock Info
 
-"lock_info.title" = "Información";
-"lock_info.text" = "El remitente envió estos fondos con un bloqueo del gasto que expirará en la fecha mostrada.\n\nNo te preocupes, los Bitcoins recibidos ya son tuyos, pero hasta que el período de bloqueo expire, no puedes gastarlos en la red Bitcoin.";
+"lock_info.title" = "TimeLock";
+"lock_info.text" = "The sender sent these funds with a spending lock that will expire on shown date.\n\nNo worries, the received Bitcoins are already yours but until the lock period expires you cannot spend them on the Bitcoin network.";
+
+// Double Spend Info
+
+"double_spend_info.title" = "Double Spend";
+"double_spend_info.header" = "Double Spend Risk! There is another transaction on blockchain that trying to spend inputs used in this transaction. Only one transaction will be accepted by the network";
+"double_spend_info.this_hash" = "This Tx";
+"double_spend_info.conflicting_hash" = "Conflicting Tx";
