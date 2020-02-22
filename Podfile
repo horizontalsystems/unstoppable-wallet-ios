@@ -25,7 +25,8 @@ def appPods
 
   pod 'XRatesKit.swift', git: 'https://github.com/horizontalsystems/xrates-kit-ios/'
   # pod 'XRatesKit.swift', path: '../xrates-kit-ios/'
-  pod 'FeeRateKit.swift'
+  pod 'FeeRateKit.swift', git: 'https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios'
+  # pod 'FeeRateKit.swift', path: '../blockchain-fee-rate-kit-ios/'
 
   pod 'UIExtensions.swift', git: 'https://github.com/horizontalsystems/gui-kit/'
   # pod 'UIExtensions.swift', path: '../gui-kit/'
