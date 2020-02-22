@@ -208,7 +208,7 @@ DEPENDENCIES:
   - EosKit.swift
   - Erc20Kit.swift
   - EthereumKit.swift
-  - FeeRateKit.swift
+  - FeeRateKit.swift (from `https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios`)
   - GRDB.swift
   - HdWalletKit.swift
   - Hodler.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
@@ -246,7 +246,6 @@ SPEC REPOS:
     - EosKit.swift
     - Erc20Kit.swift
     - EthereumKit.swift
-    - FeeRateKit.swift
     - GRDB.swift
     - GRKOpenSSLFramework
     - HdWalletKit.swift
@@ -284,6 +283,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   EosioSwiftAbieosSerializationProvider:
     :git: https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git
+  FeeRateKit.swift:
+    :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
   Hodler.swift:
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   LanguageKit.swift:
@@ -324,6 +325,9 @@ CHECKOUT OPTIONS:
   Hodler.swift:
     :commit: 8474e16aca47e46338a5589a40289e48c7b92065
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
+  FeeRateKit.swift:
+    :commit: 2f873d8801ddf9c8fbcb8660805f316c7b1b4b8c
+    :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
   LanguageKit.swift:
     :commit: ee2fd2f8f530a68ba33dfc8ff0b4f70c9742df0e
     :git: https://github.com/horizontalsystems/component-kit-ios/
