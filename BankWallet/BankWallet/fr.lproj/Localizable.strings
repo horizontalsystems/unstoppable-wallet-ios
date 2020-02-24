@@ -86,8 +86,8 @@
 "error.send_eos.insufficient_ram" = "Votre compte EOS ne dispose pas de suffisamment de RAM pour envoyer ce token. Vous devez augmenter la participation RAM pour continuer.";
 "error.send_eos.unknown" = "Quelque chose s'est mal passé: %@";
 "error.send_ethereum.wrong_parameters" = "Paramètres erronés";
-"error.send_binance.memo_required" = "Receiver requires non-empty memo in transfer transaction";
-"error.send_binance.only_digits_allowed" = "Requires the memo to contain only digits";
+"error.send_binance.memo_required" = "Le destinataire a besoin d'une note non vide pour une opération de transfert";
+"error.send_binance.only_digits_allowed" = "Nécessite que le mémo ne contienne que des chiffres";
 
 "backup.confirmation.title" = "Vérification...";
 
@@ -219,7 +219,7 @@
 "full_info.source.offline" = "déconnecté";
 
 "full_info.error.server_offline" = "déconnecté";
-"full_info.error.transaction_not_found" = "Transaction can not be found on the blockchain";
+"full_info.error.transaction_not_found" = "La transaction est introuvable sur la blockchain";
 "full_info.error.retry" = "Réessayer";
 "full_info.error.change_source" = "Changer la Source";
 "full_info.no_address" = "Adresse vide";
@@ -268,7 +268,7 @@
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "TimeLock";
-"settings.bitcoin_hodling.lock_time" = "Activate";
+"settings.bitcoin_hodling.lock_time" = "Activer";
 "settings.bitcoin_hodling.description" = "Permet d'envoyer des Bitcoins qui ne peuvent pas être dépensées avant la date spécifiée.\n\nLe destinataire d'une telle transaction devrait utiliser un portefeuille Unstoppable.\n\nSeul un portefeuille Unstoppable peut identifier correctement de telles transactions sur le réseau Bitcoin ainsi que permettre au destinataire de dépenser ces Bitcoins après l'expiration de la période de verrouillage.\n\nSi vous êtes un HODLer, vous pouvez utiliser cette fonction pour vous obliger à garder vos Bitcoins en vous envoyant une telle transaction à vous-même.\n\nPuisqu'il s'agit d'une fonctionnalité expérimentale, le montant maximum par transaction est limité à 0,5 BTC.";
 
 // Settings -> About
