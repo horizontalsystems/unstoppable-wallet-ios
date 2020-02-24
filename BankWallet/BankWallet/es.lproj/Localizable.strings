@@ -153,7 +153,7 @@
 "send.amount_error.balance" = "Saldo %@";
 "send.amount_error.maximum_amount" = "Monto máximo %@";
 "send.amount_error.minimum_amount" = "Monto mínimo %@";
-"send.amount_error.min_required_balance" = "Min. required remainder %@";
+"send.amount_error.min_required_balance" = "Min. requerido restante %@";
 "send.token.insufficient_fee_alert" = "Las comisiones de transacción para %@ (%@) pagado en %@. Es necesario %@.";
 
 "send.lock_time" = "TimeLock";
@@ -182,7 +182,7 @@
 "tx_info.rate" = "Tasa histórica";
 "tx_info.fee" = "Comisión";
 "tx_info.to_self_note" = "Esta transacción fue enviada a su propia dirección";
-"tx_info.double_spent_note" = "Double Spend Risk!";
+"tx_info.double_spent_note" = "¡Riesgo de doble gasto!";
 "tx_info.locked_until" = "Bloqueado hasta %@";
 "tx_info.recipient_hash" = "Destinatario";
 
@@ -236,7 +236,7 @@
 "settings.language" = "Idioma";
 "settings.about" = "Acerca de";
 "settings.tell_friends" = "Recomendar a un amigo";
-"settings.contact" = "Contact";
+"settings.contact" = "Contacto";
 "settings.light_mode" = "Modo ligero";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "app descentralizada";
@@ -268,7 +268,7 @@
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "TimeLock";
-"settings.bitcoin_hodling.lock_time" = "Activate";
+"settings.bitcoin_hodling.lock_time" = "Activar";
 "settings.bitcoin_hodling.description" = "Permite enviar Bitcoins que no se pueden gastar hasta la fecha establecida.\n\nEl receptor de dicha transacción debe utilizar el monedero Unstoppable.\n\nSólo el monedero Unstoppable puede identificar correctamente tales transacciones en la red Bitcoin, así como permitir que el receptor gaste esos Bitcoins después de que expire el período de bloqueo.\n\nSi eres un HODLer, puedes usar esta función para obligarte a retener tus Bitcoins enviándote dicha transacción a ti mismo.\n\nPor ser característica experimental, la cantidad máxima por transacción está limitada a 0.5 BTC.";
 
 // Settings -> About
@@ -295,11 +295,11 @@
 
 // Settings -> Contact
 
-"settings.contact.title" = "Contact";
-"settings.contact.app_status" = "App Status";
+"settings.contact.title" = "Contacto";
+"settings.contact.app_status" = "Estado de la aplicación";
 "settings.contact.email" = "E-mail";
-"settings.contact.telegram_wallet" = "Telegram (Wallet Help)";
-"settings.contact.telegram_developers" = "Telegram (Developers)";
+"settings.contact.telegram_wallet" = "Telegram (Ayuda de monedero)";
+"settings.contact.telegram_developers" = "Telegram (Desarrolladores)";
 
 // Manage Keys
 
@@ -361,7 +361,7 @@
 "chart.time_duration.month3" = "3M";
 "chart.time_duration.halyear" = "6M";
 "chart.time_duration.year" = "1A";
-"chart.time_duration.year2" = "2Y";
+"chart.time_duration.year2" = "2A";
 
 "chart.market_cap" = "Cap. de Mercado";
 "chart.market_cap.thousand" = "%@ k";
@@ -372,8 +372,8 @@
 "chart.circulation" = "En circulación";
 "chart.max_supply" = "Suministro total";
 "chart.error.not_available" = "Gráfico no disponible";
-"chart.selected.price" = "Price";
-"chart.selected.volume" = "Volume";
+"chart.selected.price" = "Precio";
+"chart.selected.volume" = "Volumen";
 
 // Create Wallet
 
@@ -392,11 +392,11 @@
 // Lock Info
 
 "lock_info.title" = "TimeLock";
-"lock_info.text" = "The sender sent these funds with a spending lock that will expire on shown date.\n\nNo worries, the received Bitcoins are already yours but until the lock period expires you cannot spend them on the Bitcoin network.";
+"lock_info.text" = "El remitente envió estos fondos con un bloqueo del gasto que expirará en la fecha mostrada.\n\nNo te preocupes, los Bitcoins recibidos ya son tuyos, pero hasta que el período de bloqueo expire, no puedes gastarlos en la red Bitcoin.";
 
 // Double Spend Info
 
-"double_spend_info.title" = "Double Spend";
-"double_spend_info.header" = "Double Spend Risk! There is another transaction on blockchain that trying to spend inputs used in this transaction. Only one transaction will be accepted by the network";
-"double_spend_info.this_hash" = "This Tx";
-"double_spend_info.conflicting_hash" = "Conflicting Tx";
+"double_spend_info.title" = "Doble gasto";
+"double_spend_info.header" = "¡Riesgo de doble gasto! Hay otra transacción en blockchain que intenta gastar entradas usadas en esta transacción. Solo una transacción será aceptada por la red.";
+"double_spend_info.this_hash" = "Esta Tx";
+"double_spend_info.conflicting_hash" = "Tx en conlicto";
