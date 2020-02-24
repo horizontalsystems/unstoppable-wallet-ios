@@ -86,8 +86,8 @@
 "error.send_eos.insufficient_ram" = "您的EOS账户没有足够的RAM来发送此令牌。您必须增加RAM才能继续。";
 "error.send_eos.unknown" = "出错了：%@";
 "error.send_ethereum.wrong_parameters" = "错误参数";
-"error.send_binance.memo_required" = "Receiver requires non-empty memo in transfer transaction";
-"error.send_binance.only_digits_allowed" = "Requires the memo to contain only digits";
+"error.send_binance.memo_required" = "收款人要求在转账交易中包含非空的备注";
+"error.send_binance.only_digits_allowed" = "要求备注仅包含数字";
 
 "backup.confirmation.title" = "正在检查...";
 
@@ -268,7 +268,7 @@
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "时间锁定";
-"settings.bitcoin_hodling.lock_time" = "Activate";
+"settings.bitcoin_hodling.lock_time" = "激活";
 "settings.bitcoin_hodling.description" = "让您汇出在指定日期前无法消费的比特币。\n\n此交易的收款人应使用Unstoppable钱包。\n\n只有Unstoppable钱包能够正确识别此类在比特币网络上的交易并让收款人在锁定期限结束后消费那些比特币。\n\n如果您是持有人，您可以使用此功能通过向自己发送此类交易的方式来强制自己持有比特币。\n\n作为实验性功能，每次交易的最大金额限制为0.5 BTC。";
 
 // Settings -> About
