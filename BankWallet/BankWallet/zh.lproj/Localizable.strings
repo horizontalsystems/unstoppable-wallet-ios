@@ -86,6 +86,8 @@
 "error.send_eos.insufficient_ram" = "您的EOS账户没有足够的RAM来发送此令牌。您必须增加RAM才能继续。";
 "error.send_eos.unknown" = "出错了：%@";
 "error.send_ethereum.wrong_parameters" = "错误参数";
+"error.send_binance.memo_required" = "收款人要求在转账交易中包含非空的备注";
+"error.send_binance.only_digits_allowed" = "要求备注仅包含数字";
 
 "backup.confirmation.title" = "正在检查...";
 
@@ -180,6 +182,7 @@
 "tx_info.rate" = "历史价格";
 "tx_info.fee" = "费用";
 "tx_info.to_self_note" = "交易已发送至自有地址";
+"tx_info.double_spent_note" = "双重支付风险！";
 "tx_info.locked_until" = "锁定至 %@";
 "tx_info.recipient_hash" = "收款人";
 
@@ -216,7 +219,7 @@
 "full_info.source.offline" = "离线";
 
 "full_info.error.server_offline" = "离线";
-"full_info.error.transaction_not_found" = "找不到交易";
+"full_info.error.transaction_not_found" = "无法在区块链上找到交易";
 "full_info.error.retry" = "重试";
 "full_info.error.change_source" = "更改源";
 "full_info.no_address" = "空地址";
@@ -233,7 +236,7 @@
 "settings.language" = "语言";
 "settings.about" = "关于";
 "settings.tell_friends" = "分享给好友";
-"settings.report_problem" = "报告问题";
+"settings.contact" = "报告问题";
 "settings.light_mode" = "简单模式";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "分布式应用程序";
@@ -246,10 +249,6 @@
 "settings.notifications.deactivate_all" = "全部停用";
 "settings.notifications.disabled_text" = "已禁用Unstoppable钱包应用通知。您必须开启通知并允许后台应用刷新才能接收价格变更警报。";
 "settings.notifications.settings_button" = "在设置中开启";
-
-// Settings -> Base Currency
-
-"settings_base_currency.title" = "基本货币";
 
 // Settings -> Manage Wallet
 
@@ -264,12 +263,12 @@
 
 "settings.experimental_features.title" = "实验性";
 "settings.experimental_features.description" = "以下功能为实验性，应谨慎使用。虽然我们已使用自己的加密货币资金对这些功能进行了彻底测试，但是我们不保证它们在所有情况下都能如常工作。";
-"settings.experimental_features.bitcoin_hodling" = "锁定比特币";
+"settings.experimental_features.bitcoin_hodling" = "时间锁定";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
-"settings.bitcoin_hodling.title" = "锁定比特币";
-"settings.bitcoin_hodling.lock_time" = "时间锁定";
+"settings.bitcoin_hodling.title" = "时间锁定";
+"settings.bitcoin_hodling.lock_time" = "激活";
 "settings.bitcoin_hodling.description" = "让您汇出在指定日期前无法消费的比特币。\n\n此交易的收款人应使用Unstoppable钱包。\n\n只有Unstoppable钱包能够正确识别此类在比特币网络上的交易并让收款人在锁定期限结束后消费那些比特币。\n\n如果您是持有人，您可以使用此功能通过向自己发送此类交易的方式来强制自己持有比特币。\n\n作为实验性功能，每次交易的最大金额限制为0.5 BTC。";
 
 // Settings -> About
@@ -294,12 +293,13 @@
 "settings_security.face_id" = "面部识别";
 "security_settings.delete_alert_button" = "从手机中删除";
 
-// Settings -> Report Problem
+// Settings -> Contact
 
-"settings.report_problem.title" = "报告问题";
-"settings.report_problem.app_status" = "应用状态";
-"settings.report_problem.email" = "电子邮箱";
-"settings.report_problem.telegram" = "电报";
+"settings.contact.title" = "报告问题";
+"settings.contact.app_status" = "应用状态";
+"settings.contact.email" = "电子邮箱";
+"settings.contact.telegram_wallet" = "电报（钱包帮助）";
+"settings.contact.telegram_developers" = "电报（开发者）";
 
 // Manage Keys
 
@@ -358,8 +358,10 @@
 "chart.time_duration.day" = "1天";
 "chart.time_duration.week" = "7天";
 "chart.time_duration.month" = "1个月";
+"chart.time_duration.month3" = "3个月";
 "chart.time_duration.halyear" = "6个月";
 "chart.time_duration.year" = "1年";
+"chart.time_duration.year2" = "2年";
 
 "chart.market_cap" = "市场价值";
 "chart.market_cap.thousand" = "%@千";
@@ -370,6 +372,8 @@
 "chart.circulation" = "流通中";
 "chart.max_supply" = "供应总额";
 "chart.error.not_available" = "无可用图表";
+"chart.selected.price" = "价格";
+"chart.selected.volume" = "量";
 
 // Create Wallet
 
@@ -387,5 +391,12 @@
 
 // Lock Info
 
-"lock_info.title" = "信息";
+"lock_info.title" = "时间锁定";
 "lock_info.text" = "汇款人通过将在所显示日期失效的消费锁定汇出这些资金。\n\n无需担心，收到的比特币已经属于您，但在锁定期限结束前，您无法在比特币网络上消费它们。";
+
+// Double Spend Info
+
+"double_spend_info.title" = "双复支付";
+"double_spend_info.header" = "双重支付风险！区块链上还有另一笔交易试图支付这笔交易所使用的投入。 网络只接受一笔交易。";
+"double_spend_info.this_hash" = "此Tx";
+"double_spend_info.conflicting_hash" = "冲突Tx";

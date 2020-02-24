@@ -86,6 +86,8 @@
 "error.send_eos.insufficient_ram" = "У вашего аккаунта EOS недостаточно оперативной памяти для отправки этого токена. Для продолжения необходимо увеличить ставку RAM.";
 "error.send_eos.unknown" = "Что-то пошло не так: %@ ";
 "error.send_ethereum.wrong_parameters" = "Неверные параметры";
+"error.send_binance.memo_required" = "Получатель требует memo в переводе транзакции";
+"error.send_binance.only_digits_allowed" = "Необходимо, чтобы memo содержало только цифры";
 
 "backup.confirmation.title" = "Проверка...";
 
@@ -180,6 +182,7 @@
 "tx_info.rate" = "Исторический Курс";
 "tx_info.fee" = "Комиссия";
 "tx_info.to_self_note" = "Эта транзакция отправлена на свой адрес";
+"tx_info.double_spent_note" = "Двойные Трата Риск!";
 "tx_info.locked_until" = "Заблокировано до %@";
 "tx_info.recipient_hash" = "Получатель";
 
@@ -216,7 +219,7 @@
 "full_info.source.offline" = "недоступен";
 
 "full_info.error.server_offline" = "недоступен";
-"full_info.error.transaction_not_found" = "Транзакция не обнаружена";
+"full_info.error.transaction_not_found" = "Транзакция не может быть найдена в блокчейне";
 "full_info.error.retry" = "Повторить";
 "full_info.error.change_source" = "Сменить Источник";
 "full_info.no_address" = "Пустой Адрес";
@@ -233,10 +236,10 @@
 "settings.language" = "Язык";
 "settings.about" = "О приложении";
 "settings.tell_friends" = "Рассказать Друзьям";
-"settings.report_problem" = "Сообщить о проблеме";
+"settings.contact" = "Kонтакты";
 "settings.light_mode" = "Светлый Режим";
 "settings.info_title" = "UNSTOPPABLE";
-"settings.info_subtitle" = "decentralized app";
+"settings.info_subtitle" = "децентрализованное приложение";
 
 // Settings -> Notifications
 
@@ -246,10 +249,6 @@
 "settings.notifications.deactivate_all" = "Отключить всё";
 "settings.notifications.disabled_text" = "Уведомления для приложения Unstoppable Wallet отключены. Вам нужно включить уведомления и разрешить фоновое обновление для приложения, чтобы иметь возможность получать уведомления о смене цен.";
 "settings.notifications.settings_button" = "Включить в настройках";
-
-// Settings -> Base Currency
-
-"settings_base_currency.title" = "Базовая Валюта";
 
 // Settings -> Manage Wallet
 
@@ -264,12 +263,12 @@
 
 "settings.experimental_features.title" = "Функции";
 "settings.experimental_features.description" = "Ниже приведены экспериментальные функции. Несмотря на то, что мы протестировали эти функции, мы не можем гарантировать, что они будут работать так, как ожидалось во всех возможных случаях. По этому, просим вас пользоваться ими с осторожностью.";
-"settings.experimental_features.bitcoin_hodling" = "Временная Блокировка";
+"settings.experimental_features.bitcoin_hodling" = "TimeLock";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
-"settings.bitcoin_hodling.title" = "Времен.Блокировка";
-"settings.bitcoin_hodling.lock_time" = "TimeLock";
+"settings.bitcoin_hodling.title" = "TimeLock";
+"settings.bitcoin_hodling.lock_time" = "Активировать";
 "settings.bitcoin_hodling.description" = "Позволяет отправлять биткойны, которые могут быть потрачены только после указанной даты.\n\nПолучатель такой транзакции должен быть пользователем кошелька Unstoppable.\n\nТолько кошелек Unstoppable может правильно распознать и обработать такие транзакции в сети Bitcoin, и позволить получателю тратить эти биткойны по истечении периода блокировки.\n\nЕсли вы HODLer (долгосрочный инвестор), то вы можете использовать эту функцию отправив биткойны себе. \n\nТак как это экспериментальная функция, максимальная сумма транзакции ограничена 0,5 BTC.";
 
 // Settings -> About
@@ -294,12 +293,13 @@
 "settings_security.face_id" = "Face ID";
 "security_settings.delete_alert_button" = "Удалить с устройства";
 
-// Settings -> Report Problem
+// Settings -> Contact
 
-"settings.report_problem.title" = "Наши Контакты";
-"settings.report_problem.app_status" = "Статус Приложения";
-"settings.report_problem.email" = "Эл. почта";
-"settings.report_problem.telegram" = "Telegram ";
+"settings.contact.title" = "Kонтакты";
+"settings.contact.app_status" = "Статус Приложения";
+"settings.contact.email" = "Эл. почта";
+"settings.contact.telegram_wallet" = "Telegram (Помощь по кошельку)";
+"settings.contact.telegram_developers" = "Telegram (Разработчики)";
 
 // Manage Keys
 
@@ -358,8 +358,10 @@
 "chart.time_duration.day" = "1Д";
 "chart.time_duration.week" = "7Д";
 "chart.time_duration.month" = "1М";
+"chart.time_duration.month3" = "3М";
 "chart.time_duration.halyear" = "6М";
 "chart.time_duration.year" = "1Г";
+"chart.time_duration.year2" = "2Г";
 
 "chart.market_cap" = "Рын. Кап.";
 "chart.market_cap.thousand" = "%@ к";
@@ -370,6 +372,8 @@
 "chart.circulation" = "Выпущено";
 "chart.max_supply" = "Макс.выпуск";
 "chart.error.not_available" = "График недоступен";
+"chart.selected.price" = "Цена";
+"chart.selected.volume" = "Объём";
 
 // Create Wallet
 
@@ -387,5 +391,12 @@
 
 // Lock Info
 
-"lock_info.title" = "Информация";
+"lock_info.title" = "TimeLock";
 "lock_info.text" = "Эти средства были отправлены с временной блокировкой, которая истекает в указанную дату.\n\nНе волнуйтесь, полученные биткойны уже ваши, но до истечения периода блокировки, вы не сможете потратить их.";
+
+// Double Spend Info
+
+"double_spend_info.title" = "Двойная Трата";
+"double_spend_info.header" = "Двойная Трата! Существует другая транзакция в блокчейне, которая пытается использовать входные данные, используемые в этой транзакции. Только одна транзакция будет принята сетью";
+"double_spend_info.this_hash" = "Эта транзакция";
+"double_spend_info.conflicting_hash" = "Конфликтная транзакция";

@@ -86,6 +86,8 @@
 "error.send_eos.insufficient_ram" = "EOS hesabınızda bu kripto parayı göndermek için yeterli RAM bulunmuyor. Devam etmek için EOS RAM hissenizi arttırmak gerekiyor.";
 "error.send_eos.unknown" = "Beklenmeyen bir hata oluştu: %@";
 "error.send_ethereum.wrong_parameters" = "Yanlış parametreler";
+"error.send_binance.memo_required" = "Aktarım işleminde alıcı boş olmayan not istiyor";
+"error.send_binance.only_digits_allowed" = "Notun yalnızca rakam içermesini gerektirir";
 
 "backup.confirmation.title" = "Kontrol etme ...";
 
@@ -180,6 +182,7 @@
 "tx_info.rate" = "Geçmiş Kur";
 "tx_info.fee" = "Ücret";
 "tx_info.to_self_note" = "Bu işlem kendi adresine gönderildi";
+"tx_info.double_spent_note" = "Çifte Harcama Riski Var!";
 "tx_info.locked_until" = "Şu zamana kadar kitlendi %@";
 "tx_info.recipient_hash" = "Alıcı";
 
@@ -216,7 +219,7 @@
 "full_info.source.offline" = "çevrimdışı";
 
 "full_info.error.server_offline" = "çevrimdışı";
-"full_info.error.transaction_not_found" = "İşlem bulunamadı";
+"full_info.error.transaction_not_found" = "Işlem Blockchain'de bulunamadı";
 "full_info.error.retry" = "Yeniden Dene";
 "full_info.error.change_source" = "Kaynağı Değiştir";
 "full_info.no_address" = "Boş adres";
@@ -233,7 +236,7 @@
 "settings.language" = "Dil";
 "settings.about" = "Hakkında";
 "settings.tell_friends" = "Arkadaşlarına bahset";
-"settings.report_problem" = "Sorunu Bildir";
+"settings.contact" = "Iletişim";
 "settings.light_mode" = "Aydınlık mod";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized App";
@@ -246,10 +249,6 @@
 "settings.notifications.deactivate_all" = "Etkisizleştir";
 "settings.notifications.disabled_text" = "Unstoppable Cüzdan uygulaması için bildirimler devre dışı bırakıldı. Fiyat değişikliği uyarıları alabilmek için Bildirimler'i açmanız ve arka plan uygulaması yenilemesine izin vermeniz gerekir.";
 "settings.notifications.settings_button" = "Ayarlardan aç";
-
-// Settings -> Base Currency
-
-"settings_base_currency.title" = "Para birimi";
 
 // Settings -> Manage Wallet
 
@@ -264,12 +263,12 @@
 
 "settings.experimental_features.title" = "Deneysel";
 "settings.experimental_features.description" = "Aşağıdaki özellikler deneyseldir ve dikkatli kullanılmalıdır. Bu özellikleri kendi kripto fonlarımızı kullanarak baştan sona test etmemize rağmen, olası tüm durumlarda beklendiği gibi çalışmalarını garanti edemeyiz.";
-"settings.experimental_features.bitcoin_hodling" = "Kilitli Bitcoins";
+"settings.experimental_features.bitcoin_hodling" = "TimeLock";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
-"settings.bitcoin_hodling.title" = "Kilitli Bitcoins";
-"settings.bitcoin_hodling.lock_time" = "TimeLock";
+"settings.bitcoin_hodling.title" = "TimeLock";
+"settings.bitcoin_hodling.lock_time" = "Aktiveet";
 "settings.bitcoin_hodling.description" = "Belirtilen tarihe kadar harcanmamış Bitcoin'leri göndermenize olanak verir.\n\nBu tür bir işlemin alıcısı Unstoppable cüzdan kullanmalıdır.\n\nSadece Unstoppable cüzdan, Bitcoin ağındaki bu tür işlemleri doğru bir şekilde tanımlayabilir ve kilitleme süresi dolduktan sonra da alıcının bu Bitcoin'leri harcamasını sağlayabilir.\n\nEğer bir HODLer iseniz, kendinize böyle bir işlem göndererek, bu özelliği Bitcoin'lerinizi zarar etmeden uzun süre elinizde tutmaya zorlamak için kullanabilirsiniz.\n\nDeneysel bir özellik olduğundan, işlem başına maksimum tutar 0.5 BTC ile sınırlandırılmıştır.";
 
 // Settings -> About
@@ -294,12 +293,13 @@
 "settings_security.face_id" = "Face ID";
 "security_settings.delete_alert_button" = "Cihazdan sil";
 
-// Settings -> Report Problem
+// Settings -> Contact
 
-"settings.report_problem.title" = "Sorunu Bildir";
-"settings.report_problem.app_status" = "Uygulama Durumu";
-"settings.report_problem.email" = "E-posta";
-"settings.report_problem.telegram" = "Telegram";
+"settings.contact.title" = "Iletişim";
+"settings.contact.app_status" = "Uygulama Durumu";
+"settings.contact.email" = "E-posta";
+"settings.contact.telegram_wallet" = "Telegram (Cüzdan Kullanım Yardımı)";
+"settings.contact.telegram_developers" = "Telegram (Developers)";
 
 // Manage Keys
 
@@ -358,8 +358,10 @@
 "chart.time_duration.day" = "1G";
 "chart.time_duration.week" = "7G";
 "chart.time_duration.month" = "1A";
+"chart.time_duration.month3" = "3A";
 "chart.time_duration.halyear" = "6Ay";
 "chart.time_duration.year" = "1Yıl";
+"chart.time_duration.year2" = "2Yıl";
 
 "chart.market_cap" = "P. Değeri";
 "chart.market_cap.thousand" = "%@ k";
@@ -370,6 +372,8 @@
 "chart.circulation" = "Dolaşan Arz	";
 "chart.max_supply" = "Toplam Arz";
 "chart.error.not_available" = "Grafik yok";
+"chart.selected.price" = "Fiyat";
+"chart.selected.volume" = "Birim";
 
 // Create Wallet
 
@@ -387,5 +391,12 @@
 
 // Lock Info
 
-"lock_info.title" = "Bilgi";
+"lock_info.title" = "TimeLock";
 "lock_info.text" = "Gönderici bu fonları belirtilen tarihte sona erecek şekilde bir harcama kilidiyle gönderdi.\n\nEndişelenmeyin, alınan Bitcoin'ler zaten sizindir ancak kilitleme süresi sona erene kadar bunları Bitcoin ağında harcayamazsınız.";
+
+// Double Spend Info
+
+"double_spend_info.title" = "Çifte Harcama";
+"double_spend_info.header" = "Çifte Harcama Riski! Blockchain'de, bu işlemde kullanılan girdileri harcamaya çalışan başka bir işlem var. Ağ tarafından yalnızca bir işlem kabul edilecektir";
+"double_spend_info.this_hash" = "Bu Tx";
+"double_spend_info.conflicting_hash" = "Çakışan Tx";
