@@ -302,7 +302,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   BitcoinCashKit.swift:
-    :commit: 8474e16aca47e46338a5589a40289e48c7b92065
+    :commit: c279fa1c3d3a743e9f2931c283a7db4f43c3ed69
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinCore.swift:
     :commit: 8474e16aca47e46338a5589a40289e48c7b92065
