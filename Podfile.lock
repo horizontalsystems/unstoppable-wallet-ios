@@ -322,12 +322,12 @@ CHECKOUT OPTIONS:
   EosioSwiftAbieosSerializationProvider:
     :commit: 7ac04899e62012e225e0ea48a96951de0b72ad08
     :git: https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git
-  Hodler.swift:
-    :commit: 8474e16aca47e46338a5589a40289e48c7b92065
-    :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   FeeRateKit.swift:
     :commit: 2f873d8801ddf9c8fbcb8660805f316c7b1b4b8c
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
+  Hodler.swift:
+    :commit: 8474e16aca47e46338a5589a40289e48c7b92065
+    :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   LanguageKit.swift:
     :commit: ee2fd2f8f530a68ba33dfc8ff0b4f70c9742df0e
     :git: https://github.com/horizontalsystems/component-kit-ios/
@@ -400,6 +400,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: 568660675ce881653095645bc9e30dbc1abc5578
 
-PODFILE CHECKSUM: af793a25b52af7810efeedd05fe11c5eb6d03e56
+PODFILE CHECKSUM: ff00b9a68f8cd0d2771c451de6126f22161511e4
 
 COCOAPODS: 1.8.4
