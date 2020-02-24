@@ -67,7 +67,7 @@ enum CoinType {
     var restoreUrl: String {
         switch self {
         case .bitcoin: return "https://btc.horizontalsystems.xyz/apg"
-        case .bitcoinCash: return "https://blockdozer.com"
+        case .bitcoinCash: return "https://explorer.bitcoin.com/bch/"
         case .dash: return "https://dash.horizontalsystems.xyz"
         default: return ""
         }
