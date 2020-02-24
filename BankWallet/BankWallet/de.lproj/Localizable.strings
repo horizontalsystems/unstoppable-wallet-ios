@@ -86,8 +86,8 @@
 "error.send_eos.insufficient_ram" = "Ihr EOS-Konto hat nicht genügend RAM, um dieses Token zu senden. Um fortfahren zu können, müssen Sie den RAM-Stake erhöhen.";
 "error.send_eos.unknown" = "Etwas ist schief gelaufen: %@";
 "error.send_ethereum.wrong_parameters" = "Falsche Parameter";
-"error.send_binance.memo_required" = "Receiver requires non-empty memo in transfer transaction";
-"error.send_binance.only_digits_allowed" = "Requires the memo to contain only digits";
+"error.send_binance.memo_required" = "Empfänger benötigt nicht-leeren Vermerk bei Transfer einer Transaktion";
+"error.send_binance.only_digits_allowed" = "Der Vermerk darf nur Zahlen enthalten";
 
 "backup.confirmation.title" = "Prüfen …";
 
@@ -153,7 +153,7 @@
 "send.amount_error.balance" = "Guthaben %@";
 "send.amount_error.maximum_amount" = "Maximaler Betrag %@";
 "send.amount_error.minimum_amount" = "Minimaler Betrag %@";
-"send.amount_error.min_required_balance" = "Min. required remainder %@";
+"send.amount_error.min_required_balance" = "Mindestens erforderlicher Rest %@";
 "send.token.insufficient_fee_alert" = "Transaktionsgebühren für %@ %@ in %@ bezahlt. Du brauchst %@.";
 
 "send.lock_time" = "TimeLock";
@@ -182,7 +182,7 @@
 "tx_info.rate" = "Historischer Rate";
 "tx_info.fee" = "Gebühr";
 "tx_info.to_self_note" = "Diese Transaktion wurde an die eigene Adresse gesendet";
-"tx_info.double_spent_note" = "Double Spend Risk!";
+"tx_info.double_spent_note" = "Double-Spend-Risiko!";
 "tx_info.locked_until" = "Gesperrt bis %@";
 "tx_info.recipient_hash" = "Empfänger";
 
@@ -219,7 +219,7 @@
 "full_info.source.offline" = "offline";
 
 "full_info.error.server_offline" = "offline";
-"full_info.error.transaction_not_found" = "Transaction can not be found on the blockchain";
+"full_info.error.transaction_not_found" = "Transaktion kann in der Blockchain nicht gefunden werden";
 "full_info.error.retry" = "Wiederholen";
 "full_info.error.change_source" = "Quelle ändern";
 "full_info.no_address" = "Leere Adresse";
@@ -236,7 +236,7 @@
 "settings.language" = "Sprache";
 "settings.about" = "Info";
 "settings.tell_friends" = "Freunden erzählen";
-"settings.contact" = "Contact";
+"settings.contact" = "Kontakt";
 "settings.light_mode" = "Licht Modus";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized";
@@ -268,14 +268,14 @@
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "TimeLock";
-"settings.bitcoin_hodling.lock_time" = "Activate";
+"settings.bitcoin_hodling.lock_time" = "Aktivieren";
 "settings.bitcoin_hodling.description" = "Damit können Sie gesendete Bitcoins sperren, sodass sie bis zu dem festgesetzten Datum nicht ausgegeben werden können.\n\nDer Empfänger einer solchen Transaktion sollte das Unstoppable-Wallet in der Version 0.10 (oder neuer) sowie das Bitcoin-Adressformat BIP44 verwenden.\n\nNur das Unstoppable-Wallet erkennt solche Transaktionen im Bitcoin-Netzwerk korrekt und ermöglicht es dem Empfänger, die Bitcoins nach der Sperrzeit zu auszugeben.\n\nWenn Sie ein HODLer* sind, können Sie diese Funktion auch für sich selbst nutzen, indem Sie sich selbst eine solche Transaktion schicken und so ihre Bitcoin für sich selbst zeitlich sperren.\n\nDa es sich noch um eine experimentelle Funktion handelt, liegt der maximale Betrag bei 0,5 BTC.\n";
 
 // Settings -> About
 
 "settings_about.title" = "Info";
 "settings_about.app_title" = "Unstoppable";
-"settings_about.app_subtitle" = "Decentralized App";
+"settings_about.app_subtitle" = "Dezentralisierte App";
 "settings_about.terms_privacy_subtitle" = "ANB & Datenschutz:";
 "settings_about.terms_privacy_text" = "Diese App basiert auf dem Peer-to-Peer-Prinzip. Das bietet den Vorteil, dass die App zum Funktionieren nicht auf bestimmte Webserver oder technischem Supportpersonal abhängig ist.\n\nDie App funktioniert überall. Sie benötigen nur einen Internetzugang. Niemand kann die App stoppen oder Sie davon abhalten, sie zu nutzen.\n\nIhre Guthaben sind sicher auf Ihrem Telefon gespeichert, nirgendwo sonst.\n\nEs liegt in Ihrer Verantwortung, den Private Key/Secret Key zu sichern und ihn gut aufzubewahren. Zeigen Sie ihn niemandem. Wenn er verloren geht, Sie ihn vergessen oder er gestohlen wird, kann Ihr Guthaben von demjenigen ausgegeben werden, der den Key besitzt.\n\nFühren Sie auf Ihrem Telefon keinen Jailbreak durch. Installieren Sie keine Apps aus unbekannten (nicht vertrauenswürdigen) Quellen. Geben Sie das Telefon keiner nicht vertrauenswürdigen Person und aktualisieren Sie das Betriebssystem Ihres Telefons regelmäßig. Die Sicherheit Ihres Wallets hängt davon ab.\n\nDer gesamte Code dieser App ist seit Anfang an öffentlich einsehbar. Wir haben versucht, das sicherste und dezentralisierteste Wallet zu programmieren. Allerdings gibt es keine Garantie, dass keine unvorhergesehenen Softwareprobleme auftreten. Trotzdem ist dieses Wallet wahrscheinlich deutlich sicherer als jede andere Smartphone-App.\n\nHinweis: Manche generischen, nicht geheimen App-Daten (wie Währungswechselkurse) werden in einem dezentralen Netzwerken (IPFS) gespeichert.";
 
@@ -295,11 +295,11 @@
 
 // Settings -> Contact
 
-"settings.contact.title" = "Contact";
-"settings.contact.app_status" = "App Status";
+"settings.contact.title" = "Kontakt";
+"settings.contact.app_status" = "App-Status";
 "settings.contact.email" = "E-mail";
-"settings.contact.telegram_wallet" = "Telegram (Wallet Help)";
-"settings.contact.telegram_developers" = "Telegram (Developers)";
+"settings.contact.telegram_wallet" = "Telegram (Wallet-Hilfe)";
+"settings.contact.telegram_developers" = "Telegram (Entwickler)";
 
 // Manage Keys
 
@@ -361,7 +361,7 @@
 "chart.time_duration.month3" = "3M";
 "chart.time_duration.halyear" = "6M";
 "chart.time_duration.year" = "1J";
-"chart.time_duration.year2" = "2Y";
+"chart.time_duration.year2" = "2J";
 
 "chart.market_cap" = "Mkt. Kap.";
 "chart.market_cap.thousand" = "%@ tsd.";
@@ -372,8 +372,8 @@
 "chart.circulation" = "Umlaufversorgung	";
 "chart.max_supply" = "Gesamtversorgung";
 "chart.error.not_available" = "Diagramm nicht verfügbar";
-"chart.selected.price" = "Price";
-"chart.selected.volume" = "Volume";
+"chart.selected.price" = "Preis";
+"chart.selected.volume" = "Lautstärke";
 
 // Create Wallet
 
@@ -392,11 +392,11 @@
 // Lock Info
 
 "lock_info.title" = "TimeLock";
-"lock_info.text" = "The sender sent these funds with a spending lock that will expire on shown date.\n\nNo worries, the received Bitcoins are already yours but until the lock period expires you cannot spend them on the Bitcoin network.";
+"lock_info.text" = "Der Sender hat dieses Guthaben mit einer Ausgabesperre versehen, die zu dem angezeigten Datum abläuft.\n\nKeine Sorge, die erhaltenen Bitcoin sind bereits Ihre. Die Bitcoins sind nur zeitweise gesperrt, so dass Sie sie erst nach Ablauf der Sperrzeit im Bitcoin-Netzwerk ausgeben können.";
 
 // Double Spend Info
 
-"double_spend_info.title" = "Double Spend";
-"double_spend_info.header" = "Double Spend Risk! There is another transaction on blockchain that trying to spend inputs used in this transaction. Only one transaction will be accepted by the network";
-"double_spend_info.this_hash" = "This Tx";
-"double_spend_info.conflicting_hash" = "Conflicting Tx";
+"double_spend_info.title" = "Double-Spend";
+"double_spend_info.header" = "Double-Spend-Risiko! Es gibt eine weitere Transaktion auf der Blockchain, die versucht, die in dieser Transaktion verwendeten Inputs auszugeben. Nur eine Transaktion wird vom Netzwerk akzeptiert";
+"double_spend_info.this_hash" = "Dieser Tx";
+"double_spend_info.conflicting_hash" = "Gegensätzliche Tx";
