@@ -86,8 +86,8 @@
 "error.send_eos.insufficient_ram" = "귀하의 EOS계정은 이 토큰을 보내기엔 RAM이 충분하지 않습니다. 진행하시려면 RAM량을 늘리셔야 합니다.";
 "error.send_eos.unknown" = "무언가 잘못 됐습니다: %@";
 "error.send_ethereum.wrong_parameters" = "잘못된 매개 변수";
-"error.send_binance.memo_required" = "Receiver requires non-empty memo in transfer transaction";
-"error.send_binance.only_digits_allowed" = "Requires the memo to contain only digits";
+"error.send_binance.memo_required" = "수신자는 송금 내역에 메모 기록을 필요로 합니다";
+"error.send_binance.only_digits_allowed" = "메모에는 숫자만 포함하셔야 합니다";
 
 "backup.confirmation.title" = "확인 중...";
 
@@ -153,7 +153,7 @@
 "send.amount_error.balance" = "잔액%@";
 "send.amount_error.maximum_amount" = "최대 %@ 금액";
 "send.amount_error.minimum_amount" = "최소 %@ 금액";
-"send.amount_error.min_required_balance" = "Min. required remainder %@";
+"send.amount_error.min_required_balance" = "최소 %@ 만큼의 필요 잔여금";
 "send.token.insufficient_fee_alert" = "%@ (%@) 에 대한 거래 수수료는 %@로 지불되었습니다. 귀하는 %@가 필요합니다.";
 
 "send.lock_time" = "시간 자물쇠";
@@ -182,7 +182,7 @@
 "tx_info.rate" = "과거 환율";
 "tx_info.fee" = "수수료";
 "tx_info.to_self_note" = "이 거래는 귀하의 주소로 전송이 되었습니다";
-"tx_info.double_spent_note" = "Double Spend Risk!";
+"tx_info.double_spent_note" = "이중 지출 위험!";
 "tx_info.locked_until" = "까지 잠그기 %@";
 "tx_info.recipient_hash" = "수령인";
 
@@ -219,7 +219,7 @@
 "full_info.source.offline" = "오프라인";
 
 "full_info.error.server_offline" = "오프라인";
-"full_info.error.transaction_not_found" = "Transaction can not be found on the blockchain";
+"full_info.error.transaction_not_found" = "블록 체인에서 거래를 찾을 수 없습니다";
 "full_info.error.retry" = "재시도";
 "full_info.error.change_source" = "출처를 변경하다";
 "full_info.no_address" = "빈 주소";
@@ -236,7 +236,7 @@
 "settings.language" = "언어";
 "settings.about" = "에 대해";
 "settings.tell_friends" = "친구에게 추천하기";
-"settings.contact" = "Contact";
+"settings.contact" = "연락처";
 "settings.light_mode" = "밝은 모드";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -263,12 +263,12 @@
 
 "settings.experimental_features.title" = "실험적인";
 "settings.experimental_features.description" = "아래 기능은 실험용이므로 사용하실때 주의를 해주시기 바랍니다. 저희 자체 암호와 자금을 사용하여 철저히 실험을 하였지만 모든 경우들에 있어 전부다 예상대로 작동한다고 보장할 수 없습니다.";
-"settings.experimental_features.bitcoin_hodling" = "TimeLock";
+"settings.experimental_features.bitcoin_hodling" = "시간 자물쇠";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
-"settings.bitcoin_hodling.title" = "TimeLock";
-"settings.bitcoin_hodling.lock_time" = "Activate";
+"settings.bitcoin_hodling.title" = "시간 자물쇠";
+"settings.bitcoin_hodling.lock_time" = "활성화";
 "settings.bitcoin_hodling.description" = "명시된 날짜까지 사용할수 없는 비트코인을 보낼 수 있습니다.\n\n이러한 거래의 수진자는 비트코인 사용에 대해 언스탑퍼플 지갑 앱 버젼 0.10 또는 더 새로운 BIP44 주소 형식을 사용해야 합니다.\n\n언스탑퍼블 지갑만이 비트코인 네트워크에서 이런 거래들을 올바르게 확인할 수 있고 또 수신자가 잠금 기간 만료 후에도 비트코인을 사용할 수 있게 할 수 있습니다.\n\n귀하께서 호들러 이시면, 이 기능을 사용하여 귀하에게 이러한 거래를 보냄으로써 호들링할 수 있습니다.\n\n실험적인 기능으로 거래당 최대 0.5 BTC로 제한이 되있습니다.";
 
 // Settings -> About
@@ -295,11 +295,11 @@
 
 // Settings -> Contact
 
-"settings.contact.title" = "Contact";
-"settings.contact.app_status" = "App Status";
+"settings.contact.title" = "연락처";
+"settings.contact.app_status" = "앱 상태";
 "settings.contact.email" = "E-mail";
-"settings.contact.telegram_wallet" = "Telegram (Wallet Help)";
-"settings.contact.telegram_developers" = "Telegram (Developers)";
+"settings.contact.telegram_wallet" = "Telegram (지갑 고객 지원)";
+"settings.contact.telegram_developers" = "Telegram (개발자)";
 
 // Manage Keys
 
@@ -358,10 +358,10 @@
 "chart.time_duration.day" = "하루";
 "chart.time_duration.week" = "일주일";
 "chart.time_duration.month" = "한 달";
-"chart.time_duration.month3" = "3M";
+"chart.time_duration.month3" = "3개월";
 "chart.time_duration.halyear" = "6개월";
 "chart.time_duration.year" = "1년";
-"chart.time_duration.year2" = "2Y";
+"chart.time_duration.year2" = "2년";
 
 "chart.market_cap" = "시가총액";
 "chart.market_cap.thousand" = "%@ 천";
@@ -372,8 +372,8 @@
 "chart.circulation" = "유통";
 "chart.max_supply" = "총 발행량";
 "chart.error.not_available" = "차트 이용불가";
-"chart.selected.price" = "Price";
-"chart.selected.volume" = "Volume";
+"chart.selected.price" = "금액";
+"chart.selected.volume" = "음량";
 
 // Create Wallet
 
@@ -391,12 +391,12 @@
 
 // Lock Info
 
-"lock_info.title" = "TimeLock";
-"lock_info.text" = "The sender sent these funds with a spending lock that will expire on shown date.\n\nNo worries, the received Bitcoins are already yours but until the lock period expires you cannot spend them on the Bitcoin network.";
+"lock_info.title" = "시간 자물쇠";
+"lock_info.text" = "발송자는 이러한 자금들을 표시된 날짜에 만료가 되는 잠금 지출과 함께 보냈습니다.\n\n걱정 하지마십시오, 수신된 비트코인은 이미 귀하의 것입니다 하지만 잠금 기간이 만료될때 까지 비트코인 네트워크에서 사용하실 수 없습니다.";
 
 // Double Spend Info
 
-"double_spend_info.title" = "Double Spend";
-"double_spend_info.header" = "Double Spend Risk! There is another transaction on blockchain that trying to spend inputs used in this transaction. Only one transaction will be accepted by the network";
-"double_spend_info.this_hash" = "This Tx";
-"double_spend_info.conflicting_hash" = "Conflicting Tx";
+"double_spend_info.title" = "이중 지출";
+"double_spend_info.header" = "이중 지출 위험! 블록 체인에 있는 거래에 지출된 정보를 사용하려는 또 다른 거래가 있습니다. 네트워크는 하나의 거래만 수용합니다";
+"double_spend_info.this_hash" = "이 Tx";
+"double_spend_info.conflicting_hash" = "충돌하는 Tx";
