@@ -2815,13 +2815,6 @@
 			path = Controls;
 			sourceTree = "<group>";
 		};
-		11B35C89D6DFA823F5F2D65D /* BaseCurrency */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = BaseCurrency;
-			sourceTree = "<group>";
-		};
 		11B35D4BDE6E4347D365B222 /* SendAccount */ = {
 			isa = PBXGroup;
 			children = (
@@ -5813,7 +5806,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.12;
+				MARKETING_VERSION = 0.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OfficeMode = "";
@@ -5882,7 +5875,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.12;
+				MARKETING_VERSION = 0.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OfficeMode = "";
 				SDKROOT = iphoneos;
