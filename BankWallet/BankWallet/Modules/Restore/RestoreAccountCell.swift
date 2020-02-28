@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
 class RestoreAccountCell: CardCell {
     private static let topPadding: CGFloat = 10
