@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
 class ManageAccountCell: CardCell {
     private static let topPadding: CGFloat = .margin2x
