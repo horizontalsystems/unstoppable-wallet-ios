@@ -23,7 +23,7 @@ class ChartPointInfoView: UIView {
         volumeView.snp.makeConstraints { maker in
             maker.leading.equalTo(priceView.snp.trailing).offset(CGFloat.margin1x)
             maker.trailing.equalToSuperview()
-            maker.top.bottom.equalTo(volumeView)
+            maker.top.bottom.equalTo(dateView)
             maker.width.equalTo(priceView)
         }
 

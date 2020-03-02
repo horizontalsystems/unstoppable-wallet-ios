@@ -79,6 +79,13 @@ class ChartTypeSelectView: UIView, UICollectionViewDelegateFlowLayout, UICollect
     }
 
     func select(index: Int) {
+        let selectedItem = IndexPath(item: index, section: 0)
+
+        if let indexPathsForSelectedItems = collectionView.indexPathsForSelectedItems,      // check already selected item
+           indexPathsForSelectedItems.contains(selectedItem) {
+            return
+        }
+
         if titles.count > selected {
             collectionView.selectItem(at: IndexPath(item: index, section: 0), animated: false, scrollPosition: .left)
         }

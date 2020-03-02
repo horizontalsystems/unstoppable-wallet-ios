@@ -382,6 +382,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "chart.error.not_available" = "Chart not available";
 "chart.selected.price" = "Price";
 "chart.selected.volume" = "Volume";
+"chart.news.title" = "Latest News";
 
 // Create Wallet
 
@@ -409,3 +410,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "double_spend_info.this_hash" = "This Tx";
 "double_spend_info.conflicting_hash" = "Conflicting Tx";
 
+// Relative Date
+"timestamp.days_ago" = "%luh ago";
+"timestamp.hours_ago" = "%luh ago";
+"timestamp.min_ago" = "%lum ago";

@@ -3,68 +3,94 @@ import XRatesKit
 import Chart
 import CurrencyKit
 
-struct ChartInfoViewItem {
-    let lowValue: CurrencyValue
-    let highValue: CurrencyValue
-
-    let diff: Decimal?
-
-    let gridIntervalType: GridIntervalType
-
-    let points: [Chart.ChartPoint]
-    let startTimestamp: TimeInterval
-    let endTimestamp: TimeInterval
-}
-
-struct MarketInfoViewItem {
-    let timestamp: TimeInterval
-
-    let rateValue: CurrencyValue?
-    let marketCapValue: CurrencyValue?
-
-    public let volumeValue: CurrencyValue?
-    public let supplyValue: CoinValue
-    public let maxSupplyValue: CoinValue?
-}
-
 class ChartRateFactory: IChartRateFactory {
-    enum FactoryError: Error {
-        case noChartPoints
-        case noPercentDelta
+    private let coinFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.roundingMode = .halfUp
+        formatter.maximumFractionDigits = 0
+        return formatter
+    }()
+
+    private let currencyFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.maximumFractionDigits = 8
+        return formatter
+    }()
+
+    private func roundedFormat(coin: Coin, value: Decimal?) -> String? {
+        guard let value = value, let formattedValue = coinFormatter.string(from: value as NSNumber) else {
+            return nil
+        }
+
+        return "\(formattedValue) \(coin.code)"
     }
 
-    func chartViewItem(type: ChartType, chartInfo: ChartInfo, currency: Currency) throws -> ChartInfoViewItem {
-        guard !chartInfo.points.isEmpty else {
-            throw FactoryError.noChartPoints
+    private func postViewItemDate(timestamp: TimeInterval) -> String {
+        var interval = Int(Date().timeIntervalSince1970 - timestamp) / 60       // interval from post in minutes
+        if interval < 60 {
+            return "timestamp.min_ago".localized(max(1, interval))
         }
-        var minimumValue = Decimal.greatestFiniteMagnitude
-        var maximumValue = Decimal.zero
-        chartInfo.points.forEach { point in
-            minimumValue = min(minimumValue, point.value)
-            maximumValue = max(maximumValue, point.value)
+        interval /= 60                                                          // interval in hours
+        if interval < 24 {
+            return "timestamp.hours_ago".localized(interval)
         }
+        interval /= 24                                                           // interval in days
+        return "timestamp.days_ago".localized(interval)
+    }
+
+    private func viewItem(marketInfo: MarketInfo, currency: Currency, coin: Coin) -> MarketInfoViewItem {
+        let marketCap = CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.marketCap)
+        let volume = CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.volume)
+
+        let supply = roundedFormat(coin: coin, value: marketInfo.supply)
+        let maxSupply = roundedFormat(coin: coin, value: MaxSupplyMap.maxSupplies[coin.code]) ?? "n/a".localized
+
+        return MarketInfoViewItem(marketCap: marketCap, volume: volume, supply: supply, maxSupply: maxSupply)
+    }
+
+    func chartViewItem(type: ChartType, allTypes: [ChartType], chartInfoStatus: ChartDataStatus<ChartInfo>,
+                       marketInfoStatus: ChartDataStatus<MarketInfo>, postsStatus: ChartDataStatus<[CryptoNewsPost]>, coin: Coin, currency: Currency) -> ChartViewItem {
+
+        let index = allTypes.firstIndex(of: type) ?? 0
+
+        let chartStatus: ChartDataStatus<ChartInfoViewItem> = chartInfoStatus.convert {
+            let points = $0.points.map { ChartPoint(timestamp: $0.timestamp, value: $0.value, volume: $0.volume) }
+            return ChartInfoViewItem(gridIntervalType: GridIntervalConverter.convert(chartType: type), points: points, startTimestamp: $0.startTimestamp, endTimestamp: $0.endTimestamp)
+        }
+        let postsStatus: ChartDataStatus<[PostViewItem]> = postsStatus.convert {
+            $0.map { PostViewItem(title: $0.title, subtitle: postViewItemDate(timestamp: $0.timestamp)) }
+        }
+        let marketStatus: ChartDataStatus<MarketInfoViewItem> = marketInfoStatus.convert {
+            viewItem(marketInfo: $0, currency: currency, coin: coin)
+        }
+
         var diff: Decimal?
-        if let first = chartInfo.points.first(where: { point in !point.value.isZero }), let last = chartInfo.points.last {
-            diff = (last.value - first.value) / first.value * 100
+        if let points = chartInfoStatus.data?.points {
+            if let first = points.first(where: { point in !point.value.isZero }), let last = points.last {
+                diff = (last.value - first.value) / first.value * 100
+            }
         }
-        let lowValue = CurrencyValue(currency: currency, value: minimumValue)
-        let highValue = CurrencyValue(currency: currency, value: maximumValue)
+        var currentRate: String?
+        if let rate = marketInfoStatus.data?.rate {
+            let rateValue = CurrencyValue(currency: currency, value: rate)
+            currentRate = ValueFormatter.instance.format(currencyValue: rateValue, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
+        }
 
-        let points = chartInfo.points.map { ChartPoint(timestamp: $0.timestamp, value: $0.value, volume: $0.volume) }
-        return ChartInfoViewItem(lowValue: lowValue, highValue: highValue, diff: diff,
-                gridIntervalType: GridIntervalConverter.convert(chartType: type), points: points,
-                startTimestamp: chartInfo.startTimestamp, endTimestamp: chartInfo.endTimestamp)
+        return ChartViewItem(selectedIndex: index, diff: diff, currentRate: currentRate, chartInfoStatus: chartStatus, marketInfoStatus: marketStatus, postsStatus: postsStatus)
     }
 
-    func marketInfoViewItem(marketInfo: MarketInfo, coin: Coin, currency: Currency) -> MarketInfoViewItem {
-        let rateValue = CurrencyValue(currency: currency, value: marketInfo.rate)
-        let marketCapValue = CurrencyValue(currency: currency, value: marketInfo.marketCap)
-        let volume = CurrencyValue(currency: currency, value: marketInfo.volume)
-        let supply = CoinValue(coin: coin, value: marketInfo.supply)
+    func selectedPointViewItem(type: ChartType, chartPoint: Chart.ChartPoint, coin: Coin, currency: Currency) -> SelectedPointViewItem {
+        let date = Date(timeIntervalSince1970: chartPoint.timestamp)
+        let formattedTime = [ChartType.day, ChartType.week].contains(type) ? DateHelper.instance.formatTimeOnly(from: date) : nil
+        let formattedDate = DateHelper.instance.formateShortDateOnly(date: date)
 
-        let maxSupply = MaxSupplyMap.maxSupplies[coin.code].map { CoinValue(coin: coin, value: $0) }
+        currencyFormatter.currencyCode = currency.code
+        currencyFormatter.currencySymbol = currency.symbol
+        let formattedValue = currencyFormatter.string(from: chartPoint.value as NSNumber)
 
-        return MarketInfoViewItem(timestamp: marketInfo.timestamp, rateValue: rateValue, marketCapValue: marketCapValue, volumeValue: volume, supplyValue: supply, maxSupplyValue: maxSupply)
+        return SelectedPointViewItem(date: formattedDate, time: formattedTime, value: formattedValue, volume: CurrencyCompactFormatter.instance.format(currency: currency, value: chartPoint.volume))
     }
 
 }

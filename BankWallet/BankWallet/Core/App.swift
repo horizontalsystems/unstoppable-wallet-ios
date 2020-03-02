@@ -32,7 +32,7 @@ class App {
 
     let currencyKit: ICurrencyKit
 
-    let rateManager: IRateManager
+    let rateManager: IRateManager & IPostsManager
 
     let feeCoinProvider: IFeeCoinProvider
     let feeRateProviderFactory: FeeRateProviderFactory
