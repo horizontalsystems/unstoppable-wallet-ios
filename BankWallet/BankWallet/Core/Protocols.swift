@@ -195,6 +195,11 @@ protocol IRateManager {
     func chartInfoObservable(coinCode: String, currencyCode: String, chartType: ChartType) -> Observable<ChartInfo>
 }
 
+protocol IPostsManager {
+    func posts(coinCode: CoinCode, timestamp: TimeInterval) -> [CryptoNewsPost]?
+    func subscribeToPosts(coinCode: CoinCode) -> Single<[CryptoNewsPost]>
+}
+
 protocol IRateCoinMapper {
     var convertCoinMap: [String: String] { get }
     var unconvertCoinMap: [String: String] { get }

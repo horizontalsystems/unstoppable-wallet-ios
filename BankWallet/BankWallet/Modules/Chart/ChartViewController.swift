@@ -1,8 +1,10 @@
 import UIKit
-import ActionSheet
 import XRatesKit
 import Chart
 import CurrencyKit
+import ThemeKit
+import SectionsTableView
+import SnapKit
 
 extension ChartType {
 
@@ -20,199 +22,194 @@ extension ChartType {
 
 }
 
-class ChartViewController: WalletActionSheetController {
-    private let coinFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.roundingMode = .halfUp
-        formatter.maximumFractionDigits = 0
-        return formatter
-    }()
-
-    private let currencyFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.maximumFractionDigits = 8
-        return formatter
-    }()
+class ChartViewController: ThemeViewController {
+    private let chartSection = 0
+    private let postsSection = 1
 
     private let delegate: IChartViewDelegate
 
-    private let titleItem: AlertTitleItem
-    private let currentRateItem = ChartCurrentRateItem(tag: 1)
-    private let chartRateTypeItem = ChartRateTypeItem(tag: 2)
-    private var chartRateItem: ChartRateItem?
-    private var marketCapItem = ChartMarketCapItem(tag: 4)
+    private let tableView = UITableView(frame: .zero, style: .grouped)
+    private let chartHeaderView: ChartHeaderView
 
-    private var types = [ChartType]()
+    private var viewItem: ChartViewItem?
 
-    init(delegate: IChartViewDelegate) {
+    init(delegate: IChartViewDelegate & IChartIndicatorDelegate, chartConfiguration: ChartConfiguration) {
         self.delegate = delegate
-
-        let coin = delegate.coin
-        titleItem = AlertTitleItem(
-                title: "chart.title".localized(coin.title),
-                icon: UIImage(coin: coin),
-                iconTintColor: .themeGray,
-                tag: 0
-        )
+        self.chartHeaderView = ChartHeaderView(configuration: chartConfiguration, delegate: delegate)
 
         super.init()
 
-        titleItem.onClose = { [weak self] in
-            self?.dismiss(byFade: false)
-        }
-
-        initItems()
+        hidesBottomBarWhenPushed = true
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func initItems() {
-        model.addItemView(titleItem)
-        model.addItemView(currentRateItem)
-        model.addItemView(chartRateTypeItem)
-
-        let chartRateItem = ChartRateItem(tag: 3, chartConfiguration: ChartConfiguration.fullChart(currency: delegate.currency), indicatorDelegate: self)
-        self.chartRateItem = chartRateItem
-
-        model.addItemView(chartRateItem)
-        model.addItemView(marketCapItem)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        model.hideInBackground = false
-
-        chartRateTypeItem.didSelect = { [weak self] index in
-            self?.didSelect(index: index)
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
         }
-        delegate.viewDidLoad()
+
+        tableView.registerCell(forClass: ChartInfoCell.self)
+        tableView.registerCell(forClass: PostCell.self)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+
+        tableView.tableFooterView = PostFooterView()
+        tableView.tableFooterView?.frame =  CGRect(x: 0, y: 0, width: view.width, height: PostFooterView.height)
+
+        chartHeaderView.onSelectIndex = { [weak self] index in
+            self?.delegate.onSelectChartType(at: index)
+        }
+
+        delegate.onLoad()
     }
 
-    private func showSubtitle(for timestamp: TimeInterval?) {
-        guard let timestamp = timestamp else {
-            titleItem.bindSubtitle?(nil)
+    private func updateViews() {
+        guard let viewItem = viewItem else {
             return
         }
-        titleItem.bindSubtitle?(DateHelper.instance.formatFullTime(from: Date(timeIntervalSince1970: timestamp)))
+        chartHeaderView.bind(viewItem: viewItem)
     }
 
-    private func show(currentRateValue: CurrencyValue?) {
-        guard let currentRateValue = currentRateValue else {
-            currentRateItem.bindRate?(nil)
+}
+
+extension ChartViewController: UITableViewDelegate, UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        2
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == chartSection {
+            return 1
+        }
+        // posts section
+        guard let viewItem = viewItem else {
+            return 0
+        }
+        if let posts = viewItem.postsStatus.data {
+            return posts.count
+        }
+
+        return 0
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == chartSection {
+            return ChartInfoCell.viewHeight
+        }
+        // posts section
+        guard let viewItem = viewItem else {
+            return 0
+        }
+        if let posts = viewItem.postsStatus.data {
+            let post = posts[indexPath.row]
+            return PostCell.height(forContainerWidth: tableView.width, title: post.title, subtitle: post.subtitle)
+        }
+
+        return 0
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == chartSection {
+            return tableView.dequeueReusableCell(withIdentifier: String(describing: ChartInfoCell.self), for: indexPath)
+        }
+        return tableView.dequeueReusableCell(withIdentifier: String(describing: PostCell.self), for: indexPath)
+    }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let viewItem = viewItem else {
             return
         }
-        let formattedValue = ValueFormatter.instance.format(currencyValue: currentRateValue, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
-        currentRateItem.bindRate?(formattedValue)
+
+        if let cell = cell as? PostCell {
+            if let posts = viewItem.postsStatus.data {
+                let post = posts[indexPath.row]
+                cell.bind(title: post.title, subtitle: post.subtitle)
+            }
+        } else if let cell = cell as? ChartInfoCell {
+            if let marketViewItem = viewItem.marketInfoStatus.data {
+                cell.bind(marketCap: marketViewItem.marketCap, volume: marketViewItem.volume, supply: marketViewItem.supply, maxSupply: marketViewItem.maxSupply)
+            }
+        }
     }
 
-    private func show(diff: Decimal?) {
-        currentRateItem.bindDiff?(diff)
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if indexPath.section == postsSection {
+            delegate.onTapPost(at: indexPath.row)
+        }
+        return nil
     }
 
-    private func show(marketCapValue: CurrencyValue?) {
-        marketCapItem.setMarketCap?(CurrencyCompactFormatter.instance.format(currencyValue: marketCapValue))
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return ChartHeaderView.viewHeight
+        }
+        return PostHeaderView.height
     }
 
-    private func show(volumeValue: CurrencyValue?) {
-        marketCapItem.setVolume?(CurrencyCompactFormatter.instance.format(currencyValue: volumeValue))
-    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == chartSection {
+            return chartHeaderView
+        }
+        let view = PostHeaderView()
 
-    private func show(supplyValue: CoinValue?) {
-        marketCapItem.setCirculation?(roundedFormat(coinValue: supplyValue))
-    }
-
-    private func show(maxSupply: CoinValue?) {
-        marketCapItem.setTotal?(roundedFormat(coinValue: maxSupply) ?? "n/a".localized)
-    }
-
-    private func roundedFormat(coinValue: CoinValue?) -> String? {
-        guard let coinValue = coinValue, let formattedValue = coinFormatter.string(from: coinValue.value as NSNumber) else {
-            return nil
+        if let viewItem = viewItem {
+            switch viewItem.postsStatus {
+            case .loading:
+                view.bind(showSpinner: true)
+            case .failed:
+                view.bind(showFailed: true)
+            default:
+                view.bind(showSpinner: false)
+            }
+        } else {
+            view.bind(showSpinner: true)
         }
 
-        return "\(formattedValue) \(coinValue.coin.code)"
+        return view
     }
 
-    private func didSelect(index: Int) {
-        guard types.count > index else {
-            return
-        }
-        delegate.onSelect(type: types[index])
+    public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        nil
+    }
+
+    public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        0
     }
 
 }
 
 extension ChartViewController: IChartView {
 
-    func show(chartViewItem viewItem: ChartInfoViewItem) {
-        show(diff: viewItem.diff)
-        chartRateItem?.bind?(viewItem.gridIntervalType, viewItem.points, viewItem.startTimestamp, viewItem.endTimestamp, true)
+    func set(title: String) {
+        self.title = title.localized
     }
 
-    func show(marketInfoViewItem viewItem: MarketInfoViewItem) {
-        showSubtitle(for: viewItem.timestamp)
-        show(currentRateValue: viewItem.rateValue)
+    func set(viewItem: ChartViewItem) {
+        self.viewItem = viewItem
 
-        show(marketCapValue: viewItem.marketCapValue)
-        show(volumeValue: viewItem.volumeValue)
-        show(supplyValue: viewItem.supplyValue)
-        show(maxSupply: viewItem.maxSupplyValue)
+        updateViews()
+        tableView.reloadData()
     }
 
-    func set(types: [ChartType]) {
-        self.types = types
-        chartRateTypeItem.setTitles?(types.map { $0.title })
+    func set(types: [String]) {
+        chartHeaderView.bind(titles: types)
     }
 
-    func set(chartType: ChartType) {
-        if let index = types.firstIndex(of: chartType) {
-            chartRateTypeItem.setSelected?(index)
-        }
+    func showSelectedPoint(viewItem: SelectedPointViewItem) {
+        chartHeaderView.showSelected(date: viewItem.date, time: viewItem.time, value: viewItem.value, volume: viewItem.volume)
     }
 
-    func showSelectedPoint(chartType: ChartType, timestamp: TimeInterval, value: CurrencyValue, volume: CurrencyValue?) {
-        let date = Date(timeIntervalSince1970: timestamp)
-        let formattedTime = [ChartType.day, ChartType.week].contains(chartType) ? DateHelper.instance.formatTimeOnly(from: date) : nil
-        let formattedDate = DateHelper.instance.formateShortDateOnly(date: date)
-
-        currencyFormatter.currencyCode = value.currency.code
-        currencyFormatter.currencySymbol = value.currency.symbol
-        let formattedValue = currencyFormatter.string(from: value.value as NSNumber)
-
-        chartRateTypeItem.showPoint?(formattedDate, formattedTime, formattedValue, CurrencyCompactFormatter.instance.format(currencyValue: volume))
-    }
-
-    func reloadAllModels() {
-        model.reload?()
-    }
-
-    func showSpinner() {
-        chartRateItem?.showSpinner?()
-    }
-
-    func hideSpinner() {
-        chartRateItem?.hideSpinner?()
-    }
-
-    func showError() {
-        chartRateItem?.showError?("chart.error.not_available".localized)
-    }
-
-}
-
-extension ChartViewController: IChartIndicatorDelegate {
-
-    func didTap(chartPoint: Chart.ChartPoint) {
-        delegate.chartTouchSelect(timestamp: chartPoint.timestamp, value: chartPoint.value, volume: chartPoint.volume)
-    }
-
-    func didFinishTap() {
-        chartRateTypeItem.showPoint?(nil, nil, nil, nil)
+    func hideSelectedPoint() {
+        chartHeaderView.hideSelected()
     }
 
 }
