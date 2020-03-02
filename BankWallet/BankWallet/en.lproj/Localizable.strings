@@ -332,7 +332,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Set PIN
 
 "set_pin.title" = "Passcode";
-"set_pin.info" = "Your passcode will be used to unlock your wallet and send money";
+"set_pin.info" = "Your passcode will be used to unlock your wallet";
 "set_pin.confirm.info" = "Confirm";
 "set_pin.wrong_confirmation" = "Passcode did not match. Try again";
 
