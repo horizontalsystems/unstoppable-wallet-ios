@@ -1,21 +1,20 @@
 import UIKit
-import ActionSheet
+import Chart
 import SnapKit
 
-class ChartMarketCapItemView: BaseActionItemView {
+class ChartInfoCell: UITableViewCell {
     private let separator = UIView()
     private let volumeView = CaptionValueView()
     private let marketCapView = CaptionValueView()
     private let circulationView = CaptionValueView()
     private let totalView = CaptionValueView()
-    private let sourceView = CaptionValueView()
 
-    override var item: ChartMarketCapItem? {
-        _item as? ChartMarketCapItem
-    }
+    override init(style: CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-    override func initView() {
-        super.initView()
+        backgroundColor = .clear
+        contentView.backgroundColor = .clear
+        selectionStyle = .none
 
         separator.backgroundColor = .themeSteel20
 
@@ -26,61 +25,52 @@ class ChartMarketCapItemView: BaseActionItemView {
             maker.height.equalTo(CGFloat.heightOnePixel)
         }
 
-        volumeView.set(caption: "chart.volume".localized)
-
         addSubview(volumeView)
         volumeView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.top.equalTo(separator.snp.bottom).offset(CGFloat.margin2x)
         }
-
-        marketCapView.set(caption: "chart.market_cap".localized)
+        volumeView.set(caption: "chart.volume".localized)
 
         addSubview(marketCapView)
         marketCapView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.top.equalTo(volumeView.snp.bottom).offset(CGFloat.margin2x)
         }
-
-        circulationView.set(caption: "chart.circulation".localized)
+        marketCapView.set(caption: "chart.market_cap".localized)
 
         addSubview(circulationView)
         circulationView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.top.equalTo(marketCapView.snp.bottom).offset(CGFloat.margin2x)
         }
-
-        totalView.set(caption: "chart.max_supply".localized)
+        circulationView.set(caption: "chart.circulation".localized)
 
         addSubview(totalView)
         totalView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.top.equalTo(circulationView.snp.bottom).offset(CGFloat.margin2x)
         }
+        totalView.set(caption: "chart.max_supply".localized)
+    }
 
-        sourceView.set(value: "@CryptoCompare.com", accent: false, font: .caption)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
-        addSubview(sourceView)
-        sourceView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(totalView.snp.bottom).offset(CGFloat.margin2x)
-        }
+    func bind(marketCap: String?, volume: String?, supply: String?, maxSupply: String?) {
+        volumeView.set(value: volume)
+        marketCapView.set(value: marketCap)
+        circulationView.set(value: supply)
+        totalView.set(value: maxSupply)
+    }
 
-        item?.setVolume = { [weak self] value in
-            self?.volumeView.set(value: value)
-        }
+}
 
-        item?.setMarketCap = { [weak self] value in
-            self?.marketCapView.set(value: value)
-        }
+extension ChartInfoCell {
 
-        item?.setCirculation = { [weak self] value in
-            self?.circulationView.set(value: value)
-        }
-
-        item?.setTotal = { [weak self] value in
-            self?.totalView.set(value: value)
-        }
+    static var viewHeight: CGFloat {
+        125
     }
 
 }
