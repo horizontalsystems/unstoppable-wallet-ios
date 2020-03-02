@@ -129,7 +129,7 @@ class BalanceCell: CardCell {
 
         clippingView.addSubview(buttonsView)
         buttonsView.snp.makeConstraints { maker in
-            maker.leading.trailing.bottom.equalToSuperview()
+            maker.leading.trailing.equalToSuperview()
             maker.top.equalTo(lockedInfoHolder.snp.bottom)
         }
     }
@@ -201,8 +201,8 @@ class BalanceCell: CardCell {
         lockedInfoHolder.bind(image: UIImage(named: "Transaction Lock Icon"), coinValue: item.lockedCoinValue, currencyValue: item.lockedCurrencyValue, animated: animated)
 
         buttonsView.bind(
-                left: (title: "balance.deposit".localized, enabled: item.receiveButtonEnabled, action: onReceive), 
-                right: (title: "balance.send".localized, enabled: item.sendButtonEnabled, action: onPay), 
+                left: (title: "balance.deposit".localized, enabled: item.receiveButtonEnabled, action: onReceive),
+                right: (title: "balance.send".localized, enabled: item.sendButtonEnabled, action: onPay),
                 animated: animated
         )
     }
