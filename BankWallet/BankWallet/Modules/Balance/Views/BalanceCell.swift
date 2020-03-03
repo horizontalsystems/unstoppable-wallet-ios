@@ -131,6 +131,7 @@ class BalanceCell: CardCell {
         buttonsView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.top.equalTo(lockedInfoHolder.snp.bottom)
+            maker.height.equalTo(CGFloat.heightButton + CGFloat.margin3x)
         }
     }
 
@@ -201,21 +202,17 @@ class BalanceCell: CardCell {
         lockedInfoHolder.bind(image: UIImage(named: "Transaction Lock Icon"), coinValue: item.lockedCoinValue, currencyValue: item.lockedCurrencyValue, animated: animated)
 
         buttonsView.bind(
-                left: (title: "balance.deposit".localized, enabled: item.receiveButtonEnabled, action: onReceive),
-                right: (title: "balance.send".localized, enabled: item.sendButtonEnabled, action: onPay),
+                left: (title: "balance.deposit".localized, enabled: item.receiveButtonEnabled, action: { [weak self] in
+                    self?.onReceive?()
+                }),
+                right: (title: "balance.send".localized, enabled: item.sendButtonEnabled, action: { [weak self] in
+                    self?.onPay?()
+                }),
                 animated: animated
         )
     }
 
     func unbind() {
-    }
-
-    @objc func onTapReceive() {
-        onReceive?()
-    }
-
-    @objc func onTapSend() {
-        onPay?()
     }
 
     @objc func onTapChart() {
