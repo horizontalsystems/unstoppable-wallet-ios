@@ -56,18 +56,6 @@ class RestoreEosViewController: ThemeViewController {
             self?.delegate.onDeleteKey()
         }
 
-        // temp solution until multi-wallet feature is implemented
-        let predefinedAccountType: PredefinedAccountType = .eos
-
-        let descriptionView = BottomDescriptionView()
-        descriptionView.bind(text: "restore.eos.description".localized(predefinedAccountType.title))
-
-        view.addSubview(descriptionView)
-        descriptionView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(accountPrivateKeyField.snp.bottom)
-        }
-
         delegate.viewDidLoad()
     }
 
