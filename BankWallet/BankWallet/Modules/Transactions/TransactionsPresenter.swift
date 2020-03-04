@@ -41,21 +41,7 @@ class TransactionsPresenter {
             return
         }
 
-        let fetchDataList = dataSource.fetchDataList
-
-        if fetchDataList.isEmpty {
-            let newItems = dataSource.increasePage()
-
-            if initial, newItems != nil {
-                viewItemLoader.reload(with: dataSource.items, animated: true)
-            } else if let newItems = newItems {
-                viewItemLoader.add(items: newItems)
-            }
-
-            loading = false
-        } else {
-            interactor.fetchRecords(fetchDataList: fetchDataList, initial: initial)
-        }
+        interactor.fetchRecords(fetchDataList: dataSource.fetchDataList, initial: initial)
     }
 
 }
