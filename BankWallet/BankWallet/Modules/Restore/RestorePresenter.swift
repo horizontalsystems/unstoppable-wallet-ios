@@ -5,17 +5,19 @@ class RestorePresenter {
     private let accountCreator: IAccountCreator
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let viewItemsFactory: AccountTypeViewItemFactory
+    private let restoreSequenceFactory: IRestoreSequenceFactory
 
     private var predefinedAccountTypes = [PredefinedAccountType]()
 
     private var predefinedAccountType: PredefinedAccountType?
     private var accountType: AccountType?
 
-    init(router: IRestoreRouter, accountCreator: IAccountCreator, predefinedAccountTypeManager: IPredefinedAccountTypeManager, viewItemsFactory: AccountTypeViewItemFactory = .init()) {
+    init(router: IRestoreRouter, accountCreator: IAccountCreator, predefinedAccountTypeManager: IPredefinedAccountTypeManager, viewItemsFactory: AccountTypeViewItemFactory = .init(), restoreSequenceFactory: IRestoreSequenceFactory = RestoreSequenceFactory()) {
         self.router = router
         self.accountCreator = accountCreator
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
         self.viewItemsFactory = viewItemsFactory
+        self.restoreSequenceFactory = restoreSequenceFactory
     }
 
 }
@@ -39,15 +41,13 @@ extension RestorePresenter: ICredentialsCheckDelegate {
 
     func didCheck(accountType: AccountType) {
         self.accountType = accountType
-        guard let predefinedAccountType = predefinedAccountType else {
-            return
-        }
 
-        if predefinedAccountType == .standard {
-            router.showSettings(delegate: self)
-        } else {
-            router.showRestoreCoins(predefinedAccountType: predefinedAccountType, accountType: accountType, delegate: self)
-        }
+        restoreSequenceFactory.onAccountCheck(accountType: accountType, predefinedAccountType: predefinedAccountType, settings: { [unowned self] in
+                    router.showSettings(delegate: self)
+                }, coins: { [unowned self] accountType, predefinedAccountType in
+                    router.showRestoreCoins(predefinedAccountType: predefinedAccountType, accountType: accountType, delegate: self)
+                }
+        )
     }
 
 }
@@ -55,14 +55,9 @@ extension RestorePresenter: ICredentialsCheckDelegate {
 extension RestorePresenter: IBlockchainSettingsDelegate {
 
     func onConfirm() {
-        guard let accountType = accountType else {
-            return
-        }
-        guard let predefinedAccountType = predefinedAccountType else {
-            return
-        }
-
-        router.showRestoreCoins(predefinedAccountType: predefinedAccountType, accountType: accountType, delegate: self)
+        restoreSequenceFactory.onSettingsConfirm(accountType: accountType, predefinedAccountType: predefinedAccountType, coins: { [unowned self] accountType, predefinedAccountType in
+            router.showRestoreCoins(predefinedAccountType: predefinedAccountType, accountType: accountType, delegate: self)
+        })
     }
 
 }
