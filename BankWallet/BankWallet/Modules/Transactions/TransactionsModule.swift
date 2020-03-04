@@ -65,12 +65,6 @@ protocol ITransactionsRouter {
     func openTransactionInfo(viewItem: TransactionViewItem)
 }
 
-protocol ITransactionLoaderDelegate: class {
-    func fetchRecords(fetchDataList: [FetchData], initial: Bool)
-    func reload(with newItems: [TransactionItem], animated: Bool)
-    func add(items: [TransactionItem])
-}
-
 protocol ITransactionViewItemFactory {
     func viewItem(fromItem item: TransactionItem, lastBlockInfo: LastBlockInfo?, threshold: Int?, rate: CurrencyValue?) -> TransactionViewItem
 }
