@@ -1,6 +1,5 @@
 protocol IManageAccountsView: class {
     func set(viewItems: [ManageAccountViewItem])
-    func showDoneButton()
     func show(error: Error)
     func showSuccess()
     func showBackupRequired(predefinedAccountType: PredefinedAccountType)
@@ -15,8 +14,6 @@ protocol IManageAccountsViewDelegate {
     func didTapRestore(index: Int)
 
     func didRequestBackup()
-
-    func didTapDone()
 }
 
 protocol IManageAccountsInteractor {
@@ -32,6 +29,8 @@ protocol IManageAccountsRouter {
     func showUnlink(account: Account, predefinedAccountType: PredefinedAccountType)
     func showBackup(account: Account, predefinedAccountType: PredefinedAccountType)
     func showCreateWallet(predefinedAccountType: PredefinedAccountType)
-    func showRestore(predefinedAccountType: PredefinedAccountType)
-    func close()
+    func showRestore(predefinedAccountType: PredefinedAccountType, delegate: ICredentialsCheckDelegate)
+    func showSettings(delegate: IBlockchainSettingsDelegate)
+    func showRestoreCoins(predefinedAccountType: PredefinedAccountType, accountType: AccountType, delegate: IRestoreCoinsDelegate)
+    func closeRestore()
 }

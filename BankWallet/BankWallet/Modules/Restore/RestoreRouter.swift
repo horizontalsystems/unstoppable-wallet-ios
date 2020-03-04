@@ -7,15 +7,7 @@ class RestoreRouter {
 extension RestoreRouter: IRestoreRouter {
 
     func showRestore(predefinedAccountType: PredefinedAccountType, delegate: ICredentialsCheckDelegate) {
-        let restoreController: UIViewController
-        switch predefinedAccountType {
-        case .standard:
-            restoreController = RestoreWordsRouter.module(presentationMode: .pushed, proceedMode: .next, wordsCount: 12, delegate: delegate)
-        case .eos:
-            restoreController = RestoreEosRouter.module(presentationMode: .pushed, proceedMode: .next, delegate: delegate)
-        case .binance:
-            restoreController = RestoreWordsRouter.module(presentationMode: .pushed, proceedMode: .next, wordsCount: 24, delegate: delegate)
-        }
+        let restoreController = RestoreRouter.module(predefinedAccountType: predefinedAccountType, mode: .pushed, proceedMode: .next, delegate: delegate)
         viewController?.navigationController?.pushViewController(restoreController, animated: true)
     }
 
@@ -46,14 +38,14 @@ extension RestoreRouter {
         return viewController
     }
 
-    static func module(predefinedAccountType: PredefinedAccountType, mode: RestoreRouter.PresentationMode, delegate: ICredentialsCheckDelegate) -> UIViewController {
+    static func module(predefinedAccountType: PredefinedAccountType, mode: RestoreRouter.PresentationMode, proceedMode: RestoreRouter.ProceedMode? = nil, delegate: ICredentialsCheckDelegate) -> UIViewController {
         switch predefinedAccountType {
         case .standard:
-            return RestoreWordsRouter.module(presentationMode: mode, proceedMode: .next, wordsCount: 12, delegate: delegate)
+            return RestoreWordsRouter.module(presentationMode: mode, proceedMode: proceedMode ?? .next, wordsCount: 12, delegate: delegate)
         case .eos:
-            return RestoreEosRouter.module(presentationMode: mode, proceedMode: .restore, delegate: delegate)
+            return RestoreEosRouter.module(presentationMode: mode, proceedMode: proceedMode ?? .restore, delegate: delegate)
         case .binance:
-            return RestoreWordsRouter.module(presentationMode: mode, proceedMode: .restore, wordsCount: 24, delegate: delegate)
+            return RestoreWordsRouter.module(presentationMode: mode, proceedMode: proceedMode ?? .restore, wordsCount: 24, delegate: delegate)
         }
     }
 

@@ -1,19 +1,22 @@
 class ManageAccountsPresenter {
     weak var view: IManageAccountsView?
 
-    private let mode: ManageAccountsRouter.PresentationMode
     private let interactor: IManageAccountsInteractor
     private let router: IManageAccountsRouter
 
     private var viewItemFactory = ManageAccountsViewItemFactory()
+    private let restoreSequenceFactory: IRestoreSequenceFactory
 
     private var items = [ManageAccountItem]()
     private var currentItem: ManageAccountItem?
 
-    init(mode: ManageAccountsRouter.PresentationMode, interactor: IManageAccountsInteractor, router: IManageAccountsRouter) {
-        self.mode = mode
+    private var predefinedAccountType: PredefinedAccountType?
+    private var accountType: AccountType?
+
+    init(interactor: IManageAccountsInteractor, router: IManageAccountsRouter, restoreSequenceFactory: IRestoreSequenceFactory = RestoreSequenceFactory()) {
         self.interactor = interactor
         self.router = router
+        self.restoreSequenceFactory = restoreSequenceFactory
     }
 
     private func buildItems() {
@@ -31,10 +34,6 @@ class ManageAccountsPresenter {
 extension ManageAccountsPresenter: IManageAccountsViewDelegate {
 
     func viewDidLoad() {
-        if mode == .presented {
-            view?.showDoneButton()
-        }
-
         buildItems()
         updateView()
     }
@@ -71,11 +70,8 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
     }
 
     func didTapRestore(index: Int) {
-        router.showRestore(predefinedAccountType: items[index].predefinedAccountType)
-    }
-
-    func didTapDone() {
-        router.close()
+        predefinedAccountType = items[index].predefinedAccountType
+        router.showRestore(predefinedAccountType: items[index].predefinedAccountType, delegate: self)
     }
 
     func didRequestBackup() {
@@ -93,6 +89,38 @@ extension ManageAccountsPresenter: IManageAccountsInteractorDelegate {
     func didUpdateAccounts() {
         buildItems()
         updateView()
+    }
+
+}
+
+extension ManageAccountsPresenter: ICredentialsCheckDelegate {
+
+    func didCheck(accountType: AccountType) {
+        self.accountType = accountType
+
+        restoreSequenceFactory.onAccountCheck(accountType: accountType, predefinedAccountType: predefinedAccountType, settings: { [unowned self] in
+            router.showSettings(delegate: self)
+        }, coins: { [unowned self] accountType, predefinedAccountType in
+            router.showRestoreCoins(predefinedAccountType: predefinedAccountType, accountType: accountType, delegate: self)
+        })
+    }
+
+}
+
+extension ManageAccountsPresenter: IBlockchainSettingsDelegate {
+
+    func onConfirm() {
+        restoreSequenceFactory.onSettingsConfirm(accountType: accountType, predefinedAccountType: predefinedAccountType, coins: { [unowned self] accountType, predefinedAccountType in
+            router.showRestoreCoins(predefinedAccountType: predefinedAccountType, accountType: accountType, delegate: self)
+        })
+    }
+
+}
+
+extension ManageAccountsPresenter: IRestoreCoinsDelegate {
+
+    func didRestore() {
+        router.closeRestore()
     }
 
 }
