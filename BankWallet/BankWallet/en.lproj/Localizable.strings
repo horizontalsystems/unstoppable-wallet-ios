@@ -322,7 +322,7 @@ bch.horizontalsystems.xyz/apg";
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Manage Wallets";
+"settings_manage_keys.title" = "Wallet Settings";
 "settings_manage_keys.item_title" = "%@ Wallet";
 "settings_manage_keys.add_wallet" = "Add Wallet";
 "settings_manage_keys.description" = "Highlighted below are your active wallets where each wallet controls a set of cryptocurrencies.\n\nYou must backup each highlighted wallet by backing up the private key for it. This key is the only way to restore and access your funds if your phone is ever lost, stolen or the app malfunctions.";

@@ -1,7 +1,9 @@
 import UIKit
+import ThemeKit
 
 class ManageAccountsRouter {
     weak var viewController: UIViewController?
+    weak var restoreController: UIViewController?
 }
 
 extension ManageAccountsRouter: IManageAccountsRouter {
@@ -20,24 +22,36 @@ extension ManageAccountsRouter: IManageAccountsRouter {
         viewController?.present(module, animated: true)
     }
 
-    func showRestore(predefinedAccountType: PredefinedAccountType) {
-        //todo
-//        let module = RestoreCoinsRouter.module(presentationMode: .inApp, predefinedAccountType: predefinedAccountType)
-//        viewController?.present(module, animated: true)
+    func showRestore(predefinedAccountType: PredefinedAccountType, delegate: ICredentialsCheckDelegate) {
+        let module = RestoreRouter.module(predefinedAccountType: predefinedAccountType, mode: .presented, proceedMode: .next, delegate: delegate)
+        restoreController = module
+        viewController?.present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 
     func close() {
         viewController?.dismiss(animated: true)
     }
 
+    func showSettings(delegate: IBlockchainSettingsDelegate) {
+        restoreController?.navigationController?.pushViewController(BlockchainSettingsRouter.module(proceedMode: .next, delegate: delegate), animated: true)
+    }
+
+    func showRestoreCoins(predefinedAccountType: PredefinedAccountType, accountType: AccountType, delegate: IRestoreCoinsDelegate) {
+        restoreController?.navigationController?.pushViewController(RestoreCoinsRouter.module(predefinedAccountType: predefinedAccountType, accountType: accountType, delegate: delegate), animated: true)
+    }
+
+    func closeRestore() {
+        restoreController?.dismiss(animated: true)
+    }
+
 }
 
 extension ManageAccountsRouter {
 
-    static func module(mode: PresentationMode) -> UIViewController {
+    static func module() -> UIViewController {
         let router = ManageAccountsRouter()
         let interactor = ManageAccountsInteractor(predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager, accountManager: App.shared.accountManager, accountCreator: App.shared.accountCreator)
-        let presenter = ManageAccountsPresenter(mode: mode, interactor: interactor, router: router)
+        let presenter = ManageAccountsPresenter(interactor: interactor, router: router)
         let viewController = ManageAccountsViewController(delegate: presenter)
 
         interactor.delegate = presenter
