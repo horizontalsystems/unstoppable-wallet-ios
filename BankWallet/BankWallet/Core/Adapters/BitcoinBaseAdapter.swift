@@ -122,6 +122,14 @@ class BitcoinBaseAdapter {
         }
     }
 
+    class func bip(from derivation: MnemonicDerivation) -> Bip {
+        switch derivation {
+        case .bip44: return Bip.bip44
+        case .bip49: return Bip.bip49
+        case .bip84: return Bip.bip84
+        }
+    }
+
 }
 
 extension BitcoinBaseAdapter: IAdapter {

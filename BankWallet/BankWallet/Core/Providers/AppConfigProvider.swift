@@ -72,6 +72,7 @@ class AppConfigProvider: IAppConfigProvider {
 
     let coins = [
         Coin(id: "BTC",       title: "Bitcoin",               code: "BTC",     decimal: 8,  type: .bitcoin),
+        Coin(id: "LTC",       title: "Litecoin",              code: "LTC",     decimal: 8,  type: .litecoin),
         Coin(id: "ETH",       title: "Ethereum",              code: "ETH",     decimal: 18, type: .ethereum),
         Coin(id: "BCH",       title: "Bitcoin Cash",          code: "BCH",     decimal: 8,  type: .bitcoinCash),
         Coin(id: "DASH",      title: "Dash",                  code: "DASH",    decimal: 8,  type: .dash),

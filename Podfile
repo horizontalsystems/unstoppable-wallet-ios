@@ -7,6 +7,7 @@ project 'BankWallet/BankWallet'
 
 def appPods
   pod 'BitcoinKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
+  pod 'LitecoinKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
   pod 'BitcoinCashKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
   pod 'DashKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
   pod 'Hodler.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'

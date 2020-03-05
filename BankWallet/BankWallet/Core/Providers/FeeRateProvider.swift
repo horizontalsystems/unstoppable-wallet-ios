@@ -47,6 +47,19 @@ class BitcoinFeeRateProvider: IFeeRateProvider {
 
 }
 
+class LitecoinFeeRateProvider: IFeeRateProvider {
+    private let feeRateProvider: FeeRateProvider
+
+    init(feeRateProvider: FeeRateProvider) {
+        self.feeRateProvider = feeRateProvider
+    }
+
+    func feeRate(for priority: FeeRatePriority) -> Single<FeeRate> {
+        feeRateProvider.bitcoinFeeRate(for: priority) // TODO: change to litecoin
+    }
+
+}
+
 class BitcoinCashFeeRateProvider: IFeeRateProvider {
     private let feeRateProvider: FeeRateProvider
 
