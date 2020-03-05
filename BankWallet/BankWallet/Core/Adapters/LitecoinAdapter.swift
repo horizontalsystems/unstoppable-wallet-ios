@@ -1,9 +1,9 @@
-import BitcoinKit
+import LitecoinKit
 import BitcoinCore
 import RxSwift
 
-class BitcoinAdapter: BitcoinBaseAdapter {
-    private let bitcoinKit: BitcoinKit
+class LitecoinAdapter: BitcoinBaseAdapter {
+    private let litecoinKit: LitecoinKit
 
     init(wallet: Wallet, testMode: Bool) throws {
         guard case let .mnemonic(words, _) = wallet.account.type else {
@@ -18,26 +18,26 @@ class BitcoinAdapter: BitcoinBaseAdapter {
             throw AdapterError.wrongParameters
         }
 
-        let networkType: BitcoinKit.NetworkType = testMode ? .testNet : .mainNet
+        let networkType: LitecoinKit.NetworkType = testMode ? .testNet : .mainNet
         let bip = BitcoinBaseAdapter.bip(from: walletDerivation)
         let syncMode = BitcoinBaseAdapter.kitMode(from: walletSyncMode)
 
-        bitcoinKit = try BitcoinKit(withWords: words, bip: bip, walletId: wallet.account.id, syncMode: syncMode, networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.defaultConfirmationsThreshold, minLogLevel: .error)
+        litecoinKit = try LitecoinKit(withWords: words, bip: bip, walletId: wallet.account.id, syncMode: syncMode, networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.defaultConfirmationsThreshold, minLogLevel: .error)
 
-        super.init(abstractKit: bitcoinKit)
+        super.init(abstractKit: litecoinKit)
 
-        bitcoinKit.delegate = self
+        litecoinKit.delegate = self
     }
 
 }
 
-extension BitcoinAdapter: ISendBitcoinAdapter {
+extension LitecoinAdapter: ISendBitcoinAdapter {
 }
 
-extension BitcoinAdapter {
+extension LitecoinAdapter {
 
     static func clear(except excludedWalletIds: [String]) throws {
-        try BitcoinKit.clear(exceptFor: excludedWalletIds)
+        try LitecoinKit.clear(exceptFor: excludedWalletIds)
     }
 
 }

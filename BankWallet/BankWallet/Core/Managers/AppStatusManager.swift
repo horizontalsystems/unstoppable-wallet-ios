@@ -1,7 +1,7 @@
 import Foundation
 
 class AppStatusManager {
-    static let statusBitcoinCoreIds = ["BTC", "BCH", "DASH"]
+    static let statusBitcoinCoreIds = ["BTC", "LTC", "BCH", "DASH"]
 
     private let systemInfoManager: ISystemInfoManager
     private let localStorage: ILocalStorage

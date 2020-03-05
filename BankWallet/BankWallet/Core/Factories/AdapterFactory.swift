@@ -15,6 +15,8 @@ class AdapterFactory: IAdapterFactory {
         switch wallet.coin.type {
         case .bitcoin:
             return try? BitcoinAdapter(wallet: wallet, testMode: appConfigProvider.testMode)
+        case .litecoin:
+            return try? LitecoinAdapter(wallet: wallet, testMode: appConfigProvider.testMode)
         case .bitcoinCash:
             return try? BitcoinCashAdapter(wallet: wallet, testMode: appConfigProvider.testMode)
         case .dash:

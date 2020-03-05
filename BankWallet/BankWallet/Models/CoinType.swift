@@ -2,6 +2,7 @@ import Foundation
 
 enum CoinType {
     case bitcoin
+    case litecoin
     case bitcoinCash
     case dash
     case ethereum
@@ -15,7 +16,7 @@ enum CoinType {
 
     func canSupport(accountType: AccountType) -> Bool {
         switch self {
-        case .bitcoin, .bitcoinCash, .dash, .ethereum, .erc20:
+        case .bitcoin, .litecoin, .bitcoinCash, .dash, .ethereum, .erc20:
             if case let .mnemonic(words, salt) = accountType, words.count == 12, salt == nil { return true }
             return false
         case .eos:
@@ -29,7 +30,7 @@ enum CoinType {
 
     var predefinedAccountType: PredefinedAccountType {
         switch self {
-        case .bitcoin, .bitcoinCash, .dash, .ethereum, .erc20:
+        case .bitcoin, .litecoin, .bitcoinCash, .dash, .ethereum, .erc20:
             return .standard
         case .eos:
             return .eos
@@ -57,7 +58,7 @@ enum CoinType {
 
     var settings: [CoinSetting] {
         switch self {
-        case .bitcoin: return [.derivation, .syncMode]
+        case .bitcoin, .litecoin: return [.derivation, .syncMode]
         case .bitcoinCash: return [.syncMode]
         case .dash: return [.syncMode]
         default: return []
@@ -67,6 +68,7 @@ enum CoinType {
     var restoreUrl: String {
         switch self {
         case .bitcoin: return "https://btc.horizontalsystems.xyz/apg"
+        case .litecoin: return "https://ltc.horizontalsystems.xyz/apg"
         case .bitcoinCash: return "https://explorer.bitcoin.com/bch/"
         case .dash: return "https://dash.horizontalsystems.xyz"
         default: return ""
@@ -80,6 +82,7 @@ extension CoinType: Equatable {
     public static func ==(lhs: CoinType, rhs: CoinType) -> Bool {
         switch (lhs, rhs) {
         case (.bitcoin, .bitcoin): return true
+        case (.litecoin, .litecoin): return true
         case (.bitcoinCash, .bitcoinCash): return true
         case (.dash, .dash): return true
         case (.ethereum, .ethereum): return true
