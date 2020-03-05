@@ -24,6 +24,10 @@ class FeeRateProvider {
         feeRateKit.bitcoin.map { FeeRate(feeRate: $0) }
     }
 
+    func litecoinFeeRate(for priority: FeeRatePriority) -> Single<FeeRate> {
+        feeRateKit.litecoin.map { FeeRate(feeRate: $0) }
+    }
+
     func bitcoinCashFeeRate(for priority: FeeRatePriority) -> Single<FeeRate> {
         feeRateKit.bitcoinCash.map { FeeRate(feeRate: $0) }
     }
@@ -55,7 +59,7 @@ class LitecoinFeeRateProvider: IFeeRateProvider {
     }
 
     func feeRate(for priority: FeeRatePriority) -> Single<FeeRate> {
-        feeRateProvider.bitcoinFeeRate(for: priority) // TODO: change to litecoin
+        feeRateProvider.litecoinFeeRate(for: priority)
     }
 
 }
