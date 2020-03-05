@@ -4,6 +4,7 @@ class MaxSupplyMap {
 
     static let maxSupplies: [String: Decimal] = [
         "BTC": 21_000_000,
+        "LTC": 84_000_000,
         "BCH": 21_000_000,
         "DASH": 18_900_000,
         "BNB": 187_536_713,
