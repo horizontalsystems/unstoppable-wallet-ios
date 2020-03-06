@@ -12,7 +12,6 @@ struct TransactionViewItem {
     let from: String?
     let to: String?
     let type: TransactionType
-    let showFromAddress: Bool
     let date: Date
     let status: TransactionStatus
     var rate: CurrencyValue?
@@ -30,7 +29,7 @@ struct TransactionViewItem {
 
     init(wallet: Wallet, record: TransactionRecord, transactionHash: String, coinValue: CoinValue, feeCoinValue: CoinValue?,
          currencyValue: CurrencyValue?, from: String?, to: String?, type: TransactionType,
-         showFromAddress: Bool, date: Date, status: TransactionStatus, rate: CurrencyValue?, lockInfo: TransactionLockInfo?, unlocked: Bool = true, conflictingTxHash: String?) {
+         date: Date, status: TransactionStatus, rate: CurrencyValue?, lockInfo: TransactionLockInfo?, unlocked: Bool = true, conflictingTxHash: String?) {
         self.wallet = wallet
         self.record = record
         self.transactionHash = transactionHash
@@ -40,7 +39,6 @@ struct TransactionViewItem {
         self.from = from
         self.to = to
         self.type = type
-        self.showFromAddress = showFromAddress
         self.date = date
         self.status = status
         self.rate = rate
