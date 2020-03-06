@@ -7,21 +7,16 @@ class TransactionsPresenter {
     private let router: ITransactionsRouter
     private let factory: ITransactionViewItemFactory
     private let dataSource: TransactionRecordDataSource
-    private let metaDataSource: TransactionsMetadataDataSource
-    private let viewItemLoader: ITransactionViewItemLoader
     private var loading = false
 
     weak var view: ITransactionsView?
 
     init(interactor: ITransactionsInteractor, router: ITransactionsRouter, factory: ITransactionViewItemFactory,
-         dataSource: TransactionRecordDataSource, metaDataSource: TransactionsMetadataDataSource,
-         viewItemLoader: ITransactionViewItemLoader) {
+         dataSource: TransactionRecordDataSource) {
         self.interactor = interactor
         self.router = router
         self.factory = factory
         self.dataSource = dataSource
-        self.metaDataSource = metaDataSource
-        self.viewItemLoader = viewItemLoader
     }
 
     private func loadNext(initial: Bool = false) {
@@ -34,7 +29,7 @@ class TransactionsPresenter {
         guard !dataSource.allShown else {
             if initial {
                 //clear list on switch coins when data source has only one page
-                viewItemLoader.reload(with: dataSource.items, animated: true)
+                view?.showNoTransactions()
             }
 
             loading = false
@@ -42,21 +37,6 @@ class TransactionsPresenter {
         }
 
         interactor.fetchRecords(fetchDataList: dataSource.fetchDataList, initial: initial)
-    }
-
-}
-
-extension TransactionsPresenter: ITransactionViewItemLoaderDelegate {
-
-    func createViewItem(for item: TransactionItem) -> TransactionViewItem {
-        let lastBlockInfo = metaDataSource.lastBlockInfo(wallet: item.wallet)
-        let threshold = metaDataSource.threshold(wallet: item.wallet)
-        let rate = metaDataSource.rate(coin: item.wallet.coin, date: item.record.date)
-        return factory.viewItem(fromItem: item, lastBlockInfo: lastBlockInfo, threshold: threshold, rate: rate)
-    }
-
-    func reload(with diff: [Change<TransactionViewItem>], items: [TransactionViewItem], animated: Bool) {
-        view?.reload(with: diff, items: items, animated: animated)
     }
 
 }
@@ -98,19 +78,10 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
     }
 
     func onUpdate(walletsData: [(Wallet, Int, LastBlockInfo?)]) {
-        var wallets = [Wallet]()
-
-        for (wallet, threshold, lastBlockInfo) in walletsData {
-            wallets.append(wallet)
-            metaDataSource.set(threshold: threshold, wallet: wallet)
-
-            if let lastBlockInfo = lastBlockInfo {
-                metaDataSource.set(lastBlockInfo: lastBlockInfo, wallet: wallet)
-            }
-        }
-
+        dataSource.handleUpdated(walletsData: walletsData)
         interactor.fetchLastBlockHeights()
 
+        let wallets = walletsData.map { (wallet, _, _) in wallet }
         if wallets.count < 2 {
             view?.show(filters: [])
         } else {
@@ -121,46 +92,30 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         loadNext(initial: true)
     }
 
-    func onUpdateBaseCurrency() {
-        metaDataSource.clearRates()
-        viewItemLoader.reloadAll()
+    func onUpdate(lastBlockInfo: LastBlockInfo, wallet: Wallet) {
+        if dataSource.set(lastBlockInfo: lastBlockInfo, wallet: wallet) {
+            view?.show(transactions: dataSource.items, animated: false)
+        }
     }
 
-    func onUpdate(lastBlockInfo: LastBlockInfo, wallet: Wallet) {
-        let oldLastBlockInfo = metaDataSource.lastBlockInfo(wallet: wallet)
-        var needToReloadIndexes = [Int]()
-        metaDataSource.set(lastBlockInfo: lastBlockInfo, wallet: wallet)
+    func onUpdateBaseCurrency() {
+        dataSource.clearRates()
+        view?.show(transactions: dataSource.items, animated: true)
+    }
 
-        if let timestamp = lastBlockInfo.timestamp {
-            let indexes = dataSource.itemIndexesForLocked(wallet: wallet, blockTimestamp: timestamp, oldBlockTimestamp: oldLastBlockInfo?.timestamp)
-
-            needToReloadIndexes.append(contentsOf: indexes)
-        }
-
-        if let threshold = metaDataSource.threshold(wallet: wallet), let oldLastBlockHeight = oldLastBlockInfo?.height {
-            let indexes = dataSource.itemIndexesForPending(wallet: wallet, blockHeight: oldLastBlockHeight - threshold)
-
-            needToReloadIndexes.append(contentsOf: indexes)
-        }
-
-        if !needToReloadIndexes.isEmpty {
-            viewItemLoader.reload(indexes: needToReloadIndexes)
-        }
+    func onConnectionRestore() {
+        view?.reloadTransactions()
     }
 
     func didUpdate(records: [TransactionRecord], wallet: Wallet) {
-        if let updatedArray = dataSource.handleUpdated(records: records, wallet: wallet) {
-            viewItemLoader.reload(with: updatedArray, animated: true)
+        if let updatedViewItems = dataSource.handleUpdated(records: records, wallet: wallet) {
+            view?.show(transactions: updatedViewItems, animated: true)
         }
     }
 
     func didFetch(rateValue: Decimal, coin: Coin, currency: Currency, date: Date) {
-        metaDataSource.set(rate: CurrencyValue(currency: currency, value: rateValue), coin: coin, date: date)
-
-        let indexes = dataSource.itemIndexes(coin: coin, date: date)
-
-        if !indexes.isEmpty {
-            viewItemLoader.reload(indexes: indexes)
+        if dataSource.set(rate: CurrencyValue(currency: currency, value: rateValue), coin: coin, date: date) {
+            view?.show(transactions: dataSource.items, animated: false)
         }
     }
 
@@ -168,21 +123,13 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         dataSource.handleNext(recordsData: recordsData)
 
         // called after load next or when pool has not enough items
-        if let items = dataSource.increasePage() {
-            if initial {
-                viewItemLoader.reload(with: items, animated: true)
-            } else {
-                viewItemLoader.add(items: items)
-            }
+        if dataSource.increasePage() {
+            view?.show(transactions: dataSource.items, animated: true)
         } else if initial {
-            viewItemLoader.reload(with: dataSource.items, animated: true)
+            view?.showNoTransactions()
         }
 
         loading = false
-    }
-
-    func onConnectionRestore() {
-        viewItemLoader.reloadAll()
     }
 
 }
