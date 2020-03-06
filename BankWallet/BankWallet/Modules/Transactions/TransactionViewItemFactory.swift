@@ -8,13 +8,11 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
         self.feeCoinProvider = feeCoinProvider
     }
 
-    func viewItem(fromItem item: TransactionItem, lastBlockInfo: LastBlockInfo? = nil, threshold: Int? = nil, rate: CurrencyValue? = nil) -> TransactionViewItem {
-        let record = item.record
-        let coin = item.wallet.coin
-
+    func viewItem(fromRecord record: TransactionRecord, wallet: Wallet, lastBlockInfo: LastBlockInfo? = nil, threshold: Int? = nil, rate: CurrencyValue? = nil) -> TransactionViewItem {
+        let coin = wallet.coin
         var status: TransactionStatus = .pending
 
-        if item.record.failed {
+        if record.failed {
             status = .failed
         } else if let blockHeight = record.blockHeight, let lastBlockHeight = lastBlockInfo?.height {
             let threshold = threshold ?? 1
@@ -31,7 +29,7 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
             CurrencyValue(currency: $0.currency, value: $0.value * record.amount)
         }
         let coinValue = CoinValue(coin: coin, value: record.amount)
-        let feeCoinValue: CoinValue? = item.record.fee.map {
+        let feeCoinValue: CoinValue? = record.fee.map {
             let feeCoin = feeCoinProvider.feeCoin(coin: coin) ?? coin
             return CoinValue(coin: feeCoin, value: $0)
         }
@@ -43,7 +41,8 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
         }
 
         return TransactionViewItem(
-                wallet: item.wallet,
+                wallet: wallet,
+                record: record,
                 transactionHash: record.transactionHash,
                 coinValue: coinValue,
                 feeCoinValue: feeCoinValue,
@@ -57,7 +56,7 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
                 rate: rate,
                 lockInfo: record.lockInfo,
                 unlocked: unlocked,
-                conflictingTxHash: item.record.conflictingHash
+                conflictingTxHash: record.conflictingHash
         )
     }
 

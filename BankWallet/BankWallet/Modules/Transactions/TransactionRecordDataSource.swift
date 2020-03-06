@@ -1,24 +1,24 @@
 import Foundation
+import CurrencyKit
 
 class TransactionRecordDataSource {
     private let poolRepo: TransactionRecordPoolRepo
-    private let itemsDataSource: TransactionItemDataSource
-    private let factory: TransactionItemFactory
+    private let itemsDataSource: TransactionViewItemDataSource
+    private let metaDataSource: TransactionsMetadataDataSource
+    private let factory: TransactionViewItemFactory
     private let limit: Int
 
-    init(poolRepo: TransactionRecordPoolRepo, itemsDataSource: TransactionItemDataSource, factory: TransactionItemFactory, limit: Int = 10) {
+    init(poolRepo: TransactionRecordPoolRepo, itemsDataSource: TransactionViewItemDataSource,
+         metaDataSource: TransactionsMetadataDataSource, factory: TransactionViewItemFactory, limit: Int = 10) {
         self.poolRepo = poolRepo
         self.itemsDataSource = itemsDataSource
+        self.metaDataSource = metaDataSource
         self.factory = factory
         self.limit = limit
     }
 
-    var items: [TransactionItem] {
-        return itemsDataSource.items
-    }
-
-    var itemsCount: Int {
-        return itemsDataSource.count
+    var items: [TransactionViewItem] {
+        itemsDataSource.items
     }
 
     var allShown: Bool {
@@ -41,20 +41,11 @@ class TransactionRecordDataSource {
         return recordsData
     }
 
-    func item(forIndex index: Int) -> TransactionItem {
-        itemsDataSource.item(forIndex: index)
-    }
-
-    func itemIndexes(coin: Coin, date: Date) -> [Int] {
-        itemsDataSource.itemIndexes(coin: coin, date: date)
-    }
-
-    func itemIndexesForPending(wallet: Wallet, blockHeight: Int) -> [Int] {
-        itemsDataSource.recordIndexes(greaterThan: blockHeight, wallet: wallet)
-    }
-
-    func itemIndexesForLocked(wallet: Wallet, blockTimestamp: Int, oldBlockTimestamp: Int?) -> [Int] {
-        itemsDataSource.recordIndexes(unlockingBefore: blockTimestamp, oldBlockTimestamp: oldBlockTimestamp, wallet: wallet)
+    private func createViewItem(for wallet: Wallet, record: TransactionRecord) -> TransactionViewItem {
+        let lastBlockInfo = metaDataSource.lastBlockInfo(wallet: wallet)
+        let threshold = metaDataSource.threshold(wallet: wallet)
+        let rate = metaDataSource.rate(coin: wallet.coin, date: record.date)
+        return factory.viewItem(fromRecord: record, wallet: wallet, lastBlockInfo: lastBlockInfo, threshold: threshold, rate: rate)
     }
 
     var fetchDataList: [FetchData] {
@@ -69,7 +60,7 @@ class TransactionRecordDataSource {
         }
     }
 
-    func handleUpdated(records: [TransactionRecord], wallet: Wallet) -> [TransactionItem]? {
+    func handleUpdated(records: [TransactionRecord], wallet: Wallet) -> [TransactionViewItem]? {
         guard let pool = poolRepo.pool(byWallet: wallet) else {
             return nil
         }
@@ -92,21 +83,21 @@ class TransactionRecordDataSource {
             return nil
         }
 
-        let items = handledItems.map { factory.create(wallet: wallet, record: $0) }
+        let items = handledItems.map { createViewItem(for: wallet, record: $0) }
         return itemsDataSource.handle(newItems: items)
     }
 
-    func increasePage() -> [TransactionItem]? {
-        var unusedItems = [TransactionItem]()
+    func increasePage() -> Bool {
+        var unusedItems = [TransactionViewItem]()
 
         poolRepo.activePools.forEach { pool in
             pool.unusedRecords.forEach { record in
-                unusedItems.append(factory.create(wallet: pool.wallet, record: record))
+                unusedItems.append(createViewItem(for: pool.wallet, record: record))
             }
         }
 
         guard !unusedItems.isEmpty else {
-            return nil
+            return false
         }
 
         unusedItems.sort()
@@ -120,7 +111,7 @@ class TransactionRecordDataSource {
             poolRepo.pool(byWallet: item.wallet)?.increaseFirstUnusedIndex()
         }
 
-        return usedItems
+        return true
     }
 
     func set(wallets: [Wallet]) {
@@ -143,4 +134,61 @@ class TransactionRecordDataSource {
         set(wallets: wallets)
     }
 
+    func handleUpdated(walletsData: [(Wallet, Int, LastBlockInfo?)]) {
+        for (wallet, threshold, lastBlockInfo) in walletsData {
+            metaDataSource.set(threshold: threshold, wallet: wallet)
+
+            if let lastBlockInfo = lastBlockInfo {
+                _ = set(lastBlockInfo: lastBlockInfo, wallet: wallet)
+            }
+        }
+    }
+
+    func clearRates() {
+        metaDataSource.clearRates()
+
+        for (index, item) in itemsDataSource.items.enumerated() {
+            let rate = metaDataSource.rate(coin: item.wallet.coin, date: item.record.date)
+            itemsDataSource.items[index].rate = rate
+            itemsDataSource.items[index].currencyValue = rate.map {
+                CurrencyValue(currency: $0.currency, value: $0.value * item.record.amount)
+            }
+        }
+    }
+
+    func set(lastBlockInfo: LastBlockInfo, wallet: Wallet) -> Bool {
+        let oldLastBlockInfo = metaDataSource.lastBlockInfo(wallet: wallet)
+        metaDataSource.set(lastBlockInfo: lastBlockInfo, wallet: wallet)
+
+        var itemsChanged = false
+
+        for (index, item) in itemsDataSource.items.enumerated() {
+            guard item.wallet == wallet else {
+                continue
+            }
+
+            if item.becomesUnlocked(oldTimestamp: oldLastBlockInfo?.timestamp, newTimestamp: lastBlockInfo.timestamp) || item.isPending {
+                itemsDataSource.items[index] = createViewItem(for: item.wallet, record: item.record)
+                itemsChanged = true
+            }
+        }
+
+        return itemsChanged
+    }
+
+    func set(rate: CurrencyValue, coin: Coin, date: Date) -> Bool {
+        metaDataSource.set(rate: rate, coin: coin, date: date)
+
+        var itemsChanged = false
+
+        for (index, item) in itemsDataSource.items.enumerated() {
+            if item.wallet.coin == coin && item.record.date == date {
+                itemsDataSource.items[index].rate = rate
+                itemsDataSource.items[index].currencyValue = CurrencyValue(currency: rate.currency, value: rate.value * item.record.amount)
+                itemsChanged = true
+            }
+        }
+
+        return itemsChanged
+    }
 }

@@ -24,7 +24,9 @@ extension TransactionStatus: Equatable {
 
 protocol ITransactionsView: class {
     func show(filters: [Wallet?])
-    func reload(with diff: [Change<TransactionViewItem>], items: [TransactionViewItem], animated: Bool)
+    func show(transactions: [TransactionViewItem], animated: Bool)
+    func showNoTransactions()
+    func reloadTransactions()
 }
 
 protocol ITransactionsViewDelegate {
@@ -51,6 +53,7 @@ protocol ITransactionsInteractorDelegate: class {
     func onUpdate(selectedCoins: [Wallet])
     func onUpdate(walletsData: [(Wallet, Int, LastBlockInfo?)])
     func onUpdateBaseCurrency()
+    func onConnectionRestore()
 
     func onUpdate(lastBlockInfo: LastBlockInfo, wallet: Wallet)
 
@@ -58,7 +61,6 @@ protocol ITransactionsInteractorDelegate: class {
 
     func didFetch(rateValue: Decimal, coin: Coin, currency: Currency, date: Date)
     func didFetch(recordsData: [Wallet: [TransactionRecord]], initial: Bool)
-    func onConnectionRestore()
 }
 
 protocol ITransactionsRouter {
@@ -66,19 +68,7 @@ protocol ITransactionsRouter {
 }
 
 protocol ITransactionViewItemFactory {
-    func viewItem(fromItem item: TransactionItem, lastBlockInfo: LastBlockInfo?, threshold: Int?, rate: CurrencyValue?) -> TransactionViewItem
-}
-
-protocol ITransactionViewItemLoader {
-    func reload(with newItems: [TransactionItem], animated: Bool)
-    func reloadAll()
-    func reload(indexes: [Int])
-    func add(items: [TransactionItem])
-}
-
-protocol ITransactionViewItemLoaderDelegate: class {
-    func createViewItem(for item: TransactionItem) -> TransactionViewItem
-    func reload(with diff: [Change<TransactionViewItem>], items: [TransactionViewItem], animated: Bool)
+    func viewItem(fromRecord: TransactionRecord, wallet: Wallet, lastBlockInfo: LastBlockInfo?, threshold: Int?, rate: CurrencyValue?) -> TransactionViewItem
 }
 
 protocol IDiffer {

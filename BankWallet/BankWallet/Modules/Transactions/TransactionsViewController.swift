@@ -7,6 +7,9 @@ import ThemeKit
 class TransactionsViewController: ThemeViewController {
     let delegate: ITransactionsViewDelegate
 
+    let queue = DispatchQueue.global(qos: .userInteractive)
+    let differ: IDiffer
+
     let tableView = UITableView(frame: .zero, style: .plain)
     private var headerBackgroundTriggerOffset: CGFloat?
 
@@ -17,8 +20,9 @@ class TransactionsViewController: ThemeViewController {
 
     private var items: [TransactionViewItem]?
 
-    init(delegate: ITransactionsViewDelegate) {
+    init(delegate: ITransactionsViewDelegate, differ: IDiffer) {
         self.delegate = delegate
+        self.differ = differ
 
         super.init()
 
@@ -83,15 +87,7 @@ class TransactionsViewController: ThemeViewController {
         }
     }
 
-}
-
-extension TransactionsViewController: ITransactionsView {
-
-    func show(filters: [Wallet?]) {
-        filterHeaderView.reload(filters: filters)
-    }
-
-    func reload(with diff: [Change<TransactionViewItem>], items: [TransactionViewItem], animated: Bool) {
+    private func reload(with diff: [Change<TransactionViewItem>], items: [TransactionViewItem], animated: Bool) {
         if (self.items == nil) || !(isViewLoaded && view.window != nil) {
             self.items = items
             tableView.reloadData()
@@ -115,6 +111,34 @@ extension TransactionsViewController: ITransactionsView {
         }, completion: { [weak self] _ in
             self?.reload(indexPaths: changes.replaces)
         })
+    }
+
+}
+
+extension TransactionsViewController: ITransactionsView {
+
+    func show(filters: [Wallet?]) {
+        filterHeaderView.reload(filters: filters)
+    }
+
+    func show(transactions newViewItems: [TransactionViewItem], animated: Bool) {
+        queue.sync {
+            let viewChanges = differ.changes(old: items ?? [], new: newViewItems)
+
+            DispatchQueue.main.async { [weak self] in
+                self?.reload(with: viewChanges, items: newViewItems, animated: animated)
+            }
+        }
+    }
+
+    func showNoTransactions() {
+        show(transactions: [], animated: false)
+    }
+
+    func reloadTransactions() {
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
 
 }

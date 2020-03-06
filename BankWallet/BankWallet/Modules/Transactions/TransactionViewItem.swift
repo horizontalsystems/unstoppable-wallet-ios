@@ -2,27 +2,37 @@ import Foundation
 import DeepDiff
 import CurrencyKit
 
-class TransactionViewItem {
+struct TransactionViewItem {
     let wallet: Wallet
+    let record: TransactionRecord
     let transactionHash: String
     let coinValue: CoinValue
     let feeCoinValue: CoinValue?
-    let currencyValue: CurrencyValue?
+    var currencyValue: CurrencyValue?
     let from: String?
     let to: String?
     let type: TransactionType
     let showFromAddress: Bool
     let date: Date
     let status: TransactionStatus
-    let rate: CurrencyValue?
+    var rate: CurrencyValue?
     let lockInfo: TransactionLockInfo?
     let unlocked: Bool
     let conflictingTxHash: String?
 
-    init(wallet: Wallet, transactionHash: String, coinValue: CoinValue, feeCoinValue: CoinValue?,
+    public var isPending: Bool {
+        switch status {
+        case .pending: return true
+        case .processing: return true
+        default: return false
+        }
+    }
+
+    init(wallet: Wallet, record: TransactionRecord, transactionHash: String, coinValue: CoinValue, feeCoinValue: CoinValue?,
          currencyValue: CurrencyValue?, from: String?, to: String?, type: TransactionType,
          showFromAddress: Bool, date: Date, status: TransactionStatus, rate: CurrencyValue?, lockInfo: TransactionLockInfo?, unlocked: Bool = true, conflictingTxHash: String?) {
         self.wallet = wallet
+        self.record = record
         self.transactionHash = transactionHash
         self.coinValue = coinValue
         self.feeCoinValue = feeCoinValue
@@ -38,12 +48,22 @@ class TransactionViewItem {
         self.unlocked = unlocked
         self.conflictingTxHash = conflictingTxHash
     }
+
+    func becomesUnlocked(oldTimestamp: Int?, newTimestamp: Int?) -> Bool {
+        guard let lockTime = lockInfo?.lockedUntil.timeIntervalSince1970,
+              let newTimestamp = newTimestamp else {
+            return false
+        }
+
+        return lockTime > Double(oldTimestamp ?? 0) && // was locked
+                lockTime <= Double(newTimestamp)       // now unlocked
+    }
 }
 
 extension TransactionViewItem: DiffAware {
 
     public var diffId: String {
-        transactionHash
+        record.uid
     }
 
     public static func compareContent(_ a: TransactionViewItem, _ b: TransactionViewItem) -> Bool {
@@ -53,6 +73,18 @@ extension TransactionViewItem: DiffAware {
                 a.status == b.status &&
                 a.unlocked == b.unlocked &&
                 a.conflictingTxHash == b.conflictingTxHash
+    }
+
+}
+
+extension TransactionViewItem: Comparable {
+
+    public static func <(lhs: TransactionViewItem, rhs: TransactionViewItem) -> Bool {
+        lhs.record < rhs.record
+    }
+
+    public static func ==(lhs: TransactionViewItem, rhs: TransactionViewItem) -> Bool {
+        lhs.record == rhs.record
     }
 
 }
