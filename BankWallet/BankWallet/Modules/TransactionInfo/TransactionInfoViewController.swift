@@ -54,7 +54,7 @@ class TransactionInfoViewController: WalletActionSheetController {
         let statusItem = TransactionStatusItem(item: item, tag: 4)
         model.addItemView(statusItem)
 
-        if item.showFromAddress, let from = item.from {
+        if let from = item.from {
             model.addItemView(TransactionFromToHashItem(title: "tx_info.from_hash".localized, value: from, tag: 5, required: true, onHashTap: { [weak self] in
                 self?.delegate.onCopy(value: from)
             }))
