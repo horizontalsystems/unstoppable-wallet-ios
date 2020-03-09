@@ -13,10 +13,18 @@ class FullTransactionDataProviderManager {
         ]
     }
 
+    private var litecoinProviders: [IBitcoinForksProvider] {
+        appConfigProvider.testMode ? [
+        ] : [
+            HorSysLitecoinProvider(testMode: false),
+            BlockChairLitecoinProvider()
+        ]
+    }
+
     private var bitcoinCashProviders: [IBitcoinForksProvider] {
         appConfigProvider.testMode ? [
         ] : [
-            CoinSpaceBitcoinCashProvider(),
+//            CoinSpaceBitcoinCashProvider(),
             BlockChairBitcoinCashProvider(),
 //            BlockExplorerBitcoinCashProvider(),
             BtcComBitcoinCashProvider()
@@ -76,6 +84,8 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
     func providers(for coin: Coin) -> [IProvider] {
         if coin.type == .bitcoin {
             return bitcoinProviders
+        } else if coin.type == .litecoin {
+            return litecoinProviders
         } else if coin.type == .bitcoinCash {
             return bitcoinCashProviders
         } else if coin.type == .dash {
@@ -92,6 +102,10 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
         if coin.type == .bitcoin {
             let name = localStorage.baseBitcoinProvider ?? bitcoinProviders[0].name
             return bitcoin(for: name)
+        }
+        if coin.type == .litecoin {
+            let name = localStorage.baseLitecoinProvider ?? litecoinProviders[0].name
+            return litecoin(for: name)
         }
         if coin.type == .bitcoinCash {
             let name = localStorage.baseBitcoinCashProvider ?? bitcoinCashProviders[0].name
@@ -116,6 +130,8 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
     func setBaseProvider(name: String, for coin: Coin) {
         if coin.type == .bitcoin {
             localStorage.baseBitcoinProvider = name
+        } else if coin.type == .litecoin {
+            localStorage.baseLitecoinProvider = name
         } else if coin.type == .bitcoinCash {
             localStorage.baseBitcoinCashProvider = name
         } else if coin.type == .dash {
@@ -133,6 +149,11 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
 
     func bitcoin(for name: String) -> IBitcoinForksProvider {
         let providers = bitcoinProviders
+        return providers.first(where: { provider in provider.name == name }) ?? providers[0]
+    }
+
+    func litecoin(for name: String) -> IBitcoinForksProvider {
+        let providers = litecoinProviders
         return providers.first(where: { provider in provider.name == name }) ?? providers[0]
     }
 
