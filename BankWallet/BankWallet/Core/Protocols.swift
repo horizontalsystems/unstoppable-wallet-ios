@@ -11,6 +11,7 @@ protocol IRandomManager {
 
 protocol ILocalStorage: class {
     var baseBitcoinProvider: String? { get set }
+    var baseLitecoinProvider: String? { get set }
     var baseBitcoinCashProvider: String? { get set }
     var baseDashProvider: String? { get set }
     var baseBinanceProvider: String? { get set }
@@ -340,6 +341,7 @@ protocol IFullTransactionDataProviderManager {
     func setBaseProvider(name: String, for coin: Coin)
 
     func bitcoin(for name: String) -> IBitcoinForksProvider
+    func litecoin(for name: String) -> IBitcoinForksProvider
     func dash(for name: String) -> IBitcoinForksProvider
     func eos(for name: String) -> IEosProvider
     func bitcoinCash(for name: String) -> IBitcoinForksProvider

@@ -23,6 +23,29 @@ class HorSysBitcoinProvider: IBitcoinForksProvider {
     }
 }
 
+class HorSysLitecoinProvider: IBitcoinForksProvider {
+    let name = "HorizontalSystems.xyz"
+    private let apiUrl: String
+    let reachabilityUrl: String
+
+    func url(for hash: String) -> String? {
+        nil
+    }
+
+    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
+        .get(url: apiUrl + hash, params: nil)
+    }
+
+    init(testMode: Bool) {
+        apiUrl = testMode ? "http://ltc-testnet.horizontalsystems.xyz/api/tx/" : "http://ltc.horizontalsystems.xyz/api/tx/"
+        reachabilityUrl = testMode ? "http://ltc-testnet.horizontalsystems.xyz/api/block/0" : "http://ltc.horizontalsystems.xyz/api/block/0"
+    }
+
+    func convert(json: [String: Any]) -> IBitcoinResponse? {
+        try? HorSysLitecoinResponse(JSONObject: json)
+    }
+}
+
 class HorSysBitcoinCashProvider: IBitcoinForksProvider {
     let name: String = "HorizontalSystems.xyz"
     private let url: String
@@ -144,6 +167,62 @@ class HorSysBitcoinResponse: IBitcoinResponse, ImmutableMappable {
                     let address = output["address"] as? String
 
                     outputs.append((value: Decimal(value) / btcRate, address: address))
+                }
+
+            }
+        }
+    }
+
+}
+
+class HorSysLitecoinResponse: IBitcoinResponse, ImmutableMappable {
+    var txId: String?
+    var blockTime: Int?
+    var blockHeight: Int?
+    var confirmations: Int?
+
+    var size: Int?
+    var fee: Decimal?
+    var feePerByte: Decimal?
+
+    var inputs = [(value: Decimal, address: String?)]()
+    var outputs = [(value: Decimal, address: String?)]()
+
+    required init(map: Map) throws {
+        txId = try? map.value("hash")
+        guard txId != nil else {
+            throw MapError(key: "txId", currentValue: "nil", reason: "wrong data")
+        }
+        blockTime = try? map.value("ts")
+        blockHeight = try? map.value("height")
+
+        if let feeString: String = try? map.value("fee") {
+            self.fee = Decimal(string: feeString)
+        }
+        if let rateString: String = try? map.value("rate"), let rate = Decimal(string: rateString) {
+            self.feePerByte = rate * btcRate / 1000
+        }
+        if let fee = fee, let feePerByte = feePerByte {
+            let handler = NSDecimalNumberHandler(roundingMode: .plain, scale: 0, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
+            size = NSDecimalNumber(decimal: fee * btcRate / feePerByte).rounding(accordingToBehavior: handler).intValue
+        }
+
+        if let vInputs: [[String: Any]] = try? map.value("inputs") {
+            vInputs.forEach { input in
+                if let coin = input["coin"] as? [String: Any], let valueString = coin["value"] as? String, let value = Decimal(string: valueString) {
+                    let address = coin["address"] as? String
+
+                    inputs.append((value: value, address: address))
+                }
+
+            }
+        }
+        if let vOutputs: [[String: Any]] = try? map.value("outputs") {
+            vOutputs.forEach { output in
+                if let valueString = output["value"] as? String, let value = Decimal(string: valueString) {
+                    let address = output["address"] as? String
+
+                    outputs.append((value: value, address: address))
                 }
 
             }

@@ -22,6 +22,27 @@ class BlockChairBitcoinProvider: IBitcoinForksProvider {
 
 }
 
+class BlockChairLitecoinProvider: IBitcoinForksProvider {
+    let name = "BlockChair.com"
+
+    func url(for hash: String) -> String? {
+        "https://blockchair.com/litecoin/transaction/" + hash
+    }
+
+    var reachabilityUrl: String {
+        "https://api.blockchair.com/litecoin/stats"
+    }
+
+    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
+        .get(url: "https://api.blockchair.com/litecoin/dashboards/transaction/" + hash, params: nil)
+    }
+
+    func convert(json: [String: Any]) -> IBitcoinResponse? {
+        try? BlockChairBitcoinResponse(JSONObject: json)
+    }
+
+}
+
 class BlockChairBitcoinCashProvider: IBitcoinForksProvider {
     let name = "BlockChair.com"
 
