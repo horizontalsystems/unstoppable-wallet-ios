@@ -23,6 +23,10 @@ extension FullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactor
             let bitcoinProvider = dataProviderManager.bitcoin(for: providerName)
             provider = bitcoinProvider
             adapter = BitcoinTransactionInfoAdapter(provider: bitcoinProvider, coin: coin, unitName: "satoshi")
+        } else if coin.type == .litecoin {
+            let litecoinProvider = dataProviderManager.litecoin(for: providerName)
+            provider = litecoinProvider
+            adapter = BitcoinTransactionInfoAdapter(provider: litecoinProvider, coin: coin, unitName: "satoshi")
         } else if coin.type == .bitcoinCash {
             let bitcoinCashProvider = dataProviderManager.bitcoinCash(for: providerName)
             provider = bitcoinCashProvider
