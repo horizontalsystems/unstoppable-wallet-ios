@@ -306,8 +306,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "settings.contact.title" = "Contact";
 "settings.contact.app_status" = "App Status";
 "settings.contact.email" = "E-mail";
-"settings.contact.telegram_wallet" = "Telegram (Wallet Help)";
-"settings.contact.telegram_developers" = "Telegram (Developers)";
+"settings.contact.telegram_wallet" = "Telegram";
 
 // Manage Keys
 
