@@ -8,8 +8,7 @@ class ContactViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private var email: String?
-    private var telegramWalletHelperGroup: String?
-    private var telegramDevelopersGroup: String?
+    private var telegramWalletHelpAccount: String?
 
     init(delegate: IContactViewDelegate) {
         self.delegate = delegate
@@ -62,35 +61,19 @@ class ContactViewController: ThemeViewController {
                     }
             ),
             Row<ImageDoubleLineCell>(
-                    id: "telegram_wallet",
+                    id: "telegram_wallet_help",
                     height: .heightDoubleLineCell,
                     autoDeselect: true,
                     bind: { [weak self] cell, _ in
                         cell.bind(
                                 image: UIImage(named: "Telegram Icon")?.tinted(with: .themeJacob),
                                 title: "settings.contact.telegram_wallet".localized,
-                                subtitle: self?.telegramWalletHelperGroup,
+                                subtitle: self?.telegramWalletHelpAccount,
                                 last: true
                         )
                     },
                     action: { [weak self] _ in
                         self?.delegate.didTapTelegramWalletHelp()
-                    }
-            ),
-            Row<ImageDoubleLineCell>(
-                    id: "telegram_developers",
-                    height: .heightDoubleLineCell,
-                    autoDeselect: true,
-                    bind: { [weak self] cell, _ in
-                        cell.bind(
-                                image: UIImage(named: "Telegram Icon")?.tinted(with: .themeJacob),
-                                title: "settings.contact.telegram_developers".localized,
-                                subtitle: self?.telegramDevelopersGroup,
-                                last: true
-                        )
-                    },
-                    action: { [weak self] _ in
-                        self?.delegate.didTapTelegramDevelopers()
                     }
             )
         ]
@@ -151,12 +134,8 @@ extension ContactViewController: IContactView {
         self.email = email
     }
 
-    func set(telegramWalletHelperGroup: String) {
-        self.telegramWalletHelperGroup = telegramWalletHelperGroup
-    }
-
-    func set(telegramDevelopersGroup: String) {
-        self.telegramDevelopersGroup = telegramDevelopersGroup
+    func set(telegramWalletHelpAccount: String) {
+        self.telegramWalletHelpAccount = telegramWalletHelpAccount
     }
 
     func showCopied() {
