@@ -1,7 +1,7 @@
 import ObjectMapper
 
-class CoinSpaceBitcoinCashProvider: IBitcoinForksProvider {
-    let name = "Coin.space"
+class BitcoinComBitcoinCashProvider: IBitcoinForksProvider {
+    let name = "Bitcoin.com"
     private let url: String
     private let apiUrl: String
 
@@ -10,7 +10,7 @@ class CoinSpaceBitcoinCashProvider: IBitcoinForksProvider {
     }
 
     var reachabilityUrl: String {
-        "https://bch.coin.space/api/sync"
+        "https://cashexplorer.bitcoin.com/api/sync"
     }
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
@@ -18,8 +18,8 @@ class CoinSpaceBitcoinCashProvider: IBitcoinForksProvider {
     }
 
     init() {
-        url = "https://bch.coin.space/tx/"
-        apiUrl = "https://bch.coin.space/api/tx/"
+        url = "https://explorer.bitcoin.com/bch/tx/"
+        apiUrl = "https://cashexplorer.bitcoin.com/api/tx/"
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {

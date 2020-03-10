@@ -24,7 +24,7 @@ class FullTransactionDataProviderManager {
     private var bitcoinCashProviders: [IBitcoinForksProvider] {
         appConfigProvider.testMode ? [
         ] : [
-//            CoinSpaceBitcoinCashProvider(),
+            BitcoinComBitcoinCashProvider(),
             BlockChairBitcoinCashProvider(),
 //            BlockExplorerBitcoinCashProvider(),
             BtcComBitcoinCashProvider()
