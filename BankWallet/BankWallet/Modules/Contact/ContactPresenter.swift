@@ -15,8 +15,7 @@ extension ContactPresenter: IContactViewDelegate {
 
     func viewDidLoad() {
         view?.set(email: interactor.email)
-        view?.set(telegramWalletHelperGroup: "@\(interactor.telegramWalletHelperGroup)")
-        view?.set(telegramDevelopersGroup: "@\(interactor.telegramDevelopersGroup)")
+        view?.set(telegramWalletHelpAccount: "@\(interactor.telegramWalletHelpAccount)")
     }
 
     func didTapEmail() {
@@ -29,11 +28,7 @@ extension ContactPresenter: IContactViewDelegate {
     }
 
     func didTapTelegramWalletHelp() {
-        router.openTelegram(group: interactor.telegramWalletHelperGroup)
-    }
-
-    func didTapTelegramDevelopers() {
-        router.openTelegram(group: interactor.telegramDevelopersGroup)
+        router.openTelegram(account: interactor.telegramWalletHelpAccount)
     }
 
     func didTapStatus() {

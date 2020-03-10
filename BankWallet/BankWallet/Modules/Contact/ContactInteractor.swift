@@ -15,12 +15,8 @@ extension ContactInteractor: IContactInteractor {
         appConfigProvider.reportEmail
     }
 
-    var telegramWalletHelperGroup: String {
-        appConfigProvider.telegramWalletHelperGroup
-    }
-
-    var telegramDevelopersGroup: String {
-        appConfigProvider.telegramDevelopersGroup
+    var telegramWalletHelpAccount: String {
+        appConfigProvider.telegramWalletHelpAccount
     }
 
     func copyToClipboard(string: String) {

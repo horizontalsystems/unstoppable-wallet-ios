@@ -19,14 +19,14 @@ extension ContactRouter: IContactRouter {
         viewController?.present(controller, animated: true)
     }
 
-    func openTelegram(group: String) {
-        guard let appUrl = URL(string: "tg://resolve?domain=\(group)") else {
+    func openTelegram(account: String) {
+        guard let appUrl = URL(string: "tg://resolve?domain=\(account)") else {
             return
         }
 
         if UIApplication.shared.canOpenURL(appUrl) {
             UIApplication.shared.open(appUrl)
-        } else if let webUrl = URL(string: "https://t.me/\(group)") {
+        } else if let webUrl = URL(string: "https://t.me/\(account)") {
             UIApplication.shared.open(webUrl)
         }
     }
