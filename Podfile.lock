@@ -139,7 +139,7 @@ PODS:
     - Secp256k1Kit.swift (~> 1.0)
   - Nimble (8.0.5)
   - ObjectMapper (3.5.1)
-  - OpenSslKit.swift (1.1)
+  - OpenSslKit.swift (1.2)
   - PinKit.swift (1.0):
     - LanguageKit.swift (~> 1.0)
     - RxSwift
@@ -315,13 +315,13 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   BitcoinCashKit.swift:
-    :commit: cee9471ab974712b496b1a6db5543a6a08d54544
+    :commit: 161ce7f8d7b07a468223bb3db8138d018864cdd8
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinCore.swift:
-    :commit: cee9471ab974712b496b1a6db5543a6a08d54544
+    :commit: 161ce7f8d7b07a468223bb3db8138d018864cdd8
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinKit.swift:
-    :commit: cee9471ab974712b496b1a6db5543a6a08d54544
+    :commit: 161ce7f8d7b07a468223bb3db8138d018864cdd8
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
     :commit: 17079e955f1069c47f869eff4a352049c6cb9111
@@ -330,7 +330,7 @@ CHECKOUT OPTIONS:
     :commit: 1ea3b03458beb307716c79018569398057f3747e
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
-    :commit: cee9471ab974712b496b1a6db5543a6a08d54544
+    :commit: 161ce7f8d7b07a468223bb3db8138d018864cdd8
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   EosioSwiftAbieosSerializationProvider:
     :commit: 7ac04899e62012e225e0ea48a96951de0b72ad08
@@ -339,13 +339,13 @@ CHECKOUT OPTIONS:
     :commit: 5b295950dde8aab7979745ea111ce3aa76ec5a7d
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
   Hodler.swift:
-    :commit: cee9471ab974712b496b1a6db5543a6a08d54544
+    :commit: 161ce7f8d7b07a468223bb3db8138d018864cdd8
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   LanguageKit.swift:
     :commit: 1ea3b03458beb307716c79018569398057f3747e
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
-    :commit: cee9471ab974712b496b1a6db5543a6a08d54544
+    :commit: 161ce7f8d7b07a468223bb3db8138d018864cdd8
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   PinKit.swift:
     :commit: 1ea3b03458beb307716c79018569398057f3747e
@@ -397,7 +397,7 @@ SPEC CHECKSUMS:
   LitecoinKit.swift: 71530f28446ba0f687e1850c2b4fd6b8bd61d7f7
   Nimble: 4ab1aeb9b45553c75b9687196b0fa0713170a332
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
-  OpenSslKit.swift: 5e9906361c2f660c0aec0572dde575d8b6aeccc8
+  OpenSslKit.swift: 168b059e3438c21994a3e9fe6c5648df96660d94
   PinKit.swift: 1acbf82ce5114972f1eb9a5a0c1b808dc08ad12e
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
