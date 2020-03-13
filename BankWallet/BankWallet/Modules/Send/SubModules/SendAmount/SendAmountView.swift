@@ -7,7 +7,6 @@ import CurrencyKit
 class SendAmountView: UIView {
     private static let spinnerRadius: CGFloat = 8
     private static let spinnerLineWidth: CGFloat = 2
-    private let sendSmallButtonMargin: CGFloat = 6
 
     private let delegate: ISendAmountViewDelegate
 
@@ -108,7 +107,7 @@ class SendAmountView: UIView {
         lineView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin2x)
             maker.trailing.equalToSuperview().inset(CGFloat.margin2x)
-            maker.top.equalTo(switchButton.snp.bottom).offset(sendSmallButtonMargin)
+            maker.top.equalTo(switchButton.snp.bottom).offset(CGFloat.margin2x)
             maker.height.equalTo(CGFloat.heightOneDp)
         }
 
@@ -136,10 +135,11 @@ class SendAmountView: UIView {
         }
 
         switchButton.snp.makeConstraints { maker in
-            maker.top.trailing.equalToSuperview().inset(sendSmallButtonMargin)
+            maker.top.trailing.equalToSuperview().inset(CGFloat.margin2x)
             maker.size.equalTo(CGFloat.heightButtonSecondary)
         }
 
+        switchButton.imageEdgeInsets = UIEdgeInsets(top: -.margin2x, left: -.margin2x, bottom: -.margin2x, right: -.margin2x)
         switchButton.setImage(UIImage(named: "Send Switch Icon")?.tinted(with: .themeOz), for: .normal)
         switchButton.setImage(UIImage(named: "Send Switch Icon")?.tinted(with: .themeGray50), for: .disabled)
         switchButton.addTarget(self, action: #selector(onTapSwitch), for: .touchUpInside)
@@ -264,7 +264,7 @@ extension SendAmountView: ISendAmountView {
                 maker.trailing.equalTo(switchButton.snp.leading)
                 maker.width.equalTo(0)
             }
-            maker.top.equalToSuperview().inset(sendSmallButtonMargin)
+            maker.top.equalToSuperview().inset(CGFloat.margin2x)
             maker.height.equalTo(CGFloat.heightButtonSecondary)
         }
     }
