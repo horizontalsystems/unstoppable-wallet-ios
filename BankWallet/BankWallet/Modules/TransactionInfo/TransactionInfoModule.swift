@@ -5,6 +5,7 @@ protocol ITransactionInfoView: class {
 protocol ITransactionInfoViewDelegate: class {
     var viewItem: TransactionViewItem { get }
     func onCopy(value: String)
+    func onShare(value: String)
     func openFullInfo()
     func openLockInfo()
     func openDoubleSpendInfo()
@@ -20,5 +21,6 @@ protocol ITransactionInfoInteractorDelegate: class {
 protocol ITransactionInfoRouter {
     func openFullInfo(transactionHash: String, wallet: Wallet)
     func openLockInfo()
+    func share(value: String)
     func openDoubleSpendInfo(txHash: String, conflictingTxHash: String?)
 }

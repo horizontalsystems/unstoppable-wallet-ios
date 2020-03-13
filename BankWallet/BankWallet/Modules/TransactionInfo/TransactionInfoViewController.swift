@@ -74,6 +74,8 @@ class TransactionInfoViewController: WalletActionSheetController {
 
         model.addItemView(TransactionIdItem(value: item.transactionHash, tag: 8, onHashTap: { [weak self] in
             self?.delegate.onCopy(value: item.transactionHash)
+        }, onShareTap: { [weak self] in
+            self?.delegate.onShare(value: item.transactionHash)
         }))
 
         if let lockInfo = item.lockInfo {
