@@ -20,6 +20,10 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
         view?.showCopied()
     }
 
+    func onShare(value: String) {
+        router.share(value: value)
+    }
+
     func openFullInfo() {
         router.openFullInfo(transactionHash: viewItem.transactionHash, wallet: viewItem.wallet)
     }

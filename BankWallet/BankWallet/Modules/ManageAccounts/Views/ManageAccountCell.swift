@@ -8,7 +8,6 @@ class ManageAccountCell: CardCell {
     private static let horizontalPadding: CGFloat = .margin3x
     private static let keyIconRightMargin: CGFloat = .margin2x
     private static let accountViewTopPadding: CGFloat = 10
-    private static let buttonHeight: CGFloat = .heightButtonSecondary
     private static let buttonTopMargin: CGFloat = .margin3x
     private static let keyIcon: UIImage? = UIImage(named: "Key Icon")
 
@@ -134,7 +133,7 @@ extension ManageAccountCell {
         let contentWidth = CardCell.contentWidth(containerWidth: containerWidth) - ManageAccountCell.horizontalPadding * 2 - ManageAccountCell.keyIconRightMargin - iconWidth
         let accountViewHeight = AccountDoubleLineCellView.height(containerWidth: contentWidth, title: ManageAccountCell.titleText(viewItem: viewItem), subtitle: viewItem.coinCodes)
 
-        let contentHeight = accountViewHeight + ManageAccountCell.accountViewTopPadding + ManageAccountCell.buttonTopMargin + ManageAccountCell.buttonHeight + ManageAccountCell.bottomPadding
+        let contentHeight = accountViewHeight + ManageAccountCell.accountViewTopPadding + ManageAccountCell.buttonTopMargin + .heightButtonSecondary + ManageAccountCell.bottomPadding
         return CardCell.height(contentHeight: contentHeight)
     }
 

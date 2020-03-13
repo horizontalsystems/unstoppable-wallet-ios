@@ -87,7 +87,7 @@ class AddressInputField: UIView {
         errorLabel.numberOfLines = 0
 
         pasteButton.snp.makeConstraints { maker in
-            maker.trailing.equalToSuperview().inset(6)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin2x)
             maker.centerY.equalToSuperview()
             maker.height.equalTo(CGFloat.heightButtonSecondary)
         }
@@ -99,11 +99,11 @@ class AddressInputField: UIView {
         scanButton.snp.makeConstraints { maker in
             maker.trailing.equalTo(pasteButton.snp.leading).offset(-CGFloat.margin2x)
             maker.centerY.equalTo(pasteButton.snp.centerY)
-            maker.height.equalTo(CGFloat.heightButtonSecondary)
-            maker.width.equalTo(36)
+            maker.size.equalTo(CGFloat.heightButtonSecondary)
         }
 
         scanButton.isHidden = !showQrButton
+        scanButton.imageEdgeInsets = UIEdgeInsets(top: -.margin2x, left: -.margin2x, bottom: -.margin2x, right: -.margin2x)
         scanButton.setImage(UIImage(named: "Send Scan Icon")?.tinted(with: .themeOz), for: .normal)
         scanButton.addTarget(self, action: #selector(onTapScan), for: .touchUpInside)
 
