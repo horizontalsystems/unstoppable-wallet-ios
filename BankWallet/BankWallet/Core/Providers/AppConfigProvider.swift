@@ -66,6 +66,7 @@ class AppConfigProvider: IAppConfigProvider {
             coins[3],
             coins[4],
             coins[5],
+            coins[6],
         ]
     }
 
