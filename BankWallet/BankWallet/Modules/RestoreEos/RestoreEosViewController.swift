@@ -96,6 +96,10 @@ extension RestoreEosViewController: IRestoreEosView {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.restore".localized, style: .done, target: self, action: #selector(doneDidTap))
     }
 
+    func showDoneButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(doneDidTap))
+    }
+
     func set(account: String?) {
         accountNameField.bind(address: account, error: nil)
     }

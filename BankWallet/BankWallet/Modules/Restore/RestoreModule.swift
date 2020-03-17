@@ -9,8 +9,8 @@ protocol IRestoreViewDelegate {
 
 protocol IRestoreRouter {
     func showRestore(predefinedAccountType: PredefinedAccountType, delegate: ICredentialsCheckDelegate)
-    func showSettings(delegate: IBlockchainSettingsDelegate)
-    func showRestoreCoins(predefinedAccountType: PredefinedAccountType, accountType: AccountType, delegate: IRestoreCoinsDelegate)
+    func showSettings(coins: [Coin], delegate: IBlockchainSettingsDelegate?)
+    func showRestoreCoins(predefinedAccountType: PredefinedAccountType, accountType: AccountType, proceedMode: RestoreRouter.ProceedMode, delegate: IRestoreCoinsDelegate?)
     func showMain()
 }
 
@@ -19,6 +19,7 @@ protocol IRestoreDelegate: AnyObject {
 }
 
 protocol IRestoreSequenceFactory {
-    func onAccountCheck(accountType: AccountType, predefinedAccountType: PredefinedAccountType?, settings: (() -> ()), coins: ((AccountType, PredefinedAccountType) -> ()))
-    func onSettingsConfirm(accountType: AccountType?, predefinedAccountType: PredefinedAccountType?, coins: ((AccountType, PredefinedAccountType) -> ()))
+    func onAccountCheck(accountType: AccountType, predefinedAccountType: PredefinedAccountType?, coins: ((AccountType, PredefinedAccountType, RestoreRouter.ProceedMode) -> ()))
+    func onCoinsSelect(coins: [Coin], accountType: AccountType?, predefinedAccountType: PredefinedAccountType?, settings: () -> ()?, finish: () -> ()?)
+    func onSettingsConfirm(accountType: AccountType?, coins: [Coin]?, settings: [BlockchainSetting], success: (() -> ()))
 }

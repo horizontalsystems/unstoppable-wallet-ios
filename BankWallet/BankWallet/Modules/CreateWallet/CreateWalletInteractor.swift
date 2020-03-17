@@ -39,8 +39,12 @@ extension CreateWalletInteractor: ICreateWalletInteractor {
         walletManager.save(wallets: wallets)
     }
 
-    func coinSettings(coin: Coin) -> CoinSettings {
-        coinSettingsManager.coinSettingsForCreate(coinType: coin.type)
+    func save(settings: [BlockchainSetting]) {
+        coinSettingsManager.save(settings: settings)
+    }
+
+    func blockchainSettings(coinType: CoinType) -> BlockchainSetting? {
+        coinSettingsManager.settingsForCreate(coinType: coinType)
     }
 
 }

@@ -54,9 +54,6 @@ protocol IWalletManager: class {
 
     func save(wallets: [Wallet])
 
-    func update(derivation: MnemonicDerivation, in wallets: [Wallet])
-    func update(syncMode: SyncMode, in wallets: [Wallet])
-
     func delete(wallets: [Wallet])
     func clearWallets()
 }
@@ -182,7 +179,7 @@ protocol IAccountFactory {
 }
 
 protocol IWalletFactory {
-    func wallet(coin: Coin, account: Account, coinSettings: CoinSettings) -> Wallet
+    func wallet(coin: Coin, account: Account) -> Wallet
 }
 
 protocol IRestoreAccountDataSource {
@@ -250,6 +247,8 @@ protocol IAppConfigProvider {
 
     var featuredCoins: [Coin] { get }
     var coins: [Coin] { get }
+
+    var defaultSettings: [BlockchainSetting] { get }
 }
 
 protocol IFullTransactionInfoProvider {
@@ -294,6 +293,16 @@ protocol IPriceAlertRecordStorage {
     func save(priceAlertRecords: [PriceAlertRecord])
     func deletePriceAlertRecords(coinCodes: [CoinCode])
     func deletePriceAlertsExcluding(coinCodes: [CoinCode])
+}
+
+protocol IBlockchainSettingsRecordStorage {
+    func blockchainSettings(coinTypeKey: String) -> BlockchainSettingRecord?
+    func save(blockchainSettings: [BlockchainSettingRecord])
+}
+
+protocol IBlockchainSettingsStorage {
+    func blockchainSettings(coinType: CoinType) -> BlockchainSetting?
+    func save(settings: [BlockchainSetting])
 }
 
 protocol IBackgroundPriceAlertManager {

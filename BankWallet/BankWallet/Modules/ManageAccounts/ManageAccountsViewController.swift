@@ -12,6 +12,8 @@ class ManageAccountsViewController: ThemeViewController {
         self.delegate = delegate
 
         super.init()
+
+        hidesBottomBarWhenPushed = true
     }
 
     required init?(coder aDecoder: NSCoder) {

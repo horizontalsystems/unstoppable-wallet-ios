@@ -14,9 +14,7 @@ class WalletStorage {
     private func enabledWallet(wallet: Wallet) -> EnabledWallet {
         EnabledWallet(
                 coinId: wallet.coin.id,
-                accountId: wallet.account.id,
-                derivation: (wallet.coinSettings[.derivation] as? MnemonicDerivation)?.rawValue,
-                syncMode: (wallet.coinSettings[.syncMode] as? SyncMode)?.rawValue
+                accountId: wallet.account.id
         )
     }
 
@@ -36,17 +34,7 @@ extension WalletStorage: IWalletStorage {
                 return nil
             }
 
-            var coinSettings = CoinSettings()
-
-            if let rawDerivation = enabledWallet.derivation, let derivation = MnemonicDerivation(rawValue: rawDerivation) {
-                coinSettings[.derivation] = derivation
-            }
-
-            if let rawSyncMode = enabledWallet.syncMode, let syncMode = SyncMode(rawValue: rawSyncMode) {
-                coinSettings[.syncMode] = syncMode
-            }
-
-            return walletFactory.wallet(coin: coin, account: account, coinSettings: coinSettings)
+            return walletFactory.wallet(coin: coin, account: account)
         }
     }
 

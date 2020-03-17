@@ -43,6 +43,8 @@ extension RestoreEosPresenter: IRestoreEosViewDelegate {
             view?.showNextButton()
         case .restore:
             view?.showRestoreButton()
+        case .done:
+            view?.showDoneButton()
         case .none: ()
         }
 

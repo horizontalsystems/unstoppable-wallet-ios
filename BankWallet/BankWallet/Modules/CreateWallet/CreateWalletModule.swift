@@ -26,18 +26,14 @@ protocol ICreateWalletInteractor {
 
     func create(accounts: [Account])
     func save(wallets: [Wallet])
+    func save(settings: [BlockchainSetting])
 
-    func coinSettings(coin: Coin) -> CoinSettings
+    func blockchainSettings(coinType: CoinType) -> BlockchainSetting?
 }
 
 protocol ICreateWalletRouter {
     func showMain()
     func close()
-}
-
-struct CreateWalletEnabledCoin {
-    let coin: Coin
-    let coinSettings: [CoinSetting: Any]
 }
 
 class CreateWalletModule {

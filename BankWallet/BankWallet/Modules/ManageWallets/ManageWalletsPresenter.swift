@@ -7,6 +7,7 @@ class ManageWalletsPresenter {
 
     private var predefinedAccountType: PredefinedAccountType?
     private var accountType: AccountType?
+    private var coinToEnable: Coin?
 
     private var wallets = [Coin: Wallet]()
 
@@ -37,10 +38,12 @@ class ManageWalletsPresenter {
         view?.set(featuredViewItems: featuredViewItems, viewItems: viewItems)
     }
 
-    private func createWallet(coin: Coin, account: Account) {
-        let coinSettings = interactor.coinSettings(coinType: coin.type)
+    private func createWallet(coin: Coin) {
+        guard let account = account(coin: coin) else {
+            return
+        }
 
-        let wallet = Wallet(coin: coin, account: account, coinSettings: coinSettings)
+        let wallet = Wallet(coin: coin, account: account)
 
         interactor.save(wallet: wallet)
         wallets[coin] = wallet
@@ -67,14 +70,22 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
         syncViewItems()
     }
 
+    func onAppear() {
+        syncViewItems()
+    }
+
     func onEnable(viewItem: CoinToggleViewItem) {
         let coin = viewItem.coin
-
         guard let account = account(coin: coin) else {
             return
         }
 
-        createWallet(coin: coin, account: account)
+        if account.origin == .restored, interactor.settings(coinType: coin.type) != nil {
+            router.showSettingsList(selectedCoins: [coin], delegate: self)
+            coinToEnable = coin
+        } else {
+            createWallet(coin: coin)
+        }
     }
 
     func onDisable(viewItem: CoinToggleViewItem) {
@@ -119,15 +130,15 @@ extension ManageWalletsPresenter: IManageWalletsInteractorDelegate {
 
 extension ManageWalletsPresenter: IBlockchainSettingsDelegate {
 
-    func onConfirm() {
-        guard let accountType = accountType else {
+    func onConfirm(settings: [BlockchainSetting]) {
+        guard let coin = coinToEnable else {
             return
         }
 
-        let account = interactor.createRestoredAccount(accountType: accountType)
-        handleCreated(account: account)
+        interactor.save(settings: settings)
+        createWallet(coin: coin)
 
-        router.closePresented()
+        router.closePushed()
     }
 
 }
@@ -136,18 +147,10 @@ extension ManageWalletsPresenter: ICredentialsCheckDelegate {
 
     func didCheck(accountType: AccountType) {
         self.accountType = accountType
-        guard let predefinedAccountType = predefinedAccountType else {
-            return
-        }
+        let account = interactor.createRestoredAccount(accountType: accountType)
+        handleCreated(account: account)
 
-        if predefinedAccountType == .standard {
-            router.showSettings(delegate: self)
-        } else {
-            let account = interactor.createRestoredAccount(accountType: accountType)
-            handleCreated(account: account)
-
-            router.closePresented()
-        }
+        router.closePresented()
     }
 
 }
