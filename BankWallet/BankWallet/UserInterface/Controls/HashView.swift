@@ -3,7 +3,8 @@ import SnapKit
 
 class HashView: RespondButton {
     private static let avatarWidth = UIImage(named: "Transaction Info Avatar Placeholder")?.size.width ?? 0
-    private static let textVerticalMargin: CGFloat = 6
+    private static let textTopMargin: CGFloat = 6
+    private static let textBottomMargin: CGFloat = 5
 
     private let avatarImageView = UIImageView()
     private let valueLabel = UILabel()
@@ -29,7 +30,8 @@ class HashView: RespondButton {
 
         wrapperView.addSubview(valueLabel)
         valueLabel.snp.makeConstraints { maker in
-            maker.top.bottom.equalToSuperview().inset(HashView.textVerticalMargin)
+            maker.top.equalToSuperview().inset(HashView.textTopMargin)
+            maker.bottom.equalToSuperview().inset(HashView.textBottomMargin)
             maker.leading.equalTo(self.avatarImageView.snp.trailing).offset(CGFloat.margin2x)
             maker.trailing.equalToSuperview().offset(-CGFloat.margin2x)
         }
@@ -91,7 +93,7 @@ class HashView: RespondButton {
     }
 
     class var textInsets: UIEdgeInsets {
-        UIEdgeInsets(top: HashView.textVerticalMargin, left: 2 * CGFloat.margin2x + HashView.avatarWidth, bottom: HashView.textVerticalMargin, right: CGFloat.margin2x)
+        UIEdgeInsets(top: HashView.textTopMargin, left: 2 * CGFloat.margin2x + HashView.avatarWidth, bottom: HashView.textBottomMargin, right: CGFloat.margin2x)
     }
 
 }
