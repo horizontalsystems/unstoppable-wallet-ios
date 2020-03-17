@@ -1414,9 +1414,9 @@
 		D31C477A238BF18D008CB818 /* BlockchainSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C476D238BF18D008CB818 /* BlockchainSettingCell.swift */; };
 		D31C477B238BF18D008CB818 /* BlockchainSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C476D238BF18D008CB818 /* BlockchainSettingCell.swift */; };
 		D31C477C238BF18D008CB818 /* BlockchainSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C476D238BF18D008CB818 /* BlockchainSettingCell.swift */; };
-		D31C477E238BF1E7008CB818 /* CoinSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C477D238BF1E7008CB818 /* CoinSettingsManager.swift */; };
-		D31C477F238BF1E7008CB818 /* CoinSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C477D238BF1E7008CB818 /* CoinSettingsManager.swift */; };
-		D31C4780238BF1E7008CB818 /* CoinSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C477D238BF1E7008CB818 /* CoinSettingsManager.swift */; };
+		D31C477E238BF1E7008CB818 /* BlockchainSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C477D238BF1E7008CB818 /* BlockchainSettingsManager.swift */; };
+		D31C477F238BF1E7008CB818 /* BlockchainSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C477D238BF1E7008CB818 /* BlockchainSettingsManager.swift */; };
+		D31C4780238BF1E7008CB818 /* BlockchainSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C477D238BF1E7008CB818 /* BlockchainSettingsManager.swift */; };
 		D31C4787238BF1F5008CB818 /* RestoreCoinsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C4782238BF1F5008CB818 /* RestoreCoinsModule.swift */; };
 		D31C4788238BF1F5008CB818 /* RestoreCoinsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C4782238BF1F5008CB818 /* RestoreCoinsModule.swift */; };
 		D31C4789238BF1F5008CB818 /* RestoreCoinsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C4782238BF1F5008CB818 /* RestoreCoinsModule.swift */; };
@@ -2244,7 +2244,7 @@
 		D31C476B238BF18D008CB818 /* BlockchainSettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockchainSettingsModule.swift; sourceTree = "<group>"; };
 		D31C476C238BF18D008CB818 /* BlockchainSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockchainSettingsViewController.swift; sourceTree = "<group>"; };
 		D31C476D238BF18D008CB818 /* BlockchainSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockchainSettingCell.swift; sourceTree = "<group>"; };
-		D31C477D238BF1E7008CB818 /* CoinSettingsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinSettingsManager.swift; sourceTree = "<group>"; };
+		D31C477D238BF1E7008CB818 /* BlockchainSettingsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockchainSettingsManager.swift; sourceTree = "<group>"; };
 		D31C4782238BF1F5008CB818 /* RestoreCoinsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreCoinsModule.swift; sourceTree = "<group>"; };
 		D31C4783238BF1F5008CB818 /* RestoreCoinsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreCoinsRouter.swift; sourceTree = "<group>"; };
 		D31C4784238BF1F5008CB818 /* RestoreCoinsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreCoinsInteractor.swift; sourceTree = "<group>"; };
@@ -2560,7 +2560,7 @@
 		11B35480153660045A6CF9AC /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				D31C477D238BF1E7008CB818 /* CoinSettingsManager.swift */,
+				D31C477D238BF1E7008CB818 /* BlockchainSettingsManager.swift */,
 				11B35ADD30196056A9C6407C /* WordsManager.swift */,
 				1A564BB88BF3ED779F8C21DC /* BlurManager.swift */,
 				11B35C4FFB99D10A8F343E9C /* LanguageManager.swift */,
@@ -2602,7 +2602,7 @@
 			isa = PBXGroup;
 			children = (
 				D31C4781238BF1F5008CB818 /* RestoreCoins */,
-				D31C4768238BF18D008CB818 /* CoinSettings */,
+				D31C4768238BF18D008CB818 /* BlockchainSettings */,
 				1A564D33595A816FABCD0402 /* BlockchainSettingsList */,
 				11B35344CEA8CF35257A6975 /* Launch */,
 				11B3522E3A62CE13EB0C958B /* Backup */,
@@ -3724,7 +3724,7 @@
 			path = Compatibility;
 			sourceTree = "<group>";
 		};
-		D31C4768238BF18D008CB818 /* CoinSettings */ = {
+		D31C4768238BF18D008CB818 /* BlockchainSettings */ = {
 			isa = PBXGroup;
 			children = (
 				D31C476B238BF18D008CB818 /* BlockchainSettingsModule.swift */,
@@ -3736,7 +3736,7 @@
 				1A5644B245A62181E34F521D /* BottomAlertViewController.swift */,
 				1A5645AB97FE34C046A0104A /* BlockchainSettingsFactory.swift */,
 			);
-			path = CoinSettings;
+			path = BlockchainSettings;
 			sourceTree = "<group>";
 		};
 		D31C4781238BF1F5008CB818 /* RestoreCoins */ = {
@@ -4630,7 +4630,7 @@
 				11B35E8CA3464D60E7D3A79F /* NotificationSettingsSelectorViewController.swift in Sources */,
 				11B35634E63C419820463391 /* AlertState.swift in Sources */,
 				11B35D10FBD91CBC30E06170 /* PriceAlertViewItemFactory.swift in Sources */,
-				D31C477E238BF1E7008CB818 /* CoinSettingsManager.swift in Sources */,
+				D31C477E238BF1E7008CB818 /* BlockchainSettingsManager.swift in Sources */,
 				11B350EDB0B40079A8DE3BD5 /* PriceAlert.swift in Sources */,
 				11B35A20B14CD83DF4EFA9DB /* PriceAlertRecord.swift in Sources */,
 				11B35EC7FDD947309458265D /* PriceAlertStorage.swift in Sources */,
@@ -5208,7 +5208,7 @@
 				11B35756FB327E32E447B4AD /* NotificationSettingsSelectorViewController.swift in Sources */,
 				11B35F975306805795EE1523 /* AlertState.swift in Sources */,
 				11B3515788E450B15F80E773 /* PriceAlertViewItemFactory.swift in Sources */,
-				D31C477F238BF1E7008CB818 /* CoinSettingsManager.swift in Sources */,
+				D31C477F238BF1E7008CB818 /* BlockchainSettingsManager.swift in Sources */,
 				11B3573B9D3B1B6587567FAC /* PriceAlert.swift in Sources */,
 				11B353B64C265C07F0547B08 /* PriceAlertRecord.swift in Sources */,
 				11B35F710FE55C6DBC3292E1 /* PriceAlertStorage.swift in Sources */,
@@ -5739,7 +5739,7 @@
 				11B35283239C08A7750DB500 /* NotificationSettingsSelectorViewController.swift in Sources */,
 				11B35839CF69F41600FB9B23 /* AlertState.swift in Sources */,
 				11B35220E45783BA43775EB6 /* PriceAlertViewItemFactory.swift in Sources */,
-				D31C4780238BF1E7008CB818 /* CoinSettingsManager.swift in Sources */,
+				D31C4780238BF1E7008CB818 /* BlockchainSettingsManager.swift in Sources */,
 				11B35256D5C9604216BEB89E /* PriceAlert.swift in Sources */,
 				11B35F4CE3BD699E684014F1 /* PriceAlertRecord.swift in Sources */,
 				11B3507E1E23542835E76929 /* PriceAlertStorage.swift in Sources */,

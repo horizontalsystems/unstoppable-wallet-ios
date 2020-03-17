@@ -6,9 +6,9 @@ class DepositInteractor {
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
     private let pasteboardManager: IPasteboardManager
-    private let blockchainSettingsManager: ICoinSettingsManager
+    private let blockchainSettingsManager: IBlockchainSettingsManager
 
-    init(walletManager: IWalletManager, adapterManager: IAdapterManager, pasteboardManager: IPasteboardManager, blockchainSettingsManager: ICoinSettingsManager) {
+    init(walletManager: IWalletManager, adapterManager: IAdapterManager, pasteboardManager: IPasteboardManager, blockchainSettingsManager: IBlockchainSettingsManager) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.pasteboardManager = pasteboardManager

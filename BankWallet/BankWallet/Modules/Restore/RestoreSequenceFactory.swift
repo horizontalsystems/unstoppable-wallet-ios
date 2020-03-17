@@ -1,10 +1,10 @@
 class RestoreSequenceFactory {
     private let walletManager: IWalletManager
-    private let settingsManager: ICoinSettingsManager
+    private let settingsManager: IBlockchainSettingsManager
     private let accountCreator: IAccountCreator
     private let accountManager: IAccountManager
 
-    init(walletManager: IWalletManager, settingsManager: ICoinSettingsManager, accountCreator: IAccountCreator, accountManager: IAccountManager) {
+    init(walletManager: IWalletManager, settingsManager: IBlockchainSettingsManager, accountCreator: IAccountCreator, accountManager: IAccountManager) {
         self.walletManager = walletManager
         self.settingsManager = settingsManager
         self.accountCreator = accountCreator
