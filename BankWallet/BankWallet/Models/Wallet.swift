@@ -1,7 +1,6 @@
 struct Wallet {
     let coin: Coin
     let account: Account
-    let coinSettings: CoinSettings
 }
 
 extension Wallet: Hashable {

@@ -9,12 +9,13 @@ class ManageWalletsRouter {
 
 extension ManageWalletsRouter: IManageWalletsRouter {
 
-    func showSettings(delegate: IBlockchainSettingsDelegate) {
-        navigationController?.pushViewController(BlockchainSettingsRouter.module(proceedMode: .restore, delegate: delegate), animated: true)
+    func showSettingsList(selectedCoins: [Coin], delegate: IBlockchainSettingsDelegate) {
+        let module = BlockchainSettingsListRouter.module(selectedCoins: selectedCoins, proceedMode: .done, canSave: false, delegate: delegate)
+        viewController?.navigationController?.pushViewController(module, animated: true)
     }
 
     func showRestore(predefinedAccountType: PredefinedAccountType, delegate: ICredentialsCheckDelegate) {
-        let module = RestoreRouter.module(predefinedAccountType: predefinedAccountType, mode: .presented, delegate: delegate)
+        let module = RestoreRouter.module(predefinedAccountType: predefinedAccountType, mode: .presented, proceedMode: .restore, delegate: delegate)
         let controller = ThemeNavigationController(rootViewController: module)
         navigationController = controller
         viewController?.present(controller, animated: true)
@@ -26,6 +27,10 @@ extension ManageWalletsRouter: IManageWalletsRouter {
 
     func closePresented() {
         navigationController?.dismiss(animated: true)
+    }
+
+    func closePushed() {
+        viewController?.navigationController?.popViewController(animated: true)
     }
 
 }

@@ -3,24 +3,28 @@ class AdapterFactory: IAdapterFactory {
     private let ethereumKitManager: EthereumKitManager
     private let eosKitManager: EosKitManager
     private let binanceKitManager: BinanceKitManager
+    private let blockchainSettingsManager: ICoinSettingsManager
 
-    init(appConfigProvider: IAppConfigProvider, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager) {
+    init(appConfigProvider: IAppConfigProvider, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager, blockchainSettingsManager: ICoinSettingsManager) {
         self.appConfigProvider = appConfigProvider
         self.ethereumKitManager = ethereumKitManager
         self.eosKitManager = eosKitManager
         self.binanceKitManager = binanceKitManager
+        self.blockchainSettingsManager = blockchainSettingsManager
     }
 
     func adapter(wallet: Wallet) -> IAdapter? {
+        let settings = blockchainSettingsManager.settings(coinType: wallet.coin.type)
+
         switch wallet.coin.type {
         case .bitcoin:
-            return try? BitcoinAdapter(wallet: wallet, testMode: appConfigProvider.testMode)
+            return try? BitcoinAdapter(wallet: wallet, settings: settings, testMode: appConfigProvider.testMode)
         case .litecoin:
-            return try? LitecoinAdapter(wallet: wallet, testMode: appConfigProvider.testMode)
+            return try? LitecoinAdapter(wallet: wallet, settings: settings, testMode: appConfigProvider.testMode)
         case .bitcoinCash:
-            return try? BitcoinCashAdapter(wallet: wallet, testMode: appConfigProvider.testMode)
+            return try? BitcoinCashAdapter(wallet: wallet, settings: settings, testMode: appConfigProvider.testMode)
         case .dash:
-            return try? DashAdapter(wallet: wallet, testMode: appConfigProvider.testMode)
+            return try? DashAdapter(wallet: wallet, settings: settings, testMode: appConfigProvider.testMode)
         case .ethereum:
             if let ethereumKit = try? ethereumKitManager.ethereumKit(account: wallet.account) {
                 return EthereumAdapter(ethereumKit: ethereumKit)

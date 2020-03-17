@@ -13,8 +13,9 @@ class BlockchainSettingsViewController: ThemeViewController {
         "bch.horizontalsystems.xyz/apg"
     ]
 
-    private var derivation: MnemonicDerivation?
-    private var syncMode: SyncMode?
+    private var settings: BlockchainSetting?
+    private var selectedDerivation: MnemonicDerivation?
+    private var selectedSyncMode: SyncMode?
 
     init(delegate: IBlockchainSettingsViewDelegate) {
         self.delegate = delegate
@@ -28,8 +29,6 @@ class BlockchainSettingsViewController: ThemeViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        title = "coin_settings.title".localized
 
         tableView.registerCell(forClass: BlockchainSettingCell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
@@ -46,10 +45,6 @@ class BlockchainSettingsViewController: ThemeViewController {
 
         delegate.onLoad()
         tableView.buildSections()
-    }
-
-    @objc func onTapRightBarButton() {
-        delegate.onConfirm()
     }
 
     private func handleSelect(derivation: MnemonicDerivation) {
@@ -139,7 +134,7 @@ extension BlockchainSettingsViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        if let derivation = derivation {
+        if let derivation = settings?.derivation {
             sections.append(Section(
                     id: "derivation",
                     headerState: header(hash: "derivation_header", text: "coin_settings.derivation.title".localized, additionalMargin: .margin2x),
@@ -148,7 +143,7 @@ extension BlockchainSettingsViewController: SectionsDataSource {
             ))
         }
 
-        if let syncMode = syncMode {
+        if let syncMode = settings?.syncMode {
             sections.append(Section(
                     id: "sync_mode",
                     headerState: header(hash: "sync_mode_header", text: "coin_settings.sync_mode.title".localized),
@@ -164,21 +159,12 @@ extension BlockchainSettingsViewController: SectionsDataSource {
 
 extension BlockchainSettingsViewController: IBlockchainSettingsView {
 
-    func showNextButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .plain, target: self, action: #selector(onTapRightBarButton))
+    func set(blockchainName: String) {
+        self.title = "blockchain_settings.chain_title".localized(blockchainName.capitalized)
     }
 
-    func showRestoreButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.restore".localized, style: .done, target: self, action: #selector(onTapRightBarButton))
-    }
-
-    func set(syncMode: SyncMode) {
-        self.syncMode = syncMode
-        tableView.reload(animated: true)
-    }
-
-    func set(derivation: MnemonicDerivation) {
-        self.derivation = derivation
+    func set(settings: BlockchainSetting) {
+        self.settings = settings
         tableView.reload(animated: true)
     }
 

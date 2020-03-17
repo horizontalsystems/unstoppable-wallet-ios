@@ -1,20 +1,26 @@
 class BlockchainSettingsPresenter {
     weak var view: IBlockchainSettingsView?
 
-    private let proceedMode: RestoreRouter.ProceedMode
     private let router: IBlockchainSettingsRouter
     private let interactor: IBlockchainSettingsInteractor
+    private let updateDelegate: IBlockchainSettingsUpdateDelegate?
 
-    private var selectedDerivation: MnemonicDerivation
-    private var selectedSyncMode: SyncMode
+    private let factory = BlockchainSettingsFactory()
 
-    init(proceedMode: RestoreRouter.ProceedMode, router: IBlockchainSettingsRouter, interactor: IBlockchainSettingsInteractor) {
-        self.proceedMode = proceedMode
+    private let coin: Coin
+    private var settings: BlockchainSetting
+
+    init(router: IBlockchainSettingsRouter, interactor: IBlockchainSettingsInteractor, coin: Coin, settings: BlockchainSetting, updateDelegate: IBlockchainSettingsUpdateDelegate) {
         self.router = router
         self.interactor = interactor
+        self.updateDelegate = updateDelegate
 
-        selectedDerivation = interactor.bitcoinDerivation
-        selectedSyncMode = interactor.syncMode
+        self.coin = coin
+        self.settings = settings
+    }
+
+    private func updateUI() {
+        view?.set(settings: factory.settings(coinType: coin.type, originalSettings: settings))
     }
 
 }
@@ -22,54 +28,46 @@ class BlockchainSettingsPresenter {
 extension BlockchainSettingsPresenter: IBlockchainSettingsViewDelegate {
 
     func onLoad() {
-        switch proceedMode {
-        case .next:
-            view?.showNextButton()
-        case .restore:
-            view?.showRestoreButton()
-        case .none: ()
-        }
-
-        view?.set(derivation: interactor.bitcoinDerivation)
-        view?.set(syncMode: interactor.syncMode)
+        view?.set(blockchainName: coin.title)
+        updateUI()
     }
 
     func onSelect(derivation: MnemonicDerivation) {
-        if selectedDerivation != derivation, !interactor.walletsForDerivationUpdate.isEmpty {
+        if settings.derivation != derivation, !interactor.walletsForUpdate(coinType: coin.type).isEmpty {
             view?.showChangeAlert(derivation: derivation)
         } else {
-            interactor.bitcoinDerivation = derivation
-            view?.set(derivation: derivation)
+            settings.derivation = derivation
+
+            updateDelegate?.onSelect(settings: settings, wallets: [])
+
+            updateUI()
         }
     }
 
     func onSelect(syncMode: SyncMode) {
-        if selectedSyncMode != syncMode, !interactor.walletsForSyncModeUpdate.isEmpty {
+        if settings.syncMode != syncMode, !interactor.walletsForUpdate(coinType: coin.type).isEmpty {
             view?.showChangeAlert(syncMode: syncMode)
         } else {
-            interactor.syncMode = syncMode
-            view?.set(syncMode: syncMode)
+            settings.syncMode = syncMode
+
+            updateDelegate?.onSelect(settings: settings, wallets: [])
+
+            updateUI()
         }
     }
 
-    func onConfirm() {
-        router.notifyConfirm()
-    }
-
     func proceedChange(derivation: MnemonicDerivation) {
-        selectedDerivation = derivation
-        view?.set(derivation: derivation)
+        settings.derivation = derivation
+        updateUI()
 
-        interactor.bitcoinDerivation = derivation
-        interactor.update(derivation: derivation, in: interactor.walletsForDerivationUpdate)
+        updateDelegate?.onSelect(settings: settings, wallets: interactor.walletsForUpdate(coinType: coin.type))
     }
 
     func proceedChange(syncMode: SyncMode) {
-        selectedSyncMode = syncMode
-        view?.set(syncMode: syncMode)
+        settings.syncMode = syncMode
+        updateUI()
 
-        interactor.syncMode = syncMode
-        interactor.update(syncMode: syncMode, in: interactor.walletsForSyncModeUpdate)
+        updateDelegate?.onSelect(settings: settings, wallets: interactor.walletsForUpdate(coinType: coin.type))
     }
 
 }

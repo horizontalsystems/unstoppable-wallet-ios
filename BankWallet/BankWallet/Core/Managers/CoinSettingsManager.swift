@@ -1,62 +1,46 @@
 protocol ICoinSettingsManager {
-    var bitcoinDerivation: MnemonicDerivation { get set }
-    var syncMode: SyncMode { get set }
+    var settableCoins: [Coin] { get }
 
-    func coinSettingsForCreate(coinType: CoinType) -> CoinSettings
-    func coinSettings(coinType: CoinType) -> CoinSettings
+    func save(settings: [BlockchainSetting])
+
+    func settingsForCreate(coinType: CoinType) -> BlockchainSetting?
+    func settings(coinType: CoinType) -> BlockchainSetting?
+    var allSettings: [BlockchainSetting] { get }
 }
 
 class CoinSettingsManager: ICoinSettingsManager {
-    private let defaultDerivation: MnemonicDerivation = .bip49
-    private let defaultSyncMode: SyncMode = .fast
+    private let appConfigProvider: IAppConfigProvider
+    private let storage: IBlockchainSettingsStorage
 
-    let localStorage: ILocalStorage
-
-    init (localStorage: ILocalStorage) {
-        self.localStorage = localStorage
-    }
-
-    var bitcoinDerivation: MnemonicDerivation {
-        get {
-            localStorage.bitcoinDerivation ?? defaultDerivation
-        }
-        set {
-            localStorage.bitcoinDerivation = newValue
-        }
-    }
-    var syncMode: SyncMode {
-        get {
-            localStorage.syncMode ?? defaultSyncMode
-        }
-        set {
-            localStorage.syncMode = newValue
+    var settableCoins: [Coin] {
+        appConfigProvider.defaultSettings.compactMap { setting in
+            appConfigProvider.coins.first { $0.type == setting.coinType }
         }
     }
 
-    func coinSettingsForCreate(coinType: CoinType) -> CoinSettings {
-        coinType.settings.reduce (CoinSettings()) { coinSettings, value in
-            var coinSettings = coinSettings
-            switch value {
-            case .derivation: coinSettings[CoinSetting.derivation] = defaultDerivation
-            case .syncMode: coinSettings[CoinSetting.syncMode] = SyncMode.new
-            }
-            return coinSettings
-        }
+    init (appConfigProvider: IAppConfigProvider, storage: IBlockchainSettingsStorage) {
+        self.appConfigProvider = appConfigProvider
+        self.storage = storage
     }
 
-    func coinSettings(coinType: CoinType) -> CoinSettings {
-        var coinSettings = CoinSettings()
+    func save(settings: [BlockchainSetting]) {
+        storage.save(settings: settings)
+    }
 
-        for setting in coinType.settings {
-            switch setting {
-            case .derivation:
-                coinSettings[.derivation] = bitcoinDerivation
-            case .syncMode:
-                coinSettings[.syncMode] = syncMode
-            }
+    func settingsForCreate(coinType: CoinType) -> BlockchainSetting? {
+        var setting = appConfigProvider.defaultSettings.first { $0.coinType == coinType }
+        setting?.syncMode = .new
+        return setting
+    }
+
+    func settings(coinType: CoinType) -> BlockchainSetting? {
+        storage.blockchainSettings(coinType: coinType) ?? appConfigProvider.defaultSettings.first { $0.coinType == coinType }
+    }
+
+    var allSettings: [BlockchainSetting] {
+        settableCoins.compactMap { coin in
+            settings(coinType: coin.type)
         }
-
-        return coinSettings
     }
 
 }

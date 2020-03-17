@@ -3,20 +3,9 @@ import ThemeKit
 
 class BlockchainSettingsRouter {
     weak var viewController: UIViewController?
-
-    private let delegate: IBlockchainSettingsDelegate?
-
-    init(delegate: IBlockchainSettingsDelegate? = nil) {
-        self.delegate = delegate
-    }
-
 }
 
 extension BlockchainSettingsRouter: IBlockchainSettingsRouter {
-
-    func notifyConfirm() {
-        delegate?.onConfirm()
-    }
 
     func open(url: String) {
         guard let url = URL(string: url) else {
@@ -30,10 +19,10 @@ extension BlockchainSettingsRouter: IBlockchainSettingsRouter {
 
 extension BlockchainSettingsRouter {
 
-    static func module(proceedMode: RestoreRouter.ProceedMode, delegate: IBlockchainSettingsDelegate? = nil) -> UIViewController {
-        let router = BlockchainSettingsRouter(delegate: delegate)
+    static func module(coin: Coin, settings: BlockchainSetting, delegate: IBlockchainSettingsUpdateDelegate) -> UIViewController {
+        let router = BlockchainSettingsRouter()
         let interactor = BlockchainSettingsInteractor(coinSettingsManager: App.shared.coinSettingsManager, walletManager: App.shared.walletManager)
-        let presenter = BlockchainSettingsPresenter(proceedMode: proceedMode, router: router, interactor: interactor)
+        let presenter = BlockchainSettingsPresenter(router: router, interactor: interactor, coin: coin, settings: settings, updateDelegate: delegate)
         let viewController = BlockchainSettingsViewController(delegate: presenter)
 
         presenter.view = viewController

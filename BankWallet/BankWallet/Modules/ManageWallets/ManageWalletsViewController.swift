@@ -44,6 +44,11 @@ class ManageWalletsViewController: ThemeViewController {
         tableView.buildSections()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        delegate.onAppear()
+    }
+
     @objc func onTapCloseButton() {
         delegate.onTapCloseButton()
     }

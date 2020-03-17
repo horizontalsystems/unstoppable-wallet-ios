@@ -9,11 +9,12 @@ class App {
     let keychainKit: IKeychainKit
     let pinKit: IPinKit
 
+    let appConfigProvider: IAppConfigProvider
+
     let localStorage: ILocalStorage & IChartTypeStorage
-    let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage
+    let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage
 
     let themeManager: ThemeManager
-    let appConfigProvider: IAppConfigProvider
     let systemInfoManager: ISystemInfoManager
 
     let pasteboardManager: IPasteboardManager
@@ -70,12 +71,14 @@ class App {
 
         keychainKit = KeychainKit(service: "io.horizontalsystems.bank.dev") 
 
+        appConfigProvider = AppConfigProvider()
+
         localStorage = LocalStorage(storage: StorageKit.LocalStorage.default)
-        storage = GrdbStorage()
+        storage = GrdbStorage(appConfigProvider: appConfigProvider)
 
         themeManager = ThemeManager.shared
-        appConfigProvider = AppConfigProvider()
         systemInfoManager = SystemInfoManager()
+
         if appConfigProvider.officeMode {
             debugLogger = DebugLogger(localStorage: localStorage, dateProvider: CurrentDateProvider())
         }
@@ -110,7 +113,10 @@ class App {
         let eosKitManager = EosKitManager(appConfigProvider: appConfigProvider)
         let binanceKitManager = BinanceKitManager(appConfigProvider: appConfigProvider)
 
-        let adapterFactory: IAdapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager)
+        let settingsStorage: IBlockchainSettingsStorage = BlockchainSettingsStorage(storage: storage)
+        coinSettingsManager = CoinSettingsManager(appConfigProvider: appConfigProvider, storage: settingsStorage)
+
+        let adapterFactory: IAdapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, blockchainSettingsManager: coinSettingsManager)
         adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager)
 
         pinKit = PinKit.Kit(secureStorage: keychainKit.secureStorage, localStorage: StorageKit.LocalStorage.default)
@@ -135,8 +141,6 @@ class App {
 
         appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage, predefinedAccountTypeManager: predefinedAccountTypeManager, walletManager: walletManager, adapterManager: adapterManager, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager)
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, localStorage: localStorage)
-
-        coinSettingsManager = CoinSettingsManager(localStorage: localStorage)
 
         keychainKitDelegate = KeychainKitDelegate(accountManager: accountManager, walletManager: walletManager)
         keychainKit.set(delegate: keychainKitDelegate)

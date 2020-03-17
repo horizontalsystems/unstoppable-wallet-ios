@@ -53,34 +53,6 @@ extension WalletManager: IWalletManager {
         }
     }
 
-    func update(derivation: MnemonicDerivation, in wallets: [Wallet]) {
-        delete(wallets: wallets)
-
-        let wallets: [Wallet] = wallets.map {
-            var coinSettings = $0.coinSettings
-            coinSettings[CoinSetting.derivation] = derivation
-
-            return Wallet(coin: $0.coin, account: $0.account, coinSettings: coinSettings)
-        }
-
-        save(wallets: wallets)
-        kitCleaner.clear()
-    }
-
-    func update(syncMode: SyncMode, in wallets: [Wallet]) {
-        delete(wallets: wallets)
-
-        let wallets: [Wallet] = wallets.map {
-            var coinSettings = $0.coinSettings
-            coinSettings[CoinSetting.syncMode] = syncMode
-
-            return Wallet(coin: $0.coin, account: $0.account, coinSettings: coinSettings)
-        }
-
-        save(wallets: wallets)
-        kitCleaner.clear()
-    }
-
     func delete(wallets: [Wallet]) {
         storage.delete(wallets: wallets)
 

@@ -2,6 +2,7 @@ protocol IRestoreEosView: class {
     func showCancelButton()
     func showNextButton()
     func showRestoreButton()
+    func showDoneButton()
     func set(account: String?)
     func set(key: String?)
     func show(error: Error)

@@ -2,6 +2,7 @@ protocol IRestoreWordsView: class {
     func showCancelButton()
     func showNextButton()
     func showRestoreButton()
+    func showDoneButton()
 
     func show(defaultWords: [String])
     func show(error: Error)

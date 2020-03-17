@@ -1,6 +1,7 @@
 class RestoreCoinsPresenter {
     weak var view: IRestoreCoinsView?
 
+    private let proceedMode: RestoreRouter.ProceedMode
     private let predefinedAccountType: PredefinedAccountType
     private let accountType: AccountType
     private let interactor: IRestoreCoinsInteractor
@@ -8,7 +9,8 @@ class RestoreCoinsPresenter {
 
     private var enabledCoins = Set<Coin>()
 
-    init(predefinedAccountType: PredefinedAccountType, accountType: AccountType, interactor: IRestoreCoinsInteractor, router: IRestoreCoinsRouter) {
+    init(proceedMode: RestoreRouter.ProceedMode, predefinedAccountType: PredefinedAccountType, accountType: AccountType, interactor: IRestoreCoinsInteractor, router: IRestoreCoinsRouter) {
+        self.proceedMode = proceedMode
         self.predefinedAccountType = predefinedAccountType
         self.accountType = accountType
         self.interactor = interactor
@@ -38,7 +40,7 @@ class RestoreCoinsPresenter {
         view?.setProceedButton(enabled: !enabledCoins.isEmpty)
     }
 
-    private func enable(coin: Coin, requestedCoinSettings: CoinSettings) {
+    private func enable(coin: Coin) {
         enabledCoins.insert(coin)
         syncProceedButton()
     }
@@ -48,12 +50,22 @@ class RestoreCoinsPresenter {
 extension RestoreCoinsPresenter: IRestoreCoinsViewDelegate {
 
     func onLoad() {
+        switch proceedMode {
+        case .next:
+            view?.showNextButton()
+        case .restore:
+            view?.showRestoreButton()
+        case .done:
+            view?.showDoneButton()
+        case .none: ()
+        }
+
         syncViewItems()
         syncProceedButton()
     }
 
     func onEnable(viewItem: CoinToggleViewItem) {
-        enable(coin: viewItem.coin, requestedCoinSettings: [:])
+        enable(coin: viewItem.coin)
     }
 
     func onDisable(viewItem: CoinToggleViewItem) {
@@ -61,22 +73,12 @@ extension RestoreCoinsPresenter: IRestoreCoinsViewDelegate {
         syncProceedButton()
     }
 
-    func onTapRestore() {
+    func onProceed() {
         guard !enabledCoins.isEmpty else {
             return
         }
 
-        let account = interactor.account(accountType: accountType)
-        interactor.create(account: account)
-
-        let wallets: [Wallet] = enabledCoins.map { coin in
-            let coinSettings = interactor.coinSettings(coinType: coin.type)
-            return Wallet(coin: coin, account: account, coinSettings: coinSettings)
-        }
-
-        interactor.save(wallets: wallets)
-
-        router.notifyRestored()
+        router.onSelect(coins: Array(enabledCoins))
     }
 
 }

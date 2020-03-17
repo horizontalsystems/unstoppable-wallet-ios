@@ -24,7 +24,6 @@ class RestoreCoinsViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = "select_coins.choose_crypto".localized
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.restore".localized, style: .done, target: self, action: #selector(onTapRestore))
 
         tableView.registerCell(forClass: CoinToggleCell.self)
         tableView.sectionDataSource = self
@@ -43,8 +42,8 @@ class RestoreCoinsViewController: ThemeViewController {
         tableView.buildSections()
     }
 
-    @objc func onTapRestore() {
-        delegate.onTapRestore()
+    @objc func onTapRightBarButton() {
+        delegate.onProceed()
     }
 
     private func rows(viewItems: [CoinToggleViewItem]) -> [RowProtocol] {
@@ -99,6 +98,18 @@ extension RestoreCoinsViewController: SectionsDataSource {
 }
 
 extension RestoreCoinsViewController: IRestoreCoinsView {
+
+    func showNextButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .plain, target: self, action: #selector(onTapRightBarButton))
+    }
+
+    func showRestoreButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.restore".localized, style: .done, target: self, action: #selector(onTapRightBarButton))
+    }
+
+    func showDoneButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(onTapRightBarButton))
+    }
 
     func set(featuredViewItems: [CoinToggleViewItem], viewItems: [CoinToggleViewItem]) {
         self.featuredViewItems = featuredViewItems

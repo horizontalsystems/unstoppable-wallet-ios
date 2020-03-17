@@ -56,15 +56,6 @@ enum CoinType {
         return nil
     }
 
-    var settings: [CoinSetting] {
-        switch self {
-        case .bitcoin, .litecoin: return [.derivation, .syncMode]
-        case .bitcoinCash: return [.syncMode]
-        case .dash: return [.syncMode]
-        default: return []
-        }
-    }
-
     var restoreUrl: String {
         switch self {
         case .bitcoin: return "https://btc.horizontalsystems.xyz/apg"
@@ -96,11 +87,4 @@ extension CoinType: Equatable {
         }
     }
 
-}
-
-typealias CoinSettings = [CoinSetting: Any]
-
-enum CoinSetting {
-    case derivation
-    case syncMode
 }

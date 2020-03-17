@@ -9,7 +9,7 @@ class MainSettingsRouter {
 extension MainSettingsRouter: IMainSettingsRouter {
 
     func showManageAccounts() {
-        viewController?.navigationController?.pushViewController(ManageAccountsRouter.module(mode: .pushed), animated: true)
+        viewController?.navigationController?.pushViewController(ManageAccountsRouter.module(), animated: true)
     }
 
     func showSecuritySettings() {
