@@ -11,12 +11,12 @@ extension RestoreRouter: IRestoreRouter {
         viewController?.navigationController?.pushViewController(restoreController, animated: true)
     }
 
-    func showSettings(delegate: IBlockchainSettingsDelegate) {
-        viewController?.navigationController?.pushViewController(BlockchainSettingsRouter.module(proceedMode: .next, delegate: delegate), animated: true)
+    func showSettings(coins: [Coin], delegate: IBlockchainSettingsDelegate?) {
+        viewController?.navigationController?.pushViewController(BlockchainSettingsListRouter.module(selectedCoins: coins, proceedMode: .restore, canSave: false, delegate: delegate), animated: true)
     }
 
-    func showRestoreCoins(predefinedAccountType: PredefinedAccountType, accountType: AccountType, delegate: IRestoreCoinsDelegate) {
-        viewController?.navigationController?.pushViewController(RestoreCoinsRouter.module(predefinedAccountType: predefinedAccountType, accountType: accountType, delegate: delegate), animated: true)
+    func showRestoreCoins(predefinedAccountType: PredefinedAccountType, accountType: AccountType, proceedMode: RestoreRouter.ProceedMode, delegate: IRestoreCoinsDelegate?) {
+        viewController?.navigationController?.pushViewController(RestoreCoinsRouter.module(proceedMode: proceedMode, predefinedAccountType: predefinedAccountType, accountType: accountType, delegate: delegate), animated: true)
     }
 
     func showMain() {
@@ -28,8 +28,10 @@ extension RestoreRouter: IRestoreRouter {
 extension RestoreRouter {
 
     static func module() -> UIViewController {
+        let restoreSequenceFactory = RestoreSequenceFactory(walletManager: App.shared.walletManager, settingsManager: App.shared.coinSettingsManager, accountCreator: App.shared.accountCreator, accountManager: App.shared.accountManager)
+
         let router = RestoreRouter()
-        let presenter = RestorePresenter(router: router, accountCreator: App.shared.accountCreator, predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager)
+        let presenter = RestorePresenter(router: router, accountCreator: App.shared.accountCreator, predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager, restoreSequenceFactory: restoreSequenceFactory)
         let viewController = RestoreViewController(delegate: presenter)
 
         presenter.view = viewController
@@ -57,6 +59,7 @@ extension RestoreRouter {
     enum ProceedMode {
         case next
         case restore
+        case done
         case none
     }
 

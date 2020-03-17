@@ -9,6 +9,7 @@ protocol IManageWalletsView: class {
 
 protocol IManageWalletsViewDelegate {
     func onLoad()
+    func onAppear()
 
     func onEnable(viewItem: CoinToggleViewItem)
     func onDisable(viewItem: CoinToggleViewItem)
@@ -27,23 +28,25 @@ protocol IManageWalletsInteractor {
     var wallets: [Wallet] { get }
 
     func save(wallet: Wallet)
+    func save(settings: [BlockchainSetting])
     func delete(wallet: Wallet)
 
     func createAccount(predefinedAccountType: PredefinedAccountType) throws -> Account
     func createRestoredAccount(accountType: AccountType) -> Account
     func save(account: Account)
 
-    func coinSettings(coinType: CoinType) -> CoinSettings
+    func settings(coinType: CoinType) -> BlockchainSetting?
 }
 
 protocol IManageWalletsInteractorDelegate: class {
 }
 
 protocol IManageWalletsRouter {
-    func showSettings(delegate: IBlockchainSettingsDelegate)
+    func showSettingsList(selectedCoins: [Coin], delegate: IBlockchainSettingsDelegate)
     func showRestore(predefinedAccountType: PredefinedAccountType, delegate: ICredentialsCheckDelegate)
     func close()
     func closePresented()
+    func closePushed()
 }
 
 protocol IManageWalletsPresenterState {

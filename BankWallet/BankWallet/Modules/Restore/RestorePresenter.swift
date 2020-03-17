@@ -11,8 +11,9 @@ class RestorePresenter {
 
     private var predefinedAccountType: PredefinedAccountType?
     private var accountType: AccountType?
+    private var coins: [Coin]?
 
-    init(router: IRestoreRouter, accountCreator: IAccountCreator, predefinedAccountTypeManager: IPredefinedAccountTypeManager, viewItemsFactory: AccountTypeViewItemFactory = .init(), restoreSequenceFactory: IRestoreSequenceFactory = RestoreSequenceFactory()) {
+    init(router: IRestoreRouter, accountCreator: IAccountCreator, predefinedAccountTypeManager: IPredefinedAccountTypeManager, viewItemsFactory: AccountTypeViewItemFactory = .init(), restoreSequenceFactory: IRestoreSequenceFactory) {
         self.router = router
         self.accountCreator = accountCreator
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
@@ -42,21 +43,18 @@ extension RestorePresenter: ICredentialsCheckDelegate {
     func didCheck(accountType: AccountType) {
         self.accountType = accountType
 
-        restoreSequenceFactory.onAccountCheck(accountType: accountType, predefinedAccountType: predefinedAccountType, settings: { [unowned self] in
-                    router.showSettings(delegate: self)
-                }, coins: { [unowned self] accountType, predefinedAccountType in
-                    router.showRestoreCoins(predefinedAccountType: predefinedAccountType, accountType: accountType, delegate: self)
-                }
-        )
+        restoreSequenceFactory.onAccountCheck(accountType: accountType, predefinedAccountType: predefinedAccountType, coins: { [weak self] accountType, predefinedAccountType, proceedMode in
+            router.showRestoreCoins(predefinedAccountType: predefinedAccountType, accountType: accountType, proceedMode: proceedMode, delegate: self)
+        })
     }
 
 }
 
 extension RestorePresenter: IBlockchainSettingsDelegate {
 
-    func onConfirm() {
-        restoreSequenceFactory.onSettingsConfirm(accountType: accountType, predefinedAccountType: predefinedAccountType, coins: { [unowned self] accountType, predefinedAccountType in
-            router.showRestoreCoins(predefinedAccountType: predefinedAccountType, accountType: accountType, delegate: self)
+    func onConfirm(settings: [BlockchainSetting]) {
+        restoreSequenceFactory.onSettingsConfirm(accountType: accountType, coins: coins, settings: settings, success: {
+            router.showMain()
         })
     }
 
@@ -64,8 +62,14 @@ extension RestorePresenter: IBlockchainSettingsDelegate {
 
 extension RestorePresenter: IRestoreCoinsDelegate {
 
-    func didRestore() {
-        router.showMain()
+    func onSelect(coins: [Coin]) {
+        self.coins = coins
+
+        restoreSequenceFactory.onCoinsSelect(coins: coins, accountType: accountType, predefinedAccountType: predefinedAccountType, settings: { [weak self] in
+            self?.router.showSettings(coins: coins, delegate: self)
+        }, finish: { [weak self] in
+            self?.router.showMain()
+        })
     }
 
 }

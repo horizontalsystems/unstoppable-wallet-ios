@@ -8,6 +8,7 @@ class CreateWalletPresenter {
 
     private var accounts = [PredefinedAccountType: Account]()
     private var wallets = [Coin: Wallet]()
+    private var settings = [Coin: BlockchainSetting]()
 
     init(presentationMode: CreateWalletModule.PresentationMode, predefinedAccountType: PredefinedAccountType?, interactor: ICreateWalletInteractor, router: ICreateWalletRouter) {
         self.presentationMode = presentationMode
@@ -62,9 +63,8 @@ class CreateWalletPresenter {
     }
 
     private func createWallet(coin: Coin, account: Account) {
-        let coinSettings = interactor.coinSettings(coin: coin)
-
-        wallets[coin] = Wallet(coin: coin, account: account, coinSettings: coinSettings)
+        settings[coin] = interactor.blockchainSettings(coinType: coin.type)
+        wallets[coin] = Wallet(coin: coin, account: account)
 
         syncCreateButton()
     }
@@ -94,6 +94,7 @@ extension CreateWalletPresenter: ICreateWalletViewDelegate {
 
     func onDisable(viewItem: CoinToggleViewItem) {
         wallets.removeValue(forKey: viewItem.coin)
+        settings.removeValue(forKey: viewItem.coin)
         syncCreateButton()
     }
 
@@ -109,6 +110,7 @@ extension CreateWalletPresenter: ICreateWalletViewDelegate {
         let accounts = Array(Set(wallets.values.map { $0.account }))
         interactor.create(accounts: accounts)
 
+        interactor.save(settings: Array(settings.values))
         interactor.save(wallets: Array(wallets.values))
 
         switch presentationMode {

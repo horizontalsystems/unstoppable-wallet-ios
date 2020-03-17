@@ -32,12 +32,12 @@ extension ManageAccountsRouter: IManageAccountsRouter {
         viewController?.dismiss(animated: true)
     }
 
-    func showSettings(delegate: IBlockchainSettingsDelegate) {
-        restoreController?.navigationController?.pushViewController(BlockchainSettingsRouter.module(proceedMode: .next, delegate: delegate), animated: true)
+    func showSettings(coins: [Coin], delegate: IBlockchainSettingsDelegate?) {
+        restoreController?.navigationController?.pushViewController(BlockchainSettingsListRouter.module(selectedCoins: coins, proceedMode: .restore, canSave: false, delegate: delegate), animated: true)
     }
 
     func showRestoreCoins(predefinedAccountType: PredefinedAccountType, accountType: AccountType, delegate: IRestoreCoinsDelegate) {
-        restoreController?.navigationController?.pushViewController(RestoreCoinsRouter.module(predefinedAccountType: predefinedAccountType, accountType: accountType, delegate: delegate), animated: true)
+        restoreController?.navigationController?.pushViewController(RestoreCoinsRouter.module(proceedMode: .next, predefinedAccountType: predefinedAccountType, accountType: accountType, delegate: delegate), animated: true)
     }
 
     func closeRestore() {
@@ -49,9 +49,11 @@ extension ManageAccountsRouter: IManageAccountsRouter {
 extension ManageAccountsRouter {
 
     static func module() -> UIViewController {
+        let restoreSequenceFactory = RestoreSequenceFactory(walletManager: App.shared.walletManager, settingsManager: App.shared.coinSettingsManager, accountCreator: App.shared.accountCreator, accountManager: App.shared.accountManager)
+
         let router = ManageAccountsRouter()
         let interactor = ManageAccountsInteractor(predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager, accountManager: App.shared.accountManager, accountCreator: App.shared.accountCreator)
-        let presenter = ManageAccountsPresenter(interactor: interactor, router: router)
+        let presenter = ManageAccountsPresenter(interactor: interactor, router: router, restoreSequenceFactory: restoreSequenceFactory)
         let viewController = ManageAccountsViewController(delegate: presenter)
 
         interactor.delegate = presenter

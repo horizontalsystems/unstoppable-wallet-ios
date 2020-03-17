@@ -6,7 +6,7 @@ class RestoreCoinsRouter {
 
     weak var delegate: IRestoreCoinsDelegate?
 
-    init(delegate: IRestoreCoinsDelegate) {
+    init(delegate: IRestoreCoinsDelegate?) {
         self.delegate = delegate
     }
 
@@ -14,24 +14,18 @@ class RestoreCoinsRouter {
 
 extension RestoreCoinsRouter: IRestoreCoinsRouter {
 
-    func notifyRestored() {
-        delegate?.didRestore()
+    func onSelect(coins: [Coin]) {
+        delegate?.onSelect(coins: coins)
     }
 
 }
 
 extension RestoreCoinsRouter {
 
-    static func module(predefinedAccountType: PredefinedAccountType, accountType: AccountType, delegate: IRestoreCoinsDelegate) -> UIViewController {
+    static func module(proceedMode: RestoreRouter.ProceedMode, predefinedAccountType: PredefinedAccountType, accountType: AccountType, delegate: IRestoreCoinsDelegate?) -> UIViewController {
         let router = RestoreCoinsRouter(delegate: delegate)
-        let interactor = RestoreCoinsInteractor(
-                appConfigProvider: App.shared.appConfigProvider,
-                accountCreator: App.shared.accountCreator,
-                accountManager: App.shared.accountManager,
-                walletManager: App.shared.walletManager,
-                coinSettingsManager: App.shared.coinSettingsManager
-        )
-        let presenter = RestoreCoinsPresenter(predefinedAccountType: predefinedAccountType, accountType: accountType, interactor: interactor, router: router)
+        let interactor = RestoreCoinsInteractor(appConfigProvider: App.shared.appConfigProvider)
+        let presenter = RestoreCoinsPresenter(proceedMode: proceedMode, predefinedAccountType: predefinedAccountType, accountType: accountType, interactor: interactor, router: router)
         let viewController = RestoreCoinsViewController(delegate: presenter)
 
         presenter.view = viewController

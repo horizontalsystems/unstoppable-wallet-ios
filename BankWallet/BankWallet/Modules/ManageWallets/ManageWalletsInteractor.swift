@@ -43,6 +43,10 @@ extension ManageWalletsInteractor: IManageWalletsInteractor {
         walletManager.save(wallets: [wallet])
     }
 
+    func save(settings: [BlockchainSetting]) {
+        coinSettingsManager.save(settings: settings)
+    }
+
     func delete(wallet: Wallet) {
         walletManager.delete(wallets: [wallet])
     }
@@ -59,8 +63,8 @@ extension ManageWalletsInteractor: IManageWalletsInteractor {
         accountManager.save(account: account)
     }
 
-    func coinSettings(coinType: CoinType) -> CoinSettings {
-        coinSettingsManager.coinSettings(coinType: coinType)
+    func settings(coinType: CoinType) -> BlockchainSetting? {
+        coinSettingsManager.settings(coinType: coinType)
     }
 
 }

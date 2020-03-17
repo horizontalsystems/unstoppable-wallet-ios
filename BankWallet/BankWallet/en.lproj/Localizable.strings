@@ -73,6 +73,7 @@ bch.horizontalsystems.xyz/apg";
 "blockchain_settings.sync_mode_change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin, Bitcoin Cash and Dash blockchains, if you have enabled any of these tokens. Your balance or transactions won\'t be affected.\n\nWe recommend not to change this setting if not sure what it does.";
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
 "blockchain_settings.sync_mode.api" = "API";
+"blockchain_settings.chain_title" = "%@ Settings";
 // Backup
 
 "backup.close" = "Close";
@@ -304,7 +305,6 @@ bch.horizontalsystems.xyz/apg";
 // Settings -> Security
 
 "settings_security.title" = "Security Center";
-"settings_security.manage_accounts" = "Wallet Settings";
 "settings_security.blockchain_settings" = "Blockchain Settings";
 "settings_security.passcode" = "Passcode";
 "settings_security.change_pin" = "Edit Passcode";
@@ -321,7 +321,7 @@ bch.horizontalsystems.xyz/apg";
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Wallet Settings";
+"settings_manage_keys.title" = "Manage Wallets";
 "settings_manage_keys.item_title" = "%@ Wallet";
 "settings_manage_keys.add_wallet" = "Add Wallet";
 "settings_manage_keys.description" = "Highlighted below are your active wallets where each wallet controls a set of cryptocurrencies.\n\nYou must backup each highlighted wallet by backing up the private key for it. This key is the only way to restore and access your funds if your phone is ever lost, stolen or the app malfunctions.";
