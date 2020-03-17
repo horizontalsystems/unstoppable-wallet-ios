@@ -315,13 +315,13 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   BitcoinCashKit.swift:
-    :commit: 551e646342236d8377d44a938967c2889bbb5dfc
+    :commit: e4f26b034f164f9859db1f81c0579e818c3c54ff
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinCore.swift:
-    :commit: 551e646342236d8377d44a938967c2889bbb5dfc
+    :commit: e4f26b034f164f9859db1f81c0579e818c3c54ff
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinKit.swift:
-    :commit: 551e646342236d8377d44a938967c2889bbb5dfc
+    :commit: e4f26b034f164f9859db1f81c0579e818c3c54ff
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
     :commit: 17079e955f1069c47f869eff4a352049c6cb9111
@@ -330,7 +330,7 @@ CHECKOUT OPTIONS:
     :commit: 5592069e189f5c48af392d1d52ea41733b27f411
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
-    :commit: 551e646342236d8377d44a938967c2889bbb5dfc
+    :commit: e4f26b034f164f9859db1f81c0579e818c3c54ff
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   EosioSwiftAbieosSerializationProvider:
     :commit: 7ac04899e62012e225e0ea48a96951de0b72ad08
@@ -339,13 +339,13 @@ CHECKOUT OPTIONS:
     :commit: 5b295950dde8aab7979745ea111ce3aa76ec5a7d
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
   Hodler.swift:
-    :commit: 551e646342236d8377d44a938967c2889bbb5dfc
+    :commit: e4f26b034f164f9859db1f81c0579e818c3c54ff
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   LanguageKit.swift:
     :commit: 5592069e189f5c48af392d1d52ea41733b27f411
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
-    :commit: 551e646342236d8377d44a938967c2889bbb5dfc
+    :commit: e4f26b034f164f9859db1f81c0579e818c3c54ff
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   PinKit.swift:
     :commit: 5592069e189f5c48af392d1d52ea41733b27f411
