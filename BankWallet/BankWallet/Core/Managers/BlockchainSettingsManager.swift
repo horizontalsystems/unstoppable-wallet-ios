@@ -1,4 +1,4 @@
-protocol ICoinSettingsManager {
+protocol IBlockchainSettingsManager {
     var settableCoins: [Coin] { get }
 
     func save(settings: [BlockchainSetting])
@@ -8,7 +8,7 @@ protocol ICoinSettingsManager {
     var allSettings: [BlockchainSetting] { get }
 }
 
-class CoinSettingsManager: ICoinSettingsManager {
+class BlockchainSettingsManager: IBlockchainSettingsManager {
     private let appConfigProvider: IAppConfigProvider
     private let storage: IBlockchainSettingsStorage
 

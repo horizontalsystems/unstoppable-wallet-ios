@@ -1,8 +1,8 @@
 class BlockchainSettingsInteractor {
-    private var blockchainSettingsManager: ICoinSettingsManager
+    private var blockchainSettingsManager: IBlockchainSettingsManager
     private let walletManager: IWalletManager
 
-    init(coinSettingsManager: ICoinSettingsManager, walletManager: IWalletManager) {
+    init(coinSettingsManager: IBlockchainSettingsManager, walletManager: IWalletManager) {
         self.blockchainSettingsManager = coinSettingsManager
         self.walletManager = walletManager
     }
