@@ -3,9 +3,9 @@ class CreateWalletInteractor {
     private let accountCreator: IAccountCreator
     private let accountManager: IAccountManager
     private let walletManager: IWalletManager
-    private let coinSettingsManager: ICoinSettingsManager
+    private let coinSettingsManager: IBlockchainSettingsManager
 
-    init(appConfigProvider: IAppConfigProvider, accountCreator: IAccountCreator, accountManager: IAccountManager, walletManager: IWalletManager, coinSettingsManager: ICoinSettingsManager) {
+    init(appConfigProvider: IAppConfigProvider, accountCreator: IAccountCreator, accountManager: IAccountManager, walletManager: IWalletManager, coinSettingsManager: IBlockchainSettingsManager) {
         self.appConfigProvider = appConfigProvider
         self.accountCreator = accountCreator
         self.accountManager = accountManager

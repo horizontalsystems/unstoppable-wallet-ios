@@ -3,9 +3,9 @@ class AdapterFactory: IAdapterFactory {
     private let ethereumKitManager: EthereumKitManager
     private let eosKitManager: EosKitManager
     private let binanceKitManager: BinanceKitManager
-    private let blockchainSettingsManager: ICoinSettingsManager
+    private let blockchainSettingsManager: IBlockchainSettingsManager
 
-    init(appConfigProvider: IAppConfigProvider, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager, blockchainSettingsManager: ICoinSettingsManager) {
+    init(appConfigProvider: IAppConfigProvider, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager, blockchainSettingsManager: IBlockchainSettingsManager) {
         self.appConfigProvider = appConfigProvider
         self.ethereumKitManager = ethereumKitManager
         self.eosKitManager = eosKitManager

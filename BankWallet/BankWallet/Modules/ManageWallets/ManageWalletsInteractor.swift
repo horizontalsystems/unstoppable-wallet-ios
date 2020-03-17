@@ -7,9 +7,9 @@ class ManageWalletsInteractor {
     private let accountManager: IAccountManager
     private let accountCreator: IAccountCreator
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
-    private let coinSettingsManager: ICoinSettingsManager
+    private let coinSettingsManager: IBlockchainSettingsManager
 
-    init(appConfigProvider: IAppConfigProvider, walletManager: IWalletManager, walletFactory: IWalletFactory, accountManager: IAccountManager, accountCreator: IAccountCreator, predefinedAccountTypeManager: IPredefinedAccountTypeManager, coinSettingsManager: ICoinSettingsManager) {
+    init(appConfigProvider: IAppConfigProvider, walletManager: IWalletManager, walletFactory: IWalletFactory, accountManager: IAccountManager, accountCreator: IAccountCreator, predefinedAccountTypeManager: IPredefinedAccountTypeManager, coinSettingsManager: IBlockchainSettingsManager) {
         self.appConfigProvider = appConfigProvider
         self.walletManager = walletManager
         self.walletFactory = walletFactory

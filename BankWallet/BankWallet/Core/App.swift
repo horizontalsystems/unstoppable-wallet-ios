@@ -54,7 +54,7 @@ class App {
     let appStatusManager: IAppStatusManager
     let appVersionManager: IAppVersionManager
 
-    let coinSettingsManager: ICoinSettingsManager
+    let coinSettingsManager: IBlockchainSettingsManager
     let rateCoinMapper: RateCoinMapper
 
     let kitCleaner: IKitCleaner
@@ -114,7 +114,7 @@ class App {
         let binanceKitManager = BinanceKitManager(appConfigProvider: appConfigProvider)
 
         let settingsStorage: IBlockchainSettingsStorage = BlockchainSettingsStorage(storage: storage)
-        coinSettingsManager = CoinSettingsManager(appConfigProvider: appConfigProvider, storage: settingsStorage)
+        coinSettingsManager = BlockchainSettingsManager(appConfigProvider: appConfigProvider, storage: settingsStorage)
 
         let adapterFactory: IAdapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, blockchainSettingsManager: coinSettingsManager)
         adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager)
