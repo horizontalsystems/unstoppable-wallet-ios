@@ -153,7 +153,7 @@
 "send.amount_error.balance" = "Баланс %@";
 "send.amount_error.maximum_amount" = "Макс. сумма %@";
 "send.amount_error.minimum_amount" = "Мин. сумма %@";
-"send.amount_error.min_required_balance" = "Мин. обязательный остаток %@";
+"send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.token.insufficient_fee_alert" = "Комиссия за отправку %@ (%@) взимается в %@. Необходимо %@.";
 
 "send.lock_time" = "TimeLock";
@@ -299,7 +299,6 @@
 "settings.contact.app_status" = "Статус Приложения";
 "settings.contact.email" = "Эл. почта";
 "settings.contact.telegram_wallet" = "Telegram (Помощь по кошельку)";
-"settings.contact.telegram_developers" = "Telegram (Разработчики)";
 
 // Manage Keys
 
@@ -374,6 +373,7 @@
 "chart.error.not_available" = "График недоступен";
 "chart.selected.price" = "Цена";
 "chart.selected.volume" = "Объём";
+"chart.news.title" = "Latest News";
 
 // Create Wallet
 
@@ -400,3 +400,8 @@
 "double_spend_info.header" = "Двойная Трата! Существует другая транзакция в блокчейне, которая пытается использовать входные данные, используемые в этой транзакции. Только одна транзакция будет принята сетью";
 "double_spend_info.this_hash" = "Эта транзакция";
 "double_spend_info.conflicting_hash" = "Конфликтная транзакция";
+
+// Relative Date
+"timestamp.days_ago" = "%luh ago";
+"timestamp.hours_ago" = "%luh ago";
+"timestamp.min_ago" = "%lum ago";
