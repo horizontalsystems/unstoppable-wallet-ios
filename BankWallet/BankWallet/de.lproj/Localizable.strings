@@ -153,7 +153,7 @@
 "send.amount_error.balance" = "Guthaben %@";
 "send.amount_error.maximum_amount" = "Maximaler Betrag %@";
 "send.amount_error.minimum_amount" = "Minimaler Betrag %@";
-"send.amount_error.min_required_balance" = "Mindestens erforderlicher Rest %@";
+"send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.token.insufficient_fee_alert" = "Transaktionsgebühren für %@ %@ in %@ bezahlt. Du brauchst %@.";
 
 "send.lock_time" = "TimeLock";
@@ -299,7 +299,6 @@
 "settings.contact.app_status" = "App-Status";
 "settings.contact.email" = "E-mail";
 "settings.contact.telegram_wallet" = "Telegram (Wallet-Hilfe)";
-"settings.contact.telegram_developers" = "Telegram (Entwickler)";
 
 // Manage Keys
 
@@ -374,6 +373,7 @@
 "chart.error.not_available" = "Diagramm nicht verfügbar";
 "chart.selected.price" = "Preis";
 "chart.selected.volume" = "Lautstärke";
+"chart.news.title" = "Latest News";
 
 // Create Wallet
 
@@ -400,3 +400,8 @@
 "double_spend_info.header" = "Double-Spend-Risiko! Es gibt eine weitere Transaktion auf der Blockchain, die versucht, die in dieser Transaktion verwendeten Inputs auszugeben. Nur eine Transaktion wird vom Netzwerk akzeptiert";
 "double_spend_info.this_hash" = "Dieser Tx";
 "double_spend_info.conflicting_hash" = "Gegensätzliche Tx";
+
+// Relative Date
+"timestamp.days_ago" = "%luh ago";
+"timestamp.hours_ago" = "%luh ago";
+"timestamp.min_ago" = "%lum ago";
