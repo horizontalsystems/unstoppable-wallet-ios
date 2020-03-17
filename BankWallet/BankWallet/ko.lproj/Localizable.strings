@@ -153,7 +153,7 @@
 "send.amount_error.balance" = "잔액%@";
 "send.amount_error.maximum_amount" = "최대 %@ 금액";
 "send.amount_error.minimum_amount" = "최소 %@ 금액";
-"send.amount_error.min_required_balance" = "최소 %@ 만큼의 필요 잔여금";
+"send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.token.insufficient_fee_alert" = "%@ (%@) 에 대한 거래 수수료는 %@로 지불되었습니다. 귀하는 %@가 필요합니다.";
 
 "send.lock_time" = "시간 자물쇠";
@@ -299,7 +299,6 @@
 "settings.contact.app_status" = "앱 상태";
 "settings.contact.email" = "E-mail";
 "settings.contact.telegram_wallet" = "Telegram (지갑 고객 지원)";
-"settings.contact.telegram_developers" = "Telegram (개발자)";
 
 // Manage Keys
 
@@ -374,6 +373,7 @@
 "chart.error.not_available" = "차트 이용불가";
 "chart.selected.price" = "금액";
 "chart.selected.volume" = "음량";
+"chart.news.title" = "Latest News";
 
 // Create Wallet
 
@@ -400,3 +400,8 @@
 "double_spend_info.header" = "이중 지출 위험! 블록 체인에 있는 거래에 지출된 정보를 사용하려는 또 다른 거래가 있습니다. 네트워크는 하나의 거래만 수용합니다";
 "double_spend_info.this_hash" = "이 Tx";
 "double_spend_info.conflicting_hash" = "충돌하는 Tx";
+
+// Relative Date
+"timestamp.days_ago" = "%luh ago";
+"timestamp.hours_ago" = "%luh ago";
+"timestamp.min_ago" = "%lum ago";
