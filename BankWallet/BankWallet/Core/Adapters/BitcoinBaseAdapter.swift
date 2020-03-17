@@ -267,7 +267,7 @@ extension BitcoinBaseAdapter {
         return Single.create { [weak self] observer in
             do {
                 if let adapter = self {
-                    _ = try adapter.abstractKit.send(to: address, value: satoshiAmount, feeRate: feeRate, pluginData: pluginData)
+                    _ = try adapter.abstractKit.send(to: address, value: satoshiAmount, feeRate: feeRate, sortType: .shuffle, pluginData: pluginData)
                 }
                 observer(.success(()))
             } catch {
