@@ -319,13 +319,13 @@ CHECKOUT OPTIONS:
     :commit: d33055102d076b114bd842eca6a1b2bb947f28fb
     :git: https://github.com/horizontalsystems/gui-kit/
   BitcoinCashKit.swift:
-    :commit: e4f26b034f164f9859db1f81c0579e818c3c54ff
+    :commit: cd447adf36445431e7a7997e98c394acc0e1fce7
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinCore.swift:
-    :commit: e4f26b034f164f9859db1f81c0579e818c3c54ff
+    :commit: cd447adf36445431e7a7997e98c394acc0e1fce7
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinKit.swift:
-    :commit: e4f26b034f164f9859db1f81c0579e818c3c54ff
+    :commit: cd447adf36445431e7a7997e98c394acc0e1fce7
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
     :commit: d33055102d076b114bd842eca6a1b2bb947f28fb
@@ -334,7 +334,7 @@ CHECKOUT OPTIONS:
     :commit: 5592069e189f5c48af392d1d52ea41733b27f411
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
-    :commit: e4f26b034f164f9859db1f81c0579e818c3c54ff
+    :commit: cd447adf36445431e7a7997e98c394acc0e1fce7
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   EosioSwiftAbieosSerializationProvider:
     :commit: 7ac04899e62012e225e0ea48a96951de0b72ad08
@@ -343,13 +343,13 @@ CHECKOUT OPTIONS:
     :commit: 5b295950dde8aab7979745ea111ce3aa76ec5a7d
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
   Hodler.swift:
-    :commit: e4f26b034f164f9859db1f81c0579e818c3c54ff
+    :commit: cd447adf36445431e7a7997e98c394acc0e1fce7
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   LanguageKit.swift:
     :commit: 5592069e189f5c48af392d1d52ea41733b27f411
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
-    :commit: e4f26b034f164f9859db1f81c0579e818c3c54ff
+    :commit: cd447adf36445431e7a7997e98c394acc0e1fce7
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   PinKit.swift:
     :commit: 5592069e189f5c48af392d1d52ea41733b27f411
