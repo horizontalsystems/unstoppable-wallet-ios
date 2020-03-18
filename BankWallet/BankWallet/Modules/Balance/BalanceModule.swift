@@ -14,6 +14,8 @@ protocol IBalanceView: class {
 
 protocol IBalanceViewDelegate {
     func onLoad()
+    func onAppear()
+    func onDisappear()
 
     func onTriggerRefresh()
 
@@ -49,6 +51,9 @@ protocol IBalanceInteractor: AnyObject {
 
     func refresh()
     func predefinedAccountType(wallet: Wallet) -> PredefinedAccountType?
+
+    func notifyAppear()
+    func notifyDisappear()
 }
 
 protocol IBalanceInteractorDelegate: class {

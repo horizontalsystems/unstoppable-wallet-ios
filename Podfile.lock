@@ -1,5 +1,5 @@
 PODS:
-  - ActionSheet.swift (1.1):
+  - ActionSheet.swift (1.2):
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1)
   - Alamofire (4.9.1)
@@ -201,7 +201,7 @@ PODS:
     - RxSwiftExt (~> 5)
 
 DEPENDENCIES:
-  - ActionSheet.swift
+  - ActionSheet.swift (from `https://github.com/horizontalsystems/gui-kit/`)
   - Alamofire
   - AlamofireImage
   - BigInt
@@ -242,7 +242,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - ActionSheet.swift
     - Alamofire
     - AlamofireImage
     - BigInt
@@ -280,6 +279,8 @@ SPEC REPOS:
     - X11Kit.swift
 
 EXTERNAL SOURCES:
+  ActionSheet.swift:
+    :git: https://github.com/horizontalsystems/gui-kit/
   BitcoinCashKit.swift:
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinCore.swift:
@@ -314,6 +315,9 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
 
 CHECKOUT OPTIONS:
+  ActionSheet.swift:
+    :commit: d33055102d076b114bd842eca6a1b2bb947f28fb
+    :git: https://github.com/horizontalsystems/gui-kit/
   BitcoinCashKit.swift:
     :commit: e4f26b034f164f9859db1f81c0579e818c3c54ff
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
@@ -324,7 +328,7 @@ CHECKOUT OPTIONS:
     :commit: e4f26b034f164f9859db1f81c0579e818c3c54ff
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
-    :commit: 17079e955f1069c47f869eff4a352049c6cb9111
+    :commit: d33055102d076b114bd842eca6a1b2bb947f28fb
     :git: https://github.com/horizontalsystems/gui-kit/
   CurrencyKit.swift:
     :commit: 5592069e189f5c48af392d1d52ea41733b27f411
@@ -357,14 +361,14 @@ CHECKOUT OPTIONS:
     :commit: 5592069e189f5c48af392d1d52ea41733b27f411
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
-    :commit: 17079e955f1069c47f869eff4a352049c6cb9111
+    :commit: d33055102d076b114bd842eca6a1b2bb947f28fb
     :git: https://github.com/horizontalsystems/gui-kit/
   XRatesKit.swift:
     :commit: 5284ff316de36234046b5c8d31e5bc51edff3b66
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
 
 SPEC CHECKSUMS:
-  ActionSheet.swift: 5352dbbab9b2cf408341e85c15642a52495c7fd6
+  ActionSheet.swift: 4583c1353a908e7c15a31af7f087a2be1465c6f8
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   AlamofireImage: be9963c6582d68b39e89191f64c82a7d7bf40fdd
   BigInt: 74b4d88367b0e819d9f77393549226d36faeb0d8
@@ -417,6 +421,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: e7e4bf432961545cace5fe8be80a9fe3aef04b36
 
-PODFILE CHECKSUM: 1fad3e54a51a829ed5b4843040b474388a223625
+PODFILE CHECKSUM: 04ab40b6e2856fdadaf63f46445197f357ad1e90
 
 COCOAPODS: 1.8.4
