@@ -37,8 +37,8 @@ class HorSysLitecoinProvider: IBitcoinForksProvider {
     }
 
     init(testMode: Bool) {
-        apiUrl = testMode ? "http://ltc-testnet.horizontalsystems.xyz/api/tx/" : "http://ltc.horizontalsystems.xyz/api/tx/"
-        reachabilityUrl = testMode ? "http://ltc-testnet.horizontalsystems.xyz/api/block/0" : "http://ltc.horizontalsystems.xyz/api/block/0"
+        apiUrl = testMode ? "http://ltc-testnet.horizontalsystems.xyz/api/tx/" : "https://ltc.horizontalsystems.xyz/api/tx/"
+        reachabilityUrl = testMode ? "http://ltc-testnet.horizontalsystems.xyz/api/block/0" : "https://ltc.horizontalsystems.xyz/api/block/0"
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
