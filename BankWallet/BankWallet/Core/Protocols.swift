@@ -24,6 +24,8 @@ protocol ILocalStorage: class {
     var mainShownOnce: Bool { get set }
     var appVersions: [AppVersion] { get set }
     var lockTimeEnabled: Bool { get set }
+    var appLaunchCount: Int { get set }
+    var rateAppLastRequestDate: Date? { get set }
 }
 
 protocol IChartTypeStorage: class {
@@ -479,4 +481,12 @@ protocol IAppStatusManager {
 
 protocol IAppVersionManager {
     func checkLatestVersion()
+}
+
+protocol IRateAppManager {
+    func onBalancePageAppear()
+    func onBalancePageDisappear()
+    func onLaunch()
+    func onBecomeActive()
+    func onResignActive()
 }

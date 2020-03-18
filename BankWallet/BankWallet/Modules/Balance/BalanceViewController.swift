@@ -66,6 +66,14 @@ class BalanceViewController: ThemeViewController {
         super.viewDidAppear(animated)
 
         tableView.refreshControl = refreshControl
+
+        delegate.onAppear()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        delegate.onDisappear()
     }
 
     @objc func onRefresh() {
