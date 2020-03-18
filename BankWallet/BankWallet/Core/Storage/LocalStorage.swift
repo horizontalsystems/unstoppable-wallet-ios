@@ -20,6 +20,8 @@ class LocalStorage {
     private let debugLogKey = "debug_log_key"
     private let keyAppVersions = "app_versions"
     private let keyLockTimeEnabled = "lock_time_enabled"
+    private let keyAppLaunchCount = "app_launch_count"
+    private let keyRateAppLastRequestDate = "rate_app_last_request_date"
 
     private let storage: StorageKit.ILocalStorage
 
@@ -120,6 +122,16 @@ extension LocalStorage: ILocalStorage {
     var lockTimeEnabled: Bool {
         get { storage.value(for: keyLockTimeEnabled) ?? false }
         set { storage.set(value: newValue, for: keyLockTimeEnabled) }
+    }
+
+    var appLaunchCount: Int {
+        get { storage.value(for: keyAppLaunchCount) ?? 0 }
+        set { storage.set(value: newValue, for: keyAppLaunchCount) }
+    }
+
+    var rateAppLastRequestDate: Date? {
+        get { storage.value(for: keyRateAppLastRequestDate) }
+        set { storage.set(value: newValue, for: keyRateAppLastRequestDate) }
     }
 
 }

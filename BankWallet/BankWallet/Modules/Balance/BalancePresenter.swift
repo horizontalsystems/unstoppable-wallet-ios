@@ -115,6 +115,14 @@ extension BalancePresenter: IBalanceViewDelegate {
         }
     }
 
+    func onAppear() {
+        interactor.notifyAppear()
+    }
+
+    func onDisappear() {
+        interactor.notifyDisappear()
+    }
+
     func onTriggerRefresh() {
         interactor.refresh()
     }

@@ -59,6 +59,8 @@ class App {
     let keychainKitDelegate: KeychainKitDelegate
     let pinKitDelegate: PinKitDelegate
 
+    let rateAppManager: IRateAppManager
+
     let appManager: AppManager
 
     init() {
@@ -138,6 +140,8 @@ class App {
         pinKitDelegate = PinKitDelegate()
         pinKit.set(delegate: pinKitDelegate)
 
+        rateAppManager = RateAppManager(walletManager: walletManager, adapterManager: adapterManager, localStorage: localStorage)
+
         let kitCleaner = KitCleaner(accountManager: accountManager)
         appManager = AppManager(
                 accountManager: accountManager,
@@ -150,7 +154,8 @@ class App {
                 backgroundPriceAlertManager: backgroundPriceAlertManager,
                 kitCleaner: kitCleaner,
                 debugLogger: debugLogger,
-                appVersionManager: appVersionManager
+                appVersionManager: appVersionManager,
+                rateAppManager: rateAppManager
         )
     }
 

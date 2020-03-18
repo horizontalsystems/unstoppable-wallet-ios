@@ -14,6 +14,7 @@ class AppManager {
     private let kitCleaner: IKitCleaner
     private let debugBackgroundLogger: IDebugLogger?
     private let appVersionManager: IAppVersionManager
+    private let rateAppManager: IRateAppManager
 
     private let didBecomeActiveSubject = PublishSubject<()>()
     private let willEnterForegroundSubject = PublishSubject<()>()
@@ -21,7 +22,7 @@ class AppManager {
     init(accountManager: IAccountManager, walletManager: IWalletManager, adapterManager: IAdapterManager, pinKit: IPinKit,
          keychainKit: IKeychainKit, blurManager: IBlurManager, notificationManager: INotificationManager,
          backgroundPriceAlertManager: IBackgroundPriceAlertManager, kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
-         appVersionManager: IAppVersionManager
+         appVersionManager: IAppVersionManager, rateAppManager: IRateAppManager
     ) {
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -34,6 +35,7 @@ class AppManager {
         self.kitCleaner = kitCleaner
         self.debugBackgroundLogger = debugLogger
         self.appVersionManager = appVersionManager
+        self.rateAppManager = rateAppManager
     }
 
 }
@@ -51,16 +53,19 @@ extension AppManager {
         kitCleaner.clear()
 
         appVersionManager.checkLatestVersion()
+        rateAppManager.onLaunch()
     }
 
     func willResignActive() {
         blurManager.willResignActive()
+        rateAppManager.onResignActive()
     }
 
     func didBecomeActive() {
         didBecomeActiveSubject.onNext(())
 
         blurManager.didBecomeActive()
+        rateAppManager.onBecomeActive()
     }
 
     func didEnterBackground() {

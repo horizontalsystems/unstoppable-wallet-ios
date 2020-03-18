@@ -42,7 +42,7 @@ def appPods
   pod 'CurrencyKit.swift', git: 'https://github.com/horizontalsystems/component-kit-ios/'
   # pod 'CurrencyKit.swift', path: '../component-kit-ios/'
 
-  pod 'ActionSheet.swift'
+  pod 'ActionSheet.swift', git: 'https://github.com/horizontalsystems/gui-kit/'
   pod 'HUD.swift'
   pod 'Chart.swift', git: 'https://github.com/horizontalsystems/gui-kit/'
   # pod 'Chart.swift', path: '../gui-kit/'

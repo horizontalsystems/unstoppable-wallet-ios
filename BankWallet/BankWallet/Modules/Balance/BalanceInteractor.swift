@@ -15,14 +15,16 @@ class BalanceInteractor {
     private let localStorage: ILocalStorage
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let rateManager: IRateManager
+    private let rateAppManager: IRateAppManager
 
-    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyKit: ICurrencyKit, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager, rateManager: IRateManager) {
+    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyKit: ICurrencyKit, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager, rateManager: IRateManager, rateAppManager: IRateAppManager) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.currencyKit = currencyKit
         self.localStorage = localStorage
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
         self.rateManager = rateManager
+        self.rateAppManager = rateAppManager
     }
 
     private func onUpdate(wallets: [Wallet]) {
@@ -147,6 +149,14 @@ extension BalanceInteractor: IBalanceInteractor {
 
     func predefinedAccountType(wallet: Wallet) -> PredefinedAccountType? {
         predefinedAccountTypeManager.predefinedAccountType(accountType: wallet.account.type)
+    }
+
+    func notifyAppear() {
+        rateAppManager.onBalancePageAppear()
+    }
+
+    func notifyDisappear() {
+        rateAppManager.onBalancePageDisappear()
     }
 
 }
