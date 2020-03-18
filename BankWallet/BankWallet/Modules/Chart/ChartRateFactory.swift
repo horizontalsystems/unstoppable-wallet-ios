@@ -19,9 +19,9 @@ class ChartRateFactory: IChartRateFactory {
         return formatter
     }()
 
-    private func roundedFormat(coin: Coin, value: Decimal?) -> String? {
-        guard let value = value, let formattedValue = coinFormatter.string(from: value as NSNumber) else {
-            return nil
+    private func roundedFormat(coin: Coin, value: Decimal?) -> String {
+        guard let value = value, !value.isZero, let formattedValue = coinFormatter.string(from: value as NSNumber) else {
+            return "n/a".localized
         }
 
         return "\(formattedValue) \(coin.code)"
@@ -41,11 +41,11 @@ class ChartRateFactory: IChartRateFactory {
     }
 
     private func viewItem(marketInfo: MarketInfo, currency: Currency, coin: Coin) -> MarketInfoViewItem {
-        let marketCap = CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.marketCap)
-        let volume = CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.volume)
+        let marketCap = marketInfo.marketCap.isZero ? "n/a".localized : CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.marketCap)
+        let volume = marketInfo.volume.isZero ? "n/a".localized : CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.volume)
 
         let supply = roundedFormat(coin: coin, value: marketInfo.supply)
-        let maxSupply = roundedFormat(coin: coin, value: MaxSupplyMap.maxSupplies[coin.code]) ?? "n/a".localized
+        let maxSupply = roundedFormat(coin: coin, value: MaxSupplyMap.maxSupplies[coin.code])
 
         return MarketInfoViewItem(marketCap: marketCap, volume: volume, supply: supply, maxSupply: maxSupply)
     }
