@@ -153,7 +153,7 @@
 "send.amount_error.balance" = "잔액%@";
 "send.amount_error.maximum_amount" = "최대 %@ 금액";
 "send.amount_error.minimum_amount" = "최소 %@ 금액";
-"send.amount_error.min_required_balance" = "Min. required remainder %@";
+"send.amount_error.min_required_balance" = "최소 %@ 만큼의 필요 잔여금";
 "send.token.insufficient_fee_alert" = "%@ (%@) 에 대한 거래 수수료는 %@로 지불되었습니다. 귀하는 %@가 필요합니다.";
 
 "send.lock_time" = "시간 자물쇠";
@@ -212,7 +212,7 @@
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
-"full_info.gas_price" = "Gas Price";
+"full_info.gas_price" = "Gas Used";
 
 "full_info.source.title" = "원천, 자료";
 "full_info.source.online" = "온라인";
@@ -229,7 +229,7 @@
 "settings.title" = "설정";
 "settings.tab_bar_item" = "설정";
 "settings.security_center" = "보안 센터";
-"settings.manage_accounts" = "Manage Wallets";
+"settings.manage_accounts" = "Gas Price";
 "settings.manage_coins" = "코인 관리";
 "settings.experimental_features" = "실험적 기능";
 "settings.notifications" = "알림";
