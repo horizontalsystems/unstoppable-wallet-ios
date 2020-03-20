@@ -1,5 +1,4 @@
 import UIKit
-import ThemeKit
 
 class ProceedManageAccountCell: BaseManageAccountCell {
     static let height: CGFloat = 44
