@@ -229,6 +229,7 @@
 "settings.title" = "设置";
 "settings.tab_bar_item" = "设置";
 "settings.security_center" = "安全中心";
+"settings.manage_accounts" = "Manage Wallets";
 "settings.manage_coins" = "管理Coins";
 "settings.experimental_features" = "实验性功能";
 "settings.notifications" = "通知";
@@ -311,6 +312,7 @@
 "settings_manage_keys.show" = "显示";
 "settings_manage_keys.create" = "创建";
 "settings_manage_keys.restore" = "恢复";
+"settings_manage_keys.settings" = "Advanced Settings";
 "settings_manage_keys.delete.cant_delete" = "您应该在将此钱包的私钥从该手机删除之前先对其进行备份。";
 "settings_manage_keys.delete.title" = "删除钱包";
 "settings_manage_keys.delete.confirmation_remove" = "该操作将从此设备删除%@钱包。";
