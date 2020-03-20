@@ -7,10 +7,6 @@ class SecuritySettingsRouter {
 
 extension SecuritySettingsRouter: ISecuritySettingsRouter {
 
-    func showManageAccounts() {
-        viewController?.navigationController?.pushViewController(ManageAccountsRouter.module(mode: .pushed), animated: true)
-    }
-
     func showSetPin(delegate: ISetPinDelegate) {
         viewController?.present(App.shared.pinKit.setPinModule(delegate: delegate), animated: true)
     }
