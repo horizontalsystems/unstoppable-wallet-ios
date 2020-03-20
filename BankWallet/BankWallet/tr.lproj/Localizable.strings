@@ -229,6 +229,7 @@
 "settings.title" = "Ayarlar";
 "settings.tab_bar_item" = "Ayarlar";
 "settings.security_center" = "Güvenlik Merkezi";
+"settings.manage_accounts" = "Manage Wallets";
 "settings.manage_coins" = "Kripto Paraları Yönet";
 "settings.experimental_features" = "Deneysel Özellikler";
 "settings.notifications" = "Bildirimler";
@@ -311,6 +312,7 @@
 "settings_manage_keys.show" = "Göster";
 "settings_manage_keys.create" = "Oluştur";
 "settings_manage_keys.restore" = "Geri Yükle";
+"settings_manage_keys.settings" = "Advanced Settings";
 "settings_manage_keys.delete.cant_delete" = "Bu cüzdanın özel anahtarını, bu telefondan silinmeden önce yedeklemeniz gerekir.";
 "settings_manage_keys.delete.title" = "Cüzdanı Sil";
 "settings_manage_keys.delete.confirmation_remove" = "Bu işlem %@ Cüzdanını bu cihazdan kaldıracak.";
