@@ -62,18 +62,16 @@ class MainSettingsViewController: ThemeViewController {
         let securityAttentionImage = allBackedUp ? nil : UIImage(named: "Attention Icon")
 
         return [
-            Row<RightImageCell>(id: "security_center", hash: "security_center.\(allBackedUp)", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.security_center".localized, rightImage: securityAttentionImage, rightImageTintColor: .themeLucian, showDisclosure: true)
+            Row<RightImageCell>(id: "manage_accounts", height: .heightSingleLineCell, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Wallet Icon"), title: "settings.manage_accounts".localized, rightImage: securityAttentionImage, rightImageTintColor: .themeJacob, showDisclosure: true, last: false)
             }, action: { [weak self] _ in
-                self?.delegate.didTapSecurity()
+                self?.delegate.onManageAccounts()
             }),
 
-            Row<TitleCell>(id: "manage_coins", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Manage Coins Icon"), title: "settings.manage_coins".localized, showDisclosure: true)
+            Row<TitleCell>(id: "security_center", hash: "security_center.\(allBackedUp)", height: .heightSingleLineCell, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.security_center".localized, showDisclosure: true)
             }, action: { [weak self] _ in
-                DispatchQueue.main.async {
-                    self?.delegate.didTapManageCoins()
-                }
+                self?.delegate.didTapSecurity()
             }),
 
             Row<TitleCell>(id: "experimental_features", height: .heightSingleLineCell, bind: { cell, _ in

@@ -14,7 +14,6 @@ protocol ISecuritySettingsView: class {
 
 protocol ISecuritySettingsViewDelegate {
     func viewDidLoad()
-    func didTapManageAccounts()
     func didSwitch(pinSet: Bool)
     func didTapEditPin()
     func didSwitch(biometryEnabled: Bool)
@@ -35,7 +34,6 @@ protocol ISecuritySettingsInteractorDelegate: class {
 }
 
 protocol ISecuritySettingsRouter {
-    func showManageAccounts()
     func showSetPin(delegate: ISetPinDelegate)
     func showEditPin()
     func showUnlock(delegate: IUnlockDelegate)

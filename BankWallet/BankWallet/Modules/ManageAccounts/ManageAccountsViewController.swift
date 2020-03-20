@@ -23,8 +23,9 @@ class ManageAccountsViewController: ThemeViewController {
 
         title = "settings_manage_keys.title".localized
 
-        tableView.registerCell(forClass: ManageAccountCell.self)
-        tableView.registerHeaderFooter(forClass: TopDescriptionHeaderFooterView.self)
+        tableView.registerCell(forClass: TitleManageAccountCell.self)
+        tableView.registerCell(forClass: ProceedManageAccountCell.self)
+
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -42,38 +43,56 @@ class ManageAccountsViewController: ThemeViewController {
         delegate.didTapDone()
     }
 
-    private var header: ViewState<TopDescriptionHeaderFooterView> {
-        let descriptionText = "settings_manage_keys.description".localized
+    private func rows(viewItem: ManageAccountViewItem, index: Int) -> [RowProtocol] {
+        var rows = [RowProtocol]()
 
-        return .cellType(
-                hash: "top_description", 
-                binder: { view in
-                    view.bind(text: descriptionText)
-                }, dynamicHeight: { [unowned self] _ in
-                    TopDescriptionHeaderFooterView.height(containerWidth: self.tableView.bounds.width, text: descriptionText)
-                }
-        )
-    }
-
-    private var rows: [RowProtocol] {
-        viewItems.enumerated().map { (index, viewItem) in
-            Row<ManageAccountCell>(
+        rows.append(
+            Row<TitleManageAccountCell>(
                     id: "account_\(viewItem.title)",
-                    dynamicHeight: { [unowned self] _ in
-                        ManageAccountCell.height(containerWidth: self.tableView.bounds.width, viewItem: viewItem)
+                    autoDeselect: true,
+                    dynamicHeight: { _ in
+                        TitleManageAccountCell.height
                     },
-                    bind: { [unowned self] cell, _ in
-                        cell.bind(viewItem: viewItem, onTapCreate: { [weak self] in
-                            self?.delegate.didTapCreate(index: index)
-                        }, onTapRestore: { [weak self] in
-                            self?.delegate.didTapRestore(index: index)
-                        }, onTapUnlink: { [weak self] in
-                            self?.delegate.didTapUnlink(index: index)
-                        }, onTapBackup: { [weak self] in
-                            self?.delegate.didTapBackup(index: index)
-                        })
+                    bind: { cell, _ in
+                        cell.bind(viewItem: viewItem)
                     }
             )
+        )
+
+        let states = [viewItem.topButtonState, viewItem.middleButtonState, viewItem.bottomButtonState].compactMap { $0 }
+        rows.append(contentsOf: states.enumerated().map { stateIndex, state in
+            let last = states.count - 1 == stateIndex
+
+            return Row<ProceedManageAccountCell>(
+                    id: "account_\(state.rawValue)",
+                    autoDeselect: true,
+                    dynamicHeight: { _ in
+                        ProceedManageAccountCell.height
+                    },
+                    bind: { cell, _ in
+                        cell.bind(state: state, highlighted: viewItem.highlighted, position: last ? .bottom : .inbetween)
+                    },
+                    action: { [weak self] _ in
+                        self?.action(state: state, index: index)
+                    }
+            )
+        })
+
+        return rows
+    }
+
+    private func action(state: ManageAccountButtonState, index: Int) {
+        switch state {
+        case .create:
+            delegate.didTapCreate(index: index)
+        case .backup, .show:
+            delegate.didTapBackup(index: index)
+        case .restore:
+            delegate.didTapRestore(index: index)
+        case .delete:
+            delegate.didTapUnlink(index: index)
+        case .settings:
+            print("not implemented")
         }
     }
 
@@ -82,14 +101,14 @@ class ManageAccountsViewController: ThemeViewController {
 extension ManageAccountsViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        [
+        viewItems.enumerated().map { index, viewItem in
             Section(
                     id: "wallets",
-                    headerState: header,
-                    footerState: .margin(height: .margin6x),
-                    rows: rows
+                    headerState: .margin(height: .margin2x),
+                    footerState: .margin(height: .margin1x),
+                    rows: rows(viewItem: viewItem, index: index)
             )
-        ]
+        }
     }
 
 }

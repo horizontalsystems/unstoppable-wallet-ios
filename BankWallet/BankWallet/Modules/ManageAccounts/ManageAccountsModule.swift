@@ -35,27 +35,3 @@ protocol IManageAccountsRouter {
     func showRestore(predefinedAccountType: PredefinedAccountType)
     func close()
 }
-
-struct ManageAccountItem {
-    let predefinedAccountType: PredefinedAccountType
-    let account: Account?
-}
-
-struct ManageAccountViewItem {
-    let title: String
-    let coinCodes: String
-    let highlighted: Bool
-    let leftButtonState: ManageAccountLeftButtonState
-    let rightButtonState: ManageAccountRightButtonState
-}
-
-enum ManageAccountLeftButtonState {
-    case create(enabled: Bool)
-    case delete
-}
-
-enum ManageAccountRightButtonState {
-    case backup
-    case show
-    case restore
-}
