@@ -229,6 +229,7 @@
 "settings.title" = "설정";
 "settings.tab_bar_item" = "설정";
 "settings.security_center" = "보안 센터";
+"settings.manage_accounts" = "Manage Wallets";
 "settings.manage_coins" = "코인 관리";
 "settings.experimental_features" = "실험적 기능";
 "settings.notifications" = "알림";
@@ -311,6 +312,7 @@
 "settings_manage_keys.show" = "표시";
 "settings_manage_keys.create" = "만들기";
 "settings_manage_keys.restore" = "복구";
+"settings_manage_keys.settings" = "Advanced Settings";
 "settings_manage_keys.delete.cant_delete" = "개인 암호가 휴대폰에서 지워질 수 있기 전에 귀하께서는 개인 암호를 백업 하셔야 합니다.";
 "settings_manage_keys.delete.title" = "지갑 삭제하기";
 "settings_manage_keys.delete.confirmation_remove" = "이 행동은 %@ 지갑을 장치에서 삭제합니다.";
