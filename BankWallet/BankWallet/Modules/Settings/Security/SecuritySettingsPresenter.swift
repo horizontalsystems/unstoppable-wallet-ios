@@ -28,10 +28,6 @@ extension SecuritySettingsPresenter: ISecuritySettingsViewDelegate {
         view?.toggle(biometryEnabled: interactor.biometryEnabled)
     }
 
-    func didTapManageAccounts() {
-        router.showManageAccounts()
-    }
-
     func didSwitch(pinSet: Bool) {
         if pinSet {
             router.showSetPin(delegate: self)

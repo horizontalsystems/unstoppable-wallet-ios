@@ -29,10 +29,6 @@ extension MainSettingsPresenter: IMainSettingsViewDelegate {
         router.showSecuritySettings()
     }
 
-    func didTapManageCoins() {
-        router.showManageCoins()
-    }
-
     func didTapExperimentalFeatures() {
         router.showExperimentalFeatures()
     }
@@ -68,6 +64,10 @@ extension MainSettingsPresenter: IMainSettingsViewDelegate {
 
     func didTapCompanyLink() {
         router.open(link: interactor.companyWebPageLink)
+    }
+
+    func onManageAccounts() {
+        router.showManageAccounts()
     }
 
 }

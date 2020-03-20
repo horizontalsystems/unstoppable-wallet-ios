@@ -58,18 +58,6 @@ class SecuritySettingsViewController: ThemeViewController {
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
     }
 
-    private var manageAccountsRows: [RowProtocol] {
-        let securityAttentionImage = backupAlertVisible ? UIImage(named: "Attention Icon") : nil
-
-        return [
-            Row<RightImageCell>(id: "manage_accounts", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Key Icon"), title: "settings_security.manage_accounts".localized, rightImage: securityAttentionImage, rightImageTintColor: .themeLucian, showDisclosure: true, last: true)
-            }, action: { [weak self] _ in
-                self?.delegate.didTapManageAccounts()
-            })
-        ]
-    }
-
     private var pinRows: [RowProtocol] {
         var rows: [RowProtocol] = [
             Row<ToggleCell>(id: "pin", height: .heightSingleLineCell, bind: { [unowned self] cell, _ in
@@ -114,7 +102,6 @@ extension SecuritySettingsViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
-            Section(id: "manage_accounts", headerState: .margin(height: .margin3x), rows: manageAccountsRows),
             Section(id: "pin", headerState: .margin(height: .margin8x), rows: pinRows)
         ]
 

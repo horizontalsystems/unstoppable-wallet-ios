@@ -8,12 +8,12 @@ class MainSettingsRouter {
 
 extension MainSettingsRouter: IMainSettingsRouter {
 
-    func showSecuritySettings() {
-        viewController?.navigationController?.pushViewController(SecuritySettingsRouter.module(), animated: true)
+    func showManageAccounts() {
+        viewController?.navigationController?.pushViewController(ManageAccountsRouter.module(mode: .pushed), animated: true)
     }
 
-    func showManageCoins() {
-        viewController?.navigationController?.pushViewController(ManageWalletsRouter.module(presentationMode: .pushed), animated: true)
+    func showSecuritySettings() {
+        viewController?.navigationController?.pushViewController(SecuritySettingsRouter.module(), animated: true)
     }
 
     func showExperimentalFeatures() {
