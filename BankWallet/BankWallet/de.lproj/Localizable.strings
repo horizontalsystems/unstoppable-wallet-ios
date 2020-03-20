@@ -229,6 +229,7 @@
 "settings.title" = "Einstellungen";
 "settings.tab_bar_item" = "Einstellungen";
 "settings.security_center" = "Sicherheit";
+"settings.manage_accounts" = "Manage Wallets";
 "settings.manage_coins" = "Coins Managen";
 "settings.experimental_features" = "Experimentelles Feature";
 "settings.notifications" = "Benachrichtigungen";
@@ -311,6 +312,7 @@
 "settings_manage_keys.show" = "Anzeigen";
 "settings_manage_keys.create" = "Erstellen";
 "settings_manage_keys.restore" = "Wiederherstellen";
+"settings_manage_keys.settings" = "Advanced Settings";
 "settings_manage_keys.delete.cant_delete" = "Sie müssen den Private Key für dieses Wallet sichern, bevor Sie es von diesem Telefon löschen können.";
 "settings_manage_keys.delete.title" = "Wallet löschen";
 "settings_manage_keys.delete.confirmation_remove" = "Damit wird das %@ Wallet von diesem Gerät gelöscht.";
