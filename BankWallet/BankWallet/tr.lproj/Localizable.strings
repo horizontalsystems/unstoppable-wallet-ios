@@ -153,7 +153,7 @@
 "send.amount_error.balance" = "%@ Bakiye";
 "send.amount_error.maximum_amount" = "Maksimum miktar %@";
 "send.amount_error.minimum_amount" = "Minimum miktar %@";
-"send.amount_error.min_required_balance" = "Min. required remainder %@";
+"send.amount_error.min_required_balance" = "Min. gerekli bakiye %@";
 "send.token.insufficient_fee_alert" = "%@ (%@) için ișlem ücreti %@ hesabından ödenir. Asgari %@ gerekiyor.";
 
 "send.lock_time" = "TimeLock";
@@ -229,7 +229,7 @@
 "settings.title" = "Ayarlar";
 "settings.tab_bar_item" = "Ayarlar";
 "settings.security_center" = "Güvenlik Merkezi";
-"settings.manage_accounts" = "Manage Wallets";
+"settings.manage_accounts" = "Cüzdanları yönet";
 "settings.manage_coins" = "Kripto Paraları Yönet";
 "settings.experimental_features" = "Deneysel Özellikler";
 "settings.notifications" = "Bildirimler";
@@ -312,7 +312,7 @@
 "settings_manage_keys.show" = "Göster";
 "settings_manage_keys.create" = "Oluştur";
 "settings_manage_keys.restore" = "Geri Yükle";
-"settings_manage_keys.settings" = "Advanced Settings";
+"settings_manage_keys.settings" = "Gelişmiş Ayarlar";
 "settings_manage_keys.delete.cant_delete" = "Bu cüzdanın özel anahtarını, bu telefondan silinmeden önce yedeklemeniz gerekir.";
 "settings_manage_keys.delete.title" = "Cüzdanı Sil";
 "settings_manage_keys.delete.confirmation_remove" = "Bu işlem %@ Cüzdanını bu cihazdan kaldıracak.";
