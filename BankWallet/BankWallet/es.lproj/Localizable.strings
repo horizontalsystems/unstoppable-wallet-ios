@@ -404,6 +404,6 @@
 "double_spend_info.conflicting_hash" = "Tx en conlicto";
 
 // Relative Date
-"timestamp.days_ago" = "%luh ago";
-"timestamp.hours_ago" = "%luh ago";
-"timestamp.min_ago" = "%lum ago";
+"timestamp.days_ago" = "Hace %lu hora";
+"timestamp.hours_ago" = "Hace %lu hora";
+"timestamp.min_ago" = "Hace %lu minutos";
