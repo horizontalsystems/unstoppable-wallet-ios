@@ -49,6 +49,7 @@ protocol IBalanceInteractor: AnyObject {
     func subscribeToMarketInfo(currencyCode: String)
 
     var sortType: BalanceSortType? { get set }
+    var balanceHidden: Bool { get set }
 
     func refresh()
     func predefinedAccountType(wallet: Wallet) -> PredefinedAccountType?

@@ -26,6 +26,7 @@ protocol ILocalStorage: class {
     var lockTimeEnabled: Bool { get set }
     var appLaunchCount: Int { get set }
     var rateAppLastRequestDate: Date? { get set }
+    var balanceHidden: Bool { get set }
 }
 
 protocol IChartTypeStorage: class {
