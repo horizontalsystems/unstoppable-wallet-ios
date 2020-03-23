@@ -138,6 +138,15 @@ extension BalanceInteractor: IBalanceInteractor {
         }
     }
 
+    var balanceHidden: Bool {
+        get {
+            localStorage.balanceHidden
+        }
+        set {
+            localStorage.balanceHidden = newValue
+        }
+    }
+
     func refresh() {
         adapterManager.refresh()
         rateManager.refresh()

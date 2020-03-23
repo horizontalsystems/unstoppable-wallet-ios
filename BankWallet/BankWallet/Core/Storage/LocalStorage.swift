@@ -22,6 +22,7 @@ class LocalStorage {
     private let keyLockTimeEnabled = "lock_time_enabled"
     private let keyAppLaunchCount = "app_launch_count"
     private let keyRateAppLastRequestDate = "rate_app_last_request_date"
+    private let keyBalanceHidden = "balance_hidden"
 
     private let storage: StorageKit.ILocalStorage
 
@@ -132,6 +133,11 @@ extension LocalStorage: ILocalStorage {
     var rateAppLastRequestDate: Date? {
         get { storage.value(for: keyRateAppLastRequestDate) }
         set { storage.set(value: newValue, for: keyRateAppLastRequestDate) }
+    }
+
+    var balanceHidden: Bool {
+        get { storage.value(for: keyBalanceHidden) ?? false }
+        set { storage.set(value: newValue, for: keyBalanceHidden) }
     }
 
 }
