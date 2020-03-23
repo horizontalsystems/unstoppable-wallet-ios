@@ -5,7 +5,7 @@ import RxSwift
 import SnapKit
 import XRatesKit
 
-class BalanceCell: CardCell {
+class BalanceCell: CardCollectionCell {
     static let height: CGFloat = 107
     static let expandedHeight: CGFloat = 165
     static let expandedLockedHeight: CGFloat = 190
@@ -35,10 +35,8 @@ class BalanceCell: CardCell {
 
     private var blockChart: Bool = false
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-
-        selectionStyle = .none
+    override init(frame: CGRect) {
+        super.init(frame: frame)
 
         clippingView.addSubview(coinIconView)
         coinIconView.snp.makeConstraints { maker in
@@ -139,7 +137,7 @@ class BalanceCell: CardCell {
         fatalError("not implemented")
     }
 
-    func bind(item: BalanceViewItem, animated: Bool = false, onReceive: @escaping (() -> ()), onPay: @escaping (() -> ()), onChart: @escaping (() -> ())) {
+    func bind(item: BalanceViewItem, animated: Bool = false, onReceive: @escaping () -> (), onPay: @escaping () -> (), onChart: @escaping () -> ()) {
         self.onPay = onPay
         self.onReceive = onReceive
         self.onChart = onChart
@@ -210,9 +208,6 @@ class BalanceCell: CardCell {
                 }),
                 animated: animated
         )
-    }
-
-    func unbind() {
     }
 
     @objc func onTapChart() {

@@ -1,19 +1,20 @@
 import UIKit
 import SnapKit
 
-class BalanceEditCell: UITableViewCell {
+class BalanceEditCell: UICollectionViewCell {
     static let height: CGFloat = 72
 
     private let button = UIButton()
 
     var onTap: (() -> ())?
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
 
-        backgroundColor = .clear
-        contentView.backgroundColor = .clear
-        selectionStyle = .none
+        contentView.addSubview(button)
+        button.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
 
         button.setTitle("balance.add_coin".localized, for: .normal)
         button.setTitleColor(.themeGray, for: .normal)
@@ -27,11 +28,6 @@ class BalanceEditCell: UITableViewCell {
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -.margin4x, bottom: 0, right: 0)
 
         button.addTarget(self, action: #selector(didTap), for: .touchUpInside)
-
-        contentView.addSubview(button)
-        button.snp.makeConstraints { maker in
-            maker.center.equalToSuperview()
-        }
     }
 
     required init?(coder aDecoder: NSCoder) {
