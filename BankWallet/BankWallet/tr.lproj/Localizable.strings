@@ -375,7 +375,7 @@
 "chart.error.not_available" = "Grafik yok";
 "chart.selected.price" = "Fiyat";
 "chart.selected.volume" = "Birim";
-"chart.news.title" = "Latest News";
+"chart.news.title" = "Son Haberler";
 
 // Create Wallet
 
@@ -404,6 +404,6 @@
 "double_spend_info.conflicting_hash" = "Çakışan Tx";
 
 // Relative Date
-"timestamp.days_ago" = "%luh ago";
+"timestamp.days_ago" = "%lu saat önce";
 "timestamp.hours_ago" = "%luh ago";
 "timestamp.min_ago" = "%lum ago";
