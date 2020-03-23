@@ -404,6 +404,6 @@
 "double_spend_info.conflicting_hash" = "Конфликтная транзакция";
 
 // Relative Date
-"timestamp.days_ago" = "%luh ago";
+"timestamp.days_ago" = "%lud ago";
 "timestamp.hours_ago" = "%luh ago";
 "timestamp.min_ago" = "%lum ago";
