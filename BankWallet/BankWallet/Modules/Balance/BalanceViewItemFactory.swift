@@ -139,7 +139,7 @@ class BalanceViewItemFactory {
 
 extension BalanceViewItemFactory: IBalanceViewItemFactory {
 
-    func viewItem(item: BalanceItem, currency: Currency, expanded: Bool) -> BalanceViewItem {
+    func viewItem(item: BalanceItem, currency: Currency, balanceHidden: Bool, expanded: Bool) -> BalanceViewItem {
         let coin = item.wallet.coin
         let state = item.state
         let marketInfo = item.marketInfo
@@ -171,7 +171,7 @@ extension BalanceViewItemFactory: IBalanceViewItemFactory {
         )
     }
 
-    func headerViewItem(items: [BalanceItem], currency: Currency) -> BalanceHeaderViewItem {
+    func headerViewItem(items: [BalanceItem], currency: Currency, sortingOnThreshold: Int) -> BalanceHeaderViewItem {
         var total: Decimal = 0
         var upToDate = true
 
@@ -195,7 +195,8 @@ extension BalanceViewItemFactory: IBalanceViewItemFactory {
 
         return BalanceHeaderViewItem(
                 currencyValue: currencyValue,
-                upToDate: upToDate
+                upToDate: upToDate,
+                sortIsOn: items.count >= sortingOnThreshold
         )
     }
 
