@@ -17,8 +17,11 @@ class BalancePresenter {
 
     private var items = [BalanceItem]()
     private var viewItems = [BalanceViewItem]()
+    private var headerViewItem: BalanceHeaderViewItem?
     private var currency: Currency
     private var sortType: BalanceSortType
+
+    private var balanceHidden = false
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.balance_presenter", qos: .userInteractive)
 
@@ -38,8 +41,6 @@ class BalancePresenter {
 
         handleAdaptersReady()
         fillLatestRates()
-
-        view?.set(sortIsOn: items.count >= sortingOnThreshold)
     }
 
     private func handleAdaptersReady() {
@@ -70,8 +71,6 @@ class BalancePresenter {
         let item = items[index]
         updateBlock(item)
         viewItems[index] = viewItem(item: item)
-
-        refreshView()
     }
 
     private func updateViewItems() {
@@ -80,21 +79,22 @@ class BalancePresenter {
         viewItems = items.map {
             viewItem(item: $0)
         }
-
-        refreshView()
     }
 
     private func updateHeaderViewItem() {
-        let viewItem = factory.headerViewItem(items: items, currency: currency)
-        view?.set(headerViewItem: viewItem)
+        if balanceHidden {
+            headerViewItem = nil
+        } else {
+            headerViewItem = factory.headerViewItem(items: items, currency: currency, sortingOnThreshold: sortingOnThreshold)
+        }
     }
 
     private func viewItem(item: BalanceItem) -> BalanceViewItem {
-        factory.viewItem(item: item, currency: currency, expanded: item.wallet == expandedWallet)
+        factory.viewItem(item: item, currency: currency, balanceHidden: balanceHidden, expanded: item.wallet == expandedWallet)
     }
 
     private func refreshView() {
-        view?.set(viewItems: viewItems)
+        view?.set(headerViewItem: headerViewItem, viewItems: viewItems)
     }
 
 }
@@ -112,6 +112,7 @@ extension BalancePresenter: IBalanceViewDelegate {
 
             self.updateViewItems()
             self.updateHeaderViewItem()
+            self.refreshView()
         }
     }
 
@@ -193,6 +194,25 @@ extension BalancePresenter: IBalanceViewDelegate {
             self.interactor.sortType = sortType
 
             self.updateViewItems()
+            self.refreshView()
+        }
+    }
+
+    func onTapHideBalance() {
+        queue.async {
+            self.balanceHidden = true
+
+            self.updateHeaderViewItem()
+            self.refreshView()
+        }
+    }
+
+    func onTapShowBalance() {
+        queue.async {
+            self.balanceHidden = false
+
+            self.updateHeaderViewItem()
+            self.refreshView()
         }
     }
 
@@ -214,6 +234,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
 
             self.updateViewItems()
             self.updateHeaderViewItem()
+            self.refreshView()
         }
     }
 
@@ -223,6 +244,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
 
             self.updateViewItems()
             self.updateHeaderViewItem()
+            self.refreshView()
         }
     }
 
@@ -234,6 +256,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
             }
 
             self.updateHeaderViewItem()
+            self.refreshView()
         }
     }
 
@@ -244,6 +267,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
             }
 
             self.updateHeaderViewItem()
+            self.refreshView()
         }
     }
 
@@ -256,6 +280,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
 
             self.updateViewItems()
             self.updateHeaderViewItem()
+            self.refreshView()
         }
     }
 
@@ -270,8 +295,8 @@ extension BalancePresenter: IBalanceInteractorDelegate {
                 }
             }
 
-            self.refreshView()
             self.updateHeaderViewItem()
+            self.refreshView()
         }
     }
 

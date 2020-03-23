@@ -9,18 +9,24 @@ class BalanceViewController: ThemeViewController {
     private let balanceSection = 0
     private let editSection = 1
 
+    private let horizontalInset: CGFloat = .margin4x
+    private let lineSpacing: CGFloat = .margin2x
+
     private let delegate: IBalanceViewDelegate
 
-    private let tableView = UITableView()
-    private let headerView = BalanceHeaderView(frame: .zero)
+    private let layout = UICollectionViewFlowLayout()
+    private let collectionView: UICollectionView
     private let refreshControl = UIRefreshControl()
 
+    private var headerViewItem: BalanceHeaderViewItem?
     private var viewItems = [BalanceViewItem]()
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.balance_view", qos: .userInitiated)
 
     init(viewDelegate: IBalanceViewDelegate) {
         self.delegate = viewDelegate
+
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 
         super.init()
 
@@ -36,28 +42,26 @@ class BalanceViewController: ThemeViewController {
 
         title = "balance.title".localized
 
-        tableView.backgroundColor = .clear
-        tableView.separatorColor = .clear
-        tableView.estimatedRowHeight = 0
-        tableView.delaysContentTouches = true
-
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
-        }
-
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.registerCell(forClass: BalanceCell.self)
-        tableView.registerCell(forClass: BalanceEditCell.self)
-
         refreshControl.tintColor = .themeLeah
         refreshControl.alpha = 0.6
         refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
 
-        headerView.onTapSortType = { [weak self] in
-            self?.delegate.onTapSortType()
+        layout.sectionHeadersPinToVisibleBounds = true
+
+        view.addSubview(collectionView)
+
+        collectionView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
         }
+
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.alwaysBounceVertical = true
+        collectionView.backgroundColor = .clear
+
+        collectionView.register(BalanceCell.self, forCellWithReuseIdentifier: String(describing: BalanceCell.self))
+        collectionView.register(BalanceEditCell.self, forCellWithReuseIdentifier: String(describing: BalanceEditCell.self))
+        collectionView.register(BalanceHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: BalanceHeaderView.self))
 
         delegate.onLoad()
     }
@@ -65,7 +69,7 @@ class BalanceViewController: ThemeViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        tableView.refreshControl = refreshControl
+        collectionView.refreshControl = refreshControl
 
         delegate.onAppear()
     }
@@ -80,7 +84,11 @@ class BalanceViewController: ThemeViewController {
         delegate.onTriggerRefresh()
     }
 
-    private func handle(newViewItems: [BalanceViewItem]) {
+    @objc private func onTapShowBalance() {
+        delegate.onTapShowBalance()
+    }
+
+    private func handle(newHeaderViewItem: BalanceHeaderViewItem?, newViewItems: [BalanceViewItem]) {
         let changes = diff(old: viewItems, new: newViewItems)
 
         if changes.contains(where: {
@@ -89,23 +97,29 @@ class BalanceViewController: ThemeViewController {
             return false
         }) {
             DispatchQueue.main.sync {
+                self.headerViewItem = newHeaderViewItem
                 self.viewItems = newViewItems
-                self.tableView.reloadData()
+                self.collectionView.reloadData()
             }
             return
         }
 
-        var heightChange = false
+        let headerVisible = headerViewItem != nil
+        let newHeaderVisible = newHeaderViewItem != nil
 
-        for (index, oldViewItem) in viewItems.enumerated() {
-            let newViewItem = newViewItems[index]
+        var heightChange = headerVisible != newHeaderVisible
 
-            let oldHeight = BalanceCell.height(item: oldViewItem)
-            let newHeight = BalanceCell.height(item: newViewItem)
+        if !heightChange {
+            for (index, oldViewItem) in viewItems.enumerated() {
+                let newViewItem = newViewItems[index]
 
-            if oldHeight != newHeight {
-                heightChange = true
-                break
+                let oldHeight = BalanceCell.height(item: oldViewItem)
+                let newHeight = BalanceCell.height(item: newViewItem)
+
+                if oldHeight != newHeight {
+                    heightChange = true
+                    break
+                }
             }
         }
 
@@ -123,7 +137,12 @@ class BalanceViewController: ThemeViewController {
         }
 
         DispatchQueue.main.sync {
+            self.headerViewItem = newHeaderViewItem
             self.viewItems = newViewItems
+
+            if let view = self.collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: 0)) as? BalanceHeaderView, let viewItem = headerViewItem {
+                view.bind(viewItem: viewItem)
+            }
 
             updateIndexes.forEach {
                 bind(at: IndexPath(row: $0, section: balanceSection), animated: heightChange)
@@ -131,9 +150,15 @@ class BalanceViewController: ThemeViewController {
 
             if heightChange {
                 UIView.animate(withDuration: BalanceCell.animationDuration) {
-                    self.tableView.beginUpdates()
-                    self.tableView.endUpdates()
+                    self.collectionView.performBatchUpdates(nil)
                 }
+            }
+
+            if self.headerViewItem == nil {
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Balance Show Icon"), style: .plain, target: self, action: #selector(self.onTapShowBalance))
+                self.navigationItem.rightBarButtonItem?.tintColor = .themeGray
+            } else {
+                self.navigationItem.rightBarButtonItem = nil
             }
         }
     }
@@ -154,44 +179,51 @@ class BalanceViewController: ThemeViewController {
         )
     }
 
+    private func bind(at indexPath: IndexPath, animated: Bool = false) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? BalanceCell {
+            bind(cell: cell, viewItem: viewItems[indexPath.row], animated: animated)
+        }
+    }
+
 }
 
-extension BalanceViewController: UITableViewDelegate, UITableViewDataSource {
+extension BalanceViewController: UICollectionViewDataSource {
 
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         numberOfSections
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == balanceSection {
             return viewItems.count
         } else if section == editSection {
             return 1
         }
+
         return 0
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == balanceSection {
-            return BalanceCell.height(item: viewItems[indexPath.row]) + .margin2x
+            return collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: BalanceCell.self), for: indexPath)
         } else if indexPath.section == editSection {
-            return BalanceEditCell.height
+            return collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: BalanceEditCell.self), for: indexPath)
         }
-        return 0
+
+        return UICollectionViewCell()
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == balanceSection {
-            return tableView.dequeueReusableCell(withIdentifier: String(describing: BalanceCell.self), for: indexPath)
-        } else if indexPath.section == editSection {
-            return tableView.dequeueReusableCell(withIdentifier: String(describing: BalanceEditCell.self), for: indexPath)
-        }
-        return UITableViewCell()
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: String(describing: BalanceHeaderView.self), for: indexPath)
     }
 
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+}
+
+extension BalanceViewController: UICollectionViewDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? BalanceCell {
-            bind(cell: cell, viewItem: viewItems[indexPath.row])
+            bind(cell: cell, viewItem: viewItems[indexPath.item])
         } else if let cell = cell as? BalanceEditCell {
             cell.onTap = { [weak self] in
                 self?.delegate.onTapAddCoin()
@@ -199,62 +231,77 @@ extension BalanceViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? BalanceCell {
-            cell.unbind()
+    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+        if let view = view as? BalanceHeaderView, let viewItem = headerViewItem {
+            view.bind(viewItem: viewItem)
+
+            view.onTapSortType = { [weak self] in
+                self?.delegate.onTapSortType()
+            }
+
+            view.onTapHide = { [weak self] in
+                self?.delegate.onTapHideBalance()
+            }
         }
     }
 
-    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        delegate.onTap(viewItem: viewItems[indexPath.row])
-        return nil
-    }
-
-    func bind(at indexPath: IndexPath, animated: Bool = false) {
-        if let cell = tableView.cellForRow(at: indexPath) as? BalanceCell {
-            bind(cell: cell, viewItem: viewItems[indexPath.row], animated: animated)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section == balanceSection {
+            delegate.onTap(viewItem: viewItems[indexPath.item])
         }
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+}
+
+extension BalanceViewController: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if indexPath.section == balanceSection {
+            return CGSize(width: collectionView.width - horizontalInset * 2, height: BalanceCell.height(item: viewItems[indexPath.item]))
+        } else if indexPath.section == editSection {
+            return CGSize(width: collectionView.width, height: BalanceEditCell.height)
+        }
+
+        return .zero
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        lineSpacing
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         if section == balanceSection {
-            return BalanceHeaderView.height + CGFloat.margin2x
+            return UIEdgeInsets(top: lineSpacing, left: horizontalInset, bottom: lineSpacing, right: horizontalInset)
         }
-        return 0
+
+        return .zero
     }
 
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         if section == balanceSection {
-            return headerView
+            return CGSize(width: collectionView.width, height: headerViewItem == nil ? CGFloat.ulpOfOne : BalanceHeaderView.height)
         }
-        return nil
+
+        return .zero
     }
 
 }
 
 extension BalanceViewController: IBalanceView {
 
-    func set(viewItems: [BalanceViewItem]) {
+    func set(headerViewItem: BalanceHeaderViewItem?, viewItems: [BalanceViewItem]) {
         queue.async {
-            self.handle(newViewItems: viewItems)
-        }
-    }
-
-    func set(headerViewItem: BalanceHeaderViewItem) {
-        DispatchQueue.main.async {
-            self.headerView.bind(viewItem: headerViewItem)
+            self.handle(newHeaderViewItem: headerViewItem, newViewItems: viewItems)
         }
     }
 
     func hideRefresh() {
         DispatchQueue.main.async {
             self.refreshControl.endRefreshing()
-        }
-    }
-
-    func set(sortIsOn: Bool) {
-        DispatchQueue.main.async {
-            self.headerView.setSortButton(hidden: !sortIsOn)
         }
     }
 

@@ -4,9 +4,7 @@ import XRatesKit
 import CurrencyKit
 
 protocol IBalanceView: class {
-    func set(viewItems: [BalanceViewItem])
-    func set(headerViewItem: BalanceHeaderViewItem)
-    func set(sortIsOn: Bool)
+    func set(headerViewItem: BalanceHeaderViewItem?, viewItems: [BalanceViewItem])
     func showSortType(selectedSortType: BalanceSortType)
     func showBackupRequired(coin: Coin, predefinedAccountType: PredefinedAccountType)
     func hideRefresh()
@@ -28,6 +26,9 @@ protocol IBalanceViewDelegate {
 
     func onTapSortType()
     func onSelect(sortType: BalanceSortType)
+
+    func onTapHideBalance()
+    func onTapShowBalance()
 
     func onRequestBackup()
 }
@@ -77,8 +78,8 @@ protocol IBalanceRouter {
 }
 
 protocol IBalanceViewItemFactory {
-    func viewItem(item: BalanceItem, currency: Currency, expanded: Bool) -> BalanceViewItem
-    func headerViewItem(items: [BalanceItem], currency: Currency) -> BalanceHeaderViewItem
+    func viewItem(item: BalanceItem, currency: Currency, balanceHidden: Bool, expanded: Bool) -> BalanceViewItem
+    func headerViewItem(items: [BalanceItem], currency: Currency, sortingOnThreshold: Int) -> BalanceHeaderViewItem
 }
 
 protocol IBalanceSorter {
