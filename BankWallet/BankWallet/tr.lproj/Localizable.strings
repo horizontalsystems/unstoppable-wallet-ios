@@ -404,6 +404,6 @@
 "double_spend_info.conflicting_hash" = "Çakışan Tx";
 
 // Relative Date
-"timestamp.days_ago" = "%lu saat önce";
-"timestamp.hours_ago" = "%luh ago";
-"timestamp.min_ago" = "%lum ago";
+"timestamp.days_ago" = "%lusaat önce";
+"timestamp.hours_ago" = "%lusaat önce";
+"timestamp.min_ago" = "%ludk önce";
