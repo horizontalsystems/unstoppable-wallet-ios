@@ -404,6 +404,6 @@
 "double_spend_info.conflicting_hash" = "Gegensätzliche Tx";
 
 // Relative Date
-"timestamp.days_ago" = "%lud ago";
-"timestamp.hours_ago" = "%luh ago";
-"timestamp.min_ago" = "%lum ago";
+"timestamp.days_ago" = "vor %luT";
+"timestamp.hours_ago" = "Vor %luSt";
+"timestamp.min_ago" = "Vor %luMin";
