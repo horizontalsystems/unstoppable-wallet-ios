@@ -20,8 +20,7 @@ class BalancePresenter {
     private var headerViewItem: BalanceHeaderViewItem?
     private var currency: Currency
     private var sortType: BalanceSortType
-
-    private var balanceHidden = false
+    private var balanceHidden: Bool
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.balance_presenter", qos: .userInteractive)
 
@@ -34,6 +33,7 @@ class BalancePresenter {
 
         currency = interactor.baseCurrency
         sortType = interactor.sortType ?? .name
+        balanceHidden = interactor.balanceHidden
     }
 
     private func handleUpdate(wallets: [Wallet]) {
@@ -95,6 +95,16 @@ class BalancePresenter {
 
     private func refreshView() {
         view?.set(headerViewItem: headerViewItem, viewItems: viewItems)
+    }
+
+    private func handle(balanceHidden: Bool) {
+        queue.async {
+            self.balanceHidden = balanceHidden
+            self.interactor.balanceHidden = balanceHidden
+
+            self.updateHeaderViewItem()
+            self.refreshView()
+        }
     }
 
 }
@@ -199,21 +209,11 @@ extension BalancePresenter: IBalanceViewDelegate {
     }
 
     func onTapHideBalance() {
-        queue.async {
-            self.balanceHidden = true
-
-            self.updateHeaderViewItem()
-            self.refreshView()
-        }
+        handle(balanceHidden: true)
     }
 
     func onTapShowBalance() {
-        queue.async {
-            self.balanceHidden = false
-
-            self.updateHeaderViewItem()
-            self.refreshView()
-        }
+        handle(balanceHidden: false)
     }
 
     func onRequestBackup() {

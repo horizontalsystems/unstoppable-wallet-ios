@@ -140,12 +140,14 @@ class BalanceViewController: ThemeViewController {
             self.headerViewItem = newHeaderViewItem
             self.viewItems = newViewItems
 
-            if let view = self.collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: 0)) as? BalanceHeaderView, let viewItem = headerViewItem {
-                view.bind(viewItem: viewItem)
+            if let view = collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: 0)) as? BalanceHeaderView {
+                bind(view: view)
             }
 
             updateIndexes.forEach {
-                bind(at: IndexPath(row: $0, section: balanceSection), animated: heightChange)
+                if let cell = collectionView.cellForItem(at: IndexPath(row: $0, section: balanceSection)) as? BalanceCell {
+                    bind(cell: cell, viewItem: viewItems[$0], animated: heightChange)
+                }
             }
 
             if heightChange {
@@ -179,9 +181,17 @@ class BalanceViewController: ThemeViewController {
         )
     }
 
-    private func bind(at indexPath: IndexPath, animated: Bool = false) {
-        if let cell = collectionView.cellForItem(at: indexPath) as? BalanceCell {
-            bind(cell: cell, viewItem: viewItems[indexPath.row], animated: animated)
+    private func bind(view: BalanceHeaderView) {
+        if let viewItem = headerViewItem {
+            view.bind(viewItem: viewItem)
+
+            view.onTapSortType = { [weak self] in
+                self?.delegate.onTapSortType()
+            }
+
+            view.onTapHide = { [weak self] in
+                self?.delegate.onTapHideBalance()
+            }
         }
     }
 
@@ -232,16 +242,8 @@ extension BalanceViewController: UICollectionViewDelegate {
     }
 
     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
-        if let view = view as? BalanceHeaderView, let viewItem = headerViewItem {
-            view.bind(viewItem: viewItem)
-
-            view.onTapSortType = { [weak self] in
-                self?.delegate.onTapSortType()
-            }
-
-            view.onTapHide = { [weak self] in
-                self?.delegate.onTapHideBalance()
-            }
+        if let view = view as? BalanceHeaderView {
+            bind(view: view)
         }
     }
 
