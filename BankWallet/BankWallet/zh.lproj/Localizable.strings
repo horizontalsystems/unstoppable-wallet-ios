@@ -404,6 +404,6 @@
 "double_spend_info.conflicting_hash" = "冲突Tx";
 
 // Relative Date
-"timestamp.days_ago" = "%lud ago";
-"timestamp.hours_ago" = "%luh ago";
-"timestamp.min_ago" = "%lum ago";
+"timestamp.days_ago" = "%lu天之前";
+"timestamp.hours_ago" = "%lu小时之前";
+"timestamp.min_ago" = "%lu分钟之前";
