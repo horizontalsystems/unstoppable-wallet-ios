@@ -229,6 +229,7 @@
 "settings.title" = "设置";
 "settings.tab_bar_item" = "设置";
 "settings.security_center" = "安全中心";
+"settings.manage_accounts" = "管理钱包";
 "settings.manage_coins" = "管理Coins";
 "settings.experimental_features" = "实验性功能";
 "settings.notifications" = "通知";
@@ -277,7 +278,7 @@
 "settings_about.app_title" = "Unstoppable";
 "settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "条款和隐私：";
-"settings_about.terms_privacy_text" = "此应用是一款点对点应用。其运作不依赖于任何网络服务器或技术支持人员。\n\n只要有网络它就能工作。没有实体能够阻止此应用工作或者阻止任何人使用它。\n\n您的资金安全地保存在电话上，而不是其他地方。\n\n您的职责是备份密钥并保证其安全。绝不要向任何人展示密钥。如果密钥丢失、遗忘或被盗，您的资金将会被拥有密钥的人使用。\n\n不要对您的电话进行越狱，不要安装来源不明（不可靠）的应用，不要把您的电话交给不可靠的人，保证电话的操作系统是最新版本。您钱包的安全将取决于此。\n\n支持此应用的完整代码从一开始就对公众监督开放。我们付出了最大努力以开发最安全的分散式钱包，但这不保证其中不会存在意外的软件问题。尽管如此，此钱包很可能还是比市面上的其他智能手机钱包更为安全。\n\n像货币汇率等通用非私有应用数据将保存在分散式存储系统（IPFS)。";
+"settings_about.terms_privacy_text" = "此应用是一款点对点应用。其运作不依赖于任何网络服务器或技术支持人员。\n\n应用能在任何有网络的地方工作。没有实体能够阻止此应用工作或者阻止任何人使用它。\n\n控制着您资金的加密密钥安全地保存在电话上，而不是其他地方。\n\n您的职责是备份加密密钥并保证其私密性。绝不要向任何人展示密钥。如果密钥丢失、遗忘或被盗，您的资金将会被拥有密钥的人使用。\n\n不要对您的电话进行越狱，不要安装来源不明（不可靠）的应用，不要把您的电话交给不可靠的人，保证电话的操作系统是最新版本。您钱包的安全将取决于此。\n\n支持此应用的完整代码对公众监督开放。尽管我们相信比市面上任何智能手机钱包应用都安全得多，但这不保证其中不会存在意外的软件问题。\n\n像交易、余额等所有数据将仅保存在您的钱包应用且绝不会从您的设备上外泄。";
 
 // Settings -> Tell Friends
 
@@ -299,7 +300,6 @@
 "settings.contact.app_status" = "应用状态";
 "settings.contact.email" = "电子邮箱";
 "settings.contact.telegram_wallet" = "电报（钱包帮助）";
-"settings.contact.telegram_developers" = "电报（开发者）";
 
 // Manage Keys
 
@@ -312,6 +312,7 @@
 "settings_manage_keys.show" = "显示";
 "settings_manage_keys.create" = "创建";
 "settings_manage_keys.restore" = "恢复";
+"settings_manage_keys.settings" = "高级设置";
 "settings_manage_keys.delete.cant_delete" = "您应该在将此钱包的私钥从该手机删除之前先对其进行备份。";
 "settings_manage_keys.delete.title" = "删除钱包";
 "settings_manage_keys.delete.confirmation_remove" = "该操作将从此设备删除%@钱包。";
@@ -349,7 +350,7 @@
 "numpad_5" = "J K L";
 "numpad_6" = "M N O";
 "numpad_7" = "P Q R S";
-"numpad_8" = "T U V";
+"numpad_8" = "P Q R S";
 "numpad_9" = "W X Y Z";
 
 // Key Types
@@ -374,6 +375,7 @@
 "chart.error.not_available" = "无可用图表";
 "chart.selected.price" = "价格";
 "chart.selected.volume" = "量";
+"chart.news.title" = "最新消息";
 
 // Create Wallet
 
@@ -400,3 +402,8 @@
 "double_spend_info.header" = "双重支付风险！区块链上还有另一笔交易试图支付这笔交易所使用的投入。 网络只接受一笔交易。";
 "double_spend_info.this_hash" = "此Tx";
 "double_spend_info.conflicting_hash" = "冲突Tx";
+
+// Relative Date
+"timestamp.days_ago" = "%lu天之前";
+"timestamp.hours_ago" = "%lu小时之前";
+"timestamp.min_ago" = "%lu分钟之前";
