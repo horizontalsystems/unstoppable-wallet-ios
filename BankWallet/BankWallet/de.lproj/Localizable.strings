@@ -229,6 +229,7 @@
 "settings.title" = "Einstellungen";
 "settings.tab_bar_item" = "Einstellungen";
 "settings.security_center" = "Sicherheit";
+"settings.manage_accounts" = "Wallets verwalten";
 "settings.manage_coins" = "Coins Managen";
 "settings.experimental_features" = "Experimentelles Feature";
 "settings.notifications" = "Benachrichtigungen";
@@ -277,7 +278,7 @@
 "settings_about.app_title" = "Unstoppable";
 "settings_about.app_subtitle" = "Dezentralisierte App";
 "settings_about.terms_privacy_subtitle" = "ANB & Datenschutz:";
-"settings_about.terms_privacy_text" = "Diese App basiert auf dem Peer-to-Peer-Prinzip. Das bietet den Vorteil, dass die App zum Funktionieren nicht auf bestimmte Webserver oder technischem Supportpersonal abhängig ist.\n\nDie App funktioniert überall. Sie benötigen nur einen Internetzugang. Niemand kann die App stoppen oder Sie davon abhalten, sie zu nutzen.\n\nIhre Guthaben sind sicher auf Ihrem Telefon gespeichert, nirgendwo sonst.\n\nEs liegt in Ihrer Verantwortung, den Private Key/Secret Key zu sichern und ihn gut aufzubewahren. Zeigen Sie ihn niemandem. Wenn er verloren geht, Sie ihn vergessen oder er gestohlen wird, kann Ihr Guthaben von demjenigen ausgegeben werden, der den Key besitzt.\n\nFühren Sie auf Ihrem Telefon keinen Jailbreak durch. Installieren Sie keine Apps aus unbekannten (nicht vertrauenswürdigen) Quellen. Geben Sie das Telefon keiner nicht vertrauenswürdigen Person und aktualisieren Sie das Betriebssystem Ihres Telefons regelmäßig. Die Sicherheit Ihres Wallets hängt davon ab.\n\nDer gesamte Code dieser App ist seit Anfang an öffentlich einsehbar. Wir haben versucht, das sicherste und dezentralisierteste Wallet zu programmieren. Allerdings gibt es keine Garantie, dass keine unvorhergesehenen Softwareprobleme auftreten. Trotzdem ist dieses Wallet wahrscheinlich deutlich sicherer als jede andere Smartphone-App.\n\nHinweis: Manche generischen, nicht geheimen App-Daten (wie Währungswechselkurse) werden in einem dezentralen Netzwerken (IPFS) gespeichert.";
+"settings_about.terms_privacy_text" = "This app is peer-to-peer. It does not depend on any web server or tech support personnel to function.\n\nIt works everywhere as long as there is internet. No entity can block this app from working or censor someone from using it.\n\nThe secret cryptographic keys which control your crypto funds are securely stored on the phone itself, not anywhere else.\n\nIt’s your responsibility to backup your secret cryptographic keys and keep them private. Never show your keys to anyone. If keys are lost, forgotten or stollen your funds can be used by the person who finds your key.\n\nDo not jailbreak your phone, do not install apps from unknown (untrusted) sources, do not give your device to untrusted people, and keep the operating system on your phone up to date. The security of your wallet depends on this.\n\nThe entire code powering this app is open to the public scrutiny. While we believe to be significantly more secure than any smartphone wallet app out there there are no guarantees that there are no unintended software issues.\n\nAll of your data i.e. transactions, balance etc available only to your wallet app and never leaves your device.";
 
 // Settings -> Tell Friends
 
@@ -299,7 +300,6 @@
 "settings.contact.app_status" = "App-Status";
 "settings.contact.email" = "E-mail";
 "settings.contact.telegram_wallet" = "Telegram (Wallet-Hilfe)";
-"settings.contact.telegram_developers" = "Telegram (Entwickler)";
 
 // Manage Keys
 
@@ -312,6 +312,7 @@
 "settings_manage_keys.show" = "Anzeigen";
 "settings_manage_keys.create" = "Erstellen";
 "settings_manage_keys.restore" = "Wiederherstellen";
+"settings_manage_keys.settings" = "Erweiterte Einstellungen";
 "settings_manage_keys.delete.cant_delete" = "Sie müssen den Private Key für dieses Wallet sichern, bevor Sie es von diesem Telefon löschen können.";
 "settings_manage_keys.delete.title" = "Wallet löschen";
 "settings_manage_keys.delete.confirmation_remove" = "Damit wird das %@ Wallet von diesem Gerät gelöscht.";
@@ -374,6 +375,7 @@
 "chart.error.not_available" = "Diagramm nicht verfügbar";
 "chart.selected.price" = "Preis";
 "chart.selected.volume" = "Lautstärke";
+"chart.news.title" = "Latest News";
 
 // Create Wallet
 
@@ -400,3 +402,8 @@
 "double_spend_info.header" = "Double-Spend-Risiko! Es gibt eine weitere Transaktion auf der Blockchain, die versucht, die in dieser Transaktion verwendeten Inputs auszugeben. Nur eine Transaktion wird vom Netzwerk akzeptiert";
 "double_spend_info.this_hash" = "Dieser Tx";
 "double_spend_info.conflicting_hash" = "Gegensätzliche Tx";
+
+// Relative Date
+"timestamp.days_ago" = "vor %luT";
+"timestamp.hours_ago" = "Vor %luSt";
+"timestamp.min_ago" = "Vor %luMin";

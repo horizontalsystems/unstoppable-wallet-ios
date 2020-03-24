@@ -229,6 +229,7 @@
 "settings.title" = "Ayarlar";
 "settings.tab_bar_item" = "Ayarlar";
 "settings.security_center" = "Güvenlik Merkezi";
+"settings.manage_accounts" = "Cüzdanları yönet";
 "settings.manage_coins" = "Kripto Paraları Yönet";
 "settings.experimental_features" = "Deneysel Özellikler";
 "settings.notifications" = "Bildirimler";
@@ -277,7 +278,7 @@
 "settings_about.app_title" = "Unstoppable";
 "settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "Şartlar & Gizlilik Politikası:";
-"settings_about.terms_privacy_text" = "Bu uygulama uçtan uca bir ağdır. Herhangi bir web sunucusuna veya teknik destek personeline bağlı değildir. \n\nİnternet olduğu sürece her yerde çalışır. Hiç kimse bu uygulamanın çalışmasını veya birisinin programı kullanmasını engelleyemez. \n\nCüzdanlarınız telefonda güvenli bir şekilde saklanır, başka bir yerde değil. \n\nGizli Anahtarınızı yedeklemek ve gizli tutmak sizin sorumluluğunuz. Asla kimseye göstermeyin. Kaybolursa, unutursanız veya çalınırsa cüzdanlarınız Gizli Anahtarınıza ele geçiren kişi tarafından kullanılabilir.\n\nTelefonunuzun yazılımını kırmayın, bilinmeyen (güvenilmeyen) kaynaklardan uygulamalar yüklemeyin, cihazınızı güvenmediğiniz kişilere vermeyin ve İşletim Sistemini telefonunuzda güncel tutun. Cüzdalarınızın güvenliği buna bağlı. \n\nBu uygulamayı oluşturan kodun tamamı, başından beri kamu denetimine açıktır. Yapabileceğimiz en güvenilir ve merkezi olmayan cüzdanı oluşturmaya çalıştık, yine de istenmeyen yazılım sorunu olmadığının garantisi yoktur. Bununla birlikte, bu cüzdanın herhangi bir akıllı telefon cüzdan uygulamasından çok daha güvenli olacağı muhtemel. \n\nDöviz kurları gibi kişisel olmayan uygulama verileri merkezi olmayan (IPFS) sisteminde depolanır. ";
+"settings_about.terms_privacy_text" = "Bu uygulama peer-to-peer uygulamasıdır. Çalışması için herhangi bir web sunucusu veya teknik personeli gerektirmiyor. \n\nInternet olduğu sürece her yerde çalışır. Hiçkimse bu uygulamanın çalışmasını engelleyemez veya birisinin onu kullanmasını sansürleyemez.\n\nKripto paranızı kontrol eden gizli şifreleme anahtarları sadece telefonun kendisinde güvenle saklanır, başka hiçbir yerde saklanmaz.\n\nGizli şifreleme anahtarlarınızı yedeklemek ve gizli tutmak sizin sorumluluğunuzdur. Anahtarlarınızı asla kimseye göstermeyin. Anahtarlar kaybolur, unutulur veya çalınırsa, paranızı anahtarınızı bulan kişi kullanabilir.\n\nTelefonunuzu kesinlikte jailbreak etmeyin, bilinmeyen (güvenilmeyen) kaynaklardan uygulama yüklemeyin, cihazınızı güvenilmeyen kişilere vermeyin ve telefonunuzdaki işletim sistemini güncel tutun. Cüzdanınızın güvenliği buna bağlıdır.\n\nBu uygulamayı destekleyen kodun tamamı kamu incelemesine açıktır. Herhangi bir akıllı telefon cüzdan uygulamasından önemli ölçüde daha güvenli olduğuna inanmamıza rağmen, istenmeyen yazılım sorunlarının olmadığının garantisi yoktur.\n\nTüm verileriniz, yani işlemler, bakiye vb. yalnızca cüzdan uygulamanız tarafından kullanılabilir ve cihazınızdan asla ayrılmaz.";
 
 // Settings -> Tell Friends
 
@@ -299,7 +300,6 @@
 "settings.contact.app_status" = "Uygulama Durumu";
 "settings.contact.email" = "E-posta";
 "settings.contact.telegram_wallet" = "Telegram (Cüzdan Kullanım Yardımı)";
-"settings.contact.telegram_developers" = "Telegram (Developers)";
 
 // Manage Keys
 
@@ -312,6 +312,7 @@
 "settings_manage_keys.show" = "Göster";
 "settings_manage_keys.create" = "Oluştur";
 "settings_manage_keys.restore" = "Geri Yükle";
+"settings_manage_keys.settings" = "Gelişmiş Ayarlar";
 "settings_manage_keys.delete.cant_delete" = "Bu cüzdanın özel anahtarını, bu telefondan silinmeden önce yedeklemeniz gerekir.";
 "settings_manage_keys.delete.title" = "Cüzdanı Sil";
 "settings_manage_keys.delete.confirmation_remove" = "Bu işlem %@ Cüzdanını bu cihazdan kaldıracak.";
@@ -374,6 +375,7 @@
 "chart.error.not_available" = "Grafik yok";
 "chart.selected.price" = "Fiyat";
 "chart.selected.volume" = "Birim";
+"chart.news.title" = "Son Haberler";
 
 // Create Wallet
 
@@ -400,3 +402,8 @@
 "double_spend_info.header" = "Çifte Harcama Riski! Blockchain'de, bu işlemde kullanılan girdileri harcamaya çalışan başka bir işlem var. Ağ tarafından yalnızca bir işlem kabul edilecektir";
 "double_spend_info.this_hash" = "Bu Tx";
 "double_spend_info.conflicting_hash" = "Çakışan Tx";
+
+// Relative Date
+"timestamp.days_ago" = "%lusaat önce";
+"timestamp.hours_ago" = "%lusaat önce";
+"timestamp.min_ago" = "%ludk önce";

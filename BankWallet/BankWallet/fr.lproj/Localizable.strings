@@ -229,6 +229,7 @@
 "settings.title" = "Paramètres";
 "settings.tab_bar_item" = "Paramètres";
 "settings.security_center" = "Centre de Sécurité";
+"settings.manage_accounts" = "Gérer les portefeuilles";
 "settings.manage_coins" = "Gérer les coins";
 "settings.experimental_features" = "Fonctionnalités expérimentales";
 "settings.notifications" = "Notifications";
@@ -277,7 +278,7 @@
 "settings_about.app_title" = "Unstoppable";
 "settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "Terms & Confidentialité:";
-"settings_about.terms_privacy_text" = "Cette application est décentralisée. Elle ne dépend d'aucun serveur Web ou personnel de support technique pour fonctionner.\n\nElle fonctionne partout tant qu'il y a internet. Aucune entité ne peut empêcher cette application de fonctionner ou empêcher quelqu'un de l'utiliser.\n\nVos fonds sont stockés de manière sécurisée sur le téléphone, pas ailleurs.\n\nIl est de votre responsabilité de sauvegarder votre clé secrète et de la garder privée. Ne la montrez jamais à personne. En cas de perte, d’oubli ou de vol, vos fonds peuvent être utilisés par la personne qui détient votre clé secrète.\n\nNe piratez pas votre téléphone, n'installez pas d'applications de sources inconnues (non fiables), ne confiez pas votre appareil à des personnes non fiables et maintenez le système d'exploitation à jour. La sécurité de votre porte-monnaie dépend de tout cela.\n\nLe code alimentant cette application a été ouvert au public depuis le début. Nous avons essayé de créer le porte-monnaie le plus sécurisé et le plus décentralisé possible, mais rien ne garantit qu’il n’y ait pas de problèmes logiciels inattendus. Cela dit, ce porte-monnaie sera probablement beaucoup plus sécurisé que n'importe quelle application de porte-monnaie pour téléphone.\n\nCertaines données d'applications génériques non privées, telles que les taux de change, sont stockées dans un stockage décentralisé (IPFS).";
+"settings_about.terms_privacy_text" = "Cette application est de type peer-to-peer. Elle ne dépend pas d'un serveur web ou du support des techniciens pour fonctionner.\n\nIt fonctionne partout tant qu'il y a une connexion internet. Aucune entité ne peut empêcher cette application de fonctionner ou censurer quelqu'un qui voudrait l'utiliser.\n\nLes clés cryptographiques secrètes qui contrôlent vos fonds cryptographiques sont stockées en toute sécurité sur le téléphone lui-même, et nulle part ailleurs.\n\nSauvegarder vos clés cryptographiques secrètes et les garder privées est de votre responsabilité. Ne montrez jamais vos clés à qui que ce soit. Si les clés sont perdues, oubliées ou volées, vos fonds pourront être utilisés par la personne qui trouvera votre clé.\n\nNe débridez pas votre téléphone, n'installez pas d'applications provenant de sources inconnues (non fiables), ne donnez pas votre appareil à des personnes non fiables, et gardez le système d'exploitation de votre téléphone à jour. La sécurité de votre portefeuille en dépend.\n\nL'ensemble du code qui alimente cette application est ouvert au regard du public. Bien que nous soyons convaincus que cette application est bien plus sûre que toutes les autres applications pour smartphones, il n'y a aucune garantie qu'il n'y ait pas de problèmes logiciels fortuits.\n\nToutes vos données, c'est-à-dire vos transactions, votre solde, etc. ne sont accessibles que par votre application portefeuille et ne quittent jamais votre appareil.";
 
 // Settings -> Tell Friends
 
@@ -299,7 +300,6 @@
 "settings.contact.app_status" = "Statut de l'appli";
 "settings.contact.email" = "E-mail";
 "settings.contact.telegram_wallet" = "Telegram (Aide portefeuille)";
-"settings.contact.telegram_developers" = "Telegram (Développeurs)";
 
 // Manage Keys
 
@@ -312,6 +312,7 @@
 "settings_manage_keys.show" = "Afficher";
 "settings_manage_keys.create" = "Créer";
 "settings_manage_keys.restore" = "Restaurer";
+"settings_manage_keys.settings" = "Configuration avancée";
 "settings_manage_keys.delete.cant_delete" = "Vous devez sauvegarder la clé privée avant de pouvoir la supprimer de ce téléphone.";
 "settings_manage_keys.delete.title" = "Supprimer le portefeuille";
 "settings_manage_keys.delete.confirmation_remove" = "Cette action supprimera le portefeuille %@ de cet appareil.";
@@ -374,6 +375,7 @@
 "chart.error.not_available" = "Graphique non disponible";
 "chart.selected.price" = "Prix";
 "chart.selected.volume" = "Volume";
+"chart.news.title" = "Dernières nouvelles";
 
 // Create Wallet
 
@@ -400,3 +402,8 @@
 "double_spend_info.header" = "Risque de double dépense ! Il y a une autre transaction sur la blockchain qui essaie de dépenser les intrants utilisés dans cette transaction. Une seule transaction sera acceptée par le réseau";
 "double_spend_info.this_hash" = "Cette Tx";
 "double_spend_info.conflicting_hash" = "Tx conflictuelle";
+
+// Relative Date
+"timestamp.days_ago" = "Il y a %luj";
+"timestamp.hours_ago" = "il y a %luh";
+"timestamp.min_ago" = "il y a %lum";
