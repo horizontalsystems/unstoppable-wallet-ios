@@ -5,27 +5,92 @@ import XRatesKit
 struct BalanceViewItem {
     let wallet: Wallet
 
+    let topViewItem: BalanceTopViewItem
+    let separatorVisible: Bool
+    let amountViewItem: BalanceAmountViewItem?
+    let lockedAmountViewItem: BalanceLockedAmountViewItem?
+    let buttonsViewItem: BalanceButtonsViewItem?
+}
+
+struct BalanceTopViewItem {
     let coinIconCode: String?
     let coinTitle: String
-    let coinValue: (text: String, dimmed: Bool)?
-    let lockedCoinValue: (text: String, dimmed: Bool)?
-    let lockedVisible: Bool
     let blockchainBadge: String?
 
-    let currencyValue: (text: String, dimmed: Bool)?
-    let lockedCurrencyValue: (text: String, dimmed: Bool)?
     let rateValue: (text: String, dimmed: Bool)?
     let diff: (value: Decimal, dimmed: Bool)?
-    let blockChart: Bool
 
     let syncSpinnerProgress: Int?
     let failedImageViewVisible: Bool
-    let syncingInfo: (progress: Int?, syncedUntil: String?)?
+}
 
-    let receiveButtonEnabled: Bool?
-    let sendButtonEnabled: Bool?
+enum BalanceAmountViewItem {
+    case amount(coinValue: (text: String?, dimmed: Bool), currencyValue: (text: String?, dimmed: Bool)?)
+    case syncing(progress: Int?, syncedUntil: String?)
+}
 
-    let expanded: Bool
+struct BalanceLockedAmountViewItem {
+    let lockedCoinValue: (text: String?, dimmed: Bool)
+    let lockedCurrencyValue: (text: String?, dimmed: Bool)?
+}
+
+struct BalanceButtonsViewItem {
+    let receiveButtonEnabled: Bool
+    let sendButtonEnabled: Bool
+}
+
+extension BalanceTopViewItem: Equatable {
+
+    static func ==(lhs: BalanceTopViewItem, rhs: BalanceTopViewItem) -> Bool {
+        lhs.coinIconCode == rhs.coinIconCode &&
+                lhs.coinTitle == rhs.coinTitle &&
+                lhs.blockchainBadge == rhs.blockchainBadge &&
+                lhs.rateValue?.text == rhs.rateValue?.text &&
+                lhs.rateValue?.dimmed == rhs.rateValue?.dimmed &&
+                lhs.diff?.value == rhs.diff?.value &&
+                lhs.diff?.dimmed == rhs.diff?.dimmed &&
+                lhs.syncSpinnerProgress == rhs.syncSpinnerProgress &&
+                lhs.failedImageViewVisible == rhs.failedImageViewVisible
+    }
+
+}
+
+extension BalanceAmountViewItem: Equatable {
+
+    static func ==(lhs: BalanceAmountViewItem, rhs: BalanceAmountViewItem) -> Bool {
+        switch (lhs, rhs) {
+        case (.amount(let lhsCoinValue, let lhsCurrencyValue), .amount(let rhsCoinValue, let rhsCurrencyValue)):
+            return lhsCoinValue.text == rhsCoinValue.text &&
+                    lhsCoinValue.dimmed == rhsCoinValue.dimmed &&
+                    lhsCurrencyValue?.text == rhsCurrencyValue?.text &&
+                    lhsCurrencyValue?.dimmed == rhsCurrencyValue?.dimmed
+        case (.syncing(let lhsProgress, let lhsSyncedUntil), .syncing(let rhsProgress, let rhsSyncedUntil)):
+            return lhsProgress == rhsProgress &&
+                    lhsSyncedUntil == rhsSyncedUntil
+        default: return false
+        }
+    }
+
+}
+
+extension BalanceLockedAmountViewItem: Equatable {
+
+    static func ==(lhs: BalanceLockedAmountViewItem, rhs: BalanceLockedAmountViewItem) -> Bool {
+        lhs.lockedCoinValue.text == rhs.lockedCoinValue.text &&
+                lhs.lockedCoinValue.dimmed == rhs.lockedCoinValue.dimmed &&
+                lhs.lockedCurrencyValue?.text == rhs.lockedCurrencyValue?.text &&
+                lhs.lockedCurrencyValue?.dimmed == rhs.lockedCurrencyValue?.dimmed
+    }
+
+}
+
+extension BalanceButtonsViewItem: Equatable {
+
+    static func ==(lhs: BalanceButtonsViewItem, rhs: BalanceButtonsViewItem) -> Bool {
+        lhs.receiveButtonEnabled == rhs.receiveButtonEnabled &&
+                lhs.sendButtonEnabled == rhs.sendButtonEnabled
+    }
+
 }
 
 extension BalanceViewItem: DiffAware {
@@ -35,36 +100,11 @@ extension BalanceViewItem: DiffAware {
     }
 
     static func compareContent(_ a: BalanceViewItem, _ b: BalanceViewItem) -> Bool {
-        let compareCoin =
-                a.coinIconCode == b.coinIconCode &&
-                a.coinTitle == b.coinTitle &&
-                a.coinValue?.text == b.coinValue?.text &&
-                a.coinValue?.dimmed == b.coinValue?.dimmed &&
-                a.lockedCoinValue?.text == b.lockedCoinValue?.text &&
-                a.lockedCoinValue?.dimmed == b.lockedCoinValue?.dimmed &&
-                a.blockchainBadge == b.blockchainBadge
-
-        let compareCurrency =
-                a.currencyValue?.text == b.currencyValue?.text &&
-                a.currencyValue?.dimmed == b.currencyValue?.dimmed &&
-                a.lockedCurrencyValue?.text == b.lockedCurrencyValue?.text &&
-                a.lockedCurrencyValue?.dimmed == b.lockedCurrencyValue?.dimmed &&
-                a.lockedVisible == b.lockedVisible &&
-                a.rateValue?.text == b.rateValue?.text &&
-                a.rateValue?.dimmed == b.rateValue?.dimmed &&
-                a.diff?.value == b.diff?.value &&
-                a.diff?.dimmed == b.diff?.dimmed
-
-        let compareOther =
-                a.syncSpinnerProgress == b.syncSpinnerProgress &&
-                a.failedImageViewVisible == b.failedImageViewVisible &&
-                a.syncingInfo?.progress == b.syncingInfo?.progress &&
-                a.syncingInfo?.syncedUntil == b.syncingInfo?.syncedUntil &&
-                a.receiveButtonEnabled == b.receiveButtonEnabled &&
-                a.sendButtonEnabled == b.sendButtonEnabled &&
-                a.expanded == b.expanded
-
-        return compareCoin && compareCurrency && compareOther
+        a.topViewItem == b.topViewItem &&
+                a.separatorVisible == b.separatorVisible &&
+                a.amountViewItem == b.amountViewItem &&
+                a.lockedAmountViewItem == b.lockedAmountViewItem &&
+                a.buttonsViewItem == b.buttonsViewItem
     }
 
 }

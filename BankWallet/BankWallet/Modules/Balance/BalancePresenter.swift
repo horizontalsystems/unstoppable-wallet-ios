@@ -102,6 +102,7 @@ class BalancePresenter {
             self.balanceHidden = balanceHidden
             self.interactor.balanceHidden = balanceHidden
 
+            self.updateViewItems()
             self.updateHeaderViewItem()
             self.refreshView()
         }
@@ -187,7 +188,13 @@ extension BalancePresenter: IBalanceViewDelegate {
     }
 
     func onTapChart(viewItem: BalanceViewItem) {
-        router.showChart(for: viewItem.wallet.coin.code)
+        let coinCode = viewItem.wallet.coin.code
+
+        guard !interactor.chartBlockedCoinCodes.contains(coinCode) else {
+            return
+        }
+
+        router.showChart(for: coinCode)
     }
 
     func onTapAddCoin() {

@@ -50,6 +50,7 @@ protocol IBalanceInteractor: AnyObject {
 
     var sortType: BalanceSortType? { get set }
     var balanceHidden: Bool { get set }
+    var chartBlockedCoinCodes: Set<String> { get }
 
     func refresh()
     func predefinedAccountType(wallet: Wallet) -> PredefinedAccountType?
