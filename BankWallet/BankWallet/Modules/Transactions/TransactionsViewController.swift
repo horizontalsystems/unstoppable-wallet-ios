@@ -21,7 +21,7 @@ class TransactionsViewController: ThemeViewController {
 
     private var items: [TransactionViewItem]?
 
-    private let syncSpinner = HUDProgressView(progress: 0, strokeLineWidth: 2, radius: 9, strokeColor: .themeGray, duration: 2)
+    private let syncSpinner = HUDProgressView(strokeLineWidth: 2, radius: 9, strokeColor: .themeGray, duration: 2)
 
     init(delegate: ITransactionsViewDelegate, differ: IDiffer) {
         self.delegate = delegate
@@ -114,12 +114,10 @@ class TransactionsViewController: ThemeViewController {
     }
 
     private func show(status: TransactionViewStatus) {
-        if let spinnerProgress = status.progress {
-            syncSpinner.set(progress: Float(max(spinnerProgress, 1)) / 100)
-            syncSpinner.isHidden = false
+        syncSpinner.isHidden = !status.showProgress
+        if status.showProgress {
             syncSpinner.startAnimating()
         } else {
-            syncSpinner.isHidden = true
             syncSpinner.stopAnimating()
         }
 
