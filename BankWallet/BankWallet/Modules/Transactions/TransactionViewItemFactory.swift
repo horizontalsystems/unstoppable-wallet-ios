@@ -35,7 +35,7 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
         }
 
         var unlocked = record.lockInfo == nil
-        
+
         if let lastBlockTimestamp = lastBlockInfo?.timestamp, let lockedUntil = record.lockInfo?.lockedUntil.timeIntervalSince1970 {
             unlocked = Double(lastBlockTimestamp) > lockedUntil
         }
@@ -62,4 +62,32 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
     private func showFromAddress(for type: CoinType) -> Bool {
         !(type == .bitcoin || type == .litecoin || type == .bitcoinCash || type == .dash)
     }
+
+    func viewStatus(adapterStates: [Coin: AdapterState], transactionsCount: Int) -> TransactionViewStatus {
+        var progress: Int? = nil
+        let noTransactions = transactionsCount == 0
+
+        let syncingStates = adapterStates.values.filter {
+            if case .syncing = $0 {
+                return true
+            }
+            return false
+        }
+        let upToDate = syncingStates.count == 0
+
+        if !upToDate {
+            var allProgress = 0
+            allProgress = syncingStates.reduce(into: 0) { result, state in
+                if case let .syncing(progress, _) = state {
+                    result += progress
+                }
+            }
+            progress = allProgress / syncingStates.count
+        }
+
+        var message: String? = noTransactions && !upToDate ? "transactions.wait_for_sync".localized : "transactions.empty_text".localized
+        message = noTransactions ? message : nil
+        return TransactionViewStatus(progress: progress, message: message)
+    }
+
 }

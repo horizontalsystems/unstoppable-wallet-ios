@@ -11,6 +11,8 @@ class TransactionsPresenter {
 
     weak var view: ITransactionsView?
 
+    private var states = [Coin: AdapterState]()
+
     init(interactor: ITransactionsInteractor, router: ITransactionsRouter, factory: ITransactionViewItemFactory,
          dataSource: TransactionRecordDataSource) {
         self.interactor = interactor
@@ -74,6 +76,8 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
 
     func onUpdate(selectedCoins: [Wallet]) {
         dataSource.set(wallets: selectedCoins)
+        view?.set(status: factory.viewStatus(adapterStates: states, transactionsCount: dataSource.items.count))
+
         loadNext(initial: true)
     }
 
@@ -110,6 +114,8 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
     func didUpdate(records: [TransactionRecord], wallet: Wallet) {
         if let updatedViewItems = dataSource.handleUpdated(records: records, wallet: wallet) {
             view?.show(transactions: updatedViewItems, animated: true)
+
+            view?.set(status: factory.viewStatus(adapterStates: states, transactionsCount: dataSource.items.count))
         }
     }
 
@@ -128,8 +134,21 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         } else if initial {
             view?.showNoTransactions()
         }
+        view?.set(status: factory.viewStatus(adapterStates: states, transactionsCount: dataSource.items.count))
 
         loading = false
+    }
+
+    func onUpdate(states: [Coin: AdapterState]) {
+        self.states = states
+
+        view?.set(status: factory.viewStatus(adapterStates: states, transactionsCount: dataSource.items.count))
+    }
+
+    func didUpdate(state: AdapterState, wallet: Wallet) {
+        states[wallet.coin] = state
+
+        view?.set(status: factory.viewStatus(adapterStates: states, transactionsCount: dataSource.items.count))
     }
 
 }

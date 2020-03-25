@@ -3,6 +3,7 @@ import SnapKit
 import ActionSheet
 import DeepDiff
 import ThemeKit
+import HUD
 
 class TransactionsViewController: ThemeViewController {
     let delegate: ITransactionsViewDelegate
@@ -19,6 +20,8 @@ class TransactionsViewController: ThemeViewController {
     private let filterHeaderView = TransactionCurrenciesHeaderView()
 
     private var items: [TransactionViewItem]?
+
+    private let syncSpinner = HUDProgressView(progress: 0, strokeLineWidth: 2, radius: 9, strokeColor: .themeGray, duration: 2)
 
     init(delegate: ITransactionsViewDelegate, differ: IDiffer) {
         self.delegate = delegate
@@ -64,11 +67,15 @@ class TransactionsViewController: ThemeViewController {
             maker.trailing.equalToSuperview().offset(-50)
         }
 
-        emptyLabel.text = "transactions.empty_text".localized
         emptyLabel.numberOfLines = 0
         emptyLabel.font = .systemFont(ofSize: 14)
         emptyLabel.textColor = .themeGray
         emptyLabel.textAlignment = .center
+
+        let holder = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        holder.addSubview(syncSpinner)
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: holder)
 
         delegate.viewDidLoad()
     }
@@ -106,9 +113,29 @@ class TransactionsViewController: ThemeViewController {
         })
     }
 
+    private func show(status: TransactionViewStatus) {
+        if let spinnerProgress = status.progress {
+            syncSpinner.set(progress: Float(max(spinnerProgress, 1)) / 100)
+            syncSpinner.isHidden = false
+            syncSpinner.startAnimating()
+        } else {
+            syncSpinner.isHidden = true
+            syncSpinner.stopAnimating()
+        }
+
+        emptyLabel.text = status.message
+        emptyLabel.isHidden = status.message == nil
+    }
+
 }
 
 extension TransactionsViewController: ITransactionsView {
+
+    func set(status: TransactionViewStatus) {
+        DispatchQueue.main.async { [weak self] in
+            self?.show(status: status)
+        }
+    }
 
     func show(filters: [Wallet?]) {
         filterHeaderView.reload(filters: filters)
@@ -150,11 +177,7 @@ extension TransactionsViewController: ITransactionsView {
 extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = items?.count ?? 0
-
-        emptyLabel.isHidden = count > 0
-
-        return count
+        items?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
