@@ -41,10 +41,6 @@ class ManageAccountsViewController: ThemeViewController {
         delegate.viewDidLoad()
     }
 
-    @objc func doneDidTap() {
-        delegate.didTapDone()
-    }
-
     private func rows(viewItem: ManageAccountViewItem, index: Int) -> [RowProtocol] {
         var rows = [RowProtocol]()
 

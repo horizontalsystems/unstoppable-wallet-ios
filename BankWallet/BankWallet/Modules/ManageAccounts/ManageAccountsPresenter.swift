@@ -100,7 +100,7 @@ extension ManageAccountsPresenter: ICredentialsCheckDelegate {
         self.accountType = accountType
 
         restoreSequenceFactory.onAccountCheck(accountType: accountType, predefinedAccountType: predefinedAccountType, coins: { [unowned self] accountType, predefinedAccountType, proceedMode in
-            router.showRestoreCoins(predefinedAccountType: predefinedAccountType, accountType: accountType, delegate: self)
+            router.showRestoreCoins(predefinedAccountType: predefinedAccountType, accountType: accountType, proceedMode: proceedMode, delegate: self)
         })
     }
 
