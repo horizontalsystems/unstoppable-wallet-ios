@@ -28,7 +28,7 @@ extension RestoreRouter: IRestoreRouter {
 extension RestoreRouter {
 
     static func module() -> UIViewController {
-        let restoreSequenceFactory = RestoreSequenceFactory(walletManager: App.shared.walletManager, settingsManager: App.shared.coinSettingsManager, accountCreator: App.shared.accountCreator, accountManager: App.shared.accountManager)
+        let restoreSequenceFactory = RestoreSequenceManager(walletManager: App.shared.walletManager, settingsManager: App.shared.coinSettingsManager, accountCreator: App.shared.accountCreator, accountManager: App.shared.accountManager)
 
         let router = RestoreRouter()
         let presenter = RestorePresenter(router: router, accountCreator: App.shared.accountCreator, predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager, restoreSequenceFactory: restoreSequenceFactory)

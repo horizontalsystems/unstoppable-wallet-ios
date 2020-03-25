@@ -36,8 +36,8 @@ extension ManageAccountsRouter: IManageAccountsRouter {
         restoreController?.navigationController?.pushViewController(BlockchainSettingsListRouter.module(selectedCoins: coins, proceedMode: .restore, canSave: false, delegate: delegate), animated: true)
     }
 
-    func showRestoreCoins(predefinedAccountType: PredefinedAccountType, accountType: AccountType, delegate: IRestoreCoinsDelegate) {
-        restoreController?.navigationController?.pushViewController(RestoreCoinsRouter.module(proceedMode: .next, predefinedAccountType: predefinedAccountType, accountType: accountType, delegate: delegate), animated: true)
+    func showRestoreCoins(predefinedAccountType: PredefinedAccountType, accountType: AccountType, proceedMode: RestoreRouter.ProceedMode, delegate: IRestoreCoinsDelegate) {
+        restoreController?.navigationController?.pushViewController(RestoreCoinsRouter.module(proceedMode: proceedMode, predefinedAccountType: predefinedAccountType, accountType: accountType, delegate: delegate), animated: true)
     }
 
     func closeRestore() {
@@ -49,7 +49,7 @@ extension ManageAccountsRouter: IManageAccountsRouter {
 extension ManageAccountsRouter {
 
     static func module() -> UIViewController {
-        let restoreSequenceFactory = RestoreSequenceFactory(walletManager: App.shared.walletManager, settingsManager: App.shared.coinSettingsManager, accountCreator: App.shared.accountCreator, accountManager: App.shared.accountManager)
+        let restoreSequenceFactory = RestoreSequenceManager(walletManager: App.shared.walletManager, settingsManager: App.shared.coinSettingsManager, accountCreator: App.shared.accountCreator, accountManager: App.shared.accountManager)
 
         let router = ManageAccountsRouter()
         let interactor = ManageAccountsInteractor(predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager, accountManager: App.shared.accountManager, accountCreator: App.shared.accountCreator)

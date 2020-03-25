@@ -31,6 +31,6 @@ protocol IManageAccountsRouter {
     func showCreateWallet(predefinedAccountType: PredefinedAccountType)
     func showRestore(predefinedAccountType: PredefinedAccountType, delegate: ICredentialsCheckDelegate)
     func showSettings(coins: [Coin], delegate: IBlockchainSettingsDelegate?)
-    func showRestoreCoins(predefinedAccountType: PredefinedAccountType, accountType: AccountType, delegate: IRestoreCoinsDelegate)
+    func showRestoreCoins(predefinedAccountType: PredefinedAccountType, accountType: AccountType, proceedMode: RestoreRouter.ProceedMode, delegate: IRestoreCoinsDelegate)
     func closeRestore()
 }
