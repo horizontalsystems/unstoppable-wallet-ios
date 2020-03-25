@@ -64,30 +64,18 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
     }
 
     func viewStatus(adapterStates: [Coin: AdapterState], transactionsCount: Int) -> TransactionViewStatus {
-        var progress: Int? = nil
         let noTransactions = transactionsCount == 0
+        var upToDate = true
 
-        let syncingStates = adapterStates.values.filter {
+        adapterStates.values.forEach {
             if case .syncing = $0 {
-                return true
+                upToDate = false
             }
-            return false
-        }
-        let upToDate = syncingStates.count == 0
-
-        if !upToDate {
-            var allProgress = 0
-            allProgress = syncingStates.reduce(into: 0) { result, state in
-                if case let .syncing(progress, _) = state {
-                    result += progress
-                }
-            }
-            progress = allProgress / syncingStates.count
         }
 
-        var message: String? = noTransactions && !upToDate ? "transactions.wait_for_sync".localized : "transactions.empty_text".localized
-        message = noTransactions ? message : nil
-        return TransactionViewStatus(progress: progress, message: message)
+        let showProgress = !upToDate
+        let message: String? = noTransactions && !upToDate ? "transactions.empty_text".localized : nil
+        return TransactionViewStatus(showProgress: showProgress, message: message)
     }
 
 }

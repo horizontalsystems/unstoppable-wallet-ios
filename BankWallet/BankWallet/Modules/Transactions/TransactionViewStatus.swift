@@ -1,4 +1,4 @@
 struct TransactionViewStatus {
-    let progress: Int?
+    let showProgress: Bool
     let message: String?
 }
