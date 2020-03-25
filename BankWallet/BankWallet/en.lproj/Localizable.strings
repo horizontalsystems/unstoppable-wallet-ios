@@ -165,6 +165,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "transactions.tab_bar_item" = "Transactions";
 "transactions.filter_all" = "All";
 "transactions.empty_text" = "You don't have any pending or past transactions yet";
+"transactions.wait_for_sync" = "Please wait for the sync to finish.";
 "transactions.pending" = "Pending";
 "transactions.receiving" = "Receiving";
 "transactions.failed" = "Failed";
