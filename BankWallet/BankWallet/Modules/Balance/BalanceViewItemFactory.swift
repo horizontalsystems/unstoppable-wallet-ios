@@ -4,10 +4,71 @@ import CurrencyKit
 
 class BalanceViewItemFactory {
     private let minimumProgress = 10
-    private let blockedChartCoins: IBlockedChartCoins
 
-    init(blockedChartCoins: IBlockedChartCoins) {
-        self.blockedChartCoins = blockedChartCoins
+    init() {
+    }
+
+    private func topViewItem(item: BalanceItem, currency: Currency) -> BalanceTopViewItem {
+        let coin = item.wallet.coin
+        let state = item.state
+        let marketInfo = item.marketInfo
+
+        return BalanceTopViewItem(
+                coinIconCode: coinIconCode(coin: coin, state: state),
+                coinTitle: coin.title,
+                blockchainBadge: coin.type.blockchainType,
+                rateValue: rateValue(currency: currency, marketInfo: marketInfo),
+                diff: diff(marketInfo: marketInfo),
+                syncSpinnerProgress: syncSpinnerProgress(state: state),
+                failedImageViewVisible: failedImageViewVisible(state: state)
+        )
+    }
+
+    private func amountViewItem(item: BalanceItem, currency: Currency, balanceHidden: Bool, expanded: Bool) -> BalanceAmountViewItem? {
+        guard !balanceHidden else {
+            return nil
+        }
+
+        if let state = item.state, let balance = item.balanceTotal {
+            if case let .syncing(progress, lastBlockDate) = state, !expanded {
+                if let lastBlockDate = lastBlockDate {
+                    return .syncing(progress: progress, syncedUntil: DateHelper.instance.formatSyncedThroughDate(from: lastBlockDate))
+                } else {
+                    return .syncing(progress: nil, syncedUntil: nil)
+                }
+            } else {
+                return .amount(
+                        coinValue: coinValue(coin: item.wallet.coin, value: balance, state: state),
+                        currencyValue: currencyValue(currency: currency, value: balance, state: state, marketInfo: item.marketInfo)
+                )
+            }
+        } else {
+            return .syncing(progress: nil, syncedUntil: nil)
+        }
+    }
+
+    private func lockedAmountViewItem(item: BalanceItem, currency: Currency, balanceHidden: Bool, expanded: Bool) -> BalanceLockedAmountViewItem? {
+        guard let state = item.state, let balanceLocked = item.balanceLocked, !balanceHidden, expanded else {
+            return nil
+        }
+
+        return BalanceLockedAmountViewItem(
+                lockedCoinValue: coinValue(coin: item.wallet.coin, value: balanceLocked, state: state),
+                lockedCurrencyValue: currencyValue(currency: currency, value: balanceLocked, state: state, marketInfo: item.marketInfo)
+        )
+    }
+
+    private func buttonsViewItem(item: BalanceItem, expanded: Bool) -> BalanceButtonsViewItem? {
+        guard expanded else {
+            return nil
+        }
+
+        let state = item.state
+
+        return BalanceButtonsViewItem(
+                receiveButtonEnabled: state != nil,
+                sendButtonEnabled: state == .synced
+        )
     }
 
     private func coinIconCode(coin: Coin, state: AdapterState?) -> String? {
@@ -53,86 +114,20 @@ class BalanceViewItemFactory {
         return (value: marketInfo.diff, dimmed: marketInfo.expired)
     }
 
-    private func coinValue(state: AdapterState?, balance: Decimal?, coin: Coin, expanded: Bool) -> (text: String, dimmed: Bool)? {
-        guard let state = state, let balance = balance else {
-            return nil
-        }
-
-        if case .syncing = state, !expanded {
-            return nil
-        }
-
-        let coinValue = CoinValue(coin: coin, value: balance)
-
-        guard let formattedValue = ValueFormatter.instance.format(coinValue: coinValue, fractionPolicy: .threshold(high: 0.01, low: 0)) else {
-            return nil
-        }
-
-        return (text: formattedValue, dimmed: state != .synced)
+    private func coinValue(coin: Coin, value: Decimal, state: AdapterState) -> (text: String?, dimmed: Bool) {
+        (
+                text: ValueFormatter.instance.format(coinValue: CoinValue(coin: coin, value: value), fractionPolicy: .threshold(high: 0.01, low: 0)),
+                dimmed: state != .synced
+        )
     }
 
-    private func coinValueLocked(state: AdapterState?, balanceLocked: Decimal?, coin: Coin, expanded: Bool) -> (text: String, dimmed: Bool)? {
-        guard let state = state, let balanceLocked = balanceLocked else {
-            return nil
+    private func currencyValue(currency: Currency, value: Decimal, state: AdapterState, marketInfo: MarketInfo?) -> (text: String?, dimmed: Bool)? {
+        marketInfo.map { marketInfo in
+            (
+                    text: ValueFormatter.instance.format(currencyValue: CurrencyValue(currency: currency, value: value * marketInfo.rate), fractionPolicy: .threshold(high: 1000, low: 0.01)),
+                    dimmed: state != .synced || marketInfo.expired
+            )
         }
-
-        if !expanded {
-            return nil
-        }
-
-        let coinValue = CoinValue(coin: coin, value: balanceLocked)
-
-        guard let formattedValue = ValueFormatter.instance.format(coinValue: coinValue, fractionPolicy: .threshold(high: 0.01, low: 0)) else {
-            return nil
-        }
-
-        return (text: formattedValue, dimmed: state != .synced)
-    }
-
-    private func currencyValue(state: AdapterState?, balance: Decimal?, currency: Currency, marketInfo: MarketInfo?, expanded: Bool) -> (text: String, dimmed: Bool)? {
-        guard let state = state, let balance = balance, let marketInfo = marketInfo else {
-            return nil
-        }
-
-        if case .syncing = state, !expanded {
-            return nil
-        }
-
-        let currencyValue = CurrencyValue(currency: currency, value: balance * marketInfo.rate)
-
-        guard let formattedValue = ValueFormatter.instance.format(currencyValue: currencyValue, fractionPolicy: .threshold(high: 1000, low: 0.01)) else {
-            return nil
-        }
-
-        return (text: formattedValue, dimmed: state != .synced || marketInfo.expired)
-    }
-
-    private func syncingInfo(state: AdapterState?, expanded: Bool) -> (progress: Int?, syncedUntil: String?)? {
-        guard let state = state, case let .syncing(progress, lastBlockDate) = state, !expanded else {
-            return nil
-        }
-
-        if let lastBlockDate = lastBlockDate {
-            return (progress: progress, syncedUntil: DateHelper.instance.formatSyncedThroughDate(from: lastBlockDate))
-        } else {
-            return (progress: nil, syncedUntil: nil)
-        }
-    }
-
-    private func receiveButtonEnabled(state: AdapterState?, expanded: Bool) -> Bool? {
-        if !expanded {
-            return nil
-        }
-
-        return state != nil
-    }
-
-    private func sendButtonEnabled(state: AdapterState?, expanded: Bool) -> Bool? {
-        if !expanded {
-            return nil
-        }
-
-        return state == .synced
     }
 
 }
@@ -140,34 +135,13 @@ class BalanceViewItemFactory {
 extension BalanceViewItemFactory: IBalanceViewItemFactory {
 
     func viewItem(item: BalanceItem, currency: Currency, balanceHidden: Bool, expanded: Bool) -> BalanceViewItem {
-        let coin = item.wallet.coin
-        let state = item.state
-        let marketInfo = item.marketInfo
-
-        return BalanceViewItem(
+        BalanceViewItem(
                 wallet: item.wallet,
-
-                coinIconCode: coinIconCode(coin: coin, state: state),
-                coinTitle: coin.title,
-                coinValue: coinValue(state: state, balance: item.balanceTotal, coin: coin, expanded: expanded),
-                lockedCoinValue: coinValueLocked(state: state, balanceLocked: item.balanceLocked, coin: coin, expanded: expanded),
-                lockedVisible: item.balanceLocked != nil,
-                blockchainBadge: coin.type.blockchainType,
-
-                currencyValue: currencyValue(state: state, balance: item.balanceTotal, currency: currency, marketInfo: marketInfo, expanded: expanded),
-                lockedCurrencyValue: currencyValue(state: state, balance: item.balanceLocked, currency: currency, marketInfo: marketInfo, expanded: expanded),
-                rateValue: rateValue(currency: currency, marketInfo: marketInfo),
-                diff: diff(marketInfo: marketInfo),
-                blockChart: blockedChartCoins.blockedCoins.contains(coin.code),
-
-                syncSpinnerProgress: syncSpinnerProgress(state: state),
-                failedImageViewVisible: failedImageViewVisible(state: state),
-                syncingInfo: syncingInfo(state: state, expanded: expanded),
-
-                receiveButtonEnabled: receiveButtonEnabled(state: state, expanded: expanded),
-                sendButtonEnabled: sendButtonEnabled(state: state, expanded: expanded),
-
-                expanded: expanded
+                topViewItem: topViewItem(item: item, currency: currency),
+                separatorVisible: !balanceHidden || expanded,
+                amountViewItem: amountViewItem(item: item, currency: currency, balanceHidden: balanceHidden, expanded: expanded),
+                lockedAmountViewItem: lockedAmountViewItem(item: item, currency: currency, balanceHidden: balanceHidden, expanded: expanded),
+                buttonsViewItem: buttonsViewItem(item: item, expanded: expanded)
         )
     }
 

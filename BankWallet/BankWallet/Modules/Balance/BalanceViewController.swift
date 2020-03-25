@@ -5,6 +5,8 @@ import ActionSheet
 import ThemeKit
 
 class BalanceViewController: ThemeViewController {
+    private let animationDuration: TimeInterval = 0.2
+
     private let numberOfSections = 2
     private let balanceSection = 0
     private let editSection = 1
@@ -100,6 +102,7 @@ class BalanceViewController: ThemeViewController {
                 self.headerViewItem = newHeaderViewItem
                 self.viewItems = newViewItems
                 self.collectionView.reloadData()
+                self.syncShowBalanceButton()
             }
             return
         }
@@ -113,8 +116,8 @@ class BalanceViewController: ThemeViewController {
             for (index, oldViewItem) in viewItems.enumerated() {
                 let newViewItem = newViewItems[index]
 
-                let oldHeight = BalanceCell.height(item: oldViewItem)
-                let newHeight = BalanceCell.height(item: newViewItem)
+                let oldHeight = BalanceCell.height(viewItem: oldViewItem)
+                let newHeight = BalanceCell.height(viewItem: newViewItem)
 
                 if oldHeight != newHeight {
                     heightChange = true
@@ -139,6 +142,7 @@ class BalanceViewController: ThemeViewController {
         DispatchQueue.main.sync {
             self.headerViewItem = newHeaderViewItem
             self.viewItems = newViewItems
+            self.syncShowBalanceButton()
 
             if let view = collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: 0)) as? BalanceHeaderView {
                 bind(view: view)
@@ -151,24 +155,18 @@ class BalanceViewController: ThemeViewController {
             }
 
             if heightChange {
-                UIView.animate(withDuration: BalanceCell.animationDuration) {
+                UIView.animate(withDuration: animationDuration) {
                     self.collectionView.performBatchUpdates(nil)
                 }
-            }
-
-            if self.headerViewItem == nil {
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Balance Show Icon"), style: .plain, target: self, action: #selector(self.onTapShowBalance))
-                self.navigationItem.rightBarButtonItem?.tintColor = .themeGray
-            } else {
-                self.navigationItem.rightBarButtonItem = nil
             }
         }
     }
 
     private func bind(cell: BalanceCell, viewItem: BalanceViewItem, animated: Bool = false) {
         cell.bind(
-                item: viewItem,
+                viewItem: viewItem,
                 animated: animated,
+                duration: animationDuration,
                 onReceive: { [weak self] in
                     self?.delegate.onTapReceive(viewItem: viewItem)
                 },
@@ -184,6 +182,7 @@ class BalanceViewController: ThemeViewController {
     private func bind(view: BalanceHeaderView) {
         if let viewItem = headerViewItem {
             view.bind(viewItem: viewItem)
+            view.layoutIfNeeded()
 
             view.onTapSortType = { [weak self] in
                 self?.delegate.onTapSortType()
@@ -192,6 +191,15 @@ class BalanceViewController: ThemeViewController {
             view.onTapHide = { [weak self] in
                 self?.delegate.onTapHideBalance()
             }
+        }
+    }
+
+    private func syncShowBalanceButton() {
+        if headerViewItem == nil {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Balance Show Icon"), style: .plain, target: self, action: #selector(onTapShowBalance))
+            navigationItem.rightBarButtonItem?.tintColor = .themeGray
+        } else {
+            navigationItem.rightBarButtonItem = nil
         }
     }
 
@@ -259,7 +267,7 @@ extension BalanceViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.section == balanceSection {
-            return CGSize(width: collectionView.width - horizontalInset * 2, height: BalanceCell.height(item: viewItems[indexPath.item]))
+            return CGSize(width: collectionView.width - horizontalInset * 2, height: BalanceCell.height(viewItem: viewItems[indexPath.item]))
         } else if indexPath.section == editSection {
             return CGSize(width: collectionView.width, height: BalanceEditCell.height)
         }
