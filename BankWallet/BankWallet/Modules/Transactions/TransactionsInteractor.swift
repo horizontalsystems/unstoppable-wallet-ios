@@ -4,6 +4,7 @@ import CurrencyKit
 
 class TransactionsInteractor {
     private let disposeBag = DisposeBag()
+    private let statesDisposeBag = DisposeBag()
     private var lastBlockHeightsDisposeBag = DisposeBag()
     private var ratesDisposeBag = DisposeBag()
     private var transactionRecordsDisposeBag = DisposeBag()
@@ -29,10 +30,12 @@ class TransactionsInteractor {
     private func onUpdateCoinsData() {
         transactionRecordsDisposeBag = DisposeBag()
         var walletsData = [(Wallet, Int, LastBlockInfo?)]()
+        var states = [Coin: AdapterState]()
 
         for wallet in walletManager.wallets {
             if let adapter = adapterManager.transactionsAdapter(for: wallet) {
                 walletsData.append((wallet, adapter.confirmationsThreshold, adapter.lastBlockInfo))
+                states[wallet.coin] = adapter.state
 
                 adapter.transactionRecordsObservable
                         .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -41,10 +44,18 @@ class TransactionsInteractor {
                             self?.delegate?.didUpdate(records: records, wallet: wallet)
                         })
                         .disposed(by: transactionRecordsDisposeBag)
+
+                adapter.stateUpdatedObservable
+                        .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                        .subscribe(onNext: { [weak self] in
+                            self?.delegate?.didUpdate(state: adapter.state, wallet: wallet)
+                        })
+                        .disposed(by: statesDisposeBag)
             }
         }
 
         delegate?.onUpdate(walletsData: walletsData)
+        delegate?.onUpdate(states: states)
     }
 
     private func onReachabilityChange() {

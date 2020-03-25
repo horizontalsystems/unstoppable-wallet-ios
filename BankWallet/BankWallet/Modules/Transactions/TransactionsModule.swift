@@ -23,6 +23,7 @@ extension TransactionStatus: Equatable {
 }
 
 protocol ITransactionsView: class {
+    func set(status: TransactionViewStatus)
     func show(filters: [Wallet?])
     func show(transactions: [TransactionViewItem], animated: Bool)
     func showNoTransactions()
@@ -61,6 +62,8 @@ protocol ITransactionsInteractorDelegate: class {
 
     func didFetch(rateValue: Decimal, coin: Coin, currency: Currency, date: Date)
     func didFetch(recordsData: [Wallet: [TransactionRecord]], initial: Bool)
+    func onUpdate(states: [Coin: AdapterState])
+    func didUpdate(state: AdapterState, wallet: Wallet)
 }
 
 protocol ITransactionsRouter {
@@ -69,6 +72,7 @@ protocol ITransactionsRouter {
 
 protocol ITransactionViewItemFactory {
     func viewItem(fromRecord: TransactionRecord, wallet: Wallet, lastBlockInfo: LastBlockInfo?, threshold: Int?, rate: CurrencyValue?) -> TransactionViewItem
+    func viewStatus(adapterStates: [Coin: AdapterState], transactionsCount: Int) -> TransactionViewStatus
 }
 
 protocol IDiffer {
