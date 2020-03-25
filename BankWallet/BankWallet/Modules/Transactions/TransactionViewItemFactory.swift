@@ -73,9 +73,7 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
             }
         }
 
-        let showProgress = !upToDate
-        let message: String? = noTransactions && !upToDate ? "transactions.empty_text".localized : nil
-        return TransactionViewStatus(showProgress: showProgress, message: message)
+        return TransactionViewStatus(showProgress: !upToDate, showMessage: noTransactions)
     }
 
 }
