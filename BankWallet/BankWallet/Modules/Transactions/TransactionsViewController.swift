@@ -67,6 +67,7 @@ class TransactionsViewController: ThemeViewController {
             maker.trailing.equalToSuperview().offset(-50)
         }
 
+        emptyLabel.text = "transactions.empty_text".localized
         emptyLabel.numberOfLines = 0
         emptyLabel.font = .systemFont(ofSize: 14)
         emptyLabel.textColor = .themeGray
@@ -121,8 +122,7 @@ class TransactionsViewController: ThemeViewController {
             syncSpinner.stopAnimating()
         }
 
-        emptyLabel.text = status.message
-        emptyLabel.isHidden = status.message == nil
+        emptyLabel.isHidden = !status.showMessage
     }
 
 }
