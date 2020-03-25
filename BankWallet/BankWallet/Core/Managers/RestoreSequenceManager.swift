@@ -1,4 +1,4 @@
-class RestoreSequenceFactory {
+class RestoreSequenceManager {
     private let walletManager: IWalletManager
     private let settingsManager: IBlockchainSettingsManager
     private let accountCreator: IAccountCreator
@@ -25,7 +25,7 @@ class RestoreSequenceFactory {
 
 }
 
-extension RestoreSequenceFactory: IRestoreSequenceFactory {
+extension RestoreSequenceManager: IRestoreSequenceFactory {
 
     func onAccountCheck(accountType: AccountType, predefinedAccountType: PredefinedAccountType?, coins: ((AccountType, PredefinedAccountType, RestoreRouter.ProceedMode) -> ())) {
         guard let predefinedAccountType = predefinedAccountType else {
