@@ -253,7 +253,7 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Portefeuilles";
+"manage_coins.title" = "Crypto Monnaie";
 "manage_coins.add_coin.title" = "Ajouter %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Portefeuille";
 "manage_coins.add_coin.text" = "Vous n'avez pas de portefeuille pouvant stocker %@ (%@). Vous pouvez générer un nouveau portefeuille avec l'application. Utilisez le bouton Créer ci-dessous pour générer un nouveau portefeuille.\n\nVous pourrez utiliser le nouveau portefeuille pour les pièces suivantes : %@. \n\nVous pouvez également utiliser la clé %@ existante si vous en avez une. Pour cela, utilisez le bouton de restauration.";
@@ -299,7 +299,7 @@
 "settings.contact.title" = "Contact";
 "settings.contact.app_status" = "Statut de l'appli";
 "settings.contact.email" = "E-mail";
-"settings.contact.telegram_wallet" = "Telegram (Aide portefeuille)";
+"settings.contact.telegram_wallet" = "Telegram";
 
 // Manage Keys
 
