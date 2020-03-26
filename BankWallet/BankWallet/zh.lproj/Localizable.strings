@@ -299,7 +299,7 @@
 "settings.contact.title" = "报告问题";
 "settings.contact.app_status" = "应用状态";
 "settings.contact.email" = "电子邮箱";
-"settings.contact.telegram_wallet" = "电报（钱包帮助）";
+"settings.contact.telegram_wallet" = "电报";
 
 // Manage Keys
 
