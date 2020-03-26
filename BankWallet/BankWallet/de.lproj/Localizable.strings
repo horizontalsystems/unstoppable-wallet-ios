@@ -299,7 +299,7 @@
 "settings.contact.title" = "Kontakt";
 "settings.contact.app_status" = "App-Status";
 "settings.contact.email" = "E-mail";
-"settings.contact.telegram_wallet" = "Telegram (Wallet-Hilfe)";
+"settings.contact.telegram_wallet" = "Telegram";
 
 // Manage Keys
 
