@@ -229,7 +229,7 @@
 "settings.title" = "설정";
 "settings.tab_bar_item" = "설정";
 "settings.security_center" = "보안 센터";
-"settings.manage_accounts" = "Gas Price";
+"settings.manage_accounts" = "지갑 관리하기";
 "settings.manage_coins" = "코인 관리";
 "settings.experimental_features" = "실험적 기능";
 "settings.notifications" = "알림";
@@ -299,7 +299,7 @@
 "settings.contact.title" = "연락처";
 "settings.contact.app_status" = "앱 상태";
 "settings.contact.email" = "E-mail";
-"settings.contact.telegram_wallet" = "Telegram (지갑 고객 지원)";
+"settings.contact.telegram_wallet" = "Telegram";
 
 // Manage Keys
 

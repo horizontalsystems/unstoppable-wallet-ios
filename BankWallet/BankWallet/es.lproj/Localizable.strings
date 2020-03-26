@@ -176,7 +176,7 @@
 "tx_info.status.confirmed" = "Confirmado";
 "tx_info.status.failed" = "Falla";
 "tx_info.from_hash" = "Desde ";
-"tx_info.transaction_id" = "Identificación de la transacción";
+"tx_info.transaction_id" = "ID";
 "tx_info.to_hash" = "Para";
 "tx_info.button_verify" = "Verificar";
 "tx_info.rate" = "Tasa histórica";
@@ -240,7 +240,7 @@
 "settings.contact" = "Contacto";
 "settings.light_mode" = "Modo ligero";
 "settings.info_title" = "UNSTOPPABLE";
-"settings.info_subtitle" = "app descentralizada";
+"settings.info_subtitle" = "decentralized app";
 
 // Settings -> Notifications
 
@@ -276,7 +276,7 @@
 
 "settings_about.title" = "Acerca de";
 "settings_about.app_title" = "Unstoppable";
-"settings_about.app_subtitle" = "App descentralizada";
+"settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "Términos y privacidad:";
 "settings_about.terms_privacy_text" = "Esta aplicación es de servidor a servidor. No depende de ningún servidor web o personal de soporte técnico para funcionar.\n\nFunciona en cualquier lugar siempre que haya conexión a internet. Ninguna entidad puede bloquear el funcionamiento de esta aplicación o impedir el acceso de un usuario.\n\nLas claves secretas criptográficas que controlan sus fondos de criptomonedas están almacenados de forma en el propio teléfono y en ningún otro lugar.\n\nEs su responsabilidad recordar su clave secreta y mantenerla en privado. Nunca la muestre a nadie. Si la pierde, la olvida o es sustraída, sus fondos pueden ser utilizados por la persona que consiga su clave secreta.\n\nNo modifique la seguridad del software de su teléfono, no instale aplicaciones de orígenes desconocidos (no confiable), no entregue su dispositivo a desconocidos y mantenga actualizado el sistema operativo de tu teléfono. La seguridad de su monedero depende de ello.\n\nLa totalidad del código que soporta esta aplicación está abierta al escrutinio público desde el inicio de la aplicación. Creemos que \n nuestra aplicación es significativamente más segura que cualquier otra aplicación de monedero para teléfonos inteligente en el mercado; sin embargo, no hay ninguna garantía de que no se produzca algún problema de software no deseado.\n\nToda su información, por ejemplo transacciones, balances, etc., están disponibles solo dentro de su aplicación de monedero y nunca abandona su dispositivo.";
 
@@ -299,7 +299,7 @@
 "settings.contact.title" = "Contacto";
 "settings.contact.app_status" = "Estado de la aplicación";
 "settings.contact.email" = "E-mail";
-"settings.contact.telegram_wallet" = "Telegram (Ayuda de monedero)";
+"settings.contact.telegram_wallet" = "Telegram";
 
 // Manage Keys
 
