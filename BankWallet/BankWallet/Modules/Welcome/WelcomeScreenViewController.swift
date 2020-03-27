@@ -4,9 +4,6 @@ import SnapKit
 class WelcomeScreenViewController: UIViewController {
     private let delegate: IWelcomeScreenViewDelegate
 
-    private let backgroundImageView = UIImageView()
-    private let createButton = UIButton.appYellow
-    private let restoreButton = UIButton.appGray
     private let versionLabel = UILabel()
 
     init(delegate: IWelcomeScreenViewDelegate) {
@@ -22,19 +19,31 @@ class WelcomeScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let image = UIImage(named: "Welcome Background") ?? UIImage()
-        backgroundImageView.image = image
-        backgroundImageView.contentMode = .scaleAspectFit
+        view.backgroundColor = .themeDarker
 
-        view.addSubview(backgroundImageView)
-        backgroundImageView.snp.makeConstraints { maker in
-            maker.top.equalTo(view.safeAreaLayoutGuide)
-            maker.leading.trailing.equalToSuperview()
-            maker.height.equalTo(view.bounds.size.width * image.size.height / image.size.width)
+        let titleWrapper = UIView()
+
+        view.addSubview(titleWrapper)
+        titleWrapper.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+            maker.height.equalToSuperview().dividedBy(2)
         }
 
-        createButton.setTitle("welcome.new_wallet".localized, for: .normal)
-        createButton.addTarget(self, action: #selector(didTapCreate), for: .touchUpInside)
+        let titleLabel = UILabel()
+
+        titleWrapper.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
+            maker.centerY.equalToSuperview()
+        }
+
+        titleLabel.text = "Unstoppable\nWallet"
+        titleLabel.numberOfLines = 0
+        titleLabel.textAlignment = .center
+        titleLabel.font = .title2
+        titleLabel.textColor = .themeLight
+
+        let createButton = UIButton.appYellow
 
         view.addSubview(createButton)
         createButton.snp.makeConstraints { maker in
@@ -42,8 +51,10 @@ class WelcomeScreenViewController: UIViewController {
             maker.height.equalTo(CGFloat.heightButton)
         }
 
-        restoreButton.setTitle("welcome.restore_wallet".localized, for: .normal)
-        restoreButton.addTarget(self, action: #selector(didTapRestore), for: .touchUpInside)
+        createButton.setTitle("welcome.new_wallet".localized, for: .normal)
+        createButton.addTarget(self, action: #selector(didTapCreate), for: .touchUpInside)
+
+        let restoreButton = UIButton.appGray
 
         view.addSubview(restoreButton)
         restoreButton.snp.makeConstraints { maker in
@@ -52,8 +63,8 @@ class WelcomeScreenViewController: UIViewController {
             maker.height.equalTo(CGFloat.heightButton)
         }
 
-        versionLabel.textColor = .themeGray
-        versionLabel.font = .caption
+        restoreButton.setTitle("welcome.restore_wallet".localized, for: .normal)
+        restoreButton.addTarget(self, action: #selector(didTapRestore), for: .touchUpInside)
 
         view.addSubview(versionLabel)
         versionLabel.snp.makeConstraints { maker in
@@ -61,6 +72,9 @@ class WelcomeScreenViewController: UIViewController {
             maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin4x)
             maker.centerX.equalToSuperview()
         }
+
+        versionLabel.textColor = .themeGray
+        versionLabel.font = .caption
 
         delegate.viewDidLoad()
     }

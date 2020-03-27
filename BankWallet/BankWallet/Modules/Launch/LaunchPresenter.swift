@@ -17,7 +17,7 @@ extension LaunchPresenter: ILaunchPresenter {
         } else if isPinSet {
             return .unlock
         } else if !interactor.hasAccounts && !interactor.mainShownOnce {
-            return  .welcome
+            return  .intro
         } else {
             return .main
         }

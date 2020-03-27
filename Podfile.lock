@@ -156,7 +156,7 @@ PODS:
   - PromiseKit/UIKit (6.13.1):
     - PromiseKit/CorePromise
   - Quick (2.2.0)
-  - RxCocoa (5.1.0):
+  - RxCocoa (5.1.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
   - RxGRDB (0.18.0):
@@ -165,9 +165,9 @@ PODS:
   - RxGRDB/default (0.18.0):
     - GRDB.swift (~> 4.1)
     - RxSwift (~> 5.0)
-  - RxRelay (5.1.0):
+  - RxRelay (5.1.1):
     - RxSwift (~> 5)
-  - RxSwift (5.1.0)
+  - RxSwift (5.1.1)
   - RxSwiftExt (5.2.0):
     - RxSwiftExt/Core (= 5.2.0)
     - RxSwiftExt/RxCocoa (= 5.2.0)
@@ -331,7 +331,7 @@ CHECKOUT OPTIONS:
     :commit: d33055102d076b114bd842eca6a1b2bb947f28fb
     :git: https://github.com/horizontalsystems/gui-kit/
   CurrencyKit.swift:
-    :commit: 735acbd0032a0b5a5a7c892c2052ac28957bdab6
+    :commit: 0fdc0b4ca8ecaab53a454353553dc2974b5e8ce4
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
     :commit: cd447adf36445431e7a7997e98c394acc0e1fce7
@@ -346,19 +346,19 @@ CHECKOUT OPTIONS:
     :commit: cd447adf36445431e7a7997e98c394acc0e1fce7
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   LanguageKit.swift:
-    :commit: 735acbd0032a0b5a5a7c892c2052ac28957bdab6
+    :commit: 0fdc0b4ca8ecaab53a454353553dc2974b5e8ce4
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
     :commit: cd447adf36445431e7a7997e98c394acc0e1fce7
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   PinKit.swift:
-    :commit: 735acbd0032a0b5a5a7c892c2052ac28957bdab6
+    :commit: 0fdc0b4ca8ecaab53a454353553dc2974b5e8ce4
     :git: https://github.com/horizontalsystems/component-kit-ios/
   StorageKit.swift:
-    :commit: 735acbd0032a0b5a5a7c892c2052ac28957bdab6
+    :commit: 0fdc0b4ca8ecaab53a454353553dc2974b5e8ce4
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: 735acbd0032a0b5a5a7c892c2052ac28957bdab6
+    :commit: 0fdc0b4ca8ecaab53a454353553dc2974b5e8ce4
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :commit: d33055102d076b114bd842eca6a1b2bb947f28fb
@@ -405,10 +405,10 @@ SPEC CHECKSUMS:
   PinKit.swift: 1acbf82ce5114972f1eb9a5a0c1b808dc08ad12e
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
-  RxCocoa: 13d2a4d7546a34b8ececae8c281e4ea1dbb94f2b
+  RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
   RxGRDB: 41dfd8f987aad7a7bdd7c420319d3eb23ee383f3
-  RxRelay: a168bd6caf712d00c676ac344e9295afc93b418e
-  RxSwift: ad5874f24bb0dbffd1e9bb8443604e3578796c7a
+  RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
+  RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
   RxSwiftExt: 4ca80336f43c28f11a2825cdd2fc61dd6c044697
   Secp256k1Kit.swift: 93b1bfbb8909c12605666cc3b1e59d1d1fde7322
   SectionsTableView.swift: 91f2235b63405f938621b7df040149d7c65b355d
