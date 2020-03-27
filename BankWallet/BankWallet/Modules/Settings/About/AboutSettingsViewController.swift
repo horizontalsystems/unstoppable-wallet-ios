@@ -79,6 +79,7 @@ class AboutSettingsViewController: ThemeViewController {
 
         let headerLabel = UILabel()
         headerLabel.text = "settings_about.terms_privacy_subtitle".localized
+        headerLabel.numberOfLines = 0
         headerLabel.font = .headline2
         headerLabel.textColor = .themeJacob
 
