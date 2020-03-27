@@ -27,6 +27,8 @@ class ContactViewController: ThemeViewController {
 
         title = "settings.contact.title".localized
 
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
+
         tableView.registerCell(forClass: ImageDoubleLineCell.self)
         tableView.registerCell(forClass: TitleCell.self)
         tableView.sectionDataSource = self
