@@ -415,3 +415,15 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "timestamp.days_ago" = "%lud ago";
 "timestamp.hours_ago" = "%luh ago";
 "timestamp.min_ago" = "%lum ago";
+
+// Intro
+
+"intro.skip" = "Skip";
+"intro.next" = "Next";
+"intro.get_started" = "Get Started";
+"intro.independence.title" = "Independence";
+"intro.independence.description" = "Keep crypto safe, uncensorable and  unconfiscatable. Make your assets independent.";
+"intro.knowledge.title" = "Knowledge";
+"intro.knowledge.description" = "Learn about projects and discover the crypto likes of Apple, Amazon and Tesla in early stages.";
+"intro.privacy.title" = "Privacy";
+"intro.privacy.description" = "Stay incognito and out of radar. Privacy options were preset for easy start. Change them on next screen or later in app.";

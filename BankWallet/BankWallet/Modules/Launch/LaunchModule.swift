@@ -13,7 +13,7 @@ protocol ILaunchPresenter {
 
 enum LaunchMode {
     case noPasscode
-    case welcome
+    case intro
     case unlock
     case main
 }
