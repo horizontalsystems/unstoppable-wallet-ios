@@ -8,7 +8,7 @@ import HUD
 class TransactionsViewController: ThemeViewController {
     let delegate: ITransactionsViewDelegate
 
-    let queue = DispatchQueue.global(qos: .userInteractive)
+    let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.transactions_view", qos: .userInitiated)
     let differ: IDiffer
 
     let tableView = UITableView(frame: .zero, style: .plain)
@@ -95,8 +95,11 @@ class TransactionsViewController: ThemeViewController {
         }
     }
 
-    private func reload(with diff: [Change<TransactionViewItem>], animated: Bool) {
-        let changes = IndexPathConverter().convert(changes: diff, section: 0)
+    private func reload(with changes: ChangeWithIndexPath, animated: Bool) {
+        if isViewLoaded && view.window != nil {
+            self.tableView.reloadData()
+            return
+        }
 
         guard !changes.inserts.isEmpty || !changes.moves.isEmpty || !changes.deletes.isEmpty else {
             reload(indexPaths: changes.replaces)
@@ -140,22 +143,13 @@ extension TransactionsViewController: ITransactionsView {
     }
 
     func show(transactions newViewItems: [TransactionViewItem], animated: Bool) {
-        queue.sync { [weak self] in
-            if (self?.items == nil) || !(isViewLoaded && view.window != nil) {
-                self?.items = newViewItems
-
-                DispatchQueue.main.async { [weak self] in
-                    self?.tableView.reloadData()
-                }
-
-                return
-            }
-
-            let viewChanges = differ.changes(old: items ?? [], new: newViewItems)
-            self?.items = newViewItems
-
-            DispatchQueue.main.async { [weak self] in
-                self?.reload(with: viewChanges, animated: animated)
+        queue.async {
+            let diff = self.differ.changes(old: self.items ?? [], new: newViewItems)
+            let changes = IndexPathConverter().convert(changes: diff, section: 0)
+            self.items = newViewItems
+            
+            DispatchQueue.main.sync { [weak self] in
+                self?.reload(with: changes, animated: animated)
             }
         }
     }
