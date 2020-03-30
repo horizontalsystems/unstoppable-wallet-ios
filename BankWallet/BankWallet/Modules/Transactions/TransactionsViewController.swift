@@ -96,7 +96,7 @@ class TransactionsViewController: ThemeViewController {
     }
 
     private func reload(with changes: ChangeWithIndexPath, animated: Bool) {
-        if isViewLoaded && view.window != nil {
+        if !isViewLoaded || view.window == nil {
             self.tableView.reloadData()
             return
         }
