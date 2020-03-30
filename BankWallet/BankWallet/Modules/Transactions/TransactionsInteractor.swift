@@ -4,7 +4,7 @@ import CurrencyKit
 
 class TransactionsInteractor {
     private let disposeBag = DisposeBag()
-    private let statesDisposeBag = DisposeBag()
+    private var statesDisposeBag = DisposeBag()
     private var lastBlockHeightsDisposeBag = DisposeBag()
     private var ratesDisposeBag = DisposeBag()
     private var transactionRecordsDisposeBag = DisposeBag()
@@ -29,6 +29,7 @@ class TransactionsInteractor {
 
     private func onUpdateCoinsData() {
         transactionRecordsDisposeBag = DisposeBag()
+        statesDisposeBag = DisposeBag()
         var walletsData = [(Wallet, Int, LastBlockInfo?)]()
         var states = [Coin: AdapterState]()
 
@@ -46,7 +47,7 @@ class TransactionsInteractor {
                         .disposed(by: transactionRecordsDisposeBag)
 
                 adapter.stateUpdatedObservable
-                        .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                        .observeOn(SerialDispatchQueueScheduler(qos: .utility))
                         .subscribe(onNext: { [weak self] in
                             self?.delegate?.didUpdate(state: adapter.state, wallet: wallet)
                         })
