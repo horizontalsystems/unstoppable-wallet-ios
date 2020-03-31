@@ -412,10 +412,9 @@
 
 "intro.skip" = "Skip";
 "intro.next" = "Next";
-"intro.get_started" = "Get Started";
 "intro.independence.title" = "Independence";
-"intro.independence.description" = "Keep crypto safe, uncensorable and  unconfiscatable. Make your assets independent.";
+"intro.independence.description" = "Keep crypto assets safe, unconfiscatable and accessible at all times";
 "intro.knowledge.title" = "Knowledge";
-"intro.knowledge.description" = "Learn about projects and discover the crypto likes of Apple, Amazon and Tesla in early stages.";
+"intro.knowledge.description" = "Become informed and discover growing blockchain projects in early stages";
 "intro.privacy.title" = "Privacy";
-"intro.privacy.description" = "Stay incognito and out of radar. Privacy options were preset for easy start. Change them on next screen or later in app.";
+"intro.privacy.description" = "Stay incognito and out of radar while growing your wealth";
