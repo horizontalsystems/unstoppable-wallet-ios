@@ -48,7 +48,6 @@ class SendBitcoinHandler {
         let loading = feePriorityModule.feeRateState.isLoading
 
         amountModule.set(loading: loading)
-        feeModule.set(loading: loading)
 
         guard !loading else {
             return

@@ -222,7 +222,7 @@ DEPENDENCIES:
   - GRDB.swift
   - HdWalletKit.swift
   - Hodler.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
-  - HUD.swift
+  - HUD.swift (from `https://github.com/horizontalsystems/gui-kit/`)
   - KeychainAccess
   - LanguageKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - LitecoinKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
@@ -259,7 +259,6 @@ SPEC REPOS:
     - GRDB.swift
     - GRKOpenSSLFramework
     - HdWalletKit.swift
-    - HUD.swift
     - KeychainAccess
     - Nimble
     - ObjectMapper
@@ -299,6 +298,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
   Hodler.swift:
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
+  HUD.swift:
+    :git: https://github.com/horizontalsystems/gui-kit/
   LanguageKit.swift:
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
@@ -345,6 +346,9 @@ CHECKOUT OPTIONS:
   Hodler.swift:
     :commit: cd447adf36445431e7a7997e98c394acc0e1fce7
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
+  HUD.swift:
+    :commit: 9d6bd6afb1428eccb982d5941ba89b6616e4aa5a
+    :git: https://github.com/horizontalsystems/gui-kit/
   LanguageKit.swift:
     :commit: 0fdc0b4ca8ecaab53a454353553dc2974b5e8ce4
     :git: https://github.com/horizontalsystems/component-kit-ios/
@@ -421,6 +425,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: e7e4bf432961545cace5fe8be80a9fe3aef04b36
 
-PODFILE CHECKSUM: 04ab40b6e2856fdadaf63f46445197f357ad1e90
+PODFILE CHECKSUM: ecb01862c793e704a1cf2e065ea9b8814a6633ef
 
 COCOAPODS: 1.8.4

@@ -16,23 +16,23 @@ class FeeRateProvider {
 
     // Fee rates
 
-    func ethereumGasPrice(for priority: FeeRatePriority) -> Single<FeeRate> {
+    var ethereumGasPrice: Single<FeeRate> {
         feeRateKit.ethereum.map { FeeRate(feeRate: $0) }
     }
 
-    func bitcoinFeeRate(for priority: FeeRatePriority) -> Single<FeeRate> {
+    var bitcoinFeeRate: Single<FeeRate> {
         feeRateKit.bitcoin.map { FeeRate(feeRate: $0) }
     }
 
-    func litecoinFeeRate(for priority: FeeRatePriority) -> Single<FeeRate> {
+    var litecoinFeeRate: Single<FeeRate> {
         feeRateKit.litecoin.map { FeeRate(feeRate: $0) }
     }
 
-    func bitcoinCashFeeRate(for priority: FeeRatePriority) -> Single<FeeRate> {
+    var bitcoinCashFeeRate: Single<FeeRate> {
         feeRateKit.bitcoinCash.map { FeeRate(feeRate: $0) }
     }
 
-    func dashFeeRate(for priority: FeeRatePriority) -> Single<FeeRate> {
+    var dashFeeRate: Single<FeeRate> {
         feeRateKit.dash.map { FeeRate(feeRate: $0) }
     }
 
@@ -45,8 +45,12 @@ class BitcoinFeeRateProvider: IFeeRateProvider {
         self.feeRateProvider = feeRateProvider
     }
 
-    func feeRate(for priority: FeeRatePriority) -> Single<FeeRate> {
-        feeRateProvider.bitcoinFeeRate(for: priority)
+    var feeRate: Single<FeeRate> {
+        feeRateProvider.bitcoinFeeRate
+    }
+
+    var feeRatePriorityList: [FeeRatePriority] {
+        [.low, .medium, .high, .custom(value: 1, range: 1...200)]
     }
 
 }
@@ -58,8 +62,8 @@ class LitecoinFeeRateProvider: IFeeRateProvider {
         self.feeRateProvider = feeRateProvider
     }
 
-    func feeRate(for priority: FeeRatePriority) -> Single<FeeRate> {
-        feeRateProvider.litecoinFeeRate(for: priority)
+    var feeRate: Single<FeeRate> {
+        feeRateProvider.litecoinFeeRate
     }
 
 }
@@ -71,8 +75,8 @@ class BitcoinCashFeeRateProvider: IFeeRateProvider {
         self.feeRateProvider = feeRateProvider
     }
 
-    func feeRate(for priority: FeeRatePriority) -> Single<FeeRate> {
-        feeRateProvider.bitcoinCashFeeRate(for: priority)
+    var feeRate: Single<FeeRate> {
+        feeRateProvider.bitcoinCashFeeRate
     }
 
 }
@@ -84,8 +88,8 @@ class EthereumFeeRateProvider: IFeeRateProvider {
         self.feeRateProvider = feeRateProvider
     }
 
-    func feeRate(for priority: FeeRatePriority) -> Single<FeeRate> {
-        feeRateProvider.ethereumGasPrice(for: priority)
+    var feeRate: Single<FeeRate> {
+        feeRateProvider.ethereumGasPrice
     }
 
 }
@@ -97,8 +101,21 @@ class DashFeeRateProvider: IFeeRateProvider {
         self.feeRateProvider = feeRateProvider
     }
 
-    func feeRate(for priority: FeeRatePriority) -> Single<FeeRate> {
-        feeRateProvider.dashFeeRate(for: priority)
+    var feeRate: Single<FeeRate> {
+        feeRateProvider.dashFeeRate
+    }
+
+    private(set) var feeRatePriorityList: [FeeRatePriority] = []
+}
+
+extension IFeeRateProvider {
+
+    var feeRatePriorityList: [FeeRatePriority] {
+        [.low, .medium, .high]
+    }
+
+    var defaultFeeRatePriority: FeeRatePriority {
+        .medium
     }
 
 }
