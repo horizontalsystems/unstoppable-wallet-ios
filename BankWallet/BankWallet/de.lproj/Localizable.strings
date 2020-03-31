@@ -129,6 +129,7 @@
 "send.tx_speed_low" = "Niedrig";
 "send.tx_speed_medium" = "Mittel";
 "send.tx_speed_high" = "Hoch";
+"send.tx_speed_custom" = "Custom";
 "send.tx_duration" = "Dauer";
 "send.duration.instant" = "Sofort";
 "send.duration.within" = "Innerhalb %@";
