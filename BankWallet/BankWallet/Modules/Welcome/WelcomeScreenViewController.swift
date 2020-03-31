@@ -130,7 +130,7 @@ class WelcomeScreenViewController: UIViewController {
 
         titleWrapper.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin12x)
             maker.centerY.equalToSuperview()
         }
 
