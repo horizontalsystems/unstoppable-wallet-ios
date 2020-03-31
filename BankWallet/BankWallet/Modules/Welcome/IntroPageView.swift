@@ -19,7 +19,7 @@ class IntroPageView: UIView {
 
         wrapperView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin12x)
             maker.top.equalToSuperview().offset(CGFloat.margin6x)
         }
 
@@ -32,7 +32,7 @@ class IntroPageView: UIView {
 
         wrapperView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin12x)
             maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin4x)
         }
 
