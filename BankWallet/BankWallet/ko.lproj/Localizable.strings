@@ -129,6 +129,7 @@
 "send.tx_speed_low" = "낮음";
 "send.tx_speed_medium" = "보통";
 "send.tx_speed_high" = "높음";
+"send.tx_speed_custom" = "Custom";
 "send.tx_duration" = "기간";
 "send.duration.instant" = "즉시";
 "send.duration.within" = "%@ 안에";
