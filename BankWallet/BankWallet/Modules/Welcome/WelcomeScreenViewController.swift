@@ -4,6 +4,25 @@ import SnapKit
 class WelcomeScreenViewController: UIViewController {
     private let delegate: IWelcomeScreenViewDelegate
 
+    private let scrollView = UIScrollView()
+    private let imageWrapperView = UIView()
+    private var imageViews = [UIImageView]()
+    private let bottomWrapperBackground = UIView()
+    private let bottomWrapper = UIView()
+    private let pageControl = UIPageControl()
+
+    private let skipButton = UIButton()
+    private let nextButton = UIButton()
+
+    private let titleWrapper = UIView()
+    private let buttonsWrapper = UIView()
+
+    private let slides = [
+        Slide(title: "intro.independence.title".localized, description: "intro.independence.description".localized, image: "Intro - Independence"),
+        Slide(title: "intro.knowledge.title".localized, description: "intro.knowledge.description".localized, image: "Intro - Knowledge"),
+        Slide(title: "intro.privacy.title".localized, description: "intro.privacy.description".localized, image: "Intro - Privacy")
+    ]
+
     private let versionLabel = UILabel()
 
     init(delegate: IWelcomeScreenViewDelegate) {
@@ -21,11 +40,89 @@ class WelcomeScreenViewController: UIViewController {
 
         view.backgroundColor = .themeDarker
 
-        let titleWrapper = UIView()
+        view.addSubview(imageWrapperView)
+        imageWrapperView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+            maker.height.equalToSuperview().dividedBy(2)
+        }
+
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        scrollView.delegate = self
+        scrollView.contentSize = CGSize(width: view.width * CGFloat(slides.count), height: view.height)
+        scrollView.isPagingEnabled = true
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.bounces = false
+
+        for (index, slide) in slides.enumerated() {
+            let slideView = IntroPageView(title: slide.title, description: slide.description)
+            scrollView.addSubview(slideView)
+            slideView.frame = CGRect(x: view.width * CGFloat(index), y: 0, width: view.width, height: view.height)
+
+            let imageView = UIImageView(image: UIImage(named: slide.image))
+
+            imageWrapperView.addSubview(imageView)
+            imageView.snp.makeConstraints { maker in
+                maker.center.equalToSuperview()
+            }
+
+            imageView.alpha = 0
+            imageViews.append(imageView)
+        }
+
+        scrollViewDidScroll(scrollView)
+
+        view.addSubview(bottomWrapperBackground)
+        view.addSubview(bottomWrapper)
+
+        bottomWrapper.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.bottom.equalTo(view.safeAreaLayoutGuide)
+            maker.height.equalTo(CGFloat.heightButton)
+        }
+        bottomWrapperBackground.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(bottomWrapper.snp.top)
+            maker.bottom.equalToSuperview()
+        }
+
+        bottomWrapperBackground.backgroundColor = .themeDark
+
+        bottomWrapper.addSubview(pageControl)
+        pageControl.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+
+        pageControl.numberOfPages = slides.count
+        pageControl.currentPage = 0
+        pageControl.pageIndicatorTintColor = .themeSteel20
+        pageControl.currentPageIndicatorTintColor = .themeJacob
+
+        bottomWrapper.addSubview(skipButton)
+        skipButton.snp.makeConstraints { maker in
+            maker.leading.top.bottom.equalToSuperview()
+        }
+
+        setup(button: skipButton)
+        skipButton.setTitle("intro.skip".localized, for: .normal)
+        skipButton.addTarget(self, action: #selector(onTapSkip), for: .touchUpInside)
+
+        bottomWrapper.addSubview(nextButton)
+        nextButton.snp.makeConstraints { maker in
+            maker.top.trailing.bottom.equalToSuperview()
+        }
+
+        setup(button: nextButton)
+        nextButton.setTitle("intro.next".localized, for: .normal)
+        nextButton.addTarget(self, action: #selector(onTapNextButton), for: .touchUpInside)
 
         view.addSubview(titleWrapper)
         titleWrapper.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
+            maker.leading.trailing.equalToSuperview()
+            maker.bottom.equalTo(view.snp.top)
             maker.height.equalToSuperview().dividedBy(2)
         }
 
@@ -43,9 +140,16 @@ class WelcomeScreenViewController: UIViewController {
         titleLabel.font = .title2
         titleLabel.textColor = .themeLight
 
+        view.addSubview(buttonsWrapper)
+        buttonsWrapper.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(view.snp.bottom)
+            maker.height.equalToSuperview().dividedBy(2)
+        }
+
         let createButton = UIButton.appYellow
 
-        view.addSubview(createButton)
+        buttonsWrapper.addSubview(createButton)
         createButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
             maker.height.equalTo(CGFloat.heightButton)
@@ -56,7 +160,7 @@ class WelcomeScreenViewController: UIViewController {
 
         let restoreButton = UIButton.appGray
 
-        view.addSubview(restoreButton)
+        buttonsWrapper.addSubview(restoreButton)
         restoreButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
             maker.top.equalTo(createButton.snp.bottom).offset(CGFloat.margin4x)
@@ -66,10 +170,10 @@ class WelcomeScreenViewController: UIViewController {
         restoreButton.setTitle("welcome.restore_wallet".localized, for: .normal)
         restoreButton.addTarget(self, action: #selector(didTapRestore), for: .touchUpInside)
 
-        view.addSubview(versionLabel)
+        buttonsWrapper.addSubview(versionLabel)
         versionLabel.snp.makeConstraints { maker in
             maker.top.equalTo(restoreButton.snp.bottom).offset(CGFloat.margin4x)
-            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin4x)
+            maker.bottom.equalToSuperview().inset(CGFloat.margin4x)
             maker.centerX.equalToSuperview()
         }
 
@@ -101,12 +205,101 @@ class WelcomeScreenViewController: UIViewController {
         delegate.didTapRestore()
     }
 
+    @objc private func onTapSkip() {
+        showWelcome()
+    }
+
+    @objc private func onTapNextButton() {
+        if pageControl.currentPage < pageControl.numberOfPages - 1 {
+            scrollView.setContentOffset(CGPoint(x: scrollView.width * CGFloat(pageControl.currentPage + 1), y: 0), animated: true)
+        } else {
+            showWelcome()
+        }
+    }
+
+    private func setup(button: UIButton) {
+        button.setTitleColor(.themeLeah, for: .normal)
+        button.setTitleColor(.themeGray50, for: .highlighted)
+        button.titleLabel?.font = .headline2
+        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: .margin6x, bottom: 0, right: .margin6x)
+    }
+
+    private func onSwitchSlide(index: Int) {
+        let lastSlide = index == pageControl.numberOfPages - 1
+
+        skipButton.set(hidden: lastSlide, animated: true, duration: 0.2)
+    }
+
+    private func showWelcome() {
+        let animationDuration: TimeInterval = 0.4
+
+        scrollView.set(hidden: true, animated: true, duration: animationDuration)
+        imageWrapperView.set(hidden: true, animated: true, duration: animationDuration)
+        bottomWrapperBackground.set(hidden: true, animated: true, duration: animationDuration)
+        bottomWrapper.set(hidden: true, animated: true, duration: animationDuration)
+
+        titleWrapper.snp.remakeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+            maker.height.equalToSuperview().dividedBy(2)
+        }
+
+        buttonsWrapper.snp.remakeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(titleWrapper.snp.bottom)
+            maker.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        UIView.animate(withDuration: animationDuration, delay: 0, options: .curveEaseInOut, animations: {
+            self.view.layoutIfNeeded()
+        })
+    }
+
+}
+
+extension WelcomeScreenViewController: UIScrollViewDelegate {
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let pageIndex = Int(round(scrollView.contentOffset.x / view.frame.width))
+
+        if pageControl.currentPage != pageIndex {
+            pageControl.currentPage = pageIndex
+            onSwitchSlide(index: pageIndex)
+        }
+
+        let maximumOffset: CGFloat = scrollView.contentSize.width - scrollView.frame.width
+        let currentOffset: CGFloat = scrollView.contentOffset.x
+
+        let currentPercent: CGFloat = currentOffset / maximumOffset
+
+        let pagePercent = CGFloat(1) / CGFloat(slides.count - 1)
+
+        for i in 0..<slides.count {
+            let fi = CGFloat(i)
+            if currentPercent >= (fi - 1) * pagePercent && currentPercent <= (fi + 1) * pagePercent {
+                let offset: CGFloat = abs((fi * pagePercent) - currentPercent)
+                let percent: CGFloat = offset / pagePercent
+
+                imageViews[i].alpha = 1 - percent
+            }
+        }
+    }
+
 }
 
 extension WelcomeScreenViewController: IWelcomeScreenView {
 
     func set(appVersion: String) {
         versionLabel.text = "welcome.version".localized(appVersion)
+    }
+
+}
+
+extension WelcomeScreenViewController {
+
+    private struct Slide {
+        let title: String
+        let description: String
+        let image: String
     }
 
 }
