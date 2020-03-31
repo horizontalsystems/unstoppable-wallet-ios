@@ -40,11 +40,16 @@ class RateManager {
         rateCoinMapper.addCoin(direction: .unconvert, from: "HOLO", to: "HOT")
 
         rateCoinMapper.addCoin(direction: .convert, from: "PGL", to: nil)
-        rateCoinMapper.addCoin(direction: .convert, from: "PPT", to: nil)
-        rateCoinMapper.addCoin(direction: .convert, from: "EOSDT", to: nil)
         rateCoinMapper.addCoin(direction: .unconvert, from: "PGL", to: nil)
+
+        rateCoinMapper.addCoin(direction: .convert, from: "PPT", to: nil)
         rateCoinMapper.addCoin(direction: .unconvert, from: "PPT", to: nil)
+
+        rateCoinMapper.addCoin(direction: .convert, from: "EOSDT", to: nil)
         rateCoinMapper.addCoin(direction: .unconvert, from: "EOSDT", to: nil)
+
+        rateCoinMapper.addCoin(direction: .convert, from: "SAI", to: nil)
+        rateCoinMapper.addCoin(direction: .unconvert, from: "SAI", to: nil)
     }
 
     private func onUpdate(wallets: [Wallet]) {
