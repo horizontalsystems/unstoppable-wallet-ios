@@ -419,7 +419,9 @@ protocol IAddressParser {
 }
 
 protocol IFeeRateProvider {
-    func feeRate(for priority: FeeRatePriority) -> Single<FeeRate>
+    var feeRate: Single<FeeRate> { get }
+    var feeRatePriorityList: [FeeRatePriority] { get }
+    var defaultFeeRatePriority: FeeRatePriority { get }
 }
 
 protocol IEncryptionManager {

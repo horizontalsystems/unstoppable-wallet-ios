@@ -12,10 +12,12 @@ struct FeeRate {
             return feeRate.medium
         case .high:
             return feeRate.high
+        case .custom(let value, _):
+            return value
         }
     }
 
-    func duration(priority: FeeRatePriority) -> TimeInterval {
+    func duration(priority: FeeRatePriority) -> TimeInterval? {
         switch priority {
         case .low:
             return feeRate.lowPriorityDuration
@@ -23,8 +25,9 @@ struct FeeRate {
             return feeRate.mediumPriorityDuration
         case .high:
             return feeRate.highPriorityDuration
+        case .custom:
+            return nil
         }
-
     }
 
 }

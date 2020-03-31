@@ -86,12 +86,8 @@ extension SendRouter {
 
         views.append(SendRouter.marginView)
 
-        if interactor.lockTimeEnabled && coin.type == .bitcoin {
-            let (hodlerView, module, hodlerRouter) = SendHodlerRouter.module()
-            hodlerModule = module
-            views.append(hodlerView)
-            routers.append(hodlerRouter)
-        }
+        let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
+        views.append(feeView)
 
         guard let (feePriorityView, feePriorityModule, feePriorityRouter) = SendFeePriorityRouter.module(coin: coin) else {
             return nil
@@ -99,8 +95,12 @@ extension SendRouter {
         views.append(feePriorityView)
         routers.append(feePriorityRouter)
 
-        let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
-        views.append(feeView)
+        if interactor.lockTimeEnabled && coin.type == .bitcoin {
+            let (hodlerView, module, hodlerRouter) = SendHodlerRouter.module()
+            hodlerModule = module
+            views.append(hodlerView)
+            routers.append(hodlerRouter)
+        }
 
         let presenter = SendBitcoinHandler(
                 interactor: interactor,
@@ -153,7 +153,7 @@ extension SendRouter {
         addressModule.delegate = presenter
         feePriorityModule.delegate = presenter
 
-        return (presenter, [amountView, addressView, SendRouter.marginView, feePriorityView, feeView], [addressRouter, feePriorityRouter])
+        return (presenter, [amountView, addressView, SendRouter.marginView, feeView, feePriorityView], [addressRouter, feePriorityRouter])
     }
 
     private static func module(coin: Coin, adapter: ISendEosAdapter) -> (ISendHandler, [UIView], [ISendSubRouter]) {
