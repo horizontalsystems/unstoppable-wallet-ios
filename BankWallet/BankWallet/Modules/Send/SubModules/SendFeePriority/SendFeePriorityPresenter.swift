@@ -11,13 +11,14 @@ class SendFeePriorityPresenter {
     private var feeRateData: FeeRate?
     private var error: Error?
 
-    var feeRatePriority: FeeRatePriority
+    private(set) var feeRatePriority: FeeRatePriority
 
-    init(interactor: ISendFeePriorityInteractor, router: ISendFeePriorityRouter, coin: Coin, feeRatePriority: FeeRatePriority) {
+   init(interactor: ISendFeePriorityInteractor, router: ISendFeePriorityRouter, coin: Coin) {
         self.interactor = interactor
         self.router = router
         self.coin = coin
-        self.feeRatePriority = feeRatePriority
+
+        feeRatePriority = interactor.defaultFeeRatePriority
     }
 
 }
@@ -49,7 +50,7 @@ extension SendFeePriorityPresenter: ISendFeePriorityModule {
         view?.set(duration: nil)
         view?.set(enabled: false)
 
-        interactor.syncFeeRate(priority: feeRatePriority)
+        interactor.syncFeeRate()
     }
 
 }
@@ -60,7 +61,7 @@ extension SendFeePriorityPresenter: ISendFeePriorityViewDelegate {
         guard let feeRateData = feeRateData else {
             return
         }
-        let items = FeeRatePriority.allCases.map { priority in
+        let items = interactor.feeRatePriorityList.map { priority in
             PriorityItem(
                     priority: priority,
                     duration: feeRateData.duration(priority: priority),
@@ -69,11 +70,30 @@ extension SendFeePriorityPresenter: ISendFeePriorityViewDelegate {
         }
 
         router.openPriorities(items: items) { [weak self] selectedItem in
-            self?.feeRatePriority = selectedItem.priority
-            self?.view?.setPriority()
-            self?.view?.set(duration: selectedItem.duration)
-            self?.delegate?.onUpdateFeePriority()
+            self?.updateFeeRatePriority(selectedItem: selectedItem)
         }
+    }
+
+    func selectCustom(feeRatePriority: FeeRatePriority) {
+        self.feeRatePriority = feeRatePriority
+        delegate?.onUpdateFeePriority()
+    }
+
+    private func updateFeeRatePriority(selectedItem: PriorityItem) {
+        if case let .custom(value: defaultValue, range: range) = selectedItem.priority {
+            var value = feeRate ?? defaultValue                  // set feeRate from previous choice when select to custom slider
+            value = min(value, range.upperBound)                 // value can't be more than slider upper range
+
+            view?.set(customVisible: true)
+            view?.set(customFeeRateValue: value, customFeeRateRange: range)
+            feeRatePriority = .custom(value: value, range: range)
+        } else {
+            view?.set(customVisible: false)
+            view?.set(duration: selectedItem.duration)
+            feeRatePriority = selectedItem.priority
+        }
+        view?.setPriority()
+        delegate?.onUpdateFeePriority()
     }
 
 }

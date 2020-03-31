@@ -13,7 +13,7 @@ extension SendFeePriorityRouter {
 
         let router = SendFeePriorityRouter()
         let interactor = SendFeePriorityInteractor(provider: feeRateProvider)
-        let presenter = SendFeePriorityPresenter(interactor: interactor, router: router, coin: coin, feeRatePriority: .medium)
+        let presenter = SendFeePriorityPresenter(interactor: interactor, router: router, coin: coin)
         let view = SendFeePriorityView(delegate: presenter)
 
         interactor.delegate = presenter
@@ -30,7 +30,7 @@ extension SendFeePriorityRouter: ISendFeePriorityRouter {
         let alertController = AlertViewController(
                 header: "send.tx_speed".localized,
                 rows: items.map { item in
-                    AlertRow(text: "\(item.priority.title) (< \(item.duration.approximateHoursOrMinutes))", selected: item.selected)
+                    AlertRow(text: "\(item.priority.title) \((item.duration?.approximateHoursOrMinutes).map { "(< \($0))" }  ?? "")", selected: item.selected)
                 }
         ) { selectedIndex in
             onSelect(items[selectedIndex])
