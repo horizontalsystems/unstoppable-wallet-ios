@@ -2,14 +2,14 @@ import UIKit
 import SectionsTableView
 import ThemeKit
 
-class BlockchainSettingsViewController: ThemeViewController {
-    private let delegate: IBlockchainSettingsViewDelegate
+class DerivationSettingsViewController: ThemeViewController {
+    private let delegate: IDerivationSettingsViewDelegate
 
     private let tableView = SectionsTableView(style: .grouped)
 
     private var viewItems = [DerivationSettingSectionViewItem]()
 
-    init(delegate: IBlockchainSettingsViewDelegate) {
+    init(delegate: IDerivationSettingsViewDelegate) {
         self.delegate = delegate
 
         super.init()
@@ -24,7 +24,7 @@ class BlockchainSettingsViewController: ThemeViewController {
 
         title = "blockchain_settings.title".localized
 
-        tableView.registerCell(forClass: BlockchainSettingCell.self)
+        tableView.registerCell(forClass: DerivationSettingCell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.sectionDataSource = self
 
@@ -68,7 +68,7 @@ class BlockchainSettingsViewController: ThemeViewController {
     }
 
     private func row(viewItem: DerivationSettingViewItem, enabled: Bool, sectionIndex: Int, rowIndex: Int, last: Bool) -> RowProtocol {
-        Row<BlockchainSettingCell>(
+        Row<DerivationSettingCell>(
                 id: viewItem.title,
                 hash: "\(viewItem.selected)",
                 height: .heightDoubleLineCell,
@@ -97,7 +97,7 @@ class BlockchainSettingsViewController: ThemeViewController {
 
 }
 
-extension BlockchainSettingsViewController: SectionsDataSource {
+extension DerivationSettingsViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         viewItems.enumerated().map { index, viewItem in
@@ -107,7 +107,7 @@ extension BlockchainSettingsViewController: SectionsDataSource {
 
 }
 
-extension BlockchainSettingsViewController: IBlockchainSettingsView {
+extension DerivationSettingsViewController: IDerivationSettingsView {
 
     func showNextButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .plain, target: self, action: #selector(onTapRightBarButton))

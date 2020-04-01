@@ -1,7 +1,7 @@
 import UIKit
 import ThemeKit
 
-class BlockchainSettingsRouter {
+class DerivationSettingsRouter {
     weak var viewController: UIViewController?
 
     private let delegate: IDerivationSettingsDelegate?
@@ -12,7 +12,7 @@ class BlockchainSettingsRouter {
 
 }
 
-extension BlockchainSettingsRouter: IBlockchainSettingsRouter {
+extension DerivationSettingsRouter: IDerivationSettingsRouter {
 
     func open(url: String) {
         guard let url = URL(string: url) else {
@@ -32,13 +32,13 @@ extension BlockchainSettingsRouter: IBlockchainSettingsRouter {
 
 }
 
-extension BlockchainSettingsRouter {
+extension DerivationSettingsRouter {
 
     static func module(proceedMode: RestoreRouter.ProceedMode, canSave: Bool, activeCoins: [Coin], showOnlyCoin: Coin? = nil, delegate: IDerivationSettingsDelegate? = nil) -> UIViewController {
-        let router = BlockchainSettingsRouter(delegate: delegate)
-        let interactor = BlockchainSettingsInteractor(derivationSettingsManager: App.shared.derivationSettingsManager, walletManager: App.shared.walletManager, appConfigProvider: App.shared.appConfigProvider)
-        let presenter = BlockchainSettingsPresenter(proceedMode: proceedMode, router: router, interactor: interactor, selectedCoins: activeCoins, showOnlyCoin: showOnlyCoin, canSave: canSave)
-        let viewController = BlockchainSettingsViewController(delegate: presenter)
+        let router = DerivationSettingsRouter(delegate: delegate)
+        let interactor = DerivationSettingsInteractor(derivationSettingsManager: App.shared.derivationSettingsManager, walletManager: App.shared.walletManager, appConfigProvider: App.shared.appConfigProvider)
+        let presenter = DerivationSettingsPresenter(proceedMode: proceedMode, router: router, interactor: interactor, selectedCoins: activeCoins, showOnlyCoin: showOnlyCoin, canSave: canSave)
+        let viewController = DerivationSettingsViewController(delegate: presenter)
 
         presenter.view = viewController
         router.viewController = viewController
