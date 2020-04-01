@@ -1,4 +1,4 @@
-protocol IBlockchainSettingsView: class {
+protocol IDerivationSettingsView: class {
     func showNextButton()
     func showRestoreButton()
     func showDoneButton()
@@ -7,7 +7,7 @@ protocol IBlockchainSettingsView: class {
     func showChangeAlert(chainIndex: Int, settingIndex: Int, derivationText: String)
 }
 
-protocol IBlockchainSettingsInteractor: class {
+protocol IDerivationSettingsInteractor: class {
     var allCoins: [Coin] { get }
     func settings(coinType: CoinType) -> DerivationSetting?
     func walletsForUpdate(coinType: CoinType) -> [Wallet]
@@ -16,14 +16,14 @@ protocol IBlockchainSettingsInteractor: class {
     func update(wallets: [Wallet])
 }
 
-protocol IBlockchainSettingsViewDelegate {
+protocol IDerivationSettingsViewDelegate {
     func onLoad()
     func onConfirm()
     func onSelect(chainIndex: Int, settingIndex: Int)
     func proceedChange(chainIndex: Int, settingIndex: Int)
 }
 
-protocol IBlockchainSettingsRouter {
+protocol IDerivationSettingsRouter {
     func open(url: String)
     func notifyConfirm(settings: [DerivationSetting])
     func close()

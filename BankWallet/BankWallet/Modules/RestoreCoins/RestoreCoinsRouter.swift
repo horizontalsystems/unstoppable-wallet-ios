@@ -19,7 +19,7 @@ extension RestoreCoinsRouter: IRestoreCoinsRouter {
     }
 
     func showSettings(for coin: Coin, settingsDelegate: IDerivationSettingsDelegate?) {
-        let module = BlockchainSettingsRouter.module(proceedMode: .done, canSave: false, activeCoins: [coin], showOnlyCoin: coin, delegate: settingsDelegate)
+        let module = DerivationSettingsRouter.module(proceedMode: .done, canSave: false, activeCoins: [coin], showOnlyCoin: coin, delegate: settingsDelegate)
         let controller = ThemeNavigationController(rootViewController: module)
         viewController?.navigationController?.present(controller, animated: true)
     }

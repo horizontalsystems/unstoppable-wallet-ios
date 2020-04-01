@@ -1,9 +1,9 @@
-class BlockchainSettingsPresenter {
-    weak var view: IBlockchainSettingsView?
+class DerivationSettingsPresenter {
+    weak var view: IDerivationSettingsView?
 
     private let proceedMode: RestoreRouter.ProceedMode
-    private let router: IBlockchainSettingsRouter
-    private let interactor: IBlockchainSettingsInteractor
+    private let router: IDerivationSettingsRouter
+    private let interactor: IDerivationSettingsInteractor
 
     private let factory = DerivationSettingsViewItemFactory()
 
@@ -15,7 +15,7 @@ class BlockchainSettingsPresenter {
 
     private let canSave: Bool
 
-    init(proceedMode: RestoreRouter.ProceedMode, router: IBlockchainSettingsRouter, interactor: IBlockchainSettingsInteractor, selectedCoins: [Coin], showOnlyCoin: Coin?, canSave: Bool) {
+    init(proceedMode: RestoreRouter.ProceedMode, router: IDerivationSettingsRouter, interactor: IDerivationSettingsInteractor, selectedCoins: [Coin], showOnlyCoin: Coin?, canSave: Bool) {
         self.proceedMode = proceedMode
         self.router = router
         self.interactor = interactor
@@ -53,7 +53,7 @@ class BlockchainSettingsPresenter {
 
 }
 
-extension BlockchainSettingsPresenter: IBlockchainSettingsViewDelegate {
+extension DerivationSettingsPresenter: IDerivationSettingsViewDelegate {
 
     func onLoad() {
         switch proceedMode {

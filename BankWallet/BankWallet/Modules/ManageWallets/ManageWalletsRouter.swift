@@ -10,7 +10,7 @@ class ManageWalletsRouter {
 extension ManageWalletsRouter: IManageWalletsRouter {
 
     func showSettings(coin: Coin, delegate: IDerivationSettingsDelegate) {
-        let module = BlockchainSettingsRouter.module(proceedMode: .done, canSave: false, activeCoins: [coin], showOnlyCoin: coin, delegate: delegate)
+        let module = DerivationSettingsRouter.module(proceedMode: .done, canSave: false, activeCoins: [coin], showOnlyCoin: coin, delegate: delegate)
         viewController?.navigationController?.pushViewController(module, animated: true)
     }
 
