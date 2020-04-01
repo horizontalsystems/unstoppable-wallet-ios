@@ -19,6 +19,8 @@ class SendFeePriorityView: UIView {
 
         backgroundColor = .clear
 
+        let separator = UIView()
+        addSubview(separator)
         addSubview(durationTitleLabel)
         durationTitleLabel.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(CGFloat.margin2x)
@@ -39,12 +41,10 @@ class SendFeePriorityView: UIView {
         durationValueLabel.textColor = .themeGray
         durationValueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
-        selectableValueView.delegate = self
-        selectableValueView.set(value: delegate.feeRatePriority.title)
-
         addSubview(feeSliderWrapper)
         feeSliderWrapper.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(CGFloat.margin2x)
+            maker.top.equalToSuperview()
+            maker.bottom.equalTo(separator.snp.top)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
         feeSliderWrapper.onTracking = { [weak self] value, position in
@@ -55,8 +55,6 @@ class SendFeePriorityView: UIView {
         }
         feeSliderWrapper.isHidden = true
 
-        let separator = UIView()
-        addSubview(separator)
         separator.snp.makeConstraints { maker in
             maker.height.equalTo(0.5)
             maker.leading.equalToSuperview()
@@ -70,7 +68,8 @@ class SendFeePriorityView: UIView {
             maker.top.equalTo(separator.snp.bottom)
             maker.bottom.leading.trailing.equalToSuperview()
         }
-
+        selectableValueView.delegate = self
+        selectableValueView.set(value: delegate.feeRatePriority.title)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -87,6 +86,8 @@ class SendFeePriorityView: UIView {
         feeConfig.hapticType = .none
         feeConfig.blurEffectStyle = nil
         feeConfig.blurEffectIntensity = nil
+        feeConfig.borderColor = .themeSteel20
+        feeConfig.borderWidth = .heightOnePixel
         feeConfig.exactSize = true
         feeConfig.preferredSize = CGSize(width: 74, height: 48)
         feeConfig.cornerRadius = CGFloat.cornerRadius2x

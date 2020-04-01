@@ -347,7 +347,7 @@ CHECKOUT OPTIONS:
     :commit: cd447adf36445431e7a7997e98c394acc0e1fce7
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HUD.swift:
-    :commit: 9d6bd6afb1428eccb982d5941ba89b6616e4aa5a
+    :commit: 5709d11483c2239ceb8b5f6fe0cef598b115516f
     :git: https://github.com/horizontalsystems/gui-kit/
   LanguageKit.swift:
     :commit: 0fdc0b4ca8ecaab53a454353553dc2974b5e8ce4
@@ -425,6 +425,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: e7e4bf432961545cace5fe8be80a9fe3aef04b36
 
-PODFILE CHECKSUM: ecb01862c793e704a1cf2e065ea9b8814a6633ef
+PODFILE CHECKSUM: e9363432462cab54e3847e27e632fda870246af3
 
 COCOAPODS: 1.8.4

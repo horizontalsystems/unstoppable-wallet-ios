@@ -35,6 +35,8 @@ class FeeSliderWrapper: UIView {
         slider.finishTracking = { [weak self] value in
             self?.finishTracking?(value)
         }
+        slider.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+        slider.setContentHuggingPriority(.defaultLow, for: .vertical)
 
         minimumLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview()

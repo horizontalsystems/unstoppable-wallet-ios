@@ -20,7 +20,7 @@ enum FeeRatePriority: Equatable {
         case (.low, .low): return true
         case (.medium, .medium): return true
         case (.high, .high): return true
-        case (.custom(_), .custom(_)): return true
+        case (.custom, .custom): return true
         default: return false
         }
     }

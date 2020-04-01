@@ -14,11 +14,13 @@ class FeeSlider: UISlider {
 
     required init() {
         let thumbImage = UIImage(named: "Fee Slider Thumb Image")
+        let selectedThumbImage = UIImage(named: "Fee Slider Thumb Selected Image")
         thumbWidth = thumbImage?.size.width ?? 0
 
         super.init(frame: CGRect.zero)
 
         setThumbImage(thumbImage?.tinted(with: .themeGray), for: .normal)
+        setThumbImage(selectedThumbImage?.tinted(with: .themeGray), for: .highlighted)
         minimumTrackTintColor = .clear
         maximumTrackTintColor = .clear
 
