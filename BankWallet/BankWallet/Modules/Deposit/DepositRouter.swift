@@ -22,7 +22,7 @@ extension DepositRouter {
         }
 
         let router = DepositRouter()
-        let interactor = DepositInteractor(walletManager: App.shared.walletManager, adapterManager: App.shared.adapterManager, pasteboardManager: App.shared.pasteboardManager, blockchainSettingsManager: App.shared.coinSettingsManager)
+        let interactor = DepositInteractor(walletManager: App.shared.walletManager, adapterManager: App.shared.adapterManager, pasteboardManager: App.shared.pasteboardManager, derivationSettingsManager: App.shared.derivationSettingsManager)
         let presenter = DepositPresenter(interactor: interactor, router: router, wallet: wallet)
         let viewController = DepositViewController(delegate: presenter)
 

@@ -30,7 +30,7 @@ protocol IManageAccountsRouter {
     func showBackup(account: Account, predefinedAccountType: PredefinedAccountType)
     func showCreateWallet(predefinedAccountType: PredefinedAccountType)
     func showRestore(predefinedAccountType: PredefinedAccountType, delegate: ICredentialsCheckDelegate)
-    func showSettings(coins: [Coin], delegate: IBlockchainSettingsDelegate?)
-    func showRestoreCoins(predefinedAccountType: PredefinedAccountType, accountType: AccountType, proceedMode: RestoreRouter.ProceedMode, delegate: IRestoreCoinsDelegate)
+//    func showSettings(coins: [Coin], delegate: IDerivationSettingsDelegate?)
+    func showRestoreCoins(predefinedAccountType: PredefinedAccountType, accountType: AccountType, delegate: IRestoreCoinsDelegate)
     func closeRestore()
 }

@@ -1,22 +1,20 @@
 class ManageWalletsInteractor {
-    weak var delegate: IManageWalletsInteractorDelegate?
-
     private let appConfigProvider: IAppConfigProvider
     private let walletManager: IWalletManager
     private let walletFactory: IWalletFactory
     private let accountManager: IAccountManager
     private let accountCreator: IAccountCreator
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
-    private let coinSettingsManager: IBlockchainSettingsManager
+    private let derivationSettingsManager: IDerivationSettingsManager
 
-    init(appConfigProvider: IAppConfigProvider, walletManager: IWalletManager, walletFactory: IWalletFactory, accountManager: IAccountManager, accountCreator: IAccountCreator, predefinedAccountTypeManager: IPredefinedAccountTypeManager, coinSettingsManager: IBlockchainSettingsManager) {
+    init(appConfigProvider: IAppConfigProvider, walletManager: IWalletManager, walletFactory: IWalletFactory, accountManager: IAccountManager, accountCreator: IAccountCreator, predefinedAccountTypeManager: IPredefinedAccountTypeManager, derivationSettingsManager: IDerivationSettingsManager) {
         self.appConfigProvider = appConfigProvider
         self.walletManager = walletManager
         self.walletFactory = walletFactory
         self.accountManager = accountManager
         self.accountCreator = accountCreator
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
-        self.coinSettingsManager = coinSettingsManager
+        self.derivationSettingsManager = derivationSettingsManager
     }
 
 }
@@ -43,8 +41,8 @@ extension ManageWalletsInteractor: IManageWalletsInteractor {
         walletManager.save(wallets: [wallet])
     }
 
-    func save(settings: [BlockchainSetting]) {
-        coinSettingsManager.save(settings: settings)
+    func save(settings: [DerivationSetting]) {
+        derivationSettingsManager.save(settings: settings)
     }
 
     func delete(wallet: Wallet) {
@@ -63,8 +61,8 @@ extension ManageWalletsInteractor: IManageWalletsInteractor {
         accountManager.save(account: account)
     }
 
-    func settings(coinType: CoinType) -> BlockchainSetting? {
-        coinSettingsManager.settings(coinType: coinType)
+    func settings(coinType: CoinType) -> DerivationSetting? {
+        try? derivationSettingsManager.derivationSetting(coinType: coinType)
     }
 
 }

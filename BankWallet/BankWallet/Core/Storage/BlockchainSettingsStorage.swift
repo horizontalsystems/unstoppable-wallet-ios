@@ -9,22 +9,26 @@ class BlockchainSettingsStorage {
 
 extension BlockchainSettingsStorage: IBlockchainSettingsStorage {
 
-    func blockchainSettings(coinType: CoinType) -> BlockchainSetting? {
-        guard let coinTypeKey = BlockchainSetting.key(for: coinType) else {
-            return nil
+    func derivationSetting(coinType: CoinType) throws -> DerivationSetting? {
+        guard let coinTypeKey = BlockchainSettingRecord.key(for: coinType) else {
+            throw DerivationSettingError.unsupportedCoinType
         }
 
-        return storage.blockchainSettings(coinTypeKey: coinTypeKey).map { record in
-            BlockchainSetting(coinType: record.coinType, derivation: record.derivation, syncMode: record.syncMode)
+        return try storage.blockchainSettings(coinTypeKey: coinTypeKey, settingKey: "derivation").map { record in
+            guard let derivation = MnemonicDerivation(rawValue: record.value) else {
+                throw DerivationSettingError.unsupportedMnemonicDerivation
+            }
+            return DerivationSetting(coinType: coinType, derivation: derivation)
         }
     }
 
-    func save(settings: [BlockchainSetting]) {
-        let settingRecords: [BlockchainSettingRecord] = settings.compactMap { setting in
-            guard let coinType = setting.coinType, let coinTypeKey = BlockchainSetting.key(for: coinType) else {
+    func save(derivationSettings: [DerivationSetting]) {
+        let settingRecords: [BlockchainSettingRecord] = derivationSettings.compactMap { setting in
+            let coinType = setting.coinType
+            guard let coinTypeKey = BlockchainSettingRecord.key(for: coinType) else {
                 return nil
             }
-            return BlockchainSettingRecord(coinType: coinTypeKey, derivation: setting.derivation?.rawValue, syncMode: setting.syncMode?.rawValue)
+            return BlockchainSettingRecord(coinType: coinTypeKey, key: "derivation", value: setting.derivation.rawValue)
         }
 
         storage.save(blockchainSettings: settingRecords)

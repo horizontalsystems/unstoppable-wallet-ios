@@ -88,3 +88,28 @@ extension CoinType: Equatable {
     }
 
 }
+
+extension CoinType: Hashable {
+
+    public func hash(into hasher: inout Hasher) {
+        switch self {
+        case .bitcoin:
+            hasher.combine("bitcoin")
+        case .litecoin:
+            hasher.combine("litecoin")
+        case .bitcoinCash:
+            hasher.combine("bitcoinCash")
+        case .dash:
+            hasher.combine("dash")
+        case .ethereum:
+            hasher.combine("ethereum")
+        case .erc20(let address, let fee, let gasLimit, let minimumRequiredBalance, let minimumSpendableAmount):
+            hasher.combine("erc20_\(address)_\(fee)_\(gasLimit.map { "\($0)" } ?? "nil")_\(minimumRequiredBalance)_\(minimumSpendableAmount.map { "\($0)" } ?? "nil")")
+        case .eos(let token, let symbol):
+            hasher.combine("eos_\(token)_\(symbol)")
+        case .binance(let symbol):
+            hasher.combine("binance_\(symbol)")
+        }
+    }
+
+}

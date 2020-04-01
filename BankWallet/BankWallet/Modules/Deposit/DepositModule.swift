@@ -12,7 +12,7 @@ protocol IDepositInteractor {
     func wallets() -> [Wallet]
     func adapter(forWallet wallet: Wallet) -> IDepositAdapter?
     func copy(address: String)
-    func blockchainSettings(coinType: CoinType) -> BlockchainSetting?
+    func derivationSettings(coinType: CoinType) -> DerivationSetting?
 }
 
 protocol IDepositInteractorDelegate: class {
