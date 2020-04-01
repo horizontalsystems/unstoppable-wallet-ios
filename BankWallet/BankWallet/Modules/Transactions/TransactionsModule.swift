@@ -76,7 +76,7 @@ protocol ITransactionViewItemFactory {
 }
 
 protocol IDiffer {
-    func changes<T: DiffAware>(old: [T], new: [T]) -> [Change<T>]
+    func changes<T: DiffAware>(old: [T], new: [T], section: Int) -> ChangeWithIndexPath
 }
 
 struct FetchData {
