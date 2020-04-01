@@ -609,7 +609,7 @@
 		1A5642EAD53DBB19C5B017A4 /* DepositCollectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645BE7DACEC78A2FAEFB5 /* DepositCollectionItem.swift */; };
 		1A5642F432EC46FA131C6266 /* DerivationSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B077A9E1C96E1306DA6 /* DerivationSettingsManager.swift */; };
 		1A564329C6F40DDC3BB2E198 /* FullTransactionHashHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F5499700A46A1515B6 /* FullTransactionHashHeaderView.swift */; };
-		1A5643443A417D608E253A50 /* Differ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F4CBE5575C4D6C40BA /* Differ.swift */; };
+		1A5643443A417D608E253A50 /* TransactionDiffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F4CBE5575C4D6C40BA /* TransactionDiffer.swift */; };
 		1A56435A3F2A592E067EE5CD /* EtherscanEthereumProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56435BAABBDC9BD5E84C40 /* EtherscanEthereumProviderTests.swift */; };
 		1A56435EB26CCED1DB73B057 /* MainSettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D73251DBFA0CFE34D12 /* MainSettingsInteractor.swift */; };
 		1A5643651979E1907BE1B12C /* BlockchainSettingRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C46FB773A67E29D9D32 /* BlockchainSettingRecord.swift */; };
@@ -750,7 +750,7 @@
 		1A564AEC44B618BE6DAC55C7 /* BottomAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5644B245A62181E34F521D /* BottomAlertViewController.swift */; };
 		1A564AF14CCBD62E209B02CA /* TransactionViewStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D0418F6ACD6558999D3 /* TransactionViewStatus.swift */; };
 		1A564B096FFE228DF453A66D /* TransactionInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564091A9C12F224A18B740 /* TransactionInfoPresenter.swift */; };
-		1A564B148862CA99776CE235 /* Differ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F4CBE5575C4D6C40BA /* Differ.swift */; };
+		1A564B148862CA99776CE235 /* TransactionDiffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F4CBE5575C4D6C40BA /* TransactionDiffer.swift */; };
 		1A564B3340086D250666A933 /* RestoreEosInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E95E2CCF97680C920F0 /* RestoreEosInteractor.swift */; };
 		1A564B4707376C1247517418 /* AppStatusPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564827B8F8D94DC4D7CC0F /* AppStatusPresenter.swift */; };
 		1A564B49C052D4BF6C53DE7F /* BalanceInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564EA89D7182D3D3F669C3 /* BalanceInteractorTests.swift */; };
@@ -766,7 +766,7 @@
 		1A564C11B7785DCEA2472065 /* BitcoinCashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BF724C69C237E309C07 /* BitcoinCashAdapter.swift */; };
 		1A564C1405D8C21185B0D4C1 /* TransactionsCurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649C888E12C1A0B70EFA8 /* TransactionsCurrencyCell.swift */; };
 		1A564C1ED93BC9A50A72FE66 /* FeeRatePriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643953F416DA3DA5DFBC3 /* FeeRatePriority.swift */; };
-		1A564C252F02B3CD2DD4E7A7 /* Differ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F4CBE5575C4D6C40BA /* Differ.swift */; };
+		1A564C252F02B3CD2DD4E7A7 /* TransactionDiffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F4CBE5575C4D6C40BA /* TransactionDiffer.swift */; };
 		1A564C31EDF7C4ED60F1A3E5 /* FullTransactionHashHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F5499700A46A1515B6 /* FullTransactionHashHeaderView.swift */; };
 		1A564C39E18A49AA791E15EC /* AddressParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649276CA421D7B080BE56 /* AddressParserTests.swift */; };
 		1A564C41C7DF7E5B3812BE3A /* BalanceEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DDACAD5CFB092AE6496 /* BalanceEditCell.swift */; };
@@ -1955,7 +1955,7 @@
 		1A5648DA32EA5FC27E4CEF64 /* DepositInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositInteractor.swift; sourceTree = "<group>"; };
 		1A5648E17213DF77DCA2EE42 /* TextSelectItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextSelectItemView.swift; sourceTree = "<group>"; };
 		1A5648F3AB070B0ACB98C7EE /* Production.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
-		1A5648F4CBE5575C4D6C40BA /* Differ.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Differ.swift; sourceTree = "<group>"; };
+		1A5648F4CBE5575C4D6C40BA /* TransactionDiffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionDiffer.swift; sourceTree = "<group>"; };
 		1A5648F5499700A46A1515B6 /* FullTransactionHashHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionHashHeaderView.swift; sourceTree = "<group>"; };
 		1A5649276CA421D7B080BE56 /* AddressParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressParserTests.swift; sourceTree = "<group>"; };
 		1A56492CDFAC522E46E07AD0 /* BlockchainSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockchainSetting.swift; sourceTree = "<group>"; };
@@ -2670,7 +2670,7 @@
 				11B35B93B5B43FF00B24528B /* TransactionRecordPoolRepo.swift */,
 				11B350DFDC2CC98086520BFA /* TransactionViewItemDataSource.swift */,
 				11B3592889642D8823BEDAE2 /* TransactionRecordPoolState.swift */,
-				1A5648F4CBE5575C4D6C40BA /* Differ.swift */,
+				1A5648F4CBE5575C4D6C40BA /* TransactionDiffer.swift */,
 				11B3527356625950A5C0358D /* TransactionViewItem.swift */,
 				11B358E4D11420A3D0B7A283 /* TransactionViewItemFactory.swift */,
 				2FA5D11954688FDC8AEC549C /* TransactionLockInfo.swift */,
@@ -4417,7 +4417,7 @@
 				11B35B2DE07F24EC17758285 /* CoinType.swift in Sources */,
 				11B352FDD80F24D5EF340F80 /* EnabledWallet.swift in Sources */,
 				58AAA2A6C9CF1E690DE6B4C6 /* InsightProvider.swift in Sources */,
-				1A5643443A417D608E253A50 /* Differ.swift in Sources */,
+				1A5643443A417D608E253A50 /* TransactionDiffer.swift in Sources */,
 				2FA5D4562E12175B6044FDFD /* BitcoinComProvider.swift in Sources */,
 				11B35FE0D2FDBD0287DD2CAD /* EosKitManager.swift in Sources */,
 				11B352354806A8BD75C4C15B /* EosAdapter.swift in Sources */,
@@ -4992,7 +4992,7 @@
 				11B35B670584B514DD0CFF35 /* CoinType.swift in Sources */,
 				11B359F074038D1507C23747 /* EnabledWallet.swift in Sources */,
 				58AAA5CEE19F771983EA8D43 /* InsightProvider.swift in Sources */,
-				1A564C252F02B3CD2DD4E7A7 /* Differ.swift in Sources */,
+				1A564C252F02B3CD2DD4E7A7 /* TransactionDiffer.swift in Sources */,
 				2FA5DBAF03EAA20DC88BADE5 /* BitcoinComProvider.swift in Sources */,
 				11B3514F863AF3FF3FA0CEEF /* EosKitManager.swift in Sources */,
 				11B35FAA453E0ED60358D43E /* EosAdapter.swift in Sources */,
@@ -5518,7 +5518,7 @@
 				11B35751F696373A51EE433E /* CoinType.swift in Sources */,
 				11B3577193A4BD719E12CE2E /* EnabledWallet.swift in Sources */,
 				58AAA4B833C09EADBF495AE3 /* InsightProvider.swift in Sources */,
-				1A564B148862CA99776CE235 /* Differ.swift in Sources */,
+				1A564B148862CA99776CE235 /* TransactionDiffer.swift in Sources */,
 				2FA5DA090638C6810DAE40F3 /* BitcoinComProvider.swift in Sources */,
 				11B357C489AE0127D16D5FB3 /* EosKitManager.swift in Sources */,
 				11B35C3330DD8899193EF57B /* EosAdapter.swift in Sources */,

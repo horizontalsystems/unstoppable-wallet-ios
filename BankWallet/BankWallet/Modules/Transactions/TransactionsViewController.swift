@@ -101,8 +101,9 @@ class TransactionsViewController: ThemeViewController {
             return
         }
 
+        reload(indexPaths: changes.replaces)
+
         guard !changes.inserts.isEmpty || !changes.moves.isEmpty || !changes.deletes.isEmpty else {
-            reload(indexPaths: changes.replaces)
             return
         }
 
@@ -112,8 +113,6 @@ class TransactionsViewController: ThemeViewController {
             for movedIndex in changes.moves {
                 self?.tableView.moveRow(at: movedIndex.from, to: movedIndex.to)
             }
-        }, completion: { [weak self] _ in
-            self?.reload(indexPaths: changes.replaces)
         })
     }
 
@@ -144,8 +143,7 @@ extension TransactionsViewController: ITransactionsView {
 
     func show(transactions newViewItems: [TransactionViewItem], animated: Bool) {
         queue.async {
-            let diff = self.differ.changes(old: self.items ?? [], new: newViewItems)
-            let changes = IndexPathConverter().convert(changes: diff, section: 0)
+            let changes = self.differ.changes(old: self.items ?? [], new: newViewItems, section: 0)
             self.items = newViewItems
             
             DispatchQueue.main.sync { [weak self] in
@@ -155,7 +153,7 @@ extension TransactionsViewController: ITransactionsView {
     }
 
     func showNoTransactions() {
-        show(transactions: [], animated: false)
+        show(transactions: [], animated: true)
     }
 
     func reloadTransactions() {
