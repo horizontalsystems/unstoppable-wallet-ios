@@ -1,4 +1,4 @@
-class BlockchainSettingsInteractor {
+class DerivationSettingsInteractor {
     private let derivationSettingsManager: IDerivationSettingsManager
     private let walletManager: IWalletManager
     private let appConfigProvider: IAppConfigProvider
@@ -11,7 +11,7 @@ class BlockchainSettingsInteractor {
 
 }
 
-extension BlockchainSettingsInteractor: IBlockchainSettingsInteractor {
+extension DerivationSettingsInteractor: IDerivationSettingsInteractor {
 
     var allCoins: [Coin] {
         appConfigProvider.coins
