@@ -9,8 +9,8 @@ class ManageWalletsRouter {
 
 extension ManageWalletsRouter: IManageWalletsRouter {
 
-    func showSettingsList(selectedCoins: [Coin], delegate: IBlockchainSettingsDelegate) {
-        let module = BlockchainSettingsListRouter.module(selectedCoins: selectedCoins, proceedMode: .done, canSave: false, delegate: delegate)
+    func showSettings(coin: Coin, delegate: IDerivationSettingsDelegate) {
+        let module = BlockchainSettingsRouter.module(proceedMode: .done, canSave: false, activeCoins: [coin], showOnlyCoin: coin, delegate: delegate)
         viewController?.navigationController?.pushViewController(module, animated: true)
     }
 
@@ -46,12 +46,11 @@ extension ManageWalletsRouter {
                 accountManager: App.shared.accountManager,
                 accountCreator: App.shared.accountCreator,
                 predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager,
-                coinSettingsManager: App.shared.coinSettingsManager
+                derivationSettingsManager: App.shared.derivationSettingsManager
         )
         let presenter = ManageWalletsPresenter(presentationMode: presentationMode, interactor: interactor, router: router)
         let viewController = ManageWalletsViewController(delegate: presenter)
 
-        interactor.delegate = presenter
         presenter.view = viewController
         router.viewController = viewController
 

@@ -54,7 +54,11 @@ class App {
     let appStatusManager: IAppStatusManager
     let appVersionManager: IAppVersionManager
 
+    //todo replace with restore mode manager
     let coinSettingsManager: IBlockchainSettingsManager
+
+    let derivationSettingsManager: IDerivationSettingsManager
+
     let rateCoinMapper: RateCoinMapper
 
     let kitCleaner: IKitCleaner
@@ -115,8 +119,9 @@ class App {
 
         let settingsStorage: IBlockchainSettingsStorage = BlockchainSettingsStorage(storage: storage)
         coinSettingsManager = BlockchainSettingsManager(appConfigProvider: appConfigProvider, storage: settingsStorage)
+        derivationSettingsManager = DerivationSettingsManager(storage: settingsStorage)
 
-        let adapterFactory: IAdapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, blockchainSettingsManager: coinSettingsManager)
+        let adapterFactory: IAdapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, blockchainSettingsManager: coinSettingsManager, derivationSettingsManager: derivationSettingsManager)
         adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager)
 
         pinKit = PinKit.Kit(secureStorage: keychainKit.secureStorage, localStorage: StorageKit.LocalStorage.default)

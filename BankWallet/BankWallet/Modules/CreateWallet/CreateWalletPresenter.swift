@@ -8,7 +8,7 @@ class CreateWalletPresenter {
 
     private var accounts = [PredefinedAccountType: Account]()
     private var wallets = [Coin: Wallet]()
-    private var settings = [Coin: BlockchainSetting]()
+    private var settings = [Coin: DerivationSetting]()
 
     init(presentationMode: CreateWalletModule.PresentationMode, predefinedAccountType: PredefinedAccountType?, interactor: ICreateWalletInteractor, router: ICreateWalletRouter) {
         self.presentationMode = presentationMode

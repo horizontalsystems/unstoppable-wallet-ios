@@ -1,28 +1,34 @@
 protocol IBlockchainSettingsView: class {
-    func set(blockchainName: String)
+    func showNextButton()
+    func showRestoreButton()
+    func showDoneButton()
 
-    func showChangeAlert(derivation: MnemonicDerivation)
-    func showChangeAlert(syncMode: SyncMode)
-    func set(settings: BlockchainSetting)
+    func set(viewItems: [DerivationSettingSectionViewItem])
+    func showChangeAlert(chainIndex: Int, settingIndex: Int, derivationText: String)
 }
 
 protocol IBlockchainSettingsInteractor: class {
-    func settings(coinType: CoinType) -> BlockchainSetting?
+    var allCoins: [Coin] { get }
+    func settings(coinType: CoinType) -> DerivationSetting?
     func walletsForUpdate(coinType: CoinType) -> [Wallet]
+
+    func save(settings: [DerivationSetting])
+    func update(wallets: [Wallet])
 }
 
 protocol IBlockchainSettingsViewDelegate {
     func onLoad()
-    func onSelect(derivation: MnemonicDerivation)
-    func onSelect(syncMode: SyncMode)
-    func proceedChange(derivation: MnemonicDerivation)
-    func proceedChange(syncMode: SyncMode)
+    func onConfirm()
+    func onSelect(chainIndex: Int, settingIndex: Int)
+    func proceedChange(chainIndex: Int, settingIndex: Int)
 }
 
 protocol IBlockchainSettingsRouter {
     func open(url: String)
+    func notifyConfirm(settings: [DerivationSetting])
+    func close()
 }
 
-protocol IBlockchainSettingsDelegate: class {
-    func onConfirm(settings: [BlockchainSetting])
+protocol IDerivationSettingsDelegate: class {
+    func onConfirm(settings: [DerivationSetting])
 }

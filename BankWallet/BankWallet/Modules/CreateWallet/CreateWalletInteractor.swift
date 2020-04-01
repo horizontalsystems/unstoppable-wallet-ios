@@ -3,14 +3,14 @@ class CreateWalletInteractor {
     private let accountCreator: IAccountCreator
     private let accountManager: IAccountManager
     private let walletManager: IWalletManager
-    private let coinSettingsManager: IBlockchainSettingsManager
+    private let derivationSettingsManager: IDerivationSettingsManager
 
-    init(appConfigProvider: IAppConfigProvider, accountCreator: IAccountCreator, accountManager: IAccountManager, walletManager: IWalletManager, coinSettingsManager: IBlockchainSettingsManager) {
+    init(appConfigProvider: IAppConfigProvider, accountCreator: IAccountCreator, accountManager: IAccountManager, walletManager: IWalletManager, derivationSettingsManager: IDerivationSettingsManager) {
         self.appConfigProvider = appConfigProvider
         self.accountCreator = accountCreator
         self.accountManager = accountManager
         self.walletManager = walletManager
-        self.coinSettingsManager = coinSettingsManager
+        self.derivationSettingsManager = derivationSettingsManager
     }
 
 }
@@ -39,12 +39,12 @@ extension CreateWalletInteractor: ICreateWalletInteractor {
         walletManager.save(wallets: wallets)
     }
 
-    func save(settings: [BlockchainSetting]) {
-        coinSettingsManager.save(settings: settings)
+    func save(settings: [DerivationSetting]) {
+        derivationSettingsManager.save(settings: settings)
     }
 
-    func blockchainSettings(coinType: CoinType) -> BlockchainSetting? {
-        coinSettingsManager.settingsForCreate(coinType: coinType)
+    func blockchainSettings(coinType: CoinType) -> DerivationSetting? {
+        try? derivationSettingsManager.defaultDerivationSetting(coinType: coinType)
     }
 
 }

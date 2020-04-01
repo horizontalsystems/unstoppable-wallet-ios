@@ -81,7 +81,7 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
         }
 
         if account.origin == .restored, interactor.settings(coinType: coin.type) != nil {
-            router.showSettingsList(selectedCoins: [coin], delegate: self)
+            router.showSettings(coin: coin, delegate: self)
             coinToEnable = coin
         } else {
             createWallet(coin: coin)
@@ -125,12 +125,9 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
 
 }
 
-extension ManageWalletsPresenter: IManageWalletsInteractorDelegate {
-}
+extension ManageWalletsPresenter: IDerivationSettingsDelegate {
 
-extension ManageWalletsPresenter: IBlockchainSettingsDelegate {
-
-    func onConfirm(settings: [BlockchainSetting]) {
+    func onConfirm(settings: [DerivationSetting]) {
         guard let coin = coinToEnable else {
             return
         }

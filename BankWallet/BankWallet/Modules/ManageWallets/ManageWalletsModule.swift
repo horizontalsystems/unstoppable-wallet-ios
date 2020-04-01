@@ -28,21 +28,18 @@ protocol IManageWalletsInteractor {
     var wallets: [Wallet] { get }
 
     func save(wallet: Wallet)
-    func save(settings: [BlockchainSetting])
+    func save(settings: [DerivationSetting])
     func delete(wallet: Wallet)
 
     func createAccount(predefinedAccountType: PredefinedAccountType) throws -> Account
     func createRestoredAccount(accountType: AccountType) -> Account
     func save(account: Account)
 
-    func settings(coinType: CoinType) -> BlockchainSetting?
-}
-
-protocol IManageWalletsInteractorDelegate: class {
+    func settings(coinType: CoinType) -> DerivationSetting?
 }
 
 protocol IManageWalletsRouter {
-    func showSettingsList(selectedCoins: [Coin], delegate: IBlockchainSettingsDelegate)
+    func showSettings(coin: Coin, delegate: IDerivationSettingsDelegate)
     func showRestore(predefinedAccountType: PredefinedAccountType, delegate: ICredentialsCheckDelegate)
     func close()
     func closePresented()

@@ -5,12 +5,12 @@ import RxSwift
 class LitecoinAdapter: BitcoinBaseAdapter {
     private let litecoinKit: LitecoinKit
 
-    init(wallet: Wallet, settings: BlockchainSetting?, testMode: Bool) throws {
+    init(wallet: Wallet, settings: BlockchainSetting?, derivation: MnemonicDerivation?, testMode: Bool) throws {
         guard case let .mnemonic(words, _) = wallet.account.type else {
             throw AdapterError.unsupportedAccount
         }
 
-        guard let walletDerivation = settings?.derivation else {
+        guard let walletDerivation = derivation else {
             throw AdapterError.wrongParameters
         }
 
