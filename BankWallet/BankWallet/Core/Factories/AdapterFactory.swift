@@ -4,23 +4,26 @@ class AdapterFactory: IAdapterFactory {
     private let eosKitManager: EosKitManager
     private let binanceKitManager: BinanceKitManager
     private let blockchainSettingsManager: IBlockchainSettingsManager
+    private let derivationSettingsManager: IDerivationSettingsManager
 
-    init(appConfigProvider: IAppConfigProvider, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager, blockchainSettingsManager: IBlockchainSettingsManager) {
+    init(appConfigProvider: IAppConfigProvider, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager, blockchainSettingsManager: IBlockchainSettingsManager, derivationSettingsManager: IDerivationSettingsManager) {
         self.appConfigProvider = appConfigProvider
         self.ethereumKitManager = ethereumKitManager
         self.eosKitManager = eosKitManager
         self.binanceKitManager = binanceKitManager
         self.blockchainSettingsManager = blockchainSettingsManager
+        self.derivationSettingsManager = derivationSettingsManager
     }
 
     func adapter(wallet: Wallet) -> IAdapter? {
         let settings = blockchainSettingsManager.settings(coinType: wallet.coin.type)
+        let derivation = (try? derivationSettingsManager.derivationSetting(coinType: wallet.coin.type))?.derivation
 
         switch wallet.coin.type {
         case .bitcoin:
-            return try? BitcoinAdapter(wallet: wallet, settings: settings, testMode: appConfigProvider.testMode)
+            return try? BitcoinAdapter(wallet: wallet, settings: settings, derivation: derivation, testMode: appConfigProvider.testMode)
         case .litecoin:
-            return try? LitecoinAdapter(wallet: wallet, settings: settings, testMode: appConfigProvider.testMode)
+            return try? LitecoinAdapter(wallet: wallet, settings: settings, derivation: derivation, testMode: appConfigProvider.testMode)
         case .bitcoinCash:
             return try? BitcoinCashAdapter(wallet: wallet, settings: settings, testMode: appConfigProvider.testMode)
         case .dash:

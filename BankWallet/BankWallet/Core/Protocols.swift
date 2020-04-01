@@ -296,13 +296,13 @@ protocol IPriceAlertRecordStorage {
 }
 
 protocol IBlockchainSettingsRecordStorage {
-    func blockchainSettings(coinTypeKey: String) -> BlockchainSettingRecord?
+    func blockchainSettings(coinTypeKey: String, settingKey: String) -> BlockchainSettingRecord?
     func save(blockchainSettings: [BlockchainSettingRecord])
 }
 
 protocol IBlockchainSettingsStorage {
-    func blockchainSettings(coinType: CoinType) -> BlockchainSetting?
-    func save(settings: [BlockchainSetting])
+    func derivationSetting(coinType: CoinType) throws -> DerivationSetting?
+    func save(derivationSettings: [DerivationSetting])
 }
 
 protocol IBackgroundPriceAlertManager {

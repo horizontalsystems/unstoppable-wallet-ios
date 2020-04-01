@@ -16,14 +16,14 @@ protocol IRestoreCoinsViewDelegate {
 protocol IRestoreCoinsInteractor {
     var coins: [Coin] { get }
     var featuredCoins: [Coin] { get }
-
+    func settings(coinType: CoinType) -> DerivationSetting?
 }
 
 protocol IRestoreCoinsRouter {
-    func onSelect(coins: [Coin])
+    func onSelect(coins: [Coin], derivationSettings: [DerivationSetting])
+    func showSettings(for coin: Coin, settingsDelegate: IDerivationSettingsDelegate?)
 }
 
 protocol IRestoreCoinsDelegate: AnyObject {
-    func onSelect(coins: [Coin])
+    func onSelect(coins: [Coin], derivationSettings: [DerivationSetting])
 }
-

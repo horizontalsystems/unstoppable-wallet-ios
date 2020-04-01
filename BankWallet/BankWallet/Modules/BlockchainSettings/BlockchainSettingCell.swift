@@ -25,8 +25,8 @@ class BlockchainSettingCell: ThemeCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(title: String, subtitle: String, selected: Bool, last: Bool = false) {
-        super.bind(last: last)
+    func bind(title: String, subtitle: String, selected: Bool, enabled: Bool, last: Bool = false) {
+        super.bind(last: last, active: enabled)
 
         leftView.bind(title: title, subtitle: subtitle)
         rightView.bind(visible: selected)

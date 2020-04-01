@@ -24,7 +24,7 @@ class BlockchainSettingsManager: IBlockchainSettingsManager {
     }
 
     func save(settings: [BlockchainSetting]) {
-        storage.save(settings: settings)
+//        storage.save(settings: settings)
     }
 
     func settingsForCreate(coinType: CoinType) -> BlockchainSetting? {
@@ -34,7 +34,8 @@ class BlockchainSettingsManager: IBlockchainSettingsManager {
     }
 
     func settings(coinType: CoinType) -> BlockchainSetting? {
-        storage.blockchainSettings(coinType: coinType) ?? appConfigProvider.defaultSettings.first { $0.coinType == coinType }
+        nil
+//        storage.blockchainSettings(coinType: coinType) ?? appConfigProvider.defaultSettings.first { $0.coinType == coinType }
     }
 
     var allSettings: [BlockchainSetting] {

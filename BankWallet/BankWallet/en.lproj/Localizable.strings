@@ -52,7 +52,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 // Coin Settings
 
-"coin_settings.derivation.title" = "Choose Address Format";
+"coin_settings.derivation.title" = "%@ Address Format";
 "coin_settings.derivation.description_bip44" = "Older (start with 1...)";
 "coin_settings.derivation.description_bip49" = "Popular (start with 3...)";
 "coin_settings.derivation.description_bip84" = "Newest (start with bc1...)";
@@ -73,7 +73,7 @@ bch.horizontalsystems.xyz/apg";
 "blockchain_settings.sync_mode_change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin, Bitcoin Cash and Dash blockchains, if you have enabled any of these tokens. Your balance or transactions won\'t be affected.\n\nWe recommend not to change this setting if not sure what it does.";
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
 "blockchain_settings.sync_mode.api" = "API";
-"blockchain_settings.chain_title" = "%@ Settings";
+"blockchain_settings.title" = "Address Format";
 // Backup
 
 "backup.close" = "Close";

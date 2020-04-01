@@ -220,10 +220,10 @@ class GrdbStorage {
         migrator.registerMigration("createBlockchainSettings") { db in
             try db.create(table: BlockchainSettingRecord.databaseTableName) { t in
                 t.column(BlockchainSettingRecord.Columns.coinType.name, .text).notNull()
-                t.column(BlockchainSettingRecord.Columns.derivation.name, .text)
-                t.column(BlockchainSettingRecord.Columns.syncMode.name, .text)
+                t.column(BlockchainSettingRecord.Columns.key.name, .text).notNull()
+                t.column(BlockchainSettingRecord.Columns.value.name, .text).notNull()
 
-                t.primaryKey([BlockchainSettingRecord.Columns.coinType.name], onConflict: .replace)
+                t.primaryKey([BlockchainSettingRecord.Columns.coinType.name, BlockchainSettingRecord.Columns.key.name], onConflict: .replace)
             }
         }
 
@@ -233,15 +233,30 @@ class GrdbStorage {
                     EnabledWallet_v_0_13.Columns.coinId == "BCH" ||
                     EnabledWallet_v_0_13.Columns.coinId == "DASH").fetchAll(db)
 
-            let blockchainSettings: [BlockchainSettingRecord] = wallets.compactMap { [weak self] wallet in
-                guard let coin = self?.appConfigProvider.coins.first(where: { $0.id == wallet.coinId }), let coinTypeKey = BlockchainSetting.key(for: coin.type) else {
+            let derivationSettings: [BlockchainSettingRecord] = wallets.compactMap { [weak self] wallet in
+                guard
+                        let coin = self?.appConfigProvider.coins.first(where: { $0.id == wallet.coinId }),
+                        let coinTypeKey = BlockchainSetting.key(for: coin.type),
+                        let derivation = wallet.derivation
+                        else {
                     return nil
                 }
 
-                return BlockchainSettingRecord(coinType: coinTypeKey, derivation: wallet.derivation, syncMode: wallet.syncMode)
+                return BlockchainSettingRecord(coinType: coinTypeKey, key: "derivation", value: derivation)
+            }
+            let syncSettings: [BlockchainSettingRecord] = wallets.compactMap { [weak self] wallet in
+                guard
+                        let coin = self?.appConfigProvider.coins.first(where: { $0.id == wallet.coinId }),
+                        let coinTypeKey = BlockchainSetting.key(for: coin.type),
+                        let syncMode = wallet.syncMode
+                        else {
+                    return nil
+                }
+
+                return BlockchainSettingRecord(coinType: coinTypeKey, key: "sync_mode", value: syncMode)
             }
 
-            for setting in blockchainSettings {
+            for setting in derivationSettings + syncSettings {
                 try setting.insert(db)
             }
         }
@@ -343,9 +358,9 @@ extension GrdbStorage: IPriceAlertRecordStorage {
 
 extension GrdbStorage: IBlockchainSettingsRecordStorage {
 
-    func blockchainSettings(coinTypeKey: String) -> BlockchainSettingRecord? {
+    func blockchainSettings(coinTypeKey: String, settingKey: String) -> BlockchainSettingRecord? {
         try? dbPool.read { db in
-            try BlockchainSettingRecord.filter(BlockchainSettingRecord.Columns.coinType == coinTypeKey).fetchOne(db)
+            try BlockchainSettingRecord.filter(BlockchainSettingRecord.Columns.coinType == coinTypeKey && BlockchainSettingRecord.Columns.key == settingKey).fetchOne(db)
         }
     }
 

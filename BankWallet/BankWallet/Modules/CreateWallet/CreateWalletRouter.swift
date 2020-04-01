@@ -26,7 +26,7 @@ extension CreateWalletRouter {
                 accountCreator: App.shared.accountCreator,
                 accountManager: App.shared.accountManager,
                 walletManager: App.shared.walletManager,
-                coinSettingsManager: App.shared.coinSettingsManager
+                derivationSettingsManager: App.shared.derivationSettingsManager
         )
         let presenter = CreateWalletPresenter(presentationMode: presentationMode, predefinedAccountType: predefinedAccountType, interactor: interactor, router: router)
         let viewController = CreateWalletViewController(delegate: presenter)

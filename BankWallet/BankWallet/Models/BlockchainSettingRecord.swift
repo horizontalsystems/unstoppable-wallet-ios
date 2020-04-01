@@ -3,14 +3,14 @@ import GRDB
 class BlockchainSettingRecord: Record {
     let coinType: String
 
-    var derivation: String?
-    var syncMode: String?
+    var key: String
+    var value: String
 
-    init(coinType: String, derivation: String?, syncMode: String?) {
+    init(coinType: String, key: String, value: String) {
         self.coinType = coinType
 
-        self.derivation = derivation
-        self.syncMode = syncMode
+        self.key = key
+        self.value = value
 
         super.init()
     }
@@ -20,21 +20,31 @@ class BlockchainSettingRecord: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case coinType, derivation, syncMode
+        case coinType, key, value
     }
 
     required init(row: Row) {
         coinType = row[Columns.coinType]
-        derivation = row[Columns.derivation]
-        syncMode = row[Columns.syncMode]
+        key = row[Columns.key]
+        value = row[Columns.value]
 
         super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
         container[Columns.coinType] = coinType
-        container[Columns.derivation] = derivation
-        container[Columns.syncMode] = syncMode
+        container[Columns.key] = key
+        container[Columns.value] = value
+    }
+
+    static func key(for coinType: CoinType) -> String? {
+        switch coinType {
+        case .bitcoin: return "bitcoin"
+        case .litecoin: return "litecoin"
+        case .bitcoinCash: return "bitcoinCash"
+        case .dash: return "dash"
+        default: return nil
+        }
     }
 
 }

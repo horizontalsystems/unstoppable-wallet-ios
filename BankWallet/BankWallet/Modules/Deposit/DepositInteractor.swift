@@ -6,13 +6,13 @@ class DepositInteractor {
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
     private let pasteboardManager: IPasteboardManager
-    private let blockchainSettingsManager: IBlockchainSettingsManager
+    private let derivationSettingsManager: IDerivationSettingsManager
 
-    init(walletManager: IWalletManager, adapterManager: IAdapterManager, pasteboardManager: IPasteboardManager, blockchainSettingsManager: IBlockchainSettingsManager) {
+    init(walletManager: IWalletManager, adapterManager: IAdapterManager, pasteboardManager: IPasteboardManager, derivationSettingsManager: IDerivationSettingsManager) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.pasteboardManager = pasteboardManager
-        self.blockchainSettingsManager = blockchainSettingsManager
+        self.derivationSettingsManager = derivationSettingsManager
     }
 }
 
@@ -30,8 +30,8 @@ extension DepositInteractor: IDepositInteractor {
         pasteboardManager.set(value: address)
     }
 
-    func blockchainSettings(coinType: CoinType) -> BlockchainSetting? {
-        blockchainSettingsManager.settings(coinType: coinType)
+    func derivationSettings(coinType: CoinType) -> DerivationSetting? {
+        try? derivationSettingsManager.derivationSetting(coinType: coinType)
     }
 
 }
