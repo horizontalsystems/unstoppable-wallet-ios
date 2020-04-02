@@ -44,25 +44,31 @@
 "restore.item_title" = "%@ 지갑";
 "restore.description" = "기존으 지갑을 복원시키려면 귀하께서는 개인 암호를 입력 하셔야 합니다.\n\n하나의 지갑을 복원 시키시면 다른 지갑들도 앱의 보안 설정에서 지갑 관리 섹션을 통해 복원 하실 수 있습니다.";
 "restore.words.description" = "개인 암호를 %@지갑에 입력해 주십시오";
-"restore.eos.description" = "개인 암호를 %@지갑에 입력해 주십시오.";
 "restore.validation_failed" = "틀린 암호 입니다";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
 // Coin Settings
 
-"coin_settings.enable_button" = "활성화";
-"coin_settings.derivation.title" = "주소 형식을 선택해 주세요";
+"coin_settings.derivation.title" = "%@ Address Format";
 "coin_settings.derivation.description_bip44" = "더 오래된 (1부터 시작)";
 "coin_settings.derivation.description_bip49" = "인기있는 (3부터 시작)";
 "coin_settings.derivation.description_bip84" = "최신 (bc1부터 시작)";
 "coin_settings.derivation.description_create" = "이 설정은 지갑에서 비트코인 주소 형식을 통제 합니다. 확실하지 않는 경우에는 BIP49를 사용하시는 것을 추천해드립니다.";
 "coin_settings.derivation.description_restore" = "복원을 하려는 지갑에서 비트코인의 주소 형식을 선택해 주세요.";
-"coin_settings.sync_mode.title" = "매개 변수 복원";
+"coin_settings.title" = "Blockchain Settings";
+"coin_settings.sync_mode.title" = "Restore Source";
 "coin_settings.sync_mode.fast.description" = "0-2 시간, 권장";
-"coin_settings.sync_mode.slow.description" = "1-12 시간";
-"coin_settings.sync_mode.description" = "언스탑퍼블이 귀하의 잔액 및 거래 내역을 다운로드 하는데 사용하는 소스를 선택해 주세요.\n\n수평 시스템 %@ API:";
-
+"coin_settings.sync_mode.slow.description" = "1-24 hours";
+"coin_settings.sync_mode.description" = "API sources links:\nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg";
+"sync_mode.from_blockchain" = "From Blockchain";
+"blockchain_settings.change_alert.title" = "Address Format";
+"blockchain_settings.change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin blockchain. Your current Bitcoin transactions will no longer be visible. Changing it back to previous setting will bring everything back after the app resyncs with blockchain.";
+"blockchain_settings.change_alert.action_button_text" = "Change to %@";
+"blockchain_settings.sync_mode_change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin, Bitcoin Cash and Dash blockchains, if you have enabled any of these tokens. Your balance or transactions won\'t be affected.\n\nWe recommend not to change this setting if not sure what it does.";
+"blockchain_settings.sync_mode.blockchain" = "Blockchain";
+"blockchain_settings.sync_mode.api" = "API";
+"blockchain_settings.title" = "Address Format";
 // Backup
 
 "backup.close" = "가까운, 닫힌";
@@ -288,7 +294,7 @@
 // Settings -> Security
 
 "settings_security.title" = "보안 센터";
-"settings_security.manage_accounts" = "지갑 관리하기";
+"settings_security.blockchain_settings" = "Blockchain Settings";
 "settings_security.passcode" = "비밀번호";
 "settings_security.change_pin" = "비밀번호 변경";
 "settings_security.touch_id" = "터치 아이디";
