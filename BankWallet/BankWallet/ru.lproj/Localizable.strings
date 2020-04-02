@@ -44,25 +44,31 @@
 "restore.item_title" = "%@ Кошелек";
 "restore.description" = "Чтобы восстановить существующий кошелек вам нужно ввести приватный ключ для этого кошелька.\n\nКак только вы восстановите один кошелек, вы сможете восстановить больше кошельков, перейдя в раздел \"Управление Кошельками\" в настройках приложения.";
 "restore.words.description" = "Введите приватный ключ для кошелька %@";
-"restore.eos.description" = "Введите приватный ключ для %@ кошелька.";
 "restore.validation_failed" = "Неверный Ключ";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
 // Coin Settings
 
-"coin_settings.enable_button" = "Активировать";
-"coin_settings.derivation.title" = "Выберите формат адреса";
+"coin_settings.derivation.title" = "%@ Address Format";
 "coin_settings.derivation.description_bip44" = "Старые (начинается с 1...)";
 "coin_settings.derivation.description_bip49" = "Популярные (начинается с 3...)";
 "coin_settings.derivation.description_bip84" = "Новый (начинается с bc1...)";
 "coin_settings.derivation.description_create" = "Этот параметр определяет формат адреса Bitcoin кошелька. Мы рекомендуем использовать BIP49.";
 "coin_settings.derivation.description_restore" = "Выберите формат адреса для Bitcoin кошелька, который вы пытаетесь восстановить.";
-"coin_settings.sync_mode.title" = "Опции Восстановления";
+"coin_settings.title" = "Blockchain Settings";
+"coin_settings.sync_mode.title" = "Restore Source";
 "coin_settings.sync_mode.fast.description" = "0-2 ч, Рекомендуется";
-"coin_settings.sync_mode.slow.description" = "1-12 часов";
-"coin_settings.sync_mode.description" = "Выберите, какой источник нужно использовать для загрузки вашего баланса и транзакций.\n \nHorizontal Systems %@ API:";
-
+"coin_settings.sync_mode.slow.description" = "1-24 hours";
+"coin_settings.sync_mode.description" = "API sources links:\nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg";
+"sync_mode.from_blockchain" = "From Blockchain";
+"blockchain_settings.change_alert.title" = "Address Format";
+"blockchain_settings.change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin blockchain. Your current Bitcoin transactions will no longer be visible. Changing it back to previous setting will bring everything back after the app resyncs with blockchain.";
+"blockchain_settings.change_alert.action_button_text" = "Change to %@";
+"blockchain_settings.sync_mode_change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin, Bitcoin Cash and Dash blockchains, if you have enabled any of these tokens. Your balance or transactions won\'t be affected.\n\nWe recommend not to change this setting if not sure what it does.";
+"blockchain_settings.sync_mode.blockchain" = "Blockchain";
+"blockchain_settings.sync_mode.api" = "API";
+"blockchain_settings.title" = "Address Format";
 // Backup
 
 "backup.close" = "Закрыть";
@@ -288,7 +294,7 @@
 // Settings -> Security
 
 "settings_security.title" = "Безопасность";
-"settings_security.manage_accounts" = "Управление Кошельками";
+"settings_security.blockchain_settings" = "Blockchain Settings";
 "settings_security.passcode" = "Код Доступа";
 "settings_security.change_pin" = "Изменить Код";
 "settings_security.touch_id" = "Touch ID";
