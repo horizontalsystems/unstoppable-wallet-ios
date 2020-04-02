@@ -44,25 +44,31 @@
 "restore.item_title" = "%@ Monedero";
 "restore.description" = "Para restaurar el monedero existente, usted necesita ingresar la clave privada para ese monedero.\n\nUna vez que restaure un monedero usted podrá restaurar otros monederos al acceder a la sección Gestionar Monederos en los ajustes de Seguridad de la aplicación.";
 "restore.words.description" = "Introduzca su clave privada para la cartera %@ que consta de %@ palabras. Las palabras deben ser introducidas en orden correcto y separadas por espacios.";
-"restore.eos.description" = "Introduzca su clave privada para el monedero %@.";
 "restore.validation_failed" = "Clave incorrecta";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key\n";
 
 // Coin Settings
 
-"coin_settings.enable_button" = "Habilitar";
-"coin_settings.derivation.title" = "Elija un formato de dirección";
+"coin_settings.derivation.title" = "%@ Address Format";
 "coin_settings.derivation.description_bip44" = "Más antiguo (comenzar con 1...)";
 "coin_settings.derivation.description_bip49" = "Popular (comenzar con 3...)";
 "coin_settings.derivation.description_bip84" = "Más nuevo (comenzar con bc1...)";
 "coin_settings.derivation.description_create" = "Esta configuración controla el formato de la dirección para este monedero de Bitcoin. Recomendamos usar BIP49 si no está seguro.";
 "coin_settings.derivation.description_restore" = "Seleccione el formato de dirección para el Bitcoin en el monedero que intenta restaurar.";
-"coin_settings.sync_mode.title" = "Restaurar los parámetros";
+"coin_settings.title" = "Blockchain Settings";
+"coin_settings.sync_mode.title" = "Restore Source";
 "coin_settings.sync_mode.fast.description" = "0-2 horas, Recomendado";
-"coin_settings.sync_mode.slow.description" = "1-12 horas";
-"coin_settings.sync_mode.description" = "Selecciones la fuente que Unstoppable debe usar para descargar su saldo y transacciones.\n\nSistemas horizontales %@ API:";
-
+"coin_settings.sync_mode.slow.description" = "1-24 hours";
+"coin_settings.sync_mode.description" = "API sources links:\nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg";
+"sync_mode.from_blockchain" = "From Blockchain";
+"blockchain_settings.change_alert.title" = "Address Format";
+"blockchain_settings.change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin blockchain. Your current Bitcoin transactions will no longer be visible. Changing it back to previous setting will bring everything back after the app resyncs with blockchain.";
+"blockchain_settings.change_alert.action_button_text" = "Change to %@";
+"blockchain_settings.sync_mode_change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin, Bitcoin Cash and Dash blockchains, if you have enabled any of these tokens. Your balance or transactions won\'t be affected.\n\nWe recommend not to change this setting if not sure what it does.";
+"blockchain_settings.sync_mode.blockchain" = "Blockchain";
+"blockchain_settings.sync_mode.api" = "API";
+"blockchain_settings.title" = "Address Format";
 // Backup
 
 "backup.close" = "Cerrar";
@@ -288,7 +294,7 @@
 // Settings -> Security
 
 "settings_security.title" = "Centro de seguridad";
-"settings_security.manage_accounts" = "Gestionar Monederos";
+"settings_security.blockchain_settings" = "Blockchain Settings";
 "settings_security.passcode" = "Código de acceso";
 "settings_security.change_pin" = "Editar el código ";
 "settings_security.touch_id" = "Identificación táctil";
