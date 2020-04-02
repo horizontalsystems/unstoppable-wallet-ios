@@ -46,6 +46,12 @@ class WelcomeScreenViewController: UIViewController {
             maker.height.equalToSuperview().dividedBy(2)
         }
 
+        let circleImageView = UIImageView(image: UIImage(named: "Intro - Circle"))
+        imageWrapperView.addSubview(circleImageView)
+        circleImageView.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
