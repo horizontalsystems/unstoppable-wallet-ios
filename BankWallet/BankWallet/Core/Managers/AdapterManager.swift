@@ -99,4 +99,12 @@ extension AdapterManager: IAdapterManager {
         binanceKitManager.refresh()
     }
 
+    func refreshAdapters(for wallets: [Wallet]) {
+        queue.async {
+            wallets.forEach { self.adapters[$0] = nil }
+        }
+
+        initAdapters(wallets: wallets)
+    }
+
 }
