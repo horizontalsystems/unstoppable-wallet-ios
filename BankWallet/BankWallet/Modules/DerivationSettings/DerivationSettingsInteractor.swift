@@ -2,11 +2,13 @@ class DerivationSettingsInteractor {
     private let derivationSettingsManager: IDerivationSettingsManager
     private let walletManager: IWalletManager
     private let appConfigProvider: IAppConfigProvider
+    private let adapterManager: IAdapterManager
 
-    init(derivationSettingsManager: IDerivationSettingsManager, walletManager: IWalletManager, appConfigProvider: IAppConfigProvider) {
+    init(derivationSettingsManager: IDerivationSettingsManager, walletManager: IWalletManager, appConfigProvider: IAppConfigProvider, adapterManager: IAdapterManager) {
         self.derivationSettingsManager = derivationSettingsManager
         self.walletManager = walletManager
         self.appConfigProvider = appConfigProvider
+        self.adapterManager = adapterManager
     }
 
 }
@@ -30,7 +32,7 @@ extension DerivationSettingsInteractor: IDerivationSettingsInteractor {
     }
 
     func update(wallets: [Wallet]) {
-        walletManager.save(wallets: wallets)
+        adapterManager.refreshAdapters(for: wallets)
     }
 
 }

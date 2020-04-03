@@ -36,7 +36,7 @@ extension DerivationSettingsRouter {
 
     static func module(proceedMode: RestoreRouter.ProceedMode, canSave: Bool, activeCoins: [Coin], showOnlyCoin: Coin? = nil, delegate: IDerivationSettingsDelegate? = nil) -> UIViewController {
         let router = DerivationSettingsRouter(delegate: delegate)
-        let interactor = DerivationSettingsInteractor(derivationSettingsManager: App.shared.derivationSettingsManager, walletManager: App.shared.walletManager, appConfigProvider: App.shared.appConfigProvider)
+        let interactor = DerivationSettingsInteractor(derivationSettingsManager: App.shared.derivationSettingsManager, walletManager: App.shared.walletManager, appConfigProvider: App.shared.appConfigProvider, adapterManager: App.shared.adapterManager)
         let presenter = DerivationSettingsPresenter(proceedMode: proceedMode, router: router, interactor: interactor, selectedCoins: activeCoins, showOnlyCoin: showOnlyCoin, canSave: canSave)
         let viewController = DerivationSettingsViewController(delegate: presenter)
 

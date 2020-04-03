@@ -40,6 +40,7 @@ protocol IAdapterManager: class {
     func transactionsAdapter(for wallet: Wallet) -> ITransactionsAdapter?
     func depositAdapter(for wallet: Wallet) -> IDepositAdapter?
     func refresh()
+    func refreshAdapters(for wallets: [Wallet])
 }
 
 protocol IAdapterFactory {
