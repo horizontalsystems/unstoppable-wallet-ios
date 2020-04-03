@@ -247,8 +247,6 @@ protocol IAppConfigProvider {
 
     var featuredCoins: [Coin] { get }
     var coins: [Coin] { get }
-
-    var defaultSettings: [BlockchainSetting] { get }
 }
 
 protocol IFullTransactionInfoProvider {
@@ -303,6 +301,9 @@ protocol IBlockchainSettingsRecordStorage {
 protocol IBlockchainSettingsStorage {
     func derivationSetting(coinType: CoinType) throws -> DerivationSetting?
     func save(derivationSettings: [DerivationSetting])
+
+    func initialSyncSetting(coinType: CoinType) throws -> InitialSyncSetting?
+    func save(initialSyncSettings: [InitialSyncSetting])
 }
 
 protocol IBackgroundPriceAlertManager {
