@@ -59,16 +59,16 @@
 "coin_settings.title" = "Настройки Блокчейна";
 "coin_settings.sync_mode.title" = "Опции восстановления";
 "coin_settings.sync_mode.fast.description" = "0-2 ч, Рекомендуется";
-"coin_settings.sync_mode.slow.description" = "1-24 hours";
-"coin_settings.sync_mode.description" = "API sources links:\nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg";
+"coin_settings.sync_mode.slow.description" = "1-24 ч";
+"coin_settings.sync_mode.description" = "Ссылки на источники API: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
 "sync_mode.from_blockchain" = "From Blockchain";
-"blockchain_settings.change_alert.title" = "Address Format";
+"blockchain_settings.change_alert.title" = "Формат Адреса";
 "blockchain_settings.change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin blockchain. Your current Bitcoin transactions will no longer be visible. Changing it back to previous setting will bring everything back after the app resyncs with blockchain.";
-"blockchain_settings.change_alert.action_button_text" = "Change to %@";
+"blockchain_settings.change_alert.action_button_text" = "Изменить на %@";
 "blockchain_settings.sync_mode_change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin, Bitcoin Cash and Dash blockchains, if you have enabled any of these tokens. Your balance or transactions won\'t be affected.\n\nWe recommend not to change this setting if not sure what it does.";
-"blockchain_settings.sync_mode.blockchain" = "Blockchain";
+"blockchain_settings.sync_mode.blockchain" = "Блокчейн";
 "blockchain_settings.sync_mode.api" = "API";
-"blockchain_settings.title" = "Address Format";
+"blockchain_settings.title" = "Формат Адреса";
 // Backup
 
 "backup.close" = "Закрыть";
@@ -294,7 +294,7 @@
 // Settings -> Security
 
 "settings_security.title" = "Безопасность";
-"settings_security.blockchain_settings" = "Blockchain Settings";
+"settings_security.blockchain_settings" = "Настройки Блокчейна";
 "settings_security.passcode" = "Код Доступа";
 "settings_security.change_pin" = "Изменить Код";
 "settings_security.touch_id" = "Touch ID";
@@ -417,11 +417,11 @@
 
 // Intro
 
-"intro.skip" = "Skip";
-"intro.next" = "Next";
-"intro.independence.title" = "Independence";
-"intro.independence.description" = "Keep crypto assets safe, unconfiscatable and accessible at all times";
-"intro.knowledge.title" = "Knowledge";
-"intro.knowledge.description" = "Become informed and discover growing blockchain projects in early stages";
-"intro.privacy.title" = "Privacy";
+"intro.skip" = "Пропустить";
+"intro.next" = "Далее";
+"intro.independence.title" = "Независимость";
+"intro.independence.description" = "Надежное хранение, невозможно конфисковать, всегда под вашим контролем.";
+"intro.knowledge.title" = "Знания";
+"intro.knowledge.description" = "Узнай о новых блокчейн проектах на ранних стадиях. ";
+"intro.privacy.title" = "Приватность";
 "intro.privacy.description" = "Stay incognito and under the radar while growing your wealth";
