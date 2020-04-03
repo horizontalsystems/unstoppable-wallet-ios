@@ -138,13 +138,4 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "WTC",       title: "Waltonchain",           code: "WTC",     decimal: 18, type: CoinType(erc20Address: "0xb7cB1C96dB6B22b0D3d9536E0108d062BD488F74")),
     ]
 
-    let defaultSettings: [BlockchainSetting] = {
-        [
-            BlockchainSetting(coinType: .bitcoin, derivation: .bip49, syncMode: .fast),
-            BlockchainSetting(coinType: .bitcoinCash, derivation: nil, syncMode: .fast),
-            BlockchainSetting(coinType: .dash, derivation: nil, syncMode: .fast),
-            BlockchainSetting(coinType: .litecoin, derivation: .bip49, syncMode: .fast),
-        ]
-    }()
-
 }

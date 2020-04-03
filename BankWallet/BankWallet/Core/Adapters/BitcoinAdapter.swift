@@ -5,7 +5,7 @@ import RxSwift
 class BitcoinAdapter: BitcoinBaseAdapter {
     private let bitcoinKit: BitcoinKit
 
-    init(wallet: Wallet, settings: BlockchainSetting?, derivation: MnemonicDerivation?, testMode: Bool) throws {
+    init(wallet: Wallet, syncMode: SyncMode?, derivation: MnemonicDerivation?, testMode: Bool) throws {
         guard case let .mnemonic(words, _) = wallet.account.type else {
             throw AdapterError.unsupportedAccount
         }
@@ -14,7 +14,7 @@ class BitcoinAdapter: BitcoinBaseAdapter {
             throw AdapterError.wrongParameters
         }
 
-        guard let walletSyncMode = settings?.syncMode else {
+        guard let walletSyncMode = syncMode else {
             throw AdapterError.wrongParameters
         }
 

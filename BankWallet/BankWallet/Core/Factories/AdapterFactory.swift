@@ -1,33 +1,35 @@
+import BitcoinCore
+
 class AdapterFactory: IAdapterFactory {
     private let appConfigProvider: IAppConfigProvider
     private let ethereumKitManager: EthereumKitManager
     private let eosKitManager: EosKitManager
     private let binanceKitManager: BinanceKitManager
-    private let blockchainSettingsManager: IBlockchainSettingsManager
+    private let initialSyncSettingsManager: IInitialSyncSettingsManager
     private let derivationSettingsManager: IDerivationSettingsManager
 
-    init(appConfigProvider: IAppConfigProvider, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager, blockchainSettingsManager: IBlockchainSettingsManager, derivationSettingsManager: IDerivationSettingsManager) {
+    init(appConfigProvider: IAppConfigProvider, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager, initialSyncSettingsManager: IInitialSyncSettingsManager, derivationSettingsManager: IDerivationSettingsManager) {
         self.appConfigProvider = appConfigProvider
         self.ethereumKitManager = ethereumKitManager
         self.eosKitManager = eosKitManager
         self.binanceKitManager = binanceKitManager
-        self.blockchainSettingsManager = blockchainSettingsManager
+        self.initialSyncSettingsManager = initialSyncSettingsManager
         self.derivationSettingsManager = derivationSettingsManager
     }
 
     func adapter(wallet: Wallet) -> IAdapter? {
-        let settings = blockchainSettingsManager.settings(coinType: wallet.coin.type)
         let derivation = (try? derivationSettingsManager.derivationSetting(coinType: wallet.coin.type))?.derivation
+        let syncMode = (try? initialSyncSettingsManager.initialSyncSetting(coinType: wallet.coin.type))?.syncMode
 
         switch wallet.coin.type {
         case .bitcoin:
-            return try? BitcoinAdapter(wallet: wallet, settings: settings, derivation: derivation, testMode: appConfigProvider.testMode)
+            return try? BitcoinAdapter(wallet: wallet, syncMode: syncMode, derivation: derivation, testMode: appConfigProvider.testMode)
         case .litecoin:
-            return try? LitecoinAdapter(wallet: wallet, settings: settings, derivation: derivation, testMode: appConfigProvider.testMode)
+            return try? LitecoinAdapter(wallet: wallet, syncMode: syncMode, derivation: derivation, testMode: appConfigProvider.testMode)
         case .bitcoinCash:
-            return try? BitcoinCashAdapter(wallet: wallet, settings: settings, testMode: appConfigProvider.testMode)
+            return try? BitcoinCashAdapter(wallet: wallet, syncMode: syncMode, testMode: appConfigProvider.testMode)
         case .dash:
-            return try? DashAdapter(wallet: wallet, settings: settings, testMode: appConfigProvider.testMode)
+            return try? DashAdapter(wallet: wallet, syncMode: syncMode, testMode: appConfigProvider.testMode)
         case .ethereum:
             if let ethereumKit = try? ethereumKitManager.ethereumKit(account: wallet.account) {
                 return EthereumAdapter(ethereumKit: ethereumKit)
