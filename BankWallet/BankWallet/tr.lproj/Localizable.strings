@@ -50,25 +50,25 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title" = "%@ Address Format";
+"coin_settings.derivation.title" = "%@ Adres Formatı";
 "coin_settings.derivation.description_bip44" = "Eski (1... ile başlar)";
 "coin_settings.derivation.description_bip49" = "Popüler (3... ile başlar)";
 "coin_settings.derivation.description_bip84" = "Yeni (bc1... ile başlar)";
 "coin_settings.derivation.description_create" = "Bu ayar, bu cüzdandaki Bitcoin adres formatını kontrol eder. Emin değilseniz BIP49 kullanmanızı öneririz.";
 "coin_settings.derivation.description_restore" = "Geri yüklemeye çalıştığınız cüzdandaki Bitcoin için adres formatını seçin.";
-"coin_settings.title" = "Blockchain Settings";
-"coin_settings.sync_mode.title" = "Restore Source";
+"coin_settings.title" = "Blockchain Ayarları";
+"coin_settings.sync_mode.title" = "Geri Yükleme Kaynağı";
 "coin_settings.sync_mode.fast.description" = "0-2 saat, Tavsiye edilen";
-"coin_settings.sync_mode.slow.description" = "1-24 hours";
-"coin_settings.sync_mode.description" = "API sources links:\nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg";
+"coin_settings.sync_mode.slow.description" = "1-24 saat";
+"coin_settings.sync_mode.description" = "API kaynak linkleri: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg\n";
 "sync_mode.from_blockchain" = "From Blockchain";
-"blockchain_settings.change_alert.title" = "Address Format";
-"blockchain_settings.change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin blockchain. Your current Bitcoin transactions will no longer be visible. Changing it back to previous setting will bring everything back after the app resyncs with blockchain.";
-"blockchain_settings.change_alert.action_button_text" = "Change to %@";
-"blockchain_settings.sync_mode_change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin, Bitcoin Cash and Dash blockchains, if you have enabled any of these tokens. Your balance or transactions won\'t be affected.\n\nWe recommend not to change this setting if not sure what it does.";
+"blockchain_settings.change_alert.title" = "Adres Formatı";
+"blockchain_settings.change_alert.content" = "Bu işlem, Unstoppable uygulaması Bitcoin blockchain ile kendini yeniden senkronize etmek için gerektirir. Mevcut Bitcoin işlemleriniz artık görünmeyecek. Önceki ayara geri döndürmek, uygulama blockchain ile yeniden senkronize edildikten sonra her şeyi geri getirir.";
+"blockchain_settings.change_alert.action_button_text" = "%@'e değiştir";
+"blockchain_settings.sync_mode_change_alert.content" = "Bu işlem, Unstoppable uygulaması Bitcoin, Bitcoin Cash and Dash blockchain ile kendini yeniden senkronize etmek için gerektirir, bu belirteçlerden herhangi birini etkinleştirdiyseniz. Bakiyeniz veya işlemleriniz etkilenmeyecektir.\n\nNe yaptığından emin değilseniz bu ayarı değiştirmemenizi öneririz.";
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
 "blockchain_settings.sync_mode.api" = "API";
-"blockchain_settings.title" = "Address Format";
+"blockchain_settings.title" = "Adres Formatı";
 // Backup
 
 "backup.close" = "Kapat";
@@ -294,7 +294,7 @@
 // Settings -> Security
 
 "settings_security.title" = "Güvenlik Merkezi";
-"settings_security.blockchain_settings" = "Blockchain Settings";
+"settings_security.blockchain_settings" = "Blockchain Ayarları";
 "settings_security.passcode" = "Kod";
 "settings_security.change_pin" = "Kod Değiştir";
 "settings_security.touch_id" = "Touch ID";
@@ -417,11 +417,11 @@
 
 // Intro
 
-"intro.skip" = "Skip";
-"intro.next" = "Next";
-"intro.independence.title" = "Independence";
-"intro.independence.description" = "Keep crypto assets safe, unconfiscatable and accessible at all times";
-"intro.knowledge.title" = "Knowledge";
-"intro.knowledge.description" = "Become informed and discover growing blockchain projects in early stages";
-"intro.privacy.title" = "Privacy";
-"intro.privacy.description" = "Stay incognito and under the radar while growing your wealth";
+"intro.skip" = "Atla";
+"intro.next" = "İleri";
+"intro.independence.title" = "Bağımsızlık";
+"intro.independence.description" = "Kripto varlıklarını her zaman güvende, el koyulamaz ve erişilebilir tutun";
+"intro.knowledge.title" = "Bilgi";
+"intro.knowledge.description" = "Haberdar olun ve erken aşamalarda büyüyen blockchain projelerini keşfedin";
+"intro.privacy.title" = "Gizlilik";
+"intro.privacy.description" = "Servetinizi büyütürken gizli ve radarın altında kalın";
