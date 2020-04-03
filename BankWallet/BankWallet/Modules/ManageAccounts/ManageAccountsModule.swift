@@ -12,12 +12,14 @@ protocol IManageAccountsViewDelegate {
     func didTapBackup(index: Int)
     func didTapCreate(index: Int)
     func didTapRestore(index: Int)
+    func didTapSettings(index: Int)
 
     func didRequestBackup()
 }
 
 protocol IManageAccountsInteractor {
     var predefinedAccountTypes: [PredefinedAccountType] { get }
+    var wallets: [Wallet] { get }
     func account(predefinedAccountType: PredefinedAccountType) -> Account?
 }
 
@@ -30,7 +32,7 @@ protocol IManageAccountsRouter {
     func showBackup(account: Account, predefinedAccountType: PredefinedAccountType)
     func showCreateWallet(predefinedAccountType: PredefinedAccountType)
     func showRestore(predefinedAccountType: PredefinedAccountType, delegate: ICredentialsCheckDelegate)
-//    func showSettings(coins: [Coin], delegate: IDerivationSettingsDelegate?)
+    func showSettings(coins: [Coin])
     func showRestoreCoins(predefinedAccountType: PredefinedAccountType, accountType: AccountType, delegate: IRestoreCoinsDelegate)
     func closeRestore()
 }
