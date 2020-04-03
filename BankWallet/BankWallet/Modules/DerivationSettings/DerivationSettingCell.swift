@@ -28,7 +28,7 @@ class DerivationSettingCell: ThemeCell {
     func bind(title: String, subtitle: String, selected: Bool, enabled: Bool, last: Bool = false) {
         super.bind(last: last, active: enabled)
 
-        leftView.bind(title: title, subtitle: subtitle)
+        leftView.bind(title: title, subtitle: subtitle, active: enabled)
         rightView.bind(visible: selected)
     }
 

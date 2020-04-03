@@ -90,7 +90,7 @@ class ManageAccountsViewController: ThemeViewController {
         case .delete:
             delegate.didTapUnlink(index: index)
         case .settings:
-            print("not implemented")
+            delegate.didTapSettings(index: index)
         }
     }
 
