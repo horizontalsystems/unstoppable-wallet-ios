@@ -28,6 +28,11 @@ extension ManageAccountsRouter: IManageAccountsRouter {
         viewController?.present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 
+    func showSettings(coins: [Coin]) {
+        let module = DerivationSettingsRouter.module(proceedMode: .none, canSave: true, activeCoins: coins)
+        viewController?.navigationController?.pushViewController(module, animated: true)
+    }
+
     func close() {
         viewController?.dismiss(animated: true)
     }
@@ -45,11 +50,11 @@ extension ManageAccountsRouter: IManageAccountsRouter {
 extension ManageAccountsRouter {
 
     static func module() -> UIViewController {
-        let restoreSequenceFactory = RestoreSequenceManager(walletManager: App.shared.walletManager, derivationSettingsManager: App.shared.derivationSettingsManager, accountCreator: App.shared.accountCreator, accountManager: App.shared.accountManager)
+        let restoreSequenceManager = RestoreSequenceManager(walletManager: App.shared.walletManager, derivationSettingsManager: App.shared.derivationSettingsManager, accountCreator: App.shared.accountCreator, accountManager: App.shared.accountManager)
 
         let router = ManageAccountsRouter()
-        let interactor = ManageAccountsInteractor(predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager, accountManager: App.shared.accountManager, accountCreator: App.shared.accountCreator)
-        let presenter = ManageAccountsPresenter(interactor: interactor, router: router, restoreSequenceManager: restoreSequenceFactory)
+        let interactor = ManageAccountsInteractor(predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager, walletManager: App.shared.walletManager, accountManager: App.shared.accountManager, accountCreator: App.shared.accountCreator)
+        let presenter = ManageAccountsPresenter(interactor: interactor, router: router, restoreSequenceManager: restoreSequenceManager)
         let viewController = ManageAccountsViewController(delegate: presenter)
 
         interactor.delegate = presenter

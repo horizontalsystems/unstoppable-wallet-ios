@@ -1393,9 +1393,9 @@
 		D31C4771238BF18D008CB818 /* DerivationSettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C476A238BF18D008CB818 /* DerivationSettingsRouter.swift */; };
 		D31C4772238BF18D008CB818 /* DerivationSettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C476A238BF18D008CB818 /* DerivationSettingsRouter.swift */; };
 		D31C4773238BF18D008CB818 /* DerivationSettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C476A238BF18D008CB818 /* DerivationSettingsRouter.swift */; };
-		D31C4774238BF18D008CB818 /* BlockchainSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C476B238BF18D008CB818 /* BlockchainSettingsModule.swift */; };
-		D31C4775238BF18D008CB818 /* BlockchainSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C476B238BF18D008CB818 /* BlockchainSettingsModule.swift */; };
-		D31C4776238BF18D008CB818 /* BlockchainSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C476B238BF18D008CB818 /* BlockchainSettingsModule.swift */; };
+		D31C4774238BF18D008CB818 /* DerivationSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C476B238BF18D008CB818 /* DerivationSettingsModule.swift */; };
+		D31C4775238BF18D008CB818 /* DerivationSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C476B238BF18D008CB818 /* DerivationSettingsModule.swift */; };
+		D31C4776238BF18D008CB818 /* DerivationSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C476B238BF18D008CB818 /* DerivationSettingsModule.swift */; };
 		D31C4777238BF18D008CB818 /* DerivationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C476C238BF18D008CB818 /* DerivationSettingsViewController.swift */; };
 		D31C4778238BF18D008CB818 /* DerivationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C476C238BF18D008CB818 /* DerivationSettingsViewController.swift */; };
 		D31C4779238BF18D008CB818 /* DerivationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C476C238BF18D008CB818 /* DerivationSettingsViewController.swift */; };
@@ -2225,7 +2225,7 @@
 		D31C475B238BF175008CB818 /* PredefinedAccountType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredefinedAccountType.swift; sourceTree = "<group>"; };
 		D31C4769238BF18D008CB818 /* DerivationSettingsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DerivationSettingsPresenter.swift; sourceTree = "<group>"; };
 		D31C476A238BF18D008CB818 /* DerivationSettingsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DerivationSettingsRouter.swift; sourceTree = "<group>"; };
-		D31C476B238BF18D008CB818 /* BlockchainSettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockchainSettingsModule.swift; sourceTree = "<group>"; };
+		D31C476B238BF18D008CB818 /* DerivationSettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DerivationSettingsModule.swift; sourceTree = "<group>"; };
 		D31C476C238BF18D008CB818 /* DerivationSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DerivationSettingsViewController.swift; sourceTree = "<group>"; };
 		D31C476D238BF18D008CB818 /* DerivationSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DerivationSettingCell.swift; sourceTree = "<group>"; };
 		D31C477D238BF1E7008CB818 /* BlockchainSettingsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockchainSettingsManager.swift; sourceTree = "<group>"; };
@@ -3707,7 +3707,7 @@
 			isa = PBXGroup;
 			children = (
 				1A564056015A8D58AC34A82D /* Models */,
-				D31C476B238BF18D008CB818 /* BlockchainSettingsModule.swift */,
+				D31C476B238BF18D008CB818 /* DerivationSettingsModule.swift */,
 				D31C476A238BF18D008CB818 /* DerivationSettingsRouter.swift */,
 				1A564FE6E8E4112D72E7A4D0 /* DerivationSettingsInteractor.swift */,
 				D31C4769238BF18D008CB818 /* DerivationSettingsPresenter.swift */,
@@ -4327,7 +4327,7 @@
 				11B359733B304A1FB21E88AC /* AdapterFactory.swift in Sources */,
 				11B35F318E009D7BCCCE1E1B /* AdapterManager.swift in Sources */,
 				11B354D394895E1FAFB2F116 /* NetworkManager.swift in Sources */,
-				D31C4774238BF18D008CB818 /* BlockchainSettingsModule.swift in Sources */,
+				D31C4774238BF18D008CB818 /* DerivationSettingsModule.swift in Sources */,
 				1A5645402EEF16D58349A8D2 /* TransactionRecordDataSource.swift in Sources */,
 				D31C4790238BF1F5008CB818 /* RestoreCoinsViewController.swift in Sources */,
 				11B35ECFA9C3E5FA6DE0646D /* ReachabilityManager.swift in Sources */,
@@ -4903,7 +4903,7 @@
 				11B353C550551A71D5AD3AAF /* NetworkManager.swift in Sources */,
 				1A564A306E13E30771D2E823 /* TransactionRecordDataSource.swift in Sources */,
 				11B35E63A1AA24A27A21C0C9 /* ReachabilityManager.swift in Sources */,
-				D31C4775238BF18D008CB818 /* BlockchainSettingsModule.swift in Sources */,
+				D31C4775238BF18D008CB818 /* DerivationSettingsModule.swift in Sources */,
 				11B354AD94C483A7D5E3DD1F /* ValueFormatter.swift in Sources */,
 				D31C4791238BF1F5008CB818 /* RestoreCoinsViewController.swift in Sources */,
 				11B35BCC6C00E857CE562F16 /* EthereumAdapter.swift in Sources */,
@@ -5430,7 +5430,7 @@
 				1A5641D57A7D6928C9D0984D /* TransactionRecordDataSource.swift in Sources */,
 				11B359E31258E14C2D0B3FC1 /* ReachabilityManager.swift in Sources */,
 				11B3541F6B5316F3B373D1EA /* ValueFormatter.swift in Sources */,
-				D31C4776238BF18D008CB818 /* BlockchainSettingsModule.swift in Sources */,
+				D31C4776238BF18D008CB818 /* DerivationSettingsModule.swift in Sources */,
 				D31C4792238BF1F5008CB818 /* RestoreCoinsViewController.swift in Sources */,
 				11B351C81028727569851233 /* EthereumAdapter.swift in Sources */,
 				11B35A801504D47FBE31CF40 /* PasteboardManager.swift in Sources */,

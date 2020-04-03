@@ -75,6 +75,16 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
         router.showRestore(predefinedAccountType: items[index].predefinedAccountType, delegate: self)
     }
 
+    func didTapSettings(index: Int) {
+        let item = items[index]
+
+        guard let account = item.account else {
+            return
+        }
+
+        router.showSettings(coins: interactor.wallets.filter { $0.account == account}.map { $0.coin })
+    }
+
     func didRequestBackup() {
         guard let item = currentItem, let account = item.account else {
             return

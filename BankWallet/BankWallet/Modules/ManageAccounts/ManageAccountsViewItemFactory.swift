@@ -9,6 +9,8 @@ class ManageAccountsViewItemFactory {
             topButtonState = !account.backedUp ? .backup : .show
         }
 
+        let middleButtonState: ManageAccountButtonState? = item.predefinedAccountType == .standard ? .settings : nil
+
         let bottomButtonState: ManageAccountButtonState
 
         if item.account != nil {
@@ -22,7 +24,7 @@ class ManageAccountsViewItemFactory {
                 coinCodes: item.predefinedAccountType.coinCodes,
                 highlighted: item.account != nil,
                 topButtonState: topButtonState,
-                middleButtonState: nil,
+                middleButtonState: middleButtonState,
                 bottomButtonState: bottomButtonState
         )
     }
