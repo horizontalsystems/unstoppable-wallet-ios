@@ -50,25 +50,25 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title" = "%@ Address Format";
+"coin_settings.derivation.title" = "%@ 주소 형식";
 "coin_settings.derivation.description_bip44" = "더 오래된 (1부터 시작)";
 "coin_settings.derivation.description_bip49" = "인기있는 (3부터 시작)";
 "coin_settings.derivation.description_bip84" = "최신 (bc1부터 시작)";
 "coin_settings.derivation.description_create" = "이 설정은 지갑에서 비트코인 주소 형식을 통제 합니다. 확실하지 않는 경우에는 BIP49를 사용하시는 것을 추천해드립니다.";
 "coin_settings.derivation.description_restore" = "복원을 하려는 지갑에서 비트코인의 주소 형식을 선택해 주세요.";
-"coin_settings.title" = "Blockchain Settings";
-"coin_settings.sync_mode.title" = "Restore Source";
+"coin_settings.title" = "블록 체인 설정";
+"coin_settings.sync_mode.title" = "매개 변수 복원";
 "coin_settings.sync_mode.fast.description" = "0-2 시간, 권장";
-"coin_settings.sync_mode.slow.description" = "1-24 hours";
-"coin_settings.sync_mode.description" = "API sources links:\nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg";
+"coin_settings.sync_mode.slow.description" = "1-24 시간";
+"coin_settings.sync_mode.description" = "API 출처 링크: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
 "sync_mode.from_blockchain" = "From Blockchain";
-"blockchain_settings.change_alert.title" = "Address Format";
-"blockchain_settings.change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin blockchain. Your current Bitcoin transactions will no longer be visible. Changing it back to previous setting will bring everything back after the app resyncs with blockchain.";
-"blockchain_settings.change_alert.action_button_text" = "Change to %@";
-"blockchain_settings.sync_mode_change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin, Bitcoin Cash and Dash blockchains, if you have enabled any of these tokens. Your balance or transactions won\'t be affected.\n\nWe recommend not to change this setting if not sure what it does.";
-"blockchain_settings.sync_mode.blockchain" = "Blockchain";
+"blockchain_settings.change_alert.title" = "주소 형식";
+"blockchain_settings.change_alert.content" = "이 작업은 언스타퍼블 앱이 비트코인 블록 체인과 다시 동기화 되어야 합니다. 현재 비트코인 거래는 더이상 보실 수 없습니다. 이전 설정으로 다시 변경하려면 앱이 블록 체인과 다시 동기화 된 후에 모든 것이 다시 원상복귀 됩니다.";
+"blockchain_settings.change_alert.action_button_text" = "%@으로 변경";
+"blockchain_settings.sync_mode_change_alert.content" = "이 작업은 귀하께서 이러한 토큰을 활성화 하신 경우 언스타퍼블 앱이 비트코인, 비트코인 Cash 및 Dash 블록 체인과 다시 동기화 되어야 합니다. 귀하의 잔액 또는 거래에는 영향을 미치지 않습니다.\n\n저희는 이 기능이 확실치 않을 경우 설정을 변경하지 않는 것을 권장합니다.";
+"blockchain_settings.sync_mode.blockchain" = "블록 체인";
 "blockchain_settings.sync_mode.api" = "API";
-"blockchain_settings.title" = "Address Format";
+"blockchain_settings.title" = "주소 형식";
 // Backup
 
 "backup.close" = "가까운, 닫힌";
@@ -294,7 +294,7 @@
 // Settings -> Security
 
 "settings_security.title" = "보안 센터";
-"settings_security.blockchain_settings" = "Blockchain Settings";
+"settings_security.blockchain_settings" = "블록 체인 설정";
 "settings_security.passcode" = "비밀번호";
 "settings_security.change_pin" = "비밀번호 변경";
 "settings_security.touch_id" = "터치 아이디";
@@ -417,11 +417,11 @@
 
 // Intro
 
-"intro.skip" = "Skip";
-"intro.next" = "Next";
-"intro.independence.title" = "Independence";
-"intro.independence.description" = "Keep crypto assets safe, unconfiscatable and accessible at all times";
-"intro.knowledge.title" = "Knowledge";
-"intro.knowledge.description" = "Become informed and discover growing blockchain projects in early stages";
-"intro.privacy.title" = "Privacy";
-"intro.privacy.description" = "Stay incognito and under the radar while growing your wealth";
+"intro.skip" = "건너뛰기";
+"intro.next" = "다음";
+"intro.independence.title" = "독립";
+"intro.independence.description" = "암호와 자산을 항상 안전하고, 압수당하지 않으며, 접근 가능한 상태로 유지하세요";
+"intro.knowledge.title" = "지식";
+"intro.knowledge.description" = "정보를 인지하시고 초기단계에서 성장하고 있는 블록체인 프로젝트를 발견하세요";
+"intro.privacy.title" = "개인정보";
+"intro.privacy.description" = "귀하의 재산을 늘리시는 동안 익명을 유지해주시고 눈에 띄이지 않게 하여 주세요";
