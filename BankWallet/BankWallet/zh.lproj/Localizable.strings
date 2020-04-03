@@ -50,25 +50,25 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title" = "%@ Address Format";
+"coin_settings.derivation.title" = "%@ 地址格式";
 "coin_settings.derivation.description_bip44" = "更旧（以1开头...）";
 "coin_settings.derivation.description_bip49" = "流行（以3开头...）";
 "coin_settings.derivation.description_bip84" = "最新（以bc1开头...）";
 "coin_settings.derivation.description_create" = "此设置控制着此钱包中比特币的地址格式。如果不确定，我们建议使用BIP49。";
 "coin_settings.derivation.description_restore" = "选择您尝试恢复的钱包中的比特币的地址格式。";
-"coin_settings.title" = "Blockchain Settings";
-"coin_settings.sync_mode.title" = "Restore Source";
+"coin_settings.title" = "区块链设置";
+"coin_settings.sync_mode.title" = "恢复参数";
 "coin_settings.sync_mode.fast.description" = "0 小时 (推荐)";
-"coin_settings.sync_mode.slow.description" = "1-24 hours";
-"coin_settings.sync_mode.description" = "API sources links:\nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg";
+"coin_settings.sync_mode.slow.description" = "1- 24 小时";
+"coin_settings.sync_mode.description" = "API 源链接： \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
 "sync_mode.from_blockchain" = "From Blockchain";
-"blockchain_settings.change_alert.title" = "Address Format";
-"blockchain_settings.change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin blockchain. Your current Bitcoin transactions will no longer be visible. Changing it back to previous setting will bring everything back after the app resyncs with blockchain.";
-"blockchain_settings.change_alert.action_button_text" = "Change to %@";
-"blockchain_settings.sync_mode_change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin, Bitcoin Cash and Dash blockchains, if you have enabled any of these tokens. Your balance or transactions won\'t be affected.\n\nWe recommend not to change this setting if not sure what it does.";
-"blockchain_settings.sync_mode.blockchain" = "Blockchain";
+"blockchain_settings.change_alert.title" = "地址格式";
+"blockchain_settings.change_alert.content" = "此操作需要使用Unstoppable应用以将其和比特币区块链重新同步。您目前的比特币交易将不再显示。将其更改回早前的设置将在应用和区块链重新同步后使一切得以恢复。";
+"blockchain_settings.change_alert.action_button_text" = "更改为%@";
+"blockchain_settings.sync_mode_change_alert.content" = "如果您已任何比特币、比特币现金和Dash，此操作需要使用Unstoppable应用以将其和这些代币的区块链重新同步。您的余额和交易将不受影响。\n\n我们建议建议在不确定的情况下不要更改此设置。";
+"blockchain_settings.sync_mode.blockchain" = "区块链";
 "blockchain_settings.sync_mode.api" = "API";
-"blockchain_settings.title" = "Address Format";
+"blockchain_settings.title" = "地址格式";
 // Backup
 
 "backup.close" = "关闭";
@@ -294,7 +294,7 @@
 // Settings -> Security
 
 "settings_security.title" = "安全中心";
-"settings_security.blockchain_settings" = "Blockchain Settings";
+"settings_security.blockchain_settings" = "区块链设置";
 "settings_security.passcode" = "密码";
 "settings_security.change_pin" = "编辑密码";
 "settings_security.touch_id" = "指纹识别";
@@ -417,11 +417,11 @@
 
 // Intro
 
-"intro.skip" = "Skip";
-"intro.next" = "Next";
-"intro.independence.title" = "Independence";
-"intro.independence.description" = "Keep crypto assets safe, unconfiscatable and accessible at all times";
-"intro.knowledge.title" = "Knowledge";
-"intro.knowledge.description" = "Become informed and discover growing blockchain projects in early stages";
-"intro.privacy.title" = "Privacy";
-"intro.privacy.description" = "Stay incognito and under the radar while growing your wealth";
+"intro.skip" = "跳过";
+"intro.next" = "继续";
+"intro.independence.title" = "独立性";
+"intro.independence.description" = "保持加密货币资产的安全、不可混淆和随时可访问。";
+"intro.knowledge.title" = "知识";
+"intro.knowledge.description" = "在早期阶段了解和探索不断发展的区块链项目。";
+"intro.privacy.title" = "隐私";
+"intro.privacy.description" = "在增长财富的同时保持隐身状态并避开追踪。";
