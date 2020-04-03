@@ -4,12 +4,12 @@ import RxSwift
 class BitcoinCashAdapter: BitcoinBaseAdapter {
     private let bitcoinCashKit: BitcoinCashKit
 
-    init(wallet: Wallet, settings: BlockchainSetting?, testMode: Bool) throws {
+    init(wallet: Wallet, syncMode: SyncMode?, testMode: Bool) throws {
         guard case let .mnemonic(words, _) = wallet.account.type else {
             throw AdapterError.unsupportedAccount
         }
 
-        guard let walletSyncMode = settings?.syncMode else {
+        guard let walletSyncMode = syncMode else {
             throw AdapterError.wrongParameters
         }
 
