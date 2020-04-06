@@ -50,7 +50,7 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title" = "%@ 주소 형식";
+"coin_settings.derivation.title" = "%@";
 "coin_settings.derivation.description_bip44" = "더 오래된 (1부터 시작)";
 "coin_settings.derivation.description_bip49" = "인기있는 (3부터 시작)";
 "coin_settings.derivation.description_bip84" = "최신 (bc1부터 시작)";
@@ -319,7 +319,7 @@
 "settings_manage_keys.show" = "표시";
 "settings_manage_keys.create" = "만들기";
 "settings_manage_keys.restore" = "복구";
-"settings_manage_keys.settings" = "고급 설정";
+"settings_manage_keys.settings" = "Address Format";
 "settings_manage_keys.delete.cant_delete" = "개인 암호가 휴대폰에서 지워질 수 있기 전에 귀하께서는 개인 암호를 백업 하셔야 합니다.";
 "settings_manage_keys.delete.title" = "지갑 삭제하기";
 "settings_manage_keys.delete.confirmation_remove" = "이 행동은 %@ 지갑을 장치에서 삭제합니다.";
