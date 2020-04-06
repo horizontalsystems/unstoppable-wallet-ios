@@ -52,7 +52,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 // Coin Settings
 
-"coin_settings.derivation.title" = "%@ Address Format";
+"coin_settings.derivation.title" = "%@";
 "coin_settings.derivation.description_bip44" = "Older (start with 1...)";
 "coin_settings.derivation.description_bip49" = "Popular (start with 3...)";
 "coin_settings.derivation.description_bip84" = "Newest (start with bc1...)";
@@ -330,7 +330,7 @@ bch.horizontalsystems.xyz/apg";
 "settings_manage_keys.show" = "Show";
 "settings_manage_keys.create" = "Create";
 "settings_manage_keys.restore" = "Restore";
-"settings_manage_keys.settings" = "Advanced Settings";
+"settings_manage_keys.settings" = "Address Format";
 "settings_manage_keys.delete.cant_delete" = "You need to backup the private key for this wallet before it can be deleted from this phone.";
 "settings_manage_keys.delete.title" = "Delete Wallet";
 "settings_manage_keys.delete.confirmation_remove" = "The action will delete the %@ Wallet from this device.";
