@@ -50,7 +50,7 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title" = "%@ Adres Formatı";
+"coin_settings.derivation.title" = "%@";
 "coin_settings.derivation.description_bip44" = "Eski (1... ile başlar)";
 "coin_settings.derivation.description_bip49" = "Popüler (3... ile başlar)";
 "coin_settings.derivation.description_bip84" = "Yeni (bc1... ile başlar)";
@@ -319,7 +319,7 @@
 "settings_manage_keys.show" = "Göster";
 "settings_manage_keys.create" = "Oluştur";
 "settings_manage_keys.restore" = "Geri Yükle";
-"settings_manage_keys.settings" = "Gelişmiş Ayarlar";
+"settings_manage_keys.settings" = "Address Format";
 "settings_manage_keys.delete.cant_delete" = "Bu cüzdanın özel anahtarını, bu telefondan silinmeden önce yedeklemeniz gerekir.";
 "settings_manage_keys.delete.title" = "Cüzdanı Sil";
 "settings_manage_keys.delete.confirmation_remove" = "Bu işlem %@ Cüzdanını bu cihazdan kaldıracak.";
