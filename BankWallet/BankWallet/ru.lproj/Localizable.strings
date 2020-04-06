@@ -50,7 +50,7 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title" = "%@ Формат Адреса";
+"coin_settings.derivation.title" = "%@";
 "coin_settings.derivation.description_bip44" = "Старые (начинается с 1...)";
 "coin_settings.derivation.description_bip49" = "Популярные (начинается с 3...)";
 "coin_settings.derivation.description_bip84" = "Новый (начинается с bc1...)";
@@ -319,7 +319,7 @@
 "settings_manage_keys.show" = "Показать";
 "settings_manage_keys.create" = "Создать";
 "settings_manage_keys.restore" = "Восстановить";
-"settings_manage_keys.settings" = "Дополнительные настройки";
+"settings_manage_keys.settings" = "Address Format";
 "settings_manage_keys.delete.cant_delete" = "Вам нужно сделать резервную копию приватного ключа для этого кошелька, прежде чем он будет удален с этого телефона.";
 "settings_manage_keys.delete.title" = "Удалить Кошелек";
 "settings_manage_keys.delete.confirmation_remove" = "Это действие удалит ваш %@ Кошелек с этого устройства.";
