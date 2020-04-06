@@ -50,7 +50,7 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title" = "%@ 地址格式";
+"coin_settings.derivation.title" = "%@";
 "coin_settings.derivation.description_bip44" = "更旧（以1开头...）";
 "coin_settings.derivation.description_bip49" = "流行（以3开头...）";
 "coin_settings.derivation.description_bip84" = "最新（以bc1开头...）";
@@ -319,7 +319,7 @@
 "settings_manage_keys.show" = "显示";
 "settings_manage_keys.create" = "创建";
 "settings_manage_keys.restore" = "恢复";
-"settings_manage_keys.settings" = "高级设置";
+"settings_manage_keys.settings" = "Address Format";
 "settings_manage_keys.delete.cant_delete" = "您应该在将此钱包的私钥从该手机删除之前先对其进行备份。";
 "settings_manage_keys.delete.title" = "删除钱包";
 "settings_manage_keys.delete.confirmation_remove" = "该操作将从此设备删除%@钱包。";
