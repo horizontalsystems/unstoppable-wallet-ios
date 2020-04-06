@@ -50,7 +50,7 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title" = "%@ Formato de Dirección";
+"coin_settings.derivation.title" = "%@";
 "coin_settings.derivation.description_bip44" = "Más antiguo (comenzar con 1...)";
 "coin_settings.derivation.description_bip49" = "Popular (comenzar con 3...)";
 "coin_settings.derivation.description_bip84" = "Más nuevo (comenzar con bc1...)";
@@ -319,7 +319,7 @@
 "settings_manage_keys.show" = "Mostrar";
 "settings_manage_keys.create" = "Crear";
 "settings_manage_keys.restore" = "Restaurar";
-"settings_manage_keys.settings" = "Configuración avanzada";
+"settings_manage_keys.settings" = "Address Format";
 "settings_manage_keys.delete.cant_delete" = "Necesita respaldar esta clave privada antes de que pueda eliminarla de este teléfono.";
 "settings_manage_keys.delete.title" = "Eliminar Monedero";
 "settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará los monederos %@ de este dispositivo.";
