@@ -50,7 +50,7 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title" = "%@ Format de l'adresse";
+"coin_settings.derivation.title" = "%@";
 "coin_settings.derivation.description_bip44" = "Plus ancient (commence par 1...)";
 "coin_settings.derivation.description_bip49" = "Populaire (commence par 3...)";
 "coin_settings.derivation.description_bip84" = "Plus récent (commence par bc1...)";
@@ -319,7 +319,7 @@
 "settings_manage_keys.show" = "Afficher";
 "settings_manage_keys.create" = "Créer";
 "settings_manage_keys.restore" = "Restaurer";
-"settings_manage_keys.settings" = "Configuration avancée";
+"settings_manage_keys.settings" = "Address Format";
 "settings_manage_keys.delete.cant_delete" = "Vous devez sauvegarder la clé privée avant de pouvoir la supprimer de ce téléphone.";
 "settings_manage_keys.delete.title" = "Supprimer le portefeuille";
 "settings_manage_keys.delete.confirmation_remove" = "Cette action supprimera le portefeuille %@ de cet appareil.";
