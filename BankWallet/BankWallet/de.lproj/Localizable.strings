@@ -50,7 +50,7 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title" = "%@ Adressformatierung";
+"coin_settings.derivation.title" = "%@";
 "coin_settings.derivation.description_bip44" = "Älter (beginnt mit 1 ...)";
 "coin_settings.derivation.description_bip49" = "Beliebt (beginnt mit 3 ...)";
 "coin_settings.derivation.description_bip84" = "Am neuesten (beginnt mit bc1 ...)";
@@ -319,7 +319,7 @@
 "settings_manage_keys.show" = "Anzeigen";
 "settings_manage_keys.create" = "Erstellen";
 "settings_manage_keys.restore" = "Wiederherstellen";
-"settings_manage_keys.settings" = "Erweiterte Einstellungen";
+"settings_manage_keys.settings" = "Address Format";
 "settings_manage_keys.delete.cant_delete" = "Sie müssen den Private Key für dieses Wallet sichern, bevor Sie es von diesem Telefon löschen können.";
 "settings_manage_keys.delete.title" = "Wallet löschen";
 "settings_manage_keys.delete.confirmation_remove" = "Damit wird das %@ Wallet von diesem Gerät gelöscht.";
