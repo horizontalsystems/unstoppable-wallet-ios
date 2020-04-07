@@ -8,6 +8,7 @@ class TransactionsInteractor {
     private var lastBlockHeightsDisposeBag = DisposeBag()
     private var ratesDisposeBag = DisposeBag()
     private var transactionRecordsDisposeBag = DisposeBag()
+    private let serialQueueScheduler = SerialDispatchQueueScheduler(qos: .utility)
 
     weak var delegate: ITransactionsInteractorDelegate?
 
@@ -47,7 +48,7 @@ class TransactionsInteractor {
                         .disposed(by: transactionRecordsDisposeBag)
 
                 adapter.stateUpdatedObservable
-                        .observeOn(SerialDispatchQueueScheduler(qos: .utility))
+                        .observeOn(serialQueueScheduler)
                         .subscribe(onNext: { [weak self] in
                             self?.delegate?.didUpdate(state: adapter.state, wallet: wallet)
                         })
