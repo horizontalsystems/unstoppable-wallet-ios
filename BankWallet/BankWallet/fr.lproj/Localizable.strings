@@ -61,7 +61,7 @@
 "coin_settings.sync_mode.fast.description" = "0 - 2 heures, recommandé";
 "coin_settings.sync_mode.slow.description" = "1-24 heures";
 "coin_settings.sync_mode.description" = "Liens vers les sources de l'API : \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
-"sync_mode.from_blockchain" = "From Blockchain";
+"sync_mode.from_blockchain" = "De la Blockchain";
 "blockchain_settings.change_alert.title" = "Format de l'adresse";
 "blockchain_settings.change_alert.content" = "Cette action nécessitera que l'application Unstoppable se resynchronise avec la blockchain Bitcoin. Vos transactions Bitcoin actuelles ne seront plus visibles. Si vous revenez aux paramètres précédents, tout reviendra à la normale après que l'application se sera resynchronisée avec la Blockchain.";
 "blockchain_settings.change_alert.action_button_text" = "Changer en %@";
@@ -135,7 +135,7 @@
 "send.tx_speed_low" = "Faible";
 "send.tx_speed_medium" = "Moyenne";
 "send.tx_speed_high" = "Élevée";
-"send.tx_speed_custom" = "Custom";
+"send.tx_speed_custom" = "Personnalisé";
 "send.tx_duration" = "Durée ";
 "send.duration.instant" = "Instantané";
 "send.duration.within" = "dans la limite de %@";
