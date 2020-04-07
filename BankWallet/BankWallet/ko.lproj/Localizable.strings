@@ -61,7 +61,7 @@
 "coin_settings.sync_mode.fast.description" = "0-2 시간, 권장";
 "coin_settings.sync_mode.slow.description" = "1-24 시간";
 "coin_settings.sync_mode.description" = "API 출처 링크: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
-"sync_mode.from_blockchain" = "From Blockchain";
+"sync_mode.from_blockchain" = "블록체인으로 부터";
 "blockchain_settings.change_alert.title" = "주소 형식";
 "blockchain_settings.change_alert.content" = "이 작업은 언스타퍼블 앱이 비트코인 블록 체인과 다시 동기화 되어야 합니다. 현재 비트코인 거래는 더이상 보실 수 없습니다. 이전 설정으로 다시 변경하려면 앱이 블록 체인과 다시 동기화 된 후에 모든 것이 다시 원상복귀 됩니다.";
 "blockchain_settings.change_alert.action_button_text" = "%@으로 변경";
@@ -135,7 +135,7 @@
 "send.tx_speed_low" = "낮음";
 "send.tx_speed_medium" = "보통";
 "send.tx_speed_high" = "높음";
-"send.tx_speed_custom" = "Custom";
+"send.tx_speed_custom" = "사용자 지정";
 "send.tx_duration" = "기간";
 "send.duration.instant" = "즉시";
 "send.duration.within" = "%@ 안에";
@@ -319,7 +319,7 @@
 "settings_manage_keys.show" = "표시";
 "settings_manage_keys.create" = "만들기";
 "settings_manage_keys.restore" = "복구";
-"settings_manage_keys.settings" = "Address Format";
+"settings_manage_keys.settings" = "주소 형식";
 "settings_manage_keys.delete.cant_delete" = "개인 암호가 휴대폰에서 지워질 수 있기 전에 귀하께서는 개인 암호를 백업 하셔야 합니다.";
 "settings_manage_keys.delete.title" = "지갑 삭제하기";
 "settings_manage_keys.delete.confirmation_remove" = "이 행동은 %@ 지갑을 장치에서 삭제합니다.";
