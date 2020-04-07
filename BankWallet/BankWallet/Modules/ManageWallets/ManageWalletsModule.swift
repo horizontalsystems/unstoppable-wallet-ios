@@ -1,5 +1,4 @@
 protocol IManageWalletsView: class {
-    func setCloseButton(visible: Bool)
     func set(featuredViewItems: [CoinToggleViewItem], viewItems: [CoinToggleViewItem])
 
     func showNoAccount(coin: Coin, predefinedAccountType: PredefinedAccountType)
@@ -9,7 +8,6 @@ protocol IManageWalletsView: class {
 
 protocol IManageWalletsViewDelegate {
     func onLoad()
-    func onAppear()
 
     func onEnable(viewItem: CoinToggleViewItem)
     func onDisable(viewItem: CoinToggleViewItem)
@@ -38,12 +36,14 @@ protocol IManageWalletsInteractor {
     func settings(coinType: CoinType) -> DerivationSetting?
 }
 
+protocol IManageWalletsInteractorDelegate: AnyObject {
+    func didUpdateAccounts()
+}
+
 protocol IManageWalletsRouter {
     func showSettings(coin: Coin, delegate: IDerivationSettingsDelegate)
-    func showRestore(predefinedAccountType: PredefinedAccountType, delegate: ICredentialsCheckDelegate)
+    func showRestore(predefinedAccountType: PredefinedAccountType)
     func close()
-    func closePresented()
-    func closePushed()
 }
 
 protocol IManageWalletsPresenterState {
@@ -74,15 +74,6 @@ enum CoinToggleViewItemState: CustomStringConvertible {
         case .toggleHidden: return "hidden"
         case .toggleVisible(let enabled): return "visible_\(enabled)"
         }
-    }
-
-}
-
-class ManageWalletsModule {
-
-    enum PresentationMode {
-        case presented
-        case pushed
     }
 
 }

@@ -5,19 +5,13 @@ class ManageAccountsPresenter {
     private let router: IManageAccountsRouter
 
     private var viewItemFactory = ManageAccountsViewItemFactory()
-    private let restoreSequenceManager: IRestoreSequenceManager
 
     private var items = [ManageAccountItem]()
     private var currentItem: ManageAccountItem?
 
-    private var predefinedAccountType: PredefinedAccountType?
-    private var accountType: AccountType?
-    private var coins: [Coin]?
-
-    init(interactor: IManageAccountsInteractor, router: IManageAccountsRouter, restoreSequenceManager: IRestoreSequenceManager) {
+    init(interactor: IManageAccountsInteractor, router: IManageAccountsRouter) {
         self.interactor = interactor
         self.router = router
-        self.restoreSequenceManager = restoreSequenceManager
     }
 
     private func buildItems() {
@@ -71,8 +65,7 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
     }
 
     func didTapRestore(index: Int) {
-        predefinedAccountType = items[index].predefinedAccountType
-        router.showRestore(predefinedAccountType: items[index].predefinedAccountType, delegate: self)
+        router.showRestore(predefinedAccountType: items[index].predefinedAccountType)
     }
 
     func didTapSettings(index: Int) {
@@ -100,30 +93,6 @@ extension ManageAccountsPresenter: IManageAccountsInteractorDelegate {
     func didUpdateAccounts() {
         buildItems()
         updateView()
-    }
-
-}
-
-extension ManageAccountsPresenter: ICredentialsCheckDelegate {
-
-    func didCheck(accountType: AccountType) {
-        self.accountType = accountType
-
-        restoreSequenceManager.onAccountCheck(accountType: accountType, predefinedAccountType: predefinedAccountType, coins: { [unowned self] accountType, predefinedAccountType in
-            router.showRestoreCoins(predefinedAccountType: predefinedAccountType, accountType: accountType, delegate: self)
-        })
-    }
-
-}
-
-extension ManageAccountsPresenter: IRestoreCoinsDelegate {
-
-    func onSelect(coins: [Coin], derivationSettings: [DerivationSetting]) {
-        self.coins = coins
-
-        restoreSequenceManager.onCoinsSelect(coins: coins, accountType: accountType, derivationSettings: derivationSettings, finish: {
-            router.closeRestore()
-        })
     }
 
 }

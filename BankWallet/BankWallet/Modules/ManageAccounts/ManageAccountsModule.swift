@@ -31,8 +31,6 @@ protocol IManageAccountsRouter {
     func showUnlink(account: Account, predefinedAccountType: PredefinedAccountType)
     func showBackup(account: Account, predefinedAccountType: PredefinedAccountType)
     func showCreateWallet(predefinedAccountType: PredefinedAccountType)
-    func showRestore(predefinedAccountType: PredefinedAccountType, delegate: ICredentialsCheckDelegate)
+    func showRestore(predefinedAccountType: PredefinedAccountType)
     func showSettings(coins: [Coin])
-    func showRestoreCoins(predefinedAccountType: PredefinedAccountType, accountType: AccountType, delegate: IRestoreCoinsDelegate)
-    func closeRestore()
 }

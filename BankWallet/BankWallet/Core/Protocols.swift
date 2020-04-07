@@ -509,3 +509,7 @@ protocol IRateAppManager {
     func onBecomeActive()
     func onResignActive()
 }
+
+protocol IRestoreManager {
+    func createAccount(accountType: AccountType, coins: [Coin])
+}

@@ -3,7 +3,6 @@ import ThemeKit
 
 class ManageAccountsRouter {
     weak var viewController: UIViewController?
-    weak var restoreController: UIViewController?
 }
 
 extension ManageAccountsRouter: IManageAccountsRouter {
@@ -22,9 +21,8 @@ extension ManageAccountsRouter: IManageAccountsRouter {
         viewController?.present(module, animated: true)
     }
 
-    func showRestore(predefinedAccountType: PredefinedAccountType, delegate: ICredentialsCheckDelegate) {
-        let module = RestoreRouter.module(predefinedAccountType: predefinedAccountType, mode: .presented, proceedMode: .next, delegate: delegate)
-        restoreController = module
+    func showRestore(predefinedAccountType: PredefinedAccountType) {
+        let module = RestoreRouter.module(predefinedAccountType: predefinedAccountType)
         viewController?.present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 
@@ -37,24 +35,14 @@ extension ManageAccountsRouter: IManageAccountsRouter {
         viewController?.dismiss(animated: true)
     }
 
-    func showRestoreCoins(predefinedAccountType: PredefinedAccountType, accountType: AccountType, delegate: IRestoreCoinsDelegate) {
-        restoreController?.navigationController?.pushViewController(RestoreCoinsRouter.module(predefinedAccountType: predefinedAccountType, accountType: accountType, delegate: delegate), animated: true)
-    }
-
-    func closeRestore() {
-        restoreController?.dismiss(animated: true)
-    }
-
 }
 
 extension ManageAccountsRouter {
 
     static func module() -> UIViewController {
-        let restoreSequenceManager = RestoreSequenceManager(walletManager: App.shared.walletManager, derivationSettingsManager: App.shared.derivationSettingsManager, accountCreator: App.shared.accountCreator, accountManager: App.shared.accountManager)
-
         let router = ManageAccountsRouter()
-        let interactor = ManageAccountsInteractor(predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager, walletManager: App.shared.walletManager, accountManager: App.shared.accountManager, accountCreator: App.shared.accountCreator)
-        let presenter = ManageAccountsPresenter(interactor: interactor, router: router, restoreSequenceManager: restoreSequenceManager)
+        let interactor = ManageAccountsInteractor(predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager, walletManager: App.shared.walletManager, accountManager: App.shared.accountManager)
+        let presenter = ManageAccountsPresenter(interactor: interactor, router: router)
         let viewController = ManageAccountsViewController(delegate: presenter)
 
         interactor.delegate = presenter
@@ -62,11 +50,6 @@ extension ManageAccountsRouter {
         router.viewController = viewController
 
         return viewController
-    }
-
-    enum PresentationMode {
-        case pushed
-        case presented
     }
 
 }

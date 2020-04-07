@@ -24,6 +24,10 @@ class RestoreEosViewController: ThemeViewController {
         title = "restore.enter_key".localized
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "button.back".localized, style: .plain, target: nil, action: nil)
 
+        if navigationController?.viewControllers.first == self {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(cancelDidTap))
+        }
+
         view.addSubview(accountNameField)
         accountNameField.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
@@ -84,20 +88,12 @@ class RestoreEosViewController: ThemeViewController {
 
 extension RestoreEosViewController: IRestoreEosView {
 
-    func showCancelButton() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(cancelDidTap))
-    }
-
     func showNextButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .plain, target: self, action: #selector(doneDidTap))
     }
 
     func showRestoreButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.restore".localized, style: .done, target: self, action: #selector(doneDidTap))
-    }
-
-    func showDoneButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(doneDidTap))
     }
 
     func set(account: String?) {

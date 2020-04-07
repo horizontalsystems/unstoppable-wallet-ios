@@ -7,12 +7,10 @@ class ManageAccountsInteractor {
 
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let walletManager: IWalletManager
-    private let accountCreator: IAccountCreator
 
-    init(predefinedAccountTypeManager: IPredefinedAccountTypeManager, walletManager: IWalletManager, accountManager: IAccountManager, accountCreator: IAccountCreator) {
+    init(predefinedAccountTypeManager: IPredefinedAccountTypeManager, walletManager: IWalletManager, accountManager: IAccountManager) {
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
         self.walletManager = walletManager
-        self.accountCreator = accountCreator
 
         accountManager.accountsObservable
                 .subscribeOn(MainScheduler.instance)

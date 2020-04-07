@@ -1,18 +1,14 @@
 class RestoreEosPresenter {
     weak var view: IRestoreEosView?
 
-    private let presentationMode: RestoreRouter.PresentationMode
-    private let proceedMode: RestoreRouter.ProceedMode
+    private let handler: IRestoreAccountTypeHandler
     private let interactor: IRestoreEosInteractor
-    private let router: IRestoreEosRouter
 
     private var state: RestoreEosPresenterState
 
-    init(presentationMode: RestoreRouter.PresentationMode, proceedMode: RestoreRouter.ProceedMode, interactor: IRestoreEosInteractor, router: IRestoreEosRouter, state: RestoreEosPresenterState) {
-        self.presentationMode = presentationMode
-        self.proceedMode = proceedMode
+    init(handler: IRestoreAccountTypeHandler, interactor: IRestoreEosInteractor, state: RestoreEosPresenterState) {
+        self.handler = handler
         self.interactor = interactor
-        self.router = router
         self.state = state
     }
 
@@ -27,7 +23,7 @@ class RestoreEosPresenter {
     }
 
     private func omitReturns(string: String) -> String {
-        return string.replacingOccurrences(of: "\n", with: " ")
+        string.replacingOccurrences(of: "\n", with: " ")
     }
 
 }
@@ -35,17 +31,10 @@ class RestoreEosPresenter {
 extension RestoreEosPresenter: IRestoreEosViewDelegate {
 
     func viewDidLoad() {
-        if presentationMode == .presented {
-            view?.showCancelButton()
-        }
-        switch proceedMode {
-        case .next:
+        if handler.selectCoins {
             view?.showNextButton()
-        case .restore:
+        } else {
             view?.showRestoreButton()
-        case .done:
-            view?.showDoneButton()
-        case .none: ()
         }
 
         let (account, activePrivateKey) = interactor.defaultCredentials
@@ -82,7 +71,7 @@ extension RestoreEosPresenter: IRestoreEosViewDelegate {
     }
 
     func didTapCancel() {
-        router.dismiss()
+        handler.handleCancel()
     }
 
     func didTapDone() {
@@ -95,7 +84,7 @@ extension RestoreEosPresenter: IRestoreEosViewDelegate {
 
             let accountType: AccountType = .eos(account: account, activePrivateKey: privateKey)
 
-            router.notifyRestored(accountType: accountType)
+            handler.handle(accountType: accountType)
         } catch {
             view?.show(error: error)
         }
