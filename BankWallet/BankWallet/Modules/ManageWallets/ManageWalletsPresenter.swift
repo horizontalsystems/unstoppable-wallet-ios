@@ -4,8 +4,6 @@ class ManageWalletsPresenter {
     private let interactor: IManageWalletsInteractor
     private let router: IManageWalletsRouter
 
-    private var coinToEnable: Coin?
-
     private var wallets = [Coin: Wallet]()
 
     init(interactor: IManageWalletsInteractor, router: IManageWalletsRouter) {
@@ -70,14 +68,11 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
             return
         }
 
-        createWallet(coin: coin)
-
-//        if account.origin == .restored, interactor.settings(coinType: coin.type) != nil {
-//            router.showSettings(coin: coin, delegate: self)
-//            coinToEnable = coin
-//        } else {
-//            createWallet(coin: coin)
-//        }
+        if account.origin == .restored, let setting = interactor.derivationSetting(coinType: coin.type) {
+            router.show(derivationSetting: setting, coin: coin, delegate: self)
+        } else {
+            createWallet(coin: coin)
+        }
     }
 
     func onDisable(viewItem: CoinToggleViewItem) {
@@ -123,17 +118,11 @@ extension ManageWalletsPresenter: IManageWalletsInteractorDelegate {
 
 }
 
-extension ManageWalletsPresenter: IDerivationSettingsDelegate {
+extension ManageWalletsPresenter: IDerivationSettingDelegate {
 
-    func onConfirm(settings: [DerivationSetting]) {
-//        guard let coin = coinToEnable else {
-//            return
-//        }
-//
-//        interactor.save(settings: settings)
-//        createWallet(coin: coin)
-//
-//        router.closePushed()
+    func onSelect(derivationSetting: DerivationSetting, coin: Coin) {
+        interactor.save(derivationSetting: derivationSetting)
+        createWallet(coin: coin)
     }
 
 }

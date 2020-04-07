@@ -21,8 +21,12 @@ extension RestoreCoinsInteractor: IRestoreCoinsInteractor {
         appConfigProvider.featuredCoins
     }
 
-    func settings(coinType: CoinType) -> DerivationSetting? {
-        try? derivationSettingsManager.derivationSetting(coinType: coinType)
+    func derivationSetting(coinType: CoinType) -> DerivationSetting? {
+        derivationSettingsManager.setting(coinType: coinType)
+    }
+
+    func save(derivationSetting: DerivationSetting) {
+        derivationSettingsManager.save(settings: [derivationSetting])
     }
 
     func save(accountType: AccountType, coins: [Coin]) {

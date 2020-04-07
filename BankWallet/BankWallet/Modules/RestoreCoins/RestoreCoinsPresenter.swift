@@ -7,7 +7,6 @@ class RestoreCoinsPresenter {
     private let router: IRestoreCoinsRouter
 
     private var enabledCoins = Set<Coin>()
-    private var derivationSettings = [CoinType: DerivationSetting]()
 
     init(predefinedAccountType: PredefinedAccountType, accountType: AccountType, interactor: IRestoreCoinsInteractor, router: IRestoreCoinsRouter) {
         self.predefinedAccountType = predefinedAccountType
@@ -42,10 +41,6 @@ class RestoreCoinsPresenter {
     private func enable(coin: Coin) {
         enabledCoins.insert(coin)
         syncRestoreButton()
-
-        if interactor.settings(coinType: coin.type) != nil {
-//            router.showSettings(for: coin, settingsDelegate: self)
-        }
     }
 
 }
@@ -58,7 +53,13 @@ extension RestoreCoinsPresenter: IRestoreCoinsViewDelegate {
     }
 
     func onEnable(viewItem: CoinToggleViewItem) {
-        enable(coin: viewItem.coin)
+        let coin = viewItem.coin
+
+        if let setting = interactor.derivationSetting(coinType: coin.type) {
+            router.show(derivationSetting: setting, coin: coin, delegate: self)
+        } else {
+            enable(coin: coin)
+        }
     }
 
     func onDisable(viewItem: CoinToggleViewItem) {
@@ -77,12 +78,11 @@ extension RestoreCoinsPresenter: IRestoreCoinsViewDelegate {
 
 }
 
-extension RestoreCoinsPresenter: IDerivationSettingsDelegate {
+extension RestoreCoinsPresenter: IDerivationSettingDelegate {
 
-    func onConfirm(settings: [DerivationSetting]) {
-        settings.forEach {
-            derivationSettings[$0.coinType] = $0
-        }
+    func onSelect(derivationSetting: DerivationSetting, coin: Coin) {
+        interactor.save(derivationSetting: derivationSetting)
+        enable(coin: coin)
     }
 
 }

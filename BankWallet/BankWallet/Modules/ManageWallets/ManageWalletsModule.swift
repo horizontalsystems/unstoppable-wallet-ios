@@ -26,14 +26,14 @@ protocol IManageWalletsInteractor {
     var wallets: [Wallet] { get }
 
     func save(wallet: Wallet)
-    func save(settings: [DerivationSetting])
     func delete(wallet: Wallet)
 
     func createAccount(predefinedAccountType: PredefinedAccountType) throws -> Account
     func createRestoredAccount(accountType: AccountType) -> Account
     func save(account: Account)
 
-    func settings(coinType: CoinType) -> DerivationSetting?
+    func derivationSetting(coinType: CoinType) -> DerivationSetting?
+    func save(derivationSetting: DerivationSetting)
 }
 
 protocol IManageWalletsInteractorDelegate: AnyObject {
@@ -41,7 +41,7 @@ protocol IManageWalletsInteractorDelegate: AnyObject {
 }
 
 protocol IManageWalletsRouter {
-    func showSettings(coin: Coin, delegate: IDerivationSettingsDelegate)
+    func show(derivationSetting: DerivationSetting, coin: Coin, delegate: IDerivationSettingDelegate)
     func showRestore(predefinedAccountType: PredefinedAccountType)
     func close()
 }
