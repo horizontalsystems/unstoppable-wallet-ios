@@ -3,44 +3,32 @@ import ThemeKit
 class RestoreWordsPresenter {
     weak var view: IRestoreWordsView?
 
-    private let presentationMode: RestoreRouter.PresentationMode
-    private let proceedMode: RestoreRouter.ProceedMode
-    private let router: IRestoreWordsRouter
+    private let handler: IRestoreAccountTypeHandler
     private var wordsManager: IWordsManager
     private let appConfigProvider: IAppConfigProvider
 
     let wordsCount: Int
 
-    init(presentationMode: RestoreRouter.PresentationMode, proceedMode: RestoreRouter.ProceedMode, router: IRestoreWordsRouter, wordsCount: Int, wordsManager: IWordsManager, appConfigProvider: IAppConfigProvider) {
-        self.presentationMode = presentationMode
-        self.proceedMode = proceedMode
-        self.router = router
+    init(handler: IRestoreAccountTypeHandler, wordsCount: Int, wordsManager: IWordsManager, appConfigProvider: IAppConfigProvider) {
+        self.handler = handler
         self.wordsCount = wordsCount
         self.wordsManager = wordsManager
         self.appConfigProvider = appConfigProvider
     }
 
-    private func notify(words: [String]) {
+    private func handle(words: [String]) {
         let accountType: AccountType = .mnemonic(words: words, salt: nil)
-
-        router.notifyChecked(accountType: accountType)
+        handler.handle(accountType: accountType)
     }
 }
 
 extension RestoreWordsPresenter: IRestoreWordsViewDelegate {
 
     func viewDidLoad() {
-        if presentationMode == .presented {
-            view?.showCancelButton()
-        }
-        switch proceedMode {
-        case .next:
+        if handler.selectCoins {
             view?.showNextButton()
-        case .restore:
+        } else {
             view?.showRestoreButton()
-        case .done:
-            view?.showDoneButton()
-        case .none: ()
         }
 
         view?.show(defaultWords: appConfigProvider.defaultWords(count: wordsCount))
@@ -49,14 +37,14 @@ extension RestoreWordsPresenter: IRestoreWordsViewDelegate {
     func didTapRestore(words: [String]) {
         do {
             try wordsManager.validate(words: words, requiredWordsCount: wordsCount)
-            notify(words: words)
+            handle(words: words)
         } catch {
             view?.show(error: error)
         }
     }
 
     func didTapCancel() {
-        router.dismiss()
+        handler.handleCancel()
     }
 
 }

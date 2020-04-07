@@ -27,6 +27,7 @@ class ManageWalletsViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = "manage_coins.title".localized
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .plain, target: self, action: #selector(onTapCloseButton))
 
         tableView.registerCell(forClass: CoinToggleCell.self)
         tableView.sectionDataSource = self
@@ -42,11 +43,6 @@ class ManageWalletsViewController: ThemeViewController {
         delegate.onLoad()
 
         tableView.buildSections()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        delegate.onAppear()
     }
 
     @objc func onTapCloseButton() {
@@ -116,13 +112,6 @@ extension ManageWalletsViewController: SectionsDataSource {
 
 extension ManageWalletsViewController: IManageWalletsView {
 
-    func setCloseButton(visible: Bool) {
-        if visible {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .plain, target: self, action: #selector(onTapCloseButton))
-        } else {
-            navigationItem.rightBarButtonItem = nil
-        }
-    }
 
     func set(featuredViewItems: [CoinToggleViewItem], viewItems: [CoinToggleViewItem]) {
         self.featuredViewItems = featuredViewItems

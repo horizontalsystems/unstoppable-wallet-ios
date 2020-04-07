@@ -1,29 +1,22 @@
 protocol IRestoreCoinsView: class {
-    func showNextButton()
-    func showRestoreButton()
-    func showDoneButton()
     func set(featuredViewItems: [CoinToggleViewItem], viewItems: [CoinToggleViewItem])
-    func setProceedButton(enabled: Bool)
+    func setRestoreButton(enabled: Bool)
 }
 
 protocol IRestoreCoinsViewDelegate {
     func onLoad()
     func onEnable(viewItem: CoinToggleViewItem)
     func onDisable(viewItem: CoinToggleViewItem)
-    func onProceed()
+    func onTapRestore()
 }
 
 protocol IRestoreCoinsInteractor {
     var coins: [Coin] { get }
     var featuredCoins: [Coin] { get }
     func settings(coinType: CoinType) -> DerivationSetting?
+    func save(accountType: AccountType, coins: [Coin])
 }
 
 protocol IRestoreCoinsRouter {
-    func onSelect(coins: [Coin], derivationSettings: [DerivationSetting])
-    func showSettings(for coin: Coin, settingsDelegate: IDerivationSettingsDelegate?)
-}
-
-protocol IRestoreCoinsDelegate: AnyObject {
-    func onSelect(coins: [Coin], derivationSettings: [DerivationSetting])
+    func finish()
 }

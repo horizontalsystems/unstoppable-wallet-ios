@@ -8,16 +8,26 @@ protocol IRestoreViewDelegate {
 }
 
 protocol IRestoreRouter {
-    func showRestore(predefinedAccountType: PredefinedAccountType, delegate: ICredentialsCheckDelegate)
-    func showRestoreCoins(predefinedAccountType: PredefinedAccountType, accountType: AccountType, delegate: IRestoreCoinsDelegate?)
-    func showMain()
+    func showRestore(predefinedAccountType: PredefinedAccountType)
 }
 
 protocol IRestoreDelegate: AnyObject {
     func didRestore(account: Account)
 }
 
-protocol IRestoreSequenceManager {
-    func onAccountCheck(accountType: AccountType, predefinedAccountType: PredefinedAccountType?, coins: ((AccountType, PredefinedAccountType) -> ()))
-    func onCoinsSelect(coins: [Coin], accountType: AccountType?, derivationSettings: [DerivationSetting], finish: () -> ()?)
+protocol IRestoreAccountTypeRouter {
+    func showSelectCoins(accountType: AccountType)
+    func dismiss()
+}
+
+protocol IRestoreAccountTypeHandler {
+    var selectCoins: Bool { get }
+
+    func handle(accountType: AccountType)
+    func handleCancel()
+}
+
+struct AccountTypeViewItem {
+    let title: String
+    let coinCodes: String
 }

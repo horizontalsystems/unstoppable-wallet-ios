@@ -1,4 +1,10 @@
+import RxSwift
+
 class ManageWalletsInteractor {
+    weak var delegate: IManageWalletsInteractorDelegate?
+
+    private let disposeBag = DisposeBag()
+
     private let appConfigProvider: IAppConfigProvider
     private let walletManager: IWalletManager
     private let walletFactory: IWalletFactory
@@ -15,6 +21,13 @@ class ManageWalletsInteractor {
         self.accountCreator = accountCreator
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
         self.derivationSettingsManager = derivationSettingsManager
+
+        accountManager.accountsObservable
+                .subscribeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] _ in
+                    self?.delegate?.didUpdateAccounts()
+                })
+                .disposed(by: disposeBag)
     }
 
 }
