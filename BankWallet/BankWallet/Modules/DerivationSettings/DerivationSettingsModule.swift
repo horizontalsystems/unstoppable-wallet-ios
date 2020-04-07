@@ -32,3 +32,7 @@ protocol IDerivationSettingsRouter {
 protocol IDerivationSettingsDelegate: class {
     func onConfirm(settings: [DerivationSetting])
 }
+
+protocol IDerivationSettingDelegate: AnyObject {
+    func onSelect(derivationSetting: DerivationSetting, coin: Coin)
+}

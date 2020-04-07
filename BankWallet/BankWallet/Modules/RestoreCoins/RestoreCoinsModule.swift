@@ -13,10 +13,12 @@ protocol IRestoreCoinsViewDelegate {
 protocol IRestoreCoinsInteractor {
     var coins: [Coin] { get }
     var featuredCoins: [Coin] { get }
-    func settings(coinType: CoinType) -> DerivationSetting?
+    func derivationSetting(coinType: CoinType) -> DerivationSetting?
+    func save(derivationSetting: DerivationSetting)
     func save(accountType: AccountType, coins: [Coin])
 }
 
 protocol IRestoreCoinsRouter {
+    func show(derivationSetting: DerivationSetting, coin: Coin, delegate: IDerivationSettingDelegate)
     func finish()
 }

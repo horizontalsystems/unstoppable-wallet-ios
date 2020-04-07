@@ -119,7 +119,7 @@ class App {
         let settingsStorage: IBlockchainSettingsStorage = BlockchainSettingsStorage(storage: storage)
         initialSyncSettingsManager = InitialSyncSettingsManager(storage: settingsStorage)
         derivationSettingsManager = DerivationSettingsManager(storage: settingsStorage)
-        restoreManager = RestoreManager(walletManager: walletManager, derivationSettingsManager: derivationSettingsManager, accountCreator: accountCreator, accountManager: accountManager)
+        restoreManager = RestoreManager(walletManager: walletManager, accountCreator: accountCreator, accountManager: accountManager)
 
         let adapterFactory: IAdapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, initialSyncSettingsManager: initialSyncSettingsManager, derivationSettingsManager: derivationSettingsManager)
         adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager)

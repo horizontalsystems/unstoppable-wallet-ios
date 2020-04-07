@@ -18,7 +18,7 @@ class AdapterFactory: IAdapterFactory {
     }
 
     func adapter(wallet: Wallet) -> IAdapter? {
-        let derivation = (try? derivationSettingsManager.derivationSetting(coinType: wallet.coin.type))?.derivation
+        let derivation = derivationSettingsManager.setting(coinType: wallet.coin.type)?.derivation
         let syncMode = (try? initialSyncSettingsManager.initialSyncSetting(coinType: wallet.coin.type))?.syncMode
 
         switch wallet.coin.type {

@@ -31,7 +31,7 @@ extension DepositInteractor: IDepositInteractor {
     }
 
     func derivationSettings(coinType: CoinType) -> DerivationSetting? {
-        try? derivationSettingsManager.derivationSetting(coinType: coinType)
+        derivationSettingsManager.setting(coinType: coinType)
     }
 
 }

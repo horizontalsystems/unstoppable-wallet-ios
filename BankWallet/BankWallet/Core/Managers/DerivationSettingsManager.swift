@@ -1,43 +1,38 @@
-protocol IDerivationSettingsManager {
-    func save(setting: DerivationSetting)
-    func save(settings: [DerivationSetting])
+class DerivationSettingsManager {
+    private let supportedCoinTypes: [CoinType: MnemonicDerivation] = [
+        .bitcoin: .bip49,
+        .litecoin: .bip49,
+    ]
 
-    func defaultDerivationSetting(coinType: CoinType) throws -> DerivationSetting
-    func derivationSetting(coinType: CoinType) throws -> DerivationSetting
-}
-
-enum DerivationSettingError: Error {
-    case unsupportedCoinType
-    case unsupportedMnemonicDerivation
-}
-
-class DerivationSettingsManager: IDerivationSettingsManager {
     private let storage: IBlockchainSettingsStorage
 
     init (storage: IBlockchainSettingsStorage) {
         self.storage = storage
     }
 
-    func save(setting: DerivationSetting) {
-        storage.save(derivationSettings: [setting])
+    private func defaultSetting(coinType: CoinType) -> DerivationSetting? {
+        guard let derivation = supportedCoinTypes[coinType] else {
+            return nil
+        }
+
+        return DerivationSetting(coinType: coinType, derivation: derivation)
+    }
+
+}
+
+extension DerivationSettingsManager: IDerivationSettingsManager {
+
+    func setting(coinType: CoinType) -> DerivationSetting? {
+        let storedSetting = storage.derivationSetting(coinType: coinType)
+        return storedSetting ?? defaultSetting(coinType: coinType)
     }
 
     func save(settings: [DerivationSetting]) {
         storage.save(derivationSettings: settings)
     }
 
-    func defaultDerivationSetting(coinType: CoinType) throws -> DerivationSetting {
-        switch coinType {
-        case .bitcoin: return DerivationSetting(coinType: coinType, derivation: .bip49)
-        case .litecoin: return DerivationSetting(coinType: coinType, derivation: .bip49)
-        default: throw DerivationSettingError.unsupportedCoinType
-        }
-    }
-
-    func derivationSetting(coinType: CoinType) throws -> DerivationSetting {
-        let setting = try storage.derivationSetting(coinType: coinType)
-
-        return try setting ?? defaultDerivationSetting(coinType: coinType)
+    func reset() {
+        storage.deleteDerivationSettings()
     }
 
 }
