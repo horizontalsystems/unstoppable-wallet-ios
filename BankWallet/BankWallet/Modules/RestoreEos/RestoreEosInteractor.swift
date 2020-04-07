@@ -17,7 +17,7 @@ extension RestoreEosInteractor: IRestoreEosInteractor {
     }
 
     var valueFromPasteboard: String? {
-        return pasteboardManager.value
+        pasteboardManager.value
     }
 
     func validate(privateKey: String) throws {

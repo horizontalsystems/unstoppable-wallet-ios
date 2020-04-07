@@ -1,7 +1,6 @@
 class RestoreCoinsPresenter {
     weak var view: IRestoreCoinsView?
 
-    private let proceedMode: RestoreRouter.ProceedMode
     private let predefinedAccountType: PredefinedAccountType
     private let accountType: AccountType
     private let interactor: IRestoreCoinsInteractor
@@ -10,8 +9,7 @@ class RestoreCoinsPresenter {
     private var enabledCoins = Set<Coin>()
     private var derivationSettings = [CoinType: DerivationSetting]()
 
-    init(proceedMode: RestoreRouter.ProceedMode, predefinedAccountType: PredefinedAccountType, accountType: AccountType, interactor: IRestoreCoinsInteractor, router: IRestoreCoinsRouter) {
-        self.proceedMode = proceedMode
+    init(predefinedAccountType: PredefinedAccountType, accountType: AccountType, interactor: IRestoreCoinsInteractor, router: IRestoreCoinsRouter) {
         self.predefinedAccountType = predefinedAccountType
         self.accountType = accountType
         self.interactor = interactor
@@ -37,16 +35,16 @@ class RestoreCoinsPresenter {
         view?.set(featuredViewItems: featuredViewItems, viewItems: viewItems)
     }
 
-    private func syncProceedButton() {
-        view?.setProceedButton(enabled: !enabledCoins.isEmpty)
+    private func syncRestoreButton() {
+        view?.setRestoreButton(enabled: !enabledCoins.isEmpty)
     }
 
     private func enable(coin: Coin) {
         enabledCoins.insert(coin)
-        syncProceedButton()
+        syncRestoreButton()
 
         if interactor.settings(coinType: coin.type) != nil {
-            router.showSettings(for: coin, settingsDelegate: self)
+//            router.showSettings(for: coin, settingsDelegate: self)
         }
     }
 
@@ -55,18 +53,8 @@ class RestoreCoinsPresenter {
 extension RestoreCoinsPresenter: IRestoreCoinsViewDelegate {
 
     func onLoad() {
-        switch proceedMode {
-        case .next:
-            view?.showNextButton()
-        case .restore:
-            view?.showRestoreButton()
-        case .done:
-            view?.showDoneButton()
-        case .none: ()
-        }
-
         syncViewItems()
-        syncProceedButton()
+        syncRestoreButton()
     }
 
     func onEnable(viewItem: CoinToggleViewItem) {
@@ -75,15 +63,16 @@ extension RestoreCoinsPresenter: IRestoreCoinsViewDelegate {
 
     func onDisable(viewItem: CoinToggleViewItem) {
         enabledCoins.remove(viewItem.coin)
-        syncProceedButton()
+        syncRestoreButton()
     }
 
-    func onProceed() {
+    func onTapRestore() {
         guard !enabledCoins.isEmpty else {
             return
         }
 
-        router.onSelect(coins: Array(enabledCoins), derivationSettings: Array(derivationSettings.values))
+        interactor.save(accountType: accountType, coins: Array(enabledCoins))
+        router.finish()
     }
 
 }
