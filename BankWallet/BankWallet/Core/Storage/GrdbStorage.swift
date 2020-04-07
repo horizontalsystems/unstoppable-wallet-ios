@@ -372,4 +372,10 @@ extension GrdbStorage: IBlockchainSettingsRecordStorage {
         }
     }
 
+    func deleteAll(settingKey: String) {
+        _ = try! dbPool.write { db in
+            try BlockchainSettingRecord.filter(BlockchainSettingRecord.Columns.key == settingKey).deleteAll(db)
+        }
+    }
+
 }

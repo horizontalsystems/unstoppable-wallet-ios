@@ -25,10 +25,8 @@ protocol ICreateWalletInteractor {
     func account(predefinedAccountType: PredefinedAccountType) throws -> Account
 
     func create(accounts: [Account])
+    func resetDerivationSettings()
     func save(wallets: [Wallet])
-    func save(settings: [DerivationSetting])
-
-    func blockchainSettings(coinType: CoinType) -> DerivationSetting?
 }
 
 protocol ICreateWalletRouter {

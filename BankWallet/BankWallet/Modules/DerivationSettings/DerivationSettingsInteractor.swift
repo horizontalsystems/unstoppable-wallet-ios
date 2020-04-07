@@ -20,7 +20,7 @@ extension DerivationSettingsInteractor: IDerivationSettingsInteractor {
     }
 
     func settings(coinType: CoinType) -> DerivationSetting? {
-        try? derivationSettingsManager.derivationSetting(coinType: coinType)
+        derivationSettingsManager.setting(coinType: coinType)
     }
 
     func walletsForUpdate(coinType: CoinType) -> [Wallet] {

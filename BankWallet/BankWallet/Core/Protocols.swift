@@ -297,11 +297,13 @@ protocol IPriceAlertRecordStorage {
 protocol IBlockchainSettingsRecordStorage {
     func blockchainSettings(coinTypeKey: String, settingKey: String) -> BlockchainSettingRecord?
     func save(blockchainSettings: [BlockchainSettingRecord])
+    func deleteAll(settingKey: String)
 }
 
 protocol IBlockchainSettingsStorage {
-    func derivationSetting(coinType: CoinType) throws -> DerivationSetting?
+    func derivationSetting(coinType: CoinType) -> DerivationSetting?
     func save(derivationSettings: [DerivationSetting])
+    func deleteDerivationSettings()
 
     func initialSyncSetting(coinType: CoinType) throws -> InitialSyncSetting?
     func save(initialSyncSettings: [InitialSyncSetting])
@@ -512,4 +514,10 @@ protocol IRateAppManager {
 
 protocol IRestoreManager {
     func createAccount(accountType: AccountType, coins: [Coin])
+}
+
+protocol IDerivationSettingsManager {
+    func setting(coinType: CoinType) -> DerivationSetting?
+    func save(settings: [DerivationSetting])
+    func reset()
 }

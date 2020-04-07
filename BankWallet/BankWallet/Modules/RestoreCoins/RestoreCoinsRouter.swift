@@ -22,11 +22,11 @@ extension RestoreCoinsRouter: IRestoreCoinsRouter {
         }
     }
 
-//    func showSettings(for coin: Coin, settingsDelegate: IDerivationSettingsDelegate?) {
-//        let module = DerivationSettingsRouter.module(proceedMode: .done, canSave: false, activeCoins: [coin], showOnlyCoin: coin, delegate: settingsDelegate)
-//        let controller = ThemeNavigationController(rootViewController: module)
-//        viewController?.navigationController?.present(controller, animated: true)
-//    }
+    func show(derivationSetting: DerivationSetting, coin: Coin, delegate: IDerivationSettingDelegate) {
+        print("COIN: \(coin.title)")
+        // todo
+        delegate.onSelect(derivationSetting: derivationSetting, coin: coin)
+    }
 
 }
 

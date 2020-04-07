@@ -35,16 +35,12 @@ extension CreateWalletInteractor: ICreateWalletInteractor {
         }
     }
 
+    func resetDerivationSettings() {
+        derivationSettingsManager.reset()
+    }
+
     func save(wallets: [Wallet]) {
         walletManager.save(wallets: wallets)
-    }
-
-    func save(settings: [DerivationSetting]) {
-        derivationSettingsManager.save(settings: settings)
-    }
-
-    func blockchainSettings(coinType: CoinType) -> DerivationSetting? {
-        try? derivationSettingsManager.defaultDerivationSetting(coinType: coinType)
     }
 
 }
