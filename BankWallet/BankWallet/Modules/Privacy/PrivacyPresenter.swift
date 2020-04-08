@@ -26,7 +26,6 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
             PrivacyViewItem(iconName: "BCH", title: "Bitcoin Cash", value: "API", changable: true),
             PrivacyViewItem(iconName: "DASH", title: "Dash", value: "API", changable: true),
         ])
-
         view?.updateUI()
     }
 
