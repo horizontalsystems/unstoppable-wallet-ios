@@ -35,6 +35,7 @@
 
 "welcome.new_wallet" = "Crear Monedero";
 "welcome.restore_wallet" = "Restaurar Monedero";
+"welcome.privacy_settings" = "Privacy Settings";
 "welcome.version" = "Versión %@";
 
 // Restore
@@ -295,10 +296,23 @@
 "settings_security.title" = "Centro de seguridad";
 "settings_security.blockchain_settings" = "Configuración de Blockchain";
 "settings_security.passcode" = "Código de acceso";
+"settings_security.privacy" = "Privacy";
 "settings_security.change_pin" = "Editar el código ";
 "settings_security.touch_id" = "Identificación táctil";
 "settings_security.face_id" = "Identificación de caras";
 "security_settings.delete_alert_button" = "Eliminar del teléfono";
+"settings_privacy.title" = "Privacy";
+"settings_privacy.header_description" = "This app doesn’t share any of your data. However, as it communicates with blockchains some public data like IP address can potentially be leaked.";
+"settings_privacy.sorting_title" = "Inputs/Outputs";
+"settings_privacy.sorting.section_header" = "Blockchain Transactions";
+"settings_privacy.sorting.section_footer" = "Make your BTC, LTC, BCH transactions harder to trace by changing the way transactions are structured.";
+"settings_privacy.connection.section_header" = "Blockchain Connection";
+"settings_privacy.connection.section_footer" = "Some blockchains do not yet provide means for mobile apps to operate in peer to peer manner. The communications with BTC, BCH, LTC, DASH blockchains is fully peer to peer.";
+"settings_privacy.sync.section_header" = "Blockchain Restore";
+"settings_privacy.sync.section_footer" = "Select data source for restoring wallet with transactions.";
+"settings_privacy.sorting_default" = "Default";
+"settings_privacy.sorting_shuffle" = "Shuffle";
+"settings_privacy.sorting_deterministic" = "Deterministic Bip69";
 
 // Settings -> Contact
 
