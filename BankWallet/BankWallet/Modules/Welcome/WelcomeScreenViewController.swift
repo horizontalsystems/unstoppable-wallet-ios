@@ -176,9 +176,30 @@ class WelcomeScreenViewController: UIViewController {
         restoreButton.setTitle("welcome.restore_wallet".localized, for: .normal)
         restoreButton.addTarget(self, action: #selector(didTapRestore), for: .touchUpInside)
 
+        let privacyButton = UIButton()
+
+        buttonsWrapper.addSubview(privacyButton)
+        privacyButton.snp.makeConstraints { maker in
+            maker.centerX.equalToSuperview()
+            maker.top.equalTo(restoreButton.snp.bottom).offset(CGFloat.margin6x)
+            maker.height.equalTo(24)
+        }
+
+        privacyButton.titleLabel?.font = .subhead2
+        privacyButton.setTitleColor(.themeLeah, for: .normal)
+        privacyButton.setTitleColor(.themeGray50, for: .highlighted)
+        privacyButton.setTitleColor(.themeGray50, for: .disabled)
+        privacyButton.setBackgroundColor(color: .themeLawrence, forState: .normal)
+        privacyButton.contentEdgeInsets.left = .margin3x
+        privacyButton.contentEdgeInsets.right = .margin3x
+        privacyButton.cornerRadius = .cornerRadius3x
+
+        privacyButton.setTitle("welcome.privacy_settings".localized, for: .normal)
+        privacyButton.addTarget(self, action: #selector(didTapPrivacy), for: .touchUpInside)
+
         buttonsWrapper.addSubview(versionLabel)
         versionLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(restoreButton.snp.bottom).offset(CGFloat.margin4x)
+            maker.top.equalTo(privacyButton.snp.bottom).offset(CGFloat.margin6x)
             maker.bottom.equalToSuperview().inset(CGFloat.margin4x)
             maker.centerX.equalToSuperview()
         }
@@ -209,6 +230,10 @@ class WelcomeScreenViewController: UIViewController {
 
     @objc func didTapRestore() {
         delegate.didTapRestore()
+    }
+
+    @objc func didTapPrivacy() {
+        delegate.didTapPrivacy()
     }
 
     @objc private func onTapSkip() {

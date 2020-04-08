@@ -6,6 +6,7 @@ protocol IWelcomeScreenViewDelegate {
     func viewDidLoad()
     func didTapCreate()
     func didTapRestore()
+    func didTapPrivacy()
 }
 
 protocol IWelcomeScreenInteractor {
@@ -15,4 +16,5 @@ protocol IWelcomeScreenInteractor {
 protocol IWelcomeScreenRouter {
     func showCreateWallet()
     func showRestoreWallet()
+    func showPrivacySettings()
 }

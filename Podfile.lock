@@ -362,7 +362,7 @@ CHECKOUT OPTIONS:
     :commit: 0fdc0b4ca8ecaab53a454353553dc2974b5e8ce4
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: 0fdc0b4ca8ecaab53a454353553dc2974b5e8ce4
+    :commit: caa45cde80ddb197cbc8f38c401529870eda2569
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :commit: d33055102d076b114bd842eca6a1b2bb947f28fb

@@ -17,6 +17,7 @@ protocol ISecuritySettingsViewDelegate {
     func didSwitch(pinSet: Bool)
     func didTapEditPin()
     func didSwitch(biometryEnabled: Bool)
+    func didTapPrivacy()
 }
 
 protocol ISecuritySettingsInteractor: AnyObject {
@@ -37,4 +38,5 @@ protocol ISecuritySettingsRouter {
     func showSetPin(delegate: ISetPinDelegate)
     func showEditPin()
     func showUnlock(delegate: IUnlockDelegate)
+    func showPrivacy()
 }
