@@ -40,7 +40,6 @@ protocol IAdapterManager: class {
     func transactionsAdapter(for wallet: Wallet) -> ITransactionsAdapter?
     func depositAdapter(for wallet: Wallet) -> IDepositAdapter?
     func refresh()
-    func refreshAdapters(for wallets: [Wallet])
 }
 
 protocol IAdapterFactory {
@@ -517,7 +516,10 @@ protocol IRestoreManager {
 }
 
 protocol IDerivationSettingsManager {
+    var allActiveSettings: [(setting: DerivationSetting, wallets: [Wallet])] { get }
+    var derivationUpdatedObservable: Observable<CoinType> { get }
+
     func setting(coinType: CoinType) -> DerivationSetting?
-    func save(settings: [DerivationSetting])
+    func save(setting: DerivationSetting)
     func reset()
 }
