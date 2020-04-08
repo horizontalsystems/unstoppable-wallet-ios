@@ -44,6 +44,10 @@ extension SecuritySettingsPresenter: ISecuritySettingsViewDelegate {
         interactor.biometryEnabled = biometryEnabled
     }
 
+    func didTapPrivacy() {
+        router.showPrivacy()
+    }
+
 }
 
 extension SecuritySettingsPresenter: ISecuritySettingsInteractorDelegate {

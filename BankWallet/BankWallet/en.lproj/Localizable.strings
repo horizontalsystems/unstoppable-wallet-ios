@@ -37,6 +37,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 "welcome.new_wallet" = "Create Wallet";
 "welcome.restore_wallet" = "Restore Wallet";
+"welcome.privacy_settings" = "Privacy Settings";
 "welcome.version" = "Version %@";
 
 // Restore
@@ -306,10 +307,23 @@ bch.horizontalsystems.xyz/apg";
 "settings_security.title" = "Security Center";
 "settings_security.blockchain_settings" = "Blockchain Settings";
 "settings_security.passcode" = "Passcode";
+"settings_security.privacy" = "Privacy";
 "settings_security.change_pin" = "Edit Passcode";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "security_settings.delete_alert_button" = "Delete from Phone";
+"settings_privacy.title" = "Privacy";
+"settings_privacy.header_description" = "This app doesn’t share any of your data. However, as it communicates with blockchains some public data like IP address can potentially be leaked.";
+"settings_privacy.sorting_title" = "Inputs/Outputs";
+"settings_privacy.sorting.section_header" = "Blockchain Transactions";
+"settings_privacy.sorting.section_footer" = "Make your BTC, LTC, BCH transactions harder to trace by changing the way transactions are structured.";
+"settings_privacy.connection.section_header" = "Blockchain Connection";
+"settings_privacy.connection.section_footer" = "Some blockchains do not yet provide means for mobile apps to operate in peer to peer manner. The communications with BTC, BCH, LTC, DASH blockchains is fully peer to peer.";
+"settings_privacy.sync.section_header" = "Blockchain Restore";
+"settings_privacy.sync.section_footer" = "Select data source for restoring wallet with transactions.";
+"settings_privacy.sorting_default" = "Default";
+"settings_privacy.sorting_shuffle" = "Shuffle";
+"settings_privacy.sorting_deterministic" = "Deterministic Bip69";
 
 // Settings -> Contact
 
