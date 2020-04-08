@@ -61,7 +61,7 @@
 "coin_settings.sync_mode.fast.description" = "0 - 2 Stunden (empfohlen)";
 "coin_settings.sync_mode.slow.description" = "1 - 24 Stunden";
 "coin_settings.sync_mode.description" = "Links zu API-Quellen: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
-"sync_mode.from_blockchain" = "From Blockchain";
+"sync_mode.from_blockchain" = "Von Blockchain";
 "blockchain_settings.change_alert.title" = "Adressformatierung";
 "blockchain_settings.change_alert.content" = "Diese Aktion erfordert, dass sich die Unstoppable App mit der Bitcoin-Blockchain neu synchronisiert. Ihre aktuellen Bitcoin-Transaktionen werden nicht mehr sichtbar sein. Wenn Sie auf die vorherige Einstellung zurückwechseln, wird alles wieder hergestellt, nachdem die App mit der Blockchain synchronisiert wurde.";
 "blockchain_settings.change_alert.action_button_text" = "Ändern zu %@";
@@ -263,7 +263,7 @@
 "manage_coins.title" = "Kryptowährung";
 "manage_coins.add_coin.title" = "%@ hinzufügen ";
 "manage_coins.add_coin.subtitle" = "%@ Wallet";
-"manage_coins.add_coin.text" = "Sie müssen das %@ Wallet einrichten, um %@ senden oder empfangen zu können.\n\nTippen Sie auf den Button „Erstellen“, um ein neues %@ Wallet zu erstellen. Sie können auch auf den Button „Wiederherstellen“ tippen, um ein bereits bestehendes Wallet zu importieren.\n\nSie können dieses Wallet benutzen für: %@.";
+"manage_coins.add_coin.text" = "You need to set up %@ wallet to be able to send or receive %@.\n\nUse the Create button below to set up a new %@ wallet, or Restore button to import the existing one.\n\nYou will be able to use this wallet for: %@.";
 "manage_coins.add_coin.create" = "Erstellen";
 "manage_coins.add_coin.restore" = "Wiederherstellen";
 
@@ -319,7 +319,7 @@
 "settings_manage_keys.show" = "Anzeigen";
 "settings_manage_keys.create" = "Erstellen";
 "settings_manage_keys.restore" = "Wiederherstellen";
-"settings_manage_keys.settings" = "Address Format";
+"settings_manage_keys.settings" = "Adressformatierung";
 "settings_manage_keys.delete.cant_delete" = "Sie müssen den Private Key für dieses Wallet sichern, bevor Sie es von diesem Telefon löschen können.";
 "settings_manage_keys.delete.title" = "Wallet löschen";
 "settings_manage_keys.delete.confirmation_remove" = "Damit wird das %@ Wallet von diesem Gerät gelöscht.";
