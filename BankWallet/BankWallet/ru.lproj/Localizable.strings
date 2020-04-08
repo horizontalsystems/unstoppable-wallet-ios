@@ -50,7 +50,6 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title" = "%@";
 "coin_settings.derivation.description_bip44" = "Старые (начинается с 1...)";
 "coin_settings.derivation.description_bip49" = "Популярные (начинается с 3...)";
 "coin_settings.derivation.description_bip84" = "Новый (начинается с bc1...)";
@@ -63,7 +62,7 @@
 "coin_settings.sync_mode.description" = "Ссылки на источники API: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
 "sync_mode.from_blockchain" = "From Blockchain";
 "blockchain_settings.change_alert.title" = "Формат Адреса";
-"blockchain_settings.change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin blockchain. Your current Bitcoin transactions will no longer be visible. Changing it back to previous setting will bring everything back after the app resyncs with blockchain.";
+"blockchain_settings.change_alert.content" = "This action will require Unstoppable app to resync itself with %@ blockchain. Your current %@ transactions will no longer be visible. Changing it back to previous setting will bring everything back after the app resyncs with blockchain.";
 "blockchain_settings.change_alert.action_button_text" = "Изменить на %@";
 "blockchain_settings.sync_mode_change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin, Bitcoin Cash and Dash blockchains, if you have enabled any of these tokens. Your balance or transactions won\'t be affected.\n\nWe recommend not to change this setting if not sure what it does.";
 "blockchain_settings.sync_mode.blockchain" = "Блокчейн";
