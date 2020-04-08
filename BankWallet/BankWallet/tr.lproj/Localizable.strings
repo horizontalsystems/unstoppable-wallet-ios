@@ -50,7 +50,6 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title" = "%@";
 "coin_settings.derivation.description_bip44" = "Eski (1... ile başlar)";
 "coin_settings.derivation.description_bip49" = "Popüler (3... ile başlar)";
 "coin_settings.derivation.description_bip84" = "Yeni (bc1... ile başlar)";
@@ -63,7 +62,7 @@
 "coin_settings.sync_mode.description" = "API kaynak linkleri: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg\n";
 "sync_mode.from_blockchain" = "From Blockchain";
 "blockchain_settings.change_alert.title" = "Adres Formatı";
-"blockchain_settings.change_alert.content" = "Bu işlem, Unstoppable uygulaması Bitcoin blockchain ile kendini yeniden senkronize etmek için gerektirir. Mevcut Bitcoin işlemleriniz artık görünmeyecek. Önceki ayara geri döndürmek, uygulama blockchain ile yeniden senkronize edildikten sonra her şeyi geri getirir.";
+"blockchain_settings.change_alert.content" = "This action will require Unstoppable app to resync itself with %@ blockchain. Your current %@ transactions will no longer be visible. Changing it back to previous setting will bring everything back after the app resyncs with blockchain.";
 "blockchain_settings.change_alert.action_button_text" = "%@'e değiştir";
 "blockchain_settings.sync_mode_change_alert.content" = "Bu işlem, Unstoppable uygulaması Bitcoin, Bitcoin Cash and Dash blockchain ile kendini yeniden senkronize etmek için gerektirir, bu belirteçlerden herhangi birini etkinleştirdiyseniz. Bakiyeniz veya işlemleriniz etkilenmeyecektir.\n\nNe yaptığından emin değilseniz bu ayarı değiştirmemenizi öneririz.";
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
