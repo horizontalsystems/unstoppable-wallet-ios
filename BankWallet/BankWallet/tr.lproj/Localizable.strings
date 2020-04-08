@@ -263,7 +263,7 @@
 "manage_coins.title" = "Kripto Para yöneticisi";
 "manage_coins.add_coin.title" = "%@ ekle ";
 "manage_coins.add_coin.subtitle" = "%@ Cüzdanı";
-"manage_coins.add_coin.text" = "%@ (%@) saklayabilen bir cüzdanınız yok. Uygulamanın sizin için yeni bir cüzdan oluşturabilir. Yeni bir cüzdan oluşturmak için aşağıdaki Oluştur düğmesini kullanın.\n\nYeni cüzdanı aşağıdaki paralar için kullanabileceksiniz: %@.\n\nVarsa, mevcut %@ Cüzdan anahtarını da kullanabilirsiniz. Bunun için Geri Yükle düğmesini kullanın.";
+"manage_coins.add_coin.text" = "You need to set up %@ wallet to be able to send or receive %@.\n\nUse the Create button below to set up a new %@ wallet, or Restore button to import the existing one.\n\nYou will be able to use this wallet for: %@.";
 "manage_coins.add_coin.create" = "Oluştur";
 "manage_coins.add_coin.restore" = "Geri Yükle";
 
