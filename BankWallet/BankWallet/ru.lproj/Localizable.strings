@@ -135,7 +135,7 @@
 "send.tx_speed_low" = "Низкая";
 "send.tx_speed_medium" = "Средняя";
 "send.tx_speed_high" = "Высокая";
-"send.tx_speed_custom" = "Custom";
+"send.tx_speed_custom" = "Вперемешку";
 "send.tx_duration" = "Продолжительность";
 "send.duration.instant" = "Мгновенно";
 "send.duration.within" = "в течение %@";
@@ -263,7 +263,7 @@
 "manage_coins.title" = "Токены";
 "manage_coins.add_coin.title" = "Добавить %@";
 "manage_coins.add_coin.subtitle" = "%@ Кошелек";
-"manage_coins.add_coin.text" = "You need to set up %@ wallet to be able to send or receive %@.\n\nUse the Create button below to set up a new %@ wallet, or Restore button to import the existing one.\n\nYou will be able to use this wallet for: %@.";
+"manage_coins.add_coin.text" = "Вам нужно настроить кошелек %@ , чтобы иметь возможность отправлять или получать %@.\n\nИспользуйте кнопку 'Создать', чтобы настроить новый кошелек %@ или 'Восстановить', чтобы импортировать существующий.\n\nВы сможете использовать этот кошелек для: %@.";
 "manage_coins.add_coin.create" = "Создать";
 "manage_coins.add_coin.restore" = "Восстановить";
 
@@ -319,7 +319,7 @@
 "settings_manage_keys.show" = "Показать";
 "settings_manage_keys.create" = "Создать";
 "settings_manage_keys.restore" = "Восстановить";
-"settings_manage_keys.settings" = "Address Format";
+"settings_manage_keys.settings" = "Формат Адреса";
 "settings_manage_keys.delete.cant_delete" = "Вам нужно сделать резервную копию приватного ключа для этого кошелька, прежде чем он будет удален с этого телефона.";
 "settings_manage_keys.delete.title" = "Удалить Кошелек";
 "settings_manage_keys.delete.confirmation_remove" = "Это действие удалит ваш %@ Кошелек с этого устройства.";
