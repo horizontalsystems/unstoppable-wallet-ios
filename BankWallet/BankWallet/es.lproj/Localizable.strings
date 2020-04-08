@@ -263,7 +263,7 @@
 "manage_coins.title" = "Gestor de monedas";
 "manage_coins.add_coin.title" = "Añadir %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Monedero";
-"manage_coins.add_coin.text" = "Usted no tiene un monedero que pueda restaurar %@(%@). La aplicación puede generar un nuevo monedero para usted. Use el botón de crear, que se encuentra abajo, para generar un nuevo monedero.\n\nPodrá usar el nuevo monedero para las siguientes monedas: %@.\n\nUsted también piede utilizar el la clave existente del monedero %@ si ya tiene uno. Use el botón restaurar para hacerlo.";
+"manage_coins.add_coin.text" = "You need to set up %@ wallet to be able to send or receive %@.\n\nUse the Create button below to set up a new %@ wallet, or Restore button to import the existing one.\n\nYou will be able to use this wallet for: %@.";
 "manage_coins.add_coin.create" = "Crear";
 "manage_coins.add_coin.restore" = "Restaurar";
 
