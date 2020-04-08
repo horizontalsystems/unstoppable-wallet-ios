@@ -50,7 +50,6 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title" = "%@";
 "coin_settings.derivation.description_bip44" = "更旧（以1开头...）";
 "coin_settings.derivation.description_bip49" = "流行（以3开头...）";
 "coin_settings.derivation.description_bip84" = "最新（以bc1开头...）";
@@ -63,7 +62,7 @@
 "coin_settings.sync_mode.description" = "API 源链接： \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
 "sync_mode.from_blockchain" = "来自区块链";
 "blockchain_settings.change_alert.title" = "地址格式";
-"blockchain_settings.change_alert.content" = "此操作需要使用Unstoppable应用以将其和比特币区块链重新同步。您目前的比特币交易将不再显示。将其更改回早前的设置将在应用和区块链重新同步后使一切得以恢复。";
+"blockchain_settings.change_alert.content" = "This action will require Unstoppable app to resync itself with %@ blockchain. Your current %@ transactions will no longer be visible. Changing it back to previous setting will bring everything back after the app resyncs with blockchain.";
 "blockchain_settings.change_alert.action_button_text" = "更改为%@";
 "blockchain_settings.sync_mode_change_alert.content" = "如果您已任何比特币、比特币现金和Dash，此操作需要使用Unstoppable应用以将其和这些代币的区块链重新同步。您的余额和交易将不受影响。\n\n我们建议建议在不确定的情况下不要更改此设置。";
 "blockchain_settings.sync_mode.blockchain" = "区块链";
