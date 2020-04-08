@@ -9,13 +9,11 @@ class ManageAccountsPresenter {
     private var items = [ManageAccountItem]()
     private var currentItem: ManageAccountItem?
 
-    private let hasDerivationSettings: Bool
+    private var hasDerivationSettings = false
 
     init(interactor: IManageAccountsInteractor, router: IManageAccountsRouter) {
         self.interactor = interactor
         self.router = router
-
-        hasDerivationSettings = !interactor.allActiveDerivationSettings.isEmpty
     }
 
     private func buildItems() {
@@ -28,12 +26,17 @@ class ManageAccountsPresenter {
         view?.set(viewItems: items.map { self.viewItemFactory.viewItem(item: $0, hasDerivationSettings: hasDerivationSettings) })
     }
 
+    private func syncDerivationSettings() {
+        hasDerivationSettings = !interactor.allActiveDerivationSettings.isEmpty
+    }
+
 }
 
 extension ManageAccountsPresenter: IManageAccountsViewDelegate {
 
     func viewDidLoad() {
         buildItems()
+        syncDerivationSettings()
         updateView()
     }
 
@@ -96,6 +99,11 @@ extension ManageAccountsPresenter: IManageAccountsInteractorDelegate {
 
     func didUpdateAccounts() {
         buildItems()
+        updateView()
+    }
+
+    func didUpdateWallets() {
+        syncDerivationSettings()
         updateView()
     }
 

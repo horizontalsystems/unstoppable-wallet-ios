@@ -41,7 +41,7 @@ extension ManageAccountsRouter {
 
     static func module() -> UIViewController {
         let router = ManageAccountsRouter()
-        let interactor = ManageAccountsInteractor(predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager, accountManager: App.shared.accountManager, derivationSettingsManager: App.shared.derivationSettingsManager)
+        let interactor = ManageAccountsInteractor(predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager, accountManager: App.shared.accountManager, derivationSettingsManager: App.shared.derivationSettingsManager, walletManager: App.shared.walletManager)
         let presenter = ManageAccountsPresenter(interactor: interactor, router: router)
         let viewController = ManageAccountsViewController(delegate: presenter)
 
