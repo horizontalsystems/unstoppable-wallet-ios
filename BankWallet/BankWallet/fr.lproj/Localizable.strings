@@ -50,7 +50,6 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title" = "%@";
 "coin_settings.derivation.description_bip44" = "Plus ancient (commence par 1...)";
 "coin_settings.derivation.description_bip49" = "Populaire (commence par 3...)";
 "coin_settings.derivation.description_bip84" = "Plus récent (commence par bc1...)";
@@ -63,7 +62,7 @@
 "coin_settings.sync_mode.description" = "Liens vers les sources de l'API : \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
 "sync_mode.from_blockchain" = "De la Blockchain";
 "blockchain_settings.change_alert.title" = "Format de l'adresse";
-"blockchain_settings.change_alert.content" = "Cette action nécessitera que l'application Unstoppable se resynchronise avec la blockchain Bitcoin. Vos transactions Bitcoin actuelles ne seront plus visibles. Si vous revenez aux paramètres précédents, tout reviendra à la normale après que l'application se sera resynchronisée avec la Blockchain.";
+"blockchain_settings.change_alert.content" = "This action will require Unstoppable app to resync itself with %@ blockchain. Your current %@ transactions will no longer be visible. Changing it back to previous setting will bring everything back after the app resyncs with blockchain.";
 "blockchain_settings.change_alert.action_button_text" = "Changer en %@";
 "blockchain_settings.sync_mode_change_alert.content" = "Si vous avez activé l'un de ces tokens, l'application Unstoppable devra se resynchroniser avec les blockchains Bitcoin, Bitcoin Cash et Dash. Votre solde ou vos transactions ne seront pas affectés.\n\nNous vous recommandons de ne pas modifier ce paramètre si vous n'êtes pas sûr de sa fonction.";
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
