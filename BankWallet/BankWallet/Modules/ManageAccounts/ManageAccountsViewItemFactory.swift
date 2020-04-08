@@ -1,6 +1,6 @@
 class ManageAccountsViewItemFactory {
 
-    func viewItem(item: ManageAccountItem) -> ManageAccountViewItem {
+    func viewItem(item: ManageAccountItem, hasDerivationSettings: Bool) -> ManageAccountViewItem {
         var topButtonState: ManageAccountButtonState?
 
         if item.account == nil, item.predefinedAccountType.createSupported {
@@ -9,7 +9,7 @@ class ManageAccountsViewItemFactory {
             topButtonState = !account.backedUp ? .backup : .show
         }
 
-        let middleButtonState: ManageAccountButtonState? = item.predefinedAccountType == .standard ? .settings : nil
+        let middleButtonState: ManageAccountButtonState? = item.predefinedAccountType == .standard && hasDerivationSettings ? .settings : nil
 
         let bottomButtonState: ManageAccountButtonState
 

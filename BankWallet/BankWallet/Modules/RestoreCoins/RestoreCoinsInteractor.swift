@@ -26,7 +26,7 @@ extension RestoreCoinsInteractor: IRestoreCoinsInteractor {
     }
 
     func save(derivationSetting: DerivationSetting) {
-        derivationSettingsManager.save(settings: [derivationSetting])
+        derivationSettingsManager.save(setting: derivationSetting)
     }
 
     func save(accountType: AccountType, coins: [Coin]) {

@@ -1,38 +1,29 @@
 protocol IDerivationSettingsView: class {
-    func showNextButton()
-    func showRestoreButton()
-    func showDoneButton()
-
     func set(viewItems: [DerivationSettingSectionViewItem])
-    func showChangeAlert(chainIndex: Int, settingIndex: Int, derivationText: String)
+    func showChangeAlert(setting: DerivationSetting, coinTitle: String)
 }
 
 protocol IDerivationSettingsInteractor: class {
-    var allCoins: [Coin] { get }
-    func settings(coinType: CoinType) -> DerivationSetting?
-    func walletsForUpdate(coinType: CoinType) -> [Wallet]
+    var allActiveSettings: [(setting: DerivationSetting, wallets: [Wallet])] { get }
+    var wallets: [Wallet] { get }
 
-    func save(settings: [DerivationSetting])
-    func update(wallets: [Wallet])
+    func save(setting: DerivationSetting)
 }
 
 protocol IDerivationSettingsViewDelegate {
     func onLoad()
-    func onConfirm()
     func onSelect(chainIndex: Int, settingIndex: Int)
-    func proceedChange(chainIndex: Int, settingIndex: Int)
+    func proceedChange(setting: DerivationSetting)
 }
 
 protocol IDerivationSettingsRouter {
-    func open(url: String)
-    func notifyConfirm(settings: [DerivationSetting])
-    func close()
-}
-
-protocol IDerivationSettingsDelegate: class {
-    func onConfirm(settings: [DerivationSetting])
 }
 
 protocol IDerivationSettingDelegate: AnyObject {
     func onSelect(derivationSetting: DerivationSetting, coin: Coin)
+}
+
+struct DerivationSettingItem {
+    let firstCoin: Coin
+    let setting: DerivationSetting
 }

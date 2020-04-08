@@ -26,8 +26,8 @@ extension ManageAccountsRouter: IManageAccountsRouter {
         viewController?.present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 
-    func showSettings(coins: [Coin]) {
-        let module = DerivationSettingsRouter.module(proceedMode: .none, canSave: true, activeCoins: coins)
+    func showSettings() {
+        let module = DerivationSettingsRouter.module()
         viewController?.navigationController?.pushViewController(module, animated: true)
     }
 
@@ -41,7 +41,7 @@ extension ManageAccountsRouter {
 
     static func module() -> UIViewController {
         let router = ManageAccountsRouter()
-        let interactor = ManageAccountsInteractor(predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager, walletManager: App.shared.walletManager, accountManager: App.shared.accountManager)
+        let interactor = ManageAccountsInteractor(predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager, accountManager: App.shared.accountManager, derivationSettingsManager: App.shared.derivationSettingsManager)
         let presenter = ManageAccountsPresenter(interactor: interactor, router: router)
         let viewController = ManageAccountsViewController(delegate: presenter)
 

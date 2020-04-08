@@ -19,7 +19,7 @@ protocol IManageAccountsViewDelegate {
 
 protocol IManageAccountsInteractor {
     var predefinedAccountTypes: [PredefinedAccountType] { get }
-    var wallets: [Wallet] { get }
+    var allActiveDerivationSettings: [(setting: DerivationSetting, wallets: [Wallet])] { get }
     func account(predefinedAccountType: PredefinedAccountType) -> Account?
 }
 
@@ -32,5 +32,5 @@ protocol IManageAccountsRouter {
     func showBackup(account: Account, predefinedAccountType: PredefinedAccountType)
     func showCreateWallet(predefinedAccountType: PredefinedAccountType)
     func showRestore(predefinedAccountType: PredefinedAccountType)
-    func showSettings(coins: [Coin])
+    func showSettings()
 }
