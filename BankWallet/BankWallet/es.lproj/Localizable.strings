@@ -319,7 +319,7 @@
 "settings_manage_keys.show" = "Mostrar";
 "settings_manage_keys.create" = "Crear";
 "settings_manage_keys.restore" = "Restaurar";
-"settings_manage_keys.settings" = "Address Format";
+"settings_manage_keys.settings" = "Formato de Dirección";
 "settings_manage_keys.delete.cant_delete" = "Necesita respaldar esta clave privada antes de que pueda eliminarla de este teléfono.";
 "settings_manage_keys.delete.title" = "Eliminar Monedero";
 "settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará los monederos %@ de este dispositivo.";
