@@ -58,6 +58,16 @@ class SecuritySettingsViewController: ThemeViewController {
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
     }
 
+    private var privacyRows: [RowProtocol] {
+        [
+            Row<TitleCell>(id: "privacy", height: .heightSingleLineCell, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Privacy Icon"), title: "settings_security.privacy".localized, showDisclosure: true, last: true)
+            }, action: { [weak self] _ in
+                self?.delegate.didTapPrivacy()
+            })
+        ]
+    }
+
     private var pinRows: [RowProtocol] {
         var rows: [RowProtocol] = [
             Row<ToggleCell>(id: "pin", height: .heightSingleLineCell, bind: { [unowned self] cell, _ in
@@ -102,6 +112,7 @@ extension SecuritySettingsViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
+            Section(id: "privacy", headerState: .margin(height: .margin8x), rows: privacyRows),
             Section(id: "pin", headerState: .margin(height: .margin8x), rows: pinRows)
         ]
 

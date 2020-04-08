@@ -24,4 +24,9 @@ extension WelcomeScreenPresenter: IWelcomeScreenViewDelegate {
     func didTapRestore() {
         router.showRestoreWallet()
     }
+
+    func didTapPrivacy() {
+        router.showPrivacySettings()
+    }
+
 }

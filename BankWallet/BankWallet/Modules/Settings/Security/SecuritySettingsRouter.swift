@@ -19,6 +19,10 @@ extension SecuritySettingsRouter: ISecuritySettingsRouter {
         viewController?.present(App.shared.pinKit.unlockPinModule(delegate: delegate, enableBiometry: false, presentationStyle: .simple, cancellable: true), animated: true)
     }
 
+    func showPrivacy() {
+        viewController?.navigationController?.pushViewController(PrivacyRouter.module(), animated: true)
+    }
+
 }
 
 extension SecuritySettingsRouter {

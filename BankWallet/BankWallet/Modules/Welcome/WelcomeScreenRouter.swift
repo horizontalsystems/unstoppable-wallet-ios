@@ -15,6 +15,10 @@ extension WelcomeScreenRouter: IWelcomeScreenRouter {
         viewController?.navigationController?.pushViewController(RestoreRouter.module(), animated: true)
     }
 
+    func showPrivacySettings() {
+        viewController?.navigationController?.pushViewController(PrivacyRouter.module(), animated: true)
+    }
+
 }
 
 extension WelcomeScreenRouter {
