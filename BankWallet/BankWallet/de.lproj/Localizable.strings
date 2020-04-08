@@ -135,7 +135,7 @@
 "send.tx_speed_low" = "Niedrig";
 "send.tx_speed_medium" = "Mittel";
 "send.tx_speed_high" = "Hoch";
-"send.tx_speed_custom" = "Custom";
+"send.tx_speed_custom" = "Benutzerdefiniert";
 "send.tx_duration" = "Dauer";
 "send.duration.instant" = "Sofort";
 "send.duration.within" = "Innerhalb %@";
@@ -263,7 +263,7 @@
 "manage_coins.title" = "Kryptowährung";
 "manage_coins.add_coin.title" = "%@ hinzufügen ";
 "manage_coins.add_coin.subtitle" = "%@ Wallet";
-"manage_coins.add_coin.text" = "You need to set up %@ wallet to be able to send or receive %@.\n\nUse the Create button below to set up a new %@ wallet, or Restore button to import the existing one.\n\nYou will be able to use this wallet for: %@.";
+"manage_coins.add_coin.text" = "Sie müssen das %@ Wallet einrichten, um %@ senden oder empfangen zu können.\n\nTippen Sie auf den Button „Erstellen“, um ein neues %@ Wallet zu erstellen. Sie können auch auf den Button „Wiederherstellen“ tippen, um ein bereits bestehendes Wallet zu importieren.\n\nSie können dieses Wallet benutzen für: %@.";
 "manage_coins.add_coin.create" = "Erstellen";
 "manage_coins.add_coin.restore" = "Wiederherstellen";
 
