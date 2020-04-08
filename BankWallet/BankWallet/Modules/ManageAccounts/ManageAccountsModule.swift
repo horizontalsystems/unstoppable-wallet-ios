@@ -25,6 +25,7 @@ protocol IManageAccountsInteractor {
 
 protocol IManageAccountsInteractorDelegate: class {
     func didUpdateAccounts()
+    func didUpdateWallets()
 }
 
 protocol IManageAccountsRouter {
