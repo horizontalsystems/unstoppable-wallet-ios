@@ -75,7 +75,7 @@ extension ManageWalletsInteractor: IManageWalletsInteractor {
     }
 
     func save(derivationSetting: DerivationSetting) {
-        derivationSettingsManager.save(settings: [derivationSetting])
+        derivationSettingsManager.save(setting: derivationSetting)
     }
 
 }

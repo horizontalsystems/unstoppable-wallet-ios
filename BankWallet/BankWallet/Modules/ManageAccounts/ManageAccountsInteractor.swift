@@ -6,11 +6,11 @@ class ManageAccountsInteractor {
     private let disposeBag = DisposeBag()
 
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
-    private let walletManager: IWalletManager
+    private let derivationSettingsManager: IDerivationSettingsManager
 
-    init(predefinedAccountTypeManager: IPredefinedAccountTypeManager, walletManager: IWalletManager, accountManager: IAccountManager) {
+    init(predefinedAccountTypeManager: IPredefinedAccountTypeManager, accountManager: IAccountManager, derivationSettingsManager: IDerivationSettingsManager) {
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
-        self.walletManager = walletManager
+        self.derivationSettingsManager = derivationSettingsManager
 
         accountManager.accountsObservable
                 .subscribeOn(MainScheduler.instance)
@@ -28,8 +28,8 @@ extension ManageAccountsInteractor: IManageAccountsInteractor {
         predefinedAccountTypeManager.allTypes
     }
 
-    var wallets: [Wallet] {
-        walletManager.wallets
+    var allActiveDerivationSettings: [(setting: DerivationSetting, wallets: [Wallet])] {
+        derivationSettingsManager.allActiveSettings
     }
 
     func account(predefinedAccountType: PredefinedAccountType) -> Account? {

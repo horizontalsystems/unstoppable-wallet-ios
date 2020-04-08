@@ -5,7 +5,7 @@ enum BottomAlertItemType {
     case title(title: String, subtitle: String, icon: UIImage?, iconTint: UIColor)
     case description(text: String)
     case checkbox(description: String)
-    case button(title: String, button: UIButton, onTap: (() -> ()))
+    case button(title: String, button: UIButton, onTap: () -> ())
 }
 
 class BottomAlertViewController: WalletActionSheetController {
@@ -47,9 +47,8 @@ class BottomAlertViewController: WalletActionSheetController {
                         createButton: { button },
                         insets: UIEdgeInsets(top: CGFloat.margin4x, left: CGFloat.margin4x, bottom: CGFloat.margin4x, right: CGFloat.margin4x)
                 ) { [weak self] in
-                    self?.dismiss(animated: true) {
-                        onTap()
-                    }
+                    onTap()
+                    self?.dismiss(animated: true)
                 }
                 buttonItems.append(buttonItem)
                 model.addItemView(buttonItem)
