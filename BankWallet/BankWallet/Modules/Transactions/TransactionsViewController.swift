@@ -86,12 +86,25 @@ class TransactionsViewController: ThemeViewController {
         headerBackgroundTriggerOffset = headerBackgroundTriggerOffset == nil ? tableView.contentOffset.y : headerBackgroundTriggerOffset
     }
 
+    private func bind(itemAt indexPath: IndexPath, to cell: UITableViewCell?) {
+        guard let items = items, items.count > indexPath.row else {
+            return
+        }
+
+        let item = items[indexPath.row]
+        if let cell = cell as? TransactionCell {
+            delegate.willShow(item: item)
+            cell.bind(item: item, first: indexPath.row == 0, last: tableView.numberOfRows(inSection: indexPath.section) == indexPath.row + 1)
+        }
+
+        if indexPath.row >= self.tableView(tableView, numberOfRowsInSection: 0) - 1 {
+            delegate.onBottomReached()
+        }
+    }
+
     private func reload(indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
-            if let cell = tableView.cellForRow(at: indexPath) as? TransactionCell, let item = items?[indexPath.row] {
-                delegate.willShow(item: item)
-                cell.bind(item: item, first: indexPath.row == 0, last: tableView.numberOfRows(inSection: indexPath.section) == indexPath.row + 1)
-            }
+            bind(itemAt: indexPath, to: tableView.cellForRow(at: indexPath))
         }
     }
 
@@ -175,17 +188,7 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let items = items, items.count > indexPath.row else {
-            return
-        }
-        if let cell = cell as? TransactionCell {
-            delegate.willShow(item: items[indexPath.row])
-            cell.bind(item: items[indexPath.row], first: indexPath.row == 0, last: tableView.numberOfRows(inSection: indexPath.section) == indexPath.row + 1)
-        }
-
-        if indexPath.row >= self.tableView(tableView, numberOfRowsInSection: 0) - 1 {
-            delegate.onBottomReached()
-        }
+        bind(itemAt: indexPath, to: cell)
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
