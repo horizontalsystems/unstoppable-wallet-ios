@@ -310,6 +310,7 @@
 "settings_privacy.connection.section_footer" = "Manche Blockchains bieten noch keine Möglichkeit des Peer-to-Peer-Betriebs von mobilen Anwendungen. Die Kommunikation mit BTC, BCH, LTC und DASH Blockchains erfolgt vollständig über Peer-to-Peer.";
 "settings_privacy.sync.section_header" = "Blockchain-Wiederherstellung";
 "settings_privacy.sync.section_footer" = "Wählen Sie die Datenquelle für die Wiederherstellung des Wallets mit Transaktionen aus.";
+"settings_privacy.alert_title.sync." = "%@ Restore";
 "settings_privacy.sorting_default" = "Standard";
 "settings_privacy.sorting_shuffle" = "Zufällig";
 "settings_privacy.sorting_deterministic" = "BIP69";
