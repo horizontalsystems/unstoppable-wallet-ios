@@ -35,7 +35,7 @@
 
 "welcome.new_wallet" = "Wallet Erstellen";
 "welcome.restore_wallet" = "Wallet Wiederherstellen";
-"welcome.privacy_settings" = "Privacy Settings";
+"welcome.privacy_settings" = "Privatsphäre-Einstellungen";
 "welcome.version" = "Version %@";
 
 // Restore
@@ -63,7 +63,7 @@
 "coin_settings.sync_mode.description" = "Links zu API-Quellen: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
 "sync_mode.from_blockchain" = "Von Blockchain";
 "blockchain_settings.change_alert.title" = "Adressformatierung";
-"blockchain_settings.change_alert.content" = "After this change the wallet will have to resync itself with the %@ blockchain.\nWhen you change the address format for %@ the current balance and transaction history will no longer be visible on balance tab. Changing it back to previous setting will bring everything back after the wallet resyncs itself with the blockchain. We recommend not to change it if not sure what that is.";
+"blockchain_settings.change_alert.content" = "Nach dieser Änderung muss sich das Wallet mit der %@ Blockchain neu synchronisieren.\n\nWenn Sie das Adressformat für %@ ändern, sind der aktuelle Saldo und die Transaktionshistorie auf der Registerkarte Kontostand nicht mehr sichtbar. Wenn Sie es auf die vorherige Einstellung zurücksetzen, wird alles wieder hergestellt, nachdem sich das Wallet mit der Blockchain synchronisiert hat. Wir empfehlen, dies nicht zu ändern, falls Sie nicht sicher sind, was das ist.";
 "blockchain_settings.change_alert.action_button_text" = "Ändern zu %@";
 "blockchain_settings.sync_mode_change_alert.content" = "Diese Aktion erfordert, dass sich die Unstoppable App mit Bitcoin, Bitcoin Cash und Dash Blockchains neu synchronisiert, falls Sie eines dieser Token aktiviert haben. Ihr Guthaben oder Ihre Transaktionen sind davon nicht betroffen.\n\nWir empfehlen, diese Einstellung nicht zu ändern, falls Sie sich der Wirkungsweise nicht sicher sind.";
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
@@ -296,23 +296,23 @@
 "settings_security.title" = "Sicherheit";
 "settings_security.blockchain_settings" = "Blockchain Einstellungen";
 "settings_security.passcode" = "Code";
-"settings_security.privacy" = "Privacy";
+"settings_security.privacy" = "Privatsphäre";
 "settings_security.change_pin" = "Code bearbeiten";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "security_settings.delete_alert_button" = "Von Telefon löschen";
-"settings_privacy.title" = "Privacy";
-"settings_privacy.header_description" = "This app doesn’t share any of your data. However, as it communicates with blockchains some public data like IP address can potentially be leaked.";
-"settings_privacy.sorting_title" = "Inputs/Outputs";
-"settings_privacy.sorting.section_header" = "Blockchain Transactions";
-"settings_privacy.sorting.section_footer" = "Make your BTC, LTC, BCH transactions harder to trace by changing the way transactions are structured.";
-"settings_privacy.connection.section_header" = "Blockchain Connection";
-"settings_privacy.connection.section_footer" = "Some blockchains do not yet provide means for mobile apps to operate in peer to peer manner. The communications with BTC, BCH, LTC, DASH blockchains is fully peer to peer.";
-"settings_privacy.sync.section_header" = "Blockchain Restore";
-"settings_privacy.sync.section_footer" = "Select data source for restoring wallet with transactions.";
-"settings_privacy.sorting_default" = "Default";
-"settings_privacy.sorting_shuffle" = "Shuffle";
-"settings_privacy.sorting_deterministic" = "Deterministic Bip69";
+"settings_privacy.title" = "Privatsphäre";
+"settings_privacy.header_description" = "Diese App gibt keine Ihrer Daten weiter. Da sie jedoch mit Blockchains kommuniziert, können bestimmte öffentliche Daten wie die IP-Adresse möglicherweise weitergegeben werden.";
+"settings_privacy.sorting_title" = "Ein-/Ausgänge";
+"settings_privacy.sorting.section_header" = "Blockchain-Transaktionen";
+"settings_privacy.sorting.section_footer" = "Machen Sie Ihre BTC, LTC und BCH Transaktionen schwieriger nachvollziehbar, indem Sie die Transaktionsstruktur verändern.";
+"settings_privacy.connection.section_header" = "Blockchain-Verbindung";
+"settings_privacy.connection.section_footer" = "Manche Blockchains bieten noch keine Möglichkeit des Peer-to-Peer-Betriebs von mobilen Anwendungen. Die Kommunikation mit BTC, BCH, LTC und DASH Blockchains erfolgt vollständig über Peer-to-Peer.";
+"settings_privacy.sync.section_header" = "Blockchain-Wiederherstellung";
+"settings_privacy.sync.section_footer" = "Wählen Sie die Datenquelle für die Wiederherstellung des Wallets mit Transaktionen aus.";
+"settings_privacy.sorting_default" = "Standard";
+"settings_privacy.sorting_shuffle" = "Zufällig";
+"settings_privacy.sorting_deterministic" = "BIP69";
 
 // Settings -> Contact
 
