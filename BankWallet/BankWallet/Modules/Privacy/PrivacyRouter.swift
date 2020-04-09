@@ -12,7 +12,7 @@ extension PrivacyRouter {
 
     static func module() -> UIViewController {
         let router = PrivacyRouter()
-        let interactor = PrivacyInteractor()
+        let interactor = PrivacyInteractor(initialSyncSettingsManager: App.shared.initialSyncSettingsManager)
         let presenter = PrivacyPresenter(interactor: interactor, router: router)
         let viewController = PrivacyViewController(delegate: presenter)
 
