@@ -35,7 +35,7 @@
 
 "welcome.new_wallet" = "Nouveu Porte-Monnaie";
 "welcome.restore_wallet" = "Restaurer le porte-monnaie";
-"welcome.privacy_settings" = "Privacy Settings";
+"welcome.privacy_settings" = "Paramètres de Confidentialité";
 "welcome.version" = "Version %@";
 
 // Restore
@@ -63,7 +63,7 @@
 "coin_settings.sync_mode.description" = "Liens vers les sources de l'API : \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
 "sync_mode.from_blockchain" = "De la Blockchain";
 "blockchain_settings.change_alert.title" = "Format de l'adresse";
-"blockchain_settings.change_alert.content" = "After this change the wallet will have to resync itself with the %@ blockchain.\nWhen you change the address format for %@ the current balance and transaction history will no longer be visible on balance tab. Changing it back to previous setting will bring everything back after the wallet resyncs itself with the blockchain. We recommend not to change it if not sure what that is.";
+"blockchain_settings.change_alert.content" = "Après ce changement, le portefeuille devra se resynchroniser avec la blockchain %@.\n\nSi vous changez le format d'adresse pour %@ , l'historique du solde actuel et des transactions ne sera plus visible dans l'onglet solde. Si vous revenez au paramètre précédent, tout sera remis en place une fois que le portefeuille se sera resynchronisé avec la blockchain. Nous vous recommandons de ne pas faire de modification si vous n'êtes pas sûr de vous.";
 "blockchain_settings.change_alert.action_button_text" = "Changer en %@";
 "blockchain_settings.sync_mode_change_alert.content" = "Si vous avez activé l'un de ces tokens, l'application Unstoppable devra se resynchroniser avec les blockchains Bitcoin, Bitcoin Cash et Dash. Votre solde ou vos transactions ne seront pas affectés.\n\nNous vous recommandons de ne pas modifier ce paramètre si vous n'êtes pas sûr de sa fonction.";
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
@@ -296,23 +296,23 @@
 "settings_security.title" = "Centre de Sécurité";
 "settings_security.blockchain_settings" = "Paramètres de la Blockchain";
 "settings_security.passcode" = "Code";
-"settings_security.privacy" = "Privacy";
+"settings_security.privacy" = "Confidentialité";
 "settings_security.change_pin" = "Modifier le code ";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "security_settings.delete_alert_button" = "Supprimer de l'appareil";
-"settings_privacy.title" = "Privacy";
-"settings_privacy.header_description" = "This app doesn’t share any of your data. However, as it communicates with blockchains some public data like IP address can potentially be leaked.";
-"settings_privacy.sorting_title" = "Inputs/Outputs";
-"settings_privacy.sorting.section_header" = "Blockchain Transactions";
-"settings_privacy.sorting.section_footer" = "Make your BTC, LTC, BCH transactions harder to trace by changing the way transactions are structured.";
-"settings_privacy.connection.section_header" = "Blockchain Connection";
-"settings_privacy.connection.section_footer" = "Some blockchains do not yet provide means for mobile apps to operate in peer to peer manner. The communications with BTC, BCH, LTC, DASH blockchains is fully peer to peer.";
-"settings_privacy.sync.section_header" = "Blockchain Restore";
-"settings_privacy.sync.section_footer" = "Select data source for restoring wallet with transactions.";
-"settings_privacy.sorting_default" = "Default";
-"settings_privacy.sorting_shuffle" = "Shuffle";
-"settings_privacy.sorting_deterministic" = "Deterministic Bip69";
+"settings_privacy.title" = "Confidentialité";
+"settings_privacy.header_description" = "Cette application ne partage aucune de vos données. Cependant, comme elle communique avec des blockchains, certaines données publiques comme l'adresse IP peuvent potentiellement être divulguées.";
+"settings_privacy.sorting_title" = "Entrées/Sorties";
+"settings_privacy.sorting.section_header" = "Transactions Blockchain";
+"settings_privacy.sorting.section_footer" = "Rendez vos transactions BTC, LTC, BCH plus difficiles à détecter en modifiant la structure des transactions.";
+"settings_privacy.connection.section_header" = "Connection Blockchain";
+"settings_privacy.connection.section_footer" = "Certaines blockchains ne permettent pas encore aux applications mobiles de fonctionner en mode peer to peer. Les communications avec les blockchains BTC, BCH, LTC, DASH sont entièrement de type peer to peer.";
+"settings_privacy.sync.section_header" = "Restauration Blockchain";
+"settings_privacy.sync.section_footer" = "Sélectionnez la source de données pour restaurer le portefeuille avec les transactions.";
+"settings_privacy.sorting_default" = "Défaut";
+"settings_privacy.sorting_shuffle" = "Mélanger";
+"settings_privacy.sorting_deterministic" = "BIP69";
 
 // Settings -> Contact
 
