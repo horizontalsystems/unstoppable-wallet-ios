@@ -35,7 +35,7 @@
 
 "welcome.new_wallet" = "새 지갑";
 "welcome.restore_wallet" = "지갑 복원";
-"welcome.privacy_settings" = "Privacy Settings";
+"welcome.privacy_settings" = "개인 정보 설정";
 "welcome.version" = "버전 %@";
 
 // Restore
@@ -63,7 +63,7 @@
 "coin_settings.sync_mode.description" = "API 출처 링크: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
 "sync_mode.from_blockchain" = "블록체인으로 부터";
 "blockchain_settings.change_alert.title" = "주소 형식";
-"blockchain_settings.change_alert.content" = "After this change the wallet will have to resync itself with the %@ blockchain.\nWhen you change the address format for %@ the current balance and transaction history will no longer be visible on balance tab. Changing it back to previous setting will bring everything back after the wallet resyncs itself with the blockchain. We recommend not to change it if not sure what that is.";
+"blockchain_settings.change_alert.content" = "이 변경 후 지갑은 %@ 블록체인과 다시 동기화 되어야합니다.\n\n%@ 의 주소 형식을 변경하실 때에 현재 잔액 및 거래 내역이 더 이상 잔액 탭에 표기되지 않습니다. 이전 설정으로 다시 변경하시면 지갑이 블록체인과 다시 동기화된 후 모든 것을 다시 가져옵니다. 저희는 그것이 확실치 않을시에 변경하지 않는 것을 권장합니다.";
 "blockchain_settings.change_alert.action_button_text" = "%@으로 변경";
 "blockchain_settings.sync_mode_change_alert.content" = "이 작업은 귀하께서 이러한 토큰을 활성화 하신 경우 언스타퍼블 앱이 비트코인, 비트코인 Cash 및 Dash 블록 체인과 다시 동기화 되어야 합니다. 귀하의 잔액 또는 거래에는 영향을 미치지 않습니다.\n\n저희는 이 기능이 확실치 않을 경우 설정을 변경하지 않는 것을 권장합니다.";
 "blockchain_settings.sync_mode.blockchain" = "블록 체인";
@@ -296,23 +296,23 @@
 "settings_security.title" = "보안 센터";
 "settings_security.blockchain_settings" = "블록 체인 설정";
 "settings_security.passcode" = "비밀번호";
-"settings_security.privacy" = "Privacy";
+"settings_security.privacy" = "개인정보";
 "settings_security.change_pin" = "비밀번호 변경";
 "settings_security.touch_id" = "터치 아이디";
 "settings_security.face_id" = "얼굴인식 아이디";
 "security_settings.delete_alert_button" = "휴대전화에서 삭제";
-"settings_privacy.title" = "Privacy";
-"settings_privacy.header_description" = "This app doesn’t share any of your data. However, as it communicates with blockchains some public data like IP address can potentially be leaked.";
-"settings_privacy.sorting_title" = "Inputs/Outputs";
-"settings_privacy.sorting.section_header" = "Blockchain Transactions";
-"settings_privacy.sorting.section_footer" = "Make your BTC, LTC, BCH transactions harder to trace by changing the way transactions are structured.";
-"settings_privacy.connection.section_header" = "Blockchain Connection";
-"settings_privacy.connection.section_footer" = "Some blockchains do not yet provide means for mobile apps to operate in peer to peer manner. The communications with BTC, BCH, LTC, DASH blockchains is fully peer to peer.";
-"settings_privacy.sync.section_header" = "Blockchain Restore";
-"settings_privacy.sync.section_footer" = "Select data source for restoring wallet with transactions.";
-"settings_privacy.sorting_default" = "Default";
-"settings_privacy.sorting_shuffle" = "Shuffle";
-"settings_privacy.sorting_deterministic" = "Deterministic Bip69";
+"settings_privacy.title" = "개인정보";
+"settings_privacy.header_description" = "이 앱은 귀하의 어떠한 정보를 공유하지 않습니다. 그러나 블록체인과의 통신을 위해 IP 주소와 같은 몇몇의 공개 정보가 유출될 수 있습니다.";
+"settings_privacy.sorting_title" = "입력/출력";
+"settings_privacy.sorting.section_header" = "블록체인 매매거래";
+"settings_privacy.sorting.section_footer" = "매매거래 구성 방식을 변경하셔서 BTC, LTC, BCH 매매거래를 더 추적하기 어렵게 만들어 주세요.";
+"settings_privacy.connection.section_header" = "블록체인 연결";
+"settings_privacy.connection.section_footer" = "몇몇의 블록체인은 아직 모바일 앱이 P2P 방식으로 작동하는 방법을 제공하지 않습니다. BTC, BCH, LTC, DASH 블록체인과의 통신은 전부 P2P 방식입니다.";
+"settings_privacy.sync.section_header" = "블록체인 복원";
+"settings_privacy.sync.section_footer" = "매매거래로 지갑을 복원 할 데이터 소스를 선택하세요.";
+"settings_privacy.sorting_default" = "기본";
+"settings_privacy.sorting_shuffle" = "셔플";
+"settings_privacy.sorting_deterministic" = "BIP69";
 
 // Settings -> Contact
 
