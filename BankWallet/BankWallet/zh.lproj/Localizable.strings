@@ -35,7 +35,7 @@
 
 "welcome.new_wallet" = "创建钱包";
 "welcome.restore_wallet" = "恢复钱包";
-"welcome.privacy_settings" = "Privacy Settings";
+"welcome.privacy_settings" = "隐私设置";
 "welcome.version" = "版本%@";
 
 // Restore
@@ -296,23 +296,23 @@
 "settings_security.title" = "安全中心";
 "settings_security.blockchain_settings" = "区块链设置";
 "settings_security.passcode" = "密码";
-"settings_security.privacy" = "Privacy";
+"settings_security.privacy" = "隐私";
 "settings_security.change_pin" = "编辑密码";
 "settings_security.touch_id" = "指纹识别";
 "settings_security.face_id" = "面部识别";
 "security_settings.delete_alert_button" = "从手机中删除";
-"settings_privacy.title" = "Privacy";
-"settings_privacy.header_description" = "This app doesn’t share any of your data. However, as it communicates with blockchains some public data like IP address can potentially be leaked.";
-"settings_privacy.sorting_title" = "Inputs/Outputs";
-"settings_privacy.sorting.section_header" = "Blockchain Transactions";
-"settings_privacy.sorting.section_footer" = "Make your BTC, LTC, BCH transactions harder to trace by changing the way transactions are structured.";
-"settings_privacy.connection.section_header" = "Blockchain Connection";
-"settings_privacy.connection.section_footer" = "Some blockchains do not yet provide means for mobile apps to operate in peer to peer manner. The communications with BTC, BCH, LTC, DASH blockchains is fully peer to peer.";
-"settings_privacy.sync.section_header" = "Blockchain Restore";
-"settings_privacy.sync.section_footer" = "Select data source for restoring wallet with transactions.";
-"settings_privacy.sorting_default" = "Default";
-"settings_privacy.sorting_shuffle" = "Shuffle";
-"settings_privacy.sorting_deterministic" = "Deterministic Bip69";
+"settings_privacy.title" = "隐私";
+"settings_privacy.header_description" = "此应用不分享您的任何数据。但是，由于其使用区块链进行通信，所以部分像 IP 地址等公共数据将有可能会泄漏。";
+"settings_privacy.sorting_title" = "输入/输出";
+"settings_privacy.sorting.section_header" = "区块链交易";
+"settings_privacy.sorting.section_footer" = "通过改变交易结构的方式使您的BTC、LTC、BCH交易更难被追踪。";
+"settings_privacy.connection.section_header" = "区块链连接";
+"settings_privacy.connection.section_footer" = "部分区块链未为手机应用提供以点对点运行的方法。与BTC、BCH、LTC、DASH 区块链的通信属于完全点对点。";
+"settings_privacy.sync.section_header" = "区块链恢复";
+"settings_privacy.sync.section_footer" = "通过交易为恢复钱包选择数据源。";
+"settings_privacy.sorting_default" = "默认";
+"settings_privacy.sorting_shuffle" = "随机排序";
+"settings_privacy.sorting_deterministic" = "BIP69";
 
 // Settings -> Contact
 
