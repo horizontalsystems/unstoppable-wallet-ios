@@ -63,7 +63,7 @@
 "coin_settings.sync_mode.description" = "API 源链接： \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
 "sync_mode.from_blockchain" = "来自区块链";
 "blockchain_settings.change_alert.title" = "地址格式";
-"blockchain_settings.change_alert.content" = "This action will require Unstoppable app to resync itself with %@ blockchain. Your current %@ transactions will no longer be visible. Changing it back to previous setting will bring everything back after the app resyncs with blockchain.";
+"blockchain_settings.change_alert.content" = "After this change the wallet will have to resync itself with the %@ blockchain.\nWhen you change the address format for %@ the current balance and transaction history will no longer be visible on balance tab. Changing it back to previous setting will bring everything back after the wallet resyncs itself with the blockchain. We recommend not to change it if not sure what that is.";
 "blockchain_settings.change_alert.action_button_text" = "更改为%@";
 "blockchain_settings.sync_mode_change_alert.content" = "如果您已任何比特币、比特币现金和Dash，此操作需要使用Unstoppable应用以将其和这些代币的区块链重新同步。您的余额和交易将不受影响。\n\n我们建议建议在不确定的情况下不要更改此设置。";
 "blockchain_settings.sync_mode.blockchain" = "区块链";
