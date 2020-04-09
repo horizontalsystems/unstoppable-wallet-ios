@@ -2,6 +2,8 @@ import UIKit
 import SnapKit
 
 class BaseManageAccountCell: UITableViewCell {
+    private static let horizontalMargin: CGFloat = .margin4x
+
     private let selectAnimationDuration = 0.3
 
     private let borderLayer = CAShapeLayer()
@@ -18,7 +20,7 @@ class BaseManageAccountCell: UITableViewCell {
 
         addSubview(contentHolder)
         contentHolder.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.leading.trailing.equalToSuperview().inset(BaseManageAccountCell.horizontalMargin)
             maker.top.bottom.equalToSuperview()
         }
         contentHolder.backgroundColor = .themeLawrence
@@ -145,6 +147,14 @@ class BaseManageAccountCell: UITableViewCell {
         } else {
             selectView.alpha = selected ? 1 : 0
         }
+    }
+
+}
+
+extension BaseManageAccountCell {
+
+    static func contentWidth(forContainerWidth containerWidth: CGFloat) -> CGFloat {
+        containerWidth - horizontalMargin * 2
     }
 
 }
