@@ -112,7 +112,7 @@ extension SecuritySettingsViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
-            Section(id: "privacy", headerState: .margin(height: .margin8x), rows: privacyRows),
+            Section(id: "privacy", headerState: .margin(height: .margin3x), rows: privacyRows),
             Section(id: "pin", headerState: .margin(height: .margin8x), rows: pinRows)
         ]
 

@@ -41,17 +41,18 @@ extension BlockchainSettingsStorage: IBlockchainSettingsStorage {
         storage.deleteAll(settingKey: derivationKey)
     }
 
-    func initialSyncSetting(coinType: CoinType) throws -> InitialSyncSetting? {
+    func initialSyncSetting(coinType: CoinType) -> InitialSyncSetting? {
         guard let coinTypeKey = BlockchainSettingRecord.key(for: coinType) else {
-            throw InitialSyncSettingError.unsupportedCoinType
+            return nil
         }
 
-        return try storage.blockchainSettings(coinTypeKey: coinTypeKey, settingKey: initialSyncKey).map { record in
-            guard let syncMode = SyncMode(rawValue: record.value) else {
-                throw InitialSyncSettingError.unsupportedSyncMode
-            }
-            return InitialSyncSetting(coinType: coinType, syncMode: syncMode)
-        }
+        return storage.blockchainSettings(coinTypeKey: coinTypeKey, settingKey: initialSyncKey)
+                .flatMap { record in
+                    guard let syncMode = SyncMode(rawValue: record.value) else {
+                        return nil
+                    }
+                    return InitialSyncSetting(coinType: coinType, syncMode: syncMode)
+                }
     }
 
     func save(initialSyncSettings: [InitialSyncSetting]) {

@@ -9,19 +9,21 @@ class AdapterManager {
     private let binanceKitManager: BinanceKitManager
     private let walletManager: IWalletManager
     private let derivationSettingsManager: IDerivationSettingsManager
+    private let initialSyncSettingsManager: IInitialSyncSettingsManager
 
     private let subject = PublishSubject<Void>()
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.adapter_manager", qos: .userInitiated)
     private var adapters = [Wallet: IAdapter]()
 
-    init(adapterFactory: IAdapterFactory, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager, walletManager: IWalletManager, derivationSettingsManager: IDerivationSettingsManager) {
+    init(adapterFactory: IAdapterFactory, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager, walletManager: IWalletManager, derivationSettingsManager: IDerivationSettingsManager, initialSyncSettingsManager: IInitialSyncSettingsManager) {
         self.adapterFactory = adapterFactory
         self.ethereumKitManager = ethereumKitManager
         self.eosKitManager = eosKitManager
         self.binanceKitManager = binanceKitManager
         self.walletManager = walletManager
         self.derivationSettingsManager = derivationSettingsManager
+        self.initialSyncSettingsManager = initialSyncSettingsManager
 
         let scheduler = SerialDispatchQueueScheduler(qos: .utility)
 
@@ -33,6 +35,13 @@ class AdapterManager {
                 .disposed(by: disposeBag)
 
         derivationSettingsManager.derivationUpdatedObservable
+                .observeOn(scheduler)
+                .subscribe(onNext: { [weak self] coinType in
+                    self?.refreshAdapters(coinType: coinType)
+                })
+                .disposed(by: disposeBag)
+
+        initialSyncSettingsManager.syncModeUpdatedObservable
                 .observeOn(scheduler)
                 .subscribe(onNext: { [weak self] coinType in
                     self?.refreshAdapters(coinType: coinType)
