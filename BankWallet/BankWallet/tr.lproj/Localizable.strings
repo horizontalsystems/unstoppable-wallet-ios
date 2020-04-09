@@ -35,7 +35,7 @@
 
 "welcome.new_wallet" = "Cüzdan Oluştur";
 "welcome.restore_wallet" = "Cüzdanı Geri Yükle";
-"welcome.privacy_settings" = "Privacy Settings";
+"welcome.privacy_settings" = "Gizlilik Ayarları";
 "welcome.version" = "Sürüm %@";
 
 // Restore
@@ -61,9 +61,9 @@
 "coin_settings.sync_mode.fast.description" = "0-2 saat, Tavsiye edilen";
 "coin_settings.sync_mode.slow.description" = "1-24 saat";
 "coin_settings.sync_mode.description" = "API kaynak linkleri: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg\n";
-"sync_mode.from_blockchain" = "From Blockchain";
+"sync_mode.from_blockchain" = "Blockchain çıkışlı";
 "blockchain_settings.change_alert.title" = "Adres Formatı";
-"blockchain_settings.change_alert.content" = "After this change the wallet will have to resync itself with the %@ blockchain.\nWhen you change the address format for %@ the current balance and transaction history will no longer be visible on balance tab. Changing it back to previous setting will bring everything back after the wallet resyncs itself with the blockchain. We recommend not to change it if not sure what that is.";
+"blockchain_settings.change_alert.content" = "Bu değişiklikten sonra cüzdan %@ blok zinciri ile kendini yeniden senkronize etmek zorunda kalacak.\n\n%@ için adres biçimini değiştirdiğinizde, mevcut bakiye ve işlem geçmişi artık bakiye sekmesinde görünmeyecek. Bir önceki ayara geri döndürmek, cüzdan blok zinciriyle kendini yeniden senkronize ettikten sonra her şeyi geri getirecektir. Bunun ne olduğundan emin değilseniz değiştirmemenizi öneririz.";
 "blockchain_settings.change_alert.action_button_text" = "%@'e değiştir";
 "blockchain_settings.sync_mode_change_alert.content" = "Bu işlem, Unstoppable uygulaması Bitcoin, Bitcoin Cash and Dash blockchain ile kendini yeniden senkronize etmek için gerektirir, bu belirteçlerden herhangi birini etkinleştirdiyseniz. Bakiyeniz veya işlemleriniz etkilenmeyecektir.\n\nNe yaptığından emin değilseniz bu ayarı değiştirmemenizi öneririz.";
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
@@ -135,7 +135,7 @@
 "send.tx_speed_low" = "Düşük";
 "send.tx_speed_medium" = "Orta";
 "send.tx_speed_high" = "Yüksek";
-"send.tx_speed_custom" = "Custom";
+"send.tx_speed_custom" = "Özel";
 "send.tx_duration" = "Süre";
 "send.duration.instant" = "Anlık";
 "send.duration.within" = "%@ içinde";
@@ -263,7 +263,7 @@
 "manage_coins.title" = "Kripto Para yöneticisi";
 "manage_coins.add_coin.title" = "%@ ekle ";
 "manage_coins.add_coin.subtitle" = "%@ Cüzdanı";
-"manage_coins.add_coin.text" = "You need to set up %@ wallet to be able to send or receive %@.\n\nUse the Create button below to set up a new %@ wallet, or Restore button to import the existing one.\n\nYou will be able to use this wallet for: %@.";
+"manage_coins.add_coin.text" = "%@ göndermek ve alabilmek için %@ cüzdanı gerekiyor. \n\nYeni bir %@ cüzdan oluşturmak için aşağıdaki Oluştur düğmesini kullanın, yada yukarıda bahsedilen Cüzdanınız varsa Geri Yükle düğmesini kullanın.\n\n Mevcut Cüzdanınızı %@ için kullanabilirsiniz.";
 "manage_coins.add_coin.create" = "Oluştur";
 "manage_coins.add_coin.restore" = "Geri Yükle";
 
@@ -296,23 +296,23 @@
 "settings_security.title" = "Güvenlik Merkezi";
 "settings_security.blockchain_settings" = "Blockchain Ayarları";
 "settings_security.passcode" = "Kod";
-"settings_security.privacy" = "Privacy";
+"settings_security.privacy" = "Gizlilik";
 "settings_security.change_pin" = "Kod Değiştir";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "security_settings.delete_alert_button" = "Cihazdan sil";
-"settings_privacy.title" = "Privacy";
-"settings_privacy.header_description" = "This app doesn’t share any of your data. However, as it communicates with blockchains some public data like IP address can potentially be leaked.";
-"settings_privacy.sorting_title" = "Inputs/Outputs";
-"settings_privacy.sorting.section_header" = "Blockchain Transactions";
-"settings_privacy.sorting.section_footer" = "Make your BTC, LTC, BCH transactions harder to trace by changing the way transactions are structured.";
-"settings_privacy.connection.section_header" = "Blockchain Connection";
-"settings_privacy.connection.section_footer" = "Some blockchains do not yet provide means for mobile apps to operate in peer to peer manner. The communications with BTC, BCH, LTC, DASH blockchains is fully peer to peer.";
-"settings_privacy.sync.section_header" = "Blockchain Restore";
-"settings_privacy.sync.section_footer" = "Select data source for restoring wallet with transactions.";
-"settings_privacy.sorting_default" = "Default";
-"settings_privacy.sorting_shuffle" = "Shuffle";
-"settings_privacy.sorting_deterministic" = "Deterministic Bip69";
+"settings_privacy.title" = "Gizlilik";
+"settings_privacy.header_description" = "Bu uygulama verilerinizden hiçbirini paylaşmıyor. Bununla birlikte, blok zincirlerle iletişim kurduğundan, IP adresi gibi bazı genel veriler potansiyel olarak sızdırılabilir.";
+"settings_privacy.sorting_title" = "Giriş/Çıkış";
+"settings_privacy.sorting.section_header" = "Blockchain İşlemleri";
+"settings_privacy.sorting.section_footer" = "İşlemlerin yapılandırılma şeklini değiştirerek BTC, LTC, BCH işlemlerinizin izlenilmesini zorlaştırın.";
+"settings_privacy.connection.section_header" = "Blokzincir Bağlantısı";
+"settings_privacy.connection.section_footer" = "Bazı blok zincirler, mobil uygulamaların peer to peer şekilde çalışması için henüz bir araç sağlamamaktadır. BTC, BCH, LTC, DASH blok zincirleriyle iletişim tamamen peer to peer.";
+"settings_privacy.sync.section_header" = "Blockchain Geri Yükleme";
+"settings_privacy.sync.section_footer" = "Cüzdanı işlemlerle geri yüklemek için veri kaynağını seçin.";
+"settings_privacy.sorting_default" = "Varsayılan";
+"settings_privacy.sorting_shuffle" = "Karıştır";
+"settings_privacy.sorting_deterministic" = "BIP69";
 
 // Settings -> Contact
 
@@ -332,7 +332,7 @@
 "settings_manage_keys.show" = "Göster";
 "settings_manage_keys.create" = "Oluştur";
 "settings_manage_keys.restore" = "Geri Yükle";
-"settings_manage_keys.settings" = "Address Format";
+"settings_manage_keys.settings" = "Adres Formatı";
 "settings_manage_keys.delete.cant_delete" = "Bu cüzdanın özel anahtarını, bu telefondan silinmeden önce yedeklemeniz gerekir.";
 "settings_manage_keys.delete.title" = "Cüzdanı Sil";
 "settings_manage_keys.delete.confirmation_remove" = "Bu işlem %@ Cüzdanını bu cihazdan kaldıracak.";
