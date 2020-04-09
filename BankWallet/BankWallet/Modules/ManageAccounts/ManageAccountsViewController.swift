@@ -48,11 +48,12 @@ class ManageAccountsViewController: ThemeViewController {
             Row<TitleManageAccountCell>(
                     id: "account_\(viewItem.title)",
                     autoDeselect: true,
-                    dynamicHeight: { _ in
-                        TitleManageAccountCell.height
+                    dynamicHeight: { [weak self] _ in
+                        TitleManageAccountCell.height(forContainerWidth: self?.tableView.width ?? 0, viewItem: viewItem)
                     },
-                    bind: { cell, _ in
-                        cell.bind(viewItem: viewItem)
+                    bind: { [weak self] cell, _ in
+                        let height = TitleManageAccountCell.height(forContainerWidth: self?.tableView.width ?? 0, viewItem: viewItem)
+                        cell.bind(viewItem: viewItem, height: height)
                     }
             )
         )

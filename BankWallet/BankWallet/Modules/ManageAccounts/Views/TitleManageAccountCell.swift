@@ -1,7 +1,14 @@
 import UIKit
 
 class TitleManageAccountCell: BaseManageAccountCell {
-    static let height: CGFloat = 60
+    private static let walletImage = UIImage(named: "Wallet Icon")?.withRenderingMode(.alwaysTemplate)
+    private static let walletImageLeftMargin: CGFloat = .margin4x
+    private static let textsHorizontalMargin: CGFloat = .margin4x
+    private static let titleTopMargin: CGFloat = 10
+    private static let titleBottomMargin: CGFloat = 5
+    private static let coinsBottomMargin: CGFloat = .margin2x
+    private static let titleFont: UIFont = .headline2
+    private static let coinsFont: UIFont = .subhead2
 
     private let walletImageView = CoinIconImageView()
     private let titleLabel = UILabel()
@@ -14,29 +21,29 @@ class TitleManageAccountCell: BaseManageAccountCell {
         contentHolder.addSubview(walletImageView)
         walletImageView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
-            maker.leading.equalToSuperview().offset(CGFloat.margin6x)
+            maker.leading.equalToSuperview().offset(TitleManageAccountCell.walletImageLeftMargin)
         }
-        walletImageView.image = UIImage(named: "Wallet Icon")?.withRenderingMode(.alwaysTemplate)
+        walletImageView.image = TitleManageAccountCell.walletImage
 
         contentHolder.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(walletImageView.snp.trailing).offset(CGFloat.margin4x)
-            maker.top.equalToSuperview().offset(CGFloat.margin2x)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.leading.equalTo(walletImageView.snp.trailing).offset(TitleManageAccountCell.textsHorizontalMargin)
+            maker.top.equalToSuperview().offset(TitleManageAccountCell.titleTopMargin)
+            maker.trailing.equalToSuperview().inset(TitleManageAccountCell.textsHorizontalMargin)
         }
 
         titleLabel.textColor = .themeOz
-        titleLabel.font = .headline2
+        titleLabel.font = TitleManageAccountCell.titleFont
 
         contentHolder.addSubview(coinLabel)
         coinLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(titleLabel)
-            maker.top.equalTo(titleLabel.snp.bottom).offset(3)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.leading.trailing.equalTo(titleLabel)
+            maker.top.equalTo(titleLabel.snp.bottom).offset(TitleManageAccountCell.titleBottomMargin)
         }
 
+        coinLabel.numberOfLines = 0
         coinLabel.textColor = .themeGray
-        coinLabel.font = .subhead2
+        coinLabel.font = TitleManageAccountCell.coinsFont
 
     }
 
@@ -44,12 +51,26 @@ class TitleManageAccountCell: BaseManageAccountCell {
         super.init(coder: aDecoder)
     }
 
-    func bind(viewItem: ManageAccountViewItem) {
-        super.bind(position: .top, highlighted: viewItem.highlighted, height: TitleManageAccountCell.height)
+    func bind(viewItem: ManageAccountViewItem, height: CGFloat) {
+        super.bind(position: .top, highlighted: viewItem.highlighted, height: height)
 
         titleLabel.text = viewItem.title
         coinLabel.text = viewItem.coinCodes
         walletImageView.tintColor = viewItem.highlighted ? .themeJacob : .themeGray
+    }
+
+}
+
+extension TitleManageAccountCell {
+
+    static func height(forContainerWidth containerWidth: CGFloat, viewItem: ManageAccountViewItem) -> CGFloat {
+        let contentWidth = BaseManageAccountCell.contentWidth(forContainerWidth: containerWidth)
+        let textsWidth = contentWidth - walletImageLeftMargin - (walletImage?.size.width ?? 0) - textsHorizontalMargin * 2
+
+        let titleHeight = viewItem.title.height(forContainerWidth: textsWidth, font: titleFont)
+        let coinsHeight = viewItem.coinCodes.height(forContainerWidth: textsWidth, font: coinsFont)
+
+        return titleTopMargin + titleHeight + titleBottomMargin + coinsHeight + coinsBottomMargin
     }
 
 }

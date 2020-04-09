@@ -1,7 +1,7 @@
 import UIKit
 
 class ProceedManageAccountCell: BaseManageAccountCell {
-    static let height: CGFloat = 44
+    static let height: CGFloat = .heightSingleLineCell
 
     private let titleLabel = UILabel()
     private let warningImageView = UIImageView(image: UIImage(named: "Attention Icon")?.tinted(with: .themeYellowD))
@@ -12,7 +12,7 @@ class ProceedManageAccountCell: BaseManageAccountCell {
 
         contentHolder.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(CGFloat.margin6x)
+            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
             maker.centerY.equalToSuperview()
         }
 
