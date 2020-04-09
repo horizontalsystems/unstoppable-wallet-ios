@@ -35,7 +35,7 @@
 
 "welcome.new_wallet" = "Создать Кошелек";
 "welcome.restore_wallet" = "Восстановить Кошелек";
-"welcome.privacy_settings" = "Privacy Settings";
+"welcome.privacy_settings" = "Настройки Приватности";
 "welcome.version" = "Версия %@";
 
 // Restore
@@ -61,9 +61,9 @@
 "coin_settings.sync_mode.fast.description" = "0-2 ч, Рекомендуется";
 "coin_settings.sync_mode.slow.description" = "1-24 ч";
 "coin_settings.sync_mode.description" = "Ссылки на источники API: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
-"sync_mode.from_blockchain" = "From Blockchain";
+"sync_mode.from_blockchain" = "Из Блокчейна";
 "blockchain_settings.change_alert.title" = "Формат Адреса";
-"blockchain_settings.change_alert.content" = "After this change the wallet will have to resync itself with the %@ blockchain.\nWhen you change the address format for %@ the current balance and transaction history will no longer be visible on balance tab. Changing it back to previous setting will bring everything back after the wallet resyncs itself with the blockchain. We recommend not to change it if not sure what that is.";
+"blockchain_settings.change_alert.content" = "После этого изменения кошелек должен будет повторно синхронизироваться с блокчейном %@ .\n\nПри изменении формата адреса для %@ текущая история транзакций не будет отображаться на вкладке баланса. Если вернуться к предыдущей настройке, все вернется после того, как кошелек повторно синхронизируется с блокчейном. Мы рекомендуем не менять его, если не уверены, что это такое.";
 "blockchain_settings.change_alert.action_button_text" = "Изменить на %@";
 "blockchain_settings.sync_mode_change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin, Bitcoin Cash and Dash blockchains, if you have enabled any of these tokens. Your balance or transactions won\'t be affected.\n\nWe recommend not to change this setting if not sure what it does.";
 "blockchain_settings.sync_mode.blockchain" = "Блокчейн";
@@ -296,23 +296,23 @@
 "settings_security.title" = "Безопасность";
 "settings_security.blockchain_settings" = "Настройки Блокчейна";
 "settings_security.passcode" = "Код Доступа";
-"settings_security.privacy" = "Privacy";
+"settings_security.privacy" = "Приватность";
 "settings_security.change_pin" = "Изменить Код";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "security_settings.delete_alert_button" = "Удалить с устройства";
-"settings_privacy.title" = "Privacy";
-"settings_privacy.header_description" = "This app doesn’t share any of your data. However, as it communicates with blockchains some public data like IP address can potentially be leaked.";
-"settings_privacy.sorting_title" = "Inputs/Outputs";
-"settings_privacy.sorting.section_header" = "Blockchain Transactions";
-"settings_privacy.sorting.section_footer" = "Make your BTC, LTC, BCH transactions harder to trace by changing the way transactions are structured.";
-"settings_privacy.connection.section_header" = "Blockchain Connection";
-"settings_privacy.connection.section_footer" = "Some blockchains do not yet provide means for mobile apps to operate in peer to peer manner. The communications with BTC, BCH, LTC, DASH blockchains is fully peer to peer.";
-"settings_privacy.sync.section_header" = "Blockchain Restore";
-"settings_privacy.sync.section_footer" = "Select data source for restoring wallet with transactions.";
-"settings_privacy.sorting_default" = "Default";
-"settings_privacy.sorting_shuffle" = "Shuffle";
-"settings_privacy.sorting_deterministic" = "Deterministic Bip69";
+"settings_privacy.title" = "Приватность";
+"settings_privacy.header_description" = "Наше приложение не делится информацией ни с кем. Но при взаимодействии с блокчейнами некоторые публичные данные как ваш IP адрес могут фиксироваться в сети.";
+"settings_privacy.sorting_title" = "Входы/Выходы";
+"settings_privacy.sorting.section_header" = "Блокчейн Tранзакции";
+"settings_privacy.sorting.section_footer" = "Поменять способ оформления транзакций что бы трудно было уследить за вашими BTC, LTC, BCH операциями.";
+"settings_privacy.connection.section_header" = "Соединение с Блокчейном";
+"settings_privacy.connection.section_footer" = "Некоторые блокчейны не имеют инфраструктуру для работы мобильных приложений в режиме peer-to-peer (P2P). Работа с блокчейнами BTC, BCH, LTC, DASH проходит полностью в режиме P2P.";
+"settings_privacy.sync.section_header" = "Восстановить Блокчейн";
+"settings_privacy.sync.section_footer" = "Выбрать источник данных для восстановления транзакций кошелька.";
+"settings_privacy.sorting_default" = "По умолчанию";
+"settings_privacy.sorting_shuffle" = "Вперемешку";
+"settings_privacy.sorting_deterministic" = "BIP69";
 
 // Settings -> Contact
 
