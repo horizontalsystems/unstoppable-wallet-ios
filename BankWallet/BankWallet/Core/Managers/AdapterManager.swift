@@ -37,16 +37,24 @@ class AdapterManager {
         derivationSettingsManager.derivationUpdatedObservable
                 .observeOn(scheduler)
                 .subscribe(onNext: { [weak self] coinType in
-                    self?.refreshAdapters(coinType: coinType)
+                    self?.onUpdateDerivation(coinType: coinType)
                 })
                 .disposed(by: disposeBag)
 
         initialSyncSettingsManager.syncModeUpdatedObservable
                 .observeOn(scheduler)
                 .subscribe(onNext: { [weak self] coinType in
-                    self?.refreshAdapters(coinType: coinType)
+                    self?.onUpdateSyncMode(coinType: coinType)
                 })
                 .disposed(by: disposeBag)
+    }
+
+    private func onUpdateDerivation(coinType: CoinType) {
+        refreshAdapters(walletsForUpdate: walletManager.wallets.filter { $0.coin.type == coinType })
+    }
+
+    private func onUpdateSyncMode(coinType: CoinType) {
+        refreshAdapters(walletsForUpdate: walletManager.wallets.filter { $0.coin.type == coinType && $0.account.origin == .restored })
     }
 
     private func initAdapters(wallets: [Wallet]) {
@@ -83,10 +91,7 @@ class AdapterManager {
         }
     }
 
-    private func refreshAdapters(coinType: CoinType) {
-        let wallets = walletManager.wallets
-        let walletsForUpdate = wallets.filter { $0.coin.type == coinType }
-
+    private func refreshAdapters(walletsForUpdate: [Wallet]) {
         guard !walletsForUpdate.isEmpty else {
             return
         }
@@ -95,7 +100,7 @@ class AdapterManager {
             walletsForUpdate.forEach { self.adapters[$0] = nil }
         }
 
-        initAdapters(wallets: wallets)
+        initAdapters(wallets: walletManager.wallets)
     }
 }
 
