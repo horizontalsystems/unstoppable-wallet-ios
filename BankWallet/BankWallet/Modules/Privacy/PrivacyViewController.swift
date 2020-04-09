@@ -130,7 +130,7 @@ class PrivacyViewController: ThemeViewController {
 extension PrivacyViewController: IPrivacyView {
 
     func updateUI() {
-        tableView.buildSections()
+        tableView.reload()
     }
 
     func set(sortingMode: String) {
@@ -143,6 +143,18 @@ extension PrivacyViewController: IPrivacyView {
 
     func set(syncModeItems: [PrivacyViewItem]) {
         self.syncModeItems = syncModeItems
+    }
+
+    func showSyncModeAlert(itemIndex: Int, coinName: String, selected: String, all: [String]) {
+        let alertController = AlertViewController(
+                header: "settings_privacy.alert_title.sync.".localized(coinName),
+                rows: all.map { title in
+                    AlertRow(text: title, selected: title == selected)
+                }) { [weak self] selectedIndex in
+            self?.delegate.onSelectSyncSetting(itemIndex: itemIndex, settingIndex: selectedIndex)
+        }
+
+        present(alertController, animated: true)
     }
 
 }

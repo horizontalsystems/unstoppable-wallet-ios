@@ -304,7 +304,7 @@ protocol IBlockchainSettingsStorage {
     func save(derivationSettings: [DerivationSetting])
     func deleteDerivationSettings()
 
-    func initialSyncSetting(coinType: CoinType) throws -> InitialSyncSetting?
+    func initialSyncSetting(coinType: CoinType) -> InitialSyncSetting?
     func save(initialSyncSettings: [InitialSyncSetting])
 }
 
@@ -522,4 +522,12 @@ protocol IDerivationSettingsManager {
     func setting(coinType: CoinType) -> DerivationSetting?
     func save(setting: DerivationSetting)
     func reset()
+}
+
+protocol IInitialSyncSettingsManager {
+    var allSettings: [(setting: InitialSyncSetting, coins: [Coin])] { get }
+    var syncModeUpdatedObservable: Observable<CoinType> { get }
+
+    func setting(coinType: CoinType) -> InitialSyncSetting?
+    func save(setting: InitialSyncSetting)
 }
