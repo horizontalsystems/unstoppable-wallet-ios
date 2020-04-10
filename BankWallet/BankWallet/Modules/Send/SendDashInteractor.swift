@@ -4,9 +4,11 @@ class SendDashInteractor {
     weak var delegate: ISendDashInteractorDelegate?
 
     private let adapter: ISendDashAdapter
+    private let transactionDataSortModeSettingsManager: ITransactionDataSortModeSettingManager
 
-    init(adapter: ISendDashAdapter) {
+    init(adapter: ISendDashAdapter, transactionDataSortModeSettingsManager: ITransactionDataSortModeSettingManager) {
         self.adapter = adapter
+        self.transactionDataSortModeSettingsManager = transactionDataSortModeSettingsManager
     }
 
 }
@@ -48,7 +50,7 @@ extension SendDashInteractor: ISendDashInteractor {
     }
 
     func sendSingle(amount: Decimal, address: String) -> Single<Void> {
-        return adapter.sendSingle(amount: amount, address: address)
+        adapter.sendSingle(amount: amount, address: address, sortMode: transactionDataSortModeSettingsManager.setting)
     }
 
 }
