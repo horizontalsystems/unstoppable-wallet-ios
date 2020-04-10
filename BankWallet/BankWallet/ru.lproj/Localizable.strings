@@ -197,7 +197,7 @@
 
 "full_info.title" = "Транзакция";
 "full_info.time" = "Время";
-"full_info.block" = "Заблокировать";
+"full_info.block" = "Блок";
 "full_info.confirmations" = "Подтверждения";
 "full_info.size" = "Размер";
 "full_info.fee" = "Комиссия";
@@ -212,8 +212,8 @@
 "full_info.nonce" = "Nonce";
 "full_info.status" = "Статус";
 "full_info.memo" = "Memo";
-"full_info.cpu" = "Использование CPU";
-"full_info.net" = "Использование Интернета";
+"full_info.cpu" = "CPU Usage";
+"full_info.net" = "Net Usage";
 "full_info.milli_seconds" = "%@ μs";
 "full_info.bytes" = "%@ Bytes";
 
@@ -348,13 +348,13 @@
 "set_pin.title" = "Код Доступа";
 "set_pin.info" = "Ваш код будет использоваться для разблокировки вашего кошелька";
 "set_pin.confirm.info" = "Подтвердить";
-"set_pin.wrong_confirmation" = "Код доступа не совпадает. Попробуйте еще раз";
+"set_pin.wrong_confirmation" = "Код не совпадает. Попробуйте еще раз";
 
 // Edit PIN
 
-"edit_pin.title" = "Изменить Код доступа";
-"edit_pin.unlock_info" = "Текущий Код доступа";
-"edit_pin.new_pin_info" = "Новый Код доступа";
+"edit_pin.title" = "Изменить Код";
+"edit_pin.unlock_info" = "Текущий Код";
+"edit_pin.new_pin_info" = "Новый Код";
 
 // Unlock PIN
 
@@ -400,7 +400,7 @@
 
 // Create Wallet
 
-"create_wallet.title" = "Новый Кошелек";
+"create_wallet.title" = "Создать Кошелек";
 "create_wallet.create_button" = "Создать";
 
 // Select Coins
