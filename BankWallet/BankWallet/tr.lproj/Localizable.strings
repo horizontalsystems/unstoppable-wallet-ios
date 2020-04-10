@@ -43,7 +43,7 @@
 "restore.title" = "Bundan geri yükle";
 "restore.enter_key" = "Anahtarı girin";
 "restore.item_title" = "%@ Cüzdanı";
-"restore.description" = "Cüzdanı geri yüklemek için o cüzdanın gizli anahtarını girmelisiniz.\n\nDaha fazla cüzdanı geri yüklemek için bir cüzdanı geri yükledikten sonra Ayarlardaki Anahtarları Yönet bölümüne gidin.";
+"restore.description" = "Geri yüklemek istediğiniz bir cüzdan seçin. Seçmiş oldugunuz cüzdana ait gizli anahtara ihtiyacınız olacak.";
 "restore.words.description" = "%@ cüzdanı için gizli anahtarı gir";
 "restore.validation_failed" = "Yanlış Anahtar";
 "restore.placeholder.account_name" = "Account Name";
@@ -390,7 +390,7 @@
 "chart.market_cap.million" = "%@ M";
 "chart.market_cap.billion" = "%@ B";
 "chart.market_cap.trillion" = "%@ T";
-"chart.volume" = "Birim";
+"chart.volume" = "Birim(24 saat)";
 "chart.circulation" = "Dolaşan Arz	";
 "chart.max_supply" = "Toplam Arz";
 "chart.error.not_available" = "Grafik yok";
