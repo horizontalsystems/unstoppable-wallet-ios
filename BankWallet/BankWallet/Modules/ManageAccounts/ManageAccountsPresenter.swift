@@ -76,12 +76,6 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
     }
 
     func didTapSettings(index: Int) {
-        let item = items[index]
-
-        guard let account = item.account else {
-            return
-        }
-
         router.showSettings()
     }
 
