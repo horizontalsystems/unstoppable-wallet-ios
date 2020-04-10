@@ -1,29 +1,28 @@
 import BitcoinCore
 
 class AdapterFactory: IAdapterFactory {
+    weak var derivationSettingsManager: IDerivationSettingsManager?
+    weak var initialSyncSettingsManager: IInitialSyncSettingsManager?
+
     private let appConfigProvider: IAppConfigProvider
     private let ethereumKitManager: EthereumKitManager
     private let eosKitManager: EosKitManager
     private let binanceKitManager: BinanceKitManager
-    private let initialSyncSettingsManager: IInitialSyncSettingsManager
-    private let derivationSettingsManager: IDerivationSettingsManager
 
-    init(appConfigProvider: IAppConfigProvider, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager, initialSyncSettingsManager: IInitialSyncSettingsManager, derivationSettingsManager: IDerivationSettingsManager) {
+    init(appConfigProvider: IAppConfigProvider, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager) {
         self.appConfigProvider = appConfigProvider
         self.ethereumKitManager = ethereumKitManager
         self.eosKitManager = eosKitManager
         self.binanceKitManager = binanceKitManager
-        self.initialSyncSettingsManager = initialSyncSettingsManager
-        self.derivationSettingsManager = derivationSettingsManager
     }
 
     func adapter(wallet: Wallet) -> IAdapter? {
-        let derivation = derivationSettingsManager.setting(coinType: wallet.coin.type)?.derivation
+        let derivation = derivationSettingsManager?.setting(coinType: wallet.coin.type)?.derivation
         let syncMode: SyncMode?
         if wallet.account.origin == .created {
             syncMode = .new
         } else {
-            syncMode = initialSyncSettingsManager.setting(coinType: wallet.coin.type)?.syncMode
+            syncMode = initialSyncSettingsManager?.setting(coinType: wallet.coin.type)?.syncMode
         }
 
         switch wallet.coin.type {
