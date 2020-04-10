@@ -28,10 +28,8 @@ class TransactionRecordPoolRepo {
         return activePoolWallets.contains(wallet)
     }
 
-    func deactivate(wallets: [Wallet]) {
-        wallets.forEach { wallet in
-            pools.removeValue(forKey: wallet)
-        }
+    func deactivateAllPools() {
+        pools.removeAll()
     }
 
 }

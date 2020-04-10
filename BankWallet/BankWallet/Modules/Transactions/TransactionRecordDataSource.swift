@@ -124,13 +124,7 @@ class TransactionRecordDataSource {
     }
 
     func handleUpdated(wallets: [Wallet]) {
-        let unusedWallets = poolRepo.allPools.filter { pool in
-            !wallets.contains(pool.wallet)
-        }.map { pool in
-            pool.wallet
-        }
-        poolRepo.deactivate(wallets: unusedWallets)
-
+        poolRepo.deactivateAllPools()
         set(wallets: wallets)
     }
 
