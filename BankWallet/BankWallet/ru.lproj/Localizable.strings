@@ -57,7 +57,7 @@
 "coin_settings.derivation.description_create" = "Этот параметр определяет формат адреса Bitcoin в этом кошельке. Мы рекомендуем использовать BIP49.";
 "coin_settings.derivation.description_restore" = "Выберите формат адреса для Bitcoin в кошельке, который вы пытаетесь восстановить.";
 "coin_settings.title" = "Настройки Блокчейна";
-"coin_settings.sync_mode.title" = "Restore Source";
+"coin_settings.sync_mode.title" = "Источник Восстановления";
 "coin_settings.sync_mode.fast.description" = "0-2 ч, Рекомендуется";
 "coin_settings.sync_mode.slow.description" = "1-24 ч";
 "coin_settings.sync_mode.description" = "Ссылки на источники API: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg";
