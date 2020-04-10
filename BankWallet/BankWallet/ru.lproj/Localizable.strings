@@ -135,7 +135,7 @@
 "send.tx_speed_low" = "Низкая";
 "send.tx_speed_medium" = "Средняя";
 "send.tx_speed_high" = "Высокая";
-"send.tx_speed_custom" = "Вперемешку";
+"send.tx_speed_custom" = "Вручную";
 "send.tx_duration" = "Продолжительность";
 "send.duration.instant" = "Мгновенно";
 "send.duration.within" = "в течение %@";
