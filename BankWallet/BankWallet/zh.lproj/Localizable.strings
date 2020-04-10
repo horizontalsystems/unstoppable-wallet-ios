@@ -310,7 +310,7 @@
 "settings_privacy.connection.section_footer" = "部分区块链未为手机应用提供以点对点运行的方法。与BTC、BCH、LTC、DASH 区块链的通信属于完全点对点。";
 "settings_privacy.sync.section_header" = "区块链恢复";
 "settings_privacy.sync.section_footer" = "通过交易为恢复钱包选择数据源。";
-"settings_privacy.alert_title.sync." = "%@ Restore";
+"settings_privacy.alert_title.sync." = "%@ 恢复";
 "settings_privacy.sorting_default" = "默认";
 "settings_privacy.sorting_shuffle" = "随机排序";
 "settings_privacy.sorting_deterministic" = "BIP69";
