@@ -35,7 +35,7 @@
 
 "welcome.new_wallet" = "Создать Кошелек";
 "welcome.restore_wallet" = "Восстановить Кошелек";
-"welcome.privacy_settings" = "Настройки конфиденциальности";
+"welcome.privacy_settings" = "Настройки Конфиденциальности";
 "welcome.version" = "Версия %@";
 
 // Restore
