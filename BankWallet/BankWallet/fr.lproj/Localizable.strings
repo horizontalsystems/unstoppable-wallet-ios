@@ -310,7 +310,7 @@
 "settings_privacy.connection.section_footer" = "Certaines blockchains ne permettent pas encore aux applications mobiles de fonctionner en mode peer to peer. Les communications avec les blockchains BTC, BCH, LTC, DASH sont entièrement de type peer to peer.";
 "settings_privacy.sync.section_header" = "Restauration Blockchain";
 "settings_privacy.sync.section_footer" = "Sélectionnez la source de données pour restaurer le portefeuille avec les transactions.";
-"settings_privacy.alert_title.sync." = "%@ Restore";
+"settings_privacy.alert_title.sync." = "%@ Restaurer";
 "settings_privacy.sorting_default" = "Défaut";
 "settings_privacy.sorting_shuffle" = "Mélanger";
 "settings_privacy.sorting_deterministic" = "BIP69";
