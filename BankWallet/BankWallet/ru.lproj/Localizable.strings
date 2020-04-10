@@ -390,8 +390,8 @@
 "chart.market_cap.million" = "%@ млн.";
 "chart.market_cap.billion" = "%@ млр.";
 "chart.market_cap.trillion" = "%@ трил.";
-"chart.volume" = "Объём";
-"chart.circulation" = "Выпущено";
+"chart.volume" = "Объём (за 24 ч)";
+"chart.circulation" = "В обороте";
 "chart.max_supply" = "Макс.выпуск";
 "chart.error.not_available" = "График недоступен";
 "chart.selected.price" = "Цена";
@@ -400,29 +400,29 @@
 
 // Create Wallet
 
-"create_wallet.title" = "Создать Кошелек";
+"create_wallet.title" = "Новый Кошелек";
 "create_wallet.create_button" = "Создать";
 
 // Select Coins
 
 "select_coins.choose_crypto" = "Выберите Валюту";
-"select_coins.next_button" = "Далее";
+"select_coins.next_button" = "Вперед";
 
-"price_notification.up" = "вверх";
+"price_notification.up" = "наверх";
 "price_notification.down" = "вниз";
-"price_notification.multi_title" = "Уведомления ";
+"price_notification.multi_title" = "Уведомления";
 
 // Lock Info
 
 "lock_info.title" = "TimeLock";
-"lock_info.text" = "Эти средства были отправлены с временной блокировкой, которая истекает в указанную дату.\n\nНе волнуйтесь, полученные биткойны уже ваши, но до истечения периода блокировки, вы не сможете потратить их.";
+"lock_info.text" = "Эти средства были отправлены с временной блокировкой, которая истекает в указанную дату.\n\nНе волнуйтесь, полученные биткойны уже ваши, но до истечения периода блокировки, вы не сможете их потратить в сети Bitcoin.";
 
 // Double Spend Info
 
 "double_spend_info.title" = "Двойная Трата";
 "double_spend_info.header" = "Двойная Трата! Существует другая транзакция в блокчейне, которая пытается использовать входные данные, используемые в этой транзакции. Только одна транзакция будет принята сетью";
 "double_spend_info.this_hash" = "Эта транзакция";
-"double_spend_info.conflicting_hash" = "Конфликтная транзакция";
+"double_spend_info.conflicting_hash" = "Конфликтующая транзакция";
 
 // Relative Date
 "timestamp.days_ago" = "%luд назад";
@@ -432,10 +432,10 @@
 // Intro
 
 "intro.skip" = "Пропустить";
-"intro.next" = "Далее";
+"intro.next" = "Вперед";
 "intro.independence.title" = "Независимость";
-"intro.independence.description" = "Надежное хранение, невозможно конфисковать, всегда под вашим контролем.";
+"intro.independence.description" = "Надежно храните криптоактивы, их невозможно конфисковать и они всегда в вашем распоряжении.";
 "intro.knowledge.title" = "Знания";
-"intro.knowledge.description" = "Узнай о новых блокчейн проектах на ранних стадиях. ";
-"intro.privacy.title" = "Приватность";
-"intro.privacy.description" = "Управляя капиталом сохрани свою приватность";
+"intro.knowledge.description" = "Оставайтесь в курсе новостей и узнавайте о растущих блокчейн-проектах на ранних стадиях.";
+"intro.privacy.title" = "Конфиденциальность";
+"intro.privacy.description" = "Увеличивайте свой капитал, оставаясь инкогнито и действуя анонимно.";
