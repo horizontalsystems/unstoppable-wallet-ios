@@ -58,6 +58,8 @@ class App {
     let derivationSettingsManager: IDerivationSettingsManager
     let restoreManager: IRestoreManager
 
+    let transactionDataSortModeSettingManager: ITransactionDataSortTypeSettingManager
+
     let rateCoinMapper: RateCoinMapper
 
     let kitCleaner: IKitCleaner
@@ -120,6 +122,8 @@ class App {
         initialSyncSettingsManager = InitialSyncSettingsManager(appConfigProvider: appConfigProvider, storage: settingsStorage)
         derivationSettingsManager = DerivationSettingsManager(walletManager: walletManager, storage: settingsStorage)
         restoreManager = RestoreManager(walletManager: walletManager, accountCreator: accountCreator, accountManager: accountManager)
+
+        transactionDataSortModeSettingManager = TransactionDataSortModeSettingManager(storage: localStorage)
 
         let adapterFactory: IAdapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, initialSyncSettingsManager: initialSyncSettingsManager, derivationSettingsManager: derivationSettingsManager)
         adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager, derivationSettingsManager: derivationSettingsManager, initialSyncSettingsManager: initialSyncSettingsManager)
