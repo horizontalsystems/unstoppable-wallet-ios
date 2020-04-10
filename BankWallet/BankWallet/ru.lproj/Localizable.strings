@@ -43,7 +43,7 @@
 "restore.title" = "Восстановить";
 "restore.enter_key" = "Введите Ключ";
 "restore.item_title" = "%@ Кошелек";
-"restore.description" = "Чтобы восстановить существующий кошелек вам нужно ввести приватный ключ для этого кошелька.\n\nКак только вы восстановите один кошелек, вы сможете восстановить больше кошельков, перейдя в раздел \"Управление Кошельками\" в настройках приложения.";
+"restore.description" = "Выберите кошелек, который вы хотите восстановить. Для этого кошелька вам понадобится приватный ключ.";
 "restore.words.description" = "Введите приватный ключ для кошелька %@, который состоит из %@ слов. Слова нужно ввести в правильном порядке и вставить пробелы между ними.";
 "restore.validation_failed" = "Неверный Ключ";
 "restore.placeholder.account_name" = "Account Name";
@@ -54,16 +54,16 @@
 "coin_settings.derivation.description_bip44" = "Старше (начинается с 1...)";
 "coin_settings.derivation.description_bip49" = "Популярные (начинается с 3...)";
 "coin_settings.derivation.description_bip84" = "Новейшие (начинается с bc1...)";
-"coin_settings.derivation.description_create" = "Этот параметр определяет формат адреса Bitcoin кошелька. Мы рекомендуем использовать BIP49.";
-"coin_settings.derivation.description_restore" = "Выберите формат адреса для Bitcoin кошелька, который вы пытаетесь восстановить.";
+"coin_settings.derivation.description_create" = "Этот параметр определяет формат адреса Bitcoin в этом кошельке. Мы рекомендуем использовать BIP49.";
+"coin_settings.derivation.description_restore" = "Выберите формат адреса для Bitcoin в кошельке, который вы пытаетесь восстановить.";
 "coin_settings.title" = "Настройки Блокчейна";
-"coin_settings.sync_mode.title" = "Опции восстановления";
+"coin_settings.sync_mode.title" = "Восстановить Источник";
 "coin_settings.sync_mode.fast.description" = "0-2 ч, Рекомендуется";
 "coin_settings.sync_mode.slow.description" = "1-24 ч";
-"coin_settings.sync_mode.description" = "Ссылки на источники API: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
+"coin_settings.sync_mode.description" = "Ссылки на источники API: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg";
 "sync_mode.from_blockchain" = "Из Блокчейна";
 "blockchain_settings.change_alert.title" = "Формат Адреса";
-"blockchain_settings.change_alert.content" = "После этого изменения кошелек должен будет повторно синхронизироваться с блокчейном %@ .\n\nПри изменении формата адреса для %@ текущая история транзакций не будет отображаться на вкладке баланса. Если вернуться к предыдущей настройке, все вернется после того, как кошелек повторно синхронизируется с блокчейном. Мы рекомендуем не менять его, если не уверены, что это такое.";
+"blockchain_settings.change_alert.content" = "После этого изменения кошелек должен будет повторно синхронизироваться с блокчейном %@.\n\nПри изменении формата адреса для %@ текущая история транзакций не будет отображаться на вкладке баланса. Вернув предыдущую настройку, вы вернете все после того, как кошелек повторно синхронизируется с блокчейном. Мы рекомендуем не менять его, если вы не уверены, что это такое.";
 "blockchain_settings.change_alert.action_button_text" = "Изменить на %@";
 "blockchain_settings.sync_mode_change_alert.content" = "Это действие потребует ресинхронизации приложения Unstoppable с Bitcoin, и блокчейнами Bitcoin Cash и Dash в случае, если вы активировали любые из этих токенов. Это не\'повлияет на ваш баланс или транзакции.\n\nМы не рекомендуем изменять эту настройку, если вы не уверены, каким будет результат этих изменений.";
 "blockchain_settings.sync_mode.blockchain" = "Блокчейн";
@@ -72,27 +72,27 @@
 // Backup
 
 "backup.close" = "Закрыть";
-"backup.backup_required" = "Необходима Резерв.Копия";
+"backup.backup_required" = "Необходима Резервная Копия";
 "backup.private_key" = "Приватный Ключ";
 
 "backup.intro.title_backup" = "Резервная Копия";
 "backup.intro.title_show" = "Показать Ключ";
-"backup.intro.subtitle" = "Приватный Ключ, который будет показан далее, - это единственный способ восстановить ваши средства, если ваш телефон потерян, украден, сломан и т.д. Убедитесь, что никто не смотрит на ваш экран.\n\nМонеты, контролируемые этим ключом: %@\n";
+"backup.intro.subtitle" = "Приватный Ключ, который будет показан далее, является единственным способом восстановления ваших средств в случае потери, кражи или поломки вашего телефона. Убедитесь, что никто не смотрит на ваш экран.\n\nЭтот ключ контролирует следующие монеты: %@";
 "backup.intro.later" = "Позже";
 "backup.intro.backup_now" = "Резервная копия";
 "backup.intro.show_key" = "Показать Ключ";
 
 "backup.words.confirmation_description" = "Введите слова из вашего %@ ключа";
 
-"backup.eos.account_name" = "Account Name";
-"backup.eos.active_private_key" = "Active Private Key";
-"backup.eos.hint" = "Копирование ключа с помощью действия «копировать» представляет определенный риск, если вы используете какие-либо приложения для управления буфером обмена или другие приложения, которые могут иметь доступ к данным буфера обмена.";
+"backup.eos.account_name" = "Имя аккаунта";
+"backup.eos.active_private_key" = "Активный приватный ключ";
+"backup.eos.hint" = "Копирование ключа с помощью действия «копировать» представляет определенный риск, если вы используете какие-либо приложения для управления буфером обмена, или другие приложения, которые могут иметь доступ к данным буфера обмена.";
 "error.send_eos.self_transfer" = "Не удается отправить токен на свой аккаунт";
-"error.send_eos.account_not_exist" = "Этот аккаунт не существует";
+"error.send_eos.account_not_exist" = "Целевой аккаунт не существует";
 "error.send_eos.insufficient_ram" = "У вашего аккаунта EOS недостаточно оперативной памяти для отправки этого токена. Для продолжения необходимо увеличить ставку RAM.";
-"error.send_eos.unknown" = "Что-то пошло не так: %@ ";
+"error.send_eos.unknown" = "Что-то пошло не так: %@";
 "error.send_ethereum.wrong_parameters" = "Неверные параметры";
-"error.send_binance.memo_required" = "Получатель требует memo в переводе транзакции";
+"error.send_binance.memo_required" = "Получатель требует заполненую memo при транзакции передачи";
 "error.send_binance.only_digits_allowed" = "Необходимо, чтобы memo содержало только цифры";
 
 "backup.confirmation.title" = "Проверка...";
@@ -107,8 +107,8 @@
 "balance.send" = "Отправить";
 "balance.deposit" = "Получить";
 "balance.rate_per_coin" = "%@ за %@";
-"balance.syncing" = "Синхронизация...";
-"balance.syncing_percent" = "Синхронизация... %@";
+"balance.syncing" = "Идет синхронизация...";
+"balance.syncing_percent" = "Идет синхронизация... %@";
 "balance.synced_through" = "до: %@";
 "balance.add_coin" = "Добавить Токен";
 "balance.sort.header" = "Сортировать по";
@@ -121,7 +121,7 @@
 "deposit.receive_coin" = "Получить %@";
 "deposit.your_address" = "Ваш Адрес";
 "deposit.your_account" = "Ваш Аккаунт";
-"receive_alert.not_backed_up_description" = "Вам нужно сделать резервную копию %@ ключа, прежде чем вы сможете получать %@.";
+"receive_alert.not_backed_up_description" = "Вам нужно сделать резервную копию %@ Кошелька, прежде чем вы сможете получать %@.";
 
 // Send
 
@@ -129,13 +129,13 @@
 "send.amount_placeholder" = "Сумма";
 "send.amount_error.min_required_balance" = "Мин. обязательный остаток %@";
 "send.address_placeholder" = "Адрес";
-"send.account_placeholder" = "Account";
+"send.account_placeholder" = "Аккаунт";
 "send.fee" = "Комиссия";
 "send.tx_speed" = "Скорость Транзакции";
 "send.tx_speed_low" = "Низкая";
 "send.tx_speed_medium" = "Средняя";
 "send.tx_speed_high" = "Высокая";
-"send.tx_speed_custom" = "Вручную";
+"send.tx_speed_custom" = "Индивидуальная";
 "send.tx_duration" = "Продолжительность";
 "send.duration.instant" = "Мгновенно";
 "send.duration.within" = "в течение %@";
@@ -143,7 +143,7 @@
 "send.duration.minutes" = "%d мин.";
 "send.available_balance" = "Доступный Баланс";
 "send.max_button" = "Макс.";
-"send.next_button" = "Далее";
+"send.next_button" = "Вперед";
 "send.error.invalid_address" = "Неверный Адрес";
 "send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 час";
@@ -151,17 +151,17 @@
 "send.hodler_locktime_half_year" = "6 месяцев";
 "send.hodler_locktime_year" = "1 год";
 "send.hodler_locktime_off" = "Выкл.";
-"send.hodler_error.unsupported_address" = "Временная блокировка работает только с адресами P2PKH (начинаются с 1)";
+"send.hodler_error.unsupported_address" = "Временная блокировка работает только с адресами P2PKH (начиная с 1)";
 
 "send.confirmation.title" = "Подтвердить";
 "send.confirmation.memo_placeholder" = "Memo";
-"send.confirmation.total" = "Итого";
+"send.confirmation.total" = "Всего";
 "send.confirmation.send_button" = "Отправить";
 "send.amount_error.balance" = "Баланс %@";
 "send.amount_error.maximum_amount" = "Макс. сумма %@";
 "send.amount_error.minimum_amount" = "Мин. сумма %@";
 "send.amount_error.min_required_balance" = "Мин. обязательный остаток %@";
-"send.token.insufficient_fee_alert" = "Комиссия за отправку %@ (%@) взимается в %@. Необходимо %@.";
+"send.token.insufficient_fee_alert" = "Комиссии за транзакцию %@ (%@) взимаются в %@. Вам нужно %@.";
 
 "send.lock_time" = "TimeLock";
 // Transactions
@@ -169,17 +169,17 @@
 "transactions.title" = "Транзакции";
 "transactions.tab_bar_item" = "Транзакции";
 "transactions.filter_all" = "Все";
-"transactions.empty_text" = "У Вас ещё нет ожидаемых или прошлых транзакций ";
-"transactions.pending" = "В процессе";
-"transactions.receiving" = "Получение";
+"transactions.empty_text" = "У Вас ещё нет незавершенных или прошлых транзакций";
+"transactions.pending" = "В обработке";
+"transactions.receiving" = "Получает";
 "transactions.failed" = "Не удалось";
-"transactions.sending" = "Отправка";
+"transactions.sending" = "Отправляется";
 
 // Transaction Info
 
 "tx_info.title" = "Транзакция";
 "tx_info.status" = "Статус";
-"tx_info.status.pending" = "В процессе";
+"tx_info.status.pending" = "В обработке";
 "tx_info.status.confirmed" = "Подтверждено";
 "tx_info.status.failed" = "Не удалось";
 "tx_info.from_hash" = "От";
@@ -189,7 +189,7 @@
 "tx_info.rate" = "Исторический Курс";
 "tx_info.fee" = "Комиссия";
 "tx_info.to_self_note" = "Эта транзакция отправлена на свой адрес";
-"tx_info.double_spent_note" = "Двойные Трата Риск!";
+"tx_info.double_spent_note" = "Риск двойной траты!";
 "tx_info.locked_until" = "Заблокировано до %@";
 "tx_info.recipient_hash" = "Получатель";
 
@@ -197,7 +197,7 @@
 
 "full_info.title" = "Транзакция";
 "full_info.time" = "Время";
-"full_info.block" = "Блок";
+"full_info.block" = "Заблокировать";
 "full_info.confirmations" = "Подтверждения";
 "full_info.size" = "Размер";
 "full_info.fee" = "Комиссия";
@@ -212,8 +212,8 @@
 "full_info.nonce" = "Nonce";
 "full_info.status" = "Статус";
 "full_info.memo" = "Memo";
-"full_info.cpu" = "CPU Usage";
-"full_info.net" = "Net Usage";
+"full_info.cpu" = "Использование CPU";
+"full_info.net" = "Использование Интернета";
 "full_info.milli_seconds" = "%@ μs";
 "full_info.bytes" = "%@ Bytes";
 
