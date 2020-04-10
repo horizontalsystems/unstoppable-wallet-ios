@@ -56,6 +56,7 @@ class App {
 
     let initialSyncSettingsManager: IInitialSyncSettingsManager
     let derivationSettingsManager: IDerivationSettingsManager
+    let ethereumRpcModeSettingsManager: IEthereumRpcModeSettingsManager
     let restoreManager: IRestoreManager
 
     let transactionDataSortModeSettingManager: ITransactionDataSortTypeSettingManager
@@ -118,15 +119,20 @@ class App {
         let eosKitManager = EosKitManager(appConfigProvider: appConfigProvider)
         let binanceKitManager = BinanceKitManager(appConfigProvider: appConfigProvider)
 
+        let adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager)
+        adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager)
+
         let settingsStorage: IBlockchainSettingsStorage = BlockchainSettingsStorage(storage: storage)
-        initialSyncSettingsManager = InitialSyncSettingsManager(appConfigProvider: appConfigProvider, storage: settingsStorage)
-        derivationSettingsManager = DerivationSettingsManager(walletManager: walletManager, storage: settingsStorage)
+        derivationSettingsManager = DerivationSettingsManager(walletManager: walletManager, adapterManager: adapterManager, storage: settingsStorage)
+        initialSyncSettingsManager = InitialSyncSettingsManager(walletManager: walletManager, adapterManager: adapterManager, appConfigProvider: appConfigProvider, storage: settingsStorage)
+        ethereumRpcModeSettingsManager = EthereumRpcModeSettingsManager(ethereumKitManager: ethereumKitManager, walletManager: walletManager, adapterManager: adapterManager, localStorage: localStorage)
         restoreManager = RestoreManager(walletManager: walletManager, accountCreator: accountCreator, accountManager: accountManager)
 
         transactionDataSortModeSettingManager = TransactionDataSortModeSettingManager(storage: localStorage)
 
-        let adapterFactory: IAdapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, initialSyncSettingsManager: initialSyncSettingsManager, derivationSettingsManager: derivationSettingsManager)
-        adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager, derivationSettingsManager: derivationSettingsManager, initialSyncSettingsManager: initialSyncSettingsManager)
+        adapterFactory.derivationSettingsManager = derivationSettingsManager
+        adapterFactory.initialSyncSettingsManager = initialSyncSettingsManager
+        ethereumKitManager.ethereumRpcModeSettingsManager = ethereumRpcModeSettingsManager
 
         pinKit = PinKit.Kit(secureStorage: keychainKit.secureStorage, localStorage: StorageKit.LocalStorage.default)
         let blurManager: IBlurManager = BlurManager(pinKit: pinKit)

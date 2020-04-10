@@ -1,5 +1,3 @@
-import RxSwift
-
 class DerivationSettingsManager {
     private let supportedCoinTypes: [(coinType: CoinType, defaultDerivation: MnemonicDerivation)] = [
         (.bitcoin, .bip49),
@@ -7,12 +5,12 @@ class DerivationSettingsManager {
     ]
 
     private let walletManager: IWalletManager
+    private let adapterManager: IAdapterManager
     private let storage: IBlockchainSettingsStorage
 
-    private let subject = PublishSubject<CoinType>()
-
-    init (walletManager: IWalletManager, storage: IBlockchainSettingsStorage) {
+    init (walletManager: IWalletManager, adapterManager: IAdapterManager, storage: IBlockchainSettingsStorage) {
         self.walletManager = walletManager
+        self.adapterManager = adapterManager
         self.storage = storage
     }
 
@@ -46,10 +44,6 @@ extension DerivationSettingsManager: IDerivationSettingsManager {
         }
     }
 
-    var derivationUpdatedObservable: Observable<CoinType> {
-        subject.asObservable()
-    }
-
     func setting(coinType: CoinType) -> DerivationSetting? {
         let storedSetting = storage.derivationSetting(coinType: coinType)
         return storedSetting ?? defaultSetting(coinType: coinType)
@@ -57,7 +51,12 @@ extension DerivationSettingsManager: IDerivationSettingsManager {
 
     func save(setting: DerivationSetting) {
         storage.save(derivationSettings: [setting])
-        subject.onNext(setting.coinType)
+
+        let walletsForUpdate = walletManager.wallets.filter { $0.coin.type == setting.coinType }
+
+        if !walletsForUpdate.isEmpty {
+            adapterManager.refreshAdapters(wallets: walletsForUpdate)
+        }
     }
 
     func reset() {
