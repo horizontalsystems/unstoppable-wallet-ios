@@ -222,10 +222,10 @@
 "full_info.gas_price" = "Gas Price";
 
 "full_info.source.title" = "Источник";
-"full_info.source.online" = "онлайн";
-"full_info.source.offline" = "офлайн";
+"full_info.source.online" = "в сети";
+"full_info.source.offline" = "недоступен";
 
-"full_info.error.server_offline" = "офлайн";
+"full_info.error.server_offline" = "недоступен";
 "full_info.error.transaction_not_found" = "Транзакция не найдена в блокчейне";
 "full_info.error.retry" = "Повторить";
 "full_info.error.change_source" = "Изменить Источник";
@@ -297,14 +297,14 @@
 "settings_security.blockchain_settings" = "Настройки Блокчейна";
 "settings_security.passcode" = "Код Доступа";
 "settings_security.privacy" = "Конфиденциальность";
-"settings_security.change_pin" = "Изменить Код доступа";
+"settings_security.change_pin" = "Изменить Код";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "security_settings.delete_alert_button" = "Удалить с телефона";
 "settings_privacy.title" = "Конфиденциальность";
 "settings_privacy.header_description" = "Наше приложение не делится никакой информацией ни с кем. Но при взаимодействии с блокчейнами некоторые публичные данные, такие как ваш IP адрес, могут фиксироваться в сети.";
 "settings_privacy.sorting_title" = "Входы/Выходы";
-"settings_privacy.sorting.section_header" = "Tранзакции блокчейна";
+"settings_privacy.sorting.section_header" = "Tранзакции Блокчейна";
 "settings_privacy.sorting.section_footer" = "Поменяйте способ структурирования транзакций, чтобы затруднить отслеживание ваших BTC, LTC, BCH операций.";
 "settings_privacy.connection.section_header" = "Подключение к Блокчейну";
 "settings_privacy.connection.section_footer" = "Некоторые блокчейны не имеют инфраструктуру для работы мобильных приложений в пиринговом режиме (P2P). Работа с блокчейнами BTC, BCH, LTC, DASH проходит полностью в режиме P2P.";
