@@ -24,7 +24,7 @@
 
 "n/a" = "Нет данных";
 
-"biometric_usage_reason" = "Разблокировать кошелек";
+"biometric_usage_reason" = "Разблокировать Кошелек";
 
 // Access Camera
 
@@ -85,7 +85,7 @@
 "backup.words.confirmation_description" = "Введите слова из вашего %@ ключа";
 
 "backup.eos.account_name" = "Account Name";
-"backup.eos.active_private_key" = "Активный приватный ключ";
+"backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Копирование ключа с помощью действия «копировать» представляет определенный риск, если вы используете какие-либо приложения для управления буфером обмена, или другие приложения, которые могут иметь доступ к данным буфера обмена.";
 "error.send_eos.self_transfer" = "Не удается отправить токен на свой аккаунт";
 "error.send_eos.account_not_exist" = "Целевой аккаунт не существует";
