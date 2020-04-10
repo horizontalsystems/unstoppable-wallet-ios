@@ -43,7 +43,7 @@
 "restore.title" = "Restaurer à partir de";
 "restore.enter_key" = "Entrez la clé";
 "restore.item_title" = "%@ Portefeuille";
-"restore.description" = "Pour restaurer un portefeuille existant, vous devez entrer une clé privée pour ce portefeuille.\n\nUne fois que vous avez restauré un portefeuille, vous pourrez en restaurer d'autres via la section Gérer les portefeuilles dans les paramètres Sécurité de l'application.";
+"restore.description" = "Choisissez un portefeuille que vous voulez restaurer. Vous aurez besoin d'une clé privée pour ce portefeuille.";
 "restore.words.description" = "Entrez votre clé privée pour %@ Portefeuille qui se compose de %@ mots. Les mots doivent être entrés dans l'ordre correct et séparés par des espaces.";
 "restore.validation_failed" = "Clé incorrect";
 "restore.placeholder.account_name" = "Account Name";
@@ -390,7 +390,7 @@
 "chart.market_cap.million" = "%@ M";
 "chart.market_cap.billion" = "%@ G";
 "chart.market_cap.trillion" = "%@ T";
-"chart.volume" = "Volume";
+"chart.volume" = "Volume(24h)";
 "chart.circulation" = "Offre en Circulation	";
 "chart.max_supply" = "Offre totale";
 "chart.error.not_available" = "Graphique non disponible";
