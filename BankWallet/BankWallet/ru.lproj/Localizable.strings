@@ -8,52 +8,52 @@
 "button.confirm" = "Подтвердить";
 "button.done" = "Готово";
 "button.restore" = "Восстановить";
-"button.next" = "Далее";
+"button.next" = "Вперед";
 "button.share" = "Поделиться";
-"button.sync" = "Синхр.";
+"button.sync" = "Синхронизировать";
 "button.paste" = "Вставить";
 "button.backup" = "Резервная копия";
 "button.copy" = "Скопировать";
 "button.back" = "Назад";
 
 "alert.copied" = "Скопировано";
-"alert.no_internet" = "Нет интернета";
+"alert.no_internet" = "Нет Интернета";
 "alert.no_fee" = "Неправильная комиссия";
-"alert.network_issue" = "Проблемы с сетью. Попробуйте еще раз ";
+"alert.network_issue" = "Проблемы с сетью. Попробуйте еще раз";
 "alert.unknown_error" = "Неизвестная Ошибка";
 
 "n/a" = "Нет данных";
 
-"biometric_usage_reason" = "Разблокировать Кошелек";
+"biometric_usage_reason" = "Разблокировать кошелек";
 
 // Access Camera
 
-"access_camera.message" = "Unstoppable Wallet необходим доступ к вашей камере для QR-код.\n\nПерейдите в \"Настройки\", чтобы разрешить доступ к камере.";
+"access_camera.message" = "Кошелек Unstoppable требует доступ к вашей камере для сканирования QR-кода.\n\nПерейдите в \"Настройки\" - > Unstoppable и разрешите доступ к Камере.";
 "access_camera.settings" = "Настройки";
 
 // Welcome
 
 "welcome.new_wallet" = "Создать Кошелек";
 "welcome.restore_wallet" = "Восстановить Кошелек";
-"welcome.privacy_settings" = "Настройки Приватности";
+"welcome.privacy_settings" = "Настройки конфиденциальности";
 "welcome.version" = "Версия %@";
 
 // Restore
 
-"restore.title" = "Восстановить ";
+"restore.title" = "Восстановить";
 "restore.enter_key" = "Введите Ключ";
 "restore.item_title" = "%@ Кошелек";
 "restore.description" = "Чтобы восстановить существующий кошелек вам нужно ввести приватный ключ для этого кошелька.\n\nКак только вы восстановите один кошелек, вы сможете восстановить больше кошельков, перейдя в раздел \"Управление Кошельками\" в настройках приложения.";
-"restore.words.description" = "Введите приватный ключ для кошелька %@";
+"restore.words.description" = "Введите приватный ключ для кошелька %@, который состоит из %@ слов. Слова нужно ввести в правильном порядке и вставить пробелы между ними.";
 "restore.validation_failed" = "Неверный Ключ";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
 // Coin Settings
 
-"coin_settings.derivation.description_bip44" = "Старые (начинается с 1...)";
+"coin_settings.derivation.description_bip44" = "Старше (начинается с 1...)";
 "coin_settings.derivation.description_bip49" = "Популярные (начинается с 3...)";
-"coin_settings.derivation.description_bip84" = "Новый (начинается с bc1...)";
+"coin_settings.derivation.description_bip84" = "Новейшие (начинается с bc1...)";
 "coin_settings.derivation.description_create" = "Этот параметр определяет формат адреса Bitcoin кошелька. Мы рекомендуем использовать BIP49.";
 "coin_settings.derivation.description_restore" = "Выберите формат адреса для Bitcoin кошелька, который вы пытаетесь восстановить.";
 "coin_settings.title" = "Настройки Блокчейна";
@@ -65,7 +65,7 @@
 "blockchain_settings.change_alert.title" = "Формат Адреса";
 "blockchain_settings.change_alert.content" = "После этого изменения кошелек должен будет повторно синхронизироваться с блокчейном %@ .\n\nПри изменении формата адреса для %@ текущая история транзакций не будет отображаться на вкладке баланса. Если вернуться к предыдущей настройке, все вернется после того, как кошелек повторно синхронизируется с блокчейном. Мы рекомендуем не менять его, если не уверены, что это такое.";
 "blockchain_settings.change_alert.action_button_text" = "Изменить на %@";
-"blockchain_settings.sync_mode_change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin, Bitcoin Cash and Dash blockchains, if you have enabled any of these tokens. Your balance or transactions won\'t be affected.\n\nWe recommend not to change this setting if not sure what it does.";
+"blockchain_settings.sync_mode_change_alert.content" = "Это действие потребует ресинхронизации приложения Unstoppable с Bitcoin, и блокчейнами Bitcoin Cash и Dash в случае, если вы активировали любые из этих токенов. Это не\'повлияет на ваш баланс или транзакции.\n\nМы не рекомендуем изменять эту настройку, если вы не уверены, каким будет результат этих изменений.";
 "blockchain_settings.sync_mode.blockchain" = "Блокчейн";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "Формат Адреса";
