@@ -126,7 +126,7 @@ extension SendRouter {
         let (addressView, addressModule, addressRouter) = SendAddressRouter.module(coin: coin)
         let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
 
-        let interactor = SendDashInteractor(adapter: adapter)
+        let interactor = SendDashInteractor(adapter: adapter, transactionDataSortModeSettingsManager: App.shared.transactionDataSortModeSettingManager)
         let presenter = SendDashHandler(interactor: interactor, amountModule: amountModule, addressModule: addressModule, feeModule: feeModule)
 
         interactor.delegate = presenter
