@@ -310,7 +310,7 @@
 "settings_privacy.connection.section_footer" = "Некоторые блокчейны не имеют инфраструктуру для работы мобильных приложений в режиме peer-to-peer (P2P). Работа с блокчейнами BTC, BCH, LTC, DASH проходит полностью в режиме P2P.";
 "settings_privacy.sync.section_header" = "Восстановить Блокчейн";
 "settings_privacy.sync.section_footer" = "Выбрать источник данных для восстановления транзакций кошелька.";
-"settings_privacy.alert_title.sync." = "%@ Restore";
+"settings_privacy.alert_title.sync." = "%@ Восстановить";
 "settings_privacy.sorting_default" = "По умолчанию";
 "settings_privacy.sorting_shuffle" = "Вперемешку";
 "settings_privacy.sorting_deterministic" = "BIP69";
