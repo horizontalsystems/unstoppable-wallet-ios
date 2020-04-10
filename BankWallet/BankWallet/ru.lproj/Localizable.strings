@@ -223,9 +223,9 @@
 
 "full_info.source.title" = "Источник";
 "full_info.source.online" = "в сети";
-"full_info.source.offline" = "недоступен";
+"full_info.source.offline" = "не доступен";
 
-"full_info.error.server_offline" = "недоступен";
+"full_info.error.server_offline" = "не доступен";
 "full_info.error.transaction_not_found" = "Транзакция не найдена в блокчейне";
 "full_info.error.retry" = "Повторить";
 "full_info.error.change_source" = "Изменить Источник";
@@ -245,7 +245,7 @@
 "settings.about" = "О приложении";
 "settings.tell_friends" = "Рассказать Друзьям";
 "settings.contact" = "Kонтакты";
-"settings.light_mode" = "Облегченный Режим";
+"settings.light_mode" = "Светлый Режим";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
 
