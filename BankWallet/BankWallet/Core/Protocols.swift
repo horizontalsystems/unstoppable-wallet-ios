@@ -23,6 +23,7 @@ protocol ILocalStorage: class {
     var sendInputType: SendInputType? { get set }
     var mainShownOnce: Bool { get set }
     var appVersions: [AppVersion] { get set }
+    var transactionDataSortMode: TransactionDataSortMode? { get set }
     var lockTimeEnabled: Bool { get set }
     var appLaunchCount: Int { get set }
     var rateAppLastRequestDate: Date? { get set }
@@ -530,4 +531,9 @@ protocol IInitialSyncSettingsManager {
 
     func setting(coinType: CoinType) -> InitialSyncSetting?
     func save(setting: InitialSyncSetting)
+}
+
+protocol ITransactionDataSortTypeSettingManager {
+    var setting: TransactionDataSortMode { get }
+    func save(setting: TransactionDataSortMode)
 }

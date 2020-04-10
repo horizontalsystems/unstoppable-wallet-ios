@@ -19,6 +19,7 @@ class LocalStorage {
     private let mainShownOnceKey = "main_shown_once_key"
     private let debugLogKey = "debug_log_key"
     private let keyAppVersions = "app_versions"
+    private let keyTransactionDataSortMode = "transaction_data_sort_mode"
     private let keyLockTimeEnabled = "lock_time_enabled"
     private let keyAppLaunchCount = "app_launch_count"
     private let keyRateAppLastRequestDate = "rate_app_last_request_date"
@@ -117,6 +118,18 @@ extension LocalStorage: ILocalStorage {
         }
         set {
             storage.set(value: try? JSONEncoder().encode(newValue), for: keyAppVersions)
+        }
+    }
+
+    var transactionDataSortMode: TransactionDataSortMode? {
+        get {
+            if let rawValue: String = storage.value(for: keyTransactionDataSortMode), let value = TransactionDataSortMode(rawValue: rawValue) {
+                return value
+            }
+            return nil
+        }
+        set {
+            storage.set(value: newValue?.rawValue, for: keyTransactionDataSortMode)
         }
     }
 
