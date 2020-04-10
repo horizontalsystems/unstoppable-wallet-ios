@@ -28,7 +28,7 @@
 
 // Access Camera
 
-"access_camera.message" = "Кошелек Unstoppable требует доступ к вашей камере для сканирования QR-кода.\n\nПерейдите в \"Настройки\" - > Unstoppable и разрешите доступ к Камере.";
+"access_camera.message" = "Unstoppable требует доступ к вашей камере для сканирования QR-кода.\n\nПерейдите в \"Настройки\" - > Unstoppable и разрешите доступ к Камере.";
 "access_camera.settings" = "Настройки";
 
 // Welcome
@@ -77,7 +77,7 @@
 
 "backup.intro.title_backup" = "Резервная Копия";
 "backup.intro.title_show" = "Показать Ключ";
-"backup.intro.subtitle" = "Приватный Ключ, который будет показан далее, является единственным способом восстановления ваших средств в случае потери, кражи или поломки вашего телефона. Убедитесь, что никто не смотрит на ваш экран.\n\nЭтот ключ контролирует следующие монеты: %@";
+"backup.intro.subtitle" = "Приватный Ключ, который будет показан далее, является единственным способом восстановления ваших средств в случае потери, кражи или поломки вашего телефона. Убедитесь, что никто не смотрит на ваш экран.\n\nЭтот ключ контролирует следующие токены: %@";
 "backup.intro.later" = "Позже";
 "backup.intro.backup_now" = "Резервная копия";
 "backup.intro.show_key" = "Показать Ключ";
@@ -222,13 +222,13 @@
 "full_info.gas_price" = "Gas Price";
 
 "full_info.source.title" = "Источник";
-"full_info.source.online" = "доступен";
-"full_info.source.offline" = "недоступен";
+"full_info.source.online" = "онлайн";
+"full_info.source.offline" = "офлайн";
 
-"full_info.error.server_offline" = "недоступен";
-"full_info.error.transaction_not_found" = "Транзакция не может быть найдена в блокчейне";
+"full_info.error.server_offline" = "офлайн";
+"full_info.error.transaction_not_found" = "Транзакция не найдена в блокчейне";
 "full_info.error.retry" = "Повторить";
-"full_info.error.change_source" = "Сменить Источник";
+"full_info.error.change_source" = "Изменить Источник";
 "full_info.no_address" = "Пустой Адрес";
 
 // Settings
@@ -239,38 +239,38 @@
 "settings.manage_accounts" = "Управление Кошельками";
 "settings.manage_coins" = "Управление Токенами";
 "settings.experimental_features" = "Экспериментальные Функции";
-"settings.notifications" = "Уведомления ";
+"settings.notifications" = "Уведомления";
 "settings.base_currency" = "Базовая Валюта";
 "settings.language" = "Язык";
 "settings.about" = "О приложении";
 "settings.tell_friends" = "Рассказать Друзьям";
 "settings.contact" = "Kонтакты";
-"settings.light_mode" = "Светлый Режим";
+"settings.light_mode" = "Облегченный Режим";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
 
 // Settings -> Notifications
 
 "settings_notifications.title" = "Уведомления";
-"settings_notifications.description" = "Установите  уведомления о смене цен для монет, за которыми вы бы хотели следить.\n\nВы будете предупреждены, когда изменение цены за последние 24 часа превысят выбранный порог.";
+"settings_notifications.description" = "Установите  уведомления о смене цен для коинов, которые вы бы хотели отслеживать.\n\nВы будете предупреждены, когда ценовое изменение за последние 24 часа превысит выбранный порог.";
 "settings_notifications.alert_off" = "Выкл.";
 "settings.notifications.deactivate_all" = "Отключить всё";
-"settings.notifications.disabled_text" = "Уведомления для приложения Unstoppable Wallet отключены. Вам нужно включить уведомления и разрешить фоновое обновление для приложения, чтобы иметь возможность получать уведомления о смене цен.";
-"settings.notifications.settings_button" = "Включить в настройках";
+"settings.notifications.disabled_text" = "Уведомления для приложения Unstoppable Wallet отключены. Вам нужно включить уведомления и разрешить фоновое обновление приложения, чтобы иметь возможность получать уведомления о смене цен.";
+"settings.notifications.settings_button" = "Включить в Настройках";
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Токены";
+"manage_coins.title" = "Менеджер токенов";
 "manage_coins.add_coin.title" = "Добавить %@";
 "manage_coins.add_coin.subtitle" = "%@ Кошелек";
-"manage_coins.add_coin.text" = "Вам нужно настроить кошелек %@ , чтобы иметь возможность отправлять или получать %@.\n\nИспользуйте кнопку 'Создать', чтобы настроить новый кошелек %@ или 'Восстановить', чтобы импортировать существующий.\n\nВы сможете использовать этот кошелек для: %@.";
+"manage_coins.add_coin.text" = "Вам нужно настроить кошелек %@, чтобы иметь возможность отправлять или получать %@.\n\nИспользуйте кнопку 'Создать', чтобы настроить новый кошелек %@ или 'Восстановить', чтобы импортировать существующий.\n\nВы сможете использовать этот кошелек для: %@.";
 "manage_coins.add_coin.create" = "Создать";
 "manage_coins.add_coin.restore" = "Восстановить";
 
 // Settings -> Experimental Features
 
-"settings.experimental_features.title" = "Функции";
-"settings.experimental_features.description" = "Ниже приведены экспериментальные функции. Несмотря на то, что мы протестировали эти функции, мы не можем гарантировать, что они будут работать так, как ожидалось во всех возможных случаях. По этому, просим вас пользоваться ими с осторожностью.";
+"settings.experimental_features.title" = "Пробные";
+"settings.experimental_features.description" = "Ниже приведены пробные функции. Несмотря на то, что мы детально протестировали эти функции, используя наши собственные криптосредства, мы не можем гарантировать, что они всегда будут работать так, как предусмотрено.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
