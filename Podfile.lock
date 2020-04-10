@@ -108,9 +108,9 @@ PODS:
   - FeeRateKit.swift (0.4):
     - Alamofire (~> 4.0)
     - RxSwift (~> 5.0)
-  - GRDB.swift (4.12.0):
-    - GRDB.swift/standard (= 4.12.0)
-  - GRDB.swift/standard (4.12.0)
+  - GRDB.swift (4.12.1):
+    - GRDB.swift/standard (= 4.12.1)
+  - GRDB.swift/standard (4.12.1)
   - GRKOpenSSLFramework (1.0.2.19)
   - HdWalletKit.swift (1.4):
     - OpenSslKit.swift (~> 1.0)
@@ -137,7 +137,7 @@ PODS:
     - OpenSslKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
     - Secp256k1Kit.swift (~> 1.0)
-  - Nimble (8.0.5)
+  - Nimble (8.0.7)
   - ObjectMapper (3.5.2)
   - OpenSslKit.swift (1.2)
   - PinKit.swift (1.0):
@@ -216,8 +216,8 @@ DEPENDENCIES:
   - DeepDiff
   - EosioSwiftAbieosSerializationProvider (from `https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git`)
   - EosKit.swift
-  - Erc20Kit.swift
-  - EthereumKit.swift
+  - Erc20Kit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
+  - EthereumKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - FeeRateKit.swift (from `https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios`)
   - GRDB.swift
   - HdWalletKit.swift
@@ -254,8 +254,6 @@ SPEC REPOS:
     - EosioSwiftEcc
     - EosioSwiftSoftkeySignatureProvider
     - EosKit.swift
-    - Erc20Kit.swift
-    - EthereumKit.swift
     - GRDB.swift
     - GRKOpenSSLFramework
     - HdWalletKit.swift
@@ -294,6 +292,10 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   EosioSwiftAbieosSerializationProvider:
     :git: https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git
+  Erc20Kit.swift:
+    :git: https://github.com/horizontalsystems/ethereum-kit-ios
+  EthereumKit.swift:
+    :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
   Hodler.swift:
@@ -317,7 +319,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   ActionSheet.swift:
-    :commit: d33055102d076b114bd842eca6a1b2bb947f28fb
+    :commit: 5709d11483c2239ceb8b5f6fe0cef598b115516f
     :git: https://github.com/horizontalsystems/gui-kit/
   BitcoinCashKit.swift:
     :commit: cd447adf36445431e7a7997e98c394acc0e1fce7
@@ -329,10 +331,10 @@ CHECKOUT OPTIONS:
     :commit: cd447adf36445431e7a7997e98c394acc0e1fce7
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
-    :commit: d33055102d076b114bd842eca6a1b2bb947f28fb
+    :commit: 5709d11483c2239ceb8b5f6fe0cef598b115516f
     :git: https://github.com/horizontalsystems/gui-kit/
   CurrencyKit.swift:
-    :commit: 0fdc0b4ca8ecaab53a454353553dc2974b5e8ce4
+    :commit: 8de24001dd0821e1d39cd0ed174c928de4b04467
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
     :commit: cd447adf36445431e7a7997e98c394acc0e1fce7
@@ -340,6 +342,12 @@ CHECKOUT OPTIONS:
   EosioSwiftAbieosSerializationProvider:
     :commit: 7ac04899e62012e225e0ea48a96951de0b72ad08
     :git: https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git
+  Erc20Kit.swift:
+    :commit: 355bf6d9989de56dc3740527d1acb32117e83606
+    :git: https://github.com/horizontalsystems/ethereum-kit-ios
+  EthereumKit.swift:
+    :commit: 355bf6d9989de56dc3740527d1acb32117e83606
+    :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :commit: 5b295950dde8aab7979745ea111ce3aa76ec5a7d
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
@@ -350,7 +358,7 @@ CHECKOUT OPTIONS:
     :commit: 5709d11483c2239ceb8b5f6fe0cef598b115516f
     :git: https://github.com/horizontalsystems/gui-kit/
   LanguageKit.swift:
-    :commit: 0fdc0b4ca8ecaab53a454353553dc2974b5e8ce4
+    :commit: 8de24001dd0821e1d39cd0ed174c928de4b04467
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
     :commit: cd447adf36445431e7a7997e98c394acc0e1fce7
@@ -359,13 +367,13 @@ CHECKOUT OPTIONS:
     :commit: 8de24001dd0821e1d39cd0ed174c928de4b04467
     :git: https://github.com/horizontalsystems/component-kit-ios/
   StorageKit.swift:
-    :commit: 0fdc0b4ca8ecaab53a454353553dc2974b5e8ce4
+    :commit: 8de24001dd0821e1d39cd0ed174c928de4b04467
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: caa45cde80ddb197cbc8f38c401529870eda2569
+    :commit: 8de24001dd0821e1d39cd0ed174c928de4b04467
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
-    :commit: d33055102d076b114bd842eca6a1b2bb947f28fb
+    :commit: 5709d11483c2239ceb8b5f6fe0cef598b115516f
     :git: https://github.com/horizontalsystems/gui-kit/
   XRatesKit.swift:
     :commit: 5284ff316de36234046b5c8d31e5bc51edff3b66
@@ -393,9 +401,9 @@ SPEC CHECKSUMS:
   EosioSwiftSoftkeySignatureProvider: dbf7a251a45bc51f1040bed93f2bec67a9620905
   EosKit.swift: f74e0444ecc9cc5104b76b4e50b410f02165fa7e
   Erc20Kit.swift: 6b2e531860457ace083f30762db0a6b9e76bfbd5
-  EthereumKit.swift: 409a1beedd2e414e9f40f662668b0294b206c575
+  EthereumKit.swift: f37259a339f81373eefde8a962e63c1c450d1eca
   FeeRateKit.swift: a2e4b9994cd67d321b32c5b99084bf7e664c4ebc
-  GRDB.swift: 0a48d51f7152fbe5eb702ce978864a55def0c586
+  GRDB.swift: e4050e5a6e8ce8d0432c8f8301d276a632bc0fad
   GRKOpenSSLFramework: 4abc733a8fcbc37060619a86a54202d2938dd70e
   HdWalletKit.swift: 45af883b0aa722a56ed9a0de82121ba6c43cce3f
   Hodler.swift: 8b733307e5d90ce25cc9bd0ce7d82720156816ca
@@ -403,7 +411,7 @@ SPEC CHECKSUMS:
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
   LanguageKit.swift: f1105c75fe9d04f482d2ab55e48eb91ed008abef
   LitecoinKit.swift: 71530f28446ba0f687e1850c2b4fd6b8bd61d7f7
-  Nimble: 4ab1aeb9b45553c75b9687196b0fa0713170a332
+  Nimble: a73af6ecd4c9106f434f3d55fc54570be3739e0b
   ObjectMapper: b53ae947d370bf89423e86be7d4e2d2b2a8d3f40
   OpenSslKit.swift: 168b059e3438c21994a3e9fe6c5648df96660d94
   PinKit.swift: 1acbf82ce5114972f1eb9a5a0c1b808dc08ad12e
@@ -425,6 +433,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: e7e4bf432961545cace5fe8be80a9fe3aef04b36
 
-PODFILE CHECKSUM: e9363432462cab54e3847e27e632fda870246af3
+PODFILE CHECKSUM: 6f85a29993e8cdce49e27d9185058fcbbb95d796
 
 COCOAPODS: 1.8.4

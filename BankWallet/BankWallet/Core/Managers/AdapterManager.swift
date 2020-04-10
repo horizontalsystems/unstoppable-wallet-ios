@@ -8,53 +8,25 @@ class AdapterManager {
     private let eosKitManager: EosKitManager
     private let binanceKitManager: BinanceKitManager
     private let walletManager: IWalletManager
-    private let derivationSettingsManager: IDerivationSettingsManager
-    private let initialSyncSettingsManager: IInitialSyncSettingsManager
 
     private let subject = PublishSubject<Void>()
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.adapter_manager", qos: .userInitiated)
     private var adapters = [Wallet: IAdapter]()
 
-    init(adapterFactory: IAdapterFactory, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager, walletManager: IWalletManager, derivationSettingsManager: IDerivationSettingsManager, initialSyncSettingsManager: IInitialSyncSettingsManager) {
+    init(adapterFactory: IAdapterFactory, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager, walletManager: IWalletManager) {
         self.adapterFactory = adapterFactory
         self.ethereumKitManager = ethereumKitManager
         self.eosKitManager = eosKitManager
         self.binanceKitManager = binanceKitManager
         self.walletManager = walletManager
-        self.derivationSettingsManager = derivationSettingsManager
-        self.initialSyncSettingsManager = initialSyncSettingsManager
-
-        let scheduler = SerialDispatchQueueScheduler(qos: .utility)
 
         walletManager.walletsUpdatedObservable
-                .observeOn(scheduler)
+                .observeOn(SerialDispatchQueueScheduler(qos: .utility))
                 .subscribe(onNext: { [weak self] wallets in
                     self?.initAdapters(wallets: wallets)
                 })
                 .disposed(by: disposeBag)
-
-        derivationSettingsManager.derivationUpdatedObservable
-                .observeOn(scheduler)
-                .subscribe(onNext: { [weak self] coinType in
-                    self?.onUpdateDerivation(coinType: coinType)
-                })
-                .disposed(by: disposeBag)
-
-        initialSyncSettingsManager.syncModeUpdatedObservable
-                .observeOn(scheduler)
-                .subscribe(onNext: { [weak self] coinType in
-                    self?.onUpdateSyncMode(coinType: coinType)
-                })
-                .disposed(by: disposeBag)
-    }
-
-    private func onUpdateDerivation(coinType: CoinType) {
-        refreshAdapters(walletsForUpdate: walletManager.wallets.filter { $0.coin.type == coinType })
-    }
-
-    private func onUpdateSyncMode(coinType: CoinType) {
-        refreshAdapters(walletsForUpdate: walletManager.wallets.filter { $0.coin.type == coinType && $0.account.origin == .restored })
     }
 
     private func initAdapters(wallets: [Wallet]) {
@@ -91,17 +63,6 @@ class AdapterManager {
         }
     }
 
-    private func refreshAdapters(walletsForUpdate: [Wallet]) {
-        guard !walletsForUpdate.isEmpty else {
-            return
-        }
-
-        queue.async {
-            walletsForUpdate.forEach { self.adapters[$0] = nil }
-        }
-
-        initAdapters(wallets: walletManager.wallets)
-    }
 }
 
 extension AdapterManager: IAdapterManager {
@@ -136,6 +97,17 @@ extension AdapterManager: IAdapterManager {
         ethereumKitManager.ethereumKit?.refresh()
         eosKitManager.eosKit?.refresh()
         binanceKitManager.refresh()
+    }
+
+    func refreshAdapters(wallets: [Wallet]) {
+        queue.async {
+            wallets.forEach {
+                self.adapters[$0]?.stop()
+                self.adapters[$0] = nil
+            }
+        }
+
+        initAdapters(wallets: walletManager.wallets)
     }
 
 }

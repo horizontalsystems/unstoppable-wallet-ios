@@ -1,5 +1,3 @@
-import RxSwift
-
 class InitialSyncSettingsManager {
     private let supportedCoinTypes: [(coinType: CoinType, defaultSyncMode: SyncMode)] = [
         (.bitcoin, .fast),
@@ -8,12 +6,14 @@ class InitialSyncSettingsManager {
         (.litecoin, .fast)
     ]
 
+    private let walletManager: IWalletManager
+    private let adapterManager: IAdapterManager
     private let appConfigProvider: IAppConfigProvider
     private let storage: IBlockchainSettingsStorage
 
-    private let subject = PublishSubject<CoinType>()
-
-    init(appConfigProvider: IAppConfigProvider, storage: IBlockchainSettingsStorage) {
+    init(walletManager: IWalletManager, adapterManager: IAdapterManager, appConfigProvider: IAppConfigProvider, storage: IBlockchainSettingsStorage) {
+        self.walletManager = walletManager
+        self.adapterManager = adapterManager
         self.appConfigProvider = appConfigProvider
         self.storage = storage
     }
@@ -48,13 +48,14 @@ extension InitialSyncSettingsManager: IInitialSyncSettingsManager {
         }
     }
 
-    var syncModeUpdatedObservable: Observable<CoinType> {
-        subject.asObservable()
-    }
-
     func save(setting: InitialSyncSetting) {
         storage.save(initialSyncSettings: [setting])
-        subject.onNext(setting.coinType)
+
+        let walletsForUpdate = walletManager.wallets.filter { $0.coin.type == setting.coinType && $0.account.origin == .restored }
+
+        if !walletsForUpdate.isEmpty {
+            adapterManager.refreshAdapters(wallets: walletsForUpdate)
+        }
     }
 
     func setting(coinType: CoinType) -> InitialSyncSetting? {

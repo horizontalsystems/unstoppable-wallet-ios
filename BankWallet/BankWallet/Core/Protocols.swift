@@ -28,6 +28,7 @@ protocol ILocalStorage: class {
     var appLaunchCount: Int { get set }
     var rateAppLastRequestDate: Date? { get set }
     var balanceHidden: Bool { get set }
+    var ethereumRpcMode: EthereumRpcMode? { get set }
 }
 
 protocol IChartTypeStorage: class {
@@ -41,6 +42,7 @@ protocol IAdapterManager: class {
     func transactionsAdapter(for wallet: Wallet) -> ITransactionsAdapter?
     func depositAdapter(for wallet: Wallet) -> IDepositAdapter?
     func refresh()
+    func refreshAdapters(wallets: [Wallet])
 }
 
 protocol IAdapterFactory {
@@ -516,21 +518,22 @@ protocol IRestoreManager {
     func createAccount(accountType: AccountType, coins: [Coin])
 }
 
-protocol IDerivationSettingsManager {
+protocol IDerivationSettingsManager: AnyObject {
     var allActiveSettings: [(setting: DerivationSetting, wallets: [Wallet])] { get }
-    var derivationUpdatedObservable: Observable<CoinType> { get }
-
     func setting(coinType: CoinType) -> DerivationSetting?
     func save(setting: DerivationSetting)
     func reset()
 }
 
-protocol IInitialSyncSettingsManager {
+protocol IInitialSyncSettingsManager: AnyObject {
     var allSettings: [(setting: InitialSyncSetting, coins: [Coin])] { get }
-    var syncModeUpdatedObservable: Observable<CoinType> { get }
-
     func setting(coinType: CoinType) -> InitialSyncSetting?
     func save(setting: InitialSyncSetting)
+}
+
+protocol IEthereumRpcModeSettingsManager: AnyObject {
+    var rpcMode: EthereumRpcMode? { get }
+    func save(rpcMode: EthereumRpcMode)
 }
 
 protocol ITransactionDataSortTypeSettingManager {
