@@ -310,7 +310,8 @@
 "settings_privacy.connection.section_footer" = "Algunos blockchains aún no brindan medios para poder usarse en aplicaciones móviles de modo peer-to-peer. Las comunicaciones con las blockchains BTC, BCH, LTC, DASH son completamente peer-to-peer.";
 "settings_privacy.sync.section_header" = "Restaurar blockchain";
 "settings_privacy.sync.section_footer" = "Seleccione la fuente de información para restaurar el monedero con las transacciones.";
-"settings_privacy.alert_title.sync." = "%@ Restaurar";
+"settings_privacy.alert_title.sync" = "%@ Restore";
+"settings_privacy.alert_title.sort" = "Inputs/Outputs";
 "settings_privacy.sorting_default" = "Predefinido";
 "settings_privacy.sorting_shuffle" = "Aleatoriamente";
 "settings_privacy.sorting_deterministic" = "BIP69";
