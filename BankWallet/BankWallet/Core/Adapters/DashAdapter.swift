@@ -57,8 +57,8 @@ extension DashAdapter: ISendDashAdapter {
         fee(amount: amount, feeRate: feeRate, address: address)
     }
 
-    func sendSingle(amount: Decimal, address: String) -> Single<Void> {
-        sendSingle(amount: amount, address: address, feeRate: feeRate, sortMode: .none)
+    func sendSingle(amount: Decimal, address: String, sortMode: TransactionDataSortMode) -> Single<Void> {
+        sendSingle(amount: amount, address: address, feeRate: feeRate, sortMode: sortMode)
     }
 
 }
