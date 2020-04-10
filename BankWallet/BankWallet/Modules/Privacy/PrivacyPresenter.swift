@@ -17,14 +17,19 @@ class PrivacyPresenter {
         view?.set(syncModeItems: factory.syncViewItems(items: syncItems))
     }
 
+    private func updateSortMode() {
+        view?.set(sortMode: interactor.sortMode.title)
+    }
+
 }
 
 extension PrivacyPresenter: IPrivacyViewDelegate {
 
     func onLoad() {
-        view?.set(sortingMode: "default")
+        updateSortMode()
+
         view?.set(connectionItems: [
-            PrivacyViewItem(iconName: "ETH", title: "Ethereum", value: "Incubed", changable: true),
+            PrivacyViewItem(iconName: "ETH", title: "Ethereum", value: "Incubed", changable: false),
             PrivacyViewItem(iconName: "EOS", title: "EOS", value: "eos.greymass.com", changable: false),
             PrivacyViewItem(iconName: "BNB", title: "Binance", value: "dex.binance.com", changable: false)
         ])
@@ -42,7 +47,10 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
     }
 
     func onSelectSortMode() {
+        let selectedSettingName = interactor.sortMode.title
+        let allSettings = TransactionDataSortMode.allCases.map { $0.title }
 
+        view?.showSortModeAlert(selected: selectedSettingName, all: allSettings)
     }
 
     func onSelectConnection(index: Int) {
@@ -68,6 +76,13 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
         interactor.save(syncSetting: newSetting)
 
         updateSync()
+        view?.updateUI()
+    }
+
+    func onSelectSortSetting(settingIndex: Int) {
+        interactor.save(sortSetting: TransactionDataSortMode.allCases[settingIndex])
+
+        updateSortMode()
         view?.updateUI()
     }
 

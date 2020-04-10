@@ -7,7 +7,7 @@ class PrivacyViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    private var sortingMode: String?
+    private var sortMode: String?
     private var connectionItems: [PrivacyViewItem]?
     private var syncModeItems: [PrivacyViewItem]?
 
@@ -56,7 +56,7 @@ class PrivacyViewController: ThemeViewController {
         )
     }
 
-    private func sortingSection(mode: String) -> SectionProtocol {
+    private func sortSection(mode: String) -> SectionProtocol {
         Section(
                 id: "sort",
                 headerState: header(hash: "sort_header", text: "settings_privacy.sorting.section_header".localized.uppercased()),
@@ -133,8 +133,8 @@ extension PrivacyViewController: IPrivacyView {
         tableView.reload()
     }
 
-    func set(sortingMode: String) {
-        self.sortingMode = sortingMode
+    func set(sortMode: String) {
+        self.sortMode = sortMode
     }
 
     func set(connectionItems: [PrivacyViewItem]) {
@@ -147,11 +147,23 @@ extension PrivacyViewController: IPrivacyView {
 
     func showSyncModeAlert(itemIndex: Int, coinName: String, selected: String, all: [String]) {
         let alertController = AlertViewController(
-                header: "settings_privacy.alert_title.sync.".localized(coinName),
+                header: "settings_privacy.alert_title.sync".localized(coinName),
                 rows: all.map { title in
                     AlertRow(text: title, selected: title == selected)
                 }) { [weak self] selectedIndex in
             self?.delegate.onSelectSyncSetting(itemIndex: itemIndex, settingIndex: selectedIndex)
+        }
+
+        present(alertController, animated: true)
+    }
+
+    func showSortModeAlert(selected: String, all: [String]) {
+        let alertController = AlertViewController(
+                header: "settings_privacy.alert_title.sort".localized(),
+                rows: all.map { title in
+                    AlertRow(text: "settings_privacy.sorting_\(title)".localized, selected: title == selected)
+                }) { [weak self] selectedIndex in
+            self?.delegate.onSelectSortSetting(settingIndex: selectedIndex)
         }
 
         present(alertController, animated: true)
@@ -166,8 +178,8 @@ extension PrivacyViewController: SectionsDataSource {
 
         sections.append(headerSection())
 
-        if let sortingMode = sortingMode {
-            sections.append(sortingSection(mode: sortingMode))
+        if let sortMode = sortMode {
+            sections.append(sortSection(mode: sortMode))
         }
 
         if let connectionItems = connectionItems {
