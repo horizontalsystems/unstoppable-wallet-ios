@@ -106,7 +106,7 @@ protocol ISendBitcoinAdapter {
     func minimumSendAmount(address: String?) -> Decimal
     func validate(address: String, pluginData: [UInt8: IBitcoinPluginData]) throws
     func fee(amount: Decimal, feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData]) -> Decimal
-    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData]) -> Single<Void>
+    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData], sortMode: TransactionDataSortMode) -> Single<Void>
 }
 
 protocol ISendDashAdapter {
@@ -536,7 +536,7 @@ protocol IEthereumRpcModeSettingsManager: AnyObject {
     func save(rpcMode: EthereumRpcMode)
 }
 
-protocol ITransactionDataSortTypeSettingManager {
+protocol ITransactionDataSortModeSettingManager {
     var setting: TransactionDataSortMode { get }
     func save(setting: TransactionDataSortMode)
 }

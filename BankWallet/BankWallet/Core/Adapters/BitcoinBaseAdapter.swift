@@ -114,6 +114,14 @@ class BitcoinBaseAdapter {
         return NSDecimalNumber(decimal: coinValue).rounding(accordingToBehavior: handler).intValue
     }
 
+    private func convertToKitSortMode(sort: TransactionDataSortMode) -> TransactionDataSortType {
+        switch sort {
+        case .none: return .none
+        case .shuffle: return .shuffle
+        case .bip69: return .bip69
+        }
+    }
+
     class func kitMode(from syncMode: SyncMode) -> BitcoinCore.SyncMode {
         switch syncMode {
         case .fast: return .api
@@ -261,13 +269,14 @@ extension BitcoinBaseAdapter {
         }
     }
 
-    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData] = [:]) -> Single<Void> {
+    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData] = [:], sortMode: TransactionDataSortMode) -> Single<Void> {
         let satoshiAmount = convertToSatoshi(value: amount)
+        let sortType = convertToKitSortMode(sort: sortMode)
 
         return Single.create { [weak self] observer in
             do {
                 if let adapter = self {
-                    _ = try adapter.abstractKit.send(to: address, value: satoshiAmount, feeRate: feeRate, sortType: .shuffle, pluginData: pluginData)
+                    _ = try adapter.abstractKit.send(to: address, value: satoshiAmount, feeRate: feeRate, sortType: sortType, pluginData: pluginData)
                 }
                 observer(.success(()))
             } catch {

@@ -59,7 +59,7 @@ class App {
     let ethereumRpcModeSettingsManager: IEthereumRpcModeSettingsManager
     let restoreManager: IRestoreManager
 
-    let transactionDataSortModeSettingManager: ITransactionDataSortTypeSettingManager
+    let transactionDataSortModeSettingManager: ITransactionDataSortModeSettingManager
 
     let rateCoinMapper: RateCoinMapper
 

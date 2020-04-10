@@ -1,8 +1,8 @@
 class PrivacyInteractor {
     private let initialSyncSettingsManager: IInitialSyncSettingsManager
-    private let transactionDataSortTypeSettingManager: ITransactionDataSortTypeSettingManager
+    private let transactionDataSortTypeSettingManager: ITransactionDataSortModeSettingManager
 
-    init(initialSyncSettingsManager: IInitialSyncSettingsManager, transactionDataSortTypeSettingManager: ITransactionDataSortTypeSettingManager) {
+    init(initialSyncSettingsManager: IInitialSyncSettingsManager, transactionDataSortTypeSettingManager: ITransactionDataSortModeSettingManager) {
         self.initialSyncSettingsManager = initialSyncSettingsManager
         self.transactionDataSortTypeSettingManager = transactionDataSortTypeSettingManager
     }

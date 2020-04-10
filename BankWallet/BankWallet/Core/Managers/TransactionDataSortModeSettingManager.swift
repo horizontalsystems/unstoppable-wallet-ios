@@ -7,7 +7,7 @@ class TransactionDataSortModeSettingManager {
 
 }
 
-extension TransactionDataSortModeSettingManager: ITransactionDataSortTypeSettingManager {
+extension TransactionDataSortModeSettingManager: ITransactionDataSortModeSettingManager {
 
     var setting: TransactionDataSortMode {
         storage.transactionDataSortMode ?? .shuffle

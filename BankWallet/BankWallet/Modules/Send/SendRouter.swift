@@ -70,7 +70,7 @@ extension SendRouter {
     }
 
     private static func module(coin: Coin, adapter: ISendBitcoinAdapter) -> (ISendHandler, [UIView], [ISendSubRouter])? {
-        let interactor = SendBitcoinInteractor(adapter: adapter, localStorage: App.shared.localStorage)
+        let interactor = SendBitcoinInteractor(adapter: adapter, transactionDataSortModeSettingsManager: App.shared.transactionDataSortModeSettingManager, localStorage: App.shared.localStorage)
 
         var views = [UIView]()
         var routers = [ISendSubRouter]()
