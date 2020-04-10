@@ -11,10 +11,4 @@ enum TransactionDataSortMode: String, CaseIterable {
         }
     }
 
-    static var allCases: [TransactionDataSortMode] = [
-        .none,
-        .shuffle,
-        .bip69
-    ]
-
 }
