@@ -57,7 +57,7 @@
 "coin_settings.derivation.description_create" = "Этот параметр определяет формат адреса Bitcoin в этом кошельке. Мы рекомендуем использовать BIP49.";
 "coin_settings.derivation.description_restore" = "Выберите формат адреса для Bitcoin в кошельке, который вы пытаетесь восстановить.";
 "coin_settings.title" = "Настройки Блокчейна";
-"coin_settings.sync_mode.title" = "Восстановить Источник";
+"coin_settings.sync_mode.title" = "Restore Source";
 "coin_settings.sync_mode.fast.description" = "0-2 ч, Рекомендуется";
 "coin_settings.sync_mode.slow.description" = "1-24 ч";
 "coin_settings.sync_mode.description" = "Ссылки на источники API: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg";
@@ -84,7 +84,7 @@
 
 "backup.words.confirmation_description" = "Введите слова из вашего %@ ключа";
 
-"backup.eos.account_name" = "Имя аккаунта";
+"backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Активный приватный ключ";
 "backup.eos.hint" = "Копирование ключа с помощью действия «копировать» представляет определенный риск, если вы используете какие-либо приложения для управления буфером обмена, или другие приложения, которые могут иметь доступ к данным буфера обмена.";
 "error.send_eos.self_transfer" = "Не удается отправить токен на свой аккаунт";
@@ -129,7 +129,7 @@
 "send.amount_placeholder" = "Сумма";
 "send.amount_error.min_required_balance" = "Мин. обязательный остаток %@";
 "send.address_placeholder" = "Адрес";
-"send.account_placeholder" = "Аккаунт";
+"send.account_placeholder" = "Account";
 "send.fee" = "Комиссия";
 "send.tx_speed" = "Скорость Транзакции";
 "send.tx_speed_low" = "Низкая";
@@ -260,7 +260,7 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Менеджер токенов";
+"manage_coins.title" = "Токены";
 "manage_coins.add_coin.title" = "Добавить %@";
 "manage_coins.add_coin.subtitle" = "%@ Кошелек";
 "manage_coins.add_coin.text" = "Вам нужно настроить кошелек %@, чтобы иметь возможность отправлять или получать %@.\n\nИспользуйте кнопку 'Создать', чтобы настроить новый кошелек %@ или 'Восстановить', чтобы импортировать существующий.\n\nВы сможете использовать этот кошелек для: %@.";
