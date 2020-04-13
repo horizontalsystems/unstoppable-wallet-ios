@@ -1,19 +1,26 @@
 import UIKit
 
 class PrivacyHeaderCell: UITableViewCell {
-    static var description = "settings_privacy.header_description".localized
+    private static let sideMargin: CGFloat = .margin4x
+    private static let topMargin: CGFloat = .margin3x
+    private static let bottomMargin: CGFloat = .margin6x
+
+    private static var description = "settings_privacy.header_description".localized
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+
         selectionStyle = .none
         backgroundColor = .clear
         contentView.backgroundColor = .clear
 
-        let descriptionView = NewTopDescriptionView()
+        let descriptionView = HighlightedDescriptionView()
 
         contentView.addSubview(descriptionView)
         descriptionView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.leading.trailing.equalToSuperview().inset(PrivacyHeaderCell.sideMargin)
+            maker.top.equalToSuperview().offset(PrivacyHeaderCell.topMargin)
+            maker.bottom.equalToSuperview().inset(PrivacyHeaderCell.bottomMargin)
         }
 
         descriptionView.bind(text: PrivacyHeaderCell.description)
@@ -24,7 +31,9 @@ class PrivacyHeaderCell: UITableViewCell {
     }
 
     static func height(containerWidth: CGFloat) -> CGFloat {
-        NewTopDescriptionView.height(containerWidth: containerWidth, text: PrivacyHeaderCell.description)
+        let descriptionViewWidth = containerWidth - 2 * sideMargin
+        let descriptionViewHeight = HighlightedDescriptionView.height(containerWidth: descriptionViewWidth, text: PrivacyHeaderCell.description)
+        return topMargin + descriptionViewHeight + bottomMargin
     }
 
 }

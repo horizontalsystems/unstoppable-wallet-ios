@@ -49,9 +49,12 @@ class PrivacyViewController: ThemeViewController {
 
         return Section(
                 id: "header", rows: [
-                    Row<PrivacyHeaderCell>(id: "header_cell", dynamicHeight: { _ in 
-                        PrivacyHeaderCell.height(containerWidth: width)
-                    })
+                    Row<PrivacyHeaderCell>(
+                            id: "header_cell",
+                            dynamicHeight: { _ in
+                                PrivacyHeaderCell.height(containerWidth: width)
+                            }
+                    )
                 ]
         )
     }
@@ -59,7 +62,7 @@ class PrivacyViewController: ThemeViewController {
     private func sortSection(mode: String) -> SectionProtocol {
         Section(
                 id: "sort",
-                headerState: header(hash: "sort_header", text: "settings_privacy.sorting.section_header".localized.uppercased()),
+                headerState: header(hash: "sort_header", text: "settings_privacy.sorting.section_header".localized),
                 footerState: footer(hash: "sort_footer", text: "settings_privacy.sorting.section_footer".localized),
                 rows: [
                     Row<PrivacyCell>(id: "sorting_cell", hash: "\(mode)", height: .heightSingleLineCell, autoDeselect: true, bind: { cell, _ in
@@ -74,7 +77,7 @@ class PrivacyViewController: ThemeViewController {
     private func connectionSection(items: [PrivacyViewItem]) -> SectionProtocol {
         Section(
                 id: "connection",
-                headerState: header(hash: "connection_header", text: "settings_privacy.connection.section_header".localized.uppercased()),
+                headerState: header(hash: "connection_header", text: "settings_privacy.connection.section_header".localized),
                 footerState: footer(hash: "connection_footer", text: "settings_privacy.connection.section_footer".localized),
                 rows: items.enumerated().map { index, item in
                     row(id: "connection_cell", item: item, action: { [weak self] in
@@ -87,7 +90,7 @@ class PrivacyViewController: ThemeViewController {
     private func syncSection(items: [PrivacyViewItem]) -> SectionProtocol {
         Section(
                 id: "sync",
-                headerState: header(hash: "sync_header", text: "settings_privacy.sync.section_header".localized.uppercased()),
+                headerState: header(hash: "sync_header", text: "settings_privacy.sync.section_header".localized),
                 footerState: footer(hash: "sync_footer", text: "settings_privacy.sync.section_footer".localized),
                 rows: items.enumerated().map { index, item in
                     row(id: "sync_cell", item: item, action: { [weak self] in
@@ -105,24 +108,28 @@ class PrivacyViewController: ThemeViewController {
         })
     }
 
-    private func header(hash: String, text: String, additionalMargin: CGFloat = 0) -> ViewState<SubtitleHeaderFooterView> {
+    private func header(hash: String, text: String) -> ViewState<SubtitleHeaderFooterView> {
         .cellType(
                 hash: hash,
                 binder: { view in
                     view.bind(text: text)
                 },
                 dynamicHeight: { _ in
-                    SubtitleHeaderFooterView.height + additionalMargin
+                    SubtitleHeaderFooterView.height
                 }
         )
     }
 
     private func footer(hash: String, text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
-        .cellType(hash: hash, binder: { view in
-            view.bind(text: text)
-        }, dynamicHeight: { [unowned self] _ in
-            BottomDescriptionHeaderFooterView.height(containerWidth: self.tableView.bounds.width, text: text)
-        })
+        .cellType(
+                hash: hash,
+                binder: { view in
+                    view.bind(text: text)
+                },
+                dynamicHeight: { [unowned self] _ in
+                    BottomDescriptionHeaderFooterView.height(containerWidth: self.tableView.bounds.width, text: text)
+                }
+        )
     }
 
 }
