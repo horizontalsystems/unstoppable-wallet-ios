@@ -311,6 +311,7 @@
 "settings_privacy.sync.section_header" = "Blockchain Geri Yükleme";
 "settings_privacy.sync.section_footer" = "Cüzdanı işlemlerle geri yüklemek için veri kaynağını seçin.";
 "settings_privacy.alert_title.sync" = "%@ Geri Yükle";
+"settings_privacy.alert_title.connection" = "%@ Connection";
 "settings_privacy.alert_title.sort" = "Giriş/Çıkış";
 "settings_privacy.sorting_default" = "Varsayılan";
 "settings_privacy.sorting_shuffle" = "Karıştır";
