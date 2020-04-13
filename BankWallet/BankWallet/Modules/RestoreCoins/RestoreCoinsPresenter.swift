@@ -85,4 +85,8 @@ extension RestoreCoinsPresenter: IDerivationSettingDelegate {
         enable(coin: coin)
     }
 
+    func onCancelSelectDerivation() {
+        syncViewItems()
+    }
+
 }

@@ -19,11 +19,7 @@ protocol IDerivationSettingsViewDelegate {
 protocol IDerivationSettingsRouter {
 }
 
-protocol IDerivationSettingDelegate: AnyObject {
-    func onSelect(derivationSetting: DerivationSetting, coin: Coin)
-}
-
-struct DerivationSettingItem {
+struct DerivationSettingsItem {
     let firstCoin: Coin
     let setting: DerivationSetting
 }

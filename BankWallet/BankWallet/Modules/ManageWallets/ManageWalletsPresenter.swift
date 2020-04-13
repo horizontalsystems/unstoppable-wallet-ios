@@ -125,4 +125,8 @@ extension ManageWalletsPresenter: IDerivationSettingDelegate {
         createWallet(coin: coin)
     }
 
+    func onCancelSelectDerivation() {
+        syncViewItems()
+    }
+
 }
