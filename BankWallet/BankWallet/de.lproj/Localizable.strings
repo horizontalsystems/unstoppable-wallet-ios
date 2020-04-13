@@ -311,6 +311,7 @@
 "settings_privacy.sync.section_header" = "Blockchain-Wiederherstellung";
 "settings_privacy.sync.section_footer" = "Wählen Sie die Datenquelle für die Wiederherstellung des Wallets mit Transaktionen aus.";
 "settings_privacy.alert_title.sync" = "%@ Wiederherstellen";
+"settings_privacy.alert_title.connection" = "%@ Connection";
 "settings_privacy.alert_title.sort" = "Ein-/Ausgänge";
 "settings_privacy.sorting_default" = "Standard";
 "settings_privacy.sorting_shuffle" = "Zufällig";
