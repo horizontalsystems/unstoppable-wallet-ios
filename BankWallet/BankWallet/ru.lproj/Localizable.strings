@@ -311,6 +311,7 @@
 "settings_privacy.sync.section_header" = "Восстановить Блокчейн";
 "settings_privacy.sync.section_footer" = "Выберите источник данных для восстановления кошелька с транзакциями.";
 "settings_privacy.alert_title.sync" = "%@ Восстановить";
+"settings_privacy.alert_title.connection" = "%@ Connection";
 "settings_privacy.alert_title.sort" = "Входы/Выходы";
 "settings_privacy.sorting_default" = "По умолчанию";
 "settings_privacy.sorting_shuffle" = "Перемешать";
