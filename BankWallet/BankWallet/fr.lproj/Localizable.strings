@@ -311,6 +311,7 @@
 "settings_privacy.sync.section_header" = "Restauration Blockchain";
 "settings_privacy.sync.section_footer" = "Sélectionnez la source de données pour restaurer le portefeuille avec les transactions.";
 "settings_privacy.alert_title.sync" = "%@ Restaurer";
+"settings_privacy.alert_title.connection" = "%@ Connection";
 "settings_privacy.alert_title.sort" = "Entrées/Sorties";
 "settings_privacy.sorting_default" = "Défaut";
 "settings_privacy.sorting_shuffle" = "Mélanger";
