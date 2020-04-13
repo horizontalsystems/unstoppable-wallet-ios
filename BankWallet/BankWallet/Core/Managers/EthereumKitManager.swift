@@ -21,7 +21,9 @@ class EthereumKitManager {
             throw AdapterError.unsupportedAccount
         }
 
-        let rpcMode: EthereumRpcMode = ethereumRpcModeSettingsManager?.rpcMode ?? .infura
+        guard let rpcMode: EthereumRpcMode = ethereumRpcModeSettingsManager?.rpcMode else {
+            throw AdapterError.wrongParameters
+        }
 
         let rpcApi: RpcApi
 

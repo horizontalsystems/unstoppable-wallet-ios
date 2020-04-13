@@ -15,8 +15,8 @@ class EthereumRpcModeSettingsManager {
 
 extension EthereumRpcModeSettingsManager: IEthereumRpcModeSettingsManager {
 
-    var rpcMode: EthereumRpcMode? {
-        localStorage.ethereumRpcMode
+    var rpcMode: EthereumRpcMode {
+        localStorage.ethereumRpcMode ?? .infura
     }
 
     func save(rpcMode: EthereumRpcMode) {

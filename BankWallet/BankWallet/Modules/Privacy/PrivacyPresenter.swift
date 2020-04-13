@@ -13,12 +13,25 @@ class PrivacyPresenter {
         self.router = router
     }
 
-    private func updateSync() {
-        view?.set(syncModeItems: factory.syncViewItems(items: syncItems))
-    }
-
     private func updateSortMode() {
         view?.set(sortMode: interactor.sortMode.title)
+    }
+
+    private func updateConnection() {
+        var connectionItems = [PrivacyViewItem]()
+
+        connectionItems.append(PrivacyViewItem(iconName: "ETH", title: "Ethereum", value: interactor.ethereumConnection.title, changable: true))
+
+        connectionItems.append(contentsOf: [
+            PrivacyViewItem(iconName: "EOS", title: "EOS", value: "eos.greymass.com", changable: false),
+            PrivacyViewItem(iconName: "BNB", title: "Binance", value: "dex.binance.com", changable: false)
+        ])
+
+        view?.set(connectionItems: connectionItems)
+    }
+
+    private func updateSync() {
+        view?.set(syncModeItems: factory.syncViewItems(items: syncItems))
     }
 
 }
@@ -28,11 +41,7 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
     func onLoad() {
         updateSortMode()
 
-        view?.set(connectionItems: [
-            PrivacyViewItem(iconName: "ETH", title: "Ethereum", value: "Incubed", changable: false),
-            PrivacyViewItem(iconName: "EOS", title: "EOS", value: "eos.greymass.com", changable: false),
-            PrivacyViewItem(iconName: "BNB", title: "Binance", value: "dex.binance.com", changable: false)
-        ])
+        updateConnection()
 
         syncItems = interactor.syncSettings.compactMap {(setting, coins) in
             guard let coin = coins.first else {
@@ -54,7 +63,14 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
     }
 
     func onSelectConnection(index: Int) {
+        switch index {
+        case 0:
+            let selectedSettingName = interactor.ethereumConnection.title
+            let allSettings = EthereumRpcMode.allCases.map { $0.title }
 
+            view?.showConnectionModeAlert(itemIndex: index, title: "Ethereum", selected: selectedSettingName, all: allSettings)
+        default: return
+        }
     }
 
     func onSelectSync(index: Int) {
@@ -77,6 +93,18 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
 
         updateSync()
         view?.updateUI()
+    }
+
+    func onSelectConnectionSetting(itemIndex: Int, settingIndex: Int) {
+        switch itemIndex {
+        case 0:
+            let newSetting = EthereumRpcMode.allCases[settingIndex]
+            interactor.save(connectionSetting: newSetting)
+
+            updateConnection()
+            view?.updateUI()
+        default: return
+        }
     }
 
     func onSelectSortSetting(settingIndex: Int) {
