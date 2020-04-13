@@ -108,9 +108,9 @@ PODS:
   - FeeRateKit.swift (0.4):
     - Alamofire (~> 4.0)
     - RxSwift (~> 5.0)
-  - GRDB.swift (4.12.1):
-    - GRDB.swift/standard (= 4.12.1)
-  - GRDB.swift/standard (4.12.1)
+  - GRDB.swift (4.12.2):
+    - GRDB.swift/standard (= 4.12.2)
+  - GRDB.swift/standard (4.12.2)
   - GRKOpenSSLFramework (1.0.2.19)
   - HdWalletKit.swift (1.4):
     - OpenSslKit.swift (~> 1.0)
@@ -334,7 +334,7 @@ CHECKOUT OPTIONS:
     :commit: 5709d11483c2239ceb8b5f6fe0cef598b115516f
     :git: https://github.com/horizontalsystems/gui-kit/
   CurrencyKit.swift:
-    :commit: 8de24001dd0821e1d39cd0ed174c928de4b04467
+    :commit: e4f4e85283a5d4c2d1102035a9cf3538290f486a
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
     :commit: cd447adf36445431e7a7997e98c394acc0e1fce7
@@ -358,19 +358,19 @@ CHECKOUT OPTIONS:
     :commit: 5709d11483c2239ceb8b5f6fe0cef598b115516f
     :git: https://github.com/horizontalsystems/gui-kit/
   LanguageKit.swift:
-    :commit: 8de24001dd0821e1d39cd0ed174c928de4b04467
+    :commit: e4f4e85283a5d4c2d1102035a9cf3538290f486a
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
     :commit: cd447adf36445431e7a7997e98c394acc0e1fce7
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   PinKit.swift:
-    :commit: 8de24001dd0821e1d39cd0ed174c928de4b04467
+    :commit: e4f4e85283a5d4c2d1102035a9cf3538290f486a
     :git: https://github.com/horizontalsystems/component-kit-ios/
   StorageKit.swift:
-    :commit: 8de24001dd0821e1d39cd0ed174c928de4b04467
+    :commit: e4f4e85283a5d4c2d1102035a9cf3538290f486a
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: 8de24001dd0821e1d39cd0ed174c928de4b04467
+    :commit: e4f4e85283a5d4c2d1102035a9cf3538290f486a
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :commit: 5709d11483c2239ceb8b5f6fe0cef598b115516f
@@ -403,7 +403,7 @@ SPEC CHECKSUMS:
   Erc20Kit.swift: 6b2e531860457ace083f30762db0a6b9e76bfbd5
   EthereumKit.swift: f37259a339f81373eefde8a962e63c1c450d1eca
   FeeRateKit.swift: a2e4b9994cd67d321b32c5b99084bf7e664c4ebc
-  GRDB.swift: e4050e5a6e8ce8d0432c8f8301d276a632bc0fad
+  GRDB.swift: 85d97200f1b3a7461243f395cc76acee251b5355
   GRKOpenSSLFramework: 4abc733a8fcbc37060619a86a54202d2938dd70e
   HdWalletKit.swift: 45af883b0aa722a56ed9a0de82121ba6c43cce3f
   Hodler.swift: 8b733307e5d90ce25cc9bd0ce7d82720156816ca
