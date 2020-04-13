@@ -8,9 +8,8 @@ class ManageWalletsRouter {
 extension ManageWalletsRouter: IManageWalletsRouter {
 
     func show(derivationSetting: DerivationSetting, coin: Coin, delegate: IDerivationSettingDelegate) {
-        print("COIN: \(coin.title)")
-        // todo
-        delegate.onSelect(derivationSetting: derivationSetting, coin: coin)
+        let controller = DerivationSettingViewController(derivationSetting: derivationSetting, coin: coin, delegate: delegate)
+        viewController?.present(controller, animated: true)
     }
 
     func showRestore(predefinedAccountType: PredefinedAccountType) {
