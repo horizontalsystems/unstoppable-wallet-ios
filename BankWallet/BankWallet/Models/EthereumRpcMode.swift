@@ -1,4 +1,4 @@
-enum EthereumRpcMode: String {
+enum EthereumRpcMode: String, CaseIterable {
     case infura
     case incubed
 

@@ -157,6 +157,18 @@ extension PrivacyViewController: IPrivacyView {
         present(alertController, animated: true)
     }
 
+    func showConnectionModeAlert(itemIndex: Int, title: String, selected: String, all: [String]) {
+        let alertController = AlertViewController(
+                header: "settings_privacy.alert_title.connection".localized(title),
+                rows: all.map { title in
+                    AlertRow(text: title, selected: title == selected)
+                }) { [weak self] selectedIndex in
+            self?.delegate.onSelectConnectionSetting(itemIndex: itemIndex, settingIndex: selectedIndex)
+        }
+
+        present(alertController, animated: true)
+    }
+
     func showSortModeAlert(selected: String, all: [String]) {
         let alertController = AlertViewController(
                 header: "settings_privacy.alert_title.sort".localized(),

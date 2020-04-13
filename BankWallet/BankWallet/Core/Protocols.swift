@@ -532,7 +532,7 @@ protocol IInitialSyncSettingsManager: AnyObject {
 }
 
 protocol IEthereumRpcModeSettingsManager: AnyObject {
-    var rpcMode: EthereumRpcMode? { get }
+    var rpcMode: EthereumRpcMode { get }
     func save(rpcMode: EthereumRpcMode)
 }
 
