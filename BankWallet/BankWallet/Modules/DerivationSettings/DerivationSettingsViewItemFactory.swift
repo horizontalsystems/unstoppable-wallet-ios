@@ -1,6 +1,6 @@
 class DerivationSettingsViewItemFactory {
 
-    func sectionViewItem(item: DerivationSettingItem) -> DerivationSettingSectionViewItem {
+    func sectionViewItem(item: DerivationSettingsItem) -> DerivationSettingSectionViewItem {
         DerivationSettingSectionViewItem(
                 coinName: item.firstCoin.title,
                 items: MnemonicDerivation.allCases.map { derivation in
