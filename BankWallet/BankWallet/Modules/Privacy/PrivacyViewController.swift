@@ -152,40 +152,92 @@ extension PrivacyViewController: IPrivacyView {
         self.syncModeItems = syncModeItems
     }
 
-    func showSyncModeAlert(itemIndex: Int, coinName: String, selected: String, all: [String]) {
-        let alertController = AlertViewController(
-                header: "settings_privacy.alert_title.sync".localized(coinName),
-                rows: all.map { title in
-                    AlertRow(text: title, selected: title == selected)
-                }) { [weak self] selectedIndex in
-            self?.delegate.onSelectSyncSetting(itemIndex: itemIndex, settingIndex: selectedIndex)
+    func showSyncModeAlert(itemIndex: Int, coinName: String, iconName: String, items: [PrivacySyncSelectViewItem]) {
+        var alertItems: [BottomAlertItemType] = [
+            .title(
+                    title: "settings_privacy.alert_sync.title".localized,
+                    subtitle: coinName,
+                    icon: UIImage(named: iconName.lowercased()),
+                    iconTint: .themeGray
+            ),
+            .description(text: "settings_privacy.alert_sync.description".localized(coinName))
+        ]
+
+        items.forEach { setting in
+            let subtitle = setting.priority == .recommended ? "settings_privacy.alert_sync.recommended" : "settings_privacy.alert_sync.more_private"
+            alertItems.append(.radio(title: setting.title, subtitle: subtitle.localized, selected: setting.selected))
         }
 
-        present(alertController, animated: true)
+        alertItems.append(.button(
+                title: "button.done".localized,
+                button: .appYellow,
+                onTap: { [weak self] selectedIndex in
+                    if let selectedIndex = selectedIndex {
+                        self?.delegate.onSelectSyncSetting(itemIndex: itemIndex, settingIndex: selectedIndex)
+                    }
+                }
+        ))
+
+        let controller = BottomAlertViewController(items: alertItems)
+        present(controller, animated: true)
     }
 
-    func showConnectionModeAlert(itemIndex: Int, title: String, selected: String, all: [String]) {
-        let alertController = AlertViewController(
-                header: "settings_privacy.alert_title.connection".localized(title),
-                rows: all.map { title in
-                    AlertRow(text: title, selected: title == selected)
-                }) { [weak self] selectedIndex in
-            self?.delegate.onSelectConnectionSetting(itemIndex: itemIndex, settingIndex: selectedIndex)
+    func showConnectionModeAlert(itemIndex: Int, coinName: String, iconName: String, items: [PrivacyConnectionSelectViewItem]) {
+        var alertItems: [BottomAlertItemType] = [
+            .title(
+                    title: "settings_privacy.alert_connection.title".localized,
+                    subtitle: coinName,
+                    icon: UIImage(named: iconName.lowercased()),
+                    iconTint: .themeGray
+            )
+        ]
+
+        items.forEach { setting in
+            alertItems.append(.radio(title: setting.title, subtitle: setting.subtitle, selected: setting.selected))
         }
 
-        present(alertController, animated: true)
+        alertItems.append(.button(
+                title: "button.done".localized,
+                button: .appYellow,
+                onTap: { [weak self] selectedIndex in
+                    if let selectedIndex = selectedIndex {
+                        self?.delegate.onSelectConnectionSetting(itemIndex: itemIndex, settingIndex: selectedIndex)
+                    }
+                }
+        ))
+
+        let controller = BottomAlertViewController(items: alertItems)
+        present(controller, animated: true)
     }
 
-    func showSortModeAlert(selected: String, all: [String]) {
-        let alertController = AlertViewController(
-                header: "settings_privacy.alert_title.sort".localized(),
-                rows: all.map { title in
-                    AlertRow(text: "settings_privacy.sorting_\(title)".localized, selected: title == selected)
-                }) { [weak self] selectedIndex in
-            self?.delegate.onSelectSortSetting(settingIndex: selectedIndex)
+    func showSortModeAlert(items: [PrivacySortSelectViewItem]) {
+        var alertItems: [BottomAlertItemType] = [
+            .title(
+                    title: "settings_privacy.alert_sort.title".localized,
+                    subtitle: "settings_privacy.alert_sort.subtitle".localized,
+                    icon: UIImage(named: "Sort Icon"),
+                    iconTint: .themeGray
+            )
+        ]
+
+        items.forEach { setting in
+            let title = "settings_privacy.sorting_\(setting.mode)".localized
+            let subtitle = "settings_privacy.sorting_\(setting.mode).description".localized
+            alertItems.append(.radio(title: title, subtitle: subtitle, selected: setting.selected))
         }
 
-        present(alertController, animated: true)
+        alertItems.append(.button(
+                title: "button.done".localized,
+                button: .appYellow,
+                onTap: { [weak self] selectedIndex in
+                    if let selectedIndex = selectedIndex {
+                        self?.delegate.onSelectSortSetting(settingIndex: selectedIndex)
+                    }
+                }
+        ))
+
+        let controller = BottomAlertViewController(items: alertItems)
+        present(controller, animated: true)
     }
 
 }

@@ -16,9 +16,9 @@ protocol IPrivacyView: class {
     func set(sortMode: String)
     func set(connectionItems: [PrivacyViewItem])
     func set(syncModeItems: [PrivacyViewItem])
-    func showSyncModeAlert(itemIndex: Int, coinName: String, selected: String, all: [String])
-    func showConnectionModeAlert(itemIndex: Int, title: String, selected: String, all: [String])
-    func showSortModeAlert(selected: String, all: [String])
+    func showSyncModeAlert(itemIndex: Int, coinName: String, iconName: String, items: [PrivacySyncSelectViewItem])
+    func showConnectionModeAlert(itemIndex: Int, coinName: String, iconName: String, items: [PrivacyConnectionSelectViewItem])
+    func showSortModeAlert(items: [PrivacySortSelectViewItem])
 }
 
 protocol IPrivacyViewDelegate {

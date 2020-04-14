@@ -5,12 +5,15 @@ enum BottomAlertItemType {
     case title(title: String, subtitle: String, icon: UIImage?, iconTint: UIColor)
     case description(text: String)
     case checkbox(description: String)
-    case button(title: String, button: UIButton, onTap: () -> ())
+    case button(title: String, button: UIButton, onTap: (Int?) -> ())
+    case radio(title: String, subtitle: String, selected: Bool)
 }
 
 class BottomAlertViewController: WalletActionSheetController {
     private var checkboxItems = [ConfirmationCheckboxItem]()
     private let checkboxAttributes = [NSAttributedString.Key.foregroundColor: UIColor.themeOz, NSAttributedString.Key.font: UIFont.subhead2]
+
+    private var radioItems = [RadioItem]()
 
     private var buttonItems = [AlertButtonItem]()
 
@@ -36,7 +39,7 @@ class BottomAlertViewController: WalletActionSheetController {
                 let attributedDescription = NSAttributedString(string: description, attributes: checkboxAttributes)
                 let checkboxIndex = checkboxItems.count
                 let checkboxItem = ConfirmationCheckboxItem(descriptionText: attributedDescription, tag: index) { [weak self] view in
-                    self?.handleToggle(index: checkboxIndex)
+                    self?.handleToggleCheckbox(index: checkboxIndex)
                 }
                 checkboxItems.append(checkboxItem)
                 model.addItemView(checkboxItem)
@@ -47,11 +50,21 @@ class BottomAlertViewController: WalletActionSheetController {
                         createButton: { button },
                         insets: UIEdgeInsets(top: CGFloat.margin4x, left: CGFloat.margin4x, bottom: CGFloat.margin4x, right: CGFloat.margin4x)
                 ) { [weak self] in
-                    onTap()
+                    let selectedRadioIndex: Int? = self?.radioItems.enumerated().compactMap { index, item in
+                        item.selected ? index : nil
+                    }.first
+                    onTap(selectedRadioIndex)
                     self?.dismiss(animated: true)
                 }
                 buttonItems.append(buttonItem)
                 model.addItemView(buttonItem)
+            case let .radio(title, subtitle, selected):
+                let radioIndex = radioItems.count
+                let radioItem = RadioItem(title: title, subtitle: subtitle, selected: selected, tag: index) { [weak self] view in
+                    self?.handleToggleRadio(index: radioIndex)
+                }
+                radioItems.append(radioItem)
+                model.addItemView(radioItem)
             }
         }
         syncButtonItems()
@@ -67,9 +80,16 @@ class BottomAlertViewController: WalletActionSheetController {
         contentBackgroundColor = .white
     }
 
-    private func handleToggle(index: Int) {
+    private func handleToggleCheckbox(index: Int) {
         checkboxItems[index].checked = !checkboxItems[index].checked
         syncButtonItems()
+        model.reload?()
+    }
+
+    private func handleToggleRadio(index: Int) {
+        for (itemIndex, item) in radioItems.enumerated() {
+            item.selected = itemIndex == index
+        }
         model.reload?()
     }
 
@@ -78,4 +98,5 @@ class BottomAlertViewController: WalletActionSheetController {
             $0.isEnabled = checkboxItems.filter { $0.checked == false }.isEmpty
         }
     }
+
 }

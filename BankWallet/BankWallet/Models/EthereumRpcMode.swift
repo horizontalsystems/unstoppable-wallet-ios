@@ -9,4 +9,11 @@ enum EthereumRpcMode: String, CaseIterable {
         }
     }
 
+    var address: String {
+        switch self {
+        case .infura: return "infura.io"
+        case .incubed: return "slock.it"
+        }
+    }
+
 }
