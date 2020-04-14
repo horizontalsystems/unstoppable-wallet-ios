@@ -310,12 +310,22 @@
 "settings_privacy.connection.section_footer" = "Некоторые блокчейны не имеют инфраструктуру для работы мобильных приложений в пиринговом режиме (P2P). Работа с блокчейнами BTC, BCH, LTC, DASH проходит полностью в режиме P2P.";
 "settings_privacy.sync.section_header" = "Восстановить Блокчейн";
 "settings_privacy.sync.section_footer" = "Выберите источник данных для восстановления кошелька с транзакциями.";
-"settings_privacy.alert_title.sync" = "%@ Восстановить";
-"settings_privacy.alert_title.connection" = "%@ Connection";
-"settings_privacy.alert_title.sort" = "Входы/Выходы";
+
+"settings_privacy.alert_sync.title" = "Restore Source";
+"settings_privacy.alert_sync.description" = "After this change the wallet will have to resync itself with the %@ blockchain.";
+"settings_privacy.alert_sync.recommended" = "Recommended";
+"settings_privacy.alert_sync.more_private" = "More Private";
+
+"settings_privacy.alert_connection.title" = "Blockchain Connection";
+
+"settings_privacy.alert_sort.title" = "Blockchain Transactions";
+"settings_privacy.alert_sort.subtitle" = "Inputs/Outputs";
 "settings_privacy.sorting_default" = "По умолчанию";
+"settings_privacy.sorting_default.description" = "Without any settings";
 "settings_privacy.sorting_shuffle" = "Перемешать";
+"settings_privacy.sorting_shuffle.description" = "Random Indexing";
 "settings_privacy.sorting_deterministic" = "Детерминированный Bip69";
+"settings_privacy.sorting_deterministic.description" = "Lexicographical Indexing";
 
 // Settings -> Contact
 
