@@ -312,20 +312,20 @@
 "settings_privacy.sync.section_footer" = "Выберите источник данных для восстановления кошелька с транзакциями.";
 
 "settings_privacy.alert_sync.title" = "Источник Восстановления";
-"settings_privacy.alert_sync.description" = "После этого изменения кошелек должен будет повторно синхронизировать с блокчейном %@.";
+"settings_privacy.alert_sync.description" = "После этого изменения кошелек должен будет повторно синхронизироваться с блокчейном %@.";
 "settings_privacy.alert_sync.recommended" = "Рекомендовано";
 "settings_privacy.alert_sync.more_private" = "Более Приватно";
 
-"settings_privacy.alert_connection.title" = "Соединение с Блокчейном";
+"settings_privacy.alert_connection.title" = "Подключение к Блокчейну";
 
 "settings_privacy.alert_sort.title" = "Блокчейн Tранзакции";
 "settings_privacy.alert_sort.subtitle" = "Входы/Выходы";
 "settings_privacy.sorting_default" = "По умолчанию";
-"settings_privacy.sorting_default.description" = "Без каких-либо настроек";
+"settings_privacy.sorting_default.description" = "Без настроек";
 "settings_privacy.sorting_shuffle" = "Перемешать";
 "settings_privacy.sorting_shuffle.description" = "Случайное Индексирование";
 "settings_privacy.sorting_deterministic" = "Детерминированный Bip69";
-"settings_privacy.sorting_deterministic.description" = "Индексация словаря";
+"settings_privacy.sorting_deterministic.description" = "Лексикографическая Индексация";
 
 // Settings -> Contact
 
