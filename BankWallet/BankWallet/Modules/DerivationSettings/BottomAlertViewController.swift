@@ -3,7 +3,7 @@ import ActionSheet
 
 enum BottomAlertItemType {
     case title(title: String, subtitle: String, icon: UIImage?, iconTint: UIColor)
-    case description(text: String)
+    case description(text: String, important: Bool)
     case checkbox(description: String)
     case button(title: String, button: UIButton, onTap: (Int?) -> ())
     case radio(title: String, subtitle: String, selected: Bool)
@@ -33,8 +33,8 @@ class BottomAlertViewController: WalletActionSheetController {
                             self?.dismiss(byFade: false)
                         }
                 ))
-            case let .description(text):
-                model.addItemView(AlertTextItem(text: text, tag: index))
+            case let .description(text, important):
+                model.addItemView(AlertTextItem(text: text, important: important, tag: index))
             case let .checkbox(description):
                 let attributedDescription = NSAttributedString(string: description, attributes: checkboxAttributes)
                 let checkboxIndex = checkboxItems.count

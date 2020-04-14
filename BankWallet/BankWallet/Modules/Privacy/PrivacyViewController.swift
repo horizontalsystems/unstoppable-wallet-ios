@@ -160,7 +160,7 @@ extension PrivacyViewController: IPrivacyView {
                     icon: UIImage(named: iconName.lowercased()),
                     iconTint: .themeGray
             ),
-            .description(text: "settings_privacy.alert_sync.description".localized(coinName))
+            .description(text: "settings_privacy.alert_sync.description".localized(coinName), important: true)
         ]
 
         items.forEach { setting in

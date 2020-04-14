@@ -2,9 +2,11 @@ import ActionSheet
 
 class AlertTextItem: BaseActionItem {
     let text: String
+    let important: Bool
 
-    init(text: String, tag: Int) {
+    init(text: String, important: Bool, tag: Int) {
         self.text = text
+        self.important = important
 
         super.init(cellType: AlertTextItemView.self, tag: tag, required: true)
 
