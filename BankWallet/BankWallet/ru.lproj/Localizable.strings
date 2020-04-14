@@ -63,7 +63,7 @@
 "coin_settings.sync_mode.description" = "Ссылки на источники API: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg";
 "sync_mode.from_blockchain" = "Из Блокчейна";
 "blockchain_settings.change_alert.title" = "Формат Адреса";
-"blockchain_settings.change_alert.content" = "После этого изменения кошелек должен будет повторно синхронизироваться с блокчейном %@.\n\nПри изменении формата адреса для %@ текущая история транзакций не будет отображаться на вкладке баланса. Вернув предыдущую настройку, вы вернете все после того, как кошелек повторно синхронизируется с блокчейном. Мы рекомендуем не менять его, если вы не уверены, что это такое.";
+"blockchain_settings.change_alert.content" = "After this change the wallet will have to resync itself with the %@ blockchain.\n\nWhen you change the address format for %@ the current balance and transaction history will no longer be visible. Changing it back to previous setting will bring everything back after the wallet resyncs itself with the blockchain. We recommend not to change it if not sure what that is.";
 "blockchain_settings.change_alert.action_button_text" = "Изменить на %@";
 "blockchain_settings.sync_mode_change_alert.content" = "Это действие потребует ресинхронизации приложения Unstoppable с Bitcoin, и блокчейнами Bitcoin Cash и Dash в случае, если вы активировали любые из этих токенов. Это не повлияет на ваш баланс или транзакции.\n\nМы не рекомендуем изменять эту настройку, если вы не уверены, каким будет результат этих изменений.";
 "blockchain_settings.sync_mode.blockchain" = "Блокчейн";
