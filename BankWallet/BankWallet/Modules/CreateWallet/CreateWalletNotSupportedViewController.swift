@@ -17,7 +17,7 @@ class CreateWalletNotSupportedViewController: WalletActionSheetController {
                 }
         )
 
-        let textItem = AlertTextItem(text: "error.cant_create_wallet".localized(predefinedAccountType.title), tag: 1)
+        let textItem = AlertTextItem(text: "error.cant_create_wallet".localized(predefinedAccountType.title), important: false, tag: 1)
 
         model.addItemView(titleItem)
         model.addItemView(textItem)
