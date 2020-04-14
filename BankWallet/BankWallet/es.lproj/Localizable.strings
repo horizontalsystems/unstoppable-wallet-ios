@@ -63,7 +63,7 @@
 "coin_settings.sync_mode.description" = "Enlaces de fuentes API: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
 "sync_mode.from_blockchain" = "Desde Blockchain";
 "blockchain_settings.change_alert.title" = "Formato de Dirección";
-"blockchain_settings.change_alert.content" = "Después de este cambio, el monedero tendrá que resincronizarse con el blockchain %@.\n\nCuando cambie el formato de dirección para %@, el saldo actual y el historial de transacciones dejarán de ser visibles en la pestaña de saldo. Cambiarlo de vuelta a la configuración anterior traerá todo de vuelta después de que el monedero se resincronice a sí mismo con el blockchain. Recomendamos no cambiarlo si no está seguro de lo que es.";
+"blockchain_settings.change_alert.content" = "After this change the wallet will have to resync itself with the %@ blockchain.\n\nWhen you change the address format for %@ the current balance and transaction history will no longer be visible. Changing it back to previous setting will bring everything back after the wallet resyncs itself with the blockchain. We recommend not to change it if not sure what that is.";
 "blockchain_settings.change_alert.action_button_text" = "Cambiar a %@";
 "blockchain_settings.sync_mode_change_alert.content" = "Esta acción requerirá que la aplicación Unstoppable se vuelva a sincronizar con Bitcoin, Bitcoin Cash y Dash blockchains, si has activado cualquiera de estos tokens. Su saldo o transacciones no se verán afectadas.\n\n Recomendamos no cambiar esta configuración si no está seguro de lo que hace.";
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
