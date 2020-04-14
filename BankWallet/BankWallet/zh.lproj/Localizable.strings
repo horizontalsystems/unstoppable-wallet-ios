@@ -311,15 +311,15 @@
 "settings_privacy.sync.section_header" = "区块链恢复";
 "settings_privacy.sync.section_footer" = "通过交易为恢复钱包选择数据源。";
 
-"settings_privacy.alert_sync.title" = "Restore Source";
-"settings_privacy.alert_sync.description" = "After this change the wallet will have to resync itself with the %@ blockchain.";
+"settings_privacy.alert_sync.title" = "恢复参数";
+"settings_privacy.alert_sync.description" = "此更改后，钱包将必须与 %@ 区块链重新同步。";
 "settings_privacy.alert_sync.recommended" = "Recommended";
 "settings_privacy.alert_sync.more_private" = "More Private";
 
-"settings_privacy.alert_connection.title" = "Blockchain Connection";
+"settings_privacy.alert_connection.title" = "区块链连接";
 
-"settings_privacy.alert_sort.title" = "Blockchain Transactions";
-"settings_privacy.alert_sort.subtitle" = "Inputs/Outputs";
+"settings_privacy.alert_sort.title" = "区块链交易";
+"settings_privacy.alert_sort.subtitle" = "输入/输出";
 "settings_privacy.sorting_default" = "默认";
 "settings_privacy.sorting_default.description" = "Without any settings";
 "settings_privacy.sorting_shuffle" = "随机排序";
