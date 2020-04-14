@@ -314,18 +314,18 @@
 "settings_privacy.alert_sync.title" = "恢复参数";
 "settings_privacy.alert_sync.description" = "此更改后，钱包将必须与 %@ 区块链重新同步。";
 "settings_privacy.alert_sync.recommended" = "推荐";
-"settings_privacy.alert_sync.more_private" = "More Private";
+"settings_privacy.alert_sync.more_private" = "更私密";
 
 "settings_privacy.alert_connection.title" = "区块链连接";
 
 "settings_privacy.alert_sort.title" = "区块链交易";
 "settings_privacy.alert_sort.subtitle" = "输入/输出";
 "settings_privacy.sorting_default" = "默认";
-"settings_privacy.sorting_default.description" = "Without any settings";
+"settings_privacy.sorting_default.description" = "无任何设置";
 "settings_privacy.sorting_shuffle" = "随机排序";
-"settings_privacy.sorting_shuffle.description" = "Random Indexing";
+"settings_privacy.sorting_shuffle.description" = "随机索引";
 "settings_privacy.sorting_deterministic" = "BIP69";
-"settings_privacy.sorting_deterministic.description" = "Lexicographical Indexing";
+"settings_privacy.sorting_deterministic.description" = "词典索引";
 
 // Settings -> Contact
 
