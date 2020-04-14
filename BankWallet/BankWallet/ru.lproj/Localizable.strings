@@ -319,7 +319,7 @@
 "settings_privacy.alert_connection.title" = "Blockchain Connection";
 
 "settings_privacy.alert_sort.title" = "Blockchain Transactions";
-"settings_privacy.alert_sort.subtitle" = "Inputs/Outputs";
+"settings_privacy.alert_sort.subtitle" = "Входы/Выходы";
 "settings_privacy.sorting_default" = "По умолчанию";
 "settings_privacy.sorting_default.description" = "Without any settings";
 "settings_privacy.sorting_shuffle" = "Перемешать";
