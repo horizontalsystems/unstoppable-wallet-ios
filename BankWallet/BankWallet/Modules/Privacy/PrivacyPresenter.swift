@@ -56,19 +56,16 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
     }
 
     func onSelectSortMode() {
-        let selectedSettingName = interactor.sortMode.title
-        let allSettings = TransactionDataSortMode.allCases.map { $0.title }
-
-        view?.showSortModeAlert(selected: selectedSettingName, all: allSettings)
+        view?.showSortModeAlert(items: factory.sortSelectViewItems(currentSetting: interactor.sortMode, all: TransactionDataSortMode.allCases))
     }
 
     func onSelectConnection(index: Int) {
         switch index {
         case 0:
-            let selectedSettingName = interactor.ethereumConnection.title
-            let allSettings = EthereumRpcMode.allCases.map { $0.title }
+            let selectedSetting = interactor.ethereumConnection
+            let allSettings = EthereumRpcMode.allCases
 
-            view?.showConnectionModeAlert(itemIndex: index, title: "Ethereum", selected: selectedSettingName, all: allSettings)
+            view?.showConnectionModeAlert(itemIndex: index, coinName: "Ethereum", iconName: "ETH", items: factory.ethConnectionSelectViewItems(currentSetting: selectedSetting, all: allSettings))
         default: return
         }
     }
@@ -77,10 +74,9 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
         let currentSetting = syncItems[index]
 
         let coinName: String = currentSetting.coin.title
-        let selectedSettingName: String = currentSetting.setting.syncMode.title
-        let allSettings = syncModes.map { $0.title }
+        let iconName: String = currentSetting.coin.code
 
-        view?.showSyncModeAlert(itemIndex: index, coinName: coinName, selected: selectedSettingName, all: allSettings)
+        view?.showSyncModeAlert(itemIndex: index, coinName: coinName, iconName: iconName, items: factory.syncSelectViewItems(currentSetting: currentSetting, all: syncModes))
     }
 
     func onSelectSyncSetting(itemIndex: Int, settingIndex: Int) {
