@@ -35,6 +35,7 @@
 
 "welcome.new_wallet" = "创建钱包";
 "welcome.restore_wallet" = "恢复钱包";
+"welcome.privacy_settings" = "隐私设置";
 "welcome.version" = "版本%@";
 
 // Restore
@@ -42,27 +43,32 @@
 "restore.title" = "恢复自";
 "restore.enter_key" = "输入密钥";
 "restore.item_title" = "%@钱包";
-"restore.description" = "要恢复现有钱包，您必须输入该钱包的私钥。\n\n恢复钱包后，您可以通过应用的“安全”设置中的“管理钱包”恢复其他钱包。";
+"restore.description" = "选择要恢复的钱包。您需要具有该钱包的私钥。";
 "restore.words.description" = "为%@钱包输入私钥，其中应包含%@个单词。这些单词必须以正确的顺序输入并用空格分隔。";
-"restore.eos.description" = "输入 %@ 钱包的私钥。";
 "restore.validation_failed" = "密钥不正确";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
 // Coin Settings
 
-"coin_settings.enable_button" = "启用";
-"coin_settings.derivation.title" = "选择地址格式";
 "coin_settings.derivation.description_bip44" = "更旧（以1开头...）";
 "coin_settings.derivation.description_bip49" = "流行（以3开头...）";
 "coin_settings.derivation.description_bip84" = "最新（以bc1开头...）";
 "coin_settings.derivation.description_create" = "此设置控制着此钱包中比特币的地址格式。如果不确定，我们建议使用BIP49。";
 "coin_settings.derivation.description_restore" = "选择您尝试恢复的钱包中的比特币的地址格式。";
+"coin_settings.title" = "区块链设置";
 "coin_settings.sync_mode.title" = "恢复参数";
 "coin_settings.sync_mode.fast.description" = "0 小时 (推荐)";
-"coin_settings.sync_mode.slow.description" = "1- 12 小时";
-"coin_settings.sync_mode.description" = "选择Unstoppable应用于下载您的余额和交易的源。\n\n水平系统%@API：";
-
+"coin_settings.sync_mode.slow.description" = "1- 24 小时";
+"coin_settings.sync_mode.description" = "API 源链接： \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
+"sync_mode.from_blockchain" = "来自区块链";
+"blockchain_settings.change_alert.title" = "地址格式";
+"blockchain_settings.change_alert.content" = "此更改后，钱包将必须与 %@ 区块链重新同步。\n\n\n当您更改地址格式的 %@ 时，当前余额和交易历史将不再可见。 将其更改为以前的设置将在钱包与区块链重新同步后恢复所有设置。 如果不确定，我们建议不要进行更改。";
+"blockchain_settings.change_alert.action_button_text" = "更改为%@";
+"blockchain_settings.sync_mode_change_alert.content" = "如果您已任何比特币、比特币现金和Dash，此操作需要使用Unstoppable应用以将其和这些代币的区块链重新同步。您的余额和交易将不受影响。\n\n我们建议建议在不确定的情况下不要更改此设置。";
+"blockchain_settings.sync_mode.blockchain" = "区块链";
+"blockchain_settings.sync_mode.api" = "API";
+"blockchain_settings.title" = "地址格式";
 // Backup
 
 "backup.close" = "关闭";
@@ -129,6 +135,7 @@
 "send.tx_speed_low" = "低";
 "send.tx_speed_medium" = "中";
 "send.tx_speed_high" = "高";
+"send.tx_speed_custom" = "自定义";
 "send.tx_duration" = "时长";
 "send.duration.instant" = "即时";
 "send.duration.within" = "在%@内";
@@ -256,7 +263,7 @@
 "manage_coins.title" = "代币管理器";
 "manage_coins.add_coin.title" = "添加%@ ";
 "manage_coins.add_coin.subtitle" = "%@钱包";
-"manage_coins.add_coin.text" = "您没有可恢复%@（%@）的钱包。应用可以为您生成新的钱包。使用下方的“创建”按钮生成新钱包。\n\n您将可以为以下代币使用新钱包：%@。\n\n如果您已有钱包，那么您也可以使用现有的%@钱包。为此使用“恢复”按钮。";
+"manage_coins.add_coin.text" = "您必须创建%@钱包才能对%@进行转账或收款。\n\n使用下方的“创建”（Create）按钮建立一个新的%@钱包，或者使用“恢复”（Restore）按钮导入现有钱包。\n\n您可以对此钱包使用：%@。";
 "manage_coins.add_coin.create" = "创建";
 "manage_coins.add_coin.restore" = "恢复";
 
@@ -287,12 +294,38 @@
 // Settings -> Security
 
 "settings_security.title" = "安全中心";
-"settings_security.manage_accounts" = "管理钱包";
+"settings_security.blockchain_settings" = "区块链设置";
 "settings_security.passcode" = "密码";
+"settings_security.privacy" = "隐私";
 "settings_security.change_pin" = "编辑密码";
 "settings_security.touch_id" = "指纹识别";
 "settings_security.face_id" = "面部识别";
 "security_settings.delete_alert_button" = "从手机中删除";
+"settings_privacy.title" = "隐私";
+"settings_privacy.header_description" = "此应用不分享您的任何数据。但是，由于其使用区块链进行通信，所以部分像 IP 地址等公共数据将有可能会泄漏。";
+"settings_privacy.sorting_title" = "输入/输出";
+"settings_privacy.sorting.section_header" = "区块链交易";
+"settings_privacy.sorting.section_footer" = "通过改变交易结构的方式使您的BTC、LTC、BCH交易更难被追踪。";
+"settings_privacy.connection.section_header" = "区块链连接";
+"settings_privacy.connection.section_footer" = "部分区块链未为手机应用提供以点对点运行的方法。与BTC、BCH、LTC、DASH 区块链的通信属于完全点对点。";
+"settings_privacy.sync.section_header" = "区块链恢复";
+"settings_privacy.sync.section_footer" = "通过交易为恢复钱包选择数据源。";
+
+"settings_privacy.alert_sync.title" = "恢复参数";
+"settings_privacy.alert_sync.description" = "此更改后，钱包将必须与 %@ 区块链重新同步。";
+"settings_privacy.alert_sync.recommended" = "推荐";
+"settings_privacy.alert_sync.more_private" = "更私密";
+
+"settings_privacy.alert_connection.title" = "区块链连接";
+
+"settings_privacy.alert_sort.title" = "区块链交易";
+"settings_privacy.alert_sort.subtitle" = "输入/输出";
+"settings_privacy.sorting_default" = "默认";
+"settings_privacy.sorting_default.description" = "无任何设置";
+"settings_privacy.sorting_shuffle" = "随机排序";
+"settings_privacy.sorting_shuffle.description" = "随机索引";
+"settings_privacy.sorting_deterministic" = "BIP69";
+"settings_privacy.sorting_deterministic.description" = "词典索引";
 
 // Settings -> Contact
 
@@ -312,7 +345,7 @@
 "settings_manage_keys.show" = "显示";
 "settings_manage_keys.create" = "创建";
 "settings_manage_keys.restore" = "恢复";
-"settings_manage_keys.settings" = "高级设置";
+"settings_manage_keys.settings" = "地址格式";
 "settings_manage_keys.delete.cant_delete" = "您应该在将此钱包的私钥从该手机删除之前先对其进行备份。";
 "settings_manage_keys.delete.title" = "删除钱包";
 "settings_manage_keys.delete.confirmation_remove" = "该操作将从此设备删除%@钱包。";
@@ -369,7 +402,7 @@
 "chart.market_cap.million" = "%@百万";
 "chart.market_cap.billion" = "%@十亿";
 "chart.market_cap.trillion" = "%@万亿";
-"chart.volume" = "量";
+"chart.volume" = "量(24小时)";
 "chart.circulation" = "流通中";
 "chart.max_supply" = "供应总额";
 "chart.error.not_available" = "无可用图表";
@@ -407,3 +440,14 @@
 "timestamp.days_ago" = "%lu天之前";
 "timestamp.hours_ago" = "%lu小时之前";
 "timestamp.min_ago" = "%lu分钟之前";
+
+// Intro
+
+"intro.skip" = "跳过";
+"intro.next" = "继续";
+"intro.independence.title" = "独立性";
+"intro.independence.description" = "保持加密货币资产的安全、不可混淆和随时可访问。";
+"intro.knowledge.title" = "知识";
+"intro.knowledge.description" = "在早期阶段了解和探索不断发展的区块链项目。";
+"intro.privacy.title" = "隐私";
+"intro.privacy.description" = "在增长财富的同时保持隐身状态并避开追踪。";

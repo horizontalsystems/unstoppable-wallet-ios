@@ -35,6 +35,7 @@
 
 "welcome.new_wallet" = "새 지갑";
 "welcome.restore_wallet" = "지갑 복원";
+"welcome.privacy_settings" = "개인 정보 설정";
 "welcome.version" = "버전 %@";
 
 // Restore
@@ -42,27 +43,32 @@
 "restore.title" = "다음에서 복원하기";
 "restore.enter_key" = "암호를 입력하세요";
 "restore.item_title" = "%@ 지갑";
-"restore.description" = "기존으 지갑을 복원시키려면 귀하께서는 개인 암호를 입력 하셔야 합니다.\n\n하나의 지갑을 복원 시키시면 다른 지갑들도 앱의 보안 설정에서 지갑 관리 섹션을 통해 복원 하실 수 있습니다.";
+"restore.description" = "복원할 지갑을 선택하여 주세요. 귀하께서는 해당 지갑의 개인 암호가 필요합니다.";
 "restore.words.description" = "개인 암호를 %@지갑에 입력해 주십시오";
-"restore.eos.description" = "개인 암호를 %@지갑에 입력해 주십시오.";
 "restore.validation_failed" = "틀린 암호 입니다";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
 // Coin Settings
 
-"coin_settings.enable_button" = "활성화";
-"coin_settings.derivation.title" = "주소 형식을 선택해 주세요";
 "coin_settings.derivation.description_bip44" = "더 오래된 (1부터 시작)";
 "coin_settings.derivation.description_bip49" = "인기있는 (3부터 시작)";
 "coin_settings.derivation.description_bip84" = "최신 (bc1부터 시작)";
 "coin_settings.derivation.description_create" = "이 설정은 지갑에서 비트코인 주소 형식을 통제 합니다. 확실하지 않는 경우에는 BIP49를 사용하시는 것을 추천해드립니다.";
 "coin_settings.derivation.description_restore" = "복원을 하려는 지갑에서 비트코인의 주소 형식을 선택해 주세요.";
+"coin_settings.title" = "블록 체인 설정";
 "coin_settings.sync_mode.title" = "매개 변수 복원";
 "coin_settings.sync_mode.fast.description" = "0-2 시간, 권장";
-"coin_settings.sync_mode.slow.description" = "1-12 시간";
-"coin_settings.sync_mode.description" = "언스탑퍼블이 귀하의 잔액 및 거래 내역을 다운로드 하는데 사용하는 소스를 선택해 주세요.\n\n수평 시스템 %@ API:";
-
+"coin_settings.sync_mode.slow.description" = "1-24 시간";
+"coin_settings.sync_mode.description" = "API 출처 링크: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
+"sync_mode.from_blockchain" = "블록체인으로 부터";
+"blockchain_settings.change_alert.title" = "주소 형식";
+"blockchain_settings.change_alert.content" = "이 변경 후 지갑은 %@ 블록체인과 다시 동기화 되어야합니다.\n\n\n%@ 의 주소 형식을 변경하실 때에 현재 잔액 및 거래 내역이 더 이상 잔액 탭에 표기되지 않습니다. 이전 설정으로 다시 변경하시면 지갑이 블록체인과 다시 동기화된 후 모든 것을 다시 가져옵니다. 저희는 그것이 확실치 않을시에 변경하지 않는 것을 권장합니다.";
+"blockchain_settings.change_alert.action_button_text" = "%@으로 변경";
+"blockchain_settings.sync_mode_change_alert.content" = "이 작업은 귀하께서 이러한 토큰을 활성화 하신 경우 언스타퍼블 앱이 비트코인, 비트코인 Cash 및 Dash 블록 체인과 다시 동기화 되어야 합니다. 귀하의 잔액 또는 거래에는 영향을 미치지 않습니다.\n\n저희는 이 기능이 확실치 않을 경우 설정을 변경하지 않는 것을 권장합니다.";
+"blockchain_settings.sync_mode.blockchain" = "블록 체인";
+"blockchain_settings.sync_mode.api" = "API";
+"blockchain_settings.title" = "주소 형식";
 // Backup
 
 "backup.close" = "가까운, 닫힌";
@@ -129,6 +135,7 @@
 "send.tx_speed_low" = "낮음";
 "send.tx_speed_medium" = "보통";
 "send.tx_speed_high" = "높음";
+"send.tx_speed_custom" = "사용자 지정";
 "send.tx_duration" = "기간";
 "send.duration.instant" = "즉시";
 "send.duration.within" = "%@ 안에";
@@ -256,7 +263,7 @@
 "manage_coins.title" = "코인 매니저";
 "manage_coins.add_coin.title" = "%@ 추가 ";
 "manage_coins.add_coin.subtitle" = "%@ 지갑";
-"manage_coins.add_coin.text" = "귀하께서는 %@(%@)를 저장할 수 있는 지갑을 가지고 계시지 않습니다. 이 앱은 귀하를 위해 새로운 지갑을 만들어 드릴 수 있습니다. 새로운 지갑을 만들기 위해 밑에있는 생성하기 버튼을 사용하십시오.\n\n귀하께서는 다음 %@에 대한 새로운 지갑을 사용 하실 수 있을 것 입니다.\n\n귀하께서는 또한 기존에 가지고 계셨던%@ 지갑 암호를 사용하실 수 있습니다. 복원하기 버튼을 누르십시오.";
+"manage_coins.add_coin.text" = "귀하께서는 %@ 을 보내거나 받으시려면 %@ 지갑을 설정하셔야 합니다.\n\n아래의 생성 버튼을 사용하여 새로운 %@ 지갑을 설정하거나 복원 버튼을 사용하여 기존 지갑을 가져옵니다.\n\n귀하께서는 이 지갑을 %@ 를 위해 사용하실 수 있습니다.";
 "manage_coins.add_coin.create" = "만들기";
 "manage_coins.add_coin.restore" = "복구";
 
@@ -287,12 +294,38 @@
 // Settings -> Security
 
 "settings_security.title" = "보안 센터";
-"settings_security.manage_accounts" = "지갑 관리하기";
+"settings_security.blockchain_settings" = "블록 체인 설정";
 "settings_security.passcode" = "비밀번호";
+"settings_security.privacy" = "개인정보";
 "settings_security.change_pin" = "비밀번호 변경";
 "settings_security.touch_id" = "터치 아이디";
 "settings_security.face_id" = "얼굴인식 아이디";
 "security_settings.delete_alert_button" = "휴대전화에서 삭제";
+"settings_privacy.title" = "개인정보";
+"settings_privacy.header_description" = "이 앱은 귀하의 어떠한 정보를 공유하지 않습니다. 그러나 블록체인과의 통신을 위해 IP 주소와 같은 몇몇의 공개 정보가 유출될 수 있습니다.";
+"settings_privacy.sorting_title" = "입력/출력";
+"settings_privacy.sorting.section_header" = "블록체인 매매거래";
+"settings_privacy.sorting.section_footer" = "매매거래 구성 방식을 변경하셔서 BTC, LTC, BCH 매매거래를 더 추적하기 어렵게 만들어 주세요.";
+"settings_privacy.connection.section_header" = "블록체인 연결";
+"settings_privacy.connection.section_footer" = "몇몇의 블록체인은 아직 모바일 앱이 P2P 방식으로 작동하는 방법을 제공하지 않습니다. BTC, BCH, LTC, DASH 블록체인과의 통신은 전부 P2P 방식입니다.";
+"settings_privacy.sync.section_header" = "블록체인 복원";
+"settings_privacy.sync.section_footer" = "매매거래로 지갑을 복원 할 데이터 소스를 선택하세요.";
+
+"settings_privacy.alert_sync.title" = "매개 변수 복원";
+"settings_privacy.alert_sync.description" = "이 변경 후에 지갑은 %@ 블록체인과 다시 동기화 되어야합니다.";
+"settings_privacy.alert_sync.recommended" = "권장";
+"settings_privacy.alert_sync.more_private" = "더 개인";
+
+"settings_privacy.alert_connection.title" = "블록체인 연결";
+
+"settings_privacy.alert_sort.title" = "블록체인 매매거래";
+"settings_privacy.alert_sort.subtitle" = "입력/출력";
+"settings_privacy.sorting_default" = "기본";
+"settings_privacy.sorting_default.description" = "설정없이";
+"settings_privacy.sorting_shuffle" = "셔플";
+"settings_privacy.sorting_shuffle.description" = "랜덤 인덱싱";
+"settings_privacy.sorting_deterministic" = "BIP69";
+"settings_privacy.sorting_deterministic.description" = "사전 색인 작성";
 
 // Settings -> Contact
 
@@ -312,7 +345,7 @@
 "settings_manage_keys.show" = "표시";
 "settings_manage_keys.create" = "만들기";
 "settings_manage_keys.restore" = "복구";
-"settings_manage_keys.settings" = "고급 설정";
+"settings_manage_keys.settings" = "주소 형식";
 "settings_manage_keys.delete.cant_delete" = "개인 암호가 휴대폰에서 지워질 수 있기 전에 귀하께서는 개인 암호를 백업 하셔야 합니다.";
 "settings_manage_keys.delete.title" = "지갑 삭제하기";
 "settings_manage_keys.delete.confirmation_remove" = "이 행동은 %@ 지갑을 장치에서 삭제합니다.";
@@ -369,7 +402,7 @@
 "chart.market_cap.million" = "%@ 백만";
 "chart.market_cap.billion" = "%@ 십억";
 "chart.market_cap.trillion" = "%@ 조";
-"chart.volume" = "음량";
+"chart.volume" = "볼륨 (24 시간)";
 "chart.circulation" = "유통";
 "chart.max_supply" = "총 발행량";
 "chart.error.not_available" = "차트 이용불가";
@@ -407,3 +440,14 @@
 "timestamp.days_ago" = "%lu일 전에";
 "timestamp.hours_ago" = "%lu시간 전에";
 "timestamp.min_ago" = "%lu분 전에";
+
+// Intro
+
+"intro.skip" = "건너뛰기";
+"intro.next" = "다음";
+"intro.independence.title" = "독립";
+"intro.independence.description" = "암호와 자산을 항상 안전하고, 압수당하지 않으며, 접근 가능한 상태로 유지하세요";
+"intro.knowledge.title" = "지식";
+"intro.knowledge.description" = "정보를 인지하시고 초기단계에서 성장하고 있는 블록체인 프로젝트를 발견하세요";
+"intro.privacy.title" = "개인정보";
+"intro.privacy.description" = "귀하의 재산을 늘리시는 동안 익명을 유지해주시고 눈에 띄이지 않게 하여 주세요";
