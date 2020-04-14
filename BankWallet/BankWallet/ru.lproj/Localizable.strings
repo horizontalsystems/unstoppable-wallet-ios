@@ -63,7 +63,7 @@
 "coin_settings.sync_mode.description" = "Ссылки на источники API: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg";
 "sync_mode.from_blockchain" = "Из Блокчейна";
 "blockchain_settings.change_alert.title" = "Формат Адреса";
-"blockchain_settings.change_alert.content" = "После этого изменения кошелек должен будет повторно синхронизироваться с блокчейном %@.\n\n\nПри изменении формата адреса для %@ текущая история транзакций не будет отображаться на вкладке баланса. Вернув предыдущую настройку, вы вернете все после того, как кошелек повторно синхронизируется с блокчейном. Мы рекомендуем не менять его, если вы не уверены, что это такое.";
+"blockchain_settings.change_alert.content" = "После этого изменения кошелек должен будет повторно синхронизироваться с блокчейном %@.\n\nПри изменении формата адреса для %@ текущая история транзакций не будет отображаться на вкладке баланса. Вернув предыдущую настройку, вы вернете все после того, как кошелек повторно синхронизируется с блокчейном. Мы рекомендуем не менять его, если вы не уверены, что это такое.";
 "blockchain_settings.change_alert.action_button_text" = "Изменить на %@";
 "blockchain_settings.sync_mode_change_alert.content" = "Это действие потребует ресинхронизации приложения Unstoppable с Bitcoin, и блокчейнами Bitcoin Cash и Dash в случае, если вы активировали любые из этих токенов. Это не повлияет на ваш баланс или транзакции.\n\nМы не рекомендуем изменять эту настройку, если вы не уверены, каким будет результат этих изменений.";
 "blockchain_settings.sync_mode.blockchain" = "Блокчейн";
@@ -92,7 +92,7 @@
 "error.send_eos.insufficient_ram" = "У вашего аккаунта EOS недостаточно оперативной памяти для отправки этого токена. Для продолжения необходимо увеличить ставку RAM.";
 "error.send_eos.unknown" = "Что-то пошло не так: %@";
 "error.send_ethereum.wrong_parameters" = "Неверные параметры";
-"error.send_binance.memo_required" = "Получатель требует заполненую memo при транзакции передачи";
+"error.send_binance.memo_required" = "Получатель требует заполненную memo при транзакции передачи";
 "error.send_binance.only_digits_allowed" = "Необходимо, чтобы memo содержало только цифры";
 
 "backup.confirmation.title" = "Проверка...";
@@ -269,7 +269,7 @@
 
 // Settings -> Experimental Features
 
-"settings.experimental_features.title" = "Пробные";
+"settings.experimental_features.title" = "Функции";
 "settings.experimental_features.description" = "Ниже приведены пробные функции. Несмотря на то, что мы детально протестировали эти функции, используя наши собственные криптосредства, мы не можем гарантировать, что они всегда будут работать так, как предусмотрено.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
 
