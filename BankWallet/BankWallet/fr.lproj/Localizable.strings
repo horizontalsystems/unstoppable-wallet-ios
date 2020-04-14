@@ -63,7 +63,7 @@
 "coin_settings.sync_mode.description" = "Liens vers les sources de l'API : \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
 "sync_mode.from_blockchain" = "De la Blockchain";
 "blockchain_settings.change_alert.title" = "Format de l'adresse";
-"blockchain_settings.change_alert.content" = "After this change the wallet will have to resync itself with the %@ blockchain.\n\nWhen you change the address format for %@ the current balance and transaction history will no longer be visible. Changing it back to previous setting will bring everything back after the wallet resyncs itself with the blockchain. We recommend not to change it if not sure what that is.";
+"blockchain_settings.change_alert.content" = "Après ce changement, le portefeuille devra se resynchroniser avec la blockchain %@.\n\n\nSi vous changez le format d'adresse pour %@ , l'historique du solde actuel et des transactions ne sera plus visible. Si vous revenez au paramètre précédent, tout sera remis en place une fois que le portefeuille se sera resynchronisé avec la blockchain. Nous vous recommandons de ne pas faire de modification si vous n'êtes pas sûr de vous.";
 "blockchain_settings.change_alert.action_button_text" = "Changer en %@";
 "blockchain_settings.sync_mode_change_alert.content" = "Si vous avez activé l'un de ces tokens, l'application Unstoppable devra se resynchroniser avec les blockchains Bitcoin, Bitcoin Cash et Dash. Votre solde ou vos transactions ne seront pas affectés.\n\nNous vous recommandons de ne pas modifier ce paramètre si vous n'êtes pas sûr de sa fonction.";
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
@@ -311,21 +311,21 @@
 "settings_privacy.sync.section_header" = "Restauration Blockchain";
 "settings_privacy.sync.section_footer" = "Sélectionnez la source de données pour restaurer le portefeuille avec les transactions.";
 
-"settings_privacy.alert_sync.title" = "Restore Source";
-"settings_privacy.alert_sync.description" = "After this change the wallet will have to resync itself with the %@ blockchain.";
-"settings_privacy.alert_sync.recommended" = "Recommended";
-"settings_privacy.alert_sync.more_private" = "More Private";
+"settings_privacy.alert_sync.title" = "Restaurer la source";
+"settings_privacy.alert_sync.description" = "Après cette modification, le portefeuille devra se resynchroniser avec la blockchain %@.";
+"settings_privacy.alert_sync.recommended" = "Recommandé";
+"settings_privacy.alert_sync.more_private" = "Plus Privé";
 
-"settings_privacy.alert_connection.title" = "Blockchain Connection";
+"settings_privacy.alert_connection.title" = "Connection blockchain";
 
-"settings_privacy.alert_sort.title" = "Blockchain Transactions";
-"settings_privacy.alert_sort.subtitle" = "Inputs/Outputs";
+"settings_privacy.alert_sort.title" = "Transactions blockchain";
+"settings_privacy.alert_sort.subtitle" = "Entrées/Sorties";
 "settings_privacy.sorting_default" = "Défaut";
-"settings_privacy.sorting_default.description" = "Without any settings";
+"settings_privacy.sorting_default.description" = "Sans aucun paramètre";
 "settings_privacy.sorting_shuffle" = "Mélanger";
-"settings_privacy.sorting_shuffle.description" = "Random Indexing";
+"settings_privacy.sorting_shuffle.description" = "Indexation aléatoire";
 "settings_privacy.sorting_deterministic" = "BIP69";
-"settings_privacy.sorting_deterministic.description" = "Lexicographical Indexing";
+"settings_privacy.sorting_deterministic.description" = "Indexation lexicographique";
 
 // Settings -> Contact
 
