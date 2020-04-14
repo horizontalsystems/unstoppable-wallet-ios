@@ -63,7 +63,7 @@
 "coin_settings.sync_mode.description" = "Links zu API-Quellen: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
 "sync_mode.from_blockchain" = "Von Blockchain";
 "blockchain_settings.change_alert.title" = "Adressformatierung";
-"blockchain_settings.change_alert.content" = "After this change the wallet will have to resync itself with the %@ blockchain.\n\nWhen you change the address format for %@ the current balance and transaction history will no longer be visible. Changing it back to previous setting will bring everything back after the wallet resyncs itself with the blockchain. We recommend not to change it if not sure what that is.";
+"blockchain_settings.change_alert.content" = "Nach dieser Änderung muss sich das Wallet mit der %@ Blockchain neu synchronisieren.\n\nWenn Sie das Adressformat für %@ ändern, sind der aktuelle Saldo und die Transaktionshistorie nicht mehr sichtbar. Wenn Sie es auf die vorherige Einstellung zurücksetzen, wird alles wieder hergestellt, nachdem sich das Wallet mit der Blockchain synchronisiert hat. Wir empfehlen, dies nicht zu ändern, falls Sie nicht sicher sind, was das ist.";
 "blockchain_settings.change_alert.action_button_text" = "Ändern zu %@";
 "blockchain_settings.sync_mode_change_alert.content" = "Diese Aktion erfordert, dass sich die Unstoppable App mit Bitcoin, Bitcoin Cash und Dash Blockchains neu synchronisiert, falls Sie eines dieser Token aktiviert haben. Ihr Guthaben oder Ihre Transaktionen sind davon nicht betroffen.\n\nWir empfehlen, diese Einstellung nicht zu ändern, falls Sie sich der Wirkungsweise nicht sicher sind.";
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
@@ -311,17 +311,17 @@
 "settings_privacy.sync.section_header" = "Blockchain-Wiederherstellung";
 "settings_privacy.sync.section_footer" = "Wählen Sie die Datenquelle für die Wiederherstellung des Wallets mit Transaktionen aus.";
 
-"settings_privacy.alert_sync.title" = "Restore Source";
-"settings_privacy.alert_sync.description" = "After this change the wallet will have to resync itself with the %@ blockchain.";
+"settings_privacy.alert_sync.title" = "Parameter wiederherstellen";
+"settings_privacy.alert_sync.description" = "Nach dieser Änderung muss sich das Wallet mit der %@ Blockchain neu synchronisieren.";
 "settings_privacy.alert_sync.recommended" = "Recommended";
-"settings_privacy.alert_sync.more_private" = "More Private";
+"settings_privacy.alert_sync.more_private" = "Mehr Privat";
 
-"settings_privacy.alert_connection.title" = "Blockchain Connection";
+"settings_privacy.alert_connection.title" = "Blockchain-Verbindung";
 
-"settings_privacy.alert_sort.title" = "Blockchain Transactions";
-"settings_privacy.alert_sort.subtitle" = "Inputs/Outputs";
+"settings_privacy.alert_sort.title" = "Blockchain-Transaktionen";
+"settings_privacy.alert_sort.subtitle" = "Ein-/Ausgänge";
 "settings_privacy.sorting_default" = "Standard";
-"settings_privacy.sorting_default.description" = "Without any settings";
+"settings_privacy.sorting_default.description" = "Ohne Einstellungen";
 "settings_privacy.sorting_shuffle" = "Zufällig";
 "settings_privacy.sorting_shuffle.description" = "Random Indexing";
 "settings_privacy.sorting_deterministic" = "BIP69";
