@@ -313,7 +313,7 @@
 
 "settings_privacy.alert_sync.title" = "恢复参数";
 "settings_privacy.alert_sync.description" = "此更改后，钱包将必须与 %@ 区块链重新同步。";
-"settings_privacy.alert_sync.recommended" = "Recommended";
+"settings_privacy.alert_sync.recommended" = "推荐";
 "settings_privacy.alert_sync.more_private" = "More Private";
 
 "settings_privacy.alert_connection.title" = "区块链连接";
