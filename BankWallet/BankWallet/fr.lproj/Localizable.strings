@@ -35,6 +35,7 @@
 
 "welcome.new_wallet" = "Nouveu Porte-Monnaie";
 "welcome.restore_wallet" = "Restaurer le porte-monnaie";
+"welcome.privacy_settings" = "Paramètres de Confidentialité";
 "welcome.version" = "Version %@";
 
 // Restore
@@ -42,27 +43,32 @@
 "restore.title" = "Restaurer à partir de";
 "restore.enter_key" = "Entrez la clé";
 "restore.item_title" = "%@ Portefeuille";
-"restore.description" = "Pour restaurer un portefeuille existant, vous devez entrer une clé privée pour ce portefeuille.\n\nUne fois que vous avez restauré un portefeuille, vous pourrez en restaurer d'autres via la section Gérer les portefeuilles dans les paramètres Sécurité de l'application.";
+"restore.description" = "Choisissez un portefeuille que vous voulez restaurer. Vous aurez besoin d'une clé privée pour ce portefeuille.";
 "restore.words.description" = "Entrez votre clé privée pour %@ Portefeuille qui se compose de %@ mots. Les mots doivent être entrés dans l'ordre correct et séparés par des espaces.";
-"restore.eos.description" = "Entrez votre clé privée pour le portefeuille %@.";
 "restore.validation_failed" = "Clé incorrect";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
 // Coin Settings
 
-"coin_settings.enable_button" = "Activer";
-"coin_settings.derivation.title" = "Choisir le format de l'adresse";
 "coin_settings.derivation.description_bip44" = "Plus ancient (commence par 1...)";
 "coin_settings.derivation.description_bip49" = "Populaire (commence par 3...)";
 "coin_settings.derivation.description_bip84" = "Plus récent (commence par bc1...)";
 "coin_settings.derivation.description_create" = "Ce paramètre contrôle le format de l'adresse du Bitcoin dans ce portefeuille. Nous recommandons d'utiliser BIP49 en cas de doute.";
 "coin_settings.derivation.description_restore" = "Sélectionnez le format de l'adresse du Bitcoin dans le portefeuille que vous essayez de restaurer.";
-"coin_settings.sync_mode.title" = "Restaurer les paramètres";
+"coin_settings.title" = "Paramètres de la Blockchain";
+"coin_settings.sync_mode.title" = "Restaurer la source";
 "coin_settings.sync_mode.fast.description" = "0 - 2 heures, recommandé";
-"coin_settings.sync_mode.slow.description" = "1-12 heures";
-"coin_settings.sync_mode.description" = "Sélectionnez la source que Unstoppable doit utiliser pour télécharger votre solde et vos transactions.\n\nHorizontal Systems %@ API :";
-
+"coin_settings.sync_mode.slow.description" = "1-24 heures";
+"coin_settings.sync_mode.description" = "Liens vers les sources de l'API : \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
+"sync_mode.from_blockchain" = "De la Blockchain";
+"blockchain_settings.change_alert.title" = "Format de l'adresse";
+"blockchain_settings.change_alert.content" = "Après ce changement, le portefeuille devra se resynchroniser avec la blockchain %@.\n\n\nSi vous changez le format d'adresse pour %@ , l'historique du solde actuel et des transactions ne sera plus visible. Si vous revenez au paramètre précédent, tout sera remis en place une fois que le portefeuille se sera resynchronisé avec la blockchain. Nous vous recommandons de ne pas faire de modification si vous n'êtes pas sûr de vous.";
+"blockchain_settings.change_alert.action_button_text" = "Changer en %@";
+"blockchain_settings.sync_mode_change_alert.content" = "Si vous avez activé l'un de ces tokens, l'application Unstoppable devra se resynchroniser avec les blockchains Bitcoin, Bitcoin Cash et Dash. Votre solde ou vos transactions ne seront pas affectés.\n\nNous vous recommandons de ne pas modifier ce paramètre si vous n'êtes pas sûr de sa fonction.";
+"blockchain_settings.sync_mode.blockchain" = "Blockchain";
+"blockchain_settings.sync_mode.api" = "API";
+"blockchain_settings.title" = "Format de l'adresse";
 // Backup
 
 "backup.close" = "Fermer";
@@ -129,6 +135,7 @@
 "send.tx_speed_low" = "Faible";
 "send.tx_speed_medium" = "Moyenne";
 "send.tx_speed_high" = "Élevée";
+"send.tx_speed_custom" = "Personnalisé";
 "send.tx_duration" = "Durée ";
 "send.duration.instant" = "Instantané";
 "send.duration.within" = "dans la limite de %@";
@@ -256,7 +263,7 @@
 "manage_coins.title" = "Crypto Monnaie";
 "manage_coins.add_coin.title" = "Ajouter %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Portefeuille";
-"manage_coins.add_coin.text" = "Vous n'avez pas de portefeuille pouvant stocker %@ (%@). Vous pouvez générer un nouveau portefeuille avec l'application. Utilisez le bouton Créer ci-dessous pour générer un nouveau portefeuille.\n\nVous pourrez utiliser le nouveau portefeuille pour les pièces suivantes : %@. \n\nVous pouvez également utiliser la clé %@ existante si vous en avez une. Pour cela, utilisez le bouton de restauration.";
+"manage_coins.add_coin.text" = "Vous devez créer un portefeuille%@ pour envoyer ou recevoir des %@.\n\nUtilisez le bouton Créer ci-dessous pour créer un nouveau portefeuille%@ , ou le bouton Restaurer pour importer le portefeuille existant.\n\nVous pourrez utiliser ce portefeuille pour : %@.";
 "manage_coins.add_coin.create" = "Créer";
 "manage_coins.add_coin.restore" = "Restaurer";
 
@@ -287,12 +294,38 @@
 // Settings -> Security
 
 "settings_security.title" = "Centre de Sécurité";
-"settings_security.manage_accounts" = "Gérer les portefeuilles";
+"settings_security.blockchain_settings" = "Paramètres de la Blockchain";
 "settings_security.passcode" = "Code";
+"settings_security.privacy" = "Confidentialité";
 "settings_security.change_pin" = "Modifier le code ";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "security_settings.delete_alert_button" = "Supprimer de l'appareil";
+"settings_privacy.title" = "Confidentialité";
+"settings_privacy.header_description" = "Cette application ne partage aucune de vos données. Cependant, comme elle communique avec des blockchains, certaines données publiques comme l'adresse IP peuvent potentiellement être divulguées.";
+"settings_privacy.sorting_title" = "Entrées/Sorties";
+"settings_privacy.sorting.section_header" = "Transactions Blockchain";
+"settings_privacy.sorting.section_footer" = "Rendez vos transactions BTC, LTC, BCH plus difficiles à détecter en modifiant la structure des transactions.";
+"settings_privacy.connection.section_header" = "Connection Blockchain";
+"settings_privacy.connection.section_footer" = "Certaines blockchains ne permettent pas encore aux applications mobiles de fonctionner en mode peer to peer. Les communications avec les blockchains BTC, BCH, LTC, DASH sont entièrement de type peer to peer.";
+"settings_privacy.sync.section_header" = "Restauration Blockchain";
+"settings_privacy.sync.section_footer" = "Sélectionnez la source de données pour restaurer le portefeuille avec les transactions.";
+
+"settings_privacy.alert_sync.title" = "Restaurer la source";
+"settings_privacy.alert_sync.description" = "Après cette modification, le portefeuille devra se resynchroniser avec la blockchain %@.";
+"settings_privacy.alert_sync.recommended" = "Recommandé";
+"settings_privacy.alert_sync.more_private" = "Plus Privé";
+
+"settings_privacy.alert_connection.title" = "Connection blockchain";
+
+"settings_privacy.alert_sort.title" = "Transactions blockchain";
+"settings_privacy.alert_sort.subtitle" = "Entrées/Sorties";
+"settings_privacy.sorting_default" = "Défaut";
+"settings_privacy.sorting_default.description" = "Sans aucun paramètre";
+"settings_privacy.sorting_shuffle" = "Mélanger";
+"settings_privacy.sorting_shuffle.description" = "Indexation aléatoire";
+"settings_privacy.sorting_deterministic" = "BIP69";
+"settings_privacy.sorting_deterministic.description" = "Indexation lexicographique";
 
 // Settings -> Contact
 
@@ -312,7 +345,7 @@
 "settings_manage_keys.show" = "Afficher";
 "settings_manage_keys.create" = "Créer";
 "settings_manage_keys.restore" = "Restaurer";
-"settings_manage_keys.settings" = "Configuration avancée";
+"settings_manage_keys.settings" = "Format de l'adresse";
 "settings_manage_keys.delete.cant_delete" = "Vous devez sauvegarder la clé privée avant de pouvoir la supprimer de ce téléphone.";
 "settings_manage_keys.delete.title" = "Supprimer le portefeuille";
 "settings_manage_keys.delete.confirmation_remove" = "Cette action supprimera le portefeuille %@ de cet appareil.";
@@ -369,7 +402,7 @@
 "chart.market_cap.million" = "%@ M";
 "chart.market_cap.billion" = "%@ G";
 "chart.market_cap.trillion" = "%@ T";
-"chart.volume" = "Volume";
+"chart.volume" = "Volume(24h)";
 "chart.circulation" = "Offre en Circulation	";
 "chart.max_supply" = "Offre totale";
 "chart.error.not_available" = "Graphique non disponible";
@@ -407,3 +440,14 @@
 "timestamp.days_ago" = "Il y a %luj";
 "timestamp.hours_ago" = "il y a %luh";
 "timestamp.min_ago" = "il y a %lum";
+
+// Intro
+
+"intro.skip" = "Ignorer";
+"intro.next" = "Suivant";
+"intro.independence.title" = "Indépendance";
+"intro.independence.description" = "Conservez les actifs cryptographiques en lieu sûr, sans possibilité de confiscation et accessibles à tout moment";
+"intro.knowledge.title" = "Connaissances";
+"intro.knowledge.description" = "Soyez informé et découvrez les projets Blockchain en cours de développement dès les premières étapes";
+"intro.privacy.title" = "Confidentialité";
+"intro.privacy.description" = "Gardez l'anonymat et restez discret tout en augmentant votre capital";
