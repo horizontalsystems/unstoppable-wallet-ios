@@ -310,12 +310,22 @@
 "settings_privacy.connection.section_footer" = "Certaines blockchains ne permettent pas encore aux applications mobiles de fonctionner en mode peer to peer. Les communications avec les blockchains BTC, BCH, LTC, DASH sont entièrement de type peer to peer.";
 "settings_privacy.sync.section_header" = "Restauration Blockchain";
 "settings_privacy.sync.section_footer" = "Sélectionnez la source de données pour restaurer le portefeuille avec les transactions.";
-"settings_privacy.alert_title.sync" = "%@ Restaurer";
-"settings_privacy.alert_title.connection" = "%@ Connection";
-"settings_privacy.alert_title.sort" = "Entrées/Sorties";
+
+"settings_privacy.alert_sync.title" = "Restore Source";
+"settings_privacy.alert_sync.description" = "After this change the wallet will have to resync itself with the %@ blockchain.";
+"settings_privacy.alert_sync.recommended" = "Recommended";
+"settings_privacy.alert_sync.more_private" = "More Private";
+
+"settings_privacy.alert_connection.title" = "Blockchain Connection";
+
+"settings_privacy.alert_sort.title" = "Blockchain Transactions";
+"settings_privacy.alert_sort.subtitle" = "Inputs/Outputs";
 "settings_privacy.sorting_default" = "Défaut";
+"settings_privacy.sorting_default.description" = "Without any settings";
 "settings_privacy.sorting_shuffle" = "Mélanger";
+"settings_privacy.sorting_shuffle.description" = "Random Indexing";
 "settings_privacy.sorting_deterministic" = "BIP69";
+"settings_privacy.sorting_deterministic.description" = "Lexicographical Indexing";
 
 // Settings -> Contact
 
