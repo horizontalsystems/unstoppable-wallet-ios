@@ -311,21 +311,21 @@
 "settings_privacy.sync.section_header" = "Blockchain Geri Yükleme";
 "settings_privacy.sync.section_footer" = "Cüzdanı işlemlerle geri yüklemek için veri kaynağını seçin.";
 
-"settings_privacy.alert_sync.title" = "Restore Source";
+"settings_privacy.alert_sync.title" = "Geri Yükleme Kaynağı";
 "settings_privacy.alert_sync.description" = "Bu değişiklikten sonra cüzdan %@ blok zinciri ile kendini yeniden senkronize etmek zorunda kalacak.";
-"settings_privacy.alert_sync.recommended" = "Recommended";
-"settings_privacy.alert_sync.more_private" = "More Private";
+"settings_privacy.alert_sync.recommended" = "Tavsiye Edilen";
+"settings_privacy.alert_sync.more_private" = "Daha Gizli";
 
 "settings_privacy.alert_connection.title" = "Blokzincir Bağlantısı";
 
 "settings_privacy.alert_sort.title" = "Blockchain İşlemleri";
 "settings_privacy.alert_sort.subtitle" = "Giriş/Çıkış";
 "settings_privacy.sorting_default" = "Varsayılan";
-"settings_privacy.sorting_default.description" = "Without any settings";
+"settings_privacy.sorting_default.description" = "Ayar yok";
 "settings_privacy.sorting_shuffle" = "Karıştır";
-"settings_privacy.sorting_shuffle.description" = "Random Indexing";
+"settings_privacy.sorting_shuffle.description" = "Rastgele Dizinleme";
 "settings_privacy.sorting_deterministic" = "BIP69";
-"settings_privacy.sorting_deterministic.description" = "Lexicographical Indexing";
+"settings_privacy.sorting_deterministic.description" = "Lexicographical Dizinleme";
 
 // Settings -> Contact
 
