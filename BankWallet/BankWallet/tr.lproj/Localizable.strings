@@ -63,7 +63,7 @@
 "coin_settings.sync_mode.description" = "API kaynak linkleri: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg\n";
 "sync_mode.from_blockchain" = "Blockchain çıkışlı";
 "blockchain_settings.change_alert.title" = "Adres Formatı";
-"blockchain_settings.change_alert.content" = "Bu değişiklikten sonra cüzdan %@ blok zinciri ile kendini yeniden senkronize etmek zorunda kalacak.\n%@ için adres biçimini değiştirdiğinizde, mevcut bakiye ve işlem geçmişi artık bakiye sekmesinde görünmeyecek. Bir önceki ayara geri döndürmek, cüzdan blok zinciriyle kendini yeniden senkronize ettikten sonra her şeyi geri getirecektir. Bunun ne olduğundan emin değilseniz değiştirmemenizi öneririz.";
+"blockchain_settings.change_alert.content" = "After this change the wallet will have to resync itself with the %@ blockchain.\n\nWhen you change the address format for %@ the current balance and transaction history will no longer be visible. Changing it back to previous setting will bring everything back after the wallet resyncs itself with the blockchain. We recommend not to change it if not sure what that is.";
 "blockchain_settings.change_alert.action_button_text" = "%@'e değiştir";
 "blockchain_settings.sync_mode_change_alert.content" = "Bu işlem, Unstoppable uygulaması Bitcoin, Bitcoin Cash and Dash blockchain ile kendini yeniden senkronize etmek için gerektirir, bu belirteçlerden herhangi birini etkinleştirdiyseniz. Bakiyeniz veya işlemleriniz etkilenmeyecektir.\n\nNe yaptığından emin değilseniz bu ayarı değiştirmemenizi öneririz.";
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
