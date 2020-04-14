@@ -113,7 +113,7 @@ extension DerivationSettingsViewController: IDerivationSettingsView {
                             icon: UIImage(named: "Attention Icon"),
                             iconTint: .themeJacob
                     ),
-                    .description(text: "blockchain_settings.change_alert.content".localized(coinTitle, coinTitle)),
+                    .description(text: "blockchain_settings.change_alert.content".localized(coinTitle, coinTitle), important: true),
                     .button(
                             title: "blockchain_settings.change_alert.action_button_text".localized(derivationText),
                             button: .appYellow,
