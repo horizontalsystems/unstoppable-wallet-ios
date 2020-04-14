@@ -117,7 +117,7 @@ extension DerivationSettingsViewController: IDerivationSettingsView {
                     .button(
                             title: "blockchain_settings.change_alert.action_button_text".localized(derivationText),
                             button: .appYellow,
-                            onTap: { [weak self] in
+                            onTap: { [weak self] _ in
                                 self?.delegate.proceedChange(setting: setting)
                             }
                     )

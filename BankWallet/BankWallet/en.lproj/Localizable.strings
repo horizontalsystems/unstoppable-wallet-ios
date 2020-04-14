@@ -321,12 +321,22 @@ bch.horizontalsystems.xyz/apg";
 "settings_privacy.connection.section_footer" = "Some blockchains do not yet provide means for mobile apps to operate in peer to peer manner. The communications with BTC, BCH, LTC, DASH blockchains is fully peer to peer.";
 "settings_privacy.sync.section_header" = "Blockchain Restore";
 "settings_privacy.sync.section_footer" = "Select data source for restoring wallet with transactions.";
-"settings_privacy.alert_title.sync" = "%@ Restore";
-"settings_privacy.alert_title.connection" = "%@ Connection";
-"settings_privacy.alert_title.sort" = "Inputs/Outputs";
+
+"settings_privacy.alert_sync.title" = "Restore Source";
+"settings_privacy.alert_sync.description" = "After this change the wallet will have to resync itself with the %@ blockchain.";
+"settings_privacy.alert_sync.recommended" = "Recommended";
+"settings_privacy.alert_sync.more_private" = "More Private";
+
+"settings_privacy.alert_connection.title" = "Blockchain Connection";
+
+"settings_privacy.alert_sort.title" = "Blockchain Transactions";
+"settings_privacy.alert_sort.subtitle" = "Inputs/Outputs";
 "settings_privacy.sorting_default" = "Default";
+"settings_privacy.sorting_default.description" = "Without any settings";
 "settings_privacy.sorting_shuffle" = "Shuffle";
+"settings_privacy.sorting_shuffle.description" = "Random Indexing";
 "settings_privacy.sorting_deterministic" = "Deterministic Bip69";
+"settings_privacy.sorting_deterministic.description" = "Lexicographical Indexing";
 
 // Settings -> Contact
 
