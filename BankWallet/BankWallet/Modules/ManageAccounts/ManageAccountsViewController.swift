@@ -24,6 +24,7 @@ class ManageAccountsViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = "settings_manage_keys.title".localized
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
 
         tableView.registerCell(forClass: TitleManageAccountCell.self)
         tableView.registerCell(forClass: ProceedManageAccountCell.self)
