@@ -14,7 +14,7 @@ class AlertTextItemView: BaseActionItemView {
         if item?.important ?? false {
             addSubview(descriptionView)
             descriptionView.snp.makeConstraints { maker in
-                maker.top.bottom.equalToSuperview().inset(CGFloat.margin3x)
+                maker.top.equalToSuperview().inset(CGFloat.margin4x)
                 maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             }
         } else {
@@ -23,8 +23,7 @@ class AlertTextItemView: BaseActionItemView {
             textLabel.textColor = .themeGray
             textLabel.numberOfLines = 0
             textLabel.snp.makeConstraints { maker in
-                maker.top.bottom.equalToSuperview()
-                maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+                maker.top.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             }
         }
 
