@@ -35,7 +35,7 @@
 
 "welcome.new_wallet" = "Создать Кошелек";
 "welcome.restore_wallet" = "Восстановить Кошелек";
-"welcome.privacy_settings" = "Настройки Конфиденциальности";
+"welcome.privacy_settings" = "Настройки Приватности";
 "welcome.version" = "Версия %@";
 
 // Restore
@@ -296,12 +296,12 @@
 "settings_security.title" = "Центр Безопасности";
 "settings_security.blockchain_settings" = "Настройки Блокчейна";
 "settings_security.passcode" = "Код Доступа";
-"settings_security.privacy" = "Конфиденциальность";
+"settings_security.privacy" = "Приватность";
 "settings_security.change_pin" = "Изменить Код";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "security_settings.delete_alert_button" = "Удалить с телефона";
-"settings_privacy.title" = "Конфиденциальность";
+"settings_privacy.title" = "Приватность";
 "settings_privacy.header_description" = "Наше приложение не делится никакой информацией ни с кем. Но при взаимодействии с блокчейнами некоторые публичные данные, такие как ваш IP адрес, могут фиксироваться в сети.";
 "settings_privacy.sorting_title" = "Входы/Выходы";
 "settings_privacy.sorting.section_header" = "Tранзакции Блокчейна";
@@ -336,7 +336,7 @@
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Управление кошельками";
+"settings_manage_keys.title" = "Кошельки";
 "settings_manage_keys.item_title" = "%@ Кошелек";
 "settings_manage_keys.add_wallet" = "Добавить Кошелёк";
 "settings_manage_keys.description" = "Ниже выделены ваши активные кошельки, где каждый кошелек отвечает за разный набор криптовалют.\n\nВы должны сделать резервную копию каждого выделенного кошелька, записав его приватный ключ. Этот ключ - единственный способ восстановления ваших средств в случае потери, кражи или поломки вашего телефона.";
@@ -449,5 +449,5 @@
 "intro.independence.description" = "Надежно храните криптоактивы, их невозможно конфисковать и они всегда в вашем распоряжении.";
 "intro.knowledge.title" = "Знания";
 "intro.knowledge.description" = "Оставайтесь в курсе новостей и узнавайте о растущих блокчейн-проектах на ранних стадиях.";
-"intro.privacy.title" = "Конфиденциальность";
+"intro.privacy.title" = "Приватность";
 "intro.privacy.description" = "Увеличивайте свой капитал, оставаясь инкогнито и действуя анонимно.";
