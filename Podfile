@@ -17,12 +17,12 @@ def appPods
   pod 'EthereumKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
   pod 'Erc20Kit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
 
-  pod 'EosKit.swift'
+  pod 'EosKit.swift', git: 'https://github.com/horizontalsystems/eos-kit-ios'
   pod 'EosioSwiftAbieosSerializationProvider', git: 'https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git'
 
-  pod 'BinanceChainKit.swift'
+  pod 'BinanceChainKit.swift', git: 'https://github.com/horizontalsystems/binance-chain-kit-ios'
 
-  pod 'HdWalletKit.swift'
+  pod 'HdWalletKit.swift', git: 'https://github.com/horizontalsystems/hd-wallet-kit-ios'
 
   pod 'XRatesKit.swift', git: 'https://github.com/horizontalsystems/xrates-kit-ios/'
   # pod 'XRatesKit.swift', path: '../xrates-kit-ios/'
