@@ -17,7 +17,7 @@ class BackupRequiredViewController: WalletActionSheetController {
                 }
         )
 
-        let textItem = AlertTextItem(text: text, important: true, tag: 1)
+        let textItem = AlertTextItem(text: text, important: true, last: true, tag: 1)
 
         model.addItemView(titleItem)
         model.addItemView(textItem)

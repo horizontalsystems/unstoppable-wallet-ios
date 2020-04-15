@@ -5,7 +5,7 @@ class PrivacyHeaderCell: UITableViewCell {
     private static let topMargin: CGFloat = .margin3x
     private static let bottomMargin: CGFloat = .margin6x
 
-    private static var description = "settings_privacy.header_description".localized
+    private static var description: String { "settings_privacy.header_description".localized }
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
