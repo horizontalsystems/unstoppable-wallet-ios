@@ -40,6 +40,14 @@ extension RateListPresenter: IRateListViewDelegate {
         interactor.subscribeToMarketInfos(currencyCode: currency.code)
     }
 
+    func onSelect(viewItem: RateViewItem) {
+        guard viewItem.diff != nil else {
+            return
+        }
+
+        router.showChart(coin: viewItem.coin)
+    }
+
 }
 
 extension RateListPresenter: IRateListInteractorDelegate {

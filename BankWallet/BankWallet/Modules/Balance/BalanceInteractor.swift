@@ -15,17 +15,15 @@ class BalanceInteractor {
     private let localStorage: ILocalStorage
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let rateManager: IRateManager
-    private let blockedChartCoins: IBlockedChartCoins
     private let rateAppManager: IRateAppManager
 
-    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyKit: ICurrencyKit, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager, rateManager: IRateManager, blockedChartCoins: IBlockedChartCoins, rateAppManager: IRateAppManager) {
+    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyKit: ICurrencyKit, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager, rateManager: IRateManager, rateAppManager: IRateAppManager) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.currencyKit = currencyKit
         self.localStorage = localStorage
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
         self.rateManager = rateManager
-        self.blockedChartCoins = blockedChartCoins
         self.rateAppManager = rateAppManager
     }
 
@@ -147,10 +145,6 @@ extension BalanceInteractor: IBalanceInteractor {
         set {
             localStorage.balanceHidden = newValue
         }
-    }
-
-    var chartBlockedCoinCodes: Set<String> {
-        blockedChartCoins.blockedCoins
     }
 
     func refresh() {

@@ -35,7 +35,6 @@ class RateListViewController: ThemeViewController {
 
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
-        tableView.allowsSelection = false
         tableView.sectionDataSource = self
 
         tableView.registerCell(forClass: RateListCell.self)
@@ -96,14 +95,18 @@ extension RateListViewController: SectionsDataSource {
             Section(
                     id: "rate_list_section",
                     headerState: sectionHeader(text: "rate_list.portfolio".localized),
-                    rows: item.rateViewItems.enumerated().map { index, item in
+                    rows: item.rateViewItems.enumerated().map { index, viewItem in
                         Row<RateListCell>(
                                 id: "rate_\(index)",
-                                hash: item.hash,
+                                hash: viewItem.hash,
                                 height: .heightDoubleLineCell,
                                 autoDeselect: true,
                                 bind: { cell, _ in
-                                    cell.bind(viewItem: item, last: index == count - 1)
+                                    cell.selectionStyle = viewItem.diff == nil ? .none : .default
+                                    cell.bind(viewItem: viewItem, last: index == count - 1)
+                                },
+                                action: { [weak self] _ in
+                                    self?.delegate.onSelect(viewItem: viewItem)
                                 }
                         )
                     }

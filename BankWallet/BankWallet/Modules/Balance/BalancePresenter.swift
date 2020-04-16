@@ -188,13 +188,11 @@ extension BalancePresenter: IBalanceViewDelegate {
     }
 
     func onTapChart(viewItem: BalanceViewItem) {
-        let coinCode = viewItem.wallet.coin.code
-
-        guard !interactor.chartBlockedCoinCodes.contains(coinCode) else {
+        guard viewItem.topViewItem.diff != nil else {
             return
         }
 
-        router.showChart(for: coinCode)
+        router.showChart(coin: viewItem.wallet.coin)
     }
 
     func onTapAddCoin() {

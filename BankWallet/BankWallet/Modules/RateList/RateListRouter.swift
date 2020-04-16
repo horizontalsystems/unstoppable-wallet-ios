@@ -1,15 +1,20 @@
 import UIKit
 
 class RateListRouter {
+    weak var delegate: IRateListDelegate?
 }
 
-
 extension RateListRouter: IRateListRouter {
+
+    func showChart(coin: Coin) {
+        delegate?.showChart(coin: coin)
+    }
+
 }
 
 extension RateListRouter {
 
-    static func module(topMargin: CGFloat = 0) -> UIViewController {
+    static func module(delegate: IRateListDelegate, topMargin: CGFloat = 0) -> UIViewController {
         let router = RateListRouter()
 
         let factory = RateListFactory(currentDateProvider: CurrentDateProvider())
@@ -20,6 +25,7 @@ extension RateListRouter {
 
         presenter.view = viewController
         interactor.delegate = presenter
+        router.delegate = delegate
 
         return viewController
     }
