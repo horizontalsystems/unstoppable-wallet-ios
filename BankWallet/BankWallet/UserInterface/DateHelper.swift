@@ -16,7 +16,7 @@ class DateHelper {
     }
 
     func formatRateListTitle(from date: Date) -> String {
-        DateFormatter.cachedFormatter(format: "MMM d").string(from: date)
+        DateFormatter.cachedFormatter(format: "MMM d, \(LanguageHourFormatter.hourFormat):mm").string(from: date)
     }
 
     func formatTimeOnly(from date: Date) -> String {

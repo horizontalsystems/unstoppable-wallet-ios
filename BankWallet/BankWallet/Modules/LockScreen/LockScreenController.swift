@@ -1,40 +1,61 @@
 import UIKit
 import ThemeKit
+import SnapKit
 
-class LockScreenController: UIPageViewController {
-    private let controllers: [UIViewController]
+class LockScreenController: ThemeViewController {
+    static let pageControlHeight: CGFloat = 28
+
+    private let viewControllers: [UIViewController]
+
+    private let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
+    private let pageControl: BarPageControl
+
+    private var currentIndex: Int?
 
     init(viewControllers: [UIViewController]) {
-        controllers = viewControllers
-        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
-
-        guard let initialViewController = viewControllers.first else {
-            fatalError("PageViewController must has at least one initial controller")
-        }
-        setViewControllers([initialViewController], direction: .forward, animated: true)
-        dataSource = self
-
-        modalPresentationStyle = .fullScreen
+        self.viewControllers = viewControllers
+        pageControl = BarPageControl(barCount: viewControllers.count)
+        super.init()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        GradientLayer.appendLayer(to: view, fromColor: .themeBackgroundFromGradient, toColor: .themeBackgroundToGradient)
+        pageViewController.dataSource = self
+        pageViewController.delegate = self
+        pageViewController.setViewControllers([viewControllers[0]], direction: .forward, animated: false)
 
-        // Set pageIndicatorTintColor and currentPageIndicatorTintColor
-        // only for the following stack of UIViewControllers
-        let pageControl = UIPageControl.appearance()
-        pageControl.pageIndicatorTintColor = .themeSteel20
-        pageControl.currentPageIndicatorTintColor = .themeJacob
+        view.addSubview(pageViewController.view)
+        pageViewController.view.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        let pageControlBackground = UIView()
+
+        view.addSubview(pageControlBackground)
+        pageControlBackground.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+        }
+
+        pageControlBackground.backgroundColor = .themeNavigationBarBackground
+
+        let pageControlWrapper = UIView()
+
+        view.addSubview(pageControlWrapper)
+        pageControlWrapper.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+            maker.bottom.equalTo(pageControlBackground.snp.bottom)
+            maker.height.equalTo(LockScreenController.pageControlHeight)
+        }
+
+        pageControlWrapper.addSubview(pageControl)
+        pageControl.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .themeDefault
     }
 
 }
@@ -42,28 +63,35 @@ class LockScreenController: UIPageViewController {
 extension LockScreenController: UIPageViewControllerDataSource {
 
     public func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let viewControllerIndex = controllers.firstIndex(of: viewController), viewControllerIndex > 0 else { return nil }
+        guard let viewControllerIndex = viewControllers.firstIndex(of: viewController), viewControllerIndex > 0 else { return nil }
 
-        return controllers[viewControllerIndex - 1]
+        return viewControllers[viewControllerIndex - 1]
     }
 
     public func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let viewControllerIndex = controllers.firstIndex(of: viewController), viewControllerIndex < (controllers.count - 1) else { return nil }
+        guard let viewControllerIndex = viewControllers.firstIndex(of: viewController), viewControllerIndex < (viewControllers.count - 1) else { return nil }
 
-        return controllers[viewControllerIndex + 1]
+        return viewControllers[viewControllerIndex + 1]
     }
 
-    public func presentationCount(for pageViewController: UIPageViewController) -> Int {
-        return controllers.count
-    }
+}
 
-    public func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-        guard let firstViewController = controllers.first,
-              let firstViewControllerIndex = controllers.firstIndex(of: firstViewController) else {
-            return 0
+extension LockScreenController: UIPageViewControllerDelegate {
+
+    public func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
+        guard let controller = pendingViewControllers.first else {
+            return
         }
 
-        return firstViewControllerIndex
+        currentIndex = viewControllers.firstIndex(of: controller)
+    }
+
+    public func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        guard completed, let index = currentIndex else {
+            return
+        }
+
+        pageControl.currentPage = index
     }
 
 }

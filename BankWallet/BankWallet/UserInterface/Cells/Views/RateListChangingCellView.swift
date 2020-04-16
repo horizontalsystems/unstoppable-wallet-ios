@@ -10,40 +10,40 @@ class RateListChangingCellView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        addSubview(rateLabel)
-        rateLabel.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(10)
-            maker.leading.equalToSuperview()
-            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
-        }
-
-        rateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        rateLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
-        rateLabel.font = .subhead1
-        rateLabel.textAlignment = .right
-
         addSubview(rateDiffView)
         rateDiffView.snp.makeConstraints { maker in
-            maker.top.equalTo(rateLabel.snp.bottom).offset(CGFloat.margin1x)
+            maker.top.equalToSuperview().offset(10)
             maker.leading.greaterThanOrEqualToSuperview()
-            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.trailing.equalToSuperview()
         }
 
         rateDiffView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         rateDiffView.setContentCompressionResistancePriority(.required, for: .horizontal)
-        rateDiffView.font = .subhead1
+        rateDiffView.font = .body
 
         addSubview(diffPlaceholderLabel)
         diffPlaceholderLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(rateLabel.snp.bottom).offset(CGFloat.margin1x)
+            maker.top.equalTo(rateDiffView.snp.top)
             maker.leading.greaterThanOrEqualToSuperview()
-            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.trailing.equalToSuperview()
         }
 
         diffPlaceholderLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         diffPlaceholderLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
-        diffPlaceholderLabel.textColor = .themeGray
-        diffPlaceholderLabel.font = .subhead1
+        diffPlaceholderLabel.textColor = .themeGray50
+        diffPlaceholderLabel.font = .body
+
+        addSubview(rateLabel)
+        rateLabel.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview()
+            maker.trailing.equalToSuperview()
+            maker.bottom.equalToSuperview().inset(CGFloat.margin2x)
+        }
+
+        rateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        rateLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+        rateLabel.font = .subhead2
+        rateLabel.textAlignment = .right
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -59,7 +59,7 @@ class RateListChangingCellView: UIView {
         rateDiffView.set(value: diff)
         rateDiffView.set(hidden: !showDiff)
 
-        diffPlaceholderLabel.text = showDiff ? nil : "----"
+        diffPlaceholderLabel.text = showDiff ? nil : "n/a".localized
         diffPlaceholderLabel.set(hidden: showDiff)
     }
 
