@@ -61,8 +61,6 @@ class App {
 
     let transactionDataSortModeSettingManager: ITransactionDataSortModeSettingManager
 
-    let rateCoinMapper: RateCoinMapper
-
     let kitCleaner: IKitCleaner
 
     let keychainKitDelegate: KeychainKitDelegate
@@ -109,8 +107,7 @@ class App {
 
         currencyKit = CurrencyKit.Kit(localStorage: StorageKit.LocalStorage.default, currencyCodes: appConfigProvider.currencyCodes)
 
-        rateCoinMapper = RateCoinMapper()
-        rateManager = RateManager(walletManager: walletManager, currencyKit: currencyKit, rateCoinMapper: rateCoinMapper)
+        rateManager = RateManager(walletManager: walletManager, currencyKit: currencyKit, rateCoinMapper: RateCoinMapper())
 
         feeCoinProvider = FeeCoinProvider(appConfigProvider: appConfigProvider)
         feeRateProviderFactory = FeeRateProviderFactory(appConfigProvider: appConfigProvider)

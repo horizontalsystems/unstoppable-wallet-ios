@@ -8,6 +8,7 @@ protocol IRateListView: class {
 
 protocol IRateListViewDelegate {
     func viewDidLoad()
+    func onSelect(viewItem: RateViewItem)
 }
 
 protocol IRateListInteractor {
@@ -24,6 +25,7 @@ protocol IRateListInteractorDelegate: class {
 }
 
 protocol IRateListRouter {
+    func showChart(coin: Coin)
 }
 
 protocol IRateListFactory {
@@ -32,6 +34,10 @@ protocol IRateListFactory {
 
 protocol IRateListSorter {
     func smartSort(for coins: [Coin], featuredCoins: [Coin]) -> [Coin]
+}
+
+protocol IRateListDelegate: AnyObject {
+    func showChart(coin: Coin)
 }
 
 struct RateListViewItem {
