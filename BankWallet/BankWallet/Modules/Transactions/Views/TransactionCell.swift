@@ -3,9 +3,7 @@ import UIExtensions
 import SnapKit
 import ThemeKit
 
-class TransactionCell: ThemeCell {
-    private let highlightBackground = UIView()
-
+class TransactionCell: ClaudeThemeCell {
     private let inOutImageView = UIImageView()
     private let doubleSpendImageView = UIImageView()
 
@@ -23,16 +21,6 @@ class TransactionCell: ThemeCell {
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
-        backgroundColor = .clear
-        contentView.backgroundColor = .themeClaude
-
-        highlightBackground.backgroundColor = .themeSteel20
-        highlightBackground.alpha = 0
-        contentView.addSubview(highlightBackground)
-        highlightBackground.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
-        }
 
         contentView.addSubview(inOutImageView)
         inOutImageView.snp.makeConstraints { maker in
@@ -204,28 +192,6 @@ class TransactionCell: ThemeCell {
             processingView.stopAnimating()
             processingView.isHidden = true
             failedLabel.isHidden = true
-        }
-    }
-
-    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
-        guard selectionStyle != .none else { return }
-        if animated {
-            UIView.animate(withDuration: .themeAnimationDuration) {
-                self.highlightBackground.alpha = highlighted ? 1 : 0
-            }
-        } else {
-            highlightBackground.alpha = highlighted ? 1 : 0
-        }
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        guard selectionStyle != .none else { return }
-        if animated {
-            UIView.animate(withDuration: .themeAnimationDuration) {
-                self.highlightBackground.alpha = selected ? 1 : 0
-            }
-        } else {
-            highlightBackground.alpha = selected ? 1 : 0
         }
     }
 
