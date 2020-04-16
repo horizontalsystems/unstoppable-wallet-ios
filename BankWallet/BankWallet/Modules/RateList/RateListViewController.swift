@@ -25,6 +25,14 @@ class RateListViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        tableView.tableFooterView = PostFooterView()
+        tableView.tableFooterView?.frame =  CGRect(x: 0, y: 0, width: view.width, height: PostFooterView.height)
+
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.allowsSelection = false
@@ -33,11 +41,6 @@ class RateListViewController: ThemeViewController {
         tableView.registerCell(forClass: RateListCell.self)
         tableView.registerCell(forClass: RateListHeaderCell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
-
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
-        }
 
         delegate.viewDidLoad()
 
@@ -93,7 +96,6 @@ extension RateListViewController: SectionsDataSource {
             Section(
                     id: "rate_list_section",
                     headerState: sectionHeader(text: "rate_list.portfolio".localized),
-                    footerState: .margin(height: CGFloat.margin8x),
                     rows: item.rateViewItems.enumerated().map { index, item in
                         Row<RateListCell>(
                                 id: "rate_\(index)",
