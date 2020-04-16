@@ -14,11 +14,15 @@ class RateDiffView: UIView {
             maker.centerY.equalToSuperview()
         }
 
+        imageView.setContentCompressionResistancePriority(.required, for: .horizontal)
+
         addSubview(label)
         label.snp.makeConstraints { maker in
             maker.leading.equalTo(imageView.snp.trailing).offset(CGFloat.margin1x)
             maker.top.trailing.bottom.equalToSuperview()
         }
+
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
     }
 
     required init?(coder aDecoder: NSCoder) {

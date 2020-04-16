@@ -12,7 +12,6 @@ class LockScreenRouter {
 
 }
 
-
 extension LockScreenRouter: ILockScreenRouter {
 
     func dismiss() {
@@ -31,8 +30,8 @@ extension LockScreenRouter {
         let router = LockScreenRouter(appStart: appStart)
         let presenter = LockScreenPresenter(router: router)
 
-        let rateListController = RateListRouter.module()
-        let unlockController = pinKit.unlockPinModule(delegate: presenter, enableBiometry: true, presentationStyle: .complex, cancellable: false)
+        let rateListController = RateListRouter.module(topMargin: LockScreenController.pageControlHeight)
+        let unlockController = pinKit.unlockPinModule(delegate: presenter, enableBiometry: true, presentationStyle: .simple, cancellable: false)
 
         let viewController = LockScreenController(viewControllers: [unlockController, rateListController])
         router.viewController = viewController

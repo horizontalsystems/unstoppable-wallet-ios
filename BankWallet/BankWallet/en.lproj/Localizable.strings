@@ -384,7 +384,11 @@ bch.horizontalsystems.xyz/apg";
 "unlock_pin.info" = "Passcode";
 "unlock_pin.cant_save_pin" = "Ouch! We cannot save your passcode, please contact us asap!";
 "unlock_pin.blocked_until" = "Disabled until: %@";
-"rate_list.updated" = "updated";
+
+// Rate List
+
+"rate_list.title" = "Prices";
+"rate_list.portfolio" = "Portfolio";
 
 //NumPad
 
