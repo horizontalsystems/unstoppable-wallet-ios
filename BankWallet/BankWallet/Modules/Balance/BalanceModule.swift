@@ -50,7 +50,6 @@ protocol IBalanceInteractor: AnyObject {
 
     var sortType: BalanceSortType? { get set }
     var balanceHidden: Bool { get set }
-    var chartBlockedCoinCodes: Set<String> { get }
 
     func refresh()
     func predefinedAccountType(wallet: Wallet) -> PredefinedAccountType?
@@ -74,7 +73,7 @@ protocol IBalanceInteractorDelegate: class {
 protocol IBalanceRouter {
     func openReceive(for wallet: Wallet)
     func openSend(wallet: Wallet)
-    func showChart(for coinCode: CoinCode)
+    func showChart(coin: Coin)
     func openManageWallets()
     func openBackup(wallet: Wallet, predefinedAccountType: PredefinedAccountType)
 }

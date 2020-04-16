@@ -1,5 +1,6 @@
 import UIKit
 import PinKit
+import ThemeKit
 
 class LockScreenRouter {
     weak var viewController: UIViewController?
@@ -13,6 +14,10 @@ class LockScreenRouter {
 }
 
 extension LockScreenRouter: ILockScreenRouter {
+
+    func showChart(coin: Coin) {
+        viewController?.navigationController?.pushViewController(ChartRouter.module(coin: coin), animated: true)
+    }
 
     func dismiss() {
         if appStart {
@@ -30,7 +35,7 @@ extension LockScreenRouter {
         let router = LockScreenRouter(appStart: appStart)
         let presenter = LockScreenPresenter(router: router)
 
-        let rateListController = RateListRouter.module(topMargin: LockScreenController.pageControlHeight)
+        let rateListController = RateListRouter.module(delegate: presenter, topMargin: LockScreenController.pageControlHeight)
         let unlockController = pinKit.unlockPinModule(delegate: presenter, enableBiometry: true, presentationStyle: .simple, cancellable: false)
 
         let viewController = LockScreenController(viewControllers: [unlockController, rateListController])
@@ -38,7 +43,7 @@ extension LockScreenRouter {
 
         viewController.modalTransitionStyle = .crossDissolve
 
-        return viewController
+        return ThemeNavigationController(rootViewController: viewController)
     }
 
 }
