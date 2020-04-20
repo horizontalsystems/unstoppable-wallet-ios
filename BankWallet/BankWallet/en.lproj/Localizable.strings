@@ -353,7 +353,7 @@ bch.horizontalsystems.xyz/apg";
 "settings_manage_keys.description" = "Highlighted below are your active wallets where each wallet controls a set of cryptocurrencies.\n\nYou must backup each highlighted wallet by backing up the private key for it. This key is the only way to restore and access your funds if your phone is ever lost, stolen or the app malfunctions.";
 "settings_manage_keys.delete" = "Delete";
 "settings_manage_keys.backup" = "Backup";
-"settings_manage_keys.show" = "Show";
+"settings_manage_keys.show" = "Show Key";
 "settings_manage_keys.create" = "Create";
 "settings_manage_keys.restore" = "Restore";
 "settings_manage_keys.settings" = "Address Format";
