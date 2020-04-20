@@ -107,7 +107,7 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "IDXM",      title: "IDEX Membership",       code: "IDXM",    decimal: 8,  type: CoinType(erc20Address: "0xCc13Fc627EFfd6E35D2D2706Ea3C4D7396c610ea")),
         Coin(id: "IDEX",      title: "IDEX",                  code: "IDEX",    decimal: 18, type: CoinType(erc20Address: "0xB705268213D593B8FD88d3FDEFF93AFF5CbDcfAE")),
         Coin(id: "KCS",       title: "KuCoin Shares",         code: "KCS",     decimal: 6,  type: CoinType(erc20Address: "0x039B5649A59967e3e936D7471f9c3700100Ee1ab", minimumRequiredBalance: 0.001)),
-        Coin(id: "KNC",       title: "Kyber Network",         code: "KNC",     decimal: 18, type: CoinType(erc20Address: "0xdd974D5C2e2928deA5F71b9825b8b646686BD200")),
+        Coin(id: "KNC",       title: "Kyber Network Crystal", code: "KNC",     decimal: 18, type: CoinType(erc20Address: "0xdd974D5C2e2928deA5F71b9825b8b646686BD200")),
         Coin(id: "LOOM",      title: "Loom Network",          code: "LOOM",    decimal: 18, type: CoinType(erc20Address: "0xA4e8C3Ec456107eA67d3075bF9e3DF3A75823DB0")),
         Coin(id: "LRC",       title: "Loopring",              code: "LRC",     decimal: 18, type: CoinType(erc20Address: "0xEF68e7C694F40c8202821eDF525dE3782458639f")),
         Coin(id: "MKR",       title: "Maker",                 code: "MKR",     decimal: 18, type: CoinType(erc20Address: "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2")),
