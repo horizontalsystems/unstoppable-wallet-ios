@@ -116,7 +116,6 @@ class BitcoinBaseAdapter {
 
     private func convertToKitSortMode(sort: TransactionDataSortMode) -> TransactionDataSortType {
         switch sort {
-        case .none: return .none
         case .shuffle: return .shuffle
         case .bip69: return .bip69
         }
