@@ -81,3 +81,14 @@ extension BackendError {
     }
 
 }
+
+extension EthereumKit.IncubedError: ConvertibleError {
+
+    var convertedError: Error {
+        switch self {
+        case .notReachable: return IncubedError.notReachable
+        default: return self
+        }
+    }
+
+}
