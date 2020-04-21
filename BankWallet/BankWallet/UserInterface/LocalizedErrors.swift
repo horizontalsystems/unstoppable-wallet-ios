@@ -83,3 +83,11 @@ extension EthereumKit.ApiError: LocalizedError {
     }
 
 }
+
+extension IncubedError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .notReachable: return "error.incubed_not_reachable".localized
+        }
+    }
+}

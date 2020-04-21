@@ -352,10 +352,10 @@ CHECKOUT OPTIONS:
     :commit: bce8c81a3672009794ccda06779ed4cee5424e73
     :git: https://github.com/horizontalsystems/eos-kit-ios
   Erc20Kit.swift:
-    :commit: cd29e645ef3fae017eb2db7248a8894dcb6b52c9
+    :commit: de8f6eacc49d94905e385638f70a073296228472
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   EthereumKit.swift:
-    :commit: cd29e645ef3fae017eb2db7248a8894dcb6b52c9
+    :commit: 479a6e66db235eb68d841536b0ff5ad8a778d9c3
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :commit: 5b295950dde8aab7979745ea111ce3aa76ec5a7d
@@ -445,6 +445,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: e7e4bf432961545cace5fe8be80a9fe3aef04b36
 
-PODFILE CHECKSUM: 8a1192e418411da30a4bc477a5698d65a8169456
+PODFILE CHECKSUM: af87df801cf1eaee2fb5765e25d46ecc3f74c97e
 
 COCOAPODS: 1.9.1
