@@ -43,13 +43,6 @@ class ManageWalletsPresenter {
         wallets[coin] = wallet
     }
 
-    private func handleCreated(account: Account) {
-        interactor.save(account: account)
-
-        syncViewItems()
-        view?.showSuccess()
-    }
-
 }
 
 extension ManageWalletsPresenter: IManageWalletsViewDelegate {
@@ -87,25 +80,11 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
     }
 
     func onSelect(viewItem: CoinToggleViewItem) {
-        view?.showNoAccount(coin: viewItem.coin, predefinedAccountType: viewItem.coin.type.predefinedAccountType)
+        router.showNoAccount(coin: viewItem.coin)
     }
 
     func onTapCloseButton() {
         router.close()
-    }
-
-    func onSelectNewAccount(predefinedAccountType: PredefinedAccountType) {
-        do {
-            let account = try interactor.createAccount(predefinedAccountType: predefinedAccountType)
-            handleCreated(account: account)
-        } catch {
-            syncViewItems()
-            view?.show(error: error)
-        }
-    }
-
-    func onSelectRestoreAccount(predefinedAccountType: PredefinedAccountType) {
-        router.showRestore(predefinedAccountType: predefinedAccountType)
     }
 
 }
