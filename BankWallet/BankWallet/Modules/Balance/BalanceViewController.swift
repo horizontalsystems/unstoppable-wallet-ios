@@ -330,14 +330,4 @@ extension BalanceViewController: IBalanceView {
         present(alertController, animated: true)
     }
 
-    func showBackupRequired(coin: Coin, predefinedAccountType: PredefinedAccountType) {
-        DispatchQueue.main.async {
-            let controller = BackupRequiredViewController(subtitle: predefinedAccountType.title, text: "receive_alert.not_backed_up_description".localized(predefinedAccountType.title, coin.title), onBackup: { [weak self] in
-                self?.delegate.onRequestBackup()
-            })
-
-            self.present(controller, animated: true)
-        }
-    }
-
 }

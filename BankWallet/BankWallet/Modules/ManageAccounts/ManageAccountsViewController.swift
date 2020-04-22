@@ -128,12 +128,4 @@ extension ManageAccountsViewController: IManageAccountsView {
         HudHelper.instance.showSuccess()
     }
 
-    func showBackupRequired(predefinedAccountType: PredefinedAccountType) {
-        let controller = BackupRequiredViewController(subtitle: predefinedAccountType.title, text: "settings_manage_keys.delete.cant_delete".localized, onBackup: { [weak self] in
-            self?.delegate.didRequestBackup()
-        })
-
-        present(controller, animated: true)
-    }
-
 }

@@ -1,67 +1,136 @@
 import UIKit
-import ActionSheet
 import ThemeKit
+import SnapKit
 
-class DepositViewController: WalletActionSheetController {
+class DepositViewController: ThemeActionSheetController {
+    private static let qrCodeSideSize: CGFloat = 120
+
     private let delegate: IDepositViewDelegate
 
-    private var currentPage = 0
-    private var pagingItem: PagingDotsItem?
+    private let titleView = AlertTitleViewNew()
+    private let qrCodeImageView = UIImageView()
+    private let addressTitleLabel = UILabel()
+    private let addressButton = UIButton.appSecondary
+    private let shareButton = UIButton.appGreen
 
     init(delegate: IDepositViewDelegate) {
         self.delegate = delegate
-        super.init()
 
-        initItems()
+        super.init()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func initItems() {
-        let items = delegate.addressItems
-
-        let depositItem = DepositCollectionItem(addresses: items, tag: 0, onPageChange: { [weak self] index in
-            self?.currentPage = index
-            self?.pagingItem?.currentPage = index
-            self?.pagingItem?.updateView?()
-        }, onCopy: { [weak self] in
-            self?.onCopy()
-        }, onClose: { [weak self] in
-            self?.dismiss(animated: true)
-        })
-        model.addItemView(depositItem)
-
-        if items.count > 1 {
-            let pagingItem = PagingDotsItem(pagesCount: items.count, tag: 1, required: true)
-            model.addItemView(pagingItem)
-            self.pagingItem = pagingItem
-        }
-
-        let shareItem = DepositShareButtonItem(tag: 2, onTap: { [weak self] in
-            self?.onShare()
-        })
-        model.addItemView(shareItem)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        model.hideInBackground = false
+        view.addSubview(titleView)
+        titleView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+        }
+
+        titleView.onTapClose = { [weak self] in
+            self?.delegate.onTapClose()
+        }
+
+        view.addSubview(qrCodeImageView)
+        qrCodeImageView.snp.makeConstraints { maker in
+            maker.centerX.equalToSuperview()
+            maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin4x)
+            maker.size.equalTo(DepositViewController.qrCodeSideSize)
+        }
+
+        qrCodeImageView.backgroundColor = .white
+        qrCodeImageView.contentMode = .center
+        qrCodeImageView.clipsToBounds = true
+        qrCodeImageView.layer.cornerRadius = .cornerRadius1x
+
+        view.addSubview(addressTitleLabel)
+        addressTitleLabel.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalTo(qrCodeImageView.snp.bottom).offset(CGFloat.margin4x)
+        }
+
+        addressTitleLabel.font = .subhead2
+        addressTitleLabel.textColor = .themeGray
+        addressTitleLabel.textAlignment = .center
+
+        view.addSubview(addressButton)
+        addressButton.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x).priority(.medium)
+            maker.centerX.equalToSuperview()
+            maker.top.equalTo(addressTitleLabel.snp.bottom).offset(CGFloat.margin3x)
+        }
+
+        addressButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        addressButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        addressButton.addTarget(self, action: #selector(onTapAddress), for: .touchUpInside)
+
+        // TODO: set gradient background and move insets to Theme button
+        addressButton.setBackgroundColor(color: .themeElena, forState: .normal)
+        addressButton.contentEdgeInsets.top = 6
+        addressButton.contentEdgeInsets.bottom = 5
+
+        addressButton.titleLabel?.numberOfLines = 0
+        addressButton.titleLabel?.textAlignment = .center
+
+        // By default UIButton has no constraints to its titleLabel.
+        // In order to support multiline title the following constraints are required
+        addressButton.titleLabel?.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview().inset(addressButton.contentEdgeInsets)
+        }
+
+        view.addSubview(shareButton)
+        shareButton.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalTo(addressButton.snp.bottom).offset(CGFloat.margin6x)
+            maker.bottom.equalToSuperview().inset(CGFloat.margin4x)
+            maker.height.equalTo(CGFloat.heightButton)
+        }
+
+        shareButton.setTitle("button.share".localized, for: .normal)
+        shareButton.addTarget(self, action: #selector(onTapShare), for: .touchUpInside)
+
+        delegate.onLoad()
     }
 
-    private func onCopy() {
-        delegate.onCopy(index: currentPage)
+    @objc private func onTapAddress() {
+        delegate.onTapAddress()
     }
 
-    private func onShare() {
-        delegate.onShare(index: currentPage)
+    @objc private func onTapShare() {
+        delegate.onTapShare()
     }
 
 }
 
 extension DepositViewController: IDepositView {
+
+    func set(viewItem: DepositModule.AddressViewItem) {
+        titleView.bind(
+                title: "deposit.receive_coin".localized(viewItem.coinCode),
+                subtitle: viewItem.coinTitle,
+                image: UIImage(named: "\(viewItem.coinCode.lowercased())")
+        )
+
+        var addressTitle: String
+
+        switch viewItem.type {
+        case .address: addressTitle = "deposit.your_address".localized
+        case .account: addressTitle = "deposit.your_account".localized
+        }
+
+        if let additionalInfo = viewItem.additionalInfo {
+            addressTitle += " (\(additionalInfo))"
+        }
+
+        addressTitleLabel.text = addressTitle
+        addressButton.setTitle(viewItem.address, for: .normal)
+
+        qrCodeImageView.asyncSetImage { UIImage(qrCodeString: viewItem.address, size: DepositViewController.qrCodeSideSize) }
+    }
 
     func showCopied() {
         HudHelper.instance.showSuccess(title: "alert.copied".localized)

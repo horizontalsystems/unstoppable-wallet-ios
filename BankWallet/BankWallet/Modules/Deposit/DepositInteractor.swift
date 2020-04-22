@@ -1,37 +1,27 @@
-import UIKit
-
 class DepositInteractor {
-    weak var delegate: IDepositInteractorDelegate?
-
-    private let walletManager: IWalletManager
-    private let adapterManager: IAdapterManager
-    private let pasteboardManager: IPasteboardManager
+    private let depositAdapter: IDepositAdapter
     private let derivationSettingsManager: IDerivationSettingsManager
+    private let pasteboardManager: IPasteboardManager
 
-    init(walletManager: IWalletManager, adapterManager: IAdapterManager, pasteboardManager: IPasteboardManager, derivationSettingsManager: IDerivationSettingsManager) {
-        self.walletManager = walletManager
-        self.adapterManager = adapterManager
-        self.pasteboardManager = pasteboardManager
+    init(depositAdapter: IDepositAdapter, derivationSettingsManager: IDerivationSettingsManager, pasteboardManager: IPasteboardManager) {
+        self.depositAdapter = depositAdapter
         self.derivationSettingsManager = derivationSettingsManager
+        self.pasteboardManager = pasteboardManager
     }
 }
 
 extension DepositInteractor: IDepositInteractor {
 
-    func wallets() -> [Wallet] {
-        walletManager.wallets
+    var address: String {
+        depositAdapter.receiveAddress
     }
 
-    func adapter(forWallet wallet: Wallet) -> IDepositAdapter? {
-        adapterManager.depositAdapter(for: wallet)
+    func derivationSetting(coinType: CoinType) -> DerivationSetting? {
+        derivationSettingsManager.setting(coinType: coinType)
     }
 
     func copy(address: String) {
         pasteboardManager.set(value: address)
-    }
-
-    func derivationSettings(coinType: CoinType) -> DerivationSetting? {
-        derivationSettingsManager.setting(coinType: coinType)
     }
 
 }

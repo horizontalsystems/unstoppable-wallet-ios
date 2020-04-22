@@ -3,7 +3,6 @@ protocol ICreateWalletView: class {
     func set(featuredViewItems: [CoinToggleViewItem], viewItems: [CoinToggleViewItem])
     func setCreateButton(enabled: Bool)
 
-    func showNotSupported(coin: Coin, predefinedAccountType: PredefinedAccountType)
     func show(error: Error)
 }
 
@@ -31,6 +30,7 @@ protocol ICreateWalletInteractor {
 
 protocol ICreateWalletRouter {
     func showMain()
+    func showNotSupported(coin: Coin, predefinedAccountType: PredefinedAccountType)
     func close()
 }
 

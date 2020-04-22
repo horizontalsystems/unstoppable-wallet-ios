@@ -133,11 +133,6 @@ extension CreateWalletViewController: ICreateWalletView {
         navigationItem.rightBarButtonItem?.isEnabled = enabled
     }
 
-    func showNotSupported(coin: Coin, predefinedAccountType: PredefinedAccountType) {
-        let controller = CreateWalletNotSupportedViewController(coin: coin, predefinedAccountType: predefinedAccountType)
-        present(controller, animated: true)
-    }
-
     func show(error: Error) {
         HudHelper.instance.showError(title: error.localizedDescription)
     }

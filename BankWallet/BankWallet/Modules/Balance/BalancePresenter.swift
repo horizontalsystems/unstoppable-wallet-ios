@@ -12,7 +12,6 @@ class BalancePresenter {
     private let sorter: IBalanceSorter
     private let sortingOnThreshold: Int
 
-    private var walletToBackup: Wallet?
     private var expandedWallet: Wallet?
 
     private var items = [BalanceItem]()
@@ -176,10 +175,9 @@ extension BalancePresenter: IBalanceViewDelegate {
         let wallet = viewItem.wallet
 
         if wallet.account.backedUp {
-            router.openReceive(for: wallet)
+            router.showReceive(wallet: wallet)
         } else if let predefinedAccountType = interactor.predefinedAccountType(wallet: wallet) {
-            walletToBackup = wallet
-            view?.showBackupRequired(coin: wallet.coin, predefinedAccountType: predefinedAccountType)
+            router.showBackupRequired(wallet: wallet, predefinedAccountType: predefinedAccountType)
         }
     }
 
@@ -219,14 +217,6 @@ extension BalancePresenter: IBalanceViewDelegate {
 
     func onTapShowBalance() {
         handle(balanceHidden: false)
-    }
-
-    func onRequestBackup() {
-        guard let wallet = walletToBackup, let predefinedAccountType = interactor.predefinedAccountType(wallet: wallet) else {
-            return
-        }
-
-        router.openBackup(wallet: wallet, predefinedAccountType: predefinedAccountType)
     }
 
 }
