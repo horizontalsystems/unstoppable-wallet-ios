@@ -6,8 +6,12 @@ class BalanceRouter {
 
 extension BalanceRouter: IBalanceRouter {
 
-    func openReceive(for wallet: Wallet) {
-        DepositRouter.module(wallet: wallet)?.show(fromController: viewController)
+    func showReceive(wallet: Wallet) {
+        guard let module = DepositRouter.module(wallet: wallet) else {
+            return
+        }
+
+        viewController?.present(module, animated: true)
     }
 
     func openSend(wallet: Wallet) {
@@ -24,8 +28,15 @@ extension BalanceRouter: IBalanceRouter {
         viewController?.present(ManageWalletsRouter.module(), animated: true)
     }
 
-    func openBackup(wallet: Wallet, predefinedAccountType: PredefinedAccountType) {
-        viewController?.present(BackupRouter.module(account: wallet.account, predefinedAccountType: predefinedAccountType), animated: true)
+    func showBackupRequired(wallet: Wallet, predefinedAccountType: PredefinedAccountType) {
+        let module = BackupRequiredRouter.module(
+                account: wallet.account,
+                predefinedAccountType: predefinedAccountType,
+                sourceViewController: viewController,
+                text: "receive_alert.not_backed_up_description".localized(predefinedAccountType.title, wallet.coin.title)
+        )
+
+        viewController?.present(module, animated: true)
     }
 
 }

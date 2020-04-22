@@ -6,7 +6,6 @@ import CurrencyKit
 protocol IBalanceView: class {
     func set(headerViewItem: BalanceHeaderViewItem?, viewItems: [BalanceViewItem])
     func showSortType(selectedSortType: BalanceSortType)
-    func showBackupRequired(coin: Coin, predefinedAccountType: PredefinedAccountType)
     func hideRefresh()
 }
 
@@ -29,8 +28,6 @@ protocol IBalanceViewDelegate {
 
     func onTapHideBalance()
     func onTapShowBalance()
-
-    func onRequestBackup()
 }
 
 protocol IBalanceInteractor: AnyObject {
@@ -71,11 +68,11 @@ protocol IBalanceInteractorDelegate: class {
 }
 
 protocol IBalanceRouter {
-    func openReceive(for wallet: Wallet)
+    func showReceive(wallet: Wallet)
     func openSend(wallet: Wallet)
     func showChart(coin: Coin)
     func openManageWallets()
-    func openBackup(wallet: Wallet, predefinedAccountType: PredefinedAccountType)
+    func showBackupRequired(wallet: Wallet, predefinedAccountType: PredefinedAccountType)
 }
 
 protocol IBalanceViewItemFactory {

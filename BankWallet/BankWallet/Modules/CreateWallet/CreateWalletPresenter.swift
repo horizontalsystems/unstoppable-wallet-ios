@@ -96,7 +96,7 @@ extension CreateWalletPresenter: ICreateWalletViewDelegate {
     }
 
     func onSelect(viewItem: CoinToggleViewItem) {
-        view?.showNotSupported(coin: viewItem.coin, predefinedAccountType: viewItem.coin.type.predefinedAccountType)
+        router.showNotSupported(coin: viewItem.coin, predefinedAccountType: viewItem.coin.type.predefinedAccountType)
     }
 
     func onTapCreateButton() {

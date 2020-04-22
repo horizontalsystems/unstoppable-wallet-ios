@@ -7,7 +7,6 @@ class ManageAccountsPresenter {
     private var viewItemFactory = ManageAccountsViewItemFactory()
 
     private var items = [ManageAccountItem]()
-    private var currentItem: ManageAccountItem?
 
     private var hasDerivationSettings = false
 
@@ -50,8 +49,7 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
         if account.backedUp {
             router.showUnlink(account: account, predefinedAccountType: item.predefinedAccountType)
         } else {
-            currentItem = item
-            view?.showBackupRequired(predefinedAccountType: item.predefinedAccountType)
+            router.showBackupRequired(account: account, predefinedAccountType: item.predefinedAccountType)
         }
     }
 
@@ -67,7 +65,6 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
 
     func didTapCreate(index: Int) {
         let item = items[index]
-        currentItem = item
         router.showCreateWallet(predefinedAccountType: item.predefinedAccountType)
     }
 
@@ -77,14 +74,6 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
 
     func didTapSettings(index: Int) {
         router.showSettings()
-    }
-
-    func didRequestBackup() {
-        guard let item = currentItem, let account = item.account else {
-            return
-        }
-
-        router.showBackup(account: account, predefinedAccountType: item.predefinedAccountType)
     }
 
 }
