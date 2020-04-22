@@ -1,79 +1,134 @@
 import UIKit
 import ActionSheet
 import ThemeKit
+import SectionsTableView
 
-class UnlinkViewController: WalletActionSheetController {
+class UnlinkViewController: ThemeActionSheetController {
     private let delegate: IUnlinkViewDelegate
-    private var items = [ConfirmationCheckboxItem]()
-    private var buttonItem: AlertButtonItem?
+
+    private let tableView = SelfSizedSectionsTableView(style: .grouped)
+
+    private var viewItems = [UnlinkModule.ViewItem]()
+    private var accountTypeTitle: String?
+    private var deleteButtonEnabled = false
 
     init(delegate: IUnlinkViewDelegate) {
         self.delegate = delegate
         super.init()
-
-        initItems()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func initItems() {
-        let titleItem = AlertTitleItem(
-                title: "settings_manage_keys.delete.title".localized,
-                subtitle: delegate.title,
-                icon: UIImage(named: "Attention Icon")?.withRenderingMode(.alwaysTemplate),
-                iconTintColor: .themeLucian,
-                tag: 0,
-                onClose: { [weak self] in
-                    self?.dismiss(byFade: false)
-                }
-        )
-        model.addItemView(titleItem)
-
-        var texts = [NSAttributedString]()
-
-        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.themeOz, NSAttributedString.Key.font: UIFont.subhead2]
-        texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_remove".localized(delegate.title), attributes: attributes))
-        texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_disable".localized(delegate.coinCodes), attributes: attributes))
-        texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_loose".localized(delegate.title), attributes: attributes))
-
-        for (index, text) in texts.enumerated() {
-            let item = ConfirmationCheckboxItem(descriptionText: text, tag: index + 1) { [weak self] view in
-                self?.handleToggle(index: index)
-            }
-
-            model.addItemView(item)
-            items.append(item)
-        }
-
-        let buttonItem = AlertButtonItem(
-                tag: texts.count + 1,
-                title: "security_settings.delete_alert_button".localized,
-                createButton: { .appRed }
-        ) { [weak self] in
-            self?.delegate.didTapUnlink()
-        }
-
-        model.addItemView(buttonItem)
-        self.buttonItem = buttonItem
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        contentBackgroundColor = .white
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        tableView.registerCell(forClass: AlertTitleCell.self)
+        tableView.registerCell(forClass: AlertCheckboxCell.self)
+        tableView.registerCell(forClass: AlertRedButtonCell.self)
+        tableView.sectionDataSource = self
+
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.alwaysBounceVertical = false
+
+        delegate.onLoad()
+
+        tableView.reload()
     }
 
-    private func handleToggle(index: Int) {
-        items[index].checked = !items[index].checked
-        buttonItem?.isEnabled = items.filter { $0.checked == false }.isEmpty
-        model.reload?()
+    private var titleRow: RowProtocol {
+        Row<AlertTitleCell>(
+                id: "title",
+                height: AlertTitleViewNew.height,
+                bind: { [weak self] cell, _ in
+                    cell.bind(
+                            title: "settings_manage_keys.delete.title".localized,
+                            subtitle: self?.accountTypeTitle,
+                            image: UIImage(named: "Attention Icon")?.tinted(with: .themeLucian)
+                    ) { [weak self] in
+                        self?.delegate.onTapClose()
+                    }
+                }
+        )
+    }
+
+    private var deleteButtonRow: RowProtocol {
+        Row<AlertRedButtonCell>(
+                id: "delete_button",
+                height: AlertRedButtonCell.height,
+                bind: { [unowned self] cell, _ in
+                    cell.bind(
+                            title: "security_settings.delete_alert_button".localized,
+                            enabled: self.deleteButtonEnabled
+                    ) { [weak self] in
+                        self?.delegate.onTapDelete()
+                    }
+                }
+        )
+    }
+
+    private func checkboxRow(viewItem: UnlinkModule.ViewItem, index: Int) -> RowProtocol {
+        Row<AlertCheckboxCell>(
+                id: "checkbox_\(index)",
+                hash: "\(viewItem.checked)",
+                height: 60,
+                bind: { [weak self] cell, _ in
+                    cell.bind(
+                            text: self?.text(itemType: viewItem.type),
+                            checked: viewItem.checked
+                    )
+                },
+                action: { [weak self] _ in
+                    self?.delegate.onTapViewItem(index: index)
+                }
+        )
+    }
+
+    private func text(itemType: UnlinkModule.ItemType) -> String {
+        switch itemType {
+        case .deleteAccount(let accountTypeTitle):
+            return "settings_manage_keys.delete.confirmation_remove".localized(accountTypeTitle)
+        case .disableCoins(let coinCodes):
+            return "settings_manage_keys.delete.confirmation_disable".localized(coinCodes)
+        case .loseAccess:
+            return "settings_manage_keys.delete.confirmation_loose".localized
+        }
+    }
+
+}
+
+extension UnlinkViewController: SectionsDataSource {
+
+    func buildSections() -> [SectionProtocol] {
+        var rows = [RowProtocol]()
+
+        rows.append(titleRow)
+        rows.append(contentsOf: viewItems.enumerated().map { checkboxRow(viewItem: $1, index: $0) })
+        rows.append(deleteButtonRow)
+
+        return [Section(id: "main", rows: rows)]
     }
 
 }
 
 extension UnlinkViewController: IUnlinkView {
+
+    func set(accountTypeTitle: String) {
+        self.accountTypeTitle = accountTypeTitle
+    }
+
+    func set(viewItems: [UnlinkModule.ViewItem], deleteButtonEnabled: Bool) {
+        self.viewItems = viewItems
+        self.deleteButtonEnabled = deleteButtonEnabled
+        tableView.reload()
+    }
 
     func showSuccess() {
         HudHelper.instance.showSuccess()

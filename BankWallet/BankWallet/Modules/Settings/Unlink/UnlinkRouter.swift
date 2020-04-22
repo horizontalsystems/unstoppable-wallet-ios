@@ -6,7 +6,7 @@ class UnlinkRouter {
 
 extension UnlinkRouter: IUnlinkRouter {
 
-    func dismiss() {
+    func close() {
         viewController?.dismiss(animated: true)
     }
 
@@ -17,14 +17,13 @@ extension UnlinkRouter {
     static func module(account: Account, predefinedAccountType: PredefinedAccountType) -> UIViewController {
         let router = UnlinkRouter()
         let interactor = UnlinkInteractor(accountManager: App.shared.accountManager)
-        let presenter = UnlinkPresenter(router: router, interactor: interactor, account: account, predefinedAccountType: predefinedAccountType)
+        let presenter = UnlinkPresenter(account: account, predefinedAccountType: predefinedAccountType, router: router, interactor: interactor)
         let viewController = UnlinkViewController(delegate: presenter)
 
-        interactor.delegate = presenter
         presenter.view = viewController
         router.viewController = viewController
 
-        return viewController
+        return viewController.toBottomSheet
     }
 
 }
