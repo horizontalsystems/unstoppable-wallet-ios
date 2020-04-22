@@ -1,9 +1,5 @@
 protocol IManageWalletsView: class {
     func set(featuredViewItems: [CoinToggleViewItem], viewItems: [CoinToggleViewItem])
-
-    func showNoAccount(coin: Coin, predefinedAccountType: PredefinedAccountType)
-    func show(error: Error)
-    func showSuccess()
 }
 
 protocol IManageWalletsViewDelegate {
@@ -14,9 +10,6 @@ protocol IManageWalletsViewDelegate {
     func onSelect(viewItem: CoinToggleViewItem)
 
     func onTapCloseButton()
-
-    func onSelectNewAccount(predefinedAccountType: PredefinedAccountType)
-    func onSelectRestoreAccount(predefinedAccountType: PredefinedAccountType)
 }
 
 protocol IManageWalletsInteractor {
@@ -28,10 +21,6 @@ protocol IManageWalletsInteractor {
     func save(wallet: Wallet)
     func delete(wallet: Wallet)
 
-    func createAccount(predefinedAccountType: PredefinedAccountType) throws -> Account
-    func createRestoredAccount(accountType: AccountType) -> Account
-    func save(account: Account)
-
     func derivationSetting(coinType: CoinType) -> DerivationSetting?
     func save(derivationSetting: DerivationSetting)
 }
@@ -42,7 +31,7 @@ protocol IManageWalletsInteractorDelegate: AnyObject {
 
 protocol IManageWalletsRouter {
     func show(derivationSetting: DerivationSetting, coin: Coin, delegate: IDerivationSettingDelegate)
-    func showRestore(predefinedAccountType: PredefinedAccountType)
+    func showNoAccount(coin: Coin)
     func close()
 }
 

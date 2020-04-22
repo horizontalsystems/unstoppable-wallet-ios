@@ -12,9 +12,9 @@ extension ManageWalletsRouter: IManageWalletsRouter {
         viewController?.present(controller, animated: true)
     }
 
-    func showRestore(predefinedAccountType: PredefinedAccountType) {
-        let controller = RestoreRouter.module(predefinedAccountType: predefinedAccountType, selectCoins: false)
-        viewController?.present(ThemeNavigationController(rootViewController: controller), animated: true)
+    func showNoAccount(coin: Coin) {
+        let module = NoAccountRouter.module(coin: coin, sourceViewController: viewController)
+        viewController?.present(module, animated: true)
     }
 
     func close() {
@@ -30,10 +30,7 @@ extension ManageWalletsRouter {
         let interactor = ManageWalletsInteractor(
                 appConfigProvider: App.shared.appConfigProvider,
                 walletManager: App.shared.walletManager,
-                walletFactory: App.shared.walletFactory,
                 accountManager: App.shared.accountManager,
-                accountCreator: App.shared.accountCreator,
-                predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager,
                 derivationSettingsManager: App.shared.derivationSettingsManager
         )
         let presenter = ManageWalletsPresenter(interactor: interactor, router: router)
