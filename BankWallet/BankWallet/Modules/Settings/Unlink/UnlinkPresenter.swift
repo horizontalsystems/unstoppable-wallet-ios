@@ -1,38 +1,55 @@
 class UnlinkPresenter {
+    weak var view: IUnlinkView?
+
     private let router: IUnlinkRouter
     private let interactor: IUnlinkInteractor
+
     private let account: Account
     private let predefinedAccountType: PredefinedAccountType
 
-    weak var view: IUnlinkView?
+    private var viewItems: [UnlinkModule.ViewItem]
 
-    init(router: IUnlinkRouter, interactor: IUnlinkInteractor, account: Account, predefinedAccountType: PredefinedAccountType) {
-        self.router = router
-        self.interactor = interactor
+    init(account: Account, predefinedAccountType: PredefinedAccountType, router: IUnlinkRouter, interactor: IUnlinkInteractor) {
         self.account = account
         self.predefinedAccountType = predefinedAccountType
+        self.router = router
+        self.interactor = interactor
+
+        viewItems = [
+            UnlinkModule.ViewItem(type: .deleteAccount(accountTypeTitle: predefinedAccountType.title)),
+            UnlinkModule.ViewItem(type: .disableCoins(coinCodes: predefinedAccountType.coinCodes)),
+            UnlinkModule.ViewItem(type: .loseAccess)
+        ]
+    }
+
+    private func syncView() {
+        let deleteButtonEnabled = viewItems.allSatisfy { $0.checked }
+        view?.set(viewItems: viewItems, deleteButtonEnabled: deleteButtonEnabled)
     }
 
 }
 
 extension UnlinkPresenter: IUnlinkViewDelegate {
 
-    var title: String {
-        return predefinedAccountType.title
+    func onLoad() {
+        view?.set(accountTypeTitle: predefinedAccountType.title)
+        syncView()
     }
 
-    var coinCodes: String {
-        return predefinedAccountType.coinCodes
+    func onTapViewItem(index: Int) {
+        viewItems[index].checked = !viewItems[index].checked
+        syncView()
     }
 
-    func didTapUnlink() {
-        interactor.unlink(account: account)
+    func onTapDelete() {
+        interactor.delete(account: account)
 
         view?.showSuccess()
-        router.dismiss()
+        router.close()
     }
 
-}
+    func onTapClose() {
+        router.close()
+    }
 
-extension UnlinkPresenter: IUnlinkInteractorDelegate {
 }

@@ -1,6 +1,4 @@
 class UnlinkInteractor {
-    weak var delegate: IUnlinkInteractorDelegate?
-
     private let accountManager: IAccountManager
 
     init(accountManager: IAccountManager) {
@@ -11,7 +9,7 @@ class UnlinkInteractor {
 
 extension UnlinkInteractor: IUnlinkInteractor {
 
-    func unlink(account: Account) {
+    func delete(account: Account) {
         accountManager.delete(account: account)
     }
 
