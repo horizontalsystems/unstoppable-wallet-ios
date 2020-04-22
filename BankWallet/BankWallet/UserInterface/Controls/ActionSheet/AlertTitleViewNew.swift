@@ -3,7 +3,7 @@ import SnapKit
 import ThemeKit
 
 class AlertTitleViewNew: UIView {
-    private static let height: CGFloat = 64
+    static let height: CGFloat = 64
 
     private let iconImageView = UIImageView()
     private let titleLabel = UILabel()

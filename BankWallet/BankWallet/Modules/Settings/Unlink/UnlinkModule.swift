@@ -1,21 +1,40 @@
 protocol IUnlinkView: class {
+    func set(accountTypeTitle: String)
+    func set(viewItems: [UnlinkModule.ViewItem], deleteButtonEnabled: Bool)
     func showSuccess()
 }
 
 protocol IUnlinkViewDelegate {
-    var title: String { get }
-    var coinCodes: String { get }
-
-    func didTapUnlink()
+    func onLoad()
+    func onTapViewItem(index: Int)
+    func onTapDelete()
+    func onTapClose()
 }
 
 protocol IUnlinkInteractor {
-    func unlink(account: Account)
-}
-
-protocol IUnlinkInteractorDelegate: class {
+    func delete(account: Account)
 }
 
 protocol IUnlinkRouter {
-    func dismiss()
+    func close()
+}
+
+class UnlinkModule {
+
+    struct ViewItem {
+        let type: ItemType
+        var checked: Bool
+
+        init(type: ItemType) {
+            self.type = type
+            checked = false
+        }
+    }
+
+    enum ItemType {
+        case deleteAccount(accountTypeTitle: String)
+        case disableCoins(coinCodes: String)
+        case loseAccess
+    }
+
 }
