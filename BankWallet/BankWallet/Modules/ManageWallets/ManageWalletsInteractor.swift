@@ -7,19 +7,13 @@ class ManageWalletsInteractor {
 
     private let appConfigProvider: IAppConfigProvider
     private let walletManager: IWalletManager
-    private let walletFactory: IWalletFactory
     private let accountManager: IAccountManager
-    private let accountCreator: IAccountCreator
-    private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let derivationSettingsManager: IDerivationSettingsManager
 
-    init(appConfigProvider: IAppConfigProvider, walletManager: IWalletManager, walletFactory: IWalletFactory, accountManager: IAccountManager, accountCreator: IAccountCreator, predefinedAccountTypeManager: IPredefinedAccountTypeManager, derivationSettingsManager: IDerivationSettingsManager) {
+    init(appConfigProvider: IAppConfigProvider, walletManager: IWalletManager, accountManager: IAccountManager, derivationSettingsManager: IDerivationSettingsManager) {
         self.appConfigProvider = appConfigProvider
         self.walletManager = walletManager
-        self.walletFactory = walletFactory
         self.accountManager = accountManager
-        self.accountCreator = accountCreator
-        self.predefinedAccountTypeManager = predefinedAccountTypeManager
         self.derivationSettingsManager = derivationSettingsManager
 
         accountManager.accountsObservable
@@ -56,18 +50,6 @@ extension ManageWalletsInteractor: IManageWalletsInteractor {
 
     func delete(wallet: Wallet) {
         walletManager.delete(wallets: [wallet])
-    }
-
-    func createAccount(predefinedAccountType: PredefinedAccountType) throws -> Account {
-        try accountCreator.newAccount(predefinedAccountType: predefinedAccountType)
-    }
-
-    func createRestoredAccount(accountType: AccountType) -> Account {
-        accountCreator.restoredAccount(accountType: accountType)
-    }
-
-    func save(account: Account) {
-        accountManager.save(account: account)
     }
 
     func derivationSetting(coinType: CoinType) -> DerivationSetting? {

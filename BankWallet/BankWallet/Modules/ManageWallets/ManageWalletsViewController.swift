@@ -112,30 +112,11 @@ extension ManageWalletsViewController: SectionsDataSource {
 
 extension ManageWalletsViewController: IManageWalletsView {
 
-
     func set(featuredViewItems: [CoinToggleViewItem], viewItems: [CoinToggleViewItem]) {
         self.featuredViewItems = featuredViewItems
         self.viewItems = viewItems
 
         tableView.reload()
-    }
-
-    func showNoAccount(coin: Coin, predefinedAccountType: PredefinedAccountType) {
-        let controller = ManageWalletsNoAccountViewController(coin: coin, predefinedAccountType: predefinedAccountType, onSelectNew: { [weak self] in
-            self?.delegate.onSelectNewAccount(predefinedAccountType: predefinedAccountType)
-        }, onSelectRestore: { [weak self] in
-            self?.delegate.onSelectRestoreAccount(predefinedAccountType: predefinedAccountType)
-        })
-
-        present(controller, animated: true)
-    }
-
-    func show(error: Error) {
-        HudHelper.instance.showError(title: error.localizedDescription)
-    }
-
-    func showSuccess() {
-        HudHelper.instance.showSuccess()
     }
 
 }
