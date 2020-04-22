@@ -6,38 +6,51 @@ class DepositPresenter {
     private let interactor: IDepositInteractor
     private let router: IDepositRouter
 
-    let addressItems: [AddressItem]
+    private let coin: Coin
+    private let address: String
 
-    init(interactor: IDepositInteractor, router: IDepositRouter, wallet: Wallet?) {
+    init(coin: Coin, interactor: IDepositInteractor, router: IDepositRouter) {
+        self.coin = coin
         self.interactor = interactor
         self.router = router
 
-        let wallets = wallet.map{ [$0] } ?? interactor.wallets()
+        address = interactor.address
+    }
 
-        addressItems = wallets.compactMap { wallet in
-            if let adapter = interactor.adapter(forWallet: wallet) {
-                return AddressItem(coin: wallet.coin,
-                                   addressType: (interactor.derivationSettings(coinType: wallet.coin.type)?.derivation)?.addressType,
-                                   address: adapter.receiveAddress)
-            }
-            return nil
+    private var addressType: DepositModule.AddressType {
+        switch coin.type {
+        case .eos: return .account
+        default: return .address
         }
     }
 
 }
 
-extension DepositPresenter: IDepositInteractorDelegate {
-}
-
 extension DepositPresenter: IDepositViewDelegate {
 
-    func onCopy(index: Int) {
-        interactor.copy(address: addressItems[index].address)
+    func onLoad() {
+        let viewItem = DepositModule.AddressViewItem(
+                coinTitle: coin.title,
+                coinCode: coin.code,
+                address: address,
+                additionalInfo: interactor.derivationSetting(coinType: coin.type)?.derivation.addressType,
+                type: addressType
+        )
+
+        view?.set(viewItem: viewItem)
+    }
+
+    func onTapAddress() {
+        interactor.copy(address: address)
         view?.showCopied()
     }
 
-    func onShare(index: Int) {
-        router.share(address: addressItems[index].address)
+    func onTapShare() {
+        router.showShare(address: address)
+    }
+
+    func onTapClose() {
+        router.close()
     }
 
 }

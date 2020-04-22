@@ -16,6 +16,17 @@ extension ManageAccountsRouter: IManageAccountsRouter {
         viewController?.present(module, animated: true)
     }
 
+    func showBackupRequired(account: Account, predefinedAccountType: PredefinedAccountType) {
+        let module = BackupRequiredRouter.module(
+                account: account,
+                predefinedAccountType: predefinedAccountType,
+                sourceViewController: viewController,
+                text: "settings_manage_keys.delete.cant_delete".localized
+        )
+
+        viewController?.present(module, animated: true)
+    }
+
     func showCreateWallet(predefinedAccountType: PredefinedAccountType) {
         let module = CreateWalletRouter.module(presentationMode: .inApp, predefinedAccountType: predefinedAccountType)
         viewController?.present(module, animated: true)

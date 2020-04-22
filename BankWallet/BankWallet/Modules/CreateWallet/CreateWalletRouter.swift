@@ -11,6 +11,11 @@ extension CreateWalletRouter: ICreateWalletRouter {
         UIApplication.shared.keyWindow?.set(newRootController: MainRouter.module(selectedTab: .balance))
     }
 
+    func showNotSupported(coin: Coin, predefinedAccountType: PredefinedAccountType) {
+        let controller = CreateWalletNotSupportedViewController(coin: coin, predefinedAccountType: predefinedAccountType)
+        viewController?.present(controller.toBottomSheet, animated: true)
+    }
+
     func close() {
         viewController?.dismiss(animated: true)
     }

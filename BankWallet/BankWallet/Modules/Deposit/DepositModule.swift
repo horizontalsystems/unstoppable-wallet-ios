@@ -1,23 +1,42 @@
 protocol IDepositView: class {
+    func set(viewItem: DepositModule.AddressViewItem)
     func showCopied()
 }
 
 protocol IDepositViewDelegate {
-    var addressItems: [AddressItem] { get }
-    func onCopy(index: Int)
-    func onShare(index: Int)
+    func onLoad()
+    func onTapAddress()
+    func onTapShare()
+    func onTapClose()
 }
 
 protocol IDepositInteractor {
-    func wallets() -> [Wallet]
-    func adapter(forWallet wallet: Wallet) -> IDepositAdapter?
+    var address: String { get }
+    func derivationSetting(coinType: CoinType) -> DerivationSetting?
     func copy(address: String)
-    func derivationSettings(coinType: CoinType) -> DerivationSetting?
 }
 
 protocol IDepositInteractorDelegate: class {
 }
 
 protocol IDepositRouter {
-    func share(address: String)
+    func showShare(address: String)
+    func close()
+}
+
+class DepositModule {
+
+    struct AddressViewItem {
+        let coinTitle: String
+        let coinCode: String
+        let address: String
+        let additionalInfo: String?
+        let type: AddressType
+    }
+
+    enum AddressType {
+        case account
+        case address
+    }
+
 }
