@@ -376,7 +376,7 @@ CHECKOUT OPTIONS:
     :commit: cb3e18c9ee8e83c8a03368c6d2bd207f1ada3af8
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   PinKit.swift:
-    :commit: 6364ee1fad41c9e994228d048fc079ca079d8687
+    :commit: fbcd4af2936a2fb4fd573aeb02cad7de6322cb43
     :git: https://github.com/horizontalsystems/component-kit-ios/
   StorageKit.swift:
     :commit: 0985776f0182ce2f1d7c90819a43aa41be6c0768
