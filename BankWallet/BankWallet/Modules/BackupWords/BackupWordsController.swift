@@ -58,7 +58,7 @@ class BackupWordsController: ThemeViewController {
         proceedButton.addTarget(self, action: #selector(nextDidTap), for: .touchUpInside)
 
         proceedButton.snp.makeConstraints { maker in
-            maker.leading.trailing.bottom.equalToSuperview().inset(CGFloat.margin6x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
             maker.bottom.equalToSuperview().inset(CGFloat.margin8x)
             maker.height.equalTo(CGFloat.heightButton)
         }
