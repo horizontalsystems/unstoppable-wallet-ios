@@ -94,6 +94,7 @@
 "error.send_ethereum.wrong_parameters" = "Неверные параметры";
 "error.send_binance.memo_required" = "Получатель требует ввести memo в переводе транзакции";
 "error.send_binance.only_digits_allowed" = "Необходимо, чтобы memo содержало только цифры";
+"error.incubed_not_reachable" = "Incubed servers not reachable";
 
 "backup.confirmation.title" = "Проверка...";
 
@@ -160,7 +161,7 @@
 "send.amount_error.balance" = "Баланс %@";
 "send.amount_error.maximum_amount" = "Макс. сумма %@";
 "send.amount_error.minimum_amount" = "Мин. сумма %@";
-"send.amount_error.min_required_balance" = "Мин. обязательный остаток %@";
+"send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.token.insufficient_fee_alert" = "Комиссии за транзакцию %@ (%@) взимаются в %@. Вам нужно %@.";
 
 "send.lock_time" = "TimeLock";
@@ -373,7 +374,11 @@
 "unlock_pin.info" = "Код Доступа";
 "unlock_pin.cant_save_pin" = "Ой! Мы не можем сохранить ваш код доступа. Пожалуйста, свяжитесь с нами как можно скорее!";
 "unlock_pin.blocked_until" = "Отключено до: %@";
-"rate_list.updated" = "обновлено";
+
+// Rate List
+
+"rate_list.title" = "Prices";
+"rate_list.portfolio" = "Portfolio";
 
 //NumPad
 
