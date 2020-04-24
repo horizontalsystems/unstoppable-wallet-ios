@@ -38,6 +38,8 @@ class App {
     let feeCoinProvider: IFeeCoinProvider
     let feeRateProviderFactory: FeeRateProviderFactory
 
+    let sortTypeManager: ISortTypeManager
+
     let adapterManager: IAdapterManager
 
     let dataProviderManager: IFullTransactionDataProviderManager
@@ -111,6 +113,8 @@ class App {
 
         feeCoinProvider = FeeCoinProvider(appConfigProvider: appConfigProvider)
         feeRateProviderFactory = FeeRateProviderFactory(appConfigProvider: appConfigProvider)
+
+        sortTypeManager = SortTypeManager(localStorage: localStorage)
 
         let ethereumKitManager = EthereumKitManager(appConfigProvider: appConfigProvider)
         let eosKitManager = EosKitManager(appConfigProvider: appConfigProvider)

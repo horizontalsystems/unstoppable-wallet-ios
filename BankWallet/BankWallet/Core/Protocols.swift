@@ -18,7 +18,7 @@ protocol ILocalStorage: class {
     var baseEosProvider: String? { get set }
     var baseEthereumProvider: String? { get set }
     var agreementAccepted: Bool { get set }
-    var balanceSortType: BalanceSortType? { get set }
+    var sortType: SortType? { get set }
     var debugLog: String? { get set }
     var sendInputType: SendInputType? { get set }
     var mainShownOnce: Bool { get set }
@@ -539,4 +539,9 @@ protocol IEthereumRpcModeSettingsManager: AnyObject {
 protocol ITransactionDataSortModeSettingManager {
     var setting: TransactionDataSortMode { get }
     func save(setting: TransactionDataSortMode)
+}
+
+protocol ISortTypeManager: AnyObject {
+    var sortType: SortType { get set }
+    var sortTypeObservable: Observable<SortType> { get }
 }

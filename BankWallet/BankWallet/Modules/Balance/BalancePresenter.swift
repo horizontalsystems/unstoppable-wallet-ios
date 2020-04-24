@@ -18,7 +18,7 @@ class BalancePresenter {
     private var viewItems = [BalanceViewItem]()
     private var headerViewItem: BalanceHeaderViewItem?
     private var currency: Currency
-    private var sortType: BalanceSortType
+    private var sortType: SortType
     private var balanceHidden: Bool
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.balance_presenter", qos: .userInteractive)
@@ -31,7 +31,7 @@ class BalancePresenter {
         self.sortingOnThreshold = sortingOnThreshold
 
         currency = interactor.baseCurrency
-        sortType = interactor.sortType ?? .name
+        sortType = interactor.sortType
         balanceHidden = interactor.balanceHidden
     }
 
@@ -198,17 +198,7 @@ extension BalancePresenter: IBalanceViewDelegate {
     }
 
     func onTapSortType() {
-        view?.showSortType(selectedSortType: sortType)
-    }
-
-    func onSelect(sortType: BalanceSortType) {
-        queue.async {
-            self.sortType = sortType
-            self.interactor.sortType = sortType
-
-            self.updateViewItems()
-            self.refreshView()
-        }
+        router.showSortType()
     }
 
     func onTapHideBalance() {
@@ -291,6 +281,15 @@ extension BalancePresenter: IBalanceInteractorDelegate {
             }
 
             self.updateHeaderViewItem()
+            self.refreshView()
+        }
+    }
+
+    func didUpdate(sortType: SortType) {
+        queue.async {
+            self.sortType = sortType
+
+            self.updateViewItems()
             self.refreshView()
         }
     }

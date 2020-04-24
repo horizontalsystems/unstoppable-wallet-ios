@@ -17,7 +17,7 @@ class BalanceSorter: IBalanceSorter {
         return hasRate
     }
 
-    func sort(items: [BalanceItem], sort: BalanceSortType) -> [BalanceItem] {
+    func sort(items: [BalanceItem], sort: SortType) -> [BalanceItem] {
         switch sort {
         case .value:
             let nonZeroItems = items.filter { !($0.balance ?? 0).isZero }

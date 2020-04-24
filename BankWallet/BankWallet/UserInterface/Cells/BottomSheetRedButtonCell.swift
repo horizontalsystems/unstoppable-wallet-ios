@@ -1,7 +1,7 @@
 import UIKit
 import ThemeKit
 
-class AlertRedButtonCell: UITableViewCell {
+class BottomSheetRedButtonCell: UITableViewCell {
     static let height: CGFloat = .heightButton + 2 * .margin4x
 
     private let button = UIButton.appRed
