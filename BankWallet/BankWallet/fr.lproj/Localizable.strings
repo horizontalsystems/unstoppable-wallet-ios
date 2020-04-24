@@ -94,6 +94,7 @@
 "error.send_ethereum.wrong_parameters" = "Paramètres erronés";
 "error.send_binance.memo_required" = "Le destinataire a besoin d'une note non vide pour une opération de transfert";
 "error.send_binance.only_digits_allowed" = "Nécessite que le mémo ne contienne que des chiffres";
+"error.incubed_not_reachable" = "Incubed servers not reachable";
 
 "backup.confirmation.title" = "Vérification...";
 
@@ -160,7 +161,7 @@
 "send.amount_error.balance" = "Balance %@";
 "send.amount_error.maximum_amount" = "Montant maximum %@";
 "send.amount_error.minimum_amount" = "Montant minimum %@";
-"send.amount_error.min_required_balance" = "Minimum requis %@ restant";
+"send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.token.insufficient_fee_alert" = "Frais de transaction pour %@ (%@) payé en %@. Il est nécessaire %@.";
 
 "send.lock_time" = "TimeLock";
@@ -373,7 +374,11 @@
 "unlock_pin.info" = "Code";
 "unlock_pin.cant_save_pin" = "Oops! Nous ne pouvons pas enregistrer votre code, veuillez nous contacter au plus vite!";
 "unlock_pin.blocked_until" = "Désactivé jusqu'à: %@";
-"rate_list.updated" = "mis à jour";
+
+// Rate List
+
+"rate_list.title" = "Prices";
+"rate_list.portfolio" = "Portfolio";
 
 //NumPad
 
