@@ -2,11 +2,11 @@ class SortTypePresenter {
     weak var view: IAlertView?
 
     private let interactor: ISortTypeInteractor
-    private let router: ISortTypeRouter
+    private let router: IAlertRouter
 
     private let sortTypes = SortType.allCases
 
-    init(interactor: ISortTypeInteractor, router: ISortTypeRouter) {
+    init(interactor: ISortTypeInteractor, router: IAlertRouter) {
         self.interactor = interactor
         self.router = router
     }

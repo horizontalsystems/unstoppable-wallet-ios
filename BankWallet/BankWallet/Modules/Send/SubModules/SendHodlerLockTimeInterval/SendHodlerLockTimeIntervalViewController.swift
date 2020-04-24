@@ -1,6 +1,6 @@
 import UIKit
 
-class SendHodlerLockTimeIntervalViewController: AlertViewControllerNew {
+class SendHodlerLockTimeIntervalViewController: AlertViewController {
 
     init(delegate: IAlertViewDelegate) {
         super.init(alertTitle: "send.hodler_locktime".localized, delegate: delegate)
