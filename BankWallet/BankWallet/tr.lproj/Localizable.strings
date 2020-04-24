@@ -94,6 +94,7 @@
 "error.send_ethereum.wrong_parameters" = "Yanlış parametreler";
 "error.send_binance.memo_required" = "Aktarım işleminde alıcı boş olmayan not istiyor";
 "error.send_binance.only_digits_allowed" = "Notun yalnızca rakam içermesini gerektirir";
+"error.incubed_not_reachable" = "Incubed servers not reachable";
 
 "backup.confirmation.title" = "Kontrol etme ...";
 
@@ -160,7 +161,7 @@
 "send.amount_error.balance" = "%@ Bakiye";
 "send.amount_error.maximum_amount" = "Maksimum miktar %@";
 "send.amount_error.minimum_amount" = "Minimum miktar %@";
-"send.amount_error.min_required_balance" = "Min. gerekli bakiye %@";
+"send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.token.insufficient_fee_alert" = "%@ (%@) için ișlem ücreti %@ hesabından ödenir. Asgari %@ gerekiyor.";
 
 "send.lock_time" = "TimeLock";
@@ -373,7 +374,11 @@
 "unlock_pin.info" = "Kod";
 "unlock_pin.cant_save_pin" = "Eyvah! PİNninizi kaydetemiyoruz, acilen bizimle iletişime geçin!";
 "unlock_pin.blocked_until" = "Engellendi: %@";
-"rate_list.updated" = "güncellendi";
+
+// Rate List
+
+"rate_list.title" = "Prices";
+"rate_list.portfolio" = "Portfolio";
 
 //NumPad
 
