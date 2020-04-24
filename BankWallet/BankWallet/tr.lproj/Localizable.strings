@@ -46,7 +46,7 @@
 "restore.description" = "Geri yüklemek istediğiniz bir cüzdan seçin. Seçmiş oldugunuz cüzdana ait gizli anahtara ihtiyacınız olacak.";
 "restore.words.description" = "%@ cüzdanı için gizli anahtarı gir";
 "restore.validation_failed" = "Yanlış Anahtar";
-"restore.placeholder.account_name" = "Account Name";
+"restore.placeholder.account_name" = "Hesap Adı";
 "restore.placeholder.private_key" = "Active Private key";
 
 // Coin Settings
@@ -66,7 +66,7 @@
 "blockchain_settings.change_alert.content" = "Bu değişiklikten sonra cüzdan %@ blok zinciri ile kendini yeniden senkronize etmek zorunda kalacak.\n\n%@ için adres biçimini değiştirdiğinizde, mevcut bakiye ve işlem geçmişi artık bakiye sekmesinde görünmeyecek. Bir önceki ayara geri döndürmek, cüzdan blok zinciriyle kendini yeniden senkronize ettikten sonra her şeyi geri getirecektir. Bunun ne olduğundan emin değilseniz değiştirmemenizi öneririz.";
 "blockchain_settings.change_alert.action_button_text" = "%@'e değiştir";
 "blockchain_settings.sync_mode_change_alert.content" = "Bu işlem, Unstoppable uygulaması Bitcoin, Bitcoin Cash and Dash blockchain ile kendini yeniden senkronize etmek için gerektirir, bu belirteçlerden herhangi birini etkinleştirdiyseniz. Bakiyeniz veya işlemleriniz etkilenmeyecektir.\n\nNe yaptığından emin değilseniz bu ayarı değiştirmemenizi öneririz.";
-"blockchain_settings.sync_mode.blockchain" = "Blockchain";
+"blockchain_settings.sync_mode.blockchain" = "Blokzinciri";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "Adres Formatı";
 // Backup
@@ -84,8 +84,8 @@
 
 "backup.words.confirmation_description" = "%@ Anahtarınızda ki kelimeleri girin";
 
-"backup.eos.account_name" = "Account Name";
-"backup.eos.active_private_key" = "Active Private Key";
+"backup.eos.account_name" = "Hesap Adı";
+"backup.eos.active_private_key" = "Aktif özel anahtar";
 "backup.eos.hint" = "Anahtarınızı \"Kopyala\" eylemiyle kopyalamanız anahtarınızın pano yönetisine ve panoya erişimi olan diğer uygulamalara sızma riskini taşır.";
 "error.send_eos.self_transfer" = "Bu kripto para kendi hesabınaza aktarılamıyor";
 "error.send_eos.account_not_exist" = "Hedef hesap yok";
@@ -130,7 +130,7 @@
 "send.amount_placeholder" = "Tutar";
 "send.amount_error.min_required_balance" = "Min. gerekli bakiye %@";
 "send.address_placeholder" = "Adres";
-"send.account_placeholder" = "Account";
+"send.account_placeholder" = "Hesap";
 "send.fee" = "Masraf";
 "send.tx_speed" = "İşlem hızı";
 "send.tx_speed_low" = "Düşük";
@@ -155,13 +155,13 @@
 "send.hodler_error.unsupported_address" = "Zaman kilitleme sadece P2PKH adresleriyle çalışır (1 ile başlayan)";
 
 "send.confirmation.title" = "Onayla";
-"send.confirmation.memo_placeholder" = "Memo";
+"send.confirmation.memo_placeholder" = "Not";
 "send.confirmation.total" = "Toplam";
 "send.confirmation.send_button" = "Gönder";
 "send.amount_error.balance" = "%@ Bakiye";
 "send.amount_error.maximum_amount" = "Maksimum miktar %@";
 "send.amount_error.minimum_amount" = "Minimum miktar %@";
-"send.amount_error.min_required_balance" = "Min. required remainder %@";
+"send.amount_error.min_required_balance" = "Min. gerekli bakiye %@";
 "send.token.insufficient_fee_alert" = "%@ (%@) için ișlem ücreti %@ hesabından ödenir. Asgari %@ gerekiyor.";
 
 "send.lock_time" = "TimeLock";
@@ -212,8 +212,8 @@
 "full_info.amount" = "Tutar";
 "full_info.nonce" = "Nonce";
 "full_info.status" = "Durum";
-"full_info.memo" = "Memo";
-"full_info.cpu" = "CPU Usage";
+"full_info.memo" = "Not";
+"full_info.cpu" = "CPU Kullanımı";
 "full_info.net" = "Net Usage";
 "full_info.milli_seconds" = "%@ μs";
 "full_info.bytes" = "%@ Bytes";
