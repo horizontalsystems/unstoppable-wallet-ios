@@ -7,7 +7,7 @@ class DepositViewController: ThemeActionSheetController {
 
     private let delegate: IDepositViewDelegate
 
-    private let titleView = AlertTitleViewNew()
+    private let titleView = BottomSheetTitleView()
     private let qrCodeImageView = UIImageView()
     private let addressTitleLabel = UILabel()
     private let addressButton = UIButton.appSecondary

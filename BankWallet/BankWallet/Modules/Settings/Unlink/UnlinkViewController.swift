@@ -29,9 +29,9 @@ class UnlinkViewController: ThemeActionSheetController {
             maker.edges.equalToSuperview()
         }
 
-        tableView.registerCell(forClass: AlertTitleCell.self)
-        tableView.registerCell(forClass: AlertCheckboxCell.self)
-        tableView.registerCell(forClass: AlertRedButtonCell.self)
+        tableView.registerCell(forClass: BottomSheetTitleCell.self)
+        tableView.registerCell(forClass: BottomSheetCheckboxCell.self)
+        tableView.registerCell(forClass: BottomSheetRedButtonCell.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -44,9 +44,9 @@ class UnlinkViewController: ThemeActionSheetController {
     }
 
     private var titleRow: RowProtocol {
-        Row<AlertTitleCell>(
+        Row<BottomSheetTitleCell>(
                 id: "title",
-                height: AlertTitleViewNew.height,
+                height: BottomSheetTitleView.height,
                 bind: { [weak self] cell, _ in
                     cell.bind(
                             title: "settings_manage_keys.delete.title".localized,
@@ -60,9 +60,9 @@ class UnlinkViewController: ThemeActionSheetController {
     }
 
     private var deleteButtonRow: RowProtocol {
-        Row<AlertRedButtonCell>(
+        Row<BottomSheetRedButtonCell>(
                 id: "delete_button",
-                height: AlertRedButtonCell.height,
+                height: BottomSheetRedButtonCell.height,
                 bind: { [unowned self] cell, _ in
                     cell.bind(
                             title: "security_settings.delete_alert_button".localized,
@@ -75,7 +75,7 @@ class UnlinkViewController: ThemeActionSheetController {
     }
 
     private func checkboxRow(viewItem: UnlinkModule.ViewItem, index: Int) -> RowProtocol {
-        Row<AlertCheckboxCell>(
+        Row<BottomSheetCheckboxCell>(
                 id: "checkbox_\(index)",
                 hash: "\(viewItem.checked)",
                 height: 60,

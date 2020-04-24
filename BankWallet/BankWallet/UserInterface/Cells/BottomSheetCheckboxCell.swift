@@ -1,7 +1,7 @@
 import UIKit
 import ThemeKit
 
-class AlertCheckboxCell: UITableViewCell {
+class BottomSheetCheckboxCell: UITableViewCell {
     private let checkBoxImageView = UIImageView()
     private let descriptionLabel = UILabel()
 

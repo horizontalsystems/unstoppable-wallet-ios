@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 import ThemeKit
 
-class AlertTitleViewNew: UIView {
+class BottomSheetTitleView: UIView {
     static let height: CGFloat = 64
 
     private let iconImageView = UIImageView()
@@ -17,7 +17,7 @@ class AlertTitleViewNew: UIView {
         super.init(frame: .zero)
 
         self.snp.makeConstraints { maker in
-            maker.height.equalTo(AlertTitleViewNew.height)
+            maker.height.equalTo(BottomSheetTitleView.height)
         }
 
         addSubview(iconImageView)

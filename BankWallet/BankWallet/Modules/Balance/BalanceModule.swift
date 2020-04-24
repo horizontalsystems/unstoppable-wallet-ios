@@ -5,7 +5,6 @@ import CurrencyKit
 
 protocol IBalanceView: class {
     func set(headerViewItem: BalanceHeaderViewItem?, viewItems: [BalanceViewItem])
-    func showSortType(selectedSortType: BalanceSortType)
     func hideRefresh()
 }
 
@@ -24,7 +23,6 @@ protocol IBalanceViewDelegate {
     func onTapAddCoin()
 
     func onTapSortType()
-    func onSelect(sortType: BalanceSortType)
 
     func onTapHideBalance()
     func onTapShowBalance()
@@ -45,7 +43,7 @@ protocol IBalanceInteractor: AnyObject {
 
     func subscribeToMarketInfo(currencyCode: String)
 
-    var sortType: BalanceSortType? { get set }
+    var sortType: SortType { get }
     var balanceHidden: Bool { get set }
 
     func refresh()
@@ -64,6 +62,8 @@ protocol IBalanceInteractorDelegate: class {
     func didUpdate(currency: Currency)
     func didUpdate(marketInfos: [CoinCode: MarketInfo])
 
+    func didUpdate(sortType: SortType)
+
     func didRefresh()
 }
 
@@ -73,6 +73,7 @@ protocol IBalanceRouter {
     func showChart(coin: Coin)
     func openManageWallets()
     func showBackupRequired(wallet: Wallet, predefinedAccountType: PredefinedAccountType)
+    func showSortType()
 }
 
 protocol IBalanceViewItemFactory {
@@ -81,20 +82,5 @@ protocol IBalanceViewItemFactory {
 }
 
 protocol IBalanceSorter {
-    func sort(items: [BalanceItem], sort: BalanceSortType) -> [BalanceItem]
-}
-
-enum BalanceSortType: Int, CaseIterable {
-    case value
-    case name
-    case percentGrowth
-
-    var title: String {
-        switch self {
-        case .value: return "balance.sort.valueHighToLow".localized
-        case .name: return "balance.sort.az".localized
-        case .percentGrowth: return "balance.sort.24h_change".localized
-        }
-    }
-
+    func sort(items: [BalanceItem], sort: SortType) -> [BalanceItem]
 }
