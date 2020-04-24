@@ -5,7 +5,7 @@ import SnapKit
 class BackupRequiredViewController: ThemeActionSheetController {
     private let router: BackupRequiredRouter
 
-    private let titleView = AlertTitleViewNew()
+    private let titleView = BottomSheetTitleView()
     private let descriptionView = HighlightedDescriptionView()
     private let backupButton = UIButton.appYellow
 

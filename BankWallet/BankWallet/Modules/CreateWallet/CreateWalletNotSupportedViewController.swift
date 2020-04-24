@@ -2,7 +2,7 @@ import UIKit
 import ActionSheet
 
 class CreateWalletNotSupportedViewController: ThemeActionSheetController {
-    private let titleView = AlertTitleViewNew()
+    private let titleView = BottomSheetTitleView()
     private let descriptionView = HighlightedDescriptionView()
 
     init(coin: Coin, predefinedAccountType: PredefinedAccountType) {

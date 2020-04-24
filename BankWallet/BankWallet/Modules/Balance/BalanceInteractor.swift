@@ -13,18 +13,28 @@ class BalanceInteractor {
     private let adapterManager: IAdapterManager
     private let currencyKit: ICurrencyKit
     private let localStorage: ILocalStorage
+    private let sortTypeManager: ISortTypeManager
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let rateManager: IRateManager
     private let rateAppManager: IRateAppManager
 
-    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyKit: ICurrencyKit, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager, rateManager: IRateManager, rateAppManager: IRateAppManager) {
+    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyKit: ICurrencyKit, localStorage: ILocalStorage, sortTypeManager: ISortTypeManager, predefinedAccountTypeManager: IPredefinedAccountTypeManager, rateManager: IRateManager, rateAppManager: IRateAppManager) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.currencyKit = currencyKit
         self.localStorage = localStorage
+        self.sortTypeManager = sortTypeManager
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
         self.rateManager = rateManager
         self.rateAppManager = rateAppManager
+
+        sortTypeManager.sortTypeObservable
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] sortType in
+                    self?.delegate?.didUpdate(sortType: sortType)
+                })
+                .disposed(by: disposeBag)
+
     }
 
     private func onUpdate(wallets: [Wallet]) {
@@ -129,13 +139,8 @@ extension BalanceInteractor: IBalanceInteractor {
                 .disposed(by: marketInfoDisposeBag)
     }
 
-    var sortType: BalanceSortType? {
-        get {
-            localStorage.balanceSortType
-        }
-        set {
-            localStorage.balanceSortType = newValue
-        }
+    var sortType: SortType {
+        sortTypeManager.sortType
     }
 
     var balanceHidden: Bool {

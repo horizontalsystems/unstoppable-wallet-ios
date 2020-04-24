@@ -5,7 +5,7 @@ import ThemeKit
 class NoAccountViewController: ThemeActionSheetController {
     private let delegate: INoAccountViewDelegate
 
-    private let titleView = AlertTitleViewNew()
+    private let titleView = BottomSheetTitleView()
     private let descriptionLabel = UILabel()
     private let createButton = UIButton.appYellow
     private let restoreButton = UIButton.appGray

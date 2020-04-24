@@ -1,15 +1,11 @@
 import UIKit
+import ThemeKit
 
-class AlertTitleCell: UITableViewCell {
-    static let height: CGFloat = 40
-
+class AlertItemCell: ThemeCell {
     private let label = UILabel()
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
-        backgroundColor = .clear
-        selectionStyle = .none
 
         addSubview(label)
         label.snp.makeConstraints { maker in
@@ -17,8 +13,7 @@ class AlertTitleCell: UITableViewCell {
             maker.centerY.equalToSuperview()
         }
 
-        label.font = .subhead1
-        label.textColor = .themeGray
+        label.font = .body
         label.textAlignment = .center
     }
 
@@ -26,8 +21,11 @@ class AlertTitleCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(text: String?) {
-        label.text = text
+    func bind(viewItem: AlertViewItem) {
+        super.bind()
+
+        label.text = viewItem.text
+        label.textColor = viewItem.selected ? .themeJacob : .themeLight
     }
 
 }

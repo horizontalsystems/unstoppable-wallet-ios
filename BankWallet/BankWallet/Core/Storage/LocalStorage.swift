@@ -11,7 +11,7 @@ class LocalStorage {
     private let keyBaseEosProvider = "base_eos_provider"
     private let keyBaseEthereumProvider = "base_ethereum_provider"
     private let agreementAcceptedKey = "i_understand_key"
-    private let balanceSortKey = "balance_sort_key"
+    private let keySortType = "balance_sort_key"
     private let biometricOnKey = "biometric_on_key"
     private let lastExitDateKey = "last_exit_date_key"
     private let keySendInputType = "send_input_type_key"
@@ -81,15 +81,15 @@ extension LocalStorage: ILocalStorage {
         set { storage.set(value: newValue, for: agreementAcceptedKey) }
     }
 
-    var balanceSortType: BalanceSortType? {
+    var sortType: SortType? {
         get {
-            guard let sortRawValue: Int = storage.value(for: balanceSortKey) else {
+            guard let sortRawValue: Int = storage.value(for: keySortType) else {
                 return nil
             }
-            return BalanceSortType(rawValue: sortRawValue)
+            return SortType(rawValue: sortRawValue)
         }
         set {
-            storage.set(value: newValue?.rawValue, for: balanceSortKey)
+            storage.set(value: newValue?.rawValue, for: keySortType)
         }
     }
 
