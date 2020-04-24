@@ -25,7 +25,7 @@ class SendHodlerView: UIView {
     }
 
     private func text(lockTimeInterval: HodlerPlugin.LockTimeInterval?) -> String {
-        lockTimeInterval.map { $0.title } ?? "send.hodler_locktime_off".localized
+        HodlerPlugin.LockTimeInterval.title(lockTimeInterval: lockTimeInterval)
     }
 
 }
