@@ -3,29 +3,15 @@ import ActionSheet
 import ThemeKit
 import SectionsTableView
 
-protocol IAlertViewDelegate {
-    func onLoad()
-    func onTapViewItem(index: Int)
-}
-
-protocol IAlertView: AnyObject {
-    func set(viewItems: [AlertViewItem])
-}
-
-struct AlertViewItem {
-    let text: String
-    let selected: Bool
-}
-
-class AlertViewControllerNew: ThemeActionSheetController {
+class AlertViewController: ThemeActionSheetController {
     private let alertTitle: String
-    private let delegate: IAlertViewDelegate
+    private let delegate: IAlertViewDelegate?
 
     private let tableView = SelfSizedSectionsTableView(style: .grouped)
 
     private var viewItems = [AlertViewItem]()
 
-    init(alertTitle: String, delegate: IAlertViewDelegate) {
+    init(alertTitle: String, delegate: IAlertViewDelegate?) {
         self.alertTitle = alertTitle
         self.delegate = delegate
         super.init()
@@ -51,7 +37,7 @@ class AlertViewControllerNew: ThemeActionSheetController {
         tableView.separatorStyle = .none
         tableView.alwaysBounceVertical = false
 
-        delegate.onLoad()
+        delegate?.onLoad()
 
         tableView.reload()
     }
@@ -75,14 +61,14 @@ class AlertViewControllerNew: ThemeActionSheetController {
                     cell.bind(viewItem: viewItem)
                 },
                 action: { [weak self] _ in
-                    self?.delegate.onTapViewItem(index: index)
+                    self?.delegate?.onTapViewItem(index: index)
                 }
         )
     }
 
 }
 
-extension AlertViewControllerNew: SectionsDataSource {
+extension AlertViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         var rows = [RowProtocol]()
@@ -95,7 +81,7 @@ extension AlertViewControllerNew: SectionsDataSource {
 
 }
 
-extension AlertViewControllerNew: IAlertView {
+extension AlertViewController: IAlertView {
 
     func set(viewItems: [AlertViewItem]) {
         self.viewItems = viewItems
