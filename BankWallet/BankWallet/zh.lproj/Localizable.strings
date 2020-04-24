@@ -94,6 +94,7 @@
 "error.send_ethereum.wrong_parameters" = "错误参数";
 "error.send_binance.memo_required" = "收款人要求在转账交易中包含非空的备注";
 "error.send_binance.only_digits_allowed" = "要求备注仅包含数字";
+"error.incubed_not_reachable" = "Incubed servers not reachable";
 
 "backup.confirmation.title" = "正在检查...";
 
@@ -160,7 +161,7 @@
 "send.amount_error.balance" = "余额%@";
 "send.amount_error.maximum_amount" = "最大金额 %@";
 "send.amount_error.minimum_amount" = "最小金额 %@";
-"send.amount_error.min_required_balance" = "最小要求剩余 %@";
+"send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.token.insufficient_fee_alert" = "%@（%@）的交易费用以%@支付。您需要%@。";
 
 "send.lock_time" = "时间锁定";
@@ -373,7 +374,11 @@
 "unlock_pin.info" = "密码";
 "unlock_pin.cant_save_pin" = "哎哟！我们无法保存您的密码，请尽快与我们联系，谢谢。";
 "unlock_pin.blocked_until" = "禁用至: %@";
-"rate_list.updated" = "已更新";
+
+// Rate List
+
+"rate_list.title" = "Prices";
+"rate_list.portfolio" = "Portfolio";
 
 //NumPad
 
