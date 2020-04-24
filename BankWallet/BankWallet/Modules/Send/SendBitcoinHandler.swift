@@ -87,7 +87,7 @@ extension SendBitcoinHandler: ISendHandler {
         if let duration = feePriorityModule.duration {
             items.append(SendConfirmationDurationViewItem(timeInterval: duration))
         }
-        if let lockValue = hodlerModule?.lockTimeInterval?.title {
+        if let lockValue = hodlerModule?.lockValue {
             items.append(SendConfirmationLockUntilViewItem(lockValue: lockValue))
         }
         return items
