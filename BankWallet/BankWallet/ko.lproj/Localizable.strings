@@ -94,6 +94,7 @@
 "error.send_ethereum.wrong_parameters" = "잘못된 매개 변수";
 "error.send_binance.memo_required" = "수신자는 송금 내역에 메모 기록을 필요로 합니다";
 "error.send_binance.only_digits_allowed" = "메모에는 숫자만 포함하셔야 합니다";
+"error.incubed_not_reachable" = "Incubed servers not reachable";
 
 "backup.confirmation.title" = "확인 중...";
 
@@ -160,7 +161,7 @@
 "send.amount_error.balance" = "잔액%@";
 "send.amount_error.maximum_amount" = "최대 %@ 금액";
 "send.amount_error.minimum_amount" = "최소 %@ 금액";
-"send.amount_error.min_required_balance" = "최소 %@ 만큼의 필요 잔여금";
+"send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.token.insufficient_fee_alert" = "%@ (%@) 에 대한 거래 수수료는 %@로 지불되었습니다. 귀하는 %@가 필요합니다.";
 
 "send.lock_time" = "시간 자물쇠";
@@ -373,7 +374,11 @@
 "unlock_pin.info" = "비밀번호";
 "unlock_pin.cant_save_pin" = "아야! 저희는 귀하의 비밀번호를 저장할 수 없습니다, 가능한 빨리 연락해 주시기 바랍니다!";
 "unlock_pin.blocked_until" = "~때까지 사용 안 함: %@";
-"rate_list.updated" = "업데이트되었습니다.";
+
+// Rate List
+
+"rate_list.title" = "Prices";
+"rate_list.portfolio" = "Portfolio";
 
 //NumPad
 
