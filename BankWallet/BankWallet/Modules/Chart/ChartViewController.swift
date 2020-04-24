@@ -54,6 +54,8 @@ class ChartViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
+        view.layoutIfNeeded()
+
         tableView.registerCell(forClass: ChartInfoCell.self)
         tableView.registerCell(forClass: PostCell.self)
         tableView.dataSource = self

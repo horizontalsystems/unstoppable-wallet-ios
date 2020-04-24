@@ -6,7 +6,7 @@ class SendHodlerPresenter {
 
     private let router: ISendHodlerRouter
 
-    var lockTimeInterval: HodlerPlugin.LockTimeInterval?
+    private var lockTimeInterval: HodlerPlugin.LockTimeInterval?
 
     init(router: ISendHodlerRouter) {
         self.router = router
@@ -24,16 +24,26 @@ extension SendHodlerPresenter: ISendHodlerModule {
         return [HodlerPlugin.id: HodlerData(lockTimeInterval: lockTimeInterval)]
     }
 
+    var lockValue: String? {
+        lockTimeInterval.map { HodlerPlugin.LockTimeInterval.title(lockTimeInterval: $0) }
+    }
+
 }
 
 extension SendHodlerPresenter: ISendHodlerViewDelegate {
 
     func onLockTimeIntervalSelectorTap() {
-        router.openLockTimeIntervals(selected: lockTimeInterval) { [weak self] selectedInterval in
-            self?.lockTimeInterval = selectedInterval
-            self?.view?.setLockTimeInterval(lockTimeInterval: selectedInterval)
-            self?.delegate?.onUpdateLockTimeInterval()
-        }
+        router.openLockTimeIntervals(selected: lockTimeInterval, delegate: self)
+    }
+
+}
+
+extension SendHodlerPresenter: ISendHodlerLockTimeIntervalDelegate {
+
+    func onSelect(lockTimeInterval: HodlerPlugin.LockTimeInterval?) {
+        self.lockTimeInterval = lockTimeInterval
+        view?.setLockTimeInterval(lockTimeInterval: lockTimeInterval)
+        delegate?.onUpdateLockTimeInterval()
     }
 
 }
