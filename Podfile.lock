@@ -388,7 +388,7 @@ CHECKOUT OPTIONS:
     :commit: 8d63bc0c19797a0455f8e2c707bdb3fd48c553aa
     :git: https://github.com/horizontalsystems/gui-kit/
   XRatesKit.swift:
-    :commit: 5284ff316de36234046b5c8d31e5bc51edff3b66
+    :commit: 91f267aef728f003606f00725f9498ac80e50f80
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
 
 SPEC CHECKSUMS:

@@ -32,4 +32,14 @@ extension RateListFactory: IRateListFactory {
         return RateListViewItem(currentDate: currentDateProvider.currentDate, lastUpdateTimestamp: lastUpdateTimestamp(marketInfos: marketInfos), rateViewItems: items)
     }
 
+    func topRateViewItem(currency: Currency, topMarketInfo: MarketInfo) -> TopRateViewItem {
+        TopRateViewItem(
+                coinCode: topMarketInfo.coinCode,
+                coinTitle: topMarketInfo.coinName ?? "",
+                rateExpired: topMarketInfo.expired,
+                rate: CurrencyValue(currency: currency, value: topMarketInfo.rate),
+                diff: topMarketInfo.diff
+        )
+    }
+
 }

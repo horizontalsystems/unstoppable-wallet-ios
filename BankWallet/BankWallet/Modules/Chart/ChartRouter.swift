@@ -23,11 +23,11 @@ extension ChartRouter: IChartRouter {
 
 extension ChartRouter {
 
-    static func module(coin: Coin) -> UIViewController {
+    static func module(coinCode: String, coinTitle: String) -> UIViewController {
         let router = ChartRouter()
         let chartRateFactory = ChartRateFactory()
         let interactor = ChartInteractor(rateManager: App.shared.rateManager, postsManager: App.shared.rateManager, chartTypeStorage: App.shared.localStorage, currentDateProvider: CurrentDateProvider())
-        let presenter = ChartPresenter(interactor: interactor, router: router, factory: chartRateFactory, coin: coin, currency: App.shared.currencyKit.baseCurrency)
+        let presenter = ChartPresenter(interactor: interactor, router: router, factory: chartRateFactory, coinCode: coinCode, coinTitle: coinTitle, currency: App.shared.currencyKit.baseCurrency)
         let viewController = ChartViewController(delegate: presenter, chartConfiguration: ChartConfiguration.fullChart(currency: App.shared.currencyKit.baseCurrency))
 
         interactor.delegate = presenter

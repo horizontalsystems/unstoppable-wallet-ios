@@ -16,7 +16,7 @@ class RateManager {
         self.currencyKit = currencyKit
         self.rateCoinMapper = rateCoinMapper
 
-        kit = XRatesKit.instance(currencyCode: currencyKit.baseCurrency.code, marketInfoExpirationInterval: 10 * 60)
+        kit = XRatesKit.instance(currencyCode: currencyKit.baseCurrency.code, marketInfoExpirationInterval: 10 * 60, topMarketsCount: 100)
 
         walletManager.walletsUpdatedObservable
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -80,6 +80,10 @@ extension RateManager: IRateManager {
         kit.marketInfo(coinCode: converted(coinCode: coinCode), currencyCode: currencyCode)
     }
 
+    func topMarketInfos(currencyCode: String) -> [MarketInfo] {
+        kit.topMarketInfos(currencyCode: currencyCode)
+    }
+
     func marketInfoObservable(coinCode: String, currencyCode: String) -> Observable<MarketInfo> {
         kit.marketInfoObservable(coinCode: converted(coinCode: coinCode), currencyCode: currencyCode)
     }
@@ -94,6 +98,10 @@ extension RateManager: IRateManager {
 
             return unconvertedMarketInfos
         }
+    }
+
+    func topMarketInfosObservable() -> Observable<[MarketInfo]> {
+        kit.topMarketInfosObservable()
     }
 
     func historicalRate(coinCode: String, currencyCode: String, timestamp: TimeInterval) -> Single<Decimal> {

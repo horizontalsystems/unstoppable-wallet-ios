@@ -4,11 +4,12 @@ import CurrencyKit
 
 protocol IRateListView: class {
     func show(item: RateListViewItem)
+    func show(topRateViewItems: [TopRateViewItem])
 }
 
 protocol IRateListViewDelegate {
     func viewDidLoad()
-    func onSelect(viewItem: RateViewItem)
+    func onSelect(coinCode: String, coinTitle: String, diff: Decimal?)
 }
 
 protocol IRateListInteractor {
@@ -17,19 +18,23 @@ protocol IRateListInteractor {
     var featuredCoins: [Coin] { get }
 
     func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo?
+    func topMarketInfos(currencyCode: String) -> [MarketInfo]
     func subscribeToMarketInfos(currencyCode: String)
+    func subscribeToMarketInfos()
 }
 
 protocol IRateListInteractorDelegate: class {
     func didReceive(marketInfos: [String: MarketInfo])
+    func didReceive(topMarketInfos: [MarketInfo])
 }
 
 protocol IRateListRouter {
-    func showChart(coin: Coin)
+    func showChart(coinCode: String, coinTitle: String)
 }
 
 protocol IRateListFactory {
     func rateListViewItem(coins: [Coin], currency: Currency, marketInfos: [CoinCode: MarketInfo]) -> RateListViewItem
+    func topRateViewItem(currency: Currency, topMarketInfo: MarketInfo) -> TopRateViewItem
 }
 
 protocol IRateListSorter {
@@ -37,7 +42,7 @@ protocol IRateListSorter {
 }
 
 protocol IRateListDelegate: AnyObject {
-    func showChart(coin: Coin)
+    func showChart(coinCode: String, coinTitle: String)
 }
 
 struct RateListViewItem {
@@ -65,4 +70,24 @@ struct RateViewItem {
         return fields.joined(separator: "_")
     }
 
+}
+
+struct TopRateViewItem {
+    let coinCode: String
+    let coinTitle: String
+    let rateExpired: Bool
+    let rate: CurrencyValue?
+    let diff: Decimal?
+
+    var hash: String {
+        var fields = [String]()
+        if let rate = rate {
+            fields.append(rate.value.description)
+        }
+        fields.append("\(rateExpired)")
+        if let diff = diff {
+            fields.append(diff.description)
+        }
+        return fields.joined(separator: "_")
+    }
 }

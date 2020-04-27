@@ -1,4 +1,4 @@
 protocol ILockScreenRouter {
-    func showChart(coin: Coin)
+    func showChart(coinCode: String, coinTitle: String)
     func dismiss()
 }
