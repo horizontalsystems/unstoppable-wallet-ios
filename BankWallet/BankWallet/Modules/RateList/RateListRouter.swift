@@ -6,8 +6,8 @@ class RateListRouter {
 
 extension RateListRouter: IRateListRouter {
 
-    func showChart(coin: Coin) {
-        delegate?.showChart(coin: coin)
+    func showChart(coinCode: String, coinTitle: String) {
+        delegate?.showChart(coinCode: coinCode, coinTitle: coinTitle)
     }
 
 }

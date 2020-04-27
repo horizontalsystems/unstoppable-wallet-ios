@@ -390,6 +390,7 @@ bch.horizontalsystems.xyz/apg";
 
 "rate_list.title" = "Prices";
 "rate_list.portfolio" = "Portfolio";
+"top100_list.portfolio" = "Top 100";
 
 //NumPad
 

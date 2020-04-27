@@ -13,7 +13,6 @@ protocol IChartView: class {
 }
 
 protocol IChartViewDelegate {
-    var coin: Coin { get }
     var currency: Currency { get }
 
     func onLoad()
@@ -49,8 +48,8 @@ protocol IChartRouter {
 
 protocol IChartRateFactory {
     func chartViewItem(type: ChartType, allTypes: [ChartType], chartInfoStatus: ChartDataStatus<ChartInfo>, marketInfoStatus: ChartDataStatus<MarketInfo>,
-                       postsStatus: ChartDataStatus<[CryptoNewsPost]>, coin: Coin, currency: Currency) -> ChartViewItem
-    func selectedPointViewItem(type: ChartType, chartPoint: Chart.ChartPoint, coin: Coin, currency: Currency) -> SelectedPointViewItem
+                       postsStatus: ChartDataStatus<[CryptoNewsPost]>, coinCode: String, currency: Currency) -> ChartViewItem
+    func selectedPointViewItem(type: ChartType, chartPoint: Chart.ChartPoint, currency: Currency) -> SelectedPointViewItem
 }
 
 
