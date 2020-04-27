@@ -48,13 +48,14 @@ protocol IRateListDelegate: AnyObject {
 struct RateListViewItem {
     let currentDate: Date
     let lastUpdateTimestamp: TimeInterval?
-    let rateViewItems: [RateViewItem]
+    var rateViewItems: [RateViewItem]
 }
 
 struct RateViewItem {
     let coinCode: String
     let coinTitle: String
     let blockchainType: String?
+    var timestamp: TimeInterval
     var rateExpired: Bool
     var rate: CurrencyValue?
     var diff: Decimal?
@@ -70,6 +71,16 @@ struct RateViewItem {
             fields.append(diff.description)
         }
         return fields.joined(separator: "_")
+    }
+
+    func sameCoinAs(_ other: RateViewItem) -> Bool {
+        self.coinCode == other.coinCode && self.coinTitle == other.coinTitle
+    }
+
+    mutating func updateRate(with other: RateViewItem) {
+        rateExpired = other.rateExpired
+        rate = other.rate
+        diff = other.diff
     }
 
 }

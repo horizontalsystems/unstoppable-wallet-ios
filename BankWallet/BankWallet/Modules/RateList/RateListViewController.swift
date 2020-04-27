@@ -67,6 +67,24 @@ class RateListViewController: ThemeViewController {
         )
     }
 
+    private func syncLists() {
+        guard let item = item else {
+            return
+        }
+
+        for (marketInfoItemIndex, marketInfoItem) in item.rateViewItems.enumerated() {
+            for (topMarketItemIndex, topMarketItem) in topRateViewItems.enumerated() {
+                if marketInfoItem.sameCoinAs(topMarketItem) {
+                    if marketInfoItem.timestamp > topMarketItem.timestamp {
+                        topRateViewItems[topMarketItemIndex].updateRate(with: marketInfoItem)
+                    } else if marketInfoItem.timestamp < topMarketItem.timestamp {
+                        self.item?.rateViewItems[marketInfoItemIndex].updateRate(with: topMarketItem)
+                    }
+                }
+            }
+        }
+    }
+
 }
 
 extension RateListViewController: SectionsDataSource {
@@ -142,12 +160,14 @@ extension RateListViewController: IRateListView {
 
     func show(item: RateListViewItem) {
         self.item = item
+        syncLists()
 
         tableView.reload()
     }
 
     func show(topRateViewItems: [RateViewItem]) {
         self.topRateViewItems = topRateViewItems
+        syncLists()
 
         tableView.reload()
     }

@@ -19,6 +19,7 @@ class RateListFactory {
                 coinCode: coin.code,
                 coinTitle: coin.title,
                 blockchainType: coin.type.blockchainType,
+                timestamp: marketInfo?.timestamp ?? Date().timeIntervalSince1970,
                 rateExpired: marketInfo?.expired ?? false,
                 rate: marketInfo.map { CurrencyValue(currency: currency, value: $0.rate) },
                 diff: marketInfo?.diff
@@ -39,6 +40,7 @@ extension RateListFactory: IRateListFactory {
                 coinCode: topMarketInfo.coinCode,
                 coinTitle: topMarketInfo.coinName ?? "",
                 blockchainType: nil,
+                timestamp: topMarketInfo.timestamp,
                 rateExpired: topMarketInfo.expired,
                 rate: CurrencyValue(currency: currency, value: topMarketInfo.rate),
                 diff: topMarketInfo.diff
