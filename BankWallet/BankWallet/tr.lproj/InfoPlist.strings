@@ -1,2 +1,2 @@
-"NSCameraUsageDescription" = "Qr kodu okumak için Kamerayı kullanmamız gerekiyor.";
-"NSFaceIDUsageDescription" = "Cüzdan kilidini açmak için Face ID kullanırız.";
+"NSCameraUsageDescription" = "The app needs to access camera in order to scan QR codes.";
+"NSFaceIDUsageDescription" = "FaceID will be used to unlock the wallet.";
