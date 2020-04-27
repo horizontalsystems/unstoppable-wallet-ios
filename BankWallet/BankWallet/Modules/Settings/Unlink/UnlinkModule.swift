@@ -1,6 +1,7 @@
 protocol IUnlinkView: class {
     func set(accountTypeTitle: String)
-    func set(viewItems: [UnlinkModule.ViewItem], deleteButtonEnabled: Bool)
+    func set(viewItems: [UnlinkModule.ViewItem])
+    func set(deleteButtonEnabled: Bool)
     func showSuccess()
 }
 
