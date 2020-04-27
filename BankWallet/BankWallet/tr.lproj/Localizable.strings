@@ -214,13 +214,13 @@
 "full_info.status" = "Durum";
 "full_info.memo" = "Not";
 "full_info.cpu" = "CPU Kullanımı";
-"full_info.net" = "Net Usage";
+"full_info.net" = "Net Kullanım";
 "full_info.milli_seconds" = "%@ μs";
 "full_info.bytes" = "%@ Bytes";
 
 "full_info.gas_limit" = "Gas Limit";
-"full_info.gas_used" = "Gas Used";
-"full_info.gas_price" = "Gas Price";
+"full_info.gas_used" = "Kullanılan Gaz";
+"full_info.gas_price" = "Gaz Fiyatı";
 
 "full_info.source.title" = "Kaynak";
 "full_info.source.online" = "çevrimiçi";
@@ -248,7 +248,7 @@
 "settings.contact" = "Iletişim";
 "settings.light_mode" = "Aydınlık mod";
 "settings.info_title" = "UNSTOPPABLE";
-"settings.info_subtitle" = "decentralized app";
+"settings.info_subtitle" = "decentralized uygulama";
 
 // Settings -> Notifications
 
@@ -284,7 +284,7 @@
 
 "settings_about.title" = "Hakkında";
 "settings_about.app_title" = "Unstoppable";
-"settings_about.app_subtitle" = "Decentralized App";
+"settings_about.app_subtitle" = "Decentralized uygulama";
 "settings_about.terms_privacy_subtitle" = "Şartlar & Gizlilik Politikası:";
 "settings_about.terms_privacy_text" = "Bu uygulama peer-to-peer uygulamasıdır. Çalışması için herhangi bir web sunucusu veya teknik personeli gerektirmiyor. \n\nInternet olduğu sürece her yerde çalışır. Hiçkimse bu uygulamanın çalışmasını engelleyemez veya birisinin onu kullanmasını sansürleyemez.\n\nKripto paranızı kontrol eden gizli şifreleme anahtarları sadece telefonun kendisinde güvenle saklanır, başka hiçbir yerde saklanmaz.\n\nGizli şifreleme anahtarlarınızı yedeklemek ve gizli tutmak sizin sorumluluğunuzdur. Anahtarlarınızı asla kimseye göstermeyin. Anahtarlar kaybolur, unutulur veya çalınırsa, paranızı anahtarınızı bulan kişi kullanabilir.\n\nTelefonunuzu kesinlikte jailbreak etmeyin, bilinmeyen (güvenilmeyen) kaynaklardan uygulama yüklemeyin, cihazınızı güvenilmeyen kişilere vermeyin ve telefonunuzdaki işletim sistemini güncel tutun. Cüzdanınızın güvenliği buna bağlıdır.\n\nBu uygulamayı destekleyen kodun tamamı kamu incelemesine açıktır. Herhangi bir akıllı telefon cüzdan uygulamasından önemli ölçüde daha güvenli olduğuna inanmamıza rağmen, istenmeyen yazılım sorunlarının olmadığının garantisi yoktur.\n\nTüm verileriniz, yani işlemler, bakiye vb. yalnızca cüzdan uygulamanız tarafından kullanılabilir ve cihazınızdan asla ayrılmaz.";
 
@@ -377,8 +377,9 @@
 
 // Rate List
 
-"rate_list.title" = "Prices";
-"rate_list.portfolio" = "Portfolio";
+"rate_list.title" = "Fiyatlar";
+"rate_list.portfolio" = "Portföy";
+"top100_list.portfolio" = "Top 100";
 
 //NumPad
 
