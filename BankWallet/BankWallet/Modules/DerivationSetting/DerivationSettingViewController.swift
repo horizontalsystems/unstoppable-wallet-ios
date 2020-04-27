@@ -1,90 +1,122 @@
 import UIKit
 import ActionSheet
+import ThemeKit
+import SectionsTableView
 
-class DerivationSettingViewController: WalletActionSheetController {
-    private var items = [DerivationAlertItem]()
-    private let coin: Coin
-    private let coinType: CoinType
-    private var currentDerivation: MnemonicDerivation
+class DerivationSettingViewController: ThemeActionSheetController {
+    private let delegate: IDerivationSettingViewDelegate
 
-    var delegate: IDerivationSettingDelegate
+    private let titleView = BottomSheetTitleView()
+    private let tableView = SelfSizedSectionsTableView(style: .grouped)
+    private let doneButton = ThemeButton()
 
-    init(derivationSetting: DerivationSetting, coin: Coin, delegate: IDerivationSettingDelegate) {
-        self.coin = coin
-        coinType = derivationSetting.coinType
-        currentDerivation = derivationSetting.derivation
+    private var viewItems = [DerivationSettingModule.ViewItem]()
 
+    init(delegate: IDerivationSettingViewDelegate) {
         self.delegate = delegate
-
         super.init()
-
-        let titleItem = AlertTitleItem(
-                title: "blockchain_settings.title".localized,
-                subtitle: coin.title,
-                icon: UIImage(coin: coin),
-                iconTintColor: .themeGray,
-                tag: 0,
-                onClose: { [weak self] in
-                    self?.dismiss(byFade: false)
-                }
-        )
-        model.addItemView(titleItem)
-
-        let derivations = MnemonicDerivation.allCases
-
-        for (index, derivation) in derivations.enumerated() {
-            let derivationItem = DerivationAlertItem(
-                    derivation: derivation,
-                    selected: derivation == currentDerivation,
-                    tag: index + 1
-            ) { [weak self] in
-                self?.handleSelect(derivation: derivation)
-            }
-
-            model.addItemView(derivationItem)
-            items.append(derivationItem)
-        }
-
-        let buttonItem = AlertButtonItem(
-                tag: derivations.count + 1,
-                title: "Done".localized,
-                createButton: { .appYellow },
-                insets: UIEdgeInsets(top: CGFloat.margin4x, left: CGFloat.margin4x, bottom: CGFloat.margin4x, right: CGFloat.margin4x)
-        ) { [weak self] in
-            self?.dismiss(animated: true) {
-                self?.notifyDerivation()
-            }
-        }
-
-        buttonItem.isEnabled = true
-        model.addItemView(buttonItem)
-
-        onDismiss = { dismiss in
-            delegate.onCancelSelectDerivation()
-        }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func handleSelect(derivation: MnemonicDerivation) {
-        currentDerivation = derivation
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
-        for item in items {
-            item.selected = item.derivation == currentDerivation
+        view.addSubview(titleView)
+        titleView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
         }
 
-        model.reload?()
+        titleView.onTapClose = { [weak self] in
+            self?.dismiss(animated: true)
+        }
+
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(titleView.snp.bottom)
+        }
+
+        tableView.registerCell(forClass: BottomSheetCheckmarkCell.self)
+        tableView.sectionDataSource = self
+
+        view.addSubview(doneButton)
+        doneButton.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalTo(tableView.snp.bottom).offset(CGFloat.margin6x)
+            maker.bottom.equalToSuperview().inset(CGFloat.margin4x)
+            maker.height.equalTo(CGFloat.heightButton)
+        }
+
+        doneButton.apply(style: .primaryYellow)
+        doneButton.setTitle("Done".localized, for: .normal)
+        doneButton.addTarget(self, action: #selector(_onTapDone), for: .touchUpInside)
+
+        delegate.onLoad()
     }
 
-    private func notifyDerivation() {
-        delegate.onSelect(derivationSetting: DerivationSetting(coinType: coinType, derivation: currentDerivation), coin: coin)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        tableView.reload()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        delegate.onBeforeClose()
+    }
+
+    @objc private func _onTapDone() {
+        delegate.onTapDone()
     }
 
 }
 
-protocol IDerivationSettingDelegate: AnyObject {
-    func onSelect(derivationSetting: DerivationSetting, coin: Coin)
-    func onCancelSelectDerivation()
+extension DerivationSettingViewController: SectionsDataSource {
+
+    func buildSections() -> [SectionProtocol] {
+        [
+            Section(
+                    id: "main",
+                    rows: viewItems.enumerated().map { index, viewItem in
+                        Row<BottomSheetCheckmarkCell>(
+                                id: "item_\(index)",
+                                hash: "\(viewItem.selected)",
+                                height: .heightDoubleLineCell,
+                                bind: { cell, _ in
+                                    cell.bind(
+                                            title: viewItem.title,
+                                            subtitle: viewItem.subtitle,
+                                            checkmarkVisible: viewItem.selected
+                                    )
+                                },
+                                action: { [weak self] _ in
+                                    self?.delegate.onTapViewItem(index: index)
+                                }
+                        )
+                    }
+            )
+        ]
+    }
+
+}
+
+extension DerivationSettingViewController: IDerivationSettingView {
+
+    func set(coinTitle: String, coinCode: String) {
+        titleView.bind(
+                title: "blockchain_settings.title".localized,
+                subtitle: coinTitle,
+                image: UIImage(named: coinCode.lowercased())?.tinted(with: .themeGray)
+        )
+    }
+
+    func set(viewItems: [DerivationSettingModule.ViewItem]) {
+        self.viewItems = viewItems
+        tableView.reload()
+    }
+
 }

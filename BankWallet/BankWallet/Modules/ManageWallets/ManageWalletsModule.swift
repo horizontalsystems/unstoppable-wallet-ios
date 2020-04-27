@@ -30,7 +30,7 @@ protocol IManageWalletsInteractorDelegate: AnyObject {
 }
 
 protocol IManageWalletsRouter {
-    func show(derivationSetting: DerivationSetting, coin: Coin, delegate: IDerivationSettingDelegate)
+    func showDerivationSetting(coin: Coin, currentDerivation: MnemonicDerivation, delegate: IDerivationSettingDelegate)
     func showNoAccount(coin: Coin)
     func close()
 }
