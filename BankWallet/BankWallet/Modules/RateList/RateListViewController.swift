@@ -10,7 +10,7 @@ class RateListViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private var item: RateListViewItem?
-    private var topRateViewItems = [TopRateViewItem]()
+    private var topRateViewItems = [RateViewItem]()
 
     init(delegate: IRateListViewDelegate, topMargin: CGFloat) {
         self.delegate = delegate
@@ -39,7 +39,6 @@ class RateListViewController: ThemeViewController {
         tableView.sectionDataSource = self
 
         tableView.registerCell(forClass: RateListCell.self)
-        tableView.registerCell(forClass: RateListTopMarketCell.self)
         tableView.registerCell(forClass: RateListHeaderCell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
 
@@ -110,7 +109,7 @@ extension RateListViewController: SectionsDataSource {
                             cell.bind(viewItem: viewItem, last: index == rateViewItemsCount - 1)
                         },
                         action: { [weak self] _ in
-                            self?.delegate.onSelect(coinCode: viewItem.coin.code, coinTitle: viewItem.coin.title, diff: viewItem.diff)
+                            self?.delegate.onSelect(viewItem: viewItem)
                         }
                     )
                 }
@@ -119,17 +118,17 @@ extension RateListViewController: SectionsDataSource {
                 id: "top100_list_section",
                 headerState: sectionHeader(text: "top100_list.portfolio".localized),
                 rows: topRateViewItems.enumerated().map { index, viewItem in
-                    Row<RateListTopMarketCell>(
+                    Row<RateListCell>(
                         id: "market_coin_rate_\(index)",
                         hash: viewItem.hash,
                         height: .heightDoubleLineCell,
                         autoDeselect: true,
                         bind: { cell, _ in
                             cell.selectionStyle = viewItem.diff == nil ? .none : .default
-                            cell.bind(viewItem: viewItem, last: index == topRateViewItemsCount - 1)
+                            cell.bind(viewItem: viewItem, showIcon: false, last: index == topRateViewItemsCount - 1)
                         },
                         action: { [weak self] _ in
-                            self?.delegate.onSelect(coinCode: viewItem.coinCode, coinTitle: viewItem.coinTitle, diff: viewItem.diff)
+                            self?.delegate.onSelect(viewItem: viewItem)
                         }
                     )
                 }
@@ -147,7 +146,7 @@ extension RateListViewController: IRateListView {
         tableView.reload()
     }
 
-    func show(topRateViewItems: [TopRateViewItem]) {
+    func show(topRateViewItems: [RateViewItem]) {
         self.topRateViewItems = topRateViewItems
 
         tableView.reload()
