@@ -17,14 +17,14 @@ class CoinIconImageView: UIImageView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(coin: Coin) {
+    func bind(image: UIImage?) {
         backgroundColor = .clear
 
-        if let image = UIImage(named: "\(coin.code.lowercased())") {
+        if let image = image {
             layer.cornerRadius = image.size.width
             self.image = image.withRenderingMode(.alwaysTemplate)
         } else {
-            image = nil
+            self.image = nil
         }
     }
 

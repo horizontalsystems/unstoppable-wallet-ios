@@ -26,10 +26,10 @@ class RateListCell: ClaudeThemeCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(viewItem: RateViewItem, last: Bool = false) {
+    func bind(viewItem: RateViewItem, showIcon: Bool = true, last: Bool = false) {
         super.bind(last: last)
 
-        leftCoinView.bind(coin: viewItem.coin)
+        leftCoinView.bind(coinTitle: viewItem.coinTitle, coinCode: viewItem.coinCode, blockchainType: viewItem.blockchainType, showIcon: showIcon)
 
         let rateString: String?
         let rateColor: UIColor

@@ -16,7 +16,9 @@ class RateListFactory {
 
     private func viewItem(coin: Coin, currency: Currency, marketInfo: MarketInfo?) -> RateViewItem {
         RateViewItem(
-                coin: coin,
+                coinCode: coin.code,
+                coinTitle: coin.title,
+                blockchainType: coin.type.blockchainType,
                 rateExpired: marketInfo?.expired ?? false,
                 rate: marketInfo.map { CurrencyValue(currency: currency, value: $0.rate) },
                 diff: marketInfo?.diff
@@ -32,10 +34,11 @@ extension RateListFactory: IRateListFactory {
         return RateListViewItem(currentDate: currentDateProvider.currentDate, lastUpdateTimestamp: lastUpdateTimestamp(marketInfos: marketInfos), rateViewItems: items)
     }
 
-    func topRateViewItem(currency: Currency, topMarketInfo: MarketInfo) -> TopRateViewItem {
-        TopRateViewItem(
+    func topRateViewItem(currency: Currency, topMarketInfo: MarketInfo) -> RateViewItem {
+        RateViewItem(
                 coinCode: topMarketInfo.coinCode,
                 coinTitle: topMarketInfo.coinName ?? "",
+                blockchainType: nil,
                 rateExpired: topMarketInfo.expired,
                 rate: CurrencyValue(currency: currency, value: topMarketInfo.rate),
                 diff: topMarketInfo.diff
