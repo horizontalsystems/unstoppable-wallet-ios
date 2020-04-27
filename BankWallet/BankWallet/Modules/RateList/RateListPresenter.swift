@@ -45,12 +45,12 @@ extension RateListPresenter: IRateListViewDelegate {
         interactor.subscribeToMarketInfos()
     }
 
-    func onSelect(coinCode: String, coinTitle: String, diff: Decimal?) {
-        guard diff != nil else {
+    func onSelect(viewItem: RateViewItem) {
+        guard viewItem.diff != nil else {
             return
         }
 
-        router.showChart(coinCode: coinCode, coinTitle: coinTitle)
+        router.showChart(coinCode: viewItem.coinCode, coinTitle: viewItem.coinTitle)
     }
 
 }
