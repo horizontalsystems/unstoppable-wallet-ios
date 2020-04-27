@@ -7,9 +7,9 @@ class ManageWalletsRouter {
 
 extension ManageWalletsRouter: IManageWalletsRouter {
 
-    func show(derivationSetting: DerivationSetting, coin: Coin, delegate: IDerivationSettingDelegate) {
-        let controller = DerivationSettingViewController(derivationSetting: derivationSetting, coin: coin, delegate: delegate)
-        viewController?.present(controller, animated: true)
+    func showDerivationSetting(coin: Coin, currentDerivation: MnemonicDerivation, delegate: IDerivationSettingDelegate) {
+        let module = DerivationSettingRouter.module(coin: coin, currentDerivation: currentDerivation, delegate: delegate)
+        viewController?.present(module, animated: true)
     }
 
     func showNoAccount(coin: Coin) {

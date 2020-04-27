@@ -62,7 +62,7 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
         }
 
         if account.origin == .restored, let setting = interactor.derivationSetting(coinType: coin.type) {
-            router.show(derivationSetting: setting, coin: coin, delegate: self)
+            router.showDerivationSetting(coin: coin, currentDerivation: setting.derivation, delegate: self)
         } else {
             createWallet(coin: coin)
         }
