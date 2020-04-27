@@ -23,8 +23,8 @@ class UnlinkPresenter {
     }
 
     private func syncView() {
-        let deleteButtonEnabled = viewItems.allSatisfy { $0.checked }
-        view?.set(viewItems: viewItems, deleteButtonEnabled: deleteButtonEnabled)
+        view?.set(viewItems: viewItems)
+        view?.set(deleteButtonEnabled: viewItems.allSatisfy { $0.checked })
     }
 
 }

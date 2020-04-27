@@ -10,8 +10,8 @@ class DepositViewController: ThemeActionSheetController {
     private let titleView = BottomSheetTitleView()
     private let qrCodeImageView = UIImageView()
     private let addressTitleLabel = UILabel()
-    private let addressButton = UIButton.appSecondary
-    private let shareButton = UIButton.appGreen
+    private let addressButton = ThemeButton()
+    private let shareButton = ThemeButton()
 
     init(delegate: IDepositViewDelegate) {
         self.delegate = delegate
@@ -68,13 +68,8 @@ class DepositViewController: ThemeActionSheetController {
         addressButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         addressButton.addTarget(self, action: #selector(onTapAddress), for: .touchUpInside)
 
-        // TODO: set gradient background and move insets to Theme button
-        addressButton.setBackgroundColor(color: .themeElena, forState: .normal)
-        addressButton.contentEdgeInsets.top = 6
-        addressButton.contentEdgeInsets.bottom = 5
-
+        addressButton.apply(style: .secondaryDefault)
         addressButton.titleLabel?.numberOfLines = 0
-        addressButton.titleLabel?.textAlignment = .center
 
         // By default UIButton has no constraints to its titleLabel.
         // In order to support multiline title the following constraints are required
@@ -90,6 +85,7 @@ class DepositViewController: ThemeActionSheetController {
             maker.height.equalTo(CGFloat.heightButton)
         }
 
+        shareButton.apply(style: .primaryGreen)
         shareButton.setTitle("button.share".localized, for: .normal)
         shareButton.addTarget(self, action: #selector(onTapShare), for: .touchUpInside)
 
