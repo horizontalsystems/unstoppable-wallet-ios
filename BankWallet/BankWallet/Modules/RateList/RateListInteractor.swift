@@ -51,7 +51,7 @@ extension RateListInteractor: IRateListInteractor {
                 .disposed(by: disposeBag)
     }
 
-    func subscribeToMarketInfos() {
+    func subscribeToTopMarketInfos() {
         rateManager.topMarketInfosObservable()
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] infos in
