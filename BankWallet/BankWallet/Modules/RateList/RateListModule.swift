@@ -4,7 +4,6 @@ import CurrencyKit
 
 protocol IRateListView: class {
     func show(item: RateListViewItem)
-    func show(topRateViewItems: [RateViewItem])
 }
 
 protocol IRateListViewDelegate {
@@ -20,7 +19,7 @@ protocol IRateListInteractor {
     func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo?
     func topMarketInfos(currencyCode: String) -> [MarketInfo]
     func subscribeToMarketInfos(currencyCode: String)
-    func subscribeToMarketInfos()
+    func subscribeToTopMarketInfos()
 }
 
 protocol IRateListInteractorDelegate: class {
@@ -33,8 +32,7 @@ protocol IRateListRouter {
 }
 
 protocol IRateListFactory {
-    func rateListViewItem(coins: [Coin], currency: Currency, marketInfos: [CoinCode: MarketInfo]) -> RateListViewItem
-    func topRateViewItem(currency: Currency, topMarketInfo: MarketInfo) -> RateViewItem
+    func rateListViewItem(coins: [Coin], currency: Currency, marketInfos: [CoinCode: MarketInfo], topMarkets: [MarketInfo]) -> RateListViewItem
 }
 
 protocol IRateListSorter {
@@ -48,14 +46,14 @@ protocol IRateListDelegate: AnyObject {
 struct RateListViewItem {
     let currentDate: Date
     let lastUpdateTimestamp: TimeInterval?
-    var rateViewItems: [RateViewItem]
+    let rateViewItems: [RateViewItem]
+    let topRateViewItems: [RateViewItem]
 }
 
 struct RateViewItem {
     let coinCode: String
     let coinTitle: String
     let blockchainType: String?
-    var timestamp: TimeInterval
     var rateExpired: Bool
     var rate: CurrencyValue?
     var diff: Decimal?
@@ -71,16 +69,6 @@ struct RateViewItem {
             fields.append(diff.description)
         }
         return fields.joined(separator: "_")
-    }
-
-    func sameCoinAs(_ other: RateViewItem) -> Bool {
-        self.coinCode == other.coinCode && self.coinTitle == other.coinTitle
-    }
-
-    mutating func updateRate(with other: RateViewItem) {
-        rateExpired = other.rateExpired
-        rate = other.rate
-        diff = other.diff
     }
 
 }

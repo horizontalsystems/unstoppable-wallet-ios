@@ -12,6 +12,8 @@ class RateListPresenter {
 
     private var coins = [Coin]()
     private let currency: Currency
+    private var marketInfos = [String: MarketInfo]()
+    private var topMarkets = [MarketInfo]()
 
     init(interactor: IRateListInteractor, router: IRateListRouter, rateListSorter: IRateListSorter, factory: IRateListFactory) {
         self.interactor = interactor
@@ -22,6 +24,23 @@ class RateListPresenter {
         currency = interactor.currency
     }
 
+    private func syncListsAndShow() {
+        for (coin, marketInfo) in marketInfos {
+            for (topMarketIndex, topMarket) in topMarkets.enumerated() {
+                if marketInfo.coinCode == topMarket.coinCode {
+                    if marketInfo.timestamp > topMarket.timestamp {
+                        topMarkets[topMarketIndex] = marketInfo
+                    } else if marketInfo.timestamp < topMarket.timestamp {
+                        marketInfos[coin] = topMarket
+                    }
+                }
+            }
+        }
+
+        let item = factory.rateListViewItem(coins: coins, currency: currency, marketInfos: marketInfos, topMarkets: topMarkets)
+        view?.show(item: item)
+    }
+
 }
 
 extension RateListPresenter: IRateListViewDelegate {
@@ -29,20 +48,17 @@ extension RateListPresenter: IRateListViewDelegate {
     func viewDidLoad() {
         coins = rateListSorter.smartSort(for: interactor.wallets.map { $0.coin }, featuredCoins: interactor.featuredCoins)
 
-        var marketInfos = [CoinCode: MarketInfo]()
+        marketInfos.removeAll()
         coins.forEach { coin in
             marketInfos[coin.code] = interactor.marketInfo(coinCode: coin.code, currencyCode: currency.code)
         }
+        topMarkets = interactor.topMarketInfos(currencyCode: currency.code)
 
-        let item = factory.rateListViewItem(coins: coins, currency: currency, marketInfos: marketInfos)
+        let item = factory.rateListViewItem(coins: coins, currency: currency, marketInfos: marketInfos, topMarkets: topMarkets)
         view?.show(item: item)
 
-        let topMarketInfos = interactor.topMarketInfos(currencyCode: currency.code)
-        let topRateViewItems = topMarketInfos.map { factory.topRateViewItem(currency: currency, topMarketInfo: $0) }
-        view?.show(topRateViewItems: topRateViewItems)
-
         interactor.subscribeToMarketInfos(currencyCode: currency.code)
-        interactor.subscribeToMarketInfos()
+        interactor.subscribeToTopMarketInfos()
     }
 
     func onSelect(viewItem: RateViewItem) {
@@ -58,13 +74,13 @@ extension RateListPresenter: IRateListViewDelegate {
 extension RateListPresenter: IRateListInteractorDelegate {
 
     func didReceive(marketInfos: [String: MarketInfo]) {
-        let item = factory.rateListViewItem(coins: coins, currency: currency, marketInfos: marketInfos)
-        view?.show(item: item)
+        self.marketInfos = marketInfos
+        syncListsAndShow()
     }
 
     func didReceive(topMarketInfos: [MarketInfo]) {
-        let topRateViewItems = topMarketInfos.map { factory.topRateViewItem(currency: currency, topMarketInfo: $0) }
-        view?.show(topRateViewItems: topRateViewItems)
+        self.topMarkets = topMarketInfos
+        syncListsAndShow()
     }
 
 }

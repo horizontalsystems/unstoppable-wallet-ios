@@ -10,7 +10,6 @@ class RateListViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private var item: RateListViewItem?
-    private var topRateViewItems = [RateViewItem]()
 
     init(delegate: IRateListViewDelegate, topMargin: CGFloat) {
         self.delegate = delegate
@@ -67,24 +66,6 @@ class RateListViewController: ThemeViewController {
         )
     }
 
-    private func syncLists() {
-        guard let item = item else {
-            return
-        }
-
-        for (marketInfoItemIndex, marketInfoItem) in item.rateViewItems.enumerated() {
-            for (topMarketItemIndex, topMarketItem) in topRateViewItems.enumerated() {
-                if marketInfoItem.sameCoinAs(topMarketItem) {
-                    if marketInfoItem.timestamp > topMarketItem.timestamp {
-                        topRateViewItems[topMarketItemIndex].updateRate(with: marketInfoItem)
-                    } else if marketInfoItem.timestamp < topMarketItem.timestamp {
-                        self.item?.rateViewItems[marketInfoItemIndex].updateRate(with: topMarketItem)
-                    }
-                }
-            }
-        }
-    }
-
 }
 
 extension RateListViewController: SectionsDataSource {
@@ -95,7 +76,7 @@ extension RateListViewController: SectionsDataSource {
         }
 
         let rateViewItemsCount = item.rateViewItems.count
-        let topRateViewItemsCount = topRateViewItems.count
+        let topRateViewItemsCount = item.topRateViewItems.count
 
         return [
             Section(
@@ -135,7 +116,7 @@ extension RateListViewController: SectionsDataSource {
             Section(
                 id: "top100_list_section",
                 headerState: sectionHeader(text: "top100_list.portfolio".localized),
-                rows: topRateViewItems.enumerated().map { index, viewItem in
+                rows: item.topRateViewItems.enumerated().map { index, viewItem in
                     Row<RateListCell>(
                         id: "market_coin_rate_\(index)",
                         hash: viewItem.hash,
@@ -160,14 +141,6 @@ extension RateListViewController: IRateListView {
 
     func show(item: RateListViewItem) {
         self.item = item
-        syncLists()
-
-        tableView.reload()
-    }
-
-    func show(topRateViewItems: [RateViewItem]) {
-        self.topRateViewItems = topRateViewItems
-        syncLists()
 
         tableView.reload()
     }
