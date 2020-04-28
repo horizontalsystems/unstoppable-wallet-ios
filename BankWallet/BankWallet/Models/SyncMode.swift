@@ -11,4 +11,12 @@ enum SyncMode: String {
         }
     }
 
+    var description: String {
+        switch self {
+        case .fast: return "settings_privacy.alert_sync.recommended".localized
+        case .slow: return "settings_privacy.alert_sync.more_private".localized
+        case .new: return ""
+        }
+    }
+
 }

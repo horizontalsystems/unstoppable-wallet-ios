@@ -6,7 +6,6 @@ class PrivacyPresenter {
     private let factory = PrivacyViewItemFactory()
 
     private var syncItems = [PrivacySyncItem]()
-    private let syncModes = [SyncMode.fast, SyncMode.slow]
 
     init(interactor: IPrivacyInteractor, router: IPrivacyRouter) {
         self.interactor = interactor
@@ -70,23 +69,7 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
 
     func onSelectSync(index: Int) {
         let currentSetting = syncItems[index]
-
-        let coinName: String = currentSetting.coin.title
-        let iconName: String = currentSetting.coin.code
-
-        view?.showSyncModeAlert(itemIndex: index, coinName: coinName, iconName: iconName, items: factory.syncSelectViewItems(currentSetting: currentSetting, all: syncModes))
-    }
-
-    func onSelectSyncSetting(itemIndex: Int, settingIndex: Int) {
-        let oldSetting = syncItems[itemIndex].setting
-        let newSetting = InitialSyncSetting(coinType: oldSetting.coinType, syncMode: syncModes[settingIndex])
-
-        syncItems[itemIndex].setting = newSetting
-
-        interactor.save(syncSetting: newSetting)
-
-        updateSync()
-        view?.updateUI()
+        router.showSyncMode(coin: currentSetting.coin, currentSyncMode: currentSetting.setting.syncMode, delegate: self)
     }
 
 }
@@ -108,6 +91,23 @@ extension PrivacyPresenter: IPrivacyEthereumRpcModeDelegate {
         interactor.save(connectionSetting: mode)
 
         updateConnection()
+        view?.updateUI()
+    }
+
+}
+
+extension PrivacyPresenter: IPrivacySyncModeDelegate {
+
+    func onSelect(syncMode: SyncMode, coin: Coin) {
+        let newSetting = InitialSyncSetting(coinType: coin.type, syncMode: syncMode)
+
+        if let index = syncItems.firstIndex(where: { $0.coin == coin }) {
+            syncItems[index].setting = newSetting
+        }
+
+        interactor.save(syncSetting: newSetting)
+
+        updateSync()
         view?.updateUI()
     }
 

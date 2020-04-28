@@ -152,36 +152,6 @@ extension PrivacyViewController: IPrivacyView {
         self.syncModeItems = syncModeItems
     }
 
-    func showSyncModeAlert(itemIndex: Int, coinName: String, iconName: String, items: [PrivacySyncSelectViewItem]) {
-        var alertItems: [BottomAlertItemType] = [
-            .title(
-                    title: "settings_privacy.alert_sync.title".localized,
-                    subtitle: coinName,
-                    icon: UIImage(named: iconName.lowercased()),
-                    iconTint: .themeGray
-            ),
-            .description(text: "settings_privacy.alert_sync.description".localized(coinName), important: true, last: false)
-        ]
-
-        items.forEach { setting in
-            let subtitle = setting.priority == .recommended ? "settings_privacy.alert_sync.recommended" : "settings_privacy.alert_sync.more_private"
-            alertItems.append(.radio(title: setting.title, subtitle: subtitle.localized, selected: setting.selected))
-        }
-
-        alertItems.append(.button(
-                title: "button.done".localized,
-                button: .appYellow,
-                onTap: { [weak self] selectedIndex in
-                    if let selectedIndex = selectedIndex {
-                        self?.delegate.onSelectSyncSetting(itemIndex: itemIndex, settingIndex: selectedIndex)
-                    }
-                }
-        ))
-
-        let controller = BottomAlertViewController(items: alertItems)
-        present(controller, animated: true)
-    }
-
 }
 
 extension PrivacyViewController: SectionsDataSource {

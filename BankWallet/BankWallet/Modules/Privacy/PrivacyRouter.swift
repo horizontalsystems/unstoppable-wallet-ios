@@ -15,6 +15,12 @@ extension PrivacyRouter: IPrivacyRouter {
         let module = PrivacyEthereumRpcModeRouter.module(currentMode: currentMode, delegate: delegate)
         viewController?.present(module, animated: true)
     }
+
+    func showSyncMode(coin: Coin, currentSyncMode: SyncMode, delegate: IPrivacySyncModeDelegate) {
+        let module = PrivacySyncModeRouter.module(coin: coin, currentSyncMode: currentSyncMode, delegate: delegate)
+        viewController?.present(module, animated: true)
+    }
+
 }
 
 extension PrivacyRouter {
