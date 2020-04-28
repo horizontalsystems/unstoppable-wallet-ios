@@ -1,5 +1,5 @@
 protocol IPrivacyRouter {
-
+    func showSortMode(currentSortMode: TransactionDataSortMode, delegate: IPrivacySortModeDelegate)
 }
 
 protocol IPrivacyInteractor {
@@ -18,7 +18,6 @@ protocol IPrivacyView: class {
     func set(syncModeItems: [PrivacyViewItem])
     func showSyncModeAlert(itemIndex: Int, coinName: String, iconName: String, items: [PrivacySyncSelectViewItem])
     func showConnectionModeAlert(itemIndex: Int, coinName: String, iconName: String, items: [PrivacyConnectionSelectViewItem])
-    func showSortModeAlert(items: [PrivacySortSelectViewItem])
 }
 
 protocol IPrivacyViewDelegate {
@@ -28,5 +27,4 @@ protocol IPrivacyViewDelegate {
     func onSelectSync(index: Int)
     func onSelectSyncSetting(itemIndex: Int, settingIndex: Int)
     func onSelectConnectionSetting(itemIndex: Int, settingIndex: Int)
-    func onSelectSortSetting(settingIndex: Int)
 }

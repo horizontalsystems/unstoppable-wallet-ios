@@ -336,8 +336,8 @@ bch.horizontalsystems.xyz/apg";
 "settings_privacy.sorting_default.description" = "Without any settings";
 "settings_privacy.sorting_shuffle" = "Shuffle";
 "settings_privacy.sorting_shuffle.description" = "Random Indexing";
-"settings_privacy.sorting_deterministic" = "Deterministic Bip69";
-"settings_privacy.sorting_deterministic.description" = "Lexicographical Indexing";
+"settings_privacy.sorting_bip69" = "Deterministic Bip69";
+"settings_privacy.sorting_bip69.description" = "Lexicographical Indexing";
 
 // Settings -> Contact
 
