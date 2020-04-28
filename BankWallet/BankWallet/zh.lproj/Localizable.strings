@@ -325,8 +325,8 @@
 "settings_privacy.sorting_default.description" = "无任何设置";
 "settings_privacy.sorting_shuffle" = "随机排序";
 "settings_privacy.sorting_shuffle.description" = "随机索引";
-"settings_privacy.sorting_deterministic" = "BIP69";
-"settings_privacy.sorting_deterministic.description" = "词典索引";
+"settings_privacy.sorting_bip69" = "Deterministic Bip69";
+"settings_privacy.sorting_bip69.description" = "Lexicographical Indexing";
 
 // Settings -> Contact
 
