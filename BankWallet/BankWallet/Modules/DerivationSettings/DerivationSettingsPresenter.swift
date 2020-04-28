@@ -38,12 +38,15 @@ extension DerivationSettingsPresenter: IDerivationSettingsViewDelegate {
         }
 
         let newSetting = DerivationSetting(coinType: item.setting.coinType, derivation: derivation)
-        view?.showChangeAlert(setting: newSetting, coinTitle: item.firstCoin.title)
+        router.showChangeConfirmation(coinTitle: item.firstCoin.title, setting: newSetting, delegate: self)
     }
 
-    func proceedChange(setting: DerivationSetting) {
-        interactor.save(setting: setting)
+}
 
+extension DerivationSettingsPresenter: IDerivationSettingConfirmationDelegate {
+
+    func onConfirm(setting: DerivationSetting) {
+        interactor.save(setting: setting)
         updateUI()
     }
 
