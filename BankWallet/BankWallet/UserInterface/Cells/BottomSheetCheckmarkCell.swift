@@ -25,8 +25,8 @@ class BottomSheetCheckmarkCell: ThemeCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(title: String, subtitle: String, checkmarkVisible: Bool) {
-        super.bind(bottomSeparatorVisible: true)
+    func bind(title: String, subtitle: String, checkmarkVisible: Bool, topSeparatorVisible: Bool = false) {
+        super.bind(topSeparatorVisible: topSeparatorVisible, bottomSeparatorVisible: true)
 
         leftView.bind(title: title, subtitle: subtitle)
         rightView.bind(visible: checkmarkVisible)
