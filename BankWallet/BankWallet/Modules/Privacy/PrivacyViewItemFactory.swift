@@ -23,10 +23,4 @@ class PrivacyViewItemFactory {
         }
     }
 
-    func sortSelectViewItems(currentSetting: TransactionDataSortMode, all: [TransactionDataSortMode]) -> [PrivacySortSelectViewItem] {
-        all.map {
-            PrivacySortSelectViewItem(mode: $0.title, selected: $0.title == currentSetting.title)
-        }
-    }
-
 }
