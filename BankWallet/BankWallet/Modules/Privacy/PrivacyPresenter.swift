@@ -62,11 +62,9 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
     func onSelectConnection(index: Int) {
         switch index {
         case 0:
-            let selectedSetting = interactor.ethereumConnection
-            let allSettings = EthereumRpcMode.allCases
-
-            view?.showConnectionModeAlert(itemIndex: index, coinName: "Ethereum", iconName: "ETH", items: factory.ethConnectionSelectViewItems(currentSetting: selectedSetting, all: allSettings))
-        default: return
+            router.showEthereumRpcMode(currentMode: interactor.ethereumConnection, delegate: self)
+        default:
+            return
         }
     }
 
@@ -91,18 +89,6 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
         view?.updateUI()
     }
 
-    func onSelectConnectionSetting(itemIndex: Int, settingIndex: Int) {
-        switch itemIndex {
-        case 0:
-            let newSetting = EthereumRpcMode.allCases[settingIndex]
-            interactor.save(connectionSetting: newSetting)
-
-            updateConnection()
-            view?.updateUI()
-        default: return
-        }
-    }
-
 }
 
 extension PrivacyPresenter: IPrivacySortModeDelegate {
@@ -111,6 +97,17 @@ extension PrivacyPresenter: IPrivacySortModeDelegate {
         interactor.save(sortSetting: sortMode)
 
         updateSortMode()
+        view?.updateUI()
+    }
+
+}
+
+extension PrivacyPresenter: IPrivacyEthereumRpcModeDelegate {
+
+    func onSelect(mode: EthereumRpcMode) {
+        interactor.save(connectionSetting: mode)
+
+        updateConnection()
         view?.updateUI()
     }
 
