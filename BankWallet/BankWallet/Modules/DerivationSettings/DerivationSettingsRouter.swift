@@ -3,13 +3,15 @@ import ThemeKit
 
 class DerivationSettingsRouter {
     weak var viewController: UIViewController?
-
-    init() {
-    }
-
 }
 
 extension DerivationSettingsRouter: IDerivationSettingsRouter {
+
+    func showChangeConfirmation(coinTitle: String, setting: DerivationSetting, delegate: IDerivationSettingConfirmationDelegate) {
+        let module = DerivationSettingConfirmationRouter.module(coinTitle: coinTitle, setting: setting, delegate: delegate)
+        viewController?.present(module, animated: true)
+    }
+
 }
 
 extension DerivationSettingsRouter {
