@@ -325,8 +325,8 @@
 "settings_privacy.sorting_default.description" = "설정없이";
 "settings_privacy.sorting_shuffle" = "셔플";
 "settings_privacy.sorting_shuffle.description" = "랜덤 인덱싱";
-"settings_privacy.sorting_deterministic" = "BIP69";
-"settings_privacy.sorting_deterministic.description" = "사전 색인 작성";
+"settings_privacy.sorting_bip69" = "Deterministic Bip69";
+"settings_privacy.sorting_bip69.description" = "Lexicographical Indexing";
 
 // Settings -> Contact
 
