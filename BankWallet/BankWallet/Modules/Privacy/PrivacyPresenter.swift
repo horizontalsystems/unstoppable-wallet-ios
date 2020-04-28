@@ -56,7 +56,7 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
     }
 
     func onSelectSortMode() {
-        view?.showSortModeAlert(items: factory.sortSelectViewItems(currentSetting: interactor.sortMode, all: TransactionDataSortMode.allCases))
+        router.showSortMode(currentSortMode: interactor.sortMode, delegate: self)
     }
 
     func onSelectConnection(index: Int) {
@@ -103,8 +103,12 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
         }
     }
 
-    func onSelectSortSetting(settingIndex: Int) {
-        interactor.save(sortSetting: TransactionDataSortMode.allCases[settingIndex])
+}
+
+extension PrivacyPresenter: IPrivacySortModeDelegate {
+
+    func onSelect(sortMode: TransactionDataSortMode) {
+        interactor.save(sortSetting: sortMode)
 
         updateSortMode()
         view?.updateUI()

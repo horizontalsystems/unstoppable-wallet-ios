@@ -6,6 +6,11 @@ class PrivacyRouter {
 
 extension PrivacyRouter: IPrivacyRouter {
 
+    func showSortMode(currentSortMode: TransactionDataSortMode, delegate: IPrivacySortModeDelegate) {
+        let module = PrivacySortModeRouter.module(currentSortMode: currentSortMode, delegate: delegate)
+        viewController?.present(module, animated: true)
+    }
+
 }
 
 extension PrivacyRouter {
