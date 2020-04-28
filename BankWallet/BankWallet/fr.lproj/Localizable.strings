@@ -325,8 +325,8 @@
 "settings_privacy.sorting_default.description" = "Sans aucun paramètre";
 "settings_privacy.sorting_shuffle" = "Mélanger";
 "settings_privacy.sorting_shuffle.description" = "Indexation aléatoire";
-"settings_privacy.sorting_deterministic" = "BIP69";
-"settings_privacy.sorting_deterministic.description" = "Indexation lexicographique";
+"settings_privacy.sorting_bip69" = "Deterministic Bip69";
+"settings_privacy.sorting_bip69.description" = "Lexicographical Indexing";
 
 // Settings -> Contact
 
