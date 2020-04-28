@@ -15,12 +15,4 @@ class PrivacyViewItemFactory {
         }
     }
 
-    func ethConnectionSelectViewItems(currentSetting: EthereumRpcMode, all: [EthereumRpcMode]) -> [PrivacyConnectionSelectViewItem] {
-        let selectedSettingName: String = currentSetting.title
-
-        return all.map { setting in
-            PrivacyConnectionSelectViewItem(title: setting.title, subtitle: setting.address, selected: setting.title == selectedSettingName)
-        }
-    }
-
 }

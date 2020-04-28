@@ -182,34 +182,6 @@ extension PrivacyViewController: IPrivacyView {
         present(controller, animated: true)
     }
 
-    func showConnectionModeAlert(itemIndex: Int, coinName: String, iconName: String, items: [PrivacyConnectionSelectViewItem]) {
-        var alertItems: [BottomAlertItemType] = [
-            .title(
-                    title: "settings_privacy.alert_connection.title".localized,
-                    subtitle: coinName,
-                    icon: UIImage(named: iconName.lowercased()),
-                    iconTint: .themeGray
-            )
-        ]
-
-        items.forEach { setting in
-            alertItems.append(.radio(title: setting.title, subtitle: setting.subtitle, selected: setting.selected))
-        }
-
-        alertItems.append(.button(
-                title: "button.done".localized,
-                button: .appYellow,
-                onTap: { [weak self] selectedIndex in
-                    if let selectedIndex = selectedIndex {
-                        self?.delegate.onSelectConnectionSetting(itemIndex: itemIndex, settingIndex: selectedIndex)
-                    }
-                }
-        ))
-
-        let controller = BottomAlertViewController(items: alertItems)
-        present(controller, animated: true)
-    }
-
 }
 
 extension PrivacyViewController: SectionsDataSource {
