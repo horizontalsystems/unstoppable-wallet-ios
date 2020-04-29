@@ -30,9 +30,22 @@ class TransactionInfoStatusCell: ThemeCell {
         statusLabel.textColor = .themeLeah
 
         contentView.addSubview(statusIcon)
+        statusIcon.snp.makeConstraints { maker in
+            maker.leading.equalTo(statusLabel.snp.trailing).offset(CGFloat.margin2x)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.centerY.equalToSuperview()
+        }
+
         statusIcon.setContentCompressionResistancePriority(.required, for: .horizontal)
 
         contentView.addSubview(barsProgressView)
+        barsProgressView.snp.makeConstraints { maker in
+            maker.leading.equalTo(statusLabel.snp.trailing).offset(CGFloat.margin2x).priority(.low)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.centerY.equalToSuperview()
+            maker.height.equalTo(18)
+        }
+
         barsProgressView.set(barsCount: BarsProgressView.progressStepsCount)
     }
 
@@ -43,10 +56,8 @@ class TransactionInfoStatusCell: ThemeCell {
     func bind(status: TransactionStatus, incoming: Bool) {
         super.bind(bottomSeparatorVisible: true)
 
-        statusIcon.snp.removeConstraints()
         statusIcon.isHidden = true
 
-        barsProgressView.snp.removeConstraints()
         barsProgressView.stopAnimating()
         barsProgressView.isHidden = true
 
@@ -64,13 +75,6 @@ class TransactionInfoStatusCell: ThemeCell {
     }
 
     private func bindProcessing(progress: Double, incoming: Bool) {
-        barsProgressView.snp.makeConstraints { maker in
-            maker.leading.equalTo(statusLabel.snp.trailing).offset(CGFloat.margin2x)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.centerY.equalToSuperview()
-            maker.height.equalTo(18)
-        }
-
         barsProgressView.isHidden = false
         barsProgressView.set(filledColor: incoming ? .themeGreenD : .themeYellowD)
         barsProgressView.set(progress: progress)
@@ -85,12 +89,6 @@ class TransactionInfoStatusCell: ThemeCell {
     }
 
     private func bindIcon(image: UIImage?) {
-        statusIcon.snp.makeConstraints { maker in
-            maker.leading.equalTo(statusLabel.snp.trailing).offset(CGFloat.margin2x)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.centerY.equalToSuperview()
-        }
-
         statusIcon.isHidden = false
         statusIcon.image = image
     }
