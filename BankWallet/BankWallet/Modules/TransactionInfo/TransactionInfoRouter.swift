@@ -3,24 +3,33 @@ import ActionSheet
 
 class TransactionInfoRouter {
     weak var viewController: UIViewController?
+    private weak var sourceViewController: UIViewController?
+
+    init(sourceViewController: UIViewController?) {
+        self.sourceViewController = sourceViewController
+    }
+
 }
 
 extension TransactionInfoRouter: ITransactionInfoRouter {
 
-    func openFullInfo(transactionHash: String, wallet: Wallet) {
-        viewController?.present(FullTransactionInfoRouter.module(transactionHash: transactionHash, wallet: wallet), animated: true)
+    func showFullInfo(transactionHash: String, wallet: Wallet) {
+        let module = FullTransactionInfoRouter.module(transactionHash: transactionHash, wallet: wallet)
+        viewController?.dismiss(animated: true) { [weak self] in
+            self?.sourceViewController?.present(module, animated: true)
+        }
     }
 
-    func openLockInfo() {
+    func showLockInfo() {
         viewController?.present(InfoRouter.module(title: "lock_info.title".localized, text: "lock_info.text".localized), animated: true)
     }
 
-    func share(value: String) {
+    func showShare(value: String) {
         let activityViewController = UIActivityViewController(activityItems: [value], applicationActivities: [])
-        viewController?.present(activityViewController, animated: true, completion: nil)
+        viewController?.present(activityViewController, animated: true)
     }
 
-    func openDoubleSpendInfo(txHash: String, conflictingTxHash: String?) {
+    func showDoubleSpendInfo(txHash: String, conflictingTxHash: String?) {
         viewController?.present(DoubleSpendInfoRouter.module(txHash: txHash, conflictingTxHash: conflictingTxHash), animated: true)
     }
 
@@ -28,18 +37,16 @@ extension TransactionInfoRouter: ITransactionInfoRouter {
 
 extension TransactionInfoRouter {
 
-    static func module(viewItem: TransactionViewItem) -> ActionSheetController {
-        let router = TransactionInfoRouter()
-
+    static func module(viewItem: TransactionViewItem, sourceViewController: UIViewController?) -> UIViewController {
+        let router = TransactionInfoRouter(sourceViewController: sourceViewController)
         let interactor = TransactionInfoInteractor(pasteboardManager: App.shared.pasteboardManager)
-        let presenter = TransactionInfoPresenter(interactor: interactor, router: router, viewItem: viewItem)
+        let presenter = TransactionInfoPresenter(viewItem: viewItem, interactor: interactor, router: router)
         let viewController = TransactionInfoViewController(delegate: presenter)
 
-        interactor.delegate = presenter
         presenter.view = viewController
         router.viewController = viewController
 
-        return viewController
+        return viewController.toBottomSheet
     }
 
 }
