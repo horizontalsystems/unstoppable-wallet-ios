@@ -40,10 +40,9 @@
 
 // Restore
 
-"restore.title" = "Bundan geri yükle";
+"restore.title" = "Choose Wallet";
 "restore.enter_key" = "Anahtarı girin";
 "restore.item_title" = "%@ Cüzdanı";
-"restore.description" = "Geri yüklemek istediğiniz bir cüzdan seçin. Seçmiş oldugunuz cüzdana ait gizli anahtara ihtiyacınız olacak.";
 "restore.words.description" = "%@ cüzdanı için gizli anahtarı gir";
 "restore.validation_failed" = "Yanlış Anahtar";
 "restore.placeholder.account_name" = "Hesap Adı";
