@@ -40,10 +40,9 @@
 
 // Restore
 
-"restore.title" = "Restaurar desde";
+"restore.title" = "Choose Wallet";
 "restore.enter_key" = "Introduzca la clave";
 "restore.item_title" = "%@ Monedero";
-"restore.description" = "Elije el monedero que deseas restaurar. Necesitarás una clave privada para ese monedero.";
 "restore.words.description" = "Introduzca su clave privada para la cartera %@ que consta de %@ palabras. Las palabras deben ser introducidas en orden correcto y separadas por espacios.";
 "restore.validation_failed" = "Clave incorrecta";
 "restore.placeholder.account_name" = "Account Name";
