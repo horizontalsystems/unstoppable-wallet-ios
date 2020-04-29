@@ -58,20 +58,6 @@ class RestoreViewController: ThemeViewController {
         }
     }
 
-    private var header: ViewState<TopDescriptionHeaderFooterView> {
-        let text = "restore.description".localized
-
-        return .cellType(
-                hash: "restore_footer",
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { [unowned self] _ in
-                    return TopDescriptionHeaderFooterView.height(containerWidth: self.tableView.bounds.width, text: text)
-                }
-        )
-    }
-
 }
 
 extension RestoreViewController: SectionsDataSource {
@@ -80,7 +66,7 @@ extension RestoreViewController: SectionsDataSource {
         [
             Section(
                     id: "wallets",
-                    headerState: header,
+                    headerState: .margin(height: .margin4x),
                     rows: walletRows
             )
         ]
