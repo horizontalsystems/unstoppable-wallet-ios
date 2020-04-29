@@ -40,10 +40,9 @@
 
 // Restore
 
-"restore.title" = "Wiederherstellen aus";
+"restore.title" = "Choose Wallet";
 "restore.enter_key" = "Schlüssel Eingeben";
 "restore.item_title" = "%@ Wallet";
-"restore.description" = "Wählen Sie ein Wallet, das Sie wiederherstellen möchten. Sie benötigen dazu einen Private Key für das Wallet.";
 "restore.words.description" = "Geben Sie Ihren Private Key für %@ Wallet ein, der aus %@ Wörtern besteht. Die Wörter müssen in der korrekten Reihenfolge eingegeben und durch Leerzeichen getrennt werden.";
 "restore.validation_failed" = "Falscher Schlüssel";
 "restore.placeholder.account_name" = "Account Name";
