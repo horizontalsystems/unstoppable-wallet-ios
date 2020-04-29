@@ -40,10 +40,9 @@
 
 // Restore
 
-"restore.title" = "Восстановить";
+"restore.title" = "Choose Wallet";
 "restore.enter_key" = "Введите Ключ";
 "restore.item_title" = "%@ Кошелек";
-"restore.description" = "Выберите кошелек, который вы хотите восстановить. Для этого кошелька вам понадобится приватный ключ.";
 "restore.words.description" = "Введите приватный ключ для кошелька %@, который состоит из %@ слов. Слова нужно ввести в правильном порядке и вставить пробелы между ними.";
 "restore.validation_failed" = "Неверный Ключ";
 "restore.placeholder.account_name" = "Account Name";
