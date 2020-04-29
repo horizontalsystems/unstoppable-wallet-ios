@@ -7,7 +7,7 @@ class TransactionsRouter {
 extension TransactionsRouter: ITransactionsRouter {
 
     func openTransactionInfo(viewItem: TransactionViewItem) {
-        viewController?.present(TransactionInfoRouter.module(viewItem: viewItem), animated: true)
+        viewController?.present(TransactionInfoRouter.module(viewItem: viewItem, sourceViewController: viewController), animated: true)
     }
 
 }
