@@ -125,7 +125,7 @@ class TransactionCell: ClaudeThemeCell {
         doubleSpendImageView.isHidden = item.conflictingTxHash == nil
         inOutImageView.image = item.type == .incoming ? UIImage(named: "Transaction In Icon") : UIImage(named: "Transaction Out Icon")
 
-        if let value = item.currencyValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.01)) {
+        if let value = item.currencyValue?.nonZero, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.01)) {
             currencyAmountLabel.text = formattedValue
         } else {
             currencyAmountLabel.text = nil

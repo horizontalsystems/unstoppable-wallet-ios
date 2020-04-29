@@ -86,3 +86,11 @@ extension TransactionViewItem: Comparable {
     }
 
 }
+
+extension CurrencyValue {
+
+    var nonZero: CurrencyValue? {
+        value == 0 ? nil : self
+    }
+
+}
