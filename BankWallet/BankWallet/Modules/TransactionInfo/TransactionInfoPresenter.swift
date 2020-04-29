@@ -22,7 +22,7 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
         let primaryAmountInfo: AmountInfo
         var secondaryAmountInfo: AmountInfo?
 
-        if let currencyValue = viewItem.currencyValue {
+        if let currencyValue = viewItem.currencyValue?.nonZero {
             primaryAmountInfo = .currencyValue(currencyValue: currencyValue)
             secondaryAmountInfo = .coinValue(coinValue: viewItem.coinValue)
         } else {
@@ -39,14 +39,14 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
 
         var viewItems = [TransactionInfoModule.ViewItem]()
 
-        if let rate = viewItem.rate {
+        if let rate = viewItem.rate?.nonZero {
             viewItems.append(.rate(currencyValue: rate, coinCode: viewItem.coinValue.coin.code))
         }
 
         if let feeCoinValue = viewItem.feeCoinValue {
             viewItems.append(.fee(
                     coinValue: feeCoinValue,
-                    currencyValue: viewItem.rate.map { CurrencyValue(currency: $0.currency, value: $0.value * feeCoinValue.value) }
+                    currencyValue: viewItem.rate?.nonZero.map { CurrencyValue(currency: $0.currency, value: $0.value * feeCoinValue.value) }
             ))
         }
 
