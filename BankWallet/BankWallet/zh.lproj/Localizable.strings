@@ -40,10 +40,9 @@
 
 // Restore
 
-"restore.title" = "恢复自";
+"restore.title" = "Choose Wallet";
 "restore.enter_key" = "输入密钥";
 "restore.item_title" = "%@钱包";
-"restore.description" = "选择要恢复的钱包。您需要具有该钱包的私钥。";
 "restore.words.description" = "为%@钱包输入私钥，其中应包含%@个单词。这些单词必须以正确的顺序输入并用空格分隔。";
 "restore.validation_failed" = "密钥不正确";
 "restore.placeholder.account_name" = "Account Name";
