@@ -99,7 +99,7 @@ extension DerivationSettingsViewController: IDerivationSettingsView {
 
     func set(viewItems: [DerivationSettingSectionViewItem]) {
         self.viewItems = viewItems
-        tableView.reload(animated: true)
+        tableView.reload()
     }
 
 }

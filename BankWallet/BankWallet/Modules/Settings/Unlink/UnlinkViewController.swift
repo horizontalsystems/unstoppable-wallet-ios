@@ -55,10 +55,6 @@ class UnlinkViewController: ThemeActionSheetController {
         deleteButton.addTarget(self, action: #selector(_onTapDelete), for: .touchUpInside)
 
         delegate.onLoad()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
 
         tableView.reload()
     }
