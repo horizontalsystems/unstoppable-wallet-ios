@@ -12,7 +12,7 @@ class SendViewController: ThemeViewController {
     private let container = UIView()
     private let iconImageView = UIImageView()
     private let sendHolderView = UIView()
-    private let sendButton: UIButton = .appYellow
+    private let sendButton = ThemeButton()
     private var keyboardShown = false
 
     private let views: [UIView]
@@ -30,6 +30,7 @@ class SendViewController: ThemeViewController {
             maker.height.equalTo(74)
         }
 
+        sendButton.apply(style: .primaryYellow)
         sendButton.setTitle("send.next_button".localized, for: .normal)
         sendButton.addTarget(self, action: #selector(onSendTouchUp), for: .touchUpInside)
 

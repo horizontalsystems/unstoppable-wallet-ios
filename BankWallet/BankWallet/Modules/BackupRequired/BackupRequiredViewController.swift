@@ -7,7 +7,7 @@ class BackupRequiredViewController: ThemeActionSheetController {
 
     private let titleView = BottomSheetTitleView()
     private let descriptionView = HighlightedDescriptionView()
-    private let backupButton = UIButton.appYellow
+    private let backupButton = ThemeButton()
 
     init(router: BackupRequiredRouter, subtitle: String, text: String) {
         self.router = router
@@ -44,6 +44,7 @@ class BackupRequiredViewController: ThemeActionSheetController {
             maker.height.equalTo(CGFloat.heightButton)
         }
 
+        backupButton.apply(style: .primaryYellow)
         backupButton.setTitle("settings_manage_keys.backup".localized, for: .normal)
         backupButton.addTarget(self, action: #selector(_onTapBackup), for: .touchUpInside)
     }

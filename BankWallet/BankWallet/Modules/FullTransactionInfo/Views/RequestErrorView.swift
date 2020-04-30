@@ -1,12 +1,13 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
 class RequestErrorView: UIView {
     private let holderView =  UIView()
     private let imageView = UIImageView()
     private let titleLabel = UILabel(frame: .zero)
     private var subtitleLabel = UILabel()
-    private var button = UIButton.appSecondary
+    private var button = ThemeButton()
     private var linkView = FullTransactionLinkView()
 
     private var action: (() -> ())?
@@ -72,7 +73,6 @@ class RequestErrorView: UIView {
             button.snp.remakeConstraints { maker in
                 maker.centerX.equalToSuperview()
                 maker.top.equalTo(subtitleLabel.snp.bottom).offset(CGFloat.margin4x)
-                maker.height.equalTo(CGFloat.heightButtonSecondary)
             }
         } else {
             button.snp.remakeConstraints { maker in
@@ -103,6 +103,9 @@ class RequestErrorView: UIView {
         action = onTapButton
 
         updateConstraints(showSubtitle: subtitle != nil, showButton: buttonText != nil)
+
+        button.apply(style: .secondaryDefault)
+
         setNeedsDisplay()
     }
 

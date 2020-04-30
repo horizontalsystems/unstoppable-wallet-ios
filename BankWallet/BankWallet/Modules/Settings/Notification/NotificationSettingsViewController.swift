@@ -60,7 +60,7 @@ class NotificationSettingsViewController: ThemeViewController {
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
         }
 
-        let settingsButton = UIButton.appSecondary
+        let settingsButton = ThemeButton().apply(style: .secondaryDefault)
         settingsButton.setTitle("settings.notifications.settings_button".localized, for: .normal)
         settingsButton.addTarget(self, action: #selector(onTapSettingsButton), for: .touchUpInside)
 
@@ -68,7 +68,6 @@ class NotificationSettingsViewController: ThemeViewController {
         settingsButton.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
             maker.top.equalTo(warningLabel.snp.bottom).offset(CGFloat.margin8x)
-            maker.height.equalTo(CGFloat.heightButtonSecondary)
         }
 
         delegate.viewDidLoad()

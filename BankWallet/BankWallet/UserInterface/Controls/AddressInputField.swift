@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
 class AddressTextView: UITextView {
     var onPaste: (() -> ())?
@@ -19,10 +20,10 @@ class AddressInputField: UIView {
     private let addressField = AddressTextView()
     private let placeholderLabel = UILabel()
     private let errorLabel = UILabel()
-    private let scanButton = UIButton.appSecondary
-    private let deleteButton = UIButton.appSecondary
-    private let pasteButton = UIButton.appSecondary
-    private let copyButton = UIButton.appSecondary
+    private let scanButton = ThemeButton()
+    private let deleteButton = ThemeButton()
+    private let pasteButton = ThemeButton()
+    private let copyButton = ThemeButton()
 
     private let placeholder: String?
     private let numberOfLines: Int
@@ -89,38 +90,37 @@ class AddressInputField: UIView {
         pasteButton.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview().inset(CGFloat.margin2x)
             maker.centerY.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightButtonSecondary)
         }
 
-        pasteButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        pasteButton.apply(style: .secondaryDefault)
         pasteButton.setTitle("button.paste".localized, for: .normal)
         pasteButton.addTarget(self, action: #selector(onTapPaste), for: .touchUpInside)
 
         scanButton.snp.makeConstraints { maker in
             maker.trailing.equalTo(pasteButton.snp.leading).offset(-CGFloat.margin2x)
             maker.centerY.equalTo(pasteButton.snp.centerY)
-            maker.size.equalTo(CGFloat.heightButtonSecondary)
         }
 
+        scanButton.apply(style: .secondaryIcon)
+        scanButton.apply(secondaryIconImage: UIImage(named: "Send Scan Icon"))
         scanButton.isHidden = !showQrButton
-        scanButton.imageEdgeInsets = UIEdgeInsets(top: -.margin2x, left: -.margin2x, bottom: -.margin2x, right: -.margin2x)
-        scanButton.setImage(UIImage(named: "Send Scan Icon")?.tinted(with: .themeOz), for: .normal)
         scanButton.addTarget(self, action: #selector(onTapScan), for: .touchUpInside)
 
         deleteButton.snp.makeConstraints { maker in
             maker.trailing.equalTo(self.pasteButton)
             maker.centerY.equalTo(pasteButton.snp.centerY)
-            maker.size.equalTo(CGFloat.heightButtonSecondary)
         }
 
-        deleteButton.setImage(UIImage(named: "Send Delete Icon")?.tinted(with: .themeOz), for: .normal)
+        deleteButton.apply(style: .secondaryIcon)
+        deleteButton.apply(secondaryIconImage: UIImage(named: "Send Delete Icon"))
         deleteButton.addTarget(self, action: #selector(onTapDelete), for: .touchUpInside)
 
         copyButton.snp.makeConstraints { maker in
             maker.edges.equalTo(deleteButton)
         }
 
-        copyButton.setImage(UIImage(named: "Address Field Copy Icon")?.tinted(with: .themeOz), for: .normal)
+        copyButton.apply(style: .secondaryIcon)
+        copyButton.apply(secondaryIconImage: UIImage(named: "Address Field Copy Icon"))
         copyButton.addTarget(self, action: #selector(onTapCopy), for: .touchUpInside)
 
         bind(address: nil, error: nil)
