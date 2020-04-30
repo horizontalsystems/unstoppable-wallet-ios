@@ -5,6 +5,7 @@ protocol IPrivacyRouter {
 }
 
 protocol IPrivacyInteractor {
+    var wallets: [Wallet] { get }
     var syncSettings: [(setting: InitialSyncSetting, coins: [Coin])] { get }
     var sortMode: TransactionDataSortMode { get }
     var ethereumConnection: EthereumRpcMode { get }
