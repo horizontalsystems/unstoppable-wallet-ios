@@ -9,7 +9,7 @@ class BackupWordsController: ThemeViewController {
     private let collectionView: UICollectionView
 
     private let proceedButtonHolder = GradientView(gradientHeight: .margin4x, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: .themeTyler)
-    private let proceedButton: UIButton = .appYellow
+    private let proceedButton = ThemeButton()
 
     init(delegate: IBackupWordsViewDelegate) {
         self.delegate = delegate
@@ -54,6 +54,7 @@ class BackupWordsController: ThemeViewController {
             maker.height.equalTo(CGFloat.heightBottomWrapperBar)
         }
 
+        proceedButton.apply(style: .primaryYellow)
         proceedButton.setTitle(delegate.isBackedUp ? "backup.close".localized : "button.next".localized, for: .normal)
         proceedButton.addTarget(self, action: #selector(nextDidTap), for: .touchUpInside)
 

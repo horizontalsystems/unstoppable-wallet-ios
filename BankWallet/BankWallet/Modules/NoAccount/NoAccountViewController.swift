@@ -7,8 +7,8 @@ class NoAccountViewController: ThemeActionSheetController {
 
     private let titleView = BottomSheetTitleView()
     private let descriptionLabel = UILabel()
-    private let createButton = UIButton.appYellow
-    private let restoreButton = UIButton.appGray
+    private let createButton = ThemeButton()
+    private let restoreButton = ThemeButton()
 
     init(delegate: INoAccountViewDelegate) {
         self.delegate = delegate
@@ -49,6 +49,7 @@ class NoAccountViewController: ThemeActionSheetController {
             maker.height.equalTo(CGFloat.heightButton)
         }
 
+        createButton.apply(style: .primaryYellow)
         createButton.setTitle("manage_coins.add_coin.create".localized, for: .normal)
         createButton.addTarget(self, action: #selector(onTapCreate), for: .touchUpInside)
 
@@ -60,6 +61,7 @@ class NoAccountViewController: ThemeActionSheetController {
             maker.height.equalTo(CGFloat.heightButton)
         }
 
+        restoreButton.apply(style: .primaryGray)
         restoreButton.setTitle("manage_coins.add_coin.restore".localized, for: .normal)
         restoreButton.addTarget(self, action: #selector(onTapRestore), for: .touchUpInside)
 

@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
 class WelcomeScreenViewController: UIViewController {
     private let delegate: IWelcomeScreenViewDelegate
@@ -153,7 +154,7 @@ class WelcomeScreenViewController: UIViewController {
             maker.height.equalToSuperview().dividedBy(2)
         }
 
-        let createButton = UIButton.appYellow
+        let createButton = ThemeButton()
 
         buttonsWrapper.addSubview(createButton)
         createButton.snp.makeConstraints { maker in
@@ -161,10 +162,11 @@ class WelcomeScreenViewController: UIViewController {
             maker.height.equalTo(CGFloat.heightButton)
         }
 
+        createButton.apply(style: .primaryYellow)
         createButton.setTitle("welcome.new_wallet".localized, for: .normal)
         createButton.addTarget(self, action: #selector(didTapCreate), for: .touchUpInside)
 
-        let restoreButton = UIButton.appGray
+        let restoreButton = ThemeButton()
 
         buttonsWrapper.addSubview(restoreButton)
         restoreButton.snp.makeConstraints { maker in
@@ -173,6 +175,7 @@ class WelcomeScreenViewController: UIViewController {
             maker.height.equalTo(CGFloat.heightButton)
         }
 
+        restoreButton.apply(style: .primaryGray)
         restoreButton.setTitle("welcome.restore_wallet".localized, for: .normal)
         restoreButton.addTarget(self, action: #selector(didTapRestore), for: .touchUpInside)
 
