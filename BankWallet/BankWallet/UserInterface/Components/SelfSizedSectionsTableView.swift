@@ -2,7 +2,6 @@ import UIKit
 import SectionsTableView
 
 class SelfSizedSectionsTableView: SectionsTableView {
-    var maxHeight: CGFloat = UIScreen.main.bounds.size.height
 
     override init(style: Style) {
         super.init(style: style)
@@ -16,19 +15,14 @@ class SelfSizedSectionsTableView: SectionsTableView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func reloadData() {
-        super.reloadData()
-
-        invalidateIntrinsicContentSize()
-        layoutIfNeeded()
+    override var contentSize: CGSize {
+        didSet {
+            invalidateIntrinsicContentSize()
+        }
     }
 
     override var intrinsicContentSize: CGSize {
-        setNeedsLayout()
-        layoutIfNeeded()
-
-        let height = min(ceil(contentSize.height), maxHeight)
-        return CGSize(width: contentSize.width, height: height)
+        contentSize
     }
 
 }

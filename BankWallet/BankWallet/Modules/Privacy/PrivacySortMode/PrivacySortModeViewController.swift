@@ -61,10 +61,6 @@ class PrivacySortModeViewController: ThemeActionSheetController {
         doneButton.addTarget(self, action: #selector(_onTapDone), for: .touchUpInside)
 
         delegate.onLoad()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
 
         tableView.reload()
     }
