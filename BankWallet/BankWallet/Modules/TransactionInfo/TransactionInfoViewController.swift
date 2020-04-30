@@ -79,10 +79,6 @@ class TransactionInfoViewController: ThemeActionSheetController {
         verifyButton.addTarget(self, action: #selector(_onTapVerify), for: .touchUpInside)
 
         delegate.onLoad()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
 
         tableView.reload()
     }

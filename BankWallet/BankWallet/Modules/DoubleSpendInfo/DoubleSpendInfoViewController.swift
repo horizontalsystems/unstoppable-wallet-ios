@@ -48,9 +48,8 @@ class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
                 hash: "top_description",
                 binder: { view in
                     view.bind(text: descriptionText)
-                    view.backgroundColor = .clear
-                }, dynamicHeight: { [unowned self] _ in
-                    TopDescriptionHeaderFooterView.height(containerWidth: self.tableView.bounds.width, text: descriptionText)
+                }, dynamicHeight: { containerWidth in
+                    TopDescriptionHeaderFooterView.height(containerWidth: containerWidth, text: descriptionText)
                 }
         )
     }

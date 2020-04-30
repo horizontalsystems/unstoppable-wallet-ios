@@ -322,7 +322,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   ActionSheet.swift:
-    :commit: b77c619bdb402dc49c203f2901ba1be9a4a96be9
+    :commit: dedea8758c71f0f73cada98c9dacd58d4646218d
     :git: https://github.com/horizontalsystems/gui-kit/
   BinanceChainKit.swift:
     :commit: 759065e748142dc9435ed076f8ed765cbb3564ef
@@ -337,10 +337,10 @@ CHECKOUT OPTIONS:
     :commit: cb3e18c9ee8e83c8a03368c6d2bd207f1ada3af8
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
-    :commit: b77c619bdb402dc49c203f2901ba1be9a4a96be9
+    :commit: dedea8758c71f0f73cada98c9dacd58d4646218d
     :git: https://github.com/horizontalsystems/gui-kit/
   CurrencyKit.swift:
-    :commit: 315de717d352c678bfccf0e57df67e68bcac5167
+    :commit: e81a3a875ba53499231328e3ee1f980891d22938
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
     :commit: cb3e18c9ee8e83c8a03368c6d2bd207f1ada3af8
@@ -367,25 +367,25 @@ CHECKOUT OPTIONS:
     :commit: cb3e18c9ee8e83c8a03368c6d2bd207f1ada3af8
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HUD.swift:
-    :commit: b77c619bdb402dc49c203f2901ba1be9a4a96be9
+    :commit: dedea8758c71f0f73cada98c9dacd58d4646218d
     :git: https://github.com/horizontalsystems/gui-kit/
   LanguageKit.swift:
-    :commit: 315de717d352c678bfccf0e57df67e68bcac5167
+    :commit: e81a3a875ba53499231328e3ee1f980891d22938
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
     :commit: cb3e18c9ee8e83c8a03368c6d2bd207f1ada3af8
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   PinKit.swift:
-    :commit: 315de717d352c678bfccf0e57df67e68bcac5167
+    :commit: e81a3a875ba53499231328e3ee1f980891d22938
     :git: https://github.com/horizontalsystems/component-kit-ios/
   StorageKit.swift:
-    :commit: 315de717d352c678bfccf0e57df67e68bcac5167
+    :commit: e81a3a875ba53499231328e3ee1f980891d22938
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: 315de717d352c678bfccf0e57df67e68bcac5167
+    :commit: e81a3a875ba53499231328e3ee1f980891d22938
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
-    :commit: b77c619bdb402dc49c203f2901ba1be9a4a96be9
+    :commit: dedea8758c71f0f73cada98c9dacd58d4646218d
     :git: https://github.com/horizontalsystems/gui-kit/
   XRatesKit.swift:
     :commit: c4e7b7032553acb9383b530f0f30c277572b2f8c
