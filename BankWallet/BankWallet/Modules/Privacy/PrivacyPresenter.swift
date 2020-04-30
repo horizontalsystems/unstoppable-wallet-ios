@@ -33,6 +33,12 @@ class PrivacyPresenter {
         view?.set(syncModeItems: factory.syncViewItems(items: syncItems))
     }
 
+    private var standardCreatedWalletExists: Bool {
+        interactor.wallets.contains { wallet in
+            wallet.account.origin == .created && wallet.coin.type.predefinedAccountType == .standard
+        }
+    }
+
 }
 
 extension PrivacyPresenter: IPrivacyViewDelegate {
@@ -42,14 +48,17 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
 
         updateConnection()
 
-        syncItems = interactor.syncSettings.compactMap {(setting, coins) in
-            guard let coin = coins.first else {
-                return nil
+        if !standardCreatedWalletExists {
+            syncItems = interactor.syncSettings.compactMap {(setting, coins) in
+                guard let coin = coins.first else {
+                    return nil
+                }
+
+                return PrivacySyncItem(coin: coin, setting: setting)
             }
 
-            return PrivacySyncItem(coin: coin, setting: setting)
+            updateSync()
         }
-        updateSync()
 
         view?.updateUI()
     }
