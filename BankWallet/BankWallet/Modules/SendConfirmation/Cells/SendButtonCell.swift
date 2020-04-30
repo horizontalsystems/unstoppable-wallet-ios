@@ -1,7 +1,8 @@
 import UIKit
+import ThemeKit
 
 class SendButtonCell: UITableViewCell {
-    private let sendButton: UIButton = .appYellow
+    private let sendButton = ThemeButton()
     private var onTap: (() -> ())?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -10,12 +11,15 @@ class SendButtonCell: UITableViewCell {
         contentView.backgroundColor = .clear
         backgroundColor = .clear
         selectionStyle = .none
+
         addSubview(sendButton)
         sendButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.bottom.equalToSuperview()
             maker.height.equalTo(CGFloat.heightButton)
         }
+
+        sendButton.apply(style: .primaryYellow)
         sendButton.setTitle("send.confirmation.send_button".localized, for: .normal)
         sendButton.addTarget(self, action: #selector(onSendTouchUp), for: .touchUpInside)
     }

@@ -11,7 +11,7 @@ class BalanceCell: UICollectionViewCell {
     private let separatorView = BalanceSeparatorView()
     private let amountView = BalanceAmountView()
     private let lockedAmountView = SecondaryBalanceDoubleRowView()
-    private let buttonsView = DoubleRowButtonView(leftButton: .appGreen, rightButton: .appYellow)
+    private let buttonsView = DoubleRowButtonView(leftButtonStyle: .primaryGreen, rightButtonStyle: .primaryYellow)
 
     private var onPay: (() -> ())?
     private var onReceive: (() -> ())?

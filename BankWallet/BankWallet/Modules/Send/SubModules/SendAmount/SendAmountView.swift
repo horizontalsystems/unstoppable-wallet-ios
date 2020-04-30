@@ -3,6 +3,7 @@ import SnapKit
 import RxSwift
 import HUD
 import CurrencyKit
+import ThemeKit
 
 class SendAmountView: UIView {
     private static let spinnerRadius: CGFloat = 8
@@ -25,10 +26,10 @@ class SendAmountView: UIView {
     private let amountTypeLabel = UILabel()
     private let inputField = UITextField()
     private let lineView = UIView()
-    private let maxButton = UIButton.appSecondary
+    private let maxButton = ThemeButton()
     private let hintLabel = UILabel()
     private let errorLabel = UILabel()
-    private let switchButton = UIButton.appSecondary
+    private let switchButton = ThemeButton()
 
     private let decimalFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -114,9 +115,9 @@ class SendAmountView: UIView {
         maxButton.snp.makeConstraints { maker in //constraints need to be set on init
             maker.top.equalTo(switchButton.snp.top)
             maker.trailing.equalTo(switchButton.snp.leading).offset(-CGFloat.margin2x)
-            maker.height.equalTo(CGFloat.heightButtonSecondary)
         }
 
+        maxButton.apply(style: .secondaryDefault)
         maxButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         maxButton.setTitle("send.max_button".localized, for: .normal)
         maxButton.addTarget(self, action: #selector(onTapMax), for: .touchUpInside)
@@ -136,12 +137,10 @@ class SendAmountView: UIView {
 
         switchButton.snp.makeConstraints { maker in
             maker.top.trailing.equalToSuperview().inset(CGFloat.margin2x)
-            maker.size.equalTo(CGFloat.heightButtonSecondary)
         }
 
-        switchButton.imageEdgeInsets = UIEdgeInsets(top: -.margin2x, left: -.margin2x, bottom: -.margin2x, right: -.margin2x)
-        switchButton.setImage(UIImage(named: "Send Switch Icon")?.tinted(with: .themeOz), for: .normal)
-        switchButton.setImage(UIImage(named: "Send Switch Icon")?.tinted(with: .themeGray50), for: .disabled)
+        switchButton.apply(style: .secondaryIcon)
+        switchButton.apply(secondaryIconImage: UIImage(named: "Send Switch Icon"))
         switchButton.addTarget(self, action: #selector(onTapSwitch), for: .touchUpInside)
 
         hintLabel.font = .caption
@@ -265,7 +264,6 @@ extension SendAmountView: ISendAmountView {
                 maker.width.equalTo(0)
             }
             maker.top.equalToSuperview().inset(CGFloat.margin2x)
-            maker.height.equalTo(CGFloat.heightButtonSecondary)
         }
     }
 

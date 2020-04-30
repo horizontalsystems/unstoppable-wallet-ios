@@ -17,7 +17,7 @@ class BackupEosViewController: ThemeViewController {
     private let qrCodeImageView = UIImageView()
 
     private let closeButtonHolder = GradientView(gradientHeight: .margin4x, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: .themeTyler)
-    private let closeButton: UIButton = .appYellow
+    private let closeButton = ThemeButton()
 
     init(delegate: IBackupEosViewDelegate) {
         self.delegate = delegate
@@ -117,6 +117,7 @@ class BackupEosViewController: ThemeViewController {
             maker.height.equalTo(CGFloat.heightBottomWrapperBar)
         }
 
+        closeButton.apply(style: .primaryYellow)
         closeButton.setTitle("backup.close".localized, for: .normal)
         closeButton.addTarget(self, action: #selector(didTapClose), for: .touchUpInside)
         closeButton.snp.makeConstraints { maker in
