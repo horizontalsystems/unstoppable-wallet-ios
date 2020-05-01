@@ -20,11 +20,11 @@ class BackupPresenter: IBackupPresenter {
 extension BackupPresenter: IBackupViewDelegate {
 
     var isBackedUp: Bool {
-        return account.backedUp
+        account.backedUp
     }
 
     var coinCodes: String {
-        return predefinedAccountType.coinCodes
+        predefinedAccountType.coinCodes
     }
 
     func cancelDidClick() {
