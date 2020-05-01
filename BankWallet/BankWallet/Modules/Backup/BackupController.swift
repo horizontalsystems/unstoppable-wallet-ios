@@ -5,7 +5,7 @@ import ThemeKit
 class BackupController: ThemeViewController {
     private let delegate: IBackupViewDelegate
 
-    private let subtitleLabel = UILabel()
+    private let descriptionView = HighlightedDescriptionView()
     private let cancelButton = ThemeButton()
     private let proceedButton = ThemeButton()
 
@@ -26,16 +26,13 @@ class BackupController: ThemeViewController {
 
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
-        view.addSubview(subtitleLabel)
-        subtitleLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.marginTextSide)
-            maker.top.equalTo(self.view.snp.topMargin).offset(CGFloat.margin6x)
+        view.addSubview(descriptionView)
+        descriptionView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
+            maker.top.equalTo(self.view.snp.topMargin).offset(CGFloat.margin3x)
         }
 
-        subtitleLabel.text = "backup.intro.subtitle".localized(delegate.coinCodes)
-        subtitleLabel.font = .body
-        subtitleLabel.textColor = .themeGray
-        subtitleLabel.numberOfLines = 0
+        descriptionView.bind(text: "backup.intro.subtitle".localized(delegate.coinCodes))
 
         view.addSubview(proceedButton)
         proceedButton.snp.makeConstraints { maker in
@@ -58,7 +55,6 @@ class BackupController: ThemeViewController {
         cancelButton.apply(style: .primaryGray)
         cancelButton.setTitle(delegate.isBackedUp ? "backup.close".localized : "backup.intro.later".localized, for: .normal)
         cancelButton.addTarget(self, action: #selector(cancelDidTap), for: .touchUpInside)
-
     }
 
     @objc func proceedDidTap() {
