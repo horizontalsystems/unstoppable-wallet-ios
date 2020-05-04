@@ -52,6 +52,10 @@ class AppConfigProvider: IAppConfigProvider {
         (Bundle.main.object(forInfoDictionaryKey: "EtherscanApiKey") as? String) ?? ""
     }
 
+    var coinMarketCapApiKey: String {
+        (Bundle.main.object(forInfoDictionaryKey: "CoinMarketCapKey") as? String) ?? ""
+    }
+
     var disablePinLock: Bool {
         Bundle.main.object(forInfoDictionaryKey: "DisablePinLock") as? String == "true"
     }

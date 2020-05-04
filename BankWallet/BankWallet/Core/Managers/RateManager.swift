@@ -11,12 +11,12 @@ class RateManager {
 
     private let kit: XRatesKit
 
-    init(walletManager: IWalletManager, currencyKit: ICurrencyKit, rateCoinMapper: IRateCoinMapper) {
+    init(walletManager: IWalletManager, currencyKit: ICurrencyKit, rateCoinMapper: IRateCoinMapper, coinMarketCapApiKey: String) {
         self.walletManager = walletManager
         self.currencyKit = currencyKit
         self.rateCoinMapper = rateCoinMapper
 
-        kit = XRatesKit.instance(currencyCode: currencyKit.baseCurrency.code, marketInfoExpirationInterval: 10 * 60, topMarketsCount: 100)
+        kit = XRatesKit.instance(currencyCode: currencyKit.baseCurrency.code, coinMarketCapApiKey: coinMarketCapApiKey, marketInfoExpirationInterval: 10 * 60, topMarketsCount: 100)
 
         walletManager.walletsUpdatedObservable
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
