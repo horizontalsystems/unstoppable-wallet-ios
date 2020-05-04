@@ -109,7 +109,7 @@ class App {
 
         currencyKit = CurrencyKit.Kit(localStorage: StorageKit.LocalStorage.default, currencyCodes: appConfigProvider.currencyCodes)
 
-        rateManager = RateManager(walletManager: walletManager, currencyKit: currencyKit, rateCoinMapper: RateCoinMapper())
+        rateManager = RateManager(walletManager: walletManager, currencyKit: currencyKit, rateCoinMapper: RateCoinMapper(), coinMarketCapApiKey: appConfigProvider.coinMarketCapApiKey)
 
         feeCoinProvider = FeeCoinProvider(appConfigProvider: appConfigProvider)
         feeRateProviderFactory = FeeRateProviderFactory(appConfigProvider: appConfigProvider)

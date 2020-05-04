@@ -244,6 +244,7 @@ protocol IAppConfigProvider {
     var infuraCredentials: (id: String, secret: String?) { get }
     var btcCoreRpcUrl: String { get }
     var etherscanKey: String { get }
+    var coinMarketCapApiKey: String { get }
     var currencyCodes: [String] { get }
 
     func defaultWords(count: Int) -> [String]
