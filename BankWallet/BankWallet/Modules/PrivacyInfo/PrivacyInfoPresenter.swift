@@ -1,6 +1,4 @@
 class PrivacyInfoPresenter {
-    weak var view: IPrivacyInfoView?
-
     private let router: IPrivacyInfoRouter
 
     init(router: IPrivacyInfoRouter) {
@@ -11,7 +9,7 @@ class PrivacyInfoPresenter {
 
 extension PrivacyInfoPresenter: IPrivacyInfoViewDelegate {
 
-    func onClose() {
+    func onTapClose() {
         router.close()
     }
 

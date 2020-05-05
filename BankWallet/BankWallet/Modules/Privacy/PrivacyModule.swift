@@ -24,7 +24,7 @@ protocol IPrivacyView: class {
 
 protocol IPrivacyViewDelegate {
     func onLoad()
-    func onInfo()
+    func onTapInfo()
     func onSelectSortMode()
     func onSelectConnection(index: Int)
     func onSelectSync(index: Int)
