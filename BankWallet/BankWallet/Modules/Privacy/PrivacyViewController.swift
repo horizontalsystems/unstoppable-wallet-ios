@@ -26,6 +26,8 @@ class PrivacyViewController: ThemeViewController {
 
         title = "settings_privacy.title".localized
 
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Attention Icon")?.tinted(with: .themeJacob), style: .plain, target: self, action: #selector(onInfo))
+
         tableView.registerCell(forClass: PrivacyHeaderCell.self)
         tableView.registerCell(forClass: PrivacyCell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
@@ -42,6 +44,10 @@ class PrivacyViewController: ThemeViewController {
         }
 
         delegate.onLoad()
+    }
+
+    @objc private func onInfo() {
+        delegate.onInfo()
     }
 
     private func headerSection() -> SectionProtocol {

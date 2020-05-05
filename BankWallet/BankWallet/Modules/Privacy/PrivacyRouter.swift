@@ -1,4 +1,5 @@
 import UIKit
+import ThemeKit
 
 class PrivacyRouter {
     weak var viewController: UIViewController?
@@ -19,6 +20,11 @@ extension PrivacyRouter: IPrivacyRouter {
     func showSyncMode(coin: Coin, currentSyncMode: SyncMode, delegate: IPrivacySyncModeDelegate) {
         let module = PrivacySyncModeRouter.module(coin: coin, currentSyncMode: currentSyncMode, delegate: delegate)
         viewController?.present(module, animated: true)
+    }
+
+    func showPrivacyInfo() {
+        let module = PrivacyInfoRouter.module()
+        viewController?.present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 
 }
