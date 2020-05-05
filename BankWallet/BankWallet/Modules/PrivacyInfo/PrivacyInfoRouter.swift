@@ -19,7 +19,6 @@ extension PrivacyInfoRouter {
         let presenter = PrivacyInfoPresenter(router: router)
         let viewController = PrivacyInfoViewController(delegate: presenter)
 
-        presenter.view = viewController
         router.viewController = viewController
 
         return viewController
