@@ -52,7 +52,8 @@ class BalanceTopView: UIView {
         addSubview(rateDiffButton)
         rateDiffButton.snp.makeConstraints { maker in
             maker.leading.greaterThanOrEqualTo(blockchainBadgeView.snp.trailing).offset(CGFloat.margin2x)
-            maker.top.trailing.bottom.equalToSuperview().inset(CGFloat.margin1x)
+            maker.top.trailing.equalToSuperview()
+            maker.bottom.equalToSuperview().inset(CGFloat.margin1x)
             maker.width.equalTo(80)
             maker.height.equalTo(42)
         }
