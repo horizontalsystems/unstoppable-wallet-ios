@@ -54,7 +54,7 @@ Deal with crypto without complexitites. You don’t need to understand technical
 
 This wallet keeps complexities under the hood giving you a straightforward user interface to the world of blockchains.
 
-It’s fast, multi-lingual and highly customizable when it comes to the look and feel.   Don’t take our word for it, give it a try yourself.
+It’s fast, multi-lingual and highly customizable when it comes to the look and feel. bizim sözümüze güvenmeyin, kendiniz deneyin.
 
 (7) OPEN & PUBLIC
 
@@ -69,5 +69,5 @@ Etereum
 Dash
 Bitcoin Cash
 50+ ERC20 tokenleri
-(in progress) EOS and EOS based tokens
-(in progress) Binance Token and Binance-based tokens
+(yapım aşamasında) EOS ve EOS based tokenleri
+(yapım aşamasında) Binance Token and Binance-based tokenleri
