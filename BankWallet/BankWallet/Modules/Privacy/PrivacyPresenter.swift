@@ -63,7 +63,7 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
         view?.updateUI()
     }
 
-    func onInfo() {
+    func onTapInfo() {
         router.showPrivacyInfo()
     }
 

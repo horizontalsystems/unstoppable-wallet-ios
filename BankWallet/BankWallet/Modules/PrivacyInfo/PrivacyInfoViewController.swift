@@ -3,24 +3,9 @@ import SectionsTableView
 import ThemeKit
 
 class PrivacyInfoViewController: ThemeViewController {
-    let delegate: IPrivacyInfoViewDelegate
+    private let delegate: IPrivacyInfoViewDelegate
 
     private let tableView = SectionsTableView(style: .grouped)
-
-    private var sortMode: String?
-    private var connectionItems: [PrivacyViewItem]?
-    private var syncModeItems: [PrivacyViewItem]?
-
-    private let headers: [String] = [
-        "settings_privacy_info.header_blockchain_transactions".localized,
-        "settings_privacy_info.header_blockchain_connection".localized,
-        "settings_privacy_info.header_blockchain_restore".localized
-    ]
-    private let cells: [String] = [
-        "settings_privacy_info.content_blockchain_transactions".localized,
-        "settings_privacy_info.content_blockchain_connection".localized,
-        "settings_privacy_info.content_blockchain_restore".localized
-    ]
 
     init(delegate: IPrivacyInfoViewDelegate) {
         self.delegate = delegate
@@ -39,69 +24,74 @@ class PrivacyInfoViewController: ThemeViewController {
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onClose))
 
-        tableView.registerHeaderFooter(forClass: PrivacyInfoHeaderView.self)
-        tableView.registerCell(forClass: PrivacyInfoCell.self)
-
-        tableView.sectionDataSource = self
-
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
-
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
 
-        tableView.reload()
+        tableView.registerHeaderFooter(forClass: PrivacyInfoHeaderView.self)
+        tableView.registerCell(forClass: PrivacyInfoCell.self)
+
+        tableView.sectionDataSource = self
+
+        tableView.allowsSelection = false
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+
+        tableView.buildSections()
     }
 
     @objc private func onClose() {
-        delegate.onClose()
+        delegate.onTapClose()
     }
 
-    private func section(title: String, text: String, first: Bool) -> SectionProtocol {
-        Section(
-                id: title,
-                headerState: header(hash: title, text: title, first: first),
-                rows: [
-                    row(id: text, text: text)
-                ]
-        )
-    }
-
-    private func header(hash: String, text: String, first: Bool) -> ViewState<PrivacyInfoHeaderView> {
-        let width = view.bounds.width
-        return .cellType(
-                hash: hash,
+    private func header(text: String, showSeparator: Bool = false) -> ViewState<PrivacyInfoHeaderView> {
+        .cellType(
+                hash: text,
                 binder: { view in
-                    view.bind(text: text, first: first)
-                }, dynamicHeight: { _ in
+                    view.bind(text: text, showSeparator: showSeparator)
+                },
+                dynamicHeight: { width in
                     PrivacyInfoHeaderView.height(containerWidth: width, text: text)
                 }
         )
     }
 
-    private func row(id: String, text: String) -> RowProtocol {
-        let width = view.bounds.width
-        return Row<PrivacyInfoCell>(id: id, hash: text, dynamicHeight: { _ in
-            PrivacyInfoCell.height(containerWidth: width, text: text)
-        }, bind: { cell, _ in
-            cell.bind(text: text)
-        })
+    private func row(text: String) -> RowProtocol {
+        Row<PrivacyInfoCell>(
+                id: text,
+                dynamicHeight: { width in
+                    PrivacyInfoCell.height(containerWidth: width, text: text)
+                },
+                bind: { cell, _ in
+                    cell.bind(text: text)
+                }
+        )
     }
-
-}
-
-extension PrivacyInfoViewController: IPrivacyInfoView {
 
 }
 
 extension PrivacyInfoViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-          zip(headers, cells).enumerated().map { tuple -> SectionProtocol in
-              section(title: tuple.element.0, text: tuple.element.1, first: tuple.offset == 0)
-          }
+        [
+            Section(
+                    id: "transactions",
+                    headerState: header(text: "settings_privacy_info.header_blockchain_transactions".localized, showSeparator: true),
+                    rows: [row(text: "settings_privacy_info.content_blockchain_transactions".localized)]
+            ),
+            Section(
+                    id: "connection",
+                    headerState: header(text: "settings_privacy_info.header_blockchain_connection".localized),
+                    rows: [row(text: "settings_privacy_info.content_blockchain_connection".localized)]
+            ),
+            Section(
+                    id: "restore",
+                    headerState: header(text: "settings_privacy_info.header_blockchain_restore".localized),
+                    footerState: .margin(height: .margin8x),
+                    rows: [row(text: "settings_privacy_info.content_blockchain_restore".localized)]
+            )
+        ]
     }
 
 }
