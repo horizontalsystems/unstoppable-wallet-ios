@@ -63,6 +63,10 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
         view?.updateUI()
     }
 
+    func onInfo() {
+        router.showPrivacyInfo()
+    }
+
     func onSelectSortMode() {
         router.showSortMode(currentSortMode: interactor.sortMode, delegate: self)
     }

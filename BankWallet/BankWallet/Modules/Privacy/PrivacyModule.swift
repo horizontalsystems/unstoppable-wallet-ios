@@ -2,6 +2,7 @@ protocol IPrivacyRouter {
     func showSortMode(currentSortMode: TransactionDataSortMode, delegate: IPrivacySortModeDelegate)
     func showEthereumRpcMode(currentMode: EthereumRpcMode, delegate: IPrivacyEthereumRpcModeDelegate)
     func showSyncMode(coin: Coin, currentSyncMode: SyncMode, delegate: IPrivacySyncModeDelegate)
+    func showPrivacyInfo()
 }
 
 protocol IPrivacyInteractor {
@@ -23,6 +24,7 @@ protocol IPrivacyView: class {
 
 protocol IPrivacyViewDelegate {
     func onLoad()
+    func onInfo()
     func onSelectSortMode()
     func onSelectConnection(index: Int)
     func onSelectSync(index: Int)
