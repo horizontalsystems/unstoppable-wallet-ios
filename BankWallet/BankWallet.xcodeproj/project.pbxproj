@@ -44,7 +44,6 @@
 		11B350F6A97B17ABAC45FA64 /* FullTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E0F14A8CD40C6F49AE3 /* FullTransactionRecord.swift */; };
 		11B350FB0BA2301455D7A0DB /* NotificationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355AE4EC2E1B56904AB13 /* NotificationSettingsViewController.swift */; };
 		11B35102A48D27150867BDD8 /* RestoreWordsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E81D848256AED44AFF3 /* RestoreWordsRouter.swift */; };
-		11B351048B1209B95FBCE92A /* CreateWalletNotSupportedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356CEF15A17FDC88895A5 /* CreateWalletNotSupportedViewController.swift */; };
 		11B351147B9FA7CFB61D6F31 /* TransactionViewItemFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35461B70501F290DFC166 /* TransactionViewItemFactoryTests.swift */; };
 		11B351280C7CBDF5A1C3ED54 /* EthereumRpcMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3586F8C87D79F3FFC5237 /* EthereumRpcMode.swift */; };
 		11B35128D64494B3A3A6462E /* BitcoinHodlingInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352A09443C11A200EB72E /* BitcoinHodlingInteractor.swift */; };
@@ -371,7 +370,6 @@
 		11B358E370059A9F95B8D1FB /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C167FC6400D527C5634 /* BadgeView.swift */; };
 		11B358E64A093C3B4E38A3C4 /* ContactPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3567992CE96357AD7BE7C /* ContactPresenter.swift */; };
 		11B358EB4EC30EDFFEBFCF29 /* WalletManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35570FD93AFB406434D20 /* WalletManager.swift */; };
-		11B358ECC1B08016EDF2DF93 /* CreateWalletNotSupportedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356CEF15A17FDC88895A5 /* CreateWalletNotSupportedViewController.swift */; };
 		11B358EF9A56A05015181CA7 /* BalanceHeaderViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D1D60E1D0A206C70490 /* BalanceHeaderViewItem.swift */; };
 		11B358F6B637CC6749A408DF /* BalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35AF1A9722F56B5F9DA79 /* BalanceCell.swift */; };
 		11B358F6DC8C277C853779E0 /* BackupEosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EF05C328B1F3FE79CC4 /* BackupEosViewController.swift */; };
@@ -540,7 +538,6 @@
 		11B35C8A76BB5C69263E9757 /* AlertModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C9F199E2A1D297480A4 /* AlertModule.swift */; };
 		11B35C92ECB84DAF5006E2F1 /* PriceAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356B1873BCF37E0C42B09 /* PriceAlertManager.swift */; };
 		11B35C938C7E2EC8E5688F00 /* NotificationSettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C9740FFE70C764CC71C /* NotificationSettingsInteractor.swift */; };
-		11B35C94E278CD561DD9A113 /* CreateWalletNotSupportedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356CEF15A17FDC88895A5 /* CreateWalletNotSupportedViewController.swift */; };
 		11B35CA53151EDE9264F4F57 /* KeychainKitDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3555A19D9E41785D88A5E /* KeychainKitDelegate.swift */; };
 		11B35CA7604E5F25E639A9A9 /* AccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35542A7D7FE1BDC2E73E2 /* AccountType.swift */; };
 		11B35CA86E20BDD8A1B2B415 /* SendMemoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35083F44195FD466288EF /* SendMemoPresenter.swift */; };
@@ -1863,7 +1860,6 @@
 		11B356A624E0982E0D90F9BB /* BalancePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalancePresenter.swift; sourceTree = "<group>"; };
 		11B356B1873BCF37E0C42B09 /* PriceAlertManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceAlertManager.swift; sourceTree = "<group>"; };
 		11B356BF2366DEE7FB54C241 /* SortTypeInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortTypeInteractor.swift; sourceTree = "<group>"; };
-		11B356CEF15A17FDC88895A5 /* CreateWalletNotSupportedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateWalletNotSupportedViewController.swift; sourceTree = "<group>"; };
 		11B356D6300E64A1982BC9EB /* UIAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		11B356D999722D69D56CBAAF /* SortTypeModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortTypeModule.swift; sourceTree = "<group>"; };
 		11B357023C453DC0EEC1910B /* NotificationSettingsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettingsRouter.swift; sourceTree = "<group>"; };
@@ -2505,7 +2501,6 @@
 				11B358A81A5AEC8A60A0456B /* CreateWalletInteractor.swift */,
 				11B35C1B8AB15392007B563E /* CreateWalletPresenter.swift */,
 				11B35A8171B7035E98628E26 /* CreateWalletViewController.swift */,
-				11B356CEF15A17FDC88895A5 /* CreateWalletNotSupportedViewController.swift */,
 			);
 			path = CreateWallet;
 			sourceTree = "<group>";
@@ -4911,7 +4906,6 @@
 				1A564EBFAD48713464580190 /* ConvertedError.swift in Sources */,
 				1A564CC6009976A3BE4A6C2A /* EosBackendError.swift in Sources */,
 				58AAA66F0A948A51C26A4151 /* ConnectionError.swift in Sources */,
-				11B35C94E278CD561DD9A113 /* CreateWalletNotSupportedViewController.swift in Sources */,
 				58AAAB97145C7C427DB27067 /* ChartConfiguration.swift in Sources */,
 				11B3506179C3E7DF94AEEFC1 /* RateDiffButton.swift in Sources */,
 				58AAA109348EF36940B08F54 /* DoubleSpendInfoRouter.swift in Sources */,
@@ -5524,7 +5518,6 @@
 				1A564512989CEBC48ABCB94E /* ConvertedError.swift in Sources */,
 				1A56476E02FE9C719E5F610E /* EosBackendError.swift in Sources */,
 				58AAA6BA6516314DE5153AF1 /* ConnectionError.swift in Sources */,
-				11B358ECC1B08016EDF2DF93 /* CreateWalletNotSupportedViewController.swift in Sources */,
 				58AAA34F0F6195DF86596A41 /* ChartConfiguration.swift in Sources */,
 				11B35E56D0348E685823A3C5 /* RateDiffButton.swift in Sources */,
 				58AAAB1C88165A1E936A46A5 /* DoubleSpendInfoRouter.swift in Sources */,
@@ -6090,7 +6083,6 @@
 				1A564665243CEEBF646D1328 /* ConvertedError.swift in Sources */,
 				1A564FDC737AC99938B7FB25 /* EosBackendError.swift in Sources */,
 				58AAA9EB37923915A52CFFFF /* ConnectionError.swift in Sources */,
-				11B351048B1209B95FBCE92A /* CreateWalletNotSupportedViewController.swift in Sources */,
 				58AAA2100166FDFB110FA6D0 /* ChartConfiguration.swift in Sources */,
 				11B35E7854572CFBEA11ADC5 /* RateDiffButton.swift in Sources */,
 				58AAAADDF644FD07B17DA45A /* DoubleSpendInfoRouter.swift in Sources */,

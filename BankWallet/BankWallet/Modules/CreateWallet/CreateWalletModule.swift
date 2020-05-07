@@ -11,7 +11,6 @@ protocol ICreateWalletViewDelegate {
 
     func onEnable(viewItem: CoinToggleViewItem)
     func onDisable(viewItem: CoinToggleViewItem)
-    func onSelect(viewItem: CoinToggleViewItem)
 
     func onTapCreateButton()
     func onTapCancelButton()
@@ -30,7 +29,6 @@ protocol ICreateWalletInteractor {
 
 protocol ICreateWalletRouter {
     func showMain()
-    func showNotSupported(coin: Coin, predefinedAccountType: PredefinedAccountType)
     func close()
 }
 
