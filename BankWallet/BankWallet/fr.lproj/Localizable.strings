@@ -359,7 +359,6 @@
 "settings_manage_keys.delete.confirmation_remove" = "Cette action supprimera le portefeuille %@ de cet appareil.";
 "settings_manage_keys.delete.confirmation_disable" = "Coins qui seront désactivées : %@";
 "settings_manage_keys.delete.confirmation_loose" = "Si vous n'avez pas sauvegardé la clé privée de ce portefeuille, vous perdrez l'accès à vos fonds.";
-"error.cant_create_wallet" = "À ce stade, Unstoppable n'est pas en mesure de créer de nouveaux portefeuilles EOS. Vous ne pouvez restaurer que celui déjà existant.";
 "error.invalid_eos_key" = "Clé invalide";
 "error.invalid_eos_account" = "Compte invalide";
 
