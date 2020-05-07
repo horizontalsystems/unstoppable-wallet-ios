@@ -110,7 +110,7 @@
 "balance.syncing" = "동기화 중입니다...";
 "balance.syncing_percent" = "동기화 중... %@";
 "balance.synced_through" = "%@ 까지";
-"balance.add_coin" = "코인 추가";
+"balance.add_coin" = "Add Coins";
 "balance.sort.header" = "정렬 기준";
 "balance.sort.valueHighToLow" = "잔액";
 "balance.sort.az" = "이름";
@@ -260,10 +260,10 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "코인 매니저";
+"manage_coins.title" = "Choose Coins";
 "manage_coins.add_coin.title" = "%@ 추가 ";
 "manage_coins.add_coin.subtitle" = "%@ 지갑";
-"manage_coins.add_coin.text" = "귀하께서는 %@ 을 보내거나 받으시려면 %@ 지갑을 설정하셔야 합니다.\n\n아래의 생성 버튼을 사용하여 새로운 %@ 지갑을 설정하거나 복원 버튼을 사용하여 기존 지갑을 가져옵니다.\n\n귀하께서는 이 지갑을 %@ 를 위해 사용하실 수 있습니다.";
+"manage_coins.add_coin.text" = "You need to set up %@ wallet to be able to send or receive %@.\n\nAt this point Unstoppable is not able to create new %@ wallet. You’re only able to restore the existing one.\n\nYou will be able to use this wallet for: %@.";
 "manage_coins.add_coin.create" = "만들기";
 "manage_coins.add_coin.restore" = "복구";
 
