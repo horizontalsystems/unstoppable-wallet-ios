@@ -76,13 +76,13 @@ extension EosBackendError: LocalizedError {
     }
 }
 
-extension EthereumKit.ApiError: LocalizedError {
-
-    public var errorDescription: String? {
-        "error.send_ethereum.wrong_parameters".localized
-    }
-
-}
+//extension EthereumKit.ApiError: LocalizedError {
+//
+//    public var errorDescription: String? {
+//        "error.send_ethereum.wrong_parameters".localized
+//    }
+//
+//}
 
 extension IncubedError: LocalizedError {
     public var errorDescription: String? {

@@ -1,5 +1,6 @@
 import ObjectMapper
 import BigInt
+import Alamofire
 
 class EtherscanEthereumProvider: IEthereumForksProvider {
     let name: String = "Etherscan.io"
@@ -11,8 +12,8 @@ class EtherscanEthereumProvider: IEthereumForksProvider {
         url + hash
     }
 
-    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        .get(url: apiUrl + hash, params: nil)
+    func request(session: Session, hash: String) -> DataRequest {
+        session.request(apiUrl + hash)
     }
 
     init(testMode: Bool) {

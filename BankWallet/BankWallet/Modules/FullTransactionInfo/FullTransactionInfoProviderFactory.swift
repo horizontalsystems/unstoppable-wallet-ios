@@ -1,10 +1,11 @@
-class FullTransactionInfoProviderFactory {
+import HsToolKit
 
-    private let apiProvider: IJsonApiProvider
+class FullTransactionInfoProviderFactory {
+    private let networkManager: NetworkManager
     private let dataProviderManager: IFullTransactionDataProviderManager
 
-    init(apiProvider: IJsonApiProvider, dataProviderManager: IFullTransactionDataProviderManager) {
-        self.apiProvider = apiProvider
+    init(networkManager: NetworkManager, dataProviderManager: IFullTransactionDataProviderManager) {
+        self.networkManager = networkManager
         self.dataProviderManager = dataProviderManager
     }
 
@@ -48,7 +49,8 @@ extension FullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactor
             provider = ethereumProvider
             adapter = EthereumTransactionInfoAdapter(provider: ethereumProvider, feeCoinProvider: App.shared.feeCoinProvider, coin: coin)
         }
-        return FullTransactionInfoProvider(apiProvider: apiProvider, adapter: adapter, provider: provider)
+
+        return FullTransactionInfoProvider(networkManager: networkManager, adapter: adapter, provider: provider)
     }
 
 }

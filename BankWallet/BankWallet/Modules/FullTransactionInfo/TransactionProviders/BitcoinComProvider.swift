@@ -1,4 +1,5 @@
 import ObjectMapper
+import Alamofire
 
 class BitcoinComBitcoinCashProvider: IBitcoinForksProvider {
     let name = "Bitcoin.com"
@@ -13,8 +14,8 @@ class BitcoinComBitcoinCashProvider: IBitcoinForksProvider {
         "https://cashexplorer.bitcoin.com/api/sync"
     }
 
-    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        .get(url: apiUrl + hash, params: nil)
+    func request(session: Session, hash: String) -> DataRequest {
+        session.request(apiUrl + hash)
     }
 
     init() {
