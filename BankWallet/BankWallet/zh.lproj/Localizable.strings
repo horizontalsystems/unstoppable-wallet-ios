@@ -359,7 +359,6 @@
 "settings_manage_keys.delete.confirmation_remove" = "该操作将从此设备删除%@钱包。";
 "settings_manage_keys.delete.confirmation_disable" = "将被禁用的代币：%@";
 "settings_manage_keys.delete.confirmation_loose" = "如果您尚未对此钱包备份私钥，您将失去您的资金。";
-"error.cant_create_wallet" = "Unstoppable此时无法创建新的%s钱包。您只可以恢复现有的钱包。";
 "error.invalid_eos_key" = "错误密钥";
 "error.invalid_eos_account" = "无效账户";
 
