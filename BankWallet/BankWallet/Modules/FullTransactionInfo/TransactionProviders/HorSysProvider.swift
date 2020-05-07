@@ -1,4 +1,5 @@
 import ObjectMapper
+import Alamofire
 
 class HorSysBitcoinProvider: IBitcoinForksProvider {
     let name = "HorizontalSystems.xyz"
@@ -9,8 +10,8 @@ class HorSysBitcoinProvider: IBitcoinForksProvider {
         nil
     }
 
-    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        .get(url: apiUrl + hash, params: nil)
+    func request(session: Session, hash: String) -> DataRequest {
+        session.request(apiUrl + hash)
     }
 
     init(testMode: Bool) {
@@ -32,8 +33,8 @@ class HorSysLitecoinProvider: IBitcoinForksProvider {
         nil
     }
 
-    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        .get(url: apiUrl + hash, params: nil)
+    func request(session: Session, hash: String) -> DataRequest {
+        session.request(apiUrl + hash)
     }
 
     init(testMode: Bool) {
@@ -53,11 +54,11 @@ class HorSysBitcoinCashProvider: IBitcoinForksProvider {
     let reachabilityUrl: String
 
     func url(for hash: String) -> String? {
-        return url + hash
+        url + hash
     }
 
-    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        return .get(url: apiUrl + hash, params: nil)
+    func request(session: Session, hash: String) -> DataRequest {
+        session.request(apiUrl + hash)
     }
 
     init(testMode: Bool) {
@@ -67,7 +68,7 @@ class HorSysBitcoinCashProvider: IBitcoinForksProvider {
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
-        return try? HorSysBitcoinResponse(JSONObject: json)
+        try? HorSysBitcoinResponse(JSONObject: json)
     }
 
 }
@@ -79,11 +80,11 @@ class HorSysDashProvider: IBitcoinForksProvider {
     let reachabilityUrl: String
 
     func url(for hash: String) -> String? {
-        return url + hash
+        url + hash
     }
 
-    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        return .get(url: apiUrl + hash, params: nil)
+    func request(session: Session, hash: String) -> DataRequest {
+        session.request(apiUrl + hash)
     }
 
     init(testMode: Bool) {
@@ -93,7 +94,7 @@ class HorSysDashProvider: IBitcoinForksProvider {
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
-        return try? InsightResponse(JSONObject: json)
+        try? InsightResponse(JSONObject: json)
     }
 }
 
@@ -107,8 +108,8 @@ class HorSysEthereumProvider: IEthereumForksProvider {
         url + hash
     }
 
-    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        .get(url: apiUrl + hash, params: nil)
+    func request(session: Session, hash: String) -> DataRequest {
+        session.request(apiUrl + hash)
     }
 
     init(testMode: Bool) {

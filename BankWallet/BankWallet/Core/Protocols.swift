@@ -2,6 +2,7 @@ import RxSwift
 import GRDB
 import XRatesKit
 import ThemeKit
+import Alamofire
 
 typealias CoinCode = String
 
@@ -238,7 +239,6 @@ protocol IAppConfigProvider {
     var reportEmail: String { get }
     var telegramWalletHelpAccount: String { get }
 
-    var reachabilityHost: String { get }
     var testMode: Bool { get }
     var officeMode: Bool { get }
     var infuraCredentials: (id: String, secret: String?) { get }
@@ -264,10 +264,6 @@ protocol IFullTransactionInfoProvider {
 
 protocol IFullTransactionInfoAdapter {
     func convert(json: [String: Any]) -> FullTransactionRecord?
-}
-
-protocol IIpfsApiProvider {
-    func gatewaysSingle<T>(singleProvider: @escaping (String, TimeInterval) -> Single<T>) -> Single<T>
 }
 
 protocol IEnabledWalletStorage {
@@ -344,10 +340,6 @@ protocol IAccountRecordStorage {
     func deleteAllAccountRecords()
 }
 
-protocol IJsonApiProvider {
-    func getJson(requestObject: JsonApiProvider.RequestObject) -> Single<[String: Any]>
-}
-
 protocol ITransactionRecordStorage {
     func record(forHash hash: String) -> TransactionRecord?
     var nonFilledRecords: [TransactionRecord] { get }
@@ -359,7 +351,7 @@ protocol ITransactionRecordStorage {
 }
 
 protocol IFullTransactionDataProviderManager {
-    var dataProviderUpdatedSignal: Signal { get }
+    var dataProviderUpdatedObservable: Observable<Void> { get }
 
     func providers(for coin: Coin) -> [IProvider]
     func baseProvider(for coin: Coin) -> IProvider
@@ -394,11 +386,6 @@ protocol IBinanceProvider: IProvider {
     func convert(json: [String: Any]) -> IBinanceResponse?
 }
 
-protocol IReachabilityManager {
-    var isReachable: Bool { get }
-    var reachabilitySignal: Signal { get }
-}
-
 protocol ITransactionRateSyncer {
     func sync(currencyCode: String)
     func cancelCurrentSync()
@@ -428,7 +415,7 @@ protocol IProvider {
     var name: String { get }
     var reachabilityUrl: String { get }
     func url(for hash: String) -> String?
-    func requestObject(for hash: String) -> JsonApiProvider.RequestObject
+    func request(session: Session, hash: String) -> DataRequest
 }
 
 protocol ICurrentDateProvider {

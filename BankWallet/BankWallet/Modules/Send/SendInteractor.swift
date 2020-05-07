@@ -1,5 +1,6 @@
 import RxSwift
 import CurrencyKit
+import HsToolKit
 
 class SendInteractor {
     weak var delegate: ISendInteractorDelegate?
@@ -15,10 +16,10 @@ class SendInteractor {
         self.currencyKit = currencyKit
         self.localStorage = localStorage
 
-        reachabilityManager.reachabilitySignal
+        reachabilityManager.reachabilityObservable
                 .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] in
-                    if reachabilityManager.isReachable {
+                .subscribe(onNext: { [weak self] isReachable in
+                    if isReachable {
                         self?.delegate?.sync()
                     }
                 })

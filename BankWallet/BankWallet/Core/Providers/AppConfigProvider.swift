@@ -12,8 +12,6 @@ class AppConfigProvider: IAppConfigProvider {
     let reportEmail = "hsdao@protonmail.ch"
     let telegramWalletHelpAccount = "UnstoppableWallet"
 
-    let reachabilityHost = "ipfs.horizontalsystems.xyz"
-
     var testMode: Bool {
         Bundle.main.object(forInfoDictionaryKey: "TestMode") as? String == "true"
     }

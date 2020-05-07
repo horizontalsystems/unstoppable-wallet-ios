@@ -8,9 +8,9 @@ class BitcoinBaseAdapter {
     private let abstractKit: AbstractKit
     private let coinRate: Decimal = pow(10, 8)
 
-    private let lastBlockUpdatedSignal = Signal()
-    private let stateUpdatedSignal = Signal()
-    private let balanceUpdatedSignal = Signal()
+    private let lastBlockUpdatedSubject = PublishSubject<Void>()
+    private let stateUpdatedSubject = PublishSubject<Void>()
+    private let balanceUpdatedSubject = PublishSubject<Void>()
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
 
     private(set) var state: AdapterState
@@ -178,11 +178,11 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
     }
 
     func balanceUpdated(balance: BalanceInfo) {
-        balanceUpdatedSignal.notify()
+        balanceUpdatedSubject.onNext(())
     }
 
     func lastBlockInfoUpdated(lastBlockInfo: BlockInfo) {
-        lastBlockUpdatedSignal.notify()
+        lastBlockUpdatedSubject.onNext(())
     }
 
     func kitStateUpdated(state: BitcoinCore.KitState) {
@@ -193,14 +193,14 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
             }
 
             self.state = .synced
-            stateUpdatedSignal.notify()
+            stateUpdatedSubject.onNext(())
         case .notSynced:
             if case .notSynced = self.state {
                 return
             }
 
             self.state = .notSynced
-            stateUpdatedSignal.notify()
+            stateUpdatedSubject.onNext(())
         case .syncing(let progress):
             let newProgress = Int(progress * 100)
             let newDate = abstractKit.lastBlockInfo?.timestamp.map { Date(timeIntervalSince1970: Double($0)) }
@@ -212,7 +212,7 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
             }
 
             self.state = .syncing(progress: newProgress, lastBlockDate: newDate)
-            stateUpdatedSignal.notify()
+            stateUpdatedSubject.onNext(())
         }
     }
 
@@ -221,11 +221,11 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
 extension BitcoinBaseAdapter: IBalanceAdapter {
 
     var stateUpdatedObservable: Observable<Void> {
-        stateUpdatedSignal.asObservable()
+        stateUpdatedSubject.asObservable()
     }
 
     var balanceUpdatedObservable: Observable<Void> {
-        balanceUpdatedSignal.asObservable()
+        balanceUpdatedSubject.asObservable()
     }
 
     var balance: Decimal {
@@ -303,7 +303,7 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
     }
 
     var lastBlockUpdatedObservable: Observable<Void> {
-        lastBlockUpdatedSignal.asObservable()
+        lastBlockUpdatedSubject.asObservable()
     }
 
     var transactionRecordsObservable: Observable<[TransactionRecord]> {

@@ -2,6 +2,7 @@ import ThemeKit
 import StorageKit
 import PinKit
 import CurrencyKit
+import HsToolKit
 
 class App {
     static let shared = App()
@@ -73,7 +74,8 @@ class App {
     let appManager: AppManager
 
     init() {
-        let networkManager = NetworkManager()
+        let logger = Logger(minLogLevel: .error)
+        let networkManager = NetworkManager(logger: logger)
 
         keychainKit = KeychainKit(service: "io.horizontalsystems.bank.dev") 
 
@@ -90,7 +92,7 @@ class App {
         }
 
         pasteboardManager = PasteboardManager()
-        reachabilityManager = ReachabilityManager(appConfigProvider: appConfigProvider)
+        reachabilityManager = ReachabilityManager()
 
         wordsManager = WordsManager()
 
@@ -139,9 +141,7 @@ class App {
         let blurManager: IBlurManager = BlurManager(pinKit: pinKit)
 
         dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
-
-        let jsonApiProvider: IJsonApiProvider = JsonApiProvider(networkManager: networkManager)
-        fullTransactionInfoProviderFactory = FullTransactionInfoProviderFactory(apiProvider: jsonApiProvider, dataProviderManager: dataProviderManager)
+        fullTransactionInfoProviderFactory = FullTransactionInfoProviderFactory(networkManager: networkManager, dataProviderManager: dataProviderManager)
 
         testModeIndicator = TestModeIndicator(appConfigProvider: appConfigProvider)
         walletRemover = WalletRemover(accountManager: accountManager, walletManager: walletManager)

@@ -1,6 +1,7 @@
 import EthereumKit
 import FeeRateKit
 import EosKit
+import HsToolKit
 
 // use convertedError to convert user relevant errors from kits to show them localized in UI
 // localize converted error via LocalizedErrors
@@ -57,11 +58,11 @@ extension FeeRateKit.NetworkError {
 
 }
 
-extension NetworkManager.NetworkError {
+extension NetworkManager.RequestError {
 
     var convertedError: Error {
         switch self {
-        case .noConnection: return ConnectionError.noConnection
+        case .noResponse: return ConnectionError.noConnection
         default: return self
         }
     }
@@ -82,13 +83,13 @@ extension BackendError {
 
 }
 
-extension EthereumKit.IncubedError: ConvertibleError {
-
-    var convertedError: Error {
-        switch self {
-        case .notReachable: return IncubedError.notReachable
-        default: return self
-        }
-    }
-
-}
+//extension EthereumKit.IncubedError: ConvertibleError {
+//
+//    var convertedError: Error {
+//        switch self {
+//        case .notReachable: return IncubedError.notReachable
+//        default: return self
+//        }
+//    }
+//
+//}

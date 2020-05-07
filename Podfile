@@ -31,6 +31,8 @@ def appPods
   pod 'FeeRateKit.swift', git: 'https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios'
   # pod 'FeeRateKit.swift', path: '../blockchain-fee-rate-kit-ios/'
 
+  pod 'HsToolKit.swift', git: 'https://github.com/horizontalsystems/hs-tool-kit-ios'
+
   pod 'UIExtensions.swift', git: 'https://github.com/horizontalsystems/gui-kit/'
   # pod 'UIExtensions.swift', path: '../gui-kit/'
   pod 'ThemeKit.swift', git: 'https://github.com/horizontalsystems/component-kit-ios/'

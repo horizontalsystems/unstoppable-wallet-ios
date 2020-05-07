@@ -1,6 +1,7 @@
 import Foundation
 import RxSwift
 import CurrencyKit
+import HsToolKit
 
 class TransactionsInteractor {
     private let disposeBag = DisposeBag()
@@ -90,8 +91,8 @@ extension TransactionsInteractor: ITransactionsInteractor {
                 })
                 .disposed(by: disposeBag)
 
-        reachabilityManager.reachabilitySignal
-                .subscribe(onNext: { [weak self] in
+        reachabilityManager.reachabilityObservable
+                .subscribe(onNext: { [weak self] _ in
                     self?.onReachabilityChange()
                 })
                 .disposed(by: disposeBag)
