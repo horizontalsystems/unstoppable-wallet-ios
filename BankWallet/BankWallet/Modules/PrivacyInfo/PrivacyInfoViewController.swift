@@ -29,6 +29,7 @@ class PrivacyInfoViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
+        tableView.registerHeaderFooter(forClass: PrivacyInfoSeparatorHeaderView.self)
         tableView.registerHeaderFooter(forClass: PrivacyInfoHeaderView.self)
         tableView.registerCell(forClass: PrivacyInfoCell.self)
 
@@ -45,11 +46,11 @@ class PrivacyInfoViewController: ThemeViewController {
         delegate.onTapClose()
     }
 
-    private func header(text: String, showSeparator: Bool = false) -> ViewState<PrivacyInfoHeaderView> {
+    private func header(text: String) -> ViewState<PrivacyInfoHeaderView> {
         .cellType(
                 hash: text,
                 binder: { view in
-                    view.bind(text: text, showSeparator: showSeparator)
+                    view.bind(text: text)
                 },
                 dynamicHeight: { width in
                     PrivacyInfoHeaderView.height(containerWidth: width, text: text)
@@ -74,10 +75,23 @@ class PrivacyInfoViewController: ThemeViewController {
 extension PrivacyInfoViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        [
+        let separatorHeaderState: ViewState<PrivacyInfoSeparatorHeaderView> = .cellType(
+                hash: "separator",
+                binder: nil,
+                dynamicHeight: { _ in
+                    PrivacyInfoSeparatorHeaderView.height
+                }
+        )
+
+        return [
+            Section(
+                    id: "description",
+                    headerState: separatorHeaderState,
+                    rows: [row(text: "settings_privacy_info.description".localized)]
+            ),
             Section(
                     id: "transactions",
-                    headerState: header(text: "settings_privacy_info.header_blockchain_transactions".localized, showSeparator: true),
+                    headerState: header(text: "settings_privacy_info.header_blockchain_transactions".localized),
                     rows: [row(text: "settings_privacy_info.content_blockchain_transactions".localized)]
             ),
             Section(

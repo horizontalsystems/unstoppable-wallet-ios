@@ -905,6 +905,7 @@
 		1A564B6E513269FED43EA6F2 /* ManageWalletsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FD2BE42EF4AADB0372C /* ManageWalletsModule.swift */; };
 		1A564B76F1F041C3397EF39C /* TransactionPendingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D94926FEAF120CF71D7 /* TransactionPendingView.swift */; };
 		1A564B91D7966574A54A5549 /* PrivacySortSelectViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56464567BE569922C1FEFC /* PrivacySortSelectViewItem.swift */; };
+		1A564BA06ABAA80A7AB8695C /* PrivacyInfoSeparatorHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642BC4431A456126A6C5F /* PrivacyInfoSeparatorHeaderView.swift */; };
 		1A564BC84E6A4F836994ABD3 /* AdapterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564504718E7D19F379A9F7 /* AdapterError.swift */; };
 		1A564BCBCA46485ED1D61625 /* PrivacyModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B295DF9E48FF142E311 /* PrivacyModule.swift */; };
 		1A564BD9C950A7B4CFC6D270 /* DerivationSettingSectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56499FAB8BA9B499B7648A /* DerivationSettingSectionViewItem.swift */; };
@@ -916,6 +917,7 @@
 		1A564C174A9B04E1D77CE50B /* PrivacyViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B6EF935F2A1E7EBEEF8 /* PrivacyViewItemFactory.swift */; };
 		1A564C1C6A9FDC2D6F3BBAF8 /* PrivacyInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564EB4A7A10C5299DA6A7D /* PrivacyInteractor.swift */; };
 		1A564C1ED93BC9A50A72FE66 /* FeeRatePriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643953F416DA3DA5DFBC3 /* FeeRatePriority.swift */; };
+		1A564C1FB7BA4824D1E80872 /* PrivacyInfoSeparatorHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642BC4431A456126A6C5F /* PrivacyInfoSeparatorHeaderView.swift */; };
 		1A564C252F02B3CD2DD4E7A7 /* TransactionDiffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F4CBE5575C4D6C40BA /* TransactionDiffer.swift */; };
 		1A564C25AF0883CE867856E0 /* PrivacyInfoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647CEF3A3BACA78B79487 /* PrivacyInfoRouter.swift */; };
 		1A564C31EDF7C4ED60F1A3E5 /* FullTransactionHashHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F5499700A46A1515B6 /* FullTransactionHashHeaderView.swift */; };
@@ -936,6 +938,7 @@
 		1A564CC0C92C44E29FEA6642 /* SetPinPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E534927A26ACA3B1D83 /* SetPinPresenterTests.swift */; };
 		1A564CC6009976A3BE4A6C2A /* EosBackendError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564827EFE2555CF7DC2A78 /* EosBackendError.swift */; };
 		1A564CCF95F91A6F7434BB2D /* PrivacyInfoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647CEF3A3BACA78B79487 /* PrivacyInfoRouter.swift */; };
+		1A564CD864B35B6DFA9BA7A3 /* PrivacyInfoSeparatorHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642BC4431A456126A6C5F /* PrivacyInfoSeparatorHeaderView.swift */; };
 		1A564CFC1DF1681FA2094252 /* AccountDoubleLineCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640FD34F5C897B1DEFAA0 /* AccountDoubleLineCellView.swift */; };
 		1A564CFECEDA95F300CEAD33 /* AddressData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649C6FFC694CD18A8B39A /* AddressData.swift */; };
 		1A564CFF150F67077C950566 /* MainSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640528EFD15137E218EA3 /* MainSettingsPresenter.swift */; };
@@ -2028,6 +2031,7 @@
 		1A5642583B39220896DDDF98 /* RestoreEosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreEosViewController.swift; sourceTree = "<group>"; };
 		1A56425A421C1C9FB383DCDA /* TransactionRecordDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionRecordDataSource.swift; sourceTree = "<group>"; };
 		1A5642992929CF74471FE0B4 /* ManageWalletsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageWalletsViewController.swift; sourceTree = "<group>"; };
+		1A5642BC4431A456126A6C5F /* PrivacyInfoSeparatorHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyInfoSeparatorHeaderView.swift; sourceTree = "<group>"; };
 		1A56433D5D39CCA995F97777 /* Development.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 		1A5643548366535C44A06F07 /* RestoreEosPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreEosPresenter.swift; sourceTree = "<group>"; };
 		1A56435BAABBDC9BD5E84C40 /* EtherscanEthereumProviderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EtherscanEthereumProviderTests.swift; sourceTree = "<group>"; };
@@ -3263,6 +3267,7 @@
 				1A564461FDFE91CED047125F /* PrivacyInfoViewController.swift */,
 				1A564495F3D50379931F27CD /* PrivacyInfoHeaderView.swift */,
 				1A564945E8FA55D2728E8362 /* PrivacyInfoCell.swift */,
+				1A5642BC4431A456126A6C5F /* PrivacyInfoSeparatorHeaderView.swift */,
 			);
 			path = PrivacyInfo;
 			sourceTree = "<group>";
@@ -5003,6 +5008,7 @@
 				1A5642A7095EB4F4C3B35CE8 /* PrivacyInfoModule.swift in Sources */,
 				1A564C0033E37BE1B71BBE55 /* PrivacyInfoHeaderView.swift in Sources */,
 				1A5646D6F4443D696D4A8FAB /* PrivacyInfoCell.swift in Sources */,
+				1A564CD864B35B6DFA9BA7A3 /* PrivacyInfoSeparatorHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5609,6 +5615,7 @@
 				1A5645CA849A3E1AC7B3514C /* PrivacyInfoModule.swift in Sources */,
 				1A5644D3099665DAE701D526 /* PrivacyInfoHeaderView.swift in Sources */,
 				1A5641BCEC948BB8D1C2002A /* PrivacyInfoCell.swift in Sources */,
+				1A564C1FB7BA4824D1E80872 /* PrivacyInfoSeparatorHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6168,6 +6175,7 @@
 				1A5641E3754802A75DC72089 /* PrivacyInfoModule.swift in Sources */,
 				1A56466A3F234475F72ADE4C /* PrivacyInfoHeaderView.swift in Sources */,
 				1A5648AE166B1609CCDB438C /* PrivacyInfoCell.swift in Sources */,
+				1A564BA06ABAA80A7AB8695C /* PrivacyInfoSeparatorHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
