@@ -359,7 +359,6 @@
 "settings_manage_keys.delete.confirmation_remove" = "Это действие удалит ваш %@ Кошелек с этого устройства.";
 "settings_manage_keys.delete.confirmation_disable" = "Токены, которые будут отключены: %@";
 "settings_manage_keys.delete.confirmation_loose" = "Если вы не сделали резервную копию приватного ключа для этого кошелька, вы потеряете доступ к вашим средствам.";
-"error.cant_create_wallet" = "В данный момент кошелек Unstoppable не может создавать новые EOS кошельки. Вы можете восстановить только существующий.";
 "error.invalid_eos_key" = "Неверный Ключ";
 "error.invalid_eos_account" = "Неверный Аккаунт";
 
