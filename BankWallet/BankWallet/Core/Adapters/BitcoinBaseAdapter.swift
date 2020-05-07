@@ -70,7 +70,7 @@ class BitcoinBaseAdapter {
                         originalAddress: hodlerOutputData.addressString
                 )
             }
-            if anyNotMineToAddress == nil, let address = output.address {
+            if anyNotMineToAddress == nil, let address = output.address, !output.mine {
                 anyNotMineToAddress = address
             }
         }
