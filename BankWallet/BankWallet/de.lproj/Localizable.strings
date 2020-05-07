@@ -359,7 +359,6 @@
 "settings_manage_keys.delete.confirmation_remove" = "Damit wird das %@ Wallet von diesem Gerät gelöscht.";
 "settings_manage_keys.delete.confirmation_disable" = "Diese Coins werden entfernt: %@";
 "settings_manage_keys.delete.confirmation_loose" = "ACHTUNG: Wenn Sie den privaten Private Key für dieses Wallet nicht gesichert haben, verlieren Sie den Zugriff auf Ihr Guthaben.";
-"error.cant_create_wallet" = "Im Moment kann das Unstoppable leider keine neuen EOS-Wallets anlegen. Sie können nur bestehende Wallets wiederherstellen.";
 "error.invalid_eos_key" = "Ungültiger Schlüssel";
 "error.invalid_eos_account" = "Ungültiger Account";
 
