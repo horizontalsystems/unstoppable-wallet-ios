@@ -110,7 +110,7 @@
 "balance.syncing" = "Synchronisation...";
 "balance.syncing_percent" = "Synchronisation... %@";
 "balance.synced_through" = "jusqu'à: %@";
-"balance.add_coin" = "Ajouter des coins";
+"balance.add_coin" = "Add Coins";
 "balance.sort.header" = "Trier par";
 "balance.sort.valueHighToLow" = "Balance";
 "balance.sort.az" = "Nom";
@@ -260,10 +260,10 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Crypto Monnaie";
+"manage_coins.title" = "Choose Coins";
 "manage_coins.add_coin.title" = "Ajouter %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Portefeuille";
-"manage_coins.add_coin.text" = "Vous devez créer un portefeuille%@ pour envoyer ou recevoir des %@.\n\nUtilisez le bouton Créer ci-dessous pour créer un nouveau portefeuille%@ , ou le bouton Restaurer pour importer le portefeuille existant.\n\nVous pourrez utiliser ce portefeuille pour : %@.";
+"manage_coins.add_coin.text" = "You need to set up %@ wallet to be able to send or receive %@.\n\nAt this point Unstoppable is not able to create new %@ wallet. You’re only able to restore the existing one.\n\nYou will be able to use this wallet for: %@.";
 "manage_coins.add_coin.create" = "Créer";
 "manage_coins.add_coin.restore" = "Restaurer";
 
