@@ -110,7 +110,7 @@
 "balance.syncing" = "Eşitleniyor...";
 "balance.syncing_percent" = "Senkronize ediliyor... %@";
 "balance.synced_through" = "%@ kadar";
-"balance.add_coin" = "Para Ekle";
+"balance.add_coin" = "Add Coins";
 "balance.sort.header" = "Sıralama şekli";
 "balance.sort.valueHighToLow" = "Bakiye";
 "balance.sort.az" = "İsim";
@@ -260,10 +260,10 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Kripto Para yöneticisi";
+"manage_coins.title" = "Choose Coins";
 "manage_coins.add_coin.title" = "%@ ekle ";
 "manage_coins.add_coin.subtitle" = "%@ Cüzdanı";
-"manage_coins.add_coin.text" = "%@ göndermek ve alabilmek için %@ cüzdanı gerekiyor. \n\nYeni bir %@ cüzdan oluşturmak için aşağıdaki Oluştur düğmesini kullanın, yada yukarıda bahsedilen Cüzdanınız varsa Geri Yükle düğmesini kullanın.\n\n Mevcut Cüzdanınızı %@ için kullanabilirsiniz.";
+"manage_coins.add_coin.text" = "You need to set up %@ wallet to be able to send or receive %@.\n\nAt this point Unstoppable is not able to create new %@ wallet. You’re only able to restore the existing one.\n\nYou will be able to use this wallet for: %@.";
 "manage_coins.add_coin.create" = "Oluştur";
 "manage_coins.add_coin.restore" = "Geri Yükle";
 
