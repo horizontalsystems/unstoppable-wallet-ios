@@ -1,4 +1,5 @@
 import ObjectMapper
+import Alamofire
 
 class EosInfraProvider: IEosProvider {
 
@@ -17,8 +18,8 @@ class EosInfraProvider: IEosProvider {
         "https://public.eosinfra.io"
     }
 
-    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        .post(url: "https://public.eosinfra.io/v1/history/get_transaction", params: ["id": hash])
+    func request(session: Session, hash: String) -> DataRequest {
+        session.request("https://public.eosinfra.io/v1/history/get_transaction", method: .post, parameters: ["id": hash])
     }
 
 }
@@ -40,8 +41,8 @@ class EosGreymassProvider: IEosProvider {
         "https://eos.greymass.com"
     }
 
-    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        .post(url: "https://eos.greymass.com/v1/history/get_transaction", params: ["id": hash])
+    func request(session: Session, hash: String) -> DataRequest {
+        session.request("https://eos.greymass.com/v1/history/get_transaction", method: .post, parameters: ["id": hash])
     }
 
 }

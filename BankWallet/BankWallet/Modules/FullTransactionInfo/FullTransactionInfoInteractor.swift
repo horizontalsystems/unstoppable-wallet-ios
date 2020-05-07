@@ -1,4 +1,5 @@
 import RxSwift
+import HsToolKit
 
 class FullTransactionInfoInteractor {
     private let disposeBag = DisposeBag()
@@ -11,15 +12,11 @@ class FullTransactionInfoInteractor {
     private let dataProviderManager: IFullTransactionDataProviderManager
     private let pasteboardManager: IPasteboardManager
 
-    private let async: Bool
-
-    init(providerFactory: IFullTransactionInfoProviderFactory, reachabilityManager: IReachabilityManager, dataProviderManager: IFullTransactionDataProviderManager, pasteboardManager: IPasteboardManager, async: Bool = true) {
+    init(providerFactory: IFullTransactionInfoProviderFactory, reachabilityManager: IReachabilityManager, dataProviderManager: IFullTransactionDataProviderManager, pasteboardManager: IPasteboardManager) {
         self.providerFactory = providerFactory
         self.reachabilityManager = reachabilityManager
         self.dataProviderManager = dataProviderManager
         self.pasteboardManager = pasteboardManager
-
-        self.async = async
     }
 
     private func showError() {
@@ -38,26 +35,22 @@ extension FullTransactionInfoInteractor: IFullTransactionInfoInteractor {
 
     func didLoad() {
         //  Reachability Manager Signal
-        var reachabilitySignal: Observable = reachabilityManager.reachabilitySignal.asObserver()
-
-        if async {
-            reachabilitySignal = reachabilitySignal.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background)).observeOn(MainScheduler.instance)
-        }
-
-        reachabilitySignal.subscribe(onNext: { [weak self] in
-            self?.delegate?.onConnectionChanged()
-        }).disposed(by: disposeBag)
+        reachabilityManager.reachabilityObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] _ in
+                    self?.delegate?.onConnectionChanged()
+                })
+                .disposed(by: disposeBag)
 
         //  DataProvider Manager Signal
-        var dataProviderUpdatedSignal: Observable = dataProviderManager.dataProviderUpdatedSignal.asObserver()
-
-        if async {
-            dataProviderUpdatedSignal = dataProviderUpdatedSignal.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background)).observeOn(MainScheduler.instance)
-        }
-
-        dataProviderUpdatedSignal.subscribe(onNext: { [weak self] in
-            self?.delegate?.onProviderChanged()
-        }).disposed(by: disposeBag)
+        dataProviderManager.dataProviderUpdatedObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] in
+                    self?.delegate?.onProviderChanged()
+                })
+                .disposed(by: disposeBag)
     }
 
     func updateProvider(for wallet: Wallet) {
@@ -72,7 +65,7 @@ extension FullTransactionInfoInteractor: IFullTransactionInfoInteractor {
                 self?.showError()
             }
         }, onError: { [weak self] error in
-            if let error = error as? NetworkManager.NetworkError, case .noConnection = error {
+            if let error = error as? NetworkManager.RequestError, case .noResponse = error {
                 self?.showOffline()
             } else {
                 self?.showError()

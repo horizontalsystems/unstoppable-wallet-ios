@@ -1,5 +1,6 @@
 import ObjectMapper
 import BigInt
+import Alamofire
 
 class BlockChairBitcoinProvider: IBitcoinForksProvider {
     let name = "BlockChair.com"
@@ -12,8 +13,8 @@ class BlockChairBitcoinProvider: IBitcoinForksProvider {
         "https://api.blockchair.com/bitcoin/stats"
     }
 
-    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        .get(url: "https://api.blockchair.com/bitcoin/dashboards/transaction/" + hash, params: nil)
+    func request(session: Session, hash: String) -> DataRequest {
+        session.request("https://api.blockchair.com/bitcoin/dashboards/transaction/" + hash)
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
@@ -33,8 +34,8 @@ class BlockChairLitecoinProvider: IBitcoinForksProvider {
         "https://api.blockchair.com/litecoin/stats"
     }
 
-    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        .get(url: "https://api.blockchair.com/litecoin/dashboards/transaction/" + hash, params: nil)
+    func request(session: Session, hash: String) -> DataRequest {
+        session.request("https://api.blockchair.com/litecoin/dashboards/transaction/" + hash)
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
@@ -54,8 +55,8 @@ class BlockChairBitcoinCashProvider: IBitcoinForksProvider {
         "https://api.blockchair.com/bitcoin-cash/stats"
     }
 
-    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        .get(url: "https://api.blockchair.com/bitcoin-cash/dashboards/transaction/" + hash, params: nil)
+    func request(session: Session, hash: String) -> DataRequest {
+        session.request("https://api.blockchair.com/bitcoin-cash/dashboards/transaction/" + hash)
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
@@ -75,8 +76,8 @@ class BlockChairDashProvider: IBitcoinForksProvider {
         "https://api.blockchair.com/dash/stats"
     }
 
-    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        .get(url: "https://api.blockchair.com/dash/dashboards/transaction/" + hash, params: nil)
+    func request(session: Session, hash: String) -> DataRequest {
+        session.request("https://api.blockchair.com/dash/dashboards/transaction/" + hash)
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
@@ -96,8 +97,8 @@ class BlockChairEthereumProvider: IEthereumForksProvider {
         "https://api.blockchair.com/ethereum/stats"
     }
 
-    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        .get(url: "https://api.blockchair.com/ethereum/dashboards/transaction/" + hash, params: nil)
+    func request(session: Session, hash: String) -> DataRequest {
+        session.request("https://api.blockchair.com/ethereum/dashboards/transaction/" + hash)
     }
 
     func convert(json: [String: Any]) -> IEthereumResponse? {
