@@ -110,7 +110,7 @@
 "balance.syncing" = "Идет синхронизация...";
 "balance.syncing_percent" = "Идет синхронизация... %@";
 "balance.synced_through" = "до: %@";
-"balance.add_coin" = "Добавить Токен";
+"balance.add_coin" = "Add Coins";
 "balance.sort.header" = "Сортировать по";
 "balance.sort.valueHighToLow" = "Балансу";
 "balance.sort.az" = "Названию";
@@ -260,10 +260,10 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Токены";
+"manage_coins.title" = "Choose Coins";
 "manage_coins.add_coin.title" = "Добавить %@";
 "manage_coins.add_coin.subtitle" = "%@ Кошелек";
-"manage_coins.add_coin.text" = "Вам нужно настроить кошелек %@, чтобы иметь возможность отправлять или получать %@.\n\nИспользуйте кнопку 'Создать', чтобы настроить новый кошелек %@ или 'Восстановить', чтобы импортировать существующий.\n\nВы сможете использовать этот кошелек для: %@.";
+"manage_coins.add_coin.text" = "You need to set up %@ wallet to be able to send or receive %@.\n\nAt this point Unstoppable is not able to create new %@ wallet. You’re only able to restore the existing one.\n\nYou will be able to use this wallet for: %@.";
 "manage_coins.add_coin.create" = "Создать";
 "manage_coins.add_coin.restore" = "Восстановить";
 
