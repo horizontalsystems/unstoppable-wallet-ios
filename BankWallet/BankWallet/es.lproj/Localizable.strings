@@ -359,7 +359,6 @@
 "settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará los monederos %@ de este dispositivo.";
 "settings_manage_keys.delete.confirmation_disable" = "Monedas que serán deshabilitadas: %@";
 "settings_manage_keys.delete.confirmation_loose" = "Si usted no respaldó la clave privada para este monedero, perderá el acceso a sus fondos.";
-"error.cant_create_wallet" = "En este momento Unstoppable no es capaz de crear nuevas cuentas de monederos EOS. Solo puede restaurar la existente.";
 "error.invalid_eos_key" = "Clave inválida";
 "error.invalid_eos_account" = "Cuenta inválida";
 
