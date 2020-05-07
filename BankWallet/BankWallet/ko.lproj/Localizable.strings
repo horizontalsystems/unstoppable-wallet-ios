@@ -359,7 +359,6 @@
 "settings_manage_keys.delete.confirmation_remove" = "이 행동은 %@ 지갑을 장치에서 삭제합니다.";
 "settings_manage_keys.delete.confirmation_disable" = "비활성화될 코인: %@";
 "settings_manage_keys.delete.confirmation_loose" = "지갑에서 개인 암호를 백업 시키지 않으셨을 경우, 귀하께서는 자금 접근에 제한이 있을 것 입니다.";
-"error.cant_create_wallet" = "언스탑퍼블은 현재 새로운 EOS 지갑을 만들 수 없습니다. 귀하께서는 기존 항목만 복원이 가능합니다.";
 "error.invalid_eos_key" = "잘못된 암호입니다";
 "error.invalid_eos_account" = "계정이 존재하지 않습니다.";
 
