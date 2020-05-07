@@ -5,20 +5,10 @@ class PrivacyInfoHeaderView: UITableViewHeaderFooterView {
     private static let horizontalPadding = CGFloat.margin6x
     private static let font: UIFont = .headline2
 
-    private let separator = UIView()
     private let label = UILabel()
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-
-        addSubview(separator)
-        separator.snp.makeConstraints { maker in
-            maker.top.equalToSuperview()
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
-            maker.height.equalTo(CGFloat.heightOnePixel)
-        }
-
-        separator.backgroundColor = .themeSteel20
 
         addSubview(label)
         label.snp.makeConstraints { maker in
@@ -35,8 +25,7 @@ class PrivacyInfoHeaderView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(text: String?, showSeparator: Bool) {
-        separator.isHidden = !showSeparator
+    func bind(text: String?) {
         label.text = text
     }
 
