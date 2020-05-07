@@ -110,7 +110,7 @@
 "balance.syncing" = "正在同步...";
 "balance.syncing_percent" = "正在同步... %@";
 "balance.synced_through" = "直至：%@";
-"balance.add_coin" = "添加代币";
+"balance.add_coin" = "Add Coins";
 "balance.sort.header" = "排序方式";
 "balance.sort.valueHighToLow" = "余额";
 "balance.sort.az" = "名称";
@@ -260,10 +260,10 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "代币管理器";
+"manage_coins.title" = "Choose Coins";
 "manage_coins.add_coin.title" = "添加%@ ";
 "manage_coins.add_coin.subtitle" = "%@钱包";
-"manage_coins.add_coin.text" = "您必须创建%@钱包才能对%@进行转账或收款。\n\n使用下方的“创建”（Create）按钮建立一个新的%@钱包，或者使用“恢复”（Restore）按钮导入现有钱包。\n\n您可以对此钱包使用：%@。";
+"manage_coins.add_coin.text" = "You need to set up %@ wallet to be able to send or receive %@.\n\nAt this point Unstoppable is not able to create new %@ wallet. You’re only able to restore the existing one.\n\nYou will be able to use this wallet for: %@.";
 "manage_coins.add_coin.create" = "创建";
 "manage_coins.add_coin.restore" = "恢复";
 
