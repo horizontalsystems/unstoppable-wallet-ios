@@ -263,7 +263,10 @@
 "manage_coins.title" = "Choose Coins";
 "manage_coins.add_coin.title" = "Ajouter %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Portefeuille";
-"manage_coins.add_coin.text" = "You need to set up %@ wallet to be able to send or receive %@.\n\nAt this point Unstoppable is not able to create new %@ wallet. You’re only able to restore the existing one.\n\nYou will be able to use this wallet for: %@.";
+"manage_coins.add_coin.text.set_up" = "You need to set up %@ wallet to be able to send or receive %@.";
+"manage_coins.add_coin.text.create_or_restore" = "Use the Create button below to set up a new %@ wallet, or Restore button to import the existing one.";
+"manage_coins.add_coin.text.create_only" = "At this point Unstoppable is not able to create new %@ wallet. You’re only able to restore the existing one.";
+"manage_coins.add_coin.text.tokens" = "You will be able to use this wallet for: %@.";
 "manage_coins.add_coin.create" = "Créer";
 "manage_coins.add_coin.restore" = "Restaurer";
 
