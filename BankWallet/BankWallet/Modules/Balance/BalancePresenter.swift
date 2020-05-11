@@ -114,7 +114,6 @@ extension BalancePresenter: IBalanceViewDelegate {
     func onLoad() {
         queue.async {
             self.interactor.subscribeToWallets()
-            self.interactor.subscribeToBaseCurrency()
 
             self.handleUpdate(wallets: self.interactor.wallets)
             self.subscribeRates()

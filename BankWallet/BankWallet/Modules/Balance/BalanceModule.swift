@@ -38,7 +38,6 @@ protocol IBalanceInteractor: AnyObject {
     func state(wallet: Wallet) -> AdapterState?
 
     func subscribeToWallets()
-    func subscribeToBaseCurrency()
     func subscribeToAdapters(wallets: [Wallet])
 
     func subscribeToMarketInfo(currencyCode: String)
