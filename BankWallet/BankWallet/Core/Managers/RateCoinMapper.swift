@@ -1,23 +1,32 @@
 import Foundation
 
-enum RateDirectionMap {
-    case convert
-    case unconvert
-}
-
 class RateCoinMapper {
-    private let nonExistCoin = "AI-DAI"
-    private(set) var convertCoinMap = [String: String]()
-    private(set) var unconvertCoinMap = [String: String]()
+    private let disabledCoins = ["AURA", "EOSDT", "PGL", "PPT", "SAI", "WBTC", "WETH"]
+    private let convertedCoins = [
+        "HOT": "HOLO",
+    ]
 }
 
 extension RateCoinMapper: IRateCoinMapper {
 
-    func addCoin(direction: RateDirectionMap, from: String, to: String?) {
-        switch direction {
-        case .convert: convertCoinMap[from] = to ?? nonExistCoin
-        case .unconvert: unconvertCoinMap[from] = to ?? nonExistCoin
+    func convert(coinCode: String) -> String? {
+        guard !disabledCoins.contains(coinCode) else {
+            return nil
         }
+
+        return convertedCoins[coinCode] ?? coinCode
+    }
+
+    func unconvert(coinCode: String) -> [String] {
+        var coinCodes = [coinCode]
+
+        for (from, to) in convertedCoins {
+            if to == coinCode {
+                coinCodes.append(from)
+            }
+        }
+
+        return coinCodes
     }
 
 }
