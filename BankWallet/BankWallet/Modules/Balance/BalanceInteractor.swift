@@ -28,6 +28,14 @@ class BalanceInteractor {
         self.rateManager = rateManager
         self.rateAppManager = rateAppManager
 
+        currencyKit.baseCurrencyUpdatedObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .subscribe(onNext: { [weak self] baseCurrency in
+                    self?.onUpdate(baseCurrency: baseCurrency)
+                })
+                .disposed(by: disposeBag)
+
         sortTypeManager.sortTypeObservable
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] sortType in
@@ -89,16 +97,6 @@ extension BalanceInteractor: IBalanceInteractor {
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .subscribe(onNext: { [weak self] in
                     self?.onAdaptersReady()
-                })
-                .disposed(by: disposeBag)
-    }
-
-    func subscribeToBaseCurrency() {
-        currencyKit.baseCurrencyUpdatedObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onNext: { [weak self] baseCurrency in
-                    self?.onUpdate(baseCurrency: baseCurrency)
                 })
                 .disposed(by: disposeBag)
     }
