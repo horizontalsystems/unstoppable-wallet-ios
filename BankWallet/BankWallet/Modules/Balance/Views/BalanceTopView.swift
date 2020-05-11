@@ -64,11 +64,11 @@ class BalanceTopView: UIView {
         super.init(coder: aDecoder)
     }
 
-    func bind(viewItem: BalanceTopViewItem, onTapRateDiff: @escaping () -> ()) {
+    func bind(viewItem: BalanceTopViewItem, onTapRateDiff: @escaping () -> (), onTapError: (() -> ())?) {
         self.onTapRateDiff = onTapRateDiff
 
         let coinIcon = viewItem.coinIconCode.flatMap { UIImage(named: "\($0.lowercased())") }
-        coinIconView.bind(coinIcon: coinIcon, spinnerProgress: viewItem.syncSpinnerProgress, failViewVisible: viewItem.failedImageViewVisible)
+        coinIconView.bind(coinIcon: coinIcon, spinnerProgress: viewItem.syncSpinnerProgress, failViewVisible: viewItem.failedImageViewVisible, onTapError: onTapError)
 
         nameLabel.text = viewItem.coinTitle
 

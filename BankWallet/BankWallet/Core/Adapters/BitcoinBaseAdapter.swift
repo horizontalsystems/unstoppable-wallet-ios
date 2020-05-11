@@ -18,7 +18,7 @@ class BitcoinBaseAdapter {
     init(abstractKit: AbstractKit) {
         self.abstractKit = abstractKit
 
-        state = .notSynced
+        state = .notSynced(error: AppError.unknownError)
     }
 
     func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
@@ -199,7 +199,7 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
                 return
             }
 
-            self.state = .notSynced
+            self.state = .notSynced(error: AppError.unknownError)
             stateUpdatedSubject.onNext(())
         case .syncing(let progress):
             let newProgress = Int(progress * 100)
