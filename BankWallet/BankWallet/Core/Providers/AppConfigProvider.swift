@@ -138,6 +138,8 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "TUSD",      title: "TrueUSD",               code: "TUSD",    decimal: 18, type: CoinType(erc20Address: "0x0000000000085d4780B73119b644AE5ecd22b376")),
         Coin(id: "USDC",      title: "USD Coin",              code: "USDC",    decimal: 6,  type: CoinType(erc20Address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48")),
         Coin(id: "WTC",       title: "Waltonchain",           code: "WTC",     decimal: 18, type: CoinType(erc20Address: "0xb7cB1C96dB6B22b0D3d9536E0108d062BD488F74")),
+        Coin(id: "WBTC",      title: "Wrapped Bitcoin",       code: "WBTC",    decimal: 8,  type: CoinType(erc20Address: "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599")),
+        Coin(id: "WETH",      title: "Wrapped Ethereum",      code: "WETH",    decimal: 18, type: CoinType(erc20Address: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")),
     ]
 
 }

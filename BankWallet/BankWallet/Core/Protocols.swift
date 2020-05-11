@@ -213,10 +213,8 @@ protocol IPostsManager {
 }
 
 protocol IRateCoinMapper {
-    var convertCoinMap: [String: String] { get }
-    var unconvertCoinMap: [String: String] { get }
-
-    func addCoin(direction: RateDirectionMap, from: String, to: String?)
+    func convert(coinCode: String) -> String?
+    func unconvert(coinCode: String) -> [String]
 }
 
 protocol IBlockedChartCoins {
