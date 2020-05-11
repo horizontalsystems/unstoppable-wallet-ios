@@ -55,7 +55,6 @@ class BalanceTopView: UIView {
             maker.top.trailing.equalToSuperview()
             maker.bottom.equalToSuperview().inset(CGFloat.margin1x)
             maker.width.equalTo(80)
-            maker.height.equalTo(42)
         }
 
         rateDiffButton.addTarget(self, action: #selector(_onTapRateDiff), for: .touchUpInside)
