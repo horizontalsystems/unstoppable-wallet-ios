@@ -83,7 +83,7 @@ extension BinanceAdapter: IBalanceAdapter {
     var state: AdapterState {
         switch binanceKit.syncState {
         case .synced: return .synced
-        case .notSynced: return .notSynced
+        case .notSynced: return .notSynced(error: AppError.unknownError)
         case .syncing: return .syncing(progress: 50, lastBlockDate: nil)
         }
     }

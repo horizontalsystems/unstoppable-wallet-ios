@@ -3,6 +3,7 @@ import SnapKit
 import DeepDiff
 import ActionSheet
 import ThemeKit
+import HUD
 
 class BalanceViewController: ThemeViewController {
     private let animationDuration: TimeInterval = 0.2
@@ -175,6 +176,9 @@ class BalanceViewController: ThemeViewController {
                 },
                 onChart: { [weak self] in
                     self?.delegate.onTapChart(viewItem: viewItem)
+                },
+                onTapError: { [weak self] in
+                    self?.delegate.onTapFailedIcon(viewItem: viewItem)
                 }
         )
     }
@@ -312,6 +316,12 @@ extension BalanceViewController: IBalanceView {
     func hideRefresh() {
         DispatchQueue.main.async {
             self.refreshControl.endRefreshing()
+        }
+    }
+
+    func show(appError: AppError) {
+        DispatchQueue.main.async {
+            HudHelper.instance.showError(title: appError.localizedDescription)
         }
     }
 
