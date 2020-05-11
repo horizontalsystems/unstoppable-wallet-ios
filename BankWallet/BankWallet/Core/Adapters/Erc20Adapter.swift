@@ -87,6 +87,26 @@ extension Erc20Adapter {
 
 }
 
+// IAdapter
+extension Erc20Adapter: IAdapter {
+
+    func start() {
+        erc20Kit.refresh()
+    }
+
+    func stop() {
+    }
+
+    func refresh() {
+        erc20Kit.refresh()
+    }
+
+    var debugInfo: String {
+        ethereumKit.debugInfo
+    }
+
+}
+
 extension Erc20Adapter: IBalanceAdapter {
 
     var state: AdapterState {
