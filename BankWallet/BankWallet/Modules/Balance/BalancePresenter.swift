@@ -192,6 +192,25 @@ extension BalancePresenter: IBalanceViewDelegate {
         router.showChart(coin: viewItem.wallet.coin)
     }
 
+    func onTapFailedIcon(viewItem: BalanceViewItem) {
+        guard let item = items.first(where: { $0.wallet == viewItem.wallet }) else {
+            return
+        }
+
+        guard let state = item.state, case let .notSynced(error) = state else {
+            return
+        }
+
+        let appError = AppError(error: error)
+
+        switch appError {
+        case .noConnection: view?.show(appError: appError)
+//        default: router.showSyncError(appError: appError)
+        //todo
+        default: view?.show(appError: appError)
+        }
+    }
+
     func onTapAddCoin() {
         router.openManageWallets()
     }

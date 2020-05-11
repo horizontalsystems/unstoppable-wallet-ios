@@ -10,7 +10,9 @@ class BalanceCoinIconHolder: GrayIconHolder {
             strokeColor: .themeGray,
             duration: 2
     )
-    private let failedImageView = UIImageView()
+    private let failedButton = UIButton()
+
+    private var onTapError: (() -> ())?
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -20,19 +22,26 @@ class BalanceCoinIconHolder: GrayIconHolder {
             maker.edges.equalToSuperview()
         }
 
-        addSubview(failedImageView)
-        failedImageView.snp.makeConstraints { maker in
-            maker.center.equalToSuperview()
+        addSubview(failedButton)
+        failedButton.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
         }
 
-        failedImageView.image = UIImage(named: "Attention Icon")
+        failedButton.setImage(UIImage(named: "Attention Icon")?.tinted(with: .themeLucian), for: .normal)
+        failedButton.addTarget(self, action: #selector(onTapErrorButton), for: .touchUpInside)
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("not implemented")
     }
 
-    func bind(coinIcon: UIImage?, spinnerProgress: Int?, failViewVisible: Bool) {
+    @objc private func onTapErrorButton() {
+        onTapError?()
+    }
+
+    func bind(coinIcon: UIImage?, spinnerProgress: Int?, failViewVisible: Bool, onTapError: (() -> ())?) {
+        self.onTapError = onTapError
+
         super.bind(image: coinIcon)
 
         if let spinnerProgress = spinnerProgress {
@@ -44,7 +53,7 @@ class BalanceCoinIconHolder: GrayIconHolder {
             syncSpinner.stopAnimating()
         }
 
-        failedImageView.isHidden = !failViewVisible
+        failedButton.isHidden = !failViewVisible
     }
 
 }
