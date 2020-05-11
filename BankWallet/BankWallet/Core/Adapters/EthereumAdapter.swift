@@ -68,6 +68,27 @@ extension EthereumAdapter {
 
 }
 
+// IAdapter
+extension EthereumAdapter: IAdapter {
+
+    func start() {
+        // started via EthereumKitManager
+    }
+
+    func stop() {
+        // stopped via EthereumKitManager
+    }
+
+    func refresh() {
+        // refreshed via EthereumKitManager
+    }
+
+    var debugInfo: String {
+        ethereumKit.debugInfo
+    }
+
+}
+
 extension EthereumAdapter: IBalanceAdapter {
 
     var state: AdapterState {
