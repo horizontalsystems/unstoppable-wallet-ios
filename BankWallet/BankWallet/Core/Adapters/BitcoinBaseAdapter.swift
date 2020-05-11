@@ -18,7 +18,7 @@ class BitcoinBaseAdapter {
     init(abstractKit: AbstractKit) {
         self.abstractKit = abstractKit
 
-        state = .syncing(progress: 0, lastBlockDate: nil)
+        state = .notSynced
     }
 
     func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
