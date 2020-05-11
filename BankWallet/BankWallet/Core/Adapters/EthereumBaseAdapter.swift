@@ -32,27 +32,6 @@ class EthereumBaseAdapter {
 
 }
 
-// IAdapter
-extension EthereumBaseAdapter: IAdapter {
-
-    func start() {
-        // started via EthereumKitManager
-    }
-
-    func stop() {
-        // stopped via EthereumKitManager
-    }
-
-    func refresh() {
-        // refreshed via EthereumKitManager
-    }
-
-    var debugInfo: String {
-        ethereumKit.debugInfo
-    }
-
-}
-
 extension EthereumBaseAdapter {
     //todo: Make ethereumKit errors public!
     enum AddressConversion: Error {
