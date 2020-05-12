@@ -201,13 +201,12 @@ extension BalancePresenter: IBalanceViewDelegate {
             return
         }
 
-        let appError = AppError(error: error)
-
-        switch appError {
-        case .noConnection: view?.show(appError: appError)
-//        default: router.showSyncError(appError: appError)
-        //todo
-        default: view?.show(appError: appError)
+        if let appError = error as? AppError, case .noConnection = appError {
+            view?.show(error: appError)
+        } else {
+            //todo
+//        default: router.showSyncError(error: error)
+            view?.show(error: error)
         }
     }
 
