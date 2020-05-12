@@ -13,7 +13,7 @@ class RateListPresenter {
     private var coins = [Coin]()
     private let currency: Currency
     private var marketInfos = [String: MarketInfo]()
-    private var topMarkets = [MarketInfo]()
+    private var topMarkets = [TopMarket]()
 
     init(interactor: IRateListInteractor, router: IRateListRouter, rateListSorter: IRateListSorter, factory: IRateListFactory) {
         self.interactor = interactor
@@ -25,13 +25,13 @@ class RateListPresenter {
     }
 
     private func syncListsAndShow() {
-        for (coin, marketInfo) in marketInfos {
+        for (coinCode, marketInfo) in marketInfos {
             for (topMarketIndex, topMarket) in topMarkets.enumerated() {
-                if marketInfo.coinCode == topMarket.coinCode {
-                    if marketInfo.timestamp > topMarket.timestamp {
-                        topMarkets[topMarketIndex] = marketInfo
-                    } else if marketInfo.timestamp < topMarket.timestamp {
-                        marketInfos[coin] = topMarket
+                if coinCode == topMarket.coinCode {
+                    if marketInfo.timestamp > topMarket.marketInfo.timestamp {
+                        topMarkets[topMarketIndex].marketInfo = marketInfo
+                    } else if marketInfo.timestamp < topMarket.marketInfo.timestamp {
+                        marketInfos[coinCode] = topMarket.marketInfo
                     }
                 }
             }
@@ -52,13 +52,12 @@ extension RateListPresenter: IRateListViewDelegate {
         coins.forEach { coin in
             marketInfos[coin.code] = interactor.marketInfo(coinCode: coin.code, currencyCode: currency.code)
         }
-        topMarkets = interactor.topMarketInfos(currencyCode: currency.code)
 
-        let item = factory.rateListViewItem(coins: coins, currency: currency, marketInfos: marketInfos, topMarkets: topMarkets)
+        let item = factory.rateListViewItem(coins: coins, currency: currency, marketInfos: marketInfos, topMarkets: [])
         view?.show(item: item)
 
         interactor.subscribeToMarketInfos(currencyCode: currency.code)
-        interactor.subscribeToTopMarketInfos()
+        interactor.updateTopMarkets(currencyCode: currency.code)
     }
 
     func onSelect(viewItem: RateViewItem) {
@@ -76,10 +75,12 @@ extension RateListPresenter: IRateListInteractorDelegate {
     func didReceive(marketInfos: [String: MarketInfo]) {
         self.marketInfos = marketInfos
         syncListsAndShow()
+
+        interactor.updateTopMarkets(currencyCode: currency.code)
     }
 
-    func didReceive(topMarketInfos: [MarketInfo]) {
-        self.topMarkets = topMarketInfos
+    func didReceive(topMarkets: [TopMarket]) {
+        self.topMarkets = topMarkets
         syncListsAndShow()
     }
 

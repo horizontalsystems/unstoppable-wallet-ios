@@ -17,14 +17,13 @@ protocol IRateListInteractor {
     var featuredCoins: [Coin] { get }
 
     func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo?
-    func topMarketInfos(currencyCode: String) -> [MarketInfo]
     func subscribeToMarketInfos(currencyCode: String)
-    func subscribeToTopMarketInfos()
+    func updateTopMarkets(currencyCode: String)
 }
 
 protocol IRateListInteractorDelegate: class {
     func didReceive(marketInfos: [String: MarketInfo])
-    func didReceive(topMarketInfos: [MarketInfo])
+    func didReceive(topMarkets: [TopMarket])
 }
 
 protocol IRateListRouter {
@@ -32,7 +31,7 @@ protocol IRateListRouter {
 }
 
 protocol IRateListFactory {
-    func rateListViewItem(coins: [Coin], currency: Currency, marketInfos: [CoinCode: MarketInfo], topMarkets: [MarketInfo]) -> RateListViewItem
+    func rateListViewItem(coins: [Coin], currency: Currency, marketInfos: [CoinCode: MarketInfo], topMarkets: [TopMarket]) -> RateListViewItem
 }
 
 protocol IRateListSorter {
