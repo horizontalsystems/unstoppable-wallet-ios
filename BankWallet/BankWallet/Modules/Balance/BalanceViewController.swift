@@ -319,9 +319,9 @@ extension BalanceViewController: IBalanceView {
         }
     }
 
-    func show(appError: AppError) {
+    func show(error: Error) {
         DispatchQueue.main.async {
-            HudHelper.instance.showError(title: appError.localizedDescription)
+            HudHelper.instance.showError(title: error.localizedDescription)
         }
     }
 

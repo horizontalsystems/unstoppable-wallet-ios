@@ -93,7 +93,7 @@ extension EosAdapter: IBalanceAdapter {
     var state: AdapterState {
         switch asset.syncState {
         case .synced: return .synced
-        case .notSynced: return .notSynced(error: AppError.unknownError)
+        case .notSynced(let error): return .notSynced(error: error.convertedError)
         case .syncing: return .syncing(progress: 50, lastBlockDate: nil)
         }
     }
