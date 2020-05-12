@@ -83,7 +83,6 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "ZRX",       title: "0x Protocol",           code: "ZRX",     decimal: 18, type: CoinType(erc20Address: "0xE41d2489571d322189246DaFA5ebDe1F4699F498")),
         Coin(id: "ELF",       title: "Aelf",                  code: "ELF",     decimal: 18, type: CoinType(erc20Address: "0xbf2179859fc6D5BEE9Bf9158632Dc51678a4100e")),
         Coin(id: "ANKR",      title: "Ankr Network",          code: "ANKR",    decimal: 8,  type: .binance(symbol: "ANKR-E97")),
-        Coin(id: "AURA",      title: "Aurora DAO",            code: "AURA",    decimal: 18, type: CoinType(erc20Address: "0xCdCFc0f66c522Fd086A1b725ea3c0Eeb9F9e8814")),
         Coin(id: "BNT",       title: "Bancor",                code: "BNT",     decimal: 18, type: CoinType(erc20Address: "0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C")),
         Coin(id: "BAT",       title: "Basic Attention Token", code: "BAT",     decimal: 18, type: CoinType(erc20Address: "0x0D8775F648430679A709E98d2b0Cb6250d2887EF")),
         Coin(id: "BNB-ERC20", title: "Binance ERC20",         code: "BNB",     decimal: 18, type: CoinType(erc20Address: "0xB8c77482e45F1F44dE1745F52C74426C631bDD52")),
