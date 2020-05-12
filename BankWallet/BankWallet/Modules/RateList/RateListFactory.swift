@@ -25,14 +25,14 @@ class RateListFactory {
         )
     }
 
-    private func topRateViewItem(currency: Currency, topMarketInfo: MarketInfo) -> RateViewItem {
+    private func topRateViewItem(currency: Currency, topMarket: TopMarket) -> RateViewItem {
         RateViewItem(
-                coinCode: topMarketInfo.coinCode,
-                coinTitle: topMarketInfo.coinName,
+                coinCode: topMarket.coinCode,
+                coinTitle: topMarket.coinName,
                 blockchainType: nil,
-                rateExpired: topMarketInfo.expired,
-                rate: CurrencyValue(currency: currency, value: topMarketInfo.rate),
-                diff: topMarketInfo.diff
+                rateExpired: topMarket.marketInfo.expired,
+                rate: CurrencyValue(currency: currency, value: topMarket.marketInfo.rate),
+                diff: topMarket.marketInfo.diff
         )
     }
 
@@ -40,9 +40,9 @@ class RateListFactory {
 
 extension RateListFactory: IRateListFactory {
 
-    func rateListViewItem(coins: [Coin], currency: Currency, marketInfos: [CoinCode: MarketInfo], topMarkets: [MarketInfo]) -> RateListViewItem {
+    func rateListViewItem(coins: [Coin], currency: Currency, marketInfos: [CoinCode: MarketInfo], topMarkets: [TopMarket]) -> RateListViewItem {
         let marketInfoItems = coins.compactMap { coin in marketInfos[coin.code].map { viewItem(coin: coin, currency: currency, marketInfo: $0) } }
-        let topRateViewItems = topMarkets.map { topRateViewItem(currency: currency, topMarketInfo: $0) }
+        let topRateViewItems = topMarkets.map { topRateViewItem(currency: currency, topMarket: $0) }
 
         return RateListViewItem(
                 currentDate: currentDateProvider.currentDate, lastUpdateTimestamp: lastUpdateTimestamp(marketInfos: marketInfos),

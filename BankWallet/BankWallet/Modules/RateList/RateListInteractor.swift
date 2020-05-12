@@ -38,10 +38,6 @@ extension RateListInteractor: IRateListInteractor {
         rateManager.marketInfo(coinCode: coinCode, currencyCode: currencyCode)
     }
 
-    func topMarketInfos(currencyCode: String) -> [MarketInfo] {
-        rateManager.topMarketInfos(currencyCode: currencyCode)
-    }
-
     func subscribeToMarketInfos(currencyCode: String) {
         rateManager.marketInfosObservable(currencyCode: currencyCode)
                 .observeOn(MainScheduler.instance)
@@ -51,11 +47,11 @@ extension RateListInteractor: IRateListInteractor {
                 .disposed(by: disposeBag)
     }
 
-    func subscribeToTopMarketInfos() {
-        rateManager.topMarketInfosObservable()
+    func updateTopMarkets(currencyCode: String) {
+        rateManager.topMarketInfos(currencyCode: currencyCode)
                 .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] infos in
-                    self?.delegate?.didReceive(topMarketInfos: infos)
+                .subscribe(onSuccess: { [weak self] infos in
+                    self?.delegate?.didReceive(topMarkets: infos)
                 })
                 .disposed(by: disposeBag)
     }
