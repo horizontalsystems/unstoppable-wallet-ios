@@ -43,7 +43,7 @@ extension BalanceRouter: IBalanceRouter {
         viewController?.present(SortTypeRouter.module(), animated: true)
     }
 
-    func showSyncError(appError: AppError) {
+    func showSyncError(error: Error) {
         print("show sheet")
     }
 

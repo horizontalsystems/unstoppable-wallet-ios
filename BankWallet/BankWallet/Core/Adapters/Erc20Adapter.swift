@@ -112,7 +112,7 @@ extension Erc20Adapter: IBalanceAdapter {
     var state: AdapterState {
         switch erc20Kit.syncState {
         case .synced: return .synced
-        case .notSynced(let error): return .notSynced(error: error)
+        case .notSynced(let error): return .notSynced(error: error.convertedError)
         case .syncing: return .syncing(progress: 50, lastBlockDate: nil)
         }
     }
