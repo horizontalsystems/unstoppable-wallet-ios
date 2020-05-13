@@ -336,7 +336,7 @@
 "settings_privacy.sorting_default.description" = "Без настроек";
 "settings_privacy.sorting_shuffle" = "Перемешать";
 "settings_privacy.sorting_shuffle.description" = "Случайное Индексирование";
-"settings_privacy.sorting_bip69" = "Deterministic Bip69";
+"settings_privacy.sorting_bip69" = "Детерминированный BIP69";
 "settings_privacy.sorting_bip69.description" = "Лексикографическая Индексация";
 
 // Settings -> Contact
