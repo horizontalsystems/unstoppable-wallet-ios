@@ -194,12 +194,14 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
 
             self.state = .synced
             stateUpdatedSubject.onNext(())
-        case .notSynced:
-            if case .notSynced = self.state {
+        case .notSynced(let error):
+            let converted = error.convertedError
+
+            if case .notSynced(let appError) = self.state, "\(converted)" == "\(appError)" {
                 return
             }
 
-            self.state = .notSynced(error: AppError.unknownError)
+            self.state = .notSynced(error: converted)
             stateUpdatedSubject.onNext(())
         case .syncing(let progress):
             let newProgress = Int(progress * 100)
