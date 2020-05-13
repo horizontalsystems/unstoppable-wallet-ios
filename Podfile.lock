@@ -334,10 +334,10 @@ CHECKOUT OPTIONS:
     :commit: ffd0e14a934a134e99cafb03d06baf045ae800f9
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinCore.swift:
-    :commit: ffd0e14a934a134e99cafb03d06baf045ae800f9
+    :commit: 06551de7eba69d5316d20abfd9cff517d762566d
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinKit.swift:
-    :commit: ffd0e14a934a134e99cafb03d06baf045ae800f9
+    :commit: 06551de7eba69d5316d20abfd9cff517d762566d
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
     :commit: dedea8758c71f0f73cada98c9dacd58d4646218d
