@@ -34,9 +34,9 @@ class FullTransactionDataProviderManager {
     private var ethereumProviders: [IEthereumForksProvider] {
         appConfigProvider.testMode ? [
 //            HorSysEthereumProvider(testMode: true),
-            EtherscanEthereumProvider(testMode: true)
+            EtherscanEthereumProvider(testMode: true, apiKey: appConfigProvider.etherscanKey)
         ] : [
-            EtherscanEthereumProvider(testMode: false),
+            EtherscanEthereumProvider(testMode: false, apiKey: appConfigProvider.etherscanKey),
 //            HorSysEthereumProvider(testMode: false),
             BlockChairEthereumProvider()
         ]

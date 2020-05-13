@@ -8,18 +8,29 @@ class EtherscanEthereumProvider: IEthereumForksProvider {
     private let apiUrl: String
     let reachabilityUrl: String
 
+    private let apiKey: String
+
     func url(for hash: String) -> String? {
         url + hash
     }
 
     func request(session: Session, hash: String) -> DataRequest {
-        session.request(apiUrl + hash)
+        let parameters: Parameters = [
+            "module": "proxy",
+            "action": "eth_getTransactionByHash",
+            "txhash": hash,
+            "apikey": apiKey
+        ]
+
+        return session.request(apiUrl, parameters: parameters)
     }
 
-    init(testMode: Bool) {
+    init(testMode: Bool, apiKey: String) {
         url = testMode ? "https://ropsten.etherscan.io/tx/" : "https://etherscan.io/tx/"
-        apiUrl = testMode ? "https://api-ropsten.etherscan.io/api?module=proxy&action=eth_getTransactionByHash&txhash=" : "https://api.etherscan.io/api?module=proxy&action=eth_getTransactionByHash&txhash="
+        apiUrl = testMode ? "https://api-ropsten.etherscan.io/api" : "https://api.etherscan.io/api"
         reachabilityUrl = testMode ? "https://api-ropsten.etherscan.io/api?module=stats&action=ethprice" : "https://api.etherscan.io/api?module=stats&action=ethprice"
+
+        self.apiKey = apiKey
     }
 
     func convert(json: [String: Any]) -> IEthereumResponse? {
@@ -48,39 +59,39 @@ class EtherscanEthereumResponse: IEthereumResponse, ImmutableMappable {
     var contractAddress: String?
 
     required init(map: Map) throws {
-        txId = try? map.value("result.hash")
-        guard txId != nil else {
-            throw MapError(key: "txId", currentValue: "nil", reason: "wrong data")
-        }
-        if let heightString: String = try? map.value("result.blockNumber") {
+        let result: [String: Any] = try map.value("result")
+
+        txId = result["hash"] as? String
+
+        if let heightString = result["blockNumber"] as? String {
             blockHeight = Int(heightString.replacingOccurrences(of: "0x", with: ""), radix: 16)
         }
 
-        if let gasString: String = try? map.value("result.gas"), let gasInt = Int(gasString.replacingOccurrences(of: "0x", with: ""), radix: 16) {
+        if let gasString = result["gas"] as? String, let gasInt = Int(gasString.replacingOccurrences(of: "0x", with: ""), radix: 16) {
             gasLimit = Decimal(gasInt)
         }
 
-        if let gasPriceString: String = try? map.value("result.gasPrice"), let gasPriceInt = Int(gasPriceString.replacingOccurrences(of: "0x", with: ""), radix: 16) {
+        if let gasPriceString = result["gasPrice"] as? String, let gasPriceInt = Int(gasPriceString.replacingOccurrences(of: "0x", with: ""), radix: 16) {
             gasPrice = Decimal(gasPriceInt) / gweiRate
         }
 
-        if let nonceString: String = try? map.value("result.nonce") {
+        if let nonceString = result["nonce"] as? String {
             nonce = Int(nonceString.replacingOccurrences(of: "0x", with: ""), radix: 16)
         }
 
-        let input: String? = try? map.value("result.input")
+        let input = result["input"] as? String
         if input == "0x" {
-            if let valueString: String = try? map.value("result.value"), let valueBigInt = BigInt(valueString.replacingOccurrences(of: "0x", with: ""), radix: 16), let value = Decimal(string: valueBigInt.description) {
+            if let valueString = result["value"] as? String, let valueBigInt = BigInt(valueString.replacingOccurrences(of: "0x", with: ""), radix: 16), let value = Decimal(string: valueBigInt.description) {
                 self.value = value
             }
-            to = try? map.value("result.to")
+            to = result["to"] as? String
         } else if let input = input, let inputData = ERC20InputParser.parse(input: input) {
             value = inputData.value
             to = inputData.to
-            contractAddress = try? map.value("result.to")
+            contractAddress = result["to"] as? String
         }
 
-        from = try? map.value("result.from")
+        from = result["from"] as? String
     }
 
 }
