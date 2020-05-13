@@ -110,7 +110,7 @@
 "balance.syncing" = "Идет синхронизация...";
 "balance.syncing_percent" = "Идет синхронизация... %@";
 "balance.synced_through" = "до: %@";
-"balance.add_coin" = "Add Coins";
+"balance.add_coin" = "Добавить Токены";
 "balance.sort.header" = "Сортировать по";
 "balance.sort.valueHighToLow" = "Балансу";
 "balance.sort.az" = "Названию";
@@ -160,7 +160,7 @@
 "send.amount_error.balance" = "Баланс %@";
 "send.amount_error.maximum_amount" = "Макс. сумма %@";
 "send.amount_error.minimum_amount" = "Мин. сумма %@";
-"send.amount_error.min_required_balance" = "Min. required remainder %@";
+"send.amount_error.min_required_balance" = "Мин. обязательный остаток %@";
 "send.token.insufficient_fee_alert" = "Комиссии за транзакцию %@ (%@) взимаются в %@. Вам нужно %@.";
 
 "send.lock_time" = "TimeLock";
@@ -263,7 +263,7 @@
 "manage_coins.title" = "Choose Coins";
 "manage_coins.add_coin.title" = "Добавить %@";
 "manage_coins.add_coin.subtitle" = "%@ Кошелек";
-"manage_coins.add_coin.text.set_up" = "You need to set up %@ wallet to be able to send or receive %@.";
+"manage_coins.add_coin.text.set_up" = "Вам нужно настроить кошелек %@, чтобы иметь возможность отправлять или получать %@.";
 "manage_coins.add_coin.text.create_or_restore" = "Use the Create button below to set up a new %@ wallet, or Restore button to import the existing one.";
 "manage_coins.add_coin.text.create_only" = "At this point Unstoppable is not able to create new %@ wallet. You’re only able to restore the existing one.";
 "manage_coins.add_coin.text.tokens" = "You will be able to use this wallet for: %@.";
