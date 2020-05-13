@@ -264,8 +264,8 @@
 "manage_coins.add_coin.title" = "Добавить %@";
 "manage_coins.add_coin.subtitle" = "%@ Кошелек";
 "manage_coins.add_coin.text.set_up" = "Вам нужно настроить кошелек %@, чтобы иметь возможность отправлять или получать %@.";
-"manage_coins.add_coin.text.create_or_restore" = "Use the Create button below to set up a new %@ wallet, or Restore button to import the existing one.";
-"manage_coins.add_coin.text.create_only" = "At this point Unstoppable is not able to create new %@ wallet. You’re only able to restore the existing one.";
+"manage_coins.add_coin.text.create_or_restore" = "Используйте кнопку 'Создать', чтобы настроить новый кошелек %@ или 'Восстановить', чтобы импортировать существующий.";
+"manage_coins.add_coin.text.create_only" = "В данный момент кошелек Unstoppable не может создавать новый %@ кошелек. Вы можете восстановить только существующий.";
 "manage_coins.add_coin.text.tokens" = "You will be able to use this wallet for: %@.";
 "manage_coins.add_coin.create" = "Создать";
 "manage_coins.add_coin.restore" = "Восстановить";
@@ -337,7 +337,7 @@
 "settings_privacy.sorting_shuffle" = "Перемешать";
 "settings_privacy.sorting_shuffle.description" = "Случайное Индексирование";
 "settings_privacy.sorting_bip69" = "Deterministic Bip69";
-"settings_privacy.sorting_bip69.description" = "Lexicographical Indexing";
+"settings_privacy.sorting_bip69.description" = "Лексикографическая Индексация";
 
 // Settings -> Contact
 
