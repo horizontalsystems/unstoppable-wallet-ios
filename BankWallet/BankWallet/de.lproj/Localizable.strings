@@ -40,7 +40,7 @@
 
 // Restore
 
-"restore.title" = "Choose Wallet";
+"restore.title" = "Wallet auswählen";
 "restore.enter_key" = "Schlüssel Eingeben";
 "restore.item_title" = "%@ Wallet";
 "restore.words.description" = "Geben Sie Ihren Private Key für %@ Wallet ein, der aus %@ Wörtern besteht. Die Wörter müssen in der korrekten Reihenfolge eingegeben und durch Leerzeichen getrennt werden.";
