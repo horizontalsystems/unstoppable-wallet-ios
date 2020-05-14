@@ -155,4 +155,12 @@ extension EthereumAdapter: ITransactionsAdapter {
                 }
     }
 
+    func transaction(hash: String) -> TransactionRecord? {
+        nil
+    }
+
+    func rawTransaction(hash: String) -> String? {
+        nil
+    }
+
 }

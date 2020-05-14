@@ -321,6 +321,14 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
                 }
     }
 
+    func transaction(hash: String) -> TransactionRecord? {
+        abstractKit.transaction(hash: hash).map { transactionRecord(fromTransaction: $0) }
+    }
+
+    func rawTransaction(hash: String) -> String? {
+        abstractKit.rawTransaction(transactionHash: hash)
+    }
+
 }
 
 extension BitcoinBaseAdapter: IDepositAdapter {
