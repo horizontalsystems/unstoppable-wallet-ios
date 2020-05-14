@@ -93,7 +93,7 @@
 "error.send_ethereum.wrong_parameters" = "잘못된 매개 변수";
 "error.send_binance.memo_required" = "수신자는 송금 내역에 메모 기록을 필요로 합니다";
 "error.send_binance.only_digits_allowed" = "메모에는 숫자만 포함하셔야 합니다";
-"error.incubed_not_reachable" = "인큐비드 서버 접근 불가";
+"error.incubed_not_reachable" = "Incubed 서버 접근 불가";
 
 "backup.confirmation.title" = "확인 중...";
 
@@ -265,8 +265,8 @@
 "manage_coins.add_coin.subtitle" = "%@ 지갑";
 "manage_coins.add_coin.text.set_up" = "귀하께서는 %@ 을 보내거나 받으시려면 %@ 지갑을 설정하셔야 합니다.";
 "manage_coins.add_coin.text.create_or_restore" = "아래의 생성 버튼을 사용하여 새로운 %@ 지갑을 설정하거나 복원 버튼을 사용하여 기존 지갑을 가져옵니다.";
-"manage_coins.add_coin.text.create_only" = "At this point Unstoppable is not able to create new %@ wallet. You’re only able to restore the existing one.";
-"manage_coins.add_coin.text.tokens" = "You will be able to use this wallet for: %@.";
+"manage_coins.add_coin.text.create_only" = "현재 Unstoppable은 신규 %@ 지갑을 생성할 수 없습니다. 기존 지갑 복원만 가능합니다.";
+"manage_coins.add_coin.text.tokens" = "이 지갑은 다음 항목을 위해 사용할 수 있습니다: %@";
 "manage_coins.add_coin.create" = "만들기";
 "manage_coins.add_coin.restore" = "복구";
 
@@ -337,7 +337,7 @@
 "settings_privacy.sorting_shuffle" = "셔플";
 "settings_privacy.sorting_shuffle.description" = "랜덤 인덱싱";
 "settings_privacy.sorting_bip69" = "Deterministic Bip69";
-"settings_privacy.sorting_bip69.description" = "Lexicographical Indexing";
+"settings_privacy.sorting_bip69.description" = "사전식 인덱싱";
 
 // Settings -> Contact
 
