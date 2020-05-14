@@ -309,7 +309,7 @@
 "settings_privacy.sorting_title" = "입력/출력";
 "settings_privacy.sorting.section_header" = "블록체인 매매거래";
 "settings_privacy.sorting.section_footer" = "매매거래 구성 방식을 변경하셔서 BTC, LTC, BCH 매매거래를 더 추적하기 어렵게 만들어 주세요.";
-"settings_privacy.connection.section_header" = "블록체인 싱크";
+"settings_privacy.connection.section_header" = "블록체인 동기화";
 "settings_privacy.connection.section_footer" = "몇몇의 블록체인은 아직 모바일 앱이 P2P 방식으로 작동하는 방법을 제공하지 않습니다. BTC, BCH, LTC, DASH 블록체인과의 통신은 전부 P2P 방식입니다.";
 "settings_privacy.sync.section_header" = "블록체인 복원";
 "settings_privacy.sync.section_footer" = "매매거래로 지갑을 복원 할 데이터 소스를 선택하세요.";
@@ -328,7 +328,7 @@
 "settings_privacy.alert_sync.recommended" = "권장";
 "settings_privacy.alert_sync.more_private" = "더 개인";
 
-"settings_privacy.alert_connection.title" = "블록체인 싱크";
+"settings_privacy.alert_connection.title" = "블록체인 동기화";
 
 "settings_privacy.alert_sort.title" = "블록체인 매매거래";
 "settings_privacy.alert_sort.subtitle" = "입력/출력";
