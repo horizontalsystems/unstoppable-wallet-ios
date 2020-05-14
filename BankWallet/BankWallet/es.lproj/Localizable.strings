@@ -93,7 +93,7 @@
 "error.send_ethereum.wrong_parameters" = "Parámetros incorrectos";
 "error.send_binance.memo_required" = "El receptor requiere que el memo no esté vacío en la transacción de transferencia";
 "error.send_binance.only_digits_allowed" = "Es necesario que el memo contenga únicamente dígitos";
-"error.incubed_not_reachable" = "Incubed servers not reachable";
+"error.incubed_not_reachable" = "No puede accederse a los servidores incubados";
 
 "backup.confirmation.title" = "Comprobar";
 
@@ -266,7 +266,7 @@
 "manage_coins.add_coin.text.set_up" = "Necesitas configurar el monedero %@ para poder enviar o recibir %@.";
 "manage_coins.add_coin.text.create_or_restore" = "Utiliza el botón Crear de abajo para configurar un nuevo monedero %@, o toca el botón Restaurar para importar un monedero existente.";
 "manage_coins.add_coin.text.create_only" = "En este momento Unstoppable no puede crear un nuevo monedero %@. Solo puedes restaurar uno ya existente.";
-"manage_coins.add_coin.text.tokens" = "You will be able to use this wallet for: %@.";
+"manage_coins.add_coin.text.tokens" = "Podrás utilizar este monedero a partir del: %@.";
 "manage_coins.add_coin.create" = "Crear";
 "manage_coins.add_coin.restore" = "Restaurar";
 
@@ -305,7 +305,7 @@
 "settings_security.face_id" = "Identificación de caras";
 "security_settings.delete_alert_button" = "Eliminar del teléfono";
 "settings_privacy.title" = "Privacidad";
-"settings_privacy.header_description" = "This app doesn't share any of your data. However, as it communicates with blockchains some public data like IP address can potentially be leaked. Use the info button on the top right to get detailed information about each section.";
+"settings_privacy.header_description" = "Esta aplicación no comparte ninguno de tus datos. Sin embargo, ya que se comunica con blockchains, algunos datos públicos como la dirección IP pueden ser filtrados. Utilice el botón Info de la parte superior derecha para obtener información detallada sobre cada sección.";
 "settings_privacy.sorting_title" = "Entradas/Salidas";
 "settings_privacy.sorting.section_header" = "Transacciones de blockchain";
 "settings_privacy.sorting.section_footer" = "Haga que sus transacciones BTC, LTC, BCH sean más difíciles de rastrear cambiando la forma en que las transacciones están estructuradas.";
@@ -328,7 +328,7 @@
 "settings_privacy.alert_sync.recommended" = "Recomendado";
 "settings_privacy.alert_sync.more_private" = "Más Privado";
 
-"settings_privacy.alert_connection.title" = "Blockchain Sync";
+"settings_privacy.alert_connection.title" = "Sincronización de Blockchain";
 
 "settings_privacy.alert_sort.title" = "Transacciones de blockchain";
 "settings_privacy.alert_sort.subtitle" = "Entradas/Salidas";
@@ -336,7 +336,7 @@
 "settings_privacy.sorting_default.description" = "Sin ninguna configuración";
 "settings_privacy.sorting_shuffle" = "Aleatoriamente";
 "settings_privacy.sorting_shuffle.description" = "Indexación aleatoria";
-"settings_privacy.sorting_bip69" = "Deterministic Bip69";
+"settings_privacy.sorting_bip69" = "Bip69 determinista";
 "settings_privacy.sorting_bip69.description" = "Indexación Lexicográfica";
 
 // Settings -> Contact
