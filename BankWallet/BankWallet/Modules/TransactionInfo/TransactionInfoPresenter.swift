@@ -9,11 +9,7 @@ class TransactionInfoPresenter {
     private let transaction: TransactionRecord
     private let wallet: Wallet
 
-    init?(transactionHash: String, wallet: Wallet, interactor: ITransactionInfoInteractor, router: ITransactionInfoRouter) {
-        guard let transaction = interactor.transaction(hash: transactionHash) else {
-            return nil
-        }
-
+    init(transaction: TransactionRecord, wallet: Wallet, interactor: ITransactionInfoInteractor, router: ITransactionInfoRouter) {
         self.transaction = transaction
         self.wallet = wallet
         self.interactor = interactor
@@ -22,6 +18,16 @@ class TransactionInfoPresenter {
 
     private func showFromAddress(for type: CoinType) -> Bool {
         !(type == .bitcoin || type == .litecoin || type == .bitcoinCash || type == .dash)
+    }
+
+    private var rateCurrencyValue: CurrencyValue? {
+        let currency = interactor.baseCurrency
+
+        guard let rate = interactor.rate(coinCode: wallet.coin.code, currencyCode: currency.code, timestamp: transaction.date.timeIntervalSince1970) else {
+            return nil
+        }
+
+        return CurrencyValue(currency: currency, value: rate)
     }
 
 }
@@ -35,8 +41,7 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
         let status = transaction.status(lastBlockHeight: lastBlockInfo?.height, threshold: interactor.confirmationThreshold)
         let lockState = transaction.lockState(lastBlockTimestamp: lastBlockInfo?.timestamp)
 
-        let rate: CurrencyValue? = nil // non zero
-//        let rate: CurrencyValue? = CurrencyValue(currency: App.shared.currencyKit.baseCurrency, value: 9123)
+        let rate = rateCurrencyValue?.nonZero
 
         let primaryAmountInfo: AmountInfo
         var secondaryAmountInfo: AmountInfo?
@@ -84,8 +89,11 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
             viewItems.append(.recipient(value: recipient))
         }
 
-        viewItems.append(.id(value: transaction.transactionHash))
-//        viewItems.append(.rawTransaction)
+        if transaction.showRawTransaction {
+            viewItems.append(.rawTransaction)
+        } else {
+            viewItems.append(.id(value: transaction.transactionHash))
+        }
 
         viewItems.append(.status(status: status, incoming: transaction.type == .incoming))
 
