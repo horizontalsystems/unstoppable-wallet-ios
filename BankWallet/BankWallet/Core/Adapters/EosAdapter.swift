@@ -39,7 +39,8 @@ class EosAdapter {
                 from: transaction.from,
                 to: transaction.to,
                 lockInfo: nil,
-                conflictingHash: nil
+                conflictingHash: nil,
+                showRawTransaction: false
         )
     }
 
@@ -154,10 +155,6 @@ extension EosAdapter: ITransactionsAdapter {
                 .map { [weak self] transactions -> [TransactionRecord] in
                     transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
                 }
-    }
-
-    func transaction(hash: String) -> TransactionRecord? {
-        nil
     }
 
     func rawTransaction(hash: String) -> String? {

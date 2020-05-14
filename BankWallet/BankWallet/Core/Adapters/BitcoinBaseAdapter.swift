@@ -104,7 +104,8 @@ class BitcoinBaseAdapter {
                 from: type == .incoming ? anyNotMineFromAddress : nil,
                 to: type == .outgoing ? anyNotMineToAddress : nil,
                 lockInfo: lockInfo,
-                conflictingHash: transaction.conflictingHash
+                conflictingHash: transaction.conflictingHash,
+                showRawTransaction: transaction.status == .new || transaction.status == .invalid
         )
     }
 
@@ -319,10 +320,6 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
                         self?.transactionRecord(fromTransaction: $0)
                     }
                 }
-    }
-
-    func transaction(hash: String) -> TransactionRecord? {
-        abstractKit.transaction(hash: hash).map { transactionRecord(fromTransaction: $0) }
     }
 
     func rawTransaction(hash: String) -> String? {

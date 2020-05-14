@@ -99,7 +99,6 @@ protocol ITransactionsAdapter {
     var lastBlockUpdatedObservable: Observable<Void> { get }
     var transactionRecordsObservable: Observable<[TransactionRecord]> { get }
     func transactionsSingle(from: TransactionRecord?, limit: Int) -> Single<[TransactionRecord]>
-    func transaction(hash: String) -> TransactionRecord?
     func rawTransaction(hash: String) -> String?
 }
 
@@ -204,6 +203,7 @@ protocol IRateManager {
     func marketInfoObservable(coinCode: String, currencyCode: String) -> Observable<MarketInfo>
     func marketInfosObservable(currencyCode: String) -> Observable<[String: MarketInfo]>
     func historicalRate(coinCode: String, currencyCode: String, timestamp: TimeInterval) -> Single<Decimal>
+    func historicalRate(coinCode: String, currencyCode: String, timestamp: TimeInterval) -> Decimal?
     func chartInfo(coinCode: String, currencyCode: String, chartType: ChartType) -> ChartInfo?
     func chartInfoObservable(coinCode: String, currencyCode: String, chartType: ChartType) -> Observable<ChartInfo>
 }
