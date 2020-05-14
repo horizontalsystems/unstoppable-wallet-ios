@@ -28,7 +28,7 @@
 
 // Access Camera
 
-"access_camera.message" = "Unstoppable  porte-monnaie a besoin d’accéder à votre camerà pour scanner le code QR.\n\nAllez dans Paramètres - >  et permettez d’accéder à la caméra.";
+"access_camera.message" = "Unstoppable a besoin d'accéder à votre caméra pour scanner le code QR.\n\nAllez dans Paramètres - > Unstoppable et autorisez l'accès à la caméra.";
 "access_camera.settings" = "Paramètres";
 
 // Welcome
@@ -287,7 +287,7 @@
 "settings_about.app_title" = "Unstoppable";
 "settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "Terms & Confidentialité:";
-"settings_about.terms_privacy_text" = "Cette application est de type peer-to-peer. Elle ne dépend pas d'un serveur web ou du support des techniciens pour fonctionner.\n\nIt fonctionne partout tant qu'il y a une connexion internet. Aucune entité ne peut empêcher cette application de fonctionner ou censurer quelqu'un qui voudrait l'utiliser.\n\nLes clés cryptographiques secrètes qui contrôlent vos fonds cryptographiques sont stockées en toute sécurité sur le téléphone lui-même, et nulle part ailleurs.\n\nSauvegarder vos clés cryptographiques secrètes et les garder privées est de votre responsabilité. Ne montrez jamais vos clés à qui que ce soit. Si les clés sont perdues, oubliées ou volées, vos fonds pourront être utilisés par la personne qui trouvera votre clé.\n\nNe débridez pas votre téléphone, n'installez pas d'applications provenant de sources inconnues (non fiables), ne donnez pas votre appareil à des personnes non fiables, et gardez le système d'exploitation de votre téléphone à jour. La sécurité de votre portefeuille en dépend.\n\nL'ensemble du code qui alimente cette application est ouvert au regard du public. Bien que nous soyons convaincus que cette application est bien plus sûre que toutes les autres applications pour smartphones, il n'y a aucune garantie qu'il n'y ait pas de problèmes logiciels fortuits.\n\nToutes vos données, c'est-à-dire vos transactions, votre solde, etc. ne sont accessibles que par votre application portefeuille et ne quittent jamais votre appareil.";
+"settings_about.terms_privacy_text" = "Cette application est de type peer-to-peer. Elle ne dépend d'aucun serveur web ou personnel de support technique pour fonctionner.\n\nElle fonctionne partout tant qu'il y a Internet. Aucune entité ne peut empêcher cette application de fonctionner ou censurer quelqu'un qui l'utiliserait.\n\nLes clés cryptographiques secrètes qui contrôlent vos fonds cryptographiques sont stockées en toute sécurité sur le téléphone lui-même, et non ailleurs.\n\nIl est de votre responsabilité de sauvegarder vos clés cryptographiques secrètes et de les garder privées. Ne montrez jamais vos clés à qui que ce soit. Si les clés sont perdues, oubliées ou volées, vos fonds peuvent être utilisés par la personne qui trouve votre clé.\n\nNe débridez pas votre téléphone, n'installez pas d'applications provenant de sources inconnues (non fiables), ne donnez pas votre appareil à des personnes non fiables et gardez le système d'exploitation de votre téléphone à jour. La sécurité de votre portefeuille en dépend.\n\nL'ensemble du code qui alimente cette application est ouvert aux regards du public. Bien que nous soyons convaincus que cette application est beaucoup plus sûre que toutes les autres applications pour portefeuille de smartphones, il n'y a aucune garantie qu'il n'y ait pas de problèmes de logiciel.\n\nToutes vos données, c'est-à-dire vos transactions, votre solde, etc., ne sont accessibles qu'à l'aide de l'application pour portefeuille et ne quittent jamais votre appareil.";
 
 // Settings -> Tell Friends
 
@@ -435,8 +435,8 @@
 "select_coins.choose_crypto" = "Choisissez la Crypto";
 "select_coins.next_button" = "Suivant";
 
-"price_notification.up" = "up";
-"price_notification.down" = "down";
+"price_notification.up" = "plus";
+"price_notification.down" = "moins";
 "price_notification.multi_title" = "Notifications";
 
 // Lock Info
