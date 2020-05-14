@@ -15,6 +15,7 @@
 "button.backup" = "Sicherung";
 "button.copy" = "Kopieren";
 "button.back" = "Zurück";
+"button.retry" = "Wiederholen";
 
 "alert.copied" = "Kopiert";
 "alert.no_internet" = "Kein Internet";
@@ -227,7 +228,6 @@
 
 "full_info.error.server_offline" = "offline";
 "full_info.error.transaction_not_found" = "Transaktion kann in der Blockchain nicht gefunden werden";
-"full_info.error.retry" = "Wiederholen";
 "full_info.error.change_source" = "Quelle ändern";
 "full_info.no_address" = "Leere Adresse";
 
