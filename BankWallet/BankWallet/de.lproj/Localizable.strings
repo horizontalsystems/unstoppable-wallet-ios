@@ -93,7 +93,7 @@
 "error.send_ethereum.wrong_parameters" = "Falsche Parameter";
 "error.send_binance.memo_required" = "Empfänger benötigt nicht-leeren Vermerk bei Transfer einer Transaktion";
 "error.send_binance.only_digits_allowed" = "Der Vermerk darf nur Zahlen enthalten";
-"error.incubed_not_reachable" = "Incubed servers not reachable";
+"error.incubed_not_reachable" = "Incubed Server nicht erreichbar";
 
 "backup.confirmation.title" = "Prüfen …";
 
@@ -168,7 +168,7 @@
 "transactions.title" = "Transaktionen";
 "transactions.tab_bar_item" = "Transaktionen";
 "transactions.filter_all" = "Alle";
-"transactions.empty_text" = "You don't have any pending or past transactions yet";
+"transactions.empty_text" = "Sie haben noch keine offenen oder früheren Transaktionen";
 "transactions.pending" = "In Bearbeitung";
 "transactions.receiving" = "Empfangen";
 "transactions.failed" = "Fehlgeschlagen";
