@@ -6,14 +6,12 @@ class RateManager {
     private let disposeBag = DisposeBag()
 
     private let walletManager: IWalletManager
-    private let currencyKit: ICurrencyKit
     private let rateCoinMapper: IRateCoinMapper
 
     private let kit: XRatesKit
 
     init(walletManager: IWalletManager, currencyKit: ICurrencyKit, rateCoinMapper: IRateCoinMapper, coinMarketCapApiKey: String) {
         self.walletManager = walletManager
-        self.currencyKit = currencyKit
         self.rateCoinMapper = rateCoinMapper
 
         kit = XRatesKit.instance(currencyCode: currencyKit.baseCurrency.code, coinMarketCapApiKey: coinMarketCapApiKey, marketInfoExpirationInterval: 10 * 60, topMarketsCount: 100)
@@ -93,6 +91,14 @@ extension RateManager: IRateManager {
         }
 
         return kit.historicalRateSingle(coinCode: convertedCoinCode, currencyCode: currencyCode, timestamp: timestamp)
+    }
+
+    func historicalRate(coinCode: String, currencyCode: String, timestamp: TimeInterval) -> Decimal? {
+        guard let convertedCoinCode = rateCoinMapper.convert(coinCode: coinCode) else {
+            return nil
+        }
+
+        return kit.historicalRate(coinCode: convertedCoinCode, currencyCode: currencyCode, timestamp: timestamp)
     }
 
     func chartInfo(coinCode: String, currencyCode: String, chartType: ChartType) -> ChartInfo? {

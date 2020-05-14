@@ -15,6 +15,7 @@ struct TransactionRecord {
     let to: String?
     let lockInfo: TransactionLockInfo?
     let conflictingHash: String?
+    let showRawTransaction: Bool
 
     func status(lastBlockHeight: Int?, threshold: Int?) -> TransactionStatus {
         if failed {

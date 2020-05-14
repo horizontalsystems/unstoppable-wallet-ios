@@ -54,7 +54,8 @@ class Erc20Adapter: EthereumBaseAdapter {
                 from: transaction.from,
                 to: transaction.to,
                 lockInfo: nil,
-                conflictingHash: nil
+                conflictingHash: nil,
+                showRawTransaction: false
         )
     }
 
@@ -169,10 +170,6 @@ extension Erc20Adapter: ITransactionsAdapter {
         } catch {
             return Single.error(error)
         }
-    }
-
-    func transaction(hash: String) -> TransactionRecord? {
-        nil
     }
 
     func rawTransaction(hash: String) -> String? {

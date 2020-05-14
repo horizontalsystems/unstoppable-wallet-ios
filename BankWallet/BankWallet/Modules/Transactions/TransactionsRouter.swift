@@ -7,7 +7,7 @@ class TransactionsRouter {
 extension TransactionsRouter: ITransactionsRouter {
 
     func openTransactionInfo(viewItem: TransactionViewItem) {
-        guard let module = TransactionInfoRouter.module(transactionHash: viewItem.transactionHash, wallet: viewItem.wallet, sourceViewController: viewController) else {
+        guard let module = TransactionInfoRouter.module(transaction: viewItem.record, wallet: viewItem.wallet, sourceViewController: viewController) else {
             return
         }
 
