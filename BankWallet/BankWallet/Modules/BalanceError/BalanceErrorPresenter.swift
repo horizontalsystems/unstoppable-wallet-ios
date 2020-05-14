@@ -17,8 +17,11 @@ class BalanceErrorPresenter {
         self.router = router
     }
 
-    private var errorText: String {
-        error.localizedDescription
+    private func isSourceChangeable(coinType: CoinType) -> Bool {
+        switch coinType {
+        case .binance, .eos: return false
+        default: return true
+        }
     }
 
 }
@@ -28,15 +31,7 @@ extension BalanceErrorPresenter: IBalanceErrorViewDelegate {
     func onLoad() {
         view?.set(coinTitle: wallet.coin.title)
 
-        var buttonTypes = [BalanceErrorModule.Buttons]()
-        buttonTypes.append(.retry)
-
-        let adapter = interactor.adapter(for: wallet)
-        if !(adapter is BinanceAdapter || adapter is EosAdapter) {
-            buttonTypes.append(.changeSource)
-        }
-
-        view?.set(buttons: buttonTypes)
+        view?.setChangeSourceButton(hidden: !isSourceChangeable(coinType: wallet.coin.type))
 
         interactor.copyToClipboard(text: "\(error)")
     }
@@ -48,16 +43,13 @@ extension BalanceErrorPresenter: IBalanceErrorViewDelegate {
     }
 
     func onTapChangeSource() {
-        router.openPrivacySettings()
-
-        router.close()
+        router.closeAndOpenPrivacySettings()
     }
 
     func onTapReport() {
         interactor.copyToClipboard(text: "\(error)")
 
-        router.openReport()
-        router.close()
+        router.closeAndOpenReport()
     }
 
     func onTapClose() {

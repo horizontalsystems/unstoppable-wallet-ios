@@ -44,6 +44,40 @@ class BalanceErrorViewController: ThemeActionSheetController {
         descriptionLabel.numberOfLines = 0
         descriptionLabel.text = "balance_error.description".localized
 
+        view.addSubview(retryButton)
+        retryButton.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalTo(descriptionLabel.snp.bottom).offset(CGFloat.margin6x)
+            maker.height.equalTo(CGFloat.heightButton)
+        }
+
+        retryButton.addTarget(self, action: #selector(onTapRetry), for: .touchUpInside)
+        retryButton.apply(style: .primaryYellow)
+        retryButton.setTitle("button.retry".localized, for: .normal)
+
+        view.addSubview(changeSourceButton)
+        changeSourceButton.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalTo(retryButton.snp.bottom).offset(CGFloat.margin4x)
+            maker.height.equalTo(CGFloat.heightButton)
+        }
+
+        changeSourceButton.addTarget(self, action: #selector(onTapChangeSource), for: .touchUpInside)
+        changeSourceButton.apply(style: .primaryGreen)
+        changeSourceButton.setTitle("balance_error.change_source".localized, for: .normal)
+
+        view.addSubview(reportButton)
+        reportButton.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalTo(changeSourceButton.snp.bottom).offset(CGFloat.margin4x)
+            maker.height.equalTo(CGFloat.heightButton)
+            maker.bottom.equalToSuperview().inset(CGFloat.margin4x)
+        }
+
+        reportButton.addTarget(self, action: #selector(onTapReport), for: .touchUpInside)
+        reportButton.apply(style: .primaryGray)
+        reportButton.setTitle("button.report".localized, for: .normal)
+
         delegate.onLoad()
     }
 
@@ -67,50 +101,12 @@ extension BalanceErrorViewController: IBalanceErrorView {
         titleView.bind(title: "balance_error.sync_error".localized, subtitle: coinTitle, image: UIImage(named: "Attention Icon")?.tinted(with: .themeLucian))
     }
 
-    func set(buttons: [BalanceErrorModule.Buttons]) {
-        var topView: UIView = descriptionLabel
-
-        if buttons.contains(.retry) {
-            view.addSubview(retryButton)
-            retryButton.snp.makeConstraints { maker in
-                maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-                maker.top.equalTo(topView.snp.bottom).offset(CGFloat.margin6x)
-                maker.height.equalTo(CGFloat.heightButton)
-            }
-
-            retryButton.addTarget(self, action: #selector(onTapRetry), for: .touchUpInside)
-            retryButton.apply(style: .primaryYellow)
-            retryButton.setTitle("button.retry".localized, for: .normal)
-
-            topView = retryButton
-        }
-
-        if buttons.contains(.changeSource) {
-            view.addSubview(changeSourceButton)
-            changeSourceButton.snp.makeConstraints { maker in
-                maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-                maker.top.equalTo(topView.snp.bottom).offset(CGFloat.margin4x)
-                maker.height.equalTo(CGFloat.heightButton)
-            }
-
-            changeSourceButton.addTarget(self, action: #selector(onTapChangeSource), for: .touchUpInside)
-            changeSourceButton.apply(style: .primaryGreen)
-            changeSourceButton.setTitle("balance_error.change_source".localized, for: .normal)
-
-            topView = changeSourceButton
-        }
-
-        view.addSubview(reportButton)
-        reportButton.snp.makeConstraints { maker in
+    func setChangeSourceButton(hidden: Bool) {
+        changeSourceButton.snp.remakeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(topView.snp.bottom).offset(CGFloat.margin4x)
-            maker.height.equalTo(CGFloat.heightButton)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalTo(retryButton.snp.bottom).offset(hidden ? 0 : CGFloat.margin4x)
+            maker.height.equalTo(hidden ? 0 : CGFloat.heightButton)
         }
-
-        reportButton.addTarget(self, action: #selector(onTapReport), for: .touchUpInside)
-        reportButton.apply(style: .primaryGray)
-        reportButton.setTitle("button.report".localized, for: .normal)
     }
 
 }

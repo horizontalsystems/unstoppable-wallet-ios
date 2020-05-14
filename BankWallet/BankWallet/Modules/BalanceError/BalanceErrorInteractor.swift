@@ -19,8 +19,4 @@ extension BalanceErrorInteractor: IBalanceErrorInteractor {
         adapterManager.refresh(wallet: wallet)
     }
 
-    func adapter(for wallet: Wallet) -> IAdapter? {
-        adapterManager.adapter(for: wallet)
-    }
-
 }
