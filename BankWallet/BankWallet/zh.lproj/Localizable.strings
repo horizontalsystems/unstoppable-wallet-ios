@@ -191,6 +191,7 @@
 "tx_info.double_spent_note" = "双重支付风险！";
 "tx_info.locked_until" = "锁定至 %@";
 "tx_info.recipient_hash" = "收款人";
+"tx_info.raw_transaction" = "Raw Transaction";
 
 // Full Info
 
