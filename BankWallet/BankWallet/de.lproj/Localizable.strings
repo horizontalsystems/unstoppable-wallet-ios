@@ -12,7 +12,7 @@
 "button.share" = "Teilen";
 "button.sync" = "Sync";
 "button.paste" = "Einsetzen";
-"button.backup" = "Backup";
+"button.backup" = "Sicherung";
 "button.copy" = "Kopieren";
 "button.back" = "Zurück";
 
@@ -71,14 +71,14 @@
 // Backup
 
 "backup.close" = "Schließen";
-"backup.backup_required" = "Backup erforderlich";
+"backup.backup_required" = "Sicherung erforderlich";
 "backup.private_key" = "Privater Schlüssel";
 
 "backup.intro.title_backup" = "Sicherung";
 "backup.intro.title_show" = "Schlüssel anzeigen";
 "backup.intro.subtitle" = "Der private Schlüssel, der als nächstes angezeigt wird, ist die einzige Möglichkeit, Ihr Guthaben wiederherzustellen, wenn Ihr Telefon verloren geht, gestohlen wird oder beschädigt wird. \n\nAchten Sie darauf, dass niemand Ihren Bildschirm sieht.\n\nDie Coins, die von diesem Schlüssel kontrolliert werden: %@";
 "backup.intro.later" = "Später";
-"backup.intro.backup_now" = "Backup";
+"backup.intro.backup_now" = "Sicherung";
 "backup.intro.show_key" = "Schlüssel anzeigen";
 
 "backup.words.confirmation_description" = "Geben Sie die Worte Ihres %@ Schlüssels ein";
@@ -108,7 +108,7 @@
 "balance.deposit" = "Anfordern";
 "balance.rate_per_coin" = "%@ pro %@";
 "balance.syncing" = "Synchronisieren...";
-"balance.syncing_percent" = "Synchronisiere... %@";
+"balance.syncing_percent" = "Synchronisieren... %@";
 "balance.synced_through" = "bis: %@";
 "balance.add_coin" = "Coins hinzufügen";
 "balance.sort.header" = "Sortieren nach";
@@ -262,9 +262,9 @@
 "manage_coins.title" = "Coins auswählen";
 "manage_coins.add_coin.title" = "%@ hinzufügen ";
 "manage_coins.add_coin.subtitle" = "%@ Wallet";
-"manage_coins.add_coin.text.set_up" = "You need to set up %@ wallet to be able to send or receive %@.";
-"manage_coins.add_coin.text.create_or_restore" = "Use the Create button below to set up a new %@ wallet, or Restore button to import the existing one.";
-"manage_coins.add_coin.text.create_only" = "At this point Unstoppable is not able to create new %@ wallet. You’re only able to restore the existing one.";
+"manage_coins.add_coin.text.set_up" = "Sie müssen das %@ Wallet einrichten, um %@ senden oder empfangen zu können.\n";
+"manage_coins.add_coin.text.create_or_restore" = "Tippen Sie auf den Button „Erstellen“, um ein neues %@ Wallet zu erstellen. Sie können auch auf den Button „Wiederherstellen“ tippen, um ein bereits bestehendes Wallet zu importieren.\n";
+"manage_coins.add_coin.text.create_only" = "Im Moment kann das Unstoppable leider keine neuen %@ Wallets anlegen. Sie können nur bestehende Wallets wiederherstellen.";
 "manage_coins.add_coin.text.tokens" = "You will be able to use this wallet for: %@.";
 "manage_coins.add_coin.create" = "Erstellen";
 "manage_coins.add_coin.restore" = "Wiederherstellen";
@@ -287,7 +287,7 @@
 "settings_about.app_title" = "Unstoppable";
 "settings_about.app_subtitle" = "Dezentralisierte App";
 "settings_about.terms_privacy_subtitle" = "ANB & Datenschutz:";
-"settings_about.terms_privacy_text" = "This app is peer-to-peer. It does not depend on any web server or tech support personnel to function.\n\nIt works everywhere as long as there is internet. No entity can block this app from working or censor someone from using it.\n\nThe secret cryptographic keys which control your crypto funds are securely stored on the phone itself, not anywhere else.\n\nIt’s your responsibility to backup your secret cryptographic keys and keep them private. Never show your keys to anyone. If keys are lost, forgotten or stollen your funds can be used by the person who finds your key.\n\nDo not jailbreak your phone, do not install apps from unknown (untrusted) sources, do not give your device to untrusted people, and keep the operating system on your phone up to date. The security of your wallet depends on this.\n\nThe entire code powering this app is open to the public scrutiny. While we believe to be significantly more secure than any smartphone wallet app out there there are no guarantees that there are no software issues.\n\nAll of your data i.e. transactions, balance etc available only to your wallet app and never leaves your device.";
+"settings_about.terms_privacy_text" = "Diese App basiert auf dem Peer-to-Peer-Prinzip. Das bietet den Vorteil, dass die App zum Funktionieren nicht auf bestimmte Webserver oder technischem Supportpersonal abhängig ist.\n\nDie App funktioniert überall. Sie benötigen nur einen Internetzugang. Niemand kann die App stoppen oder jemanden zensieren, sie zu nutzen.\n\nDie geheimen kryptographischen Key, die Ihr kryptographisches Guthaben verwalten, werden sicher auf dem Mobiltelefon gespeichert, nirgendwo sonst.\n\nEs liegt in Ihrer Verantwortung, den geheimen kryptographischen Key zu sichern und ihn gut aufzubewahren. Zeigen Sie ihn niemandem. Wenn ein Key verloren geht, Sie ihn vergessen oder dieser gestohlen wird, kann Ihr Guthaben von demjenigen ausgegeben werden, der den Key besitzt.\n\nFühren Sie auf Ihrem Telefon keinen Jailbreak durch. Installieren Sie keine Apps aus unbekannten (nicht vertrauenswürdigen) Quellen. Geben Sie das Mobiltelefon keiner nicht vertrauenswürdigen Person und aktualisieren Sie das Betriebssystem Ihres Mobiltelefons regelmäßig. Die Sicherheit Ihres Wallets hängt davon ab.\n\nDer gesamte Code dieser App ist öffentlich einsehbar. Obwohl wir glauben, dass diese App wesentlich sicherer als jede andere Smartphone Wallet App ist, gibt es keine Garantie, dass es keine Softwareprobleme gibt.\n\nAlle Ihre Daten, d.h. Transaktionen, Guthaben usw., sind nur für Ihre Wallet-App verfügbar und verlassen niemals Ihr Gerät.";
 
 // Settings -> Tell Friends
 
