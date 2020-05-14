@@ -40,7 +40,7 @@
 
 // Restore
 
-"restore.title" = "Choose Wallet";
+"restore.title" = "Выберите кошелек";
 "restore.enter_key" = "Введите Ключ";
 "restore.item_title" = "%@ Кошелек";
 "restore.words.description" = "Введите приватный ключ для кошелька %@, который состоит из %@ слов. Слова нужно ввести в правильном порядке и вставить пробелы между ними.";
