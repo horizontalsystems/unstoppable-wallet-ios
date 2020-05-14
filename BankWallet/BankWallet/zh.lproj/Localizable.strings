@@ -40,7 +40,7 @@
 
 // Restore
 
-"restore.title" = "Choose Wallet";
+"restore.title" = "选择钱包";
 "restore.enter_key" = "输入密钥";
 "restore.item_title" = "%@钱包";
 "restore.words.description" = "为%@钱包输入私钥，其中应包含%@个单词。这些单词必须以正确的顺序输入并用空格分隔。";
@@ -93,7 +93,7 @@
 "error.send_ethereum.wrong_parameters" = "错误参数";
 "error.send_binance.memo_required" = "收款人要求在转账交易中包含非空的备注";
 "error.send_binance.only_digits_allowed" = "要求备注仅包含数字";
-"error.incubed_not_reachable" = "Incubed servers not reachable";
+"error.incubed_not_reachable" = "无法联系Incubed服务器";
 
 "backup.confirmation.title" = "正在检查...";
 
@@ -110,7 +110,7 @@
 "balance.syncing" = "正在同步...";
 "balance.syncing_percent" = "正在同步... %@";
 "balance.synced_through" = "直至：%@";
-"balance.add_coin" = "Add Coins";
+"balance.add_coin" = "添加代币";
 "balance.sort.header" = "排序方式";
 "balance.sort.valueHighToLow" = "余额";
 "balance.sort.az" = "名称";
@@ -191,7 +191,7 @@
 "tx_info.double_spent_note" = "双重支付风险！";
 "tx_info.locked_until" = "锁定至 %@";
 "tx_info.recipient_hash" = "收款人";
-"tx_info.raw_transaction" = "Raw Transaction";
+"tx_info.raw_transaction" = "原始交易";
 
 // Full Info
 
@@ -260,12 +260,12 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Choose Coins";
+"manage_coins.title" = "选择代币";
 "manage_coins.add_coin.title" = "添加%@ ";
 "manage_coins.add_coin.subtitle" = "%@钱包";
 "manage_coins.add_coin.text.set_up" = "您必须创建%@钱包才能对%@进行转账或收款。";
-"manage_coins.add_coin.text.create_or_restore" = "Use the Create button below to set up a new %@ wallet, or Restore button to import the existing one.";
-"manage_coins.add_coin.text.create_only" = "At this point Unstoppable is not able to create new %@ wallet. You’re only able to restore the existing one.";
+"manage_coins.add_coin.text.create_or_restore" = "您可以单击“创建”按钮以初始化新的%@钱包，或单击“恢复”按钮以导入现有的钱包。";
+"manage_coins.add_coin.text.create_only" = "目前，Unstoppable无法创建新的%@钱包。 请导入现有的钱包。";
 "manage_coins.add_coin.text.tokens" = "You will be able to use this wallet for: %@.";
 "manage_coins.add_coin.create" = "创建";
 "manage_coins.add_coin.restore" = "恢复";
