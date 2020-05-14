@@ -415,8 +415,8 @@
 
 "chart.market_cap" = "P. Değeri";
 "chart.market_cap.thousand" = "%@ bin";
-"chart.market_cap.million" = "%@ M";
-"chart.market_cap.billion" = "%@ B";
+"chart.market_cap.million" = "%@ M-n";
+"chart.market_cap.billion" = "%@ M-r";
 "chart.market_cap.trillion" = "%@ T";
 "chart.volume" = "Birim(24 saat)";
 "chart.circulation" = "Dolaşan Arz	";
