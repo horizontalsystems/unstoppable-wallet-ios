@@ -110,7 +110,7 @@
 "balance.syncing" = "Sincronizando...";
 "balance.syncing_percent" = "Sincronizando... %@";
 "balance.synced_through" = "hasta: %@";
-"balance.add_coin" = "Add Coins";
+"balance.add_coin" = "Añadir Monedas";
 "balance.sort.header" = "Ordenar por";
 "balance.sort.valueHighToLow" = "Saldo";
 "balance.sort.az" = "Nombre";
@@ -260,12 +260,12 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Choose Coins";
+"manage_coins.title" = "Elegir monedas";
 "manage_coins.add_coin.title" = "Añadir %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Monedero";
-"manage_coins.add_coin.text.set_up" = "You need to set up %@ wallet to be able to send or receive %@.";
-"manage_coins.add_coin.text.create_or_restore" = "Use the Create button below to set up a new %@ wallet, or Restore button to import the existing one.";
-"manage_coins.add_coin.text.create_only" = "At this point Unstoppable is not able to create new %@ wallet. You’re only able to restore the existing one.";
+"manage_coins.add_coin.text.set_up" = "Necesitas configurar el monedero %@ para poder enviar o recibir %@.";
+"manage_coins.add_coin.text.create_or_restore" = "Utiliza el botón Crear de abajo para configurar un nuevo monedero %@, o toca el botón Restaurar para importar un monedero existente.";
+"manage_coins.add_coin.text.create_only" = "En este momento Unstoppable no puede crear un nuevo monedero %@. Solo puedes restaurar uno ya existente.";
 "manage_coins.add_coin.text.tokens" = "You will be able to use this wallet for: %@.";
 "manage_coins.add_coin.create" = "Crear";
 "manage_coins.add_coin.restore" = "Restaurar";
