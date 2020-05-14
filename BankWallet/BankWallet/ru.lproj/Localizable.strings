@@ -91,7 +91,7 @@
 "error.send_eos.insufficient_ram" = "У вашего аккаунта EOS недостаточно оперативной памяти для отправки этого токена. Для продолжения необходимо увеличить ставку RAM.";
 "error.send_eos.unknown" = "Что-то пошло не так: %@";
 "error.send_ethereum.wrong_parameters" = "Неверные параметры";
-"error.send_binance.memo_required" = "Получателю нужно заполненное поле мемо при транзакции передачи";
+"error.send_binance.memo_required" = "Получателю нужно заполненное поле мемо при отправке транзакции";
 "error.send_binance.only_digits_allowed" = "Необходимо, чтобы memo содержало только цифры";
 "error.incubed_not_reachable" = "Incubed сервера недоступны";
 
