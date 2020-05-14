@@ -10,23 +10,23 @@ Kripto varlıklarını cihazınızda güvenli tutar
 Sadece kendiniz kontrol edebilirsiniz
 Kim olduğunuzu bilmiyor
 Herhangi bir veri toplamaz
-It's easy to migrate to/from
-It’s not dependent on any entity to function
-It integrates blockchains in a decentralized manner
-It implements latest improvements for each blockchain
-It can’t be blocked or censored
-It provides real time transaction fees
-It’s fast and beautiful  
-It's the most advanced wallet to date
-(1) UNRESTRICTED CONTROL
+Ona/Ondan geçiş yapmak kolaydır
+İşlemesi herhangi bir varlığa bağlı değildir
+Blok zincirleri merkezi olmayan bir şekilde entegre eder
+Her blok zinciri için en son geliştirmeleri uygular
+Engellenemez veya sansürlenemez
+Gerçek zamanlı işlem ücretleri sağlar
+Hızlı ve güzel
+Bugüne kadarki en gelişmiş cüzdan
+(1) SINIRSIZ KONTROL
 
-  Transact freely and unconditionally regardless of where you live. No entity can stop you from sending/receiving crypto in Unstoppable wallet.   
+Nerede yaşadığınızdan bağımsız olarak özgürce ve koşulsuz olarak işlem yapın. Hiçbir varlık Unstoppable cüzdanında kripto göndermenizi / almanızı engelleyemez.   
 
-You’re the only person with control and access to your crypto finances. The Secret Key (that give you ownership over crypto assets) never leaves your device.
+Kripto paranızı kontrol eden ve bunlara erişimi olan tek kişi sizsiniz. Gizli Anahtar (size kripto varlıkları üzerinde sahiplik veren) cihazınızı asla terk etmez.
 
-(2) GENUINE PRIVACY
+(2) GERÇEK GİZLİLİK
 
-  Stay truly private without revealing any personal data.   
+Herhangi bir kişisel bilgi vermeden gerçekten gizli kalın.   
 
 Unlike most wallets in the market the Unstoppable wallet connects users directly to decentralized blockchains without any restrictions or intermediaries.
 
