@@ -19,6 +19,7 @@
 "button.paste" = "Paste";
 "button.backup" = "Backup";
 "button.back" = "Back";
+"button.retry" = "Retry";
 
 "alert.copied" = "Copied";
 "alert.no_internet" = "No Internet";
@@ -204,7 +205,6 @@
 "full_info.source.offline" = "offline";
 
 "full_info.error.subtitle" = "offline";
-"full_info.error.retry" = "Retry";
 "full_info.error.change_source" = "Change Source";
 "full_info.no_address" = "Empty Address";
 

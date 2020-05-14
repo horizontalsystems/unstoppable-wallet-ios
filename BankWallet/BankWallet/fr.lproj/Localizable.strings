@@ -15,6 +15,7 @@
 "button.backup" = "Sauvegarde";
 "button.copy" = "Copier";
 "button.back" = "Retour";
+"button.retry" = "Réessayer";
 
 "alert.copied" = "Copié";
 "alert.no_internet" = "Aucune connexion Internet";
@@ -227,7 +228,6 @@
 
 "full_info.error.server_offline" = "déconnecté";
 "full_info.error.transaction_not_found" = "La transaction est introuvable sur la blockchain";
-"full_info.error.retry" = "Réessayer";
 "full_info.error.change_source" = "Changer la Source";
 "full_info.no_address" = "Adresse vide";
 

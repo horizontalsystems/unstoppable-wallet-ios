@@ -44,6 +44,7 @@ protocol IAdapterManager: class {
     func depositAdapter(for wallet: Wallet) -> IDepositAdapter?
     func refresh()
     func refreshAdapters(wallets: [Wallet])
+    func refresh(wallet: Wallet)
 }
 
 protocol IAdapterFactory {
