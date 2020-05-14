@@ -164,6 +164,14 @@ extension BinanceAdapter: ITransactionsAdapter {
                 }
     }
 
+    func transaction(hash: String) -> TransactionRecord? {
+        nil
+    }
+
+    func rawTransaction(hash: String) -> String? {
+        nil
+    }
+
 }
 
 extension BinanceAdapter: IDepositAdapter {

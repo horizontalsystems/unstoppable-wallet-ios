@@ -131,8 +131,8 @@ class TransactionCell: ClaudeThemeCell {
             currencyAmountLabel.text = nil
         }
 
-        if item.lockInfo != nil {
-            lockImageView.image = item.unlocked ? UIImage(named: "Transaction Unlock Icon") : UIImage(named: "Transaction Lock Icon")
+        if let lockState = item.lockState {
+            lockImageView.image = UIImage(named: lockState.locked ? "Transaction Lock Icon" : "Transaction Unlock Icon")
             lockImageView.snp.remakeConstraints { maker in
                 maker.leading.equalTo(currencyAmountLabel.snp.trailing).offset(CGFloat.margin1x)
                 maker.top.equalToSuperview().inset(CGFloat.margin4x)

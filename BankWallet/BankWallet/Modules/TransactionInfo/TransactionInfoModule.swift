@@ -2,7 +2,7 @@ import Foundation
 import CurrencyKit
 
 protocol ITransactionInfoView: AnyObject {
-    func set(date: Date, primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, type: TransactionType, locked: Bool?)
+    func set(date: Date, primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, type: TransactionType, lockState: TransactionLockState?)
     func set(viewItems: [TransactionInfoModule.ViewItem])
     func showCopied()
 }
@@ -17,9 +17,15 @@ protocol ITransactionInfoViewDelegate: class {
     func onTapVerify()
     func onTapLockInfo()
     func onTapDoubleSpendInfo()
+    func onTapCopyRawTransaction()
 }
 
 protocol ITransactionInfoInteractor {
+    var lastBlockInfo: LastBlockInfo? { get }
+    var confirmationThreshold: Int { get }
+    func transaction(hash: String) -> TransactionRecord?
+    func rawTransaction(hash: String) -> String?
+    func feeCoin(coin: Coin) -> Coin?
     func copy(value: String)
 }
 
@@ -41,8 +47,9 @@ class TransactionInfoModule {
         case rate(currencyValue: CurrencyValue, coinCode: String)
         case fee(coinValue: CoinValue, currencyValue: CurrencyValue?)
         case doubleSpend
-        case lockInfo(lockedUntil: Date, unlocked: Bool)
+        case lockInfo(lockState: TransactionLockState)
         case sentToSelf
+        case rawTransaction
     }
 
 }

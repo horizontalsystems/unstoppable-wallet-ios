@@ -143,7 +143,6 @@ class TransactionRecordDataSource {
 
         for (index, item) in itemsDataSource.items.enumerated() {
             let rate = metaDataSource.rate(coin: item.wallet.coin, date: item.record.date)
-            itemsDataSource.items[index].rate = rate
             itemsDataSource.items[index].currencyValue = rate.map {
                 CurrencyValue(currency: $0.currency, value: $0.value * item.record.amount)
             }
@@ -177,7 +176,6 @@ class TransactionRecordDataSource {
 
         for (index, item) in itemsDataSource.items.enumerated() {
             if item.wallet.coin == coin && item.record.date == date {
-                itemsDataSource.items[index].rate = rate
                 itemsDataSource.items[index].currencyValue = CurrencyValue(currency: rate.currency, value: rate.value * item.record.amount)
                 itemsChanged = true
             }

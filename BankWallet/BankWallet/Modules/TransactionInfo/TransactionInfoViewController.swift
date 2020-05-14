@@ -64,6 +64,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
         tableView.registerCell(forClass: TransactionInfoValueCell.self)
         tableView.registerCell(forClass: TransactionInfoWarningCell.self)
         tableView.registerCell(forClass: TransactionInfoNoteCell.self)
+        tableView.registerCell(forClass: TransactionInfoCopyCell.self)
         tableView.sectionDataSource = self
         tableView.allowsSelection = false
 
@@ -206,9 +207,9 @@ class TransactionInfoViewController: ThemeActionSheetController {
         }
     }
 
-    private func lockInfoRow(lockedUntil: Date, unlocked: Bool) -> RowProtocol {
-        let formattedDate = DateHelper.instance.formatFullTime(from: lockedUntil)
-        let lockedIconName = unlocked ? "Transaction Unlock Icon" : "Transaction Lock Icon"
+    private func lockInfoRow(lockState: TransactionLockState) -> RowProtocol {
+        let formattedDate = DateHelper.instance.formatFullTime(from: lockState.date)
+        let lockedIconName = lockState.locked ? "Transaction Lock Icon" : "Transaction Unlock Icon"
 
         return warningRow(
                 id: "lock_info",
@@ -240,6 +241,21 @@ class TransactionInfoViewController: ThemeActionSheetController {
         )
     }
 
+    private func rawTransactionRow() -> RowProtocol {
+        Row<TransactionInfoCopyCell>(
+                id: "raw_transaction",
+                height: .heightSingleLineCell,
+                bind: { cell, _ in
+                    cell.bind(
+                            title: "tx_info.raw_transaction".localized,
+                            onTapCopy: { [weak self] in
+                                self?.delegate.onTapCopyRawTransaction()
+                            }
+                    )
+                }
+        )
+    }
+
     private func row(viewItem: TransactionInfoModule.ViewItem) -> RowProtocol {
         switch viewItem {
         case let .status(status, incoming): return statusRow(status: status, incoming: incoming)
@@ -250,8 +266,9 @@ class TransactionInfoViewController: ThemeActionSheetController {
         case let .rate(currencyValue, coinCode): return rateRow(currencyValue: currencyValue, coinCode: coinCode)
         case let .fee(coinValue, currencyValue): return feeRow(coinValue: coinValue, currencyValue: currencyValue)
         case .doubleSpend: return doubleSpendRow()
-        case let .lockInfo(lockedUntil, unlocked): return lockInfoRow(lockedUntil: lockedUntil, unlocked: unlocked)
+        case let .lockInfo(lockState): return lockInfoRow(lockState: lockState)
         case .sentToSelf: return sentToSelfRow()
+        case .rawTransaction: return rawTransactionRow()
         }
     }
 
@@ -274,7 +291,7 @@ extension TransactionInfoViewController: SectionsDataSource {
 
 extension TransactionInfoViewController: ITransactionInfoView {
 
-    func set(date: Date, primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, type: TransactionType, locked: Bool?) {
+    func set(date: Date, primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, type: TransactionType, lockState: TransactionLockState?) {
         titleView.bind(
                 title: "tx_info.title".localized,
                 subtitle: DateHelper.instance.formatFullTime(from: date),
@@ -286,7 +303,7 @@ extension TransactionInfoViewController: ITransactionInfoView {
             amountInfoView.primaryFormatTrimmable = false
         }
 
-        amountInfoView.bind(primaryAmountInfo: primaryAmountInfo, secondaryAmountInfo: secondaryAmountInfo, type: type, locked: locked)
+        amountInfoView.bind(primaryAmountInfo: primaryAmountInfo, secondaryAmountInfo: secondaryAmountInfo, type: type, lockState: lockState)
     }
 
     func set(viewItems: [TransactionInfoModule.ViewItem]) {

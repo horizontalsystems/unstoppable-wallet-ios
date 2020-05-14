@@ -37,10 +37,18 @@ extension TransactionInfoRouter: ITransactionInfoRouter {
 
 extension TransactionInfoRouter {
 
-    static func module(viewItem: TransactionViewItem, sourceViewController: UIViewController?) -> UIViewController {
+    static func module(transactionHash: String, wallet: Wallet, sourceViewController: UIViewController?) -> UIViewController? {
+        guard let adapter = App.shared.adapterManager.transactionsAdapter(for: wallet) else {
+            return nil
+        }
+
         let router = TransactionInfoRouter(sourceViewController: sourceViewController)
-        let interactor = TransactionInfoInteractor(pasteboardManager: App.shared.pasteboardManager)
-        let presenter = TransactionInfoPresenter(viewItem: viewItem, interactor: interactor, router: router)
+        let interactor = TransactionInfoInteractor(adapter: adapter, feeCoinProvider: App.shared.feeCoinProvider, pasteboardManager: App.shared.pasteboardManager)
+
+        guard let presenter = TransactionInfoPresenter(transactionHash: transactionHash, wallet: wallet, interactor: interactor, router: router) else {
+            return nil
+        }
+
         let viewController = TransactionInfoViewController(delegate: presenter)
 
         presenter.view = viewController
