@@ -309,7 +309,7 @@
 "settings_privacy.sorting_title" = "Entradas/Salidas";
 "settings_privacy.sorting.section_header" = "Transacciones de blockchain";
 "settings_privacy.sorting.section_footer" = "Haga que sus transacciones BTC, LTC, BCH sean más difíciles de rastrear cambiando la forma en que las transacciones están estructuradas.";
-"settings_privacy.connection.section_header" = "Blockchain Sync";
+"settings_privacy.connection.section_header" = "Sincronización de Blockchain";
 "settings_privacy.connection.section_footer" = "Algunos blockchains aún no brindan medios para poder usarse en aplicaciones móviles de modo peer-to-peer. Las comunicaciones con las blockchains BTC, BCH, LTC, DASH son completamente peer-to-peer.";
 "settings_privacy.sync.section_header" = "Restaurar blockchain";
 "settings_privacy.sync.section_footer" = "Seleccione la fuente de información para restaurar el monedero con las transacciones.";
@@ -337,7 +337,7 @@
 "settings_privacy.sorting_shuffle" = "Aleatoriamente";
 "settings_privacy.sorting_shuffle.description" = "Indexación aleatoria";
 "settings_privacy.sorting_bip69" = "Deterministic Bip69";
-"settings_privacy.sorting_bip69.description" = "Lexicographical Indexing";
+"settings_privacy.sorting_bip69.description" = "Indexación Lexicográfica";
 
 // Settings -> Contact
 
@@ -387,8 +387,8 @@
 
 // Rate List
 
-"rate_list.title" = "Prices";
-"rate_list.portfolio" = "Portfolio";
+"rate_list.title" = "Precios";
+"rate_list.portfolio" = "Cartera";
 "top100_list.portfolio" = "Top 100";
 
 //NumPad
