@@ -83,8 +83,8 @@
 
 "backup.words.confirmation_description" = "%@ Anahtarınızda ki kelimeleri girin";
 
-"backup.eos.account_name" = "Hesap Adı";
-"backup.eos.active_private_key" = "Aktif özel anahtar";
+"backup.eos.account_name" = "Account Name";
+"backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Anahtarınızı \"Kopyala\" eylemiyle kopyalamanız anahtarınızın pano yönetisine ve panoya erişimi olan diğer uygulamalara sızma riskini taşır.";
 "error.send_eos.self_transfer" = "Bu kripto para kendi hesabınaza aktarılamıyor";
 "error.send_eos.account_not_exist" = "Hedef hesap yok";
@@ -210,15 +210,15 @@
 "full_info.amount" = "Tutar";
 "full_info.nonce" = "Nonce";
 "full_info.status" = "Durum";
-"full_info.memo" = "Not";
-"full_info.cpu" = "CPU Kullanımı";
-"full_info.net" = "Net Kullanım";
+"full_info.memo" = "Memo";
+"full_info.cpu" = "CPU Usage";
+"full_info.net" = "Net Usage";
 "full_info.milli_seconds" = "%@ μs";
 "full_info.bytes" = "%@ Bytes";
 
 "full_info.gas_limit" = "Gas Limit";
-"full_info.gas_used" = "Kullanılan Gaz";
-"full_info.gas_price" = "Gaz Fiyatı";
+"full_info.gas_used" = "Gas Used";
+"full_info.gas_price" = "Gas Price";
 
 "full_info.source.title" = "Kaynak";
 "full_info.source.online" = "çevrimiçi";
