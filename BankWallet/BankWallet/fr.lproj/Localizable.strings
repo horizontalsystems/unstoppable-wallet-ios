@@ -40,7 +40,7 @@
 
 // Restore
 
-"restore.title" = "Choose Wallet";
+"restore.title" = "Choisissez le portefeuille";
 "restore.enter_key" = "Entrez la clé";
 "restore.item_title" = "%@ Portefeuille";
 "restore.words.description" = "Entrez votre clé privée pour %@ Portefeuille qui se compose de %@ mots. Les mots doivent être entrés dans l'ordre correct et séparés par des espaces.";
@@ -110,7 +110,7 @@
 "balance.syncing" = "Synchronisation...";
 "balance.syncing_percent" = "Synchronisation... %@";
 "balance.synced_through" = "jusqu'à: %@";
-"balance.add_coin" = "Add Coins";
+"balance.add_coin" = "Ajouter des coins";
 "balance.sort.header" = "Trier par";
 "balance.sort.valueHighToLow" = "Balance";
 "balance.sort.az" = "Nom";
@@ -160,7 +160,7 @@
 "send.amount_error.balance" = "Balance %@";
 "send.amount_error.maximum_amount" = "Montant maximum %@";
 "send.amount_error.minimum_amount" = "Montant minimum %@";
-"send.amount_error.min_required_balance" = "Min. required remainder %@";
+"send.amount_error.min_required_balance" = "Minimum requis %@ restant";
 "send.token.insufficient_fee_alert" = "Frais de transaction pour %@ (%@) payé en %@. Il est nécessaire %@.";
 
 "send.lock_time" = "TimeLock";
@@ -260,7 +260,7 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Choose Coins";
+"manage_coins.title" = "Crypto Monnaie";
 "manage_coins.add_coin.title" = "Ajouter %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Portefeuille";
 "manage_coins.add_coin.text.set_up" = "You need to set up %@ wallet to be able to send or receive %@.";
