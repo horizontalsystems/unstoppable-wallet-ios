@@ -19,6 +19,7 @@
 "button.paste" = "Paste";
 "button.backup" = "Backup";
 "button.back" = "Back";
+"button.retry" = "تلاش دوباره";
 
 "alert.copied" = "کپی انجام شد";
 "alert.no_internet" = "انترنت نداريد";
@@ -204,7 +205,6 @@
 "full_info.source.offline" = "آفلاین";
 
 "full_info.error.subtitle" = "آفلاین";
-"full_info.error.retry" = "تلاش دوباره";
 "full_info.error.change_source" = "تغییر منبع";
 "full_info.no_address" = "آدرس خالي است";
 

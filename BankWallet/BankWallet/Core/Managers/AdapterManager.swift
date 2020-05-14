@@ -110,4 +110,19 @@ extension AdapterManager: IAdapterManager {
         initAdapters(wallets: walletManager.wallets)
     }
 
+    func refresh(wallet: Wallet) {
+        let adapter = adapters[wallet]
+
+        switch adapter {
+        case is BinanceAdapter:
+            binanceKitManager.refresh()
+        case is EthereumBaseAdapter:
+            ethereumKitManager.ethereumKit?.refresh()
+        case is EosAdapter:
+            eosKitManager.eosKit?.refresh()
+        default:
+            adapter?.refresh()
+        }
+    }
+
 }

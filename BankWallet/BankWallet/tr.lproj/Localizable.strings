@@ -15,6 +15,7 @@
 "button.backup" = "Yedekle";
 "button.copy" = "Kopyala";
 "button.back" = "Geri";
+"button.retry" = "Yeniden Dene";
 
 "alert.copied" = "Kopyalandı";
 "alert.no_internet" = "Internet Bağlantısı Yok";
@@ -227,7 +228,6 @@
 
 "full_info.error.server_offline" = "çevrimdışı";
 "full_info.error.transaction_not_found" = "Işlem Blockchain'de bulunamadı";
-"full_info.error.retry" = "Yeniden Dene";
 "full_info.error.change_source" = "Kaynağı Değiştir";
 "full_info.no_address" = "Boş adres";
 

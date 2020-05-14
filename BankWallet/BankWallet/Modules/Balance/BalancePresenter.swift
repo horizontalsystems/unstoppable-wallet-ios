@@ -204,9 +204,7 @@ extension BalancePresenter: IBalanceViewDelegate {
         if let appError = error as? AppError, case .noConnection = appError {
             view?.show(error: appError)
         } else {
-            //todo
-//        default: router.showSyncError(error: error)
-            view?.show(error: error)
+            router.showSyncError(error: error, wallet: item.wallet)
         }
     }
 

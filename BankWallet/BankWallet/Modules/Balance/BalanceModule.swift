@@ -75,7 +75,7 @@ protocol IBalanceRouter {
     func openManageWallets()
     func showBackupRequired(wallet: Wallet, predefinedAccountType: PredefinedAccountType)
     func showSortType()
-    func showSyncError(error: Error)
+    func showSyncError(error: Error, wallet: Wallet)
 }
 
 protocol IBalanceViewItemFactory {

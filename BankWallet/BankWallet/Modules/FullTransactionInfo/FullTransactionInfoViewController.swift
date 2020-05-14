@@ -207,7 +207,7 @@ extension FullTransactionInfoViewController: IFullTransactionInfoView {
     }
 
     func showOffline(providerName: String?) {
-        errorView.bind(image: errorImage, title: "full_info.error.server_offline".localized, buttonText: "full_info.error.retry".localized, linkText: "full_info.error.change_source".localized, onTapButton: onRetry, onTapLink: onTapChangeResource)
+        errorView.bind(image: errorImage, title: "full_info.error.server_offline".localized, buttonText: "button.retry".localized, linkText: "full_info.error.change_source".localized, onTapButton: onRetry, onTapLink: onTapChangeResource)
         errorView.set(hidden: false, animated: true)
     }
 
