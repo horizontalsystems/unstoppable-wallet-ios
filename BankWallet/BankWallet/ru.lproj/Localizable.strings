@@ -191,6 +191,7 @@
 "tx_info.double_spent_note" = "Риск Двойной Траты!";
 "tx_info.locked_until" = "Заблокировано до %@";
 "tx_info.recipient_hash" = "Получатель";
+"tx_info.raw_transaction" = "Raw Transaction";
 
 // Full Info
 
