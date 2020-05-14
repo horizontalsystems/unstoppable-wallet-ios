@@ -266,7 +266,7 @@
 "manage_coins.add_coin.text.set_up" = "Sie müssen das %@ Wallet einrichten, um %@ senden oder empfangen zu können.\n";
 "manage_coins.add_coin.text.create_or_restore" = "Tippen Sie auf den Button „Erstellen“, um ein neues %@ Wallet zu erstellen. Sie können auch auf den Button „Wiederherstellen“ tippen, um ein bereits bestehendes Wallet zu importieren.\n";
 "manage_coins.add_coin.text.create_only" = "Im Moment kann das Unstoppable leider keine neuen %@ Wallets anlegen. Sie können nur bestehende Wallets wiederherstellen.";
-"manage_coins.add_coin.text.tokens" = "You will be able to use this wallet for: %@.";
+"manage_coins.add_coin.text.tokens" = "Sie können dieses Wallet verwenden für: %@.";
 "manage_coins.add_coin.create" = "Erstellen";
 "manage_coins.add_coin.restore" = "Wiederherstellen";
 
@@ -305,7 +305,7 @@
 "settings_security.face_id" = "Face ID";
 "security_settings.delete_alert_button" = "Von Telefon löschen";
 "settings_privacy.title" = "Privatsphäre";
-"settings_privacy.header_description" = "This app doesn't share any of your data. However, as it communicates with blockchains some public data like IP address can potentially be leaked. Use the info button on the top right to get detailed information about each section.";
+"settings_privacy.header_description" = "Diese App gibt keine Ihrer Daten weiter. Da sie jedoch mit Blockchains kommuniziert, können einige öffentliche Daten wie z. B. die IP-Adresse möglicherweise durchsickern. Benutzen Sie den Info-Knopf oben rechts, um detaillierte Informationen über jeden Abschnitt zu erhalten.";
 "settings_privacy.sorting_title" = "Ein-/Ausgänge";
 "settings_privacy.sorting.section_header" = "Blockchain-Transaktionen";
 "settings_privacy.sorting.section_footer" = "Machen Sie Ihre BTC, LTC und BCH Transaktionen schwieriger nachvollziehbar, indem Sie die Transaktionsstruktur verändern.";
@@ -325,7 +325,7 @@
 
 "settings_privacy.alert_sync.title" = "Parameter wiederherstellen";
 "settings_privacy.alert_sync.description" = "Nach dieser Änderung muss sich das Wallet mit der %@ Blockchain neu synchronisieren.";
-"settings_privacy.alert_sync.recommended" = "Recommended";
+"settings_privacy.alert_sync.recommended" = "Empfohlen";
 "settings_privacy.alert_sync.more_private" = "Mehr Privat";
 
 "settings_privacy.alert_connection.title" = "Blockchain Sync";
@@ -335,9 +335,9 @@
 "settings_privacy.sorting_default" = "Standard";
 "settings_privacy.sorting_default.description" = "Ohne Einstellungen";
 "settings_privacy.sorting_shuffle" = "Zufällig";
-"settings_privacy.sorting_shuffle.description" = "Random Indexing";
-"settings_privacy.sorting_bip69" = "Deterministic Bip69";
-"settings_privacy.sorting_bip69.description" = "Lexicographical Indexing";
+"settings_privacy.sorting_shuffle.description" = "Zufällige Indizierung";
+"settings_privacy.sorting_bip69" = "Deterministische Bip69";
+"settings_privacy.sorting_bip69.description" = "Lexikographische Indizierung";
 
 // Settings -> Contact
 
@@ -387,7 +387,7 @@
 
 // Rate List
 
-"rate_list.title" = "Prices";
+"rate_list.title" = "Preise";
 "rate_list.portfolio" = "Portfolio";
 "top100_list.portfolio" = "Top 100";
 
