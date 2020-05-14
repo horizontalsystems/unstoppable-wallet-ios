@@ -40,7 +40,7 @@
 
 // Restore
 
-"restore.title" = "Choose Wallet";
+"restore.title" = "Elegir Monedero";
 "restore.enter_key" = "Introduzca la clave";
 "restore.item_title" = "%@ Monedero";
 "restore.words.description" = "Introduzca su clave privada para la cartera %@ que consta de %@ palabras. Las palabras deben ser introducidas en orden correcto y separadas por espacios.";
@@ -191,6 +191,7 @@
 "tx_info.double_spent_note" = "¡Riesgo de doble gasto!";
 "tx_info.locked_until" = "Bloqueado hasta %@";
 "tx_info.recipient_hash" = "Destinatario";
+"tx_info.raw_transaction" = "Raw Transaction";
 
 // Full Info
 
