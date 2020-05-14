@@ -35,7 +35,7 @@ extension LockScreenRouter {
         let router = LockScreenRouter(appStart: appStart)
         let presenter = LockScreenPresenter(router: router)
 
-        let insets = UIEdgeInsets(top: LockScreenController.pageControlHeight, left: 0, bottom: 60, right: 0)
+        let insets = UIEdgeInsets(top: LockScreenController.pageControlHeight, left: 0, bottom: 48, right: 0)
         let rateListController = RateListRouter.module(delegate: presenter, topMargin: LockScreenController.pageControlHeight)
         let unlockController = pinKit.unlockPinModule(delegate: presenter, biometryUnlockMode: .enabled, insets: insets, cancellable: false)
 
