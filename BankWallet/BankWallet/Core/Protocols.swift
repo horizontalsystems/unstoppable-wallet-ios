@@ -99,6 +99,8 @@ protocol ITransactionsAdapter {
     var lastBlockUpdatedObservable: Observable<Void> { get }
     var transactionRecordsObservable: Observable<[TransactionRecord]> { get }
     func transactionsSingle(from: TransactionRecord?, limit: Int) -> Single<[TransactionRecord]>
+    func transaction(hash: String) -> TransactionRecord?
+    func rawTransaction(hash: String) -> String?
 }
 
 protocol ISendBitcoinAdapter {

@@ -79,7 +79,7 @@ class AmountInfoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, type: TransactionType = .outgoing, locked: Bool? = nil) {
+    func bind(primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, type: TransactionType = .outgoing, lockState: TransactionLockState? = nil) {
         primaryAmountLabel.textColor = type == .incoming ? .themeRemus : .themeJacob
 
         let amountLabel: String?
@@ -103,8 +103,8 @@ class AmountInfoView: UIView {
         case .currencyValue(let currencyValue): secondaryAmountTitleLabel.text = currencyValue.currency.code
         }
 
-        if let txLocked = locked {
-            lockImageView.image = UIImage(named: txLocked ? "Transaction Lock Icon" : "Transaction Unlock Icon")
+        if let lockState = lockState {
+            lockImageView.image = UIImage(named: lockState.locked ? "Transaction Lock Icon" : "Transaction Unlock Icon")
             lockImageView.snp.remakeConstraints { maker in
                 maker.leading.equalTo(primaryAmountLabel.snp.trailing).offset(CGFloat.margin1x)
                 maker.top.equalToSuperview().inset(CGFloat.margin4x)
