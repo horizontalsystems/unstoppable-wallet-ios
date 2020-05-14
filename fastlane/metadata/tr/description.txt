@@ -48,7 +48,7 @@ Use the most technologically advanced and decentralized wallet ever built. Tüm 
 
 Her ay bu cüzdana 2500'ün üzerinde mühendislik saati ekleniyor. This wallet is being constantly improved further and continuously integrates latest enhancements in all blockchains such as segwit or real-time transaction fee estimator.
 
-(6) BEAUTIFUL
+(6) GÜZEL
 
 Deal with crypto without complexitites. You don’t need to understand technicalities powering different blockchains to be able to transact with them. 
 
