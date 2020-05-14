@@ -1,6 +1,6 @@
 protocol IBalanceErrorView: class {
     func set(coinTitle: String)
-    func set(buttons: [BalanceErrorModule.Buttons])
+    func setChangeSourceButton(hidden: Bool)
 }
 
 protocol IBalanceErrorViewDelegate {
@@ -15,7 +15,6 @@ protocol IBalanceErrorViewDelegate {
 protocol IBalanceErrorInteractor {
     func copyToClipboard(text: String)
     func refresh(wallet: Wallet)
-    func adapter(for wallet: Wallet) -> IAdapter?
 }
 
 protocol IBalanceErrorInteractorDelegate: class {
@@ -23,15 +22,6 @@ protocol IBalanceErrorInteractorDelegate: class {
 
 protocol IBalanceErrorRouter {
     func close()
-    func openPrivacySettings()
-    func openReport()
-}
-
-class BalanceErrorModule {
-
-    enum Buttons {
-        case retry
-        case changeSource
-    }
-
+    func closeAndOpenPrivacySettings()
+    func closeAndOpenReport()
 }
