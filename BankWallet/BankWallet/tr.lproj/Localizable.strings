@@ -93,7 +93,7 @@
 "error.send_ethereum.wrong_parameters" = "Yanlış parametreler";
 "error.send_binance.memo_required" = "Aktarım işleminde alıcı boş olmayan not istiyor";
 "error.send_binance.only_digits_allowed" = "Notun yalnızca rakam içermesini gerektirir";
-"error.incubed_not_reachable" = "Incubed servers not reachable";
+"error.incubed_not_reachable" = "Incubed sunucularına erişilemiyor";
 
 "backup.confirmation.title" = "Kontrol etme ...";
 
@@ -191,6 +191,7 @@
 "tx_info.double_spent_note" = "Çifte Harcama Riski Var!";
 "tx_info.locked_until" = "Şu zamana kadar kitlendi %@";
 "tx_info.recipient_hash" = "Alıcı";
+"tx_info.raw_transaction" = "Raw Transaction";
 
 // Full Info
 
@@ -413,7 +414,7 @@
 "chart.time_duration.year2" = "2Yıl";
 
 "chart.market_cap" = "P. Değeri";
-"chart.market_cap.thousand" = "%@ k";
+"chart.market_cap.thousand" = "%@ bin";
 "chart.market_cap.million" = "%@ M";
 "chart.market_cap.billion" = "%@ B";
 "chart.market_cap.trillion" = "%@ T";
