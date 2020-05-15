@@ -28,11 +28,11 @@ Kripto paranızı kontrol eden ve bunlara erişimi olan tek kişi sizsiniz. Gizl
 
 Herhangi bir kişisel bilgi vermeden gerçekten gizli kalın.   
 
-Unlike most wallets in the market the Unstoppable wallet connects users directly to decentralized blockchains without any restrictions or intermediaries.
+Piyasadaki cüzdanların aksine Unstoppable cüzdanı kullanıcıları herhangi bir kısıtlama veya aracı olmadan doğrudan decentralized blok zincirlerine bağlar.
 
 (3) GÜVENLİGİ YÜKSEK
 
-  Keep your crypto assets safe on your phone using safe storage mechanisms provided by phone's operating system. Your secret keys never leaves your device the device.
+Telefonun işletim sistemi tarafından sağlanan güvenli depolama mekanizmalarını kullanarak kripto varlıklarınızı telefonunuzda güvende tutun. Your secret keys never leaves your device the device.
 
   In case of a device loss or replacement you may easily restore your wallet using Secret Key. Unstoppable makes it really easy to switch to another wallet or migrate funds from another wallet.
 
