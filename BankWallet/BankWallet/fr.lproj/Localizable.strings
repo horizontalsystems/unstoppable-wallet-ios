@@ -15,6 +15,8 @@
 "button.backup" = "Sauvegarde";
 "button.copy" = "Copier";
 "button.back" = "Retour";
+"button.retry" = "Retry";
+"button.report" = "Report";
 
 "alert.copied" = "Copié";
 "alert.no_internet" = "Aucune connexion Internet";
@@ -115,6 +117,9 @@
 "balance.sort.valueHighToLow" = "Balance";
 "balance.sort.az" = "Nom";
 "balance.sort.24h_change" = "Prix 24h (%)";
+"balance_error.description" = "The error text will be copied to your clipboard should you decide to report it.";
+"balance_error.change_source" = "Change Source";
+"balance_error.sync_error" = "Sync Error";
 
 // Deposit
 
@@ -227,7 +232,6 @@
 
 "full_info.error.server_offline" = "déconnecté";
 "full_info.error.transaction_not_found" = "La transaction est introuvable sur la blockchain";
-"full_info.error.retry" = "Réessayer";
 "full_info.error.change_source" = "Changer la Source";
 "full_info.no_address" = "Adresse vide";
 
