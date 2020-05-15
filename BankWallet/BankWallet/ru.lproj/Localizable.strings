@@ -15,6 +15,8 @@
 "button.backup" = "Резервная копия";
 "button.copy" = "Скопировать";
 "button.back" = "Назад";
+"button.retry" = "Retry";
+"button.report" = "Report";
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет Интернета";
@@ -115,6 +117,9 @@
 "balance.sort.valueHighToLow" = "Балансу";
 "balance.sort.az" = "Названию";
 "balance.sort.24h_change" = "Цене(%) за 24 ч";
+"balance_error.description" = "The error text will be copied to your clipboard should you decide to report it.";
+"balance_error.change_source" = "Change Source";
+"balance_error.sync_error" = "Sync Error";
 
 // Deposit
 
@@ -227,7 +232,6 @@
 
 "full_info.error.server_offline" = "не доступен";
 "full_info.error.transaction_not_found" = "Транзакция не найдена в блокчейне";
-"full_info.error.retry" = "Повторить";
 "full_info.error.change_source" = "Изменить Источник";
 "full_info.no_address" = "Пустой Адрес";
 
