@@ -15,6 +15,8 @@
 "button.backup" = "备份";
 "button.copy" = "复制";
 "button.back" = "返回";
+"button.retry" = "Retry";
+"button.report" = "Report";
 
 "alert.copied" = "已复制";
 "alert.no_internet" = "没有网络";
@@ -115,6 +117,9 @@
 "balance.sort.valueHighToLow" = "余额";
 "balance.sort.az" = "名称";
 "balance.sort.24h_change" = "24小时价格（%）";
+"balance_error.description" = "The error text will be copied to your clipboard should you decide to report it.";
+"balance_error.change_source" = "Change Source";
+"balance_error.sync_error" = "Sync Error";
 
 // Deposit
 
@@ -227,7 +232,6 @@
 
 "full_info.error.server_offline" = "离线";
 "full_info.error.transaction_not_found" = "无法在区块链上找到交易";
-"full_info.error.retry" = "重试";
 "full_info.error.change_source" = "更改源";
 "full_info.no_address" = "空地址";
 
