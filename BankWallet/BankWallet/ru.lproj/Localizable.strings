@@ -175,9 +175,9 @@
 "transactions.filter_all" = "Все";
 "transactions.empty_text" = "У Вас ещё нет незавершенных или прошлых транзакций";
 "transactions.pending" = "В обработке";
-"transactions.receiving" = "Получает";
+"transactions.receiving" = "Получение";
 "transactions.failed" = "Не удалось";
-"transactions.sending" = "Отправляется";
+"transactions.sending" = "Отправка";
 
 // Transaction Info
 
