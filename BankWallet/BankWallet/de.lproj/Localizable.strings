@@ -195,6 +195,7 @@
 "tx_info.to_self_note" = "Diese Transaktion wurde an die eigene Adresse gesendet";
 "tx_info.double_spent_note" = "Double-Spend-Risiko!";
 "tx_info.locked_until" = "Gesperrt bis %@";
+"tx_info.unlocked_at" = "Unlocked at %@";
 "tx_info.recipient_hash" = "Empfänger";
 "tx_info.raw_transaction" = "Raw Transaction";
 
