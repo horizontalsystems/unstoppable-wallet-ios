@@ -214,7 +214,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
         return warningRow(
                 id: "lock_info",
                 image: UIImage(named: lockedIconName),
-                text: "tx_info.locked_until".localized(formattedDate)
+                text: lockState.locked ? "tx_info.locked_until".localized(formattedDate) : "tx_info.unlocked_at".localized(formattedDate)
         ) { [weak self] in
             self?.delegate.onTapLockInfo()
         }
