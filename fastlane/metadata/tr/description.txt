@@ -30,7 +30,7 @@ Herhangi bir kişisel bilgi vermeden gerçekten gizli kalın.   
 
 Unlike most wallets in the market the Unstoppable wallet connects users directly to decentralized blockchains without any restrictions or intermediaries.
 
-(3) HIGHLY SECURE
+(3) GÜVENLİGİ YÜKSEK
 
   Keep your crypto assets safe on your phone using safe storage mechanisms provided by phone's operating system. Your secret keys never leaves your device the device.
 
