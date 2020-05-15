@@ -52,9 +52,9 @@
 
 // Coin Settings
 
-"coin_settings.derivation.description_bip44" = "Старые (начинается с 1...)";
-"coin_settings.derivation.description_bip49" = "Популярные (начинается с 3...)";
-"coin_settings.derivation.description_bip84" = "Новейшие (начинается с bc1...)";
+"coin_settings.derivation.description_bip44" = "Старый (начинается с 1...)";
+"coin_settings.derivation.description_bip49" = "Популярный (начинается с 3...)";
+"coin_settings.derivation.description_bip84" = "Новый (начинается с bc1...)";
 "coin_settings.derivation.description_create" = "Этот параметр определяет формат адреса Bitcoin в этом кошельке. Мы рекомендуем использовать BIP49.";
 "coin_settings.derivation.description_restore" = "Выберите формат адреса для Bitcoin в кошельке, который вы пытаетесь восстановить.";
 "coin_settings.title" = "Настройки Блокчейна";
