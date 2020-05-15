@@ -15,6 +15,8 @@
 "button.backup" = "백업";
 "button.copy" = "복사";
 "button.back" = "뒤로";
+"button.retry" = "Retry";
+"button.report" = "Report";
 
 "alert.copied" = "복사됨";
 "alert.no_internet" = "인터넷에 연결되지 않음";
@@ -115,6 +117,9 @@
 "balance.sort.valueHighToLow" = "잔액";
 "balance.sort.az" = "이름";
 "balance.sort.24h_change" = "24시간 가격(%)";
+"balance_error.description" = "The error text will be copied to your clipboard should you decide to report it.";
+"balance_error.change_source" = "Change Source";
+"balance_error.sync_error" = "Sync Error";
 
 // Deposit
 
@@ -227,7 +232,6 @@
 
 "full_info.error.server_offline" = "오프라인";
 "full_info.error.transaction_not_found" = "블록 체인에서 거래를 찾을 수 없습니다";
-"full_info.error.retry" = "재시도";
 "full_info.error.change_source" = "출처를 변경하다";
 "full_info.no_address" = "빈 주소";
 
