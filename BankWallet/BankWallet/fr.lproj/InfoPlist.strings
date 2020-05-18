@@ -1,2 +1,2 @@
-"NSCameraUsageDescription" = "The app needs to access camera in order to scan QR codes.";
-"NSFaceIDUsageDescription" = "FaceID will be used to unlock the wallet.";
+"NSCameraUsageDescription" = "L'application doit accéder à la caméra afin de scanner les codes QR.";
+"NSFaceIDUsageDescription" = "FaceID sera utilisé pour déverrouiller le portefeuille.";
