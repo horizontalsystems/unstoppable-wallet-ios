@@ -244,13 +244,13 @@
 "settings.manage_accounts" = "Cüzdanları yönet";
 "settings.manage_coins" = "Kripto Paraları Yönet";
 "settings.experimental_features" = "Deneysel Özellikler";
-"settings.notifications" = "Notifications";
-"settings.base_currency" = "Base Currency";
-"settings.language" = "Language";
-"settings.about" = "About";
-"settings.tell_friends" = "Tell Friends";
-"settings.contact" = "Contact";
-"settings.light_mode" = "Light Mode";
+"settings.notifications" = "Bildirimler";
+"settings.base_currency" = "Para birimi";
+"settings.language" = "Dil";
+"settings.about" = "Hakkında";
+"settings.tell_friends" = "Arkadaşlarına bahset";
+"settings.contact" = "Iletişim";
+"settings.light_mode" = "Aydınlık mod";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
 
