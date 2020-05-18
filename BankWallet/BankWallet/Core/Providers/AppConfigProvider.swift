@@ -12,8 +12,6 @@ class AppConfigProvider: IAppConfigProvider {
     let reportEmail = "hsdao@protonmail.ch"
     let telegramWalletHelpAccount = "UnstoppableWallet"
 
-    let reachabilityHost = "ipfs.horizontalsystems.xyz"
-
     var testMode: Bool {
         Bundle.main.object(forInfoDictionaryKey: "TestMode") as? String == "true"
     }
@@ -52,6 +50,10 @@ class AppConfigProvider: IAppConfigProvider {
         (Bundle.main.object(forInfoDictionaryKey: "EtherscanApiKey") as? String) ?? ""
     }
 
+    var coinMarketCapApiKey: String {
+        (Bundle.main.object(forInfoDictionaryKey: "CoinMarketCapKey") as? String) ?? ""
+    }
+
     var disablePinLock: Bool {
         Bundle.main.object(forInfoDictionaryKey: "DisablePinLock") as? String == "true"
     }
@@ -81,7 +83,6 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "ZRX",       title: "0x Protocol",           code: "ZRX",     decimal: 18, type: CoinType(erc20Address: "0xE41d2489571d322189246DaFA5ebDe1F4699F498")),
         Coin(id: "ELF",       title: "Aelf",                  code: "ELF",     decimal: 18, type: CoinType(erc20Address: "0xbf2179859fc6D5BEE9Bf9158632Dc51678a4100e")),
         Coin(id: "ANKR",      title: "Ankr Network",          code: "ANKR",    decimal: 8,  type: .binance(symbol: "ANKR-E97")),
-        Coin(id: "AURA",      title: "Aurora DAO",            code: "AURA",    decimal: 18, type: CoinType(erc20Address: "0xCdCFc0f66c522Fd086A1b725ea3c0Eeb9F9e8814")),
         Coin(id: "BNT",       title: "Bancor",                code: "BNT",     decimal: 18, type: CoinType(erc20Address: "0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C")),
         Coin(id: "BAT",       title: "Basic Attention Token", code: "BAT",     decimal: 18, type: CoinType(erc20Address: "0x0D8775F648430679A709E98d2b0Cb6250d2887EF")),
         Coin(id: "BNB-ERC20", title: "Binance ERC20",         code: "BNB",     decimal: 18, type: CoinType(erc20Address: "0xB8c77482e45F1F44dE1745F52C74426C631bDD52")),
@@ -136,6 +137,8 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "TUSD",      title: "TrueUSD",               code: "TUSD",    decimal: 18, type: CoinType(erc20Address: "0x0000000000085d4780B73119b644AE5ecd22b376")),
         Coin(id: "USDC",      title: "USD Coin",              code: "USDC",    decimal: 6,  type: CoinType(erc20Address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48")),
         Coin(id: "WTC",       title: "Waltonchain",           code: "WTC",     decimal: 18, type: CoinType(erc20Address: "0xb7cB1C96dB6B22b0D3d9536E0108d062BD488F74")),
+        Coin(id: "WBTC",      title: "Wrapped Bitcoin",       code: "WBTC",    decimal: 8,  type: CoinType(erc20Address: "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599")),
+        Coin(id: "WETH",      title: "Wrapped Ethereum",      code: "WETH",    decimal: 18, type: CoinType(erc20Address: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")),
     ]
 
 }

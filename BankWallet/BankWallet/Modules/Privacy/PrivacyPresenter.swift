@@ -6,7 +6,6 @@ class PrivacyPresenter {
     private let factory = PrivacyViewItemFactory()
 
     private var syncItems = [PrivacySyncItem]()
-    private let syncModes = [SyncMode.fast, SyncMode.slow]
 
     init(interactor: IPrivacyInteractor, router: IPrivacyRouter) {
         self.interactor = interactor
@@ -34,6 +33,12 @@ class PrivacyPresenter {
         view?.set(syncModeItems: factory.syncViewItems(items: syncItems))
     }
 
+    private var standardCreatedWalletExists: Bool {
+        interactor.wallets.contains { wallet in
+            wallet.account.origin == .created && wallet.coin.type.predefinedAccountType == .standard
+        }
+    }
+
 }
 
 extension PrivacyPresenter: IPrivacyViewDelegate {
@@ -43,70 +48,79 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
 
         updateConnection()
 
-        syncItems = interactor.syncSettings.compactMap {(setting, coins) in
-            guard let coin = coins.first else {
-                return nil
+        if !standardCreatedWalletExists {
+            syncItems = interactor.syncSettings.compactMap {(setting, coins) in
+                guard let coin = coins.first else {
+                    return nil
+                }
+
+                return PrivacySyncItem(coin: coin, setting: setting)
             }
 
-            return PrivacySyncItem(coin: coin, setting: setting)
+            updateSync()
         }
-        updateSync()
 
         view?.updateUI()
     }
 
+    func onTapInfo() {
+        router.showPrivacyInfo()
+    }
+
     func onSelectSortMode() {
-        view?.showSortModeAlert(items: factory.sortSelectViewItems(currentSetting: interactor.sortMode, all: TransactionDataSortMode.allCases))
+        router.showSortMode(currentSortMode: interactor.sortMode, delegate: self)
     }
 
     func onSelectConnection(index: Int) {
         switch index {
         case 0:
-            let selectedSetting = interactor.ethereumConnection
-            let allSettings = EthereumRpcMode.allCases
-
-            view?.showConnectionModeAlert(itemIndex: index, coinName: "Ethereum", iconName: "ETH", items: factory.ethConnectionSelectViewItems(currentSetting: selectedSetting, all: allSettings))
-        default: return
+            router.showEthereumRpcMode(currentMode: interactor.ethereumConnection, delegate: self)
+        default:
+            return
         }
     }
 
     func onSelectSync(index: Int) {
         let currentSetting = syncItems[index]
-
-        let coinName: String = currentSetting.coin.title
-        let iconName: String = currentSetting.coin.code
-
-        view?.showSyncModeAlert(itemIndex: index, coinName: coinName, iconName: iconName, items: factory.syncSelectViewItems(currentSetting: currentSetting, all: syncModes))
+        router.showSyncMode(coin: currentSetting.coin, currentSyncMode: currentSetting.setting.syncMode, delegate: self)
     }
 
-    func onSelectSyncSetting(itemIndex: Int, settingIndex: Int) {
-        let oldSetting = syncItems[itemIndex].setting
-        let newSetting = InitialSyncSetting(coinType: oldSetting.coinType, syncMode: syncModes[settingIndex])
+}
 
-        syncItems[itemIndex].setting = newSetting
+extension PrivacyPresenter: IPrivacySortModeDelegate {
+
+    func onSelect(sortMode: TransactionDataSortMode) {
+        interactor.save(sortSetting: sortMode)
+
+        updateSortMode()
+        view?.updateUI()
+    }
+
+}
+
+extension PrivacyPresenter: IPrivacyEthereumRpcModeDelegate {
+
+    func onSelect(mode: EthereumRpcMode) {
+        interactor.save(connectionSetting: mode)
+
+        updateConnection()
+        view?.updateUI()
+    }
+
+}
+
+extension PrivacyPresenter: IPrivacySyncModeDelegate {
+
+    func onSelect(syncMode: SyncMode, coin: Coin) {
+        let newSetting = InitialSyncSetting(coinType: coin.type, syncMode: syncMode)
+
+        if let index = syncItems.firstIndex(where: { $0.coin == coin }) {
+            syncItems[index].setting = newSetting
+        }
 
         interactor.save(syncSetting: newSetting)
 
         updateSync()
-        view?.updateUI()
-    }
-
-    func onSelectConnectionSetting(itemIndex: Int, settingIndex: Int) {
-        switch itemIndex {
-        case 0:
-            let newSetting = EthereumRpcMode.allCases[settingIndex]
-            interactor.save(connectionSetting: newSetting)
-
-            updateConnection()
-            view?.updateUI()
-        default: return
-        }
-    }
-
-    func onSelectSortSetting(settingIndex: Int) {
-        interactor.save(sortSetting: TransactionDataSortMode.allCases[settingIndex])
-
-        updateSortMode()
         view?.updateUI()
     }
 

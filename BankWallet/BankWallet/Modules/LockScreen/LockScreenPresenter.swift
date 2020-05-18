@@ -22,8 +22,8 @@ extension LockScreenPresenter: IUnlockDelegate {
 
 extension LockScreenPresenter: IRateListDelegate {
 
-    func showChart(coin: Coin) {
-        router.showChart(coin: coin)
+    func showChart(coinCode: String, coinTitle: String) {
+        router.showChart(coinCode: coinCode, coinTitle: coinTitle)
     }
 
 }

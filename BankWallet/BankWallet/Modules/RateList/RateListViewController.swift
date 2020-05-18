@@ -75,7 +75,8 @@ extension RateListViewController: SectionsDataSource {
             return []
         }
 
-        let count = item.rateViewItems.count
+        let rateViewItemsCount = item.rateViewItems.count
+        let topRateViewItemsCount = item.topRateViewItems.count
 
         return [
             Section(
@@ -93,23 +94,43 @@ extension RateListViewController: SectionsDataSource {
                     ]
             ),
             Section(
-                    id: "rate_list_section",
-                    headerState: sectionHeader(text: "rate_list.portfolio".localized),
-                    rows: item.rateViewItems.enumerated().map { index, viewItem in
-                        Row<RateListCell>(
-                                id: "rate_\(index)",
-                                hash: viewItem.hash,
-                                height: .heightDoubleLineCell,
-                                autoDeselect: true,
-                                bind: { cell, _ in
-                                    cell.selectionStyle = viewItem.diff == nil ? .none : .default
-                                    cell.bind(viewItem: viewItem, last: index == count - 1)
-                                },
-                                action: { [weak self] _ in
-                                    self?.delegate.onSelect(viewItem: viewItem)
-                                }
-                        )
-                    }
+                id: "rate_list_section",
+                headerState: sectionHeader(text: "rate_list.portfolio".localized),
+                footerState: .margin(height: .margin8x),
+                rows: item.rateViewItems.enumerated().map { index, viewItem in
+                    Row<RateListCell>(
+                        id: "coin_rate_\(index)",
+                        hash: viewItem.hash,
+                        height: .heightDoubleLineCell,
+                        autoDeselect: true,
+                        bind: { cell, _ in
+                            cell.selectionStyle = viewItem.diff == nil ? .none : .default
+                            cell.bind(viewItem: viewItem, last: index == rateViewItemsCount - 1)
+                        },
+                        action: { [weak self] _ in
+                            self?.delegate.onSelect(viewItem: viewItem)
+                        }
+                    )
+                }
+            ),
+            Section(
+                id: "top100_list_section",
+                headerState: sectionHeader(text: "top100_list.portfolio".localized),
+                rows: item.topRateViewItems.enumerated().map { index, viewItem in
+                    Row<RateListCell>(
+                        id: "market_coin_rate_\(index)",
+                        hash: viewItem.hash,
+                        height: .heightDoubleLineCell,
+                        autoDeselect: true,
+                        bind: { cell, _ in
+                            cell.selectionStyle = viewItem.diff == nil ? .none : .default
+                            cell.bind(viewItem: viewItem, showIcon: false, last: index == topRateViewItemsCount - 1)
+                        },
+                        action: { [weak self] _ in
+                            self?.delegate.onSelect(viewItem: viewItem)
+                        }
+                    )
+                }
             )
         ]
     }

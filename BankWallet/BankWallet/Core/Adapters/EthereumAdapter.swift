@@ -42,7 +42,8 @@ class EthereumAdapter: EthereumBaseAdapter {
                 from: transaction.from,
                 to: transaction.to,
                 lockInfo: nil,
-                conflictingHash: nil
+                conflictingHash: nil,
+                showRawTransaction: false
         )
     }
 
@@ -68,12 +69,33 @@ extension EthereumAdapter {
 
 }
 
+// IAdapter
+extension EthereumAdapter: IAdapter {
+
+    func start() {
+        // started via EthereumKitManager
+    }
+
+    func stop() {
+        // stopped via EthereumKitManager
+    }
+
+    func refresh() {
+        // refreshed via EthereumKitManager
+    }
+
+    var debugInfo: String {
+        ethereumKit.debugInfo
+    }
+
+}
+
 extension EthereumAdapter: IBalanceAdapter {
 
     var state: AdapterState {
         switch ethereumKit.syncState {
         case .synced: return .synced
-        case .notSynced: return .notSynced
+        case .notSynced(let error): return .notSynced(error: error.convertedError)
         case .syncing: return .syncing(progress: 50, lastBlockDate: nil)
         }
     }
@@ -132,6 +154,10 @@ extension EthereumAdapter: ITransactionsAdapter {
                 .map { [weak self] transactions -> [TransactionRecord] in
                     transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
                 }
+    }
+
+    func rawTransaction(hash: String) -> String? {
+        nil
     }
 
 }

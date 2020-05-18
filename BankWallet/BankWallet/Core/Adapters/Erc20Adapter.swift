@@ -54,7 +54,8 @@ class Erc20Adapter: EthereumBaseAdapter {
                 from: transaction.from,
                 to: transaction.to,
                 lockInfo: nil,
-                conflictingHash: nil
+                conflictingHash: nil,
+                showRawTransaction: false
         )
     }
 
@@ -87,12 +88,32 @@ extension Erc20Adapter {
 
 }
 
+// IAdapter
+extension Erc20Adapter: IAdapter {
+
+    func start() {
+        erc20Kit.refresh()
+    }
+
+    func stop() {
+    }
+
+    func refresh() {
+        erc20Kit.refresh()
+    }
+
+    var debugInfo: String {
+        ethereumKit.debugInfo
+    }
+
+}
+
 extension Erc20Adapter: IBalanceAdapter {
 
     var state: AdapterState {
         switch erc20Kit.syncState {
         case .synced: return .synced
-        case .notSynced: return .notSynced
+        case .notSynced(let error): return .notSynced(error: error.convertedError)
         case .syncing: return .syncing(progress: 50, lastBlockDate: nil)
         }
     }
@@ -149,6 +170,10 @@ extension Erc20Adapter: ITransactionsAdapter {
         } catch {
             return Single.error(error)
         }
+    }
+
+    func rawTransaction(hash: String) -> String? {
+        nil
     }
 
 }

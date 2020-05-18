@@ -125,14 +125,14 @@ class TransactionCell: ClaudeThemeCell {
         doubleSpendImageView.isHidden = item.conflictingTxHash == nil
         inOutImageView.image = item.type == .incoming ? UIImage(named: "Transaction In Icon") : UIImage(named: "Transaction Out Icon")
 
-        if let value = item.currencyValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.01)) {
+        if let value = item.currencyValue?.nonZero, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.01)) {
             currencyAmountLabel.text = formattedValue
         } else {
             currencyAmountLabel.text = nil
         }
 
-        if item.lockInfo != nil {
-            lockImageView.image = item.unlocked ? UIImage(named: "Transaction Unlock Icon") : UIImage(named: "Transaction Lock Icon")
+        if let lockState = item.lockState {
+            lockImageView.image = UIImage(named: lockState.locked ? "Transaction Lock Icon" : "Transaction Unlock Icon")
             lockImageView.snp.remakeConstraints { maker in
                 maker.leading.equalTo(currencyAmountLabel.snp.trailing).offset(CGFloat.margin1x)
                 maker.top.equalToSuperview().inset(CGFloat.margin4x)

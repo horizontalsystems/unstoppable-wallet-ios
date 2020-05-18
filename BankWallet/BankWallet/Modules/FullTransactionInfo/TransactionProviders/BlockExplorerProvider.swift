@@ -1,4 +1,5 @@
 import ObjectMapper
+import Alamofire
 
 class BlockExplorerBitcoinProvider: IBitcoinForksProvider {
     let name = "BlockExplorer.com"
@@ -11,8 +12,8 @@ class BlockExplorerBitcoinProvider: IBitcoinForksProvider {
         "https://blockexplorer.com/api/block/0"
     }
 
-    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        .get(url: "https://blockexplorer.com/api/tx/" + hash, params: nil)
+    func request(session: Session, hash: String) -> DataRequest {
+        session.request("https://blockexplorer.com/api/tx/" + hash)
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
@@ -32,8 +33,8 @@ class BlockExplorerBitcoinCashProvider: IBitcoinForksProvider {
         "https://bitcoincash.blockexplorer.com/api/block/0"
     }
 
-    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        .get(url: "https://bitcoincash.blockexplorer.com/api/tx/" + hash, params: nil)
+    func request(session: Session, hash: String) -> DataRequest {
+        session.request("https://bitcoincash.blockexplorer.com/api/tx/" + hash)
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {

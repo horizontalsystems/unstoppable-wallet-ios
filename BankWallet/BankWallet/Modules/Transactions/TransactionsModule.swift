@@ -2,26 +2,6 @@ import Foundation
 import DeepDiff
 import CurrencyKit
 
-enum TransactionStatus {
-    case failed
-    case pending
-    case processing(progress: Double)
-    case completed
-}
-
-extension TransactionStatus: Equatable {
-
-    public static func ==(lhs: TransactionStatus, rhs: TransactionStatus) -> Bool {
-        switch (lhs, rhs) {
-        case (.pending, .pending): return true
-        case (let .processing(lhsProgress), let .processing(rhsProgress)): return lhsProgress == rhsProgress
-        case (.completed, .completed): return true
-        default: return false
-        }
-    }
-
-}
-
 protocol ITransactionsView: class {
     func set(status: TransactionViewStatus)
     func show(filters: [Wallet?])

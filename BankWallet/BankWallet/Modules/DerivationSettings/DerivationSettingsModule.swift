@@ -1,6 +1,5 @@
 protocol IDerivationSettingsView: class {
     func set(viewItems: [DerivationSettingSectionViewItem])
-    func showChangeAlert(setting: DerivationSetting, coinTitle: String)
 }
 
 protocol IDerivationSettingsInteractor: class {
@@ -13,10 +12,10 @@ protocol IDerivationSettingsInteractor: class {
 protocol IDerivationSettingsViewDelegate {
     func onLoad()
     func onSelect(chainIndex: Int, settingIndex: Int)
-    func proceedChange(setting: DerivationSetting)
 }
 
 protocol IDerivationSettingsRouter {
+    func showChangeConfirmation(coinTitle: String, setting: DerivationSetting, delegate: IDerivationSettingConfirmationDelegate)
 }
 
 struct DerivationSettingsItem {

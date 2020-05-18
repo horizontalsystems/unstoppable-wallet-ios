@@ -1,39 +1,53 @@
 import Alamofire
 import RxSwift
+import HsToolKit
 
 class FullTransactionInfoProvider {
     private let disposeBag = DisposeBag()
 
-    private let apiProvider: IJsonApiProvider
+    private let networkManager: NetworkManager
     private let adapter: IFullTransactionInfoAdapter
     private let provider: IProvider
-    private let async: Bool
 
-    init(apiProvider: IJsonApiProvider, adapter: IFullTransactionInfoAdapter, provider: IProvider, async: Bool = true) {
-        self.apiProvider = apiProvider
+    init(networkManager: NetworkManager, adapter: IFullTransactionInfoAdapter, provider: IProvider) {
+        self.networkManager = networkManager
         self.adapter = adapter
         self.provider = provider
-
-        self.async = async
     }
 
 }
 
 extension FullTransactionInfoProvider: IFullTransactionInfoProvider {
 
-    var providerName: String { return provider.name }
-    func url(for hash: String) -> String? { return provider.url(for: hash) }
+    var providerName: String {
+        provider.name
+    }
+
+    func url(for hash: String) -> String? {
+        provider.url(for: hash)
+    }
 
     func retrieveTransactionInfo(transactionHash: String) -> Single<FullTransactionRecord?> {
-        var single = apiProvider.getJson(requestObject: provider.requestObject(for: transactionHash))
+        let request = provider.request(session: networkManager.session, hash: transactionHash)
 
-        if async {
-            single = single.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background)).observeOn(MainScheduler.instance)
+        return networkManager.single(request: request, mapper: self)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
+                .map { [weak self] json in
+                    self?.adapter.convert(json: json)
+                }
+    }
+
+}
+
+extension FullTransactionInfoProvider: IApiMapper {
+
+    public func map(statusCode: Int, data: Any?) throws -> [String: Any] {
+        guard let map = data as? [String: Any] else {
+            throw NetworkManager.RequestError.invalidResponse(statusCode: statusCode, data: data)
         }
 
-        return single.map { [weak self] jsonObject in
-            self?.adapter.convert(json: jsonObject)
-        }
+        return map
     }
 
 }

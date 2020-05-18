@@ -18,18 +18,20 @@ protocol IRateListInteractor {
 
     func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo?
     func subscribeToMarketInfos(currencyCode: String)
+    func updateTopMarkets(currencyCode: String)
 }
 
 protocol IRateListInteractorDelegate: class {
     func didReceive(marketInfos: [String: MarketInfo])
+    func didReceive(topMarkets: [TopMarket])
 }
 
 protocol IRateListRouter {
-    func showChart(coin: Coin)
+    func showChart(coinCode: String, coinTitle: String)
 }
 
 protocol IRateListFactory {
-    func rateListViewItem(coins: [Coin], currency: Currency, marketInfos: [CoinCode: MarketInfo]) -> RateListViewItem
+    func rateListViewItem(coins: [Coin], currency: Currency, marketInfos: [CoinCode: MarketInfo], topMarkets: [TopMarket]) -> RateListViewItem
 }
 
 protocol IRateListSorter {
@@ -37,24 +39,27 @@ protocol IRateListSorter {
 }
 
 protocol IRateListDelegate: AnyObject {
-    func showChart(coin: Coin)
+    func showChart(coinCode: String, coinTitle: String)
 }
 
 struct RateListViewItem {
     let currentDate: Date
     let lastUpdateTimestamp: TimeInterval?
     let rateViewItems: [RateViewItem]
+    let topRateViewItems: [RateViewItem]
 }
 
 struct RateViewItem {
-    let coin: Coin
+    let coinCode: String
+    let coinTitle: String
+    let blockchainType: String?
     var rateExpired: Bool
     var rate: CurrencyValue?
     var diff: Decimal?
 
     var hash: String {
         var fields = [String]()
-        fields.append(coin.code)
+        fields.append(coinCode)
         if let rate = rate {
             fields.append(rate.value.description)
         }

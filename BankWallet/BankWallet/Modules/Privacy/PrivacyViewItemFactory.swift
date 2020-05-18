@@ -6,27 +6,4 @@ class PrivacyViewItemFactory {
         }
     }
 
-    func syncSelectViewItems(currentSetting: PrivacySyncItem, all: [SyncMode]) -> [PrivacySyncSelectViewItem] {
-        let selectedSettingName: String = currentSetting.setting.syncMode.title
-        let allSettings = all.map { $0.title }
-
-        return allSettings.enumerated().map { index, title in
-            PrivacySyncSelectViewItem(title: title, selected: title == selectedSettingName, priority: index == 0 ? .recommended : .morePrivate)
-        }
-    }
-
-    func ethConnectionSelectViewItems(currentSetting: EthereumRpcMode, all: [EthereumRpcMode]) -> [PrivacyConnectionSelectViewItem] {
-        let selectedSettingName: String = currentSetting.title
-
-        return all.map { setting in
-            PrivacyConnectionSelectViewItem(title: setting.title, subtitle: setting.address, selected: setting.title == selectedSettingName)
-        }
-    }
-
-    func sortSelectViewItems(currentSetting: TransactionDataSortMode, all: [TransactionDataSortMode]) -> [PrivacySortSelectViewItem] {
-        all.map {
-            PrivacySortSelectViewItem(mode: $0.title, selected: $0.title == currentSetting.title)
-        }
-    }
-
 }

@@ -47,4 +47,13 @@ extension RateListInteractor: IRateListInteractor {
                 .disposed(by: disposeBag)
     }
 
+    func updateTopMarkets(currencyCode: String) {
+        rateManager.topMarketInfos(currencyCode: currencyCode)
+                .observeOn(MainScheduler.instance)
+                .subscribe(onSuccess: { [weak self] infos in
+                    self?.delegate?.didReceive(topMarkets: infos)
+                })
+                .disposed(by: disposeBag)
+    }
+
 }

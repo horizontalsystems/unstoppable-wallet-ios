@@ -8,9 +8,9 @@ class BitcoinBaseAdapter {
     private let abstractKit: AbstractKit
     private let coinRate: Decimal = pow(10, 8)
 
-    private let lastBlockUpdatedSignal = Signal()
-    private let stateUpdatedSignal = Signal()
-    private let balanceUpdatedSignal = Signal()
+    private let lastBlockUpdatedSubject = PublishSubject<Void>()
+    private let stateUpdatedSubject = PublishSubject<Void>()
+    private let balanceUpdatedSubject = PublishSubject<Void>()
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
 
     private(set) var state: AdapterState
@@ -18,7 +18,7 @@ class BitcoinBaseAdapter {
     init(abstractKit: AbstractKit) {
         self.abstractKit = abstractKit
 
-        state = .syncing(progress: 0, lastBlockDate: nil)
+        state = .notSynced(error: AppError.unknownError)
     }
 
     func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
@@ -70,7 +70,7 @@ class BitcoinBaseAdapter {
                         originalAddress: hodlerOutputData.addressString
                 )
             }
-            if anyNotMineToAddress == nil, let address = output.address {
+            if anyNotMineToAddress == nil, let address = output.address, !output.mine {
                 anyNotMineToAddress = address
             }
         }
@@ -104,7 +104,8 @@ class BitcoinBaseAdapter {
                 from: type == .incoming ? anyNotMineFromAddress : nil,
                 to: type == .outgoing ? anyNotMineToAddress : nil,
                 lockInfo: lockInfo,
-                conflictingHash: transaction.conflictingHash
+                conflictingHash: transaction.conflictingHash,
+                showRawTransaction: transaction.status == .new || transaction.status == .invalid
         )
     }
 
@@ -178,11 +179,11 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
     }
 
     func balanceUpdated(balance: BalanceInfo) {
-        balanceUpdatedSignal.notify()
+        balanceUpdatedSubject.onNext(())
     }
 
     func lastBlockInfoUpdated(lastBlockInfo: BlockInfo) {
-        lastBlockUpdatedSignal.notify()
+        lastBlockUpdatedSubject.onNext(())
     }
 
     func kitStateUpdated(state: BitcoinCore.KitState) {
@@ -193,14 +194,16 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
             }
 
             self.state = .synced
-            stateUpdatedSignal.notify()
-        case .notSynced:
-            if case .notSynced = self.state {
+            stateUpdatedSubject.onNext(())
+        case .notSynced(let error):
+            let converted = error.convertedError
+
+            if case .notSynced(let appError) = self.state, "\(converted)" == "\(appError)" {
                 return
             }
 
-            self.state = .notSynced
-            stateUpdatedSignal.notify()
+            self.state = .notSynced(error: converted)
+            stateUpdatedSubject.onNext(())
         case .syncing(let progress):
             let newProgress = Int(progress * 100)
             let newDate = abstractKit.lastBlockInfo?.timestamp.map { Date(timeIntervalSince1970: Double($0)) }
@@ -212,7 +215,7 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
             }
 
             self.state = .syncing(progress: newProgress, lastBlockDate: newDate)
-            stateUpdatedSignal.notify()
+            stateUpdatedSubject.onNext(())
         }
     }
 
@@ -221,11 +224,11 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
 extension BitcoinBaseAdapter: IBalanceAdapter {
 
     var stateUpdatedObservable: Observable<Void> {
-        stateUpdatedSignal.asObservable()
+        stateUpdatedSubject.asObservable()
     }
 
     var balanceUpdatedObservable: Observable<Void> {
-        balanceUpdatedSignal.asObservable()
+        balanceUpdatedSubject.asObservable()
     }
 
     var balance: Decimal {
@@ -303,7 +306,7 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
     }
 
     var lastBlockUpdatedObservable: Observable<Void> {
-        lastBlockUpdatedSignal.asObservable()
+        lastBlockUpdatedSubject.asObservable()
     }
 
     var transactionRecordsObservable: Observable<[TransactionRecord]> {
@@ -317,6 +320,10 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
                         self?.transactionRecord(fromTransaction: $0)
                     }
                 }
+    }
+
+    func rawTransaction(hash: String) -> String? {
+        abstractKit.rawTransaction(transactionHash: hash)
     }
 
 }

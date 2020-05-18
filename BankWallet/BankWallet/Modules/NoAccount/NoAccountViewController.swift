@@ -7,8 +7,8 @@ class NoAccountViewController: ThemeActionSheetController {
 
     private let titleView = BottomSheetTitleView()
     private let descriptionLabel = UILabel()
-    private let createButton = UIButton.appYellow
-    private let restoreButton = UIButton.appGray
+    private let createButton = ThemeButton()
+    private let restoreButton = ThemeButton()
 
     init(delegate: INoAccountViewDelegate) {
         self.delegate = delegate
@@ -38,7 +38,7 @@ class NoAccountViewController: ThemeActionSheetController {
             maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin3x)
         }
 
-        descriptionLabel.font = .subhead1
+        descriptionLabel.font = .subhead2
         descriptionLabel.textColor = .themeGray
         descriptionLabel.numberOfLines = 0
 
@@ -49,6 +49,7 @@ class NoAccountViewController: ThemeActionSheetController {
             maker.height.equalTo(CGFloat.heightButton)
         }
 
+        createButton.apply(style: .primaryYellow)
         createButton.setTitle("manage_coins.add_coin.create".localized, for: .normal)
         createButton.addTarget(self, action: #selector(onTapCreate), for: .touchUpInside)
 
@@ -60,6 +61,7 @@ class NoAccountViewController: ThemeActionSheetController {
             maker.height.equalTo(CGFloat.heightButton)
         }
 
+        restoreButton.apply(style: .primaryGray)
         restoreButton.setTitle("manage_coins.add_coin.restore".localized, for: .normal)
         restoreButton.addTarget(self, action: #selector(onTapRestore), for: .touchUpInside)
 
@@ -85,8 +87,17 @@ extension NoAccountViewController: INoAccountView {
                 image: UIImage(named: viewItem.coinCode.lowercased())?.tinted(with: .themeGray)
         )
 
-        descriptionLabel.text = "manage_coins.add_coin.text".localized(viewItem.accountTypeTitle, viewItem.coinTitle, viewItem.accountTypeTitle, viewItem.coinCodes)
-        createButton.isEnabled = viewItem.createEnabled
+        descriptionLabel.text = "manage_coins.add_coin.text.set_up".localized(viewItem.accountTypeTitle, viewItem.coinTitle) +
+                "\n\n" +
+                (viewItem.createEnabled ? "manage_coins.add_coin.text.create_or_restore".localized(viewItem.accountTypeTitle) : "manage_coins.add_coin.text.create_only".localized(viewItem.accountTypeTitle)) +
+                "\n\n" +
+                "manage_coins.add_coin.text.tokens".localized(viewItem.coinCodes)
+
+        createButton.snp.remakeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalTo(descriptionLabel.snp.bottom).offset(viewItem.createEnabled ? CGFloat.margin6x : CGFloat.margin2x)
+            maker.height.equalTo(viewItem.createEnabled ? CGFloat.heightButton : 0)
+        }
     }
 
     func show(error: Error) {

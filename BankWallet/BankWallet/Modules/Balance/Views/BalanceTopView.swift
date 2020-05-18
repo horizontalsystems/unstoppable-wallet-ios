@@ -52,9 +52,9 @@ class BalanceTopView: UIView {
         addSubview(rateDiffButton)
         rateDiffButton.snp.makeConstraints { maker in
             maker.leading.greaterThanOrEqualTo(blockchainBadgeView.snp.trailing).offset(CGFloat.margin2x)
-            maker.top.trailing.bottom.equalToSuperview().inset(CGFloat.margin1x)
+            maker.top.trailing.equalToSuperview()
+            maker.bottom.equalToSuperview().inset(CGFloat.margin1x)
             maker.width.equalTo(80)
-            maker.height.equalTo(42)
         }
 
         rateDiffButton.addTarget(self, action: #selector(_onTapRateDiff), for: .touchUpInside)
@@ -64,11 +64,11 @@ class BalanceTopView: UIView {
         super.init(coder: aDecoder)
     }
 
-    func bind(viewItem: BalanceTopViewItem, onTapRateDiff: @escaping () -> ()) {
+    func bind(viewItem: BalanceTopViewItem, onTapRateDiff: @escaping () -> (), onTapError: (() -> ())?) {
         self.onTapRateDiff = onTapRateDiff
 
         let coinIcon = viewItem.coinIconCode.flatMap { UIImage(named: "\($0.lowercased())") }
-        coinIconView.bind(coinIcon: coinIcon, spinnerProgress: viewItem.syncSpinnerProgress, failViewVisible: viewItem.failedImageViewVisible)
+        coinIconView.bind(coinIcon: coinIcon, spinnerProgress: viewItem.syncSpinnerProgress, failViewVisible: viewItem.failedImageViewVisible, onTapError: onTapError)
 
         nameLabel.text = viewItem.coinTitle
 

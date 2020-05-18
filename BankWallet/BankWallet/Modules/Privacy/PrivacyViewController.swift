@@ -15,6 +15,8 @@ class PrivacyViewController: ThemeViewController {
         self.delegate = delegate
 
         super.init()
+
+        hidesBottomBarWhenPushed = true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -25,6 +27,8 @@ class PrivacyViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = "settings_privacy.title".localized
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Attention Icon")?.tinted(with: .themeJacob), style: .plain, target: self, action: #selector(onTapInfo))
 
         tableView.registerCell(forClass: PrivacyHeaderCell.self)
         tableView.registerCell(forClass: PrivacyCell.self)
@@ -44,6 +48,10 @@ class PrivacyViewController: ThemeViewController {
         delegate.onLoad()
     }
 
+    @objc private func onTapInfo() {
+        delegate.onTapInfo()
+    }
+
     private func headerSection() -> SectionProtocol {
         let width = view.bounds.width
 
@@ -59,14 +67,14 @@ class PrivacyViewController: ThemeViewController {
         )
     }
 
-    private func sortSection(mode: String) -> SectionProtocol {
+    private func sortSection(sortModeTitle: String) -> SectionProtocol {
         Section(
                 id: "sort",
                 headerState: header(hash: "sort_header", text: "settings_privacy.sorting.section_header".localized),
                 footerState: footer(hash: "sort_footer", text: "settings_privacy.sorting.section_footer".localized),
                 rows: [
-                    Row<PrivacyCell>(id: "sorting_cell", hash: "\(mode)", height: .heightSingleLineCell, autoDeselect: true, bind: { cell, _ in
-                        cell.bind(image: nil, title: "settings_privacy.sorting_title".localized, value: "settings_privacy.sorting_\(mode)".localized, showDisclosure: true)
+                    Row<PrivacyCell>(id: "sorting_cell", hash: "\(sortModeTitle)", height: .heightSingleLineCell, autoDeselect: true, bind: { cell, _ in
+                        cell.bind(image: nil, title: "settings_privacy.sorting_title".localized, value: sortModeTitle, showDisclosure: true)
                     }, action: { [weak self] _ in
                         self?.delegate.onSelectSortMode()
                     })
@@ -152,94 +160,6 @@ extension PrivacyViewController: IPrivacyView {
         self.syncModeItems = syncModeItems
     }
 
-    func showSyncModeAlert(itemIndex: Int, coinName: String, iconName: String, items: [PrivacySyncSelectViewItem]) {
-        var alertItems: [BottomAlertItemType] = [
-            .title(
-                    title: "settings_privacy.alert_sync.title".localized,
-                    subtitle: coinName,
-                    icon: UIImage(named: iconName.lowercased()),
-                    iconTint: .themeGray
-            ),
-            .description(text: "settings_privacy.alert_sync.description".localized(coinName), important: true, last: false)
-        ]
-
-        items.forEach { setting in
-            let subtitle = setting.priority == .recommended ? "settings_privacy.alert_sync.recommended" : "settings_privacy.alert_sync.more_private"
-            alertItems.append(.radio(title: setting.title, subtitle: subtitle.localized, selected: setting.selected))
-        }
-
-        alertItems.append(.button(
-                title: "button.done".localized,
-                button: .appYellow,
-                onTap: { [weak self] selectedIndex in
-                    if let selectedIndex = selectedIndex {
-                        self?.delegate.onSelectSyncSetting(itemIndex: itemIndex, settingIndex: selectedIndex)
-                    }
-                }
-        ))
-
-        let controller = BottomAlertViewController(items: alertItems)
-        present(controller, animated: true)
-    }
-
-    func showConnectionModeAlert(itemIndex: Int, coinName: String, iconName: String, items: [PrivacyConnectionSelectViewItem]) {
-        var alertItems: [BottomAlertItemType] = [
-            .title(
-                    title: "settings_privacy.alert_connection.title".localized,
-                    subtitle: coinName,
-                    icon: UIImage(named: iconName.lowercased()),
-                    iconTint: .themeGray
-            )
-        ]
-
-        items.forEach { setting in
-            alertItems.append(.radio(title: setting.title, subtitle: setting.subtitle, selected: setting.selected))
-        }
-
-        alertItems.append(.button(
-                title: "button.done".localized,
-                button: .appYellow,
-                onTap: { [weak self] selectedIndex in
-                    if let selectedIndex = selectedIndex {
-                        self?.delegate.onSelectConnectionSetting(itemIndex: itemIndex, settingIndex: selectedIndex)
-                    }
-                }
-        ))
-
-        let controller = BottomAlertViewController(items: alertItems)
-        present(controller, animated: true)
-    }
-
-    func showSortModeAlert(items: [PrivacySortSelectViewItem]) {
-        var alertItems: [BottomAlertItemType] = [
-            .title(
-                    title: "settings_privacy.alert_sort.title".localized,
-                    subtitle: "settings_privacy.alert_sort.subtitle".localized,
-                    icon: UIImage(named: "Sort Icon"),
-                    iconTint: .themeGray
-            )
-        ]
-
-        items.forEach { setting in
-            let title = "settings_privacy.sorting_\(setting.mode)".localized
-            let subtitle = "settings_privacy.sorting_\(setting.mode).description".localized
-            alertItems.append(.radio(title: title, subtitle: subtitle, selected: setting.selected))
-        }
-
-        alertItems.append(.button(
-                title: "button.done".localized,
-                button: .appYellow,
-                onTap: { [weak self] selectedIndex in
-                    if let selectedIndex = selectedIndex {
-                        self?.delegate.onSelectSortSetting(settingIndex: selectedIndex)
-                    }
-                }
-        ))
-
-        let controller = BottomAlertViewController(items: alertItems)
-        present(controller, animated: true)
-    }
-
 }
 
 extension PrivacyViewController: SectionsDataSource {
@@ -250,7 +170,7 @@ extension PrivacyViewController: SectionsDataSource {
         sections.append(headerSection())
 
         if let sortMode = sortMode {
-            sections.append(sortSection(mode: sortMode))
+            sections.append(sortSection(sortModeTitle: sortMode))
         }
 
         if let connectionItems = connectionItems {

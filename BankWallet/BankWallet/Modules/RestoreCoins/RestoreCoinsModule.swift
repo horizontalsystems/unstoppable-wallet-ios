@@ -19,6 +19,6 @@ protocol IRestoreCoinsInteractor {
 }
 
 protocol IRestoreCoinsRouter {
-    func show(derivationSetting: DerivationSetting, coin: Coin, delegate: IDerivationSettingDelegate)
+    func showDerivationSetting(coin: Coin, currentDerivation: MnemonicDerivation, delegate: IDerivationSettingDelegate)
     func finish()
 }

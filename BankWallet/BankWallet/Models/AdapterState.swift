@@ -3,7 +3,7 @@ import Foundation
 enum AdapterState {
     case synced
     case syncing(progress: Int, lastBlockDate: Date?)
-    case notSynced
+    case notSynced(error: Error)
 
 }
 

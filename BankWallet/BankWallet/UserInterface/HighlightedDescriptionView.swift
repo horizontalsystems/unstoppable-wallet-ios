@@ -24,7 +24,7 @@ open class HighlightedDescriptionView: UIView {
 
         label.numberOfLines = 0
         label.font = HighlightedDescriptionView.font
-        label.textColor = .themeJacob
+        label.textColor = .themeOz
     }
 
     required public init?(coder aDecoder: NSCoder) {

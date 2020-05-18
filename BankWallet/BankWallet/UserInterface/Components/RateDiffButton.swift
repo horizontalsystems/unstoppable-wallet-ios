@@ -12,7 +12,7 @@ class RateDiffButton: UIButton {
         clipsToBounds = true
         layer.borderColor = UIColor.themeSteel20.cgColor
         layer.borderWidth = .heightOneDp
-        layer.cornerRadius = .cornerRadius1x
+        layer.cornerRadius = .cornerRadius2x
 
         setBackgroundColor(color: .themeLawrence, forState: .normal)
         setBackgroundColor(color: .themeLawrencePressed, forState: .highlighted)

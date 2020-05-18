@@ -114,7 +114,6 @@ extension BalancePresenter: IBalanceViewDelegate {
     func onLoad() {
         queue.async {
             self.interactor.subscribeToWallets()
-            self.interactor.subscribeToBaseCurrency()
 
             self.handleUpdate(wallets: self.interactor.wallets)
             self.subscribeRates()
@@ -191,6 +190,22 @@ extension BalancePresenter: IBalanceViewDelegate {
         }
 
         router.showChart(coin: viewItem.wallet.coin)
+    }
+
+    func onTapFailedIcon(viewItem: BalanceViewItem) {
+        guard let item = items.first(where: { $0.wallet == viewItem.wallet }) else {
+            return
+        }
+
+        guard let state = item.state, case let .notSynced(error) = state else {
+            return
+        }
+
+        if let appError = error as? AppError, case .noConnection = appError {
+            view?.show(error: appError)
+        } else {
+            router.showSyncError(error: error, wallet: item.wallet)
+        }
     }
 
     func onTapAddCoin() {

@@ -99,32 +99,7 @@ extension DerivationSettingsViewController: IDerivationSettingsView {
 
     func set(viewItems: [DerivationSettingSectionViewItem]) {
         self.viewItems = viewItems
-        tableView.reload(animated: true)
-    }
-
-    func showChangeAlert(setting: DerivationSetting, coinTitle: String) {
-        let derivationText = setting.derivation.rawValue.uppercased()
-
-        let controller = BottomAlertViewController(
-                items: [
-                    .title(
-                            title: "blockchain_settings.change_alert.title".localized,
-                            subtitle: derivationText,
-                            icon: UIImage(named: "Attention Icon"),
-                            iconTint: .themeJacob
-                    ),
-                    .description(text: "blockchain_settings.change_alert.content".localized(coinTitle, coinTitle), important: true, last: true),
-                    .button(
-                            title: "blockchain_settings.change_alert.action_button_text".localized(derivationText),
-                            button: .appYellow,
-                            onTap: { [weak self] _ in
-                                self?.delegate.proceedChange(setting: setting)
-                            }
-                    )
-                ]
-        )
-
-        present(controller, animated: true)
+        tableView.reload()
     }
 
 }

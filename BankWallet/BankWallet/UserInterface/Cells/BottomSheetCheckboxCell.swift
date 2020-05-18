@@ -2,6 +2,13 @@ import UIKit
 import ThemeKit
 
 class BottomSheetCheckboxCell: UITableViewCell {
+    private static let imageViewLeadingMargin: CGFloat = .margin6x
+    private static let imageViewSize: CGFloat = 24
+    private static let textLeadingMargin: CGFloat = .margin4x
+    private static let textTrailingMargin: CGFloat = .margin6x
+    private static let textVerticalMargin: CGFloat = .margin4x
+    private static let textFont: UIFont = .subhead2
+
     private let checkBoxImageView = UIImageView()
     private let descriptionLabel = UILabel()
 
@@ -13,19 +20,20 @@ class BottomSheetCheckboxCell: UITableViewCell {
 
         contentView.addSubview(checkBoxImageView)
         checkBoxImageView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(CGFloat.margin6x)
+            maker.leading.equalToSuperview().offset(BottomSheetCheckboxCell.imageViewLeadingMargin)
             maker.top.equalToSuperview().offset(CGFloat.margin3x)
+            maker.size.equalTo(BottomSheetCheckboxCell.imageViewSize)
         }
 
         contentView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(checkBoxImageView.snp.trailing).offset(CGFloat.margin4x)
-            maker.top.equalToSuperview().inset(CGFloat.margin4x)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin6x)
+            maker.leading.equalTo(checkBoxImageView.snp.trailing).offset(BottomSheetCheckboxCell.textLeadingMargin)
+            maker.top.equalToSuperview().inset(BottomSheetCheckboxCell.textVerticalMargin)
+            maker.trailing.equalToSuperview().inset(BottomSheetCheckboxCell.textTrailingMargin)
         }
 
         descriptionLabel.numberOfLines = 0
-        descriptionLabel.font = .caption
+        descriptionLabel.font = BottomSheetCheckboxCell.textFont
         descriptionLabel.textColor = .themeOz
     }
 
@@ -36,6 +44,17 @@ class BottomSheetCheckboxCell: UITableViewCell {
     func bind(text: String?, checked: Bool) {
         descriptionLabel.text = text
         checkBoxImageView.image = UIImage(named: checked ? "Checkbox Checked" : "Checkbox Unchecked")
+    }
+
+}
+
+extension BottomSheetCheckboxCell {
+
+    static func height(containerWidth: CGFloat, text: String) -> CGFloat {
+        let textWidth = containerWidth - imageViewLeadingMargin - imageViewSize - textLeadingMargin - textTrailingMargin
+        let textHeight = text.height(forContainerWidth: textWidth, font: textFont)
+
+        return textHeight + 2 * textVerticalMargin
     }
 
 }

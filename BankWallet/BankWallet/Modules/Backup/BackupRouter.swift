@@ -9,7 +9,7 @@ class BackupRouter {
 extension BackupRouter: IBackupRouter {
 
     func showUnlock(delegate: IUnlockDelegate) {
-        let insets = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: 48, right: 0)
         viewController?.present(App.shared.pinKit.unlockPinModule(delegate: delegate, biometryUnlockMode: .disabled, insets: insets, cancellable: true), animated: true)
     }
 

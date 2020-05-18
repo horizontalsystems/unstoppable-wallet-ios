@@ -1,7 +1,7 @@
 enum PredefinedAccountType: CaseIterable {
     case standard
-    case eos
     case binance
+    case eos
 
     var title: String {
         switch self {

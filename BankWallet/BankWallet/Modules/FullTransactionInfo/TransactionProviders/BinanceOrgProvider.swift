@@ -1,5 +1,6 @@
 import ObjectMapper
 import BigInt
+import Alamofire
 
 class BinanceOrgProvider: IBinanceProvider {
     let name: String = "Binance.org"
@@ -11,8 +12,8 @@ class BinanceOrgProvider: IBinanceProvider {
         url + hash
     }
 
-    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        .get(url: apiUrl + hash + "?format=json", params: nil)
+    func request(session: Session, hash: String) -> DataRequest {
+        session.request(apiUrl + hash + "?format=json")
     }
 
     init(testMode: Bool) {

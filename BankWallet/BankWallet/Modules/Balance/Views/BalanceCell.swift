@@ -11,7 +11,7 @@ class BalanceCell: UICollectionViewCell {
     private let separatorView = BalanceSeparatorView()
     private let amountView = BalanceAmountView()
     private let lockedAmountView = SecondaryBalanceDoubleRowView()
-    private let buttonsView = DoubleRowButtonView(leftButton: .appGreen, rightButton: .appYellow)
+    private let buttonsView = DoubleRowButtonView(leftButtonStyle: .primaryGreen, rightButtonStyle: .primaryYellow)
 
     private var onPay: (() -> ())?
     private var onReceive: (() -> ())?
@@ -65,11 +65,11 @@ class BalanceCell: UICollectionViewCell {
         fatalError("not implemented")
     }
 
-    func bind(viewItem: BalanceViewItem, animated: Bool = false, duration: TimeInterval = 0.2, onReceive: @escaping () -> (), onPay: @escaping () -> (), onChart: @escaping () -> ()) {
+    func bind(viewItem: BalanceViewItem, animated: Bool = false, duration: TimeInterval = 0.2, onReceive: @escaping () -> (), onPay: @escaping () -> (), onChart: @escaping () -> (), onTapError: (() -> ())?) {
         self.onPay = onPay
         self.onReceive = onReceive
 
-        topView.bind(viewItem: viewItem.topViewItem, onTapRateDiff: onChart)
+        topView.bind(viewItem: viewItem.topViewItem, onTapRateDiff: onChart, onTapError: onTapError)
 
         separatorView.set(hidden: !viewItem.separatorVisible, animated: animated, duration: duration)
 

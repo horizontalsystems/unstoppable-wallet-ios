@@ -56,7 +56,7 @@ extension RestoreCoinsPresenter: IRestoreCoinsViewDelegate {
         let coin = viewItem.coin
 
         if let setting = interactor.derivationSetting(coinType: coin.type) {
-            router.show(derivationSetting: setting, coin: coin, delegate: self)
+            router.showDerivationSetting(coin: coin, currentDerivation: setting.derivation, delegate: self)
         } else {
             enable(coin: coin)
         }

@@ -6,11 +6,11 @@ import SectionsTableView
 class UnlinkViewController: ThemeActionSheetController {
     private let delegate: IUnlinkViewDelegate
 
+    private let titleView = BottomSheetTitleView()
     private let tableView = SelfSizedSectionsTableView(style: .grouped)
+    private let deleteButton = ThemeButton()
 
     private var viewItems = [UnlinkModule.ViewItem]()
-    private var accountTypeTitle: String?
-    private var deleteButtonEnabled = false
 
     init(delegate: IUnlinkViewDelegate) {
         self.delegate = delegate
@@ -24,64 +24,57 @@ class UnlinkViewController: ThemeActionSheetController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+        view.addSubview(titleView)
+        titleView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
         }
 
-        tableView.registerCell(forClass: BottomSheetTitleCell.self)
+        titleView.onTapClose = { [weak self] in
+            self?.delegate.onTapClose()
+        }
+
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(titleView.snp.bottom)
+        }
+
         tableView.registerCell(forClass: BottomSheetCheckboxCell.self)
-        tableView.registerCell(forClass: BottomSheetRedButtonCell.self)
         tableView.sectionDataSource = self
 
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
-        tableView.alwaysBounceVertical = false
+        view.addSubview(deleteButton)
+        deleteButton.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalTo(tableView.snp.bottom).offset(CGFloat.margin6x)
+            maker.bottom.equalToSuperview().inset(CGFloat.margin4x)
+            maker.height.equalTo(CGFloat.heightButton)
+        }
+
+        deleteButton.apply(style: .primaryRed)
+        deleteButton.setTitle("security_settings.delete_alert_button".localized, for: .normal)
+        deleteButton.addTarget(self, action: #selector(_onTapDelete), for: .touchUpInside)
 
         delegate.onLoad()
 
         tableView.reload()
     }
 
-    private var titleRow: RowProtocol {
-        Row<BottomSheetTitleCell>(
-                id: "title",
-                height: BottomSheetTitleView.height,
-                bind: { [weak self] cell, _ in
-                    cell.bind(
-                            title: "settings_manage_keys.delete.title".localized,
-                            subtitle: self?.accountTypeTitle,
-                            image: UIImage(named: "Attention Icon")?.tinted(with: .themeLucian)
-                    ) { [weak self] in
-                        self?.delegate.onTapClose()
-                    }
-                }
-        )
-    }
-
-    private var deleteButtonRow: RowProtocol {
-        Row<BottomSheetRedButtonCell>(
-                id: "delete_button",
-                height: BottomSheetRedButtonCell.height,
-                bind: { [unowned self] cell, _ in
-                    cell.bind(
-                            title: "security_settings.delete_alert_button".localized,
-                            enabled: self.deleteButtonEnabled
-                    ) { [weak self] in
-                        self?.delegate.onTapDelete()
-                    }
-                }
-        )
+    @objc private func _onTapDelete() {
+        delegate.onTapDelete()
     }
 
     private func checkboxRow(viewItem: UnlinkModule.ViewItem, index: Int) -> RowProtocol {
-        Row<BottomSheetCheckboxCell>(
+        let checkboxText = text(itemType: viewItem.type)
+
+        return Row<BottomSheetCheckboxCell>(
                 id: "checkbox_\(index)",
                 hash: "\(viewItem.checked)",
-                height: 60,
-                bind: { [weak self] cell, _ in
+                dynamicHeight: { width in
+                    BottomSheetCheckboxCell.height(containerWidth: width, text: checkboxText)
+                },
+                bind: { cell, _ in
                     cell.bind(
-                            text: self?.text(itemType: viewItem.type),
+                            text: checkboxText,
                             checked: viewItem.checked
                     )
                 },
@@ -107,13 +100,14 @@ class UnlinkViewController: ThemeActionSheetController {
 extension UnlinkViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        var rows = [RowProtocol]()
-
-        rows.append(titleRow)
-        rows.append(contentsOf: viewItems.enumerated().map { checkboxRow(viewItem: $1, index: $0) })
-        rows.append(deleteButtonRow)
-
-        return [Section(id: "main", rows: rows)]
+        [
+            Section(
+                    id: "main",
+                    rows: viewItems.enumerated().map {
+                        checkboxRow(viewItem: $1, index: $0)
+                    }
+            )
+        ]
     }
 
 }
@@ -121,13 +115,20 @@ extension UnlinkViewController: SectionsDataSource {
 extension UnlinkViewController: IUnlinkView {
 
     func set(accountTypeTitle: String) {
-        self.accountTypeTitle = accountTypeTitle
+        titleView.bind(
+                title: "settings_manage_keys.delete.title".localized,
+                subtitle: accountTypeTitle,
+                image: UIImage(named: "Attention Icon")?.tinted(with: .themeLucian)
+        )
     }
 
-    func set(viewItems: [UnlinkModule.ViewItem], deleteButtonEnabled: Bool) {
+    func set(viewItems: [UnlinkModule.ViewItem]) {
         self.viewItems = viewItems
-        self.deleteButtonEnabled = deleteButtonEnabled
         tableView.reload()
+    }
+
+    func set(deleteButtonEnabled: Bool) {
+        deleteButton.isEnabled = deleteButtonEnabled
     }
 
     func showSuccess() {

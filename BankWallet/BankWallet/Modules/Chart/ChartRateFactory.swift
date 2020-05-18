@@ -19,12 +19,12 @@ class ChartRateFactory: IChartRateFactory {
         return formatter
     }()
 
-    private func roundedFormat(coin: Coin, value: Decimal?) -> String {
+    private func roundedFormat(coinCode: String, value: Decimal?) -> String {
         guard let value = value, !value.isZero, let formattedValue = coinFormatter.string(from: value as NSNumber) else {
             return "n/a".localized
         }
 
-        return "\(formattedValue) \(coin.code)"
+        return "\(formattedValue) \(coinCode)"
     }
 
     private func postViewItemDate(timestamp: TimeInterval) -> String {
@@ -40,18 +40,18 @@ class ChartRateFactory: IChartRateFactory {
         return "timestamp.days_ago".localized(interval)
     }
 
-    private func viewItem(marketInfo: MarketInfo, currency: Currency, coin: Coin) -> MarketInfoViewItem {
+    private func viewItem(marketInfo: MarketInfo, currency: Currency, coinCode: String) -> MarketInfoViewItem {
         let marketCap = marketInfo.marketCap.isZero ? "n/a".localized : CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.marketCap)
         let volume = marketInfo.volume.isZero ? "n/a".localized : CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.volume)
 
-        let supply = roundedFormat(coin: coin, value: marketInfo.supply)
-        let maxSupply = roundedFormat(coin: coin, value: MaxSupplyMap.maxSupplies[coin.code])
+        let supply = roundedFormat(coinCode: coinCode, value: marketInfo.supply)
+        let maxSupply = roundedFormat(coinCode: coinCode, value: MaxSupplyMap.maxSupplies[coinCode])
 
         return MarketInfoViewItem(marketCap: marketCap, volume: volume, supply: supply, maxSupply: maxSupply)
     }
 
     func chartViewItem(type: ChartType, allTypes: [ChartType], chartInfoStatus: ChartDataStatus<ChartInfo>,
-                       marketInfoStatus: ChartDataStatus<MarketInfo>, postsStatus: ChartDataStatus<[CryptoNewsPost]>, coin: Coin, currency: Currency) -> ChartViewItem {
+                       marketInfoStatus: ChartDataStatus<MarketInfo>, postsStatus: ChartDataStatus<[CryptoNewsPost]>, coinCode: String, currency: Currency) -> ChartViewItem {
 
         let index = allTypes.firstIndex(of: type) ?? 0
 
@@ -63,7 +63,7 @@ class ChartRateFactory: IChartRateFactory {
             $0.map { PostViewItem(title: $0.title, subtitle: postViewItemDate(timestamp: $0.timestamp)) }
         }
         let marketStatus: ChartDataStatus<MarketInfoViewItem> = marketInfoStatus.convert {
-            viewItem(marketInfo: $0, currency: currency, coin: coin)
+            viewItem(marketInfo: $0, currency: currency, coinCode: coinCode)
         }
 
         var diff: Decimal?
@@ -81,7 +81,7 @@ class ChartRateFactory: IChartRateFactory {
         return ChartViewItem(selectedIndex: index, diff: diff, currentRate: currentRate, chartInfoStatus: chartStatus, marketInfoStatus: marketStatus, postsStatus: postsStatus)
     }
 
-    func selectedPointViewItem(type: ChartType, chartPoint: Chart.ChartPoint, coin: Coin, currency: Currency) -> SelectedPointViewItem {
+    func selectedPointViewItem(type: ChartType, chartPoint: Chart.ChartPoint, currency: Currency) -> SelectedPointViewItem {
         let date = Date(timeIntervalSince1970: chartPoint.timestamp)
         let formattedTime = [ChartType.day, ChartType.week].contains(type) ? DateHelper.instance.formatTimeOnly(from: date) : nil
         let formattedDate = DateHelper.instance.formateShortDateOnly(date: date)

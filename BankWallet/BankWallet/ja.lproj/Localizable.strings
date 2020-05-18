@@ -19,6 +19,7 @@
 "button.paste" = "Paste";
 "button.backup" = "Backup";
 "button.back" = "Back";
+"button.retry" = "リトライ";
 
 "alert.copied" = "コピー完了";
 "alert.no_internet" = "No Internet";
@@ -204,7 +205,6 @@
 "full_info.source.offline" = "オフライン";
 
 "full_info.error.subtitle" = "オフライン";
-"full_info.error.retry" = "リトライ";
 "full_info.error.change_source" = "ソースの変更";
 "full_info.no_address" = "Empty Address";
 

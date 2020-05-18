@@ -25,7 +25,7 @@ class AlertItemCell: ThemeCell {
         super.bind()
 
         label.text = viewItem.text
-        label.textColor = viewItem.selected ? .themeJacob : .themeLight
+        label.textColor = viewItem.selected ? .themeJacob : .themeOz
     }
 
 }

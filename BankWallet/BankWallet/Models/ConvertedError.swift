@@ -1,12 +1,18 @@
-import EthereumKit
+import BitcoinCore
+import BinanceChainKit
 import FeeRateKit
 import EosKit
+import Erc20Kit
+import EthereumKit
+import HdWalletKit
+import Hodler
+import HsToolKit
 
 // use convertedError to convert user relevant errors from kits to show them localized in UI
-// localize converted error via LocalizedErrors
+// localize converted error via AppError
 // other errors prevented either in the Kit logic or via business logic of the app but need to be shown in debug routine
 
-protocol ConvertibleError: Error {
+protocol ConvertibleError {
     var convertedError: Error { get }
 }
 
@@ -21,74 +27,107 @@ extension Error {
 
 }
 
-extension Error {
-
-    var localizedDescription: String {
-        if let localizedError = self as? LocalizedError, let errorDescription = localizedError.errorDescription {
-            return errorDescription
-        } else {
-            return "\("alert.unknown_error".localized) \(String(reflecting: self))"
-        }
-    }
-
-}
-
 // converted errors
 
-extension EthereumKit.NetworkError: ConvertibleError {
-
+extension NetworkManager.RequestError: ConvertibleError {
     var convertedError: Error {
         switch self {
-        case .noConnection: return ConnectionError.noConnection
+        case .noResponse: return AppError.noConnection
         default: return self
         }
     }
-
-}
-
-extension FeeRateKit.NetworkError {
-
-    var convertedError: Error {
-        switch self {
-        case .noConnection: return ConnectionError.noConnection
-        default: return self
-        }
-    }
-
-}
-
-extension NetworkManager.NetworkError {
-
-    var convertedError: Error {
-        switch self {
-        case .noConnection: return ConnectionError.noConnection
-        default: return self
-        }
-    }
-
 }
 
 extension BackendError {
-
     var convertedError: Error {
         switch self {
-        case .selfTransfer: return EosBackendError.selfTransfer
-        case .accountNotExist: return EosBackendError.accountNotExist
-        case .insufficientRam: return EosBackendError.insufficientRam
-        case .unknown(let message): return EosBackendError.unknown(message: message)
+        case .selfTransfer: return AppError.eos(reason: .selfTransfer)
+        case .accountNotExist: return AppError.eos(reason: .accountNotExist)
+        case .insufficientRam: return AppError.eos(reason: .insufficientRam)
         default: return self
         }
     }
-
 }
 
-extension EthereumKit.IncubedError: ConvertibleError {
-
+extension IncubedRpcApiProvider.IncubedError: ConvertibleError {
     var convertedError: Error {
         switch self {
-        case .notReachable: return IncubedError.notReachable
+        case .notReachable: return AppError.incubedNotReachable
         default: return self
         }
     }
+}
 
+extension BinanceError: ConvertibleError {
+    var convertedError: Error {
+        if message.contains("requires non-empty memo in transfer transaction") {
+            return AppError.binance(reason: .memoRequired)
+        } else if message.contains("requires the memo contains only digits") {
+            return AppError.binance(reason: .onlyDigitsAllowed)
+        }
+
+        return self
+    }
+}
+
+extension WordsValidator.ValidationError: ConvertibleError {
+    var convertedError: Error {
+        switch self {
+        case .emptyWords:
+             return AppError.wordsValidation(reason: .emptyWords)
+        case .invalidConfirmation:
+            return AppError.wordsValidation(reason: .invalidConfirmation)
+        }
+    }
+}
+
+extension Mnemonic.ValidationError: ConvertibleError {
+    var convertedError: Error {
+        switch self {
+        case .invalidWordsCount, .invalidWords:
+            return AppError.wordsValidation(reason: .invalidWords)
+        }
+    }
+}
+
+extension EosKit.ValidationError: ConvertibleError {
+    var convertedError: Error {
+        switch self {
+        case .invalidPrivateKey:
+            return AppError.eos(reason: .invalidPrivateKey)
+        }
+    }
+}
+
+extension SendTransactionError: ConvertibleError {
+    var convertedError: Error {
+        switch self {
+        case .noFee: return AppError.sendTransactionNoFee
+        }
+    }
+}
+
+extension EosAdapter.ValidationError: ConvertibleError {
+    var convertedError: Error {
+        switch self {
+        case .invalidAccount: return AppError.eos(reason: .invalidAccount)
+        }
+    }
+}
+
+extension ReachabilityManager.ReachabilityError: ConvertibleError {
+    var convertedError: Error {
+        switch self {
+        case .notReachable: return AppError.noConnection
+        }
+    }
+}
+
+extension EthereumKit.Kit.SyncError: ConvertibleError {
+    var convertedError: Error {
+        switch self {
+        case .noNetworkConnection: return AppError.noConnection
+        default: return self
+        }
+    }
 }

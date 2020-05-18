@@ -1,4 +1,5 @@
 import ObjectMapper
+import Alamofire
 
 class InsightDashProvider: IBitcoinForksProvider {
     let name = "Insight.dash.org"
@@ -11,8 +12,8 @@ class InsightDashProvider: IBitcoinForksProvider {
         "https://insight.dash.org/insight-api/block/0" 
     }
 
-    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
-        .get(url: "https://insight.dash.org/insight-api/tx/" + hash, params: nil)
+    func request(session: Session, hash: String) -> DataRequest {
+        session.request("https://insight.dash.org/insight-api/tx/" + hash)
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {

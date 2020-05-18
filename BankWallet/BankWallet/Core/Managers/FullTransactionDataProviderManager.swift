@@ -34,9 +34,9 @@ class FullTransactionDataProviderManager {
     private var ethereumProviders: [IEthereumForksProvider] {
         appConfigProvider.testMode ? [
 //            HorSysEthereumProvider(testMode: true),
-            EtherscanEthereumProvider(testMode: true)
+            EtherscanEthereumProvider(testMode: true, apiKey: appConfigProvider.etherscanKey)
         ] : [
-            EtherscanEthereumProvider(testMode: false),
+            EtherscanEthereumProvider(testMode: false, apiKey: appConfigProvider.etherscanKey),
 //            HorSysEthereumProvider(testMode: false),
             BlockChairEthereumProvider()
         ]
@@ -70,7 +70,7 @@ class FullTransactionDataProviderManager {
     private let localStorage: ILocalStorage
     private let appConfigProvider: IAppConfigProvider
 
-    let dataProviderUpdatedSignal = Signal()
+    private let dataProviderUpdatedSubject = PublishSubject<Void>()
 
     init(localStorage: ILocalStorage, appConfigProvider: IAppConfigProvider) {
         self.localStorage = localStorage
@@ -80,6 +80,10 @@ class FullTransactionDataProviderManager {
 }
 
 extension FullTransactionDataProviderManager: IFullTransactionDataProviderManager {
+
+    var dataProviderUpdatedObservable: Observable<Void> {
+        dataProviderUpdatedSubject.asObservable()
+    }
 
     func providers(for coin: Coin) -> [IProvider] {
         if coin.type == .bitcoin {
@@ -144,7 +148,7 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
             localStorage.baseEthereumProvider = name
         }
 
-        dataProviderUpdatedSignal.notify()
+        dataProviderUpdatedSubject.onNext(())
     }
 
     func bitcoin(for name: String) -> IBitcoinForksProvider {

@@ -14,12 +14,25 @@ class RateListFactory {
         return allTimestamps.max()
     }
 
-    private func viewItem(coin: Coin, currency: Currency, marketInfo: MarketInfo?) -> RateViewItem {
+    private func viewItem(coin: Coin, currency: Currency, marketInfo: MarketInfo) -> RateViewItem {
         RateViewItem(
-                coin: coin,
-                rateExpired: marketInfo?.expired ?? false,
-                rate: marketInfo.map { CurrencyValue(currency: currency, value: $0.rate) },
-                diff: marketInfo?.diff
+                coinCode: coin.code,
+                coinTitle: coin.title,
+                blockchainType: coin.type.blockchainType,
+                rateExpired: marketInfo.expired,
+                rate: CurrencyValue(currency: currency, value: marketInfo.rate),
+                diff: marketInfo.diff
+        )
+    }
+
+    private func topRateViewItem(currency: Currency, topMarket: TopMarket) -> RateViewItem {
+        RateViewItem(
+                coinCode: topMarket.coinCode,
+                coinTitle: topMarket.coinName,
+                blockchainType: nil,
+                rateExpired: topMarket.marketInfo.expired,
+                rate: CurrencyValue(currency: currency, value: topMarket.marketInfo.rate),
+                diff: topMarket.marketInfo.diff
         )
     }
 
@@ -27,9 +40,14 @@ class RateListFactory {
 
 extension RateListFactory: IRateListFactory {
 
-    func rateListViewItem(coins: [Coin], currency: Currency, marketInfos: [CoinCode: MarketInfo]) -> RateListViewItem {
-        let items = coins.map { viewItem(coin: $0, currency: currency, marketInfo: marketInfos[$0.code]) }
-        return RateListViewItem(currentDate: currentDateProvider.currentDate, lastUpdateTimestamp: lastUpdateTimestamp(marketInfos: marketInfos), rateViewItems: items)
+    func rateListViewItem(coins: [Coin], currency: Currency, marketInfos: [CoinCode: MarketInfo], topMarkets: [TopMarket]) -> RateListViewItem {
+        let marketInfoItems = coins.compactMap { coin in marketInfos[coin.code].map { viewItem(coin: coin, currency: currency, marketInfo: $0) } }
+        let topRateViewItems = topMarkets.map { topRateViewItem(currency: currency, topMarket: $0) }
+
+        return RateListViewItem(
+                currentDate: currentDateProvider.currentDate, lastUpdateTimestamp: lastUpdateTimestamp(marketInfos: marketInfos),
+                rateViewItems: marketInfoItems, topRateViewItems: topRateViewItems
+        )
     }
 
 }

@@ -1,121 +1,314 @@
 import UIKit
 import ActionSheet
 import ThemeKit
+import SectionsTableView
 import CurrencyKit
 
-class TransactionInfoViewController: WalletActionSheetController {
+class TransactionInfoViewController: ThemeActionSheetController {
     private let delegate: ITransactionInfoViewDelegate
+
+    private let titleView = BottomSheetTitleView()
+    private let amountInfoView = AmountInfoView()
+    private let separatorView = UIView()
+    private let tableView = SelfSizedSectionsTableView(style: .grouped)
+    private let verifyButton = ThemeButton()
+
+    private var viewItems = [TransactionInfoModule.ViewItem]()
 
     init(delegate: ITransactionInfoViewDelegate) {
         self.delegate = delegate
         super.init()
-
-        initItems()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func initItems() {
-        let item = delegate.viewItem
-
-        let iconImage = item.type == .incoming ? UIImage(named: "Transaction In Icon") : UIImage(named: "Transaction Out Icon")
-        let iconTintColor: UIColor = item.type == .incoming ? .themeRemus : .themeJacob
-
-        let titleItem = AlertTitleItem(
-                title: "tx_info.title".localized,
-                subtitle: DateHelper.instance.formatFullTime(from: item.date),
-                icon: iconImage,
-                iconTintColor: iconTintColor,
-                tag: 0,
-                onClose: { [weak self] in
-                    self?.dismiss(byFade: false)
-                }
-        )
-        model.addItemView(titleItem)
-
-        let amountItem = TransactionAmountItem(item: item, tag: 1)
-        model.addItemView(amountItem)
-
-        if let value = item.rate, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false) {
-            let rateItem = TransactionValueActionItem(title: "tx_info.rate".localized, value: "balance.rate_per_coin".localized(formattedValue, item.coinValue.coin.code), tag: 2)
-            model.addItemView(rateItem)
-        }
-
-        if let feeCoinValue = item.feeCoinValue, let formattedCoinValue = ValueFormatter.instance.format(coinValue: feeCoinValue) {
-            let formattedCurrencyValue = item.rate.flatMap { ValueFormatter.instance.format(currencyValue: CurrencyValue(currency: $0.currency, value: $0.value * feeCoinValue.value)) }
-            let joinedValues = [formattedCoinValue, formattedCurrencyValue != nil ? "|" : nil, formattedCurrencyValue].compactMap { $0 }.joined(separator: " ")
-
-            let feeItem = TransactionValueActionItem(title: "tx_info.fee".localized, value: joinedValues, tag: 3)
-            model.addItemView(feeItem)
-        }
-
-        let statusItem = TransactionStatusItem(item: item, tag: 4)
-        model.addItemView(statusItem)
-
-        if let from = item.from {
-            model.addItemView(TransactionFromToHashItem(title: "tx_info.from_hash".localized, value: from, tag: 5, required: true, onHashTap: { [weak self] in
-                self?.delegate.onCopy(value: from)
-            }))
-        }
-
-        if let to = item.to {
-            model.addItemView(TransactionFromToHashItem(title: "tx_info.to_hash".localized, value: to, tag: 6, required: true, onHashTap: { [weak self] in
-                self?.delegate.onCopy(value: to)
-            }))
-        }
-
-        if item.type == .outgoing, let recipientAddress = item.lockInfo?.originalAddress {
-            model.addItemView(TransactionFromToHashItem(title: "tx_info.recipient_hash".localized, value: recipientAddress, tag: 7, required: true, onHashTap: { [weak self] in
-                self?.delegate.onCopy(value: recipientAddress)
-            }))
-        }
-
-        model.addItemView(TransactionIdItem(value: item.transactionHash, tag: 8, onHashTap: { [weak self] in
-            self?.delegate.onCopy(value: item.transactionHash)
-        }, onShareTap: { [weak self] in
-            self?.delegate.onShare(value: item.transactionHash)
-        }))
-
-        if let lockInfo = item.lockInfo {
-            let lockedDate = DateHelper.instance.formatFullTime(from: lockInfo.lockedUntil)
-            let lockedIconName = item.unlocked ? "Transaction Unlock Icon" : "Transaction Lock Icon"
-            let lockDateItem = TransactionNoteItem(note: "tx_info.locked_until".localized(lockedDate), imageName: lockedIconName, tag: 9, iconName: "Transaction Info Icon") { [weak self] in
-                self?.delegate.openLockInfo()
-            }
-            model.addItemView(lockDateItem)
-        }
-
-        if item.type == .sentToSelf {
-            let infoItem = TransactionNoteItem(note: "tx_info.to_self_note".localized, imageName: "Transaction In Icon", tag: 10)
-            model.addItemView(infoItem)
-        }
-
-        if item.conflictingTxHash != nil {
-            let doubleSpendItem = TransactionNoteItem(note: "tx_info.double_spent_note".localized, imageName: "Transaction Double Spend Icon", tag: 11, iconName: "Transaction Info Icon") { [weak self] in
-                self?.delegate.openDoubleSpendInfo()
-            }
-            model.addItemView(doubleSpendItem)
-        }
-
-        let openFullInfoItem = TransactionOpenFullInfoItem(tag: 12, required: true, onTap: { [weak self] in
-            self?.delegate.openFullInfo()
-        })
-        model.addItemView(openFullInfoItem)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        model.hideInBackground = false
+        view.addSubview(titleView)
+        titleView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+        }
 
-        model.reload?()
+        titleView.onTapClose = { [weak self] in
+            self?.dismiss(animated: true)
+        }
+
+        view.addSubview(amountInfoView)
+        amountInfoView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(titleView.snp.bottom)
+            maker.height.equalTo(72)
+        }
+
+        view.addSubview(separatorView)
+        separatorView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.bottom.equalTo(amountInfoView)
+            maker.height.equalTo(1 / UIScreen.main.scale)
+        }
+
+        separatorView.backgroundColor = .themeSteel20
+
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(amountInfoView.snp.bottom)
+        }
+
+        tableView.registerCell(forClass: TransactionInfoStatusCell.self)
+        tableView.registerCell(forClass: TransactionInfoFromToCell.self)
+        tableView.registerCell(forClass: TransactionInfoTransactionIdCell.self)
+        tableView.registerCell(forClass: TransactionInfoValueCell.self)
+        tableView.registerCell(forClass: TransactionInfoWarningCell.self)
+        tableView.registerCell(forClass: TransactionInfoNoteCell.self)
+        tableView.registerCell(forClass: TransactionInfoCopyCell.self)
+        tableView.sectionDataSource = self
+        tableView.allowsSelection = false
+
+        view.addSubview(verifyButton)
+        verifyButton.snp.makeConstraints { maker in
+            maker.leading.trailing.bottom.equalToSuperview()
+            maker.top.equalTo(tableView.snp.bottom)
+            maker.height.equalTo(CGFloat.heightButton)
+        }
+
+        verifyButton.apply(style: .primaryTransparent)
+        verifyButton.setTitle("tx_info.button_verify".localized, for: .normal)
+        verifyButton.addTarget(self, action: #selector(_onTapVerify), for: .touchUpInside)
+
+        delegate.onLoad()
+
+        tableView.reload()
+    }
+
+    @objc private func _onTapVerify() {
+        delegate.onTapVerify()
+    }
+
+    private func statusRow(status: TransactionStatus, incoming: Bool) -> RowProtocol {
+        Row<TransactionInfoStatusCell>(
+                id: "status",
+                hash: "\(status)",
+                height: .heightSingleLineCell,
+                bind: { cell, _ in
+                    cell.bind(status: status, incoming: incoming)
+                }
+        )
+    }
+
+    private func fromToRow(title: String, value: String, onTap: @escaping () -> ()) -> RowProtocol {
+        Row<TransactionInfoFromToCell>(
+                id: title,
+                hash: value,
+                height: .heightSingleLineCell,
+                bind: { cell, _ in
+                    cell.bind(title: title, value: value, onTap: onTap)
+                }
+        )
+    }
+
+    private func fromRow(value: String) -> RowProtocol {
+        fromToRow(title: "tx_info.from_hash".localized, value: value) { [weak self] in
+            self?.delegate.onTapFrom()
+        }
+    }
+
+    private func toRow(value: String) -> RowProtocol {
+        fromToRow(title: "tx_info.to_hash".localized, value: value) { [weak self] in
+            self?.delegate.onTapTo()
+        }
+    }
+
+    private func recipientRow(value: String) -> RowProtocol {
+        fromToRow(title: "tx_info.recipient_hash".localized, value: value) { [weak self] in
+            self?.delegate.onTapRecipient()
+        }
+    }
+
+    private func idRow(value: String) -> RowProtocol {
+        Row<TransactionInfoTransactionIdCell>(
+                id: "transaction_id",
+                hash: value,
+                height: .heightSingleLineCell,
+                bind: { cell, _ in
+                    cell.bind(
+                            value: value,
+                            onTapId: { [weak self] in
+                                self?.delegate.onTapTransactionId()
+                            },
+                            onTapShare: { [weak self] in
+                                self?.delegate.onTapShareTransactionId()
+                            }
+                    )
+                }
+        )
+    }
+
+    private func valueRow(title: String, value: String?) -> RowProtocol {
+        Row<TransactionInfoValueCell>(
+                id: title,
+                hash: value ?? "",
+                height: .heightSingleLineCell,
+                bind: { cell, _ in
+                    cell.bind(title: title, value: value)
+                }
+        )
+    }
+
+    private func rateRow(currencyValue: CurrencyValue, coinCode: String) -> RowProtocol {
+        let formattedValue = ValueFormatter.instance.format(currencyValue: currencyValue, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
+
+        return valueRow(
+                title: "tx_info.rate".localized,
+                value: formattedValue.map { "balance.rate_per_coin".localized($0, coinCode) }
+        )
+    }
+
+    private func feeRow(coinValue: CoinValue, currencyValue: CurrencyValue?) -> RowProtocol {
+        var parts = [String]()
+
+        if let formattedCoinValue = ValueFormatter.instance.format(coinValue: coinValue) {
+            parts.append(formattedCoinValue)
+        }
+
+        if let currencyValue = currencyValue, let formattedCurrencyValue = ValueFormatter.instance.format(currencyValue: currencyValue) {
+            parts.append(formattedCurrencyValue)
+        }
+
+        return valueRow(
+                title: "tx_info.fee".localized,
+                value: parts.joined(separator: " | ")
+        )
+    }
+
+    private func warningRow(id: String, image: UIImage?, text: String, onTapButton: @escaping () -> ()) -> RowProtocol {
+        Row<TransactionInfoWarningCell>(
+                id: id,
+                hash: text,
+                dynamicHeight: { containerWidth in
+                    TransactionInfoWarningCell.height(containerWidth: containerWidth, text: text)
+                },
+                bind: { cell, _ in
+                    cell.bind(image: image, text: text, onTapButton: onTapButton)
+                }
+        )
+    }
+
+    private func doubleSpendRow() -> RowProtocol {
+        warningRow(
+                id: "double_spend",
+                image: UIImage(named: "Transaction Double Spend Icon"),
+                text: "tx_info.double_spent_note".localized
+        ) { [weak self] in
+            self?.delegate.onTapDoubleSpendInfo()
+        }
+    }
+
+    private func lockInfoRow(lockState: TransactionLockState) -> RowProtocol {
+        let formattedDate = DateHelper.instance.formatFullTime(from: lockState.date)
+        let lockedIconName = lockState.locked ? "Transaction Lock Icon" : "Transaction Unlock Icon"
+
+        return warningRow(
+                id: "lock_info",
+                image: UIImage(named: lockedIconName),
+                text: lockState.locked ? "tx_info.locked_until".localized(formattedDate) : "tx_info.unlocked_at".localized(formattedDate)
+        ) { [weak self] in
+            self?.delegate.onTapLockInfo()
+        }
+    }
+
+    private func noteRow(id: String, image: UIImage?, text: String) -> RowProtocol {
+        Row<TransactionInfoNoteCell>(
+                id: id,
+                hash: text,
+                dynamicHeight: { containerWidth in
+                    TransactionInfoNoteCell.height(containerWidth: containerWidth, text: text)
+                },
+                bind: { cell, _ in
+                    cell.bind(image: image, text: text)
+                }
+        )
+    }
+
+    private func sentToSelfRow() -> RowProtocol {
+        noteRow(
+                id: "sent_to_self",
+                image: UIImage(named: "Transaction In Icon")?.tinted(with: .themeRemus),
+                text: "tx_info.to_self_note".localized
+        )
+    }
+
+    private func rawTransactionRow() -> RowProtocol {
+        Row<TransactionInfoCopyCell>(
+                id: "raw_transaction",
+                height: .heightSingleLineCell,
+                bind: { cell, _ in
+                    cell.bind(
+                            title: "tx_info.raw_transaction".localized,
+                            onTapCopy: { [weak self] in
+                                self?.delegate.onTapCopyRawTransaction()
+                            }
+                    )
+                }
+        )
+    }
+
+    private func row(viewItem: TransactionInfoModule.ViewItem) -> RowProtocol {
+        switch viewItem {
+        case let .status(status, incoming): return statusRow(status: status, incoming: incoming)
+        case let .from(value): return fromRow(value: value)
+        case let .to(value): return toRow(value: value)
+        case let .recipient(value): return recipientRow(value: value)
+        case let .id(value): return idRow(value: value)
+        case let .rate(currencyValue, coinCode): return rateRow(currencyValue: currencyValue, coinCode: coinCode)
+        case let .fee(coinValue, currencyValue): return feeRow(coinValue: coinValue, currencyValue: currencyValue)
+        case .doubleSpend: return doubleSpendRow()
+        case let .lockInfo(lockState): return lockInfoRow(lockState: lockState)
+        case .sentToSelf: return sentToSelfRow()
+        case .rawTransaction: return rawTransactionRow()
+        }
+    }
+
+}
+
+extension TransactionInfoViewController: SectionsDataSource {
+
+    func buildSections() -> [SectionProtocol] {
+        [
+            Section(
+                    id: "main",
+                    rows: viewItems.map { viewItem in
+                        row(viewItem: viewItem)
+                    }
+            )
+        ]
     }
 
 }
 
 extension TransactionInfoViewController: ITransactionInfoView {
+
+    func set(date: Date, primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, type: TransactionType, lockState: TransactionLockState?) {
+        titleView.bind(
+                title: "tx_info.title".localized,
+                subtitle: DateHelper.instance.formatFullTime(from: date),
+                image: type == .incoming ? UIImage(named: "Transaction In Icon")?.tinted(with: .themeRemus) : UIImage(named: "Transaction Out Icon")?.tinted(with: .themeJacob)
+        )
+
+        if secondaryAmountInfo != nil {
+            amountInfoView.customPrimaryFractionPolicy = .threshold(high: 1000, low: 0.01)
+            amountInfoView.primaryFormatTrimmable = false
+        }
+
+        amountInfoView.bind(primaryAmountInfo: primaryAmountInfo, secondaryAmountInfo: secondaryAmountInfo, type: type, lockState: lockState)
+    }
+
+    func set(viewItems: [TransactionInfoModule.ViewItem]) {
+        self.viewItems = viewItems
+    }
 
     func showCopied() {
         HudHelper.instance.showSuccess(title: "alert.copied".localized)

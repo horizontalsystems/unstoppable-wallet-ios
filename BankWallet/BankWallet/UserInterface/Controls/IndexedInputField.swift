@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
 @IBDesignable
 class IndexedInputField: UIView, UITextFieldDelegate {
@@ -8,7 +9,7 @@ class IndexedInputField: UIView, UITextFieldDelegate {
     var textField: UITextField
     var indexLabel: UILabel
 
-    var clearTextButton = UIButton.appSecondary
+    var clearTextButton = ThemeButton()
 
     var onReturn: (() -> ())?
     var onSpaceKey: (() -> Bool)?
@@ -18,7 +19,6 @@ class IndexedInputField: UIView, UITextFieldDelegate {
         indexLabel = UILabel()
         textField = UITextField()
 
-        clearTextButton.setImage(UIImage(named: "Send Delete Icon")?.tinted(with: .themeOz), for: .normal)
         super.init(frame: frame)
         commonInit()
     }
@@ -35,9 +35,10 @@ class IndexedInputField: UIView, UITextFieldDelegate {
         clearTextButton.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.trailing.equalToSuperview().inset(CGFloat.margin2x)
-            maker.size.equalTo(CGFloat.heightButtonSecondary)
         }
 
+        clearTextButton.apply(style: .secondaryIcon)
+        clearTextButton.apply(secondaryIconImage: UIImage(named: "Send Delete Icon"))
         clearTextButton.addTarget(self, action: #selector(onClearText), for: .touchUpInside)
         clearTextButton.isHidden = true
 
