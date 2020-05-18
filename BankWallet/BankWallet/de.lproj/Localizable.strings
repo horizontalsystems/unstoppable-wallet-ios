@@ -16,7 +16,7 @@
 "button.copy" = "Kopieren";
 "button.back" = "Zurück";
 "button.retry" = "Wiederholen";
-"button.report" = "Report";
+"button.report" = "Melden";
 
 "alert.copied" = "Kopiert";
 "alert.no_internet" = "Kein Internet";
@@ -117,9 +117,9 @@
 "balance.sort.valueHighToLow" = "Guthaben";
 "balance.sort.az" = "Name";
 "balance.sort.24h_change" = "24h Preis(%)";
-"balance_error.description" = "The error text will be copied to your clipboard should you decide to report it.";
+"balance_error.description" = "Der Fehlertext wird in die Zwischenablage kopiert, falls Sie den Fehler melden möchten.";
 "balance_error.change_source" = "Quelle ändern";
-"balance_error.sync_error" = "Sync Error";
+"balance_error.sync_error" = "Sync-Fehler";
 
 // Deposit
 
@@ -195,7 +195,7 @@
 "tx_info.to_self_note" = "Diese Transaktion wurde an die eigene Adresse gesendet";
 "tx_info.double_spent_note" = "Double-Spend-Risiko!";
 "tx_info.locked_until" = "Gesperrt bis %@";
-"tx_info.unlocked_at" = "Unlocked at %@";
+"tx_info.unlocked_at" = "Freigegeben am %@";
 "tx_info.recipient_hash" = "Empfänger";
 "tx_info.raw_transaction" = "Raw Transaction";
 
