@@ -18,7 +18,7 @@ class TransactionCurrenciesHeaderView: UIView, UICollectionViewDelegateFlowLayou
 
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: layoutMargins.left * 2, bottom: 0, right: layoutMargins.right * 2)
+        collectionView.contentInset = UIEdgeInsets(top: 6, left: layoutMargins.left * 2, bottom: 6, right: layoutMargins.right * 2)
         collectionView.allowsMultipleSelection = false
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
