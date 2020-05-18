@@ -232,18 +232,18 @@
 "full_info.source.offline" = "çevrimdışı";
 
 "full_info.error.server_offline" = "çevrimdışı";
-"full_info.error.transaction_not_found" = "Transaction can not be found on the blockchain";
-"full_info.error.change_source" = "Change Source";
-"full_info.no_address" = "Empty Address";
+"full_info.error.transaction_not_found" = "Işlem Blockchain'de bulunamadı";
+"full_info.error.change_source" = "Kaynağı Değiştir";
+"full_info.no_address" = "Boş adres";
 
 // Settings
 
-"settings.title" = "Settings";
-"settings.tab_bar_item" = "Settings";
-"settings.security_center" = "Security Center";
-"settings.manage_accounts" = "Manage Wallets";
-"settings.manage_coins" = "Manage Coins";
-"settings.experimental_features" = "Experimental Features";
+"settings.title" = "Ayarlar";
+"settings.tab_bar_item" = "Ayarlar";
+"settings.security_center" = "Güvenlik Merkezi";
+"settings.manage_accounts" = "Cüzdanları yönet";
+"settings.manage_coins" = "Kripto Paraları Yönet";
+"settings.experimental_features" = "Deneysel Özellikler";
 "settings.notifications" = "Notifications";
 "settings.base_currency" = "Base Currency";
 "settings.language" = "Language";
