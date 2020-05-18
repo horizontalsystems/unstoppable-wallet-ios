@@ -283,7 +283,7 @@ bch.horizontalsystems.xyz/apg";
 // Settings -> Experimental Features
 
 "settings.experimental_features.title" = "Experimental";
-"settings.experimental_features.description" = "The features below are experimental and should be used with caution. While we have throughly tested these features using our own crypto funds we cannot guarantee they work as expected in all possible cases.";
+"settings.experimental_features.description" = "The features below are experimental and should be used with caution. While we have thoroughly tested these features using our own crypto funds we cannot guarantee they work as expected in all possible cases.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
@@ -301,7 +301,7 @@ bch.horizontalsystems.xyz/apg";
 "settings_about.terms_privacy_text" = "This app is peer-to-peer. It does not depend on any web server or tech support personnel to function.
 \nIt works everywhere as long as there is internet. No entity can block this app from working or censor someone from using it.
 \nThe secret cryptographic keys which control your crypto funds are securely stored on the phone itself, not anywhere else.
-\nIt’s your responsibility to backup your secret cryptographic keys and keep them private. Never show your keys to anyone. If keys are lost, forgotten or stollen your funds can be used by the person who finds your key.
+\nIt’s your responsibility to backup your secret cryptographic keys and keep them private. Never show your keys to anyone. If keys are lost, forgotten or stolen your funds can be used by the person who finds your key.
 \nDo not jailbreak your phone, do not install apps from unknown (untrusted) sources, do not give your device to untrusted people, and keep the operating system on your phone up to date. The security of your wallet depends on this.
 \nThe entire code powering this app is open to the public scrutiny. While we believe to be significantly more secure than any smartphone wallet app out there there are no guarantees that there are no software issues.
 \nAll of your data i.e. transactions, balance etc available only to your wallet app and never leaves your device.";
