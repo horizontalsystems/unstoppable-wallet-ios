@@ -22,7 +22,8 @@ extension MainRouter {
         let viewControllers = [
             balanceNavigation,
             transactionsNavigation,
-            settingsNavigation
+            guidesNavigation,
+            settingsNavigation,
         ]
 
         let viewController = MainViewController(viewDelegate: presenter, viewControllers: viewControllers, selectedIndex: selectedTab.rawValue)
@@ -46,6 +47,10 @@ extension MainRouter {
 
     private static var settingsNavigation: UIViewController {
         ThemeNavigationController(rootViewController: MainSettingsRouter.module())
+    }
+
+    private static var guidesNavigation: UIViewController {
+        ThemeNavigationController(rootViewController: GuidesRouter.module())
     }
 
 }
