@@ -195,7 +195,7 @@
 "tx_info.to_self_note" = "交易已发送至自有地址";
 "tx_info.double_spent_note" = "双重支付风险！";
 "tx_info.locked_until" = "锁定至 %@";
-"tx_info.unlocked_at" = "Unlocked at %@";
+"tx_info.unlocked_at" = "在 %@ 解锁了";
 "tx_info.recipient_hash" = "收款人";
 "tx_info.raw_transaction" = "原始交易";
 
