@@ -93,14 +93,13 @@ class AmountInfoView: UIView {
         }
         primaryAmountLabel.text = amountLabel
 
-        guard let secondaryAmountInfo = secondaryAmountInfo else {
-            return
-        }
-        secondaryAmountLabel.text = secondaryAmountInfo.formattedString
+        if let secondaryAmountInfo = secondaryAmountInfo {
+            secondaryAmountLabel.text = secondaryAmountInfo.formattedString
 
-        switch secondaryAmountInfo {
-        case .coinValue(let coinValue): secondaryAmountTitleLabel.text = coinValue.coin.title
-        case .currencyValue(let currencyValue): secondaryAmountTitleLabel.text = currencyValue.currency.code
+            switch secondaryAmountInfo {
+            case .coinValue(let coinValue): secondaryAmountTitleLabel.text = coinValue.coin.title
+            case .currencyValue(let currencyValue): secondaryAmountTitleLabel.text = currencyValue.currency.code
+            }
         }
 
         if let lockState = lockState {
