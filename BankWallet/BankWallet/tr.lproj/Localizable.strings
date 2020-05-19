@@ -472,3 +472,8 @@
 "intro.knowledge.description" = "Haberdar olun ve erken aşamalarda büyüyen blockchain projelerini keşfedin";
 "intro.privacy.title" = "Gizlilik";
 "intro.privacy.description" = "Servetinizi büyütürken gizli ve radarın altında kalın";
+
+// Guides
+
+"guides.tab_bar_item" = "Guides";
+"guides.title" = "Guides";
