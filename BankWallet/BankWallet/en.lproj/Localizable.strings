@@ -483,3 +483,8 @@ bch.horizontalsystems.xyz/apg";
 "intro.knowledge.description" = "Become informed and discover growing blockchain projects in early stages";
 "intro.privacy.title" = "Privacy";
 "intro.privacy.description" = "Stay incognito and under the radar while growing your wealth";
+
+// Guides
+
+"guides.tab_bar_item" = "Guides";
+"guides.title" = "Guides";
