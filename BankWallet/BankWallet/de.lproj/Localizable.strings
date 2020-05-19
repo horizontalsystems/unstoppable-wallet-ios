@@ -472,3 +472,8 @@
 "intro.knowledge.description" = "Informieren Sie sich und entdecken Sie wachsende Blockchain-Projekte in einem frühen Stadium";
 "intro.privacy.title" = "Privatsphäre";
 "intro.privacy.description" = "Bleiben Sie inkognito und unbemerkt, während Sie Ihr Vermögen vermehren";
+
+// Guides
+
+"guides.tab_bar_item" = "Guides";
+"guides.title" = "Guides";
