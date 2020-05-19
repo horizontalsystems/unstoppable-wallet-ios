@@ -472,3 +472,8 @@
 "intro.knowledge.description" = "Soyez informé et découvrez les projets Blockchain en cours de développement dès les premières étapes";
 "intro.privacy.title" = "Confidentialité";
 "intro.privacy.description" = "Gardez l'anonymat et restez discret tout en augmentant votre capital";
+
+// Guides
+
+"guides.tab_bar_item" = "Guides";
+"guides.title" = "Guides";
