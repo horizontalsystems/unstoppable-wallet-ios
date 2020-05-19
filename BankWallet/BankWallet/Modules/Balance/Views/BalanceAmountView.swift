@@ -58,6 +58,18 @@ class BalanceAmountView: UIView {
 
             syncingLabel.set(hidden: true, animated: animated, duration: duration)
             syncedUntilLabel.set(hidden: true, animated: animated, duration: duration)
+        case let .searchingTx(count):
+            balanceView.set(hidden: true, animated: animated, duration: duration)
+            syncingLabel.text = "balance.searching".localized()
+
+            if count > 0 {
+                syncedUntilLabel.text = "balance.searching.count".localized("\(count)")
+                syncedUntilLabel.set(hidden: false, animated: animated, duration: duration)
+            } else {
+                syncedUntilLabel.set(hidden: true, animated: animated, duration: duration)
+            }
+
+            syncingLabel.set(hidden: false, animated: animated, duration: duration)
         case let .syncing(progress, syncedUntil):
             balanceView.set(hidden: true, animated: animated, duration: duration)
 

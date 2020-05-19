@@ -68,7 +68,10 @@ class BalanceTopView: UIView {
         self.onTapRateDiff = onTapRateDiff
 
         let coinIcon = viewItem.coinIconCode.flatMap { UIImage(named: "\($0.lowercased())") }
-        coinIconView.bind(coinIcon: coinIcon, spinnerProgress: viewItem.syncSpinnerProgress, failViewVisible: viewItem.failedImageViewVisible, onTapError: onTapError)
+        coinIconView.bind(
+                coinIcon: coinIcon, spinnerProgress: viewItem.syncSpinnerProgress, indefiniteSearchCircle: viewItem.indefiniteSearchCircle,
+                failViewVisible: viewItem.failedImageViewVisible, onTapError: onTapError
+        )
 
         nameLabel.text = viewItem.coinTitle
 

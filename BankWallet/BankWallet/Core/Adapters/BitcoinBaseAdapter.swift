@@ -216,6 +216,13 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
 
             self.state = .syncing(progress: newProgress, lastBlockDate: newDate)
             stateUpdatedSubject.onNext(())
+        case .apiSyncing(let newCount):
+            if case .searchingTxs(let count) = self.state, newCount == count {
+                return
+            }
+
+            self.state = .searchingTxs(count: newCount)
+            stateUpdatedSubject.onNext(())
         }
     }
 

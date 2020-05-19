@@ -20,6 +20,7 @@ class BalanceViewItemFactory {
                 rateValue: rateValue(currency: currency, marketInfo: marketInfo),
                 diff: diff(marketInfo: marketInfo),
                 syncSpinnerProgress: syncSpinnerProgress(state: state),
+                indefiniteSearchCircle: indefiniteSearchCircle(state: state),
                 failedImageViewVisible: failedImageViewVisible(state: state)
         )
     }
@@ -36,6 +37,8 @@ class BalanceViewItemFactory {
                 } else {
                     return .syncing(progress: nil, syncedUntil: nil)
                 }
+            } else if case let .searchingTxs(count) = state, !expanded {
+                return .searchingTx(count: count)
             } else {
                 return .amount(
                         coinValue: coinValue(coin: item.wallet.coin, value: balance, state: state),
@@ -83,6 +86,13 @@ class BalanceViewItemFactory {
             return max(minimumProgress, progress)
         }
         return nil
+    }
+
+    private func indefiniteSearchCircle(state: AdapterState?) -> Bool {
+        if let state = state, case .searchingTxs(_) = state {
+            return true
+        }
+        return false
     }
 
     private func failedImageViewVisible(state: AdapterState?) -> Bool {
