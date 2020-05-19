@@ -472,3 +472,8 @@
 "intro.knowledge.description" = "在早期阶段了解和探索不断发展的区块链项目。";
 "intro.privacy.title" = "隐私";
 "intro.privacy.description" = "在增长财富的同时保持隐身状态并避开追踪。";
+
+// Guides
+
+"guides.tab_bar_item" = "Guides";
+"guides.title" = "Guides";
