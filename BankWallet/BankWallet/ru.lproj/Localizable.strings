@@ -472,3 +472,8 @@
 "intro.knowledge.description" = "Оставайтесь в курсе новостей и узнавайте о растущих блокчейн-проектах на ранних стадиях.";
 "intro.privacy.title" = "Приватность";
 "intro.privacy.description" = "Увеличивайте свой капитал, оставаясь инкогнито и действуя анонимно.";
+
+// Guides
+
+"guides.tab_bar_item" = "Guides";
+"guides.title" = "Guides";
