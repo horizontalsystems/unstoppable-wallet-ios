@@ -21,11 +21,13 @@ struct BalanceTopViewItem {
     let diff: (value: Decimal, dimmed: Bool)?
 
     let syncSpinnerProgress: Int?
+    let indefiniteSearchCircle: Bool
     let failedImageViewVisible: Bool
 }
 
 enum BalanceAmountViewItem {
     case amount(coinValue: (text: String?, dimmed: Bool), currencyValue: (text: String?, dimmed: Bool)?)
+    case searchingTx(count: Int)
     case syncing(progress: Int?, syncedUntil: String?)
 }
 
@@ -64,6 +66,8 @@ extension BalanceAmountViewItem: Equatable {
                     lhsCoinValue.dimmed == rhsCoinValue.dimmed &&
                     lhsCurrencyValue?.text == rhsCurrencyValue?.text &&
                     lhsCurrencyValue?.dimmed == rhsCurrencyValue?.dimmed
+        case (.searchingTx(let lhsCount), .searchingTx(let rhsCount)):
+            return lhsCount == rhsCount
         case (.syncing(let lhsProgress, let lhsSyncedUntil), .syncing(let rhsProgress, let rhsSyncedUntil)):
             return lhsProgress == rhsProgress &&
                     lhsSyncedUntil == rhsSyncedUntil
