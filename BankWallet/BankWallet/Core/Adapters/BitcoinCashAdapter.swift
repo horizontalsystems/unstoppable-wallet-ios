@@ -9,10 +9,7 @@ class BitcoinCashAdapter: BitcoinBaseAdapter {
             throw AdapterError.unsupportedAccount
         }
 
-        guard let walletSyncMode = syncMode else {
-            throw AdapterError.wrongParameters
-        }
-
+        let walletSyncMode = syncMode ?? .slow
         let networkType: BitcoinCashKit.NetworkType = testMode ? .testNet : .mainNet
 
         bitcoinCashKit = try BitcoinCashKit(withWords: words, walletId: wallet.account.id, syncMode: BitcoinBaseAdapter.kitMode(from: walletSyncMode), networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.defaultConfirmationsThreshold, minLogLevel: .error)
