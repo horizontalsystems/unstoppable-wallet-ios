@@ -39,13 +39,19 @@ class BalanceCoinIconHolder: GrayIconHolder {
         onTapError?()
     }
 
-    func bind(coinIcon: UIImage?, spinnerProgress: Int?, failViewVisible: Bool, onTapError: (() -> ())?) {
+    func bind(coinIcon: UIImage?, spinnerProgress: Int?, indefiniteSearchCircle: Bool, failViewVisible: Bool, onTapError: (() -> ())?) {
         self.onTapError = onTapError
 
         super.bind(image: coinIcon)
 
         if let spinnerProgress = spinnerProgress {
             syncSpinner.set(progress: Float(spinnerProgress) / 100)
+            syncSpinner.set(strokeColor: .themeGray)
+            syncSpinner.isHidden = false
+            syncSpinner.startAnimating()
+        } else if indefiniteSearchCircle {
+            syncSpinner.set(strokeColor: .themeGray50)
+            syncSpinner.set(progress: 1)
             syncSpinner.isHidden = false
             syncSpinner.startAnimating()
         } else {
