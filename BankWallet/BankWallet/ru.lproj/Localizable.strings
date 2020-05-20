@@ -110,6 +110,8 @@
 "balance.deposit" = "Получить";
 "balance.rate_per_coin" = "%@ за %@";
 "balance.syncing" = "Идет синхронизация...";
+"balance.searching" = "Searching transactions...";
+"balance.searching.count" = "%@ txs";
 "balance.syncing_percent" = "Идет синхронизация... %@";
 "balance.synced_through" = "до: %@";
 "balance.add_coin" = "Добавить Токены";
