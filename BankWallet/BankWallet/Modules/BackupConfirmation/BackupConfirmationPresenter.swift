@@ -35,7 +35,7 @@ extension BackupConfirmationPresenter: IBackupConfirmationViewDelegate {
             try interactor.validate(words: words, confirmationIndexes: indexes, confirmationWords: confirmationWords)
             router.notifyDidValidate()
         } catch {
-            view?.show(error: error)
+            view?.show(error: error.convertedError)
         }
     }
 

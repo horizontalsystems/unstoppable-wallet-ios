@@ -39,7 +39,7 @@ extension NoAccountPresenter: INoAccountViewDelegate {
             view?.showSuccess()
             router.close()
         } catch {
-            view?.show(error: error)
+            view?.show(error: error.convertedError)
         }
     }
 

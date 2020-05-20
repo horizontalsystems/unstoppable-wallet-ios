@@ -86,7 +86,7 @@ extension RestoreEosPresenter: IRestoreEosViewDelegate {
 
             handler.handle(accountType: accountType)
         } catch {
-            view?.show(error: error)
+            view?.show(error: error.convertedError)
         }
     }
 
