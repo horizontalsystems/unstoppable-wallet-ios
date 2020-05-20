@@ -83,7 +83,7 @@ extension CreateWalletPresenter: ICreateWalletViewDelegate {
             let account = try resolveAccount(predefinedAccountType: coin.type.predefinedAccountType)
             createWallet(coin: coin, account: account)
         } catch {
-            view?.show(error: error)
+            view?.show(error: error.convertedError)
             syncViewItems()
         }
     }

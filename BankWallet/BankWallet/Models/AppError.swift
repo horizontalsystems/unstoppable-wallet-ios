@@ -6,7 +6,6 @@ enum AppError: Error {
     case eos(reason: EosError)
     case binance(reason: BinanceError)
     case wordsValidation(reason: WordsValidationError)
-    case sendTransactionNoFee
     case unknownError
 
     enum WordsValidationError: Error {
@@ -20,7 +19,6 @@ enum AppError: Error {
         case accountNotExist
         case insufficientRam
         case invalidPrivateKey
-        case invalidAccount
     }
 
     enum BinanceError: Error {
@@ -42,7 +40,6 @@ extension AppError: LocalizedError {
             case .accountNotExist: return "error.send_eos.account_not_exist".localized
             case .insufficientRam: return "error.send_eos.insufficient_ram".localized
             case .invalidPrivateKey: return "error.invalid_eos_key".localized
-            case .invalidAccount: return "error.invalid_eos_account".localized
             }
         case .binance(let reason):
             switch reason {
@@ -56,7 +53,6 @@ extension AppError: LocalizedError {
             case .invalidWords: return "restore.validation_failed".localized
 
             }
-        case .sendTransactionNoFee: return "alert.no_fee".localized
         case .unknownError: return "Unknown Error"
         }
 

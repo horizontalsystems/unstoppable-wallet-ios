@@ -38,7 +38,7 @@ extension NetworkManager.RequestError: ConvertibleError {
     }
 }
 
-extension BackendError {
+extension BackendError: ConvertibleError {
     var convertedError: Error {
         switch self {
         case .selfTransfer: return AppError.eos(reason: .selfTransfer)
@@ -95,22 +95,6 @@ extension EosKit.ValidationError: ConvertibleError {
         switch self {
         case .invalidPrivateKey:
             return AppError.eos(reason: .invalidPrivateKey)
-        }
-    }
-}
-
-extension SendTransactionError: ConvertibleError {
-    var convertedError: Error {
-        switch self {
-        case .noFee: return AppError.sendTransactionNoFee
-        }
-    }
-}
-
-extension EosAdapter.ValidationError: ConvertibleError {
-    var convertedError: Error {
-        switch self {
-        case .invalidAccount: return AppError.eos(reason: .invalidAccount)
         }
     }
 }
