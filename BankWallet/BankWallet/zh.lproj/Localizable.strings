@@ -110,6 +110,8 @@
 "balance.deposit" = "接收";
 "balance.rate_per_coin" = "%@ / %@";
 "balance.syncing" = "正在同步...";
+"balance.searching" = "Searching transactions...";
+"balance.searching.count" = "%@ txs";
 "balance.syncing_percent" = "正在同步... %@";
 "balance.synced_through" = "直至：%@";
 "balance.add_coin" = "添加代币";
