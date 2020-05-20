@@ -39,7 +39,7 @@ extension RestoreWordsPresenter: IRestoreWordsViewDelegate {
             try wordsManager.validate(words: words, requiredWordsCount: wordsCount)
             handle(words: words)
         } catch {
-            view?.show(error: error)
+            view?.show(error: error.convertedError)
         }
     }
 
