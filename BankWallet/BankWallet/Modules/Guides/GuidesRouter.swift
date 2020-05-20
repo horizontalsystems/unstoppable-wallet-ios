@@ -5,6 +5,12 @@ class GuidesRouter {
 }
 
 extension GuidesRouter: IGuidesRouter {
+
+    func showGuide(url: String) {
+        let module = GuideRouter.module(url: url)
+        viewController?.navigationController?.pushViewController(module, animated: true)
+    }
+
 }
 
 extension GuidesRouter {
