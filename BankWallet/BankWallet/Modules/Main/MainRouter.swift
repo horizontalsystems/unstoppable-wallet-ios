@@ -11,7 +11,7 @@ extension MainRouter: IMainRouter {
 extension MainRouter {
 
     enum Tab: Int {
-        case balance, transactions, settings
+        case balance, transactions, guides, settings
     }
 
     static func module(selectedTab: Tab = .balance) -> UIViewController {
