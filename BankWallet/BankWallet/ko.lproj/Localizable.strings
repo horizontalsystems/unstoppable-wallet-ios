@@ -110,6 +110,8 @@
 "balance.deposit" = "수신";
 "balance.rate_per_coin" = "%@ 당 %@";
 "balance.syncing" = "동기화 중입니다...";
+"balance.searching" = "Searching transactions...";
+"balance.searching.count" = "%@ txs";
 "balance.syncing_percent" = "동기화 중... %@";
 "balance.synced_through" = "%@ 까지";
 "balance.add_coin" = "코인 추가";
