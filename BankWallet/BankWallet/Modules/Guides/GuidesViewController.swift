@@ -12,12 +12,7 @@ class GuidesViewController: ThemeViewController {
     private let layout = UICollectionViewFlowLayout()
     private let collectionView: UICollectionView
 
-    private var viewItems: [GuideViewItem] = [
-        GuideViewItem(title: "How to Store Bitcoins", large: true, coinCode: nil, imageUrl: "https://ag-spots-2015.o.auroraobjects.eu/2015/10/13/other/2880-1800-crop-bmw-m5-f10-2011-c992313102015171001_1.jpg"),
-        GuideViewItem(title: "Libra in Simple Terms", large: true, coinCode: "LOOM", imageUrl: nil),
-        GuideViewItem(title: "Thether is Simple Terms", large: false, coinCode: "USDT", imageUrl: nil),
-        GuideViewItem(title: "Crypto Terms for Beginners", large: false, coinCode: nil, imageUrl: "https://pbs.twimg.com/media/DQzb48iV4AA_2Tu.jpg"),
-    ]
+    private var viewItems = [GuideViewItem]()
 
     init(delegate: IGuidesViewDelegate) {
         self.delegate = delegate
@@ -80,7 +75,7 @@ extension GuidesViewController: UICollectionViewDelegate {
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.item)
+        delegate.onTapGuide(index: indexPath.item)
     }
 
 }
@@ -114,4 +109,9 @@ extension GuidesViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension GuidesViewController: IGuidesView {
+
+    func set(viewItems: [GuideViewItem]) {
+        self.viewItems = viewItems
+    }
+
 }
