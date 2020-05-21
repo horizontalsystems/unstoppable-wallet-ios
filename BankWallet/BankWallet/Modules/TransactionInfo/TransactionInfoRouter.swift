@@ -29,7 +29,7 @@ extension TransactionInfoRouter: ITransactionInfoRouter {
         viewController?.present(activityViewController, animated: true)
     }
 
-    func showDoubleSpendInfo(txHash: String, conflictingTxHash: String?) {
+    func showDoubleSpendInfo(txHash: String, conflictingTxHash: String) {
         viewController?.present(DoubleSpendInfoRouter.module(txHash: txHash, conflictingTxHash: conflictingTxHash), animated: true)
     }
 

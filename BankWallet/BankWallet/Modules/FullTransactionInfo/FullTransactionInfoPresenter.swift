@@ -63,10 +63,6 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoViewDelegate {
             return
         }
 
-        if let url = item.url {
-            router.open(url: url)
-        }
-
         if let value = item.value {
             interactor.copyToPasteboard(value: value)
             view?.showCopied()
