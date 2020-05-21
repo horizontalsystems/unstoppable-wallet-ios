@@ -188,7 +188,7 @@ class AddressInputField: UIView {
 
         if let error = error {
             errorLabel.isHidden = false
-            errorLabel.text = error.localizedDescription
+            errorLabel.text = error.smartDescription
             addressField.snp.remakeConstraints { maker in
                 maker.top.equalToSuperview().offset(CGFloat.margin3x)
                 maker.leading.trailing.equalToSuperview()
@@ -197,7 +197,7 @@ class AddressInputField: UIView {
             errorLabel.snp.remakeConstraints { maker in
                 maker.leading.trailing.equalToSuperview()
                 maker.top.equalTo(addressField.snp.bottom).offset(CGFloat.margin1x)
-                maker.height.equalTo(errorFieldHeight(text: error.localizedDescription))
+                maker.height.equalTo(errorFieldHeight(text: error.smartDescription))
                 maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
             }
         } else {

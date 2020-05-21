@@ -141,7 +141,7 @@ extension SendViewController: ISendView {
     }
 
     func show(error: Error) {
-        HudHelper.instance.showError(title: error.localizedDescription)
+        HudHelper.instance.showError(title: error.smartDescription)
     }
 
     func showProgress() {

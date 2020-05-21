@@ -121,7 +121,7 @@ extension ManageAccountsViewController: IManageAccountsView {
     }
 
     func show(error: Error) {
-        HudHelper.instance.showError(title: error.localizedDescription)
+        HudHelper.instance.showError(title: error.smartDescription)
     }
 
     func showSuccess() {
