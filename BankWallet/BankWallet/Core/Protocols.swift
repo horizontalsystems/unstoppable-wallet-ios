@@ -516,7 +516,7 @@ protocol IDerivationSettingsManager: AnyObject {
 }
 
 protocol IInitialSyncSettingsManager: AnyObject {
-    var allSettings: [(setting: InitialSyncSetting, coins: [Coin])] { get }
+    var allSettings: [(setting: InitialSyncSetting, coins: [Coin], changeable: Bool)] { get }
     func setting(coinType: CoinType) -> InitialSyncSetting?
     func save(setting: InitialSyncSetting)
 }

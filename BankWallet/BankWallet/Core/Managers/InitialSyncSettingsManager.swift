@@ -1,8 +1,9 @@
 class InitialSyncSettingsManager {
-    private let supportedCoinTypes: [(coinType: CoinType, defaultSyncMode: SyncMode)] = [
-        (.bitcoin, .fast),
-        (.dash, .fast),
-        (.litecoin, .fast)
+    private let supportedCoinTypes = [
+        SupportedCoinType(coinType: .bitcoin, defaultSyncMode: .fast, changeable: true),
+        SupportedCoinType(coinType: .bitcoinCash, defaultSyncMode: .slow, changeable: false),
+        SupportedCoinType(coinType: .dash, defaultSyncMode: .fast, changeable: true),
+        SupportedCoinType(coinType: .litecoin, defaultSyncMode: .fast, changeable: true),
     ]
 
     private let walletManager: IWalletManager
@@ -17,33 +18,29 @@ class InitialSyncSettingsManager {
         self.storage = storage
     }
 
-    private func defaultSetting(coinType: CoinType) -> InitialSyncSetting? {
-        guard let syncMode = supportedCoinTypes.first(where: { $0.coinType == coinType })?.defaultSyncMode else {
-            return nil
-        }
-
-        return InitialSyncSetting(coinType: coinType, syncMode: syncMode)
+    private func defaultSetting(supportedCoinType: SupportedCoinType) -> InitialSyncSetting {
+        InitialSyncSetting(coinType: supportedCoinType.coinType, syncMode: supportedCoinType.defaultSyncMode)
     }
 
 }
 
 extension InitialSyncSettingsManager: IInitialSyncSettingsManager {
 
-    var allSettings: [(setting: InitialSyncSetting, coins: [Coin])] {
+    var allSettings: [(setting: InitialSyncSetting, coins: [Coin], changeable: Bool)] {
         let coins = appConfigProvider.coins
 
-        return supportedCoinTypes.compactMap { (coinType, _) in
-            let coinTypeCoins = coins.filter { $0.type == coinType }
+        return supportedCoinTypes.compactMap { supportedCoinType in
+            let coinTypeCoins = coins.filter { $0.type == supportedCoinType.coinType }
 
             guard !coinTypeCoins.isEmpty else {
                 return nil
             }
 
-            guard let setting = setting(coinType: coinType) else {
+            guard let setting = setting(coinType: supportedCoinType.coinType) else {
                 return nil
             }
 
-            return (setting: setting, coins: coinTypeCoins)
+            return (setting: setting, coins: coinTypeCoins, supportedCoinType.changeable)
         }
     }
 
@@ -58,9 +55,27 @@ extension InitialSyncSettingsManager: IInitialSyncSettingsManager {
     }
 
     func setting(coinType: CoinType) -> InitialSyncSetting? {
+        guard let supportedCoinType = supportedCoinTypes.first(where: { $0.coinType == coinType }) else {
+            return nil
+        }
+
+        guard supportedCoinType.changeable else {
+            return defaultSetting(supportedCoinType: supportedCoinType)
+        }
+
         let storedSetting = storage.initialSyncSetting(coinType: coinType)
 
-        return storedSetting ?? defaultSetting(coinType: coinType)
+        return storedSetting ?? defaultSetting(supportedCoinType: supportedCoinType)
+    }
+
+}
+
+extension InitialSyncSettingsManager {
+
+    private struct SupportedCoinType {
+        let coinType: CoinType
+        let defaultSyncMode: SyncMode
+        let changeable: Bool
     }
 
 }
