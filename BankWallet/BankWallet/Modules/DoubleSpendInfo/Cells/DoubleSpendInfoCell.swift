@@ -33,7 +33,7 @@ class DoubleSpendInfoCell: TitleCell {
         onTap?()
     }
 
-    func bind(title: String, hash: String, last: Bool, onTap: (() -> ())? = nil) {
+    func bind(title: String, hash: String?, last: Bool, onTap: (() -> ())? = nil) {
         super.bind(titleIcon: nil, title: title, titleColor: .themeGray, last: last)
 
         button.setTitle(hash, for: .normal)

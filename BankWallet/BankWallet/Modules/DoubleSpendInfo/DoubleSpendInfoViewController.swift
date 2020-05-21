@@ -9,7 +9,10 @@ import ThemeKit
 class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
     private let delegate: IDoubleSpendInfoViewDelegate
 
-    let tableView = SectionsTableView(style: .grouped)
+    private let tableView = SectionsTableView(style: .grouped)
+
+    private var transactionHash: String?
+    private var conflictingTransactionHash: String?
 
     public init(delegate: IDoubleSpendInfoViewDelegate) {
         self.delegate = delegate
@@ -38,7 +41,9 @@ class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
         tableView.sectionDataSource = self
         tableView.separatorStyle = .none
 
-        tableView.reload()
+        delegate.onLoad()
+
+        tableView.buildSections()
     }
 
     private var header: ViewState<TopDescriptionHeaderFooterView> {
@@ -64,10 +69,10 @@ class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
                         Row<DoubleSpendInfoCell>(
                                 id: "row_txHash",
                                 height: .heightSingleLineCell,
-                                bind: { [unowned self] cell, _ in
+                                bind: { [weak self] cell, _ in
                                     cell.bind(
                                             title: "double_spend_info.this_hash".localized,
-                                            hash: self.delegate.txHash,
+                                            hash: self?.transactionHash,
                                             last: false,
                                             onTap: { [weak self] in
                                                 self?.onTapHash()
@@ -78,10 +83,10 @@ class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
                         Row<DoubleSpendInfoCell>(
                                 id: "row_conflictingTxHash",
                                 height: .heightSingleLineCell,
-                                bind: { [unowned self] cell, _ in
+                                bind: { [weak self] cell, _ in
                                     cell.bind(
                                             title: "double_spend_info.conflicting_hash".localized,
-                                            hash: self.delegate.conflictingTxHash,
+                                            hash: self?.conflictingTransactionHash,
                                             last: true,
                                             onTap: { [weak self] in
                                                 self?.onConflictingTapHash()
@@ -99,7 +104,7 @@ class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
     }
 
     func onConflictingTapHash() {
-        delegate.onConflictingTapHash()
+        delegate.onTapConflictingHash()
     }
 
     @objc func onClose() {
@@ -110,6 +115,11 @@ class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
 
 
 extension DoubleSpendInfoViewController: IDoubleSpendInfoView {
+
+    func set(transactionHash: String, conflictingTransactionHash: String) {
+        self.transactionHash = transactionHash
+        self.conflictingTransactionHash = conflictingTransactionHash
+    }
 
     func showCopied() {
         HudHelper.instance.showSuccess(title: "alert.copied".localized)

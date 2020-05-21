@@ -1,6 +1,6 @@
 class DoubleSpendInfoPresenter {
-    let txHash: String
-    let conflictingTxHash: String
+    private let txHash: String
+    private let conflictingTxHash: String
 
     private let interactor: IDoubleSpendInfoInteractor
     weak var view: IDoubleSpendInfoView?
@@ -15,12 +15,16 @@ class DoubleSpendInfoPresenter {
 
 extension DoubleSpendInfoPresenter: IDoubleSpendInfoViewDelegate {
 
+    func onLoad() {
+        view?.set(transactionHash: txHash, conflictingTransactionHash: conflictingTxHash)
+    }
+
     func onTapHash() {
         interactor.copy(value: txHash)
         view?.showCopied()
     }
 
-    func onConflictingTapHash() {
+    func onTapConflictingHash() {
         interactor.copy(value: conflictingTxHash)
         view?.showCopied()
     }
