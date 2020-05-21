@@ -3,7 +3,10 @@ import SnapKit
 import ThemeKit
 
 class FullTransactionInfoTextCell: TitleCell {
-    private let descriptionView = HashView()
+    private let label = UILabel()
+    private let button = ThemeButton()
+
+    private var onTap: (() -> ())?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -14,51 +17,67 @@ class FullTransactionInfoTextCell: TitleCell {
 
         iconImageView.tintColor = .themeGray
 
-        contentView.addSubview(descriptionView)
-        descriptionView.snp.makeConstraints { maker in
-            maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin12x)
+        contentView.addSubview(label)
+        label.snp.makeConstraints { maker in
+            maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin4x)
             maker.centerY.equalToSuperview()
-            maker.trailing.equalTo(disclosureImageView.snp.leading).inset(CGFloat.margin4x)
+            maker.trailing.equalTo(disclosureImageView.snp.leading)
         }
+
+        label.textAlignment = .right
+        label.font = .subhead1
+        label.textColor = .themeLeah
+
+        contentView.addSubview(button)
+        button.snp.makeConstraints { maker in
+            maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin4x)
+            maker.centerY.equalToSuperview()
+            maker.trailing.equalTo(disclosureImageView.snp.leading)
+        }
+
+        button.apply(style: .secondaryDefault)
+        button.addTarget(self, action: #selector(onTapButton), for: .touchUpInside)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    @objc private func onTapButton() {
+        onTap?()
+    }
+
     func bind(item: FullTransactionItem, selectionStyle: SelectionStyle = .none, showDisclosure: Bool = false, last: Bool = false, onTap: (() -> ())? = nil) {
         super.bind(titleIcon: item.icon.flatMap { UIImage(named: $0) }, title: item.title, titleColor: .themeGray, showDisclosure: showDisclosure, last: last)
         self.selectionStyle = selectionStyle
 
-        descriptionView.snp.remakeConstraints { maker in
-            maker.leading.equalTo(self.titleLabel.snp.trailing).offset(CGFloat.margin12x)
-            maker.centerY.equalToSuperview()
+        if let onTap = onTap {
+            label.isHidden = true
+            label.text = nil
 
-            let descriptionBackgroundOffset = onTap == nil ? CGFloat.margin2x : 0
-            if showDisclosure {
-                maker.trailing.equalTo(self.disclosureImageView.snp.leading).offset(descriptionBackgroundOffset - CGFloat.margin3x)
-            } else {
-                maker.trailing.equalTo(contentView.snp.trailingMargin).offset(descriptionBackgroundOffset)
+            button.isHidden = false
+            button.setTitle(item.value, for: .normal)
+
+            button.snp.remakeConstraints { maker in
+                maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin4x)
+                maker.centerY.equalToSuperview()
+                maker.trailing.equalTo(disclosureImageView.snp.leading).offset(showDisclosure ? -CGFloat.margin2x : 0)
+            }
+        } else {
+            button.isHidden = true
+            button.setTitle(nil, for: .normal)
+
+            label.isHidden = false
+            label.text = item.value
+
+            label.snp.remakeConstraints { maker in
+                maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin4x)
+                maker.centerY.equalToSuperview()
+                maker.trailing.equalTo(disclosureImageView.snp.leading).offset(showDisclosure ? -CGFloat.margin2x : 0)
             }
         }
 
-        descriptionView.bind(value: item.value, color: item.titleColor ?? .themeOz, showExtra: item.showExtra, onTap: onTap)
-        descriptionView.isUserInteractionEnabled = onTap != nil
-    }
-
-    func bind(title: String, hash: String, last: Bool, onTap: (() -> ())? = nil) {
-        super.bind(titleIcon: nil, title: title, titleColor: .themeGray, last: last)
-
-        descriptionView.snp.remakeConstraints { maker in
-            maker.leading.equalTo(self.titleLabel.snp.trailing).offset(CGFloat.margin12x)
-            maker.centerY.equalToSuperview()
-
-            let descriptionBackgroundOffset = onTap == nil ? CGFloat.margin2x : 0
-            maker.trailing.equalTo(contentView.snp.trailingMargin).offset(descriptionBackgroundOffset)
-        }
-
-        descriptionView.bind(value: hash, color: .themeOz, onTap: onTap)
-        descriptionView.isUserInteractionEnabled = onTap != nil
+        self.onTap = onTap
     }
 
 }

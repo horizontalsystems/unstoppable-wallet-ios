@@ -50,11 +50,11 @@ class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
             transactionItems.append(FullTransactionItem(title: "full_info.fee".localized, value: ValueFormatter.instance.format(coinValue: feeValue)))
         }
         if let size = txResponse.size {
-            transactionItems.append(FullTransactionItem(title: "full_info.size".localized, titleColor: .themeGray, value: "\(size) (bytes)"))
+            transactionItems.append(FullTransactionItem(title: "full_info.size".localized, value: "\(size) (bytes)"))
         }
         if let feeRate = txResponse.feePerByte, let formattedValue = BitcoinTransactionInfoAdapter.feeRateFormatter.string(from: feeRate as NSNumber) {
             let feeRateValue = "\(formattedValue) (\(unitName))"
-            transactionItems.append(FullTransactionItem(title: "full_info.rate".localized, titleColor: .themeGray, value: feeRateValue))
+            transactionItems.append(FullTransactionItem(title: "full_info.rate".localized, value: feeRateValue))
         }
         if !transactionItems.isEmpty {
             sections.append(FullTransactionSection(title: nil, items: transactionItems))
@@ -73,7 +73,7 @@ class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
                 continue
             }
             let clickable = input.address != nil
-            inputItems.append(FullTransactionItem(title: title, value: input.address ?? "full_info.no_address", clickable: clickable, showExtra: clickable ? .icon : .none))
+            inputItems.append(FullTransactionItem(title: title, value: input.address ?? "full_info.no_address", clickable: clickable))
         }
         if !inputItems.isEmpty {
             sections.append(FullTransactionSection(title: nil, items: inputItems))
@@ -93,7 +93,7 @@ class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
             }
             let clickable = output.address != nil
             let address = output.address ?? "full_info.no_address".localized
-            outputItems.append(FullTransactionItem(title: title, value: address, clickable: clickable, showExtra: clickable ? .icon : .none))
+            outputItems.append(FullTransactionItem(title: title, value: address, clickable: clickable))
         }
         if !outputItems.isEmpty {
             sections.append(FullTransactionSection(title: nil, items: outputItems))

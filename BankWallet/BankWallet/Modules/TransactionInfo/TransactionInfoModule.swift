@@ -34,7 +34,7 @@ protocol ITransactionInfoRouter {
     func showFullInfo(transactionHash: String, wallet: Wallet)
     func showLockInfo()
     func showShare(value: String)
-    func showDoubleSpendInfo(txHash: String, conflictingTxHash: String?)
+    func showDoubleSpendInfo(txHash: String, conflictingTxHash: String)
 }
 
 class TransactionInfoModule {

@@ -58,16 +58,16 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
             feeGasItems.append(FullTransactionItem(title: "full_info.size".localized, value: "\(size) (bytes)"))
         }
         if let gasLimit = txResponse.gasLimit {
-            feeGasItems.append(FullTransactionItem(title: "full_info.gas_limit".localized, titleColor: .themeGray, value: "\(gasLimit)"))
+            feeGasItems.append(FullTransactionItem(title: "full_info.gas_limit".localized, value: "\(gasLimit)"))
         }
 
         if let gasPrice = txResponse.gasPrice {
             let gWeiCoin = Coin(id: "", title: "", code: "gWei", decimal: 0, type: .ethereum)
             let gasValue = CoinValue(coin: gWeiCoin, value: gasPrice)
-            feeGasItems.append(FullTransactionItem(title: "full_info.gas_price".localized, titleColor: .themeGray, value: ValueFormatter.instance.format(coinValue: gasValue)))
+            feeGasItems.append(FullTransactionItem(title: "full_info.gas_price".localized, value: ValueFormatter.instance.format(coinValue: gasValue)))
         }
         if let gasUsed = txResponse.gasUsed {
-            feeGasItems.append(FullTransactionItem(title: "full_info.gas_used".localized, titleColor: .themeGray, value: "\(gasUsed)"))
+            feeGasItems.append(FullTransactionItem(title: "full_info.gas_used".localized, value: "\(gasUsed)"))
         }
         if !feeGasItems.isEmpty {
             sections.append(FullTransactionSection(title: nil, items: feeGasItems))
@@ -77,13 +77,13 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
 
         var inputOutputItems = [FullTransactionItem]()
         if let contractAddress = txResponse.contractAddress {
-            inputOutputItems.append(FullTransactionItem(title: "full_info.contract".localized, value: contractAddress, clickable: true, showExtra: .token))
+            inputOutputItems.append(FullTransactionItem(title: "full_info.contract".localized, value: contractAddress, clickable: true))
         }
         if let from = txResponse.from {
-            inputOutputItems.append(FullTransactionItem(title: "full_info.from".localized, value: from, clickable: true, showExtra: .icon))
+            inputOutputItems.append(FullTransactionItem(title: "full_info.from".localized, value: from, clickable: true))
         }
         if let to = txResponse.to {
-            inputOutputItems.append(FullTransactionItem(title: "full_info.to".localized, value: to, clickable: true, showExtra: .icon))
+            inputOutputItems.append(FullTransactionItem(title: "full_info.to".localized, value: to, clickable: true))
         }
         if !inputOutputItems.isEmpty {
             sections.append(FullTransactionSection(title: nil, items: inputOutputItems))
