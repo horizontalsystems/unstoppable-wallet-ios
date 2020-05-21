@@ -110,7 +110,7 @@
 "balance.deposit" = "Al";
 "balance.rate_per_coin" = "%@ = 1 %@";
 "balance.syncing" = "Eşitleniyor...";
-"balance.searching" = "Searching transactions...";
+"balance.searching" = "İşlemler aranıyor ...";
 "balance.searching.count" = "%@ txs";
 "balance.syncing_percent" = "Senkronize ediliyor... %@";
 "balance.synced_through" = "%@ kadar";
