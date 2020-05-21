@@ -33,7 +33,7 @@ class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
             maker.edges.equalToSuperview()
         }
 
-        tableView.registerCell(forClass: FullTransactionInfoTextCell.self)
+        tableView.registerCell(forClass: DoubleSpendInfoCell.self)
         tableView.registerHeaderFooter(forClass: TopDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
         tableView.separatorStyle = .none
@@ -54,35 +54,42 @@ class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
         )
     }
 
-    private var rows: [RowProtocol] {
-        var rows = [RowProtocol]()
-
-        let txHash = delegate.txHash
-        let last = delegate.conflictingTxHash == nil
-        rows.append(
-                Row<FullTransactionInfoTextCell>(id: "row_txHash", height: .heightSingleLineCell, bind: { [weak self] cell, _ in
-                    cell.bind(title: "double_spend_info.this_hash".localized, hash: txHash, last: last, onTap: {
-                        self?.onTapHash()
-                    })
-                }))
-        if let conflictingTxHash = delegate.conflictingTxHash {
-            rows.append(
-                    Row<FullTransactionInfoTextCell>(id: "row_conflictingTxHash", height: .heightSingleLineCell, bind: { [weak self] cell, _ in
-                        cell.bind(title: "double_spend_info.conflicting_hash".localized, hash: conflictingTxHash, last: true, onTap: {
-                            self?.onConflictingTapHash()
-                        })
-                    }))
-        }
-        return rows
-    }
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
                     id: "hashes",
                     headerState: header,
                     footerState: .margin(height: .margin6x),
-                    rows: rows
+                    rows: [
+                        Row<DoubleSpendInfoCell>(
+                                id: "row_txHash",
+                                height: .heightSingleLineCell,
+                                bind: { [unowned self] cell, _ in
+                                    cell.bind(
+                                            title: "double_spend_info.this_hash".localized,
+                                            hash: self.delegate.txHash,
+                                            last: false,
+                                            onTap: { [weak self] in
+                                                self?.onTapHash()
+                                            }
+                                    )
+                                }
+                        ),
+                        Row<DoubleSpendInfoCell>(
+                                id: "row_conflictingTxHash",
+                                height: .heightSingleLineCell,
+                                bind: { [unowned self] cell, _ in
+                                    cell.bind(
+                                            title: "double_spend_info.conflicting_hash".localized,
+                                            hash: self.delegate.conflictingTxHash,
+                                            last: true,
+                                            onTap: { [weak self] in
+                                                self?.onConflictingTapHash()
+                                            }
+                                    )
+                                }
+                        )
+                    ]
             )
         ]
     }

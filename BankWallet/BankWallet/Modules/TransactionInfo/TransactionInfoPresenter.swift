@@ -157,7 +157,11 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
     }
 
     func onTapDoubleSpendInfo() {
-        router.showDoubleSpendInfo(txHash: transaction.transactionHash, conflictingTxHash: transaction.conflictingHash)
+        guard let conflictingHash = transaction.conflictingHash else {
+            return
+        }
+
+        router.showDoubleSpendInfo(txHash: transaction.transactionHash, conflictingTxHash: conflictingHash)
     }
 
     func onTapCopyRawTransaction() {

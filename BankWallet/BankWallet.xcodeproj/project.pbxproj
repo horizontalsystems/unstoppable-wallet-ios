@@ -90,6 +90,7 @@
 		11B35220E45783BA43775EB6 /* PriceAlertViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35500FBBBDCCF35143B4C /* PriceAlertViewItemFactory.swift */; };
 		11B352239A24A134A0A26C5F /* SendFeePriorityRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D64EA4FDD339C8DC162 /* SendFeePriorityRouter.swift */; };
 		11B35225C822B395C8916EEF /* BalanceViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D7125090E2FF868F924 /* BalanceViewItemFactory.swift */; };
+		11B3522E44FF029A360DCB97 /* DoubleSpendInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35758A394EA865A8AD4C1 /* DoubleSpendInfoCell.swift */; };
 		11B35230E3C4799ED6883CFC /* RestoreWordsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358A22763AC816195CE7A /* RestoreWordsModule.swift */; };
 		11B35230F3FE3A8600DBE26A /* BarPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3512EF5B66B852F5E05FB /* BarPageControl.swift */; };
 		11B35230FA3958ED9CA0DB86 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EB6A09E7FBB70B8966B /* Wallet.swift */; };
@@ -312,6 +313,7 @@
 		11B35773F8C014B160CCF4F6 /* BalanceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A0A1E69943CD3203FF9 /* BalanceItem.swift */; };
 		11B35774C1DAF75AD0321C51 /* NoAccountPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350CF9856A0EA7DB447DA /* NoAccountPresenter.swift */; };
 		11B357800441857F2E6DCEA0 /* DerivationSettingConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D234A49424DFBFBCC12 /* DerivationSettingConfirmationViewController.swift */; };
+		11B35784857740B97F5FC6CA /* DoubleSpendInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35758A394EA865A8AD4C1 /* DoubleSpendInfoCell.swift */; };
 		11B3578A2EDAABF62974AF93 /* ContactModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35346CC367A9C4EE59C7E /* ContactModule.swift */; };
 		11B3578A6B587E760D12B28E /* PermissionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354B43B5120F594318FDA /* PermissionsHelper.swift */; };
 		11B3578B2A48B9EB3C53E0E4 /* ContactModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35346CC367A9C4EE59C7E /* ContactModule.swift */; };
@@ -604,6 +606,7 @@
 		11B35D5C9C08AA5221DDE773 /* TransactionRecordPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B491E521F1ECC600DAE203 /* TransactionRecordPool.swift */; };
 		11B35D67E24093EE53927BE0 /* CreateWalletRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C4D5FE39F91054C4344 /* CreateWalletRouter.swift */; };
 		11B35D6C0E436839A68E22BA /* PrivacySortModePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FD8874AAFB34B3A377C /* PrivacySortModePresenter.swift */; };
+		11B35D6E95027179A3AE63C9 /* DoubleSpendInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35758A394EA865A8AD4C1 /* DoubleSpendInfoCell.swift */; };
 		11B35D744E68BD2134A82F51 /* SendAmountDecimalParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E7729CFBE85123BA5C6 /* SendAmountDecimalParser.swift */; };
 		11B35D77A40B7BCA0F7D4ECE /* SendPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DC75FCA42F7A5FB1E65 /* SendPresenterTests.swift */; };
 		11B35D7A975118FB5129DB6A /* GuideRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3582E659A53CF52705FEC /* GuideRouter.swift */; };
@@ -1901,6 +1904,7 @@
 		11B3570598EDE26F96BC5F41 /* RespondButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RespondButton.swift; sourceTree = "<group>"; };
 		11B3570D7EEAB2DE4E6A5D74 /* UIImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		11B3572B7C2F16CD51F37FF0 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		11B35758A394EA865A8AD4C1 /* DoubleSpendInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSpendInfoCell.swift; sourceTree = "<group>"; };
 		11B3576492DE68F2507BB711 /* AdapterFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterFactory.swift; sourceTree = "<group>"; };
 		11B357736B8C29DF38F5DCBA /* AlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 		11B35779E6353B98B298FF29 /* CurrentDateProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentDateProvider.swift; sourceTree = "<group>"; };
@@ -3157,6 +3161,14 @@
 			path = SendHodlerLockTimeInterval;
 			sourceTree = "<group>";
 		};
+		11B35AF071B66F299FBA3D45 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				11B35758A394EA865A8AD4C1 /* DoubleSpendInfoCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		11B35B0445A038D808DEE829 /* Providers */ = {
 			isa = PBXGroup;
 			children = (
@@ -3971,6 +3983,7 @@
 		58AAAB709D0435465FC5BD99 /* DoubleSpendInfo */ = {
 			isa = PBXGroup;
 			children = (
+				11B35AF071B66F299FBA3D45 /* Cells */,
 				58AAA5AE34C515816D2D4977 /* DoubleSpendInfoRouter.swift */,
 				58AAA72BD42697A894C2383C /* DoubleSpendInfoViewController.swift */,
 				58AAA54B2A8BD3C218BAD838 /* DoubleSpendInfoInteractor.swift */,
@@ -5137,6 +5150,7 @@
 				11B3594EB41D1CB231DB9D8E /* GuideViewController.swift in Sources */,
 				11B353D45C91245873862997 /* GuideInteractor.swift in Sources */,
 				11B3559145F6750C5E37BEB3 /* Error.swift in Sources */,
+				11B35784857740B97F5FC6CA /* DoubleSpendInfoCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5760,6 +5774,7 @@
 				11B35D19D00091E903B04472 /* GuideViewController.swift in Sources */,
 				11B35D270BF38B1478789B5E /* GuideInteractor.swift in Sources */,
 				11B353917D2223D2B275429A /* Error.swift in Sources */,
+				11B35D6E95027179A3AE63C9 /* DoubleSpendInfoCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6336,6 +6351,7 @@
 				11B358C1D982EAC4F0A308ED /* GuideViewController.swift in Sources */,
 				11B35B3821C6CCB647B98F9A /* GuideInteractor.swift in Sources */,
 				11B35711E8B592D0B88C9CC1 /* Error.swift in Sources */,
+				11B3522E44FF029A360DCB97 /* DoubleSpendInfoCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

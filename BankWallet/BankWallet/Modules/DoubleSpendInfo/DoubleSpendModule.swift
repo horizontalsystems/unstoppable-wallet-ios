@@ -6,7 +6,7 @@ protocol IDoubleSpendInfoView: class {
 
 protocol IDoubleSpendInfoViewDelegate {
     var txHash: String { get }
-    var conflictingTxHash: String? { get }
+    var conflictingTxHash: String { get }
 
     func onTapHash()
     func onConflictingTapHash()

@@ -1,11 +1,11 @@
 class DoubleSpendInfoPresenter {
     let txHash: String
-    let conflictingTxHash: String?
+    let conflictingTxHash: String
 
     private let interactor: IDoubleSpendInfoInteractor
     weak var view: IDoubleSpendInfoView?
 
-    init(interactor: IDoubleSpendInfoInteractor, txHash: String, conflictingTxHash: String?) {
+    init(interactor: IDoubleSpendInfoInteractor, txHash: String, conflictingTxHash: String) {
         self.interactor = interactor
         self.txHash = txHash
         self.conflictingTxHash = conflictingTxHash
@@ -21,11 +21,7 @@ extension DoubleSpendInfoPresenter: IDoubleSpendInfoViewDelegate {
     }
 
     func onConflictingTapHash() {
-        guard let hash = conflictingTxHash else {
-            return
-        }
-
-        interactor.copy(value: hash)
+        interactor.copy(value: conflictingTxHash)
         view?.showCopied()
     }
 

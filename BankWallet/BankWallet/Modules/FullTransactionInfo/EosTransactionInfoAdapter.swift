@@ -43,19 +43,19 @@ class EosTransactionInfoAdapter: IFullTransactionInfoAdapter {
         for action in txResponse.actions {
             var inputOutputItems = [FullTransactionItem]()
             if let contract = action.contract {
-                inputOutputItems.append(FullTransactionItem(title: "full_info.contract".localized, value: contract, clickable: true, showExtra: .token))
+                inputOutputItems.append(FullTransactionItem(title: "full_info.contract".localized, value: contract, clickable: true))
             }
             if let quantity = action.quantity {
                 inputOutputItems.append(FullTransactionItem(title: "full_info.amount".localized, value: quantity))
             }
             if let from = action.from {
-                inputOutputItems.append(FullTransactionItem(title: "full_info.from".localized, value: from, clickable: true, showExtra: .icon))
+                inputOutputItems.append(FullTransactionItem(title: "full_info.from".localized, value: from, clickable: true))
             }
             if let to = action.to {
-                inputOutputItems.append(FullTransactionItem(title: "full_info.to".localized, value: to, clickable: true, showExtra: .icon))
+                inputOutputItems.append(FullTransactionItem(title: "full_info.to".localized, value: to, clickable: true))
             }
             if let memo = action.memo, !memo.isEmpty {
-                inputOutputItems.append(FullTransactionItem(title: "full_info.memo".localized, value: memo, clickable: true, showExtra: .none))
+                inputOutputItems.append(FullTransactionItem(title: "full_info.memo".localized, value: memo, clickable: true))
             }
             if !inputOutputItems.isEmpty {
                 sections.append(FullTransactionSection(title: nil, items: inputOutputItems))
