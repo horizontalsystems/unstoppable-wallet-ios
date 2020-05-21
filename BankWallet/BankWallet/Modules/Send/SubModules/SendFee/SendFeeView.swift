@@ -80,7 +80,7 @@ extension SendFeeView: ISendFeeView {
     }
 
     func set(error: Error?) {
-        errorLabel.text = error?.localizedDescription
+        errorLabel.text = error?.smartDescription
 
         let hide = error != nil
 

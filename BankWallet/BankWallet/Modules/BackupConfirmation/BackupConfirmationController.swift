@@ -93,7 +93,7 @@ class BackupConfirmationController: ThemeViewController {
 extension BackupConfirmationController: IBackupConfirmationView {
 
     func show(error: Error) {
-        HudHelper.instance.showError(title: error.localizedDescription)
+        HudHelper.instance.showError(title: error.smartDescription)
     }
 
     func onBecomeActive() {

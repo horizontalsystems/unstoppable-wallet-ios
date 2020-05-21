@@ -146,6 +146,7 @@
 		11B3538BCEB71A64DB75C141 /* TransactionsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3569AE7CDF7E217CAB4EE /* TransactionsPresenter.swift */; };
 		11B3538EE12AC16D563701DD /* BitcoinAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352D114BED753EEBA8B8D /* BitcoinAdapter.swift */; };
 		11B3538F8C8354B93C9EF6E8 /* ManageAccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358B4DFC88B488F3BC039 /* ManageAccountsViewController.swift */; };
+		11B353917D2223D2B275429A /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359D48FD6D82735C8969A /* Error.swift */; };
 		11B353960FC8EFB25B362F30 /* BitcoinHodlingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A214A614D1630F52AD3 /* BitcoinHodlingRouter.swift */; };
 		11B3539CDC90D880423281E9 /* SendHodlerLockTimeIntervalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B7C60AD3D8E0D468A5F /* SendHodlerLockTimeIntervalViewController.swift */; };
 		11B353A7F530336B1E15015E /* DepositViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35ED7203AD00030A8BA23 /* DepositViewController.swift */; };
@@ -234,6 +235,7 @@
 		11B35580776AC575EDFA69CD /* TransactionViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358E4D11420A3D0B7A283 /* TransactionViewItemFactory.swift */; };
 		11B35590A4DA4BCFB3D38DDF /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352884D47E0B23DCF2C2C /* AppManager.swift */; };
 		11B355910DDDD9B57384518A /* AddressParserFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353450DED12F9F024BAD0 /* AddressParserFactory.swift */; };
+		11B3559145F6750C5E37BEB3 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359D48FD6D82735C8969A /* Error.swift */; };
 		11B3559B3F93D6808473D95F /* SendEosInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D43482DC6ECD766D51A /* SendEosInteractor.swift */; };
 		11B355B7E336EB3AED69FA38 /* AddressParserFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353450DED12F9F024BAD0 /* AddressParserFactory.swift */; };
 		11B355B832036E0924745595 /* RestoreWordsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B925DBFC2CE0B69B6DD /* RestoreWordsPresenter.swift */; };
@@ -291,6 +293,7 @@
 		11B356EF6E8D3D067ACFF3C6 /* TransactionInfoCopyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351842C59140B2EDA8CDD /* TransactionInfoCopyCell.swift */; };
 		11B356F871A3E0DF3265DDBA /* NoAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E5DF58C01A920CE48F3 /* NoAccountViewController.swift */; };
 		11B356FB08E4ED0A3F75B456 /* PrivacyEthereumRpcModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C1A6DF9A49DDB98A6D3 /* PrivacyEthereumRpcModeViewController.swift */; };
+		11B35711E8B592D0B88C9CC1 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359D48FD6D82735C8969A /* Error.swift */; };
 		11B35720DFE70B9BDF92B9F2 /* GuideCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EC5CADBD290DDD3DE1C /* GuideCell.swift */; };
 		11B35723699E0165AD9E7FA3 /* DerivationSettingConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D234A49424DFBFBCC12 /* DerivationSettingConfirmationViewController.swift */; };
 		11B3572D3A2A9AB3D5E01442 /* SortTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C480773A445DC5A88BD /* SortTypeViewController.swift */; };
@@ -1938,6 +1941,7 @@
 		11B359B9C1E0BB4D32599695 /* GuidePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuidePresenter.swift; sourceTree = "<group>"; };
 		11B359BBFCD82C3C6DC06F96 /* FeeRateProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeRateProvider.swift; sourceTree = "<group>"; };
 		11B359C638A7FC7D2287850D /* NotificationSettingsSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettingsSelectorViewController.swift; sourceTree = "<group>"; };
+		11B359D48FD6D82735C8969A /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		11B359D88585F2BBFA56CB77 /* FeeRateProviderFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeRateProviderFactory.swift; sourceTree = "<group>"; };
 		11B359DB9EEA8DC030338FAC /* SendAccountInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendAccountInteractor.swift; sourceTree = "<group>"; };
 		11B359E41531CEAB8D8823E1 /* NoAccountModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoAccountModule.swift; sourceTree = "<group>"; };
@@ -2663,6 +2667,7 @@
 				1A56447C12D91108517ED217 /* UIDevice.swift */,
 				58AAA9D5D29115C5F435CF1B /* ChartConfiguration.swift */,
 				58AAAFBDA192A490C33DBB95 /* UITextView.swift */,
+				11B359D48FD6D82735C8969A /* Error.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -5131,6 +5136,7 @@
 				11B350EFCCD95031A497059D /* GuideRouter.swift in Sources */,
 				11B3594EB41D1CB231DB9D8E /* GuideViewController.swift in Sources */,
 				11B353D45C91245873862997 /* GuideInteractor.swift in Sources */,
+				11B3559145F6750C5E37BEB3 /* Error.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5753,6 +5759,7 @@
 				11B35D7A975118FB5129DB6A /* GuideRouter.swift in Sources */,
 				11B35D19D00091E903B04472 /* GuideViewController.swift in Sources */,
 				11B35D270BF38B1478789B5E /* GuideInteractor.swift in Sources */,
+				11B353917D2223D2B275429A /* Error.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6328,6 +6335,7 @@
 				11B3507E74720125D9EE4EA0 /* GuideRouter.swift in Sources */,
 				11B358C1D982EAC4F0A308ED /* GuideViewController.swift in Sources */,
 				11B35B3821C6CCB647B98F9A /* GuideInteractor.swift in Sources */,
+				11B35711E8B592D0B88C9CC1 /* Error.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

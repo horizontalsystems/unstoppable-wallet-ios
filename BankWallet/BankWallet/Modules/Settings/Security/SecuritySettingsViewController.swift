@@ -156,7 +156,7 @@ extension SecuritySettingsViewController: ISecuritySettingsView {
     }
 
     func show(error: Error) {
-        HudHelper.instance.showError(title: error.localizedDescription)
+        HudHelper.instance.showError(title: error.smartDescription)
     }
 
 }
