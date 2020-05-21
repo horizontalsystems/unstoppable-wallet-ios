@@ -208,15 +208,16 @@ class TransactionInfoViewController: ThemeActionSheetController {
     }
 
     private func lockInfoRow(lockState: TransactionLockState) -> RowProtocol {
+        let id = "lock_info"
+        let image = UIImage(named: lockState.locked ? "Transaction Lock Icon" : "Transaction Unlock Icon")
         let formattedDate = DateHelper.instance.formatFullTime(from: lockState.date)
-        let lockedIconName = lockState.locked ? "Transaction Lock Icon" : "Transaction Unlock Icon"
 
-        return warningRow(
-                id: "lock_info",
-                image: UIImage(named: lockedIconName),
-                text: lockState.locked ? "tx_info.locked_until".localized(formattedDate) : "tx_info.unlocked_at".localized(formattedDate)
-        ) { [weak self] in
-            self?.delegate.onTapLockInfo()
+        if lockState.locked {
+            return warningRow(id: id, image: image, text: "tx_info.locked_until".localized(formattedDate)) { [weak self] in
+                self?.delegate.onTapLockInfo()
+            }
+        } else {
+            return noteRow(id: id, image: image, text: "tx_info.unlocked_at".localized(formattedDate))
         }
     }
 
