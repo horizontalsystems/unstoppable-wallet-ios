@@ -51,7 +51,7 @@ class BalanceCoinIconHolder: GrayIconHolder {
             syncSpinner.startAnimating()
         } else if indefiniteSearchCircle {
             syncSpinner.set(strokeColor: .themeGray50)
-            syncSpinner.set(progress: 1)
+            syncSpinner.set(progress: 0.1)
             syncSpinner.isHidden = false
             syncSpinner.startAnimating()
         } else {
