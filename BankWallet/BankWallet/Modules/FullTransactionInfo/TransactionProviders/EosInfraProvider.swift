@@ -19,7 +19,7 @@ class EosInfraProvider: IEosProvider {
     }
 
     func request(session: Session, hash: String) -> DataRequest {
-        session.request("https://public.eosinfra.io/v1/history/get_transaction", method: .post, parameters: ["id": hash])
+        session.request("https://public.eosinfra.io/v1/history/get_transaction", method: .post, parameters: ["id": hash], encoding: JSONEncoding.default)
     }
 
 }
@@ -42,7 +42,7 @@ class EosGreymassProvider: IEosProvider {
     }
 
     func request(session: Session, hash: String) -> DataRequest {
-        session.request("https://eos.greymass.com/v1/history/get_transaction", method: .post, parameters: ["id": hash])
+        session.request("https://eos.greymass.com/v1/history/get_transaction", method: .post, parameters: ["id": hash], encoding: JSONEncoding.default)
     }
 
 }
