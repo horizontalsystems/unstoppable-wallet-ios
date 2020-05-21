@@ -1,15 +1,12 @@
-import Foundation
-
 protocol IDoubleSpendInfoView: class {
+    func set(transactionHash: String, conflictingTransactionHash: String)
     func showCopied()
 }
 
 protocol IDoubleSpendInfoViewDelegate {
-    var txHash: String { get }
-    var conflictingTxHash: String { get }
-
+    func onLoad()
     func onTapHash()
-    func onConflictingTapHash()
+    func onTapConflictingHash()
 }
 
 protocol IDoubleSpendInfoInteractor {
