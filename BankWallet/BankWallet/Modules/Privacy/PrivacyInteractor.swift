@@ -19,7 +19,7 @@ extension PrivacyInteractor: IPrivacyInteractor {
         walletManager.wallets
     }
 
-    var syncSettings: [(setting: InitialSyncSetting, coins: [Coin])] {
+    var syncSettings: [(setting: InitialSyncSetting, coins: [Coin], changeable: Bool)] {
         initialSyncSettingsManager.allSettings
     }
 

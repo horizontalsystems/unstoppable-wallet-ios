@@ -49,12 +49,12 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
         updateConnection()
 
         if !standardCreatedWalletExists {
-            syncItems = interactor.syncSettings.compactMap {(setting, coins) in
+            syncItems = interactor.syncSettings.compactMap {(setting, coins, changeable) in
                 guard let coin = coins.first else {
                     return nil
                 }
 
-                return PrivacySyncItem(coin: coin, setting: setting)
+                return PrivacySyncItem(coin: coin, setting: setting, changeable: changeable)
             }
 
             updateSync()
@@ -81,8 +81,13 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
     }
 
     func onSelectSync(index: Int) {
-        let currentSetting = syncItems[index]
-        router.showSyncMode(coin: currentSetting.coin, currentSyncMode: currentSetting.setting.syncMode, delegate: self)
+        let item = syncItems[index]
+
+        guard item.changeable else {
+            return
+        }
+
+        router.showSyncMode(coin: item.coin, currentSyncMode: item.setting.syncMode, delegate: self)
     }
 
 }
