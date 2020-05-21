@@ -248,7 +248,7 @@ extension SendAmountView: ISendAmountView {
     func set(error: Error?) {
         errorLabel.isHidden = error == nil
         hintLabel.isHidden = error != nil
-        errorLabel.text = error?.localizedDescription
+        errorLabel.text = error?.smartDescription
     }
 
     func set(switchButtonEnabled: Bool) {
