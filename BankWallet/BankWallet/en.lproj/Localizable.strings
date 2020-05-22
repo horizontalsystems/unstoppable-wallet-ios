@@ -116,7 +116,7 @@ bch.horizontalsystems.xyz/apg";
 "balance.rate_per_coin" = "%@ per %@";
 "balance.syncing" = "Syncing...";
 "balance.searching" = "Searching transactions...";
-"balance.searching.count" = "%@ txs";
+"balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Syncing... %@";
 "balance.synced_through" = "until: %@";
 "balance.add_coin" = "Add Coins";

@@ -51,7 +51,7 @@ class FullTransactionInfoTextCell: TitleCell {
         super.bind(titleIcon: item.icon.flatMap { UIImage(named: $0) }, title: item.title, titleColor: .themeGray, showDisclosure: showDisclosure, last: last)
         self.selectionStyle = selectionStyle
 
-        if let onTap = onTap {
+        if onTap != nil {
             label.isHidden = true
             label.text = nil
 
