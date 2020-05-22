@@ -1,2 +1,2 @@
-"NSCameraUsageDescription" = "Qr kodu okumak için Kamerayı kullanmamız gerekiyor.";
-"NSFaceIDUsageDescription" = "Cüzdan kilidini açmak için Face ID kullanırız.";
+"NSCameraUsageDescription" = "QR kodlarını taramak için uygulamanın kameraya erişmesi gerekiyor.";
+"NSFaceIDUsageDescription" = "\nFaceID, cüzdanın kilidini açmak için kullanılacaktır.";
