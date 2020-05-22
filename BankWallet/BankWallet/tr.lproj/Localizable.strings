@@ -111,7 +111,7 @@
 "balance.rate_per_coin" = "%@ = 1 %@";
 "balance.syncing" = "Eşitleniyor...";
 "balance.searching" = "İşlemler aranıyor ...";
-"balance.searching.count" = "%@ txs";
+"balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Senkronize ediliyor... %@";
 "balance.synced_through" = "%@ kadar";
 "balance.add_coin" = "Kripto Para Ekle";
