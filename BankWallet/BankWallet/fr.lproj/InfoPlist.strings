@@ -1,2 +1,2 @@
-"NSCameraUsageDescription" = "L'accès à votre caméra est nécessaire pour scanner le code QR.";
-"NSFaceIDUsageDescription" = "Face ID nous permet de déverrouiller le porte-monnaie.";
+"NSCameraUsageDescription" = "L'application doit accéder à la caméra afin de scanner les codes QR.";
+"NSFaceIDUsageDescription" = "FaceID sera utilisé pour déverrouiller le portefeuille.";
