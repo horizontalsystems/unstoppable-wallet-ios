@@ -111,7 +111,7 @@
 "balance.rate_per_coin" = "%@ por %@";
 "balance.syncing" = "Sincronizando...";
 "balance.searching" = "Searching transactions...";
-"balance.searching.count" = "%@ txs";
+"balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Sincronizando... %@";
 "balance.synced_through" = "hasta: %@";
 "balance.add_coin" = "Añadir Monedas";
