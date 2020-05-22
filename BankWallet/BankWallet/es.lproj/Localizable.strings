@@ -110,7 +110,7 @@
 "balance.deposit" = "Recibir";
 "balance.rate_per_coin" = "%@ por %@";
 "balance.syncing" = "Sincronizando...";
-"balance.searching" = "Searching transactions...";
+"balance.searching" = "Buscando transacciones…";
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Sincronizando... %@";
 "balance.synced_through" = "hasta: %@";
