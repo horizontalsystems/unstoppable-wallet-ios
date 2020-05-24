@@ -27,5 +27,5 @@ protocol ISendAccountDelegate: class {
 }
 
 protocol ISendAccountRouter {
-    func scanQrCode(delegate: IScanQrCodeDelegate)
+    func scanQrCode(delegate: IScanQrModuleDelegate)
 }
