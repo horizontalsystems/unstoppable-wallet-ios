@@ -80,7 +80,7 @@ class RestoreEosViewController: ThemeViewController {
     }
 
     private func onScanQrCode() {
-        let scanController = ScanQRController(delegate: self)
+        let scanController = ScanQrRouter.module(delegate: self)
         present(scanController, animated: true)
     }
 
@@ -110,10 +110,11 @@ extension RestoreEosViewController: IRestoreEosView {
 
 }
 
-extension RestoreEosViewController: IScanQrCodeDelegate {
+extension RestoreEosViewController: IScanQrModuleDelegate {
 
-    func didScan(string: String) {
+    func didScan(string: String) -> ScanQrModule.Result {
         delegate.onScan(key: string)
+        return .success
     }
 
 }
