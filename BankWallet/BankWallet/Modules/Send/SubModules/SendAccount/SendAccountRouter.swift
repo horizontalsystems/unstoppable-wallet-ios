@@ -6,8 +6,8 @@ class SendAccountRouter: ISendSubRouter {
 
 extension SendAccountRouter: ISendAccountRouter {
 
-    func scanQrCode(delegate: IScanQrCodeDelegate) {
-        let scanController = ScanQRController(delegate: delegate)
+    func scanQrCode(delegate: IScanQrModuleDelegate) {
+        let scanController = ScanQrRouter.module(delegate: delegate)
         viewController?.present(scanController, animated: true)
     }
 

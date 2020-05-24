@@ -31,5 +31,5 @@ protocol ISendAddressDelegate: class {
 }
 
 protocol ISendAddressRouter {
-    func scanQrCode(delegate: IScanQrCodeDelegate)
+    func scanQrCode(delegate: IScanQrModuleDelegate)
 }
