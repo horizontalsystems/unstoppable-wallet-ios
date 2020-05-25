@@ -82,10 +82,8 @@ extension ScanQrViewController: IScanQrView {
         scanView.stop()
     }
 
-    func set(error: ScanQrModule.ErrorType) {
-        switch error {
-        case .address: errorLabel.text = "send.error.invalid_address".localized
-        }
+    func set(error: Error) {
+        errorLabel.text = error.smartDescription
     }
 
 }

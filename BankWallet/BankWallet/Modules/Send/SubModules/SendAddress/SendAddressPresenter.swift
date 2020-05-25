@@ -89,16 +89,16 @@ extension SendAddressPresenter: ISendAddressModule {
 
 extension SendAddressPresenter: IScanQrModuleDelegate {
 
-    func didScan(string: String) -> ScanQrModule.Result {
+    func validate(string: String) throws {
         do {
             try delegate?.validate(address: string)
-
-            onEnter(address: string)
-
-            return .success
         } catch {
-            return .error(type: .address)
+            throw createSendError(from: error)
         }
+    }
+
+    func didScan(string: String) {
+        onEnter(address: string)
     }
 
 }

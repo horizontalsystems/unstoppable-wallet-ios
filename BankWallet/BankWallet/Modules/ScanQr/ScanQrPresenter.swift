@@ -1,20 +1,34 @@
 import Foundation
 
 class ScanQrPresenter {
-    private static let validationInterval: TimeInterval = 3
+    private let validationInterval: TimeInterval = 3
 
     weak var view: IScanQrView?
 
     private let router: IScanQrRouter
 
-    private let timer: INotificationTimer
+    private var timer: Timer?
     private let delegate: IScanQrModuleDelegate
 
-    init(router: IScanQrRouter, delegate: IScanQrModuleDelegate, timer: INotificationTimer) {
+    init(router: IScanQrRouter, delegate: IScanQrModuleDelegate) {
         self.router = router
 
-        self.timer = timer
         self.delegate = delegate
+    }
+
+    deinit {
+        timer?.invalidate()
+    }
+
+    @objc private func onFire() {
+        view?.start()
+    }
+
+    private func startTimer() {
+        timer?.invalidate()
+
+        timer = Timer(fireAt: Date(timeIntervalSinceNow: validationInterval), interval: 0, target: self, selector: #selector(onFire), userInfo: nil, repeats: false)
+        RunLoop.main.add(timer!, forMode: .common)
     }
 
 }
@@ -24,27 +38,19 @@ extension ScanQrPresenter: IScanQrViewDelegate {
     func didScan(string: String) {
         view?.stop()
 
-        let result = delegate.didScan(string: string)
+        do {
+            try delegate.validate(string: string)
 
-        guard case .error(let type) = result else {
+            delegate.didScan(string: string)
             router.close()
-            return
+        } catch {
+            startTimer()
+            view?.set(error: error)
         }
-
-        timer.start(interval: ScanQrPresenter.validationInterval)
-        view?.set(error: type)
     }
 
     func onCancel() {
         router.close()
-    }
-
-}
-
-extension ScanQrPresenter: INotificationTimerDelegate {
-
-    func onFire() {
-        view?.start()
     }
 
 }
