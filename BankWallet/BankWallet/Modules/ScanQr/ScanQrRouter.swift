@@ -15,15 +15,12 @@ extension ScanQrRouter: IScanQrRouter {
 extension ScanQrRouter {
 
     static func module(delegate: IScanQrModuleDelegate) -> UIViewController {
-        let timer = NotificationTimer()
-
         let router = ScanQrRouter()
-        let presenter = ScanQrPresenter(router: router, delegate: delegate, timer: timer)
+        let presenter = ScanQrPresenter(router: router, delegate: delegate)
         let viewController = ScanQrViewController(delegate: presenter)
 
         presenter.view = viewController
         router.viewController = viewController
-        timer.delegate = presenter
 
         return viewController
     }
