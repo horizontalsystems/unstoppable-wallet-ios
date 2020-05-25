@@ -1,2 +1,0 @@
-#include "../Pods/Target Support Files/Pods-Bank/Pods-Bank.debug.xcconfig"
-#include "Production.xcconfig"
