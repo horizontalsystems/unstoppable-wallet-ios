@@ -849,7 +849,6 @@
 		1A5645DB413129670978BE82 /* RestoreEosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642583B39220896DDDF98 /* RestoreEosViewController.swift */; };
 		1A5645DE1329BC81C1A9B711 /* InitialSyncSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646B6231F2C52F27526F7 /* InitialSyncSettingsManager.swift */; };
 		1A5645E8DB6D93591BEA6056 /* BaseManageAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BA1E1C26E77BAFCC0A9 /* BaseManageAccountCell.swift */; };
-		1A56460F831911FD786E2EE0 /* NotificationTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D3C875FD9CF1083E92B /* NotificationTimer.swift */; };
 		1A56462125CEB00DADCDAD41 /* ManageAccountViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647EFA3EE1478D4910E0F /* ManageAccountViewItem.swift */; };
 		1A56463AB918839385E8CDBD /* BlockchainSettingsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56443BF752CB6537E45F5A /* BlockchainSettingsStorage.swift */; };
 		1A56463B3BB8862B740E807B /* RestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56437FBAAB9652DDA7CC4F /* RestoreManager.swift */; };
@@ -914,7 +913,6 @@
 		1A5648E9A5AFB70CCF3B51A4 /* ManageWalletsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B45A6BB5D38CE45C009 /* ManageWalletsPresenter.swift */; };
 		1A5648F960BA99CA9DC5478B /* AppStatusPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564827B8F8D94DC4D7CC0F /* AppStatusPresenter.swift */; };
 		1A56490122E001351FAA3234 /* ProceedManageAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BE541CB0B055DEA746B /* ProceedManageAccountCell.swift */; };
-		1A56490F45EF726F4004CF57 /* NotificationTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D3C875FD9CF1083E92B /* NotificationTimer.swift */; };
 		1A56491257F7A7FCC5805A4D /* PrivacyViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B6EF935F2A1E7EBEEF8 /* PrivacyViewItemFactory.swift */; };
 		1A564915991CDE70557FC3C9 /* PrivacySyncItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56458F031D6E76252DF283 /* PrivacySyncItem.swift */; };
 		1A5649169A405D3288324442 /* BalanceErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564CE56CEC73B78C9DB6B5 /* BalanceErrorViewController.swift */; };
@@ -1033,7 +1031,6 @@
 		1A564E3D1BD7610D43898DB6 /* MainSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647AD7481B36F20D4DDF9 /* MainSettingsModule.swift */; };
 		1A564E3E8411846EDD0D73E2 /* PrivacyRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640CF11E6CF38BE9C488E /* PrivacyRouter.swift */; };
 		1A564E49B65B5396F2CB47FB /* AppStatusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C8BA986A5635B1222FB /* AppStatusManager.swift */; };
-		1A564E60FB11CB4E17EC6294 /* NotificationTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D3C875FD9CF1083E92B /* NotificationTimer.swift */; };
 		1A564E61E0EBDDA6006279F2 /* PinInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564AA8BF74E16E91DC46D5 /* PinInteractorTests.swift */; };
 		1A564E71A18B471183E24F7A /* AddressInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647755D9C148EACC988CB /* AddressInputField.swift */; };
 		1A564E7F2D374D6FA3C2ED31 /* RestoreEosRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648A78E729DAE860F99AF /* RestoreEosRouter.swift */; };
@@ -2208,7 +2205,6 @@
 		1A564CB5E9C751F39838CFF6 /* TransactionCompletedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCompletedView.swift; sourceTree = "<group>"; };
 		1A564CE56CEC73B78C9DB6B5 /* BalanceErrorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceErrorViewController.swift; sourceTree = "<group>"; };
 		1A564D0418F6ACD6558999D3 /* TransactionViewStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionViewStatus.swift; sourceTree = "<group>"; };
-		1A564D3C875FD9CF1083E92B /* NotificationTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTimer.swift; sourceTree = "<group>"; };
 		1A564D5E55767404ED6C88E0 /* Decimal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Decimal.swift; sourceTree = "<group>"; };
 		1A564D73251DBFA0CFE34D12 /* MainSettingsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsInteractor.swift; sourceTree = "<group>"; };
 		1A564D94926FEAF120CF71D7 /* TransactionPendingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionPendingView.swift; sourceTree = "<group>"; };
@@ -3521,7 +3517,6 @@
 				1A5647BF748A2AACE849948B /* ScanQrRouter.swift */,
 				1A564BFE633B47B47C2B223F /* ScanQrPresenter.swift */,
 				1A564A144576DB93334E1682 /* ScanQrViewController.swift */,
-				1A564D3C875FD9CF1083E92B /* NotificationTimer.swift */,
 			);
 			path = ScanQr;
 			sourceTree = "<group>";
@@ -5182,7 +5177,6 @@
 				1A564966B885D0049C9ED60E /* ScanQrRouter.swift in Sources */,
 				1A56439C0D4491A70541C18E /* ScanQrViewController.swift in Sources */,
 				1A5642EBE040ECFC99644094 /* ScanQrPresenter.swift in Sources */,
-				1A56460F831911FD786E2EE0 /* NotificationTimer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5810,7 +5804,6 @@
 				1A564E1B52632100B17387DA /* ScanQrRouter.swift in Sources */,
 				1A564EE727CD892E7F2E5715 /* ScanQrViewController.swift in Sources */,
 				1A5647DB8BC538A9BA9FE2D2 /* ScanQrPresenter.swift in Sources */,
-				1A564E60FB11CB4E17EC6294 /* NotificationTimer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6391,7 +6384,6 @@
 				1A564A1324DFCF3D3B12E9AC /* ScanQrRouter.swift in Sources */,
 				1A56481FC0EAFA9FC32E1E21 /* ScanQrViewController.swift in Sources */,
 				1A564002FD88024F4D0306C5 /* ScanQrPresenter.swift in Sources */,
-				1A56490F45EF726F4004CF57 /* NotificationTimer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

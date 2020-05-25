@@ -1,22 +1,9 @@
 import Foundation
 
-class ScanQrModule {
-
-    enum Result {
-        case success
-        case error(type: ErrorType)
-    }
-
-    enum ErrorType {
-        case address
-    }
-
-}
-
 protocol IScanQrView: class {
     func start()
     func stop()
-    func set(error: ScanQrModule.ErrorType)
+    func set(error: Error)
 }
 
 protocol IScanQrViewDelegate {
@@ -28,14 +15,7 @@ protocol IScanQrRouter {
     func close()
 }
 
-protocol INotificationTimer {
-    func start(interval: TimeInterval)
-}
-
-protocol INotificationTimerDelegate: class {
-    func onFire()
-}
-
 protocol IScanQrModuleDelegate {
-    func didScan(string: String) -> ScanQrModule.Result
+    func validate(string: String) throws
+    func didScan(string: String)
 }

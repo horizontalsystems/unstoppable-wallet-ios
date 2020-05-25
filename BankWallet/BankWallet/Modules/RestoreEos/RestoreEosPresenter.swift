@@ -94,9 +94,11 @@ extension RestoreEosPresenter: IRestoreEosViewDelegate {
 
 extension RestoreEosPresenter: IScanQrModuleDelegate {
 
-    func didScan(string: String) -> ScanQrModule.Result {
+    func validate(string: String) throws {
+    }
+
+    func didScan(string: String) {
         onEnter(key: string)
-        return .success
     }
 
 }

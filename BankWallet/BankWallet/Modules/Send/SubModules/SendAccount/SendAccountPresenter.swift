@@ -77,16 +77,12 @@ extension SendAccountPresenter: ISendAccountModule {
 
 extension SendAccountPresenter: IScanQrModuleDelegate {
 
-    func didScan(string: String) -> ScanQrModule.Result {
-        do {
-            try delegate?.validate(account: string)
+    func validate(string: String) throws {
+        try delegate?.validate(account: string)
+    }
 
-            onEnter(account: string)
-
-            return .success
-        } catch {
-            return .error(type: .address)
-        }
+    func didScan(string: String) {
+        onEnter(account: string)
     }
 
 }
