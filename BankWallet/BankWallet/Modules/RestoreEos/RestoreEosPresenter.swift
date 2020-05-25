@@ -62,10 +62,6 @@ extension RestoreEosPresenter: IRestoreEosViewDelegate {
         }
     }
 
-    func onScan(key: String) {
-        onEnter(key: key)
-    }
-
     func onDeleteKey() {
         onEnter(key: nil)
     }
@@ -88,6 +84,19 @@ extension RestoreEosPresenter: IRestoreEosViewDelegate {
         } catch {
             view?.show(error: error.convertedError)
         }
+    }
+
+    func didTapScanQr() {
+        handler.handleScanQr(delegate: self)
+    }
+
+}
+
+extension RestoreEosPresenter: IScanQrModuleDelegate {
+
+    func didScan(string: String) -> ScanQrModule.Result {
+        onEnter(key: string)
+        return .success
     }
 
 }

@@ -22,6 +22,10 @@ extension RestoreAccountTypeHandler: IRestoreAccountTypeHandler {
         }
     }
 
+    func handleScanQr(delegate: IScanQrModuleDelegate) {
+        router.showScanQr(delegate: delegate)
+    }
+
     func handleCancel() {
         router.dismiss()
     }
