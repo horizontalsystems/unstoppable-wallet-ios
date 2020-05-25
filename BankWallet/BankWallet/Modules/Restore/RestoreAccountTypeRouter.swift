@@ -20,6 +20,11 @@ extension RestoreAccountTypeRouter: IRestoreAccountTypeRouter {
         viewController?.navigationController?.pushViewController(controller, animated: true)
     }
 
+    func showScanQr(delegate: IScanQrModuleDelegate) {
+        let controller = ScanQrRouter.module(delegate: delegate)
+        viewController?.present(controller, animated: true)
+    }
+
     func dismiss() {
         viewController?.dismiss(animated: true)
     }

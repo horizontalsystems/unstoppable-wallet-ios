@@ -80,8 +80,7 @@ class RestoreEosViewController: ThemeViewController {
     }
 
     private func onScanQrCode() {
-        let scanController = ScanQrRouter.module(delegate: self)
-        present(scanController, animated: true)
+        delegate.didTapScanQr()
     }
 
 }
@@ -106,15 +105,6 @@ extension RestoreEosViewController: IRestoreEosView {
 
     func show(error: Error) {
         HudHelper.instance.showError(title: error.smartDescription)
-    }
-
-}
-
-extension RestoreEosViewController: IScanQrModuleDelegate {
-
-    func didScan(string: String) -> ScanQrModule.Result {
-        delegate.onScan(key: string)
-        return .success
     }
 
 }
