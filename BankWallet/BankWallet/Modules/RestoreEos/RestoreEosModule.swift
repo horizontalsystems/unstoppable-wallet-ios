@@ -12,11 +12,11 @@ protocol IRestoreEosViewDelegate {
     func onChange(account: String?)
     func onDeleteAccount()
     func onPasteKeyClicked()
-    func onScan(key: String)
     func onDeleteKey()
 
     func didTapCancel()
     func didTapDone()
+    func didTapScanQr()
 }
 
 protocol IRestoreEosInteractor {

@@ -35,6 +35,10 @@ extension ScanQrPresenter: IScanQrViewDelegate {
         view?.set(error: type)
     }
 
+    func onCancel() {
+        router.close()
+    }
+
 }
 
 extension ScanQrPresenter: INotificationTimerDelegate {

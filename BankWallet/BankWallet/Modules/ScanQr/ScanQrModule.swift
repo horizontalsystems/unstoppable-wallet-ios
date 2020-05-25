@@ -1,6 +1,7 @@
 import Foundation
 
 class ScanQrModule {
+
     enum Result {
         case success
         case error(type: ErrorType)
@@ -20,6 +21,7 @@ protocol IScanQrView: class {
 
 protocol IScanQrViewDelegate {
     func didScan(string: String)
+    func onCancel()
 }
 
 protocol IScanQrRouter {
