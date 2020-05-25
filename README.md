@@ -18,10 +18,10 @@ More at [https://unstoppable.money](https://unstoppable.money)
 
 1. `git clone git@github.com:horizontalsystems/unstoppable-wallet-ios.git`
 
-2. You need to have `Development.xcconfig` file for Debug configuration and `Production.xcconfig` file for Release in `BankWallet/BankWallet/Configuration`.
+2. You need to have `Development.xcconfig` file for Debug configuration and `Production.xcconfig` file for Release in `UnstoppableWallet/UnstoppableWallet/Configuration`.
 You can use sample configurations in `.template.xcconfig` files.
 
-3. Open in XCode and run.
+3. Open in Xcode and run.
  
 
 ## License

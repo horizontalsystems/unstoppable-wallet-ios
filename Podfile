@@ -3,7 +3,7 @@ use_modular_headers!
 
 inhibit_all_warnings!
 
-project 'BankWallet/BankWallet'
+project 'UnstoppableWallet/UnstoppableWallet'
 
 def appPods
   pod 'BitcoinKit.swift', '0.14.3'
@@ -70,21 +70,20 @@ def appPods
   pod 'DeepDiff'
 end
 
-target 'Bank Dev T' do
+target 'Unstoppable Dev T' do
   appPods
 end
 
-target 'Bank Dev' do
+target 'Unstoppable Dev' do
   appPods
 end
 
-target 'Bank' do
+target 'Unstoppable' do
   appPods
 end
 
-target 'Bank Tests' do
-  pod 'DeepDiff'
-  pod 'RxSwift'
+target 'Unstoppable Tests' do
+  appPods
   pod 'Cuckoo'
   pod 'Quick'
   pod 'Nimble'
