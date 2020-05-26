@@ -29,12 +29,22 @@ class SelectableValueView: UIView {
         wrapperView.addSubview(valueLabel)
         wrapperView.addSubview(dropDownImageView)
 
+        lineView.snp.makeConstraints { maker in
+            maker.top.equalToSuperview()
+            maker.height.equalTo(0.5)
+            maker.leading.equalToSuperview()
+            maker.trailing.equalToSuperview()
+        }
+
+        lineView.backgroundColor = .themeSteel20
+
         titleLabel.text = title
         titleLabel.font = UIFont.subhead1
         titleLabel.textColor = .themeGray
         titleLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
-            maker.top.equalToSuperview().offset(14)
+            maker.top.equalTo(lineView).offset(CGFloat.margin3x)
+            maker.bottom.equalToSuperview().inset(13)
         }
 
         wrapperView.snp.makeConstraints { maker in
@@ -56,14 +66,6 @@ class SelectableValueView: UIView {
         dropDownImageView.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview()
             maker.centerY.equalToSuperview()
-        }
-
-        lineView.backgroundColor = .themeSteel20
-        lineView.snp.makeConstraints { maker in
-            maker.height.equalTo(0.5)
-            maker.leading.equalToSuperview()
-            maker.trailing.equalToSuperview()
-            maker.top.equalTo(titleLabel.snp.bottom).offset(13)
         }
 
         wrapperView.handleTouch = { [weak self] in

@@ -19,11 +19,9 @@ class SendFeePriorityView: UIView {
 
         backgroundColor = .clear
 
-        let separator = UIView()
-        addSubview(separator)
         addSubview(durationTitleLabel)
         durationTitleLabel.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(CGFloat.margin2x)
+            maker.top.equalToSuperview().offset(CGFloat.margin3x)
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
         }
         durationTitleLabel.text = "send.tx_duration".localized
@@ -32,7 +30,6 @@ class SendFeePriorityView: UIView {
 
         addSubview(durationValueLabel)
         durationValueLabel.snp.makeConstraints { maker in
-            maker.top.equalToSuperview()
             maker.centerY.equalTo(durationTitleLabel.snp.centerY)
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.leading.equalTo(durationTitleLabel.snp.trailing).offset(CGFloat.margin4x)
@@ -44,7 +41,6 @@ class SendFeePriorityView: UIView {
         addSubview(feeSliderWrapper)
         feeSliderWrapper.snp.makeConstraints { maker in
             maker.top.equalToSuperview()
-            maker.bottom.equalTo(separator.snp.top)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
         feeSliderWrapper.onTracking = { [weak self] value, position in
@@ -55,17 +51,10 @@ class SendFeePriorityView: UIView {
         }
         feeSliderWrapper.isHidden = true
 
-        separator.snp.makeConstraints { maker in
-            maker.height.equalTo(0.5)
-            maker.leading.equalToSuperview()
-            maker.trailing.equalToSuperview()
-            maker.top.equalTo(durationTitleLabel.snp.bottom).offset(CGFloat.margin3x)
-        }
-        separator.backgroundColor = .themeSteel20
-
         addSubview(selectableValueView)
         selectableValueView.snp.makeConstraints { maker in
-            maker.top.equalTo(separator.snp.bottom)
+            maker.top.equalTo(durationTitleLabel.snp.bottom).offset(CGFloat.margin3x)
+            maker.top.equalTo(feeSliderWrapper.snp.bottom)
             maker.bottom.leading.trailing.equalToSuperview()
         }
         selectableValueView.delegate = self

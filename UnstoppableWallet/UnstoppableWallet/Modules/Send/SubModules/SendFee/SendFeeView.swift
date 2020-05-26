@@ -22,7 +22,7 @@ class SendFeeView: UIView {
         feeTitleLabel.font = .subhead2
         feeTitleLabel.textColor = .themeGray
         feeTitleLabel.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(CGFloat.margin2x)
+            maker.top.equalToSuperview().offset(CGFloat.margin4x)
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
             maker.bottom.lessThanOrEqualToSuperview()
         }
@@ -41,7 +41,7 @@ class SendFeeView: UIView {
         errorLabel.font = .caption
         errorLabel.textColor = .themeLucian
         errorLabel.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(CGFloat.margin2x)
+            maker.top.equalToSuperview().offset(CGFloat.margin4x)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.bottom.lessThanOrEqualToSuperview()
         }

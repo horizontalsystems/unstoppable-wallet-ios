@@ -60,7 +60,7 @@ class SendAmountView: UIView {
         addSubview(availableBalanceValueLabel)
         availableBalanceValueLabel.font = .subhead1
 
-        availableBalanceValueLabel.textColor = .themeLeah
+        availableBalanceValueLabel.textColor = .themeOz
         availableBalanceValueLabel.snp.makeConstraints { maker in
             maker.centerY.equalTo(availableBalanceTitleLabel.snp.centerY)
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)

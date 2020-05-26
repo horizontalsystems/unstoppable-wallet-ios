@@ -27,7 +27,7 @@ class SendViewController: ThemeViewController {
 
         sendHolderView.backgroundColor = .clear
         sendHolderView.snp.makeConstraints { maker in
-            maker.height.equalTo(74)
+            maker.height.equalTo(66)
         }
 
         sendButton.apply(style: .primaryYellow)

@@ -3,7 +3,11 @@ import SnapKit
 import ThemeKit
 
 class SendConfirmationReceiverCell: ThemeCell {
-    private let hashView = HashView(singleLine: false)
+    private static let addressButtonStyle = ThemeButtonStyle.secondaryDefault
+
+    private let addressButton = ThemeButton()
+
+    private var _onHashTap: (() -> ())?
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -12,30 +16,43 @@ class SendConfirmationReceiverCell: ThemeCell {
         backgroundColor = .clear
         selectionStyle = .none
 
-        addSubview(hashView)
-
-        hashView.snp.makeConstraints { maker in
+        addSubview(addressButton)
+        addressButton.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(CGFloat.margin2x)
-            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
-            maker.trailing.lessThanOrEqualToSuperview().inset(CGFloat.margin4x)
+            maker.leading.greaterThanOrEqualToSuperview().offset(CGFloat.margin4x)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
-        hashView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        hashView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        addressButton.apply(style: SendConfirmationReceiverCell.addressButtonStyle)
+        // By default UIButton has no constraints to its titleLabel.
+        // In order to support multiline title the following constraints are required
+        addressButton.titleLabel?.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview().inset(addressButton.contentEdgeInsets)
+        }
+
+        addressButton.titleLabel?.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        addressButton.titleLabel?.numberOfLines = 0
+        addressButton.titleLabel?.textAlignment = .right
+        addressButton.addTarget(self, action: #selector(onHashTap), for: .touchUpInside)
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
+    @objc private func onHashTap() {
+        _onHashTap?()
+    }
+
     func bind(receiver: String, last: Bool = false, onHashTap: (() -> ())?) {
         super.bind(showDisclosure: false, last: last)
-        hashView.bind(value: receiver, showExtra: .icon, onTap: onHashTap)
+        _onHashTap = onHashTap
+
+        addressButton.setTitle(receiver, for: .normal)
     }
 
     static func height(forContainerWidth containerWidth: CGFloat, text: String) -> CGFloat {
-        let insets = HashView.textInsets
-        return ceil(text.height(forContainerWidth: containerWidth - 2 * CGFloat.margin4x - insets.width, font: .subhead1)) + insets.height + 2 * .margin2x
+        ceil(ThemeButton.height(forContainerWidth: containerWidth - 2 * CGFloat.margin4x, text: text, style: SendConfirmationReceiverCell.addressButtonStyle)) + 2 * .margin2x
     }
 
 }
