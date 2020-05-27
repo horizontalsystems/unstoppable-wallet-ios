@@ -20,7 +20,7 @@ class DerivationSettingPresenter {
         let viewItems = derivations.map { derivation in
             DerivationSettingModule.ViewItem(
                     title: derivation.title,
-                    subtitle: derivation.description,
+                    subtitle: derivation.description(coinType: coin.type),
                     selected: derivation == currentDerivation
             )
         }
