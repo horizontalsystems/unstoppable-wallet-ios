@@ -30,10 +30,8 @@ class SelectableValueView: UIView {
         wrapperView.addSubview(dropDownImageView)
 
         lineView.snp.makeConstraints { maker in
-            maker.top.equalToSuperview()
-            maker.height.equalTo(0.5)
-            maker.leading.equalToSuperview()
-            maker.trailing.equalToSuperview()
+            maker.top.leading.trailing.equalToSuperview()
+            maker.height.equalTo(CGFloat.heightOnePixel)
         }
 
         lineView.backgroundColor = .themeSteel20
