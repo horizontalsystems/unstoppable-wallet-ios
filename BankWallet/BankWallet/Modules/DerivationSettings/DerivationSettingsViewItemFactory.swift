@@ -6,7 +6,7 @@ class DerivationSettingsViewItemFactory {
                 items: MnemonicDerivation.allCases.map { derivation in
                     DerivationSettingViewItem(
                             title: derivation.title,
-                            subtitle: derivation.description,
+                            subtitle: derivation.description(coinType: item.setting.coinType),
                             selected: derivation == item.setting.derivation
                     )
                 }

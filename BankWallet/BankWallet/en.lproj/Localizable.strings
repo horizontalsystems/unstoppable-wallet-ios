@@ -54,9 +54,10 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 // Coin Settings
 
-"coin_settings.derivation.description_bip44" = "Older (start with 1...)";
-"coin_settings.derivation.description_bip49" = "Popular (start with 3...)";
-"coin_settings.derivation.description_bip84" = "Newest (start with bc1...)";
+"coin_settings.derivation.description.bip44" = "Older";
+"coin_settings.derivation.description.bip49" = "Popular";
+"coin_settings.derivation.description.bip84" = "Newest";
+"coin_settings.derivation.starts_with" = "starts with %@...";
 "coin_settings.derivation.description_create" = "This setting controls the address format for the Bitcoin in this wallet. We recommend using BIP49 if not sure.";
 "coin_settings.derivation.description_restore" = "Select the address format for the Bitcoin in the wallet you're trying to restore.";
 "coin_settings.title" = "Blockchain Settings";
