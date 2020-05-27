@@ -52,9 +52,10 @@
 
 // Coin Settings
 
-"coin_settings.derivation.description_bip44" = "Eski (1... ile başlar)";
-"coin_settings.derivation.description_bip49" = "Popüler (3... ile başlar)";
-"coin_settings.derivation.description_bip84" = "Yeni (bc1... ile başlar)";
+"coin_settings.derivation.description.bip44" = "Eski";
+"coin_settings.derivation.description.bip49" = "Popüler";
+"coin_settings.derivation.description.bip84" = "Yeni";
+"coin_settings.derivation.starts_with" = "%@...ile başlar";
 "coin_settings.derivation.description_create" = "Bu ayar, bu cüzdandaki Bitcoin adres formatını kontrol eder. Emin değilseniz BIP49 kullanmanızı öneririz.";
 "coin_settings.derivation.description_restore" = "Geri yüklemeye çalıştığınız cüzdandaki Bitcoin için adres formatını seçin.";
 "coin_settings.title" = "Blockchain Ayarları";

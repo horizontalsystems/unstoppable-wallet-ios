@@ -52,9 +52,10 @@
 
 // Coin Settings
 
-"coin_settings.derivation.description_bip44" = "Älter (beginnt mit 1 ...)";
-"coin_settings.derivation.description_bip49" = "Beliebt (beginnt mit 3 ...)";
-"coin_settings.derivation.description_bip84" = "Am neuesten (beginnt mit bc1 ...)";
+"coin_settings.derivation.description.bip44" = "Älter";
+"coin_settings.derivation.description.bip49" = "Beliebt";
+"coin_settings.derivation.description.bip84" = "Am neuesten";
+"coin_settings.derivation.starts_with" = "beginnt mit %@...";
 "coin_settings.derivation.description_create" = "Mit dieser Einstellung wählen Sie das Adressformat für Bitcoin in diesem Wallet. Wenn Sie unsicher sind, empfehlen wir die Nutzung von BIP49.";
 "coin_settings.derivation.description_restore" = "Wählen Sie das Adressformat für die Bitcoin in dem Wallet, das Sie wiederherstellen möchten.";
 "coin_settings.title" = "Blockchain Einstellungen";
@@ -70,6 +71,7 @@
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "Adressformatierung";
+
 // Backup
 
 "backup.close" = "Schließen";

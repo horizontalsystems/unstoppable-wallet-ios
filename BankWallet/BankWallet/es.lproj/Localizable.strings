@@ -52,9 +52,10 @@
 
 // Coin Settings
 
-"coin_settings.derivation.description_bip44" = "Más antiguo (comenzar con 1...)";
-"coin_settings.derivation.description_bip49" = "Popular (comenzar con 3...)";
-"coin_settings.derivation.description_bip84" = "Más nuevo (comenzar con bc1...)";
+"coin_settings.derivation.description.bip44" = "Más antiguo";
+"coin_settings.derivation.description.bip49" = "Popular";
+"coin_settings.derivation.description.bip84" = "Más nuevo";
+"coin_settings.derivation.starts_with" = "comenzar con %@...";
 "coin_settings.derivation.description_create" = "Esta configuración controla el formato de la dirección para este monedero de Bitcoin. Recomendamos usar BIP49 si no está seguro.";
 "coin_settings.derivation.description_restore" = "Seleccione el formato de dirección para el Bitcoin en el monedero que intenta restaurar.";
 "coin_settings.title" = "Configuración de Blockchain";
@@ -70,6 +71,7 @@
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "Formato de Dirección";
+
 // Backup
 
 "backup.close" = "Cerrar";

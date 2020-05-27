@@ -52,9 +52,10 @@
 
 // Coin Settings
 
-"coin_settings.derivation.description_bip44" = "더 오래된 (1부터 시작)";
-"coin_settings.derivation.description_bip49" = "인기있는 (3부터 시작)";
-"coin_settings.derivation.description_bip84" = "최신 (bc1부터 시작)";
+"coin_settings.derivation.description.bip44" = "더 오래된";
+"coin_settings.derivation.description.bip49" = "인기있는";
+"coin_settings.derivation.description.bip84" = "최신";
+"coin_settings.derivation.starts_with" = "%@부터 시작";
 "coin_settings.derivation.description_create" = "이 설정은 지갑에서 비트코인 주소 형식을 통제 합니다. 확실하지 않는 경우에는 BIP49를 사용하시는 것을 추천해드립니다.";
 "coin_settings.derivation.description_restore" = "복원을 하려는 지갑에서 비트코인의 주소 형식을 선택해 주세요.";
 "coin_settings.title" = "블록 체인 설정";
@@ -70,6 +71,7 @@
 "blockchain_settings.sync_mode.blockchain" = "블록 체인";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "주소 형식";
+
 // Backup
 
 "backup.close" = "가까운, 닫힌";

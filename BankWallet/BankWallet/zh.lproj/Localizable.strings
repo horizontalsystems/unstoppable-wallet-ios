@@ -52,9 +52,10 @@
 
 // Coin Settings
 
-"coin_settings.derivation.description_bip44" = "更旧（以1开头...）";
-"coin_settings.derivation.description_bip49" = "流行（以3开头...）";
-"coin_settings.derivation.description_bip84" = "最新（以bc1开头...）";
+"coin_settings.derivation.description.bip44" = "更旧";
+"coin_settings.derivation.description.bip49" = "流行";
+"coin_settings.derivation.description.bip84" = "最新";
+"coin_settings.derivation.starts_with" = "以%@开头";
 "coin_settings.derivation.description_create" = "此设置控制着此钱包中比特币的地址格式。如果不确定，我们建议使用BIP49。";
 "coin_settings.derivation.description_restore" = "选择您尝试恢复的钱包中的比特币的地址格式。";
 "coin_settings.title" = "区块链设置";
@@ -70,6 +71,7 @@
 "blockchain_settings.sync_mode.blockchain" = "区块链";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "地址格式";
+
 // Backup
 
 "backup.close" = "关闭";

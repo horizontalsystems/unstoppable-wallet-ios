@@ -52,9 +52,10 @@
 
 // Coin Settings
 
-"coin_settings.derivation.description_bip44" = "Старый (начинается с 1...)";
-"coin_settings.derivation.description_bip49" = "Популярный (начинается с 3...)";
-"coin_settings.derivation.description_bip84" = "Новый (начинается с bc1...)";
+"coin_settings.derivation.description.bip44" = "Старый";
+"coin_settings.derivation.description.bip49" = "Популярный";
+"coin_settings.derivation.description.bip84" = "Новый";
+"coin_settings.derivation.starts_with" = "начинается с %@...";
 "coin_settings.derivation.description_create" = "Этот параметр определяет формат адреса Bitcoin в этом кошельке. Мы рекомендуем использовать BIP49.";
 "coin_settings.derivation.description_restore" = "Выберите формат адреса для Bitcoin в кошельке, который вы пытаетесь восстановить.";
 "coin_settings.title" = "Настройки Блокчейна";
@@ -70,6 +71,7 @@
 "blockchain_settings.sync_mode.blockchain" = "Блокчейн";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "Формат Адреса";
+
 // Backup
 
 "backup.close" = "Закрыть";
@@ -355,7 +357,7 @@
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Управление Кошельками";
+"settings_manage_keys.title" = "Кошельки";
 "settings_manage_keys.item_title" = "%@ Кошелек";
 "settings_manage_keys.add_wallet" = "Добавить Кошелёк";
 "settings_manage_keys.description" = "Ниже выделены ваши активные кошельки, где каждый кошелек отвечает за разный набор криптовалют.\n\nВы должны сделать резервную копию каждого выделенного кошелька, записав его приватный ключ. Этот ключ - единственный способ восстановления ваших средств в случае потери, кражи или поломки вашего телефона.";
