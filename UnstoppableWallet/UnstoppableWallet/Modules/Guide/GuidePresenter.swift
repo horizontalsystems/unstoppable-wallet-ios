@@ -4,10 +4,10 @@ class GuidePresenter {
     private let router: IGuideRouter
     private let interactor: IGuideInteractor
 
-    private let url: String
+    private let guide: Guide
 
-    init(url: String, router: IGuideRouter, interactor: IGuideInteractor) {
-        self.url = url
+    init(guide: Guide, router: IGuideRouter, interactor: IGuideInteractor) {
+        self.guide = guide
         self.router = router
         self.interactor = interactor
     }
@@ -17,7 +17,7 @@ class GuidePresenter {
 extension GuidePresenter: IGuideViewDelegate {
 
     func onLoad() {
-        view?.load(url: url)
+        view?.set(title: guide.title, imageUrl: guide.imageUrl)
     }
 
 }

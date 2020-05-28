@@ -91,7 +91,7 @@ extension GuidesViewController: UICollectionViewDelegateFlowLayout {
             width = (collectionView.width - horizontalInset * 2 - interitemSpacing) / 2
         }
 
-        return CGSize(width: width, height: 160)
+        return CGSize(width: width, height: 220)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

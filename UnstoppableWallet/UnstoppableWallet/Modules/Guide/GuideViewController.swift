@@ -1,12 +1,15 @@
 import UIKit
 import SnapKit
 import ThemeKit
-import WebKit
+import SectionsTableView
 
 class GuideViewController: ThemeViewController {
     private let delegate: IGuideViewDelegate
 
-    private let webView = WKWebView(frame: .zero, configuration: WKWebViewConfiguration())
+    private let tableView = SectionsTableView(style: .grouped)
+
+    private var imageUrl: String?
+    private var titleText: String?
 
     init(delegate: IGuideViewDelegate) {
         self.delegate = delegate
@@ -24,24 +27,54 @@ class GuideViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.addSubview(webView)
-        webView.snp.makeConstraints { maker in
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
 
-        webView.isOpaque = false
+        tableView.allowsSelection = false
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+
+        tableView.registerCell(forClass: GuideHeaderCell.self)
+        tableView.sectionDataSource = self
 
         delegate.onLoad()
+
+        tableView.buildSections()
     }
 
 }
 
+extension GuideViewController: SectionsDataSource {
+
+    func buildSections() -> [SectionProtocol] {
+        [
+            Section(
+                    id: "main",
+                    rows: [
+                        Row<GuideHeaderCell>(
+                                id: "header",
+                                dynamicHeight: { [weak self] containerWidth in
+                                    GuideHeaderCell.height(containerWidth: containerWidth, text: self?.title)
+                                },
+                                bind: { [weak self] cell, _ in
+                                    cell.bind(imageUrl: self?.imageUrl, text: self?.titleText)
+                                }
+                        )
+                    ]
+            )
+        ]
+    }
+
+}
+
+
 extension GuideViewController: IGuideView {
 
-    func load(url: String) {
-        if let url = URL(string: url) {
-            webView.load(URLRequest(url: url))
-        }
+    func set(title: String, imageUrl: String) {
+        titleText = title
+        self.imageUrl = imageUrl
     }
 
 }

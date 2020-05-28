@@ -1,5 +1,5 @@
 protocol IGuideView: AnyObject {
-    func load(url: String)
+    func set(title: String, imageUrl: String)
 }
 
 protocol IGuideViewDelegate {

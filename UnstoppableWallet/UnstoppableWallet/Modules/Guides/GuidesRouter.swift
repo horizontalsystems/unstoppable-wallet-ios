@@ -6,8 +6,8 @@ class GuidesRouter {
 
 extension GuidesRouter: IGuidesRouter {
 
-    func showGuide(url: String) {
-        let module = GuideRouter.module(url: url)
+    func show(guide: Guide) {
+        let module = GuideRouter.module(guide: guide)
         viewController?.navigationController?.pushViewController(module, animated: true)
     }
 

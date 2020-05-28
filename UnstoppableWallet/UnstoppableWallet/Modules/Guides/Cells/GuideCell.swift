@@ -6,9 +6,8 @@ import AlamofireImage
 class GuideCell: UICollectionViewCell {
     private let cardView = CardView(insets: .zero)
 
+    private let guideImageView = UIImageView()
     private let titleLabel = UILabel()
-    private let backgroundImageView = UIImageView()
-    private let coinImageView = UIImageView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -18,26 +17,24 @@ class GuideCell: UICollectionViewCell {
             maker.edges.equalToSuperview()
         }
 
-        cardView.contentView.addSubview(backgroundImageView)
-        backgroundImageView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+        cardView.contentView.addSubview(guideImageView)
+        guideImageView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+            maker.height.equalTo(160)
         }
 
-        backgroundImageView.contentMode = .scaleAspectFill
+        guideImageView.contentMode = .scaleAspectFill
+        guideImageView.clipsToBounds = true
 
         cardView.contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.bottom.equalToSuperview().inset(CGFloat.margin4x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalTo(guideImageView.snp.bottom).offset(CGFloat.margin4x)
         }
 
         titleLabel.numberOfLines = 0
         titleLabel.font = .title3
         titleLabel.textColor = .themeOz
-
-        cardView.contentView.addSubview(coinImageView)
-        coinImageView.snp.makeConstraints { maker in
-            maker.top.trailing.equalToSuperview().inset(CGFloat.margin4x)
-        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -48,12 +45,10 @@ class GuideCell: UICollectionViewCell {
         titleLabel.text = viewItem.title
 
         if let imageUrl = viewItem.imageUrl, let url = URL(string: imageUrl) {
-            backgroundImageView.af.setImage(withURL: url)
+            guideImageView.af.setImage(withURL: url)
         } else {
-            backgroundImageView.image = nil
+            guideImageView.image = nil
         }
-
-        coinImageView.image = viewItem.coinCode.flatMap { UIImage(named: $0.lowercased())?.tinted(with: .themeJacob) }
     }
 
 }
