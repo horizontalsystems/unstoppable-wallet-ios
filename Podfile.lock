@@ -338,13 +338,13 @@ CHECKOUT OPTIONS:
     :commit: 41bb215d7231db83c5e9dbd2a061c672cbcc83c2
     :git: https://github.com/horizontalsystems/binance-chain-kit-ios
   BitcoinCashKit.swift:
-    :commit: 597fd6a8ee51e7bca2eb9fa4b951b29fb796b5c0
+    :commit: 8c7bc095115e7bf698850196b35e304380b9ea4c
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinCore.swift:
-    :commit: 597fd6a8ee51e7bca2eb9fa4b951b29fb796b5c0
+    :commit: 8c7bc095115e7bf698850196b35e304380b9ea4c
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinKit.swift:
-    :commit: 597fd6a8ee51e7bca2eb9fa4b951b29fb796b5c0
+    :commit: 8c7bc095115e7bf698850196b35e304380b9ea4c
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
     :commit: dedea8758c71f0f73cada98c9dacd58d4646218d
@@ -353,7 +353,7 @@ CHECKOUT OPTIONS:
     :commit: baf21dd4bca1650254882a85883ed492a2bc081f
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
-    :commit: 597fd6a8ee51e7bca2eb9fa4b951b29fb796b5c0
+    :commit: 8c7bc095115e7bf698850196b35e304380b9ea4c
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   EosioSwiftAbieosSerializationProvider:
     :commit: 7ac04899e62012e225e0ea48a96951de0b72ad08
@@ -374,7 +374,7 @@ CHECKOUT OPTIONS:
     :commit: 3e3720f600d10929146e5e8583cf39a072b37e61
     :git: https://github.com/horizontalsystems/hd-wallet-kit-ios
   Hodler.swift:
-    :commit: 597fd6a8ee51e7bca2eb9fa4b951b29fb796b5c0
+    :commit: 8c7bc095115e7bf698850196b35e304380b9ea4c
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HsToolKit.swift:
     :commit: b97c6224fee8d7b554a8e49e289ccdf131617dff
@@ -386,7 +386,7 @@ CHECKOUT OPTIONS:
     :commit: baf21dd4bca1650254882a85883ed492a2bc081f
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
-    :commit: 597fd6a8ee51e7bca2eb9fa4b951b29fb796b5c0
+    :commit: 8c7bc095115e7bf698850196b35e304380b9ea4c
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   PinKit.swift:
     :commit: baf21dd4bca1650254882a85883ed492a2bc081f
