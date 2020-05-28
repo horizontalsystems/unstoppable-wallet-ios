@@ -8,19 +8,18 @@ protocol IGuidesViewDelegate {
 }
 
 protocol IGuidesInteractor {
+    var guides: [Guide] { get }
 }
 
 protocol IGuidesInteractorDelegate: AnyObject {
 }
 
 protocol IGuidesRouter {
-    func showGuide(url: String)
+    func show(guide: Guide)
 }
 
 struct GuideViewItem {
     let title: String
     let large: Bool
-    let url: String
-    var coinCode: String?
     var imageUrl: String?
 }
