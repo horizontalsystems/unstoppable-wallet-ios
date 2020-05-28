@@ -1,20 +1,37 @@
 import UIKit
 import SnapKit
 
-class TransactionCurrenciesHeaderView: UIView, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-    static let headerHeight: CGFloat = 40
+extension FilterHeaderView {
+    enum ViewItem {
+        case all
+        case item(title: String)
+    }
+}
 
-    var filters = [Wallet?]()
-    var collectionView: UICollectionView
-    var onSelectWallet: ((Wallet?) -> ())?
+class FilterHeaderView: UIView, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    private var filters = [ViewItem]()
+    private let collectionView: UICollectionView
+
+    var onSelect: ((Int) -> ())?
+
+    public var headerHeight: CGFloat {
+        filters.isEmpty ? 0 : 40
+    }
 
     init() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = .zero
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+
         super.init(frame: .zero)
+
         backgroundColor = .themeNavigationBarBackground
+
+        addSubview(collectionView)
+        collectionView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
 
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -23,12 +40,7 @@ class TransactionCurrenciesHeaderView: UIView, UICollectionViewDelegateFlowLayou
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
 
-        collectionView.registerCell(forClass: TransactionsCurrencyCell.self)
-
-        addSubview(collectionView)
-        collectionView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
-        }
+        collectionView.registerCell(forClass: FilterHeaderCell.self)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -40,17 +52,17 @@ class TransactionCurrenciesHeaderView: UIView, UICollectionViewDelegateFlowLayou
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: TransactionsCurrencyCell.self), for: indexPath)
+        collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: FilterHeaderCell.self), for: indexPath)
     }
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let cell = cell as? TransactionsCurrencyCell {
+        if let cell = cell as? FilterHeaderCell {
             cell.bind(title: title(index: indexPath.item), selected: collectionView.indexPathsForSelectedItems?.contains(indexPath) ?? false)
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        TransactionsCurrencyCell.size(for: title(index: indexPath.item))
+        FilterHeaderCell.size(for: title(index: indexPath.item))
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -65,11 +77,11 @@ class TransactionCurrenciesHeaderView: UIView, UICollectionViewDelegateFlowLayou
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        onSelectWallet?(filters[indexPath.item])
+        onSelect?(indexPath.item)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
 
-    func reload(filters: [Wallet?]) {
+    func reload(filters: [ViewItem]) {
         self.filters = filters
         collectionView.reloadData()
 
@@ -79,8 +91,10 @@ class TransactionCurrenciesHeaderView: UIView, UICollectionViewDelegateFlowLayou
     }
 
     private func title(index: Int) -> String {
-        let title = filters[index]?.coin.code ?? "transactions.filter_all".localized
-        return title.uppercased()
+        switch filters[index] {
+        case .all: return "transactions.filter_all".localized
+        case .item(let title): return title
+        }
     }
 
 }

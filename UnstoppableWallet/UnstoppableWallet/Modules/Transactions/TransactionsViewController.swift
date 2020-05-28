@@ -17,7 +17,7 @@ class TransactionsViewController: ThemeViewController {
     private let cellName = String(describing: TransactionCell.self)
 
     private let emptyLabel = UILabel()
-    private let filterHeaderView = TransactionCurrenciesHeaderView()
+    private let filterHeaderView = FilterHeaderView()
 
     private var items: [TransactionViewItem]?
 
@@ -41,8 +41,8 @@ class TransactionsViewController: ThemeViewController {
 
         title = "transactions.title".localized
 
-        filterHeaderView.onSelectWallet = { [weak self] wallet in
-            self?.delegate.onFilterSelect(wallet: wallet)
+        filterHeaderView.onSelect = { [weak self] index in
+            self?.delegate.onFilterSelect(index: index)
         }
 
         view.addSubview(tableView)
@@ -150,7 +150,7 @@ extension TransactionsViewController: ITransactionsView {
         }
     }
 
-    func show(filters: [Wallet?]) {
+    func show(filters: [FilterHeaderView.ViewItem]) {
         filterHeaderView.reload(filters: filters)
     }
 
@@ -158,7 +158,7 @@ extension TransactionsViewController: ITransactionsView {
         queue.async {
             let changes = self.differ.changes(old: self.items ?? [], new: newViewItems, section: 0)
             self.items = newViewItems
-            
+
             DispatchQueue.main.sync { [weak self] in
                 self?.reload(with: changes, animated: animated)
             }
@@ -203,7 +203,7 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        filterHeaderView.filters.isEmpty ? 0 : TransactionCurrenciesHeaderView.headerHeight
+        filterHeaderView.headerHeight
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
