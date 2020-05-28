@@ -9,6 +9,8 @@ class TransactionsPresenter {
     private let dataSource: TransactionRecordDataSource
     private var loading = false
 
+    private var wallets = [Wallet]()
+
     weak var view: ITransactionsView?
 
     private var states = [Coin: AdapterState]()
@@ -49,9 +51,12 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
         interactor.initialFetch()
     }
 
-    func onFilterSelect(wallet: Wallet?) {
-        let wallets = wallet.map { [$0] } ?? []
-        interactor.set(selectedWallets: wallets)
+    func onFilterSelect(index: Int) {
+        if index == 0 {
+            interactor.set(selectedWallets: wallets)
+        } else {
+            interactor.set(selectedWallets: [wallets[index - 1]])
+        }
     }
 
     func onBottomReached() {
@@ -85,12 +90,9 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         dataSource.handleUpdated(walletsData: walletsData)
         interactor.fetchLastBlockHeights()
 
-        let wallets = walletsData.map { (wallet, _, _) in wallet }
-        if wallets.count < 2 {
-            view?.show(filters: [])
-        } else {
-            view?.show(filters: [nil] + wallets.sorted { wallet, wallet2 in wallet.coin.code < wallet2.coin.code })
-        }
+        wallets = walletsData.map { (wallet, _, _) in wallet }.sorted { wallet, wallet2 in wallet.coin.code < wallet2.coin.code }
+
+        view?.show(filters: factory.filterItems(wallets: wallets))
 
         dataSource.handleUpdated(wallets: wallets)
         loadNext(initial: true)

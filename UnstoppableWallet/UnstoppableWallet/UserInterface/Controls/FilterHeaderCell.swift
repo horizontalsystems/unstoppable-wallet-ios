@@ -2,7 +2,7 @@ import UIKit
 import ThemeKit
 import SnapKit
 
-class TransactionsCurrencyCell: UICollectionViewCell {
+class FilterHeaderCell: UICollectionViewCell {
     private static let nameLabelFont = UIFont.subhead1
 
     private let button = ThemeButton()
@@ -29,14 +29,13 @@ class TransactionsCurrencyCell: UICollectionViewCell {
         }
     }
 
-
     override var isHighlighted: Bool {
         didSet {
             bind(highlighted: isHighlighted)
         }
     }
 
-    func bind(title: String, selected: Bool) {
+    func bind(title: String?, selected: Bool) {
         button.setTitle(title, for: .normal)
 
         bind(selected: selected)
@@ -52,9 +51,10 @@ class TransactionsCurrencyCell: UICollectionViewCell {
 
 }
 
-extension TransactionsCurrencyCell {
+extension FilterHeaderCell {
+
     static func size(for title: String) -> CGSize {
-        let size = title.size(containerWidth: .greatestFiniteMagnitude, font: TransactionsCurrencyCell.nameLabelFont)
+        let size = title.size(containerWidth: .greatestFiniteMagnitude, font: FilterHeaderCell.nameLabelFont)
         let calculatedWidth = size.width + 2 * .margin3x
         return CGSize(width: calculatedWidth, height: 28)
     }

@@ -3,6 +3,14 @@ import CurrencyKit
 
 class TransactionViewItemFactory: ITransactionViewItemFactory {
 
+    func filterItems(wallets: [Wallet]) -> [FilterHeaderView.ViewItem] {
+        if wallets.count < 2 {
+            return []
+        } else {
+            return [.all] + wallets.map { .item(title: $0.coin.code) }
+        }
+    }
+
     func viewItem(fromRecord record: TransactionRecord, wallet: Wallet, lastBlockInfo: LastBlockInfo? = nil, threshold: Int? = nil, rate: CurrencyValue? = nil) -> TransactionViewItem {
         TransactionViewItem(
                 wallet: wallet,

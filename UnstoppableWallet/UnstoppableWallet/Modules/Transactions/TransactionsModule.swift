@@ -4,7 +4,7 @@ import CurrencyKit
 
 protocol ITransactionsView: class {
     func set(status: TransactionViewStatus)
-    func show(filters: [Wallet?])
+    func show(filters: [FilterHeaderView.ViewItem])
     func show(transactions: [TransactionViewItem], animated: Bool)
     func showNoTransactions()
     func reloadTransactions()
@@ -12,7 +12,7 @@ protocol ITransactionsView: class {
 
 protocol ITransactionsViewDelegate {
     func viewDidLoad()
-    func onFilterSelect(wallet: Wallet?)
+    func onFilterSelect(index: Int)
 
     func onBottomReached()
 
@@ -51,6 +51,7 @@ protocol ITransactionsRouter {
 }
 
 protocol ITransactionViewItemFactory {
+    func filterItems(wallets: [Wallet]) -> [FilterHeaderView.ViewItem]
     func viewItem(fromRecord: TransactionRecord, wallet: Wallet, lastBlockInfo: LastBlockInfo?, threshold: Int?, rate: CurrencyValue?) -> TransactionViewItem
     func viewStatus(adapterStates: [Coin: AdapterState], transactionsCount: Int) -> TransactionViewStatus
 }

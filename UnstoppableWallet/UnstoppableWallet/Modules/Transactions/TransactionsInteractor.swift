@@ -162,8 +162,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
     }
 
     func set(selectedWallets: [Wallet]) {
-        let allWallets = walletManager.wallets
-        delegate?.onUpdate(selectedCoins: selectedWallets.isEmpty ? allWallets : selectedWallets)
+        delegate?.onUpdate(selectedCoins: selectedWallets)
     }
 
     func fetchRate(coin: Coin, date: Date) {
