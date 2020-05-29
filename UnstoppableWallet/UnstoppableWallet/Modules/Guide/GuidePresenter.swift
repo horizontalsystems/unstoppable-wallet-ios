@@ -17,7 +17,7 @@ class GuidePresenter {
 extension GuidePresenter: IGuideViewDelegate {
 
     func onLoad() {
-        view?.set(title: guide.title, imageUrl: guide.imageUrl)
+        view?.set(imageUrl: guide.imageUrl, blocks: guide.blocks)
     }
 
 }
