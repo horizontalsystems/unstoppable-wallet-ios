@@ -1,13 +1,15 @@
 class GuidePresenter {
     weak var view: IGuideView?
 
+    private let parser: IGuideParser
     private let router: IGuideRouter
     private let interactor: IGuideInteractor
 
     private let guide: Guide
 
-    init(guide: Guide, router: IGuideRouter, interactor: IGuideInteractor) {
+    init(guide: Guide, parser: IGuideParser, router: IGuideRouter, interactor: IGuideInteractor) {
         self.guide = guide
+        self.parser = parser
         self.router = router
         self.interactor = interactor
     }
@@ -17,7 +19,7 @@ class GuidePresenter {
 extension GuidePresenter: IGuideViewDelegate {
 
     func onLoad() {
-        view?.set(imageUrl: guide.imageUrl, blocks: guide.blocks)
+        view?.set(imageUrl: guide.imageUrl, blocks: parser.blocks(markdownFileName: guide.fileName))
     }
 
 }

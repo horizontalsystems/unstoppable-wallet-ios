@@ -3,7 +3,7 @@ import Foundation
 struct Guide {
     let title: String
     let imageUrl: String
-    let blocks: [GuideBlock]
+    let fileName: String
 }
 
 enum GuideBlock {

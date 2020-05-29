@@ -70,6 +70,7 @@ class App {
     let pinKitDelegate: PinKitDelegate
 
     let rateAppManager: IRateAppManager
+    let guidesManager: IGuidesManager
 
     let appManager: AppManager
 
@@ -165,6 +166,8 @@ class App {
         pinKit.set(delegate: pinKitDelegate)
 
         rateAppManager = RateAppManager(walletManager: walletManager, adapterManager: adapterManager, localStorage: localStorage)
+
+        guidesManager = GuidesManager()
 
         appManager = AppManager(
                 accountManager: accountManager,

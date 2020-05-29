@@ -14,3 +14,7 @@ protocol IGuideInteractorDelegate: AnyObject {
 
 protocol IGuideRouter {
 }
+
+protocol IGuideParser {
+    func blocks(markdownFileName: String) -> [GuideBlock]
+}

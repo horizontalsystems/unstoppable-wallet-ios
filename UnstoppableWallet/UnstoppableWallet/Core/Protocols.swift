@@ -535,3 +535,7 @@ protocol ISortTypeManager: AnyObject {
     var sortType: SortType { get set }
     var sortTypeObservable: Observable<SortType> { get }
 }
+
+protocol IGuidesManager {
+    var guides: [Guide] { get }
+}
