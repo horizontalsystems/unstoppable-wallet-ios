@@ -1,5 +1,5 @@
 protocol IGuideView: AnyObject {
-    func set(title: String, imageUrl: String)
+    func set(imageUrl: String, blocks: [GuideBlock])
 }
 
 protocol IGuideViewDelegate {
