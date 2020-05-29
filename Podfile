@@ -70,6 +70,8 @@ def appPods
   pod 'KeychainAccess'
   pod 'SnapKit'
   pod 'DeepDiff'
+
+  pod 'Down'
 end
 
 target 'Unstoppable Dev T' do
