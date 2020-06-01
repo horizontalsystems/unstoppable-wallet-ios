@@ -43,7 +43,7 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
         tableView.registerCell(forClass: SendConfirmationReceiverCell.self)
         tableView.registerCell(forClass: SendConfirmationMemoCell.self)
         tableView.registerCell(forClass: SendConfirmationFieldCell.self)
-        tableView.registerCell(forClass: SendButtonCell.self)
+        tableView.registerCell(forClass: ButtonCell.self)
         tableView.sectionDataSource = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
@@ -66,12 +66,18 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
         var sections = [SectionProtocol]()
         var rows = [RowProtocol]()
         rows.append(contentsOf: self.rows)
-        let sendButtonRow = Row<SendButtonCell>(id: "send_row", height: 74, bind: { [weak self] cell, _ in
-            cell.bind { [weak self] in
-                self?.onSendTap()
-            }
-        })
+
+        let sendButtonRow = Row<ButtonCell>(
+                id: "send_row",
+                height: ButtonCell.height(),
+                bind: { [weak self] cell, _ in
+                    cell.bind(style: .primaryYellow, title: "send.confirmation.send_button".localized) { [weak self] in
+                        self?.onSendTap()
+                    }
+                }
+        )
         rows.append(sendButtonRow)
+
         sections.append(Section(id: "confirmation_section", rows: rows))
         return sections
     }
