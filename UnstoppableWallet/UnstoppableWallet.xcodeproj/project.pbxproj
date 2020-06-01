@@ -652,6 +652,7 @@
 		11B35D4D8F5A035E1B653198 /* TransactionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3527356625950A5C0358D /* TransactionViewItem.swift */; };
 		11B35D4E566D1F5D24825050 /* FeeRateProviderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359D88585F2BBFA56CB77 /* FeeRateProviderFactory.swift */; };
 		11B35D51B52EF0000711CE05 /* CaptionValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359824DCDF3B05413CDD2 /* CaptionValueView.swift */; };
+		11B35D53E7F7AD24B3A26339 /* AdditionalDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355F6D50A7099E7455822 /* AdditionalDataCell.swift */; };
 		11B35D54818399B4BCE9F2C2 /* UnlinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352A8C9C3AA2AB1776F3C /* UnlinkViewController.swift */; };
 		11B35D54876231D567457532 /* AddTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3521444684873524033C6 /* AddTokenViewController.swift */; };
 		11B35D5C9C08AA5221DDE773 /* TransactionRecordPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B491E521F1ECC600DAE203 /* TransactionRecordPool.swift */; };
@@ -682,6 +683,7 @@
 		11B35DCEED8F4EDC0D730540 /* SendMemoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BF93F697057885AC62A /* SendMemoRouter.swift */; };
 		11B35DD11863080EFAE18F92 /* TransactionInfoFromToCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DF34CA46AFA139D23AF /* TransactionInfoFromToCell.swift */; };
 		11B35DDB41FFB254E91B6019 /* GuideTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3536DB4D3D3D7771B3EA4 /* GuideTextCell.swift */; };
+		11B35DE05BD38DF0422DA633 /* AdditionalDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355F6D50A7099E7455822 /* AdditionalDataCell.swift */; };
 		11B35DE2003D90563EF5C8F1 /* PrivacySyncModePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B8893A0EEFA901A2A61 /* PrivacySyncModePresenter.swift */; };
 		11B35DE3E7E6EB3CFAB81329 /* UnlinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352A8C9C3AA2AB1776F3C /* UnlinkViewController.swift */; };
 		11B35DEE84F2A008B35D02E8 /* SendInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354AB8441E2204D1DFED3 /* SendInteractor.swift */; };
@@ -747,6 +749,7 @@
 		11B35F3F5CD25FA39671E1A0 /* SendFeePriorityRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D64EA4FDD339C8DC162 /* SendFeePriorityRouter.swift */; };
 		11B35F40DAA86E45C4585F03 /* RestoreAccountTypeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35997E609908F5621CFC0 /* RestoreAccountTypeRouter.swift */; };
 		11B35F4C1AEA693876B4837E /* RateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B10B1F0DFF9144C785D /* RateManager.swift */; };
+		11B35F4CCFC683B6BF412403 /* AdditionalDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355F6D50A7099E7455822 /* AdditionalDataCell.swift */; };
 		11B35F4CE3BD699E684014F1 /* PriceAlertRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C1528814607B0474707 /* PriceAlertRecord.swift */; };
 		11B35F6305DC6D459B9A4B6A /* SendBinanceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F571876EA99794DD145 /* SendBinanceHandler.swift */; };
 		11B35F663F7E12BFDDE3C88B /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35872950C107E4810AB6B /* AccountManager.swift */; };
@@ -1382,7 +1385,6 @@
 		58AAA5D8E8A7660DAEFDA0F5 /* BackgroundPriceAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA475A44B60E7AB0807AA /* BackgroundPriceAlertManager.swift */; };
 		58AAA5DDCD97727AAD974B37 /* FullTransactionLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA407F55E644523FC8EF8 /* FullTransactionLinkView.swift */; };
 		58AAA5E52B1488746245BF0A /* BackupConfirmationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE75A33F6C7304A3F8EE /* BackupConfirmationPresenter.swift */; };
-		58AAA5F9B6B9DCEB3C1DDF0C /* SendConfirmationFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE1BB9FC0F98690BCB1F /* SendConfirmationFieldCell.swift */; };
 		58AAA5FDC26FC291E9E82928 /* GridIntervalConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8CCC7252ECFFDC51578 /* GridIntervalConverter.swift */; };
 		58AAA6084D64BB5064E542D0 /* HorSysProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA976A6B67FD47D5958E8 /* HorSysProvider.swift */; };
 		58AAA6099C361C5E89AAA7A0 /* DoubleSpendInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA54B2A8BD3C218BAD838 /* DoubleSpendInfoInteractor.swift */; };
@@ -1429,7 +1431,6 @@
 		58AAA7ACE289E7B0E845BB83 /* SendConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9E43BB1F4A9472DFED4 /* SendConfirmationViewController.swift */; };
 		58AAA7BF63EEB776A0256C61 /* BackupModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA88D3ED8D5570474B589 /* BackupModule.swift */; };
 		58AAA7D4E5166917E8A3F527 /* InfoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5B7C08CA010C863F6AA /* InfoRouter.swift */; };
-		58AAA7E280375B58308C839B /* SendConfirmationFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE1BB9FC0F98690BCB1F /* SendConfirmationFieldCell.swift */; };
 		58AAA7F2D05806CC22121935 /* SectionHeaderFooterTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAABEC00FE5DB3E113643E /* SectionHeaderFooterTextView.swift */; };
 		58AAA7FAA603E03B217AB881 /* RateCoinMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA02A5C8C597ABDCFB27E /* RateCoinMapper.swift */; };
 		58AAA80C97CA1454B266DB3E /* RateListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA61AB92EBB7DB83B3CE4 /* RateListCell.swift */; };
@@ -1612,7 +1613,6 @@
 		58AAAF4FAB66D242A8A84DAC /* RateListSorterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAACB3D8661EFE2E30FCFF /* RateListSorterTests.swift */; };
 		58AAAF5089615F99495D0654 /* ChartRateFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA28ABE08D74D89C2BF50 /* ChartRateFactory.swift */; };
 		58AAAF51E260707C9024738A /* SendAmountModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA82DAFCCEBBC7BEBB80B /* SendAmountModule.swift */; };
-		58AAAF5F0B8148F42BC494A3 /* SendConfirmationFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE1BB9FC0F98690BCB1F /* SendConfirmationFieldCell.swift */; };
 		58AAAF60C09C70550BD437A9 /* SendAmountInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD6F502BE56E4FECFBA0 /* SendAmountInteractor.swift */; };
 		58AAAF6248682EE23B3C3D5A /* DebugLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA18F75B95ACBBAE94DF3 /* DebugLogger.swift */; };
 		58AAAF657CB1F0F0295E982E /* BackupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5F63E9C788A68C8AF5A /* BackupPresenter.swift */; };
@@ -1955,6 +1955,7 @@
 		11B355AE4EC2E1B56904AB13 /* NotificationSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettingsViewController.swift; sourceTree = "<group>"; };
 		11B355E86612AEE00ED19CFE /* BackupManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupManager.swift; sourceTree = "<group>"; };
 		11B355F297366E6AF1549492 /* PrivacyEthereumRpcModeModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyEthereumRpcModeModule.swift; sourceTree = "<group>"; };
+		11B355F6D50A7099E7455822 /* AdditionalDataCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdditionalDataCell.swift; sourceTree = "<group>"; };
 		11B35614C6E244926AF48701 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		11B3563ED22080EE222848A5 /* GuideImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideImageCell.swift; sourceTree = "<group>"; };
 		11B3566D9CACCEF57F44FF1D /* ManageAccountsViewItemFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAccountsViewItemFactoryTests.swift; sourceTree = "<group>"; };
@@ -2469,7 +2470,6 @@
 		58AAADD445F174344AFB6AAC /* DebugModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugModule.swift; sourceTree = "<group>"; };
 		58AAAE11F750506E50B37B8B /* RateListSorter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateListSorter.swift; sourceTree = "<group>"; };
 		58AAAE13528FF0F1CD7067A5 /* NotificationFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationFactoryTests.swift; sourceTree = "<group>"; };
-		58AAAE1BB9FC0F98690BCB1F /* SendConfirmationFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendConfirmationFieldCell.swift; sourceTree = "<group>"; };
 		58AAAE622FCAB8C2400A3149 /* GradientLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientLayer.swift; sourceTree = "<group>"; };
 		58AAAE75A33F6C7304A3F8EE /* BackupConfirmationPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupConfirmationPresenter.swift; sourceTree = "<group>"; };
 		58AAAEA9AB2118A46863AEB5 /* FullTransactionInfoPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoPresenterTests.swift; sourceTree = "<group>"; };
@@ -2721,6 +2721,7 @@
 				11B35C6D66CF7BCBF59E67D6 /* BottomSheetCheckmarkCell.swift */,
 				11B354E4F417F3826DD3BAF5 /* AddressInputFieldCell.swift */,
 				11B354E55E901615862E7CD4 /* ButtonCell.swift */,
+				11B355F6D50A7099E7455822 /* AdditionalDataCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -4091,7 +4092,6 @@
 			isa = PBXGroup;
 			children = (
 				58AAAFA9479D63145A24BD9C /* SendConfirmationAmountCell.swift */,
-				58AAAE1BB9FC0F98690BCB1F /* SendConfirmationFieldCell.swift */,
 				58AAA0A7DCC834864D9AD4D5 /* SendConfirmationReceiverCell.swift */,
 				58AAA5D396A321E46E3A8D99 /* SendConfirmationMemoCell.swift */,
 			);
@@ -5005,7 +5005,6 @@
 				11B35986EB197D5C17EA63B4 /* SendMemoModule.swift in Sources */,
 				2FA5D3089083CC312E701E05 /* TimeInterval.swift in Sources */,
 				58AAA6D40A2C4447AB85A285 /* SendConfirmationAmountCell.swift in Sources */,
-				58AAAF5F0B8148F42BC494A3 /* SendConfirmationFieldCell.swift in Sources */,
 				58AAAC5AA637BE777F822C70 /* SectionHeaderFooterTextView.swift in Sources */,
 				11B35D4D8F5A035E1B653198 /* TransactionViewItem.swift in Sources */,
 				11B35AF67D9BA187050E8F0D /* TransactionViewItemFactory.swift in Sources */,
@@ -5297,6 +5296,7 @@
 				11B35478A58525F38E2F8A72 /* AddErc20TokenRouter.swift in Sources */,
 				11B35C2EBD4BEDBDF8299AA1 /* AddressInputFieldCell.swift in Sources */,
 				11B35CA1B04C526F132360DB /* ButtonCell.swift in Sources */,
+				11B35F4CCFC683B6BF412403 /* AdditionalDataCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5643,7 +5643,6 @@
 				11B3561DC0573104B65773B0 /* SendMemoModule.swift in Sources */,
 				2FA5D98D7EE8F90744430243 /* TimeInterval.swift in Sources */,
 				58AAAC7F74556AB6B3AD9D63 /* SendConfirmationAmountCell.swift in Sources */,
-				58AAA7E280375B58308C839B /* SendConfirmationFieldCell.swift in Sources */,
 				58AAA7F2D05806CC22121935 /* SectionHeaderFooterTextView.swift in Sources */,
 				11B354008C41AFF33191F4E9 /* TransactionViewItem.swift in Sources */,
 				11B3526C9A7E3D28562D6673 /* TransactionViewItemFactory.swift in Sources */,
@@ -5934,6 +5933,7 @@
 				11B3584CAA484A87E42D0312 /* AddErc20TokenRouter.swift in Sources */,
 				11B35929C438E3F2F78D5029 /* AddressInputFieldCell.swift in Sources */,
 				11B35A52C122A756C0A43604 /* ButtonCell.swift in Sources */,
+				11B35D53E7F7AD24B3A26339 /* AdditionalDataCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6241,7 +6241,6 @@
 				11B3531F0D90C639FBF7408E /* SendMemoModule.swift in Sources */,
 				2FA5DDDD98533BAFCF3819C8 /* TimeInterval.swift in Sources */,
 				58AAAFEEC27E71FF55CBE115 /* SendConfirmationAmountCell.swift in Sources */,
-				58AAA5F9B6B9DCEB3C1DDF0C /* SendConfirmationFieldCell.swift in Sources */,
 				58AAA310A3437BC4975FCBAF /* SectionHeaderFooterTextView.swift in Sources */,
 				11B355539506DA979B8ECE97 /* TransactionViewItem.swift in Sources */,
 				11B35580776AC575EDFA69CD /* TransactionViewItemFactory.swift in Sources */,
@@ -6532,6 +6531,7 @@
 				11B3549F9161D23927F563E6 /* AddErc20TokenRouter.swift in Sources */,
 				11B3534D35400D7B08835BFF /* AddressInputFieldCell.swift in Sources */,
 				11B356ECE0D41F928FCED96C /* ButtonCell.swift in Sources */,
+				11B35DE05BD38DF0422DA633 /* AdditionalDataCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
