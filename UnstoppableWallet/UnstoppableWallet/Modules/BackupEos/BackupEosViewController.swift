@@ -10,9 +10,9 @@ class BackupEosViewController: ThemeViewController {
 
     private let container = UIView()
     private let accountLabel = UILabel()
-    private let accountField = AddressInputField(frame: .zero, placeholder: nil, showQrButton: false, canEdit: false, lineBreakMode: .byTruncatingMiddle, rightButtonMode: .copy)
+    private let accountField = AddressInputField()
     private let activePrivateKeyLabel = UILabel()
-    private let activePrivateKeyField = AddressInputField(frame: .zero, placeholder: nil, numberOfLines: 2, showQrButton: false, canEdit: false, lineBreakMode: .byTruncatingMiddle, rightButtonMode: .copy)
+    private let activePrivateKeyField = AddressInputField()
     private let hintLabel = UILabel()
     private let qrCodeImageView = UIImageView()
 
@@ -70,6 +70,11 @@ class BackupEosViewController: ThemeViewController {
             maker.top.equalTo(self.accountLabel.snp.bottom).offset(CGFloat.margin2x)
             maker.height.equalTo(44)
         }
+
+        accountField.canEdit = false
+        accountField.lineBreakMode = .byTruncatingMiddle
+        accountField.rightButtonMode = .copy
+
         accountField.onCopy = { [weak self] in
             self?.delegate.onCopyAddress()
         }
@@ -86,6 +91,12 @@ class BackupEosViewController: ThemeViewController {
             maker.top.equalTo(self.activePrivateKeyLabel.snp.bottom).offset(CGFloat.margin2x)
             maker.height.equalTo(66)
         }
+
+        activePrivateKeyField.numberOfLines = 2
+        activePrivateKeyField.canEdit = false
+        activePrivateKeyField.lineBreakMode = .byTruncatingMiddle
+        activePrivateKeyField.rightButtonMode = .copy
+
         activePrivateKeyField.onCopy = { [weak self] in
             self?.delegate.onCopyPrivateKey()
         }

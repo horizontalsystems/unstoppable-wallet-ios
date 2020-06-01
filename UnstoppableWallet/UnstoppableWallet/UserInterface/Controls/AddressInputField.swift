@@ -25,11 +25,19 @@ class AddressInputField: UIView {
     private let pasteButton = ThemeButton()
     private let copyButton = ThemeButton()
 
-    private let placeholder: String?
-    private let numberOfLines: Int
-    private let showQrButton: Bool
-    private let canEdit: Bool
-    private let rightButtonMode: RightButtonMode
+    var numberOfLines: Int = 1 {
+        didSet {
+            addressField.textContainer.maximumNumberOfLines = numberOfLines
+        }
+    }
+
+    var showQrButton: Bool = false {
+        didSet {
+            scanButton.isHidden = !showQrButton
+        }
+    }
+
+    var rightButtonMode: RightButtonMode = .delete
 
     var onPaste: (() -> ())?
     var onScan: (() -> ())?
@@ -37,13 +45,8 @@ class AddressInputField: UIView {
     var onCopy: (() -> ())?
     var onTextChange: ((String?) -> ())?
 
-    init(frame: CGRect, placeholder: String?, numberOfLines: Int = 1, showQrButton: Bool, canEdit: Bool, lineBreakMode: NSLineBreakMode, rightButtonMode: RightButtonMode = .delete) {
-        self.placeholder = placeholder
-        self.numberOfLines = numberOfLines
-        self.showQrButton = showQrButton
-        self.canEdit = canEdit
-        self.rightButtonMode = rightButtonMode
-        super.init(frame: frame)
+    init() {
+        super.init(frame: .zero)
 
         addSubview(addressWrapperView)
         addressWrapperView.addSubview(addressField)
@@ -63,12 +66,10 @@ class AddressInputField: UIView {
         addressField.tintColor = .themeInputFieldTintColor
         addressField.keyboardAppearance = .themeDefault
         addressField.autocapitalizationType = .none
-        addressField.isUserInteractionEnabled = canEdit
         addressField.textContainer.maximumNumberOfLines = numberOfLines
         addressField.textColor = .themeOz
 
         addressField.font = addressFieldFont
-        addressField.textContainer.lineBreakMode = lineBreakMode
         addressField.textContainer.lineFragmentPadding = 0
         addressField.textContainerInset = .zero
         addressField.backgroundColor = .clear
@@ -81,7 +82,6 @@ class AddressInputField: UIView {
             maker.leading.equalToSuperview()
             maker.centerY.equalToSuperview()
         }
-        placeholderLabel.text = placeholder
 
         errorLabel.font = errorFont
         errorLabel.textColor = .themeLucian
@@ -144,6 +144,33 @@ class AddressInputField: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    var placeholder: String? {
+        get {
+            placeholderLabel.text
+        }
+        set {
+            placeholderLabel.text = newValue
+        }
+    }
+
+    var canEdit: Bool {
+        get {
+            addressField.isUserInteractionEnabled
+        }
+        set {
+            addressField.isUserInteractionEnabled = newValue
+        }
+    }
+
+    var lineBreakMode: NSLineBreakMode {
+        get {
+            addressField.textContainer.lineBreakMode
+        }
+        set {
+            addressField.textContainer.lineBreakMode = newValue
+        }
     }
 
     func bind(address: String?, error: Error?) {
