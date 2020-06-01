@@ -9,6 +9,10 @@ class AddErc20TokenViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private var address: String?
+    private var spinnerVisible = false
+    private var viewItem: AddErc20TokenModule.ViewItem?
+    private var warningVisible = false
+    private var buttonVisible = false
 
     init(delegate: IAddErc20TokenViewDelegate) {
         self.delegate = delegate
@@ -35,6 +39,9 @@ class AddErc20TokenViewController: ThemeViewController {
         tableView.separatorStyle = .none
 
         tableView.registerCell(forClass: AddressInputFieldCell.self)
+        tableView.registerCell(forClass: AddErc20TokenSpinnerCell.self)
+        tableView.registerCell(forClass: AdditionalDataCell.self)
+        tableView.registerCell(forClass: ButtonCell.self)
         tableView.sectionDataSource = self
 
         tableView.buildSections()
@@ -67,7 +74,39 @@ class AddErc20TokenViewController: ThemeViewController {
                     )
                 }
         )
+    }
 
+    private func spinnerRow() -> RowProtocol {
+        Row<AddErc20TokenSpinnerCell>(
+                id: "spinner",
+                height: .heightSingleLineCell,
+                bind: { cell, _ in
+                    cell.startAnimating()
+                }
+        )
+    }
+
+    private func additionalDataRow(title: String, value: String?) -> RowProtocol {
+        Row<AdditionalDataCell>(
+                id: title,
+                hash: value,
+                height: AdditionalDataCell.height,
+                bind: { cell, _ in
+                    cell.bind(title: title, value: value, highlighted: true)
+                }
+        )
+    }
+
+    private func buttonRow() -> RowProtocol {
+        Row<ButtonCell>(
+                id: "add_button",
+                height: ButtonCell.height(),
+                bind: { cell, _ in
+                    cell.bind(style: .primaryYellow, title: "add_erc20_token.add".localized) { [weak self] in
+                        self?.delegate.onTapAddButton()
+                    }
+                }
+        )
     }
 
 }
@@ -75,12 +114,26 @@ class AddErc20TokenViewController: ThemeViewController {
 extension AddErc20TokenViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        [
+        var rows: [RowProtocol] = [inputFieldRow(address: address)]
+
+        if spinnerVisible {
+            rows.append(spinnerRow())
+        }
+
+        if let viewItem = viewItem {
+            rows.append(additionalDataRow(title: "add_erc20_token.coin_name".localized, value: viewItem.coinName))
+            rows.append(additionalDataRow(title: "add_erc20_token.symbol".localized, value: viewItem.symbol))
+            rows.append(additionalDataRow(title: "add_erc20_token.decimals".localized, value: "\(viewItem.decimals)"))
+        }
+
+        if buttonVisible {
+            rows.append(buttonRow())
+        }
+
+        return [
             Section(
                     id: "main",
-                    rows: [
-                        inputFieldRow(address: address)
-                    ]
+                    rows: rows
             )
         ]
     }
@@ -91,6 +144,25 @@ extension AddErc20TokenViewController: IAddErc20TokenView {
 
     func set(address: String?) {
         self.address = address
+    }
+
+    func set(spinnerVisible: Bool) {
+        self.spinnerVisible = spinnerVisible
+    }
+
+    func set(viewItem: AddErc20TokenModule.ViewItem?) {
+        self.viewItem = viewItem
+    }
+
+    func set(warningVisible: Bool) {
+        self.warningVisible = warningVisible
+    }
+
+    func set(buttonVisible: Bool) {
+        self.buttonVisible = buttonVisible
+    }
+
+    func refresh() {
         tableView.reload()
     }
 
