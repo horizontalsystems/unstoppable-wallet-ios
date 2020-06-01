@@ -5,12 +5,14 @@ import ThemeKit
 class WelcomeScreenViewController: UIViewController {
     private let delegate: IWelcomeScreenViewDelegate
 
+    private let wrapperView = UIView()
+
     private let scrollView = UIScrollView()
     private let imageWrapperView = UIView()
     private var imageViews = [UIImageView]()
     private let bottomWrapperBackground = UIView()
     private let bottomWrapper = UIView()
-    private let pageControl = UIPageControl()
+    private let pageControl: BarPageControl
 
     private let skipButton = UIButton()
     private let nextButton = UIButton()
@@ -28,6 +30,7 @@ class WelcomeScreenViewController: UIViewController {
 
     init(delegate: IWelcomeScreenViewDelegate) {
         self.delegate = delegate
+        pageControl = BarPageControl(barCount: slides.count)
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -41,10 +44,16 @@ class WelcomeScreenViewController: UIViewController {
 
         view.backgroundColor = .themeDarker
 
-        view.addSubview(imageWrapperView)
+        view.addSubview(wrapperView)
+        wrapperView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        wrapperView.addSubview(imageWrapperView)
         imageWrapperView.snp.makeConstraints { maker in
             maker.leading.top.trailing.equalToSuperview()
-            maker.height.equalToSuperview().dividedBy(2)
+            maker.height.equalToSuperview().multipliedBy(3.0 / 5.0)
         }
 
         let circleImageView = UIImageView(image: UIImage(named: "Intro - Circle"))
@@ -103,10 +112,7 @@ class WelcomeScreenViewController: UIViewController {
             maker.center.equalToSuperview()
         }
 
-        pageControl.numberOfPages = slides.count
         pageControl.currentPage = 0
-        pageControl.pageIndicatorTintColor = .themeSteel20
-        pageControl.currentPageIndicatorTintColor = .themeJacob
 
         bottomWrapper.addSubview(skipButton)
         skipButton.snp.makeConstraints { maker in
@@ -267,8 +273,8 @@ class WelcomeScreenViewController: UIViewController {
     private func showWelcome() {
         let animationDuration: TimeInterval = 0.4
 
+        wrapperView.set(hidden: true, animated: true, duration: animationDuration)
         scrollView.set(hidden: true, animated: true, duration: animationDuration)
-        imageWrapperView.set(hidden: true, animated: true, duration: animationDuration)
         bottomWrapperBackground.set(hidden: true, animated: true, duration: animationDuration)
         bottomWrapper.set(hidden: true, animated: true, duration: animationDuration)
 

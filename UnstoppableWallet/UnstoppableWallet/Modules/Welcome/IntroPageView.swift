@@ -11,16 +11,24 @@ class IntroPageView: UIView {
 
         addSubview(wrapperView)
         wrapperView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.bottom.equalTo(self.safeAreaLayoutGuide)
+        }
+
+        let textWrapperView = UIView()
+
+        wrapperView.addSubview(textWrapperView)
+        textWrapperView.snp.makeConstraints { maker in
             maker.leading.trailing.bottom.equalToSuperview()
-            maker.height.equalToSuperview().dividedBy(2)
+            maker.height.equalToSuperview().multipliedBy(2.0 / 5.0)
         }
 
         let titleLabel = UILabel()
 
-        wrapperView.addSubview(titleLabel)
+        textWrapperView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin12x)
-            maker.top.equalToSuperview().offset(CGFloat.margin6x)
+            maker.top.equalToSuperview().offset(CGFloat.margin8x)
         }
 
         titleLabel.textAlignment = .center
@@ -30,7 +38,7 @@ class IntroPageView: UIView {
 
         let descriptionLabel = UILabel()
 
-        wrapperView.addSubview(descriptionLabel)
+        textWrapperView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin12x)
             maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin4x)
