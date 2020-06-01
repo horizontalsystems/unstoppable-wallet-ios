@@ -44,7 +44,7 @@ class AdditionalDataCell: UITableViewCell {
         titleLabel.text = title
         valueLabel.text = value
 
-        valueLabel.textColor = highlighted ? .themeGray : .themeOz
+        valueLabel.textColor = highlighted ? .themeOz : .themeGray
     }
 
 }

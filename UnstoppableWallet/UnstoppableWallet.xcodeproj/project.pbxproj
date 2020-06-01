@@ -64,6 +64,7 @@
 		11B3515788E450B15F80E773 /* PriceAlertViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35500FBBBDCCF35143B4C /* PriceAlertViewItemFactory.swift */; };
 		11B3515AAA8F57C367776EB4 /* SendAccountPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3522F4EC3F33A0801A017 /* SendAccountPresenter.swift */; };
 		11B35177B650540BCEA880B3 /* UnlinkInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351A464627DCBABD1AC17 /* UnlinkInteractor.swift */; };
+		11B35186D51338D2600B8210 /* AddErc20TokenSpinnerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356E3A56BD0105E8957EE /* AddErc20TokenSpinnerCell.swift */; };
 		11B3518E536A06DD6C10774D /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C4FFB99D10A8F343E9C /* LanguageManager.swift */; };
 		11B35191E1A9626DF75D6A51 /* GuidePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359B9C1E0BB4D32599695 /* GuidePresenter.swift */; };
 		11B3519526D833BD0D46D3CC /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359907F922F6935929D0B /* NotificationManager.swift */; };
@@ -201,6 +202,7 @@
 		11B3545A8A2A23ADB5BA1E0A /* IntroPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A05B93CB243B6404C4A /* IntroPageView.swift */; };
 		11B3546128004E2E5F3CD23A /* RestorePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BAEE22C144B33661819 /* RestorePresenter.swift */; };
 		11B35465DD4B55E6F99D885E /* GuideHeader3Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358A78367D108DD529C1B /* GuideHeader3Cell.swift */; };
+		11B35466BD0B360DD3EE3B89 /* AddErc20TokenSpinnerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356E3A56BD0105E8957EE /* AddErc20TokenSpinnerCell.swift */; };
 		11B3546D0CA441F8F2C988AD /* TransactionRecordPoolState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3592889642D8823BEDAE2 /* TransactionRecordPoolState.swift */; };
 		11B3546D93941524CF7A8739 /* ManageAccountsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35283DEB96027246DFFFE /* ManageAccountsRouter.swift */; };
 		11B3546E0AE5C0AE3D166FC9 /* AlertModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C9F199E2A1D297480A4 /* AlertModule.swift */; };
@@ -459,6 +461,7 @@
 		11B359B26C54E23BDBBCE090 /* BitcoinHodlingModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3514A59589CED7BBDC466 /* BitcoinHodlingModule.swift */; };
 		11B359B3AA3DBA42E09A11AD /* AddTokenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353781796807F7F44AA4F /* AddTokenPresenter.swift */; };
 		11B359B6BE7572F551D44F2D /* GuideHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DDFA4734869DDFFA316 /* GuideHeaderCell.swift */; };
+		11B359BB545A07401D4917D5 /* AddErc20TokenSpinnerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356E3A56BD0105E8957EE /* AddErc20TokenSpinnerCell.swift */; };
 		11B359BBF55CD772D0815833 /* BalanceHeaderViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D1D60E1D0A206C70490 /* BalanceHeaderViewItem.swift */; };
 		11B359CC4B492477E14339B2 /* KeychainKitDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3555A19D9E41785D88A5E /* KeychainKitDelegate.swift */; };
 		11B359CD82F2491AC552C1E7 /* BalanceSeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F135EB8A1F65CEEF396 /* BalanceSeparatorView.swift */; };
@@ -1969,6 +1972,7 @@
 		11B356BF2366DEE7FB54C241 /* SortTypeInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortTypeInteractor.swift; sourceTree = "<group>"; };
 		11B356D6300E64A1982BC9EB /* UIAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		11B356D999722D69D56CBAAF /* SortTypeModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortTypeModule.swift; sourceTree = "<group>"; };
+		11B356E3A56BD0105E8957EE /* AddErc20TokenSpinnerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddErc20TokenSpinnerCell.swift; sourceTree = "<group>"; };
 		11B357023C453DC0EEC1910B /* NotificationSettingsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettingsRouter.swift; sourceTree = "<group>"; };
 		11B3570D7EEAB2DE4E6A5D74 /* UIImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		11B3572B7C2F16CD51F37FF0 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
@@ -2670,6 +2674,7 @@
 		11B351816FACBB33F9100BFE /* AddErc20Token */ = {
 			isa = PBXGroup;
 			children = (
+				11B35BA6BACC88FFA2A78368 /* Cells */,
 				11B358A5B2FA437E8B42584E /* AddErc20TokenModule.swift */,
 				11B35D8FAB5571A058E34430 /* AddErc20TokenRouter.swift */,
 				11B35B5DA319203E98E7FEBB /* AddErc20TokenInteractor.swift */,
@@ -3319,6 +3324,14 @@
 				11B3532DFFBC8DCEEBDC19FB /* WordsValidatorTests.swift */,
 			);
 			path = Backup;
+			sourceTree = "<group>";
+		};
+		11B35BA6BACC88FFA2A78368 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				11B356E3A56BD0105E8957EE /* AddErc20TokenSpinnerCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		11B35C1A2B620B277F5E2FD7 /* Components */ = {
@@ -5297,6 +5310,7 @@
 				11B35C2EBD4BEDBDF8299AA1 /* AddressInputFieldCell.swift in Sources */,
 				11B35CA1B04C526F132360DB /* ButtonCell.swift in Sources */,
 				11B35F4CCFC683B6BF412403 /* AdditionalDataCell.swift in Sources */,
+				11B35186D51338D2600B8210 /* AddErc20TokenSpinnerCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5934,6 +5948,7 @@
 				11B35929C438E3F2F78D5029 /* AddressInputFieldCell.swift in Sources */,
 				11B35A52C122A756C0A43604 /* ButtonCell.swift in Sources */,
 				11B35D53E7F7AD24B3A26339 /* AdditionalDataCell.swift in Sources */,
+				11B35466BD0B360DD3EE3B89 /* AddErc20TokenSpinnerCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6532,6 +6547,7 @@
 				11B3534D35400D7B08835BFF /* AddressInputFieldCell.swift in Sources */,
 				11B356ECE0D41F928FCED96C /* ButtonCell.swift in Sources */,
 				11B35DE05BD38DF0422DA633 /* AdditionalDataCell.swift in Sources */,
+				11B359BB545A07401D4917D5 /* AddErc20TokenSpinnerCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
