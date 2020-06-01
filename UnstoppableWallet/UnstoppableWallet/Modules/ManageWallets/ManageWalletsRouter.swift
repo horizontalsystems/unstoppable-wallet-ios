@@ -17,10 +17,6 @@ extension ManageWalletsRouter: IManageWalletsRouter {
         viewController?.present(module, animated: true)
     }
 
-    func close() {
-        viewController?.dismiss(animated: true)
-    }
-
 }
 
 extension ManageWalletsRouter {
@@ -40,7 +36,7 @@ extension ManageWalletsRouter {
         presenter.view = viewController
         router.viewController = viewController
 
-        return ThemeNavigationController(rootViewController: viewController)
+        return viewController
     }
 
 }

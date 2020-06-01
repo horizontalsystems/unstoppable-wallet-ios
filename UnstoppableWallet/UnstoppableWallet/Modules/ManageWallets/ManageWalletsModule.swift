@@ -9,7 +9,7 @@ protocol IManageWalletsViewDelegate {
     func onDisable(viewItem: CoinToggleViewItem)
     func onSelect(viewItem: CoinToggleViewItem)
 
-    func onTapCloseButton()
+    func onTapAddToken()
 }
 
 protocol IManageWalletsInteractor {
@@ -32,7 +32,6 @@ protocol IManageWalletsInteractorDelegate: AnyObject {
 protocol IManageWalletsRouter {
     func showDerivationSetting(coin: Coin, currentDerivation: MnemonicDerivation, delegate: IDerivationSettingDelegate)
     func showNoAccount(coin: Coin)
-    func close()
 }
 
 protocol IManageWalletsPresenterState {

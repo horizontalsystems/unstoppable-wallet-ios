@@ -83,8 +83,8 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
         router.showNoAccount(coin: viewItem.coin)
     }
 
-    func onTapCloseButton() {
-        router.close()
+    func onTapAddToken() {
+
     }
 
 }

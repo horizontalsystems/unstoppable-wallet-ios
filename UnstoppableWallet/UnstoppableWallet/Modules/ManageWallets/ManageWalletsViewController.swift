@@ -27,7 +27,7 @@ class ManageWalletsViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = "manage_coins.title".localized
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .plain, target: self, action: #selector(onTapCloseButton))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "manage_coins.add_token".localized, style: .plain, target: self, action: #selector(onTapAddTokenButton))
 
         tableView.registerCell(forClass: CoinToggleCell.self)
         tableView.sectionDataSource = self
@@ -45,8 +45,8 @@ class ManageWalletsViewController: ThemeViewController {
         tableView.buildSections()
     }
 
-    @objc func onTapCloseButton() {
-        delegate.onTapCloseButton()
+    @objc func onTapAddTokenButton() {
+        delegate.onTapAddToken()
     }
 
     private func rows(viewItems: [CoinToggleViewItem]) -> [RowProtocol] {
