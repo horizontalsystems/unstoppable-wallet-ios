@@ -17,6 +17,11 @@ extension ManageWalletsRouter: IManageWalletsRouter {
         viewController?.present(module, animated: true)
     }
 
+    func showAddToken() {
+        let module = AddTokenRouter.module(sourceViewController: viewController)
+        viewController?.present(module, animated: true)
+    }
+
 }
 
 extension ManageWalletsRouter {

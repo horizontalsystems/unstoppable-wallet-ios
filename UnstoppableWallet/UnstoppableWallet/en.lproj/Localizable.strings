@@ -492,3 +492,11 @@ bch.horizontalsystems.xyz/apg";
 
 "guides.tab_bar_item" = "Guides";
 "guides.title" = "Guides";
+
+// Add Token
+
+"add_token.choose_blockchain" = "Choose Blockchain";
+"add_token.add_token" = "Add Token";
+"add_token.erc20_token" = "ERC20 Token";
+"add_token.eos_token" = "EOS Token";
+"add_token.binance_token" = "Binance Token";

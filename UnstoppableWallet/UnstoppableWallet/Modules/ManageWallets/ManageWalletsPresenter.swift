@@ -84,7 +84,7 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
     }
 
     func onTapAddToken() {
-
+        router.showAddToken()
     }
 
 }
