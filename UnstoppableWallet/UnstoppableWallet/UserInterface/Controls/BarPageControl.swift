@@ -46,6 +46,10 @@ class BarPageControl: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    var numberOfPages: Int {
+        barViews.count
+    }
+
     private func updateBackgrounds() {
         for (index, view) in barViews.enumerated() {
             view.backgroundColor = index == currentPage ? .themeJacob : .themeSteel20
