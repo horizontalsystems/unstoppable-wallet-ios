@@ -7,7 +7,7 @@ class SendAccountView: UIView {
 
     public init(delegate: ISendAccountViewDelegate) {
         self.delegate = delegate
-        addressInputField = AddressInputField(frame: .zero, placeholder: "send.account_placeholder".localized, showQrButton: true, canEdit: true, lineBreakMode: .byTruncatingMiddle)
+        addressInputField = AddressInputField()
 
         super.init(frame: .zero)
 
@@ -19,6 +19,11 @@ class SendAccountView: UIView {
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.bottom.equalToSuperview()
         }
+
+        addressInputField.placeholder = "send.account_placeholder".localized
+        addressInputField.showQrButton = true
+        addressInputField.lineBreakMode = .byTruncatingMiddle
+
         addressInputField.onScan = { [weak self] in
             self?.delegate.onScanClicked()
         }

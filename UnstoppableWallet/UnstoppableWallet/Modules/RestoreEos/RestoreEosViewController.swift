@@ -5,8 +5,8 @@ import ThemeKit
 class RestoreEosViewController: ThemeViewController {
     private let delegate: IRestoreEosViewDelegate
 
-    private let accountNameField = AddressInputField(frame: .zero, placeholder: "restore.placeholder.account_name".localized, showQrButton: false, canEdit: true, lineBreakMode: .byWordWrapping)
-    private let accountPrivateKeyField = AddressInputField(frame: .zero, placeholder: "restore.placeholder.private_key".localized, numberOfLines: 2, showQrButton: true, canEdit: false, lineBreakMode: .byWordWrapping)
+    private let accountNameField = AddressInputField()
+    private let accountPrivateKeyField = AddressInputField()
 
     init(delegate: IRestoreEosViewDelegate) {
         self.delegate = delegate
@@ -34,6 +34,9 @@ class RestoreEosViewController: ThemeViewController {
             maker.top.equalTo(view.snp.topMargin).offset(CGFloat.margin3x)
             maker.height.equalTo(CGFloat.heightSingleLineInput)
         }
+
+        accountNameField.placeholder = "restore.placeholder.account_name".localized
+
         accountNameField.onPaste = { [weak self] in
             self?.delegate.onPasteAccountClicked()
         }
@@ -50,6 +53,12 @@ class RestoreEosViewController: ThemeViewController {
             maker.top.equalTo(accountNameField.snp.bottom).offset(CGFloat.margin4x)
             maker.height.equalTo(CGFloat.heightDoubleLineInput)
         }
+
+        accountPrivateKeyField.placeholder = "restore.placeholder.private_key".localized
+        accountPrivateKeyField.numberOfLines = 2
+        accountPrivateKeyField.showQrButton = true
+        accountPrivateKeyField.canEdit = false
+
         accountPrivateKeyField.onPaste = { [weak self] in
             self?.delegate.onPasteKeyClicked()
         }
