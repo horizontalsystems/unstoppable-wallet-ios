@@ -14,7 +14,12 @@ class AddTokenRouter {
 extension AddTokenRouter: IAddTokenRouter {
 
     func closeAndShowAddErc20Token() {
-        viewController?.dismiss(animated: true)
+        let module = AddErc20TokenRouter.module()
+
+        viewController?.dismiss(animated: true) { [weak self] in
+            self?.sourceViewController?.present(module, animated: true)
+        }
+
     }
 
     func close() {
