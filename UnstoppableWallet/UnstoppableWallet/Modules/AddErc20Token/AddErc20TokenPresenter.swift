@@ -13,6 +13,14 @@ class AddErc20TokenPresenter {
 
 extension AddErc20TokenPresenter: IAddErc20TokenViewDelegate {
 
+    func onTapPasteAddress() {
+        view?.set(address: "abcdef2736623b87237i723bi76v32iu6i276v8236i7o")
+    }
+
+    func onTapDeleteAddress() {
+        view?.set(address: nil)
+    }
+
     func onTapCancel() {
         router.close()
     }

@@ -1,7 +1,10 @@
 protocol IAddErc20TokenView: class {
+    func set(address: String?)
 }
 
 protocol IAddErc20TokenViewDelegate {
+    func onTapPasteAddress()
+    func onTapDeleteAddress()
     func onTapCancel()
 }
 
