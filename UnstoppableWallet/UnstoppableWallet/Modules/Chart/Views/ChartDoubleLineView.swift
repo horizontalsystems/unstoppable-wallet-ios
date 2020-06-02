@@ -1,11 +1,11 @@
 import UIKit
 import SnapKit
 
-class DoubleLineView: UIView {
+class ChartDoubleLineView: UIView {
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
 
-    init(titleColor: UIColor = .themeLeah, titleFont: UIFont = .caption, subtitleColor: UIColor = .themeGray, subtitleFont: UIFont = .micro, marginBetween: CGFloat = 3) {
+    init(titleColor: UIColor = .themeOz, titleFont: UIFont = .captionSB, subtitleColor: UIColor = .themeGray, subtitleFont: UIFont = .caption, marginBetween: CGFloat = 0, textAlignment: NSTextAlignment = .left) {
         super.init(frame: .zero)
 
         addSubview(titleLabel)
@@ -21,8 +21,10 @@ class DoubleLineView: UIView {
 
         titleLabel.textColor = titleColor
         titleLabel.font = titleFont
+        titleLabel.textAlignment = textAlignment
         subtitleLabel.textColor = subtitleColor
         subtitleLabel.font = subtitleFont
+        subtitleLabel.textAlignment = textAlignment
     }
 
     required init?(coder aDecoder: NSCoder) {

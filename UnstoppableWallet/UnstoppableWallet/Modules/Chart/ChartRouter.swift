@@ -1,5 +1,6 @@
 import UIKit
 import ThemeKit
+import LanguageKit
 import Chart
 import SafariServices
 
@@ -7,28 +8,14 @@ class ChartRouter {
     weak var viewController: UIViewController?
 }
 
-extension ChartRouter: IChartRouter {
-
-    func open(link: String) {
-        if let url = URL(string: link) {
-            let configuration = SFSafariViewController.Configuration()
-            configuration.entersReaderIfAvailable = true
-
-            let vc = SFSafariViewController(url: url, configuration: configuration)
-            viewController?.present(vc, animated: true)
-        }
-    }
-
-}
-
 extension ChartRouter {
 
     static func module(coinCode: String, coinTitle: String) -> UIViewController {
         let router = ChartRouter()
-        let chartRateFactory = ChartRateFactory()
-        let interactor = ChartInteractor(rateManager: App.shared.rateManager, postsManager: App.shared.rateManager, chartTypeStorage: App.shared.localStorage, currentDateProvider: CurrentDateProvider())
-        let presenter = ChartPresenter(interactor: interactor, router: router, factory: chartRateFactory, coinCode: coinCode, coinTitle: coinTitle, currency: App.shared.currencyKit.baseCurrency)
-        let viewController = ChartViewController(delegate: presenter, chartConfiguration: ChartConfiguration.fullChart(currency: App.shared.currencyKit.baseCurrency))
+        let chartRateFactory = ChartRateFactory(timelineHelper: TimelineHelper(), indicatorFactory: IndicatorFactory(), currentLocale: LanguageManager.shared.currentLocale)
+        let interactor = ChartInteractor(rateManager: App.shared.rateManager, chartTypeStorage: App.shared.localStorage, currentDateProvider: CurrentDateProvider())
+        let presenter = ChartPresenter(interactor: interactor, factory: chartRateFactory, coinCode: coinCode, coinTitle: coinTitle, currency: App.shared.currencyKit.baseCurrency)
+        let viewController = ChartViewController(delegate: presenter, configuration: ChartConfiguration.fullChart)
 
         interactor.delegate = presenter
         presenter.view = viewController

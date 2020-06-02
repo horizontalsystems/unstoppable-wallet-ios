@@ -9,13 +9,10 @@ class ChartPresenter {
     weak var view: IChartView?
 
     private var interactor: IChartInteractor
-    private let router: IChartRouter
     private let factory: IChartRateFactory
 
-    private var marketInfo: MarketInfo?
+    private var chartDataStatus: ChartDataStatus<ChartInfo> = .loading
     private var marketInfoStatus: ChartDataStatus<MarketInfo> = .loading
-    private var chartInfoStatus: ChartDataStatus<ChartInfo> = .loading
-    private var postsStatus: ChartDataStatus<[CryptoNewsPost]> = .loading
 
     let coinTitle: String
     let coinCode: String
@@ -23,9 +20,10 @@ class ChartPresenter {
 
     private var chartType: ChartType
 
-    init(interactor: IChartInteractor, router: IChartRouter, factory: IChartRateFactory, coinCode: String, coinTitle: String, currency: Currency) {
+    private var selectedIndicator: ChartIndicatorMode = .none
+
+    init(interactor: IChartInteractor, factory: IChartRateFactory, coinCode: String, coinTitle: String, currency: Currency) {
         self.interactor = interactor
-        self.router = router
         self.factory = factory
         self.coinCode = coinCode
         self.coinTitle = coinTitle
@@ -34,34 +32,26 @@ class ChartPresenter {
         chartType = interactor.defaultChartType ?? .day
     }
 
-    private func updateView() {
-
-        let viewItem = factory.chartViewItem(type: chartType,
-                allTypes: types,
-                chartInfoStatus: chartInfoStatus,
+    private func updateChart() {
+        let viewItem = factory.chartViewItem(
+                chartDataStatus: chartDataStatus,
                 marketInfoStatus: marketInfoStatus,
-                postsStatus: postsStatus,
+                chartType: chartType,
                 coinCode: coinCode,
-                currency: currency)
+                currency: currency,
+                selectedIndicator: selectedIndicator)
 
         view?.set(viewItem: viewItem)
     }
 
     private func fetchInfo() {
-        chartInfoStatus = ChartDataStatus(data: interactor.chartInfo(coinCode: coinCode, currencyCode: currency.code, chartType: chartType))
+        chartDataStatus = ChartDataStatus(data: interactor.chartInfo(coinCode: coinCode, currencyCode: currency.code, chartType: chartType))
         interactor.subscribeToChartInfo(coinCode: coinCode, currencyCode: currency.code, chartType: chartType)
 
         marketInfoStatus = ChartDataStatus(data: interactor.marketInfo(coinCode: coinCode, currencyCode: currency.code))
         interactor.subscribeToMarketInfo(coinCode: coinCode, currencyCode: currency.code)
 
-        if let posts = interactor.posts(coinCode: coinCode) {
-            postsStatus = .completed(posts)
-        } else {
-            self.postsStatus = .loading
-            interactor.subscribeToPosts(coinCode: coinCode)
-        }
-
-        updateView()
+        updateChart()
     }
 
 }
@@ -70,12 +60,14 @@ extension ChartPresenter: IChartViewDelegate {
 
     func onLoad() {
         view?.set(title: coinTitle)
+
         view?.set(types: types.map { $0.title })
+        view?.setSelectedType(at: types.firstIndex(of: chartType))
 
         fetchInfo()
     }
 
-    func onSelectChartType(at index: Int) {
+    func onSelectType(at index: Int) {
         guard types.count > index else {
             return
         }
@@ -85,11 +77,13 @@ extension ChartPresenter: IChartViewDelegate {
         fetchInfo()
     }
 
-    func onTapPost(at index: Int) {
-        guard let posts = postsStatus.data else {
-            return
+    func onTap(indicator: ChartIndicatorMode) {
+        if selectedIndicator == indicator {
+            selectedIndicator = .none
+        } else {
+            selectedIndicator = indicator
         }
-        router.open(link: posts[index].url)
+        updateChart()
     }
 
 }
@@ -100,40 +94,38 @@ extension ChartPresenter: IChartInteractorDelegate {
         guard coinCode == coinCode else {
             return
         }
-        chartInfoStatus = .completed(chartInfo)
-        updateView()
+        chartDataStatus = .completed(chartInfo)
+        updateChart()
     }
 
     func didReceive(marketInfo: MarketInfo) {
         marketInfoStatus = .completed(marketInfo)
-        updateView()
-    }
-
-    func didReceive(posts: [CryptoNewsPost]) {
-        self.postsStatus = .completed(posts)
-        updateView()
+        updateChart()
     }
 
     func onChartInfoError() {
-        chartInfoStatus = .failed
-        updateView()
-    }
-
-    func onPostsError() {
-        self.postsStatus = .failed
-        updateView()
+        chartDataStatus = .failed
+        updateChart()
     }
 
 }
 
-extension ChartPresenter: IChartIndicatorDelegate {
+extension ChartPresenter: IChartViewTouchDelegate {
 
-    public func didTap(chartPoint: Chart.ChartPoint) {
-        view?.showSelectedPoint(viewItem: factory.selectedPointViewItem(type: chartType, chartPoint: chartPoint, currency: currency))
+    func touchDown() {
+        view?.setSelectedState(hidden: false)
     }
 
-    public func didFinishTap() {
-        view?.hideSelectedPoint()
+    func select(item: ChartItem) {
+        guard let rate = item.indicators[.rate] else {
+            return
+        }
+        let viewItem = factory.selectedPointViewItem(chartPoint: ChartPoint(timestamp: item.timestamp, value: rate, volume: item.indicators[.volume]), type: chartType, currency: currency)
+        view?.showSelectedPoint(viewItem: viewItem)
+    }
+
+    func touchUp() {
+        view?.setSelectedState(hidden: true)
     }
 
 }

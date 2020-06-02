@@ -1,30 +1,22 @@
 import UIKit
+import ThemeKit
 
 class ChartPointInfoView: UIView {
-    private let dateView = DoubleLineView()
-    private let priceView = DoubleLineView()
-    private let volumeView = DoubleLineView()
+    private let leftView = ChartDoubleLineView()
+    private let rightView = ChartDoubleLineView(titleColor: .themeGray, titleFont: .caption, textAlignment: .right)
 
     init() {
         super.init(frame: .zero)
 
-        addSubview(dateView)
-        addSubview(priceView)
-        addSubview(volumeView)
+        addSubview(leftView)
+        addSubview(rightView)
 
-        dateView.snp.makeConstraints { maker in
+        leftView.snp.makeConstraints { maker in
             maker.leading.top.bottom.equalToSuperview()
         }
-        priceView.snp.makeConstraints { maker in
-            maker.leading.equalTo(dateView.snp.trailing).offset(CGFloat.margin1x)
-            maker.top.bottom.equalTo(dateView)
-            maker.width.equalTo(dateView)
-        }
-        volumeView.snp.makeConstraints { maker in
-            maker.leading.equalTo(priceView.snp.trailing).offset(CGFloat.margin1x)
-            maker.trailing.equalToSuperview()
-            maker.top.bottom.equalTo(dateView)
-            maker.width.equalTo(priceView)
+        rightView.snp.makeConstraints { maker in
+            maker.top.trailing.bottom.equalToSuperview()
+            maker.width.equalTo(leftView)
         }
 
     }
@@ -33,14 +25,11 @@ class ChartPointInfoView: UIView {
         fatalError("not implemented")
     }
 
-    func bind(date: String?, time: String?, price: String?, volume: String?) {
-        dateView.bind(title: date, subtitle: time)
-
-        let priceSubtitle = price.map { _ in "chart.selected.price".localized }
-        priceView.bind(title: price, subtitle: priceSubtitle)
+    func bind(date: String?, price: String?, volume: String?) {
+        leftView.bind(title: price, subtitle: date)
 
         let volumeSubtitle = volume.map { _ in "chart.selected.volume".localized }
-        volumeView.bind(title: volume, subtitle: volumeSubtitle)
+        rightView.bind(title: volume, subtitle: volumeSubtitle)
     }
 
 }
