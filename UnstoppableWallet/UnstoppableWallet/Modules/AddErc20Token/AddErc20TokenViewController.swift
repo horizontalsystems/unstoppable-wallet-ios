@@ -2,6 +2,7 @@ import UIKit
 import SectionsTableView
 import SnapKit
 import ThemeKit
+import HUD
 
 class AddErc20TokenViewController: ThemeViewController {
     private let delegate: IAddErc20TokenViewDelegate
@@ -165,8 +166,11 @@ extension AddErc20TokenViewController: SectionsDataSource {
 
 extension AddErc20TokenViewController: IAddErc20TokenView {
 
-    func set(address: String?, error: Error?) {
+    func set(address: String?) {
         self.address = address
+    }
+
+    func set(error: Error?) {
         self.error = error
     }
 
@@ -188,6 +192,10 @@ extension AddErc20TokenViewController: IAddErc20TokenView {
 
     func refresh() {
         tableView.reload()
+    }
+
+    func showSuccess() {
+        HudHelper.instance.showSuccess()
     }
 
 }
