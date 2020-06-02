@@ -30,7 +30,7 @@ class PrivacyViewController: ThemeViewController {
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Attention Icon")?.tinted(with: .themeJacob), style: .plain, target: self, action: #selector(onTapInfo))
 
-        tableView.registerCell(forClass: PrivacyHeaderCell.self)
+        tableView.registerCell(forClass: HighlightedDescriptionCell.self)
         tableView.registerCell(forClass: PrivacyCell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
@@ -53,14 +53,19 @@ class PrivacyViewController: ThemeViewController {
     }
 
     private func headerSection() -> SectionProtocol {
-        let width = view.bounds.width
+        let text = "settings_privacy.header_description".localized
 
         return Section(
-                id: "header", rows: [
-                    Row<PrivacyHeaderCell>(
+                id: "header",
+                footerState: .margin(height: .margin3x),
+                rows: [
+                    Row<HighlightedDescriptionCell>(
                             id: "header_cell",
-                            dynamicHeight: { _ in
-                                PrivacyHeaderCell.height(containerWidth: width)
+                            dynamicHeight: { containerWidth in
+                                HighlightedDescriptionCell.height(containerWidth: containerWidth, text: text)
+                            },
+                            bind: { cell, _ in
+                                cell.bind(text: text)
                             }
                     )
                 ]

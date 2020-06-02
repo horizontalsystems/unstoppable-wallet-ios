@@ -9,6 +9,7 @@ class AddErc20TokenViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private var address: String?
+    private var error: Error?
     private var spinnerVisible = false
     private var viewItem: AddErc20TokenModule.ViewItem?
     private var warningVisible = false
@@ -41,6 +42,7 @@ class AddErc20TokenViewController: ThemeViewController {
         tableView.registerCell(forClass: AddressInputFieldCell.self)
         tableView.registerCell(forClass: AddErc20TokenSpinnerCell.self)
         tableView.registerCell(forClass: AdditionalDataCell.self)
+        tableView.registerCell(forClass: HighlightedDescriptionCell.self)
         tableView.registerCell(forClass: ButtonCell.self)
         tableView.sectionDataSource = self
 
@@ -72,6 +74,19 @@ class AddErc20TokenViewController: ThemeViewController {
                                 self?.delegate.onTapDeleteAddress()
                             }
                     )
+                }
+        )
+    }
+
+    private func warningRow(text: String) -> RowProtocol {
+        Row<HighlightedDescriptionCell>(
+                id: "warning",
+                hash: text,
+                dynamicHeight: { containerWidth in
+                    HighlightedDescriptionCell.height(containerWidth: containerWidth, text: text)
+                },
+                bind: { cell, _ in
+                    cell.bind(text: text)
                 }
         )
     }
@@ -116,6 +131,10 @@ extension AddErc20TokenViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         var rows: [RowProtocol] = [inputFieldRow(address: address)]
 
+        if let error = error {
+            rows.append(warningRow(text: error.smartDescription))
+        }
+
         if spinnerVisible {
             rows.append(spinnerRow())
         }
@@ -124,6 +143,10 @@ extension AddErc20TokenViewController: SectionsDataSource {
             rows.append(additionalDataRow(title: "add_erc20_token.coin_name".localized, value: viewItem.coinName))
             rows.append(additionalDataRow(title: "add_erc20_token.symbol".localized, value: viewItem.symbol))
             rows.append(additionalDataRow(title: "add_erc20_token.decimals".localized, value: "\(viewItem.decimals)"))
+        }
+
+        if warningVisible {
+            rows.append(warningRow(text: "add_erc20_token.already_exists".localized))
         }
 
         if buttonVisible {
@@ -142,8 +165,9 @@ extension AddErc20TokenViewController: SectionsDataSource {
 
 extension AddErc20TokenViewController: IAddErc20TokenView {
 
-    func set(address: String?) {
+    func set(address: String?, error: Error?) {
         self.address = address
+        self.error = error
     }
 
     func set(spinnerVisible: Bool) {

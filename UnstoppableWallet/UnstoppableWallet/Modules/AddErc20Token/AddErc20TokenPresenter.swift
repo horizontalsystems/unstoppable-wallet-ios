@@ -16,7 +16,7 @@ class AddErc20TokenPresenter {
 extension AddErc20TokenPresenter: IAddErc20TokenViewDelegate {
 
     func onTapPasteAddress() {
-        view?.set(address: "abcdef2736623b87237i723bi76v32iu6i276v8236i7o")
+        view?.set(address: "abcdef2736623b87237i723bi76v32iu6i276v8236i7o", error: nil)
         view?.set(spinnerVisible: true)
 
         view?.refresh()
@@ -24,7 +24,8 @@ extension AddErc20TokenPresenter: IAddErc20TokenViewDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             self?.view?.set(spinnerVisible: false)
             self?.view?.set(viewItem: AddErc20TokenModule.ViewItem(coinName: "Huobi", symbol: "HBO", decimals: 18))
-            self?.view?.set(buttonVisible: true)
+            self?.view?.set(warningVisible: true)
+//            self?.view?.set(buttonVisible: true)
 
             self?.view?.refresh()
         }
@@ -32,7 +33,7 @@ extension AddErc20TokenPresenter: IAddErc20TokenViewDelegate {
     }
 
     func onTapDeleteAddress() {
-        view?.set(address: nil)
+        view?.set(address: nil, error: nil)
         view?.set(viewItem: nil)
         view?.set(buttonVisible: false)
 

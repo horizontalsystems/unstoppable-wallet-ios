@@ -1,5 +1,5 @@
 protocol IAddErc20TokenView: class {
-    func set(address: String?)
+    func set(address: String?, error: Error?)
     func set(spinnerVisible: Bool)
     func set(viewItem: AddErc20TokenModule.ViewItem?)
     func set(warningVisible: Bool)
