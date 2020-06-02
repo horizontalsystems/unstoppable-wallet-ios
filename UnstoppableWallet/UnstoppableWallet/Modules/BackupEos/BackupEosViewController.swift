@@ -10,9 +10,9 @@ class BackupEosViewController: ThemeViewController {
 
     private let container = UIView()
     private let accountLabel = UILabel()
-    private let accountField = AddressInputField()
+    private let accountField = FormField()
     private let activePrivateKeyLabel = UILabel()
-    private let activePrivateKeyField = AddressInputField()
+    private let activePrivateKeyField = FormField()
     private let hintLabel = UILabel()
     private let qrCodeImageView = UIImageView()
 
@@ -65,17 +65,13 @@ class BackupEosViewController: ThemeViewController {
             maker.leading.equalToSuperview().offset(CGFloat.margin6x)
             maker.top.equalToSuperview().offset(CGFloat.margin3x + CGFloat.margin2x) // simulate placement in header
         }
+
         accountField.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(self.accountLabel.snp.bottom).offset(CGFloat.margin2x)
-            maker.height.equalTo(44)
+            maker.top.equalTo(accountLabel.snp.bottom).offset(CGFloat.margin2x)
         }
 
-        accountField.canEdit = false
-        accountField.lineBreakMode = .byTruncatingMiddle
-        accountField.rightButtonMode = .copy
-
-        accountField.onCopy = { [weak self] in
+        accountField.onTapCopy = { [weak self] in
             self?.delegate.onCopyAddress()
         }
 
@@ -86,18 +82,13 @@ class BackupEosViewController: ThemeViewController {
             maker.leading.equalToSuperview().offset(CGFloat.margin6x)
             maker.top.equalTo(self.accountField.snp.bottom).offset(CGFloat.margin3x + CGFloat.margin2x) // simulate placement in header
         }
+
         activePrivateKeyField.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(self.activePrivateKeyLabel.snp.bottom).offset(CGFloat.margin2x)
-            maker.height.equalTo(66)
+            maker.top.equalTo(activePrivateKeyLabel.snp.bottom).offset(CGFloat.margin2x)
         }
 
-        activePrivateKeyField.numberOfLines = 2
-        activePrivateKeyField.canEdit = false
-        activePrivateKeyField.lineBreakMode = .byTruncatingMiddle
-        activePrivateKeyField.rightButtonMode = .copy
-
-        activePrivateKeyField.onCopy = { [weak self] in
+        activePrivateKeyField.onTapCopy = { [weak self] in
             self?.delegate.onCopyPrivateKey()
         }
 
@@ -137,8 +128,8 @@ class BackupEosViewController: ThemeViewController {
             maker.height.equalTo(CGFloat.heightButton)
         }
 
-        accountField.bind(address: delegate.account, error: nil)
-        activePrivateKeyField.bind(address: delegate.activePrivateKey, error: nil)
+        accountField.text = delegate.account
+        activePrivateKeyField.text = delegate.activePrivateKey
         qrCodeImageView.asyncSetImage { UIImage(qrCodeString: self.delegate.activePrivateKey, size: 120) }
     }
 
