@@ -126,6 +126,7 @@
 		11B352AB8FBB0ED320C415E4 /* GuidesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EFC660CC91D0FCCF652 /* GuidesInteractor.swift */; };
 		11B352B132162C8B4DC8268F /* BitcoinHodlingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D9DD75364F936010D3D /* BitcoinHodlingViewController.swift */; };
 		11B352BF9F4A74CF1C968260 /* DerivationSettingConfirmationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D69E86FA2A31D9B6883 /* DerivationSettingConfirmationModule.swift */; };
+		11B352C06CB8547C6BE8D5B5 /* FormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359B5B7DEEE9C2C06C226 /* FormField.swift */; };
 		11B352CB88796F46A78DCAB7 /* AddTokenModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35207083CD100C56A3404 /* AddTokenModule.swift */; };
 		11B352CBDFAABC82F02F66E9 /* GuideHeader1Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D31D3EC415789CFA160 /* GuideHeader1Cell.swift */; };
 		11B352D8DEAC018B9F5EC75D /* PrivacySortModeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D1E6BDC69689775142B /* PrivacySortModeModule.swift */; };
@@ -334,6 +335,7 @@
 		11B3574E036AB78A70DE3A9B /* BottomSheetCheckmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C6D66CF7BCBF59E67D6 /* BottomSheetCheckmarkCell.swift */; };
 		11B35751F696373A51EE433E /* CoinType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35878592C2E37DA1EBE1E /* CoinType.swift */; };
 		11B35756FB327E32E447B4AD /* NotificationSettingsSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359C638A7FC7D2287850D /* NotificationSettingsSelectorViewController.swift */; };
+		11B35758E38AC7F25E50960B /* FormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359B5B7DEEE9C2C06C226 /* FormField.swift */; };
 		11B3576D1E589AD032D82FFD /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C167FC6400D527C5634 /* BadgeView.swift */; };
 		11B3577193A4BD719E12CE2E /* EnabledWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BDC2E3F845A52C442AD /* EnabledWallet.swift */; };
 		11B35773C3155D10F411DFEF /* BalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35AF1A9722F56B5F9DA79 /* BalanceCell.swift */; };
@@ -477,6 +479,7 @@
 		11B35A05CA2272BFB4CFAB5B /* ManageAccountsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DDCBD6107AD190ED580 /* ManageAccountsModule.swift */; };
 		11B35A0D31731F8EC4AD86C1 /* BalanceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DB3C4F3491CAAC2FC97 /* BalanceHeaderView.swift */; };
 		11B35A0FCD2E65066D22D984 /* BalanceViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35458E7255EFB7BD0FB67 /* BalanceViewItem.swift */; };
+		11B35A1032566C40D45BED90 /* FormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359B5B7DEEE9C2C06C226 /* FormField.swift */; };
 		11B35A16172FC11FDCD26715 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352044BCE494491257933 /* LocalStorage.swift */; };
 		11B35A18ED2005B15820F1CF /* SortTypeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356BF2366DEE7FB54C241 /* SortTypeInteractor.swift */; };
 		11B35A1A0F8687A583590CA5 /* PrivacySortModePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FD8874AAFB34B3A377C /* PrivacySortModePresenter.swift */; };
@@ -2016,6 +2019,7 @@
 		11B359907F922F6935929D0B /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		11B359938943C5FEF100F26B /* DerivationSettingConfirmationPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DerivationSettingConfirmationPresenter.swift; sourceTree = "<group>"; };
 		11B35997E609908F5621CFC0 /* RestoreAccountTypeRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreAccountTypeRouter.swift; sourceTree = "<group>"; };
+		11B359B5B7DEEE9C2C06C226 /* FormField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormField.swift; sourceTree = "<group>"; };
 		11B359B9C1E0BB4D32599695 /* GuidePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuidePresenter.swift; sourceTree = "<group>"; };
 		11B359BBFCD82C3C6DC06F96 /* FeeRateProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeRateProvider.swift; sourceTree = "<group>"; };
 		11B359C638A7FC7D2287850D /* NotificationSettingsSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettingsSelectorViewController.swift; sourceTree = "<group>"; };
@@ -3370,6 +3374,7 @@
 				11B354C3C105D13E1B382178 /* BottomSheetTitleView.swift */,
 				1A564B1C051AF2C87C670563 /* FilterHeaderView.swift */,
 				1A564293D88587642800717B /* FilterHeaderCell.swift */,
+				11B359B5B7DEEE9C2C06C226 /* FormField.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -5311,6 +5316,7 @@
 				11B35CA1B04C526F132360DB /* ButtonCell.swift in Sources */,
 				11B35F4CCFC683B6BF412403 /* AdditionalDataCell.swift in Sources */,
 				11B35186D51338D2600B8210 /* AddErc20TokenSpinnerCell.swift in Sources */,
+				11B352C06CB8547C6BE8D5B5 /* FormField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5949,6 +5955,7 @@
 				11B35A52C122A756C0A43604 /* ButtonCell.swift in Sources */,
 				11B35D53E7F7AD24B3A26339 /* AdditionalDataCell.swift in Sources */,
 				11B35466BD0B360DD3EE3B89 /* AddErc20TokenSpinnerCell.swift in Sources */,
+				11B35A1032566C40D45BED90 /* FormField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6548,6 +6555,7 @@
 				11B356ECE0D41F928FCED96C /* ButtonCell.swift in Sources */,
 				11B35DE05BD38DF0422DA633 /* AdditionalDataCell.swift in Sources */,
 				11B359BB545A07401D4917D5 /* AddErc20TokenSpinnerCell.swift in Sources */,
+				11B35758E38AC7F25E50960B /* FormField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
