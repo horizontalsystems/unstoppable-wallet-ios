@@ -6,9 +6,15 @@ class AddErc20TokenPresenter {
     private let interactor: IAddErc20TokenInteractor
     private let router: IAddErc20TokenRouter
 
+    private var coin: Coin?
+
     init(interactor: IAddErc20TokenInteractor, router: IAddErc20TokenRouter) {
         self.interactor = interactor
         self.router = router
+    }
+
+    private func viewItem(coin: Coin) -> AddErc20TokenModule.ViewItem {
+        AddErc20TokenModule.ViewItem(coinName: coin.title, symbol: coin.code, decimals: coin.decimal)
     }
 
 }
@@ -16,32 +22,56 @@ class AddErc20TokenPresenter {
 extension AddErc20TokenPresenter: IAddErc20TokenViewDelegate {
 
     func onTapPasteAddress() {
-        view?.set(address: "abcdef2736623b87237i723bi76v32iu6i276v8236i7o", error: nil)
+        guard let address = interactor.valueFromPasteboard else {
+            return
+        }
+
+        view?.set(address: address)
+
+        do {
+            try interactor.validate(address: address)
+        } catch {
+            view?.set(error: error)
+
+            view?.refresh()
+            return
+        }
+
+        if let coin = interactor.existingCoin(address: address) {
+            view?.set(viewItem: viewItem(coin: coin))
+            view?.set(warningVisible: true)
+
+            view?.refresh()
+            return
+        }
+
         view?.set(spinnerVisible: true)
 
         view?.refresh()
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            self?.view?.set(spinnerVisible: false)
-            self?.view?.set(viewItem: AddErc20TokenModule.ViewItem(coinName: "Huobi", symbol: "HBO", decimals: 18))
-            self?.view?.set(warningVisible: true)
-//            self?.view?.set(buttonVisible: true)
-
-            self?.view?.refresh()
-        }
-
+        interactor.fetchCoin(address: address)
     }
 
     func onTapDeleteAddress() {
-        view?.set(address: nil, error: nil)
+        view?.set(address: nil)
+        view?.set(error: nil)
+        view?.set(spinnerVisible: false)
         view?.set(viewItem: nil)
+        view?.set(warningVisible: false)
         view?.set(buttonVisible: false)
 
         view?.refresh()
     }
 
     func onTapAddButton() {
+        guard let coin = coin else {
+            return
+        }
 
+        interactor.save(coin: coin)
+
+        view?.showSuccess()
+        router.close()
     }
 
     func onTapCancel() {
@@ -51,4 +81,22 @@ extension AddErc20TokenPresenter: IAddErc20TokenViewDelegate {
 }
 
 extension AddErc20TokenPresenter: IAddErc20TokenInteractorDelegate {
+
+    func didFetch(coin: Coin) {
+        self.coin = coin
+
+        view?.set(spinnerVisible: false)
+        view?.set(viewItem: viewItem(coin: coin))
+        view?.set(buttonVisible: true)
+
+        view?.refresh()
+    }
+
+    func didFailToFetchCoin(error: Error) {
+        view?.set(error: error)
+        view?.set(spinnerVisible: false)
+
+        view?.refresh()
+    }
+
 }
