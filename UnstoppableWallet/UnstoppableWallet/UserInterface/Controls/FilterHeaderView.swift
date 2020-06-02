@@ -8,7 +8,7 @@ extension FilterHeaderView {
     }
 }
 
-class FilterHeaderView: UIView, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+class FilterHeaderView: UIView {
     private var filters = [ViewItem]()
     private let collectionView: UICollectionView
 
@@ -47,6 +47,38 @@ class FilterHeaderView: UIView, UICollectionViewDelegateFlowLayout, UICollection
         fatalError("not implemented")
     }
 
+    private func title(index: Int) -> String {
+        switch filters[index] {
+        case .all: return "transactions.filter_all".localized
+        case .item(let title): return title
+        }
+    }
+
+    func reload(filters: [ViewItem]) {
+        self.filters = filters
+        collectionView.reloadData()
+
+        if filters.count > 0 {
+            collectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: .left)
+        }
+    }
+
+    func select(index: Int) {
+        let selectedItem = IndexPath(item: index, section: 0)
+
+        guard collectionView.indexPathsForSelectedItems?.contains(selectedItem) ?? true else {
+            return
+        }
+
+        if filters.count > index {
+            collectionView.selectItem(at: selectedItem, animated: false, scrollPosition: .left)
+        }
+    }
+
+}
+
+extension FilterHeaderView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         filters.count
     }
@@ -79,22 +111,6 @@ class FilterHeaderView: UIView, UICollectionViewDelegateFlowLayout, UICollection
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         onSelect?(indexPath.item)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-    }
-
-    func reload(filters: [ViewItem]) {
-        self.filters = filters
-        collectionView.reloadData()
-
-        if filters.count > 0 {
-            collectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: .left)
-        }
-    }
-
-    private func title(index: Int) -> String {
-        switch filters[index] {
-        case .all: return "transactions.filter_all".localized
-        case .item(let title): return title
-        }
     }
 
 }

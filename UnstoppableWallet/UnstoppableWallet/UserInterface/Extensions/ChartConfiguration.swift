@@ -2,58 +2,39 @@ import Foundation
 import Chart
 import LanguageKit
 import CurrencyKit
+import ThemeKit
 
 extension ChartConfiguration {
 
-    static var balanceChart: ChartConfiguration {
-        let configuration = ChartConfiguration()
-        configuration.setCryptoColors()
-
-        configuration.showGrid = false
-        configuration.showLimitValues = false
-
-        return configuration
+    static var fullChart: ChartConfiguration {
+        ChartConfiguration().applyColors()
     }
 
-    static func fullChart(currency: Currency) -> ChartConfiguration {
-        let configuration = ChartConfiguration()
-        configuration.setCryptoColors()
+    @discardableResult private func applyColors() -> Self {
+        borderColor = .themeSteel20
+        backgroundColor = .clear
+        selectedColor = .white
+        limitLinesColor = .themeNina
+        limitTextColor = .themeNina
+        limitTextFont = .caption
+        verticalLinesColor = .themeSteel20
+        volumeBarsFillColor = .themeSteel20
+        timelineTextColor = .themeGray
+        timelineFont = .caption
+        touchLineColor = .themeNina
+        emaShortColor = UIColor.themeStronbuy.withAlphaComponent(0.5)
+        emaLongColor = UIColor.themeJacob.withAlphaComponent(0.5)
+        macdSelectedColor = .themeWhite50
+        macdSignalColor = UIColor.themeStronbuy.withAlphaComponent(0.5)
+        macdColor = UIColor.themeJacob.withAlphaComponent(0.5)
+        macdPositiveColor = UIColor.themeGreenD.withAlphaComponent(0.5)
+        macdNegativeColor = UIColor.themeRedD.withAlphaComponent(0.5)
+        rsiLineColor = UIColor.themeStronbuy.withAlphaComponent(0.5)
 
-        let currencyFormatter = NumberFormatter()
-        currencyFormatter.numberStyle = .currency
-        currencyFormatter.currencyCode = currency.code
-        currencyFormatter.currencySymbol = currency.symbol
+        macdTextColor = .themeGray
+        macdTextFont = .caption
 
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = LanguageManager.shared.currentLocale
-
-        configuration.limitTextFormatter = currencyFormatter
-        configuration.dateFormatter = dateFormatter
-        return configuration
-    }
-
-    private func setCryptoColors() {
-        curvePositiveColor = .themeRemus
-        curveNegativeColor = .themeLucian
-        curveIncompleteColor = .themeGray50
-
-        gradientPositiveColor = .themeRemus
-        gradientNegativeColor = .themeLucian
-        gradientIncompleteColor = .themeGray50
-
-        limitColor = .themeNina
-
-        gridColor = .themeSteel20
-        gridTextColor = .themeGray
-
-        limitTextFont = .subhead1
-        limitTextColor = .themeLeah
-
-        selectedIndicatorColor = .themeOz
-        selectedCurveColor = .themeOz
-        selectedGradientColor = .themeOz
-
-        volumeBarColor = .themeSteel20
+        return self
     }
 
 }

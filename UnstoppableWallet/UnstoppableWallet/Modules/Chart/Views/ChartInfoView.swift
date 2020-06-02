@@ -1,27 +1,21 @@
 import UIKit
-import Chart
 import SnapKit
 
-class ChartInfoCell: UITableViewCell {
+class ChartInfoView: UIView {
     private let separator = UIView()
     private let volumeView = CaptionValueView()
     private let marketCapView = CaptionValueView()
     private let circulationView = CaptionValueView()
     private let totalView = CaptionValueView()
 
-    override init(style: CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-
-        backgroundColor = .clear
-        contentView.backgroundColor = .clear
-        selectionStyle = .none
+    init() {
+        super.init(frame: .zero)
 
         separator.backgroundColor = .themeSteel20
 
         addSubview(separator)
         separator.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalToSuperview().offset(CGFloat.margin2x)
+            maker.leading.top.trailing.equalToSuperview()
             maker.height.equalTo(CGFloat.heightOnePixel)
         }
 
@@ -63,14 +57,6 @@ class ChartInfoCell: UITableViewCell {
         marketCapView.set(value: marketCap)
         circulationView.set(value: supply)
         totalView.set(value: maxSupply)
-    }
-
-}
-
-extension ChartInfoCell {
-
-    static var viewHeight: CGFloat {
-        125
     }
 
 }

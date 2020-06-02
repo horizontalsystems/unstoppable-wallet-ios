@@ -2,7 +2,8 @@ import UIKit
 
 class ChartCurrentRateView: UIView {
     private let rateLabel = UILabel()
-    private let rateDiffView = RateDiffView()
+    private let diffImageView = UIImageView()
+    private let diffLabel = UILabel()
 
     init() {
         super.init(frame: .zero)
@@ -10,22 +11,32 @@ class ChartCurrentRateView: UIView {
         backgroundColor = .clear
 
         addSubview(rateLabel)
-        rateLabel.font = .headline2
+        rateLabel.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
+            maker.centerY.equalToSuperview()
+        }
+
+        rateLabel.font = .title3
         rateLabel.textColor = .themeOz
         rateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
-        rateLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview()
-            maker.top.equalToSuperview()
+        addSubview(diffImageView)
+        addSubview(diffLabel)
+
+        diffLabel.snp.makeConstraints { maker in
+            maker.leading.equalTo(diffImageView.snp.trailing).offset(CGFloat.margin1x)
+            maker.top.bottom.equalToSuperview()
+            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
+        }
+        diffImageView.snp.makeConstraints { maker in
+            maker.leading.greaterThanOrEqualTo(rateLabel.snp.trailing).offset(CGFloat.margin2x)
+            maker.centerY.equalToSuperview()
         }
 
-        rateDiffView.font = .subhead1
-
-        addSubview(rateDiffView)
-        rateDiffView.snp.makeConstraints { maker in
-            maker.leading.equalTo(rateLabel.snp.trailing).offset(CGFloat.margin2x)
-            maker.bottom.equalTo(rateLabel.snp.bottom)
-        }
+        diffImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
+        diffLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+        diffLabel.font = .subhead1
+        diffLabel.textColor = .themeLeah
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -34,7 +45,31 @@ class ChartCurrentRateView: UIView {
 
     func bind(rate: String?, diff: Decimal?) {
         rateLabel.text = rate
-        rateDiffView.set(value: diff)
+
+        guard let diff = diff else {
+            diffLabel.text = nil
+            diffImageView.image = nil
+            return
+        }
+        let color: UIColor = diff.isSignMinus ? .themeLucian : .themeRemus
+        let imageName = diff.isSignMinus ? "Down" : "Up"
+
+        diffImageView.image = UIImage(named: imageName)?.tinted(with: color)
+
+        let formattedDiff = ChartCurrentRateView.formatter.string(from: abs(diff) as NSNumber)
+        diffLabel.text = formattedDiff.map { "\($0)%" }
     }
+
+}
+
+extension ChartCurrentRateView {
+
+    private static let formatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
+        formatter.groupingSeparator = ""
+        return formatter
+    }()
 
 }

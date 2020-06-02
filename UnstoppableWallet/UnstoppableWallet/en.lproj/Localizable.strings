@@ -443,8 +443,11 @@ bch.horizontalsystems.xyz/apg";
 "chart.max_supply" = "Total Supply";
 "chart.error.not_available" = "Chart not available";
 "chart.selected.price" = "Price";
-"chart.selected.volume" = "Volume";
+"chart.selected.volume" = "Vol";
 "chart.news.title" = "Latest News";
+"chart.trend_neutral" = "Neutral";
+"chart.trend_down" = "Down Trend";
+"chart.trend_up" = "Up Trend";
 
 // Create Wallet
 

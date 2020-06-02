@@ -14,7 +14,7 @@ class RateManager {
         self.walletManager = walletManager
         self.rateCoinMapper = rateCoinMapper
 
-        kit = XRatesKit.instance(currencyCode: currencyKit.baseCurrency.code, coinMarketCapApiKey: coinMarketCapApiKey, marketInfoExpirationInterval: 10 * 60, topMarketsCount: 100)
+        kit = XRatesKit.instance(currencyCode: currencyKit.baseCurrency.code, coinMarketCapApiKey: coinMarketCapApiKey, indicatorPointCount: 50, marketInfoExpirationInterval: 10 * 60, topMarketsCount: 100)
 
         walletManager.walletsUpdatedObservable
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))

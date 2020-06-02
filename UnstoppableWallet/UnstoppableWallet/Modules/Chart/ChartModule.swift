@@ -5,11 +5,14 @@ import Chart
 
 protocol IChartView: class {
     func set(title: String)
-    func set(viewItem: ChartViewItem)
-    func set(types: [String])
 
+    func set(viewItem: ChartViewItem)
+
+    func set(types: [String])
+    func setSelectedType(at: Int?)
+
+    func setSelectedState(hidden: Bool)
     func showSelectedPoint(viewItem: SelectedPointViewItem)
-    func hideSelectedPoint()
 }
 
 protocol IChartViewDelegate {
@@ -17,8 +20,8 @@ protocol IChartViewDelegate {
 
     func onLoad()
 
-    func onSelectChartType(at index: Int)
-    func onTapPost(at index: Int)
+    func onSelectType(at index: Int)
+    func onTap(indicator: ChartIndicatorMode)
 }
 
 protocol IChartInteractor {
@@ -29,41 +32,46 @@ protocol IChartInteractor {
 
     func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo?
     func subscribeToMarketInfo(coinCode: CoinCode, currencyCode: String)
-
-    func posts(coinCode: CoinCode) -> [CryptoNewsPost]?
-    func subscribeToPosts(coinCode: CoinCode)
 }
 
 protocol IChartInteractorDelegate: class {
     func didReceive(chartInfo: ChartInfo, coinCode: CoinCode)
     func didReceive(marketInfo: MarketInfo)
-    func didReceive(posts: [CryptoNewsPost])
     func onChartInfoError()
-    func onPostsError()
-}
-
-protocol IChartRouter {
-    func open(link: String)
 }
 
 protocol IChartRateFactory {
-    func chartViewItem(type: ChartType, allTypes: [ChartType], chartInfoStatus: ChartDataStatus<ChartInfo>, marketInfoStatus: ChartDataStatus<MarketInfo>,
-                       postsStatus: ChartDataStatus<[CryptoNewsPost]>, coinCode: String, currency: Currency) -> ChartViewItem
-    func selectedPointViewItem(type: ChartType, chartPoint: Chart.ChartPoint, currency: Currency) -> SelectedPointViewItem
+    func chartViewItem(chartDataStatus: ChartDataStatus<ChartInfo>, marketInfoStatus: ChartDataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, selectedIndicator: ChartIndicatorMode) -> ChartViewItem
+    func selectedPointViewItem(chartPoint: ChartPoint, type: ChartType, currency: Currency) -> SelectedPointViewItem
 }
 
-
-struct PostViewItem {
-    let title: String
-    let subtitle: String
+enum MovementTrend {
+    case neutral
+    case down
+    case up
 }
 
-struct ChartInfoViewItem {
-    let gridIntervalType: GridIntervalType
+enum ChartIndicatorMode {
+    case ema
+    case macd
+    case rsi
+    case none
+}
 
-    let points: [Chart.ChartPoint]
-    let startTimestamp: TimeInterval
-    let endTimestamp: TimeInterval
+struct ChartDataViewItem {
+    let chartData: ChartData
+
+    let chartTrend: MovementTrend
+    let chartDiff: Decimal?
+
+    let emaTrend: MovementTrend
+    let macdTrend: MovementTrend
+    let rsiTrend: MovementTrend
+
+    let minValue: String?
+    let maxValue: String?
+
+    let timeline: [ChartTimelineItem]
 }
 
 struct MarketInfoViewItem {
@@ -75,18 +83,15 @@ struct MarketInfoViewItem {
 
 struct SelectedPointViewItem {
     let date: String
-    let time: String?
     let value: String?
     let volume: String?
 }
 
 struct ChartViewItem {
-    let selectedIndex: Int
-
-    let diff: Decimal?
     let currentRate: String?
 
-    let chartInfoStatus: ChartDataStatus<ChartInfoViewItem>
+    let chartDataStatus: ChartDataStatus<ChartDataViewItem>
     let marketInfoStatus: ChartDataStatus<MarketInfoViewItem>
-    let postsStatus: ChartDataStatus<[PostViewItem]>
+
+    let selectedIndicator: ChartIndicatorMode
 }

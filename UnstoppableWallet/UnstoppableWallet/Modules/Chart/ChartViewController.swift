@@ -1,45 +1,64 @@
 import UIKit
 import XRatesKit
-import Chart
-import CurrencyKit
 import ThemeKit
 import SectionsTableView
 import SnapKit
+import HUD
+import Chart
 
 extension ChartType {
-
     var title: String {
         switch self {
-            case .day: return "chart.time_duration.day".localized
-            case .week: return "chart.time_duration.week".localized
-            case .month: return "chart.time_duration.month".localized
-            case .month3: return "chart.time_duration.month3".localized
-            case .halfYear: return "chart.time_duration.halyear".localized
-            case .year: return "chart.time_duration.year".localized
-            case .year2: return "chart.time_duration.year2".localized
+        case .day: return "chart.time_duration.day".localized
+        case .week: return "chart.time_duration.week".localized
+        case .month: return "chart.time_duration.month".localized
+        case .month3: return "chart.time_duration.month3".localized
+        case .halfYear: return "chart.time_duration.halyear".localized
+        case .year: return "chart.time_duration.year".localized
+        case .year2: return "chart.time_duration.year2".localized
         }
     }
-
 }
 
 class ChartViewController: ThemeViewController {
-    private let chartSection = 0
-    private let postsSection = 1
-
-    private let delegate: IChartViewDelegate
+    private let delegate: IChartViewDelegate & IChartViewTouchDelegate
 
     private let tableView = UITableView(frame: .zero, style: .grouped)
-    private let chartHeaderView: ChartHeaderView
+    private let container = UIView()
 
-    private var viewItem: ChartViewItem?
+    private let currentRateView = ChartCurrentRateView()
+    private let intervalSelectView = FilterHeaderView()
+    private let selectedRateView = ChartPointInfoView()
 
-    init(delegate: IChartViewDelegate & IChartIndicatorDelegate, chartConfiguration: ChartConfiguration) {
+    private let chartView: RateChartView
+
+    private let emaIndicatorView = IndicatorSelectView(title: "EMA")
+    private let macdIndicatorView = IndicatorSelectView(title: "MACD")
+    private let rsiIndicatorView = IndicatorSelectView(title: "RSI")
+
+    private let chartInfoView = ChartInfoView()
+
+    private let loadingView = HUDProgressView(strokeLineWidth: FullTransactionInfoViewController.spinnerLineWidth,
+            radius: FullTransactionInfoViewController.spinnerSideSize / 2 - FullTransactionInfoViewController.spinnerLineWidth / 2,
+            strokeColor: .themeGray)
+
+    init(delegate: IChartViewDelegate & IChartViewTouchDelegate, configuration: ChartConfiguration) {
         self.delegate = delegate
-        self.chartHeaderView = ChartHeaderView(configuration: chartConfiguration, delegate: delegate)
+        self.chartView = RateChartView(configuration: configuration)
 
         super.init()
 
         hidesBottomBarWhenPushed = true
+
+        emaIndicatorView.onTap = { [weak self] in
+            self?.delegate.onTap(indicator: .ema)
+        }
+        macdIndicatorView.onTap = { [weak self] in
+            self?.delegate.onTap(indicator: .macd)
+        }
+        rsiIndicatorView.onTap = { [weak self] in
+            self?.delegate.onTap(indicator: .rsi)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -54,137 +73,151 @@ class ChartViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        view.layoutIfNeeded()
-
-        tableView.registerCell(forClass: ChartInfoCell.self)
-        tableView.registerCell(forClass: PostCell.self)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
+        tableView.registerCell(forClass: UITableViewCell.self)
 
-        tableView.tableFooterView = PostFooterView()
-        tableView.tableFooterView?.frame =  CGRect(x: 0, y: 0, width: view.width, height: PostFooterView.height)
+        container.addSubview(currentRateView)
+        currentRateView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+            maker.height.equalTo(40)
+        }
 
-        chartHeaderView.onSelectIndex = { [weak self] index in
-            self?.delegate.onSelectChartType(at: index)
+        container.addSubview(selectedRateView)
+        selectedRateView.snp.makeConstraints { maker in
+            maker.top.equalTo(currentRateView.snp.bottom)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.height.equalTo(40)
+        }
+
+        container.addSubview(intervalSelectView)
+        intervalSelectView.snp.makeConstraints { maker in
+            maker.top.bottom.equalTo(selectedRateView)
+            maker.leading.trailing.equalToSuperview()
+        }
+
+        intervalSelectView.onSelect = { [weak self] index in
+            self?.delegate.onSelectType(at: index)
+        }
+
+        container.addSubview(chartView)
+        chartView.snp.makeConstraints { maker in
+            maker.top.equalTo(intervalSelectView.snp.bottom).offset(CGFloat.margin2x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+        }
+
+        chartView.delegate = delegate
+
+        container.addSubview(loadingView)
+        loadingView.snp.makeConstraints { maker in
+            maker.edges.equalTo(chartView)
+        }
+        loadingView.set(hidden: true)
+        loadingView.backgroundColor = view.backgroundColor
+
+        container.addSubview(emaIndicatorView)
+        emaIndicatorView.snp.makeConstraints { maker in
+            maker.top.equalTo(chartView.snp.bottom).offset(CGFloat.margin2x)
+            maker.leading.trailing.equalToSuperview()
+            maker.height.equalTo(44)
+        }
+        container.addSubview(macdIndicatorView)
+        macdIndicatorView.snp.makeConstraints { maker in
+            maker.top.equalTo(emaIndicatorView.snp.bottom)
+            maker.leading.trailing.equalToSuperview()
+            maker.height.equalTo(44)
+        }
+        container.addSubview(rsiIndicatorView)
+        rsiIndicatorView.snp.makeConstraints { maker in
+            maker.top.equalTo(macdIndicatorView.snp.bottom)
+            maker.leading.trailing.equalToSuperview()
+            maker.height.equalTo(44)
+        }
+
+        container.addSubview(chartInfoView)
+        chartInfoView.snp.makeConstraints { maker in
+            maker.top.equalTo(rsiIndicatorView.snp.bottom)
+            maker.leading.trailing.equalToSuperview()
+            maker.height.equalTo(125)
         }
 
         delegate.onLoad()
     }
 
-    private func updateViews() {
-        guard let viewItem = viewItem else {
-            return
-        }
-        chartHeaderView.bind(viewItem: viewItem)
+    // Chart Loading functions
+    private func showLoading() {
+        chartView.isHidden = true
+
+        loadingView.set(hidden: false)
+        loadingView.startAnimating()
     }
 
-}
+    private func hideLoading() {
+        chartView.isHidden = false
 
-extension ChartViewController: UITableViewDelegate, UITableViewDataSource {
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        2
+        loadingView.set(hidden: true)
+        loadingView.stopAnimating()
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == chartSection {
-            return 1
-        }
-        // posts section
-        guard let viewItem = viewItem else {
-            return 0
-        }
-        if let posts = viewItem.postsStatus.data {
-            return posts.count
+    private func updateViews(viewItem: ChartViewItem) {
+        currentRateView.bind(rate: viewItem.currentRate, diff: nil)
+
+        if let marketViewItem = viewItem.marketInfoStatus.data {
+            chartInfoView.bind(marketCap: marketViewItem.marketCap, volume: marketViewItem.volume, supply: marketViewItem.supply, maxSupply: marketViewItem.maxSupply)
         }
 
-        return 0
-    }
+        switch viewItem.chartDataStatus {
+        case .loading:
+            showLoading()
+            deactivateIndicators()
+        case .failed:
+//            hideLoading()//todo need error design
+            deactivateIndicators()
+        case .completed(let data):
+            hideLoading()
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == chartSection {
-            return ChartInfoCell.viewHeight
-        }
-        // posts section
-        guard let viewItem = viewItem else {
-            return 0
-        }
-        if let posts = viewItem.postsStatus.data {
-            let post = posts[indexPath.row]
-            return PostCell.height(forContainerWidth: tableView.width, title: post.title, subtitle: post.subtitle)
-        }
-
-        return 0
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == chartSection {
-            return tableView.dequeueReusableCell(withIdentifier: String(describing: ChartInfoCell.self), for: indexPath)
-        }
-        return tableView.dequeueReusableCell(withIdentifier: String(describing: PostCell.self), for: indexPath)
-    }
-
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let viewItem = viewItem else {
-            return
-        }
-
-        if let cell = cell as? PostCell {
-            if let posts = viewItem.postsStatus.data {
-                let post = posts[indexPath.row]
-                cell.bind(title: post.title, subtitle: post.subtitle)
+            currentRateView.bind(rate: viewItem.currentRate, diff: data.chartDiff)
+            switch data.chartTrend {
+            case .neutral:
+                chartView.setCurve(color: .themeGray)
+            case .up:
+                chartView.setCurve(color: .themeGreenD)
+            case .down:
+                chartView.setCurve(color: .themeRedD)
             }
-        } else if let cell = cell as? ChartInfoCell {
-            if let marketViewItem = viewItem.marketInfoStatus.data {
-                cell.bind(marketCap: marketViewItem.marketCap, volume: marketViewItem.volume, supply: marketViewItem.supply, maxSupply: marketViewItem.maxSupply)
+
+            chartView.set(chartData: data.chartData)
+
+            chartView.set(timeline: data.timeline, start: data.chartData.startWindow, end: data.chartData.endWindow)
+
+            emaIndicatorView.bind(selected: viewItem.selectedIndicator == .ema, trend: data.emaTrend)
+            macdIndicatorView.bind(selected: viewItem.selectedIndicator == .macd, trend: data.macdTrend)
+            rsiIndicatorView.bind(selected: viewItem.selectedIndicator == .rsi, trend: data.rsiTrend)
+
+            chartView.setVolumes(hidden: true)
+            chartView.setMacd(hidden: true)
+            chartView.setRsi(hidden: true)
+            chartView.setEma(hidden: true)
+            switch viewItem.selectedIndicator {
+            case .ema:
+                chartView.setEma(hidden: false)
+                chartView.setVolumes(hidden: false)
+            case .macd:
+                chartView.setMacd(hidden: false)
+            case .rsi:
+                chartView.setRsi(hidden: false)
+            case .none: ()
+                chartView.setVolumes(hidden: false)
             }
         }
     }
 
-    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if indexPath.section == postsSection {
-            delegate.onTapPost(at: indexPath.row)
-        }
-        return nil
-    }
-
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
-            return ChartHeaderView.viewHeight
-        }
-        return PostHeaderView.height
-    }
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == chartSection {
-            return chartHeaderView
-        }
-        let view = PostHeaderView()
-
-        if let viewItem = viewItem {
-            switch viewItem.postsStatus {
-            case .loading:
-                view.bind(showSpinner: true)
-            case .failed:
-                view.bind(showFailed: true)
-            default:
-                view.bind(showSpinner: false)
-            }
-        } else {
-            view.bind(showSpinner: true)
-        }
-
-        return view
-    }
-
-    public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        nil
-    }
-
-    public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        0
+    private func deactivateIndicators() {
+        emaIndicatorView.bind(selected: false, trend: nil)
+        macdIndicatorView.bind(selected: false, trend: nil)
+        rsiIndicatorView.bind(selected: false, trend: nil)
     }
 
 }
@@ -195,23 +228,57 @@ extension ChartViewController: IChartView {
         self.title = title.localized
     }
 
-    func set(viewItem: ChartViewItem) {
-        self.viewItem = viewItem
-
-        updateViews()
-        tableView.reloadData()
+    // Interval selecting functions
+    func set(types: [String]) {
+        intervalSelectView.reload(filters: types.map { .item(title: $0.uppercased()) })
     }
 
-    func set(types: [String]) {
-        chartHeaderView.bind(titles: types)
+    func setSelectedType(at index: Int?) {
+        guard let index = index else {
+            return
+        }
+
+        intervalSelectView.select(index: index)
+    }
+
+    // Chart data functions
+    func set(viewItem: ChartViewItem) {
+        updateViews(viewItem: viewItem)
+    }
+
+    func setSelectedState(hidden: Bool) {
+        selectedRateView.isHidden = hidden
+        intervalSelectView.isHidden = !hidden
     }
 
     func showSelectedPoint(viewItem: SelectedPointViewItem) {
-        chartHeaderView.showSelected(date: viewItem.date, time: viewItem.time, value: viewItem.value, volume: viewItem.volume)
+        selectedRateView.bind(date: viewItem.date, price: viewItem.value, volume: viewItem.volume)
     }
 
-    func hideSelectedPoint() {
-        chartHeaderView.hideSelected()
+}
+
+extension ChartViewController: UITableViewDelegate, UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        1
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        1
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: UITableViewCell.self), for: indexPath)
+        cell.backgroundColor = .clear
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        587.5
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        container
     }
 
 }
