@@ -17,7 +17,7 @@ extension AddErc20TokenRouter {
 
     static func module() -> UIViewController {
         let router = AddErc20TokenRouter()
-        let interactor = AddErc20TokenInteractor(pasteboardManager: App.shared.pasteboardManager)
+        let interactor = AddErc20TokenInteractor(pasteboardManager: App.shared.pasteboardManager, erc20ContractInfoProvider: App.shared.erc20ContractInfoProvider)
         let presenter = AddErc20TokenPresenter(interactor: interactor, router: router)
         let viewController = AddErc20TokenViewController(delegate: presenter)
 

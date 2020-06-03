@@ -55,7 +55,7 @@ extension EthereumBaseAdapter {
     func validate(address: String) throws {
         //todo: remove when make errors public
         do {
-            try ethereumKit.validate(address: address)
+            try EthereumKit.Kit.validate(address: address)
         } catch {
             throw AddressConversion.invalidAddress
         }
