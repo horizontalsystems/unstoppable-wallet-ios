@@ -30,8 +30,6 @@
 	<string>${default_words_12}</string>
 	<key>DefaultWords24</key>
 	<string>${default_words_24}</string>
-	<key>DisablePinLock</key>
-	<string>${disable_pin_lock}</string>
 	<key>EtherscanApiKey</key>
 	<string>${etherscan_api_key}</string>
 	<key>ITSAppUsesNonExemptEncryption</key>

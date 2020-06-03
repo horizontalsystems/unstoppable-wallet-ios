@@ -231,9 +231,6 @@ protocol ISystemInfoManager {
 }
 
 protocol IAppConfigProvider {
-    var ipfsId: String { get }
-    var ipfsGateways: [String] { get }
-
     var companyWebPageLink: String { get }
     var appWebPageLink: String { get }
     var reportEmail: String { get }
@@ -249,7 +246,6 @@ protocol IAppConfigProvider {
 
     func defaultWords(count: Int) -> [String]
     var defaultEosCredentials: (String, String) { get }
-    var disablePinLock: Bool { get }
 
     var featuredCoins: [Coin] { get }
     var defaultCoins: [Coin] { get }
