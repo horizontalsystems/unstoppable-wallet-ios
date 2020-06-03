@@ -1,31 +1,16 @@
 import RxSwift
+import EthereumKit
 
 class AddErc20TokenInteractor {
     weak var delegate: IAddErc20TokenInteractorDelegate?
 
     private let pasteboardManager: IPasteboardManager
+    private let erc20ContractInfoProvider: IErc20ContractInfoProvider
     private var disposeBag = DisposeBag()
 
-    init(pasteboardManager: IPasteboardManager) {
+    init(pasteboardManager: IPasteboardManager, erc20ContractInfoProvider: IErc20ContractInfoProvider) {
         self.pasteboardManager = pasteboardManager
-    }
-
-    private func coinSingle(address: String) -> Single<Coin> {
-        Single.create { observer in
-            let coin = Coin(
-                    id: "ERM",
-                    title: "Ermat",
-                    code: "ERM",
-                    decimal: 18,
-                    type: CoinType(erc20Address: address)
-            )
-
-            Thread.sleep(forTimeInterval: 1)
-
-            observer(SingleEvent.success(coin))
-
-            return Disposables.create()
-        }
+        self.erc20ContractInfoProvider = erc20ContractInfoProvider
     }
 
 }
@@ -37,7 +22,7 @@ extension AddErc20TokenInteractor: IAddErc20TokenInteractor {
     }
 
     func validate(address: String) throws {
-        // todo: validate via EthereumKit
+        try EthereumKit.Kit.validate(address: address)
     }
 
     func existingCoin(address: String) -> Coin? {
@@ -46,8 +31,7 @@ extension AddErc20TokenInteractor: IAddErc20TokenInteractor {
     }
 
     func fetchCoin(address: String) {
-        // todo: replace single with Infura coin info single
-        coinSingle(address: address)
+        erc20ContractInfoProvider.coinSingle(address: address)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .observeOn(MainScheduler.instance)
                 .subscribe(

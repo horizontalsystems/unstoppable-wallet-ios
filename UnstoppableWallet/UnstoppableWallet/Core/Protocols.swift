@@ -539,3 +539,7 @@ protocol ISortTypeManager: AnyObject {
 protocol IGuidesManager {
     var guides: [Guide] { get }
 }
+
+protocol IErc20ContractInfoProvider {
+    func coinSingle(address: String) -> Single<Coin>
+}

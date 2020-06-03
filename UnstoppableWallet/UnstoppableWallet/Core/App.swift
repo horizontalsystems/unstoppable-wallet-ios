@@ -72,6 +72,8 @@ class App {
     let rateAppManager: IRateAppManager
     let guidesManager: IGuidesManager
 
+    let erc20ContractInfoProvider: IErc20ContractInfoProvider
+
     let appManager: AppManager
 
     init() {
@@ -168,6 +170,8 @@ class App {
         rateAppManager = RateAppManager(walletManager: walletManager, adapterManager: adapterManager, localStorage: localStorage)
 
         guidesManager = GuidesManager()
+
+        erc20ContractInfoProvider = Erc20ContractInfoProvider(appConfigProvider: appConfigProvider, networkManager: networkManager)
 
         appManager = AppManager(
                 accountManager: accountManager,

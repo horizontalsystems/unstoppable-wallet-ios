@@ -2,7 +2,7 @@ PODS:
   - ActionSheet.swift (1.2):
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1)
-  - Alamofire (5.2.0)
+  - Alamofire (5.2.1)
   - AlamofireImage (4.1.0):
     - Alamofire (~> 5.1)
   - BigInt (5.0.0)
@@ -366,10 +366,10 @@ CHECKOUT OPTIONS:
     :commit: c2a88383caa226c345cd87d8e1b17dea5e9482f0
     :git: https://github.com/horizontalsystems/eos-kit-ios
   Erc20Kit.swift:
-    :commit: 4004636c0e79654b51f6a10a25ed77a26686f2fb
+    :commit: d53efa05ab71282d04aae6b4990eaff2606b7343
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   EthereumKit.swift:
-    :commit: 4004636c0e79654b51f6a10a25ed77a26686f2fb
+    :commit: d53efa05ab71282d04aae6b4990eaff2606b7343
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :commit: 783ff3709e90df51ca60d50a2665e6afdad8e391
@@ -413,7 +413,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   ActionSheet.swift: 4583c1353a908e7c15a31af7f087a2be1465c6f8
-  Alamofire: c1ca147559e730bfb2182c8c7aafbdd90a867987
+  Alamofire: e911732990610fe89af59ac0077f923d72dc3dfd
   AlamofireImage: c4a2ba349885fb3064feb74d2e547bd42ce9be10
   BigInt: 74b4d88367b0e819d9f77393549226d36faeb0d8
   BinanceChainKit.swift: dc4abba0d58f08ffd24e1030edd081ba2d1c8ec9

@@ -240,6 +240,7 @@
 		11B355331BBF243C9F63B407 /* ManageAccountsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CDAE70C1D4C434FE954 /* ManageAccountsPresenter.swift */; };
 		11B3553AB8EE1BDDA3E8D696 /* SortTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C480773A445DC5A88BD /* SortTypeViewController.swift */; };
 		11B3553D8942EEE330AFCDF1 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EB6A09E7FBB70B8966B /* Wallet.swift */; };
+		11B3553FDA37CFB48F991F9C /* Erc20ContractInfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350E7BDCE610339D35459 /* Erc20ContractInfoProvider.swift */; };
 		11B3553FE441E814B14A29F6 /* KeyboardObservingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3535FC407BA20765EBCF4 /* KeyboardObservingViewController.swift */; };
 		11B355429E85398C7DFEA819 /* PrivacyEthereumRpcModePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35255A8D7836AAC814F6E /* PrivacyEthereumRpcModePresenter.swift */; };
 		11B35542BB8470BFD140E73D /* AuthData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352D70D3A3A2851CCEDA3 /* AuthData.swift */; };
@@ -484,6 +485,7 @@
 		11B35A16172FC11FDCD26715 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352044BCE494491257933 /* LocalStorage.swift */; };
 		11B35A18ED2005B15820F1CF /* SortTypeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356BF2366DEE7FB54C241 /* SortTypeInteractor.swift */; };
 		11B35A1A0F8687A583590CA5 /* PrivacySortModePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FD8874AAFB34B3A377C /* PrivacySortModePresenter.swift */; };
+		11B35A205E3123998EDE2307 /* Erc20ContractInfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350E7BDCE610339D35459 /* Erc20ContractInfoProvider.swift */; };
 		11B35A20B14CD83DF4EFA9DB /* PriceAlertRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C1528814607B0474707 /* PriceAlertRecord.swift */; };
 		11B35A322A16FE2994799EE5 /* BackupEosRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3537D10E0DC42026B43EC /* BackupEosRouter.swift */; };
 		11B35A3495FF00B1A3FF4197 /* AuthData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352D70D3A3A2851CCEDA3 /* AuthData.swift */; };
@@ -684,6 +686,7 @@
 		11B35DB041C7780D832397A5 /* RateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B10B1F0DFF9144C785D /* RateManager.swift */; };
 		11B35DBC26D7C55BC6134373 /* BalanceViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D7125090E2FF868F924 /* BalanceViewItemFactory.swift */; };
 		11B35DBF0D669818947B25FF /* ContactInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EA21D8C1130359E3F80 /* ContactInteractor.swift */; };
+		11B35DC2A3663EC49E2A91AB /* Erc20ContractInfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350E7BDCE610339D35459 /* Erc20ContractInfoProvider.swift */; };
 		11B35DC48F8C828C54AE91F3 /* ManageAccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358B4DFC88B488F3BC039 /* ManageAccountsViewController.swift */; };
 		11B35DC784A87FF72EB860C4 /* SortTypeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3542991AFD66D96544EAD /* SortTypeManager.swift */; };
 		11B35DCBA7142ACFE401FA4A /* BitcoinHodlingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A214A614D1630F52AD3 /* BitcoinHodlingRouter.swift */; };
@@ -1860,6 +1863,7 @@
 		11B350BD364F07D1AC759865 /* NSAttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSAttributedString.swift; sourceTree = "<group>"; };
 		11B350CF9856A0EA7DB447DA /* NoAccountPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoAccountPresenter.swift; sourceTree = "<group>"; };
 		11B350DFDC2CC98086520BFA /* TransactionViewItemDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionViewItemDataSource.swift; sourceTree = "<group>"; };
+		11B350E7BDCE610339D35459 /* Erc20ContractInfoProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Erc20ContractInfoProvider.swift; sourceTree = "<group>"; };
 		11B350FB98EA5CA39B3C3AB1 /* EthereumRpcModeSettingsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumRpcModeSettingsManager.swift; sourceTree = "<group>"; };
 		11B3511175F5F85BE5677E1A /* BalanceInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceInteractor.swift; sourceTree = "<group>"; };
 		11B3512EF5B66B852F5E05FB /* BarPageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarPageControl.swift; sourceTree = "<group>"; };
@@ -3303,6 +3307,7 @@
 				11B35779E6353B98B298FF29 /* CurrentDateProvider.swift */,
 				11B3586FDC91E3742847B7E0 /* AppConfigProvider.swift */,
 				11B359BBFCD82C3C6DC06F96 /* FeeRateProvider.swift */,
+				11B350E7BDCE610339D35459 /* Erc20ContractInfoProvider.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -5293,6 +5298,7 @@
 				11B35F47D698C56B87AB8994 /* HighlightedDescriptionCell.swift in Sources */,
 				1A56400FEC5C916B16FC4C45 /* ChartInfoView.swift in Sources */,
 				1A564966E82BE974A42E5021 /* PostFooterView.swift in Sources */,
+				11B35DC2A3663EC49E2A91AB /* Erc20ContractInfoProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5928,6 +5934,7 @@
 				11B351D834D8858391B32866 /* HighlightedDescriptionCell.swift in Sources */,
 				1A56428F167A71E2102EB0DB /* ChartInfoView.swift in Sources */,
 				1A564049A64FEB759A994509 /* PostFooterView.swift in Sources */,
+				11B35A205E3123998EDE2307 /* Erc20ContractInfoProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6524,6 +6531,7 @@
 				1A5644DDDC89B581087F770D /* IndicatorSelectView.swift in Sources */,
 				1A5641A7DAAE63B7E5BE1EAD /* ChartInfoView.swift in Sources */,
 				1A564A8DEA3ED1AC9631670E /* PostFooterView.swift in Sources */,
+				11B3553FDA37CFB48F991F9C /* Erc20ContractInfoProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
