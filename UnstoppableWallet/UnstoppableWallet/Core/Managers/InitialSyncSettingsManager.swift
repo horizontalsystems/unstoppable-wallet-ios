@@ -27,7 +27,7 @@ class InitialSyncSettingsManager {
 extension InitialSyncSettingsManager: IInitialSyncSettingsManager {
 
     var allSettings: [(setting: InitialSyncSetting, coins: [Coin], changeable: Bool)] {
-        let coins = appConfigProvider.coins
+        let coins = appConfigProvider.defaultCoins
 
         return supportedCoinTypes.compactMap { supportedCoinType in
             let coinTypeCoins = coins.filter { $0.type == supportedCoinType.coinType }

@@ -252,7 +252,7 @@ protocol IAppConfigProvider {
     var disablePinLock: Bool { get }
 
     var featuredCoins: [Coin] { get }
-    var coins: [Coin] { get }
+    var defaultCoins: [Coin] { get }
 }
 
 protocol IFullTransactionInfoProvider {
@@ -542,4 +542,9 @@ protocol IGuidesManager {
 
 protocol IErc20ContractInfoProvider {
     func coinSingle(address: String) -> Single<Coin>
+}
+
+protocol ICoinManager {
+    var coins: [Coin] { get }
+    var featuredCoins: [Coin] { get }
 }

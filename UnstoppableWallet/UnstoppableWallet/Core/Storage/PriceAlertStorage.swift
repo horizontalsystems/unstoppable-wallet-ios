@@ -1,11 +1,11 @@
 import RxSwift
 
 class PriceAlertStorage {
-    private let appConfigProvider: IAppConfigProvider
+    private let coinManager: ICoinManager
     private let storage: IPriceAlertRecordStorage
 
-    init(appConfigProvider: IAppConfigProvider, storage: IPriceAlertRecordStorage) {
-        self.appConfigProvider = appConfigProvider
+    init(coinManager: ICoinManager, storage: IPriceAlertRecordStorage) {
+        self.coinManager = coinManager
         self.storage = storage
     }
 
@@ -14,7 +14,7 @@ class PriceAlertStorage {
 extension PriceAlertStorage: IPriceAlertStorage {
 
     var priceAlerts: [PriceAlert] {
-        let coins = appConfigProvider.coins
+        let coins = coinManager.coins
 
         return storage.priceAlertRecords.compactMap { record in
             guard let coin = coins.first(where: { $0.code == record.coinCode }) else {

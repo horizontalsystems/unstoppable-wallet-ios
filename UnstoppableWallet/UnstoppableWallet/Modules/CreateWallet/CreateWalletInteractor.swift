@@ -1,12 +1,12 @@
 class CreateWalletInteractor {
-    private let appConfigProvider: IAppConfigProvider
+    private let coinManager: ICoinManager
     private let accountCreator: IAccountCreator
     private let accountManager: IAccountManager
     private let walletManager: IWalletManager
     private let derivationSettingsManager: IDerivationSettingsManager
 
-    init(appConfigProvider: IAppConfigProvider, accountCreator: IAccountCreator, accountManager: IAccountManager, walletManager: IWalletManager, derivationSettingsManager: IDerivationSettingsManager) {
-        self.appConfigProvider = appConfigProvider
+    init(coinManager: ICoinManager, accountCreator: IAccountCreator, accountManager: IAccountManager, walletManager: IWalletManager, derivationSettingsManager: IDerivationSettingsManager) {
+        self.coinManager = coinManager
         self.accountCreator = accountCreator
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -18,11 +18,11 @@ class CreateWalletInteractor {
 extension CreateWalletInteractor: ICreateWalletInteractor {
 
     var coins: [Coin] {
-        appConfigProvider.coins
+        coinManager.coins
     }
 
     var featuredCoins: [Coin] {
-        appConfigProvider.featuredCoins
+        coinManager.featuredCoins
     }
 
     func account(predefinedAccountType: PredefinedAccountType) throws -> Account {

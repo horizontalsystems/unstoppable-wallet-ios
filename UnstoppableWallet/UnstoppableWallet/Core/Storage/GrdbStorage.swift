@@ -235,7 +235,7 @@ class GrdbStorage {
 
             let derivationSettings: [BlockchainSettingRecord] = wallets.compactMap { [weak self] wallet in
                 guard
-                        let coin = self?.appConfigProvider.coins.first(where: { $0.id == wallet.coinId }),
+                        let coin = self?.appConfigProvider.defaultCoins.first(where: { $0.id == wallet.coinId }),
                         let coinTypeKey = BlockchainSetting.key(for: coin.type),
                         let derivation = wallet.derivation
                         else {
@@ -246,7 +246,7 @@ class GrdbStorage {
             }
             let syncSettings: [BlockchainSettingRecord] = wallets.compactMap { [weak self] wallet in
                 guard
-                        let coin = self?.appConfigProvider.coins.first(where: { $0.id == wallet.coinId }),
+                        let coin = self?.appConfigProvider.defaultCoins.first(where: { $0.id == wallet.coinId }),
                         let coinTypeKey = BlockchainSetting.key(for: coin.type),
                         let syncMode = wallet.syncMode
                         else {

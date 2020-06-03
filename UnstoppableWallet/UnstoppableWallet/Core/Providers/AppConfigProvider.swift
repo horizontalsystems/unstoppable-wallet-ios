@@ -62,17 +62,17 @@ class AppConfigProvider: IAppConfigProvider {
 
     var featuredCoins: [Coin] {
         [
-            coins[0],
-            coins[1],
-            coins[2],
-            coins[3],
-            coins[4],
-            coins[5],
-            coins[6],
+            defaultCoins[0],
+            defaultCoins[1],
+            defaultCoins[2],
+            defaultCoins[3],
+            defaultCoins[4],
+            defaultCoins[5],
+            defaultCoins[6],
         ]
     }
 
-    let coins = [
+    let defaultCoins = [
         Coin(id: "BTC",       title: "Bitcoin",               code: "BTC",     decimal: 8,  type: .bitcoin),
         Coin(id: "LTC",       title: "Litecoin",              code: "LTC",     decimal: 8,  type: .litecoin),
         Coin(id: "ETH",       title: "Ethereum",              code: "ETH",     decimal: 18, type: .ethereum),
