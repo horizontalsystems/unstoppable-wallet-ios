@@ -108,7 +108,7 @@ extension DepositViewController: IDepositView {
         titleView.bind(
                 title: "deposit.receive_coin".localized(viewItem.coinCode),
                 subtitle: viewItem.coinTitle,
-                image: UIImage(named: "\(viewItem.coinCode.lowercased())")
+                image: .image(coinCode: viewItem.coinCode, blockchainType: viewItem.blockchainType)
         )
 
         var addressTitle: String

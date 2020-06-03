@@ -377,7 +377,6 @@
 		11B357FE4C2E1EC8E26ED68F /* GrdbStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A1AE56A94BEB52AC4D1 /* GrdbStorage.swift */; };
 		11B35805CEDDC43E740ECA4B /* WalletStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3528133D64471E1BF1AB2 /* WalletStorage.swift */; };
 		11B35807029DA6882DBAAF0C /* BarsProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A686DD5BA335FEB6BEB /* BarsProgressView.swift */; };
-		11B3580BECA360DE35E89286 /* CoinIconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D8D844E5AE5C73A6EB8 /* CoinIconImageView.swift */; };
 		11B3580FB13155CB3ABDD0BA /* SendHodlerLockTimeIntervalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B7C60AD3D8E0D468A5F /* SendHodlerLockTimeIntervalViewController.swift */; };
 		11B35811E061B6EFD1CF73F4 /* GuidesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D9767615D8FBF7A314F /* GuidesManager.swift */; };
 		11B3581EB0F56103624AEA83 /* SendAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3587F4E2DDA3C7B401E0C /* SendAccountView.swift */; };
@@ -434,7 +433,6 @@
 		11B358F6DC8C277C853779E0 /* BackupEosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EF05C328B1F3FE79CC4 /* BackupEosViewController.swift */; };
 		11B359007541FCC6212CB8DD /* BackupEosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EF05C328B1F3FE79CC4 /* BackupEosViewController.swift */; };
 		11B359033D3EF81CC3F5DCC2 /* PrivacyEthereumRpcModeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354E1774092C21CCB6E78 /* PrivacyEthereumRpcModeRouter.swift */; };
-		11B3590CC5D7FB68ED00F7B7 /* CoinIconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D8D844E5AE5C73A6EB8 /* CoinIconImageView.swift */; };
 		11B3591B2F8F927EA67B2823 /* AddTokenModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35207083CD100C56A3404 /* AddTokenModule.swift */; };
 		11B3591C3FF0BD59B96FB859 /* PrivacySyncModeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3582691E4C895FB29FF1E /* PrivacySyncModeRouter.swift */; };
 		11B3591F5380E4ADAE7381E9 /* RateAppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FA360A91FDE3EB0B85C /* RateAppManager.swift */; };
@@ -664,7 +662,6 @@
 		11B35D270BF38B1478789B5E /* GuideInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35801399EA004F5A2A1F7 /* GuideInteractor.swift */; };
 		11B35D325B26EB022F1E7C65 /* FullTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E0F14A8CD40C6F49AE3 /* FullTransactionRecord.swift */; };
 		11B35D371DCB8BBE733BA756 /* PredefinedAccountTypeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35981A2EDBC21C82D13A5 /* PredefinedAccountTypeManager.swift */; };
-		11B35D3A74237CE0B77295B6 /* CoinIconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D8D844E5AE5C73A6EB8 /* CoinIconImageView.swift */; };
 		11B35D3D2260FC9DD200657B /* FullTransactionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D1E5F2AC620CBCE3E3E /* FullTransactionSection.swift */; };
 		11B35D47EAA2EB26D8C3D6CF /* PrivacySortModeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3519C133E4C0A28943906 /* PrivacySortModeRouter.swift */; };
 		11B35D4D8F5A035E1B653198 /* TransactionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3527356625950A5C0358D /* TransactionViewItem.swift */; };
@@ -2110,7 +2107,6 @@
 		11B35D69E86FA2A31D9B6883 /* DerivationSettingConfirmationModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DerivationSettingConfirmationModule.swift; sourceTree = "<group>"; };
 		11B35D7125090E2FF868F924 /* BalanceViewItemFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceViewItemFactory.swift; sourceTree = "<group>"; };
 		11B35D7D10A4112120575661 /* AddTokenRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTokenRouter.swift; sourceTree = "<group>"; };
-		11B35D8D844E5AE5C73A6EB8 /* CoinIconImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinIconImageView.swift; sourceTree = "<group>"; };
 		11B35D8FAB5571A058E34430 /* AddErc20TokenRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddErc20TokenRouter.swift; sourceTree = "<group>"; };
 		11B35D9767615D8FBF7A314F /* GuidesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuidesManager.swift; sourceTree = "<group>"; };
 		11B35D9DD75364F936010D3D /* BitcoinHodlingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinHodlingViewController.swift; sourceTree = "<group>"; };
@@ -2822,7 +2818,6 @@
 				11B353F2C2D228FDCCDE913F /* Controllers */,
 				11B352926E3B01F819D344DF /* Extensions */,
 				1A564E38A79F3308EC1B437A /* AddressParser.swift */,
-				11B35D8D844E5AE5C73A6EB8 /* CoinIconImageView.swift */,
 				11B35492B1162F69CA7A0597 /* DateHelper.swift */,
 				11B354B43B5120F594318FDA /* PermissionsHelper.swift */,
 				11B35EFB45ECC2D403CA6C89 /* ValueFormatter.swift */,
@@ -4859,7 +4854,6 @@
 				58AAA6941C8B5140B0B5DDAE /* Erc20Adapter.swift in Sources */,
 				58AAA2363892ED5743CBF2EB /* EthereumBaseAdapter.swift in Sources */,
 				1A56451041F9A9AB607C3A73 /* Decimal.swift in Sources */,
-				11B35D3A74237CE0B77295B6 /* CoinIconImageView.swift in Sources */,
 				11B35A4912C5B73767232C95 /* TestModeIndicator.swift in Sources */,
 				11B353A7F530336B1E15015E /* DepositViewController.swift in Sources */,
 				11B3547C43F7FD29D8BC5E62 /* TransactionInfoViewController.swift in Sources */,
@@ -5499,7 +5493,6 @@
 				58AAABE8E8374ED4211F610C /* Erc20Adapter.swift in Sources */,
 				58AAA4A377F356194AE08055 /* EthereumBaseAdapter.swift in Sources */,
 				1A56415A4BB89B9156C6442D /* Decimal.swift in Sources */,
-				11B3580BECA360DE35E89286 /* CoinIconImageView.swift in Sources */,
 				11B3524C9BD6FDCE5D72CB81 /* TestModeIndicator.swift in Sources */,
 				11B35C046F97A4FCE1EF6B79 /* DepositViewController.swift in Sources */,
 				11B35965E596BF6F3D86A85B /* TransactionInfoViewController.swift in Sources */,
@@ -6098,7 +6091,6 @@
 				58AAA82745E47084A2B18F95 /* Erc20Adapter.swift in Sources */,
 				58AAAF011B2E9CDF8455CA7B /* EthereumBaseAdapter.swift in Sources */,
 				1A56491DC545ED4F8A6E6D40 /* Decimal.swift in Sources */,
-				11B3590CC5D7FB68ED00F7B7 /* CoinIconImageView.swift in Sources */,
 				11B355522F6E7CD38E985901 /* TestModeIndicator.swift in Sources */,
 				11B35A675024A73985BD8EC4 /* DepositViewController.swift in Sources */,
 				11B354A942427929EBB4B329 /* TransactionInfoViewController.swift in Sources */,

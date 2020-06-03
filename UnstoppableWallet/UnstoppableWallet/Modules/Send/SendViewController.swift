@@ -133,7 +133,7 @@ extension SendViewController: ISendView {
 
     func set(coin: Coin) {
         title = "send.title".localized(coin.code)
-        iconImageView.image = UIImage(named: "\(coin.code.lowercased())")?.withRenderingMode(.alwaysTemplate)
+        iconImageView.image = .image(coinCode: coin.code, blockchainType: coin.type.blockchainType)
     }
 
     func showCopied() {

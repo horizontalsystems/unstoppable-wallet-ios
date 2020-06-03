@@ -106,7 +106,7 @@ extension NotificationSettingsViewController: SectionsDataSource {
                                 height: CGFloat.heightDoubleLineCell,
                                 bind: { [unowned self] cell, _ in
                                     cell.bind(
-                                            image: UIImage(named: "\(item.code.lowercased())")?.tinted(with: .themeGray),
+                                            image: .image(coinCode: item.code),
                                             title: item.title,
                                             subtitle: item.code,
                                             value: "\(item.state)",

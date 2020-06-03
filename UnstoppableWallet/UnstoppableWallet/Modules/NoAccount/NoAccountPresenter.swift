@@ -23,6 +23,7 @@ extension NoAccountPresenter: INoAccountViewDelegate {
         let viewItem = NoAccountModule.ViewItem(
                 coinTitle: coin.title,
                 coinCode: coin.code,
+                blockchainType: coin.type.blockchainType,
                 accountTypeTitle: predefinedAccountType.title,
                 coinCodes: predefinedAccountType.coinCodes,
                 createEnabled: predefinedAccountType.createSupported

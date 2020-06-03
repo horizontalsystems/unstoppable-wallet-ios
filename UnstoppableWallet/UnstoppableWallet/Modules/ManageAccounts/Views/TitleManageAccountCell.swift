@@ -10,7 +10,7 @@ class TitleManageAccountCell: BaseManageAccountCell {
     private static let titleFont: UIFont = .headline2
     private static let coinsFont: UIFont = .subhead2
 
-    private let walletImageView = CoinIconImageView()
+    private let walletImageView = UIImageView()
     private let titleLabel = UILabel()
     private let coinLabel = UILabel()
 
@@ -23,6 +23,9 @@ class TitleManageAccountCell: BaseManageAccountCell {
             maker.centerY.equalToSuperview()
             maker.leading.equalToSuperview().offset(TitleManageAccountCell.walletImageLeftMargin)
         }
+
+        walletImageView.setContentHuggingPriority(.required, for: .horizontal)
+        walletImageView.setContentHuggingPriority(.required, for: .vertical)
         walletImageView.image = TitleManageAccountCell.walletImage
 
         contentHolder.addSubview(titleLabel)

@@ -18,8 +18,14 @@ extension UIImage {
         self.init(ciImage: scaledImage)
     }
 
-    convenience init?(coin: Coin) {
-        self.init(named: "\(coin.code.lowercased())")
+    static func image(coinCode: String, blockchainType: String? = nil) -> UIImage? {
+        var image = UIImage(named: "\(coinCode.lowercased())")
+
+        if image == nil, let blockchainType = blockchainType {
+            image = UIImage(named: blockchainType)
+        }
+
+        return image?.tinted(with: .themeGray)
     }
 
 }
