@@ -1,5 +1,5 @@
 protocol IDerivationSettingView: class {
-    func set(coinTitle: String, coinCode: String)
+    func set(coinTitle: String, coinCode: String, blockchainType: String?)
     func set(viewItems: [DerivationSettingModule.ViewItem])
 }
 

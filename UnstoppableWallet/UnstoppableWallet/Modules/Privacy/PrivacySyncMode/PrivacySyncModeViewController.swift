@@ -104,11 +104,11 @@ extension PrivacySyncModeViewController: SectionsDataSource {
 
 extension PrivacySyncModeViewController: IPrivacySyncModeView {
 
-    func set(coinTitle: String, coinCode: String) {
+    func set(coinTitle: String, coinCode: String, blockchainType: String?) {
         titleView.bind(
                 title: "settings_privacy.alert_sync.title".localized,
                 subtitle: coinTitle,
-                image: UIImage(named: coinCode.lowercased())?.tinted(with: .themeGray)
+                image: .image(coinCode: coinCode, blockchainType: blockchainType)
         )
 
         descriptionView.bind(text: "settings_privacy.alert_sync.description".localized(coinTitle))

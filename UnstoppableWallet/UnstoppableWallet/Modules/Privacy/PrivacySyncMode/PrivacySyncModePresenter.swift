@@ -30,7 +30,7 @@ class PrivacySyncModePresenter {
 extension PrivacySyncModePresenter: IPrivacySyncModeViewDelegate {
 
     func onLoad() {
-        view?.set(coinTitle: coin.title, coinCode: coin.code)
+        view?.set(coinTitle: coin.title, coinCode: coin.code, blockchainType: coin.type.blockchainType)
         syncViewItems()
     }
 

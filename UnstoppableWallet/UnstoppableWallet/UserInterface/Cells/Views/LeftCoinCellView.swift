@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 
 class LeftCoinCellView: UIView {
-    private let coinImageView = CoinIconImageView()
+    private let coinImageView = UIImageView()
     private let titleLabel = UILabel()
     private let coinLabel = UILabel()
     private let blockchainBadgeView = BadgeView()
@@ -15,6 +15,9 @@ class LeftCoinCellView: UIView {
             maker.centerY.equalToSuperview()
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
         }
+
+        coinImageView.setContentHuggingPriority(.required, for: .horizontal)
+        coinImageView.setContentHuggingPriority(.required, for: .vertical)
 
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
@@ -49,7 +52,7 @@ class LeftCoinCellView: UIView {
     func bind(coinTitle: String, coinCode: String, blockchainType: String?, showIcon: Bool = true) {
         if showIcon {
             coinImageView.isHidden = false
-            coinImageView.bind(image: UIImage(named: "\(coinCode.lowercased())"))
+            coinImageView.image = .image(coinCode: coinCode, blockchainType: blockchainType)
             titleLabel.snp.remakeConstraints { maker in
                 maker.leading.equalTo(coinImageView.snp.trailing).offset(CGFloat.margin4x)
                 maker.top.equalToSuperview().offset(10)

@@ -26,6 +26,7 @@ class NoAccountModule {
     struct ViewItem {
         let coinTitle: String
         let coinCode: String
+        let blockchainType: String?
         let accountTypeTitle: String
         let coinCodes: String
         let createEnabled: Bool

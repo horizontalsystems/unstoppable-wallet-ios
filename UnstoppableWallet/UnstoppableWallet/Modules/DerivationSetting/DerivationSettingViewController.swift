@@ -102,11 +102,11 @@ extension DerivationSettingViewController: SectionsDataSource {
 
 extension DerivationSettingViewController: IDerivationSettingView {
 
-    func set(coinTitle: String, coinCode: String) {
+    func set(coinTitle: String, coinCode: String, blockchainType: String?) {
         titleView.bind(
                 title: "blockchain_settings.title".localized,
                 subtitle: coinTitle,
-                image: UIImage(named: coinCode.lowercased())?.tinted(with: .themeGray)
+                image: .image(coinCode: coinCode, blockchainType: blockchainType)
         )
     }
 

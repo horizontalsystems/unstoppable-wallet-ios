@@ -84,7 +84,7 @@ extension NoAccountViewController: INoAccountView {
         titleView.bind(
                 title: "manage_coins.add_coin.title".localized(viewItem.coinTitle),
                 subtitle: "manage_coins.add_coin.subtitle".localized(viewItem.accountTypeTitle),
-                image: UIImage(named: viewItem.coinCode.lowercased())?.tinted(with: .themeGray)
+                image: .image(coinCode: viewItem.coinCode, blockchainType: viewItem.blockchainType)
         )
 
         descriptionLabel.text = "manage_coins.add_coin.text.set_up".localized(viewItem.accountTypeTitle, viewItem.coinTitle) +

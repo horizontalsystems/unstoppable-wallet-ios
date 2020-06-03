@@ -32,7 +32,7 @@ class DerivationSettingPresenter {
 extension DerivationSettingPresenter: IDerivationSettingViewDelegate {
 
     func onLoad() {
-        view?.set(coinTitle: coin.title, coinCode: coin.code)
+        view?.set(coinTitle: coin.title, coinCode: coin.code, blockchainType: coin.type.blockchainType)
         syncViewItems()
     }
 
