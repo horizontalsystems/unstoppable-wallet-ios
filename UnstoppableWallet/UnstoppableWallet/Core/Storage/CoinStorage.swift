@@ -48,14 +48,17 @@ extension CoinStorage: ICoinStorage {
         storage.coinRecords.compactMap { coin(record: $0) }
     }
 
-    func save(coin: Coin) {
+    func save(coin: Coin) -> Bool {
         switch coin.type {
         case .erc20(let address, _, _, _, _):
             var record = coinRecord(coin: coin, tokenType: .erc20)
             record.erc20Address = address
             storage.save(coinRecord: record)
+            return true
         default: ()
         }
+
+        return false
     }
 
 }

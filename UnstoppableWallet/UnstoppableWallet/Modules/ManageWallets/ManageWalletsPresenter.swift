@@ -95,6 +95,10 @@ extension ManageWalletsPresenter: IManageWalletsInteractorDelegate {
         syncViewItems()
     }
 
+    func didAddCoin() {
+        syncViewItems()
+    }
+
 }
 
 extension ManageWalletsPresenter: IDerivationSettingDelegate {

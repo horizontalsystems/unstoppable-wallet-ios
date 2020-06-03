@@ -27,6 +27,7 @@ protocol IManageWalletsInteractor {
 
 protocol IManageWalletsInteractorDelegate: AnyObject {
     func didUpdateAccounts()
+    func didAddCoin()
 }
 
 protocol IManageWalletsRouter {
