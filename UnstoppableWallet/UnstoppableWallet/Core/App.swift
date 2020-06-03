@@ -13,7 +13,7 @@ class App {
     let appConfigProvider: IAppConfigProvider
 
     let localStorage: ILocalStorage & IChartTypeStorage
-    let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage
+    let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & ICoinRecordStorage
 
     let themeManager: ThemeManager
     let systemInfoManager: ISystemInfoManager
@@ -107,7 +107,8 @@ class App {
 
         kitCleaner = KitCleaner(accountManager: accountManager)
 
-        coinManager = CoinManager(appConfigProvider: appConfigProvider)
+        let coinStorage: ICoinStorage = CoinStorage(storage: storage)
+        coinManager = CoinManager(appConfigProvider: appConfigProvider, storage: coinStorage)
 
         walletFactory = WalletFactory()
         let walletStorage: IWalletStorage = WalletStorage(coinManager: coinManager, walletFactory: walletFactory, storage: storage)

@@ -4,11 +4,13 @@ import EthereumKit
 class AddErc20TokenInteractor {
     weak var delegate: IAddErc20TokenInteractorDelegate?
 
+    private let coinManager: ICoinManager
     private let pasteboardManager: IPasteboardManager
     private let erc20ContractInfoProvider: IErc20ContractInfoProvider
     private var disposeBag = DisposeBag()
 
-    init(pasteboardManager: IPasteboardManager, erc20ContractInfoProvider: IErc20ContractInfoProvider) {
+    init(coinManager: ICoinManager, pasteboardManager: IPasteboardManager, erc20ContractInfoProvider: IErc20ContractInfoProvider) {
+        self.coinManager = coinManager
         self.pasteboardManager = pasteboardManager
         self.erc20ContractInfoProvider = erc20ContractInfoProvider
     }
@@ -26,8 +28,7 @@ extension AddErc20TokenInteractor: IAddErc20TokenInteractor {
     }
 
     func existingCoin(address: String) -> Coin? {
-        // todo: check address in hardcoded coins list and already saved coins
-        nil
+        coinManager.existingCoin(erc20Address: address)
     }
 
     func fetchCoin(address: String) {
@@ -50,7 +51,7 @@ extension AddErc20TokenInteractor: IAddErc20TokenInteractor {
     }
 
     func save(coin: Coin) {
-        // todo: save coin to database
+        coinManager.save(coin: coin)
     }
 
 }

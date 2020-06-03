@@ -261,6 +261,19 @@ class GrdbStorage {
             }
         }
 
+        migrator.registerMigration("createCoins") { db in
+            try db.create(table: CoinRecord.databaseTableName) { t in
+                t.column(CoinRecord.Columns.coinId.name, .text).notNull()
+                t.column(CoinRecord.Columns.title.name, .text).notNull()
+                t.column(CoinRecord.Columns.code.name, .text).notNull()
+                t.column(CoinRecord.Columns.decimal.name, .integer).notNull()
+                t.column(CoinRecord.Columns.tokenType.name, .text).notNull()
+                t.column(CoinRecord.Columns.erc20Address.name, .text)
+
+                t.primaryKey([CoinRecord.Columns.coinId.name], onConflict: .replace)
+            }
+        }
+
         return migrator
     }
 
@@ -375,6 +388,22 @@ extension GrdbStorage: IBlockchainSettingsRecordStorage {
     func deleteAll(settingKey: String) {
         _ = try! dbPool.write { db in
             try BlockchainSettingRecord.filter(BlockchainSettingRecord.Columns.key == settingKey).deleteAll(db)
+        }
+    }
+
+}
+
+extension GrdbStorage: ICoinRecordStorage {
+
+    var coinRecords: [CoinRecord] {
+        try! dbPool.read { db in
+            try CoinRecord.fetchAll(db)
+        }
+    }
+
+    func save(coinRecord: CoinRecord) {
+        _ = try! dbPool.write { db in
+            try coinRecord.insert(db)
         }
     }
 
