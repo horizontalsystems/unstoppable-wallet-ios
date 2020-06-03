@@ -143,6 +143,8 @@ class ChartViewController: ThemeViewController {
             maker.height.equalTo(125)
         }
 
+        view.layoutIfNeeded()
+
         delegate.onLoad()
     }
 
