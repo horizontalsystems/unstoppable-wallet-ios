@@ -60,7 +60,7 @@ class BackupWordsController: ThemeViewController {
 
         proceedButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin8x)
+            maker.bottom.equalToSuperview().inset(CGFloat.margin6x)
             maker.height.equalTo(CGFloat.heightButton)
         }
     }

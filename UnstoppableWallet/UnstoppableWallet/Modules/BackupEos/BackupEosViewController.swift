@@ -123,8 +123,8 @@ class BackupEosViewController: ThemeViewController {
         closeButton.setTitle("backup.close".localized, for: .normal)
         closeButton.addTarget(self, action: #selector(didTapClose), for: .touchUpInside)
         closeButton.snp.makeConstraints { maker in
-            maker.leading.trailing.bottom.equalToSuperview().inset(CGFloat.margin6x)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin8x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
+            maker.bottom.equalToSuperview().inset(CGFloat.margin6x)
             maker.height.equalTo(CGFloat.heightButton)
         }
 
