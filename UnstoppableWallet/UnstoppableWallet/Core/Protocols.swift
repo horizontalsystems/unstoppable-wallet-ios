@@ -547,4 +547,16 @@ protocol IErc20ContractInfoProvider {
 protocol ICoinManager {
     var coins: [Coin] { get }
     var featuredCoins: [Coin] { get }
+    func existingCoin(erc20Address: String) -> Coin?
+    func save(coin: Coin)
+}
+
+protocol ICoinRecordStorage {
+    var coinRecords: [CoinRecord] { get }
+    func save(coinRecord: CoinRecord)
+}
+
+protocol ICoinStorage {
+    var coins: [Coin] { get }
+    func save(coin: Coin)
 }
