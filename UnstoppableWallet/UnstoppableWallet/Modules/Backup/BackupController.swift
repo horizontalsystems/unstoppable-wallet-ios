@@ -48,7 +48,7 @@ class BackupController: ThemeViewController {
         cancelButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
             maker.top.equalTo(proceedButton.snp.bottom).offset(CGFloat.margin4x)
-            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(CGFloat.margin8x)
+            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(CGFloat.margin6x)
             maker.height.equalTo(CGFloat.heightButton)
         }
 
