@@ -1,12 +1,6 @@
 import Foundation
 
 class AppConfigProvider: IAppConfigProvider {
-    let ipfsId = "QmXTJZBMMRmBbPun6HFt3tmb3tfYF2usLPxFoacL7G5uMX"
-    let ipfsGateways = [
-        "https://ipfs-ext.horizontalsystems.xyz",
-        "https://ipfs.io"
-    ]
-
     let companyWebPageLink = "https://horizontalsystems.io"
     let appWebPageLink = "https://unstoppable.money"
     let reportEmail = "hsdao@protonmail.ch"
@@ -52,10 +46,6 @@ class AppConfigProvider: IAppConfigProvider {
 
     var coinMarketCapApiKey: String {
         (Bundle.main.object(forInfoDictionaryKey: "CoinMarketCapKey") as? String) ?? ""
-    }
-
-    var disablePinLock: Bool {
-        Bundle.main.object(forInfoDictionaryKey: "DisablePinLock") as? String == "true"
     }
 
     let currencyCodes: [String] = ["USD", "EUR", "GBP", "JPY"]

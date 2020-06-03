@@ -132,16 +132,6 @@ class MainSettingsViewController: ThemeViewController {
         ]
     }
 
-    private var debugRows: [RowProtocol] {
-        [
-            Row<TitleCell>(id: "debug_realm_info", height: .heightSingleLineCell, autoDeselect: true, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Show Realm Info", showDisclosure: false, last: false)
-            }, action: { [weak self] _ in
-                self?.showRealmInfo()
-            })
-        ]
-    }
-
     private var footer: ViewState<MainSettingsFooter> {
         .cellType(hash: "about_footer", binder: { [weak self] view in
             view.bind(appVersion: self?.appVersion) { [weak self] in
@@ -152,31 +142,16 @@ class MainSettingsViewController: ThemeViewController {
         })
     }
 
-    private func showRealmInfo() {
-        for wallet in App.shared.walletManager.wallets {
-            print("\nINFO FOR \(wallet.coin.code):")
-            if let adapter = App.shared.adapterManager.adapter(for: wallet) {
-                print(adapter.debugInfo)
-            }
-        }
-    }
-
 }
 
 extension MainSettingsViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        var sections: [SectionProtocol] = [
+        [
             Section(id: "security_settings", headerState: .margin(height: .margin3x), rows: securityRows),
             Section(id: "appearance_settings", headerState: .margin(height: .margin8x), rows: appearanceRows),
             Section(id: "about", headerState: .margin(height: .margin8x), footerState: footer, rows: aboutRows)
         ]
-
-        #if DEBUG
-        sections.append(Section(id: "debug", headerState: .margin(height: 50), footerState: .margin(height: 20), rows: debugRows))
-        #endif
-
-        return sections
     }
 
 }
