@@ -33,7 +33,7 @@ extension RestoreCoinsRouter {
 
     static func module(predefinedAccountType: PredefinedAccountType, accountType: AccountType, initialRestore: Bool) -> UIViewController {
         let router = RestoreCoinsRouter(initialRestore: initialRestore)
-        let interactor = RestoreCoinsInteractor(appConfigProvider: App.shared.appConfigProvider, derivationSettingsManager: App.shared.derivationSettingsManager, restoreManager: App.shared.restoreManager)
+        let interactor = RestoreCoinsInteractor(coinManager: App.shared.coinManager, derivationSettingsManager: App.shared.derivationSettingsManager, restoreManager: App.shared.restoreManager)
         let presenter = RestoreCoinsPresenter(predefinedAccountType: predefinedAccountType, accountType: accountType, interactor: interactor, router: router)
         let viewController = RestoreCoinsViewController(delegate: presenter)
 

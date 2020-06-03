@@ -26,6 +26,8 @@ class App {
     let accountManager: IAccountManager
     let backupManager: IBackupManager
 
+    let coinManager: ICoinManager
+
     let walletFactory: IWalletFactory
     let walletManager: IWalletManager
 
@@ -105,8 +107,10 @@ class App {
 
         kitCleaner = KitCleaner(accountManager: accountManager)
 
+        coinManager = CoinManager(appConfigProvider: appConfigProvider)
+
         walletFactory = WalletFactory()
-        let walletStorage: IWalletStorage = WalletStorage(appConfigProvider: appConfigProvider, walletFactory: walletFactory, storage: storage)
+        let walletStorage: IWalletStorage = WalletStorage(coinManager: coinManager, walletFactory: walletFactory, storage: storage)
         walletManager = WalletManager(accountManager: accountManager, walletFactory: walletFactory, storage: walletStorage, kitCleaner: kitCleaner)
 
         accountCreator = AccountCreator(accountFactory: AccountFactory(), wordsManager: wordsManager)
@@ -149,7 +153,7 @@ class App {
         testModeIndicator = TestModeIndicator(appConfigProvider: appConfigProvider)
         walletRemover = WalletRemover(accountManager: accountManager, walletManager: walletManager)
 
-        let priceAlertStorage: IPriceAlertStorage = PriceAlertStorage(appConfigProvider: appConfigProvider, storage: storage)
+        let priceAlertStorage: IPriceAlertStorage = PriceAlertStorage(coinManager: coinManager, storage: storage)
         priceAlertManager = PriceAlertManager(walletManager: walletManager, storage: priceAlertStorage)
         notificationManager = NotificationManager()
 

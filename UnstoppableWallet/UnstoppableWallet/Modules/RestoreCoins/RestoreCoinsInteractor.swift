@@ -1,10 +1,10 @@
 class RestoreCoinsInteractor {
-    private let appConfigProvider: IAppConfigProvider
+    private let coinManager: ICoinManager
     private let derivationSettingsManager: IDerivationSettingsManager
     private let restoreManager: IRestoreManager
 
-    init(appConfigProvider: IAppConfigProvider, derivationSettingsManager: IDerivationSettingsManager, restoreManager: IRestoreManager) {
-        self.appConfigProvider = appConfigProvider
+    init(coinManager: ICoinManager, derivationSettingsManager: IDerivationSettingsManager, restoreManager: IRestoreManager) {
+        self.coinManager = coinManager
         self.derivationSettingsManager = derivationSettingsManager
         self.restoreManager = restoreManager
     }
@@ -14,11 +14,11 @@ class RestoreCoinsInteractor {
 extension RestoreCoinsInteractor: IRestoreCoinsInteractor {
 
     var coins: [Coin] {
-        appConfigProvider.coins
+        coinManager.coins
     }
 
     var featuredCoins: [Coin] {
-        appConfigProvider.featuredCoins
+        coinManager.featuredCoins
     }
 
     func derivationSetting(coinType: CoinType) -> DerivationSetting? {

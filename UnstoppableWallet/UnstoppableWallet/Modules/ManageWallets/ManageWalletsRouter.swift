@@ -29,7 +29,7 @@ extension ManageWalletsRouter {
     static func module() -> UIViewController {
         let router = ManageWalletsRouter()
         let interactor = ManageWalletsInteractor(
-                appConfigProvider: App.shared.appConfigProvider,
+                coinManager: App.shared.coinManager,
                 walletManager: App.shared.walletManager,
                 accountManager: App.shared.accountManager,
                 derivationSettingsManager: App.shared.derivationSettingsManager

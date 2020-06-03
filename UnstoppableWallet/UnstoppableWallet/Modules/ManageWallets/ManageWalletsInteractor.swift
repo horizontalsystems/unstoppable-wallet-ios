@@ -5,13 +5,13 @@ class ManageWalletsInteractor {
 
     private let disposeBag = DisposeBag()
 
-    private let appConfigProvider: IAppConfigProvider
+    private let coinManager: ICoinManager
     private let walletManager: IWalletManager
     private let accountManager: IAccountManager
     private let derivationSettingsManager: IDerivationSettingsManager
 
-    init(appConfigProvider: IAppConfigProvider, walletManager: IWalletManager, accountManager: IAccountManager, derivationSettingsManager: IDerivationSettingsManager) {
-        self.appConfigProvider = appConfigProvider
+    init(coinManager: ICoinManager, walletManager: IWalletManager, accountManager: IAccountManager, derivationSettingsManager: IDerivationSettingsManager) {
+        self.coinManager = coinManager
         self.walletManager = walletManager
         self.accountManager = accountManager
         self.derivationSettingsManager = derivationSettingsManager
@@ -29,11 +29,11 @@ class ManageWalletsInteractor {
 extension ManageWalletsInteractor: IManageWalletsInteractor {
 
     var coins: [Coin] {
-        appConfigProvider.coins
+        coinManager.coins
     }
 
     var featuredCoins: [Coin] {
-        appConfigProvider.featuredCoins
+        coinManager.featuredCoins
     }
 
     var accounts: [Account] {

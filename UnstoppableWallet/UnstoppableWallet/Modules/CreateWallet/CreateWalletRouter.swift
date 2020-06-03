@@ -22,7 +22,7 @@ extension CreateWalletRouter {
     static func module(presentationMode: CreateWalletModule.PresentationMode, predefinedAccountType: PredefinedAccountType? = nil) -> UIViewController {
         let router = CreateWalletRouter()
         let interactor = CreateWalletInteractor(
-                appConfigProvider: App.shared.appConfigProvider,
+                coinManager: App.shared.coinManager,
                 accountCreator: App.shared.accountCreator,
                 accountManager: App.shared.accountManager,
                 walletManager: App.shared.walletManager,

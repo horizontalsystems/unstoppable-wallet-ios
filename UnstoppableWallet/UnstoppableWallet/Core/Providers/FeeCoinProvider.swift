@@ -6,7 +6,7 @@ class FeeCoinProvider {
     }
 
     private var erc20FeeCoin: Coin? {
-        appConfigProvider.coins.first(where: { $0.type == .ethereum })
+        appConfigProvider.defaultCoins.first(where: { $0.type == .ethereum })
     }
 
     private var erc20FeeCoinProtocol: String {
@@ -18,7 +18,7 @@ class FeeCoinProvider {
             return nil
         }
 
-        return appConfigProvider.coins.first(where: { coin in
+        return appConfigProvider.defaultCoins.first(where: { coin in
             if case let .binance(symbol) = coin.type {
                 return symbol == "BNB"
             }
