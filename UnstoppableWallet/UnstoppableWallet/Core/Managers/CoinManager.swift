@@ -1,6 +1,10 @@
+import RxSwift
+
 class CoinManager {
     private let appConfigProvider: IAppConfigProvider
     private let storage: ICoinStorage
+
+    private let subject = PublishSubject<Coin>()
 
     init(appConfigProvider: IAppConfigProvider, storage: ICoinStorage) {
         self.appConfigProvider = appConfigProvider
@@ -10,6 +14,10 @@ class CoinManager {
 }
 
 extension CoinManager: ICoinManager {
+
+    var coinAddedObservable: Observable<Coin> {
+        subject.asObservable()
+    }
 
     var coins: [Coin] {
         storage.coins + appConfigProvider.defaultCoins
@@ -30,7 +38,9 @@ extension CoinManager: ICoinManager {
     }
 
     func save(coin: Coin) {
-        storage.save(coin: coin)
+        if storage.save(coin: coin) {
+            subject.onNext(coin)
+        }
     }
 
 }

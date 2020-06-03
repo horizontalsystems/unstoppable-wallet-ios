@@ -397,7 +397,7 @@ extension GrdbStorage: ICoinRecordStorage {
 
     var coinRecords: [CoinRecord] {
         try! dbPool.read { db in
-            try CoinRecord.fetchAll(db)
+            try CoinRecord.order(CoinRecord.Columns.title.asc).fetchAll(db)
         }
     }
 

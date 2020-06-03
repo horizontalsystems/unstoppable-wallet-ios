@@ -545,6 +545,7 @@ protocol IErc20ContractInfoProvider {
 }
 
 protocol ICoinManager {
+    var coinAddedObservable: Observable<Coin> { get }
     var coins: [Coin] { get }
     var featuredCoins: [Coin] { get }
     func existingCoin(erc20Address: String) -> Coin?
@@ -558,5 +559,5 @@ protocol ICoinRecordStorage {
 
 protocol ICoinStorage {
     var coins: [Coin] { get }
-    func save(coin: Coin)
+    func save(coin: Coin) -> Bool
 }

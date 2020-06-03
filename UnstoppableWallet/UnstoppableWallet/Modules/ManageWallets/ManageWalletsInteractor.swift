@@ -22,6 +22,13 @@ class ManageWalletsInteractor {
                     self?.delegate?.didUpdateAccounts()
                 })
                 .disposed(by: disposeBag)
+
+        coinManager.coinAddedObservable
+                .subscribeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] _ in
+                    self?.delegate?.didAddCoin()
+                })
+                .disposed(by: disposeBag)
     }
 
 }
