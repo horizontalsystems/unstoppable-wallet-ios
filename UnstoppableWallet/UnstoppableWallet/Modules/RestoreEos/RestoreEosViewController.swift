@@ -5,8 +5,8 @@ import ThemeKit
 class RestoreEosViewController: ThemeViewController {
     private let delegate: IRestoreEosViewDelegate
 
-    private let accountNameField = AddressInputField()
-    private let accountPrivateKeyField = AddressInputField()
+    private let accountNameField = InputField()
+    private let accountPrivateKeyField = InputField()
 
     init(delegate: IRestoreEosViewDelegate) {
         self.delegate = delegate
@@ -32,7 +32,6 @@ class RestoreEosViewController: ThemeViewController {
         accountNameField.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.top.equalTo(view.snp.topMargin).offset(CGFloat.margin3x)
-            maker.height.equalTo(CGFloat.heightSingleLineInput)
         }
 
         accountNameField.placeholder = "restore.placeholder.account_name".localized
@@ -51,11 +50,9 @@ class RestoreEosViewController: ThemeViewController {
         accountPrivateKeyField.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.top.equalTo(accountNameField.snp.bottom).offset(CGFloat.margin4x)
-            maker.height.equalTo(CGFloat.heightDoubleLineInput)
         }
 
         accountPrivateKeyField.placeholder = "restore.placeholder.private_key".localized
-        accountPrivateKeyField.numberOfLines = 2
         accountPrivateKeyField.showQrButton = true
         accountPrivateKeyField.canEdit = false
 
@@ -105,11 +102,11 @@ extension RestoreEosViewController: IRestoreEosView {
     }
 
     func set(account: String?) {
-        accountNameField.bind(address: account, error: nil)
+        accountNameField.bind(text: account, error: nil)
     }
 
     func set(key: String?) {
-        accountPrivateKeyField.bind(address: key, error: nil)
+        accountPrivateKeyField.bind(text: key, error: nil)
     }
 
     func show(error: Error) {

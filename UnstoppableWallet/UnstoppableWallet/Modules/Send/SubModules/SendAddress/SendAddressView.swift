@@ -2,12 +2,12 @@ import UIKit
 import RxSwift
 
 class SendAddressView: UIView {
-    private let addressInputField: AddressInputField
+    private let addressInputField: InputField
     private let delegate: ISendAddressViewDelegate
 
     public init(delegate: ISendAddressViewDelegate) {
         self.delegate = delegate
-        addressInputField = AddressInputField()
+        addressInputField = InputField()
 
         super.init(frame: .zero)
 
@@ -23,7 +23,6 @@ class SendAddressView: UIView {
         addressInputField.placeholder = "send.address_placeholder".localized
         addressInputField.showQrButton = true
         addressInputField.canEdit = false
-        addressInputField.lineBreakMode = .byTruncatingMiddle
 
         addressInputField.onScan = { [weak self] in
             self?.delegate.onAddressScanClicked()
@@ -45,7 +44,7 @@ class SendAddressView: UIView {
 extension SendAddressView: ISendAddressView {
 
     func set(address: String?, error: Error?) {
-        addressInputField.bind(address: address, error: error)
+        addressInputField.bind(text: address, error: error)
     }
 
 }
