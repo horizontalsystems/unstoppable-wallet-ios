@@ -2,12 +2,11 @@ import UIKit
 import RxSwift
 
 class SendAccountView: UIView {
-    private let addressInputField: AddressInputField
+    private let addressInputField = InputField()
     private let delegate: ISendAccountViewDelegate
 
     public init(delegate: ISendAccountViewDelegate) {
         self.delegate = delegate
-        addressInputField = AddressInputField()
 
         super.init(frame: .zero)
 
@@ -22,7 +21,6 @@ class SendAccountView: UIView {
 
         addressInputField.placeholder = "send.account_placeholder".localized
         addressInputField.showQrButton = true
-        addressInputField.lineBreakMode = .byTruncatingMiddle
 
         addressInputField.onScan = { [weak self] in
             self?.delegate.onScanClicked()
@@ -47,7 +45,7 @@ class SendAccountView: UIView {
 extension SendAccountView: ISendAccountView {
 
     func set(account: String?, error: Error?) {
-        addressInputField.bind(address: account, error: error)
+        addressInputField.bind(text: account, error: error)
     }
 
 }

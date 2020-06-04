@@ -54,20 +54,19 @@ class AddErc20TokenViewController: ThemeViewController {
         delegate.onTapCancel()
     }
 
-    private func inputFieldRow(address: String?) -> RowProtocol {
+    private func inputFieldRow(address: String?, error: Error?) -> RowProtocol {
         Row<AddressInputFieldCell>(
                 id: "input_field",
                 hash: address,
                 dynamicHeight: { containerWidth in
-                    AddressInputFieldCell.height(containerWidth: containerWidth, address: address, error: nil)
+                    AddressInputFieldCell.height(containerWidth: containerWidth, error: error)
                 },
                 bind: { cell, _ in
                     cell.bind(
                             placeholder: "add_erc20_token.contract_address".localized,
                             canEdit: false,
-                            lineBreakMode: .byTruncatingMiddle,
                             address: address,
-                            error: nil,
+                            error: error,
                             onPaste: { [weak self] in
                                 self?.delegate.onTapPasteAddress()
                             },
@@ -130,11 +129,7 @@ class AddErc20TokenViewController: ThemeViewController {
 extension AddErc20TokenViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        var rows: [RowProtocol] = [inputFieldRow(address: address)]
-
-        if let error = error {
-            rows.append(warningRow(text: error.smartDescription))
-        }
+        var rows: [RowProtocol] = [inputFieldRow(address: address, error: error)]
 
         if spinnerVisible {
             rows.append(spinnerRow())
