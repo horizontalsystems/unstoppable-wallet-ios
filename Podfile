@@ -6,13 +6,13 @@ inhibit_all_warnings!
 project 'BankWallet/BankWallet'
 
 def appPods
-  pod 'BitcoinKit.swift', '0.14.3'
-  pod 'LitecoinKit.swift', '0.14.3'
-  pod 'BitcoinCashKit.swift', '0.14.3'
-  pod 'DashKit.swift', '0.14.3'
-  pod 'Hodler.swift', '0.14.3'
+  pod 'BitcoinKit.swift', '0.14.4'
+  pod 'LitecoinKit.swift', '0.14.4'
+  pod 'BitcoinCashKit.swift', '0.14.4'
+  pod 'DashKit.swift', '0.14.4'
+  pod 'Hodler.swift', '0.14.4'
 
-  pod 'BitcoinCore.swift', '0.14.3'
+  pod 'BitcoinCore.swift', '0.14.4'
 
   pod 'EthereumKit.swift', '0.9.2'
   pod 'Erc20Kit.swift', '0.9.2'
