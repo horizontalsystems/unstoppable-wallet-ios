@@ -66,7 +66,8 @@ class FilterHeaderView: UIView {
     func select(index: Int) {
         let selectedItem = IndexPath(item: index, section: 0)
 
-        guard collectionView.indexPathsForSelectedItems?.contains(selectedItem) ?? true else {
+        if let indexPathsForSelectedItems = collectionView.indexPathsForSelectedItems,      // check already selected item
+           indexPathsForSelectedItems.contains(selectedItem) {
             return
         }
 
