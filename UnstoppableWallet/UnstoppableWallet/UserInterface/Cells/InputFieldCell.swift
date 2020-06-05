@@ -1,7 +1,7 @@
 import UIKit
 import ThemeKit
 
-class AddressInputFieldCell: UITableViewCell {
+class InputFieldCell: UITableViewCell {
     private static let horizontalPadding: CGFloat = .margin4x
     private static let verticalPadding: CGFloat = .margin3x
 
@@ -15,8 +15,8 @@ class AddressInputFieldCell: UITableViewCell {
 
         addSubview(inputField)
         inputField.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(AddressInputFieldCell.horizontalPadding)
-            maker.top.equalToSuperview().inset(AddressInputFieldCell.verticalPadding)
+            maker.leading.trailing.equalToSuperview().inset(InputFieldCell.horizontalPadding)
+            maker.top.equalToSuperview().inset(InputFieldCell.verticalPadding)
         }
     }
 
@@ -24,11 +24,11 @@ class AddressInputFieldCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(placeholder: String? = nil, canEdit: Bool = true, address: String?, error: Error? = nil, onPaste: (() -> ())?, onDelete: (() -> ())?) {
+    func bind(placeholder: String? = nil, canEdit: Bool = true, text: String?, error: Error? = nil, onPaste: (() -> ())?, onDelete: (() -> ())?) {
         inputField.placeholder = placeholder
         inputField.canEdit = canEdit
 
-        inputField.bind(text: address, error: error)
+        inputField.bind(text: text, error: error)
 
         inputField.onPaste = onPaste
         inputField.onDelete = onDelete
@@ -36,10 +36,10 @@ class AddressInputFieldCell: UITableViewCell {
 
 }
 
-extension AddressInputFieldCell {
+extension InputFieldCell {
 
     static func height(containerWidth: CGFloat, error: Error?) -> CGFloat {
-        InputField.height(error: error, containerWidth: containerWidth - AddressInputFieldCell.horizontalPadding * 2) + 2 * verticalPadding
+        InputField.height(error: error, containerWidth: containerWidth - InputFieldCell.horizontalPadding * 2) + 2 * verticalPadding
     }
 
 }
