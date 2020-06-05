@@ -513,3 +513,4 @@ bch.horizontalsystems.xyz/apg";
 "add_erc20_token.decimals" = "Decimals";
 "add_erc20_token.already_exists" = "This token is already in the coin manager list.";
 "add_erc20_token.add" = "Add";
+"add_erc20_token.contract_not_exist" = "Contract not found";

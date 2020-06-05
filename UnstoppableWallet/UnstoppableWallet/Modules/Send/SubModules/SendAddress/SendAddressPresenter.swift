@@ -28,14 +28,6 @@ class SendAddressPresenter {
         }
     }
 
-    private func createSendError(from error: Error) -> Error {
-        if let error = error as? HodlerPluginError, error == HodlerPluginError.unsupportedAddress {
-            return ValidationError.notSupportedByHodler
-        }
-
-        return ValidationError.invalidAddress
-    }
-
 }
 
 extension SendAddressPresenter: ISendAddressViewDelegate {
@@ -63,7 +55,7 @@ extension SendAddressPresenter: ISendAddressModule {
     func validateAddress() throws {
         guard let address = enteredAddress else {
             currentAddress = nil
-            throw ValidationError.invalidAddress
+            throw AppError.addressInvalid
         }
 
         do {
@@ -72,14 +64,14 @@ extension SendAddressPresenter: ISendAddressModule {
             view?.set(address: address, error: nil)
         } catch {
             currentAddress = nil
-            view?.set(address: address, error: createSendError(from: error))
+            view?.set(address: address, error: error.convertedError)
             throw error
         }
     }
 
     func validAddress() throws -> String {
         guard let address = currentAddress else {
-            throw ValidationError.invalidAddress
+            throw AppError.addressInvalid
         }
 
         return address
@@ -90,33 +82,11 @@ extension SendAddressPresenter: ISendAddressModule {
 extension SendAddressPresenter: IScanQrModuleDelegate {
 
     func validate(string: String) throws {
-        do {
-            try delegate?.validate(address: string)
-        } catch {
-            throw createSendError(from: error)
-        }
+        try delegate?.validate(address: string)
     }
 
     func didScan(string: String) {
         onEnter(address: string)
-    }
-
-}
-
-extension SendAddressPresenter {
-
-    private enum ValidationError: Error, LocalizedError {
-        case invalidAddress
-        case notSupportedByHodler
-
-        var errorDescription: String? {
-            switch self {
-            case .invalidAddress:
-                return "send.error.invalid_address".localized
-            case .notSupportedByHodler:
-                return "send.hodler_error.unsupported_address".localized
-            }
-        }
     }
 
 }

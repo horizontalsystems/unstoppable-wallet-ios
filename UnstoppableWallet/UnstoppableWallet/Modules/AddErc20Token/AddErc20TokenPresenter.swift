@@ -31,7 +31,7 @@ extension AddErc20TokenPresenter: IAddErc20TokenViewDelegate {
         do {
             try interactor.validate(address: address)
         } catch {
-            view?.set(error: error)
+            view?.set(error: error.convertedError)
 
             view?.refresh()
             return

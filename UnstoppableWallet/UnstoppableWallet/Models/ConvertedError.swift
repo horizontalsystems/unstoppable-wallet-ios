@@ -115,3 +115,27 @@ extension EthereumKit.Kit.SyncError: ConvertibleError {
         }
     }
 }
+
+extension EthereumKit.Kit.AddressValidationError: ConvertibleError {
+    var convertedError: Error {
+         AppError.addressInvalid
+    }
+}
+
+extension BinanceChainKit.CoderError: ConvertibleError {
+    var convertedError: Error {
+         AppError.addressInvalid
+    }
+}
+
+extension HodlerPluginError: ConvertibleError {
+    var convertedError: Error {
+         AppError.notSupportedByHodler
+    }
+}
+
+extension BitcoinCoreErrors.AddressConversionErrors: ConvertibleError {
+    var convertedError: Error {
+        AppError.addressInvalid
+    }
+}
