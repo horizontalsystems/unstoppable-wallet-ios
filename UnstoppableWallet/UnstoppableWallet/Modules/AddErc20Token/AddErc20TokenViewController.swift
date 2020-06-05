@@ -40,7 +40,7 @@ class AddErc20TokenViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
-        tableView.registerCell(forClass: AddressInputFieldCell.self)
+        tableView.registerCell(forClass: InputFieldCell.self)
         tableView.registerCell(forClass: AddErc20TokenSpinnerCell.self)
         tableView.registerCell(forClass: AdditionalDataCell.self)
         tableView.registerCell(forClass: HighlightedDescriptionCell.self)
@@ -55,17 +55,17 @@ class AddErc20TokenViewController: ThemeViewController {
     }
 
     private func inputFieldRow(address: String?, error: Error?) -> RowProtocol {
-        Row<AddressInputFieldCell>(
+        Row<InputFieldCell>(
                 id: "input_field",
                 hash: address,
                 dynamicHeight: { containerWidth in
-                    AddressInputFieldCell.height(containerWidth: containerWidth, error: error)
+                    InputFieldCell.height(containerWidth: containerWidth, error: error)
                 },
                 bind: { cell, _ in
                     cell.bind(
                             placeholder: "add_erc20_token.contract_address".localized,
                             canEdit: false,
-                            address: address,
+                            text: address,
                             error: error,
                             onPaste: { [weak self] in
                                 self?.delegate.onTapPasteAddress()
