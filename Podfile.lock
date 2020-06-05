@@ -43,7 +43,7 @@ PODS:
     - OpenSslKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
     - Secp256k1Kit.swift (~> 1.0)
-  - BlsKit.swift (1.0)
+  - BlsKit.swift (1.0.1)
   - BlueSocket (1.0.52)
   - Chart.swift (1.2):
     - SnapKit (~> 5.0)
@@ -141,7 +141,7 @@ PODS:
     - Secp256k1Kit.swift (~> 1.0)
   - Nimble (8.0.9)
   - ObjectMapper (3.5.3)
-  - OpenSslKit.swift (1.2)
+  - OpenSslKit.swift (1.2.1)
   - PinKit.swift (1.0):
     - LanguageKit.swift (~> 1.0)
     - RxSwift
@@ -420,7 +420,7 @@ SPEC CHECKSUMS:
   BitcoinCashKit.swift: df5b06703e6b64cb63655da4b124376b784d8760
   BitcoinCore.swift: cedc633dcdb979e3387ab201d3150619baa12464
   BitcoinKit.swift: 8b9c69ad9a36ec0687606ed92f50cfbee64ecf66
-  BlsKit.swift: 533e494e0068f9ad2cf211a31fe9279f688af123
+  BlsKit.swift: e73fb332ed6a577b0f34a0da30aa5ec6c09bee55
   BlueSocket: 1acd943acb07b55905291d608649fcfbf8cbd57d
   Chart.swift: bdfda424f16ff62b3c6d2a4dcda1ec2c7b6b3cda
   Cuckoo: 57f71c6616b6b08cd9fe27f803da056fb619ff3e
@@ -447,7 +447,7 @@ SPEC CHECKSUMS:
   LitecoinKit.swift: 31ec809adc25f64b8467717182cd9a3e0ec2accf
   Nimble: 98b888285a615fd34f20e61753cf58ea1402bde4
   ObjectMapper: 97111c97e054a6ee25917662106689f0b4127b37
-  OpenSslKit.swift: 168b059e3438c21994a3e9fe6c5648df96660d94
+  OpenSslKit.swift: 0f9c774a09e406c320a0c17341d84fced0e1ba16
   PinKit.swift: 1acbf82ce5114972f1eb9a5a0c1b808dc08ad12e
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
