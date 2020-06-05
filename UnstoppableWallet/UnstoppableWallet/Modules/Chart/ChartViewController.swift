@@ -51,7 +51,7 @@ class ChartViewController: ThemeViewController {
         hidesBottomBarWhenPushed = true
 
         emaIndicatorView.onTap = { [weak self] in
-            self?.delegate.onTap(indicator: .ema)
+            self?.delegate.onTapEmaIndicator()
         }
         macdIndicatorView.onTap = { [weak self] in
             self?.delegate.onTap(indicator: .macd)
@@ -194,18 +194,16 @@ class ChartViewController: ThemeViewController {
 
             chartView.set(timeline: data.timeline, start: data.chartData.startWindow, end: data.chartData.endWindow)
 
-            emaIndicatorView.bind(selected: viewItem.selectedIndicator == .ema, trend: data.emaTrend)
+            emaIndicatorView.bind(selected: viewItem.showEma, trend: data.emaTrend)
             macdIndicatorView.bind(selected: viewItem.selectedIndicator == .macd, trend: data.macdTrend)
             rsiIndicatorView.bind(selected: viewItem.selectedIndicator == .rsi, trend: data.rsiTrend)
+
+            chartView.setEma(hidden: !viewItem.showEma)
 
             chartView.setVolumes(hidden: true)
             chartView.setMacd(hidden: true)
             chartView.setRsi(hidden: true)
-            chartView.setEma(hidden: true)
             switch viewItem.selectedIndicator {
-            case .ema:
-                chartView.setEma(hidden: false)
-                chartView.setVolumes(hidden: false)
             case .macd:
                 chartView.setMacd(hidden: false)
             case .rsi:

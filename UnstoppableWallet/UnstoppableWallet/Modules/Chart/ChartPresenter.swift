@@ -20,6 +20,7 @@ class ChartPresenter {
 
     private var chartType: ChartType
 
+    private var showEma = false
     private var selectedIndicator: ChartIndicatorMode = .none
 
     init(interactor: IChartInteractor, factory: IChartRateFactory, coinCode: String, coinTitle: String, currency: Currency) {
@@ -39,6 +40,7 @@ class ChartPresenter {
                 chartType: chartType,
                 coinCode: coinCode,
                 currency: currency,
+                showEma: showEma,
                 selectedIndicator: selectedIndicator)
 
         view?.set(viewItem: viewItem)
@@ -75,6 +77,12 @@ extension ChartPresenter: IChartViewDelegate {
         interactor.defaultChartType = chartType
 
         fetchInfo()
+    }
+
+    func onTapEmaIndicator() {
+        showEma.toggle()
+
+        updateChart()
     }
 
     func onTap(indicator: ChartIndicatorMode) {
