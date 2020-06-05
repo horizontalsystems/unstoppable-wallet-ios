@@ -21,6 +21,8 @@ protocol IChartViewDelegate {
     func onLoad()
 
     func onSelectType(at index: Int)
+
+    func onTapEmaIndicator()
     func onTap(indicator: ChartIndicatorMode)
 }
 
@@ -41,7 +43,7 @@ protocol IChartInteractorDelegate: class {
 }
 
 protocol IChartRateFactory {
-    func chartViewItem(chartDataStatus: ChartDataStatus<ChartInfo>, marketInfoStatus: ChartDataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, selectedIndicator: ChartIndicatorMode) -> ChartViewItem
+    func chartViewItem(chartDataStatus: ChartDataStatus<ChartInfo>, marketInfoStatus: ChartDataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, showEma: Bool, selectedIndicator: ChartIndicatorMode) -> ChartViewItem
     func selectedPointViewItem(chartPoint: ChartPoint, type: ChartType, currency: Currency) -> SelectedPointViewItem
 }
 
@@ -52,7 +54,6 @@ enum MovementTrend {
 }
 
 enum ChartIndicatorMode {
-    case ema
     case macd
     case rsi
     case none
@@ -93,5 +94,6 @@ struct ChartViewItem {
     let chartDataStatus: ChartDataStatus<ChartDataViewItem>
     let marketInfoStatus: ChartDataStatus<MarketInfoViewItem>
 
+    let showEma: Bool
     let selectedIndicator: ChartIndicatorMode
 }

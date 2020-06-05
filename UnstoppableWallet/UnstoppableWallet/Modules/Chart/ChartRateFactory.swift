@@ -214,7 +214,7 @@ class ChartRateFactory: IChartRateFactory {
                 minValue: minRateString, maxValue: maxRateString, timeline: timeline)
     }
 
-    func chartViewItem(chartDataStatus: ChartDataStatus<ChartInfo>, marketInfoStatus: ChartDataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, selectedIndicator: ChartIndicatorMode) -> ChartViewItem {
+    func chartViewItem(chartDataStatus: ChartDataStatus<ChartInfo>, marketInfoStatus: ChartDataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, showEma: Bool, selectedIndicator: ChartIndicatorMode) -> ChartViewItem {
         let chartDataStatusViewItem: ChartDataStatus<ChartDataViewItem> = chartDataStatus.convert {
             convert(chartInfo: $0, marketInfo: marketInfoStatus.data, chartType: chartType, currency: currency)
         }
@@ -229,7 +229,7 @@ class ChartRateFactory: IChartRateFactory {
             currentRate = ValueFormatter.instance.format(currencyValue: rateValue, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
         }
 
-        return ChartViewItem(currentRate: currentRate, chartDataStatus: chartDataStatusViewItem, marketInfoStatus: marketStatus, selectedIndicator: selectedIndicator)
+        return ChartViewItem(currentRate: currentRate, chartDataStatus: chartDataStatusViewItem, marketInfoStatus: marketStatus, showEma: showEma, selectedIndicator: selectedIndicator)
     }
 
     func selectedPointViewItem(chartPoint: ChartPoint, type: ChartType, currency: Currency) -> SelectedPointViewItem {
