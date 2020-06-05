@@ -6,6 +6,8 @@ enum AppError: Error {
     case eos(reason: EosError)
     case binance(reason: BinanceError)
     case wordsValidation(reason: WordsValidationError)
+    case addressInvalid
+    case notSupportedByHodler
     case unknownError
 
     enum WordsValidationError: Error {
@@ -53,6 +55,8 @@ extension AppError: LocalizedError {
             case .invalidWords: return "restore.validation_failed".localized
 
             }
+        case .addressInvalid: return "send.error.invalid_address".localized
+        case .notSupportedByHodler: return "send.hodler_error.unsupported_address".localized
         case .unknownError: return "Unknown Error"
         }
 

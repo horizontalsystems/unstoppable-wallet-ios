@@ -339,7 +339,7 @@ CHECKOUT OPTIONS:
     :commit: dedea8758c71f0f73cada98c9dacd58d4646218d
     :git: https://github.com/horizontalsystems/gui-kit/
   BinanceChainKit.swift:
-    :commit: 41bb215d7231db83c5e9dbd2a061c672cbcc83c2
+    :commit: 0eada26988e54fd47ad58ca90a340bfe8a2734cc
     :git: https://github.com/horizontalsystems/binance-chain-kit-ios
   BitcoinCashKit.swift:
     :commit: 8c7bc095115e7bf698850196b35e304380b9ea4c
@@ -369,7 +369,7 @@ CHECKOUT OPTIONS:
     :commit: d53efa05ab71282d04aae6b4990eaff2606b7343
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   EthereumKit.swift:
-    :commit: d53efa05ab71282d04aae6b4990eaff2606b7343
+    :commit: 9c41fdf86394c6208595be84a9fedba7dca14fee
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :commit: 783ff3709e90df51ca60d50a2665e6afdad8e391
@@ -468,6 +468,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: b09af5caafef556c489bf9b55b8c3dddbd710861
 
-PODFILE CHECKSUM: 9aef8429426e00db5af2c30fa9372af5c0db837c
+PODFILE CHECKSUM: 55d6aa480d46398c5f51900cd0729ad445bbacbc
 
 COCOAPODS: 1.9.1

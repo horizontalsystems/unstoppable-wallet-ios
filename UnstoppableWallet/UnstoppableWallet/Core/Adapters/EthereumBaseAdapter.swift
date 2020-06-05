@@ -32,13 +32,6 @@ class EthereumBaseAdapter {
 
 }
 
-extension EthereumBaseAdapter {
-    //todo: Make ethereumKit errors public!
-    enum AddressConversion: Error {
-        case invalidAddress
-    }
-}
-
 // ISendEthereumAdapter
 extension EthereumBaseAdapter {
 
@@ -53,12 +46,7 @@ extension EthereumBaseAdapter {
     }
 
     func validate(address: String) throws {
-        //todo: remove when make errors public
-        do {
-            try EthereumKit.Kit.validate(address: address)
-        } catch {
-            throw AddressConversion.invalidAddress
-        }
+        try EthereumKit.Kit.validate(address: address)
     }
 
 }

@@ -1,3 +1,4 @@
+import Foundation
 import RxSwift
 import Alamofire
 import HsToolKit
@@ -82,9 +83,17 @@ extension Erc20ContractInfoProvider {
 
 extension Erc20ContractInfoProvider {
 
-    enum ApiError: Error {
+    enum ApiError: LocalizedError {
         case contractDoesNotExist
         case invalidResponse
+
+        var errorDescription: String? {
+            switch self {
+            case .contractDoesNotExist: return "add_erc20_token.contract_not_exist".localized
+            default: return "\(self)"
+            }
+        }
+
     }
 
 }

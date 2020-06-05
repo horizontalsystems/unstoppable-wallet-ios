@@ -45,7 +45,7 @@ extension ScanQrPresenter: IScanQrViewDelegate {
             router.close()
         } catch {
             startTimer()
-            view?.set(error: error)
+            view?.set(error: error.convertedError)
         }
     }
 
