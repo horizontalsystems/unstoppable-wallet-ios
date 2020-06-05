@@ -68,6 +68,7 @@ class InputField: UIView {
             maker.centerY.equalToSuperview()
         }
 
+        pasteButton.setContentHuggingPriority(.required, for: .horizontal)
         pasteButton.apply(style: .secondaryDefault)
         pasteButton.setTitle("button.paste".localized, for: .normal)
         pasteButton.addTarget(self, action: #selector(onTapPaste), for: .touchUpInside)
