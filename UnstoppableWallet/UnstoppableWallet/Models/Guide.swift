@@ -6,10 +6,13 @@ struct Guide {
     let fileName: String
 }
 
-enum GuideBlock {
+enum GuideBlockViewItem {
     case h1(attributedString: NSAttributedString)
     case h2(attributedString: NSAttributedString)
     case h3(attributedString: NSAttributedString)
     case text(attributedString: NSAttributedString)
-    case image(url: String, altText: String?)
+    case listItem(attributedString: NSAttributedString)
+    case blockQuote(attributedString: NSAttributedString)
+    case image(url: String)
+    case imageTitle(text: String)
 }

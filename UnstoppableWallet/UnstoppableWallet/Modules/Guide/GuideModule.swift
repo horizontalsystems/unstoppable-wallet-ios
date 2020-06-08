@@ -1,5 +1,5 @@
 protocol IGuideView: AnyObject {
-    func set(imageUrl: String, blocks: [GuideBlock])
+    func set(imageUrl: String, viewItems: [GuideBlockViewItem])
 }
 
 protocol IGuideViewDelegate {
@@ -16,5 +16,5 @@ protocol IGuideRouter {
 }
 
 protocol IGuideParser {
-    func blocks(markdownFileName: String) -> [GuideBlock]
+    func viewItems(markdownFileName: String) -> [GuideBlockViewItem]
 }
