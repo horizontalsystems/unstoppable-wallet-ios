@@ -1,23 +1,17 @@
 import UIKit
 import SnapKit
 import ThemeKit
+import SectionsTableView
 
 class GuidesViewController: ThemeViewController {
     private let delegate: IGuidesViewDelegate
 
-    private let horizontalInset: CGFloat = .margin4x
-    private let interitemSpacing: CGFloat = .margin2x
-    private let lineSpacing: CGFloat = .margin3x
-
-    private let layout = UICollectionViewFlowLayout()
-    private let collectionView: UICollectionView
+    private let tableView = SectionsTableView(style: .grouped)
 
     private var viewItems = [GuideViewItem]()
 
     init(delegate: IGuidesViewDelegate) {
         self.delegate = delegate
-
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 
         super.init()
 
@@ -33,77 +27,50 @@ class GuidesViewController: ThemeViewController {
 
         title = "guides.title".localized
 
-        view.addSubview(collectionView)
-        collectionView.snp.makeConstraints { maker in
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
 
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.alwaysBounceVertical = true
-        collectionView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
 
-        collectionView.register(GuideCell.self, forCellWithReuseIdentifier: String(describing: GuideCell.self))
+        tableView.registerCell(forClass: GuideCell.self)
+        tableView.sectionDataSource = self
 
         delegate.onLoad()
+
+        tableView.buildSections()
+    }
+
+    private func guideRow(index: Int, viewItem: GuideViewItem) -> RowProtocol {
+        Row<GuideCell>(
+                id: viewItem.title,
+                dynamicHeight: { containerWidth in
+                    GuideCell.height(containerWidth: containerWidth, viewItem: viewItem)
+                },
+                bind: { cell, _ in
+                    cell.bind(viewItem: viewItem)
+                },
+                action: { [weak self] _ in
+                    self?.delegate.onTapGuide(index: index)
+                }
+        )
     }
 
 }
 
-extension GuidesViewController: UICollectionViewDataSource {
+extension GuidesViewController: SectionsDataSource {
 
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
-    }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewItems.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: GuideCell.self), for: indexPath)
-    }
-
-}
-
-extension GuidesViewController: UICollectionViewDelegate {
-
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let cell = cell as? GuideCell {
-            cell.bind(viewItem: viewItems[indexPath.item])
-        }
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate.onTapGuide(index: indexPath.item)
-    }
-
-}
-
-extension GuidesViewController: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width: CGFloat
-
-        if viewItems[indexPath.item].large {
-            width = collectionView.width - horizontalInset * 2
-        } else {
-            width = (collectionView.width - horizontalInset * 2 - interitemSpacing) / 2
-        }
-
-        return CGSize(width: width, height: 220)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        interitemSpacing
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        lineSpacing
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        UIEdgeInsets(top: lineSpacing, left: horizontalInset, bottom: lineSpacing, right: horizontalInset)
+    func buildSections() -> [SectionProtocol] {
+        [
+            Section(
+                    id: "guides",
+                    headerState: .margin(height: .margin3x),
+                    footerState: .margin(height: .margin8x),
+                    rows: viewItems.enumerated().map { guideRow(index: $0, viewItem: $1) }
+            )
+        ]
     }
 
 }

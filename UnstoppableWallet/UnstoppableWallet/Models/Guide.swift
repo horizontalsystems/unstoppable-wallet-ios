@@ -2,6 +2,7 @@ import Foundation
 
 struct Guide {
     let title: String
+    let date: Date
     let imageUrl: String
     let fileName: String
 }
