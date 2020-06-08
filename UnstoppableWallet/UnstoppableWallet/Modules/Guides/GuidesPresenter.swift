@@ -1,3 +1,5 @@
+import Foundation
+
 class GuidesPresenter {
     weak var view: IGuidesView?
 
@@ -20,7 +22,7 @@ extension GuidesPresenter: IGuidesViewDelegate {
         guides = interactor.guides
 
         let viewItems = guides.map { guide in
-            GuideViewItem(title: guide.title, large: true, imageUrl: guide.imageUrl)
+            GuideViewItem(title: guide.title, date: guide.date, imageUrl: guide.imageUrl)
         }
         view?.set(viewItems: viewItems)
     }

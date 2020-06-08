@@ -1,3 +1,5 @@
+import Foundation
+
 protocol IGuidesView: AnyObject {
     func set(viewItems: [GuideViewItem])
 }
@@ -20,6 +22,6 @@ protocol IGuidesRouter {
 
 struct GuideViewItem {
     let title: String
-    let large: Bool
+    let date: Date
     var imageUrl: String?
 }
