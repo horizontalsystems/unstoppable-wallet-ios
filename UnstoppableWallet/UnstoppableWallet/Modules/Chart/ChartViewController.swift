@@ -31,11 +31,7 @@ class ChartViewController: ThemeViewController {
     private let selectedRateView = ChartPointInfoView()
 
     private let chartView: RateChartView
-
-    private let emaIndicatorView = IndicatorSelectView(title: "EMA")
-    private let macdIndicatorView = IndicatorSelectView(title: "MACD")
-    private let rsiIndicatorView = IndicatorSelectView(title: "RSI")
-
+    private var indicatorViews = [ChartIndicatorSet : IndicatorSelectView]()
     private let chartInfoView = ChartInfoView()
 
     private let loadingView = HUDProgressView(strokeLineWidth: FullTransactionInfoViewController.spinnerLineWidth,
@@ -49,16 +45,6 @@ class ChartViewController: ThemeViewController {
         super.init()
 
         hidesBottomBarWhenPushed = true
-
-        emaIndicatorView.onTap = { [weak self] in
-            self?.delegate.onTapEmaIndicator()
-        }
-        macdIndicatorView.onTap = { [weak self] in
-            self?.delegate.onTap(indicator: .macd)
-        }
-        rsiIndicatorView.onTap = { [weak self] in
-            self?.delegate.onTap(indicator: .rsi)
-        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -117,24 +103,41 @@ class ChartViewController: ThemeViewController {
         loadingView.set(hidden: true)
         loadingView.backgroundColor = view.backgroundColor
 
+        let emaIndicatorView = IndicatorSelectView(title: "EMA")
         container.addSubview(emaIndicatorView)
         emaIndicatorView.snp.makeConstraints { maker in
             maker.top.equalTo(chartView.snp.bottom).offset(CGFloat.margin2x)
             maker.leading.trailing.equalToSuperview()
             maker.height.equalTo(44)
         }
+        emaIndicatorView.onTap = { [weak self] in
+            self?.delegate.onTap(indicator: .ema)
+        }
+        indicatorViews[.ema] = emaIndicatorView
+
+        let macdIndicatorView = IndicatorSelectView(title: "MACD")
         container.addSubview(macdIndicatorView)
         macdIndicatorView.snp.makeConstraints { maker in
             maker.top.equalTo(emaIndicatorView.snp.bottom)
             maker.leading.trailing.equalToSuperview()
             maker.height.equalTo(44)
         }
+        macdIndicatorView.onTap = { [weak self] in
+            self?.delegate.onTap(indicator: .macd)
+        }
+        indicatorViews[.macd] = macdIndicatorView
+
+        let rsiIndicatorView = IndicatorSelectView(title: "RSI")
         container.addSubview(rsiIndicatorView)
         rsiIndicatorView.snp.makeConstraints { maker in
             maker.top.equalTo(macdIndicatorView.snp.bottom)
             maker.leading.trailing.equalToSuperview()
             maker.height.equalTo(44)
         }
+        rsiIndicatorView.onTap = { [weak self] in
+            self?.delegate.onTap(indicator: .rsi)
+        }
+        indicatorViews[.rsi] = rsiIndicatorView
 
         container.addSubview(chartInfoView)
         chartInfoView.snp.makeConstraints { maker in
@@ -194,30 +197,29 @@ class ChartViewController: ThemeViewController {
 
             chartView.set(timeline: data.timeline, start: data.chartData.startWindow, end: data.chartData.endWindow)
 
-            emaIndicatorView.bind(selected: viewItem.showEma, trend: data.emaTrend)
-            macdIndicatorView.bind(selected: viewItem.selectedIndicator == .macd, trend: data.macdTrend)
-            rsiIndicatorView.bind(selected: viewItem.selectedIndicator == .rsi, trend: data.rsiTrend)
+            chartView.setVolumes(hidden: viewItem.selectedIndicator.showVolumes)
+            ChartIndicatorSet.all.forEach { indicator in
+                let show = viewItem.selectedIndicator.contains(indicator)
 
-            chartView.setEma(hidden: !viewItem.showEma)
-
-            chartView.setVolumes(hidden: true)
-            chartView.setMacd(hidden: true)
-            chartView.setRsi(hidden: true)
-            switch viewItem.selectedIndicator {
-            case .macd:
-                chartView.setMacd(hidden: false)
-            case .rsi:
-                chartView.setRsi(hidden: false)
-            case .none: ()
-                chartView.setVolumes(hidden: false)
+                indicatorViews[indicator]?.bind(selected: show, trend: data.trends[indicator])
+                set(indicator: indicator, hidden: !show)
             }
         }
     }
 
+    private func set(indicator: ChartIndicatorSet, hidden: Bool) {
+        switch indicator {
+        case .rsi: chartView.setRsi(hidden: hidden)
+        case .macd: chartView.setMacd(hidden: hidden)
+        case .ema: chartView.setEma(hidden: hidden)
+        default: ()
+        }
+    }
+
     private func deactivateIndicators() {
-        emaIndicatorView.bind(selected: false, trend: nil)
-        macdIndicatorView.bind(selected: false, trend: nil)
-        rsiIndicatorView.bind(selected: false, trend: nil)
+        indicatorViews.forEach { _, view in
+            view.bind(selected: false, trend: nil)
+        }
     }
 
 }

@@ -181,9 +181,10 @@ class ChartRateFactory: IChartRateFactory {
 
         let lastIndicatorPoint = addCurrentRate ? data.items[data.items.count - 2] : data.items.last
 
-        let emaIndicatorTrend = calculateTrend(down: lastIndicatorPoint?.indicators[.emaLong], up: lastIndicatorPoint?.indicators[.emaShort])
-        let macdIndicatorTrend = calculateTrend(down: lastIndicatorPoint?.indicators[.macdSignal], up: lastIndicatorPoint?.indicators[.macd])
-        let rsiIndicatorTrend = calculateRsiTrend(rsi: lastIndicatorPoint?.indicators[.rsi])
+        var trends = [ChartIndicatorSet: MovementTrend]()
+        trends[.ema] = calculateTrend(down: lastIndicatorPoint?.indicators[.emaLong], up: lastIndicatorPoint?.indicators[.emaShort])
+        trends[.macd] = calculateTrend(down: lastIndicatorPoint?.indicators[.macdSignal], up: lastIndicatorPoint?.indicators[.macd])
+        trends[.rsi] = calculateRsiTrend(rsi: lastIndicatorPoint?.indicators[.rsi])
 
         var minRateString: String?, maxRateString: String?
 
@@ -210,11 +211,10 @@ class ChartRateFactory: IChartRateFactory {
                 }
 
         return ChartDataViewItem(chartData: data, chartTrend: chartTrend, chartDiff: chartDiff,
-                emaTrend: emaIndicatorTrend, macdTrend: macdIndicatorTrend, rsiTrend: rsiIndicatorTrend,
-                minValue: minRateString, maxValue: maxRateString, timeline: timeline)
+                trends: trends, minValue: minRateString, maxValue: maxRateString, timeline: timeline)
     }
 
-    func chartViewItem(chartDataStatus: ChartDataStatus<ChartInfo>, marketInfoStatus: ChartDataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, showEma: Bool, selectedIndicator: ChartIndicatorMode) -> ChartViewItem {
+    func chartViewItem(chartDataStatus: ChartDataStatus<ChartInfo>, marketInfoStatus: ChartDataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, selectedIndicator: ChartIndicatorSet) -> ChartViewItem {
         let chartDataStatusViewItem: ChartDataStatus<ChartDataViewItem> = chartDataStatus.convert {
             convert(chartInfo: $0, marketInfo: marketInfoStatus.data, chartType: chartType, currency: currency)
         }
@@ -229,7 +229,7 @@ class ChartRateFactory: IChartRateFactory {
             currentRate = ValueFormatter.instance.format(currencyValue: rateValue, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
         }
 
-        return ChartViewItem(currentRate: currentRate, chartDataStatus: chartDataStatusViewItem, marketInfoStatus: marketStatus, showEma: showEma, selectedIndicator: selectedIndicator)
+        return ChartViewItem(currentRate: currentRate, chartDataStatus: chartDataStatusViewItem, marketInfoStatus: marketStatus, selectedIndicator: selectedIndicator)
     }
 
     func selectedPointViewItem(chartPoint: ChartPoint, type: ChartType, currency: Currency) -> SelectedPointViewItem {

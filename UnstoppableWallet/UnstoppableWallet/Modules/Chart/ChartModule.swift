@@ -22,8 +22,7 @@ protocol IChartViewDelegate {
 
     func onSelectType(at index: Int)
 
-    func onTapEmaIndicator()
-    func onTap(indicator: ChartIndicatorMode)
+    func onTap(indicator: ChartIndicatorSet)
 }
 
 protocol IChartInteractor {
@@ -43,7 +42,7 @@ protocol IChartInteractorDelegate: class {
 }
 
 protocol IChartRateFactory {
-    func chartViewItem(chartDataStatus: ChartDataStatus<ChartInfo>, marketInfoStatus: ChartDataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, showEma: Bool, selectedIndicator: ChartIndicatorMode) -> ChartViewItem
+    func chartViewItem(chartDataStatus: ChartDataStatus<ChartInfo>, marketInfoStatus: ChartDataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, selectedIndicator: ChartIndicatorSet) -> ChartViewItem
     func selectedPointViewItem(chartPoint: ChartPoint, type: ChartType, currency: Currency) -> SelectedPointViewItem
 }
 
@@ -53,10 +52,36 @@ enum MovementTrend {
     case up
 }
 
-enum ChartIndicatorMode {
-    case macd
-    case rsi
-    case none
+struct ChartIndicatorSet: OptionSet, Hashable {
+    let rawValue: UInt8
+
+    static let none = ChartIndicatorSet(rawValue: 0)
+    static let ema = ChartIndicatorSet(rawValue: 1 << 0)
+    static let macd = ChartIndicatorSet(rawValue: 1 << 1)
+    static let rsi = ChartIndicatorSet(rawValue: 1 << 2)
+
+    static let all: [ChartIndicatorSet] = [.macd, .rsi, .ema]
+
+    func toggle(indicator: ChartIndicatorSet) -> ChartIndicatorSet {
+        let oldEmaValue: UInt8 = self.rawValue % 2
+        let newEmaValue: UInt8 = indicator.rawValue % 2
+
+        guard newEmaValue == 0 else {
+            return  ChartIndicatorSet(rawValue: self.rawValue ^ 1)
+        }
+
+        let resultValue = ~self.rawValue & indicator.rawValue + oldEmaValue
+        return ChartIndicatorSet(rawValue: resultValue)
+    }
+
+    var showVolumes: Bool {
+        self.rawValue > 1
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(rawValue)
+    }
+
 }
 
 struct ChartDataViewItem {
@@ -65,9 +90,7 @@ struct ChartDataViewItem {
     let chartTrend: MovementTrend
     let chartDiff: Decimal?
 
-    let emaTrend: MovementTrend
-    let macdTrend: MovementTrend
-    let rsiTrend: MovementTrend
+    let trends: [ChartIndicatorSet: MovementTrend]
 
     let minValue: String?
     let maxValue: String?
@@ -94,6 +117,5 @@ struct ChartViewItem {
     let chartDataStatus: ChartDataStatus<ChartDataViewItem>
     let marketInfoStatus: ChartDataStatus<MarketInfoViewItem>
 
-    let showEma: Bool
-    let selectedIndicator: ChartIndicatorMode
+    let selectedIndicator: ChartIndicatorSet
 }
