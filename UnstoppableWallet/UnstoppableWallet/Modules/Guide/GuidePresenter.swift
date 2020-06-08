@@ -19,7 +19,7 @@ class GuidePresenter {
 extension GuidePresenter: IGuideViewDelegate {
 
     func onLoad() {
-        view?.set(imageUrl: guide.imageUrl, blocks: parser.blocks(markdownFileName: guide.fileName))
+        view?.set(imageUrl: guide.imageUrl, viewItems: parser.viewItems(markdownFileName: guide.fileName))
     }
 
 }

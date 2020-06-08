@@ -6,24 +6,24 @@ extension GuidesManager: IGuidesManager {
     var guides: [Guide] {
         [
             Guide(
-                    title: "How to Store Bitcoins",
-                    imageUrl: "https://media.gettyimages.com/photos/-picture-id540996432",
+                    title: "Tether in Simple Terms",
+                    imageUrl: "https://raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/master/token_guides/images/TetherMain.png",
                     fileName: "tether"
             ),
             Guide(
-                    title: "Libra in Simple Terms",
-                    imageUrl: "https://media.gettyimages.com/photos/530d-car-head-lights-picture-id157735154",
-                    fileName: "tether"
-            ),
-            Guide(
-                    title: "Crypto Terms for Beginners",
-                    imageUrl: "http://media.gettyimages.com/photos/modern-key-to-the-bmw-in-a-hand-picture-id890886864",
-                    fileName: "tether"
-            ),
-            Guide(
-                    title: "Thether is Simple Terms",
+                    title: "MakerDAO & DAI in Simple Terms",
                     imageUrl: "http://media.gettyimages.com/photos/car-steel-wheels-of-a-new-bmw-coupe-picture-id516914879",
-                    fileName: "tether"
+                    fileName: "maker"
+            ),
+            Guide(
+                    title: "Bitcoin In Simple Terms",
+                    imageUrl: "https://media.gettyimages.com/photos/530d-car-head-lights-picture-id157735154",
+                    fileName: "bitcoin"
+            ),
+            Guide(
+                    title: "Ethereum in Simple Terms",
+                    imageUrl: "http://media.gettyimages.com/photos/modern-key-to-the-bmw-in-a-hand-picture-id890886864",
+                    fileName: "ethereum"
             ),
         ]
     }

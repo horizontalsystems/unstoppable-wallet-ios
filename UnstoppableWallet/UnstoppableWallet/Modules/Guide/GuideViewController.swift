@@ -9,7 +9,7 @@ class GuideViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private var imageUrl: String?
-    private var blocks = [GuideBlock]()
+    private var viewItems = [GuideBlockViewItem]()
 
     init(delegate: IGuideViewDelegate) {
         self.delegate = delegate
@@ -37,16 +37,37 @@ class GuideViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
-        tableView.registerCell(forClass: GuideHeaderCell.self)
         tableView.registerCell(forClass: GuideHeader1Cell.self)
         tableView.registerCell(forClass: GuideHeader3Cell.self)
         tableView.registerCell(forClass: GuideTextCell.self)
+        tableView.registerCell(forClass: GuideListItemCell.self)
+        tableView.registerCell(forClass: GuideBlockQuoteCell.self)
         tableView.registerCell(forClass: GuideImageCell.self)
+        tableView.registerCell(forClass: GuideImageTitleCell.self)
+        tableView.registerCell(forClass: GuideFooterCell.self)
         tableView.sectionDataSource = self
 
         delegate.onLoad()
 
         tableView.buildSections()
+    }
+
+    override func viewSafeAreaInsetsDidChange() {
+        super.viewSafeAreaInsetsDidChange()
+
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: view.safeAreaInsets.bottom, right: 0)
+    }
+
+    private func footerRow(text: String) -> RowProtocol {
+        Row<GuideFooterCell>(
+                id: "footer",
+                dynamicHeight: { containerWidth in
+                    GuideFooterCell.height(containerWidth: containerWidth, text: text)
+                },
+                bind: { cell, _ in
+                    cell.bind(text: text)
+                }
+        )
     }
 
     private func header1Row(attributedString: NSAttributedString) -> RowProtocol {
@@ -85,25 +106,64 @@ class GuideViewController: ThemeViewController {
         )
     }
 
-    private func imageRow(url: String, altText: String?) -> RowProtocol {
-        Row<GuideImageCell>(
-                id: url,
+    private func listItemRow(prefix: String, attributedString: NSAttributedString) -> RowProtocol {
+        Row<GuideListItemCell>(
+                id: attributedString.string, // todo: check performance
                 dynamicHeight: { containerWidth in
-                    GuideImageCell.height(containerWidth: containerWidth, altText: altText)
+                    GuideListItemCell.height(containerWidth: containerWidth, attributedString: attributedString)
                 },
                 bind: { cell, _ in
-                    cell.bind(imageUrl: url, altText: altText)
+                    cell.bind(prefix: prefix, attributedString: attributedString)
                 }
         )
     }
 
-    private func row(block: GuideBlock) -> RowProtocol {
-        switch block {
+    private func blockQuoteRow(attributedString: NSAttributedString) -> RowProtocol {
+        Row<GuideBlockQuoteCell>(
+                id: attributedString.string, // todo: check performance
+                dynamicHeight: { containerWidth in
+                    GuideBlockQuoteCell.height(containerWidth: containerWidth, attributedString: attributedString)
+                },
+                bind: { cell, _ in
+                    cell.bind(attributedString: attributedString)
+                }
+        )
+    }
+
+    private func imageRow(url: String) -> RowProtocol {
+        Row<GuideImageCell>(
+                id: url,
+                dynamicHeight: { containerWidth in
+                    GuideImageCell.height(containerWidth: containerWidth)
+                },
+                bind: { cell, _ in
+                    cell.bind(imageUrl: url)
+                }
+        )
+    }
+
+    private func imageTitleRow(text: String) -> RowProtocol {
+        Row<GuideImageTitleCell>(
+                id: text,
+                dynamicHeight: { containerWidth in
+                    GuideImageTitleCell.height(containerWidth: containerWidth, text: text)
+                },
+                bind: { cell, _ in
+                    cell.bind(text: text)
+                }
+        )
+    }
+
+    private func row(viewItem: GuideBlockViewItem) -> RowProtocol {
+        switch viewItem {
         case let .h1(attributedString): return header1Row(attributedString: attributedString)
         case let .h2(attributedString): return header1Row(attributedString: attributedString)
         case let .h3(attributedString): return header3Row(attributedString: attributedString)
         case let .text(attributedString): return textRow(attributedString: attributedString)
-        case let .image(url, altText): return imageRow(url: url, altText: altText)
+        case let .listItem(attributedString): return listItemRow(prefix: "•", attributedString: attributedString)
+        case let .blockQuote(attributedString): return blockQuoteRow(attributedString: attributedString)
+        case let .image(url): return imageRow(url: url)
+        case let .imageTitle(text): return imageTitleRow(text: text)
         }
     }
 
@@ -114,20 +174,14 @@ extension GuideViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "header",
-                    rows: [
-                        Row<GuideHeaderCell>(
-                                id: "header",
-                                height: GuideHeaderCell.height,
-                                bind: { [weak self] cell, _ in
-                                    cell.bind(imageUrl: self?.imageUrl)
-                                }
-                        )
-                    ]
+                    id: "blocks",
+                    rows: viewItems.map { row(viewItem: $0) }
             ),
             Section(
-                    id: "blocks",
-                    rows: blocks.map { row(block: $0) }
+                    id: "footer",
+                    rows: [
+                        footerRow(text: "© Horizontal Systems 2020")
+                    ]
             )
         ]
     }
@@ -137,9 +191,9 @@ extension GuideViewController: SectionsDataSource {
 
 extension GuideViewController: IGuideView {
 
-    func set(imageUrl: String, blocks: [GuideBlock]) {
+    func set(imageUrl: String, viewItems: [GuideBlockViewItem]) {
         self.imageUrl = imageUrl
-        self.blocks = blocks
+        self.viewItems = viewItems
     }
 
 }

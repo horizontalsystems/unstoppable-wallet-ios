@@ -1,4 +1,5 @@
 import UIKit
+import ThemeKit
 
 class GuideTextView: UITextView {
 
@@ -10,6 +11,12 @@ class GuideTextView: UITextView {
         textContainer.lineFragmentPadding = 0
         isEditable = false
         isScrollEnabled = false
+
+        linkTextAttributes = [
+            .foregroundColor: UIColor.themeJacob,
+            .underlineColor: UIColor.themeJacob,
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ]
     }
 
     required init?(coder: NSCoder) {
