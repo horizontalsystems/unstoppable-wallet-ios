@@ -43,7 +43,7 @@ extension SecuritySettingsInteractor: ISecuritySettingsInteractor {
         backupManager.allBackedUp
     }
 
-    var biometryType: BiometryType {
+    var biometryType: BiometryType? {
         pinKit.biometryType
     }
 
