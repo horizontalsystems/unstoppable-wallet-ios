@@ -229,7 +229,7 @@ DEPENDENCIES:
   - LitecoinKit.swift (= 0.14.4)
   - Nimble
   - ObjectMapper
-  - PinKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
+  - PinKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`, branch `bank_wallet/0.14`)
   - Quick
   - RxCocoa
   - RxGRDB
@@ -303,6 +303,7 @@ EXTERNAL SOURCES:
   LanguageKit.swift:
     :git: https://github.com/horizontalsystems/component-kit-ios/
   PinKit.swift:
+    :branch: bank_wallet/0.14
     :git: https://github.com/horizontalsystems/component-kit-ios/
   StorageKit.swift:
     :git: https://github.com/horizontalsystems/component-kit-ios/
@@ -321,7 +322,7 @@ CHECKOUT OPTIONS:
     :commit: dedea8758c71f0f73cada98c9dacd58d4646218d
     :git: https://github.com/horizontalsystems/gui-kit/
   CurrencyKit.swift:
-    :commit: baf21dd4bca1650254882a85883ed492a2bc081f
+    :commit: 24686c296b7601358a38e3ea1b499808af43883f
     :git: https://github.com/horizontalsystems/component-kit-ios/
   EosioSwiftAbieosSerializationProvider:
     :commit: 7ac04899e62012e225e0ea48a96951de0b72ad08
@@ -342,7 +343,7 @@ CHECKOUT OPTIONS:
     :commit: baf21dd4bca1650254882a85883ed492a2bc081f
     :git: https://github.com/horizontalsystems/component-kit-ios/
   PinKit.swift:
-    :commit: baf21dd4bca1650254882a85883ed492a2bc081f
+    :commit: 9339ebc2303627536c4a1b88b140f23e143c2cd4
     :git: https://github.com/horizontalsystems/component-kit-ios/
   StorageKit.swift:
     :commit: baf21dd4bca1650254882a85883ed492a2bc081f
@@ -412,6 +413,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: b09af5caafef556c489bf9b55b8c3dddbd710861
 
-PODFILE CHECKSUM: 529d8f9a7ad38a1a41cc60cc5d7a0a0c7e8141e7
+PODFILE CHECKSUM: a8fa88c62b7c2d7566f8abe9dad2e5245589707d
 
 COCOAPODS: 1.9.1
