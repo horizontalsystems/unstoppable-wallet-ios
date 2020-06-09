@@ -7,7 +7,7 @@ protocol ISecuritySettingsView: class {
     func toggle(pinSet: Bool)
     func set(editPinVisible: Bool)
     func set(biometryVisible: Bool)
-    func set(biometryType: BiometryType)
+    func set(biometryType: BiometryType?)
     func toggle(biometryEnabled: Bool)
     func show(error: Error)
 }
@@ -22,7 +22,7 @@ protocol ISecuritySettingsViewDelegate {
 
 protocol ISecuritySettingsInteractor: AnyObject {
     var allBackedUp: Bool { get }
-    var biometryType: BiometryType { get }
+    var biometryType: BiometryType? { get }
     var pinSet: Bool { get }
     var biometryEnabled: Bool { get set }
     func disablePin() throws

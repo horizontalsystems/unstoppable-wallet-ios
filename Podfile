@@ -39,7 +39,7 @@ def appPods
   # pod 'LanguageKit.swift', path: '../component-kit-ios/'
   pod 'StorageKit.swift', git: 'https://github.com/horizontalsystems/component-kit-ios/'
   # pod 'StorageKit.swift', path: '../component-kit-ios/'
-  pod 'PinKit.swift', git: 'https://github.com/horizontalsystems/component-kit-ios/'
+  pod 'PinKit.swift', git: 'https://github.com/horizontalsystems/component-kit-ios/', :branch => 'bank_wallet/0.14'
   # pod 'PinKit.swift', path: '../component-kit-ios/'
   pod 'CurrencyKit.swift', git: 'https://github.com/horizontalsystems/component-kit-ios/'
   # pod 'CurrencyKit.swift', path: '../component-kit-ios/'
