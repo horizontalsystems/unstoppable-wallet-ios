@@ -14,7 +14,7 @@ class SecuritySettingsViewController: ThemeViewController {
     private var pinSet = false
     private var editPinVisible = false
     private var biometryVisible = false
-    private var biometryType: BiometryType = .none
+    private var biometryType: BiometryType?
     private var biometryEnabled = false
 
     init(delegate: ISecuritySettingsViewDelegate) {
@@ -91,10 +91,12 @@ class SecuritySettingsViewController: ThemeViewController {
     }
 
     private var biometryRow: RowProtocol? {
-        switch biometryType {
-        case .touchId: return createBiometryRow(title: "settings_security.touch_id".localized, icon: "Touch Id Icon")
-        case .faceId: return createBiometryRow(title: "settings_security.face_id".localized, icon: "Face Id Icon")
-        default: return nil
+        biometryType.flatMap {
+            switch $0 {
+            case .touchId: return createBiometryRow(title: "settings_security.touch_id".localized, icon: "Touch Id Icon")
+            case .faceId: return createBiometryRow(title: "settings_security.face_id".localized, icon: "Face Id Icon")
+            default: return nil
+            }
         }
     }
 
@@ -147,7 +149,7 @@ extension SecuritySettingsViewController: ISecuritySettingsView {
         self.biometryVisible = biometryVisible
     }
 
-    func set(biometryType: BiometryType) {
+    func set(biometryType: BiometryType?) {
         self.biometryType = biometryType
     }
 
