@@ -8,7 +8,8 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
     private let delegate: ISendConfirmationViewDelegate
 
     private let tableView = SectionsTableView(style: .grouped)
-    private var rows = [RowProtocol]()
+    private var topRows = [RowProtocol]()
+    private var bottomRows = [RowProtocol]()
     private var noMemo = true
 
     private let decimalFormatter: NumberFormatter = {
@@ -62,21 +63,21 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
-        var rows = [RowProtocol]()
-        rows.append(contentsOf: self.rows)
 
-        let sendButtonRow = Row<ButtonCell>(
-                id: "send_row",
-                height: ButtonCell.height(),
-                bind: { [weak self] cell, _ in
-                    cell.bind(style: .primaryYellow, title: "send.confirmation.send_button".localized) { [weak self] in
-                        self?.onSendTap()
+        sections.append(Section(id: "top_section", rows: topRows))
+        sections.append(Section(id: "bottom_section", headerState: .margin(height: .margin3x), rows: bottomRows))
+        sections.append(Section(id: "button_section", rows: [
+            Row<ButtonCell>(
+                    id: "send_row",
+                    height: ButtonCell.height(),
+                    bind: { [weak self] cell, _ in
+                        cell.bind(style: .primaryYellow, title: "send.confirmation.send_button".localized) { [weak self] in
+                            self?.onSendTap()
+                        }
                     }
-                }
-        )
-        rows.append(sendButtonRow)
+            )
+        ]))
 
-        sections.append(Section(id: "confirmation_section", rows: rows))
         return sections
     }
 
@@ -111,8 +112,8 @@ extension SendConfirmationViewController: ISendConfirmationView {
                 self?.onHashTap(receiver: viewItem.receiver)
             }
         })
-        rows.append(primaryRow)
-        rows.append(receiverRow)
+        topRows.append(primaryRow)
+        topRows.append(receiverRow)
     }
 
     func show(viewItem: SendConfirmationMemoViewItem) {
@@ -124,7 +125,7 @@ extension SendConfirmationViewController: ISendConfirmationView {
             cell.bind(memo: viewItem.memo)
         })
 
-        rows.append(row)
+        topRows.append(row)
     }
 
     func show(viewItem: SendConfirmationFeeViewItem) {
@@ -158,7 +159,7 @@ extension SendConfirmationViewController: ISendConfirmationView {
                 }
         )
 
-        rows.append(row)
+        bottomRows.append(row)
     }
 
     func show(viewItem: SendConfirmationTotalViewItem) {
@@ -181,7 +182,7 @@ extension SendConfirmationViewController: ISendConfirmationView {
                 }
         )
 
-        rows.append(row)
+        bottomRows.append(row)
     }
 
     func show(viewItem: SendConfirmationDurationViewItem) {
@@ -195,7 +196,7 @@ extension SendConfirmationViewController: ISendConfirmationView {
                 }
         )
 
-        rows.append(row)
+        bottomRows.append(row)
     }
 
     func show(viewItem: SendConfirmationLockUntilViewItem) {
@@ -207,7 +208,7 @@ extension SendConfirmationViewController: ISendConfirmationView {
                 }
         )
 
-        rows.append(row)
+        bottomRows.append(row)
     }
 
     func buildData() {
