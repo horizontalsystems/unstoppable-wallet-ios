@@ -49,23 +49,8 @@ class LeftCoinCellView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(coinTitle: String, coinCode: String, blockchainType: String?, showIcon: Bool = true) {
-        if showIcon {
-            coinImageView.isHidden = false
-            coinImageView.image = .image(coinCode: coinCode, blockchainType: blockchainType)
-            titleLabel.snp.remakeConstraints { maker in
-                maker.leading.equalTo(coinImageView.snp.trailing).offset(CGFloat.margin4x)
-                maker.top.equalToSuperview().offset(10)
-                maker.trailing.equalToSuperview().inset(CGFloat.margin1x)
-            }
-        } else {
-            coinImageView.isHidden = true
-            titleLabel.snp.remakeConstraints { maker in
-                maker.leading.equalToSuperview().offset(CGFloat.margin4x)
-                maker.top.equalToSuperview().offset(10)
-                maker.trailing.equalToSuperview().inset(CGFloat.margin1x)
-            }
-        }
+    func bind(coinTitle: String, coinCode: String, blockchainType: String?) {
+        coinImageView.image = .image(coinCode: coinCode, blockchainType: blockchainType)
 
         titleLabel.text = coinTitle
         coinLabel.text = coinCode

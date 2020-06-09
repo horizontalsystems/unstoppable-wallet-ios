@@ -1,41 +1,40 @@
 import Foundation
 import XRatesKit
-import CurrencyKit
 
-protocol IRateListView: AnyObject {
-    func set(viewItems: [RateListModule.CoinViewItem])
+protocol IRateTopListView: AnyObject {
+    func set(viewItems: [RateTopListModule.ViewItem])
     func set(lastUpdated: Date)
     func refresh()
 }
 
-protocol IRateListViewDelegate {
+protocol IRateTopListViewDelegate {
     func onLoad()
-    func onSelectCoin(index: Int)
+    func onSelect(index: Int)
 }
 
-protocol IRateListInteractor {
+protocol IRateTopListInteractor {
     var wallets: [Wallet] { get }
-    var featuredCoins: [Coin] { get }
 
     func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo?
     func subscribeToMarketInfos(currencyCode: String)
+    func updateTopMarkets(currencyCode: String)
 }
 
-protocol IRateListInteractorDelegate: AnyObject {
+protocol IRateTopListInteractorDelegate: AnyObject {
     func didReceive(marketInfos: [String: MarketInfo])
+    func didReceive(topMarkets: [TopMarket])
 }
 
-protocol IRateListRouter {
+protocol IRateTopListRouter {
     func showChart(coinCode: String, coinTitle: String)
 }
 
-class RateListModule {
+class RateTopListModule {
 
-    struct CoinViewItem {
+    struct ViewItem {
         let coinCode: String
         let coinTitle: String
-        let blockchainType: String?
-        let rate: RateViewItem?
+        let rate: RateViewItem
     }
 
 }

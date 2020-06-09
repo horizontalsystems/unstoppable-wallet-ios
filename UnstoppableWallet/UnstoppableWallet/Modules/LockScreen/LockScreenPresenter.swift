@@ -20,7 +20,7 @@ extension LockScreenPresenter: IUnlockDelegate {
 
 }
 
-extension LockScreenPresenter: IRateListDelegate {
+extension LockScreenPresenter: IChartOpener {
 
     func showChart(coinCode: String, coinTitle: String) {
         router.showChart(coinCode: coinCode, coinTitle: coinTitle)
