@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 import HUD
+import CurrencyKit
 
 class RateListChangingCellView: UIView {
     private let rateLabel = UILabel()
@@ -50,17 +51,37 @@ class RateListChangingCellView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(rate: String?, rateColor: UIColor, diff: Decimal?) {
-        rateLabel.text = rate
-        rateLabel.textColor = rateColor
+    func bind(viewItem: RateViewItem?) {
+        if let viewItem = viewItem {
+            rateLabel.text = ValueFormatter.instance.format(currencyValue: viewItem.currencyValue, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
+            rateLabel.textColor = viewItem.dimmed ? .themeGray50 : .themeLeah
 
-        let showDiff = diff != nil
+            rateDiffView.isHidden = false
+            rateDiffView.set(value: viewItem.diff, highlightText: !viewItem.dimmed)
 
-        rateDiffView.set(value: diff)
-        rateDiffView.set(hidden: !showDiff)
+            diffPlaceholderLabel.isHidden = true
+            diffPlaceholderLabel.text = nil
+        } else {
+            rateLabel.text = "----"
+            rateLabel.textColor = .themeGray50
 
-        diffPlaceholderLabel.text = showDiff ? nil : "n/a".localized
-        diffPlaceholderLabel.set(hidden: showDiff)
+            rateDiffView.isHidden = true
+            rateDiffView.set(value: nil)
+
+            diffPlaceholderLabel.isHidden = false
+            diffPlaceholderLabel.text = "n/a".localized
+        }
+    }
+
+}
+
+struct RateViewItem {
+    let currencyValue: CurrencyValue
+    let diff: Decimal
+    let dimmed: Bool
+
+    var hash: String {
+        "\(currencyValue.value)-\(diff)-\(dimmed)"
     }
 
 }

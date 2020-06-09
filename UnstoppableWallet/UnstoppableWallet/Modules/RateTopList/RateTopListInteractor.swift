@@ -1,31 +1,26 @@
 import RxSwift
 import XRatesKit
+import CurrencyKit
 
-class RateListInteractor {
-    weak var delegate: IRateListInteractorDelegate?
+class RateTopListInteractor {
+    weak var delegate: IRateTopListInteractorDelegate?
 
     private let rateManager: IRateManager
     private let walletManager: IWalletManager
-    private let appConfigProvider: IAppConfigProvider
 
     private let disposeBag = DisposeBag()
 
-    init(rateManager: IRateManager, walletManager: IWalletManager, appConfigProvider: IAppConfigProvider) {
+    init(rateManager: IRateManager, walletManager: IWalletManager) {
         self.rateManager = rateManager
         self.walletManager = walletManager
-        self.appConfigProvider = appConfigProvider
     }
 
 }
 
-extension RateListInteractor: IRateListInteractor {
+extension RateTopListInteractor: IRateTopListInteractor {
 
     var wallets: [Wallet] {
         walletManager.wallets
-    }
-
-    var featuredCoins: [Coin] {
-        appConfigProvider.featuredCoins
     }
 
     func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo? {
@@ -37,6 +32,15 @@ extension RateListInteractor: IRateListInteractor {
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] marketInfos in
                     self?.delegate?.didReceive(marketInfos: marketInfos)
+                })
+                .disposed(by: disposeBag)
+    }
+
+    func updateTopMarkets(currencyCode: String) {
+        rateManager.topMarketInfos(currencyCode: currencyCode)
+                .observeOn(MainScheduler.instance)
+                .subscribe(onSuccess: { [weak self] infos in
+                    self?.delegate?.didReceive(topMarkets: infos)
                 })
                 .disposed(by: disposeBag)
     }

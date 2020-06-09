@@ -3,15 +3,15 @@ import SnapKit
 import SectionsTableView
 import ThemeKit
 
-class RateListViewController: ThemeViewController {
-    private let delegate: IRateListViewDelegate
+class RateTopListViewController: ThemeViewController {
+    private let delegate: IRateTopListViewDelegate
 
     private let tableView = SectionsTableView(style: .plain)
 
-    private var viewItems = [RateListModule.CoinViewItem]()
+    private var viewItems = [RateTopListModule.ViewItem]()
     private var lastUpdated: Date?
 
-    init(delegate: IRateListViewDelegate) {
+    init(delegate: IRateTopListViewDelegate) {
         self.delegate = delegate
 
         super.init(gradient: false)
@@ -33,7 +33,7 @@ class RateListViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.sectionDataSource = self
 
-        tableView.registerCell(forClass: RateListCell.self)
+        tableView.registerCell(forClass: RateTopListCell.self)
         tableView.registerHeaderFooter(forClass: RateListHeaderFooterView.self)
 
         delegate.onLoad()
@@ -41,11 +41,11 @@ class RateListViewController: ThemeViewController {
         tableView.buildSections()
     }
 
-    private func coinsHeader() -> ViewState<RateListHeaderFooterView> {
+    private func header() -> ViewState<RateListHeaderFooterView> {
         .cellType(
-                hash: "coins_header",
+                hash: "header",
                 binder: { [weak self] view in
-                    view.bind(title: "rate_list.portfolio".localized, lastUpdated: self?.lastUpdated)
+                    view.bind(title: "top100_list.portfolio".localized, lastUpdated: self?.lastUpdated)
                 },
                 dynamicHeight: { _ in
                     RateListHeaderFooterView.height
@@ -53,19 +53,19 @@ class RateListViewController: ThemeViewController {
         )
     }
 
-    private func coinRow(index: Int, viewItem: RateListModule.CoinViewItem) -> RowProtocol {
+    private func row(index: Int, viewItem: RateTopListModule.ViewItem) -> RowProtocol {
         let last = index == viewItems.count - 1
 
-        return Row<RateListCell>(
+        return Row<RateTopListCell>(
                 id: "coin_rate_\(index)",
-                hash: viewItem.rate?.hash,
+                hash: viewItem.rate.hash,
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
                 bind: { cell, _ in
-                    cell.bind(viewItem: viewItem, last: last)
+                    cell.bind(order: index + 1, viewItem: viewItem, last: last)
                 },
                 action: { [weak self] _ in
-                    self?.delegate.onSelectCoin(index: index)
+                    self?.delegate.onSelect(index: index)
                 }
         )
 
@@ -73,26 +73,26 @@ class RateListViewController: ThemeViewController {
 
 }
 
-extension RateListViewController: SectionsDataSource {
+extension RateTopListViewController: SectionsDataSource {
 
     public func buildSections() -> [SectionProtocol] {
         [
             Section(
-                id: "rate_list_section",
-                headerState: coinsHeader(),
-                footerState: .marginColor(height: .margin8x, color: .clear),
-                rows: viewItems.enumerated().map { index, viewItem in
-                    coinRow(index: index, viewItem: viewItem)
-                }
+                    id: "top_markets",
+                    headerState: header(),
+                    footerState: .marginColor(height: .margin8x, color: .clear),
+                    rows: viewItems.enumerated().map { index, viewItem in
+                        row(index: index, viewItem: viewItem)
+                    }
             ),
         ]
     }
 
 }
 
-extension RateListViewController: IRateListView {
+extension RateTopListViewController: IRateTopListView {
 
-    func set(viewItems: [RateListModule.CoinViewItem]) {
+    func set(viewItems: [RateTopListModule.ViewItem]) {
         self.viewItems = viewItems
     }
 

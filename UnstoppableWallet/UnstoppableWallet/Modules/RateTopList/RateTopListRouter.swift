@@ -1,6 +1,6 @@
 import UIKit
 
-class RateListRouter {
+class RateTopListRouter {
     private weak var chartOpener: IChartOpener?
 
     init(chartOpener: IChartOpener?) {
@@ -9,7 +9,7 @@ class RateListRouter {
 
 }
 
-extension RateListRouter: IRateListRouter {
+extension RateTopListRouter: IRateTopListRouter {
 
     func showChart(coinCode: String, coinTitle: String) {
         chartOpener?.showChart(coinCode: coinCode, coinTitle: coinTitle)
@@ -17,16 +17,16 @@ extension RateListRouter: IRateListRouter {
 
 }
 
-extension RateListRouter {
+extension RateTopListRouter {
 
     static func module(chartOpener: IChartOpener, additionalSafeAreaInsets: UIEdgeInsets = .zero) -> UIViewController {
         let currency = App.shared.currencyKit.baseCurrency
 
-        let router = RateListRouter(chartOpener: chartOpener)
-        let interactor = RateListInteractor(rateManager: App.shared.rateManager, walletManager: App.shared.walletManager, appConfigProvider: App.shared.appConfigProvider)
-        let presenter = RateListPresenter(currency: currency, interactor: interactor, router: router)
+        let router = RateTopListRouter(chartOpener: chartOpener)
+        let interactor = RateTopListInteractor(rateManager: App.shared.rateManager, walletManager: App.shared.walletManager)
+        let presenter = RateTopListPresenter(currency: currency, interactor: interactor, router: router)
 
-        let viewController = RateListViewController(delegate: presenter)
+        let viewController = RateTopListViewController(delegate: presenter)
         viewController.additionalSafeAreaInsets = additionalSafeAreaInsets
 
         presenter.view = viewController
