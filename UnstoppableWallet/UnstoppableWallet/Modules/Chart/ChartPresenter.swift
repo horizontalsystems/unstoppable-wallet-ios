@@ -21,7 +21,7 @@ class ChartPresenter {
     private var chartType: ChartType
 
     private var showEma = false
-    private var selectedIndicators: ChartIndicatorSet = .none
+    private var selectedIndicators = ChartIndicatorSet()
 
     init(interactor: IChartInteractor, factory: IChartRateFactory, coinCode: String, coinTitle: String, currency: Currency) {
         self.interactor = interactor
