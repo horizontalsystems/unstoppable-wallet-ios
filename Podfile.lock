@@ -236,7 +236,7 @@ DEPENDENCIES:
   - LitecoinKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
   - Nimble
   - ObjectMapper
-  - PinKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`, branch `bank_wallet/0.14`)
+  - PinKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - Quick
   - RxCocoa
   - RxGRDB
@@ -393,7 +393,7 @@ CHECKOUT OPTIONS:
     :commit: 8c7bc095115e7bf698850196b35e304380b9ea4c
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   PinKit.swift:
-    :commit: baf21dd4bca1650254882a85883ed492a2bc081f
+    :commit: 24686c296b7601358a38e3ea1b499808af43883f
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ScanQrKit.swift:
     :commit: 5611e067b1f63ad01cbd923bc714b8d9bc5c035d
