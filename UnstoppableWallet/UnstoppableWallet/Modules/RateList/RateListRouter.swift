@@ -1,10 +1,10 @@
 import UIKit
 
 class RateListRouter {
-    private weak var chartOpener: IChartOpener?
+    private weak var navigationRouter: INavigationRouter?
 
-    init(chartOpener: IChartOpener?) {
-        self.chartOpener = chartOpener
+    init(navigationRouter: INavigationRouter) {
+        self.navigationRouter = navigationRouter
     }
 
 }
@@ -12,17 +12,17 @@ class RateListRouter {
 extension RateListRouter: IRateListRouter {
 
     func showChart(coinCode: String, coinTitle: String) {
-        chartOpener?.showChart(coinCode: coinCode, coinTitle: coinTitle)
+        navigationRouter?.push(viewController: ChartRouter.module(coinCode: coinCode, coinTitle: coinTitle))
     }
 
 }
 
 extension RateListRouter {
 
-    static func module(chartOpener: IChartOpener, additionalSafeAreaInsets: UIEdgeInsets = .zero) -> UIViewController {
+    static func module(navigationRouter: INavigationRouter, additionalSafeAreaInsets: UIEdgeInsets = .zero) -> UIViewController {
         let currency = App.shared.currencyKit.baseCurrency
 
-        let router = RateListRouter(chartOpener: chartOpener)
+        let router = RateListRouter(navigationRouter: navigationRouter)
         let interactor = RateListInteractor(rateManager: App.shared.rateManager, walletManager: App.shared.walletManager, appConfigProvider: App.shared.appConfigProvider)
         let presenter = RateListPresenter(currency: currency, interactor: interactor, router: router)
 

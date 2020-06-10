@@ -3,7 +3,7 @@ import SnapKit
 import ThemeKit
 
 class RateTopListCell: ClaudeThemeCell {
-    private let orderLabel = UILabel()
+    private let rankLabel = UILabel()
     private let titleLabel = UILabel()
     private let coinLabel = UILabel()
     private let rightView = RateListChangingCellView()
@@ -11,19 +11,19 @@ class RateTopListCell: ClaudeThemeCell {
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        contentView.addSubview(orderLabel)
-        orderLabel.snp.makeConstraints { maker in
+        contentView.addSubview(rankLabel)
+        rankLabel.snp.makeConstraints { maker in
             maker.leading.top.bottom.equalToSuperview()
             maker.width.equalTo(56)
         }
 
-        orderLabel.textAlignment = .center
-        orderLabel.font = .captionSB
-        orderLabel.textColor = .themeGray
+        rankLabel.textAlignment = .center
+        rankLabel.font = .captionSB
+        rankLabel.textColor = .themeGray
 
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(orderLabel.snp.trailing)
+            maker.leading.equalTo(rankLabel.snp.trailing)
             maker.top.equalToSuperview().offset(10)
         }
 
@@ -51,10 +51,10 @@ class RateTopListCell: ClaudeThemeCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(order: Int, viewItem: RateTopListModule.ViewItem, last: Bool = false) {
+    func bind(viewItem: RateTopListModule.ViewItem, last: Bool = false) {
         super.bind(last: last)
 
-        orderLabel.text = "\(order)"
+        rankLabel.text = "\(viewItem.rank)"
         titleLabel.text = viewItem.coinTitle
         coinLabel.text = viewItem.coinCode
 

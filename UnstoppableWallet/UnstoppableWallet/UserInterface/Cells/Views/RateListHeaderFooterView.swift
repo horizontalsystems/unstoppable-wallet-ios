@@ -7,6 +7,9 @@ class RateListHeaderFooterView: UITableViewHeaderFooterView {
     private let dateLabel = UILabel()
     private let separatorView = UIView()
     private let titleLabel = UILabel()
+    private let sortButton = UIButton()
+
+    private var onTapSort: (() -> ())?
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -40,15 +43,38 @@ class RateListHeaderFooterView: UITableViewHeaderFooterView {
         }
 
         separatorView.backgroundColor = .themeSteel20
+
+        addSubview(sortButton)
+        sortButton.snp.makeConstraints { maker in
+            maker.leading.equalTo(titleLabel.snp.trailing)
+            maker.top.equalTo(separatorView.snp.bottom)
+            maker.trailing.equalToSuperview()
+            maker.bottom.equalToSuperview()
+            maker.width.equalTo(CGFloat.margin4x + 24 + CGFloat.margin4x)
+        }
+
+        sortButton.setImage(UIImage(named: "Balance Sort Icon")?.tinted(with: .themeJacob), for: .normal)
+        sortButton.addTarget(self, action: #selector(onTapSortButton), for: .touchUpInside)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(title: String, lastUpdated: Date?) {
+    @objc private func onTapSortButton() {
+        onTapSort?()
+    }
+
+    func bind(title: String, lastUpdated: Date?, onTapSort: (() -> ())? = nil) {
         titleLabel.text = title
         dateLabel.text = lastUpdated.map { DateHelper.instance.formatRateListTitle(from: $0) }
+
+        if onTapSort == nil {
+            sortButton.isHidden = true
+        } else {
+            sortButton.isHidden = false
+            self.onTapSort = onTapSort
+        }
     }
 
 }
