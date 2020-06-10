@@ -3,7 +3,7 @@ import ThemeKit
 import SnapKit
 
 class FilterHeaderCell: UICollectionViewCell {
-    private static let nameLabelFont = UIFont.subhead1
+    private static let buttonStyle: ThemeButtonStyle = .secondaryTransparent
 
     private let button = ThemeButton()
 
@@ -15,7 +15,7 @@ class FilterHeaderCell: UICollectionViewCell {
             maker.edges.equalToSuperview()
         }
 
-        button.apply(style: .secondaryTransparent)
+        button.apply(style: FilterHeaderCell.buttonStyle)
         button.isUserInteractionEnabled = false
     }
 
@@ -54,9 +54,7 @@ class FilterHeaderCell: UICollectionViewCell {
 extension FilterHeaderCell {
 
     static func size(for title: String) -> CGSize {
-        let size = title.size(containerWidth: .greatestFiniteMagnitude, font: FilterHeaderCell.nameLabelFont)
-        let calculatedWidth = size.width + 2 * .margin3x
-        return CGSize(width: calculatedWidth, height: 28)
+        ThemeButton.size(containerWidth: .greatestFiniteMagnitude, text: title, style: buttonStyle)
     }
 
 }

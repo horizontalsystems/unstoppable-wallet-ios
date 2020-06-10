@@ -354,7 +354,7 @@ CHECKOUT OPTIONS:
     :commit: 793644b514f4e5cefd6f4303c00a28eda8f8fe1a
     :git: https://github.com/horizontalsystems/gui-kit/
   CurrencyKit.swift:
-    :commit: 24686c296b7601358a38e3ea1b499808af43883f
+    :commit: 677f093dfc8ace8296307601f68cd1b7dd739304
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
     :commit: 36ccd7c9637f0e28c4a22d09f0d83908d5d11a86
@@ -387,22 +387,22 @@ CHECKOUT OPTIONS:
     :commit: 793644b514f4e5cefd6f4303c00a28eda8f8fe1a
     :git: https://github.com/horizontalsystems/gui-kit/
   LanguageKit.swift:
-    :commit: 24686c296b7601358a38e3ea1b499808af43883f
+    :commit: 677f093dfc8ace8296307601f68cd1b7dd739304
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
     :commit: 36ccd7c9637f0e28c4a22d09f0d83908d5d11a86
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   PinKit.swift:
-    :commit: 24686c296b7601358a38e3ea1b499808af43883f
+    :commit: 677f093dfc8ace8296307601f68cd1b7dd739304
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ScanQrKit.swift:
-    :commit: 24686c296b7601358a38e3ea1b499808af43883f
+    :commit: 677f093dfc8ace8296307601f68cd1b7dd739304
     :git: https://github.com/horizontalsystems/component-kit-ios/
   StorageKit.swift:
-    :commit: 24686c296b7601358a38e3ea1b499808af43883f
+    :commit: 677f093dfc8ace8296307601f68cd1b7dd739304
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: 24686c296b7601358a38e3ea1b499808af43883f
+    :commit: 677f093dfc8ace8296307601f68cd1b7dd739304
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :commit: 793644b514f4e5cefd6f4303c00a28eda8f8fe1a

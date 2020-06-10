@@ -3,7 +3,9 @@ import SnapKit
 import ThemeKit
 
 class SendConfirmationReceiverCell: ThemeCell {
-    private static let addressButtonStyle = ThemeButtonStyle.secondaryDefault
+    private static let addressButtonStyle: ThemeButtonStyle = .secondaryDefault
+    private static let horizontalPadding: CGFloat = .margin4x
+    private static let verticalPadding: CGFloat = .margin2x
 
     private let addressButton = ThemeButton()
 
@@ -18,9 +20,9 @@ class SendConfirmationReceiverCell: ThemeCell {
 
         addSubview(addressButton)
         addressButton.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(CGFloat.margin2x)
-            maker.leading.greaterThanOrEqualToSuperview().offset(CGFloat.margin4x)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalToSuperview().offset(SendConfirmationReceiverCell.verticalPadding)
+            maker.leading.greaterThanOrEqualToSuperview().offset(SendConfirmationReceiverCell.horizontalPadding)
+            maker.trailing.equalToSuperview().inset(SendConfirmationReceiverCell.horizontalPadding)
         }
 
         addressButton.apply(style: SendConfirmationReceiverCell.addressButtonStyle)
@@ -51,8 +53,12 @@ class SendConfirmationReceiverCell: ThemeCell {
         addressButton.setTitle(receiver, for: .normal)
     }
 
+}
+
+extension SendConfirmationReceiverCell {
+
     static func height(forContainerWidth containerWidth: CGFloat, text: String) -> CGFloat {
-        ceil(ThemeButton.height(forContainerWidth: containerWidth - 2 * CGFloat.margin4x, text: text, style: SendConfirmationReceiverCell.addressButtonStyle)) + 2 * .margin2x
+        ThemeButton.size(containerWidth: containerWidth - 2 * horizontalPadding, text: text, style: addressButtonStyle).height + 2 * verticalPadding
     }
 
 }
