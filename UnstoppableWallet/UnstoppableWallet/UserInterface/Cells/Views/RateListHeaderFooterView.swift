@@ -65,16 +65,31 @@ class RateListHeaderFooterView: UITableViewHeaderFooterView {
         onTapSort?()
     }
 
-    func bind(title: String, lastUpdated: Date?, onTapSort: (() -> ())? = nil) {
+    func bind(title: String, lastUpdated: Date?, sortButtonState: SortButtonState) {
         titleLabel.text = title
         dateLabel.text = lastUpdated.map { DateHelper.instance.formatRateListTitle(from: $0) }
 
-        if onTapSort == nil {
+        switch sortButtonState {
+        case .hidden:
             sortButton.isHidden = true
-        } else {
+        case .disabled:
             sortButton.isHidden = false
-            self.onTapSort = onTapSort
+            sortButton.isEnabled = false
+        case .enabled(let onTap):
+            sortButton.isHidden = false
+            sortButton.isEnabled = true
+            onTapSort = onTap
         }
+    }
+
+}
+
+extension RateListHeaderFooterView {
+
+    enum SortButtonState {
+        case hidden
+        case disabled
+        case enabled(onTap: () -> ())
     }
 
 }

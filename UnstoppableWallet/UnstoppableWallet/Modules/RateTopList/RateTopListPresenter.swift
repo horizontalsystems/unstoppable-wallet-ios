@@ -87,6 +87,8 @@ extension RateTopListPresenter: IRateTopListViewDelegate {
         }
 
         syncView()
+        view?.setSpinner(visible: true)
+        view?.setSortButton(enabled: false)
 
         interactor.subscribeToMarketInfos(currencyCode: currency.code)
         interactor.updateTopMarkets(currencyCode: currency.code)
@@ -122,6 +124,9 @@ extension RateTopListPresenter: IRateTopListInteractorDelegate {
         items = topMarkets.enumerated().map { index, topMarket in
             RateTopListModule.TopMarketItem(rank: index + 1, topMarket: topMarket)
         }
+
+        view?.setSpinner(visible: false)
+        view?.setSortButton(enabled: true)
 
         syncMarketInfo()
         syncSort()

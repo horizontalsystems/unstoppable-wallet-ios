@@ -2,14 +2,24 @@ import UIKit
 import SnapKit
 import SectionsTableView
 import ThemeKit
+import HUD
 
 class RateTopListViewController: ThemeViewController {
+    private static let spinnerRadius: CGFloat = 8
+    private static let spinnerLineWidth: CGFloat = 2
+
     private let delegate: IRateTopListViewDelegate
 
     private let tableView = SectionsTableView(style: .plain)
+    private let spinner = HUDProgressView(
+            strokeLineWidth: RateTopListViewController.spinnerLineWidth,
+            radius: RateTopListViewController.spinnerRadius,
+            strokeColor: .themeGray
+    )
 
     private var viewItems = [RateTopListModule.ViewItem]()
     private var lastUpdated: Date?
+    private var sortButtonEnabled = false
 
     init(delegate: IRateTopListViewDelegate) {
         self.delegate = delegate
@@ -36,18 +46,30 @@ class RateTopListViewController: ThemeViewController {
         tableView.registerCell(forClass: RateTopListCell.self)
         tableView.registerHeaderFooter(forClass: RateListHeaderFooterView.self)
 
+        view.addSubview(spinner)
+        spinner.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+            maker.width.height.equalTo(RateTopListViewController.spinnerRadius * 2 + RateTopListViewController.spinnerLineWidth)
+        }
+
         delegate.onLoad()
 
         tableView.buildSections()
     }
 
     private func header() -> ViewState<RateListHeaderFooterView> {
-        .cellType(
+        let sortButtonState: RateListHeaderFooterView.SortButtonState
+
+        if sortButtonEnabled {
+            sortButtonState = .enabled { [weak self] in self?.delegate.onTapSort() }
+        } else {
+            sortButtonState = .disabled
+        }
+
+        return .cellType(
                 hash: "header",
                 binder: { [weak self] view in
-                    view.bind(title: "top100_list.portfolio".localized, lastUpdated: self?.lastUpdated) { [weak self] in
-                        self?.delegate.onTapSort()
-                    }
+                    view.bind(title: "top100_list.portfolio".localized, lastUpdated: self?.lastUpdated, sortButtonState: sortButtonState)
                 },
                 dynamicHeight: { _ in
                     RateListHeaderFooterView.height
@@ -104,6 +126,20 @@ extension RateTopListViewController: IRateTopListView {
 
     func refresh() {
         tableView.reload()
+    }
+
+    func setSpinner(visible: Bool) {
+        if visible {
+            spinner.isHidden = false
+            spinner.startAnimating()
+        } else {
+            spinner.isHidden = true
+            spinner.stopAnimating()
+        }
+    }
+
+    func setSortButton(enabled: Bool) {
+        sortButtonEnabled = enabled
     }
 
 }
