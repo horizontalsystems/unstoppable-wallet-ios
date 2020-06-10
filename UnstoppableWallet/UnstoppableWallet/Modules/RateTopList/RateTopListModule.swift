@@ -5,6 +5,8 @@ protocol IRateTopListView: AnyObject {
     func set(viewItems: [RateTopListModule.ViewItem])
     func set(lastUpdated: Date)
     func refresh()
+    func setSpinner(visible: Bool)
+    func setSortButton(enabled: Bool)
 }
 
 protocol IRateTopListViewDelegate {

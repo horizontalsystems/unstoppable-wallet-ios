@@ -45,7 +45,7 @@ class RateListViewController: ThemeViewController {
         .cellType(
                 hash: "coins_header",
                 binder: { [weak self] view in
-                    view.bind(title: "rate_list.portfolio".localized, lastUpdated: self?.lastUpdated)
+                    view.bind(title: "rate_list.portfolio".localized, lastUpdated: self?.lastUpdated, sortButtonState: .hidden)
                 },
                 dynamicHeight: { _ in
                     RateListHeaderFooterView.height
