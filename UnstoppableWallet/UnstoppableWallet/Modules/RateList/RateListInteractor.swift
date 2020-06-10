@@ -43,16 +43,16 @@ extension RateListInteractor: IRateListInteractor {
                 .disposed(by: disposeBag)
     }
 
-    func posts(coinCode: CoinCode, timestamp: TimeInterval) -> [CryptoNewsPost]? {
-        postsManager.posts(coinCode: coinCode, timestamp: timestamp)
+    func posts(timestamp: TimeInterval) -> [CryptoNewsPost]? {
+        postsManager.posts(timestamp: timestamp)
     }
 
-    func subscribeToPosts(coinCode: CoinCode) {
-        postsManager.subscribeToPosts(coinCode: coinCode)
+    func fetchPosts() {
+        postsManager.postsSingle
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onSuccess: { [weak self] posts in
-                    self?.delegate?.didReceive(posts: posts)
+                    self?.delegate?.didFetch(posts: posts)
                 })
                 .disposed(by: disposeBag)
     }

@@ -23,13 +23,13 @@ protocol IRateListInteractor {
     func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo?
     func subscribeToMarketInfos(currencyCode: String)
 
-    func posts(coinCode: CoinCode, timestamp: TimeInterval) -> [CryptoNewsPost]?
-    func subscribeToPosts(coinCode: CoinCode)
+    func posts(timestamp: TimeInterval) -> [CryptoNewsPost]?
+    func fetchPosts()
 }
 
 protocol IRateListInteractorDelegate: AnyObject {
     func didReceive(marketInfos: [String: MarketInfo])
-    func didReceive(posts: [CryptoNewsPost])
+    func didFetch(posts: [CryptoNewsPost])
 }
 
 protocol IRateListRouter {
