@@ -11,6 +11,7 @@ class RateListPresenter {
 
     private var coins = [Coin]()
     private var marketInfos = [String: MarketInfo]()
+    private var posts: [CryptoNewsPost]?
 
     init(currency: Currency, interactor: IRateListInteractor, router: IRateListRouter) {
         self.currency = currency
@@ -33,16 +34,23 @@ class RateListPresenter {
         return orderedCoins(activeCoins: activeCoins, featuredCoins: featuredCoins)
     }
 
-    private func syncView() {
+    private func syncViewForCoins() {
         let viewItems = coins.map { coin in
             coinViewItem(coin: coin, marketInfo: marketInfos[coin.code])
         }
-        view?.set(viewItems: viewItems)
+        view?.set(coinViewItems: viewItems)
 
         let timestamps = marketInfos.map { $0.value.timestamp }
         if let timestamp = timestamps.max() {
             view?.set(lastUpdated: Date(timeIntervalSince1970: timestamp))
         }
+    }
+
+    private func syncView(posts: [CryptoNewsPost]) {
+        let viewItems = posts.map { post in
+            RateListModule.PostViewItem(title: post.title, date: Date(timeIntervalSince1970: post.timestamp))
+        }
+        view?.set(postViewItems: viewItems)
     }
 
     private func coinViewItem(coin: Coin, marketInfo: MarketInfo?) -> RateListModule.CoinViewItem {
@@ -74,7 +82,16 @@ extension RateListPresenter: IRateListViewDelegate {
             marketInfos[coin.code] = interactor.marketInfo(coinCode: coin.code, currencyCode: currency.code)
         }
 
-        syncView()
+        syncViewForCoins()
+
+        if let posts = interactor.posts(coinCode: "BTC", timestamp: Date().timeIntervalSince1970) {
+            self.posts = posts
+            syncView(posts: posts)
+            view?.setPostSpinner(visible: false)
+        } else {
+            view?.setPostSpinner(visible: true)
+            interactor.subscribeToPosts(coinCode: "BTC")
+        }
 
         interactor.subscribeToMarketInfos(currencyCode: currency.code)
     }
@@ -89,13 +106,28 @@ extension RateListPresenter: IRateListViewDelegate {
         router.showChart(coinCode: coin.code, coinTitle: coin.title)
     }
 
+    func onSelectPost(index: Int) {
+        guard let posts = self.posts else {
+            return
+        }
+
+        router.open(link: posts[index].url)
+    }
+
 }
 
 extension RateListPresenter: IRateListInteractorDelegate {
 
     func didReceive(marketInfos: [String: MarketInfo]) {
         self.marketInfos = marketInfos
-        syncView()
+        syncViewForCoins()
+        view?.refresh()
+    }
+
+    func didReceive(posts: [CryptoNewsPost]) {
+        self.posts = posts
+        view?.setPostSpinner(visible: false)
+        syncView(posts: posts)
         view?.refresh()
     }
 

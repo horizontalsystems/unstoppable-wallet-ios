@@ -1,4 +1,5 @@
 import UIKit
+import SafariServices
 
 class RateListRouter {
     private weak var navigationRouter: INavigationRouter?
@@ -15,6 +16,16 @@ extension RateListRouter: IRateListRouter {
         navigationRouter?.push(viewController: ChartRouter.module(coinCode: coinCode, coinTitle: coinTitle))
     }
 
+    func open(link: String) {
+        if let url = URL(string: link) {
+            let configuration = SFSafariViewController.Configuration()
+            configuration.entersReaderIfAvailable = true
+
+            let safariViewController = SFSafariViewController(url: url, configuration: configuration)
+            navigationRouter?.present(viewController: safariViewController)
+        }
+    }
+
 }
 
 extension RateListRouter {
@@ -23,7 +34,12 @@ extension RateListRouter {
         let currency = App.shared.currencyKit.baseCurrency
 
         let router = RateListRouter(navigationRouter: navigationRouter)
-        let interactor = RateListInteractor(rateManager: App.shared.rateManager, walletManager: App.shared.walletManager, appConfigProvider: App.shared.appConfigProvider)
+        let interactor = RateListInteractor(
+                rateManager: App.shared.rateManager,
+                walletManager: App.shared.walletManager,
+                appConfigProvider: App.shared.appConfigProvider,
+                postsManager: App.shared.rateManager
+        )
         let presenter = RateListPresenter(currency: currency, interactor: interactor, router: router)
 
         let viewController = RateListViewController(delegate: presenter)
