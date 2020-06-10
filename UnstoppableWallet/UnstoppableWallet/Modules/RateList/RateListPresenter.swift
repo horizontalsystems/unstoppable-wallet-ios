@@ -84,13 +84,13 @@ extension RateListPresenter: IRateListViewDelegate {
 
         syncViewForCoins()
 
-        if let posts = interactor.posts(coinCode: "BTC", timestamp: Date().timeIntervalSince1970) {
+        if let posts = interactor.posts(timestamp: Date().timeIntervalSince1970) {
             self.posts = posts
             syncView(posts: posts)
             view?.setPostSpinner(visible: false)
         } else {
             view?.setPostSpinner(visible: true)
-            interactor.subscribeToPosts(coinCode: "BTC")
+            interactor.fetchPosts()
         }
 
         interactor.subscribeToMarketInfos(currencyCode: currency.code)
@@ -124,7 +124,7 @@ extension RateListPresenter: IRateListInteractorDelegate {
         view?.refresh()
     }
 
-    func didReceive(posts: [CryptoNewsPost]) {
+    func didFetch(posts: [CryptoNewsPost]) {
         self.posts = posts
         view?.setPostSpinner(visible: false)
         syncView(posts: posts)

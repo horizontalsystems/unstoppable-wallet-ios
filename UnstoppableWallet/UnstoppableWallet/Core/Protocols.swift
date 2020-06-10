@@ -210,8 +210,8 @@ protocol IRateManager {
 }
 
 protocol IPostsManager {
-    func posts(coinCode: CoinCode, timestamp: TimeInterval) -> [CryptoNewsPost]?
-    func subscribeToPosts(coinCode: CoinCode) -> Single<[CryptoNewsPost]>
+    func posts(timestamp: TimeInterval) -> [CryptoNewsPost]?
+    var postsSingle: Single<[CryptoNewsPost]> { get }
 }
 
 protocol IRateCoinMapper {

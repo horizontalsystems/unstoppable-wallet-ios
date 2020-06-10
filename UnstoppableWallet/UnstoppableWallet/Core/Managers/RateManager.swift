@@ -121,12 +121,12 @@ extension RateManager: IRateManager {
 
 extension RateManager: IPostsManager {
 
-    func posts(coinCode: CoinCode, timestamp: TimeInterval) -> [CryptoNewsPost]? {
-        kit.cryptoPosts(for: coinCode, timestamp: timestamp)
+    func posts(timestamp: TimeInterval) -> [CryptoNewsPost]? {
+        kit.cryptoPosts(timestamp: timestamp)
     }
 
-    func subscribeToPosts(coinCode: CoinCode) -> Single<[CryptoNewsPost]> {
-        kit.cryptoPostsSingle(for: coinCode)
+    var postsSingle: Single<[CryptoNewsPost]> {
+        kit.cryptoPostsSingle
     }
 
 }
