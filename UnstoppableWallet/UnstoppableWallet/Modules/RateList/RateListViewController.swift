@@ -8,8 +8,10 @@ class RateListViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .plain)
 
-    private var viewItems = [RateListModule.CoinViewItem]()
+    private var coinViewItems = [RateListModule.CoinViewItem]()
+    private var postViewItems = [RateListModule.PostViewItem]()
     private var lastUpdated: Date?
+    private var postSpinnerVisible = false
 
     init(delegate: IRateListViewDelegate) {
         self.delegate = delegate
@@ -34,7 +36,9 @@ class RateListViewController: ThemeViewController {
         tableView.sectionDataSource = self
 
         tableView.registerCell(forClass: RateListCell.self)
+        tableView.registerCell(forClass: PostCell.self)
         tableView.registerHeaderFooter(forClass: RateListHeaderFooterView.self)
+        tableView.registerHeaderFooter(forClass: PostsHeaderFooterView.self)
 
         delegate.onLoad()
 
@@ -53,8 +57,20 @@ class RateListViewController: ThemeViewController {
         )
     }
 
+    private func postsHeader(spinnerVisible: Bool) -> ViewState<PostsHeaderFooterView> {
+        .cellType(
+                hash: "posts_header",
+                binder: { [weak self] view in
+                    view.bind(spinnerVisible: spinnerVisible)
+                },
+                dynamicHeight: { _ in
+                    .heightSingleLineCell
+                }
+        )
+    }
+
     private func coinRow(index: Int, viewItem: RateListModule.CoinViewItem) -> RowProtocol {
-        let last = index == viewItems.count - 1
+        let last = index == coinViewItems.count - 1
 
         return Row<RateListCell>(
                 id: "coin_rate_\(index)",
@@ -71,6 +87,23 @@ class RateListViewController: ThemeViewController {
 
     }
 
+    private func postRow(index: Int, viewItem: RateListModule.PostViewItem) -> RowProtocol {
+        Row<PostCell>(
+                id: "post_\(index)",
+                autoDeselect: true,
+                dynamicHeight: { containerWidth in
+                    PostCell.height(containerWidth: containerWidth, viewItem: viewItem)
+                },
+                bind: { cell, _ in
+                    cell.bind(viewItem: viewItem)
+                },
+                action: { [weak self] _ in
+                    self?.delegate.onSelectPost(index: index)
+                }
+        )
+
+    }
+
 }
 
 extension RateListViewController: SectionsDataSource {
@@ -81,8 +114,16 @@ extension RateListViewController: SectionsDataSource {
                 id: "rate_list_section",
                 headerState: coinsHeader(),
                 footerState: .marginColor(height: .margin8x, color: .clear),
-                rows: viewItems.enumerated().map { index, viewItem in
+                rows: coinViewItems.enumerated().map { index, viewItem in
                     coinRow(index: index, viewItem: viewItem)
+                }
+            ),
+            Section(
+                id: "posts_section",
+                headerState: postsHeader(spinnerVisible: postSpinnerVisible),
+                footerState: .marginColor(height: .margin8x, color: .clear),
+                rows: postViewItems.enumerated().map { index, viewItem in
+                    postRow(index: index, viewItem: viewItem)
                 }
             ),
         ]
@@ -92,12 +133,20 @@ extension RateListViewController: SectionsDataSource {
 
 extension RateListViewController: IRateListView {
 
-    func set(viewItems: [RateListModule.CoinViewItem]) {
-        self.viewItems = viewItems
+    func set(coinViewItems: [RateListModule.CoinViewItem]) {
+        self.coinViewItems = coinViewItems
+    }
+
+    func set(postViewItems: [RateListModule.PostViewItem]) {
+        self.postViewItems = postViewItems
     }
 
     func set(lastUpdated: Date) {
         self.lastUpdated = lastUpdated
+    }
+
+    func setPostSpinner(visible: Bool) {
+        self.postSpinnerVisible = visible
     }
 
     func refresh() {

@@ -39,19 +39,6 @@ class ChartRateFactory: IChartRateFactory {
         return "\(formattedValue) \(coinCode)"
     }
 
-    private func postViewItemDate(timestamp: TimeInterval) -> String {
-        var interval = Int(Date().timeIntervalSince1970 - timestamp) / 60       // interval from post in minutes
-        if interval < 60 {
-            return "timestamp.min_ago".localized(max(1, interval))
-        }
-        interval /= 60                                                          // interval in hours
-        if interval < 24 {
-            return "timestamp.hours_ago".localized(interval)
-        }
-        interval /= 24                                                           // interval in days
-        return "timestamp.days_ago".localized(interval)
-    }
-
     private func scale(min: Decimal, max: Decimal) -> Int {
         let maxIntegerDigits = max.integerDigitCount
         var min = min / pow(10, maxIntegerDigits), max = max / pow(10, maxIntegerDigits)

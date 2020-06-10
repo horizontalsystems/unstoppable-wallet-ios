@@ -408,6 +408,7 @@ bch.horizontalsystems.xyz/apg";
 // Rate List
 
 "rate_list.portfolio" = "Portfolio";
+"rate_list.latest_news" = "Latest News";
 "top100_list.portfolio" = "Top 100";
 "top100_list.sort_by" = "Sort By";
 "top100_list.sort_type.rank" = "Rank";
@@ -447,7 +448,6 @@ bch.horizontalsystems.xyz/apg";
 "chart.error.not_available" = "Chart not available";
 "chart.selected.price" = "Price";
 "chart.selected.volume" = "Vol";
-"chart.news.title" = "Latest News";
 "chart.trend_neutral" = "Neutral";
 "chart.trend_down" = "Down Trend";
 "chart.trend_up" = "Up Trend";
