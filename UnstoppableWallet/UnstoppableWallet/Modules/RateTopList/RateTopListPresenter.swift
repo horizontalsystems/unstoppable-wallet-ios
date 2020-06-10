@@ -11,7 +11,9 @@ class RateTopListPresenter {
 
     private var coins = [Coin]()
     private var marketInfos = [String: MarketInfo]()
-    private var topMarkets = [TopMarket]()
+    private var items = [RateTopListModule.TopMarketItem]()
+
+    private var sortType: RateTopListModule.SortType = .rank
 
     init(currency: Currency, interactor: IRateTopListInteractor, router: IRateTopListRouter) {
         self.currency = currency
@@ -19,38 +21,58 @@ class RateTopListPresenter {
         self.router = router
     }
 
+    private func syncSort() {
+        switch sortType {
+        case .rank:
+            items.sort { $0.rank < $1.rank }
+        case .topWinners:
+            items.sort { $0.topMarket.marketInfo.diff > $1.topMarket.marketInfo.diff }
+        case .topLosers: ()
+            items.sort { $0.topMarket.marketInfo.diff < $1.topMarket.marketInfo.diff }
+        }
+    }
+
     private func syncMarketInfo() {
         for (coinCode, marketInfo) in marketInfos {
-            for (topMarketIndex, topMarket) in topMarkets.enumerated() {
-                if coinCode == topMarket.coinCode {
-                    topMarkets[topMarketIndex].marketInfo = marketInfo
+            for (itemIndex, item) in items.enumerated() {
+                if coinCode == item.topMarket.coinCode {
+                    items[itemIndex].topMarket.marketInfo = marketInfo
                 }
             }
         }
     }
 
     private func syncView() {
-        let viewItems = topMarkets.map { topMarket in
-            viewItem(topMarket: topMarket)
+        let viewItems = items.map { item in
+            viewItem(item: item)
         }
         view?.set(viewItems: viewItems)
 
-        let timestamps = topMarkets.map { $0.marketInfo.timestamp }
+        let timestamps = items.map { $0.topMarket.marketInfo.timestamp }
         if let timestamp = timestamps.max() {
             view?.set(lastUpdated: Date(timeIntervalSince1970: timestamp))
         }
     }
 
-    private func viewItem(topMarket: TopMarket) -> RateTopListModule.ViewItem {
+    private func viewItem(item: RateTopListModule.TopMarketItem) -> RateTopListModule.ViewItem {
         RateTopListModule.ViewItem(
-                coinCode: topMarket.coinCode,
-                coinTitle: topMarket.coinName,
+                rank: item.rank,
+                coinCode: item.topMarket.coinCode,
+                coinTitle: item.topMarket.coinName,
                 rate: RateViewItem(
-                        currencyValue: CurrencyValue(currency: currency, value: topMarket.marketInfo.rate),
-                        diff: topMarket.marketInfo.diff,
-                        dimmed: topMarket.marketInfo.expired
+                        currencyValue: CurrencyValue(currency: currency, value: item.topMarket.marketInfo.rate),
+                        diff: item.topMarket.marketInfo.diff,
+                        dimmed: item.topMarket.marketInfo.expired
                 )
         )
+    }
+
+    private func onUpdate(sortType: RateTopListModule.SortType) {
+        self.sortType = sortType
+
+        syncSort()
+        syncView()
+        view?.refresh()
     }
 
 }
@@ -71,8 +93,14 @@ extension RateTopListPresenter: IRateTopListViewDelegate {
     }
 
     func onSelect(index: Int) {
-        let topMarket = topMarkets[index]
-        router.showChart(coinCode: topMarket.coinCode, coinTitle: topMarket.coinName)
+        let item = items[index]
+        router.showChart(coinCode: item.topMarket.coinCode, coinTitle: item.topMarket.coinName)
+    }
+
+    func onTapSort() {
+        router.showSortType(selected: sortType) { [weak self] sortType in
+            self?.onUpdate(sortType: sortType)
+        }
     }
 
 }
@@ -83,6 +111,7 @@ extension RateTopListPresenter: IRateTopListInteractorDelegate {
         self.marketInfos = marketInfos
 
         syncMarketInfo()
+        syncSort()
         syncView()
         view?.refresh()
 
@@ -90,9 +119,12 @@ extension RateTopListPresenter: IRateTopListInteractorDelegate {
     }
 
     func didReceive(topMarkets: [TopMarket]) {
-        self.topMarkets = topMarkets
+        items = topMarkets.enumerated().map { index, topMarket in
+            RateTopListModule.TopMarketItem(rank: index + 1, topMarket: topMarket)
+        }
 
         syncMarketInfo()
+        syncSort()
         syncView()
         view?.refresh()
     }

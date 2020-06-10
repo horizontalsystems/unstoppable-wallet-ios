@@ -7,7 +7,9 @@ class AlertRouter {
 extension AlertRouter: IAlertRouter {
 
     func close() {
-        viewController?.dismiss(animated: true)
+        DispatchQueue.main.async { [weak self] in
+            self?.viewController?.dismiss(animated: true)
+        }
     }
 
 }

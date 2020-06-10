@@ -1,10 +1,10 @@
 import UIKit
 
 class RateTopListRouter {
-    private weak var chartOpener: IChartOpener?
+    private weak var navigationRouter: INavigationRouter?
 
-    init(chartOpener: IChartOpener?) {
-        self.chartOpener = chartOpener
+    init(navigationRouter: INavigationRouter) {
+        self.navigationRouter = navigationRouter
     }
 
 }
@@ -12,17 +12,32 @@ class RateTopListRouter {
 extension RateTopListRouter: IRateTopListRouter {
 
     func showChart(coinCode: String, coinTitle: String) {
-        chartOpener?.showChart(coinCode: coinCode, coinTitle: coinTitle)
+        navigationRouter?.push(viewController: ChartRouter.module(coinCode: coinCode, coinTitle: coinTitle))
+    }
+
+    func showSortType(selected: RateTopListModule.SortType, onSelect: @escaping (RateTopListModule.SortType) -> ()) {
+        let sortTypes = RateTopListModule.SortType.allCases
+
+        let alertController = AlertRouter.module(
+                title: "top100_list.sort_by".localized,
+                viewItems: sortTypes.map { sortType in
+                    AlertViewItem(text: sortType.title, selected: sortType == selected)
+                }
+        ) { index in
+            onSelect(sortTypes[index])
+        }
+
+        navigationRouter?.present(viewController: alertController)
     }
 
 }
 
 extension RateTopListRouter {
 
-    static func module(chartOpener: IChartOpener, additionalSafeAreaInsets: UIEdgeInsets = .zero) -> UIViewController {
+    static func module(navigationRouter: INavigationRouter, additionalSafeAreaInsets: UIEdgeInsets = .zero) -> UIViewController {
         let currency = App.shared.currencyKit.baseCurrency
 
-        let router = RateTopListRouter(chartOpener: chartOpener)
+        let router = RateTopListRouter(navigationRouter: navigationRouter)
         let interactor = RateTopListInteractor(rateManager: App.shared.rateManager, walletManager: App.shared.walletManager)
         let presenter = RateTopListPresenter(currency: currency, interactor: interactor, router: router)
 

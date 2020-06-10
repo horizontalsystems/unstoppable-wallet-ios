@@ -15,16 +15,24 @@ class LockScreenRouter {
 
 extension LockScreenRouter: ILockScreenRouter {
 
-    func showChart(coinCode: String, coinTitle: String) {
-        viewController?.navigationController?.pushViewController(ChartRouter.module(coinCode: coinCode, coinTitle: coinTitle), animated: true)
-    }
-
     func dismiss() {
         if appStart {
             UIApplication.shared.keyWindow?.set(newRootController: MainRouter.module())
         } else {
             viewController?.dismiss(animated: false)
         }
+    }
+
+}
+
+extension LockScreenRouter: INavigationRouter {
+
+    func push(viewController: UIViewController) {
+        self.viewController?.navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    func present(viewController: UIViewController) {
+        self.viewController?.present(viewController, animated: true)
     }
 
 }
@@ -39,8 +47,8 @@ extension LockScreenRouter {
         let unlockController = pinKit.unlockPinModule(delegate: presenter, biometryUnlockMode: .enabled, insets: insets, cancellable: false)
 
         let rateListInsets = UIEdgeInsets(top: LockScreenController.pageControlHeight, left: 0, bottom: 0, right: 0)
-        let rateListController = RateListRouter.module(chartOpener: presenter, additionalSafeAreaInsets: rateListInsets)
-        let rateTopListController = RateTopListRouter.module(chartOpener: presenter, additionalSafeAreaInsets: rateListInsets)
+        let rateListController = RateListRouter.module(navigationRouter: router, additionalSafeAreaInsets: rateListInsets)
+        let rateTopListController = RateTopListRouter.module(navigationRouter: router, additionalSafeAreaInsets: rateListInsets)
 
         let viewController = LockScreenController(viewControllers: [unlockController, rateListController, rateTopListController])
         router.viewController = viewController

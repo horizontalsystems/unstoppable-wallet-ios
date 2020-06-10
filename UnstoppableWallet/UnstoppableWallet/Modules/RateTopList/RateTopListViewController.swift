@@ -45,7 +45,9 @@ class RateTopListViewController: ThemeViewController {
         .cellType(
                 hash: "header",
                 binder: { [weak self] view in
-                    view.bind(title: "top100_list.portfolio".localized, lastUpdated: self?.lastUpdated)
+                    view.bind(title: "top100_list.portfolio".localized, lastUpdated: self?.lastUpdated) { [weak self] in
+                        self?.delegate.onTapSort()
+                    }
                 },
                 dynamicHeight: { _ in
                     RateListHeaderFooterView.height
@@ -62,7 +64,7 @@ class RateTopListViewController: ThemeViewController {
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
                 bind: { cell, _ in
-                    cell.bind(order: index + 1, viewItem: viewItem, last: last)
+                    cell.bind(viewItem: viewItem, last: last)
                 },
                 action: { [weak self] _ in
                     self?.delegate.onSelect(index: index)
