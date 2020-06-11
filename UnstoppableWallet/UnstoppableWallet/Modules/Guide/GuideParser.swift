@@ -76,13 +76,7 @@ extension GuideParser: IGuideParser {
 
             for block in documentBlock.blocks {
                 if let headingBlock = block as? GuideVisitor.HeadingBlock {
-                    if headingBlock.level == 1 {
-                        viewItems.append(.h1(attributedString: headingBlock.attributedString))
-                    } else if headingBlock.level == 2 {
-                        viewItems.append(.h2(attributedString: headingBlock.attributedString))
-                    } else if headingBlock.level == 3 {
-                        viewItems.append(.h3(attributedString: headingBlock.attributedString))
-                    }
+                    viewItems.append(.header(attributedString: headingBlock.attributedString, level: headingBlock.level))
                 }
 
                 if let paragraphBlock = block as? GuideVisitor.ParagraphBlock {
@@ -109,10 +103,8 @@ extension GuideParser: IGuideParser {
                 }
 
                 if let blockQuoteBlock = block as? GuideVisitor.BlockQuoteBlock {
-                    for block in blockQuoteBlock.blocks {
-                        if let paragraphBlock = block as? GuideVisitor.ParagraphBlock {
-                            viewItems.append(.blockQuote(attributedString: paragraphBlock.attributedString))
-                        }
+                    for paragraphBlock in blockQuoteBlock.paragraphBlocks {
+                        viewItems.append(.blockQuote(attributedString: paragraphBlock.attributedString))
                     }
                 }
 
