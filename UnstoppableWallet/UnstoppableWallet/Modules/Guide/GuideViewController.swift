@@ -70,9 +70,9 @@ class GuideViewController: ThemeViewController {
         )
     }
 
-    private func header1Row(attributedString: NSAttributedString) -> RowProtocol {
+    private func header1Row(id: String, attributedString: NSAttributedString) -> RowProtocol {
         Row<GuideHeader1Cell>(
-                id: attributedString.string, // todo: check performance
+                id: id,
                 dynamicHeight: { containerWidth in
                     GuideHeader1Cell.height(containerWidth: containerWidth, attributedString: attributedString)
                 },
@@ -82,9 +82,9 @@ class GuideViewController: ThemeViewController {
         )
     }
 
-    private func header3Row(attributedString: NSAttributedString) -> RowProtocol {
+    private func header3Row(id: String, attributedString: NSAttributedString) -> RowProtocol {
         Row<GuideHeader3Cell>(
-                id: attributedString.string, // todo: check performance
+                id: id,
                 dynamicHeight: { containerWidth in
                     GuideHeader3Cell.height(containerWidth: containerWidth, attributedString: attributedString)
                 },
@@ -94,9 +94,9 @@ class GuideViewController: ThemeViewController {
         )
     }
 
-    private func textRow(attributedString: NSAttributedString) -> RowProtocol {
+    private func textRow(id: String, attributedString: NSAttributedString) -> RowProtocol {
         Row<GuideTextCell>(
-                id: attributedString.string, // todo: check performance
+                id: id,
                 dynamicHeight: { containerWidth in
                     GuideTextCell.height(containerWidth: containerWidth, attributedString: attributedString)
                 },
@@ -106,9 +106,9 @@ class GuideViewController: ThemeViewController {
         )
     }
 
-    private func listItemRow(attributedString: NSAttributedString, prefix: String?, tightTop: Bool, tightBottom: Bool) -> RowProtocol {
+    private func listItemRow(id: String, attributedString: NSAttributedString, prefix: String?, tightTop: Bool, tightBottom: Bool) -> RowProtocol {
         Row<GuideListItemCell>(
-                id: attributedString.string, // todo: check performance
+                id: id,
                 dynamicHeight: { containerWidth in
                     GuideListItemCell.height(containerWidth: containerWidth, attributedString: attributedString, tightTop: tightTop, tightBottom: tightBottom)
                 },
@@ -118,9 +118,9 @@ class GuideViewController: ThemeViewController {
         )
     }
 
-    private func blockQuoteRow(attributedString: NSAttributedString) -> RowProtocol {
+    private func blockQuoteRow(id: String, attributedString: NSAttributedString) -> RowProtocol {
         Row<GuideBlockQuoteCell>(
-                id: attributedString.string, // todo: check performance
+                id: id,
                 dynamicHeight: { containerWidth in
                     GuideBlockQuoteCell.height(containerWidth: containerWidth, attributedString: attributedString)
                 },
@@ -130,9 +130,9 @@ class GuideViewController: ThemeViewController {
         )
     }
 
-    private func imageRow(url: String) -> RowProtocol {
+    private func imageRow(id: String, url: String) -> RowProtocol {
         Row<GuideImageCell>(
-                id: url,
+                id: id,
                 dynamicHeight: { containerWidth in
                     GuideImageCell.height(containerWidth: containerWidth)
                 },
@@ -142,9 +142,9 @@ class GuideViewController: ThemeViewController {
         )
     }
 
-    private func imageTitleRow(text: String) -> RowProtocol {
+    private func imageTitleRow(id: String, text: String) -> RowProtocol {
         Row<GuideImageTitleCell>(
-                id: text,
+                id: id,
                 dynamicHeight: { containerWidth in
                     GuideImageTitleCell.height(containerWidth: containerWidth, text: text)
                 },
@@ -154,16 +154,51 @@ class GuideViewController: ThemeViewController {
         )
     }
 
-    private func row(viewItem: GuideBlockViewItem) -> RowProtocol {
+    private func row(index: Int, viewItem: GuideBlockViewItem) -> RowProtocol {
         switch viewItem {
-        case let .h1(attributedString): return header1Row(attributedString: attributedString)
-        case let .h2(attributedString): return header1Row(attributedString: attributedString)
-        case let .h3(attributedString): return header3Row(attributedString: attributedString)
-        case let .text(attributedString): return textRow(attributedString: attributedString)
-        case let .listItem(attributedString, prefix, tightTop, tightBottom): return listItemRow(attributedString: attributedString, prefix: prefix, tightTop: tightTop, tightBottom: tightBottom)
-        case let .blockQuote(attributedString): return blockQuoteRow(attributedString: attributedString)
-        case let .image(url): return imageRow(url: url)
-        case let .imageTitle(text): return imageTitleRow(text: text)
+        case let .h1(attributedString):
+            return header1Row(
+                    id: "header1_\(index)",
+                    attributedString: attributedString
+            )
+        case let .h2(attributedString):
+            return header1Row(
+                    id: "header2_\(index)",
+                    attributedString: attributedString
+            )
+        case let .h3(attributedString):
+            return header3Row(
+                    id: "header3_\(index)",
+                    attributedString: attributedString
+            )
+        case let .text(attributedString):
+            return textRow(
+                    id: "text_\(index)",
+                    attributedString: attributedString
+            )
+        case let .listItem(attributedString, prefix, tightTop, tightBottom):
+            return listItemRow(
+                    id: "listItem_\(index)",
+                    attributedString: attributedString,
+                    prefix: prefix,
+                    tightTop: tightTop,
+                    tightBottom: tightBottom
+            )
+        case let .blockQuote(attributedString):
+            return blockQuoteRow(
+                    id: "blockQuote_\(index)",
+                    attributedString: attributedString
+            )
+        case let .image(url):
+            return imageRow(
+                    id: "image_\(index)",
+                    url: url
+            )
+        case let .imageTitle(text):
+            return imageTitleRow(
+                    id: "imageTitle_\(index)",
+                    text: text
+            )
         }
     }
 
@@ -175,7 +210,7 @@ extension GuideViewController: SectionsDataSource {
         [
             Section(
                     id: "blocks",
-                    rows: viewItems.map { row(viewItem: $0) }
+                    rows: viewItems.enumerated().map { row(index: $0, viewItem: $1) }
             ),
             Section(
                     id: "footer",
