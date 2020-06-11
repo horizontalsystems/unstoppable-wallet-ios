@@ -1723,6 +1723,15 @@
 		D351EAA5248E2A7A00D58B13 /* bitcoin.md in Resources */ = {isa = PBXBuildFile; fileRef = 11B35F2D76E2FB2441549D32 /* bitcoin.md */; };
 		D351EAA6248E2A7A00D58B13 /* ethereum.md in Resources */ = {isa = PBXBuildFile; fileRef = 11B354FBAFEF51CD1E6E7D8B /* ethereum.md */; };
 		D351EAA7248E2A7A00D58B13 /* maker.md in Resources */ = {isa = PBXBuildFile; fileRef = 11B357299DACFB712BE39D0F /* maker.md */; };
+		D351EAAB2492254600D58B13 /* 3-private-keys.md in Resources */ = {isa = PBXBuildFile; fileRef = D351EAA82492254500D58B13 /* 3-private-keys.md */; };
+		D351EAAC2492254600D58B13 /* 3-private-keys.md in Resources */ = {isa = PBXBuildFile; fileRef = D351EAA82492254500D58B13 /* 3-private-keys.md */; };
+		D351EAAD2492254600D58B13 /* 3-private-keys.md in Resources */ = {isa = PBXBuildFile; fileRef = D351EAA82492254500D58B13 /* 3-private-keys.md */; };
+		D351EAAE2492254600D58B13 /* 1-cryptocurrencies.md in Resources */ = {isa = PBXBuildFile; fileRef = D351EAA92492254600D58B13 /* 1-cryptocurrencies.md */; };
+		D351EAAF2492254600D58B13 /* 1-cryptocurrencies.md in Resources */ = {isa = PBXBuildFile; fileRef = D351EAA92492254600D58B13 /* 1-cryptocurrencies.md */; };
+		D351EAB02492254600D58B13 /* 1-cryptocurrencies.md in Resources */ = {isa = PBXBuildFile; fileRef = D351EAA92492254600D58B13 /* 1-cryptocurrencies.md */; };
+		D351EAB12492254600D58B13 /* 2-wallets-explained.md in Resources */ = {isa = PBXBuildFile; fileRef = D351EAAA2492254600D58B13 /* 2-wallets-explained.md */; };
+		D351EAB22492254600D58B13 /* 2-wallets-explained.md in Resources */ = {isa = PBXBuildFile; fileRef = D351EAAA2492254600D58B13 /* 2-wallets-explained.md */; };
+		D351EAB32492254600D58B13 /* 2-wallets-explained.md in Resources */ = {isa = PBXBuildFile; fileRef = D351EAAA2492254600D58B13 /* 2-wallets-explained.md */; };
 		D35B518A21942E7A00504FBA /* AboutSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35B518821942E7A00504FBA /* AboutSettingsViewController.swift */; };
 		D35B518B21942E7A00504FBA /* AboutSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35B518821942E7A00504FBA /* AboutSettingsViewController.swift */; };
 		D35B518C21942E7A00504FBA /* AboutSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35B518821942E7A00504FBA /* AboutSettingsViewController.swift */; };
@@ -2573,6 +2582,9 @@
 		D34E941B21F86C3500AD8E90 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D34E941C21F86C3500AD8E90 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D351EA9B248101A500D58B13 /* tether.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = tether.md; sourceTree = "<group>"; };
+		D351EAA82492254500D58B13 /* 3-private-keys.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "3-private-keys.md"; sourceTree = "<group>"; };
+		D351EAA92492254600D58B13 /* 1-cryptocurrencies.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "1-cryptocurrencies.md"; sourceTree = "<group>"; };
+		D351EAAA2492254600D58B13 /* 2-wallets-explained.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "2-wallets-explained.md"; sourceTree = "<group>"; };
 		D35B518821942E7A00504FBA /* AboutSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutSettingsViewController.swift; sourceTree = "<group>"; };
 		D38405CE218317DF007D50AD /* Unstoppable D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unstoppable D.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38406BE21831B3D007D50AD /* Unstoppable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unstoppable.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3291,6 +3303,9 @@
 		11B358F85158C35C93B3E6D8 /* Guides */ = {
 			isa = PBXGroup;
 			children = (
+				D351EAA92492254600D58B13 /* 1-cryptocurrencies.md */,
+				D351EAAA2492254600D58B13 /* 2-wallets-explained.md */,
+				D351EAA82492254500D58B13 /* 3-private-keys.md */,
 				D351EA9B248101A500D58B13 /* tether.md */,
 				11B35F2D76E2FB2441549D32 /* bitcoin.md */,
 				11B354FBAFEF51CD1E6E7D8B /* ethereum.md */,
@@ -4493,10 +4508,13 @@
 				D351EAA7248E2A7A00D58B13 /* maker.md in Resources */,
 				D3373DB220C52F640082BC4A /* LaunchScreen.xib in Resources */,
 				50AB06B7215A269200A01E4A /* InfoPlist.strings in Resources */,
+				D351EAAD2492254600D58B13 /* 3-private-keys.md in Resources */,
+				D351EAB32492254600D58B13 /* 2-wallets-explained.md in Resources */,
 				D351EA9E248101A500D58B13 /* tether.md in Resources */,
 				D38406C021832751007D50AD /* Assets.xcassets in Resources */,
 				D38406C721832862007D50AD /* AppIconDevT.xcassets in Resources */,
 				D3B62A9E20CA88BF005A9F80 /* Colors.xcassets in Resources */,
+				D351EAB02492254600D58B13 /* 1-cryptocurrencies.md in Resources */,
 				D3B62A9A20CA73A0005A9F80 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4517,10 +4535,13 @@
 				D351EAA1248E2A6000D58B13 /* maker.md in Resources */,
 				D38405BC218317DF007D50AD /* LaunchScreen.xib in Resources */,
 				D38405BD218317DF007D50AD /* InfoPlist.strings in Resources */,
+				D351EAAC2492254600D58B13 /* 3-private-keys.md in Resources */,
+				D351EAB22492254600D58B13 /* 2-wallets-explained.md in Resources */,
 				D351EA9D248101A500D58B13 /* tether.md in Resources */,
 				D38406C221832757007D50AD /* Assets.xcassets in Resources */,
 				D38405C0218317DF007D50AD /* Colors.xcassets in Resources */,
 				D38405C3218317DF007D50AD /* Localizable.strings in Resources */,
+				D351EAAF2492254600D58B13 /* 1-cryptocurrencies.md in Resources */,
 				D38406C921832968007D50AD /* AppIconDev.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4534,10 +4555,13 @@
 				D351EAA4248E2A6D00D58B13 /* maker.md in Resources */,
 				D38406AC21831B3D007D50AD /* LaunchScreen.xib in Resources */,
 				D38406AD21831B3D007D50AD /* InfoPlist.strings in Resources */,
+				D351EAAB2492254600D58B13 /* 3-private-keys.md in Resources */,
+				D351EAB12492254600D58B13 /* 2-wallets-explained.md in Resources */,
 				D351EA9C248101A500D58B13 /* tether.md in Resources */,
 				D38406B021831B3D007D50AD /* Colors.xcassets in Resources */,
 				D38406C5218327E3007D50AD /* AppIcon.xcassets in Resources */,
 				D38406B321831B3D007D50AD /* Localizable.strings in Resources */,
+				D351EAAE2492254600D58B13 /* 1-cryptocurrencies.md in Resources */,
 				D38406B521831B3D007D50AD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

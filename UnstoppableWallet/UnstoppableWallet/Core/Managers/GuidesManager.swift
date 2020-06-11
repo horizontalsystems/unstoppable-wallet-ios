@@ -22,14 +22,32 @@ extension GuidesManager: IGuidesManager {
             Guide(
                     title: "Bitcoin In Simple Terms",
                     date: Date(),
-                    imageUrl: "https://media.gettyimages.com/photos/530d-car-head-lights-picture-id157735154",
+                    imageUrl: "",
                     fileName: "bitcoin"
             ),
             Guide(
                     title: "Ethereum in Simple Terms",
                     date: Date(),
-                    imageUrl: "http://media.gettyimages.com/photos/modern-key-to-the-bmw-in-a-hand-picture-id890886864",
+                    imageUrl: "",
                     fileName: "ethereum"
+            ),
+            Guide(
+                    title: "Blockchains Explained",
+                    date: Date(),
+                    imageUrl: "",
+                    fileName: "1-cryptocurrencies"
+            ),
+            Guide(
+                    title: "Wallets Explained",
+                    date: Date(),
+                    imageUrl: "",
+                    fileName: "2-wallets-explained"
+            ),
+            Guide(
+                    title: "Private Keys Explained",
+                    date: Date(),
+                    imageUrl: "",
+                    fileName: "3-private-keys"
             ),
         ]
     }
