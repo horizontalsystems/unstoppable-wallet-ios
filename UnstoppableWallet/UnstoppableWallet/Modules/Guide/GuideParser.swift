@@ -4,18 +4,11 @@ import Down
 
 class GuideParser {
 
-    private let fonts = StaticFontCollection(
-            heading1: .title2,
-            heading2: .title3,
-            heading3: .headline2,
-            body: .body
-    )
-
     private let colors = StaticColorCollection(
             heading1: .themeOz,
             heading2: .themeJacob,
             heading3: .themeJacob,
-            body: .themeOz
+            body: .themeBran
     )
 
     private let paragraphStyles: StaticParagraphStyleCollection = {
@@ -38,7 +31,14 @@ class GuideParser {
 
 extension GuideParser: IGuideParser {
 
-    func viewItems(markdownFileName: String) -> [GuideBlockViewItem] {
+    func viewItems(markdownFileName: String, fontSize: Int) -> [GuideBlockViewItem] {
+        let fonts = StaticFontCollection(
+                heading1: .title2,
+                heading2: .title3,
+                heading3: .headline2,
+                body: .systemFont(ofSize: CGFloat(fontSize), weight: .regular)
+        )
+
         guard let url = Bundle.main.url(forResource: markdownFileName, withExtension: "md") else {
             return []
         }

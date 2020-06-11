@@ -8,7 +8,6 @@ class GuideViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    private var imageUrl: String?
     private var viewItems = [GuideBlockViewItem]()
 
     init(delegate: IGuideViewDelegate) {
@@ -26,6 +25,8 @@ class GuideViewController: ThemeViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Attention Icon")?.tinted(with: .themeJacob), style: .plain, target: self, action: #selector(onTapFontSizeButton))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -56,6 +57,10 @@ class GuideViewController: ThemeViewController {
         super.viewSafeAreaInsetsDidChange()
 
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: view.safeAreaInsets.bottom, right: 0)
+    }
+
+    @objc private func onTapFontSizeButton() {
+        delegate.onTapFontSize()
     }
 
     private func footerRow(text: String) -> RowProtocol {
@@ -226,9 +231,12 @@ extension GuideViewController: SectionsDataSource {
 
 extension GuideViewController: IGuideView {
 
-    func set(imageUrl: String, viewItems: [GuideBlockViewItem]) {
-        self.imageUrl = imageUrl
+    func set(viewItems: [GuideBlockViewItem]) {
         self.viewItems = viewItems
+    }
+
+    func refresh() {
+        tableView.reload()
     }
 
 }
