@@ -186,6 +186,10 @@ extension GuideVisitor {
     struct BlockQuoteBlock: GuideBlock {
         let blocks: [GuideBlock]
 
+        var paragraphBlocks: [ParagraphBlock] {
+            blocks.compactMap { $0 as? ParagraphBlock }
+        }
+
         var description: String {
             "BlockQuote Block: \(blocks.count) block(s)"
         }

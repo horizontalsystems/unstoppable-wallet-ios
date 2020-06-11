@@ -70,6 +70,14 @@ class GuideViewController: ThemeViewController {
         )
     }
 
+    private func headerRow(id: String, attributedString: NSAttributedString, level: Int) -> RowProtocol {
+        if level == 1 || level == 2 {
+            return header1Row(id: id, attributedString: attributedString)
+        } else {
+            return header3Row(id: id, attributedString: attributedString)
+        }
+    }
+
     private func header1Row(id: String, attributedString: NSAttributedString) -> RowProtocol {
         Row<GuideHeader1Cell>(
                 id: id,
@@ -156,20 +164,11 @@ class GuideViewController: ThemeViewController {
 
     private func row(index: Int, viewItem: GuideBlockViewItem) -> RowProtocol {
         switch viewItem {
-        case let .h1(attributedString):
-            return header1Row(
-                    id: "header1_\(index)",
-                    attributedString: attributedString
-            )
-        case let .h2(attributedString):
-            return header1Row(
-                    id: "header2_\(index)",
-                    attributedString: attributedString
-            )
-        case let .h3(attributedString):
-            return header3Row(
-                    id: "header3_\(index)",
-                    attributedString: attributedString
+        case let .header(attributedString, level):
+            return headerRow(
+                    id: "header_\(index)",
+                    attributedString: attributedString,
+                    level: level
             )
         case let .text(attributedString):
             return textRow(
