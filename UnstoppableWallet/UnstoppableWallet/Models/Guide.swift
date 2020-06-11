@@ -12,7 +12,7 @@ enum GuideBlockViewItem {
     case h2(attributedString: NSAttributedString)
     case h3(attributedString: NSAttributedString)
     case text(attributedString: NSAttributedString)
-    case listItem(attributedString: NSAttributedString)
+    case listItem(attributedString: NSAttributedString, prefix: String?, tightTop: Bool, tightBottom: Bool)
     case blockQuote(attributedString: NSAttributedString)
     case image(url: String)
     case imageTitle(text: String)

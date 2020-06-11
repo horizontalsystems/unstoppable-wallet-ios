@@ -4,8 +4,11 @@ import ThemeKit
 
 class GuideListItemCell: UITableViewCell {
     private static let horizontalPadding: CGFloat = .margin6x
+    private static let verticalPadding: CGFloat = .margin3x
+    private static let tightVerticalPadding: CGFloat = .margin1x
     private static let prefixWidth: CGFloat = .margin6x
 
+    private let wrapperView = UIView()
     private let prefixLabel = UILabel()
     private let textView = GuideTextView()
 
@@ -14,7 +17,12 @@ class GuideListItemCell: UITableViewCell {
 
         backgroundColor = .clear
 
-        contentView.addSubview(prefixLabel)
+        contentView.addSubview(wrapperView)
+        wrapperView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        wrapperView.addSubview(prefixLabel)
         prefixLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().inset(GuideListItemCell.horizontalPadding)
             maker.top.equalToSuperview()
@@ -23,10 +31,10 @@ class GuideListItemCell: UITableViewCell {
         prefixLabel.font = .body
         prefixLabel.textColor = .themeOz
 
-        contentView.addSubview(textView)
+        wrapperView.addSubview(textView)
         textView.snp.makeConstraints { maker in
             maker.leading.equalTo(prefixLabel.snp.leading).offset(GuideListItemCell.prefixWidth)
-            maker.top.equalToSuperview()
+            maker.top.bottom.equalToSuperview()
             maker.trailing.equalToSuperview().inset(GuideListItemCell.horizontalPadding)
         }
     }
@@ -35,20 +43,28 @@ class GuideListItemCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(prefix: String, attributedString: NSAttributedString) {
+    func bind(attributedString: NSAttributedString, prefix: String?, tightTop: Bool, tightBottom: Bool) {
         prefixLabel.text = prefix
         textView.attributedText = attributedString
+
+        wrapperView.snp.remakeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalToSuperview().inset(tightTop ? GuideListItemCell.tightVerticalPadding : GuideListItemCell.verticalPadding)
+            maker.bottom.equalToSuperview().inset(tightBottom ? GuideListItemCell.tightVerticalPadding : GuideListItemCell.verticalPadding)
+        }
     }
 
 }
 
 extension GuideListItemCell {
 
-    static func height(containerWidth: CGFloat, attributedString: NSAttributedString) -> CGFloat {
+    static func height(containerWidth: CGFloat, attributedString: NSAttributedString, tightTop: Bool, tightBottom: Bool) -> CGFloat {
         let textWidth = containerWidth - prefixWidth - 2 * horizontalPadding
         let textHeight = attributedString.height(containerWidth: textWidth)
+        let topPadding = tightTop ? tightVerticalPadding : verticalPadding
+        let bottomPadding = tightBottom ? tightVerticalPadding : verticalPadding
 
-        return textHeight
+        return topPadding + textHeight + bottomPadding
     }
 
 }

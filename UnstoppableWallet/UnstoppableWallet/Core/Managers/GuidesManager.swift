@@ -10,13 +10,13 @@ extension GuidesManager: IGuidesManager {
             Guide(
                     title: "Tether in Simple Terms",
                     date: Date(),
-                    imageUrl: "https://raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/master/token_guides/images/TetherMain.png",
+                    imageUrl: "https://raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/master/token_guides/images/usdt-Main-l.png",
                     fileName: "tether"
             ),
             Guide(
                     title: "MakerDAO & DAI in Simple Terms",
                     date: Date(),
-                    imageUrl: "http://media.gettyimages.com/photos/car-steel-wheels-of-a-new-bmw-coupe-picture-id516914879",
+                    imageUrl: "https://raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/master/token_guides/images/mkr-Main-l.png",
                     fileName: "maker"
             ),
             Guide(
