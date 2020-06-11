@@ -23,7 +23,7 @@ class GuideBlockQuoteCell: UITableViewCell {
         contentView.addSubview(lineView)
         lineView.snp.makeConstraints { maker in
             maker.leading.top.bottom.equalToSuperview()
-            maker.width.equalTo(2)
+            maker.width.equalTo(4)
         }
 
         lineView.backgroundColor = .themeGreen50
