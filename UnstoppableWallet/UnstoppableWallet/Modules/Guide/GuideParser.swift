@@ -108,8 +108,18 @@ extension GuideParser: IGuideParser {
                     }
                 }
 
-                if let imageBlock = block as? GuideVisitor.ImageBlock, let url = imageBlock.url {
-                    viewItems.append(.image(url: url))
+                if let imageBlock = block as? GuideVisitor.ImageBlock, let urlString = imageBlock.url, let url = URL(string: urlString) {
+                    var type: GuideImageType = .square
+
+                    if let letter = url.deletingPathExtension().lastPathComponent.split(separator: "-").last {
+                        if letter == "l" {
+                            type = .landscape
+                        } else if letter == "p" {
+                            type = .portrait
+                        }
+                    }
+
+                    viewItems.append(.image(url: url, type: type))
 
                     if let title = imageBlock.title {
                         viewItems.append(.imageTitle(text: title))

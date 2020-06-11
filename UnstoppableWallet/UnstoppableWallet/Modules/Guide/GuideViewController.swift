@@ -138,14 +138,14 @@ class GuideViewController: ThemeViewController {
         )
     }
 
-    private func imageRow(id: String, url: String) -> RowProtocol {
+    private func imageRow(id: String, url: URL, type: GuideImageType) -> RowProtocol {
         Row<GuideImageCell>(
                 id: id,
                 dynamicHeight: { containerWidth in
-                    GuideImageCell.height(containerWidth: containerWidth)
+                    GuideImageCell.height(containerWidth: containerWidth, type: type)
                 },
                 bind: { cell, _ in
-                    cell.bind(imageUrl: url)
+                    cell.bind(imageUrl: url, type: type)
                 }
         )
     }
@@ -188,10 +188,11 @@ class GuideViewController: ThemeViewController {
                     id: "blockQuote_\(index)",
                     attributedString: attributedString
             )
-        case let .image(url):
+        case let .image(url, type):
             return imageRow(
                     id: "image_\(index)",
-                    url: url
+                    url: url,
+                    type: type
             )
         case let .imageTitle(text):
             return imageTitleRow(
