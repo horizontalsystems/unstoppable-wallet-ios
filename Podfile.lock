@@ -70,21 +70,21 @@ PODS:
     - X11Kit.swift (~> 1.0)
   - DeepDiff (2.3.1)
   - Down (0.9.2)
-  - EosioSwift (0.2.1):
+  - EosioSwift (0.4.0):
     - BigInt (~> 5.0)
     - PromiseKit (~> 6.8)
-  - EosioSwiftAbieosSerializationProvider (0.2.1):
-    - EosioSwift (~> 0.2.1)
-  - EosioSwiftEcc (0.2.1):
-    - EosioSwift (~> 0.2.1)
+  - EosioSwiftAbieosSerializationProvider (0.4.0):
+    - EosioSwift (~> 0.4.0)
+  - EosioSwiftEcc (0.4.0):
+    - EosioSwift (~> 0.4.0)
     - GRKOpenSSLFramework (= 1.0.2.19)
-  - EosioSwiftSoftkeySignatureProvider (0.2.1):
-    - EosioSwift (~> 0.2.1)
-    - EosioSwiftEcc (~> 0.2.1)
+  - EosioSwiftSoftkeySignatureProvider (0.4.0):
+    - EosioSwift (~> 0.4.0)
+    - EosioSwiftEcc (~> 0.4.0)
   - EosKit.swift (0.3.4):
-    - EosioSwift (~> 0.2.1)
-    - EosioSwiftAbieosSerializationProvider (~> 0.2.1)
-    - EosioSwiftSoftkeySignatureProvider (~> 0.2.1)
+    - EosioSwift (~> 0.4.0)
+    - EosioSwiftAbieosSerializationProvider (~> 0.4.0)
+    - EosioSwiftSoftkeySignatureProvider (~> 0.4.0)
     - GRDB.swift (~> 4.0)
     - HsToolKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
@@ -221,6 +221,7 @@ DEPENDENCIES:
   - DashKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
   - DeepDiff
   - Down (from `https://github.com/iwasrobbed/Down/`, branch `feature/list-tightness`)
+  - EosioSwift (from `https://github.com/horizontalsystems/eosio-swift`)
   - EosioSwiftAbieosSerializationProvider (from `https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git`)
   - EosKit.swift (from `https://github.com/horizontalsystems/eos-kit-ios`)
   - Erc20Kit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
@@ -301,6 +302,8 @@ EXTERNAL SOURCES:
   Down:
     :branch: feature/list-tightness
     :git: https://github.com/iwasrobbed/Down/
+  EosioSwift:
+    :git: https://github.com/horizontalsystems/eosio-swift
   EosioSwiftAbieosSerializationProvider:
     :git: https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git
   EosKit.swift:
@@ -364,11 +367,14 @@ CHECKOUT OPTIONS:
   Down:
     :commit: 95578c6e2c875aeeb04c11830fb8f3515dc914d9
     :git: https://github.com/iwasrobbed/Down/
+  EosioSwift:
+    :commit: d011ffb8ddbe3b74a0b7f6d94ae52bf3b946cc8f
+    :git: https://github.com/horizontalsystems/eosio-swift
   EosioSwiftAbieosSerializationProvider:
-    :commit: 7ac04899e62012e225e0ea48a96951de0b72ad08
+    :commit: 40f8c7e604667c0c16713143501e74e1b0b958de
     :git: https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git
   EosKit.swift:
-    :commit: c2a88383caa226c345cd87d8e1b17dea5e9482f0
+    :commit: 937926ff85a0b0e0af8dfe8a9340b1ba85a9129a
     :git: https://github.com/horizontalsystems/eos-kit-ios
   Erc20Kit.swift:
     :commit: 9c41fdf86394c6208595be84a9fedba7dca14fee
@@ -433,11 +439,11 @@ SPEC CHECKSUMS:
   DashKit.swift: aab54ef810b3880d2472d9bc8d3d5e56a5367dc7
   DeepDiff: e5ae6c50d0321568e4508cec5930b9f10bb293fc
   Down: 1f6a14846dff45ae8e7e4334b4e386a5fd3b2412
-  EosioSwift: 21ca0d61e7928a982a64c82b623e7342d7dd86dc
-  EosioSwiftAbieosSerializationProvider: f5fc013dde26b49d037d9b827fc66c905c22de50
-  EosioSwiftEcc: b0ba4fe71c70c377e30d2ce79fcf1b55864c7669
-  EosioSwiftSoftkeySignatureProvider: dbf7a251a45bc51f1040bed93f2bec67a9620905
-  EosKit.swift: 2dba7e2b5ad25c7ff7e169a0e7817f4372b9ecfe
+  EosioSwift: 2965d63ded78cbe4d1849ccf96aea5a8d92cc643
+  EosioSwiftAbieosSerializationProvider: eba59a5335200175ccb71546388b81e98cd3213d
+  EosioSwiftEcc: bd176c3e86e7ee25a40e428473fe9fef404339f5
+  EosioSwiftSoftkeySignatureProvider: 3dc161a082173d7553e7dcf96b8e4a14e226d2f8
+  EosKit.swift: 5c17e0485658371b247eb71a9e5b3e7bd6bd14ff
   Erc20Kit.swift: b85a26b1e02b82ba85ee4b5c9bd526af542739de
   EthereumKit.swift: 389c6eb5b625656c2bb99ba7209a8f606cd08f87
   FeeRateKit.swift: fbf599802e96d999d1d9e45127ab0ad05a6163f8
@@ -473,6 +479,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: b09af5caafef556c489bf9b55b8c3dddbd710861
 
-PODFILE CHECKSUM: 6cc1602a65c5a5933f38633e1dcb2ad37fd35a4e
+PODFILE CHECKSUM: 3564a7bff5dded23670d09b58d35e1ec756d5eb4
 
 COCOAPODS: 1.9.1
