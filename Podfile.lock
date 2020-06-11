@@ -259,7 +259,6 @@ SPEC REPOS:
     - BlueSocket
     - Cuckoo
     - DeepDiff
-    - EosioSwift
     - EosioSwiftEcc
     - EosioSwiftSoftkeySignatureProvider
     - GRDB.swift
@@ -479,6 +478,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: b09af5caafef556c489bf9b55b8c3dddbd710861
 
-PODFILE CHECKSUM: 3564a7bff5dded23670d09b58d35e1ec756d5eb4
+PODFILE CHECKSUM: 8a2585053edd6670b75fea3c59373cc30a34bea5
 
 COCOAPODS: 1.9.1
