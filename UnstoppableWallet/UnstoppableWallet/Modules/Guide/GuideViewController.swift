@@ -106,14 +106,14 @@ class GuideViewController: ThemeViewController {
         )
     }
 
-    private func listItemRow(prefix: String, attributedString: NSAttributedString) -> RowProtocol {
+    private func listItemRow(attributedString: NSAttributedString, prefix: String?, tightTop: Bool, tightBottom: Bool) -> RowProtocol {
         Row<GuideListItemCell>(
                 id: attributedString.string, // todo: check performance
                 dynamicHeight: { containerWidth in
-                    GuideListItemCell.height(containerWidth: containerWidth, attributedString: attributedString)
+                    GuideListItemCell.height(containerWidth: containerWidth, attributedString: attributedString, tightTop: tightTop, tightBottom: tightBottom)
                 },
                 bind: { cell, _ in
-                    cell.bind(prefix: prefix, attributedString: attributedString)
+                    cell.bind(attributedString: attributedString, prefix: prefix, tightTop: tightTop, tightBottom: tightBottom)
                 }
         )
     }
@@ -160,7 +160,7 @@ class GuideViewController: ThemeViewController {
         case let .h2(attributedString): return header1Row(attributedString: attributedString)
         case let .h3(attributedString): return header3Row(attributedString: attributedString)
         case let .text(attributedString): return textRow(attributedString: attributedString)
-        case let .listItem(attributedString): return listItemRow(prefix: "•", attributedString: attributedString)
+        case let .listItem(attributedString, prefix, tightTop, tightBottom): return listItemRow(attributedString: attributedString, prefix: prefix, tightTop: tightTop, tightBottom: tightBottom)
         case let .blockQuote(attributedString): return blockQuoteRow(attributedString: attributedString)
         case let .image(url): return imageRow(url: url)
         case let .imageTitle(text): return imageTitleRow(text: text)

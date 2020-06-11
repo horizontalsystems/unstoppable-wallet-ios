@@ -27,7 +27,13 @@ extension GuideVisitor: Visitor {
     }
 
     public func visit(list node: List) -> GuideBlock {
-        ListBlock(blocks: visitChildren(of: node))
+        var startOrder: Int?
+
+        if case .ordered(let start) = node.listType {
+            startOrder = start
+        }
+
+        return ListBlock(blocks: visitChildren(of: node), tight: node.isTight, startOrder: startOrder)
     }
 
     public func visit(item node: Item) -> GuideBlock {
@@ -151,15 +157,25 @@ extension GuideVisitor {
 
     struct ListBlock: GuideBlock {
         let blocks: [GuideBlock]
+        let tight: Bool
+        var startOrder: Int?
+
+        var itemBlocks: [ItemBlock] {
+            blocks.compactMap { $0 as? ItemBlock }
+        }
 
         var description: String {
-            "List Block: \(blocks.count) blocks:\n\(blocks.map { "\($0)" }.joined(separator: "\n"))\n\n"
+            "List Block: [tight=\(tight), startOrder=\(startOrder.map { "\($0)" } ?? "nil")] \(blocks.count) blocks:\n\(blocks.map { "\($0)" }.joined(separator: "\n"))\n\n"
         }
 
     }
 
     struct ItemBlock: GuideBlock {
         let blocks: [GuideBlock]
+
+        var paragraphBlocks: [ParagraphBlock] {
+            blocks.compactMap { $0 as? ParagraphBlock }
+        }
 
         var description: String {
             "Item Block: \(blocks.count) block(s)"

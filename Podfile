@@ -72,7 +72,7 @@ def appPods
   pod 'SnapKit'
   pod 'DeepDiff'
 
-  pod 'Down'
+  pod 'Down', git: 'https://github.com/iwasrobbed/Down/', branch: 'feature/list-tightness'
 end
 
 target 'Unstoppable Dev T' do

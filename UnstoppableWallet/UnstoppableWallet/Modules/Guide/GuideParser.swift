@@ -90,14 +90,21 @@ extension GuideParser: IGuideParser {
                 }
 
                 if let listBlock = block as? GuideVisitor.ListBlock {
-                    for block in listBlock.blocks {
-                        if let itemBlock = block as? GuideVisitor.ItemBlock {
-                            for block in itemBlock.blocks {
-                                if let paragraphBlock = block as? GuideVisitor.ParagraphBlock {
-                                    viewItems.append(.listItem(attributedString: paragraphBlock.attributedString))
-                                }
-                            }
+                    var order = listBlock.startOrder
+
+                    for (itemIndex, itemBlock) in listBlock.itemBlocks.enumerated() {
+                        let prefix = order.map { "\($0)." } ?? "•"
+
+                        for (paragraphIndex, paragraphBlock) in itemBlock.paragraphBlocks.enumerated() {
+                            viewItems.append(.listItem(
+                                    attributedString: paragraphBlock.attributedString,
+                                    prefix: paragraphIndex == 0 ? prefix : nil,
+                                    tightTop: listBlock.tight && itemIndex != 0,
+                                    tightBottom: listBlock.tight && itemIndex != listBlock.itemBlocks.count - 1
+                            ))
                         }
+
+                        order? += 1
                     }
                 }
 

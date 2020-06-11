@@ -220,7 +220,7 @@ DEPENDENCIES:
   - CurrencyKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - DashKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
   - DeepDiff
-  - Down
+  - Down (from `https://github.com/iwasrobbed/Down/`, branch `feature/list-tightness`)
   - EosioSwiftAbieosSerializationProvider (from `https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git`)
   - EosKit.swift (from `https://github.com/horizontalsystems/eos-kit-ios`)
   - Erc20Kit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
@@ -258,7 +258,6 @@ SPEC REPOS:
     - BlueSocket
     - Cuckoo
     - DeepDiff
-    - Down
     - EosioSwift
     - EosioSwiftEcc
     - EosioSwiftSoftkeySignatureProvider
@@ -299,6 +298,9 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
+  Down:
+    :branch: feature/list-tightness
+    :git: https://github.com/iwasrobbed/Down/
   EosioSwiftAbieosSerializationProvider:
     :git: https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git
   EosKit.swift:
@@ -359,6 +361,9 @@ CHECKOUT OPTIONS:
   DashKit.swift:
     :commit: 36ccd7c9637f0e28c4a22d09f0d83908d5d11a86
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
+  Down:
+    :commit: 95578c6e2c875aeeb04c11830fb8f3515dc914d9
+    :git: https://github.com/iwasrobbed/Down/
   EosioSwiftAbieosSerializationProvider:
     :commit: 7ac04899e62012e225e0ea48a96951de0b72ad08
     :git: https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git
@@ -468,6 +473,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: b09af5caafef556c489bf9b55b8c3dddbd710861
 
-PODFILE CHECKSUM: 55d6aa480d46398c5f51900cd0729ad445bbacbc
+PODFILE CHECKSUM: 6cc1602a65c5a5933f38633e1dcb2ad37fd35a4e
 
 COCOAPODS: 1.9.1
