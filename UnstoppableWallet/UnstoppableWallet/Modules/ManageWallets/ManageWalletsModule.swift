@@ -10,6 +10,7 @@ protocol IManageWalletsViewDelegate {
     func onSelect(viewItem: CoinToggleViewItem)
 
     func onTapAddToken()
+    func onTapDone()
 }
 
 protocol IManageWalletsInteractor {
@@ -34,6 +35,7 @@ protocol IManageWalletsRouter {
     func showDerivationSetting(coin: Coin, currentDerivation: MnemonicDerivation, delegate: IDerivationSettingDelegate)
     func showNoAccount(coin: Coin)
     func showAddToken()
+    func close()
 }
 
 protocol IManageWalletsPresenterState {
