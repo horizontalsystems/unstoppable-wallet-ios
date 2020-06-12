@@ -27,7 +27,8 @@ class ManageWalletsViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = "manage_coins.title".localized
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "manage_coins.add_token".localized, style: .plain, target: self, action: #selector(onTapAddTokenButton))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(onTapDoneButton))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "manage_coins.add_token".localized, style: .plain, target: self, action: #selector(onTapAddTokenButton))
 
         tableView.registerCell(forClass: CoinToggleCell.self)
         tableView.sectionDataSource = self
@@ -43,6 +44,10 @@ class ManageWalletsViewController: ThemeViewController {
         delegate.onLoad()
 
         tableView.buildSections()
+    }
+
+    @objc func onTapDoneButton() {
+        delegate.onTapDone()
     }
 
     @objc func onTapAddTokenButton() {
