@@ -29,6 +29,7 @@ class GuidePresenter {
 extension GuidePresenter: IGuideViewDelegate {
 
     func onLoad() {
+        view?.setSpinner(visible: true)
         interactor.fetchGuideContent(url: guide.fileUrl)
     }
 
@@ -47,6 +48,7 @@ extension GuidePresenter: IGuideInteractorDelegate {
     func didFetch(guideContent: String) {
         self.guideContent = guideContent
 
+        view?.setSpinner(visible: false)
         syncViewItems()
         view?.refresh()
     }

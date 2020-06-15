@@ -1,6 +1,7 @@
 protocol IGuideView: AnyObject {
     func set(viewItems: [GuideBlockViewItem])
     func refresh()
+    func setSpinner(visible: Bool)
 }
 
 protocol IGuideViewDelegate {

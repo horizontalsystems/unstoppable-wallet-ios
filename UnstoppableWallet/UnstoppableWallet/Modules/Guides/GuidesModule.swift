@@ -4,6 +4,7 @@ protocol IGuidesView: AnyObject {
     func set(filterViewItems: [FilterHeaderView.ViewItem])
     func set(viewItems: [GuideViewItem])
     func refresh()
+    func setSpinner(visible: Bool)
 }
 
 protocol IGuidesViewDelegate {

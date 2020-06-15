@@ -31,6 +31,7 @@ class GuidesPresenter {
 extension GuidesPresenter: IGuidesViewDelegate {
 
     func onLoad() {
+        view?.setSpinner(visible: true)
         interactor.fetchGuideCategories()
     }
 
@@ -60,6 +61,7 @@ extension GuidesPresenter: IGuidesInteractorDelegate {
             FilterHeaderView.ViewItem.item(title: category.title)
         })
 
+        view?.setSpinner(visible: false)
         syncViewItems()
         view?.refresh()
     }
