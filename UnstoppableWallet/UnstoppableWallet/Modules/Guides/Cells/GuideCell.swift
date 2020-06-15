@@ -4,7 +4,10 @@ import SnapKit
 import AlamofireImage
 
 class GuideCell: UITableViewCell {
-    private static let cardBottomMargin: CGFloat = .margin3x
+    private static let cardTopMargin: CGFloat = 0
+    private static let cardTopMarginFirst: CGFloat = .margin3x
+    private static let cardBottomMargin: CGFloat = .margin2x
+    private static let cardBottomMarginLast: CGFloat = .margin8x
     private static let cardHorizontalMargin: CGFloat = .margin4x
     private static let imageHeight: CGFloat = 160
     private static let dateTopMargin: CGFloat = .margin4x
@@ -28,9 +31,7 @@ class GuideCell: UITableViewCell {
 
         contentView.addSubview(cardView)
         cardView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(GuideCell.cardHorizontalMargin)
-            maker.top.equalToSuperview()
-            maker.bottom.equalToSuperview().inset(GuideCell.cardBottomMargin)
+            maker.edges.equalToSuperview() // constraints are set in bind
         }
 
         cardView.contentView.addSubview(guideImageView)
@@ -66,7 +67,13 @@ class GuideCell: UITableViewCell {
         fatalError("not implemented")
     }
 
-    func bind(viewItem: GuideViewItem) {
+    func bind(viewItem: GuideViewItem, first: Bool, last: Bool) {
+        cardView.snp.remakeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(GuideCell.cardHorizontalMargin)
+            maker.top.equalToSuperview().inset(first ? GuideCell.cardTopMarginFirst : GuideCell.cardTopMargin)
+            maker.bottom.equalToSuperview().inset(last ? GuideCell.cardBottomMarginLast : GuideCell.cardBottomMargin)
+        }
+
         guideImageView.image = nil
 
         if let imageUrl = viewItem.imageUrl, let url = URL(string: imageUrl) {
@@ -89,11 +96,14 @@ extension GuideCell {
 
 extension GuideCell {
 
-    static func height(containerWidth: CGFloat, viewItem: GuideViewItem) -> CGFloat {
+    static func height(containerWidth: CGFloat, viewItem: GuideViewItem, first: Bool, last: Bool) -> CGFloat {
         let titleWidth = containerWidth - 2 * cardHorizontalMargin - 2 * titleHorizontalMargin
         let titleHeight = viewItem.title.height(forContainerWidth: titleWidth, font: titleFont)
 
-        return imageHeight + dateTopMargin + dateFont.lineHeight + titleTopMargin + titleHeight + titleBottomMargin + cardBottomMargin
+        let cardTop = first ? cardTopMarginFirst : cardTopMargin
+        let cardBottom = last ? cardBottomMarginLast : cardBottomMargin
+
+        return cardTop + imageHeight + dateTopMargin + dateFont.lineHeight + titleTopMargin + titleHeight + titleBottomMargin + cardBottom
     }
 
 }

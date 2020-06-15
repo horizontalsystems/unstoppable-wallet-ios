@@ -6,7 +6,8 @@ import SectionsTableView
 class GuidesViewController: ThemeViewController {
     private let delegate: IGuidesViewDelegate
 
-    private let tableView = SectionsTableView(style: .grouped)
+    private let tableView = UITableView(frame: .zero, style: .plain)
+    private let filterHeaderView = FilterHeaderView()
 
     private var viewItems = [GuideViewItem]()
 
@@ -36,41 +37,61 @@ class GuidesViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.registerCell(forClass: GuideCell.self)
-        tableView.sectionDataSource = self
+        tableView.dataSource = self
+        tableView.delegate = self
+
+        filterHeaderView.onSelect = { [weak self] index in
+        }
 
         delegate.onLoad()
 
-        tableView.buildSections()
-    }
-
-    private func guideRow(index: Int, viewItem: GuideViewItem) -> RowProtocol {
-        Row<GuideCell>(
-                id: viewItem.title,
-                dynamicHeight: { containerWidth in
-                    GuideCell.height(containerWidth: containerWidth, viewItem: viewItem)
-                },
-                bind: { cell, _ in
-                    cell.bind(viewItem: viewItem)
-                },
-                action: { [weak self] _ in
-                    self?.delegate.onTapGuide(index: index)
-                }
-        )
     }
 
 }
 
-extension GuidesViewController: SectionsDataSource {
+extension GuidesViewController: UITableViewDataSource, UITableViewDelegate {
 
-    func buildSections() -> [SectionProtocol] {
-        [
-            Section(
-                    id: "guides",
-                    headerState: .margin(height: .margin3x),
-                    footerState: .margin(height: .margin8x),
-                    rows: viewItems.enumerated().map { guideRow(index: $0, viewItem: $1) }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewItems.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        tableView.dequeueReusableCell(withIdentifier: String(describing: GuideCell.self), for: indexPath)
+    }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? GuideCell {
+            let index = indexPath.row
+
+            cell.bind(
+                    viewItem: viewItems[index],
+                    first: index == 0,
+                    last: index == viewItems.count - 1
             )
-        ]
+        }
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        delegate.onTapGuide(index: indexPath.row)
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let index = indexPath.row
+
+        return GuideCell.height(
+                containerWidth: tableView.width,
+                viewItem: viewItems[index],
+                first: index == 0,
+                last: index == viewItems.count - 1
+        )
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        filterHeaderView.headerHeight
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        filterHeaderView
     }
 
 }
@@ -79,6 +100,11 @@ extension GuidesViewController: IGuidesView {
 
     func set(viewItems: [GuideViewItem]) {
         self.viewItems = viewItems
+
+        filterHeaderView.reload(filters: [
+            FilterHeaderView.ViewItem.item(title: "Basics"),
+            FilterHeaderView.ViewItem.item(title: "Coins"),
+        ])
     }
 
 }
