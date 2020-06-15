@@ -1,19 +1,23 @@
 import Foundation
 
 protocol IGuidesView: AnyObject {
+    func set(filterViewItems: [FilterHeaderView.ViewItem])
     func set(viewItems: [GuideViewItem])
+    func refresh()
 }
 
 protocol IGuidesViewDelegate {
     func onLoad()
+    func onSelectFilter(index: Int)
     func onTapGuide(index: Int)
 }
 
 protocol IGuidesInteractor {
-    var guides: [Guide] { get }
+    func fetchGuideCategories()
 }
 
 protocol IGuidesInteractorDelegate: AnyObject {
+    func didFetch(guideCategories: [GuideCategory])
 }
 
 protocol IGuidesRouter {

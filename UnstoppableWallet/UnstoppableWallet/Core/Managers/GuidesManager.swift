@@ -1,55 +1,42 @@
 import Foundation
+import RxSwift
+import HsToolKit
+import Alamofire
 
 class GuidesManager {
+    private let networkManager: NetworkManager
+
+    init(networkManager: NetworkManager) {
+        self.networkManager = networkManager
+    }
+
 }
 
 extension GuidesManager: IGuidesManager {
 
-    var guides: [Guide] {
-        [
-            Guide(
-                    title: "Tether in Simple Terms",
-                    date: Date(),
-                    imageUrl: "https://raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/master/token_guides/images/usdt-Main-l.png",
-                    fileName: "tether"
-            ),
-            Guide(
-                    title: "MakerDAO & DAI in Simple Terms",
-                    date: Date(),
-                    imageUrl: "https://raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/master/token_guides/images/mkr-Main-l.png",
-                    fileName: "maker"
-            ),
-            Guide(
-                    title: "Bitcoin In Simple Terms",
-                    date: Date(),
-                    imageUrl: "",
-                    fileName: "bitcoin"
-            ),
-            Guide(
-                    title: "Ethereum in Simple Terms",
-                    date: Date(),
-                    imageUrl: "",
-                    fileName: "ethereum"
-            ),
-            Guide(
-                    title: "Blockchains Explained",
-                    date: Date(),
-                    imageUrl: "",
-                    fileName: "1-cryptocurrencies"
-            ),
-            Guide(
-                    title: "Wallets Explained",
-                    date: Date(),
-                    imageUrl: "",
-                    fileName: "2-wallets-explained"
-            ),
-            Guide(
-                    title: "Private Keys Explained",
-                    date: Date(),
-                    imageUrl: "",
-                    fileName: "3-private-keys"
-            ),
-        ]
+    var guideCategoriesSingle: Single<[GuideCategory]> {
+        let url = "https://raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/master/index.json"
+        let request = networkManager.session.request(url)
+        return networkManager.single(request: request)
+    }
+
+    func guideContentSingle(url: String) -> Single<String> {
+        let request = networkManager.session.request(url)
+
+        return Single.create { observer in
+            let requestReference = request.responseString(queue: DispatchQueue.global(qos: .background)) { response in
+                switch response.result {
+                case .success(let result):
+                    observer(.success(result))
+                case .failure(let error):
+                    observer(.error(NetworkManager.unwrap(error: error)))
+                }
+            }
+
+            return Disposables.create {
+                requestReference.cancel()
+            }
+        }
     }
 
 }

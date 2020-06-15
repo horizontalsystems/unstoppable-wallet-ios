@@ -27,7 +27,7 @@ extension GuideRouter {
 
     static func module(guide: Guide) -> UIViewController {
         let router = GuideRouter()
-        let interactor = GuideInteractor()
+        let interactor = GuideInteractor(guidesManager: App.shared.guidesManager)
         let presenter = GuidePresenter(guide: guide, parser: GuideParser(), router: router, interactor: interactor)
         let view = GuideViewController(delegate: presenter)
 

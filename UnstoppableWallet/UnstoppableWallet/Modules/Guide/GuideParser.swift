@@ -31,7 +31,7 @@ class GuideParser {
 
 extension GuideParser: IGuideParser {
 
-    func viewItems(markdownFileName: String, fontSize: Int) -> [GuideBlockViewItem] {
+    func viewItems(guideContent: String, fontSize: Int) -> [GuideBlockViewItem] {
         let fonts = StaticFontCollection(
                 heading1: .title2,
                 heading2: .title3,
@@ -39,22 +39,17 @@ extension GuideParser: IGuideParser {
                 body: .systemFont(ofSize: CGFloat(fontSize), weight: .regular)
         )
 
-        guard let url = Bundle.main.url(forResource: markdownFileName, withExtension: "md") else {
-            return []
-        }
+        let down = Down(markdownString: guideContent)
+
+        let configuration = DownStylerConfiguration(
+                fonts: fonts,
+                colors: colors,
+                paragraphStyles: paragraphStyles
+        )
+
+        let styler = DownStyler(configuration: configuration)
 
         do {
-            let string = try NSString(contentsOf: url, encoding: String.Encoding.utf8.rawValue) as String
-            let down = Down(markdownString: string)
-
-            let configuration = DownStylerConfiguration(
-                    fonts: fonts,
-                    colors: colors,
-                    paragraphStyles: paragraphStyles
-            )
-
-            let styler = DownStyler(configuration: configuration)
-
             let tree = try down.toAST().wrap()
 
             guard let document = tree as? Document else {
