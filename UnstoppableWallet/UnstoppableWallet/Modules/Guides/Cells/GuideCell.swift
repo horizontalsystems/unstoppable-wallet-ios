@@ -74,6 +74,7 @@ class GuideCell: UITableViewCell {
             maker.bottom.equalToSuperview().inset(last ? GuideCell.cardBottomMarginLast : GuideCell.cardBottomMargin)
         }
 
+        guideImageView.af.cancelImageRequest()
         guideImageView.image = nil
 
         if let imageUrl = viewItem.imageUrl, let url = URL(string: imageUrl) {

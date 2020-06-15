@@ -533,7 +533,8 @@ protocol ISortTypeManager: AnyObject {
 }
 
 protocol IGuidesManager {
-    var guides: [Guide] { get }
+    var guideCategoriesSingle: Single<[GuideCategory]> { get }
+    func guideContentSingle(url: String) -> Single<String>
 }
 
 protocol IErc20ContractInfoProvider {

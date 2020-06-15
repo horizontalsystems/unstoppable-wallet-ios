@@ -41,6 +41,7 @@ class GuidesViewController: ThemeViewController {
         tableView.delegate = self
 
         filterHeaderView.onSelect = { [weak self] index in
+            self?.delegate.onSelectFilter(index: index)
         }
 
         delegate.onLoad()
@@ -98,13 +99,16 @@ extension GuidesViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension GuidesViewController: IGuidesView {
 
+    func set(filterViewItems: [FilterHeaderView.ViewItem]) {
+        filterHeaderView.reload(filters: filterViewItems)
+    }
+
     func set(viewItems: [GuideViewItem]) {
         self.viewItems = viewItems
+    }
 
-        filterHeaderView.reload(filters: [
-            FilterHeaderView.ViewItem.item(title: "Basics"),
-            FilterHeaderView.ViewItem.item(title: "Coins"),
-        ])
+    func refresh() {
+        tableView.reloadData()
     }
 
 }

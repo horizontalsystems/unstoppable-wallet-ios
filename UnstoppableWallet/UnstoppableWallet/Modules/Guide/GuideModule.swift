@@ -9,9 +9,11 @@ protocol IGuideViewDelegate {
 }
 
 protocol IGuideInteractor {
+    func fetchGuideContent(url: String)
 }
 
 protocol IGuideInteractorDelegate: AnyObject {
+    func didFetch(guideContent: String)
 }
 
 protocol IGuideRouter {
@@ -19,5 +21,5 @@ protocol IGuideRouter {
 }
 
 protocol IGuideParser {
-    func viewItems(markdownFileName: String, fontSize: Int) -> [GuideBlockViewItem]
+    func viewItems(guideContent: String, fontSize: Int) -> [GuideBlockViewItem]
 }

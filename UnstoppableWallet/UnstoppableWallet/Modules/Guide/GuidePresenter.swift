@@ -8,6 +8,8 @@ class GuidePresenter {
     private let guide: Guide
     private var fontSize: Int = 17
 
+    private var guideContent: String?
+
     init(guide: Guide, parser: IGuideParser, router: IGuideRouter, interactor: IGuideInteractor) {
         self.guide = guide
         self.parser = parser
@@ -16,14 +18,18 @@ class GuidePresenter {
     }
 
     private func syncViewItems() {
-        view?.set(viewItems: parser.viewItems(markdownFileName: guide.fileName, fontSize: fontSize))
+        guard let guideContent = guideContent else {
+            return
+        }
+
+        view?.set(viewItems: parser.viewItems(guideContent: guideContent, fontSize: fontSize))
     }
 }
 
 extension GuidePresenter: IGuideViewDelegate {
 
     func onLoad() {
-        syncViewItems()
+        interactor.fetchGuideContent(url: guide.fileUrl)
     }
 
     func onTapFontSize() {
@@ -37,4 +43,12 @@ extension GuidePresenter: IGuideViewDelegate {
 }
 
 extension GuidePresenter: IGuideInteractorDelegate {
+
+    func didFetch(guideContent: String) {
+        self.guideContent = guideContent
+
+        syncViewItems()
+        view?.refresh()
+    }
+
 }

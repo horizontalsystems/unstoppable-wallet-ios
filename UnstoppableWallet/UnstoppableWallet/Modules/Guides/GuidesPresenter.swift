@@ -6,32 +6,62 @@ class GuidesPresenter {
     private let router: IGuidesRouter
     private let interactor: IGuidesInteractor
 
-    private var guides = [Guide]()
+    private var guideCategories = [GuideCategory]()
     private var viewItems = [GuideViewItem]()
+
+    private var currentCategoryIndex: Int = 0
 
     init(router: IGuidesRouter, interactor: IGuidesInteractor) {
         self.router = router
         self.interactor = interactor
     }
 
+    private func syncViewItems() {
+        guard guideCategories.count > currentCategoryIndex else {
+            return
+        }
+
+        let viewItems = guideCategories[currentCategoryIndex].guides.map { guide in
+            GuideViewItem(title: guide.title, date: guide.date, imageUrl: guide.imageUrl)
+        }
+        view?.set(viewItems: viewItems)
+    }
 }
 
 extension GuidesPresenter: IGuidesViewDelegate {
 
     func onLoad() {
-        guides = interactor.guides
+        interactor.fetchGuideCategories()
+    }
 
-        let viewItems = guides.map { guide in
-            GuideViewItem(title: guide.title, date: guide.date, imageUrl: guide.imageUrl)
-        }
-        view?.set(viewItems: viewItems)
+    func onSelectFilter(index: Int) {
+        currentCategoryIndex = index
+
+        syncViewItems()
+        view?.refresh()
     }
 
     func onTapGuide(index: Int) {
-        router.show(guide: guides[index])
+        guard guideCategories.count > currentCategoryIndex else {
+            return
+        }
+
+        router.show(guide: guideCategories[currentCategoryIndex].guides[index])
     }
 
 }
 
 extension GuidesPresenter: IGuidesInteractorDelegate {
+
+    func didFetch(guideCategories: [GuideCategory]) {
+        self.guideCategories = guideCategories
+
+        view?.set(filterViewItems: guideCategories.map { category in
+            FilterHeaderView.ViewItem.item(title: category.title)
+        })
+
+        syncViewItems()
+        view?.refresh()
+    }
+
 }

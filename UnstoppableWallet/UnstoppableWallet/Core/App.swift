@@ -174,7 +174,7 @@ class App {
 
         rateAppManager = RateAppManager(walletManager: walletManager, adapterManager: adapterManager, localStorage: localStorage)
 
-        guidesManager = GuidesManager()
+        guidesManager = GuidesManager(networkManager: networkManager)
 
         erc20ContractInfoProvider = Erc20ContractInfoProvider(appConfigProvider: appConfigProvider, networkManager: networkManager)
 
