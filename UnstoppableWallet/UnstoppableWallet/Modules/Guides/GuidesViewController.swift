@@ -2,12 +2,22 @@ import UIKit
 import SnapKit
 import ThemeKit
 import SectionsTableView
+import HUD
 
 class GuidesViewController: ThemeViewController {
+    private static let spinnerRadius: CGFloat = 8
+    private static let spinnerLineWidth: CGFloat = 2
+
     private let delegate: IGuidesViewDelegate
 
     private let tableView = UITableView(frame: .zero, style: .plain)
     private let filterHeaderView = FilterHeaderView()
+
+    private let spinner = HUDProgressView(
+            strokeLineWidth: GuidesViewController.spinnerLineWidth,
+            radius: GuidesViewController.spinnerRadius,
+            strokeColor: .themeGray
+    )
 
     private var viewItems = [GuideViewItem]()
 
@@ -44,8 +54,13 @@ class GuidesViewController: ThemeViewController {
             self?.delegate.onSelectFilter(index: index)
         }
 
-        delegate.onLoad()
+        view.addSubview(spinner)
+        spinner.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+            maker.width.height.equalTo(GuidesViewController.spinnerRadius * 2 + GuidesViewController.spinnerLineWidth)
+        }
 
+        delegate.onLoad()
     }
 
 }
@@ -109,6 +124,16 @@ extension GuidesViewController: IGuidesView {
 
     func refresh() {
         tableView.reloadData()
+    }
+
+    func setSpinner(visible: Bool) {
+        if visible {
+            spinner.isHidden = false
+            spinner.startAnimating()
+        } else {
+            spinner.isHidden = true
+            spinner.stopAnimating()
+        }
     }
 
 }

@@ -2,11 +2,20 @@ import UIKit
 import SnapKit
 import ThemeKit
 import SectionsTableView
+import HUD
 
 class GuideViewController: ThemeViewController {
+    private static let spinnerRadius: CGFloat = 8
+    private static let spinnerLineWidth: CGFloat = 2
+
     private let delegate: IGuideViewDelegate
 
     private let tableView = SectionsTableView(style: .grouped)
+    private let spinner = HUDProgressView(
+            strokeLineWidth: GuideViewController.spinnerLineWidth,
+            radius: GuideViewController.spinnerRadius,
+            strokeColor: .themeGray
+    )
 
     private var viewItems = [GuideBlockViewItem]()
 
@@ -47,6 +56,12 @@ class GuideViewController: ThemeViewController {
         tableView.registerCell(forClass: GuideImageTitleCell.self)
         tableView.registerCell(forClass: GuideFooterCell.self)
         tableView.sectionDataSource = self
+
+        view.addSubview(spinner)
+        spinner.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+            maker.width.height.equalTo(GuideViewController.spinnerRadius * 2 + GuideViewController.spinnerLineWidth)
+        }
 
         delegate.onLoad()
 
@@ -237,6 +252,16 @@ extension GuideViewController: IGuideView {
 
     func refresh() {
         tableView.reload()
+    }
+
+    func setSpinner(visible: Bool) {
+        if visible {
+            spinner.isHidden = false
+            spinner.startAnimating()
+        } else {
+            spinner.isHidden = true
+            spinner.stopAnimating()
+        }
     }
 
 }
