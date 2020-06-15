@@ -33,9 +33,36 @@ struct Guide: ImmutableMappable {
     init(map: Map) throws {
         title = try map.value("title")
         imageUrl = try map.value("image_url")
-        date = Date()
+        date = try map.value("updated_at", using: DateTransform())
         fileUrl = try map.value("file_url")
     }
+}
+
+extension Guide {
+
+    class DateTransform: TransformType {
+        private static let dateFormatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd-MM-yyyy"
+            return formatter
+        }()
+
+        typealias Object = Date
+        typealias JSON = String
+
+        func transformFromJSON(_ value: Any?) -> Date? {
+            guard let value = value as? String else {
+                return nil
+            }
+
+            return DateTransform.dateFormatter.date(from: value)
+        }
+
+        func transformToJSON(_ value: Date?) -> String? {
+            fatalError("transformToJSON(_:) has not been implemented")
+        }
+    }
+
 }
 
 enum GuideBlockViewItem {
