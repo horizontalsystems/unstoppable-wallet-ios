@@ -146,14 +146,14 @@ class GuideViewController: ThemeViewController {
         )
     }
 
-    private func blockQuoteRow(id: String, attributedString: NSAttributedString) -> RowProtocol {
+    private func blockQuoteRow(id: String, attributedString: NSAttributedString, tightTop: Bool, tightBottom: Bool) -> RowProtocol {
         Row<GuideBlockQuoteCell>(
                 id: id,
                 dynamicHeight: { containerWidth in
-                    GuideBlockQuoteCell.height(containerWidth: containerWidth, attributedString: attributedString)
+                    GuideBlockQuoteCell.height(containerWidth: containerWidth, attributedString: attributedString, tightTop: tightTop, tightBottom: tightBottom)
                 },
                 bind: { cell, _ in
-                    cell.bind(attributedString: attributedString)
+                    cell.bind(attributedString: attributedString, tightTop: tightTop, tightBottom: tightBottom)
                 }
         )
     }
@@ -203,10 +203,12 @@ class GuideViewController: ThemeViewController {
                     tightTop: tightTop,
                     tightBottom: tightBottom
             )
-        case let .blockQuote(attributedString):
+        case let .blockQuote(attributedString, tightTop, tightBottom):
             return blockQuoteRow(
                     id: "blockQuote_\(index)",
-                    attributedString: attributedString
+                    attributedString: attributedString,
+                    tightTop: tightTop,
+                    tightBottom: tightBottom
             )
         case let .image(url, type):
             return imageRow(

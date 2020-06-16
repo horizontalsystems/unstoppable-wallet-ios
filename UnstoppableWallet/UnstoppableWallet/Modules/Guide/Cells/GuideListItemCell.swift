@@ -19,7 +19,7 @@ class GuideListItemCell: UITableViewCell {
 
         contentView.addSubview(wrapperView)
         wrapperView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.edges.equalToSuperview() // constraints are set in bind method
         }
 
         wrapperView.addSubview(prefixLabel)
