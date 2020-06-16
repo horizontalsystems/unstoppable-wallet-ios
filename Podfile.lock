@@ -341,7 +341,7 @@ CHECKOUT OPTIONS:
     :commit: 793644b514f4e5cefd6f4303c00a28eda8f8fe1a
     :git: https://github.com/horizontalsystems/gui-kit/
   BinanceChainKit.swift:
-    :commit: 0eada26988e54fd47ad58ca90a340bfe8a2734cc
+    :commit: c9f6406460048057d7b56a5c183680efd5bb38aa
     :git: https://github.com/horizontalsystems/binance-chain-kit-ios
   BitcoinCashKit.swift:
     :commit: 36ccd7c9637f0e28c4a22d09f0d83908d5d11a86
@@ -371,10 +371,10 @@ CHECKOUT OPTIONS:
     :commit: 937926ff85a0b0e0af8dfe8a9340b1ba85a9129a
     :git: https://github.com/horizontalsystems/eos-kit-ios
   Erc20Kit.swift:
-    :commit: 5b7719d26703408aeb06434d09b99ef5950880db
+    :commit: 100a018df6347d5fef12ad5a80cf087983872851
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   EthereumKit.swift:
-    :commit: 5b7719d26703408aeb06434d09b99ef5950880db
+    :commit: 100a018df6347d5fef12ad5a80cf087983872851
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :commit: 783ff3709e90df51ca60d50a2665e6afdad8e391
@@ -386,7 +386,7 @@ CHECKOUT OPTIONS:
     :commit: 36ccd7c9637f0e28c4a22d09f0d83908d5d11a86
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HsToolKit.swift:
-    :commit: b97c6224fee8d7b554a8e49e289ccdf131617dff
+    :commit: 2f4b640e92bf845a454cec3bbe74f68fdb402a8f
     :git: https://github.com/horizontalsystems/hs-tool-kit-ios
   HUD.swift:
     :commit: 793644b514f4e5cefd6f4303c00a28eda8f8fe1a
@@ -413,7 +413,7 @@ CHECKOUT OPTIONS:
     :commit: 793644b514f4e5cefd6f4303c00a28eda8f8fe1a
     :git: https://github.com/horizontalsystems/gui-kit/
   XRatesKit.swift:
-    :commit: 01a5a5d7583d91025d5f08257466447f1b91e98e
+    :commit: 6cb0e7e846da6b943a4fd6e9e7aff1a8d6c03b2b
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
 
 SPEC CHECKSUMS:
@@ -473,6 +473,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: b09af5caafef556c489bf9b55b8c3dddbd710861
 
-PODFILE CHECKSUM: a2b5f364ed4e0bf82a48901010c5c45d238bfecd
+PODFILE CHECKSUM: f9b1912931b0442baf964e8bcc9dfc309bed074f
 
 COCOAPODS: 1.9.1
