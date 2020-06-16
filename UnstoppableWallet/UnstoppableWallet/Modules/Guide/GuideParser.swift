@@ -98,8 +98,12 @@ extension GuideParser: IGuideParser {
                 }
 
                 if let blockQuoteBlock = block as? GuideVisitor.BlockQuoteBlock {
-                    for paragraphBlock in blockQuoteBlock.paragraphBlocks {
-                        viewItems.append(.blockQuote(attributedString: paragraphBlock.attributedString))
+                    for (paragraphIndex, paragraphBlock) in blockQuoteBlock.paragraphBlocks.enumerated() {
+                        viewItems.append(.blockQuote(
+                                attributedString: paragraphBlock.attributedString,
+                                tightTop: paragraphIndex != 0,
+                                tightBottom: paragraphIndex != blockQuoteBlock.paragraphBlocks.count - 1
+                        ))
                     }
                 }
 
