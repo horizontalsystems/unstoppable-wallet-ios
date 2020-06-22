@@ -37,24 +37,24 @@
 
 "welcome.new_wallet" = "Create Wallet";
 "welcome.restore_wallet" = "Restore Wallet";
-"welcome.privacy_settings" = "Privacy Settings";
-"welcome.version" = "Version %@";
+"welcome.privacy_settings" = "隐私设置";
+"welcome.version" = "版本%@";
 
 // Restore
 
-"restore.title" = "Choose Wallet";
-"restore.enter_key" = "Enter Key";
-"restore.item_title" = "%@ Wallet";
-"restore.words.description" = "Enter your private key for %@ wallet which consists of %@ words. The words needs to be entered in correct order and separated by spaces.";
-"restore.validation_failed" = "Incorrect Key";
+"restore.title" = "选择钱包";
+"restore.enter_key" = "输入密钥";
+"restore.item_title" = "%@钱包";
+"restore.words.description" = "为%@钱包输入私钥，其中应包含%@个单词。这些单词必须以正确的顺序输入并用空格分隔。";
+"restore.validation_failed" = "密钥不正确";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
 // Coin Settings
 
-"coin_settings.derivation.description.bip44" = "Older";
-"coin_settings.derivation.description.bip49" = "Popular";
-"coin_settings.derivation.description.bip84" = "Newest";
+"coin_settings.derivation.description.bip44" = "更旧";
+"coin_settings.derivation.description.bip49" = "流行";
+"coin_settings.derivation.description.bip84" = "最新";
 "coin_settings.derivation.starts_with" = "starts with %@...";
 "coin_settings.derivation.description_create" = "This setting controls the address format for the Bitcoin in this wallet. We recommend using BIP49 if not sure.";
 "coin_settings.derivation.description_restore" = "Select the address format for the Bitcoin in the wallet you're trying to restore.";
@@ -255,7 +255,7 @@
 "settings.contact" = "Contact";
 "settings.light_mode" = "Light Mode";
 "settings.info_title" = "UNSTOPPABLE";
-"settings.info_subtitle" = "decentralized app";
+"settings.info_subtitle" = "分布式应用程序";
 
 // Settings -> Notifications
 
@@ -397,7 +397,7 @@
 // Rate List
 
 "rate_list.portfolio" = "Portfolio";
-"rate_list.latest_news" = "Latest News";
+"rate_list.latest_news" = "最新消息";
 "top100_list.portfolio" = "Top 100";
 "top100_list.sort_by" = "Sort By";
 "top100_list.sort_type.rank" = "Rank";
