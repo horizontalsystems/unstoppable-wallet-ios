@@ -61,40 +61,40 @@
 "coin_settings.title" = "블록 체인 설정";
 "coin_settings.sync_mode.title" = "매개 변수 복원";
 "coin_settings.sync_mode.fast.description" = "0-2 시간, 권장";
-"coin_settings.sync_mode.slow.description" = "1-24 hours";
-"coin_settings.sync_mode.description" = "API sources links:\nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg";
-"sync_mode.from_blockchain" = "From Blockchain";
-"blockchain_settings.change_alert.title" = "Address Format";
-"blockchain_settings.change_alert.content" = "After this change the wallet will have to resync itself with the %@ blockchain.\n\nWhen you change the address format for %@ the current balance and transaction history will no longer be visible. Changing it back to previous setting will bring everything back after the wallet resyncs itself with the blockchain. We recommend not to change it if not sure what that is.";
-"blockchain_settings.change_alert.action_button_text" = "Change to %@";
-"blockchain_settings.sync_mode_change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin, Bitcoin Cash and Dash blockchains, if you have enabled any of these tokens. Your balance or transactions won\'t be affected.\n\nWe recommend not to change this setting if not sure what it does.";
-"blockchain_settings.sync_mode.blockchain" = "Blockchain";
+"coin_settings.sync_mode.slow.description" = "1-24 시간";
+"coin_settings.sync_mode.description" = "API 출처 링크: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
+"sync_mode.from_blockchain" = "블록체인으로 부터";
+"blockchain_settings.change_alert.title" = "주소 형식";
+"blockchain_settings.change_alert.content" = "이 변경 후 지갑은 %@ 블록체인과 다시 동기화 되어야합니다.\n\n\n%@ 의 주소 형식을 변경하실 때에 현재 잔액 및 거래 내역이 더 이상 잔액 탭에 표기되지 않습니다. 이전 설정으로 다시 변경하시면 지갑이 블록체인과 다시 동기화된 후 모든 것을 다시 가져옵니다. 저희는 그것이 확실치 않을시에 변경하지 않는 것을 권장합니다.";
+"blockchain_settings.change_alert.action_button_text" = "%@으로 변경";
+"blockchain_settings.sync_mode_change_alert.content" = "이 작업은 귀하께서 이러한 토큰을 활성화 하신 경우 언스타퍼블 앱이 비트코인, 비트코인 Cash 및 Dash 블록 체인과 다시 동기화 되어야 합니다. 귀하의 잔액 또는 거래에는 영향을 미치지 않습니다.\n\n저희는 이 기능이 확실치 않을 경우 설정을 변경하지 않는 것을 권장합니다.";
+"blockchain_settings.sync_mode.blockchain" = "블록 체인";
 "blockchain_settings.sync_mode.api" = "API";
-"blockchain_settings.title" = "Address Format";
+"blockchain_settings.title" = "주소 형식";
 // Backup
 
-"backup.close" = "Close";
-"backup.backup_required" = "Backup Required";
-"backup.private_key" = "Private Key";
+"backup.close" = "가까운, 닫힌";
+"backup.backup_required" = "백업이 필요합니다";
+"backup.private_key" = "개인 암호";
 
-"backup.intro.title_backup" = "Backup";
-"backup.intro.title_show" = "Show Key";
-"backup.intro.subtitle" = "The private key that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
-"backup.intro.later" = "Later";
-"backup.intro.backup_now" = "Backup";
-"backup.intro.show_key" = "Show Key";
+"backup.intro.title_backup" = "백업";
+"backup.intro.title_show" = "암호 보이기";
+"backup.intro.subtitle" = "다음에 나오게될 개인 암호는 귀하께서 휴대폰 분실, 도난, 파손 등을 당하셨을 경우에 귀하의 자금을 복원시킬 유일한 방법입니다.\n\n다른 사람이 귀하의 화면을 보지 못하게 하십시오.\n\n코인들은 이 암호로 통제됩니다.%@";
+"backup.intro.later" = "나중에";
+"backup.intro.backup_now" = "백업";
+"backup.intro.show_key" = "암호 보이기";
 
-"backup.words.confirmation_description" = "Enter words from your %@ Key";
+"backup.words.confirmation_description" = "귀하의 %@암호에서 단어를 입력해 주십시오.";
 
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
-"backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may have access to clipboard data.";
-"error.send_eos.self_transfer" = "Can't transfer token to own account";
-"error.send_eos.account_not_exist" = "Target account does not exist";
-"error.send_eos.insufficient_ram" = "Your EOS account doesn't have enough RAM to send this token. You need to increase RAM stake to proceed.";
-"error.send_eos.unknown" = "Something went wrong: %@";
-"error.send_ethereum.wrong_parameters" = "Wrong parameters";
-"error.send_binance.memo_required" = "Receiver requires non-empty memo in transfer transaction";
+"backup.eos.hint" = "클립보드 관리 앱 또는 클립보드 데이터에 접근할 수 있는 다른 앱을 사용하고 있다면 \"복사\"작업을 사용하여 암호를 복사하는 것은 위험할 수 있습니다.";
+"error.send_eos.self_transfer" = "토큰을 개인계정으로 옮길 수 없습니다";
+"error.send_eos.account_not_exist" = "회원 계정이 존재하지 않습니다";
+"error.send_eos.insufficient_ram" = "귀하의 EOS계정은 이 토큰을 보내기엔 RAM이 충분하지 않습니다. 진행하시려면 RAM량을 늘리셔야 합니다.";
+"error.send_eos.unknown" = "무언가 잘못 됐습니다: %@";
+"error.send_ethereum.wrong_parameters" = "잘못된 매개 변수";
+"error.send_binance.memo_required" = "수신자는 송금 내역에 메모 기록을 필요로 합니다";
 "error.send_binance.only_digits_allowed" = "메모에는 숫자만 포함하셔야 합니다";
 "error.incubed_not_reachable" = "Incubed 서버 접근 불가";
 
@@ -195,29 +195,29 @@
 "tx_info.button_verify" = "확인";
 "tx_info.rate" = "과거 환율";
 "tx_info.fee" = "수수료";
-"tx_info.to_self_note" = "This transaction sent to own address";
-"tx_info.double_spent_note" = "Double Spend Risk!";
-"tx_info.locked_until" = "Locked until %@";
-"tx_info.unlocked_at" = "Unlocked at %@";
-"tx_info.recipient_hash" = "Recipient";
-"tx_info.raw_transaction" = "Raw Transaction";
+"tx_info.to_self_note" = "이 거래는 귀하의 주소로 전송이 되었습니다";
+"tx_info.double_spent_note" = "이중 지출 위험!";
+"tx_info.locked_until" = "까지 잠그기 %@";
+"tx_info.unlocked_at" = "%@에서 잠금 해제됨";
+"tx_info.recipient_hash" = "수령인";
+"tx_info.raw_transaction" = "로우 트랜잭션";
 
 // Full Info
 
-"full_info.title" = "Transaction";
-"full_info.time" = "Time";
-"full_info.block" = "Block";
-"full_info.confirmations" = "Confirmations";
-"full_info.size" = "Size";
-"full_info.fee" = "Fee";
-"full_info.rate" = "Rate";
-"full_info.inputs" = "Inputs";
-"full_info.outputs" = "Outputs";
-"full_info.source" = "Source";
-"full_info.contract" = "Contract";
-"full_info.from" = "From";
-"full_info.to" = "To";
-"full_info.amount" = "Amount";
+"full_info.title" = "거래";
+"full_info.time" = "시간";
+"full_info.block" = "덩어리";
+"full_info.confirmations" = "확인";
+"full_info.size" = "크기";
+"full_info.fee" = "비용";
+"full_info.rate" = "비율, 속도, 평가";
+"full_info.inputs" = "입력값";
+"full_info.outputs" = "산출값";
+"full_info.source" = "원천, 자료";
+"full_info.contract" = "계약";
+"full_info.from" = "로 부터";
+"full_info.to" = "에게";
+"full_info.amount" = "양";
 "full_info.nonce" = "Nonce";
 "full_info.status" = "상태";
 "full_info.memo" = "Memo";
@@ -480,8 +480,8 @@
 "intro.independence.description" = "암호와 자산을 항상 안전하고, 압수당하지 않으며, 접근 가능한 상태로 유지하세요";
 "intro.knowledge.title" = "지식";
 "intro.knowledge.description" = "정보를 인지하시고 초기단계에서 성장하고 있는 블록체인 프로젝트를 발견하세요";
-"intro.privacy.title" = "Privacy";
-"intro.privacy.description" = "Stay incognito and under the radar while growing your wealth";
+"intro.privacy.title" = "개인정보";
+"intro.privacy.description" = "귀하의 재산을 늘리시는 동안 익명을 유지해주시고 눈에 띄이지 않게 하여 주세요";
 
 // Guides
 
