@@ -136,7 +136,7 @@
 "send.title" = "Send %@";
 "send.amount_placeholder" = "Amount";
 "send.address_placeholder" = "Address";
-"send.account_placeholder" = "Account";
+"send.account_placeholder" = "Аккаунт";
 "send.fee" = "Fee";
 "send.tx_speed" = "Transaction Speed";
 "send.tx_speed_low" = "Low";
@@ -255,7 +255,7 @@
 "settings.contact" = "Contact";
 "settings.light_mode" = "Light Mode";
 "settings.info_title" = "UNSTOPPABLE";
-"settings.info_subtitle" = "decentralized app";
+"settings.info_subtitle" = "децентрализованное приложение";
 
 // Settings -> Notifications
 
