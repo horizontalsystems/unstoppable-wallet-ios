@@ -13,7 +13,7 @@ extension ChartConfiguration {
     @discardableResult private func applyColors() -> Self {
         borderColor = .themeSteel20
         backgroundColor = .clear
-        selectedColor = .white
+        selectedColor = .themeNina
         limitLinesColor = .themeNina
         limitTextColor = .themeNina
         limitTextFont = .caption

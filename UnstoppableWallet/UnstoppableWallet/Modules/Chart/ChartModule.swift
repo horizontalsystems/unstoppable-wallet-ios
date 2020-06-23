@@ -98,8 +98,14 @@ struct ChartDataViewItem {
 }
 
 struct MarketInfoViewItem {
-    let marketCap: String?
-    let volume: String?
+
+    struct Value {
+        let value: String?
+        let accent: Bool
+    }
+
+    let marketCap: Value
+    let volume: Value
     let supply: String?
     let maxSupply: String?
 }

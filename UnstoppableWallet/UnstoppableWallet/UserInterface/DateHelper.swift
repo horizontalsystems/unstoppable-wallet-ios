@@ -55,7 +55,7 @@ class DateHelper {
         DateFormatter.cachedFormatter(format: "MM/dd/yy, HH:mm:ss").string(from: date)
     }
 
-    func formateShortDateOnly(date: Date) -> String {
+    func formatShortDateOnly(date: Date) -> String {
         dateOnly(forDate: date).string(from: date)
     }
 
