@@ -45,9 +45,9 @@ class IndicatorSelectView: UIView {
         }
 
         button.addTarget(self, action: #selector(onSelect), for: .touchUpInside)
-        button.setImage(UIImage(named: "Chart Indicator Hide Icon")?.tinted(with: .themeJacob), for: .selected)
-        button.setImage(UIImage(named: "Chart Indicator Show Icon")?.tinted(with: .themeGray), for: .normal)
-        button.setImage(UIImage(named: "Chart Indicator Show Icon")?.tinted(with: .themeGray50), for: .disabled)
+        button.setImage(UIImage(named: "Chart Indicator Icon")?.tinted(with: .themeJacob), for: .selected)
+        button.setImage(UIImage(named: "Chart Indicator Icon")?.tinted(with: .themeGray), for: .normal)
+        button.setImage(UIImage(named: "Chart Indicator Icon")?.tinted(with: .themeGray50), for: .disabled)
         button.imageEdgeInsets = UIEdgeInsets(top: 14, left: 16, bottom: 14, right: 0)
         button.contentHorizontalAlignment = .left
     }
