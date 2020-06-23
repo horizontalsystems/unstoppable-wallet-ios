@@ -269,7 +269,7 @@
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "Выберите Токены";
-"manage_coins.add_token" = "Add Token";
+"manage_coins.add_token" = "Добавить Токен";
 "manage_coins.add_coin.title" = "Добавить %@";
 "manage_coins.add_coin.subtitle" = "%@ Кошелек";
 "manage_coins.add_coin.text.set_up" = "Вам нужно настроить кошелек %@, чтобы иметь возможность отправлять или получать %@.";
@@ -400,9 +400,9 @@
 "rate_list.latest_news" = "Последние Новости";
 "top100_list.portfolio" = "ТОП-100";
 "top100_list.sort_by" = "Сортировать по";
-"top100_list.sort_type.rank" = "Rank";
-"top100_list.sort_type.top_winners" = "Top Winners";
-"top100_list.sort_type.top_losers" = "Top Losers";
+"top100_list.sort_type.rank" = "Место";
+"top100_list.sort_type.top_winners" = "Топ Победителей";
+"top100_list.sort_type.top_losers" = "Топ Проигравших";
 
 //NumPad
 
@@ -485,24 +485,24 @@
 
 // Guides
 
-"guides.tab_bar_item" = "Guides";
-"guides.title" = "Guides";
+"guides.tab_bar_item" = "Инструкции";
+"guides.title" = "Инструкции";
 
 // Add Token
 
-"add_token.choose_blockchain" = "Choose Blockchain";
-"add_token.add_token" = "Add Token";
+"add_token.choose_blockchain" = "Выбрать Блокчейн";
+"add_token.add_token" = "Добавить Токен";
 "add_token.erc20_token" = "ERC20 Токен";
 "add_token.eos_token" = "EOS Токен";
 "add_token.binance_token" = "Binance Токен";
 
 // Add Erc20 Token
 
-"add_erc20_token.title" = "Add ERC20";
-"add_erc20_token.contract_address" = "Contract Address";
-"add_erc20_token.coin_name" = "Coin Name";
-"add_erc20_token.symbol" = "Symbol";
-"add_erc20_token.decimals" = "Decimals";
+"add_erc20_token.title" = "Добавить ERC20";
+"add_erc20_token.contract_address" = "Адрес Контракта";
+"add_erc20_token.coin_name" = "Название Токена";
+"add_erc20_token.symbol" = "Символ";
+"add_erc20_token.decimals" = "Десятичные знаки";
 "add_erc20_token.already_exists" = "This token is already in the coin manager list.";
-"add_erc20_token.add" = "Add";
-"add_erc20_token.contract_not_exist" = "Contract not found";
+"add_erc20_token.add" = "Добавить";
+"add_erc20_token.contract_not_exist" = "Контракт не найден";
