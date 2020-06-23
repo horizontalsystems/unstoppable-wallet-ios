@@ -397,7 +397,7 @@
 // Rate List
 
 "rate_list.portfolio" = "Портфель";
-"rate_list.latest_news" = "Latest News";
+"rate_list.latest_news" = "Последние Новости";
 "top100_list.portfolio" = "ТОП-100";
 "top100_list.sort_by" = "Сортировать по";
 "top100_list.sort_type.rank" = "Rank";
@@ -492,9 +492,9 @@
 
 "add_token.choose_blockchain" = "Choose Blockchain";
 "add_token.add_token" = "Add Token";
-"add_token.erc20_token" = "ERC20 Token";
-"add_token.eos_token" = "EOS Token";
-"add_token.binance_token" = "Binance Token";
+"add_token.erc20_token" = "ERC20 Токен";
+"add_token.eos_token" = "EOS Токен";
+"add_token.binance_token" = "Binance Токен";
 
 // Add Erc20 Token
 
