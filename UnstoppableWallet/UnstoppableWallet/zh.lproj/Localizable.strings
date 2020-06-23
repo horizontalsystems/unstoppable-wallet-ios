@@ -269,7 +269,7 @@
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "选择代币";
-"manage_coins.add_token" = "Add Token";
+"manage_coins.add_token" = "添加代币";
 "manage_coins.add_coin.title" = "添加%@ ";
 "manage_coins.add_coin.subtitle" = "%@钱包";
 "manage_coins.add_coin.text.set_up" = "您必须创建%@钱包才能对%@进行转账或收款。";
@@ -399,10 +399,10 @@
 "rate_list.portfolio" = "投资组合";
 "rate_list.latest_news" = "最新消息";
 "top100_list.portfolio" = "前100名";
-"top100_list.sort_by" = "Sort By";
-"top100_list.sort_type.rank" = "Rank";
-"top100_list.sort_type.top_winners" = "Top Winners";
-"top100_list.sort_type.top_losers" = "Top Losers";
+"top100_list.sort_by" = "排序方式";
+"top100_list.sort_type.rank" = "排名";
+"top100_list.sort_type.top_winners" = "顶级赢家";
+"top100_list.sort_type.top_losers" = "顶级输家";
 
 //NumPad
 
@@ -485,24 +485,24 @@
 
 // Guides
 
-"guides.tab_bar_item" = "Guides";
-"guides.title" = "Guides";
+"guides.tab_bar_item" = "手册";
+"guides.title" = "手册";
 
 // Add Token
 
-"add_token.choose_blockchain" = "Choose Blockchain";
-"add_token.add_token" = "Add Token";
-"add_token.erc20_token" = "ERC20 Token";
-"add_token.eos_token" = "EOS Token";
-"add_token.binance_token" = "Binance Token";
+"add_token.choose_blockchain" = "选择区块链";
+"add_token.add_token" = "添加代币";
+"add_token.erc20_token" = "ERC 20 代币";
+"add_token.eos_token" = "EOS 代币";
+"add_token.binance_token" = "Binance 代币";
 
 // Add Erc20 Token
 
-"add_erc20_token.title" = "Add ERC20";
+"add_erc20_token.title" = "添加ERC20";
 "add_erc20_token.contract_address" = "Contract Address";
-"add_erc20_token.coin_name" = "Coin Name";
-"add_erc20_token.symbol" = "Symbol";
-"add_erc20_token.decimals" = "Decimals";
-"add_erc20_token.already_exists" = "This token is already in the coin manager list.";
+"add_erc20_token.coin_name" = "代币图片";
+"add_erc20_token.symbol" = "标志";
+"add_erc20_token.decimals" = "小数";
+"add_erc20_token.already_exists" = "该代币已在代币管理列表中.";
 "add_erc20_token.add" = "添加";
 "add_erc20_token.contract_not_exist" = "Contract not found";
