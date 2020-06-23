@@ -197,6 +197,8 @@ class ChartViewController: ThemeViewController {
 
             chartView.set(timeline: data.timeline, start: data.chartData.startWindow, end: data.chartData.endWindow)
 
+            chartView.set(highLimitText: data.maxValue, lowLimitText: data.minValue)
+
             chartView.setVolumes(hidden: viewItem.selectedIndicator.showVolumes)
             ChartIndicatorSet.all.forEach { indicator in
                 let show = viewItem.selectedIndicator.contains(indicator)

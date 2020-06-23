@@ -221,7 +221,7 @@ class ChartRateFactory: IChartRateFactory {
 
     func selectedPointViewItem(chartPoint: ChartPoint, type: ChartType, currency: Currency) -> SelectedPointViewItem {
         let date = Date(timeIntervalSince1970: chartPoint.timestamp)
-        let formattedDate = DateHelper.instance.formatRateListTitle(from: date)
+        let formattedDate = DateHelper.instance.formatFullTime(from: date)
 
         currencyFormatter.currencyCode = currency.code
         currencyFormatter.currencySymbol = currency.symbol
@@ -233,8 +233,11 @@ class ChartRateFactory: IChartRateFactory {
     }
 
     private func viewItem(marketInfo: MarketInfo, currency: Currency, coinCode: String) -> MarketInfoViewItem {
-        let marketCap = marketInfo.marketCap.isZero ? "n/a".localized : CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.marketCap)
-        let volume = marketInfo.volume.isZero ? "n/a".localized : CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.volume)
+        let marketCapText = marketInfo.marketCap.isZero ? "n/a".localized : CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.marketCap)
+        let marketCap = MarketInfoViewItem.Value(value: marketCapText, accent: !marketInfo.marketCap.isZero)
+
+        let volumeText = marketInfo.volume.isZero ? "n/a".localized : CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.volume)
+        let volume = MarketInfoViewItem.Value(value: volumeText, accent: !marketInfo.volume.isZero)
 
         let supply = roundedFormat(coinCode: coinCode, value: marketInfo.supply)
         let maxSupply = roundedFormat(coinCode: coinCode, value: MaxSupplyMap.maxSupplies[coinCode])
