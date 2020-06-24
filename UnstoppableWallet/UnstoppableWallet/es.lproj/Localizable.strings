@@ -269,7 +269,7 @@
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "Elegir monedas";
-"manage_coins.add_token" = "Add Token";
+"manage_coins.add_token" = "Añadir Token";
 "manage_coins.add_coin.title" = "Añadir %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Monedero";
 "manage_coins.add_coin.text.set_up" = "Necesitas configurar el monedero %@ para poder enviar o recibir %@.";
@@ -438,8 +438,8 @@
 "chart.selected.price" = "Precio";
 "chart.selected.volume" = "Volumen";
 "chart.trend_neutral" = "Neutral";
-"chart.trend_down" = "Down Trend";
-"chart.trend_up" = "Up Trend";
+"chart.trend_down" = "Tendencia bajista";
+"chart.trend_up" = "Tendencia alcista";
 
 // Create Wallet
 
@@ -503,6 +503,6 @@
 "add_erc20_token.coin_name" = "Nombre de moneda";
 "add_erc20_token.symbol" = "Símbolo";
 "add_erc20_token.decimals" = "Decimales";
-"add_erc20_token.already_exists" = "This token is already in the coin manager list.";
+"add_erc20_token.already_exists" = "Este token ya está en la lista del gestor de monedas.";
 "add_erc20_token.add" = "Añadir";
-"add_erc20_token.contract_not_exist" = "Contract not found";
+"add_erc20_token.contract_not_exist" = "Contrato no encontrado";
