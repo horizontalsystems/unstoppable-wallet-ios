@@ -240,7 +240,9 @@ class ChartRateFactory: IChartRateFactory {
         let volume = MarketInfoViewItem.Value(value: volumeText, accent: !marketInfo.volume.isZero)
 
         let supply = roundedFormat(coinCode: coinCode, value: marketInfo.supply)
-        let maxSupply = roundedFormat(coinCode: coinCode, value: MaxSupplyMap.maxSupplies[coinCode])
+
+        let maxSupplyText = roundedFormat(coinCode: coinCode, value: MaxSupplyMap.maxSupplies[coinCode])
+        let maxSupply = MarketInfoViewItem.Value(value: maxSupplyText, accent: MaxSupplyMap.maxSupplies[coinCode] != nil)
 
         return MarketInfoViewItem(marketCap: marketCap, volume: volume, supply: supply, maxSupply: maxSupply)
     }
