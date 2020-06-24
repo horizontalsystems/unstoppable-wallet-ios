@@ -107,7 +107,7 @@ struct MarketInfoViewItem {
     let marketCap: Value
     let volume: Value
     let supply: String?
-    let maxSupply: String?
+    let maxSupply: Value
 }
 
 struct SelectedPointViewItem {

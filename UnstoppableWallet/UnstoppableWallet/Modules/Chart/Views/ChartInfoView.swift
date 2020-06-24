@@ -52,11 +52,11 @@ class ChartInfoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(marketCap: MarketInfoViewItem.Value, volume: MarketInfoViewItem.Value, supply: String?, maxSupply: String?) {
+    func bind(marketCap: MarketInfoViewItem.Value, volume: MarketInfoViewItem.Value, supply: String?, maxSupply: MarketInfoViewItem.Value) {
         volumeView.set(value: volume.value, accent: volume.accent)
         marketCapView.set(value: marketCap.value, accent: marketCap.accent)
         circulationView.set(value: supply)
-        totalView.set(value: maxSupply)
+        totalView.set(value: maxSupply.value, accent: maxSupply.accent)
     }
 
 }
