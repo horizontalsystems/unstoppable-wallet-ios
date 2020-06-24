@@ -437,9 +437,9 @@
 "chart.error.not_available" = "无可用图表";
 "chart.selected.price" = "价格";
 "chart.selected.volume" = "量";
-"chart.trend_neutral" = "Neutral";
-"chart.trend_down" = "Down Trend";
-"chart.trend_up" = "Up Trend";
+"chart.trend_neutral" = "中性";
+"chart.trend_down" = "下降";
+"chart.trend_up" = "上升";
 
 // Create Wallet
 
@@ -499,10 +499,10 @@
 // Add Erc20 Token
 
 "add_erc20_token.title" = "添加ERC20";
-"add_erc20_token.contract_address" = "Contract Address";
+"add_erc20_token.contract_address" = "智能合约地址";
 "add_erc20_token.coin_name" = "代币图片";
 "add_erc20_token.symbol" = "标志";
 "add_erc20_token.decimals" = "小数";
 "add_erc20_token.already_exists" = "该代币已在代币管理列表中.";
 "add_erc20_token.add" = "添加";
-"add_erc20_token.contract_not_exist" = "Contract not found";
+"add_erc20_token.contract_not_exist" = "没找到合同";
