@@ -269,7 +269,7 @@
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "Kripto Parayı Seç";
-"manage_coins.add_token" = "Add Token";
+"manage_coins.add_token" = "Token Ekle";
 "manage_coins.add_coin.title" = "%@ ekle ";
 "manage_coins.add_coin.subtitle" = "%@ Cüzdanı";
 "manage_coins.add_coin.text.set_up" = "Ancak %@ cüzdanını ayarladıktan sonra %@ gönderebilir veya alabilirsiniz için.";
@@ -399,8 +399,8 @@
 "rate_list.portfolio" = "Portföy";
 "rate_list.latest_news" = "Son Haberler";
 "top100_list.portfolio" = "En Beğenilen 100";
-"top100_list.sort_by" = "Sort By";
-"top100_list.sort_type.rank" = "Rank";
+"top100_list.sort_by" = "Sırala";
+"top100_list.sort_type.rank" = "Derece";
 "top100_list.sort_type.top_winners" = "Top Winners";
 "top100_list.sort_type.top_losers" = "Top Losers";
 
