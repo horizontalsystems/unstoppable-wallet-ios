@@ -399,7 +399,7 @@
 "rate_list.portfolio" = "포트폴리오";
 "rate_list.latest_news" = "최신 뉴스";
 "top100_list.portfolio" = "상위 100";
-"top100_list.sort_by" = "Sort By";
+"top100_list.sort_by" = "정렬 기준";
 "top100_list.sort_type.rank" = "순위";
 "top100_list.sort_type.top_winners" = "탑 위너";
 "top100_list.sort_type.top_losers" = "탑 루저";
@@ -437,9 +437,9 @@
 "chart.error.not_available" = "차트 이용불가";
 "chart.selected.price" = "금액";
 "chart.selected.volume" = "음량";
-"chart.trend_neutral" = "Neutral";
-"chart.trend_down" = "Down Trend";
-"chart.trend_up" = "Up Trend";
+"chart.trend_neutral" = "중립";
+"chart.trend_down" = "하향 추세";
+"chart.trend_up" = "상향 추세";
 
 // Create Wallet
 
@@ -505,4 +505,4 @@
 "add_erc20_token.decimals" = "소수점";
 "add_erc20_token.already_exists" = "이 토큰은 이미 코인 매니저 리스트에 있습니다.";
 "add_erc20_token.add" = "추가";
-"add_erc20_token.contract_not_exist" = "Contract not found";
+"add_erc20_token.contract_not_exist" = "거래 발견되지 않음";
