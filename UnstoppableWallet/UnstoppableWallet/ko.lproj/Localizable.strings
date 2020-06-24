@@ -269,7 +269,7 @@
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "코인 선택";
-"manage_coins.add_token" = "Add Token";
+"manage_coins.add_token" = "토큰 추가";
 "manage_coins.add_coin.title" = "%@ 추가 ";
 "manage_coins.add_coin.subtitle" = "%@ 지갑";
 "manage_coins.add_coin.text.set_up" = "귀하께서는 %@ 을 보내거나 받으시려면 %@ 지갑을 설정하셔야 합니다.";
@@ -397,12 +397,12 @@
 // Rate List
 
 "rate_list.portfolio" = "포트폴리오";
-"rate_list.latest_news" = "Latest News";
+"rate_list.latest_news" = "최신 뉴스";
 "top100_list.portfolio" = "상위 100";
 "top100_list.sort_by" = "Sort By";
-"top100_list.sort_type.rank" = "Rank";
-"top100_list.sort_type.top_winners" = "Top Winners";
-"top100_list.sort_type.top_losers" = "Top Losers";
+"top100_list.sort_type.rank" = "순위";
+"top100_list.sort_type.top_winners" = "탑 위너";
+"top100_list.sort_type.top_losers" = "탑 루저";
 
 //NumPad
 
@@ -485,24 +485,24 @@
 
 // Guides
 
-"guides.tab_bar_item" = "Guides";
-"guides.title" = "Guides";
+"guides.tab_bar_item" = "가이드";
+"guides.title" = "가이드";
 
 // Add Token
 
-"add_token.choose_blockchain" = "Choose Blockchain";
-"add_token.add_token" = "Add Token";
-"add_token.erc20_token" = "ERC20 Token";
-"add_token.eos_token" = "EOS Token";
-"add_token.binance_token" = "Binance Token";
+"add_token.choose_blockchain" = "블록체인 선택";
+"add_token.add_token" = "토큰 추가";
+"add_token.erc20_token" = "ERC 20 토큰";
+"add_token.eos_token" = "EOS 토큰";
+"add_token.binance_token" = "Binance 토큰";
 
 // Add Erc20 Token
 
-"add_erc20_token.title" = "Add ERC20";
-"add_erc20_token.contract_address" = "Contract Address";
-"add_erc20_token.coin_name" = "Coin Name";
-"add_erc20_token.symbol" = "Symbol";
-"add_erc20_token.decimals" = "Decimals";
-"add_erc20_token.already_exists" = "This token is already in the coin manager list.";
-"add_erc20_token.add" = "Add";
+"add_erc20_token.title" = "ERC20 추가";
+"add_erc20_token.contract_address" = "계약 주소";
+"add_erc20_token.coin_name" = "코인 이름";
+"add_erc20_token.symbol" = "심볼";
+"add_erc20_token.decimals" = "소수점";
+"add_erc20_token.already_exists" = "이 토큰은 이미 코인 매니저 리스트에 있습니다.";
+"add_erc20_token.add" = "추가";
 "add_erc20_token.contract_not_exist" = "Contract not found";
