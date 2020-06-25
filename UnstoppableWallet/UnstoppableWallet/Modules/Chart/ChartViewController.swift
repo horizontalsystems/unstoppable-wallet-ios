@@ -143,7 +143,6 @@ class ChartViewController: ThemeViewController {
         chartInfoView.snp.makeConstraints { maker in
             maker.top.equalTo(rsiIndicatorView.snp.bottom)
             maker.leading.trailing.equalToSuperview()
-            maker.height.equalTo(125)
         }
 
         view.layoutIfNeeded()
@@ -170,7 +169,9 @@ class ChartViewController: ThemeViewController {
         currentRateView.bind(rate: viewItem.currentRate, diff: nil)
 
         if let marketViewItem = viewItem.marketInfoStatus.data {
-            chartInfoView.bind(marketCap: marketViewItem.marketCap, volume: marketViewItem.volume, supply: marketViewItem.supply, maxSupply: marketViewItem.maxSupply)
+            chartInfoView.bind(marketCap: marketViewItem.marketCap, volume: marketViewItem.volume, supply: marketViewItem.supply, maxSupply: marketViewItem.maxSupply, startDate: marketViewItem.startDate, website: marketViewItem.website, onTapLink: { [weak self] in
+                self?.delegate.onTapLink()
+            })
         }
 
         switch viewItem.chartDataStatus {
@@ -278,7 +279,7 @@ extension ChartViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        587.5
+        643
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

@@ -241,10 +241,16 @@ class ChartRateFactory: IChartRateFactory {
 
         let supply = roundedFormat(coinCode: coinCode, value: marketInfo.supply)
 
-        let maxSupplyText = roundedFormat(coinCode: coinCode, value: MaxSupplyMap.maxSupplies[coinCode])
-        let maxSupply = MarketInfoViewItem.Value(value: maxSupplyText, accent: MaxSupplyMap.maxSupplies[coinCode] != nil)
+        let coinData = CoinInfoMap.data[coinCode]
 
-        return MarketInfoViewItem(marketCap: marketCap, volume: volume, supply: supply, maxSupply: maxSupply)
+        let maxSupplyText = roundedFormat(coinCode: coinCode, value: coinData?.supply)
+        let maxSupply = MarketInfoViewItem.Value(value: maxSupplyText, accent: coinData?.supply != nil)
+
+        let startDate = MarketInfoViewItem.Value(value: coinData?.startDate ?? "n/a".localized, accent: coinData?.startDate != nil)
+
+        let website = MarketInfoViewItem.Value(value: coinData?.website ?? "n/a".localized, accent: coinData?.website != nil)
+
+        return MarketInfoViewItem(marketCap: marketCap, volume: volume, supply: supply, maxSupply: maxSupply, startDate: startDate, website: website)
     }
 
 }
