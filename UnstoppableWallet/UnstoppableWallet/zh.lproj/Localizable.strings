@@ -434,6 +434,8 @@
 "chart.volume" = "量(24小时)";
 "chart.circulation" = "流通中";
 "chart.max_supply" = "供应总额";
+"chart.start_date" = "Launch Date";
+"chart.website" = "Official Website";
 "chart.error.not_available" = "无可用图表";
 "chart.selected.price" = "价格";
 "chart.selected.volume" = "量";
