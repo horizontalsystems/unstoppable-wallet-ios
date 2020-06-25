@@ -15,6 +15,10 @@ protocol IChartView: class {
     func showSelectedPoint(viewItem: SelectedPointViewItem)
 }
 
+protocol IChartRouter {
+    func open(link: String?)
+}
+
 protocol IChartViewDelegate {
     var currency: Currency { get }
 
@@ -23,6 +27,7 @@ protocol IChartViewDelegate {
     func onSelectType(at index: Int)
 
     func onTap(indicator: ChartIndicatorSet)
+    func onTapLink()
 }
 
 protocol IChartInteractor {
@@ -106,8 +111,10 @@ struct MarketInfoViewItem {
 
     let marketCap: Value
     let volume: Value
-    let supply: String?
+    let supply: String
     let maxSupply: Value
+    let startDate: Value
+    let website: Value
 }
 
 struct SelectedPointViewItem {

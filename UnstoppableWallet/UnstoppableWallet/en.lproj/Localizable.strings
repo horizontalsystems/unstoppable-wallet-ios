@@ -445,6 +445,8 @@ bch.horizontalsystems.xyz/apg";
 "chart.volume" = "Volume (24h)";
 "chart.circulation" = "In Circulation";
 "chart.max_supply" = "Total Supply";
+"chart.start_date" = "Launch Date";
+"chart.website" = "Official Website";
 "chart.error.not_available" = "Chart not available";
 "chart.selected.price" = "Price";
 "chart.selected.volume" = "Vol";

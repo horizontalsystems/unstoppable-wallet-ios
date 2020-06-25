@@ -8,6 +8,7 @@ class ChartPresenter {
 
     weak var view: IChartView?
 
+    private var router: IChartRouter
     private var interactor: IChartInteractor
     private let factory: IChartRateFactory
 
@@ -23,7 +24,8 @@ class ChartPresenter {
     private var showEma = false
     private var selectedIndicators = ChartIndicatorSet()
 
-    init(interactor: IChartInteractor, factory: IChartRateFactory, coinCode: String, coinTitle: String, currency: Currency) {
+    init(router: IChartRouter, interactor: IChartInteractor, factory: IChartRateFactory, coinCode: String, coinTitle: String, currency: Currency) {
+        self.router = router
         self.interactor = interactor
         self.factory = factory
         self.coinCode = coinCode
@@ -82,6 +84,10 @@ extension ChartPresenter: IChartViewDelegate {
         selectedIndicators = selectedIndicators.toggle(indicator: indicator)
 
         updateChart()
+    }
+
+    func onTapLink() {
+        router.open(link: CoinInfoMap.data[coinCode]?.website)
     }
 
 }
