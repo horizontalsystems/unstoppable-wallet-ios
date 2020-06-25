@@ -434,6 +434,8 @@
 "chart.volume" = "Birim(24 saat)";
 "chart.circulation" = "Dolaşan Arz	";
 "chart.max_supply" = "Toplam Arz";
+"chart.start_date" = "Launch Date";
+"chart.website" = "Official Website";
 "chart.error.not_available" = "Grafik yok";
 "chart.selected.price" = "Fiyat";
 "chart.selected.volume" = "Birim";
