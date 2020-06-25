@@ -435,7 +435,7 @@
 "chart.circulation" = "В обороте";
 "chart.max_supply" = "Макс.выпуск";
 "chart.start_date" = "Launch Date";
-"chart.website" = "Official Website";
+"chart.website" = "Официальный веб-сайт";
 "chart.error.not_available" = "График недоступен";
 "chart.selected.price" = "Цена";
 "chart.selected.volume" = "Объём";
