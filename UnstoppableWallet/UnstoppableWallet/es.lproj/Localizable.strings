@@ -434,6 +434,8 @@
 "chart.volume" = "Volumen (24St)";
 "chart.circulation" = "En circulación";
 "chart.max_supply" = "Suministro total";
+"chart.start_date" = "Launch Date";
+"chart.website" = "Official Website";
 "chart.error.not_available" = "Gráfico no disponible";
 "chart.selected.price" = "Precio";
 "chart.selected.volume" = "Volumen";
