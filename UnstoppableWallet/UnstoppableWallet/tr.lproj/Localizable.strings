@@ -401,8 +401,8 @@
 "top100_list.portfolio" = "En Beğenilen 100";
 "top100_list.sort_by" = "Sırala";
 "top100_list.sort_type.rank" = "Derece";
-"top100_list.sort_type.top_winners" = "Top Winners";
-"top100_list.sort_type.top_losers" = "Top Losers";
+"top100_list.sort_type.top_winners" = "Çok Kazananlar";
+"top100_list.sort_type.top_losers" = "Çok Kaybedenler";
 
 //NumPad
 
@@ -437,9 +437,9 @@
 "chart.error.not_available" = "Grafik yok";
 "chart.selected.price" = "Fiyat";
 "chart.selected.volume" = "Birim";
-"chart.trend_neutral" = "Neutral";
-"chart.trend_down" = "Down Trend";
-"chart.trend_up" = "Up Trend";
+"chart.trend_neutral" = "Nötr";
+"chart.trend_down" = "Aşağı Eğilim";
+"chart.trend_up" = "Artış Eğilim";
 
 // Create Wallet
 
@@ -485,24 +485,24 @@
 
 // Guides
 
-"guides.tab_bar_item" = "Guides";
-"guides.title" = "Guides";
+"guides.tab_bar_item" = "Kılavuzlar";
+"guides.title" = "Kılavuzlar";
 
 // Add Token
 
-"add_token.choose_blockchain" = "Choose Blockchain";
-"add_token.add_token" = "Add Token";
-"add_token.erc20_token" = "ERC20 Token";
+"add_token.choose_blockchain" = "Blockchain Seç";
+"add_token.add_token" = "Token Ekle";
+"add_token.erc20_token" = "ERC20 tokenleri";
 "add_token.eos_token" = "EOS Token";
 "add_token.binance_token" = "Binance Token";
 
 // Add Erc20 Token
 
-"add_erc20_token.title" = "Add ERC20";
-"add_erc20_token.contract_address" = "Contract Address";
-"add_erc20_token.coin_name" = "Coin Name";
-"add_erc20_token.symbol" = "Symbol";
-"add_erc20_token.decimals" = "Decimals";
-"add_erc20_token.already_exists" = "This token is already in the coin manager list.";
-"add_erc20_token.add" = "Add";
-"add_erc20_token.contract_not_exist" = "Contract not found";
+"add_erc20_token.title" = "ERC20 Ekle";
+"add_erc20_token.contract_address" = "Sözleşme Adresi";
+"add_erc20_token.coin_name" = "Kripto Para Adı";
+"add_erc20_token.symbol" = "Sembol";
+"add_erc20_token.decimals" = "Ondalıklar";
+"add_erc20_token.already_exists" = "Bu token zaten kripto para yöneticisi listesindedir.";
+"add_erc20_token.add" = "Ekle";
+"add_erc20_token.contract_not_exist" = "Sözleşme bulunamadı";
