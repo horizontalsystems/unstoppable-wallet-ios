@@ -434,6 +434,8 @@
 "chart.volume" = "Volume(24h)";
 "chart.circulation" = "Offre en Circulation	";
 "chart.max_supply" = "Offre totale";
+"chart.start_date" = "Launch Date";
+"chart.website" = "Official Website";
 "chart.error.not_available" = "Graphique non disponible";
 "chart.selected.price" = "Prix";
 "chart.selected.volume" = "Volume";
