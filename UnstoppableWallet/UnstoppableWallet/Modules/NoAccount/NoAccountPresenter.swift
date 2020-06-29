@@ -34,6 +34,10 @@ extension NoAccountPresenter: INoAccountViewDelegate {
 
     func onTapCreate() {
         do {
+            if interactor.derivationSettings(coin: coin) != nil {
+                interactor.resetDerivationSettings()
+            }
+
             let account = try interactor.createAccount(predefinedAccountType: predefinedAccountType)
             interactor.save(account: account)
 

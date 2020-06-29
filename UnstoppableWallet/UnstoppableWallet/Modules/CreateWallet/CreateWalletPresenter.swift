@@ -101,7 +101,13 @@ extension CreateWalletPresenter: ICreateWalletViewDelegate {
         let accounts = Array(Set(wallets.values.map { $0.account }))
         interactor.create(accounts: accounts)
 
-        interactor.resetDerivationSettings()
+        let needResetDerivation = wallets.keys.reduce(false) { result, coin in
+            result || interactor.derivationSettings(coin: coin) != nil
+        }
+        if needResetDerivation {
+            interactor.resetDerivationSettings()
+        }
+
         interactor.save(wallets: Array(wallets.values))
 
         switch presentationMode {
