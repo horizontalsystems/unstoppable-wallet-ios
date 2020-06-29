@@ -124,7 +124,7 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "R",         title: "Revain",                code: "R",       decimal: 0,  type: CoinType(erc20Address: "0x48f775EFBE4F5EcE6e0DF2f7b5932dF56823B990")),
         Coin(id: "XRP",       title: "Ripple",                code: "XRP",     decimal: 8,  type: .binance(symbol: "XRP-BF2")),
         Coin(id: "SAI",       title: "Sai",                   code: "SAI",     decimal: 18, type: CoinType(erc20Address: "0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359")),
-        Coin(id: "SNX",       title: "Synthetix",             code: "SNX",     decimal: 18, type: CoinType(erc20Address: "0xc011a72400e58ecd99ee497cf89e3775d4bd732f")),
+        Coin(id: "SNX",       title: "Synthetix",             code: "SNX",     decimal: 18, type: CoinType(erc20Address: "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F")),
         Coin(id: "EURS",      title: "STASIS EURO",           code: "EURS",    decimal: 2,  type: CoinType(erc20Address: "0xdB25f211AB05b1c97D595516F45794528a807ad8")),
         Coin(id: "SNT",       title: "Status",                code: "SNT",     decimal: 18, type: CoinType(erc20Address: "0x744d70FDBE2Ba4CF95131626614a1763DF805B9E")),
         Coin(id: "CHSB",      title: "SwissBorg",             code: "CHSB",    decimal: 8,  type: CoinType(erc20Address: "0xba9d4199fab4f26efe3551d490e3821486f135ba")),
