@@ -43,4 +43,8 @@ extension CreateWalletInteractor: ICreateWalletInteractor {
         walletManager.save(wallets: wallets)
     }
 
+    func derivationSettings(coin: Coin) -> DerivationSetting? {
+        derivationSettingsManager.setting(coinType: coin.type)
+    }
+
 }

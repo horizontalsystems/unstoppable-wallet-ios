@@ -25,6 +25,7 @@ protocol ICreateWalletInteractor {
     func create(accounts: [Account])
     func resetDerivationSettings()
     func save(wallets: [Wallet])
+    func derivationSettings(coin: Coin) -> DerivationSetting?
 }
 
 protocol ICreateWalletRouter {

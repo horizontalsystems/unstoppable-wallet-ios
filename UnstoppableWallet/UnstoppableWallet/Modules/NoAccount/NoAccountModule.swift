@@ -14,6 +14,8 @@ protocol INoAccountViewDelegate {
 protocol INoAccountInteractor {
     func createAccount(predefinedAccountType: PredefinedAccountType) throws -> Account
     func save(account: Account)
+    func derivationSettings(coin: Coin) -> DerivationSetting?
+    func resetDerivationSettings()
 }
 
 protocol INoAccountRouter {
