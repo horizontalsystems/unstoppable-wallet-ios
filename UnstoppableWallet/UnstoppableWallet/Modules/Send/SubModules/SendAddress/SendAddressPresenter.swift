@@ -83,7 +83,8 @@ extension SendAddressPresenter: ISendAddressModule {
 extension SendAddressPresenter: IScanQrModuleDelegate {
 
     func validate(string: String) throws {
-        try delegate?.validate(address: string)
+        let (parsedAddress, _) = interactor.parse(address: string)
+        try delegate?.validate(address: parsedAddress)
     }
 
     func didScan(string: String) {
