@@ -44,6 +44,7 @@ extension SendAddressPresenter: ISendAddressViewDelegate {
 
     func onAddressDeleteClicked() {
         view?.set(address: nil, error: nil)
+        currentAddress = nil
         enteredAddress = nil
         delegate?.onUpdateAddress()
     }

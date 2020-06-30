@@ -67,17 +67,13 @@ class SendEthereumHandler {
     }
 
     private func syncEstimateGasLimit() {
-        guard let address = try? addressModule.validAddress(), !amountModule.currentAmount.isZero else {
-            onReceive(gasLimit: 0)
-            return
-        }
         gasDisposeBag = DisposeBag()
 
         estimateGasLimitState = .loading
         syncState()
         syncValidation()
 
-        interactor.estimateGasLimit(to: address, value: amountModule.currentAmount, gasPrice: feePriorityModule.feeRate)
+        interactor.estimateGasLimit(to: try? addressModule.validAddress(), value: amountModule.currentAmount, gasPrice: feePriorityModule.feeRate)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onSuccess: onReceive, onError: onGasLimitError)

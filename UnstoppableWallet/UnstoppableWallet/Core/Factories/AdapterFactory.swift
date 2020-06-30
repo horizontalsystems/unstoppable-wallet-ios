@@ -38,9 +38,9 @@ class AdapterFactory: IAdapterFactory {
             if let ethereumKit = try? ethereumKitManager.ethereumKit(account: wallet.account) {
                 return EthereumAdapter(ethereumKit: ethereumKit)
             }
-        case let .erc20(address, fee, gasLimit, minimumRequiredBalance, minimumSpendableAmount):
+        case let .erc20(address, fee, minimumRequiredBalance, minimumSpendableAmount):
             if let ethereumKit = try? ethereumKitManager.ethereumKit(account: wallet.account) {
-                return try? Erc20Adapter(ethereumKit: ethereumKit, contractAddress: address, decimal: wallet.coin.decimal, fee: fee, gasLimit: gasLimit, minimumRequiredBalance: minimumRequiredBalance, minimumSpendableAmount: minimumSpendableAmount)
+                return try? Erc20Adapter(ethereumKit: ethereumKit, contractAddress: address, decimal: wallet.coin.decimal, fee: fee, minimumRequiredBalance: minimumRequiredBalance, minimumSpendableAmount: minimumSpendableAmount)
             }
         case let .eos(token, symbol):
             if let eosKit = try? eosKitManager.eosKit(account: wallet.account) {

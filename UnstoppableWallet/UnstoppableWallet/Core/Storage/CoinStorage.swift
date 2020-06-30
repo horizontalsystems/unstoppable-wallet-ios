@@ -50,7 +50,7 @@ extension CoinStorage: ICoinStorage {
 
     func save(coin: Coin) -> Bool {
         switch coin.type {
-        case .erc20(let address, _, _, _, _):
+        case .erc20(let address, _, _, _):
             let record = coinRecord(coin: coin, tokenType: .erc20)
             record.erc20Address = address
             storage.save(coinRecord: record)

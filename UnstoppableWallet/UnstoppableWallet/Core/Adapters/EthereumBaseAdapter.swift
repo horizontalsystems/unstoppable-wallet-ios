@@ -22,10 +22,6 @@ class EthereumBaseAdapter {
         fatalError("Method should be overridden in child class")
     }
 
-    func estimateGasLimit(to address: String, value: Decimal, gasPrice: Int?) -> Single<Int> {
-        fatalError("Method should be overridden in child class")
-    }
-
     func createSendError(from error: Error) -> Error {
         error.convertedError
     }
