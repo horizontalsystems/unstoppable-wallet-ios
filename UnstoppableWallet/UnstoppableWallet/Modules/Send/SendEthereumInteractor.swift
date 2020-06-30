@@ -12,7 +12,7 @@ class SendEthereumInteractor {
 
 extension SendEthereumInteractor: ISendEthereumInteractor {
 
-    func availableBalance(gasPrice: Int, gasLimit: Int?) -> Decimal {
+    func availableBalance(gasPrice: Int, gasLimit: Int) -> Decimal {
         adapter.availableBalance(gasPrice: gasPrice, gasLimit: gasLimit)
     }
 
@@ -36,7 +36,7 @@ extension SendEthereumInteractor: ISendEthereumInteractor {
         adapter.fee(gasPrice: gasPrice, gasLimit: gasLimit)
     }
 
-    func estimateGasLimit(to address: String, value: Decimal, gasPrice: Int?) -> Single<Int> {
+    func estimateGasLimit(to address: String?, value: Decimal, gasPrice: Int?) -> Single<Int> {
         adapter.estimateGasLimit(to: address, value: value, gasPrice: gasPrice)
     }
 

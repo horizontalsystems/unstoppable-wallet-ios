@@ -6,12 +6,12 @@ enum CoinType {
     case bitcoinCash
     case dash
     case ethereum
-    case erc20(address: String, fee: Decimal, gasLimit: Int?, minimumRequiredBalance: Decimal, minimumSpendableAmount: Decimal?)
+    case erc20(address: String, fee: Decimal, minimumRequiredBalance: Decimal, minimumSpendableAmount: Decimal?)
     case eos(token: String, symbol: String)
     case binance(symbol: String)
 
-    init(erc20Address: String, fee: Decimal = 0, gasLimit: Int? = nil, minimumRequiredBalance: Decimal = 0, minimumSpendableAmount: Decimal? = nil) {
-        self = .erc20(address: erc20Address, fee: fee, gasLimit: gasLimit, minimumRequiredBalance: minimumRequiredBalance, minimumSpendableAmount: minimumSpendableAmount)
+    init(erc20Address: String, fee: Decimal = 0, minimumRequiredBalance: Decimal = 0, minimumSpendableAmount: Decimal? = nil) {
+        self = .erc20(address: erc20Address, fee: fee, minimumRequiredBalance: minimumRequiredBalance, minimumSpendableAmount: minimumSpendableAmount)
     }
 
     func canSupport(accountType: AccountType) -> Bool {
@@ -77,8 +77,8 @@ extension CoinType: Equatable {
         case (.bitcoinCash, .bitcoinCash): return true
         case (.dash, .dash): return true
         case (.ethereum, .ethereum): return true
-        case (.erc20(let lhsAddress, let lhsFee, let lhsGasLimit, _, _), .erc20(let rhsAddress, let rhsFee, let rhsGasLimit, _, _)):
-            return lhsAddress == rhsAddress && lhsFee == rhsFee && lhsGasLimit == rhsGasLimit
+        case (.erc20(let lhsAddress, let lhsFee, _, _), .erc20(let rhsAddress, let rhsFee, _, _)):
+            return lhsAddress == rhsAddress && lhsFee == rhsFee
         case (.eos(let lhsToken, let lhsSymbol), .eos(let rhsToken, let rhsSymbol)):
             return lhsToken == rhsToken && lhsSymbol == rhsSymbol
         case (.binance(let lhsSymbol), .binance(let rhsSymbol)):
@@ -103,8 +103,8 @@ extension CoinType: Hashable {
             hasher.combine("dash")
         case .ethereum:
             hasher.combine("ethereum")
-        case .erc20(let address, let fee, let gasLimit, let minimumRequiredBalance, let minimumSpendableAmount):
-            hasher.combine("erc20_\(address)_\(fee)_\(gasLimit.map { "\($0)" } ?? "nil")_\(minimumRequiredBalance)_\(minimumSpendableAmount.map { "\($0)" } ?? "nil")")
+        case .erc20(let address, let fee, let minimumRequiredBalance, let minimumSpendableAmount):
+            hasher.combine("erc20_\(address)_\(fee)_\(minimumRequiredBalance)_\(minimumSpendableAmount.map { "\($0)" } ?? "nil")")
         case .eos(let token, let symbol):
             hasher.combine("eos_\(token)_\(symbol)")
         case .binance(let symbol):

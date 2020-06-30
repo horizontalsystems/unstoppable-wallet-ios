@@ -7,15 +7,13 @@ class Erc20Adapter: EthereumBaseAdapter {
     private let erc20Kit: Erc20Kit.Kit
     private let contractAddress: String
     private let fee: Decimal
-    private let gasLimit: Int?
     private(set) var minimumRequiredBalance: Decimal
     private(set) var minimumSpendableAmount: Decimal?
 
-    init(ethereumKit: EthereumKit.Kit, contractAddress: String, decimal: Int, fee: Decimal, gasLimit: Int? = nil, minimumRequiredBalance: Decimal, minimumSpendableAmount: Decimal?) throws {
+    init(ethereumKit: EthereumKit.Kit, contractAddress: String, decimal: Int, fee: Decimal, minimumRequiredBalance: Decimal, minimumSpendableAmount: Decimal?) throws {
         self.erc20Kit = try Erc20Kit.Kit.instance(ethereumKit: ethereumKit, contractAddress: contractAddress)
         self.contractAddress = contractAddress
         self.fee = fee
-        self.gasLimit = gasLimit
         self.minimumRequiredBalance = minimumRequiredBalance
         self.minimumSpendableAmount = minimumSpendableAmount
 
@@ -69,13 +67,6 @@ class Erc20Adapter: EthereumBaseAdapter {
         } catch {
             return Single.error(error)
         }
-    }
-
-    override func estimateGasLimit(to address: String, value: Decimal, gasPrice: Int?) -> Single<Int> {
-        if let gasLimit = gasLimit {
-            return Single.just(gasLimit)
-        }
-        return erc20Kit.estimateGas(to: address, contractAddress: contractAddress, value: value.roundedString(decimal: decimal), gasPrice: gasPrice)
     }
 
 }
@@ -138,7 +129,7 @@ extension Erc20Adapter: IBalanceAdapter {
 
 extension Erc20Adapter: ISendEthereumAdapter {
 
-    func availableBalance(gasPrice: Int, gasLimit: Int?) -> Decimal {
+    func availableBalance(gasPrice: Int, gasLimit: Int) -> Decimal {
         max(0, balance - fee)
     }
 
@@ -149,6 +140,10 @@ extension Erc20Adapter: ISendEthereumAdapter {
     func fee(gasPrice: Int, gasLimit: Int) -> Decimal {
         let value = Decimal(gasPrice) * Decimal(gasLimit)
         return value / pow(10, EthereumAdapter.decimal)
+    }
+
+    func estimateGasLimit(to address: String?, value: Decimal, gasPrice: Int?) -> Single<Int> {
+        erc20Kit.estimateGas(to: address, contractAddress: contractAddress, value: value.roundedString(decimal: decimal), gasPrice: gasPrice)
     }
 
 }

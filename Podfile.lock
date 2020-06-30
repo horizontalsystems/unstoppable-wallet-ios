@@ -48,9 +48,9 @@ PODS:
   - Chart.swift (1.2):
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1)
-  - Cuckoo (1.3.2):
-    - Cuckoo/Swift (= 1.3.2)
-  - Cuckoo/Swift (1.3.2)
+  - Cuckoo (1.4.0):
+    - Cuckoo/Swift (= 1.4.0)
+  - Cuckoo/Swift (1.4.0)
   - CurrencyKit.swift (1.0):
     - LanguageKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
@@ -338,19 +338,19 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   ActionSheet.swift:
-    :commit: 793644b514f4e5cefd6f4303c00a28eda8f8fe1a
+    :commit: 851bb7b56296dafa541461aac7549d33b6f03a58
     :git: https://github.com/horizontalsystems/gui-kit/
   BinanceChainKit.swift:
     :commit: c9f6406460048057d7b56a5c183680efd5bb38aa
     :git: https://github.com/horizontalsystems/binance-chain-kit-ios
   BitcoinCashKit.swift:
-    :commit: 36ccd7c9637f0e28c4a22d09f0d83908d5d11a86
+    :commit: 76a64386df58808bc1fc361d071bc4525858f19c
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinCore.swift:
-    :commit: 36ccd7c9637f0e28c4a22d09f0d83908d5d11a86
+    :commit: 76a64386df58808bc1fc361d071bc4525858f19c
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinKit.swift:
-    :commit: 36ccd7c9637f0e28c4a22d09f0d83908d5d11a86
+    :commit: 76a64386df58808bc1fc361d071bc4525858f19c
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
     :commit: 851bb7b56296dafa541461aac7549d33b6f03a58
@@ -359,7 +359,7 @@ CHECKOUT OPTIONS:
     :commit: 4197f1e86f580c50dbd42b1bf61edd3564716aad
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
-    :commit: 36ccd7c9637f0e28c4a22d09f0d83908d5d11a86
+    :commit: 76a64386df58808bc1fc361d071bc4525858f19c
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   EosioSwift:
     :commit: d011ffb8ddbe3b74a0b7f6d94ae52bf3b946cc8f
@@ -371,10 +371,10 @@ CHECKOUT OPTIONS:
     :commit: 937926ff85a0b0e0af8dfe8a9340b1ba85a9129a
     :git: https://github.com/horizontalsystems/eos-kit-ios
   Erc20Kit.swift:
-    :commit: 100a018df6347d5fef12ad5a80cf087983872851
+    :commit: bc049b3ccb9612293c2bc69b1edbf6e2d9a2ea7f
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   EthereumKit.swift:
-    :commit: 100a018df6347d5fef12ad5a80cf087983872851
+    :commit: bc049b3ccb9612293c2bc69b1edbf6e2d9a2ea7f
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :commit: 783ff3709e90df51ca60d50a2665e6afdad8e391
@@ -383,19 +383,19 @@ CHECKOUT OPTIONS:
     :commit: 3e3720f600d10929146e5e8583cf39a072b37e61
     :git: https://github.com/horizontalsystems/hd-wallet-kit-ios
   Hodler.swift:
-    :commit: 36ccd7c9637f0e28c4a22d09f0d83908d5d11a86
+    :commit: 76a64386df58808bc1fc361d071bc4525858f19c
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HsToolKit.swift:
     :commit: 2f4b640e92bf845a454cec3bbe74f68fdb402a8f
     :git: https://github.com/horizontalsystems/hs-tool-kit-ios
   HUD.swift:
-    :commit: 793644b514f4e5cefd6f4303c00a28eda8f8fe1a
+    :commit: 851bb7b56296dafa541461aac7549d33b6f03a58
     :git: https://github.com/horizontalsystems/gui-kit/
   LanguageKit.swift:
     :commit: 4197f1e86f580c50dbd42b1bf61edd3564716aad
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
-    :commit: 36ccd7c9637f0e28c4a22d09f0d83908d5d11a86
+    :commit: 76a64386df58808bc1fc361d071bc4525858f19c
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   PinKit.swift:
     :commit: 4197f1e86f580c50dbd42b1bf61edd3564716aad
@@ -410,7 +410,7 @@ CHECKOUT OPTIONS:
     :commit: 4197f1e86f580c50dbd42b1bf61edd3564716aad
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
-    :commit: 793644b514f4e5cefd6f4303c00a28eda8f8fe1a
+    :commit: 851bb7b56296dafa541461aac7549d33b6f03a58
     :git: https://github.com/horizontalsystems/gui-kit/
   XRatesKit.swift:
     :commit: 6cb0e7e846da6b943a4fd6e9e7aff1a8d6c03b2b
@@ -428,7 +428,7 @@ SPEC CHECKSUMS:
   BlsKit.swift: e73fb332ed6a577b0f34a0da30aa5ec6c09bee55
   BlueSocket: 1acd943acb07b55905291d608649fcfbf8cbd57d
   Chart.swift: bdfda424f16ff62b3c6d2a4dcda1ec2c7b6b3cda
-  Cuckoo: 57f71c6616b6b08cd9fe27f803da056fb619ff3e
+  Cuckoo: da26594ea25d227d788cd2f25466442a4348c486
   CurrencyKit.swift: c1a37e0e43eac3828be95c8348693f192d67b376
   DashKit.swift: aab54ef810b3880d2472d9bc8d3d5e56a5367dc7
   DeepDiff: e5ae6c50d0321568e4508cec5930b9f10bb293fc

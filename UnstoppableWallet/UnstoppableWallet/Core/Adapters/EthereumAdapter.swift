@@ -55,10 +55,6 @@ class EthereumAdapter: EthereumBaseAdapter {
                 }
     }
 
-    override func estimateGasLimit(to address: String, value: Decimal, gasPrice: Int?) -> Single<Int> {
-        Single.just(ethereumKit.gasLimit)
-    }
-
 }
 
 extension EthereumAdapter {
@@ -116,11 +112,8 @@ extension EthereumAdapter: IBalanceAdapter {
 
 extension EthereumAdapter: ISendEthereumAdapter {
 
-    func availableBalance(gasPrice: Int, gasLimit: Int?) -> Decimal {
-        guard let gasLimit = gasLimit else {
-            return balance
-        }
-        return max(0, balance - fee(gasPrice: gasPrice, gasLimit: gasLimit))
+    func availableBalance(gasPrice: Int, gasLimit: Int) -> Decimal {
+        max(0, balance - fee(gasPrice: gasPrice, gasLimit: gasLimit))
     }
 
     var ethereumBalance: Decimal {
@@ -136,7 +129,12 @@ extension EthereumAdapter: ISendEthereumAdapter {
     }
 
     func fee(gasPrice: Int, gasLimit: Int) -> Decimal {
-        ethereumKit.fee(gasPrice: gasPrice) / pow(10, EthereumAdapter.decimal)
+        let value = Decimal(gasPrice) * Decimal(gasLimit)
+        return value / pow(10, EthereumAdapter.decimal)
+    }
+
+    func estimateGasLimit(to address: String?, value: Decimal, gasPrice: Int?) -> Single<Int> {
+        ethereumKit.estimateGas(to: address, amount: value.roundedString(decimal: decimal), gasPrice: gasPrice)
     }
 
 }
