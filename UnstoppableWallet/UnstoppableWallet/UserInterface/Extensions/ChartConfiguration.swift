@@ -24,7 +24,6 @@ extension ChartConfiguration {
         touchLineColor = .themeNina
         emaShortColor = UIColor.themeStronbuy.withAlphaComponent(0.5)
         emaLongColor = UIColor.themeJacob.withAlphaComponent(0.5)
-        macdSelectedColor = .themeWhite50
         macdSignalColor = UIColor.themeStronbuy.withAlphaComponent(0.5)
         macdColor = UIColor.themeJacob.withAlphaComponent(0.5)
         macdPositiveColor = UIColor.themeGreenD.withAlphaComponent(0.5)
