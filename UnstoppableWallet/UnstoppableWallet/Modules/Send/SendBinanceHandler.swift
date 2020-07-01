@@ -64,7 +64,6 @@ extension SendBinanceHandler: ISendHandler {
 
     func sync(rateValue: Decimal?) {
         amountModule.set(rateValue: rateValue)
-        feeModule.set(rateValue: rateValue)
     }
 
     func sync(inputType: SendInputType) {
