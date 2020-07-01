@@ -7,6 +7,7 @@ class SendFeeRouter {
         let presenter = SendFeePresenter(coin: coin, interactor: interactor)
         let view = SendFeeView(delegate: presenter)
 
+        interactor.delegate = presenter
         presenter.view = view
 
         return (view, presenter)

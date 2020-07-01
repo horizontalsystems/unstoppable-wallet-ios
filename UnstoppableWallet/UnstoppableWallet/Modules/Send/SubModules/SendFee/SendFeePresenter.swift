@@ -1,5 +1,6 @@
 import Foundation
 import CurrencyKit
+import XRatesKit
 
 class SendFeePresenter {
     weak var view: ISendFeeView?
@@ -121,11 +122,6 @@ extension SendFeePresenter: ISendFeeModule {
         syncError()
     }
 
-    func set(rateValue: Decimal?) {
-        self.rateValue = rateValue
-        syncFeeLabels()
-    }
-
     func update(inputType: SendInputType) {
         self.inputType = inputType
         syncFeeLabels()
@@ -138,6 +134,23 @@ extension SendFeePresenter: ISendFeeViewDelegate {
     func viewDidLoad() {
         syncFeeLabels()
         syncError()
+
+        interactor.subscribeToMarketInfo(coinCode: feeCoin?.code, currencyCode: interactor.baseCurrency.code)
+        rateValue = interactor.nonExpiredRateValue(coinCode: coin.code, currencyCode: interactor.baseCurrency.code)
+    }
+
+}
+
+extension SendFeePresenter: ISendFeeInteractorDelegate {
+
+    func didReceive(marketInfo: MarketInfo) {
+        if !marketInfo.expired {
+            rateValue = marketInfo.rate
+        } else {
+            rateValue = nil
+        }
+
+        syncFeeLabels()
     }
 
 }
