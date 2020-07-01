@@ -21,7 +21,7 @@ class GuideBlockQuoteCell: UITableViewCell {
             maker.edges.equalToSuperview() // constraints are set in bind method
         }
 
-        wrapperView.backgroundColor = .themeJeremy
+        wrapperView.backgroundColor = .themeSteel10
 
         wrapperView.addSubview(textView)
         textView.snp.makeConstraints { maker in
@@ -35,7 +35,7 @@ class GuideBlockQuoteCell: UITableViewCell {
             maker.width.equalTo(4)
         }
 
-        lineView.backgroundColor = .themeGreen50
+        lineView.backgroundColor = .themeRemus
     }
 
     required public init?(coder aDecoder: NSCoder) {

@@ -60,8 +60,8 @@ extension GuideParser: IGuideParser {
             let visitor = GuideVisitor(attributedStringVisitor: attributedStringVisitor, styler: styler)
             let block = document.accept(visitor)
 
-            print(block)
-            print(document.accept(DebugVisitor()))
+//            print(block)
+//            print(document.accept(DebugVisitor()))
 
             guard let documentBlock = block as? GuideVisitor.DocumentBlock else {
                 return []
@@ -69,7 +69,7 @@ extension GuideParser: IGuideParser {
 
             var viewItems = [GuideBlockViewItem]()
 
-            for block in documentBlock.blocks {
+            for (blockIndex, block) in documentBlock.blocks.enumerated() {
                 if let headingBlock = block as? GuideVisitor.HeadingBlock {
                     viewItems.append(.header(attributedString: headingBlock.attributedString, level: headingBlock.level))
                 }
@@ -118,7 +118,7 @@ extension GuideParser: IGuideParser {
                         }
                     }
 
-                    viewItems.append(.image(url: url, type: type))
+                    viewItems.append(.image(url: url, type: type, tight: blockIndex == 0))
 
                     if let title = imageBlock.title {
                         viewItems.append(.imageTitle(text: title))
