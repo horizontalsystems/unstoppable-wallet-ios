@@ -35,14 +35,13 @@ class GuideViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Attention Icon")?.tinted(with: .themeJacob), style: .plain, target: self, action: #selector(onTapFontSizeButton))
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Attention Icon")?.tinted(with: .themeJacob), style: .plain, target: self, action: #selector(onTapFontSizeButton))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
 
-        tableView.contentInsetAdjustmentBehavior = .never
         tableView.allowsSelection = false
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
@@ -66,12 +65,6 @@ class GuideViewController: ThemeViewController {
         delegate.onLoad()
 
         tableView.buildSections()
-    }
-
-    override func viewSafeAreaInsetsDidChange() {
-        super.viewSafeAreaInsetsDidChange()
-
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: view.safeAreaInsets.bottom, right: 0)
     }
 
     @objc private func onTapFontSizeButton() {
@@ -158,14 +151,14 @@ class GuideViewController: ThemeViewController {
         )
     }
 
-    private func imageRow(id: String, url: URL, type: GuideImageType) -> RowProtocol {
+    private func imageRow(id: String, url: URL, type: GuideImageType, tight: Bool) -> RowProtocol {
         Row<GuideImageCell>(
                 id: id,
                 dynamicHeight: { containerWidth in
-                    GuideImageCell.height(containerWidth: containerWidth, type: type)
+                    GuideImageCell.height(containerWidth: containerWidth, type: type, tight: tight)
                 },
                 bind: { cell, _ in
-                    cell.bind(imageUrl: url, type: type)
+                    cell.bind(imageUrl: url, type: type, tight: tight)
                 }
         )
     }
@@ -210,11 +203,12 @@ class GuideViewController: ThemeViewController {
                     tightTop: tightTop,
                     tightBottom: tightBottom
             )
-        case let .image(url, type):
+        case let .image(url, type, tight):
             return imageRow(
                     id: "image_\(index)",
                     url: url,
-                    type: type
+                    type: type,
+                    tight: tight
             )
         case let .imageTitle(text):
             return imageTitleRow(
@@ -257,11 +251,12 @@ extension GuideViewController: IGuideView {
     }
 
     func setSpinner(visible: Bool) {
+        tableView.isHidden = visible
+        spinner.isHidden = !visible
+
         if visible {
-            spinner.isHidden = false
             spinner.startAnimating()
         } else {
-            spinner.isHidden = true
             spinner.stopAnimating()
         }
     }
