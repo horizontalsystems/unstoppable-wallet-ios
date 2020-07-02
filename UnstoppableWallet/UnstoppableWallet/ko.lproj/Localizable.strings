@@ -435,7 +435,7 @@
 "chart.circulation" = "유통";
 "chart.max_supply" = "총 발행량";
 "chart.start_date" = "Launch Date";
-"chart.website" = "Official Website";
+"chart.website" = "Project Website";
 "chart.error.not_available" = "차트 이용불가";
 "chart.selected.price" = "금액";
 "chart.selected.volume" = "음량";
@@ -487,7 +487,7 @@
 
 // Guides
 
-"guides.tab_bar_item" = "가이드";
+"guides.tab_bar_item" = "Academy";
 "guides.title" = "가이드";
 
 // Add Token
