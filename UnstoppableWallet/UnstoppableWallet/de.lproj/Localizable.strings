@@ -434,14 +434,14 @@
 "chart.volume" = "Lautstärke(24 St.)";
 "chart.circulation" = "Umlaufversorgung	";
 "chart.max_supply" = "Gesamtversorgung";
-"chart.start_date" = "Launch Date";
-"chart.website" = "Project Website";
+"chart.start_date" = "Startdatum";
+"chart.website" = "Projekt-Webseite";
 "chart.error.not_available" = "Diagramm nicht verfügbar";
 "chart.selected.price" = "Preis";
 "chart.selected.volume" = "Lautstärke";
 "chart.trend_neutral" = "Neutral";
-"chart.trend_down" = "Down Trend";
-"chart.trend_up" = "Up Trend";
+"chart.trend_down" = "Down-Trend";
+"chart.trend_up" = "Up-Trend";
 
 // Create Wallet
 
@@ -487,7 +487,7 @@
 
 // Guides
 
-"guides.tab_bar_item" = "Academy";
+"guides.tab_bar_item" = "Akademie";
 "guides.title" = "Anleitungen";
 
 // Add Token
