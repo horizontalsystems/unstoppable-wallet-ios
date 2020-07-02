@@ -400,7 +400,7 @@
 "rate_list.latest_news" = "Последние Новости";
 "top100_list.portfolio" = "ТОП-100";
 "top100_list.sort_by" = "Сортировать по";
-"top100_list.sort_type.rank" = "Место";
+"top100_list.sort_type.rank" = "Месту";
 "top100_list.sort_type.top_winners" = "Топ Победителей";
 "top100_list.sort_type.top_losers" = "Топ Проигравших";
 
