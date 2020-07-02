@@ -16,7 +16,6 @@ class CoinInfoMap {
         "ANT": CoinInfo(supply: 39_609_524, startDate: "05/05/2017", website: "https://aragon.one"),
         "BNT": CoinInfo(supply: nil, startDate: "13/02/2017", website: "https://bancor.network"),
         "BAT": CoinInfo(supply: 1_500_000_000, startDate: "31/05/2017", website: "https://basicattentiontoken.org"),
-        "BNB": CoinInfo(supply: nil, startDate: "14/07/2017", website: "https://www.binance.com/en"),
         "BUSD": CoinInfo(supply: 28_603_822, startDate: "10/09/2019", website: "https://www.paxos.com/busd"),
         "BTCB": CoinInfo(supply: 9_001, startDate: "17/06/2019", website: "https://bitcoin.org/en/"),
         "CAS": CoinInfo(supply: 1_000_000_000, startDate: "12/10/2017", website: "https://cashaa.com"),
