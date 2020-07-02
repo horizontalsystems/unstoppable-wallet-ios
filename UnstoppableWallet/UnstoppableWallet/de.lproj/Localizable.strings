@@ -435,7 +435,7 @@
 "chart.circulation" = "Umlaufversorgung	";
 "chart.max_supply" = "Gesamtversorgung";
 "chart.start_date" = "Launch Date";
-"chart.website" = "Official Website";
+"chart.website" = "Project Website";
 "chart.error.not_available" = "Diagramm nicht verfügbar";
 "chart.selected.price" = "Preis";
 "chart.selected.volume" = "Lautstärke";
@@ -487,7 +487,7 @@
 
 // Guides
 
-"guides.tab_bar_item" = "Anleitungen";
+"guides.tab_bar_item" = "Academy";
 "guides.title" = "Anleitungen";
 
 // Add Token
