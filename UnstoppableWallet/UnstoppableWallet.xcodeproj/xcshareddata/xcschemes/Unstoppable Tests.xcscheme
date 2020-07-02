@@ -37,6 +37,15 @@
          </BuildableReference>
       </MacroExpansion>
       <Testables>
+         <TestableReference>
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D3373DBE20C658660082BC4A"
+               BuildableName = "Unstoppable Tests.xctest"
+               BlueprintName = "Unstoppable Tests"
+               ReferencedContainer = "container:UnstoppableWallet.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

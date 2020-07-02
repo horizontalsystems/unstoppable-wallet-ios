@@ -446,7 +446,7 @@ bch.horizontalsystems.xyz/apg";
 "chart.circulation" = "In Circulation";
 "chart.max_supply" = "Total Supply";
 "chart.start_date" = "Launch Date";
-"chart.website" = "Official Website";
+"chart.website" = "Project Website";
 "chart.error.not_available" = "Chart not available";
 "chart.selected.price" = "Price";
 "chart.selected.volume" = "Vol";
@@ -498,7 +498,7 @@ bch.horizontalsystems.xyz/apg";
 
 // Guides
 
-"guides.tab_bar_item" = "Guides";
+"guides.tab_bar_item" = "Academy";
 "guides.title" = "Guides";
 
 // Add Token
