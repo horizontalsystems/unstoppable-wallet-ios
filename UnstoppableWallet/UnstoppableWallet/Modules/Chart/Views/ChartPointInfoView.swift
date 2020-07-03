@@ -4,32 +4,50 @@ import ThemeKit
 class ChartPointInfoView: UIView {
     private let leftView = ChartDoubleLineView()
     private let rightView = ChartDoubleLineView(titleColor: .themeGray, titleFont: .caption, textAlignment: .right)
+    private let macdView = MacdPointView()
 
     init() {
         super.init(frame: .zero)
 
         addSubview(leftView)
-        addSubview(rightView)
-
         leftView.snp.makeConstraints { maker in
             maker.leading.top.bottom.equalToSuperview()
         }
+
+        addSubview(rightView)
         rightView.snp.makeConstraints { maker in
             maker.top.trailing.bottom.equalToSuperview()
             maker.width.equalTo(leftView)
         }
 
+        addSubview(macdView)
+        macdView.snp.makeConstraints { maker in
+            maker.top.trailing.bottom.equalToSuperview()
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("not implemented")
     }
 
-    func bind(date: String?, price: String?, volume: String?) {
-        leftView.bind(title: price, subtitle: date)
+    func bind(viewItem: SelectedPointViewItem) {
+        leftView.bind(title: viewItem.value, subtitle: viewItem.date)
 
-        let volumeSubtitle = volume.map { _ in "chart.selected.volume".localized }
-        rightView.bind(title: volume, subtitle: volumeSubtitle)
+
+        switch viewItem.rightSideMode {
+        case .volume(let value):
+            let volumeSubtitle = value.map { _ in "chart.selected.volume".localized }
+            rightView.bind(title: value, subtitle: volumeSubtitle)
+
+            rightView.isHidden = false
+            macdView.isHidden = true
+        case .macd(let macdInfo):
+            macdView.bind(histogram: macdInfo.histogram, signal: macdInfo.signal, macd: macdInfo.macd, histogramDown: macdInfo.histogramDown)
+
+            rightView.isHidden = true
+            macdView.isHidden = false
+        }
+
     }
 
 }

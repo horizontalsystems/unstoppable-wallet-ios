@@ -25,6 +25,14 @@ class ChartRateFactory: IChartRateFactory {
         return formatter
     }()
 
+    private let macdFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.roundingMode = .halfUp
+        formatter.maximumFractionDigits = 2
+        return formatter
+    }()
+
     private let currencyFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
@@ -37,6 +45,15 @@ class ChartRateFactory: IChartRateFactory {
         }
 
         return "\(formattedValue) \(coinCode)"
+    }
+
+    private func macdFormat(value: Decimal?) -> String? {
+        guard let value = value, let formattedValue = macdFormatter.string(from: abs(value) as NSNumber) else {
+            return nil
+        }
+
+        let sign = value.isSignMinus ? "- " : ""
+        return "\(sign)\(formattedValue)"
     }
 
     private func scale(min: Decimal, max: Decimal) -> Int {
@@ -219,7 +236,13 @@ class ChartRateFactory: IChartRateFactory {
         return ChartViewItem(currentRate: currentRate, chartDataStatus: chartDataStatusViewItem, marketInfoStatus: marketStatus, selectedIndicator: selectedIndicator)
     }
 
-    func selectedPointViewItem(chartPoint: ChartPoint, type: ChartType, currency: Currency) -> SelectedPointViewItem {
+    func selectedPointViewItem(chartItem: ChartItem, type: ChartType, currency: Currency, macdSelected: Bool) -> SelectedPointViewItem? {
+        guard let rate = chartItem.indicators[.rate] else {
+            return nil
+        }
+
+        let chartPoint = ChartPoint(timestamp: chartItem.timestamp, value: rate, volume: chartItem.indicators[.volume])
+
         let date = Date(timeIntervalSince1970: chartPoint.timestamp)
         let formattedDate = DateHelper.instance.formatFullTime(from: date)
 
@@ -229,7 +252,19 @@ class ChartRateFactory: IChartRateFactory {
 
         let formattedValue = currencyFormatter.string(from: chartPoint.value as NSNumber)
 
-        return SelectedPointViewItem(date: formattedDate, value: formattedValue, volume: CurrencyCompactFormatter.instance.format(currency: currency, value: chartPoint.volume))
+        var rightSideMode: SelectedPointViewItem.RightSideMode
+        if macdSelected{
+            let macd = macdFormat(value: chartItem.indicators[.macd])
+            let macdSignal = macdFormat(value: chartItem.indicators[.macdSignal])
+            let macdHistogram = macdFormat(value: chartItem.indicators[.macdHistogram])
+            let histogramDown = chartItem.indicators[.macdHistogram]?.isSignMinus
+
+            rightSideMode = .macd(macdInfo: MacdInfo(macd: macd, signal: macdSignal, histogram: macdHistogram, histogramDown: histogramDown))
+        } else {
+            rightSideMode = .volume(value: CurrencyCompactFormatter.instance.format(currency: currency, value: chartPoint.volume))
+        }
+
+        return SelectedPointViewItem(date: formattedDate, value: formattedValue, rightSideMode: rightSideMode)
     }
 
     private func viewItem(marketInfo: MarketInfo, currency: Currency, coinCode: String) -> MarketInfoViewItem {
