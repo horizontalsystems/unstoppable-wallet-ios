@@ -21,7 +21,6 @@ class ChartPresenter {
 
     private var chartType: ChartType
 
-    private var showEma = false
     private var selectedIndicators = ChartIndicatorSet()
 
     init(router: IChartRouter, interactor: IChartInteractor, factory: IChartRateFactory, coinCode: String, coinTitle: String, currency: Currency) {
@@ -121,10 +120,10 @@ extension ChartPresenter: IChartViewTouchDelegate {
     }
 
     func select(item: ChartItem) {
-        guard let rate = item.indicators[.rate] else {
+        guard let viewItem = factory.selectedPointViewItem(chartItem: item, type: chartType, currency: currency, macdSelected: selectedIndicators.contains(.macd)) else {
             return
         }
-        let viewItem = factory.selectedPointViewItem(chartPoint: ChartPoint(timestamp: item.timestamp, value: rate, volume: item.indicators[.volume]), type: chartType, currency: currency)
+
         view?.showSelectedPoint(viewItem: viewItem)
     }
 

@@ -48,7 +48,7 @@ protocol IChartInteractorDelegate: class {
 
 protocol IChartRateFactory {
     func chartViewItem(chartDataStatus: ChartDataStatus<ChartInfo>, marketInfoStatus: ChartDataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, selectedIndicator: ChartIndicatorSet) -> ChartViewItem
-    func selectedPointViewItem(chartPoint: ChartPoint, type: ChartType, currency: Currency) -> SelectedPointViewItem
+    func selectedPointViewItem(chartItem: ChartItem, type: ChartType, currency: Currency, macdSelected: Bool) -> SelectedPointViewItem?
 }
 
 enum MovementTrend {
@@ -120,7 +120,20 @@ struct MarketInfoViewItem {
 struct SelectedPointViewItem {
     let date: String
     let value: String?
-    let volume: String?
+
+    let rightSideMode: RightSideMode
+
+    enum RightSideMode {
+        case volume(value: String?)
+        case macd(macdInfo: MacdInfo)
+    }
+}
+
+struct MacdInfo {
+    let macd: String?
+    let signal: String?
+    let histogram: String?
+    let histogramDown: Bool?
 }
 
 struct ChartViewItem {

@@ -257,7 +257,7 @@ extension ChartViewController: IChartView {
     }
 
     func showSelectedPoint(viewItem: SelectedPointViewItem) {
-        selectedRateView.bind(date: viewItem.date, price: viewItem.value, volume: viewItem.volume)
+        selectedRateView.bind(viewItem: viewItem)
     }
 
 }
