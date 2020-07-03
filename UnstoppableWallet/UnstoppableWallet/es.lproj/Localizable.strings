@@ -71,7 +71,6 @@
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "Formato de Dirección";
-
 // Backup
 
 "backup.close" = "Cerrar";
@@ -191,7 +190,7 @@
 "tx_info.status.confirmed" = "Confirmado";
 "tx_info.status.failed" = "Falla";
 "tx_info.from_hash" = "Desde ";
-"tx_info.transaction_id" = "ID";
+"tx_info.transaction_id" = "Identificación de la transacción";
 "tx_info.to_hash" = "Para";
 "tx_info.button_verify" = "Verificar";
 "tx_info.rate" = "Tasa histórica";
@@ -256,7 +255,7 @@
 "settings.contact" = "Contacto";
 "settings.light_mode" = "Modo ligero";
 "settings.info_title" = "UNSTOPPABLE";
-"settings.info_subtitle" = "decentralized app";
+"settings.info_subtitle" = "app descentralizada";
 
 // Settings -> Notifications
 
@@ -270,6 +269,7 @@
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "Elegir monedas";
+"manage_coins.add_token" = "Añadir Token";
 "manage_coins.add_coin.title" = "Añadir %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Monedero";
 "manage_coins.add_coin.text.set_up" = "Necesitas configurar el monedero %@ para poder enviar o recibir %@.";
@@ -396,9 +396,13 @@
 
 // Rate List
 
-"rate_list.title" = "Precios";
 "rate_list.portfolio" = "Cartera";
+"rate_list.latest_news" = "Últimas noticias";
 "top100_list.portfolio" = "Top 100";
+"top100_list.sort_by" = "Ordenar por";
+"top100_list.sort_type.rank" = "Puesto";
+"top100_list.sort_type.top_winners" = "Mejores ganadores";
+"top100_list.sort_type.top_losers" = "Peores perdedores";
 
 //NumPad
 
@@ -430,10 +434,14 @@
 "chart.volume" = "Volumen (24St)";
 "chart.circulation" = "En circulación";
 "chart.max_supply" = "Suministro total";
+"chart.start_date" = "Fecha de lanzamiento";
+"chart.website" = "Website del proyecto";
 "chart.error.not_available" = "Gráfico no disponible";
 "chart.selected.price" = "Precio";
 "chart.selected.volume" = "Volumen";
-"chart.news.title" = "Últimas noticias";
+"chart.trend_neutral" = "Neutral";
+"chart.trend_down" = "Tendencia bajista";
+"chart.trend_up" = "Tendencia alcista";
 
 // Create Wallet
 
@@ -479,5 +487,24 @@
 
 // Guides
 
-"guides.tab_bar_item" = "Guides";
-"guides.title" = "Guides";
+"guides.tab_bar_item" = "Academia";
+"guides.title" = "Academy";
+
+// Add Token
+
+"add_token.choose_blockchain" = "Elegir Blockchain";
+"add_token.add_token" = "Añadir Token";
+"add_token.erc20_token" = "ERC20 Token";
+"add_token.eos_token" = "EOS Token";
+"add_token.binance_token" = "Binance Token";
+
+// Add Erc20 Token
+
+"add_erc20_token.title" = "Añadir ERC20";
+"add_erc20_token.contract_address" = "Dirección del contrato";
+"add_erc20_token.coin_name" = "Nombre de moneda";
+"add_erc20_token.symbol" = "Símbolo";
+"add_erc20_token.decimals" = "Decimales";
+"add_erc20_token.already_exists" = "Este token ya está en la lista del gestor de monedas.";
+"add_erc20_token.add" = "Añadir";
+"add_erc20_token.contract_not_exist" = "Contrato no encontrado";

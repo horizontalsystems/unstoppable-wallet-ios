@@ -71,7 +71,6 @@
 "blockchain_settings.sync_mode.blockchain" = "区块链";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "地址格式";
-
 // Backup
 
 "backup.close" = "关闭";
@@ -256,7 +255,7 @@
 "settings.contact" = "报告问题";
 "settings.light_mode" = "简单模式";
 "settings.info_title" = "UNSTOPPABLE";
-"settings.info_subtitle" = "decentralized app";
+"settings.info_subtitle" = "分布式应用程序";
 
 // Settings -> Notifications
 
@@ -270,6 +269,7 @@
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "选择代币";
+"manage_coins.add_token" = "添加代币";
 "manage_coins.add_coin.title" = "添加%@ ";
 "manage_coins.add_coin.subtitle" = "%@钱包";
 "manage_coins.add_coin.text.set_up" = "您必须创建%@钱包才能对%@进行转账或收款。";
@@ -396,9 +396,13 @@
 
 // Rate List
 
-"rate_list.title" = "价格";
 "rate_list.portfolio" = "投资组合";
+"rate_list.latest_news" = "最新消息";
 "top100_list.portfolio" = "前100名";
+"top100_list.sort_by" = "排序方式";
+"top100_list.sort_type.rank" = "排名";
+"top100_list.sort_type.top_winners" = "顶级赢家";
+"top100_list.sort_type.top_losers" = "顶级输家";
 
 //NumPad
 
@@ -430,10 +434,14 @@
 "chart.volume" = "量(24小时)";
 "chart.circulation" = "流通中";
 "chart.max_supply" = "供应总额";
+"chart.start_date" = "上市日期";
+"chart.website" = "网站项目";
 "chart.error.not_available" = "无可用图表";
 "chart.selected.price" = "价格";
 "chart.selected.volume" = "量";
-"chart.news.title" = "最新消息";
+"chart.trend_neutral" = "中性";
+"chart.trend_down" = "下降";
+"chart.trend_up" = "上升";
 
 // Create Wallet
 
@@ -479,5 +487,24 @@
 
 // Guides
 
-"guides.tab_bar_item" = "Guides";
-"guides.title" = "Guides";
+"guides.tab_bar_item" = "学院";
+"guides.title" = "Academy";
+
+// Add Token
+
+"add_token.choose_blockchain" = "选择区块链";
+"add_token.add_token" = "添加代币";
+"add_token.erc20_token" = "ERC 20 代币";
+"add_token.eos_token" = "EOS 代币";
+"add_token.binance_token" = "Binance 代币";
+
+// Add Erc20 Token
+
+"add_erc20_token.title" = "添加ERC20";
+"add_erc20_token.contract_address" = "智能合约地址";
+"add_erc20_token.coin_name" = "代币图片";
+"add_erc20_token.symbol" = "标志";
+"add_erc20_token.decimals" = "小数";
+"add_erc20_token.already_exists" = "该代币已在代币管理列表中.";
+"add_erc20_token.add" = "添加";
+"add_erc20_token.contract_not_exist" = "没找到合同";

@@ -269,6 +269,7 @@
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "Kripto Parayı Seç";
+"manage_coins.add_token" = "Token Ekle";
 "manage_coins.add_coin.title" = "%@ ekle ";
 "manage_coins.add_coin.subtitle" = "%@ Cüzdanı";
 "manage_coins.add_coin.text.set_up" = "Ancak %@ cüzdanını ayarladıktan sonra %@ gönderebilir veya alabilirsiniz için.";
@@ -293,7 +294,7 @@
 // Settings -> About
 
 "settings_about.title" = "Hakkında";
-"settings_about.app_title" = "Unstoppable";
+"settings_about.app_title" = "Usntoppable";
 "settings_about.app_subtitle" = "Decentralized uygulama";
 "settings_about.terms_privacy_subtitle" = "Şartlar & Gizlilik Politikası:";
 "settings_about.terms_privacy_text" = "Bu uygulama peer-to-peer uygulamasıdır. Çalışması için herhangi bir web sunucusu veya teknik personeli gerektirmiyor. \n\nInternet olduğu sürece her yerde çalışır. Hiçkimse bu uygulamanın çalışmasını engelleyemez veya birisinin onu kullanmasını sansürleyemez.\n\nKripto paranızı kontrol eden gizli şifreleme anahtarları sadece telefonun kendisinde güvenle saklanır, başka hiçbir yerde saklanmaz.\n\nGizli şifreleme anahtarlarınızı yedeklemek ve gizli tutmak sizin sorumluluğunuzdur. Anahtarlarınızı asla kimseye göstermeyin. Anahtarlar kaybolur, unutulur veya çalınırsa, paranızı anahtarınızı bulan kişi kullanabilir.\n\nTelefonunuzu kesinlikte jailbreak etmeyin, bilinmeyen (güvenilmeyen) kaynaklardan uygulama yüklemeyin, cihazınızı güvenilmeyen kişilere vermeyin ve telefonunuzdaki işletim sistemini güncel tutun. Cüzdanınızın güvenliği buna bağlıdır.\n\nBu uygulamayı destekleyen kodun tamamı kamu incelemesine açıktır. Herhangi bir akıllı telefon cüzdan uygulamasından önemli ölçüde daha güvenli olduğuna inanmamıza rağmen, istenmeyen yazılım sorunlarının olmadığının garantisi yoktur.\n\nTüm verileriniz, yani işlemler, bakiye vb. yalnızca cüzdan uygulamanız tarafından kullanılabilir ve cihazınızdan asla ayrılmaz.";
@@ -309,7 +310,7 @@
 "settings_security.passcode" = "Kod";
 "settings_security.privacy" = "Gizlilik";
 "settings_security.change_pin" = "Kod Değiştir";
-"settings_security.touch_id" = "Touch ID";
+"settings_security.touch_id" = "Dokunma Kimliği";
 "settings_security.face_id" = "Face ID";
 "security_settings.delete_alert_button" = "Cihazdan sil";
 "settings_privacy.title" = "Gizlilik";
@@ -395,9 +396,13 @@
 
 // Rate List
 
-"rate_list.title" = "Fiyatlar";
 "rate_list.portfolio" = "Portföy";
+"rate_list.latest_news" = "Son Haberler";
 "top100_list.portfolio" = "En Beğenilen 100";
+"top100_list.sort_by" = "Sırala";
+"top100_list.sort_type.rank" = "Derece";
+"top100_list.sort_type.top_winners" = "Çok Kazananlar";
+"top100_list.sort_type.top_losers" = "Çok Kaybedenler";
 
 //NumPad
 
@@ -408,7 +413,7 @@
 "numpad_6" = "M N O";
 "numpad_7" = "P Q R S";
 "numpad_8" = "T U V";
-"numpad_9" = "W X Y Z";
+"numpad_9" = "W X Y Z ";
 
 // Key Types
 
@@ -429,10 +434,14 @@
 "chart.volume" = "Birim(24 saat)";
 "chart.circulation" = "Dolaşan Arz	";
 "chart.max_supply" = "Toplam Arz";
+"chart.start_date" = "Açılış Günü";
+"chart.website" = "Proje Web Sitesi";
 "chart.error.not_available" = "Grafik yok";
 "chart.selected.price" = "Fiyat";
 "chart.selected.volume" = "Birim";
-"chart.news.title" = "Son Haberler";
+"chart.trend_neutral" = "Nötr";
+"chart.trend_down" = "Aşağı Eğilim";
+"chart.trend_up" = "Artış Eğilim";
 
 // Create Wallet
 
@@ -478,5 +487,24 @@
 
 // Guides
 
-"guides.tab_bar_item" = "Guides";
-"guides.title" = "Guides";
+"guides.tab_bar_item" = "Akademi";
+"guides.title" = "Academy";
+
+// Add Token
+
+"add_token.choose_blockchain" = "Blockchain Seç";
+"add_token.add_token" = "Token Ekle";
+"add_token.erc20_token" = "ERC20 tokenleri";
+"add_token.eos_token" = "EOS Token";
+"add_token.binance_token" = "Binance Token";
+
+// Add Erc20 Token
+
+"add_erc20_token.title" = "ERC20 Ekle";
+"add_erc20_token.contract_address" = "Sözleşme Adresi";
+"add_erc20_token.coin_name" = "Kripto Para Adı";
+"add_erc20_token.symbol" = "Sembol";
+"add_erc20_token.decimals" = "Ondalıklar";
+"add_erc20_token.already_exists" = "Bu token zaten kripto para yöneticisi listesindedir.";
+"add_erc20_token.add" = "Ekle";
+"add_erc20_token.contract_not_exist" = "Sözleşme bulunamadı";

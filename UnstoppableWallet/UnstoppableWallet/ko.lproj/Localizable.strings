@@ -71,7 +71,6 @@
 "blockchain_settings.sync_mode.blockchain" = "블록 체인";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "주소 형식";
-
 // Backup
 
 "backup.close" = "가까운, 닫힌";
@@ -270,6 +269,7 @@
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "코인 선택";
+"manage_coins.add_token" = "토큰 추가";
 "manage_coins.add_coin.title" = "%@ 추가 ";
 "manage_coins.add_coin.subtitle" = "%@ 지갑";
 "manage_coins.add_coin.text.set_up" = "귀하께서는 %@ 을 보내거나 받으시려면 %@ 지갑을 설정하셔야 합니다.";
@@ -396,9 +396,13 @@
 
 // Rate List
 
-"rate_list.title" = "가격";
 "rate_list.portfolio" = "포트폴리오";
+"rate_list.latest_news" = "최신 뉴스";
 "top100_list.portfolio" = "상위 100";
+"top100_list.sort_by" = "정렬 기준";
+"top100_list.sort_type.rank" = "순위";
+"top100_list.sort_type.top_winners" = "탑 위너";
+"top100_list.sort_type.top_losers" = "탑 루저";
 
 //NumPad
 
@@ -430,10 +434,14 @@
 "chart.volume" = "볼륨 (24 시간)";
 "chart.circulation" = "유통";
 "chart.max_supply" = "총 발행량";
+"chart.start_date" = "출시일";
+"chart.website" = "프로젝트 웹사이트";
 "chart.error.not_available" = "차트 이용불가";
 "chart.selected.price" = "금액";
 "chart.selected.volume" = "음량";
-"chart.news.title" = "최신 뉴스";
+"chart.trend_neutral" = "중립";
+"chart.trend_down" = "하향 추세";
+"chart.trend_up" = "상향 추세";
 
 // Create Wallet
 
@@ -479,5 +487,24 @@
 
 // Guides
 
-"guides.tab_bar_item" = "Guides";
-"guides.title" = "Guides";
+"guides.tab_bar_item" = "아카데미";
+"guides.title" = "Academy";
+
+// Add Token
+
+"add_token.choose_blockchain" = "블록체인 선택";
+"add_token.add_token" = "토큰 추가";
+"add_token.erc20_token" = "ERC 20 토큰";
+"add_token.eos_token" = "EOS 토큰";
+"add_token.binance_token" = "Binance 토큰";
+
+// Add Erc20 Token
+
+"add_erc20_token.title" = "ERC20 추가";
+"add_erc20_token.contract_address" = "계약 주소";
+"add_erc20_token.coin_name" = "코인 이름";
+"add_erc20_token.symbol" = "심볼";
+"add_erc20_token.decimals" = "소수점";
+"add_erc20_token.already_exists" = "이 토큰은 이미 코인 매니저 리스트에 있습니다.";
+"add_erc20_token.add" = "추가";
+"add_erc20_token.contract_not_exist" = "거래 발견되지 않음";

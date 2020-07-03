@@ -71,7 +71,6 @@
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "Adressformatierung";
-
 // Backup
 
 "backup.close" = "Schließen";
@@ -270,6 +269,7 @@
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "Coins auswählen";
+"manage_coins.add_token" = "Token hinzufügen";
 "manage_coins.add_coin.title" = "%@ hinzufügen ";
 "manage_coins.add_coin.subtitle" = "%@ Wallet";
 "manage_coins.add_coin.text.set_up" = "Sie müssen das %@ Wallet einrichten, um %@ senden oder empfangen zu können.\n";
@@ -396,9 +396,13 @@
 
 // Rate List
 
-"rate_list.title" = "Preise";
 "rate_list.portfolio" = "Portfolio";
+"rate_list.latest_news" = "Neueste Nachrichten";
 "top100_list.portfolio" = "Top 100";
+"top100_list.sort_by" = "Sortieren nach:";
+"top100_list.sort_type.rank" = "Position";
+"top100_list.sort_type.top_winners" = "Top Gewinner";
+"top100_list.sort_type.top_losers" = "Top Verlierer";
 
 //NumPad
 
@@ -430,10 +434,14 @@
 "chart.volume" = "Lautstärke(24 St.)";
 "chart.circulation" = "Umlaufversorgung	";
 "chart.max_supply" = "Gesamtversorgung";
+"chart.start_date" = "Startdatum";
+"chart.website" = "Projekt-Webseite";
 "chart.error.not_available" = "Diagramm nicht verfügbar";
 "chart.selected.price" = "Preis";
 "chart.selected.volume" = "Lautstärke";
-"chart.news.title" = "Neueste Nachrichten";
+"chart.trend_neutral" = "Neutral";
+"chart.trend_down" = "Down-Trend";
+"chart.trend_up" = "Up-Trend";
 
 // Create Wallet
 
@@ -479,5 +487,24 @@
 
 // Guides
 
-"guides.tab_bar_item" = "Guides";
-"guides.title" = "Guides";
+"guides.tab_bar_item" = "Akademie";
+"guides.title" = "Academy";
+
+// Add Token
+
+"add_token.choose_blockchain" = "Blockchain auswählen";
+"add_token.add_token" = "Token hinzufügen";
+"add_token.erc20_token" = "ERC20 Token";
+"add_token.eos_token" = "EOS Token";
+"add_token.binance_token" = "Binance Token";
+
+// Add Erc20 Token
+
+"add_erc20_token.title" = "ERC-20 hinzufügen";
+"add_erc20_token.contract_address" = "Vertragsadresse";
+"add_erc20_token.coin_name" = "Coin Name";
+"add_erc20_token.symbol" = "Symbol";
+"add_erc20_token.decimals" = "Dezimalen";
+"add_erc20_token.already_exists" = "Dieser Token befindet sich bereits in der Coin-Verwaltungsliste.";
+"add_erc20_token.add" = "Hinzufügen";
+"add_erc20_token.contract_not_exist" = "Vertrag nicht gefunden";

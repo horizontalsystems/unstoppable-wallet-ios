@@ -71,7 +71,6 @@
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "Format de l'adresse";
-
 // Backup
 
 "backup.close" = "Fermer";
@@ -270,6 +269,7 @@
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "Crypto Monnaie";
+"manage_coins.add_token" = "Ajouter le token";
 "manage_coins.add_coin.title" = "Ajouter %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Portefeuille";
 "manage_coins.add_coin.text.set_up" = "Vous devez créer un portefeuille %@ pour envoyer ou recevoir des %@.";
@@ -396,9 +396,13 @@
 
 // Rate List
 
-"rate_list.title" = "Tarifs";
 "rate_list.portfolio" = "Portfolio";
+"rate_list.latest_news" = "Dernières nouvelles";
 "top100_list.portfolio" = "Top 100";
+"top100_list.sort_by" = "Trier par";
+"top100_list.sort_type.rank" = "Rang";
+"top100_list.sort_type.top_winners" = "Les grands gagnants";
+"top100_list.sort_type.top_losers" = "Les gros perdants";
 
 //NumPad
 
@@ -430,10 +434,14 @@
 "chart.volume" = "Volume(24h)";
 "chart.circulation" = "Offre en Circulation	";
 "chart.max_supply" = "Offre totale";
+"chart.start_date" = "Date de lancement";
+"chart.website" = "Site web du projet";
 "chart.error.not_available" = "Graphique non disponible";
 "chart.selected.price" = "Prix";
 "chart.selected.volume" = "Volume";
-"chart.news.title" = "Dernières nouvelles";
+"chart.trend_neutral" = "Neutre";
+"chart.trend_down" = "Tendance à la baisse";
+"chart.trend_up" = "Tendance à la hausse";
 
 // Create Wallet
 
@@ -479,5 +487,24 @@
 
 // Guides
 
-"guides.tab_bar_item" = "Guides";
-"guides.title" = "Guides";
+"guides.tab_bar_item" = "Académie";
+"guides.title" = "Academy";
+
+// Add Token
+
+"add_token.choose_blockchain" = "Choisir la blockchain";
+"add_token.add_token" = "Ajouter le token";
+"add_token.erc20_token" = "ERC20 Token";
+"add_token.eos_token" = "EOS Token";
+"add_token.binance_token" = "Binance Token";
+
+// Add Erc20 Token
+
+"add_erc20_token.title" = "Ajouter ERC20";
+"add_erc20_token.contract_address" = "Adresse du contrat";
+"add_erc20_token.coin_name" = "Nom de la pièce";
+"add_erc20_token.symbol" = "Symbole";
+"add_erc20_token.decimals" = "Decimales";
+"add_erc20_token.already_exists" = "Ce token figure déjà sur la liste du gestionnaire des pièces.";
+"add_erc20_token.add" = "Ajouter";
+"add_erc20_token.contract_not_exist" = "Contrat non trouvé";
