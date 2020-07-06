@@ -6,28 +6,22 @@ inhibit_all_warnings!
 project 'UnstoppableWallet/UnstoppableWallet'
 
 def appPods
-  pod 'BitcoinKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
-  pod 'LitecoinKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
-  pod 'BitcoinCashKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
-  pod 'DashKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
-  pod 'Hodler.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
+  pod 'BitcoinKit.swift', '0.14.5'
+  pod 'LitecoinKit.swift', '0.14.5'
+  pod 'BitcoinCashKit.swift', '0.14.5'
+  pod 'DashKit.swift', '0.14.5'
+  pod 'Hodler.swift', '0.14.5'
 
-  pod 'BitcoinCore.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
+  pod 'BitcoinCore.swift', '0.14.5'
 
-  pod 'EthereumKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
-  # pod 'EthereumKit.swift', path: '../ethereum-kit-ios/'
-  pod 'Erc20Kit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
-  # pod 'Erc20Kit.swift', path: '../ethereum-kit-ios/'
+  pod 'EthereumKit.swift', '0.10.0'
+  pod 'Erc20Kit.swift', '0.10.0'
 
-  pod 'EosKit.swift', git: 'https://github.com/horizontalsystems/eos-kit-ios'
-  # pod 'EosKit.swift', path: '../eos-kit-ios/'
+  pod 'EosKit.swift', '0.3.5'
   pod 'EosioSwiftAbieosSerializationProvider', git: 'https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git'
-  # pod 'EosioSwiftAbieosSerializationProvider', path: '../eosio-swift-abieos-serialization-provider/'
   pod 'EosioSwift', git: 'https://github.com/horizontalsystems/eosio-swift'
-  # pod 'EosioSwift', path: '../eosio-swift/'
 
-  pod 'BinanceChainKit.swift', git: 'https://github.com/horizontalsystems/binance-chain-kit-ios'
-  # pod 'BinanceChainKit.swift', path: '../binance-chain-kit-ios/'
+  pod 'BinanceChainKit.swift', '0.3.4'
 
   pod 'HdWalletKit.swift', git: 'https://github.com/horizontalsystems/hd-wallet-kit-ios'
 
