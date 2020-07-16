@@ -60,7 +60,7 @@ class RateListViewController: ThemeViewController {
     private func postsHeader(spinnerVisible: Bool) -> ViewState<PostsHeaderFooterView> {
         .cellType(
                 hash: "posts_header",
-                binder: { [weak self] view in
+                binder: { view in
                     view.bind(spinnerVisible: spinnerVisible)
                 },
                 dynamicHeight: { _ in

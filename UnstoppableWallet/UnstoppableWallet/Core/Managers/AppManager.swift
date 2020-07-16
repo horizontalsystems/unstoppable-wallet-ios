@@ -10,7 +10,6 @@ class AppManager {
     private let keychainKit: IKeychainKit
     private let blurManager: IBlurManager
     private let notificationManager: INotificationManager
-    private let backgroundPriceAlertManager: IBackgroundPriceAlertManager
     private let kitCleaner: IKitCleaner
     private let debugBackgroundLogger: IDebugLogger?
     private let appVersionManager: IAppVersionManager
@@ -21,7 +20,7 @@ class AppManager {
 
     init(accountManager: IAccountManager, walletManager: IWalletManager, adapterManager: IAdapterManager, pinKit: IPinKit,
          keychainKit: IKeychainKit, blurManager: IBlurManager, notificationManager: INotificationManager,
-         backgroundPriceAlertManager: IBackgroundPriceAlertManager, kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
+         kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
          appVersionManager: IAppVersionManager, rateAppManager: IRateAppManager
     ) {
         self.accountManager = accountManager
@@ -31,7 +30,6 @@ class AppManager {
         self.keychainKit = keychainKit
         self.blurManager = blurManager
         self.notificationManager = notificationManager
-        self.backgroundPriceAlertManager = backgroundPriceAlertManager
         self.kitCleaner = kitCleaner
         self.debugBackgroundLogger = debugLogger
         self.appVersionManager = appVersionManager
@@ -51,6 +49,7 @@ extension AppManager {
         pinKit.didFinishLaunching()
         notificationManager.removeNotifications()
         kitCleaner.clear()
+        notificationManager.handleLaunch()
 
         appVersionManager.checkLatestVersion()
         rateAppManager.onLaunch()
@@ -72,7 +71,6 @@ extension AppManager {
         debugBackgroundLogger?.logEnterBackground()
 
         pinKit.didEnterBackground()
-//        backgroundPriceAlertManager.didEnterBackground()
     }
 
     func willEnterForeground() {
@@ -87,6 +85,10 @@ extension AppManager {
 
     func willTerminate() {
         debugBackgroundLogger?.logTerminate()
+    }
+
+    func didReceivePushToken(tokenData: Data) {
+        notificationManager.didReceivePushToken(tokenData: tokenData)
     }
 
 }

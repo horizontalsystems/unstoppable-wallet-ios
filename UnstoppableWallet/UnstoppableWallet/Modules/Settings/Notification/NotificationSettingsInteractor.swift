@@ -28,10 +28,6 @@ extension NotificationSettingsInteractor: INotificationSettingsInteractor {
         priceAlertManager.priceAlerts
     }
 
-    var allowedBackgroundFetching: Bool {
-        notificationManager.allowedBackgroundFetching
-    }
-
     func requestPermission() {
         notificationManager.requestPermission { [weak self] granted in
             if granted {
@@ -44,6 +40,12 @@ extension NotificationSettingsInteractor: INotificationSettingsInteractor {
 
     func save(priceAlerts: [PriceAlert]) {
         priceAlertManager.save(priceAlerts: priceAlerts)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onError: { [weak self] error in
+                    self?.delegate?.didFailSaveAlerts(error: error)
+                })
+                .disposed(by: disposeBag)
     }
 
 }

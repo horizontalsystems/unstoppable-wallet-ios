@@ -30,6 +30,7 @@ protocol ILocalStorage: class {
     var rateAppLastRequestDate: Date? { get set }
     var balanceHidden: Bool { get set }
     var ethereumRpcMode: EthereumRpcMode? { get set }
+    var pushToken: String? { get set }
 }
 
 protocol IChartTypeStorage: class {
@@ -65,7 +66,7 @@ protocol IWalletManager: class {
 
 protocol IPriceAlertManager {
     var priceAlerts: [PriceAlert] { get }
-    func save(priceAlerts: [PriceAlert])
+    func save(priceAlerts: [PriceAlert]) -> Observable<[()]>
 }
 
 protocol IAdapter: class {
@@ -188,10 +189,6 @@ protocol IWalletFactory {
     func wallet(coin: Coin, account: Account) -> Wallet
 }
 
-protocol IRestoreAccountDataSource {
-    var restoreAccounts: [Account] { get }
-}
-
 protocol IBlurManager {
     func willResignActive()
     func didBecomeActive()
@@ -219,10 +216,6 @@ protocol IRateCoinMapper {
     func unconvert(coinCode: String) -> [String]
 }
 
-protocol IBlockedChartCoins {
-    var blockedCoins: Set<String> { get }
-}
-
 protocol ISystemInfoManager {
     var appVersion: String { get }
     var passcodeSet: Bool { get }
@@ -243,6 +236,10 @@ protocol IAppConfigProvider {
     var etherscanKey: String { get }
     var coinMarketCapApiKey: String { get }
     var currencyCodes: [String] { get }
+
+    var pnsUrl: String { get }
+    var pnsPassword: String { get }
+    var pnsUsername: String { get }
 
     func defaultWords(count: Int) -> [String]
     var defaultEosCredentials: (String, String) { get }
@@ -306,25 +303,6 @@ protocol IBlockchainSettingsStorage {
     func save(initialSyncSettings: [InitialSyncSetting])
 }
 
-protocol IBackgroundPriceAlertManager {
-    func didEnterBackground()
-    func fetchRates(onComplete: @escaping (Bool) -> ())
-}
-
-protocol IPriceAlertHandler {
-//    func handleAlerts(with latestRatesData: LatestRateData)
-}
-
-protocol INotificationFactory {
-    func notifications(forAlerts alertItems: [PriceAlertItem]) -> [AlertNotification]
-}
-
-protocol IEmojiHelper {
-    var multiAlerts: String { get }
-    func title(forState state: Int) -> String
-    func body(forState state: Int) -> String
-}
-
 protocol IKitCleaner {
     func clear()
 }
@@ -334,16 +312,6 @@ protocol IAccountRecordStorage {
     func save(accountRecord: AccountRecord)
     func deleteAccountRecord(by id: String)
     func deleteAllAccountRecords()
-}
-
-protocol ITransactionRecordStorage {
-    func record(forHash hash: String) -> TransactionRecord?
-    var nonFilledRecords: [TransactionRecord] { get }
-    func set(rate: Double, transactionHash: String)
-    func clearRates()
-
-    func update(records: [TransactionRecord])
-    func clearRecords()
 }
 
 protocol IFullTransactionDataProviderManager {
@@ -466,10 +434,10 @@ protocol IFeeCoinProvider {
 }
 
 protocol INotificationManager {
-    var allowedBackgroundFetching: Bool { get }
+    func handleLaunch()
     func requestPermission(onComplete: @escaping (Bool) -> ())
-    func show(notification: AlertNotification)
     func removeNotifications()
+    func didReceivePushToken(tokenData: Data)
 }
 
 protocol IDebugLogger {
@@ -498,6 +466,11 @@ protocol IRateAppManager {
     func onLaunch()
     func onBecomeActive()
     func onResignActive()
+}
+
+protocol IRemoteNotificationManager {
+    func subscribePrice(pushToken: String?, alerts: [PriceAlert]) -> Single<()>
+    func unsubscribePrice(pushToken: String?, alerts: [PriceAlert]) -> Single<()>
 }
 
 protocol IRestoreManager {

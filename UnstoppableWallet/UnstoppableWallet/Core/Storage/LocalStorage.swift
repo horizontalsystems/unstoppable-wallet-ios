@@ -25,6 +25,7 @@ class LocalStorage {
     private let keyRateAppLastRequestDate = "rate_app_last_request_date"
     private let keyBalanceHidden = "balance_hidden"
     private let keyEthereumRpcMode = "ethereum_rpc_mode"
+    private let keyPushToken = "push_token"
 
     private let storage: StorageKit.ILocalStorage
 
@@ -164,6 +165,11 @@ extension LocalStorage: ILocalStorage {
         set {
             storage.set(value: newValue?.rawValue, for: keyEthereumRpcMode)
         }
+    }
+
+    var pushToken: String? {
+        get { storage.value(for: keyPushToken) }
+        set { storage.set(value: newValue, for: keyPushToken) }
     }
 
 }

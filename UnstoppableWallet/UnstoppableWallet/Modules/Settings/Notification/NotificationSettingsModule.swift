@@ -2,6 +2,7 @@ protocol INotificationSettingsView: AnyObject {
     func set(viewItems: [PriceAlertViewItem])
     func showWarning()
     func hideWarning()
+    func showError(error: Error)
 }
 
 protocol INotificationSettingsViewDelegate {
@@ -13,7 +14,6 @@ protocol INotificationSettingsViewDelegate {
 
 protocol INotificationSettingsInteractor {
     var alerts: [PriceAlert] { get }
-    var allowedBackgroundFetching: Bool { get }
     func requestPermission()
     func save(priceAlerts: [PriceAlert])
 }
@@ -22,6 +22,7 @@ protocol INotificationSettingsInteractorDelegate: AnyObject {
     func didGrantPermission()
     func didDenyPermission()
     func didEnterForeground()
+    func didFailSaveAlerts(error: Error)
 }
 
 protocol INotificationSettingsRouter {

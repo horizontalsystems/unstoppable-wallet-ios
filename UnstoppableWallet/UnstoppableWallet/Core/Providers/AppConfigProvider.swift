@@ -48,6 +48,18 @@ class AppConfigProvider: IAppConfigProvider {
         (Bundle.main.object(forInfoDictionaryKey: "CoinMarketCapKey") as? String) ?? ""
     }
 
+    var pnsUrl: String {
+        (Bundle.main.object(forInfoDictionaryKey: "PnsUrl") as? String) ?? ""
+    }
+
+    var pnsUsername: String {
+        (Bundle.main.object(forInfoDictionaryKey: "PnsUsername") as? String) ?? ""
+    }
+
+    var pnsPassword: String {
+        (Bundle.main.object(forInfoDictionaryKey: "PnsPassword") as? String) ?? ""
+    }
+
     let currencyCodes: [String] = ["USD", "EUR", "GBP", "JPY"]
 
     var featuredCoins: [Coin] {
