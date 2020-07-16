@@ -170,4 +170,8 @@ extension NotificationSettingsViewController: INotificationSettingsView {
         tableView.isHidden = false
     }
 
+    func showError(error: Error) {
+        HudHelper.instance.showError(title: error.smartDescription)
+    }
+
 }

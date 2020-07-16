@@ -73,12 +73,11 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
+	<key>PnsUrl</key>
+	<string>${pns_url}</string>
+	<key>PnsUsername</key>
+	<string>${pns_username}</string>
+	<key>PnsPassword</key>
+	<string>${pns_password}</string>
 </dict>
 </plist>

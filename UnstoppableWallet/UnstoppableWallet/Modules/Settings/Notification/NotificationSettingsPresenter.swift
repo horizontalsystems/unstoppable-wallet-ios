@@ -63,11 +63,6 @@ extension NotificationSettingsPresenter: INotificationSettingsViewDelegate {
 extension NotificationSettingsPresenter: INotificationSettingsInteractorDelegate {
 
     func didGrantPermission() {
-        guard interactor.allowedBackgroundFetching else {
-            view?.showWarning()
-            return
-        }
-
         view?.hideWarning()
     }
 
@@ -77,6 +72,15 @@ extension NotificationSettingsPresenter: INotificationSettingsInteractorDelegate
 
     func didEnterForeground() {
         interactor.requestPermission()
+    }
+
+    func didFailSaveAlerts(error: Error) {
+        alerts = interactor.alerts
+
+        let viewItems = factory.viewItems(alerts: alerts)
+        view?.set(viewItems: viewItems)
+
+        view?.showError(error: error.convertedError)
     }
 
 }

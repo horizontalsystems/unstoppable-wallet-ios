@@ -12,3 +12,15 @@ class PriceAlert {
     }
 
 }
+
+//extension TrendAlert.State {
+//
+//    var topicValue: String {
+//        switch self {
+//        case .off: return ""
+//        case .short: return "7days"
+//        case .long: return "6month"
+//        }
+//    }
+//
+//}
