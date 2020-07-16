@@ -4,15 +4,13 @@ class PriceAlertManager {
     private let disposeBag = DisposeBag()
 
     private let walletManager: IWalletManager
-    private let remoteNotificationManager: IRemoteNotificationManager
+    private let remoteAlertManager: IRemoteAlertManager
     private let storage: IPriceAlertStorage
-    private let localStorage: ILocalStorage
 
-    init(walletManager: IWalletManager, remoteNotificationManager: IRemoteNotificationManager, storage: IPriceAlertStorage, localStorage: ILocalStorage) {
+    init(walletManager: IWalletManager, storage: IPriceAlertStorage, remoteAlertManager: IRemoteAlertManager) {
         self.walletManager = walletManager
         self.storage = storage
-        self.remoteNotificationManager = remoteNotificationManager
-        self.localStorage = localStorage
+        self.remoteAlertManager = remoteAlertManager
 
         walletManager.walletsUpdatedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -63,7 +61,7 @@ extension PriceAlertManager: IPriceAlertManager {
 
         if !toBeSaved.isEmpty {
             singles.append(
-                    remoteNotificationManager.subscribePrice(pushToken: localStorage.pushToken, alerts: toBeSaved)
+                    remoteAlertManager.handle(newAlerts: toBeSaved)
                             .do(onSuccess: { [weak self] in
                                 self?.storage.save(priceAlerts: toBeSaved)
                             })
@@ -72,7 +70,7 @@ extension PriceAlertManager: IPriceAlertManager {
 
         if !toBeDeleted.isEmpty {
             singles.append(
-                    remoteNotificationManager.unsubscribePrice(pushToken: localStorage.pushToken, alerts: toBeDeleted)
+                    remoteAlertManager.handle(deletedAlerts: toBeDeleted)
                             .do(onSuccess: { [weak self] in
                                 self?.storage.delete(priceAlerts: toBeDeleted)
                             })

@@ -1042,10 +1042,10 @@
 		1A56495C591C36060A433A0E /* TransactionCompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564CB5E9C751F39838CFF6 /* TransactionCompletedView.swift */; };
 		1A564966B885D0049C9ED60E /* ScanQrRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647BF748A2AACE849948B /* ScanQrRouter.swift */; };
 		1A564966E82BE974A42E5021 /* PostFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564502E2B9B8455D452D4A /* PostFooterView.swift */; };
-		1A564966E9369E5BA04BB1AE /* RemoteNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645E4DE579618A4BC39AC /* RemoteNotificationManager.swift */; };
+		1A564966E9369E5BA04BB1AE /* RemoteAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645E4DE579618A4BC39AC /* RemoteAlertManager.swift */; };
 		1A564975B127F4EA2FCF61EB /* BitcoinBaseAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56450DA6DF97C9E1FFE987 /* BitcoinBaseAdapter.swift */; };
 		1A56497B4905D999F96E0461 /* SecuritySettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641B7D1079995F147F7D2 /* SecuritySettingsRouter.swift */; };
-		1A56498110974350A8228648 /* RemoteNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645E4DE579618A4BC39AC /* RemoteNotificationManager.swift */; };
+		1A56498110974350A8228648 /* RemoteAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645E4DE579618A4BC39AC /* RemoteAlertManager.swift */; };
 		1A56498C73C42F16A2D96A8D /* HighlightedDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564730E8F235240D62124B /* HighlightedDescriptionView.swift */; };
 		1A5649926B0064083045BEEB /* BalanceErrorInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646B5D68A302515565030 /* BalanceErrorInteractor.swift */; };
 		1A56499555CB26F0D24B4F06 /* BitcoinBaseAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56450DA6DF97C9E1FFE987 /* BitcoinBaseAdapter.swift */; };
@@ -1164,7 +1164,7 @@
 		1A564EC83C89E2261445AEE1 /* TransactionViewItemDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647DAC1D6B533F8E5E298 /* TransactionViewItemDataSourceTests.swift */; };
 		1A564ECD8CE958963E077C48 /* TransactionDataSortModeSettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F319DD6F10DDA8C617 /* TransactionDataSortModeSettingManager.swift */; };
 		1A564EDBD3E4B37299E199B7 /* AppStatusModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56404C1C16B85434117DB7 /* AppStatusModule.swift */; };
-		1A564EE60829E24E972ACB56 /* RemoteNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645E4DE579618A4BC39AC /* RemoteNotificationManager.swift */; };
+		1A564EE60829E24E972ACB56 /* RemoteAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645E4DE579618A4BC39AC /* RemoteAlertManager.swift */; };
 		1A564EE727CD892E7F2E5715 /* ScanQrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A144576DB93334E1682 /* ScanQrViewController.swift */; };
 		1A564EF8265D93AF6B2FFBCC /* InitialSyncSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646B6231F2C52F27526F7 /* InitialSyncSettingsManager.swift */; };
 		1A564F0710DC348B4454CC5F /* PrivacyConnectionSelectViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640B9ED5333E033280CE3 /* PrivacyConnectionSelectViewItem.swift */; };
@@ -2241,7 +2241,7 @@
 		1A56458F031D6E76252DF283 /* PrivacySyncItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacySyncItem.swift; sourceTree = "<group>"; };
 		1A5645AB97FE34C046A0104A /* DerivationSettingsViewItemFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DerivationSettingsViewItemFactory.swift; sourceTree = "<group>"; };
 		1A5645D25F2DB148CD0C16B5 /* MainSettingsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsRouter.swift; sourceTree = "<group>"; };
-		1A5645E4DE579618A4BC39AC /* RemoteNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteNotificationManager.swift; sourceTree = "<group>"; };
+		1A5645E4DE579618A4BC39AC /* RemoteAlertManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteAlertManager.swift; sourceTree = "<group>"; };
 		1A56464567BE569922C1FEFC /* PrivacySortSelectViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacySortSelectViewItem.swift; sourceTree = "<group>"; };
 		1A564672EB7B4A88898FF848 /* DerivationSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DerivationSetting.swift; sourceTree = "<group>"; };
 		1A56468820A5F894EC599A44 /* BalanceDataSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceDataSourceTests.swift; sourceTree = "<group>"; };
@@ -2935,7 +2935,7 @@
 				2FA5D02D8F5C2AE32C6FF923 /* KitCleaner.swift */,
 				11B359907F922F6935929D0B /* NotificationManager.swift */,
 				11B356B1873BCF37E0C42B09 /* PriceAlertManager.swift */,
-				1A5645E4DE579618A4BC39AC /* RemoteNotificationManager.swift */,
+				1A5645E4DE579618A4BC39AC /* RemoteAlertManager.swift */,
 				58AAA18F75B95ACBBAE94DF3 /* DebugLogger.swift */,
 				1A564C8BA986A5635B1222FB /* AppStatusManager.swift */,
 				1A5641CDB00EF52E18BF70F3 /* AppVersionManager.swift */,
@@ -5338,7 +5338,7 @@
 				11B35490A3BEC02B0E151766 /* PostCell.swift in Sources */,
 				11B35CE397039405FEDC0206 /* PostsHeaderFooterView.swift in Sources */,
 				1A564088605FE5AB983136AF /* MacdPointView.swift in Sources */,
-				1A564EE60829E24E972ACB56 /* RemoteNotificationManager.swift in Sources */,
+				1A564EE60829E24E972ACB56 /* RemoteAlertManager.swift in Sources */,
 				1A564F6BE30CF6CF79C95BA1 /* NotificationBackendError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5981,7 +5981,7 @@
 				11B35E303DC21178C2B27115 /* PostCell.swift in Sources */,
 				11B3592140A69C79DC5BE69D /* PostsHeaderFooterView.swift in Sources */,
 				1A564B3CAEC8BFB65782696D /* MacdPointView.swift in Sources */,
-				1A564966E9369E5BA04BB1AE /* RemoteNotificationManager.swift in Sources */,
+				1A564966E9369E5BA04BB1AE /* RemoteAlertManager.swift in Sources */,
 				1A564ABC706EAB84C3C81A46 /* NotificationBackendError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6586,7 +6586,7 @@
 				11B35FDACCB94864C88B5FB6 /* PostCell.swift in Sources */,
 				11B35F28E234A3BC7A1548F2 /* PostsHeaderFooterView.swift in Sources */,
 				1A5643C3C26E2E30F33FB8EE /* MacdPointView.swift in Sources */,
-				1A56498110974350A8228648 /* RemoteNotificationManager.swift in Sources */,
+				1A56498110974350A8228648 /* RemoteAlertManager.swift in Sources */,
 				1A564F4100E65CDDD9169AE6 /* NotificationBackendError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

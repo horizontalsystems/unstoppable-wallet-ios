@@ -433,7 +433,8 @@ protocol IFeeCoinProvider {
     func feeCoinProtocol(coin: Coin) -> String?
 }
 
-protocol INotificationManager {
+protocol INotificationManager: AnyObject {
+    var token: String? { get }
     func handleLaunch()
     func requestPermission(onComplete: @escaping (Bool) -> ())
     func removeNotifications()
@@ -468,9 +469,10 @@ protocol IRateAppManager {
     func onResignActive()
 }
 
-protocol IRemoteNotificationManager {
-    func subscribePrice(pushToken: String?, alerts: [PriceAlert]) -> Single<()>
-    func unsubscribePrice(pushToken: String?, alerts: [PriceAlert]) -> Single<()>
+protocol IRemoteAlertManager {
+    var notificationManager: INotificationManager? { get set }
+    func handle(newAlerts: [PriceAlert]) -> Single<()>
+    func handle(deletedAlerts: [PriceAlert]) -> Single<()>
 }
 
 protocol IRestoreManager {

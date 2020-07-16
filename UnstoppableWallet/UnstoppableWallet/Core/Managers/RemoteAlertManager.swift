@@ -4,7 +4,9 @@ import RxSwift
 import ObjectMapper
 import Alamofire
 
-class RemoteNotificationManager {
+class RemoteAlertManager {
+    weak var notificationManager: INotificationManager?
+
     private let networkManager: NetworkManager
     private let appConfigProvider: IAppConfigProvider
 
@@ -79,21 +81,7 @@ class RemoteNotificationManager {
 
 }
 
-extension RemoteNotificationManager: IRemoteNotificationManager {
-
-    func subscribePrice(pushToken: String?, alerts: [PriceAlert]) -> Single<()> {
-        let topics = alerts.map(composePriceTopic)
-        return update(pushToken: pushToken, topics: topics, method: .subscribe)
-    }
-
-    func unsubscribePrice(pushToken: String?, alerts: [PriceAlert]) -> Single<()> {
-        let topics = alerts.map(composePriceTopic)
-        return update(pushToken: pushToken, topics: topics, method: .unsubscribe)
-    }
-
-}
-
-extension RemoteNotificationManager {
+extension RemoteAlertManager {
 
     class AuthMapper: IApiMapper {
 
@@ -122,6 +110,20 @@ extension RemoteNotificationManager {
             }
         }
 
+    }
+
+}
+
+extension RemoteAlertManager: IRemoteAlertManager {
+
+    func handle(newAlerts: [PriceAlert]) -> Single<()> {
+        let topics = newAlerts.map(composePriceTopic)
+        return update(pushToken: notificationManager?.token, topics: topics, method: .subscribe)
+    }
+
+    func handle(deletedAlerts: [PriceAlert]) -> Single<()> {
+        let topics = deletedAlerts.map(composePriceTopic)
+        return update(pushToken: notificationManager?.token, topics: topics, method: .unsubscribe)
     }
 
 }
