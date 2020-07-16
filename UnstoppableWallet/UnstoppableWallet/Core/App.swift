@@ -51,9 +51,9 @@ class App {
     private let testModeIndicator: TestModeIndicator
     private let walletRemover: WalletRemover
 
+    var remoteAlertManager: IRemoteAlertManager
     let priceAlertManager: IPriceAlertManager
     let notificationManager: INotificationManager
-    let remoteNotificationManager: IRemoteNotificationManager
 
     var debugLogger: IDebugLogger?
 
@@ -155,10 +155,14 @@ class App {
         testModeIndicator = TestModeIndicator(appConfigProvider: appConfigProvider)
         walletRemover = WalletRemover(accountManager: accountManager, walletManager: walletManager)
 
-        remoteNotificationManager = RemoteNotificationManager(networkManager: networkManager, appConfigProvider: appConfigProvider)
+        remoteAlertManager = RemoteAlertManager(networkManager: networkManager, appConfigProvider: appConfigProvider)
+
         let priceAlertStorage: IPriceAlertStorage = PriceAlertStorage(coinManager: coinManager, storage: storage)
-        priceAlertManager = PriceAlertManager(walletManager: walletManager, remoteNotificationManager: remoteNotificationManager, storage: priceAlertStorage, localStorage: localStorage)
-        notificationManager = NotificationManager(priceAlertManager: priceAlertManager, remoteNotificationManager: remoteNotificationManager, storage: localStorage)
+        priceAlertManager = PriceAlertManager(walletManager: walletManager, storage: priceAlertStorage, remoteAlertManager: remoteAlertManager)
+
+        notificationManager = NotificationManager(priceAlertManager: priceAlertManager, remoteAlertManager: remoteAlertManager, storage: localStorage)
+
+        remoteAlertManager.notificationManager = notificationManager
 
         appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage, predefinedAccountTypeManager: predefinedAccountTypeManager, walletManager: walletManager, adapterManager: adapterManager, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager)
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, localStorage: localStorage)

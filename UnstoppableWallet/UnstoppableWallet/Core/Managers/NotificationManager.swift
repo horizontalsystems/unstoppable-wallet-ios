@@ -4,20 +4,24 @@ import RxSwift
 
 class NotificationManager {
     let priceAlertManager: IPriceAlertManager
-    let remoteNotificationManager: IRemoteNotificationManager
+    let remoteAlertManager: IRemoteAlertManager
     let storage: ILocalStorage
 
     let disposeBag = DisposeBag()
 
-    init(priceAlertManager: IPriceAlertManager, remoteNotificationManager: IRemoteNotificationManager, storage: ILocalStorage) {
+    init(priceAlertManager: IPriceAlertManager, remoteAlertManager: IRemoteAlertManager, storage: ILocalStorage) {
         self.priceAlertManager = priceAlertManager
-        self.remoteNotificationManager = remoteNotificationManager
+        self.remoteAlertManager = remoteAlertManager
         self.storage = storage
     }
 
 }
 
 extension NotificationManager: INotificationManager {
+
+    var token: String? {
+        storage.pushToken
+    }
 
     func handleLaunch() {
         UIApplication.shared.registerForRemoteNotifications()
@@ -47,7 +51,7 @@ extension NotificationManager: INotificationManager {
         if storage.pushToken != token {
             storage.pushToken = token
 
-            remoteNotificationManager.subscribePrice(pushToken: token, alerts: priceAlertManager.priceAlerts)
+            remoteAlertManager.handle(newAlerts: priceAlertManager.priceAlerts)
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                     .observeOn(MainScheduler.instance)
                     .subscribe()
