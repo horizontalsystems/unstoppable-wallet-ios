@@ -14,13 +14,12 @@ class GuidesManager {
 
 extension GuidesManager: IGuidesManager {
 
-    var guideCategoriesSingle: Single<[GuideCategory]> {
-        let url = "https://raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/master/index.json"
+    func guideCategoriesSingle(url: URL) -> Single<[GuideCategory]> {
         let request = networkManager.session.request(url)
         return networkManager.single(request: request)
     }
 
-    func guideContentSingle(url: String) -> Single<String> {
+    func guideContentSingle(url: URL) -> Single<String> {
         let request = networkManager.session.request(url)
 
         return Single.create { observer in

@@ -6,12 +6,18 @@ class GuidesPresenter {
     private let router: IGuidesRouter
     private let interactor: IGuidesInteractor
 
+    private let indexUrl: URL
     private var guideCategories = [GuideCategory]()
     private var viewItems = [GuideViewItem]()
 
     private var currentCategoryIndex: Int = 0
 
-    init(router: IGuidesRouter, interactor: IGuidesInteractor) {
+    init?(router: IGuidesRouter, interactor: IGuidesInteractor) {
+        guard let indexUrl = URL(string: "index.json", relativeTo: interactor.guidesBaseUrl) else {
+            return nil
+        }
+
+        self.indexUrl = indexUrl
         self.router = router
         self.interactor = interactor
     }
@@ -22,7 +28,11 @@ class GuidesPresenter {
         }
 
         let viewItems = guideCategories[currentCategoryIndex].guides.map { guide in
-            GuideViewItem(title: guide.title, date: guide.date, imageUrl: guide.imageUrl)
+            GuideViewItem(
+                    title: guide.title,
+                    date: guide.date,
+                    imageUrl: guide.imageUrl.flatMap { URL(string: $0, relativeTo: interactor.guidesBaseUrl) }
+            )
         }
         view?.set(viewItems: viewItems)
     }
@@ -32,7 +42,7 @@ extension GuidesPresenter: IGuidesViewDelegate {
 
     func onLoad() {
         view?.setSpinner(visible: true)
-        interactor.fetchGuideCategories()
+        interactor.fetchGuideCategories(url: indexUrl)
     }
 
     func onSelectFilter(index: Int) {

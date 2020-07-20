@@ -228,6 +228,7 @@ protocol IAppConfigProvider {
     var appWebPageLink: String { get }
     var reportEmail: String { get }
     var telegramWalletHelpAccount: String { get }
+    var guidesBaseUrl: URL? { get }
 
     var testMode: Bool { get }
     var officeMode: Bool { get }
@@ -508,8 +509,8 @@ protocol ISortTypeManager: AnyObject {
 }
 
 protocol IGuidesManager {
-    var guideCategoriesSingle: Single<[GuideCategory]> { get }
-    func guideContentSingle(url: String) -> Single<String>
+    func guideCategoriesSingle(url: URL) -> Single<[GuideCategory]>
+    func guideContentSingle(url: URL) -> Single<String>
 }
 
 protocol IErc20ContractInfoProvider {

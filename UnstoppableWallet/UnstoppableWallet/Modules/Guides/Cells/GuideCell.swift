@@ -77,8 +77,8 @@ class GuideCell: UITableViewCell {
         guideImageView.af.cancelImageRequest()
         guideImageView.image = nil
 
-        if let imageUrl = viewItem.imageUrl, let url = URL(string: imageUrl) {
-            guideImageView.af.setImage(withURL: url)
+        if let imageUrl = viewItem.imageUrl {
+            guideImageView.af.setImage(withURL: imageUrl)
         }
 
         dateLabel.text = GuideCell.formattedDate(viewItem: viewItem)

@@ -19,14 +19,14 @@ extension MainRouter {
         let interactor = MainInteractor(localStorage: App.shared.localStorage)
         let presenter = MainPresenter(interactor: interactor, router: router)
 
-        let viewControllers = [
+        let viewControllers: [UIViewController?] = [
             balanceNavigation,
             transactionsNavigation,
             guidesNavigation,
             settingsNavigation,
         ]
 
-        let viewController = MainViewController(viewDelegate: presenter, viewControllers: viewControllers, selectedIndex: selectedTab.rawValue)
+        let viewController = MainViewController(viewDelegate: presenter, viewControllers: viewControllers.compactMap { $0 }, selectedIndex: selectedTab.rawValue)
 
         interactor.delegate = presenter
         presenter.view = viewController
@@ -49,8 +49,8 @@ extension MainRouter {
         ThemeNavigationController(rootViewController: MainSettingsRouter.module())
     }
 
-    private static var guidesNavigation: UIViewController {
-        ThemeNavigationController(rootViewController: GuidesRouter.module())
+    private static var guidesNavigation: UIViewController? {
+        GuidesRouter.module().map { ThemeNavigationController(rootViewController: $0) }
     }
 
 }

@@ -1,3 +1,5 @@
+import Foundation
+
 class GuidePresenter {
     weak var view: IGuideView?
 
@@ -5,13 +7,17 @@ class GuidePresenter {
     private let router: IGuideRouter
     private let interactor: IGuideInteractor
 
-    private let guide: Guide
+    private let guideUrl: URL
     private var fontSize: Int = 17
 
     private var guideContent: String?
 
-    init(guide: Guide, parser: IGuideParser, router: IGuideRouter, interactor: IGuideInteractor) {
-        self.guide = guide
+    init?(guide: Guide,  parser: IGuideParser, router: IGuideRouter, interactor: IGuideInteractor) {
+        guard let guideUrl = URL(string: guide.fileUrl, relativeTo: interactor.guidesBaseUrl) else {
+            return nil
+        }
+
+        self.guideUrl = guideUrl
         self.parser = parser
         self.router = router
         self.interactor = interactor
@@ -22,7 +28,7 @@ class GuidePresenter {
             return
         }
 
-        view?.set(viewItems: parser.viewItems(guideContent: guideContent, fontSize: fontSize))
+        view?.set(viewItems: parser.viewItems(guideContent: guideContent, guideUrl: guideUrl, fontSize: fontSize))
     }
 }
 
@@ -30,7 +36,7 @@ extension GuidePresenter: IGuideViewDelegate {
 
     func onLoad() {
         view?.setSpinner(visible: true)
-        interactor.fetchGuideContent(url: guide.fileUrl)
+        interactor.fetchGuideContent(url: guideUrl)
     }
 
     func onTapFontSize() {

@@ -1,3 +1,5 @@
+import Foundation
+
 protocol IGuideView: AnyObject {
     func set(viewItems: [GuideBlockViewItem])
     func refresh()
@@ -10,7 +12,8 @@ protocol IGuideViewDelegate {
 }
 
 protocol IGuideInteractor {
-    func fetchGuideContent(url: String)
+    var guidesBaseUrl: URL? { get }
+    func fetchGuideContent(url: URL)
 }
 
 protocol IGuideInteractorDelegate: AnyObject {
@@ -22,5 +25,5 @@ protocol IGuideRouter {
 }
 
 protocol IGuideParser {
-    func viewItems(guideContent: String, fontSize: Int) -> [GuideBlockViewItem]
+    func viewItems(guideContent: String, guideUrl: URL, fontSize: Int) -> [GuideBlockViewItem]
 }

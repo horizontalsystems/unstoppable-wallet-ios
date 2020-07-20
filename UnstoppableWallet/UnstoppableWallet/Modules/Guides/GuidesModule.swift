@@ -14,7 +14,8 @@ protocol IGuidesViewDelegate {
 }
 
 protocol IGuidesInteractor {
-    func fetchGuideCategories()
+    var guidesBaseUrl: URL? { get }
+    func fetchGuideCategories(url: URL)
 }
 
 protocol IGuidesInteractorDelegate: AnyObject {
@@ -28,5 +29,5 @@ protocol IGuidesRouter {
 struct GuideViewItem {
     let title: String
     let date: Date
-    var imageUrl: String?
+    var imageUrl: URL?
 }

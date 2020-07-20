@@ -1,13 +1,16 @@
+import Foundation
 import RxSwift
 
 class GuideInteractor {
     weak var delegate: IGuideInteractorDelegate?
 
     private let guidesManager: IGuidesManager
+    private let appConfigProvider: IAppConfigProvider
 
     private let disposeBag = DisposeBag()
 
-    init(guidesManager: IGuidesManager) {
+    init(appConfigProvider: IAppConfigProvider, guidesManager: IGuidesManager) {
+        self.appConfigProvider = appConfigProvider
         self.guidesManager = guidesManager
     }
 
@@ -15,7 +18,11 @@ class GuideInteractor {
 
 extension GuideInteractor: IGuideInteractor {
 
-    func fetchGuideContent(url: String) {
+    var guidesBaseUrl: URL? {
+        appConfigProvider.guidesBaseUrl
+    }
+
+    func fetchGuideContent(url: URL) {
         guidesManager.guideContentSingle(url: url)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .observeOn(MainScheduler.instance)
