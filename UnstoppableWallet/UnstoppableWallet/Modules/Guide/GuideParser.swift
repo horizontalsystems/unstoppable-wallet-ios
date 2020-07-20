@@ -31,7 +31,7 @@ class GuideParser {
 
 extension GuideParser: IGuideParser {
 
-    func viewItems(guideContent: String, fontSize: Int) -> [GuideBlockViewItem] {
+    func viewItems(guideContent: String, guideUrl: URL, fontSize: Int) -> [GuideBlockViewItem] {
         let fonts = StaticFontCollection(
                 heading1: .title2,
                 heading2: .title3,
@@ -107,7 +107,7 @@ extension GuideParser: IGuideParser {
                     }
                 }
 
-                if let imageBlock = block as? GuideVisitor.ImageBlock, let urlString = imageBlock.url, let url = URL(string: urlString) {
+                if let imageBlock = block as? GuideVisitor.ImageBlock, let urlString = imageBlock.url, let url = URL(string: urlString, relativeTo: guideUrl) {
                     var type: GuideImageType = .square
 
                     if let letter = url.deletingPathExtension().lastPathComponent.split(separator: "-").last {
