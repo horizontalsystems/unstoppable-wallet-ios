@@ -12,11 +12,7 @@ class GuidePresenter {
 
     private var guideContent: String?
 
-    init?(guide: Guide,  parser: IGuideParser, router: IGuideRouter, interactor: IGuideInteractor) {
-        guard let guideUrl = URL(string: guide.fileUrl, relativeTo: interactor.guidesBaseUrl) else {
-            return nil
-        }
-
+    init(guideUrl: URL, parser: IGuideParser, router: IGuideRouter, interactor: IGuideInteractor) {
         self.guideUrl = guideUrl
         self.parser = parser
         self.router = router
@@ -37,6 +33,14 @@ extension GuidePresenter: IGuideViewDelegate {
     func onLoad() {
         view?.setSpinner(visible: true)
         interactor.fetchGuideContent(url: guideUrl)
+    }
+
+    func onTapGuide(url: URL) {
+        guard let resolvedUrl = URL(string: url.absoluteString, relativeTo: guideUrl) else {
+            return
+        }
+
+        router.showGuide(url: resolvedUrl)
     }
 
     func onTapFontSize() {

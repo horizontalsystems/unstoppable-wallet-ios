@@ -24,8 +24,9 @@ class GuideTextCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(attributedString: NSAttributedString) {
+    func bind(attributedString: NSAttributedString, delegate: UITextViewDelegate?) {
         textView.attributedText = attributedString
+        textView.delegate = delegate
     }
 
 }

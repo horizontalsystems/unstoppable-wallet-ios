@@ -5,7 +5,7 @@ class AppConfigProvider: IAppConfigProvider {
     let appWebPageLink = "https://unstoppable.money"
     let reportEmail = "hsdao@protonmail.ch"
     let telegramWalletHelpAccount = "UnstoppableWallet"
-    let guidesBaseUrl = URL(string: "https://raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/develop/")
+    let guidesIndexUrl = URL(string: "https://raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/develop/index.json")!
 
     var testMode: Bool {
         Bundle.main.object(forInfoDictionaryKey: "TestMode") as? String == "true"
