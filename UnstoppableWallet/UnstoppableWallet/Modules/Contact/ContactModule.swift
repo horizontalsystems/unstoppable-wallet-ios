@@ -8,7 +8,6 @@ protocol IContactViewDelegate {
     func viewDidLoad()
     func didTapEmail()
     func didTapTelegramWalletHelp()
-    func didTapStatus()
     func didTapDebugLog()
 }
 
@@ -22,6 +21,5 @@ protocol IContactRouter {
     var canSendMail: Bool { get }
     func openSendMail(recipient: String)
     func openTelegram(account: String)
-    func openStatus()
     func showDebugLog()
 }

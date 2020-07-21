@@ -31,10 +31,6 @@ extension ContactRouter: IContactRouter {
         }
     }
 
-    func openStatus() {
-        viewController?.navigationController?.pushViewController(AppStatusRouter.module(), animated: true)
-    }
-
     func showDebugLog() {
         viewController?.navigationController?.pushViewController(DebugRouter.module(), animated: true)
     }
