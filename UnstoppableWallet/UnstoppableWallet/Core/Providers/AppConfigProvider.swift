@@ -96,6 +96,7 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "CAS",       title: "Cashaa",                code: "CAS",     decimal: 8,  type: .binance(symbol: "CAS-167")),
         Coin(id: "LINK",      title: "Chainlink",             code: "LINK",    decimal: 18, type: CoinType(erc20Address: "0x514910771AF9Ca656af840dff83E8264EcF986CA")),
         Coin(id: "CVC",       title: "Civic",                 code: "CVC",     decimal: 8,  type: CoinType(erc20Address: "0x41e5560054824ea6b0732e656e3ad64e20e94e45")),
+        Coin(id: "COMP",      title: "Compound",              code: "COMP",    decimal: 18, type: CoinType(erc20Address: "0xc00e94cb662c3520282e6f5717214004a7f26888")),
         Coin(id: "CRPT",      title: "Crypterium",            code: "CRPT",    decimal: 8,  type: .binance(symbol: "CRPT-8C9")),
         Coin(id: "CRO",       title: "Crypto.com Coin",       code: "CRO",     decimal: 8,  type: CoinType(erc20Address: "0xA0b73E1Ff0B80914AB6fe0444E65848C4C34450b")),
         Coin(id: "DAI",       title: "Dai",                   code: "DAI",     decimal: 18, type: CoinType(erc20Address: "0x6b175474e89094c44da98b954eedeac495271d0f")),

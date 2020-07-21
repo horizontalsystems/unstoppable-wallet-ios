@@ -73,7 +73,7 @@ class CoinInfoMap {
         "WTC": CoinInfo(supply: 70_000_000, startDate: "27/08/2017", website: "https://www.waltonchain.org/en/"),
         "WBTC": CoinInfo(supply: 21_000_000, startDate: "27/11/2018", website: "https://wbtc.network/"),
         "WETH": CoinInfo(supply: 1_153_917, startDate: "31/12/2018", website: "https://weth.io/"),
-
+        "COMP": CoinInfo(supply: 10_000_000, startDate: "04/03/2020", website: "https://compound.finance/"),
     ]
 
 }
