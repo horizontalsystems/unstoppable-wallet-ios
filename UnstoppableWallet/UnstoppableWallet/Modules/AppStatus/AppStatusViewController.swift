@@ -25,7 +25,7 @@ class AppStatusViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "settings.contact.app_status".localized
+        title = "settings.app_status".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.copy".localized, style: .plain, target: self, action: #selector(didTapButton))
 
         view.addSubview(textView)

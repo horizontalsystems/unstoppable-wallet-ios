@@ -74,10 +74,10 @@ class MainSettingsViewController: ThemeViewController {
                 self?.delegate.didTapSecurity()
             }),
 
-            Row<TitleCell>(id: "experimental_features", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Experimental Features Icon"), title: "settings.experimental_features".localized, showDisclosure: true, last: true)
+            Row<TitleCell>(id: "app_status", height: .heightSingleLineCell, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "App Status Icon"), title: "settings.app_status".localized, showDisclosure: true, last: true)
             }, action: { [weak self] _ in
-                self?.delegate.didTapExperimentalFeatures()
+                self?.delegate.didTapAppStatus()
             })
         ]
     }
@@ -103,19 +103,25 @@ class MainSettingsViewController: ThemeViewController {
             }),
 
             Row<ToggleCell>(id: "light_mode", height: .heightSingleLineCell, bind: { [unowned self] cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.light_mode".localized, isOn: self.lightMode, last: true, onToggle: { [weak self] isOn in
+                cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.light_mode".localized, isOn: self.lightMode, onToggle: { [weak self] isOn in
                     self?.delegate.didSwitch(lightMode: isOn)
                 })
+            }),
+
+            Row<TitleCell>(id: "experimental_features", height: .heightSingleLineCell, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Experimental Features Icon"), title: "settings.experimental_features".localized, showDisclosure: true, last: true)
+            }, action: { [weak self] _ in
+                self?.delegate.didTapExperimentalFeatures()
             })
         ]
     }
 
     private var aboutRows: [RowProtocol] {
         [
-            Row<TitleCell>(id: "about", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "About Icon"), title: "settings.about".localized, showDisclosure: true)
+            Row<TitleCell>(id: "contact", height: .heightSingleLineCell, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Contact Icon"), title: "settings.contact".localized, showDisclosure: true, last: true)
             }, action: { [weak self] _ in
-                self?.delegate.didTapAbout()
+                self?.delegate.didTapContact()
             }),
 
             Row<TitleCell>(id: "tell_friends", height: .heightSingleLineCell, autoDeselect: true, bind: { cell, _ in
@@ -124,10 +130,10 @@ class MainSettingsViewController: ThemeViewController {
                 self?.delegate.didTapTellFriends()
             }),
 
-            Row<TitleCell>(id: "contact", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Contact Icon"), title: "settings.contact".localized, showDisclosure: true, last: true)
+            Row<TitleCell>(id: "terms", height: .heightSingleLineCell, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Terms Icon"), title: "settings.terms".localized, showDisclosure: true)
             }, action: { [weak self] _ in
-                self?.delegate.didTapContact()
+                self?.delegate.didTapTerms()
             })
         ]
     }

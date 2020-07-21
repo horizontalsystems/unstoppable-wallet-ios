@@ -16,6 +16,10 @@ extension MainSettingsRouter: IMainSettingsRouter {
         viewController?.navigationController?.pushViewController(SecuritySettingsRouter.module(), animated: true)
     }
 
+    func showAppStatus() {
+        viewController?.navigationController?.pushViewController(AppStatusRouter.module(), animated: true)
+    }
+
     func showExperimentalFeatures() {
         viewController?.navigationController?.pushViewController(ExperimentalFeaturesRouter.module(), animated: true)
     }
@@ -33,7 +37,7 @@ extension MainSettingsRouter: IMainSettingsRouter {
         viewController?.navigationController?.pushViewController(module, animated: true)
     }
 
-    func showAbout() {
+    func showTerms() {
         viewController?.navigationController?.pushViewController(AboutSettingsRouter.module(), animated: true)
     }
 

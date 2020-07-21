@@ -31,10 +31,6 @@ extension ContactPresenter: IContactViewDelegate {
         router.openTelegram(account: interactor.telegramWalletHelpAccount)
     }
 
-    func didTapStatus() {
-        router.openStatus()
-    }
-
     func didTapDebugLog() {
         router.showDebugLog()
     }

@@ -251,11 +251,12 @@ bch.horizontalsystems.xyz/apg";
 "settings.security_center" = "Security Center";
 "settings.manage_accounts" = "Manage Wallets";
 "settings.manage_coins" = "Manage Coins";
+"settings.app_status" = "App Status";
 "settings.experimental_features" = "Experimental Features";
 "settings.notifications" = "Notifications";
 "settings.base_currency" = "Base Currency";
 "settings.language" = "Language";
-"settings.about" = "About";
+"settings.terms" = "Terms";
 "settings.tell_friends" = "Tell Friends";
 "settings.contact" = "Contact";
 "settings.light_mode" = "Light Mode";
@@ -362,7 +363,6 @@ bch.horizontalsystems.xyz/apg";
 // Settings -> Contact
 
 "settings.contact.title" = "Contact";
-"settings.contact.app_status" = "App Status";
 "settings.contact.email" = "E-mail";
 "settings.contact.telegram_wallet" = "Telegram";
 

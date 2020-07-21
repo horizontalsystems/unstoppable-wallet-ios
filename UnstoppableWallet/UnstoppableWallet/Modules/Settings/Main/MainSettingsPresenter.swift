@@ -29,6 +29,10 @@ extension MainSettingsPresenter: IMainSettingsViewDelegate {
         router.showSecuritySettings()
     }
 
+    func didTapAppStatus() {
+        router.showAppStatus()
+    }
+
     func didTapExperimentalFeatures() {
         router.showExperimentalFeatures()
     }
@@ -50,8 +54,8 @@ extension MainSettingsPresenter: IMainSettingsViewDelegate {
         router.reloadAppInterface()
     }
 
-    func didTapAbout() {
-        router.showAbout()
+    func didTapTerms() {
+        router.showTerms()
     }
 
     func didTapTellFriends() {

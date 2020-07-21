@@ -81,22 +81,6 @@ class ContactViewController: ThemeViewController {
         ]
     }
 
-    private var statusRows: [RowProtocol] {
-        [
-            Row<TitleCell>(
-                    id: "status",
-                    height: .heightSingleLineCell,
-                    autoDeselect: true,
-                    bind: { cell, _ in
-                        cell.bind(titleIcon: nil, title: "settings.contact.app_status".localized, showDisclosure: true, last: true)
-                    },
-                    action: { [weak self] _ in
-                        self?.delegate.didTapStatus()
-                    }
-            )
-        ]
-    }
-
     private var debugRows: [RowProtocol] {
         [
             Row<TitleCell>(id: "debug_background_log", height: .heightSingleLineCell, autoDeselect: true, bind: { cell, _ in
@@ -117,8 +101,7 @@ extension ContactViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
-            Section(id: "report_section", headerState: .margin(height: .margin3x), rows: reportRows),
-            Section(id: "status_section", headerState: .margin(height: .margin8x), rows: statusRows)
+            Section(id: "report_section", headerState: .margin(height: .margin3x), footerState: .margin(height: .margin8x), rows: reportRows)
         ]
 
         if App.shared.appConfigProvider.officeMode {
