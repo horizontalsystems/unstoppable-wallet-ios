@@ -17,8 +17,8 @@ class GuidesInteractor {
 
 extension GuidesInteractor: IGuidesInteractor {
 
-    var guidesBaseUrl: URL? {
-        appConfigProvider.guidesBaseUrl
+    var guidesIndexUrl: URL {
+        appConfigProvider.guidesIndexUrl
     }
 
     func fetchGuideCategories(url: URL) {

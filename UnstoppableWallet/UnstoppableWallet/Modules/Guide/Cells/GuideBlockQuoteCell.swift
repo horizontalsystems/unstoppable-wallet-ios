@@ -42,8 +42,9 @@ class GuideBlockQuoteCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(attributedString: NSAttributedString, tightTop: Bool, tightBottom: Bool) {
+    func bind(attributedString: NSAttributedString, delegate: UITextViewDelegate?, tightTop: Bool, tightBottom: Bool) {
         textView.attributedText = attributedString
+        textView.delegate = delegate
 
         wrapperView.snp.remakeConstraints { maker in
             maker.leading.trailing.equalToSuperview()

@@ -8,11 +8,11 @@ protocol IGuideView: AnyObject {
 
 protocol IGuideViewDelegate {
     func onLoad()
+    func onTapGuide(url: URL)
     func onTapFontSize()
 }
 
 protocol IGuideInteractor {
-    var guidesBaseUrl: URL? { get }
     func fetchGuideContent(url: URL)
 }
 
@@ -21,6 +21,7 @@ protocol IGuideInteractorDelegate: AnyObject {
 }
 
 protocol IGuideRouter {
+    func showGuide(url: URL)
     func showFontSize(selected: Int, onSelect: @escaping (Int) -> ())
 }
 

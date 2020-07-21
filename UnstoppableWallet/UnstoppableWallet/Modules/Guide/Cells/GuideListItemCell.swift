@@ -43,9 +43,10 @@ class GuideListItemCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(attributedString: NSAttributedString, prefix: String?, tightTop: Bool, tightBottom: Bool) {
+    func bind(attributedString: NSAttributedString, delegate: UITextViewDelegate?, prefix: String?, tightTop: Bool, tightBottom: Bool) {
         prefixLabel.text = prefix
         textView.attributedText = attributedString
+        textView.delegate = delegate
 
         wrapperView.snp.remakeConstraints { maker in
             maker.leading.trailing.equalToSuperview()

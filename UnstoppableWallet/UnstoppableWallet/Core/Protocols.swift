@@ -228,7 +228,7 @@ protocol IAppConfigProvider {
     var appWebPageLink: String { get }
     var reportEmail: String { get }
     var telegramWalletHelpAccount: String { get }
-    var guidesBaseUrl: URL? { get }
+    var guidesIndexUrl: URL { get }
 
     var testMode: Bool { get }
     var officeMode: Bool { get }

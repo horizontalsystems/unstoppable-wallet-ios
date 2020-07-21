@@ -6,11 +6,8 @@ class GuidesRouter {
 
 extension GuidesRouter: IGuidesRouter {
 
-    func show(guide: Guide) {
-        guard let module = GuideRouter.module(guide: guide) else {
-            return
-        }
-
+    func show(guideUrl: URL) {
+        let module = GuideRouter.module(guideUrl: guideUrl)
         viewController?.navigationController?.pushViewController(module, animated: true)
     }
 
@@ -18,14 +15,10 @@ extension GuidesRouter: IGuidesRouter {
 
 extension GuidesRouter {
 
-    static func module() -> UIViewController? {
+    static func module() -> UIViewController {
         let router = GuidesRouter()
         let interactor = GuidesInteractor(appConfigProvider: App.shared.appConfigProvider, guidesManager: App.shared.guidesManager)
-
-        guard let presenter = GuidesPresenter(router: router, interactor: interactor) else {
-            return nil
-        }
-
+        let presenter = GuidesPresenter(router: router, interactor: interactor)
         let view = GuidesViewController(delegate: presenter)
 
         interactor.delegate = presenter

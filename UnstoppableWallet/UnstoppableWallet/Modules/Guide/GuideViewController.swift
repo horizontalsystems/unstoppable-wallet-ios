@@ -121,8 +121,8 @@ class GuideViewController: ThemeViewController {
                 dynamicHeight: { containerWidth in
                     GuideTextCell.height(containerWidth: containerWidth, attributedString: attributedString)
                 },
-                bind: { cell, _ in
-                    cell.bind(attributedString: attributedString)
+                bind: { [weak self] cell, _ in
+                    cell.bind(attributedString: attributedString, delegate: self)
                 }
         )
     }
@@ -133,8 +133,8 @@ class GuideViewController: ThemeViewController {
                 dynamicHeight: { containerWidth in
                     GuideListItemCell.height(containerWidth: containerWidth, attributedString: attributedString, tightTop: tightTop, tightBottom: tightBottom)
                 },
-                bind: { cell, _ in
-                    cell.bind(attributedString: attributedString, prefix: prefix, tightTop: tightTop, tightBottom: tightBottom)
+                bind: { [weak self] cell, _ in
+                    cell.bind(attributedString: attributedString, delegate: self, prefix: prefix, tightTop: tightTop, tightBottom: tightBottom)
                 }
         )
     }
@@ -145,8 +145,8 @@ class GuideViewController: ThemeViewController {
                 dynamicHeight: { containerWidth in
                     GuideBlockQuoteCell.height(containerWidth: containerWidth, attributedString: attributedString, tightTop: tightTop, tightBottom: tightBottom)
                 },
-                bind: { cell, _ in
-                    cell.bind(attributedString: attributedString, tightTop: tightTop, tightBottom: tightBottom)
+                bind: { [weak self] cell, _ in
+                    cell.bind(attributedString: attributedString, delegate: self, tightTop: tightTop, tightBottom: tightBottom)
                 }
         )
     }
@@ -239,6 +239,19 @@ extension GuideViewController: SectionsDataSource {
 
 }
 
+extension GuideViewController: UITextViewDelegate {
+
+    public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        guard URL.pathExtension == "md" else {
+            return true
+        }
+
+        delegate.onTapGuide(url: URL)
+
+        return false
+    }
+
+}
 
 extension GuideViewController: IGuideView {
 

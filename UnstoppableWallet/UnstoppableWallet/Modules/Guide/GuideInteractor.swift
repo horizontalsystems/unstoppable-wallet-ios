@@ -5,22 +5,16 @@ class GuideInteractor {
     weak var delegate: IGuideInteractorDelegate?
 
     private let guidesManager: IGuidesManager
-    private let appConfigProvider: IAppConfigProvider
 
     private let disposeBag = DisposeBag()
 
-    init(appConfigProvider: IAppConfigProvider, guidesManager: IGuidesManager) {
-        self.appConfigProvider = appConfigProvider
+    init(guidesManager: IGuidesManager) {
         self.guidesManager = guidesManager
     }
 
 }
 
 extension GuideInteractor: IGuideInteractor {
-
-    var guidesBaseUrl: URL? {
-        appConfigProvider.guidesBaseUrl
-    }
 
     func fetchGuideContent(url: URL) {
         guidesManager.guideContentSingle(url: url)
