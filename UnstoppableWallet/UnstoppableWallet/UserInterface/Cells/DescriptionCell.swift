@@ -1,9 +1,9 @@
 import UIKit
 
-class PrivacyInfoCell: UITableViewCell {
+class DescriptionCell: UITableViewCell {
     private static let horizontalPadding: CGFloat = .margin6x
     private static let verticalPadding: CGFloat = .margin3x
-    private static let font: UIFont = .subhead2
+    private static let font: UIFont = .body
 
     private let label = UILabel()
 
@@ -11,16 +11,17 @@ class PrivacyInfoCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         backgroundColor = .clear
+        selectionStyle = .none
 
         contentView.addSubview(label)
         label.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(PrivacyInfoCell.horizontalPadding)
-            maker.top.equalToSuperview().inset(PrivacyInfoCell.verticalPadding)
+            maker.leading.trailing.equalToSuperview().inset(DescriptionCell.horizontalPadding)
+            maker.top.equalToSuperview().inset(DescriptionCell.verticalPadding)
         }
 
         label.numberOfLines = 0
-        label.font = PrivacyInfoCell.font
-        label.textColor = .themeLeah
+        label.font = DescriptionCell.font
+        label.textColor = .themeBran
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -33,7 +34,7 @@ class PrivacyInfoCell: UITableViewCell {
 
 }
 
-extension PrivacyInfoCell {
+extension DescriptionCell {
 
     static func height(containerWidth: CGFloat, text: String) -> CGFloat {
         let textHeight = text.height(forContainerWidth: containerWidth - 2 * horizontalPadding, font: font)

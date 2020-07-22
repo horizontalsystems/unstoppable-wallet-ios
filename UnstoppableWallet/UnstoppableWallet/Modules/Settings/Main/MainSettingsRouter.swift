@@ -38,7 +38,7 @@ extension MainSettingsRouter: IMainSettingsRouter {
     }
 
     func showTerms() {
-        viewController?.navigationController?.pushViewController(AboutSettingsRouter.module(), animated: true)
+        viewController?.navigationController?.pushViewController(TermsRouter.module(), animated: true)
     }
 
     func showShare(appWebPageLink: String) {
@@ -69,6 +69,7 @@ extension MainSettingsRouter {
         let router = MainSettingsRouter()
         let interactor = MainSettingsInteractor(
                 backupManager: App.shared.backupManager,
+                termsManager: App.shared.termsManager,
                 themeManager: App.shared.themeManager,
                 systemInfoManager: App.shared.systemInfoManager,
                 currencyKit: App.shared.currencyKit,

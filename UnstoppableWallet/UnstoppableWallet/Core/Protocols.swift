@@ -534,3 +534,10 @@ protocol ICoinStorage {
     var coins: [Coin] { get }
     func save(coin: Coin) -> Bool
 }
+
+protocol ITermsManager {
+    var terms: [Term] { get }
+    var termsAccepted: Bool { get }
+    var termsAcceptedObservable: Observable<Bool> { get }
+    func update(term: Term)
+}

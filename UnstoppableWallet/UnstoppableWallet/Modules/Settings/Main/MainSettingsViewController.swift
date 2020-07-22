@@ -10,6 +10,7 @@ class MainSettingsViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private var allBackedUp: Bool = true
+    private var termsAccepted: Bool = true
     private var currentBaseCurrency: String?
     private var currentLanguage: String?
     private var lightMode: Bool = true
@@ -117,9 +118,11 @@ class MainSettingsViewController: ThemeViewController {
     }
 
     private var aboutRows: [RowProtocol] {
-        [
+        let termsAttentionImage = termsAccepted ? nil : UIImage(named: "Attention Icon")
+
+        return [
             Row<TitleCell>(id: "contact", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Contact Icon"), title: "settings.contact".localized, showDisclosure: true, last: true)
+                cell.bind(titleIcon: UIImage(named: "Contact Icon"), title: "settings.contact".localized, showDisclosure: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapContact()
             }),
@@ -130,8 +133,8 @@ class MainSettingsViewController: ThemeViewController {
                 self?.delegate.didTapTellFriends()
             }),
 
-            Row<TitleCell>(id: "terms", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Terms Icon"), title: "settings.terms".localized, showDisclosure: true)
+            Row<RightImageCell>(id: "terms", height: .heightSingleLineCell, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Terms Icon"), title: "settings.terms".localized, rightImage: termsAttentionImage, rightImageTintColor: .themeJacob, showDisclosure: true, last: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapTerms()
             })
@@ -170,6 +173,10 @@ extension MainSettingsViewController: IMainSettingsView {
 
     func set(allBackedUp: Bool) {
         self.allBackedUp = allBackedUp
+    }
+
+    func set(termsAccepted: Bool) {
+        self.termsAccepted = termsAccepted
     }
 
     func set(currentBaseCurrency: String) {

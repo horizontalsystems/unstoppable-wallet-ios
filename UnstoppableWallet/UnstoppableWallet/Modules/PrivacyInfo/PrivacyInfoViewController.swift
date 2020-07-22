@@ -31,7 +31,7 @@ class PrivacyInfoViewController: ThemeViewController {
 
         tableView.registerHeaderFooter(forClass: PrivacyInfoSeparatorHeaderView.self)
         tableView.registerHeaderFooter(forClass: PrivacyInfoHeaderView.self)
-        tableView.registerCell(forClass: PrivacyInfoCell.self)
+        tableView.registerCell(forClass: DescriptionCell.self)
 
         tableView.sectionDataSource = self
 
@@ -59,10 +59,10 @@ class PrivacyInfoViewController: ThemeViewController {
     }
 
     private func row(text: String) -> RowProtocol {
-        Row<PrivacyInfoCell>(
+        Row<DescriptionCell>(
                 id: text,
                 dynamicHeight: { width in
-                    PrivacyInfoCell.height(containerWidth: width, text: text)
+                    DescriptionCell.height(containerWidth: width, text: text)
                 },
                 bind: { cell, _ in
                     cell.bind(text: text)
