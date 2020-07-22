@@ -226,6 +226,7 @@ protocol ISystemInfoManager {
 protocol IAppConfigProvider {
     var companyWebPageLink: String { get }
     var appWebPageLink: String { get }
+    var appGitHubLink: String { get }
     var reportEmail: String { get }
     var telegramWalletHelpAccount: String { get }
     var guidesIndexUrl: URL { get }

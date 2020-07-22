@@ -3500,12 +3500,12 @@
 		11B35E1B51E123DEB9F71E96 /* Terms */ = {
 			isa = PBXGroup;
 			children = (
-				11B35BDC4FD741BE033D1956 /* TermsRouter.swift */,
-				D35B518821942E7A00504FBA /* TermsViewController.swift */,
 				11B3574888F9F86494FAEFBE /* Cells */,
+				11B35B462980B0617E11FB05 /* TermsModule.swift */,
+				11B35BDC4FD741BE033D1956 /* TermsRouter.swift */,
 				11B351DAF31FBE0834EBC066 /* TermsInteractor.swift */,
 				11B353010933750F8F920E1E /* TermsPresenter.swift */,
-				11B35B462980B0617E11FB05 /* TermsModule.swift */,
+				D35B518821942E7A00504FBA /* TermsViewController.swift */,
 			);
 			path = Terms;
 			sourceTree = "<group>";
