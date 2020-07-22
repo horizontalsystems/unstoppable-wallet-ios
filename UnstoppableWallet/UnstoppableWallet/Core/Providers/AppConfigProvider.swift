@@ -3,6 +3,7 @@ import Foundation
 class AppConfigProvider: IAppConfigProvider {
     let companyWebPageLink = "https://horizontalsystems.io"
     let appWebPageLink = "https://unstoppable.money"
+    let appGitHubLink = "https://github.com/horizontalsystems/unstoppable-wallet-ios"
     let reportEmail = "hsdao@protonmail.ch"
     let telegramWalletHelpAccount = "UnstoppableWallet"
     let guidesIndexUrl = URL(string: "https://raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/develop/index.json")!

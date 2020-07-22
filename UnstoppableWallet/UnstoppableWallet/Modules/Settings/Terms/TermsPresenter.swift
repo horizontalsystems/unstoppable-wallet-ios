@@ -22,6 +22,14 @@ extension TermsPresenter: ITermsViewDelegate {
         view?.set(terms: terms)
     }
 
+    func onTapGitHubButton() {
+        router.open(link: interactor.gitHubLink)
+    }
+
+    func onTapSiteButton() {
+        router.open(link: interactor.siteLink)
+    }
+
     func onTapTerm(index: Int) {
         terms[index].accepted = !terms[index].accepted
 
