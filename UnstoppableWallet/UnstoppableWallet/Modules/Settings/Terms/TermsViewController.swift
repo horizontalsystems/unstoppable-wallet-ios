@@ -39,6 +39,7 @@ class TermsViewController: ThemeViewController {
         tableView.registerCell(forClass: DescriptionCell.self)
         tableView.registerCell(forClass: TermsButtonsCell.self)
         tableView.registerCell(forClass: CheckboxCell.self)
+        tableView.registerCell(forClass: BrandFooterCell.self)
         tableView.sectionDataSource = self
 
         delegate.viewDidLoad()
@@ -105,6 +106,17 @@ extension TermsViewController: SectionsDataSource {
                                 checked: term.accepted
                         )
                     }
+            ),
+            Section(
+                    id: "footer",
+                    rows: [
+                        Row<BrandFooterCell>(
+                                id: "footer",
+                                dynamicHeight: { containerWidth in
+                                    BrandFooterCell.height(containerWidth: containerWidth)
+                                }
+                        )
+                    ]
             )
         ]
     }
