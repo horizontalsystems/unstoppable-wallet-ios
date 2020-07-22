@@ -117,6 +117,7 @@
 		11B3524F18E71E3B19DAE144 /* AddErc20TokenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B5DA319203E98E7FEBB /* AddErc20TokenInteractor.swift */; };
 		11B35256D5C9604216BEB89E /* PriceAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35394931A964455585870 /* PriceAlert.swift */; };
 		11B3525B1959C9797C5FABF8 /* SendMemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35914EC43FE3F25946BF1 /* SendMemoView.swift */; };
+		11B352619EB23ED81E420828 /* TermsFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35994005EE82AE70CDA98 /* TermsFooterCell.swift */; };
 		11B35262A6D3AB8C41E2E245 /* AccountStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E87C15A3AE82F471007 /* AccountStorage.swift */; };
 		11B3526683EE5472A6804235 /* BackupEosModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3531F23A4062CDD0E7617 /* BackupEosModule.swift */; };
 		11B35267BB7BFACBBF5C030F /* GrdbStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A1AE56A94BEB52AC4D1 /* GrdbStorage.swift */; };
@@ -286,6 +287,7 @@
 		11B3559145F6750C5E37BEB3 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359D48FD6D82735C8969A /* Error.swift */; };
 		11B3559ADCC7FBA2DF1F4690 /* RateTopListModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357F7CA03BBDDD0E1B3C7 /* RateTopListModule.swift */; };
 		11B3559B3F93D6808473D95F /* SendEosInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D43482DC6ECD766D51A /* SendEosInteractor.swift */; };
+		11B355A4A225681A05BFC63B /* TermsFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35994005EE82AE70CDA98 /* TermsFooterCell.swift */; };
 		11B355B7E336EB3AED69FA38 /* AddressParserFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353450DED12F9F024BAD0 /* AddressParserFactory.swift */; };
 		11B355B832036E0924745595 /* RestoreWordsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B925DBFC2CE0B69B6DD /* RestoreWordsPresenter.swift */; };
 		11B355BB70CDD1EB97FC0CF9 /* RestoreAccountTypeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35997E609908F5621CFC0 /* RestoreAccountTypeRouter.swift */; };
@@ -711,6 +713,7 @@
 		11B35D325B26EB022F1E7C65 /* FullTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E0F14A8CD40C6F49AE3 /* FullTransactionRecord.swift */; };
 		11B35D371DCB8BBE733BA756 /* PredefinedAccountTypeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35981A2EDBC21C82D13A5 /* PredefinedAccountTypeManager.swift */; };
 		11B35D3D2260FC9DD200657B /* FullTransactionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D1E5F2AC620CBCE3E3E /* FullTransactionSection.swift */; };
+		11B35D41A0A6B20537BA55F4 /* TermsFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35994005EE82AE70CDA98 /* TermsFooterCell.swift */; };
 		11B35D47EAA2EB26D8C3D6CF /* PrivacySortModeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3519C133E4C0A28943906 /* PrivacySortModeRouter.swift */; };
 		11B35D4D8F5A035E1B653198 /* TransactionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3527356625950A5C0358D /* TransactionViewItem.swift */; };
 		11B35D4E566D1F5D24825050 /* FeeRateProviderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359D88585F2BBFA56CB77 /* FeeRateProviderFactory.swift */; };
@@ -2066,6 +2069,7 @@
 		11B35987C48604FA6CB81C92 /* ManageAccountsViewItemFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAccountsViewItemFactory.swift; sourceTree = "<group>"; };
 		11B359907F922F6935929D0B /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		11B359938943C5FEF100F26B /* DerivationSettingConfirmationPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DerivationSettingConfirmationPresenter.swift; sourceTree = "<group>"; };
+		11B35994005EE82AE70CDA98 /* TermsFooterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsFooterCell.swift; sourceTree = "<group>"; };
 		11B35997E609908F5621CFC0 /* RestoreAccountTypeRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreAccountTypeRouter.swift; sourceTree = "<group>"; };
 		11B359B5B7DEEE9C2C06C226 /* FormField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormField.swift; sourceTree = "<group>"; };
 		11B359B9C1E0BB4D32599695 /* GuidePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuidePresenter.swift; sourceTree = "<group>"; };
@@ -3234,6 +3238,7 @@
 			children = (
 				11B35812D1F62D1839D5DCDC /* TermsHeaderCell.swift */,
 				11B35234176F24F0B1D41A30 /* TermsButtonsCell.swift */,
+				11B35994005EE82AE70CDA98 /* TermsFooterCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -5390,6 +5395,7 @@
 				11B357EEC616915B3150DAE2 /* TermsPresenter.swift in Sources */,
 				11B35FDE4B19A4A81AA46886 /* TermsModule.swift in Sources */,
 				11B35DFFE9762068F70FB553 /* BrandFooterCell.swift in Sources */,
+				11B35D41A0A6B20537BA55F4 /* TermsFooterCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6040,6 +6046,7 @@
 				11B351B155CC3A0A5C0D5398 /* TermsPresenter.swift in Sources */,
 				11B358137165A40C30218032 /* TermsModule.swift in Sources */,
 				11B3533941A80D693369E9C0 /* BrandFooterCell.swift in Sources */,
+				11B355A4A225681A05BFC63B /* TermsFooterCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6652,6 +6659,7 @@
 				11B35180EBCC01488C99C660 /* TermsPresenter.swift in Sources */,
 				11B3510BC26128273E969C7F /* TermsModule.swift in Sources */,
 				11B356448BC036CD117EB7DC /* BrandFooterCell.swift in Sources */,
+				11B352619EB23ED81E420828 /* TermsFooterCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
