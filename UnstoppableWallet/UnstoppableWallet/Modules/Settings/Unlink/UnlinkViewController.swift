@@ -39,7 +39,7 @@ class UnlinkViewController: ThemeActionSheetController {
             maker.top.equalTo(titleView.snp.bottom)
         }
 
-        tableView.registerCell(forClass: BottomSheetCheckboxCell.self)
+        tableView.registerCell(forClass: CheckboxCell.self)
         tableView.sectionDataSource = self
 
         view.addSubview(deleteButton)
@@ -66,11 +66,11 @@ class UnlinkViewController: ThemeActionSheetController {
     private func checkboxRow(viewItem: UnlinkModule.ViewItem, index: Int) -> RowProtocol {
         let checkboxText = text(itemType: viewItem.type)
 
-        return Row<BottomSheetCheckboxCell>(
+        return Row<CheckboxCell>(
                 id: "checkbox_\(index)",
                 hash: "\(viewItem.checked)",
                 dynamicHeight: { width in
-                    BottomSheetCheckboxCell.height(containerWidth: width, text: checkboxText)
+                    CheckboxCell.height(containerWidth: width, text: checkboxText)
                 },
                 bind: { cell, _ in
                     cell.bind(

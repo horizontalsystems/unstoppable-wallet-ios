@@ -1,7 +1,7 @@
 import UIKit
 import ThemeKit
 
-class BottomSheetCheckboxCell: UITableViewCell {
+class CheckboxCell: UITableViewCell {
     private static let imageViewLeadingMargin: CGFloat = .margin6x
     private static let imageViewSize: CGFloat = 24
     private static let textLeadingMargin: CGFloat = .margin4x
@@ -20,20 +20,20 @@ class BottomSheetCheckboxCell: UITableViewCell {
 
         contentView.addSubview(checkBoxImageView)
         checkBoxImageView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(BottomSheetCheckboxCell.imageViewLeadingMargin)
+            maker.leading.equalToSuperview().offset(CheckboxCell.imageViewLeadingMargin)
             maker.top.equalToSuperview().offset(CGFloat.margin3x)
-            maker.size.equalTo(BottomSheetCheckboxCell.imageViewSize)
+            maker.size.equalTo(CheckboxCell.imageViewSize)
         }
 
         contentView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(checkBoxImageView.snp.trailing).offset(BottomSheetCheckboxCell.textLeadingMargin)
-            maker.top.equalToSuperview().inset(BottomSheetCheckboxCell.textVerticalMargin)
-            maker.trailing.equalToSuperview().inset(BottomSheetCheckboxCell.textTrailingMargin)
+            maker.leading.equalTo(checkBoxImageView.snp.trailing).offset(CheckboxCell.textLeadingMargin)
+            maker.top.equalToSuperview().inset(CheckboxCell.textVerticalMargin)
+            maker.trailing.equalToSuperview().inset(CheckboxCell.textTrailingMargin)
         }
 
         descriptionLabel.numberOfLines = 0
-        descriptionLabel.font = BottomSheetCheckboxCell.textFont
+        descriptionLabel.font = CheckboxCell.textFont
         descriptionLabel.textColor = .themeOz
     }
 
@@ -48,7 +48,7 @@ class BottomSheetCheckboxCell: UITableViewCell {
 
 }
 
-extension BottomSheetCheckboxCell {
+extension CheckboxCell {
 
     static func height(containerWidth: CGFloat, text: String) -> CGFloat {
         let textWidth = containerWidth - imageViewLeadingMargin - imageViewSize - textLeadingMargin - textTrailingMargin

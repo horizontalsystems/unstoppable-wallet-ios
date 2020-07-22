@@ -9,13 +9,15 @@ class MainSettingsInteractor {
     weak var delegate: IMainSettingsInteractorDelegate?
 
     private let backupManager: IBackupManager
+    private let termsManager: ITermsManager
     private let themeManager: ThemeManager
     private let systemInfoManager: ISystemInfoManager
     private let currencyKit: ICurrencyKit
     private let appConfigProvider: IAppConfigProvider
 
-    init(backupManager: IBackupManager, themeManager: ThemeManager, systemInfoManager: ISystemInfoManager, currencyKit: ICurrencyKit, appConfigProvider: IAppConfigProvider) {
+    init(backupManager: IBackupManager, termsManager: ITermsManager, themeManager: ThemeManager, systemInfoManager: ISystemInfoManager, currencyKit: ICurrencyKit, appConfigProvider: IAppConfigProvider) {
         self.backupManager = backupManager
+        self.termsManager = termsManager
         self.themeManager = themeManager
         self.systemInfoManager = systemInfoManager
         self.currencyKit = currencyKit
@@ -26,6 +28,14 @@ class MainSettingsInteractor {
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] allBackedUp in
                     self?.delegate?.didUpdate(allBackedUp: allBackedUp)
+                })
+                .disposed(by: disposeBag)
+
+        termsManager.termsAcceptedObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] termsAccepted in
+                    self?.delegate?.didUpdate(termsAccepted: termsAccepted)
                 })
                 .disposed(by: disposeBag)
 
@@ -52,6 +62,10 @@ extension MainSettingsInteractor: IMainSettingsInteractor {
 
     var allBackedUp: Bool {
         backupManager.allBackedUp
+    }
+
+    var termsAccepted: Bool {
+        termsManager.termsAccepted
     }
 
     var currentLanguageDisplayName: String? {
