@@ -53,7 +53,7 @@ class GuideViewController: ThemeViewController {
         tableView.registerCell(forClass: GuideBlockQuoteCell.self)
         tableView.registerCell(forClass: GuideImageCell.self)
         tableView.registerCell(forClass: GuideImageTitleCell.self)
-        tableView.registerCell(forClass: GuideFooterCell.self)
+        tableView.registerCell(forClass: BrandFooterCell.self)
         tableView.sectionDataSource = self
 
         view.addSubview(spinner)
@@ -69,18 +69,6 @@ class GuideViewController: ThemeViewController {
 
     @objc private func onTapFontSizeButton() {
         delegate.onTapFontSize()
-    }
-
-    private func footerRow(text: String) -> RowProtocol {
-        Row<GuideFooterCell>(
-                id: "footer",
-                dynamicHeight: { containerWidth in
-                    GuideFooterCell.height(containerWidth: containerWidth, text: text)
-                },
-                bind: { cell, _ in
-                    cell.bind(text: text)
-                }
-        )
     }
 
     private func headerRow(id: String, attributedString: NSAttributedString, level: Int) -> RowProtocol {
@@ -231,7 +219,12 @@ extension GuideViewController: SectionsDataSource {
             Section(
                     id: "footer",
                     rows: [
-                        footerRow(text: "© Horizontal Systems 2020")
+                        Row<BrandFooterCell>(
+                                id: "footer",
+                                dynamicHeight: { containerWidth in
+                                    BrandFooterCell.height(containerWidth: containerWidth)
+                                }
+                        )
                     ]
             )
         ]
