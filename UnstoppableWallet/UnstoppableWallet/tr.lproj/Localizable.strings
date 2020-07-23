@@ -531,3 +531,6 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "change_24hour_down" = "%@ price: down %@%% %@";
 "change_trend_up" = "%@ trend: up %@";
 "change_trend_down" = "%@ trend: down %@";
+
+"chart_alert.title" = "Notification";
+"chart_alert.24h_description" = "Price Change 24h";
