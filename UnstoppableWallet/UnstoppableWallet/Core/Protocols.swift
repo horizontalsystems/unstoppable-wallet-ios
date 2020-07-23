@@ -65,7 +65,9 @@ protocol IWalletManager: class {
 }
 
 protocol IPriceAlertManager {
+    var updateObservable: Observable<()> { get }
     var priceAlerts: [PriceAlert] { get }
+    func priceAlert(coin: Coin) -> PriceAlert
     func save(priceAlerts: [PriceAlert]) -> Observable<[()]>
 }
 
@@ -277,6 +279,7 @@ protocol IAccountStorage {
 
 protocol IPriceAlertStorage {
     var priceAlerts: [PriceAlert] { get }
+    func priceAlert(coin: Coin) -> PriceAlert?
     var activePriceAlerts: [PriceAlert] { get }
     func save(priceAlerts: [PriceAlert])
     func delete(priceAlerts: [PriceAlert])
@@ -285,6 +288,7 @@ protocol IPriceAlertStorage {
 
 protocol IPriceAlertRecordStorage {
     var priceAlertRecords: [PriceAlertRecord] { get }
+    func priceAlertRecord(forCoinCode coinCode: String) -> PriceAlertRecord?
     func save(priceAlertRecords: [PriceAlertRecord])
     func deletePriceAlertRecords(coinCodes: [CoinCode])
     func deletePriceAlertsExcluding(coinCodes: [CoinCode])

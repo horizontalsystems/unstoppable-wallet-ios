@@ -17,6 +17,7 @@ protocol IChartView: class {
 
 protocol IChartRouter {
     func open(link: String?)
+    func openAlertSettings(coin: Coin)
 }
 
 protocol IChartViewDelegate {
@@ -28,6 +29,8 @@ protocol IChartViewDelegate {
 
     func onTap(indicator: ChartIndicatorSet)
     func onTapLink()
+
+    func onTapAlert()
 }
 
 protocol IChartInteractor {
@@ -38,16 +41,19 @@ protocol IChartInteractor {
 
     func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo?
     func subscribeToMarketInfo(coinCode: CoinCode, currencyCode: String)
+    func priceAlert(coin: Coin) -> PriceAlert
+    func subscribeToAlertUpdates()
 }
 
 protocol IChartInteractorDelegate: class {
     func didReceive(chartInfo: ChartInfo, coinCode: CoinCode)
     func didReceive(marketInfo: MarketInfo)
     func onChartInfoError()
+    func didUpdateAlert()
 }
 
 protocol IChartRateFactory {
-    func chartViewItem(chartDataStatus: ChartDataStatus<ChartInfo>, marketInfoStatus: ChartDataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, selectedIndicator: ChartIndicatorSet) -> ChartViewItem
+    func chartViewItem(chartDataStatus: ChartDataStatus<ChartInfo>, marketInfoStatus: ChartDataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, selectedIndicator: ChartIndicatorSet, priceAlert: PriceAlert) -> ChartViewItem
     func selectedPointViewItem(chartItem: ChartItem, type: ChartType, currency: Currency, macdSelected: Bool) -> SelectedPointViewItem?
 }
 
@@ -143,4 +149,6 @@ struct ChartViewItem {
     let marketInfoStatus: ChartDataStatus<MarketInfoViewItem>
 
     let selectedIndicator: ChartIndicatorSet
+
+    let alertOn: Bool
 }

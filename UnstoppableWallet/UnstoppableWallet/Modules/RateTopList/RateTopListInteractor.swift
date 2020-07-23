@@ -7,12 +7,14 @@ class RateTopListInteractor {
 
     private let rateManager: IRateManager
     private let walletManager: IWalletManager
+    private let coinManager: ICoinManager
 
     private let disposeBag = DisposeBag()
 
-    init(rateManager: IRateManager, walletManager: IWalletManager) {
+    init(rateManager: IRateManager, walletManager: IWalletManager, coinManager: ICoinManager) {
         self.rateManager = rateManager
         self.walletManager = walletManager
+        self.coinManager = coinManager
     }
 
 }
@@ -43,6 +45,12 @@ extension RateTopListInteractor: IRateTopListInteractor {
                     self?.delegate?.didReceive(topMarkets: infos)
                 })
                 .disposed(by: disposeBag)
+    }
+
+    func coin(code: String) -> Coin? {
+        coinManager.coins.first {
+            $0.code == code
+        }
     }
 
 }

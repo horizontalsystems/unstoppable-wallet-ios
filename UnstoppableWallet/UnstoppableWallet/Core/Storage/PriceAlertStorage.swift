@@ -25,6 +25,18 @@ extension PriceAlertStorage: IPriceAlertStorage {
         }
     }
 
+    func priceAlert(coin: Coin) -> PriceAlert? {
+        let coins = coinManager.coins
+
+        return storage.priceAlertRecord(forCoinCode: coin.code).flatMap { record in
+            guard let coin = coins.first(where: { $0.code == record.coinCode }) else {
+                return nil
+            }
+
+            return PriceAlert(coin: coin, state: record.state, lastRate: record.lastRate)
+        }
+    }
+
     var activePriceAlerts: [PriceAlert] {
         priceAlerts.filter { $0.state != .off }
     }

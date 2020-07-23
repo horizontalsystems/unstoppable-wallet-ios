@@ -347,6 +347,12 @@ extension GrdbStorage: IPriceAlertRecordStorage {
         }
     }
 
+    func priceAlertRecord(forCoinCode coinCode: String) -> PriceAlertRecord? {
+        try! dbPool.read { db in
+            try PriceAlertRecord.filter(PriceAlertRecord.Columns.coinCode == coinCode).fetchOne(db)
+        }
+    }
+
     func save(priceAlertRecords: [PriceAlertRecord]) {
         _ = try! dbPool.write { db in
             for record in priceAlertRecords {

@@ -1294,6 +1294,21 @@
 		5002C0982294165700E88585 /* ThreadSafeness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002C0952294165700E88585 /* ThreadSafeness.swift */; };
 		5041FC2F24827DE200DAE319 /* IndicatorSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564424585C28DDD2157098 /* IndicatorSelectView.swift */; };
 		5041FC3024827DE200DAE319 /* IndicatorSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564424585C28DDD2157098 /* IndicatorSelectView.swift */; };
+		50959EEC24C16AD8002D095A /* ChartNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50959EE524C16AD7002D095A /* ChartNotificationViewController.swift */; };
+		50959EED24C16AD8002D095A /* ChartNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50959EE524C16AD7002D095A /* ChartNotificationViewController.swift */; };
+		50959EEE24C16AD8002D095A /* ChartNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50959EE524C16AD7002D095A /* ChartNotificationViewController.swift */; };
+		50959EEF24C16AD8002D095A /* ChartNotificationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50959EE624C16AD7002D095A /* ChartNotificationInteractor.swift */; };
+		50959EF024C16AD8002D095A /* ChartNotificationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50959EE624C16AD7002D095A /* ChartNotificationInteractor.swift */; };
+		50959EF124C16AD8002D095A /* ChartNotificationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50959EE624C16AD7002D095A /* ChartNotificationInteractor.swift */; };
+		50959EF824C16AD8002D095A /* ChartNotificationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50959EE924C16AD7002D095A /* ChartNotificationModule.swift */; };
+		50959EF924C16AD8002D095A /* ChartNotificationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50959EE924C16AD7002D095A /* ChartNotificationModule.swift */; };
+		50959EFA24C16AD8002D095A /* ChartNotificationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50959EE924C16AD7002D095A /* ChartNotificationModule.swift */; };
+		50959EFB24C16AD8002D095A /* ChartNotificationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50959EEA24C16AD7002D095A /* ChartNotificationRouter.swift */; };
+		50959EFC24C16AD8002D095A /* ChartNotificationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50959EEA24C16AD7002D095A /* ChartNotificationRouter.swift */; };
+		50959EFD24C16AD8002D095A /* ChartNotificationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50959EEA24C16AD7002D095A /* ChartNotificationRouter.swift */; };
+		50959EFE24C16AD8002D095A /* ChartNotificationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50959EEB24C16AD7002D095A /* ChartNotificationPresenter.swift */; };
+		50959EFF24C16AD8002D095A /* ChartNotificationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50959EEB24C16AD7002D095A /* ChartNotificationPresenter.swift */; };
+		50959F0024C16AD8002D095A /* ChartNotificationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50959EEB24C16AD7002D095A /* ChartNotificationPresenter.swift */; };
 		509F06B12416511E00472BE0 /* DerivationSettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FE6E8E4112D72E7A4D0 /* DerivationSettingsInteractor.swift */; };
 		509F06B22416524200472BE0 /* DerivationSettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FE6E8E4112D72E7A4D0 /* DerivationSettingsInteractor.swift */; };
 		509F06B32416525300472BE0 /* DerivationSettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FE6E8E4112D72E7A4D0 /* DerivationSettingsInteractor.swift */; };
@@ -2395,6 +2410,11 @@
 		5026FFF721C3CA280023EEA2 /* Unstoppable Dev T.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Unstoppable Dev T.debug.xcconfig"; sourceTree = "<group>"; };
 		5026FFF821C3CA280023EEA2 /* Unstoppable Dev.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Unstoppable Dev.debug.xcconfig"; sourceTree = "<group>"; };
 		5026FFF921C3CA280023EEA2 /* Unstoppable.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Unstoppable.debug.xcconfig; sourceTree = "<group>"; };
+		50959EE524C16AD7002D095A /* ChartNotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartNotificationViewController.swift; sourceTree = "<group>"; };
+		50959EE624C16AD7002D095A /* ChartNotificationInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartNotificationInteractor.swift; sourceTree = "<group>"; };
+		50959EE924C16AD7002D095A /* ChartNotificationModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartNotificationModule.swift; sourceTree = "<group>"; };
+		50959EEA24C16AD7002D095A /* ChartNotificationRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartNotificationRouter.swift; sourceTree = "<group>"; };
+		50959EEB24C16AD7002D095A /* ChartNotificationPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartNotificationPresenter.swift; sourceTree = "<group>"; };
 		50A83FBE213FCB4B008A5F4B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		50AB06AD2158E2EE00A01E4A /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		50AB06B6215A269200A01E4A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -3015,6 +3035,7 @@
 				11B352FAC4377E8D23D66635 /* ManageAccounts */,
 				3C7B9BF3170D4C25D5293D33 /* Welcome */,
 				58AAA2A5AB45112E87D1554D /* Chart */,
+				50959EE424C16AD7002D095A /* ChartNotification */,
 				11B35026832A9E40CB14A318 /* Contact */,
 				11B350E21710D3DB68418C97 /* CreateWallet */,
 				58AAA2D1EAFC2C4D0251DD82 /* LockScreen */,
@@ -3915,6 +3936,18 @@
 				1A56433D5D39CCA995F97777 /* Development.xcconfig */,
 			);
 			path = Configuration;
+			sourceTree = "<group>";
+		};
+		50959EE424C16AD7002D095A /* ChartNotification */ = {
+			isa = PBXGroup;
+			children = (
+				50959EE924C16AD7002D095A /* ChartNotificationModule.swift */,
+				50959EEA24C16AD7002D095A /* ChartNotificationRouter.swift */,
+				50959EE624C16AD7002D095A /* ChartNotificationInteractor.swift */,
+				50959EEB24C16AD7002D095A /* ChartNotificationPresenter.swift */,
+				50959EE524C16AD7002D095A /* ChartNotificationViewController.swift */,
+			);
+			path = ChartNotification;
 			sourceTree = "<group>";
 		};
 		58AAA00553B26C36E53C69BD /* SubModules */ = {
@@ -4872,9 +4905,11 @@
 				11B35E4D93574CAF730B47D9 /* EthereumAdapter.swift in Sources */,
 				11B35BD066A268FB1B85B068 /* PasteboardManager.swift in Sources */,
 				11B35FB674D5ADB9301E529F /* TermsRouter.swift in Sources */,
+				50959EEE24C16AD8002D095A /* ChartNotificationViewController.swift in Sources */,
 				58AAA1AB2FD9FBA7801F830D /* PaymentRequestAddress.swift in Sources */,
 				11B354E2E53DB96607574EA1 /* UIImage.swift in Sources */,
 				D31C4793238BF1F5008CB818 /* RestoreCoinsPresenter.swift in Sources */,
+				50959EFA24C16AD8002D095A /* ChartNotificationModule.swift in Sources */,
 				1A564375773F7977B14EF1E0 /* Coin.swift in Sources */,
 				11B35807029DA6882DBAAF0C /* BarsProgressView.swift in Sources */,
 				11B35DBC26D7C55BC6134373 /* BalanceViewItemFactory.swift in Sources */,
@@ -5053,6 +5088,7 @@
 				11B35AF198E802C3356834A5 /* SendEthereumInteractor.swift in Sources */,
 				11B350B0CB0D63DA6AA61249 /* SendAccountRouter.swift in Sources */,
 				50D91A0324236CE800793402 /* ManageAccountItem.swift in Sources */,
+				50959F0024C16AD8002D095A /* ChartNotificationPresenter.swift in Sources */,
 				11B351A14366E8A6A31A14A7 /* SendAccountInteractor.swift in Sources */,
 				11B3524652F3594670EF76F8 /* SendAccountView.swift in Sources */,
 				11B351E0D63C80085178E2A1 /* SendAccountModule.swift in Sources */,
@@ -5079,6 +5115,7 @@
 				11B359A1958D7460DE8C03B6 /* SendDashHandler.swift in Sources */,
 				58AAA62B03EE7DCD253BD19A /* ChartRateFactory.swift in Sources */,
 				11B353BFE452CD0F88E59F3B /* SendPresenter.swift in Sources */,
+				50959EFD24C16AD8002D095A /* ChartNotificationRouter.swift in Sources */,
 				11B3507ED156929CC706EE93 /* SendInteractor.swift in Sources */,
 				11B35792051018C2846415C7 /* SendMemoRouter.swift in Sources */,
 				11B3525B1959C9797C5FABF8 /* SendMemoView.swift in Sources */,
@@ -5326,6 +5363,7 @@
 				11B353DB123B854AC40341F4 /* GuidesViewController.swift in Sources */,
 				11B352AB8FBB0ED320C415E4 /* GuidesInteractor.swift in Sources */,
 				11B35720DFE70B9BDF92B9F2 /* GuideCell.swift in Sources */,
+				50959EF124C16AD8002D095A /* ChartNotificationInteractor.swift in Sources */,
 				11B35B62BB0AE595D49277C8 /* GuideModule.swift in Sources */,
 				11B35067163D9CFA6947DEA8 /* GuidePresenter.swift in Sources */,
 				11B350EFCCD95031A497059D /* GuideRouter.swift in Sources */,
@@ -5523,9 +5561,11 @@
 				11B35BCC6C00E857CE562F16 /* EthereumAdapter.swift in Sources */,
 				11B35E0BEC5BE604ACE59BC2 /* PasteboardManager.swift in Sources */,
 				11B35D891416C66FA7FAD434 /* TermsRouter.swift in Sources */,
+				50959EED24C16AD8002D095A /* ChartNotificationViewController.swift in Sources */,
 				58AAA8D40B3399937CFEB0F2 /* PaymentRequestAddress.swift in Sources */,
 				11B35BDBD856C645045553D2 /* UIImage.swift in Sources */,
 				D31C4794238BF1F5008CB818 /* RestoreCoinsPresenter.swift in Sources */,
+				50959EF924C16AD8002D095A /* ChartNotificationModule.swift in Sources */,
 				1A564E286A1C980C944A63A9 /* Coin.swift in Sources */,
 				1A564FD718DF1DD5F82D7B1E /* ManageWalletsModule.swift in Sources */,
 				1A564076F4C5BD7656156603 /* ManageWalletsRouter.swift in Sources */,
@@ -5704,6 +5744,7 @@
 				11B35F06AB23A13BF6675744 /* SendEthereumHandler.swift in Sources */,
 				11B353B37E4387DD6C77DB79 /* SendEthereumInteractor.swift in Sources */,
 				50D91A0424236CE800793402 /* ManageAccountItem.swift in Sources */,
+				50959EFF24C16AD8002D095A /* ChartNotificationPresenter.swift in Sources */,
 				11B351D315E4B83E3537DCE4 /* SendAccountRouter.swift in Sources */,
 				11B35D1519A5FA5E759628BE /* SendAccountInteractor.swift in Sources */,
 				11B3581EB0F56103624AEA83 /* SendAccountView.swift in Sources */,
@@ -5730,6 +5771,7 @@
 				11B3583D4F95CF785A5C2961 /* SendDashInteractor.swift in Sources */,
 				11B350D6595217FAFAF7A44A /* SendDashHandler.swift in Sources */,
 				58AAAC1598AF623C2FFD7735 /* ChartRateFactory.swift in Sources */,
+				50959EFC24C16AD8002D095A /* ChartNotificationRouter.swift in Sources */,
 				11B35203D12B18D5A8F7B799 /* SendPresenter.swift in Sources */,
 				11B35C0BDF96C168DA8BCCB1 /* SendInteractor.swift in Sources */,
 				11B35293733280FC1D6E2497 /* SendMemoRouter.swift in Sources */,
@@ -5977,6 +6019,7 @@
 				11B3560E158C55624C466E27 /* GuidesViewController.swift in Sources */,
 				11B35A02C805296764EB31EE /* GuidesInteractor.swift in Sources */,
 				11B35573BC52BFE9E545AA01 /* GuideCell.swift in Sources */,
+				50959EF024C16AD8002D095A /* ChartNotificationInteractor.swift in Sources */,
 				11B35879CD589823140024D1 /* GuideModule.swift in Sources */,
 				11B35191E1A9626DF75D6A51 /* GuidePresenter.swift in Sources */,
 				11B35D7A975118FB5129DB6A /* GuideRouter.swift in Sources */,
@@ -6136,9 +6179,11 @@
 				11B35A801504D47FBE31CF40 /* PasteboardManager.swift in Sources */,
 				11B35F09210E8E5EAFABEEA4 /* TermsRouter.swift in Sources */,
 				58AAA4E1C32E0B48A4CFECCD /* PaymentRequestAddress.swift in Sources */,
+				50959EEC24C16AD8002D095A /* ChartNotificationViewController.swift in Sources */,
 				11B35D0542ACB56A31C61143 /* UIImage.swift in Sources */,
 				1A564A7ECB966C4711CA1A86 /* Coin.swift in Sources */,
 				D31C4795238BF1F5008CB818 /* RestoreCoinsPresenter.swift in Sources */,
+				50959EF824C16AD8002D095A /* ChartNotificationModule.swift in Sources */,
 				1A564B6E513269FED43EA6F2 /* ManageWalletsModule.swift in Sources */,
 				1A564FEE11A00F6D86B5616D /* ManageWalletsRouter.swift in Sources */,
 				1A5648E9A5AFB70CCF3B51A4 /* ManageWalletsPresenter.swift in Sources */,
@@ -6317,6 +6362,7 @@
 				11B351BFEF2508F03638A016 /* SendEthereumHandler.swift in Sources */,
 				11B356DB3835A587CE7495D9 /* SendEthereumInteractor.swift in Sources */,
 				50D91A0524236CE800793402 /* ManageAccountItem.swift in Sources */,
+				50959EFE24C16AD8002D095A /* ChartNotificationPresenter.swift in Sources */,
 				11B354874F95CC09A538E5FC /* SendAccountRouter.swift in Sources */,
 				11B35A6586FF799F6BB23261 /* SendAccountInteractor.swift in Sources */,
 				11B35D1E7FB41E2370F5CFD5 /* SendAccountView.swift in Sources */,
@@ -6343,6 +6389,7 @@
 				11B35426F2A49B0B4785CAD3 /* SendDashInteractor.swift in Sources */,
 				11B35F8AC9D4BF9DF44F88DC /* SendDashHandler.swift in Sources */,
 				58AAAF5089615F99495D0654 /* ChartRateFactory.swift in Sources */,
+				50959EFB24C16AD8002D095A /* ChartNotificationRouter.swift in Sources */,
 				11B35EAA520B6385169C1AF2 /* SendPresenter.swift in Sources */,
 				11B35DEE84F2A008B35D02E8 /* SendInteractor.swift in Sources */,
 				11B35DCEED8F4EDC0D730540 /* SendMemoRouter.swift in Sources */,
@@ -6590,6 +6637,7 @@
 				11B35C8D2E7B034B7242E7A9 /* GuidesInteractor.swift in Sources */,
 				11B3586009D99341D46E1824 /* GuideCell.swift in Sources */,
 				11B35A995B75250D1635FC93 /* GuideModule.swift in Sources */,
+				50959EEF24C16AD8002D095A /* ChartNotificationInteractor.swift in Sources */,
 				11B35CC30F65AC6966F66BA4 /* GuidePresenter.swift in Sources */,
 				11B3507E74720125D9EE4EA0 /* GuideRouter.swift in Sources */,
 				11B358C1D982EAC4F0A308ED /* GuideViewController.swift in Sources */,

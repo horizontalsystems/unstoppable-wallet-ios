@@ -11,11 +11,13 @@ class ChartInteractor {
     private let rateManager: IRateManager
     private let chartTypeStorage: IChartTypeStorage
     private let currentDateProvider: ICurrentDateProvider
+    private let priceAlertManager: IPriceAlertManager
 
-    init(rateManager: IRateManager, chartTypeStorage: IChartTypeStorage, currentDateProvider: ICurrentDateProvider) {
+    init(rateManager: IRateManager, chartTypeStorage: IChartTypeStorage, currentDateProvider: ICurrentDateProvider, priceAlertManager: IPriceAlertManager) {
         self.rateManager = rateManager
         self.chartTypeStorage = chartTypeStorage
         self.currentDateProvider = currentDateProvider
+        self.priceAlertManager = priceAlertManager
     }
 
 }
@@ -58,6 +60,19 @@ extension ChartInteractor: IChartInteractor {
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] marketInfo in
                     self?.delegate?.didReceive(marketInfo: marketInfo)
+                })
+                .disposed(by: disposeBag)
+    }
+
+    func priceAlert(coin: Coin) -> PriceAlert {
+        priceAlertManager.priceAlert(coin: coin)
+    }
+
+    func subscribeToAlertUpdates() {
+        priceAlertManager.updateObservable
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] in
+                    self?.delegate?.didUpdateAlert()
                 })
                 .disposed(by: disposeBag)
     }
