@@ -49,11 +49,11 @@ protocol IChartInteractorDelegate: class {
     func didReceive(chartInfo: ChartInfo, coinCode: CoinCode)
     func didReceive(marketInfo: MarketInfo)
     func onChartInfoError()
-    func didUpdateAlert()
+    func didUpdate(alerts: [PriceAlert])
 }
 
 protocol IChartRateFactory {
-    func chartViewItem(chartDataStatus: ChartDataStatus<ChartInfo>, marketInfoStatus: ChartDataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, selectedIndicator: ChartIndicatorSet, priceAlert: PriceAlert) -> ChartViewItem
+    func chartViewItem(chartDataStatus: ChartDataStatus<ChartInfo>, marketInfoStatus: ChartDataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, selectedIndicator: ChartIndicatorSet, priceAlert: PriceAlert?) -> ChartViewItem
     func selectedPointViewItem(chartItem: ChartItem, type: ChartType, currency: Currency, macdSelected: Bool) -> SelectedPointViewItem?
 }
 

@@ -22,6 +22,8 @@ class ChartPresenter {
 
     private var selectedIndicators = ChartIndicatorSet()
 
+    private var alert: PriceAlert?
+
     init(router: IChartRouter, interactor: IChartInteractor, factory: IChartRateFactory, coin: Coin, currency: Currency) {
         self.router = router
         self.interactor = interactor
@@ -40,7 +42,7 @@ class ChartPresenter {
                 coinCode: coin.code,
                 currency: currency,
                 selectedIndicator: selectedIndicators,
-                priceAlert: interactor.priceAlert(coin: coin))
+                priceAlert: alert)
 
         view?.set(viewItem: viewItem)
     }
@@ -53,6 +55,8 @@ class ChartPresenter {
         interactor.subscribeToMarketInfo(coinCode: coin.code, currencyCode: currency.code)
 
         interactor.subscribeToAlertUpdates()
+
+        alert = interactor.priceAlert(coin: coin)
 
         updateChart()
     }
@@ -116,7 +120,11 @@ extension ChartPresenter: IChartInteractorDelegate {
         updateChart()
     }
 
-    func didUpdateAlert() {
+    func didUpdate(alerts: [PriceAlert]) {
+        alert = alerts.first {
+            $0.coin == coin
+        }
+
         updateChart()
     }
 

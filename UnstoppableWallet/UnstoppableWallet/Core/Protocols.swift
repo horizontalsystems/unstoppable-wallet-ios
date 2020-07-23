@@ -65,7 +65,7 @@ protocol IWalletManager: class {
 }
 
 protocol IPriceAlertManager {
-    var updateObservable: Observable<()> { get }
+    var updateObservable: Observable<[PriceAlert]> { get }
     var priceAlerts: [PriceAlert] { get }
     func priceAlert(coin: Coin) -> PriceAlert
     func save(priceAlerts: [PriceAlert]) -> Observable<[()]>
