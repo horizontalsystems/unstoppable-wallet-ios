@@ -9,6 +9,8 @@ class SelfSizedSectionsTableView: SectionsTableView {
         backgroundColor = .clear
         separatorStyle = .none
         alwaysBounceVertical = false
+
+        setContentHuggingPriority(.defaultHigh, for: .vertical)
     }
 
     required init?(coder aDecoder: NSCoder) {

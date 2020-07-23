@@ -15,20 +15,18 @@ class ChartPresenter {
     private var chartDataStatus: ChartDataStatus<ChartInfo> = .loading
     private var marketInfoStatus: ChartDataStatus<MarketInfo> = .loading
 
-    let coinTitle: String
-    let coinCode: String
+    let coin: Coin
     let currency: Currency
 
     private var chartType: ChartType
 
     private var selectedIndicators = ChartIndicatorSet()
 
-    init(router: IChartRouter, interactor: IChartInteractor, factory: IChartRateFactory, coinCode: String, coinTitle: String, currency: Currency) {
+    init(router: IChartRouter, interactor: IChartInteractor, factory: IChartRateFactory, coin: Coin, currency: Currency) {
         self.router = router
         self.interactor = interactor
         self.factory = factory
-        self.coinCode = coinCode
-        self.coinTitle = coinTitle
+        self.coin = coin
         self.currency = currency
 
         chartType = interactor.defaultChartType ?? .day
@@ -39,19 +37,22 @@ class ChartPresenter {
                 chartDataStatus: chartDataStatus,
                 marketInfoStatus: marketInfoStatus,
                 chartType: chartType,
-                coinCode: coinCode,
+                coinCode: coin.code,
                 currency: currency,
-                selectedIndicator: selectedIndicators)
+                selectedIndicator: selectedIndicators,
+                priceAlert: interactor.priceAlert(coin: coin))
 
         view?.set(viewItem: viewItem)
     }
 
     private func fetchInfo() {
-        chartDataStatus = ChartDataStatus(data: interactor.chartInfo(coinCode: coinCode, currencyCode: currency.code, chartType: chartType))
-        interactor.subscribeToChartInfo(coinCode: coinCode, currencyCode: currency.code, chartType: chartType)
+        chartDataStatus = ChartDataStatus(data: interactor.chartInfo(coinCode: coin.code, currencyCode: currency.code, chartType: chartType))
+        interactor.subscribeToChartInfo(coinCode: coin.code, currencyCode: currency.code, chartType: chartType)
 
-        marketInfoStatus = ChartDataStatus(data: interactor.marketInfo(coinCode: coinCode, currencyCode: currency.code))
-        interactor.subscribeToMarketInfo(coinCode: coinCode, currencyCode: currency.code)
+        marketInfoStatus = ChartDataStatus(data: interactor.marketInfo(coinCode: coin.code, currencyCode: currency.code))
+        interactor.subscribeToMarketInfo(coinCode: coin.code, currencyCode: currency.code)
+
+        interactor.subscribeToAlertUpdates()
 
         updateChart()
     }
@@ -61,7 +62,7 @@ class ChartPresenter {
 extension ChartPresenter: IChartViewDelegate {
 
     func onLoad() {
-        view?.set(title: coinTitle)
+        view?.set(title: coin.title)
 
         view?.set(types: types.map { $0.title })
         view?.setSelectedType(at: types.firstIndex(of: chartType))
@@ -86,7 +87,11 @@ extension ChartPresenter: IChartViewDelegate {
     }
 
     func onTapLink() {
-        router.open(link: CoinInfoMap.data[coinCode]?.website)
+        router.open(link: CoinInfoMap.data[coin.code]?.website)
+    }
+
+    func onTapAlert() {
+        router.openAlertSettings(coin: coin)
     }
 
 }
@@ -108,6 +113,10 @@ extension ChartPresenter: IChartInteractorDelegate {
 
     func onChartInfoError() {
         chartDataStatus = .failed
+        updateChart()
+    }
+
+    func didUpdateAlert() {
         updateChart()
     }
 

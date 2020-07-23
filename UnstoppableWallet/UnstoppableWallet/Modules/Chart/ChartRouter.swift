@@ -16,15 +16,19 @@ extension ChartRouter: IChartRouter {
         }
     }
 
+    func openAlertSettings(coin: Coin) {
+        viewController?.present(ChartNotificationRouter.module(coin: coin), animated: true)
+    }
+
 }
 
 extension ChartRouter {
 
-    static func module(coinCode: String, coinTitle: String) -> UIViewController {
+    static func module(coin: Coin) -> UIViewController {
         let router = ChartRouter()
         let chartRateFactory = ChartRateFactory(timelineHelper: TimelineHelper(), indicatorFactory: IndicatorFactory(), currentLocale: LanguageManager.shared.currentLocale)
-        let interactor = ChartInteractor(rateManager: App.shared.rateManager, chartTypeStorage: App.shared.localStorage, currentDateProvider: CurrentDateProvider())
-        let presenter = ChartPresenter(router: router, interactor: interactor, factory: chartRateFactory, coinCode: coinCode, coinTitle: coinTitle, currency: App.shared.currencyKit.baseCurrency)
+        let interactor = ChartInteractor(rateManager: App.shared.rateManager, chartTypeStorage: App.shared.localStorage, currentDateProvider: CurrentDateProvider(), priceAlertManager: App.shared.priceAlertManager)
+        let presenter = ChartPresenter(router: router, interactor: interactor, factory: chartRateFactory, coin: coin, currency: App.shared.currencyKit.baseCurrency)
         let viewController = ChartViewController(delegate: presenter, configuration: ChartConfiguration.fullChart)
 
         interactor.delegate = presenter

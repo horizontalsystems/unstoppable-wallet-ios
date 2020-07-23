@@ -11,8 +11,8 @@ class RateTopListRouter {
 
 extension RateTopListRouter: IRateTopListRouter {
 
-    func showChart(coinCode: String, coinTitle: String) {
-        navigationRouter?.push(viewController: ChartRouter.module(coinCode: coinCode, coinTitle: coinTitle))
+    func showChart(coin: Coin) {
+        navigationRouter?.push(viewController: ChartRouter.module(coin: coin))
     }
 
     func showSortType(selected: RateTopListModule.SortType, onSelect: @escaping (RateTopListModule.SortType) -> ()) {
@@ -38,7 +38,7 @@ extension RateTopListRouter {
         let currency = App.shared.currencyKit.baseCurrency
 
         let router = RateTopListRouter(navigationRouter: navigationRouter)
-        let interactor = RateTopListInteractor(rateManager: App.shared.rateManager, walletManager: App.shared.walletManager)
+        let interactor = RateTopListInteractor(rateManager: App.shared.rateManager, walletManager: App.shared.walletManager, coinManager: App.shared.coinManager)
         let presenter = RateTopListPresenter(currency: currency, interactor: interactor, router: router)
 
         let viewController = RateTopListViewController(delegate: presenter)
