@@ -75,72 +75,72 @@
 
 "backup.close" = "Schließen";
 "backup.backup_required" = "Sicherung erforderlich";
-"backup.private_key" = "Private Key";
+"backup.private_key" = "Privater Schlüssel";
 
-"backup.intro.title_backup" = "Backup";
-"backup.intro.title_show" = "Show Key";
-"backup.intro.subtitle" = "The private key that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
-"backup.intro.later" = "Later";
-"backup.intro.backup_now" = "Backup";
-"backup.intro.show_key" = "Show Key";
+"backup.intro.title_backup" = "Sicherung";
+"backup.intro.title_show" = "Schlüssel anzeigen";
+"backup.intro.subtitle" = "Der private Schlüssel, der als nächstes angezeigt wird, ist die einzige Möglichkeit, Ihr Guthaben wiederherzustellen, wenn Ihr Telefon verloren geht, gestohlen wird oder beschädigt wird. \n\nAchten Sie darauf, dass niemand Ihren Bildschirm sieht.\n\nDie Coins, die von diesem Schlüssel kontrolliert werden: %@";
+"backup.intro.later" = "Später";
+"backup.intro.backup_now" = "Sicherung";
+"backup.intro.show_key" = "Schlüssel anzeigen";
 
-"backup.words.confirmation_description" = "Enter words from your %@ Key";
+"backup.words.confirmation_description" = "Geben Sie die Worte Ihres %@ Schlüssels ein";
 
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
-"backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may have access to clipboard data.";
-"error.send_eos.self_transfer" = "Can't transfer token to own account";
-"error.send_eos.account_not_exist" = "Target account does not exist";
-"error.send_eos.insufficient_ram" = "Your EOS account doesn't have enough RAM to send this token. You need to increase RAM stake to proceed.";
-"error.send_eos.unknown" = "Something went wrong: %@";
-"error.send_ethereum.wrong_parameters" = "Wrong parameters";
-"error.send_binance.memo_required" = "Receiver requires non-empty memo in transfer transaction";
-"error.send_binance.only_digits_allowed" = "Requires the memo to contain only digits";
-"error.incubed_not_reachable" = "Incubed servers not reachable";
+"backup.eos.hint" = "Den Key einfach mit „Kopieren“ zu kopieren, ist riskant, da Sie womöglich Zwischenablage-Management-Apps oder andere Apps nutzen, die Zugriff auf die Daten in der Zwischenablage haben. Ein Hacker könnte so heimlich auf Ihre Zwischenablage zugreifen und Ihre Coins stehlen. Das gilt es natürlich zu vermeiden.";
+"error.send_eos.self_transfer" = "Token kann nicht auf das eigene Konto übertragen werden";
+"error.send_eos.account_not_exist" = "Das Zielkonto existiert nicht";
+"error.send_eos.insufficient_ram" = "Ihr EOS-Konto hat nicht genügend RAM, um dieses Token zu senden. Um fortfahren zu können, müssen Sie den RAM-Stake erhöhen.";
+"error.send_eos.unknown" = "Etwas ist schief gelaufen: %@";
+"error.send_ethereum.wrong_parameters" = "Falsche Parameter";
+"error.send_binance.memo_required" = "Empfänger benötigt nicht-leeren Vermerk bei Transfer einer Transaktion";
+"error.send_binance.only_digits_allowed" = "Der Vermerk darf nur Zahlen enthalten";
+"error.incubed_not_reachable" = "Incubed Server nicht erreichbar";
 
-"backup.confirmation.title" = "Check ...";
+"backup.confirmation.title" = "Prüfen …";
 
-"words_validator.empty_words" = "Not all words are entered";
-"words_validator.invalid_confirmation" = "Words do not match";
+"words_validator.empty_words" = "Es wurden nicht alle Worte eingegeben";
+"words_validator.invalid_confirmation" = "Worte stimmen nicht überein";
 
 // Balance
 
-"balance.title" = "Balance";
-"balance.tab_bar_item" = "Balance";
-"balance.send" = "Send";
-"balance.deposit" = "Receive";
-"balance.rate_per_coin" = "%@ per %@";
-"balance.syncing" = "Syncing...";
-"balance.searching" = "Searching transactions...";
+"balance.title" = "Guthaben";
+"balance.tab_bar_item" = "Guthaben";
+"balance.send" = "Senden";
+"balance.deposit" = "Anfordern";
+"balance.rate_per_coin" = "%@ pro %@";
+"balance.syncing" = "Synchronisieren...";
+"balance.searching" = "Transaktionen werden gesucht...";
 "balance.searching.count" = "%@ tx";
-"balance.syncing_percent" = "Syncing... %@";
-"balance.synced_through" = "until: %@";
-"balance.add_coin" = "Add Coins";
-"balance.sort.header" = "Sort by";
-"balance.sort.valueHighToLow" = "Balance";
+"balance.syncing_percent" = "Synchronisieren... %@";
+"balance.synced_through" = "bis: %@";
+"balance.add_coin" = "Coins hinzufügen";
+"balance.sort.header" = "Sortieren nach";
+"balance.sort.valueHighToLow" = "Guthaben";
 "balance.sort.az" = "Name";
-"balance.sort.24h_change" = "24h Price(%)";
-"balance_error.description" = "The error text will be copied to your clipboard should you decide to report it.";
-"balance_error.change_source" = "Change Source";
-"balance_error.sync_error" = "Sync Error";
+"balance.sort.24h_change" = "24h Preis(%)";
+"balance_error.description" = "Der Fehlertext wird in die Zwischenablage kopiert, falls Sie den Fehler melden möchten.";
+"balance_error.change_source" = "Quelle ändern";
+"balance_error.sync_error" = "Sync-Fehler";
 
 // Deposit
 
-"deposit.receive_coin" = "Receive %@";
-"deposit.your_address" = "Your Address";
-"deposit.your_account" = "Your Account";
-"receive_alert.not_backed_up_description" = "You need to backup the %@ Wallet before you may receive %@.";
+"deposit.receive_coin" = "%@ Anfordern ";
+"deposit.your_address" = "Deine Adresse";
+"deposit.your_account" = "Dein Konto";
+"receive_alert.not_backed_up_description" = "Sie müssen das %@ Wallet sichern, bevor Sie %@ empfangen können.";
 
 // Send
 
-"send.title" = "Send %@";
-"send.amount_placeholder" = "Amount";
-"send.address_placeholder" = "Address";
+"send.title" = "Senden %@";
+"send.amount_placeholder" = "Betrag";
+"send.address_placeholder" = "Adresse";
 "send.account_placeholder" = "Account";
-"send.fee" = "Fee";
-"send.tx_speed" = "Transaction Speed";
-"send.tx_speed_low" = "Low";
-"send.tx_speed_medium" = "Medium";
+"send.fee" = "Gebühr";
+"send.tx_speed" = "Transaktionsgeschwindigkeit";
+"send.tx_speed_low" = "Niedrig";
+"send.tx_speed_medium" = "Mittel";
 "send.tx_speed_high" = "Hoch";
 "send.tx_speed_custom" = "Benutzerdefiniert";
 "send.tx_duration" = "Dauer";
@@ -207,90 +207,90 @@
 "full_info.title" = "Transaktion";
 "full_info.time" = "Zeit";
 "full_info.block" = "Block";
-"full_info.confirmations" = "Confirmations";
-"full_info.size" = "Size";
-"full_info.fee" = "Fee";
-"full_info.rate" = "Rate";
-"full_info.inputs" = "Inputs";
-"full_info.outputs" = "Outputs";
-"full_info.source" = "Source";
-"full_info.contract" = "Contract";
-"full_info.from" = "From";
-"full_info.to" = "To";
-"full_info.amount" = "Amount";
+"full_info.confirmations" = "Bestätigungen";
+"full_info.size" = "Größe";
+"full_info.fee" = "Gebühr";
+"full_info.rate" = "Bewerten";
+"full_info.inputs" = "Eingänge";
+"full_info.outputs" = "Ausgänge";
+"full_info.source" = "Quelle";
+"full_info.contract" = "Vertrag";
+"full_info.from" = "Von";
+"full_info.to" = "An";
+"full_info.amount" = "Betrag";
 "full_info.nonce" = "Nonce";
 "full_info.status" = "Status";
 "full_info.memo" = "Memo";
 "full_info.cpu" = "CPU Usage";
 "full_info.net" = "Net Usage";
-"full_info.milli_seconds" = "%@ μs";
+"full_info.milli_seconds" = "%@ µs";
 "full_info.bytes" = "%@ Bytes";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
 "full_info.gas_price" = "Gas Price";
 
-"full_info.source.title" = "Source";
+"full_info.source.title" = "Quelle";
 "full_info.source.online" = "online";
 "full_info.source.offline" = "offline";
 
 "full_info.error.server_offline" = "offline";
-"full_info.error.transaction_not_found" = "Transaction can not be found on the blockchain";
-"full_info.error.change_source" = "Change Source";
-"full_info.no_address" = "Empty Address";
+"full_info.error.transaction_not_found" = "Transaktion kann in der Blockchain nicht gefunden werden";
+"full_info.error.change_source" = "Quelle ändern";
+"full_info.no_address" = "Leere Adresse";
 
 // Settings
 
-"settings.title" = "Settings";
-"settings.tab_bar_item" = "Settings";
-"settings.security_center" = "Security Center";
-"settings.manage_accounts" = "Manage Wallets";
-"settings.manage_coins" = "Manage Coins";
+"settings.title" = "Einstellungen";
+"settings.tab_bar_item" = "Einstellungen";
+"settings.security_center" = "Sicherheit";
+"settings.manage_accounts" = "Wallets verwalten";
+"settings.manage_coins" = "Coins Managen";
 "settings.app_status" = "App-Status";
-"settings.experimental_features" = "Experimental Features";
-"settings.notifications" = "Notifications";
-"settings.base_currency" = "Base Currency";
-"settings.language" = "Language";
+"settings.experimental_features" = "Experimentelles Feature";
+"settings.notifications" = "Benachrichtigungen";
+"settings.base_currency" = "Währung";
+"settings.language" = "Sprache";
 "settings.terms" = "Terms";
-"settings.tell_friends" = "Tell Friends";
-"settings.contact" = "Contact";
-"settings.light_mode" = "Light Mode";
+"settings.tell_friends" = "Freunden erzählen";
+"settings.contact" = "Kontakt";
+"settings.light_mode" = "Licht Modus";
 "settings.info_title" = "UNSTOPPABLE";
-"settings.info_subtitle" = "decentralized app";
+"settings.info_subtitle" = "decentralized";
 
 // Settings -> Notifications
 
-"settings_notifications.title" = "Notifications";
-"settings_notifications.description" = "Set price change alerts for the coins you would like to watch.\n\nYou will be alerted when the change in price for the last 24 hours exceeds selected threshold.";
-"settings_notifications.alert_off" = "Off";
-"settings.notifications.deactivate_all" = "Deactivate All";
-"settings.notifications.disabled_text" = "The notifications for Unstoppable Wallet app are disabled. You need to turn on Notifications and allow background app refresh in order to be able to receive price change alerts.";
-"settings.notifications.settings_button" = "Turn on in Settings";
+"settings_notifications.title" = "Benachrichtigungen";
+"settings_notifications.description" = "Legen Sie einen Preisänderungsalarm für die Coins fest, die Sie beobachten möchten.\n\nSie werden benachrichtigt, wenn die Preisänderung in den letzten 24 Stunden die von Ihnen festgesetzte Grenze übersteigt.";
+"settings_notifications.alert_off" = "Aus";
+"settings.notifications.deactivate_all" = "Alle deaktivieren";
+"settings.notifications.disabled_text" = "Die Benachrichtigungen für das Unstoppable-Wallet sind ausgeschaltet. Sie müssen die Benachrichtigungen einschalten und eine Aktualisierung der App im Hintergrund erlauben, um Benachrichtigungen bei Preisänderungen zu erhalten.";
+"settings.notifications.settings_button" = "In Einstellungen einschalten";
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Choose Coins";
-"manage_coins.add_token" = "Add Token";
-"manage_coins.add_coin.title" = "Add %@";
+"manage_coins.title" = "Coins auswählen";
+"manage_coins.add_token" = "Token hinzufügen";
+"manage_coins.add_coin.title" = "%@ hinzufügen ";
 "manage_coins.add_coin.subtitle" = "%@ Wallet";
-"manage_coins.add_coin.text.set_up" = "You need to set up %@ wallet to be able to send or receive %@.";
-"manage_coins.add_coin.text.create_or_restore" = "Use the Create button below to set up a new %@ wallet, or Restore button to import the existing one.";
-"manage_coins.add_coin.text.create_only" = "At this point Unstoppable is not able to create new %@ wallet. You’re only able to restore the existing one.";
-"manage_coins.add_coin.text.tokens" = "You will be able to use this wallet for: %@.";
-"manage_coins.add_coin.create" = "Create";
-"manage_coins.add_coin.restore" = "Restore";
+"manage_coins.add_coin.text.set_up" = "Sie müssen das %@ Wallet einrichten, um %@ senden oder empfangen zu können.\n";
+"manage_coins.add_coin.text.create_or_restore" = "Tippen Sie auf den Button „Erstellen“, um ein neues %@ Wallet zu erstellen. Sie können auch auf den Button „Wiederherstellen“ tippen, um ein bereits bestehendes Wallet zu importieren.\n";
+"manage_coins.add_coin.text.create_only" = "Im Moment kann das Unstoppable leider keine neuen %@ Wallets anlegen. Sie können nur bestehende Wallets wiederherstellen.";
+"manage_coins.add_coin.text.tokens" = "Sie können dieses Wallet verwenden für: %@.";
+"manage_coins.add_coin.create" = "Erstellen";
+"manage_coins.add_coin.restore" = "Wiederherstellen";
 
 // Settings -> Experimental Features
 
-"settings.experimental_features.title" = "Experimental";
-"settings.experimental_features.description" = "The features below are experimental and should be used with caution. While we have thoroughly tested these features using our own crypto funds we cannot guarantee they work as expected in all possible cases.";
+"settings.experimental_features.title" = "Experimentell";
+"settings.experimental_features.description" = "Die unten aufgeführten Funktionen sind experimentell und sollten mit Vorsicht eingesetzt werden. Wir haben sie zwar ausführlich mit unserem eigenen Kryptoguthaben getestet, aber wir können noch nicht garantieren, dass sie in allen denkbaren Fällen funktionieren.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "TimeLock";
-"settings.bitcoin_hodling.lock_time" = "Activate";
-"settings.bitcoin_hodling.description" = "Enables you to send Bitcoins that cannot be spent until specified date.\n\nThe receiver of such transaction should use Unstoppable wallet app version 0.10 or newer with BIP44 address format for the Bitcoin.\n\nOnly Unstoppable wallet can correctly identify such transactions on Bitcoin network as well as enable receiver to spend those Bitcoins after the lock period expires.\n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transaction to yourself.\n\nBeing an experimental feature the maximum amount per transaction is limited to 0.5 BTC.";
+"settings.bitcoin_hodling.lock_time" = "Aktivieren";
+"settings.bitcoin_hodling.description" = "Damit können Sie gesendete Bitcoins sperren, sodass sie bis zu dem festgesetzten Datum nicht ausgegeben werden können.\n\nDer Empfänger einer solchen Transaktion sollte das Unstoppable-Wallet in der Version 0.10 (oder neuer) sowie das Bitcoin-Adressformat BIP44 verwenden.\n\nNur das Unstoppable-Wallet erkennt solche Transaktionen im Bitcoin-Netzwerk korrekt und ermöglicht es dem Empfänger, die Bitcoins nach der Sperrzeit zu auszugeben.\n\nWenn Sie ein HODLer* sind, können Sie diese Funktion auch für sich selbst nutzen, indem Sie sich selbst eine solche Transaktion schicken und so ihre Bitcoin für sich selbst zeitlich sperren.\n\nDa es sich noch um eine experimentelle Funktion handelt, liegt der maximale Betrag bei 0,5 BTC.\n";
 
 // Settings -> Terms
 
@@ -315,11 +315,11 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Unstoppable Wallet - a crypto wallet I recommend";
+"settings_tell_friends.text" = "Hi! Schau mal hier, das Unstoppable-Wallet. Das ist das Krypta-Wallet, dass ich dir empfehle.";
 
 // Settings -> Security
 
-"settings_security.title" = "Security Center";
+"settings_security.title" = "Sicherheit";
 "settings_security.blockchain_settings" = "Blockchain Einstellungen";
 "settings_security.passcode" = "Code";
 "settings_security.privacy" = "Privatsphäre";
@@ -501,7 +501,7 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 // Guides
 
 "guides.tab_bar_item" = "Akademie";
-"guides.title" = "Academy";
+"guides.title" = "Akademie";
 
 // Add Token
 
