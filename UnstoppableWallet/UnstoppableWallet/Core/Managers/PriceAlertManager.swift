@@ -7,7 +7,7 @@ class PriceAlertManager {
     private let remoteAlertManager: IRemoteAlertManager
     private let storage: IPriceAlertStorage
 
-    private let updateSubject = PublishSubject<()>()
+    private let updateSubject = PublishSubject<[PriceAlert]>()
 
     init(walletManager: IWalletManager, storage: IPriceAlertStorage, remoteAlertManager: IRemoteAlertManager) {
         self.walletManager = walletManager
@@ -33,7 +33,7 @@ class PriceAlertManager {
 
 extension PriceAlertManager: IPriceAlertManager {
 
-    var updateObservable: Observable<()> {
+    var updateObservable: Observable<[PriceAlert]> {
         updateSubject.asObservable()
     }
 
@@ -88,7 +88,7 @@ extension PriceAlertManager: IPriceAlertManager {
         }
 
         return Single.zip(singles).asObservable().do(onCompleted: { [weak self] in
-            self?.updateSubject.onNext(())
+            self?.updateSubject.onNext(priceAlerts)
         })
     }
 

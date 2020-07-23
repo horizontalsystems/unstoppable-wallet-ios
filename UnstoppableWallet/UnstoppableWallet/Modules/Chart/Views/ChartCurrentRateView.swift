@@ -49,7 +49,7 @@ class ChartCurrentRateView: UIView {
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
-        alertButton.setImage(UIImage(named: "Notification Small Icon"), for: .normal)
+        alertButton.setImage(UIImage(named: "Notification Small Icon")?.tinted(with: .themeGray), for: .normal)
         alertButton.setImage(UIImage(named: "Notification Small Icon")?.tinted(with: .themeGray50), for: .highlighted)
         alertButton.contentHorizontalAlignment = .right
         alertButton.addTarget(self, action: #selector(onAlertTap), for: .touchUpInside)

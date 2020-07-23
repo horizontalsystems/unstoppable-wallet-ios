@@ -71,8 +71,8 @@ extension ChartInteractor: IChartInteractor {
     func subscribeToAlertUpdates() {
         priceAlertManager.updateObservable
                 .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] in
-                    self?.delegate?.didUpdateAlert()
+                .subscribe(onNext: { [weak self] alerts in
+                    self?.delegate?.didUpdate(alerts: alerts)
                 })
                 .disposed(by: disposeBag)
     }
