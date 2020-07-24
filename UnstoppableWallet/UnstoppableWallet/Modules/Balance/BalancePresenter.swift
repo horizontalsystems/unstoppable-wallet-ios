@@ -184,6 +184,10 @@ extension BalancePresenter: IBalanceViewDelegate {
         router.openSend(wallet: viewItem.wallet)
     }
 
+    func onTapSwap(viewItem: BalanceViewItem) {
+        router.openSwap(wallet: viewItem.wallet)
+    }
+
     func onTapChart(viewItem: BalanceViewItem) {
         guard viewItem.topViewItem.diff != nil else {
             return
