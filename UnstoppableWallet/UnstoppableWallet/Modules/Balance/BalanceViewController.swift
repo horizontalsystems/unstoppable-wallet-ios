@@ -174,6 +174,9 @@ class BalanceViewController: ThemeViewController {
                 onPay: { [weak self] in
                     self?.delegate.onTapPay(viewItem: viewItem)
                 },
+                onSwap: { [weak self] in
+                    self?.delegate.onTapSwap(viewItem: viewItem)
+                },
                 onChart: { [weak self] in
                     self?.delegate.onTapChart(viewItem: viewItem)
                 },
