@@ -198,6 +198,12 @@ PODS:
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1)
   - UIExtensions.swift (1.1)
+  - UniswapKit.swift (0.9.2):
+    - BigInt (~> 5.0)
+    - EthereumKit.swift (~> 0.9)
+    - OpenSslKit.swift (~> 1.0)
+    - RxSwift (~> 5.0)
+    - Secp256k1Kit.swift (~> 1.0)
   - X11Kit.swift (1.0)
   - XRatesKit.swift (0.5):
     - GRDB.swift (~> 4.0)
@@ -248,6 +254,7 @@ DEPENDENCIES:
   - StorageKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - ThemeKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - UIExtensions.swift (from `https://github.com/horizontalsystems/gui-kit/`)
+  - UniswapKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - XRatesKit.swift (from `https://github.com/horizontalsystems/xrates-kit-ios/`)
 
 SPEC REPOS:
@@ -333,6 +340,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :git: https://github.com/horizontalsystems/gui-kit/
+  UniswapKit.swift:
+    :git: https://github.com/horizontalsystems/ethereum-kit-ios
   XRatesKit.swift:
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
 
@@ -412,6 +421,9 @@ CHECKOUT OPTIONS:
   UIExtensions.swift:
     :commit: 178caaa864a13dd6fbafac73c9d1478ce4cbbb75
     :git: https://github.com/horizontalsystems/gui-kit/
+  UniswapKit.swift:
+    :commit: 49185b35c7e489bcbe965bbd219740371dd9b035
+    :git: https://github.com/horizontalsystems/ethereum-kit-ios
   XRatesKit.swift:
     :commit: 6cb0e7e846da6b943a4fd6e9e7aff1a8d6c03b2b
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
@@ -470,9 +482,10 @@ SPEC CHECKSUMS:
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   ThemeKit.swift: ab5c081b10f6a80149d37751f3ee98f1292bf497
   UIExtensions.swift: b3852a339a81c730d98b3342ae0275e807703782
+  UniswapKit.swift: 4ac5509195b9207ad960d4a0c22eac3ce84b2cff
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: b09af5caafef556c489bf9b55b8c3dddbd710861
 
-PODFILE CHECKSUM: f9b1912931b0442baf964e8bcc9dfc309bed074f
+PODFILE CHECKSUM: 4c89e554478433b06fcee64aad76a8ab38a28d7c
 
 COCOAPODS: 1.9.1

@@ -20,6 +20,12 @@ extension BalanceRouter: IBalanceRouter {
         }
     }
 
+    func openSwap(wallet: Wallet) {
+        if let module = SwapRouter.module(wallet: wallet) {
+            viewController?.present(module, animated: true)
+        }
+    }
+
     func showChart(coinCode: String, coinTitle: String) {
         viewController?.navigationController?.pushViewController(ChartRouter.module(coinCode: coinCode, coinTitle: coinTitle), animated: true)
     }

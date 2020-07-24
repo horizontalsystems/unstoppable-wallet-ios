@@ -3,6 +3,7 @@ import ThemeKit
 import SnapKit
 
 class BalanceCell: UICollectionViewCell {
+    private let receiveIndex = 0, sendIndex = 1, swapIndex = 2
     private static let insets = UIEdgeInsets(top: .margin2x, left: .margin2x, bottom: .margin2x, right: .margin2x)
 
     private let cardView = CardView(insets: BalanceCell.insets)
@@ -11,10 +12,7 @@ class BalanceCell: UICollectionViewCell {
     private let separatorView = BalanceSeparatorView()
     private let amountView = BalanceAmountView()
     private let lockedAmountView = SecondaryBalanceDoubleRowView()
-    private let buttonsView = DoubleRowButtonView(leftButtonStyle: .primaryGreen, rightButtonStyle: .primaryYellow)
-
-    private var onPay: (() -> ())?
-    private var onReceive: (() -> ())?
+    private let buttonsView = BalanceButtonsView(receiveStyle: .primaryGreen, sendStyle: .primaryYellow, swapStyle: .primaryGray)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -58,17 +56,14 @@ class BalanceCell: UICollectionViewCell {
             maker.height.equalTo(DoubleRowButtonView.height)
         }
 
-        buttonsView.bind(leftTitle: "balance.deposit".localized, rightTitle: "balance.send".localized)
+        buttonsView.bind(receiveTitle: "balance.deposit".localized, sendTitle: "balance.send".localized, swapTitle: "Swap".localized)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("not implemented")
     }
 
-    func bind(viewItem: BalanceViewItem, animated: Bool = false, duration: TimeInterval = 0.2, onReceive: @escaping () -> (), onPay: @escaping () -> (), onChart: @escaping () -> (), onTapError: (() -> ())?) {
-        self.onPay = onPay
-        self.onReceive = onReceive
-
+    func bind(viewItem: BalanceViewItem, animated: Bool = false, duration: TimeInterval = 0.2, onReceive: @escaping () -> (), onPay: @escaping () -> (), onSwap: @escaping () -> (), onChart: @escaping () -> (), onTapError: (() -> ())?) {
         topView.bind(viewItem: viewItem.topViewItem, onTapRateDiff: onChart, onTapError: onTapError)
 
         separatorView.set(hidden: !viewItem.separatorVisible, animated: animated, duration: duration)
@@ -89,7 +84,12 @@ class BalanceCell: UICollectionViewCell {
         }
 
         if let viewItem = viewItem.buttonsViewItem {
-            buttonsView.bind(leftEnabled: viewItem.receiveButtonEnabled, rightEnabled: viewItem.sendButtonEnabled, leftAction: onReceive, rightAction: onPay)
+            buttonsView.bind(receiveEnabled: viewItem.receiveButtonEnabled,
+                    sendEnabled: viewItem.sendButtonEnabled,
+                    swapHidden: viewItem.swapButtonHidden,
+                    receiveAction: onReceive,
+                    sendAction: onPay,
+                    swapAction: onSwap)
         }
         buttonsView.set(hidden: viewItem.buttonsViewItem == nil, animated: animated, duration: duration)
     }

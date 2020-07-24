@@ -39,6 +39,7 @@ struct BalanceLockedAmountViewItem {
 struct BalanceButtonsViewItem {
     let receiveButtonEnabled: Bool
     let sendButtonEnabled: Bool
+    let swapButtonHidden: Bool
 }
 
 extension BalanceTopViewItem: Equatable {

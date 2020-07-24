@@ -19,6 +19,7 @@ protocol IBalanceViewDelegate {
     func onTap(viewItem: BalanceViewItem)
     func onTapReceive(viewItem: BalanceViewItem)
     func onTapPay(viewItem: BalanceViewItem)
+    func onTapSwap(viewItem: BalanceViewItem)
     func onTapChart(viewItem: BalanceViewItem)
     func onTapFailedIcon(viewItem: BalanceViewItem)
 
@@ -71,6 +72,7 @@ protocol IBalanceInteractorDelegate: class {
 protocol IBalanceRouter {
     func showReceive(wallet: Wallet)
     func openSend(wallet: Wallet)
+    func openSwap(wallet: Wallet)
     func showChart(coinCode: String, coinTitle: String)
     func openManageWallets()
     func showBackupRequired(wallet: Wallet, predefinedAccountType: PredefinedAccountType)

@@ -18,6 +18,8 @@ def appPods
   # pod 'EthereumKit.swift', path: '../ethereum-kit-ios/'
   pod 'Erc20Kit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
   # pod 'Erc20Kit.swift', path: '../ethereum-kit-ios/'
+  pod 'UniswapKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
+  # pod 'UniswapKit.swift', :path => '../ethereum-kit-ios'
 
   pod 'EosKit.swift', git: 'https://github.com/horizontalsystems/eos-kit-ios'
   # pod 'EosKit.swift', path: '../eos-kit-ios/'
@@ -41,8 +43,8 @@ def appPods
 
   pod 'UIExtensions.swift', git: 'https://github.com/horizontalsystems/gui-kit/'
   # pod 'UIExtensions.swift', path: '../gui-kit/'
-  pod 'ThemeKit.swift', git: 'https://github.com/horizontalsystems/component-kit-ios/'
-  # pod 'ThemeKit.swift', path: '../component-kit-ios/'
+  # pod 'ThemeKit.swift', git: 'https://github.com/horizontalsystems/component-kit-ios/'
+  pod 'ThemeKit.swift', path: '../component-kit-ios/'
   pod 'LanguageKit.swift', git: 'https://github.com/horizontalsystems/component-kit-ios/'
   # pod 'LanguageKit.swift', path: '../component-kit-ios/'
   pod 'StorageKit.swift', git: 'https://github.com/horizontalsystems/component-kit-ios/'

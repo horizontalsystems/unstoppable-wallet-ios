@@ -70,7 +70,8 @@ class BalanceViewItemFactory {
 
         return BalanceButtonsViewItem(
                 receiveButtonEnabled: state != nil,
-                sendButtonEnabled: state == .synced
+                sendButtonEnabled: state == .synced,
+                swapButtonHidden: false
         )
     }
 
