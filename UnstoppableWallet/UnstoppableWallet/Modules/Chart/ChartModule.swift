@@ -41,8 +41,9 @@ protocol IChartInteractor {
 
     func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo?
     func subscribeToMarketInfo(coinCode: CoinCode, currencyCode: String)
-    func priceAlert(coin: Coin) -> PriceAlert
+    func priceAlert(coinCode: String) -> PriceAlert?
     func subscribeToAlertUpdates()
+    func coin(code: String) -> Coin?
 }
 
 protocol IChartInteractorDelegate: class {

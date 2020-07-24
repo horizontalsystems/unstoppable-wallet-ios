@@ -20,8 +20,8 @@ extension BalanceRouter: IBalanceRouter {
         }
     }
 
-    func showChart(coin: Coin) {
-        viewController?.navigationController?.pushViewController(ChartRouter.module(coin: coin), animated: true)
+    func showChart(coinCode: String, coinTitle: String) {
+        viewController?.navigationController?.pushViewController(ChartRouter.module(coinCode: coinCode, coinTitle: coinTitle), animated: true)
     }
 
     func openManageWallets() {

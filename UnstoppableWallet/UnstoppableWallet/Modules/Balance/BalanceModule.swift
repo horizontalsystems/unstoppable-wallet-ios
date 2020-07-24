@@ -71,7 +71,7 @@ protocol IBalanceInteractorDelegate: class {
 protocol IBalanceRouter {
     func showReceive(wallet: Wallet)
     func openSend(wallet: Wallet)
-    func showChart(coin: Coin)
+    func showChart(coinCode: String, coinTitle: String)
     func openManageWallets()
     func showBackupRequired(wallet: Wallet, predefinedAccountType: PredefinedAccountType)
     func showSortType()

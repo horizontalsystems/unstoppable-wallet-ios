@@ -21,7 +21,6 @@ protocol IRateTopListInteractor {
     func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo?
     func subscribeToMarketInfos(currencyCode: String)
     func updateTopMarkets(currencyCode: String)
-    func coin(code: String) -> Coin?
 }
 
 protocol IRateTopListInteractorDelegate: AnyObject {
@@ -30,7 +29,7 @@ protocol IRateTopListInteractorDelegate: AnyObject {
 }
 
 protocol IRateTopListRouter {
-    func showChart(coin: Coin)
+    func showChart(coinCode: String, coinTitle: String)
     func showSortType(selected: RateTopListModule.SortType, onSelect: @escaping (RateTopListModule.SortType) -> ())
 }
 
