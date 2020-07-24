@@ -33,7 +33,7 @@ protocol IRateListInteractorDelegate: AnyObject {
 }
 
 protocol IRateListRouter {
-    func showChart(coin: Coin)
+    func showChart(coinCode: String, coinTitle: String)
     func open(link: String)
 }
 

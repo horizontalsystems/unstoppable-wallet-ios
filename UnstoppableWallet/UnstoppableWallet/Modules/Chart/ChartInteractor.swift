@@ -12,12 +12,14 @@ class ChartInteractor {
     private let chartTypeStorage: IChartTypeStorage
     private let currentDateProvider: ICurrentDateProvider
     private let priceAlertManager: IPriceAlertManager
+    private let coinManager: ICoinManager
 
-    init(rateManager: IRateManager, chartTypeStorage: IChartTypeStorage, currentDateProvider: ICurrentDateProvider, priceAlertManager: IPriceAlertManager) {
+    init(rateManager: IRateManager, chartTypeStorage: IChartTypeStorage, currentDateProvider: ICurrentDateProvider, priceAlertManager: IPriceAlertManager, coinManager: ICoinManager) {
         self.rateManager = rateManager
         self.chartTypeStorage = chartTypeStorage
         self.currentDateProvider = currentDateProvider
         self.priceAlertManager = priceAlertManager
+        self.coinManager = coinManager
     }
 
 }
@@ -64,8 +66,12 @@ extension ChartInteractor: IChartInteractor {
                 .disposed(by: disposeBag)
     }
 
-    func priceAlert(coin: Coin) -> PriceAlert {
-        priceAlertManager.priceAlert(coin: coin)
+    func priceAlert(coinCode: String) -> PriceAlert? {
+        guard let coin = coin(code: coinCode) else {
+            return nil
+        }
+
+        return priceAlertManager.priceAlert(coin: coin)
     }
 
     func subscribeToAlertUpdates() {
@@ -75,6 +81,12 @@ extension ChartInteractor: IChartInteractor {
                     self?.delegate?.didUpdate(alerts: alerts)
                 })
                 .disposed(by: disposeBag)
+    }
+
+    func coin(code: String) -> Coin? {
+        coinManager.coins.first {
+            $0.code == code
+        }
     }
 
 }

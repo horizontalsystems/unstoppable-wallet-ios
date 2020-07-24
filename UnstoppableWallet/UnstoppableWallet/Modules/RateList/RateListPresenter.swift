@@ -103,7 +103,7 @@ extension RateListPresenter: IRateListViewDelegate {
             return
         }
 
-        router.showChart(coin: coin)
+        router.showChart(coinCode: coin.code, coinTitle: coin.title)
     }
 
     func onSelectPost(index: Int) {

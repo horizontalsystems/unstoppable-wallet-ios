@@ -97,11 +97,7 @@ extension RateTopListPresenter: IRateTopListViewDelegate {
     func onSelect(index: Int) {
         let item = items[index]
 
-        guard let coin = interactor.coin(code: item.topMarket.coinCode) else {
-            return
-        }
-
-        router.showChart(coin: coin)
+        router.showChart(coinCode: item.topMarket.coinCode, coinTitle: item.topMarket.coinName)
     }
 
     func onTapSort() {
