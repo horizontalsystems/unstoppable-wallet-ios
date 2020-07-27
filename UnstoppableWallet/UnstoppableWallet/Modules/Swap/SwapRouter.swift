@@ -8,6 +8,10 @@ class SwapRouter {
 
 extension SwapRouter: ISwapRouter {
 
+    func openTokenSelect(path: SwapPath, exclude: [Coin], delegate: ICoinSelectDelegate) {
+        viewController?.present(SwapTokenSelectRouter.module(path: path, exclude: exclude, delegate: delegate), animated: true)
+    }
+
     func dismiss() {
         viewController?.dismiss(animated: true)
     }
@@ -22,9 +26,10 @@ extension SwapRouter {
         }
 
         let decimalParser = SendAmountDecimalParser()
+        let swapTokenManager = SwapTokenManager(coinManager: App.shared.coinManager, walletManager: App.shared.walletManager, adapterManager: App.shared.adapterManager)
 
         let router = SwapRouter()
-        let interactor = SwapInteractor(swapKit: swapKit)
+        let interactor = SwapInteractor(swapKit: swapKit, swapTokenManager: swapTokenManager)
         let presenter = SwapPresenter(interactor: interactor, router: router, factory: SwapViewItemFactory(), decimalParser: decimalParser, coinIn: wallet.coin)
         let viewController = SwapViewController(delegate: presenter)
 

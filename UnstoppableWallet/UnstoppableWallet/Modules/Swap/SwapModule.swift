@@ -1,7 +1,6 @@
 import UniswapKit
 
 protocol ISwapView: class {
-    func showKeyboard(path: SwapPath)
     func dismissKeyboard()
 
     func bind(viewItem: SwapViewItem)
@@ -12,21 +11,25 @@ protocol ISwapViewDelegate {
     func onViewDidLoad()
     func onClose()
 
+    func onTokenSelect(path: SwapPath)
     func didChangeAmount(path: SwapPath)
 }
 
 protocol ISwapInteractor {
+    func balance(coin: Coin) -> Decimal?
     func requestSwapData(coinIn: Coin?, coinOut: Coin?)
     func bestTradeExactIn(swapData: SwapData, amount: Decimal) throws -> TradeData
     func bestTradeExactOut(swapData: SwapData, amount: Decimal) throws -> TradeData
 }
 
 protocol ISwapInteractorDelegate: class {
+    func clearSwapData()
     func didReceive(swapData: SwapData)
     func didFailReceiveSwapData(error: Error)
 }
 
 protocol ISwapRouter {
+    func openTokenSelect(path: SwapPath, exclude: [Coin], delegate: ICoinSelectDelegate)
     func dismiss()
 }
 
@@ -41,5 +44,10 @@ protocol ISwapInputViewDelegate: class {
 }
 
 protocol ISwapViewItemFactory {
-    func viewItem(coinIn: Coin, coinOut: Coin?, path: SwapPath, tradeData: TradeData?) -> SwapViewItem
+    func viewItem(coinIn: Coin, balance: Decimal?, coinOut: Coin?, path: SwapPath, tradeData: TradeData?) -> SwapViewItem
+}
+
+struct CoinBalanceItem {
+    let coin: Coin
+    let balance: Decimal?
 }

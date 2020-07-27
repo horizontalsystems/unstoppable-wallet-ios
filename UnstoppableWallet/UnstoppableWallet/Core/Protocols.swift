@@ -571,3 +571,8 @@ protocol ISwapKit {
     func estimateGasSingle(tradeData: TradeData, gasPrice: Int) -> Single<GasData>
     func swapSingle(tradeData: TradeData, gasData: GasData, gasPrice: Int) -> Single<String>
 }
+
+protocol ISwapCoinManager {
+    func balance(coin: Coin) -> Decimal?
+    func items(path: SwapPath, exclude: [Coin]) -> [CoinBalanceItem]
+}

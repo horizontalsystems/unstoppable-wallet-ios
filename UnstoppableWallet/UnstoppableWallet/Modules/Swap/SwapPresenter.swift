@@ -26,7 +26,8 @@ class SwapPresenter {
     }
 
     private func sync() {
-        view?.bind(viewItem: factory.viewItem(coinIn: coinIn, coinOut: coinOut, path: path, tradeData: tradeData))
+        let balance = interactor.balance(coin: coinIn)
+        view?.bind(viewItem: factory.viewItem(coinIn: coinIn, balance: balance, coinOut: coinOut, path: path, tradeData: tradeData))
     }
 
     private func tradeData(path: SwapPath) -> TradeData? {
@@ -59,18 +60,56 @@ extension SwapPresenter: ISwapViewDelegate {
         self.path = path
 
         tradeData = tradeData(path: path)
-        view?.bind(viewItem: factory.viewItem(coinIn: coinIn, coinOut: coinOut, path: path, tradeData: tradeData))
+        sync()
+    }
+
+    func onTokenSelect(path: SwapPath) {
+        let exclude = path == .to ? [coinIn] : []
+
+        router.openTokenSelect(path: path, exclude: exclude, delegate: self)
     }
 
 }
 
 extension SwapPresenter: ISwapInteractorDelegate {
 
-    func didReceive(swapData: UniswapKit.SwapData) {
+    func clearSwapData() {
+        swapData = nil
 
+        sync()
+    }
+
+    func didReceive(swapData: SwapData) {
+        self.swapData = swapData
+
+        tradeData = tradeData(path: path)
+        sync()
     }
 
     func didFailReceiveSwapData(error: Error) {
+        swapData = nil
+
+        sync()
+    }
+
+}
+
+extension SwapPresenter: ICoinSelectDelegate {
+
+    func didSelect(path: SwapPath, coin: Coin) {
+        switch path {
+        case .from:
+            coinIn = coin
+            if coinOut == coin {
+                coinOut = nil
+            }
+        case .to:
+            coinOut = coin
+        }
+
+        interactor.requestSwapData(coinIn: coinIn, coinOut: coinOut)
+
+        sync()
     }
 
 }
