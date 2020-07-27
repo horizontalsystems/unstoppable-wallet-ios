@@ -88,10 +88,10 @@ extension TermsViewController: SectionsDataSource {
                         Row<TermsButtonsCell>(
                                 id: "buttons",
                                 height: TermsButtonsCell.height,
-                                bind: { cell, _ in
-                                    cell.bind(onTapGithub: { [weak self] in
+                                bind: { [weak self] cell, _ in
+                                    cell.bind(onTapGithub: {
                                         self?.delegate.onTapGitHubButton()
-                                    }, onTapSite: { [weak self] in
+                                    }, onTapSite: {
                                         self?.delegate.onTapSiteButton()
                                     })
                                 }
