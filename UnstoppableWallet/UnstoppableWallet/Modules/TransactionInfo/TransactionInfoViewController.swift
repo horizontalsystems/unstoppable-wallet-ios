@@ -133,13 +133,13 @@ class TransactionInfoViewController: ThemeActionSheetController {
                 id: "transaction_id",
                 hash: value,
                 height: .heightSingleLineCell,
-                bind: { cell, _ in
+                bind: { [weak self] cell, _ in
                     cell.bind(
                             value: value,
-                            onTapId: { [weak self] in
+                            onTapId: {
                                 self?.delegate.onTapTransactionId()
                             },
-                            onTapShare: { [weak self] in
+                            onTapShare: {
                                 self?.delegate.onTapShareTransactionId()
                             }
                     )
@@ -246,10 +246,10 @@ class TransactionInfoViewController: ThemeActionSheetController {
         Row<TransactionInfoCopyCell>(
                 id: "raw_transaction",
                 height: .heightSingleLineCell,
-                bind: { cell, _ in
+                bind: { [weak self] cell, _ in
                     cell.bind(
                             title: "tx_info.raw_transaction".localized,
-                            onTapCopy: { [weak self] in
+                            onTapCopy: {
                                 self?.delegate.onTapCopyRawTransaction()
                             }
                     )

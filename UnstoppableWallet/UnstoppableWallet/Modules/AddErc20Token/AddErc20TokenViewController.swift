@@ -61,16 +61,16 @@ class AddErc20TokenViewController: ThemeViewController {
                 dynamicHeight: { containerWidth in
                     InputFieldCell.height(containerWidth: containerWidth, error: error)
                 },
-                bind: { cell, _ in
+                bind: { [weak self] cell, _ in
                     cell.bind(
                             placeholder: "add_erc20_token.contract_address".localized,
                             canEdit: false,
                             text: address,
                             error: error,
-                            onPaste: { [weak self] in
+                            onPaste: {
                                 self?.delegate.onTapPasteAddress()
                             },
-                            onDelete: { [weak self] in
+                            onDelete: {
                                 self?.delegate.onTapDeleteAddress()
                             }
                     )
@@ -116,8 +116,8 @@ class AddErc20TokenViewController: ThemeViewController {
         Row<ButtonCell>(
                 id: "add_button",
                 height: ButtonCell.height(),
-                bind: { cell, _ in
-                    cell.bind(style: .primaryYellow, title: "add_erc20_token.add".localized) { [weak self] in
+                bind: { [weak self] cell, _ in
+                    cell.bind(style: .primaryYellow, title: "add_erc20_token.add".localized) {
                         self?.delegate.onTapAddButton()
                     }
                 }
