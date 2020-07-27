@@ -176,6 +176,22 @@ bch.horizontalsystems.xyz/apg";
 "send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
 
 "send.lock_time" = "TimeLock";
+
+// Swap
+"swap.title" = "Swap";
+"swap.you_pay" = "You Pay";
+"swap.estimated" = "estimated";
+"swap.balance" = "Balance";
+"swap.you_get" = "You Get";
+"swap.token" = "Token";
+"swap.price" = "Price";
+"swap.price_impact" = "Price Impact";
+"swap.max_min" = "Max / Min";
+"swap.maximum_paid" = "Maximum Paid";
+"swap.minimum_got" = "Minimum Got";
+"swap.proceed" = "Proceed";
+
+"swap.select_token.title" = "Choose Coin";
 // Transactions
 
 "transactions.title" = "Transactions";

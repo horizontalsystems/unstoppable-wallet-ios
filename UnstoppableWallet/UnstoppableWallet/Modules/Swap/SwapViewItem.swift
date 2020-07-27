@@ -1,10 +1,10 @@
-import Foundation
+import UIKit
 
 enum SwapPath {
     case to
     case from
 
-    var estimated: SwapPath {
+    var toggle: SwapPath {
         switch self {
         case .to: return .from
         default: return .to
@@ -23,8 +23,9 @@ struct SwapViewItem {
 
     let minMaxTitle: String
     let minMaxValue: String
-    let executionPriceValue: String
+    let executionPriceValue: String?
     let priceImpactValue: String
+    let priceImpactColor: UIColor
 
     let swapButtonEnabled: Bool
 }

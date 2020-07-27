@@ -56,6 +56,13 @@ enum CoinType {
         return nil
     }
 
+    var swappable: Bool {
+        switch self {
+        case .ethereum, .erc20: return true
+        default: return false
+        }
+    }
+
     var restoreUrl: String {
         switch self {
         case .bitcoin: return "https://btc.horizontalsystems.xyz/apg"

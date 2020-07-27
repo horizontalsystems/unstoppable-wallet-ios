@@ -30,6 +30,8 @@ class SwapViewController: ThemeViewController {
         self.delegate = delegate
 
         super.init()
+
+        hidesBottomBarWhenPushed = true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -39,7 +41,7 @@ class SwapViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Swap"
+        title = "swap.title".localized
         view.backgroundColor = .themeDarker
 
         view.addSubview(scrollView)
@@ -96,18 +98,19 @@ class SwapViewController: ThemeViewController {
         }
         fromTitleLabel.font = .body
         fromTitleLabel.textColor = .themeOz
-        fromTitleLabel.text = "swap.from_title".localized
+        fromTitleLabel.text = "swap.you_pay".localized
 
         fromBadgeView.snp.makeConstraints { maker in
             maker.centerY.equalTo(fromTitleLabel)
             maker.leading.equalTo(fromTitleLabel.snp.trailing).offset(CGFloat.margin2x)
         }
-        fromBadgeView.set(text: "ESTIMATED".localized)
+        fromBadgeView.set(text: "swap.estimated".localized)
 
         fromInputView.snp.makeConstraints { maker in
             maker.top.equalTo(fromTitleLabel.snp.bottom).offset(CGFloat.margin3x)
             maker.leading.trailing.equalToSuperview()
         }
+        fromInputView.set(maxButtonVisible: false)
 
         fromAvailableBalanceView.snp.makeConstraints { maker in
             maker.top.equalTo(fromInputView.snp.bottom).offset(CGFloat.margin3x)
@@ -128,18 +131,19 @@ class SwapViewController: ThemeViewController {
         toTitleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         toTitleLabel.font = .body
         toTitleLabel.textColor = .themeOz
-        toTitleLabel.text = "swap.to_title".localized
+        toTitleLabel.text = "swap.you_get".localized
 
         toBadgeView.snp.makeConstraints { maker in
             maker.centerY.equalTo(toTitleLabel)
             maker.leading.equalTo(toTitleLabel.snp.trailing).offset(CGFloat.margin2x)
         }
-        toBadgeView.set(text: "ESTIMATED".localized)
+        toBadgeView.set(text: "estimated".localized)
 
         toInputView.snp.makeConstraints { maker in
             maker.top.equalTo(toTitleLabel.snp.bottom).offset(CGFloat.margin3x)
             maker.leading.trailing.equalToSuperview()
         }
+        toInputView.set(maxButtonVisible: false)
 
         toPriceView.snp.makeConstraints { maker in
             maker.top.equalTo(toInputView.snp.bottom).offset(CGFloat.margin3x)
@@ -164,24 +168,13 @@ class SwapViewController: ThemeViewController {
         }
 
         swapButton.apply(style: .primaryYellow)
-        swapButton.setTitle("swap.proceed_button".localized, for: .normal)
+        swapButton.setTitle("swap.proceed".localized, for: .normal)
         swapButton.addTarget(self, action: #selector(onSwapTouchUp), for: .touchUpInside)
 
-        fromAvailableBalanceView.set(title: "Available Balance")
-        fromAvailableBalanceView.set(value: "0.0072345 ETH")
-        fromInputView.set(tokenName: "ETHТР")
+        fromAvailableBalanceView.set(title: "swap.balance".localized)
 
-        toInputView.set(tokenName: "ETHTP")
-        toInputView.set(maxButtonVisible: false)
-
-        toPriceView.set(title: "Price")
-        toPriceView.set(value: "0 ETH")
-
-        toPriceImpactView.set(title: "Price Impact")
-        toPriceImpactView.set(value: "0%")
-
-        minMaxView.set(title: "Max / Min")
-        minMaxView.set(value: "0")
+        toPriceView.set(title: "swap.price".localized)
+        toPriceImpactView.set(title: "swap.price_impact".localized)
     }
 
     private func set(estimatedField: SwapPath) {
@@ -209,13 +202,6 @@ class SwapViewController: ThemeViewController {
 
 extension SwapViewController: ISwapView {
 
-    func showKeyboard(path: SwapPath) {
-        switch path {
-        case .to: toInputView.showKeyboard()
-        case .from: fromInputView.showKeyboard()
-        }
-    }
-
     func dismissKeyboard() {
         view.endEditing(true)
     }
@@ -238,6 +224,9 @@ extension SwapViewController: ISwapView {
 
         toPriceView.set(value: viewItem.executionPriceValue)
         toPriceImpactView.set(value: viewItem.priceImpactValue)
+        toPriceImpactView.set(color: viewItem.priceImpactColor)
+
+        swapButton.isEnabled = viewItem.swapButtonEnabled
     }
 
     func amount(path: SwapPath) -> String? {
@@ -270,7 +259,7 @@ extension SwapViewController: ISwapInputViewDelegate {
     }
 
     func onTokenSelectClicked(_ inputView: SwapInputView) {
-        print("onTokenSelectClicked - ", path(for: inputView))
+        delegate.onTokenSelect(path: path(for: inputView))
     }
 
 }
