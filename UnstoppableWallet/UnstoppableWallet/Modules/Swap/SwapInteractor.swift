@@ -6,16 +6,18 @@ import RxSwift
 class SwapInteractor {
     private let disposeBag = DisposeBag()
     private let swapKit: ISwapKit
+    private let swapTokenManager: SwapTokenManager
 
     weak var delegate: ISwapInteractorDelegate?
 
-    init(swapKit: ISwapKit) {
+    init(swapKit: ISwapKit, swapTokenManager: SwapTokenManager) {
         self.swapKit = swapKit
+        self.swapTokenManager = swapTokenManager
     }
 
-    private func uniswapToken(coin: Coin?) -> Token {
-        if case let .erc20(address, _, _, _) = coin?.type, let decimal = coin?.decimal {
-            return swapKit.token(contractAddress: Data(hex: address)!, decimals: decimal)
+    private func uniswapToken(coin: Coin) -> Token {
+        if case let .erc20(address, _, _, _) = coin.type {
+            return swapKit.token(contractAddress: Data(hex: address)!, decimals: coin.decimal)
         }
 
         return swapKit.etherToken
@@ -25,7 +27,17 @@ class SwapInteractor {
 
 extension SwapInteractor: ISwapInteractor {
 
+    func balance(coin: Coin) -> Decimal? {
+        swapTokenManager.balance(coin: coin)
+    }
+
     func requestSwapData(coinIn: Coin?, coinOut: Coin?) {
+        guard let coinIn = coinIn, let coinOut = coinOut else {
+            delegate?.clearSwapData()
+
+            return
+        }
+
         let tokenIn = uniswapToken(coin: coinIn)
         let tokenOut = uniswapToken(coin: coinOut)
 

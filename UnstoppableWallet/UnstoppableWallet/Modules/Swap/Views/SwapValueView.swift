@@ -47,4 +47,7 @@ class SwapValueView: UIView {
         valueLabel.text = value
     }
 
+    func set(color: UIColor) {
+        valueLabel.textColor = color
+    }
 }
