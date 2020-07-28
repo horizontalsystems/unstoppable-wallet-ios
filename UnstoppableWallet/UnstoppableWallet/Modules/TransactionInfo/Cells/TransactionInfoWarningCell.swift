@@ -42,7 +42,7 @@ class TransactionInfoWarningCell: ThemeCell {
             maker.width.equalTo(TransactionInfoWarningCell.buttonWidth)
         }
 
-        button.setImage(UIImage(named: "Transaction Info Icon")?.tinted(with: .themeJacob), for: .normal)
+        button.setImage(UIImage(named: "Info Icon Medium")?.tinted(with: .themeJacob), for: .normal)
         button.addTarget(self, action: #selector(_onTapButton), for: .touchUpInside)
     }
 

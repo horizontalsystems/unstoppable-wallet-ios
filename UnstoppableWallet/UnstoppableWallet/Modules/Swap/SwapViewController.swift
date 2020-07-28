@@ -13,7 +13,9 @@ class SwapViewController: ThemeViewController {
     private let fromTitleLabel = UILabel()
     private let fromBadgeView = BadgeView()
     private let fromInputView = SwapInputView()
-    private let fromAvailableBalanceView = SwapValueView()
+
+    private let fromBalanceView = SwapValueView()
+    private let fromErrorView = UILabel()
 
     private let separatorLineView = UIView()
 
@@ -59,7 +61,7 @@ class SwapViewController: ThemeViewController {
             maker.top.bottom.equalTo(self.scrollView)
         }
 
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Info Icon Small")?.tinted(with: .themeJacob), style: .plain, target: self, action: #selector(onInfo))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Info Icon Medium")?.tinted(with: .themeJacob), style: .plain, target: self, action: #selector(onInfo))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onClose))
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
@@ -75,7 +77,8 @@ class SwapViewController: ThemeViewController {
         container.addSubview(fromTitleLabel)
         container.addSubview(fromBadgeView)
         container.addSubview(fromInputView)
-        container.addSubview(fromAvailableBalanceView)
+        container.addSubview(fromBalanceView)
+        container.addSubview(fromErrorView)
         container.addSubview(separatorLineView)
         container.addSubview(toTitleLabel)
         container.addSubview(toBadgeView)
@@ -112,13 +115,21 @@ class SwapViewController: ThemeViewController {
         }
         fromInputView.set(maxButtonVisible: false)
 
-        fromAvailableBalanceView.snp.makeConstraints { maker in
+        fromBalanceView.snp.makeConstraints { maker in
             maker.top.equalTo(fromInputView.snp.bottom).offset(CGFloat.margin3x)
             maker.leading.trailing.equalToSuperview()
         }
 
+        fromErrorView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().offset(CGFloat.margin3x)
+            maker.top.bottom.equalTo(fromBalanceView)
+        }
+        fromErrorView.font = .caption
+        fromErrorView.textColor = .themeLucian
+        fromErrorView.isHidden = true
+
         separatorLineView.snp.makeConstraints { maker in
-            maker.top.equalTo(fromAvailableBalanceView.snp.bottom).offset(CGFloat.margin2x)
+            maker.top.equalTo(fromBalanceView.snp.bottom).offset(CGFloat.margin2x)
             maker.leading.trailing.equalToSuperview()
             maker.height.equalTo(CGFloat.heightOneDp)
         }
@@ -171,7 +182,7 @@ class SwapViewController: ThemeViewController {
         swapButton.setTitle("swap.proceed".localized, for: .normal)
         swapButton.addTarget(self, action: #selector(onSwapTouchUp), for: .touchUpInside)
 
-        fromAvailableBalanceView.set(title: "swap.balance".localized)
+        fromBalanceView.set(title: "swap.balance".localized)
 
         toPriceView.set(title: "swap.price".localized)
         toPriceImpactView.set(title: "swap.price_impact".localized)
@@ -185,7 +196,6 @@ class SwapViewController: ThemeViewController {
     private func path(for view: SwapInputView) -> SwapPath {
         view == fromInputView ? .from : .to
     }
-
 
     @objc func onClose() {
         delegate.onClose()
@@ -217,7 +227,16 @@ extension SwapViewController: ISwapView {
         case .from: fromInputView.set(text: viewItem.estimatedAmount)
         }
 
-        fromAvailableBalanceView.set(value: viewItem.availableBalance)
+        fromBalanceView.set(value: viewItem.availableBalance)
+        if let error = viewItem.error {
+            fromErrorView.isHidden = false
+            fromBalanceView.isHidden = true
+
+            fromErrorView.text = error
+        } else {
+            fromErrorView.isHidden = true
+            fromBalanceView.isHidden = false
+        }
 
         minMaxView.set(title: viewItem.minMaxTitle)
         minMaxView.set(value: viewItem.minMaxValue)
@@ -241,21 +260,19 @@ extension SwapViewController: ISwapView {
 extension SwapViewController: ISwapInputViewDelegate {
 
     func isValid(_ inputView: SwapInputView, text: String) -> Bool {
-        true
+        if delegate.isValid(path: path(for: inputView), text: text) {
+            return true
+        } else {
+            inputView.shakeView()
+            return false
+        }
     }
 
     func willChangeAmount(_ inputView: SwapInputView, text: String?) {
-        print("willChangeAmount - ", path(for: inputView), " - ", text)
-    }
-
-    func didChangeAmount(_ inputView: SwapInputView, text: String?) {
-        delegate.didChangeAmount(path: path(for: inputView))
-
-        print("didChangeAmount - ", path(for: inputView))
+        delegate.willChangeAmount(path: path(for: inputView), text: text)
     }
 
     func onMaxClicked(_ inputView: SwapInputView) {
-        print("onMaxClicked - ", path(for: inputView))
     }
 
     func onTokenSelectClicked(_ inputView: SwapInputView) {

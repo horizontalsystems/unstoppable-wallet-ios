@@ -11,8 +11,10 @@ protocol ISwapViewDelegate {
     func onViewDidLoad()
     func onClose()
 
+    func isValid(path: SwapPath, text: String) -> Bool
+    func willChangeAmount(path: SwapPath, text: String?)
+
     func onTokenSelect(path: SwapPath)
-    func didChangeAmount(path: SwapPath)
 }
 
 protocol ISwapInteractor {
@@ -37,7 +39,6 @@ protocol ISwapInputViewDelegate: class {
     func isValid(_ inputView: SwapInputView, text: String) -> Bool
 
     func willChangeAmount(_ inputView: SwapInputView, text: String?)
-    func didChangeAmount(_ inputView: SwapInputView, text: String?)
 
     func onMaxClicked(_ inputView: SwapInputView)
     func onTokenSelectClicked(_ inputView: SwapInputView)
