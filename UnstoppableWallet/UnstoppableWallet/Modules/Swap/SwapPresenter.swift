@@ -1,6 +1,8 @@
 import UniswapKit
 
 class SwapPresenter {
+    private let maxCoinDecimal = 8
+
     private let interactor: ISwapInteractor
     private let router: ISwapRouter
 
@@ -11,6 +13,8 @@ class SwapPresenter {
 
     private var coinIn: Coin
     private var coinOut: Coin?
+
+    private var balanceIn: Decimal?
 
     private var swapData: SwapData?
     private var tradeData: TradeData?
@@ -26,8 +30,9 @@ class SwapPresenter {
     }
 
     private func sync() {
-        let balance = interactor.balance(coin: coinIn)
-        view?.bind(viewItem: factory.viewItem(coinIn: coinIn, balance: balance, coinOut: coinOut, path: path, tradeData: tradeData))
+        balanceIn = interactor.balance(coin: coinIn)
+
+        view?.bind(viewItem: factory.viewItem(coinIn: coinIn, balance: balanceIn, coinOut: coinOut, path: path, tradeData: tradeData))
     }
 
     private func tradeData(path: SwapPath) -> TradeData? {
@@ -56,11 +61,30 @@ extension SwapPresenter: ISwapViewDelegate {
         router.dismiss()
     }
 
-    func didChangeAmount(path: SwapPath) {
+    func willChangeAmount(path: SwapPath, text: String?) {
         self.path = path
 
         tradeData = tradeData(path: path)
         sync()
+    }
+
+    func isValid(path: SwapPath, text: String) -> Bool {
+        guard let value = decimalParser.parseAnyDecimal(from: text) else {
+            return false
+        }
+
+        let decimal: Int
+        var balance: Decimal? = nil
+
+        switch path {
+        case .from:
+            decimal = min(coinIn.decimal, maxCoinDecimal)
+            balance = self.balanceIn
+        case .to: decimal = min(coinOut?.decimal ?? maxCoinDecimal, maxCoinDecimal)
+        }
+
+        let insufficientAmount = balance.map { value > $0 } ?? false
+        return value.decimalCount <= decimal && !insufficientAmount
     }
 
     func onTokenSelect(path: SwapPath) {

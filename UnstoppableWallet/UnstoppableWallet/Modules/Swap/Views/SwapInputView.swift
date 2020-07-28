@@ -161,6 +161,9 @@ extension SwapInputView: UITextFieldDelegate {
 
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if let text = inputField.text, let textRange = Range(range, in: text) {
+            guard string != "" else {       // allow backspacing in inputView
+                return true
+            }
             let text = text.replacingCharacters(in: textRange, with: string)
             guard !text.isEmpty else {
                 return true
