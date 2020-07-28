@@ -43,7 +43,7 @@ extension SwapTokenManager: ISwapCoinManager {
                 let include = !exclude.contains(item.coin)
                 let zeroBalance = item.balance?.isZero ?? false
 
-                return item.coin.type.swappable && include //TODO: add check for balance && !zeroBalance
+                return item.coin.type.swappable && include && !zeroBalance
             }
         case .to:                                   // return ethereum and erc20 tokens registered in app
             return coinManager.coins

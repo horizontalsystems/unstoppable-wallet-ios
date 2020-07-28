@@ -68,12 +68,12 @@ class BalanceViewItemFactory {
 
         let state = item.state
         
-        // let zeroBalance = item.balance?.isZero ?? false
+         let zeroBalance = item.balance?.isZero ?? false
 
         return BalanceButtonsViewItem(
                 receiveButtonEnabled: state != nil,
                 sendButtonEnabled: state == .synced,
-                swapButtonHidden: !item.wallet.coin.type.swappable //todo: uncommit && !zeroBalance
+                swapButtonHidden: !item.wallet.coin.type.swappable && !zeroBalance
         )
     }
 
