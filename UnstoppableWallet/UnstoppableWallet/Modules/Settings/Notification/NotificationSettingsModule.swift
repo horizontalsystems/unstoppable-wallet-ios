@@ -7,7 +7,7 @@ protocol INotificationSettingsView: AnyObject {
 
 protocol INotificationSettingsViewDelegate {
     func viewDidLoad()
-    func didSelect(state: AlertState, index: Int)
+    func didSelect(changeState: PriceAlert.ChangeState, trendState: PriceAlert.TrendState, index: Int)
     func didTapSettingsButton()
     func didTapDeactivateAll()
 }
@@ -16,12 +16,14 @@ protocol INotificationSettingsInteractor {
     var alerts: [PriceAlert] { get }
     func requestPermission()
     func save(priceAlerts: [PriceAlert])
+    func deleteAllAlerts()
 }
 
 protocol INotificationSettingsInteractorDelegate: AnyObject {
     func didGrantPermission()
     func didDenyPermission()
     func didEnterForeground()
+    func didSaveAlerts()
     func didFailSaveAlerts(error: Error)
 }
 
@@ -32,7 +34,8 @@ protocol INotificationSettingsRouter {
 struct PriceAlertViewItem {
     let title: String
     let code: String
-    let state: AlertState
+    let changeState: PriceAlert.ChangeState
+    let trendState: PriceAlert.TrendState
 }
 
 struct PriceAlertValueViewItem {

@@ -9,6 +9,7 @@ class RemoteAlertManager {
 
     private let networkManager: NetworkManager
     private let appConfigProvider: IAppConfigProvider
+    private let storage: IPriceAlertRequestStorage
 
     private let authDisposeBag = DisposeBag()
     private let disposeBag = DisposeBag()
@@ -21,15 +22,21 @@ class RemoteAlertManager {
         case unsubscribe = "pns/unsubscribe"
     }
 
-    init(networkManager: NetworkManager, appConfigProvider: IAppConfigProvider) {
+    init(networkManager: NetworkManager, reachabilityManager: IReachabilityManager, appConfigProvider: IAppConfigProvider, storage: IPriceAlertRequestStorage) {
         self.networkManager = networkManager
         self.appConfigProvider = appConfigProvider
+        self.storage = storage
 
         self.url = appConfigProvider.pnsUrl
-    }
 
-    private func composePriceTopic(alert: PriceAlert) -> String {
-        "\(alert.coin.code)_24hour_\(alert.state.rawValue)percent"
+        reachabilityManager.reachabilityObservable
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .subscribe(onNext: { [weak self] isReachable in
+                    if isReachable {
+                        self?.schedule(requests: self?.storage.requests ?? [])
+                    }
+                })
+                .disposed(by: disposeBag)
     }
 
     private func authenticate(after: Single<()>? = nil) -> Single<String> {
@@ -43,38 +50,41 @@ class RemoteAlertManager {
                 })
     }
 
-    private func update(pushToken: String?, topics: [String], method: Method) -> Single<()> {
+    private func update(pushToken: String?, topics: [String], method: PriceAlertRequest.Method, restMethod: HTTPMethod) -> Single<()> {
         guard let pushToken = pushToken else {
             return .error(NotificationBackendError.token)
+        }
+        guard !topics.isEmpty else {
+            return .just(())
         }
 
         let path = method.rawValue
         let params: [String: Any] = ["token": pushToken, "topics": topics]
 
-        return wrapAuth(url: url + path, parameters: params)
+        return wrapAuth(url: url + path, parameters: params, method: restMethod)
     }
 
-    private func wrapAuth(url: String, parameters: [String: Any]) -> Single<()> {
+    private func wrapAuth(url: String, parameters: [String: Any], method: HTTPMethod) -> Single<()> {
         let authSingle = authenticate()
 
         guard let jwtToken = jwtToken else {
             return authSingle.flatMap { [weak self] token in
-                self?.makeRequest(url: url, parameters: parameters, jwtToken: token) ?? .error(NotificationBackendError.unknown)
+                self?.makeRequest(url: url, parameters: parameters, jwtToken: token, method: method) ?? .error(NotificationBackendError.unknown)
             }
         }
 
-        return makeRequest(url: url, parameters: parameters, jwtToken: jwtToken).catchError { error in
+        return makeRequest(url: url, parameters: parameters, jwtToken: jwtToken, method: method).catchError { error in
             if let error = error as? NotificationBackendError, error == .auth {
                 return authSingle.flatMap { [weak self] token in
-                    self?.makeRequest(url: url, parameters: parameters, jwtToken: token) ?? .error(NotificationBackendError.unknown)
+                    self?.makeRequest(url: url, parameters: parameters, jwtToken: token, method: method) ?? .error(NotificationBackendError.unknown)
                 }
             }
             return .error(error)
         }
     }
 
-    private func makeRequest(url: String, parameters: [String: Any], jwtToken: String) -> Single<()> {
-        let request = networkManager.session.request(url, method: .post, parameters: parameters, headers: ["Authorization": "Bearer " + jwtToken])
+    private func makeRequest(url: String, parameters: [String: Any], jwtToken: String, method: HTTPMethod) -> Single<()> {
+        let request = networkManager.session.request(url, method: method, parameters: parameters, headers: ["Authorization": "Bearer " + jwtToken])
 
         return networkManager.single(request: request, mapper: SuccessMapper())
     }
@@ -116,14 +126,44 @@ extension RemoteAlertManager {
 
 extension RemoteAlertManager: IRemoteAlertManager {
 
-    func handle(newAlerts: [PriceAlert]) -> Single<()> {
-        let topics = newAlerts.map(composePriceTopic)
-        return update(pushToken: notificationManager?.token, topics: topics, method: .subscribe)
+    func handle(requests: [PriceAlertRequest]) -> Observable<[()]> {
+        let token = notificationManager?.token
+
+        var subscribeTopics = [String]()
+        var unsubscribeTopics = [String]()
+        requests.forEach {
+            switch $0.method {
+            case .subscribe: subscribeTopics.append($0.topic)
+            case .unsubscribe: unsubscribeTopics.append($0.topic)
+            }
+        }
+
+        return Single.zip([
+            update(pushToken: token, topics: subscribeTopics, method: .subscribe, restMethod: .post),
+            update(pushToken: token, topics: unsubscribeTopics, method: .unsubscribe, restMethod: .post)
+        ]).asObservable()
     }
 
-    func handle(deletedAlerts: [PriceAlert]) -> Single<()> {
-        let topics = deletedAlerts.map(composePriceTopic)
-        return update(pushToken: notificationManager?.token, topics: topics, method: .unsubscribe)
+    func schedule(requests: [PriceAlertRequest]) {
+        handle(requests: requests)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .subscribe(onError: { [weak self] _ in
+                    self?.storage.save(requests: requests)
+                }, onCompleted: { [weak self] in
+                    self?.storage.delete(requests: requests)
+                })
+                .disposed(by: disposeBag)
+    }
+
+    func unsubscribeAll() -> Single<()> {
+        guard let pushToken = notificationManager?.token else {
+            return .error(NotificationBackendError.token)
+        }
+
+        let path = "pns/unsubscribeall"
+
+        return wrapAuth(url: url + path + "/" + pushToken, parameters: [:], method: .get)
     }
 
 }

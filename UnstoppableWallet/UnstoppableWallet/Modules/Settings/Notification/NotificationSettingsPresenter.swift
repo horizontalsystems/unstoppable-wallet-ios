@@ -32,14 +32,15 @@ extension NotificationSettingsPresenter: INotificationSettingsViewDelegate {
         interactor.requestPermission()
     }
 
-    func didSelect(state: AlertState, index: Int) {
-        let alert = alerts[index]
+    func didSelect(changeState: PriceAlert.ChangeState, trendState: PriceAlert.TrendState, index: Int) {
+        var alert = alerts[index]
 
-        guard alert.state != state else {
+        guard alert.changeState != changeState || alert.trendState != trendState else {
             return
         }
 
-        alert.state = state
+        alert.changeState = changeState
+        alert.trendState = trendState
 
         handleUpdated(alerts: [alert])
     }
@@ -49,13 +50,7 @@ extension NotificationSettingsPresenter: INotificationSettingsViewDelegate {
     }
 
     func didTapDeactivateAll() {
-        let activeAlerts = alerts.filter { $0.state != .off }
-
-        activeAlerts.forEach { alert in
-            alert.state = .off
-        }
-
-        handleUpdated(alerts: activeAlerts)
+        interactor.deleteAllAlerts()
     }
 
 }
@@ -72,6 +67,13 @@ extension NotificationSettingsPresenter: INotificationSettingsInteractorDelegate
 
     func didEnterForeground() {
         interactor.requestPermission()
+    }
+
+    func didSaveAlerts() {
+        alerts = interactor.alerts
+
+        let viewItems = factory.viewItems(alerts: alerts)
+        view?.set(viewItems: viewItems)
     }
 
     func didFailSaveAlerts(error: Error) {

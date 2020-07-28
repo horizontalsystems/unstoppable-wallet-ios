@@ -44,6 +44,20 @@ extension NotificationSettingsInteractor: INotificationSettingsInteractor {
                 .observeOn(MainScheduler.instance)
                 .subscribe(onError: { [weak self] error in
                     self?.delegate?.didFailSaveAlerts(error: error)
+                }, onCompleted: { [weak self] in
+                    self?.delegate?.didSaveAlerts()
+                })
+                .disposed(by: disposeBag)
+    }
+
+    func deleteAllAlerts() {
+        priceAlertManager.deleteAllAlerts()
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onSuccess: { [weak self] in
+                    self?.delegate?.didSaveAlerts()
+                }, onError: { [weak self] error in
+                    self?.delegate?.didFailSaveAlerts(error: error)
                 })
                 .disposed(by: disposeBag)
     }

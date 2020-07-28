@@ -102,15 +102,15 @@ extension NotificationSettingsViewController: SectionsDataSource {
                     rows: viewItems.enumerated().map { (index, item) in
                         Row<ImageDoubleLineValueCell>(
                                 id: item.code,
-                                hash: "\(item.state)",
+                                hash: "\(item.changeState)",
                                 height: CGFloat.heightDoubleLineCell,
                                 bind: { [unowned self] cell, _ in
                                     cell.bind(
                                             image: .image(coinCode: item.code),
                                             title: item.title,
                                             subtitle: item.code,
-                                            value: "\(item.state)",
-                                            valueHighlighted: item.state != .off,
+                                            value: "\(item.changeState)",
+                                            valueHighlighted: item.changeState != .off,
                                             last: index == self.viewItems.count - 1
                                     )
                                 },
@@ -142,8 +142,8 @@ extension NotificationSettingsViewController: SectionsDataSource {
     }
 
     private func showSelector(index: Int) {
-        let controller = NotificationSettingsSelectorViewController(selectedState: viewItems[index].state, onSelect: { [weak self] state in
-            self?.delegate.didSelect(state: state, index: index)
+        let controller = NotificationSettingsSelectorViewController(changeState: viewItems[index].changeState, onSelect: { [weak self] state in
+            self?.delegate.didSelect(changeState: state, trendState: .off, index: index)
         })
 
         controller.title = self.viewItems[index].title

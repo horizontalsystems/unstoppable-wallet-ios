@@ -89,13 +89,26 @@ class GrdbStorage {
             try db.drop(table: "enabled_coins")
         }
 
-        migrator.registerMigration("createPriceAlertRecordsTable") { db in
+        migrator.registerMigration("reCreatePriceAlertRecordsTable") { db in
+            if try db.tableExists(PriceAlertRecord.databaseTableName) {
+                try db.drop(table: PriceAlertRecord.databaseTableName)
+            }
+
             try db.create(table: PriceAlertRecord.databaseTableName) { t in
                 t.column(PriceAlertRecord.Columns.coinCode.name, .text).notNull()
-                t.column(PriceAlertRecord.Columns.state.name, .integer).notNull()
-                t.column(PriceAlertRecord.Columns.lastRate.name, .text)
+                t.column(PriceAlertRecord.Columns.changeState.name, .integer).notNull()
+                t.column(PriceAlertRecord.Columns.trendState.name, .text).notNull()
 
                 t.primaryKey([PriceAlertRecord.Columns.coinCode.name], onConflict: .replace)
+            }
+        }
+
+        migrator.registerMigration("createPriceAlertRequestRecordsTable") { db in
+            try db.create(table: PriceAlertRequestRecord.databaseTableName) { t in
+                t.column(PriceAlertRequestRecord.Columns.topic.name, .text).notNull()
+                t.column(PriceAlertRequestRecord.Columns.method.name, .integer).notNull()
+
+                t.primaryKey([PriceAlertRequestRecord.Columns.topic.name, PriceAlertRequestRecord.Columns.method.name], onConflict: .replace)
             }
         }
 
@@ -361,15 +374,35 @@ extension GrdbStorage: IPriceAlertRecordStorage {
         }
     }
 
-    func deletePriceAlertRecords(coinCodes: [CoinCode]) {
+    func deleteAllPriceAlertRecords() {
         _ = try! dbPool.write { db in
-            try PriceAlertRecord.filter(coinCodes.contains(PriceAlertRecord.Columns.coinCode)).deleteAll(db)
+            try PriceAlertRecord.deleteAll(db)
         }
     }
 
-    func deletePriceAlertsExcluding(coinCodes: [CoinCode]) {
+}
+
+extension GrdbStorage: IPriceAlertRequestRecordStorage {
+
+    var priceAlertRequestRecords: [PriceAlertRequestRecord] {
+        try! dbPool.read { db in
+            try PriceAlertRequestRecord.fetchAll(db)
+        }
+    }
+
+    func save(priceAlertRequestRecords: [PriceAlertRequestRecord]) {
         _ = try! dbPool.write { db in
-            try PriceAlertRecord.filter(!coinCodes.contains(PriceAlertRecord.Columns.coinCode)).deleteAll(db)
+            for record in priceAlertRequestRecords {
+                try record.insert(db)
+            }
+        }
+    }
+
+    func delete(priceAlertRequestRecords: [PriceAlertRequestRecord]) {
+        _ = try! dbPool.write { db in
+            for priceAlertRequestRecord in priceAlertRequestRecords {
+                try priceAlertRequestRecord.delete(db)
+            }
         }
     }
 

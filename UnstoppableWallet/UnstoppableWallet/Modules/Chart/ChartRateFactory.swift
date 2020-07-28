@@ -233,7 +233,7 @@ class ChartRateFactory: IChartRateFactory {
             currentRate = ValueFormatter.instance.format(currencyValue: rateValue, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
         }
 
-        let alertOn = priceAlert?.state != .off
+        let alertOn = priceAlert?.changeState != .off || priceAlert?.trendState != .off
 
         return ChartViewItem(currentRate: currentRate, chartDataStatus: chartDataStatusViewItem, marketInfoStatus: marketStatus, selectedIndicator: selectedIndicator, alertOn: alertOn)
     }
