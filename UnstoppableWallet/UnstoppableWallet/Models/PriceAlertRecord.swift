@@ -2,13 +2,13 @@ import GRDB
 
 class PriceAlertRecord: Record {
     let coinCode: CoinCode
-    let state: AlertState
-    let lastRate: Decimal?
+    let changeState: PriceAlert.ChangeState
+    let trendState: PriceAlert.TrendState
 
-    init(coinCode: CoinCode, state: AlertState, lastRate: Decimal?) {
+    init(coinCode: CoinCode, changeState: PriceAlert.ChangeState, trendState: PriceAlert.TrendState) {
         self.coinCode = coinCode
-        self.state = state
-        self.lastRate = lastRate
+        self.changeState = changeState
+        self.trendState = trendState
 
         super.init()
     }
@@ -19,22 +19,22 @@ class PriceAlertRecord: Record {
 
     enum Columns: String, ColumnExpression {
         case coinCode
-        case state
-        case lastRate
+        case changeState
+        case trendState
     }
 
     required init(row: Row) {
         coinCode = row[Columns.coinCode]
-        state = row[Columns.state].flatMap { AlertState(rawValue: $0) } ?? .off
-        lastRate = row[Columns.lastRate]
+        changeState = row[Columns.changeState].flatMap { PriceAlert.ChangeState(rawValue: $0) } ?? .off
+        trendState = row[Columns.trendState].flatMap { PriceAlert.TrendState(rawValue: $0) } ?? .off
 
         super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
         container[Columns.coinCode] = coinCode
-        container[Columns.state] = state.rawValue
-        container[Columns.lastRate] = lastRate
+        container[Columns.changeState] = changeState.rawValue
+        container[Columns.trendState] = trendState.rawValue
     }
 
 }

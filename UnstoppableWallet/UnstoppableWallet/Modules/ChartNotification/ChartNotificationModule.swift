@@ -1,6 +1,6 @@
 protocol IChartNotificationView: AnyObject {
     func set(coinName: String)
-    func set(selectedState: AlertState)
+    func set(alert: PriceAlert)
 
     func showWarning()
     func hideWarning()
@@ -9,12 +9,13 @@ protocol IChartNotificationView: AnyObject {
 
 protocol IChartNotificationViewDelegate {
     func viewDidLoad()
-    func didSelect(state: AlertState)
+    func didSelect(changeState: PriceAlert.ChangeState)
+    func didSelect(trendState: PriceAlert.TrendState)
     func didTapSettingsButton()
 }
 
 protocol IChartNotificationInteractor {
-    func notification(coin: Coin) -> PriceAlert
+    func priceAlert(coin: Coin) -> PriceAlert
     func requestPermission()
     func save(priceAlert: PriceAlert)
 }

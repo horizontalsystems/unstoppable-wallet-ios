@@ -26,7 +26,22 @@ class PriceAlertManager {
     private func onUpdate(wallets: [Wallet]) {
         let coinCodes = wallets.map { $0.coin.code }
 
-        storage.deleteExcluding(coinCodes: coinCodes)
+        let alertsToDeactivate = priceAlerts.filter { !coinCodes.contains($0.coin.code) }
+
+        storage.save(priceAlerts: alertsToDeactivate.map { PriceAlert(coin: $0.coin, changeState: .off, trendState: .off) })
+
+        let unsubscribeRequests = alertsToDeactivate.reduce([PriceAlertRequest]()) {
+            var array = $0
+            if $1.changeState != .off {
+                array.append(PriceAlertRequest(topic: $1.changeTopic, method: .unsubscribe))
+            }
+            if $1.trendState != .off {
+                array.append(PriceAlertRequest(topic: $1.trendTopic, method: .unsubscribe))
+            }
+            return array
+        }
+
+        remoteAlertManager.schedule(requests: unsubscribeRequests)
     }
 
 }
@@ -47,48 +62,55 @@ extension PriceAlertManager: IPriceAlertManager {
                 return alert
             }
 
-            return PriceAlert(coin: coin, state: .off)
+            return PriceAlert(coin: coin, changeState: .off, trendState: .off)
         }
     }
 
     func priceAlert(coin: Coin) -> PriceAlert {
-        storage.priceAlert(coin: coin) ?? PriceAlert(coin: coin, state: .off)
+        storage.priceAlert(coin: coin) ?? PriceAlert(coin: coin, changeState: .off, trendState: .off)
     }
 
     func save(priceAlerts: [PriceAlert]) -> Observable<[()]> {
-        var toBeSaved = [PriceAlert]()
-        var toBeDeleted = [PriceAlert]()
+        let oldAlerts = self.priceAlerts
 
-        for priceAlert in priceAlerts {
-            if priceAlert.state == .off {
-                toBeDeleted.append(priceAlert)
-            } else {
-                toBeSaved.append(priceAlert)
+        var requests = [PriceAlertRequest]()
+
+        for alert in priceAlerts {
+            let oldAlert = (oldAlerts.first { $0.coin == alert.coin }) ?? PriceAlert(coin: alert.coin, changeState: .off, trendState: .off)
+
+            if alert.changeState != oldAlert.changeState {
+                if alert.changeState == .off {
+                    requests.append(PriceAlertRequest(topic: oldAlert.changeTopic, method: .unsubscribe))
+                } else {
+                    requests.append(PriceAlertRequest(topic: alert.changeTopic, method: .subscribe))
+                    if oldAlert.changeState != .off {
+                        requests.append(PriceAlertRequest(topic: oldAlert.changeTopic, method: .unsubscribe))
+                    }
+                }
+            }
+
+            if alert.trendState != oldAlert.trendState {
+                if alert.trendState == .off {
+                    requests.append(PriceAlertRequest(topic: oldAlert.trendTopic, method: .unsubscribe))
+                } else {
+                    requests.append(PriceAlertRequest(topic: alert.trendTopic, method: .subscribe))
+                    if oldAlert.trendState != .off {
+                        requests.append(PriceAlertRequest(topic: oldAlert.trendTopic, method: .unsubscribe))
+                    }
+                }
             }
         }
 
-        var singles = [Single<()>]()
-
-        if !toBeSaved.isEmpty {
-            singles.append(
-                    remoteAlertManager.handle(newAlerts: toBeSaved)
-                            .do(onSuccess: { [weak self] in
-                                self?.storage.save(priceAlerts: toBeSaved)
-                            })
-            )
-        }
-
-        if !toBeDeleted.isEmpty {
-            singles.append(
-                    remoteAlertManager.handle(deletedAlerts: toBeDeleted)
-                            .do(onSuccess: { [weak self] in
-                                self?.storage.delete(priceAlerts: toBeDeleted)
-                            })
-            )
-        }
-
-        return Single.zip(singles).asObservable().do(onCompleted: { [weak self] in
+        return remoteAlertManager.handle(requests: requests).do(onCompleted: { [weak self] in
+            self?.storage.save(priceAlerts: priceAlerts)
             self?.updateSubject.onNext(priceAlerts)
+        })
+    }
+
+    func deleteAllAlerts() -> Single<()> {
+        remoteAlertManager.unsubscribeAll()
+        .do(onSuccess: { [weak self] in
+            self?.storage.deleteAll()
         })
     }
 

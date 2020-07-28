@@ -13,7 +13,7 @@ class App {
     let appConfigProvider: IAppConfigProvider
 
     let localStorage: ILocalStorage & IChartTypeStorage
-    let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & ICoinRecordStorage
+    let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & ICoinRecordStorage & IPriceAlertRequestRecordStorage
 
     let themeManager: ThemeManager
     let systemInfoManager: ISystemInfoManager
@@ -84,7 +84,7 @@ class App {
         let logger = Logger(minLogLevel: .error)
         let networkManager = NetworkManager(logger: logger)
 
-        keychainKit = KeychainKit(service: "io.horizontalsystems.bank.dev") 
+        keychainKit = KeychainKit(service: "io.horizontalsystems.bank.dev")
 
         appConfigProvider = AppConfigProvider()
 
@@ -156,7 +156,8 @@ class App {
         testModeIndicator = TestModeIndicator(appConfigProvider: appConfigProvider)
         walletRemover = WalletRemover(accountManager: accountManager, walletManager: walletManager)
 
-        remoteAlertManager = RemoteAlertManager(networkManager: networkManager, appConfigProvider: appConfigProvider)
+        let priceAlertRequestStorage: IPriceAlertRequestStorage = PriceAlertRequestStorage(storage: storage)
+        remoteAlertManager = RemoteAlertManager(networkManager: networkManager, reachabilityManager: reachabilityManager, appConfigProvider: appConfigProvider, storage: priceAlertRequestStorage)
 
         let priceAlertStorage: IPriceAlertStorage = PriceAlertStorage(coinManager: coinManager, storage: storage)
         priceAlertManager = PriceAlertManager(walletManager: walletManager, storage: priceAlertStorage, remoteAlertManager: remoteAlertManager)

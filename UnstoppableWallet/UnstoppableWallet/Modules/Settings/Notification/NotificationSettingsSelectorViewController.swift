@@ -3,13 +3,13 @@ import SectionsTableView
 import ThemeKit
 
 class NotificationSettingsSelectorViewController: ThemeViewController {
-    private let onSelect: (AlertState) -> ()
+    private let onSelect: (PriceAlert.ChangeState) -> ()
 
-    private let selectedState: AlertState
+    private let selectedState: PriceAlert.ChangeState
     private let tableView = SectionsTableView(style: .grouped)
 
-    init(selectedState: AlertState, onSelect: @escaping (AlertState) -> ()) {
-        self.selectedState = selectedState
+    init(changeState: PriceAlert.ChangeState, onSelect: @escaping (PriceAlert.ChangeState) -> ()) {
+        self.selectedState = changeState
         self.onSelect = onSelect
 
         super.init()
@@ -41,7 +41,7 @@ class NotificationSettingsSelectorViewController: ThemeViewController {
 extension NotificationSettingsSelectorViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        let allCases = AlertState.allCases
+        let allCases = PriceAlert.ChangeState.allCases
 
         return [
             Section(

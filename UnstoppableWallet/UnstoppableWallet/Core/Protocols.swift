@@ -69,6 +69,7 @@ protocol IPriceAlertManager {
     var priceAlerts: [PriceAlert] { get }
     func priceAlert(coin: Coin) -> PriceAlert
     func save(priceAlerts: [PriceAlert]) -> Observable<[()]>
+    func deleteAllAlerts() -> Single<()>
 }
 
 protocol IAdapter: class {
@@ -282,16 +283,26 @@ protocol IPriceAlertStorage {
     func priceAlert(coin: Coin) -> PriceAlert?
     var activePriceAlerts: [PriceAlert] { get }
     func save(priceAlerts: [PriceAlert])
-    func delete(priceAlerts: [PriceAlert])
-    func deleteExcluding(coinCodes: [CoinCode])
+    func deleteAll()
 }
 
 protocol IPriceAlertRecordStorage {
     var priceAlertRecords: [PriceAlertRecord] { get }
     func priceAlertRecord(forCoinCode coinCode: String) -> PriceAlertRecord?
     func save(priceAlertRecords: [PriceAlertRecord])
-    func deletePriceAlertRecords(coinCodes: [CoinCode])
-    func deletePriceAlertsExcluding(coinCodes: [CoinCode])
+    func deleteAllPriceAlertRecords()
+}
+
+protocol IPriceAlertRequestStorage {
+    var requests: [PriceAlertRequest] { get }
+    func save(requests: [PriceAlertRequest])
+    func delete(requests: [PriceAlertRequest])
+}
+
+protocol IPriceAlertRequestRecordStorage {
+    var priceAlertRequestRecords: [PriceAlertRequestRecord] { get }
+    func save(priceAlertRequestRecords: [PriceAlertRequestRecord])
+    func delete(priceAlertRequestRecords: [PriceAlertRequestRecord])
 }
 
 protocol IBlockchainSettingsRecordStorage {
@@ -477,8 +488,11 @@ protocol IRateAppManager {
 
 protocol IRemoteAlertManager {
     var notificationManager: INotificationManager? { get set }
-    func handle(newAlerts: [PriceAlert]) -> Single<()>
-    func handle(deletedAlerts: [PriceAlert]) -> Single<()>
+
+    func handle(requests: [PriceAlertRequest]) -> Observable<[()]>
+    func schedule(requests: [PriceAlertRequest])
+
+    func unsubscribeAll() -> Single<()>
 }
 
 protocol IRestoreManager {

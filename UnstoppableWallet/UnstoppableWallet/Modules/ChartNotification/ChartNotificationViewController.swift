@@ -5,7 +5,7 @@ import ThemeKit
 class ChartNotificationViewController: ThemeViewController {
     private let delegate: IChartNotificationViewDelegate
 
-    private var selectedState: AlertState?
+    private var alert: PriceAlert?
 
     private let titleView = BottomSheetTitleView()
 
@@ -115,7 +115,7 @@ extension ChartNotificationViewController: SectionsDataSource {
             SubtitleHeaderFooterView.height
         })
 
-        let allCases = AlertState.allCases
+        let allCases = PriceAlert.ChangeState.allCases
 
         return [
             Section(
@@ -128,12 +128,12 @@ extension ChartNotificationViewController: SectionsDataSource {
                                 bind: { [unowned self] cell, _ in
                                     cell.bind(
                                             text: "\(state)",
-                                            checkmarkVisible: self.selectedState == state,
+                                            checkmarkVisible: self.alert?.changeState == state,
                                             last: index == allCases.count - 1
                                     )
                                 },
                                 action: { [weak self] _ in
-                                    self?.delegate.didSelect(state: state)
+                                    self?.delegate.didSelect(changeState: state)
                                 }
                         )
                     }
@@ -153,8 +153,8 @@ extension ChartNotificationViewController: IChartNotificationView {
         )
     }
 
-    func set(selectedState: AlertState) {
-        self.selectedState = selectedState
+    func set(alert: PriceAlert) {
+        self.alert = alert
 
         tableView.reload()
     }

@@ -21,34 +21,29 @@ extension PriceAlertStorage: IPriceAlertStorage {
                 return nil
             }
 
-            return PriceAlert(coin: coin, state: record.state, lastRate: record.lastRate)
+            return PriceAlert(coin: coin, changeState: record.changeState, trendState: record.trendState)
         }
     }
 
     func priceAlert(coin: Coin) -> PriceAlert? {
         storage.priceAlertRecord(forCoinCode: coin.code).flatMap { record in
-            PriceAlert(coin: coin, state: record.state, lastRate: record.lastRate)
+            PriceAlert(coin: coin, changeState: record.changeState, trendState: record.trendState)
         }
     }
 
     var activePriceAlerts: [PriceAlert] {
-        priceAlerts.filter { $0.state != .off }
+        priceAlerts.filter { $0.changeState != .off || $0.trendState != .off }
     }
 
     func save(priceAlerts: [PriceAlert]) {
         let records = priceAlerts.map {
-            PriceAlertRecord(coinCode: $0.coin.code, state: $0.state, lastRate: $0.lastRate)
+            PriceAlertRecord(coinCode: $0.coin.code, changeState: $0.changeState, trendState: $0.trendState)
         }
         storage.save(priceAlertRecords: records)
     }
 
-    func delete(priceAlerts: [PriceAlert]) {
-        let coinCodes = priceAlerts.map { $0.coin.code }
-        storage.deletePriceAlertRecords(coinCodes: coinCodes)
-    }
-
-    func deleteExcluding(coinCodes: [CoinCode]) {
-        storage.deletePriceAlertsExcluding(coinCodes: coinCodes)
+    func deleteAll() {
+        storage.deleteAllPriceAlertRecords()
     }
 
 }

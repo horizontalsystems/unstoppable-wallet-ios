@@ -4,7 +4,7 @@ class ChartNotificationPresenter {
     private let router: IChartNotificationRouter
     private let interactor: IChartNotificationInteractor
 
-    private var notification: PriceAlert
+    private var alert: PriceAlert
 
     private let coin: Coin
 
@@ -14,13 +14,13 @@ class ChartNotificationPresenter {
 
         self.coin = coin
 
-        self.notification = interactor.notification(coin: coin)
+        self.alert = interactor.priceAlert(coin: coin)
     }
 
     private func handleUpdated(alert: PriceAlert) {
         interactor.save(priceAlert: alert)
 
-        view?.set(selectedState: alert.state)
+        view?.set(alert: alert)
     }
 
 }
@@ -31,17 +31,27 @@ extension ChartNotificationPresenter: IChartNotificationViewDelegate {
         interactor.requestPermission()
 
         view?.set(coinName: coin.title)
-        view?.set(selectedState: notification.state)
+        view?.set(alert: alert)
     }
 
-    func didSelect(state: AlertState) {
-        guard notification.state != state else {
+    func didSelect(changeState: PriceAlert.ChangeState) {
+        guard alert.changeState != changeState else {
             return
         }
 
-        notification.state = state
+        alert.changeState = changeState
 
-        handleUpdated(alert: notification)
+        handleUpdated(alert: alert)
+    }
+
+    func didSelect(trendState: PriceAlert.TrendState) {
+        guard alert.trendState != trendState else {
+            return
+        }
+
+        alert.trendState = trendState
+
+        handleUpdated(alert: alert)
     }
 
     func didTapSettingsButton() {
@@ -65,9 +75,9 @@ extension ChartNotificationPresenter: IChartNotificationInteractorDelegate {
     }
 
     func didFailSaveAlerts(error: Error) {
-        notification = interactor.notification(coin: coin)
+        alert = interactor.priceAlert(coin: coin)
 
-        view?.set(selectedState: notification.state)
+        view?.set(alert: alert)
 
         view?.showError(error: error.convertedError)
     }
