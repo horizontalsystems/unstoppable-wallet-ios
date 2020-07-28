@@ -42,18 +42,14 @@ extension SwapInteractor: ISwapInteractor {
         let tokenOut = uniswapToken(coin: coinOut)
 
         swapKit.swapDataSingle(tokenIn: tokenIn, tokenOut: tokenOut)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .observeOn(MainScheduler.instance)
-                .subscribe(onSuccess: { [weak self] swapData in
-                    print("SwapData:\n\(swapData)")
-
-                    self?.delegate?.didReceive(swapData: swapData)
-                }, onError: { [weak self] error in
-                    print("SwapError: \n\(error.localizedDescription)")
-
-                    self?.delegate?.didFailReceiveSwapData(error: error)
-                })
-                .disposed(by: disposeBag)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .observeOn(MainScheduler.instance)
+            .subscribe(onSuccess: { [weak self] swapData in
+                self?.delegate?.didReceive(swapData: swapData)
+            }, onError: { [weak self] error in
+                self?.delegate?.didFailReceiveSwapData(error: error)
+            })
+            .disposed(by: disposeBag)
     }
 
     func bestTradeExactIn(swapData: SwapData, amount: Decimal) throws -> TradeData {
