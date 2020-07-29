@@ -549,3 +549,4 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 
 "chart_alert.title" = "Notification";
 "chart_alert.24h_description" = "Price Change 24h";
+"chart_alert.trend_description" = "Price Trend Change";
