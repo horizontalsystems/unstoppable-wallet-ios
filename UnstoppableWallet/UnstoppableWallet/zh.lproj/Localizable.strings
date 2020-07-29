@@ -108,6 +108,7 @@
 "balance.title" = "余额";
 "balance.tab_bar_item" = "余额";
 "balance.send" = "发送​​";
+"balance.swap" = "Swap";
 "balance.deposit" = "接收";
 "balance.rate_per_coin" = "%@ / %@";
 "balance.syncing" = "正在同步...";
@@ -171,6 +172,23 @@
 "send.token.insufficient_fee_alert" = "%@（%@）的交易费用以%@支付。您需要%@。";
 
 "send.lock_time" = "时间锁定";
+// Swap
+
+"swap.title" = "Swap";
+"swap.you_pay" = "You Pay";
+"swap.estimated" = "estimated";
+"swap.balance" = "Balance";
+"swap.you_get" = "You Get";
+"swap.token" = "Token";
+"swap.price" = "Price";
+"swap.price_impact" = "Price Impact";
+"swap.max_min" = "Max / Min";
+"swap.maximum_paid" = "Maximum Paid";
+"swap.minimum_got" = "Minimum Got";
+"swap.proceed" = "Proceed";
+"swap.amount_error.maximum_amount" = "Maximum amount %@";
+"swap.select_token.title" = "Choose Coin";
+
 // Transactions
 
 "transactions.title" = "交易";
