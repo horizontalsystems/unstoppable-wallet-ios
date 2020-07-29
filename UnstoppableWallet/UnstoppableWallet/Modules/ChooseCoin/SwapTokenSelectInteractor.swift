@@ -4,13 +4,9 @@ class SwapTokenSelectInteractor {
     private let disposeBag = DisposeBag()
 
     private let swapCoinManager: ISwapCoinManager
-    private let walletManager: IWalletManager
-    private let accountManager: IAccountManager
 
-    init(swapCoinManager: ISwapCoinManager, walletManager: IWalletManager, accountManager: IAccountManager) {
+    init(swapCoinManager: ISwapCoinManager) {
         self.swapCoinManager = swapCoinManager
-        self.walletManager = walletManager
-        self.accountManager = accountManager
     }
 
 }
