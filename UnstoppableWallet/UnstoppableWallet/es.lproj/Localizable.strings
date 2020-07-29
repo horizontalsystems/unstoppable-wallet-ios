@@ -271,6 +271,8 @@ bch.horizontalsystems.xyz/apg";
 "settings.notifications.deactivate_all" = "Deactivate All";
 "settings.notifications.disabled_text" = "The notifications for Unstoppable Wallet app are disabled. You need to turn on Notifications and allow background app refresh in order to be able to receive price change alerts.";
 "settings.notifications.settings_button" = "Turn on in Settings";
+"settings_notifications.trend_short" = "Short Term 7D";
+"settings_notifications.trend_long" = "Long Term 6M";
 
 // Settings -> Manage Wallet
 
