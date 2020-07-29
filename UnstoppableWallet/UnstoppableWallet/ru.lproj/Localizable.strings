@@ -266,6 +266,8 @@
 "settings.notifications.deactivate_all" = "Отключить всё";
 "settings.notifications.disabled_text" = "Уведомления для приложения Unstoppable Wallet отключены. Вам нужно включить уведомления и разрешить фоновое обновление приложения, чтобы иметь возможность получать уведомления о смене цен.";
 "settings.notifications.settings_button" = "Включить в Настройках";
+"settings_notifications.trend_short" = "Short Term 7D";
+"settings_notifications.trend_long" = "Long Term 6M";
 
 // Settings -> Manage Wallet
 
