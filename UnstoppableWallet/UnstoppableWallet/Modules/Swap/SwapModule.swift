@@ -52,3 +52,15 @@ struct CoinBalanceItem {
     let coin: Coin
     let balance: Decimal?
 }
+
+enum SwapValidationError: Error, LocalizedError {
+    case insufficientBalance(availableBalance: String?)
+
+    var errorDescription: String? {
+        switch self {
+        case .insufficientBalance(let availableBalance):
+            return "swap.amount_error.maximum_amount".localized(availableBalance ?? "")
+        }
+    }
+
+}

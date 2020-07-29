@@ -26,16 +26,17 @@ class SwapTokenSelectViewController: ThemeViewController {
         title = "choose_coin.title".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onClose))
 
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
         tableView.registerCell(forClass: SwapTokenSelectCell.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
-        }
 
         delegate.onLoad()
 

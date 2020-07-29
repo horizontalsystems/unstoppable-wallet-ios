@@ -252,7 +252,7 @@ DEPENDENCIES:
   - SectionsTableView.swift
   - SnapKit
   - StorageKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
-  - ThemeKit.swift (from `../component-kit-ios/`)
+  - ThemeKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - UIExtensions.swift (from `https://github.com/horizontalsystems/gui-kit/`)
   - UniswapKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - XRatesKit.swift (from `https://github.com/horizontalsystems/xrates-kit-ios/`)
@@ -337,7 +337,7 @@ EXTERNAL SOURCES:
   StorageKit.swift:
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :path: "../component-kit-ios/"
+    :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :git: https://github.com/horizontalsystems/gui-kit/
   UniswapKit.swift:
@@ -415,6 +415,9 @@ CHECKOUT OPTIONS:
   StorageKit.swift:
     :commit: 4197f1e86f580c50dbd42b1bf61edd3564716aad
     :git: https://github.com/horizontalsystems/component-kit-ios/
+  ThemeKit.swift:
+    :commit: e0da92ed09c4b8a208fae6f145cfbe2314020238
+    :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :commit: 178caaa864a13dd6fbafac73c9d1478ce4cbbb75
     :git: https://github.com/horizontalsystems/gui-kit/
@@ -483,6 +486,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: b09af5caafef556c489bf9b55b8c3dddbd710861
 
-PODFILE CHECKSUM: 4c89e554478433b06fcee64aad76a8ab38a28d7c
+PODFILE CHECKSUM: 616e0a1d16993450a020146c8d0f5126f49c0976
 
 COCOAPODS: 1.9.1

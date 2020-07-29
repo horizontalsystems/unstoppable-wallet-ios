@@ -47,15 +47,19 @@ class SwapViewController: ThemeViewController {
         view.backgroundColor = .themeDarker
 
         view.addSubview(scrollView)
-        scrollView.alwaysBounceVertical = true
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.keyboardDismissMode = .onDrag
+
         scrollView.snp.makeConstraints { maker in
             maker.top.equalToSuperview()
             maker.leading.trailing.equalToSuperview()
             maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
+
+        scrollView.alwaysBounceVertical = true
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.keyboardDismissMode = .onDrag
+
         scrollView.addSubview(container)
+
         container.snp.makeConstraints { maker in
             maker.leading.trailing.equalTo(self.view)
             maker.top.bottom.equalTo(self.scrollView)
@@ -93,12 +97,14 @@ class SwapViewController: ThemeViewController {
             maker.leading.trailing.equalToSuperview()
             maker.height.equalTo(CGFloat.heightOneDp)
         }
+
         topLineView.backgroundColor = .themeSteel20
 
         fromTitleLabel.snp.makeConstraints { maker in
             maker.top.equalTo(topLineView.snp.bottom).offset(CGFloat.margin3x)
             maker.leading.equalToSuperview().inset(CGFloat.margin4x)
         }
+
         fromTitleLabel.font = .body
         fromTitleLabel.textColor = .themeOz
         fromTitleLabel.text = "swap.you_pay".localized
@@ -107,12 +113,14 @@ class SwapViewController: ThemeViewController {
             maker.centerY.equalTo(fromTitleLabel)
             maker.leading.equalTo(fromTitleLabel.snp.trailing).offset(CGFloat.margin2x)
         }
+
         fromBadgeView.set(text: "swap.estimated".localized)
 
         fromInputView.snp.makeConstraints { maker in
             maker.top.equalTo(fromTitleLabel.snp.bottom).offset(CGFloat.margin3x)
             maker.leading.trailing.equalToSuperview()
         }
+
         fromInputView.set(maxButtonVisible: false)
 
         fromBalanceView.snp.makeConstraints { maker in
@@ -124,6 +132,7 @@ class SwapViewController: ThemeViewController {
             maker.leading.trailing.equalToSuperview().offset(CGFloat.margin3x)
             maker.top.bottom.equalTo(fromBalanceView)
         }
+
         fromErrorView.font = .caption
         fromErrorView.textColor = .themeLucian
         fromErrorView.isHidden = true
@@ -133,12 +142,14 @@ class SwapViewController: ThemeViewController {
             maker.leading.trailing.equalToSuperview()
             maker.height.equalTo(CGFloat.heightOneDp)
         }
+
         separatorLineView.backgroundColor = .themeSteel20
 
         toTitleLabel.snp.makeConstraints { maker in
             maker.top.equalTo(separatorLineView.snp.bottom).offset(CGFloat.margin3x)
             maker.leading.equalToSuperview().inset(CGFloat.margin4x)
         }
+
         toTitleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         toTitleLabel.font = .body
         toTitleLabel.textColor = .themeOz
@@ -148,12 +159,14 @@ class SwapViewController: ThemeViewController {
             maker.centerY.equalTo(toTitleLabel)
             maker.leading.equalTo(toTitleLabel.snp.trailing).offset(CGFloat.margin2x)
         }
+
         toBadgeView.set(text: "estimated".localized)
 
         toInputView.snp.makeConstraints { maker in
             maker.top.equalTo(toTitleLabel.snp.bottom).offset(CGFloat.margin3x)
             maker.leading.trailing.equalToSuperview()
         }
+
         toInputView.set(maxButtonVisible: false)
 
         toPriceView.snp.makeConstraints { maker in
@@ -220,7 +233,7 @@ extension SwapViewController: ISwapView {
         set(estimatedField: viewItem.estimatedField)
 
         fromInputView.set(tokenName: viewItem.tokenIn)
-        toInputView.set(tokenName: viewItem.tokenOut)
+        toInputView.set(tokenName: viewItem.tokenOut ?? "swap.token".localized)
 
         switch viewItem.estimatedField {
         case .to: toInputView.set(text: viewItem.estimatedAmount)
@@ -232,13 +245,13 @@ extension SwapViewController: ISwapView {
             fromErrorView.isHidden = false
             fromBalanceView.isHidden = true
 
-            fromErrorView.text = error
+            fromErrorView.text = error.localizedDescription
         } else {
             fromErrorView.isHidden = true
             fromBalanceView.isHidden = false
         }
 
-        minMaxView.set(title: viewItem.minMaxTitle)
+        minMaxView.set(title: viewItem.minMaxTitle.localized)
         minMaxView.set(value: viewItem.minMaxValue)
 
         toPriceView.set(value: viewItem.executionPriceValue)

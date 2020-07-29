@@ -113,6 +113,7 @@ bch.horizontalsystems.xyz/apg";
 "balance.title" = "Balance";
 "balance.tab_bar_item" = "Balance";
 "balance.send" = "Send";
+"balance.swap" = "Swap";
 "balance.deposit" = "Receive";
 "balance.rate_per_coin" = "%@ per %@";
 "balance.syncing" = "Syncing...";

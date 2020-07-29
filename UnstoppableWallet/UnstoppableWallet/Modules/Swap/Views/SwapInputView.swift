@@ -78,12 +78,8 @@ class SwapInputView: UIView {
 
         inputField.rx.controlEvent(.editingChanged)
                 .asObservable()
-                .do(onNext: { [weak self] _ in
-                    self?.willChangeAmount()
-                })
-                .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
                 .subscribe(onNext: { [weak self] _ in
-                    self?.didChangeAmount()
+                    self?.willChangeAmount()
                 })
                 .disposed(by: disposeBag)
     }
@@ -94,10 +90,6 @@ class SwapInputView: UIView {
 
     private func willChangeAmount() {
         delegate?.willChangeAmount(self, text: inputField.text)
-    }
-
-    private func didChangeAmount() {
-        delegate?.didChangeAmount(self, text: inputField.text)
     }
 
     @objc private func onTapMax() {

@@ -22,13 +22,13 @@ extension SwapViewItemFactory: ISwapViewItemFactory {
 
     func viewItem(coinIn: Coin, balance: Decimal?, coinOut: Coin?, path: SwapPath, tradeData: TradeData?) -> SwapViewItem {
         var estimatedAmount: String? = nil
-        var error: String? = nil
+        var error: Error? = nil
 
-        var tokenOut = "swap.token".localized
+        var tokenOut: String? = nil
 
         let balanceValue = stringCoinValue(coin: coinIn, amount: balance)
 
-        var minMaxTitle = "swap.max_min".localized
+        var minMaxTitle = "swap.max_min"
         var minMaxValue = "0"
 
         var executionPrice = ValueFormatter.instance.format(coinValue: CoinValue(coin: coinIn, value: 0))
@@ -54,7 +54,7 @@ extension SwapViewItemFactory: ISwapViewItemFactory {
         }
 
         tokenOut = coinOut.code
-        minMaxTitle = (path == .to ? "swap.maximum_paid" : "swap.minimum_got").localized
+        minMaxTitle = path == .to ? "swap.maximum_paid" : "swap.minimum_got"
 
         guard let tradeData = tradeData else {      // trade data not calculated yet
             return SwapViewItem(estimatedField: path.toggle,
@@ -87,11 +87,10 @@ extension SwapViewItemFactory: ISwapViewItemFactory {
             amount = tradeData.amountIn
 
             if let balance = balance,
-               let balanceValue = balanceValue,
                let amount = amount,
                balance < amount {
                 buttonEnabled = false
-                error = "swap.amount_error.maximum_amount".localized(balanceValue)
+                error = SwapValidationError.insufficientBalance(availableBalance: balanceValue)
             }
 
             minMaxValue = stringCoinValue(coin: coinIn, amount: tradeData.amountInMax) ?? minMaxValue
