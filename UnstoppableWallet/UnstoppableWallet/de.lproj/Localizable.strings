@@ -266,6 +266,8 @@
 "settings.notifications.deactivate_all" = "Alle deaktivieren";
 "settings.notifications.disabled_text" = "Die Benachrichtigungen für das Unstoppable-Wallet sind ausgeschaltet. Sie müssen die Benachrichtigungen einschalten und eine Aktualisierung der App im Hintergrund erlauben, um Benachrichtigungen bei Preisänderungen zu erhalten.";
 "settings.notifications.settings_button" = "In Einstellungen einschalten";
+"settings_notifications.trend_short" = "Short Term 7D";
+"settings_notifications.trend_long" = "Long Term 6M";
 
 // Settings -> Manage Wallet
 
