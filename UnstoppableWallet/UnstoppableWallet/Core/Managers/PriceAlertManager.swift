@@ -30,13 +30,13 @@ class PriceAlertManager {
 
         storage.save(priceAlerts: alertsToDeactivate.map { PriceAlert(coin: $0.coin, changeState: .off, trendState: .off) })
 
-        let unsubscribeRequests = alertsToDeactivate.reduce([PriceAlertRequest]()) {
-            var array = $0
-            if $1.changeState != .off {
-                array.append(PriceAlertRequest(topic: $1.changeTopic, method: .unsubscribe))
+        let unsubscribeRequests = alertsToDeactivate.reduce([PriceAlertRequest]()) { array, alert in
+            var array = array
+            if alert.changeState != .off {
+                array.append(PriceAlertRequest(topic: alert.changeTopic, method: .unsubscribe))
             }
-            if $1.trendState != .off {
-                array.append(PriceAlertRequest(topic: $1.trendTopic, method: .unsubscribe))
+            if alert.trendState != .off {
+                array.append(PriceAlertRequest(topic: alert.trendTopic, method: .unsubscribe))
             }
             return array
         }

@@ -51,13 +51,13 @@ extension NotificationManager: INotificationManager {
         if storage.pushToken != token {
             storage.pushToken = token
 
-            remoteAlertManager.schedule(requests: priceAlertManager.priceAlerts.reduce([PriceAlertRequest]()) {
-                var array = $0
-                if $1.changeState != .off {
-                    array.append(PriceAlertRequest(topic: $1.changeTopic, method: .subscribe))
+            remoteAlertManager.schedule(requests: priceAlertManager.priceAlerts.reduce([PriceAlertRequest]()) { array, alert in
+                var array = array
+                if alert.changeState != .off {
+                    array.append(PriceAlertRequest(topic: alert.changeTopic, method: .subscribe))
                 }
-                if $1.trendState != .off {
-                    array.append(PriceAlertRequest(topic: $1.trendTopic, method: .subscribe))
+                if alert.trendState != .off {
+                    array.append(PriceAlertRequest(topic: alert.trendTopic, method: .subscribe))
                 }
                 return array
             })
