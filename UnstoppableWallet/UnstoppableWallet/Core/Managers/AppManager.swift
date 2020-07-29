@@ -14,6 +14,7 @@ class AppManager {
     private let debugBackgroundLogger: IDebugLogger?
     private let appVersionManager: IAppVersionManager
     private let rateAppManager: IRateAppManager
+    private let remoteAlertManager: IRemoteAlertManager
 
     private let didBecomeActiveSubject = PublishSubject<()>()
     private let willEnterForegroundSubject = PublishSubject<()>()
@@ -21,7 +22,8 @@ class AppManager {
     init(accountManager: IAccountManager, walletManager: IWalletManager, adapterManager: IAdapterManager, pinKit: IPinKit,
          keychainKit: IKeychainKit, blurManager: IBlurManager, notificationManager: INotificationManager,
          kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
-         appVersionManager: IAppVersionManager, rateAppManager: IRateAppManager
+         appVersionManager: IAppVersionManager, rateAppManager: IRateAppManager,
+         remoteAlertManager: IRemoteAlertManager
     ) {
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -34,6 +36,7 @@ class AppManager {
         self.debugBackgroundLogger = debugLogger
         self.appVersionManager = appVersionManager
         self.rateAppManager = rateAppManager
+        self.remoteAlertManager = remoteAlertManager
     }
 
 }
@@ -53,6 +56,8 @@ extension AppManager {
 
         appVersionManager.checkLatestVersion()
         rateAppManager.onLaunch()
+
+        remoteAlertManager.checkScheduledRequests()
     }
 
     func willResignActive() {

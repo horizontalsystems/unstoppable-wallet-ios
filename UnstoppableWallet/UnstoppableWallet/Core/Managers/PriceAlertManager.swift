@@ -26,18 +26,13 @@ class PriceAlertManager {
     private func onUpdate(wallets: [Wallet]) {
         let coinCodes = wallets.map { $0.coin.code }
 
-        let alertsToDeactivate = priceAlerts.filter { !coinCodes.contains($0.coin.code) }
+        let alertsToDeactivate = storage.priceAlerts.filter { !coinCodes.contains($0.coin.code) && !$0.activeTopics.isEmpty }
 
         storage.save(priceAlerts: alertsToDeactivate.map { PriceAlert(coin: $0.coin, changeState: .off, trendState: .off) })
 
         let unsubscribeRequests = alertsToDeactivate.reduce([PriceAlertRequest]()) { array, alert in
             var array = array
-            if alert.changeState != .off {
-                array.append(PriceAlertRequest(topic: alert.changeTopic, method: .unsubscribe))
-            }
-            if alert.trendState != .off {
-                array.append(PriceAlertRequest(topic: alert.trendTopic, method: .unsubscribe))
-            }
+            array.append(contentsOf: PriceAlertRequest.requests(topics: alert.activeTopics, method: .unsubscribe))
             return array
         }
 
@@ -70,41 +65,30 @@ extension PriceAlertManager: IPriceAlertManager {
         storage.priceAlert(coin: coin) ?? PriceAlert(coin: coin, changeState: .off, trendState: .off)
     }
 
-    func save(priceAlerts: [PriceAlert]) -> Observable<[()]> {
+    private func updateAlertsObservable(priceAlerts: [PriceAlert]) -> Observable<[()]> {
         let oldAlerts = self.priceAlerts
 
         var requests = [PriceAlertRequest]()
 
         for alert in priceAlerts {
-            let oldAlert = (oldAlerts.first { $0.coin == alert.coin }) ?? PriceAlert(coin: alert.coin, changeState: .off, trendState: .off)
+            let oldAlert = (oldAlerts.first { $0.coin == alert.coin })
 
-            if alert.changeState != oldAlert.changeState {
-                if alert.changeState == .off {
-                    requests.append(PriceAlertRequest(topic: oldAlert.changeTopic, method: .unsubscribe))
-                } else {
-                    requests.append(PriceAlertRequest(topic: alert.changeTopic, method: .subscribe))
-                    if oldAlert.changeState != .off {
-                        requests.append(PriceAlertRequest(topic: oldAlert.changeTopic, method: .unsubscribe))
-                    }
-                }
-            }
+            let subscribeTopics = alert.activeTopics.subtracting(oldAlert?.activeTopics ?? [])
+            let unsubscribeTopics = oldAlert?.activeTopics.subtracting(alert.activeTopics) ?? []
 
-            if alert.trendState != oldAlert.trendState {
-                if alert.trendState == .off {
-                    requests.append(PriceAlertRequest(topic: oldAlert.trendTopic, method: .unsubscribe))
-                } else {
-                    requests.append(PriceAlertRequest(topic: alert.trendTopic, method: .subscribe))
-                    if oldAlert.trendState != .off {
-                        requests.append(PriceAlertRequest(topic: oldAlert.trendTopic, method: .unsubscribe))
-                    }
-                }
-            }
+            requests.append(contentsOf: PriceAlertRequest.requests(topics: subscribeTopics, method: .subscribe))
+            requests.append(contentsOf: PriceAlertRequest.requests(topics: unsubscribeTopics, method: .unsubscribe))
         }
 
-        return remoteAlertManager.handle(requests: requests).do(onCompleted: { [weak self] in
-            self?.storage.save(priceAlerts: priceAlerts)
-            self?.updateSubject.onNext(priceAlerts)
-        })
+        return remoteAlertManager.handle(requests: requests)
+    }
+
+    func save(priceAlerts: [PriceAlert]) -> Observable<[()]> {
+        updateAlertsObservable(priceAlerts: priceAlerts)
+                .do(onCompleted: { [weak self] in
+                    self?.storage.save(priceAlerts: priceAlerts)
+                    self?.updateSubject.onNext(priceAlerts)
+                })
     }
 
     func deleteAllAlerts() -> Single<()> {

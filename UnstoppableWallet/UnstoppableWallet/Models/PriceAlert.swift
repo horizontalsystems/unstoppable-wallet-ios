@@ -5,13 +5,6 @@ struct PriceAlert {
     var changeState: ChangeState
     var trendState: TrendState
 
-    var changeTopic: String {
-        "\(coin.code)_24hour_\(changeState.rawValue)percent"
-    }
-    var trendTopic: String {
-        "\(coin.code)_\(trendState.rawValue)term_trend_change"
-    }
-
     enum ChangeState: Int, CaseIterable {
         case off = 0
         case percent2 = 2
@@ -23,6 +16,24 @@ struct PriceAlert {
         case off = "off"
         case short = "short"
         case long = "long"
+    }
+
+    private var changeTopic: String {
+        "\(coin.code)_24hour_\(changeState.rawValue)percent"
+    }
+    private var trendTopic: String {
+        "\(coin.code)_\(trendState.rawValue)term_trend_change"
+    }
+
+    var activeTopics: Set<String> {
+        var topics = Set<String>()
+        if changeState != .off {
+            topics.insert(changeTopic)
+        }
+        if trendState != .off {
+            topics.insert(trendTopic)
+        }
+        return topics
     }
 
 }
