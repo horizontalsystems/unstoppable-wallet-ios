@@ -230,8 +230,8 @@ DEPENDENCIES:
   - EosioSwift (from `https://github.com/horizontalsystems/eosio-swift`)
   - EosioSwiftAbieosSerializationProvider (from `https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git`)
   - EosKit.swift (from `https://github.com/horizontalsystems/eos-kit-ios`)
-  - Erc20Kit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
-  - EthereumKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
+  - Erc20Kit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`, commit `49185b35c7e489bcbe965bbd219740371dd9b035`)
+  - EthereumKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`, commit `49185b35c7e489bcbe965bbd219740371dd9b035`)
   - FeeRateKit.swift (from `https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios`)
   - GRDB.swift
   - HdWalletKit.swift (from `https://github.com/horizontalsystems/hd-wallet-kit-ios`)
@@ -254,7 +254,7 @@ DEPENDENCIES:
   - StorageKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - ThemeKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - UIExtensions.swift (from `https://github.com/horizontalsystems/gui-kit/`)
-  - UniswapKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
+  - UniswapKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`, commit `49185b35c7e489bcbe965bbd219740371dd9b035`)
   - XRatesKit.swift (from `https://github.com/horizontalsystems/xrates-kit-ios/`)
 
 SPEC REPOS:
@@ -313,8 +313,10 @@ EXTERNAL SOURCES:
   EosKit.swift:
     :git: https://github.com/horizontalsystems/eos-kit-ios
   Erc20Kit.swift:
+    :commit: 49185b35c7e489bcbe965bbd219740371dd9b035
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   EthereumKit.swift:
+    :commit: 49185b35c7e489bcbe965bbd219740371dd9b035
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
@@ -341,6 +343,7 @@ EXTERNAL SOURCES:
   UIExtensions.swift:
     :git: https://github.com/horizontalsystems/gui-kit/
   UniswapKit.swift:
+    :commit: 49185b35c7e489bcbe965bbd219740371dd9b035
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   XRatesKit.swift:
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
@@ -380,10 +383,10 @@ CHECKOUT OPTIONS:
     :commit: bbaf1c9ff6537a8e918db3310c464c9157423a6f
     :git: https://github.com/horizontalsystems/eos-kit-ios
   Erc20Kit.swift:
-    :commit: 55593f85404df70ddd929e8b9d52a8435a5c3dc2
+    :commit: 49185b35c7e489bcbe965bbd219740371dd9b035
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   EthereumKit.swift:
-    :commit: 55593f85404df70ddd929e8b9d52a8435a5c3dc2
+    :commit: 49185b35c7e489bcbe965bbd219740371dd9b035
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :commit: 783ff3709e90df51ca60d50a2665e6afdad8e391
@@ -486,6 +489,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: b09af5caafef556c489bf9b55b8c3dddbd710861
 
-PODFILE CHECKSUM: 616e0a1d16993450a020146c8d0f5126f49c0976
+PODFILE CHECKSUM: 6626b649faa91e783f95bb19b96c38560185ef9a
 
 COCOAPODS: 1.9.1
