@@ -3,7 +3,6 @@ import ThemeKit
 import SnapKit
 
 class BalanceCell: UICollectionViewCell {
-    private let receiveIndex = 0, sendIndex = 1, swapIndex = 2
     private static let insets = UIEdgeInsets(top: .margin2x, left: .margin2x, bottom: .margin2x, right: .margin2x)
 
     private let cardView = CardView(insets: BalanceCell.insets)
@@ -56,7 +55,7 @@ class BalanceCell: UICollectionViewCell {
             maker.height.equalTo(DoubleRowButtonView.height)
         }
 
-        buttonsView.bind(receiveTitle: "balance.deposit".localized, sendTitle: "balance.send".localized, swapTitle: "Swap".localized)
+        buttonsView.bind(receiveTitle: "balance.deposit".localized, sendTitle: "balance.send".localized, swapTitle: "balance.swap".localized)
     }
 
     required init?(coder aDecoder: NSCoder) {

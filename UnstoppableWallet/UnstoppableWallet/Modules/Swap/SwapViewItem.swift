@@ -15,10 +15,10 @@ enum SwapPath {
 struct SwapViewItem {
     let estimatedField: SwapPath
     let estimatedAmount: String?
-    let error: String?
+    let error: Error?
 
     let tokenIn: String
-    let tokenOut: String
+    let tokenOut: String?
 
     let availableBalance: String?
 
