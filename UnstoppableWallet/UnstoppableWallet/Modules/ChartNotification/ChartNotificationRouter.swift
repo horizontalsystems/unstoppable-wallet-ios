@@ -21,9 +21,11 @@ extension ChartNotificationRouter: IChartNotificationRouter {
 extension ChartNotificationRouter {
 
     static func module(coin: Coin) -> UIViewController {
+        let factory = ChartNotificationViewModelFactory()
+
         let router = ChartNotificationRouter()
         let interactor = ChartNotificationInteractor(priceAlertManager: App.shared.priceAlertManager, notificationManager: App.shared.notificationManager, appManager: App.shared.appManager)
-        let presenter = ChartNotificationPresenter(router: router, interactor: interactor, coin: coin)
+        let presenter = ChartNotificationPresenter(router: router, interactor: interactor, factory: factory, coin: coin)
         let viewController = ChartNotificationViewController(delegate: presenter)
 
         interactor.delegate = presenter

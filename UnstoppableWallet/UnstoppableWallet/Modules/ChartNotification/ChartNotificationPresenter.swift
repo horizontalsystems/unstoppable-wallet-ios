@@ -3,24 +3,20 @@ class ChartNotificationPresenter {
 
     private let router: IChartNotificationRouter
     private let interactor: IChartNotificationInteractor
+    private let factory: ChartNotificationViewModelFactory
 
     private var alert: PriceAlert
 
     private let coin: Coin
 
-    init(router: IChartNotificationRouter, interactor: IChartNotificationInteractor, coin: Coin) {
+    init(router: IChartNotificationRouter, interactor: IChartNotificationInteractor, factory: ChartNotificationViewModelFactory, coin: Coin) {
         self.router = router
         self.interactor = interactor
+        self.factory = factory
 
         self.coin = coin
 
         self.alert = interactor.priceAlert(coin: coin)
-    }
-
-    private func handleUpdated(alert: PriceAlert) {
-        interactor.save(priceAlert: alert)
-
-        view?.set(alert: alert)
     }
 
 }
@@ -30,28 +26,16 @@ extension ChartNotificationPresenter: IChartNotificationViewDelegate {
     func viewDidLoad() {
         interactor.requestPermission()
 
-        view?.set(coinName: coin.title)
-        view?.set(alert: alert)
+        view?.set(titleViewModel: factory.titleViewModel(coin: coin))
+        view?.set(sectionViewModels: factory.sections(alert: alert))
     }
 
-    func didSelect(changeState: PriceAlert.ChangeState) {
-        guard alert.changeState != changeState else {
-            return
-        }
+    func didSelect(alertState: Int, stateIndex: Int) {
+        alert.update(alertState: alertState, stateIndex: stateIndex)
 
-        alert.changeState = changeState
+        interactor.save(priceAlert: alert)
 
-        handleUpdated(alert: alert)
-    }
-
-    func didSelect(trendState: PriceAlert.TrendState) {
-        guard alert.trendState != trendState else {
-            return
-        }
-
-        alert.trendState = trendState
-
-        handleUpdated(alert: alert)
+        view?.set(sectionViewModels: factory.sections(alert: alert))
     }
 
     func didTapSettingsButton() {
@@ -77,7 +61,7 @@ extension ChartNotificationPresenter: IChartNotificationInteractorDelegate {
     func didFailSaveAlerts(error: Error) {
         alert = interactor.priceAlert(coin: coin)
 
-        view?.set(alert: alert)
+        view?.set(sectionViewModels: factory.sections(alert: alert))
 
         view?.showError(error: error.convertedError)
     }
