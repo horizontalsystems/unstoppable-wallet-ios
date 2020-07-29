@@ -74,7 +74,7 @@ class ChartCurrentRateView: UIView {
             return
         }
         let color: UIColor = diff.isSignMinus ? .themeLucian : .themeRemus
-        let imageName = diff.isSignMinus ? "Down" : "Up"
+        let imageName = diff.isSignMinus ? "Price Down" : "Price Up"
 
         diffImageView.image = UIImage(named: imageName)?.tinted(with: color)
 

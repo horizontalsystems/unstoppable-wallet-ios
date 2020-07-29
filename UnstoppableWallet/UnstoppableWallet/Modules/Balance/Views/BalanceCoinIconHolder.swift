@@ -27,7 +27,7 @@ class BalanceCoinIconHolder: GrayIconHolder {
             maker.edges.equalToSuperview()
         }
 
-        failedButton.setImage(UIImage(named: "Attention Icon")?.tinted(with: .themeLucian), for: .normal)
+        failedButton.setImage(UIImage(named: "Attention Icon"), for: .normal)
         failedButton.addTarget(self, action: #selector(onTapErrorButton), for: .touchUpInside)
     }
 

@@ -62,7 +62,7 @@ extension DerivationSettingConfirmationViewController: IDerivationSettingConfirm
         titleView.bind(
                 title: "blockchain_settings.change_alert.title".localized,
                 subtitle: settingTitle,
-                image: UIImage(named: "Attention Icon")?.tinted(with: .themeJacob)
+                image: UIImage(named: "Attention Icon")
         )
 
         descriptionView.bind(text: "blockchain_settings.change_alert.content".localized(coinTitle, coinTitle))
