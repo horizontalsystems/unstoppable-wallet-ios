@@ -98,7 +98,7 @@ class BalanceErrorViewController: ThemeActionSheetController {
 extension BalanceErrorViewController: IBalanceErrorView {
 
     func set(coinTitle: String) {
-        titleView.bind(title: "balance_error.sync_error".localized, subtitle: coinTitle, image: UIImage(named: "Attention Icon"))
+        titleView.bind(title: "balance_error.sync_error".localized, subtitle: coinTitle, image: UIImage(named: "Attention Icon")?.tinted(with: .themeLucian))
     }
 
     func setChangeSourceButton(hidden: Bool) {
