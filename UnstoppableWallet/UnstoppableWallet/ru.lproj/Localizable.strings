@@ -108,6 +108,7 @@
 "balance.title" = "Баланс";
 "balance.tab_bar_item" = "Баланс";
 "balance.send" = "Отправить";
+"balance.swap" = "Swap";
 "balance.deposit" = "Получить";
 "balance.rate_per_coin" = "%@ за %@";
 "balance.syncing" = "Идет синхронизация...";
@@ -171,6 +172,23 @@
 "send.token.insufficient_fee_alert" = "Комиссии за транзакцию %@ (%@) взимаются в %@. Вам нужно %@.";
 
 "send.lock_time" = "TimeLock";
+// Swap
+
+"swap.title" = "Swap";
+"swap.you_pay" = "You Pay";
+"swap.estimated" = "estimated";
+"swap.balance" = "Balance";
+"swap.you_get" = "You Get";
+"swap.token" = "Token";
+"swap.price" = "Price";
+"swap.price_impact" = "Price Impact";
+"swap.max_min" = "Max / Min";
+"swap.maximum_paid" = "Maximum Paid";
+"swap.minimum_got" = "Minimum Got";
+"swap.proceed" = "Proceed";
+"swap.amount_error.maximum_amount" = "Maximum amount %@";
+"swap.select_token.title" = "Choose Coin";
+
 // Transactions
 
 "transactions.title" = "Транзакции";
