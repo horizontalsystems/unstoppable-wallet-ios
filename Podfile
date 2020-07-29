@@ -14,11 +14,11 @@ def appPods
 
   pod 'BitcoinCore.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
 
-  pod 'EthereumKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
+  pod 'EthereumKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios', :commit => '49185b35c7e489bcbe965bbd219740371dd9b035'
   # pod 'EthereumKit.swift', path: '../ethereum-kit-ios/'
-  pod 'Erc20Kit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
+  pod 'Erc20Kit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios', :commit => '49185b35c7e489bcbe965bbd219740371dd9b035'
   # pod 'Erc20Kit.swift', path: '../ethereum-kit-ios/'
-  pod 'UniswapKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
+  pod 'UniswapKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios', :commit => '49185b35c7e489bcbe965bbd219740371dd9b035'
   # pod 'UniswapKit.swift', :path => '../ethereum-kit-ios'
 
   pod 'EosKit.swift', git: 'https://github.com/horizontalsystems/eos-kit-ios'
