@@ -266,6 +266,8 @@
 "settings.notifications.deactivate_all" = "全部停用";
 "settings.notifications.disabled_text" = "已禁用Unstoppable钱包应用通知。您必须开启通知并允许后台应用刷新才能接收价格变更警报。";
 "settings.notifications.settings_button" = "在设置中开启";
+"settings_notifications.trend_short" = "Short Term 7D";
+"settings_notifications.trend_long" = "Long Term 6M";
 
 // Settings -> Manage Wallet
 
