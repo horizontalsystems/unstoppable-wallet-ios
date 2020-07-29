@@ -148,7 +148,7 @@ extension RemoteAlertManager: IRemoteAlertManager {
         handle(requests: requests)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .subscribe(onError: { [weak self] _ in
+                .subscribe(onError: { [weak self] error in
                     self?.storage.save(requests: requests)
                 }, onCompleted: { [weak self] in
                     self?.storage.delete(requests: requests)
@@ -164,6 +164,10 @@ extension RemoteAlertManager: IRemoteAlertManager {
         let path = "pns/unsubscribeall"
 
         return wrapAuth(url: url + path + "/" + pushToken, parameters: [:], method: .get)
+    }
+
+    func checkScheduledRequests() {
+        schedule(requests: storage.requests)
     }
 
 }

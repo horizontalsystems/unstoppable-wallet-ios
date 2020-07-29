@@ -53,12 +53,7 @@ extension NotificationManager: INotificationManager {
 
             remoteAlertManager.schedule(requests: priceAlertManager.priceAlerts.reduce([PriceAlertRequest]()) { array, alert in
                 var array = array
-                if alert.changeState != .off {
-                    array.append(PriceAlertRequest(topic: alert.changeTopic, method: .subscribe))
-                }
-                if alert.trendState != .off {
-                    array.append(PriceAlertRequest(topic: alert.trendTopic, method: .subscribe))
-                }
+                array.append(contentsOf: PriceAlertRequest.requests(topics: alert.activeTopics, method: .subscribe))
                 return array
             })
         }

@@ -493,6 +493,8 @@ protocol IRemoteAlertManager {
     func schedule(requests: [PriceAlertRequest])
 
     func unsubscribeAll() -> Single<()>
+
+    func checkScheduledRequests()
 }
 
 protocol IRestoreManager {

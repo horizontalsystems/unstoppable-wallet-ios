@@ -193,7 +193,8 @@ class App {
                 kitCleaner: kitCleaner,
                 debugLogger: debugLogger,
                 appVersionManager: appVersionManager,
-                rateAppManager: rateAppManager
+                rateAppManager: rateAppManager,
+                remoteAlertManager: remoteAlertManager
         )
     }
 
