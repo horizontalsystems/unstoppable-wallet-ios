@@ -5,12 +5,13 @@ import ThemeKit
 class ChartNotificationViewController: ThemeViewController {
     private let delegate: IChartNotificationViewDelegate
 
-    private var alert: PriceAlert?
-
     private let titleView = BottomSheetTitleView()
 
     private let tableView = SelfSizedSectionsTableView(style: .grouped)
     private let warningView = UIView()
+
+    private var titleViewModel: PriceAlertTitleViewModel?
+    private var sectionViewModels: [PriceAlertSectionViewModel]?
 
     init(delegate: IChartNotificationViewDelegate) {
         self.delegate = delegate
@@ -58,7 +59,7 @@ class ChartNotificationViewController: ThemeViewController {
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.sectionDataSource = self
 
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = .themeLawrence
         tableView.separatorStyle = .none
 
         warningView.isHidden = true
@@ -106,57 +107,70 @@ class ChartNotificationViewController: ThemeViewController {
 extension ChartNotificationViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        let descriptionText = "chart_alert.24h_description".localized
+        let sectionsCount = sectionViewModels?.count ?? 0
 
-        let headerState: ViewState<SubtitleHeaderFooterView> = .cellType(hash: "top_description", binder: { view in
-            view.bind(text: descriptionText, uppercased: false)
-            view.contentView.backgroundColor = .themeLawrence
-        }, dynamicHeight: { containerWidth in
-            SubtitleHeaderFooterView.height
-        })
+        return sectionViewModels?.enumerated().compactMap { [weak self] index, section in
+            self?.section(sectionModel: section, sectionIndex: index, last: index == sectionsCount - 1)
+        } ?? []
+    }
 
-        let allCases = PriceAlert.ChangeState.allCases
+    func section(sectionModel: PriceAlertSectionViewModel, sectionIndex: Int, last: Bool) -> SectionProtocol {
+        var headerState: ViewState<SubtitleHeaderFooterView>?
 
-        return [
-            Section(
-                    id: "alerts",
-                    headerState: headerState,
-                    rows: allCases.enumerated().map { (index, state) in
-                        Row<SingleLineCheckmarkCell>(
-                                id: "\(state)",
-                                height: CGFloat.heightSingleLineCell,
-                                bind: { [unowned self] cell, _ in
-                                    cell.bind(
-                                            text: "\(state)",
-                                            checkmarkVisible: self.alert?.changeState == state,
-                                            last: index == allCases.count - 1
-                                    )
-                                },
-                                action: { [weak self] _ in
-                                    self?.delegate.didSelect(changeState: state)
-                                }
-                        )
-                    }
-            )
-        ]
+        if let header = sectionModel.header {
+            headerState = .cellType(hash: "header_\(sectionIndex)", binder: { view in
+                view.bind(text: header.localized, uppercased: false)
+                view.contentView.backgroundColor = .themeLawrence
+            }, dynamicHeight: { containerWidth in
+                SubtitleHeaderFooterView.height
+            })
+        }
+
+        return Section(
+                id: "section_\(sectionIndex)",
+                headerState: headerState ?? .margin(height: 0),
+                footerState: .margin(height: last ? 32 : 20),
+                rows: sectionModel.rows.enumerated().compactMap { [weak self] index, row in
+                    self?.row(rowModel: row, sectionIndex: sectionIndex, rowIndex: index, last: index == sectionModel.rows.count - 1)
+                }
+        )
+    }
+
+    func row(rowModel: PriceAlertSectionViewModel.Row, sectionIndex: Int, rowIndex: Int, last: Bool) -> RowProtocol {
+        Row<SingleLineCheckmarkCell>(
+                id: "row_\(rowIndex)",
+                hash: "\(rowModel.selected)",
+                height: CGFloat.heightSingleLineCell,
+                autoDeselect: true,
+                bind: { cell, _ in
+                    cell.bind(
+                            text: rowModel.title,
+                            checkmarkVisible: rowModel.selected,
+                            last: last
+                    )
+                },
+                action: { [weak self] _ in
+                    self?.delegate.didSelect(alertState: sectionIndex, stateIndex: rowIndex)
+                }
+        )
     }
 
 }
 
 extension ChartNotificationViewController: IChartNotificationView {
 
-    func set(coinName: String) {
+    func set(titleViewModel: PriceAlertTitleViewModel) {
         titleView.bind(
-                title: "chart_alert.title".localized,
-                subtitle: coinName,
+                title: titleViewModel.title.localized,
+                subtitle: titleViewModel.subtitle,
                 image: UIImage(named: "Notification Medium Icon")
         )
     }
 
-    func set(alert: PriceAlert) {
-        self.alert = alert
+    func set(sectionViewModels: [PriceAlertSectionViewModel]) {
+        self.sectionViewModels = sectionViewModels
 
-        tableView.reload()
+        tableView.reload(animated: true)
     }
 
     func showWarning() {

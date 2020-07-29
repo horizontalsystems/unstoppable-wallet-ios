@@ -10,12 +10,33 @@ struct PriceAlert {
         case percent2 = 2
         case percent5 = 5
         case percent10 = 10
+
+        init?(index: Int) {
+            switch index {
+            case 0: self = .off
+            case 1: self = .percent2
+            case 2: self = .percent5
+            case 3: self = .percent10
+            default: return nil
+            }
+        }
+
     }
 
     enum TrendState: String, CaseIterable {
         case off = "off"
         case short = "short"
         case long = "long"
+
+        init?(index: Int) {
+            switch index {
+            case 0: self = .off
+            case 1: self = .short
+            case 2: self = .long
+            default: return nil
+            }
+        }
+
     }
 
     private var changeTopic: String {
@@ -34,6 +55,24 @@ struct PriceAlert {
             topics.insert(trendTopic)
         }
         return topics
+    }
+
+    mutating func update(alertState: Int, stateIndex: Int) {
+        switch alertState {
+        case 0:
+            guard let state = ChangeState(index: stateIndex) else {
+                return
+            }
+
+            changeState = state
+        case 1:
+            guard let state = TrendState(index: stateIndex) else {
+                return
+            }
+
+            trendState = state
+        default: return
+        }
     }
 
 }
