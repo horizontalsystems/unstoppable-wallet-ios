@@ -50,7 +50,7 @@ class RateDiffButton: UIButton {
 
     func show(value: Decimal, dimmed: Bool) {
         let color: UIColor = dimmed ? .themeGray50 : (value.isSignMinus ? .themeLucian : .themeRemus)
-        let imageName = value.isSignMinus ? "Down" : "Up"
+        let imageName = value.isSignMinus ? "Price Down" : "Price Up"
 
         iconImageView.image = UIImage(named: imageName)?.tinted(with: color)
 

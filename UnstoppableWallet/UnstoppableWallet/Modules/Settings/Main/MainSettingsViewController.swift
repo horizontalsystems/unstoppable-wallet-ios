@@ -64,7 +64,7 @@ class MainSettingsViewController: ThemeViewController {
 
         return [
             Row<RightImageCell>(id: "manage_accounts", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Wallet Icon"), title: "settings.manage_accounts".localized, rightImage: securityAttentionImage, rightImageTintColor: .themeJacob, showDisclosure: true, last: false)
+                cell.bind(titleIcon: UIImage(named: "Wallet Icon"), title: "settings.manage_accounts".localized, rightImage: securityAttentionImage, rightImageTintColor: .themeLucian, showDisclosure: true, last: false)
             }, action: { [weak self] _ in
                 self?.delegate.onManageAccounts()
             }),
@@ -134,7 +134,7 @@ class MainSettingsViewController: ThemeViewController {
             }),
 
             Row<RightImageCell>(id: "terms", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Terms Icon"), title: "settings.terms".localized, rightImage: termsAttentionImage, rightImageTintColor: .themeJacob, showDisclosure: true, last: true)
+                cell.bind(titleIcon: UIImage(named: "Terms Icon"), title: "settings.terms".localized, rightImage: termsAttentionImage, rightImageTintColor: .themeLucian, showDisclosure: true, last: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapTerms()
             })

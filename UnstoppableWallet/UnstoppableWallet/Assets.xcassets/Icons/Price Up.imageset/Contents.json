@@ -5,12 +5,12 @@
       "scale" : "1x"
     },
     {
-      "filename" : "Attention@2x.png",
+      "filename" : "price_up@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Attention@3x.png",
+      "filename" : "price_down@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

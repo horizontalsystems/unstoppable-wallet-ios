@@ -45,7 +45,7 @@ class RateDiffView: UIView {
             return
         }
         let color: UIColor = value.isSignMinus ? .themeLucian : .themeRemus
-        let imageName = value.isSignMinus ? "Down" : "Up"
+        let imageName = value.isSignMinus ? "Price Down" : "Price Up"
 
         imageView.image = UIImage(named: imageName)?.tinted(with: color)
 
