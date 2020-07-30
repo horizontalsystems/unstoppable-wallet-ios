@@ -20,6 +20,7 @@
 
 "alert.copied" = "已复制";
 "alert.no_internet" = "没有网络";
+"alert.wrong_amount" = "Wrong Amount";
 "alert.no_fee" = "错误费用";
 "alert.network_issue" = "网络问题。请稍后再试\n\n";
 "alert.unknown_error" = "未知错误";
