@@ -113,7 +113,7 @@ extension EthereumAdapter: IBalanceAdapter {
     }
 
     var balance: Decimal {
-        balanceDecimal(balanceString: ethereumKit.balance?.description, decimal: EthereumAdapter.decimal)
+        balanceDecimal(kitBalance: ethereumKit.balance, decimal: EthereumAdapter.decimal)
     }
 
     var balanceUpdatedObservable: Observable<Void> {

@@ -1,5 +1,6 @@
 import EthereumKit
 import RxSwift
+import BigInt
 
 class EthereumBaseAdapter {
     let ethereumKit: EthereumKit.Kit
@@ -15,11 +16,16 @@ class EthereumBaseAdapter {
         _ = try Address(hex: address)
     }
 
-    func balanceDecimal(balanceString: String?, decimal: Int) -> Decimal {
-        if let balanceString = balanceString, let significand = Decimal(string: balanceString) {
-            return Decimal(sign: .plus, exponent: -decimal, significand: significand)
+    func balanceDecimal(kitBalance: BigUInt?, decimal: Int) -> Decimal {
+        guard let kitBalance = kitBalance else {
+            return 0
         }
-        return 0
+
+        guard let significand = Decimal(string: kitBalance.description) else {
+            return 0
+        }
+
+        return Decimal(sign: .plus, exponent: -decimal, significand: significand)
     }
 
     func sendSingle(to address: String, value: Decimal, gasPrice: Int, gasLimit: Int) -> Single<Void> {
