@@ -15,9 +15,9 @@ class SwapInteractor {
         self.swapTokenManager = swapTokenManager
     }
 
-    private func uniswapToken(coin: Coin) -> Token {
+    private func uniswapToken(coin: Coin) throws -> Token {
         if case let .erc20(address, _, _, _) = coin.type {
-            return swapKit.token(contractAddress: address, decimals: coin.decimal)
+            return swapKit.token(contractAddress: try Address(hex: address), decimals: coin.decimal)
         }
 
         return swapKit.etherToken
@@ -38,18 +38,22 @@ extension SwapInteractor: ISwapInteractor {
             return
         }
 
-        let tokenIn = uniswapToken(coin: coinIn)
-        let tokenOut = uniswapToken(coin: coinOut)
+        do {
+            let tokenIn = try uniswapToken(coin: coinIn)
+            let tokenOut = try uniswapToken(coin: coinOut)
 
-        swapKit.swapDataSingle(tokenIn: tokenIn, tokenOut: tokenOut)
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .observeOn(MainScheduler.instance)
-            .subscribe(onSuccess: { [weak self] swapData in
-                self?.delegate?.didReceive(swapData: swapData)
-            }, onError: { [weak self] error in
-                self?.delegate?.didFailReceiveSwapData(error: error)
-            })
-            .disposed(by: disposeBag)
+            swapKit.swapDataSingle(tokenIn: tokenIn, tokenOut: tokenOut)
+                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                    .observeOn(MainScheduler.instance)
+                    .subscribe(onSuccess: { [weak self] swapData in
+                        self?.delegate?.didReceive(swapData: swapData)
+                    }, onError: { [weak self] error in
+                        self?.delegate?.didFailReceiveSwapData(error: error)
+                    })
+                    .disposed(by: disposeBag)
+        } catch {
+            self.delegate?.didFailReceiveSwapData(error: error)
+        }
     }
 
     func bestTradeExactIn(swapData: SwapData, amount: Decimal) throws -> TradeData {

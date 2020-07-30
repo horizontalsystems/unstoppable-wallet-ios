@@ -15,10 +15,8 @@ class CoinStorage {
             guard let address = record.erc20Address else {
                 return nil
             }
-            guard let coinType = try? CoinType(erc20Address: address) else {
-                return nil
-            }
-            return coin(record: record, coinType: coinType)
+
+            return coin(record: record, coinType: CoinType(erc20Address: address))
         }
     }
 
@@ -54,7 +52,7 @@ extension CoinStorage: ICoinStorage {
         switch coin.type {
         case .erc20(let address, _, _, _):
             let record = coinRecord(coin: coin, tokenType: .erc20)
-            record.erc20Address = address.hex
+            record.erc20Address = address
             storage.save(coinRecord: record)
             return true
         default: ()
