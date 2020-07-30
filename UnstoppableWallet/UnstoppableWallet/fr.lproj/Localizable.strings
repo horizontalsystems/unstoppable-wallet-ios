@@ -20,6 +20,7 @@
 
 "alert.copied" = "Copié";
 "alert.no_internet" = "Aucune connexion Internet";
+"alert.wrong_amount" = "Wrong Amount";
 "alert.no_fee" = "Commission incorrecte";
 "alert.network_issue" = "Problèmes réseau. Réessayez";
 "alert.unknown_error" = "Erreur inconnue";
