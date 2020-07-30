@@ -34,7 +34,7 @@ extension CoinManager: ICoinManager {
 
     func existingCoin(erc20Address: String) -> Coin? {
         coins.first { coin in
-            if case .erc20(let address, _, _, _) = coin.type, address.hex == erc20Address {
+            if case .erc20(let address, _, _, _) = coin.type, address.lowercased() == erc20Address.lowercased() {
                 return true
             }
 

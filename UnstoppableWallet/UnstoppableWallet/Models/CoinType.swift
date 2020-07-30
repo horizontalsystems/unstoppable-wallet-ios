@@ -1,5 +1,4 @@
 import Foundation
-import EthereumKit
 
 enum CoinType {
     case bitcoin
@@ -7,12 +6,12 @@ enum CoinType {
     case bitcoinCash
     case dash
     case ethereum
-    case erc20(address: EthereumKit.Address, fee: Decimal, minimumRequiredBalance: Decimal, minimumSpendableAmount: Decimal?)
+    case erc20(address: String, fee: Decimal, minimumRequiredBalance: Decimal, minimumSpendableAmount: Decimal?)
     case eos(token: String, symbol: String)
     case binance(symbol: String)
 
-    init(erc20Address: String, fee: Decimal = 0, minimumRequiredBalance: Decimal = 0, minimumSpendableAmount: Decimal? = nil) throws {
-        self = .erc20(address: try Address(hex: erc20Address), fee: fee, minimumRequiredBalance: minimumRequiredBalance, minimumSpendableAmount: minimumSpendableAmount)
+    init(erc20Address: String, fee: Decimal = 0, minimumRequiredBalance: Decimal = 0, minimumSpendableAmount: Decimal? = nil) {
+        self = .erc20(address: erc20Address, fee: fee, minimumRequiredBalance: minimumRequiredBalance, minimumSpendableAmount: minimumSpendableAmount)
     }
 
     func canSupport(accountType: AccountType) -> Bool {
