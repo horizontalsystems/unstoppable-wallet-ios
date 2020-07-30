@@ -17,7 +17,7 @@ class SwapInteractor {
 
     private func uniswapToken(coin: Coin) -> Token {
         if case let .erc20(address, _, _, _) = coin.type {
-            return swapKit.token(contractAddress: Data(hex: address)!, decimals: coin.decimal)
+            return swapKit.token(contractAddress: address, decimals: coin.decimal)
         }
 
         return swapKit.etherToken

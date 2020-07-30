@@ -1,5 +1,6 @@
 import EthereumKit
 import RxSwift
+import BigInt
 
 class EthereumAdapter: EthereumBaseAdapter {
     static let decimal = 18
@@ -8,16 +9,19 @@ class EthereumAdapter: EthereumBaseAdapter {
         super.init(ethereumKit: ethereumKit, decimal: EthereumAdapter.decimal)
     }
 
-    private func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
+    private func transactionRecord(fromTransaction transactionWithInternal: TransactionWithInternal) -> TransactionRecord {
+        let mineAddress = ethereumKit.receiveAddress
+        let transaction = transactionWithInternal.transaction
+
         var type: TransactionType = .sentToSelf
         var amount: Decimal = 0
 
-        if let significand = Decimal(string: transaction.value) {
+
+        if let significand = Decimal(string: transaction.value.description) {
             amount = Decimal(sign: .plus, exponent: -decimal, significand: significand)
 
-            let mineAddress = ethereumKit.receiveAddress.lowercased()
-            let fromMine = transaction.from.lowercased() == mineAddress
-            let toMine = transaction.to.lowercased() == mineAddress
+            let fromMine = transaction.from == mineAddress
+            let toMine = transaction.to == mineAddress
 
             if fromMine && !toMine {
                 type = .outgoing
@@ -29,8 +33,8 @@ class EthereumAdapter: EthereumBaseAdapter {
         let failed = (transaction.isError ?? 0) != 0
 
         return TransactionRecord(
-                uid: transaction.hash,
-                transactionHash: transaction.hash,
+                uid: transaction.hash.hex,
+                transactionHash: transaction.hash.hex,
                 transactionIndex: transaction.transactionIndex ?? 0,
                 interTransactionIndex: 0,
                 type: type,
@@ -39,20 +43,28 @@ class EthereumAdapter: EthereumBaseAdapter {
                 fee: transaction.gasUsed.map { Decimal(sign: .plus, exponent: -decimal, significand: Decimal($0 * transaction.gasPrice)) },
                 date: Date(timeIntervalSince1970: transaction.timestamp),
                 failed: failed,
-                from: transaction.from,
-                to: transaction.to,
+                from: transaction.from.hex,
+                to: transaction.to.hex,
                 lockInfo: nil,
                 conflictingHash: nil,
                 showRawTransaction: false
         )
     }
 
-    override func sendSingle(to address: String, value: String, gasPrice: Int, gasLimit: Int) -> Single<Void> {
-        ethereumKit.sendSingle(to: address, value: value, gasPrice: gasPrice, gasLimit: gasLimit)
-                .map { _ in ()}
-                .catchError { [weak self] error in
-                    Single.error(self?.createSendError(from: error) ?? error)
-                }
+    override func sendSingle(to address: String, value: Decimal, gasPrice: Int, gasLimit: Int) -> Single<Void> {
+        guard let amount = BigUInt(value.roundedString(decimal: decimal)) else {
+            return Single.error(SendTransactionError.wrongAmount)
+        }
+        do {
+            return try ethereumKit.sendSingle(address: Address(hex: address), value: amount, gasPrice: gasPrice, gasLimit: gasLimit)
+                    .map { _ in ()}
+                    .catchError { [weak self] error in
+                        Single.error(self?.createSendError(from: error) ?? error)
+                    }
+        } catch {
+            return Single.error(error)
+        }
+
     }
 
 }
@@ -101,7 +113,7 @@ extension EthereumAdapter: IBalanceAdapter {
     }
 
     var balance: Decimal {
-        balanceDecimal(balanceString: ethereumKit.balance, decimal: EthereumAdapter.decimal)
+        balanceDecimal(balanceString: ethereumKit.balance?.description, decimal: EthereumAdapter.decimal)
     }
 
     var balanceUpdatedObservable: Observable<Void> {
@@ -134,7 +146,16 @@ extension EthereumAdapter: ISendEthereumAdapter {
     }
 
     func estimateGasLimit(to address: String?, value: Decimal, gasPrice: Int?) -> Single<Int> {
-        ethereumKit.estimateGas(to: address, amount: value.roundedString(decimal: decimal), gasPrice: gasPrice)
+        guard let amount = BigUInt(value.roundedString(decimal: decimal)) else {
+            return Single.error(SendTransactionError.wrongAmount)
+        }
+
+        var ethAddress: Address?
+        if let address = address {
+            ethAddress = try? Address(hex: address)
+        }
+
+        return ethereumKit.estimateGas(to: ethAddress, amount: amount, gasPrice: gasPrice)
     }
 
 }
@@ -148,7 +169,7 @@ extension EthereumAdapter: ITransactionsAdapter {
     }
 
     func transactionsSingle(from: TransactionRecord?, limit: Int) -> Single<[TransactionRecord]> {
-        ethereumKit.transactionsSingle(fromHash: from?.transactionHash, limit: limit)
+        ethereumKit.transactionsSingle(fromHash: from.flatMap { Data(hex: $0.transactionHash) }, limit: limit)
                 .map { [weak self] transactions -> [TransactionRecord] in
                     transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
                 }

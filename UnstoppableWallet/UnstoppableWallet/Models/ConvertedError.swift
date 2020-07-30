@@ -116,7 +116,7 @@ extension EthereumKit.Kit.SyncError: ConvertibleError {
     }
 }
 
-extension EthereumKit.Kit.AddressValidationError: ConvertibleError {
+extension EthereumKit.Address.ValidationError: ConvertibleError {
     var convertedError: Error {
          AppError.addressInvalid
     }

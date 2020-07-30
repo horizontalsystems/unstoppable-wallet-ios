@@ -24,7 +24,7 @@ extension AddErc20TokenInteractor: IAddErc20TokenInteractor {
     }
 
     func validate(address: String) throws {
-        try EthereumKit.Kit.validate(address: address)
+        _ = try EthereumKit.Address(hex: address)
     }
 
     func existingCoin(address: String) -> Coin? {
