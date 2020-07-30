@@ -72,6 +72,7 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
                     height: ButtonCell.height(),
                     bind: { [weak self] cell, _ in
                         cell.bind(style: .primaryYellow, title: "send.confirmation.send_button".localized) { [weak self] in
+                            cell.disable()
                             self?.onSendTap()
                         }
                     }

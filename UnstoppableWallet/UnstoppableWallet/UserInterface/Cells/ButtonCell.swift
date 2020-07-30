@@ -33,11 +33,15 @@ class ButtonCell: UITableViewCell {
     }
 
     func bind(style: ThemeButtonStyle, title: String?, onTap: (() -> ())?) {
+        button.isEnabled = true
         button.apply(style: style)
         button.setTitle(title, for: .normal)
         self.onTap = onTap
     }
 
+    func disable() {
+        button.isEnabled = false
+    }
 }
 
 extension ButtonCell {
