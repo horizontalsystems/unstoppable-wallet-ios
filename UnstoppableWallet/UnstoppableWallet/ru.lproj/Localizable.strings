@@ -20,6 +20,7 @@
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет Интернета";
+"alert.wrong_amount" = "Wrong Amount";
 "alert.no_fee" = "Неправильная комиссия";
 "alert.network_issue" = "Проблемы с сетью. Попробуйте еще раз";
 "alert.unknown_error" = "Неизвестная Ошибка";
