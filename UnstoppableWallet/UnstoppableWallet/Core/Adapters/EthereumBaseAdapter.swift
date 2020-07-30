@@ -11,6 +11,10 @@ class EthereumBaseAdapter {
         self.decimal = decimal
     }
 
+    func validate(address: String) throws {
+        _ = try Address(hex: address)
+    }
+
     func balanceDecimal(balanceString: String?, decimal: Int) -> Decimal {
         if let balanceString = balanceString, let significand = Decimal(string: balanceString) {
             return Decimal(sign: .plus, exponent: -decimal, significand: significand)
@@ -18,7 +22,7 @@ class EthereumBaseAdapter {
         return 0
     }
 
-    func sendSingle(to address: String, value: String, gasPrice: Int, gasLimit: Int) -> Single<Void> {
+    func sendSingle(to address: String, value: Decimal, gasPrice: Int, gasLimit: Int) -> Single<Void> {
         fatalError("Method should be overridden in child class")
     }
 
@@ -32,17 +36,7 @@ class EthereumBaseAdapter {
 extension EthereumBaseAdapter {
 
     func sendSingle(amount: Decimal, address: String, gasPrice: Int, gasLimit: Int) -> Single<Void> {
-        let poweredDecimal = amount * pow(10, decimal)
-        let handler = NSDecimalNumberHandler(roundingMode: .plain, scale: 0, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
-        let roundedDecimal = NSDecimalNumber(decimal: poweredDecimal).rounding(accordingToBehavior: handler).decimalValue
-
-        let amountString = String(describing: roundedDecimal)
-
-        return sendSingle(to: address, value: amountString, gasPrice: gasPrice, gasLimit: gasLimit)
-    }
-
-    func validate(address: String) throws {
-        try EthereumKit.Kit.validate(address: address)
+        sendSingle(to: address, value: amount, gasPrice: gasPrice, gasLimit: gasLimit)
     }
 
 }
@@ -67,7 +61,7 @@ extension EthereumBaseAdapter {
 extension EthereumBaseAdapter: IDepositAdapter {
 
     var receiveAddress: String {
-        ethereumKit.receiveAddress
+        ethereumKit.receiveAddress.hex
     }
 
 }

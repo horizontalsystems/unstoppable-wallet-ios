@@ -2,6 +2,7 @@ import RxSwift
 import GRDB
 import XRatesKit
 import UniswapKit
+import EthereumKit
 import ThemeKit
 import Alamofire
 
@@ -566,12 +567,12 @@ protocol ITermsManager {
 
 protocol ISwapKit {
     var etherToken: Token { get }
-    func token(contractAddress: Data, decimals: Int) -> Token
+    func token(contractAddress: EthereumKit.Address, decimals: Int) -> Token
     func swapDataSingle(tokenIn: Token, tokenOut: Token) -> Single<SwapData>
     func bestTradeExactIn(swapData: SwapData, amountIn: Decimal, options: TradeOptions) throws -> TradeData
     func bestTradeExactOut(swapData: SwapData, amountOut: Decimal, options: TradeOptions) throws -> TradeData
-    func estimateGasSingle(tradeData: TradeData, gasPrice: Int) -> Single<GasData>
-    func swapSingle(tradeData: TradeData, gasData: GasData, gasPrice: Int) -> Single<String>
+    func estimateSwapSingle(tradeData: TradeData, gasPrice: Int) -> Single<Int>
+    func swapSingle(tradeData: TradeData, gasLimit: Int, gasPrice: Int) -> Single<EthereumKit.TransactionWithInternal>
 }
 
 protocol ISwapCoinManager {

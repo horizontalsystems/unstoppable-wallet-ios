@@ -68,7 +68,7 @@ extension Erc20ContractInfoProvider {
                 throw ApiError.invalidResponse
             }
 
-            return Coin(
+            return try Coin(
                     id: tokenSymbol,
                     title: tokenName,
                     code: tokenSymbol,

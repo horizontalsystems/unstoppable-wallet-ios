@@ -19,7 +19,7 @@ class SwapKitManager {
             return nil
         }
 
-        uniswapKit = try? UniswapKit.Kit.instance(ethereumKit: ethereumKit)
+        uniswapKit = UniswapKit.Kit.instance(ethereumKit: ethereumKit)
         return uniswapKit
     }
 
