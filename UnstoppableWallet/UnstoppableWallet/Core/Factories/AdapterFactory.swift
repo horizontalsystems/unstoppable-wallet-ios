@@ -1,5 +1,4 @@
 import BitcoinCore
-import EthereumKit
 
 class AdapterFactory: IAdapterFactory {
     weak var derivationSettingsManager: IDerivationSettingsManager?
@@ -41,7 +40,7 @@ class AdapterFactory: IAdapterFactory {
             }
         case let .erc20(address, fee, minimumRequiredBalance, minimumSpendableAmount):
             if let ethereumKit = try? ethereumKitManager.ethereumKit(account: wallet.account) {
-                return try? Erc20Adapter(ethereumKit: ethereumKit, contractAddress: EthereumKit.Address(hex: address), decimal: wallet.coin.decimal, fee: fee, minimumRequiredBalance: minimumRequiredBalance, minimumSpendableAmount: minimumSpendableAmount)
+                return try? Erc20Adapter(ethereumKit: ethereumKit, contractAddress: address, decimal: wallet.coin.decimal, fee: fee, minimumRequiredBalance: minimumRequiredBalance, minimumSpendableAmount: minimumSpendableAmount)
             }
         case let .eos(token, symbol):
             if let eosKit = try? eosKitManager.eosKit(account: wallet.account) {
