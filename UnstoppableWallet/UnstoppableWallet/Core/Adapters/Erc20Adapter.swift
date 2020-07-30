@@ -121,11 +121,7 @@ extension Erc20Adapter: IBalanceAdapter {
     }
 
     var balance: Decimal {
-        guard let balanceString = erc20Kit.balance else {
-            return 0
-        }
-
-        return balanceDecimal(balanceString: balanceString.description, decimal: decimal)
+        balanceDecimal(kitBalance: erc20Kit.balance, decimal: decimal)
     }
 
     var balanceUpdatedObservable: Observable<Void> {
@@ -141,7 +137,7 @@ extension Erc20Adapter: ISendEthereumAdapter {
     }
 
     var ethereumBalance: Decimal {
-        balanceDecimal(balanceString: ethereumKit.balance?.description, decimal: EthereumAdapter.decimal)
+        balanceDecimal(kitBalance: ethereumKit.balance, decimal: EthereumAdapter.decimal)
     }
 
     func fee(gasPrice: Int, gasLimit: Int) -> Decimal {
