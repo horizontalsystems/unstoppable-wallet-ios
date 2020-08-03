@@ -577,5 +577,5 @@ protocol ISwapKit {
 
 protocol ISwapCoinManager {
     func balance(coin: Coin) -> Decimal?
-    func items(path: SwapPath, exclude: [Coin]) -> [CoinBalanceItem]
+    func items(accountCoins: Bool, exclude: [Coin]) -> [CoinBalanceItem]
 }

@@ -8,8 +8,14 @@ class SwapRouter {
 
 extension SwapRouter: ISwapRouter {
 
-    func openTokenSelect(path: SwapPath, exclude: [Coin], delegate: ICoinSelectDelegate) {
-        viewController?.present(SwapTokenSelectRouter.module(path: path, exclude: exclude, delegate: delegate), animated: true)
+    func openTokenSelect(accountCoins: Bool, exclude: [Coin], delegate: ICoinSelectDelegate) {
+        viewController?.present(SwapTokenSelectRouter.module(accountCoins: accountCoins, exclude: exclude, delegate: delegate), animated: true)
+    }
+
+    func showConfirmation(coinIn: Coin, coinOut: Coin, tradeData: TradeData, delegate: ISwapConfirmationDelegate) {
+        let confirmationController = SwapConfirmationRouter.module(coinIn: coinIn, coinOut: coinOut, tradeData: tradeData, delegate: delegate)
+
+        viewController?.navigationController?.pushViewController(confirmationController, animated: true)
     }
 
     func dismiss() {

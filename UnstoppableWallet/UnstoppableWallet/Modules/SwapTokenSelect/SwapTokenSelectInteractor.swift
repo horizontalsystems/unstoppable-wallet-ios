@@ -13,8 +13,8 @@ class SwapTokenSelectInteractor {
 
 extension SwapTokenSelectInteractor: ISwapTokenSelectInteractor {
 
-    func coins(path: SwapPath, exclude: [Coin]) -> [CoinBalanceItem] {
-        swapCoinManager.items(path: path, exclude: exclude)
+    func coins(accountCoins: Bool, exclude: [Coin]) -> [CoinBalanceItem] {
+        swapCoinManager.items(accountCoins: accountCoins, exclude: exclude)
     }
 
 }

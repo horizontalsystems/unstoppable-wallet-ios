@@ -34,18 +34,17 @@ extension SwapTokenManager: ISwapCoinManager {
             .balance
     }
 
-    func items(path: SwapPath, exclude: [Coin]) -> [CoinBalanceItem] {
+    func items(accountCoins: Bool, exclude: [Coin]) -> [CoinBalanceItem] {
         // add filtration by incoming filters (etc. ethereum, binance and other)
 
-        switch path {
-        case .from:                                   // return ethereum and erc20 tokens with available balances
+        if accountCoins {                                   // ethereum and erc20 tokens with available balances
             return walletItems.filter { item in
                 let include = !exclude.contains(item.coin)
                 let zeroBalance = item.balance?.isZero ?? false
 
                 return item.coin.type.swappable && include && !zeroBalance
             }
-        case .to:                                   // return ethereum and erc20 tokens registered in app
+        } else {                                            // ethereum and erc20 tokens registered in app
             return coinManager.coins
                     .compactMap { coin in
                 let include = !exclude.contains(coin)

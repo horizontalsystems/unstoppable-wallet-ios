@@ -2,10 +2,9 @@ import UIKit
 import SnapKit
 
 class AdditionalDataCell: UITableViewCell {
-    static let height: CGFloat = 29
+    static let height: CGFloat = AdditionalDataView.height
 
-    private let titleLabel = UILabel()
-    private let valueLabel = UILabel()
+    private let additionalDataView = AdditionalDataView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -13,27 +12,11 @@ class AdditionalDataCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
 
-        addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
+        addSubview(additionalDataView)
+        additionalDataView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
             maker.top.equalToSuperview()
         }
-
-        titleLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        titleLabel.textColor = .themeGray
-        titleLabel.font = .subhead2
-
-        addSubview(valueLabel)
-        valueLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin2x)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalToSuperview()
-        }
-
-        valueLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        valueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        valueLabel.font = .subhead2
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -41,10 +24,13 @@ class AdditionalDataCell: UITableViewCell {
     }
 
     func bind(title: String?, value: String?, highlighted: Bool = false) {
-        titleLabel.text = title
-        valueLabel.text = value
+        additionalDataView.bind(title: title, value: value)
 
-        valueLabel.textColor = highlighted ? .themeOz : .themeGray
+        additionalDataView.setValue(color: highlighted ? .themeOz : .themeGray)
+    }
+
+    func set(valueColor: UIColor) {
+        additionalDataView.setValue(color: valueColor)
     }
 
 }

@@ -9,7 +9,7 @@ protocol ISwapTokenSelectViewDelegate {
 }
 
 protocol ISwapTokenSelectInteractor {
-    func coins(path: SwapPath, exclude: [Coin]) -> [CoinBalanceItem]
+    func coins(accountCoins: Bool, exclude: [Coin]) -> [CoinBalanceItem]
 }
 
 protocol ISwapTokenSelectInteractorDelegate: AnyObject {
@@ -24,7 +24,7 @@ protocol ICoinBalanceViewItemFactory {
 }
 
 protocol ICoinSelectDelegate {
-    func didSelect(path: SwapPath, coin: Coin)
+    func didSelect(accountCoins: Bool, coin: Coin)
 }
 
 struct CoinBalanceViewItem {
