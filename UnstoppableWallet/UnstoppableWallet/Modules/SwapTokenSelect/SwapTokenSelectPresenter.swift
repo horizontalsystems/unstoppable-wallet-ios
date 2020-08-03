@@ -6,21 +6,21 @@ class SwapTokenSelectPresenter {
     private let factory: ICoinBalanceViewItemFactory
     private let delegate: ICoinSelectDelegate
 
-    private let path: SwapPath
+    private let accountCoins: Bool
     private let exclude: [Coin]
 
-    init(interactor: ISwapTokenSelectInteractor, router: ISwapTokenSelectRouter, factory: ICoinBalanceViewItemFactory, delegate: ICoinSelectDelegate, path: SwapPath, exclude: [Coin]) {
+    init(interactor: ISwapTokenSelectInteractor, router: ISwapTokenSelectRouter, factory: ICoinBalanceViewItemFactory, delegate: ICoinSelectDelegate, accountCoins: Bool, exclude: [Coin]) {
         self.interactor = interactor
         self.router = router
         self.factory = factory
         self.delegate = delegate
 
-        self.path = path
+        self.accountCoins = accountCoins
         self.exclude = exclude
     }
 
     private func syncViewItems() {
-        let viewItems = interactor.coins(path: path, exclude: exclude).map { factory.viewItem(item: $0) }
+        let viewItems = interactor.coins(accountCoins: accountCoins, exclude: exclude).map { factory.viewItem(item: $0) }
 
         view?.set(viewItems: viewItems)
     }
@@ -34,7 +34,7 @@ extension SwapTokenSelectPresenter: ISwapTokenSelectViewDelegate {
     }
 
     func onSelect(coin: Coin) {
-        delegate.didSelect(path: path, coin: coin)
+        delegate.didSelect(accountCoins: accountCoins, coin: coin)
 
         router.close()
     }

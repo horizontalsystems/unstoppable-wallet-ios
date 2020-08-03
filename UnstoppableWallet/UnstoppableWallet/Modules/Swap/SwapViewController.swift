@@ -1,5 +1,6 @@
 import UIKit
 import ThemeKit
+import UniswapKit
 
 class SwapViewController: ThemeViewController {
     private let delegate: ISwapViewDelegate
@@ -14,7 +15,7 @@ class SwapViewController: ThemeViewController {
     private let fromBadgeView = BadgeView()
     private let fromInputView = SwapInputView()
 
-    private let fromBalanceView = SwapValueView()
+    private let fromBalanceView = AdditionalDataView()
     private let fromErrorView = UILabel()
 
     private let separatorLineView = UIView()
@@ -22,9 +23,9 @@ class SwapViewController: ThemeViewController {
     private let toTitleLabel = UILabel()
     private let toBadgeView = BadgeView()
     private let toInputView = SwapInputView()
-    private let toPriceView = SwapValueView()
-    private let toPriceImpactView = SwapValueView()
-    private let minMaxView = SwapValueView()
+    private let toPriceView = AdditionalDataView()
+    private let toPriceImpactView = AdditionalDataView()
+    private let minMaxView = AdditionalDataView()
 
     private let swapButton = ThemeButton()
 
@@ -138,7 +139,7 @@ class SwapViewController: ThemeViewController {
         fromErrorView.isHidden = true
 
         separatorLineView.snp.makeConstraints { maker in
-            maker.top.equalTo(fromBalanceView.snp.bottom).offset(CGFloat.margin2x)
+            maker.top.equalTo(fromBalanceView.snp.bottom).offset(CGFloat.margin1x)
             maker.leading.trailing.equalToSuperview()
             maker.height.equalTo(CGFloat.heightOneDp)
         }
@@ -175,17 +176,17 @@ class SwapViewController: ThemeViewController {
         }
 
         toPriceImpactView.snp.makeConstraints { maker in
-            maker.top.equalTo(toPriceView.snp.bottom).offset(CGFloat.margin3x)
+            maker.top.equalTo(toPriceView.snp.bottom)
             maker.leading.trailing.equalToSuperview()
         }
 
         minMaxView.snp.makeConstraints { maker in
-            maker.top.equalTo(toPriceImpactView.snp.bottom).offset(CGFloat.margin3x)
+            maker.top.equalTo(toPriceImpactView.snp.bottom)
             maker.leading.trailing.equalToSuperview()
         }
 
         swapButton.snp.makeConstraints { maker in
-            maker.top.equalTo(minMaxView.snp.bottom).offset(CGFloat.margin3x + CGFloat.margin4x)
+            maker.top.equalTo(minMaxView.snp.bottom).offset(CGFloat.margin4x)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.bottom.equalToSuperview()
             maker.height.equalTo(50)
@@ -194,20 +195,15 @@ class SwapViewController: ThemeViewController {
         swapButton.apply(style: .primaryYellow)
         swapButton.setTitle("swap.proceed".localized, for: .normal)
         swapButton.addTarget(self, action: #selector(onSwapTouchUp), for: .touchUpInside)
-
-        fromBalanceView.set(title: "swap.balance".localized)
-
-        toPriceView.set(title: "swap.price".localized)
-        toPriceImpactView.set(title: "swap.price_impact".localized)
     }
 
-    private func set(estimatedField: SwapPath) {
-        fromBadgeView.isHidden = estimatedField == .to
-        toBadgeView.isHidden = estimatedField == .from
+    private func set(exactType: TradeType) {
+        fromBadgeView.isHidden = exactType == .exactIn
+        toBadgeView.isHidden = exactType == .exactOut
     }
 
-    private func path(for view: SwapInputView) -> SwapPath {
-        view == fromInputView ? .from : .to
+    private func type(for view: SwapInputView) -> TradeType {
+        view == fromInputView ? .exactIn : .exactOut
     }
 
     @objc func onClose() {
@@ -218,7 +214,7 @@ class SwapViewController: ThemeViewController {
     }
 
     @objc func onSwapTouchUp() {
-        delegate.onClose()
+        delegate.onProceed()
     }
 
 }
@@ -229,18 +225,19 @@ extension SwapViewController: ISwapView {
         view.endEditing(true)
     }
 
-    func bind(viewItem: SwapViewItem) {
-        set(estimatedField: viewItem.estimatedField)
+    func bind(viewItem: SwapModule.ViewItem) {
+        set(exactType: viewItem.exactType)
 
         fromInputView.set(tokenName: viewItem.tokenIn)
         toInputView.set(tokenName: viewItem.tokenOut ?? "swap.token".localized)
 
-        switch viewItem.estimatedField {
-        case .to: toInputView.set(text: viewItem.estimatedAmount)
-        case .from: fromInputView.set(text: viewItem.estimatedAmount)
+        switch viewItem.exactType {
+        case .exactIn: toInputView.set(text: viewItem.estimatedAmount)
+        case .exactOut: fromInputView.set(text: viewItem.estimatedAmount)
         }
 
-        fromBalanceView.set(value: viewItem.availableBalance)
+        fromBalanceView.bind(title: "swap.balance".localized, value: viewItem.availableBalance)
+
         if let error = viewItem.error {
             fromErrorView.isHidden = false
             fromBalanceView.isHidden = true
@@ -251,21 +248,25 @@ extension SwapViewController: ISwapView {
             fromBalanceView.isHidden = false
         }
 
-        minMaxView.set(title: viewItem.minMaxTitle.localized)
-        minMaxView.set(value: viewItem.minMaxValue)
+        minMaxView.bind(title: viewItem.minMaxTitle.localized, value: viewItem.minMaxValue)
 
-        toPriceView.set(value: viewItem.executionPriceValue)
-        toPriceImpactView.set(value: viewItem.priceImpactValue)
-        toPriceImpactView.set(color: viewItem.priceImpactColor)
+        toPriceView.bind(title: "swap.price".localized, value: viewItem.executionPriceValue)
+        toPriceImpactView.bind(title: "swap.price_impact".localized, value: viewItem.priceImpactValue)
+        toPriceImpactView.setValue(color: viewItem.priceImpactColor)
 
         swapButton.isEnabled = viewItem.swapButtonEnabled
     }
 
-    func amount(path: SwapPath) -> String? {
-        switch path {
-        case .to: return toInputView.text
-        case .from: return fromInputView.text
+    func amount(type: TradeType) -> String? {
+        switch type {
+        case .exactOut: return toInputView.text
+        case .exactIn: return fromInputView.text
         }
+    }
+
+    func dismissWithSuccess() {
+        navigationController?.dismiss(animated: true)
+        HudHelper.instance.showSuccess()
     }
 
 }
@@ -273,7 +274,7 @@ extension SwapViewController: ISwapView {
 extension SwapViewController: ISwapInputViewDelegate {
 
     func isValid(_ inputView: SwapInputView, text: String) -> Bool {
-        if delegate.isValid(path: path(for: inputView), text: text) {
+        if delegate.isValid(type: type(for: inputView), text: text) {
             return true
         } else {
             inputView.shakeView()
@@ -282,14 +283,14 @@ extension SwapViewController: ISwapInputViewDelegate {
     }
 
     func willChangeAmount(_ inputView: SwapInputView, text: String?) {
-        delegate.willChangeAmount(path: path(for: inputView), text: text)
+        delegate.willChangeAmount(type: type(for: inputView), text: text)
     }
 
     func onMaxClicked(_ inputView: SwapInputView) {
     }
 
     func onTokenSelectClicked(_ inputView: SwapInputView) {
-        delegate.onTokenSelect(path: path(for: inputView))
+        delegate.onTokenSelect(type: type(for: inputView))
     }
 
 }

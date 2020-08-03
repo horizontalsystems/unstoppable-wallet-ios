@@ -3,18 +3,21 @@ import UniswapKit
 protocol ISwapView: class {
     func dismissKeyboard()
 
-    func bind(viewItem: SwapViewItem)
-    func amount(path: SwapPath) -> String?
+    func bind(viewItem: SwapModule.ViewItem)
+    func amount(type: TradeType) -> String?
+
+    func dismissWithSuccess()
 }
 
 protocol ISwapViewDelegate {
     func onViewDidLoad()
     func onClose()
 
-    func isValid(path: SwapPath, text: String) -> Bool
-    func willChangeAmount(path: SwapPath, text: String?)
+    func isValid(type: TradeType, text: String) -> Bool
+    func willChangeAmount(type: TradeType, text: String?)
 
-    func onTokenSelect(path: SwapPath)
+    func onTokenSelect(type: TradeType)
+    func onProceed()
 }
 
 protocol ISwapInteractor {
@@ -31,7 +34,8 @@ protocol ISwapInteractorDelegate: class {
 }
 
 protocol ISwapRouter {
-    func openTokenSelect(path: SwapPath, exclude: [Coin], delegate: ICoinSelectDelegate)
+    func openTokenSelect(accountCoins: Bool, exclude: [Coin], delegate: ICoinSelectDelegate)
+    func showConfirmation(coinIn: Coin, coinOut: Coin, tradeData: TradeData, delegate: ISwapConfirmationDelegate)
     func dismiss()
 }
 
@@ -45,7 +49,7 @@ protocol ISwapInputViewDelegate: class {
 }
 
 protocol ISwapViewItemFactory {
-    func viewItem(coinIn: Coin, balance: Decimal?, coinOut: Coin?, path: SwapPath, tradeData: TradeData?) -> SwapViewItem
+    func viewItem(coinIn: Coin, balance: Decimal?, coinOut: Coin?, type: TradeType, tradeData: TradeData?) -> SwapModule.ViewItem
 }
 
 struct CoinBalanceItem {
@@ -61,6 +65,29 @@ enum SwapValidationError: Error, LocalizedError {
         case .insufficientBalance(let availableBalance):
             return "swap.amount_error.maximum_amount".localized(availableBalance ?? "")
         }
+    }
+
+}
+
+class SwapModule {
+
+    struct ViewItem {
+        let exactType: TradeType
+        let estimatedAmount: String?
+        let error: Error?
+
+        let tokenIn: String
+        let tokenOut: String?
+
+        let availableBalance: String?
+
+        let minMaxTitle: String
+        let minMaxValue: String
+        let executionPriceValue: String?
+        let priceImpactValue: String
+        let priceImpactColor: UIColor
+
+        let swapButtonEnabled: Bool
     }
 
 }
