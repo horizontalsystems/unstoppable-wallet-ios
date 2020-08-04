@@ -23,12 +23,15 @@ protocol INotificationSettingsInteractor: AnyObject {
 }
 
 protocol INotificationSettingsInteractorDelegate: AnyObject {
+    func onAlertsUpdate()
+
     func didGrantPermission()
     func didDenyPermission()
     func didEnterForeground()
-    func onAlertsUpdate()
     func didSaveAlerts()
     func didFailSaveAlerts(error: Error)
+    func didUpdateTopics()
+    func didFailUpdateTopics(error: Error)
 }
 
 protocol INotificationSettingsRouter {

@@ -50,16 +50,21 @@ extension NotificationSettingsPresenter: INotificationSettingsViewDelegate {
             interactor.requestPermission()
         } else {
             view?.set(pushNotificationsOn: interactor.pushNotificationsOn)
-
             updateViewItems()
-
-            interactor.updateTopics()
         }
+
+        interactor.updateTopics()
     }
 
 }
 
 extension NotificationSettingsPresenter: INotificationSettingsInteractorDelegate {
+
+    func onAlertsUpdate() {
+        alerts = interactor.alerts
+
+        updateViewItems()
+    }
 
     func didGrantPermission() {
         view?.hideWarning()
@@ -81,12 +86,6 @@ extension NotificationSettingsPresenter: INotificationSettingsInteractorDelegate
         }
     }
 
-    func onAlertsUpdate() {
-        alerts = interactor.alerts
-
-        updateViewItems()
-    }
-
     func didSaveAlerts() {
         alerts = interactor.alerts
 
@@ -96,6 +95,19 @@ extension NotificationSettingsPresenter: INotificationSettingsInteractorDelegate
     func didFailSaveAlerts(error: Error) {
         alerts = interactor.alerts
 
+        updateViewItems()
+
+        view?.showError(error: error.convertedError)
+    }
+
+    func didUpdateTopics() {
+        updateViewItems()
+    }
+
+    func didFailUpdateTopics(error: Error) {
+        interactor.pushNotificationsOn = !interactor.pushNotificationsOn
+
+        view?.set(pushNotificationsOn: interactor.pushNotificationsOn)
         updateViewItems()
 
         view?.showError(error: error.convertedError)
