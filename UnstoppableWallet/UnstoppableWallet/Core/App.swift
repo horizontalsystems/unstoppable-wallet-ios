@@ -163,7 +163,7 @@ class App {
         remoteAlertManager = RemoteAlertManager(networkManager: networkManager, reachabilityManager: reachabilityManager, appConfigProvider: appConfigProvider, storage: priceAlertRequestStorage)
 
         let priceAlertStorage: IPriceAlertStorage = PriceAlertStorage(coinManager: coinManager, storage: storage)
-        priceAlertManager = PriceAlertManager(walletManager: walletManager, storage: priceAlertStorage, remoteAlertManager: remoteAlertManager)
+        priceAlertManager = PriceAlertManager(walletManager: walletManager, remoteAlertManager: remoteAlertManager, storage: priceAlertStorage, localStorage: localStorage)
 
         notificationManager = NotificationManager(priceAlertManager: priceAlertManager, remoteAlertManager: remoteAlertManager, storage: localStorage)
 

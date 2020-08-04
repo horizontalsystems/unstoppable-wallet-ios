@@ -52,9 +52,9 @@ extension NotificationSettingsInteractor: INotificationSettingsInteractor {
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onError: { [weak self] error in
-                    self?.delegate?.didFailSaveAlerts(error: error)
+                    self?.delegate?.didFailUpdateTopics(error: error)
                 }, onCompleted: { [weak self] in
-                    self?.delegate?.didSaveAlerts()
+                    self?.delegate?.didUpdateTopics()
                 })
                 .disposed(by: disposeBag)
     }

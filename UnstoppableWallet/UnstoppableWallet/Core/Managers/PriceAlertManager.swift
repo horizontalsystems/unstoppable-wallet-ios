@@ -6,13 +6,15 @@ class PriceAlertManager {
     private let walletManager: IWalletManager
     private let remoteAlertManager: IRemoteAlertManager
     private let storage: IPriceAlertStorage
+    private let localStorage: ILocalStorage
 
     private let updateSubject = PublishSubject<[PriceAlert]>()
 
-    init(walletManager: IWalletManager, storage: IPriceAlertStorage, remoteAlertManager: IRemoteAlertManager) {
+    init(walletManager: IWalletManager, remoteAlertManager: IRemoteAlertManager, storage: IPriceAlertStorage, localStorage: ILocalStorage) {
         self.walletManager = walletManager
         self.storage = storage
         self.remoteAlertManager = remoteAlertManager
+        self.localStorage = localStorage
 
         walletManager.walletsUpdatedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -99,9 +101,15 @@ extension PriceAlertManager: IPriceAlertManager {
     }
 
     func updateTopics() -> Observable<[()]> {
-        //todo relay on notificationsOn
-        print("updateSubscriptions")
-        return .just([()])
+        let activeTopics = priceAlerts.reduce(Set<String>()) { set, alert in
+            var set = set
+            set.formUnion(alert.activeTopics)
+            return set
+        }
+
+        let requests = PriceAlertRequest.requests(topics: activeTopics, method: localStorage.pushNotificationsOn ? .subscribe : .unsubscribe)
+
+        return remoteAlertManager.handle(requests: requests)
     }
 
 }
