@@ -1,5 +1,7 @@
 protocol INotificationSettingsView: AnyObject {
-    func set(viewItems: [PriceAlertViewItem])
+    func set(pushNotificationsOn: Bool)
+    func set(viewItems: [NotificationSettingSectionViewItem])
+
     func showWarning()
     func hideWarning()
     func showError(error: Error)
@@ -7,15 +9,16 @@ protocol INotificationSettingsView: AnyObject {
 
 protocol INotificationSettingsViewDelegate {
     func viewDidLoad()
-    func didSelect(changeState: PriceAlert.ChangeState, trendState: PriceAlert.TrendState, index: Int)
+    func didToggleNotifications(on: Bool)
     func didTapSettingsButton()
     func didTapDeactivateAll()
 }
 
 protocol INotificationSettingsInteractor {
     var alerts: [PriceAlert] { get }
+    var pushNotificationsOn: Bool { get set }
+    func updateTopics()
     func requestPermission()
-    func save(priceAlerts: [PriceAlert])
     func deleteAllAlerts()
 }
 
@@ -23,12 +26,14 @@ protocol INotificationSettingsInteractorDelegate: AnyObject {
     func didGrantPermission()
     func didDenyPermission()
     func didEnterForeground()
+    func onAlertsUpdate()
     func didSaveAlerts()
     func didFailSaveAlerts(error: Error)
 }
 
 protocol INotificationSettingsRouter {
-    func openSettings()
+    func openSystemSettings()
+    func openSettings(alert: PriceAlert, mode: NotificationSettingPresentMode)
 }
 
 struct PriceAlertViewItem {
@@ -41,4 +46,15 @@ struct PriceAlertViewItem {
 struct PriceAlertValueViewItem {
     let value: Int?
     let selected: Bool
+}
+
+struct NotificationSettingSectionViewItem {
+    let title: String
+    let rowItems: [NotificationSettingRowViewItem]
+}
+
+struct NotificationSettingRowViewItem {
+    let title: String
+    let value: String
+    let onTap: () -> ()
 }

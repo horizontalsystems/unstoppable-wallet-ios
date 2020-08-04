@@ -98,4 +98,10 @@ extension PriceAlertManager: IPriceAlertManager {
         })
     }
 
+    func updateTopics() -> Observable<[()]> {
+        //todo relay on notificationsOn
+        print("updateSubscriptions")
+        return .just([()])
+    }
+
 }

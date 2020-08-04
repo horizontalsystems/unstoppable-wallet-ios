@@ -5,5 +5,6 @@ struct PriceAlertSectionViewModel {
     struct Row {
         let title: String
         let selected: Bool
+        let action: (Int) -> ()
     }
 }

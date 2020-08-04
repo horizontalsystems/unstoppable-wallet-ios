@@ -48,7 +48,7 @@ extension NotificationManager: INotificationManager {
             token = token + String(format: "%02.2hhx", arguments: [tokenData[i]])
         }
 
-        if storage.pushToken != token {
+        if storage.pushToken != token, storage.pushNotificationsOn {
             storage.pushToken = token
 
             remoteAlertManager.schedule(requests: priceAlertManager.priceAlerts.reduce([PriceAlertRequest]()) { array, alert in

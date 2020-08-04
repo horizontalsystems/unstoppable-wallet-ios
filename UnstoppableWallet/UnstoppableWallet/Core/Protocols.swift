@@ -33,6 +33,7 @@ protocol ILocalStorage: class {
     var balanceHidden: Bool { get set }
     var ethereumRpcMode: EthereumRpcMode? { get set }
     var pushToken: String? { get set }
+    var pushNotificationsOn: Bool { get set }
 }
 
 protocol IChartTypeStorage: class {
@@ -72,6 +73,7 @@ protocol IPriceAlertManager {
     func priceAlert(coin: Coin) -> PriceAlert
     func save(priceAlerts: [PriceAlert]) -> Observable<[()]>
     func deleteAllAlerts() -> Single<()>
+    func updateTopics() -> Observable<[()]>
 }
 
 protocol IAdapter: class {

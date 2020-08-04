@@ -5,7 +5,8 @@ import ThemeKit
 class NotificationSettingsViewController: ThemeViewController {
     private let delegate: INotificationSettingsViewDelegate
 
-    private var viewItems = [PriceAlertViewItem]()
+    private var viewItemsNew = [NotificationSettingSectionViewItem]()
+    private var pushNotificationsOn = false
 
     private let tableView = SectionsTableView(style: .grouped)
     private let warningView = UIView()
@@ -27,9 +28,12 @@ class NotificationSettingsViewController: ThemeViewController {
 
         title = "settings_notifications.title".localized
 
-        tableView.registerCell(forClass: ImageDoubleLineValueCell.self)
-        tableView.registerCell(forClass: SingleLineCell.self)
-        tableView.registerHeaderFooter(forClass: TopDescriptionHeaderFooterView.self)
+        tableView.registerCell(forClass: ToggleCell.self)
+        tableView.registerCell(forClass: SingleLineValueDropdownCell.self)
+        tableView.registerCell(forClass: TitleCell.self)
+        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
+        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
+
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -87,77 +91,118 @@ class NotificationSettingsViewController: ThemeViewController {
 extension NotificationSettingsViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        let descriptionText = "settings_notifications.description".localized
+        var sections = [toggleNotificationsSection()]
 
-        let headerState: ViewState<TopDescriptionHeaderFooterView> = .cellType(hash: "top_description", binder: { view in
-            view.bind(text: descriptionText)
-        }, dynamicHeight: { [unowned self] _ in
-            TopDescriptionHeaderFooterView.height(containerWidth: self.tableView.bounds.width, text: descriptionText)
-        })
+        sections.append(contentsOf: itemSections(viewItems: viewItemsNew))
 
-        return [
-            Section(
-                    id: "alerts",
-                    headerState: headerState,
-                    rows: viewItems.enumerated().map { (index, item) in
-                        Row<ImageDoubleLineValueCell>(
-                                id: item.code,
-                                hash: "\(item.changeState)",
-                                height: CGFloat.heightDoubleLineCell,
-                                bind: { [unowned self] cell, _ in
-                                    cell.bind(
-                                            image: .image(coinCode: item.code),
-                                            title: item.title,
-                                            subtitle: item.code,
-                                            value: "\(item.changeState)",
-                                            valueHighlighted: item.changeState != .off,
-                                            last: index == self.viewItems.count - 1
-                                    )
-                                },
-                                action: { [weak self] _ in
-                                    self?.showSelector(index: index)
-                                }
-                        )
-                    }
-            ),
-            Section(
-                    id: "deactivate",
-                    headerState: .margin(height: .margin8x),
-                    footerState: .margin(height: .margin8x),
-                    rows: [
-                        Row<SingleLineCell>(
-                                id: "deactivate_all",
-                                height: CGFloat.heightSingleLineCell,
-                                autoDeselect: true,
-                                bind: { cell, _ in
-                                    cell.bind(text: "settings.notifications.deactivate_all".localized, last: true)
-                                },
-                                action: { [weak self] _ in
-                                    self?.delegate.didTapDeactivateAll()
-                                }
-                        )
-                    ]
-            )
-        ]
+        if !viewItemsNew.isEmpty {
+            sections.append(resetAllSection())
+        }
+
+        return sections
     }
 
-    private func showSelector(index: Int) {
-        let controller = NotificationSettingsSelectorViewController(changeState: viewItems[index].changeState, onSelect: { [weak self] state in
-            self?.delegate.didSelect(changeState: state, trendState: .off, index: index)
+    private func toggleNotificationsSection() -> SectionProtocol {
+        let description = "settings_notifications.description".localized
+        var footerState: ViewState<BottomDescriptionHeaderFooterView> = .cellType(hash: "toggle_description", binder: { view in
+            view.bind(text: description)
+        }, dynamicHeight: { [unowned self] containerWidth in
+            BottomDescriptionHeaderFooterView.height(containerWidth: containerWidth, text: description)
         })
 
-        controller.title = self.viewItems[index].title
+        return Section(
+                id: "toggle_section",
+                headerState: .margin(height: .margin3x),
+                footerState: footerState,
+                rows: [
+                    Row<ToggleCell>(
+                            id: "toggle_cell",
+                            hash: "\(pushNotificationsOn)",
+                            height: CGFloat.heightSingleLineCell,
+                            bind: { [weak self] cell, _ in
+                                cell.bind(title: "settings_notifications.toggle_title".localized, isOn: self?.pushNotificationsOn ?? false, last: true, onToggle: { on in
+                                    self?.delegate.didToggleNotifications(on: on)
+                                })
+                            }
+                    )
+                ]
+        )
+    }
 
-        navigationController?.pushViewController(controller, animated: true)
+    private func itemSections(viewItems: [NotificationSettingSectionViewItem]) -> [SectionProtocol] {
+        viewItems.enumerated().map { index, viewItem in
+            itemSection(sectionIndex: index, viewItem: viewItem)
+        }
+    }
+
+    private func itemSection(sectionIndex: Int, viewItem: NotificationSettingSectionViewItem) -> SectionProtocol {
+        var headerState: ViewState<SubtitleHeaderFooterView> = .cellType(hash: "item_section_header_\(sectionIndex)", binder: { view in
+            view.bind(text: viewItem.title)
+        }, dynamicHeight: { containerWidth in
+            SubtitleHeaderFooterView.height
+        })
+
+        let itemsCount = viewItem.rowItems.count
+
+        return Section(
+                id: "item_section_\(sectionIndex)",
+                headerState: headerState,
+                footerState: .margin(height: 20),
+                rows: viewItem.rowItems.enumerated().compactMap { [weak self] index, item in
+                    self?.itemRow(index: index, viewItem: item, last: index == itemsCount - 1)
+                }
+        )
+    }
+
+    private func itemRow(index: Int, viewItem: NotificationSettingRowViewItem, last: Bool) -> RowProtocol {
+        Row<SingleLineValueDropdownCell>(
+                id: "item_row_\(index)",
+                hash: "\(viewItem.value)",
+                height: .heightSingleLineCell,
+                autoDeselect: true,
+                bind: { [weak self] cell, _ in
+                    cell.bind(title: viewItem.title.localized, value: viewItem.value, last: true)
+                },
+                action: { _ in
+                    viewItem.onTap()
+                }
+        )
+    }
+
+    private func resetAllSection() -> SectionProtocol {
+        Section(
+                id: "reset_all_section",
+                headerState: .margin(height: .margin3x),
+                footerState: .margin(height: .margin8x),
+                rows: [
+                    Row<TitleCell>(
+                            id: "reset_all_cell",
+                            height: CGFloat.heightSingleLineCell,
+                            autoDeselect: true,
+                            bind: { [weak self] cell, _ in
+                                cell.bind(title: "settings_notifications.reset_all_title".localized, titleColor: .themeLucian, last: true)
+                            },
+                            action: { [weak self] _ in
+                                self?.delegate.didTapDeactivateAll()
+                            }
+                    )
+                ]
+        )
     }
 
 }
 
 extension NotificationSettingsViewController: INotificationSettingsView {
 
-    func set(viewItems: [PriceAlertViewItem]) {
-        self.viewItems = viewItems
-        tableView.reload(animated: true)
+    func set(pushNotificationsOn: Bool) {
+        self.pushNotificationsOn = pushNotificationsOn
+
+        tableView.reload()
+    }
+
+    func set(viewItems: [NotificationSettingSectionViewItem]) {
+        self.viewItemsNew = viewItems
+        tableView.reload()
     }
 
     func showWarning() {

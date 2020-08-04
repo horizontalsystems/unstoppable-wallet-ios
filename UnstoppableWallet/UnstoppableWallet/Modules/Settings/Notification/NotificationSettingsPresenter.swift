@@ -2,8 +2,8 @@ class NotificationSettingsPresenter {
     weak var view: INotificationSettingsView?
 
     private let router: INotificationSettingsRouter
-    private let interactor: INotificationSettingsInteractor
-    private let factory = PriceAlertViewItemFactory()
+    private var interactor: INotificationSettingsInteractor
+    private let factory = NotificationSettingsViewItemFactory()
 
     private var alerts: [PriceAlert] = []
 
@@ -12,11 +12,12 @@ class NotificationSettingsPresenter {
         self.interactor = interactor
     }
 
-    private func handleUpdated(alerts: [PriceAlert]) {
-        interactor.save(priceAlerts: alerts)
+    private func updateViewItems() {
+        view?.set(viewItems: factory.viewItems(alerts: alerts, notificationsOn: interactor.pushNotificationsOn, onTap: onTap))
+    }
 
-        let viewItems = factory.viewItems(alerts: self.alerts)
-        view?.set(viewItems: viewItems)
+    private func onTap(alert: PriceAlert, mode: NotificationSettingPresentMode) {
+        router.openSettings(alert: alert, mode: mode)
     }
 
 }
@@ -26,31 +27,34 @@ extension NotificationSettingsPresenter: INotificationSettingsViewDelegate {
     func viewDidLoad() {
         alerts = interactor.alerts
 
-        let viewItems = factory.viewItems(alerts: alerts)
-        view?.set(viewItems: viewItems)
+        updateViewItems()
+        view?.set(pushNotificationsOn: interactor.pushNotificationsOn)
 
-        interactor.requestPermission()
-    }
-
-    func didSelect(changeState: PriceAlert.ChangeState, trendState: PriceAlert.TrendState, index: Int) {
-        var alert = alerts[index]
-
-        guard alert.changeState != changeState || alert.trendState != trendState else {
-            return
+        if interactor.pushNotificationsOn {
+            interactor.requestPermission()
         }
-
-        alert.changeState = changeState
-        alert.trendState = trendState
-
-        handleUpdated(alerts: [alert])
     }
 
     func didTapSettingsButton() {
-        router.openSettings()
+        router.openSystemSettings()
     }
 
     func didTapDeactivateAll() {
         interactor.deleteAllAlerts()
+    }
+
+    func didToggleNotifications(on: Bool) {
+        interactor.pushNotificationsOn = on
+
+        if on {
+            interactor.requestPermission()
+        } else {
+            view?.set(pushNotificationsOn: interactor.pushNotificationsOn)
+
+            updateViewItems()
+
+            interactor.updateTopics()
+        }
     }
 
 }
@@ -59,28 +63,40 @@ extension NotificationSettingsPresenter: INotificationSettingsInteractorDelegate
 
     func didGrantPermission() {
         view?.hideWarning()
+
+        view?.set(pushNotificationsOn: interactor.pushNotificationsOn)
+
+        updateViewItems()
     }
 
     func didDenyPermission() {
         view?.showWarning()
+
+        view?.set(pushNotificationsOn: interactor.pushNotificationsOn)
     }
 
     func didEnterForeground() {
-        interactor.requestPermission()
+        if interactor.pushNotificationsOn {
+            interactor.requestPermission()
+        }
+    }
+
+    func onAlertsUpdate() {
+        alerts = interactor.alerts
+
+        updateViewItems()
     }
 
     func didSaveAlerts() {
         alerts = interactor.alerts
 
-        let viewItems = factory.viewItems(alerts: alerts)
-        view?.set(viewItems: viewItems)
+        updateViewItems()
     }
 
     func didFailSaveAlerts(error: Error) {
         alerts = interactor.alerts
 
-        let viewItems = factory.viewItems(alerts: alerts)
-        view?.set(viewItems: viewItems)
+        updateViewItems()
 
         view?.showError(error: error.convertedError)
     }
