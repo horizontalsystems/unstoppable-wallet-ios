@@ -27,7 +27,7 @@ extension ChartRouter {
     static func module(coinCode: String, coinTitle: String) -> UIViewController {
         let router = ChartRouter()
         let chartRateFactory = ChartRateFactory(timelineHelper: TimelineHelper(), indicatorFactory: IndicatorFactory(), currentLocale: LanguageManager.shared.currentLocale)
-        let interactor = ChartInteractor(rateManager: App.shared.rateManager, chartTypeStorage: App.shared.localStorage, currentDateProvider: CurrentDateProvider(), priceAlertManager: App.shared.priceAlertManager, coinManager: App.shared.coinManager)
+        let interactor = ChartInteractor(rateManager: App.shared.rateManager, chartTypeStorage: App.shared.localStorage, currentDateProvider: CurrentDateProvider(), priceAlertManager: App.shared.priceAlertManager, coinManager: App.shared.coinManager, localStorage: App.shared.localStorage)
         let presenter = ChartPresenter(router: router, interactor: interactor, factory: chartRateFactory, coinCode: coinCode, coinTitle: coinTitle, currency: App.shared.currencyKit.baseCurrency)
         let viewController = ChartViewController(delegate: presenter, configuration: ChartConfiguration.fullChart)
 

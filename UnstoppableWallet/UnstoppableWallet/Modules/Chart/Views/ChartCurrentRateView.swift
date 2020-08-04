@@ -63,7 +63,7 @@ class ChartCurrentRateView: UIView {
         onTap?()
     }
 
-    func bind(rate: String?, diff: Decimal?, alertOn: Bool, onTap: (() -> ())?) {
+    func bind(rate: String?, diff: Decimal?, alertMode: ChartPriceAlertMode, onTap: (() -> ())?) {
         self.onTap = onTap
 
         rateLabel.text = rate
@@ -81,8 +81,26 @@ class ChartCurrentRateView: UIView {
         let formattedDiff = ChartCurrentRateView.formatter.string(from: abs(diff) as NSNumber)
         diffLabel.text = formattedDiff.map { "\($0)%" }
 
-        alertButton.setImage(UIImage(named: "Notification Small Icon")?.tinted(with: alertOn ? .themeJacob : .themeGray), for: .normal)
+        switch alertMode {
+        case .on:
+            alertButton.setImage(UIImage(named: "Notification Small Icon")?.tinted(with: .themeJacob), for: .normal)
+            updateDiffLabelConstraints(notificationsHidden: false)
+        case .off:
+            alertButton.setImage(UIImage(named: "Notification Small Icon")?.tinted(with: .themeGray), for: .normal)
+            updateDiffLabelConstraints(notificationsHidden: false)
+        case .hidden:
+            alertButton.setImage(nil, for: .normal)
+            updateDiffLabelConstraints(notificationsHidden: true)
+        }
     }
+
+    private func updateDiffLabelConstraints(notificationsHidden: Bool) {
+        diffLabel.snp.updateConstraints { maker in
+            let inset = notificationsHidden ? CGFloat.margin4x : CGFloat.margin4x + CGFloat.margin2x + 16
+            maker.trailing.equalToSuperview().inset(inset)
+        }
+
+}
 
 }
 

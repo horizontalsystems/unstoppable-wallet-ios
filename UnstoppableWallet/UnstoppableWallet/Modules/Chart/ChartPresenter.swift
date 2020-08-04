@@ -44,7 +44,8 @@ class ChartPresenter {
                 coinCode: coinCode,
                 currency: currency,
                 selectedIndicator: selectedIndicators,
-                priceAlert: alert)
+                priceAlert: alert,
+                alertsOn: interactor.alertsOn)
 
         view?.set(viewItem: viewItem)
     }
