@@ -7,13 +7,12 @@ import Chart
 class ChartRateFactory: IChartRateFactory {
     private let timelineHelper: ITimelineHelper
     private let indicatorFactory: IIndicatorFactory
-    private let dateFormatter: DateFormatter
+    private let dateFormatter = DateFormatter()
 
     init(timelineHelper: ITimelineHelper, indicatorFactory: IIndicatorFactory, currentLocale: Locale) {
         self.timelineHelper = timelineHelper
         self.indicatorFactory = indicatorFactory
 
-        self.dateFormatter = DateFormatter()
         dateFormatter.locale = currentLocale
     }
 
@@ -283,7 +282,12 @@ class ChartRateFactory: IChartRateFactory {
         let maxSupplyText = roundedFormat(coinCode: coinCode, value: coinData?.supply)
         let maxSupply = MarketInfoViewItem.Value(value: maxSupplyText, accent: coinData?.supply != nil)
 
-        let startDate = MarketInfoViewItem.Value(value: coinData?.startDate ?? "n/a".localized, accent: coinData?.startDate != nil)
+        let parsedDate = coinData?
+                .startDate
+                .map { DateHelper.instance.parseDateOnly(string: $0) }?
+                .map { DateHelper.instance.formatFullDateOnly(from: $0) }
+
+        let startDate = MarketInfoViewItem.Value(value: parsedDate ?? "n/a".localized, accent: coinData?.startDate != nil)
 
         let website = MarketInfoViewItem.Value(value: coinData?.website ?? "n/a".localized, accent: coinData?.website != nil)
 
