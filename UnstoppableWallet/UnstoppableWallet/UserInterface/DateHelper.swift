@@ -51,6 +51,10 @@ class DateHelper {
         DateFormatter.cachedFormatter(format: "yyyy MMM d").string(from: date)
     }
 
+    func parseDateOnly(string: String) -> Date? {
+        DateFormatter.cachedFormatter(format: "dd/MM/yyyy").date(from: string)
+    }
+
     func formatDebug(date: Date) -> String {
         DateFormatter.cachedFormatter(format: "MM/dd/yy, HH:mm:ss").string(from: date)
     }
