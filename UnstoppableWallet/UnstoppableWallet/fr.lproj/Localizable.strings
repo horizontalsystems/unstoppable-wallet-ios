@@ -305,13 +305,16 @@
 // Settings -> Notifications
 
 "settings_notifications.title" = "Notifications";
-"settings_notifications.description" = "Définissez des alertes de changement de prix pour les pièces que vous voulez surveiller. \n\nVous serez averti lorsque le changement de prix pour les dernières 24 heures dépasse le seuil sélectionné.";
+"settings_notifications.toggle_title" = "Push Notifications";
+"settings_notifications.description" = "Set price change alerts for the coins you would like to watch\n\nYou will be alerted when the change in price for the last 24 hours exceeds selected threshold.\n\nPrice Trend Alert warns of a trend change for the short 1 week, for the long 6 month.";
 "settings_notifications.alert_off" = "Désactivé";
 "settings.notifications.deactivate_all" = "Tout désactiver";
 "settings.notifications.disabled_text" = "Les notifications pour l'application Unstoppable Wallet sont désactivées. Vous devez activer les notifications et autoriser le rafraîchissement de l'application en arrière-plan afin de pouvoir recevoir des alertes de changement de prix.";
 "settings.notifications.settings_button" = "Activer dans Paramètres";
 "settings_notifications.trend_short" = "Short Term 7D";
 "settings_notifications.trend_long" = "Long Term 6M";
+"settings_notifications.reset_all_title" = "Reset All";
+"settings_notifications.trend_settings_title" = "Price Trend";
 
 // Settings -> Manage Wallet
 
