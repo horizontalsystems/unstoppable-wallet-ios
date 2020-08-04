@@ -26,6 +26,7 @@ class LocalStorage {
     private let keyBalanceHidden = "balance_hidden"
     private let keyEthereumRpcMode = "ethereum_rpc_mode"
     private let keyPushToken = "push_token"
+    private let keyPushNotificationsOn = "push_notifications_on"
 
     private let storage: StorageKit.ILocalStorage
 
@@ -170,6 +171,11 @@ extension LocalStorage: ILocalStorage {
     var pushToken: String? {
         get { storage.value(for: keyPushToken) }
         set { storage.set(value: newValue, for: keyPushToken) }
+    }
+
+    var pushNotificationsOn: Bool {
+        get { storage.value(for: keyPushNotificationsOn) ?? false }
+        set { storage.set(value: newValue, for: keyPushNotificationsOn) }
     }
 
 }

@@ -6,6 +6,7 @@ class ChartNotificationViewController: ThemeViewController {
     private let delegate: IChartNotificationViewDelegate
 
     private let titleView = BottomSheetTitleView()
+    private let spacer = UIView()
 
     private let tableView = SelfSizedSectionsTableView(style: .grouped)
     private let warningView = UIView()
@@ -38,9 +39,7 @@ class ChartNotificationViewController: ThemeViewController {
         }
         titleView.backgroundColor = .themeLawrence
 
-        let spacer = UIView()
         view.addSubview(spacer)
-
         spacer.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.top.equalTo(titleView.snp.bottom)
@@ -149,8 +148,8 @@ extension ChartNotificationViewController: SectionsDataSource {
                             last: last
                     )
                 },
-                action: { [weak self] _ in
-                    self?.delegate.didSelect(alertState: sectionIndex, stateIndex: rowIndex)
+                action: { _ in
+                    rowModel.action(rowIndex)
                 }
         )
     }
@@ -158,6 +157,12 @@ extension ChartNotificationViewController: SectionsDataSource {
 }
 
 extension ChartNotificationViewController: IChartNotificationView {
+
+    func set(spacerMode: NotificationSettingPresentMode) {
+        spacer.snp.updateConstraints { maker in
+            maker.height.equalTo(spacerMode == .all ? CGFloat.margin3x : 0)
+        }
+    }
 
     func set(titleViewModel: PriceAlertTitleViewModel) {
         titleView.bind(

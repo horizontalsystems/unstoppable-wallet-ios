@@ -1,4 +1,5 @@
 protocol IChartNotificationView: AnyObject {
+    func set(spacerMode: NotificationSettingPresentMode)
     func set(titleViewModel: PriceAlertTitleViewModel)
     func set(sectionViewModels: [PriceAlertSectionViewModel])
 
@@ -9,7 +10,6 @@ protocol IChartNotificationView: AnyObject {
 
 protocol IChartNotificationViewDelegate {
     func viewDidLoad()
-    func didSelect(alertState: Int, stateIndex: Int)
     func didTapSettingsButton()
 }
 
@@ -28,4 +28,9 @@ protocol IChartNotificationInteractorDelegate: AnyObject {
 
 protocol IChartNotificationRouter {
     func openSettings()
+}
+
+protocol IChartNotificationViewModelFactory {
+    func titleViewModel(coin: Coin) -> PriceAlertTitleViewModel
+    func sections(alert: PriceAlert, priceChangeUpdate: @escaping (Int) -> (), trendUpdate: @escaping (Int) -> ()) -> [PriceAlertSectionViewModel]
 }
