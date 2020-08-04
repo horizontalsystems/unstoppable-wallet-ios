@@ -104,9 +104,9 @@ extension NotificationSettingsViewController: SectionsDataSource {
 
     private func toggleNotificationsSection() -> SectionProtocol {
         let description = "settings_notifications.description".localized
-        var footerState: ViewState<BottomDescriptionHeaderFooterView> = .cellType(hash: "toggle_description", binder: { view in
+        let footerState: ViewState<BottomDescriptionHeaderFooterView> = .cellType(hash: "toggle_description", binder: { view in
             view.bind(text: description)
-        }, dynamicHeight: { [unowned self] containerWidth in
+        }, dynamicHeight: { containerWidth in
             BottomDescriptionHeaderFooterView.height(containerWidth: containerWidth, text: description)
         })
 
@@ -136,7 +136,7 @@ extension NotificationSettingsViewController: SectionsDataSource {
     }
 
     private func itemSection(sectionIndex: Int, viewItem: NotificationSettingSectionViewItem) -> SectionProtocol {
-        var headerState: ViewState<SubtitleHeaderFooterView> = .cellType(hash: "item_section_header_\(sectionIndex)", binder: { view in
+        let headerState: ViewState<SubtitleHeaderFooterView> = .cellType(hash: "item_section_header_\(sectionIndex)", binder: { view in
             view.bind(text: viewItem.title)
         }, dynamicHeight: { containerWidth in
             SubtitleHeaderFooterView.height
@@ -160,7 +160,7 @@ extension NotificationSettingsViewController: SectionsDataSource {
                 hash: "\(viewItem.value)",
                 height: .heightSingleLineCell,
                 autoDeselect: true,
-                bind: { [weak self] cell, _ in
+                bind: { cell, _ in
                     cell.bind(title: viewItem.title.localized, value: viewItem.value, last: true)
                 },
                 action: { _ in
@@ -179,7 +179,7 @@ extension NotificationSettingsViewController: SectionsDataSource {
                             id: "reset_all_cell",
                             height: CGFloat.heightSingleLineCell,
                             autoDeselect: true,
-                            bind: { [weak self] cell, _ in
+                            bind: { cell, _ in
                                 cell.bind(title: "settings_notifications.reset_all_title".localized, titleColor: .themeLucian, last: true)
                             },
                             action: { [weak self] _ in

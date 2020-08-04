@@ -78,7 +78,6 @@ extension SwapViewItemFactory: ISwapViewItemFactory {
         guard let coinOut = coinOut,
               let tradeData = tradeData else {      // trade data not calculated yet
 
-            let impactData = data(impactPrice: nil)
             return SwapModule.ViewItem(exactType: type,
                     estimatedAmount: estimatedAmount,
                     error: error,

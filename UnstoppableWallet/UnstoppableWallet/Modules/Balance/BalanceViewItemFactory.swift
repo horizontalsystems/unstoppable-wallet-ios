@@ -68,8 +68,6 @@ class BalanceViewItemFactory {
 
         let state = item.state
         
-         let zeroBalance = item.balance?.isZero ?? false
-
         return BalanceButtonsViewItem(
                 receiveButtonEnabled: state != nil,
                 sendButtonEnabled: state == .synced,
