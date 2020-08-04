@@ -1,6 +1,6 @@
 import UIKit
 
-class PrivacyInfoSeparatorHeaderView: UITableViewHeaderFooterView {
+class InfoSeparatorHeaderView: UITableViewHeaderFooterView {
     static let height: CGFloat = .margin3x
 
     private let separator = UIView()
@@ -10,7 +10,7 @@ class PrivacyInfoSeparatorHeaderView: UITableViewHeaderFooterView {
 
         addSubview(separator)
         separator.snp.makeConstraints { maker in
-            maker.top.equalToSuperview()
+            maker.bottom.equalToSuperview()
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
             maker.height.equalTo(CGFloat.heightOnePixel)
         }

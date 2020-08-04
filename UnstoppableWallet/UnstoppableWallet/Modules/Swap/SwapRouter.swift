@@ -18,6 +18,11 @@ extension SwapRouter: ISwapRouter {
         viewController?.navigationController?.pushViewController(confirmationController, animated: true)
     }
 
+    func showUniswapInfo() {
+        let module = UniswapInfoRouter.module()
+        viewController?.present(ThemeNavigationController(rootViewController: module), animated: true)
+    }
+
     func dismiss() {
         viewController?.dismiss(animated: true)
     }

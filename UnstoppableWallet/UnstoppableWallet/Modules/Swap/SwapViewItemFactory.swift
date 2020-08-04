@@ -29,9 +29,10 @@ class SwapViewItemFactory {
 
             return ValueFormatter.instance.format(coinValue: CoinValue(coin: coinIn, value: 0))
         }
+        let value = price.isZero ? 0 : 1 / price
         return ValueFormatter
                 .instance
-                .format(coinValue: CoinValue(coin: coinIn, value: 1 / price))
+                .format(coinValue: CoinValue(coin: coinIn, value: value))
                 .map { [coinOut.code, $0].joined(separator: " = ") }
     }
 
