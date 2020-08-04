@@ -173,6 +173,7 @@
 "send.token.insufficient_fee_alert" = "%@ (%@) 에 대한 거래 수수료는 %@로 지불되었습니다. 귀하는 %@가 필요합니다.";
 
 "send.lock_time" = "시간 자물쇠";
+
 // Swap
 
 "swap.title" = "Swap";
@@ -181,14 +182,28 @@
 "swap.balance" = "Balance";
 "swap.you_get" = "You Get";
 "swap.token" = "Token";
+"swap.proceed" = "Proceed";
+"swap.amount_error.maximum_amount" = "Maximum amount %@";
+
 "swap.price" = "Price";
 "swap.price_impact" = "Price Impact";
 "swap.max_min" = "Max / Min";
 "swap.maximum_paid" = "Maximum Paid";
 "swap.minimum_got" = "Minimum Got";
-"swap.proceed" = "Proceed";
-"swap.amount_error.maximum_amount" = "Maximum amount %@";
+
+"swap.fee" = "Swap Fee";
+"swap.transactions_speed" = "Transactions speed";
+"swap.transaction_fee" = "Transaction Fee";
+
 "swap.select_token.title" = "Choose Coin";
+
+// Swap Confirmation
+
+"swap.confirmation.title" = "Confirm";
+"swap.confirmation.swap_button" = "Swap";
+"swap.confirmation.pay" = "Pay %@";
+"swap.confirmation.get" = "Get %@";
+
 
 // Transactions
 
