@@ -310,13 +310,16 @@ bch.horizontalsystems.xyz/apg";
 // Settings -> Notifications
 
 "settings_notifications.title" = "Notifications";
-"settings_notifications.description" = "Set price change alerts for the coins you would like to watch.\n\nYou will be alerted when the change in price for the last 24 hours exceeds selected threshold.";
+"settings_notifications.toggle_title" = "Push Notifications";
+"settings_notifications.description" = "Set price change alerts for the coins you would like to watch\n\nYou will be alerted when the change in price for the last 24 hours exceeds selected threshold.\n\nPrice Trend Alert warns of a trend change for the short 1 week, for the long 6 month.";
 "settings_notifications.alert_off" = "Off";
 "settings.notifications.deactivate_all" = "Deactivate All";
 "settings.notifications.disabled_text" = "The notifications for Unstoppable Wallet app are disabled. You need to turn on Notifications and allow background app refresh in order to be able to receive price change alerts.";
 "settings.notifications.settings_button" = "Turn on in Settings";
 "settings_notifications.trend_short" = "Short Term 7D";
 "settings_notifications.trend_long" = "Long Term 6M";
+"settings_notifications.reset_all_title" = "Reset All";
+"settings_notifications.trend_settings_title" = "Price Trend";
 
 // Settings -> Manage Wallet
 
