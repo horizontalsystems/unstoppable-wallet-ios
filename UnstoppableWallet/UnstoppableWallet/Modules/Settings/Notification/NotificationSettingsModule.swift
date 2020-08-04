@@ -14,7 +14,7 @@ protocol INotificationSettingsViewDelegate {
     func didTapDeactivateAll()
 }
 
-protocol INotificationSettingsInteractor {
+protocol INotificationSettingsInteractor: AnyObject {
     var alerts: [PriceAlert] { get }
     var pushNotificationsOn: Bool { get set }
     func updateTopics()

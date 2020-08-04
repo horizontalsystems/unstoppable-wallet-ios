@@ -2,7 +2,7 @@ class NotificationSettingsPresenter {
     weak var view: INotificationSettingsView?
 
     private let router: INotificationSettingsRouter
-    private var interactor: INotificationSettingsInteractor
+    private let interactor: INotificationSettingsInteractor
     private let factory = NotificationSettingsViewItemFactory()
 
     private var alerts: [PriceAlert] = []
