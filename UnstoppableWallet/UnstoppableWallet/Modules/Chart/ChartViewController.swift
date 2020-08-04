@@ -170,7 +170,7 @@ class ChartViewController: ThemeViewController {
             self?.delegate.onTapAlert()
         }
 
-        currentRateView.bind(rate: viewItem.currentRate, diff: nil, alertOn: viewItem.alertOn, onTap: onAlertTap)
+        currentRateView.bind(rate: viewItem.currentRate, diff: nil, alertMode: viewItem.priceAlertMode, onTap: onAlertTap)
 
         if let marketViewItem = viewItem.marketInfoStatus.data {
             chartInfoView.bind(marketCap: marketViewItem.marketCap, volume: marketViewItem.volume, supply: marketViewItem.supply, maxSupply: marketViewItem.maxSupply, startDate: marketViewItem.startDate, website: marketViewItem.website, onTapLink: { [weak self] in
@@ -188,7 +188,7 @@ class ChartViewController: ThemeViewController {
         case .completed(let data):
             hideLoading()
 
-            currentRateView.bind(rate: viewItem.currentRate, diff: data.chartDiff, alertOn: viewItem.alertOn, onTap: onAlertTap)
+            currentRateView.bind(rate: viewItem.currentRate, diff: data.chartDiff, alertMode: viewItem.priceAlertMode, onTap: onAlertTap)
             switch data.chartTrend {
             case .neutral:
                 chartView.setCurve(color: .themeGray)
