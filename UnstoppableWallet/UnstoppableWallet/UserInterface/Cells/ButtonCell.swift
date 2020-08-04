@@ -15,11 +15,7 @@ class ButtonCell: UITableViewCell {
         selectionStyle = .none
 
         addSubview(button)
-        button.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalToSuperview().inset(ButtonCell.verticalPadding)
-            maker.height.equalTo(CGFloat.heightButton)
-        }
+        makeConstraints()
 
         button.addTarget(self, action: #selector(onTapButton), for: .touchUpInside)
     }
@@ -28,11 +24,32 @@ class ButtonCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private func makeConstraints(style: ThemeButtonStyle? = nil, compact: Bool = false) {
+        let height = ThemeButton.height(style: style)
+
+        button.snp.remakeConstraints { maker in
+            if compact {
+                maker.centerX.equalToSuperview()
+                maker.leading.greaterThanOrEqualToSuperview().inset(CGFloat.margin4x)
+            } else {
+                maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            }
+            maker.top.equalToSuperview().inset(ButtonCell.verticalPadding)
+            maker.height.equalTo(height)
+        }
+
+        UIView.performWithoutAnimation {
+            layoutIfNeeded()
+        }
+    }
+
     @objc private func onTapButton() {
         onTap?()
     }
 
-    func bind(style: ThemeButtonStyle, title: String?, onTap: (() -> ())?) {
+    func bind(style: ThemeButtonStyle, title: String?, compact: Bool = false, onTap: (() -> ())?) {
+        makeConstraints(style: style, compact: compact)
+
         button.apply(style: style)
         button.setTitle(title, for: .normal)
         self.onTap = onTap
@@ -42,8 +59,8 @@ class ButtonCell: UITableViewCell {
 
 extension ButtonCell {
 
-    static func height() -> CGFloat {
-        .heightButton + 2 * verticalPadding
+    static func height(style: ThemeButtonStyle) -> CGFloat {
+        ThemeButton.height(style: style) + 2 * verticalPadding
     }
 
 }

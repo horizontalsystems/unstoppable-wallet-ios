@@ -11,6 +11,7 @@ protocol ISwapView: class {
 
 protocol ISwapViewDelegate {
     func onViewDidLoad()
+    func onTapInfo()
     func onClose()
 
     func isValid(type: TradeType, text: String) -> Bool
@@ -35,6 +36,7 @@ protocol ISwapInteractorDelegate: class {
 
 protocol ISwapRouter {
     func openTokenSelect(accountCoins: Bool, exclude: [Coin], delegate: ICoinSelectDelegate)
+    func showUniswapInfo()
     func showConfirmation(coinIn: Coin, coinOut: Coin, tradeData: TradeData, delegate: ISwapConfirmationDelegate)
     func dismiss()
 }

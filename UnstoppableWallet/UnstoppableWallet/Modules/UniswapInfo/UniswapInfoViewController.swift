@@ -2,12 +2,12 @@ import UIKit
 import SectionsTableView
 import ThemeKit
 
-class PrivacyInfoViewController: ThemeViewController {
-    private let delegate: IPrivacyInfoViewDelegate
+class UniswapInfoViewController: ThemeViewController {
+    private let delegate: IUniswapInfoViewDelegate
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    init(delegate: IPrivacyInfoViewDelegate) {
+    init(delegate: IUniswapInfoViewDelegate) {
         self.delegate = delegate
 
         super.init()
@@ -20,7 +20,7 @@ class PrivacyInfoViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "settings_privacy_info.title".localized
+        title = "swap.uniswap_info.title".localized
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onClose))
 
@@ -31,6 +31,7 @@ class PrivacyInfoViewController: ThemeViewController {
 
         tableView.registerHeaderFooter(forClass: InfoSeparatorHeaderView.self)
         tableView.registerHeaderFooter(forClass: InfoHeaderView.self)
+        tableView.registerCell(forClass: ButtonCell.self)
         tableView.registerCell(forClass: DescriptionCell.self)
 
         tableView.sectionDataSource = self
@@ -70,9 +71,13 @@ class PrivacyInfoViewController: ThemeViewController {
         )
     }
 
+    private func onTapLink() {
+        delegate.onTapLink()
+    }
+
 }
 
-extension PrivacyInfoViewController: SectionsDataSource {
+extension UniswapInfoViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         let separatorHeaderState: ViewState<InfoSeparatorHeaderView> = .cellType(
@@ -87,23 +92,38 @@ extension PrivacyInfoViewController: SectionsDataSource {
             Section(
                     id: "description",
                     headerState: separatorHeaderState,
-                    rows: [row(text: "settings_privacy_info.description".localized)]
+                    rows: [row(text: "swap.uniswap_info.description".localized)]
             ),
             Section(
-                    id: "transactions",
-                    headerState: header(text: "settings_privacy_info.header_blockchain_transactions".localized),
-                    rows: [row(text: "settings_privacy_info.content_blockchain_transactions".localized)]
+                    id: "received",
+                    headerState: header(text: "swap.uniswap_info.header_minimum_received".localized),
+                    rows: [row(text: "swap.uniswap_info.content_minimum_received".localized)]
             ),
             Section(
-                    id: "connection",
-                    headerState: header(text: "settings_privacy_info.header_blockchain_connection".localized),
-                    rows: [row(text: "settings_privacy_info.content_blockchain_connection".localized)]
+                    id: "price_impact",
+                    headerState: header(text: "swap.uniswap_info.header_price_impact".localized),
+                    rows: [row(text: "swap.uniswap_info.content_price_impact".localized)]
             ),
             Section(
-                    id: "restore",
-                    headerState: header(text: "settings_privacy_info.header_blockchain_restore".localized),
+                    id: "swap_fee",
+                    headerState: header(text: "swap.uniswap_info.header_swap_fee".localized),
+                    rows: [row(text: "swap.uniswap_info.content_swap_fee".localized)]
+            ),
+            Section(
+                    id: "swap_link_button",
+                    headerState: .margin(height: .margin3x),
                     footerState: .margin(height: .margin8x),
-                    rows: [row(text: "settings_privacy_info.content_blockchain_restore".localized)]
+                    rows: [
+                        Row<ButtonCell>(
+                                id: "swap_row",
+                                height: ThemeButton.height(style: .secondaryDefault),
+                                bind: { [weak self] cell, _ in
+                                    cell.bind(style: .secondaryDefault, title: "swap.uniswap_info.link_button".localized, compact: true) { [weak self] in
+                                        self?.onTapLink()
+                                    }
+                                }
+                        )
+                    ]
             )
         ]
     }

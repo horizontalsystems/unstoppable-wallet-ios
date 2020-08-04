@@ -210,6 +210,16 @@ bch.horizontalsystems.xyz/apg";
 "swap.confirmation.get" = "Get %@";
 
 
+"swap.uniswap_info.title" = "Uniswap v.2";
+"swap.uniswap_info.description" = "Uniswap is a fully decentralized protocol for automated liquidity provision on Ethereum.\n\nA simple formalized equation drives unstoppable liquidity for thousands of users and hundreds of applications.\n\nUniswap empowers developers, liquidity providers and traders to participate in a financial marketplace that is open and accessible to all.";
+"swap.uniswap_info.header_minimum_received" = "Minimum Received";
+"swap.uniswap_info.content_minimum_received" = "Yor transaction will revert if there is a large, unfavorable price movement before it is confirmed.";
+"swap.uniswap_info.header_price_impact" = "Price Impact";
+"swap.uniswap_info.content_price_impact" = "The difference between the market price and estimated price due to trade size.";
+"swap.uniswap_info.header_swap_fee" = "Swap Fee";
+"swap.uniswap_info.content_swap_fee" = "A portion of each trade (0.30%) goes to liquidity providers as a protocol incentive.";
+"swap.uniswap_info.link_button" = "Uniswap Site";
+
 // Transactions
 
 "transactions.title" = "Transactions";

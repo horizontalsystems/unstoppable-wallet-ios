@@ -211,6 +211,7 @@ class SwapViewController: ThemeViewController {
     }
 
     @objc func onInfo() {
+        delegate.onTapInfo()
     }
 
     @objc func onSwapTouchUp() {

@@ -55,6 +55,10 @@ extension SwapPresenter: ISwapViewDelegate {
         sync()
     }
 
+    func onTapInfo() {
+        router.showUniswapInfo()
+    }
+
     func onClose() {
         view?.dismissKeyboard()
 

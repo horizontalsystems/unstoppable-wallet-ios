@@ -99,7 +99,7 @@ class SwapConfirmationViewController: ThemeViewController, SectionsDataSource {
         sections.append(Section(id: "button_section", rows: [
             Row<ButtonCell>(
                     id: "swap_row",
-                    height: ButtonCell.height(),
+                    height: ButtonCell.height(style: .primaryYellow),
                     bind: { [weak self] cell, _ in
                         cell.bind(style: .primaryYellow, title: "swap.confirmation.swap_button".localized) { [weak self] in
                             self?.onSwapTap()
