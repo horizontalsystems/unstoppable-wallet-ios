@@ -410,7 +410,7 @@ CHECKOUT OPTIONS:
     :commit: 4197f1e86f580c50dbd42b1bf61edd3564716aad
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ScanQrKit.swift:
-    :commit: 4197f1e86f580c50dbd42b1bf61edd3564716aad
+    :commit: 246b84b2084660618b7406c60a9b4bfe929b5c52
     :git: https://github.com/horizontalsystems/component-kit-ios/
   StorageKit.swift:
     :commit: 4197f1e86f580c50dbd42b1bf61edd3564716aad

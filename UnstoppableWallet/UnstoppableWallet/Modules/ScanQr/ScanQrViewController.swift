@@ -52,12 +52,14 @@ class ScanQrViewController: ThemeViewController {
         cancelButton.apply(style: .primaryGray)
         cancelButton.setTitle("button.cancel".localized, for: .normal)
         cancelButton.addTarget(self, action: #selector(onCancel), for: .touchUpInside)
+
+        scanView.start()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        scanView.start()
+        scanView.startCaptureSession()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -76,6 +78,7 @@ extension ScanQrViewController: IScanQrView {
 
     func start() {
         scanView.start()
+        scanView.startCaptureSession()
     }
 
     func stop() {
