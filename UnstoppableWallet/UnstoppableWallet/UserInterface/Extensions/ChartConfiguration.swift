@@ -28,7 +28,7 @@ extension ChartConfiguration {
         macdColor = UIColor.themeJacob.withAlphaComponent(0.5)
         macdPositiveColor = UIColor.themeGreenD.withAlphaComponent(0.5)
         macdNegativeColor = UIColor.themeRedD.withAlphaComponent(0.5)
-        rsiLineColor = UIColor.themeStronbuy.withAlphaComponent(0.5)
+        rsiLineColor = UIColor.themeJacob.withAlphaComponent(0.5)
 
         macdTextColor = .themeGray
         macdTextFont = .caption
