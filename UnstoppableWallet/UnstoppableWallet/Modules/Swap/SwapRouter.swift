@@ -32,7 +32,7 @@ extension SwapRouter: ISwapRouter {
 extension SwapRouter {
 
     static func module(wallet: Wallet) -> UIViewController? {
-        guard let swapKit = App.shared.swapKitManager.kit(account: wallet.account) else {
+        guard let ethereumKit = try? App.shared.ethereumKitManager.ethereumKit(account: wallet.account) else {
             return nil
         }
 
@@ -40,7 +40,7 @@ extension SwapRouter {
         let swapTokenManager = SwapTokenManager(coinManager: App.shared.coinManager, walletManager: App.shared.walletManager, adapterManager: App.shared.adapterManager)
 
         let router = SwapRouter()
-        let interactor = SwapInteractor(swapKit: swapKit, swapTokenManager: swapTokenManager)
+        let interactor = SwapInteractor(swapKit: UniswapKit.Kit.instance(ethereumKit: ethereumKit), swapTokenManager: swapTokenManager)
         let presenter = SwapPresenter(interactor: interactor, router: router, factory: SwapViewItemFactory(), decimalParser: decimalParser, coinIn: wallet.coin)
         let viewController = SwapViewController(delegate: presenter)
 

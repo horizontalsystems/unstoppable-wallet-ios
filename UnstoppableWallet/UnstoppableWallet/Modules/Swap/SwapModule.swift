@@ -54,6 +54,9 @@ protocol ISwapViewItemFactory {
     func viewItem(coinIn: Coin, balance: Decimal?, coinOut: Coin?, type: TradeType, tradeData: TradeData?) -> SwapModule.ViewItem
 }
 
+extension UniswapKit.Kit: ISwapKit {
+}
+
 struct CoinBalanceItem {
     let coin: Coin
     let balance: Decimal?

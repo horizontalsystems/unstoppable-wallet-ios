@@ -79,7 +79,7 @@ class App {
     let erc20ContractInfoProvider: IErc20ContractInfoProvider
 
     let appManager: AppManager
-    let swapKitManager: SwapKitManager
+    let ethereumKitManager: EthereumKitManager
 
     init() {
         let logger = Logger(minLogLevel: .error)
@@ -129,11 +129,9 @@ class App {
 
         sortTypeManager = SortTypeManager(localStorage: localStorage)
 
-        let ethereumKitManager = EthereumKitManager(appConfigProvider: appConfigProvider)
+        ethereumKitManager = EthereumKitManager(appConfigProvider: appConfigProvider)
         let eosKitManager = EosKitManager(appConfigProvider: appConfigProvider)
         let binanceKitManager = BinanceKitManager(appConfigProvider: appConfigProvider)
-
-        swapKitManager = SwapKitManager(ethereumKitManager: ethereumKitManager)
 
         let adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager)
         adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager)
