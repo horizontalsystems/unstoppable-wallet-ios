@@ -425,7 +425,7 @@ CHECKOUT OPTIONS:
     :commit: b0a64bb7aabecc9e234aaa72d1e78fae1b11e64e
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   XRatesKit.swift:
-    :commit: 6cb0e7e846da6b943a4fd6e9e7aff1a8d6c03b2b
+    :commit: f7a4b52e8f4fda8f1d39521b8f91455f51b477f2
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
 
 SPEC CHECKSUMS:
