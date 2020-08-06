@@ -482,6 +482,7 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "chart.title" = "%@ Цена";
 "chart.time_duration.day" = "1Д";
 "chart.time_duration.week" = "7Д";
+"chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "1М";
 "chart.time_duration.month3" = "3М";
 "chart.time_duration.halyear" = "6М";
