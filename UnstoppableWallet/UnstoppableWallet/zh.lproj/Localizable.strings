@@ -482,6 +482,7 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "chart.title" = "%@ 价格";
 "chart.time_duration.day" = "1天";
 "chart.time_duration.week" = "7天";
+"chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "1个月";
 "chart.time_duration.month3" = "3个月";
 "chart.time_duration.halyear" = "6个月";
