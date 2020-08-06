@@ -487,6 +487,7 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "chart.title" = "%@ Price";
 "chart.time_duration.day" = "1D";
 "chart.time_duration.week" = "7D";
+"chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "1M";
 "chart.time_duration.month3" = "3M";
 "chart.time_duration.halyear" = "6M";
