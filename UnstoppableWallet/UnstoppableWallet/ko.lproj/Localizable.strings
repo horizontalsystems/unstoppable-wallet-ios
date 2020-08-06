@@ -482,6 +482,7 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "chart.title" = "%@ 금액";
 "chart.time_duration.day" = "하루";
 "chart.time_duration.week" = "일주일";
+"chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "한 달";
 "chart.time_duration.month3" = "3개월";
 "chart.time_duration.halyear" = "6개월";
