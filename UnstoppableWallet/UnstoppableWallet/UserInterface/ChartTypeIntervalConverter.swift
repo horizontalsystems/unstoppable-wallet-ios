@@ -8,6 +8,7 @@ class ChartTypeIntervalConverter {
         switch chartType {
         case .day: return 6
         case .week: return 2 * day
+        case .week2: return 3 * day
         case .month: return 6 * day
         case .month3: return 18 * day
         case .halfYear: return month

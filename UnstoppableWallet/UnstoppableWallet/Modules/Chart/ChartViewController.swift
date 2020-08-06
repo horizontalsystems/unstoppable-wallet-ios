@@ -11,6 +11,7 @@ extension ChartType {
         switch self {
         case .day: return "chart.time_duration.day".localized
         case .week: return "chart.time_duration.week".localized
+        case .week2: return "chart.time_duration.week2".localized
         case .month: return "chart.time_duration.month".localized
         case .month3: return "chart.time_duration.month3".localized
         case .halfYear: return "chart.time_duration.halyear".localized
