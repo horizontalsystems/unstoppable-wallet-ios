@@ -31,7 +31,7 @@ extension NotificationSettingsPresenter: INotificationSettingsViewDelegate {
         view?.set(pushNotificationsOn: interactor.pushNotificationsOn)
 
         if interactor.pushNotificationsOn {
-            interactor.requestPermission()
+            interactor.requestPermission(needUpdate: false)
         }
     }
 
@@ -47,13 +47,13 @@ extension NotificationSettingsPresenter: INotificationSettingsViewDelegate {
         interactor.pushNotificationsOn = on
 
         if on {
-            interactor.requestPermission()
+            interactor.requestPermission(needUpdate: true)
         } else {
             view?.set(pushNotificationsOn: interactor.pushNotificationsOn)
             updateViewItems()
-        }
 
-        interactor.updateTopics()
+            interactor.updateTopics()
+        }
     }
 
 }
@@ -66,7 +66,11 @@ extension NotificationSettingsPresenter: INotificationSettingsInteractorDelegate
         updateViewItems()
     }
 
-    func didGrantPermission() {
+    func didGrantPermission(needUpdate: Bool) {
+        if needUpdate, interactor.apnsTokenReceived {
+            interactor.updateTopics()
+        }
+
         view?.hideWarning()
 
         view?.set(pushNotificationsOn: interactor.pushNotificationsOn)
@@ -82,7 +86,7 @@ extension NotificationSettingsPresenter: INotificationSettingsInteractorDelegate
 
     func didEnterForeground() {
         if interactor.pushNotificationsOn {
-            interactor.requestPermission()
+            interactor.requestPermission(needUpdate: false)
         }
     }
 

@@ -47,6 +47,10 @@ extension NotificationSettingsInteractor: INotificationSettingsInteractor {
         priceAlertManager.priceAlerts
     }
 
+    var apnsTokenReceived: Bool {
+        notificationManager.token != nil
+    }
+
     func updateTopics() {
         priceAlertManager.updateTopics()
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
@@ -59,10 +63,10 @@ extension NotificationSettingsInteractor: INotificationSettingsInteractor {
                 .disposed(by: disposeBag)
     }
 
-    func requestPermission() {
+    func requestPermission(needUpdate: Bool) {
         notificationManager.requestPermission { [weak self] granted in
             if granted {
-                self?.delegate?.didGrantPermission()
+                self?.delegate?.didGrantPermission(needUpdate: needUpdate)
             } else {
                 self?.delegate?.didDenyPermission()
             }
