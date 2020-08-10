@@ -1,10 +1,10 @@
 "coin.BTC" = "Bitcoin";
-"coin.BCH" = "Bitcoin Cash";
+"coin.BCH" = "Bitcoin Cash ";
 "coin.ETH" = "Ethereum";
 
-"button.ok" = "OK";
-"button.cancel" = "Cancel";
-"button.close" = "Close";
+"button.ok" = "확인";
+"button.cancel" = "취소";
+"button.close" = "가까운, 닫힌";
 "button.confirm" = "Confirm";
 "button.done" = "Done";
 "button.restore" = "Restore";
