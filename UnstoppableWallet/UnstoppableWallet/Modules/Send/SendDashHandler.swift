@@ -1,5 +1,6 @@
 import Foundation
 import RxSwift
+import HsToolKit
 
 class SendDashHandler {
     weak var delegate: ISendHandlerDelegate?
@@ -73,8 +74,8 @@ extension SendDashHandler: ISendHandler {
         feeModule.update(inputType: inputType)
     }
 
-    func sendSingle() throws -> Single<Void> {
-        interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress())
+    func sendSingle(logger: Logger) throws -> Single<Void> {
+        interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress(), logger: logger)
     }
 
 }

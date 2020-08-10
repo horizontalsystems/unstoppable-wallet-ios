@@ -2,6 +2,7 @@ import RxSwift
 import GRDB
 import RxGRDB
 import KeychainAccess
+import HsToolKit
 
 class GrdbStorage {
     private let dbPool: DatabasePool
@@ -446,4 +447,10 @@ extension GrdbStorage: ICoinRecordStorage {
         }
     }
 
+}
+
+extension GrdbStorage: ILogStorage {
+    func log(date: Date, level: Logger.Level, message: String, file: String?, function: String?, line: Int?, context: [String]?) {
+        print("\(date) \(level) \(context?.joined(separator: " ")) \(message)")
+    }
 }

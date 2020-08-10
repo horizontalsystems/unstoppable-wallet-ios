@@ -1,5 +1,6 @@
 import Foundation
 import RxSwift
+import HsToolKit
 
 class SendBitcoinHandler {
     weak var delegate: ISendHandlerDelegate?
@@ -110,11 +111,11 @@ extension SendBitcoinHandler: ISendHandler {
         feeModule.update(inputType: inputType)
     }
 
-    func sendSingle() throws -> Single<Void> {
+    func sendSingle(logger: Logger) throws -> Single<Void> {
         guard let feeRate = feePriorityModule.feeRate else {
             throw SendTransactionError.noFee
         }
-        return interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress(), feeRate: feeRate, pluginData: pluginData)
+        return interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress(), feeRate: feeRate, pluginData: pluginData, logger: logger)
     }
 
 }

@@ -1,5 +1,6 @@
 import Foundation
 import RxSwift
+import HsToolKit
 
 class SendBinanceHandler {
     weak var delegate: ISendHandlerDelegate?
@@ -71,7 +72,7 @@ extension SendBinanceHandler: ISendHandler {
         feeModule.update(inputType: inputType)
     }
 
-    func sendSingle() throws -> Single<Void> {
+    func sendSingle(logger: Logger) throws -> Single<Void> {
         interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress(), memo: memoModule.memo)
     }
 
