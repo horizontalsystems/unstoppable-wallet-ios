@@ -27,6 +27,8 @@ def appPods
   # pod 'EosioSwiftAbieosSerializationProvider', path: '../eosio-swift-abieos-serialization-provider/'
   pod 'EosioSwift', git: 'https://github.com/horizontalsystems/eosio-swift'
   # pod 'EosioSwift', path: '../eosio-swift/'
+  pod 'EosioSwiftEcc', git: 'https://github.com/horizontalsystems/eosio-swift-ecc.git'
+  pod 'EosioSwiftSoftkeySignatureProvider', git: 'https://github.com/horizontalsystems/eosio-swift-softkey-signature-provider.git'
 
   pod 'BinanceChainKit.swift', git: 'https://github.com/horizontalsystems/binance-chain-kit-ios'
   # pod 'BinanceChainKit.swift', path: '../binance-chain-kit-ios/'
