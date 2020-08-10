@@ -182,10 +182,10 @@
 "swap.balance" = "Balance";
 "swap.you_get" = "You Get";
 "swap.token" = "Token";
-"swap.proceed" = "Proceed";
+"swap.proceed" = "Continuer";
 "swap.amount_error.maximum_amount" = "Maximum amount %@";
 
-"swap.price" = "Price";
+"swap.price" = "Prix";
 "swap.price_impact" = "Price Impact";
 "swap.max_min" = "Max / Min";
 "swap.maximum_paid" = "Maximum Paid";
@@ -305,7 +305,7 @@
 // Settings -> Notifications
 
 "settings_notifications.title" = "Notifications";
-"settings_notifications.toggle_title" = "Push Notifications";
+"settings_notifications.toggle_title" = "Notifications Push";
 "settings_notifications.description" = "Set price change alerts for the coins you would like to watch\n\nYou will be alerted when the change in price for the last 24 hours exceeds selected threshold.\n\nPrice Trend Alert warns of a trend change for the short 1 week, for the long 6 month.";
 "settings_notifications.alert_off" = "Désactivé";
 "settings.notifications.deactivate_all" = "Tout désactiver";
@@ -344,7 +344,7 @@
 // Settings -> Terms
 
 "terms.title" = "Terms";
-"terms.app_subtitle" = "Decentralized App";
+"terms.app_subtitle" = "Decentralized app";
 "terms.description" = "The Unstoppable wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.
 
 It's a non-custodial, peer-to-peer wallet where only the user has control over funds. It doesn't collect any data and keeps user independent by not locking his/her wallet to a specific wallet app.
