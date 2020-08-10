@@ -13,7 +13,7 @@ class App {
     let appConfigProvider: IAppConfigProvider
 
     let localStorage: ILocalStorage & IChartTypeStorage
-    let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & ICoinRecordStorage & IPriceAlertRequestRecordStorage
+    let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & ICoinRecordStorage & IPriceAlertRequestRecordStorage & ILogStorage
 
     let themeManager: ThemeManager
     let systemInfoManager: ISystemInfoManager
@@ -56,6 +56,7 @@ class App {
     let notificationManager: INotificationManager
 
     var debugLogger: IDebugLogger?
+    let logger: Logger
 
     let appStatusManager: IAppStatusManager
     let appVersionManager: IAppVersionManager
@@ -82,15 +83,15 @@ class App {
     let ethereumKitManager: EthereumKitManager
 
     init() {
-        let logger = Logger(minLogLevel: .error)
-        let networkManager = NetworkManager(logger: logger)
-
-        keychainKit = KeychainKit(service: "io.horizontalsystems.bank.dev")
-
         appConfigProvider = AppConfigProvider()
 
         localStorage = LocalStorage(storage: StorageKit.LocalStorage.default)
         storage = GrdbStorage(appConfigProvider: appConfigProvider)
+
+        logger = Logger(minLogLevel: .error, storage: storage)
+        let networkManager = NetworkManager(logger: logger)
+
+        keychainKit = KeychainKit(service: "io.horizontalsystems.bank.dev")
 
         themeManager = ThemeManager.shared
         systemInfoManager = SystemInfoManager()

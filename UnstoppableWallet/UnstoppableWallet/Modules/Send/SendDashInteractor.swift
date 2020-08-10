@@ -1,4 +1,5 @@
 import RxSwift
+import HsToolKit
 
 class SendDashInteractor {
     weak var delegate: ISendDashInteractorDelegate?
@@ -49,8 +50,8 @@ extension SendDashInteractor: ISendDashInteractor {
         }
     }
 
-    func sendSingle(amount: Decimal, address: String) -> Single<Void> {
-        adapter.sendSingle(amount: amount, address: address, sortMode: transactionDataSortModeSettingsManager.setting)
+    func sendSingle(amount: Decimal, address: String, logger: Logger) -> Single<Void> {
+        adapter.sendSingle(amount: amount, address: address, sortMode: transactionDataSortModeSettingsManager.setting, logger: logger)
     }
 
 }

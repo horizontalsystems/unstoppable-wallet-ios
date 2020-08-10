@@ -3,6 +3,7 @@ import RxSwift
 import EthereumKit
 import FeeRateKit
 import Erc20Kit
+import HsToolKit
 
 class SendEthereumHandler {
     private var gasDisposeBag = DisposeBag()
@@ -126,7 +127,7 @@ extension SendEthereumHandler: ISendHandler {
         feeModule.update(inputType: inputType)
     }
 
-    func sendSingle() throws -> Single<Void> {
+    func sendSingle(logger: Logger) throws -> Single<Void> {
         guard let feeRate = feePriorityModule.feeRate, case let .value(gasLimit) = estimateGasLimitState else {
             throw SendTransactionError.noFee
         }

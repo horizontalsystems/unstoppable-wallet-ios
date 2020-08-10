@@ -1,6 +1,7 @@
 import Foundation
 import RxSwift
 import XRatesKit
+import HsToolKit
 
 class SendPresenter {
     weak var view: ISendView?
@@ -10,13 +11,15 @@ class SendPresenter {
     private let handler: ISendHandler
     private let interactor: ISendInteractor
     private let router: ISendRouter
+    private let logger: Logger
 
-    init(coin: Coin, handler: ISendHandler, interactor: ISendInteractor, router: ISendRouter) {
+    init(coin: Coin, handler: ISendHandler, interactor: ISendInteractor, router: ISendRouter, logger: Logger) {
         self.coin = coin
 
         self.handler = handler
         self.interactor = interactor
         self.router = router
+        self.logger = logger
     }
 
 }
@@ -95,11 +98,15 @@ extension SendPresenter: ISendInteractorDelegate {
 extension SendPresenter: ISendConfirmationDelegate {
 
     func onSendClicked() {
+        let actionLogger = logger.scoped(with: "\(Int.random(in: 0..<1_000_000))")
+        actionLogger.debug("Confirm clicked", save: true)
+
         view?.showProgress()
 
         do {
-            interactor.send(single: try handler.sendSingle())
+            interactor.send(single: try handler.sendSingle(logger: actionLogger), logger: actionLogger)
         } catch {
+            actionLogger.warning("Not sending due to \(error)", save: true)
             view?.show(error: error)
         }
     }

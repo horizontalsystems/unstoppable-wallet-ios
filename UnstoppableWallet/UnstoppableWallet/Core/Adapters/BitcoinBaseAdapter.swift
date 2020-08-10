@@ -1,6 +1,7 @@
 import BitcoinCore
 import Hodler
 import RxSwift
+import HsToolKit
 
 class BitcoinBaseAdapter {
     static let defaultConfirmationsThreshold = 3
@@ -278,13 +279,14 @@ extension BitcoinBaseAdapter {
         }
     }
 
-    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData] = [:], sortMode: TransactionDataSortMode) -> Single<Void> {
+    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData] = [:], sortMode: TransactionDataSortMode, logger: Logger) -> Single<Void> {
         let satoshiAmount = convertToSatoshi(value: amount)
         let sortType = convertToKitSortMode(sort: sortMode)
 
         return Single.create { [weak self] observer in
             do {
                 if let adapter = self {
+                    logger.debug("Sending to \(String(reflecting: adapter.abstractKit))", save: true)
                     _ = try adapter.abstractKit.send(to: address, value: satoshiAmount, feeRate: feeRate, sortType: sortType, pluginData: pluginData)
                 }
                 observer(.success(()))

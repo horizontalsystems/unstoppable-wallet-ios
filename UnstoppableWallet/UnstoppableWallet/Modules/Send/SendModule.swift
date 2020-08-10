@@ -2,6 +2,7 @@ import UIKit
 import RxSwift
 import CurrencyKit
 import XRatesKit
+import HsToolKit
 
 protocol ISendView: class {
     func set(coin: Coin)
@@ -30,7 +31,7 @@ protocol ISendInteractor {
     var defaultInputType: SendInputType { get }
 
     func nonExpiredRateValue(coinCode: CoinCode, currencyCode: String) -> Decimal?
-    func send(single: Single<Void>)
+    func send(single: Single<Void>, logger: Logger)
     func subscribeToMarketInfo(coinCode: CoinCode, currencyCode: String)
 }
 
@@ -50,7 +51,7 @@ protocol ISendHandler: AnyObject {
     func sync(rateValue: Decimal?)
     func sync(inputType: SendInputType)
     func confirmationViewItems() throws -> [ISendConfirmationViewItemNew]
-    func sendSingle() throws -> Single<Void>
+    func sendSingle(logger: Logger) throws -> Single<Void>
 }
 
 protocol ISendHandlerDelegate: AnyObject {
@@ -64,7 +65,7 @@ protocol ISendBitcoinInteractor {
     func fetchMinimumAmount(address: String?)
     func validate(address: String, pluginData: [UInt8: IBitcoinPluginData]) throws
     func fetchFee(amount: Decimal, feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData])
-    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData]) -> Single<Void>
+    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData], logger: Logger) -> Single<Void>
 }
 
 protocol ISendBitcoinInteractorDelegate: class {
@@ -79,7 +80,7 @@ protocol ISendDashInteractor {
     func fetchMinimumAmount(address: String?)
     func validate(address: String) throws
     func fetchFee(amount: Decimal, address: String?)
-    func sendSingle(amount: Decimal, address: String) -> Single<Void>
+    func sendSingle(amount: Decimal, address: String, logger: Logger) -> Single<Void>
 }
 
 protocol ISendDashInteractorDelegate: class {

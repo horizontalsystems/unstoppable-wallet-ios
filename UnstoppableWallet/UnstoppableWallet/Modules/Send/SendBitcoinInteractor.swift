@@ -1,4 +1,5 @@
 import RxSwift
+import HsToolKit
 
 class SendBitcoinInteractor {
     weak var delegate: ISendBitcoinInteractorDelegate?
@@ -65,8 +66,8 @@ extension SendBitcoinInteractor: ISendBitcoinInteractor {
         }
     }
 
-    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData]) -> Single<Void> {
-        adapter.sendSingle(amount: amount, address: address, feeRate: feeRate, pluginData: pluginData, sortMode: transactionDataSortModeSettingsManager.setting)
+    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData], logger: Logger) -> Single<Void> {
+        adapter.sendSingle(amount: amount, address: address, feeRate: feeRate, pluginData: pluginData, sortMode: transactionDataSortModeSettingsManager.setting, logger: logger)
     }
 
 }

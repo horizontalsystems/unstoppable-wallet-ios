@@ -48,7 +48,7 @@ extension SendRouter {
         }
 
         let interactor = SendInteractor(reachabilityManager: App.shared.reachabilityManager, rateManager: App.shared.rateManager, currencyKit: App.shared.currencyKit, localStorage: App.shared.localStorage)
-        let presenter = SendPresenter(coin: wallet.coin, handler: handler, interactor: interactor, router: router)
+        let presenter = SendPresenter(coin: wallet.coin, handler: handler, interactor: interactor, router: router, logger: App.shared.logger.scoped(with: "Send"))
         let viewController = SendViewController(delegate: presenter, views: subViews)
 
         interactor.delegate = presenter

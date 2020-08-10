@@ -14,8 +14,9 @@ class BitcoinCashAdapter: BitcoinBaseAdapter {
         }
 
         let networkType: BitcoinCashKit.NetworkType = testMode ? .testNet : .mainNet
+        let logger = App.shared.logger.scoped(with: "BitcoinCashKit")
 
-        bitcoinCashKit = try BitcoinCashKit(withWords: words, walletId: wallet.account.id, syncMode: BitcoinBaseAdapter.kitMode(from: walletSyncMode), networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.defaultConfirmationsThreshold, minLogLevel: .error)
+        bitcoinCashKit = try BitcoinCashKit(withWords: words, walletId: wallet.account.id, syncMode: BitcoinBaseAdapter.kitMode(from: walletSyncMode), networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.defaultConfirmationsThreshold, logger: logger)
 
         super.init(abstractKit: bitcoinCashKit)
 

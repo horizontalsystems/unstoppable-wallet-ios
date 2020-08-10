@@ -5,6 +5,7 @@ import UniswapKit
 import EthereumKit
 import ThemeKit
 import Alamofire
+import HsToolKit
 
 typealias CoinCode = String
 
@@ -117,7 +118,7 @@ protocol ISendBitcoinAdapter {
     func minimumSendAmount(address: String?) -> Decimal
     func validate(address: String, pluginData: [UInt8: IBitcoinPluginData]) throws
     func fee(amount: Decimal, feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData]) -> Decimal
-    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData], sortMode: TransactionDataSortMode) -> Single<Void>
+    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData], sortMode: TransactionDataSortMode, logger: Logger) -> Single<Void>
 }
 
 protocol ISendDashAdapter {
@@ -125,7 +126,7 @@ protocol ISendDashAdapter {
     func minimumSendAmount(address: String?) -> Decimal
     func validate(address: String) throws
     func fee(amount: Decimal, address: String?) -> Decimal
-    func sendSingle(amount: Decimal, address: String, sortMode: TransactionDataSortMode) -> Single<Void>
+    func sendSingle(amount: Decimal, address: String, sortMode: TransactionDataSortMode, logger: Logger) -> Single<Void>
 }
 
 protocol ISendEthereumAdapter {

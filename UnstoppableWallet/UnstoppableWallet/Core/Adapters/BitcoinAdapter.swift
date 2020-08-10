@@ -21,8 +21,9 @@ class BitcoinAdapter: BitcoinBaseAdapter {
         let networkType: BitcoinKit.NetworkType = testMode ? .testNet : .mainNet
         let bip = BitcoinBaseAdapter.bip(from: walletDerivation)
         let syncMode = BitcoinBaseAdapter.kitMode(from: walletSyncMode)
+        let logger = App.shared.logger.scoped(with: "BitcoinKit")
 
-        bitcoinKit = try BitcoinKit(withWords: words, bip: bip, walletId: wallet.account.id, syncMode: syncMode, networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.defaultConfirmationsThreshold, minLogLevel: .error)
+        bitcoinKit = try BitcoinKit(withWords: words, bip: bip, walletId: wallet.account.id, syncMode: syncMode, networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.defaultConfirmationsThreshold, logger: logger)
 
         super.init(abstractKit: bitcoinKit)
 

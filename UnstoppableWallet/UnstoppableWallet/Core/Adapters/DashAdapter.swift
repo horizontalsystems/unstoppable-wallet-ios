@@ -1,5 +1,6 @@
 import DashKit
 import RxSwift
+import HsToolKit
 
 class DashAdapter: BitcoinBaseAdapter {
     private let feeRate = 1
@@ -16,8 +17,9 @@ class DashAdapter: BitcoinBaseAdapter {
         }
 
         let networkType: DashKit.NetworkType = testMode ? .testNet : .mainNet
+        let logger = App.shared.logger.scoped(with: "DashKit")
 
-        dashKit = try DashKit(withWords: words, walletId: wallet.account.id, syncMode: BitcoinBaseAdapter.kitMode(from: walletSyncMode), networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.defaultConfirmationsThreshold, minLogLevel: .error)
+        dashKit = try DashKit(withWords: words, walletId: wallet.account.id, syncMode: BitcoinBaseAdapter.kitMode(from: walletSyncMode), networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.defaultConfirmationsThreshold, logger: logger)
 
         super.init(abstractKit: dashKit)
 
@@ -57,8 +59,8 @@ extension DashAdapter: ISendDashAdapter {
         fee(amount: amount, feeRate: feeRate, address: address)
     }
 
-    func sendSingle(amount: Decimal, address: String, sortMode: TransactionDataSortMode) -> Single<Void> {
-        sendSingle(amount: amount, address: address, feeRate: feeRate, sortMode: sortMode)
+    func sendSingle(amount: Decimal, address: String, sortMode: TransactionDataSortMode, logger: Logger) -> Single<Void> {
+        sendSingle(amount: amount, address: address, feeRate: feeRate, sortMode: sortMode, logger: logger)
     }
 
 }

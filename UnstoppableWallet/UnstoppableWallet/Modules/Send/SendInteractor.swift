@@ -45,12 +45,14 @@ extension SendInteractor: ISendInteractor {
         return marketInfo.rate
     }
 
-    func send(single: Single<Void>) {
+    func send(single: Single<Void>, logger: Logger) {
         single.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onSuccess: { [weak self] in
+                    logger.debug("Send success", save: true)
                     self?.delegate?.didSend()
                 }, onError: { [weak self] error in
+                    logger.error("Send failed due to \(error)", save: true)
                     self?.delegate?.didFailToSend(error: error)
                 })
                 .disposed(by: disposeBag)
