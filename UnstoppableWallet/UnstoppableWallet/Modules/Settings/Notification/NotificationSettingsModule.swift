@@ -17,7 +17,7 @@ protocol INotificationSettingsViewDelegate {
 protocol INotificationSettingsInteractor: AnyObject {
     var alerts: [PriceAlert] { get }
     var pushNotificationsOn: Bool { get set }
-    var apnsTokenReceived: Bool
+    var apnsTokenReceived: Bool { get }
     func updateTopics()
     func requestPermission(needUpdate: Bool)
     func deleteAllAlerts()
