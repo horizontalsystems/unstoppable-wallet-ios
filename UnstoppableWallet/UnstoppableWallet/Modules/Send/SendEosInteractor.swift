@@ -12,7 +12,7 @@ class SendEosInteractor {
 extension SendEosInteractor: ISendEosInteractor {
 
     var availableBalance: Decimal {
-        return adapter.availableBalance
+        adapter.availableBalance
     }
 
     func validate(account: String) throws {
@@ -20,7 +20,7 @@ extension SendEosInteractor: ISendEosInteractor {
     }
 
     func sendSingle(amount: Decimal, account: String, memo: String?) -> Single<Void> {
-        return adapter.sendSingle(amount: amount, account: account, memo: memo)
+        adapter.sendSingle(amount: amount, account: account, memo: memo)
     }
 
 }

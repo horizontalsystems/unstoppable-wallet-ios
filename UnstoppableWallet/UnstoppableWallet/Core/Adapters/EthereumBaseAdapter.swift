@@ -1,6 +1,7 @@
 import EthereumKit
 import RxSwift
 import BigInt
+import HsToolKit
 
 class EthereumBaseAdapter {
     let ethereumKit: EthereumKit.Kit
@@ -28,7 +29,7 @@ class EthereumBaseAdapter {
         return Decimal(sign: .plus, exponent: -decimal, significand: significand)
     }
 
-    func sendSingle(to address: String, value: Decimal, gasPrice: Int, gasLimit: Int) -> Single<Void> {
+    func sendSingle(to address: String, value: Decimal, gasPrice: Int, gasLimit: Int, logger: Logger) -> Single<Void> {
         fatalError("Method should be overridden in child class")
     }
 
@@ -41,8 +42,8 @@ class EthereumBaseAdapter {
 // ISendEthereumAdapter
 extension EthereumBaseAdapter {
 
-    func sendSingle(amount: Decimal, address: String, gasPrice: Int, gasLimit: Int) -> Single<Void> {
-        sendSingle(to: address, value: amount, gasPrice: gasPrice, gasLimit: gasLimit)
+    func sendSingle(amount: Decimal, address: String, gasPrice: Int, gasLimit: Int, logger: Logger) -> Single<Void> {
+        sendSingle(to: address, value: amount, gasPrice: gasPrice, gasLimit: gasLimit, logger: logger)
     }
 
 }

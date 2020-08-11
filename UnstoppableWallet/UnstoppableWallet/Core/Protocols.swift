@@ -149,7 +149,7 @@ protocol ISendEthereumAdapter {
     func validate(address: String) throws
     func estimateGasLimit(to address: String?, value: Decimal, gasPrice: Int?) -> Single<Int>
     func fee(gasPrice: Int, gasLimit: Int) -> Decimal
-    func sendSingle(amount: Decimal, address: String, gasPrice: Int, gasLimit: Int) -> Single<Void>
+    func sendSingle(amount: Decimal, address: String, gasPrice: Int, gasLimit: Int, logger: Logger) -> Single<Void>
 }
 
 protocol ISendEosAdapter {
