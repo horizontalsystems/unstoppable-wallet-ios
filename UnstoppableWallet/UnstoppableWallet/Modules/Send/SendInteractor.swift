@@ -52,7 +52,7 @@ extension SendInteractor: ISendInteractor {
                     logger.debug("Send success", save: true)
                     self?.delegate?.didSend()
                 }, onError: { [weak self] error in
-                    logger.error("Send failed due to \(error)", save: true)
+                    logger.error("Send failed due to \(String(reflecting: error))", save: true)
                     self?.delegate?.didFailToSend(error: error)
                 })
                 .disposed(by: disposeBag)

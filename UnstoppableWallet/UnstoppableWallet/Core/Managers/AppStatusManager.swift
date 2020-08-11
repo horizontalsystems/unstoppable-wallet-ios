@@ -5,6 +5,7 @@ class AppStatusManager {
 
     private let systemInfoManager: ISystemInfoManager
     private let localStorage: ILocalStorage
+    private let logRecordManager: ILogRecordManager
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
@@ -12,7 +13,9 @@ class AppStatusManager {
     private let eosKitManager: EosKitManager
     private let binanceKitManager: BinanceKitManager
 
-    init(systemInfoManager: ISystemInfoManager, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager, walletManager: IWalletManager, adapterManager: IAdapterManager, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager) {
+    init(systemInfoManager: ISystemInfoManager, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager,
+         walletManager: IWalletManager, adapterManager: IAdapterManager, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager,
+         binanceKitManager: BinanceKitManager, logRecordManager: ILogRecordManager) {
         self.systemInfoManager = systemInfoManager
         self.localStorage = localStorage
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
@@ -21,6 +24,7 @@ class AppStatusManager {
         self.ethereumKitManager = ethereumKitManager
         self.eosKitManager = eosKitManager
         self.binanceKitManager = binanceKitManager
+        self.logRecordManager = logRecordManager
     }
 
     private var accountStatus: [(String, Any)] {
@@ -82,6 +86,7 @@ extension AppStatusManager: IAppStatusManager {
                 ("Phone Model", systemInfoManager.deviceModel),
                 ("OS Version", systemInfoManager.osVersion)
             ]),
+            ("App Log", logRecordManager.logsGroupedBy(context: "Send")),
             ("Version History", localStorage.appVersions.map { ($0.version, $0.date) }),
             ("Wallets Status", accountStatus),
             ("Blockchains Status", blockchainStatus)
