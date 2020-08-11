@@ -20,7 +20,7 @@
 
 "alert.copied" = "Kopyalandı";
 "alert.no_internet" = "Internet Bağlantısı Yok";
-"alert.wrong_amount" = "Wrong Amount";
+"alert.wrong_amount" = "Yanlış Tutar";
 "alert.no_fee" = "Yanlış Masraf";
 "alert.network_issue" = "Ağ sorunu. Tekrar deneyin.";
 "alert.unknown_error" = "Bilinmeyen Hata";
@@ -178,7 +178,7 @@
 
 "swap.title" = "Takas";
 "swap.you_pay" = "Ödediğiniz";
-"swap.estimated" = "estimated";
+"swap.estimated" = "tahmini";
 "swap.balance" = "Bakiye";
 "swap.you_get" = "Kazandığınız";
 "swap.token" = "Token";
@@ -193,7 +193,7 @@
 
 "swap.fee" = "Takas Ücreti";
 "swap.transactions_speed" = "İşlem hızı";
-"swap.transaction_fee" = "Transaction Fee";
+"swap.transaction_fee" = "İşlem Ücreti";
 
 "swap.select_token.title" = "Kripto Parayı Seç";
 
@@ -202,7 +202,7 @@
 "swap.confirmation.title" = "Onayla";
 "swap.confirmation.swap_button" = "Takas";
 "swap.confirmation.pay" = "Ödeyin %@";
-"swap.confirmation.get" = "Get %@";
+"swap.confirmation.get" = "%@ al";
 
 
 "swap.uniswap_info.title" = "Uniswap v.2";
@@ -307,15 +307,15 @@ Uniswap, Ethereum'da otomatik likidite tedariki için tamamen merkezi olmayan bi
 
 "settings_notifications.title" = "Bildirimler";
 "settings_notifications.toggle_title" = "Anlık Bildirimler";
-"settings_notifications.description" = "Set price change alerts for the coins you would like to watch\n\nYou will be alerted when the change in price for the last 24 hours exceeds selected threshold.\n\nPrice Trend Alert warns of a trend change for the short 1 week, for the long 6 month.";
+"settings_notifications.description" = "İzlemek istediğiniz paralar için fiyat değişikliği uyarılarını ayarlayın\n\nSon 24 saatteki fiyat değişikliği seçilen eşiği aştığında uyarı alırsınız. \n\nFiyat Trendi Uyarısı, 6 ay boyunca, 1 haftalık kısa bir süre için bir trend değişikliği durumunu uyarır.";
 "settings_notifications.alert_off" = "Kapat";
 "settings.notifications.deactivate_all" = "Etkisizleştir";
 "settings.notifications.disabled_text" = "Unstoppable Cüzdan uygulaması için bildirimler devre dışı bırakıldı. Fiyat değişikliği uyarıları alabilmek için Bildirimler'i açmanız ve arka plan uygulaması yenilemesine izin vermeniz gerekir.";
 "settings.notifications.settings_button" = "Ayarlardan aç";
 "settings_notifications.trend_short" = "Kısa Vade 7G";
 "settings_notifications.trend_long" = "Uzun Vade 6A";
-"settings_notifications.reset_all_title" = "Reset All";
-"settings_notifications.trend_settings_title" = "Price Trend";
+"settings_notifications.reset_all_title" = "Tümünü Sıfırla";
+"settings_notifications.trend_settings_title" = "Fiyat Trendi";
 
 // Settings -> Manage Wallet
 
@@ -573,11 +573,11 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "add_erc20_token.add" = "Ekle";
 "add_erc20_token.contract_not_exist" = "Sözleşme bulunamadı";
 
-"change_24hour_up" = "%@ price: up %@%% %@";
-"change_24hour_down" = "%@ price: down %@%% %@";
-"change_trend_up" = "%@ trend: up %@";
-"change_trend_down" = "%@ trend: down %@";
+"change_24hour_up" = "%@ fiyat: yukarı %@%% %@";
+"change_24hour_down" = "%@ fiyat: aşağı %@%% %@";
+"change_trend_up" = "%@ trend: yukarı %@";
+"change_trend_down" = "%@ trend: aşağı %@";
 
-"chart_alert.title" = "Notification";
-"chart_alert.24h_description" = "Price Change 24h";
+"chart_alert.title" = "Bildirim";
+"chart_alert.24h_description" = "Fiyat Değişimi 24s";
 "chart_alert.trend_description" = "Fiyat Trend Değişimi";
