@@ -1,6 +1,7 @@
 import EthereumKit
 import RxSwift
 import BigInt
+import HsToolKit
 
 class EthereumAdapter: EthereumBaseAdapter {
     static let decimal = 18
@@ -51,12 +52,13 @@ class EthereumAdapter: EthereumBaseAdapter {
         )
     }
 
-    override func sendSingle(to address: String, value: Decimal, gasPrice: Int, gasLimit: Int) -> Single<Void> {
+    override func sendSingle(to address: String, value: Decimal, gasPrice: Int, gasLimit: Int, logger: Logger) -> Single<Void> {
         guard let amount = BigUInt(value.roundedString(decimal: decimal)) else {
             return Single.error(SendTransactionError.wrongAmount)
         }
         do {
             return try ethereumKit.sendSingle(address: Address(hex: address), value: amount, gasPrice: gasPrice, gasLimit: gasLimit)
+                    .do(onSubscribe: { logger.debug("Sending to EthereumKit", save: true) })
                     .map { _ in ()}
                     .catchError { [weak self] error in
                         Single.error(self?.createSendError(from: error) ?? error)

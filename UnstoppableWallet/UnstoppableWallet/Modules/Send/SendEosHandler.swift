@@ -71,6 +71,7 @@ extension SendEosHandler: ISendHandler {
 
     func sendSingle(logger: Logger) throws -> Single<Void> {
         interactor.sendSingle(amount: try amountModule.validAmount(), account: try accountModule.validAccount(), memo: memoModule.memo)
+                .do(onSubscribe: { logger.debug("Sending to ISendEosInteractor", save: true) })
     }
 
 }

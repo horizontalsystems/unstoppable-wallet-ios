@@ -131,7 +131,7 @@ extension SendEthereumHandler: ISendHandler {
         guard let feeRate = feePriorityModule.feeRate, case let .value(gasLimit) = estimateGasLimitState else {
             throw SendTransactionError.noFee
         }
-        return interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress(), gasPrice: feeRate, gasLimit: gasLimit)
+        return interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress(), gasPrice: feeRate, gasLimit: gasLimit, logger: logger)
     }
 
 }

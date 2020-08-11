@@ -2,6 +2,7 @@ import EthereumKit
 import Erc20Kit
 import RxSwift
 import BigInt
+import HsToolKit
 import class Erc20Kit.Transaction
 
 class Erc20Adapter: EthereumBaseAdapter {
@@ -60,13 +61,14 @@ class Erc20Adapter: EthereumBaseAdapter {
         )
     }
 
-    override func sendSingle(to address: String, value: Decimal, gasPrice: Int, gasLimit: Int) -> Single<Void> {
+    override func sendSingle(to address: String, value: Decimal, gasPrice: Int, gasLimit: Int, logger: Logger) -> Single<Void> {
         guard let amount = BigUInt(value.roundedString(decimal: decimal)) else {
             return Single.error(SendTransactionError.wrongAmount)
         }
 
         do {
             return try erc20Kit.sendSingle(to: Address(hex: address), value: amount, gasPrice: gasPrice, gasLimit: gasLimit)
+                    .do(onSubscribe: { logger.debug("Sending to Erc20Kit", save: true) })
                     .map { _ in ()}
                     .catchError { [weak self] error in
                         Single.error(self?.createSendError(from: error) ?? error)
