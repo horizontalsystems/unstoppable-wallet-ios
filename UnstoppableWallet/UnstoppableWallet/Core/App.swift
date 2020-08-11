@@ -198,7 +198,8 @@ class App {
                 debugLogger: debugLogger,
                 appVersionManager: appVersionManager,
                 rateAppManager: rateAppManager,
-                remoteAlertManager: remoteAlertManager
+                remoteAlertManager: remoteAlertManager,
+                logRecordManager: logRecordManager
         )
     }
 

@@ -15,6 +15,7 @@ class AppManager {
     private let appVersionManager: IAppVersionManager
     private let rateAppManager: IRateAppManager
     private let remoteAlertManager: IRemoteAlertManager
+    private let logRecordManager: ILogRecordManager
 
     private let didBecomeActiveSubject = PublishSubject<()>()
     private let willEnterForegroundSubject = PublishSubject<()>()
@@ -23,7 +24,7 @@ class AppManager {
          keychainKit: IKeychainKit, blurManager: IBlurManager, notificationManager: INotificationManager,
          kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
          appVersionManager: IAppVersionManager, rateAppManager: IRateAppManager,
-         remoteAlertManager: IRemoteAlertManager
+         remoteAlertManager: IRemoteAlertManager, logRecordManager: ILogRecordManager
     ) {
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -37,6 +38,7 @@ class AppManager {
         self.appVersionManager = appVersionManager
         self.rateAppManager = rateAppManager
         self.remoteAlertManager = remoteAlertManager
+        self.logRecordManager = logRecordManager
     }
 
 }
@@ -70,6 +72,7 @@ extension AppManager {
 
         blurManager.didBecomeActive()
         rateAppManager.onBecomeActive()
+        logRecordManager.onBecomeActive()
     }
 
     func didEnterBackground() {

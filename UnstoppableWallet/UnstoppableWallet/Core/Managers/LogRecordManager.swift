@@ -1,11 +1,12 @@
 import HsToolKit
 
 class LogRecordManager: ILogRecordManager {
+    private let linesCountLimit: Int
+    private let storage: ILogRecordStorage
 
-    let storage: ILogRecordStorage
-
-    init(storage: ILogRecordStorage) {
+    init(storage: ILogRecordStorage, linesCountLimit: Int = 1000) {
         self.storage = storage
+        self.linesCountLimit = linesCountLimit
     }
 
     func logsGroupedBy(context: String) -> [(String, Any)] {
@@ -16,7 +17,7 @@ class LogRecordManager: ILogRecordManager {
                             guard let aFirst = a.1.first, let bFirst = b.1.first else {
                                 return true
                             }
-        
+
                             return aFirst.date < bFirst.date
                         }
                         .map { (key: String, logs: [LogRecord]) -> (String, Any) in
@@ -24,6 +25,19 @@ class LogRecordManager: ILogRecordManager {
                                 "\(Date(timeIntervalSince1970: log.date)) [\(log.levelString)]: \(log.message)"
                             })
                         }
+    }
+
+    func onBecomeActive() {
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            guard let manager = self else {
+                return
+            }
+
+            let logsCount = manager.storage.logsCount()
+            if logsCount > manager.linesCountLimit {
+                manager.storage.removeFirstLogs(count: logsCount - manager.linesCountLimit)
+            }
+        }
     }
 
 }
