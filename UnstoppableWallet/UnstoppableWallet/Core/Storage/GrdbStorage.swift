@@ -288,6 +288,15 @@ class GrdbStorage {
             }
         }
 
+        migrator.registerMigration("createLogs") { db in 
+            try db.create(table: LogRecord.databaseTableName) { t in
+                t.column(LogRecord.Columns.date.name, .double).notNull()
+                t.column(LogRecord.Columns.level.name, .integer).notNull()
+                t.column(LogRecord.Columns.context.name, .text).notNull()
+                t.column(LogRecord.Columns.message.name, .text).notNull()
+            }
+        }
+
         return migrator
     }
 
@@ -449,8 +458,21 @@ extension GrdbStorage: ICoinRecordStorage {
 
 }
 
-extension GrdbStorage: ILogStorage {
-    func log(date: Date, level: Logger.Level, message: String, file: String?, function: String?, line: Int?, context: [String]?) {
-        print("\(date) \(level) \(context?.joined(separator: " ")) \(message)")
+extension GrdbStorage: ILogRecordStorage {
+
+    func logs(context: String) -> [LogRecord] {
+        try! dbPool.read { db in
+            try LogRecord
+                    .filter(LogRecord.Columns.context.like("\(context)%"))
+                    .order(LogRecord.Columns.date.asc)
+                    .fetchAll(db)
+        }
     }
+
+    func save(logRecord: LogRecord) {
+        _ = try? dbPool.write { db in
+            try logRecord.insert(db)
+        }
+    }
+
 }

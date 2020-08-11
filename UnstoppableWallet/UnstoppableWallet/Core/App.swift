@@ -13,7 +13,7 @@ class App {
     let appConfigProvider: IAppConfigProvider
 
     let localStorage: ILocalStorage & IChartTypeStorage
-    let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & ICoinRecordStorage & IPriceAlertRequestRecordStorage & ILogStorage
+    let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & ICoinRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage
 
     let themeManager: ThemeManager
     let systemInfoManager: ISystemInfoManager
@@ -54,6 +54,7 @@ class App {
     var remoteAlertManager: IRemoteAlertManager
     let priceAlertManager: IPriceAlertManager
     let notificationManager: INotificationManager
+    let logRecordManager: ILogRecordManager & ILogStorage
 
     var debugLogger: IDebugLogger?
     let logger: Logger
@@ -87,8 +88,9 @@ class App {
 
         localStorage = LocalStorage(storage: StorageKit.LocalStorage.default)
         storage = GrdbStorage(appConfigProvider: appConfigProvider)
+        logRecordManager = LogRecordManager(storage: storage)
 
-        logger = Logger(minLogLevel: .error, storage: storage)
+        logger = Logger(minLogLevel: .error, storage: logRecordManager)
         let networkManager = NetworkManager(logger: logger)
 
         keychainKit = KeychainKit(service: "io.horizontalsystems.bank.dev")
@@ -168,7 +170,7 @@ class App {
 
         remoteAlertManager.notificationManager = notificationManager
 
-        appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage, predefinedAccountTypeManager: predefinedAccountTypeManager, walletManager: walletManager, adapterManager: adapterManager, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager)
+        appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage, predefinedAccountTypeManager: predefinedAccountTypeManager, walletManager: walletManager, adapterManager: adapterManager, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, logRecordManager: logRecordManager)
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, localStorage: localStorage)
 
         keychainKitDelegate = KeychainKitDelegate(accountManager: accountManager, walletManager: walletManager)

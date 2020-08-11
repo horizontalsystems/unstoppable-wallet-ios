@@ -54,6 +54,11 @@ class AppStatusViewController: ThemeViewController {
                 result += key + "\(int)" + "\n"
             } else if let int = value as? Int32 {
                 result += key + "\(int)" + "\n"
+            } else if let deep = value as? [String] {
+                result += key + "\n"
+                deep.forEach { str in
+                    result += indentation + "    " + bullet + str + "\n"
+                }
             } else if let deep = value as? [(String, Any)] {
                 result += key + "\n" + build(logs: deep, indentation: "    " + indentation, bullet: " - ", level: level + 1) + (level < 2 ? "\n" : "")
             }

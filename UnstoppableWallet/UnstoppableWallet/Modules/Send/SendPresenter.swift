@@ -106,7 +106,7 @@ extension SendPresenter: ISendConfirmationDelegate {
         do {
             interactor.send(single: try handler.sendSingle(logger: actionLogger), logger: actionLogger)
         } catch {
-            actionLogger.warning("Not sending due to \(error)", save: true)
+            actionLogger.warning("Not sending due to \(String(reflecting: error))", save: true)
             view?.show(error: error)
         }
     }

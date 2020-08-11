@@ -37,6 +37,15 @@ protocol ILocalStorage: class {
     var pushNotificationsOn: Bool { get set }
 }
 
+protocol ILogRecordManager {
+    func logsGroupedBy(context: String) -> [(String, Any)]
+}
+
+protocol ILogRecordStorage {
+    func logs(context: String) -> [LogRecord]
+    func save(logRecord: LogRecord)
+}
+
 protocol IChartTypeStorage: class {
     var chartType: ChartType? { get set }
 }
