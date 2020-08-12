@@ -26,19 +26,25 @@ class SendEthereumHandler {
         self.feePriorityModule = feePriorityModule
     }
 
-    private func syncValidation() {
+    @discardableResult private func syncValidation() -> Bool {
+        var success = false
+
         do {
             _ = try amountModule.validAmount()
             try addressModule.validateAddress()
 
             delegate?.onChange(isValid: feeModule.isValid && feePriorityModule.feeRateState.isValid && estimateGasLimitState.isValid)
+
+            success = true
         } catch {
             delegate?.onChange(isValid: false)
         }
+
+        return success
     }
 
     private func processFee(error: Error) {
-        feeModule.set(externalError: error is EthereumKit.Address.ValidationError ? nil : error)        // TODO: check right error
+        feeModule.set(externalError: error)
     }
 
     private func syncState() {
@@ -72,7 +78,6 @@ class SendEthereumHandler {
 
         estimateGasLimitState = .loading
         syncState()
-        syncValidation()
 
         interactor.estimateGasLimit(to: try? addressModule.validAddress(), value: amountModule.currentAmount, gasPrice: feePriorityModule.feeRate)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
@@ -139,8 +144,9 @@ extension SendEthereumHandler: ISendHandler {
 extension SendEthereumHandler: ISendAmountDelegate {
 
     func onChangeAmount() {
-        syncValidation()
-        syncEstimateGasLimit()
+        if syncValidation() {
+            syncEstimateGasLimit()
+        }
     }
 
     func onChange(inputType: SendInputType) {
@@ -156,8 +162,9 @@ extension SendEthereumHandler: ISendAddressDelegate {
     }
 
     func onUpdateAddress() {
-        syncValidation()
-        syncEstimateGasLimit()
+        if syncValidation() {
+            syncEstimateGasLimit()
+        }
     }
 
     func onUpdate(amount: Decimal) {
@@ -170,8 +177,9 @@ extension SendEthereumHandler: ISendFeePriorityDelegate {
 
     func onUpdateFeePriority() {
         syncState()
-        syncValidation()
-        syncEstimateGasLimit()
+        if syncValidation() {
+            syncEstimateGasLimit()
+        }
     }
 
 }
