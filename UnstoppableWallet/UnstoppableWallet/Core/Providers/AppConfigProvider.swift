@@ -16,6 +16,10 @@ class AppConfigProvider: IAppConfigProvider {
         Bundle.main.object(forInfoDictionaryKey: "OfficeMode") as? String == "true"
     }
 
+    var sandbox: Bool {
+        Bundle.main.object(forInfoDictionaryKey: "Sandbox") as? String == "true"
+    }
+
     func defaultWords(count: Int) -> [String] {
         guard let wordsString = Bundle.main.object(forInfoDictionaryKey: "DefaultWords\(count)") as? String else {
             return []
@@ -51,7 +55,10 @@ class AppConfigProvider: IAppConfigProvider {
     }
 
     var pnsUrl: String {
-        (Bundle.main.object(forInfoDictionaryKey: "PnsUrl") as? String) ?? ""
+        let development = "http://pns-dev.horizontalsystems.xyz/api/v1/"
+        let production = "http://pns.horizontalsystems.xyz/api/v1/"
+
+        return sandbox ? development : production
     }
 
     var pnsUsername: String {
