@@ -20,7 +20,7 @@
 
 "alert.copied" = "Copiado";
 "alert.no_internet" = "Sin conexión a Internet";
-"alert.wrong_amount" = "Wrong Amount";
+"alert.wrong_amount" = "Cantidad Incorrecta";
 "alert.no_fee" = "Tarifa incorrecta";
 "alert.network_issue" = "Problemas de red. Inténtelo de nuevo";
 "alert.unknown_error" = "Error desconocido";
@@ -109,7 +109,7 @@
 "balance.title" = "Saldo";
 "balance.tab_bar_item" = "Saldo";
 "balance.send" = "Enviar";
-"balance.swap" = "Swap";
+"balance.swap" = "Permutar";
 "balance.deposit" = "Recibir";
 "balance.rate_per_coin" = "%@ por %@";
 "balance.syncing" = "Sincronizando...";
@@ -176,44 +176,44 @@
 
 // Swap
 
-"swap.title" = "Swap";
-"swap.you_pay" = "You Pay";
-"swap.estimated" = "estimated";
+"swap.title" = "Permutar";
+"swap.you_pay" = "Usted paga";
+"swap.estimated" = "estimado";
 "swap.balance" = "Saldo";
-"swap.you_get" = "You Get";
+"swap.you_get" = "Obtienes";
 "swap.token" = "Token";
-"swap.proceed" = "Proceed";
-"swap.amount_error.maximum_amount" = "Maximum amount %@";
+"swap.proceed" = "Continuar";
+"swap.amount_error.maximum_amount" = "Monto máximo %@";
 
-"swap.price" = "Price";
-"swap.price_impact" = "Price Impact";
-"swap.max_min" = "Max / Min";
-"swap.maximum_paid" = "Maximum Paid";
-"swap.minimum_got" = "Minimum Got";
+"swap.price" = "Precio";
+"swap.price_impact" = "Impacto en el precio";
+"swap.max_min" = "Máx / Mín";
+"swap.maximum_paid" = "Máximo Pagado";
+"swap.minimum_got" = "Mínimo Obtenido";
 
-"swap.fee" = "Swap Fee";
-"swap.transactions_speed" = "Transactions speed";
-"swap.transaction_fee" = "Transaction Fee";
+"swap.fee" = "Tarifa por permutar";
+"swap.transactions_speed" = "Velocidad de transacciones";
+"swap.transaction_fee" = "Tarifa de Transacción";
 
-"swap.select_token.title" = "Choose Coin";
+"swap.select_token.title" = "Elegir moneda";
 
 // Swap Confirmation
 
-"swap.confirmation.title" = "Confirm";
-"swap.confirmation.swap_button" = "Swap";
-"swap.confirmation.pay" = "Pay %@";
-"swap.confirmation.get" = "Get %@";
+"swap.confirmation.title" = "Confirmar";
+"swap.confirmation.swap_button" = "Permutar";
+"swap.confirmation.pay" = "Paga %@";
+"swap.confirmation.get" = "Obtén %@";
 
 
 "swap.uniswap_info.title" = "Uniswap v.2";
-"swap.uniswap_info.description" = "Uniswap is a fully decentralized protocol for automated liquidity provision on Ethereum.\n\nA simple formalized equation drives unstoppable liquidity for thousands of users and hundreds of applications.\n\nUniswap empowers developers, liquidity providers and traders to participate in a financial marketplace that is open and accessible to all.";
-"swap.uniswap_info.header_minimum_received" = "Minimum Received";
-"swap.uniswap_info.content_minimum_received" = "Yor transaction will revert if there is a large, unfavorable price movement before it is confirmed.";
-"swap.uniswap_info.header_price_impact" = "Price Impact";
-"swap.uniswap_info.content_price_impact" = "The difference between the market price and estimated price due to trade size.";
-"swap.uniswap_info.header_swap_fee" = "Swap Fee";
-"swap.uniswap_info.content_swap_fee" = "A portion of each trade (0.30%) goes to liquidity providers as a protocol incentive.";
-"swap.uniswap_info.link_button" = "Uniswap Site";
+"swap.uniswap_info.description" = "Uniswap es un protocolo totalmente descentralizado para la provisión automatizada de liquidez en Ethereum.\n\nUna simple ecuación formalizada impulsa una liquidez imparable para miles de usuarios y cientos de aplicaciones.\n\nUniswap potencia a desarrolladores, proveedores de liquidez y operadores a participar en un mercado financiero abierto y accesible para todos.";
+"swap.uniswap_info.header_minimum_received" = "Mínimo Recibido";
+"swap.uniswap_info.content_minimum_received" = "Su transacción se revertirá si hay un movimiento de precios grande y desfavorable antes de que se confirme.";
+"swap.uniswap_info.header_price_impact" = "Impacto en el precio";
+"swap.uniswap_info.content_price_impact" = "La diferencia entre el precio de mercado y el precio estimado debido al tamaño de la operación.";
+"swap.uniswap_info.header_swap_fee" = "Tarifa por permutar";
+"swap.uniswap_info.content_swap_fee" = "Una porción de cada transacción (0,30%) va a parar a los proveedores de liquidez como incentivo de protocolo.";
+"swap.uniswap_info.link_button" = "Website de Uniswap";
 
 // Transactions
 
@@ -295,7 +295,7 @@
 "settings.notifications" = "Notificaciones";
 "settings.base_currency" = "Moneda principal";
 "settings.language" = "Idioma";
-"settings.terms" = "Terms";
+"settings.terms" = "Términos";
 "settings.tell_friends" = "Recomendar a un amigo";
 "settings.contact" = "Contacto";
 "settings.light_mode" = "Modo ligero";
@@ -305,15 +305,15 @@
 // Settings -> Notifications
 
 "settings_notifications.title" = "Notificaciones";
-"settings_notifications.toggle_title" = "Push Notifications";
-"settings_notifications.description" = "Set price change alerts for the coins you would like to watch\n\nYou will be alerted when the change in price for the last 24 hours exceeds selected threshold.\n\nPrice Trend Alert warns of a trend change for the short 1 week, for the long 6 month.";
+"settings_notifications.toggle_title" = "Notificaciones automáticas";
+"settings_notifications.description" = "Establece alertas de variación de precio para las monedas que te gustaría ver\n\nSe te alertará cuando la variación de precio de las últimas 24 horas supere el umbral seleccionado.\n\n La Alerta de Tendencia de Precio advierte de un cambio de tendencia para el corto plazo de 1 semana, y para el largo plazo de 6 meses.";
 "settings_notifications.alert_off" = "Desactivado";
 "settings.notifications.deactivate_all" = "Desactivar todo";
 "settings.notifications.disabled_text" = "Las notificaciones para la aplicación del Monedero Unstoppable están desactivadas. Necesita activarlas para poder recibir alertas de cambio de precios.";
 "settings.notifications.settings_button" = "Activar en ajustes";
-"settings_notifications.trend_short" = "Short Term 7D";
-"settings_notifications.trend_long" = "Long Term 6M";
-"settings_notifications.reset_all_title" = "Reset All";
+"settings_notifications.trend_short" = "Corto plazo 7D";
+"settings_notifications.trend_long" = "Largo Plazo 6M";
+"settings_notifications.reset_all_title" = "Restablecer todo";
 "settings_notifications.trend_settings_title" = "Price Trend";
 
 // Settings -> Manage Wallet
