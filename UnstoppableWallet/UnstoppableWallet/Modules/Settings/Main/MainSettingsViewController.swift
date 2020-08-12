@@ -10,6 +10,7 @@ class MainSettingsViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private var allBackedUp: Bool = true
+    private var pinSet: Bool = true
     private var termsAccepted: Bool = true
     private var currentBaseCurrency: String?
     private var currentLanguage: String?
@@ -60,17 +61,18 @@ class MainSettingsViewController: ThemeViewController {
     }
 
     private var securityRows: [RowProtocol] {
-        let securityAttentionImage = allBackedUp ? nil : UIImage(named: "Attention Icon")
+        let manageAccountAttentionIcon = allBackedUp ? nil : UIImage(named: "Attention Icon")
+        let securityAttentionIcon = pinSet ? nil : UIImage(named: "Attention Icon")
 
         return [
             Row<RightImageCell>(id: "manage_accounts", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Wallet Icon"), title: "settings.manage_accounts".localized, rightImage: securityAttentionImage, rightImageTintColor: .themeLucian, showDisclosure: true, last: false)
+                cell.bind(titleIcon: UIImage(named: "Wallet Icon"), title: "settings.manage_accounts".localized, rightImage: manageAccountAttentionIcon, rightImageTintColor: .themeLucian, showDisclosure: true, last: false)
             }, action: { [weak self] _ in
                 self?.delegate.onManageAccounts()
             }),
 
-            Row<TitleCell>(id: "security_center", hash: "security_center.\(allBackedUp)", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.security_center".localized, showDisclosure: true)
+            Row<RightImageCell>(id: "security_center", hash: "security_center.\(pinSet)", height: .heightSingleLineCell, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.security_center".localized, rightImage: securityAttentionIcon, rightImageTintColor: .themeLucian, showDisclosure: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapSecurity()
             }),
@@ -173,6 +175,10 @@ extension MainSettingsViewController: IMainSettingsView {
 
     func set(allBackedUp: Bool) {
         self.allBackedUp = allBackedUp
+    }
+
+    func set(pinSet: Bool) {
+        self.pinSet = pinSet
     }
 
     func set(termsAccepted: Bool) {

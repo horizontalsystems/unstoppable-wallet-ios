@@ -16,7 +16,7 @@ class SystemInfoManager: ISystemInfoManager {
         return version
     }
 
-    var passcodeSet: Bool {
+    var pinSet: Bool {
         return LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
     }
 

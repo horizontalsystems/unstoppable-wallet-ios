@@ -84,8 +84,6 @@ extension SecuritySettingsPresenter: IUnlockDelegate {
     func onUnlock() {
         do {
             try interactor.disablePin()
-
-            sync(pinSet: false)
         } catch {
             view?.show(error: error)
             view?.toggle(pinSet: true)

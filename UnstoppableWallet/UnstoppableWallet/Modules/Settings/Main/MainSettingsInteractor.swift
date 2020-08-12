@@ -2,6 +2,7 @@ import RxSwift
 import LanguageKit
 import ThemeKit
 import CurrencyKit
+import PinKit
 
 class MainSettingsInteractor {
     private let disposeBag = DisposeBag()
@@ -9,14 +10,17 @@ class MainSettingsInteractor {
     weak var delegate: IMainSettingsInteractorDelegate?
 
     private let backupManager: IBackupManager
+    private let pinKit: IPinKit
     private let termsManager: ITermsManager
     private let themeManager: ThemeManager
     private let systemInfoManager: ISystemInfoManager
     private let currencyKit: ICurrencyKit
     private let appConfigProvider: IAppConfigProvider
 
-    init(backupManager: IBackupManager, termsManager: ITermsManager, themeManager: ThemeManager, systemInfoManager: ISystemInfoManager, currencyKit: ICurrencyKit, appConfigProvider: IAppConfigProvider) {
+    init(backupManager: IBackupManager, pinKit: IPinKit, termsManager: ITermsManager, themeManager: ThemeManager,
+         systemInfoManager: ISystemInfoManager, currencyKit: ICurrencyKit, appConfigProvider: IAppConfigProvider) {
         self.backupManager = backupManager
+        self.pinKit = pinKit
         self.termsManager = termsManager
         self.themeManager = themeManager
         self.systemInfoManager = systemInfoManager
@@ -28,6 +32,13 @@ class MainSettingsInteractor {
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] allBackedUp in
                     self?.delegate?.didUpdate(allBackedUp: allBackedUp)
+                })
+                .disposed(by: disposeBag)
+
+        pinKit.isPinSetObservable
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .subscribe(onNext: { [weak self] isPinSet in
+                    self?.delegate?.didUpdate(pinSet: isPinSet)
                 })
                 .disposed(by: disposeBag)
 
@@ -62,6 +73,10 @@ extension MainSettingsInteractor: IMainSettingsInteractor {
 
     var allBackedUp: Bool {
         backupManager.allBackedUp
+    }
+
+    var pinSet: Bool {
+        pinKit.isPinSet
     }
 
     var termsAccepted: Bool {
