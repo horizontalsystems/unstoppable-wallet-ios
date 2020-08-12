@@ -253,6 +253,7 @@ protocol IAppConfigProvider {
 
     var testMode: Bool { get }
     var officeMode: Bool { get }
+    var sandbox: Bool { get }
     var infuraCredentials: (id: String, secret: String?) { get }
     var btcCoreRpcUrl: String { get }
     var etherscanKey: String { get }

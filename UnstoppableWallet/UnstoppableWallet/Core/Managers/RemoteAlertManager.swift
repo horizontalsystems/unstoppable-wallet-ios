@@ -17,11 +17,6 @@ class RemoteAlertManager {
     private let url: String
     private var jwtToken: String?
 
-    enum Method: String {
-        case subscribe = "pns/subscribe"
-        case unsubscribe = "pns/unsubscribe"
-    }
-
     init(networkManager: NetworkManager, reachabilityManager: IReachabilityManager, appConfigProvider: IAppConfigProvider, storage: IPriceAlertRequestStorage) {
         self.networkManager = networkManager
         self.appConfigProvider = appConfigProvider
@@ -59,7 +54,11 @@ class RemoteAlertManager {
         }
 
         let path = method.rawValue
-        let params: [String: Any] = ["token": pushToken, "topics": topics]
+
+        var params = [String: Any]()
+        params["token"] = pushToken
+        params["topics"] = topics
+        params["bundle_id"] = Bundle.main.bundleIdentifier
 
         return wrapAuth(url: url + path, parameters: params, method: restMethod)
     }
