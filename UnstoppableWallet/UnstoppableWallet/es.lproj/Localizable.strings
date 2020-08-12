@@ -314,7 +314,7 @@
 "settings_notifications.trend_short" = "Corto plazo 7D";
 "settings_notifications.trend_long" = "Largo Plazo 6M";
 "settings_notifications.reset_all_title" = "Restablecer todo";
-"settings_notifications.trend_settings_title" = "Price Trend";
+"settings_notifications.trend_settings_title" = "Tendencia de precios";
 
 // Settings -> Manage Wallet
 
@@ -343,24 +343,25 @@
 
 // Settings -> Terms
 
-"terms.title" = "Terms";
+"terms.title" = "Términos";
 "terms.app_subtitle" = "Decentralized app";
-"terms.description" = "The Unstoppable wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.
+"terms.description" = "El monedero Unstoppable fue creado para aquellos que buscan invertir y almacenar criptomonedas de forma privada e independiente.
 
-It's a non-custodial, peer-to-peer wallet where only the user has control over funds. It doesn't collect any data and keeps user independent by not locking his/her wallet to a specific wallet app.
+Es un monedero peer-to-peer sin custodio, donde sólo el usuario tiene control sobre los fondos. No recopila ningún dato y mantiene al usuario independiente al no enlazar su cartera a un único monedero.
 
-The Unstoppable wallet is fully open-source and anyone can confirm that the app works exactly as it claims to.
+El monedero Unstoppable es completamente de código abierto y cualquiera puede verificar que la aplicación funciona exactamente como se afirma.
 
-We built Unstoppable for ourselves as the available solutions were not up to par. Both from engineering and usability perspective we believe this wallet to be significantly ahead of alternative products.";
-"terms.site" = "Site";
-"terms.item.academy" = "I went through the Academy section of this app and got familiar with the fundamental aspects of storing cryptocurrencies.";
-"terms.item.backup" = "I have backed up the private key(s) for my wallets that were shown to me in a form of 12-24 words. I understand that these private keys are stored on my smartphone and not elsewhere.";
-"terms.item.owner" = "I understand that only the owner of my private key(s) can access and spend funds on my wallet and therefore these keys should never be shared with anyone.";
-"terms.item.recover" = "I understand that I will need my private keys in order to restore access to my funds should I loose my phone or if the app malfunctions. Without my private keys it will be impossible to recover access to my wallet.";
-"terms.item.phone" = "I understand that passing my phone to untrusted entities or leaving the wallet app without safe PIN lock may potentially endanger the safety of my funds.";
-"terms.item.root" = "I understand that jail breaking (rooting) my phone, installing third party apps from unknown sources, keeping the operating system outdated can potentially endanger the safety of my funds.";
-"terms.item.bugs" = "I understand there may be undiscovered software issues in the code powering this wallet app which may lead to unexpected behavior or the app malfunctioning.";
-"terms.footer" = "Thank you for choosing this wallet!";
+Desarrollamos Unstoppable para nosotros mismos ya que las soluciones disponibles no estaban a la altura. Desde una perspectiva de ingenieria y practicidad, creemos que este monedero está significativamente por delante de los productos alternativos.";
+"terms.site" = "Sitio";
+"terms.item.academy" = "He pasado por la sección Academia de esta aplicación y me he familiarizado con los aspectos fundamentales del almacenamiento de criptomonedas.";
+"terms.item.backup" = "He respaldado la(s) clave(s) privada(s) para mis monederos que se me mostraron en forma de 12-24 palabras. Entiendo que estas claves privadas se almacenan en mi smartphone y no en ningún otro lugar.";
+"terms.item.owner" = "Entiendo que sólo el propietario de mi(s) clave(s) privada(s) puede acceder y gastar fondos en mi monedero y, por lo tanto, estas claves no deben ser compartidas con nadie.";
+"terms.item.recover" = "Entiendo que necesitaré mis claves privadas para restaurar el acceso a mis fondos si pierdo mi teléfono o si la aplicación no funciona correctamente. Sin mis claves privadas será imposible recuperar el acceso a mi monedero.";
+"terms.item.phone" = "Entiendo que dar mi teléfono a entidades no fiables o dejar la aplicación de monedero sin bloqueo seguro por PIN podría, potencialmente, poner en peligro la seguridad de mis fondos.";
+"terms.item.root" = "Entiendo que rootear mi teléfono (rooting), instalando aplicaciones de terceros de fuentes desconocidas o mantener el sistema operativo desactualizado puede, potencialmente,
+poner en peligro la seguridad de mis fondos.";
+"terms.item.bugs" = "Entiendo que puede haber problemas de software sin descubrir en el código que hace funcionar esta aplicación, lo que puede llevar a un comportamiento inesperado o al mal funcionamiento de la aplicación.";
+"terms.footer" = "¡Gracias por elegir este monedero!";
 
 // Settings -> Tell Friends
 
@@ -572,11 +573,11 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "add_erc20_token.add" = "Añadir";
 "add_erc20_token.contract_not_exist" = "Contrato no encontrado";
 
-"change_24hour_up" = "%@ price: up %@%% %@";
-"change_24hour_down" = "%@ price: down %@%% %@";
-"change_trend_up" = "%@ trend: up %@";
-"change_trend_down" = "%@ trend: down %@";
+"change_24hour_up" = "Cotización %@: subió %@%% %@";
+"change_24hour_down" = "Cotización %@: bajó %@%% %@";
+"change_trend_up" = "Tendencia de %@: subió %@";
+"change_trend_down" = "Tendencia de %@: bajó %@";
 
-"chart_alert.title" = "Notification";
-"chart_alert.24h_description" = "Price Change 24h";
-"chart_alert.trend_description" = "Price Trend Change";
+"chart_alert.title" = "Notificación";
+"chart_alert.24h_description" = "Variación de Precio 24h";
+"chart_alert.trend_description" = "Variación de Tendencia de Precios";
