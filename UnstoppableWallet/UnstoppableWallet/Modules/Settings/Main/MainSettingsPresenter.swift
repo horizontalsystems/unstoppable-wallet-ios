@@ -19,6 +19,7 @@ extension MainSettingsPresenter: IMainSettingsViewDelegate {
 
     func viewDidLoad() {
         view?.set(allBackedUp: interactor.allBackedUp)
+        view?.set(pinSet: interactor.pinSet)
         view?.set(termsAccepted: interactor.termsAccepted)
         syncCurrentBaseCurrency()
         view?.set(currentLanguage: interactor.currentLanguageDisplayName)
@@ -81,6 +82,11 @@ extension MainSettingsPresenter: IMainSettingsInteractorDelegate {
 
     func didUpdate(allBackedUp: Bool) {
         view?.set(allBackedUp: allBackedUp)
+        view?.refresh()
+    }
+
+    func didUpdate(pinSet: Bool) {
+        view?.set(pinSet: pinSet)
         view?.refresh()
     }
 

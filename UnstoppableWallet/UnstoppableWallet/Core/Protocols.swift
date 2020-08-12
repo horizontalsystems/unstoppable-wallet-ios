@@ -238,7 +238,7 @@ protocol IRateCoinMapper {
 
 protocol ISystemInfoManager {
     var appVersion: String { get }
-    var passcodeSet: Bool { get }
+    var pinSet: Bool { get }
     var deviceModel: String { get }
     var osVersion: String { get }
 }

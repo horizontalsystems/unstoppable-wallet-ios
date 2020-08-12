@@ -69,6 +69,7 @@ extension MainSettingsRouter {
         let router = MainSettingsRouter()
         let interactor = MainSettingsInteractor(
                 backupManager: App.shared.backupManager,
+                pinKit: App.shared.pinKit,
                 termsManager: App.shared.termsManager,
                 themeManager: App.shared.themeManager,
                 systemInfoManager: App.shared.systemInfoManager,

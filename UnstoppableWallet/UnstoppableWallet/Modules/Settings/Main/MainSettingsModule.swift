@@ -4,6 +4,7 @@ protocol IMainSettingsView: class {
     func refresh()
 
     func set(allBackedUp: Bool)
+    func set(pinSet: Bool)
     func set(termsAccepted: Bool)
     func set(currentBaseCurrency: String)
     func set(currentLanguage: String?)
@@ -31,6 +32,7 @@ protocol IMainSettingsInteractor: AnyObject {
     var companyWebPageLink: String { get }
     var appWebPageLink: String { get }
     var allBackedUp: Bool { get }
+    var pinSet: Bool { get }
     var termsAccepted: Bool { get }
     var currentLanguageDisplayName: String? { get }
     var baseCurrency: Currency { get }
@@ -40,6 +42,7 @@ protocol IMainSettingsInteractor: AnyObject {
 
 protocol IMainSettingsInteractorDelegate: class {
     func didUpdate(allBackedUp: Bool)
+    func didUpdate(pinSet: Bool)
     func didUpdate(termsAccepted: Bool)
     func didUpdateBaseCurrency()
 }

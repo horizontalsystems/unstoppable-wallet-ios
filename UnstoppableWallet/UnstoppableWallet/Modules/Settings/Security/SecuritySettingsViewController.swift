@@ -69,9 +69,12 @@ class SecuritySettingsViewController: ThemeViewController {
     }
 
     private var pinRows: [RowProtocol] {
+        let attentionIcon = pinSet ? nil : UIImage(named: "Attention Icon")
+
         var rows: [RowProtocol] = [
             Row<ToggleCell>(id: "pin", height: .heightSingleLineCell, bind: { [unowned self] cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Passcode Icon"), title: "settings_security.passcode".localized, isOn: self.pinSet, last: !self.editPinVisible, onToggle: { [weak self] isOn in
+                cell.bind(titleIcon: UIImage(named: "Passcode Icon"), title: "settings_security.passcode".localized, 
+                        rightImage: attentionIcon?.tinted(with: .themeLucian), isOn: self.pinSet, last: !self.editPinVisible, onToggle: { [weak self] isOn in
                     self?.delegate.didSwitch(pinSet: isOn)
                 })
             })
