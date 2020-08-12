@@ -573,8 +573,8 @@ poner en peligro la seguridad de mis fondos.";
 "add_erc20_token.add" = "Añadir";
 "add_erc20_token.contract_not_exist" = "Contrato no encontrado";
 
-"change_24hour_up" = "Cotización %@: subió %@%% %@";
-"change_24hour_down" = "Cotización %@: bajó %@%% %@";
+"change_24hour_up" = "Precio %@: subió %@%% %@";
+"change_24hour_down" = "Precio %@: bajó %@%% %@";
 "change_trend_up" = "Tendencia de %@: subió %@";
 "change_trend_down" = "Tendencia de %@: bajó %@";
 
