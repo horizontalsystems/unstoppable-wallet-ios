@@ -49,7 +49,6 @@ class ChartCurrentRateView: UIView {
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
-        alertButton.setImage(UIImage(named: "Notification Small Icon")?.tinted(with: .themeGray), for: .normal)
         alertButton.setImage(UIImage(named: "Notification Small Icon")?.tinted(with: .themeGray50), for: .highlighted)
         alertButton.contentHorizontalAlignment = .right
         alertButton.addTarget(self, action: #selector(onAlertTap), for: .touchUpInside)
@@ -84,17 +83,18 @@ class ChartCurrentRateView: UIView {
         switch alertMode {
         case .on:
             alertButton.setImage(UIImage(named: "Notification Small Icon")?.tinted(with: .themeJacob), for: .normal)
-            updateDiffLabelConstraints(notificationsHidden: false)
+            updateNotificationControls(notificationsHidden: false)
         case .off:
             alertButton.setImage(UIImage(named: "Notification Small Icon")?.tinted(with: .themeGray), for: .normal)
-            updateDiffLabelConstraints(notificationsHidden: false)
+            updateNotificationControls(notificationsHidden: false)
         case .hidden:
             alertButton.setImage(nil, for: .normal)
-            updateDiffLabelConstraints(notificationsHidden: true)
+            updateNotificationControls(notificationsHidden: true)
         }
     }
 
-    private func updateDiffLabelConstraints(notificationsHidden: Bool) {
+    private func updateNotificationControls(notificationsHidden: Bool) {
+        alertButton.isUserInteractionEnabled = !notificationsHidden
         diffLabel.snp.updateConstraints { maker in
             let inset = notificationsHidden ? CGFloat.margin4x : CGFloat.margin4x + CGFloat.margin2x + 16
             maker.trailing.equalToSuperview().inset(inset)
