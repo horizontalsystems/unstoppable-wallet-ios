@@ -1,33 +1,54 @@
 import Foundation
+import RxSwift
+import RxCocoa
 
-protocol IGuidesView: AnyObject {
-    func set(filterViewItems: [FilterHeaderView.ViewItem])
-    func set(viewItems: [GuideViewItem])
-    func refresh()
-    func setSpinner(visible: Bool)
-}
+protocol IGuidesViewModel {
+    var filters: Driver<[String]> { get }
+    var viewItems: Driver<[GuideViewItem]> { get }
+    var isLoading: Driver<Bool> { get }
+    var error: Driver<Error?> { get }
 
-protocol IGuidesViewDelegate {
-    func onLoad()
     func onSelectFilter(index: Int)
-    func onTapGuide(index: Int)
 }
 
-protocol IGuidesInteractor {
-    var guidesIndexUrl: URL { get }
-    func fetchGuideCategories(url: URL)
+enum DataState<T> {
+    case loading
+    case success(result: T)
+    case error(error: Error)
 }
 
-protocol IGuidesInteractorDelegate: AnyObject {
-    func didFetch(guideCategories: [GuideCategory])
+struct GuideCategoryItem {
+    let title: String
+    let items: [GuideItem]
 }
 
-protocol IGuidesRouter {
-    func show(guideUrl: URL)
+struct GuideItem {
+    let title: String
+    var imageUrl: URL?
+    let date: Date
+    let url: URL?
 }
 
 struct GuideViewItem {
     let title: String
     let date: Date
     var imageUrl: URL?
+    let url: URL?
+}
+
+struct GuidesModule {
+
+    static func instance() -> UIViewController {
+        let repository = GuidesRepository(
+                appConfigProvider: App.shared.appConfigProvider,
+                guidesManager: App.shared.guidesManager,
+                reachabilityManager: App.shared.reachabilityManager
+        )
+
+        let service = GuidesService(appConfigProvider: App.shared.appConfigProvider, repository: repository)
+        let viewModel = GuidesViewModel(service: service)
+
+        return GuidesViewController(viewModel: viewModel)
+    }
+
 }

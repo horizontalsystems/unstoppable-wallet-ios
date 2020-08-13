@@ -3,12 +3,13 @@ import SnapKit
 import ThemeKit
 import SectionsTableView
 import HUD
+import RxSwift
 
 class GuidesViewController: ThemeViewController {
     private static let spinnerRadius: CGFloat = 8
     private static let spinnerLineWidth: CGFloat = 2
 
-    private let delegate: IGuidesViewDelegate
+    private let viewModel: IGuidesViewModel
 
     private let tableView = UITableView(frame: .zero, style: .plain)
     private let filterHeaderView = FilterHeaderView()
@@ -19,10 +20,14 @@ class GuidesViewController: ThemeViewController {
             strokeColor: .themeGray
     )
 
+    private let errorLabel = UILabel()
+
     private var viewItems = [GuideViewItem]()
 
-    init(delegate: IGuidesViewDelegate) {
-        self.delegate = delegate
+    private let disposeBag = DisposeBag()
+
+    init(viewModel: IGuidesViewModel) {
+        self.viewModel = viewModel
 
         super.init()
 
@@ -51,7 +56,7 @@ class GuidesViewController: ThemeViewController {
         tableView.delegate = self
 
         filterHeaderView.onSelect = { [weak self] index in
-            self?.delegate.onSelectFilter(index: index)
+            self?.viewModel.onSelectFilter(index: index)
         }
 
         view.addSubview(spinner)
@@ -60,7 +65,50 @@ class GuidesViewController: ThemeViewController {
             maker.width.height.equalTo(GuidesViewController.spinnerRadius * 2 + GuidesViewController.spinnerLineWidth)
         }
 
-        delegate.onLoad()
+        view.addSubview(errorLabel)
+        errorLabel.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+
+        errorLabel.font = .subhead2
+        errorLabel.textColor = .themeGray
+
+        viewModel.filters
+                .drive(onNext: { [weak self] filters in
+                    self?.filterHeaderView.reload(filters: filters.map { filter in
+                        FilterHeaderView.ViewItem.item(title: filter)
+                    })
+                })
+                .disposed(by: disposeBag)
+
+        viewModel.viewItems
+                .drive(onNext: { [weak self] viewItems in
+                    self?.viewItems = viewItems
+                    self?.tableView.reloadData()
+                })
+                .disposed(by: disposeBag)
+
+        viewModel.isLoading
+                .drive(onNext: { [weak self] visible in
+                    self?.setSpinner(visible: visible)
+                })
+                .disposed(by: disposeBag)
+
+        viewModel.error
+                .drive(onNext: { [weak self] error in
+                    self?.errorLabel.text = error?.smartDescription
+                })
+                .disposed(by: disposeBag)
+    }
+
+    private func setSpinner(visible: Bool) {
+        if visible {
+            spinner.isHidden = false
+            spinner.startAnimating()
+        } else {
+            spinner.isHidden = true
+            spinner.stopAnimating()
+        }
     }
 
 }
@@ -88,7 +136,14 @@ extension GuidesViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate.onTapGuide(index: indexPath.row)
+        let viewItem = viewItems[indexPath.row]
+
+        guard let url = viewItem.url else {
+            return
+        }
+
+        let module = GuideRouter.module(guideUrl: url)
+        navigationController?.pushViewController(module, animated: true)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -108,32 +163,6 @@ extension GuidesViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         filterHeaderView
-    }
-
-}
-
-extension GuidesViewController: IGuidesView {
-
-    func set(filterViewItems: [FilterHeaderView.ViewItem]) {
-        filterHeaderView.reload(filters: filterViewItems)
-    }
-
-    func set(viewItems: [GuideViewItem]) {
-        self.viewItems = viewItems
-    }
-
-    func refresh() {
-        tableView.reloadData()
-    }
-
-    func setSpinner(visible: Bool) {
-        if visible {
-            spinner.isHidden = false
-            spinner.startAnimating()
-        } else {
-            spinner.isHidden = true
-            spinner.stopAnimating()
-        }
     }
 
 }
