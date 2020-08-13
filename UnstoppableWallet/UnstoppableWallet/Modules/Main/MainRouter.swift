@@ -50,7 +50,7 @@ extension MainRouter {
     }
 
     private static var guidesNavigation: UIViewController {
-        ThemeNavigationController(rootViewController: GuidesRouter.module())
+        ThemeNavigationController(rootViewController: GuidesModule.instance())
     }
 
 }
