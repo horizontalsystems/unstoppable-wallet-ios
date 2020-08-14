@@ -575,8 +575,10 @@ poner en peligro la seguridad de mis fondos.";
 
 "change_24hour_up" = "Precio %@: subió %@%% %@";
 "change_24hour_down" = "Precio %@: bajó %@%% %@";
-"change_trend_up" = "Tendencia de %@: subió %@";
-"change_trend_down" = "Tendencia de %@: bajó %@";
+"trend_shortterm_up" = "%@ short term trend: up %@";
+"trend_shortterm_down" = "%@ short term trend: down %@";
+"trend_longterm_up" = "%@ long term trend: up %@";
+"trend_longterm_down" = "%@ long term trend: down %@";
 
 "chart_alert.title" = "Notificación";
 "chart_alert.24h_description" = "Variación de Precio 24h";
