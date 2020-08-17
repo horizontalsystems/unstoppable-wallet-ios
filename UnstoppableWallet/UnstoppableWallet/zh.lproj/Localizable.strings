@@ -181,39 +181,39 @@
 "swap.estimated" = "估计";
 "swap.balance" = "余额";
 "swap.you_get" = "您获得";
-"swap.token" = "Token";
-"swap.proceed" = "Proceed";
-"swap.amount_error.maximum_amount" = "Maximum amount %@";
+"swap.token" = "令牌";
+"swap.proceed" = "继续";
+"swap.amount_error.maximum_amount" = "最大金额 %@";
 
-"swap.price" = "Price";
-"swap.price_impact" = "Price Impact";
-"swap.max_min" = "Max / Min";
-"swap.maximum_paid" = "Maximum Paid";
-"swap.minimum_got" = "Minimum Got";
+"swap.price" = "价格";
+"swap.price_impact" = "价格影响";
+"swap.max_min" = "最大 / 最小";
+"swap.maximum_paid" = "最大支付金额";
+"swap.minimum_got" = "最小获取金额";
 
-"swap.fee" = "Swap Fee";
-"swap.transactions_speed" = "Transactions speed";
-"swap.transaction_fee" = "Transaction Fee";
+"swap.fee" = "掉期交易费用";
+"swap.transactions_speed" = "交易速度";
+"swap.transaction_fee" = "交易费用";
 
-"swap.select_token.title" = "Choose Coin";
+"swap.select_token.title" = "选择代币";
 
 // Swap Confirmation
 
-"swap.confirmation.title" = "Confirm";
-"swap.confirmation.swap_button" = "Swap";
-"swap.confirmation.pay" = "Pay %@";
-"swap.confirmation.get" = "Get %@";
+"swap.confirmation.title" = "确认";
+"swap.confirmation.swap_button" = "掉期交易";
+"swap.confirmation.pay" = "支付 %@";
+"swap.confirmation.get" = "获得 %@";
 
 
 "swap.uniswap_info.title" = "Uniswap v.2";
-"swap.uniswap_info.description" = "Uniswap is a fully decentralized protocol for automated liquidity provision on Ethereum.\n\nA simple formalized equation drives unstoppable liquidity for thousands of users and hundreds of applications.\n\nUniswap empowers developers, liquidity providers and traders to participate in a financial marketplace that is open and accessible to all.";
-"swap.uniswap_info.header_minimum_received" = "Minimum Received";
-"swap.uniswap_info.content_minimum_received" = "Yor transaction will revert if there is a large, unfavorable price movement before it is confirmed.";
-"swap.uniswap_info.header_price_impact" = "Price Impact";
-"swap.uniswap_info.content_price_impact" = "The difference between the market price and estimated price due to trade size.";
-"swap.uniswap_info.header_swap_fee" = "Swap Fee";
-"swap.uniswap_info.content_swap_fee" = "A portion of each trade (0.30%) goes to liquidity providers as a protocol incentive.";
-"swap.uniswap_info.link_button" = "Uniswap Site";
+"swap.uniswap_info.description" = "Uniswap是对以太币（Ethereum）实现流动性供给自动化的一种完全去中心化协议。\n\n一个简单的形式化方程为成千上百的用户和应用程序推动了不可阻挡的流动性。\n\nUniswap为开发人员、流动性提供着和交易者赋予了参与到对所有人开放的金融市场中的能力。";
+"swap.uniswap_info.header_minimum_received" = "收到的最小金额";
+"swap.uniswap_info.content_minimum_received" = "如果在确认之前出现大幅度不利的价格变动，您的交易将会还原。";
+"swap.uniswap_info.header_price_impact" = "价格影响";
+"swap.uniswap_info.content_price_impact" = "市场价格和估计价格由于交易规模引起的差额。";
+"swap.uniswap_info.header_swap_fee" = "掉期交易费用";
+"swap.uniswap_info.content_swap_fee" = "每一交易的一部分（0.30%）将作为协议奖励授予流动性提供着。";
+"swap.uniswap_info.link_button" = "Uniswap网站";
 
 // Transactions
 
@@ -295,7 +295,7 @@
 "settings.notifications" = "通知";
 "settings.base_currency" = "基本货币";
 "settings.language" = "语言";
-"settings.terms" = "Terms";
+"settings.terms" = "条款";
 "settings.tell_friends" = "分享给好友";
 "settings.contact" = "报告问题";
 "settings.light_mode" = "简单模式";
@@ -305,16 +305,16 @@
 // Settings -> Notifications
 
 "settings_notifications.title" = "通知";
-"settings_notifications.toggle_title" = "Push Notifications";
-"settings_notifications.description" = "Set price change alerts for the coins you would like to watch\n\nYou will be alerted when the change in price for the last 24 hours exceeds selected threshold.\n\nPrice Trend Alert warns of a trend change for the short 1 week, for the long 6 month.";
+"settings_notifications.toggle_title" = "推送通知";
+"settings_notifications.description" = "为您要监视的代币设定价格变动警报\n\n当过去24小时内价格变动超过选定的临界值时，您将会收到警报。\n\n价格趋势警报将对短期的1星期、长期的6个月发出趋势变动警告。";
 "settings_notifications.alert_off" = "关";
 "settings.notifications.deactivate_all" = "全部停用";
 "settings.notifications.disabled_text" = "已禁用Unstoppable钱包应用通知。您必须开启通知并允许后台应用刷新才能接收价格变更警报。";
 "settings.notifications.settings_button" = "在设置中开启";
-"settings_notifications.trend_short" = "Short Term 7D";
-"settings_notifications.trend_long" = "Long Term 6M";
-"settings_notifications.reset_all_title" = "Reset All";
-"settings_notifications.trend_settings_title" = "Price Trend";
+"settings_notifications.trend_short" = "短期7天";
+"settings_notifications.trend_long" = "长期6个月";
+"settings_notifications.reset_all_title" = "重置全部";
+"settings_notifications.trend_settings_title" = "价格趋势";
 
 // Settings -> Manage Wallet
 
@@ -343,24 +343,24 @@
 
 // Settings -> Terms
 
-"terms.title" = "Terms";
-"terms.app_subtitle" = "Decentralized App";
-"terms.description" = "The Unstoppable wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.
+"terms.title" = "条款";
+"terms.app_subtitle" = "去中心化应用";
+"terms.description" = "Unstoppable钱包是为寻求以私密和独立的方式投资和储存加密货币的人士而创立。
 
-It's a non-custodial, peer-to-peer wallet where only the user has control over funds. It doesn't collect any data and keeps user independent by not locking his/her wallet to a specific wallet app.
+这是一个非监护式对等钱包，只有用户能够对资金进行控制。它不收集任何数据并通过不把用户钱包锁定至特定的钱包应用来保证他/她的独立性。
 
-The Unstoppable wallet is fully open-source and anyone can confirm that the app works exactly as it claims to.
+Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的方式运行。
 
-We built Unstoppable for ourselves as the available solutions were not up to par. Both from engineering and usability perspective we believe this wallet to be significantly ahead of alternative products.";
-"terms.site" = "Site";
-"terms.item.academy" = "I went through the Academy section of this app and got familiar with the fundamental aspects of storing cryptocurrencies.";
-"terms.item.backup" = "I have backed up the private key(s) for my wallets that were shown to me in a form of 12-24 words. I understand that these private keys are stored on my smartphone and not elsewhere.";
-"terms.item.owner" = "I understand that only the owner of my private key(s) can access and spend funds on my wallet and therefore these keys should never be shared with anyone.";
-"terms.item.recover" = "I understand that I will need my private keys in order to restore access to my funds should I loose my phone or if the app malfunctions. Without my private keys it will be impossible to recover access to my wallet.";
-"terms.item.phone" = "I understand that passing my phone to untrusted entities or leaving the wallet app without safe PIN lock may potentially endanger the safety of my funds.";
-"terms.item.root" = "I understand that jail breaking (rooting) my phone, installing third party apps from unknown sources, keeping the operating system outdated can potentially endanger the safety of my funds.";
-"terms.item.bugs" = "I understand there may be undiscovered software issues in the code powering this wallet app which may lead to unexpected behavior or the app malfunctioning.";
-"terms.footer" = "Thank you for choosing this wallet!";
+我们为我们自己创立了Unstoppable作为符合标准的可用的解决方案。从工程和可用性角度而言，我们相信此钱包远远领先于其他产品。";
+"terms.site" = "网站";
+"terms.item.academy" = "我浏览了此应用的“学院”（Academy）部分并掌握了储存加密货币的基础知识。";
+"terms.item.backup" = "我已对我钱包的私钥备份，该私钥以12-24字的格式展示给我。我理解这些私钥将保存在我的智能手机而不是其他地方。";
+"terms.item.owner" = "我理解只有私钥的所有人可以访问和消费我钱包上的资金，因此不得和任何人共享这些私钥。";
+"terms.item.recover" = "我理解如果我丢失了手机或者应用出现故障时，我需要私钥才能恢复对我资金的访问。没有私钥，将无法恢复对我钱包的访问。";
+"terms.item.phone" = "我理解，将我的手机交给不可信的实体或者在未设置安全PIN码锁定的情况下离开钱包应用可能会危害我的资金安全。";
+"terms.item.root" = "我理解对我的手机进行越狱（root）、安装来源不明的第三方应用、未及时更新操作系统可能会危害我的资金安全。";
+"terms.item.bugs" = "我理解，在实现此钱包应用的代码中可能存在未发现的软件问题，这可能会导致意外行为或应用故障的发生。";
+"terms.footer" = "感谢您选择我们的钱包！";
 
 // Settings -> Tell Friends
 
@@ -487,7 +487,7 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "chart.title" = "%@ 价格";
 "chart.time_duration.day" = "1天";
 "chart.time_duration.week" = "7天";
-"chart.time_duration.week2" = "2W";
+"chart.time_duration.week2" = "2周";
 "chart.time_duration.month" = "1个月";
 "chart.time_duration.month3" = "3个月";
 "chart.time_duration.halyear" = "6个月";
@@ -577,13 +577,13 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "add_erc20_token.add" = "添加";
 "add_erc20_token.contract_not_exist" = "没找到合同";
 
-"change_24hour_up" = "%@ price: up %@%% %@";
-"change_24hour_down" = "%@ price: down %@%% %@";
-"trend_shortterm_up" = "%@ short term trend: up %@";
-"trend_shortterm_down" = "%@ short term trend: down %@";
-"trend_longterm_up" = "%@ long term trend: up %@";
-"trend_longterm_down" = "%@ long term trend: down %@";
+"change_24hour_up" = "%@ 价格：上升 %@%% %@";
+"change_24hour_down" = "%@ 价格：下跌 %@%% %@";
+"trend_shortterm_up" = "%@ 短期趋势：上升 %@";
+"trend_shortterm_down" = "%@ 短期趋势：下跌 %@";
+"trend_longterm_up" = "%@ 长期趋势：上升 %@";
+"trend_longterm_down" = "%@ 长期趋势：下跌 %@";
 
-"chart_alert.title" = "Notification";
-"chart_alert.24h_description" = "Price Change 24h";
-"chart_alert.trend_description" = "Price Trend Change";
+"chart_alert.title" = "通知";
+"chart_alert.24h_description" = "24小时价格变动";
+"chart_alert.trend_description" = "价格趋势变动";
