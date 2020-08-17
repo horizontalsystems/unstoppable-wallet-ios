@@ -20,7 +20,7 @@
 
 "alert.copied" = "已复制";
 "alert.no_internet" = "没有网络";
-"alert.wrong_amount" = "Wrong Amount";
+"alert.wrong_amount" = "金额有误";
 "alert.no_fee" = "错误费用";
 "alert.network_issue" = "网络问题。请稍后再试\n\n";
 "alert.unknown_error" = "未知错误";
@@ -109,7 +109,7 @@
 "balance.title" = "余额";
 "balance.tab_bar_item" = "余额";
 "balance.send" = "发送​​";
-"balance.swap" = "Swap";
+"balance.swap" = "掉期交易";
 "balance.deposit" = "接收";
 "balance.rate_per_coin" = "%@ / %@";
 "balance.syncing" = "正在同步...";
@@ -176,11 +176,11 @@
 
 // Swap
 
-"swap.title" = "Swap";
-"swap.you_pay" = "You Pay";
-"swap.estimated" = "estimated";
-"swap.balance" = "Balance";
-"swap.you_get" = "You Get";
+"swap.title" = "掉期交易";
+"swap.you_pay" = "您支付";
+"swap.estimated" = "估计";
+"swap.balance" = "余额";
+"swap.you_get" = "您获得";
 "swap.token" = "Token";
 "swap.proceed" = "Proceed";
 "swap.amount_error.maximum_amount" = "Maximum amount %@";
