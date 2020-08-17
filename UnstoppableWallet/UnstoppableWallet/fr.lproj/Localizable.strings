@@ -20,7 +20,7 @@
 
 "alert.copied" = "Copié";
 "alert.no_internet" = "Aucune connexion Internet";
-"alert.wrong_amount" = "Wrong Amount";
+"alert.wrong_amount" = "Montant incorrect";
 "alert.no_fee" = "Commission incorrecte";
 "alert.network_issue" = "Problèmes réseau. Réessayez";
 "alert.unknown_error" = "Erreur inconnue";
@@ -109,7 +109,7 @@
 "balance.title" = "Balance";
 "balance.tab_bar_item" = "Balance";
 "balance.send" = "Envoyer";
-"balance.swap" = "Swap";
+"balance.swap" = "Echanger";
 "balance.deposit" = "Recevoir";
 "balance.rate_per_coin" = "%@ par %@";
 "balance.syncing" = "Synchronisation...";
@@ -176,44 +176,44 @@
 
 // Swap
 
-"swap.title" = "Swap";
-"swap.you_pay" = "You Pay";
-"swap.estimated" = "estimated";
+"swap.title" = "Echanger";
+"swap.you_pay" = "Vous payez";
+"swap.estimated" = "estimé";
 "swap.balance" = "Balance";
-"swap.you_get" = "You Get";
+"swap.you_get" = "Vous recevez";
 "swap.token" = "Token";
 "swap.proceed" = "Continuer";
-"swap.amount_error.maximum_amount" = "Maximum amount %@";
+"swap.amount_error.maximum_amount" = "Montant maximum %@";
 
 "swap.price" = "Prix";
-"swap.price_impact" = "Price Impact";
+"swap.price_impact" = "Impact prix";
 "swap.max_min" = "Max / Min";
-"swap.maximum_paid" = "Maximum Paid";
-"swap.minimum_got" = "Minimum Got";
+"swap.maximum_paid" = "Montant maximum payé";
+"swap.minimum_got" = "Montant minimum reçu";
 
-"swap.fee" = "Swap Fee";
-"swap.transactions_speed" = "Transactions speed";
-"swap.transaction_fee" = "Transaction Fee";
+"swap.fee" = "Frais d'échange";
+"swap.transactions_speed" = "Vitesse de transaction";
+"swap.transaction_fee" = "Frais de transaction";
 
-"swap.select_token.title" = "Choose Coin";
+"swap.select_token.title" = "Choisir la pièce";
 
 // Swap Confirmation
 
 "swap.confirmation.title" = "Confirmer";
-"swap.confirmation.swap_button" = "Swap";
-"swap.confirmation.pay" = "Pay %@";
-"swap.confirmation.get" = "Get %@";
+"swap.confirmation.swap_button" = "Échanger";
+"swap.confirmation.pay" = "Paye %@";
+"swap.confirmation.get" = "Reçoit %@";
 
 
 "swap.uniswap_info.title" = "Uniswap v.2";
-"swap.uniswap_info.description" = "Uniswap is a fully decentralized protocol for automated liquidity provision on Ethereum.\n\nA simple formalized equation drives unstoppable liquidity for thousands of users and hundreds of applications.\n\nUniswap empowers developers, liquidity providers and traders to participate in a financial marketplace that is open and accessible to all.";
-"swap.uniswap_info.header_minimum_received" = "Minimum Received";
-"swap.uniswap_info.content_minimum_received" = "Yor transaction will revert if there is a large, unfavorable price movement before it is confirmed.";
-"swap.uniswap_info.header_price_impact" = "Price Impact";
-"swap.uniswap_info.content_price_impact" = "The difference between the market price and estimated price due to trade size.";
-"swap.uniswap_info.header_swap_fee" = "Swap Fee";
-"swap.uniswap_info.content_swap_fee" = "A portion of each trade (0.30%) goes to liquidity providers as a protocol incentive.";
-"swap.uniswap_info.link_button" = "Uniswap Site";
+"swap.uniswap_info.description" = "Uniswap est un protocole entièrement décentralisé pour la provision automatisée de liquidités sur Ethereum.\n\nUne simple équation formalisée entraîne une liquidité imparable pour des milliers d'utilisateurs et des centaines d'applications.\n\nUniswap permet aux développeurs, aux fournisseurs de liquidités et aux traders de participer à un marché financier ouvert et accessible à tous.";
+"swap.uniswap_info.header_minimum_received" = "Minimum reçu";
+"swap.uniswap_info.content_minimum_received" = "Votre transaction sera reprise s'il y a un mouvement de prix important et défavorable avant de confirmer.";
+"swap.uniswap_info.header_price_impact" = "Impact prix";
+"swap.uniswap_info.content_price_impact" = "La différence entre le prix du marché et le prix estimé en raison de la taille des échanges.";
+"swap.uniswap_info.header_swap_fee" = "Frais d'échange";
+"swap.uniswap_info.content_swap_fee" = "Une fraction de chaque transaction (0,30 %) est versée aux fournisseurs de liquidité à titre d'incitation au protocole.";
+"swap.uniswap_info.link_button" = "Site Uniswap";
 
 // Transactions
 
@@ -295,7 +295,7 @@
 "settings.notifications" = "Notifications";
 "settings.base_currency" = "Devise de Base";
 "settings.language" = "Langue";
-"settings.terms" = "Terms";
+"settings.terms" = "Conditions";
 "settings.tell_friends" = "Partager avec ami";
 "settings.contact" = "Contact";
 "settings.light_mode" = "Mode lumineux";
@@ -306,15 +306,15 @@
 
 "settings_notifications.title" = "Notifications";
 "settings_notifications.toggle_title" = "Notifications Push";
-"settings_notifications.description" = "Set price change alerts for the coins you would like to watch\n\nYou will be alerted when the change in price for the last 24 hours exceeds selected threshold.\n\nPrice Trend Alert warns of a trend change for the short 1 week, for the long 6 month.";
+"settings_notifications.description" = "Définissez des alertes de changement de prix pour les pièces que vous souhaitez surveiller.\n\nVous serez alerté lorsque le changement de prix des dernières 24 heures dépassera le seuil sélectionné.\n\nL'alerte de tendance de prix vous avertit d'un changement de tendance pour le court terme à 1 semaine, pour le long terme à 6 mois.";
 "settings_notifications.alert_off" = "Désactivé";
 "settings.notifications.deactivate_all" = "Tout désactiver";
 "settings.notifications.disabled_text" = "Les notifications pour l'application Unstoppable Wallet sont désactivées. Vous devez activer les notifications et autoriser le rafraîchissement de l'application en arrière-plan afin de pouvoir recevoir des alertes de changement de prix.";
 "settings.notifications.settings_button" = "Activer dans Paramètres";
-"settings_notifications.trend_short" = "Short Term 7D";
-"settings_notifications.trend_long" = "Long Term 6M";
-"settings_notifications.reset_all_title" = "Reset All";
-"settings_notifications.trend_settings_title" = "Price Trend";
+"settings_notifications.trend_short" = "Court terme 7J";
+"settings_notifications.trend_long" = "Long terme 6M";
+"settings_notifications.reset_all_title" = "Tout réinitialiser";
+"settings_notifications.trend_settings_title" = "Tendance de prix";
 
 // Settings -> Manage Wallet
 
@@ -343,24 +343,24 @@
 
 // Settings -> Terms
 
-"terms.title" = "Terms";
+"terms.title" = "Conditions";
 "terms.app_subtitle" = "Decentralized app";
-"terms.description" = "The Unstoppable wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.
+"terms.description" = "Unstoppable Wallet est conçu pour ceux qui cherchent à investir et à stocker des cryptomonnaies de manière privée et indépendante.
 
-It's a non-custodial, peer-to-peer wallet where only the user has control over funds. It doesn't collect any data and keeps user independent by not locking his/her wallet to a specific wallet app.
+Il s'agit d'un portefeuille non privatif de liberté, de type pair à pair, où seul l'utilisateur a le contrôle des fonds. Il ne collecte aucune donnée et permet à l'utilisateur de rester indépendant en ne verrouillant pas son portefeuille à une application de portefeuille spécifique.
 
-The Unstoppable wallet is fully open-source and anyone can confirm that the app works exactly as it claims to.
+L'application Unstoppable Wallet est entièrement open-source et tout le monde peut confirmer que l'application fonctionne exactement comme elle le prétend.
 
-We built Unstoppable for ourselves as the available solutions were not up to par. Both from engineering and usability perspective we believe this wallet to be significantly ahead of alternative products.";
+Nous avons construit Unstoppable à notre intention car les solutions disponibles n'étaient pas à la hauteur de nos attentes. Tant du point de vue de l'ingénierie que de la convivialité, nous pensons que ce portefeuille a une avance considérable sur les produits alternatifs.";
 "terms.site" = "Site";
-"terms.item.academy" = "I went through the Academy section of this app and got familiar with the fundamental aspects of storing cryptocurrencies.";
-"terms.item.backup" = "I have backed up the private key(s) for my wallets that were shown to me in a form of 12-24 words. I understand that these private keys are stored on my smartphone and not elsewhere.";
-"terms.item.owner" = "I understand that only the owner of my private key(s) can access and spend funds on my wallet and therefore these keys should never be shared with anyone.";
-"terms.item.recover" = "I understand that I will need my private keys in order to restore access to my funds should I loose my phone or if the app malfunctions. Without my private keys it will be impossible to recover access to my wallet.";
-"terms.item.phone" = "I understand that passing my phone to untrusted entities or leaving the wallet app without safe PIN lock may potentially endanger the safety of my funds.";
-"terms.item.root" = "I understand that jail breaking (rooting) my phone, installing third party apps from unknown sources, keeping the operating system outdated can potentially endanger the safety of my funds.";
-"terms.item.bugs" = "I understand there may be undiscovered software issues in the code powering this wallet app which may lead to unexpected behavior or the app malfunctioning.";
-"terms.footer" = "Thank you for choosing this wallet!";
+"terms.item.academy" = "J'ai parcouru la section Académie de cette application et me suis familiarisé avec les aspects fondamentaux du stockage des cryptomonnaies.";
+"terms.item.backup" = "J'ai sauvegardé la/les clé(s) privée(s) de mes portefeuilles qui m'ont été présentées sous une formule de 12 à 24 mots. Je comprends que ces clés privées sont stockées sur mon smartphone et non ailleurs.";
+"terms.item.owner" = "Je comprends que seul le propriétaire de ma (mes) clé(s) privée(s) peut accéder à mon portefeuille et y dépenser des fonds, et que ces clés ne doivent donc jamais être partagées avec qui que ce soit.";
+"terms.item.recover" = "Je comprends que j'aurai besoin de mes clés privées afin de rétablir l'accès à mes fonds si je perds mon téléphone ou si l'application fonctionne mal. Sans mes clés privées, il me sera impossible de récupérer l'accès à mon portefeuille.";
+"terms.item.phone" = "Je comprends que le fait de confier mon téléphone à des entités non fiables ou de laisser l'application portefeuille sans verrouillage du code PIN peut potentiellement compromettre la sécurité de mes fonds.";
+"terms.item.root" = "Je comprends que le fait débrider (rooting) mon téléphone, d'installer des applications tierces de sources inconnues, de conserver un système d'exploitation obsolète peut potentiellement mettre en danger la sécurité de mes fonds.";
+"terms.item.bugs" = "Je suis conscient qu'il pourrait y avoir des problèmes non détectés dans le code de cette application de portefeuille, ce qui pourrait entraîner un comportement inattendu ou un dysfonctionnement de l'application.";
+"terms.footer" = "Merci d'avoir choisi ce portefeuille !";
 
 // Settings -> Tell Friends
 
@@ -574,13 +574,13 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "add_erc20_token.add" = "Ajouter";
 "add_erc20_token.contract_not_exist" = "Contrat non trouvé";
 
-"change_24hour_up" = "%@ price: up %@%% %@";
-"change_24hour_down" = "%@ price: down %@%% %@";
+"change_24hour_up" = "%@ prix: hausse %@%% %@";
+"change_24hour_down" = "%@ prix: baisse %@%% %@";
 "trend_shortterm_up" = "%@ short term trend: up %@";
 "trend_shortterm_down" = "%@ short term trend: down %@";
 "trend_longterm_up" = "%@ long term trend: up %@";
 "trend_longterm_down" = "%@ long term trend: down %@";
 
 "chart_alert.title" = "Notifications";
-"chart_alert.24h_description" = "Price Change 24h";
-"chart_alert.trend_description" = "Price Trend Change";
+"chart_alert.24h_description" = "Changement de prix 24h";
+"chart_alert.trend_description" = "Changement de tendance de prix";
