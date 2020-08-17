@@ -20,7 +20,7 @@
 
 "alert.copied" = "복사됨";
 "alert.no_internet" = "인터넷에 연결되지 않음";
-"alert.wrong_amount" = "Wrong Amount";
+"alert.wrong_amount" = "잘못된 금액";
 "alert.no_fee" = "잘못된 요금";
 "alert.network_issue" = "네트워크에 문제가 있습니다. 잠시 후 다시 시도해 주세요";
 "alert.unknown_error" = "알수없는 오류";
@@ -109,7 +109,7 @@
 "balance.title" = "잔액";
 "balance.tab_bar_item" = "잔액";
 "balance.send" = "전송";
-"balance.swap" = "Swap";
+"balance.swap" = "스왑";
 "balance.deposit" = "수신";
 "balance.rate_per_coin" = "%@ 당 %@";
 "balance.syncing" = "동기화 중입니다...";
@@ -176,30 +176,30 @@
 
 // Swap
 
-"swap.title" = "Swap";
-"swap.you_pay" = "You Pay";
-"swap.estimated" = "estimated";
-"swap.balance" = "Balance";
-"swap.you_get" = "You Get";
-"swap.token" = "Token";
-"swap.proceed" = "Proceed";
-"swap.amount_error.maximum_amount" = "Maximum amount %@";
+"swap.title" = "스왑";
+"swap.you_pay" = "지불하기";
+"swap.estimated" = "예상";
+"swap.balance" = "잔액";
+"swap.you_get" = "얻기";
+"swap.token" = "토큰";
+"swap.proceed" = "진행";
+"swap.amount_error.maximum_amount" = "최대 금액 %@";
 
-"swap.price" = "Price";
-"swap.price_impact" = "Price Impact";
-"swap.max_min" = "Max / Min";
-"swap.maximum_paid" = "Maximum Paid";
-"swap.minimum_got" = "Minimum Got";
+"swap.price" = "금액";
+"swap.price_impact" = "가격 영향";
+"swap.max_min" = "최대 / 최소";
+"swap.maximum_paid" = "최대 지불액";
+"swap.minimum_got" = "최대 지급액";
 
-"swap.fee" = "Swap Fee";
-"swap.transactions_speed" = "Transactions speed";
-"swap.transaction_fee" = "Transaction Fee";
+"swap.fee" = "스왑 비용";
+"swap.transactions_speed" = "거래 속도";
+"swap.transaction_fee" = "거래 비용";
 
-"swap.select_token.title" = "Choose Coin";
+"swap.select_token.title" = "코인 선택";
 
 // Swap Confirmation
 
-"swap.confirmation.title" = "Confirm";
+"swap.confirmation.title" = "확인";
 "swap.confirmation.swap_button" = "Swap";
 "swap.confirmation.pay" = "Pay %@";
 "swap.confirmation.get" = "Get %@";
