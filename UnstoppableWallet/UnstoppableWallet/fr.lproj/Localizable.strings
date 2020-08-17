@@ -576,10 +576,10 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 "change_24hour_up" = "%@ prix: hausse %@%% %@";
 "change_24hour_down" = "%@ prix: baisse %@%% %@";
-"trend_shortterm_up" = "%@ short term trend: up %@";
-"trend_shortterm_down" = "%@ short term trend: down %@";
-"trend_longterm_up" = "%@ long term trend: up %@";
-"trend_longterm_down" = "%@ long term trend: down %@";
+"trend_shortterm_up" = "%@ tendance à court terme : hausse %@";
+"trend_shortterm_down" = "%@ tendance à court terme : baisse %@";
+"trend_longterm_up" = "%@ tendance à long terme : hausse %@";
+"trend_longterm_down" = "%@ tendance à long terme : baisse %@";
 
 "chart_alert.title" = "Notifications";
 "chart_alert.24h_description" = "Changement de prix 24h";
