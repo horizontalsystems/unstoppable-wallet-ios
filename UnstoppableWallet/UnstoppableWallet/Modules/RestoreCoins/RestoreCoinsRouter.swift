@@ -16,7 +16,7 @@ extension RestoreCoinsRouter: IRestoreCoinsRouter {
 
     func finish() {
         if initialRestore {
-            UIApplication.shared.keyWindow?.set(newRootController: MainRouter.module(selectedTab: .balance))
+            UIApplication.shared.keyWindow?.set(newRootController: MainModule.instance(selectedTab: .balance))
         } else {
             viewController?.dismiss(animated: true)
         }

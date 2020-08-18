@@ -17,7 +17,7 @@ extension LockScreenRouter: ILockScreenRouter {
 
     func dismiss() {
         if appStart {
-            UIApplication.shared.keyWindow?.set(newRootController: MainRouter.module())
+            UIApplication.shared.keyWindow?.set(newRootController: MainModule.instance())
         } else {
             viewController?.dismiss(animated: false)
         }
