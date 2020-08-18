@@ -578,10 +578,10 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 "change_24hour_up" = "%@ Preis: %@%% %@ höher";
 "change_24hour_down" = "%@ Preis: %@%% %@ niedriger";
-"trend_shortterm_up" = "%@ short term trend: up %@";
-"trend_shortterm_down" = "%@ short term trend: down %@";
-"trend_longterm_up" = "%@ long term trend: up %@";
-"trend_longterm_down" = "%@ long term trend: down %@";
+"trend_shortterm_up" = "%@ Kurzzeittrend: %@ höher";
+"trend_shortterm_down" = "%@ Kurzzeittrend: %@ niedriger";
+"trend_longterm_up" = "%@ Langzeittrend: %@ höher";
+"trend_longterm_down" = "%@ Langzeittrend: %@ niedriger";
 
 "chart_alert.title" = "Benachrichtigung";
 "chart_alert.24h_description" = "Preisänderung 24h";
