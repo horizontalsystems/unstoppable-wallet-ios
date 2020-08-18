@@ -179,7 +179,7 @@
 "swap.title" = "Swap";
 "swap.you_pay" = "You Pay";
 "swap.estimated" = "estimated";
-"swap.balance" = "Balance";
+"swap.balance" = "Баланс";
 "swap.you_get" = "You Get";
 "swap.token" = "Токен";
 "swap.proceed" = "Выполнить";
@@ -360,7 +360,7 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "terms.item.phone" = "I understand that passing my phone to untrusted entities or leaving the wallet app without safe PIN lock may potentially endanger the safety of my funds.";
 "terms.item.root" = "I understand that jail breaking (rooting) my phone, installing third party apps from unknown sources, keeping the operating system outdated can potentially endanger the safety of my funds.";
 "terms.item.bugs" = "I understand there may be undiscovered software issues in the code powering this wallet app which may lead to unexpected behavior or the app malfunctioning.";
-"terms.footer" = "Thank you for choosing this wallet!";
+"terms.footer" = "Благодарим вас за выбор этого кошелька!";
 
 // Settings -> Tell Friends
 
