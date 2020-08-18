@@ -6,8 +6,8 @@ import AlamofireImage
 class GuideImageCell: UITableViewCell {
     private static let verticalPadding: CGFloat = .margin3x
 
-    private let guideImageView = UIImageView()
     private let placeholderImageView = UIImageView()
+    private let guideImageView = UIImageView()
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -37,8 +37,14 @@ class GuideImageCell: UITableViewCell {
     }
 
     func bind(imageUrl: URL, type: GuideImageType, tight: Bool) {
+        placeholderImageView.isHidden = false
         guideImageView.image = nil
-        guideImageView.af.setImage(withURL: imageUrl)
+
+        guideImageView.af.setImage(withURL: imageUrl, completion: { [weak self] response in
+            if case .success = response.result {
+                self?.placeholderImageView.isHidden = true
+            }
+        })
 
         placeholderImageView.snp.remakeConstraints { maker in
             maker.leading.trailing.equalToSuperview()

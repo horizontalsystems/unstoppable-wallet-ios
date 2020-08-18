@@ -9,7 +9,7 @@ class GuideCell: UITableViewCell {
     private static let cardBottomMargin: CGFloat = .margin2x
     private static let cardBottomMarginLast: CGFloat = .margin8x
     private static let cardHorizontalMargin: CGFloat = .margin4x
-    private static let imageHeight: CGFloat = 160
+    private static let imageHeight: CGFloat = 180
     private static let dateTopMargin: CGFloat = .margin4x
     private static let titleTopMargin: CGFloat = .margin2x
     private static let titleBottomMargin: CGFloat = .margin4x
@@ -42,6 +42,7 @@ class GuideCell: UITableViewCell {
 
         guideImageView.contentMode = .scaleAspectFill
         guideImageView.clipsToBounds = true
+        guideImageView.backgroundColor = .themeRaina
 
         cardView.contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { maker in
