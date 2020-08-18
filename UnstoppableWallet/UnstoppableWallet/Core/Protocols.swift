@@ -56,6 +56,7 @@ protocol IChartTypeStorage: class {
 protocol IAdapterManager: class {
     var adaptersReadyObservable: Observable<Void> { get }
     func adapter(for wallet: Wallet) -> IAdapter?
+    func adapter(for coin: Coin) -> IAdapter?
     func balanceAdapter(for wallet: Wallet) -> IBalanceAdapter?
     func transactionsAdapter(for wallet: Wallet) -> ITransactionsAdapter?
     func depositAdapter(for wallet: Wallet) -> IDepositAdapter?
@@ -150,6 +151,13 @@ protocol ISendEthereumAdapter {
     func estimateGasLimit(to address: String?, value: Decimal, gasPrice: Int?) -> Single<Int>
     func fee(gasPrice: Int, gasLimit: Int) -> Decimal
     func sendSingle(amount: Decimal, address: String, gasPrice: Int, gasLimit: Int, logger: Logger) -> Single<Void>
+}
+
+protocol IErc20Adapter {
+    var ethereumBalance: Decimal { get }
+    func allowanceSingle(spenderAddress: Address) -> Single<Decimal>
+    func estimateApproveSingle(spenderAddress: Address, amount: Decimal, gasPrice: Int) -> Single<Int>
+    func approveSingle(spenderAddress: Address, amount: Decimal, gasLimit: Int, gasPrice: Int) -> Single<String>
 }
 
 protocol ISendEosAdapter {
@@ -583,6 +591,8 @@ protocol ITermsManager {
 
 protocol ISwapKit {
     var etherToken: Token { get }
+    var routerAddress: Address { get }
+
     func token(contractAddress: EthereumKit.Address, decimals: Int) -> Token
     func swapDataSingle(tokenIn: Token, tokenOut: Token) -> Single<SwapData>
     func bestTradeExactIn(swapData: SwapData, amountIn: Decimal, options: TradeOptions) throws -> TradeData
@@ -594,4 +604,6 @@ protocol ISwapKit {
 protocol ISwapCoinManager {
     func balance(coin: Coin) -> Decimal?
     func items(accountCoins: Bool, exclude: [Coin]) -> [CoinBalanceItem]
+
+    func allowanceSingle(coin: Coin, spenderAddress: Address) -> Single<Decimal>
 }

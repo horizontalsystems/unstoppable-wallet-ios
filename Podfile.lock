@@ -438,7 +438,7 @@ CHECKOUT OPTIONS:
     :commit: 7f95e9a3125c34712cb73884f2479bb5d15c75f8
     :git: https://github.com/horizontalsystems/gui-kit/
   UniswapKit.swift:
-    :commit: b0a64bb7aabecc9e234aaa72d1e78fae1b11e64e
+    :commit: 6ed0c35be985e390cad60b6484ec8479f497e890
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   XRatesKit.swift:
     :commit: f7a4b52e8f4fda8f1d39521b8f91455f51b477f2

@@ -1,5 +1,6 @@
 import UIKit
 import ThemeKit
+import EthereumKit
 import UniswapKit
 
 class SwapRouter {
@@ -10,6 +11,13 @@ extension SwapRouter: ISwapRouter {
 
     func openTokenSelect(accountCoins: Bool, exclude: [Coin], delegate: ICoinSelectDelegate) {
         viewController?.present(SwapTokenSelectRouter.module(accountCoins: accountCoins, exclude: exclude, delegate: delegate), animated: true)
+    }
+
+    func showApprove(delegate: ISwapApproveDelegate, coin: Coin, spenderAddress: Address, amount: Decimal) {
+        guard let approveController = SwapApproveRouter.module(coin: coin, spenderAddress: spenderAddress, amount: amount, delegate: delegate) else {
+            return
+        }
+        viewController?.present(approveController, animated: true)
     }
 
     func showConfirmation(coinIn: Coin, coinOut: Coin, tradeData: TradeData, delegate: ISwapConfirmationDelegate) {
@@ -41,7 +49,7 @@ extension SwapRouter {
 
         let router = SwapRouter()
         let interactor = SwapInteractor(swapKit: UniswapKit.Kit.instance(ethereumKit: ethereumKit), swapTokenManager: swapTokenManager)
-        let presenter = SwapPresenter(interactor: interactor, router: router, factory: SwapViewItemFactory(), decimalParser: decimalParser, coinIn: wallet.coin)
+        let presenter = SwapPresenter(interactor: interactor, router: router, viewItemFactory: SwapViewItemFactory(), stateFactory: SwapFactory(), decimalParser: decimalParser, coinIn: wallet.coin)
         let viewController = SwapViewController(delegate: presenter)
 
         presenter.view = viewController

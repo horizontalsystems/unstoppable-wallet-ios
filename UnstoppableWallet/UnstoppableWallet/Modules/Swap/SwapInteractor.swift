@@ -5,6 +5,7 @@ import RxSwift
 
 class SwapInteractor {
     private let disposeBag = DisposeBag()
+    private var allowanceDisposeBag = DisposeBag()
     private let swapKit: ISwapKit
     private let swapTokenManager: SwapTokenManager
 
@@ -26,6 +27,10 @@ class SwapInteractor {
 }
 
 extension SwapInteractor: ISwapInteractor {
+
+    var spenderAddress: Address {
+        swapKit.routerAddress
+    }
 
     func balance(coin: Coin) -> Decimal? {
         swapTokenManager.balance(coin: coin)
@@ -53,6 +58,35 @@ extension SwapInteractor: ISwapInteractor {
                     .disposed(by: disposeBag)
         } catch {
             self.delegate?.didFailReceiveSwapData(error: error)
+        }
+    }
+
+    func requestAllowance(coin: Coin) {
+        guard case .erc20 = coin.type else {
+            self.delegate?.didReceive(allowance: nil)
+            return
+        }
+
+        swapTokenManager.allowanceSingle(coin: coin, spenderAddress: swapKit.routerAddress)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onSuccess: { [weak self] allowance in
+                    self?.delegate?.didReceive(allowance: allowance)
+                }, onError: { [weak self] error in
+                    self?.delegate?.didFailReceiveAllowance(error: error)
+                })
+                .disposed(by: disposeBag)
+    }
+
+    func allowanceChanging(subscribe: Bool, coin: Coin) {
+        if subscribe {
+            Observable<Int>.interval(.seconds(10), scheduler: MainScheduler.instance)
+                    .subscribe(onNext: { [weak self] time in
+                        self?.requestAllowance(coin: coin)
+                    })
+                    .disposed(by: allowanceDisposeBag)
+        } else {
+            allowanceDisposeBag = DisposeBag()
         }
     }
 

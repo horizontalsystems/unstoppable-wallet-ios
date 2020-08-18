@@ -55,7 +55,7 @@ protocol IChartInteractorDelegate: class {
 }
 
 protocol IChartRateFactory {
-    func chartViewItem(chartDataStatus: ChartDataStatus<ChartInfo>, marketInfoStatus: ChartDataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, selectedIndicator: ChartIndicatorSet, priceAlert: PriceAlert?, alertsOn: Bool) -> ChartViewItem
+    func chartViewItem(chartDataStatus: DataStatus<ChartInfo>, marketInfoStatus: DataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, selectedIndicator: ChartIndicatorSet, priceAlert: PriceAlert?, alertsOn: Bool) -> ChartViewItem
     func selectedPointViewItem(chartItem: ChartItem, type: ChartType, currency: Currency, macdSelected: Bool) -> SelectedPointViewItem?
 }
 
@@ -147,8 +147,8 @@ struct MacdInfo {
 struct ChartViewItem {
     let currentRate: String?
 
-    let chartDataStatus: ChartDataStatus<ChartDataViewItem>
-    let marketInfoStatus: ChartDataStatus<MarketInfoViewItem>
+    let chartDataStatus: DataStatus<ChartDataViewItem>
+    let marketInfoStatus: DataStatus<MarketInfoViewItem>
 
     let selectedIndicator: ChartIndicatorSet
 

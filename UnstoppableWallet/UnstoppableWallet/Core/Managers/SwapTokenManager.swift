@@ -1,4 +1,6 @@
 import Foundation
+import RxSwift
+import EthereumKit
 
 class SwapTokenManager {
     private let coinManager: ICoinManager
@@ -11,17 +13,18 @@ class SwapTokenManager {
         self.adapterManager = adapterManager
     }
 
+    private func wallet(coin: Coin) -> Wallet? {
+        walletManager.wallets.first { $0.coin == coin }
+    }
+
+    private func balance(coin: Coin, walletItems: [CoinBalanceItem]) -> Decimal? {
+        wallet(coin: coin).flatMap { self.adapterManager.balanceAdapter(for: $0)?.balance }
+    }
+
     private var walletItems: [CoinBalanceItem] {
         walletManager.wallets.map { wallet in
             CoinBalanceItem(coin: wallet.coin, balance: adapterManager.balanceAdapter(for: wallet)?.balance)
         }
-    }
-
-    private func balance(coin: Coin, walletItems: [CoinBalanceItem]) -> Decimal? {
-        if let item = walletItems.first(where: { $0.coin == coin }) {
-            return item.balance
-        }
-        return nil
     }
 
 }
@@ -55,6 +58,15 @@ extension SwapTokenManager: ISwapCoinManager {
                 return CoinBalanceItem(coin: coin, balance: balance(coin: coin, walletItems: walletItems))
             }
         }
+    }
+
+    func allowanceSingle(coin: Coin, spenderAddress: Address) -> Single<Decimal> {
+        guard let wallet = wallet(coin: coin),
+              let adapter = adapterManager.adapter(for: wallet) as? IErc20Adapter else {
+            return .error(SendTransactionError.wrongAmount)     // todo: change
+        }
+
+        return adapter.allowanceSingle(spenderAddress: spenderAddress)
     }
 
 }

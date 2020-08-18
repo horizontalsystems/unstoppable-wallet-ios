@@ -2,12 +2,15 @@ import UIKit
 import ThemeKit
 import UniswapKit
 import HUD
+import RxSwift
+import RxCocoa
 
-class SwapViewController: ThemeViewController {
-    private static let spinnerRadius: CGFloat = 8
-    private static let spinnerLineWidth: CGFloat = 2
+class Swap2ViewController: ThemeViewController {
+    private static let levelColors: [UIColor] = [.themeRemus, .themeJacob, .themeLucian]
 
-    private let delegate: ISwapViewDelegate
+    private let disposeBag = DisposeBag()
+
+    private let viewModel: ISwap2ViewModel
 
     private let scrollView = UIScrollView()
     private let container = UIView()
@@ -26,19 +29,19 @@ class SwapViewController: ThemeViewController {
     private let toInputView = SwapInputView()
 
     private let swapAreaWrapper = UIView()
-    private let toPriceView = AdditionalDataView()
-    private let toPriceImpactView = AdditionalDataView()
+    private let priceView = AdditionalDataView()
+    private let priceImpactView = AdditionalDataView()
     private let minMaxView = AdditionalDataView()
 
     private let button = ThemeButton()
 
     private let swapErrorLabel = UILabel()
 
-    init(delegate: ISwapViewDelegate) {
-        self.delegate = delegate
+    init(viewModel: ISwap2ViewModel) {
+        self.viewModel = viewModel
 
         super.init()
-
+        hidesBottomBarWhenPushed = true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -47,6 +50,8 @@ class SwapViewController: ThemeViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        title = "guides.title".localized
 
         title = "swap.title".localized
         view.backgroundColor = .themeDarker
@@ -75,12 +80,11 @@ class SwapViewController: ThemeViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         initLayout()
-        delegate.onViewDidLoad()
     }
 
     private func initLayout() {
-        fromInputView.delegate = self
-        toInputView.delegate = self
+//        fromInputView.delegate = self
+//        toInputView.delegate = self
 
         container.addSubview(topLineView)
         container.addSubview(fromHeaderView)
@@ -92,8 +96,8 @@ class SwapViewController: ThemeViewController {
         container.addSubview(toInputView)
 
         container.addSubview(swapAreaWrapper)
-        swapAreaWrapper.addSubview(toPriceView)
-        swapAreaWrapper.addSubview(toPriceImpactView)
+        swapAreaWrapper.addSubview(priceView)
+        swapAreaWrapper.addSubview(priceImpactView)
         swapAreaWrapper.addSubview(minMaxView)
         swapAreaWrapper.addSubview(button)
 
@@ -165,18 +169,18 @@ class SwapViewController: ThemeViewController {
 
         swapAreaWrapper.isHidden = true
 
-        toPriceView.snp.makeConstraints { maker in
+        priceView.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(CGFloat.margin3x)
             maker.leading.trailing.equalToSuperview()
         }
 
-        toPriceImpactView.snp.makeConstraints { maker in
-            maker.top.equalTo(toPriceView.snp.bottom)
+        priceImpactView.snp.makeConstraints { maker in
+            maker.top.equalTo(priceView.snp.bottom)
             maker.leading.trailing.equalToSuperview()
         }
 
         minMaxView.snp.makeConstraints { maker in
-            maker.top.equalTo(toPriceImpactView.snp.bottom)
+            maker.top.equalTo(priceImpactView.snp.bottom)
             maker.leading.trailing.equalToSuperview()
         }
 
@@ -201,133 +205,102 @@ class SwapViewController: ThemeViewController {
         swapErrorLabel.numberOfLines = 0
     }
 
-    private func setSwapArea(hidden: Bool) {
-        swapAreaWrapper.isHidden = hidden
-    }
+    private func subscribeViewModel() {
+        subscribe(disposeBag, viewModel.estimated) { [weak self] in self?.set(estimated: $0) }
 
-    private func set(exactType: TradeType) {
-        fromHeaderView.setBadge(hidden: exactType == .exactIn)
-        toHeaderView.setBadge(hidden: exactType == .exactOut)
-    }
+        subscribe(disposeBag, viewModel.isSwapDataLoading) { [weak self] in self?.fromHeaderView.set(loading: $0) }
+        subscribe(disposeBag, viewModel.swapDataError) { [weak self] in self?.set(swapDataError: $0) }
 
-    private func set(viewItem: AdditionalViewItem, for additionalView: AdditionalDataView) {
-        additionalView.bind(title: viewItem.title.localized, value: viewItem.value?.localized)
-        additionalView.setValue(customColor: viewItem.customColor)
-    }
+        subscribe(disposeBag, viewModel.fromAmount) { [weak self] in self?.set(amount: $0, type: .exactIn) }
+        subscribe(disposeBag, viewModel.fromTokenCode) { [weak self] in self?.set(tokenCode: $0, type: .exactIn) }
 
-    private func type(for view: SwapInputView) -> TradeType {
-        view == fromInputView ? .exactIn : .exactOut
+        subscribe(disposeBag, viewModel.fromBalance) { [weak self] in self?.set(fromBalance: $0) }
+        subscribe(disposeBag, viewModel.balanceError) { [weak self] in self?.set(fromBalance: nil, error: $0) }
+
+        subscribe(disposeBag, viewModel.isAllowanceHidden) { [weak self] in self?.allowanceView.set(hidden: $0) }
+        subscribe(disposeBag, viewModel.isAllowanceLoading) { [weak self] in self?.allowanceView.set(loading: $0) }
+        subscribe(disposeBag, viewModel.allowance) { [weak self] in self?.allowanceView.bind(title: "swap.allowance".localized, value: $0) }
+        subscribe(disposeBag, viewModel.allowanceError) { _ in () } // TODO: show allowanceError
+
+        subscribe(disposeBag, viewModel.toAmount) { [weak self] in self?.set(amount: $0, type: .exactOut) }
+        subscribe(disposeBag, viewModel.toTokenCode) { [weak self] in self?.set(tokenCode: $0, type: .exactOut) }
+
+        subscribe(disposeBag, viewModel.tradeViewItem) { [weak self] in self?.set(tradeViewItem: $0) }
+        subscribe(disposeBag, viewModel.actionTitle) { [weak self] in self?.button.setTitle($0, for: .normal) }
+        subscribe(disposeBag, viewModel.isActionEnabled) { [weak self] in self?.button.isEnabled = $0 }
+        subscribe(disposeBag, viewModel.isSwapDataHidden) { [weak self] in self?.set(swapDataHidden: $0) }
     }
 
     @objc func onClose() {
-        delegate.onClose()
+        dismiss(animated: true)
     }
 
     @objc func onInfo() {
-        delegate.onTapInfo()
+        let module = UniswapInfoRouter.module()
+        present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 
     @objc func onButtonTouchUp() {
-        delegate.onButtonClicked()
+        viewModel.onTapButton()
     }
 
 }
 
-extension SwapViewController: ISwapView {
+extension Swap2ViewController {
 
-    func dismissKeyboard() {
-        view.endEditing(true)
+    private func set(estimated: TradeType) {
+        fromHeaderView.setBadge(hidden: estimated == .exactIn)
+        fromHeaderView.setBadge(hidden: estimated == .exactOut)
     }
 
-    func bind(swapAreaViewItem: SwapModule.SwapAreaViewItem) {
-        set(viewItem: swapAreaViewItem.minMaxItem, for: minMaxView)
-        set(viewItem: swapAreaViewItem.executionPriceItem, for: toPriceView)
-        set(viewItem: swapAreaViewItem.priceImpactItem, for: toPriceImpactView)
-
-        button.setTitle(swapAreaViewItem.buttonTitle.localized, for: .normal)
-        button.isEnabled = swapAreaViewItem.buttonEnabled
+    private func set(swapDataError: Error?) {
+        swapErrorLabel.text = swapDataError?.smartDescription
     }
 
-    func bind(viewItem: SwapModule.ViewItem) {
-        set(exactType: viewItem.exactType)
-
-        fromInputView.set(tokenCode: viewItem.tokenIn)
-        toInputView.set(tokenCode: viewItem.tokenOut ?? "swap.token".localized)
-
-        switch viewItem.exactType {
-        case .exactIn: toInputView.set(text: viewItem.estimatedAmount)
-        case .exactOut: fromInputView.set(text: viewItem.estimatedAmount)
+    private func inputView(to: TradeType) -> SwapInputView {
+        switch to {
+        case .exactIn: return fromInputView
+        case .exactOut: return toInputView
         }
+    }
 
-        fromBalanceView.bind(title: "swap.balance".localized, value: viewItem.balance)
-        fromBalanceView.bind(error: viewItem.balanceError?.localizedDescription)
+    private func set(amount: String?, type: TradeType) {
+        inputView(to: type).set(text: amount)
+    }
 
-        if let allowance = viewItem.allowance {
-            allowanceView.set(hidden: false)
+    private func set(tokenCode: String, type: TradeType) {
+        inputView(to: type).set(tokenCode: tokenCode)
+    }
 
-            allowanceView.bind(title: "swap.allowance", value: allowance.data)
-            if case .loading = allowance {
-                allowanceView.set(loading: true)
-            }
-        } else {
-            allowanceView.set(hidden: true)
+    private func set(fromBalance: String?, error: Error? = nil) {
+        guard let error = error else {
+            fromBalanceView.bind(title: "swap.balance".localized, value: fromBalance)
+            return
         }
+        fromBalanceView.bind(error: error.smartDescription)
+    }
 
-        setSwapArea(hidden: true)
-        swapErrorLabel.isHidden = true
-        fromHeaderView.set(loading: true)
+    private func color(for level: Swap2Module.PriceImpactLevel) -> UIColor {
+        let index = level.rawValue % Swap2ViewController.levelColors.count
+        return Swap2ViewController.levelColors[index]
+    }
 
-        guard let swapAreaItem = viewItem.swapAreaItem else {
+    private func set(tradeViewItem: Swap2Module.TradeViewItem?) {
+        // todo: hide/show when nil/not nil
+        guard let viewItem = tradeViewItem else {
             return
         }
 
-        switch swapAreaItem {
-        case .failed(let error):
-            swapErrorLabel.isHidden = false
-            swapErrorLabel.text = error?.localizedDescription
-        case .loading:
-            fromHeaderView.set(loading: false)
-        case .completed(let data):
-            setSwapArea(hidden: false)
+        priceView.bind(title: "swap.price".localized, value: viewItem.executionPrice?.localized)
 
-            bind(swapAreaViewItem: data)
-        }
+        priceImpactView.bind(title: "swap.price_impact".localized, value: viewItem.priceImpact?.localized)
+        priceImpactView.setValue(customColor: color(for: viewItem.priceImpactLevel))
+
+        minMaxView.bind(title: viewItem.minMaxTitle?.localized, value: viewItem.minMaxAmount?.localized)
     }
 
-    func amount(type: TradeType) -> String? {
-        switch type {
-        case .exactOut: return toInputView.text
-        case .exactIn: return fromInputView.text
-        }
-    }
-
-    func dismissWithSuccess() {
-        navigationController?.dismiss(animated: true)
-        HudHelper.instance.showSuccess()
-    }
-
-}
-
-extension SwapViewController: ISwapInputViewDelegate {
-
-    func isValid(_ inputView: SwapInputView, text: String) -> Bool {
-        if delegate.isValid(type: type(for: inputView), text: text) {
-            return true
-        } else {
-            inputView.shakeView()
-            return false
-        }
-    }
-
-    func willChangeAmount(_ inputView: SwapInputView, text: String?) {
-        delegate.willChangeAmount(type: type(for: inputView), text: text)
-    }
-
-    func onMaxClicked(_ inputView: SwapInputView) {
-    }
-
-    func onTokenSelectClicked(_ inputView: SwapInputView) {
-        delegate.onTokenSelect(type: type(for: inputView))
+    private func set(swapDataHidden: Bool) {
+        swapAreaWrapper.isHidden = swapDataHidden
     }
 
 }
