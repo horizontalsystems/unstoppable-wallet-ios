@@ -20,7 +20,7 @@
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет Интернета";
-"alert.wrong_amount" = "Wrong Amount";
+"alert.wrong_amount" = "Неправильная сумма";
 "alert.no_fee" = "Неправильная комиссия";
 "alert.network_issue" = "Проблемы с сетью. Попробуйте еще раз";
 "alert.unknown_error" = "Неизвестная Ошибка";
@@ -181,28 +181,28 @@
 "swap.estimated" = "estimated";
 "swap.balance" = "Balance";
 "swap.you_get" = "You Get";
-"swap.token" = "Token";
-"swap.proceed" = "Proceed";
-"swap.amount_error.maximum_amount" = "Maximum amount %@";
+"swap.token" = "Токен";
+"swap.proceed" = "Выполнить";
+"swap.amount_error.maximum_amount" = "Максимальная сумма %@";
 
-"swap.price" = "Price";
+"swap.price" = "Цена";
 "swap.price_impact" = "Price Impact";
-"swap.max_min" = "Max / Min";
-"swap.maximum_paid" = "Maximum Paid";
-"swap.minimum_got" = "Minimum Got";
+"swap.max_min" = "Макс / Мин";
+"swap.maximum_paid" = "Максимальная выплата";
+"swap.minimum_got" = "Минимальная выплата";
 
 "swap.fee" = "Swap Fee";
-"swap.transactions_speed" = "Transactions speed";
-"swap.transaction_fee" = "Transaction Fee";
+"swap.transactions_speed" = "Скорость Транзакции";
+"swap.transaction_fee" = "Комиссия за транзакцию";
 
-"swap.select_token.title" = "Choose Coin";
+"swap.select_token.title" = "Выберите Токен";
 
 // Swap Confirmation
 
-"swap.confirmation.title" = "Confirm";
+"swap.confirmation.title" = "Подтвердить";
 "swap.confirmation.swap_button" = "Swap";
-"swap.confirmation.pay" = "Pay %@";
-"swap.confirmation.get" = "Get %@";
+"swap.confirmation.pay" = "Оплатить %@";
+"swap.confirmation.get" = "Получить %@";
 
 
 "swap.uniswap_info.title" = "Uniswap v.2";
@@ -213,7 +213,7 @@
 "swap.uniswap_info.content_price_impact" = "The difference between the market price and estimated price due to trade size.";
 "swap.uniswap_info.header_swap_fee" = "Swap Fee";
 "swap.uniswap_info.content_swap_fee" = "A portion of each trade (0.30%) goes to liquidity providers as a protocol incentive.";
-"swap.uniswap_info.link_button" = "Uniswap Site";
+"swap.uniswap_info.link_button" = "Веб-сайт Uniswap";
 
 // Transactions
 
@@ -305,7 +305,7 @@
 // Settings -> Notifications
 
 "settings_notifications.title" = "Уведомления";
-"settings_notifications.toggle_title" = "Push Notifications";
+"settings_notifications.toggle_title" = "Push-уведомления";
 "settings_notifications.description" = "Set price change alerts for the coins you would like to watch\n\nYou will be alerted when the change in price for the last 24 hours exceeds selected threshold.\n\nPrice Trend Alert warns of a trend change for the short 1 week, for the long 6 month.";
 "settings_notifications.alert_off" = "Выкл.";
 "settings.notifications.deactivate_all" = "Отключить всё";
@@ -313,7 +313,7 @@
 "settings.notifications.settings_button" = "Включить в Настройках";
 "settings_notifications.trend_short" = "Short Term 7D";
 "settings_notifications.trend_long" = "Long Term 6M";
-"settings_notifications.reset_all_title" = "Reset All";
+"settings_notifications.reset_all_title" = "Сбросить всё";
 "settings_notifications.trend_settings_title" = "Price Trend";
 
 // Settings -> Manage Wallet
@@ -352,7 +352,7 @@ It's a non-custodial, peer-to-peer wallet where only the user has control over f
 The Unstoppable wallet is fully open-source and anyone can confirm that the app works exactly as it claims to.
 
 We built Unstoppable for ourselves as the available solutions were not up to par. Both from engineering and usability perspective we believe this wallet to be significantly ahead of alternative products.";
-"terms.site" = "Site";
+"terms.site" = "Веб-сайт";
 "terms.item.academy" = "I went through the Academy section of this app and got familiar with the fundamental aspects of storing cryptocurrencies.";
 "terms.item.backup" = "I have backed up the private key(s) for my wallets that were shown to me in a form of 12-24 words. I understand that these private keys are stored on my smartphone and not elsewhere.";
 "terms.item.owner" = "I understand that only the owner of my private key(s) can access and spend funds on my wallet and therefore these keys should never be shared with anyone.";
@@ -482,7 +482,7 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "chart.title" = "%@ Цена";
 "chart.time_duration.day" = "1Д";
 "chart.time_duration.week" = "7Д";
-"chart.time_duration.week2" = "2W";
+"chart.time_duration.week2" = "2Н";
 "chart.time_duration.month" = "1М";
 "chart.time_duration.month3" = "3М";
 "chart.time_duration.halyear" = "6М";
