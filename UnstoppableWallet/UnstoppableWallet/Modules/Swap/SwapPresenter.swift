@@ -6,7 +6,8 @@ class SwapPresenter {
     private let interactor: ISwapInteractor
     private let router: ISwapRouter
 
-    private let factory: ISwapViewItemFactory
+    private let stateFactory: ISwapFactory
+    private let viewItemFactory: ISwapViewItemFactory
     private let decimalParser: ISendAmountDecimalParser
 
     weak var view: ISwapView?
@@ -14,37 +15,82 @@ class SwapPresenter {
     private var coinIn: Coin
     private var coinOut: Coin?
 
-    private var balanceIn: Decimal?
+    private var balance: Decimal?
+    private var allowance: DataStatus<Decimal>?
 
-    private var swapData: SwapData?
-    private var tradeData: TradeData?
+    private var approving: Bool = false
+    private var swapState: SwapProcessState = .approve
+
+    private var swapData: DataStatus<SwapData>?
+    private var tradeData: DataStatus<TradeData>?
 
     private var tradeType: TradeType = .exactIn
 
-    init(interactor: ISwapInteractor, router: ISwapRouter, factory: ISwapViewItemFactory, decimalParser: ISendAmountDecimalParser, coinIn: Coin) {
+    init(interactor: ISwapInteractor, router: ISwapRouter, viewItemFactory: ISwapViewItemFactory, stateFactory: ISwapFactory, decimalParser: ISendAmountDecimalParser, coinIn: Coin) {
         self.interactor = interactor
         self.router = router
-        self.factory = factory
+        self.viewItemFactory = viewItemFactory
+        self.stateFactory = stateFactory
         self.decimalParser = decimalParser
         self.coinIn = coinIn
     }
 
     private func sync() {
-        balanceIn = interactor.balance(coin: coinIn)
+        balance = interactor.balance(coin: coinIn)
+        tradeData = tradeData(type: tradeType)
+        swapState = stateFactory.swapState(coinIn: coinIn, allowance: allowance, tradeData: tradeData, approving: approving)
 
-        view?.bind(viewItem: factory.viewItem(coinIn: coinIn, balance: balanceIn, coinOut: coinOut, type: tradeType, tradeData: tradeData))
+        view?.bind(viewItem: viewItemFactory.viewItem(coinIn: coinIn, balance: balance, coinOut: coinOut, type: tradeType, allowance: allowance, tradeData: tradeData, state: swapState))
     }
 
-    private func tradeData(type: TradeType) -> TradeData? {
-        guard let swapData = swapData,
-              let amount = decimalParser.parseAnyDecimal(from: view?.amount(type: type)) else {
+    private func syncAllowance() {
+        allowance = .loading
+        interactor.requestAllowance(coin: coinIn)
+    }
+
+    private func syncSwapData() {
+        swapData = .loading
+        interactor.requestSwapData(coinIn: coinIn, coinOut: coinOut)
+    }
+
+    private func tradeData(type: TradeType) -> DataStatus<TradeData>? {
+        guard let swapData = swapData else {
             return nil
         }
 
-        switch type {
-        case .exactIn: return try? interactor.bestTradeExactIn(swapData: swapData, amount: amount)
-        case .exactOut: return try? interactor.bestTradeExactOut(swapData: swapData, amount: amount)
+        switch swapData {
+        case .loading: return .loading
+        case .failed(let error): return .failed(error)
+        case .completed(let data):
+            let amount = decimalParser.parseAnyDecimal(from: view?.amount(type: type)) ?? 0
+
+            do {
+                switch type {
+                case .exactIn: return try .completed(interactor.bestTradeExactIn(swapData: data, amount: amount))
+                case .exactOut: return try .completed(interactor.bestTradeExactOut(swapData: data, amount: amount))
+                }
+            } catch {
+                return .failed(error)
+            }
         }
+    }
+
+    private func setCoin(tradeType: TradeType, coin: Coin) {
+        switch tradeType {
+        case .exactIn:
+            coinIn = coin
+            if coinOut == coin {
+                coinOut = nil
+            }
+        case .exactOut:
+            coinOut = coin
+        }
+    }
+
+    private func set(approving: Bool) {
+        self.approving = approving
+
+        interactor.allowanceChanging(subscribe: approving, coin: coinIn)
     }
 
 }
@@ -52,6 +98,7 @@ class SwapPresenter {
 extension SwapPresenter: ISwapViewDelegate {
 
     func onViewDidLoad() {
+        syncAllowance()
         sync()
     }
 
@@ -83,11 +130,13 @@ extension SwapPresenter: ISwapViewDelegate {
         switch type {
         case .exactIn:
             decimal = min(coinIn.decimal, maxCoinDecimal)
-            balance = self.balanceIn
+            balance = self.balance
         case .exactOut: decimal = min(coinOut?.decimal ?? maxCoinDecimal, maxCoinDecimal)
         }
 
-        let insufficientAmount = balance.map { value > $0 } ?? false
+        let insufficientAmount = balance.map {
+            value > $0
+        } ?? false
         return value.decimalCount <= decimal && !insufficientAmount
     }
 
@@ -97,14 +146,18 @@ extension SwapPresenter: ISwapViewDelegate {
         router.openTokenSelect(accountCoins: type == .exactIn, exclude: exclude, delegate: self)
     }
 
-    func onProceed() {
+    func onButtonClicked() {
         guard let coinOut = coinOut,
-              let tradeData = tradeData else {
-
+              let tradeData = tradeData?.data,
+              let amount = tradeData.amountIn else {
             return
         }
 
-        router.showConfirmation(coinIn: coinIn, coinOut: coinOut, tradeData: tradeData, delegate: self)
+        switch swapState {
+        case .approve: router.showApprove(delegate: self, coin: coinIn, spenderAddress: interactor.spenderAddress, amount: amount)
+        case .proceed: router.showConfirmation(coinIn: coinIn, coinOut: coinOut, tradeData: tradeData, delegate: self)
+        default: ()
+        }
     }
 
 }
@@ -113,19 +166,43 @@ extension SwapPresenter: ISwapInteractorDelegate {
 
     func clearSwapData() {
         swapData = nil
+        set(approving: false)
 
         sync()
     }
 
     func didReceive(swapData: SwapData) {
-        self.swapData = swapData
+        self.swapData = .completed(swapData)
+        set(approving: false)
 
-        tradeData = tradeData(type: tradeType)
         sync()
     }
 
     func didFailReceiveSwapData(error: Error) {
-        swapData = nil
+        swapData = .failed(error)
+        set(approving: false)
+
+        sync()
+    }
+
+    func didReceive(allowance: Decimal?) {
+        if let allowance = allowance {
+            if let previous = self.allowance?.data, previous != allowance {
+                set(approving: false)
+            }
+
+            self.allowance = .completed(allowance)
+        } else {
+            set(approving: false)
+
+            self.allowance = nil
+        }
+
+        sync()
+    }
+
+    func didFailReceiveAllowance(error: Error) {
+        allowance = .failed(error)
 
         sync()
     }
@@ -135,16 +212,12 @@ extension SwapPresenter: ISwapInteractorDelegate {
 extension SwapPresenter: ICoinSelectDelegate {
 
     func didSelect(accountCoins: Bool, coin: Coin) {
-        if accountCoins {
-            coinIn = coin
-            if coinOut == coin {
-                coinOut = nil
-            }
-        } else {
-            coinOut = coin
-        }
+        setCoin(tradeType: accountCoins ? .exactIn : .exactOut, coin: coin)
 
-        interactor.requestSwapData(coinIn: coinIn, coinOut: coinOut)
+        if accountCoins {
+            syncAllowance()
+        }
+        syncSwapData()
 
         sync()
     }
@@ -159,6 +232,16 @@ extension SwapPresenter: ISwapConfirmationDelegate {
 
     func onCancelClicked() {
         router.dismiss()
+    }
+
+}
+
+extension SwapPresenter: ISwapApproveDelegate {
+
+    func didApprove() {
+        set(approving: true)
+
+        sync()
     }
 
 }

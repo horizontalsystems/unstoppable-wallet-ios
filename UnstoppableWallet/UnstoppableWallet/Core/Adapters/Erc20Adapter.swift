@@ -152,7 +152,6 @@ extension Erc20Adapter: ISendEthereumAdapter {
             return Single.error(SendTransactionError.wrongAmount)
         }
 
-
         var tokenAddress: Address?
         if let address = address {
             tokenAddress = try? Address(hex: address)
@@ -160,6 +159,36 @@ extension Erc20Adapter: ISendEthereumAdapter {
 
 
         return erc20Kit.estimateGas(to: tokenAddress, contractAddress: contractAddress, value: amount, gasPrice: gasPrice)
+    }
+
+}
+
+extension Erc20Adapter: IErc20Adapter {
+
+    func allowanceSingle(spenderAddress: Address) -> Single<Decimal> {
+        erc20Kit.allowanceSingle(spenderAddress: spenderAddress)
+                .map { [unowned self] allowanceString in
+                    if let significand = Decimal(string: allowanceString) {
+                        return Decimal(sign: .plus, exponent: -self.decimal, significand: significand)
+                    }
+
+                    return 0
+                }
+    }
+
+    func estimateApproveSingle(spenderAddress: Address, amount: Decimal, gasPrice: Int) -> Single<Int> {
+        let amount = BigUInt(amount.roundedString(decimal: decimal))!
+
+        return erc20Kit.estimateApproveSingle(spenderAddress: spenderAddress, amount: amount, gasPrice: gasPrice)
+    }
+
+    func approveSingle(spenderAddress: Address, amount: Decimal, gasLimit: Int, gasPrice: Int) -> Single<String> {
+        let amount = BigUInt(amount.roundedString(decimal: decimal))!
+
+        return erc20Kit.approveSingle(spenderAddress: spenderAddress, amount: amount, gasLimit: gasLimit, gasPrice: gasPrice)
+                .map { transactionWithInternal in
+                    transactionWithInternal.transaction.hash.toHexString()
+                }
     }
 
 }

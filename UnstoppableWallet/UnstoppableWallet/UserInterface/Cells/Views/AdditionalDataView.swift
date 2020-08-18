@@ -48,8 +48,16 @@ class AdditionalDataView: UIView {
         valueLabel.text = value
     }
 
-    func setValue(color: UIColor) {
+    func setValue(customColor: UIColor?) {
+        guard let color = customColor else {
+            return
+        }
+
         valueLabel.textColor = color
+    }
+
+    func setValue(hidden: Bool) {
+        valueLabel.isHidden = hidden
     }
 
 }

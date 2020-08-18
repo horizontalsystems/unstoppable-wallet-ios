@@ -12,8 +12,8 @@ class ChartPresenter {
     private var interactor: IChartInteractor
     private let factory: IChartRateFactory
 
-    private var chartDataStatus: ChartDataStatus<ChartInfo> = .loading
-    private var marketInfoStatus: ChartDataStatus<MarketInfo> = .loading
+    private var chartDataStatus: DataStatus<ChartInfo> = .loading
+    private var marketInfoStatus: DataStatus<MarketInfo> = .loading
 
     let coinCode: String
     let coinTitle: String
@@ -51,10 +51,10 @@ class ChartPresenter {
     }
 
     private func fetchInfo() {
-        chartDataStatus = ChartDataStatus(data: interactor.chartInfo(coinCode: coinCode, currencyCode: currency.code, chartType: chartType))
+        chartDataStatus = DataStatus(data: interactor.chartInfo(coinCode: coinCode, currencyCode: currency.code, chartType: chartType))
         interactor.subscribeToChartInfo(coinCode: coinCode, currencyCode: currency.code, chartType: chartType)
 
-        marketInfoStatus = ChartDataStatus(data: interactor.marketInfo(coinCode: coinCode, currencyCode: currency.code))
+        marketInfoStatus = DataStatus(data: interactor.marketInfo(coinCode: coinCode, currencyCode: currency.code))
         interactor.subscribeToMarketInfo(coinCode: coinCode, currencyCode: currency.code)
 
         interactor.subscribeToAlertUpdates()
@@ -123,7 +123,7 @@ extension ChartPresenter: IChartInteractorDelegate {
     }
 
     func onChartInfoError() {
-        chartDataStatus = .failed
+        chartDataStatus = .failed(nil)
         updateChart()
     }
 

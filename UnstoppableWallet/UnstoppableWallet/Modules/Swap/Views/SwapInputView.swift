@@ -114,8 +114,8 @@ extension SwapInputView {
         inputField.becomeFirstResponder()
     }
 
-    public func set(tokenName: String) {
-        tokenSelectButton.setTitle(tokenName, for: .normal)
+    public func set(tokenCode: String) {
+        tokenSelectButton.setTitle(tokenCode, for: .normal)
     }
 
     public func set(maxButtonVisible: Bool) {

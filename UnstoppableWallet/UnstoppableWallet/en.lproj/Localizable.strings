@@ -185,9 +185,12 @@ bch.horizontalsystems.xyz/apg";
 "swap.you_pay" = "You Pay";
 "swap.estimated" = "estimated";
 "swap.balance" = "Balance";
+"swap.allowance" = "allowance";
 "swap.you_get" = "You Get";
 "swap.token" = "Token";
-"swap.proceed" = "Proceed";
+"swap.proceed_button" = "Proceed";
+"swap.approve_button" = "Approve";
+"swap.approving_button" = "Approving";
 "swap.amount_error.maximum_amount" = "Maximum amount %@";
 
 "swap.price" = "Price";
@@ -201,6 +204,11 @@ bch.horizontalsystems.xyz/apg";
 "swap.transaction_fee" = "Transaction Fee";
 
 "swap.select_token.title" = "Choose Coin";
+
+// Swap Approving
+
+"swap.approve.title" = "Approve";
+"swap.approve.subtitle" = "Approve";
 
 // Swap Confirmation
 

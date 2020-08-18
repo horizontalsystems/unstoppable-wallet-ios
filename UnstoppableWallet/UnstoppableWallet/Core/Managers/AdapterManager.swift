@@ -75,6 +75,16 @@ extension AdapterManager: IAdapterManager {
         queue.sync { adapters[wallet] }
     }
 
+    func adapter(for coin: Coin) -> IAdapter? {
+        queue.sync {
+            guard let wallet = walletManager.wallets.first(where: { $0.coin == coin } ) else {
+                return nil
+            }
+
+            return adapters[wallet]
+        }
+    }
+
     func balanceAdapter(for wallet: Wallet) -> IBalanceAdapter? {
         queue.sync { adapters[wallet] as? IBalanceAdapter }
     }
