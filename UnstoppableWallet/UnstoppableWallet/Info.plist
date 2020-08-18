@@ -79,5 +79,7 @@
 	<string>${pns_username}</string>
 	<key>PnsPassword</key>
 	<string>${pns_password}</string>
+	<key>GuidesIndexUrl</key>
+	<string>${guides_index_url}</string>
 </dict>
 </plist>
