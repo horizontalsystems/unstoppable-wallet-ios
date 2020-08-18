@@ -109,7 +109,7 @@
 "balance.title" = "Guthaben";
 "balance.tab_bar_item" = "Guthaben";
 "balance.send" = "Senden";
-"balance.swap" = "Swap";
+"balance.swap" = "Tauschen";
 "balance.deposit" = "Anfordern";
 "balance.rate_per_coin" = "%@ pro %@";
 "balance.syncing" = "Synchronisieren...";
@@ -176,7 +176,7 @@
 
 // Swap
 
-"swap.title" = "Swap";
+"swap.title" = "Tauschen";
 "swap.you_pay" = "Sie bezahlen";
 "swap.estimated" = "geschätzt";
 "swap.balance" = "Guthaben";
