@@ -109,7 +109,7 @@
 "balance.title" = "Баланс";
 "balance.tab_bar_item" = "Баланс";
 "balance.send" = "Отправить";
-"balance.swap" = "Swap";
+"balance.swap" = "Обменять";
 "balance.deposit" = "Получить";
 "balance.rate_per_coin" = "%@ за %@";
 "balance.syncing" = "Идет синхронизация...";
@@ -176,22 +176,22 @@
 
 // Swap
 
-"swap.title" = "Swap";
-"swap.you_pay" = "You Pay";
-"swap.estimated" = "estimated";
+"swap.title" = "Обменять";
+"swap.you_pay" = "Вы платите";
+"swap.estimated" = "приблизительно";
 "swap.balance" = "Баланс";
-"swap.you_get" = "You Get";
+"swap.you_get" = "Вы получите";
 "swap.token" = "Токен";
 "swap.proceed" = "Выполнить";
 "swap.amount_error.maximum_amount" = "Максимальная сумма %@";
 
 "swap.price" = "Цена";
-"swap.price_impact" = "Price Impact";
+"swap.price_impact" = "Разница в цене";
 "swap.max_min" = "Макс / Мин";
 "swap.maximum_paid" = "Максимальная выплата";
 "swap.minimum_got" = "Минимальная выплата";
 
-"swap.fee" = "Swap Fee";
+"swap.fee" = "Комиссия за обмен";
 "swap.transactions_speed" = "Скорость Транзакции";
 "swap.transaction_fee" = "Комиссия за транзакцию";
 
@@ -200,19 +200,19 @@
 // Swap Confirmation
 
 "swap.confirmation.title" = "Подтвердить";
-"swap.confirmation.swap_button" = "Swap";
+"swap.confirmation.swap_button" = "Обменять";
 "swap.confirmation.pay" = "Оплатить %@";
 "swap.confirmation.get" = "Получить %@";
 
 
 "swap.uniswap_info.title" = "Uniswap v.2";
-"swap.uniswap_info.description" = "Uniswap is a fully decentralized protocol for automated liquidity provision on Ethereum.\n\nA simple formalized equation drives unstoppable liquidity for thousands of users and hundreds of applications.\n\nUniswap empowers developers, liquidity providers and traders to participate in a financial marketplace that is open and accessible to all.";
-"swap.uniswap_info.header_minimum_received" = "Minimum Received";
-"swap.uniswap_info.content_minimum_received" = "Yor transaction will revert if there is a large, unfavorable price movement before it is confirmed.";
-"swap.uniswap_info.header_price_impact" = "Price Impact";
-"swap.uniswap_info.content_price_impact" = "The difference between the market price and estimated price due to trade size.";
-"swap.uniswap_info.header_swap_fee" = "Swap Fee";
-"swap.uniswap_info.content_swap_fee" = "A portion of each trade (0.30%) goes to liquidity providers as a protocol incentive.";
+"swap.uniswap_info.description" = "Uniswap - это полностью децентрализованный протокол для автоматического предоставления ликвидности на Ethereum.\n\nПростая формула обеспечивает постоянную ликвидность для тысячи пользователей и сотен приложений.\n\nUniswap дает возможность разработчикам, поставщикам ликвидности и трейдерам участвовать в открытом и доступном для всех финансовом рынке.";
+"swap.uniswap_info.header_minimum_received" = "Получено минимум";
+"swap.uniswap_info.content_minimum_received" = "Ваша транзакция будет отменена в случае возникновения большого и неблагоприятного ценового движения до её подтверждения.";
+"swap.uniswap_info.header_price_impact" = "Разница в цене";
+"swap.uniswap_info.content_price_impact" = "Разница между рыночной и приблизительной ценой из-за размера сделки.";
+"swap.uniswap_info.header_swap_fee" = "Комиссия за обмен";
+"swap.uniswap_info.content_swap_fee" = "Часть с каждой сделки (0,30%) идет поставщикам ликвидности как протокольный стимул.";
 "swap.uniswap_info.link_button" = "Веб-сайт Uniswap";
 
 // Transactions
@@ -314,7 +314,7 @@
 "settings_notifications.trend_short" = "Краткосрочный 7Д";
 "settings_notifications.trend_long" = "Долгосрочный 6М";
 "settings_notifications.reset_all_title" = "Сбросить всё";
-"settings_notifications.trend_settings_title" = "Price Trend";
+"settings_notifications.trend_settings_title" = "Ценовой Тренд";
 
 // Settings -> Manage Wallet
 
@@ -345,13 +345,13 @@
 
 "terms.title" = "Условия использования";
 "terms.app_subtitle" = "Децентрализованное Приложение";
-"terms.description" = "The Unstoppable wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.
+"terms.description" = "Кошелек Unstoppable предназначен для тех, кто хочет инвестировать и хранить криптовалюты приватным и независимым образом.
 
-It's a non-custodial, peer-to-peer wallet where only the user has control over funds. It doesn't collect any data and keeps user independent by not locking his/her wallet to a specific wallet app.
+Это некастодиальный, децентрализованный кошелек где только пользователь имеет контроль над средствами. Кошелек не собирает какие либо данные и позволяет пользователю сохранять свою независимость не завязывая его/ее учетную запись под одно приложение кошелек.
 
-The Unstoppable wallet is fully open-source and anyone can confirm that the app works exactly as it claims to.
+Исходный программный код кошелека Unstoppable является открытым и доступным для всех, каждый может убедиться сам в том, что приложение работает должным образом.
 
-We built Unstoppable for ourselves as the available solutions were not up to par. Both from engineering and usability perspective we believe this wallet to be significantly ahead of alternative products.";
+Мы создали кошелек Unstoppable для себя, так как альтернативы не достаточно устраивали нас. С точки зрения инженерии и удобства использования, мы считаем, что этот кошелек значительно опережает всех остальных.";
 "terms.site" = "Веб-сайт";
 "terms.item.academy" = "Я зашел в раздел \"Академия\" этого приложения и ознакомился с фундаментальными аспектами хранения криптовалют.";
 "terms.item.backup" = "Я создал резервную копию приватного ключа (-ей) для своих кошельков, показанных мне в виде 12-24 слов. Я понимаю, что эти приватные ключи хранятся на моем смартфоне, а не в другом месте.";
@@ -572,12 +572,12 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "add_erc20_token.add" = "Добавить";
 "add_erc20_token.contract_not_exist" = "Контракт не найден";
 
-"change_24hour_up" = "%@ price: up %@%% %@";
-"change_24hour_down" = "%@ price: down %@%% %@";
-"trend_shortterm_up" = "%@ short term trend: up %@";
-"trend_shortterm_down" = "%@ short term trend: down %@";
-"trend_longterm_up" = "%@ long term trend: up %@";
-"trend_longterm_down" = "%@ long term trend: down %@";
+"change_24hour_up" = "%@ цена: повысилась на %@%%%@";
+"change_24hour_down" = "%@ цена: понизилась на %@%%%@";
+"trend_shortterm_up" = "Краткосрочный тренд %@: вверх %@";
+"trend_shortterm_down" = "Краткосрочный тренд %@: вниз %@";
+"trend_longterm_up" = "Долгосрочный тренд %@: вверх %@";
+"trend_longterm_down" = "Долгосрочный тренд %@: вниз %@";
 
 "chart_alert.title" = "Уведомления ";
 "chart_alert.24h_description" = "Изменение цены 24 ч";
