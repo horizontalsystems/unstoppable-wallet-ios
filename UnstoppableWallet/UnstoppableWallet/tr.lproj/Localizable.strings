@@ -20,6 +20,7 @@
 
 "alert.copied" = "Kopyalandı";
 "alert.no_internet" = "Internet Bağlantısı Yok";
+"alert.wrong_amount" = "Yanlış Tutar";
 "alert.no_fee" = "Yanlış Masraf";
 "alert.network_issue" = "Ağ sorunu. Tekrar deneyin.";
 "alert.unknown_error" = "Bilinmeyen Hata";
@@ -108,6 +109,7 @@
 "balance.title" = "Bakiye";
 "balance.tab_bar_item" = "Bakiye";
 "balance.send" = "Gönder";
+"balance.swap" = "Takas";
 "balance.deposit" = "Al";
 "balance.rate_per_coin" = "%@ = 1 %@";
 "balance.syncing" = "Eşitleniyor...";
@@ -171,6 +173,49 @@
 "send.token.insufficient_fee_alert" = "%@ (%@) için ișlem ücreti %@ hesabından ödenir. Asgari %@ gerekiyor.";
 
 "send.lock_time" = "TimeLock";
+
+// Swap
+
+"swap.title" = "Takas";
+"swap.you_pay" = "Ödediğiniz";
+"swap.estimated" = "tahmini";
+"swap.balance" = "Bakiye";
+"swap.you_get" = "Kazandığınız";
+"swap.token" = "Token";
+"swap.proceed" = "Devam";
+"swap.amount_error.maximum_amount" = "Maksimum miktar %@";
+
+"swap.price" = "Fiyat";
+"swap.price_impact" = "Fiyat Etkisi";
+"swap.max_min" = "Max / Min";
+"swap.maximum_paid" = "Maksimum Ödenen";
+"swap.minimum_got" = "Minimum Kazanılan";
+
+"swap.fee" = "Takas Ücreti";
+"swap.transactions_speed" = "İşlem hızı";
+"swap.transaction_fee" = "İşlem Ücreti";
+
+"swap.select_token.title" = "Kripto Parayı Seç";
+
+// Swap Confirmation
+
+"swap.confirmation.title" = "Onayla";
+"swap.confirmation.swap_button" = "Takas";
+"swap.confirmation.pay" = "Ödeyin %@";
+"swap.confirmation.get" = "%@ al";
+
+
+"swap.uniswap_info.title" = "Uniswap v.2";
+"swap.uniswap_info.description" = "
+Uniswap, Ethereum'da otomatik likidite tedariki için tamamen merkezi olmayan bir protokoldür.\n\nBasit biçimlendirilmiş bir denklem, binlerce kullanıcı ve yüzlerce uygulama için durdurulamaz likidite sağlar.\n\nUniswap, geliştiricilere, likidite sağlayıcılarına ve tüccarlara herkese açık ve erişilebilir bir finans piyasasına katılma yetkisi verir.    ";
+"swap.uniswap_info.header_minimum_received" = "Minimum Alınan";
+"swap.uniswap_info.content_minimum_received" = "Onaylanmadan önce büyük, olumsuz bir fiyat hareketi varsa alım satım işleminiz geri alınacaktır.";
+"swap.uniswap_info.header_price_impact" = "Fiyat Etkisi";
+"swap.uniswap_info.content_price_impact" = "Ticaret hacmine bağlı olarak piyasa fiyatı ile tahmini fiyat arasındaki fark.";
+"swap.uniswap_info.header_swap_fee" = "Takas Ücreti";
+"swap.uniswap_info.content_swap_fee" = "Her işlemin bir kısmı (% 0.30) bir protokol teşvik primi olarak likidite sağlayıcılarına gider.";
+"swap.uniswap_info.link_button" = "Uniswap Web Sitesi";
+
 // Transactions
 
 "transactions.title" = "Hesap işlemleri";
@@ -246,11 +291,12 @@
 "settings.security_center" = "Güvenlik Merkezi";
 "settings.manage_accounts" = "Cüzdanları yönet";
 "settings.manage_coins" = "Kripto Paraları Yönet";
+"settings.app_status" = "Uygulama Durumu";
 "settings.experimental_features" = "Deneysel Özellikler";
 "settings.notifications" = "Bildirimler";
 "settings.base_currency" = "Para birimi";
 "settings.language" = "Dil";
-"settings.about" = "Hakkında";
+"settings.terms" = "Şartlar";
 "settings.tell_friends" = "Arkadaşlarına bahset";
 "settings.contact" = "Iletişim";
 "settings.light_mode" = "Aydınlık mod";
@@ -260,11 +306,16 @@
 // Settings -> Notifications
 
 "settings_notifications.title" = "Bildirimler";
-"settings_notifications.description" = "İzlemek istediğiniz paralar için fiyat değişikliği uyarılarını ayarlayın.\n\nSon 24 saatteki fiyat değişikliği seçilen eşiği aştığında uyarılırsınız.";
+"settings_notifications.toggle_title" = "Anlık Bildirimler";
+"settings_notifications.description" = "İzlemek istediğiniz paralar için fiyat değişikliği uyarılarını ayarlayın\n\nSon 24 saatteki fiyat değişikliği seçilen eşiği aştığında uyarı alırsınız. \n\nFiyat Trendi Uyarısı, 6 ay boyunca, 1 haftalık kısa bir süre için bir trend değişikliği durumunu uyarır.";
 "settings_notifications.alert_off" = "Kapat";
 "settings.notifications.deactivate_all" = "Etkisizleştir";
 "settings.notifications.disabled_text" = "Unstoppable Cüzdan uygulaması için bildirimler devre dışı bırakıldı. Fiyat değişikliği uyarıları alabilmek için Bildirimler'i açmanız ve arka plan uygulaması yenilemesine izin vermeniz gerekir.";
 "settings.notifications.settings_button" = "Ayarlardan aç";
+"settings_notifications.trend_short" = "Kısa Vade 7G";
+"settings_notifications.trend_long" = "Uzun Vade 6A";
+"settings_notifications.reset_all_title" = "Tümünü Sıfırla";
+"settings_notifications.trend_settings_title" = "Fiyat Trendi";
 
 // Settings -> Manage Wallet
 
@@ -291,13 +342,26 @@
 "settings.bitcoin_hodling.lock_time" = "Aktiveet";
 "settings.bitcoin_hodling.description" = "Belirtilen tarihe kadar harcanmamış Bitcoin'leri göndermenize olanak verir.\n\nBu tür bir işlemin alıcısı Unstoppable cüzdan kullanmalıdır.\n\nSadece Unstoppable cüzdan, Bitcoin ağındaki bu tür işlemleri doğru bir şekilde tanımlayabilir ve kilitleme süresi dolduktan sonra da alıcının bu Bitcoin'leri harcamasını sağlayabilir.\n\nEğer bir HODLer iseniz, kendinize böyle bir işlem göndererek, bu özelliği Bitcoin'lerinizi zarar etmeden uzun süre elinizde tutmaya zorlamak için kullanabilirsiniz.\n\nDeneysel bir özellik olduğundan, işlem başına maksimum tutar 0.5 BTC ile sınırlandırılmıştır.";
 
-// Settings -> About
+// Settings -> Terms
 
-"settings_about.title" = "Hakkında";
-"settings_about.app_title" = "Usntoppable";
-"settings_about.app_subtitle" = "Decentralized uygulama";
-"settings_about.terms_privacy_subtitle" = "Şartlar & Gizlilik Politikası:";
-"settings_about.terms_privacy_text" = "Bu uygulama peer-to-peer uygulamasıdır. Çalışması için herhangi bir web sunucusu veya teknik personeli gerektirmiyor. \n\nInternet olduğu sürece her yerde çalışır. Hiçkimse bu uygulamanın çalışmasını engelleyemez veya birisinin onu kullanmasını sansürleyemez.\n\nKripto paranızı kontrol eden gizli şifreleme anahtarları sadece telefonun kendisinde güvenle saklanır, başka hiçbir yerde saklanmaz.\n\nGizli şifreleme anahtarlarınızı yedeklemek ve gizli tutmak sizin sorumluluğunuzdur. Anahtarlarınızı asla kimseye göstermeyin. Anahtarlar kaybolur, unutulur veya çalınırsa, paranızı anahtarınızı bulan kişi kullanabilir.\n\nTelefonunuzu kesinlikte jailbreak etmeyin, bilinmeyen (güvenilmeyen) kaynaklardan uygulama yüklemeyin, cihazınızı güvenilmeyen kişilere vermeyin ve telefonunuzdaki işletim sistemini güncel tutun. Cüzdanınızın güvenliği buna bağlıdır.\n\nBu uygulamayı destekleyen kodun tamamı kamu incelemesine açıktır. Herhangi bir akıllı telefon cüzdan uygulamasından önemli ölçüde daha güvenli olduğuna inanmamıza rağmen, istenmeyen yazılım sorunlarının olmadığının garantisi yoktur.\n\nTüm verileriniz, yani işlemler, bakiye vb. yalnızca cüzdan uygulamanız tarafından kullanılabilir ve cihazınızdan asla ayrılmaz.";
+"terms.title" = "Şartlar";
+"terms.app_subtitle" = "Decentralized App";
+"terms.description" = "Durdurulamaz cüzdan, kripto para birimlerine özel ve bağımsız bir şekilde yatırım yapmak ve biriktirmek isteyenler için üretilmiştir.
+
+Bu, yalnızca kullanıcının fonlar üzerinde kontrol sahibi olduğu, gözetim dışı, uçtan uca bir cüzdandır. Herhangi bir veri toplamaz ve kullanıcının cüzdanını belirli bir cüzdan uygulamasına bağlamadan kullanıcıyı bağımsız tutar.
+
+Durdurulamaz cüzdan tamamen açık kaynaklıdır ve herkes uygulamanın tam olarak iddia edildiği gibi çalıştığını doğrulayabilir.
+
+Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliştirdik. Hem mühendislik hem de kullanılabilirlik açısından bu cüzdanın alternatif ürünlerin çok önünde olduğuna inanıyoruz.";
+"terms.site" = "Web Sitesi";
+"terms.item.academy" = "Bu uygulamanın Akademi kısmını inceledim ve kripto para birimlerini biriktirmenin temel hususlarına aşina oldum.";
+"terms.item.backup" = "Bana 12-24 sözcük şeklinde gösterilen cüzdanlarım için özel anahtar(lar) ın yedeğini aldım. Bu özel anahtarların başka bir yerde değil akıllı telefonumda kaydedileceğini anladım.";
+"terms.item.owner" = "Sadece özel anahtar(lar) ıma sahip olanın cüzdanıma erişip fonları harcayabileceğini ve bu nedenle bu anahtarların asla kimseyle paylaşılmaması gerektiğini anladım.";
+"terms.item.recover" = "Telefonumu kaybedersem veya uygulama kullanım dışı kalırsa fonlarıma tekrar erişim sağlamak için özel anahtarlarıma ihtiyacım olacağını anladım. Özel anahtarlarım olmadan cüzdanıma erişimi kurtarmak imkansız olacaktır.";
+"terms.item.phone" = "Telefonumu güvenilmeyen kişilere vermenin veya cüzdan uygulamasından güvenli PIN kilidi olmadan çıkmanın fonlarımın güvenliğini potansiyel olarak tehlikeye atabileceğini anladım.";
+"terms.item.root" = "Telefonumun yazılımını kırmanın (rootlama), bilinmeyen kaynaklardan üçüncü taraf uygulamaları yüklemenin, işletim sistemini güncel tutmamanın fonlarımın güvenliğini potansiyel olarak tehlikeye atabileceğini anladım.";
+"terms.item.bugs" = "Bu cüzdan uygulamasını çalıştıran kodda beklenmeyen durumlara veya uygulamanın hatalı çalışmasına neden olabilecek keşfedilmemiş yazılım sorunları olabileceğini anladım.";
+"terms.footer" = "Bu cüzdanı seçtiğiniz için teşekkür ederiz!";
 
 // Settings -> Tell Friends
 
@@ -351,7 +415,6 @@
 // Settings -> Contact
 
 "settings.contact.title" = "Iletişim";
-"settings.contact.app_status" = "Uygulama Durumu";
 "settings.contact.email" = "E-posta";
 "settings.contact.telegram_wallet" = "Telegram";
 
@@ -420,6 +483,7 @@
 "chart.title" = "%@ Fiyat";
 "chart.time_duration.day" = "1G";
 "chart.time_duration.week" = "7G";
+"chart.time_duration.week2" = "2H";
 "chart.time_duration.month" = "1A";
 "chart.time_duration.month3" = "3A";
 "chart.time_duration.halyear" = "6Ay";
@@ -508,3 +572,14 @@
 "add_erc20_token.already_exists" = "Bu token zaten kripto para yöneticisi listesindedir.";
 "add_erc20_token.add" = "Ekle";
 "add_erc20_token.contract_not_exist" = "Sözleşme bulunamadı";
+
+"change_24hour_up" = "%@ fiyat: yukarı %@%% %@";
+"change_24hour_down" = "%@ fiyat: aşağı %@%% %@";
+"trend_shortterm_up" = "%@ kısa vade trend: yukarı %@";
+"trend_shortterm_down" = "%@ kısa vade trend: aşağı %@";
+"trend_longterm_up" = "%@ uzun vade trend: yukarı %@";
+"trend_longterm_down" = "%@ uzun vade trend: aşağı %@";
+
+"chart_alert.title" = "Bildirim";
+"chart_alert.24h_description" = "Fiyat Değişimi 24s";
+"chart_alert.trend_description" = "Fiyat Trend Değişimi";

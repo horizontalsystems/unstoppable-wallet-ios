@@ -1,6 +1,6 @@
 "coin.BTC" = "Bitcoin";
 "coin.BCH" = "Bitcoin Cash";
-"coin.ETH" = "Ethreum";
+"coin.ETH" = "Ethereum";
 
 "button.ok" = "确定";
 "button.cancel" = "取消";
@@ -20,6 +20,7 @@
 
 "alert.copied" = "已复制";
 "alert.no_internet" = "没有网络";
+"alert.wrong_amount" = "金额有误";
 "alert.no_fee" = "错误费用";
 "alert.network_issue" = "网络问题。请稍后再试\n\n";
 "alert.unknown_error" = "未知错误";
@@ -108,6 +109,7 @@
 "balance.title" = "余额";
 "balance.tab_bar_item" = "余额";
 "balance.send" = "发送​​";
+"balance.swap" = "掉期交易";
 "balance.deposit" = "接收";
 "balance.rate_per_coin" = "%@ / %@";
 "balance.syncing" = "正在同步...";
@@ -161,7 +163,7 @@
 "send.hodler_error.unsupported_address" = "时间锁定只能和P2PKH地址（以1开头）一起使用";
 
 "send.confirmation.title" = "确认";
-"send.confirmation.memo_placeholder" = "Memo";
+"send.confirmation.memo_placeholder" = "备忘录";
 "send.confirmation.total" = "总额";
 "send.confirmation.send_button" = "发送​​";
 "send.amount_error.balance" = "余额%@";
@@ -171,6 +173,48 @@
 "send.token.insufficient_fee_alert" = "%@（%@）的交易费用以%@支付。您需要%@。";
 
 "send.lock_time" = "时间锁定";
+
+// Swap
+
+"swap.title" = "掉期交易";
+"swap.you_pay" = "您支付";
+"swap.estimated" = "估计";
+"swap.balance" = "余额";
+"swap.you_get" = "您获得";
+"swap.token" = "令牌";
+"swap.proceed" = "继续";
+"swap.amount_error.maximum_amount" = "最大金额 %@";
+
+"swap.price" = "价格";
+"swap.price_impact" = "价格影响";
+"swap.max_min" = "最大 / 最小";
+"swap.maximum_paid" = "最大支付金额";
+"swap.minimum_got" = "最小获取金额";
+
+"swap.fee" = "掉期交易费用";
+"swap.transactions_speed" = "交易速度";
+"swap.transaction_fee" = "交易费用";
+
+"swap.select_token.title" = "选择代币";
+
+// Swap Confirmation
+
+"swap.confirmation.title" = "确认";
+"swap.confirmation.swap_button" = "掉期交易";
+"swap.confirmation.pay" = "支付 %@";
+"swap.confirmation.get" = "获得 %@";
+
+
+"swap.uniswap_info.title" = "Uniswap v.2";
+"swap.uniswap_info.description" = "Uniswap是对以太币（Ethereum）实现流动性供给自动化的一种完全去中心化协议。\n\n一个简单的形式化方程为成千上百的用户和应用程序推动了不可阻挡的流动性。\n\nUniswap为开发人员、流动性提供着和交易者赋予了参与到对所有人开放的金融市场中的能力。";
+"swap.uniswap_info.header_minimum_received" = "收到的最小金额";
+"swap.uniswap_info.content_minimum_received" = "如果在确认之前出现大幅度不利的价格变动，您的交易将会还原。";
+"swap.uniswap_info.header_price_impact" = "价格影响";
+"swap.uniswap_info.content_price_impact" = "市场价格和估计价格由于交易规模引起的差额。";
+"swap.uniswap_info.header_swap_fee" = "掉期交易费用";
+"swap.uniswap_info.content_swap_fee" = "每一交易的一部分（0.30%）将作为协议奖励授予流动性提供着。";
+"swap.uniswap_info.link_button" = "Uniswap网站";
+
 // Transactions
 
 "transactions.title" = "交易";
@@ -246,11 +290,12 @@
 "settings.security_center" = "安全中心";
 "settings.manage_accounts" = "管理钱包";
 "settings.manage_coins" = "管理Coins";
+"settings.app_status" = "应用状态";
 "settings.experimental_features" = "实验性功能";
 "settings.notifications" = "通知";
 "settings.base_currency" = "基本货币";
 "settings.language" = "语言";
-"settings.about" = "关于";
+"settings.terms" = "条款";
 "settings.tell_friends" = "分享给好友";
 "settings.contact" = "报告问题";
 "settings.light_mode" = "简单模式";
@@ -260,11 +305,16 @@
 // Settings -> Notifications
 
 "settings_notifications.title" = "通知";
-"settings_notifications.description" = "为您要监察的代币设置价格变更警报。\n\n当价格的变化在24小时内超出选定的临界值时，您将收到警报。";
+"settings_notifications.toggle_title" = "推送通知";
+"settings_notifications.description" = "为您要监视的代币设定价格变动警报\n\n当过去24小时内价格变动超过选定的临界值时，您将会收到警报。\n\n价格趋势警报将对短期的1星期、长期的6个月发出趋势变动警告。";
 "settings_notifications.alert_off" = "关";
 "settings.notifications.deactivate_all" = "全部停用";
 "settings.notifications.disabled_text" = "已禁用Unstoppable钱包应用通知。您必须开启通知并允许后台应用刷新才能接收价格变更警报。";
 "settings.notifications.settings_button" = "在设置中开启";
+"settings_notifications.trend_short" = "短期7天";
+"settings_notifications.trend_long" = "长期6个月";
+"settings_notifications.reset_all_title" = "重置全部";
+"settings_notifications.trend_settings_title" = "价格趋势";
 
 // Settings -> Manage Wallet
 
@@ -291,13 +341,26 @@
 "settings.bitcoin_hodling.lock_time" = "激活";
 "settings.bitcoin_hodling.description" = "让您汇出在指定日期前无法消费的比特币。\n\n此交易的收款人应使用Unstoppable钱包。\n\n只有Unstoppable钱包能够正确识别此类在比特币网络上的交易并让收款人在锁定期限结束后消费那些比特币。\n\n如果您是持有人，您可以使用此功能通过向自己发送此类交易的方式来强制自己持有比特币。\n\n作为实验性功能，每次交易的最大金额限制为0.5 BTC。";
 
-// Settings -> About
+// Settings -> Terms
 
-"settings_about.title" = "关于";
-"settings_about.app_title" = "Unstoppable";
-"settings_about.app_subtitle" = "Decentralized App";
-"settings_about.terms_privacy_subtitle" = "条款和隐私：";
-"settings_about.terms_privacy_text" = "此应用是一款点对点应用。其运作不依赖于任何网络服务器或技术支持人员。\n\n应用能在任何有网络的地方工作。没有实体能够阻止此应用工作或者阻止任何人使用它。\n\n控制着您资金的加密密钥安全地保存在电话上，而不是其他地方。\n\n您的职责是备份加密密钥并保证其私密性。绝不要向任何人展示密钥。如果密钥丢失、遗忘或被盗，您的资金将会被拥有密钥的人使用。\n\n不要对您的电话进行越狱，不要安装来源不明（不可靠）的应用，不要把您的电话交给不可靠的人，保证电话的操作系统是最新版本。您钱包的安全将取决于此。\n\n支持此应用的完整代码对公众监督开放。尽管我们相信比市面上任何智能手机钱包应用都安全得多，但这不保证其中不会存在意外的软件问题。\n\n像交易、余额等所有数据将仅保存在您的钱包应用且绝不会从您的设备上外泄。";
+"terms.title" = "条款";
+"terms.app_subtitle" = "去中心化应用";
+"terms.description" = "Unstoppable钱包是为寻求以私密和独立的方式投资和储存加密货币的人士而创立。
+
+这是一个非监护式对等钱包，只有用户能够对资金进行控制。它不收集任何数据并通过不把用户钱包锁定至特定的钱包应用来保证他/她的独立性。
+
+Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的方式运行。
+
+我们为我们自己创立了Unstoppable作为符合标准的可用的解决方案。从工程和可用性角度而言，我们相信此钱包远远领先于其他产品。";
+"terms.site" = "网站";
+"terms.item.academy" = "我浏览了此应用的“学院”（Academy）部分并掌握了储存加密货币的基础知识。";
+"terms.item.backup" = "我已对我钱包的私钥备份，该私钥以12-24字的格式展示给我。我理解这些私钥将保存在我的智能手机而不是其他地方。";
+"terms.item.owner" = "我理解只有私钥的所有人可以访问和消费我钱包上的资金，因此不得和任何人共享这些私钥。";
+"terms.item.recover" = "我理解如果我丢失了手机或者应用出现故障时，我需要私钥才能恢复对我资金的访问。没有私钥，将无法恢复对我钱包的访问。";
+"terms.item.phone" = "我理解，将我的手机交给不可信的实体或者在未设置安全PIN码锁定的情况下离开钱包应用可能会危害我的资金安全。";
+"terms.item.root" = "我理解对我的手机进行越狱（root）、安装来源不明的第三方应用、未及时更新操作系统可能会危害我的资金安全。";
+"terms.item.bugs" = "我理解，在实现此钱包应用的代码中可能存在未发现的软件问题，这可能会导致意外行为或应用故障的发生。";
+"terms.footer" = "感谢您选择我们的钱包！";
 
 // Settings -> Tell Friends
 
@@ -330,7 +393,12 @@
 "settings_privacy_info.header_blockchain_connection" = "Blockchain Sync";
 "settings_privacy_info.content_blockchain_connection" = "This setting controls how this app interacts with blockchains (sending/receiving transactions). In case of Bitcoin, Bitcoin Cash, Litecoin and Dash it is fully peer to peer. The app pings many nodes and communicates with them. Potentially these nodes can record IP address and data requested but since they are chosen randomly, each time the app connects to a different node.\n\nIn case of Ethereum, there is no alternative for mobile wallets to interact with blockchain other than via third party service providers (i.e. Infura.io) or personal Ethereum nodes. Third party services can potentially record IP addresses and the requests made. That info can reveal location, balance, transactions etc. Moreover, the wallet has to trust that information returned is correct. There is a an alternative known as Incubed which in essence is a network of special Ethereum nodes. These nodes can also record IP addresses and requests made, but they are chosen randomly each time. While being slightly slower than Infura, the way Incubed works pretty much guarantees that the information returned is correct (not fake).\n\nWhen it comes to other blockchains like EOSIO and Binance Chain, at this point they only provide centralized means of connecting, without viable alternatives. Potentially they can be recording IP addresses and requests made.";
 "settings_privacy_info.header_blockchain_restore" = "Blockchain Restore";
-"settings_privacy_info.content_blockchain_restore" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transactions history for a given coin so that the wallet app is able to display past transactions and figure out latest balance. This needs to happen only once, when user restores previously created wallet. At this point there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from API Server : There is a predefined server which hosts the entire blockchain and has all the data processed and ready to provide it in a fast manner. This method is fast but can potentially keep track of the IP addresses and the data requested. This option is recommended due to its speed of getting data (5-10 minutes). The risks are minimal. If the user restoring from his own server then no privacy risks at all.\n\n2. from Blockchain : In this case the app tries to restore directly from a p2p network of the blockchain nodes. The app pings many of those nodes and requests data from them. Potentially these nodes can keep track of user's IP address and requests made however during restore the app can switch between nodes. There are close to 10,000 Bitcoin nodes on the network at any given time. This option is slow and can easily take 2-3 hours, app needs to be open while restore is happening.\n";
+"settings_privacy_info.content_blockchain_restore" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transactions history for a given coin so that the wallet app is able to display past transactions and figure out latest balance. This needs to happen only once, when user restores previously created wallet. At this point there are two potential ways for a mobile wallet like Unstoppable to do this:
+
+1. from API Server : There is a predefined server which hosts the entire blockchain and has all the data processed and ready to provide it in a fast manner. This method is fast but can potentially keep track of the IP addresses and the data requested. This option is recommended due to its speed of getting data (5-10 minutes). The risks are minimal. If the user restoring from his own server then no privacy risks at all.
+
+2. from Blockchain : In this case the app tries to restore directly from a p2p network of the blockchain nodes. The app pings many of those nodes and requests data from them. Potentially these nodes can keep track of user's IP address and requests made however during restore the app can switch between nodes. There are close to 10,000 Bitcoin nodes on the network at any given time. This option is slow and can easily take 2-3 hours, app needs to be open while restore is happening.
+";
 
 "settings_privacy.alert_sync.title" = "恢复参数";
 "settings_privacy.alert_sync.description" = "此更改后，钱包将必须与 %@ 区块链重新同步。";
@@ -351,7 +419,6 @@
 // Settings -> Contact
 
 "settings.contact.title" = "报告问题";
-"settings.contact.app_status" = "应用状态";
 "settings.contact.email" = "电子邮箱";
 "settings.contact.telegram_wallet" = "电报";
 
@@ -420,6 +487,7 @@
 "chart.title" = "%@ 价格";
 "chart.time_duration.day" = "1天";
 "chart.time_duration.week" = "7天";
+"chart.time_duration.week2" = "2周";
 "chart.time_duration.month" = "1个月";
 "chart.time_duration.month3" = "3个月";
 "chart.time_duration.halyear" = "6个月";
@@ -508,3 +576,14 @@
 "add_erc20_token.already_exists" = "该代币已在代币管理列表中.";
 "add_erc20_token.add" = "添加";
 "add_erc20_token.contract_not_exist" = "没找到合同";
+
+"change_24hour_up" = "%@ 价格：上升 %@%% %@";
+"change_24hour_down" = "%@ 价格：下跌 %@%% %@";
+"trend_shortterm_up" = "%@ 短期趋势：上升 %@";
+"trend_shortterm_down" = "%@ 短期趋势：下跌 %@";
+"trend_longterm_up" = "%@ 长期趋势：上升 %@";
+"trend_longterm_down" = "%@ 长期趋势：下跌 %@";
+
+"chart_alert.title" = "通知";
+"chart_alert.24h_description" = "24小时价格变动";
+"chart_alert.trend_description" = "价格趋势变动";

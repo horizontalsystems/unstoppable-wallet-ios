@@ -20,6 +20,7 @@
 
 "alert.copied" = "Kopiert";
 "alert.no_internet" = "Kein Internet";
+"alert.wrong_amount" = "Falscher Betrag";
 "alert.no_fee" = "Falsche Gebühr";
 "alert.network_issue" = "Es sind Netzwerkprobleme aufgetreten. Bitte versuchen Sie es erneut.";
 "alert.unknown_error" = "Unbekannter Fehler";
@@ -108,6 +109,7 @@
 "balance.title" = "Guthaben";
 "balance.tab_bar_item" = "Guthaben";
 "balance.send" = "Senden";
+"balance.swap" = "Tauschen";
 "balance.deposit" = "Anfordern";
 "balance.rate_per_coin" = "%@ pro %@";
 "balance.syncing" = "Synchronisieren...";
@@ -171,6 +173,48 @@
 "send.token.insufficient_fee_alert" = "Transaktionsgebühren für %@ %@ in %@ bezahlt. Du brauchst %@.";
 
 "send.lock_time" = "TimeLock";
+
+// Swap
+
+"swap.title" = "Tauschen";
+"swap.you_pay" = "Sie bezahlen";
+"swap.estimated" = "geschätzt";
+"swap.balance" = "Guthaben";
+"swap.you_get" = "Sie erhalten";
+"swap.token" = "Token";
+"swap.proceed" = "Fortfahren";
+"swap.amount_error.maximum_amount" = "Maximaler Betrag %@";
+
+"swap.price" = "Preis";
+"swap.price_impact" = "Preisauswirkungen";
+"swap.max_min" = "Max / Min";
+"swap.maximum_paid" = "Maximal bezahlt";
+"swap.minimum_got" = "Mindestens erhalten";
+
+"swap.fee" = "Tauschgebühr";
+"swap.transactions_speed" = "Transaktionsgeschwindigkeit";
+"swap.transaction_fee" = "Transaktionsgebühr";
+
+"swap.select_token.title" = "Coins auswählen";
+
+// Swap Confirmation
+
+"swap.confirmation.title" = "Bestätigen";
+"swap.confirmation.swap_button" = "Tauschen";
+"swap.confirmation.pay" = "%@ bezahlen";
+"swap.confirmation.get" = "%@ erhalten";
+
+
+"swap.uniswap_info.title" = "Uniswap v.2";
+"swap.uniswap_info.description" = "Uniswap ist ein vollständig dezentralisiertes Protokoll zur automatisierten Liquiditätsbereitstellung für Ethereum.\n\nEine einfache festgeschriebene Gleichung treibt unaufhaltsame Liquidität für tausende Benutzer und hunderte Anwendungen an.\n\nUniswap ermöglicht Entwicklern, Liquiditätsanbietern und Händlern die Teilnahme an einem offenen und für alle zugänglichen Finanzmarkt.";
+"swap.uniswap_info.header_minimum_received" = "Mindestens erhalten";
+"swap.uniswap_info.content_minimum_received" = "Ihre Transaktion wird rückgängig gemacht, wenn es eine große, ungünstige Kursbewegung gibt, bevor sie bestätigt wird.";
+"swap.uniswap_info.header_price_impact" = "Preisauswirkungen";
+"swap.uniswap_info.content_price_impact" = "Die Differenz zwischen dem Marktpreis und dem geschätzten Preis aufgrund der Handelsgröße.";
+"swap.uniswap_info.header_swap_fee" = "Tauschgebühr";
+"swap.uniswap_info.content_swap_fee" = "Ein Teil jedes Handels (0,30%) geht als Protokollanreiz an Liquiditätsanbieter.";
+"swap.uniswap_info.link_button" = "Uniswap-Seite";
+
 // Transactions
 
 "transactions.title" = "Transaktionen";
@@ -246,11 +290,12 @@
 "settings.security_center" = "Sicherheit";
 "settings.manage_accounts" = "Wallets verwalten";
 "settings.manage_coins" = "Coins Managen";
+"settings.app_status" = "App-Status";
 "settings.experimental_features" = "Experimentelles Feature";
 "settings.notifications" = "Benachrichtigungen";
 "settings.base_currency" = "Währung";
 "settings.language" = "Sprache";
-"settings.about" = "Info";
+"settings.terms" = "Bedingungen";
 "settings.tell_friends" = "Freunden erzählen";
 "settings.contact" = "Kontakt";
 "settings.light_mode" = "Licht Modus";
@@ -260,11 +305,16 @@
 // Settings -> Notifications
 
 "settings_notifications.title" = "Benachrichtigungen";
-"settings_notifications.description" = "Legen Sie einen Preisänderungsalarm für die Coins fest, die Sie beobachten möchten.\n\nSie werden benachrichtigt, wenn die Preisänderung in den letzten 24 Stunden die von Ihnen festgesetzte Grenze übersteigt.";
+"settings_notifications.toggle_title" = "Push-Benachrichtigungen";
+"settings_notifications.description" = "Legen Sie Warnungen für Preisänderungen von Coins fest, die Sie sehen möchten\n\nSie werden benachrichtigt, wenn die Preisänderung der letzten 24 Stunden den ausgewählten Grenzwert überschreitet.\n\nPreistrend-Warnung warnt vor einer Trendänderung für 1 Woche (kurzfristig), für 6 Monate (langfristig).";
 "settings_notifications.alert_off" = "Aus";
 "settings.notifications.deactivate_all" = "Alle deaktivieren";
 "settings.notifications.disabled_text" = "Die Benachrichtigungen für das Unstoppable-Wallet sind ausgeschaltet. Sie müssen die Benachrichtigungen einschalten und eine Aktualisierung der App im Hintergrund erlauben, um Benachrichtigungen bei Preisänderungen zu erhalten.";
 "settings.notifications.settings_button" = "In Einstellungen einschalten";
+"settings_notifications.trend_short" = "Kurzfristig 7T";
+"settings_notifications.trend_long" = "Langfristig 6M";
+"settings_notifications.reset_all_title" = "Alle zurücksetzen";
+"settings_notifications.trend_settings_title" = "Preistrend";
 
 // Settings -> Manage Wallet
 
@@ -291,13 +341,26 @@
 "settings.bitcoin_hodling.lock_time" = "Aktivieren";
 "settings.bitcoin_hodling.description" = "Damit können Sie gesendete Bitcoins sperren, sodass sie bis zu dem festgesetzten Datum nicht ausgegeben werden können.\n\nDer Empfänger einer solchen Transaktion sollte das Unstoppable-Wallet in der Version 0.10 (oder neuer) sowie das Bitcoin-Adressformat BIP44 verwenden.\n\nNur das Unstoppable-Wallet erkennt solche Transaktionen im Bitcoin-Netzwerk korrekt und ermöglicht es dem Empfänger, die Bitcoins nach der Sperrzeit zu auszugeben.\n\nWenn Sie ein HODLer* sind, können Sie diese Funktion auch für sich selbst nutzen, indem Sie sich selbst eine solche Transaktion schicken und so ihre Bitcoin für sich selbst zeitlich sperren.\n\nDa es sich noch um eine experimentelle Funktion handelt, liegt der maximale Betrag bei 0,5 BTC.\n";
 
-// Settings -> About
+// Settings -> Terms
 
-"settings_about.title" = "Info";
-"settings_about.app_title" = "Unstoppable";
-"settings_about.app_subtitle" = "Dezentralisierte App";
-"settings_about.terms_privacy_subtitle" = "ANB & Datenschutz:";
-"settings_about.terms_privacy_text" = "Diese App basiert auf dem Peer-to-Peer-Prinzip. Das bietet den Vorteil, dass die App zum Funktionieren nicht auf bestimmte Webserver oder technischem Supportpersonal abhängig ist.\n\nDie App funktioniert überall. Sie benötigen nur einen Internetzugang. Niemand kann die App stoppen oder jemanden zensieren, sie zu nutzen.\n\nDie geheimen kryptographischen Key, die Ihr kryptographisches Guthaben verwalten, werden sicher auf dem Mobiltelefon gespeichert, nirgendwo sonst.\n\nEs liegt in Ihrer Verantwortung, den geheimen kryptographischen Key zu sichern und ihn gut aufzubewahren. Zeigen Sie ihn niemandem. Wenn ein Key verloren geht, Sie ihn vergessen oder dieser gestohlen wird, kann Ihr Guthaben von demjenigen ausgegeben werden, der den Key besitzt.\n\nFühren Sie auf Ihrem Telefon keinen Jailbreak durch. Installieren Sie keine Apps aus unbekannten (nicht vertrauenswürdigen) Quellen. Geben Sie das Mobiltelefon keiner nicht vertrauenswürdigen Person und aktualisieren Sie das Betriebssystem Ihres Mobiltelefons regelmäßig. Die Sicherheit Ihres Wallets hängt davon ab.\n\nDer gesamte Code dieser App ist öffentlich einsehbar. Obwohl wir glauben, dass diese App wesentlich sicherer als jede andere Smartphone Wallet App ist, gibt es keine Garantie, dass es keine Softwareprobleme gibt.\n\nAlle Ihre Daten, d.h. Transaktionen, Guthaben usw., sind nur für Ihre Wallet-App verfügbar und verlassen niemals Ihr Gerät.";
+"terms.title" = "Bedingungen";
+"terms.app_subtitle" = "Dezentralisierte App";
+"terms.description" = "Das Unstoppable Wallet ist für diejenigen gedacht, die in Kryptowährungen auf private und unabhängige Weise investieren und diese sparen möchten.
+
+Es ist ein Non-Custodial, Peer-to-Peer Wallet, bei dem nur der Benutzer die Kontrolle über das Guthaben hat. Es sammelt keine Daten und hält Benutzer unabhängig, indem es sein Wallet nicht an eine bestimmte Wallet-App verknüpft.
+
+Das Unstoppable Wallet ist vollständig Open Source und jeder kann bestätigen, dass die App genau so funktioniert, wie sie es vorgibt.
+
+Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen nicht gut waren. Sowohl aus technischer Sicht als auch aus Sicht der Nutzbarkeit sind wir der Meinung, dass diese Wallets den alternativen Produkten deutlich voraus ist.";
+"terms.site" = "Seite";
+"terms.item.academy" = "Ich bin durch den Academy-Bereich dieser App gegangen und machte mich mit den grundlegenden Aspekten der Aufbewahrung von Kryptowährungen vertraut.";
+"terms.item.backup" = "Ich habe den/die Private Key(s) für meine Wallets gesichert, die mir in Form von 12-24 Wörtern angezeigt wurden. Mir ist bewusst, dass diese Private Keys auf meinem Smartphone und nirgendwo anders gespeichert werden.";
+"terms.item.owner" = "Mir ist bewusst, dass nur der Eigentümer meines/meiner Private Key(s) auf mein Wallet zugreifen und Geld ausgeben kann und dass diese Keys daher niemals mit irgendjemandem geteilt werden sollten.";
+"terms.item.recover" = "Mir ist bewusst, dass ich meine Private Keys benötige, um den Zugriff auf mein Geld wiederherzustellen, falls ich mein Mobiltelefon verlieren sollte oder wenn die App nicht funktioniert. Ohne meine Private Keys wird es unmöglich sein, den Zugriff auf mein Wallet wiederherzustellen.";
+"terms.item.phone" = "Mir ist bewusst, dass das Übergeben meines Mobiltelefons an nicht vertrauenswürdige Personen oder das Verlassen der Wallet-App ohne sichere PIN-Sperre die Sicherheit meines Guthabens gefährden könnte.";
+"terms.item.root" = "Mir ist bewusst, dass Jailbreaking (Rooting) meines Mobiltelefons, Installieren von Apps von Drittanbietern aus unbekannten Quellen und die Veraltung des Betriebssystems die Sicherheit meines Geldes gefährden kann.";
+"terms.item.bugs" = "Mir ist bewusst, dass es möglicherweise ungelöste Softwarefehler in dem Code gibt, mit dem diese Wallet-App betrieben wird, was zu unerwartetem Verhalten oder zu Fehlfunktionen der App führen kann.";
+"terms.footer" = "Vielen Dank, dass Sie dieses Wallet nutzen!";
 
 // Settings -> Tell Friends
 
@@ -330,7 +393,11 @@
 "settings_privacy_info.header_blockchain_connection" = "Blockchain Sync";
 "settings_privacy_info.content_blockchain_connection" = "This setting controls how this app interacts with blockchains (sending/receiving transactions). In case of Bitcoin, Bitcoin Cash, Litecoin and Dash it is fully peer to peer. The app pings many nodes and communicates with them. Potentially these nodes can record IP address and data requested but since they are chosen randomly, each time the app connects to a different node.\n\nIn case of Ethereum, there is no alternative for mobile wallets to interact with blockchain other than via third party service providers (i.e. Infura.io) or personal Ethereum nodes. Third party services can potentially record IP addresses and the requests made. That info can reveal location, balance, transactions etc. Moreover, the wallet has to trust that information returned is correct. There is a an alternative known as Incubed which in essence is a network of special Ethereum nodes. These nodes can also record IP addresses and requests made, but they are chosen randomly each time. While being slightly slower than Infura, the way Incubed works pretty much guarantees that the information returned is correct (not fake).\n\nWhen it comes to other blockchains like EOSIO and Binance Chain, at this point they only provide centralized means of connecting, without viable alternatives. Potentially they can be recording IP addresses and requests made.";
 "settings_privacy_info.header_blockchain_restore" = "Blockchain Restore";
-"settings_privacy_info.content_blockchain_restore" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transactions history for a given coin so that the wallet app is able to display past transactions and figure out latest balance. This needs to happen only once, when user restores previously created wallet. At this point there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from API Server : There is a predefined server which hosts the entire blockchain and has all the data processed and ready to provide it in a fast manner. This method is fast but can potentially keep track of the IP addresses and the data requested. This option is recommended due to its speed of getting data (5-10 minutes). The risks are minimal. If the user restoring from his own server then no privacy risks at all.\n\n2. from Blockchain : In this case the app tries to restore directly from a p2p network of the blockchain nodes. The app pings many of those nodes and requests data from them. Potentially these nodes can keep track of user's IP address and requests made however during restore the app can switch between nodes. There are close to 10,000 Bitcoin nodes on the network at any given time. This option is slow and can easily take 2-3 hours, app needs to be open while restore is happening.";
+"settings_privacy_info.content_blockchain_restore" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transactions history for a given coin so that the wallet app is able to display past transactions and figure out latest balance. This needs to happen only once, when user restores previously created wallet. At this point there are two potential ways for a mobile wallet like Unstoppable to do this:
+
+1. from API Server : There is a predefined server which hosts the entire blockchain and has all the data processed and ready to provide it in a fast manner. This method is fast but can potentially keep track of the IP addresses and the data requested. This option is recommended due to its speed of getting data (5-10 minutes). The risks are minimal. If the user restoring from his own server then no privacy risks at all.
+
+2. from Blockchain : In this case the app tries to restore directly from a p2p network of the blockchain nodes. The app pings many of those nodes and requests data from them. Potentially these nodes can keep track of user's IP address and requests made however during restore the app can switch between nodes. There are close to 10,000 Bitcoin nodes on the network at any given time. This option is slow and can easily take 2-3 hours, app needs to be open while restore is happening.";
 
 "settings_privacy.alert_sync.title" = "Parameter wiederherstellen";
 "settings_privacy.alert_sync.description" = "Nach dieser Änderung muss sich das Wallet mit der %@ Blockchain neu synchronisieren.";
@@ -351,7 +418,6 @@
 // Settings -> Contact
 
 "settings.contact.title" = "Kontakt";
-"settings.contact.app_status" = "App-Status";
 "settings.contact.email" = "E-mail";
 "settings.contact.telegram_wallet" = "Telegram";
 
@@ -420,6 +486,7 @@
 "chart.title" = "%@ Preis";
 "chart.time_duration.day" = "1T";
 "chart.time_duration.week" = "7T";
+"chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "1M";
 "chart.time_duration.month3" = "3M";
 "chart.time_duration.halyear" = "6M";
@@ -488,7 +555,7 @@
 // Guides
 
 "guides.tab_bar_item" = "Akademie";
-"guides.title" = "Academy";
+"guides.title" = "Akademie";
 
 // Add Token
 
@@ -508,3 +575,14 @@
 "add_erc20_token.already_exists" = "Dieser Token befindet sich bereits in der Coin-Verwaltungsliste.";
 "add_erc20_token.add" = "Hinzufügen";
 "add_erc20_token.contract_not_exist" = "Vertrag nicht gefunden";
+
+"change_24hour_up" = "%@ Preis: %@%% %@ höher";
+"change_24hour_down" = "%@ Preis: %@%% %@ niedriger";
+"trend_shortterm_up" = "%@ Kurzzeittrend: %@ höher";
+"trend_shortterm_down" = "%@ Kurzzeittrend: %@ niedriger";
+"trend_longterm_up" = "%@ Langzeittrend: %@ höher";
+"trend_longterm_down" = "%@ Langzeittrend: %@ niedriger";
+
+"chart_alert.title" = "Benachrichtigung";
+"chart_alert.24h_description" = "Preisänderung 24h";
+"chart_alert.trend_description" = "Preistrendänderung";

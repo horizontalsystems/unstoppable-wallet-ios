@@ -1,5 +1,5 @@
 "coin.BTC" = "Bitcoin";
-"coin.BCH" = "Efectivo Bitcoin";
+"coin.BCH" = "Bitcoin Cash";
 "coin.ETH" = "Ethereum";
 
 "button.ok" = "Aceptar";
@@ -20,6 +20,7 @@
 
 "alert.copied" = "Copiado";
 "alert.no_internet" = "Sin conexión a Internet";
+"alert.wrong_amount" = "Cantidad Incorrecta";
 "alert.no_fee" = "Tarifa incorrecta";
 "alert.network_issue" = "Problemas de red. Inténtelo de nuevo";
 "alert.unknown_error" = "Error desconocido";
@@ -87,7 +88,7 @@
 "backup.words.confirmation_description" = "Insertar palabras de su clave %@";
 
 "backup.eos.account_name" = "Account Name";
-"backup.eos.active_private_key" = "Active Private Key\n";
+"backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Copiar su clave utilizando la acción \"copiar\" implica ciertos riesgos si utiliza aplicaciones de gestión de portapapeles u otra aplicación que pueda tener acceso a la información del portapapeles.";
 "error.send_eos.self_transfer" = "No se puede transferir el token a su propia cuenta";
 "error.send_eos.account_not_exist" = "La cuenta de destino no existe";
@@ -108,6 +109,7 @@
 "balance.title" = "Saldo";
 "balance.tab_bar_item" = "Saldo";
 "balance.send" = "Enviar";
+"balance.swap" = "Permutar";
 "balance.deposit" = "Recibir";
 "balance.rate_per_coin" = "%@ por %@";
 "balance.syncing" = "Sincronizando...";
@@ -171,6 +173,48 @@
 "send.token.insufficient_fee_alert" = "Las comisiones de transacción para %@ (%@) pagado en %@. Es necesario %@.";
 
 "send.lock_time" = "TimeLock";
+
+// Swap
+
+"swap.title" = "Permutar";
+"swap.you_pay" = "Usted paga";
+"swap.estimated" = "estimado";
+"swap.balance" = "Saldo";
+"swap.you_get" = "Obtienes";
+"swap.token" = "Token";
+"swap.proceed" = "Continuar";
+"swap.amount_error.maximum_amount" = "Monto máximo %@";
+
+"swap.price" = "Precio";
+"swap.price_impact" = "Impacto en el precio";
+"swap.max_min" = "Máx / Mín";
+"swap.maximum_paid" = "Máximo Pagado";
+"swap.minimum_got" = "Mínimo Obtenido";
+
+"swap.fee" = "Tarifa por permutar";
+"swap.transactions_speed" = "Velocidad de transacciones";
+"swap.transaction_fee" = "Tarifa de Transacción";
+
+"swap.select_token.title" = "Elegir moneda";
+
+// Swap Confirmation
+
+"swap.confirmation.title" = "Confirmar";
+"swap.confirmation.swap_button" = "Permutar";
+"swap.confirmation.pay" = "Paga %@";
+"swap.confirmation.get" = "Obtén %@";
+
+
+"swap.uniswap_info.title" = "Uniswap v.2";
+"swap.uniswap_info.description" = "Uniswap es un protocolo totalmente descentralizado para la provisión automatizada de liquidez en Ethereum.\n\nUna simple ecuación formalizada impulsa una liquidez imparable para miles de usuarios y cientos de aplicaciones.\n\nUniswap potencia a desarrolladores, proveedores de liquidez y operadores a participar en un mercado financiero abierto y accesible para todos.";
+"swap.uniswap_info.header_minimum_received" = "Mínimo Recibido";
+"swap.uniswap_info.content_minimum_received" = "Su transacción se revertirá si hay un movimiento de precios grande y desfavorable antes de que se confirme.";
+"swap.uniswap_info.header_price_impact" = "Impacto en el precio";
+"swap.uniswap_info.content_price_impact" = "La diferencia entre el precio de mercado y el precio estimado debido al tamaño de la operación.";
+"swap.uniswap_info.header_swap_fee" = "Tarifa por permutar";
+"swap.uniswap_info.content_swap_fee" = "Una porción de cada transacción (0,30%) va a parar a los proveedores de liquidez como incentivo de protocolo.";
+"swap.uniswap_info.link_button" = "Website de Uniswap";
+
 // Transactions
 
 "transactions.title" = "Transacciones";
@@ -246,11 +290,12 @@
 "settings.security_center" = "Centro de seguridad";
 "settings.manage_accounts" = "Gestionar monederos";
 "settings.manage_coins" = "Gestionar monedas";
+"settings.app_status" = "Estado de la aplicación";
 "settings.experimental_features" = "Características experimentales";
 "settings.notifications" = "Notificaciones";
 "settings.base_currency" = "Moneda principal";
 "settings.language" = "Idioma";
-"settings.about" = "Acerca de";
+"settings.terms" = "Términos";
 "settings.tell_friends" = "Recomendar a un amigo";
 "settings.contact" = "Contacto";
 "settings.light_mode" = "Modo ligero";
@@ -260,11 +305,16 @@
 // Settings -> Notifications
 
 "settings_notifications.title" = "Notificaciones";
-"settings_notifications.description" = "Establecer alertas de cambio de precio para las monedas que desea ver.\n\nSe le avisará cuando el cambio de precio, durante las últimas 24 horas, supere el umbral seleccionado.";
+"settings_notifications.toggle_title" = "Notificaciones automáticas";
+"settings_notifications.description" = "Establece alertas de variación de precio para las monedas que te gustaría ver\n\nSe te alertará cuando la variación de precio de las últimas 24 horas supere el umbral seleccionado.\n\n La Alerta de Tendencia de Precio advierte de un cambio de tendencia para el corto plazo de 1 semana, y para el largo plazo de 6 meses.";
 "settings_notifications.alert_off" = "Desactivado";
 "settings.notifications.deactivate_all" = "Desactivar todo";
 "settings.notifications.disabled_text" = "Las notificaciones para la aplicación del Monedero Unstoppable están desactivadas. Necesita activarlas para poder recibir alertas de cambio de precios.";
 "settings.notifications.settings_button" = "Activar en ajustes";
+"settings_notifications.trend_short" = "Corto plazo 7D";
+"settings_notifications.trend_long" = "Largo Plazo 6M";
+"settings_notifications.reset_all_title" = "Restablecer todo";
+"settings_notifications.trend_settings_title" = "Tendencia de precios";
 
 // Settings -> Manage Wallet
 
@@ -291,13 +341,27 @@
 "settings.bitcoin_hodling.lock_time" = "Activar";
 "settings.bitcoin_hodling.description" = "Permite enviar Bitcoins que no se pueden gastar hasta la fecha establecida.\n\nEl receptor de dicha transacción debe utilizar el monedero Unstoppable.\n\nSólo el monedero Unstoppable puede identificar correctamente tales transacciones en la red Bitcoin, así como permitir que el receptor gaste esos Bitcoins después de que expire el período de bloqueo.\n\nSi eres un HODLer, puedes usar esta función para obligarte a retener tus Bitcoins enviándote dicha transacción a ti mismo.\n\nPor ser característica experimental, la cantidad máxima por transacción está limitada a 0.5 BTC.";
 
-// Settings -> About
+// Settings -> Terms
 
-"settings_about.title" = "Acerca de";
-"settings_about.app_title" = "Unstoppable";
-"settings_about.app_subtitle" = "Decentralized App";
-"settings_about.terms_privacy_subtitle" = "Términos y privacidad:";
-"settings_about.terms_privacy_text" = "Esta aplicación es de servidor a servidor. No depende de ningún servidor web o personal de soporte técnico para funcionar.\n\nFunciona en cualquier lugar siempre que haya conexión a internet. Ninguna entidad puede bloquear el funcionamiento de esta aplicación o impedir el acceso de un usuario.\n\nLas claves secretas criptográficas que controlan sus fondos de criptomonedas están almacenados de forma en el propio teléfono y en ningún otro lugar.\n\nEs su responsabilidad recordar su clave secreta y mantenerla en privado. Nunca la muestre a nadie. Si la pierde, la olvida o es sustraída, sus fondos pueden ser utilizados por la persona que consiga su clave secreta.\n\nNo modifique la seguridad del software de su teléfono, no instale aplicaciones de orígenes desconocidos (no confiable), no entregue su dispositivo a desconocidos y mantenga actualizado el sistema operativo de tu teléfono. La seguridad de su monedero depende de ello.\n\nLa totalidad del código que soporta esta aplicación está abierta al escrutinio público desde el inicio de la aplicación. Creemos que \n nuestra aplicación es significativamente más segura que cualquier otra aplicación de monedero para teléfonos inteligente en el mercado; sin embargo, no hay ninguna garantía de que no se produzca algún problema de software no deseado.\n\nToda su información, por ejemplo transacciones, balances, etc., están disponibles solo dentro de su aplicación de monedero y nunca abandona su dispositivo.";
+"terms.title" = "Términos";
+"terms.app_subtitle" = "Decentralized app";
+"terms.description" = "El monedero Unstoppable fue creado para aquellos que buscan invertir y almacenar criptomonedas de forma privada e independiente.
+
+Es un monedero peer-to-peer sin custodio, donde sólo el usuario tiene control sobre los fondos. No recopila ningún dato y mantiene al usuario independiente al no enlazar su cartera a un único monedero.
+
+El monedero Unstoppable es completamente de código abierto y cualquiera puede verificar que la aplicación funciona exactamente como se afirma.
+
+Desarrollamos Unstoppable para nosotros mismos ya que las soluciones disponibles no estaban a la altura. Desde una perspectiva de ingenieria y practicidad, creemos que este monedero está significativamente por delante de los productos alternativos.";
+"terms.site" = "Sitio";
+"terms.item.academy" = "He pasado por la sección Academia de esta aplicación y me he familiarizado con los aspectos fundamentales del almacenamiento de criptomonedas.";
+"terms.item.backup" = "He respaldado la(s) clave(s) privada(s) para mis monederos que se me mostraron en forma de 12-24 palabras. Entiendo que estas claves privadas se almacenan en mi smartphone y no en ningún otro lugar.";
+"terms.item.owner" = "Entiendo que sólo el propietario de mi(s) clave(s) privada(s) puede acceder y gastar fondos en mi monedero y, por lo tanto, estas claves no deben ser compartidas con nadie.";
+"terms.item.recover" = "Entiendo que necesitaré mis claves privadas para restaurar el acceso a mis fondos si pierdo mi teléfono o si la aplicación no funciona correctamente. Sin mis claves privadas será imposible recuperar el acceso a mi monedero.";
+"terms.item.phone" = "Entiendo que dar mi teléfono a entidades no fiables o dejar la aplicación de monedero sin bloqueo seguro por PIN podría, potencialmente, poner en peligro la seguridad de mis fondos.";
+"terms.item.root" = "Entiendo que rootear mi teléfono (rooting), instalando aplicaciones de terceros de fuentes desconocidas o mantener el sistema operativo desactualizado puede, potencialmente,
+poner en peligro la seguridad de mis fondos.";
+"terms.item.bugs" = "Entiendo que puede haber problemas de software sin descubrir en el código que hace funcionar esta aplicación, lo que puede llevar a un comportamiento inesperado o al mal funcionamiento de la aplicación.";
+"terms.footer" = "¡Gracias por elegir este monedero!";
 
 // Settings -> Tell Friends
 
@@ -351,7 +415,6 @@
 // Settings -> Contact
 
 "settings.contact.title" = "Contacto";
-"settings.contact.app_status" = "Estado de la aplicación";
 "settings.contact.email" = "Email";
 "settings.contact.telegram_wallet" = "Telegram";
 
@@ -420,6 +483,7 @@
 "chart.title" = "%@ Precio";
 "chart.time_duration.day" = "1 D";
 "chart.time_duration.week" = "7 D";
+"chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "1M";
 "chart.time_duration.month3" = "3M";
 "chart.time_duration.halyear" = "6M";
@@ -508,3 +572,14 @@
 "add_erc20_token.already_exists" = "Este token ya está en la lista del gestor de monedas.";
 "add_erc20_token.add" = "Añadir";
 "add_erc20_token.contract_not_exist" = "Contrato no encontrado";
+
+"change_24hour_up" = "Precio %@: subió %@%% %@";
+"change_24hour_down" = "Precio %@: bajó %@%% %@";
+"trend_shortterm_up" = "Tendencia a corto plazo de %@: subiò %@";
+"trend_shortterm_down" = "Tendencia a corto plazo de %@: bajó %@";
+"trend_longterm_up" = "Tendencia a largo plazo de %@: subiò %@";
+"trend_longterm_down" = "Tendencia a largo plazo de %@: bajó %@";
+
+"chart_alert.title" = "Notificación";
+"chart_alert.24h_description" = "Variación de Precio 24h";
+"chart_alert.trend_description" = "Variación de Tendencia de Precios";

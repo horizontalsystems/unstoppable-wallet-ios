@@ -20,6 +20,7 @@
 
 "alert.copied" = "복사됨";
 "alert.no_internet" = "인터넷에 연결되지 않음";
+"alert.wrong_amount" = "잘못된 금액";
 "alert.no_fee" = "잘못된 요금";
 "alert.network_issue" = "네트워크에 문제가 있습니다. 잠시 후 다시 시도해 주세요";
 "alert.unknown_error" = "알수없는 오류";
@@ -108,6 +109,7 @@
 "balance.title" = "잔액";
 "balance.tab_bar_item" = "잔액";
 "balance.send" = "전송";
+"balance.swap" = "스왑";
 "balance.deposit" = "수신";
 "balance.rate_per_coin" = "%@ 당 %@";
 "balance.syncing" = "동기화 중입니다...";
@@ -171,6 +173,48 @@
 "send.token.insufficient_fee_alert" = "%@ (%@) 에 대한 거래 수수료는 %@로 지불되었습니다. 귀하는 %@가 필요합니다.";
 
 "send.lock_time" = "시간 자물쇠";
+
+// Swap
+
+"swap.title" = "스왑";
+"swap.you_pay" = "지불하기";
+"swap.estimated" = "예상";
+"swap.balance" = "잔액";
+"swap.you_get" = "얻기";
+"swap.token" = "토큰";
+"swap.proceed" = "진행";
+"swap.amount_error.maximum_amount" = "최대 금액 %@";
+
+"swap.price" = "금액";
+"swap.price_impact" = "가격 영향";
+"swap.max_min" = "최대 / 최소";
+"swap.maximum_paid" = "최대 지불액";
+"swap.minimum_got" = "최대 지급액";
+
+"swap.fee" = "스왑 비용";
+"swap.transactions_speed" = "거래 속도";
+"swap.transaction_fee" = "거래 비용";
+
+"swap.select_token.title" = "코인 선택";
+
+// Swap Confirmation
+
+"swap.confirmation.title" = "확인";
+"swap.confirmation.swap_button" = "스왑";
+"swap.confirmation.pay" = "%@ 지불";
+"swap.confirmation.get" = "%@ 지급";
+
+
+"swap.uniswap_info.title" = "Uniswap v.2";
+"swap.uniswap_info.description" = "Uniswap는 Ethereum에서 자동화된 유동성 제공을 위한 완전 분산형 프로토콜입니다.\n\nA 간단한 공식화 등식은 수천 명의 사용자와 수백 개의 애플리케이션을 위해 막을 수 없는 유동성을 촉진합니다. \n\nUniswap의 개발자, 유동성 제공자 및 거래자가 모두에게 개방되고 접근 가능한 금융 시장에 참여할 수 있는 권한을 부여합니다.";
+"swap.uniswap_info.header_minimum_received" = "최소 지급액";
+"swap.uniswap_info.content_minimum_received" = "귀하의 거래가 확정되기 전에, 만약 크고 불리한 가격 움직임이 있다면, 귀하의 거래는 반환됩니다.";
+"swap.uniswap_info.header_price_impact" = "가격 영향";
+"swap.uniswap_info.content_price_impact" = "거래 규모에 따른 시장가격과 예상가격의 차이.";
+"swap.uniswap_info.header_swap_fee" = "스왑 비용";
+"swap.uniswap_info.content_swap_fee" = "각 거래의 일부(0.30%) 는 프로토콜 인센티브로 유동성 제공자에게 전달됩니다.";
+"swap.uniswap_info.link_button" = "Uniswap 사이트";
+
 // Transactions
 
 "transactions.title" = "거래기록";
@@ -246,25 +290,31 @@
 "settings.security_center" = "보안 센터";
 "settings.manage_accounts" = "지갑 관리하기";
 "settings.manage_coins" = "코인 관리";
+"settings.app_status" = "앱 상태";
 "settings.experimental_features" = "실험적 기능";
 "settings.notifications" = "알림";
 "settings.base_currency" = "기초 통화";
 "settings.language" = "언어";
-"settings.about" = "에 대해";
+"settings.terms" = "약관";
 "settings.tell_friends" = "친구에게 추천하기";
 "settings.contact" = "연락처";
 "settings.light_mode" = "밝은 모드";
 "settings.info_title" = "UNSTOPPABLE";
-"settings.info_subtitle" = "decentralized app";
+"settings.info_subtitle" = "분산형 앱";
 
 // Settings -> Notifications
 
 "settings_notifications.title" = "알림";
-"settings_notifications.description" = "귀하께서 보고싶으신 코인들의 가격 변동 설정 알람 설정을 하십시오.\n\n귀하께서는 24시간 전의 가격 변동이 선택하신 기대치에 도달할 경우에 알림을 받을 것 입니다.";
+"settings_notifications.toggle_title" = "알림 설정";
+"settings_notifications.description" = "보고 싶은 코인에 대한 가격 변경 알림 설정\n\n최근 24시간 동안의 가격 변동이 선택된 임계값을 초과할 경우 알림 메시지가 표시됨\n\n가격 동향 알림은 짧은 1주일, 긴 6개월 동안의 동향 변화에 대해 알려줍니다.";
 "settings_notifications.alert_off" = "끄기";
 "settings.notifications.deactivate_all" = "전부 비활성화";
 "settings.notifications.disabled_text" = "Unstoppable 지갑 앱을 위한 알림이 불가능합니다. 귀하께서는 가격 변동 알림을 받으시려면 앱을 켜놓는걸 필요로 합니다.";
 "settings.notifications.settings_button" = "설정에서 켜십시오";
+"settings_notifications.trend_short" = "단기 7D";
+"settings_notifications.trend_long" = "장기 6M";
+"settings_notifications.reset_all_title" = "전체 초기화";
+"settings_notifications.trend_settings_title" = "가격 동향";
 
 // Settings -> Manage Wallet
 
@@ -291,13 +341,26 @@
 "settings.bitcoin_hodling.lock_time" = "활성화";
 "settings.bitcoin_hodling.description" = "명시된 날짜까지 사용할수 없는 비트코인을 보낼 수 있습니다.\n\n이러한 거래의 수진자는 비트코인 사용에 대해 언스탑퍼플 지갑 앱 버젼 0.10 또는 더 새로운 BIP44 주소 형식을 사용해야 합니다.\n\n언스탑퍼블 지갑만이 비트코인 네트워크에서 이런 거래들을 올바르게 확인할 수 있고 또 수신자가 잠금 기간 만료 후에도 비트코인을 사용할 수 있게 할 수 있습니다.\n\n귀하께서 호들러 이시면, 이 기능을 사용하여 귀하에게 이러한 거래를 보냄으로써 호들링할 수 있습니다.\n\n실험적인 기능으로 거래당 최대 0.5 BTC로 제한이 되있습니다.";
 
-// Settings -> About
+// Settings -> Terms
 
-"settings_about.title" = "에 대해";
-"settings_about.app_title" = "Unstoppable";
-"settings_about.app_subtitle" = "Decentralized App";
-"settings_about.terms_privacy_subtitle" = "용어 및 정책";
-"settings_about.terms_privacy_text" = "이 앱은 피어투피어(P2P) 방식입니다. 어떠한 웹 서버 나 기술 지원 담당자에게 의존하지 않습니다.\n\n인터넷이 있는 한 어디에서나 작동합니다. 어떠한 독립체도 이 앱의 작동을 차단하거나 누군가가 사용함에 있어 검열할 수 없습니다. \n\n귀하의 크립토 자금을 통제하는 비밀 암호화 키는 다른 곳이 아닌 휴대폰 자체에서 안전하게 저장됩니다.\n\n귀하의 비밀 암호화 키를 백업하는 것은 귀하의 책임입니다. 누구에게도 귀하의 암호화 키를 보여주지 마세요. 암호와 키를 잃어버리거나 잊어버리거나 또는 도난당했을 경우 귀하의 자금은 귀하의 암호화 키를 찾은 다른사람에 의해 사용이될 수 있습니다.\n\n휴대 전화에서 벗어나거나 알 수 없는 (신뢰할 수 없는) 출처의 앱을 설치하지 마시고, 신뢰할 수 없는 사람들에게 귀하의 기기를 건내주지 마시고, 휴대 전화의 운영체제를 최신 상태로 유지하여 주세요. 지갑의 보안은 여기에 의존하고 있습니다.\n\n이 앱을 작동하는 전체 코드는 공개 조사로 오픈이 됩니다. 저희는 스마트폰 지갑 앱 보다 훨씬 더 안전하다고 생각하지만 의도치 않은 소프트웨어 문제가 없을거라고 보장하지는 않습니다.\n\n모든 데이터, 즉 거래, 잔액 등은 오직 귀하의 지갑 앱에서만 사용하실 수 있으며 절때 귀하의 기기에서 벗어나지 말아주세요.";
+"terms.title" = "약관";
+"terms.app_subtitle" = "분산형 앱";
+"terms.description" = "Unstoppable 지갑은 개인적이고 독립적인 방식으로 암호화폐를 투자하고 보관하려는 사람들을 위해 만들어졌습니다.
+
+이는 오직 사용자만이 자금을 통제할 수 있는 비관세적인 P2P 지갑입니다. 데이터를 수집하지 않고 특정 지갑 앱에 지갑을 잠그지 않아 사용자의 독립성을 유지합니다.
+
+Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는 대로 정확히 작동하는지 확인할 수 있습니다.
+
+귀사는 이용 가능한 해결책이 기대에 미치지 못했기 때문에 스스로 Unstoppable 을 구축했습니다. 엔지니어링과 사용 편의성 측면에서 모두 귀사는 이 지갑이 대체 제품보다 상당히 앞서 있다고 믿고 있습니다.";
+"terms.site" = "사이트";
+"terms.item.academy" = "나는 이 앱의 아카데미 부문을 거치면서 가상화폐 저장의 근본적인 측면에 대해 알게 되었다.";
+"terms.item.backup" = "나는 12-24 단어 형식으로 보여 준 지갑의 개인 암호를 백업했습니다. 나는 이 개인 암호가 다른 곳이 아닌 내 스마트폰에 저장되어 있다는 것을 인지합니다.";
+"terms.item.owner" = "나는 내 개인 암호의 소유자만이 내 지갑에 접근하여 자금을 쓸 수 있고 따라서 이 암호들은 절대 누구와도 공유되어서는 안 된다는 것을 이해합니다.";
+"terms.item.recover" = "만약 내가 핸드폰을 풀거나 앱이 오작동한다면 나는 내 자금에 대한 접근을 복구하기 위해 내 개인 암호가 필요할 것이라는 것을 이해합니다. 내 개인 암호가 없으면 내 지갑에 대한 접근을 복구하는 것은 불가능할 것입니다.";
+"terms.item.phone" = "신뢰할 수 없는 단체에게 핸드폰을 건네거나 안전한 PIN 잠금 없이 지갑 앱을 탈퇴하는 것은 잠재적으로 내 자금의 안전을 위협할 수 있다는 것을 알고 있습니다.";
+"terms.item.root" = "나는 내 전화기를 탈선하고(루팅), 출처를 알 수 없는 제3자 앱을 설치하고, 운영 체제를 구식 상태로 유지하면 잠재적으로 내 자금의 안전을 위태롭게 할 수 있다는 것을 이해합니다.";
+"terms.item.bugs" = "나는 이 지갑 앱에 전원을 공급하는 코드에서 예기치 않은 동작이나 앱 오작동으로 이어질 수 있는 미발견된 소프트웨어 문제가 있을 수 있다는 것을 알고 있습니다.";
+"terms.footer" = "이 지갑을 선택해주셔서 감사합니다!";
 
 // Settings -> Tell Friends
 
@@ -323,7 +386,7 @@
 "settings_privacy.sync.section_header" = "블록체인 복원";
 "settings_privacy.sync.section_footer" = "매매거래로 지갑을 복원 할 데이터 소스를 선택하세요.";
 
-"settings_privacy_info.title" = "Privacy Settings";
+"settings_privacy_info.title" = "개인 정보 설정";
 "settings_privacy_info.description" = "다음은 앱에서 사용할 수 있는 개인정보 설정에 관한 자세한 설명입니다. 강화된 개인정보 보호를 원하는 사용자를 위한 설정이라고 생각하시면 됩니다.";
 "settings_privacy_info.header_blockchain_transactions" = "Blockchain Transactions";
 "settings_privacy_info.content_blockchain_transactions" = "This setting controls the privacy level of user's transactions on Bitcoin, Bitcoin Cash and Litecoin blockchains.\n\nMost Bitcoin transactions generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party monitoring Bitcoin blockchain to understand which of the outputs went to the receiving party and which one was the change returned to the sender. The output returned to the sender can then be used in future transactions and further reveal the details to the monitoring party.\n\nUnstoppable wallet implements measures to makes it significantly harder to figure out which output goes where. There are two options available to Unstoppable users:\n\n1. Shuffle : The order of transaction outputs are randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then this is regarded as the recommended option.\n\n2. Deterministic : There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open source wallets that standard ensures that wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether transaction was sent from the wallet that uses that standard or not.";
@@ -351,7 +414,6 @@
 // Settings -> Contact
 
 "settings.contact.title" = "연락처";
-"settings.contact.app_status" = "앱 상태";
 "settings.contact.email" = "E-mail";
 "settings.contact.telegram_wallet" = "Telegram";
 
@@ -420,6 +482,7 @@
 "chart.title" = "%@ 금액";
 "chart.time_duration.day" = "하루";
 "chart.time_duration.week" = "일주일";
+"chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "한 달";
 "chart.time_duration.month3" = "3개월";
 "chart.time_duration.halyear" = "6개월";
@@ -488,7 +551,7 @@
 // Guides
 
 "guides.tab_bar_item" = "아카데미";
-"guides.title" = "Academy";
+"guides.title" = "아카데미";
 
 // Add Token
 
@@ -508,3 +571,14 @@
 "add_erc20_token.already_exists" = "이 토큰은 이미 코인 매니저 리스트에 있습니다.";
 "add_erc20_token.add" = "추가";
 "add_erc20_token.contract_not_exist" = "거래 발견되지 않음";
+
+"change_24hour_up" = "%@ 가격: 상승 %@%% %@";
+"change_24hour_down" = "%@ 가격: 하락 %@%% %@";
+"trend_shortterm_up" = "%@ 단기 동향: 상승 %@";
+"trend_shortterm_down" = "%@ 단기 동향: 하락 %@";
+"trend_longterm_up" = "%@ 장기 동향: 상승 %@";
+"trend_longterm_down" = "%@ 장기 동향: 하락 %@";
+
+"chart_alert.title" = "알림";
+"chart_alert.24h_description" = "가격 변동 24시간";
+"chart_alert.trend_description" = "가격 동향 변동";
