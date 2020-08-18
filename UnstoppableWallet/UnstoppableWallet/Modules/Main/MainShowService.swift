@@ -1,17 +1,11 @@
 import Foundation
 
-class MainInteractor {
-    weak var delegate: IMainInteractorDelegate?
-
+class MainShowService {
     private let localStorage: ILocalStorage
 
     init(localStorage: ILocalStorage) {
         self.localStorage = localStorage
     }
-
-}
-
-extension MainInteractor: IMainInteractor {
 
     func setMainShownOnce() {
         DispatchQueue.global(qos: .background).async {

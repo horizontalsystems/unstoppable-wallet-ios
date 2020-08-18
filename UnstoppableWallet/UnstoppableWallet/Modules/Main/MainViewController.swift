@@ -1,17 +1,26 @@
 import UIKit
 import ThemeKit
+import RxSwift
+import RxCocoa
 
 class MainViewController: ThemeTabBarController {
-    let viewDelegate: IMainViewDelegate
+    private let disposeBag = DisposeBag()
 
-    init(viewDelegate: IMainViewDelegate, viewControllers: [UIViewController], selectedIndex: Int) {
-        self.viewDelegate = viewDelegate
+    private let viewModel: MainViewModel
+
+    init(viewModel: MainViewModel, viewControllers: [UIViewController], selectedIndex: Int) {
+        self.viewModel = viewModel
 
         super.init()
 
         self.viewControllers = viewControllers
-
         self.selectedIndex = selectedIndex
+
+        viewModel.settingsBadgeDriver
+                .drive(onNext: { [weak self] visible in
+                    self?.setSettingsBadge(visible: visible)
+                })
+                .disposed(by: disposeBag)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -21,10 +30,20 @@ class MainViewController: ThemeTabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        viewDelegate.viewDidLoad()
+        viewModel.onLoad()
     }
 
-}
+    private func setSettingsBadge(visible: Bool) {
+        guard let viewControllers = viewControllers else {
+            return
+        }
 
-extension MainViewController: IMainView {
+        for viewController in viewControllers {
+            if let navigationController = viewController as? UINavigationController, navigationController.viewControllers.first is MainSettingsViewController {
+                viewController.tabBarItem.setDotBadge(visible: visible)
+                break
+            }
+        }
+    }
+
 }

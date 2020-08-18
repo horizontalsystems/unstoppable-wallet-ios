@@ -8,7 +8,7 @@ class CreateWalletRouter {
 extension CreateWalletRouter: ICreateWalletRouter {
 
     func showMain() {
-        UIApplication.shared.keyWindow?.set(newRootController: MainRouter.module(selectedTab: .balance))
+        UIApplication.shared.keyWindow?.set(newRootController: MainModule.instance(selectedTab: .balance))
     }
 
     func close() {
