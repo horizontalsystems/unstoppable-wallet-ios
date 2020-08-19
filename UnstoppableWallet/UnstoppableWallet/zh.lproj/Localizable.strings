@@ -180,10 +180,14 @@
 "swap.you_pay" = "您支付";
 "swap.estimated" = "估计";
 "swap.balance" = "余额";
+"swap.allowance" = "Allowance";
 "swap.you_get" = "您获得";
 "swap.token" = "令牌";
-"swap.proceed" = "继续";
-"swap.amount_error.maximum_amount" = "最大金额 %@";
+"swap.proceed_button" = "Proceed";
+"swap.approve_button" = "Approve";
+"swap.approving_button" = "Approving";
+"swap.amount_error.maximum_amount" = "Can't parse balance for token";
+"swap.amount_error.no_balance" = "Maximum amount %@";
 
 "swap.price" = "价格";
 "swap.price_impact" = "价格影响";
@@ -196,6 +200,11 @@
 "swap.transaction_fee" = "交易费用";
 
 "swap.select_token.title" = "选择代币";
+
+// Swap Approving
+
+"swap.approve.title" = "Approve";
+"swap.approve.subtitle" = "Approve";
 
 // Swap Confirmation
 
