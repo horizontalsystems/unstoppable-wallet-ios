@@ -10,34 +10,9 @@ func subscribe<T>(_ disposeBag: DisposeBag, _ driver: Driver<T>, _ onNext: ((T) 
     driver.drive(onNext: onNext).disposed(by: disposeBag)
 }
 
-protocol ISwap2ViewModel {
-    var isSwapDataLoading: Driver<Bool> { get }
-    var swapDataError: Driver<Error?> { get }
-    var isSwapDataHidden: Driver<Bool> { get }
-    var estimated: Driver<TradeType> { get }
-    var fromAmount: Driver<String?> { get }
-    var fromTokenCode: Driver<String> { get }
-    var fromBalance: Driver<String?> { get }
-    var balanceError: Driver<Error?> { get }
-    var isAllowanceHidden: Driver<Bool> { get }
-    var isAllowanceLoading: Driver<Bool> { get }
-    var allowance: Driver<String?> { get }
-    var allowanceError: Driver<Error?> { get }
-    var toAmount: Driver<String?> { get }
-    var toTokenCode: Driver<String> { get }
-    var tradeViewItem: Driver<Swap2Module.TradeViewItem?> { get }
-    var actionTitle: Driver<String?> { get }
-    var isActionEnabled: Driver<Bool> { get }
-
-    func onChangeFrom(amount: String?)
-    func onSelectFrom(coin: Coin)
-
-    func onChangeTo(amount: String?)
-    func onSelectTo(coin: Coin)
-
-    func onTapButton()
+func subscribe<T>(_ disposeBag: DisposeBag, _ observable: Observable<T>, _ onNext: ((T) -> Void)? = nil) {
+    observable.subscribe(onNext: onNext).disposed(by: disposeBag)
 }
-
 
 struct Swap2Module {
 
@@ -75,6 +50,11 @@ struct Swap2Module {
         let isSufficient: Bool
     }
 
+    struct CoinWithBalance {
+        let coin: Coin
+        let balance: Decimal?
+    }
+
     enum ActionType {
         case proceed
         case approve
@@ -87,9 +67,9 @@ struct Swap2Module {
         }
         let swapKit = UniswapKit.Kit.instance(ethereumKit: ethereumKit)
         let allowanceRepository = AllowanceRepository(walletManager: App.shared.walletManager, adapterManager: App.shared.adapterManager)
-//        let decimalParser = SendAmountDecimalParser()
+        let decimalParser = SendAmountDecimalParser()
 
-        let service = Swap2Service(uniswapRepository: UniswapRepository(swapKit: swapKit), allowanceRepository: allowanceRepository, coin: wallet.coin)
+        let service = Swap2Service(uniswapRepository: UniswapRepository(swapKit: swapKit), allowanceRepository: allowanceRepository, adapterManager: App.shared.adapterManager, decimalParser: decimalParser, coin: wallet.coin)
         let viewModel = Swap2ViewModel(service: service)
 
         return ThemeNavigationController(rootViewController: Swap2ViewController(viewModel: viewModel))

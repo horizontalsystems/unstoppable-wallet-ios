@@ -1315,34 +1315,28 @@
 		3C7B92BBA978401F035B8CAC /* Swap2ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9F9A74156E9642605772 /* Swap2ViewModel.swift */; };
 		3C7B9332423F320A74F69354 /* WelcomeScreenModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B92FD9F4CEC1CBB31B5A7 /* WelcomeScreenModule.swift */; };
 		3C7B936067D1C0A7CDC2635D /* UrlManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94F32F315F4F753D89AD /* UrlManager.swift */; };
-		3C7B93914B0DD646490A1915 /* SwapToInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B93E5CB806630412FC022 /* SwapToInputViewModel.swift */; };
-		3C7B93BD9A75C212A0406657 /* SwapInputModuleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9592A22E618F3B48F172 /* SwapInputModuleViewModel.swift */; };
-		3C7B93F7E05882A2C89375F0 /* SwapInputModuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B991E341860CC105D9250 /* SwapInputModuleView.swift */; };
+		3C7B93F7E05882A2C89375F0 /* Swap2InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B991E341860CC105D9250 /* Swap2InputView.swift */; };
 		3C7B9469B45EA1720D7FA071 /* WelcomeScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B95EF8087307F8266483C /* WelcomeScreenRouter.swift */; };
 		3C7B94B65E1C445819714F84 /* WelcomeScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9537271B4937DF028FEC /* WelcomeScreenPresenter.swift */; };
 		3C7B95CD8DC991FF890AC487 /* BackupConfirmationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94C6548A52D8576B8138 /* BackupConfirmationInteractor.swift */; };
 		3C7B9663B3AF4B2A8D7E8A46 /* WelcomeScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B95EF8087307F8266483C /* WelcomeScreenRouter.swift */; };
-		3C7B96CCFBA60CBCE5B7080D /* SwapInputModuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B991E341860CC105D9250 /* SwapInputModuleView.swift */; };
-		3C7B96E8ED5C84870A34E198 /* SwapInputModuleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9592A22E618F3B48F172 /* SwapInputModuleViewModel.swift */; };
+		3C7B96CCFBA60CBCE5B7080D /* Swap2InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B991E341860CC105D9250 /* Swap2InputView.swift */; };
 		3C7B96FC319A0049E1E8E2ED /* SwapInputModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9C1519E996A1202C4111 /* SwapInputModule.swift */; };
-		3C7B970B7F3ED324BEAD6FE0 /* SwapToInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B93E5CB806630412FC022 /* SwapToInputViewModel.swift */; };
-		3C7B9819A17C30EC88F84A69 /* SwapFromInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9EA102CF2C46FF2B0BD6 /* SwapFromInputViewModel.swift */; };
+		3C7B9819A17C30EC88F84A69 /* SwapFromInputPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9EA102CF2C46FF2B0BD6 /* SwapFromInputPresenter.swift */; };
 		3C7B9855473ABB3E281A1B71 /* SwapInputModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9C1519E996A1202C4111 /* SwapInputModule.swift */; };
 		3C7B989E186C799AC2FD49F1 /* WelcomeScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9537271B4937DF028FEC /* WelcomeScreenPresenter.swift */; };
 		3C7B98EAF59280801E6583FD /* Swap2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94FF3EA2D191FBF77B12 /* Swap2Module.swift */; };
 		3C7B993C4BDE65E87BE5A429 /* Swap2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94FF3EA2D191FBF77B12 /* Swap2Module.swift */; };
 		3C7B99D3D6AE0B1C0D8E5F09 /* UrlManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94F32F315F4F753D89AD /* UrlManager.swift */; };
-		3C7B9A3D999EF7E06D6052B0 /* SwapInputModuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B991E341860CC105D9250 /* SwapInputModuleView.swift */; };
+		3C7B9A3D999EF7E06D6052B0 /* Swap2InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B991E341860CC105D9250 /* Swap2InputView.swift */; };
 		3C7B9A553D6E06BE44720EF1 /* Swap2Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94FF3EA2D191FBF77B12 /* Swap2Module.swift */; };
 		3C7B9AA3A29613BEBC00F6B2 /* WelcomeScreenModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B92FD9F4CEC1CBB31B5A7 /* WelcomeScreenModule.swift */; };
 		3C7B9B4ABC5DEA912B8CFFFD /* Swap2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B921FCC08FBEB38040D0A /* Swap2ViewController.swift */; };
 		3C7B9BAF807355796DCA80C4 /* WelcomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B956E27165EB2D682C2D7 /* WelcomeScreenViewController.swift */; };
-		3C7B9BF290F1EBF8BFA7BA4E /* SwapFromInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9EA102CF2C46FF2B0BD6 /* SwapFromInputViewModel.swift */; };
+		3C7B9BF290F1EBF8BFA7BA4E /* SwapFromInputPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9EA102CF2C46FF2B0BD6 /* SwapFromInputPresenter.swift */; };
 		3C7B9BFB4A9D871F992211EC /* Swap2ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9F9A74156E9642605772 /* Swap2ViewModel.swift */; };
 		3C7B9BFD8EA7360907306675 /* UrlManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94F32F315F4F753D89AD /* UrlManager.swift */; };
 		3C7B9C7B9B11D4C86A01BE04 /* Swap2Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B98E7BE0C031F0A2BCFDC /* Swap2Service.swift */; };
-		3C7B9C916414B7769C90E0C5 /* SwapToInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B93E5CB806630412FC022 /* SwapToInputViewModel.swift */; };
-		3C7B9D1181A3F77E89A3A120 /* SwapInputModuleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9592A22E618F3B48F172 /* SwapInputModuleViewModel.swift */; };
 		3C7B9D8B115FFB52B990EF1C /* SwapInputModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9C1519E996A1202C4111 /* SwapInputModule.swift */; };
 		3C7B9E0C7FA1973B064DE53E /* Swap2Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B98E7BE0C031F0A2BCFDC /* Swap2Service.swift */; };
 		3C7B9E4617897C61295C6308 /* WelcomeScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B99396FD9BBA3E8E3715F /* WelcomeScreenInteractor.swift */; };
@@ -1350,7 +1344,7 @@
 		3C7B9E804373BC59EAFA9561 /* Swap2ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9F9A74156E9642605772 /* Swap2ViewModel.swift */; };
 		3C7B9F0AC922D7433A5F4058 /* WelcomeScreenModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B92FD9F4CEC1CBB31B5A7 /* WelcomeScreenModule.swift */; };
 		3C7B9F2A51BC2B8872C41DD8 /* WelcomeScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B99396FD9BBA3E8E3715F /* WelcomeScreenInteractor.swift */; };
-		3C7B9F3BDEF8C16FB54FE3CE /* SwapFromInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9EA102CF2C46FF2B0BD6 /* SwapFromInputViewModel.swift */; };
+		3C7B9F3BDEF8C16FB54FE3CE /* SwapFromInputPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9EA102CF2C46FF2B0BD6 /* SwapFromInputPresenter.swift */; };
 		3C7B9F51D15FBB02710E5EEB /* WelcomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B956E27165EB2D682C2D7 /* WelcomeScreenViewController.swift */; };
 		5002C0962294165700E88585 /* ThreadSafeness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002C0952294165700E88585 /* ThreadSafeness.swift */; };
 		5002C0972294165700E88585 /* ThreadSafeness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002C0952294165700E88585 /* ThreadSafeness.swift */; };
@@ -1472,7 +1466,6 @@
 		58AAA29AAA66A8F8CC332655 /* SwapConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4C8ABBD56D9457B5362 /* SwapConfirmationViewController.swift */; };
 		58AAA2A6C9CF1E690DE6B4C6 /* InsightProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA168658F739D4AF36B7D /* InsightProvider.swift */; };
 		58AAA2A9F965506F4CA3EA83 /* BackupWordsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC411BF9546AD24CDE23 /* BackupWordsController.swift */; };
-		58AAA2AF2A7CB57B7C945E70 /* SwapHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9E3853589A6279E4A4D /* SwapHeaderView.swift */; };
 		58AAA2B47548D5655651FF8D /* DoubleSpendInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAABC875624B234499359D /* DoubleSpendInfoPresenter.swift */; };
 		58AAA2B6DE1387076505D7A4 /* FullTransactionInfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD82EF02D5AA6E8ED4CB /* FullTransactionInfoProvider.swift */; };
 		58AAA2B8931FA1B4849C7BC3 /* SwapTokenSelectPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAA7869D41E1CEFA88C9D /* SwapTokenSelectPresenter.swift */; };
@@ -1507,7 +1500,6 @@
 		58AAA3D3904C7703445A9098 /* SendConfirmationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA36CC6CD40E00CDF9662 /* SendConfirmationPresenter.swift */; };
 		58AAA3DAFE5384FD60DEE304 /* SendAddressPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8B716A3F70CFB8A0FFE /* SendAddressPresenter.swift */; };
 		58AAA3E5C080A32A6A6B0E6D /* BtcComProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA58097EB8413FEA75EE8 /* BtcComProvider.swift */; };
-		58AAA3EC4CF6ECDA32E8EB6C /* SwapHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9E3853589A6279E4A4D /* SwapHeaderView.swift */; };
 		58AAA3ED415F09117EE63646 /* FullTransactionInfoState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA90F7BDC0FD487A0C495 /* FullTransactionInfoState.swift */; };
 		58AAA3F38047AE459F40B388 /* SendConfirmationReceiverCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0A7DCC834864D9AD4D5 /* SendConfirmationReceiverCell.swift */; };
 		58AAA3FE527C904C4C777DAB /* FullTransactionInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA823D090E4B3E0D03A91 /* FullTransactionInfoPresenter.swift */; };
@@ -1592,6 +1584,7 @@
 		58AAA6084D64BB5064E542D0 /* HorSysProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA976A6B67FD47D5958E8 /* HorSysProvider.swift */; };
 		58AAA6099C361C5E89AAA7A0 /* DoubleSpendInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA54B2A8BD3C218BAD838 /* DoubleSpendInfoInteractor.swift */; };
 		58AAA609E483EC150926CDC6 /* DoubleSpendModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA54AD29E5DE0F9AAE93F /* DoubleSpendModule.swift */; };
+		58AAA623BE66934C27CE758A /* SwapHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA27EC76FEB78462FDA6C /* SwapHeaderView.swift */; };
 		58AAA62B03EE7DCD253BD19A /* ChartRateFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA28ABE08D74D89C2BF50 /* ChartRateFactory.swift */; };
 		58AAA62B4D8A572B271CBDC0 /* FullTransactionInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA823D090E4B3E0D03A91 /* FullTransactionInfoPresenter.swift */; };
 		58AAA62C8447B4C9F141FE65 /* DebugInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA16C7E337511638808E5 /* DebugInteractor.swift */; };
@@ -1659,6 +1652,7 @@
 		58AAA81B714A0DFAB98764F2 /* SwapTokenSelectRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5A5172F3EEBF241F16A /* SwapTokenSelectRouter.swift */; };
 		58AAA82719D98C4777F04042 /* SwapConfirmationAmountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9D5A2FDB3D4DE9AB246 /* SwapConfirmationAmountCell.swift */; };
 		58AAA82745E47084A2B18F95 /* Erc20Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA312DD0792117182B64E /* Erc20Adapter.swift */; };
+		58AAA827F0BDD3C603C0A18B /* SwapHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA27EC76FEB78462FDA6C /* SwapHeaderView.swift */; };
 		58AAA82A7449A4C48D9364D7 /* DoubleSpendInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA54B2A8BD3C218BAD838 /* DoubleSpendInfoInteractor.swift */; };
 		58AAA82CE1738BCC5B426CB8 /* DebugModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAADD445F174344AFB6AAC /* DebugModule.swift */; };
 		58AAA83C17364F5FB220062A /* SendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA89DB3DE36B5C227C1C1 /* SendViewController.swift */; };
@@ -1670,6 +1664,8 @@
 		58AAA8517E6A2C55FEC9BE00 /* LockScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4A027BD92BD062748CC /* LockScreenController.swift */; };
 		58AAA8546CA4476BFF8BDC3A /* SwapConfirmationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4E0987D1739DD7BA9AE /* SwapConfirmationPresenter.swift */; };
 		58AAA857E827B217EABDE8DC /* SwapModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAABCAE968EC25FDF77337 /* SwapModule.swift */; };
+		58AAA86E8ACB5BF0EB68180B /* SwapToInputPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAACAFB78BDB579AF33AC6 /* SwapToInputPresenter.swift */; };
+		58AAA86FFC4C3D974F0EFB1F /* SwapToInputPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAACAFB78BDB579AF33AC6 /* SwapToInputPresenter.swift */; };
 		58AAA87153C727D520EE3557 /* RateListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA31FF3C379E7AFD16C94 /* RateListViewController.swift */; };
 		58AAA87CA53468D7169FA265 /* ChartTypeIntervalConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8CCC7252ECFFDC51578 /* ChartTypeIntervalConverter.swift */; };
 		58AAA88B26D590A1BA7EA124 /* SendFeeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6205C47965E48E4BAC3 /* SendFeeView.swift */; };
@@ -1720,10 +1716,10 @@
 		58AAA9EB37923915A52CFFFF /* ConnectionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA610E99CF0429135DD1D /* ConnectionError.swift */; };
 		58AAA9EFD7F9CB98975F26E7 /* HorSysProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA976A6B67FD47D5958E8 /* HorSysProvider.swift */; };
 		58AAA9F1B2A551603B6C9B6F /* LockScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB5515ECA96D506F56C3 /* LockScreenRouter.swift */; };
-		58AAAA0545D5F0849C085ACC /* SwapHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9E3853589A6279E4A4D /* SwapHeaderView.swift */; };
 		58AAAA097567E0DF18B8A80B /* UniswapInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA83833C970A2DC467715 /* UniswapInfoViewController.swift */; };
 		58AAAA0C3CE3E9ED64A49425 /* SwapConfirmationAmountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9D5A2FDB3D4DE9AB246 /* SwapConfirmationAmountCell.swift */; };
 		58AAAA10D028F74A2A0ECD08 /* ChartDoubleLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA68E59622ED7B1FCB3D7 /* ChartDoubleLineView.swift */; };
+		58AAAA1CD07C2558A6DED18B /* SwapHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA27EC76FEB78462FDA6C /* SwapHeaderView.swift */; };
 		58AAAA204A5E7F6ED54B9D8F /* FeeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAADC857D0132D4AA3C431 /* FeeModule.swift */; };
 		58AAAA2E5B50D77CF62FA49A /* BackupWordsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8FCF190F71C5494E5C5 /* BackupWordsModule.swift */; };
 		58AAAA3B88DEB23FE98E034F /* SendAddressRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA047F8B03E37F51F6AC1 /* SendAddressRouter.swift */; };
@@ -1763,6 +1759,7 @@
 		58AAAB6C9699F02DC27892FA /* SendConfirmationMemoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5D396A321E46E3A8D99 /* SendConfirmationMemoCell.swift */; };
 		58AAAB8E36AEE5EFB93DE617 /* BackupConfirmationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA2D3E1840EA8931E12D0 /* BackupConfirmationRouter.swift */; };
 		58AAAB92C2ABB375E76223C8 /* AmountInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF4E453A954DBFA84E89 /* AmountInfoView.swift */; };
+		58AAAB9613DB09C6ADB0C663 /* SwapToInputPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAACAFB78BDB579AF33AC6 /* SwapToInputPresenter.swift */; };
 		58AAAB97145C7C427DB27067 /* ChartConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9D5D29115C5F435CF1B /* ChartConfiguration.swift */; };
 		58AAAB9745C02752516A1307 /* UniswapInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAEA5B2627C16307C60FC /* UniswapInfoPresenter.swift */; };
 		58AAABB4991882979199CA1F /* FullTransactionInfoProviderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA72A3BACDB574838A8CC /* FullTransactionInfoProviderFactory.swift */; };
@@ -2605,19 +2602,17 @@
 		3AF4739C21D38F380005A458 /* FullTransactionInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoViewController.swift; sourceTree = "<group>"; };
 		3C7B921FCC08FBEB38040D0A /* Swap2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swap2ViewController.swift; sourceTree = "<group>"; };
 		3C7B92FD9F4CEC1CBB31B5A7 /* WelcomeScreenModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeScreenModule.swift; sourceTree = "<group>"; };
-		3C7B93E5CB806630412FC022 /* SwapToInputViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapToInputViewModel.swift; sourceTree = "<group>"; };
 		3C7B94C6548A52D8576B8138 /* BackupConfirmationInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupConfirmationInteractor.swift; sourceTree = "<group>"; };
 		3C7B94F32F315F4F753D89AD /* UrlManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlManager.swift; sourceTree = "<group>"; };
 		3C7B94FF3EA2D191FBF77B12 /* Swap2Module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swap2Module.swift; sourceTree = "<group>"; };
 		3C7B9537271B4937DF028FEC /* WelcomeScreenPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeScreenPresenter.swift; sourceTree = "<group>"; };
 		3C7B956E27165EB2D682C2D7 /* WelcomeScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeScreenViewController.swift; sourceTree = "<group>"; };
-		3C7B9592A22E618F3B48F172 /* SwapInputModuleViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapInputModuleViewModel.swift; sourceTree = "<group>"; };
 		3C7B95EF8087307F8266483C /* WelcomeScreenRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeScreenRouter.swift; sourceTree = "<group>"; };
 		3C7B98E7BE0C031F0A2BCFDC /* Swap2Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swap2Service.swift; sourceTree = "<group>"; };
-		3C7B991E341860CC105D9250 /* SwapInputModuleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapInputModuleView.swift; sourceTree = "<group>"; };
+		3C7B991E341860CC105D9250 /* Swap2InputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swap2InputView.swift; sourceTree = "<group>"; };
 		3C7B99396FD9BBA3E8E3715F /* WelcomeScreenInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeScreenInteractor.swift; sourceTree = "<group>"; };
 		3C7B9C1519E996A1202C4111 /* SwapInputModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapInputModule.swift; sourceTree = "<group>"; };
-		3C7B9EA102CF2C46FF2B0BD6 /* SwapFromInputViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapFromInputViewModel.swift; sourceTree = "<group>"; };
+		3C7B9EA102CF2C46FF2B0BD6 /* SwapFromInputPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapFromInputPresenter.swift; sourceTree = "<group>"; };
 		3C7B9F9A74156E9642605772 /* Swap2ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swap2ViewModel.swift; sourceTree = "<group>"; };
 		3F893EBA24E84454242DD71C /* Pods-Unstoppable Dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unstoppable Dev.release.xcconfig"; path = "Target Support Files/Pods-Unstoppable Dev/Pods-Unstoppable Dev.release.xcconfig"; sourceTree = "<group>"; };
 		49EED44F3386B655D10F87E7 /* Pods-Unstoppable.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unstoppable.release.xcconfig"; path = "Target Support Files/Pods-Unstoppable/Pods-Unstoppable.release.xcconfig"; sourceTree = "<group>"; };
@@ -2678,6 +2673,7 @@
 		58AAA24B6EB7103CB072A53D /* FeeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeSlider.swift; sourceTree = "<group>"; };
 		58AAA251C8ADF1AE43EAF65F /* SwapApproveModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapApproveModule.swift; sourceTree = "<group>"; };
 		58AAA25A6411A796E30A72CF /* FeeAdapterFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeAdapterFactory.swift; sourceTree = "<group>"; };
+		58AAA27EC76FEB78462FDA6C /* SwapHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapHeaderView.swift; sourceTree = "<group>"; };
 		58AAA2833E26BB948D3E06D2 /* BackupConfirmationModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupConfirmationModule.swift; sourceTree = "<group>"; };
 		58AAA28AAA6976AA8A84D918 /* RateListPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateListPresenter.swift; sourceTree = "<group>"; };
 		58AAA28ABE08D74D89C2BF50 /* ChartRateFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartRateFactory.swift; sourceTree = "<group>"; };
@@ -2776,7 +2772,6 @@
 		58AAA9D5A2FDB3D4DE9AB246 /* SwapConfirmationAmountCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapConfirmationAmountCell.swift; sourceTree = "<group>"; };
 		58AAA9D5D29115C5F435CF1B /* ChartConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartConfiguration.swift; sourceTree = "<group>"; };
 		58AAA9E19A578FD13792D2B7 /* AdditionalDataView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdditionalDataView.swift; sourceTree = "<group>"; };
-		58AAA9E3853589A6279E4A4D /* SwapHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapHeaderView.swift; sourceTree = "<group>"; };
 		58AAA9E43BB1F4A9472DFED4 /* SendConfirmationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendConfirmationViewController.swift; sourceTree = "<group>"; };
 		58AAA9F2F3A6F483B0D67E18 /* DataStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStatus.swift; sourceTree = "<group>"; };
 		58AAAA2545685D88708F9C5B /* SwapConfirmationModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapConfirmationModule.swift; sourceTree = "<group>"; };
@@ -2800,6 +2795,7 @@
 		58AAAC5B00009B199A687EF3 /* EthereumKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumKitManager.swift; sourceTree = "<group>"; };
 		58AAAC944A9DCACFAF1DDA15 /* FullTransactionInfoProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoProtocols.swift; sourceTree = "<group>"; };
 		58AAAC9716B68916B4EA0B9B /* HashView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HashView.swift; path = ../../../UserInterface/Controls/HashView.swift; sourceTree = "<group>"; };
+		58AAACAFB78BDB579AF33AC6 /* SwapToInputPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapToInputPresenter.swift; sourceTree = "<group>"; };
 		58AAACB3D8661EFE2E30FCFF /* RateListSorterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateListSorterTests.swift; sourceTree = "<group>"; };
 		58AAACD2595FD785AEF3C379 /* SwapTokenSelectModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwapTokenSelectModule.swift; path = ../SwapTokenSelect/SwapTokenSelectModule.swift; sourceTree = "<group>"; };
 		58AAACDA873CA39BACE6BC9E /* FeeViewItemFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeViewItemFactory.swift; sourceTree = "<group>"; };
@@ -4196,21 +4192,20 @@
 		3C7B903B922022DC0ACFE269 /* SwapInputModule */ = {
 			isa = PBXGroup;
 			children = (
-				3C7B991E341860CC105D9250 /* SwapInputModuleView.swift */,
+				3C7B991E341860CC105D9250 /* Swap2InputView.swift */,
 				3C7B9C1519E996A1202C4111 /* SwapInputModule.swift */,
-				3C7B9592A22E618F3B48F172 /* SwapInputModuleViewModel.swift */,
-				3C7B9690AEB690746B5896E1 /* Facade */,
+				3C7B9690AEB690746B5896E1 /* Presenters */,
 			);
 			path = SwapInputModule;
 			sourceTree = "<group>";
 		};
-		3C7B9690AEB690746B5896E1 /* Facade */ = {
+		3C7B9690AEB690746B5896E1 /* Presenters */ = {
 			isa = PBXGroup;
 			children = (
-				3C7B9EA102CF2C46FF2B0BD6 /* SwapFromInputViewModel.swift */,
-				3C7B93E5CB806630412FC022 /* SwapToInputViewModel.swift */,
+				3C7B9EA102CF2C46FF2B0BD6 /* SwapFromInputPresenter.swift */,
+				58AAACAFB78BDB579AF33AC6 /* SwapToInputPresenter.swift */,
 			);
-			path = Facade;
+			path = Presenters;
 			sourceTree = "<group>";
 		};
 		3C7B9999764FB6418F52EE2F /* SwapMVVM */ = {
@@ -4308,7 +4303,7 @@
 			children = (
 				58AAA6D20E7742DEAA400F3A /* SwapInputView.swift */,
 				58AAAE7F0F8F26EA50DE7D4C /* SwapValueView.swift */,
-				58AAA9E3853589A6279E4A4D /* SwapHeaderView.swift */,
+				58AAA27EC76FEB78462FDA6C /* SwapHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -5926,7 +5921,6 @@
 				58AAA1389E524074EE29F7A7 /* SwapApproveViewController.swift in Sources */,
 				58AAAB668D24C28C7DAE57AC /* SwapApproveModule.swift in Sources */,
 				58AAAF91350F0979C5357E92 /* AdditionalDataWithLoadingView.swift in Sources */,
-				58AAAA0545D5F0849C085ACC /* SwapHeaderView.swift in Sources */,
 				58AAA850D5F7A0CF986B2AA5 /* AdditionalDataWithErrorView.swift in Sources */,
 				58AAA4E4236E16AC7CC306F0 /* SwapFactory.swift in Sources */,
 				58AAA90DDDAACEB4C8ADCF51 /* SwapApproveAmountView.swift in Sources */,
@@ -5941,13 +5935,13 @@
 				3C7B9054077A4349D2F66968 /* Swap2ViewController.swift in Sources */,
 				3C7B9E0C7FA1973B064DE53E /* Swap2Service.swift in Sources */,
 				3C7B9E804373BC59EAFA9561 /* Swap2ViewModel.swift in Sources */,
-				3C7B9A3D999EF7E06D6052B0 /* SwapInputModuleView.swift in Sources */,
+				3C7B9A3D999EF7E06D6052B0 /* Swap2InputView.swift in Sources */,
 				3C7B9D8B115FFB52B990EF1C /* SwapInputModule.swift in Sources */,
-				3C7B9D1181A3F77E89A3A120 /* SwapInputModuleViewModel.swift in Sources */,
-				3C7B9BF290F1EBF8BFA7BA4E /* SwapFromInputViewModel.swift in Sources */,
-				3C7B9C916414B7769C90E0C5 /* SwapToInputViewModel.swift in Sources */,
+				3C7B9BF290F1EBF8BFA7BA4E /* SwapFromInputPresenter.swift in Sources */,
 				58AAA9E6DEDF8D5D65F18C50 /* UniswapRepository.swift in Sources */,
 				58AAA5AB9BD23E30F3B3AA0F /* AllowanceRepository.swift in Sources */,
+				58AAA827F0BDD3C603C0A18B /* SwapHeaderView.swift in Sources */,
+				58AAAB9613DB09C6ADB0C663 /* SwapToInputPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6649,7 +6643,6 @@
 				58AAA0D14CD9EDAE2DBF7540 /* SwapApproveViewController.swift in Sources */,
 				58AAAAD2D124AA0323629B0E /* SwapApproveModule.swift in Sources */,
 				58AAA4883A624049A945F5E0 /* AdditionalDataWithLoadingView.swift in Sources */,
-				58AAA2AF2A7CB57B7C945E70 /* SwapHeaderView.swift in Sources */,
 				58AAAFDBA357FC699C07C334 /* AdditionalDataWithErrorView.swift in Sources */,
 				58AAA68022D9D4D227CB5002 /* SwapFactory.swift in Sources */,
 				58AAA9053CD38F13CD944E2A /* SwapApproveAmountView.swift in Sources */,
@@ -6664,13 +6657,13 @@
 				3C7B9E552FEF003B3046FAF4 /* Swap2ViewController.swift in Sources */,
 				3C7B9C7B9B11D4C86A01BE04 /* Swap2Service.swift in Sources */,
 				3C7B9BFB4A9D871F992211EC /* Swap2ViewModel.swift in Sources */,
-				3C7B96CCFBA60CBCE5B7080D /* SwapInputModuleView.swift in Sources */,
+				3C7B96CCFBA60CBCE5B7080D /* Swap2InputView.swift in Sources */,
 				3C7B9855473ABB3E281A1B71 /* SwapInputModule.swift in Sources */,
-				3C7B93BD9A75C212A0406657 /* SwapInputModuleViewModel.swift in Sources */,
-				3C7B9819A17C30EC88F84A69 /* SwapFromInputViewModel.swift in Sources */,
-				3C7B93914B0DD646490A1915 /* SwapToInputViewModel.swift in Sources */,
+				3C7B9819A17C30EC88F84A69 /* SwapFromInputPresenter.swift in Sources */,
 				58AAAC27AFB2339A1A0A6A38 /* UniswapRepository.swift in Sources */,
 				58AAA99AF5AC86ED8CEC411F /* AllowanceRepository.swift in Sources */,
+				58AAAA1CD07C2558A6DED18B /* SwapHeaderView.swift in Sources */,
+				58AAA86FFC4C3D974F0EFB1F /* SwapToInputPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7332,7 +7325,6 @@
 				58AAA7B99324DDA9C53692AD /* SwapApproveViewController.swift in Sources */,
 				58AAA64C3C4E4FA0E4213000 /* SwapApproveModule.swift in Sources */,
 				58AAA72B8C2F04E871EFCC28 /* AdditionalDataWithLoadingView.swift in Sources */,
-				58AAA3EC4CF6ECDA32E8EB6C /* SwapHeaderView.swift in Sources */,
 				58AAAAC61D3D8AD1AC4BEEAE /* AdditionalDataWithErrorView.swift in Sources */,
 				58AAAB57AEC519CB80CD74AF /* SwapFactory.swift in Sources */,
 				58AAACD7A57AA93736CDB54D /* SwapApproveAmountView.swift in Sources */,
@@ -7347,13 +7339,13 @@
 				3C7B9B4ABC5DEA912B8CFFFD /* Swap2ViewController.swift in Sources */,
 				3C7B9156874F38A8B998BEA4 /* Swap2Service.swift in Sources */,
 				3C7B92BBA978401F035B8CAC /* Swap2ViewModel.swift in Sources */,
-				3C7B93F7E05882A2C89375F0 /* SwapInputModuleView.swift in Sources */,
+				3C7B93F7E05882A2C89375F0 /* Swap2InputView.swift in Sources */,
 				3C7B96FC319A0049E1E8E2ED /* SwapInputModule.swift in Sources */,
-				3C7B96E8ED5C84870A34E198 /* SwapInputModuleViewModel.swift in Sources */,
-				3C7B9F3BDEF8C16FB54FE3CE /* SwapFromInputViewModel.swift in Sources */,
-				3C7B970B7F3ED324BEAD6FE0 /* SwapToInputViewModel.swift in Sources */,
+				3C7B9F3BDEF8C16FB54FE3CE /* SwapFromInputPresenter.swift in Sources */,
 				58AAA59E29F23D2F9EC625B8 /* UniswapRepository.swift in Sources */,
 				58AAAD8A074C69317E4DB8C7 /* AllowanceRepository.swift in Sources */,
+				58AAA623BE66934C27CE758A /* SwapHeaderView.swift in Sources */,
+				58AAA86E8ACB5BF0EB68180B /* SwapToInputPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
