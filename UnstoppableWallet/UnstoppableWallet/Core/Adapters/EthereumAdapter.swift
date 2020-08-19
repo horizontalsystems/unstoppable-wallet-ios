@@ -11,23 +11,31 @@ class EthereumAdapter: EthereumBaseAdapter {
     }
 
     private func transactionRecord(fromTransaction transactionWithInternal: TransactionWithInternal) -> TransactionRecord {
-        let mineAddress = ethereumKit.receiveAddress
         let transaction = transactionWithInternal.transaction
+        let myAddress = ethereumKit.receiveAddress
+        let fromMine = transaction.from == myAddress
+        let toMine = transaction.to == myAddress
 
         var type: TransactionType = .sentToSelf
         var amount: Decimal = 0
 
+        if let significand = Decimal(string: transaction.value.description), significand != 0 {
+            let sign: FloatingPointSign = fromMine ? .minus : .plus
+            amount = Decimal(sign: sign, exponent: -decimal, significand: significand)
+        }
 
-        if let significand = Decimal(string: transaction.value.description) {
-            amount = Decimal(sign: .plus, exponent: -decimal, significand: significand)
+        if fromMine && !toMine {
+            type = .outgoing
+        } else if !fromMine && toMine {
+            type = .incoming
+        }
 
-            let fromMine = transaction.from == mineAddress
-            let toMine = transaction.to == mineAddress
-
-            if fromMine && !toMine {
-                type = .outgoing
-            } else if !fromMine && toMine {
-                type = .incoming
+        for internalTransaction in transactionWithInternal.internalTransactions {
+            if let significand = Decimal(string: internalTransaction.value.description), significand != 0 {
+                let mine = internalTransaction.from == myAddress
+                let sign: FloatingPointSign = mine ? .minus : .plus
+                let internalTransactionAmount = Decimal(sign: sign, exponent: -decimal, significand: significand)
+                amount += internalTransactionAmount
             }
         }
 
