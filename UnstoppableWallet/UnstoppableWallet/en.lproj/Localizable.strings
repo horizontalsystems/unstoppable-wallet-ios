@@ -185,13 +185,14 @@ bch.horizontalsystems.xyz/apg";
 "swap.you_pay" = "You Pay";
 "swap.estimated" = "estimated";
 "swap.balance" = "Balance";
-"swap.allowance" = "allowance";
+"swap.allowance" = "Allowance";
 "swap.you_get" = "You Get";
 "swap.token" = "Token";
 "swap.proceed_button" = "Proceed";
 "swap.approve_button" = "Approve";
 "swap.approving_button" = "Approving";
-"swap.amount_error.maximum_amount" = "Maximum amount %@";
+"swap.amount_error.maximum_amount" = "Can't parse balance for token";
+"swap.amount_error.no_balance" = "Maximum amount %@";
 
 "swap.price" = "Price";
 "swap.price_impact" = "Price Impact";

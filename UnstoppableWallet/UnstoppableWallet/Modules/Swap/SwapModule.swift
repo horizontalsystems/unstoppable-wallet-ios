@@ -75,10 +75,13 @@ struct CoinBalanceItem {
 }
 
 enum SwapValidationError: Error, LocalizedError {
+    case noBalance
     case insufficientBalance(availableBalance: String?)
 
     var errorDescription: String? {
         switch self {
+        case .noBalance:
+            return "swap.amount_error.no_balance".localized
         case .insufficientBalance(let availableBalance):
             return "swap.amount_error.maximum_amount".localized(availableBalance ?? "")
         }

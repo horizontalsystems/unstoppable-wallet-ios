@@ -13,74 +13,101 @@ class Swap2ViewModel {
     private var swapDataErrorRelay = BehaviorRelay<Error?>(value: nil)
     private var tradeViewItemRelay = BehaviorRelay<Swap2Module.TradeViewItem?>(value: nil)
 
-    private var estimatedRelay = BehaviorRelay<TradeType>(value: .exactIn)
-    private var fromAmountRelay = BehaviorRelay<String?>(value: nil)
-    private var fromTokenCodeRelay = BehaviorRelay<String>(value: "swap.token")
+    private var fromEstimatedRelay = BehaviorRelay<Bool>(value: false)
+    private var toEstimatedRelay = BehaviorRelay<Bool>(value: true)
     private var fromBalanceRelay = BehaviorRelay<String?>(value: nil)
     private var balanceErrorRelay = BehaviorRelay<Error?>(value: nil)
 
     private var isAllowanceHiddenRelay = BehaviorRelay<Bool>(value: true)
     private var isAllowanceLoadingRelay = BehaviorRelay<Bool>(value: false)
-    private var allowanceRelay = BehaviorRelay<String?>(value: nil)
+    private var allowanceRelay = BehaviorRelay<Swap2Module.AllowanceViewItem?>(value: nil)
     private var allowanceErrorRelay = BehaviorRelay<Error?>(value: nil)
 
-    private var toAmountRelay = BehaviorRelay<String?>(value: nil)
-    private var toTokenCodeRelay = BehaviorRelay<String>(value: "swap.token")
     private var actionTitleRelay = BehaviorRelay<String?>(value: nil)
     private var isActionEnabledRelay = BehaviorRelay<Bool>(value: false)
 
     init(service: Swap2Service) {
         self.service = service
 
-//        service.categories
-//                .subscribe(onNext: { [weak self] dataState in
-//                    self?.handle(dataState: dataState)
-//                })
-//                .disposed(by: disposeBag)
+        subscribeToService()
     }
 
-//    private func handle(dataState: DataState<[GuideCategoryItem]>) {
-//        if case .loading = dataState {
-//            loadingRelay.accept(true)
-//        } else {
-//            loadingRelay.accept(false)
-//        }
-//
-//        if case .success(let categories) = dataState {
-//            self.categories = categories
-//
-//            filterViewItemsRelay.accept(categories.map { $0.title })
-//
-//            syncViewItems()
-//        }
-//
-//        if case .error(let error) = dataState {
-//            errorRelay.accept(error.convertedError)
-//        } else {
-//            errorRelay.accept(nil)
-//        }
-//    }
-//
-//    private func syncViewItems() {
-//        guard categories.count > currentCategoryIndex else {
-//            return
-//        }
-//
-//        let viewItems = categories[currentCategoryIndex].items.map { item in
-//            GuideViewItem(
-//                    title: item.title,
-//                    date: item.date,
-//                    imageUrl: item.imageUrl,
-//                    url: item.url
-//            )
-//        }
-//
-//        viewItemsRelay.accept(viewItems)
-//    }
+    private func subscribeToService() {
+        subscribe(disposeBag, service.estimated) { [weak self] estimated in self?.handle(estimated: estimated) }
+        subscribe(disposeBag, service.balance) { [weak self] coinWithBalance in self?.handle(coinWithBalance: coinWithBalance) }
+        subscribe(disposeBag, service.balanceError) { [weak self] error in self?.balanceErrorRelay.accept(error) }
+        subscribe(disposeBag, service.allowance) { [weak self] state in self?.handle(allowanceState: state) }
+    }
+
+    private func handle<T>(state: DataStatus<T>, loadingRelay: BehaviorRelay<Bool>, errorRelay: BehaviorRelay<Error?>) -> T? {
+        if case .loading = state {
+            loadingRelay.accept(true)
+            return nil
+        }
+        loadingRelay.accept(false)
+
+        if case .failed(let error) = state {
+            errorRelay.accept(error)
+            return nil
+        }
+        errorRelay.accept(nil)
+
+        return state.data
+    }
+
+    static private func stringCoinValue(coin: Coin, amount: Decimal?) -> String? {
+        guard let amount = amount else {
+            return nil
+        }
+        return ValueFormatter.instance.format(coinValue: CoinValue(coin: coin, value: amount))
+    }
+
+    public var fromInputPresenter: ISwapInputPresenter {
+        SwapFromInputPresenter(service: service, decimalParser: SendAmountDecimalParser())
+    }
+
+    public var toInputPresenter: ISwapInputPresenter {
+        SwapToInputPresenter(service: service, decimalParser: SendAmountDecimalParser())
+    }
 
 }
 
-extension Swap2ViewModel: ISwap2ViewModel {
+extension Swap2ViewModel {
+
+    private func handle(estimated: TradeType) {
+        let from = estimated == .exactIn
+        let to = estimated == .exactOut
+
+        fromEstimatedRelay.accept(to)
+        toEstimatedRelay.accept(from)
+    }
+
+    private func handle(coinWithBalance: Swap2Module.CoinWithBalance?) {
+        guard let coinWithBalance = coinWithBalance else {
+            fromBalanceRelay.accept(nil)
+            return
+        }
+
+        fromBalanceRelay.accept(Swap2ViewModel.stringCoinValue(coin: coinWithBalance.coin, amount: coinWithBalance.balance))
+    }
+
+    private func handle(allowanceState: DataStatus<Swap2Module.AllowanceItem>?) {
+        guard let state = allowanceState else {
+            isAllowanceHiddenRelay.accept(true)
+            return
+        }
+        isAllowanceHiddenRelay.accept(false)
+
+        guard let allowance = handle(state: state, loadingRelay: isAllowanceLoadingRelay, errorRelay: balanceErrorRelay) else {
+            return
+        }
+
+        allowanceRelay.accept(Swap2Module.AllowanceViewItem(amount: Swap2ViewModel.stringCoinValue(coin: allowance.coin, amount: allowance.amount), isSufficient: allowance.isSufficient))
+    }
+
+}
+
+extension Swap2ViewModel {
 
     var isSwapDataLoading: Driver<Bool> {
         isSwapDataLoadingRelay.asDriver()
@@ -90,16 +117,12 @@ extension Swap2ViewModel: ISwap2ViewModel {
         swapDataErrorRelay.asDriver()
     }
 
-    var estimated: Driver<UniswapKit.TradeType> {
-        estimatedRelay.asDriver()
+    var fromEstimated: Driver<Bool> {
+        fromEstimatedRelay.asDriver()
     }
 
-    var fromAmount: Driver<String?> {
-        fromAmountRelay.asDriver()
-    }
-
-    var fromTokenCode: Driver<String> {
-        fromTokenCodeRelay.asDriver()
+    var toEstimated: Driver<Bool> {
+        toEstimatedRelay.asDriver()
     }
 
     var fromBalance: Driver<String?> {
@@ -118,20 +141,12 @@ extension Swap2ViewModel: ISwap2ViewModel {
         isAllowanceLoadingRelay.asDriver()
     }
 
-    var allowance: Driver<String?> {
+    var allowance: Driver<Swap2Module.AllowanceViewItem?> {
         allowanceRelay.asDriver()
     }
 
     var allowanceError: Driver<Error?> {
         allowanceErrorRelay.asDriver()
-    }
-
-    var toAmount: Driver<String?> {
-        toAmountRelay.asDriver()
-    }
-
-    var toTokenCode: Driver<String> {
-        toTokenCodeRelay.asDriver()
     }
 
     var tradeViewItem: Driver<Swap2Module.TradeViewItem?> {
@@ -151,12 +166,14 @@ extension Swap2ViewModel: ISwap2ViewModel {
     }
 
     func onChangeFrom(amount: String?) {
+        service.onChange(type: .exactIn, amount: amount)
     }
 
     func onSelectFrom(coin: Coin) {
     }
 
     func onChangeTo(amount: String?) {
+        service.onChange(type: .exactOut, amount: amount)
     }
 
     func onSelectTo(coin: Coin) {

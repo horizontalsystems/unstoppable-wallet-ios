@@ -75,6 +75,10 @@ class UniswapRepository {
 
 extension UniswapRepository {
 
+    var spenderAddress: Address {
+        swapKit.routerAddress
+    }
+
     func trade(coinIn: Coin, coinOut: Coin, amount: Decimal, tradeType: TradeType) -> Single<Swap2Module.TradeItem> {
 
         swapData(coinIn: coinIn, coinOut: coinOut).flatMap { swapData in
