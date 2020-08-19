@@ -16,18 +16,11 @@ class EthereumAdapter: EthereumBaseAdapter {
         let fromMine = transaction.from == myAddress
         let toMine = transaction.to == myAddress
 
-        var type: TransactionType = .sentToSelf
         var amount: Decimal = 0
 
         if let significand = Decimal(string: transaction.value.description), significand != 0 {
             let sign: FloatingPointSign = fromMine ? .minus : .plus
             amount = Decimal(sign: sign, exponent: -decimal, significand: significand)
-        }
-
-        if fromMine && !toMine {
-            type = .outgoing
-        } else if !fromMine && toMine {
-            type = .incoming
         }
 
         for internalTransaction in transactionWithInternal.internalTransactions {
@@ -37,6 +30,15 @@ class EthereumAdapter: EthereumBaseAdapter {
                 let internalTransactionAmount = Decimal(sign: sign, exponent: -decimal, significand: significand)
                 amount += internalTransactionAmount
             }
+        }
+
+        var type: TransactionType = .sentToSelf
+        if fromMine && toMine {
+            type = .sentToSelf
+        } else if amount < 0 {
+            type = .outgoing
+        } else {
+            type = .incoming
         }
 
         let failed = (transaction.isError ?? 0) != 0
