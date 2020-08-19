@@ -180,10 +180,14 @@
 "swap.you_pay" = "Ödediğiniz";
 "swap.estimated" = "tahmini";
 "swap.balance" = "Bakiye";
+"swap.allowance" = "Allowance";
 "swap.you_get" = "Kazandığınız";
 "swap.token" = "Token";
-"swap.proceed" = "Devam";
-"swap.amount_error.maximum_amount" = "Maksimum miktar %@";
+"swap.proceed_button" = "Proceed";
+"swap.approve_button" = "Approve";
+"swap.approving_button" = "Approving";
+"swap.amount_error.maximum_amount" = "Can't parse balance for token";
+"swap.amount_error.no_balance" = "Maximum amount %@";
 
 "swap.price" = "Fiyat";
 "swap.price_impact" = "Fiyat Etkisi";
@@ -196,6 +200,11 @@
 "swap.transaction_fee" = "İşlem Ücreti";
 
 "swap.select_token.title" = "Kripto Parayı Seç";
+
+// Swap Approving
+
+"swap.approve.title" = "Approve";
+"swap.approve.subtitle" = "Approve";
 
 // Swap Confirmation
 
