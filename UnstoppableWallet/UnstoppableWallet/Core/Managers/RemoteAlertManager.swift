@@ -96,7 +96,7 @@ extension RemoteAlertManager {
 
         public func map(statusCode: Int, data: Any?) throws -> String {
             if statusCode > 400 {
-                throw NotificationBackendError.unknown
+                throw NetworkManager.RequestError.invalidResponse(statusCode: statusCode, data: data)
             }
 
             guard let map = data as? [String: Any], let authKey = map["token"] as? String else {
@@ -115,7 +115,7 @@ extension RemoteAlertManager {
                 throw NotificationBackendError.auth
             }
             if statusCode > 400 {
-                throw NotificationBackendError.unknown
+                throw NetworkManager.RequestError.invalidResponse(statusCode: statusCode, data: data)
             }
         }
 
