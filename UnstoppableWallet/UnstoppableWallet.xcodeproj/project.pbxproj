@@ -1398,7 +1398,6 @@
 		58AAA09CAEB6AF43CA020636 /* FullTransactionInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA823D090E4B3E0D03A91 /* FullTransactionInfoPresenter.swift */; };
 		58AAA0A4B15F591F75068D2F /* RateListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA28AAA6976AA8A84D918 /* RateListPresenter.swift */; };
 		58AAA0A54A64F5548C65F5F1 /* FullTransactionInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA687FC0253AD175BA756 /* FullTransactionInfoInteractor.swift */; };
-		58AAA0A9376868F4DEAA0900 /* InfoSeparatorHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6FB0AF97333CD9D007F /* InfoSeparatorHeaderView.swift */; };
 		58AAA0B04B8E3BD80EC3085E /* FullTransactionInfoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA79D129F7B3E64598E5F /* FullTransactionInfoModule.swift */; };
 		58AAA0BEEC3EF61DCB80C6BA /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAA6EA2DAD95D2CB417FD /* DebugViewController.swift */; };
 		58AAA0C0DB5C901FE58F5F9B /* FeeSliderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC2D03916C80C8DC5FE5 /* FeeSliderWrapper.swift */; };
@@ -1451,7 +1450,6 @@
 		58AAA23D9F9C8C74E53A84E5 /* SendConfirmationReceiverCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0A7DCC834864D9AD4D5 /* SendConfirmationReceiverCell.swift */; };
 		58AAA23E15CBC7EBB94086E2 /* FullTransactionDataProviderManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAAC5854D58969ECE57A1 /* FullTransactionDataProviderManagerTests.swift */; };
 		58AAA2487EC444852EBDE4C1 /* SwapConfirmationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAA2545685D88708F9C5B /* SwapConfirmationModule.swift */; };
-		58AAA24D3A36CB5B3A9AADE6 /* InfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB99897A0344B040F6E2 /* InfoHeaderView.swift */; };
 		58AAA256124B8491C5CEF391 /* SendFeeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA898435C21331DE0890C /* SendFeeModule.swift */; };
 		58AAA2567B06971BD69917E7 /* ChartInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6021E4709D0ED818A18 /* ChartInteractor.swift */; };
 		58AAA25A0F43766D1DDCA6C6 /* UniswapInfoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA71CC228BCFC20E7DCAF /* UniswapInfoRouter.swift */; };
@@ -1491,7 +1489,6 @@
 		58AAA393DF93EFFA5047589B /* FeeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA24B6EB7103CB072A53D /* FeeSlider.swift */; };
 		58AAA39A983D2E97066C3959 /* LastBlockInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9D55F97CE089EC67766 /* LastBlockInfo.swift */; };
 		58AAA3A5967BAB513DD4B33F /* FeeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA24B6EB7103CB072A53D /* FeeSlider.swift */; };
-		58AAA3B66EAB4141F77339EA /* InfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB99897A0344B040F6E2 /* InfoHeaderView.swift */; };
 		58AAA3B7668B1B989B5F8065 /* BackupWordsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8FCF190F71C5494E5C5 /* BackupWordsModule.swift */; };
 		58AAA3BD3B4D9D1CE8764B71 /* LockScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA05D182333BAE6FB3C0B /* LockScreenPresenter.swift */; };
 		58AAA3BE2D0DEF53CE6CEE97 /* EthereumKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC5B00009B199A687EF3 /* EthereumKitManager.swift */; };
@@ -1564,7 +1561,6 @@
 		58AAA57DAFE1C2556E733045 /* SwapApproveViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA21219E4A269C8D54EF0 /* SwapApproveViewItemFactory.swift */; };
 		58AAA58ED4B9DF77A5EED3E9 /* ChartPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA54C0CDDBE5FEEFC08B0 /* ChartPresenter.swift */; };
 		58AAA5930B8040CE9D9119CF /* BackupConfirmationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA2D3E1840EA8931E12D0 /* BackupConfirmationRouter.swift */; };
-		58AAA5949679B84E126EB6F9 /* InfoSeparatorHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6FB0AF97333CD9D007F /* InfoSeparatorHeaderView.swift */; };
 		58AAA59DF74C10DDCA79F35F /* AdditionalDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9E19A578FD13792D2B7 /* AdditionalDataView.swift */; };
 		58AAA59E29F23D2F9EC625B8 /* UniswapRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC01A1CB85BAC663F222 /* UniswapRepository.swift */; };
 		58AAA5AB9BD23E30F3B3AA0F /* AllowanceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA00E9A37B83569BD8FF8 /* AllowanceRepository.swift */; };
@@ -4237,6 +4233,9 @@
 		5026FFF321C3CA280023EEA2 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				50A1DB5A24E407CF001D396C /* Unstoppable DT.entitlements */,
+				50D05F9B249A22950067D28F /* Unstoppable.entitlements */,
+				50D05F9A249A228C0067D28F /* Unstoppable D.entitlements */,
 				5026FFF421C3CA280023EEA2 /* Unstoppable Dev.release.xcconfig */,
 				5026FFF521C3CA280023EEA2 /* Unstoppable Dev T.release.xcconfig */,
 				5026FFF621C3CA280023EEA2 /* Unstoppable.release.xcconfig */,
@@ -4744,9 +4743,6 @@
 		D3285F3920BD158E00644076 = {
 			isa = PBXGroup;
 			children = (
-				50A1DB5A24E407CF001D396C /* Unstoppable DT.entitlements */,
-				50D05F9B249A22950067D28F /* Unstoppable.entitlements */,
-				50D05F9A249A228C0067D28F /* Unstoppable D.entitlements */,
 				D3285F4420BD158E00644076 /* UnstoppableWallet */,
 				D3373DC020C658660082BC4A /* UnstoppableWalletTests */,
 				D3285F4320BD158E00644076 /* Products */,
@@ -5896,8 +5892,6 @@
 				58AAA25A0F43766D1DDCA6C6 /* UniswapInfoRouter.swift in Sources */,
 				58AAAB9745C02752516A1307 /* UniswapInfoPresenter.swift in Sources */,
 				58AAA741A17DE37F1FBD7156 /* UniswapInfoModule.swift in Sources */,
-				58AAA3B66EAB4141F77339EA /* InfoHeaderView.swift in Sources */,
-				58AAA5949679B84E126EB6F9 /* InfoSeparatorHeaderView.swift in Sources */,
 				58AAA2487EC444852EBDE4C1 /* SwapConfirmationModule.swift in Sources */,
 				58AAA7CAF231D302867626D3 /* SwapConfirmationPresenter.swift in Sources */,
 				58AAA999D721C408495B5322 /* SwapConfirmationRouter.swift in Sources */,
@@ -6618,8 +6612,6 @@
 				58AAA04648798EB3C11A8B57 /* UniswapInfoRouter.swift in Sources */,
 				58AAA64C0051A5B09F7B2087 /* UniswapInfoPresenter.swift in Sources */,
 				58AAA410C9996BA929E3CEEF /* UniswapInfoModule.swift in Sources */,
-				58AAA24D3A36CB5B3A9AADE6 /* InfoHeaderView.swift in Sources */,
-				58AAA0A9376868F4DEAA0900 /* InfoSeparatorHeaderView.swift in Sources */,
 				58AAA43CA9EFF60D0DD53ABA /* SwapConfirmationModule.swift in Sources */,
 				58AAA8546CA4476BFF8BDC3A /* SwapConfirmationPresenter.swift in Sources */,
 				58AAA68DC3528A15042365F6 /* SwapConfirmationRouter.swift in Sources */,
@@ -7545,7 +7537,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5026FFF721C3CA280023EEA2 /* Unstoppable Dev T.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Unstoppable DT.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "UnstoppableWallet/Configuration/Unstoppable DT.entitlements";
 				OfficeMode = true;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.testnet";
 				PRODUCT_MODULE_NAME = Unstoppable_Dev_T;
@@ -7560,7 +7552,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5026FFF521C3CA280023EEA2 /* Unstoppable Dev T.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Unstoppable DT.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "UnstoppableWallet/Configuration/Unstoppable DT.entitlements";
 				OfficeMode = true;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.testnet";
 				PRODUCT_MODULE_NAME = Unstoppable_Dev_T;
@@ -7617,7 +7609,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5026FFF821C3CA280023EEA2 /* Unstoppable Dev.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Unstoppable D.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "UnstoppableWallet/Configuration/Unstoppable D.entitlements";
 				DEVELOPMENT_TEAM = HC4MCAXJ66;
 				OfficeMode = true;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
@@ -7632,7 +7624,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5026FFF421C3CA280023EEA2 /* Unstoppable Dev.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Unstoppable D.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "UnstoppableWallet/Configuration/Unstoppable D.entitlements";
 				OfficeMode = true;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
 				PRODUCT_MODULE_NAME = Unstoppable_Dev;
@@ -7646,7 +7638,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5026FFF921C3CA280023EEA2 /* Unstoppable.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = Unstoppable.entitlements;
+				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Unstoppable.entitlements;
 				OfficeMode = false;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_MODULE_NAME = Unstoppable;
@@ -7659,7 +7651,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5026FFF621C3CA280023EEA2 /* Unstoppable.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = Unstoppable.entitlements;
+				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Unstoppable.entitlements;
 				OfficeMode = false;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_MODULE_NAME = Unstoppable;
