@@ -10,30 +10,27 @@ class EthereumAdapter: EthereumBaseAdapter {
         super.init(ethereumKit: ethereumKit, decimal: EthereumAdapter.decimal)
     }
 
+    private func convertAmount(amount: BigUInt, fromAddress: Address) -> Decimal {
+        guard let significand = Decimal(string: amount.description), significand != 0 else {
+            return 0
+        }
+
+        let fromMine = fromAddress == ethereumKit.receiveAddress
+        let sign: FloatingPointSign = fromMine ? .minus : .plus
+        return Decimal(sign: sign, exponent: -decimal, significand: significand)
+    }
+
     private func transactionRecord(fromTransaction transactionWithInternal: TransactionWithInternal) -> TransactionRecord {
         let transaction = transactionWithInternal.transaction
-        let myAddress = ethereumKit.receiveAddress
-        let fromMine = transaction.from == myAddress
-        let toMine = transaction.to == myAddress
 
-        var amount: Decimal = 0
+        var amount = convertAmount(amount: transaction.value, fromAddress: transaction.from)
 
-        if let significand = Decimal(string: transaction.value.description), significand != 0 {
-            let sign: FloatingPointSign = fromMine ? .minus : .plus
-            amount = Decimal(sign: sign, exponent: -decimal, significand: significand)
+        amount += transactionWithInternal.internalTransactions.reduce(0) { internalAmount, internalTransaction in
+            internalAmount + convertAmount(amount: internalTransaction.value, fromAddress: internalTransaction.from)
         }
 
-        for internalTransaction in transactionWithInternal.internalTransactions {
-            if let significand = Decimal(string: internalTransaction.value.description), significand != 0 {
-                let mine = internalTransaction.from == myAddress
-                let sign: FloatingPointSign = mine ? .minus : .plus
-                let internalTransactionAmount = Decimal(sign: sign, exponent: -decimal, significand: significand)
-                amount += internalTransactionAmount
-            }
-        }
-
-        var type: TransactionType = .sentToSelf
-        if fromMine && toMine {
+        let type: TransactionType
+        if transaction.from == transaction.to {
             type = .sentToSelf
         } else if amount < 0 {
             type = .outgoing
