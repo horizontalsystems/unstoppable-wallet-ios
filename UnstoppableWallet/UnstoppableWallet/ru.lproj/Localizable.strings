@@ -304,7 +304,7 @@
 "settings.notifications" = "Уведомления";
 "settings.base_currency" = "Базовая Валюта";
 "settings.language" = "Язык";
-"settings.terms" = "Условия использования";
+"settings.terms" = "Условия Использования";
 "settings.tell_friends" = "Рассказать Друзьям";
 "settings.contact" = "Kонтакты";
 "settings.light_mode" = "Светлый Режим";
@@ -352,7 +352,7 @@
 
 // Settings -> Terms
 
-"terms.title" = "Условия использования";
+"terms.title" = "Условия Использования";
 "terms.app_subtitle" = "Децентрализованное Приложение";
 "terms.description" = "Кошелек Unstoppable предназначен для тех, кто хочет инвестировать и хранить криптовалюты приватным и независимым образом.
 
