@@ -14,4 +14,8 @@ class NotificationSettingsViewItemFactory {
                 } : []
     }
 
+    func showResetAll(alerts: [PriceAlert]) -> Bool {
+        alerts.contains { !$0.activeTopics.isEmpty }
+    }
+
 }

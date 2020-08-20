@@ -5,8 +5,9 @@ import ThemeKit
 class NotificationSettingsViewController: ThemeViewController {
     private let delegate: INotificationSettingsViewDelegate
 
-    private var viewItems = [NotificationSettingSectionViewItem]()
     private var pushNotificationsOn = false
+    private var viewItems = [NotificationSettingSectionViewItem]()
+    private var showResetAll = false
 
     private let tableView = SectionsTableView(style: .grouped)
     private let warningView = UIView()
@@ -95,7 +96,7 @@ extension NotificationSettingsViewController: SectionsDataSource {
 
         sections.append(contentsOf: itemSections(viewItems: viewItems))
 
-        if !viewItems.isEmpty {
+        if showResetAll {
             sections.append(resetAllSection())
         }
 
@@ -200,8 +201,9 @@ extension NotificationSettingsViewController: INotificationSettingsView {
         tableView.reload()
     }
 
-    func set(viewItems: [NotificationSettingSectionViewItem]) {
+    func set(viewItems: [NotificationSettingSectionViewItem], showResetAll: Bool) {
         self.viewItems = viewItems
+        self.showResetAll = showResetAll
         tableView.reload()
     }
 

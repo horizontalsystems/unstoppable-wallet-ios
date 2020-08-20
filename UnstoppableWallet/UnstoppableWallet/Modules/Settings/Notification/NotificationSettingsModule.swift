@@ -1,6 +1,6 @@
 protocol INotificationSettingsView: AnyObject {
     func set(pushNotificationsOn: Bool)
-    func set(viewItems: [NotificationSettingSectionViewItem])
+    func set(viewItems: [NotificationSettingSectionViewItem], showResetAll: Bool)
 
     func showWarning()
     func hideWarning()
