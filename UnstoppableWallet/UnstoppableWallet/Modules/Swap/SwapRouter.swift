@@ -14,7 +14,7 @@ extension SwapRouter: ISwapRouter {
     }
 
     func showApprove(delegate: ISwapApproveDelegate, coin: Coin, spenderAddress: Address, amount: Decimal) {
-        guard let approveController = SwapApproveRouter.module(coin: coin, spenderAddress: spenderAddress, amount: amount, delegate: delegate) else {
+        guard let approveController = SwapApproveModule.instance(coin: coin, spenderAddress: spenderAddress, amount: amount, delegate: delegate) else {
             return
         }
         viewController?.present(approveController, animated: true)

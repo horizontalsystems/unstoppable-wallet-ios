@@ -1,51 +1,43 @@
 import Foundation
 import EthereumKit
 
-protocol ISwapApproveView: class {
-    func set(viewItem: SwapApproveModule.ViewItem)
-    func show(error: Error)
-    func showSuccess()
+struct SwapApproveModule {
+
+    static func instance(coin: Coin, spenderAddress: Address, amount: Decimal, delegate: ISwapApproveDelegate) -> UIViewController? {
+        guard let wallet = App.shared.walletManager.wallets.first(where: { $0.coin == coin }),
+              let adapter = App.shared.adapterManager.adapter(for: wallet),
+              let feeRateProvider = App.shared.feeRateProviderFactory.provider(coin: coin),
+              let feeAdapter = FeeAdapterFactory().swapAdapter(adapter: adapter),
+              let sendAdapter = adapter as? Erc20Adapter else {
+
+            return nil
+        }
+
+        let service = SwapApproveService(feeAdapter: feeAdapter, provider: feeRateProvider, sendAdapter: sendAdapter)
+        let viewModel = SwapApproveViewModel(service: service, feeModule: FeeModule.module(), coin: coin, amount: amount, spenderAddress: spenderAddress)
+        let view = SwapApproveViewController(viewModel: viewModel, delegate: delegate)
+
+        return view.toBottomSheet
+    }
+
 }
 
-protocol ISwapApproveViewDelegate {
-    func onLoad()
-    func onTapApprove()
-    func onTapClose()
-}
-
-protocol ISwapApproveInteractor {
-    func fetchFeeRate()
-    func fetchFee(address: String, amount: Decimal, feeRate: Int)
-    func approve(spenderAddress: Address, amount: Decimal, gasLimit: Int, gasPrice: Int)
-}
-
-protocol ISwapApproveInteractorDelegate: AnyObject {
-    func onReceive(feeRate: FeeRate)
-    func onFailReceiveFeeRate(_ error: Error)
-    func onReceive(fee: Int)
-    func onFailReceiveFee(_ error: Error)
-    func onApproveSend()
-    func onFailApprove(error: Error)
-}
-
-protocol ISwapApproveRouter {
-    func close()
-}
-
-protocol ISwapApproveViewItemFactory {
-    func viewItem(coin: Coin, amount: Decimal, fee: DataStatus<Int>, feeRate: DataStatus<FeeRate>, feeRatePriority: FeeRatePriority) -> SwapApproveModule.ViewItem
+enum ApproveState {
+    case idle
+    case loading
+    case success
+    case error(error: Error)
 }
 
 protocol ISwapApproveDelegate {
     func didApprove()
 }
 
-class SwapApproveModule {
+extension SwapApproveModule {
 
     struct ViewItem {
         let coinCode: String
         let amount: String?
-        let fee: DataStatus<String?>
         let transactionSpeed: String?
     }
 
