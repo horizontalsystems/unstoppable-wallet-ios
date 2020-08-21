@@ -6,7 +6,8 @@ import RxSwift
 class SwapApproveViewController: ThemeActionSheetController {
     private let disposeBag = DisposeBag()
 
-    private let delegate: ISwapApproveViewDelegate
+    private let viewModel: SwapApproveViewModel
+    private let delegate: ISwapApproveDelegate
 
     private let titleView = BottomSheetTitleView()
     private let amountView = SwapApproveAmountView()
@@ -15,7 +16,8 @@ class SwapApproveViewController: ThemeActionSheetController {
     private let transactionSpeedView = AdditionalDataView()
     private let approveButton = ThemeButton()
 
-    init(delegate: ISwapApproveViewDelegate) {
+    init(viewModel: SwapApproveViewModel, delegate: ISwapApproveDelegate) {
+        self.viewModel = viewModel
         self.delegate = delegate
 
         super.init()
@@ -34,7 +36,7 @@ class SwapApproveViewController: ThemeActionSheetController {
         }
 
         titleView.onTapClose = { [weak self] in
-            self?.delegate.onTapClose()
+            self?.dismiss(animated: true)
         }
 
         view.addSubview(amountView)
@@ -78,44 +80,55 @@ class SwapApproveViewController: ThemeActionSheetController {
         approveButton.setTitle("swap.approve_button".localized, for: .normal)
         approveButton.addTarget(self, action: #selector(onTapApprove), for: .touchUpInside)
 
-        delegate.onLoad()
+        subscribeToViewModel()
+    }
+
+    private func subscribeToViewModel() {
+        subscribe(disposeBag, viewModel.approveSuccess) { [weak self] success in
+            guard success else {
+                return
+            }
+
+            HudHelper.instance.showSuccess()
+            self?.delegate.didApprove()
+            self?.dismiss(animated: true)
+        }
+
+        subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] viewItem in self?.set(viewItem: viewItem) }
+        subscribe(disposeBag, viewModel.feeLoading) { [weak self] feeLoading in self?.set(feeLoading: feeLoading) }
+        subscribe(disposeBag, viewModel.fee) { [weak self] fee in fee.flatMap { self?.set(fee: $0) } }
     }
 
     @objc private func onTapApprove() {
-        delegate.onTapApprove()
+        viewModel.onTapApprove()
     }
 
 }
 
-extension SwapApproveViewController: ISwapApproveView {
+extension SwapApproveViewController {
 
-    func set(viewItem: SwapApproveModule.ViewItem) {
+    private func set(feeLoading: Bool) {
+        approveButton.isEnabled = !feeLoading
+        feeView.set(loading: feeLoading)
+    }
+
+    private func set(fee: String) {
+        feeView.bind(title: "swap.fee".localized, value: fee)
+        approveButton.isEnabled = true
+    }
+
+    private func set(viewItem: SwapApproveModule.ViewItem) {
         titleView.bind(
                 title: "swap.approve.title".localized,
                 subtitle: "swap.approve.subtitle".localized,
                 image: UIImage(named: "Swap Icon Medium")?.tinted(with: .themeGray))
 
         amountView.bind(amount: viewItem.amount, description: viewItem.coinCode)
-
-        approveButton.isEnabled = false
-        switch viewItem.fee {
-        case .loading:
-            feeView.set(loading: true)
-        case .completed(let feeValue):
-            feeView.bind(title: "swap.fee".localized, value: feeValue)
-            approveButton.isEnabled = true
-        default: ()
-        }
-
-        transactionSpeedView.bind(title: "swap.transaction_speed".localized, value: viewItem.transactionSpeed)
+        transactionSpeedView.bind(title: "swap.transactions_speed".localized, value: viewItem.transactionSpeed)
     }
 
-    func show(error: Error) {
+    private func show(error: Error) {
         HudHelper.instance.showError(title: error.smartDescription)
-    }
-
-    func showSuccess() {
-        HudHelper.instance.showSuccess()
     }
 
 }
