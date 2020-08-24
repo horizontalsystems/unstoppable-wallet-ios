@@ -180,14 +180,14 @@
 "swap.you_pay" = "Vous payez";
 "swap.estimated" = "estimé";
 "swap.balance" = "Balance";
-"swap.allowance" = "Allowance";
+"swap.allowance" = "Allocation";
 "swap.you_get" = "Vous recevez";
 "swap.token" = "Token";
-"swap.proceed_button" = "Proceed";
-"swap.approve_button" = "Approve";
-"swap.approving_button" = "Approving";
-"swap.amount_error.maximum_amount" = "Can't parse balance for token";
-"swap.amount_error.no_balance" = "Maximum amount %@";
+"swap.proceed_button" = "Continuer";
+"swap.approve_button" = "Approuver";
+"swap.approving_button" = "En cours d'approbation";
+"swap.amount_error.maximum_amount" = "Impossible d'analyser le solde pour le token";
+"swap.amount_error.no_balance" = "Montant maximum %@";
 
 "swap.price" = "Prix";
 "swap.price_impact" = "Impact prix";
@@ -203,8 +203,8 @@
 
 // Swap Approving
 
-"swap.approve.title" = "Approve";
-"swap.approve.subtitle" = "Approve";
+"swap.approve.title" = "Approuver";
+"swap.approve.subtitle" = "Approuver";
 
 // Swap Confirmation
 
