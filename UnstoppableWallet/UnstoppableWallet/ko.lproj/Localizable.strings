@@ -183,7 +183,7 @@
 "swap.allowance" = "Allowance";
 "swap.you_get" = "얻기";
 "swap.token" = "토큰";
-"swap.proceed_button" = "Proceed";
+"swap.proceed_button" = "진행";
 "swap.approve_button" = "Approve";
 "swap.approving_button" = "Approving";
 "swap.amount_error.maximum_amount" = "Can't parse balance for token";
