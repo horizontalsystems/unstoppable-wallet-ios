@@ -180,14 +180,14 @@
 "swap.you_pay" = "Ödediğiniz";
 "swap.estimated" = "tahmini";
 "swap.balance" = "Bakiye";
-"swap.allowance" = "Allowance";
+"swap.allowance" = "Ödenek";
 "swap.you_get" = "Kazandığınız";
 "swap.token" = "Token";
-"swap.proceed_button" = "Proceed";
-"swap.approve_button" = "Approve";
-"swap.approving_button" = "Approving";
-"swap.amount_error.maximum_amount" = "Can't parse balance for token";
-"swap.amount_error.no_balance" = "Maximum amount %@";
+"swap.proceed_button" = "İlerle";
+"swap.approve_button" = "Onayla";
+"swap.approving_button" = "Onaylayan";
+"swap.amount_error.maximum_amount" = "Token için bakiye ayrıştırılamıyor";
+"swap.amount_error.no_balance" = "Maksimum miktar %@";
 
 "swap.price" = "Fiyat";
 "swap.price_impact" = "Fiyat Etkisi";
@@ -203,8 +203,8 @@
 
 // Swap Approving
 
-"swap.approve.title" = "Approve";
-"swap.approve.subtitle" = "Approve";
+"swap.approve.title" = "Onayla";
+"swap.approve.subtitle" = "Onayla";
 
 // Swap Confirmation
 
