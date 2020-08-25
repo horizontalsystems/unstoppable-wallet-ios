@@ -2,7 +2,7 @@ import UIKit
 import ThemeKit
 
 protocol ICoinSelectDelegate {
-    func didSelect(coin: CoinBalanceItem)
+    func didSelect(coin: SwapModule.CoinBalanceItem)
 }
 
 struct CoinBalanceViewItem {
@@ -12,7 +12,7 @@ struct CoinBalanceViewItem {
 
 struct CoinSelectModule {
 
-    static func instance(coins: [CoinBalanceItem], delegate: ICoinSelectDelegate) -> UIViewController {
+    static func instance(coins: [SwapModule.CoinBalanceItem], delegate: ICoinSelectDelegate) -> UIViewController {
         let viewModel = CoinSelectViewModel(coins: coins)
 
         return ThemeNavigationController(rootViewController: CoinSelectViewController(viewModel: viewModel, delegate: delegate))

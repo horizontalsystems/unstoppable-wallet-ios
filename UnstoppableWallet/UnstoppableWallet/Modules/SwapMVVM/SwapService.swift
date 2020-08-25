@@ -4,7 +4,7 @@ import RxRelay
 import HsToolKit
 import UniswapKit
 
-class Swap2Service {
+class SwapService {
     private let disposeBag = DisposeBag()
     private var allowanceDisposable: Disposable?
     private var tradeDataDisposable: Disposable?
@@ -24,10 +24,10 @@ class Swap2Service {
     private var balanceRelay = BehaviorRelay<CoinValue?>(value: nil)
     private var validationErrorsRelay = BehaviorRelay<[Error]>(value: [])
 
-    private var tradeDataStateRelay = BehaviorRelay<DataStatus<Swap2Module.TradeItem>?>(value: nil)
+    private var tradeDataStateRelay = BehaviorRelay<DataStatus<SwapModule.TradeItem>?>(value: nil)
     private var allowanceStateRelay = BehaviorRelay<DataStatus<CoinValue>?>(value: nil)
 
-    private var swapStateRelay = BehaviorRelay<Swap2Module.SwapState>(value: .idle)
+    private var swapStateRelay = BehaviorRelay<SwapModule.SwapState>(value: .idle)
 
     private var waitingForApprove: Bool = false
 
@@ -144,7 +144,7 @@ class Swap2Service {
         balanceRelay.accept(CoinValue(coin: coin, value: balance))
     }
 
-    private func stateByAllowance() -> Swap2Module.SwapState {
+    private func stateByAllowance() -> SwapModule.SwapState {
         guard let allowance = allowanceStateRelay.value else {
             return .allowed
         }
@@ -157,7 +157,7 @@ class Swap2Service {
         return .allowed
     }
 
-    private func stateByTradeData(state: Swap2Module.SwapState) -> Swap2Module.SwapState {
+    private func stateByTradeData(state: SwapModule.SwapState) -> SwapModule.SwapState {
         guard let tradeData = tradeDataStateRelay.value else {
             return .idle
         }
@@ -206,7 +206,7 @@ class Swap2Service {
 
 }
 
-extension Swap2Service {
+extension SwapService {
 
     private func handle(tradeData: TradeData, coinIn: Coin, coinOut: Coin) {
         let estimatedAmount = tradeData.type == .exactIn ? tradeData.amountOut : tradeData.amountIn
@@ -219,7 +219,7 @@ extension Swap2Service {
             amountInRelay.accept(amount)
         }
 
-        let tradeItem = Swap2Module.TradeItem(
+        let tradeItem = SwapModule.TradeItem(
                 coinIn: coinIn,
                 coinOut: coinOut,
                 type: tradeData.type,
@@ -244,9 +244,9 @@ extension Swap2Service {
 
 }
 
-extension Swap2Service {
+extension SwapService {
 
-    func tokensForSelection(type: TradeType) -> [CoinBalanceItem] {
+    func tokensForSelection(type: TradeType) -> [SwapModule.CoinBalanceItem] {
         switch type {
         case .exactIn: return swapCoinProvider.coins(accountCoins: true, exclude: [])
         case .exactOut: return swapCoinProvider.coins(accountCoins: false, exclude: [coinInRelay.value])
@@ -302,17 +302,17 @@ extension Swap2Service {
         sync()
     }
 
-    var approveData: Swap2Module.ApproveData? {
+    var approveData: SwapModule.ApproveData? {
         guard let amount = amount(for: .exactIn) else {
             return nil
         }
-        return Swap2Module.ApproveData(coin: coinInRelay.value,
+        return SwapModule.ApproveData(coin: coinInRelay.value,
                 spenderAddress: uniswapRepository.spenderAddress,
                 amount: amount)
     }
 
-    var proceedData: Swap2Module.ProceedData {
-        Swap2Module.ProceedData()
+    var proceedData: SwapModule.ProceedData {
+        SwapModule.ProceedData()
     }
 
     var estimated: Observable<TradeType> {
@@ -347,11 +347,11 @@ extension Swap2Service {
         allowanceStateRelay.asObservable()
     }
 
-    var tradeData: Observable<DataStatus<Swap2Module.TradeItem>?> {
+    var tradeData: Observable<DataStatus<SwapModule.TradeItem>?> {
         tradeDataStateRelay.asObservable()
     }
 
-    var swapState: Observable<Swap2Module.SwapState> {
+    var swapState: Observable<SwapModule.SwapState> {
         swapStateRelay.asObservable()
     }
 

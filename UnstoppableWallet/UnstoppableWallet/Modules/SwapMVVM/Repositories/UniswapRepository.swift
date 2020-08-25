@@ -3,11 +3,11 @@ import RxSwift
 import EthereumKit
 
 class UniswapRepository {
-    private let swapKit: ISwapKit
+    private let swapKit: UniswapKit.Kit
 
     private var swapData = [String: SwapData]()
 
-    init(swapKit: ISwapKit) {
+    init(swapKit: UniswapKit.Kit) {
         self.swapKit = swapKit
     }
 

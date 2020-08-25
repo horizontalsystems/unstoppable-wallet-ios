@@ -17,13 +17,13 @@ class SwapTokenManager {
         walletManager.wallets.first { $0.coin == coin }
     }
 
-    private func balance(coin: Coin, walletItems: [CoinBalanceItem]) -> Decimal? {
+    private func balance(coin: Coin, walletItems: [SwapModule.CoinBalanceItem]) -> Decimal? {
         wallet(coin: coin).flatMap { self.adapterManager.balanceAdapter(for: $0)?.balance }
     }
 
-    private var walletItems: [CoinBalanceItem] {
+    private var walletItems: [SwapModule.CoinBalanceItem] {
         walletManager.wallets.map { wallet in
-            CoinBalanceItem(coin: wallet.coin, balance: adapterManager.balanceAdapter(for: wallet)?.balance)
+            SwapModule.CoinBalanceItem(coin: wallet.coin, balance: adapterManager.balanceAdapter(for: wallet)?.balance)
         }
     }
 
@@ -37,7 +37,7 @@ extension SwapTokenManager: ISwapCoinManager {
             .balance
     }
 
-    func items(accountCoins: Bool, exclude: [Coin]) -> [CoinBalanceItem] {
+    func items(accountCoins: Bool, exclude: [Coin]) -> [SwapModule.CoinBalanceItem] {
         // add filtration by incoming filters (etc. ethereum, binance and other)
 
         if accountCoins {                                   // ethereum and erc20 tokens with available balances
@@ -55,7 +55,7 @@ extension SwapTokenManager: ISwapCoinManager {
                 guard coin.type.swappable && include else {
                     return nil
                 }
-                return CoinBalanceItem(coin: coin, balance: balance(coin: coin, walletItems: walletItems))
+                return SwapModule.CoinBalanceItem(coin: coin, balance: balance(coin: coin, walletItems: walletItems))
             }
         }
     }

@@ -589,21 +589,9 @@ protocol ITermsManager {
     func update(term: Term)
 }
 
-protocol ISwapKit {
-    var etherToken: Token { get }
-    var routerAddress: Address { get }
-
-    func token(contractAddress: EthereumKit.Address, decimals: Int) -> Token
-    func swapDataSingle(tokenIn: Token, tokenOut: Token) -> Single<SwapData>
-    func bestTradeExactIn(swapData: SwapData, amountIn: Decimal, options: TradeOptions) throws -> TradeData
-    func bestTradeExactOut(swapData: SwapData, amountOut: Decimal, options: TradeOptions) throws -> TradeData
-    func estimateSwapSingle(tradeData: TradeData, gasPrice: Int) -> Single<Int>
-    func swapSingle(tradeData: TradeData, gasLimit: Int, gasPrice: Int) -> Single<EthereumKit.TransactionWithInternal>
-}
-
 protocol ISwapCoinManager {
     func balance(coin: Coin) -> Decimal?
-    func items(accountCoins: Bool, exclude: [Coin]) -> [CoinBalanceItem]
+    func items(accountCoins: Bool, exclude: [Coin]) -> [SwapModule.CoinBalanceItem]
 
     func allowanceSingle(coin: Coin, spenderAddress: Address) -> Single<Decimal>
 }
