@@ -13,6 +13,8 @@ enum DataStatus<T> {
         }
     }
 
+    var isLoading: Bool { self == .loading }
+
     static func zip<A, B>(_ first: DataStatus<A>, _ second: DataStatus<B>) -> DataStatus<(A, B)> {
         if let firstData = first.data, let secondData = second.data {
             return DataStatus<(A, B)>(data: (firstData, secondData))
@@ -56,6 +58,24 @@ enum DataStatus<T> {
             return data
         }
         return nil
+    }
+
+    var error: Error? {
+        if case let .failed(error) = self {
+            return error
+        }
+        return nil
+    }
+
+}
+
+extension DataStatus: Equatable {
+
+    public static func ==(lhs: DataStatus<T>, rhs: DataStatus<T>) -> Bool {
+        switch (lhs, rhs) {
+        case (.loading, .loading), (.completed, .completed), (.failed, .failed): return true
+        default: return false
+        }
     }
 
 }

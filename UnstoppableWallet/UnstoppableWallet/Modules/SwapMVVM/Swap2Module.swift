@@ -2,6 +2,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 import UniswapKit
+import EthereumKit
 import ThemeKit
 
 
@@ -17,15 +18,16 @@ func subscribe<T>(_ disposeBag: DisposeBag, _ observable: Observable<T>, _ onNex
 struct Swap2Module {
 
     enum PriceImpactLevel: Int {
+    case none
     case normal
     case warning
     case forbidden
     }
 
     struct TradeItem {
+        let coinIn: Coin
+        let coinOut: Coin
         let type: TradeType
-        let amountIn: Decimal?
-        let amountOut: Decimal?
         let executionPrice: Decimal?
         let priceImpact: Decimal?
         let minMaxAmount: Decimal?
@@ -40,8 +42,7 @@ struct Swap2Module {
     }
 
     struct AllowanceItem {
-        let coin: Coin
-        let amount: Decimal
+        let amount: CoinValue
         let isSufficient: Bool
     }
 
@@ -50,15 +51,20 @@ struct Swap2Module {
         let isSufficient: Bool
     }
 
-    struct CoinWithBalance {
+    struct ApproveData {
         let coin: Coin
-        let balance: Decimal?
+        let spenderAddress: Address
+        let amount: Decimal
     }
 
-    enum ActionType {
-        case proceed
-        case approve
-        case approving
+    struct ProceedData {
+    }
+
+    enum SwapState {
+        case idle
+        case approveRequired
+        case waitingForApprove
+        case allowed
     }
 
     static func instance(wallet: Wallet) -> UIViewController? {
@@ -67,12 +73,41 @@ struct Swap2Module {
         }
         let swapKit = UniswapKit.Kit.instance(ethereumKit: ethereumKit)
         let allowanceRepository = AllowanceRepository(walletManager: App.shared.walletManager, adapterManager: App.shared.adapterManager)
-        let decimalParser = SendAmountDecimalParser()
+        let swapCoinProvider = SwapCoinProvider(coinManager: App.shared.coinManager, walletManager: App.shared.walletManager, adapterManager: App.shared.adapterManager)
 
-        let service = Swap2Service(uniswapRepository: UniswapRepository(swapKit: swapKit), allowanceRepository: allowanceRepository, adapterManager: App.shared.adapterManager, decimalParser: decimalParser, coin: wallet.coin)
-        let viewModel = Swap2ViewModel(service: service)
+        let service = Swap2Service(uniswapRepository: UniswapRepository(swapKit: swapKit), allowanceRepository: allowanceRepository, swapCoinProvider: swapCoinProvider, adapterManager: App.shared.adapterManager, coin: wallet.coin)
+        let viewModel = Swap2ViewModel(service: service, decimalParser: SendAmountDecimalParser())
 
         return ThemeNavigationController(rootViewController: Swap2ViewController(viewModel: viewModel))
+    }
+
+}
+
+enum SwapValidationError: Error, LocalizedError {
+    case insufficientBalance(availableBalance: CoinValue?)
+    case insufficientAllowance
+
+    var errorDescription: String? {
+        switch self {
+        case .insufficientBalance(let availableBalance):
+            if let availableBalance = availableBalance {
+                return "swap.amount_error.maximum_amount".localized(ValueFormatter.instance.format(coinValue: availableBalance) ?? "")
+            }
+            return "swap.amount_error.no_balance".localized
+        case .insufficientAllowance:
+            return "swap.allowance_error.insufficient_allowance".localized
+        }
+    }
+
+}
+
+extension UniswapKit.Kit.TradeError: LocalizedError {
+
+    public var errorDescription: String? {
+        switch self {
+        case .tradeNotFound: return "swap.trade_error.not_found".localized
+        default: return nil
+        }
     }
 
 }

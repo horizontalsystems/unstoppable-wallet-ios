@@ -95,7 +95,7 @@ extension SwapApproveViewModel {
         guard let gasLimit = feeRelay.value, let gasPrice = feeRate else {
             return
         }
-        handle(approveState: .loading)
+        handle(approveState: .success)
 //        interactor.approve(spenderAddress: spenderAddress, amount: amount, gasLimit: gasLimit, gasPrice: gasPrice.feeRate(priority: SwapApprovePresenter.feePriority))
     }
 

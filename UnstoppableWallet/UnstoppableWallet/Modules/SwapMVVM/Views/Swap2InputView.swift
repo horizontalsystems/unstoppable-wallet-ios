@@ -1,12 +1,14 @@
 import UIKit
 import SnapKit
 import RxSwift
+import RxCocoa
 import ThemeKit
 
 class Swap2InputView: UIView {
     private var disposeBag = DisposeBag()
 
-    private let presenter: ISwapInputPresenter
+    private let presenter: BaseSwapInputPresenter
+    weak var presentDelegate: IPresentDelegate?
 
     private let holderView = UIView()
 
@@ -17,7 +19,7 @@ class Swap2InputView: UIView {
     private let maxButton = ThemeButton()
     private let tokenSelectButton = ThemeButton()
 
-    public init(presenter: ISwapInputPresenter) {
+    public init(presenter: BaseSwapInputPresenter) {
         self.presenter = presenter
 
         super.init(frame: .zero)
@@ -88,7 +90,7 @@ class Swap2InputView: UIView {
         tokenSelectButton.apply(secondaryIconImage: UIImage(named: "Token Drop Down")?.tinted(with: .themeLeah))
         tokenSelectButton.semanticContentAttribute = .forceRightToLeft
         tokenSelectButton.imageEdgeInsets = UIEdgeInsets(top: 6, left: 10, bottom: 6, right: 0)
-        tokenSelectButton.addTarget(self, action: #selector(onTapTokenSelect), for: .touchUpInside)
+        tokenSelectButton.addTarget(self, action: #selector(onTapCoinSelect), for: .touchUpInside)
 
         inputField.rx.controlEvent(.editingChanged)
                 .asObservable()
@@ -97,6 +99,10 @@ class Swap2InputView: UIView {
                 })
                 .disposed(by: disposeBag)
 
+        badgeView.set(text: "swap.estimated".localized.uppercased())
+        badgeView.isHidden = true
+        
+        set(maxButtonVisible: false)
         subscribeToPresenter()
     }
 
@@ -105,6 +111,7 @@ class Swap2InputView: UIView {
     }
 
     private func subscribeToPresenter() {
+        subscribe(disposeBag, presenter.description) { [weak self] in self?.set(title: $0) }
         subscribe(disposeBag, presenter.isEstimated) { [weak self] in self?.setBadge(hidden: !$0) }
         subscribe(disposeBag, presenter.amount) { [weak self] in self?.set(text: $0) }
         subscribe(disposeBag, presenter.tokenCode) { [weak self] in self?.set(tokenCode: $0) }
@@ -114,40 +121,31 @@ class Swap2InputView: UIView {
 //        delegate?.onMaxClicked(self)
     }
 
-    @objc private func onTapTokenSelect() {
-//        delegate?.onTokenSelectClicked(self)
+    @objc private func onTapCoinSelect() {
+        let coins = presenter.tokensForSelection
+
+        let vc = CoinSelectModule.instance(coins: coins, delegate: self)
+        presentDelegate?.show(viewController: vc)
     }
 
 }
 
 extension Swap2InputView {
 
-    public func showKeyboard() {
-        inputField.becomeFirstResponder()
+    private func set(title: String?) {
+        titleLabel.text = title?.localized
     }
 
-    public func set(title: String?) {
-        titleLabel.text = title
-    }
-
-    public func setBadge(text: String?) {
-        badgeView.set(text: text)
-    }
-
-    public func setBadge(hidden: Bool) {
+    private func setBadge(hidden: Bool) {
         badgeView.isHidden = hidden
     }
 
-    public func set(tokenCode: String?) {
-        tokenSelectButton.setTitle(tokenCode, for: .normal)
+    private func set(tokenCode: String?) {
+        tokenSelectButton.setTitle(tokenCode ?? "swap.token".localized, for: .normal)
     }
 
-    public func set(text: String?) {
+    private func set(text: String?) {
         inputField.text = text
-    }
-
-    public var text: String? {
-        inputField.text
     }
 
     public func set(maxButtonVisible: Bool) {
@@ -187,6 +185,14 @@ extension Swap2InputView: UITextFieldDelegate {
             return validate(text: text)
         }
         return validate(text: string)
+    }
+
+}
+
+extension Swap2InputView: ICoinSelectDelegate {
+
+    func didSelect(coin: CoinBalanceItem) {
+        presenter.onSelect(coin: coin)
     }
 
 }

@@ -47,7 +47,7 @@ class UniswapRepository {
         }
     }
 
-    private func tradeData(swapData: SwapData, amount: Decimal, tradeType: TradeType) -> Single<Swap2Module.TradeItem> {
+    private func tradeData(swapData: SwapData, amount: Decimal, tradeType: TradeType) -> Single<TradeData> {
         do {
             let tradeData: TradeData
             switch tradeType {
@@ -57,14 +57,7 @@ class UniswapRepository {
                 tradeData = try swapKit.bestTradeExactOut(swapData: swapData, amountOut: amount, options: TradeOptions())
             }
 
-            let tradeItem = Swap2Module.TradeItem(type: tradeType,
-                    amountIn: tradeData.amountIn,
-                    amountOut: tradeData.amountOut,
-                    executionPrice: tradeData.executionPrice,
-                    priceImpact: tradeData.priceImpact,
-                    minMaxAmount: tradeType == .exactIn ? tradeData.amountOutMin : tradeData.amountInMax)
-
-            return Single.just(tradeItem)
+            return Single.just(tradeData)
         } catch {
             return Single.error(error)
         }
@@ -79,7 +72,7 @@ extension UniswapRepository {
         swapKit.routerAddress
     }
 
-    func trade(coinIn: Coin, coinOut: Coin, amount: Decimal, tradeType: TradeType) -> Single<Swap2Module.TradeItem> {
+    func trade(coinIn: Coin, coinOut: Coin, amount: Decimal, tradeType: TradeType) -> Single<TradeData> {
 
         swapData(coinIn: coinIn, coinOut: coinOut).flatMap { swapData in
             self.tradeData(swapData: swapData, amount: amount, tradeType: tradeType)

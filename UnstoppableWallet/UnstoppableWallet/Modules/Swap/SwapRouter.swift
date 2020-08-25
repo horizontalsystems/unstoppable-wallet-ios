@@ -10,7 +10,7 @@ class SwapRouter {
 extension SwapRouter: ISwapRouter {
 
     func openTokenSelect(accountCoins: Bool, exclude: [Coin], delegate: ICoinSelectDelegate) {
-        viewController?.present(SwapTokenSelectRouter.module(accountCoins: accountCoins, exclude: exclude, delegate: delegate), animated: true)
+//        viewController?.present(SwapTokenSelectRouter.module(accountCoins: accountCoins, exclude: exclude, delegate: delegate), animated: true)
     }
 
     func showApprove(delegate: ISwapApproveDelegate, coin: Coin, spenderAddress: Address, amount: Decimal) {

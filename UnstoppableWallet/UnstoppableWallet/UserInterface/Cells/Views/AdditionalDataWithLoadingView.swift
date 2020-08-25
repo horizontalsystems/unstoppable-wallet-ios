@@ -56,7 +56,6 @@ class AdditionalDataWithLoadingView: UIView {
         additionalDataView.setValue(hidden: false)
 
         spinner(show: false)
-
     }
 
     func setValue(color: UIColor) {

@@ -1,0 +1,108 @@
+import RxSwift
+import RxCocoa
+import UniswapKit
+
+class BaseSwapInputPresenter {
+    static let maxValidDecimals = 8
+    let disposeBag = DisposeBag()
+
+    let service: Swap2Service
+    private let decimalParser: ISendAmountDecimalParser
+    private let decimalFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = ""
+        return formatter
+    }()
+
+    private var descriptionRelay = BehaviorRelay<String?>(value: nil)
+    private var isEstimatedRelay = BehaviorRelay<Bool>(value: false)
+    private var amountRelay = BehaviorRelay<String?>(value: nil)
+    private var tokenCodeRelay = BehaviorRelay<String?>(value: nil)
+
+    private var validDecimals = BaseSwapInputPresenter.maxValidDecimals
+
+    var type: TradeType {
+        fatalError("Must be implemented by Concrete subclass.")
+    }
+
+    var _description: String {
+        fatalError("Must be implemented by Concrete subclass.")
+    }
+
+    init(service: Swap2Service, decimalParser: ISendAmountDecimalParser) {
+        self.service = service
+        self.decimalParser = decimalParser
+
+        descriptionRelay.accept(_description)
+
+        subscribeToService()
+    }
+
+    func subscribeToService() {
+        subscribe(disposeBag, service.estimated) { [weak self] in self?.handle(estimated: $0) }
+    }
+
+    private func handle(estimated: TradeType) {
+        isEstimatedRelay.accept(estimated != type)
+    }
+
+    func update(amount: CoinValue?, type: TradeType) {
+        guard self.type != type else {
+            return
+        }
+
+        decimalFormatter.maximumFractionDigits = validDecimals
+        let amountString = amount.flatMap { decimalFormatter.string(from: $0.value as NSNumber) }
+
+        amountRelay.accept(amountString)
+    }
+
+    func handle(coin: Coin?) {
+        let max = SwapToInputPresenter.maxValidDecimals
+        validDecimals = min(max, (coin?.decimal ?? max))
+
+        tokenCodeRelay.accept(coin?.code)
+    }
+
+}
+
+extension BaseSwapInputPresenter {
+
+    var isEstimated: Driver<Bool> {
+        isEstimatedRelay.asDriver()
+    }
+
+    func isValid(amount: String?) -> Bool {
+        guard let amount = decimalParser.parseAnyDecimal(from: amount) else {
+            return false
+        }
+
+        return amount.decimalCount <= validDecimals
+    }
+
+    var description: Driver<String?> {
+        descriptionRelay.asDriver()
+    }
+
+    var amount: Driver<String?> {
+        amountRelay.asDriver()
+    }
+
+    var tokenCode: Driver<String?> {
+        tokenCodeRelay.asDriver()
+    }
+
+    func onChange(amount: String?) {
+        service.onChange(type: type, amount: decimalParser.parseAnyDecimal(from: amount))
+    }
+
+    var tokensForSelection: [CoinBalanceItem] {
+        service.tokensForSelection(type: type)
+    }
+
+    func onSelect(coin: CoinBalanceItem) {
+        service.onSelect(type: type, coin: coin.coin)
+    }
+
+}
