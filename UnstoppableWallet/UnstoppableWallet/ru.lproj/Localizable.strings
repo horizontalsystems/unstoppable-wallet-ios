@@ -176,6 +176,10 @@
 
 "send.lock_time" = "TimeLock";
 
+// CoinSelector
+
+"choose_coin.title" = "Choose Coin";
+
 // Swap
 
 "swap.title" = "Обменять";
@@ -187,9 +191,10 @@
 "swap.token" = "Токен";
 "swap.proceed_button" = "Продолжить";
 "swap.approve_button" = "Подтвердить";
-"swap.approving_button" = "Подтверждение";
-"swap.amount_error.maximum_amount" = "Ошибка анализа баланса для токена";
-"swap.amount_error.no_balance" = "Макс. сумма %@";
+"swap.approving_button" = "Approving...";
+"swap.amount_error.maximum_amount" = "Balance %@";
+"swap.amount_error.no_balance" = "Can't parse balance for token";
+"swap.trade_error.not_found" = "Can't swap this tokens";
 
 "swap.price" = "Цена";
 "swap.price_impact" = "Колебание Цен";
