@@ -363,13 +363,13 @@ CHECKOUT OPTIONS:
     :commit: 90c82f0ed78dfcba30c5073f76c79e89511bd82d
     :git: https://github.com/horizontalsystems/binance-chain-kit-ios
   BitcoinCashKit.swift:
-    :commit: 8bdfa4ddb6b696e5b5648c4a3bb9c9dd7cd0afb4
+    :commit: 05598f5d8c059479abac5942e4c6687f4e0e8cc0
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinCore.swift:
-    :commit: 5651e7893c887d10934cea1f6c252f4e7e634a4c
+    :commit: 05598f5d8c059479abac5942e4c6687f4e0e8cc0
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinKit.swift:
-    :commit: 8bdfa4ddb6b696e5b5648c4a3bb9c9dd7cd0afb4
+    :commit: 05598f5d8c059479abac5942e4c6687f4e0e8cc0
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
     :commit: 20a122ce11f03862b642c0d7d00523057177d6f4
@@ -378,7 +378,7 @@ CHECKOUT OPTIONS:
     :commit: c9b44d7cacb0dca1918cf0d0b9d78e47aae1e539
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
-    :commit: 8bdfa4ddb6b696e5b5648c4a3bb9c9dd7cd0afb4
+    :commit: 05598f5d8c059479abac5942e4c6687f4e0e8cc0
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   EosioSwift:
     :commit: 2eaa0415c3adedaf957d4bd5505627b59fefa032
@@ -408,7 +408,7 @@ CHECKOUT OPTIONS:
     :commit: 3e3720f600d10929146e5e8583cf39a072b37e61
     :git: https://github.com/horizontalsystems/hd-wallet-kit-ios
   Hodler.swift:
-    :commit: 8bdfa4ddb6b696e5b5648c4a3bb9c9dd7cd0afb4
+    :commit: 05598f5d8c059479abac5942e4c6687f4e0e8cc0
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HsToolKit.swift:
     :commit: ad37fa961b7e59094a5aa0dc5648d638c3f0136d
@@ -420,7 +420,7 @@ CHECKOUT OPTIONS:
     :commit: c9b44d7cacb0dca1918cf0d0b9d78e47aae1e539
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
-    :commit: 8bdfa4ddb6b696e5b5648c4a3bb9c9dd7cd0afb4
+    :commit: 05598f5d8c059479abac5942e4c6687f4e0e8cc0
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   PinKit.swift:
     :commit: c9b44d7cacb0dca1918cf0d0b9d78e47aae1e539
