@@ -133,18 +133,6 @@ extension SwapInputView {
         inputField.becomeFirstResponder()
     }
 
-    public func set(title: String?) {
-        titleLabel.text = title
-    }
-
-    public func setBadge(text: String?) {
-        badgeView.set(text: text)
-    }
-
-    public func setBadge(hidden: Bool) {
-        badgeView.isHidden = hidden
-    }
-
     public func set(tokenCode: String) {
         tokenSelectButton.setTitle(tokenCode, for: .normal)
     }

@@ -607,3 +607,7 @@ protocol ISwapCoinManager {
 
     func allowanceSingle(coin: Coin, spenderAddress: Address) -> Single<Decimal>
 }
+
+protocol IPresentDelegate: AnyObject {
+    func  show(viewController: UIViewController)
+}

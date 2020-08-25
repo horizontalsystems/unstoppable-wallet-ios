@@ -143,7 +143,7 @@ extension SwapPresenter: ISwapViewDelegate {
     func onTokenSelect(type: TradeType) {
         let exclude = type == .exactOut ? [coinIn] : []
 
-        router.openTokenSelect(accountCoins: type == .exactIn, exclude: exclude, delegate: self)
+//        router.openTokenSelect(accountCoins: type == .exactIn, exclude: exclude, delegate: self)
     }
 
     func onButtonClicked() {
@@ -203,21 +203,6 @@ extension SwapPresenter: ISwapInteractorDelegate {
 
     func didFailReceiveAllowance(error: Error) {
         allowance = .failed(error)
-
-        sync()
-    }
-
-}
-
-extension SwapPresenter: ICoinSelectDelegate {
-
-    func didSelect(accountCoins: Bool, coin: Coin) {
-        setCoin(tradeType: accountCoins ? .exactIn : .exactOut, coin: coin)
-
-        if accountCoins {
-            syncAllowance()
-        }
-        syncSwapData()
 
         sync()
     }

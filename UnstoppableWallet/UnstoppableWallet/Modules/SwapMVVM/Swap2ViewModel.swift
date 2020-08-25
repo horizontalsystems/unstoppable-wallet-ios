@@ -7,179 +7,228 @@ class Swap2ViewModel {
     private let disposeBag = DisposeBag()
 
     private let service: Swap2Service
+    private let decimalParser: ISendAmountDecimalParser
 
-    private var isSwapDataLoadingRelay = BehaviorRelay<Bool>(value: false)
-    private var isSwapDataHiddenRelay = BehaviorRelay<Bool>(value: true)
-    private var swapDataErrorRelay = BehaviorRelay<Error?>(value: nil)
+    private var isLoadingRelay = BehaviorRelay<Bool>(value: false)
+    private var isTradeDataHiddenRelay = BehaviorRelay<Bool>(value: true)
+    private var tradeDataErrorRelay = BehaviorRelay<Error?>(value: nil)
     private var tradeViewItemRelay = BehaviorRelay<Swap2Module.TradeViewItem?>(value: nil)
 
-    private var fromEstimatedRelay = BehaviorRelay<Bool>(value: false)
-    private var toEstimatedRelay = BehaviorRelay<Bool>(value: true)
-    private var fromBalanceRelay = BehaviorRelay<String?>(value: nil)
+    private var balanceRelay = BehaviorRelay<String?>(value: nil)
     private var balanceErrorRelay = BehaviorRelay<Error?>(value: nil)
 
-    private var isAllowanceHiddenRelay = BehaviorRelay<Bool>(value: true)
-    private var isAllowanceLoadingRelay = BehaviorRelay<Bool>(value: false)
-    private var allowanceRelay = BehaviorRelay<Swap2Module.AllowanceViewItem?>(value: nil)
-    private var allowanceErrorRelay = BehaviorRelay<Error?>(value: nil)
-
-    private var actionTitleRelay = BehaviorRelay<String?>(value: nil)
+    private var showProcessRelay = BehaviorRelay<Bool>(value: true)
+    private var showApproveRelay = BehaviorRelay<Bool>(value: false)
+    private var showApprovingRelay = BehaviorRelay<Bool>(value: false)
     private var isActionEnabledRelay = BehaviorRelay<Bool>(value: false)
 
-    init(service: Swap2Service) {
+    private var openApproveRelay = PublishRelay<Swap2Module.ApproveData?>()
+    private var openProceedRelay = PublishRelay<Swap2Module.ProceedData?>()
+
+    // Swap Module Presenters
+    public var fromInputPresenter: BaseSwapInputPresenter {
+        SwapFromInputPresenter(service: service, decimalParser: decimalParser)
+    }
+
+    public var toInputPresenter: BaseSwapInputPresenter {
+        SwapToInputPresenter(service: service, decimalParser: decimalParser)
+    }
+
+    public var allowancePresenter: SwapAllowancePresenter {
+        SwapAllowancePresenter(service: service)
+    }
+
+    init(service: Swap2Service, decimalParser: ISendAmountDecimalParser) {
         self.service = service
+        self.decimalParser = decimalParser
 
         subscribeToService()
     }
 
     private func subscribeToService() {
-        subscribe(disposeBag, service.estimated) { [weak self] estimated in self?.handle(estimated: estimated) }
-        subscribe(disposeBag, service.balance) { [weak self] coinWithBalance in self?.handle(coinWithBalance: coinWithBalance) }
-        subscribe(disposeBag, service.balanceError) { [weak self] error in self?.balanceErrorRelay.accept(error) }
-        subscribe(disposeBag, service.allowance) { [weak self] state in self?.handle(allowanceState: state) }
+        subscribe(disposeBag, service.balance) { [weak self] in self?.handle(balance: $0) }
+        subscribe(disposeBag, service.validationErrors) { [weak self] errors in self?.handle(errors: errors) }
+        subscribe(disposeBag, service.tradeData) { [weak self] in self?.handle(tradeData: $0) }
+        subscribe(disposeBag, service.swapState) { [weak self] in self?.handle(state: $0) }
     }
 
-    private func handle<T>(state: DataStatus<T>, loadingRelay: BehaviorRelay<Bool>, errorRelay: BehaviorRelay<Error?>) -> T? {
-        if case .loading = state {
-            loadingRelay.accept(true)
-            return nil
+    private func executionPrice(item: Swap2Module.TradeItem) -> String? {
+        guard let price = item.executionPrice else {
+            return ValueFormatter.instance.format(coinValue: CoinValue(coin: item.coinIn, value: 0))
         }
-        loadingRelay.accept(false)
+        let value = price.isZero ? 0 : 1 / price
+        return ValueFormatter
+                .instance
+                .format(coinValue: CoinValue(coin: item.coinIn, value: value))
+                .map {
+                    [item.coinOut.code, $0].joined(separator: " = ")
+                }
+    }
 
-        if case .failed(let error) = state {
-            errorRelay.accept(error)
-            return nil
+    private func tradeViewItem(item: Swap2Module.TradeItem) -> Swap2Module.TradeViewItem {
+        var priceImpact: Decimal = 0
+        var impactLevel = Swap2Module.PriceImpactLevel.none
+
+        if let value = item.priceImpact {
+            priceImpact = value
+            if priceImpact <= 1 {
+                impactLevel = .normal
+            } else if priceImpact <= 5 {
+                impactLevel = .warning
+            } else {
+                impactLevel = .forbidden
+            }
         }
-        errorRelay.accept(nil)
+        let impactString = priceImpact.description + "%"
 
-        return state.data
-    }
+        let coinValue: CoinValue?
+        let minMaxTitle: String
 
-    static private func stringCoinValue(coin: Coin, amount: Decimal?) -> String? {
-        guard let amount = amount else {
-            return nil
+        switch item.type {
+        case .exactIn:
+            minMaxTitle = "swap.minimum_got"
+            coinValue = item.minMaxAmount.map { CoinValue(coin: item.coinOut, value: $0) }
+        case .exactOut:
+            minMaxTitle = "swap.maximum_paid"
+            coinValue = item.minMaxAmount.map { CoinValue(coin: item.coinIn, value: $0) }
         }
-        return ValueFormatter.instance.format(coinValue: CoinValue(coin: coin, value: amount))
-    }
 
-    public var fromInputPresenter: ISwapInputPresenter {
-        SwapFromInputPresenter(service: service, decimalParser: SendAmountDecimalParser())
-    }
+        let minMaxValue = coinValue.flatMap { ValueFormatter.instance.format(coinValue: $0) }
 
-    public var toInputPresenter: ISwapInputPresenter {
-        SwapToInputPresenter(service: service, decimalParser: SendAmountDecimalParser())
+        return Swap2Module.TradeViewItem(
+                executionPrice: executionPrice(item: item),
+                priceImpact: impactString,
+                priceImpactLevel: impactLevel,
+                minMaxTitle: minMaxTitle, minMaxAmount: minMaxValue)
     }
 
 }
 
 extension Swap2ViewModel {
 
-    private func handle(estimated: TradeType) {
-        let from = estimated == .exactIn
-        let to = estimated == .exactOut
+    private func handle(balance: CoinValue?) {
+        guard let balance = balance else {
+            balanceRelay.accept(nil)
+            return
+        }
 
-        fromEstimatedRelay.accept(to)
-        toEstimatedRelay.accept(from)
+        balanceRelay.accept(ValueFormatter.instance.format(coinValue: balance))
     }
 
-    private func handle(coinWithBalance: Swap2Module.CoinWithBalance?) {
-        guard let coinWithBalance = coinWithBalance else {
-            fromBalanceRelay.accept(nil)
-            return
+    private func handle(errors: [Error]) {
+        balanceErrorRelay.accept(nil)
+        errors.forEach { error in
+            if case SwapValidationError.insufficientBalance = error {
+                balanceErrorRelay.accept(error)
+                return
+            }
         }
-
-        fromBalanceRelay.accept(Swap2ViewModel.stringCoinValue(coin: coinWithBalance.coin, amount: coinWithBalance.balance))
     }
 
-    private func handle(allowanceState: DataStatus<Swap2Module.AllowanceItem>?) {
-        guard let state = allowanceState else {
-            isAllowanceHiddenRelay.accept(true)
-            return
-        }
-        isAllowanceHiddenRelay.accept(false)
-
-        guard let allowance = handle(state: state, loadingRelay: isAllowanceLoadingRelay, errorRelay: balanceErrorRelay) else {
-            return
+    private func resolveTrade(error: Error?) -> Error? {
+        guard let error = error else {
+            return nil
         }
 
-        allowanceRelay.accept(Swap2Module.AllowanceViewItem(amount: Swap2ViewModel.stringCoinValue(coin: allowance.coin, amount: allowance.amount), isSufficient: allowance.isSufficient))
+        if case Kit.TradeError.zeroAmount = error {
+            return nil
+        }
+        return error
+    }
+
+    private func handle(tradeData: DataStatus<Swap2Module.TradeItem>?) {
+        guard let tradeData = tradeData else {  // hide section without trade data
+            isTradeDataHiddenRelay.accept(true)
+            return
+        }
+
+        isTradeDataHiddenRelay.accept(tradeData.isLoading || tradeData.error != nil)
+        isLoadingRelay.accept(tradeData.isLoading)
+
+        if let item = tradeData.data {      // show data
+            let viewItem = tradeViewItem(item: item)
+            tradeViewItemRelay.accept(viewItem)
+        }
+
+        tradeDataErrorRelay.accept(resolveTrade(error: tradeData.error))
+    }
+
+    private func handle(state: Swap2Module.SwapState) {
+        switch state {
+        case .idle, .allowed:
+            showProcessRelay.accept(true)
+            isActionEnabledRelay.accept(state == .allowed)
+        case .approveRequired:
+            showApproveRelay.accept(true)
+            isActionEnabledRelay.accept(true)
+        case .waitingForApprove:
+            showApprovingRelay.accept(true)
+            isActionEnabledRelay.accept(false)
+        }
     }
 
 }
 
 extension Swap2ViewModel {
 
-    var isSwapDataLoading: Driver<Bool> {
-        isSwapDataLoadingRelay.asDriver()
+    var isLoading: Driver<Bool> {
+        isLoadingRelay.asDriver()
     }
 
-    var swapDataError: Driver<Error?> {
-        swapDataErrorRelay.asDriver()
-    }
-
-    var fromEstimated: Driver<Bool> {
-        fromEstimatedRelay.asDriver()
-    }
-
-    var toEstimated: Driver<Bool> {
-        toEstimatedRelay.asDriver()
-    }
-
-    var fromBalance: Driver<String?> {
-        fromBalanceRelay.asDriver()
-    }
-
-    var balanceError: Driver<Error?> {
-        balanceErrorRelay.asDriver()
-    }
-
-    var isAllowanceHidden: Driver<Bool> {
-        isAllowanceHiddenRelay.asDriver()
-    }
-
-    var isAllowanceLoading: Driver<Bool> {
-        isAllowanceLoadingRelay.asDriver()
-    }
-
-    var allowance: Driver<Swap2Module.AllowanceViewItem?> {
-        allowanceRelay.asDriver()
-    }
-
-    var allowanceError: Driver<Error?> {
-        allowanceErrorRelay.asDriver()
+    var tradeDataError: Driver<Error?> {
+        tradeDataErrorRelay.asDriver()
     }
 
     var tradeViewItem: Driver<Swap2Module.TradeViewItem?> {
         tradeViewItemRelay.asDriver()
     }
 
-    var actionTitle: Driver<String?> {
-        actionTitleRelay.asDriver()
+    var isTradeDataHidden: Driver<Bool> {
+        isTradeDataHiddenRelay.asDriver()
+    }
+
+    var balance: Driver<String?> {
+        balanceRelay.asDriver()
+    }
+
+    var balanceError: Driver<Error?> {
+        balanceErrorRelay.asDriver()
+    }
+
+    var showApprove: Driver<Bool> {
+        showApproveRelay.asDriver()
+    }
+
+    var showProcess: Driver<Bool> {
+        showProcessRelay.asDriver()
+    }
+
+    var showApproving: Driver<Bool> {
+        showApprovingRelay.asDriver()
     }
 
     var isActionEnabled: Driver<Bool> {
         isActionEnabledRelay.asDriver()
     }
 
-    var isSwapDataHidden: Driver<Bool> {
-        isSwapDataHiddenRelay.asDriver()
+    var openApprove: Driver<Swap2Module.ApproveData?> {
+        openApproveRelay.asDriver(onErrorJustReturn: nil)
     }
 
-    func onChangeFrom(amount: String?) {
-        service.onChange(type: .exactIn, amount: amount)
+    var openProceed: Driver<Swap2Module.ProceedData?> {
+        openProceedRelay.asDriver(onErrorJustReturn: nil)
     }
 
-    func onSelectFrom(coin: Coin) {
+    func onTapProceed() {
+        openProceedRelay.accept(service.proceedData)
     }
 
-    func onChangeTo(amount: String?) {
-        service.onChange(type: .exactOut, amount: amount)
+    func onTapApprove() {
+        openApproveRelay.accept(service.approveData)
     }
 
-    func onSelectTo(coin: Coin) {
-    }
-
-    func onTapButton() {
+    func didApprove() {
+        service.didApprove()
     }
 
 }

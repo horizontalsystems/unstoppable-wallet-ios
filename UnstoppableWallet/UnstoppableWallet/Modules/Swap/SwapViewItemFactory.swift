@@ -102,7 +102,7 @@ class SwapViewItemFactory {
             return false
         }
         if amountIn > balance {
-            throw SwapValidationError.insufficientBalance(availableBalance: stringCoinValue(coin: coin, amount: balance))
+            throw SwapValidationError.insufficientBalance(availableBalance: CoinValue(coin: coin, value: balance))
         }
 
         return true

@@ -2,15 +2,19 @@ import UIKit
 import SectionsTableView
 import SnapKit
 import ThemeKit
+import RxSwift
 
-class SwapTokenSelectViewController: ThemeViewController {
-    private let delegate: ISwapTokenSelectViewDelegate
+class CoinSelectViewController: ThemeViewController {
+    private let disposeBag = DisposeBag()
+    private let delegate: ICoinSelectDelegate
+
+    private let viewModel: CoinSelectViewModel
+    private let tableView = SectionsTableView(style: .grouped)
 
     private var viewItems = [CoinBalanceViewItem]()
 
-    private let tableView = SectionsTableView(style: .grouped)
-
-    init(delegate: ISwapTokenSelectViewDelegate) {
+    init(viewModel: CoinSelectViewModel, delegate: ICoinSelectDelegate) {
+        self.viewModel = viewModel
         self.delegate = delegate
 
         super.init()
@@ -37,14 +41,11 @@ class SwapTokenSelectViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
-
-        delegate.onLoad()
-
-        tableView.buildSections()
+        subscribe(disposeBag, viewModel.coinViewItems) { [weak self] in self?.handle(viewItems: $0) }
     }
 
     @objc func onClose() {
-        delegate.onTapClose()
+        dismiss(animated: true)
     }
 
     private func rows(viewItems: [CoinBalanceViewItem]) -> [RowProtocol] {
@@ -57,19 +58,29 @@ class SwapTokenSelectViewController: ThemeViewController {
                     cell.bind(coin: viewItem.coin, balance: viewItem.balance, last: index == viewItems.count - 1)
                 },
                 action: { [weak self] _ in
-                    self?.onSelect(coin: viewItem.coin)
+                    self?.onSelectCoin(at: index)
                 }
             )
         }
     }
 
-    private func onSelect(coin: Coin) {
-        delegate.onSelect(coin: coin)
+    private func onSelectCoin(at index: Int) {
+        if let coin = viewModel.coin(at: index) {
+            delegate.didSelect(coin: coin)
+        }
+
+        onClose()
+    }
+
+    private func handle(viewItems: [CoinBalanceViewItem]) {
+        self.viewItems = viewItems
+
+        tableView.reload()
     }
 
 }
 
-extension SwapTokenSelectViewController: SectionsDataSource {
+extension CoinSelectViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         [
@@ -80,16 +91,6 @@ extension SwapTokenSelectViewController: SectionsDataSource {
                     rows: rows(viewItems: viewItems)
             )
         ]
-    }
-
-}
-
-extension SwapTokenSelectViewController: ISwapTokenSelectView {
-
-    func set(viewItems: [CoinBalanceViewItem]) {
-        self.viewItems = viewItems
-
-        tableView.reload()
     }
 
 }

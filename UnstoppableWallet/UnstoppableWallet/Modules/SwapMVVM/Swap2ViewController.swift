@@ -6,9 +6,11 @@ import RxSwift
 import RxCocoa
 
 class Swap2ViewController: ThemeViewController {
-    private static let levelColors: [UIColor] = [.themeRemus, .themeJacob, .themeLucian]
+    private static let levelColors: [UIColor] = [.themeGray, .themeRemus, .themeJacob, .themeLucian]
     private static let spinnerRadius: CGFloat = 8
     private static let spinnerLineWidth: CGFloat = 2
+
+    private static let processTag = 0, approveTag = 1, approvingTag = 2
 
     private let processSpinner = HUDProgressView(
             strokeLineWidth: Swap2ViewController.spinnerLineWidth,
@@ -28,7 +30,7 @@ class Swap2ViewController: ThemeViewController {
     private let fromInputView: Swap2InputView
 
     private let fromBalanceView = AdditionalDataWithErrorView()
-    private let allowanceView = AdditionalDataWithLoadingView()
+    private let allowanceView: Swap2AllowanceView
 
     private let separatorLineView = UIView()
 
@@ -45,10 +47,16 @@ class Swap2ViewController: ThemeViewController {
 
     init(viewModel: Swap2ViewModel) {
         self.viewModel = viewModel
+
         fromInputView = Swap2InputView(presenter: viewModel.fromInputPresenter)
         toInputView = Swap2InputView(presenter: viewModel.toInputPresenter)
+        allowanceView = Swap2AllowanceView(presenter: viewModel.allowancePresenter)
 
         super.init()
+
+        fromInputView.presentDelegate = self
+        toInputView.presentDelegate = self
+
         hidesBottomBarWhenPushed = true
     }
 
@@ -94,6 +102,7 @@ class Swap2ViewController: ThemeViewController {
     private func initLayout() {
         container.addSubview(topLineView)
         container.addSubview(processSpinner)
+
         container.addSubview(fromInputView)
         container.addSubview(fromBalanceView)
         container.addSubview(allowanceView)
@@ -128,11 +137,6 @@ class Swap2ViewController: ThemeViewController {
             maker.leading.trailing.equalToSuperview()
         }
 
-        fromInputView.set(title: "swap.you_pay".localized)
-        fromInputView.setBadge(text: "swap.estimated".localized)
-        fromInputView.setBadge(hidden: true)
-        fromInputView.set(maxButtonVisible: false)
-
         fromBalanceView.snp.makeConstraints { maker in
             maker.top.equalTo(fromInputView.snp.bottom).offset(CGFloat.margin3x)
             maker.leading.trailing.equalToSuperview()
@@ -155,11 +159,6 @@ class Swap2ViewController: ThemeViewController {
             maker.top.equalTo(separatorLineView.snp.bottom).offset(CGFloat.margin3x)
             maker.leading.trailing.equalToSuperview()
         }
-
-        toInputView.set(title: "swap.you_get".localized)
-        toInputView.setBadge(text: "swap.estimated".localized)
-        toInputView.setBadge(hidden: false)
-        toInputView.set(maxButtonVisible: false)
 
         swapAreaWrapper.snp.makeConstraints { maker in
             maker.top.equalTo(toInputView.snp.bottom).offset(CGFloat.margin3x)
@@ -206,21 +205,20 @@ class Swap2ViewController: ThemeViewController {
     }
 
     private func subscribeToViewModel() {
-        subscribe(disposeBag, viewModel.isSwapDataLoading) { [weak self] in self?.set(loading: $0) }
-        subscribe(disposeBag, viewModel.swapDataError) { [weak self] in self?.set(swapDataError: $0) }
+        subscribe(disposeBag, viewModel.isLoading) { [weak self] in self?.set(loading: $0) }
+        subscribe(disposeBag, viewModel.tradeDataError) { [weak self] in self?.set(swapDataError: $0) }
 
-        subscribe(disposeBag, viewModel.fromBalance) { [weak self] in self?.set(fromBalance: $0) }
+        subscribe(disposeBag, viewModel.balance) { [weak self] in self?.set(fromBalance: $0) }
         subscribe(disposeBag, viewModel.balanceError) { [weak self] in self?.set(error: $0) }
 
-        subscribe(disposeBag, viewModel.isAllowanceHidden) { [weak self] in self?.allowanceView.set(hidden: $0) }
-        subscribe(disposeBag, viewModel.isAllowanceLoading) { [weak self] in self?.allowanceView.set(loading: $0) }
-        subscribe(disposeBag, viewModel.allowance) { [weak self] in self?.set(allowance: $0) }
-        subscribe(disposeBag, viewModel.allowanceError) { _ in () } // TODO: show allowanceError
-
-        subscribe(disposeBag, viewModel.tradeViewItem) { [weak self] in self?.set(tradeViewItem: $0) }
-        subscribe(disposeBag, viewModel.actionTitle) { [weak self] in self?.button.setTitle($0, for: .normal) }
+        subscribe(disposeBag, viewModel.tradeViewItem) { [weak self] in self?.handle(tradeViewItem: $0) }
+        subscribe(disposeBag, viewModel.showProcess) { [weak self] in self?.setButton(tag: Swap2ViewController.processTag, show: $0) }
+        subscribe(disposeBag, viewModel.showApprove) { [weak self] in self?.setButton(tag: Swap2ViewController.approveTag, show: $0) }
+        subscribe(disposeBag, viewModel.showApproving) { [weak self] in self?.setButton(tag: Swap2ViewController.approvingTag, show: $0) }
         subscribe(disposeBag, viewModel.isActionEnabled) { [weak self] in self?.button.isEnabled = $0 }
-        subscribe(disposeBag, viewModel.isSwapDataHidden) { [weak self] in self?.set(swapDataHidden: $0) }
+        subscribe(disposeBag, viewModel.isTradeDataHidden) { [weak self] in self?.set(swapDataHidden: $0) }
+
+        subscribe(disposeBag, viewModel.openApprove) { [weak self] in self?.openApprove(data: $0) }
     }
 
     @objc func onClose() {
@@ -233,7 +231,10 @@ class Swap2ViewController: ThemeViewController {
     }
 
     @objc func onButtonTouchUp() {
-        viewModel.onTapButton()
+        switch button.tag {
+        case Swap2ViewController.approveTag: viewModel.onTapApprove()
+        default: viewModel.onTapProceed()
+        }
     }
 
     private func set(loading: Bool) {
@@ -248,22 +249,6 @@ class Swap2ViewController: ThemeViewController {
 }
 
 extension Swap2ViewController {
-
-    private func set(fromEstimated: Bool) {
-        fromInputView.setBadge(hidden: !fromEstimated)
-    }
-
-    private func set(toEstimated: Bool) {
-        toInputView.setBadge(hidden: !toEstimated)
-    }
-
-    private func set(allowance: Swap2Module.AllowanceViewItem?) {
-        guard let item = allowance else {
-            return
-        }
-        allowanceView.bind(title: "swap.allowance".localized, value: item.amount)
-        allowanceView.setValue(color: item.isSufficient ? .themeRemus : .themeLucian)
-    }
 
     private func set(swapDataError: Error?) {
         swapErrorLabel.text = swapDataError?.smartDescription
@@ -282,7 +267,7 @@ extension Swap2ViewController {
         return Swap2ViewController.levelColors[index]
     }
 
-    private func set(tradeViewItem: Swap2Module.TradeViewItem?) {
+    private func handle(tradeViewItem: Swap2Module.TradeViewItem?) {
         // todo: hide/show when nil/not nil
         guard let viewItem = tradeViewItem else {
             return
@@ -296,42 +281,44 @@ extension Swap2ViewController {
         minMaxView.bind(title: viewItem.minMaxTitle?.localized, value: viewItem.minMaxAmount?.localized)
     }
 
+    private func setButton(tag: Int, show: Bool) {
+        let tag = show ? tag : Swap2ViewController.processTag
+        button.tag = tag
+
+        switch tag {
+        case Swap2ViewController.approveTag: button.setTitle("swap.approve_button".localized, for: .normal)
+        case Swap2ViewController.approvingTag: button.setTitle("swap.approving_button".localized, for: .normal)
+        default: button.setTitle("swap.proceed_button".localized, for: .normal)
+        }
+    }
+
     private func set(swapDataHidden: Bool) {
         swapAreaWrapper.isHidden = swapDataHidden
     }
 
+    private func openApprove(data: Swap2Module.ApproveData?) {
+        guard let data = data,
+              let vc = SwapApproveModule.instance(coin: data.coin, spenderAddress: data.spenderAddress, amount: data.amount, delegate: self) else {
+            return
+        }
+        
+        present(vc, animated: true)
+    }
+
 }
 
-extension Swap2ViewController: ISwapInputViewDelegate {
+extension Swap2ViewController: IPresentDelegate {
 
-    func isValid(_ inputView: SwapInputView, text: String) -> Bool {
-//        if viewModel.isValid(type: type(for: inputView), text: text) {
-            return true
-//        } else {
-//            inputView.shakeView()
-//            return false
-//        }
+    func show(viewController: UIViewController) {
+        present(viewController, animated: true)
     }
 
-    func willChangeAmount(_ inputView: SwapInputView, text: String?) {
-        if inputView == fromInputView {
-            viewModel.onChangeFrom(amount: text)
-        }
-        if inputView == toInputView {
-            viewModel.onChangeTo(amount: text)
-        }
-    }
+}
 
-    func onMaxClicked(_ inputView: SwapInputView) {
-    }
+extension Swap2ViewController: ISwapApproveDelegate {
 
-    func onTokenSelectClicked(_ inputView: SwapInputView) {
-        if inputView == fromInputView {
-//
-        }
-        if inputView == toInputView {
-//
-        }
+    func didApprove() {
+        viewModel.didApprove()
     }
 
 }
