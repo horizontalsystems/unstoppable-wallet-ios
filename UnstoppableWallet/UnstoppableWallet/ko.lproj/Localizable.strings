@@ -176,7 +176,7 @@
 
 // CoinSelector
 
-"choose_coin.title" = "Choose Coin";
+"choose_coin.title" = "코인 선택";
 
 // Swap
 
@@ -184,15 +184,15 @@
 "swap.you_pay" = "지불하기";
 "swap.estimated" = "예상";
 "swap.balance" = "잔액";
-"swap.allowance" = "Allowance";
+"swap.allowance" = "허용량";
 "swap.you_get" = "얻기";
 "swap.token" = "토큰";
 "swap.proceed_button" = "진행";
-"swap.approve_button" = "Approve";
-"swap.approving_button" = "Approving...";
-"swap.amount_error.maximum_amount" = "Balance %@";
-"swap.amount_error.no_balance" = "Can't parse balance for token";
-"swap.trade_error.not_found" = "Can't swap this tokens";
+"swap.approve_button" = "승인";
+"swap.approving_button" = "승인 중...";
+"swap.amount_error.maximum_amount" = "잔액 %@";
+"swap.amount_error.no_balance" = "토큰을 위해 잔액을 파싱할 수 없습니다";
+"swap.trade_error.not_found" = "이 토큰을 스왑할 수 없습니다";
 
 "swap.price" = "금액";
 "swap.price_impact" = "가격 영향";
@@ -208,8 +208,8 @@
 
 // Swap Approving
 
-"swap.approve.title" = "Approve";
-"swap.approve.subtitle" = "Approve";
+"swap.approve.title" = "승인";
+"swap.approve.subtitle" = "승인";
 
 // Swap Confirmation
 
