@@ -5,7 +5,7 @@ import HUD
 import RxSwift
 import RxCocoa
 
-class Swap2ViewController: ThemeViewController {
+class SwapViewController: ThemeViewController {
     private static let levelColors: [UIColor] = [.themeGray, .themeRemus, .themeJacob, .themeLucian]
     private static let spinnerRadius: CGFloat = 8
     private static let spinnerLineWidth: CGFloat = 2
@@ -13,28 +13,28 @@ class Swap2ViewController: ThemeViewController {
     private static let processTag = 0, approveTag = 1, approvingTag = 2
 
     private let processSpinner = HUDProgressView(
-            strokeLineWidth: Swap2ViewController.spinnerLineWidth,
-            radius: Swap2ViewController.spinnerRadius,
+            strokeLineWidth: SwapViewController.spinnerLineWidth,
+            radius: SwapViewController.spinnerRadius,
             strokeColor: .themeOz
     )
 
     private let disposeBag = DisposeBag()
 
-    private let viewModel: Swap2ViewModel
+    private let viewModel: SwapViewModel
 
     private let scrollView = UIScrollView()
     private let container = UIView()
 
     private let topLineView = UIView()
 
-    private let fromInputView: Swap2InputView
+    private let fromInputView: SwapInputView
 
     private let fromBalanceView = AdditionalDataWithErrorView()
-    private let allowanceView: Swap2AllowanceView
+    private let allowanceView: SwapAllowanceView
 
     private let separatorLineView = UIView()
 
-    private let toInputView: Swap2InputView
+    private let toInputView: SwapInputView
 
     private let swapAreaWrapper = UIView()
     private let priceView = AdditionalDataView()
@@ -45,12 +45,12 @@ class Swap2ViewController: ThemeViewController {
 
     private let swapErrorLabel = UILabel()
 
-    init(viewModel: Swap2ViewModel) {
+    init(viewModel: SwapViewModel) {
         self.viewModel = viewModel
 
-        fromInputView = Swap2InputView(presenter: viewModel.fromInputPresenter)
-        toInputView = Swap2InputView(presenter: viewModel.toInputPresenter)
-        allowanceView = Swap2AllowanceView(presenter: viewModel.allowancePresenter)
+        fromInputView = SwapInputView(presenter: viewModel.fromInputPresenter)
+        toInputView = SwapInputView(presenter: viewModel.toInputPresenter)
+        allowanceView = SwapAllowanceView(presenter: viewModel.allowancePresenter)
 
         super.init()
 
@@ -128,7 +128,7 @@ class Swap2ViewController: ThemeViewController {
         processSpinner.snp.makeConstraints { maker in
             maker.top.equalTo(topLineView.snp.bottom).offset(CGFloat.margin3x)
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.width.height.equalTo(Swap2ViewController.spinnerRadius * 2 + Swap2ViewController.spinnerLineWidth)
+            maker.width.height.equalTo(SwapViewController.spinnerRadius * 2 + SwapViewController.spinnerLineWidth)
         }
         processSpinner.isHidden = true
 
@@ -212,9 +212,9 @@ class Swap2ViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.balanceError) { [weak self] in self?.set(error: $0) }
 
         subscribe(disposeBag, viewModel.tradeViewItem) { [weak self] in self?.handle(tradeViewItem: $0) }
-        subscribe(disposeBag, viewModel.showProcess) { [weak self] in self?.setButton(tag: Swap2ViewController.processTag, show: $0) }
-        subscribe(disposeBag, viewModel.showApprove) { [weak self] in self?.setButton(tag: Swap2ViewController.approveTag, show: $0) }
-        subscribe(disposeBag, viewModel.showApproving) { [weak self] in self?.setButton(tag: Swap2ViewController.approvingTag, show: $0) }
+        subscribe(disposeBag, viewModel.showProcess) { [weak self] in self?.setButton(tag: SwapViewController.processTag, show: $0) }
+        subscribe(disposeBag, viewModel.showApprove) { [weak self] in self?.setButton(tag: SwapViewController.approveTag, show: $0) }
+        subscribe(disposeBag, viewModel.showApproving) { [weak self] in self?.setButton(tag: SwapViewController.approvingTag, show: $0) }
         subscribe(disposeBag, viewModel.isActionEnabled) { [weak self] in self?.button.isEnabled = $0 }
         subscribe(disposeBag, viewModel.isTradeDataHidden) { [weak self] in self?.set(swapDataHidden: $0) }
 
@@ -232,7 +232,7 @@ class Swap2ViewController: ThemeViewController {
 
     @objc func onButtonTouchUp() {
         switch button.tag {
-        case Swap2ViewController.approveTag: viewModel.onTapApprove()
+        case SwapViewController.approveTag: viewModel.onTapApprove()
         default: viewModel.onTapProceed()
         }
     }
@@ -248,7 +248,7 @@ class Swap2ViewController: ThemeViewController {
 
 }
 
-extension Swap2ViewController {
+extension SwapViewController {
 
     private func set(swapDataError: Error?) {
         swapErrorLabel.text = swapDataError?.smartDescription
@@ -262,12 +262,12 @@ extension Swap2ViewController {
         fromBalanceView.bind(error: error?.smartDescription)
     }
 
-    private func color(for level: Swap2Module.PriceImpactLevel) -> UIColor {
-        let index = level.rawValue % Swap2ViewController.levelColors.count
-        return Swap2ViewController.levelColors[index]
+    private func color(for level: SwapModule.PriceImpactLevel) -> UIColor {
+        let index = level.rawValue % SwapViewController.levelColors.count
+        return SwapViewController.levelColors[index]
     }
 
-    private func handle(tradeViewItem: Swap2Module.TradeViewItem?) {
+    private func handle(tradeViewItem: SwapModule.TradeViewItem?) {
         // todo: hide/show when nil/not nil
         guard let viewItem = tradeViewItem else {
             return
@@ -282,12 +282,12 @@ extension Swap2ViewController {
     }
 
     private func setButton(tag: Int, show: Bool) {
-        let tag = show ? tag : Swap2ViewController.processTag
+        let tag = show ? tag : SwapViewController.processTag
         button.tag = tag
 
         switch tag {
-        case Swap2ViewController.approveTag: button.setTitle("swap.approve_button".localized, for: .normal)
-        case Swap2ViewController.approvingTag: button.setTitle("swap.approving_button".localized, for: .normal)
+        case SwapViewController.approveTag: button.setTitle("swap.approve_button".localized, for: .normal)
+        case SwapViewController.approvingTag: button.setTitle("swap.approving_button".localized, for: .normal)
         default: button.setTitle("swap.proceed_button".localized, for: .normal)
         }
     }
@@ -296,18 +296,18 @@ extension Swap2ViewController {
         swapAreaWrapper.isHidden = swapDataHidden
     }
 
-    private func openApprove(data: Swap2Module.ApproveData?) {
+    private func openApprove(data: SwapModule.ApproveData?) {
         guard let data = data,
               let vc = SwapApproveModule.instance(coin: data.coin, spenderAddress: data.spenderAddress, amount: data.amount, delegate: self) else {
             return
         }
-        
+
         present(vc, animated: true)
     }
 
 }
 
-extension Swap2ViewController: IPresentDelegate {
+extension SwapViewController: IPresentDelegate {
 
     func show(viewController: UIViewController) {
         present(viewController, animated: true)
@@ -315,7 +315,7 @@ extension Swap2ViewController: IPresentDelegate {
 
 }
 
-extension Swap2ViewController: ISwapApproveDelegate {
+extension SwapViewController: ISwapApproveDelegate {
 
     func didApprove() {
         viewModel.didApprove()

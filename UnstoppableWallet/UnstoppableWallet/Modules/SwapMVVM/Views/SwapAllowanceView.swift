@@ -2,7 +2,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class Swap2AllowanceView: UIView {
+class SwapAllowanceView: UIView {
     private var disposeBag = DisposeBag()
 
     private let presenter: SwapAllowancePresenter

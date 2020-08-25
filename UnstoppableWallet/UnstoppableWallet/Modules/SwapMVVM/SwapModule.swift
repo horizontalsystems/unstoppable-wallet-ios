@@ -15,7 +15,7 @@ func subscribe<T>(_ disposeBag: DisposeBag, _ observable: Observable<T>, _ onNex
     observable.subscribe(onNext: onNext).disposed(by: disposeBag)
 }
 
-struct Swap2Module {
+struct SwapModule {
 
     enum PriceImpactLevel: Int {
     case none
@@ -57,6 +57,11 @@ struct Swap2Module {
         let amount: Decimal
     }
 
+    struct CoinBalanceItem {
+        let coin: Coin
+        let balance: Decimal?
+    }
+
     struct ProceedData {
     }
 
@@ -75,10 +80,10 @@ struct Swap2Module {
         let allowanceRepository = AllowanceRepository(walletManager: App.shared.walletManager, adapterManager: App.shared.adapterManager)
         let swapCoinProvider = SwapCoinProvider(coinManager: App.shared.coinManager, walletManager: App.shared.walletManager, adapterManager: App.shared.adapterManager)
 
-        let service = Swap2Service(uniswapRepository: UniswapRepository(swapKit: swapKit), allowanceRepository: allowanceRepository, swapCoinProvider: swapCoinProvider, adapterManager: App.shared.adapterManager, coin: wallet.coin)
-        let viewModel = Swap2ViewModel(service: service, decimalParser: SendAmountDecimalParser())
+        let service = SwapService(uniswapRepository: UniswapRepository(swapKit: swapKit), allowanceRepository: allowanceRepository, swapCoinProvider: swapCoinProvider, adapterManager: App.shared.adapterManager, coin: wallet.coin)
+        let viewModel = SwapViewModel(service: service, decimalParser: SendAmountDecimalParser())
 
-        return ThemeNavigationController(rootViewController: Swap2ViewController(viewModel: viewModel))
+        return ThemeNavigationController(rootViewController: SwapViewController(viewModel: viewModel))
     }
 
 }

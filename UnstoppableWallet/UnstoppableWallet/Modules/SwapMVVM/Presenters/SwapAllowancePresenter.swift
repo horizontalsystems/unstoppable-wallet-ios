@@ -5,14 +5,14 @@ import RxCocoa
 class SwapAllowancePresenter {
     private let disposeBag = DisposeBag()
 
-    private let service: Swap2Service
+    private let service: SwapService
 
     private var isHiddenRelay = BehaviorRelay<Bool>(value: false)
     private var isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private var allowanceRelay = BehaviorRelay<String?>(value: nil)
     private var insufficientAllowanceRelay = BehaviorRelay<Bool>(value: false)
 
-    init(service: Swap2Service) {
+    init(service: SwapService) {
         self.service = service
 
         subscribeToService()

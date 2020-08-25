@@ -3,16 +3,16 @@ import RxSwift
 import RxCocoa
 import UniswapKit
 
-class Swap2ViewModel {
+class SwapViewModel {
     private let disposeBag = DisposeBag()
 
-    private let service: Swap2Service
+    private let service: SwapService
     private let decimalParser: ISendAmountDecimalParser
 
     private var isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private var isTradeDataHiddenRelay = BehaviorRelay<Bool>(value: true)
     private var tradeDataErrorRelay = BehaviorRelay<Error?>(value: nil)
-    private var tradeViewItemRelay = BehaviorRelay<Swap2Module.TradeViewItem?>(value: nil)
+    private var tradeViewItemRelay = BehaviorRelay<SwapModule.TradeViewItem?>(value: nil)
 
     private var balanceRelay = BehaviorRelay<String?>(value: nil)
     private var balanceErrorRelay = BehaviorRelay<Error?>(value: nil)
@@ -22,8 +22,8 @@ class Swap2ViewModel {
     private var showApprovingRelay = BehaviorRelay<Bool>(value: false)
     private var isActionEnabledRelay = BehaviorRelay<Bool>(value: false)
 
-    private var openApproveRelay = PublishRelay<Swap2Module.ApproveData?>()
-    private var openProceedRelay = PublishRelay<Swap2Module.ProceedData?>()
+    private var openApproveRelay = PublishRelay<SwapModule.ApproveData?>()
+    private var openProceedRelay = PublishRelay<SwapModule.ProceedData?>()
 
     // Swap Module Presenters
     public var fromInputPresenter: BaseSwapInputPresenter {
@@ -38,7 +38,7 @@ class Swap2ViewModel {
         SwapAllowancePresenter(service: service)
     }
 
-    init(service: Swap2Service, decimalParser: ISendAmountDecimalParser) {
+    init(service: SwapService, decimalParser: ISendAmountDecimalParser) {
         self.service = service
         self.decimalParser = decimalParser
 
@@ -52,7 +52,7 @@ class Swap2ViewModel {
         subscribe(disposeBag, service.swapState) { [weak self] in self?.handle(state: $0) }
     }
 
-    private func executionPrice(item: Swap2Module.TradeItem) -> String? {
+    private func executionPrice(item: SwapModule.TradeItem) -> String? {
         guard let price = item.executionPrice else {
             return ValueFormatter.instance.format(coinValue: CoinValue(coin: item.coinIn, value: 0))
         }
@@ -65,9 +65,9 @@ class Swap2ViewModel {
                 }
     }
 
-    private func tradeViewItem(item: Swap2Module.TradeItem) -> Swap2Module.TradeViewItem {
+    private func tradeViewItem(item: SwapModule.TradeItem) -> SwapModule.TradeViewItem {
         var priceImpact: Decimal = 0
-        var impactLevel = Swap2Module.PriceImpactLevel.none
+        var impactLevel = SwapModule.PriceImpactLevel.none
 
         if let value = item.priceImpact {
             priceImpact = value
@@ -95,7 +95,7 @@ class Swap2ViewModel {
 
         let minMaxValue = coinValue.flatMap { ValueFormatter.instance.format(coinValue: $0) }
 
-        return Swap2Module.TradeViewItem(
+        return SwapModule.TradeViewItem(
                 executionPrice: executionPrice(item: item),
                 priceImpact: impactString,
                 priceImpactLevel: impactLevel,
@@ -104,7 +104,7 @@ class Swap2ViewModel {
 
 }
 
-extension Swap2ViewModel {
+extension SwapViewModel {
 
     private func handle(balance: CoinValue?) {
         guard let balance = balance else {
@@ -136,7 +136,7 @@ extension Swap2ViewModel {
         return error
     }
 
-    private func handle(tradeData: DataStatus<Swap2Module.TradeItem>?) {
+    private func handle(tradeData: DataStatus<SwapModule.TradeItem>?) {
         guard let tradeData = tradeData else {  // hide section without trade data
             isTradeDataHiddenRelay.accept(true)
             return
@@ -153,7 +153,7 @@ extension Swap2ViewModel {
         tradeDataErrorRelay.accept(resolveTrade(error: tradeData.error))
     }
 
-    private func handle(state: Swap2Module.SwapState) {
+    private func handle(state: SwapModule.SwapState) {
         switch state {
         case .idle, .allowed:
             showProcessRelay.accept(true)
@@ -169,7 +169,7 @@ extension Swap2ViewModel {
 
 }
 
-extension Swap2ViewModel {
+extension SwapViewModel {
 
     var isLoading: Driver<Bool> {
         isLoadingRelay.asDriver()
@@ -179,7 +179,7 @@ extension Swap2ViewModel {
         tradeDataErrorRelay.asDriver()
     }
 
-    var tradeViewItem: Driver<Swap2Module.TradeViewItem?> {
+    var tradeViewItem: Driver<SwapModule.TradeViewItem?> {
         tradeViewItemRelay.asDriver()
     }
 
@@ -211,11 +211,11 @@ extension Swap2ViewModel {
         isActionEnabledRelay.asDriver()
     }
 
-    var openApprove: Driver<Swap2Module.ApproveData?> {
+    var openApprove: Driver<SwapModule.ApproveData?> {
         openApproveRelay.asDriver(onErrorJustReturn: nil)
     }
 
-    var openProceed: Driver<Swap2Module.ProceedData?> {
+    var openProceed: Driver<SwapModule.ProceedData?> {
         openProceedRelay.asDriver(onErrorJustReturn: nil)
     }
 

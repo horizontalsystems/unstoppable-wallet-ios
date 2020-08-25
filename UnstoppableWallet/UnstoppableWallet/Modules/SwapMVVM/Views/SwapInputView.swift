@@ -1,12 +1,14 @@
 import UIKit
 import SnapKit
 import RxSwift
+import RxCocoa
 import ThemeKit
 
 class SwapInputView: UIView {
     private var disposeBag = DisposeBag()
 
-    weak var delegate: ISwapInputViewDelegate?
+    private let presenter: BaseSwapInputPresenter
+    weak var presentDelegate: IPresentDelegate?
 
     private let holderView = UIView()
 
@@ -17,14 +19,9 @@ class SwapInputView: UIView {
     private let maxButton = ThemeButton()
     private let tokenSelectButton = ThemeButton()
 
-    private let decimalFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.groupingSeparator = ""
-        return formatter
-    }()
+    public init(presenter: BaseSwapInputPresenter) {
+        self.presenter = presenter
 
-    public init() {
         super.init(frame: .zero)
 
         backgroundColor = .clear
@@ -93,56 +90,62 @@ class SwapInputView: UIView {
         tokenSelectButton.apply(secondaryIconImage: UIImage(named: "Token Drop Down")?.tinted(with: .themeLeah))
         tokenSelectButton.semanticContentAttribute = .forceRightToLeft
         tokenSelectButton.imageEdgeInsets = UIEdgeInsets(top: 6, left: 10, bottom: 6, right: 0)
-        tokenSelectButton.addTarget(self, action: #selector(onTapTokenSelect), for: .touchUpInside)
+        tokenSelectButton.addTarget(self, action: #selector(onTapCoinSelect), for: .touchUpInside)
 
         inputField.rx.controlEvent(.editingChanged)
                 .asObservable()
                 .subscribe(onNext: { [weak self] _ in
-                    self?.willChangeAmount()
+                    self?.presenter.onChange(amount: self?.inputField.text)
                 })
                 .disposed(by: disposeBag)
+
+        badgeView.set(text: "swap.estimated".localized.uppercased())
+        badgeView.isHidden = true
+        
+        set(maxButtonVisible: false)
+        subscribeToPresenter()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("not implemented")
     }
 
-    private func willChangeAmount() {
-        delegate?.willChangeAmount(self, text: inputField.text)
+    private func subscribeToPresenter() {
+        subscribe(disposeBag, presenter.description) { [weak self] in self?.set(title: $0) }
+        subscribe(disposeBag, presenter.isEstimated) { [weak self] in self?.setBadge(hidden: !$0) }
+        subscribe(disposeBag, presenter.amount) { [weak self] in self?.set(text: $0) }
+        subscribe(disposeBag, presenter.tokenCode) { [weak self] in self?.set(tokenCode: $0) }
     }
 
     @objc private func onTapMax() {
-        delegate?.onMaxClicked(self)
+//        delegate?.onMaxClicked(self)
     }
 
-    @objc private func onTapTokenSelect() {
-        delegate?.onTokenSelectClicked(self)
-    }
+    @objc private func onTapCoinSelect() {
+        let coins = presenter.tokensForSelection
 
-    private func format(coinValue: CoinValue) -> String? {
-        decimalFormatter.maximumFractionDigits = min(coinValue.coin.decimal, 8)
-        return decimalFormatter.string(from: coinValue.value as NSNumber)
+        let vc = CoinSelectModule.instance(coins: coins, delegate: self)
+        presentDelegate?.show(viewController: vc)
     }
-
 
 }
 
 extension SwapInputView {
 
-    public func showKeyboard() {
-        inputField.becomeFirstResponder()
+    private func set(title: String?) {
+        titleLabel.text = title?.localized
     }
 
-    public func set(tokenCode: String) {
-        tokenSelectButton.setTitle(tokenCode, for: .normal)
+    private func setBadge(hidden: Bool) {
+        badgeView.isHidden = hidden
     }
 
-    public func set(text: String?) {
+    private func set(tokenCode: String?) {
+        tokenSelectButton.setTitle(tokenCode ?? "swap.token".localized, for: .normal)
+    }
+
+    private func set(text: String?) {
         inputField.text = text
-    }
-
-    public var text: String? {
-        inputField.text
     }
 
     public func set(maxButtonVisible: Bool) {
@@ -162,12 +165,12 @@ extension SwapInputView {
 extension SwapInputView: UITextFieldDelegate {
 
     private func validate(text: String) -> Bool {
-//        if let isValid = delegate?.isValid(self, text: text) {
-//            return isValid
-//        }
-//
-//        inputField.shakeView()
-        return true
+        let isValid = presenter.isValid(amount: text)
+        if !isValid {
+            inputField.shakeView()
+        }
+        return isValid
+
     }
 
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -184,8 +187,12 @@ extension SwapInputView: UITextFieldDelegate {
         return validate(text: string)
     }
 
-    public func textFieldDidBeginEditing(_ textField: UITextField) {
-        print("textFieldDidBeginEditing")
+}
+
+extension SwapInputView: ICoinSelectDelegate {
+
+    func didSelect(coin: SwapModule.CoinBalanceItem) {
+        presenter.onSelect(coin: coin)
     }
 
 }

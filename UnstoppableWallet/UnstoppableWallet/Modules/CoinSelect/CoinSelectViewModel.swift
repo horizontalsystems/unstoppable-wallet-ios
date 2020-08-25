@@ -6,9 +6,9 @@ class CoinSelectViewModel {
     private let disposeBag = DisposeBag()
 
     private var coinViewItemsRelay = BehaviorRelay<[CoinBalanceViewItem]>(value: [])
-    private let coins: [CoinBalanceItem]
+    private let coins: [SwapModule.CoinBalanceItem]
 
-    init(coins: [CoinBalanceItem]) {
+    init(coins: [SwapModule.CoinBalanceItem]) {
         self.coins = coins
 
         sync()
@@ -33,7 +33,7 @@ extension CoinSelectViewModel {
         coinViewItemsRelay.asDriver()
     }
 
-    public func coin(at index: Int) -> CoinBalanceItem? {
+    public func coin(at index: Int) -> SwapModule.CoinBalanceItem? {
         guard index < coins.count else {
             return nil
         }

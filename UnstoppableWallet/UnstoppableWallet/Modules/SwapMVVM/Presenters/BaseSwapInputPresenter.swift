@@ -6,7 +6,7 @@ class BaseSwapInputPresenter {
     static let maxValidDecimals = 8
     let disposeBag = DisposeBag()
 
-    let service: Swap2Service
+    let service: SwapService
     private let decimalParser: ISendAmountDecimalParser
     private let decimalFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -30,7 +30,7 @@ class BaseSwapInputPresenter {
         fatalError("Must be implemented by Concrete subclass.")
     }
 
-    init(service: Swap2Service, decimalParser: ISendAmountDecimalParser) {
+    init(service: SwapService, decimalParser: ISendAmountDecimalParser) {
         self.service = service
         self.decimalParser = decimalParser
 
@@ -97,11 +97,11 @@ extension BaseSwapInputPresenter {
         service.onChange(type: type, amount: decimalParser.parseAnyDecimal(from: amount))
     }
 
-    var tokensForSelection: [CoinBalanceItem] {
+    var tokensForSelection: [SwapModule.CoinBalanceItem] {
         service.tokensForSelection(type: type)
     }
 
-    func onSelect(coin: CoinBalanceItem) {
+    func onSelect(coin: SwapModule.CoinBalanceItem) {
         service.onSelect(type: type, coin: coin.coin)
     }
 
