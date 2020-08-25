@@ -13,8 +13,8 @@ struct SwapApproveModule {
             return nil
         }
 
-        let service = SwapApproveService(feeAdapter: feeAdapter, provider: feeRateProvider, sendAdapter: sendAdapter)
-        let viewModel = SwapApproveViewModel(service: service, feeModule: FeeModule.module(), coin: coin, amount: amount, spenderAddress: spenderAddress)
+        let service = SwapApproveService(feeAdapter: feeAdapter, provider: feeRateProvider, sendAdapter: sendAdapter, coin: coin, amount: amount, spenderAddress: spenderAddress)
+        let viewModel = SwapApproveViewModel(service: service, feeModule: FeeModule.module())
         let view = SwapApproveViewController(viewModel: viewModel, delegate: delegate)
 
         return view.toBottomSheet
@@ -23,7 +23,8 @@ struct SwapApproveModule {
 }
 
 enum ApproveState {
-    case idle
+    case approveNotAllowed
+    case approveAllowed
     case loading
     case success
     case error(error: Error)
@@ -31,14 +32,4 @@ enum ApproveState {
 
 protocol ISwapApproveDelegate {
     func didApprove()
-}
-
-extension SwapApproveModule {
-
-    struct ViewItem {
-        let coinCode: String
-        let amount: String?
-        let transactionSpeed: String?
-    }
-
 }

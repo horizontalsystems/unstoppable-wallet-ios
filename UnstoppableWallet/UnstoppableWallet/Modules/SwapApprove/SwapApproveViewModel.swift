@@ -4,86 +4,57 @@ import RxSwift
 import EthereumKit
 
 class SwapApproveViewModel {
-    static private let feePriority: FeeRatePriority = .high
-
     private let service: SwapApproveService
-    private let feeModule: IFeeModule
 
     private let disposeBag = DisposeBag()
+    private let feeModule: IFeeModule
 
-    private var viewItem: SwapApproveModule.ViewItem
-    private var coin: Coin
-    private var amount: Decimal
-    private var spenderAddress: Address
-    private var feeRate: FeeRate? = nil
+    private var approveAllowedRelay = BehaviorRelay<Bool>(value: false)
+    private var feeRelay = BehaviorRelay<String>(value: "")
+    private var feeLoadingRelay = BehaviorRelay<Bool>(value: true)
 
-    private var approveLoadingRelay = BehaviorRelay<Bool>(value: false)
-    private var approveSuccessRelay = BehaviorRelay<Bool>(value: false)
-    private var approveErrorRelay = BehaviorRelay<Error?>(value: nil)
+    private var approveSuccessRelay = PublishRelay<>()
+    private var errorRelay = PublishRelay<Error>()
 
-    private var feeRelay = BehaviorRelay<String?>(value: nil)
-    private var feeErrorRelay = BehaviorRelay<Error?>(value: nil)
-    private var feeLoadingRelay = BehaviorRelay<Bool>(value: false)
-
-    init(service: SwapApproveService, feeModule: IFeeModule, coin: Coin, amount: Decimal, spenderAddress: Address) {
+    init(service: SwapApproveService, feeModule: IFeeModule) {
         self.service = service
         self.feeModule = feeModule
-        self.viewItem = SwapApproveModule.ViewItem(coinCode: coin.code, amount: amount.description, transactionSpeed: SwapApproveViewModel.feePriority.title)
-        self.coin = coin
-        self.amount = amount
-        self.spenderAddress = spenderAddress
 
-        subscribe(disposeBag, service.approve) { [weak self] dataState in self?.handle(approveState: dataState) }
-        subscribe(disposeBag, service.feeRate) { [weak self] feeRateState in self?.handle(feeRateState: feeRateState) }
+        subscribe(disposeBag, service.approveState) { [weak self] approveState in self?.handle(approveState: approveState) }
         subscribe(disposeBag, service.fee) { [weak self] feeState in self?.handle(feeState: feeState) }
-
-        service.fetchFeeRate()
     }
 
     private func handle(approveState: ApproveState) {
-        if case .loading = approveState {
-            approveLoadingRelay.accept(true)
-        } else {
-            approveLoadingRelay.accept(false)
-        }
-
         switch approveState {
-        case .success:
-            approveSuccessRelay.accept(true)
-        case .error(let error):
-            approveErrorRelay.accept(error)
-        case .idle, .loading: ()
-        }
-    }
-
-    private func handle(feeRateState: DataState<FeeRate>) {
-        switch feeRateState {
-        case .success(result: let feeRate):
-            self.feeRate = feeRate
-            self.service.fetchFee(address: spenderAddress.hex, amount: amount, feeRate: feeRate.feeRate(priority: SwapApproveViewModel.feePriority))
-
-        case .error(error: let error):
-            self.feeErrorRelay.accept(error)
-
+        case .approveNotAllowed:
+            approveAllowedRelay.accept(false)
+        case .approveAllowed:
+            approveAllowedRelay.accept(true)
         case .loading:
-            self.feeLoadingRelay.accept(true)
+            ()
+        case .success():
+            approveSuccessRelay.accept()
+        case .error(let error):
+            errorRelay.accept(error)
         }
     }
 
     private func handle(feeState: DataState<Int>) {
         switch feeState {
-        case .success(result: let fee):
-            if let feeRate = self.feeRate {
-                let feeDecimal = Decimal(fee) * Decimal(feeRate.feeRate(priority: SwapApproveViewModel.feePriority)) / pow(10, EthereumAdapter.decimal)
-                let feeValue = feeModule.viewItem(coin: coin, fee: feeDecimal, reversed: false).value
-                self.feeRelay.accept(feeValue)
+        case .success(result: let feeInt):
+            if let feeRate = service.feeRate {
+                let feeDecimal = Decimal(feeInt) * Decimal(feeRate.feeRate(priority: SwapApproveService.feePriority)) / pow(10, EthereumAdapter.decimal)
+
+                feeModule.viewItem(coin: service.coin, fee: feeDecimal, reversed: false).value.flatMap { feeValue in
+                    feeRelay.accept(feeValue)
+                }
             }
 
         case .error(error: let error):
-            self.feeErrorRelay.accept(error)
+            errorRelay.accept(error)
 
         case .loading:
-            self.feeLoadingRelay.accept(true)
+            feeLoadingRelay.accept(true)
         }
     }
 
@@ -92,34 +63,31 @@ class SwapApproveViewModel {
 extension SwapApproveViewModel {
 
     func onTapApprove() {
-        guard let gasLimit = feeRelay.value, let gasPrice = feeRate else {
-            return
-        }
-        handle(approveState: .success)
-//        interactor.approve(spenderAddress: spenderAddress, amount: amount, gasLimit: gasLimit, gasPrice: gasPrice.feeRate(priority: SwapApprovePresenter.feePriority))
+        handle(approveState: .success(transactionHash: "lala"))
+//        service.approve()
     }
 
 }
 
 extension SwapApproveViewModel {
 
-    public var viewItemDriver: Driver<SwapApproveModule.ViewItem> {
-        Driver<SwapApproveModule.ViewItem>.just(viewItem)
+    public var coinAmount: String {
+        "\(service.amount.description) \(service.coin.code)"
     }
 
-    public var approveLoading: Driver<Bool> {
-        approveLoadingRelay.asDriver()
+    public var coinTitle: String {
+        service.coin.title
     }
 
-    public var approveSuccess: Driver<Bool> {
-        approveSuccessRelay.asDriver()
+    public var transactionSpeed: String {
+        SwapApproveService.feePriority.title
     }
 
-    public var approveError: Driver<Error?> {
-        approveErrorRelay.asDriver()
+    public var approveAllowed: Driver<Bool> {
+        approveAllowedRelay.asDriver()
     }
 
-    public var fee: Driver<String?> {
+    public var fee: Driver<String> {
         feeRelay.asDriver()
     }
 
@@ -127,8 +95,12 @@ extension SwapApproveViewModel {
         feeLoadingRelay.asDriver()
     }
 
-    public var feeError: Driver<Error?> {
-        feeErrorRelay.asDriver()
+    public var approveSuccess: Signal<> {
+        approveSuccessRelay.asSignal()
+    }
+
+    public var error: Signal<Error> {
+        errorRelay.asSignal()
     }
 
 }

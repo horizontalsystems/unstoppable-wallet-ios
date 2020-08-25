@@ -80,23 +80,23 @@ class SwapApproveViewController: ThemeActionSheetController {
         approveButton.setTitle("swap.approve_button".localized, for: .normal)
         approveButton.addTarget(self, action: #selector(onTapApprove), for: .touchUpInside)
 
+        set(amountLabel: viewModel.coinAmount, coinTitle: viewModel.coinTitle)
+        set(transactionSpeed: viewModel.transactionSpeed)
+
         subscribeToViewModel()
     }
 
     private func subscribeToViewModel() {
-        subscribe(disposeBag, viewModel.approveSuccess) { [weak self] success in
-            guard success else {
-                return
-            }
-
+        subscribe(disposeBag, viewModel.approveSuccess) { [weak self] transactionHash in
             HudHelper.instance.showSuccess()
             self?.delegate.didApprove()
             self?.dismiss(animated: true)
         }
 
-        subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] viewItem in self?.set(viewItem: viewItem) }
+        subscribe(disposeBag, viewModel.approveAllowed) { [weak self] approveAllowed in self?.set(approveButtonEnabled: approveAllowed) }
         subscribe(disposeBag, viewModel.feeLoading) { [weak self] feeLoading in self?.set(feeLoading: feeLoading) }
-        subscribe(disposeBag, viewModel.fee) { [weak self] fee in fee.flatMap { self?.set(fee: $0) } }
+        subscribe(disposeBag, viewModel.fee) { [weak self] fee in self?.set(fee: fee) }
+        subscribe(disposeBag, viewModel.error) { [weak self] error in self?.show(error: error) }
     }
 
     @objc private func onTapApprove() {
@@ -108,23 +108,28 @@ class SwapApproveViewController: ThemeActionSheetController {
 extension SwapApproveViewController {
 
     private func set(feeLoading: Bool) {
-        approveButton.isEnabled = !feeLoading
         feeView.set(loading: feeLoading)
     }
 
     private func set(fee: String) {
         feeView.bind(title: "swap.fee".localized, value: fee)
-        approveButton.isEnabled = true
     }
 
-    private func set(viewItem: SwapApproveModule.ViewItem) {
+    private func set(amountLabel: String, coinTitle: String) {
         titleView.bind(
                 title: "swap.approve.title".localized,
                 subtitle: "swap.approve.subtitle".localized,
                 image: UIImage(named: "Swap Icon Medium")?.tinted(with: .themeGray))
 
-        amountView.bind(amount: viewItem.amount, description: viewItem.coinCode)
-        transactionSpeedView.bind(title: "swap.transactions_speed".localized, value: viewItem.transactionSpeed)
+        amountView.bind(amount: amountLabel, description: coinTitle)
+    }
+
+    private func set(transactionSpeed: String) {
+        transactionSpeedView.bind(title: "swap.transactions_speed".localized, value: transactionSpeed)
+    }
+
+    private func set(approveButtonEnabled: Bool) {
+        approveButton.isEnabled = approveButtonEnabled
     }
 
     private func show(error: Error) {
