@@ -6,7 +6,8 @@ import CurrencyKit
 class FeeService {
     private let disposeBag = DisposeBag()
 
-    private let adapter: IErc20Adapter
+    private let erc20Adapter: IErc20Adapter
+    private let balanceAdapter: IBalanceAdapter
     private let provider: IFeeRateProvider
     private let rateManager: IRateManager
     private let baseCurrency: Currency
@@ -20,8 +21,9 @@ class FeeService {
 
     private let feeRelay = BehaviorRelay<DataState<(coinValue: CoinValue, currencyValue: CurrencyValue?)>>(value: .loading)
 
-    init(adapter: IErc20Adapter, provider: IFeeRateProvider, rateManager: IRateManager, baseCurrency: Currency, feeCoin: Coin, amount: Decimal, spenderAddress: Address) {
-        self.adapter = adapter
+    init(adapter: IErc20Adapter, balanceAdapter: IBalanceAdapter, provider: IFeeRateProvider, rateManager: IRateManager, baseCurrency: Currency, feeCoin: Coin, amount: Decimal, spenderAddress: Address) {
+        self.erc20Adapter = adapter
+        self.balanceAdapter = balanceAdapter
         self.provider = provider
         self.rateManager = rateManager
         self.baseCurrency = baseCurrency
@@ -52,10 +54,17 @@ class FeeService {
             return
         }
 
-        let gasPriceDecimal = adapter.fee(gasPrice: gasPrice, gasLimit: gasLimit)
+        let fee = erc20Adapter.fee(gasPrice: gasPrice, gasLimit: gasLimit)
+        let coinValue = CoinValue(coin: feeCoin, value: fee)
+
+        guard balanceAdapter.balance >= fee else {
+            feeRelay.accept(.error(error: FeeModule.FeeError.insufficientFeeBalance(coinValue: coinValue)))
+            return
+        }
+
         let feeValues = (
-                coinValue: CoinValue(coin: feeCoin, value: gasPriceDecimal),
-                currencyValue: currencyValue(coin: feeCoin, fee: gasPriceDecimal)
+                coinValue: coinValue,
+                currencyValue: currencyValue(coin: feeCoin, fee: fee)
         )
 
         feeRelay.accept(.success(result: feeValues))
@@ -64,7 +73,7 @@ class FeeService {
     private func handle(feeRate: FeeRate) {
         gasPrice = feeRate.feeRate(priority: priority)
 
-        return adapter.estimateApproveSingle(spenderAddress: spenderAddress, amount: amount, gasPrice: feeRate.feeRate(priority: priority))
+        return erc20Adapter.estimateApproveSingle(spenderAddress: spenderAddress, amount: amount, gasPrice: feeRate.feeRate(priority: priority))
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onSuccess: { [weak self] gasLimit in
