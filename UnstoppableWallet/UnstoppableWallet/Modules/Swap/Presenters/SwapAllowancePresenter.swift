@@ -19,11 +19,11 @@ class SwapAllowancePresenter {
     }
 
     private func subscribeToService() {
-        subscribe(disposeBag, service.allowance) { [weak self] allowance in self?.handle(allowance: allowance) }
-        subscribe(disposeBag, service.validationErrors) { [weak self] errors in self?.handle(errors: errors) }
+        subscribe(disposeBag, service.allowanceObservable) { [weak self] allowance in self?.handle(allowance: allowance) }
+        subscribe(disposeBag, service.validationErrorsObservable) { [weak self] errors in self?.handle(errors: errors) }
     }
 
-    private func handle(allowance: DataStatus<CoinValue>?) {
+    private func handle(allowance: DataStatus<Decimal>?) {
         allowanceRelay.accept(nil)
 
         guard let allowance = allowance else {
@@ -34,7 +34,8 @@ class SwapAllowancePresenter {
         isLoadingRelay.accept(allowance.isLoading)
 
         if let allowance = allowance.data {
-            let amount = ValueFormatter.instance.format(coinValue: allowance)
+            let coinValue = CoinValue(coin: service.coinIn, value: allowance)
+            let amount = ValueFormatter.instance.format(coinValue: coinValue)
 
             allowanceRelay.accept(amount)
             return
@@ -55,7 +56,6 @@ class SwapAllowancePresenter {
 
 }
 
-// TODO: handle changes from base service
 extension SwapAllowancePresenter {
 
     var isHidden: Driver<Bool> {

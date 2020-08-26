@@ -30,6 +30,7 @@ struct SwapModule {
         let type: TradeType
         let executionPrice: Decimal?
         let priceImpact: Decimal?
+        let priceImpactLevel: PriceImpactLevel
         let minMaxAmount: Decimal?
     }
 
@@ -62,15 +63,26 @@ struct SwapModule {
         let balance: Decimal?
     }
 
-    struct ProceedData {
-    }
-
     enum SwapState {
         case idle
         case approveRequired
         case waitingForApprove
         case allowed
+        case swapSuccess
     }
+
+    struct ConfirmationAdditionalViewItem {
+        let title: String
+        let value: String?
+    }
+
+    struct ConfirmationAmountViewItem {
+        let payTitle: String
+        let payValue: String?
+        let getTitle: String
+        let getValue: String?
+    }
+
 
     static func instance(wallet: Wallet) -> UIViewController? {
         guard let ethereumKit = try? App.shared.ethereumKitManager.ethereumKit(account: wallet.account) else {
@@ -81,7 +93,7 @@ struct SwapModule {
         let swapCoinProvider = SwapCoinProvider(coinManager: App.shared.coinManager, walletManager: App.shared.walletManager, adapterManager: App.shared.adapterManager)
 
         let service = SwapService(uniswapRepository: UniswapRepository(swapKit: swapKit), allowanceRepository: allowanceRepository, swapCoinProvider: swapCoinProvider, adapterManager: App.shared.adapterManager, coin: wallet.coin)
-        let viewModel = SwapViewModel(service: service, decimalParser: SendAmountDecimalParser())
+        let viewModel = SwapViewModel(service: service, factory: SwapViewItemFactory(), decimalParser: SendAmountDecimalParser())
 
         return ThemeNavigationController(rootViewController: SwapViewController(viewModel: viewModel))
     }

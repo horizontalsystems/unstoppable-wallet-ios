@@ -1,6 +1,7 @@
 import UniswapKit
 import RxSwift
 import EthereumKit
+import Foundation
 
 class UniswapRepository {
     private let swapKit: UniswapKit.Kit
@@ -77,6 +78,10 @@ extension UniswapRepository {
         swapData(coinIn: coinIn, coinOut: coinOut).flatMap { swapData in
             self.tradeData(swapData: swapData, amount: amount, tradeType: tradeType)
         }
+    }
+
+    func swap(tradeData: TradeData, gasLimit: Int, gasPrice: Int) -> Single<TransactionWithInternal> {
+        swapKit.swapSingle(tradeData: tradeData, gasLimit: gasLimit, gasPrice: gasPrice)
     }
 
 }
