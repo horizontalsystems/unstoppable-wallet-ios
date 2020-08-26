@@ -7,6 +7,7 @@ class SwapViewModel {
     private let disposeBag = DisposeBag()
 
     private let service: SwapService
+    private let factory: SwapViewItemFactory
     private let decimalParser: ISendAmountDecimalParser
 
     private var isLoadingRelay = BehaviorRelay<Bool>(value: false)
@@ -23,7 +24,7 @@ class SwapViewModel {
     private var isActionEnabledRelay = BehaviorRelay<Bool>(value: false)
 
     private var openApproveRelay = PublishRelay<SwapModule.ApproveData?>()
-    private var openProceedRelay = PublishRelay<SwapModule.ProceedData?>()
+    private var closeRelay = PublishRelay<()>()
 
     // Swap Module Presenters
     public var fromInputPresenter: BaseSwapInputPresenter {
@@ -38,81 +39,49 @@ class SwapViewModel {
         SwapAllowancePresenter(service: service)
     }
 
-    init(service: SwapService, decimalParser: ISendAmountDecimalParser) {
+    public var confirmationPresenter: Swap2ConfirmationPresenter {
+        Swap2ConfirmationPresenter(service: service, factory: factory)
+    }
+
+    init(service: SwapService, factory: SwapViewItemFactory, decimalParser: ISendAmountDecimalParser) {
         self.service = service
+        self.factory = factory
         self.decimalParser = decimalParser
 
         subscribeToService()
     }
 
     private func subscribeToService() {
-        subscribe(disposeBag, service.balance) { [weak self] in self?.handle(balance: $0) }
-        subscribe(disposeBag, service.validationErrors) { [weak self] errors in self?.handle(errors: errors) }
-        subscribe(disposeBag, service.tradeData) { [weak self] in self?.handle(tradeData: $0) }
-        subscribe(disposeBag, service.swapState) { [weak self] in self?.handle(state: $0) }
-    }
+        handle(balance: service.balance)
+        handle(tradeData: service.tradeDataState)
 
-    private func executionPrice(item: SwapModule.TradeItem) -> String? {
-        guard let price = item.executionPrice else {
-            return ValueFormatter.instance.format(coinValue: CoinValue(coin: item.coinIn, value: 0))
-        }
-        let value = price.isZero ? 0 : 1 / price
-        return ValueFormatter
-                .instance
-                .format(coinValue: CoinValue(coin: item.coinIn, value: value))
-                .map {
-                    [item.coinOut.code, $0].joined(separator: " = ")
-                }
+        subscribe(disposeBag, service.balanceObservable) { [weak self] in self?.handle(balance: $0) }
+        subscribe(disposeBag, service.validationErrorsObservable) { [weak self] errors in self?.handle(errors: errors) }
+        subscribe(disposeBag, service.tradeDataObservable) { [weak self] in self?.handle(tradeData: $0) }
+        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.handle(state: $0) }
     }
 
     private func tradeViewItem(item: SwapModule.TradeItem) -> SwapModule.TradeViewItem {
-        var priceImpact: Decimal = 0
-        var impactLevel = SwapModule.PriceImpactLevel.none
-
-        if let value = item.priceImpact {
-            priceImpact = value
-            if priceImpact <= 1 {
-                impactLevel = .normal
-            } else if priceImpact <= 5 {
-                impactLevel = .warning
-            } else {
-                impactLevel = .forbidden
-            }
-        }
-        let impactString = priceImpact.description + "%"
-
-        let coinValue: CoinValue?
-        let minMaxTitle: String
-
-        switch item.type {
-        case .exactIn:
-            minMaxTitle = "swap.minimum_got"
-            coinValue = item.minMaxAmount.map { CoinValue(coin: item.coinOut, value: $0) }
-        case .exactOut:
-            minMaxTitle = "swap.maximum_paid"
-            coinValue = item.minMaxAmount.map { CoinValue(coin: item.coinIn, value: $0) }
-        }
-
-        let minMaxValue = coinValue.flatMap { ValueFormatter.instance.format(coinValue: $0) }
-
-        return SwapModule.TradeViewItem(
-                executionPrice: executionPrice(item: item),
-                priceImpact: impactString,
-                priceImpactLevel: impactLevel,
-                minMaxTitle: minMaxTitle, minMaxAmount: minMaxValue)
+        SwapModule.TradeViewItem(
+            executionPrice: factory.string(executionPrice: item.executionPrice, coinIn: item.coinIn, coinOut: item.coinOut),
+            priceImpact: factory.string(impactPrice: item.priceImpact),
+            priceImpactLevel: item.priceImpactLevel,
+            minMaxTitle: factory.minMaxTitle(type: item.type, coinOut: item.coinOut),
+            minMaxAmount: factory.minMaxValue(amount: item.minMaxAmount, coinIn: item.coinIn, coinOut: item.coinOut, type: item.type))
     }
 
 }
 
 extension SwapViewModel {
 
-    private func handle(balance: CoinValue?) {
+    private func handle(balance: Decimal?) {
         guard let balance = balance else {
             balanceRelay.accept(nil)
             return
         }
 
-        balanceRelay.accept(ValueFormatter.instance.format(coinValue: balance))
+        let coinValue = CoinValue(coin: service.coinIn, value: balance)
+        balanceRelay.accept(ValueFormatter.instance.format(coinValue: coinValue))
     }
 
     private func handle(errors: [Error]) {
@@ -164,6 +133,8 @@ extension SwapViewModel {
         case .waitingForApprove:
             showApprovingRelay.accept(true)
             isActionEnabledRelay.accept(false)
+        case .swapSuccess:
+            closeRelay.accept(())
         }
     }
 
@@ -211,16 +182,12 @@ extension SwapViewModel {
         isActionEnabledRelay.asDriver()
     }
 
+    var close: Driver<()> {
+        closeRelay.asDriver(onErrorJustReturn: ())
+    }
+
     var openApprove: Driver<SwapModule.ApproveData?> {
         openApproveRelay.asDriver(onErrorJustReturn: nil)
-    }
-
-    var openProceed: Driver<SwapModule.ProceedData?> {
-        openProceedRelay.asDriver(onErrorJustReturn: nil)
-    }
-
-    func onTapProceed() {
-        openProceedRelay.accept(service.proceedData)
     }
 
     func onTapApprove() {
@@ -229,6 +196,10 @@ extension SwapViewModel {
 
     func didApprove() {
         service.didApprove()
+    }
+
+    func onSwap() {
+        service.swap()
     }
 
 }

@@ -27,11 +27,11 @@ extension SwapConfirmationPresenter: ISwapConfirmationViewDelegate {
     }
 
     func onSwapClicked() {
-        delegate?.onSwapClicked()
+        delegate?.onSwap()
     }
 
     func onCancelClicked() {
-        delegate?.onCancelClicked()
+        delegate?.onCancel()
     }
 
 }

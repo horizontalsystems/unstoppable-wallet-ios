@@ -40,20 +40,21 @@ class BaseSwapInputPresenter {
     }
 
     func subscribeToService() {
-        subscribe(disposeBag, service.estimated) { [weak self] in self?.handle(estimated: $0) }
+        handle(estimated: service.estimated)
+        subscribe(disposeBag, service.estimatedObservable) { [weak self] in self?.handle(estimated: $0) }
     }
 
     private func handle(estimated: TradeType) {
         isEstimatedRelay.accept(estimated != type)
     }
 
-    func update(amount: CoinValue?, type: TradeType) {
-        guard self.type != type else {
+    func update(amount: Decimal?) {
+        guard self.type != service.estimated else {
             return
         }
 
         decimalFormatter.maximumFractionDigits = validDecimals
-        let amountString = amount.flatMap { decimalFormatter.string(from: $0.value as NSNumber) }
+        let amountString = amount.flatMap { decimalFormatter.string(from: $0 as NSNumber) }
 
         amountRelay.accept(amountString)
     }

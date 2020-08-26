@@ -13,8 +13,10 @@ class SwapFromInputPresenter: BaseSwapInputPresenter {
     override func subscribeToService() {
         super.subscribeToService()
 
-        subscribe(disposeBag, service.amountIn.withLatestFrom(service.estimated) { ($0, $1) }) { amount, type in self.update(amount: amount, type: type) }
-        subscribe(disposeBag, service.coinIn) { [weak self] in self?.handle(coin: $0) }
+        update(amount: service.amountIn)
+        handle(coin: service.coinIn)
+        subscribe(disposeBag, service.amountInObservable) { [weak self] in self?.update(amount: $0) }
+        subscribe(disposeBag, service.coinInObservable) { [weak self] in self?.handle(coin: $0) }
     }
 
 }

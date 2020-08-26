@@ -1,8 +1,8 @@
 import UniswapKit
 
 protocol ISwapConfirmationDelegate: class {
-    func onSwapClicked()
-    func onCancelClicked()
+    func onSwap()
+    func onCancel()
 }
 
 protocol ISwapConfirmationView: class {

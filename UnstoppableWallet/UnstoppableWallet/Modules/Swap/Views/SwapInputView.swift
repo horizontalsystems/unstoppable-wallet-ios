@@ -109,7 +109,6 @@ class SwapInputView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("not implemented")
     }
-
     private func subscribeToPresenter() {
         subscribe(disposeBag, presenter.description) { [weak self] in self?.set(title: $0) }
         subscribe(disposeBag, presenter.isEstimated) { [weak self] in self?.setBadge(hidden: !$0) }
