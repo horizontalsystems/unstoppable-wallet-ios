@@ -67,7 +67,6 @@ class SwapApproveViewController: ThemeActionSheetController {
             maker.top.equalTo(feeView.snp.bottom)
         }
 
-
         view.addSubview(approveButton)
         approveButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
@@ -81,21 +80,22 @@ class SwapApproveViewController: ThemeActionSheetController {
         approveButton.addTarget(self, action: #selector(onTapApprove), for: .touchUpInside)
 
         set(amountLabel: viewModel.coinAmount, coinTitle: viewModel.coinTitle)
-        set(transactionSpeed: viewModel.transactionSpeed)
+        set(transactionSpeed: viewModel.feePresenter.priorityTitle)
 
         subscribeToViewModel()
     }
 
     private func subscribeToViewModel() {
-        subscribe(disposeBag, viewModel.approveSuccess) { [weak self] transactionHash in
+        subscribe(disposeBag, viewModel.approveSuccess) { [weak self] in
             HudHelper.instance.showSuccess()
             self?.delegate.didApprove()
             self?.dismiss(animated: true)
         }
 
         subscribe(disposeBag, viewModel.approveAllowed) { [weak self] approveAllowed in self?.set(approveButtonEnabled: approveAllowed) }
-        subscribe(disposeBag, viewModel.feeLoading) { [weak self] feeLoading in self?.set(feeLoading: feeLoading) }
-        subscribe(disposeBag, viewModel.fee) { [weak self] fee in self?.set(fee: fee) }
+        subscribe(disposeBag, viewModel.feePresenter.feeLoading) { [weak self] feeLoading in self?.set(feeLoading: feeLoading) }
+        subscribe(disposeBag, viewModel.feePresenter.fee) { [weak self] fee in self?.set(fee: fee) }
+        subscribe(disposeBag, viewModel.feePresenter.error) { [weak self] error in self?.show(error: error) }
         subscribe(disposeBag, viewModel.error) { [weak self] error in self?.show(error: error) }
     }
 
