@@ -155,6 +155,7 @@ protocol ISendEthereumAdapter {
 
 protocol IErc20Adapter {
     var ethereumBalance: Decimal { get }
+    func fee(gasPrice: Int, gasLimit: Int) -> Decimal
     func allowanceSingle(spenderAddress: Address) -> Single<Decimal>
     func estimateApproveSingle(spenderAddress: Address, amount: Decimal, gasPrice: Int) -> Single<Int>
     func approveSingle(spenderAddress: Address, amount: Decimal, gasLimit: Int, gasPrice: Int) -> Single<String>

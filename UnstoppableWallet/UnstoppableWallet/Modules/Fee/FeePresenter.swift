@@ -1,35 +1,90 @@
 import Foundation
 import CurrencyKit
 import XRatesKit
+import RxSwift
+import RxCocoa
+import EthereumKit
 
 class FeePresenter {
-    private let interactor: IFeeInteractor
-    private let factory: IFeeViewItemFactory
+    private let disposeBag = DisposeBag()
 
-    init(interactor: IFeeInteractor, factory: IFeeViewItemFactory) {
-        self.interactor = interactor
-        self.factory = factory
+    let service: FeeService
+
+    private var feeRelay = BehaviorRelay<String>(value: "")
+    private var feeLoadingRelay = BehaviorRelay<Bool>(value: true)
+    private var errorRelay = PublishRelay<Error>()
+
+    init(service: FeeService) {
+        self.service = service
+
+        subscribe(disposeBag, service.feeState) { [weak self] feeState in self?.handle(feeState: feeState) }
+    }
+
+    func feeValue(coinValue: CoinValue, currencyValue: CurrencyValue?, reversed: Bool) -> String {
+        let coinValue = ValueFormatter.instance.format(coinValue: coinValue)
+        let currencyValue = currencyValue.flatMap { ValueFormatter.instance.format(currencyValue: $0) }
+
+        var array = [coinValue, currencyValue].compactMap { $0 }
+        if reversed {
+            array.reverse()
+        }
+
+        return array.joined(separator: " | ")
+    }
+
+    private func handle(feeState: DataState<(coinValue: CoinValue, currencyValue: CurrencyValue?)>) {
+        switch feeState {
+        case .success(result: let feeValues):
+            if let feeRate = service.gasPrice {
+                let fee = feeValue(coinValue: feeValues.coinValue, currencyValue: feeValues.currencyValue, reversed: false)
+                feeRelay.accept(fee)
+            }
+
+        case .error(error: let error):
+            errorRelay.accept(error)
+
+        case .loading:
+            feeLoadingRelay.accept(true)
+        }
     }
 
 }
 
-extension FeePresenter: IFeeModule {
+extension FeePresenter {
 
-    func viewItem(coin: Coin, fee: Decimal, reversed: Bool) -> FeeViewItem {
-        factory.viewItem(coinValue: coinValue(coin: coin, fee: fee), currencyValue: currencyValue(coin: coin, fee: fee), reversed: reversed)
+    var priorityTitle: String {
+        service.priority.title
     }
 
-    func coinValue(coin: Coin, fee: Decimal) -> CoinValue {
-        let feeCoin = interactor.feeCoin(coin: coin) ?? coin
-
-        return CoinValue(coin: feeCoin, value: fee)
+    public var fee: Driver<String> {
+        feeRelay.asDriver()
     }
 
-    func currencyValue(coin: Coin, fee: Decimal) -> CurrencyValue? {
-        let baseCurrency = interactor.baseCurrency
-        let rate = interactor.nonExpiredRateValue(coinCode: coin.code, currencyCode: baseCurrency.code)
+    public var feeLoading: Driver<Bool> {
+        feeLoadingRelay.asDriver()
+    }
 
-        return rate.map { CurrencyValue(currency: baseCurrency, value: $0 * fee) }
+    public var error: Signal<Error> {
+        errorRelay.asSignal()
+    }
+
+}
+
+extension FeePresenter {
+
+    static func instance(erc20Adapter: IErc20Adapter, coin: Coin, amount: Decimal, spenderAddress: Address) -> FeePresenter? {
+        guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(coin: coin) else {
+            return nil
+        }
+
+        let feeCoinProvider = App.shared.feeCoinProvider
+        let feeCoin = feeCoinProvider.feeCoin(coin: coin) ?? coin
+
+
+        let interactor = FeeService(adapter: erc20Adapter, provider: feeRateProvider, rateManager: App.shared.rateManager, baseCurrency: App.shared.currencyKit.baseCurrency, feeCoin: feeCoin, amount: amount, spenderAddress: spenderAddress)
+        let presenter = FeePresenter(service: interactor)
+
+        return presenter
     }
 
 }
