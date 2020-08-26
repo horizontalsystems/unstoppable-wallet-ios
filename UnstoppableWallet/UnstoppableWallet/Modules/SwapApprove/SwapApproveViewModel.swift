@@ -21,7 +21,7 @@ class SwapApproveViewModel {
         subscribe(disposeBag, service.approveState) { [weak self] approveState in self?.handle(approveState: approveState) }
     }
 
-    private func handle(approveState: ApproveState) {
+    private func handle(approveState: SwapApproveModule.ApproveState) {
         if case .approveAllowed = approveState {
             approveAllowedRelay.accept(true)
         }
@@ -64,8 +64,8 @@ extension SwapApproveViewModel {
         approveSuccessRelay.asSignal()
     }
 
-    public var error: Signal<Error> {
-        errorRelay.asSignal()
+    public var error: Signal<String> {
+        errorRelay.asSignal().map({ $0.smartDescription })
     }
 
 }
