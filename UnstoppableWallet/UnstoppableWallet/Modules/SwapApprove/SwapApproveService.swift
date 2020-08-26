@@ -14,7 +14,7 @@ class SwapApproveService {
     var amount: Decimal
     var spenderAddress: Address
 
-    private let approveRelay = BehaviorRelay<ApproveState>(value: .approveNotAllowed)
+    private let approveRelay = BehaviorRelay<SwapApproveModule.ApproveState>(value: .approveNotAllowed)
 
     init(feeService: FeeService, sendAdapter: IErc20Adapter, coin: Coin, amount: Decimal, spenderAddress: Address) {
         self.feeService = feeService
@@ -37,7 +37,7 @@ class SwapApproveService {
 
 extension SwapApproveService {
 
-    var approveState: Observable<ApproveState> {
+    var approveState: Observable<SwapApproveModule.ApproveState> {
         approveRelay.asObservable()
     }
 
