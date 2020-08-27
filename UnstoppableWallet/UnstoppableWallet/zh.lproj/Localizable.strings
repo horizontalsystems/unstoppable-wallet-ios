@@ -210,6 +210,8 @@
 
 "swap.approve.title" = "批准";
 "swap.approve.subtitle" = "批准";
+"swap.approve.insufficient_fee_alert" = "Transaction fees for approve paid in %@. You need %@.";
+
 
 // Swap Confirmation
 
