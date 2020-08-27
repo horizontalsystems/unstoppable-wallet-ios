@@ -65,7 +65,11 @@ extension TransactionRecord: Comparable {
             return lhs.interTransactionIndex < rhs.interTransactionIndex
         }
 
-        return lhs.type < rhs.type
+        guard lhs.type == rhs.type else {
+            return lhs.type < rhs.type
+        }
+
+        return lhs.uid < rhs.uid
     }
 
     public static func ==(lhs: TransactionRecord, rhs: TransactionRecord) -> Bool {
