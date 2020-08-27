@@ -10,9 +10,9 @@ class SwapApproveService {
     private let feeService: FeeService
     private let sendAdapter: IErc20Adapter
 
-    var coin: Coin
-    var amount: Decimal
-    var spenderAddress: Address
+    private(set) var coin: Coin
+    private(set) var amount: Decimal
+    private var spenderAddress: Address
 
     private let approveRelay = BehaviorRelay<SwapApproveModule.ApproveState>(value: .approveNotAllowed)
 

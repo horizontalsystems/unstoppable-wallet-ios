@@ -16,23 +16,23 @@ enum DataStatus<T> {
 
     var isLoading: Bool { self == .loading }
 
-    func handle<S>(loadingRelay: BehaviorRelay<Bool>, completedRelay: PublishRelay<S?>, failedRelay: PublishRelay<Error?>, mapper: (T) -> S?) {
+    func handle<S>(loadingRelay: BehaviorRelay<Bool>?, completedRelay: PublishRelay<S?>?, failedRelay: PublishRelay<Error?>?, mapper: (T) -> S?) {
         if case .loading = self {
-            loadingRelay.accept(true)
+            loadingRelay?.accept(true)
         } else {
-            loadingRelay.accept(false)
+            loadingRelay?.accept(false)
         }
 
         if case .completed(let result) = self {
-            completedRelay.accept(mapper(result))
+            completedRelay?.accept(mapper(result))
         } else {
-            completedRelay.accept(nil)
+            completedRelay?.accept(nil)
         }
 
         if case .failed(let error) = self {
-            failedRelay.accept(error)
+            failedRelay?.accept(error)
         } else {
-            failedRelay.accept(nil)
+            failedRelay?.accept(nil)
         }
     }
 
