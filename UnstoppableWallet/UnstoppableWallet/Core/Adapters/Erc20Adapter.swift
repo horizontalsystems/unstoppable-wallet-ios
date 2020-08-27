@@ -43,7 +43,7 @@ class Erc20Adapter: EthereumBaseAdapter {
         }
 
         return TransactionRecord(
-                uid: transaction.transactionHash.hex + String(transaction.interTransactionIndex),
+                uid: transaction.transactionHash.hex + String(transaction.interTransactionIndex) + contractAddress.hex,
                 transactionHash: transaction.transactionHash.hex,
                 transactionIndex: transaction.transactionIndex ?? 0,
                 interTransactionIndex: transaction.interTransactionIndex,

@@ -61,7 +61,11 @@ extension TransactionRecord: Comparable {
             return lhs.transactionIndex < rhs.transactionIndex
         }
 
-        return lhs.interTransactionIndex < rhs.interTransactionIndex
+        guard lhs.interTransactionIndex == rhs.interTransactionIndex else {
+            return lhs.interTransactionIndex < rhs.interTransactionIndex
+        }
+
+        return lhs.type < rhs.type
     }
 
     public static func ==(lhs: TransactionRecord, rhs: TransactionRecord) -> Bool {
@@ -70,7 +74,15 @@ extension TransactionRecord: Comparable {
 
 }
 
-enum TransactionType: Equatable { case incoming, outgoing, sentToSelf }
+enum TransactionType: Int, Equatable { case incoming, outgoing, sentToSelf }
+
+extension TransactionType: Comparable {
+
+    public static func <(lhs: TransactionType, rhs: TransactionType) -> Bool {
+        lhs.rawValue >= rhs.rawValue
+    }
+
+}
 
 enum TransactionStatus {
     case failed
