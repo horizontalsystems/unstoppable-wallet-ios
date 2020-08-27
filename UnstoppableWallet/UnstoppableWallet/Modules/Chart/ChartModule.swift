@@ -50,7 +50,7 @@ protocol IChartInteractor {
 protocol IChartInteractorDelegate: class {
     func didReceive(chartInfo: ChartInfo, coinCode: CoinCode)
     func didReceive(marketInfo: MarketInfo)
-    func onChartInfoError()
+    func onChartInfoError(error: Error)
     func didUpdate(alerts: [PriceAlert])
 }
 
