@@ -212,6 +212,8 @@
 
 "swap.approve.title" = "Подтвердить";
 "swap.approve.subtitle" = "Подтвердить";
+"swap.approve.insufficient_fee_alert" = "Transaction fees for approve paid in %@. You need %@.";
+
 
 // Swap Confirmation
 
