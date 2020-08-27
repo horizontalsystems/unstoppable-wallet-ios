@@ -7,7 +7,6 @@ class FeeService {
     private let disposeBag = DisposeBag()
 
     private let erc20Adapter: IErc20Adapter
-    private let balanceAdapter: IBalanceAdapter
     private let provider: IFeeRateProvider
     private let rateManager: IRateManager
     private let baseCurrency: Currency
@@ -19,11 +18,10 @@ class FeeService {
     public var amount: Decimal
     public var spenderAddress: Address
 
-    private let feeRelay = BehaviorRelay<DataState<(coinValue: CoinValue, currencyValue: CurrencyValue?)>>(value: .loading)
+    private let feeRelay = BehaviorRelay<DataStatus<(coinValue: CoinValue, currencyValue: CurrencyValue?)>>(value: .loading)
 
-    init(adapter: IErc20Adapter, balanceAdapter: IBalanceAdapter, provider: IFeeRateProvider, rateManager: IRateManager, baseCurrency: Currency, feeCoin: Coin, amount: Decimal, spenderAddress: Address) {
+    init(adapter: IErc20Adapter, provider: IFeeRateProvider, rateManager: IRateManager, baseCurrency: Currency, feeCoin: Coin, amount: Decimal, spenderAddress: Address) {
         self.erc20Adapter = adapter
-        self.balanceAdapter = balanceAdapter
         self.provider = provider
         self.rateManager = rateManager
         self.baseCurrency = baseCurrency
@@ -57,8 +55,8 @@ class FeeService {
         let fee = erc20Adapter.fee(gasPrice: gasPrice, gasLimit: gasLimit)
         let coinValue = CoinValue(coin: feeCoin, value: fee)
 
-        guard balanceAdapter.balance >= fee else {
-            feeRelay.accept(.error(error: FeeModule.FeeError.insufficientFeeBalance(coinValue: coinValue)))
+        guard erc20Adapter.ethereumBalance >= fee else {
+            feeRelay.accept(.failed(FeeModule.FeeError.insufficientFeeBalance(coinValue: coinValue)))
             return
         }
 
@@ -67,7 +65,7 @@ class FeeService {
                 currencyValue: currencyValue(coin: feeCoin, fee: fee)
         )
 
-        feeRelay.accept(.success(result: feeValues))
+        feeRelay.accept(.completed(feeValues))
     }
 
     private func handle(feeRate: FeeRate) {
@@ -79,7 +77,7 @@ class FeeService {
                 .subscribe(onSuccess: { [weak self] gasLimit in
                     self?.handle(gasLimit: gasLimit)
                 }, onError: { [weak self] error in
-                    self?.feeRelay.accept(.error(error: error))
+                    self?.feeRelay.accept(.failed(error))
                 })
                 .disposed(by: disposeBag)
     }
@@ -92,12 +90,12 @@ class FeeService {
                 .subscribe(onSuccess: { [weak self] feeRate in
                     self?.handle(feeRate: feeRate)
                 }, onError: { [weak self] error in
-                    self?.feeRelay.accept(.error(error: error))
+                    self?.feeRelay.accept(.failed(error))
                 })
                 .disposed(by: disposeBag)
     }
 
-    var feeState: Observable<DataState<(coinValue: CoinValue, currencyValue: CurrencyValue?)>> {
+    var feeState: Observable<DataStatus<(coinValue: CoinValue, currencyValue: CurrencyValue?)>> {
         feeRelay.asObservable()
     }
 

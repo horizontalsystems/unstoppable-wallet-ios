@@ -106,8 +106,8 @@ class SwapApproveViewController: ThemeActionSheetController {
 
         subscribe(disposeBag, viewModel.approveAllowed) { [weak self] approveAllowed in self?.set(approveButtonEnabled: approveAllowed) }
         subscribe(disposeBag, viewModel.feePresenter.feeLoading) { [weak self] feeLoading in self?.set(feeLoading: feeLoading) }
-        subscribe(disposeBag, viewModel.feePresenter.fee) { [weak self] fee in self?.set(fee: fee) }
-        subscribe(disposeBag, viewModel.feePresenter.error) { [weak self] errorString in self?.set(feeError: errorString) }
+        subscribe(disposeBag, viewModel.feePresenter.fee) { [weak self] fee in fee.flatMap { self?.set(fee: $0) } }
+        subscribe(disposeBag, viewModel.feePresenter.error) { [weak self] errorString in errorString.flatMap { self?.set(feeError: $0) } }
         subscribe(disposeBag, viewModel.error) { [weak self] errorString in self?.show(error: errorString) }
     }
 

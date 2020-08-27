@@ -122,8 +122,8 @@ extension ChartPresenter: IChartInteractorDelegate {
         updateChart()
     }
 
-    func onChartInfoError() {
-        chartDataStatus = .failed(nil)
+    func onChartInfoError(error: Error) {
+        chartDataStatus = .failed(error)
         updateChart()
     }
 

@@ -1,8 +1,9 @@
 import Foundation
+import RxCocoa
 
 enum DataStatus<T> {
     case loading
-    case failed(Error?)
+    case failed(Error)
     case completed(T)
 
     init(data: T?) {
@@ -14,6 +15,26 @@ enum DataStatus<T> {
     }
 
     var isLoading: Bool { self == .loading }
+
+    func handle<S>(loadingRelay: BehaviorRelay<Bool>, completedRelay: PublishRelay<S?>, failedRelay: PublishRelay<Error?>, mapper: (T) -> S?) {
+        if case .loading = self {
+            loadingRelay.accept(true)
+        } else {
+            loadingRelay.accept(false)
+        }
+
+        if case .completed(let result) = self {
+            completedRelay.accept(mapper(result))
+        } else {
+            completedRelay.accept(nil)
+        }
+
+        if case .failed(let error) = self {
+            failedRelay.accept(error)
+        } else {
+            failedRelay.accept(nil)
+        }
+    }
 
     static func zip<A, B>(_ first: DataStatus<A>, _ second: DataStatus<B>) -> DataStatus<(A, B)> {
         if let firstData = first.data, let secondData = second.data {

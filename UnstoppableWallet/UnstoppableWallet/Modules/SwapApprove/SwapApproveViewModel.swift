@@ -24,6 +24,8 @@ class SwapApproveViewModel {
     private func handle(approveState: SwapApproveModule.ApproveState) {
         if case .approveAllowed = approveState {
             approveAllowedRelay.accept(true)
+        } else {
+            approveAllowedRelay.accept(false)
         }
 
         if case .success = approveState {

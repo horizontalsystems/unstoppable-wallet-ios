@@ -10,9 +10,9 @@ class FeePresenter {
 
     let service: FeeService
 
-    private var feeRelay = BehaviorRelay<String>(value: "")
+    private var feeRelay = PublishRelay<String?>()
     private var feeLoadingRelay = BehaviorRelay<Bool>(value: true)
-    private var errorRelay = PublishRelay<Error>()
+    private var errorRelay = PublishRelay<Error?>()
 
     init(service: FeeService) {
         self.service = service
@@ -32,19 +32,9 @@ class FeePresenter {
         return array.joined(separator: " | ")
     }
 
-    private func handle(feeState: DataState<(coinValue: CoinValue, currencyValue: CurrencyValue?)>) {
-        switch feeState {
-        case .success(result: let feeValues):
-            if let feeRate = service.gasPrice {
-                let fee = feeValue(coinValue: feeValues.coinValue, currencyValue: feeValues.currencyValue, reversed: false)
-                feeRelay.accept(fee)
-            }
-
-        case .error(error: let error):
-            errorRelay.accept(error)
-
-        case .loading:
-            feeLoadingRelay.accept(true)
+    private func handle(feeState: DataStatus<(coinValue: CoinValue, currencyValue: CurrencyValue?)>) {
+        feeState.handle(loadingRelay: feeLoadingRelay, completedRelay: feeRelay, failedRelay: errorRelay) { coinValue, currencyValue -> String? in
+            feeValue(coinValue: coinValue, currencyValue: currencyValue, reversed: false)
         }
     }
 
@@ -56,16 +46,16 @@ extension FeePresenter {
         service.priority.title
     }
 
-    public var fee: Driver<String> {
-        feeRelay.asDriver()
+    public var fee: Signal<String?> {
+        feeRelay.asSignal()
     }
 
     public var feeLoading: Driver<Bool> {
         feeLoadingRelay.asDriver()
     }
 
-    public var error: Signal<String> {
-        errorRelay.asSignal().map({ $0.smartDescription })
+    public var error: Signal<String?> {
+        errorRelay.asSignal().map({ $0?.smartDescription })
     }
 
 }

@@ -54,7 +54,7 @@ extension ChartInteractor: IChartInteractor {
                 .subscribe(onNext: { [weak self] chartInfo in
                     self?.delegate?.didReceive(chartInfo: chartInfo, coinCode: coinCode)
                 }, onError: { [weak self] error in
-                    self?.delegate?.onChartInfoError()
+                    self?.delegate?.onChartInfoError(error: error)
                 })
                 .disposed(by: chartsDisposeBag)
     }
