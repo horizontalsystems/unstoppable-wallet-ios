@@ -11,12 +11,13 @@ class FeeService {
     private let rateManager: IRateManager
     private let baseCurrency: Currency
 
+    private var feeCoin: Coin
+    private var amount: Decimal
+    private var spenderAddress: Address
+
     public let priority: FeeRatePriority = .high
-    public var feeCoin: Coin
     public var gasPrice: Int? = nil
     public var gasLimit: Int? = nil
-    public var amount: Decimal
-    public var spenderAddress: Address
 
     private let feeRelay = BehaviorRelay<DataStatus<(coinValue: CoinValue, currencyValue: CurrencyValue?)>>(value: .loading)
 
