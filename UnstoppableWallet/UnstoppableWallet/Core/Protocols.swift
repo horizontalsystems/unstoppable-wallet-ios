@@ -315,7 +315,7 @@ protocol IPriceAlertStorage {
 
 protocol IPriceAlertRecordStorage {
     var priceAlertRecords: [PriceAlertRecord] { get }
-    func priceAlertRecord(forCoinCode coinCode: String) -> PriceAlertRecord?
+    func priceAlertRecord(forCoinId coinCode: String) -> PriceAlertRecord?
     func save(priceAlertRecords: [PriceAlertRecord])
     func deleteAllPriceAlertRecords()
 }

@@ -40,10 +40,10 @@ struct PriceAlert {
     }
 
     private var changeTopic: String {
-        "\(coin.code)_24hour_\(changeState.rawValue)percent"
+        "\(coin.id)_24hour_\(changeState.rawValue)percent"
     }
     private var trendTopic: String {
-        "\(coin.code)_\(trendState.rawValue)term_trend_change"
+        "\(coin.id)_\(trendState.rawValue)term_trend_change"
     }
 
     var activeTopics: Set<String> {

@@ -26,9 +26,9 @@ class PriceAlertManager {
     }
 
     private func onUpdate(wallets: [Wallet]) {
-        let coinCodes = wallets.map { $0.coin.code }
+        let coinIds = wallets.map { $0.coin.id }
 
-        let alertsToDeactivate = storage.priceAlerts.filter { !coinCodes.contains($0.coin.code) && !$0.activeTopics.isEmpty }
+        let alertsToDeactivate = storage.activePriceAlerts.filter { !coinIds.contains($0.coin.id) }
 
         storage.save(priceAlerts: alertsToDeactivate.map { PriceAlert(coin: $0.coin, changeState: .off, trendState: .off) })
 
