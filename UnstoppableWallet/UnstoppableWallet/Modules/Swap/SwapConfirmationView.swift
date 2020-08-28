@@ -4,6 +4,7 @@ import SectionsTableView
 import ThemeKit
 import RxSwift
 import RxCocoa
+import UIExtensions
 
 class SwapConfirmationView: ThemeViewController, SectionsDataSource {
     private let disposeBag = DisposeBag()

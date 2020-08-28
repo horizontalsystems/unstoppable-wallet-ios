@@ -2,6 +2,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 import UniswapKit
+import UIExtensions
 
 class SwapViewModel {
     private let disposeBag = DisposeBag()

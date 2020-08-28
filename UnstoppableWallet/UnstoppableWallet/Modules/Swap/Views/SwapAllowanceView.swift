@@ -1,6 +1,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import UIExtensions
 
 class SwapAllowanceView: UIView {
     private var disposeBag = DisposeBag()

@@ -3,6 +3,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import ThemeKit
+import UIExtensions
 
 class SwapInputView: UIView {
     private var disposeBag = DisposeBag()
@@ -101,7 +102,7 @@ class SwapInputView: UIView {
 
         badgeView.set(text: "swap.estimated".localized.uppercased())
         badgeView.isHidden = true
-        
+
         set(maxButtonVisible: false)
         subscribeToPresenter()
     }

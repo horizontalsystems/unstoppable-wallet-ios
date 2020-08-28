@@ -4,6 +4,7 @@ import XRatesKit
 import RxSwift
 import RxCocoa
 import EthereumKit
+import UIExtensions
 
 class FeePresenter {
     private let disposeBag = DisposeBag()

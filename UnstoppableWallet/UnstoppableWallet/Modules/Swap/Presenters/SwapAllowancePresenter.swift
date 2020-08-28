@@ -1,6 +1,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import UIExtensions
 
 class SwapAllowancePresenter {
     private let disposeBag = DisposeBag()

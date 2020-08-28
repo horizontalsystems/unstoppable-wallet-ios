@@ -1,6 +1,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import UIExtensions
 
 class Swap2ConfirmationPresenter {
     static let swapFeeValue: Decimal = 0.03

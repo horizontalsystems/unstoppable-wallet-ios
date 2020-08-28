@@ -3,6 +3,7 @@ import SectionsTableView
 import SnapKit
 import ThemeKit
 import RxSwift
+import UIExtensions
 
 class CoinSelectViewController: ThemeViewController {
     private let disposeBag = DisposeBag()

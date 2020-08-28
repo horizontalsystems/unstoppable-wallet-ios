@@ -1,6 +1,7 @@
 import RxSwift
 import RxCocoa
 import UniswapKit
+import UIExtensions
 
 class BaseSwapInputPresenter {
     static let maxValidDecimals = 8

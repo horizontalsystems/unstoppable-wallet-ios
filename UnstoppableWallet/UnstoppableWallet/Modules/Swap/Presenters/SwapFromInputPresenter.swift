@@ -1,4 +1,5 @@
 import UniswapKit
+import UIExtensions
 
 class SwapFromInputPresenter: BaseSwapInputPresenter {
 

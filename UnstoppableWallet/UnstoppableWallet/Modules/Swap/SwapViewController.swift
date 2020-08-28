@@ -4,6 +4,7 @@ import UniswapKit
 import HUD
 import RxSwift
 import RxCocoa
+import UIExtensions
 
 class SwapViewController: ThemeViewController {
     private static let levelColors: [UIColor] = [.themeGray, .themeRemus, .themeJacob, .themeLucian]

@@ -2,6 +2,7 @@ import Foundation
 import RxCocoa
 import RxSwift
 import EthereumKit
+import UIExtensions
 
 class SwapApproveService {
     private let feeDisposeBag = DisposeBag()

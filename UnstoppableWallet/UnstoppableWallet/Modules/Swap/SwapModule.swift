@@ -1,23 +1,7 @@
 import Foundation
-import RxSwift
-import RxCocoa
 import UniswapKit
 import EthereumKit
 import ThemeKit
-
-
-//TODO: move to another place
-func subscribe<T>(_ disposeBag: DisposeBag, _ driver: Driver<T>, _ onNext: ((T) -> Void)? = nil) {
-    driver.drive(onNext: onNext).disposed(by: disposeBag)
-}
-
-func subscribe<T>(_ disposeBag: DisposeBag, _ signal: Signal<T>, _ onNext: ((T) -> Void)? = nil) {
-    signal.emit(onNext: onNext).disposed(by: disposeBag)
-}
-
-func subscribe<T>(_ disposeBag: DisposeBag, _ observable: Observable<T>, _ onNext: ((T) -> Void)? = nil) {
-    observable.subscribe(onNext: onNext).disposed(by: disposeBag)
-}
 
 struct SwapModule {
 

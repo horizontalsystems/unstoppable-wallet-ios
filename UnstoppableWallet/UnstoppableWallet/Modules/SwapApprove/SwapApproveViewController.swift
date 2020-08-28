@@ -2,6 +2,7 @@ import UIKit
 import ActionSheet
 import ThemeKit
 import RxSwift
+import UIExtensions
 
 class SwapApproveViewController: ThemeActionSheetController {
     private let disposeBag = DisposeBag()
