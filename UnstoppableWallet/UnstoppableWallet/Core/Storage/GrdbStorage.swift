@@ -96,11 +96,11 @@ class GrdbStorage {
             }
 
             try db.create(table: PriceAlertRecord.databaseTableName) { t in
-                t.column(PriceAlertRecord.Columns.coinCode.name, .text).notNull()
+                t.column(PriceAlertRecord.Columns.coinId.name, .text).notNull()
                 t.column(PriceAlertRecord.Columns.changeState.name, .integer).notNull()
                 t.column(PriceAlertRecord.Columns.trendState.name, .text).notNull()
 
-                t.primaryKey([PriceAlertRecord.Columns.coinCode.name], onConflict: .replace)
+                t.primaryKey([PriceAlertRecord.Columns.coinId.name], onConflict: .replace)
             }
         }
 
@@ -288,7 +288,7 @@ class GrdbStorage {
             }
         }
 
-        migrator.registerMigration("createLogs") { db in 
+        migrator.registerMigration("createLogs") { db in
             try db.create(table: LogRecord.databaseTableName) { t in
                 t.column(LogRecord.Columns.date.name, .double).notNull()
                 t.column(LogRecord.Columns.level.name, .integer).notNull()
@@ -370,9 +370,9 @@ extension GrdbStorage: IPriceAlertRecordStorage {
         }
     }
 
-    func priceAlertRecord(forCoinCode coinCode: String) -> PriceAlertRecord? {
+    func priceAlertRecord(forCoinId coinId: String) -> PriceAlertRecord? {
         try! dbPool.read { db in
-            try PriceAlertRecord.filter(PriceAlertRecord.Columns.coinCode == coinCode).fetchOne(db)
+            try PriceAlertRecord.filter(PriceAlertRecord.Columns.coinId == coinId).fetchOne(db)
         }
     }
 

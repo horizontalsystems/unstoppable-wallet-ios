@@ -13,7 +13,7 @@ class NotificationSettingsPresenter {
     }
 
     private func updateViewItems() {
-        view?.set(viewItems: factory.viewItems(alerts: alerts, notificationsOn: interactor.pushNotificationsOn, onTap: onTap), showResetAll: factory.showResetAll(alerts: alerts))
+        view?.set(viewItems: factory.viewItems(alerts: alerts, notificationsOn: interactor.pushNotificationsOn, onTap: onTap), showResetAll: factory.showResetAll(notificationsOn: interactor.pushNotificationsOn, alerts: alerts))
     }
 
     private func onTap(alert: PriceAlert, mode: NotificationSettingPresentMode) {
