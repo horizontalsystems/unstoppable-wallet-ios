@@ -337,6 +337,7 @@ Uniswap, Ethereum'da otomatik likidite tedariki için tamamen merkezi olmayan bi
 
 "manage_coins.title" = "Kripto Parayı Seç";
 "manage_coins.add_token" = "Token Ekle";
+"manage_coins.search" = "Search";
 "manage_coins.add_coin.title" = "%@ ekle ";
 "manage_coins.add_coin.subtitle" = "%@ Cüzdanı";
 "manage_coins.add_coin.text.set_up" = "Ancak %@ cüzdanını ayarladıktan sonra %@ gönderebilir veya alabilirsiniz için.";
