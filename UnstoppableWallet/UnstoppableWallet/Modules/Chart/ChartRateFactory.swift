@@ -217,7 +217,7 @@ class ChartRateFactory: IChartRateFactory {
                 trends: trends, minValue: minRateString, maxValue: maxRateString, timeline: timeline)
     }
 
-    func chartViewItem(chartDataStatus: DataStatus<ChartInfo>, marketInfoStatus: DataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, selectedIndicator: ChartIndicatorSet, priceAlert: PriceAlert?, alertsOn: Bool) -> ChartViewItem {
+    func chartViewItem(chartDataStatus: DataStatus<ChartInfo>, marketInfoStatus: DataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, selectedIndicator: ChartIndicatorSet, coin: Coin?, priceAlert: PriceAlert?, alertsOn: Bool) -> ChartViewItem {
         let chartDataStatusViewItem: DataStatus<ChartDataViewItem> = chartDataStatus.map {
             convert(chartInfo: $0, marketInfo: marketInfoStatus.data, chartType: chartType, currency: currency)
         }
@@ -233,7 +233,7 @@ class ChartRateFactory: IChartRateFactory {
         }
 
         let priceAlertMode: ChartPriceAlertMode
-        if !alertsOn {
+        if !alertsOn || coin == nil {
             priceAlertMode = .hidden
         } else {
             priceAlertMode = priceAlert?.changeState != .off || priceAlert?.trendState != .off ? .on : .off

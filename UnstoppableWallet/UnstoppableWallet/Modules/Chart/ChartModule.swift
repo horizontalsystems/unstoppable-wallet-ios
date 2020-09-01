@@ -42,9 +42,8 @@ protocol IChartInteractor {
 
     func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo?
     func subscribeToMarketInfo(coinCode: CoinCode, currencyCode: String)
-    func priceAlert(coinCode: String) -> PriceAlert?
+    func priceAlert(coin: Coin?) -> PriceAlert?
     func subscribeToAlertUpdates()
-    func coin(code: String) -> Coin?
 }
 
 protocol IChartInteractorDelegate: class {
@@ -55,7 +54,7 @@ protocol IChartInteractorDelegate: class {
 }
 
 protocol IChartRateFactory {
-    func chartViewItem(chartDataStatus: DataStatus<ChartInfo>, marketInfoStatus: DataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, selectedIndicator: ChartIndicatorSet, priceAlert: PriceAlert?, alertsOn: Bool) -> ChartViewItem
+    func chartViewItem(chartDataStatus: DataStatus<ChartInfo>, marketInfoStatus: DataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, selectedIndicator: ChartIndicatorSet, coin: Coin?, priceAlert: PriceAlert?, alertsOn: Bool) -> ChartViewItem
     func selectedPointViewItem(chartItem: ChartItem, type: ChartType, currency: Currency, macdSelected: Bool) -> SelectedPointViewItem?
 }
 
