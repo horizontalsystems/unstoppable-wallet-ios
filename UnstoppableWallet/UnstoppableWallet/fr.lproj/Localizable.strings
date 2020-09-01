@@ -336,6 +336,7 @@
 
 "manage_coins.title" = "Crypto Monnaie";
 "manage_coins.add_token" = "Ajouter le token";
+"manage_coins.search" = "Search";
 "manage_coins.add_coin.title" = "Ajouter %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Portefeuille";
 "manage_coins.add_coin.text.set_up" = "Vous devez créer un portefeuille %@ pour envoyer ou recevoir des %@.";
