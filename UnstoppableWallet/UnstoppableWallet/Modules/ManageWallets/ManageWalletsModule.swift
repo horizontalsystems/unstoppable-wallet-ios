@@ -1,50 +1,54 @@
-protocol IManageWalletsView: class {
-    func set(featuredViewItems: [CoinToggleViewItem], viewItems: [CoinToggleViewItem])
-}
+import UIKit
+import ThemeKit
 
-protocol IManageWalletsViewDelegate {
-    func onLoad()
+struct ManageWalletsModule {
 
-    func onEnable(viewItem: CoinToggleViewItem)
-    func onDisable(viewItem: CoinToggleViewItem)
-    func onSelect(viewItem: CoinToggleViewItem)
+    static func instance() -> UIViewController {
+        let service = ManageWalletsService(
+                coinManager: App.shared.coinManager,
+                walletManager: App.shared.walletManager,
+                accountManager: App.shared.accountManager,
+                derivationSettingsManager: App.shared.derivationSettingsManager
+        )
+        let viewModel = ManageWalletsViewModel(service: service)
+        let viewController = ManageWalletsViewController(viewModel: viewModel)
 
-    func onTapAddToken()
-    func onTapDone()
-}
+        return ThemeNavigationController(rootViewController: viewController)
+    }
 
-protocol IManageWalletsInteractor {
-    var coins: [Coin] { get }
-    var featuredCoins: [Coin] { get }
-    var accounts: [Account] { get }
-    var wallets: [Wallet] { get }
+    struct State {
+        let featuredItems: [Item]
+        let items: [Item]
 
-    func save(wallet: Wallet)
-    func delete(wallet: Wallet)
+        static var empty: State {
+            State(featuredItems: [], items: [])
+        }
+    }
 
-    func derivationSetting(coinType: CoinType) -> DerivationSetting?
-    func save(derivationSetting: DerivationSetting)
-}
+    class Item {
+        let coin: Coin
+        var state: ItemState
 
-protocol IManageWalletsInteractorDelegate: AnyObject {
-    func didUpdateAccounts()
-    func didAddCoin()
-}
+        init(coin: Coin, state: ItemState) {
+            self.coin = coin
+            self.state = state
+        }
+    }
 
-protocol IManageWalletsRouter {
-    func showDerivationSetting(coin: Coin, currentDerivation: MnemonicDerivation, delegate: IDerivationSettingDelegate)
-    func showNoAccount(coin: Coin)
-    func showAddToken()
-    func close()
-}
+    enum ItemState: CustomStringConvertible {
+        case noAccount
+        case hasAccount(hasWallet: Bool)
+    }
 
-protocol IManageWalletsPresenterState {
-    var allCoins: [Coin] { get set }
-    var wallets: [Wallet] { get set }
-    var coins: [Coin] { get }
-    func enable(wallet: Wallet)
-    func disable(index: Int)
-    func move(from: Int, to: Int)
+    struct ViewState {
+        let featuredViewItems: [CoinToggleViewItem]
+        let viewItems: [CoinToggleViewItem]
+
+        static var empty: ViewState {
+            ViewState(featuredViewItems: [], viewItems: [])
+        }
+    }
+
 }
 
 class CoinToggleViewItem {

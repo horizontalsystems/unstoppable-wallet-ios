@@ -341,6 +341,7 @@ bch.horizontalsystems.xyz/apg";
 
 "manage_coins.title" = "Choose Coins";
 "manage_coins.add_token" = "Add Token";
+"manage_coins.search" = "Search";
 "manage_coins.add_coin.title" = "Add %@";
 "manage_coins.add_coin.subtitle" = "%@ Wallet";
 "manage_coins.add_coin.text.set_up" = "You need to set up %@ wallet to be able to send or receive %@.";
