@@ -338,6 +338,7 @@
 
 "manage_coins.title" = "Выберите Токены";
 "manage_coins.add_token" = "Добавить Токен";
+"manage_coins.search" = "Search";
 "manage_coins.add_coin.title" = "Добавить %@";
 "manage_coins.add_coin.subtitle" = "%@ Кошелек";
 "manage_coins.add_coin.text.set_up" = "Вам нужно настроить кошелек %@, чтобы отправлять или получать %@.";
