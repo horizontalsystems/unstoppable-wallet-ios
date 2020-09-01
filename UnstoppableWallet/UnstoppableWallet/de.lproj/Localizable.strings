@@ -336,6 +336,7 @@
 
 "manage_coins.title" = "Coins auswählen";
 "manage_coins.add_token" = "Token hinzufügen";
+"manage_coins.search" = "Search";
 "manage_coins.add_coin.title" = "%@ hinzufügen ";
 "manage_coins.add_coin.subtitle" = "%@ Wallet";
 "manage_coins.add_coin.text.set_up" = "Sie müssen das %@ Wallet einrichten, um %@ senden oder empfangen zu können.\n";
