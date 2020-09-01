@@ -336,6 +336,7 @@
 
 "manage_coins.title" = "Elegir monedas";
 "manage_coins.add_token" = "Añadir Token";
+"manage_coins.search" = "Search";
 "manage_coins.add_coin.title" = "Añadir %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Monedero";
 "manage_coins.add_coin.text.set_up" = "Necesitas configurar el monedero %@ para poder enviar o recibir %@.";
