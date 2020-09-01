@@ -54,7 +54,7 @@ extension DerivationSettingPresenter: IDerivationSettingViewDelegate {
             return
         }
 
-        delegate?.onCancelSelectDerivation()
+        delegate?.onCancelSelectDerivation(coin: coin)
     }
 
 }

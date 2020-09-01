@@ -2,17 +2,22 @@ import UIKit
 import SectionsTableView
 import SnapKit
 import ThemeKit
+import RxSwift
+import RxCocoa
 
 class ManageWalletsViewController: ThemeViewController {
-    private let delegate: IManageWalletsViewDelegate
+    private let viewModel: ManageWalletsViewModel
 
-    private var featuredViewItems = [CoinToggleViewItem]()
-    private var viewItems = [CoinToggleViewItem]()
+    private let disposeBag = DisposeBag()
+    private var viewState: ManageWalletsModule.ViewState = .empty
 
     private let tableView = SectionsTableView(style: .grouped)
+    private let searchController = UISearchController(searchResultsController: nil)
 
-    init(delegate: IManageWalletsViewDelegate) {
-        self.delegate = delegate
+    private var currentFilter: String?
+
+    init(viewModel: ManageWalletsViewModel) {
+        self.viewModel = viewModel
 
         super.init()
 
@@ -41,17 +46,38 @@ class ManageWalletsViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        delegate.onLoad()
+        searchController.searchBar.placeholder = "manage_coins.search".localized
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchResultsUpdater = self
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
 
-        tableView.buildSections()
+        viewModel.viewStateDriver
+                .drive(onNext: { [weak self] viewState in
+                    self?.onUpdate(viewState: viewState)
+                })
+                .disposed(by: disposeBag)
+
+        viewModel.openDerivationSettingsSignal
+                .emit(onNext: { [weak self] coin, currentDerivation in
+                    self?.showDerivationSettings(coin: coin, currentDerivation: currentDerivation)
+                })
+                .disposed(by: disposeBag)
     }
 
     @objc func onTapDoneButton() {
-        delegate.onTapDone()
+        dismiss(animated: true)
     }
 
     @objc func onTapAddTokenButton() {
-        delegate.onTapAddToken()
+        let module = AddTokenRouter.module(sourceViewController: self)
+        present(module, animated: true)
+    }
+
+    private func onUpdate(viewState: ManageWalletsModule.ViewState) {
+        let animated = self.viewState.featuredViewItems.count == viewState.featuredViewItems.count && self.viewState.viewItems.count == viewState.viewItems.count
+        self.viewState = viewState
+        tableView.reload(animated: animated)
     }
 
     private func rows(viewItems: [CoinToggleViewItem]) -> [RowProtocol] {
@@ -60,7 +86,7 @@ class ManageWalletsViewController: ThemeViewController {
 
             if case .toggleHidden = viewItem.state {
                 action = { [weak self] _ in
-                    self?.delegate.onSelect(viewItem: viewItem)
+                    self?.showNoAccount(viewItem: viewItem)
                 }
             }
 
@@ -84,13 +110,33 @@ class ManageWalletsViewController: ThemeViewController {
     }
 
     private func onToggle(viewItem: CoinToggleViewItem, enabled: Bool) {
-        viewItem.state = .toggleVisible(enabled: enabled)
-
         if enabled {
-            delegate.onEnable(viewItem: viewItem)
+            viewModel.onEnable(coin: viewItem.coin)
         } else {
-            delegate.onDisable(viewItem: viewItem)
+            viewModel.onDisable(coin: viewItem.coin)
         }
+    }
+
+    private func showNoAccount(viewItem: CoinToggleViewItem) {
+        let module = NoAccountRouter.module(coin: viewItem.coin, sourceViewController: self)
+        present(module, animated: true)
+    }
+
+    private func showDerivationSettings(coin: Coin, currentDerivation: MnemonicDerivation) {
+        let module = DerivationSettingRouter.module(coin: coin, currentDerivation: currentDerivation, delegate: self)
+        present(module, animated: true)
+    }
+
+    private func revert(coin: Coin, viewItems: [CoinToggleViewItem], section: Int) {
+        guard let index = viewItems.firstIndex(where: { $0.coin == coin }) else {
+            return
+        }
+
+        guard let cell = tableView.cellForRow(at: IndexPath(row: index, section: section)) as? CoinToggleCell else {
+            return
+        }
+
+        cell.setToggleOff()
     }
 
 }
@@ -101,27 +147,46 @@ extension ManageWalletsViewController: SectionsDataSource {
         [
             Section(
                     id: "featured_coins",
-                    headerState: .margin(height: .margin3x),
-                    footerState: .margin(height: .margin8x),
-                    rows: rows(viewItems: featuredViewItems)
+                    headerState: .margin(height: .margin1x),
+                    footerState: .margin(height: viewState.featuredViewItems.isEmpty ? 0 : .margin8x),
+                    rows: rows(viewItems: viewState.featuredViewItems)
             ),
             Section(
                     id: "coins",
                     footerState: .margin(height: .margin8x),
-                    rows: rows(viewItems: viewItems)
+                    rows: rows(viewItems: viewState.viewItems)
             )
         ]
     }
 
 }
 
-extension ManageWalletsViewController: IManageWalletsView {
+extension ManageWalletsViewController: UISearchResultsUpdating {
 
-    func set(featuredViewItems: [CoinToggleViewItem], viewItems: [CoinToggleViewItem]) {
-        self.featuredViewItems = featuredViewItems
-        self.viewItems = viewItems
+    public func updateSearchResults(for searchController: UISearchController) {
+        var filter = searchController.searchBar.text?.trimmingCharacters(in: .whitespaces)
 
-        tableView.reload()
+        if filter == "" {
+            filter = nil
+        }
+
+        if filter != currentFilter {
+            currentFilter = filter
+            viewModel.onUpdate(filter: filter)
+        }
+    }
+
+}
+
+extension ManageWalletsViewController: IDerivationSettingDelegate {
+
+    func onSelect(derivationSetting: DerivationSetting, coin: Coin) {
+        viewModel.onSelect(derivationSetting: derivationSetting, coin: coin)
+    }
+
+    func onCancelSelectDerivation(coin: Coin) {
+        revert(coin: coin, viewItems: viewState.featuredViewItems, section: 0)
+        revert(coin: coin, viewItems: viewState.viewItems, section: 1)
     }
 
 }

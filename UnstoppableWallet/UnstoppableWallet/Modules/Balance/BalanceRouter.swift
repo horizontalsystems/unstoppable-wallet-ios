@@ -31,7 +31,7 @@ extension BalanceRouter: IBalanceRouter {
     }
 
     func openManageWallets() {
-        viewController?.present(ManageWalletsRouter.module(), animated: true)
+        viewController?.present(ManageWalletsModule.instance(), animated: true)
     }
 
     func showBackupRequired(wallet: Wallet, predefinedAccountType: PredefinedAccountType) {

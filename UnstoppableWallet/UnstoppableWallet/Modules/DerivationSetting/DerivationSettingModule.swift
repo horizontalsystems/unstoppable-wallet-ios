@@ -16,7 +16,7 @@ protocol IDerivationSettingRouter {
 
 protocol IDerivationSettingDelegate: AnyObject {
     func onSelect(derivationSetting: DerivationSetting, coin: Coin)
-    func onCancelSelectDerivation()
+    func onCancelSelectDerivation(coin: Coin)
 }
 
 class DerivationSettingModule {
