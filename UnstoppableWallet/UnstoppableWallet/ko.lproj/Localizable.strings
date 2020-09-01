@@ -336,6 +336,7 @@
 
 "manage_coins.title" = "코인 선택";
 "manage_coins.add_token" = "토큰 추가";
+"manage_coins.search" = "Search";
 "manage_coins.add_coin.title" = "%@ 추가 ";
 "manage_coins.add_coin.subtitle" = "%@ 지갑";
 "manage_coins.add_coin.text.set_up" = "귀하께서는 %@ 을 보내거나 받으시려면 %@ 지갑을 설정하셔야 합니다.";
