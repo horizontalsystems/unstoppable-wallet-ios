@@ -3,6 +3,41 @@ import XRatesKit
 import CurrencyKit
 import Chart
 
+struct ChartModule {
+
+    enum LaunchMode {
+        case partial(coinCode: String, coinTitle: String)
+        case coin(coin: Coin)
+
+        var coinCode: String {
+            switch self {
+            case let .partial(coinCode, _):
+                return coinCode
+            case let .coin(coin):
+                return coin.code
+            }
+        }
+
+        var coinTitle: String {
+            switch self {
+            case let .partial(_, coinTitle):
+                return coinTitle
+            case let .coin(coin):
+                return coin.title
+            }
+        }
+
+        var coin: Coin? {
+            if case let .coin(coin) = self {
+                return coin
+            }
+
+            return  nil
+        }
+    }
+
+}
+
 protocol IChartView: class {
     func set(title: String)
 
