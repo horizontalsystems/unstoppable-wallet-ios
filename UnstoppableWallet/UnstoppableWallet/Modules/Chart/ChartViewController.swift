@@ -167,11 +167,8 @@ class ChartViewController: ThemeViewController {
     }
 
     private func updateViews(viewItem: ChartViewItem) {
-        let onAlertTap: (() -> ())? = { [weak self] in
-            self?.delegate.onTapAlert()
-        }
-
-        currentRateView.bind(rate: viewItem.currentRate, diff: nil, alertMode: viewItem.priceAlertMode, onTap: onAlertTap)
+        currentRateView.bind(rate: viewItem.currentRate, diff: nil)
+        updateAlertBarItem(alertMode: viewItem.priceAlertMode)
 
         if let marketViewItem = viewItem.marketInfoStatus.data {
             chartInfoView.bind(marketCap: marketViewItem.marketCap, volume: marketViewItem.volume, supply: marketViewItem.supply, maxSupply: marketViewItem.maxSupply, startDate: marketViewItem.startDate, website: marketViewItem.website, onTapLink: { [weak self] in
@@ -189,7 +186,7 @@ class ChartViewController: ThemeViewController {
         case .completed(let data):
             hideLoading()
 
-            currentRateView.bind(rate: viewItem.currentRate, diff: data.chartDiff, alertMode: viewItem.priceAlertMode, onTap: onAlertTap)
+            currentRateView.bind(rate: viewItem.currentRate, diff: data.chartDiff)
             switch data.chartTrend {
             case .neutral:
                 chartView.setCurve(color: .themeGray)
@@ -228,6 +225,23 @@ class ChartViewController: ThemeViewController {
         indicatorViews.forEach { _, view in
             view.bind(selected: false, trend: nil)
         }
+    }
+
+    private func updateAlertBarItem(alertMode: ChartPriceAlertMode) {
+        switch alertMode {
+        case .on:
+            let image = UIImage(named: "Notification Medium Icon")?.tinted(with: .themeJacob)?.withRenderingMode(.alwaysOriginal)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(onAlertTap))
+        case .off:
+            let image = UIImage(named: "Notification Medium Icon")?.tinted(with: .themeGray)?.withRenderingMode(.alwaysOriginal)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(onAlertTap))
+        case .hidden:
+            navigationItem.rightBarButtonItem = nil
+        }
+    }
+
+    @objc private func onAlertTap() {
+        delegate.onTapAlert()
     }
 
 }
