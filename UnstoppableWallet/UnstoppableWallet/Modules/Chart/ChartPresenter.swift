@@ -17,6 +17,7 @@ class ChartPresenter {
 
     let coinCode: String
     let coinTitle: String
+    let coin: Coin?
     let currency: Currency
 
     private var chartType: ChartType
@@ -25,12 +26,13 @@ class ChartPresenter {
 
     private var alert: PriceAlert?
 
-    init(router: IChartRouter, interactor: IChartInteractor, factory: IChartRateFactory, coinCode: String, coinTitle: String, currency: Currency) {
+    init(router: IChartRouter, interactor: IChartInteractor, factory: IChartRateFactory, coinCode: String, coinTitle: String, coin: Coin?, currency: Currency) {
         self.router = router
         self.interactor = interactor
         self.factory = factory
         self.coinCode = coinCode
         self.coinTitle = coinTitle
+        self.coin = coin
         self.currency = currency
 
         chartType = interactor.defaultChartType ?? .day
@@ -44,6 +46,7 @@ class ChartPresenter {
                 coinCode: coinCode,
                 currency: currency,
                 selectedIndicator: selectedIndicators,
+                coin: coin,
                 priceAlert: alert,
                 alertsOn: interactor.alertsOn)
 
@@ -59,7 +62,7 @@ class ChartPresenter {
 
         interactor.subscribeToAlertUpdates()
 
-        alert = interactor.priceAlert(coinCode: coinCode)
+        alert = interactor.priceAlert(coin: coin)
 
         updateChart()
     }
@@ -98,7 +101,7 @@ extension ChartPresenter: IChartViewDelegate {
     }
 
     func onTapAlert() {
-        guard let coin = interactor.coin(code: coinCode) else {
+        guard let coin = coin else {
             return
         }
 

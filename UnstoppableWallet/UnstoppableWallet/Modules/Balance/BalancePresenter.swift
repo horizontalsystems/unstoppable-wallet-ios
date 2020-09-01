@@ -193,7 +193,7 @@ extension BalancePresenter: IBalanceViewDelegate {
             return
         }
 
-        router.showChart(coinCode: viewItem.wallet.coin.code, coinTitle: viewItem.wallet.coin.title)
+        router.showChart(coinCode: viewItem.wallet.coin.code, coinTitle: viewItem.wallet.coin.title, coin: viewItem.wallet.coin)
     }
 
     func onTapFailedIcon(viewItem: BalanceViewItem) {
