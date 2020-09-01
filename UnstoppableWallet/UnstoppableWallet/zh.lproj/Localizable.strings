@@ -336,6 +336,7 @@
 
 "manage_coins.title" = "选择代币";
 "manage_coins.add_token" = "添加代币";
+"manage_coins.search" = "Search";
 "manage_coins.add_coin.title" = "添加%@ ";
 "manage_coins.add_coin.subtitle" = "%@钱包";
 "manage_coins.add_coin.text.set_up" = "您必须创建%@钱包才能对%@进行转账或收款。";
