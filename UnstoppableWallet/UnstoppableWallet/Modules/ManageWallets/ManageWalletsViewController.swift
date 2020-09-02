@@ -52,6 +52,15 @@ class ManageWalletsViewController: ThemeViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
 
+        if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
+            textField.textColor = .themeOz
+
+            if let leftView = textField.leftView as? UIImageView {
+                leftView.image = leftView.image?.withRenderingMode(.alwaysTemplate)
+                leftView.tintColor = .themeGray
+            }
+        }
+
         viewModel.viewStateDriver
                 .drive(onNext: { [weak self] viewState in
                     self?.onUpdate(viewState: viewState)
