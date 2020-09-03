@@ -193,6 +193,8 @@
 "swap.amount_error.maximum_amount" = "Balance %@";
 "swap.amount_error.no_balance" = "Can't parse balance for token";
 "swap.trade_error.not_found" = "Can't swap this tokens";
+"swap.amount_error.insufficient_balance" = "Transaction amount with fees for paid is %@.";
+"swap.amount_error.insufficient_fee_alert" = "Transaction fees paid in %@. You need %@.";
 
 "swap.price" = "Prix";
 "swap.price_impact" = "Impact prix";
@@ -201,7 +203,7 @@
 "swap.minimum_got" = "Montant minimum reçu";
 
 "swap.fee" = "Frais d'échange";
-"swap.transactions_speed" = "Vitesse de transaction";
+"swap.transactions_speed" = "Transactions Speed";
 "swap.transaction_fee" = "Frais de transaction";
 
 "swap.select_token.title" = "Choisir la pièce";
