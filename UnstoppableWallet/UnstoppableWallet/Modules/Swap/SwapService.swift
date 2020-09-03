@@ -217,50 +217,6 @@ class SwapService {
         self.balance = balance
     }
 
-    private func stateByAllowance() -> SwapModule.SwapState? {
-        guard let allowance = allowanceStateRelay.value else {
-            return nil
-        }
-        guard let data = allowance.data else {
-            return .idle
-        }
-        if (allowanceAmount(for: estimated) ?? 0) > data {
-            return .approveRequired
-        }
-        return nil
-    }
-
-    private func stateByTradeData() -> SwapModule.SwapState {
-        guard let tradeData = tradeDataState else {
-            return .idle
-        }
-        guard let data = tradeData.data else {
-            return .idle
-        }
-
-        if data.priceImpactLevel == .forbidden {
-            return .idle
-        }
-        return .proceedAllowed
-    }
-
-    private func stateByFee() -> SwapModule.SwapState? {
-        guard let feeState = feeState else {
-            return nil
-        }
-        if feeState.isLoading {
-            return .fetchingFee
-        }
-        if feeState.error != nil {
-            return .idle
-        }
-        if feeState.data != nil {
-            return .swapAllowed
-        }
-
-        return nil
-    }
-
     private func sync() {
         guard let balance = balance else {
             validationErrorsRelay.accept([SwapValidationError.insufficientBalance(availableBalance: nil)])
@@ -305,17 +261,36 @@ class SwapService {
             return
         }
 
-        var state = stateByTradeData()
+        var state = SwapModule.SwapState.idle
+        let forbiddenTrade = tradeDataState?.data?.priceImpactLevel == .forbidden
 
-        state = stateByAllowance() ?? state     // check allowance
-        state = stateByFee() ?? state           // check fee
+        if let tradeData = tradeDataState,
+           tradeData.data != nil,
+           !forbiddenTrade {
+            state = .proceedAllowed
+        }
 
+        if let allowanceData = allowanceStateRelay.value {
+            let needed = allowanceAmount(for: estimated) ?? 0
+
+            switch allowanceData {
+            case .completed(let allowance): state = needed > allowance && !forbiddenTrade ? .approveRequired : state
+            default: state = .idle
+            }
+        }
+
+        if let feeState = feeState {
+            switch feeState {
+            case .loading: state = .fetchingFee
+            case .completed: state = .swapAllowed
+            case .failed: state = .idle
+            }
+        }
         validationErrorsRelay.accept(errors)
 
         guard stateRelay.value != state else {
             return
         }
-
         stateRelay.accept(state)
     }
 
