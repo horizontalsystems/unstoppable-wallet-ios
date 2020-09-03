@@ -52,8 +52,7 @@ open class BalanceButtonsView: UIView {
             maker.leading.equalTo(sendButtonWrapper.snp.trailing).offset(CGFloat.margin2x)
             maker.top.equalTo(receiveButton.snp.top)
             maker.trailing.equalToSuperview()
-            maker.width.equalTo(receiveButton.snp.width)
-            maker.height.equalTo(CGFloat.heightButton)
+            maker.size.equalTo(CGFloat.heightButton)
         }
 
         swapButtonWrapper.addSubview(swapButton)
@@ -62,6 +61,7 @@ open class BalanceButtonsView: UIView {
         }
 
         swapButton.apply(style: swapStyle)
+        swapButton.setImage(UIImage(named: "Swap Icon Medium")?.tinted(with: .black), for: .normal)
         swapButton.addTarget(self, action: #selector(onSwap), for: .touchUpInside)
     }
 
@@ -80,7 +80,7 @@ open class BalanceButtonsView: UIView {
                 maker.leading.equalTo(sendWrapper.snp.trailing).offset(CGFloat.margin2x)
                 maker.top.equalTo(receiveButton.snp.top)
                 maker.trailing.equalToSuperview()
-                maker.width.equalTo(receiveButton.snp.width)
+                maker.width.equalTo(CGFloat.heightButton)
             }
             maker.top.equalTo(receiveButton.snp.top)
             maker.trailing.equalToSuperview()
@@ -95,10 +95,9 @@ open class BalanceButtonsView: UIView {
         fatalError("not implemented")
     }
 
-    public func bind(receiveTitle: String, sendTitle: String, swapTitle: String) {
+    public func bind(receiveTitle: String, sendTitle: String) {
         receiveButton.setTitle(receiveTitle, for: .normal)
         sendButton.setTitle(sendTitle, for: .normal)
-        swapButton.setTitle(swapTitle, for: .normal)
     }
 
     public func bind(receiveEnabled: Bool, sendEnabled: Bool, swapHidden: Bool, receiveAction: @escaping () -> (), sendAction: @escaping () -> (), swapAction: @escaping () -> ()) {
