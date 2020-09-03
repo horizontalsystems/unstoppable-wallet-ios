@@ -49,8 +49,9 @@ extension SwapApproveViewModel {
 
 extension SwapApproveViewModel {
 
-    public var coinAmount: String {
-        "\(service.amount.description) \(service.coin.code)"
+    public var coinAmount: String? {
+        let coinValue = CoinValue(coin: service.coin, value: service.amount)
+        return ValueFormatter.instance.format(coinValue: coinValue)
     }
 
     public var coinTitle: String {

@@ -206,15 +206,15 @@ class SwapViewController: ThemeViewController {
 
     private func subscribeToViewModel() {
         subscribe(disposeBag, viewModel.isLoading) { [weak self] in self?.set(loading: $0) }
-        subscribe(disposeBag, viewModel.tradeDataError) { [weak self] in self?.set(swapDataError: $0) }
+        subscribe(disposeBag, viewModel.swapError) { [weak self] in self?.set(swapError: $0) }
 
         subscribe(disposeBag, viewModel.balance) { [weak self] in self?.set(fromBalance: $0) }
         subscribe(disposeBag, viewModel.balanceError) { [weak self] in self?.set(error: $0) }
 
         subscribe(disposeBag, viewModel.tradeViewItem) { [weak self] in self?.handle(tradeViewItem: $0) }
-        subscribe(disposeBag, viewModel.showProcess) { [weak self] in self?.setButton(tag: SwapViewController.processTag, show: $0) }
-        subscribe(disposeBag, viewModel.showApprove) { [weak self] in self?.setButton(tag: SwapViewController.approveTag, show: $0) }
-        subscribe(disposeBag, viewModel.showApproving) { [weak self] in self?.setButton(tag: SwapViewController.approvingTag, show: $0) }
+        subscribe(disposeBag, viewModel.showProcess) { [weak self] in self?.setButton(tag: SwapViewController.processTag) }
+        subscribe(disposeBag, viewModel.showApprove) { [weak self] in self?.setButton(tag: SwapViewController.approveTag) }
+        subscribe(disposeBag, viewModel.showApproving) { [weak self] in self?.setButton(tag: SwapViewController.approvingTag) }
         subscribe(disposeBag, viewModel.isActionEnabled) { [weak self] in self?.button.isEnabled = $0 }
         subscribe(disposeBag, viewModel.isTradeDataHidden) { [weak self] in self?.set(swapDataHidden: $0) }
 
@@ -253,16 +253,16 @@ class SwapViewController: ThemeViewController {
 
 extension SwapViewController {
 
-    private func set(swapDataError: Error?) {
-        swapErrorLabel.text = swapDataError?.smartDescription
+    private func set(swapError: String?) {
+        swapErrorLabel.text = swapError
     }
 
     private func set(fromBalance: String?) {
         fromBalanceView.bind(title: "swap.balance".localized, value: fromBalance)
     }
 
-    private func set(error: Error?) {
-        fromBalanceView.bind(error: error?.smartDescription)
+    private func set(error: String?) {
+        fromBalanceView.bind(error: error)
     }
 
     private func color(for level: SwapModule.PriceImpactLevel) -> UIColor {
@@ -284,8 +284,7 @@ extension SwapViewController {
         minMaxView.bind(title: viewItem.minMaxTitle?.localized, value: viewItem.minMaxAmount?.localized)
     }
 
-    private func setButton(tag: Int, show: Bool) {
-        let tag = show ? tag : SwapViewController.processTag
+    private func setButton(tag: Int) {
         button.tag = tag
 
         switch tag {

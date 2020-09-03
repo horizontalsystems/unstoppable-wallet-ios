@@ -16,7 +16,7 @@ class SwapFeeRepository {
 
     private var feeCoin: Coin
 
-    public let priority: FeeRatePriority = .high
+    public let priority: FeeRatePriority = .medium
 
     init(uniswapKit: UniswapKit.Kit, adapterManager: IAdapterManager, provider: IFeeRateProvider, rateManager: IRateManager, baseCurrency: Currency, feeCoin: Coin) {
         self.uniswapKit = uniswapKit

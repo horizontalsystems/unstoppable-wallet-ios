@@ -15,7 +15,7 @@ class FeeService {
     private var amount: Decimal
     private var spenderAddress: Address
 
-    public let priority: FeeRatePriority = .high
+    public let priority: FeeRatePriority = .medium
     public var gasPrice: Int? = nil
     public var gasLimit: Int? = nil
 

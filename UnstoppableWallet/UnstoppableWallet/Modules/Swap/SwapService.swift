@@ -192,11 +192,13 @@ class SwapService {
             return
         }
 
+        let last = allowanceStateRelay.value?.data
+
         allowanceStateRelay.accept(.loading)
         allowanceDisposable = allowanceProvider
                 .allowanceObservable(coin: coinIn, spenderAddress: uniswapRepository.routerAddress)
                 .subscribe(onSuccess: { [weak self] allowance in
-                    self?.handle(allowance: allowance, coin: coinIn)
+                    self?.handle(lastAllowance: last, allowance: allowance, coin: coinIn)
                 }, onError: { [weak self] error in
                     self?.waitingForApprove = false
                     self?.allowanceStateRelay.accept(.failed(error))
@@ -260,32 +262,19 @@ class SwapService {
     }
 
     private func sync() {
-        var errors = [Error]()
-
         guard let balance = balance else {
-            errors.append(SwapValidationError.insufficientBalance(availableBalance: nil))
-
-            validationErrorsRelay.accept(errors)
+            validationErrorsRelay.accept([SwapValidationError.insufficientBalance(availableBalance: nil)])
             stateRelay.accept(.idle)
             return
         }
+        var errors = [Error]()
 
-        var state = stateByTradeData()
-
+        if let allowanceError = allowanceStateRelay.value?.error {
+            errors.append(allowanceError)
+        }
         if (amount(for: .exactIn) ?? 0) > balance {
             errors.append(SwapValidationError.insufficientBalance(availableBalance: CoinValue(coin: coinIn, value: balance)))
-            state = .idle
         }
-
-        if let allowance = allowanceStateRelay.value?.data,
-           (allowanceAmount(for: estimated) ?? 0) > allowance {
-            errors.append(SwapValidationError.insufficientAllowance)
-        }
-
-        if let feeError = feeState?.error {
-            errors.append(feeError)
-        }
-
         if let fee = feeState?.data,
            fee.coinAmount.coin == coinIn,
            let amount = amount(for: .exactIn),
@@ -293,13 +282,33 @@ class SwapService {
 
             let coinValue = CoinValue(coin: fee.coinAmount.coin, value: amount + fee.coinAmount.value)
             errors.append(FeeModule.FeeError.insufficientAmountWithFeeBalance(coinValue: coinValue))
-            state = .idle
-        } else if waitingForApprove {
-            state = .waitingForApprove
-        } else {
-            state = stateByAllowance() ?? state     // check allowance
-            state = stateByFee() ?? state           // check fee
         }
+        if let feeError = feeState?.error {
+            errors.append(feeError)
+        }
+
+        let hasErrors = !errors.isEmpty
+        if let allowance = allowanceStateRelay.value?.data,
+           (allowanceAmount(for: estimated) ?? 0) > allowance {
+            errors.append(SwapValidationError.insufficientAllowance)
+        }
+
+        if hasErrors {
+            validationErrorsRelay.accept(errors)
+            stateRelay.accept(.idle)
+            return
+        }
+
+        if waitingForApprove {
+            validationErrorsRelay.accept(errors)
+            stateRelay.accept(.waitingForApprove)
+            return
+        }
+
+        var state = stateByTradeData()
+
+        state = stateByAllowance() ?? state     // check allowance
+        state = stateByFee() ?? state           // check fee
 
         validationErrorsRelay.accept(errors)
 
@@ -348,14 +357,16 @@ extension SwapService {
         sync()
     }
 
-    private func handle(allowance: Decimal, coin: Coin) {
-        if let lastAllowance = allowanceStateRelay.value?.data,
+    private func handle(lastAllowance: Decimal?, allowance: Decimal, coin: Coin) {
+        if let lastAllowance = lastAllowance,
            allowance == lastAllowance {
+
+            allowanceStateRelay.accept(.completed(allowance))
             return
         }
 
-        waitingForApprove = false
         allowanceStateRelay.accept(.completed(allowance))
+        waitingForApprove = false
         sync()
     }
 

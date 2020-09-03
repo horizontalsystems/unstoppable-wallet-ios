@@ -40,8 +40,6 @@ class SwapAllowancePresenter {
             allowanceRelay.accept(amount)
             return
         }
-
-        // TODO: handle api error
     }
 
     private func handle(errors: [Error]) {
