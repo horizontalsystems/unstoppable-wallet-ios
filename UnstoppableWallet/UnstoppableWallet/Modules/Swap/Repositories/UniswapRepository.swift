@@ -69,7 +69,7 @@ class UniswapRepository {
 
 extension UniswapRepository {
 
-    var spenderAddress: Address {
+    var routerAddress: Address {
         swapKit.routerAddress
     }
 

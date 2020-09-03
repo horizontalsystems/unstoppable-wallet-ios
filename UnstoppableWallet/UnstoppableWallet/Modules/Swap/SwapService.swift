@@ -3,8 +3,10 @@ import RxCocoa
 import RxRelay
 import HsToolKit
 import UniswapKit
+import CurrencyKit
 
 class SwapService {
+    static private let refreshInterval: TimeInterval = 10
     private static let warningPriceImpact: Decimal = 1
     private static let forbiddenPriceImpact: Decimal = 5
 
@@ -12,9 +14,11 @@ class SwapService {
     private var allowanceDisposable: Disposable?
     private var tradeDataDisposable: Disposable?
     private var swapDisposable: Disposable?
+    private var feeDisposable: Disposable?
 
     private let uniswapRepository: UniswapRepository
-    private let allowanceRepository: AllowanceRepository
+    private let allowanceProvider: AllowanceProvider
+    private let swapFeeRepository: SwapFeeRepository
     private let swapCoinProvider: SwapCoinProvider
     private let adapterManager: IAdapterManager
 
@@ -30,72 +34,96 @@ class SwapService {
 
     private var tradeDataStateRelay = PublishRelay<DataStatus<SwapModule.TradeItem>?>()
     private var allowanceStateRelay = BehaviorRelay<DataStatus<Decimal>?>(value: nil)
+    private var feeStateRelay = PublishRelay<DataStatus<SwapModule.SwapFeeInfo>?>()
 
     private var swapStateRelay = BehaviorRelay<DataStatus<Data>?>(value: nil)
     private var stateRelay = BehaviorRelay<SwapModule.SwapState>(value: .idle)
 
     private var tradeData: TradeData?
     private var waitingForApprove: Bool = false
+    private var timer: Timer?
 
-    public var estimated = TradeType.exactIn {
+    private(set) var estimated = TradeType.exactIn {
         didSet {
             estimatedRelay.accept(estimated)
         }
     }
 
-    public var coinIn: Coin {
+    private(set) var coinIn: Coin {
         didSet {
             coinInRelay.accept(coinIn)
         }
     }
 
-    public var coinOut: Coin? {
+    private(set) var coinOut: Coin? {
         didSet {
             coinOutRelay.accept(coinOut)
         }
     }
 
-    public var amountIn: Decimal? {
+    private(set) var amountIn: Decimal? {
         didSet {
             amountInRelay.accept(amountIn)
         }
     }
 
-    public var amountOut: Decimal? {
+    private(set) var amountOut: Decimal? {
         didSet {
             amountOutRelay.accept(amountOut)
         }
     }
 
-    public var balance: Decimal? {
+    private(set) var balance: Decimal? {
         didSet {
             balanceRelay.accept(balance)
         }
     }
 
-    public var tradeDataState: DataStatus<SwapModule.TradeItem>? {
+    private(set) var tradeDataState: DataStatus<SwapModule.TradeItem>? {
         didSet {
             tradeDataStateRelay.accept(tradeDataState)
         }
     }
 
-    init(uniswapRepository: UniswapRepository, allowanceRepository: AllowanceRepository, swapCoinProvider: SwapCoinProvider, adapterManager: IAdapterManager, coin: Coin) {
+    private(set) var feeState: DataStatus<SwapModule.SwapFeeInfo>? {
+        didSet {
+            feeStateRelay.accept(feeState)
+        }
+    }
+
+    var feePriority: FeeRatePriority { swapFeeRepository.priority }
+
+    init(uniswapRepository: UniswapRepository, allowanceRepository: AllowanceProvider, swapFeeRepository: SwapFeeRepository, swapCoinProvider: SwapCoinProvider, adapterManager: IAdapterManager, coin: Coin) {
         self.uniswapRepository = uniswapRepository
-        self.allowanceRepository = allowanceRepository
+        self.allowanceProvider = allowanceRepository
+        self.swapFeeRepository = swapFeeRepository
         self.swapCoinProvider = swapCoinProvider
         self.adapterManager = adapterManager
 
         coinIn = coin
 
+        subscribeToService()
         updateBalance()
         updateAllowance()
 
         sync()
     }
 
+    private func subscribeToService() {
+        timer = Timer.scheduledTimer(timeInterval: Self.refreshInterval, target: self, selector: #selector(handleRefreshTimer), userInfo: nil, repeats: true)
+    }
+
+    @objc private func handleRefreshTimer() {
+        guard waitingForApprove else {
+            return
+        }
+
+        updateAllowance()
+    }
+
     private func tryResetCoinOut(coin: Coin) {
         if coinOut == coin {
-            coinOut = coin
+            coinOut = nil
         }
     }
 
@@ -105,6 +133,10 @@ class SwapService {
 
     private func amount(for type: TradeType) -> Decimal? {
         type == .exactIn ? amountIn : amountOut
+    }
+
+    private func allowanceAmount(for type: TradeType) -> Decimal? {
+        type == .exactIn ? amountIn : tradeData?.amountInMax
     }
 
     private func clearEstimated(for type: TradeType) {
@@ -124,7 +156,7 @@ class SwapService {
         return adapter.balance
     }
 
-    private func updateTradeData(type: TradeType) {
+    private func updateTradeData() {
         let coinIn = self.coinIn
         guard let coinOut = coinOut else {
 
@@ -132,17 +164,17 @@ class SwapService {
             return
         }
 
-        let amount = self.amount(for: type) ?? 0
+        let amount = self.amount(for: estimated) ?? 0
 
         tradeDataState = .loading
 
         tradeDataDisposable?.dispose()
         tradeDataDisposable = uniswapRepository
-                .trade(coinIn: coinIn, coinOut: coinOut, amount: amount, tradeType: type)
+                .trade(coinIn: coinIn, coinOut: coinOut, amount: amount, tradeType: estimated)
                 .subscribe(onSuccess: { [weak self] item in
                     self?.handle(tradeData: item, coinIn: coinIn, coinOut: coinOut)
                 }, onError: { [weak self] error in
-                    self?.tradeDataStateRelay.accept(.failed(error))
+                    self?.tradeDataState = .failed(error)
 
                     self?.sync()
                 })
@@ -151,24 +183,20 @@ class SwapService {
     }
 
     private func updateAllowance() {
+        allowanceDisposable?.dispose()
+
         let coinIn = self.coinIn
         guard coinIn.type != .ethereum else {
             allowanceStateRelay.accept(nil)
-            allowanceDisposable?.dispose()
 
             return
         }
 
         allowanceStateRelay.accept(.loading)
-
-        allowanceDisposable?.dispose()
-
-        allowanceDisposable = allowanceRepository
-                .allowanceObservable(coin: coinIn, spenderAddress: uniswapRepository.spenderAddress)
-                .subscribe(onNext: { [weak self] allowance in
-                    self?.handle(coin: coinIn, allowance: allowance)
-
-                    self?.sync()
+        allowanceDisposable = allowanceProvider
+                .allowanceObservable(coin: coinIn, spenderAddress: uniswapRepository.routerAddress)
+                .subscribe(onSuccess: { [weak self] allowance in
+                    self?.handle(allowance: allowance, coin: coinIn)
                 }, onError: { [weak self] error in
                     self?.waitingForApprove = false
                     self?.allowanceStateRelay.accept(.failed(error))
@@ -177,10 +205,6 @@ class SwapService {
                 })
 
         allowanceDisposable?.disposed(by: disposeBag)
-    }
-
-    private func updateEthereumBalance() {
-
     }
 
     private func updateBalance() {
@@ -198,7 +222,7 @@ class SwapService {
         guard let data = allowance.data else {
             return .idle
         }
-        if (amount(for: .exactIn) ?? 0) > data {
+        if (allowanceAmount(for: estimated) ?? 0) > data {
             return .approveRequired
         }
         return nil
@@ -215,7 +239,24 @@ class SwapService {
         if data.priceImpactLevel == .forbidden {
             return .idle
         }
-        return .allowed
+        return .proceedAllowed
+    }
+
+    private func stateByFee() -> SwapModule.SwapState? {
+        guard let feeState = feeState else {
+            return nil
+        }
+        if feeState.isLoading {
+            return .fetchingFee
+        }
+        if feeState.error != nil {
+            return .idle
+        }
+        if feeState.data != nil {
+            return .swapAllowed
+        }
+
+        return nil
     }
 
     private func sync() {
@@ -230,7 +271,6 @@ class SwapService {
         }
 
         var state = stateByTradeData()
-        validationErrorsRelay.accept(errors)
 
         if (amount(for: .exactIn) ?? 0) > balance {
             errors.append(SwapValidationError.insufficientBalance(availableBalance: CoinValue(coin: coinIn, value: balance)))
@@ -238,17 +278,35 @@ class SwapService {
         }
 
         if let allowance = allowanceStateRelay.value?.data,
-           (amount(for: .exactIn) ?? 0) > allowance {
+           (allowanceAmount(for: estimated) ?? 0) > allowance {
             errors.append(SwapValidationError.insufficientAllowance)
         }
 
-        if waitingForApprove {
+        if let feeError = feeState?.error {
+            errors.append(feeError)
+        }
+
+        if let fee = feeState?.data,
+           fee.coinAmount.coin == coinIn,
+           let amount = amount(for: .exactIn),
+           amount + fee.coinAmount.value > balance {
+
+            let coinValue = CoinValue(coin: fee.coinAmount.coin, value: amount + fee.coinAmount.value)
+            errors.append(FeeModule.FeeError.insufficientAmountWithFeeBalance(coinValue: coinValue))
+            state = .idle
+        } else if waitingForApprove {
             state = .waitingForApprove
         } else {
-            state = stateByAllowance() ?? state
+            state = stateByAllowance() ?? state     // check allowance
+            state = stateByFee() ?? state           // check fee
         }
 
         validationErrorsRelay.accept(errors)
+
+        guard stateRelay.value != state else {
+            return
+        }
+
         stateRelay.accept(state)
     }
 
@@ -290,14 +348,15 @@ extension SwapService {
         sync()
     }
 
-    private func handle(coin: Coin, allowance: Decimal) {
+    private func handle(allowance: Decimal, coin: Coin) {
         if let lastAllowance = allowanceStateRelay.value?.data,
-           allowance != lastAllowance {
-
-            waitingForApprove = false
+           allowance == lastAllowance {
+            return
         }
 
+        waitingForApprove = false
         allowanceStateRelay.accept(.completed(allowance))
+        sync()
     }
 
 }
@@ -323,7 +382,8 @@ extension SwapService {
         }
 
         waitingForApprove = false
-        updateTradeData(type: type)
+        feeState = nil
+        updateTradeData()
 
         sync()
     }
@@ -348,7 +408,8 @@ extension SwapService {
         clearEstimated(for: estimated)
 
         waitingForApprove = false
-        updateTradeData(type: estimated)
+        feeState = nil
+        updateTradeData()
 
         sync()
     }
@@ -359,8 +420,29 @@ extension SwapService {
         sync()
     }
 
-    func swap() {
+    func proceed() {
         guard let tradeData = tradeData else {
+            return
+        }
+        feeDisposable?.dispose()
+
+        feeState = .loading
+        feeDisposable = swapFeeRepository.swapFeeInfo(coin: coinIn, tradeData: tradeData)
+        .subscribe(onSuccess: { [weak self] info in
+            self?.feeState = .completed(info)
+            self?.sync()
+        }, onError: { [weak self] error in
+            self?.feeState = .failed(error)
+            self?.sync()
+        })
+        feeDisposable?.disposed(by: disposeBag)
+
+        sync()
+    }
+
+    func swap() {
+        guard let tradeData = tradeData,
+              let feeData = feeState?.data else {
             return
         }
 
@@ -368,7 +450,7 @@ extension SwapService {
         swapDisposable?.dispose()
 
         swapDisposable = uniswapRepository
-                .swap(tradeData: tradeData, gasLimit: 1000000, gasPrice: 90)
+                .swap(tradeData: tradeData, gasLimit: feeData.gasLimit, gasPrice: feeData.gasPrice)
                 .subscribe(onSuccess: { [weak self] _ in
                     self?.swapStateRelay.accept(.completed(Data()))
 
@@ -381,11 +463,11 @@ extension SwapService {
     }
 
     var approveData: SwapModule.ApproveData? {
-        guard let amount = amount(for: .exactIn) else {
+        guard let amount = allowanceAmount(for: estimated) else {
             return nil
         }
         return SwapModule.ApproveData(coin: coinIn,
-                spenderAddress: uniswapRepository.spenderAddress,
+                spenderAddress: uniswapRepository.routerAddress,
                 amount: amount)
     }
 
@@ -419,6 +501,10 @@ extension SwapService {
 
     var allowanceObservable: Observable<DataStatus<Decimal>?> {
         allowanceStateRelay.asObservable()
+    }
+
+    var feeStateObservable: Observable<DataStatus<SwapModule.SwapFeeInfo>?> {
+        feeStateRelay.asObservable()
     }
 
     var tradeDataObservable: Observable<DataStatus<SwapModule.TradeItem>?> {

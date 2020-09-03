@@ -22,11 +22,17 @@ struct FeeModule {
 extension FeeModule {
 
     enum FeeError: Error, LocalizedError {
+        case insufficientAmountWithFeeBalance(coinValue: CoinValue)
         case insufficientFeeBalance(coinValue: CoinValue)
+        case insufficientApproveFeeBalance(coinValue: CoinValue)
 
         var errorDescription: String? {
             switch self {
+            case let .insufficientAmountWithFeeBalance(coinValue):
+                return "swap.amount_error.insufficient_balance".localized(ValueFormatter.instance.format(coinValue: coinValue) ?? "")
             case let .insufficientFeeBalance(coinValue):
+                return "swap.amount_error.insufficient_fee_alert".localized(coinValue.coin.title, ValueFormatter.instance.format(coinValue: coinValue) ?? "")
+            case let .insufficientApproveFeeBalance(coinValue):
                 return "swap.approve.insufficient_fee_alert".localized(coinValue.coin.title, ValueFormatter.instance.format(coinValue: coinValue) ?? "")
             }
         }

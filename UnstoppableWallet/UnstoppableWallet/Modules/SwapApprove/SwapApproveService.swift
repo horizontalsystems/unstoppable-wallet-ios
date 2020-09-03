@@ -25,7 +25,7 @@ class SwapApproveService {
         self.spenderAddress = spenderAddress
 
         subscribe(disposeBag, feeService.feeState) { [weak self] feeState in
-            guard case .completed(let _) = feeState else {
+            guard case .completed(_) = feeState else {
                 return
             }
 
