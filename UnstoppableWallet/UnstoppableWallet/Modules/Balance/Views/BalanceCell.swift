@@ -55,7 +55,7 @@ class BalanceCell: UICollectionViewCell {
             maker.height.equalTo(DoubleRowButtonView.height)
         }
 
-        buttonsView.bind(receiveTitle: "balance.deposit".localized, sendTitle: "balance.send".localized, swapTitle: "balance.swap".localized)
+        buttonsView.bind(receiveTitle: "balance.deposit".localized, sendTitle: "balance.send".localized)
     }
 
     required init?(coder aDecoder: NSCoder) {
