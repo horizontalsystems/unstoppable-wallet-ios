@@ -195,6 +195,8 @@
 "swap.amount_error.maximum_amount" = "Balance %@";
 "swap.amount_error.no_balance" = "Can't parse balance for token";
 "swap.trade_error.not_found" = "Can't swap this tokens";
+"swap.amount_error.insufficient_balance" = "Transaction amount with fees for paid is %@.";
+"swap.amount_error.insufficient_fee_alert" = "Transaction fees paid in %@. You need %@.";
 
 "swap.price" = "Цена";
 "swap.price_impact" = "Колебание Цен";
@@ -203,7 +205,7 @@
 "swap.minimum_got" = "Минимальная Выплата";
 
 "swap.fee" = "Комиссия за обмен";
-"swap.transactions_speed" = "Скорость Транзакции";
+"swap.transactions_speed" = "Transactions Speed";
 "swap.transaction_fee" = "Комиссия за транзакцию";
 
 "swap.select_token.title" = "Выберите Токен";
