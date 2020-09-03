@@ -16,7 +16,7 @@ extension AllowanceProvider {
 
     func allowanceObservable(coin: Coin, spenderAddress: Address) -> Single<Decimal> {
         guard let adapter = adapterManager.adapter(for: coin) as? IErc20Adapter else {
-            return .error(SendTransactionError.wrongAmount)     // todo: add error if adapter not found
+            return .error(AdapterError.unsupportedAccount)
         }
 
         return adapter.allowanceSingle(spenderAddress: spenderAddress)

@@ -119,7 +119,7 @@ class SwapApproveViewController: ThemeActionSheetController {
 
 extension SwapApproveViewController {
 
-    private func set(amountLabel: String, coinTitle: String) {
+    private func set(amountLabel: String?, coinTitle: String) {
         titleView.bind(
                 title: "swap.approve.title".localized,
                 subtitle: "swap.approve.subtitle".localized,
