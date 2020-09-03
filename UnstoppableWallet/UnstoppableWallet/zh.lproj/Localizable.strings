@@ -193,6 +193,8 @@
 "swap.amount_error.maximum_amount" = "Balance %@";
 "swap.amount_error.no_balance" = "Can't parse balance for token";
 "swap.trade_error.not_found" = "Can't swap this tokens";
+"swap.amount_error.insufficient_balance" = "Transaction amount with fees for paid is %@.";
+"swap.amount_error.insufficient_fee_alert" = "Transaction fees paid in %@. You need %@.";
 
 "swap.price" = "价格";
 "swap.price_impact" = "价格影响";
@@ -201,7 +203,7 @@
 "swap.minimum_got" = "最小获取金额";
 
 "swap.fee" = "掉期交易费用";
-"swap.transactions_speed" = "交易速度";
+"swap.transactions_speed" = "Transactions Speed";
 "swap.transaction_fee" = "交易费用";
 
 "swap.select_token.title" = "选择代币";
