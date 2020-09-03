@@ -4,6 +4,7 @@ import RxCocoa
 import UniswapKit
 import EthereumKit
 import ThemeKit
+import CurrencyKit
 
 
 //TODO: move to another place
@@ -20,6 +21,16 @@ func subscribe<T>(_ disposeBag: DisposeBag, _ observable: Observable<T>, _ onNex
 }
 
 struct SwapModule {
+
+    enum SwapState {
+        case idle
+        case approveRequired
+        case waitingForApprove
+        case proceedAllowed
+        case fetchingFee
+        case swapAllowed
+        case swapSuccess
+    }
 
     enum PriceImpactLevel: Int {
     case none
@@ -67,14 +78,6 @@ struct SwapModule {
         let balance: Decimal?
     }
 
-    enum SwapState {
-        case idle
-        case approveRequired
-        case waitingForApprove
-        case allowed
-        case swapSuccess
-    }
-
     struct ConfirmationAdditionalViewItem {
         let title: String
         let value: String?
@@ -87,16 +90,27 @@ struct SwapModule {
         let getValue: String?
     }
 
+    struct SwapFeeInfo {
+        let gasPrice: Int
+        let gasLimit: Int
+        let coinAmount: CoinValue
+        let currencyAmount: CurrencyValue?
+    }
 
     static func instance(wallet: Wallet) -> UIViewController? {
-        guard let ethereumKit = try? App.shared.ethereumKitManager.ethereumKit(account: wallet.account) else {
+        guard let ethereumKit = try? App.shared.ethereumKitManager.ethereumKit(account: wallet.account),
+              let feeRateProvider = App.shared.feeRateProviderFactory.provider(coin: wallet.coin) else {
             return nil
         }
         let swapKit = UniswapKit.Kit.instance(ethereumKit: ethereumKit)
-        let allowanceRepository = AllowanceRepository(walletManager: App.shared.walletManager, adapterManager: App.shared.adapterManager)
+        let allowanceRepository = AllowanceProvider(walletManager: App.shared.walletManager, adapterManager: App.shared.adapterManager)
         let swapCoinProvider = SwapCoinProvider(coinManager: App.shared.coinManager, walletManager: App.shared.walletManager, adapterManager: App.shared.adapterManager)
 
-        let service = SwapService(uniswapRepository: UniswapRepository(swapKit: swapKit), allowanceRepository: allowanceRepository, swapCoinProvider: swapCoinProvider, adapterManager: App.shared.adapterManager, coin: wallet.coin)
+        let feeCoinProvider = App.shared.feeCoinProvider
+        let feeCoin = feeCoinProvider.feeCoin(coin: wallet.coin) ?? wallet.coin
+
+        let swapFeeRepository = SwapFeeRepository(uniswapKit: swapKit, adapterManager: App.shared.adapterManager, provider: feeRateProvider, rateManager: App.shared.rateManager, baseCurrency: App.shared.currencyKit.baseCurrency, feeCoin: feeCoin)
+        let service = SwapService(uniswapRepository: UniswapRepository(swapKit: swapKit), allowanceRepository: allowanceRepository, swapFeeRepository: swapFeeRepository, swapCoinProvider: swapCoinProvider, adapterManager: App.shared.adapterManager, coin: wallet.coin)
         let viewModel = SwapViewModel(service: service, factory: SwapViewItemFactory(), decimalParser: SendAmountDecimalParser())
 
         return ThemeNavigationController(rootViewController: SwapViewController(viewModel: viewModel))

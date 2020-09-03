@@ -42,8 +42,7 @@ class SwapApproveViewModel {
 extension SwapApproveViewModel {
 
     func onTapApprove() {
-        handle(approveState: .success)
-//        service.approve()
+        service.approve()
     }
 
 }

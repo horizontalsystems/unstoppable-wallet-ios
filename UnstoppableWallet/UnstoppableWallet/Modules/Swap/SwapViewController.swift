@@ -219,6 +219,7 @@ class SwapViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.isTradeDataHidden) { [weak self] in self?.set(swapDataHidden: $0) }
 
         subscribe(disposeBag, viewModel.openApprove) { [weak self] in self?.openApprove(data: $0) }
+        subscribe(disposeBag, viewModel.openConfirmation) { [weak self] in self?.openConfirmation() }
         subscribe(disposeBag, viewModel.close) { [weak self] in self?.onClose() }
     }
 
@@ -234,9 +235,8 @@ class SwapViewController: ThemeViewController {
     @objc func onButtonTouchUp() {
         switch button.tag {
         case SwapViewController.approveTag: viewModel.onTapApprove()
-        default:
-            let vc = SwapConfirmationView(presenter: viewModel.confirmationPresenter, delegate: self)
-            navigationController?.pushViewController(vc, animated: true)
+        case SwapViewController.processTag: viewModel.onTapProceed()
+        default: ()
         }
     }
 
@@ -306,6 +306,11 @@ extension SwapViewController {
         }
 
         present(vc, animated: true)
+    }
+
+    private func openConfirmation() {
+        let vc = SwapConfirmationView(presenter: viewModel.confirmationPresenter, delegate: self)
+        navigationController?.pushViewController(vc, animated: true)
     }
 
 }

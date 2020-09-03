@@ -63,7 +63,18 @@ class Swap2ConfirmationPresenter {
 
         let coinValue = CoinValue(coin: service.coinIn, value: amountIn * Swap2ConfirmationPresenter.swapFeeValue)
         let swapFee = ValueFormatter.instance.format(coinValue: coinValue)
-        additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.swap_fee", value: swapFee))
+        additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.fee", value: swapFee))
+
+        additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.transactions_speed", value: service.feePriority.title))
+        if let feeData = service.feeState?.data {
+            let coinValue = ValueFormatter.instance.format(coinValue: feeData.coinAmount)
+            let currencyValue = feeData.currencyAmount.flatMap { ValueFormatter.instance.format(currencyValue: $0) }
+
+            let array = [coinValue, currencyValue].compactMap { $0 }
+            let feeString = array.joined(separator: " | ")
+
+            additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.transaction_fee", value: feeString))
+        }
 
         additionalDataRelay.accept(additionalData)
     }

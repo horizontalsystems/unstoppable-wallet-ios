@@ -2,6 +2,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 import UniswapKit
+import CurrencyKit
 
 class SwapViewModel {
     private let disposeBag = DisposeBag()
@@ -24,6 +25,7 @@ class SwapViewModel {
     private var isActionEnabledRelay = BehaviorRelay<Bool>(value: false)
 
     private var openApproveRelay = PublishRelay<SwapModule.ApproveData?>()
+    private var openConfirmationRelay = PublishRelay<()>()
     private var closeRelay = PublishRelay<()>()
 
     // Swap Module Presenters
@@ -59,6 +61,7 @@ class SwapViewModel {
         subscribe(disposeBag, service.validationErrorsObservable) { [weak self] errors in self?.handle(errors: errors) }
         subscribe(disposeBag, service.tradeDataObservable) { [weak self] in self?.handle(tradeData: $0) }
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.handle(state: $0) }
+        subscribe(disposeBag, service.feeStateObservable) { [weak self] in self?.handle(feeState: $0)}
     }
 
     private func tradeViewItem(item: SwapModule.TradeItem) -> SwapModule.TradeViewItem {
@@ -91,6 +94,9 @@ extension SwapViewModel {
                 balanceErrorRelay.accept(error)
                 return
             }
+            if case FeeModule.FeeError.insufficientAmountWithFeeBalance = error {
+                balanceErrorRelay.accept(error)
+            }
         }
     }
 
@@ -99,7 +105,7 @@ extension SwapViewModel {
             return nil
         }
 
-        if case Kit.TradeError.zeroAmount = error {
+        if case UniswapKit.Kit.TradeError.zeroAmount = error {
             return nil
         }
         return error
@@ -124,18 +130,39 @@ extension SwapViewModel {
 
     private func handle(state: SwapModule.SwapState) {
         switch state {
-        case .idle, .allowed:
+        case .idle, .proceedAllowed:
+            isLoadingRelay.accept(false)
             showProcessRelay.accept(true)
-            isActionEnabledRelay.accept(state == .allowed)
+            isActionEnabledRelay.accept(state == .proceedAllowed)
         case .approveRequired:
             showApproveRelay.accept(true)
             isActionEnabledRelay.accept(true)
         case .waitingForApprove:
+            isLoadingRelay.accept(true)
             showApprovingRelay.accept(true)
             isActionEnabledRelay.accept(false)
+        case .fetchingFee:
+            isLoadingRelay.accept(true)
+            showProcessRelay.accept(true)
+            isActionEnabledRelay.accept(false)
+        case .swapAllowed:
+            isLoadingRelay.accept(false)
+            showProcessRelay.accept(true)
+            isActionEnabledRelay.accept(true)
+
+            openConfirmationRelay.accept(())
         case .swapSuccess:
             closeRelay.accept(())
         }
+    }
+
+    func handle(feeState: DataStatus<SwapModule.SwapFeeInfo>?) {
+        guard let state = feeState else {
+            return
+        }
+
+        isTradeDataHiddenRelay.accept(state.error != nil)
+        tradeDataErrorRelay.accept(state.error)
     }
 
 }
@@ -186,12 +213,20 @@ extension SwapViewModel {
         closeRelay.asDriver(onErrorJustReturn: ())
     }
 
-    var openApprove: Driver<SwapModule.ApproveData?> {
-        openApproveRelay.asDriver(onErrorJustReturn: nil)
+    var openApprove: Signal<SwapModule.ApproveData?> {
+        openApproveRelay.asSignal()
+    }
+
+    var openConfirmation: Signal<()> {
+        openConfirmationRelay.asSignal()
     }
 
     func onTapApprove() {
         openApproveRelay.accept(service.approveData)
+    }
+
+    func onTapProceed() {
+        service.proceed()
     }
 
     func didApprove() {
