@@ -88,6 +88,10 @@ class EthereumFeeRateProvider: IFeeRateProvider {
         self.feeRateProvider = feeRateProvider
     }
 
+    var feeRatePriorityList: [FeeRatePriority] {
+        [.medium, .high]
+    }
+
     var feeRate: Single<FeeRate> {
         feeRateProvider.ethereumGasPrice
     }
