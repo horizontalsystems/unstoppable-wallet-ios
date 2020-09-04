@@ -1,6 +1,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import LanguageKit
 
 protocol IGuidesViewModel {
     var filters: Driver<[String]> { get }
@@ -45,7 +46,7 @@ struct GuidesModule {
                 reachabilityManager: App.shared.reachabilityManager
         )
 
-        let service = GuidesService(appConfigProvider: App.shared.appConfigProvider, repository: repository)
+        let service = GuidesService(appConfigProvider: App.shared.appConfigProvider, repository: repository, languageManager: LanguageManager.shared)
         let viewModel = GuidesViewModel(service: service)
 
         return GuidesViewController(viewModel: viewModel)
