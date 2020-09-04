@@ -417,7 +417,7 @@ CHECKOUT OPTIONS:
     :commit: 7f95e9a3125c34712cb73884f2479bb5d15c75f8
     :git: https://github.com/horizontalsystems/gui-kit/
   LanguageKit.swift:
-    :commit: 0c2ae616c0c0e9fcbdfda57d272537a9a6a6de68
+    :commit: d722e2d3ad9bfc20db064ff46b9e161c92f2fcec
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
     :commit: 05598f5d8c059479abac5942e4c6687f4e0e8cc0

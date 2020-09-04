@@ -2,17 +2,52 @@ import Foundation
 import ObjectMapper
 
 struct GuideCategory: ImmutableMappable {
-    let title: String
-    let guides: [Guide]
-
-    init(title: String, guides: [Guide]) {
-        self.title = title
-        self.guides = guides
-    }
+    private let title: [String: String]
+    private let guides: [[String: Guide]]
 
     init(map: Map) throws {
-        title = try map.value("title")
-        guides = try map.value("guides")
+        title = try map.value("category")
+        guides = try map.value("guides", using: GuideTransform())
+    }
+
+    func title(language: String, fallbackLanguage: String) -> String? {
+        title[language] ?? title[fallbackLanguage]
+    }
+
+    func guides(language: String, fallbackLanguage: String) -> [Guide] {
+        guides.compactMap { guideMap in
+            guideMap[language] ?? guideMap[fallbackLanguage]
+        }
+    }
+
+}
+
+extension GuideCategory {
+
+    class GuideTransform: TransformType {
+        typealias Object = [[String: Guide]]
+        typealias JSON = Any
+
+        func transformFromJSON(_ value: Any?) -> [[String: Guide]]? {
+            guard let guidesFrom = value as? [[String: Any]] else {
+                return nil
+            }
+
+            do {
+                return try guidesFrom.map { guideFrom in
+                    try guideFrom.mapValues { guideJson in
+                        try Guide(JSONObject: guideJson)
+                    }
+                }
+            } catch {
+                return nil
+            }
+        }
+
+        func transformToJSON(_ value: [[String: Guide]]?) -> Any? {
+            fatalError("transformToJSON(_:) has not been implemented")
+        }
+
     }
 
 }
@@ -32,9 +67,9 @@ struct Guide: ImmutableMappable {
 
     init(map: Map) throws {
         title = try map.value("title")
-        imageUrl = try map.value("image_url")
+        imageUrl = try map.value("image")
         date = try map.value("updated_at", using: DateTransform())
-        fileUrl = try map.value("file_url")
+        fileUrl = try map.value("file")
     }
 }
 
@@ -62,7 +97,6 @@ extension Guide {
             fatalError("transformToJSON(_:) has not been implemented")
         }
     }
-
 }
 
 enum GuideBlockViewItem {

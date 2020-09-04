@@ -1,22 +1,31 @@
 import RxSwift
 import RxRelay
 import HsToolKit
+import LanguageKit
 
 class GuidesService {
     private let disposeBag = DisposeBag()
 
     private let appConfigProvider: IAppConfigProvider
     private let repository: GuidesRepository
+    private let languageManager: LanguageManager
 
-    init(appConfigProvider: IAppConfigProvider, repository: GuidesRepository) {
+    init(appConfigProvider: IAppConfigProvider, repository: GuidesRepository, languageManager: LanguageManager) {
         self.appConfigProvider = appConfigProvider
         self.repository = repository
+        self.languageManager = languageManager
     }
 
-    private func categoryItem(category: GuideCategory) -> GuideCategoryItem {
-        GuideCategoryItem(
-                title: category.title,
-                items: category.guides.map { guideItem(guide: $0) }
+    private func categoryItem(category: GuideCategory) -> GuideCategoryItem? {
+        guard let title = category.title(language: languageManager.currentLanguage, fallbackLanguage: LanguageManager.fallbackLanguage) else {
+            return nil
+        }
+
+        let guides = category.guides(language: languageManager.currentLanguage, fallbackLanguage: LanguageManager.fallbackLanguage)
+
+        return GuideCategoryItem(
+                title: title,
+                items: guides.map { guideItem(guide: $0) }
         )
     }
 
