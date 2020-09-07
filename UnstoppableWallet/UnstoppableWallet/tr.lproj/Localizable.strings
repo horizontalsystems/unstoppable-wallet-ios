@@ -231,7 +231,7 @@ Uniswap, Ethereum'da otomatik likidite tedariki için tamamen merkezi olmayan bi
 "swap.uniswap_info.header_price_impact" = "Fiyat Etkisi";
 "swap.uniswap_info.content_price_impact" = "Ticaret hacmine bağlı olarak piyasa fiyatı ile tahmini fiyat arasındaki fark.";
 "swap.uniswap_info.header_swap_fee" = "Takas Ücreti";
-"swap.uniswap_info.content_swap_fee" = "Her işlemin bir kısmı (% 0.30) bir protokol teşvik primi olarak likidite sağlayıcılarına gider.";
+"swap.uniswap_info.content_swap_fee" = "A portion of each trade (0.3%) goes to liquidity providers as a protocol incentive.";
 "swap.uniswap_info.link_button" = "Uniswap Web Sitesi";
 
 // Transactions
