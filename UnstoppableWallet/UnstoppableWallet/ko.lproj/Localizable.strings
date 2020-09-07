@@ -230,7 +230,7 @@
 "swap.uniswap_info.header_price_impact" = "가격 영향";
 "swap.uniswap_info.content_price_impact" = "거래 규모에 따른 시장가격과 예상가격의 차이.";
 "swap.uniswap_info.header_swap_fee" = "스왑 비용";
-"swap.uniswap_info.content_swap_fee" = "각 거래의 일부(0.30%) 는 프로토콜 인센티브로 유동성 제공자에게 전달됩니다.";
+"swap.uniswap_info.content_swap_fee" = "A portion of each trade (0.3%) goes to liquidity providers as a protocol incentive.";
 "swap.uniswap_info.link_button" = "Uniswap 사이트";
 
 // Transactions
