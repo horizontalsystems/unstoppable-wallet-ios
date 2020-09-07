@@ -230,7 +230,7 @@
 "swap.uniswap_info.header_price_impact" = "价格影响";
 "swap.uniswap_info.content_price_impact" = "市场价格和估计价格由于交易规模引起的差额。";
 "swap.uniswap_info.header_swap_fee" = "掉期交易费用";
-"swap.uniswap_info.content_swap_fee" = "每一交易的一部分（0.30%）将作为协议奖励授予流动性提供着。";
+"swap.uniswap_info.content_swap_fee" = "A portion of each trade (0.3%) goes to liquidity providers as a protocol incentive.";
 "swap.uniswap_info.link_button" = "Uniswap网站";
 
 // Transactions
