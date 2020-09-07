@@ -1,7 +1,7 @@
 import Foundation
 
 class RateCoinMapper {
-    private let disabledCoins = ["EOSDT", "PGL", "PPT", "SAI", "WBTC", "WETH"]
+    private let disabledCoins = ["EOSDT", "PGL", "PPT", "SAI", "WBTC", "WETH", "SWAP"]
     private let convertedCoins = [
         "HOT": "HOLO",
     ]

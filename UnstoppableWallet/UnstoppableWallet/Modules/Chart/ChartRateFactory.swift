@@ -177,7 +177,7 @@ class ChartRateFactory: IChartRateFactory {
         // determine chart growing state. when chart not full - it's nil
         var chartTrend: MovementTrend = .neutral
         var chartDiff: Decimal?
-        if let first = data.items.first, let last = data.items.last, last.timestamp == endTimestamp, let firstRate = first.indicators[.rate], let lastRate = last.indicators[.rate] {
+        if let first = data.items.first(where: { ($0.indicators[.rate] ?? 0) != 0 }), let last = data.items.last, last.timestamp == endTimestamp, let firstRate = first.indicators[.rate], let lastRate = last.indicators[.rate] {
             chartDiff = (lastRate - firstRate) / firstRate * 100
             chartTrend = (lastRate - firstRate).isSignMinus ? .down : .up
         }
