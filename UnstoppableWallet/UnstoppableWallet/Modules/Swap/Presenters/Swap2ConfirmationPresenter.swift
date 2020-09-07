@@ -3,7 +3,7 @@ import RxSwift
 import RxCocoa
 
 class Swap2ConfirmationPresenter {
-    static let swapFeeValue: Decimal = 0.03
+    static let swapFeeValue: Decimal = 0.003
     private let disposeBag = DisposeBag()
 
     private let service: SwapService
