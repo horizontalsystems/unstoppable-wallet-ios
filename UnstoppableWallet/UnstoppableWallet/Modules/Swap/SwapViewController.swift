@@ -190,8 +190,10 @@ class SwapViewController: ThemeViewController {
             maker.height.equalTo(50)
         }
 
-        button.apply(style: .primaryYellow)
         button.addTarget(self, action: #selector(onButtonTouchUp), for: .touchUpInside)
+        button.apply(style: .primaryYellow)
+        button.setTitle("swap.proceed_button".localized, for: .normal)
+        button.isEnabled = false
 
         swapErrorLabel.snp.makeConstraints { maker in
             maker.top.equalTo(toInputView.snp.bottom).offset(CGFloat.margin3x)
