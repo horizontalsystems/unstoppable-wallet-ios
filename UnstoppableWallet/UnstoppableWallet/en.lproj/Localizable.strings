@@ -235,7 +235,7 @@ bch.horizontalsystems.xyz/apg";
 "swap.uniswap_info.header_price_impact" = "Price Impact";
 "swap.uniswap_info.content_price_impact" = "The difference between the market price and estimated price due to trade size.";
 "swap.uniswap_info.header_swap_fee" = "Swap Fee";
-"swap.uniswap_info.content_swap_fee" = "A portion of each trade (0.30%) goes to liquidity providers as a protocol incentive.";
+"swap.uniswap_info.content_swap_fee" = "A portion of each trade (0.3%) goes to liquidity providers as a protocol incentive.";
 "swap.uniswap_info.link_button" = "Uniswap Site";
 
 // Transactions
