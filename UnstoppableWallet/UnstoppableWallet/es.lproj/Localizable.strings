@@ -230,7 +230,7 @@
 "swap.uniswap_info.header_price_impact" = "Impacto en el precio";
 "swap.uniswap_info.content_price_impact" = "La diferencia entre el precio de mercado y el precio estimado debido al tamaño de la operación.";
 "swap.uniswap_info.header_swap_fee" = "Tarifa por permutar";
-"swap.uniswap_info.content_swap_fee" = "Una porción de cada transacción (0,30%) va a parar a los proveedores de liquidez como incentivo de protocolo.";
+"swap.uniswap_info.content_swap_fee" = "A portion of each trade (0.3%) goes to liquidity providers as a protocol incentive.";
 "swap.uniswap_info.link_button" = "Website de Uniswap";
 
 // Transactions
