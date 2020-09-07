@@ -39,10 +39,11 @@ class EthereumAdapter: EthereumBaseAdapter {
         }
 
         let failed = (transaction.isError ?? 0) != 0
+        let txHash = transaction.hash.toHexString()
 
         return TransactionRecord(
-                uid: transaction.hash.hex,
-                transactionHash: transaction.hash.hex,
+                uid: txHash,
+                transactionHash: txHash,
                 transactionIndex: transaction.transactionIndex ?? 0,
                 interTransactionIndex: 0,
                 type: type,

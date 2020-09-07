@@ -41,10 +41,12 @@ class Erc20Adapter: EthereumBaseAdapter {
                 type = .incoming
             }
         }
+        
+        let txHash = transaction.transactionHash.toHexString()
 
         return TransactionRecord(
-                uid: transaction.transactionHash.hex + String(transaction.interTransactionIndex) + contractAddress.hex,
-                transactionHash: transaction.transactionHash.hex,
+            uid: txHash + String(transaction.interTransactionIndex) + contractAddress.hex,
+                transactionHash: txHash,
                 transactionIndex: transaction.transactionIndex ?? 0,
                 interTransactionIndex: transaction.interTransactionIndex,
                 type: type,
