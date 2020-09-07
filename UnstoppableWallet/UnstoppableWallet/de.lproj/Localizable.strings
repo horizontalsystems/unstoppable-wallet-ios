@@ -230,7 +230,7 @@
 "swap.uniswap_info.header_price_impact" = "Preisauswirkungen";
 "swap.uniswap_info.content_price_impact" = "Die Differenz zwischen dem Marktpreis und dem geschätzten Preis aufgrund der Handelsgröße.";
 "swap.uniswap_info.header_swap_fee" = "Tauschgebühr";
-"swap.uniswap_info.content_swap_fee" = "Ein Teil jedes Handels (0,30%) geht als Protokollanreiz an Liquiditätsanbieter.";
+"swap.uniswap_info.content_swap_fee" = "A portion of each trade (0.3%) goes to liquidity providers as a protocol incentive.";
 "swap.uniswap_info.link_button" = "Uniswap-Seite";
 
 // Transactions
