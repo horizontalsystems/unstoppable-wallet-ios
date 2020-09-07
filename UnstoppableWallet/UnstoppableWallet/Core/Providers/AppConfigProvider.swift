@@ -167,7 +167,7 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "CHSB",      title: "SwissBorg",             code: "CHSB",    decimal: 8,  type: CoinType(erc20Address: "0xba9d4199fab4f26efe3551d490e3821486f135ba")),
         Coin(id: "USDT",      title: "Tether USD",            code: "USDT",    decimal: 6,  type: CoinType(erc20Address: "0xdAC17F958D2ee523a2206206994597C13D831ec7")),
         Coin(id: "TUSD",      title: "TrueUSD",               code: "TUSD",    decimal: 18, type: CoinType(erc20Address: "0x0000000000085d4780B73119b644AE5ecd22b376")),
-        Coin(id: "Swap",      title: "TrustSwap",             code: "Swap",    decimal: 18, type: CoinType(erc20Address: "0xCC4304A31d09258b0029eA7FE63d032f52e44EFe")),
+        Coin(id: "SWAP",      title: "TrustSwap",             code: "SWAP",    decimal: 18, type: CoinType(erc20Address: "0xCC4304A31d09258b0029eA7FE63d032f52e44EFe")),
         Coin(id: "USDC",      title: "USD Coin",              code: "USDC",    decimal: 6,  type: CoinType(erc20Address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48")),
         Coin(id: "WTC",       title: "Waltonchain",           code: "WTC",     decimal: 18, type: CoinType(erc20Address: "0xb7cB1C96dB6B22b0D3d9536E0108d062BD488F74")),
         Coin(id: "WBTC",      title: "Wrapped Bitcoin",       code: "WBTC",    decimal: 8,  type: CoinType(erc20Address: "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599")),
