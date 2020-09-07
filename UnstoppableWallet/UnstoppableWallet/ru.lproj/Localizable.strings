@@ -232,7 +232,7 @@
 "swap.uniswap_info.header_price_impact" = "Разница в цене";
 "swap.uniswap_info.content_price_impact" = "Разница между рыночной и приблизительной ценой из-за размера сделки.";
 "swap.uniswap_info.header_swap_fee" = "Комиссия за обмен";
-"swap.uniswap_info.content_swap_fee" = "Часть с каждой сделки (0,30%) отчисляется поставщикам ликвидности в качестве протокольного поощрения.";
+"swap.uniswap_info.content_swap_fee" = "A portion of each trade (0.3%) goes to liquidity providers as a protocol incentive.";
 "swap.uniswap_info.link_button" = "Веб-сайт Uniswap";
 
 // Transactions
