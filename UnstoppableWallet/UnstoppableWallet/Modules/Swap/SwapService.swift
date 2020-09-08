@@ -110,10 +110,12 @@ class SwapService {
     }
 
     private func subscribeToService() {
-        timer = Timer.scheduledTimer(timeInterval: Self.refreshInterval, target: self, selector: #selector(handleRefreshTimer), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(withTimeInterval: Self.refreshInterval, repeats: true) { [weak self] _ in
+            self?.handleRefreshTimer()
+        }
     }
 
-    @objc private func handleRefreshTimer() {
+    private func handleRefreshTimer() {
         guard waitingForApprove else {
             return
         }
