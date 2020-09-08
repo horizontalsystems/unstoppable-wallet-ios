@@ -5,6 +5,11 @@ import ThemeKit
 import RxSwift
 import RxCocoa
 
+protocol ISwapConfirmationDelegate: class {
+    func onSwap()
+    func onCancel()
+}
+
 class SwapConfirmationView: ThemeViewController, SectionsDataSource {
     private let disposeBag = DisposeBag()
 

@@ -38,11 +38,9 @@ class UniswapRepository {
             }
 
             return swapKit.swapDataSingle(tokenIn: tokenIn, tokenOut: tokenOut)
-                    .map { swapData in
-                        self.save(swapData: swapData, coinIn: coinIn, coinOut: coinOut)
-
-                        return swapData
-                    }
+                    .do(onSuccess: { [weak self] swapData in
+                        self?.save(swapData: swapData, coinIn: coinIn, coinOut: coinOut)
+                    })
         } catch {
             return Single.error(error)
         }
@@ -64,7 +62,6 @@ class UniswapRepository {
         }
     }
 
-
 }
 
 extension UniswapRepository {
@@ -74,9 +71,11 @@ extension UniswapRepository {
     }
 
     func trade(coinIn: Coin, coinOut: Coin, amount: Decimal, tradeType: TradeType) -> Single<TradeData> {
-
-        swapData(coinIn: coinIn, coinOut: coinOut).flatMap { swapData in
-            self.tradeData(swapData: swapData, amount: amount, tradeType: tradeType)
+        swapData(coinIn: coinIn, coinOut: coinOut).flatMap { [weak self] swapData in
+            guard let data = self?.tradeData(swapData: swapData, amount: amount, tradeType: tradeType) else {
+                return Single.error(AppError.unknownError)
+            }
+            return data
         }
     }
 
