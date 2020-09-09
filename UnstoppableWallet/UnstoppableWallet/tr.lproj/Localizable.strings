@@ -203,7 +203,7 @@
 "swap.minimum_got" = "Minimum Kazanılan";
 
 "swap.fee" = "Takas Ücreti";
-"swap.transactions_speed" = "Transactions Speed";
+"swap.transactions_speed" = "Transaction Speed";
 "swap.transaction_fee" = "İşlem Ücreti";
 
 "swap.select_token.title" = "Kripto Parayı Seç";
@@ -227,7 +227,7 @@
 "swap.uniswap_info.description" = "
 Uniswap, Ethereum'da otomatik likidite tedariki için tamamen merkezi olmayan bir protokoldür.\n\nBasit biçimlendirilmiş bir denklem, binlerce kullanıcı ve yüzlerce uygulama için durdurulamaz likidite sağlar.\n\nUniswap, geliştiricilere, likidite sağlayıcılarına ve tüccarlara herkese açık ve erişilebilir bir finans piyasasına katılma yetkisi verir.    ";
 "swap.uniswap_info.header_minimum_received" = "Minimum Alınan";
-"swap.uniswap_info.content_minimum_received" = "Onaylanmadan önce büyük, olumsuz bir fiyat hareketi varsa alım satım işleminiz geri alınacaktır.";
+"swap.uniswap_info.content_minimum_received" = "Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.";
 "swap.uniswap_info.header_price_impact" = "Fiyat Etkisi";
 "swap.uniswap_info.content_price_impact" = "Ticaret hacmine bağlı olarak piyasa fiyatı ile tahmini fiyat arasındaki fark.";
 "swap.uniswap_info.header_swap_fee" = "Takas Ücreti";
