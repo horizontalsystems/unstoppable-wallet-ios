@@ -205,7 +205,7 @@
 "swap.minimum_got" = "Минимальная Выплата";
 
 "swap.fee" = "Комиссия за обмен";
-"swap.transactions_speed" = "Transactions Speed";
+"swap.transactions_speed" = "Transaction Speed";
 "swap.transaction_fee" = "Комиссия за транзакцию";
 
 "swap.select_token.title" = "Выберите Токен";
@@ -228,7 +228,7 @@
 "swap.uniswap_info.title" = "Uniswap v.2";
 "swap.uniswap_info.description" = "Uniswap – полностью децентрализованный протокол для автоматического предоставления ликвидности на Ethereum.\n\nПростая формула обеспечивает постоянную ликвидность для тысячи пользователей и сотен приложений.\n\nUniswap дает возможность разработчикам, поставщикам ликвидности и трейдерам участвовать на открытом и доступном для всех финансовом рынке.";
 "swap.uniswap_info.header_minimum_received" = "Получено минимум";
-"swap.uniswap_info.content_minimum_received" = "Ваша транзакция будет отменена до её подтверждения в случае возникновения большого и неблагоприятного движения цен.";
+"swap.uniswap_info.content_minimum_received" = "Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.";
 "swap.uniswap_info.header_price_impact" = "Разница в цене";
 "swap.uniswap_info.content_price_impact" = "Разница между рыночной и приблизительной ценой из-за размера сделки.";
 "swap.uniswap_info.header_swap_fee" = "Комиссия за обмен";
