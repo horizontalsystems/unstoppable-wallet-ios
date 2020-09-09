@@ -203,7 +203,7 @@
 "swap.minimum_got" = "Mindestens erhalten";
 
 "swap.fee" = "Tauschgebühr";
-"swap.transactions_speed" = "Transactions Speed";
+"swap.transactions_speed" = "Transaction Speed";
 "swap.transaction_fee" = "Transaktionsgebühr";
 
 "swap.select_token.title" = "Coins auswählen";
@@ -226,7 +226,7 @@
 "swap.uniswap_info.title" = "Uniswap v.2";
 "swap.uniswap_info.description" = "Uniswap ist ein vollständig dezentralisiertes Protokoll zur automatisierten Liquiditätsbereitstellung für Ethereum.\n\nEine einfache festgeschriebene Gleichung treibt unaufhaltsame Liquidität für tausende Benutzer und hunderte Anwendungen an.\n\nUniswap ermöglicht Entwicklern, Liquiditätsanbietern und Händlern die Teilnahme an einem offenen und für alle zugänglichen Finanzmarkt.";
 "swap.uniswap_info.header_minimum_received" = "Mindestens erhalten";
-"swap.uniswap_info.content_minimum_received" = "Ihre Transaktion wird rückgängig gemacht, wenn es eine große, ungünstige Kursbewegung gibt, bevor sie bestätigt wird.";
+"swap.uniswap_info.content_minimum_received" = "Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.";
 "swap.uniswap_info.header_price_impact" = "Preisauswirkungen";
 "swap.uniswap_info.content_price_impact" = "Die Differenz zwischen dem Marktpreis und dem geschätzten Preis aufgrund der Handelsgröße.";
 "swap.uniswap_info.header_swap_fee" = "Tauschgebühr";
