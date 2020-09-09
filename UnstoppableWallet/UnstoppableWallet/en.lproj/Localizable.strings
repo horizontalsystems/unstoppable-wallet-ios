@@ -121,7 +121,7 @@ bch.horizontalsystems.xyz/apg";
 "balance.searching" = "Searching transactions...";
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Syncing... %@";
-"balance.synced_through" = "until: %@";
+"balance.synced_through" = "until %@";
 "balance.add_coin" = "Add Coins";
 "balance.sort.header" = "Sort by";
 "balance.sort.valueHighToLow" = "Balance";
@@ -605,4 +605,4 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 
 "chart_alert.title" = "Notification";
 "chart_alert.24h_description" = "Price Change 24h";
-"chart_alert.trend_description" = "Price Trend Change";
+"chart_alert.trend_description" = "Trend Change";
