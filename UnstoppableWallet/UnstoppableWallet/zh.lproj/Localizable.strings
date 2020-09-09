@@ -203,7 +203,7 @@
 "swap.minimum_got" = "最小获取金额";
 
 "swap.fee" = "掉期交易费用";
-"swap.transactions_speed" = "Transactions Speed";
+"swap.transactions_speed" = "Transaction Speed";
 "swap.transaction_fee" = "交易费用";
 
 "swap.select_token.title" = "选择代币";
@@ -226,7 +226,7 @@
 "swap.uniswap_info.title" = "Uniswap v.2";
 "swap.uniswap_info.description" = "Uniswap是对以太币（Ethereum）实现流动性供给自动化的一种完全去中心化协议。\n\n一个简单的形式化方程为成千上百的用户和应用程序推动了不可阻挡的流动性。\n\nUniswap为开发人员、流动性提供着和交易者赋予了参与到对所有人开放的金融市场中的能力。";
 "swap.uniswap_info.header_minimum_received" = "收到的最小金额";
-"swap.uniswap_info.content_minimum_received" = "如果在确认之前出现大幅度不利的价格变动，您的交易将会还原。";
+"swap.uniswap_info.content_minimum_received" = "Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.";
 "swap.uniswap_info.header_price_impact" = "价格影响";
 "swap.uniswap_info.content_price_impact" = "市场价格和估计价格由于交易规模引起的差额。";
 "swap.uniswap_info.header_swap_fee" = "掉期交易费用";
