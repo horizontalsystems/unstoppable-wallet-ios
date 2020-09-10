@@ -194,6 +194,7 @@ bch.horizontalsystems.xyz/apg";
 "swap.token" = "Token";
 "swap.proceed_button" = "Proceed";
 "swap.approve_button" = "Approve";
+"swap.approve.description" = "You should grant a permission to a smart contract to execute the trade using your funds. This permission does not affect funds on your balance";
 "swap.approving_button" = "Approving...";
 "swap.amount_error.maximum_amount" = "Balance %@";
 "swap.amount_error.no_balance" = "Can't parse balance for token";
