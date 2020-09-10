@@ -116,7 +116,7 @@
 "balance.searching" = "正在搜索交易…...";
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "正在同步... %@";
-"balance.synced_through" = "直至：%@";
+"balance.synced_through" = "until %@";
 "balance.add_coin" = "添加代币";
 "balance.sort.header" = "排序方式";
 "balance.sort.valueHighToLow" = "余额";
@@ -189,6 +189,7 @@
 "swap.token" = "令牌";
 "swap.proceed_button" = "继续";
 "swap.approve_button" = "批准";
+"swap.approve.description" = "You should grant a permission to a smart contract to execute the trade using your funds. This permission does not affect funds on your balance";
 "swap.approving_button" = "Approving...";
 "swap.amount_error.maximum_amount" = "Balance %@";
 "swap.amount_error.no_balance" = "Can't parse balance for token";
@@ -605,4 +606,4 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "chart_alert.title" = "通知";
 "chart_alert.24h_description" = "24小时价格变动";
-"chart_alert.trend_description" = "价格趋势变动";
+"chart_alert.trend_description" = "Trend Change";
