@@ -116,7 +116,7 @@
 "balance.searching" = "Buscando transacciones…";
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Sincronizando... %@";
-"balance.synced_through" = "hasta: %@";
+"balance.synced_through" = "until %@";
 "balance.add_coin" = "Añadir Monedas";
 "balance.sort.header" = "Ordenar por";
 "balance.sort.valueHighToLow" = "Saldo";
@@ -189,6 +189,7 @@
 "swap.token" = "Token";
 "swap.proceed_button" = "Continuar";
 "swap.approve_button" = "Aprobar";
+"swap.approve.description" = "You should grant a permission to a smart contract to execute the trade using your funds. This permission does not affect funds on your balance";
 "swap.approving_button" = "Approving...";
 "swap.amount_error.maximum_amount" = "Balance %@";
 "swap.amount_error.no_balance" = "Can't parse balance for token";
@@ -601,4 +602,4 @@ poner en peligro la seguridad de mis fondos.";
 
 "chart_alert.title" = "Notificación";
 "chart_alert.24h_description" = "Variación de Precio 24h";
-"chart_alert.trend_description" = "Variación de Tendencia de Precios";
+"chart_alert.trend_description" = "Trend Change";
