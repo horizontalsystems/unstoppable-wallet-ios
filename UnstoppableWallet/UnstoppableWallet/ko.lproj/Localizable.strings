@@ -25,6 +25,8 @@
 "alert.network_issue" = "네트워크에 문제가 있습니다. 잠시 후 다시 시도해 주세요";
 "alert.unknown_error" = "알수없는 오류";
 
+"action.loading" = "loading...";
+
 "n/a" = "해당 없음 ";
 
 "biometric_usage_reason" = "지갑 잠금 해제";
