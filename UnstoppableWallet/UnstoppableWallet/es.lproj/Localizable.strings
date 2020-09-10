@@ -25,6 +25,8 @@
 "alert.network_issue" = "Problemas de red. Inténtelo de nuevo";
 "alert.unknown_error" = "Error desconocido";
 
+"action.loading" = "loading...";
+
 "n/a" = "N/A";
 
 "biometric_usage_reason" = "Desbloquear monedero";
