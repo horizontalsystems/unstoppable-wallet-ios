@@ -4,7 +4,7 @@ import SnapKit
 open class HighlightedDescriptionView: UIView {
     private static let font: UIFont = .subhead2
     private static let sidePadding: CGFloat = .margin3x
-    private static let verticalPadding: CGFloat = .margin2x
+    private static let verticalPadding: CGFloat = .margin3x
 
     private let label = UILabel()
 

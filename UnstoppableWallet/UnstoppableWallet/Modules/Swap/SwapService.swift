@@ -40,8 +40,9 @@ class SwapService {
     private var stateRelay = BehaviorRelay<SwapModule.SwapState>(value: .idle)
 
     private var tradeData: TradeData?
-    private var waitingForApprove: Bool = false
-    private var timer: Timer?
+
+    private var approvingTimer: Timer?
+    private var lastAllowance: Decimal?
 
     private(set) var estimated = TradeType.exactIn {
         didSet {
@@ -102,25 +103,29 @@ class SwapService {
 
         coinIn = coin
 
-        subscribeToService()
         updateBalance()
         updateAllowance()
 
         sync()
     }
 
-    private func subscribeToService() {
-        timer = Timer.scheduledTimer(withTimeInterval: Self.refreshInterval, repeats: true) { [weak self] _ in
-            self?.handleRefreshTimer()
-        }
-    }
-
-    private func handleRefreshTimer() {
-        guard waitingForApprove else {
+    private func startWaitingApprove() {
+        guard approvingTimer == nil else {
             return
         }
 
+        approvingTimer = Timer.scheduledTimer(withTimeInterval: Self.refreshInterval, repeats: true) { [weak self] _ in
+            self?.updateAllowance()
+        }
+
         updateAllowance()
+    }
+
+    private func stopWaitingApprove() {
+        if approvingTimer != nil {
+            approvingTimer?.invalidate()
+            approvingTimer = nil
+        }
     }
 
     private func tryResetCoinOut(coin: Coin) {
@@ -194,15 +199,13 @@ class SwapService {
             return
         }
 
-        let last = allowanceStateRelay.value?.data
-
         allowanceStateRelay.accept(.loading)
         allowanceDisposable = allowanceProvider
                 .allowanceObservable(coin: coinIn, spenderAddress: uniswapRepository.routerAddress)
                 .subscribe(onSuccess: { [weak self] allowance in
-                    self?.handle(lastAllowance: last, allowance: allowance, coin: coinIn)
+                    self?.handle(allowance: allowance, coin: coinIn)
                 }, onError: { [weak self] error in
-                    self?.waitingForApprove = false
+                    self?.stopWaitingApprove()
                     self?.allowanceStateRelay.accept(.failed(error))
 
                     self?.sync()
@@ -257,7 +260,7 @@ class SwapService {
             return
         }
 
-        if waitingForApprove {
+        if approvingTimer != nil {
             validationErrorsRelay.accept(errors)
             stateRelay.accept(.waitingForApprove)
             return
@@ -334,16 +337,18 @@ extension SwapService {
         sync()
     }
 
-    private func handle(lastAllowance: Decimal?, allowance: Decimal, coin: Coin) {
+    private func handle(allowance: Decimal, coin: Coin) {
         if let lastAllowance = lastAllowance,
            allowance == lastAllowance {
 
-            allowanceStateRelay.accept(.completed(allowance))
+            let newState: DataStatus<Decimal> = stateRelay.value == .waitingForApprove ? .loading : .completed(allowance)
+            allowanceStateRelay.accept(newState)
             return
         }
 
         allowanceStateRelay.accept(.completed(allowance))
-        waitingForApprove = false
+        self.lastAllowance = allowance
+        stopWaitingApprove()
         sync()
     }
 
@@ -369,7 +374,7 @@ extension SwapService {
             amountOut = amount
         }
 
-        waitingForApprove = false
+        stopWaitingApprove()
         feeState = nil
         updateTradeData()
 
@@ -386,6 +391,8 @@ extension SwapService {
             coinIn = coin
 
             updateBalance()
+
+            lastAllowance = nil
             updateAllowance()
 
             tryResetCoinOut(coin: coin)
@@ -395,7 +402,7 @@ extension SwapService {
 
         clearEstimated(for: estimated)
 
-        waitingForApprove = false
+        stopWaitingApprove()
         feeState = nil
         updateTradeData()
 
@@ -403,7 +410,7 @@ extension SwapService {
     }
 
     func didApprove() {
-        waitingForApprove = true
+        startWaitingApprove()
 
         sync()
     }
