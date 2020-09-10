@@ -25,6 +25,8 @@
 "alert.network_issue" = "Es sind Netzwerkprobleme aufgetreten. Bitte versuchen Sie es erneut.";
 "alert.unknown_error" = "Unbekannter Fehler";
 
+"action.loading" = "loading...";
+
 "n/a" = "N/A";
 
 "biometric_usage_reason" = "Wallet entsperren";
@@ -189,13 +191,13 @@
 "swap.token" = "Token";
 "swap.proceed_button" = "Fortfahren";
 "swap.approve_button" = "Bestätigen";
-"swap.approve.description" = "You should grant a permission to a smart contract to execute the trade using your funds. This permission does not affect funds on your balance";
+"swap.approve.description" = "Sie sollten einem intelligenten Vertrag die Erlaubnis erteilen, den Handel mit Ihrem Guthaben auszuführen. Diese Berechtigung wirkt sich nicht auf das Guthaben auf Ihrem Saldo aus";
 "swap.approving_button" = "Wird bestätigt...";
 "swap.amount_error.maximum_amount" = "Guthaben %@";
 "swap.amount_error.no_balance" = "Kann Saldo für Token nicht verarbeiten";
-"swap.trade_error.not_found" = "Can't swap this tokens";
-"swap.amount_error.insufficient_balance" = "Transaction amount with fees for paid is %@.";
-"swap.amount_error.insufficient_fee_alert" = "Transaction fees paid in %@. You need %@.";
+"swap.trade_error.not_found" = "Diese Token sind nicht tauschbar";
+"swap.amount_error.insufficient_balance" = "Der Transaktionsbetrag mit Gebühren für die Zahlung beträgt %@.";
+"swap.amount_error.insufficient_fee_alert" = "Transaktionsgebühren in %@ bezahlt. Sie benötigen %@.";
 
 "swap.price" = "Preis";
 "swap.price_impact" = "Preisauswirkungen";
@@ -213,7 +215,7 @@
 
 "swap.approve.title" = "Bestätigen";
 "swap.approve.subtitle" = "Bestätigen";
-"swap.approve.insufficient_fee_alert" = "Transaction fees for approve paid in %@. You need %@.";
+"swap.approve.insufficient_fee_alert" = "Transaktionsgebühren für Bestätigung in %@. Sie benötigen %@.";
 
 
 // Swap Confirmation
@@ -227,11 +229,11 @@
 "swap.uniswap_info.title" = "Uniswap v.2";
 "swap.uniswap_info.description" = "Uniswap ist ein vollständig dezentralisiertes Protokoll zur automatisierten Liquiditätsbereitstellung für Ethereum.\n\nEine einfache festgeschriebene Gleichung treibt unaufhaltsame Liquidität für tausende Benutzer und hunderte Anwendungen an.\n\nUniswap ermöglicht Entwicklern, Liquiditätsanbietern und Händlern die Teilnahme an einem offenen und für alle zugänglichen Finanzmarkt.";
 "swap.uniswap_info.header_minimum_received" = "Mindestens erhalten";
-"swap.uniswap_info.content_minimum_received" = "Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.";
+"swap.uniswap_info.content_minimum_received" = "Ihre Transaktion wird rückgängig gemacht, wenn es eine große, ungünstige Kursbewegung vor der Bestätigung gibt.";
 "swap.uniswap_info.header_price_impact" = "Preisauswirkungen";
 "swap.uniswap_info.content_price_impact" = "Die Differenz zwischen dem Marktpreis und dem geschätzten Preis aufgrund der Handelsgröße.";
 "swap.uniswap_info.header_swap_fee" = "Tauschgebühr";
-"swap.uniswap_info.content_swap_fee" = "A portion of each trade (0.3%) goes to liquidity providers as a protocol incentive.";
+"swap.uniswap_info.content_swap_fee" = "Ein Teil jedes Handels (0,3%) geht als Protokollanreiz an Liquiditätsanbieter.";
 "swap.uniswap_info.link_button" = "Uniswap-Seite";
 
 // Transactions
@@ -605,4 +607,4 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 "chart_alert.title" = "Benachrichtigung";
 "chart_alert.24h_description" = "Preisänderung 24h";
-"chart_alert.trend_description" = "Trend Change";
+"chart_alert.trend_description" = "Trendänderung";
