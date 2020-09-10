@@ -118,7 +118,7 @@
 "balance.searching" = "Поиск транзакций...";
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Синхронизация... %@";
-"balance.synced_through" = "until %@";
+"balance.synced_through" = "до %@";
 "balance.add_coin" = "Добавить Токены";
 "balance.sort.header" = "Сортировать по";
 "balance.sort.valueHighToLow" = "Балансу";
@@ -178,7 +178,7 @@
 
 // CoinSelector
 
-"choose_coin.title" = "Choose Coin";
+"choose_coin.title" = "Выберите Токен";
 
 // Swap
 
@@ -192,12 +192,12 @@
 "swap.proceed_button" = "Продолжить";
 "swap.approve_button" = "Подтвердить";
 "swap.approve.description" = "You should grant a permission to a smart contract to execute the trade using your funds. This permission does not affect funds on your balance";
-"swap.approving_button" = "Approving...";
-"swap.amount_error.maximum_amount" = "Balance %@";
-"swap.amount_error.no_balance" = "Can't parse balance for token";
+"swap.approving_button" = "Подтверждение...";
+"swap.amount_error.maximum_amount" = "Баланс %@";
+"swap.amount_error.no_balance" = "Ошибка анализа баланса для токена";
 "swap.trade_error.not_found" = "Can't swap this tokens";
 "swap.amount_error.insufficient_balance" = "Transaction amount with fees for paid is %@.";
-"swap.amount_error.insufficient_fee_alert" = "Transaction fees paid in %@. You need %@.";
+"swap.amount_error.insufficient_fee_alert" = "Комиссии за транзакцию взимаются в %@. Вам нужно %@.";
 
 "swap.price" = "Цена";
 "swap.price_impact" = "Колебание Цен";
@@ -229,11 +229,11 @@
 "swap.uniswap_info.title" = "Uniswap v.2";
 "swap.uniswap_info.description" = "Uniswap – полностью децентрализованный протокол для автоматического предоставления ликвидности на Ethereum.\n\nПростая формула обеспечивает постоянную ликвидность для тысячи пользователей и сотен приложений.\n\nUniswap дает возможность разработчикам, поставщикам ликвидности и трейдерам участвовать на открытом и доступном для всех финансовом рынке.";
 "swap.uniswap_info.header_minimum_received" = "Получено минимум";
-"swap.uniswap_info.content_minimum_received" = "Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.";
+"swap.uniswap_info.content_minimum_received" = "Ваша транзакция будет отменена в случае возникновения большого и неблагоприятного ценового движения до её подтверждения.";
 "swap.uniswap_info.header_price_impact" = "Разница в цене";
 "swap.uniswap_info.content_price_impact" = "Разница между рыночной и приблизительной ценой из-за размера сделки.";
 "swap.uniswap_info.header_swap_fee" = "Комиссия за обмен";
-"swap.uniswap_info.content_swap_fee" = "A portion of each trade (0.3%) goes to liquidity providers as a protocol incentive.";
+"swap.uniswap_info.content_swap_fee" = "Часть с каждой сделки (0,30%) отчисляется поставщикам ликвидности в качестве протокольного поощрения.";
 "swap.uniswap_info.link_button" = "Веб-сайт Uniswap";
 
 // Transactions
@@ -341,7 +341,7 @@
 
 "manage_coins.title" = "Выберите Токены";
 "manage_coins.add_token" = "Добавить Токен";
-"manage_coins.search" = "Search";
+"manage_coins.search" = "Поиск";
 "manage_coins.add_coin.title" = "Добавить %@";
 "manage_coins.add_coin.subtitle" = "%@ Кошелек";
 "manage_coins.add_coin.text.set_up" = "Вам нужно настроить кошелек %@, чтобы отправлять или получать %@.";
