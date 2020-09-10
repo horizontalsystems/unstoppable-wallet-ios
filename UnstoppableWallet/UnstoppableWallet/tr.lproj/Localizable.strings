@@ -116,7 +116,7 @@
 "balance.searching" = "İşlemler aranıyor ...";
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Senkronize ediliyor... %@";
-"balance.synced_through" = "until %@";
+"balance.synced_through" = "%@ kadar";
 "balance.add_coin" = "Kripto Para Ekle";
 "balance.sort.header" = "Sıralama şekli";
 "balance.sort.valueHighToLow" = "Bakiye";
@@ -176,7 +176,7 @@
 
 // CoinSelector
 
-"choose_coin.title" = "Choose Coin";
+"choose_coin.title" = "Kripto Parayı Seç";
 
 // Swap
 
@@ -191,8 +191,8 @@
 "swap.approve_button" = "Onayla";
 "swap.approve.description" = "You should grant a permission to a smart contract to execute the trade using your funds. This permission does not affect funds on your balance";
 "swap.approving_button" = "Approving...";
-"swap.amount_error.maximum_amount" = "Balance %@";
-"swap.amount_error.no_balance" = "Can't parse balance for token";
+"swap.amount_error.maximum_amount" = "%@ Bakiye";
+"swap.amount_error.no_balance" = "Token için bakiye ayrıştırılamıyor";
 "swap.trade_error.not_found" = "Can't swap this tokens";
 "swap.amount_error.insufficient_balance" = "Transaction amount with fees for paid is %@.";
 "swap.amount_error.insufficient_fee_alert" = "Transaction fees paid in %@. You need %@.";
@@ -204,7 +204,7 @@
 "swap.minimum_got" = "Minimum Kazanılan";
 
 "swap.fee" = "Takas Ücreti";
-"swap.transactions_speed" = "Transaction Speed";
+"swap.transactions_speed" = "İşlem hızı";
 "swap.transaction_fee" = "İşlem Ücreti";
 
 "swap.select_token.title" = "Kripto Parayı Seç";
@@ -228,11 +228,11 @@
 "swap.uniswap_info.description" = "
 Uniswap, Ethereum'da otomatik likidite tedariki için tamamen merkezi olmayan bir protokoldür.\n\nBasit biçimlendirilmiş bir denklem, binlerce kullanıcı ve yüzlerce uygulama için durdurulamaz likidite sağlar.\n\nUniswap, geliştiricilere, likidite sağlayıcılarına ve tüccarlara herkese açık ve erişilebilir bir finans piyasasına katılma yetkisi verir.    ";
 "swap.uniswap_info.header_minimum_received" = "Minimum Alınan";
-"swap.uniswap_info.content_minimum_received" = "Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.";
+"swap.uniswap_info.content_minimum_received" = "Onaylanmadan önce büyük, olumsuz bir fiyat hareketi varsa alım satım işleminiz geri alınacaktır.";
 "swap.uniswap_info.header_price_impact" = "Fiyat Etkisi";
 "swap.uniswap_info.content_price_impact" = "Ticaret hacmine bağlı olarak piyasa fiyatı ile tahmini fiyat arasındaki fark.";
 "swap.uniswap_info.header_swap_fee" = "Takas Ücreti";
-"swap.uniswap_info.content_swap_fee" = "A portion of each trade (0.3%) goes to liquidity providers as a protocol incentive.";
+"swap.uniswap_info.content_swap_fee" = "Her işlemin bir kısmı (% 0.3) bir protokol teşvik primi olarak likidite sağlayıcılarına gider.";
 "swap.uniswap_info.link_button" = "Uniswap Web Sitesi";
 
 // Transactions
