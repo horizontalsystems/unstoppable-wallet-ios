@@ -5,7 +5,7 @@ PODS:
   - Alamofire (5.2.2)
   - AlamofireImage (4.1.0):
     - Alamofire (~> 5.1)
-  - BigInt (5.0.0)
+  - BigInt (5.2.0)
   - BinanceChainKit.swift (0.3.4):
     - GRDB.swift (~> 4.0)
     - HdWalletKit.swift (~> 1.5)
@@ -145,7 +145,7 @@ PODS:
     - OpenSslKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
     - Secp256k1Kit.swift (~> 1.0)
-  - Nimble (8.1.1)
+  - Nimble (8.1.2)
   - ObjectMapper (3.5.3)
   - OpenSslKit.swift (1.2.1)
   - PinKit.swift (1.0):
@@ -375,7 +375,7 @@ CHECKOUT OPTIONS:
     :commit: 7f95e9a3125c34712cb73884f2479bb5d15c75f8
     :git: https://github.com/horizontalsystems/gui-kit/
   CurrencyKit.swift:
-    :commit: 0c2ae616c0c0e9fcbdfda57d272537a9a6a6de68
+    :commit: d722e2d3ad9bfc20db064ff46b9e161c92f2fcec
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
     :commit: 05598f5d8c059479abac5942e4c6687f4e0e8cc0
@@ -423,22 +423,22 @@ CHECKOUT OPTIONS:
     :commit: 05598f5d8c059479abac5942e4c6687f4e0e8cc0
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   PinKit.swift:
-    :commit: 0c2ae616c0c0e9fcbdfda57d272537a9a6a6de68
+    :commit: d722e2d3ad9bfc20db064ff46b9e161c92f2fcec
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ScanQrKit.swift:
-    :commit: 0c2ae616c0c0e9fcbdfda57d272537a9a6a6de68
+    :commit: d722e2d3ad9bfc20db064ff46b9e161c92f2fcec
     :git: https://github.com/horizontalsystems/component-kit-ios/
   StorageKit.swift:
-    :commit: 0c2ae616c0c0e9fcbdfda57d272537a9a6a6de68
+    :commit: d722e2d3ad9bfc20db064ff46b9e161c92f2fcec
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: 0c2ae616c0c0e9fcbdfda57d272537a9a6a6de68
+    :commit: d722e2d3ad9bfc20db064ff46b9e161c92f2fcec
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :commit: 7f95e9a3125c34712cb73884f2479bb5d15c75f8
     :git: https://github.com/horizontalsystems/gui-kit/
   UniswapKit.swift:
-    :commit: 3da94a0e484a4674357c5be9092ac7dc56e347ca
+    :commit: 6d4173a4a1f3bfdc4e2013c58029335fed65fc9e
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   XRatesKit.swift:
     :commit: f7a4b52e8f4fda8f1d39521b8f91455f51b477f2
@@ -448,7 +448,7 @@ SPEC CHECKSUMS:
   ActionSheet.swift: 4583c1353a908e7c15a31af7f087a2be1465c6f8
   Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
   AlamofireImage: c4a2ba349885fb3064feb74d2e547bd42ce9be10
-  BigInt: 74b4d88367b0e819d9f77393549226d36faeb0d8
+  BigInt: f668a80089607f521586bbe29513d708491ef2f7
   BinanceChainKit.swift: 8b0f9f257b15a13673dcfa89584dc990c77dbf08
   BitcoinCashKit.swift: 16253867ed90c8e2cb2422298e399f078bea2018
   BitcoinCore.swift: c093f12fbd02ae72689cc4ddba2132f7a5792810
@@ -478,7 +478,7 @@ SPEC CHECKSUMS:
   KeychainAccess: 3f760109aa99b05d0f231e28b22642da7153e38a
   LanguageKit.swift: f1105c75fe9d04f482d2ab55e48eb91ed008abef
   LitecoinKit.swift: f87e7b41d3054584949eaf2b785ca9a1319b2908
-  Nimble: 5f8a2fb6fa343a7242dfdd9d42f7267419d464b2
+  Nimble: 3864815b4703c7ebffba875973c70e854489fbae
   ObjectMapper: 97111c97e054a6ee25917662106689f0b4127b37
   OpenSslKit.swift: 0f9c774a09e406c320a0c17341d84fced0e1ba16
   PinKit.swift: 1acbf82ce5114972f1eb9a5a0c1b808dc08ad12e

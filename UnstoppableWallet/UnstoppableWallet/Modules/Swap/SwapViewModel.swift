@@ -13,11 +13,11 @@ class SwapViewModel {
 
     private var isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private var isTradeDataHiddenRelay = BehaviorRelay<Bool>(value: true)
-    private var swapErrorRelay = PublishRelay<String?>()
+    private var swapErrorRelay = PublishRelay<Error?>()
     private var tradeViewItemRelay = BehaviorRelay<SwapModule.TradeViewItem?>(value: nil)
 
     private var balanceRelay = BehaviorRelay<String?>(value: nil)
-    private var balanceErrorRelay = PublishRelay<String?>()
+    private var balanceErrorRelay = PublishRelay<Error?>()
 
     private var showProcessRelay = PublishRelay<()>()
     private var showApproveRelay = PublishRelay<()>()
@@ -90,14 +90,15 @@ extension SwapViewModel {
     private func handle(errors: [Error]) {
         var hasError = false
 
+        errors.forEach { (error: Error) -> () in print(error) }
         errors.forEach { error in
             if case SwapValidationError.insufficientBalance = error {
                 hasError = true
-                balanceErrorRelay.accept(error.smartDescription)
+                balanceErrorRelay.accept(error)
             }
             if case FeeModule.FeeError.insufficientAmountWithFeeBalance = error {
                 hasError = true
-                balanceErrorRelay.accept(error.smartDescription)
+                balanceErrorRelay.accept(error)
             }
         }
 
@@ -131,7 +132,7 @@ extension SwapViewModel {
             tradeViewItemRelay.accept(viewItem)
         }
 
-        swapErrorRelay.accept(resolveTrade(error: tradeData.error)?.smartDescription)
+        swapErrorRelay.accept(resolveTrade(error: tradeData.error))
     }
 
     private func handle(state: SwapModule.SwapState) {
@@ -169,7 +170,7 @@ extension SwapViewModel {
         }
 
         isTradeDataHiddenRelay.accept(state.error != nil)
-        swapErrorRelay.accept(state.error?.smartDescription)
+        swapErrorRelay.accept(state.error)
     }
 
 }
@@ -181,7 +182,7 @@ extension SwapViewModel {
     }
 
     var swapError: Signal<String?> {
-        swapErrorRelay.asSignal()
+        swapErrorRelay.asSignal().map { $0?.convertedError.smartDescription }
     }
 
     var tradeViewItem: Driver<SwapModule.TradeViewItem?> {
@@ -197,7 +198,7 @@ extension SwapViewModel {
     }
 
     var balanceError: Signal<String?> {
-        balanceErrorRelay.asSignal()
+        balanceErrorRelay.asSignal().map { $0?.convertedError.smartDescription }
     }
 
     var showApprove: Signal<()> {

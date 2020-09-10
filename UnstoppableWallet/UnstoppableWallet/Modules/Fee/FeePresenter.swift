@@ -55,7 +55,7 @@ extension FeePresenter {
     }
 
     public var error: Signal<String?> {
-        errorRelay.asSignal().map({ $0?.smartDescription })
+        errorRelay.asSignal().map({ $0?.convertedError.smartDescription })
     }
 
 }

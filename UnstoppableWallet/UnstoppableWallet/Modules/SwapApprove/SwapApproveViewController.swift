@@ -10,9 +10,11 @@ class SwapApproveViewController: ThemeActionSheetController {
     private let delegate: ISwapApproveDelegate
 
     private let titleView = BottomSheetTitleView()
+    private let descriptionView = HighlightedDescriptionView()
+    private let topSeparatorView = UIView()
     private let amountView = SwapApproveAmountView()
-    private let separatorView = UIView()
-    private let feeView = AdditionalDataWithLoadingView()
+    private let middleSeparatorView = UIView()
+    private let feeView = AdditionalDataView()
     private let transactionSpeedView = AdditionalDataView()
     private let feeErrorLabel = UILabel()
     private let approveButton = ThemeButton()
@@ -40,26 +42,42 @@ class SwapApproveViewController: ThemeActionSheetController {
             self?.dismiss(animated: true)
         }
 
+        view.addSubview(descriptionView)
+        descriptionView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin3x)
+        }
+        descriptionView.bind(text: "swap.approve.description".localized)
+
+        view.addSubview(topSeparatorView)
+        topSeparatorView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(descriptionView.snp.bottom).offset(CGFloat.margin3x)
+            maker.height.equalTo(CGFloat.heightOnePixel)
+        }
+
+        topSeparatorView.backgroundColor = .themeSteel20
+
         view.addSubview(amountView)
         amountView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(titleView.snp.bottom)
+            maker.top.equalTo(topSeparatorView.snp.bottom)
             maker.height.equalTo(72)
         }
 
-        view.addSubview(separatorView)
-        separatorView.snp.makeConstraints { maker in
+        view.addSubview(middleSeparatorView)
+        middleSeparatorView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.top.equalTo(amountView.snp.bottom)
             maker.height.equalTo(CGFloat.heightOnePixel)
         }
 
-        separatorView.backgroundColor = .themeSteel20
+        middleSeparatorView.backgroundColor = .themeSteel20
 
         view.addSubview(feeView)
         feeView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(separatorView.snp.bottom).offset(CGFloat.margin3x)
+            maker.top.equalTo(middleSeparatorView.snp.bottom).offset(CGFloat.margin3x)
         }
 
         view.addSubview(transactionSpeedView)
@@ -76,7 +94,7 @@ class SwapApproveViewController: ThemeActionSheetController {
         feeErrorLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(separatorView.snp.bottom).offset(CGFloat.margin3x)
+            maker.top.equalTo(middleSeparatorView.snp.bottom).offset(CGFloat.margin3x)
         }
 
         view.addSubview(approveButton)
@@ -105,7 +123,7 @@ class SwapApproveViewController: ThemeActionSheetController {
         }
 
         subscribe(disposeBag, viewModel.approveAllowed) { [weak self] approveAllowed in self?.set(approveButtonEnabled: approveAllowed) }
-        subscribe(disposeBag, viewModel.feePresenter.feeLoading) { [weak self] feeLoading in self?.set(feeLoading: feeLoading) }
+        subscribe(disposeBag, viewModel.feePresenter.feeLoading) { [weak self] _ in self?.setFeeLoading() }
         subscribe(disposeBag, viewModel.feePresenter.fee) { [weak self] fee in fee.flatMap { self?.set(fee: $0) } }
         subscribe(disposeBag, viewModel.feePresenter.error) { [weak self] errorString in errorString.flatMap { self?.set(feeError: $0) } }
         subscribe(disposeBag, viewModel.error) { [weak self] errorString in self?.show(error: errorString) }
@@ -128,8 +146,8 @@ extension SwapApproveViewController {
         amountView.bind(amount: amountLabel, description: coinTitle)
     }
 
-    private func set(feeLoading: Bool) {
-        feeView.set(loading: feeLoading)
+    private func setFeeLoading() {
+        set(fee: "action.loading".localized)
     }
 
     private func set(fee: String) {
