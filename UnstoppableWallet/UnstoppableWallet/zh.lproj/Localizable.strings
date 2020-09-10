@@ -25,6 +25,8 @@
 "alert.network_issue" = "网络问题。请稍后再试\n\n";
 "alert.unknown_error" = "未知错误";
 
+"action.loading" = "loading...";
+
 "n/a" = "不可用";
 
 "biometric_usage_reason" = "解锁钱包";
@@ -189,13 +191,13 @@
 "swap.token" = "令牌";
 "swap.proceed_button" = "继续";
 "swap.approve_button" = "批准";
-"swap.approve.description" = "You should grant a permission to a smart contract to execute the trade using your funds. This permission does not affect funds on your balance";
+"swap.approve.description" = "您应该为智能合约授予权限以便使用您的资金执行交易。此权限不会影响您余额中的资金";
 "swap.approving_button" = "审批中...";
 "swap.amount_error.maximum_amount" = "余额 %@";
 "swap.amount_error.no_balance" = "无法解析代币余额";
-"swap.trade_error.not_found" = "Can't swap this tokens";
-"swap.amount_error.insufficient_balance" = "Transaction amount with fees for paid is %@.";
-"swap.amount_error.insufficient_fee_alert" = "Transaction fees paid in %@. You need %@.";
+"swap.trade_error.not_found" = "无法交换代币";
+"swap.amount_error.insufficient_balance" = "含支付费用的交易金额为%@。";
+"swap.amount_error.insufficient_fee_alert" = "交易费用以%@支付。您需要%@。";
 
 "swap.price" = "价格";
 "swap.price_impact" = "价格影响";
@@ -213,7 +215,7 @@
 
 "swap.approve.title" = "批准";
 "swap.approve.subtitle" = "批准";
-"swap.approve.insufficient_fee_alert" = "Transaction fees for approve paid in %@. You need %@.";
+"swap.approve.insufficient_fee_alert" = "审批交易费用以%@支付。您需要%@。";
 
 
 // Swap Confirmation
@@ -606,4 +608,4 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "chart_alert.title" = "通知";
 "chart_alert.24h_description" = "24小时价格变动";
-"chart_alert.trend_description" = "Trend Change";
+"chart_alert.trend_description" = "趋势变化";
