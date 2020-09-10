@@ -116,7 +116,7 @@
 "balance.searching" = "Recherche des transactions…...";
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Synchronisation... %@";
-"balance.synced_through" = "jusqu'à: %@";
+"balance.synced_through" = "until %@";
 "balance.add_coin" = "Ajouter des coins";
 "balance.sort.header" = "Trier par";
 "balance.sort.valueHighToLow" = "Balance";
@@ -189,6 +189,7 @@
 "swap.token" = "Token";
 "swap.proceed_button" = "Continuer";
 "swap.approve_button" = "Approuver";
+"swap.approve.description" = "You should grant a permission to a smart contract to execute the trade using your funds. This permission does not affect funds on your balance";
 "swap.approving_button" = "Approving...";
 "swap.amount_error.maximum_amount" = "Balance %@";
 "swap.amount_error.no_balance" = "Can't parse balance for token";
@@ -602,4 +603,4 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 "chart_alert.title" = "Notifications";
 "chart_alert.24h_description" = "Changement de prix 24h";
-"chart_alert.trend_description" = "Changement de tendance de prix";
+"chart_alert.trend_description" = "Trend Change";
