@@ -88,22 +88,15 @@ extension SwapViewModel {
     }
 
     private func handle(errors: [Error]) {
-        var hasError = false
-
-        errors.forEach { (error: Error) -> () in print(error) }
+        balanceErrorRelay.accept(nil)
+        swapErrorRelay.accept(nil)
         errors.forEach { error in
             if case SwapValidationError.insufficientBalance = error {
-                hasError = true
                 balanceErrorRelay.accept(error)
             }
-            if case FeeModule.FeeError.insufficientAmountWithFeeBalance = error {
-                hasError = true
-                balanceErrorRelay.accept(error)
+            if case FeeModule.FeeError.insufficientFeeBalance = error {
+                showTradeError(error: error)
             }
-        }
-
-        if !hasError {
-            balanceErrorRelay.accept(nil)
         }
     }
 
@@ -116,6 +109,11 @@ extension SwapViewModel {
             return nil
         }
         return error
+    }
+
+    private func showTradeError(error: Error?) {
+        isTradeDataHiddenRelay.accept(error != nil)
+        swapErrorRelay.accept(error)
     }
 
     private func handle(tradeData: DataStatus<SwapModule.TradeItem>?) {
@@ -132,7 +130,8 @@ extension SwapViewModel {
             tradeViewItemRelay.accept(viewItem)
         }
 
-        swapErrorRelay.accept(resolveTrade(error: tradeData.error))
+        let resolved = resolveTrade(error: tradeData.error)
+        showTradeError(error: resolved)
     }
 
     private func handle(state: SwapModule.SwapState) {
@@ -169,8 +168,7 @@ extension SwapViewModel {
             return
         }
 
-        isTradeDataHiddenRelay.accept(state.error != nil)
-        swapErrorRelay.accept(state.error)
+        showTradeError(error: state.error)
     }
 
 }
