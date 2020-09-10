@@ -196,8 +196,7 @@
 "swap.amount_error.maximum_amount" = "Guthaben %@";
 "swap.amount_error.no_balance" = "Kann Saldo für Token nicht verarbeiten";
 "swap.trade_error.not_found" = "Diese Token sind nicht tauschbar";
-"swap.amount_error.insufficient_balance" = "Der Transaktionsbetrag mit Gebühren für die Zahlung beträgt %@.";
-"swap.amount_error.insufficient_fee_alert" = "Transaktionsgebühren in %@ bezahlt. Sie benötigen %@.";
+"swap.error.insufficient_fee_alert" = "Transaction fees paid in %@. You need %@.";
 
 "swap.price" = "Preis";
 "swap.price_impact" = "Preisauswirkungen";
