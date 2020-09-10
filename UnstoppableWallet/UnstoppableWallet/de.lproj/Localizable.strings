@@ -116,7 +116,7 @@
 "balance.searching" = "Transaktionen werden gesucht...";
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Synchronisieren... %@";
-"balance.synced_through" = "until %@";
+"balance.synced_through" = "bis %@";
 "balance.add_coin" = "Coins hinzufügen";
 "balance.sort.header" = "Sortieren nach";
 "balance.sort.valueHighToLow" = "Guthaben";
@@ -176,7 +176,7 @@
 
 // CoinSelector
 
-"choose_coin.title" = "Choose Coin";
+"choose_coin.title" = "Coins auswählen";
 
 // Swap
 
@@ -190,9 +190,9 @@
 "swap.proceed_button" = "Fortfahren";
 "swap.approve_button" = "Bestätigen";
 "swap.approve.description" = "You should grant a permission to a smart contract to execute the trade using your funds. This permission does not affect funds on your balance";
-"swap.approving_button" = "Approving...";
-"swap.amount_error.maximum_amount" = "Balance %@";
-"swap.amount_error.no_balance" = "Can't parse balance for token";
+"swap.approving_button" = "Wird bestätigt...";
+"swap.amount_error.maximum_amount" = "Guthaben %@";
+"swap.amount_error.no_balance" = "Kann Saldo für Token nicht verarbeiten";
 "swap.trade_error.not_found" = "Can't swap this tokens";
 "swap.amount_error.insufficient_balance" = "Transaction amount with fees for paid is %@.";
 "swap.amount_error.insufficient_fee_alert" = "Transaction fees paid in %@. You need %@.";
@@ -204,7 +204,7 @@
 "swap.minimum_got" = "Mindestens erhalten";
 
 "swap.fee" = "Tauschgebühr";
-"swap.transactions_speed" = "Transaction Speed";
+"swap.transactions_speed" = "Transaktionsgeschwindigkeit";
 "swap.transaction_fee" = "Transaktionsgebühr";
 
 "swap.select_token.title" = "Coins auswählen";
@@ -339,7 +339,7 @@
 
 "manage_coins.title" = "Coins auswählen";
 "manage_coins.add_token" = "Token hinzufügen";
-"manage_coins.search" = "Search";
+"manage_coins.search" = "Suche";
 "manage_coins.add_coin.title" = "%@ hinzufügen ";
 "manage_coins.add_coin.subtitle" = "%@ Wallet";
 "manage_coins.add_coin.text.set_up" = "Sie müssen das %@ Wallet einrichten, um %@ senden oder empfangen zu können.\n";
