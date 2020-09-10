@@ -116,7 +116,7 @@
 "balance.searching" = "Recherche des transactions…...";
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Synchronisation... %@";
-"balance.synced_through" = "until %@";
+"balance.synced_through" = "jusqu'à: %@";
 "balance.add_coin" = "Ajouter des coins";
 "balance.sort.header" = "Trier par";
 "balance.sort.valueHighToLow" = "Balance";
@@ -176,7 +176,7 @@
 
 // CoinSelector
 
-"choose_coin.title" = "Choose Coin";
+"choose_coin.title" = "Choisir la pièce";
 
 // Swap
 
@@ -190,9 +190,9 @@
 "swap.proceed_button" = "Continuer";
 "swap.approve_button" = "Approuver";
 "swap.approve.description" = "You should grant a permission to a smart contract to execute the trade using your funds. This permission does not affect funds on your balance";
-"swap.approving_button" = "Approving...";
+"swap.approving_button" = "En cours d'approbation...";
 "swap.amount_error.maximum_amount" = "Balance %@";
-"swap.amount_error.no_balance" = "Can't parse balance for token";
+"swap.amount_error.no_balance" = "Impossible d'analyser le solde pour le token";
 "swap.trade_error.not_found" = "Can't swap this tokens";
 "swap.amount_error.insufficient_balance" = "Transaction amount with fees for paid is %@.";
 "swap.amount_error.insufficient_fee_alert" = "Transaction fees paid in %@. You need %@.";
@@ -204,7 +204,7 @@
 "swap.minimum_got" = "Montant minimum reçu";
 
 "swap.fee" = "Frais d'échange";
-"swap.transactions_speed" = "Transaction Speed";
+"swap.transactions_speed" = "Vitesse de transaction ";
 "swap.transaction_fee" = "Frais de transaction";
 
 "swap.select_token.title" = "Choisir la pièce";
@@ -227,7 +227,7 @@
 "swap.uniswap_info.title" = "Uniswap v.2";
 "swap.uniswap_info.description" = "Uniswap est un protocole entièrement décentralisé pour la provision automatisée de liquidités sur Ethereum.\n\nUne simple équation formalisée entraîne une liquidité imparable pour des milliers d'utilisateurs et des centaines d'applications.\n\nUniswap permet aux développeurs, aux fournisseurs de liquidités et aux traders de participer à un marché financier ouvert et accessible à tous.";
 "swap.uniswap_info.header_minimum_received" = "Minimum reçu";
-"swap.uniswap_info.content_minimum_received" = "Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.";
+"swap.uniswap_info.content_minimum_received" = "Votre transaction sera reprise s'il y a un mouvement de prix important et défavorable avant de confirmer.";
 "swap.uniswap_info.header_price_impact" = "Impact prix";
 "swap.uniswap_info.content_price_impact" = "La différence entre le prix du marché et le prix estimé en raison de la taille des échanges.";
 "swap.uniswap_info.header_swap_fee" = "Frais d'échange";
@@ -339,7 +339,7 @@
 
 "manage_coins.title" = "Crypto Monnaie";
 "manage_coins.add_token" = "Ajouter le token";
-"manage_coins.search" = "Search";
+"manage_coins.search" = "Chercher";
 "manage_coins.add_coin.title" = "Ajouter %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Portefeuille";
 "manage_coins.add_coin.text.set_up" = "Vous devez créer un portefeuille %@ pour envoyer ou recevoir des %@.";
