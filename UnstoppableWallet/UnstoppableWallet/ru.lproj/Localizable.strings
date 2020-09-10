@@ -118,7 +118,7 @@
 "balance.searching" = "Поиск транзакций...";
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Синхронизация... %@";
-"balance.synced_through" = "до: %@";
+"balance.synced_through" = "until %@";
 "balance.add_coin" = "Добавить Токены";
 "balance.sort.header" = "Сортировать по";
 "balance.sort.valueHighToLow" = "Балансу";
@@ -191,6 +191,7 @@
 "swap.token" = "Токен";
 "swap.proceed_button" = "Продолжить";
 "swap.approve_button" = "Подтвердить";
+"swap.approve.description" = "You should grant a permission to a smart contract to execute the trade using your funds. This permission does not affect funds on your balance";
 "swap.approving_button" = "Approving...";
 "swap.amount_error.maximum_amount" = "Balance %@";
 "swap.amount_error.no_balance" = "Can't parse balance for token";
@@ -602,4 +603,4 @@
 
 "chart_alert.title" = "Уведомления ";
 "chart_alert.24h_description" = "Изменение цены 24 ч";
-"chart_alert.trend_description" = "Изменение Тенденции Цен";
+"chart_alert.trend_description" = "Trend Change";
