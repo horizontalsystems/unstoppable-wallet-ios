@@ -57,7 +57,7 @@ class FeeService {
         let coinValue = CoinValue(coin: feeCoin, value: fee)
 
         guard erc20Adapter.ethereumBalance >= fee else {
-            feeRelay.accept(.failed(FeeModule.FeeError.insufficientApproveFeeBalance(coinValue: coinValue)))
+            feeRelay.accept(.failed(FeeModule.FeeError.insufficientFeeBalance(coinValue: coinValue)))
             return
         }
 

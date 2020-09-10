@@ -241,8 +241,7 @@ class SwapService {
            let amount = amount(for: .exactIn),
            amount + fee.coinAmount.value > balance {
 
-            let coinValue = CoinValue(coin: fee.coinAmount.coin, value: amount + fee.coinAmount.value)
-            errors.append(FeeModule.FeeError.insufficientAmountWithFeeBalance(coinValue: coinValue))
+            errors.append(FeeModule.FeeError.insufficientFeeBalance(coinValue: fee.coinAmount))
         }
         if let feeError = feeState?.error {
             errors.append(feeError)
