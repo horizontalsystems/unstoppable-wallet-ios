@@ -189,13 +189,13 @@
 "swap.token" = "Token";
 "swap.proceed_button" = "Continuer";
 "swap.approve_button" = "Approuver";
-"swap.approve.description" = "You should grant a permission to a smart contract to execute the trade using your funds. This permission does not affect funds on your balance";
+"swap.approve.description" = "Vous devriez accorder à un contrat intelligent la permission d'exécuter l'opération en utilisant vos fonds. Cette autorisation n'affecte pas les fonds sur votre solde";
 "swap.approving_button" = "En cours d'approbation...";
 "swap.amount_error.maximum_amount" = "Balance %@";
 "swap.amount_error.no_balance" = "Impossible d'analyser le solde pour le token";
-"swap.trade_error.not_found" = "Can't swap this tokens";
+"swap.trade_error.not_found" = "Impossible d'échanger ces tokens";
 "swap.amount_error.insufficient_balance" = "Transaction amount with fees for paid is %@.";
-"swap.amount_error.insufficient_fee_alert" = "Transaction fees paid in %@. You need %@.";
+"swap.amount_error.insufficient_fee_alert" = "Frais de transaction payés en %@. Vous avez besoin de %@.";
 
 "swap.price" = "Prix";
 "swap.price_impact" = "Impact prix";
@@ -231,7 +231,7 @@
 "swap.uniswap_info.header_price_impact" = "Impact prix";
 "swap.uniswap_info.content_price_impact" = "La différence entre le prix du marché et le prix estimé en raison de la taille des échanges.";
 "swap.uniswap_info.header_swap_fee" = "Frais d'échange";
-"swap.uniswap_info.content_swap_fee" = "A portion of each trade (0.3%) goes to liquidity providers as a protocol incentive.";
+"swap.uniswap_info.content_swap_fee" = "Une fraction de chaque transaction (0,30 %) est versée aux fournisseurs de liquidité à titre d'incitation au protocole.";
 "swap.uniswap_info.link_button" = "Site Uniswap";
 
 // Transactions
