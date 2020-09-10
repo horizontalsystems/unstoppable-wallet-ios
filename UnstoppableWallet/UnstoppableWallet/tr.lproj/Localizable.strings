@@ -25,6 +25,8 @@
 "alert.network_issue" = "Ağ sorunu. Tekrar deneyin.";
 "alert.unknown_error" = "Bilinmeyen Hata";
 
+"action.loading" = "loading...";
+
 "n/a" = "N/A";
 
 "biometric_usage_reason" = "Cüzdan kilidini aç";
