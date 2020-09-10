@@ -25,6 +25,8 @@
 "alert.network_issue" = "Проблемы с сетью. Попробуйте еще раз";
 "alert.unknown_error" = "Неизвестная Ошибка";
 
+"action.loading" = "loading...";
+
 "n/a" = "Нет данных";
 
 "biometric_usage_reason" = "Разблокировать Кошелек";
