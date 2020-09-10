@@ -201,7 +201,7 @@ bch.horizontalsystems.xyz/apg";
 "swap.amount_error.maximum_amount" = "Balance %@";
 "swap.amount_error.no_balance" = "Can't parse balance for token";
 "swap.trade_error.not_found" = "Can't swap this tokens";
-"swap.amount_error.insufficient_balance" = "Transaction amount and recommended trasnaction fee exceeds available %@ balance.";
+"swap.amount_error.insufficient_balance" = "Transaction amount and recommended transaction fee exceeds available %@ balance.";
 "swap.amount_error.insufficient_fee_alert" = "Transaction fees paid in %@. You need %@.";
 
 "swap.price" = "Price";
