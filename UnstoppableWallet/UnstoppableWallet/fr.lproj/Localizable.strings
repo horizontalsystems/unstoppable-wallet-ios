@@ -25,6 +25,8 @@
 "alert.network_issue" = "Problèmes réseau. Réessayez";
 "alert.unknown_error" = "Erreur inconnue";
 
+"action.loading" = "loading...";
+
 "n/a" = "S. O.";
 
 "biometric_usage_reason" = "Déverrouiller le porte-monnaie";
@@ -603,4 +605,4 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 "chart_alert.title" = "Notifications";
 "chart_alert.24h_description" = "Changement de prix 24h";
-"chart_alert.trend_description" = "Trend Change";
+"chart_alert.trend_description" = "Changement de tendance";
