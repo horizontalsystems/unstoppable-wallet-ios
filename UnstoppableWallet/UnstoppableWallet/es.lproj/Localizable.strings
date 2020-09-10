@@ -116,7 +116,7 @@
 "balance.searching" = "Buscando transacciones…";
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Sincronizando... %@";
-"balance.synced_through" = "until %@";
+"balance.synced_through" = "hasta %@";
 "balance.add_coin" = "Añadir Monedas";
 "balance.sort.header" = "Ordenar por";
 "balance.sort.valueHighToLow" = "Saldo";
@@ -176,7 +176,7 @@
 
 // CoinSelector
 
-"choose_coin.title" = "Choose Coin";
+"choose_coin.title" = "Elegir moneda";
 
 // Swap
 
@@ -190,9 +190,9 @@
 "swap.proceed_button" = "Continuar";
 "swap.approve_button" = "Aprobar";
 "swap.approve.description" = "You should grant a permission to a smart contract to execute the trade using your funds. This permission does not affect funds on your balance";
-"swap.approving_button" = "Approving...";
-"swap.amount_error.maximum_amount" = "Balance %@";
-"swap.amount_error.no_balance" = "Can't parse balance for token";
+"swap.approving_button" = "Aprobando...";
+"swap.amount_error.maximum_amount" = "Saldo %@";
+"swap.amount_error.no_balance" = "No es posible analizar el saldo del token";
 "swap.trade_error.not_found" = "Can't swap this tokens";
 "swap.amount_error.insufficient_balance" = "Transaction amount with fees for paid is %@.";
 "swap.amount_error.insufficient_fee_alert" = "Transaction fees paid in %@. You need %@.";
@@ -204,7 +204,7 @@
 "swap.minimum_got" = "Mínimo Obtenido";
 
 "swap.fee" = "Tarifa por permutar";
-"swap.transactions_speed" = "Transaction Speed";
+"swap.transactions_speed" = "Velocidad de transacción";
 "swap.transaction_fee" = "Tarifa de Transacción";
 
 "swap.select_token.title" = "Elegir moneda";
@@ -231,7 +231,7 @@
 "swap.uniswap_info.header_price_impact" = "Impacto en el precio";
 "swap.uniswap_info.content_price_impact" = "La diferencia entre el precio de mercado y el precio estimado debido al tamaño de la operación.";
 "swap.uniswap_info.header_swap_fee" = "Tarifa por permutar";
-"swap.uniswap_info.content_swap_fee" = "A portion of each trade (0.3%) goes to liquidity providers as a protocol incentive.";
+"swap.uniswap_info.content_swap_fee" = "Una porción de cada transacción (0,30%) va a parar a los proveedores de liquidez como incentivo de protocolo.";
 "swap.uniswap_info.link_button" = "Website de Uniswap";
 
 // Transactions
@@ -339,7 +339,7 @@
 
 "manage_coins.title" = "Elegir monedas";
 "manage_coins.add_token" = "Añadir Token";
-"manage_coins.search" = "Search";
+"manage_coins.search" = "Buscar";
 "manage_coins.add_coin.title" = "Añadir %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Monedero";
 "manage_coins.add_coin.text.set_up" = "Necesitas configurar el monedero %@ para poder enviar o recibir %@.";
