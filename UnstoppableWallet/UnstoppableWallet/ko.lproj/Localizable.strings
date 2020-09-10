@@ -116,7 +116,7 @@
 "balance.searching" = "거래 검색 중...";
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "동기화 중... %@";
-"balance.synced_through" = "%@ 까지";
+"balance.synced_through" = "until %@";
 "balance.add_coin" = "코인 추가";
 "balance.sort.header" = "정렬 기준";
 "balance.sort.valueHighToLow" = "잔액";
@@ -189,6 +189,7 @@
 "swap.token" = "토큰";
 "swap.proceed_button" = "진행";
 "swap.approve_button" = "승인";
+"swap.approve.description" = "You should grant a permission to a smart contract to execute the trade using your funds. This permission does not affect funds on your balance";
 "swap.approving_button" = "승인 중...";
 "swap.amount_error.maximum_amount" = "잔액 %@";
 "swap.amount_error.no_balance" = "토큰을 위해 잔액을 파싱할 수 없습니다";
@@ -600,4 +601,4 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 "chart_alert.title" = "알림";
 "chart_alert.24h_description" = "가격 변동 24시간";
-"chart_alert.trend_description" = "가격 동향 변동";
+"chart_alert.trend_description" = "Trend Change";
