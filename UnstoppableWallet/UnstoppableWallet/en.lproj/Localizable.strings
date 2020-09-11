@@ -219,8 +219,6 @@ bch.horizontalsystems.xyz/apg";
 
 "swap.approve.title" = "Approve";
 "swap.approve.subtitle" = "Approve";
-"swap.approve.insufficient_fee_alert" = "Transaction fees for approve paid in %@. You need %@.";
-
 
 // Swap Confirmation
 
