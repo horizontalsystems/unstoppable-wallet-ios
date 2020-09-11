@@ -214,8 +214,6 @@
 
 "swap.approve.title" = "Approuver";
 "swap.approve.subtitle" = "Approuver";
-"swap.approve.insufficient_fee_alert" = "2. Frais de transaction pour le montant approuvé payé en %@. Vous avez besoin de %@.";
-
 
 // Swap Confirmation
 
