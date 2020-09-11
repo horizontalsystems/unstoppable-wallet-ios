@@ -25,7 +25,7 @@
 "alert.network_issue" = "Ağ sorunu. Tekrar deneyin.";
 "alert.unknown_error" = "Bilinmeyen Hata";
 
-"action.loading" = "loading...";
+"action.loading" = "yükleniyor...";
 
 "n/a" = "N/A";
 
@@ -196,7 +196,7 @@
 "swap.amount_error.maximum_amount" = "%@ Bakiye";
 "swap.amount_error.no_balance" = "Token için bakiye ayrıştırılamıyor";
 "swap.trade_error.not_found" = "Bu token swap edilemez";
-"swap.error.insufficient_fee_alert" = "Transaction fees paid in %@. You need %@.";
+"swap.error.insufficient_fee_alert" = "İşlem ücreti %@ hesabından ödenir. Asgari %@ gerekiyor.";
 
 "swap.price" = "Fiyat";
 "swap.price_impact" = "Fiyat Etkisi";
