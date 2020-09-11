@@ -214,8 +214,6 @@
 
 "swap.approve.title" = "批准";
 "swap.approve.subtitle" = "批准";
-"swap.approve.insufficient_fee_alert" = "审批交易费用以%@支付。您需要%@。";
-
 
 // Swap Confirmation
 
