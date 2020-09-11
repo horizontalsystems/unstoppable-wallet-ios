@@ -1,12 +1,12 @@
 protocol IRestoreCoinsView: class {
-    func set(featuredViewItems: [CoinToggleViewItem], viewItems: [CoinToggleViewItem])
+    func set(featuredViewItems: [CoinToggleViewModel.ViewItem], viewItems: [CoinToggleViewModel.ViewItem])
     func setRestoreButton(enabled: Bool)
 }
 
 protocol IRestoreCoinsViewDelegate {
     func onLoad()
-    func onEnable(viewItem: CoinToggleViewItem)
-    func onDisable(viewItem: CoinToggleViewItem)
+    func onEnable(viewItem: CoinToggleViewModel.ViewItem)
+    func onDisable(viewItem: CoinToggleViewModel.ViewItem)
     func onTapRestore()
 }
 

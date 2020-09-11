@@ -8,7 +8,7 @@ class WelcomeScreenRouter {
 extension WelcomeScreenRouter: IWelcomeScreenRouter {
 
     func showCreateWallet() {
-        viewController?.navigationController?.pushViewController(CreateWalletRouter.module(presentationMode: .initial), animated: true)
+        viewController?.navigationController?.pushViewController(CreateWalletModule.instance(presentationMode: .initial), animated: true)
     }
 
     func showRestoreWallet() {

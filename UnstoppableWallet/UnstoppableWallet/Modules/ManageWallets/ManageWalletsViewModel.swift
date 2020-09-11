@@ -6,7 +6,7 @@ class ManageWalletsViewModel {
     private let service: ManageWalletsService
 
     private let disposeBag = DisposeBag()
-    private let viewStateRelay = BehaviorRelay<ManageWalletsModule.ViewState>(value: .empty)
+    private let viewStateRelay = BehaviorRelay<CoinToggleViewModel.ViewState>(value: .empty)
     private let openDerivationSettingsRelay = PublishRelay<(coin: Coin, currentDerivation: MnemonicDerivation)>()
     private var filter: String?
 
@@ -23,8 +23,8 @@ class ManageWalletsViewModel {
         syncViewState()
     }
 
-    private func viewItem(item: ManageWalletsModule.Item) -> CoinToggleViewItem {
-        let state: CoinToggleViewItemState
+    private func viewItem(item: ManageWalletsService.Item) -> CoinToggleViewModel.ViewItem {
+        let state: CoinToggleViewModel.ViewItemState
 
         switch item.state {
         case .noAccount:
@@ -33,13 +33,13 @@ class ManageWalletsViewModel {
             state = .toggleVisible(enabled: hasWallet)
         }
 
-        return CoinToggleViewItem(
+        return CoinToggleViewModel.ViewItem(
                 coin: item.coin,
                 state: state
         )
     }
 
-    private func filtered(items: [ManageWalletsModule.Item]) -> [ManageWalletsModule.Item] {
+    private func filtered(items: [ManageWalletsService.Item]) -> [ManageWalletsService.Item] {
         guard let filter = filter else {
             return items
         }
@@ -49,10 +49,10 @@ class ManageWalletsViewModel {
         }
     }
 
-    private func syncViewState(state: ManageWalletsModule.State? = nil) {
+    private func syncViewState(state: ManageWalletsService.State? = nil) {
         let state = state ?? service.state
 
-        let viewState = ManageWalletsModule.ViewState(
+        let viewState = CoinToggleViewModel.ViewState(
                 featuredViewItems: filtered(items: state.featuredItems).map {
                     viewItem(item: $0)
                 },
@@ -79,14 +79,10 @@ class ManageWalletsViewModel {
 
 }
 
-extension ManageWalletsViewModel {
+extension ManageWalletsViewModel: ICoinToggleViewModel {
 
-    var viewStateDriver: Driver<ManageWalletsModule.ViewState> {
+    var viewStateDriver: Driver<CoinToggleViewModel.ViewState> {
         viewStateRelay.asDriver()
-    }
-
-    var openDerivationSettingsSignal: Signal<(coin: Coin, currentDerivation: MnemonicDerivation)> {
-        openDerivationSettingsRelay.asSignal()
     }
 
     func onEnable(coin: Coin) {
@@ -97,16 +93,24 @@ extension ManageWalletsViewModel {
         service.disable(coin: coin)
     }
 
-    func onSelect(derivationSetting: DerivationSetting, coin: Coin) {
-        enable(coin: coin, derivationSetting: derivationSetting)
-    }
-
     func onUpdate(filter: String?) {
         self.filter = filter
 
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             self?.syncViewState()
         }
+    }
+
+}
+
+extension ManageWalletsViewModel {
+
+    var openDerivationSettingsSignal: Signal<(coin: Coin, currentDerivation: MnemonicDerivation)> {
+        openDerivationSettingsRelay.asSignal()
+    }
+
+    func onSelect(derivationSetting: DerivationSetting, coin: Coin) {
+        enable(coin: coin, derivationSetting: derivationSetting)
     }
 
 }

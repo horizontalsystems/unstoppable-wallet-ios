@@ -5,8 +5,8 @@ import ThemeKit
 class RestoreCoinsViewController: ThemeViewController {
     private let delegate: IRestoreCoinsViewDelegate
 
-    private var featuredViewItems = [CoinToggleViewItem]()
-    private var viewItems = [CoinToggleViewItem]()
+    private var featuredViewItems = [CoinToggleViewModel.ViewItem]()
+    private var viewItems = [CoinToggleViewModel.ViewItem]()
 
     private let tableView = SectionsTableView(style: .grouped)
 
@@ -47,7 +47,7 @@ class RestoreCoinsViewController: ThemeViewController {
         delegate.onTapRestore()
     }
 
-    private func rows(viewItems: [CoinToggleViewItem]) -> [RowProtocol] {
+    private func rows(viewItems: [CoinToggleViewModel.ViewItem]) -> [RowProtocol] {
         viewItems.enumerated().map { (index, viewItem) in
             Row<CoinToggleCell>(
                     id: "coin_\(viewItem.coin.id)",
@@ -55,8 +55,7 @@ class RestoreCoinsViewController: ThemeViewController {
                     height: .heightDoubleLineCell,
                     bind: { [weak self] cell, _ in
                         cell.bind(
-                                coin: viewItem.coin,
-                                state: viewItem.state,
+                                viewItem: viewItem,
                                 last: index == viewItems.count - 1
                         ) { [weak self] enabled in
                             self?.onToggle(viewItem: viewItem, enabled: enabled)
@@ -66,7 +65,7 @@ class RestoreCoinsViewController: ThemeViewController {
         }
     }
 
-    private func onToggle(viewItem: CoinToggleViewItem, enabled: Bool) {
+    private func onToggle(viewItem: CoinToggleViewModel.ViewItem, enabled: Bool) {
         viewItem.state = .toggleVisible(enabled: enabled)
 
         if enabled {
@@ -100,7 +99,7 @@ extension RestoreCoinsViewController: SectionsDataSource {
 
 extension RestoreCoinsViewController: IRestoreCoinsView {
 
-    func set(featuredViewItems: [CoinToggleViewItem], viewItems: [CoinToggleViewItem]) {
+    func set(featuredViewItems: [CoinToggleViewModel.ViewItem], viewItems: [CoinToggleViewModel.ViewItem]) {
         self.featuredViewItems = featuredViewItems
         self.viewItems = viewItems
 

@@ -1,39 +1,25 @@
-protocol ICreateWalletView: class {
-    func setCancelButton(visible: Bool)
-    func set(featuredViewItems: [CoinToggleViewItem], viewItems: [CoinToggleViewItem])
-    func setCreateButton(enabled: Bool)
+import UIKit
+import ThemeKit
 
-    func show(error: Error)
-}
+struct CreateWalletModule {
 
-protocol ICreateWalletViewDelegate {
-    func onLoad()
+    static func instance(presentationMode: CreateWalletModule.PresentationMode, predefinedAccountType: PredefinedAccountType? = nil) -> UIViewController {
+        let service = CreateWalletService(
+                predefinedAccountType: predefinedAccountType,
+                coinManager: App.shared.coinManager,
+                accountCreator: App.shared.accountCreator,
+                accountManager: App.shared.accountManager,
+                walletManager: App.shared.walletManager,
+                derivationSettingsManager: App.shared.derivationSettingsManager
+        )
+        let viewModel = CreateWalletViewModel(service: service)
+        let viewController = CreateWalletViewController(viewModel: viewModel, presentationMode: presentationMode)
 
-    func onEnable(viewItem: CoinToggleViewItem)
-    func onDisable(viewItem: CoinToggleViewItem)
-
-    func onTapCreateButton()
-    func onTapCancelButton()
-}
-
-protocol ICreateWalletInteractor {
-    var coins: [Coin] { get }
-    var featuredCoins: [Coin] { get }
-
-    func account(predefinedAccountType: PredefinedAccountType) throws -> Account
-
-    func create(accounts: [Account])
-    func resetDerivationSettings()
-    func save(wallets: [Wallet])
-    func derivationSettings(coin: Coin) -> DerivationSetting?
-}
-
-protocol ICreateWalletRouter {
-    func showMain()
-    func close()
-}
-
-class CreateWalletModule {
+        switch presentationMode {
+        case .initial: return viewController
+        case .inApp: return ThemeNavigationController(rootViewController: viewController)
+        }
+    }
 
     enum PresentationMode {
         case initial

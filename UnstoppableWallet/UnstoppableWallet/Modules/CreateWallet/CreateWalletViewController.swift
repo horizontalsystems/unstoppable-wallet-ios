@@ -1,19 +1,19 @@
 import UIKit
 import SectionsTableView
+import SnapKit
 import ThemeKit
+import RxSwift
+import RxCocoa
 
-class CreateWalletViewController: ThemeViewController {
-    private let delegate: ICreateWalletViewDelegate
+class CreateWalletViewController: CoinToggleViewController {
+    private let viewModel: CreateWalletViewModel
+    private let presentationMode: CreateWalletModule.PresentationMode
 
-    private var featuredViewItems = [CoinToggleViewItem]()
-    private var viewItems = [CoinToggleViewItem]()
+    init(viewModel: CreateWalletViewModel, presentationMode: CreateWalletModule.PresentationMode) {
+        self.viewModel = viewModel
+        self.presentationMode = presentationMode
 
-    private let tableView = SectionsTableView(style: .grouped)
-
-    init(delegate: ICreateWalletViewDelegate) {
-        self.delegate = delegate
-
-        super.init()
+        super.init(viewModel: viewModel)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -24,108 +24,53 @@ class CreateWalletViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = "select_coins.choose_crypto".localized
+        searchController.searchBar.placeholder = "manage_coins.search".localized
 
+        if presentationMode == .inApp {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancelButton))
+        }
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "create_wallet.create_button".localized, style: .done, target: self, action: #selector(onTapCreateButton))
 
-        tableView.registerCell(forClass: CoinToggleCell.self)
-        tableView.sectionDataSource = self
+        viewModel.createEnabledDriver
+                .drive(onNext: { [weak self] enabled in
+                    self?.navigationItem.rightBarButtonItem?.isEnabled = enabled
+                })
+                .disposed(by: disposeBag)
 
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
+        viewModel.errorSignal
+                .emit(onNext: { error in
+                    HudHelper.instance.showError(title: error.smartDescription)
+                })
+                .disposed(by: disposeBag)
 
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+        viewModel.enableFailedSignal
+                .emit(onNext: { [weak self] coin in
+                    self?.revert(coin: coin)
+                })
+                .disposed(by: disposeBag)
+
+        viewModel.finishSignal
+                .emit(onNext: { [weak self] in
+                    self?.finish()
+                })
+                .disposed(by: disposeBag)
+    }
+
+    @objc private func onTapCancelButton() {
+        dismiss(animated: true)
+    }
+
+    @objc private func onTapCreateButton() {
+        viewModel.onTapCreate()
+    }
+
+    private func finish() {
+        switch presentationMode {
+        case .initial:
+            UIApplication.shared.keyWindow?.set(newRootController: MainModule.instance(selectedTab: .balance))
+        case .inApp:
+            dismiss(animated: true)
         }
-
-        delegate.onLoad()
-
-        tableView.buildSections()
-    }
-
-    @objc func onTapCreateButton() {
-        delegate.onTapCreateButton()
-    }
-
-    @objc func onTapCancelButton() {
-        delegate.onTapCancelButton()
-    }
-
-    private func rows(viewItems: [CoinToggleViewItem]) -> [RowProtocol] {
-        viewItems.enumerated().map { (index, viewItem) in
-            Row<CoinToggleCell>(
-                    id: "coin_\(viewItem.coin.id)",
-                    hash: "coin_\(viewItem.state)",
-                    height: .heightDoubleLineCell,
-                    autoDeselect: true,
-                    bind: { [weak self] cell, _ in
-                        cell.bind(
-                                coin: viewItem.coin,
-                                state: viewItem.state,
-                                last: index == viewItems.count - 1
-                        ) { [weak self] enabled in
-                            self?.onToggle(viewItem: viewItem, enabled: enabled)
-                        }
-                    }
-            )
-        }
-    }
-
-    private func onToggle(viewItem: CoinToggleViewItem, enabled: Bool) {
-        viewItem.state = .toggleVisible(enabled: enabled)
-
-        if enabled {
-            delegate.onEnable(viewItem: viewItem)
-        } else {
-            delegate.onDisable(viewItem: viewItem)
-        }
-    }
-
-}
-
-extension CreateWalletViewController: SectionsDataSource {
-
-    func buildSections() -> [SectionProtocol] {
-        [
-            Section(
-                    id: "featured_coins",
-                    headerState: .margin(height: .margin3x),
-                    footerState: .margin(height: .margin8x),
-                    rows: rows(viewItems: featuredViewItems)
-            ),
-            Section(
-                    id: "coins",
-                    footerState: .margin(height: .margin8x),
-                    rows: rows(viewItems: viewItems)
-            )
-        ]
-    }
-
-}
-
-extension CreateWalletViewController: ICreateWalletView {
-
-    func setCancelButton(visible: Bool) {
-        if visible {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancelButton))
-        } else {
-            navigationItem.leftBarButtonItem = nil
-        }
-    }
-
-    func set(featuredViewItems: [CoinToggleViewItem], viewItems: [CoinToggleViewItem]) {
-        self.featuredViewItems = featuredViewItems
-        self.viewItems = viewItems
-
-        tableView.reload()
-    }
-
-    func setCreateButton(enabled: Bool) {
-        navigationItem.rightBarButtonItem?.isEnabled = enabled
-    }
-
-    func show(error: Error) {
-        HudHelper.instance.showError(title: error.smartDescription)
     }
 
 }
