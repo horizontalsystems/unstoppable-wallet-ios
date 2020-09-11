@@ -214,8 +214,6 @@
 
 "swap.approve.title" = "Onayla";
 "swap.approve.subtitle" = "Onayla";
-"swap.approve.insufficient_fee_alert" = "Onay için işlem ücreti %@ hesabından ödenir. Asgari %@ gerekiyor.";
-
 
 // Swap Confirmation
 
