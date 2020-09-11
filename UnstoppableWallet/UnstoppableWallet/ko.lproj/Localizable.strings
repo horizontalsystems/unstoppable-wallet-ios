@@ -214,8 +214,6 @@
 
 "swap.approve.title" = "승인";
 "swap.approve.subtitle" = "승인";
-"swap.approve.insufficient_fee_alert" = "거래 수수료는 %@로 지불이 승인되었습니다. 귀하는 %@가 필요합니다.";
-
 
 // Swap Confirmation
 
