@@ -200,7 +200,7 @@ bch.horizontalsystems.xyz/apg";
 "swap.approving_button" = "Approving...";
 "swap.amount_error.maximum_amount" = "Balance %@";
 "swap.amount_error.no_balance" = "Can't parse balance for token";
-"swap.trade_error.not_found" = "Can't swap this tokens";
+"swap.trade_error.not_found" = "Can't swap these tokens";
 "swap.error.insufficient_fee_alert" = "Transaction fees paid in %@. You need %@.";
 
 "swap.price" = "Price";
@@ -219,8 +219,6 @@ bch.horizontalsystems.xyz/apg";
 
 "swap.approve.title" = "Approve";
 "swap.approve.subtitle" = "Approve";
-"swap.approve.insufficient_fee_alert" = "Transaction fees for approve paid in %@. You need %@.";
-
 
 // Swap Confirmation
 
