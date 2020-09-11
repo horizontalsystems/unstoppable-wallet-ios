@@ -25,7 +25,7 @@
 "alert.network_issue" = "Problemas de red. Inténtelo de nuevo";
 "alert.unknown_error" = "Error desconocido";
 
-"action.loading" = "loading...";
+"action.loading" = "cargando...";
 
 "n/a" = "N/A";
 
@@ -191,12 +191,12 @@
 "swap.token" = "Token";
 "swap.proceed_button" = "Continuar";
 "swap.approve_button" = "Aprobar";
-"swap.approve.description" = "You should grant a permission to a smart contract to execute the trade using your funds. This permission does not affect funds on your balance";
+"swap.approve.description" = "Usted debe conceder un permiso a un contrato inteligente para ejecutar la operación usando sus fondos. Este permiso no afecta a los fondos de su saldo";
 "swap.approving_button" = "Aprobando...";
 "swap.amount_error.maximum_amount" = "Saldo %@";
 "swap.amount_error.no_balance" = "No es posible analizar el saldo del token";
-"swap.trade_error.not_found" = "Can't swap this tokens";
-"swap.error.insufficient_fee_alert" = "Transaction fees paid in %@. You need %@.";
+"swap.trade_error.not_found" = "No se pueden permutar estos tokens";
+"swap.error.insufficient_fee_alert" = "Comisiones de transacción pagadas en %@. Es necesario %@.";
 
 "swap.price" = "Precio";
 "swap.price_impact" = "Impacto en el precio";
@@ -214,7 +214,7 @@
 
 "swap.approve.title" = "Aprobar";
 "swap.approve.subtitle" = "Aprobar";
-"swap.approve.insufficient_fee_alert" = "Transaction fees for approve paid in %@. You need %@.";
+"swap.approve.insufficient_fee_alert" = "Comisiones de transacción pagadas en %@. Es necesario %@.";
 
 
 // Swap Confirmation
@@ -228,7 +228,7 @@
 "swap.uniswap_info.title" = "Uniswap v.2";
 "swap.uniswap_info.description" = "Uniswap es un protocolo totalmente descentralizado para la provisión automatizada de liquidez en Ethereum.\n\nUna simple ecuación formalizada impulsa una liquidez imparable para miles de usuarios y cientos de aplicaciones.\n\nUniswap potencia a desarrolladores, proveedores de liquidez y operadores a participar en un mercado financiero abierto y accesible para todos.";
 "swap.uniswap_info.header_minimum_received" = "Mínimo Recibido";
-"swap.uniswap_info.content_minimum_received" = "Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.";
+"swap.uniswap_info.content_minimum_received" = "Su transacción se revertirá si hay un movimiento de precios grande y desfavorable antes de que se confirme.";
 "swap.uniswap_info.header_price_impact" = "Impacto en el precio";
 "swap.uniswap_info.content_price_impact" = "La diferencia entre el precio de mercado y el precio estimado debido al tamaño de la operación.";
 "swap.uniswap_info.header_swap_fee" = "Tarifa por permutar";
@@ -603,4 +603,4 @@ poner en peligro la seguridad de mis fondos.";
 
 "chart_alert.title" = "Notificación";
 "chart_alert.24h_description" = "Variación de Precio 24h";
-"chart_alert.trend_description" = "Trend Change";
+"chart_alert.trend_description" = "Variación de tendencia";
