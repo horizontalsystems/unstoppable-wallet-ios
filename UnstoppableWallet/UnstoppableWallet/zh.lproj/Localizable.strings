@@ -25,6 +25,8 @@
 "alert.network_issue" = "网络问题。请稍后再试\n\n";
 "alert.unknown_error" = "未知错误";
 
+"action.loading" = "正在加载...";
+
 "n/a" = "不可用";
 
 "biometric_usage_reason" = "解锁钱包";
@@ -116,7 +118,7 @@
 "balance.searching" = "正在搜索交易…...";
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "正在同步... %@";
-"balance.synced_through" = "直至：%@";
+"balance.synced_through" = "直到 %@";
 "balance.add_coin" = "添加代币";
 "balance.sort.header" = "排序方式";
 "balance.sort.valueHighToLow" = "余额";
@@ -174,16 +176,27 @@
 
 "send.lock_time" = "时间锁定";
 
+// CoinSelector
+
+"choose_coin.title" = "选择代币";
+
 // Swap
 
 "swap.title" = "掉期交易";
 "swap.you_pay" = "您支付";
 "swap.estimated" = "估计";
 "swap.balance" = "余额";
+"swap.allowance" = "补贴";
 "swap.you_get" = "您获得";
 "swap.token" = "令牌";
-"swap.proceed" = "继续";
-"swap.amount_error.maximum_amount" = "最大金额 %@";
+"swap.proceed_button" = "继续";
+"swap.approve_button" = "批准";
+"swap.approve.description" = "您应该为智能合约授予权限以便使用您的资金执行交易。此权限不会影响您余额中的资金";
+"swap.approving_button" = "审批中...";
+"swap.amount_error.maximum_amount" = "余额 %@";
+"swap.amount_error.no_balance" = "无法解析代币余额";
+"swap.trade_error.not_found" = "无法交换代币";
+"swap.error.insufficient_fee_alert" = "交易费用以%@支付。您需要%@。";
 
 "swap.price" = "价格";
 "swap.price_impact" = "价格影响";
@@ -196,6 +209,11 @@
 "swap.transaction_fee" = "交易费用";
 
 "swap.select_token.title" = "选择代币";
+
+// Swap Approving
+
+"swap.approve.title" = "批准";
+"swap.approve.subtitle" = "批准";
 
 // Swap Confirmation
 
@@ -212,7 +230,7 @@
 "swap.uniswap_info.header_price_impact" = "价格影响";
 "swap.uniswap_info.content_price_impact" = "市场价格和估计价格由于交易规模引起的差额。";
 "swap.uniswap_info.header_swap_fee" = "掉期交易费用";
-"swap.uniswap_info.content_swap_fee" = "每一交易的一部分（0.30%）将作为协议奖励授予流动性提供着。";
+"swap.uniswap_info.content_swap_fee" = "每一交易的一部分（0.3%) 将作为协议奖励授予流动性提供着。";
 "swap.uniswap_info.link_button" = "Uniswap网站";
 
 // Transactions
@@ -320,6 +338,7 @@
 
 "manage_coins.title" = "选择代币";
 "manage_coins.add_token" = "添加代币";
+"manage_coins.search" = "搜索​​​​";
 "manage_coins.add_coin.title" = "添加%@ ";
 "manage_coins.add_coin.subtitle" = "%@钱包";
 "manage_coins.add_coin.text.set_up" = "您必须创建%@钱包才能对%@进行转账或收款。";
@@ -586,4 +605,4 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "chart_alert.title" = "通知";
 "chart_alert.24h_description" = "24小时价格变动";
-"chart_alert.trend_description" = "价格趋势变动";
+"chart_alert.trend_description" = "趋势变化";

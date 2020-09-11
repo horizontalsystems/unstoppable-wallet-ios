@@ -25,6 +25,8 @@
 "alert.network_issue" = "네트워크에 문제가 있습니다. 잠시 후 다시 시도해 주세요";
 "alert.unknown_error" = "알수없는 오류";
 
+"action.loading" = "로딩중";
+
 "n/a" = "해당 없음 ";
 
 "biometric_usage_reason" = "지갑 잠금 해제";
@@ -174,16 +176,27 @@
 
 "send.lock_time" = "시간 자물쇠";
 
+// CoinSelector
+
+"choose_coin.title" = "코인 선택";
+
 // Swap
 
 "swap.title" = "스왑";
 "swap.you_pay" = "지불하기";
 "swap.estimated" = "예상";
 "swap.balance" = "잔액";
+"swap.allowance" = "허용량";
 "swap.you_get" = "얻기";
 "swap.token" = "토큰";
-"swap.proceed" = "진행";
-"swap.amount_error.maximum_amount" = "최대 금액 %@";
+"swap.proceed_button" = "진행";
+"swap.approve_button" = "승인";
+"swap.approve.description" = "귀하 귀하 의 자금을 이용하여 거래를 실행할 수 있도록 스마트 계약에 승인을 해야 합니다. 이 승인은 귀하의 잔액에 영향을 주지 않습니다.";
+"swap.approving_button" = "승인 중...";
+"swap.amount_error.maximum_amount" = "잔액 %@";
+"swap.amount_error.no_balance" = "토큰을 위해 잔액을 파싱할 수 없습니다";
+"swap.trade_error.not_found" = "이 토큰을 스왑할 수 없습니다";
+"swap.error.insufficient_fee_alert" = "거래 수수료는 %@로 지불되었습니다. 귀하는 %@가 필요합니다.";
 
 "swap.price" = "금액";
 "swap.price_impact" = "가격 영향";
@@ -196,6 +209,11 @@
 "swap.transaction_fee" = "거래 비용";
 
 "swap.select_token.title" = "코인 선택";
+
+// Swap Approving
+
+"swap.approve.title" = "승인";
+"swap.approve.subtitle" = "승인";
 
 // Swap Confirmation
 
@@ -212,7 +230,7 @@
 "swap.uniswap_info.header_price_impact" = "가격 영향";
 "swap.uniswap_info.content_price_impact" = "거래 규모에 따른 시장가격과 예상가격의 차이.";
 "swap.uniswap_info.header_swap_fee" = "스왑 비용";
-"swap.uniswap_info.content_swap_fee" = "각 거래의 일부(0.30%) 는 프로토콜 인센티브로 유동성 제공자에게 전달됩니다.";
+"swap.uniswap_info.content_swap_fee" = "각 거래의 일부(0.3%) 는 프로토콜 인센티브로 유동성 제공자에게 전달됩니다.";
 "swap.uniswap_info.link_button" = "Uniswap 사이트";
 
 // Transactions
@@ -320,6 +338,7 @@
 
 "manage_coins.title" = "코인 선택";
 "manage_coins.add_token" = "토큰 추가";
+"manage_coins.search" = "검색";
 "manage_coins.add_coin.title" = "%@ 추가 ";
 "manage_coins.add_coin.subtitle" = "%@ 지갑";
 "manage_coins.add_coin.text.set_up" = "귀하께서는 %@ 을 보내거나 받으시려면 %@ 지갑을 설정하셔야 합니다.";
@@ -581,4 +600,4 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 "chart_alert.title" = "알림";
 "chart_alert.24h_description" = "가격 변동 24시간";
-"chart_alert.trend_description" = "가격 동향 변동";
+"chart_alert.trend_description" = "동향 변화";

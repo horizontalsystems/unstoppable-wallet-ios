@@ -25,6 +25,8 @@
 "alert.network_issue" = "Es sind Netzwerkprobleme aufgetreten. Bitte versuchen Sie es erneut.";
 "alert.unknown_error" = "Unbekannter Fehler";
 
+"action.loading" = "wird geladen ...";
+
 "n/a" = "N/A";
 
 "biometric_usage_reason" = "Wallet entsperren";
@@ -116,7 +118,7 @@
 "balance.searching" = "Transaktionen werden gesucht...";
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Synchronisieren... %@";
-"balance.synced_through" = "bis: %@";
+"balance.synced_through" = "bis %@";
 "balance.add_coin" = "Coins hinzufügen";
 "balance.sort.header" = "Sortieren nach";
 "balance.sort.valueHighToLow" = "Guthaben";
@@ -174,16 +176,27 @@
 
 "send.lock_time" = "TimeLock";
 
+// CoinSelector
+
+"choose_coin.title" = "Coins auswählen";
+
 // Swap
 
 "swap.title" = "Tauschen";
 "swap.you_pay" = "Sie bezahlen";
 "swap.estimated" = "geschätzt";
 "swap.balance" = "Guthaben";
+"swap.allowance" = "Vergütung";
 "swap.you_get" = "Sie erhalten";
 "swap.token" = "Token";
-"swap.proceed" = "Fortfahren";
-"swap.amount_error.maximum_amount" = "Maximaler Betrag %@";
+"swap.proceed_button" = "Fortfahren";
+"swap.approve_button" = "Bestätigen";
+"swap.approve.description" = "Sie sollten einem intelligenten Vertrag die Erlaubnis erteilen, den Handel mit Ihrem Guthaben auszuführen. Diese Berechtigung wirkt sich nicht auf das Guthaben auf Ihrem Saldo aus";
+"swap.approving_button" = "Wird bestätigt...";
+"swap.amount_error.maximum_amount" = "Guthaben %@";
+"swap.amount_error.no_balance" = "Kann Saldo für Token nicht verarbeiten";
+"swap.trade_error.not_found" = "Diese Token sind nicht tauschbar";
+"swap.error.insufficient_fee_alert" = "Transaktionsgebühren in %@ bezahlt. Sie benötigen %@.";
 
 "swap.price" = "Preis";
 "swap.price_impact" = "Preisauswirkungen";
@@ -197,6 +210,11 @@
 
 "swap.select_token.title" = "Coins auswählen";
 
+// Swap Approving
+
+"swap.approve.title" = "Bestätigen";
+"swap.approve.subtitle" = "Bestätigen";
+
 // Swap Confirmation
 
 "swap.confirmation.title" = "Bestätigen";
@@ -208,11 +226,11 @@
 "swap.uniswap_info.title" = "Uniswap v.2";
 "swap.uniswap_info.description" = "Uniswap ist ein vollständig dezentralisiertes Protokoll zur automatisierten Liquiditätsbereitstellung für Ethereum.\n\nEine einfache festgeschriebene Gleichung treibt unaufhaltsame Liquidität für tausende Benutzer und hunderte Anwendungen an.\n\nUniswap ermöglicht Entwicklern, Liquiditätsanbietern und Händlern die Teilnahme an einem offenen und für alle zugänglichen Finanzmarkt.";
 "swap.uniswap_info.header_minimum_received" = "Mindestens erhalten";
-"swap.uniswap_info.content_minimum_received" = "Ihre Transaktion wird rückgängig gemacht, wenn es eine große, ungünstige Kursbewegung gibt, bevor sie bestätigt wird.";
+"swap.uniswap_info.content_minimum_received" = "Ihre Transaktion wird rückgängig gemacht, wenn es eine große, ungünstige Kursbewegung vor der Bestätigung gibt.";
 "swap.uniswap_info.header_price_impact" = "Preisauswirkungen";
 "swap.uniswap_info.content_price_impact" = "Die Differenz zwischen dem Marktpreis und dem geschätzten Preis aufgrund der Handelsgröße.";
 "swap.uniswap_info.header_swap_fee" = "Tauschgebühr";
-"swap.uniswap_info.content_swap_fee" = "Ein Teil jedes Handels (0,30%) geht als Protokollanreiz an Liquiditätsanbieter.";
+"swap.uniswap_info.content_swap_fee" = "Ein Teil jedes Handels (0,3%) geht als Protokollanreiz an Liquiditätsanbieter.";
 "swap.uniswap_info.link_button" = "Uniswap-Seite";
 
 // Transactions
@@ -320,6 +338,7 @@
 
 "manage_coins.title" = "Coins auswählen";
 "manage_coins.add_token" = "Token hinzufügen";
+"manage_coins.search" = "Suche";
 "manage_coins.add_coin.title" = "%@ hinzufügen ";
 "manage_coins.add_coin.subtitle" = "%@ Wallet";
 "manage_coins.add_coin.text.set_up" = "Sie müssen das %@ Wallet einrichten, um %@ senden oder empfangen zu können.\n";
@@ -585,4 +604,4 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 "chart_alert.title" = "Benachrichtigung";
 "chart_alert.24h_description" = "Preisänderung 24h";
-"chart_alert.trend_description" = "Preistrendänderung";
+"chart_alert.trend_description" = "Trendänderung";

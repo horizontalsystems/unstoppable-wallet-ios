@@ -25,6 +25,8 @@
 "alert.network_issue" = "Problemas de red. Inténtelo de nuevo";
 "alert.unknown_error" = "Error desconocido";
 
+"action.loading" = "cargando...";
+
 "n/a" = "N/A";
 
 "biometric_usage_reason" = "Desbloquear monedero";
@@ -116,7 +118,7 @@
 "balance.searching" = "Buscando transacciones…";
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Sincronizando... %@";
-"balance.synced_through" = "hasta: %@";
+"balance.synced_through" = "hasta %@";
 "balance.add_coin" = "Añadir Monedas";
 "balance.sort.header" = "Ordenar por";
 "balance.sort.valueHighToLow" = "Saldo";
@@ -174,16 +176,27 @@
 
 "send.lock_time" = "TimeLock";
 
+// CoinSelector
+
+"choose_coin.title" = "Elegir moneda";
+
 // Swap
 
 "swap.title" = "Permutar";
 "swap.you_pay" = "Usted paga";
 "swap.estimated" = "estimado";
 "swap.balance" = "Saldo";
+"swap.allowance" = "Permiso de acceso";
 "swap.you_get" = "Obtienes";
 "swap.token" = "Token";
-"swap.proceed" = "Continuar";
-"swap.amount_error.maximum_amount" = "Monto máximo %@";
+"swap.proceed_button" = "Continuar";
+"swap.approve_button" = "Aprobar";
+"swap.approve.description" = "Usted debe conceder un permiso a un contrato inteligente para ejecutar la operación usando sus fondos. Este permiso no afecta a los fondos de su saldo";
+"swap.approving_button" = "Aprobando...";
+"swap.amount_error.maximum_amount" = "Saldo %@";
+"swap.amount_error.no_balance" = "No es posible analizar el saldo del token";
+"swap.trade_error.not_found" = "No se pueden permutar estos tokens";
+"swap.error.insufficient_fee_alert" = "Comisiones de transacción pagadas en %@. Es necesario %@.";
 
 "swap.price" = "Precio";
 "swap.price_impact" = "Impacto en el precio";
@@ -192,10 +205,15 @@
 "swap.minimum_got" = "Mínimo Obtenido";
 
 "swap.fee" = "Tarifa por permutar";
-"swap.transactions_speed" = "Velocidad de transacciones";
+"swap.transactions_speed" = "Velocidad de transacción";
 "swap.transaction_fee" = "Tarifa de Transacción";
 
 "swap.select_token.title" = "Elegir moneda";
+
+// Swap Approving
+
+"swap.approve.title" = "Aprobar";
+"swap.approve.subtitle" = "Aprobar";
 
 // Swap Confirmation
 
@@ -320,6 +338,7 @@
 
 "manage_coins.title" = "Elegir monedas";
 "manage_coins.add_token" = "Añadir Token";
+"manage_coins.search" = "Buscar";
 "manage_coins.add_coin.title" = "Añadir %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Monedero";
 "manage_coins.add_coin.text.set_up" = "Necesitas configurar el monedero %@ para poder enviar o recibir %@.";
@@ -582,4 +601,4 @@ poner en peligro la seguridad de mis fondos.";
 
 "chart_alert.title" = "Notificación";
 "chart_alert.24h_description" = "Variación de Precio 24h";
-"chart_alert.trend_description" = "Variación de Tendencia de Precios";
+"chart_alert.trend_description" = "Variación de tendencia";

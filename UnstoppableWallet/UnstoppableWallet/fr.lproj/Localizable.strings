@@ -25,6 +25,8 @@
 "alert.network_issue" = "Problèmes réseau. Réessayez";
 "alert.unknown_error" = "Erreur inconnue";
 
+"action.loading" = "chargement en cours...";
+
 "n/a" = "S. O.";
 
 "biometric_usage_reason" = "Déverrouiller le porte-monnaie";
@@ -174,16 +176,27 @@
 
 "send.lock_time" = "TimeLock";
 
+// CoinSelector
+
+"choose_coin.title" = "Choisir la pièce";
+
 // Swap
 
 "swap.title" = "Echanger";
 "swap.you_pay" = "Vous payez";
 "swap.estimated" = "estimé";
 "swap.balance" = "Balance";
+"swap.allowance" = "Allocation";
 "swap.you_get" = "Vous recevez";
 "swap.token" = "Token";
-"swap.proceed" = "Continuer";
-"swap.amount_error.maximum_amount" = "Montant maximum %@";
+"swap.proceed_button" = "Continuer";
+"swap.approve_button" = "Approuver";
+"swap.approve.description" = "Vous devriez accorder à un contrat intelligent la permission d'exécuter l'opération en utilisant vos fonds. Cette autorisation n'affecte pas les fonds sur votre solde";
+"swap.approving_button" = "En cours d'approbation...";
+"swap.amount_error.maximum_amount" = "Balance %@";
+"swap.amount_error.no_balance" = "Impossible d'analyser le solde pour le token";
+"swap.trade_error.not_found" = "Impossible d'échanger ces tokens";
+"swap.error.insufficient_fee_alert" = "Frais de transaction payés en %@. Vous avez besoin de %@.";
 
 "swap.price" = "Prix";
 "swap.price_impact" = "Impact prix";
@@ -192,10 +205,15 @@
 "swap.minimum_got" = "Montant minimum reçu";
 
 "swap.fee" = "Frais d'échange";
-"swap.transactions_speed" = "Vitesse de transaction";
+"swap.transactions_speed" = "Vitesse de transaction ";
 "swap.transaction_fee" = "Frais de transaction";
 
 "swap.select_token.title" = "Choisir la pièce";
+
+// Swap Approving
+
+"swap.approve.title" = "Approuver";
+"swap.approve.subtitle" = "Approuver";
 
 // Swap Confirmation
 
@@ -320,6 +338,7 @@
 
 "manage_coins.title" = "Crypto Monnaie";
 "manage_coins.add_token" = "Ajouter le token";
+"manage_coins.search" = "Chercher";
 "manage_coins.add_coin.title" = "Ajouter %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Portefeuille";
 "manage_coins.add_coin.text.set_up" = "Vous devez créer un portefeuille %@ pour envoyer ou recevoir des %@.";
@@ -583,4 +602,4 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 "chart_alert.title" = "Notifications";
 "chart_alert.24h_description" = "Changement de prix 24h";
-"chart_alert.trend_description" = "Changement de tendance de prix";
+"chart_alert.trend_description" = "Changement de tendance";

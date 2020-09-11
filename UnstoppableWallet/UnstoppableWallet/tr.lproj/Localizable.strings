@@ -25,6 +25,8 @@
 "alert.network_issue" = "Ağ sorunu. Tekrar deneyin.";
 "alert.unknown_error" = "Bilinmeyen Hata";
 
+"action.loading" = "yükleniyor...";
+
 "n/a" = "N/A";
 
 "biometric_usage_reason" = "Cüzdan kilidini aç";
@@ -174,16 +176,27 @@
 
 "send.lock_time" = "TimeLock";
 
+// CoinSelector
+
+"choose_coin.title" = "Kripto Parayı Seç";
+
 // Swap
 
 "swap.title" = "Takas";
 "swap.you_pay" = "Ödediğiniz";
 "swap.estimated" = "tahmini";
 "swap.balance" = "Bakiye";
+"swap.allowance" = "Ödenek";
 "swap.you_get" = "Kazandığınız";
 "swap.token" = "Token";
-"swap.proceed" = "Devam";
-"swap.amount_error.maximum_amount" = "Maksimum miktar %@";
+"swap.proceed_button" = "İlerle";
+"swap.approve_button" = "Onayla";
+"swap.approve.description" = "Fonlarınızı kullanarak alım satımı gerçekleştirmek için bir akıllı sözleşmeye izin vermelisiniz. Bu izin bakiyenizdeki fonları etkilemez";
+"swap.approving_button" = "Onaylanıyor...";
+"swap.amount_error.maximum_amount" = "%@ Bakiye";
+"swap.amount_error.no_balance" = "Token için bakiye ayrıştırılamıyor";
+"swap.trade_error.not_found" = "Bu token swap edilemez";
+"swap.error.insufficient_fee_alert" = "İşlem ücreti %@ hesabından ödenir. Asgari %@ gerekiyor.";
 
 "swap.price" = "Fiyat";
 "swap.price_impact" = "Fiyat Etkisi";
@@ -196,6 +209,11 @@
 "swap.transaction_fee" = "İşlem Ücreti";
 
 "swap.select_token.title" = "Kripto Parayı Seç";
+
+// Swap Approving
+
+"swap.approve.title" = "Onayla";
+"swap.approve.subtitle" = "Onayla";
 
 // Swap Confirmation
 
@@ -213,7 +231,7 @@ Uniswap, Ethereum'da otomatik likidite tedariki için tamamen merkezi olmayan bi
 "swap.uniswap_info.header_price_impact" = "Fiyat Etkisi";
 "swap.uniswap_info.content_price_impact" = "Ticaret hacmine bağlı olarak piyasa fiyatı ile tahmini fiyat arasındaki fark.";
 "swap.uniswap_info.header_swap_fee" = "Takas Ücreti";
-"swap.uniswap_info.content_swap_fee" = "Her işlemin bir kısmı (% 0.30) bir protokol teşvik primi olarak likidite sağlayıcılarına gider.";
+"swap.uniswap_info.content_swap_fee" = "Her işlemin bir kısmı (% 0.3) bir protokol teşvik primi olarak likidite sağlayıcılarına gider.";
 "swap.uniswap_info.link_button" = "Uniswap Web Sitesi";
 
 // Transactions
@@ -321,6 +339,7 @@ Uniswap, Ethereum'da otomatik likidite tedariki için tamamen merkezi olmayan bi
 
 "manage_coins.title" = "Kripto Parayı Seç";
 "manage_coins.add_token" = "Token Ekle";
+"manage_coins.search" = "Ara";
 "manage_coins.add_coin.title" = "%@ ekle ";
 "manage_coins.add_coin.subtitle" = "%@ Cüzdanı";
 "manage_coins.add_coin.text.set_up" = "Ancak %@ cüzdanını ayarladıktan sonra %@ gönderebilir veya alabilirsiniz için.";
@@ -582,4 +601,4 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 "chart_alert.title" = "Bildirim";
 "chart_alert.24h_description" = "Fiyat Değişimi 24s";
-"chart_alert.trend_description" = "Fiyat Trend Değişimi";
+"chart_alert.trend_description" = "Trend Değişimi";
