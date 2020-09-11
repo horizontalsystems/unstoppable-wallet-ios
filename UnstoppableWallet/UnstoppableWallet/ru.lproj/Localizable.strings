@@ -25,7 +25,7 @@
 "alert.network_issue" = "Проблемы с сетью. Попробуйте еще раз";
 "alert.unknown_error" = "Неизвестная Ошибка";
 
-"action.loading" = "loading...";
+"action.loading" = "загрузка...";
 
 "n/a" = "Нет данных";
 
@@ -116,7 +116,7 @@
 "balance.swap" = "Обменять";
 "balance.deposit" = "Получить";
 "balance.rate_per_coin" = "%@ за %@";
-"balance.syncing" = "Идет синхронизация...";
+"balance.syncing" = "Синхронизация...";
 "balance.searching" = "Поиск транзакций...";
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Синхронизация... %@";
@@ -193,12 +193,12 @@
 "swap.token" = "Токен";
 "swap.proceed_button" = "Продолжить";
 "swap.approve_button" = "Подтвердить";
-"swap.approve.description" = "You should grant a permission to a smart contract to execute the trade using your funds. This permission does not affect funds on your balance";
+"swap.approve.description" = "Вы должны предоставить смарт-контракту разрешение на совершение сделки с использованием ваших средств. Это разрешение не влияет на средства на вашем балансе";
 "swap.approving_button" = "Подтверждение...";
 "swap.amount_error.maximum_amount" = "Баланс %@";
 "swap.amount_error.no_balance" = "Ошибка анализа баланса для токена";
-"swap.trade_error.not_found" = "Can't swap this tokens";
-"swap.error.insufficient_fee_alert" = "Transaction fees paid in %@. You need %@.";
+"swap.trade_error.not_found" = "Невозможно обменять эти токены";
+"swap.error.insufficient_fee_alert" = "Комиссии за транзакцию взимаются в %@. Вам требуется %@.";
 
 "swap.price" = "Цена";
 "swap.price_impact" = "Колебание Цен";
@@ -207,7 +207,7 @@
 "swap.minimum_got" = "Минимальная Выплата";
 
 "swap.fee" = "Комиссия за обмен";
-"swap.transactions_speed" = "Transaction Speed";
+"swap.transactions_speed" = "Скорость Транзакции";
 "swap.transaction_fee" = "Комиссия за транзакцию";
 
 "swap.select_token.title" = "Выберите Токен";
@@ -216,7 +216,7 @@
 
 "swap.approve.title" = "Подтвердить";
 "swap.approve.subtitle" = "Подтвердить";
-"swap.approve.insufficient_fee_alert" = "Transaction fees for approve paid in %@. You need %@.";
+"swap.approve.insufficient_fee_alert" = "Комиссия за одобрение транзакции взимается в %@. Вам требуется %@.";
 
 
 // Swap Confirmation
@@ -604,4 +604,4 @@
 
 "chart_alert.title" = "Уведомления ";
 "chart_alert.24h_description" = "Изменение цены 24 ч";
-"chart_alert.trend_description" = "Trend Change";
+"chart_alert.trend_description" = "Изменение Тренда";
