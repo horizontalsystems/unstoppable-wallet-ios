@@ -25,7 +25,7 @@
 "alert.network_issue" = "Es sind Netzwerkprobleme aufgetreten. Bitte versuchen Sie es erneut.";
 "alert.unknown_error" = "Unbekannter Fehler";
 
-"action.loading" = "loading...";
+"action.loading" = "wird geladen ...";
 
 "n/a" = "N/A";
 
@@ -196,7 +196,7 @@
 "swap.amount_error.maximum_amount" = "Guthaben %@";
 "swap.amount_error.no_balance" = "Kann Saldo für Token nicht verarbeiten";
 "swap.trade_error.not_found" = "Diese Token sind nicht tauschbar";
-"swap.error.insufficient_fee_alert" = "Transaction fees paid in %@. You need %@.";
+"swap.error.insufficient_fee_alert" = "Transaktionsgebühren in %@ bezahlt. Sie benötigen %@.";
 
 "swap.price" = "Preis";
 "swap.price_impact" = "Preisauswirkungen";
