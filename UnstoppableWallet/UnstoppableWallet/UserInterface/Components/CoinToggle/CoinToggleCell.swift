@@ -46,10 +46,12 @@ class CoinToggleCell: ThemeCell {
         super.init(coder: aDecoder)
     }
 
-    func bind(coin: Coin, state: CoinToggleViewItemState, last: Bool, onToggle: ((Bool) -> ())? = nil) {
+    func bind(viewItem: CoinToggleViewModel.ViewItem, last: Bool, onToggle: ((Bool) -> ())? = nil) {
+        let coin = viewItem.coin
+
         leftCoinView.bind(coinTitle: coin.title, coinCode: coin.code, blockchainType: coin.type.blockchainType)
 
-        switch state {
+        switch viewItem.state {
         case .toggleHidden:
             super.bind(last: last)
 

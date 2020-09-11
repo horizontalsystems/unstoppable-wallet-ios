@@ -10,9 +10,9 @@ class ManageWalletsService {
     private let disposeBag = DisposeBag()
     private var wallets = [Coin: Wallet]()
 
-    private let stateRelay = PublishRelay<ManageWalletsModule.State>()
+    private let stateRelay = PublishRelay<State>()
 
-    var state = ManageWalletsModule.State.empty {
+    var state = State.empty {
         didSet {
             stateRelay.accept(state)
         }
@@ -49,18 +49,18 @@ class ManageWalletsService {
         accountManager.accounts.first { coin.type.canSupport(accountType: $0.type) }
     }
 
-    private func item(coin: Coin) -> ManageWalletsModule.Item {
+    private func item(coin: Coin) -> Item {
         let hasWallet = wallets[coin] != nil
         let hasAccount = account(coin: coin) != nil
-        let state: ManageWalletsModule.ItemState = hasAccount ? .hasAccount(hasWallet: hasWallet) : .noAccount
-        return ManageWalletsModule.Item(coin: coin, state: state)
+        let state: ItemState = hasAccount ? .hasAccount(hasWallet: hasWallet) : .noAccount
+        return Item(coin: coin, state: state)
     }
 
     private func syncState() {
         let featuredCoins = coinManager.featuredCoins
         let coins = coinManager.coins.filter { !featuredCoins.contains($0) }
 
-        state = ManageWalletsModule.State(
+        state = State(
                 featuredItems: featuredCoins.map { item(coin: $0) },
                 items: coins.map { item(coin: $0) }
         )
@@ -70,7 +70,7 @@ class ManageWalletsService {
 
 extension ManageWalletsService {
 
-    var stateObservable: Observable<ManageWalletsModule.State> {
+    var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
 
@@ -109,6 +109,30 @@ extension ManageWalletsService {
 }
 
 extension ManageWalletsService {
+
+    struct State {
+        let featuredItems: [Item]
+        let items: [Item]
+
+        static var empty: State {
+            State(featuredItems: [], items: [])
+        }
+    }
+
+    struct Item {
+        let coin: Coin
+        var state: ItemState
+
+        init(coin: Coin, state: ItemState) {
+            self.coin = coin
+            self.state = state
+        }
+    }
+
+    enum ItemState: CustomStringConvertible {
+        case noAccount
+        case hasAccount(hasWallet: Bool)
+    }
 
     enum EnableCoinError: Error {
         case noAccount

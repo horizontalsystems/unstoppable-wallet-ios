@@ -19,9 +19,9 @@ class RestoreCoinsPresenter {
         coins.filter { $0.type.predefinedAccountType == predefinedAccountType }
     }
 
-    private func viewItem(coin: Coin) -> CoinToggleViewItem {
+    private func viewItem(coin: Coin) -> CoinToggleViewModel.ViewItem {
         let enabled = enabledCoins.contains(coin)
-        return CoinToggleViewItem(coin: coin, state: .toggleVisible(enabled: enabled))
+        return CoinToggleViewModel.ViewItem(coin: coin, state: .toggleVisible(enabled: enabled))
     }
 
     private func syncViewItems() {
@@ -52,7 +52,7 @@ extension RestoreCoinsPresenter: IRestoreCoinsViewDelegate {
         syncRestoreButton()
     }
 
-    func onEnable(viewItem: CoinToggleViewItem) {
+    func onEnable(viewItem: CoinToggleViewModel.ViewItem) {
         let coin = viewItem.coin
 
         if let setting = interactor.derivationSetting(coinType: coin.type) {
@@ -62,7 +62,7 @@ extension RestoreCoinsPresenter: IRestoreCoinsViewDelegate {
         }
     }
 
-    func onDisable(viewItem: CoinToggleViewItem) {
+    func onDisable(viewItem: CoinToggleViewModel.ViewItem) {
         enabledCoins.remove(viewItem.coin)
         syncRestoreButton()
     }
