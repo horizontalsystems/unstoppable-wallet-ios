@@ -24,7 +24,7 @@ class ManageWalletsViewController: CoinToggleViewController {
         super.viewDidLoad()
 
         title = "manage_coins.title".localized
-        searchController.searchBar.placeholder = "manage_coins.search".localized
+        searchController.searchBar.placeholder = "placeholder.search".localized
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(onTapDoneButton))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "manage_coins.add_token".localized, style: .plain, target: self, action: #selector(onTapAddTokenButton))

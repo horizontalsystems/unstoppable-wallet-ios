@@ -10,6 +10,9 @@ class CoinSelectViewController: ThemeViewController {
 
     private let viewModel: CoinSelectViewModel
     private let tableView = SectionsTableView(style: .grouped)
+    let searchController = UISearchController(searchResultsController: nil)
+
+    private var currentFilter: String?
 
     private var viewItems = [CoinBalanceViewItem]()
 
@@ -41,7 +44,28 @@ class CoinSelectViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
+        searchController.searchBar.placeholder = "placeholder.search".localized
+        searchController.obscuresBackgroundDuringPresentation = false
+
+        searchController.searchResultsUpdater = self
+        definesPresentationContext = true
+
         subscribe(disposeBag, viewModel.coinViewItems) { [weak self] in self?.handle(viewItems: $0) }
+    }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
+        navigationItem.searchController = searchController
+
+        if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
+            textField.textColor = .themeOz
+
+            if let leftView = textField.leftView as? UIImageView {
+                leftView.image = leftView.image?.withRenderingMode(.alwaysTemplate)
+                leftView.tintColor = .themeGray
+            }
+        }
     }
 
     @objc func onClose() {
@@ -91,6 +115,23 @@ extension CoinSelectViewController: SectionsDataSource {
                     rows: rows(viewItems: viewItems)
             )
         ]
+    }
+
+}
+
+extension CoinSelectViewController: UISearchResultsUpdating {
+
+    public func updateSearchResults(for searchController: UISearchController) {
+        var filter = searchController.searchBar.text?.trimmingCharacters(in: .whitespaces)
+
+        if filter == "" {
+            filter = nil
+        }
+
+        if filter != currentFilter {
+            currentFilter = filter
+            viewModel.onUpdate(filter: filter)
+        }
     }
 
 }

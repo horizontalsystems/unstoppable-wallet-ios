@@ -26,6 +26,7 @@
 "alert.unknown_error" = "Unknown Error";
 
 "action.loading" = "loading...";
+"placeholder.search" = "Search";
 
 "n/a" = "N/A";
 

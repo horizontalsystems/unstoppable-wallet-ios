@@ -39,7 +39,7 @@ class CreateWalletViewModel {
         }
 
         return items.filter { item in
-            item.coin.title.lowercased().contains(filter.lowercased()) || item.coin.code.lowercased().contains(filter.lowercased())
+            item.coin.title.localizedCaseInsensitiveContains(filter) || item.coin.code.localizedCaseInsensitiveContains(filter)
         }
     }
 
