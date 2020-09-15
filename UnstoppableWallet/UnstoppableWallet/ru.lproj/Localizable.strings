@@ -215,7 +215,7 @@
 // Swap Approving
 
 "swap.approve.title" = "Подтвердить";
-"swap.approve.subtitle" = "Подтвердить";
+"swap.approve.subtitle" = "Обмен";
 
 // Swap Confirmation
 
