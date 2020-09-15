@@ -213,7 +213,7 @@
 // Swap Approving
 
 "swap.approve.title" = "批准";
-"swap.approve.subtitle" = "批准";
+"swap.approve.subtitle" = "掉期交易";
 
 // Swap Confirmation
 
