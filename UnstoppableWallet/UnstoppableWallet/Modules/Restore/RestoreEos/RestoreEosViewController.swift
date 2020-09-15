@@ -47,10 +47,12 @@ class RestoreEosViewController: ThemeViewController {
         accountNameField.placeholder = "restore.placeholder.account_name".localized
 
         accountNameField.onPaste = { [weak self] in
-//            self?.delegate.onPasteAccountClicked()
+            let value = self?.paste(in: self?.accountNameField)
+            self?.viewModel.onEnter(account: value ?? "")
         }
         accountNameField.onDelete = { [weak self] in
-//            self?.delegate.onDeleteAccount()
+            self?.accountNameField.bind(text: nil, error: nil)
+            self?.viewModel.onEnter(account: "")
         }
         accountNameField.onTextChange = { [weak self] text in
             self?.viewModel.onEnter(account: text ?? "")
@@ -67,13 +69,15 @@ class RestoreEosViewController: ThemeViewController {
         accountPrivateKeyField.canEdit = false
 
         accountPrivateKeyField.onPaste = { [weak self] in
-//            self?.delegate.onPasteKeyClicked()
+            let value = self?.paste(in: self?.accountPrivateKeyField)
+            self?.viewModel.onEnter(privateKey: value ?? "")
         }
         accountPrivateKeyField.onScan = { [weak self] in
-//            self?.onScanQrCode()
+            self?.showScanQr()
         }
         accountPrivateKeyField.onDelete = { [weak self] in
-//            self?.delegate.onDeleteKey()
+            self?.accountPrivateKeyField.bind(text: nil, error: nil)
+            self?.viewModel.onEnter(privateKey: "")
         }
         accountPrivateKeyField.onTextChange = { [weak self] text in
             self?.viewModel.onEnter(privateKey: text ?? "")
@@ -109,6 +113,30 @@ class RestoreEosViewController: ThemeViewController {
 
     @objc private func cancelDidTap() {
         dismiss(animated: true)
+    }
+
+    @discardableResult private func paste(in field: InputField?) -> String? {
+        let value = UIPasteboard.general.string?.replacingOccurrences(of: "\n", with: " ")
+        field?.bind(text: value, error: nil)
+
+        return value
+    }
+
+    private func showScanQr() {
+        let controller = ScanQrRouter.module(delegate: self)
+        present(controller, animated: true)
+    }
+
+}
+
+extension RestoreEosViewController: IScanQrModuleDelegate {
+
+    func validate(string: String) throws {
+    }
+
+    func didScan(string: String) {
+        accountPrivateKeyField.bind(text: string, error: nil)
+        viewModel.onEnter(privateKey: string)
     }
 
 }
