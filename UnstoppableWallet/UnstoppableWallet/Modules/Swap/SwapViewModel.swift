@@ -5,6 +5,14 @@ import UniswapKit
 import CurrencyKit
 
 class SwapViewModel {
+    private enum ErrorType: Int, Comparable, Hashable {
+        case tradeData = 0, feeData, validation
+
+        static func <(lhs: ErrorType, rhs: ErrorType) -> Bool {
+            lhs.rawValue < rhs.rawValue
+        }
+    }
+
     private let disposeBag = DisposeBag()
 
     private let service: SwapService
@@ -27,6 +35,8 @@ class SwapViewModel {
     private var openApproveRelay = PublishRelay<SwapModule.ApproveData?>()
     private var openConfirmationRelay = PublishRelay<()>()
     private var closeRelay = PublishRelay<()>()
+
+    private var tradeErrorState = ContainerState<ErrorType, Error>()
 
     // Swap Module Presenters
     public var fromInputPresenter: BaseSwapInputPresenter {
@@ -77,6 +87,16 @@ class SwapViewModel {
 
 extension SwapViewModel {
 
+    private func updateTradeError(type: ErrorType, error: Error?) {
+        tradeErrorState.set(to: type, value: error)
+
+        let tradeDataEmpty = service.tradeDataState?.data == nil
+        let hideTrade = tradeErrorState.first != nil || tradeDataEmpty
+
+        isTradeDataHiddenRelay.accept(hideTrade)
+        swapErrorRelay.accept(tradeErrorState.first)
+    }
+
     private func handle(balance: Decimal?) {
         guard let balance = balance else {
             balanceRelay.accept(nil)
@@ -89,13 +109,13 @@ extension SwapViewModel {
 
     private func handle(errors: [Error]) {
         balanceErrorRelay.accept(nil)
-        swapErrorRelay.accept(nil)
+        updateTradeError(type: .validation, error: nil)
         errors.forEach { error in
             if case SwapValidationError.insufficientBalance = error {
                 balanceErrorRelay.accept(error)
             }
             if case FeeModule.FeeError.insufficientFeeBalance = error {
-                showTradeError(error: error)
+                updateTradeError(type: .validation, error: error)
             }
         }
     }
@@ -111,18 +131,12 @@ extension SwapViewModel {
         return error
     }
 
-    private func showTradeError(error: Error?) {
-        isTradeDataHiddenRelay.accept(error != nil)
-        swapErrorRelay.accept(error)
-    }
-
     private func handle(tradeData: DataStatus<SwapModule.TradeItem>?) {
         guard let tradeData = tradeData else {  // hide section without trade data
-            isTradeDataHiddenRelay.accept(true)
+            updateTradeError(type: .tradeData, error: nil)
             return
         }
 
-        isTradeDataHiddenRelay.accept(tradeData.isLoading || tradeData.error != nil)
         isLoadingRelay.accept(tradeData.isLoading)
 
         if let item = tradeData.data {      // show data
@@ -131,7 +145,7 @@ extension SwapViewModel {
         }
 
         let resolved = resolveTrade(error: tradeData.error)
-        showTradeError(error: resolved)
+        updateTradeError(type: .tradeData, error: resolved)
     }
 
     private func handle(state: SwapModule.SwapState) {
@@ -164,11 +178,7 @@ extension SwapViewModel {
     }
 
     func handle(feeState: DataStatus<SwapModule.SwapFeeInfo>?) {
-        guard let state = feeState else {
-            return
-        }
-
-        showTradeError(error: state.error)
+        updateTradeError(type: .feeData, error: feeState?.error)
     }
 
 }

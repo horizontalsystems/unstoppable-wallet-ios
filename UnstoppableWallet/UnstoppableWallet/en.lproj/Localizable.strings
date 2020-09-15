@@ -218,7 +218,7 @@ bch.horizontalsystems.xyz/apg";
 // Swap Approving
 
 "swap.approve.title" = "Approve";
-"swap.approve.subtitle" = "Approve";
+"swap.approve.subtitle" = "Swap";
 
 // Swap Confirmation
 
