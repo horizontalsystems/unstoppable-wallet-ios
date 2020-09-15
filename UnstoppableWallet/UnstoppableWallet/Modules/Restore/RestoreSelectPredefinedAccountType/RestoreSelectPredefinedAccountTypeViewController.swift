@@ -4,14 +4,18 @@ import SnapKit
 import SectionsTableView
 import ThemeKit
 
-class RestoreViewController: ThemeViewController {
-    private let delegate: IRestoreViewDelegate
+class RestoreSelectPredefinedAccountTypeViewController: ThemeViewController {
+    private let restoreView: RestoreView
+    private let viewModel: RestoreSelectPredefinedAccountTypeViewModel
 
     private let tableView = SectionsTableView(style: .grouped)
-    private var accountTypes = [AccountTypeViewItem]()
+    private let viewItems: [RestoreSelectPredefinedAccountTypeViewModel.ViewItem]
 
-    init(delegate: IRestoreViewDelegate) {
-        self.delegate = delegate
+    init(restoreView: RestoreView, viewModel: RestoreSelectPredefinedAccountTypeViewModel) {
+        self.restoreView = restoreView
+        self.viewModel = viewModel
+        viewItems = viewModel.viewItems
+
         super.init()
     }
 
@@ -23,9 +27,10 @@ class RestoreViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = "restore.title".localized
+
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "button.back".localized, style: .plain, target: nil, action: nil)
 
-        tableView.registerCell(forClass: RestoreAccountCell.self)
+        tableView.registerCell(forClass: RestoreSelectPredefinedAccountTypeCell.self)
         tableView.registerHeaderFooter(forClass: TopDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
@@ -37,30 +42,34 @@ class RestoreViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        delegate.viewDidLoad()
+        tableView.buildSections()
     }
 
     private var walletRows: [RowProtocol] {
-        accountTypes.enumerated().map { (index, accountType) in
-            Row<RestoreAccountCell>(
+        viewItems.enumerated().map { (index, viewItem) in
+            Row<RestoreSelectPredefinedAccountTypeCell>(
                     id: "wallet_\(index)_row",
                     autoDeselect: true,
-                    dynamicHeight: { [unowned self] _ in
-                        RestoreAccountCell.height(containerWidth: self.tableView.bounds.width, accountType: accountType)
+                    dynamicHeight: { containerWidth in
+                        RestoreSelectPredefinedAccountTypeCell.height(containerWidth: containerWidth, viewItem: viewItem)
                     },
                     bind: { cell, _ in
-                        cell.bind(accountType: accountType)
+                        cell.bind(viewItem: viewItem)
                     },
                     action: { [weak self] _ in
-                        self?.delegate.didSelect(index: index)
+                        self?.onSelect(index: index)
                     }
             )
         }
     }
 
+    private func onSelect(index: Int) {
+        restoreView.viewModel.onSelect(predefinedAccountType: viewItems[index].predefinedAccountType)
+    }
+
 }
 
-extension RestoreViewController: SectionsDataSource {
+extension RestoreSelectPredefinedAccountTypeViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         [
@@ -70,16 +79,6 @@ extension RestoreViewController: SectionsDataSource {
                     rows: walletRows
             )
         ]
-    }
-
-}
-
-extension RestoreViewController: IRestoreView {
-
-    func set(accountTypes: [AccountTypeViewItem]) {
-        self.accountTypes = accountTypes
-
-        tableView.reload()
     }
 
 }

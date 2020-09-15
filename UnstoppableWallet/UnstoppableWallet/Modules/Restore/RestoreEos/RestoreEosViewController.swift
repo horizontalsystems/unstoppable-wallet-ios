@@ -1,15 +1,19 @@
-import UIKit
-import SnapKit
 import ThemeKit
+import RxSwift
+import RxCocoa
 
 class RestoreEosViewController: ThemeViewController {
-    private let delegate: IRestoreEosViewDelegate
+    private let restoreView: RestoreView
+    private let viewModel: RestoreEosViewModel
 
     private let accountNameField = InputField()
     private let accountPrivateKeyField = InputField()
 
-    init(delegate: IRestoreEosViewDelegate) {
-        self.delegate = delegate
+    private let disposeBag = DisposeBag()
+
+    init(restoreView: RestoreView, viewModel: RestoreEosViewModel) {
+        self.restoreView = restoreView
+        self.viewModel = viewModel
 
         super.init()
     }
@@ -28,6 +32,12 @@ class RestoreEosViewController: ThemeViewController {
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(cancelDidTap))
         }
 
+        if restoreView.viewModel.selectCoins {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .plain, target: self, action: #selector(proceedDidTap))
+        } else {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.restore".localized, style: .done, target: self, action: #selector(proceedDidTap))
+        }
+
         view.addSubview(accountNameField)
         accountNameField.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
@@ -37,13 +47,13 @@ class RestoreEosViewController: ThemeViewController {
         accountNameField.placeholder = "restore.placeholder.account_name".localized
 
         accountNameField.onPaste = { [weak self] in
-            self?.delegate.onPasteAccountClicked()
+//            self?.delegate.onPasteAccountClicked()
         }
         accountNameField.onDelete = { [weak self] in
-            self?.delegate.onDeleteAccount()
+//            self?.delegate.onDeleteAccount()
         }
         accountNameField.onTextChange = { [weak self] text in
-            self?.delegate.onChange(account: text)
+            self?.viewModel.onEnter(account: text ?? "")
         }
 
         view.addSubview(accountPrivateKeyField)
@@ -57,16 +67,32 @@ class RestoreEosViewController: ThemeViewController {
         accountPrivateKeyField.canEdit = false
 
         accountPrivateKeyField.onPaste = { [weak self] in
-            self?.delegate.onPasteKeyClicked()
+//            self?.delegate.onPasteKeyClicked()
         }
         accountPrivateKeyField.onScan = { [weak self] in
-            self?.onScanQrCode()
+//            self?.onScanQrCode()
         }
         accountPrivateKeyField.onDelete = { [weak self] in
-            self?.delegate.onDeleteKey()
+//            self?.delegate.onDeleteKey()
+        }
+        accountPrivateKeyField.onTextChange = { [weak self] text in
+            self?.viewModel.onEnter(privateKey: text ?? "")
         }
 
-        delegate.viewDidLoad()
+        accountNameField.bind(text: viewModel.account, error: nil)
+        accountPrivateKeyField.bind(text: viewModel.privateKey, error: nil)
+
+        viewModel.accountTypeSignal
+                .emit(onNext: { [weak self] accountType in
+                    self?.restoreView.viewModel.onEnter(accountType: accountType)
+                })
+                .disposed(by: disposeBag)
+
+        viewModel.errorSignal
+                .emit(onNext: { error in
+                    HudHelper.instance.showError(title: error.localizedDescription)
+                })
+                .disposed(by: disposeBag)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -77,40 +103,12 @@ class RestoreEosViewController: ThemeViewController {
         }
     }
 
-    @objc func doneDidTap() {
-        delegate.didTapDone()
+    @objc private func proceedDidTap() {
+        viewModel.onProceed()
     }
 
-    @objc func cancelDidTap() {
-        delegate.didTapCancel()
-    }
-
-    private func onScanQrCode() {
-        delegate.didTapScanQr()
-    }
-
-}
-
-extension RestoreEosViewController: IRestoreEosView {
-
-    func showNextButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .plain, target: self, action: #selector(doneDidTap))
-    }
-
-    func showRestoreButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.restore".localized, style: .done, target: self, action: #selector(doneDidTap))
-    }
-
-    func set(account: String?) {
-        accountNameField.bind(text: account, error: nil)
-    }
-
-    func set(key: String?) {
-        accountPrivateKeyField.bind(text: key, error: nil)
-    }
-
-    func show(error: Error) {
-        HudHelper.instance.showError(title: error.smartDescription)
+    @objc private func cancelDidTap() {
+        dismiss(animated: true)
     }
 
 }

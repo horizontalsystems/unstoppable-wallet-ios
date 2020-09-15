@@ -1,19 +1,16 @@
 import RxSwift
-import RxRelay
 import RxCocoa
 
-class CreateWalletViewModel {
-    private let service: CreateWalletService
+class RestoreSelectCoinsViewModel {
+    private let service: RestoreSelectCoinsService
 
     private let disposeBag = DisposeBag()
     private let viewStateRelay = BehaviorRelay<CoinToggleViewModel.ViewState>(value: .empty)
-    private let errorRelay = PublishRelay<Error>()
-    private let enableFailedRelay = PublishRelay<Coin>()
-    private let finishRelay = PublishRelay<Void>()
-
+    private let openDerivationSettingsRelay = PublishRelay<(coin: Coin, currentDerivation: MnemonicDerivation)>()
+    private let enabledCoinsRelay = PublishRelay<[Coin]>()
     private var filter: String?
 
-    init(service: CreateWalletService) {
+    init(service: RestoreSelectCoinsService) {
         self.service = service
 
         service.stateObservable
@@ -26,14 +23,14 @@ class CreateWalletViewModel {
         syncViewState()
     }
 
-    private func viewItem(item: CreateWalletService.Item) -> CoinToggleViewModel.ViewItem {
+    private func viewItem(item: RestoreSelectCoinsService.Item) -> CoinToggleViewModel.ViewItem {
         CoinToggleViewModel.ViewItem(
                 coin: item.coin,
                 state: .toggleVisible(enabled: item.enabled)
         )
     }
 
-    private func filtered(items: [CreateWalletService.Item]) -> [CreateWalletService.Item] {
+    private func filtered(items: [RestoreSelectCoinsService.Item]) -> [RestoreSelectCoinsService.Item] {
         guard let filter = filter else {
             return items
         }
@@ -43,7 +40,7 @@ class CreateWalletViewModel {
         }
     }
 
-    private func syncViewState(state: CreateWalletService.State? = nil) {
+    private func syncViewState(state: RestoreSelectCoinsService.State? = nil) {
         let state = state ?? service.state
 
         let viewState = CoinToggleViewModel.ViewState(
@@ -58,21 +55,28 @@ class CreateWalletViewModel {
         viewStateRelay.accept(viewState)
     }
 
+    private func enable(coin: Coin, derivationSetting: DerivationSetting? = nil) {
+        do {
+            try service.enable(coin: coin, derivationSetting: derivationSetting)
+        } catch let error as RestoreSelectCoinsService.EnableCoinError {
+            switch error {
+            case .derivationNotConfirmed(let currentDerivation):
+                openDerivationSettingsRelay.accept((coin: coin, currentDerivation: currentDerivation))
+            }
+        } catch {
+        }
+    }
+
 }
 
-extension CreateWalletViewModel: ICoinToggleViewModel {
+extension RestoreSelectCoinsViewModel: ICoinToggleViewModel {
 
     var viewStateDriver: Driver<CoinToggleViewModel.ViewState> {
         viewStateRelay.asDriver()
     }
 
     func onEnable(coin: Coin) {
-        do {
-            try service.enable(coin: coin)
-        } catch {
-            errorRelay.accept(error.convertedError)
-            enableFailedRelay.accept(coin)
-        }
+        enable(coin: coin)
     }
 
     func onDisable(coin: Coin) {
@@ -89,31 +93,26 @@ extension CreateWalletViewModel: ICoinToggleViewModel {
 
 }
 
-extension CreateWalletViewModel {
+extension RestoreSelectCoinsViewModel {
 
-    var createEnabledDriver: Driver<Bool> {
-        service.canCreateObservable.asDriver(onErrorJustReturn: false)
+    var restoreEnabledDriver: Driver<Bool> {
+        service.canRestoreObservable.asDriver(onErrorJustReturn: false)
     }
 
-    var errorSignal: Signal<Error> {
-        errorRelay.asSignal()
+    var enabledCoinsSignal: Signal<[Coin]> {
+        enabledCoinsRelay.asSignal()
     }
 
-    var enableFailedSignal: Signal<Coin> {
-        enableFailedRelay.asSignal()
+    var openDerivationSettingsSignal: Signal<(coin: Coin, currentDerivation: MnemonicDerivation)> {
+        openDerivationSettingsRelay.asSignal()
     }
 
-    var finishSignal: Signal<Void> {
-        finishRelay.asSignal()
+    func onSelect(derivationSetting: DerivationSetting, coin: Coin) {
+        enable(coin: coin, derivationSetting: derivationSetting)
     }
 
-    func onCreate() {
-        do {
-            try service.create()
-            finishRelay.accept(())
-        } catch {
-            errorRelay.accept(error.convertedError)
-        }
+    func onRestore() {
+        enabledCoinsRelay.accept(Array(service.enabledCoins))
     }
 
 }

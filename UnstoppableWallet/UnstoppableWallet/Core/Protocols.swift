@@ -524,10 +524,6 @@ protocol IRemoteAlertManager {
     func checkScheduledRequests()
 }
 
-protocol IRestoreManager {
-    func createAccount(accountType: AccountType, coins: [Coin])
-}
-
 protocol IDerivationSettingsManager: AnyObject {
     var allActiveSettings: [(setting: DerivationSetting, wallets: [Wallet])] { get }
     func setting(coinType: CoinType) -> DerivationSetting?

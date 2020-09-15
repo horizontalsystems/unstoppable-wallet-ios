@@ -1,19 +1,23 @@
-class RestoreManager {
+class RestoreService {
     private let walletManager: IWalletManager
     private let accountCreator: IAccountCreator
     private let accountManager: IAccountManager
 
-    init(walletManager: IWalletManager, accountCreator: IAccountCreator, accountManager: IAccountManager) {
+    var predefinedAccountType: PredefinedAccountType?
+    var accountType: AccountType?
+
+    init(predefinedAccountType: PredefinedAccountType?, walletManager: IWalletManager, accountCreator: IAccountCreator, accountManager: IAccountManager) {
+        self.predefinedAccountType = predefinedAccountType
         self.walletManager = walletManager
         self.accountCreator = accountCreator
         self.accountManager = accountManager
     }
 
-}
+    func restoreAccount(coins: [Coin] = []) throws {
+        guard let accountType = accountType else {
+            throw RestoreError.noAccountType
+        }
 
-extension RestoreManager: IRestoreManager {
-
-    func createAccount(accountType: AccountType, coins: [Coin]) {
         let account = accountCreator.restoredAccount(accountType: accountType)
         accountManager.save(account: account)
 
@@ -25,6 +29,14 @@ extension RestoreManager: IRestoreManager {
             Wallet(coin: coin, account: account)
         }
         walletManager.save(wallets: wallets)
+    }
+
+}
+
+extension RestoreService {
+
+    enum RestoreError: Error {
+        case noAccountType
     }
 
 }

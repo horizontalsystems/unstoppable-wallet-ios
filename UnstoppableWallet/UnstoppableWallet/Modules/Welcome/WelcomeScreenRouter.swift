@@ -12,7 +12,9 @@ extension WelcomeScreenRouter: IWelcomeScreenRouter {
     }
 
     func showRestoreWallet() {
-        viewController?.navigationController?.pushViewController(RestoreRouter.module(), animated: true)
+        RestoreModule.start(mode: .push(navigationController: viewController?.navigationController)) {
+            UIApplication.shared.keyWindow?.set(newRootController: MainModule.instance(selectedTab: .balance))
+        }
     }
 
     func showPrivacySettings() {
