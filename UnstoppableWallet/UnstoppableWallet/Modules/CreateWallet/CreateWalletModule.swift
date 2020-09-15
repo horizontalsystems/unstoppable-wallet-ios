@@ -3,7 +3,7 @@ import ThemeKit
 
 struct CreateWalletModule {
 
-    static func instance(presentationMode: CreateWalletModule.PresentationMode, predefinedAccountType: PredefinedAccountType? = nil) -> UIViewController {
+    static func start(mode: ModuleStartMode, predefinedAccountType: PredefinedAccountType? = nil, onComplete: (() -> ())? = nil) {
         let service = CreateWalletService(
                 predefinedAccountType: predefinedAccountType,
                 coinManager: App.shared.coinManager,
@@ -13,17 +13,14 @@ struct CreateWalletModule {
                 derivationSettingsManager: App.shared.derivationSettingsManager
         )
         let viewModel = CreateWalletViewModel(service: service)
-        let viewController = CreateWalletViewController(viewModel: viewModel, presentationMode: presentationMode)
+        let view = CreateWalletViewController(viewModel: viewModel, onComplete: onComplete)
 
-        switch presentationMode {
-        case .initial: return viewController
-        case .inApp: return ThemeNavigationController(rootViewController: viewController)
+        switch mode {
+        case .push(let navigationController):
+            navigationController?.pushViewController(view, animated: true)
+        case .present(let viewController):
+            viewController?.present(ThemeNavigationController(rootViewController: view), animated: true)
         }
-    }
-
-    enum PresentationMode {
-        case initial
-        case inApp
     }
 
 }

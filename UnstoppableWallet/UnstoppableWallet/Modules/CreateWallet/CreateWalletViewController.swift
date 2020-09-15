@@ -7,11 +7,11 @@ import RxCocoa
 
 class CreateWalletViewController: CoinToggleViewController {
     private let viewModel: CreateWalletViewModel
-    private let presentationMode: CreateWalletModule.PresentationMode
+    private var onComplete: (() -> ())?
 
-    init(viewModel: CreateWalletViewModel, presentationMode: CreateWalletModule.PresentationMode) {
+    init(viewModel: CreateWalletViewModel, onComplete: (() -> ())? = nil) {
         self.viewModel = viewModel
-        self.presentationMode = presentationMode
+        self.onComplete = onComplete
 
         super.init(viewModel: viewModel)
     }
@@ -26,7 +26,7 @@ class CreateWalletViewController: CoinToggleViewController {
         title = "select_coins.choose_crypto".localized
         searchController.searchBar.placeholder = "placeholder.search".localized
 
-        if presentationMode == .inApp {
+        if navigationController?.viewControllers.first == self {
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancelButton))
         }
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "create_wallet.create_button".localized, style: .done, target: self, action: #selector(onTapCreateButton))
@@ -65,10 +65,9 @@ class CreateWalletViewController: CoinToggleViewController {
     }
 
     private func finish() {
-        switch presentationMode {
-        case .initial:
-            UIApplication.shared.keyWindow?.set(newRootController: MainModule.instance(selectedTab: .balance))
-        case .inApp:
+        if let onComplete = onComplete {
+            onComplete()
+        } else {
             dismiss(animated: true)
         }
     }

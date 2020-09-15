@@ -28,8 +28,7 @@ extension ManageAccountsRouter: IManageAccountsRouter {
     }
 
     func showCreateWallet(predefinedAccountType: PredefinedAccountType) {
-        let module = CreateWalletModule.instance(presentationMode: .inApp, predefinedAccountType: predefinedAccountType)
-        viewController?.present(module, animated: true)
+        CreateWalletModule.start(mode: .present(viewController: viewController), predefinedAccountType: predefinedAccountType)
     }
 
     func showRestore(predefinedAccountType: PredefinedAccountType) {
