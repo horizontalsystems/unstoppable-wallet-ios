@@ -3,17 +3,24 @@ import ThemeKit
 
 class WelcomeScreenRouter {
     weak var viewController: UIViewController?
+
+    private func reloadAppInterface() {
+        UIApplication.shared.keyWindow?.set(newRootController: MainModule.instance(selectedTab: .balance))
+    }
+
 }
 
 extension WelcomeScreenRouter: IWelcomeScreenRouter {
 
     func showCreateWallet() {
-        viewController?.navigationController?.pushViewController(CreateWalletModule.instance(presentationMode: .initial), animated: true)
+        CreateWalletModule.start(mode: .push(navigationController: viewController?.navigationController)) { [weak self] in
+            self?.reloadAppInterface()
+        }
     }
 
     func showRestoreWallet() {
-        RestoreModule.start(mode: .push(navigationController: viewController?.navigationController)) {
-            UIApplication.shared.keyWindow?.set(newRootController: MainModule.instance(selectedTab: .balance))
+        RestoreModule.start(mode: .push(navigationController: viewController?.navigationController)) { [weak self] in
+            self?.reloadAppInterface()
         }
     }
 

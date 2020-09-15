@@ -65,7 +65,7 @@ class RestoreView {
 
 extension RestoreView {
 
-    func start(mode: RestoreModule.StartMode) {
+    func start(mode: ModuleStartMode) {
         let initialViewController = viewController(screen: viewModel.initialScreen)
 
         switch mode {

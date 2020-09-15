@@ -282,6 +282,7 @@
 		11B35526BED48D17B07C3C46 /* ValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EFB45ECC2D403CA6C89 /* ValueFormatter.swift */; };
 		11B35529B2F5BEBC96A337BD /* TermsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351DAF31FBE0834EBC066 /* TermsInteractor.swift */; };
 		11B355331BBF243C9F63B407 /* ManageAccountsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CDAE70C1D4C434FE954 /* ManageAccountsPresenter.swift */; };
+		11B35537029FF1926663BE4C /* ModuleStartMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359E0A53A06E0C5EB5D61 /* ModuleStartMode.swift */; };
 		11B3553AB8EE1BDDA3E8D696 /* SortTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C480773A445DC5A88BD /* SortTypeViewController.swift */; };
 		11B3553D8942EEE330AFCDF1 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EB6A09E7FBB70B8966B /* Wallet.swift */; };
 		11B3553FDA37CFB48F991F9C /* Erc20ContractInfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350E7BDCE610339D35459 /* Erc20ContractInfoProvider.swift */; };
@@ -352,6 +353,7 @@
 		11B35652B7EE997B81F97445 /* PrivacySortModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350B690E2FF7D866E2591 /* PrivacySortModeViewController.swift */; };
 		11B3565591161D28409A3345 /* RateTopListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D12977C85EF258F84BF /* RateTopListInteractor.swift */; };
 		11B35659FCF3FB3579A206AD /* BitcoinHodlingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E4ABC64519982B2B9C1 /* BitcoinHodlingPresenter.swift */; };
+		11B3565CC4281C4445602E90 /* ModuleStartMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359E0A53A06E0C5EB5D61 /* ModuleStartMode.swift */; };
 		11B35667896D13573EFD0E97 /* PriceAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356B1873BCF37E0C42B09 /* PriceAlertManager.swift */; };
 		11B3566FA2A855E903F5A746 /* AccountRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E9B9C7A88B7584507DF /* AccountRecord.swift */; };
 		11B3567FCB0A136C731C9F6F /* TransactionsMetadataDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B491E721F1ECC600DAE203 /* TransactionsMetadataDataSource.swift */; };
@@ -868,6 +870,7 @@
 		11B35F21648179D3166B5538 /* ManageAccountsViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35987C48604FA6CB81C92 /* ManageAccountsViewItemFactory.swift */; };
 		11B35F22529AC536C77F06D3 /* BitcoinHodlingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E4ABC64519982B2B9C1 /* BitcoinHodlingPresenter.swift */; };
 		11B35F254B93A1608116F7B0 /* PrivacySyncModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3500621E6BB91F9CE181B /* PrivacySyncModeViewController.swift */; };
+		11B35F25EF8CFF0DF656F5FA /* ModuleStartMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359E0A53A06E0C5EB5D61 /* ModuleStartMode.swift */; };
 		11B35F28E234A3BC7A1548F2 /* PostsHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35AAC30EEE35CB283E6D5 /* PostsHeaderFooterView.swift */; };
 		11B35F318E009D7BCCCE1E1B /* AdapterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357F5E2BDAAAE4E5446E3 /* AdapterManager.swift */; };
 		11B35F33BC029E7CE784BAC2 /* BackupRequiredRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F9BB34006CA79F6C0D1 /* BackupRequiredRouter.swift */; };
@@ -2248,6 +2251,7 @@
 		11B359D88585F2BBFA56CB77 /* FeeRateProviderFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeRateProviderFactory.swift; sourceTree = "<group>"; };
 		11B359DAB464176D8EBFC8A0 /* GuideTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideTextView.swift; sourceTree = "<group>"; };
 		11B359DB9EEA8DC030338FAC /* SendAccountInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendAccountInteractor.swift; sourceTree = "<group>"; };
+		11B359E0A53A06E0C5EB5D61 /* ModuleStartMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleStartMode.swift; sourceTree = "<group>"; };
 		11B359E41531CEAB8D8823E1 /* NoAccountModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoAccountModule.swift; sourceTree = "<group>"; };
 		11B359FD5E4BE6F08D6EC16B /* SortTypeRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortTypeRouter.swift; sourceTree = "<group>"; };
 		11B35A05B93CB243B6404C4A /* IntroPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroPageView.swift; sourceTree = "<group>"; };
@@ -3418,6 +3422,7 @@
 				1A56462F0D6DFBC020710449 /* PriceAlertRequest.swift */,
 				1A56472CE6CCA8886C86151C /* PriceAlertRequestRecord.swift */,
 				2FA5D73DA43455B86DF104FE /* LogRecord.swift */,
+				11B359E0A53A06E0C5EB5D61 /* ModuleStartMode.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -5816,6 +5821,7 @@
 				11B356E866F4868AFA2E0E10 /* RestoreEosViewController.swift in Sources */,
 				11B35606D8A47F38B7E4FB83 /* RestoreEosService.swift in Sources */,
 				11B3581E67D335603C6E6742 /* RestoreEosViewModel.swift in Sources */,
+				11B35537029FF1926663BE4C /* ModuleStartMode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6520,6 +6526,7 @@
 				11B35D591F6FE0F196EBEE03 /* RestoreEosViewController.swift in Sources */,
 				11B353B3C7DB00A50342F2A6 /* RestoreEosService.swift in Sources */,
 				11B356FAD464E102B174F372 /* RestoreEosViewModel.swift in Sources */,
+				11B3565CC4281C4445602E90 /* ModuleStartMode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7186,6 +7193,7 @@
 				11B3557C858491A6559F85D9 /* RestoreEosViewController.swift in Sources */,
 				11B35B28AC132875F873E4B6 /* RestoreEosService.swift in Sources */,
 				11B35DDAD9BE80D749EFED49 /* RestoreEosViewModel.swift in Sources */,
+				11B35F25EF8CFF0DF656F5FA /* ModuleStartMode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
