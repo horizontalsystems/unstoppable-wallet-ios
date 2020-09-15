@@ -14,10 +14,8 @@ class NoAccountRouter {
 extension NoAccountRouter: INoAccountRouter {
 
     func closeAndShowRestore(predefinedAccountType: PredefinedAccountType) {
-        let controller = RestoreRouter.module(predefinedAccountType: predefinedAccountType, selectCoins: false)
-
         viewController?.dismiss(animated: true) { [weak self] in
-            self?.sourceViewController?.present(ThemeNavigationController(rootViewController: controller), animated: true)
+            RestoreModule.start(mode: .present(viewController: self?.sourceViewController), predefinedAccountType: predefinedAccountType, selectCoins: false)
         }
     }
 

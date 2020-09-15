@@ -1,35 +1,22 @@
-protocol IRestoreView: class {
-    func set(accountTypes: [AccountTypeViewItem])
+import ThemeKit
+
+struct RestoreModule {
+
+    static func start(mode: StartMode, predefinedAccountType: PredefinedAccountType? = nil, selectCoins: Bool = true, onComplete: (() -> ())? = nil) {
+        let service = RestoreService(predefinedAccountType: predefinedAccountType, walletManager: App.shared.walletManager, accountCreator: App.shared.accountCreator, accountManager: App.shared.accountManager)
+        let viewModel = RestoreViewModel(service: service, selectCoins: selectCoins)
+        let view = RestoreView(viewModel: viewModel, onComplete: onComplete)
+
+        view.start(mode: mode)
+    }
+
 }
 
-protocol IRestoreViewDelegate {
-    func viewDidLoad()
-    func didSelect(index: Int)
-}
+extension RestoreModule {
 
-protocol IRestoreRouter {
-    func showRestore(predefinedAccountType: PredefinedAccountType)
-}
+    enum StartMode {
+        case push(navigationController: UINavigationController?)
+        case present(viewController: UIViewController?)
+    }
 
-protocol IRestoreDelegate: AnyObject {
-    func didRestore(account: Account)
-}
-
-protocol IRestoreAccountTypeRouter {
-    func showSelectCoins(accountType: AccountType)
-    func showScanQr(delegate: IScanQrModuleDelegate)
-    func dismiss()
-}
-
-protocol IRestoreAccountTypeHandler {
-    var selectCoins: Bool { get }
-
-    func handle(accountType: AccountType)
-    func handleScanQr(delegate: IScanQrModuleDelegate)
-    func handleCancel()
-}
-
-struct AccountTypeViewItem {
-    let title: String
-    let coinCodes: String
 }

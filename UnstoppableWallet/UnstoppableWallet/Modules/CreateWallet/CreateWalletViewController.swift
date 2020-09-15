@@ -61,7 +61,7 @@ class CreateWalletViewController: CoinToggleViewController {
     }
 
     @objc private func onTapCreateButton() {
-        viewModel.onTapCreate()
+        viewModel.onCreate()
     }
 
     private func finish() {

@@ -83,7 +83,7 @@ extension CreateWalletService {
         stateRelay.asObservable()
     }
 
-    var canCrateObservable: Observable<Bool> {
+    var canCreateObservable: Observable<Bool> {
         canCreateRelay.asObservable()
     }
 

@@ -33,8 +33,7 @@ extension ManageAccountsRouter: IManageAccountsRouter {
     }
 
     func showRestore(predefinedAccountType: PredefinedAccountType) {
-        let module = RestoreRouter.module(predefinedAccountType: predefinedAccountType)
-        viewController?.present(ThemeNavigationController(rootViewController: module), animated: true)
+        RestoreModule.start(mode: .present(viewController: viewController), predefinedAccountType: predefinedAccountType)
     }
 
     func showSettings() {

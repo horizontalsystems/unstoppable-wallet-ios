@@ -65,7 +65,6 @@ class App {
     let initialSyncSettingsManager: IInitialSyncSettingsManager
     let derivationSettingsManager: IDerivationSettingsManager
     let ethereumRpcModeSettingsManager: IEthereumRpcModeSettingsManager
-    let restoreManager: IRestoreManager
 
     let transactionDataSortModeSettingManager: ITransactionDataSortModeSettingManager
 
@@ -143,7 +142,6 @@ class App {
         derivationSettingsManager = DerivationSettingsManager(walletManager: walletManager, adapterManager: adapterManager, storage: settingsStorage)
         initialSyncSettingsManager = InitialSyncSettingsManager(walletManager: walletManager, adapterManager: adapterManager, appConfigProvider: appConfigProvider, storage: settingsStorage)
         ethereumRpcModeSettingsManager = EthereumRpcModeSettingsManager(ethereumKitManager: ethereumKitManager, walletManager: walletManager, adapterManager: adapterManager, localStorage: localStorage)
-        restoreManager = RestoreManager(walletManager: walletManager, accountCreator: accountCreator, accountManager: accountManager)
 
         transactionDataSortModeSettingManager = TransactionDataSortModeSettingManager(storage: localStorage)
 
