@@ -140,7 +140,6 @@ class InputField: UIView {
         textView.text = text
 
         if let text = text, !text.isEmpty {
-            placeholderLabel.isHidden = true
             pasteButton.isHidden = true
             scanButton.isHidden = true
             deleteButton.isHidden = false
@@ -152,7 +151,6 @@ class InputField: UIView {
                 maker.trailing.equalTo(deleteButton.snp.leading).offset(-InputField.textMargin)
             }
         } else {
-            placeholderLabel.isHidden = false
             pasteButton.isHidden = false
             scanButton.isHidden = false || !showQrButton
             deleteButton.isHidden = true
@@ -168,6 +166,8 @@ class InputField: UIView {
                 }
             }
         }
+        updatePlaceholderVisibility()
+
 
         if let error = error {
             errorLabel.isHidden = false
@@ -192,12 +192,18 @@ class InputField: UIView {
         textView.becomeFirstResponder()
     }
 
+    private func updatePlaceholderVisibility() {
+        placeholderLabel.isHidden = !(textView.text?.isEmpty ?? true)
+    }
+
 }
 
 extension InputField: UITextViewDelegate {
 
     public func textViewDidChange(_ textView: UITextView) {
         onTextChange?(textView.text)
+
+        updatePlaceholderVisibility()
     }
 
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
