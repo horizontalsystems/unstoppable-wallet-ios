@@ -24,14 +24,13 @@ class InputFieldCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(placeholder: String? = nil, canEdit: Bool = true, text: String?, error: Error? = nil, onPaste: (() -> ())?, onDelete: (() -> ())?) {
+    func bind(placeholder: String? = nil, canEdit: Bool = true, error: Error? = nil, onTextChange: ((String?) -> ())?) {
         inputField.placeholder = placeholder
         inputField.canEdit = canEdit
 
-        inputField.bind(text: text, error: error)
+        inputField.bind(error: error)
 
-        inputField.onPaste = onPaste
-        inputField.onDelete = onDelete
+        inputField.onTextChange = onTextChange
     }
 
 }

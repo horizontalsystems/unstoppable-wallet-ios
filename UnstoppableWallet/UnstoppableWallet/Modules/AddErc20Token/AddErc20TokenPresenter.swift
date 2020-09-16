@@ -21,15 +21,22 @@ class AddErc20TokenPresenter {
 
 extension AddErc20TokenPresenter: IAddErc20TokenViewDelegate {
 
-    func onTapPasteAddress() {
-        guard let address = interactor.valueFromPasteboard else {
+    func onChange(address: String?) {
+        guard let address = address, !address.isEmpty else {
+            view?.set(error: nil)
+            view?.set(spinnerVisible: false)
+            view?.set(viewItem: nil)
+            view?.set(warningVisible: false)
+            view?.set(buttonVisible: false)
+
+            view?.refresh()
+
             return
         }
 
-        view?.set(address: address)
-
         do {
             try interactor.validate(address: address)
+            view?.set(error: nil)
         } catch {
             view?.set(error: error.convertedError)
 
@@ -50,17 +57,6 @@ extension AddErc20TokenPresenter: IAddErc20TokenViewDelegate {
         view?.refresh()
 
         interactor.fetchCoin(address: address)
-    }
-
-    func onTapDeleteAddress() {
-        view?.set(address: nil)
-        view?.set(error: nil)
-        view?.set(spinnerVisible: false)
-        view?.set(viewItem: nil)
-        view?.set(warningVisible: false)
-        view?.set(buttonVisible: false)
-
-        view?.refresh()
     }
 
     func onTapAddButton() {

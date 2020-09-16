@@ -1,12 +1,13 @@
+import UIKit
+
 protocol ISendAccountView: class {
-    func set(account: String?, error: Error?)
+    func set(error: Error?)
 }
 
 protocol ISendAccountViewDelegate {
-    func onScanClicked()
-    func onPasteClicked()
+    func onOpenScan(controller: UIViewController)
     func onChange(account: String?)
-    func onDeleteClicked()
+    func validateScan(string: String) throws
 }
 
 protocol ISendAccountInteractor {
@@ -27,5 +28,5 @@ protocol ISendAccountDelegate: class {
 }
 
 protocol ISendAccountRouter {
-    func scanQrCode(delegate: IScanQrModuleDelegate)
+    func openScanQrCode(controller: UIViewController)
 }

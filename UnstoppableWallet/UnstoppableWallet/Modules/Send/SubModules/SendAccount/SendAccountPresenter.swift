@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 class SendAccountPresenter {
     weak var view: ISendAccountView?
@@ -22,43 +22,33 @@ class SendAccountPresenter {
         do {
             try delegate?.validate(account: account)
 
-            view?.set(account: account, error: nil)
+            view?.set(error: nil)
             self.currentAccount = account
         } catch {
-            view?.set(account: account, error: error)
+            view?.set(error: error)
             self.currentAccount = nil
         }
-    }
-
-    private func onClear() {
-        view?.set(account: nil, error: nil)
-        currentAccount = nil
     }
 
 }
 
 extension SendAccountPresenter: ISendAccountViewDelegate {
 
-    func onScanClicked() {
-        router.scanQrCode(delegate: self)
-    }
-
-    func onPasteClicked() {
-        if let account = interactor.valueFromPasteboard {
-            onEnter(account: account)
-        }
+    func onOpenScan(controller: UIViewController) {
+        router.openScanQrCode(controller: controller)
     }
 
     func onChange(account: String?) {
         guard let account = account, !account.isEmpty else {
-            onClear()
+            currentAccount = nil
+            view?.set(error: nil)
             return
         }
         onEnter(account: account)
     }
 
-    func onDeleteClicked() {
-        onClear()
+    func validateScan(string: String) throws {
+        try delegate?.validate(account: string)
     }
 
 }
@@ -71,18 +61,6 @@ extension SendAccountPresenter: ISendAccountModule {
         }
 
         return validAccount
-    }
-
-}
-
-extension SendAccountPresenter: IScanQrModuleDelegate {
-
-    func validate(string: String) throws {
-        try delegate?.validate(account: string)
-    }
-
-    func didScan(string: String) {
-        onEnter(account: string)
     }
 
 }

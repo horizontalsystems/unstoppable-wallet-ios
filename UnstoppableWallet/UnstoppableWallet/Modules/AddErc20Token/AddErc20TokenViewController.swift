@@ -9,7 +9,6 @@ class AddErc20TokenViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    private var address: String?
     private var error: Error?
     private var spinnerVisible = false
     private var viewItem: AddErc20TokenModule.ViewItem?
@@ -54,10 +53,10 @@ class AddErc20TokenViewController: ThemeViewController {
         delegate.onTapCancel()
     }
 
-    private func inputFieldRow(address: String?, error: Error?) -> RowProtocol {
+    private func inputFieldRow(error: Error?) -> RowProtocol {
         Row<InputFieldCell>(
                 id: "input_field",
-                hash: address,
+                hash: error?.localizedDescription,
                 dynamicHeight: { containerWidth in
                     InputFieldCell.height(containerWidth: containerWidth, error: error)
                 },
@@ -65,13 +64,9 @@ class AddErc20TokenViewController: ThemeViewController {
                     cell.bind(
                             placeholder: "add_erc20_token.contract_address".localized,
                             canEdit: false,
-                            text: address,
                             error: error,
-                            onPaste: {
-                                self?.delegate.onTapPasteAddress()
-                            },
-                            onDelete: {
-                                self?.delegate.onTapDeleteAddress()
+                            onTextChange: {
+                                self?.delegate.onChange(address: $0)
                             }
                     )
                 }
@@ -129,7 +124,7 @@ class AddErc20TokenViewController: ThemeViewController {
 extension AddErc20TokenViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        var rows: [RowProtocol] = [inputFieldRow(address: address, error: error)]
+        var rows: [RowProtocol] = [inputFieldRow(error: error)]
 
         if spinnerVisible {
             rows.append(spinnerRow())
@@ -160,10 +155,6 @@ extension AddErc20TokenViewController: SectionsDataSource {
 }
 
 extension AddErc20TokenViewController: IAddErc20TokenView {
-
-    func set(address: String?) {
-        self.address = address
-    }
 
     func set(error: Error?) {
         self.error = error

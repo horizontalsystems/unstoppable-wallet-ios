@@ -25,9 +25,8 @@ class InputField: UIView {
         }
     }
 
-    var onPaste: (() -> ())?
-    var onScan: (() -> ())?
-    var onDelete: (() -> ())?
+    var openScan: ((UIViewController) -> ())?
+    var validateScan: ((String) throws -> ())?
     var onTextChange: ((String?) -> ())?
 
     init() {
@@ -103,15 +102,21 @@ class InputField: UIView {
     }
 
     @objc private func onTapPaste() {
-        onPaste?()
+        textView.text = UIPasteboard.general.string?.replacingOccurrences(of: "\n", with: " ")
+        onTextChange?(textView.text)
+
+        updateUi()
     }
 
     @objc private func onTapScan() {
-        onScan?()
+        openScan?(ScanQrRouter.module(delegate: self))
     }
 
     @objc private func onTapDelete() {
-        onDelete?()
+        textView.text = nil
+        onTextChange?(textView.text)
+
+        updateUi()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -139,36 +144,10 @@ class InputField: UIView {
     func bind(text: String?, error: Error?) {
         textView.text = text
 
-        if let text = text, !text.isEmpty {
-            pasteButton.isHidden = true
-            scanButton.isHidden = true
-            deleteButton.isHidden = false
+        bind(error: error)
+    }
 
-            wrapperView.snp.remakeConstraints { maker in
-                maker.leading.top.bottom.equalToSuperview().inset(InputField.textMargin)
-                maker.height.greaterThanOrEqualTo(InputField.textHeight)
-
-                maker.trailing.equalTo(deleteButton.snp.leading).offset(-InputField.textMargin)
-            }
-        } else {
-            pasteButton.isHidden = false
-            scanButton.isHidden = false || !showQrButton
-            deleteButton.isHidden = true
-
-            wrapperView.snp.remakeConstraints { maker in
-                maker.leading.top.bottom.equalToSuperview().inset(InputField.textMargin)
-                maker.height.greaterThanOrEqualTo(InputField.textHeight)
-
-                if showQrButton {
-                    maker.trailing.equalTo(scanButton.snp.leading).offset(-InputField.textMargin)
-                } else {
-                    maker.trailing.equalTo(pasteButton.snp.leading).offset(-InputField.textMargin)
-                }
-            }
-        }
-        updatePlaceholderVisibility()
-
-
+    func bind(error: Error?) {
         if let error = error {
             errorLabel.isHidden = false
             errorLabel.text = error.smartDescription
@@ -186,14 +165,44 @@ class InputField: UIView {
                 maker.edges.equalToSuperview()
             }
         }
+
+        updateUi()
     }
 
     @discardableResult override func becomeFirstResponder() -> Bool {
         textView.becomeFirstResponder()
     }
 
-    private func updatePlaceholderVisibility() {
-        placeholderLabel.isHidden = !(textView.text?.isEmpty ?? true)
+    private func updateUi() {
+        if let text = textView.text, !text.isEmpty {
+            pasteButton.isHidden = true
+            scanButton.isHidden = true
+            deleteButton.isHidden = false
+            placeholderLabel.isHidden = true
+
+            wrapperView.snp.remakeConstraints { maker in
+                maker.leading.top.bottom.equalToSuperview().inset(InputField.textMargin)
+                maker.height.greaterThanOrEqualTo(InputField.textHeight)
+
+                maker.trailing.equalTo(deleteButton.snp.leading).offset(-InputField.textMargin)
+            }
+        } else {
+            pasteButton.isHidden = false
+            scanButton.isHidden = false || !showQrButton
+            deleteButton.isHidden = true
+            placeholderLabel.isHidden = false
+
+            wrapperView.snp.remakeConstraints { maker in
+                maker.leading.top.bottom.equalToSuperview().inset(InputField.textMargin)
+                maker.height.greaterThanOrEqualTo(InputField.textHeight)
+
+                if showQrButton {
+                    maker.trailing.equalTo(scanButton.snp.leading).offset(-InputField.textMargin)
+                } else {
+                    maker.trailing.equalTo(pasteButton.snp.leading).offset(-InputField.textMargin)
+                }
+            }
+        }
     }
 
 }
@@ -203,7 +212,7 @@ extension InputField: UITextViewDelegate {
     public func textViewDidChange(_ textView: UITextView) {
         onTextChange?(textView.text)
 
-        updatePlaceholderVisibility()
+        updateUi()
     }
 
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -225,6 +234,21 @@ extension InputField {
         errorHeight = errorHeight.map { $0 + InputField.errorTopMargin }
 
         return InputField.textMargin * 2 + InputField.textHeight + (errorHeight ?? 0)
+    }
+
+}
+
+extension InputField: IScanQrModuleDelegate {
+
+    func validate(string: String) throws {
+        try validateScan?(string)
+    }
+
+    func didScan(string: String) {
+        textView.text = string
+        onTextChange?(textView.text)
+
+        updateUi()
     }
 
 }
