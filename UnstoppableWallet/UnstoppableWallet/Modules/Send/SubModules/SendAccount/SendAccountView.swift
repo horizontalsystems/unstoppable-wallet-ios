@@ -22,14 +22,11 @@ class SendAccountView: UIView {
         addressInputField.placeholder = "send.account_placeholder".localized
         addressInputField.showQrButton = true
 
-        addressInputField.onScan = { [weak self] in
-            self?.delegate.onScanClicked()
+        addressInputField.openScan = { [weak self] controller in
+            self?.delegate.onOpenScan(controller: controller)
         }
-        addressInputField.onPaste = { [weak self] in
-            self?.delegate.onPasteClicked()
-        }
-        addressInputField.onDelete = { [weak self] in
-            self?.delegate.onDeleteClicked()
+        addressInputField.validateScan = { [weak self] string in
+            try self?.delegate.validateScan(string: string)
         }
         addressInputField.onTextChange = { [weak self] address in
             self?.delegate.onChange(account: address)
@@ -44,8 +41,8 @@ class SendAccountView: UIView {
 
 extension SendAccountView: ISendAccountView {
 
-    func set(account: String?, error: Error?) {
-        addressInputField.bind(text: account, error: error)
+    func set(error: Error?) {
+        addressInputField.bind(error: error)
     }
 
 }

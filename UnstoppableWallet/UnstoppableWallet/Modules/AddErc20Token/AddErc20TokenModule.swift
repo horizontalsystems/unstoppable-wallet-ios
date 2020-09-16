@@ -1,5 +1,4 @@
 protocol IAddErc20TokenView: class {
-    func set(address: String?)
     func set(error: Error?)
     func set(spinnerVisible: Bool)
     func set(viewItem: AddErc20TokenModule.ViewItem?)
@@ -10,8 +9,7 @@ protocol IAddErc20TokenView: class {
 }
 
 protocol IAddErc20TokenViewDelegate {
-    func onTapPasteAddress()
-    func onTapDeleteAddress()
+    func onChange(address: String?)
     func onTapAddButton()
     func onTapCancel()
 }

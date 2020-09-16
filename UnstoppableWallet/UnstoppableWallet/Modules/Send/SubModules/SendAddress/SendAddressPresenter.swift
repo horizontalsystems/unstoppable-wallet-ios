@@ -32,21 +32,25 @@ class SendAddressPresenter {
 
 extension SendAddressPresenter: ISendAddressViewDelegate {
 
-    func onAddressScanClicked() {
-        router.scanQrCode(delegate: self)
+    func onOpenScan(controller: UIViewController) {
+        router.openScan(controller: controller)
     }
 
-    func onAddressPasteClicked() {
-        if let address = interactor.valueFromPasteboard {
-            onEnter(address: address)
+    func validateScan(string: String) throws {
+        let (parsedAddress, _) = interactor.parse(address: string)
+        try delegate?.validate(address: parsedAddress)
+    }
+
+    func onAddressChange(string: String?) {
+        guard let address = string, !address.isEmpty else {
+            view?.set(error: nil)
+            currentAddress = nil
+            enteredAddress = nil
+            delegate?.onUpdateAddress()
+
+            return
         }
-    }
-
-    func onAddressDeleteClicked() {
-        view?.set(address: nil, error: nil)
-        currentAddress = nil
-        enteredAddress = nil
-        delegate?.onUpdateAddress()
+        onEnter(address: address)
     }
 
 }
@@ -62,10 +66,10 @@ extension SendAddressPresenter: ISendAddressModule {
         do {
             try delegate?.validate(address: address)
             currentAddress = address
-            view?.set(address: address, error: nil)
+            view?.set(error: nil)
         } catch {
             currentAddress = nil
-            view?.set(address: address, error: error.convertedError)
+            view?.set(error: error.convertedError)
             throw error
         }
     }
@@ -76,19 +80,6 @@ extension SendAddressPresenter: ISendAddressModule {
         }
 
         return address
-    }
-
-}
-
-extension SendAddressPresenter: IScanQrModuleDelegate {
-
-    func validate(string: String) throws {
-        let (parsedAddress, _) = interactor.parse(address: string)
-        try delegate?.validate(address: parsedAddress)
-    }
-
-    func didScan(string: String) {
-        onEnter(address: string)
     }
 
 }

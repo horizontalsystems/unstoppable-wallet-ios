@@ -24,14 +24,14 @@ class SendAddressView: UIView {
         addressInputField.showQrButton = true
         addressInputField.canEdit = false
 
-        addressInputField.onScan = { [weak self] in
-            self?.delegate.onAddressScanClicked()
+        addressInputField.openScan = { [weak self] controller in
+            self?.delegate.onOpenScan(controller: controller)
         }
-        addressInputField.onPaste = { [weak self] in
-            self?.delegate.onAddressPasteClicked()
+        addressInputField.validateScan = { [weak self] string in
+            try self?.delegate.validateScan(string: string)
         }
-        addressInputField.onDelete = { [weak self] in
-            self?.delegate.onAddressDeleteClicked()
+        addressInputField.onTextChange = { [weak self] string in
+            self?.delegate.onAddressChange(string: string)
         }
     }
 
@@ -43,8 +43,8 @@ class SendAddressView: UIView {
 
 extension SendAddressView: ISendAddressView {
 
-    func set(address: String?, error: Error?) {
-        addressInputField.bind(text: address, error: error)
+    func set(error: Error?) {
+        addressInputField.bind(error: error)
     }
 
 }

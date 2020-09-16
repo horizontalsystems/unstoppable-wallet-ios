@@ -1,13 +1,13 @@
-import Foundation
+import UIKit
 
 protocol ISendAddressView: class {
-    func set(address: String?, error: Error?)
+    func set(error: Error?)
 }
 
 protocol ISendAddressViewDelegate {
-    func onAddressScanClicked()
-    func onAddressPasteClicked()
-    func onAddressDeleteClicked()
+    func onOpenScan(controller: UIViewController)
+    func validateScan(string: String) throws
+    func onAddressChange(string: String?)
 }
 
 protocol ISendAddressInteractor {
@@ -31,5 +31,5 @@ protocol ISendAddressDelegate: class {
 }
 
 protocol ISendAddressRouter {
-    func scanQrCode(delegate: IScanQrModuleDelegate)
+    func openScan(controller: UIViewController)
 }
