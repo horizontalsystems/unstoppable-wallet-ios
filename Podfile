@@ -6,13 +6,13 @@ inhibit_all_warnings!
 project 'UnstoppableWallet/UnstoppableWallet'
 
 def appPods
-  pod 'BitcoinKit.swift', '0.15.0'
-  pod 'LitecoinKit.swift', '0.15.0'
-  pod 'BitcoinCashKit.swift', '0.15.0'
-  pod 'DashKit.swift', '0.15.0'
-  pod 'Hodler.swift', '0.15.0'
+  pod 'BitcoinKit.swift', '0.15.1'
+  pod 'LitecoinKit.swift', '0.15.1'
+  pod 'BitcoinCashKit.swift', '0.15.1'
+  pod 'DashKit.swift', '0.15.1'
+  pod 'Hodler.swift', '0.15.1'
 
-  pod 'BitcoinCore.swift', '0.15.0'
+  pod 'BitcoinCore.swift', '0.15.1'
 
   pod 'EthereumKit.swift', '0.11.0'
   pod 'Erc20Kit.swift', '0.11.0'
