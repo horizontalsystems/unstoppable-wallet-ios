@@ -1,7 +1,7 @@
 class InitialSyncSettingsManager {
     private let supportedCoinTypes = [
         SupportedCoinType(coinType: .bitcoin, defaultSyncMode: .fast, changeable: true),
-        SupportedCoinType(coinType: .bitcoinCash, defaultSyncMode: .slow, changeable: false),
+        SupportedCoinType(coinType: .bitcoinCash, defaultSyncMode: .fast, changeable: true),
         SupportedCoinType(coinType: .dash, defaultSyncMode: .fast, changeable: true),
         SupportedCoinType(coinType: .litecoin, defaultSyncMode: .fast, changeable: true),
     ]
