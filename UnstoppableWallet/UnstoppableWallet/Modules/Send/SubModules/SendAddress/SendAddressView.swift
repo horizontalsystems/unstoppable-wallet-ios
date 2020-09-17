@@ -27,9 +27,6 @@ class SendAddressView: UIView {
         addressInputField.openScan = { [weak self] controller in
             self?.delegate.onOpenScan(controller: controller)
         }
-        addressInputField.validateScan = { [weak self] string in
-            try self?.delegate.validateScan(string: string)
-        }
         addressInputField.onTextChange = { [weak self] string in
             self?.delegate.onAddressChange(string: string)
         }
