@@ -3,7 +3,6 @@ import Foundation
 protocol IScanQrView: class {
     func start()
     func stop()
-    func set(error: Error)
 }
 
 protocol IScanQrViewDelegate {
@@ -16,6 +15,5 @@ protocol IScanQrRouter {
 }
 
 protocol IScanQrModuleDelegate {
-    func validate(string: String) throws
     func didScan(string: String)
 }

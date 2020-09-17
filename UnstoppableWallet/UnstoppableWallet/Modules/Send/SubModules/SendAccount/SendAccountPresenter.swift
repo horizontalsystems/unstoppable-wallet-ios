@@ -47,10 +47,6 @@ extension SendAccountPresenter: ISendAccountViewDelegate {
         onEnter(account: account)
     }
 
-    func validateScan(string: String) throws {
-        try delegate?.validate(account: string)
-    }
-
 }
 
 extension SendAccountPresenter: ISendAccountModule {

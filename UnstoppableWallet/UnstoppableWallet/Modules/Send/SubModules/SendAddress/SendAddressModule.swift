@@ -6,7 +6,6 @@ protocol ISendAddressView: class {
 
 protocol ISendAddressViewDelegate {
     func onOpenScan(controller: UIViewController)
-    func validateScan(string: String) throws
     func onAddressChange(string: String?)
 }
 

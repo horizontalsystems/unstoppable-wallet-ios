@@ -26,7 +26,6 @@ class InputField: UIView {
     }
 
     var openScan: ((UIViewController) -> ())?
-    var validateScan: ((String) throws -> ())?
     var onTextChange: ((String?) -> ())?
 
     init() {
@@ -239,10 +238,6 @@ extension InputField {
 }
 
 extension InputField: IScanQrModuleDelegate {
-
-    func validate(string: String) throws {
-        try validateScan?(string)
-    }
 
     func didScan(string: String) {
         textView.text = string

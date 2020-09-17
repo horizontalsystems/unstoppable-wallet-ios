@@ -6,7 +6,6 @@ import ScanQrKit
 class ScanQrViewController: ThemeViewController {
     private let delegate: IScanQrViewDelegate
 
-    private let errorLabel = UILabel()
     private let cancelButton = ThemeButton()
 
     private let scanView = ScanQrView()
@@ -30,17 +29,6 @@ class ScanQrViewController: ThemeViewController {
         }
 
         scanView.delegate = self
-
-        view.addSubview(errorLabel)
-        errorLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
-            maker.centerY.equalToSuperview().dividedBy(3)
-        }
-
-        errorLabel.numberOfLines = 0
-        errorLabel.textAlignment = .center
-        errorLabel.textColor = .themeLucian
-        errorLabel.font = .subhead2
 
         view.addSubview(cancelButton)
         cancelButton.snp.makeConstraints { maker in
@@ -83,10 +71,6 @@ extension ScanQrViewController: IScanQrView {
 
     func stop() {
         scanView.stop()
-    }
-
-    func set(error: Error) {
-        errorLabel.text = error.smartDescription
     }
 
 }

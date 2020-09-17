@@ -36,11 +36,6 @@ extension SendAddressPresenter: ISendAddressViewDelegate {
         router.openScan(controller: controller)
     }
 
-    func validateScan(string: String) throws {
-        let (parsedAddress, _) = interactor.parse(address: string)
-        try delegate?.validate(address: parsedAddress)
-    }
-
     func onAddressChange(string: String?) {
         guard let address = string, !address.isEmpty else {
             view?.set(error: nil)

@@ -7,7 +7,6 @@ protocol ISendAccountView: class {
 protocol ISendAccountViewDelegate {
     func onOpenScan(controller: UIViewController)
     func onChange(account: String?)
-    func validateScan(string: String) throws
 }
 
 protocol ISendAccountInteractor {
