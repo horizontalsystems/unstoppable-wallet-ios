@@ -110,12 +110,7 @@ extension CreateWalletService {
             accountManager.save(account: account)
         }
 
-        let needResetDerivation = wallets.keys.reduce(false) { result, coin in
-            result || derivationSettingsManager.setting(coinType: coin.type) != nil
-        }
-        if needResetDerivation {
-            derivationSettingsManager.reset()
-        }
+        derivationSettingsManager.reset()
 
         walletManager.save(wallets: Array(wallets.values))
     }
