@@ -76,6 +76,7 @@ struct SwapModule {
     struct CoinBalanceItem {
         let coin: Coin
         let balance: Decimal?
+        let blockchainType: String?
     }
 
     struct ConfirmationAdditionalViewItem {
