@@ -8,6 +8,7 @@ protocol ICoinSelectDelegate {
 struct CoinBalanceViewItem {
     let coin: Coin
     let balance: String?
+    let blockchainType: String?
 }
 
 struct CoinSelectModule {

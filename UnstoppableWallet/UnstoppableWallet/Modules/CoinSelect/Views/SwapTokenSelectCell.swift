@@ -27,9 +27,9 @@ class SwapTokenSelectCell: ThemeCell {
         super.init(coder: aDecoder)
     }
 
-    func bind(coin: Coin, balance: String?, last: Bool) {
+    func bind(coin: Coin, balance: String?, blockchainType: String?, last: Bool) {
         super.bind(last: last)
-        leftCoinView.bind(coinTitle: coin.title, coinCode: coin.code, blockchainType: nil)
+        leftCoinView.bind(coinTitle: coin.title, coinCode: coin.code, blockchainType: blockchainType, showBadge: false)
         balanceView.bind(text: balance, highlighted: true)
     }
 

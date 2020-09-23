@@ -32,7 +32,7 @@ class CoinSelectViewModel {
                     .flatMap { CoinValue(coin: item.coin, value: $0) }
                     .flatMap { ValueFormatter.instance.format(coinValue: $0, fractionPolicy: .threshold(high: 0.01, low: 0)) }
 
-            return CoinBalanceViewItem(coin: item.coin, balance: formatted)
+            return CoinBalanceViewItem(coin: item.coin, balance: formatted, blockchainType: item.blockchainType)
         }
         coinViewItemsRelay.accept(viewItems)
     }

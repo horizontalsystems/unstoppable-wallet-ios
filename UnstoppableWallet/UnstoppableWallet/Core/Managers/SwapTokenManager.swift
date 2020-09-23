@@ -23,7 +23,7 @@ class SwapTokenManager {
 
     private var walletItems: [SwapModule.CoinBalanceItem] {
         walletManager.wallets.map { wallet in
-            SwapModule.CoinBalanceItem(coin: wallet.coin, balance: adapterManager.balanceAdapter(for: wallet)?.balance)
+            SwapModule.CoinBalanceItem(coin: wallet.coin, balance: adapterManager.balanceAdapter(for: wallet)?.balance, blockchainType: wallet.coin.type.blockchainType)
         }
     }
 
@@ -55,7 +55,7 @@ extension SwapTokenManager: ISwapCoinManager {
                 guard coin.type.swappable && include else {
                     return nil
                 }
-                return SwapModule.CoinBalanceItem(coin: coin, balance: balance(coin: coin, walletItems: walletItems))
+                return SwapModule.CoinBalanceItem(coin: coin, balance: balance(coin: coin, walletItems: walletItems), blockchainType: coin.type.blockchainType)
             }
         }
     }

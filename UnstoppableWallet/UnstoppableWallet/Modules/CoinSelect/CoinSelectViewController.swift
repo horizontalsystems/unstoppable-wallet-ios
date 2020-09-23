@@ -79,7 +79,7 @@ class CoinSelectViewController: ThemeViewController {
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
                 bind: { cell, _ in
-                    cell.bind(coin: viewItem.coin, balance: viewItem.balance, last: index == viewItems.count - 1)
+                    cell.bind(coin: viewItem.coin, balance: viewItem.balance, blockchainType: viewItem.blockchainType, last: index == viewItems.count - 1)
                 },
                 action: { [weak self] _ in
                     self?.onSelectCoin(at: index)

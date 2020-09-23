@@ -49,13 +49,13 @@ class LeftCoinCellView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(coinTitle: String, coinCode: String, blockchainType: String?) {
+    func bind(coinTitle: String, coinCode: String, blockchainType: String?, showBadge: Bool = true) {
         coinImageView.image = .image(coinCode: coinCode, blockchainType: blockchainType)
 
         titleLabel.text = coinTitle
         coinLabel.text = coinCode
 
-        if let blockchainType = blockchainType {
+        if let blockchainType = blockchainType, showBadge {
             blockchainBadgeView.isHidden = false
             blockchainBadgeView.set(text: blockchainType)
         } else {
