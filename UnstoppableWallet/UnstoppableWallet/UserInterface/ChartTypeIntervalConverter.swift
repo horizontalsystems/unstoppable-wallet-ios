@@ -6,6 +6,7 @@ class ChartTypeIntervalConverter {
 
     static func convert(chartType: ChartType) -> Int {
         switch chartType {
+        case .today: return 6
         case .day: return 6
         case .week: return 2 * day
         case .week2: return 3 * day

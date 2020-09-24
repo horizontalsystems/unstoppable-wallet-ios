@@ -139,35 +139,29 @@ class ChartRateFactory: IChartRateFactory {
         var points = chartInfo.points
         var endTimestamp = chartInfo.endTimestamp
 
-        var extendedPoint: ChartPoint?
         var addCurrentRate = false
-        if let marketInfo = marketInfo, marketInfo.timestamp > endTimestamp {
+        if let marketInfo = marketInfo, let lastPointTimestamp = chartInfo.points.last?.timestamp, marketInfo.timestamp > lastPointTimestamp {
             // add current rate in data
-            endTimestamp = marketInfo.timestamp
-            points.append(ChartPoint(timestamp: endTimestamp, value: marketInfo.rate, volume: nil))
+            endTimestamp = max(marketInfo.timestamp, endTimestamp)
+            points.append(ChartPoint(timestamp: marketInfo.timestamp, value: marketInfo.rate, volume: nil))
             addCurrentRate = true
 
-            // create extended point for 24h ago
-            if chartType == .day {
-                let firstTimestamp = marketInfo.timestamp - 24 * 60 * 60
-                extendedPoint = ChartPoint(timestamp: firstTimestamp, value: marketInfo.open24hour, volume: nil)
+            // replace start rate for diff calculation
+            var calendar = Calendar.current
+            calendar.timeZone = TimeZone(secondsFromGMT: 0) ?? calendar.timeZone
+            let firstTimestamp = calendar.startOfDay(for: Date()).timeIntervalSince1970
+            if chartType == .today, let startDayIndex = points.firstIndex(where: { $0.timestamp == firstTimestamp }) {
+                let firstRate = marketInfo.rate / (1 + marketInfo.diff / 100)
+                let h24point = ChartPoint(timestamp: firstTimestamp, value: firstRate, volume: points[startDayIndex].volume)
+
+                points[startDayIndex] = h24point
             }
         }
         // build data with rates, volumes and indicators for points
         let data = chartData(points: points, startTimestamp: chartInfo.startTimestamp, endTimestamp: endTimestamp)
 
-        // calculate item for 24h back point and add to data
-        if let extendedPoint = extendedPoint {
-            let values = points.filter { $0.timestamp < extendedPoint.timestamp }.map { $0.value }
-            let extendedItem = chartItem(point: extendedPoint, previousValues: values)
-
-            data.insert(item: extendedItem)
-            // change start visible timestamp
-            data.startWindow = extendedItem.timestamp
-        }
         // remove non-visible items
         data.items = data.items.filter { item in item.timestamp >= data.startWindow }
-
 
         // calculate min and max limit texts
         let rates = data.values(name: .rate)
@@ -177,12 +171,12 @@ class ChartRateFactory: IChartRateFactory {
         // determine chart growing state. when chart not full - it's nil
         var chartTrend: MovementTrend = .neutral
         var chartDiff: Decimal?
-        if let first = data.items.first(where: { ($0.indicators[.rate] ?? 0) != 0 }), let last = data.items.last, last.timestamp == endTimestamp, let firstRate = first.indicators[.rate], let lastRate = last.indicators[.rate] {
+        if let first = data.items.first(where: { ($0.indicators[.rate] ?? 0) != 0 }), let last = data.items.last, !chartInfo.expired, let firstRate = first.indicators[.rate], let lastRate = last.indicators[.rate] {
             chartDiff = (lastRate - firstRate) / firstRate * 100
             chartTrend = (lastRate - firstRate).isSignMinus ? .down : .up
         }
 
-        let lastIndicatorPoint = addCurrentRate ? data.items[data.items.count - 2] : data.items.last
+        let lastIndicatorPoint = addCurrentRate && data.items.count > 2 ? data.items[data.items.count - 2] : data.items.last
 
         var trends = [ChartIndicatorSet: MovementTrend]()
         trends[.ema] = calculateTrend(down: lastIndicatorPoint?.indicators[.emaLong], up: lastIndicatorPoint?.indicators[.emaShort])
