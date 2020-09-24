@@ -4,6 +4,7 @@ import BigInt
 import HsToolKit
 
 class EthereumBaseAdapter {
+    static let confirmationsThreshold = 12
     let ethereumKit: EthereumKit.Kit
 
     let decimal: Int
@@ -50,10 +51,6 @@ extension EthereumBaseAdapter {
 
 // ITransactionsAdapter
 extension EthereumBaseAdapter {
-
-    var confirmationsThreshold: Int {
-        12
-    }
 
     var lastBlockInfo: LastBlockInfo? {
         ethereumKit.lastBlockHeight.map { LastBlockInfo(height: $0, timestamp: nil) }

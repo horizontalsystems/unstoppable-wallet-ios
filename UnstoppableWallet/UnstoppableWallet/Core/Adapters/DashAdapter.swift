@@ -19,7 +19,7 @@ class DashAdapter: BitcoinBaseAdapter {
         let networkType: DashKit.NetworkType = testMode ? .testNet : .mainNet
         let logger = App.shared.logger.scoped(with: "DashKit")
 
-        dashKit = try DashKit(withWords: words, walletId: wallet.account.id, syncMode: BitcoinBaseAdapter.kitMode(from: walletSyncMode), networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.defaultConfirmationsThreshold, logger: logger)
+        dashKit = try DashKit(withWords: words, walletId: wallet.account.id, syncMode: BitcoinBaseAdapter.kitMode(from: walletSyncMode), networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold, logger: logger)
 
         super.init(abstractKit: dashKit)
 

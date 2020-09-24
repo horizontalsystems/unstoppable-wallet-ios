@@ -4,7 +4,7 @@ import SnapKit
 import ThemeKit
 
 class TransactionCell: ClaudeThemeCell {
-    private let inOutImageView = UIImageView()
+    private let typeIconImageView = UIImageView()
     private let doubleSpendImageView = UIImageView()
 
     private let dateLabel = UILabel()
@@ -22,13 +22,13 @@ class TransactionCell: ClaudeThemeCell {
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        contentView.addSubview(inOutImageView)
-        inOutImageView.snp.makeConstraints { maker in
+        contentView.addSubview(typeIconImageView)
+        typeIconImageView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin3x)
             maker.top.equalToSuperview().offset(CGFloat.margin3x)
         }
-        inOutImageView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        inOutImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        typeIconImageView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        typeIconImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         contentView.addSubview(doubleSpendImageView)
         doubleSpendImageView.snp.makeConstraints { maker in
@@ -45,7 +45,7 @@ class TransactionCell: ClaudeThemeCell {
         dateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(inOutImageView.snp.trailing).offset(CGFloat.margin3x)
+            maker.leading.equalTo(typeIconImageView.snp.trailing).offset(CGFloat.margin3x)
             maker.top.equalToSuperview().offset(CGFloat.margin3x)
         }
 
@@ -85,19 +85,19 @@ class TransactionCell: ClaudeThemeCell {
 
         contentView.addSubview(processingView)
         processingView.snp.makeConstraints { maker in
-            maker.leading.equalTo(inOutImageView.snp.trailing).offset(CGFloat.margin3x)
+            maker.leading.equalTo(typeIconImageView.snp.trailing).offset(CGFloat.margin3x)
             maker.centerY.equalTo(amountLabel)
         }
 
         contentView.addSubview(completedView)
         completedView.snp.makeConstraints { maker in
-            maker.leading.equalTo(inOutImageView.snp.trailing).offset(CGFloat.margin3x)
+            maker.leading.equalTo(typeIconImageView.snp.trailing).offset(CGFloat.margin3x)
             maker.centerY.equalTo(amountLabel)
         }
 
         contentView.addSubview(failedLabel)
         failedLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(inOutImageView.snp.trailing).offset(CGFloat.margin3x)
+            maker.leading.equalTo(typeIconImageView.snp.trailing).offset(CGFloat.margin3x)
             maker.centerY.equalTo(amountLabel)
         }
 
@@ -116,14 +116,23 @@ class TransactionCell: ClaudeThemeCell {
         let status = item.status
 
         dateLabel.textColor = .themeLeah
-        currencyAmountLabel.textColor = item.type == .incoming ? .themeRemus : .themeJacob
+        switch item.type {
+        case .incoming:
+            currencyAmountLabel.textColor = .themeGreenD
+            typeIconImageView.image = UIImage(named: "Transaction In Icon")
+        case .outgoing, .sentToSelf:
+            currencyAmountLabel.textColor = .themeYellowD
+            typeIconImageView.image = UIImage(named: "Transaction Out Icon")
+        case .approve:
+            currencyAmountLabel.textColor = .themeLeah
+            typeIconImageView.image = UIImage(named: "Transaction Approve Icon")?.tinted(with: .themeLeah)
+        }
         amountLabel.textColor = .themeGray
 
         dateLabel.text = DateHelper.instance.formatTransactionDate(from: item.date).uppercased()
         amountLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue, fractionPolicy: .threshold(high: 0.01, low: 0))
 
         doubleSpendImageView.isHidden = item.conflictingTxHash == nil
-        inOutImageView.image = item.type == .incoming ? UIImage(named: "Transaction In Icon") : UIImage(named: "Transaction Out Icon")
 
         if let value = item.currencyValue?.nonZero, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.01)) {
             currencyAmountLabel.text = formattedValue

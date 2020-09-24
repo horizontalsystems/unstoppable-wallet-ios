@@ -2,7 +2,7 @@ import EosKit
 import RxSwift
 
 class EosAdapter {
-    private let irreversibleThreshold = 330
+    private static let irreversibleThreshold = 330
 
     private let eosKit: EosKit
     private let asset: Asset
@@ -32,6 +32,7 @@ class EosAdapter {
                 interTransactionIndex: transaction.actionSequence,
                 type: type,
                 blockHeight: transaction.blockNumber,
+                confirmationsThreshold: Self.irreversibleThreshold,
                 amount: transaction.quantity.amount,
                 fee: nil,
                 date: transaction.date,
@@ -132,12 +133,8 @@ extension EosAdapter: ISendEosAdapter {
 
 extension EosAdapter: ITransactionsAdapter {
 
-    var confirmationsThreshold: Int {
-        irreversibleThreshold
-    }
-
     var lastBlockInfo: LastBlockInfo? {
-        eosKit.irreversibleBlockHeight.map { LastBlockInfo(height: $0 + irreversibleThreshold, timestamp: nil) }
+        eosKit.irreversibleBlockHeight.map { LastBlockInfo(height: $0 + Self.irreversibleThreshold, timestamp: nil) }
     }
 
     var lastBlockUpdatedObservable: Observable<Void> {

@@ -32,8 +32,23 @@ class TransactionProcessingView: UIView {
     }
 
     func bind(type: TransactionType, progress: Double) {
-        processingLabel.text = type == .incoming ? "transactions.receiving".localized : "transactions.sending".localized
-        barsProgressView.set(filledColor: type == .incoming ? .themeGreenD : .themeYellowD)
+        let text: String
+        let filledColor: UIColor
+
+        switch type {
+        case .incoming:
+            text = "transactions.receiving".localized
+            filledColor = .themeGreenD
+        case .outgoing, .sentToSelf:
+            text = "transactions.sending".localized
+            filledColor = .themeYellowD
+        case .approve:
+            text = "transactions.approval".localized
+            filledColor = .themeLeah
+        }
+
+        processingLabel.text = text
+        barsProgressView.set(filledColor: filledColor)
         barsProgressView.set(progress: progress)
     }
 

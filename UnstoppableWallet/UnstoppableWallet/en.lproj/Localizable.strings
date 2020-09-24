@@ -249,6 +249,7 @@ bch.horizontalsystems.xyz/apg";
 "transactions.receiving" = "Receiving";
 "transactions.failed" = "Failed";
 "transactions.sending" = "Sending";
+"transactions.approval" = "Swap approval";
 
 // Transaction Info
 

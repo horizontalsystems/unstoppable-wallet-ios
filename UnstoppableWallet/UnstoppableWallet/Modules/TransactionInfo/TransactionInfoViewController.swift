@@ -111,19 +111,19 @@ class TransactionInfoViewController: ThemeActionSheetController {
     }
 
     private func fromRow(value: String) -> RowProtocol {
-        fromToRow(title: "tx_info.from_hash".localized, value: value) { [weak self] in
+        fromToRow(title: "tx_info.from_hash".localized, value: TransactionInfoAddressMapper.map(value)) { [weak self] in
             self?.delegate.onTapFrom()
         }
     }
 
     private func toRow(value: String) -> RowProtocol {
-        fromToRow(title: "tx_info.to_hash".localized, value: value) { [weak self] in
+        fromToRow(title: "tx_info.to_hash".localized, value: TransactionInfoAddressMapper.map(value)) { [weak self] in
             self?.delegate.onTapTo()
         }
     }
 
     private func recipientRow(value: String) -> RowProtocol {
-        fromToRow(title: "tx_info.recipient_hash".localized, value: value) { [weak self] in
+        fromToRow(title: "tx_info.recipient_hash".localized, value: TransactionInfoAddressMapper.map(value)) { [weak self] in
             self?.delegate.onTapRecipient()
         }
     }
@@ -293,10 +293,20 @@ extension TransactionInfoViewController: SectionsDataSource {
 extension TransactionInfoViewController: ITransactionInfoView {
 
     func set(date: Date, primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, type: TransactionType, lockState: TransactionLockState?) {
+        let iconImage: UIImage?
+        switch type {
+        case .incoming:
+            iconImage = UIImage(named: "Transaction In Icon")
+        case .outgoing, .sentToSelf:
+            iconImage = UIImage(named: "Transaction Out Icon")
+        case .approve:
+            iconImage = UIImage(named: "Transaction Approve Icon")?.tinted(with: .themeLeah)
+        }
+
         titleView.bind(
                 title: "tx_info.title".localized,
                 subtitle: DateHelper.instance.formatFullTime(from: date),
-                image: type == .incoming ? UIImage(named: "Transaction In Icon")?.tinted(with: .themeRemus) : UIImage(named: "Transaction Out Icon")?.tinted(with: .themeJacob)
+                image: iconImage
         )
 
         if secondaryAmountInfo != nil {

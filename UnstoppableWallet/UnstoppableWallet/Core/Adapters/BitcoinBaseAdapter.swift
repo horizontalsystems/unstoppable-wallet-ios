@@ -4,7 +4,7 @@ import RxSwift
 import HsToolKit
 
 class BitcoinBaseAdapter {
-    static let defaultConfirmationsThreshold = 3
+    static let confirmationsThreshold = 3
 
     private let abstractKit: AbstractKit
     private let coinRate: Decimal = pow(10, 8)
@@ -98,6 +98,7 @@ class BitcoinBaseAdapter {
                 interTransactionIndex: 0,
                 type: type,
                 blockHeight: transaction.blockHeight,
+                confirmationsThreshold: Self.confirmationsThreshold,
                 amount: Decimal(abs(amount)) / coinRate,
                 fee: transaction.fee.map { Decimal($0) / coinRate },
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
@@ -305,10 +306,6 @@ extension BitcoinBaseAdapter {
 }
 
 extension BitcoinBaseAdapter: ITransactionsAdapter {
-
-    var confirmationsThreshold: Int {
-        BitcoinBaseAdapter.defaultConfirmationsThreshold
-    }
 
     var lastBlockInfo: LastBlockInfo? {
         abstractKit.lastBlockInfo.map { LastBlockInfo(height: $0.height, timestamp: $0.timestamp) }

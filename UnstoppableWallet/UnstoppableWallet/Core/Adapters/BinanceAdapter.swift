@@ -2,6 +2,7 @@ import RxSwift
 import BinanceChainKit
 
 class BinanceAdapter {
+    private static let confirmationsThreshold = 1
     static let transferFee: Decimal = 0.000375
 
     private let binanceKit: BinanceChainKit
@@ -33,6 +34,7 @@ class BinanceAdapter {
                 interTransactionIndex: 0,
                 type: type,
                 blockHeight: transaction.blockHeight,
+                confirmationsThreshold: Self.confirmationsThreshold,
                 amount: transaction.amount,
                 fee: BinanceAdapter.transferFee,
                 date: transaction.date,
@@ -138,9 +140,6 @@ extension BinanceAdapter: ISendBinanceAdapter {
 }
 
 extension BinanceAdapter: ITransactionsAdapter {
-    var confirmationsThreshold: Int {
-        1
-    }
 
     var lastBlockInfo: LastBlockInfo? {
         binanceKit.lastBlockHeight.map { LastBlockInfo(height: $0, timestamp: nil) }

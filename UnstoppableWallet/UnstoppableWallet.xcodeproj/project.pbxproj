@@ -1560,6 +1560,7 @@
 		58AAA54CC7B9C961B0B56678 /* DataProviderSettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4B3E970540EE2F76C6E /* DataProviderSettingsInteractor.swift */; };
 		58AAA54CF2169C04A4A38817 /* DebugRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA905C4D766F902C08B65 /* DebugRouter.swift */; };
 		58AAA550B894B6F8FC8DA1B1 /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAFBDA192A490C33DBB95 /* UITextView.swift */; };
+		58AAA56019A5429995921E5F /* TransactionInfoAddressMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD28A03FD9BF14672C9D /* TransactionInfoAddressMapper.swift */; };
 		58AAA561DCDEB0F846BD5D44 /* BackupConfirmationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA2833E26BB948D3E06D2 /* BackupConfirmationModule.swift */; };
 		58AAA56975B506269FB6B520 /* ChartInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6021E4709D0ED818A18 /* ChartInteractor.swift */; };
 		58AAA56A4BD68CC35A4E3D6E /* SendAddressRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA047F8B03E37F51F6AC1 /* SendAddressRouter.swift */; };
@@ -1715,6 +1716,7 @@
 		58AAAAC587B54002789A555A /* BackupModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA88D3ED8D5570474B589 /* BackupModule.swift */; };
 		58AAAAC61D3D8AD1AC4BEEAE /* AdditionalDataWithErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8483BC1E85730F04CA3 /* AdditionalDataWithErrorView.swift */; };
 		58AAAAD2D124AA0323629B0E /* SwapApproveModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA251C8ADF1AE43EAF65F /* SwapApproveModule.swift */; };
+		58AAAAD9049A97E8C314B09A /* TransactionInfoAddressMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD28A03FD9BF14672C9D /* TransactionInfoAddressMapper.swift */; };
 		58AAAADDF644FD07B17DA45A /* DoubleSpendInfoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5AE34C515816D2D4977 /* DoubleSpendInfoRouter.swift */; };
 		58AAAAEB64E554EFE622B1DE /* BitcoinTransactionInfoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA1C151E737B0B32208B4 /* BitcoinTransactionInfoAdapter.swift */; };
 		58AAAAF4A46837B302186E73 /* DoubleSpendModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA54AD29E5DE0F9AAE93F /* DoubleSpendModule.swift */; };
@@ -1797,6 +1799,7 @@
 		58AAADD168939A9A7614EAD6 /* SendFeePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6C29584EFCDD8209363 /* SendFeePresenter.swift */; };
 		58AAADD4A8BA1090780CEA11 /* FullTransactionInfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD82EF02D5AA6E8ED4CB /* FullTransactionInfoProvider.swift */; };
 		58AAADF0F0A5801361CF4B82 /* AdditionalDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9E19A578FD13792D2B7 /* AdditionalDataView.swift */; };
+		58AAADF15D39E52E89F75FE6 /* TransactionInfoAddressMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD28A03FD9BF14672C9D /* TransactionInfoAddressMapper.swift */; };
 		58AAAE00BA8F5C995B2367AC /* SwapFromInputPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAED6B61ED438518A0A0B /* SwapFromInputPresenter.swift */; };
 		58AAAE017EAE7ED3D0019E7E /* FullTransactionInfoRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA36F24D9B30298D67BCB /* FullTransactionInfoRouterTests.swift */; };
 		58AAAE02A5B4368374B6CDCB /* SendAmountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA37F862C32C60A4A44AB /* SendAmountView.swift */; };
@@ -2741,6 +2744,7 @@
 		58AAACF9F67C579CBB8B50C8 /* SwapConfirmationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapConfirmationView.swift; sourceTree = "<group>"; };
 		58AAAD0D7BBA63BA61CDED0F /* SwapFeeRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapFeeRepository.swift; sourceTree = "<group>"; };
 		58AAAD1CD72812BF23180D65 /* RateListModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateListModule.swift; sourceTree = "<group>"; };
+		58AAAD28A03FD9BF14672C9D /* TransactionInfoAddressMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoAddressMapper.swift; sourceTree = "<group>"; };
 		58AAAD6F502BE56E4FECFBA0 /* SendAmountInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendAmountInteractor.swift; sourceTree = "<group>"; };
 		58AAAD70A38E76F7B47C2204 /* ChartCurrentRateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartCurrentRateView.swift; sourceTree = "<group>"; };
 		58AAAD7AC450FEF913E5417F /* UniswapInfoModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniswapInfoModule.swift; sourceTree = "<group>"; };
@@ -4076,6 +4080,7 @@
 				1A5647DBF15322999B5A1D04 /* TransactionInfoInteractor.swift */,
 				1A564091A9C12F224A18B740 /* TransactionInfoPresenter.swift */,
 				11B35EA7951903DA3790E945 /* TransactionInfoViewController.swift */,
+				58AAAD28A03FD9BF14672C9D /* TransactionInfoAddressMapper.swift */,
 			);
 			path = TransactionInfo;
 			sourceTree = "<group>";
@@ -5822,6 +5827,7 @@
 				11B35606D8A47F38B7E4FB83 /* RestoreEosService.swift in Sources */,
 				11B3581E67D335603C6E6742 /* RestoreEosViewModel.swift in Sources */,
 				11B35537029FF1926663BE4C /* ModuleStartMode.swift in Sources */,
+				58AAADF15D39E52E89F75FE6 /* TransactionInfoAddressMapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6527,6 +6533,7 @@
 				11B353B3C7DB00A50342F2A6 /* RestoreEosService.swift in Sources */,
 				11B356FAD464E102B174F372 /* RestoreEosViewModel.swift in Sources */,
 				11B3565CC4281C4445602E90 /* ModuleStartMode.swift in Sources */,
+				58AAA56019A5429995921E5F /* TransactionInfoAddressMapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7194,6 +7201,7 @@
 				11B35B28AC132875F873E4B6 /* RestoreEosService.swift in Sources */,
 				11B35DDAD9BE80D749EFED49 /* RestoreEosViewModel.swift in Sources */,
 				11B35F25EF8CFF0DF656F5FA /* ModuleStartMode.swift in Sources */,
+				58AAAAD9049A97E8C314B09A /* TransactionInfoAddressMapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

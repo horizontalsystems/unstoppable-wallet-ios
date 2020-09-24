@@ -32,7 +32,7 @@ protocol ITransactionsInteractor {
 
 protocol ITransactionsInteractorDelegate: class {
     func onUpdate(selectedCoins: [Wallet])
-    func onUpdate(walletsData: [(Wallet, Int, LastBlockInfo?)])
+    func onUpdate(walletsData: [(Wallet, LastBlockInfo?)])
     func onUpdateBaseCurrency()
     func onConnectionRestore()
 
@@ -52,7 +52,7 @@ protocol ITransactionsRouter {
 
 protocol ITransactionViewItemFactory {
     func filterItems(wallets: [Wallet]) -> [FilterHeaderView.ViewItem]
-    func viewItem(fromRecord: TransactionRecord, wallet: Wallet, lastBlockInfo: LastBlockInfo?, threshold: Int?, rate: CurrencyValue?) -> TransactionViewItem
+    func viewItem(fromRecord: TransactionRecord, wallet: Wallet, lastBlockInfo: LastBlockInfo?, rate: CurrencyValue?) -> TransactionViewItem
     func viewStatus(adapterStates: [Coin: AdapterState], transactionsCount: Int) -> TransactionViewStatus
 }
 

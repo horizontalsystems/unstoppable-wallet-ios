@@ -23,7 +23,6 @@ protocol ITransactionInfoViewDelegate: class {
 protocol ITransactionInfoInteractor {
     var baseCurrency: Currency { get }
     var lastBlockInfo: LastBlockInfo? { get }
-    var confirmationThreshold: Int { get }
     func rate(coinCode: String, currencyCode: String, timestamp: TimeInterval) -> Decimal?
     func rawTransaction(hash: String) -> String?
     func feeCoin(coin: Coin) -> Coin?

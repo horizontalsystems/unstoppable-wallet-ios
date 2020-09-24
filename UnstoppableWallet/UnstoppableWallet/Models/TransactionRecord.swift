@@ -7,6 +7,7 @@ struct TransactionRecord {
     let interTransactionIndex: Int
     let type: TransactionType
     let blockHeight: Int?
+    let confirmationsThreshold: Int?
     let amount: Decimal
     let fee: Decimal?
     let date: Date
@@ -17,11 +18,11 @@ struct TransactionRecord {
     let conflictingHash: String?
     let showRawTransaction: Bool
 
-    func status(lastBlockHeight: Int?, threshold: Int?) -> TransactionStatus {
+    func status(lastBlockHeight: Int?) -> TransactionStatus {
         if failed {
             return .failed
         } else if let blockHeight = blockHeight, let lastBlockHeight = lastBlockHeight {
-            let threshold = threshold ?? 1
+            let threshold = self.confirmationsThreshold ?? 1
             let confirmations = lastBlockHeight - blockHeight + 1
 
             if confirmations >= threshold {
@@ -78,7 +79,7 @@ extension TransactionRecord: Comparable {
 
 }
 
-enum TransactionType: Int, Equatable { case incoming, outgoing, sentToSelf }
+enum TransactionType: Int, Equatable { case incoming, outgoing, sentToSelf, approve }
 
 extension TransactionType: Comparable {
 

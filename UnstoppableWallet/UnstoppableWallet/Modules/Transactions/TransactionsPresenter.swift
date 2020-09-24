@@ -86,11 +86,11 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         loadNext(initial: true)
     }
 
-    func onUpdate(walletsData: [(Wallet, Int, LastBlockInfo?)]) {
+    func onUpdate(walletsData: [(Wallet, LastBlockInfo?)]) {
         dataSource.handleUpdated(walletsData: walletsData)
         interactor.fetchLastBlockHeights()
 
-        wallets = walletsData.map { (wallet, _, _) in wallet }.sorted { wallet, wallet2 in wallet.coin.code < wallet2.coin.code }
+        wallets = walletsData.map { (wallet, _) in wallet }.sorted { wallet, wallet2 in wallet.coin.code < wallet2.coin.code }
 
         view?.show(filters: factory.filterItems(wallets: wallets))
 

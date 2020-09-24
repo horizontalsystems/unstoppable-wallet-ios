@@ -38,7 +38,7 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
         let coin = wallet.coin
         let lastBlockInfo = interactor.lastBlockInfo
 
-        let status = transaction.status(lastBlockHeight: lastBlockInfo?.height, threshold: interactor.confirmationThreshold)
+        let status = transaction.status(lastBlockHeight: lastBlockInfo?.height)
         let lockState = transaction.lockState(lastBlockTimestamp: lastBlockInfo?.timestamp)
 
         let rate = rateCurrencyValue?.nonZero

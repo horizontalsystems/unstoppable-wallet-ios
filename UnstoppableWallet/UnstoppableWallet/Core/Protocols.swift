@@ -117,7 +117,6 @@ protocol IDepositAdapter {
 protocol ITransactionsAdapter {
     var state: AdapterState { get }
     var stateUpdatedObservable: Observable<Void> { get }
-    var confirmationsThreshold: Int { get }
     var lastBlockInfo: LastBlockInfo? { get }
     var lastBlockUpdatedObservable: Observable<Void> { get }
     var transactionRecordsObservable: Observable<[TransactionRecord]> { get }
