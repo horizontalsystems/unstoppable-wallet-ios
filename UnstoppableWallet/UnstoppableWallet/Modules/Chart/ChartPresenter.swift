@@ -31,7 +31,7 @@ class ChartPresenter {
         self.launchMode = launchMode
         self.currency = currency
 
-        chartType = interactor.defaultChartType ?? .day
+        chartType = interactor.defaultChartType ?? .today
     }
 
     private func updateChart() {

@@ -9,6 +9,7 @@ import Chart
 extension ChartType {
     var title: String {
         switch self {
+        case .today: return "chart.time_duration.today".localized
         case .day: return "chart.time_duration.day".localized
         case .week: return "chart.time_duration.week".localized
         case .week2: return "chart.time_duration.week2".localized
