@@ -27,10 +27,6 @@ extension TransactionInfoInteractor: ITransactionInfoInteractor {
         adapter.lastBlockInfo
     }
 
-    var confirmationThreshold: Int {
-        adapter.confirmationsThreshold
-    }
-
     func rate(coinCode: String, currencyCode: String, timestamp: TimeInterval) -> Decimal? {
         rateManager.historicalRate(coinCode: coinCode, currencyCode: currencyCode, timestamp: timestamp)
     }

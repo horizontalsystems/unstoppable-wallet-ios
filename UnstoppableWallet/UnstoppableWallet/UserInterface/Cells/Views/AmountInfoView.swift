@@ -80,7 +80,17 @@ class AmountInfoView: UIView {
     }
 
     func bind(primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, type: TransactionType = .outgoing, lockState: TransactionLockState? = nil) {
-        primaryAmountLabel.textColor = type == .incoming ? .themeRemus : .themeJacob
+        let primaryColor: UIColor
+        switch type {
+        case .incoming:
+            primaryColor = .themeGreenD
+        case .outgoing, .sentToSelf:
+            primaryColor = .themeYellowD
+        case .approve:
+            primaryColor = .themeLeah
+        }
+
+        primaryAmountLabel.textColor = primaryColor
 
         let amountLabel: String?
         switch primaryAmountInfo {

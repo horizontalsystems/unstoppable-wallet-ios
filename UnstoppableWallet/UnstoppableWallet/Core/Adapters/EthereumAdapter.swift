@@ -48,6 +48,7 @@ class EthereumAdapter: EthereumBaseAdapter {
                 interTransactionIndex: 0,
                 type: type,
                 blockHeight: transaction.blockNumber,
+                confirmationsThreshold: EthereumBaseAdapter.confirmationsThreshold,
                 amount: abs(amount),
                 fee: transaction.gasUsed.map { Decimal(sign: .plus, exponent: -decimal, significand: Decimal($0 * transaction.gasPrice)) },
                 date: Date(timeIntervalSince1970: transaction.timestamp),

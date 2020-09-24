@@ -6,6 +6,7 @@ import HsToolKit
 import class Erc20Kit.Transaction
 
 class Erc20Adapter: EthereumBaseAdapter {
+    private static let approveConfirmationsThreshold: Int? = nil
     private let erc20Kit: Erc20Kit.Kit
     private let contractAddress: Address
     private let fee: Decimal
@@ -28,6 +29,7 @@ class Erc20Adapter: EthereumBaseAdapter {
 
         var type: TransactionType = .sentToSelf
         var amount: Decimal = 0
+        var confirmationsThreshold: Int? = EthereumBaseAdapter.confirmationsThreshold
 
         if let significand = Decimal(string: transaction.value.description) {
             amount = Decimal(sign: .plus, exponent: -decimal, significand: significand)
@@ -35,7 +37,10 @@ class Erc20Adapter: EthereumBaseAdapter {
             let fromMine = transaction.from == mineAddress
             let toMine = transaction.to == mineAddress
 
-            if fromMine && !toMine {
+            if transaction.type == .approve {
+                type = .approve
+                confirmationsThreshold = Self.approveConfirmationsThreshold
+            } else if fromMine && !toMine {
                 type = .outgoing
             } else if !fromMine && toMine {
                 type = .incoming
@@ -51,6 +56,7 @@ class Erc20Adapter: EthereumBaseAdapter {
                 interTransactionIndex: transaction.interTransactionIndex,
                 type: type,
                 blockHeight: transaction.blockNumber,
+                confirmationsThreshold: confirmationsThreshold,
                 amount: abs(amount),
                 fee: nil,
                 date: Date(timeIntervalSince1970: transaction.timestamp),
@@ -188,8 +194,8 @@ extension Erc20Adapter: IErc20Adapter {
         let amount = BigUInt(amount.roundedString(decimal: decimal))!
 
         return erc20Kit.approveSingle(spenderAddress: spenderAddress, amount: amount, gasLimit: gasLimit, gasPrice: gasPrice)
-                .map { transactionWithInternal in
-                    transactionWithInternal.transaction.hash.toHexString()
+                .map { transaction in
+                    transaction.transactionHash.toHexString()
                 }
     }
 

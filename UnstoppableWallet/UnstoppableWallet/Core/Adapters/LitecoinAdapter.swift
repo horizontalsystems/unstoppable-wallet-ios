@@ -23,7 +23,7 @@ class LitecoinAdapter: BitcoinBaseAdapter {
         let syncMode = BitcoinBaseAdapter.kitMode(from: walletSyncMode)
         let logger = App.shared.logger.scoped(with: "LitecoinKit")
 
-        litecoinKit = try LitecoinKit(withWords: words, bip: bip, walletId: wallet.account.id, syncMode: syncMode, networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.defaultConfirmationsThreshold, logger: logger)
+        litecoinKit = try LitecoinKit(withWords: words, bip: bip, walletId: wallet.account.id, syncMode: syncMode, networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold, logger: logger)
 
         super.init(abstractKit: litecoinKit)
 

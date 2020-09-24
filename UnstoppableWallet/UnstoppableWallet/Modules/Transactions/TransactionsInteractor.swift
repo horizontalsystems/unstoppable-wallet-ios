@@ -32,12 +32,12 @@ class TransactionsInteractor {
     private func onUpdateCoinsData() {
         transactionRecordsDisposeBag = DisposeBag()
         statesDisposeBag = DisposeBag()
-        var walletsData = [(Wallet, Int, LastBlockInfo?)]()
+        var walletsData = [(Wallet, LastBlockInfo?)]()
         var states = [Coin: AdapterState]()
 
         for wallet in walletManager.wallets {
             if let adapter = adapterManager.transactionsAdapter(for: wallet) {
-                walletsData.append((wallet, adapter.confirmationsThreshold, adapter.lastBlockInfo))
+                walletsData.append((wallet, adapter.lastBlockInfo))
                 states[wallet.coin] = adapter.state
 
                 adapter.transactionRecordsObservable

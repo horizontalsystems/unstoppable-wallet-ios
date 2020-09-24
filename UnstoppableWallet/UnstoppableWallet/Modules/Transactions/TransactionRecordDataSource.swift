@@ -43,9 +43,8 @@ class TransactionRecordDataSource {
 
     private func createViewItem(for wallet: Wallet, record: TransactionRecord) -> TransactionViewItem {
         let lastBlockInfo = metaDataSource.lastBlockInfo(wallet: wallet)
-        let threshold = metaDataSource.threshold(wallet: wallet)
         let rate = metaDataSource.rate(coin: wallet.coin, date: record.date)
-        return factory.viewItem(fromRecord: record, wallet: wallet, lastBlockInfo: lastBlockInfo, threshold: threshold, rate: rate)
+        return factory.viewItem(fromRecord: record, wallet: wallet, lastBlockInfo: lastBlockInfo, rate: rate)
     }
 
     var fetchDataList: [FetchData] {
@@ -128,14 +127,8 @@ class TransactionRecordDataSource {
         set(wallets: wallets)
     }
 
-    func handleUpdated(walletsData: [(Wallet, Int, LastBlockInfo?)]) {
-        for (wallet, threshold, lastBlockInfo) in walletsData {
-            metaDataSource.set(threshold: threshold, wallet: wallet)
-
-            if let lastBlockInfo = lastBlockInfo {
-                _ = set(lastBlockInfo: lastBlockInfo, wallet: wallet)
-            }
-        }
+    func handleUpdated(walletsData: [(Wallet, LastBlockInfo?)]) {
+        walletsData.forEach { set(lastBlockInfo: $1, wallet: $0) }
     }
 
     func clearRates() {
@@ -149,7 +142,11 @@ class TransactionRecordDataSource {
         }
     }
 
-    func set(lastBlockInfo: LastBlockInfo, wallet: Wallet) -> Bool {
+    @discardableResult func set(lastBlockInfo: LastBlockInfo?, wallet: Wallet) -> Bool {
+        guard let lastBlockInfo = lastBlockInfo else {
+            return false
+        }
+
         let oldLastBlockInfo = metaDataSource.lastBlockInfo(wallet: wallet)
         metaDataSource.set(lastBlockInfo: lastBlockInfo, wallet: wallet)
 
