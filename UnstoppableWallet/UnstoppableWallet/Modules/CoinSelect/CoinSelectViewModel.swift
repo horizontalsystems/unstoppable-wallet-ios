@@ -46,6 +46,8 @@ extension CoinSelectViewModel {
     }
 
     public func coin(at index: Int) -> SwapModule.CoinBalanceItem? {
+        let coins = filtered
+
         guard index < coins.count else {
             return nil
         }
