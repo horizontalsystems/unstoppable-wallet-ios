@@ -29,6 +29,8 @@ class CoinToggleViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationItem.hidesSearchBarWhenScrolling = false
+
         tableView.registerCell(forClass: CoinToggleCell.self)
         tableView.sectionDataSource = self
 

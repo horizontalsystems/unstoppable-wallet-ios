@@ -32,6 +32,7 @@ class CoinSelectViewController: ThemeViewController {
 
         title = "choose_coin.title".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onClose))
+        navigationItem.hidesSearchBarWhenScrolling = false
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -69,6 +70,9 @@ class CoinSelectViewController: ThemeViewController {
     }
 
     @objc func onClose() {
+        if searchController.isActive {
+            searchController.dismiss(animated: false)
+        }
         dismiss(animated: true)
     }
 
