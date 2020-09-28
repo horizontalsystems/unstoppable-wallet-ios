@@ -2,409 +2,415 @@
 "coin.BCH" = "Bitcoin Cash";
 "coin.ETH" = "Ethereum";
 
-"button.ok" = "Aceptar";
-"button.cancel" = "Cancelar";
-"button.close" = "Cerrar";
-"button.confirm" = "Confirmar";
-"button.done" = "Listo";
-"button.restore" = "Restaurar";
-"button.next" = "Siguiente";
-"button.share" = "Compartir";
-"button.sync" = "Sincronizar";
-"button.paste" = "Pegar";
-"button.backup" = "Copia de seguridad";
-"button.copy" = "Copiar";
-"button.back" = "Atrás";
-"button.retry" = "Reintentar";
-"button.report" = "Reportar";
+"button.ok" = "OK";
+"button.cancel" = "Cancel";
+"button.close" = "Close";
+"button.confirm" = "Confirm";
+"button.done" = "Done";
+"button.restore" = "Restore";
+"button.next" = "Next";
+"button.share" = "Share";
+"button.sync" = "Sync";
+"button.paste" = "Paste";
+"button.backup" = "Backup";
+"button.copy" = "Copy";
+"button.back" = "Back";
+"button.retry" = "Retry";
+"button.report" = "Report";
 
-"alert.copied" = "Copiado";
-"alert.no_internet" = "Sin conexión a Internet";
-"alert.wrong_amount" = "Cantidad Incorrecta";
-"alert.no_fee" = "Tarifa incorrecta";
-"alert.network_issue" = "Problemas de red. Inténtelo de nuevo";
-"alert.unknown_error" = "Error desconocido";
+"alert.copied" = "Copied";
+"alert.no_internet" = "No Internet";
+"alert.wrong_amount" = "Wrong Amount";
+"alert.no_fee" = "Wrong Fee";
+"alert.network_issue" = "Network issues. Try again in a short moment";
+"alert.unknown_error" = "Unknown Error";
 
-"action.loading" = "cargando...";
+"action.loading" = "loading...";
+"placeholder.search" = "Search";
 
 "n/a" = "N/A";
 
-"biometric_usage_reason" = "Desbloquear monedero";
+"biometric_usage_reason" = "Unlock wallet";
 
 // Access Camera
 
-"access_camera.message" = "El monedero Unstoppable necesita acceder a su cámara para escanear el código QR.\n\nIr a Ajustes - > Unstoppable y permita el acceso a cámara.";
-"access_camera.settings" = "Ajustes";
+"access_camera.message" = "Unstoppable needs access to your camera to scan QR code.
+
+Go to Settings - > Unstoppable and allow access to Camera.";
+"access_camera.settings" = "Settings";
 
 // Welcome
 
-"welcome.new_wallet" = "Crear Monedero";
-"welcome.restore_wallet" = "Restaurar Monedero";
-"welcome.privacy_settings" = "Ajustes de privacidad";
-"welcome.version" = "Versión %@";
+"welcome.new_wallet" = "Create Wallet";
+"welcome.restore_wallet" = "Restore Wallet";
+"welcome.privacy_settings" = "Privacy Settings";
+"welcome.version" = "Version %@";
 
 // Restore
 
-"restore.title" = "Elegir Monedero";
-"restore.enter_key" = "Introduzca la clave";
-"restore.item_title" = "%@ Monedero";
-"restore.words.description" = "Introduzca su clave privada para el monedero %@, la cual consta de %@ palabras. Las palabras deben ser introducidas en orden correcto y separadas por espacios.";
-"restore.validation_failed" = "Clave incorrecta";
+"restore.title" = "Choose Wallet";
+"restore.enter_key" = "Enter Key";
+"restore.item_title" = "%@ Wallet";
+"restore.words.description" = "Enter your private key for %@ wallet which consists of %@ words. The words needs to be entered in correct order and separated by spaces.";
+"restore.validation_failed" = "Incorrect Key";
 "restore.placeholder.account_name" = "Account Name";
-"restore.placeholder.private_key" = "Active Private Key\n";
+"restore.placeholder.private_key" = "Active Private Key";
 
 // Coin Settings
 
-"coin_settings.derivation.description.bip44" = "Más antiguo";
+"coin_settings.derivation.description.bip44" = "Older";
 "coin_settings.derivation.description.bip49" = "Popular";
-"coin_settings.derivation.description.bip84" = "Más nuevo";
-"coin_settings.derivation.starts_with" = "comenzar con %@...";
-"coin_settings.derivation.description_create" = "Esta configuración controla el formato de la dirección para este monedero de Bitcoin. Recomendamos usar BIP49 si no está seguro.";
-"coin_settings.derivation.description_restore" = "Seleccione el formato de dirección para el Bitcoin en el monedero que intenta restaurar.";
-"coin_settings.title" = "Configuración de Blockchain";
-"coin_settings.sync_mode.title" = "Restaurar Fuente";
-"coin_settings.sync_mode.fast.description" = "0-2 horas, Recomendado";
-"coin_settings.sync_mode.slow.description" = "1-24 horas";
-"coin_settings.sync_mode.description" = "Enlaces de fuentes API: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
-"sync_mode.from_blockchain" = "Desde Blockchain";
-"blockchain_settings.change_alert.title" = "Formato de Dirección";
-"blockchain_settings.change_alert.content" = "Después de este cambio, el monedero tendrá que resincronizarse con el blockchain %@.\n\n\nCuando cambie el formato de dirección para %@, el saldo actual y el historial de transacciones dejarán de ser visibles. Cambiarlo de vuelta a la configuración anterior traerá todo de vuelta después de que el monedero se resincronice a sí mismo con el blockchain. Recomendamos no cambiarlo si no está seguro de lo que es.";
-"blockchain_settings.change_alert.action_button_text" = "Cambiar a %@";
-"blockchain_settings.sync_mode_change_alert.content" = "Esta acción requerirá que la aplicación Unstoppable se vuelva a sincronizar con Bitcoin, Bitcoin Cash y Dash blockchains, si has activado cualquiera de estos tokens. Su saldo o transacciones no se verán afectadas.\n\n Recomendamos no cambiar esta configuración si no está seguro de lo que hace.";
+"coin_settings.derivation.description.bip84" = "Newest";
+"coin_settings.derivation.starts_with" = "starts with %@...";
+"coin_settings.derivation.description_create" = "This setting controls the address format for the Bitcoin in this wallet. We recommend using BIP49 if not sure.";
+"coin_settings.derivation.description_restore" = "Select the address format for the Bitcoin in the wallet you're trying to restore.";
+"coin_settings.title" = "Blockchain Settings";
+"coin_settings.sync_mode.title" = "Restore Source";
+"coin_settings.sync_mode.fast.description" = "0-2 hours, Recommended";
+"coin_settings.sync_mode.slow.description" = "1-24 hours";
+"coin_settings.sync_mode.description" = "API sources links:
+btc.horizontalsystems.xyz/apg
+dash.horizontalsystems.xyz/apg
+bch.horizontalsystems.xyz/apg";
+"sync_mode.from_blockchain" = "From Blockchain";
+"blockchain_settings.change_alert.title" = "Address Format";
+"blockchain_settings.change_alert.content" = "After this change the wallet will have to resync itself with the %@ blockchain.\n\nWhen you change the address format for %@ the current balance and transaction history will no longer be visible. Changing it back to previous setting will bring everything back after the wallet resyncs itself with the blockchain. We recommend not to change it if not sure what that is.";
+"blockchain_settings.change_alert.action_button_text" = "Change to %@";
+"blockchain_settings.sync_mode_change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin, Bitcoin Cash and Dash blockchains, if you have enabled any of these tokens. Your balance or transactions won\'t be affected.\n\nWe recommend not to change this setting if not sure what it does.";
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
 "blockchain_settings.sync_mode.api" = "API";
-"blockchain_settings.title" = "Formato de Dirección";
+"blockchain_settings.title" = "Address Format";
 // Backup
 
-"backup.close" = "Cerrar";
-"backup.backup_required" = "Se requiere una copia de seg.";
-"backup.private_key" = "Clave privada";
+"backup.close" = "Close";
+"backup.backup_required" = "Backup Required";
+"backup.private_key" = "Private Key";
 
-"backup.intro.title_backup" = "Copia de seguridad";
-"backup.intro.title_show" = "Mostrar clave";
-"backup.intro.subtitle" = "La clave privada que se mostrará a continuación es la única forma de restaurar sus fondos en caso de que su teléfono se pierda, lo roben, se averíe, etc.\n\nAsegúrese de que nadie está viendo su pantalla.\n\nLas monedas controladas por esta clave: %@";
-"backup.intro.later" = "Más tarde";
-"backup.intro.backup_now" = "Copia de seguridad";
-"backup.intro.show_key" = "Mostrar clave";
+"backup.intro.title_backup" = "Backup";
+"backup.intro.title_show" = "Show Key";
+"backup.intro.subtitle" = "The private key that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
+"backup.intro.later" = "Later";
+"backup.intro.backup_now" = "Backup";
+"backup.intro.show_key" = "Show Key";
 
-"backup.words.confirmation_description" = "Insertar palabras de su clave %@";
+"backup.words.confirmation_description" = "Enter words from your %@ Key";
 
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
-"backup.eos.hint" = "Copiar su clave utilizando la acción \"copiar\" implica ciertos riesgos si utiliza aplicaciones de gestión de portapapeles u otra aplicación que pueda tener acceso a la información del portapapeles.";
-"error.send_eos.self_transfer" = "No se puede transferir el token a su propia cuenta";
-"error.send_eos.account_not_exist" = "La cuenta de destino no existe";
-"error.send_eos.insufficient_ram" = "Su cuenta EOS no tiene suficiente memoria RAM para enviar este token. Necesita aumentar la capacidad RAM para continuar.";
-"error.send_eos.unknown" = "Algo ha fallado: %@";
-"error.send_ethereum.wrong_parameters" = "Parámetros incorrectos";
-"error.send_binance.memo_required" = "El receptor requiere que el memo no esté vacío en la transacción de transferencia";
-"error.send_binance.only_digits_allowed" = "Es necesario que el memo contenga únicamente dígitos";
-"error.incubed_not_reachable" = "No puede accederse a los servidores incubados";
+"backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may have access to clipboard data.";
+"error.send_eos.self_transfer" = "Can't transfer token to own account";
+"error.send_eos.account_not_exist" = "Target account does not exist";
+"error.send_eos.insufficient_ram" = "Your EOS account doesn't have enough RAM to send this token. You need to increase RAM stake to proceed.";
+"error.send_eos.unknown" = "Something went wrong: %@";
+"error.send_ethereum.wrong_parameters" = "Wrong parameters";
+"error.send_binance.memo_required" = "Receiver requires non-empty memo in transfer transaction";
+"error.send_binance.only_digits_allowed" = "Requires the memo to contain only digits";
+"error.incubed_not_reachable" = "Incubed servers not reachable";
 
-"backup.confirmation.title" = "Comprobar";
+"backup.confirmation.title" = "Check ...";
 
-"words_validator.empty_words" = "No se han introducido todas las palabras";
-"words_validator.invalid_confirmation" = "Las palabras no coinciden";
+"words_validator.empty_words" = "Not all words are entered";
+"words_validator.invalid_confirmation" = "Words do not match";
 
 // Balance
 
-"balance.title" = "Saldo";
-"balance.tab_bar_item" = "Saldo";
-"balance.send" = "Enviar";
-"balance.swap" = "Permutar";
-"balance.deposit" = "Recibir";
-"balance.rate_per_coin" = "%@ por %@";
-"balance.syncing" = "Sincronizando...";
-"balance.searching" = "Buscando transacciones…";
+"balance.title" = "Balance";
+"balance.tab_bar_item" = "Balance";
+"balance.send" = "Send";
+"balance.swap" = "Swap";
+"balance.deposit" = "Receive";
+"balance.rate_per_coin" = "%@ per %@";
+"balance.syncing" = "Syncing...";
+"balance.searching" = "Searching transactions...";
 "balance.searching.count" = "%@ tx";
-"balance.syncing_percent" = "Sincronizando... %@";
-"balance.synced_through" = "hasta %@";
-"balance.add_coin" = "Añadir Monedas";
-"balance.sort.header" = "Ordenar por";
-"balance.sort.valueHighToLow" = "Saldo";
-"balance.sort.az" = "Nombre";
-"balance.sort.24h_change" = "Precio(%) 24H";
-"balance_error.description" = "El texto de error se copiará al portapapeles si decides reportarlo.";
-"balance_error.change_source" = "Cambiar Origen";
-"balance_error.sync_error" = "Error de sincronización";
+"balance.syncing_percent" = "Syncing... %@";
+"balance.synced_through" = "until %@";
+"balance.add_coin" = "Add Coins";
+"balance.sort.header" = "Sort by";
+"balance.sort.valueHighToLow" = "Balance";
+"balance.sort.az" = "Name";
+"balance.sort.24h_change" = "24h Price(%)";
+"balance_error.description" = "The error text will be copied to your clipboard should you decide to report it.";
+"balance_error.change_source" = "Change Source";
+"balance_error.sync_error" = "Sync Error";
 
 // Deposit
 
-"deposit.receive_coin" = "Recibir %@";
-"deposit.your_address" = "Su dirección";
-"deposit.your_account" = "Su cuenta";
-"receive_alert.not_backed_up_description" = "Necesita respaldar el monedero %@ antes de poder recibir %@.";
+"deposit.receive_coin" = "Receive %@";
+"deposit.your_address" = "Your Address";
+"deposit.your_account" = "Your Account";
+"receive_alert.not_backed_up_description" = "You need to backup the %@ Wallet before you may receive %@.";
 
 // Send
 
-"send.title" = "Enviar %@";
-"send.amount_placeholder" = "Importe";
-"send.address_placeholder" = "Dirección";
-"send.account_placeholder" = "Cuenta";
-"send.fee" = "Comisión";
-"send.tx_speed" = "Velocidad de transacción";
-"send.tx_speed_low" = "Bajo";
-"send.tx_speed_medium" = "Medio";
-"send.tx_speed_high" = "Alto";
-"send.tx_speed_custom" = "Personalizado";
-"send.tx_duration" = "Duración";
-"send.duration.instant" = "Inmediato";
-"send.duration.within" = "dentro de %@";
+"send.title" = "Send %@";
+"send.amount_placeholder" = "Amount";
+"send.address_placeholder" = "Address";
+"send.account_placeholder" = "Account";
+"send.fee" = "Fee";
+"send.tx_speed" = "Transaction Speed";
+"send.tx_speed_low" = "Low";
+"send.tx_speed_medium" = "Medium";
+"send.tx_speed_high" = "High";
+"send.tx_speed_custom" = "Custom";
+"send.tx_duration" = "Duration";
+"send.duration.instant" = "Instant";
+"send.duration.within" = "within %@";
 "send.duration.hours" = "%d h.";
 "send.duration.minutes" = "%d min.";
-"send.available_balance" = "Saldo disponible";
-"send.max_button" = "Máx.";
-"send.next_button" = "Siguiente";
-"send.error.invalid_address" = "Dirección inválida";
+"send.available_balance" = "Available Balance";
+"send.max_button" = "Max";
+"send.next_button" = "Next";
+"send.error.invalid_address" = "Invalid Address";
 "send.hodler_locktime" = "TimeLock";
-"send.hodler_locktime_hour" = "1 hora";
-"send.hodler_locktime_month" = "1 mes";
-"send.hodler_locktime_half_year" = "6 meses";
-"send.hodler_locktime_year" = "1 año";
-"send.hodler_locktime_off" = "Apagado";
-"send.hodler_error.unsupported_address" = "El bloqueo del tiempo solo funciona con direcciones P2PKH (a partir de 1)";
+"send.hodler_locktime_hour" = "1 hour";
+"send.hodler_locktime_month" = "1 month";
+"send.hodler_locktime_half_year" = "6 months";
+"send.hodler_locktime_year" = "1 year";
+"send.hodler_locktime_off" = "Off";
+"send.hodler_error.unsupported_address" = "Time locking works only with P2PKH addresses (starting with 1)";
 
-"send.confirmation.title" = "Confirmar";
+"send.confirmation.title" = "Confirm";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total";
-"send.confirmation.send_button" = "Enviar";
-"send.amount_error.balance" = "Saldo %@";
-"send.amount_error.maximum_amount" = "Monto máximo %@";
-"send.amount_error.minimum_amount" = "Monto mínimo %@";
-"send.amount_error.min_required_balance" = "Min. requerido restante %@";
-"send.token.insufficient_fee_alert" = "Las comisiones de transacción para %@ (%@) pagado en %@. Es necesario %@.";
+"send.confirmation.send_button" = "Send";
+"send.amount_error.balance" = "Balance %@";
+"send.amount_error.maximum_amount" = "Maximum amount %@";
+"send.amount_error.minimum_amount" = "Minimum amount %@";
+"send.amount_error.min_required_balance" = "Min. required remainder %@";
+"send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
 
 "send.lock_time" = "TimeLock";
 
 // CoinSelector
 
-"choose_coin.title" = "Elegir moneda";
+"choose_coin.title" = "Choose Coin";
 
 // Swap
 
-"swap.title" = "Permutar";
-"swap.you_pay" = "Usted paga";
-"swap.estimated" = "estimado";
-"swap.balance" = "Saldo";
-"swap.allowance" = "Permiso de acceso";
-"swap.you_get" = "Obtienes";
+"swap.title" = "Swap";
+"swap.you_pay" = "You Pay";
+"swap.estimated" = "estimated";
+"swap.balance" = "Balance";
+"swap.allowance" = "Allowance";
+"swap.you_get" = "You Get";
 "swap.token" = "Token";
-"swap.proceed_button" = "Continuar";
-"swap.approve_button" = "Aprobar";
-"swap.approve.description" = "Usted debe conceder un permiso a un contrato inteligente para ejecutar la operación usando sus fondos. Este permiso no afecta a los fondos de su saldo";
-"swap.approving_button" = "Aprobando...";
-"swap.amount_error.maximum_amount" = "Saldo %@";
-"swap.amount_error.no_balance" = "No es posible analizar el saldo del token";
-"swap.trade_error.not_found" = "No se pueden permutar estos tokens";
-"swap.error.insufficient_fee_alert" = "Comisiones de transacción pagadas en %@. Es necesario %@.";
+"swap.proceed_button" = "Proceed";
+"swap.approve_button" = "Approve";
+"swap.approve.description" = "You should grant a permission to a smart contract to execute the trade using your funds. This permission does not affect funds on your balance";
+"swap.approving_button" = "Approving...";
+"swap.amount_error.maximum_amount" = "Balance %@";
+"swap.amount_error.no_balance" = "Can't parse balance for token";
+"swap.trade_error.not_found" = "Can't swap these tokens";
+"swap.error.insufficient_fee_alert" = "Transaction fees paid in %@. You need %@.";
 
-"swap.price" = "Precio";
-"swap.price_impact" = "Impacto en el precio";
-"swap.max_min" = "Máx / Mín";
-"swap.maximum_paid" = "Máximo Pagado";
-"swap.minimum_got" = "Mínimo Obtenido";
+"swap.price" = "Price";
+"swap.price_impact" = "Price Impact";
+"swap.max_min" = "Max / Min";
+"swap.maximum_paid" = "Maximum Paid";
+"swap.minimum_got" = "Minimum Got";
 
-"swap.fee" = "Tarifa por permutar";
-"swap.transactions_speed" = "Velocidad de transacción";
-"swap.transaction_fee" = "Tarifa de Transacción";
+"swap.fee" = "Swap Fee";
+"swap.transactions_speed" = "Transaction Speed";
+"swap.transaction_fee" = "Transaction Fee";
 
-"swap.select_token.title" = "Elegir moneda";
+"swap.select_token.title" = "Choose Coin";
 
 // Swap Approving
 
-"swap.approve.title" = "Aprobar";
-"swap.approve.subtitle" = "Permutar";
+"swap.approve.title" = "Approve";
+"swap.approve.subtitle" = "Swap";
 
 // Swap Confirmation
 
-"swap.confirmation.title" = "Confirmar";
-"swap.confirmation.swap_button" = "Permutar";
-"swap.confirmation.pay" = "Paga %@";
-"swap.confirmation.get" = "Obtén %@";
+"swap.confirmation.title" = "Confirm";
+"swap.confirmation.swap_button" = "Swap";
+"swap.confirmation.pay" = "Pay %@";
+"swap.confirmation.get" = "Get %@";
 
 
 "swap.uniswap_info.title" = "Uniswap v.2";
-"swap.uniswap_info.description" = "Uniswap es un protocolo totalmente descentralizado para la provisión automatizada de liquidez en Ethereum.\n\nUna simple ecuación formalizada impulsa una liquidez imparable para miles de usuarios y cientos de aplicaciones.\n\nUniswap potencia a desarrolladores, proveedores de liquidez y operadores a participar en un mercado financiero abierto y accesible para todos.";
-"swap.uniswap_info.header_minimum_received" = "Mínimo Recibido";
-"swap.uniswap_info.content_minimum_received" = "Su transacción se revertirá si hay un movimiento de precios grande y desfavorable antes de que se confirme.";
-"swap.uniswap_info.header_price_impact" = "Impacto en el precio";
-"swap.uniswap_info.content_price_impact" = "La diferencia entre el precio de mercado y el precio estimado debido al tamaño de la operación.";
-"swap.uniswap_info.header_swap_fee" = "Tarifa por permutar";
-"swap.uniswap_info.content_swap_fee" = "Una porción de cada transacción (0,30%) va a parar a los proveedores de liquidez como incentivo de protocolo.";
-"swap.uniswap_info.link_button" = "Website de Uniswap";
+"swap.uniswap_info.description" = "Uniswap is a fully decentralized protocol for automated liquidity provision on Ethereum.\n\nA simple formalized equation drives unstoppable liquidity for thousands of users and hundreds of applications.\n\nUniswap empowers developers, liquidity providers and traders to participate in a financial marketplace that is open and accessible to all.";
+"swap.uniswap_info.header_minimum_received" = "Minimum Received";
+"swap.uniswap_info.content_minimum_received" = "Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.";
+"swap.uniswap_info.header_price_impact" = "Price Impact";
+"swap.uniswap_info.content_price_impact" = "The difference between the market price and estimated price due to trade size.";
+"swap.uniswap_info.header_swap_fee" = "Swap Fee";
+"swap.uniswap_info.content_swap_fee" = "A portion of each trade (0.3%) goes to liquidity providers as a protocol incentive.";
+"swap.uniswap_info.link_button" = "Uniswap Site";
 
 // Transactions
 
-"transactions.title" = "Transacciones";
-"transactions.tab_bar_item" = "Transacciones";
-"transactions.filter_all" = "Todo";
-"transactions.empty_text" = "Todavía no tienes transacciones pendientes o pasadas";
-"transactions.pending" = "Pendiente";
-"transactions.receiving" = "Recibiendo";
-"transactions.failed" = "Falla";
-"transactions.sending" = "Enviando";
+"transactions.title" = "Transactions";
+"transactions.tab_bar_item" = "Transactions";
+"transactions.filter_all" = "All";
+"transactions.empty_text" = "You don't have any pending or past transactions yet";
+"transactions.pending" = "Pending";
+"transactions.receiving" = "Receiving";
+"transactions.failed" = "Failed";
+"transactions.sending" = "Sending";
+"transactions.approval" = "Swap approval";
 
 // Transaction Info
 
-"tx_info.title" = "Transacción";
-"tx_info.status" = "Estado";
-"tx_info.status.pending" = "Pendiente";
-"tx_info.status.confirmed" = "Confirmado";
-"tx_info.status.failed" = "Falla";
-"tx_info.from_hash" = "Desde ";
-"tx_info.transaction_id" = "Identificación de la transacción";
-"tx_info.to_hash" = "Para";
-"tx_info.button_verify" = "Verificar";
-"tx_info.rate" = "Tasa histórica";
-"tx_info.fee" = "Comisión";
-"tx_info.to_self_note" = "Esta transacción fue enviada a su propia dirección";
-"tx_info.double_spent_note" = "¡Riesgo de doble gasto!";
-"tx_info.locked_until" = "Bloqueado hasta %@";
-"tx_info.unlocked_at" = "Desbloqueado en %@";
-"tx_info.recipient_hash" = "Destinatario";
-"tx_info.raw_transaction" = "Transacción sin procesar";
+"tx_info.title" = "Transaction";
+"tx_info.status" = "Status";
+"tx_info.status.pending" = "Pending";
+"tx_info.status.confirmed" = "Confirmed";
+"tx_info.status.failed" = "Failed";
+"tx_info.from_hash" = "From";
+"tx_info.transaction_id" = "ID";
+"tx_info.to_hash" = "To";
+"tx_info.button_verify" = "Verify";
+"tx_info.rate" = "Historical Rate";
+"tx_info.fee" = "Fee";
+"tx_info.to_self_note" = "This transaction sent to own address";
+"tx_info.double_spent_note" = "Double Spend Risk!";
+"tx_info.locked_until" = "Locked until %@";
+"tx_info.unlocked_at" = "Unlocked at %@";
+"tx_info.recipient_hash" = "Recipient";
+"tx_info.raw_transaction" = "Raw Transaction";
 
 // Full Info
 
-"full_info.title" = "Transacción";
-"full_info.time" = "Hora";
-"full_info.block" = "Bloquear";
-"full_info.confirmations" = "Confirmaciones";
-"full_info.size" = "Tamaño";
-"full_info.fee" = "Comisión";
-"full_info.rate" = "Tasa";
-"full_info.inputs" = "Aportaciones";
-"full_info.outputs" = "Rendimientos";
-"full_info.source" = "Origen";
-"full_info.contract" = "Contrato";
-"full_info.from" = "Desde ";
-"full_info.to" = "Para";
-"full_info.amount" = "Importe";
+"full_info.title" = "Transaction";
+"full_info.time" = "Time";
+"full_info.block" = "Block";
+"full_info.confirmations" = "Confirmations";
+"full_info.size" = "Size";
+"full_info.fee" = "Fee";
+"full_info.rate" = "Rate";
+"full_info.inputs" = "Inputs";
+"full_info.outputs" = "Outputs";
+"full_info.source" = "Source";
+"full_info.contract" = "Contract";
+"full_info.from" = "From";
+"full_info.to" = "To";
+"full_info.amount" = "Amount";
 "full_info.nonce" = "Nonce";
-"full_info.status" = "Estado";
+"full_info.status" = "Status";
 "full_info.memo" = "Memo";
-"full_info.cpu" = "Uso de CPU";
-"full_info.net" = "Uso de red";
+"full_info.cpu" = "CPU Usage";
+"full_info.net" = "Net Usage";
 "full_info.milli_seconds" = "%@ μs";
 "full_info.bytes" = "%@ Bytes";
 
-"full_info.gas_limit" = "Límite de gas";
-"full_info.gas_used" = "Gas usado";
-"full_info.gas_price" = "Precio de gas";
+"full_info.gas_limit" = "Gas Limit";
+"full_info.gas_used" = "Gas Used";
+"full_info.gas_price" = "Gas Price";
 
-"full_info.source.title" = "Origen";
-"full_info.source.online" = "en línea";
-"full_info.source.offline" = "desconectado";
+"full_info.source.title" = "Source";
+"full_info.source.online" = "online";
+"full_info.source.offline" = "offline";
 
-"full_info.error.server_offline" = "desconectado";
-"full_info.error.transaction_not_found" = "La transacción no se pudo encontrar en el blockchain";
-"full_info.error.change_source" = "Cambiar origen";
-"full_info.no_address" = "Dirección vacía";
+"full_info.error.server_offline" = "offline";
+"full_info.error.transaction_not_found" = "Transaction can not be found on the blockchain";
+"full_info.error.change_source" = "Change Source";
+"full_info.no_address" = "Empty Address";
 
 // Settings
 
-"settings.title" = "Ajustes";
-"settings.tab_bar_item" = "Ajustes";
-"settings.security_center" = "Centro de seguridad";
-"settings.manage_accounts" = "Gestionar monederos";
-"settings.manage_coins" = "Gestionar monedas";
-"settings.app_status" = "Estado de la aplicación";
-"settings.experimental_features" = "Características experimentales";
-"settings.notifications" = "Notificaciones";
-"settings.base_currency" = "Moneda principal";
-"settings.language" = "Idioma";
-"settings.terms" = "Términos";
-"settings.tell_friends" = "Recomendar a un amigo";
-"settings.contact" = "Contacto";
-"settings.light_mode" = "Modo ligero";
+"settings.title" = "Settings";
+"settings.tab_bar_item" = "Settings";
+"settings.security_center" = "Security Center";
+"settings.manage_accounts" = "Manage Wallets";
+"settings.manage_coins" = "Manage Coins";
+"settings.app_status" = "App Status";
+"settings.experimental_features" = "Experimental Features";
+"settings.notifications" = "Notifications";
+"settings.base_currency" = "Base Currency";
+"settings.language" = "Language";
+"settings.terms" = "Terms";
+"settings.tell_friends" = "Tell Friends";
+"settings.contact" = "Contact";
+"settings.light_mode" = "Light Mode";
 "settings.info_title" = "UNSTOPPABLE";
-"settings.info_subtitle" = "app descentralizada";
+"settings.info_subtitle" = "decentralized app";
 
 // Settings -> Notifications
 
-"settings_notifications.title" = "Notificaciones";
-"settings_notifications.toggle_title" = "Notificaciones automáticas";
-"settings_notifications.description" = "Establece alertas de variación de precio para las monedas que te gustaría ver\n\nSe te alertará cuando la variación de precio de las últimas 24 horas supere el umbral seleccionado.\n\n La Alerta de Tendencia de Precio advierte de un cambio de tendencia para el corto plazo de 1 semana, y para el largo plazo de 6 meses.";
-"settings_notifications.alert_off" = "Desactivado";
-"settings.notifications.deactivate_all" = "Desactivar todo";
-"settings.notifications.disabled_text" = "Las notificaciones para la aplicación del Monedero Unstoppable están desactivadas. Necesita activarlas para poder recibir alertas de cambio de precios.";
-"settings.notifications.settings_button" = "Activar en ajustes";
-"settings_notifications.trend_short" = "Corto plazo 7D";
-"settings_notifications.trend_long" = "Largo Plazo 6M";
-"settings_notifications.reset_all_title" = "Restablecer todo";
-"settings_notifications.trend_settings_title" = "Tendencia de precios";
+"settings_notifications.title" = "Notifications";
+"settings_notifications.toggle_title" = "Push Notifications";
+"settings_notifications.description" = "Set price change alerts for the coins you would like to watch\n\nYou will be alerted when the change in price for the last 24 hours exceeds selected threshold.\n\nPrice Trend Alert warns of a trend change for the short 1 week, for the long 6 month.";
+"settings_notifications.alert_off" = "Off";
+"settings.notifications.deactivate_all" = "Deactivate All";
+"settings.notifications.disabled_text" = "The notifications for Unstoppable Wallet app are disabled. You need to turn on Notifications and allow background app refresh in order to be able to receive price change alerts.";
+"settings.notifications.settings_button" = "Turn on in Settings";
+"settings_notifications.trend_short" = "Short Term 7D";
+"settings_notifications.trend_long" = "Long Term 6M";
+"settings_notifications.reset_all_title" = "Reset All";
+"settings_notifications.trend_settings_title" = "Price Trend";
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Elegir monedas";
-"manage_coins.add_token" = "Añadir Token";
-"manage_coins.search" = "Buscar";
-"manage_coins.add_coin.title" = "Añadir %@ ";
-"manage_coins.add_coin.subtitle" = "%@ Monedero";
-"manage_coins.add_coin.text.set_up" = "Necesitas configurar el monedero %@ para poder enviar o recibir %@.";
-"manage_coins.add_coin.text.create_or_restore" = "Utiliza el botón Crear de abajo para configurar un nuevo monedero %@, o toca el botón Restaurar para importar un monedero existente.";
-"manage_coins.add_coin.text.create_only" = "En este momento Unstoppable no puede crear un nuevo monedero %@. Solo puedes restaurar uno ya existente.";
-"manage_coins.add_coin.text.tokens" = "Podrás utilizar este monedero a partir del: %@.";
-"manage_coins.add_coin.create" = "Crear";
-"manage_coins.add_coin.restore" = "Restaurar";
+"manage_coins.title" = "Choose Coins";
+"manage_coins.add_token" = "Add Token";
+"manage_coins.search" = "Search";
+"manage_coins.add_coin.title" = "Add %@";
+"manage_coins.add_coin.subtitle" = "%@ Wallet";
+"manage_coins.add_coin.text.set_up" = "You need to set up %@ wallet to be able to send or receive %@.";
+"manage_coins.add_coin.text.create_or_restore" = "Use the Create button below to set up a new %@ wallet, or Restore button to import the existing one.";
+"manage_coins.add_coin.text.create_only" = "At this point Unstoppable is not able to create new %@ wallet. You’re only able to restore the existing one.";
+"manage_coins.add_coin.text.tokens" = "You will be able to use this wallet for: %@.";
+"manage_coins.add_coin.create" = "Create";
+"manage_coins.add_coin.restore" = "Restore";
 
 // Settings -> Experimental Features
 
 "settings.experimental_features.title" = "Experimental";
-"settings.experimental_features.description" = "Las siguientes características son experimentales y deben utilizarse con precaución. Aunque hemos probado a fondo estas características usando nuestros propios fondos criptográficos, no podemos garantizar que funcionen como se espera en todos los casos posibles.";
+"settings.experimental_features.description" = "The features below are experimental and should be used with caution. While we have thoroughly tested these features using our own crypto funds we cannot guarantee they work as expected in all possible cases.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "TimeLock";
-"settings.bitcoin_hodling.lock_time" = "Activar";
-"settings.bitcoin_hodling.description" = "Permite enviar Bitcoins que no se pueden gastar hasta la fecha establecida.\n\nEl receptor de dicha transacción debe utilizar el monedero Unstoppable.\n\nSólo el monedero Unstoppable puede identificar correctamente tales transacciones en la red Bitcoin, así como permitir que el receptor gaste esos Bitcoins después de que expire el período de bloqueo.\n\nSi eres un HODLer, puedes usar esta función para obligarte a retener tus Bitcoins enviándote dicha transacción a ti mismo.\n\nPor ser característica experimental, la cantidad máxima por transacción está limitada a 0.5 BTC.";
+"settings.bitcoin_hodling.lock_time" = "Activate";
+"settings.bitcoin_hodling.description" = "Enables you to send Bitcoins that cannot be spent until specified date.\n\nThe receiver of such transaction should use Unstoppable wallet app version 0.10 or newer with BIP44 address format for the Bitcoin.\n\nOnly Unstoppable wallet can correctly identify such transactions on Bitcoin network as well as enable receiver to spend those Bitcoins after the lock period expires.\n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transaction to yourself.\n\nBeing an experimental feature the maximum amount per transaction is limited to 0.5 BTC.";
 
 // Settings -> Terms
 
-"terms.title" = "Términos";
-"terms.app_subtitle" = "Decentralized app";
-"terms.description" = "El monedero Unstoppable fue creado para aquellos que buscan invertir y almacenar criptomonedas de forma privada e independiente.
+"terms.title" = "Terms";
+"terms.app_subtitle" = "Decentralized App";
+"terms.description" = "The Unstoppable wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.
 
-Es un monedero peer-to-peer sin custodio, donde sólo el usuario tiene control sobre los fondos. No recopila ningún dato y mantiene al usuario independiente al no enlazar su cartera a un único monedero.
+It's a non-custodial, peer-to-peer wallet where only the user has control over funds. It doesn't collect any data and keeps user independent by not locking his/her wallet to a specific wallet app.
 
-El monedero Unstoppable es completamente de código abierto y cualquiera puede verificar que la aplicación funciona exactamente como se afirma.
+The Unstoppable wallet is fully open-source and anyone can confirm that the app works exactly as it claims to.
 
-Desarrollamos Unstoppable para nosotros mismos ya que las soluciones disponibles no estaban a la altura. Desde una perspectiva de ingenieria y practicidad, creemos que este monedero está significativamente por delante de los productos alternativos.";
-"terms.site" = "Sitio";
-"terms.item.academy" = "He pasado por la sección Academia de esta aplicación y me he familiarizado con los aspectos fundamentales del almacenamiento de criptomonedas.";
-"terms.item.backup" = "He respaldado la(s) clave(s) privada(s) para mis monederos que se me mostraron en forma de 12-24 palabras. Entiendo que estas claves privadas se almacenan en mi smartphone y no en ningún otro lugar.";
-"terms.item.owner" = "Entiendo que sólo el propietario de mi(s) clave(s) privada(s) puede acceder y gastar fondos en mi monedero y, por lo tanto, estas claves no deben ser compartidas con nadie.";
-"terms.item.recover" = "Entiendo que necesitaré mis claves privadas para restaurar el acceso a mis fondos si pierdo mi teléfono o si la aplicación no funciona correctamente. Sin mis claves privadas será imposible recuperar el acceso a mi monedero.";
-"terms.item.phone" = "Entiendo que dar mi teléfono a entidades no fiables o dejar la aplicación de monedero sin bloqueo seguro por PIN podría, potencialmente, poner en peligro la seguridad de mis fondos.";
-"terms.item.root" = "Entiendo que rootear mi teléfono (rooting), instalando aplicaciones de terceros de fuentes desconocidas o mantener el sistema operativo desactualizado puede, potencialmente,
-poner en peligro la seguridad de mis fondos.";
-"terms.item.bugs" = "Entiendo que puede haber problemas de software sin descubrir en el código que hace funcionar esta aplicación, lo que puede llevar a un comportamiento inesperado o al mal funcionamiento de la aplicación.";
-"terms.footer" = "¡Gracias por elegir este monedero!";
+We built Unstoppable for ourselves as the available solutions were not up to par. Both from engineering and usability perspective we believe this wallet to be significantly ahead of alternative products.";
+"terms.site" = "Site";
+"terms.item.academy" = "I went through the Academy section of this app and got familiar with the fundamental aspects of storing cryptocurrencies.";
+"terms.item.backup" = "I have backed up the private key(s) for my wallets that were shown to me in a form of 12-24 words. I understand that these private keys are stored on my smartphone and not elsewhere.";
+"terms.item.owner" = "I understand that only the owner of my private key(s) can access and spend funds on my wallet and therefore these keys should never be shared with anyone.";
+"terms.item.recover" = "I understand that I will need my private keys in order to restore access to my funds should I loose my phone or if the app malfunctions. Without my private keys it will be impossible to recover access to my wallet.";
+"terms.item.phone" = "I understand that passing my phone to untrusted entities or leaving the wallet app without safe PIN lock may potentially endanger the safety of my funds.";
+"terms.item.root" = "I understand that jail breaking (rooting) my phone, installing third party apps from unknown sources, keeping the operating system outdated can potentially endanger the safety of my funds.";
+"terms.item.bugs" = "I understand there may be undiscovered software issues in the code powering this wallet app which may lead to unexpected behavior or the app malfunctioning.";
+"terms.footer" = "Thank you for choosing this wallet!";
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Monedero Unstoppable - un monedero de criptomonedas que yo recomiendo";
+"settings_tell_friends.text" = "Unstoppable Wallet - a crypto wallet I recommend";
 
 // Settings -> Security
 
-"settings_security.title" = "Centro de seguridad";
-"settings_security.blockchain_settings" = "Configuración de Blockchain";
-"settings_security.passcode" = "Código de acceso";
-"settings_security.privacy" = "Privacidad";
-"settings_security.change_pin" = "Editar el código ";
-"settings_security.touch_id" = "Identificación táctil";
-"settings_security.face_id" = "Identificación de caras";
-"security_settings.delete_alert_button" = "Eliminar del teléfono";
-"settings_privacy.title" = "Privacidad";
-"settings_privacy.header_description" = "Esta aplicación no comparte ninguno de tus datos. Sin embargo, ya que se comunica con blockchains, algunos datos públicos como la dirección IP pueden ser filtrados. Utilice el botón Info de la parte superior derecha para obtener información detallada sobre cada sección.";
-"settings_privacy.sorting_title" = "Entradas/Salidas";
-"settings_privacy.sorting.section_header" = "Transacciones de blockchain";
-"settings_privacy.sorting.section_footer" = "Haga que sus transacciones BTC, LTC, BCH sean más difíciles de rastrear cambiando la forma en que las transacciones están estructuradas.";
-"settings_privacy.connection.section_header" = "Sincronización de Blockchain";
-"settings_privacy.connection.section_footer" = "Algunos blockchains aún no brindan medios para poder usarse en aplicaciones móviles de modo peer-to-peer. Las comunicaciones con las blockchains BTC, BCH, LTC, DASH son completamente peer-to-peer.";
-"settings_privacy.sync.section_header" = "Restaurar blockchain";
-"settings_privacy.sync.section_footer" = "Seleccione la fuente de información para restaurar el monedero con las transacciones.";
+"settings_security.title" = "Security Center";
+"settings_security.blockchain_settings" = "Blockchain Settings";
+"settings_security.passcode" = "Passcode";
+"settings_security.privacy" = "Privacy";
+"settings_security.change_pin" = "Edit Passcode";
+"settings_security.touch_id" = "Touch ID";
+"settings_security.face_id" = "Face ID";
+"security_settings.delete_alert_button" = "Delete from Phone";
+"settings_privacy.title" = "Privacy";
+"settings_privacy.header_description" = "This app doesn't share any of your data. However, as it communicates with blockchains some public data like IP address can potentially be leaked. Use the info button on the top right to get detailed information about each section.";
+"settings_privacy.sorting_title" = "Inputs/Outputs";
+"settings_privacy.sorting.section_header" = "Blockchain Transactions";
+"settings_privacy.sorting.section_footer" = "Make your BTC, LTC, BCH transactions harder to trace by changing the way transactions are structured.";
+"settings_privacy.connection.section_header" = "Blockchain Sync";
+"settings_privacy.connection.section_footer" = "Some blockchains do not yet provide means for mobile apps to operate in peer to peer manner. The communications with BTC, BCH, LTC, DASH blockchains is fully peer to peer.";
+"settings_privacy.sync.section_header" = "Blockchain Restore";
+"settings_privacy.sync.section_footer" = "Select data source for restoring wallet with transactions.";
 
 "settings_privacy_info.title" = "Privacy Settings";
 "settings_privacy_info.description" = "Below you will find detailed explanation of the privacy settings that are available in the app. It's safe to consider them as settings for those that require extensive privacy.";
@@ -415,76 +421,76 @@ poner en peligro la seguridad de mis fondos.";
 "settings_privacy_info.header_blockchain_restore" = "Blockchain Restore";
 "settings_privacy_info.content_blockchain_restore" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transactions history for a given coin so that the wallet app is able to display past transactions and figure out latest balance. This needs to happen only once, when user restores previously created wallet. At this point there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from API Server : There is a predefined server which hosts the entire blockchain and has all the data processed and ready to provide it in a fast manner. This method is fast but can potentially keep track of the IP addresses and the data requested. This option is recommended due to its speed of getting data (5-10 minutes). The risks are minimal. If the user restoring from his own server then no privacy risks at all.\n\n2. from Blockchain : In this case the app tries to restore directly from a p2p network of the blockchain nodes. The app pings many of those nodes and requests data from them. Potentially these nodes can keep track of user's IP address and requests made however during restore the app can switch between nodes. There are close to 10,000 Bitcoin nodes on the network at any given time. This option is slow and can easily take 2-3 hours, app needs to be open while restore is happening.";
 
-"settings_privacy.alert_sync.title" = "Restaurar Fuente";
-"settings_privacy.alert_sync.description" = "Después de este cambio, el monedero tendrá que resincronizarse con el blockchain %@.";
-"settings_privacy.alert_sync.recommended" = "Recomendado";
-"settings_privacy.alert_sync.more_private" = "Más Privado";
+"settings_privacy.alert_sync.title" = "Restore Source";
+"settings_privacy.alert_sync.description" = "After this change the wallet will have to resync itself with the %@ blockchain.";
+"settings_privacy.alert_sync.recommended" = "Recommended";
+"settings_privacy.alert_sync.more_private" = "More Private";
 
-"settings_privacy.alert_connection.title" = "Sincronización de Blockchain";
+"settings_privacy.alert_connection.title" = "Blockchain Sync";
 
-"settings_privacy.alert_sort.title" = "Transacciones de blockchain";
-"settings_privacy.alert_sort.subtitle" = "Entradas/Salidas";
-"settings_privacy.sorting_default" = "Predefinido";
-"settings_privacy.sorting_default.description" = "Sin ninguna configuración";
-"settings_privacy.sorting_shuffle" = "Aleatoriamente";
-"settings_privacy.sorting_shuffle.description" = "Indexación aleatoria";
-"settings_privacy.sorting_bip69" = "Bip69 determinista";
-"settings_privacy.sorting_bip69.description" = "Indexación Lexicográfica";
+"settings_privacy.alert_sort.title" = "Blockchain Transactions";
+"settings_privacy.alert_sort.subtitle" = "Inputs/Outputs";
+"settings_privacy.sorting_default" = "Default";
+"settings_privacy.sorting_default.description" = "Without any settings";
+"settings_privacy.sorting_shuffle" = "Shuffle";
+"settings_privacy.sorting_shuffle.description" = "Random Indexing";
+"settings_privacy.sorting_bip69" = "Deterministic Bip69";
+"settings_privacy.sorting_bip69.description" = "Lexicographical Indexing";
 
 // Settings -> Contact
 
-"settings.contact.title" = "Contacto";
-"settings.contact.email" = "Email";
+"settings.contact.title" = "Contact";
+"settings.contact.email" = "E-mail";
 "settings.contact.telegram_wallet" = "Telegram";
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Gestionar monederos";
-"settings_manage_keys.item_title" = "%@ Monedero";
-"settings_manage_keys.add_wallet" = "Añadir Monedero";
-"settings_manage_keys.description" = "A continuación se destacan sus monederos activos donde cada monedero es responsable de diferentes tipos de criptomonedas.\n\nDebería hacer copias de seguridad de cada monedero resaltado, respaldando la clave privada de esa cartera. Esta clave es la única manera de restaurar sus fondos si su teléfono se pierde, lo roban, se avería, etc.";
-"settings_manage_keys.delete" = "Eliminar";
-"settings_manage_keys.backup" = "Copia de seguridad";
-"settings_manage_keys.show" = "Mostrar";
-"settings_manage_keys.create" = "Crear";
-"settings_manage_keys.restore" = "Restaurar";
-"settings_manage_keys.settings" = "Formato de Dirección";
-"settings_manage_keys.delete.cant_delete" = "Necesita respaldar esta clave privada antes de que pueda eliminarla de este teléfono.";
-"settings_manage_keys.delete.title" = "Eliminar Monedero";
-"settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará los monederos %@ de este dispositivo.";
-"settings_manage_keys.delete.confirmation_disable" = "Monedas que serán deshabilitadas: %@";
-"settings_manage_keys.delete.confirmation_loose" = "Si usted no respaldó la clave privada para este monedero, perderá el acceso a sus fondos.";
-"error.invalid_eos_key" = "Clave inválida";
-"error.invalid_eos_account" = "Cuenta inválida";
+"settings_manage_keys.title" = "Manage Wallets";
+"settings_manage_keys.item_title" = "%@ Wallet";
+"settings_manage_keys.add_wallet" = "Add Wallet";
+"settings_manage_keys.description" = "Highlighted below are your active wallets where each wallet controls a set of cryptocurrencies.\n\nYou must backup each highlighted wallet by backing up the private key for it. This key is the only way to restore and access your funds if your phone is ever lost, stolen or the app malfunctions.";
+"settings_manage_keys.delete" = "Delete";
+"settings_manage_keys.backup" = "Backup";
+"settings_manage_keys.show" = "Show Key";
+"settings_manage_keys.create" = "Create";
+"settings_manage_keys.restore" = "Restore";
+"settings_manage_keys.settings" = "Address Format";
+"settings_manage_keys.delete.cant_delete" = "You need to backup the private key for this wallet before it can be deleted from this phone.";
+"settings_manage_keys.delete.title" = "Delete Wallet";
+"settings_manage_keys.delete.confirmation_remove" = "The action will delete the %@ Wallet from this device.";
+"settings_manage_keys.delete.confirmation_disable" = "Coins that will be disabled: %@";
+"settings_manage_keys.delete.confirmation_loose" = "If you didn't backup the private key for this wallet, you will lose access to your funds.";
+"error.invalid_eos_key" = "Invalid key";
+"error.invalid_eos_account" = "Invalid account";
 
 // Set PIN
 
-"set_pin.title" = "Código de acceso";
-"set_pin.info" = "Su código servirá para abrir su monedero y enviar dinero";
-"set_pin.confirm.info" = "Confirmar";
-"set_pin.wrong_confirmation" = "El código de acceso no coincide. Inténtelo de nuevo";
+"set_pin.title" = "Passcode";
+"set_pin.info" = "Your passcode will be used to unlock your wallet";
+"set_pin.confirm.info" = "Confirm";
+"set_pin.wrong_confirmation" = "Passcode did not match. Try again";
 
 // Edit PIN
 
-"edit_pin.title" = "Editar el código de acceso";
-"edit_pin.unlock_info" = "Código actual";
-"edit_pin.new_pin_info" = "Nuevo código de acceso";
+"edit_pin.title" = "Edit Passcode";
+"edit_pin.unlock_info" = "Current Passcode";
+"edit_pin.new_pin_info" = "New Passcode";
 
 // Unlock PIN
 
-"unlock_pin.info" = "Código de acceso";
-"unlock_pin.cant_save_pin" = "¡Ups! ¡No podemos guardar su código, póngase en contacto con nosotros lo antes posible!";
-"unlock_pin.blocked_until" = "Inhabilitado hasta: %@";
+"unlock_pin.info" = "Passcode";
+"unlock_pin.cant_save_pin" = "Ouch! We cannot save your passcode, please contact us asap!";
+"unlock_pin.blocked_until" = "Disabled until: %@";
 
 // Rate List
 
-"rate_list.portfolio" = "Cartera";
-"rate_list.latest_news" = "Últimas noticias";
+"rate_list.portfolio" = "Portfolio";
+"rate_list.latest_news" = "Latest News";
 "top100_list.portfolio" = "Top 100";
-"top100_list.sort_by" = "Ordenar por";
-"top100_list.sort_type.rank" = "Puesto";
-"top100_list.sort_type.top_winners" = "Mejores ganadores";
-"top100_list.sort_type.top_losers" = "Peores perdedores";
+"top100_list.sort_by" = "Sort By";
+"top100_list.sort_type.rank" = "Rank";
+"top100_list.sort_type.top_winners" = "Top Winners";
+"top100_list.sort_type.top_losers" = "Top Losers";
 
 //NumPad
 
@@ -499,106 +505,107 @@ poner en peligro la seguridad de mis fondos.";
 
 // Key Types
 
-"chart.title" = "%@ Precio";
-"chart.time_duration.day" = "1 D";
-"chart.time_duration.week" = "7 D";
+"chart.title" = "%@ Price";
+"chart.time_duration.today" = "Today";
+"chart.time_duration.day" = "1D";
+"chart.time_duration.week" = "7D";
 "chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "1M";
 "chart.time_duration.month3" = "3M";
 "chart.time_duration.halyear" = "6M";
-"chart.time_duration.year" = "1A";
-"chart.time_duration.year2" = "2A";
+"chart.time_duration.year" = "1Y";
+"chart.time_duration.year2" = "2Y";
 
-"chart.market_cap" = "Cap. de Mercado";
+"chart.market_cap" = "Market Cap";
 "chart.market_cap.thousand" = "%@ k";
 "chart.market_cap.million" = "%@ M";
 "chart.market_cap.billion" = "%@ B";
 "chart.market_cap.trillion" = "%@ T";
-"chart.volume" = "Volumen (24St)";
-"chart.circulation" = "En circulación";
-"chart.max_supply" = "Suministro total";
-"chart.start_date" = "Fecha de lanzamiento";
-"chart.website" = "Website del proyecto";
-"chart.error.not_available" = "Gráfico no disponible";
-"chart.selected.price" = "Precio";
-"chart.selected.volume" = "Volumen";
+"chart.volume" = "Volume (24h)";
+"chart.circulation" = "In Circulation";
+"chart.max_supply" = "Total Supply";
+"chart.start_date" = "Launch Date";
+"chart.website" = "Project Website";
+"chart.error.not_available" = "Chart not available";
+"chart.selected.price" = "Price";
+"chart.selected.volume" = "Vol";
 "chart.trend_neutral" = "Neutral";
-"chart.trend_down" = "Tendencia bajista";
-"chart.trend_up" = "Tendencia alcista";
+"chart.trend_down" = "Down Trend";
+"chart.trend_up" = "Up Trend";
 
 // Create Wallet
 
-"create_wallet.title" = "Nuevo Monedero";
-"create_wallet.create_button" = "Crear";
+"create_wallet.title" = "New Wallet";
+"create_wallet.create_button" = "Create";
 
 // Select Coins
 
-"select_coins.choose_crypto" = "Elegir Cripto";
-"select_coins.next_button" = "Siguiente";
+"select_coins.choose_crypto" = "Choose Crypto";
+"select_coins.next_button" = "Next";
 
-"price_notification.up" = "arriba";
-"price_notification.down" = "abajo";
-"price_notification.multi_title" = "Notificaciones";
+"price_notification.up" = "up";
+"price_notification.down" = "down";
+"price_notification.multi_title" = "Notifications";
 
 // Lock Info
 
 "lock_info.title" = "TimeLock";
-"lock_info.text" = "El remitente envió estos fondos con un bloqueo del gasto que expirará en la fecha mostrada.\n\nNo te preocupes, los Bitcoins recibidos ya son tuyos, pero hasta que el período de bloqueo expire, no puedes gastarlos en la red Bitcoin.";
+"lock_info.text" = "The sender sent these funds with a spending lock that will expire on shown date.\n\nNo worries, the received Bitcoins are already yours but until the lock period expires you cannot spend them on the Bitcoin network.";
 
 // Double Spend Info
 
-"double_spend_info.title" = "Doble gasto";
-"double_spend_info.header" = "¡Riesgo de doble gasto! Hay otra transacción en blockchain que intenta gastar entradas usadas en esta transacción. Solo una transacción será aceptada por la red.";
-"double_spend_info.this_hash" = "Esta Tx";
-"double_spend_info.conflicting_hash" = "Tx en conlicto";
+"double_spend_info.title" = "Double Spend";
+"double_spend_info.header" = "Double Spend Risk! There is another transaction on blockchain that trying to spend inputs used in this transaction. Only one transaction will be accepted by the network";
+"double_spend_info.this_hash" = "This Tx";
+"double_spend_info.conflicting_hash" = "Conflicting Tx";
 
 // Relative Date
-"timestamp.days_ago" = "Hace %lu d";
-"timestamp.hours_ago" = "Hace %lu h";
-"timestamp.min_ago" = "Hace %lu m";
+"timestamp.days_ago" = "%lud ago";
+"timestamp.hours_ago" = "%luh ago";
+"timestamp.min_ago" = "%lum ago";
 
 // Intro
 
-"intro.skip" = "Omitir";
-"intro.next" = "Siguiente";
-"intro.independence.title" = "Independencia";
-"intro.independence.description" = "Mantenga los activos criptográficos seguros, no confiscables y accesibles en todo momento";
-"intro.knowledge.title" = "Conocimiento";
-"intro.knowledge.description" = "Mantente informado y descubre proyectos de blockchain en las primeras etapas de desarrollo";
-"intro.privacy.title" = "Privacidad";
-"intro.privacy.description" = "Manténgase incognito y bajo el radar, mientras crece su riqueza";
+"intro.skip" = "Skip";
+"intro.next" = "Next";
+"intro.independence.title" = "Independence";
+"intro.independence.description" = "Keep crypto assets safe, unconfiscatable and accessible at all times";
+"intro.knowledge.title" = "Knowledge";
+"intro.knowledge.description" = "Become informed and discover growing blockchain projects in early stages";
+"intro.privacy.title" = "Privacy";
+"intro.privacy.description" = "Stay incognito and under the radar while growing your wealth";
 
 // Guides
 
-"guides.tab_bar_item" = "Academia";
+"guides.tab_bar_item" = "Academy";
 "guides.title" = "Academy";
 
 // Add Token
 
-"add_token.choose_blockchain" = "Elegir Blockchain";
-"add_token.add_token" = "Añadir Token";
+"add_token.choose_blockchain" = "Choose Blockchain";
+"add_token.add_token" = "Add Token";
 "add_token.erc20_token" = "ERC20 Token";
 "add_token.eos_token" = "EOS Token";
 "add_token.binance_token" = "Binance Token";
 
 // Add Erc20 Token
 
-"add_erc20_token.title" = "Añadir ERC20";
-"add_erc20_token.contract_address" = "Dirección del contrato";
-"add_erc20_token.coin_name" = "Nombre de moneda";
-"add_erc20_token.symbol" = "Símbolo";
-"add_erc20_token.decimals" = "Decimales";
-"add_erc20_token.already_exists" = "Este token ya está en la lista del gestor de monedas.";
-"add_erc20_token.add" = "Añadir";
-"add_erc20_token.contract_not_exist" = "Contrato no encontrado";
+"add_erc20_token.title" = "Add ERC20";
+"add_erc20_token.contract_address" = "Contract Address";
+"add_erc20_token.coin_name" = "Coin Name";
+"add_erc20_token.symbol" = "Symbol";
+"add_erc20_token.decimals" = "Decimals";
+"add_erc20_token.already_exists" = "This token is already in the coin manager list.";
+"add_erc20_token.add" = "Add";
+"add_erc20_token.contract_not_exist" = "Contract not found";
 
-"change_24hour_up" = "Precio %@: subió %@%% %@";
-"change_24hour_down" = "Precio %@: bajó %@%% %@";
-"trend_shortterm_up" = "Tendencia a corto plazo de %@: subiò %@";
-"trend_shortterm_down" = "Tendencia a corto plazo de %@: bajó %@";
-"trend_longterm_up" = "Tendencia a largo plazo de %@: subiò %@";
-"trend_longterm_down" = "Tendencia a largo plazo de %@: bajó %@";
+"change_24hour_up" = "%@ price: up %@%% %@";
+"change_24hour_down" = "%@ price: down %@%% %@";
+"trend_shortterm_up" = "%@ short term trend: up %@";
+"trend_shortterm_down" = "%@ short term trend: down %@";
+"trend_longterm_up" = "%@ long term trend: up %@";
+"trend_longterm_down" = "%@ long term trend: down %@";
 
-"chart_alert.title" = "Notificación";
-"chart_alert.24h_description" = "Variación de Precio 24h";
-"chart_alert.trend_description" = "Variación de tendencia";
+"chart_alert.title" = "Notification";
+"chart_alert.24h_description" = "Price Change 24h";
+"chart_alert.trend_description" = "Trend Change";
