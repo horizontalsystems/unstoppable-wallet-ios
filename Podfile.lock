@@ -399,7 +399,7 @@ CHECKOUT OPTIONS:
     :commit: fda99c1197bf51d57bdd76248392953743c9d269
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   EthereumKit.swift:
-    :commit: fda99c1197bf51d57bdd76248392953743c9d269
+    :commit: 5e7f10272f9566048ea2deef5c6bee2f427e48cd
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :commit: 783ff3709e90df51ca60d50a2665e6afdad8e391
@@ -441,7 +441,7 @@ CHECKOUT OPTIONS:
     :commit: fda99c1197bf51d57bdd76248392953743c9d269
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   XRatesKit.swift:
-    :commit: f11467a192cdd4a2623d186fe07cbfcfceab4425
+    :commit: 7140afde4f131ff1d4f3f66e8fc6735a76b2f094
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
 
 SPEC CHECKSUMS:

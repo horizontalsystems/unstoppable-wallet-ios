@@ -145,17 +145,6 @@ class ChartRateFactory: IChartRateFactory {
             endTimestamp = max(marketInfo.timestamp, endTimestamp)
             points.append(ChartPoint(timestamp: marketInfo.timestamp, value: marketInfo.rate, volume: nil))
             addCurrentRate = true
-
-            // replace start rate for diff calculation
-            var calendar = Calendar.current
-            calendar.timeZone = TimeZone(secondsFromGMT: 0) ?? calendar.timeZone
-            let firstTimestamp = calendar.startOfDay(for: Date()).timeIntervalSince1970
-            if chartType == .today, let startDayIndex = points.firstIndex(where: { $0.timestamp == firstTimestamp }) {
-                let firstRate = marketInfo.rate / (1 + marketInfo.diff / 100)
-                let h24point = ChartPoint(timestamp: firstTimestamp, value: firstRate, volume: points[startDayIndex].volume)
-
-                points[startDayIndex] = h24point
-            }
         }
         // build data with rates, volumes and indicators for points
         let data = chartData(points: points, startTimestamp: chartInfo.startTimestamp, endTimestamp: endTimestamp)
