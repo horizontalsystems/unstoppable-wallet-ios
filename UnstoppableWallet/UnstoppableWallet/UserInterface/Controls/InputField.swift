@@ -108,7 +108,9 @@ class InputField: UIView {
     }
 
     @objc private func onTapScan() {
-        openScan?(ScanQrRouter.module(delegate: self))
+        let scanQrViewController = ScanQrViewController()
+        scanQrViewController.delegate = self
+        openScan?(scanQrViewController)
     }
 
     @objc private func onTapDelete() {
@@ -237,7 +239,7 @@ extension InputField {
 
 }
 
-extension InputField: IScanQrModuleDelegate {
+extension InputField: IScanQrViewControllerDelegate {
 
     func didScan(string: String) {
         textView.text = string
