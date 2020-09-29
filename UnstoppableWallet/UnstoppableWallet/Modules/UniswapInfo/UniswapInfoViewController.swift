@@ -33,6 +33,7 @@ class UniswapInfoViewController: ThemeViewController {
         tableView.registerHeaderFooter(forClass: InfoHeaderView.self)
         tableView.registerCell(forClass: ButtonCell.self)
         tableView.registerCell(forClass: DescriptionCell.self)
+        tableView.registerCell(forClass: InfoHeader3Cell.self)
 
         tableView.sectionDataSource = self
 
@@ -55,6 +56,18 @@ class UniswapInfoViewController: ThemeViewController {
                 },
                 dynamicHeight: { width in
                     InfoHeaderView.height(containerWidth: width, text: text)
+                }
+        )
+    }
+
+    private func header3Row(id: String, string: String) -> RowProtocol {
+        Row<InfoHeader3Cell>(
+                id: id,
+                dynamicHeight: { containerWidth in
+                    InfoHeader3Cell.height(containerWidth: containerWidth, string: string)
+                },
+                bind: { cell, _ in
+                    cell.bind(string: string)
                 }
         )
     }
@@ -92,12 +105,15 @@ extension UniswapInfoViewController: SectionsDataSource {
             Section(
                     id: "description",
                     headerState: separatorHeaderState,
-                    rows: [row(text: "swap.uniswap_info.description".localized)]
+                    rows: [
+                        row(text: "swap.uniswap_info.description".localized),
+                        header3Row(id: "uniswap_related", string: "swap.uniswap_info.header_uniswap_related".localized)
+                    ]
             ),
             Section(
-                    id: "received",
-                    headerState: header(text: "swap.uniswap_info.header_minimum_received".localized),
-                    rows: [row(text: "swap.uniswap_info.content_minimum_received".localized)]
+                    id: "allowance",
+                    headerState: header(text: "swap.uniswap_info.header_allowance".localized),
+                    rows: [row(text: "swap.uniswap_info.content_allowance".localized)]
             ),
             Section(
                     id: "price_impact",
@@ -108,6 +124,29 @@ extension UniswapInfoViewController: SectionsDataSource {
                     id: "swap_fee",
                     headerState: header(text: "swap.uniswap_info.header_swap_fee".localized),
                     rows: [row(text: "swap.uniswap_info.content_swap_fee".localized)]
+            ),
+            Section(
+                    id: "guaranteed_amount",
+                    headerState: header(text: "swap.uniswap_info.header_guaranteed_amount".localized),
+                    rows: [row(text: "swap.uniswap_info.content_guaranteed_amount".localized)]
+            ),
+            Section(
+                    id: "maximum_spend",
+                    headerState: header(text: "swap.uniswap_info.header_maximum_spend".localized),
+                    rows: [
+                        row(text: "swap.uniswap_info.content_maximum_spend".localized),
+                        header3Row(id: "other", string: "swap.uniswap_info.header_other".localized)
+                    ]
+            ),
+            Section(
+                    id: "transaction_fee",
+                    headerState: header(text: "swap.uniswap_info.header_transaction_fee".localized),
+                    rows: [row(text: "swap.uniswap_info.content_transaction_fee".localized)]
+            ),
+            Section(
+                    id: "transaction_speed",
+                    headerState: header(text: "swap.uniswap_info.header_transaction_speed".localized),
+                    rows: [row(text: "swap.uniswap_info.content_transaction_speed".localized)]
             ),
             Section(
                     id: "swap_link_button",

@@ -1068,6 +1068,7 @@
 		1A5646DDDD9A1E132BE1885E /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B7C35C5B235D2BBAC2C /* AppVersion.swift */; };
 		1A5646DF9D2D653D07C89963 /* PrivacySortSelectViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56464567BE569922C1FEFC /* PrivacySortSelectViewItem.swift */; };
 		1A5646E67996AB355694A35E /* EnabledWallet_v_0_13.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A55E5866D6081EA6F69 /* EnabledWallet_v_0_13.swift */; };
+		1A5646EADF5C50B93EE3AC21 /* InfoHeader3Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E04BCA7E9E76746A01A /* InfoHeader3Cell.swift */; };
 		1A5646F57C3677EBC462673C /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56489DE231CDDCA75CAEB3 /* AppError.swift */; };
 		1A5646F6ED19CA9AA8F52C7F /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646D49060C3EFF06D0479 /* App.swift */; };
 		1A564703555DD89136D915FE /* SyncMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BE241BFC5DD59D0FB7C /* SyncMode.swift */; };
@@ -1133,6 +1134,7 @@
 		1A564A24327DB692A068D909 /* FilterHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564293D88587642800717B /* FilterHeaderCell.swift */; };
 		1A564A2B23326B3057C37962 /* AdapterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564504718E7D19F379A9F7 /* AdapterError.swift */; };
 		1A564A306E13E30771D2E823 /* TransactionRecordDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56425A421C1C9FB383DCDA /* TransactionRecordDataSource.swift */; };
+		1A564A3224D923C1C1484289 /* InfoHeader3Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E04BCA7E9E76746A01A /* InfoHeader3Cell.swift */; };
 		1A564A392D461D926BFB4FC7 /* BalanceErrorRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B109096C8B0FE5EF8AE /* BalanceErrorRouter.swift */; };
 		1A564A3A24650FE818D46E0B /* AdapterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564504718E7D19F379A9F7 /* AdapterError.swift */; };
 		1A564A428A1481DD5AE200C1 /* AccountDoubleLineCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640FD34F5C897B1DEFAA0 /* AccountDoubleLineCellView.swift */; };
@@ -1195,6 +1197,7 @@
 		1A564CBCF88289030B38447D /* AppVersionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641CDB00EF52E18BF70F3 /* AppVersionManager.swift */; };
 		1A564CCF95F91A6F7434BB2D /* PrivacyInfoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647CEF3A3BACA78B79487 /* PrivacyInfoRouter.swift */; };
 		1A564CD864B35B6DFA9BA7A3 /* InfoSeparatorHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642BC4431A456126A6C5F /* InfoSeparatorHeaderView.swift */; };
+		1A564CF70EE8FF7965ECEBCC /* InfoHeader3Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E04BCA7E9E76746A01A /* InfoHeader3Cell.swift */; };
 		1A564CFC1DF1681FA2094252 /* AccountDoubleLineCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640FD34F5C897B1DEFAA0 /* AccountDoubleLineCellView.swift */; };
 		1A564CFECEDA95F300CEAD33 /* AddressData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649C6FFC694CD18A8B39A /* AddressData.swift */; };
 		1A564CFF150F67077C950566 /* MainSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640528EFD15137E218EA3 /* MainSettingsPresenter.swift */; };
@@ -2523,6 +2526,7 @@
 		1A564D94926FEAF120CF71D7 /* TransactionPendingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionPendingView.swift; sourceTree = "<group>"; };
 		1A564DDACAD5CFB092AE6496 /* BalanceEditCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceEditCell.swift; sourceTree = "<group>"; };
 		1A564DE706E6058771D4F644 /* ChartNotificationViewModelFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartNotificationViewModelFactory.swift; sourceTree = "<group>"; };
+		1A564E04BCA7E9E76746A01A /* InfoHeader3Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoHeader3Cell.swift; sourceTree = "<group>"; };
 		1A564E1FBBCCA45BCDA557F4 /* DepositModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositModule.swift; sourceTree = "<group>"; };
 		1A564E38A79F3308EC1B437A /* AddressParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressParser.swift; sourceTree = "<group>"; };
 		1A564E6A6B7E18C287A1D77D /* TransactionDataSortMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionDataSortMode.swift; sourceTree = "<group>"; };
@@ -4296,6 +4300,7 @@
 				58AAA71CC228BCFC20E7DCAF /* UniswapInfoRouter.swift */,
 				58AAAEA5B2627C16307C60FC /* UniswapInfoPresenter.swift */,
 				58AAAD7AC450FEF913E5417F /* UniswapInfoModule.swift */,
+				1A564E04BCA7E9E76746A01A /* InfoHeader3Cell.swift */,
 			);
 			path = UniswapInfo;
 			sourceTree = "<group>";
@@ -5828,6 +5833,7 @@
 				11B3581E67D335603C6E6742 /* RestoreEosViewModel.swift in Sources */,
 				11B35537029FF1926663BE4C /* ModuleStartMode.swift in Sources */,
 				58AAADF15D39E52E89F75FE6 /* TransactionInfoAddressMapper.swift in Sources */,
+				1A5646EADF5C50B93EE3AC21 /* InfoHeader3Cell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6534,6 +6540,7 @@
 				11B356FAD464E102B174F372 /* RestoreEosViewModel.swift in Sources */,
 				11B3565CC4281C4445602E90 /* ModuleStartMode.swift in Sources */,
 				58AAA56019A5429995921E5F /* TransactionInfoAddressMapper.swift in Sources */,
+				1A564CF70EE8FF7965ECEBCC /* InfoHeader3Cell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7202,6 +7209,7 @@
 				11B35DDAD9BE80D749EFED49 /* RestoreEosViewModel.swift in Sources */,
 				11B35F25EF8CFF0DF656F5FA /* ModuleStartMode.swift in Sources */,
 				58AAAAD9049A97E8C314B09A /* TransactionInfoAddressMapper.swift in Sources */,
+				1A564A3224D923C1C1484289 /* InfoHeader3Cell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
