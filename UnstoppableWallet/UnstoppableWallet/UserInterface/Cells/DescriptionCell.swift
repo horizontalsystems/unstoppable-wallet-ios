@@ -2,7 +2,7 @@ import UIKit
 
 class DescriptionCell: UITableViewCell {
     private static let horizontalPadding: CGFloat = .margin6x
-    private static let verticalPadding: CGFloat = .margin3x
+    private static let topPadding: CGFloat = .margin6x
     private static let font: UIFont = .body
 
     private let label = UILabel()
@@ -16,7 +16,7 @@ class DescriptionCell: UITableViewCell {
         contentView.addSubview(label)
         label.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(DescriptionCell.horizontalPadding)
-            maker.top.equalToSuperview().inset(DescriptionCell.verticalPadding)
+            maker.top.equalToSuperview().inset(DescriptionCell.topPadding)
         }
 
         label.numberOfLines = 0
@@ -38,7 +38,7 @@ extension DescriptionCell {
 
     static func height(containerWidth: CGFloat, text: String) -> CGFloat {
         let textHeight = text.height(forContainerWidth: containerWidth - 2 * horizontalPadding, font: font)
-        return textHeight + 2 * verticalPadding
+        return textHeight + topPadding
     }
 
 }
