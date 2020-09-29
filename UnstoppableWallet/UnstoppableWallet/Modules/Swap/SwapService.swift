@@ -329,6 +329,7 @@ extension SwapService {
                 executionPrice: tradeData.executionPrice,
                 priceImpact: tradeData.priceImpact,
                 priceImpactLevel: impactLevel,
+                providerFee: tradeData.providerFee,
                 minMaxAmount: tradeData.type == .exactIn ? tradeData.amountOutMin : tradeData.amountInMax)
 
         tradeDataState = .completed(tradeItem)
