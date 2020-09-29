@@ -3,22 +3,15 @@ import SnapKit
 import ThemeKit
 import ScanQrKit
 
-class ScanQrViewController: ThemeViewController {
-    private let delegate: IScanQrViewDelegate
+protocol IScanQrViewControllerDelegate: AnyObject {
+    func didScan(string: String)
+}
 
-    private let cancelButton = ThemeButton()
+class ScanQrViewController: ThemeViewController {
+    weak var delegate: IScanQrViewControllerDelegate?
 
     private let scanView = ScanQrView()
-
-    init(delegate: IScanQrViewDelegate) {
-        self.delegate = delegate
-
-        super.init()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    private let cancelButton = ThemeButton()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,21 +49,13 @@ class ScanQrViewController: ThemeViewController {
         scanView.stop()
     }
 
-    @objc private func onCancel() {
-        delegate.onCancel()
+    @objc func onCancel() {
+        dismiss(animated: true)
     }
 
-}
-
-extension ScanQrViewController: IScanQrView {
-
-    func start() {
-        scanView.start()
-        scanView.startCaptureSession()
-    }
-
-    func stop() {
-        scanView.stop()
+    func onScan(string: String) {
+        delegate?.didScan(string: string)
+        dismiss(animated: true)
     }
 
 }
@@ -78,7 +63,7 @@ extension ScanQrViewController: IScanQrView {
 extension ScanQrViewController: IScanQrCodeDelegate {
 
     func didScan(string: String) {
-        delegate.didScan(string: string)
+        onScan(string: string)
     }
 
 }
