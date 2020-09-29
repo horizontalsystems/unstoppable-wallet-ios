@@ -85,6 +85,18 @@ class MainSettingsViewController: ThemeViewController {
         ]
     }
 
+    private var walletConnectRows: [RowProtocol] {
+        [
+            Row<TitleCell>(id: "wallet_connect", height: .heightSingleLineCell, autoDeselect: true, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Wallet Connect Icon"), title: "Wallet Connect", showDisclosure: true)
+            }, action: { _ in
+                DispatchQueue.main.async {
+                    // todo
+                }
+            }),
+        ]
+    }
+
     private var appearanceRows: [RowProtocol] {
         [
             Row<TitleCell>(id: "notifications", height: .heightSingleLineCell, bind: { cell, _ in
@@ -160,6 +172,7 @@ extension MainSettingsViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         [
             Section(id: "security_settings", headerState: .margin(height: .margin3x), rows: securityRows),
+            Section(id: "wallet_connect", headerState: .margin(height: .margin8x), rows: walletConnectRows),
             Section(id: "appearance_settings", headerState: .margin(height: .margin8x), rows: appearanceRows),
             Section(id: "about", headerState: .margin(height: .margin8x), footerState: footer, rows: aboutRows)
         ]
