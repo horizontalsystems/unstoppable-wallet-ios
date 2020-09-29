@@ -94,7 +94,7 @@ PODS:
     - RxSwift (~> 5.0)
   - Erc20Kit.swift (0.11.0):
     - BigInt (~> 5.0)
-    - EthereumKit.swift (~> 0.9)
+    - EthereumKit.swift (~> 0.11)
     - GRDB.swift (~> 4.0)
     - OpenSslKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
@@ -206,7 +206,7 @@ PODS:
   - UIExtensions.swift (1.1.1)
   - UniswapKit.swift (0.9.2):
     - BigInt (~> 5.0)
-    - EthereumKit.swift (~> 0.9)
+    - EthereumKit.swift (~> 0.11)
     - OpenSslKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
     - Secp256k1Kit.swift (~> 1.0)
@@ -396,10 +396,10 @@ CHECKOUT OPTIONS:
     :commit: 09c5aaab6593354e1ab624582827fa3e15835c08
     :git: https://github.com/horizontalsystems/eos-kit-ios
   Erc20Kit.swift:
-    :commit: fda99c1197bf51d57bdd76248392953743c9d269
+    :commit: 963bbdf34f5ad8f906abcd2ad7530ea20682dca7
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   EthereumKit.swift:
-    :commit: 5e7f10272f9566048ea2deef5c6bee2f427e48cd
+    :commit: 963bbdf34f5ad8f906abcd2ad7530ea20682dca7
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :commit: 783ff3709e90df51ca60d50a2665e6afdad8e391
@@ -438,7 +438,7 @@ CHECKOUT OPTIONS:
     :commit: 21838c0051ef021a4c6865fb02cccf326c793c4c
     :git: https://github.com/horizontalsystems/gui-kit/
   UniswapKit.swift:
-    :commit: fda99c1197bf51d57bdd76248392953743c9d269
+    :commit: 963bbdf34f5ad8f906abcd2ad7530ea20682dca7
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   XRatesKit.swift:
     :commit: c0ef7faf52500375de0912b041dd9015ae028384
@@ -466,7 +466,7 @@ SPEC CHECKSUMS:
   EosioSwiftEcc: 0e469473d2227200254a3a660feaf74b690c3a2e
   EosioSwiftSoftkeySignatureProvider: 1edcefc7f238b3193cb21b48f74e36e815eaa952
   EosKit.swift: 3fe1c100dda7b730c7f74da34472f2e7af335678
-  Erc20Kit.swift: 6fd40930fe41ddc485e5e4bfd0df0bd999db5cfd
+  Erc20Kit.swift: 62a32994af3b0915486fbf62cb0f255f3eca2a68
   EthereumKit.swift: 0134a5496b3d59976ddff31eff8e128353bb948b
   FeeRateKit.swift: fbf599802e96d999d1d9e45127ab0ad05a6163f8
   GRDB.swift: 8cc3ab7c8b8b4ac1761deb8dca4b51c1c9d429f8
@@ -498,7 +498,7 @@ SPEC CHECKSUMS:
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   ThemeKit.swift: ab5c081b10f6a80149d37751f3ee98f1292bf497
   UIExtensions.swift: 3ed084c0343ddd0f86c7c558d37759e1fd7d5778
-  UniswapKit.swift: d03b7c682755a8eb5aa521929859d3a944137980
+  UniswapKit.swift: b14da72cf5b4746fa880c32458723fd6d3d48114
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: e30efad6badf909b67cad6914ac29e6dbc50079d
 

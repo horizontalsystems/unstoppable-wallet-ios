@@ -3,7 +3,6 @@ import RxSwift
 import RxCocoa
 
 class Swap2ConfirmationPresenter {
-    static let swapFeeValue: Decimal = 0.003
     private let disposeBag = DisposeBag()
 
     private let service: SwapService
@@ -61,9 +60,11 @@ class Swap2ConfirmationPresenter {
         let priceImpact = factory.string(impactPrice: item.priceImpact)
         additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.price_impact", value: priceImpact))
 
-        let coinValue = CoinValue(coin: service.coinIn, value: amountIn * Swap2ConfirmationPresenter.swapFeeValue)
-        let swapFee = ValueFormatter.instance.format(coinValue: coinValue)
-        additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.fee", value: swapFee))
+        if let providerFee = item.providerFee {
+            let coinValue = CoinValue(coin: service.coinIn, value: providerFee)
+            let swapFee = ValueFormatter.instance.format(coinValue: coinValue)
+            additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.fee", value: swapFee))
+        }
 
         additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.transactions_speed", value: service.feePriority.title))
         if let feeData = service.feeState?.data {

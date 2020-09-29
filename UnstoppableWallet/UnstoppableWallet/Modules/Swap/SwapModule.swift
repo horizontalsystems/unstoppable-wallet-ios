@@ -46,6 +46,7 @@ struct SwapModule {
         let executionPrice: Decimal?
         let priceImpact: Decimal?
         let priceImpactLevel: PriceImpactLevel
+        let providerFee: Decimal?
         let minMaxAmount: Decimal?
     }
 
