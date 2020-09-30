@@ -6,7 +6,7 @@ class FullTransactionDataProviderManager {
         appConfigProvider.testMode ? [
             HorSysBitcoinProvider(testMode: true)
         ] : [
-            HorSysBitcoinProvider(testMode: false),
+//            HorSysBitcoinProvider(testMode: false),
             BlockChairBitcoinProvider(),
 //            BlockExplorerBitcoinProvider(),
             BtcComBitcoinProvider()
