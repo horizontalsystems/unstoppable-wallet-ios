@@ -63,6 +63,7 @@ class ScanQrViewController: ThemeViewController {
 extension ScanQrViewController: IScanQrCodeDelegate {
 
     func didScan(string: String) {
+        scanView.stop()
         onScan(string: string)
     }
 
