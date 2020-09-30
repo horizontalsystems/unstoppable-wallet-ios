@@ -89,10 +89,8 @@ class MainSettingsViewController: ThemeViewController {
         [
             Row<TitleCell>(id: "wallet_connect", height: .heightSingleLineCell, autoDeselect: true, bind: { cell, _ in
                 cell.bind(titleIcon: UIImage(named: "Wallet Connect Icon"), title: "Wallet Connect", showDisclosure: true)
-            }, action: { _ in
-                DispatchQueue.main.async {
-                    // todo
-                }
+            }, action: { [weak self] _ in
+                WalletConnectModule.start(sourceViewController: self)
             }),
         ]
     }
