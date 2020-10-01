@@ -9,6 +9,7 @@ class WelcomeScreenViewController: UIViewController {
 
     private let scrollView = UIScrollView()
     private let imageWrapperView = UIView()
+    private let circleImageView = UIImageView(image: UIImage(named: "Intro - Circle"))
     private var imageViews = [UIImageView]()
     private let bottomWrapperBackground = UIView()
     private let bottomWrapper = UIView()
@@ -17,12 +18,16 @@ class WelcomeScreenViewController: UIViewController {
     private let skipButton = UIButton()
     private let nextButton = UIButton()
 
-    private let titleWrapper = UIView()
+    private let logoWrapper = UIView()
+    private let logoImageView = UIImageView()
     private let buttonsWrapper = UIView()
 
+    private var pageIndex = 0
+
     private let slides = [
-        Slide(title: "intro.independence.title".localized, description: "intro.independence.description".localized, image: "Intro - Independence"),
+        Slide(title: nil, description: "intro.brand.description".localized, image: "Intro - Logo"),
         Slide(title: "intro.knowledge.title".localized, description: "intro.knowledge.description".localized, image: "Intro - Knowledge"),
+        Slide(title: "intro.independence.title".localized, description: "intro.independence.description".localized, image: "Intro - Independence"),
         Slide(title: "intro.privacy.title".localized, description: "intro.privacy.description".localized, image: "Intro - Privacy")
     ]
 
@@ -56,10 +61,11 @@ class WelcomeScreenViewController: UIViewController {
             maker.height.equalToSuperview().multipliedBy(3.0 / 5.0)
         }
 
-        let circleImageView = UIImageView(image: UIImage(named: "Intro - Circle"))
+        let imageTopOffset = CGFloat.margin4x
         imageWrapperView.addSubview(circleImageView)
         circleImageView.snp.makeConstraints { maker in
-            maker.center.equalToSuperview()
+            maker.centerX.equalToSuperview()
+            maker.centerY.equalToSuperview().offset(imageTopOffset)
         }
 
         view.addSubview(scrollView)
@@ -82,7 +88,8 @@ class WelcomeScreenViewController: UIViewController {
 
             imageWrapperView.addSubview(imageView)
             imageView.snp.makeConstraints { maker in
-                maker.center.equalToSuperview()
+                maker.centerX.equalToSuperview()
+                maker.centerY.equalToSuperview().offset(imageTopOffset)
             }
 
             imageView.alpha = 0
@@ -132,26 +139,20 @@ class WelcomeScreenViewController: UIViewController {
         nextButton.setTitle("intro.next".localized, for: .normal)
         nextButton.addTarget(self, action: #selector(onTapNextButton), for: .touchUpInside)
 
-        view.addSubview(titleWrapper)
-        titleWrapper.snp.makeConstraints { maker in
+        view.addSubview(logoWrapper)
+        logoWrapper.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.bottom.equalTo(view.snp.top)
             maker.height.equalToSuperview().dividedBy(2)
         }
 
-        let titleLabel = UILabel()
-
-        titleWrapper.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { maker in
+        logoWrapper.addSubview(logoImageView)
+        logoImageView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin12x)
             maker.centerY.equalToSuperview()
         }
 
-        titleLabel.text = "Unstoppable\nWallet"
-        titleLabel.numberOfLines = 0
-        titleLabel.textAlignment = .center
-        titleLabel.font = .title2
-        titleLabel.textColor = .themeLight
+        logoImageView.image = UIImage(named: "Intro - Logo")
 
         view.addSubview(buttonsWrapper)
         buttonsWrapper.snp.makeConstraints { maker in
@@ -273,24 +274,65 @@ class WelcomeScreenViewController: UIViewController {
     private func showWelcome() {
         let animationDuration: TimeInterval = 0.4
 
-        wrapperView.set(hidden: true, animated: true, duration: animationDuration)
-        scrollView.set(hidden: true, animated: true, duration: animationDuration)
-        bottomWrapperBackground.set(hidden: true, animated: true, duration: animationDuration)
-        bottomWrapper.set(hidden: true, animated: true, duration: animationDuration)
+        if pageIndex == 0 {
+            logoWrapper.isHidden = true
+            buttonsWrapper.isHidden = true
+            logoWrapper.snp.remakeConstraints { maker in
+                maker.leading.top.trailing.equalToSuperview()
+                maker.height.equalToSuperview().dividedBy(2)
+            }
+            buttonsWrapper.snp.remakeConstraints { maker in
+                maker.leading.trailing.equalToSuperview()
+                maker.top.equalTo(logoWrapper.snp.bottom)
+                maker.bottom.equalTo(view.safeAreaLayoutGuide)
+            }
+            view.layoutIfNeeded()
 
-        titleWrapper.snp.remakeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
-            maker.height.equalToSuperview().dividedBy(2)
-        }
+            scrollView.set(hidden: true, animated: true, duration: animationDuration)
+            bottomWrapperBackground.set(hidden: true, animated: true, duration: animationDuration)
+            bottomWrapper.set(hidden: true, animated: true, duration: animationDuration)
+            buttonsWrapper.set(hidden: false, animated: true, duration: animationDuration)
 
-        buttonsWrapper.snp.remakeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(titleWrapper.snp.bottom)
-            maker.bottom.equalTo(view.safeAreaLayoutGuide)
+            imageViews[0].snp.remakeConstraints { maker in
+                maker.edges.equalTo(logoImageView)
+            }
+        } else {
+            logoWrapper.snp.remakeConstraints { maker in
+                maker.leading.equalTo(view.snp.trailing)
+                maker.top.equalToSuperview()
+                maker.height.equalToSuperview().dividedBy(2)
+            }
+            buttonsWrapper.snp.remakeConstraints { maker in
+                maker.leading.equalTo(view.snp.trailing)
+                maker.top.equalTo(logoWrapper.snp.bottom)
+                maker.bottom.equalTo(view.safeAreaLayoutGuide)
+            }
+            view.layoutIfNeeded()
+
+            wrapperView.set(hidden: true, animated: true, duration: animationDuration)
+            scrollView.set(hidden: true, animated: true, duration: animationDuration)
+            bottomWrapperBackground.set(hidden: true, animated: true, duration: animationDuration)
+            bottomWrapper.set(hidden: true, animated: true, duration: animationDuration)
+
+            logoWrapper.snp.remakeConstraints { maker in
+                maker.leading.top.trailing.equalToSuperview()
+                maker.height.equalToSuperview().dividedBy(2)
+            }
+
+            buttonsWrapper.snp.remakeConstraints { maker in
+                maker.leading.trailing.equalToSuperview()
+                maker.top.equalTo(logoWrapper.snp.bottom)
+                maker.bottom.equalTo(view.safeAreaLayoutGuide)
+            }
         }
 
         UIView.animate(withDuration: animationDuration, delay: 0, options: .curveEaseInOut, animations: {
             self.view.layoutIfNeeded()
+        }, completion: { _ in
+            if self.pageIndex == 0 {
+                self.logoWrapper.isHidden = false
+                self.wrapperView.isHidden = true
+            }
         })
     }
 
@@ -299,7 +341,7 @@ class WelcomeScreenViewController: UIViewController {
 extension WelcomeScreenViewController: UIScrollViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let pageIndex = Int(round(scrollView.contentOffset.x / view.frame.width))
+        pageIndex = Int(round(scrollView.contentOffset.x / view.frame.width))
 
         if pageControl.currentPage != pageIndex {
             pageControl.currentPage = pageIndex
@@ -320,6 +362,8 @@ extension WelcomeScreenViewController: UIScrollViewDelegate {
                 let percent: CGFloat = offset / pagePercent
 
                 imageViews[i].alpha = 1 - percent
+
+                circleImageView.alpha = min(currentPercent, pagePercent) / pagePercent
             }
         }
     }
@@ -337,7 +381,7 @@ extension WelcomeScreenViewController: IWelcomeScreenView {
 extension WelcomeScreenViewController {
 
     private struct Slide {
-        let title: String
+        let title: String?
         let description: String
         let image: String
     }

@@ -4,7 +4,7 @@ import ThemeKit
 
 class IntroPageView: UIView {
 
-    init(title: String, description: String) {
+    init(title: String?, description: String) {
         super.init(frame: .zero)
 
         let wrapperView = UIView()
@@ -28,7 +28,10 @@ class IntroPageView: UIView {
         textWrapperView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin12x)
-            maker.top.equalToSuperview().offset(CGFloat.margin8x)
+            maker.top.equalToSuperview().offset(title == nil ? 0 : CGFloat.margin4x)
+            if title == nil {
+                maker.height.equalTo(0)
+            }
         }
 
         titleLabel.textAlignment = .center
@@ -47,7 +50,7 @@ class IntroPageView: UIView {
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textAlignment = .center
         descriptionLabel.font = .body
-        descriptionLabel.textColor = .themeLightGray
+        descriptionLabel.textColor = .themeGray
         descriptionLabel.text = description
     }
 
