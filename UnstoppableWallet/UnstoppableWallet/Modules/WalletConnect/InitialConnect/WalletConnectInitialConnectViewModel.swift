@@ -1,7 +1,7 @@
 class WalletConnectInitialConnectViewModel {
-    private let service: WalletConnectService
+    private let service: WalletConnectInitialConnectService
 
-    init(service: WalletConnectService) {
+    init(service: WalletConnectInitialConnectService) {
         self.service = service
     }
 

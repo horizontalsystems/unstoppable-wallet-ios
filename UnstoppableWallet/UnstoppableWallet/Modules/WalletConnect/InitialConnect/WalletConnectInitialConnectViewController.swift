@@ -1,19 +1,15 @@
 import ThemeKit
 
 class WalletConnectInitialConnectViewController: ThemeViewController {
-    weak var sourceViewController: UIViewController?
-
-    private let baseViewModel: WalletConnectViewModel
+    private let baseView: WalletConnectView
     private let viewModel: WalletConnectInitialConnectViewModel
 
     private let connectButton = ThemeButton()
     private let cancelButton = ThemeButton()
 
-    init(baseViewModel: WalletConnectViewModel, sourceViewController: UIViewController?) {
-        self.baseViewModel = baseViewModel
-        self.sourceViewController = sourceViewController
-
-        viewModel = baseViewModel.initialConnectViewModel
+    init?(baseView: WalletConnectView, viewModel: WalletConnectInitialConnectViewModel) {
+        self.baseView = baseView
+        self.viewModel = viewModel
 
         super.init()
     }
@@ -51,12 +47,10 @@ class WalletConnectInitialConnectViewController: ThemeViewController {
     }
 
     @objc private func onConnect() {
-        let viewController = WalletConnectMainViewController(baseViewModel: baseViewModel, sourceViewController: sourceViewController)
-        present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
     @objc private func onCancel() {
-        sourceViewController?.dismiss(animated: true)
+        baseView.viewModel.onFinish()
     }
 
 }

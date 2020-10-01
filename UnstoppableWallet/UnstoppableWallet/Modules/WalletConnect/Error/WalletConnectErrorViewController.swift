@@ -1,14 +1,14 @@
 import ThemeKit
 
-class WalletConnectMainViewController: ThemeViewController {
+class WalletConnectErrorViewController: ThemeViewController {
     private let baseView: WalletConnectView
-    private let viewModel: WalletConnectMainViewModel
+    private let error: Error
 
-    private let disconnectButton = ThemeButton()
+    private let closeButton = ThemeButton()
 
-    init?(baseView: WalletConnectView, viewModel: WalletConnectMainViewModel) {
+    init(baseView: WalletConnectView, error: Error) {
         self.baseView = baseView
-        self.viewModel = viewModel
+        self.error = error
 
         super.init()
     }
@@ -22,19 +22,19 @@ class WalletConnectMainViewController: ThemeViewController {
 
         title = "Wallet Connect"
 
-        view.addSubview(disconnectButton)
-        disconnectButton.snp.makeConstraints { maker in
+        view.addSubview(closeButton)
+        closeButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
             maker.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(CGFloat.margin6x)
             maker.height.equalTo(CGFloat.heightButton)
         }
 
-        disconnectButton.apply(style: .primaryRed)
-        disconnectButton.setTitle("Disconnect", for: .normal)
-        disconnectButton.addTarget(self, action: #selector(onDisconnect), for: .touchUpInside)
+        closeButton.apply(style: .primaryGray)
+        closeButton.setTitle("Close", for: .normal)
+        closeButton.addTarget(self, action: #selector(onClose), for: .touchUpInside)
     }
 
-    @objc private func onDisconnect() {
+    @objc private func onClose() {
         baseView.viewModel.onFinish()
     }
 

@@ -82,6 +82,9 @@ def appPods
   pod 'DeepDiff'
 
   pod 'Down'
+
+  pod 'WalletConnect', git: 'https://github.com/trustwallet/wallet-connect-swift', branch: 'master'
+  pod 'Starscream', '3.1.1'
 end
 
 target 'Unstoppable Dev T' do
