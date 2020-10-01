@@ -3,7 +3,10 @@ import RxRelay
 import RxCocoa
 
 class WalletConnectViewModel {
-    private let service: WalletConnectService
+    let service: WalletConnectService
+
+    private let openScreenRelay = PublishRelay<Screen>()
+    private let finishRelay = PublishRelay<Void>()
 
     init(service: WalletConnectService) {
         self.service = service
@@ -13,28 +16,48 @@ class WalletConnectViewModel {
 
 extension WalletConnectViewModel {
 
-    var initialScreen: InitialScreen {
-        .scanQrCode
+    var initialScreen: Screen {
+        if !service.isEthereumKitReady {
+            return .noEthereumKit
+        }
+
+        if service.isClientReady {
+            return .main
+        }
+
+        return .scanQrCode
     }
 
-    var scanQrViewModel: WalletConnectScanQrViewModel {
-        WalletConnectScanQrViewModel(service: service)
+    var openScreenSignal: Signal<Screen> {
+        openScreenRelay.asSignal()
     }
 
-    var initialConnectViewModel: WalletConnectInitialConnectViewModel {
-        WalletConnectInitialConnectViewModel(service: service)
+    var finishSignal: Signal<Void> {
+        finishRelay.asSignal()
     }
 
-    var mainViewModel: WalletConnectMainViewModel {
-        WalletConnectMainViewModel(service: service)
+    func onScan(string: String) {
+        do {
+            try service.initInteractor(uri: string)
+            openScreenRelay.accept(.initialConnect)
+        } catch {
+            openScreenRelay.accept(.error(error))
+        }
+    }
+
+    func onFinish() {
+        finishRelay.accept(())
     }
 
 }
 
 extension WalletConnectViewModel {
 
-    enum InitialScreen {
+    enum Screen {
+        case noEthereumKit
         case scanQrCode
+        case error(Error)
+        case initialConnect
         case main
     }
 
