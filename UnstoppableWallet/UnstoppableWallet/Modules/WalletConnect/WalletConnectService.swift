@@ -1,4 +1,5 @@
 import EthereumKit
+import WalletConnect
 
 class WalletConnectService {
     var ethereumKit: Kit?
@@ -20,7 +21,23 @@ class WalletConnectService {
     }
 
     func initInteractor(uri: String) throws {
-        interactor = try WalletConnectInteractor.instance(uri: uri)
+        interactor = try WalletConnectInteractor(uri: uri)
+    }
+
+    func initClient(peerMeta: WCPeerMeta) throws {
+        guard let interactor = interactor else {
+            throw ClientError.noInteractor
+        }
+
+        client = WalletConnectClient(interactor: interactor, peerMeta: peerMeta)
+    }
+
+}
+
+extension WalletConnectService {
+
+    enum ClientError: Error {
+        case noInteractor
     }
 
 }

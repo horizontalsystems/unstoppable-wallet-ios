@@ -2,7 +2,7 @@ import WalletConnect
 
 protocol IWalletConnectInteractorDelegate: AnyObject {
     func didConnect()
-    func didRequestSession()
+    func didRequestSession(peerMeta: WCPeerMeta)
 }
 
 class WalletConnectInteractor {
@@ -12,7 +12,7 @@ class WalletConnectInteractor {
 
     private let interactor: WCInteractor
 
-    private init(session: WCSession) {
+    init(session: WCSession) {
         interactor = WCInteractor(session: session, meta: Self.clientMeta, uuid: UIDevice.current.identifierForVendor ?? UUID())
 
         interactor.onSessionRequest = { [weak self] (id, requestParam) in
@@ -28,11 +28,19 @@ class WalletConnectInteractor {
         }
     }
 
+    convenience init(uri: String) throws {
+        guard let session = WCSession.from(string: uri) else {
+            throw SessionError.invalidUri
+        }
+
+        self.init(session: session)
+    }
+
     private func onSessionRequest(id: Int64, requestParam: WCSessionRequestParam) {
         print("Interactor Session Request: \(id)")
         print("Peer: \(requestParam.chainId ?? -1); \(requestParam.peerId); \(requestParam.peerMeta)")
 
-        delegate?.didRequestSession()
+        delegate?.didRequestSession(peerMeta: requestParam.peerMeta)
     }
 
     private func onDisconnect(error: Error?) {
@@ -56,20 +64,12 @@ extension WalletConnectInteractor {
         }
     }
 
-}
-
-extension WalletConnectInteractor {
-
-    static func instance(uri: String) throws -> WalletConnectInteractor {
-        guard let session = WCSession.from(string: uri) else {
-            throw SessionError.invalidUri
-        }
-
-        return WalletConnectInteractor(session: session)
+    func approveSession(address: String, chainId: Int) {
+        interactor.approveSession(accounts: [address], chainId: chainId).cauterize()
     }
 
-    static func instance(session: WCSession) -> WalletConnectInteractor {
-        WalletConnectInteractor(session: session)
+    func rejectSession() {
+        interactor.rejectSession().cauterize()
     }
 
 }
