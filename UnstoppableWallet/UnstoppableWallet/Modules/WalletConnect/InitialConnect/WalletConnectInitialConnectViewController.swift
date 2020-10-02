@@ -10,6 +10,7 @@ class WalletConnectInitialConnectViewController: ThemeViewController {
     private let connectingLabel = UILabel()
     private let approveButton = ThemeButton()
     private let rejectButton = ThemeButton()
+    private let cancelButton = ThemeButton()
 
     private let disposeBag = DisposeBag()
 
@@ -68,24 +69,31 @@ class WalletConnectInitialConnectViewController: ThemeViewController {
         rejectButton.setTitle("Reject", for: .normal)
         rejectButton.addTarget(self, action: #selector(onTapReject), for: .touchUpInside)
 
+        view.addSubview(cancelButton)
+        cancelButton.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
+            maker.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(CGFloat.margin6x)
+            maker.height.equalTo(CGFloat.heightButton)
+        }
+
+        cancelButton.apply(style: .primaryGray)
+        cancelButton.setTitle("Cancel", for: .normal)
+        cancelButton.addTarget(self, action: #selector(onTapCancel), for: .touchUpInside)
+
         viewModel.connectingDriver
                 .drive(onNext: { [weak self] connecting in
                     self?.connectingLabel.isHidden = !connecting
+                    self?.cancelButton.isHidden = !connecting
                 })
                 .disposed(by: disposeBag)
 
         viewModel.peerMetaDriver
                 .drive(onNext: { [weak self] peerMeta in
-                    if let peerMeta = peerMeta {
-                        self?.peerMetaLabel.isHidden = false
-                        self?.peerMetaLabel.text = peerMeta.name
-                        self?.approveButton.isEnabled = true
-                        self?.rejectButton.isEnabled = true
-                    } else {
-                        self?.peerMetaLabel.isHidden = true
-                        self?.approveButton.isEnabled = false
-                        self?.rejectButton.isEnabled = false
-                    }
+                    self?.peerMetaLabel.text = peerMeta.map { $0.name }
+
+                    self?.peerMetaLabel.isHidden = peerMeta == nil
+                    self?.approveButton.isHidden = peerMeta == nil
+                    self?.rejectButton.isHidden = peerMeta == nil
                 })
                 .disposed(by: disposeBag)
 
@@ -108,6 +116,10 @@ class WalletConnectInitialConnectViewController: ThemeViewController {
 
     @objc private func onTapReject() {
         viewModel.reject()
+    }
+
+    @objc private func onTapCancel() {
+        baseView.viewModel.onFinish()
     }
 
 }
