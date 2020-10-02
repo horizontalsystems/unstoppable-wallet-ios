@@ -1,3 +1,4 @@
+import WalletConnect
 import RxSwift
 import RxRelay
 import RxCocoa
@@ -43,6 +44,19 @@ extension WalletConnectViewModel {
         } catch {
             openScreenRelay.accept(.error(error))
         }
+    }
+
+    func onApproveSession(peerMeta: WCPeerMeta) {
+        do {
+            try service.initClient(peerMeta: peerMeta)
+            openScreenRelay.accept(.main)
+        } catch {
+            // todo
+        }
+    }
+
+    func onRejectSession() {
+        finishRelay.accept(())
     }
 
     func onFinish() {

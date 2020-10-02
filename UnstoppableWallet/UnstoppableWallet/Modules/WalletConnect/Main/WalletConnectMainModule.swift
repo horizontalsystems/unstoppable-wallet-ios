@@ -7,8 +7,11 @@ class WalletConnectMainModule {
             return nil
         }
 
-        let service = WalletConnectMainService.instance(client: client, ethereumKit: ethereumKit)
+        let service = WalletConnectMainService(client: client, ethereumKit: ethereumKit)
         let viewModel = WalletConnectMainViewModel(service: service)
+
+        client.interactor.delegate = service
+
         return WalletConnectMainViewController(baseView: baseView, viewModel: viewModel)
     }
 
