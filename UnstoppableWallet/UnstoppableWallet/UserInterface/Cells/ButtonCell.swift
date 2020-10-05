@@ -14,7 +14,7 @@ class ButtonCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
 
-        addSubview(button)
+        contentView.addSubview(button)
         makeConstraints()
 
         button.addTarget(self, action: #selector(onTapButton), for: .touchUpInside)
