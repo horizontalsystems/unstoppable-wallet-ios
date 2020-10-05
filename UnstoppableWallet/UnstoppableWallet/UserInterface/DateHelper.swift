@@ -4,6 +4,8 @@ import LanguageKit
 class DateHelper {
     static let instance = DateHelper()
 
+    private let planeFormatter = DateFormatter()
+
     func formatTransactionDate(from date: Date) -> String {
         let correctDate = min(date, Date())
         let interval = date.interval(forDate: correctDate)
@@ -52,7 +54,8 @@ class DateHelper {
     }
 
     func parseDateOnly(string: String) -> Date? {
-        DateFormatter.cachedFormatter(format: "dd/MM/yyyy").date(from: string)
+        planeFormatter.dateFormat = "dd/MM/yyyy"
+        return planeFormatter.date(from: string)
     }
 
     func formatDebug(date: Date) -> String {
