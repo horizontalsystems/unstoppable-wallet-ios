@@ -4,6 +4,7 @@ class WalletConnectErrorViewController: ThemeViewController {
     private let baseView: WalletConnectView
     private let error: Error
 
+    private let errorView = RequestErrorViewNew()
     private let closeButton = ThemeButton()
 
     init(baseView: WalletConnectView, error: Error) {
@@ -20,7 +21,15 @@ class WalletConnectErrorViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Wallet Connect"
+        title = "wallet_connect.title".localized
+
+        view.addSubview(errorView)
+        errorView.snp.makeConstraints { maker in
+            maker.top.bottom.equalToSuperview()
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+        }
+
+        errorView.bind(image: UIImage(named: "Error Cross Icon"), text: "wallet_connect.error.invalid_url".localized)
 
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints { maker in
@@ -30,7 +39,7 @@ class WalletConnectErrorViewController: ThemeViewController {
         }
 
         closeButton.apply(style: .primaryGray)
-        closeButton.setTitle("Close", for: .normal)
+        closeButton.setTitle("button.close".localized, for: .normal)
         closeButton.addTarget(self, action: #selector(onClose), for: .touchUpInside)
     }
 
