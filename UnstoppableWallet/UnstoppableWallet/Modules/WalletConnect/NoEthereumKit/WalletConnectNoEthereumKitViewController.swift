@@ -4,7 +4,7 @@ import SnapKit
 class WalletConnectNoEthereumKitViewController: ThemeActionSheetController {
     private let titleView = BottomSheetTitleView()
     private let descriptionView = HighlightedDescriptionView()
-    private let closeButton = ThemeButton()
+    private let addButton = ThemeButton()
 
     override init() {
         super.init()
@@ -15,9 +15,9 @@ class WalletConnectNoEthereumKitViewController: ThemeActionSheetController {
         }
 
         titleView.bind(
-                title: "Title",
-                subtitle: "Subtitle",
-                image: UIImage(named: "Attention Icon")?.tinted(with: .themeLucian)
+                title: "wallet_connect.title".localized,
+                subtitle: "wallet_connect.requirement".localized,
+                image: UIImage(named: "Wallet Connect Icon")?.tinted(with: .themeGray)
         )
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)
@@ -29,27 +29,30 @@ class WalletConnectNoEthereumKitViewController: ThemeActionSheetController {
             maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin3x)
         }
 
-        descriptionView.bind(text: "No EthereumKit")
+        descriptionView.bind(text: "wallet_connect.requirement.description".localized)
 
-        view.addSubview(closeButton)
-        closeButton.snp.makeConstraints { maker in
+        view.addSubview(addButton)
+        addButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.top.equalTo(descriptionView.snp.bottom).offset(CGFloat.margin6x)
             maker.bottom.equalToSuperview().inset(CGFloat.margin4x)
             maker.height.equalTo(CGFloat.heightButton)
         }
 
-        closeButton.apply(style: .primaryGray)
-        closeButton.setTitle("Close", for: .normal)
-        closeButton.addTarget(self, action: #selector(onTapClose), for: .touchUpInside)
+        addButton.apply(style: .primaryYellow)
+        addButton.setTitle("button.add".localized, for: .normal)
+        addButton.addTarget(self, action: #selector(onTapAdd), for: .touchUpInside)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    @objc private func onTapClose() {
-        dismiss(animated: true)
+    @objc private func onTapAdd() {
+        let controller = presentingViewController
+        dismiss(animated: true) {
+            controller?.present(ManageWalletsModule.instance(), animated: true)
+        }
     }
 
 }
