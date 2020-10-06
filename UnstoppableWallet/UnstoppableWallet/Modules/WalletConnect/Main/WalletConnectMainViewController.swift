@@ -16,6 +16,9 @@ class WalletConnectMainViewController: ThemeViewController {
 
     private let disposeBag = DisposeBag()
 
+    private var peerMeta: WalletConnectMainPresenter.PeerMetaViewItem?
+    private var status: WalletConnectMainPresenter.Status?
+
     init(viewModel: WalletConnectViewModel, sourceViewController: UIViewController?) {
         self.viewModel = viewModel
         presenter = viewModel.mainPresenter
@@ -39,6 +42,7 @@ class WalletConnectMainViewController: ThemeViewController {
             maker.top.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin6x)
         }
 
+        peerMetaLabel.numberOfLines = 0
         peerMetaLabel.textColor = .themeRemus
 
         view.addSubview(connectingLabel)
@@ -126,8 +130,8 @@ class WalletConnectMainViewController: ThemeViewController {
 
         presenter.peerMetaDriver
                 .drive(onNext: { [weak self] peerMeta in
-                    self?.peerMetaLabel.text = peerMeta.map { $0.name }
-                    self?.peerMetaLabel.isHidden = peerMeta == nil
+                    self?.peerMeta = peerMeta
+                    self?.syncLabel()
                 })
                 .disposed(by: disposeBag)
 
@@ -138,6 +142,8 @@ class WalletConnectMainViewController: ThemeViewController {
 
         presenter.statusDriver
                 .drive(onNext: { [weak self] status in
+                    self?.status = status
+                    self?.syncLabel()
                 })
                 .disposed(by: disposeBag)
 
@@ -162,6 +168,23 @@ class WalletConnectMainViewController: ThemeViewController {
 
     @objc private func onTapDisconnect() {
         presenter.disconnect()
+    }
+
+    private func syncLabel() {
+        var textParts = [String]()
+
+        if let peerMeta = peerMeta {
+            textParts.append("Name: \(peerMeta.name)")
+            textParts.append("Url: \(peerMeta.url)")
+            textParts.append("Description: \(peerMeta.description)")
+            textParts.append("Icon: \(peerMeta.icon ?? "nil")")
+        }
+
+        if let status = status {
+            textParts.append("Status: \(status)")
+        }
+
+        peerMetaLabel.text = textParts.joined(separator: "\n")
     }
 
 }

@@ -5,7 +5,7 @@ import RxSwift
 class WalletConnectService {
     private var ethereumKit: Kit?
     private var interactor: WalletConnectInteractor?
-    private(set) var peerMeta: WCPeerMeta?
+    private var peerData: PeerData?
 
     private var stateSubject = PublishSubject<State>()
 
@@ -19,7 +19,7 @@ class WalletConnectService {
         ethereumKit = ethereumKitManager.ethereumKit
 
         if let storeItem = WCSessionStore.allSessions.first?.value {
-            peerMeta = storeItem.peerMeta
+            peerData = PeerData(id: storeItem.peerId, meta: storeItem.peerMeta)
 
             interactor = WalletConnectInteractor(session: storeItem.session)
             interactor?.delegate = self
@@ -41,6 +41,10 @@ extension WalletConnectService {
         ethereumKit != nil
     }
 
+    var peerMeta: WCPeerMeta? {
+        peerData?.meta
+    }
+
     func connect(uri: String) throws {
         interactor = try WalletConnectInteractor(uri: uri)
         interactor?.delegate = self
@@ -56,6 +60,10 @@ extension WalletConnectService {
 
         interactor.approveSession(address: ethereumKit.address.eip55, chainId: 1) // todo: get chainId from kit
 
+        if let peerData = peerData {
+            WCSessionStore.store(interactor.session, peerId: peerData.id, peerMeta: peerData.meta)
+        }
+
         state = .ready
     }
 
@@ -69,15 +77,26 @@ extension WalletConnectService {
         state = .rejected
     }
 
+    func killSession() {
+        guard let interactor = interactor else {
+            return
+        }
+
+        interactor.killSession()
+    }
+
 }
 
 extension WalletConnectService: IWalletConnectInteractorDelegate {
 
     func didConnect() {
+        if peerData != nil {
+            state = .ready
+        }
     }
 
-    func didRequestSession(peerMeta: WCPeerMeta) {
-        self.peerMeta = peerMeta
+    func didRequestSession(peerId: String, peerMeta: WCPeerMeta) {
+        peerData = PeerData(id: peerId, meta: peerMeta)
 
         state = .waitingForApproveSession
     }
@@ -92,6 +111,11 @@ extension WalletConnectService {
         case waitingForApproveSession
         case ready
         case rejected
+    }
+
+    struct PeerData {
+        let id: String
+        let meta: WCPeerMeta
     }
 
 }
