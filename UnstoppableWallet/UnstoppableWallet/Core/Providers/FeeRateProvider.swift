@@ -82,6 +82,9 @@ class BitcoinCashFeeRateProvider: IFeeRateProvider {
 }
 
 class EthereumFeeRateProvider: IFeeRateProvider {
+    private let lower = 1_000_000_000
+    private let upper = 400_000_000_000
+
     private let feeRateProvider: FeeRateProvider
 
     init(feeRateProvider: FeeRateProvider) {
@@ -89,7 +92,7 @@ class EthereumFeeRateProvider: IFeeRateProvider {
     }
 
     var feeRatePriorityList: [FeeRatePriority] {
-        [.medium, .high]
+        [.medium, .high, .custom(value: lower, range: lower...upper)]
     }
 
     var feeRate: Single<FeeRate> {

@@ -79,7 +79,7 @@ extension SendRouter {
         let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
         views.append(feeView)
 
-        guard let (feePriorityView, feePriorityModule, feePriorityRouter) = SendFeePriorityRouter.module(coin: coin) else {
+        guard let (feePriorityView, feePriorityModule, feePriorityRouter) = SendFeePriorityRouter.module(coin: coin, customPriorityUnit: .satoshi) else {
             return nil
         }
         views.append(feePriorityView)
@@ -132,7 +132,7 @@ extension SendRouter {
         let (addressView, addressModule, addressRouter) = SendAddressRouter.module(coin: coin)
         let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
 
-        guard let (feePriorityView, feePriorityModule, feePriorityRouter) = SendFeePriorityRouter.module(coin: coin) else {
+        guard let (feePriorityView, feePriorityModule, feePriorityRouter) = SendFeePriorityRouter.module(coin: coin, customPriorityUnit: .gwei) else {
             return nil
         }
 

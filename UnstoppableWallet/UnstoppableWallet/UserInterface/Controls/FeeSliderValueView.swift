@@ -4,7 +4,7 @@ import HUD
 
 class FeeSliderValueView: UIView {
     private let feeRateLabel = UILabel()
-    private let satByteLabel = UILabel()
+    private let unitNameLabel = UILabel()
 
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -23,16 +23,19 @@ class FeeSliderValueView: UIView {
         feeRateLabel.textColor = .themeLeah
         feeRateLabel.font = .body
 
-        addSubview(satByteLabel)
-        satByteLabel.snp.makeConstraints { maker in
+        addSubview(unitNameLabel)
+        unitNameLabel.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
             maker.top.equalTo(feeRateLabel.snp.bottom)
         }
-        satByteLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        satByteLabel.text = "sat/byte"
-        satByteLabel.font = .micro
-        satByteLabel.textAlignment = .center
-        satByteLabel.textColor = .themeGray
+        unitNameLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        unitNameLabel.font = .micro
+        unitNameLabel.textAlignment = .center
+        unitNameLabel.textColor = .themeGray
+    }
+
+    func set(descriptionText: String?) {
+        unitNameLabel.text = descriptionText
     }
 
     func set(value: String?) {

@@ -13,8 +13,12 @@ class SendFeePriorityView: UIView {
     private let selectableValueView = SelectableValueView(title: "send.tx_speed".localized)
     private let feeRateView = FeeSliderValueView()
 
-    init(delegate: ISendFeePriorityViewDelegate) {
+    private let customPriorityUnit: CustomPriorityUnit?
+
+    init(delegate: ISendFeePriorityViewDelegate, customPriorityUnit: CustomPriorityUnit?) {
         self.delegate = delegate
+        self.customPriorityUnit = customPriorityUnit
+
         super.init(frame: .zero)
 
         backgroundColor = .clear
@@ -59,6 +63,8 @@ class SendFeePriorityView: UIView {
         }
         selectableValueView.delegate = self
         selectableValueView.set(value: delegate.feeRatePriority.title)
+
+        feeRateView.set(descriptionText: customPriorityUnit?.presentationName)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -88,6 +94,17 @@ class SendFeePriorityView: UIView {
         return feeConfig
     }
 
+    private func convert(_ value: Int, toPresent: Bool = true) -> Int {
+        let decimals = customPriorityUnit?.presentationDecimals ?? 0
+        var multi = pow(10, decimals)
+        multi = toPresent ? 1 / multi : multi
+        return NSDecimalNumber(decimal: Decimal(value) * multi).intValue
+    }
+
+    private func convert(_ range: ClosedRange<Int>, toPresent: Bool = true) -> ClosedRange<Int> {
+        convert(range.lowerBound, toPresent: toPresent)...convert(range.upperBound, toPresent: toPresent)
+    }
+
     private func onTracking(_ value: Int, position: CGPoint) {
         HUD.instance.config = hudConfig(position: position)
 
@@ -97,7 +114,9 @@ class SendFeePriorityView: UIView {
 
     private func finishTracking(value: Int) {
         HUD.instance.hide()
-        delegate.selectCustom(feeRatePriority: .custom(value: value, range: feeSliderWrapper.sliderRange))
+
+        let realRange = convert(feeSliderWrapper.sliderRange, toPresent: false)
+        delegate.selectCustom(feeRatePriority: .custom(value: convert(value, toPresent: false), range: realRange))
     }
 
 }
@@ -121,7 +140,8 @@ extension SendFeePriorityView: ISendFeePriorityView {
     }
 
     func set(customFeeRateValue: Int, customFeeRateRange: ClosedRange<Int>) {
-        feeSliderWrapper.set(value: customFeeRateValue, range: customFeeRateRange)
+        let presentationRange = convert(customFeeRateRange)
+        feeSliderWrapper.set(value: convert(customFeeRateValue), range: presentationRange)
     }
 
     func set(duration: TimeInterval?) {

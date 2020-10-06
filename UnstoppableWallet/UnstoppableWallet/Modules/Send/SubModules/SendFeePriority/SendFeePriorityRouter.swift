@@ -6,7 +6,7 @@ class SendFeePriorityRouter {
 
 extension SendFeePriorityRouter {
 
-    static func module(coin: Coin) -> (UIView, ISendFeePriorityModule, ISendSubRouter)? {
+    static func module(coin: Coin, customPriorityUnit: CustomPriorityUnit? = nil) -> (UIView, ISendFeePriorityModule, ISendSubRouter)? {
         guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(coin: coin) else {
             return nil
         }
@@ -14,7 +14,7 @@ extension SendFeePriorityRouter {
         let router = SendFeePriorityRouter()
         let interactor = SendFeePriorityInteractor(provider: feeRateProvider)
         let presenter = SendFeePriorityPresenter(interactor: interactor, router: router, coin: coin)
-        let view = SendFeePriorityView(delegate: presenter)
+        let view = SendFeePriorityView(delegate: presenter, customPriorityUnit: customPriorityUnit)
 
         interactor.delegate = presenter
         presenter.view = view
