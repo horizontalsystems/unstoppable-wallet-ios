@@ -2,7 +2,7 @@ import WalletConnect
 
 protocol IWalletConnectInteractorDelegate: AnyObject {
     func didConnect()
-    func didRequestSession(peerMeta: WCPeerMeta)
+    func didRequestSession(peerId: String, peerMeta: WCPeerMeta)
 }
 
 class WalletConnectInteractor {
@@ -40,7 +40,7 @@ class WalletConnectInteractor {
         print("Interactor Session Request: \(id)")
         print("Peer: \(requestParam.chainId ?? -1); \(requestParam.peerId); \(requestParam.peerMeta)")
 
-        delegate?.didRequestSession(peerMeta: requestParam.peerMeta)
+        delegate?.didRequestSession(peerId: requestParam.peerId, peerMeta: requestParam.peerMeta)
     }
 
     private func onDisconnect(error: Error?) {
@@ -54,6 +54,10 @@ class WalletConnectInteractor {
 }
 
 extension WalletConnectInteractor {
+
+    var session: WCSession {
+        interactor.session
+    }
 
     func connect() {
         interactor.connect().done { [weak self] connected in
@@ -70,6 +74,10 @@ extension WalletConnectInteractor {
 
     func rejectSession() {
         interactor.rejectSession().cauterize()
+    }
+
+    func killSession() {
+        interactor.killSession().cauterize()
     }
 
 }

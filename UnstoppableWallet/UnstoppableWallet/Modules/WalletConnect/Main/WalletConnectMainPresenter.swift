@@ -69,7 +69,12 @@ class WalletConnectMainPresenter {
     }
 
     private func viewItem(peerMeta: WCPeerMeta) -> PeerMetaViewItem {
-        PeerMetaViewItem(name: peerMeta.name)
+        PeerMetaViewItem(
+                name: peerMeta.name,
+                url: peerMeta.url,
+                description: peerMeta.description,
+                icon: peerMeta.icons.first
+        )
     }
 
 }
@@ -122,6 +127,8 @@ extension WalletConnectMainPresenter {
     }
 
     func disconnect() {
+        service.killSession()
+        finishRelay.accept(())
     }
 
 }
@@ -130,6 +137,9 @@ extension WalletConnectMainPresenter {
 
     struct PeerMetaViewItem {
         let name: String
+        let url: String
+        let description: String
+        let icon: String?
     }
 
     enum Status {
