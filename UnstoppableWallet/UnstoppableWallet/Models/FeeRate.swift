@@ -8,7 +8,7 @@ struct FeeRate {
         switch priority {
         case .low:
             return feeRate.low
-        case .medium:
+        case .medium, .recommended:
             return feeRate.medium
         case .high:
             return feeRate.high
@@ -21,7 +21,7 @@ struct FeeRate {
         switch priority {
         case .low:
             return feeRate.lowPriorityDuration
-        case .medium:
+        case .medium, .recommended:
             return feeRate.mediumPriorityDuration
         case .high:
             return feeRate.highPriorityDuration

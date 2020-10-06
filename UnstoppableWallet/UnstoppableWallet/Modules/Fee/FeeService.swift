@@ -15,7 +15,7 @@ class FeeService {
     private var amount: Decimal
     private var spenderAddress: Address
 
-    public let priority: FeeRatePriority = .medium
+    public let priority: FeeRatePriority
     public var gasPrice: Int? = nil
     public var gasLimit: Int? = nil
 
@@ -24,6 +24,7 @@ class FeeService {
     init(adapter: IErc20Adapter, provider: IFeeRateProvider, rateManager: IRateManager, baseCurrency: Currency, feeCoin: Coin, amount: Decimal, spenderAddress: Address) {
         self.erc20Adapter = adapter
         self.provider = provider
+        self.priority = provider.defaultFeeRatePriority
         self.rateManager = rateManager
         self.baseCurrency = baseCurrency
         self.feeCoin = feeCoin

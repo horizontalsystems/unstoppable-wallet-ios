@@ -3,6 +3,7 @@ import Foundation
 enum FeeRatePriority: Equatable {
     case low
     case medium
+    case recommended
     case high
     case custom(value: Int, range: ClosedRange<Int>)
 
@@ -10,6 +11,7 @@ enum FeeRatePriority: Equatable {
         switch self {
         case .low: return "send.tx_speed_low".localized
         case .medium: return "send.tx_speed_medium".localized
+        case .recommended: return "send.tx_speed_recommended".localized
         case .high: return "send.tx_speed_high".localized
         case .custom: return "send.tx_speed_custom".localized
         }
@@ -19,6 +21,7 @@ enum FeeRatePriority: Equatable {
         switch (lhs, rhs) {
         case (.low, .low): return true
         case (.medium, .medium): return true
+        case (.recommended, .recommended): return true
         case (.high, .high): return true
         case (.custom, .custom): return true
         default: return false

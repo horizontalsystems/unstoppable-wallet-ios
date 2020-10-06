@@ -92,11 +92,15 @@ class EthereumFeeRateProvider: IFeeRateProvider {
     }
 
     var feeRatePriorityList: [FeeRatePriority] {
-        [.medium, .high, .custom(value: lower, range: lower...upper)]
+        [.recommended, .custom(value: lower, range: lower...upper)]
     }
 
     var feeRate: Single<FeeRate> {
         feeRateProvider.ethereumGasPrice
+    }
+
+    var defaultFeeRatePriority: FeeRatePriority {
+        .recommended
     }
 
 }
