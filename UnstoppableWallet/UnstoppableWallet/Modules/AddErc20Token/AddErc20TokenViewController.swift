@@ -112,7 +112,7 @@ class AddErc20TokenViewController: ThemeViewController {
                 id: "add_button",
                 height: ButtonCell.height(style: .primaryYellow),
                 bind: { [weak self] cell, _ in
-                    cell.bind(style: .primaryYellow, title: "add_erc20_token.add".localized) {
+                    cell.bind(style: .primaryYellow, title: "button.add".localized) {
                         self?.delegate.onTapAddButton()
                     }
                 }
