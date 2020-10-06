@@ -1,13 +1,9 @@
 import WalletConnect
 import RxSwift
-import RxRelay
 import RxCocoa
 
 class WalletConnectViewModel {
-    let service: WalletConnectService
-
-    private let openScreenRelay = PublishRelay<Screen>()
-    private let finishRelay = PublishRelay<Void>()
+    private let service: WalletConnectService
 
     init(service: WalletConnectService) {
         self.service = service
@@ -17,61 +13,33 @@ class WalletConnectViewModel {
 
 extension WalletConnectViewModel {
 
-    var initialScreen: Screen {
+    var scanQrPresenter: WalletConnectScanQrPresenter {
+        WalletConnectScanQrPresenter(service: service)
+    }
+
+    var mainPresenter: WalletConnectMainPresenter {
+        WalletConnectMainPresenter(service: service)
+    }
+
+    var initialScreen: InitialScreen {
         if !service.isEthereumKitReady {
             return .noEthereumKit
         }
 
-        if service.isClientReady {
-            return .main
+        if service.state == .idle {
+            return .scanQrCode
         }
 
-        return .scanQrCode
-    }
-
-    var openScreenSignal: Signal<Screen> {
-        openScreenRelay.asSignal()
-    }
-
-    var finishSignal: Signal<Void> {
-        finishRelay.asSignal()
-    }
-
-    func onScan(string: String) {
-        do {
-            try service.initInteractor(uri: string)
-            openScreenRelay.accept(.initialConnect)
-        } catch {
-            openScreenRelay.accept(.error(error))
-        }
-    }
-
-    func onApproveSession(peerMeta: WCPeerMeta) {
-        do {
-            try service.initClient(peerMeta: peerMeta)
-            openScreenRelay.accept(.main)
-        } catch {
-            // todo
-        }
-    }
-
-    func onRejectSession() {
-        finishRelay.accept(())
-    }
-
-    func onFinish() {
-        finishRelay.accept(())
+        return .main
     }
 
 }
 
 extension WalletConnectViewModel {
 
-    enum Screen {
+    enum InitialScreen {
         case noEthereumKit
         case scanQrCode
-        case error(Error)
-        case initialConnect
         case main
     }
 
