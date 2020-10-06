@@ -1,43 +1,97 @@
 import EthereumKit
 import WalletConnect
+import RxSwift
 
 class WalletConnectService {
-    var ethereumKit: Kit?
+    private var ethereumKit: Kit?
+    private var interactor: WalletConnectInteractor?
+    private(set) var peerMeta: WCPeerMeta?
 
-    var interactor: WalletConnectInteractor?
-    var client: WalletConnectClient?
+    private var stateSubject = PublishSubject<State>()
+
+    private(set) var state: State = .idle {
+        didSet {
+            stateSubject.onNext(state)
+        }
+    }
 
     init(ethereumKitManager: EthereumKitManager) {
         ethereumKit = ethereumKitManager.ethereumKit
-        client = WalletConnectClient.storedInstance()
-    }
 
-    var isEthereumKitReady: Bool {
-        ethereumKit != nil
-    }
+        if let storeItem = WCSessionStore.allSessions.first?.value {
+            peerMeta = storeItem.peerMeta
 
-    var isClientReady: Bool {
-        client != nil
-    }
+            interactor = WalletConnectInteractor(session: storeItem.session)
+            interactor?.delegate = self
+            interactor?.connect()
 
-    func initInteractor(uri: String) throws {
-        interactor = try WalletConnectInteractor(uri: uri)
-    }
-
-    func initClient(peerMeta: WCPeerMeta) throws {
-        guard let interactor = interactor else {
-            throw ClientError.noInteractor
+            state = .connecting
         }
-
-        client = WalletConnectClient(interactor: interactor, peerMeta: peerMeta)
     }
 
 }
 
 extension WalletConnectService {
 
-    enum ClientError: Error {
-        case noInteractor
+    var stateObservable: Observable<State> {
+        stateSubject.asObservable()
+    }
+
+    var isEthereumKitReady: Bool {
+        ethereumKit != nil
+    }
+
+    func connect(uri: String) throws {
+        interactor = try WalletConnectInteractor(uri: uri)
+        interactor?.delegate = self
+        interactor?.connect()
+
+        state = .connecting
+    }
+
+    func approveSession() {
+        guard let ethereumKit = ethereumKit, let interactor = interactor else {
+            return
+        }
+
+        interactor.approveSession(address: ethereumKit.address.eip55, chainId: 1) // todo: get chainId from kit
+
+        state = .ready
+    }
+
+    func rejectSession() {
+        guard let interactor = interactor else {
+            return
+        }
+
+        interactor.rejectSession()
+
+        state = .rejected
+    }
+
+}
+
+extension WalletConnectService: IWalletConnectInteractorDelegate {
+
+    func didConnect() {
+    }
+
+    func didRequestSession(peerMeta: WCPeerMeta) {
+        self.peerMeta = peerMeta
+
+        state = .waitingForApproveSession
+    }
+
+}
+
+extension WalletConnectService {
+
+    enum State {
+        case idle
+        case connecting
+        case waitingForApproveSession
+        case ready
+        case rejected
     }
 
 }

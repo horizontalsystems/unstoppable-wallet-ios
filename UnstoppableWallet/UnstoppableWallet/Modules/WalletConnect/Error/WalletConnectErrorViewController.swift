@@ -1,15 +1,15 @@
 import ThemeKit
 
 class WalletConnectErrorViewController: ThemeViewController {
-    private let baseView: WalletConnectView
     private let error: Error
+    private weak var sourceViewController: UIViewController?
 
     private let errorView = RequestErrorViewNew()
     private let closeButton = ThemeButton()
 
-    init(baseView: WalletConnectView, error: Error) {
-        self.baseView = baseView
+    init(error: Error, sourceViewController: UIViewController?) {
         self.error = error
+        self.sourceViewController = sourceViewController
 
         super.init()
     }
@@ -44,7 +44,7 @@ class WalletConnectErrorViewController: ThemeViewController {
     }
 
     @objc private func onClose() {
-        baseView.viewModel.onFinish()
+        sourceViewController?.dismiss(animated: true)
     }
 
 }
