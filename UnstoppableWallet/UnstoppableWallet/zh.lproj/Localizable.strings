@@ -17,6 +17,7 @@
 "button.back" = "Back";
 "button.retry" = "Retry";
 "button.report" = "Report";
+"button.add" = "Add";
 
 "alert.copied" = "Copied";
 "alert.no_internet" = "No Internet";
@@ -610,7 +611,6 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "add_erc20_token.symbol" = "Symbol";
 "add_erc20_token.decimals" = "Decimals";
 "add_erc20_token.already_exists" = "This token is already in the coin manager list.";
-"add_erc20_token.add" = "Add";
 "add_erc20_token.contract_not_exist" = "Contract not found";
 
 "change_24hour_up" = "%@ price: up %@%% %@";
@@ -625,4 +625,6 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "chart_alert.trend_description" = "Trend Change";
 
 "wallet_connect.title" = "Wallet Connect";
+"wallet_connect.requirement" = "Requirement";
+"wallet_connect.requirement.description" = "For connect with browser you should to activate ethereum or any erc20 token on your balance tab";
 "wallet_connect.error.invalid_url" = "Invalid URL Address";
