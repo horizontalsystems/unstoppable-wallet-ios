@@ -21,18 +21,7 @@ class EthereumKitManager {
             throw AdapterError.unsupportedAccount
         }
 
-        guard let rpcMode: EthereumRpcMode = ethereumRpcModeSettingsManager?.rpcMode else {
-            throw AdapterError.wrongParameters
-        }
-
-        let rpcApi: RpcApi
-
-        switch rpcMode {
-        case .infura:
-            rpcApi = .infura(id: appConfigProvider.infuraCredentials.id, secret: appConfigProvider.infuraCredentials.secret)
-        case .incubed:
-            rpcApi = .incubed
-        }
+        let rpcApi: SyncSource = .infuraWebSocket(id: appConfigProvider.infuraCredentials.id, secret: appConfigProvider.infuraCredentials.secret)
 
         let ethereumKit = try EthereumKit.Kit.instance(
                 words: words,
