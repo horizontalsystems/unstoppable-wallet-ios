@@ -123,6 +123,12 @@ class WalletConnectMainViewController: ThemeViewController {
                 })
                 .disposed(by: disposeBag)
 
+        presenter.closeVisibleDriver
+                .drive(onNext: { [weak self] visible in
+                    self?.syncCloseButton(visible: visible)
+                })
+                .disposed(by: disposeBag)
+
         presenter.signedTransactionsVisibleDriver
                 .drive(onNext: { [weak self] visible in
                 })
@@ -174,6 +180,18 @@ class WalletConnectMainViewController: ThemeViewController {
 
     @objc private func onTapDisconnect() {
         presenter.disconnect()
+    }
+
+    @objc private func onTapClose() {
+        presenter.close()
+    }
+
+    private func syncCloseButton(visible: Bool) {
+        if visible {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
+        } else {
+            navigationItem.rightBarButtonItem = nil
+        }
     }
 
     private func syncLabel() {

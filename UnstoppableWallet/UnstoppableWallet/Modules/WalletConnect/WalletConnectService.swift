@@ -6,7 +6,7 @@ import RxRelay
 class WalletConnectService {
     private var ethereumKit: Kit?
     private var interactor: WalletConnectInteractor?
-    private var peerData: PeerData?
+    private var remotePeerData: PeerData?
 
     private var stateRelay = PublishRelay<State>()
     private var requestRelay = PublishRelay<Int>()
@@ -23,9 +23,9 @@ class WalletConnectService {
         ethereumKit = ethereumKitManager.ethereumKit
 
         if let storeItem = WCSessionStore.allSessions.first?.value {
-            peerData = PeerData(id: storeItem.peerId, meta: storeItem.peerMeta)
+            remotePeerData = PeerData(id: storeItem.peerId, meta: storeItem.peerMeta)
 
-            interactor = WalletConnectInteractor(session: storeItem.session)
+            interactor = WalletConnectInteractor(session: storeItem.session, remotePeerId: storeItem.peerId)
             interactor?.delegate = self
             interactor?.connect()
 
@@ -49,8 +49,8 @@ extension WalletConnectService {
         ethereumKit != nil
     }
 
-    var peerMeta: WCPeerMeta? {
-        peerData?.meta
+    var remotePeerMeta: WCPeerMeta? {
+        remotePeerData?.meta
     }
 
     var ethereumCoin: Coin? {
@@ -74,9 +74,9 @@ extension WalletConnectService {
             return
         }
 
-        interactor.approveSession(address: ethereumKit.address.eip55, chainId: 1) // todo: get chainId from kit
+        interactor.approveSession(address: ethereumKit.address.eip55, chainId: ethereumKit.networkType.chainId)
 
-        if let peerData = peerData {
+        if let peerData = remotePeerData {
             WCSessionStore.store(interactor.session, peerId: peerData.id, peerMeta: peerData.meta)
         }
 
@@ -126,8 +126,6 @@ extension WalletConnectService {
         }
 
         interactor.killSession()
-
-        state = .completed
     }
 
 }
@@ -135,15 +133,21 @@ extension WalletConnectService {
 extension WalletConnectService: IWalletConnectInteractorDelegate {
 
     func didConnect() {
-        if peerData != nil {
+        if remotePeerData != nil {
             state = .ready
         }
     }
 
     func didRequestSession(peerId: String, peerMeta: WCPeerMeta) {
-        peerData = PeerData(id: peerId, meta: peerMeta)
+        remotePeerData = PeerData(id: peerId, meta: peerMeta)
 
         state = .waitingForApproveSession
+    }
+
+    func didKillSession() {
+        WCSessionStore.clearAll()
+
+        state = .completed
     }
 
     func didRequestEthereumTransaction(id: Int, event: WCEvent, transaction: WCEthereumTransaction) {

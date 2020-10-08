@@ -12,6 +12,7 @@ class WalletConnectMainPresenter {
     private let cancelVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let approveAndRejectVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let disconnectVisibleRelay = BehaviorRelay<Bool>(value: false)
+    private let closeVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let signedTransactionsVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let peerMetaRelay = BehaviorRelay<PeerMetaViewItem?>(value: nil)
     private let hintRelay = BehaviorRelay<String?>(value: nil)
@@ -48,13 +49,14 @@ class WalletConnectMainPresenter {
             return
         }
 
-        connectingRelay.accept(state == .connecting && service.peerMeta == nil)
+        connectingRelay.accept(state == .connecting && service.remotePeerMeta == nil)
         cancelVisibleRelay.accept(state == .connecting)
         disconnectVisibleRelay.accept(state == .ready)
+        closeVisibleRelay.accept(state == .ready)
         approveAndRejectVisibleRelay.accept(state == .waitingForApproveSession)
         signedTransactionsVisibleRelay.accept(state == .ready)
 
-        peerMetaRelay.accept(service.peerMeta.map { viewItem(peerMeta: $0) })
+        peerMetaRelay.accept(service.remotePeerMeta.map { viewItem(peerMeta: $0) })
         hintRelay.accept(hint(state: state))
         statusRelay.accept(status(state: state))
     }
@@ -108,6 +110,10 @@ extension WalletConnectMainPresenter {
 
     var disconnectVisibleDriver: Driver<Bool> {
         disconnectVisibleRelay.asDriver()
+    }
+
+    var closeVisibleDriver: Driver<Bool> {
+        closeVisibleRelay.asDriver()
     }
 
     var signedTransactionsVisibleDriver: Driver<Bool> {
