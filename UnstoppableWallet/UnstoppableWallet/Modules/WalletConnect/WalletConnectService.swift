@@ -1,17 +1,21 @@
 import EthereumKit
 import WalletConnect
 import RxSwift
+import RxRelay
 
 class WalletConnectService {
     private var ethereumKit: Kit?
     private var interactor: WalletConnectInteractor?
     private var peerData: PeerData?
 
-    private var stateSubject = PublishSubject<State>()
+    private var stateRelay = PublishRelay<State>()
+    private var requestRelay = PublishRelay<Int>()
+
+    private var pendingRequests = [Request]()
 
     private(set) var state: State = .idle {
         didSet {
-            stateSubject.onNext(state)
+            stateRelay.accept(state)
         }
     }
 
@@ -34,7 +38,11 @@ class WalletConnectService {
 extension WalletConnectService {
 
     var stateObservable: Observable<State> {
-        stateSubject.asObservable()
+        stateRelay.asObservable()
+    }
+
+    var requestObservable: Observable<Int> {
+        requestRelay.asObservable()
     }
 
     var isEthereumKitReady: Bool {
@@ -43,6 +51,14 @@ extension WalletConnectService {
 
     var peerMeta: WCPeerMeta? {
         peerData?.meta
+    }
+
+    var ethereumCoin: Coin? {
+        App.shared.appConfigProvider.defaultCoins.first(where: { $0.type == .ethereum })
+    }
+
+    func request(id: Int) -> Request? {
+        pendingRequests.first { $0.id == id }
     }
 
     func connect(uri: String) throws {
@@ -74,7 +90,34 @@ extension WalletConnectService {
 
         interactor.rejectSession()
 
-        state = .rejected
+        state = .completed
+    }
+
+    func approveRequest(id: Int) {
+        guard let index = pendingRequests.firstIndex(where: { $0.id == id }) else {
+            return
+        }
+
+        let request = pendingRequests.remove(at: index)
+
+        switch request.type {
+        case .sendEthereumTransaction(let transaction):
+            // todo
+            interactor?.rejectRequest(id: id, message: "Not implemented yet")
+        case .signEthereumTransaction(let transaction):
+            // todo
+            interactor?.rejectRequest(id: id, message: "Not implemented yet")
+        }
+    }
+
+    func rejectRequest(id: Int) {
+        guard let index = pendingRequests.firstIndex(where: { $0.id == id }) else {
+            return
+        }
+
+        pendingRequests.remove(at: index)
+
+        interactor?.rejectRequest(id: id, message: "Rejected by user")
     }
 
     func killSession() {
@@ -83,6 +126,8 @@ extension WalletConnectService {
         }
 
         interactor.killSession()
+
+        state = .completed
     }
 
 }
@@ -101,6 +146,27 @@ extension WalletConnectService: IWalletConnectInteractorDelegate {
         state = .waitingForApproveSession
     }
 
+    func didRequestEthereumTransaction(id: Int, event: WCEvent, transaction: WCEthereumTransaction) {
+        var requestType: Request.RequestType?
+
+        switch event {
+        case .ethSendTransaction: requestType = .sendEthereumTransaction(transaction: transaction)
+        case .ethSignTransaction: requestType = .signEthereumTransaction(transaction: transaction)
+        default: ()
+        }
+
+        guard let type = requestType else {
+            interactor?.rejectRequest(id: id, message: "Not supported yet")
+            return
+        }
+
+        let request = Request(id: id, type: type)
+
+        pendingRequests.append(request)
+
+        requestRelay.accept(request.id)
+    }
+
 }
 
 extension WalletConnectService {
@@ -110,12 +176,22 @@ extension WalletConnectService {
         case connecting
         case waitingForApproveSession
         case ready
-        case rejected
+        case completed
     }
 
     struct PeerData {
         let id: String
         let meta: WCPeerMeta
+    }
+
+    struct Request {
+        let id: Int
+        let type: RequestType
+
+        enum RequestType {
+            case sendEthereumTransaction(transaction: WCEthereumTransaction)
+            case signEthereumTransaction(transaction: WCEthereumTransaction)
+        }
     }
 
 }

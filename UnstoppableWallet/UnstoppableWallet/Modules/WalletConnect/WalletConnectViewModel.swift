@@ -21,6 +21,10 @@ extension WalletConnectViewModel {
         WalletConnectMainPresenter(service: service)
     }
 
+    func requestPresenter(requestId: Int) -> WalletConnectRequestPresenter {
+        WalletConnectRequestPresenter(service: service, requestId: requestId)
+    }
+
     var initialScreen: InitialScreen {
         if !service.isEthereumKitReady {
             return .noEthereumKit

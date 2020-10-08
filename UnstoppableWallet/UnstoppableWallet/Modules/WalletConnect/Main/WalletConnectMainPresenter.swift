@@ -17,6 +17,7 @@ class WalletConnectMainPresenter {
     private let hintRelay = BehaviorRelay<String?>(value: nil)
     private let statusRelay = BehaviorRelay<Status?>(value: nil)
 
+    private let openRequestRelay = PublishRelay<Int>()
     private let finishRelay = PublishRelay<Void>()
 
     init(service: WalletConnectService) {
@@ -29,11 +30,23 @@ class WalletConnectMainPresenter {
                 })
                 .disposed(by: disposeBag)
 
+        service.requestObservable
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] id in
+                    self?.openRequestRelay.accept(id)
+                })
+                .disposed(by: disposeBag)
+
         sync()
     }
 
     private func sync(state: WalletConnectService.State? = nil) {
         let state = state ?? service.state
+
+        guard state != .completed else {
+            finishRelay.accept(())
+            return
+        }
 
         connectingRelay.accept(state == .connecting && service.peerMeta == nil)
         cancelVisibleRelay.accept(state == .connecting)
@@ -113,6 +126,10 @@ extension WalletConnectMainPresenter {
         statusRelay.asDriver()
     }
 
+    var openRequestSignal: Signal<Int> {
+        openRequestRelay.asSignal()
+    }
+
     var finishSignal: Signal<Void> {
         finishRelay.asSignal()
     }
@@ -123,11 +140,13 @@ extension WalletConnectMainPresenter {
 
     func reject() {
         service.rejectSession()
-        finishRelay.accept(())
     }
 
     func disconnect() {
         service.killSession()
+    }
+
+    func close() {
         finishRelay.accept(())
     }
 
