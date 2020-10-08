@@ -3,6 +3,7 @@ import WalletConnect
 protocol IWalletConnectInteractorDelegate: AnyObject {
     func didConnect()
     func didRequestSession(peerId: String, peerMeta: WCPeerMeta)
+    func didKillSession()
     func didRequestEthereumTransaction(id: Int, event: WCEvent, transaction: WCEthereumTransaction)
 }
 
@@ -13,11 +14,15 @@ class WalletConnectInteractor {
 
     private let interactor: WCInteractor
 
-    init(session: WCSession) {
-        interactor = WCInteractor(session: session, meta: Self.clientMeta, uuid: UIDevice.current.identifierForVendor ?? UUID())
+    init(session: WCSession, remotePeerId: String? = nil) {
+        interactor = WCInteractor(session: session, meta: Self.clientMeta, uuid: UIDevice.current.identifierForVendor ?? UUID(), peerId: remotePeerId)
 
         interactor.onSessionRequest = { [weak self] (id, requestParam) in
             self?.delegate?.didRequestSession(peerId: requestParam.peerId, peerMeta: requestParam.peerMeta)
+        }
+
+        interactor.onSessionKill = { [weak self] in
+            self?.delegate?.didKillSession()
         }
 
         interactor.onError = { [weak self] error in
