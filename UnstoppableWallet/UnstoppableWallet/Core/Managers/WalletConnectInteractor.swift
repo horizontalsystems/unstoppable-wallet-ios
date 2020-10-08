@@ -90,8 +90,12 @@ extension WalletConnectInteractor {
 
 extension WalletConnectInteractor {
 
-    enum SessionError: Error {
+    enum SessionError: LocalizedError {
         case invalidUri
+
+        var errorDescription: String? {
+            "wallet_connect.error.invalid_url".localized
+        }
     }
 
 }

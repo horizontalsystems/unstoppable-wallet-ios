@@ -29,7 +29,7 @@ class WalletConnectErrorViewController: ThemeViewController {
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
-        errorView.bind(image: UIImage(named: "Error Cross Icon"), text: "wallet_connect.error.invalid_url".localized)
+        errorView.bind(image: UIImage(named: "Error Cross Icon"), text: error.smartDescription)
 
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints { maker in
