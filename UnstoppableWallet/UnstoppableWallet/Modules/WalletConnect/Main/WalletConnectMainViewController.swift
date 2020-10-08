@@ -147,6 +147,12 @@ class WalletConnectMainViewController: ThemeViewController {
                 })
                 .disposed(by: disposeBag)
 
+        presenter.openRequestSignal
+                .emit(onNext: { [weak self] id in
+                    self?.openRequest(id: id)
+                })
+                .disposed(by: disposeBag)
+
         presenter.finishSignal
                 .emit(onNext: { [weak self] in
                     self?.sourceViewController?.dismiss(animated: true)
@@ -185,6 +191,11 @@ class WalletConnectMainViewController: ThemeViewController {
         }
 
         peerMetaLabel.text = textParts.joined(separator: "\n")
+    }
+
+    private func openRequest(id: Int) {
+        let viewController = WalletConnectRequestViewController(viewModel: viewModel, requestId: id).toBottomSheet
+        present(viewController, animated: true)
     }
 
 }

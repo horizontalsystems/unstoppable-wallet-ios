@@ -3,6 +3,7 @@ import WalletConnect
 protocol IWalletConnectInteractorDelegate: AnyObject {
     func didConnect()
     func didRequestSession(peerId: String, peerMeta: WCPeerMeta)
+    func didRequestEthereumTransaction(id: Int, event: WCEvent, transaction: WCEthereumTransaction)
 }
 
 class WalletConnectInteractor {
@@ -16,15 +17,19 @@ class WalletConnectInteractor {
         interactor = WCInteractor(session: session, meta: Self.clientMeta, uuid: UIDevice.current.identifierForVendor ?? UUID())
 
         interactor.onSessionRequest = { [weak self] (id, requestParam) in
-            self?.onSessionRequest(id: id, requestParam: requestParam)
+            self?.delegate?.didRequestSession(peerId: requestParam.peerId, peerMeta: requestParam.peerMeta)
         }
 
         interactor.onError = { [weak self] error in
             self?.onError(error: error)
         }
 
-        interactor.onDisconnect = { [weak self] (error) in
+        interactor.onDisconnect = { [weak self] error in
             self?.onDisconnect(error: error)
+        }
+
+        interactor.eth.onTransaction = { [weak self] id, event, transaction in
+            self?.delegate?.didRequestEthereumTransaction(id: Int(id), event: event, transaction: transaction)
         }
     }
 
@@ -34,13 +39,6 @@ class WalletConnectInteractor {
         }
 
         self.init(session: session)
-    }
-
-    private func onSessionRequest(id: Int64, requestParam: WCSessionRequestParam) {
-        print("Interactor Session Request: \(id)")
-        print("Peer: \(requestParam.chainId ?? -1); \(requestParam.peerId); \(requestParam.peerMeta)")
-
-        delegate?.didRequestSession(peerId: requestParam.peerId, peerMeta: requestParam.peerMeta)
     }
 
     private func onDisconnect(error: Error?) {
@@ -78,6 +76,14 @@ extension WalletConnectInteractor {
 
     func killSession() {
         interactor.killSession().cauterize()
+    }
+
+    func approveRequest<T: Codable>(id: Int, result: T) {
+        interactor.approveRequest(id: Int64(id), result: result).cauterize()
+    }
+
+    func rejectRequest(id: Int, message: String) {
+        interactor.rejectRequest(id: Int64(id), message: message).cauterize()
     }
 
 }
