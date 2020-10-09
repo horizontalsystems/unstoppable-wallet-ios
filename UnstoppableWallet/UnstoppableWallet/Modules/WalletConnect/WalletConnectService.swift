@@ -2,9 +2,17 @@ import EthereumKit
 import WalletConnect
 import RxSwift
 import RxRelay
+import CurrencyKit
+import BigInt
 
 class WalletConnectService {
-    private var ethereumKit: Kit?
+    private var ethereumKit: EthereumKit.Kit?
+    private let appConfigProvider: IAppConfigProvider
+    private let currencyKit: ICurrencyKit
+    private let rateManager: IRateManager
+
+    private let disposeBag = DisposeBag()
+
     private var interactor: WalletConnectInteractor?
     private var remotePeerData: PeerData?
 
@@ -19,8 +27,11 @@ class WalletConnectService {
         }
     }
 
-    init(ethereumKitManager: EthereumKitManager) {
+    init(ethereumKitManager: EthereumKitManager, appConfigProvider: IAppConfigProvider, currencyKit: ICurrencyKit, rateManager: IRateManager) {
         ethereumKit = ethereumKitManager.ethereumKit
+        self.appConfigProvider = appConfigProvider
+        self.currencyKit = currencyKit
+        self.rateManager = rateManager
 
         if let storeItem = WCSessionStore.allSessions.first?.value {
             remotePeerData = PeerData(id: storeItem.peerId, meta: storeItem.peerMeta)
@@ -31,6 +42,34 @@ class WalletConnectService {
 
             state = .connecting
         }
+    }
+
+    private func ethereumTransaction(transaction: WCEthereumTransaction) throws -> EthereumTransaction {
+        guard let to = transaction.to else {
+            throw TransactionError.invalidRecipient
+        }
+
+        guard let gasLimitString = transaction.gas ?? transaction.gasLimit, let gasLimit = Int(gasLimitString.replacingOccurrences(of: "0x", with: ""), radix: 16) else {
+            throw TransactionError.invalidGasLimit
+        }
+
+        guard let valueString = transaction.value, let value = BigUInt(valueString.replacingOccurrences(of: "0x", with: ""), radix: 16) else {
+            throw TransactionError.invalidValue
+        }
+
+        guard let data = Data(hex: transaction.data) else {
+            throw TransactionError.invalidData
+        }
+
+        return EthereumTransaction(
+                from: try Address(hex: transaction.from),
+                to: try Address(hex: to),
+                nonce: transaction.nonce.flatMap { Int($0.replacingOccurrences(of: "0x", with: ""), radix: 16) },
+                gasPrice: transaction.gasPrice.flatMap { Int($0.replacingOccurrences(of: "0x", with: ""), radix: 16) },
+                gasLimit: gasLimit,
+                value: value,
+                data: data
+        )
     }
 
 }
@@ -53,8 +92,16 @@ extension WalletConnectService {
         remotePeerData?.meta
     }
 
-    var ethereumCoin: Coin? {
-        App.shared.appConfigProvider.defaultCoins.first(where: { $0.type == .ethereum })
+    var ethereumCoin: Coin {
+        appConfigProvider.ethereumCoin
+    }
+
+    var ethereumRate: CurrencyValue? {
+        let baseCurrency = currencyKit.baseCurrency
+
+        return rateManager.marketInfo(coinCode: ethereumCoin.code, currencyCode: baseCurrency.code).map { marketInfo in
+            CurrencyValue(currency: baseCurrency, value: marketInfo.rate)
+        }
     }
 
     func request(id: Int) -> Request? {
@@ -95,6 +142,7 @@ extension WalletConnectService {
 
     func approveRequest(id: Int) {
         guard let index = pendingRequests.firstIndex(where: { $0.id == id }) else {
+            print("APPROVE: request not found")
             return
         }
 
@@ -102,8 +150,22 @@ extension WalletConnectService {
 
         switch request.type {
         case .sendEthereumTransaction(let transaction):
-            // todo
             interactor?.rejectRequest(id: id, message: "Not implemented yet")
+
+//            ethereumKit?.sendSingle(
+//                            address: transaction.to,
+//                            value: transaction.value,
+//                            transactionInput: transaction.data,
+//                            gasPrice: 50_000_000_000,
+//                            gasLimit: transaction.gasLimit,
+//                            nonce: transaction.nonce
+//                    )
+//                    .subscribe(onSuccess: { [weak self] transactionWithInternal in
+//                        self?.interactor?.approveRequest(id: id, result: transactionWithInternal.transaction.hash.toHexString())
+//                    }, onError: { [weak self] error in
+//                        self?.interactor?.rejectRequest(id: id, message: error.smartDescription)
+//                    })
+//                    .disposed(by: disposeBag)
         case .signEthereumTransaction(let transaction):
             // todo
             interactor?.rejectRequest(id: id, message: "Not implemented yet")
@@ -151,24 +213,25 @@ extension WalletConnectService: IWalletConnectInteractorDelegate {
     }
 
     func didRequestEthereumTransaction(id: Int, event: WCEvent, transaction: WCEthereumTransaction) {
-        var requestType: Request.RequestType?
+        do {
+            let transaction = try ethereumTransaction(transaction: transaction)
 
-        switch event {
-        case .ethSendTransaction: requestType = .sendEthereumTransaction(transaction: transaction)
-        case .ethSignTransaction: requestType = .signEthereumTransaction(transaction: transaction)
-        default: ()
+            let requestType: Request.RequestType
+
+            switch event {
+            case .ethSendTransaction: requestType = .sendEthereumTransaction(transaction: transaction)
+            case .ethSignTransaction: requestType = .signEthereumTransaction(transaction: transaction)
+            default: throw TransactionError.unsupportedRequestType
+            }
+
+            let request = Request(id: id, type: requestType)
+
+            pendingRequests.append(request)
+            requestRelay.accept(request.id)
+        } catch {
+            interactor?.rejectRequest(id: id, message: error.smartDescription)
         }
 
-        guard let type = requestType else {
-            interactor?.rejectRequest(id: id, message: "Not supported yet")
-            return
-        }
-
-        let request = Request(id: id, type: type)
-
-        pendingRequests.append(request)
-
-        requestRelay.accept(request.id)
     }
 
 }
@@ -193,9 +256,27 @@ extension WalletConnectService {
         let type: RequestType
 
         enum RequestType {
-            case sendEthereumTransaction(transaction: WCEthereumTransaction)
-            case signEthereumTransaction(transaction: WCEthereumTransaction)
+            case sendEthereumTransaction(transaction: EthereumTransaction)
+            case signEthereumTransaction(transaction: EthereumTransaction)
         }
+    }
+
+    struct EthereumTransaction {
+        let from: Address
+        let to: Address
+        let nonce: Int?
+        let gasPrice: Int?
+        let gasLimit: Int
+        let value: BigUInt
+        let data: Data
+    }
+
+    enum TransactionError: Error {
+        case unsupportedRequestType
+        case invalidRecipient
+        case invalidGasLimit
+        case invalidValue
+        case invalidData
     }
 
 }

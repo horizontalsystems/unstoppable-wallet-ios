@@ -3,6 +3,7 @@ import RxRelay
 import RxCocoa
 import WalletConnect
 import CurrencyKit
+import BigInt
 
 class WalletConnectRequestViewModel {
     private let service: WalletConnectService
@@ -30,25 +31,35 @@ class WalletConnectRequestViewModel {
         }
     }
 
-    private func sync(transaction: WCEthereumTransaction) {
-        guard let ethereumCoin = service.ethereumCoin else {
-            return
+    private func convert(amount: BigUInt) -> Decimal {
+        guard let significand = Decimal(string: amount.description), significand != 0 else {
+            return 0
         }
 
-        let amountViewItem = AmountViewItem(
-                primaryAmountInfo: .coinValue(coinValue: CoinValue(coin: ethereumCoin, value: 0.25)),
-                secondaryAmountInfo: nil
-        )
+        return Decimal(sign: .plus, exponent: -service.ethereumCoin.decimal, significand: significand)
+    }
+
+    private func sync(transaction: WalletConnectService.EthereumTransaction) {
+        let value = convert(amount: transaction.value)
+
+        let primaryAmountInfo: AmountInfo
+        var secondaryAmountInfo: AmountInfo?
+
+        let coinValue = CoinValue(coin: service.ethereumCoin, value: value)
+        if let rate = service.ethereumRate {
+            primaryAmountInfo = .currencyValue(currencyValue: CurrencyValue(currency: rate.currency, value: rate.value * value))
+            secondaryAmountInfo = .coinValue(coinValue: coinValue)
+        } else {
+            primaryAmountInfo = .coinValue(coinValue: coinValue)
+        }
+
+        let amountViewItem = AmountViewItem(primaryAmountInfo: primaryAmountInfo, secondaryAmountInfo: secondaryAmountInfo)
         amountViewItemRelay.accept(amountViewItem)
 
-        var viewItems: [ViewItem] = [
-            .from(value: transaction.from)
+        let viewItems: [ViewItem] = [
+            .from(value: transaction.from.eip55),
+            .to(value: transaction.to.eip55)
         ]
-
-        if let to = transaction.to {
-            viewItems.append(.to(value: to))
-        }
-
         viewItemsRelay.accept(viewItems)
     }
 
@@ -69,6 +80,7 @@ extension WalletConnectRequestViewModel {
     }
 
     func approve() {
+        service.approveRequest(id: requestId)
         finishRelay.accept(())
     }
 

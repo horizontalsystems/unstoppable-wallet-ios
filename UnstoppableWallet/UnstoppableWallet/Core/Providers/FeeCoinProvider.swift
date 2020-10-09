@@ -5,10 +5,6 @@ class FeeCoinProvider {
         self.appConfigProvider = appConfigProvider
     }
 
-    private var erc20FeeCoin: Coin? {
-        appConfigProvider.defaultCoins.first(where: { $0.type == .ethereum })
-    }
-
     private var erc20FeeCoinProtocol: String {
         "ERC20"
     }
@@ -41,7 +37,7 @@ extension FeeCoinProvider: IFeeCoinProvider {
     func feeCoin(coin: Coin) -> Coin? {
         switch coin.type {
         case .erc20:
-            return erc20FeeCoin
+            return appConfigProvider.ethereumCoin
         case .binance(let symbol):
             return binanceFeeCoin(symbol: symbol)
         default:
