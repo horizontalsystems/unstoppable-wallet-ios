@@ -275,6 +275,7 @@ protocol IAppConfigProvider {
     func defaultWords(count: Int) -> [String]
     var defaultEosCredentials: (String, String) { get }
 
+    var ethereumCoin: Coin { get }
     var featuredCoins: [Coin] { get }
     var defaultCoins: [Coin] { get }
 }

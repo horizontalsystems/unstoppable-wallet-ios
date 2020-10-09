@@ -3,7 +3,12 @@ import UIKit
 struct WalletConnectModule {
 
     static func start(sourceViewController: UIViewController?) {
-        let service = WalletConnectService(ethereumKitManager: App.shared.ethereumKitManager)
+        let service = WalletConnectService(
+                ethereumKitManager: App.shared.ethereumKitManager,
+                appConfigProvider: App.shared.appConfigProvider,
+                currencyKit: App.shared.currencyKit,
+                rateManager: App.shared.rateManager
+        )
         let viewModel = WalletConnectViewModel(service: service)
         let view = WalletConnectView(viewModel: viewModel, sourceViewController: sourceViewController)
 
