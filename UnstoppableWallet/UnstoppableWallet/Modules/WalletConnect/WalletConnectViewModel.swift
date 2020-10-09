@@ -13,16 +13,16 @@ class WalletConnectViewModel {
 
 extension WalletConnectViewModel {
 
-    var scanQrPresenter: WalletConnectScanQrPresenter {
-        WalletConnectScanQrPresenter(service: service)
+    var scanQrViewModel: WalletConnectScanQrViewModel {
+        WalletConnectScanQrViewModel(service: service)
     }
 
-    var mainPresenter: WalletConnectMainPresenter {
-        WalletConnectMainPresenter(service: service)
+    var mainViewModel: WalletConnectMainViewModel {
+        WalletConnectMainViewModel(service: service)
     }
 
-    func requestPresenter(requestId: Int) -> WalletConnectRequestPresenter {
-        WalletConnectRequestPresenter(service: service, requestId: requestId)
+    func requestViewModel(requestId: Int) -> WalletConnectRequestViewModel {
+        WalletConnectRequestViewModel(service: service, requestId: requestId)
     }
 
     var initialScreen: InitialScreen {

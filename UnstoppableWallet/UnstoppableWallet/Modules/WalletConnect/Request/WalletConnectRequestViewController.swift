@@ -6,7 +6,7 @@ import CurrencyKit
 
 class WalletConnectRequestViewController: ThemeActionSheetController {
     private let viewModel: WalletConnectViewModel
-    private let presenter: WalletConnectRequestPresenter
+    private let presenter: WalletConnectRequestViewModel
 
     private let titleView = BottomSheetTitleView()
     private let amountInfoView = AmountInfoView()
@@ -15,13 +15,13 @@ class WalletConnectRequestViewController: ThemeActionSheetController {
     private let approveButton = ThemeButton()
     private let rejectButton = ThemeButton()
 
-    private var viewItems = [WalletConnectRequestPresenter.ViewItem]()
+    private var viewItems = [WalletConnectRequestViewModel.ViewItem]()
 
     private let disposeBag = DisposeBag()
 
     init(viewModel: WalletConnectViewModel, requestId: Int) {
         self.viewModel = viewModel
-        presenter = viewModel.requestPresenter(requestId: requestId)
+        presenter = viewModel.requestViewModel(requestId: requestId)
 
         super.init()
     }
@@ -172,7 +172,7 @@ class WalletConnectRequestViewController: ThemeActionSheetController {
         )
     }
 
-    private func row(viewItem: WalletConnectRequestPresenter.ViewItem) -> RowProtocol {
+    private func row(viewItem: WalletConnectRequestViewModel.ViewItem) -> RowProtocol {
         switch viewItem {
         case let .from(value): return fromRow(value: value)
         case let .to(value): return toRow(value: value)
