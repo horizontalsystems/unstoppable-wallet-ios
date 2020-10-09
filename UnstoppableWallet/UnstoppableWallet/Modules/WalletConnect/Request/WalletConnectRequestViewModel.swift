@@ -4,7 +4,7 @@ import RxCocoa
 import WalletConnect
 import CurrencyKit
 
-class WalletConnectRequestPresenter {
+class WalletConnectRequestViewModel {
     private let service: WalletConnectService
     private let requestId: Int
 
@@ -54,7 +54,7 @@ class WalletConnectRequestPresenter {
 
 }
 
-extension WalletConnectRequestPresenter {
+extension WalletConnectRequestViewModel {
 
     var amountViewItemDriver: Driver<AmountViewItem?> {
         amountViewItemRelay.asDriver()
@@ -79,7 +79,7 @@ extension WalletConnectRequestPresenter {
 
 }
 
-extension WalletConnectRequestPresenter {
+extension WalletConnectRequestViewModel {
 
     struct AmountViewItem {
         let primaryAmountInfo: AmountInfo

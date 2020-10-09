@@ -3,7 +3,7 @@ import RxRelay
 import RxCocoa
 import WalletConnect
 
-class WalletConnectMainPresenter {
+class WalletConnectMainViewModel {
     private let service: WalletConnectService
 
     private let disposeBag = DisposeBag()
@@ -94,7 +94,7 @@ class WalletConnectMainPresenter {
 
 }
 
-extension WalletConnectMainPresenter {
+extension WalletConnectMainViewModel {
 
     var connectingDriver: Driver<Bool> {
         connectingRelay.asDriver()
@@ -158,7 +158,7 @@ extension WalletConnectMainPresenter {
 
 }
 
-extension WalletConnectMainPresenter {
+extension WalletConnectMainViewModel {
 
     struct PeerMetaViewItem {
         let name: String

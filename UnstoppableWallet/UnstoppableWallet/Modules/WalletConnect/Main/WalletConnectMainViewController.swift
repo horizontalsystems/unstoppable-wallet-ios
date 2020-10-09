@@ -11,7 +11,7 @@ class WalletConnectMainViewController: ThemeViewController {
     private static let spinnerSideSize: CGFloat = 20
 
     private let viewModel: WalletConnectViewModel
-    private let presenter: WalletConnectMainPresenter
+    private let presenter: WalletConnectMainViewModel
     private weak var sourceViewController: UIViewController?
 
     private let loadingView = HUDProgressView(strokeLineWidth: WalletConnectMainViewController.spinnerLineWidth,
@@ -42,12 +42,12 @@ class WalletConnectMainViewController: ThemeViewController {
 
     private let disposeBag = DisposeBag()
 
-    private var peerMeta: WalletConnectMainPresenter.PeerMetaViewItem?
-    private var status: WalletConnectMainPresenter.Status?
+    private var peerMeta: WalletConnectMainViewModel.PeerMetaViewItem?
+    private var status: WalletConnectMainViewModel.Status?
 
     init(viewModel: WalletConnectViewModel, sourceViewController: UIViewController?) {
         self.viewModel = viewModel
-        presenter = viewModel.mainPresenter
+        presenter = viewModel.mainViewModel
         self.sourceViewController = sourceViewController
 
         super.init()

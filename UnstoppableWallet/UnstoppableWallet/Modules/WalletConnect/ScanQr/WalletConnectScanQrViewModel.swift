@@ -3,7 +3,7 @@ import RxRelay
 import RxCocoa
 import WalletConnect
 
-class WalletConnectScanQrPresenter {
+class WalletConnectScanQrViewModel {
     private let service: WalletConnectService
 
     private let openMainRelay = PublishRelay<Void>()
@@ -15,7 +15,7 @@ class WalletConnectScanQrPresenter {
 
 }
 
-extension WalletConnectScanQrPresenter {
+extension WalletConnectScanQrViewModel {
 
     var openMainSignal: Signal<Void> {
         openMainRelay.asSignal()

@@ -4,14 +4,14 @@ import RxCocoa
 
 class WalletConnectScanQrViewController: ScanQrViewController {
     private let viewModel: WalletConnectViewModel
-    private let presenter: WalletConnectScanQrPresenter
+    private let presenter: WalletConnectScanQrViewModel
     private weak var sourceViewController: UIViewController?
 
     private let disposeBag = DisposeBag()
 
     init(viewModel: WalletConnectViewModel, sourceViewController: UIViewController?) {
         self.viewModel = viewModel
-        presenter = viewModel.scanQrPresenter
+        presenter = viewModel.scanQrViewModel
         self.sourceViewController = sourceViewController
 
         super.init()
