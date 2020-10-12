@@ -5,36 +5,33 @@ import ThemeKit
 class TermsHeaderCell: UITableViewCell {
     static let height: CGFloat = 104
 
+    private let headerImageView = UIImageView()
+    private let titleLabel = UILabel()
+    private let subtitleLabel = UILabel()
+
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         backgroundColor = .clear
         selectionStyle = .none
 
-        let imageView = UIImageView(image: UIImage(named: "App Icon"))
-
-        contentView.addSubview(imageView)
-        imageView.snp.makeConstraints { maker in
+        contentView.addSubview(headerImageView)
+        headerImageView.snp.makeConstraints { maker in
             maker.top.equalToSuperview().inset(CGFloat.margin4x)
             maker.leading.equalToSuperview().inset(CGFloat.margin6x)
         }
 
-        imageView.setContentHuggingPriority(.required, for: .horizontal)
-
-        let titleLabel = UILabel()
+        headerImageView.setContentHuggingPriority(.required, for: .horizontal)
 
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(imageView.snp.top).inset(10)
-            maker.leading.equalTo(imageView.snp.trailing).offset(CGFloat.margin4x)
+            maker.top.equalTo(headerImageView.snp.top).inset(10)
+            maker.leading.equalTo(headerImageView.snp.trailing).offset(CGFloat.margin4x)
             maker.trailing.equalToSuperview().inset(CGFloat.margin6x)
         }
 
-        titleLabel.text = "Unstoppable"
         titleLabel.font = .headline1
         titleLabel.textColor = .themeOz
-
-        let subtitleLabel = UILabel()
 
         contentView.addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { maker in
@@ -43,13 +40,24 @@ class TermsHeaderCell: UITableViewCell {
             maker.trailing.equalTo(titleLabel.snp.trailing)
         }
 
-        subtitleLabel.text = "terms.app_subtitle".localized
         subtitleLabel.font = .subhead2
         subtitleLabel.textColor = .themeGray
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+
+    func bind(image: UIImage? = nil, imageUrl: String? = nil, title: String, subtitle: String?) {
+        headerImageView.image = image
+        headerImageView.af.cancelImageRequest()
+
+        if let imageUrl = imageUrl, let url = URL(string: imageUrl) {
+            headerImageView.af.setImage(withURL: url)
+        }
+
+        titleLabel.text = title
+        subtitleLabel.text = subtitle
     }
 
 }
