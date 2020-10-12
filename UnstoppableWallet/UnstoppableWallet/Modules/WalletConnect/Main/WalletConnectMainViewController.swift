@@ -20,7 +20,7 @@ class WalletConnectMainViewController: ThemeViewController {
 
     private let peerMetaLabel = UILabel()
 
-    private let buttonsHolder = GradientView(gradientHeight: .margin4x, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: .themeTyler)
+    private let buttonsHolder = BottomGradientHolder()
 
     private let disconnectButton = ThemeButton()
     private var disconnectButtonBottomConstraint: Constraint?
@@ -44,6 +44,7 @@ class WalletConnectMainViewController: ThemeViewController {
 
     private var peerMeta: WalletConnectMainViewModel.PeerMetaViewItem?
     private var status: WalletConnectMainViewModel.Status?
+    private var hint: String?
 
     init(viewModel: WalletConnectViewModel, sourceViewController: UIViewController?) {
         self.viewModel = viewModel
@@ -78,10 +79,24 @@ class WalletConnectMainViewController: ThemeViewController {
 
         loadingView.set(hidden: true)
 
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+        }
+
+        tableView.sectionDataSource = self
+
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+
+        tableView.registerCell(forClass: TermsHeaderCell.self)
+        tableView.registerCell(forClass: FullTransactionInfoTextCell.self)
+        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
+
         view.addSubview(buttonsHolder)
         buttonsHolder.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            maker.top.equalTo(tableView.snp.bottom).offset(-CGFloat.margin4x)
+            maker.leading.trailing.bottom.equalToSuperview()
         }
 
         buttonsHolder.addSubview(disconnectButton)
@@ -133,17 +148,6 @@ class WalletConnectMainViewController: ThemeViewController {
         cancelButton.setTitle("Cancel", for: .normal)
         cancelButton.addTarget(self, action: #selector(onTapCancel), for: .touchUpInside)
 
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
-            maker.bottom.equalTo(buttonsHolder.snp.top).offset(CGFloat.margin4x)
-        }
-
-        tableView.sectionDataSource = self
-
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
-
         presenter.connectingDriver
                 .drive(onNext: { [weak self] connecting in
                     self?.sync(connecting: connecting)
@@ -183,12 +187,14 @@ class WalletConnectMainViewController: ThemeViewController {
         presenter.peerMetaDriver
                 .drive(onNext: { [weak self] peerMeta in
                     self?.peerMeta = peerMeta
-                    self?.syncLabel()
+                    self?.tableView.reload()
                 })
                 .disposed(by: disposeBag)
 
         presenter.hintDriver
                 .drive(onNext: { [weak self] hint in
+                    self?.hint = hint
+                    self?.tableView.reload()
                 })
                 .disposed(by: disposeBag)
 
@@ -281,7 +287,27 @@ class WalletConnectMainViewController: ThemeViewController {
 extension WalletConnectMainViewController: SectionsDataSource {
 
     public func buildSections() -> [SectionProtocol] {
-        []
+        let footer: ViewState<BottomDescriptionHeaderFooterView>? = hint.map { hint -> ViewState<BottomDescriptionHeaderFooterView> in
+            .cellType(hash: "about_footer", binder: { view in
+                view.bind(text: hint)
+            }, dynamicHeight: { width in
+                BottomDescriptionHeaderFooterView.height(containerWidth: width, text: hint)
+            })
+        }
+
+        var rows = [RowProtocol]()
+
+        if let peerMeta = peerMeta {
+            rows.append(headerRow(imageUrl: peerMeta.icon, title: peerMeta.name))
+        }
+
+        return [Section(id: "wallet_connect", footerState: footer ?? .margin(height: 0), rows: rows)]
+    }
+
+    private func headerRow(imageUrl: String?, title: String) -> RowProtocol {
+        Row<TermsHeaderCell>(id: "header", height: TermsHeaderCell.height, bind: { cell, _ in
+            cell.bind(imageUrl: imageUrl, title: title, subtitle: nil)
+        })
     }
 
 }

@@ -75,7 +75,13 @@ extension TermsViewController: SectionsDataSource {
             Section(
                     id: "main",
                     rows: [
-                        Row<TermsHeaderCell>(id: "header", height: TermsHeaderCell.height),
+                        Row<TermsHeaderCell>(
+                                id: "header",
+                                height: TermsHeaderCell.height,
+                                bind: { cell, _ in
+                                    cell.bind(image: UIImage(named: "App Icon"), title: "Unstoppable", subtitle: "terms.app_subtitle".localized)
+                                }
+                        ),
                         Row<DescriptionCell>(
                                 id: "description",
                                 dynamicHeight: { containerWidth in

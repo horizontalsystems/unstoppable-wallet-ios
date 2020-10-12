@@ -16,7 +16,7 @@ class BackupEosViewController: ThemeViewController {
     private let hintLabel = UILabel()
     private let qrCodeImageView = UIImageView()
 
-    private let closeButtonHolder = GradientView(gradientHeight: .margin4x, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: .themeTyler)
+    private let closeButtonHolder = BottomGradientHolder()
     private let closeButton = ThemeButton()
 
     init(delegate: IBackupEosViewDelegate) {
@@ -40,7 +40,6 @@ class BackupEosViewController: ThemeViewController {
         scrollView.snp.makeConstraints { maker in
             maker.top.equalToSuperview()
             maker.leading.trailing.equalToSuperview()
-            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
         scrollView.addSubview(container)
         container.snp.makeConstraints { maker in
@@ -54,9 +53,6 @@ class BackupEosViewController: ThemeViewController {
         container.addSubview(activePrivateKeyField)
         container.addSubview(hintLabel)
         container.addSubview(qrCodeImageView)
-
-        view.addSubview(closeButtonHolder)
-        closeButtonHolder.addSubview(closeButton)
 
         accountLabel.text = "backup.eos.account_name".localized.uppercased()
         accountLabel.font = .subhead1
@@ -110,23 +106,23 @@ class BackupEosViewController: ThemeViewController {
             maker.centerX.equalTo(self.view)
             maker.top.equalTo(hintLabel.snp.bottom).offset(CGFloat.margin6x)
             maker.size.equalTo(120)
-            maker.bottom.equalToSuperview().inset(CGFloat.heightBottomWrapperBar)
         }
 
+        view.addSubview(closeButtonHolder)
         closeButtonHolder.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
-            maker.height.equalTo(CGFloat.heightBottomWrapperBar)
+            maker.top.equalTo(scrollView.snp.bottom).offset(-CGFloat.margin4x)
+            maker.leading.trailing.bottom.equalToSuperview()
+        }
+
+        closeButtonHolder.addSubview(closeButton)
+        closeButton.snp.makeConstraints { maker in
+            maker.leading.top.trailing.bottom.equalToSuperview().inset(CGFloat.margin6x)
+            maker.height.equalTo(CGFloat.heightButton)
         }
 
         closeButton.apply(style: .primaryYellow)
         closeButton.setTitle("backup.close".localized, for: .normal)
         closeButton.addTarget(self, action: #selector(didTapClose), for: .touchUpInside)
-        closeButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin6x)
-            maker.height.equalTo(CGFloat.heightButton)
-        }
 
         accountField.text = delegate.account
         activePrivateKeyField.text = delegate.activePrivateKey

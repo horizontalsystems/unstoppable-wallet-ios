@@ -448,7 +448,7 @@ CHECKOUT OPTIONS:
     :commit: 607113a2f1025b32a14ff331033b6942645bd236
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
-    :commit: 21838c0051ef021a4c6865fb02cccf326c793c4c
+    :commit: c8bede21609ca82f3820b52b200824643b84ff73
     :git: https://github.com/horizontalsystems/gui-kit/
   UniswapKit.swift:
     :commit: 3b3113482fdd396c5d88a4dd3327e9fe8a2f6a2c
