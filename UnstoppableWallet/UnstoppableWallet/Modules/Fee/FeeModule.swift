@@ -4,12 +4,11 @@ import EthereumKit
 struct FeeModule {
 
     static func instance(erc20Adapter: IErc20Adapter, coin: Coin, amount: Decimal, spenderAddress: Address) -> FeePresenter? {
-        guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(coin: coin) else {
+        let feeCoin = App.shared.feeCoinProvider.feeCoin(coin: coin) ?? coin
+
+        guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: feeCoin.type) else {
             return nil
         }
-
-        let feeCoinProvider = App.shared.feeCoinProvider
-        let feeCoin = feeCoinProvider.feeCoin(coin: coin) ?? coin
 
         let interactor = FeeService(adapter: erc20Adapter, provider: feeRateProvider, rateManager: App.shared.rateManager, baseCurrency: App.shared.currencyKit.baseCurrency, feeCoin: feeCoin, amount: amount, spenderAddress: spenderAddress)
         let presenter = FeePresenter(service: interactor)
