@@ -79,6 +79,8 @@ class App {
 
     let erc20ContractInfoProvider: IErc20ContractInfoProvider
 
+    let walletConnectSessionStore: WalletConnectSessionStore
+
     let appManager: AppManager
     let ethereumKitManager: EthereumKitManager
 
@@ -183,6 +185,8 @@ class App {
         termsManager = TermsManager(storage: StorageKit.LocalStorage.default)
 
         erc20ContractInfoProvider = Erc20ContractInfoProvider(appConfigProvider: appConfigProvider, networkManager: networkManager)
+
+        walletConnectSessionStore = WalletConnectSessionStore()
 
         appManager = AppManager(
                 accountManager: accountManager,

@@ -12,6 +12,7 @@ class MainSettingsViewController: ThemeViewController {
     private var allBackedUp: Bool = true
     private var pinSet: Bool = true
     private var termsAccepted: Bool = true
+    private var currentWalletConnectPeer: String?
     private var currentBaseCurrency: String?
     private var currentLanguage: String?
     private var lightMode: Bool = true
@@ -87,8 +88,8 @@ class MainSettingsViewController: ThemeViewController {
 
     private var walletConnectRows: [RowProtocol] {
         [
-            Row<TitleCell>(id: "wallet_connect", height: .heightSingleLineCell, autoDeselect: true, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Wallet Connect Icon"), title: "Wallet Connect", showDisclosure: true)
+            Row<RightLabelCell>(id: "wallet_connect", height: .heightSingleLineCell, autoDeselect: true, bind: { [weak self] cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Wallet Connect Icon"), title: "Wallet Connect", rightText: self?.currentWalletConnectPeer, showDisclosure: true)
             }, action: { [weak self] _ in
                 WalletConnectModule.start(sourceViewController: self)
             }),
@@ -194,6 +195,10 @@ extension MainSettingsViewController: IMainSettingsView {
 
     func set(termsAccepted: Bool) {
         self.termsAccepted = termsAccepted
+    }
+
+    func set(currentWalletConnectPeer: String?) {
+        self.currentWalletConnectPeer = currentWalletConnectPeer
     }
 
     func set(currentBaseCurrency: String) {

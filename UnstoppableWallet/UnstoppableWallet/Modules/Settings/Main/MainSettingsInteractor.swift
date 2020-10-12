@@ -3,6 +3,7 @@ import LanguageKit
 import ThemeKit
 import CurrencyKit
 import PinKit
+import WalletConnect
 
 class MainSettingsInteractor {
     private let disposeBag = DisposeBag()
@@ -16,9 +17,11 @@ class MainSettingsInteractor {
     private let systemInfoManager: ISystemInfoManager
     private let currencyKit: ICurrencyKit
     private let appConfigProvider: IAppConfigProvider
+    private let walletConnectSessionStore: WalletConnectSessionStore
 
     init(backupManager: IBackupManager, pinKit: IPinKit, termsManager: ITermsManager, themeManager: ThemeManager,
-         systemInfoManager: ISystemInfoManager, currencyKit: ICurrencyKit, appConfigProvider: IAppConfigProvider) {
+         systemInfoManager: ISystemInfoManager, currencyKit: ICurrencyKit, appConfigProvider: IAppConfigProvider,
+         walletConnectSessionStore: WalletConnectSessionStore) {
         self.backupManager = backupManager
         self.pinKit = pinKit
         self.termsManager = termsManager
@@ -26,6 +29,7 @@ class MainSettingsInteractor {
         self.systemInfoManager = systemInfoManager
         self.currencyKit = currencyKit
         self.appConfigProvider = appConfigProvider
+        self.walletConnectSessionStore = walletConnectSessionStore
 
         backupManager.allBackedUpObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -47,6 +51,14 @@ class MainSettingsInteractor {
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] termsAccepted in
                     self?.delegate?.didUpdate(termsAccepted: termsAccepted)
+                })
+                .disposed(by: disposeBag)
+
+        walletConnectSessionStore.storedPeerMetaObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] peerMeta in
+                    self?.delegate?.didUpdateWalletConnect(peerMeta: peerMeta)
                 })
                 .disposed(by: disposeBag)
 
@@ -81,6 +93,10 @@ extension MainSettingsInteractor: IMainSettingsInteractor {
 
     var termsAccepted: Bool {
         termsManager.termsAccepted
+    }
+
+    var walletConnectPeerMeta: WCPeerMeta? {
+        walletConnectSessionStore.storedPeerMeta
     }
 
     var currentLanguageDisplayName: String? {

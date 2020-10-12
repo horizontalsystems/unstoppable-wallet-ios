@@ -10,6 +10,7 @@ class WalletConnectService {
     private let appConfigProvider: IAppConfigProvider
     private let currencyKit: ICurrencyKit
     private let rateManager: IRateManager
+    private let sessionStore: WalletConnectSessionStore
 
     private let disposeBag = DisposeBag()
 
@@ -27,13 +28,14 @@ class WalletConnectService {
         }
     }
 
-    init(ethereumKitManager: EthereumKitManager, appConfigProvider: IAppConfigProvider, currencyKit: ICurrencyKit, rateManager: IRateManager) {
+    init(ethereumKitManager: EthereumKitManager, appConfigProvider: IAppConfigProvider, currencyKit: ICurrencyKit, rateManager: IRateManager, sessionStore: WalletConnectSessionStore) {
         ethereumKit = ethereumKitManager.ethereumKit
         self.appConfigProvider = appConfigProvider
         self.currencyKit = currencyKit
         self.rateManager = rateManager
+        self.sessionStore = sessionStore
 
-        if let storeItem = WCSessionStore.allSessions.first?.value {
+        if let storeItem = sessionStore.storedItem {
             remotePeerData = PeerData(id: storeItem.peerId, meta: storeItem.peerMeta)
 
             interactor = WalletConnectInteractor(session: storeItem.session, remotePeerId: storeItem.peerId)
@@ -124,7 +126,7 @@ extension WalletConnectService {
         interactor.approveSession(address: ethereumKit.address.eip55, chainId: ethereumKit.networkType.chainId)
 
         if let peerData = remotePeerData {
-            WCSessionStore.store(interactor.session, peerId: peerData.id, peerMeta: peerData.meta)
+            sessionStore.store(session: interactor.session, peerId: peerData.id, peerMeta: peerData.meta)
         }
 
         state = .ready
@@ -207,7 +209,7 @@ extension WalletConnectService: IWalletConnectInteractorDelegate {
     }
 
     func didKillSession() {
-        WCSessionStore.clearAll()
+        sessionStore.clear()
 
         state = .completed
     }

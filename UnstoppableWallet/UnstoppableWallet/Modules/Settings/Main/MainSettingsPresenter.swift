@@ -1,3 +1,5 @@
+import WalletConnect
+
 class MainSettingsPresenter {
     weak var view: IMainSettingsView?
 
@@ -13,6 +15,10 @@ class MainSettingsPresenter {
         view?.set(currentBaseCurrency: interactor.baseCurrency.code)
     }
 
+    private func syncCurrentWalletConnectPeer(peerMeta: WCPeerMeta?) {
+        view?.set(currentWalletConnectPeer: peerMeta?.name)
+    }
+
 }
 
 extension MainSettingsPresenter: IMainSettingsViewDelegate {
@@ -21,6 +27,7 @@ extension MainSettingsPresenter: IMainSettingsViewDelegate {
         view?.set(allBackedUp: interactor.allBackedUp)
         view?.set(pinSet: interactor.pinSet)
         view?.set(termsAccepted: interactor.termsAccepted)
+        syncCurrentWalletConnectPeer(peerMeta: interactor.walletConnectPeerMeta)
         syncCurrentBaseCurrency()
         view?.set(currentLanguage: interactor.currentLanguageDisplayName)
         view?.set(lightMode: interactor.lightMode)
@@ -92,6 +99,11 @@ extension MainSettingsPresenter: IMainSettingsInteractorDelegate {
 
     func didUpdate(termsAccepted: Bool) {
         view?.set(termsAccepted: termsAccepted)
+        view?.refresh()
+    }
+
+    func didUpdateWalletConnect(peerMeta: WCPeerMeta?) {
+        syncCurrentWalletConnectPeer(peerMeta: peerMeta)
         view?.refresh()
     }
 

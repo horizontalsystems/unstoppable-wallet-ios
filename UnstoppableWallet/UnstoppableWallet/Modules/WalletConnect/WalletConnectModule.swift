@@ -7,7 +7,8 @@ struct WalletConnectModule {
                 ethereumKitManager: App.shared.ethereumKitManager,
                 appConfigProvider: App.shared.appConfigProvider,
                 currencyKit: App.shared.currencyKit,
-                rateManager: App.shared.rateManager
+                rateManager: App.shared.rateManager,
+                sessionStore: App.shared.walletConnectSessionStore
         )
         let viewModel = WalletConnectViewModel(service: service)
         let view = WalletConnectView(viewModel: viewModel, sourceViewController: sourceViewController)

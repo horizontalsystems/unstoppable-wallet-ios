@@ -1,4 +1,5 @@
 import CurrencyKit
+import WalletConnect
 
 protocol IMainSettingsView: class {
     func refresh()
@@ -6,6 +7,7 @@ protocol IMainSettingsView: class {
     func set(allBackedUp: Bool)
     func set(pinSet: Bool)
     func set(termsAccepted: Bool)
+    func set(currentWalletConnectPeer: String?)
     func set(currentBaseCurrency: String)
     func set(currentLanguage: String?)
     func set(lightMode: Bool)
@@ -34,6 +36,7 @@ protocol IMainSettingsInteractor: AnyObject {
     var allBackedUp: Bool { get }
     var pinSet: Bool { get }
     var termsAccepted: Bool { get }
+    var walletConnectPeerMeta: WCPeerMeta? { get }
     var currentLanguageDisplayName: String? { get }
     var baseCurrency: Currency { get }
     var lightMode: Bool { get set }
@@ -44,6 +47,7 @@ protocol IMainSettingsInteractorDelegate: class {
     func didUpdate(allBackedUp: Bool)
     func didUpdate(pinSet: Bool)
     func didUpdate(termsAccepted: Bool)
+    func didUpdateWalletConnect(peerMeta: WCPeerMeta?)
     func didUpdateBaseCurrency()
 }
 
