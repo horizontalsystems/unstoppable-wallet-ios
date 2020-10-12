@@ -4,7 +4,7 @@ class TransactionInfoAddressMapper {
     ]
 
     static func map(_ value: String) -> String {
-        map[value] ?? value
+        map[value.lowercased()] ?? value
     }
 
 }
