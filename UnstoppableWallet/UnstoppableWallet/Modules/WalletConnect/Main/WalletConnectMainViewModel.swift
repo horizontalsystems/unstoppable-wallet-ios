@@ -88,7 +88,7 @@ class WalletConnectMainViewModel {
                 name: peerMeta.name,
                 url: peerMeta.url,
                 description: peerMeta.description,
-                icon: peerMeta.icons.first
+                icon: peerMeta.icons.last
         )
     }
 
