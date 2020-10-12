@@ -7,7 +7,9 @@ class SendFeePriorityRouter {
 extension SendFeePriorityRouter {
 
     static func module(coin: Coin, customPriorityUnit: CustomPriorityUnit? = nil) -> (UIView, ISendFeePriorityModule, ISendSubRouter)? {
-        guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(coin: coin) else {
+        let feeCoin = App.shared.feeCoinProvider.feeCoin(coin: coin) ?? coin
+
+        guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: feeCoin.type) else {
             return nil
         }
 

@@ -100,16 +100,15 @@ struct SwapModule {
     }
 
     static func instance(wallet: Wallet) -> UIViewController? {
+        let feeCoin = App.shared.feeCoinProvider.feeCoin(coin: wallet.coin) ?? wallet.coin
+
         guard let ethereumKit = try? App.shared.ethereumKitManager.ethereumKit(account: wallet.account),
-              let feeRateProvider = App.shared.feeRateProviderFactory.provider(coin: wallet.coin) else {
+              let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: feeCoin.type) else {
             return nil
         }
         let swapKit = UniswapKit.Kit.instance(ethereumKit: ethereumKit)
         let allowanceRepository = AllowanceProvider(walletManager: App.shared.walletManager, adapterManager: App.shared.adapterManager)
         let swapCoinProvider = SwapCoinProvider(coinManager: App.shared.coinManager, walletManager: App.shared.walletManager, adapterManager: App.shared.adapterManager)
-
-        let feeCoinProvider = App.shared.feeCoinProvider
-        let feeCoin = feeCoinProvider.feeCoin(coin: wallet.coin) ?? wallet.coin
 
         let swapFeeRepository = SwapFeeRepository(uniswapKit: swapKit, adapterManager: App.shared.adapterManager, provider: feeRateProvider, rateManager: App.shared.rateManager, baseCurrency: App.shared.currencyKit.baseCurrency, feeCoin: feeCoin)
         let service = SwapService(uniswapRepository: UniswapRepository(swapKit: swapKit), allowanceRepository: allowanceRepository, swapFeeRepository: swapFeeRepository, swapCoinProvider: swapCoinProvider, adapterManager: App.shared.adapterManager, coin: wallet.coin)
