@@ -74,7 +74,8 @@ extension MainSettingsRouter {
                 themeManager: App.shared.themeManager,
                 systemInfoManager: App.shared.systemInfoManager,
                 currencyKit: App.shared.currencyKit,
-                appConfigProvider: App.shared.appConfigProvider
+                appConfigProvider: App.shared.appConfigProvider,
+                walletConnectSessionStore: App.shared.walletConnectSessionStore
         )
         let presenter = MainSettingsPresenter(router: router, interactor: interactor)
         let view = MainSettingsViewController(delegate: presenter)
