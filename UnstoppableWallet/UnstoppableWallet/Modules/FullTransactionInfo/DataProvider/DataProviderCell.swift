@@ -75,10 +75,10 @@ class DataProviderCell: ThemeCell {
             spinnerView.stopAnimating()
 
             if online {
-                subtitleLabel.text = "full_info.source.online".localized
+                subtitleLabel.text = "online".localized
                 subtitleLabel.textColor = .themeRemus
             } else {
-                subtitleLabel.text = "full_info.source.offline".localized
+                subtitleLabel.text = "offline".localized
                 subtitleLabel.textColor = .themeLucian
             }
         }

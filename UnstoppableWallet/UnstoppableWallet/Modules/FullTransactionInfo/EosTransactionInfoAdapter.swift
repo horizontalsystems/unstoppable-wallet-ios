@@ -32,14 +32,14 @@ class EosTransactionInfoAdapter: IFullTransactionInfoAdapter {
             topSectionItems.append(FullTransactionItem(icon: "Block Icon", title: "full_info.block".localized, value: "#\(blockNumber)"))
         }
         if let status = txResponse.status {
-            topSectionItems.append(FullTransactionItem(icon: "Confirmations Icon", title: "full_info.status".localized, value: "\(status)"))
+            topSectionItems.append(FullTransactionItem(icon: "Confirmations Icon", title: "status".localized, value: "\(status)"))
         }
         if !topSectionItems.isEmpty {
             sections.append(FullTransactionSection(title: nil, items: topSectionItems))
         }
 
         // Actions
-        
+
         for action in txResponse.actions {
             var inputOutputItems = [FullTransactionItem]()
             if let contract = action.contract {
@@ -61,7 +61,7 @@ class EosTransactionInfoAdapter: IFullTransactionInfoAdapter {
                 sections.append(FullTransactionSection(title: nil, items: inputOutputItems))
             }
         }
-        
+
         // net and cpu
 
         var netCpuItems = [FullTransactionItem]()

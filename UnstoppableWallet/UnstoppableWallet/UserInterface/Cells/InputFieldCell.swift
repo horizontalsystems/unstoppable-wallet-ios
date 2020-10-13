@@ -13,7 +13,7 @@ class InputFieldCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
 
-        addSubview(inputField)
+        contentView.addSubview(inputField)
         inputField.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(InputFieldCell.horizontalPadding)
             maker.top.equalToSuperview().inset(InputFieldCell.verticalPadding)

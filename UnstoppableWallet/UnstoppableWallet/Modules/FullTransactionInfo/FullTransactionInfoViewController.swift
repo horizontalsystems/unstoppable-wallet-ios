@@ -99,7 +99,7 @@ class FullTransactionInfoViewController: ThemeViewController, SectionsDataSource
             rows.append(
                 Row<FullTransactionInfoTextCell>(id: "resource", height: .heightSingleLineCell, autoDeselect: true, bind: { cell, _ in
                     let item = FullTransactionItem(title: "full_info.source.title".localized, value: providerName)
-                    cell.bind(item: item, selectionStyle: .default, showDisclosure: true, last: true)
+                    cell.bind(icon: item.icon, title: item.title, subtitle: item.value, selectionStyle: .default, showDisclosure: true, last: true)
                 }, action: { [weak self] cell in
                     self?.onTapChangeResource()
                 })
@@ -122,9 +122,9 @@ class FullTransactionInfoViewController: ThemeViewController, SectionsDataSource
             for (rowIndex, item) in section.items.enumerated() {
                 rows.append(
                         Row<FullTransactionInfoTextCell>(id: "section_\(sectionIndex)_row_\(rowIndex)", height: .heightSingleLineCell, bind: { [weak self] cell, _ in
-                    cell.bind(item: item, last: rowIndex == section.items.count - 1, onTap: item.clickable ? {
-                        self?.onTap(item: item)
-                    } : nil)
+                            cell.bind(icon: item.icon, title: item.title, subtitle: item.value, last: rowIndex == section.items.count - 1, onTap: item.clickable ? {
+                                self?.onTap(item: item)
+                            } : nil)
                 }))
             }
         }

@@ -26,7 +26,6 @@ class FullTransactionInfoTextCell: TitleCell {
 
         label.textAlignment = .right
         label.font = .subhead1
-        label.textColor = .themeLeah
 
         contentView.addSubview(button)
         button.snp.makeConstraints { maker in
@@ -47,8 +46,10 @@ class FullTransactionInfoTextCell: TitleCell {
         onTap?()
     }
 
-    func bind(item: FullTransactionItem, selectionStyle: SelectionStyle = .none, showDisclosure: Bool = false, last: Bool = false, onTap: (() -> ())? = nil) {
-        super.bind(titleIcon: item.icon.flatMap { UIImage(named: $0) }, title: item.title, titleColor: .themeGray, showDisclosure: showDisclosure, last: last)
+    func bind(icon: String? = nil, title: String, subtitle: String?, subtitleColor: UIColor? = nil, selectionStyle: SelectionStyle = .none, showDisclosure: Bool = false, last: Bool = false, onTap: (() -> ())? = nil) {
+        label.textColor = subtitleColor ?? .themeLeah
+
+        super.bind(titleIcon: icon.flatMap { UIImage(named: $0) }, title: title, titleColor: .themeGray, showDisclosure: showDisclosure, last: last)
         self.selectionStyle = selectionStyle
 
         if onTap != nil {
@@ -56,7 +57,7 @@ class FullTransactionInfoTextCell: TitleCell {
             label.text = nil
 
             button.isHidden = false
-            button.setTitle(item.value, for: .normal)
+            button.setTitle(subtitle, for: .normal)
 
             button.snp.remakeConstraints { maker in
                 maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin4x)
@@ -68,7 +69,7 @@ class FullTransactionInfoTextCell: TitleCell {
             button.setTitle(nil, for: .normal)
 
             label.isHidden = false
-            label.text = item.value
+            label.text = subtitle
 
             label.snp.remakeConstraints { maker in
                 maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin4x)

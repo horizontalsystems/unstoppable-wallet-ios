@@ -28,7 +28,7 @@ class TermsHeaderCell: UITableViewCell {
 
         headerImageView.setContentHuggingPriority(.required, for: .horizontal)
         headerImageView.contentMode = .scaleAspectFill
-        headerImageView.cornerRadius = 15
+        headerImageView.cornerRadius = .margin4x
         headerImageView.clipsToBounds = true
 
         contentView.addSubview(labelsHolder)
