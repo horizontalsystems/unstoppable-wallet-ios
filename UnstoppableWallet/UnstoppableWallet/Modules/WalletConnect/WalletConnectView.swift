@@ -14,9 +14,9 @@ class WalletConnectView {
         case .noEthereumKit:
             return WalletConnectNoEthereumKitViewController().toBottomSheet
         case .scanQrCode:
-            return WalletConnectScanQrViewController(viewModel: viewModel, sourceViewController: sourceViewController)
+            return WalletConnectScanQrViewController(baseViewModel: viewModel, sourceViewController: sourceViewController)
         case .main:
-            return ThemeNavigationController(rootViewController: WalletConnectMainViewController(viewModel: viewModel, sourceViewController: sourceViewController))
+            return ThemeNavigationController(rootViewController: WalletConnectMainViewController(baseViewModel: viewModel, sourceViewController: sourceViewController))
         }
     }
 

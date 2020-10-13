@@ -4,7 +4,7 @@ protocol IWalletConnectInteractorDelegate: AnyObject {
     func didConnect()
     func didRequestSession(peerId: String, peerMeta: WCPeerMeta)
     func didKillSession()
-    func didRequestEthereumTransaction(id: Int, event: WCEvent, transaction: WCEthereumTransaction)
+    func didRequestSendEthereumTransaction(id: Int, transaction: WCEthereumTransaction)
 }
 
 class WalletConnectInteractor {
@@ -34,7 +34,28 @@ class WalletConnectInteractor {
         }
 
         interactor.eth.onTransaction = { [weak self] id, event, transaction in
-            self?.delegate?.didRequestEthereumTransaction(id: Int(id), event: event, transaction: transaction)
+            switch event {
+            case .ethSendTransaction:
+                self?.delegate?.didRequestSendEthereumTransaction(id: Int(id), transaction: transaction)
+            default:
+                self?.rejectWithNotSupported(id: id)
+            }
+        }
+
+        interactor.eth.onSign = { [weak self] id, _ in
+            self?.rejectWithNotSupported(id: id)
+        }
+
+        interactor.bnb.onSign = { [weak self] id, _ in
+            self?.rejectWithNotSupported(id: id)
+        }
+
+        interactor.trust.onTransactionSign = { [weak self] id, _ in
+            self?.rejectWithNotSupported(id: id)
+        }
+
+        interactor.trust.onGetAccounts = { [weak self] id in
+            self?.rejectWithNotSupported(id: id)
         }
     }
 
@@ -52,6 +73,10 @@ class WalletConnectInteractor {
 
     private func onError(error: Error) {
         print("Interactor Error: \(error)")
+    }
+
+    private func rejectWithNotSupported(id: Int64) {
+        interactor.rejectRequest(id: id, message: "Not supported yet").cauterize()
     }
 
 }

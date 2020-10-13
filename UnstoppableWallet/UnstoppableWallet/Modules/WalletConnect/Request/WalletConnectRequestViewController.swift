@@ -5,8 +5,8 @@ import SectionsTableView
 import CurrencyKit
 
 class WalletConnectRequestViewController: ThemeActionSheetController {
-    private let viewModel: WalletConnectViewModel
-    private let presenter: WalletConnectRequestViewModel
+    private let baseViewModel: WalletConnectViewModel
+    private let viewModel: IWalletConnectRequestViewModel
 
     private let titleView = BottomSheetTitleView()
     private let amountInfoView = AmountInfoView()
@@ -15,13 +15,13 @@ class WalletConnectRequestViewController: ThemeActionSheetController {
     private let approveButton = ThemeButton()
     private let rejectButton = ThemeButton()
 
-    private var viewItems = [WalletConnectRequestViewModel.ViewItem]()
+    private var viewItems = [WalletConnectRequestViewItem]()
 
     private let disposeBag = DisposeBag()
 
-    init(viewModel: WalletConnectViewModel, requestId: Int) {
+    init(baseViewModel: WalletConnectViewModel, viewModel: IWalletConnectRequestViewModel) {
+        self.baseViewModel = baseViewModel
         self.viewModel = viewModel
-        presenter = viewModel.requestViewModel(requestId: requestId)
 
         super.init()
     }
@@ -93,7 +93,7 @@ class WalletConnectRequestViewController: ThemeActionSheetController {
         rejectButton.setTitle("Reject".localized, for: .normal)
         rejectButton.addTarget(self, action: #selector(onTapReject), for: .touchUpInside)
 
-        presenter.amountViewItemDriver
+        viewModel.amountViewItemDriver
                 .drive(onNext: { [weak self] viewItem in
                     if let viewItem = viewItem {
                         self?.amountInfoView.bind(primaryAmountInfo: viewItem.primaryAmountInfo, secondaryAmountInfo: viewItem.secondaryAmountInfo)
@@ -101,26 +101,28 @@ class WalletConnectRequestViewController: ThemeActionSheetController {
                 })
                 .disposed(by: disposeBag)
 
-        presenter.viewItemsDriver
+        viewModel.viewItemsDriver
                 .drive(onNext: { [weak self] viewItems in
                     self?.viewItems = viewItems
                     self?.tableView.reload()
                 })
                 .disposed(by: disposeBag)
 
-        presenter.finishSignal
-                .emit(onNext: { [weak self] in
+        viewModel.approveSignal
+                .emit(onNext: { [weak self] result in
+                    self?.baseViewModel.approveRequest(id: self!.viewModel.requestId, result: result)
                     self?.dismiss(animated: true)
                 })
                 .disposed(by: disposeBag)
     }
 
     @objc private func onTapApprove() {
-        presenter.approve()
+        viewModel.approve()
     }
 
     @objc private func onTapReject() {
-        presenter.reject()
+        baseViewModel.rejectRequest(id: viewModel.requestId)
+        dismiss(animated: true)
     }
 
     private func fromToRow(title: String, value: String, onTap: @escaping () -> ()) -> RowProtocol {
@@ -172,7 +174,7 @@ class WalletConnectRequestViewController: ThemeActionSheetController {
         )
     }
 
-    private func row(viewItem: WalletConnectRequestViewModel.ViewItem) -> RowProtocol {
+    private func row(viewItem: WalletConnectRequestViewItem) -> RowProtocol {
         switch viewItem {
         case let .from(value): return fromRow(value: value)
         case let .to(value): return toRow(value: value)

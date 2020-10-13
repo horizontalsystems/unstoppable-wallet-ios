@@ -18,7 +18,7 @@ class WalletConnectMainViewModel {
     private let hintRelay = BehaviorRelay<String?>(value: nil)
     private let statusRelay = BehaviorRelay<Status?>(value: nil)
 
-    private let openRequestRelay = PublishRelay<Int>()
+    private let openRequestRelay = PublishRelay<WalletConnectRequest>()
     private let finishRelay = PublishRelay<Void>()
 
     init(service: WalletConnectService) {
@@ -33,8 +33,8 @@ class WalletConnectMainViewModel {
 
         service.requestObservable
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] id in
-                    self?.openRequestRelay.accept(id)
+                .subscribe(onNext: { [weak self] request in
+                    self?.openRequestRelay.accept(request)
                 })
                 .disposed(by: disposeBag)
 
@@ -132,7 +132,7 @@ extension WalletConnectMainViewModel {
         statusRelay.asDriver()
     }
 
-    var openRequestSignal: Signal<Int> {
+    var openRequestSignal: Signal<WalletConnectRequest> {
         openRequestRelay.asSignal()
     }
 
