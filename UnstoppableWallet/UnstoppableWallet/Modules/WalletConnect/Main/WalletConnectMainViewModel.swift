@@ -171,6 +171,22 @@ extension WalletConnectMainViewModel {
         case connecting
         case online
         case offline
+
+        var color: UIColor {
+            switch self {
+            case .connecting: return .themeLeah
+            case .offline: return .themeLucian
+            case .online: return .themeRemus
+            }
+        }
+
+        var title: String {
+            switch self {
+            case .connecting: return "connecting".localized
+            case .offline: return "offline".localized
+            case .online: return "online".localized
+            }
+        }
     }
 
 }

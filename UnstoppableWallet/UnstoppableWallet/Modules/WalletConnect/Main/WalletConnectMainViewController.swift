@@ -18,8 +18,6 @@ class WalletConnectMainViewController: ThemeViewController {
             radius: WalletConnectMainViewController.spinnerSideSize / 2 - WalletConnectMainViewController.spinnerLineWidth / 2,
             strokeColor: .themeGray)
 
-    private let peerMetaLabel = UILabel()
-
     private let buttonsHolder = BottomGradientHolder()
 
     private let disconnectButton = ThemeButton()
@@ -62,15 +60,6 @@ class WalletConnectMainViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = "Wallet Connect"
-
-        view.addSubview(peerMetaLabel)
-        peerMetaLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
-            maker.top.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin6x)
-        }
-
-        peerMetaLabel.numberOfLines = 0
-        peerMetaLabel.textColor = .themeRemus
 
         view.addSubview(loadingView)
         loadingView.snp.makeConstraints { maker in
@@ -201,7 +190,7 @@ class WalletConnectMainViewController: ThemeViewController {
         presenter.statusDriver
                 .drive(onNext: { [weak self] status in
                     self?.status = status
-                    self?.syncLabel()
+                    self?.tableView.reload()
                 })
                 .disposed(by: disposeBag)
 
@@ -260,23 +249,6 @@ class WalletConnectMainViewController: ThemeViewController {
         }
     }
 
-    private func syncLabel() {
-        var textParts = [String]()
-
-        if let peerMeta = peerMeta {
-            textParts.append("Name: \(peerMeta.name)")
-            textParts.append("Url: \(peerMeta.url)")
-            textParts.append("Description: \(peerMeta.description)")
-            textParts.append("Icon: \(peerMeta.icon ?? "nil")")
-        }
-
-        if let status = status {
-            textParts.append("Status: \(status)")
-        }
-
-        peerMetaLabel.text = textParts.joined(separator: "\n")
-    }
-
     private func openRequest(id: Int) {
         let viewController = WalletConnectRequestViewController(viewModel: viewModel, requestId: id).toBottomSheet
         present(viewController, animated: true)
@@ -287,26 +259,44 @@ class WalletConnectMainViewController: ThemeViewController {
 extension WalletConnectMainViewController: SectionsDataSource {
 
     public func buildSections() -> [SectionProtocol] {
-        let footer: ViewState<BottomDescriptionHeaderFooterView>? = hint.map { hint -> ViewState<BottomDescriptionHeaderFooterView> in
-            .cellType(hash: "about_footer", binder: { view in
-                view.bind(text: hint)
-            }, dynamicHeight: { width in
-                BottomDescriptionHeaderFooterView.height(containerWidth: width, text: hint)
-            })
-        }
-
         var rows = [RowProtocol]()
+
+        let statusRow = status.map { status in
+            valueRow(title: "status".localized, subtitle: status.title, subtitleColor: status.color)
+        }
 
         if let peerMeta = peerMeta {
             rows.append(headerRow(imageUrl: peerMeta.icon, title: peerMeta.name))
+
+            if let statusRow = statusRow {
+                rows.append(statusRow)
+            }
+
+            rows.append(valueRow(title: "wallet_connect.url".localized, subtitle: peerMeta.url))
         }
 
         return [Section(id: "wallet_connect", footerState: footer ?? .margin(height: 0), rows: rows)]
     }
 
+    private var footer: ViewState<BottomDescriptionHeaderFooterView>? {
+        hint.map { hint -> ViewState<BottomDescriptionHeaderFooterView> in
+            .cellType(hash: "hint_footer", binder: { view in
+                view.bind(text: hint)
+            }, dynamicHeight: { width in
+                BottomDescriptionHeaderFooterView.height(containerWidth: width, text: hint)
+            })
+        }
+    }
+
     private func headerRow(imageUrl: String?, title: String) -> RowProtocol {
         Row<TermsHeaderCell>(id: "header", height: TermsHeaderCell.height, bind: { cell, _ in
             cell.bind(imageUrl: imageUrl, title: title, subtitle: nil)
+        })
+    }
+
+    private func valueRow(title: String, subtitle: String, subtitleColor: UIColor? = nil) -> RowProtocol {
+        Row<FullTransactionInfoTextCell>(id: "row_\(title)", height: .heightSingleLineCell, bind: { cell, _ in
+            cell.bind(title: title, subtitle: subtitle, subtitleColor: subtitleColor)
         })
     }
 

@@ -16,7 +16,7 @@ class TransactionInfoStatusCell: ThemeCell {
             maker.leading.top.bottom.equalToSuperview()
         }
 
-        titleView.bind(text: "tx_info.status".localized)
+        titleView.bind(text: "status".localized)
 
         contentView.addSubview(statusLabel)
         statusLabel.snp.makeConstraints { maker in
