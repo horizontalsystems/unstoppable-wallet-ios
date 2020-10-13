@@ -10,8 +10,8 @@ class WalletConnectMainViewController: ThemeViewController {
     private static let spinnerLineWidth: CGFloat = 2
     private static let spinnerSideSize: CGFloat = 20
 
-    private let viewModel: WalletConnectViewModel
-    private let presenter: WalletConnectMainViewModel
+    private let baseViewModel: WalletConnectViewModel
+    private let viewModel: WalletConnectMainViewModel
     private weak var sourceViewController: UIViewController?
 
     private let loadingView = HUDProgressView(strokeLineWidth: WalletConnectMainViewController.spinnerLineWidth,
@@ -44,9 +44,9 @@ class WalletConnectMainViewController: ThemeViewController {
     private var status: WalletConnectMainViewModel.Status?
     private var hint: String?
 
-    init(viewModel: WalletConnectViewModel, sourceViewController: UIViewController?) {
-        self.viewModel = viewModel
-        presenter = viewModel.mainViewModel
+    init(baseViewModel: WalletConnectViewModel, sourceViewController: UIViewController?) {
+        self.baseViewModel = baseViewModel
+        viewModel = baseViewModel.mainViewModel
         self.sourceViewController = sourceViewController
 
         super.init()
@@ -137,70 +137,70 @@ class WalletConnectMainViewController: ThemeViewController {
         cancelButton.setTitle("Cancel", for: .normal)
         cancelButton.addTarget(self, action: #selector(onTapCancel), for: .touchUpInside)
 
-        presenter.connectingDriver
+        viewModel.connectingDriver
                 .drive(onNext: { [weak self] connecting in
                     self?.sync(connecting: connecting)
                 })
                 .disposed(by: disposeBag)
 
-        presenter.cancelVisibleDriver
+        viewModel.cancelVisibleDriver
                 .drive(onNext: { [weak self] visible in
                     self?.syncButtonConstraints(bottom: self?.cancelButtonBottomConstraint, height: self?.cancelButtonHeightConstraint, visible: visible)
                 })
                 .disposed(by: disposeBag)
 
-        presenter.approveAndRejectVisibleDriver
+        viewModel.approveAndRejectVisibleDriver
                 .drive(onNext: { [weak self] visible in
                     self?.syncButtonConstraints(bottom: self?.approveButtonBottomConstraint, height: self?.approveButtonHeightConstraint, visible: visible)
                     self?.syncButtonConstraints(bottom: self?.rejectButtonBottomConstraint, height: self?.rejectButtonHeightConstraint, visible: visible)
                 })
                 .disposed(by: disposeBag)
 
-        presenter.disconnectVisibleDriver
+        viewModel.disconnectVisibleDriver
                 .drive(onNext: { [weak self] visible in
                     self?.syncButtonConstraints(bottom: self?.disconnectButtonBottomConstraint, height: self?.disconnectButtonHeightConstraint, visible: visible)
                 })
                 .disposed(by: disposeBag)
 
-        presenter.closeVisibleDriver
+        viewModel.closeVisibleDriver
                 .drive(onNext: { [weak self] visible in
                     self?.syncCloseButton(visible: visible)
                 })
                 .disposed(by: disposeBag)
 
-        presenter.signedTransactionsVisibleDriver
+        viewModel.signedTransactionsVisibleDriver
                 .drive(onNext: { [weak self] visible in
                 })
                 .disposed(by: disposeBag)
 
-        presenter.peerMetaDriver
+        viewModel.peerMetaDriver
                 .drive(onNext: { [weak self] peerMeta in
                     self?.peerMeta = peerMeta
                     self?.tableView.reload()
                 })
                 .disposed(by: disposeBag)
 
-        presenter.hintDriver
+        viewModel.hintDriver
                 .drive(onNext: { [weak self] hint in
                     self?.hint = hint
                     self?.tableView.reload()
                 })
                 .disposed(by: disposeBag)
 
-        presenter.statusDriver
+        viewModel.statusDriver
                 .drive(onNext: { [weak self] status in
                     self?.status = status
                     self?.tableView.reload()
                 })
                 .disposed(by: disposeBag)
 
-        presenter.openRequestSignal
-                .emit(onNext: { [weak self] id in
-                    self?.openRequest(id: id)
+        viewModel.openRequestSignal
+                .emit(onNext: { [weak self] request in
+                    self?.open(request: request)
                 })
                 .disposed(by: disposeBag)
 
-        presenter.finishSignal
+        viewModel.finishSignal
                 .emit(onNext: { [weak self] in
                     self?.sourceViewController?.dismiss(animated: true)
                 })
@@ -226,19 +226,19 @@ class WalletConnectMainViewController: ThemeViewController {
     }
 
     @objc private func onTapApprove() {
-        presenter.approve()
+        viewModel.approve()
     }
 
     @objc private func onTapReject() {
-        presenter.reject()
+        viewModel.reject()
     }
 
     @objc private func onTapDisconnect() {
-        presenter.disconnect()
+        viewModel.disconnect()
     }
 
     @objc private func onTapClose() {
-        presenter.close()
+        viewModel.close()
     }
 
     private func syncCloseButton(visible: Bool) {
@@ -249,9 +249,18 @@ class WalletConnectMainViewController: ThemeViewController {
         }
     }
 
-    private func openRequest(id: Int) {
-        let viewController = WalletConnectRequestViewController(viewModel: viewModel, requestId: id).toBottomSheet
-        present(viewController, animated: true)
+    private func open(request: WalletConnectRequest) {
+        var viewController: UIViewController?
+
+        switch request {
+        case let request as WalletConnectSendEthereumTransactionRequest:
+            viewController = WalletConnectSendEthereumTransactionRequestModule.viewController(baseViewModel: baseViewModel, request: request)
+        default: ()
+        }
+
+        if let viewController = viewController {
+            present(viewController.toBottomSheet, animated: true)
+        }
     }
 
 }

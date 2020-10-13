@@ -21,10 +21,6 @@ extension WalletConnectViewModel {
         WalletConnectMainViewModel(service: service)
     }
 
-    func requestViewModel(requestId: Int) -> WalletConnectRequestViewModel {
-        WalletConnectRequestViewModel(service: service, requestId: requestId)
-    }
-
     var initialScreen: InitialScreen {
         if !service.isEthereumKitReady {
             return .noEthereumKit
@@ -35,6 +31,14 @@ extension WalletConnectViewModel {
         }
 
         return .main
+    }
+
+    func approveRequest(id: Int, result: Any) {
+        service.approveRequest(id: id, result: result)
+    }
+
+    func rejectRequest(id: Int) {
+        service.rejectRequest(id: id)
     }
 
 }

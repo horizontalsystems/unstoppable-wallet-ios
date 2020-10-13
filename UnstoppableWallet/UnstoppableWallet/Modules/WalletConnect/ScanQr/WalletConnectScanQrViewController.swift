@@ -3,15 +3,15 @@ import RxSwift
 import RxCocoa
 
 class WalletConnectScanQrViewController: ScanQrViewController {
-    private let viewModel: WalletConnectViewModel
-    private let presenter: WalletConnectScanQrViewModel
+    private let baseViewModel: WalletConnectViewModel
+    private let viewModel: WalletConnectScanQrViewModel
     private weak var sourceViewController: UIViewController?
 
     private let disposeBag = DisposeBag()
 
-    init(viewModel: WalletConnectViewModel, sourceViewController: UIViewController?) {
-        self.viewModel = viewModel
-        presenter = viewModel.scanQrViewModel
+    init(baseViewModel: WalletConnectViewModel, sourceViewController: UIViewController?) {
+        self.baseViewModel = baseViewModel
+        viewModel = baseViewModel.scanQrViewModel
         self.sourceViewController = sourceViewController
 
         super.init()
@@ -24,13 +24,13 @@ class WalletConnectScanQrViewController: ScanQrViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        presenter.openMainSignal
+        viewModel.openMainSignal
                 .emit(onNext: { [weak self] in
                     self?.openMain()
                 })
                 .disposed(by: disposeBag)
 
-        presenter.openErrorSignal
+        viewModel.openErrorSignal
                 .emit(onNext: { [weak self] error in
                     self?.openError(error: error)
                 })
@@ -38,11 +38,11 @@ class WalletConnectScanQrViewController: ScanQrViewController {
     }
 
     override func onScan(string: String) {
-        presenter.handleScanned(string: string)
+        viewModel.handleScanned(string: string)
     }
 
     private func openMain() {
-        let viewController = WalletConnectMainViewController(viewModel: viewModel, sourceViewController: sourceViewController)
+        let viewController = WalletConnectMainViewController(baseViewModel: baseViewModel, sourceViewController: sourceViewController)
         present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
