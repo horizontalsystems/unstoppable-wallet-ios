@@ -7,32 +7,20 @@ import BigInt
 
 class WalletConnectSendEthereumTransactionRequestViewModel {
     private let service: WalletConnectSendEthereumTransactionRequestService
-    private let request: WalletConnectSendEthereumTransactionRequest
+    private let transaction: WalletConnectTransaction
 
     private let disposeBag = DisposeBag()
 
-    private let amountViewItemRelay = BehaviorRelay<WalletConnectRequestAmountViewItem?>(value: nil)
-    private let viewItemsRelay = BehaviorRelay<[WalletConnectRequestViewItem]>(value: [])
+    let amountViewItem: WalletConnectRequestAmountViewItem
+    let viewItems: [WalletConnectRequestViewItem]
 
-    private let approveRelay = PublishRelay<Any>()
+    private let approveRelay = PublishRelay<Data>()
 
-    init(service: WalletConnectSendEthereumTransactionRequestService, request: WalletConnectSendEthereumTransactionRequest) {
+    init(service: WalletConnectSendEthereumTransactionRequestService, transaction: WalletConnectTransaction) {
         self.service = service
-        self.request = request
+        self.transaction = transaction
 
-        sync(transaction: request.transaction)
-    }
-
-    private func convert(amount: BigUInt) -> Decimal {
-        guard let significand = Decimal(string: amount.description), significand != 0 else {
-            return 0
-        }
-
-        return Decimal(sign: .plus, exponent: -service.ethereumCoin.decimal, significand: significand)
-    }
-
-    private func sync(transaction: WalletConnectSendEthereumTransactionRequest.Transaction) {
-        let value = convert(amount: transaction.value)
+        let value = Self.convert(amount: transaction.value, coin: service.ethereumCoin)
 
         let primaryAmountInfo: AmountInfo
         var secondaryAmountInfo: AmountInfo?
@@ -45,33 +33,27 @@ class WalletConnectSendEthereumTransactionRequestViewModel {
             primaryAmountInfo = .coinValue(coinValue: coinValue)
         }
 
-        let amountViewItem = WalletConnectRequestAmountViewItem(primaryAmountInfo: primaryAmountInfo, secondaryAmountInfo: secondaryAmountInfo)
-        amountViewItemRelay.accept(amountViewItem)
+        amountViewItem = WalletConnectRequestAmountViewItem(primaryAmountInfo: primaryAmountInfo, secondaryAmountInfo: secondaryAmountInfo)
 
-        let viewItems: [WalletConnectRequestViewItem] = [
+        viewItems = [
             .from(value: transaction.from.eip55),
             .to(value: transaction.to.eip55)
         ]
-        viewItemsRelay.accept(viewItems)
+    }
+
+    private static func convert(amount: BigUInt, coin: Coin) -> Decimal {
+        guard let significand = Decimal(string: amount.description), significand != 0 else {
+            return 0
+        }
+
+        return Decimal(sign: .plus, exponent: -coin.decimal, significand: significand)
     }
 
 }
 
 extension WalletConnectSendEthereumTransactionRequestViewModel: IWalletConnectRequestViewModel {
 
-    var requestId: Int {
-        request.id
-    }
-
-    var amountViewItemDriver: Driver<WalletConnectRequestAmountViewItem?> {
-        amountViewItemRelay.asDriver()
-    }
-
-    var viewItemsDriver: Driver<[WalletConnectRequestViewItem]> {
-        viewItemsRelay.asDriver()
-    }
-
-    var approveSignal: Signal<Any> {
+    var approveSignal: Signal<Data> {
         approveRelay.asSignal()
     }
 

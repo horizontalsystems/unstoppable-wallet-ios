@@ -2,7 +2,7 @@ import UIKit
 
 struct WalletConnectSendEthereumTransactionRequestModule {
 
-    static func viewController(baseViewModel: WalletConnectViewModel, request: WalletConnectSendEthereumTransactionRequest) -> UIViewController? {
+    static func viewController(transaction: WalletConnectTransaction, onApprove: @escaping (Data) -> (), onReject: @escaping () -> ()) -> UIViewController? {
         guard let ethereumKit = App.shared.ethereumKitManager.ethereumKit else {
             return nil
         }
@@ -14,9 +14,9 @@ struct WalletConnectSendEthereumTransactionRequestModule {
                 rateManager: App.shared.rateManager
         )
 
-        let viewModel = WalletConnectSendEthereumTransactionRequestViewModel(service: service, request: request)
+        let viewModel = WalletConnectSendEthereumTransactionRequestViewModel(service: service, transaction: transaction)
 
-        return WalletConnectRequestViewController(baseViewModel: baseViewModel, viewModel: viewModel)
+        return WalletConnectRequestViewController(viewModel: viewModel, onApprove: onApprove, onReject: onReject)
     }
 
 }

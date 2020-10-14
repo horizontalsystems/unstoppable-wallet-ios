@@ -5,8 +5,9 @@ import SectionsTableView
 import CurrencyKit
 
 class WalletConnectRequestViewController: ThemeActionSheetController {
-    private let baseViewModel: WalletConnectViewModel
     private let viewModel: IWalletConnectRequestViewModel
+    private let onApprove: (Data) -> ()
+    private let onReject: () -> ()
 
     private let titleView = BottomSheetTitleView()
     private let amountInfoView = AmountInfoView()
@@ -19,9 +20,10 @@ class WalletConnectRequestViewController: ThemeActionSheetController {
 
     private let disposeBag = DisposeBag()
 
-    init(baseViewModel: WalletConnectViewModel, viewModel: IWalletConnectRequestViewModel) {
-        self.baseViewModel = baseViewModel
+    init(viewModel: IWalletConnectRequestViewModel, onApprove: @escaping (Data) -> (), onReject: @escaping () -> ()) {
         self.viewModel = viewModel
+        self.onApprove = onApprove
+        self.onReject = onReject
 
         super.init()
     }
@@ -50,6 +52,9 @@ class WalletConnectRequestViewController: ThemeActionSheetController {
             maker.top.equalTo(titleView.snp.bottom)
             maker.height.equalTo(72)
         }
+
+        let amountViewItem = viewModel.amountViewItem
+        amountInfoView.bind(primaryAmountInfo: amountViewItem.primaryAmountInfo, secondaryAmountInfo: amountViewItem.secondaryAmountInfo)
 
         view.addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
@@ -93,27 +98,15 @@ class WalletConnectRequestViewController: ThemeActionSheetController {
         rejectButton.setTitle("Reject".localized, for: .normal)
         rejectButton.addTarget(self, action: #selector(onTapReject), for: .touchUpInside)
 
-        viewModel.amountViewItemDriver
-                .drive(onNext: { [weak self] viewItem in
-                    if let viewItem = viewItem {
-                        self?.amountInfoView.bind(primaryAmountInfo: viewItem.primaryAmountInfo, secondaryAmountInfo: viewItem.secondaryAmountInfo)
-                    }
-                })
-                .disposed(by: disposeBag)
-
-        viewModel.viewItemsDriver
-                .drive(onNext: { [weak self] viewItems in
-                    self?.viewItems = viewItems
-                    self?.tableView.reload()
-                })
-                .disposed(by: disposeBag)
-
         viewModel.approveSignal
-                .emit(onNext: { [weak self] result in
-                    self?.baseViewModel.approveRequest(id: self!.viewModel.requestId, result: result)
+                .emit(onNext: { [weak self] transactionId in
+                    self?.onApprove(transactionId)
                     self?.dismiss(animated: true)
                 })
                 .disposed(by: disposeBag)
+
+        viewItems = viewModel.viewItems
+        tableView.buildSections()
     }
 
     @objc private func onTapApprove() {
@@ -121,7 +114,7 @@ class WalletConnectRequestViewController: ThemeActionSheetController {
     }
 
     @objc private func onTapReject() {
-        baseViewModel.rejectRequest(id: viewModel.requestId)
+        onReject()
         dismiss(animated: true)
     }
 
