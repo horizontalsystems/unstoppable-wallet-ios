@@ -3,10 +3,10 @@
 "coin.ETH" = "Ethereum";
 
 "button.ok" = "OK";
-"button.cancel" = "Cancel";
-"button.close" = "Close";
-"button.confirm" = "Confirm";
-"button.done" = "Done";
+"button.cancel" = "Отменить";
+"button.close" = "Закрыть";
+"button.confirm" = "Подтвердить";
+"button.done" = "Готово";
 "button.restore" = "Restore";
 "button.next" = "Next";
 "button.share" = "Share";
