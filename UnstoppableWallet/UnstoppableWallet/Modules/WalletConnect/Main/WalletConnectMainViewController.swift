@@ -261,18 +261,16 @@ extension WalletConnectMainViewController: SectionsDataSource {
     public func buildSections() -> [SectionProtocol] {
         var rows = [RowProtocol]()
 
-        let statusRow = status.map { status in
-            valueRow(title: "status".localized, subtitle: status.title, subtitleColor: status.color)
+        if let imageUrl = peerMeta?.icon, let title = peerMeta?.name {
+            rows.append(headerRow(imageUrl: imageUrl, title: title))
         }
 
-        if let peerMeta = peerMeta {
-            rows.append(headerRow(imageUrl: peerMeta.icon, title: peerMeta.name))
+        if let status = status {
+            rows.append(valueRow(title: "status".localized, subtitle: status.title, subtitleColor: status.color))
+        }
 
-            if let statusRow = statusRow {
-                rows.append(statusRow)
-            }
-
-            rows.append(valueRow(title: "wallet_connect.url".localized, subtitle: peerMeta.url))
+        if let url = peerMeta?.url {
+            rows.append(valueRow(title: "wallet_connect.url".localized, subtitle: url))
         }
 
         return [Section(id: "wallet_connect", footerState: footer ?? .margin(height: 0), rows: rows)]
