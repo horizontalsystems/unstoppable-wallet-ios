@@ -17,8 +17,8 @@
 "button.back" = "Back";
 "button.retry" = "Retry";
 "button.report" = "Report";
-"button.add" = "Add";
-"button.approve" = "Approve";
+"button.add" = "Добавить";
+"button.approve" = "Подтвердить";
 
 "alert.copied" = "Copied";
 "alert.no_internet" = "No Internet";
@@ -28,12 +28,12 @@
 "alert.unknown_error" = "Unknown Error";
 
 "action.loading" = "loading...";
-"placeholder.search" = "Search";
+"placeholder.search" = "Поиск";
 
-"status" = "Status";
+"status" = "Статус";
 "connecting" = "connecting";
-"online" = "online";
-"offline" = "offline";
+"online" = "в сети";
+"offline" = "не доступен";
 
 "n/a" = "N/A";
 
