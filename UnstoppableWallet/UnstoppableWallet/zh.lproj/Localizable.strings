@@ -17,7 +17,7 @@
 "button.back" = "Back";
 "button.retry" = "Retry";
 "button.report" = "Report";
-"button.add" = "Add";
+"button.add" = "添加";
 "button.approve" = "Approve";
 
 "alert.copied" = "Copied";
