@@ -89,7 +89,7 @@ class MainSettingsViewController: ThemeViewController {
     private var walletConnectRows: [RowProtocol] {
         [
             Row<RightLabelCell>(id: "wallet_connect", height: .heightSingleLineCell, autoDeselect: true, bind: { [weak self] cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Wallet Connect Icon"), title: "Wallet Connect", rightText: self?.currentWalletConnectPeer, showDisclosure: true)
+                cell.bind(titleIcon: UIImage(named: "Wallet Connect Icon"), title: "wallet_connect.title".localized, rightText: self?.currentWalletConnectPeer, showDisclosure: true)
             }, action: { [weak self] _ in
                 WalletConnectModule.start(sourceViewController: self)
             }),

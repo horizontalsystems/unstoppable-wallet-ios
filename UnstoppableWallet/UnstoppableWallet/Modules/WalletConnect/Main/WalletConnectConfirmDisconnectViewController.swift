@@ -27,7 +27,7 @@ class WalletConnectConfirmDisconnectViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.bind(title: "Disconnect", subtitle: remotePeerName, image: UIImage(named: "Wallet Connect Icon")?.tinted(with: .themeGray))
+        titleView.bind(title: "wallet_connect.button_disconnect".localized, subtitle: remotePeerName, image: UIImage(named: "Wallet Connect Icon")?.tinted(with: .themeGray))
 
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)
@@ -41,7 +41,7 @@ class WalletConnectConfirmDisconnectViewController: ThemeActionSheetController {
         }
 
         disconnectButton.apply(style: .primaryRed)
-        disconnectButton.setTitle("Disconnect", for: .normal)
+        disconnectButton.setTitle("wallet_connect.button_disconnect".localized, for: .normal)
         disconnectButton.addTarget(self, action: #selector(onTapDisconnect), for: .touchUpInside)
 
         view.addSubview(cancelButton)
