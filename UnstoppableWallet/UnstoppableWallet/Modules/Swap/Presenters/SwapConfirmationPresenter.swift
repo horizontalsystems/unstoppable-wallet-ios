@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class Swap2ConfirmationPresenter {
+class SwapConfirmationPresenter {
     private let disposeBag = DisposeBag()
 
     private let service: SwapService
@@ -28,16 +28,17 @@ class Swap2ConfirmationPresenter {
     }
 
     private func buildState() {
-        guard let amountIn = service.amountIn,
+        guard let coinIn = service.coinIn,
+              let amountIn = service.amountIn,
               let amountOut = service.amountOut,
               let coinOut = service.coinOut else {
             return
         }
-        let payValue = ValueFormatter.instance.format(coinValue: CoinValue(coin: service.coinIn, value: amountIn))
+        let payValue = ValueFormatter.instance.format(coinValue: CoinValue(coin: coinIn, value: amountIn))
         let getValue = ValueFormatter.instance.format(coinValue: CoinValue(coin: coinOut, value: amountOut))
 
         let amountData = SwapModule.ConfirmationAmountViewItem(
-                payTitle: service.coinIn.title,
+                payTitle: coinIn.title,
                 payValue: payValue,
                 getTitle: coinOut.title,
                 getValue: getValue)
@@ -61,7 +62,7 @@ class Swap2ConfirmationPresenter {
         additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.price_impact", value: priceImpact))
 
         if let providerFee = item.providerFee {
-            let coinValue = CoinValue(coin: service.coinIn, value: providerFee)
+            let coinValue = CoinValue(coin: coinIn, value: providerFee)
             let swapFee = ValueFormatter.instance.format(coinValue: coinValue)
             additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.fee", value: swapFee))
         }
@@ -101,7 +102,7 @@ class Swap2ConfirmationPresenter {
 
 }
 
-extension Swap2ConfirmationPresenter {
+extension SwapConfirmationPresenter {
 
     var amountData: Driver<SwapModule.ConfirmationAmountViewItem?> {
         amountDataRelay.asDriver()

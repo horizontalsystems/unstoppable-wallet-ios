@@ -12,12 +12,6 @@ class SwapViewController: ThemeViewController {
 
     private static let processTag = 0, approveTag = 1, approvingTag = 2
 
-    private let processSpinner = HUDProgressView(
-            strokeLineWidth: SwapViewController.spinnerLineWidth,
-            radius: SwapViewController.spinnerRadius,
-            strokeColor: .themeOz
-    )
-
     private let disposeBag = DisposeBag()
 
     private let viewModel: SwapViewModel
@@ -25,37 +19,41 @@ class SwapViewController: ThemeViewController {
     private let scrollView = UIScrollView()
     private let container = UIView()
 
-    private let topLineView = UIView()
+    private let fromCoinCard: SwapCoinCard
+    private let toCoinCard: SwapCoinCard
 
-    private let fromInputView: SwapInputView
+    private let loadingSpinner = HUDProgressView(
+            strokeLineWidth: SwapViewController.spinnerLineWidth,
+            radius: SwapViewController.spinnerRadius,
+            strokeColor: .themeOz
+    )
+    private let priceLabel = UILabel()
+    private let switchButton = UIButton()
 
-    private let fromBalanceView = AdditionalDataWithErrorView()
     private let allowanceView: SwapAllowanceView
 
-    private let separatorLineView = UIView()
-
-    private let toInputView: SwapInputView
-
     private let swapAreaWrapper = UIView()
-    private let priceView = AdditionalDataView()
     private let priceImpactView = AdditionalDataView()
     private let minMaxView = AdditionalDataView()
+    private let separatorView = UIView()
+    private let settingsView = SettingsDisclosureView()
 
     private let button = ThemeButton()
 
     private let swapErrorLabel = UILabel()
+    private let validationErrorLabel = UILabel()
 
     init(viewModel: SwapViewModel) {
         self.viewModel = viewModel
 
-        fromInputView = SwapInputView(presenter: viewModel.fromInputPresenter)
-        toInputView = SwapInputView(presenter: viewModel.toInputPresenter)
+        fromCoinCard = SwapCoinCard(presenter: viewModel.fromInputPresenter)
+        toCoinCard = SwapCoinCard(presenter: viewModel.toInputPresenter)
         allowanceView = SwapAllowanceView(presenter: viewModel.allowancePresenter)
 
         super.init()
 
-        fromInputView.presentDelegate = self
-        toInputView.presentDelegate = self
+        fromCoinCard.presentDelegate = self
+        toCoinCard.presentDelegate = self
 
         hidesBottomBarWhenPushed = true
     }
@@ -92,7 +90,7 @@ class SwapViewController: ThemeViewController {
         }
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Info Icon Medium")?.tinted(with: .themeJacob), style: .plain, target: self, action: #selector(onInfo))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onClose))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onClose))
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         initLayout()
@@ -100,81 +98,81 @@ class SwapViewController: ThemeViewController {
     }
 
     private func initLayout() {
-        container.addSubview(topLineView)
-        container.addSubview(processSpinner)
+        container.addSubview(fromCoinCard)
 
-        container.addSubview(fromInputView)
-        container.addSubview(fromBalanceView)
+        container.addSubview(loadingSpinner)
+        container.addSubview(priceLabel)
+        container.addSubview(switchButton)
+
+        container.addSubview(toCoinCard)
         container.addSubview(allowanceView)
-        container.addSubview(separatorLineView)
-        container.addSubview(toInputView)
 
         container.addSubview(swapAreaWrapper)
-        swapAreaWrapper.addSubview(priceView)
         swapAreaWrapper.addSubview(priceImpactView)
         swapAreaWrapper.addSubview(minMaxView)
+        swapAreaWrapper.addSubview(validationErrorLabel)
+        swapAreaWrapper.addSubview(separatorView)
+        swapAreaWrapper.addSubview(settingsView)
         swapAreaWrapper.addSubview(button)
 
         container.addSubview(swapErrorLabel)
 
-        topLineView.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(CGFloat.margin2x)
-            maker.leading.trailing.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightOneDp)
+        fromCoinCard.snp.makeConstraints { maker in
+            maker.top.equalToSuperview()//.offset(CGFloat.margin3x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
-        topLineView.backgroundColor = .themeSteel20
-
-        processSpinner.snp.makeConstraints { maker in
-            maker.top.equalTo(topLineView.snp.bottom).offset(CGFloat.margin3x)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
+        loadingSpinner.snp.makeConstraints { maker in
+            maker.top.equalTo(fromCoinCard.snp.bottom).offset(CGFloat.margin3x)
+            maker.leading.equalToSuperview().inset(CGFloat.margin4x)
             maker.width.height.equalTo(SwapViewController.spinnerRadius * 2 + SwapViewController.spinnerLineWidth)
         }
-        processSpinner.isHidden = true
 
-        fromInputView.snp.makeConstraints { maker in
-            maker.top.equalTo(topLineView.snp.bottom).offset(CGFloat.margin3x)
-            maker.leading.trailing.equalToSuperview()
+        loadingSpinner.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        loadingSpinner.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        loadingSpinner.isHidden = false
+
+        priceLabel.snp.makeConstraints { maker in
+            maker.centerY.equalTo(switchButton)
+            maker.leading.equalTo(loadingSpinner.snp.trailing).offset(CGFloat.margin2x)
+            maker.trailing.equalTo(switchButton.snp.leading).offset(-CGFloat.margin2x)
         }
 
-        fromBalanceView.snp.makeConstraints { maker in
-            maker.top.equalTo(fromInputView.snp.bottom).offset(CGFloat.margin3x)
-            maker.leading.trailing.equalToSuperview()
+        priceLabel.font = .subhead2
+        priceLabel.textAlignment = .center
+        set(price: nil)
+
+        switchButton.snp.makeConstraints { maker in
+            maker.top.equalTo(fromCoinCard.snp.bottom)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.bottom.equalTo(toCoinCard.snp.top)
+        }
+
+        switchButton.setImage(UIImage(named: "Swap Switch Icon")?.tinted(with: .themeGray), for: .normal)
+        switchButton.addTarget(self, action: #selector(onSwitchTap), for: .touchUpInside)
+        switchButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        switchButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+
+        toCoinCard.snp.makeConstraints { maker in
+            maker.top.equalTo(loadingSpinner.snp.bottom).offset(CGFloat.margin3x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
         allowanceView.snp.makeConstraints {maker in
-            maker.top.equalTo(fromBalanceView.snp.bottom)
-            maker.leading.trailing.equalToSuperview()
-        }
-
-        separatorLineView.snp.makeConstraints { maker in
-            maker.top.equalTo(allowanceView.snp.bottom).offset(CGFloat.margin1x)
-            maker.leading.trailing.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightOneDp)
-        }
-
-        separatorLineView.backgroundColor = .themeSteel20
-
-        toInputView.snp.makeConstraints { maker in
-            maker.top.equalTo(separatorLineView.snp.bottom).offset(CGFloat.margin3x)
+            maker.top.equalTo(toCoinCard.snp.bottom).offset(CGFloat.margin3x)
             maker.leading.trailing.equalToSuperview()
         }
 
         swapAreaWrapper.snp.makeConstraints { maker in
-            maker.top.equalTo(toInputView.snp.bottom).offset(CGFloat.margin3x)
+            maker.top.equalTo(allowanceView.snp.bottom)
             maker.leading.trailing.equalToSuperview()
             maker.bottom.equalToSuperview()
         }
 
         swapAreaWrapper.isHidden = true
 
-        priceView.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(CGFloat.margin3x)
-            maker.leading.trailing.equalToSuperview()
-        }
-
         priceImpactView.snp.makeConstraints { maker in
-            maker.top.equalTo(priceView.snp.bottom)
+            maker.top.equalToSuperview()
             maker.leading.trailing.equalToSuperview()
         }
 
@@ -183,11 +181,41 @@ class SwapViewController: ThemeViewController {
             maker.leading.trailing.equalToSuperview()
         }
 
+        validationErrorLabel.snp.makeConstraints { maker in
+            maker.top.equalTo(minMaxView.snp.bottom)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+        }
+
+        validationErrorLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+        validationErrorLabel.font = .subhead2
+        validationErrorLabel.textColor = .themeLucian
+        validationErrorLabel.numberOfLines = 0
+
+
+        separatorView.snp.makeConstraints { maker in
+            maker.top.equalTo(validationErrorLabel.snp.bottom)
+            maker.height.equalTo(CGFloat.heightOnePixel)
+            maker.leading.trailing.equalToSuperview()
+        }
+
+        separatorView.backgroundColor = .themeSteel20
+
+        settingsView.snp.makeConstraints { maker in
+            maker.top.equalTo(separatorView)
+            maker.height.equalTo(CGFloat.heightSingleLineCell)
+            maker.leading.trailing.equalToSuperview()
+        }
+
+        settingsView.set(title: "swap.advanced_settings".localized)
+        settingsView.onTouchUp = { [weak self] in
+            self?.onSettingsButtonTouchUp()
+        }
+
         button.snp.makeConstraints { maker in
-            maker.top.equalTo(minMaxView.snp.bottom).offset(CGFloat.margin4x)
+            maker.top.equalTo(settingsView.snp.bottom).offset(CGFloat.margin4x)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.bottom.equalToSuperview()
-            maker.height.equalTo(50)
+            maker.height.equalTo(CGFloat.heightButton)
         }
 
         button.addTarget(self, action: #selector(onButtonTouchUp), for: .touchUpInside)
@@ -196,22 +224,24 @@ class SwapViewController: ThemeViewController {
         button.isEnabled = false
 
         swapErrorLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(toInputView.snp.bottom).offset(CGFloat.margin3x)
+            maker.top.equalTo(allowanceView.snp.bottom)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
         swapErrorLabel.setContentCompressionResistancePriority(.required, for: .vertical)
-        swapErrorLabel.font = .caption
+        swapErrorLabel.font = .subhead2
         swapErrorLabel.textColor = .themeLucian
         swapErrorLabel.numberOfLines = 0
+
+        fromCoinCard.viewDidLoad()
+        toCoinCard.viewDidLoad()
+        allowanceView.viewDidLoad()
     }
 
     private func subscribeToViewModel() {
         subscribe(disposeBag, viewModel.isLoading) { [weak self] in self?.set(loading: $0) }
         subscribe(disposeBag, viewModel.swapError) { [weak self] in self?.set(swapError: $0) }
-
-        subscribe(disposeBag, viewModel.balance) { [weak self] in self?.set(fromBalance: $0) }
-        subscribe(disposeBag, viewModel.balanceError) { [weak self] in self?.set(error: $0) }
+        subscribe(disposeBag, viewModel.validationError) { [weak self] in self?.set(validationError: $0) }
 
         subscribe(disposeBag, viewModel.tradeViewItem) { [weak self] in self?.handle(tradeViewItem: $0) }
         subscribe(disposeBag, viewModel.showProcess) { [weak self] in self?.setButton(tag: SwapViewController.processTag) }
@@ -234,21 +264,39 @@ class SwapViewController: ThemeViewController {
         present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 
+    @objc func onSwitchTap() {
+        viewModel.onTapSwitch()
+    }
+
+    @objc func onSettingsButtonTouchUp() {
+        print("settings button touchUp")
+    }
+
     @objc func onButtonTouchUp() {
         switch button.tag {
         case SwapViewController.approveTag: viewModel.onTapApprove()
-        case SwapViewController.processTag: viewModel.onTapProceed()
+        case SwapViewController.processTag: openConfirmation()
         default: ()
         }
     }
 
     private func set(loading: Bool) {
-        processSpinner.isHidden = !loading
+        loadingSpinner.isHidden = !loading
         if loading {
-            processSpinner.startAnimating()
+            loadingSpinner.startAnimating()
         } else {
-            processSpinner.stopAnimating()
+            loadingSpinner.stopAnimating()
         }
+    }
+
+    private func set(price: String?) {
+        guard let price = price else {
+            priceLabel.textColor = .themeGray50
+            priceLabel.text = "Price"
+            return
+        }
+        priceLabel.textColor = .themeGray
+        priceLabel.text = price
     }
 
 }
@@ -259,12 +307,12 @@ extension SwapViewController {
         swapErrorLabel.text = swapError
     }
 
-    private func set(fromBalance: String?) {
-        fromBalanceView.bind(title: "swap.balance".localized, value: fromBalance)
-    }
-
-    private func set(error: String?) {
-        fromBalanceView.bind(error: error)
+    private func set(validationError: String?) {
+        validationErrorLabel.text = validationError
+        separatorView.snp.updateConstraints { maker in
+            maker.top.equalTo(validationErrorLabel.snp.bottom).offset(validationError == nil ? 0 : CGFloat.margin3x)
+        }
+        view.layoutIfNeeded()
     }
 
     private func color(for level: SwapModule.PriceImpactLevel) -> UIColor {
@@ -273,15 +321,17 @@ extension SwapViewController {
     }
 
     private func handle(tradeViewItem: SwapModule.TradeViewItem?) {
-        // todo: hide/show when nil/not nil
+        set(price: tradeViewItem?.executionPrice)
+
         guard let viewItem = tradeViewItem else {
+            priceImpactView.clear()
+            minMaxView.clear()
+
             return
         }
 
-        priceView.bind(title: "swap.price".localized, value: viewItem.executionPrice?.localized)
-
         priceImpactView.bind(title: "swap.price_impact".localized, value: viewItem.priceImpact?.localized)
-        priceImpactView.setValue(customColor: color(for: viewItem.priceImpactLevel))
+        priceImpactView.setValue(color: color(for: viewItem.priceImpactLevel))
 
         minMaxView.bind(title: viewItem.minMaxTitle?.localized, value: viewItem.minMaxAmount?.localized)
     }

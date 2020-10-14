@@ -27,8 +27,7 @@ struct SwapModule {
         case approveRequired
         case waitingForApprove
         case proceedAllowed
-        case fetchingFee
-        case swapAllowed
+        case swapping
         case swapSuccess
     }
 
@@ -119,22 +118,37 @@ struct SwapModule {
 
 }
 
-enum SwapValidationError: Error, LocalizedError {
-    case insufficientBalance(availableBalance: CoinValue?)
+enum SwapValidationError: Hashable, Error, LocalizedError {
+    case unavailableBalance(type: TradeType)
+    case insufficientBalance
     case insufficientAllowance
 
     var errorDescription: String? {
         switch self {
-        case .insufficientBalance(let availableBalance):
-            if let availableBalance = availableBalance {
-                return "swap.amount_error.maximum_amount".localized(ValueFormatter.instance.format(coinValue: availableBalance) ?? "")
-            }
-            return "swap.amount_error.no_balance".localized
         case .insufficientAllowance:
             return "swap.allowance_error.insufficient_allowance".localized
+        default: return ""
         }
     }
 
+    func hash(into hasher: inout Hasher) {
+        switch self {
+        case .unavailableBalance(let type):
+            hasher.combine(type)
+        case .insufficientBalance:
+            hasher.combine("balance")
+        case .insufficientAllowance:
+            hasher.combine("allowance")
+        }
+    }
+
+    static func ==(lhs: SwapValidationError, rhs: SwapValidationError) -> Bool {
+        switch (lhs, rhs) {
+        case (unavailableBalance(let lhsType), unavailableBalance(let rhsType)): return lhsType == rhsType
+        case (insufficientBalance, insufficientBalance), (insufficientAllowance, insufficientAllowance): return true
+        default: return false
+        }
+    }
 }
 
 extension UniswapKit.Kit.TradeError: LocalizedError {

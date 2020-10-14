@@ -52,7 +52,7 @@ class AdditionalDataWithErrorView: UIView {
 
 
     func setValue(color: UIColor) {
-        additionalDataView.setValue(customColor: color)
+        additionalDataView.setValue(color: color)
     }
 
 }

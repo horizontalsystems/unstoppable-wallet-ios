@@ -13,14 +13,14 @@ protocol ISwapConfirmationDelegate: class {
 class SwapConfirmationView: ThemeViewController, SectionsDataSource {
     private let disposeBag = DisposeBag()
 
-    private let presenter: Swap2ConfirmationPresenter
+    private let presenter: SwapConfirmationPresenter
     private let delegate: ISwapConfirmationDelegate
     private let tableView = SectionsTableView(style: .grouped)
 
     private var amountViewItem: SwapModule.ConfirmationAmountViewItem?
     private var additionalViewItems = [SwapModule.ConfirmationAdditionalViewItem]()
 
-    init(presenter: Swap2ConfirmationPresenter, delegate: ISwapConfirmationDelegate) {
+    init(presenter: SwapConfirmationPresenter, delegate: ISwapConfirmationDelegate) {
         self.presenter = presenter
         self.delegate = delegate
 

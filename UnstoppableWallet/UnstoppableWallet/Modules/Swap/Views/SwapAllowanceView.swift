@@ -20,18 +20,21 @@ class SwapAllowanceView: UIView {
             maker.edges.equalToSuperview()
         }
 
-        subscribeToPresenter()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("not implemented")
     }
 
+    func viewDidLoad() {
+        subscribeToPresenter()
+    }
+
     private func subscribeToPresenter() {
         subscribe(disposeBag, presenter.allowance) { [weak self] in self?.set(allowance: $0) }
         subscribe(disposeBag, presenter.insufficientAllowance) { [weak self] in self?.set(insufficientAllowance: $0) }
         subscribe(disposeBag, presenter.isLoading) { [weak self] in self?.set(loading: $0) }
-        subscribe(disposeBag, presenter.isHidden) { [weak self] in self?.allowanceView.set(hidden: $0) }
+        subscribe(disposeBag, presenter.isHidden) { [weak self] in self?.set(hidden: $0) }
     }
 
     private func set(allowance: String?) {
@@ -41,12 +44,16 @@ class SwapAllowanceView: UIView {
     private func set(loading: Bool) {
         if loading {
             allowanceView.bind(title: "swap.allowance".localized, value: "action.loading".localized)
-            allowanceView.setValue(customColor: .themeGray)
+            allowanceView.setValue(color: .themeGray)
         }
     }
 
     private func set(insufficientAllowance: Bool) {
-        allowanceView.setValue(customColor: insufficientAllowance ? .themeLucian : .themeGray)
+        allowanceView.setValue(color: insufficientAllowance ? .themeLucian : .themeGray)
+    }
+
+    private func set(hidden: Bool) {
+        allowanceView.set(hidden: hidden)
     }
 
 }
