@@ -33,12 +33,15 @@ class SwapAllowancePresenter {
         isHiddenRelay.accept(false)
         isLoadingRelay.accept(allowance.isLoading)
 
-        if let allowance = allowance.data {
-            let coinValue = CoinValue(coin: service.coinIn, value: allowance)
+        if let coinIn = service.coinIn, let allowance = allowance.data {
+            let coinValue = CoinValue(coin: coinIn, value: allowance)
             let amount = ValueFormatter.instance.format(coinValue: coinValue)
 
             allowanceRelay.accept(amount)
-            return
+        }
+
+        if allowance.error != nil {
+            allowanceRelay.accept("n/a".localized)
         }
     }
 

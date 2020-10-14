@@ -3,10 +3,13 @@ import RxCocoa
 import UniswapKit
 
 class BaseSwapInputPresenter {
-    static let maxValidDecimals = 8
+    static private let unavailableBalanceIndex = 0
+    static private let maxValidDecimals = 8
+
     let disposeBag = DisposeBag()
 
     let service: SwapService
+
     private let decimalParser: ISendAmountDecimalParser
     private let decimalFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -15,12 +18,16 @@ class BaseSwapInputPresenter {
         return formatter
     }()
 
-    private var descriptionRelay = BehaviorRelay<String?>(value: nil)
-    private var isEstimatedRelay = BehaviorRelay<Bool>(value: false)
-    private var amountRelay = BehaviorRelay<String?>(value: nil)
-    private var tokenCodeRelay = BehaviorRelay<String?>(value: nil)
+    var titleRelay = BehaviorRelay<String?>(value: nil)
+    var isEstimatedRelay = BehaviorRelay<Bool>(value: false)
+    var amountRelay = BehaviorRelay<String?>(value: nil)
+    var balanceRelay = BehaviorRelay<String?>(value: nil)
+    var balanceErrorRelay = BehaviorRelay<Bool>(value: false)
+    var tokenCodeRelay = BehaviorRelay<String?>(value: nil)
 
     private var validDecimals = BaseSwapInputPresenter.maxValidDecimals
+
+    var balanceErrors = ContainerState<Int, Error>()
 
     var type: TradeType {
         fatalError("Must be implemented by Concrete subclass.")
@@ -30,11 +37,15 @@ class BaseSwapInputPresenter {
         fatalError("Must be implemented by Concrete subclass.")
     }
 
+    var coin: Coin? {
+        fatalError("Must be implemented by Concrete subclass.")
+    }
+
     init(service: SwapService, decimalParser: ISendAmountDecimalParser) {
         self.service = service
         self.decimalParser = decimalParser
 
-        descriptionRelay.accept(_description)
+        titleRelay.accept(_description)
 
         subscribeToService()
     }
@@ -42,6 +53,7 @@ class BaseSwapInputPresenter {
     func subscribeToService() {
         handle(estimated: service.estimated)
         subscribe(disposeBag, service.estimatedObservable) { [weak self] in self?.handle(estimated: $0) }
+        subscribe(disposeBag, service.validationErrorsObservable) { [weak self] in self?.handle(errors: $0) }
     }
 
     private func handle(estimated: TradeType) {
@@ -66,6 +78,28 @@ class BaseSwapInputPresenter {
         tokenCodeRelay.accept(coin?.code)
     }
 
+    func handle(balance: Decimal?) {
+        guard let coin = self.coin else {
+            balanceRelay.accept(nil)
+            return
+        }
+
+        guard let balance = balance else {
+            balanceRelay.accept("n/a".localized)
+            return
+        }
+
+        let coinValue = CoinValue(coin: coin, value: balance)
+        balanceRelay.accept(ValueFormatter.instance.format(coinValue: coinValue))
+    }
+
+    func handle(errors: [Error]) {
+        let error = errors.first(where: { SwapValidationError.unavailableBalance(type: type) == $0 as? SwapValidationError })
+        balanceErrors.set(to: Self.unavailableBalanceIndex, value: error)
+
+        balanceErrorRelay.accept(balanceErrors.first != nil)
+    }
+
 }
 
 extension BaseSwapInputPresenter {
@@ -83,11 +117,19 @@ extension BaseSwapInputPresenter {
     }
 
     var description: Driver<String?> {
-        descriptionRelay.asDriver()
+        titleRelay.asDriver()
     }
 
     var amount: Driver<String?> {
         amountRelay.asDriver()
+    }
+
+    var balance: Driver<String?> {
+        balanceRelay.asDriver()
+    }
+
+    var balanceError: Driver<Bool> {
+        balanceErrorRelay.asDriver()
     }
 
     var tokenCode: Driver<String?> {

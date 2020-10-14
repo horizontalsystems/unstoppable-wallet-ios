@@ -23,13 +23,14 @@ class SwapService {
     private let adapterManager: IAdapterManager
 
     private var estimatedRelay = PublishRelay<TradeType>()
-    private var coinInRelay = PublishRelay<Coin>()
+    private var coinInRelay = PublishRelay<Coin?>()
     private var coinOutRelay = PublishRelay<Coin?>()
 
     private var amountInRelay = PublishRelay<Decimal?>()
     private var amountOutRelay = PublishRelay<Decimal?>()
 
-    private var balanceRelay = BehaviorRelay<Decimal?>(value: nil)
+    private var balanceInRelay = BehaviorRelay<Decimal?>(value: nil)
+    private var balanceOutRelay = BehaviorRelay<Decimal?>(value: nil)
     private var validationErrorsRelay = BehaviorRelay<[Error]>(value: [])
 
     private var tradeDataStateRelay = PublishRelay<DataStatus<SwapModule.TradeItem>?>()
@@ -50,9 +51,12 @@ class SwapService {
         }
     }
 
-    private(set) var coinIn: Coin {
+    private(set) var coinIn: Coin? {
         didSet {
             coinInRelay.accept(coinIn)
+
+            lastAllowance = nil
+            updateAllowance()
         }
     }
 
@@ -74,9 +78,15 @@ class SwapService {
         }
     }
 
-    private(set) var balance: Decimal? {
+    private(set) var balanceIn: Decimal? {
         didSet {
-            balanceRelay.accept(balance)
+            balanceInRelay.accept(balanceIn)
+        }
+    }
+
+    private(set) var balanceOut: Decimal? {
+        didSet {
+            balanceOutRelay.accept(balanceOut)
         }
     }
 
@@ -103,7 +113,7 @@ class SwapService {
 
         coinIn = coin
 
-        updateBalance()
+        updateBalances()
         updateAllowance()
 
         sync()
@@ -128,12 +138,6 @@ class SwapService {
         }
     }
 
-    private func tryResetCoinOut(coin: Coin) {
-        if coinOut == coin {
-            coinOut = nil
-        }
-    }
-
     private func coin(for type: TradeType) -> Coin? {
         type == .exactIn ? coinIn : coinOut
     }
@@ -146,6 +150,14 @@ class SwapService {
         type == .exactIn ? amountIn : tradeData?.amountInMax
     }
 
+    private func insufficientAllowance() -> Bool {
+        if let allowance = allowanceStateRelay.value?.data,
+           (allowanceAmount(for: estimated) ?? 0) > allowance {     // not enough allowance for swap
+            return true
+        }
+        return false
+    }
+
     private func clearEstimated(for type: TradeType) {
         switch type {
         case .exactIn:
@@ -155,17 +167,41 @@ class SwapService {
         }
     }
 
-    private func balance(coin: Coin) -> Decimal? {
-        guard let adapter = adapterManager.adapter(for: coin) as? IBalanceAdapter else {
+    private func balance(coin: Coin?) -> Decimal? {
+        guard let coin = coin, let adapter = adapterManager.adapter(for: coin) as? IBalanceAdapter else {
             return nil
         }
 
         return adapter.balance
     }
 
+    private func updateFeeState() {
+        guard let coinIn = coinIn, let tradeData = tradeData else {
+            feeState = nil
+            return
+        }
+
+        if allowanceStateRelay.value != nil, insufficientAllowance() {    // for erc20 without allowance(or loading) can't calculate fee
+            feeState = nil
+            return
+        }
+
+        feeDisposable?.dispose()
+
+        feeState = .loading
+        feeDisposable = swapFeeRepository.swapFeeInfo(coin: coinIn, tradeData: tradeData)
+                .subscribe(onSuccess: { [weak self] info in
+                    self?.feeState = .completed(info)
+                    self?.sync()
+                }, onError: { [weak self] error in
+                    self?.feeState = .failed(error)
+                    self?.sync()
+                })
+        feeDisposable?.disposed(by: disposeBag)
+    }
+
     private func updateTradeData() {
-        let coinIn = self.coinIn
-        guard let coinOut = coinOut else {
+        guard let coinIn = coinIn, let coinOut = coinOut else {
 
             tradeDataState = nil
             return
@@ -173,16 +209,15 @@ class SwapService {
 
         let amount = self.amount(for: estimated) ?? 0
 
-        tradeDataState = .loading
-
         tradeDataDisposable?.dispose()
+
+        tradeDataState = .loading
         tradeDataDisposable = uniswapRepository
                 .trade(coinIn: coinIn, coinOut: coinOut, amount: amount, tradeType: estimated)
                 .subscribe(onSuccess: { [weak self] item in
                     self?.handle(tradeData: item, coinIn: coinIn, coinOut: coinOut)
                 }, onError: { [weak self] error in
                     self?.tradeDataState = .failed(error)
-
                     self?.sync()
                 })
 
@@ -192,8 +227,7 @@ class SwapService {
     private func updateAllowance() {
         allowanceDisposable?.dispose()
 
-        let coinIn = self.coinIn
-        guard coinIn.type != .ethereum else {
+        guard let coinIn = self.coinIn, coinIn.type != .ethereum else {
             allowanceStateRelay.accept(nil)
 
             return
@@ -214,42 +248,46 @@ class SwapService {
         allowanceDisposable?.disposed(by: disposeBag)
     }
 
-    private func updateBalance() {
-        guard let balance = self.balance(coin: coinIn) else {
-            return
-        }
-
-        self.balance = balance
+    private func updateBalances() {
+        self.balanceIn = self.balance(coin: coinIn)
+        self.balanceOut = self.balance(coin: coinOut)
     }
 
     private func sync() {
-        guard let balance = balance else {
-            validationErrorsRelay.accept([SwapValidationError.insufficientBalance(availableBalance: nil)])
+        guard let coinIn = coinIn else {        // not select coin in. Just idle
             stateRelay.accept(.idle)
             return
         }
+
+        guard let balanceIn = balanceIn else {      // can't get balance for coinIn. Idle and N/A for balanceIn
+            validationErrorsRelay.accept([SwapValidationError.unavailableBalance(type: .exactIn)])
+            stateRelay.accept(.idle)
+            return
+        }
+
         var errors = [Error]()
 
-        if let allowanceError = allowanceStateRelay.value?.error {
+        if let allowanceError = allowanceStateRelay.value?.error {  // can't get allowance
             errors.append(allowanceError)
         }
-        if (amount(for: .exactIn) ?? 0) > balance {
-            errors.append(SwapValidationError.insufficientBalance(availableBalance: CoinValue(coin: coinIn, value: balance)))
+
+        if (amount(for: .exactIn) ?? 0) > balanceIn {   // not enough balance for swap
+            errors.append(SwapValidationError.insufficientBalance)
         }
+
         if let fee = feeState?.data,
            fee.coinAmount.coin == coinIn,
            let amount = amount(for: .exactIn),
-           amount + fee.coinAmount.value > balance {
+           amount + fee.coinAmount.value > balanceIn {  // not enough balance+fee (for Eth) for swap
 
             errors.append(FeeModule.FeeError.insufficientFeeBalance(coinValue: fee.coinAmount))
         }
-        if let feeError = feeState?.error {
+        if let feeError = feeState?.error {     // can't get fee for swap
             errors.append(feeError)
         }
 
         let hasErrors = !errors.isEmpty
-        if let allowance = allowanceStateRelay.value?.data,
-           (allowanceAmount(for: estimated) ?? 0) > allowance {
+        if insufficientAllowance() {     // not enough allowance for swap
             errors.append(SwapValidationError.insufficientAllowance)
         }
 
@@ -268,9 +306,10 @@ class SwapService {
         var state = SwapModule.SwapState.idle
         let forbiddenTrade = tradeDataState?.data?.priceImpactLevel == .forbidden
 
-        if let tradeData = tradeDataState,
-           tradeData.data != nil,
+        if tradeDataState?.data != nil,
+           feeState?.data != nil,
            !forbiddenTrade {
+
             state = .proceedAllowed
         }
 
@@ -283,13 +322,6 @@ class SwapService {
             }
         }
 
-        if let feeState = feeState {
-            switch feeState {
-            case .loading: state = .fetchingFee
-            case .completed: state = .swapAllowed
-            case .failed: state = .idle
-            }
-        }
         validationErrorsRelay.accept(errors)
 
         guard stateRelay.value != state else {
@@ -304,6 +336,7 @@ extension SwapService {
 
     private func handle(tradeData: TradeData, coinIn: Coin, coinOut: Coin) {
         self.tradeData = tradeData
+        updateFeeState()
 
         let estimatedAmount = tradeData.type == .exactIn ? tradeData.amountOut : tradeData.amountIn
         switch tradeData.type {
@@ -347,8 +380,9 @@ extension SwapService {
         }
 
         allowanceStateRelay.accept(.completed(allowance))
-        self.lastAllowance = allowance
         stopWaitingApprove()
+
+        self.lastAllowance = allowance
         sync()
     }
 
@@ -359,12 +393,17 @@ extension SwapService {
     func tokensForSelection(type: TradeType) -> [SwapModule.CoinBalanceItem] {
         switch type {
         case .exactIn: return swapCoinProvider.coins(accountCoins: true, exclude: [])
-        case .exactOut: return swapCoinProvider.coins(accountCoins: false, exclude: [coinIn])
+        case .exactOut: return swapCoinProvider.coins(accountCoins: false, exclude: [])
         }
     }
 
     func onChange(type: TradeType, amount: Decimal?) {
         estimated = type
+
+        guard self.amount(for: type) != amount else {
+            return
+        }
+
         clearEstimated(for: type)
 
         switch type {
@@ -390,15 +429,17 @@ extension SwapService {
         case .exactIn:
             coinIn = coin
 
-            updateBalance()
-
-            lastAllowance = nil
-            updateAllowance()
-
-            tryResetCoinOut(coin: coin)
+            if coinOut == coin {
+                coinOut = nil
+            }
         case .exactOut:
             coinOut = coin
+
+            if coinIn == coin {
+                coinIn = nil
+            }
         }
+        updateBalances()
 
         clearEstimated(for: estimated)
 
@@ -416,21 +457,20 @@ extension SwapService {
     }
 
     func proceed() {
-        guard let tradeData = tradeData else {
-            return
-        }
-        feeDisposable?.dispose()
+    }
 
-        feeState = .loading
-        feeDisposable = swapFeeRepository.swapFeeInfo(coin: coinIn, tradeData: tradeData)
-        .subscribe(onSuccess: { [weak self] info in
-            self?.feeState = .completed(info)
-            self?.sync()
-        }, onError: { [weak self] error in
-            self?.feeState = .failed(error)
-            self?.sync()
-        })
-        feeDisposable?.disposed(by: disposeBag)
+    func switchCoins() {
+        let swapCoin = coinIn
+        coinIn = coinOut
+        coinOut = swapCoin
+
+        updateBalances()
+
+        clearEstimated(for: estimated)
+
+        stopWaitingApprove()
+        feeState = nil
+        updateTradeData()
 
         sync()
     }
@@ -458,7 +498,7 @@ extension SwapService {
     }
 
     var approveData: SwapModule.ApproveData? {
-        guard let amount = allowanceAmount(for: estimated) else {
+        guard let coinIn = coinIn, let amount = allowanceAmount(for: estimated) else {
             return nil
         }
         return SwapModule.ApproveData(coin: coinIn,
@@ -470,7 +510,7 @@ extension SwapService {
         estimatedRelay.asObservable()
     }
 
-    var coinInObservable: Observable<Coin> {
+    var coinInObservable: Observable<Coin?> {
         coinInRelay.asObservable()
     }
 
@@ -486,8 +526,12 @@ extension SwapService {
         amountOutRelay.asObservable()
     }
 
-    var balanceObservable: Observable<Decimal?> {
-        balanceRelay.asObservable()
+    var balanceInObservable: Observable<Decimal?> {
+        balanceInRelay.asObservable()
+    }
+
+    var balanceOutObservable: Observable<Decimal?> {
+        balanceOutRelay.asObservable()
     }
 
     var validationErrorsObservable: Observable<[Error]> {

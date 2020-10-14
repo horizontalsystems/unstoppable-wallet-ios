@@ -26,11 +26,11 @@ class AdditionalDataCell: UITableViewCell {
     func bind(title: String?, value: String?, highlighted: Bool = false) {
         additionalDataView.bind(title: title, value: value)
 
-        additionalDataView.setValue(customColor: highlighted ? .themeOz : .themeGray)
+        additionalDataView.setValue(color: highlighted ? .themeOz : .themeGray)
     }
 
     func set(valueColor: UIColor) {
-        additionalDataView.setValue(customColor: valueColor)
+        additionalDataView.setValue(color: valueColor)
     }
 
 }

@@ -59,7 +59,7 @@ class AdditionalDataWithLoadingView: UIView {
     }
 
     func setValue(color: UIColor) {
-        additionalDataView.setValue(customColor: color)
+        additionalDataView.setValue(color: color)
     }
 
     func set(loading: Bool) {
