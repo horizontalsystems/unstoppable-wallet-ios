@@ -7,12 +7,14 @@ class RateManager {
 
     private let walletManager: IWalletManager
     private let rateCoinMapper: IRateCoinMapper
+    private let feeCoinProvider: IFeeCoinProvider
 
     private let kit: XRatesKit
 
-    init(walletManager: IWalletManager, currencyKit: ICurrencyKit, rateCoinMapper: IRateCoinMapper, coinMarketCapApiKey: String) {
+    init(walletManager: IWalletManager, currencyKit: ICurrencyKit, rateCoinMapper: IRateCoinMapper, feeCoinProvider: IFeeCoinProvider, coinMarketCapApiKey: String) {
         self.walletManager = walletManager
         self.rateCoinMapper = rateCoinMapper
+        self.feeCoinProvider = feeCoinProvider
 
         kit = XRatesKit.instance(currencyCode: currencyKit.baseCurrency.code, coinMarketCapApiKey: coinMarketCapApiKey, indicatorPointCount: 50, marketInfoExpirationInterval: 10 * 60, topMarketsCount: 100)
 
@@ -32,7 +34,13 @@ class RateManager {
     }
 
     private func onUpdate(wallets: [Wallet]) {
-        let allCoinCodes = wallets.map { $0.coin.code }
+        let allCoinCodes = wallets.reduce(into: [CoinCode]()) { result, wallet in
+            result.append(wallet.coin.code)
+
+            if let feeCoin = feeCoinProvider.feeCoin(coin: wallet.coin) {
+                result.append(feeCoin.code)
+            }
+        }
         let convertedCoinCodes = allCoinCodes.compactMap { rateCoinMapper.convert(coinCode: $0) }
         let uniqueCoinCodes = Array(Set(convertedCoinCodes))
 
