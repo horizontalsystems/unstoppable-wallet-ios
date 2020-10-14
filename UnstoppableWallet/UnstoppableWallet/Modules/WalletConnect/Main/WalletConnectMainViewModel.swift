@@ -64,15 +64,19 @@ class WalletConnectMainViewModel {
     private func hint(state: WalletConnectService.State) -> String? {
         switch state {
         case .waitingForApproveSession:
-            return "waiting"
+            return "wallet_connect.connect_description".localized
         case .ready:
-            return "ready"
+            return "wallet_connect.usage_description".localized
         default:
             return nil
         }
     }
 
     private func status(state: WalletConnectService.State) -> Status? {
+        guard service.remotePeerMeta != nil else {
+            return nil
+        }
+
         switch state {
         case .connecting:
             return .connecting
