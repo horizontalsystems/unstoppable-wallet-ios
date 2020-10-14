@@ -234,7 +234,11 @@ class WalletConnectMainViewController: ThemeViewController {
     }
 
     @objc private func onTapDisconnect() {
-        viewModel.disconnect()
+        let viewController = WalletConnectConfirmDisconnectViewController(remotePeerName: peerMeta?.name) { [weak self] in
+            self?.viewModel.disconnect()
+        }
+
+        present(viewController.toBottomSheet, animated: true)
     }
 
     @objc private func onTapClose() {
