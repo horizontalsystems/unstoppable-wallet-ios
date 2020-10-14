@@ -18,6 +18,7 @@
 "button.retry" = "Retry";
 "button.report" = "Report";
 "button.add" = "Add";
+"button.approve" = "Approve";
 
 "alert.copied" = "Copied";
 "alert.no_internet" = "No Internet";
@@ -203,7 +204,6 @@ bch.horizontalsystems.xyz/apg";
 "swap.you_get" = "You Get";
 "swap.token" = "Token";
 "swap.proceed_button" = "Proceed";
-"swap.approve_button" = "Approve";
 "swap.approve.description" = "You should grant a permission to a smart contract to execute the trade using your funds. This permission does not affect funds on your balance";
 "swap.approving_button" = "Approving...";
 "swap.amount_error.maximum_amount" = "Balance %@";
@@ -225,7 +225,6 @@ bch.horizontalsystems.xyz/apg";
 
 // Swap Approving
 
-"swap.approve.title" = "Approve";
 "swap.approve.subtitle" = "Swap";
 
 // Swap Confirmation
@@ -625,8 +624,14 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "chart_alert.24h_description" = "Price Change 24h";
 "chart_alert.trend_description" = "Trend Change";
 
+// Wallet Connect
+
 "wallet_connect.title" = "Wallet Connect";
 "wallet_connect.requirement" = "Requirement";
 "wallet_connect.requirement.description" = "For connect with browser you should to activate ethereum or any erc20 token on your balance tab";
 "wallet_connect.error.invalid_url" = "Invalid URL Address";
 "wallet_connect.url" = "URL";
+"wallet_connect.connect_description" = "By clicking approve, you allow this app to view your public address. This is important security step to protect your data from potential phishing risks.";
+"wallet_connect.usage_description" = "You can go to the browser. Do not close this page while interacting in the browser.";
+"wallet_connect.button_disconnect" = "Disconnect";
+"wallet_connect.button_reject" = "Reject";
