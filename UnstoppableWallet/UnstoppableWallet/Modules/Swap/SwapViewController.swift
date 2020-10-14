@@ -290,7 +290,7 @@ extension SwapViewController {
         button.tag = tag
 
         switch tag {
-        case SwapViewController.approveTag: button.setTitle("swap.approve_button".localized, for: .normal)
+        case SwapViewController.approveTag: button.setTitle("button.approve".localized, for: .normal)
         case SwapViewController.approvingTag: button.setTitle("swap.approving_button".localized, for: .normal)
         default: button.setTitle("swap.proceed_button".localized, for: .normal)
         }

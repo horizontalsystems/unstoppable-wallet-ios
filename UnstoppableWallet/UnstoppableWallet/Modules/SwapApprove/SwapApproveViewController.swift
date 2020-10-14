@@ -106,7 +106,7 @@ class SwapApproveViewController: ThemeActionSheetController {
         }
 
         approveButton.apply(style: .primaryYellow)
-        approveButton.setTitle("swap.approve_button".localized, for: .normal)
+        approveButton.setTitle("button.approve".localized, for: .normal)
         approveButton.addTarget(self, action: #selector(onTapApprove), for: .touchUpInside)
 
         set(amountLabel: viewModel.coinAmount, coinTitle: viewModel.coinTitle)
@@ -139,7 +139,7 @@ extension SwapApproveViewController {
 
     private func set(amountLabel: String?, coinTitle: String) {
         titleView.bind(
-                title: "swap.approve.title".localized,
+                title: "button.approve".localized,
                 subtitle: "swap.approve.subtitle".localized,
                 image: UIImage(named: "Swap Icon Medium")?.tinted(with: .themeGray))
 

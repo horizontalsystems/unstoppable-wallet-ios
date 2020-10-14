@@ -59,7 +59,7 @@ class WalletConnectMainViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Wallet Connect"
+        title = "wallet_connect.title".localized
 
         view.addSubview(loadingView)
         loadingView.snp.makeConstraints { maker in
@@ -97,7 +97,7 @@ class WalletConnectMainViewController: ThemeViewController {
         }
 
         disconnectButton.apply(style: .primaryRed)
-        disconnectButton.setTitle("Disconnect", for: .normal)
+        disconnectButton.setTitle("wallet_connect.button_disconnect".localized, for: .normal)
         disconnectButton.addTarget(self, action: #selector(onTapDisconnect), for: .touchUpInside)
 
         buttonsHolder.addSubview(rejectButton)
@@ -109,7 +109,7 @@ class WalletConnectMainViewController: ThemeViewController {
         }
 
         rejectButton.apply(style: .primaryGray)
-        rejectButton.setTitle("Reject", for: .normal)
+        rejectButton.setTitle("wallet_connect.button_reject".localized, for: .normal)
         rejectButton.addTarget(self, action: #selector(onTapReject), for: .touchUpInside)
 
         buttonsHolder.addSubview(approveButton)
@@ -121,7 +121,7 @@ class WalletConnectMainViewController: ThemeViewController {
         }
 
         approveButton.apply(style: .primaryYellow)
-        approveButton.setTitle("Approve", for: .normal)
+        approveButton.setTitle("button.approve".localized, for: .normal)
         approveButton.addTarget(self, action: #selector(onTapApprove), for: .touchUpInside)
 
         buttonsHolder.addSubview(cancelButton)
@@ -134,7 +134,7 @@ class WalletConnectMainViewController: ThemeViewController {
         }
 
         cancelButton.apply(style: .primaryGray)
-        cancelButton.setTitle("Cancel", for: .normal)
+        cancelButton.setTitle("button.cancel".localized, for: .normal)
         cancelButton.addTarget(self, action: #selector(onTapCancel), for: .touchUpInside)
 
         viewModel.connectingDriver
