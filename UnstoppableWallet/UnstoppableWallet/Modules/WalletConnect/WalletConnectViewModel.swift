@@ -33,14 +33,6 @@ extension WalletConnectViewModel {
         return .main
     }
 
-    func approveRequest(id: Int, result: Any) {
-        service.approveRequest(id: id, result: result)
-    }
-
-    func rejectRequest(id: Int) {
-        service.rejectRequest(id: id)
-    }
-
 }
 
 extension WalletConnectViewModel {

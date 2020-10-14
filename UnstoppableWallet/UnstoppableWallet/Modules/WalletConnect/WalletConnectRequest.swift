@@ -12,7 +12,7 @@ class WalletConnectRequest {
 }
 
 class WalletConnectSendEthereumTransactionRequest: WalletConnectRequest {
-    let transaction: Transaction
+    let transaction: WalletConnectTransaction
 
     init(id: Int, transaction: WCEthereumTransaction) throws {
         guard let to = transaction.to else {
@@ -31,7 +31,7 @@ class WalletConnectSendEthereumTransactionRequest: WalletConnectRequest {
             throw TransactionError.invalidData
         }
 
-        self.transaction = Transaction(
+        self.transaction = WalletConnectTransaction(
                 from: try Address(hex: transaction.from),
                 to: try Address(hex: to),
                 nonce: transaction.nonce.flatMap { Int($0.replacingOccurrences(of: "0x", with: ""), radix: 16) },
@@ -42,16 +42,6 @@ class WalletConnectSendEthereumTransactionRequest: WalletConnectRequest {
         )
 
         super.init(id: id)
-    }
-
-    struct Transaction {
-        let from: Address
-        let to: Address
-        let nonce: Int?
-        let gasPrice: Int?
-        let gasLimit: Int
-        let value: BigUInt
-        let data: Data
     }
 
     enum TransactionError: Error {

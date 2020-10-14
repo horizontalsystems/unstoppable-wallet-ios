@@ -1,12 +1,23 @@
 import RxCocoa
 import CurrencyKit
+import EthereumKit
+import BigInt
 
 protocol IWalletConnectRequestViewModel {
-    var requestId: Int { get }
-    var amountViewItemDriver: Driver<WalletConnectRequestAmountViewItem?> { get }
-    var viewItemsDriver: Driver<[WalletConnectRequestViewItem]> { get }
-    var approveSignal: Signal<Any> { get }
+    var amountViewItem: WalletConnectRequestAmountViewItem { get }
+    var viewItems: [WalletConnectRequestViewItem] { get }
+    var approveSignal: Signal<Data> { get }
     func approve()
+}
+
+struct WalletConnectTransaction {
+    let from: Address
+    let to: Address
+    let nonce: Int?
+    let gasPrice: Int?
+    let gasLimit: Int
+    let value: BigUInt
+    let data: Data
 }
 
 struct WalletConnectRequestAmountViewItem {
