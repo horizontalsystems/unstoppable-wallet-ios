@@ -51,20 +51,20 @@ class SwapViewModel {
 
 
     // Swap Module Presenters
-    public var fromInputPresenter: BaseSwapInputPresenter {
-        SwapFromInputPresenter(service: service, decimalParser: decimalParser)
+    public var fromInputPresenter: BaseSwapInputViewModel {
+        SwapFromInputViewModel(service: service, decimalParser: decimalParser)
     }
 
-    public var toInputPresenter: BaseSwapInputPresenter {
-        SwapToInputPresenter(service: service, decimalParser: decimalParser)
+    public var toInputPresenter: BaseSwapInputViewModel {
+        SwapToInputViewModel(service: service, decimalParser: decimalParser)
     }
 
-    public var allowancePresenter: SwapAllowancePresenter {
-        SwapAllowancePresenter(service: service)
+    public var allowancePresenter: SwapAllowanceViewModel {
+        SwapAllowanceViewModel(service: service)
     }
 
-    public var confirmationPresenter: SwapConfirmationPresenter {
-        SwapConfirmationPresenter(service: service, factory: factory)
+    public var confirmationPresenter: SwapConfirmationViewModel {
+        SwapConfirmationViewModel(service: service, factory: factory)
     }
 
     init(service: SwapService, factory: SwapViewItemFactory, decimalParser: ISendAmountDecimalParser) {
