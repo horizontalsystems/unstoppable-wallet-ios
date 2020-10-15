@@ -5,11 +5,11 @@ import RxCocoa
 class SwapAllowanceView: UIView {
     private var disposeBag = DisposeBag()
 
-    private let presenter: SwapAllowancePresenter
+    private let viewModel: SwapAllowanceViewModel
     private let allowanceView = AdditionalDataView()
 
-    public init(presenter: SwapAllowancePresenter) {
-        self.presenter = presenter
+    public init(viewModel: SwapAllowanceViewModel) {
+        self.viewModel = viewModel
 
         super.init(frame: .zero)
 
@@ -27,14 +27,14 @@ class SwapAllowanceView: UIView {
     }
 
     func viewDidLoad() {
-        subscribeToPresenter()
+        subscribeToViewModel()
     }
 
-    private func subscribeToPresenter() {
-        subscribe(disposeBag, presenter.allowance) { [weak self] in self?.set(allowance: $0) }
-        subscribe(disposeBag, presenter.insufficientAllowance) { [weak self] in self?.set(insufficientAllowance: $0) }
-        subscribe(disposeBag, presenter.isLoading) { [weak self] in self?.set(loading: $0) }
-        subscribe(disposeBag, presenter.isHidden) { [weak self] in self?.set(hidden: $0) }
+    private func subscribeToViewModel() {
+        subscribe(disposeBag, viewModel.allowance) { [weak self] in self?.set(allowance: $0) }
+        subscribe(disposeBag, viewModel.insufficientAllowance) { [weak self] in self?.set(insufficientAllowance: $0) }
+        subscribe(disposeBag, viewModel.isLoading) { [weak self] in self?.set(loading: $0) }
+        subscribe(disposeBag, viewModel.isHidden) { [weak self] in self?.set(hidden: $0) }
     }
 
     private func set(allowance: String?) {

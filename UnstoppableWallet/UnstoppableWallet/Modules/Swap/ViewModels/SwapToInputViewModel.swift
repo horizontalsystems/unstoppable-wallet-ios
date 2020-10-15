@@ -1,6 +1,6 @@
 import UniswapKit
 
-class SwapToInputPresenter: BaseSwapInputPresenter {
+class SwapToInputViewModel: BaseSwapInputViewModel {
 
     override var type: TradeType {
         .exactOut

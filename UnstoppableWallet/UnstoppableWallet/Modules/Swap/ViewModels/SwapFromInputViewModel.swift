@@ -1,6 +1,6 @@
 import UniswapKit
 
-class SwapFromInputPresenter: BaseSwapInputPresenter {
+class SwapFromInputViewModel: BaseSwapInputViewModel {
     static private let insufficientBalanceIndex = 1
 
     override var type: TradeType {

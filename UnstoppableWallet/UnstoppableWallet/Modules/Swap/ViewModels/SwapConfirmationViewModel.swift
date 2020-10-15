@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class SwapConfirmationPresenter {
+class SwapConfirmationViewModel {
     private let disposeBag = DisposeBag()
 
     private let service: SwapService
@@ -102,7 +102,7 @@ class SwapConfirmationPresenter {
 
 }
 
-extension SwapConfirmationPresenter {
+extension SwapConfirmationViewModel {
 
     var amountData: Driver<SwapModule.ConfirmationAmountViewItem?> {
         amountDataRelay.asDriver()

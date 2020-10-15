@@ -46,9 +46,9 @@ class SwapViewController: ThemeViewController {
     init(viewModel: SwapViewModel) {
         self.viewModel = viewModel
 
-        fromCoinCard = SwapCoinCard(presenter: viewModel.fromInputPresenter)
-        toCoinCard = SwapCoinCard(presenter: viewModel.toInputPresenter)
-        allowanceView = SwapAllowanceView(presenter: viewModel.allowancePresenter)
+        fromCoinCard = SwapCoinCard(viewModel: viewModel.fromInputPresenter)
+        toCoinCard = SwapCoinCard(viewModel: viewModel.toInputPresenter)
+        allowanceView = SwapAllowanceView(viewModel: viewModel.allowancePresenter)
 
         super.init()
 
@@ -83,7 +83,6 @@ class SwapViewController: ThemeViewController {
         scrollView.keyboardDismissMode = .onDrag
 
         scrollView.addSubview(container)
-
         container.snp.makeConstraints { maker in
             maker.leading.trailing.equalTo(self.view)
             maker.top.bottom.equalTo(self.scrollView)
@@ -99,29 +98,12 @@ class SwapViewController: ThemeViewController {
 
     private func initLayout() {
         container.addSubview(fromCoinCard)
-
-        container.addSubview(loadingSpinner)
-        container.addSubview(priceLabel)
-        container.addSubview(switchButton)
-
-        container.addSubview(toCoinCard)
-        container.addSubview(allowanceView)
-
-        container.addSubview(swapAreaWrapper)
-        swapAreaWrapper.addSubview(priceImpactView)
-        swapAreaWrapper.addSubview(minMaxView)
-        swapAreaWrapper.addSubview(validationErrorLabel)
-        swapAreaWrapper.addSubview(separatorView)
-        swapAreaWrapper.addSubview(settingsView)
-        swapAreaWrapper.addSubview(button)
-
-        container.addSubview(swapErrorLabel)
-
         fromCoinCard.snp.makeConstraints { maker in
             maker.top.equalToSuperview()//.offset(CGFloat.margin3x)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
+        container.addSubview(loadingSpinner)
         loadingSpinner.snp.makeConstraints { maker in
             maker.top.equalTo(fromCoinCard.snp.bottom).offset(CGFloat.margin3x)
             maker.leading.equalToSuperview().inset(CGFloat.margin4x)
@@ -132,20 +114,22 @@ class SwapViewController: ThemeViewController {
         loadingSpinner.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         loadingSpinner.isHidden = false
 
+        container.addSubview(priceLabel)
         priceLabel.snp.makeConstraints { maker in
-            maker.centerY.equalTo(switchButton)
+            maker.centerY.equalTo(loadingSpinner)
             maker.leading.equalTo(loadingSpinner.snp.trailing).offset(CGFloat.margin2x)
-            maker.trailing.equalTo(switchButton.snp.leading).offset(-CGFloat.margin2x)
         }
 
         priceLabel.font = .subhead2
         priceLabel.textAlignment = .center
         set(price: nil)
 
+        container.addSubview(switchButton)
         switchButton.snp.makeConstraints { maker in
             maker.top.equalTo(fromCoinCard.snp.bottom)
+            maker.leading.equalTo(priceLabel.snp.trailing).offset(CGFloat.margin2x)
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.bottom.equalTo(toCoinCard.snp.top)
+            maker.bottom.equalTo(loadingSpinner).offset(CGFloat.margin3x)
         }
 
         switchButton.setImage(UIImage(named: "Swap Switch Icon")?.tinted(with: .themeGray), for: .normal)
@@ -153,16 +137,20 @@ class SwapViewController: ThemeViewController {
         switchButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         switchButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
 
+        container.addSubview(toCoinCard)
         toCoinCard.snp.makeConstraints { maker in
             maker.top.equalTo(loadingSpinner.snp.bottom).offset(CGFloat.margin3x)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
+        container.addSubview(allowanceView)
         allowanceView.snp.makeConstraints {maker in
             maker.top.equalTo(toCoinCard.snp.bottom).offset(CGFloat.margin3x)
             maker.leading.trailing.equalToSuperview()
         }
 
+
+        container.addSubview(swapAreaWrapper)
         swapAreaWrapper.snp.makeConstraints { maker in
             maker.top.equalTo(allowanceView.snp.bottom)
             maker.leading.trailing.equalToSuperview()
@@ -171,16 +159,19 @@ class SwapViewController: ThemeViewController {
 
         swapAreaWrapper.isHidden = true
 
+        swapAreaWrapper.addSubview(priceImpactView)
         priceImpactView.snp.makeConstraints { maker in
             maker.top.equalToSuperview()
             maker.leading.trailing.equalToSuperview()
         }
 
+        swapAreaWrapper.addSubview(minMaxView)
         minMaxView.snp.makeConstraints { maker in
             maker.top.equalTo(priceImpactView.snp.bottom)
             maker.leading.trailing.equalToSuperview()
         }
 
+        swapAreaWrapper.addSubview(validationErrorLabel)
         validationErrorLabel.snp.makeConstraints { maker in
             maker.top.equalTo(minMaxView.snp.bottom)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
@@ -191,7 +182,7 @@ class SwapViewController: ThemeViewController {
         validationErrorLabel.textColor = .themeLucian
         validationErrorLabel.numberOfLines = 0
 
-
+        swapAreaWrapper.addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
             maker.top.equalTo(validationErrorLabel.snp.bottom)
             maker.height.equalTo(CGFloat.heightOnePixel)
@@ -200,6 +191,7 @@ class SwapViewController: ThemeViewController {
 
         separatorView.backgroundColor = .themeSteel20
 
+        swapAreaWrapper.addSubview(settingsView)
         settingsView.snp.makeConstraints { maker in
             maker.top.equalTo(separatorView)
             maker.height.equalTo(CGFloat.heightSingleLineCell)
@@ -211,6 +203,7 @@ class SwapViewController: ThemeViewController {
             self?.onSettingsButtonTouchUp()
         }
 
+        swapAreaWrapper.addSubview(button)
         button.snp.makeConstraints { maker in
             maker.top.equalTo(settingsView.snp.bottom).offset(CGFloat.margin4x)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
@@ -223,6 +216,7 @@ class SwapViewController: ThemeViewController {
         button.setTitle("swap.proceed_button".localized, for: .normal)
         button.isEnabled = false
 
+        container.addSubview(swapErrorLabel)
         swapErrorLabel.snp.makeConstraints { maker in
             maker.top.equalTo(allowanceView.snp.bottom)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)

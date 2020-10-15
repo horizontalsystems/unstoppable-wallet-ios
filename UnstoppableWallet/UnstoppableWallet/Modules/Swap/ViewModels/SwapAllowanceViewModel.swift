@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class SwapAllowancePresenter {
+class SwapAllowanceViewModel {
     private let disposeBag = DisposeBag()
 
     private let service: SwapService
@@ -57,7 +57,7 @@ class SwapAllowancePresenter {
 
 }
 
-extension SwapAllowancePresenter {
+extension SwapAllowanceViewModel {
 
     var isHidden: Driver<Bool> {
         isHiddenRelay.asDriver()

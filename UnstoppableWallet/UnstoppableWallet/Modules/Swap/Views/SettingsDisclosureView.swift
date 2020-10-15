@@ -5,7 +5,7 @@ import ThemeKit
 class SettingsDisclosureView: UIView {
     private let titleLabel = UILabel()
     private let imageView = UIImageView()
-    private let button = ThemeButton()
+    private let button = UIButton()
 
     var onTouchUp: (() -> ())?
 
@@ -13,9 +13,15 @@ class SettingsDisclosureView: UIView {
         super.init(frame: .zero)
 
         addSubview(button)
-        addSubview(titleLabel)
-        addSubview(imageView)
+        button.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
 
+        button.setBackgroundColor(color: .clear, forState: .normal)
+        button.setBackgroundColor(color: .themeLawrencePressed, forState: .highlighted)
+        button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
+
+        addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
@@ -24,6 +30,7 @@ class SettingsDisclosureView: UIView {
         titleLabel.textColor = .themeGray
         titleLabel.font = .subhead2
 
+        addSubview(imageView)
         imageView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin2x)
@@ -31,14 +38,6 @@ class SettingsDisclosureView: UIView {
         }
 
         imageView.image = UIImage(named: "Disclosure Indicator")?.tinted(with: .themeGray)
-
-        button.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
-        }
-
-        button.setBackgroundColor(color: .clear, forState: .normal)
-        button.setBackgroundColor(color: .themeLawrencePressed, forState: .highlighted)
-        button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
     }
 
     required init?(coder: NSCoder) {

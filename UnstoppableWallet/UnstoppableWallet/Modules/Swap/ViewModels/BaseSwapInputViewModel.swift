@@ -2,7 +2,7 @@ import RxSwift
 import RxCocoa
 import UniswapKit
 
-class BaseSwapInputPresenter {
+class BaseSwapInputViewModel {
     static private let unavailableBalanceIndex = 0
     static private let maxValidDecimals = 8
 
@@ -25,7 +25,7 @@ class BaseSwapInputPresenter {
     var balanceErrorRelay = BehaviorRelay<Bool>(value: false)
     var tokenCodeRelay = BehaviorRelay<String?>(value: nil)
 
-    private var validDecimals = BaseSwapInputPresenter.maxValidDecimals
+    private var validDecimals = BaseSwapInputViewModel.maxValidDecimals
 
     var balanceErrors = ContainerState<Int, Error>()
 
@@ -72,7 +72,7 @@ class BaseSwapInputPresenter {
     }
 
     func handle(coin: Coin?) {
-        let max = SwapToInputPresenter.maxValidDecimals
+        let max = SwapToInputViewModel.maxValidDecimals
         validDecimals = min(max, (coin?.decimal ?? max))
 
         tokenCodeRelay.accept(coin?.code)
@@ -102,7 +102,7 @@ class BaseSwapInputPresenter {
 
 }
 
-extension BaseSwapInputPresenter {
+extension BaseSwapInputViewModel {
 
     var isEstimated: Driver<Bool> {
         isEstimatedRelay.asDriver()

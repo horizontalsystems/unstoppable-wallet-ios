@@ -7,7 +7,7 @@ class SwapCoinCard: UIView {
 
     private let disposeBag = DisposeBag()
 
-    private let presenter: BaseSwapInputPresenter
+    private let viewModel: BaseSwapInputViewModel
     weak var presentDelegate: IPresentDelegate?
 
     private let cardView = CardView(insets: SwapCoinCard.insets)
@@ -22,26 +22,19 @@ class SwapCoinCard: UIView {
 
     private let balanceView = AdditionalDataView()
 
-    public init(presenter: BaseSwapInputPresenter) {
-        self.presenter = presenter
+    public init(viewModel: BaseSwapInputViewModel) {
+        self.viewModel = viewModel
 
         super.init(frame: .zero)
 
         backgroundColor = .clear
 
         addSubview(cardView)
-        cardView.addSubview(titleLabel)
-        cardView.addSubview(badgeView)
-        cardView.addSubview(paddingView)
-        cardView.addSubview(tokenSelectView)
-        cardView.addSubview(inputFieldWrapper)
-        inputFieldWrapper.addSubview(inputField)
-        cardView.addSubview(balanceView)
-
         cardView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
 
+        cardView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(CGFloat.margin3x)
             maker.leading.equalToSuperview().inset(CGFloat.margin4x)
@@ -51,6 +44,7 @@ class SwapCoinCard: UIView {
         titleLabel.font = .body
         titleLabel.textColor = .themeOz
 
+        cardView.addSubview(badgeView)
         badgeView.snp.makeConstraints { maker in
             maker.centerY.equalTo(titleLabel)
             maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin2x)
@@ -59,6 +53,7 @@ class SwapCoinCard: UIView {
         badgeView.set(text: "swap.estimated".localized.uppercased())
         badgeView.isHidden = true
 
+        cardView.addSubview(paddingView)
         paddingView.snp.makeConstraints { maker in
             maker.centerY.equalTo(badgeView)
             maker.leading.equalTo(badgeView.snp.trailing).offset(CGFloat.margin2x)
@@ -68,6 +63,7 @@ class SwapCoinCard: UIView {
         paddingView.setContentHuggingPriority(.defaultLow, for: .horizontal)
         paddingView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
+        cardView.addSubview(tokenSelectView)
         tokenSelectView.snp.makeConstraints { maker in
             maker.top.equalToSuperview()
             maker.height.equalTo(CGFloat.heightSingleLineCell)
@@ -79,6 +75,7 @@ class SwapCoinCard: UIView {
             self?.tapTokenSelect()
         }
 
+        cardView.addSubview(inputFieldWrapper)
         inputFieldWrapper.snp.makeConstraints { maker in
             maker.top.equalTo(tokenSelectView.snp.bottom)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin2x)
@@ -89,6 +86,7 @@ class SwapCoinCard: UIView {
         inputFieldWrapper.layer.borderWidth = CGFloat.heightOnePixel
         inputFieldWrapper.layer.borderColor = UIColor.themeSteel20.cgColor
 
+        inputFieldWrapper.addSubview(inputField)
         inputField.snp.makeConstraints { maker in
             maker.edges.equalToSuperview().inset(CGFloat.margin3x)
         }
@@ -104,10 +102,11 @@ class SwapCoinCard: UIView {
         inputField.rx.controlEvent(.editingChanged)
                 .asObservable()
                 .subscribe(onNext: { [weak self] _ in
-                    self?.presenter.onChange(amount: self?.inputField.text)
+                    self?.viewModel.onChange(amount: self?.inputField.text)
                 })
                 .disposed(by: disposeBag)
 
+        cardView.addSubview(balanceView)
         balanceView.snp.makeConstraints { maker in
             maker.top.equalTo(inputFieldWrapper.snp.bottom).offset(CGFloat.margin3x)
             maker.leading.trailing.equalToSuperview()
@@ -120,20 +119,20 @@ class SwapCoinCard: UIView {
     }
 
     func viewDidLoad() {
-        subscribeToPresenter()
+        subscribeToViewModel()
     }
 
-    private func subscribeToPresenter() {
-        subscribe(disposeBag, presenter.description) { [weak self] in self?.set(title: $0) }
-        subscribe(disposeBag, presenter.isEstimated) { [weak self] in self?.setBadge(hidden: !$0) }
-        subscribe(disposeBag, presenter.amount) { [weak self] in self?.set(text: $0) }
-        subscribe(disposeBag, presenter.tokenCode) { [weak self] in self?.set(tokenCode: $0) }
-        subscribe(disposeBag, presenter.balance) { [weak self] in self?.set(balance: $0) }
-        subscribe(disposeBag, presenter.balanceError) { [weak self] in self?.set(balanceError: $0) }
+    private func subscribeToViewModel() {
+        subscribe(disposeBag, viewModel.description) { [weak self] in self?.set(title: $0) }
+        subscribe(disposeBag, viewModel.isEstimated) { [weak self] in self?.setBadge(hidden: !$0) }
+        subscribe(disposeBag, viewModel.amount) { [weak self] in self?.set(text: $0) }
+        subscribe(disposeBag, viewModel.tokenCode) { [weak self] in self?.set(tokenCode: $0) }
+        subscribe(disposeBag, viewModel.balance) { [weak self] in self?.set(balance: $0) }
+        subscribe(disposeBag, viewModel.balanceError) { [weak self] in self?.set(balanceError: $0) }
     }
 
     private func tapTokenSelect() {
-        let coins = presenter.tokensForSelection
+        let coins = viewModel.tokensForSelection
 
         let vc = CoinSelectModule.instance(coins: coins, delegate: self)
         presentDelegate?.show(viewController: vc)
@@ -180,7 +179,7 @@ extension SwapCoinCard {
 extension SwapCoinCard: UITextFieldDelegate {
 
     private func validate(text: String) -> Bool {
-        let isValid = presenter.isValid(amount: text)
+        let isValid = viewModel.isValid(amount: text)
         if !isValid {
             inputField.shakeView()
         }
@@ -207,8 +206,7 @@ extension SwapCoinCard: UITextFieldDelegate {
 extension SwapCoinCard: ICoinSelectDelegate {
 
     func didSelect(coin: SwapModule.CoinBalanceItem) {
-        presenter.onSelect(coin: coin)
+        viewModel.onSelect(coin: coin)
     }
 
 }
-

@@ -22,12 +22,6 @@ class SwapConfirmationAmountCell: ThemeCell {
         selectionStyle = .none
 
         contentView.addSubview(topLineView)
-        contentView.addSubview(bottomLineView)
-        contentView.addSubview(payTitleLabel)
-        contentView.addSubview(payValueLabel)
-        contentView.addSubview(getTitleLabel)
-        contentView.addSubview(getValueLabel)
-
         topLineView.snp.makeConstraints { maker in
             maker.top.equalToSuperview()
             maker.leading.trailing.equalToSuperview()
@@ -36,6 +30,7 @@ class SwapConfirmationAmountCell: ThemeCell {
 
         topLineView.backgroundColor = .themeSteel20
 
+        contentView.addSubview(payTitleLabel)
         payTitleLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
             maker.top.equalToSuperview().offset(CGFloat.margin3x)
@@ -44,6 +39,7 @@ class SwapConfirmationAmountCell: ThemeCell {
         payTitleLabel.font = .headline2
         payTitleLabel.textColor = .themeOz
 
+        contentView.addSubview(payValueLabel)
         payValueLabel.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.leading.equalTo(payTitleLabel.snp.trailing).offset(CGFloat.margin4x)
@@ -57,6 +53,7 @@ class SwapConfirmationAmountCell: ThemeCell {
         payTitleLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         payValueLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
 
+        contentView.addSubview(getTitleLabel)
         getTitleLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
             maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
@@ -65,6 +62,7 @@ class SwapConfirmationAmountCell: ThemeCell {
         getTitleLabel.font = .subhead2
         getTitleLabel.textColor = .themeGray
 
+        contentView.addSubview(getValueLabel)
         getValueLabel.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.leading.equalTo(getTitleLabel.snp.trailing).offset(CGFloat.margin4x)
@@ -78,6 +76,7 @@ class SwapConfirmationAmountCell: ThemeCell {
         getTitleLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         getValueLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
 
+        contentView.addSubview(bottomLineView)
         bottomLineView.snp.makeConstraints { maker in
             maker.bottom.equalToSuperview()
             maker.leading.trailing.equalToSuperview()

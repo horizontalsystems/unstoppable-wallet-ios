@@ -7,7 +7,7 @@ import ThemeKit
 class SwapInputView: UIView {
     private var disposeBag = DisposeBag()
 
-    private let presenter: BaseSwapInputPresenter
+    private let viewModel: BaseSwapInputViewModel
     weak var presentDelegate: IPresentDelegate?
 
     private let holderView = UIView()
@@ -19,21 +19,14 @@ class SwapInputView: UIView {
     private let maxButton = ThemeButton()
     private let tokenSelectButton = ThemeButton()
 
-    public init(presenter: BaseSwapInputPresenter) {
-        self.presenter = presenter
+    public init(viewModel: BaseSwapInputViewModel) {
+        self.viewModel = viewModel
 
         super.init(frame: .zero)
 
         backgroundColor = .clear
 
         addSubview(titleLabel)
-        addSubview(badgeView)
-        addSubview(holderView)
-
-        holderView.addSubview(inputField)
-        holderView.addSubview(maxButton)
-        holderView.addSubview(tokenSelectButton)
-
         titleLabel.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(CGFloat.margin3x)
             maker.leading.equalToSuperview().inset(CGFloat.margin4x)
@@ -42,22 +35,29 @@ class SwapInputView: UIView {
         titleLabel.font = .body
         titleLabel.textColor = .themeOz
 
+        addSubview(badgeView)
         badgeView.snp.makeConstraints { maker in
             maker.centerY.equalTo(titleLabel)
             maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin2x)
         }
 
+        badgeView.set(text: "swap.estimated".localized.uppercased())
+        badgeView.isHidden = true
+
+        addSubview(holderView)
         holderView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.height.equalTo(CGFloat.heightSingleLineCell)
             maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin3x)
             maker.bottom.equalToSuperview()
         }
+
         holderView.layer.cornerRadius = CGFloat.cornerRadius2x
         holderView.layer.borderWidth = CGFloat.heightOneDp
         holderView.layer.borderColor = UIColor.themeSteel20.cgColor
         holderView.backgroundColor = .themeLawrence
 
+        holderView.addSubview(maxButton)
         maxButton.snp.makeConstraints { maker in //constraints need to be set on init
             maker.top.equalTo(tokenSelectButton.snp.top)
             maker.trailing.equalTo(tokenSelectButton.snp.leading).offset(-CGFloat.margin2x)
@@ -68,6 +68,14 @@ class SwapInputView: UIView {
         maxButton.setTitle("send.max_button".localized, for: .normal)
         maxButton.addTarget(self, action: #selector(onTapMax), for: .touchUpInside)
 
+
+        holderView.addSubview(inputField)
+        inputField.snp.makeConstraints { maker in
+            maker.top.bottom.equalToSuperview()
+            maker.leading.equalToSuperview().offset(CGFloat.margin3x)
+            maker.trailing.equalTo(maxButton.snp.leading).offset(-CGFloat.margin1x)
+        }
+
         inputField.delegate = self
         inputField.font = .body
         inputField.textColor = .themeOz
@@ -75,15 +83,18 @@ class SwapInputView: UIView {
         inputField.keyboardAppearance = .themeDefault
         inputField.keyboardType = .decimalPad
         inputField.tintColor = .themeInputFieldTintColor
-        inputField.snp.makeConstraints { maker in
-            maker.top.bottom.equalToSuperview()
-            maker.leading.equalToSuperview().offset(CGFloat.margin3x)
-            maker.trailing.equalTo(maxButton.snp.leading).offset(-CGFloat.margin1x)
-        }
 
+        holderView.addSubview(tokenSelectButton)
         tokenSelectButton.snp.makeConstraints { maker in
             maker.top.trailing.equalToSuperview().inset(CGFloat.margin2x)
         }
+
+        inputField.rx.controlEvent(.editingChanged)
+                .asObservable()
+                .subscribe(onNext: { [weak self] _ in
+                    self?.viewModel.onChange(amount: self?.inputField.text)
+                })
+                .disposed(by: disposeBag)
 
         tokenSelectButton.setContentHuggingPriority(.required, for: .horizontal)
         tokenSelectButton.apply(style: .secondaryDefault)
@@ -92,28 +103,19 @@ class SwapInputView: UIView {
         tokenSelectButton.imageEdgeInsets = UIEdgeInsets(top: 6, left: 10, bottom: 6, right: 0)
         tokenSelectButton.addTarget(self, action: #selector(onTapCoinSelect), for: .touchUpInside)
 
-        inputField.rx.controlEvent(.editingChanged)
-                .asObservable()
-                .subscribe(onNext: { [weak self] _ in
-                    self?.presenter.onChange(amount: self?.inputField.text)
-                })
-                .disposed(by: disposeBag)
-
-        badgeView.set(text: "swap.estimated".localized.uppercased())
-        badgeView.isHidden = true
-        
         set(maxButtonVisible: false)
-        subscribeToPresenter()
+        subscribeToViewModel()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("not implemented")
     }
-    private func subscribeToPresenter() {
-        subscribe(disposeBag, presenter.description) { [weak self] in self?.set(title: $0) }
-        subscribe(disposeBag, presenter.isEstimated) { [weak self] in self?.setBadge(hidden: !$0) }
-        subscribe(disposeBag, presenter.amount) { [weak self] in self?.set(text: $0) }
-        subscribe(disposeBag, presenter.tokenCode) { [weak self] in self?.set(tokenCode: $0) }
+
+    private func subscribeToViewModel() {
+        subscribe(disposeBag, viewModel.description) { [weak self] in self?.set(title: $0) }
+        subscribe(disposeBag, viewModel.isEstimated) { [weak self] in self?.setBadge(hidden: !$0) }
+        subscribe(disposeBag, viewModel.amount) { [weak self] in self?.set(text: $0) }
+        subscribe(disposeBag, viewModel.tokenCode) { [weak self] in self?.set(tokenCode: $0) }
     }
 
     @objc private func onTapMax() {
@@ -121,7 +123,7 @@ class SwapInputView: UIView {
     }
 
     @objc private func onTapCoinSelect() {
-        let coins = presenter.tokensForSelection
+        let coins = viewModel.tokensForSelection
 
         let vc = CoinSelectModule.instance(coins: coins, delegate: self)
         presentDelegate?.show(viewController: vc)
@@ -164,7 +166,7 @@ extension SwapInputView {
 extension SwapInputView: UITextFieldDelegate {
 
     private func validate(text: String) -> Bool {
-        let isValid = presenter.isValid(amount: text)
+        let isValid = viewModel.isValid(amount: text)
         if !isValid {
             inputField.shakeView()
         }
@@ -191,7 +193,7 @@ extension SwapInputView: UITextFieldDelegate {
 extension SwapInputView: ICoinSelectDelegate {
 
     func didSelect(coin: SwapModule.CoinBalanceItem) {
-        presenter.onSelect(coin: coin)
+        viewModel.onSelect(coin: coin)
     }
 
 }
