@@ -7,46 +7,49 @@ import BigInt
 
 class WalletConnectSendEthereumTransactionRequestViewModel {
     private let service: WalletConnectSendEthereumTransactionRequestService
-    private let transaction: WalletConnectTransaction
+    private let coinService: EthereumCoinService
 
     private let disposeBag = DisposeBag()
 
-    let amountViewItem: WalletConnectRequestAmountViewItem
+    let amountData: AmountData
     let viewItems: [WalletConnectRequestViewItem]
 
     private let approveRelay = PublishRelay<Data>()
 
-    init(service: WalletConnectSendEthereumTransactionRequestService, transaction: WalletConnectTransaction) {
+    init(service: WalletConnectSendEthereumTransactionRequestService, coinService: EthereumCoinService) {
         self.service = service
-        self.transaction = transaction
+        self.coinService = coinService
 
-        let value = Self.convert(amount: transaction.value, coin: service.ethereumCoin)
+        amountData = coinService.amountData(value: service.transactionData.value ?? 0)
 
-        let primaryAmountInfo: AmountInfo
-        var secondaryAmountInfo: AmountInfo?
+        var viewItems = [WalletConnectRequestViewItem]()
 
-        let coinValue = CoinValue(coin: service.ethereumCoin, value: value)
-        if let rate = service.ethereumRate {
-            primaryAmountInfo = .currencyValue(currencyValue: CurrencyValue(currency: rate.currency, value: rate.value * value))
-            secondaryAmountInfo = .coinValue(coinValue: coinValue)
-        } else {
-            primaryAmountInfo = .coinValue(coinValue: coinValue)
+        if let to = service.transactionData.to {
+            viewItems.append(.to(value: to.eip55))
         }
 
-        amountViewItem = WalletConnectRequestAmountViewItem(primaryAmountInfo: primaryAmountInfo, secondaryAmountInfo: secondaryAmountInfo)
+        viewItems.append(.input(value: service.transactionData.input.toHexString()))
 
-        viewItems = [
-            .from(value: transaction.from.eip55),
-            .to(value: transaction.to.eip55)
-        ]
+        self.viewItems = viewItems
+
+        service.stateObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] state in
+                    self?.sync(state: state)
+                })
+                .disposed(by: disposeBag)
+
+        sync(state: service.state)
     }
 
-    private static func convert(amount: BigUInt, coin: Coin) -> Decimal {
-        guard let significand = Decimal(string: amount.description), significand != 0 else {
-            return 0
+    private func sync(state: WalletConnectSendEthereumTransactionRequestService.State) {
+        switch state {
+        case .ready:
+            () // todo: enable buttons
+        case .notReady:
+            () // todo: handle errors
         }
-
-        return Decimal(sign: .plus, exponent: -coin.decimal, significand: significand)
     }
 
 }

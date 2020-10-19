@@ -6,6 +6,7 @@ import CurrencyKit
 
 class WalletConnectRequestViewController: ThemeActionSheetController {
     private let viewModel: IWalletConnectRequestViewModel
+    private let feeViewModel: EthereumFeeViewModel
     private let onApprove: (Data) -> ()
     private let onReject: () -> ()
 
@@ -20,8 +21,9 @@ class WalletConnectRequestViewController: ThemeActionSheetController {
 
     private let disposeBag = DisposeBag()
 
-    init(viewModel: IWalletConnectRequestViewModel, onApprove: @escaping (Data) -> (), onReject: @escaping () -> ()) {
+    init(viewModel: IWalletConnectRequestViewModel, feeViewModel: EthereumFeeViewModel, onApprove: @escaping (Data) -> (), onReject: @escaping () -> ()) {
         self.viewModel = viewModel
+        self.feeViewModel = feeViewModel
         self.onApprove = onApprove
         self.onReject = onReject
 
@@ -53,8 +55,7 @@ class WalletConnectRequestViewController: ThemeActionSheetController {
             maker.height.equalTo(72)
         }
 
-        let amountViewItem = viewModel.amountViewItem
-        amountInfoView.bind(primaryAmountInfo: amountViewItem.primaryAmountInfo, secondaryAmountInfo: amountViewItem.secondaryAmountInfo)
+        amountInfoView.bind(primaryAmountInfo: viewModel.amountData.primary, secondaryAmountInfo: viewModel.amountData.secondary)
 
         view.addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
@@ -139,6 +140,11 @@ class WalletConnectRequestViewController: ThemeActionSheetController {
         }
     }
 
+    private func inputRow(value: String) -> RowProtocol {
+        fromToRow(title: "tx_info.input".localized, value: value) { [weak self] in
+        }
+    }
+
     private func valueRow(title: String, value: String?) -> RowProtocol {
         Row<TransactionInfoValueCell>(
                 id: title,
@@ -171,7 +177,7 @@ class WalletConnectRequestViewController: ThemeActionSheetController {
         switch viewItem {
         case let .from(value): return fromRow(value: value)
         case let .to(value): return toRow(value: value)
-        case let .fee(coinValue, currencyValue): return feeRow(coinValue: coinValue, currencyValue: currencyValue)
+        case let .input(value): return inputRow(value: value)
         }
     }
 

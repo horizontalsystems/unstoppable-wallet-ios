@@ -7,16 +7,27 @@ struct WalletConnectSendEthereumTransactionRequestModule {
             return nil
         }
 
-        let service = WalletConnectSendEthereumTransactionRequestService(
-                ethereumKit: ethereumKit,
+        let coinService = EthereumCoinService(
                 appConfigProvider: App.shared.appConfigProvider,
                 currencyKit: App.shared.currencyKit,
                 rateManager: App.shared.rateManager
         )
 
-        let viewModel = WalletConnectSendEthereumTransactionRequestViewModel(service: service, transaction: transaction)
+        let transactionService = EthereumTransactionService(
+                ethereumKit: ethereumKit,
+                feeRateProvider: App.shared.feeRateProviderFactory.provider(coinType: .ethereum) as! EthereumFeeRateProvider
+        )
 
-        return WalletConnectRequestViewController(viewModel: viewModel, onApprove: onApprove, onReject: onReject)
+        let service = WalletConnectSendEthereumTransactionRequestService(
+                transaction: transaction,
+                transactionService: transactionService,
+                ethereumKit: ethereumKit
+        )
+
+        let viewModel = WalletConnectSendEthereumTransactionRequestViewModel(service: service, coinService: coinService)
+        let feeViewModel = EthereumFeeViewModel(service: transactionService, coinService: coinService)
+
+        return WalletConnectRequestViewController(viewModel: viewModel, feeViewModel: feeViewModel, onApprove: onApprove, onReject: onReject)
     }
 
 }
