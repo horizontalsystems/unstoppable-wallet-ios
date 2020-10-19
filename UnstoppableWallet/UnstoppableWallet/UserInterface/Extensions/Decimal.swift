@@ -1,4 +1,5 @@
 import Foundation
+import BigInt
 
 extension Decimal {
 
@@ -13,6 +14,14 @@ extension Decimal {
             }
         }
         return maxDecimals
+    }
+
+    init?(bigUInt: BigUInt, decimal: Int) {
+        guard let significand = Decimal(string: bigUInt.description) else {
+            return nil
+        }
+
+        self.init(sign: .plus, exponent: -decimal, significand: significand)
     }
 
 }

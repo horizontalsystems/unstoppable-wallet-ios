@@ -149,6 +149,11 @@ enum AmountInfo {
 
 }
 
+struct AmountData {
+    let primary: AmountInfo
+    let secondary: AmountInfo?
+}
+
 class SendConfirmationViewItem {
     let primaryAmount: String
     var secondaryAmount: String?
