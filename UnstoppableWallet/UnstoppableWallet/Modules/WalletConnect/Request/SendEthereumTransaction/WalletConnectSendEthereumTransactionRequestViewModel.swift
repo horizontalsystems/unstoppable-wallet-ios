@@ -1,9 +1,6 @@
 import RxSwift
 import RxRelay
 import RxCocoa
-import WalletConnect
-import CurrencyKit
-import BigInt
 
 class WalletConnectSendEthereumTransactionRequestViewModel {
     private let service: WalletConnectSendEthereumTransactionRequestService
@@ -14,6 +11,10 @@ class WalletConnectSendEthereumTransactionRequestViewModel {
     let amountData: AmountData
     let viewItems: [WalletConnectRequestViewItem]
 
+    private let approveEnabledRelay = BehaviorRelay<Bool>(value: false)
+    private let rejectEnabledRelay = BehaviorRelay<Bool>(value: false)
+    private let errorsRelay = BehaviorRelay<[Error]>(value: [])
+    private let sendingRelay = BehaviorRelay<Bool>(value: false)
     private let approveRelay = PublishRelay<Data>()
 
     init(service: WalletConnectSendEthereumTransactionRequestService, coinService: EthereumCoinService) {
@@ -44,24 +45,49 @@ class WalletConnectSendEthereumTransactionRequestViewModel {
     }
 
     private func sync(state: WalletConnectSendEthereumTransactionRequestService.State) {
-        switch state {
-        case .ready:
-            () // todo: enable buttons
-        case .notReady:
-            () // todo: handle errors
+        if case .sent(let transactionHash) = state {
+            approveRelay.accept(transactionHash)
+            return
         }
+
+        approveEnabledRelay.accept(state == .ready)
+        rejectEnabledRelay.accept(state != .sending)
+
+        if case .notReady(let errors) = state {
+            errorsRelay.accept(errors)
+        } else {
+            errorsRelay.accept([])
+        }
+
+        sendingRelay.accept(state == .sending)
     }
 
 }
 
-extension WalletConnectSendEthereumTransactionRequestViewModel: IWalletConnectRequestViewModel {
+extension WalletConnectSendEthereumTransactionRequestViewModel {
+
+    var approveEnabledDriver: Driver<Bool> {
+        approveEnabledRelay.asDriver()
+    }
+
+    var rejectEnabledDriver: Driver<Bool> {
+        rejectEnabledRelay.asDriver()
+    }
+
+    var errorsDriver: Driver<[Error]> {
+        errorsRelay.asDriver()
+    }
+
+    var sendingDriver: Driver<Bool> {
+        sendingRelay.asDriver()
+    }
 
     var approveSignal: Signal<Data> {
         approveRelay.asSignal()
     }
 
     func approve() {
-        approveRelay.accept(Data(repeating: 1, count: 4))
+        service.send()
     }
 
 }

@@ -63,13 +63,49 @@ extension WalletConnectSendEthereumTransactionRequestService {
         stateRelay.asObservable()
     }
 
+    func send() {
+        guard case .ready = state, case .completed(let transaction) = transactionService.transactionStatus else {
+            return
+        }
+
+        state = .sending
+
+        ethereumKit.sendSingle(
+                address: transaction.data.to!, // todo: make optional in EthereumKit
+                value: transaction.data.value!, // todo: make optional in EthereumKit
+                transactionInput: transaction.data.input,
+                gasPrice: transaction.gasData.gasPrice,
+                gasLimit: transaction.gasData.gasLimit
+        )
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onSuccess: { [weak self] transactionWithInternal in
+                    self?.state = .sent(transactionHash: transactionWithInternal.transaction.hash)
+                }, onError: { [weak self] error in
+                    // todo
+                })
+                .disposed(by: disposeBag)
+    }
+
 }
 
 extension WalletConnectSendEthereumTransactionRequestService {
 
-    enum State {
+    enum State: Equatable {
         case ready
         case notReady(errors: [Error])
+        case sending
+        case sent(transactionHash: Data)
+
+        static func ==(lhs: State, rhs: State) -> Bool {
+            switch (lhs, rhs) {
+            case (.ready, .ready): return true
+            case (.notReady, .notReady): return true
+            case (.sending, .sending): return true
+            case (.sent, .sent): return true
+            default: return false
+            }
+        }
     }
 
     enum TransactionError: Error {

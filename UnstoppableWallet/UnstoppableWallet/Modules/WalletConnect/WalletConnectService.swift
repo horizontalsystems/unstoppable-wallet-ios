@@ -121,8 +121,7 @@ extension WalletConnectService {
         pendingRequests.remove(at: index)
 
         if let convertedResult = converted(result: result) {
-//            interactor?.approveRequest(id: id, result: convertedResult)
-            interactor?.rejectRequest(id: id, message: "Not implemented yet: \(convertedResult)")
+            interactor?.approveRequest(id: id, result: convertedResult)
         }
 
         // todo: handle next pending request

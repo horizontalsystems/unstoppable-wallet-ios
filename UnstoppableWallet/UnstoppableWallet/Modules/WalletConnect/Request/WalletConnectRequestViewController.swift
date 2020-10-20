@@ -3,9 +3,10 @@ import RxSwift
 import RxCocoa
 import SectionsTableView
 import CurrencyKit
+import HUD
 
 class WalletConnectRequestViewController: ThemeViewController {
-    private let viewModel: IWalletConnectRequestViewModel
+    private let viewModel: WalletConnectSendEthereumTransactionRequestViewModel
     private let feeViewModel: EthereumFeeViewModel
     private let onApprove: (Data) -> ()
     private let onReject: () -> ()
@@ -20,7 +21,7 @@ class WalletConnectRequestViewController: ThemeViewController {
 
     private let disposeBag = DisposeBag()
 
-    init(viewModel: IWalletConnectRequestViewModel, feeViewModel: EthereumFeeViewModel, onApprove: @escaping (Data) -> (), onReject: @escaping () -> ()) {
+    init(viewModel: WalletConnectSendEthereumTransactionRequestViewModel, feeViewModel: EthereumFeeViewModel, onApprove: @escaping (Data) -> (), onReject: @escaping () -> ()) {
         self.viewModel = viewModel
         self.feeViewModel = feeViewModel
         self.onApprove = onApprove
@@ -82,10 +83,37 @@ class WalletConnectRequestViewController: ThemeViewController {
         approveButton.setTitle("button.approve".localized, for: .normal)
         approveButton.addTarget(self, action: #selector(onTapApprove), for: .touchUpInside)
 
+        viewModel.approveEnabledDriver
+                .drive(onNext: { [weak self] enabled in
+                    self?.approveButton.isEnabled = enabled
+                })
+                .disposed(by: disposeBag)
+
+        viewModel.rejectEnabledDriver
+                .drive(onNext: { [weak self] enabled in
+                    self?.rejectButton.isEnabled = enabled
+                })
+                .disposed(by: disposeBag)
+
+        viewModel.errorsDriver
+                .drive(onNext: { [weak self] errors in
+                    // todo
+                })
+                .disposed(by: disposeBag)
+
+        viewModel.sendingDriver
+                .drive(onNext: { sending in
+                    if sending {
+                        HudHelper.instance.showSpinner(userInteractionEnabled: false)
+                    }
+                })
+                .disposed(by: disposeBag)
+
         viewModel.approveSignal
                 .emit(onNext: { [weak self] transactionId in
                     self?.onApprove(transactionId)
                     self?.dismiss(animated: true)
+                    HudHelper.instance.showSuccess()
                 })
                 .disposed(by: disposeBag)
 

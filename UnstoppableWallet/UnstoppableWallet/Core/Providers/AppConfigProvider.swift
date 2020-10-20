@@ -91,7 +91,11 @@ class AppConfigProvider: IAppConfigProvider {
         ]
     }
 
-    let defaultCoins = [
+    var defaultCoins: [Coin] {
+        testMode ? testNetCoins : mainNetCoins
+    }
+
+    private let mainNetCoins = [
         Coin(id: "BTC",       title: "Bitcoin",               code: "BTC",     decimal: 8,  type: .bitcoin),
         Coin(id: "LTC",       title: "Litecoin",              code: "LTC",     decimal: 8,  type: .litecoin),
         ethereumCoin,
@@ -178,6 +182,17 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "WTC",       title: "Waltonchain",           code: "WTC",     decimal: 18, type: CoinType(erc20Address: "0xb7cB1C96dB6B22b0D3d9536E0108d062BD488F74")),
         Coin(id: "WBTC",      title: "Wrapped Bitcoin",       code: "WBTC",    decimal: 8,  type: CoinType(erc20Address: "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599")),
         Coin(id: "WETH",      title: "Wrapped Ethereum",      code: "WETH",    decimal: 18, type: CoinType(erc20Address: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")),
+    ]
+
+    private let testNetCoins = [
+        Coin(id: "BTC",       title: "Bitcoin",               code: "BTC",     decimal: 8,  type: .bitcoin),
+        Coin(id: "LTC",       title: "Litecoin",              code: "LTC",     decimal: 8,  type: .litecoin),
+        ethereumCoin,
+        Coin(id: "BCH",       title: "Bitcoin Cash",          code: "BCH",     decimal: 8,  type: .bitcoinCash),
+        Coin(id: "DASH",      title: "Dash",                  code: "DASH",    decimal: 8,  type: .dash),
+        Coin(id: "BNB",       title: "Binance Chain",         code: "BNB",     decimal: 8,  type: .binance(symbol: "BNB")),
+        Coin(id: "EOS",       title: "EOS",                   code: "EOS",     decimal: 4,  type: .eos(token: "eosio.token", symbol: "EOS")),
+        Coin(id: "DAI",       title: "Dai",                   code: "DAI",     decimal: 18, type: CoinType(erc20Address: "0xad6d458402f60fd3bd25163575031acdce07538d")),
     ]
 
 }
