@@ -114,6 +114,12 @@ protocol ISendBinanceInteractor {
     func sendSingle(amount: Decimal, address: String, memo: String?) -> Single<Void>
 }
 
+protocol ISendZCashInteractor {
+    var availableBalance: Decimal { get }
+    func validate(address: String) throws
+    func sendSingle(amount: Decimal, address: String, memo: String?) -> Single<Void>
+}
+
 protocol ISendRouter: class {
     func showConfirmation(viewItems: [ISendConfirmationViewItemNew], delegate: ISendConfirmationDelegate)
     func dismiss()

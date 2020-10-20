@@ -15,6 +15,8 @@ class AccountCreator {
             throw CreateError.eosNotSupported
         case .binance:
             return try createMnemonicAccountType(wordsCount: 24)
+        case .zCash:
+            return try createMnemonicAccountType(wordsCount: 24)
         }
     }
 

@@ -6,6 +6,7 @@ enum CoinType {
     case bitcoinCash
     case dash
     case ethereum
+    case zCash
     case erc20(address: String, fee: Decimal, minimumRequiredBalance: Decimal, minimumSpendableAmount: Decimal?)
     case eos(token: String, symbol: String)
     case binance(symbol: String)
@@ -22,7 +23,7 @@ enum CoinType {
         case .eos:
             if case .eos = accountType { return true }
             return false
-        case .binance:
+        case .binance, .zCash:
             if case let .mnemonic(words, salt) = accountType, words.count == 24, salt == nil { return true }
             return false
         }
@@ -36,6 +37,8 @@ enum CoinType {
             return .eos
         case .binance:
             return .binance
+        case .zCash:
+            return .zCash
         }
     }
 
@@ -84,6 +87,7 @@ extension CoinType: Equatable {
         case (.bitcoinCash, .bitcoinCash): return true
         case (.dash, .dash): return true
         case (.ethereum, .ethereum): return true
+        case (.zCash, .zCash): return true
         case (.erc20(let lhsAddress, let lhsFee, _, _), .erc20(let rhsAddress, let rhsFee, _, _)):
             return lhsAddress == rhsAddress && lhsFee == rhsFee
         case (.eos(let lhsToken, let lhsSymbol), .eos(let rhsToken, let rhsSymbol)):
@@ -110,6 +114,8 @@ extension CoinType: Hashable {
             hasher.combine("dash")
         case .ethereum:
             hasher.combine("ethereum")
+        case .zCash:
+            hasher.combine("zCash")
         case .erc20(let address, let fee, let minimumRequiredBalance, let minimumSpendableAmount):
             hasher.combine("erc20_\(address)_\(fee)_\(minimumRequiredBalance)_\(minimumSpendableAmount.map { "\($0)" } ?? "nil")")
         case .eos(let token, let symbol):

@@ -40,6 +40,8 @@ extension SendRouter {
             partialModule = module(coin: wallet.coin, adapter: adapter)
         case let adapter as ISendBinanceAdapter:
             partialModule = module(coin: wallet.coin, adapter: adapter)
+        case let adapter as ISendZCashAdapter:
+            partialModule = module(coin: wallet.coin, adapter: adapter)
         default: ()
         }
 
@@ -173,6 +175,20 @@ extension SendRouter {
         addressModule.delegate = presenter
 
         return (presenter, [amountView, addressView, memoView, feeView], [addressRouter])
+    }
+
+    private static func module(coin: Coin, adapter: ISendZCashAdapter) -> (ISendHandler, [UIView], [ISendSubRouter]) {
+        let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
+        let (addressView, addressModule, addressRouter) = SendAddressRouter.module(coin: coin)
+        let (memoView, memoModule) = SendMemoRouter.module()
+
+        let interactor = SendZCashInteractor(adapter: adapter)
+        let presenter = SendZCashHandler(interactor: interactor, amountModule: amountModule, addressModule: addressModule, memoModule: memoModule)
+
+        amountModule.delegate = presenter
+        addressModule.delegate = presenter
+
+        return (presenter, [amountView, addressView, memoView], [addressRouter])
     }
 
 }

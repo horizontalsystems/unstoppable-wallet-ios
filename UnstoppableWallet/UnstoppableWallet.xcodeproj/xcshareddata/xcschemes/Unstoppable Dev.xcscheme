@@ -59,6 +59,13 @@
             ReferencedContainer = "container:UnstoppableWallet.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "ZCASH_NETWORK_ENVIRONMENT"
+            value = "TESTNET"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

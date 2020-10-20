@@ -174,6 +174,12 @@ protocol ISendBinanceAdapter {
     func sendSingle(amount: Decimal, address: String, memo: String?) -> Single<Void>
 }
 
+protocol ISendZCashAdapter {
+    var availableBalance: Decimal { get }
+    func validate(address: String) throws
+    func sendSingle(amount: Decimal, address: String, memo: String?) -> Single<Void>
+}
+
 protocol IWordsManager {
     func generateWords(count: Int) throws -> [String]
     func validate(words: [String], requiredWordsCount: Int) throws

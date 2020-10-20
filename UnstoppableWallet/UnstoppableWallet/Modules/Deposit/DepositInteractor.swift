@@ -13,7 +13,8 @@ class DepositInteractor {
 extension DepositInteractor: IDepositInteractor {
 
     var address: String {
-        depositAdapter.receiveAddress
+        print("receive address: \(depositAdapter.receiveAddress)")
+        return depositAdapter.receiveAddress
     }
 
     func derivationSetting(coinType: CoinType) -> DerivationSetting? {
