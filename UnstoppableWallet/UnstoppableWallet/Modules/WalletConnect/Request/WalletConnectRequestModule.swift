@@ -3,13 +3,6 @@ import CurrencyKit
 import EthereumKit
 import BigInt
 
-protocol IWalletConnectRequestViewModel {
-    var amountData: AmountData { get }
-    var viewItems: [WalletConnectRequestViewItem] { get }
-    var approveSignal: Signal<Data> { get }
-    func approve()
-}
-
 struct WalletConnectTransaction {
     let from: Address
     let to: Address?
