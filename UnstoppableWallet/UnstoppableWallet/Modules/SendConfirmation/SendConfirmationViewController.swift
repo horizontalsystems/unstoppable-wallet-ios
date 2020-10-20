@@ -36,7 +36,7 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "send.confirmation.title".localized
+        title = "confirm".localized
 
         tableView.registerCell(forClass: SendConfirmationAmountCell.self)
         tableView.registerCell(forClass: SendConfirmationReceiverCell.self)
@@ -104,7 +104,7 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
 extension SendConfirmationViewController: ISendConfirmationView {
 
     func show(viewItem: SendConfirmationAmountViewItem) {
-        let primaryRow = Row<SendConfirmationAmountCell>(id: "send_primary_row", height: 72, bind: { cell, _ in
+        let primaryRow = Row<SendConfirmationAmountCell>(id: "send_primary_row", height: SendConfirmationAmountCell.height, bind: { cell, _ in
             cell.bind(primaryAmountInfo: viewItem.primaryInfo, secondaryAmountInfo: viewItem.secondaryInfo)
         })
         let receiverRow = Row<SendConfirmationReceiverCell>(id: "send_receiver_row", height: SendConfirmationReceiverCell.height(forContainerWidth: view.bounds.width, text: viewItem.receiver), bind: { [weak self] cell, _ in

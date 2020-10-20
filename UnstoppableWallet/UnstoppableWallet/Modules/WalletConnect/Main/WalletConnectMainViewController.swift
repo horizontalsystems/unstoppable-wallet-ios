@@ -109,7 +109,7 @@ class WalletConnectMainViewController: ThemeViewController {
         }
 
         rejectButton.apply(style: .primaryGray)
-        rejectButton.setTitle("wallet_connect.button_reject".localized, for: .normal)
+        rejectButton.setTitle("button.reject".localized, for: .normal)
         rejectButton.addTarget(self, action: #selector(onTapReject), for: .touchUpInside)
 
         buttonsHolder.addSubview(approveButton)
@@ -271,7 +271,7 @@ class WalletConnectMainViewController: ThemeViewController {
         }
 
         if let viewController = viewController {
-            present(viewController.toBottomSheet, animated: true)
+            present(ThemeNavigationController(rootViewController: viewController), animated: true)
         }
     }
 

@@ -4,16 +4,15 @@ import RxCocoa
 import SectionsTableView
 import CurrencyKit
 
-class WalletConnectRequestViewController: ThemeActionSheetController {
+class WalletConnectRequestViewController: ThemeViewController {
     private let viewModel: IWalletConnectRequestViewModel
     private let feeViewModel: EthereumFeeViewModel
     private let onApprove: (Data) -> ()
     private let onReject: () -> ()
 
-    private let titleView = BottomSheetTitleView()
-    private let amountInfoView = AmountInfoView()
-    private let separatorView = UIView()
-    private let tableView = SelfSizedSectionsTableView(style: .grouped)
+    private let tableView = SectionsTableView(style: .grouped)
+
+    private let buttonsHolder = BottomGradientHolder()
     private let approveButton = ThemeButton()
     private let rejectButton = ThemeButton()
 
@@ -37,67 +36,51 @@ class WalletConnectRequestViewController: ThemeActionSheetController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.addSubview(titleView)
-        titleView.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
-        }
-
-        titleView.bind(title: "Send Confirm", subtitle: "Uniswap Interface", image: UIImage(named: "Attention Icon")?.tinted(with: .themeGray))
-
-        titleView.onTapClose = { [weak self] in
-            self?.dismiss(animated: true)
-        }
-
-        view.addSubview(amountInfoView)
-        amountInfoView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(titleView.snp.bottom)
-            maker.height.equalTo(72)
-        }
-
-        amountInfoView.bind(primaryAmountInfo: viewModel.amountData.primary, secondaryAmountInfo: viewModel.amountData.secondary)
-
-        view.addSubview(separatorView)
-        separatorView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.bottom.equalTo(amountInfoView)
-            maker.height.equalTo(CGFloat.heightOnePixel)
-        }
-
-        separatorView.backgroundColor = .themeSteel20
+        title = "connect".localized
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(amountInfoView.snp.bottom)
+            maker.leading.top.trailing.equalToSuperview()
         }
+
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+
+        tableView.registerCell(forClass: SendConfirmationAmountCell.self)
 
         tableView.registerCell(forClass: TransactionInfoFromToCell.self)
         tableView.registerCell(forClass: TransactionInfoValueCell.self)
         tableView.sectionDataSource = self
         tableView.allowsSelection = false
 
-        view.addSubview(approveButton)
-        approveButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(tableView.snp.bottom).offset(CGFloat.margin4x)
-            maker.height.equalTo(CGFloat.heightButton)
+        view.addSubview(buttonsHolder)
+        buttonsHolder.snp.makeConstraints { maker in
+            maker.top.equalTo(tableView.snp.bottom).offset(-CGFloat.margin4x)
+            maker.leading.trailing.bottom.equalToSuperview()
         }
 
-        approveButton.apply(style: .primaryYellow)
-        approveButton.setTitle("Approve".localized, for: .normal)
-        approveButton.addTarget(self, action: #selector(onTapApprove), for: .touchUpInside)
-
-        view.addSubview(rejectButton)
+        buttonsHolder.addSubview(rejectButton)
         rejectButton.snp.makeConstraints { maker in
-            maker.leading.trailing.bottom.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(approveButton.snp.bottom).offset(CGFloat.margin4x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
+            maker.bottom.equalToSuperview().offset(-CGFloat.margin4x)
             maker.height.equalTo(CGFloat.heightButton)
         }
 
         rejectButton.apply(style: .primaryGray)
-        rejectButton.setTitle("Reject".localized, for: .normal)
+        rejectButton.setTitle("button.reject".localized, for: .normal)
         rejectButton.addTarget(self, action: #selector(onTapReject), for: .touchUpInside)
+
+        buttonsHolder.addSubview(approveButton)
+        approveButton.snp.makeConstraints { maker in
+            maker.top.equalToSuperview().inset(CGFloat.margin8x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
+            maker.bottom.equalTo(rejectButton.snp.top).offset(-CGFloat.margin4x)
+            maker.height.equalTo(CGFloat.heightButton)
+        }
+
+        approveButton.apply(style: .primaryYellow)
+        approveButton.setTitle("button.approve".localized, for: .normal)
+        approveButton.addTarget(self, action: #selector(onTapApprove), for: .touchUpInside)
 
         viewModel.approveSignal
                 .emit(onNext: { [weak self] transactionId in
@@ -117,6 +100,35 @@ class WalletConnectRequestViewController: ThemeActionSheetController {
     @objc private func onTapReject() {
         onReject()
         dismiss(animated: true)
+    }
+
+}
+
+extension WalletConnectRequestViewController: SectionsDataSource {
+
+    func buildSections() -> [SectionProtocol] {
+        var rows = [RowProtocol]()
+
+        rows.append(amountRow)
+
+        rows.append(contentsOf: viewItems.map { viewItem in
+            row(viewItem: viewItem)
+        })
+
+        return [Section(id: "main", rows: rows)]
+    }
+
+    private var amountRow: RowProtocol {
+        let amountViewItem = viewModel.amountData
+
+        return Row<SendConfirmationAmountCell>(
+                id: "amount",
+                hash: amountViewItem.primary.formattedString,
+                height: SendConfirmationAmountCell.height,
+                bind: { cell, _ in
+                    cell.bind(primaryAmountInfo: amountViewItem.primary, secondaryAmountInfo: amountViewItem.secondary)
+                }
+        )
     }
 
     private func fromToRow(title: String, value: String, onTap: @escaping () -> ()) -> RowProtocol {
@@ -179,21 +191,6 @@ class WalletConnectRequestViewController: ThemeActionSheetController {
         case let .to(value): return toRow(value: value)
         case let .input(value): return inputRow(value: value)
         }
-    }
-
-}
-
-extension WalletConnectRequestViewController: SectionsDataSource {
-
-    func buildSections() -> [SectionProtocol] {
-        [
-            Section(
-                    id: "main",
-                    rows: viewItems.map { viewItem in
-                        row(viewItem: viewItem)
-                    }
-            )
-        ]
     }
 
 }

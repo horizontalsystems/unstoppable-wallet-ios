@@ -3,6 +3,7 @@ import SnapKit
 import ThemeKit
 
 class SendConfirmationAmountCell: ThemeCell {
+    static let height: CGFloat = 72
 
     private let amountInfoView = AmountInfoView()
 

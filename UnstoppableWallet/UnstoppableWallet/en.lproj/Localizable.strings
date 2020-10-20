@@ -5,7 +5,6 @@
 "button.ok" = "OK";
 "button.cancel" = "Cancel";
 "button.close" = "Close";
-"button.confirm" = "Confirm";
 "button.done" = "Done";
 "button.restore" = "Restore";
 "button.next" = "Next";
@@ -19,6 +18,7 @@
 "button.report" = "Report";
 "button.add" = "Add";
 "button.approve" = "Approve";
+"button.reject" = "Reject";
 
 "alert.copied" = "Copied";
 "alert.no_internet" = "No Internet";
@@ -31,9 +31,11 @@
 "placeholder.search" = "Search";
 
 "status" = "Status";
-"connecting" = "connecting";
-"online" = "online";
-"offline" = "offline";
+"connecting" = "Connecting...";
+"online" = "Online";
+"offline" = "Offline";
+"confirm" = "Confirm";
+"connect" = "Connect";
 
 "n/a" = "N/A";
 
@@ -178,7 +180,6 @@ bch.horizontalsystems.xyz/apg";
 "send.hodler_locktime_off" = "Off";
 "send.hodler_error.unsupported_address" = "Time locking works only with P2PKH addresses (starting with 1)";
 
-"send.confirmation.title" = "Confirm";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total";
 "send.confirmation.send_button" = "Send";
@@ -230,7 +231,6 @@ bch.horizontalsystems.xyz/apg";
 
 // Swap Confirmation
 
-"swap.confirmation.title" = "Confirm";
 "swap.confirmation.swap_button" = "Swap";
 "swap.confirmation.pay" = "Pay %@";
 "swap.confirmation.get" = "Get %@";
@@ -279,6 +279,7 @@ bch.horizontalsystems.xyz/apg";
 "tx_info.from_hash" = "From";
 "tx_info.transaction_id" = "ID";
 "tx_info.to_hash" = "To";
+"tx_info.input" = "Input";
 "tx_info.button_verify" = "Verify";
 "tx_info.rate" = "Historical Rate";
 "tx_info.fee" = "Fee";
@@ -482,7 +483,6 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 
 "set_pin.title" = "Passcode";
 "set_pin.info" = "Your passcode will be used to unlock your wallet";
-"set_pin.confirm.info" = "Confirm";
 "set_pin.wrong_confirmation" = "Passcode did not match. Try again";
 
 // Edit PIN
@@ -635,4 +635,3 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "wallet_connect.connect_description" = "By clicking approve, you allow this app to view your public address. This is important security step to protect your data from potential phishing risks.";
 "wallet_connect.usage_description" = "You can go to the browser. Do not close this page while interacting in the browser.";
 "wallet_connect.button_disconnect" = "Disconnect";
-"wallet_connect.button_reject" = "Reject";

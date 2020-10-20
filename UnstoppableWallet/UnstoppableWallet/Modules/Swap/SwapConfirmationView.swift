@@ -48,7 +48,7 @@ class SwapConfirmationView: ThemeViewController, SectionsDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "send.confirmation.title".localized
+        title = "confirm".localized
 
         view.addSubview(tableView)
 
