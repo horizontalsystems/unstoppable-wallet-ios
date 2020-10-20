@@ -1,6 +1,7 @@
 enum PredefinedAccountType: CaseIterable {
     case standard
     case binance
+    case zCash
     case eos
 
     var title: String {
@@ -8,6 +9,7 @@ enum PredefinedAccountType: CaseIterable {
         case .standard: return "Standard"
         case .eos: return "EOS"
         case .binance: return "Binance"
+        case .zCash: return "zCash"
         }
     }
 
@@ -16,6 +18,7 @@ enum PredefinedAccountType: CaseIterable {
         case .standard: return "BTC, ETH, LTC, BCH, DASH, ERC20 tokens"
         case .eos: return "EOS, EOSIO tokens"
         case .binance: return "BNB, BEP2 tokens"
+        case .zCash: return "ZEC"
         }
     }
 
@@ -33,6 +36,10 @@ enum PredefinedAccountType: CaseIterable {
             if case let .mnemonic(words, _) = accountType {
                 return words.count == 24
             }
+        case .zCash:
+            if case let .mnemonic(words, _) = accountType {
+                return words.count == 24
+            }
         }
 
         return false
@@ -40,7 +47,7 @@ enum PredefinedAccountType: CaseIterable {
 
     var createSupported: Bool {
         switch self {
-        case .standard, .binance: return true
+        case .standard, .binance, .zCash: return true
         case .eos: return false
         }
     }
@@ -54,6 +61,7 @@ extension PredefinedAccountType: Hashable {
         case .standard: hasher.combine("standard")
         case .eos: hasher.combine("eos")
         case .binance: hasher.combine("binance")
+        case .zCash: hasher.combine("zCash")
         }
     }
 

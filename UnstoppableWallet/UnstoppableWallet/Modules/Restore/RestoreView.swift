@@ -51,7 +51,7 @@ class RestoreView {
                 return RestoreWordsModule.viewController(restoreView: self, wordCount: 12)
             case .eos:
                 return RestoreEosModule.viewController(restoreView: self)
-            case .binance:
+            case .binance, .zCash:
                 return RestoreWordsModule.viewController(restoreView: self, wordCount: 24)
             }
 

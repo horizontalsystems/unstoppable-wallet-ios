@@ -1401,6 +1401,21 @@
 		3AF4739D21D38F380005A458 /* FullTransactionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF4739C21D38F380005A458 /* FullTransactionInfoViewController.swift */; };
 		3AF4739E21D38F380005A458 /* FullTransactionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF4739C21D38F380005A458 /* FullTransactionInfoViewController.swift */; };
 		3AF4739F21D38F380005A458 /* FullTransactionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF4739C21D38F380005A458 /* FullTransactionInfoViewController.swift */; };
+		3AF9F60D253EF4BD000626A8 /* SendZCashHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9F60B253EF4BD000626A8 /* SendZCashHandler.swift */; };
+		3AF9F60E253EF4BD000626A8 /* SendZCashHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9F60B253EF4BD000626A8 /* SendZCashHandler.swift */; };
+		3AF9F60F253EF4BD000626A8 /* SendZCashHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9F60B253EF4BD000626A8 /* SendZCashHandler.swift */; };
+		3AF9F610253EF4BD000626A8 /* SendZCashInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9F60C253EF4BD000626A8 /* SendZCashInteractor.swift */; };
+		3AF9F611253EF4BD000626A8 /* SendZCashInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9F60C253EF4BD000626A8 /* SendZCashInteractor.swift */; };
+		3AF9F612253EF4BD000626A8 /* SendZCashInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9F60C253EF4BD000626A8 /* SendZCashInteractor.swift */; };
+		3AF9F61A253EF555000626A8 /* ZCashTransactionPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9F617253EF555000626A8 /* ZCashTransactionPool.swift */; };
+		3AF9F61B253EF555000626A8 /* ZCashTransactionPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9F617253EF555000626A8 /* ZCashTransactionPool.swift */; };
+		3AF9F61C253EF555000626A8 /* ZCashTransactionPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9F617253EF555000626A8 /* ZCashTransactionPool.swift */; };
+		3AF9F61D253EF555000626A8 /* ZCashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9F618253EF555000626A8 /* ZCashAdapter.swift */; };
+		3AF9F61E253EF555000626A8 /* ZCashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9F618253EF555000626A8 /* ZCashAdapter.swift */; };
+		3AF9F61F253EF555000626A8 /* ZCashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9F618253EF555000626A8 /* ZCashAdapter.swift */; };
+		3AF9F620253EF555000626A8 /* ZCashTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9F619253EF555000626A8 /* ZCashTransaction.swift */; };
+		3AF9F621253EF555000626A8 /* ZCashTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9F619253EF555000626A8 /* ZCashTransaction.swift */; };
+		3AF9F622253EF555000626A8 /* ZCashTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9F619253EF555000626A8 /* ZCashTransaction.swift */; };
 		3C7B9054077A4349D2F66968 /* SwapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B921FCC08FBEB38040D0A /* SwapViewController.swift */; };
 		3C7B908FFAF30C34C67B7142 /* BackupConfirmationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94C6548A52D8576B8138 /* BackupConfirmationInteractor.swift */; };
 		3C7B90996EF221A34CC4E5E0 /* WelcomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B956E27165EB2D682C2D7 /* WelcomeScreenViewController.swift */; };
@@ -2678,6 +2693,11 @@
 		2FA5DF7B14D5A200DDF5168D /* SendHodlerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendHodlerView.swift; sourceTree = "<group>"; };
 		341CB5B84A8E493223058BD3 /* Pods-Unstoppable Dev T.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unstoppable Dev T.release.xcconfig"; path = "Target Support Files/Pods-Unstoppable Dev T/Pods-Unstoppable Dev T.release.xcconfig"; sourceTree = "<group>"; };
 		3AF4739C21D38F380005A458 /* FullTransactionInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoViewController.swift; sourceTree = "<group>"; };
+		3AF9F60B253EF4BD000626A8 /* SendZCashHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendZCashHandler.swift; sourceTree = "<group>"; };
+		3AF9F60C253EF4BD000626A8 /* SendZCashInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendZCashInteractor.swift; sourceTree = "<group>"; };
+		3AF9F617253EF555000626A8 /* ZCashTransactionPool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZCashTransactionPool.swift; sourceTree = "<group>"; };
+		3AF9F618253EF555000626A8 /* ZCashAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZCashAdapter.swift; sourceTree = "<group>"; };
+		3AF9F619253EF555000626A8 /* ZCashTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZCashTransaction.swift; sourceTree = "<group>"; };
 		3C7B90282B09BCEF768A64D3 /* SwapViewItemFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapViewItemFactory.swift; sourceTree = "<group>"; };
 		3C7B921FCC08FBEB38040D0A /* SwapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapViewController.swift; sourceTree = "<group>"; };
 		3C7B92FD9F4CEC1CBB31B5A7 /* WelcomeScreenModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeScreenModule.swift; sourceTree = "<group>"; };
@@ -4014,6 +4034,9 @@
 				11B35232DF5270C6F48DDB7B /* EosAdapter.swift */,
 				11B35AAAC675987369F2DA1B /* BinanceAdapter.swift */,
 				11B356861F703A5A5C6630B6 /* LitecoinAdapter.swift */,
+				3AF9F618253EF555000626A8 /* ZCashAdapter.swift */,
+				3AF9F619253EF555000626A8 /* ZCashTransaction.swift */,
+				3AF9F617253EF555000626A8 /* ZCashTransactionPool.swift */,
 			);
 			path = Adapters;
 			sourceTree = "<group>";
@@ -4200,6 +4223,8 @@
 				11B35D43482DC6ECD766D51A /* SendEosInteractor.swift */,
 				11B35F571876EA99794DD145 /* SendBinanceHandler.swift */,
 				11B35CFD3F426B3D4C8C6A7C /* SendBinanceInteractor.swift */,
+				3AF9F60B253EF4BD000626A8 /* SendZCashHandler.swift */,
+				3AF9F60C253EF4BD000626A8 /* SendZCashInteractor.swift */,
 				11B3585438D1F0C4223AB1BC /* SendPresenter.swift */,
 				11B354AB8441E2204D1DFED3 /* SendInteractor.swift */,
 			);
@@ -5451,6 +5476,7 @@
 				11B355D74C9D67C254B90297 /* IndexedInputField.swift in Sources */,
 				11B3553FE441E814B14A29F6 /* KeyboardObservingViewController.swift in Sources */,
 				11B350B7FE5660DE0BD3DA64 /* Satoshi.swift in Sources */,
+				3AF9F61F253EF555000626A8 /* ZCashAdapter.swift in Sources */,
 				11B355591BDF5022FB33EB05 /* Date.swift in Sources */,
 				11B355D0E3D67372D975FE21 /* UIAlertController.swift in Sources */,
 				11B353CE3525B4AE83F0B993 /* DateHelper.swift in Sources */,
@@ -5554,6 +5580,7 @@
 				D31C4777238BF18D008CB818 /* DerivationSettingsViewController.swift in Sources */,
 				D31C4765238BF176008CB818 /* PredefinedAccountType.swift in Sources */,
 				11B35BCC684750CBA3C50709 /* AccountCreator.swift in Sources */,
+				3AF9F612253EF4BD000626A8 /* SendZCashInteractor.swift in Sources */,
 				11B35AB76F57933E0EC2831B /* WalletFactory.swift in Sources */,
 				58AAA0413061DD475F50E0B7 /* BackupPresenter.swift in Sources */,
 				58AAA7BF63EEB776A0256C61 /* BackupModule.swift in Sources */,
@@ -5613,6 +5640,7 @@
 				58AAA53C361658A83C658B86 /* SendConfirmationModule.swift in Sources */,
 				58AAACB5C1F6CFCECC00EAF0 /* SendConfirmationRouter.swift in Sources */,
 				58AAACB46A71DBC1572AEE3F /* SendConfirmationInteractor.swift in Sources */,
+				3AF9F60F253EF4BD000626A8 /* SendZCashHandler.swift in Sources */,
 				58AAA98CF3780BBCE1BA809F /* SendConfirmationPresenter.swift in Sources */,
 				58AAA7ACE289E7B0E845BB83 /* SendConfirmationViewController.swift in Sources */,
 				2FA5DFFB571221BD243E34E3 /* BinanceOrgProvider.swift in Sources */,
@@ -5635,6 +5663,7 @@
 				50959F0024C16AD8002D095A /* ChartNotificationPresenter.swift in Sources */,
 				11B351A14366E8A6A31A14A7 /* SendAccountInteractor.swift in Sources */,
 				11B3524652F3594670EF76F8 /* SendAccountView.swift in Sources */,
+				3AF9F61C253EF555000626A8 /* ZCashTransactionPool.swift in Sources */,
 				11B351E0D63C80085178E2A1 /* SendAccountModule.swift in Sources */,
 				11B3515AAA8F57C367776EB4 /* SendAccountPresenter.swift in Sources */,
 				11B3512DF921C5E4EC286714 /* SendEosHandler.swift in Sources */,
@@ -5948,6 +5977,7 @@
 				11B357F29DCEF3BCA4FDD9B7 /* RateTopListRouter.swift in Sources */,
 				11B35767A4CBCFEF837C5E53 /* RateListHeaderFooterView.swift in Sources */,
 				11B35D8F3BB6D3C09B4B9AA8 /* RateTopListCell.swift in Sources */,
+				3AF9F622253EF555000626A8 /* ZCashTransaction.swift in Sources */,
 				11B35490A3BEC02B0E151766 /* PostCell.swift in Sources */,
 				11B35CE397039405FEDC0206 /* PostsHeaderFooterView.swift in Sources */,
 				1A564088605FE5AB983136AF /* MacdPointView.swift in Sources */,
@@ -6188,6 +6218,7 @@
 				D3840598218317DF007D50AD /* IndexedInputField.swift in Sources */,
 				D384059A218317DF007D50AD /* KeyboardObservingViewController.swift in Sources */,
 				D384059E218317DF007D50AD /* Satoshi.swift in Sources */,
+				3AF9F61E253EF555000626A8 /* ZCashAdapter.swift in Sources */,
 				D38405A1218317DF007D50AD /* Date.swift in Sources */,
 				D38405A2218317DF007D50AD /* UIAlertController.swift in Sources */,
 				D38405A5218317DF007D50AD /* DateHelper.swift in Sources */,
@@ -6291,6 +6322,7 @@
 				11B353AA4AFFB020A68E09B6 /* AccountFactory.swift in Sources */,
 				D31C4778238BF18D008CB818 /* DerivationSettingsViewController.swift in Sources */,
 				D31C4766238BF176008CB818 /* PredefinedAccountType.swift in Sources */,
+				3AF9F611253EF4BD000626A8 /* SendZCashInteractor.swift in Sources */,
 				11B3586B8B2C99BCFDF2C40B /* AccountCreator.swift in Sources */,
 				11B351B76E70E4D03CB0615D /* WalletFactory.swift in Sources */,
 				58AAAF657CB1F0F0295E982E /* BackupPresenter.swift in Sources */,
@@ -6350,6 +6382,7 @@
 				58AAA4578B59022BBFEC60A6 /* SendFeeRouter.swift in Sources */,
 				58AAA38CFBCC6D377BDE404E /* SendConfirmationModule.swift in Sources */,
 				58AAA4CE42E4E172AB4576A2 /* SendConfirmationRouter.swift in Sources */,
+				3AF9F60E253EF4BD000626A8 /* SendZCashHandler.swift in Sources */,
 				58AAA6ABD4F748833A6D1F09 /* SendConfirmationInteractor.swift in Sources */,
 				58AAA476CF9F0EA8910B7C22 /* SendConfirmationPresenter.swift in Sources */,
 				58AAAC7A561E4A44951A020F /* SendConfirmationViewController.swift in Sources */,
@@ -6372,6 +6405,7 @@
 				50959EFF24C16AD8002D095A /* ChartNotificationPresenter.swift in Sources */,
 				11B351D315E4B83E3537DCE4 /* SendAccountRouter.swift in Sources */,
 				11B35D1519A5FA5E759628BE /* SendAccountInteractor.swift in Sources */,
+				3AF9F61B253EF555000626A8 /* ZCashTransactionPool.swift in Sources */,
 				11B3581EB0F56103624AEA83 /* SendAccountView.swift in Sources */,
 				11B356AA0EC12A1E035A7200 /* SendAccountModule.swift in Sources */,
 				11B35C7079C3051F2D11ADFC /* SendAccountPresenter.swift in Sources */,
@@ -6685,6 +6719,7 @@
 				11B35F39B63B3FD703DFEE0B /* RateTopListRouter.swift in Sources */,
 				11B353697B52C62D3BF12051 /* RateListHeaderFooterView.swift in Sources */,
 				11B35952407090E799497BC4 /* RateTopListCell.swift in Sources */,
+				3AF9F621253EF555000626A8 /* ZCashTransaction.swift in Sources */,
 				11B35E303DC21178C2B27115 /* PostCell.swift in Sources */,
 				11B3592140A69C79DC5BE69D /* PostsHeaderFooterView.swift in Sources */,
 				1A564B3CAEC8BFB65782696D /* MacdPointView.swift in Sources */,
@@ -6887,6 +6922,7 @@
 				D384068921831B3D007D50AD /* KeyboardObservingViewController.swift in Sources */,
 				D384068D21831B3D007D50AD /* Satoshi.swift in Sources */,
 				D384069021831B3D007D50AD /* Date.swift in Sources */,
+				3AF9F61D253EF555000626A8 /* ZCashAdapter.swift in Sources */,
 				D384069121831B3D007D50AD /* UIAlertController.swift in Sources */,
 				D384069421831B3D007D50AD /* DateHelper.swift in Sources */,
 				D384069521831B3D007D50AD /* SystemInfoManager.swift in Sources */,
@@ -6990,6 +7026,7 @@
 				D31C4779238BF18D008CB818 /* DerivationSettingsViewController.swift in Sources */,
 				D31C4767238BF176008CB818 /* PredefinedAccountType.swift in Sources */,
 				11B35C3000332017B1CED810 /* AccountCreator.swift in Sources */,
+				3AF9F610253EF4BD000626A8 /* SendZCashInteractor.swift in Sources */,
 				11B35A5B491C935030FCD1C5 /* WalletFactory.swift in Sources */,
 				58AAA5BD7844035810B6DAF4 /* BackupPresenter.swift in Sources */,
 				58AAACF69195400BFD9AE04E /* BackupModule.swift in Sources */,
@@ -7049,6 +7086,7 @@
 				58AAA377293C8A04C01B664E /* SendFeeRouter.swift in Sources */,
 				58AAA2150F02CE149A62F27B /* SendConfirmationModule.swift in Sources */,
 				58AAADC7A68B2EBEE20C8E10 /* SendConfirmationRouter.swift in Sources */,
+				3AF9F60D253EF4BD000626A8 /* SendZCashHandler.swift in Sources */,
 				58AAA1C1E11D605D14B117D2 /* SendConfirmationInteractor.swift in Sources */,
 				58AAA3D3904C7703445A9098 /* SendConfirmationPresenter.swift in Sources */,
 				58AAA445D49128211BC917DD /* SendConfirmationViewController.swift in Sources */,
@@ -7071,6 +7109,7 @@
 				50959EFE24C16AD8002D095A /* ChartNotificationPresenter.swift in Sources */,
 				11B354874F95CC09A538E5FC /* SendAccountRouter.swift in Sources */,
 				11B35A6586FF799F6BB23261 /* SendAccountInteractor.swift in Sources */,
+				3AF9F61A253EF555000626A8 /* ZCashTransactionPool.swift in Sources */,
 				11B35D1E7FB41E2370F5CFD5 /* SendAccountView.swift in Sources */,
 				11B35B14FCB13985160F5359 /* SendAccountModule.swift in Sources */,
 				11B35B264DEF9EA53ECB6F89 /* SendAccountPresenter.swift in Sources */,
@@ -7384,6 +7423,7 @@
 				11B35CC3A258F953C116DD7E /* RateTopListRouter.swift in Sources */,
 				11B35C6E04CF9C6C29FA19C3 /* RateListHeaderFooterView.swift in Sources */,
 				11B35B72AE17D9F74630DA3A /* RateTopListCell.swift in Sources */,
+				3AF9F620253EF555000626A8 /* ZCashTransaction.swift in Sources */,
 				11B35FDACCB94864C88B5FB6 /* PostCell.swift in Sources */,
 				11B35F28E234A3BC7A1548F2 /* PostsHeaderFooterView.swift in Sources */,
 				1A5643C3C26E2E30F33FB8EE /* MacdPointView.swift in Sources */,
