@@ -335,7 +335,7 @@ DEPENDENCIES:
   - UniswapKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - WalletConnect (from `https://github.com/horizontalsystems/wallet-connect-swift`, branch `master`)
   - XRatesKit.swift (from `https://github.com/horizontalsystems/xrates-kit-ios/`)
-  - ZcashLightClientKit (from `https://github.com/zcash/ZcashLightClientKit.git`)
+  - ZcashLightClientKit (from `https://github.com/zcash/ZcashLightClientKit.git`, branch `wallet-history`)
 
 SPEC REPOS:
   trunk:
@@ -453,6 +453,7 @@ EXTERNAL SOURCES:
   XRatesKit.swift:
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
   ZcashLightClientKit:
+    :branch: wallet-history
     :git: https://github.com/zcash/ZcashLightClientKit.git
 
 CHECKOUT OPTIONS:
@@ -547,7 +548,7 @@ CHECKOUT OPTIONS:
     :commit: c0ef7faf52500375de0912b041dd9015ae028384
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
   ZcashLightClientKit:
-    :commit: 0df4b9e4f2007850a233feb92a723b068a2ab060
+    :commit: 4e1e899de856cfa2272cb645ac3520728e5def3b
     :git: https://github.com/zcash/ZcashLightClientKit.git
 
 SPEC CHECKSUMS:
@@ -633,6 +634,6 @@ SPEC CHECKSUMS:
   XRatesKit.swift: e30efad6badf909b67cad6914ac29e6dbc50079d
   ZcashLightClientKit: 6a12b800a373f3330d4bc177480e56b499c23a8f
 
-PODFILE CHECKSUM: 9e5611374ce0b3a6623c7476a7b68cf80992c9a2
+PODFILE CHECKSUM: eb1ff784d6dfb7eb6da56432736e0022efd7646d
 
 COCOAPODS: 1.9.3

@@ -14,7 +14,7 @@ def appPods
 
   pod 'BitcoinCore.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
 
-  pod 'ZcashLightClientKit', :git => 'https://github.com/zcash/ZcashLightClientKit.git'
+  pod 'ZcashLightClientKit', :git => 'https://github.com/zcash/ZcashLightClientKit.git', :branch => 'wallet-history'
 
   pod 'EthereumKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
   # pod 'EthereumKit.swift', path: '../ethereum-kit-ios/'
@@ -113,6 +113,10 @@ post_install do |installer|
     target.build_configurations.each do |config|
       config.build_settings['DEBUG_INFORMATION_FORMAT'] = 'dwarf'
       config.build_settings['ENABLE_BITCODE'] = 'NO'
+
+      if target.name == 'ZcashLightClientKit'
+         config.build_settings['ZCASH_NETWORK_ENVIRONMENT'] = "TESTNET"
+      end
     end
   end
 end
