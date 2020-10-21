@@ -39,12 +39,12 @@ class ZСashAdapter {
 
         let seedData = [UInt8](Mnemonic.seed(mnemonic: words))
         try initializer.initialize(viewingKeys: try DerivationTool.default.deriveViewingKeys(seed: seedData, numberOfAccounts: 1),
-                walletBirthday: BlockHeight(testMode ? 663174 : 620_000)) // Init or DIE
+                walletBirthday: BlockHeight(620_000))
 
         keys = try DerivationTool.default.deriveSpendingKeys(seed: seedData, numberOfAccounts: 1)
         synchronizer = try SDKSynchronizer(initializer: initializer)
 
-        transactionPool = ZCashTransactionPool(clearedTransactions: synchronizer.clearedTransactions, pendingTransactions: synchronizer.pendingTransactions)
+        transactionPool = ZCashTransactionPool(confirmedTransactions: synchronizer.clearedTransactions, pendingTransactions: synchronizer.pendingTransactions)
 
         state = .syncing(progress: 0, lastBlockDate: nil)
 
@@ -66,7 +66,7 @@ class ZСashAdapter {
         center.addObserver(self, selector: #selector(statusUpdated(_:)), name: Notification.Name.transactionsUpdated, object: synchronizer)
 
         //found new transactions
-        center.addObserver(self, selector: #selector(transactionsUpdated(_:)), name: Notification.Name.synchronizerMinedTransaction, object: synchronizer)
+        center.addObserver(self, selector: #selector(transactionsUpdated(_:)), name: Notification.Name.synchronizerFoundTransactions, object: synchronizer)
 
         //latestHeight
         center.addObserver(self, selector: #selector(blockHeightUpdated(_:)), name: Notification.Name.blockProcessorUpdated, object: synchronizer.blockProcessor)
@@ -93,7 +93,7 @@ class ZСashAdapter {
 
     @objc private func transactionsUpdated(_ notification: Notification) {
         print("Transactions Updated with mined!")
-        if let userInfo = notification.userInfo, let txs = userInfo[CompactBlockProcessorNotificationKey.foundTransactions] as? [TransactionEntity] {
+        if let userInfo = notification.userInfo, let txs = userInfo[CompactBlockProcessorNotificationKey.foundTransactions] as? [ConfirmedTransactionEntity] {
 
             print("===== ZCASH =====")
             print("-> Updated net txs count: \(txs.count)")
@@ -102,7 +102,8 @@ class ZСashAdapter {
             }
             print("tx entity value")
 
-//            transactionRecordsSubject.onNext(txs.map { transactionRecord(fromTransaction: $0) })
+            let newTxs = transactionPool.updated(confirmedTransactions: txs)
+            transactionRecordsSubject.onNext(newTxs.map { transactionRecord(fromTransaction: $0) })
         }
 
         balanceUpdatedSubject.onNext(())
@@ -159,7 +160,7 @@ class ZСashAdapter {
                 amount: Decimal(transaction.value) / coinRate,
                 fee: 0.0005,
                 date: Date(timeIntervalSince1970: transaction.timestamp),
-                failed: false,
+                failed: transaction.failed,
                 from: nil,
                 to: transaction.toAddress,
                 lockInfo: nil,
@@ -292,10 +293,11 @@ extension ZСashAdapter: ISendZCashAdapter {
         return Single<()>.create { single in
             synchronizer.sendToAddress(spendingKey: spendingKey, zatoshi: amount, toAddress: address, memo: memo, from: 0) { result in
                 switch result {
-                case .success:
+                case .success(let tx):
+                    print("TX: \(tx)")
                     single(.success(()))
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    print("ERROR: ", error.localizedDescription)
                     single(.error(error))
                 }
             }

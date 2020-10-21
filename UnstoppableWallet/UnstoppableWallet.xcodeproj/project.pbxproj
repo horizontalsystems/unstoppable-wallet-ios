@@ -5046,6 +5046,7 @@
 				D38406AB21831B3D007D50AD /* Resources */,
 				67CE29D99EF3682CBE44ECA1 /* [CP] Embed Pods Frameworks */,
 				F283A4A9D6F36C7FDA4833BC /* [CP] Copy Pods Resources */,
+				3AF9FF20254008F3000626A8 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -5162,6 +5163,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		3AF9FF20254008F3000626A8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
+		};
 		404705D497FE519E24388092 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -7671,6 +7689,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.17;
+				MAX = LOH;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OfficeMode = "";
@@ -7681,6 +7700,7 @@
 				SWIFT_VERSION = 5.0;
 				Sandbox = true;
 				VERSIONING_SYSTEM = "apple-generic";
+				ZCASH_NETWORK_ENVIRONMENT = TESTNET;
 			};
 			name = Debug;
 		};
@@ -7742,6 +7762,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.17;
+				MAX = LOH;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OfficeMode = "";
 				Production = YES;
@@ -7752,6 +7773,7 @@
 				Sandbox = false;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
+				ZCASH_NETWORK_ENVIRONMENT = TESTNET;
 			};
 			name = Release;
 		};
@@ -7866,6 +7888,7 @@
 				PRODUCT_MODULE_NAME = Unstoppable;
 				PRODUCT_NAME = Unstoppable;
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet Dev";
+				ZCASH_NETWORK_ENVIRONMENT = MAINNET;
 			};
 			name = Debug;
 		};
@@ -7879,6 +7902,7 @@
 				PRODUCT_MODULE_NAME = Unstoppable;
 				PRODUCT_NAME = Unstoppable;
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet AppStore";
+				ZCASH_NETWORK_ENVIRONMENT = MAINNET;
 			};
 			name = Release;
 		};
