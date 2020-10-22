@@ -115,7 +115,7 @@ post_install do |installer|
       config.build_settings['ENABLE_BITCODE'] = 'NO'
 
       if target.name == 'ZcashLightClientKit'
-         config.build_settings['ZCASH_NETWORK_ENVIRONMENT'] = "TESTNET"
+         config.build_settings['ZCASH_NETWORK_ENVIRONMENT'] = "MAINNET"
       end
     end
   end

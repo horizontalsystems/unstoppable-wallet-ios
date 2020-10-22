@@ -16,12 +16,16 @@ class ZCashTransactionPool {
         self.pendingTransactions = Set(pendingTransactions.compactMap { ZCashTransaction(pendingTransaction: $0) })
     }
 
-    func add(pendingTransaction: PendingTransactionEntity) {
+    func add(pendingTransaction: PendingTransactionEntity) -> ZCashTransaction? {
         guard let transaction = ZCashTransaction(pendingTransaction: pendingTransaction) else {
-            return
+            return nil
         }
 
+        print(" ---> Mapped to: \(transaction.transactionHash)")
+        print("pending txs: \(pendingTransactions)")
+
         pendingTransactions.update(with: transaction)
+        return transaction
     }
 
     func add(confirmedTransaction: ConfirmedTransactionEntity) {
