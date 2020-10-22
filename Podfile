@@ -64,7 +64,8 @@ def appPods
   # pod 'HUD.swift', path: '../gui-kit/'
   pod 'Chart.swift', git: 'https://github.com/horizontalsystems/gui-kit/'
   # pod 'Chart.swift', path: '../gui-kit/'
-  pod 'SectionsTableView.swift'
+  pod 'SectionsTableView.swift', git: 'https://github.com/horizontalsystems/gui-kit/'
+  # pod 'SectionsTableView.swift', path: '../gui-kit/'
 
   pod 'Alamofire'
   pod 'AlamofireImage'

@@ -36,8 +36,8 @@ extension EthereumCoinService {
         let coinValue = CoinValue(coin: ethereumCoin, value: decimalValue)
 
         if let rate = ethereumRate {
-            primaryInfo = .currencyValue(currencyValue: CurrencyValue(currency: rate.currency, value: rate.value * decimalValue))
-            secondaryInfo = .coinValue(coinValue: coinValue)
+            primaryInfo = .coinValue(coinValue: coinValue)
+            secondaryInfo = .currencyValue(currencyValue: CurrencyValue(currency: rate.currency, value: rate.value * decimalValue))
         } else {
             primaryInfo = .coinValue(coinValue: coinValue)
         }

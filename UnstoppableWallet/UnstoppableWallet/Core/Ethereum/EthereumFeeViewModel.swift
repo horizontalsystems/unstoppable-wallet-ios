@@ -8,7 +8,7 @@ class EthereumFeeViewModel {
 
     private let disposeBag = DisposeBag()
 
-    private let feeStatusRelay = BehaviorRelay<DataStatus<AmountData?>>(value: .loading)
+    private let feeStatusRelay = BehaviorRelay<String>(value: "")
 
     init(service: EthereumTransactionService, coinService: EthereumCoinService) {
         self.service = service
@@ -26,16 +26,25 @@ class EthereumFeeViewModel {
     }
 
     private func sync(transactionStatus: DataStatus<EthereumTransactionService.Transaction>) {
-        feeStatusRelay.accept(transactionStatus.map { transaction in
-            coinService.amountData(value: transaction.gasData.fee)
-        })
+        feeStatusRelay.accept(feeStatus(transactionStatus: transactionStatus))
+    }
+
+    private func feeStatus(transactionStatus: DataStatus<EthereumTransactionService.Transaction>) -> String {
+        switch transactionStatus {
+        case .loading:
+            return "action.loading".localized
+        case .failed:
+            return "n/a".localized
+        case .completed(let transaction):
+            return coinService.amountData(value: transaction.gasData.fee).formattedString
+        }
     }
 
 }
 
 extension EthereumFeeViewModel {
 
-    var feeStatusDriver: Driver<DataStatus<AmountData?>> {
+    var feeStatusDriver: Driver<String> {
         feeStatusRelay.asDriver()
     }
 

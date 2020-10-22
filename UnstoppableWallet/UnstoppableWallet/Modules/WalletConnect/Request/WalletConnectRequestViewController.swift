@@ -12,12 +12,14 @@ class WalletConnectRequestViewController: ThemeViewController {
     private let onReject: () -> ()
 
     private let tableView = SectionsTableView(style: .grouped)
+    private let feeCell = SendEthereumFeeCell()
 
     private let buttonsHolder = BottomGradientHolder()
     private let approveButton = ThemeButton()
     private let rejectButton = ThemeButton()
 
     private var viewItems = [WalletConnectRequestViewItem]()
+    private var error: Error?
 
     private let disposeBag = DisposeBag()
 
@@ -51,6 +53,7 @@ class WalletConnectRequestViewController: ThemeViewController {
 
         tableView.registerCell(forClass: TransactionInfoFromToCell.self)
         tableView.registerCell(forClass: TransactionInfoValueCell.self)
+        tableView.registerCell(forClass: SendEthereumErrorCell.self)
         tableView.sectionDataSource = self
         tableView.allowsSelection = false
 
@@ -96,8 +99,9 @@ class WalletConnectRequestViewController: ThemeViewController {
                 .disposed(by: disposeBag)
 
         viewModel.errorsDriver
-                .drive(onNext: { [weak self] errors in
-                    // todo
+                .drive(onNext: { [weak self] error in
+                    self?.error = error
+                    self?.tableView.reload()
                 })
                 .disposed(by: disposeBag)
 
@@ -114,6 +118,12 @@ class WalletConnectRequestViewController: ThemeViewController {
                     self?.onApprove(transactionId)
                     self?.dismiss(animated: true)
                     HudHelper.instance.showSuccess()
+                })
+                .disposed(by: disposeBag)
+
+        feeViewModel.feeStatusDriver
+                .drive(onNext: { [weak self] status in
+                    self?.feeCell.bind(value: status)
                 })
                 .disposed(by: disposeBag)
 
@@ -135,15 +145,27 @@ class WalletConnectRequestViewController: ThemeViewController {
 extension WalletConnectRequestViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        var rows = [RowProtocol]()
+        var feeRows = [RowProtocol]()
 
-        rows.append(amountRow)
+        if let error = error {
+            feeRows.append(errorRow(error: error))
+        }
 
-        rows.append(contentsOf: viewItems.map { viewItem in
-            row(viewItem: viewItem)
-        })
+        feeRows.append(feeRow)
 
-        return [Section(id: "main", rows: rows)]
+        return [
+            Section(
+                    id: "main",
+                    footerState: .margin(height: CGFloat.margin3x),
+                    rows: [amountRow] + viewItems.map { viewItem in
+                        row(viewItem: viewItem)
+                    }
+            ),
+            Section(
+                    id: "fee",
+                    rows: feeRows
+            )
+        ]
     }
 
     private var amountRow: RowProtocol {
@@ -196,20 +218,11 @@ extension WalletConnectRequestViewController: SectionsDataSource {
         )
     }
 
-    private func feeRow(coinValue: CoinValue, currencyValue: CurrencyValue?) -> RowProtocol {
-        var parts = [String]()
-
-        if let formattedCoinValue = ValueFormatter.instance.format(coinValue: coinValue) {
-            parts.append(formattedCoinValue)
-        }
-
-        if let currencyValue = currencyValue, let formattedCurrencyValue = ValueFormatter.instance.format(currencyValue: currencyValue) {
-            parts.append(formattedCurrencyValue)
-        }
-
-        return valueRow(
-                title: "tx_info.fee".localized,
-                value: parts.joined(separator: " | ")
+    private var feeRow: RowProtocol {
+        StaticRow(
+                cell: feeCell,
+                id: "fee",
+                height: .heightSingleLineCell
         )
     }
 
@@ -219,6 +232,19 @@ extension WalletConnectRequestViewController: SectionsDataSource {
         case let .to(value): return toRow(value: value)
         case let .input(value): return inputRow(value: value)
         }
+    }
+
+    private func errorRow(error: Error) -> RowProtocol {
+        Row<SendEthereumErrorCell>(
+                id: "error_row",
+                hash: error.smartDescription,
+                dynamicHeight: { width in
+                    SendEthereumErrorCell.height(error: error, containerWidth: width)
+                },
+                bind: { cell, _ in
+                    cell.bind(error: error)
+                }
+        )
     }
 
 }

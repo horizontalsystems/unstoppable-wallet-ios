@@ -13,7 +13,7 @@ class WalletConnectSendEthereumTransactionRequestViewModel {
 
     private let approveEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let rejectEnabledRelay = BehaviorRelay<Bool>(value: false)
-    private let errorsRelay = BehaviorRelay<[Error]>(value: [])
+    private let errorsRelay = BehaviorRelay<Error?>(value: nil)
     private let sendingRelay = BehaviorRelay<Bool>(value: false)
     private let approveRelay = PublishRelay<Data>()
 
@@ -54,12 +54,23 @@ class WalletConnectSendEthereumTransactionRequestViewModel {
         rejectEnabledRelay.accept(state != .sending)
 
         if case .notReady(let errors) = state {
-            errorsRelay.accept(errors)
+            errorsRelay.accept(convert(error: errors.first))
         } else {
-            errorsRelay.accept([])
+            errorsRelay.accept(nil)
         }
 
         sendingRelay.accept(state == .sending)
+    }
+
+    private func convert(error: Error?) -> Error? {
+        if let transactionError = error as? WalletConnectSendEthereumTransactionRequestService.TransactionError {
+            switch transactionError {
+            case .insufficientBalance(let requiredBalance):
+                return SendError.insufficientBalance(requiredBalance: coinService.amountData(value: requiredBalance))
+            }
+        }
+
+        return error
     }
 
 }
@@ -74,7 +85,7 @@ extension WalletConnectSendEthereumTransactionRequestViewModel {
         rejectEnabledRelay.asDriver()
     }
 
-    var errorsDriver: Driver<[Error]> {
+    var errorsDriver: Driver<Error?> {
         errorsRelay.asDriver()
     }
 
@@ -88,6 +99,21 @@ extension WalletConnectSendEthereumTransactionRequestViewModel {
 
     func approve() {
         service.send()
+    }
+
+}
+
+extension WalletConnectSendEthereumTransactionRequestViewModel {
+
+    enum SendError: LocalizedError {
+        case insufficientBalance(requiredBalance: AmountData)
+
+        public var errorDescription: String? {
+            switch self {
+            case .insufficientBalance(let requiredBalance):
+                return "ethereum_transaction.error.insufficient_balance".localized(requiredBalance.formattedString)
+            }
+        }
     }
 
 }
