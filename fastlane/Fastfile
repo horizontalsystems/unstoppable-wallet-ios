@@ -5,7 +5,7 @@ lane :dev_t do |options|
   sigh(app_identifier: "io.horizontalsystems.bank-wallet.dev.testnet", force: true, adhoc: true, username: ENV['ITUNES_CONNECT_USERNAME'], team_id: options[:dp_team_id])
   gym(scheme: "Unstoppable Dev T", export_method: "ad-hoc", silent: true, clean: true, export_options: { compileBitcode: false })
 
-  upload_to_app_center(options[:app_center_api_token])
+  upload_to_app_center(options[:app_center_api_token], "Unstoppable-T")
 end
 
 lane :dev do |options|
@@ -15,7 +15,7 @@ lane :dev do |options|
   sigh(app_identifier: "io.horizontalsystems.bank-wallet.dev", force: true, adhoc: true, username: ENV['ITUNES_CONNECT_USERNAME'], team_id: options[:dp_team_id])
   gym(scheme: "Unstoppable Dev", export_method: "ad-hoc", silent: true, clean: true, export_options: { compileBitcode: false })
 
-  upload_to_app_center(options[:app_center_api_token])
+  upload_to_app_center(options[:app_center_api_token], "Unstoppable")
 end
 
 def prepare_environment
@@ -36,12 +36,12 @@ def prepare_environment
   cocoapods(repo_update: true)
 end
 
-def upload_to_app_center(api_token)
+def upload_to_app_center(api_token, app_name)
   appcenter_upload(
     api_token: api_token,
     owner_name: "Horizontal-Systems",
     owner_type: "organization",
-    app_name: "Unstoppable",
+    app_name: app_name,
     notify_testers: true,
     release_notes: last_git_commit[:message]
   )
