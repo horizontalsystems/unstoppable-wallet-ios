@@ -152,6 +152,20 @@ enum AmountInfo {
 struct AmountData {
     let primary: AmountInfo
     let secondary: AmountInfo?
+
+    var formattedString: String {
+        var parts = [String]()
+
+        if let formatted = primary.formattedString {
+            parts.append(formatted)
+        }
+
+        if let formatted = secondary?.formattedString {
+            parts.append(formatted)
+        }
+
+        return parts.joined(separator: " | ")
+    }
 }
 
 class SendConfirmationViewItem {
