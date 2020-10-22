@@ -13,7 +13,9 @@ class ZCashTransaction {
     let failed: Bool
 
     init?(confirmedTransaction: ConfirmedTransactionEntity) {
+        print("mapping confirmed into zCash")
         guard let rawTransactionId = confirmedTransaction.rawTransactionId else {
+            print("rawTxID = nil!")
             return nil
         }
 
@@ -59,9 +61,7 @@ extension ZCashTransaction: Comparable {
     }
 
     public static func ==(lhs: ZCashTransaction, rhs: ZCashTransaction) -> Bool {
-        lhs.transactionHash == rhs.transactionHash &&
-        lhs.timestamp == rhs.timestamp &&
-        lhs.transactionIndex == rhs.transactionIndex
+        lhs.transactionHash == rhs.transactionHash
     }
 
 }

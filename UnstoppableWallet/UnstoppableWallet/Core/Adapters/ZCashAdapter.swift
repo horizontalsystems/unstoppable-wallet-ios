@@ -28,10 +28,14 @@ class ZСashAdapter {
             throw AdapterError.unsupportedAccount
         }
 
+        let endPoint = testMode ? "lightwalletd.testnet.electriccoin.co" : "lightwalletd.electriccoin.co"
+        let birthday = testMode ? 620_000 : 995_000
+//        let birthday = testMode ? 620_000 : 663_174
+
         let initializer = Initializer(cacheDbURL:try! ZСashAdapter.__cacheDbURL(),
                                       dataDbURL: try! ZСashAdapter.__dataDbURL(),
                                       pendingDbURL: try! ZСashAdapter.__pendingDbURL(),
-                endpoint: LightWalletEndpoint(address: "lightwalletd.testnet.electriccoin.co", port: 9067),
+                endpoint: LightWalletEndpoint(address: endPoint, port: 9067),
                 spendParamsURL: try! ZСashAdapter.__spendParamsURL(),
                 outputParamsURL: try! ZСashAdapter.__outputParamsURL(),
                 loggerProxy: loggingProxy)
@@ -39,7 +43,7 @@ class ZСashAdapter {
 
         let seedData = [UInt8](Mnemonic.seed(mnemonic: words))
         try initializer.initialize(viewingKeys: try DerivationTool.default.deriveViewingKeys(seed: seedData, numberOfAccounts: 1),
-                walletBirthday: BlockHeight(620_000))
+                walletBirthday: BlockHeight(birthday))
 
         keys = try DerivationTool.default.deriveSpendingKeys(seed: seedData, numberOfAccounts: 1)
         synchronizer = try SDKSynchronizer(initializer: initializer)
@@ -47,6 +51,7 @@ class ZСashAdapter {
         transactionPool = ZCashTransactionPool(confirmedTransactions: synchronizer.clearedTransactions, pendingTransactions: synchronizer.pendingTransactions)
 
         state = .syncing(progress: 0, lastBlockDate: nil)
+        lastBlockHeight = try? synchronizer.latestHeight()
 
         subscribeSynchronizerNotifications()
     }
@@ -93,20 +98,28 @@ class ZСashAdapter {
 
     @objc private func transactionsUpdated(_ notification: Notification) {
         print("Transactions Updated with mined!")
-        if let userInfo = notification.userInfo, let txs = userInfo[CompactBlockProcessorNotificationKey.foundTransactions] as? [ConfirmedTransactionEntity] {
+        if let userInfo = notification.userInfo, let txs2 = userInfo[SDKSynchronizer.NotificationKeys.foundTransactions] {
+            print("userInfo TX data: ", txs2)
+            if let txs = txs2 as? [ConfirmedTransactionEntity] {
 
-            print("===== ZCASH =====")
-            print("-> Updated net txs count: \(txs.count)")
-            txs.forEach {
-                print($0)
+                print("===== ZCASH =====")
+                print("-> Updated net txs count: \(txs.count)")
+                txs.forEach {
+                    print("TX: \($0.rawTransactionId?.hex ?? "N/A") : \($0.toAddress ?? "NoAddr") : \($0.transactionIndex) : \($0.blockTimeInMilliseconds.description) ")
+                }
+                print("tx entity value")
+
+                let newTxs = transactionPool.updated(confirmedTransactions: txs)
+
+                newTxs.forEach {
+                    print("CONVERTED TX: \($0.transactionHash) : \($0.toAddress ?? "NoAddr") : \($0.transactionIndex) : \($0.timestamp.description) ")
+                }
+                print("result transactions count: \(newTxs.count)")
+                transactionRecordsSubject.onNext(newTxs.map {
+                    transactionRecord(fromTransaction: $0)
+                })
             }
-            print("tx entity value")
-
-            let newTxs = transactionPool.updated(confirmedTransactions: txs)
-            transactionRecordsSubject.onNext(newTxs.map { transactionRecord(fromTransaction: $0) })
         }
-
-        balanceUpdatedSubject.onNext(())
     }
 
     @objc private func blockHeightUpdated(_ notification: Notification) {
@@ -117,6 +130,16 @@ class ZСashAdapter {
             print("===== ZCASH =====")
             print("-> BLOCK HEIGHT UPDATED: \(blockHeight)")
         }
+
+        balanceUpdatedSubject.onNext(())
+    }
+
+    private func updatePending(with pendingTransaction: PendingTransactionEntity) {
+        guard let transaction = transactionPool.add(pendingTransaction: pendingTransaction) else {
+            return
+        }
+
+        transactionRecordsSubject.onNext([transaction].map { transactionRecord(fromTransaction: $0) })
     }
 
     private static func __documentsDirectory() throws -> URL {
@@ -151,7 +174,7 @@ class ZСashAdapter {
 
         return TransactionRecord(
                 uid: transaction.id ?? "",
-                transactionHash: transaction.transactionHash ?? "",
+                transactionHash: transaction.transactionHash,
                 transactionIndex: transaction.transactionIndex,
                 interTransactionIndex: 0,
                 type: incoming ? .incoming : .outgoing,
@@ -290,19 +313,19 @@ extension ZСashAdapter: ISendZCashAdapter {
         let amount = NSDecimalNumber(decimal: amount * coinRate).int64Value
         let synchronizer = self.synchronizer
 
-        return Single<()>.create { single in
+        return Single<PendingTransactionEntity>.create { single in
             synchronizer.sendToAddress(spendingKey: spendingKey, zatoshi: amount, toAddress: address, memo: memo, from: 0) { result in
                 switch result {
                 case .success(let tx):
-                    print("TX: \(tx)")
-                    single(.success(()))
+                    single(.success(tx))
                 case .failure(let error):
-                    print("ERROR: ", error.localizedDescription)
                     single(.error(error))
                 }
             }
 
             return Disposables.create()
+        }.map { [weak self] in
+            self?.updatePending(with: $0)
         }
 
     }
