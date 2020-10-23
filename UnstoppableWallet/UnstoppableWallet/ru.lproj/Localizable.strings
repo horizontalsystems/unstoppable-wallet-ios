@@ -19,6 +19,7 @@
 "button.add" = "Добавить";
 "button.approve" = "Подтвердить";
 "button.reject" = "Reject";
+"button.connect" = "Connect";
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет Интернета";
