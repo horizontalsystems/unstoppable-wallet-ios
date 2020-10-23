@@ -15,6 +15,7 @@ class WalletConnectService {
     private var remotePeerData: PeerData?
 
     private var stateRelay = PublishRelay<State>()
+    private var connectionStateRelay = PublishRelay<WalletConnectInteractor.State>()
     private var requestRelay = PublishRelay<WalletConnectRequest>()
 
     private var pendingRequests = [WalletConnectRequest]()
@@ -23,6 +24,10 @@ class WalletConnectService {
         didSet {
             stateRelay.accept(state)
         }
+    }
+
+    var connectionState: WalletConnectInteractor.State {
+        interactor?.state ?? .disconnected
     }
 
     init(ethereumKitManager: EthereumKitManager, sessionStore: WalletConnectSessionStore) {
@@ -36,7 +41,7 @@ class WalletConnectService {
             interactor?.delegate = self
             interactor?.connect()
 
-            state = .connecting
+            state = .ready
         }
     }
 
@@ -69,6 +74,10 @@ extension WalletConnectService {
         stateRelay.asObservable()
     }
 
+    var connectionStateObservable: Observable<WalletConnectInteractor.State> {
+        connectionStateRelay.asObservable()
+    }
+
     var requestObservable: Observable<WalletConnectRequest> {
         requestRelay.asObservable()
     }
@@ -85,8 +94,6 @@ extension WalletConnectService {
         interactor = try WalletConnectInteractor(uri: uri)
         interactor?.delegate = self
         interactor?.connect()
-
-        state = .connecting
     }
 
     func approveSession() {
@@ -110,7 +117,7 @@ extension WalletConnectService {
 
         interactor.rejectSession()
 
-        state = .completed
+        state = .killed
     }
 
     func approveRequest(id: Int, result: Any) {
@@ -150,10 +157,8 @@ extension WalletConnectService {
 
 extension WalletConnectService: IWalletConnectInteractorDelegate {
 
-    func didConnect() {
-        if remotePeerData != nil {
-            state = .ready
-        }
+    func didUpdate(state: WalletConnectInteractor.State) {
+        connectionStateRelay.accept(state)
     }
 
     func didRequestSession(peerId: String, peerMeta: WCPeerMeta) {
@@ -165,7 +170,7 @@ extension WalletConnectService: IWalletConnectInteractorDelegate {
     func didKillSession() {
         sessionStore.clear()
 
-        state = .completed
+        state = .killed
     }
 
     func didRequestSendEthereumTransaction(id: Int, transaction: WCEthereumTransaction) {
@@ -180,10 +185,9 @@ extension WalletConnectService {
 
     enum State {
         case idle
-        case connecting
         case waitingForApproveSession
         case ready
-        case completed
+        case killed
     }
 
     struct PeerData {
