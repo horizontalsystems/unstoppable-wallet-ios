@@ -1,7 +1,7 @@
 import WalletConnect
 
 protocol IWalletConnectInteractorDelegate: AnyObject {
-    func didConnect()
+    func didUpdate(state: WalletConnectInteractor.State)
     func didRequestSession(peerId: String, peerMeta: WCPeerMeta)
     func didKillSession()
     func didRequestSendEthereumTransaction(id: Int, transaction: WCEthereumTransaction)
@@ -13,6 +13,12 @@ class WalletConnectInteractor {
     weak var delegate: IWalletConnectInteractorDelegate?
 
     private let interactor: WCInteractor
+
+    private(set) var state: State = .disconnected {
+        didSet {
+            delegate?.didUpdate(state: state)
+        }
+    }
 
     init(session: WCSession, remotePeerId: String? = nil) {
         interactor = WCInteractor(session: session, meta: Self.clientMeta, uuid: UIDevice.current.identifierForVendor ?? UUID(), peerId: remotePeerId)
@@ -30,7 +36,8 @@ class WalletConnectInteractor {
         }
 
         interactor.onDisconnect = { [weak self] error in
-            self?.onDisconnect(error: error)
+            print("Disconnected: \(error)")
+            self?.state = .disconnected
         }
 
         interactor.eth.onTransaction = { [weak self] id, event, transaction in
@@ -67,10 +74,6 @@ class WalletConnectInteractor {
         self.init(session: session)
     }
 
-    private func onDisconnect(error: Error?) {
-        print("Interactor Disconnect: \(error)")
-    }
-
     private func onError(error: Error) {
         print("Interactor Error: \(error)")
     }
@@ -88,11 +91,13 @@ extension WalletConnectInteractor {
     }
 
     func connect() {
+        state = .connecting
+
         interactor.connect().done { [weak self] connected in
-            print("Connected")
-            self?.delegate?.didConnect()
+            self?.state = .connected
         }.catch { [weak self] error in
-            print("Error: \(error)")
+            print("Connect Error: \(error)")
+            self?.state = .disconnected
         }
     }
 
@@ -119,6 +124,12 @@ extension WalletConnectInteractor {
 }
 
 extension WalletConnectInteractor {
+
+    public enum State {
+        case connected
+        case connecting
+        case disconnected
+    }
 
     enum SessionError: LocalizedError {
         case invalidUri

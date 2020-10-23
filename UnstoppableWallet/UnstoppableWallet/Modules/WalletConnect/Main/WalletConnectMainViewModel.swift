@@ -10,8 +10,8 @@ class WalletConnectMainViewModel {
 
     private let connectingRelay = BehaviorRelay<Bool>(value: false)
     private let cancelVisibleRelay = BehaviorRelay<Bool>(value: false)
-    private let approveAndRejectVisibleRelay = BehaviorRelay<Bool>(value: false)
-    private let disconnectVisibleRelay = BehaviorRelay<Bool>(value: false)
+    private let connectButtonRelay = BehaviorRelay<ButtonState>(value: .hidden)
+    private let disconnectButtonRelay = BehaviorRelay<ButtonState>(value: .hidden)
     private let closeVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let signedTransactionsVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let peerMetaRelay = BehaviorRelay<PeerMetaViewItem?>(value: nil)
@@ -31,6 +31,13 @@ class WalletConnectMainViewModel {
                 })
                 .disposed(by: disposeBag)
 
+        service.connectionStateObservable
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] state in
+                    self?.sync(connectionState: state)
+                })
+                .disposed(by: disposeBag)
+
         service.requestObservable
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] request in
@@ -41,24 +48,28 @@ class WalletConnectMainViewModel {
         sync()
     }
 
-    private func sync(state: WalletConnectService.State? = nil) {
+    private func sync(state: WalletConnectService.State? = nil, connectionState: WalletConnectInteractor.State? = nil) {
         let state = state ?? service.state
+        let connectionState = connectionState ?? service.connectionState
 
-        guard state != .completed else {
+        print("\(state) --- \(connectionState)")
+
+        guard state != .killed else {
             finishRelay.accept(())
             return
         }
 
-        connectingRelay.accept(state == .connecting && service.remotePeerMeta == nil)
-        cancelVisibleRelay.accept(state == .connecting)
-        disconnectVisibleRelay.accept(state == .ready)
+        connectingRelay.accept(service.state == .idle)
+        cancelVisibleRelay.accept(state != .ready)
+        connectButtonRelay.accept(state == .waitingForApproveSession ? (connectionState == .connected ? .enabled : .disabled) : .hidden)
+        disconnectButtonRelay.accept(state == .ready ? (connectionState == .connected ? .enabled : .disabled) : .hidden)
         closeVisibleRelay.accept(state == .ready)
-        approveAndRejectVisibleRelay.accept(state == .waitingForApproveSession)
-        signedTransactionsVisibleRelay.accept(state == .ready)
+
+//        signedTransactionsVisibleRelay.accept(state == .ready)
 
         peerMetaRelay.accept(service.remotePeerMeta.map { viewItem(peerMeta: $0) })
         hintRelay.accept(hint(state: state))
-        statusRelay.accept(status(state: state))
+        statusRelay.accept(status(connectionState: connectionState))
     }
 
     private func hint(state: WalletConnectService.State) -> String? {
@@ -72,18 +83,18 @@ class WalletConnectMainViewModel {
         }
     }
 
-    private func status(state: WalletConnectService.State) -> Status? {
+    private func status(connectionState: WalletConnectInteractor.State) -> Status? {
         guard service.remotePeerMeta != nil else {
             return nil
         }
 
-        switch state {
+        switch connectionState {
         case .connecting:
             return .connecting
-        case .ready:
+        case .connected:
             return .online
-        default:
-            return nil
+        case .disconnected:
+            return .offline
         }
     }
 
@@ -108,12 +119,12 @@ extension WalletConnectMainViewModel {
         cancelVisibleRelay.asDriver()
     }
 
-    var approveAndRejectVisibleDriver: Driver<Bool> {
-        approveAndRejectVisibleRelay.asDriver()
+    var connectButtonDriver: Driver<ButtonState> {
+        connectButtonRelay.asDriver()
     }
 
-    var disconnectVisibleDriver: Driver<Bool> {
-        disconnectVisibleRelay.asDriver()
+    var disconnectButtonDriver: Driver<ButtonState> {
+        disconnectButtonRelay.asDriver()
     }
 
     var closeVisibleDriver: Driver<Bool> {
@@ -144,7 +155,15 @@ extension WalletConnectMainViewModel {
         finishRelay.asSignal()
     }
 
-    func approve() {
+    func cancel() {
+        if service.connectionState == .connected && service.state == .waitingForApproveSession {
+            service.rejectSession()
+        } else {
+            finishRelay.accept(())
+        }
+    }
+
+    func connect() {
         service.approveSession()
     }
 
@@ -177,6 +196,12 @@ extension WalletConnectMainViewModel {
         let url: String
         let description: String
         let icon: String?
+    }
+
+    enum ButtonState {
+        case enabled
+        case disabled
+        case hidden
     }
 
     enum Status {

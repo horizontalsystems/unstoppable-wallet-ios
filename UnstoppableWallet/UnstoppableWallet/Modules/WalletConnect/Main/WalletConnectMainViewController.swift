@@ -24,13 +24,9 @@ class WalletConnectMainViewController: ThemeViewController {
     private var disconnectButtonBottomConstraint: Constraint?
     private var disconnectButtonHeightConstraint: Constraint?
 
-    private let rejectButton = ThemeButton()
-    private var rejectButtonBottomConstraint: Constraint?
-    private var rejectButtonHeightConstraint: Constraint?
-
-    private let approveButton = ThemeButton()
-    private var approveButtonBottomConstraint: Constraint?
-    private var approveButtonHeightConstraint: Constraint?
+    private let connectButton = ThemeButton()
+    private var connectButtonBottomConstraint: Constraint?
+    private var connectButtonHeightConstraint: Constraint?
 
     private let cancelButton = ThemeButton()
     private var cancelButtonBottomConstraint: Constraint?
@@ -100,42 +96,30 @@ class WalletConnectMainViewController: ThemeViewController {
         disconnectButton.setTitle("wallet_connect.button_disconnect".localized, for: .normal)
         disconnectButton.addTarget(self, action: #selector(onTapDisconnect), for: .touchUpInside)
 
-        buttonsHolder.addSubview(rejectButton)
-        rejectButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
-
-            rejectButtonBottomConstraint = maker.bottom.equalTo(disconnectButton.snp.top).offset(-CGFloat.margin4x).constraint
-            rejectButtonHeightConstraint = maker.height.equalTo(CGFloat.heightButton).constraint
-        }
-
-        rejectButton.apply(style: .primaryGray)
-        rejectButton.setTitle("button.reject".localized, for: .normal)
-        rejectButton.addTarget(self, action: #selector(onTapReject), for: .touchUpInside)
-
-        buttonsHolder.addSubview(approveButton)
-        approveButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
-
-            approveButtonBottomConstraint = maker.bottom.equalTo(rejectButton.snp.top).offset(-CGFloat.margin4x).constraint
-            approveButtonHeightConstraint = maker.height.equalTo(CGFloat.heightButton).constraint
-        }
-
-        approveButton.apply(style: .primaryYellow)
-        approveButton.setTitle("button.approve".localized, for: .normal)
-        approveButton.addTarget(self, action: #selector(onTapApprove), for: .touchUpInside)
-
         buttonsHolder.addSubview(cancelButton)
         cancelButton.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin8x)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
 
-            cancelButtonBottomConstraint = maker.bottom.equalTo(approveButton.snp.top).offset(-CGFloat.margin4x).constraint
+            cancelButtonBottomConstraint = maker.bottom.equalTo(disconnectButton.snp.top).offset(-CGFloat.margin4x).constraint
             cancelButtonHeightConstraint = maker.height.equalTo(CGFloat.heightButton).constraint
         }
 
         cancelButton.apply(style: .primaryGray)
         cancelButton.setTitle("button.cancel".localized, for: .normal)
         cancelButton.addTarget(self, action: #selector(onTapCancel), for: .touchUpInside)
+
+        buttonsHolder.addSubview(connectButton)
+        connectButton.snp.makeConstraints { maker in
+            maker.top.equalToSuperview().inset(CGFloat.margin8x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
+
+            connectButtonBottomConstraint = maker.bottom.equalTo(cancelButton.snp.top).offset(-CGFloat.margin4x).constraint
+            connectButtonHeightConstraint = maker.height.equalTo(CGFloat.heightButton).constraint
+        }
+
+        connectButton.apply(style: .primaryYellow)
+        connectButton.setTitle("button.connect".localized, for: .normal)
+        connectButton.addTarget(self, action: #selector(onTapConnect), for: .touchUpInside)
 
         viewModel.connectingDriver
                 .drive(onNext: { [weak self] connecting in
@@ -149,16 +133,17 @@ class WalletConnectMainViewController: ThemeViewController {
                 })
                 .disposed(by: disposeBag)
 
-        viewModel.approveAndRejectVisibleDriver
-                .drive(onNext: { [weak self] visible in
-                    self?.syncButtonConstraints(bottom: self?.approveButtonBottomConstraint, height: self?.approveButtonHeightConstraint, visible: visible)
-                    self?.syncButtonConstraints(bottom: self?.rejectButtonBottomConstraint, height: self?.rejectButtonHeightConstraint, visible: visible)
+        viewModel.connectButtonDriver
+                .drive(onNext: { [weak self] state in
+                    self?.syncButtonConstraints(bottom: self?.connectButtonBottomConstraint, height: self?.connectButtonHeightConstraint, visible: state != .hidden)
+                    self?.connectButton.isEnabled = state == .enabled
                 })
                 .disposed(by: disposeBag)
 
-        viewModel.disconnectVisibleDriver
-                .drive(onNext: { [weak self] visible in
-                    self?.syncButtonConstraints(bottom: self?.disconnectButtonBottomConstraint, height: self?.disconnectButtonHeightConstraint, visible: visible)
+        viewModel.disconnectButtonDriver
+                .drive(onNext: { [weak self] state in
+                    self?.syncButtonConstraints(bottom: self?.disconnectButtonBottomConstraint, height: self?.disconnectButtonHeightConstraint, visible: state != .hidden)
+                    self?.disconnectButton.isEnabled = state == .enabled
                 })
                 .disposed(by: disposeBag)
 
@@ -222,11 +207,11 @@ class WalletConnectMainViewController: ThemeViewController {
     }
 
     @objc private func onTapCancel() {
-        sourceViewController?.dismiss(animated: true)
+        viewModel.cancel()
     }
 
-    @objc private func onTapApprove() {
-        viewModel.approve()
+    @objc private func onTapConnect() {
+        viewModel.connect()
     }
 
     @objc private func onTapReject() {
