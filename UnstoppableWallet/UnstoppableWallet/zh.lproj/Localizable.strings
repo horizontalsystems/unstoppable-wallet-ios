@@ -19,6 +19,7 @@
 "button.add" = "添加";
 "button.approve" = "Approve";
 "button.reject" = "Reject";
+"button.connect" = "Connect";
 
 "alert.copied" = "Copied";
 "alert.no_internet" = "No Internet";
