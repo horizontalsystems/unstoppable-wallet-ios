@@ -19,6 +19,7 @@
 "button.add" = "Add";
 "button.approve" = "Approve";
 "button.reject" = "Reject";
+"button.connect" = "Connect";
 
 "alert.copied" = "Copied";
 "alert.no_internet" = "No Internet";
