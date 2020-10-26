@@ -3,17 +3,42 @@ import ZcashLightClientKit
 import RxSwift
 
 class ZCashTransactionPool {
-    private var confirmedTransactions: Set<ZCashTransaction>
-    private var pendingTransactions: Set<ZCashTransaction>
+    private var confirmedTransactions = Set<ZCashTransaction>()
+    private var pendingTransactions = Set<ZCashTransaction>()
 
     private var transactions: [ZCashTransaction] {
         Array(confirmedTransactions.union(pendingTransactions)).sorted()
     }
 
-    init(confirmedTransactions: [ConfirmedTransactionEntity], pendingTransactions: [PendingTransactionEntity]) {
+    private func zCashTransactions(_ transactions: [SignedTransactionEntity]) -> [ZCashTransaction] {
+        transactions.compactMap { tx in
+            switch tx {
+            case let tx as PendingTransactionEntity: return ZCashTransaction(pendingTransaction: tx)
+            case let tx as ConfirmedTransactionEntity: return ZCashTransaction(confirmedTransaction: tx)
+            default: return nil
+            }
+        }
+    }
 
-        self.confirmedTransactions = Set(confirmedTransactions.compactMap { ZCashTransaction(confirmedTransaction: $0) })
-        self.pendingTransactions = Set(pendingTransactions.compactMap { ZCashTransaction(pendingTransaction: $0) })
+    @discardableResult private func sync(own: inout Set<ZCashTransaction>, incoming: [ZCashTransaction]) -> [ZCashTransaction] {
+        var newTx = [ZCashTransaction]()
+        incoming.forEach { transaction in
+            if own.insert(transaction).inserted {
+                newTx.append(transaction)
+            }
+        }
+        return newTx
+    }
+
+    func store(confirmedTransactions: [ConfirmedTransactionEntity], pendingTransactions: [PendingTransactionEntity]) {
+        print("=======================================")
+        print("Clear and storing again:")
+        print("---- pending ----")
+        pendingTransactions.forEach { print(description($0)) }
+        self.pendingTransactions = Set(zCashTransactions(pendingTransactions))
+        print("---- confirmed ----")
+        confirmedTransactions.forEach { print(description($0)) }
+        self.confirmedTransactions = Set(zCashTransactions(confirmedTransactions))
     }
 
     func add(pendingTransaction: PendingTransactionEntity) -> ZCashTransaction? {
@@ -36,15 +61,28 @@ class ZCashTransactionPool {
         confirmedTransactions.update(with: transaction)
     }
 
-    func update(pendingTransactions: [PendingTransactionEntity]) {
-        self.pendingTransactions = Set(pendingTransactions.compactMap { ZCashTransaction(pendingTransaction: $0) })
+    func sync(transactions: [PendingTransactionEntity]) -> [ZCashTransaction] {
+        print("=======================================")
+        print("sync coming pending transactions:")
+        transactions.forEach { print(description($0)) }
+
+        let new = sync(own: &pendingTransactions, incoming: zCashTransactions(transactions))
+        print("new transactions:")
+        new.forEach { print($0.description) }
+
+        return new
     }
 
-    func updated(confirmedTransactions: [ConfirmedTransactionEntity]) -> [ZCashTransaction] {
-        let newTransactions = confirmedTransactions.compactMap { ZCashTransaction(confirmedTransaction: $0) }
-        self.confirmedTransactions = self.confirmedTransactions.union(Set(newTransactions))
+    func sync(transactions: [ConfirmedTransactionEntity]) -> [ZCashTransaction] {
+        print("=======================================")
+        print("sync coming confirmed transactions:")
+        transactions.forEach { print(description($0)) }
 
-        return newTransactions
+        let new = sync(own: &confirmedTransactions, incoming: zCashTransactions(transactions))
+        print("new transactions:")
+        new.forEach { print($0.description) }
+
+        return new
     }
 
 }
