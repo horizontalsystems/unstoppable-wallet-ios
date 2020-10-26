@@ -1,12 +1,21 @@
 class RestoreWordsService {
-    let wordCount: Int
-    private var wordsManager: IWordsManager
+    private let restoreAccountType: RestoreWordsModule.RestoreAccountType
+    private let wordsManager: IWordsManager
     private let appConfigProvider: IAppConfigProvider
 
-    init(wordCount: Int, wordsManager: IWordsManager, appConfigProvider: IAppConfigProvider) {
-        self.wordCount = wordCount
+    init(restoreAccountType: RestoreWordsModule.RestoreAccountType, wordsManager: IWordsManager, appConfigProvider: IAppConfigProvider) {
+        self.restoreAccountType = restoreAccountType
         self.wordsManager = wordsManager
         self.appConfigProvider = appConfigProvider
+    }
+
+    var wordCount: Int {
+        switch restoreAccountType {
+        case .mnemonic(let wordsCount):
+            return wordsCount
+        case .zCash:
+            return 24
+        }
     }
 
     var defaultWords: [String] {
@@ -15,7 +24,13 @@ class RestoreWordsService {
 
     func accountType(words: [String]) throws -> AccountType {
         try wordsManager.validate(words: words, requiredWordsCount: wordCount)
-        return .mnemonic(words: words, salt: nil)
+
+        switch restoreAccountType {
+        case .mnemonic:
+            return .mnemonic(words: words, salt: nil)
+        case .zCash:
+            return .zCash(words: words)
+        }
     }
 
 }

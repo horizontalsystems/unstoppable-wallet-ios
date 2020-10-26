@@ -4,6 +4,7 @@ enum AccountType {
     case mnemonic(words: [String], salt: String?)
     case privateKey(data: Data)
     case eos(account: String, activePrivateKey: String)
+    case zCash(words: [String])
 }
 
 extension AccountType: Hashable {
@@ -16,6 +17,8 @@ extension AccountType: Hashable {
             return lhsData == rhsData
         case (let .eos(lhsAccount, lhsActivePrivateKey), let .eos(rhsAccount, rhsActivePrivateKey)):
             return lhsAccount == rhsAccount && lhsActivePrivateKey == rhsActivePrivateKey
+        case (let .zCash(lhsWords), let .zCash(rhsWords)):
+            return lhsWords == rhsWords
         default: return false
         }
     }
@@ -30,6 +33,8 @@ extension AccountType: Hashable {
         case let .eos(account, activePrivateKey):
             hasher.combine(account)
             hasher.combine(activePrivateKey)
+        case let .zCash(words):
+            hasher.combine(words)
         }
     }
 

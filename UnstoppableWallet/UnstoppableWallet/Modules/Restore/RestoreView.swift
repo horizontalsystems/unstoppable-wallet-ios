@@ -48,11 +48,13 @@ class RestoreView {
         case .restoreAccountType(let predefinedAccountType):
             switch predefinedAccountType {
             case .standard:
-                return RestoreWordsModule.viewController(restoreView: self, wordCount: 12)
+                return RestoreWordsModule.viewController(restoreView: self, restoreAccountType: .mnemonic(wordsCount: 12))
             case .eos:
                 return RestoreEosModule.viewController(restoreView: self)
-            case .binance, .zCash:
-                return RestoreWordsModule.viewController(restoreView: self, wordCount: 24)
+            case .binance:
+                return RestoreWordsModule.viewController(restoreView: self, restoreAccountType: .mnemonic(wordsCount: 24))
+            case .zCash:
+                return RestoreWordsModule.viewController(restoreView: self, restoreAccountType: .zCash)
             }
 
         case .selectCoins(let predefinedAccountType):
