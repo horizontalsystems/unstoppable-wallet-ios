@@ -21,17 +21,12 @@ class WalletConnectSendEthereumTransactionRequestViewModel {
         self.service = service
         self.coinService = coinService
 
-        amountData = coinService.amountData(value: service.transactionData.value ?? 0)
+        amountData = coinService.amountData(value: service.transactionData.value)
 
-        var viewItems = [WalletConnectRequestViewItem]()
-
-        if let to = service.transactionData.to {
-            viewItems.append(.to(value: to.eip55))
-        }
-
-        viewItems.append(.input(value: service.transactionData.input.toHexString()))
-
-        self.viewItems = viewItems
+        viewItems = [
+            .to(value: service.transactionData.to.eip55),
+            .input(value: service.transactionData.input.toHexString())
+        ]
 
         service.stateObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))

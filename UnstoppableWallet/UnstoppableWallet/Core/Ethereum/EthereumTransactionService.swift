@@ -33,8 +33,6 @@ class EthereumTransactionService {
     private func gasPriceSingle(gasPriceType: GasPriceType) -> Single<Int> {
         switch gasPriceType {
         case .recommended:
-            // todo: do we need to cache loaded gasPrice?
-
             return feeRateProvider.feeRate
                     .map { rate in
                         rate.feeRate(priority: .recommended)
@@ -45,8 +43,7 @@ class EthereumTransactionService {
     }
 
     private func gasLimitSingle(gasPrice: Int, transactionData: TransactionData) -> Single<Int> {
-        // todo: make "to" optional in EthereumKit
-        ethereumKit.estimateGas(to: transactionData.to!, amount: transactionData.value, gasPrice: gasPrice, data: transactionData.input)
+        ethereumKit.estimateGas(to: transactionData.to, amount: transactionData.value, gasPrice: gasPrice, data: transactionData.input)
     }
 
     private func sync() {
@@ -106,13 +103,9 @@ extension EthereumTransactionService {
 extension EthereumTransactionService {
 
     struct TransactionData {
-        var to: Address?
-        var value: BigUInt?
+        var to: Address
+        var value: BigUInt
         var input: Data
-
-        var amount: BigUInt {
-            value ?? 0
-        }
     }
 
     struct GasData {
@@ -129,7 +122,7 @@ extension EthereumTransactionService {
         let gasData: GasData
 
         var totalAmount: BigUInt {
-            data.amount + gasData.fee
+            data.value + gasData.fee
         }
     }
 

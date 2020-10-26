@@ -71,8 +71,8 @@ extension WalletConnectSendEthereumTransactionRequestService {
         state = .sending
 
         ethereumKit.sendSingle(
-                address: transaction.data.to!, // todo: make optional in EthereumKit
-                value: transaction.data.value!, // todo: make optional in EthereumKit
+                address: transaction.data.to,
+                value: transaction.data.value,
                 transactionInput: transaction.data.input,
                 gasPrice: transaction.gasData.gasPrice,
                 gasLimit: transaction.gasData.gasLimit
@@ -81,7 +81,7 @@ extension WalletConnectSendEthereumTransactionRequestService {
                 .observeOn(MainScheduler.instance)
                 .subscribe(onSuccess: { [weak self] transactionWithInternal in
                     self?.state = .sent(transactionHash: transactionWithInternal.transaction.hash)
-                }, onError: { [weak self] error in
+                }, onError: { error in
                     // todo
                 })
                 .disposed(by: disposeBag)
