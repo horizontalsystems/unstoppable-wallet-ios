@@ -5,11 +5,11 @@ import BigInt
 
 struct WalletConnectTransaction {
     let from: Address
-    let to: Address?
+    let to: Address
     let nonce: Int?
     let gasPrice: Int?
     let gasLimit: Int?
-    let value: BigUInt?
+    let value: BigUInt
     let data: Data
 }
 

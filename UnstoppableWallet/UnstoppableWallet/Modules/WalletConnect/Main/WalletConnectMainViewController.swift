@@ -153,10 +153,10 @@ class WalletConnectMainViewController: ThemeViewController {
                 })
                 .disposed(by: disposeBag)
 
-        viewModel.signedTransactionsVisibleDriver
-                .drive(onNext: { [weak self] visible in
-                })
-                .disposed(by: disposeBag)
+//        viewModel.signedTransactionsVisibleDriver
+//                .drive(onNext: { [weak self] visible in
+//                })
+//                .disposed(by: disposeBag)
 
         viewModel.peerMetaDriver
                 .drive(onNext: { [weak self] peerMeta in
