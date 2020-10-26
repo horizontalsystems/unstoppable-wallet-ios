@@ -7,7 +7,7 @@ import HsToolKit
 
 class ZСashAdapter {
     private let coinRate: Decimal = pow(10, 8)
-    let fee: Decimal = 0.0005
+    let fee: Decimal = 0.0001
 
     private let synchronizer: SDKSynchronizer
     private let transactionPool: ZCashTransactionPool
@@ -381,10 +381,10 @@ private class ZCashLogger: ZcashLightClientKit.Logger {
 }
 
 func description(_ tx: ConfirmedTransactionEntity) {
-    print("TX(Confirmed) === hash:\(tx.rawTransactionId?.hex.prefix(6) ?? "N/A") : \(tx.toAddress?.prefix(6) ?? "NoAddr") : \(tx.transactionIndex) height: \(tx.minedHeight) timestamp \(tx.blockTimeInMilliseconds.description) ")
+    print("TX(Confirmed) === hash:\(tx.rawTransactionId?.reversedHex ?? "N/A") : \(tx.toAddress?.prefix(6) ?? "NoAddr") : \(tx.transactionIndex) height: \(tx.minedHeight) timestamp \(tx.blockTimeInMilliseconds.description) ")
 }
 
 func description(_ tx: PendingTransactionEntity) {
-    print("TX(Confirmed) === hash:\(tx.rawTransactionId?.hex.prefix(6) ?? "N/A") : \(tx.toAddress.prefix(6)) : N/A height: N/A timestamp \(tx.createTime.description) ")
+    print("TX(Confirmed) === hash:\(tx.rawTransactionId?.reversedHex ?? "N/A") : \(tx.toAddress.prefix(6)) : N/A height: N/A timestamp \(tx.createTime.description) ")
 }
 

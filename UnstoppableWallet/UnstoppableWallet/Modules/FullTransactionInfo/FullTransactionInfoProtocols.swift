@@ -76,3 +76,14 @@ protocol IBinanceResponse {
 
     var memo: String? { get }
 }
+
+protocol IZCashResponse {
+    var txId: String? { get }
+    var blockTime: Int? { get }
+    var blockHeight: Int? { get }
+
+    var fee: Decimal? { get }
+
+    var inputs: [(value: Decimal, address: String?)] { get }
+    var outputs: [(value: Decimal, address: String?)] { get }
+}

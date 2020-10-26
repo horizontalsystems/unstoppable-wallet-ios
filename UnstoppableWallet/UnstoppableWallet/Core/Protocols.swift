@@ -19,6 +19,7 @@ protocol ILocalStorage: class {
     var baseBitcoinCashProvider: String? { get set }
     var baseDashProvider: String? { get set }
     var baseBinanceProvider: String? { get set }
+    var baseZCashProvider: String? { get set }
     var baseEosProvider: String? { get set }
     var baseEthereumProvider: String? { get set }
     var agreementAccepted: Bool { get set }
@@ -379,6 +380,7 @@ protocol IFullTransactionDataProviderManager {
     func bitcoinCash(for name: String) -> IBitcoinForksProvider
     func ethereum(for name: String) -> IEthereumForksProvider
     func binance(for name: String) -> IBinanceProvider
+    func zCash(for name: String) -> IZCashProvider
 }
 
 protocol IPingManager {
@@ -399,6 +401,10 @@ protocol IEthereumForksProvider: IProvider {
 
 protocol IBinanceProvider: IProvider {
     func convert(json: [String: Any]) -> IBinanceResponse?
+}
+
+protocol IZCashProvider: IProvider {
+    func convert(json: [String: Any]) -> IZCashResponse?
 }
 
 protocol ITransactionRateSyncer {
