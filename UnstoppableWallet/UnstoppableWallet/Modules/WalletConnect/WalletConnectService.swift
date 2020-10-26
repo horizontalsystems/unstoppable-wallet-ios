@@ -4,10 +4,12 @@ import RxSwift
 import RxRelay
 import CurrencyKit
 import BigInt
+import HsToolKit
 
 class WalletConnectService {
     private var ethereumKit: EthereumKit.Kit?
     private let sessionStore: WalletConnectSessionStore
+    private let reachabilityManager: IReachabilityManager
 
     private let disposeBag = DisposeBag()
 
@@ -30,9 +32,10 @@ class WalletConnectService {
         interactor?.state ?? .disconnected
     }
 
-    init(ethereumKitManager: EthereumKitManager, sessionStore: WalletConnectSessionStore) {
+    init(ethereumKitManager: EthereumKitManager, sessionStore: WalletConnectSessionStore, reachabilityManager: IReachabilityManager) {
         ethereumKit = ethereumKitManager.ethereumKit
         self.sessionStore = sessionStore
+        self.reachabilityManager = reachabilityManager
 
         if let storeItem = sessionStore.storedItem {
             remotePeerData = PeerData(id: storeItem.peerId, meta: storeItem.peerMeta)
@@ -43,6 +46,15 @@ class WalletConnectService {
 
             state = .ready
         }
+
+        reachabilityManager.reachabilityObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .subscribe(onNext: { [weak self] reachable in
+                    if reachable {
+                        self?.interactor?.connect()
+                    }
+                })
+                .disposed(by: disposeBag)
     }
 
     private func handleRequest(id: Int, requestResolver: () throws -> WalletConnectRequest) {
