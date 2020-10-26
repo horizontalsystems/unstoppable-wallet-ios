@@ -44,6 +44,12 @@ class AccountStorage {
             }
 
             type = .eos(account: eosAccount, activePrivateKey: activePrivateKey)
+        case .zCash:
+            guard let words = recoverStringArray(id: id, typeName: typeName, keyName: .words) else {
+                return nil
+            }
+
+            type = .zCash(words: words)
         }
 
         return Account(
@@ -76,6 +82,9 @@ class AccountStorage {
             typeName = .eos
             eosAccount = account
             dataKey = try store(string: activePrivateKey, id: id, typeName: typeName, keyName: .privateKey)
+        case .zCash(let words):
+            typeName = .zCash
+            wordsKey = try store(stringArray: words, id: id, typeName: typeName, keyName: .words)
         }
 
         return AccountRecord(
@@ -102,6 +111,8 @@ class AccountStorage {
             try secureStorage.removeValue(for: secureKey(id: id, typeName: .privateKey, keyName: .data))
         case .eos:
             try secureStorage.removeValue(for: secureKey(id: id, typeName: .eos, keyName: .privateKey))
+        case .zCash:
+            try secureStorage.removeValue(for: secureKey(id: id, typeName: .mnemonic, keyName: .words))
         }
     }
 
@@ -170,6 +181,7 @@ extension AccountStorage {
         case mnemonic
         case privateKey
         case eos
+        case zCash
     }
 
     private enum KeyName: String {

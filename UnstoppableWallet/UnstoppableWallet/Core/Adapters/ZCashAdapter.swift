@@ -25,7 +25,7 @@ class ZСashAdapter {
     private(set) var state: AdapterState
 
     init(wallet: Wallet, syncMode: SyncMode?, derivation: MnemonicDerivation?, testMode: Bool) throws {
-        guard case let .mnemonic(words, _) = wallet.account.type else {
+        guard case let .zCash(words) = wallet.account.type else {
             throw AdapterError.unsupportedAccount
         }
 
