@@ -7,6 +7,7 @@ import HsToolKit
 
 class ZСashAdapter {
     private let coinRate: Decimal = pow(10, 8)
+    let fee: Decimal = 0.0005
 
     private let synchronizer: SDKSynchronizer
     private let transactionPool: ZCashTransactionPool
@@ -48,7 +49,8 @@ class ZСashAdapter {
         keys = try DerivationTool.default.deriveSpendingKeys(seed: seedData, numberOfAccounts: 1)
         synchronizer = try SDKSynchronizer(initializer: initializer)
 
-        transactionPool = ZCashTransactionPool(confirmedTransactions: synchronizer.clearedTransactions, pendingTransactions: synchronizer.pendingTransactions)
+        transactionPool = ZCashTransactionPool()
+        transactionPool.store(confirmedTransactions: synchronizer.clearedTransactions, pendingTransactions: synchronizer.pendingTransactions)
 
         state = .syncing(progress: 0, lastBlockDate: nil)
         lastBlockHeight = try? synchronizer.latestHeight()
@@ -97,24 +99,21 @@ class ZСashAdapter {
     }
 
     @objc private func transactionsUpdated(_ notification: Notification) {
-        print("Transactions Updated with mined!")
+        print("Transactions Updated with Mined+!")
         if let userInfo = notification.userInfo, let txs2 = userInfo[SDKSynchronizer.NotificationKeys.foundTransactions] {
-            print("userInfo TX data: ", txs2)
             if let txs = txs2 as? [ConfirmedTransactionEntity] {
 
-                print("===== ZCASH =====")
-                print("-> Updated net txs count: \(txs.count)")
-                txs.forEach {
-                    print("TX: \($0.rawTransactionId?.hex ?? "N/A") : \($0.toAddress ?? "NoAddr") : \($0.transactionIndex) : \($0.blockTimeInMilliseconds.description) ")
-                }
-                print("tx entity value")
+                print("=======================================")
+                print("-> Updated TRANSACTION_FOUND txs count: \(txs.count)")
+                txs.forEach { description($0) }
 
-                let newTxs = transactionPool.updated(confirmedTransactions: txs)
+                print("=======================================")
+                let newTxs = transactionPool.sync(transactions: txs)
 
-                newTxs.forEach {
-                    print("CONVERTED TX: \($0.transactionHash) : \($0.toAddress ?? "NoAddr") : \($0.transactionIndex) : \($0.timestamp.description) ")
-                }
+                print("after pool sync:")
+                newTxs.forEach { print($0.description) }
                 print("result transactions count: \(newTxs.count)")
+
                 transactionRecordsSubject.onNext(newTxs.map {
                     transactionRecord(fromTransaction: $0)
                 })
@@ -134,12 +133,14 @@ class ZСashAdapter {
         balanceUpdatedSubject.onNext(())
     }
 
-    private func updatePending(with pendingTransaction: PendingTransactionEntity) {
-        guard let transaction = transactionPool.add(pendingTransaction: pendingTransaction) else {
-            return
-        }
+    private func syncPending() {
+        let newTxs = transactionPool.sync(transactions: synchronizer.pendingTransactions)
 
-        transactionRecordsSubject.onNext([transaction].map { transactionRecord(fromTransaction: $0) })
+        if !newTxs.isEmpty {
+            transactionRecordsSubject.onNext(newTxs.map {
+                transactionRecord(fromTransaction: $0)
+            })
+        }
     }
 
     private static func __documentsDirectory() throws -> URL {
@@ -173,15 +174,15 @@ class ZСashAdapter {
         }
 
         return TransactionRecord(
-                uid: transaction.id ?? "",
+                uid: transaction.transactionHash,
                 transactionHash: transaction.transactionHash,
                 transactionIndex: transaction.transactionIndex,
                 interTransactionIndex: 0,
                 type: incoming ? .incoming : .outgoing,
                 blockHeight: transaction.minedHeight,
-                confirmationsThreshold: 6,
+                confirmationsThreshold: 10,
                 amount: Decimal(transaction.value) / coinRate,
-                fee: 0.0005,
+                fee: fee,
                 date: Date(timeIntervalSince1970: transaction.timestamp),
                 failed: transaction.failed,
                 from: nil,
@@ -279,7 +280,11 @@ extension ZСashAdapter: IBalanceAdapter {
     }
 
     var balanceLocked: Decimal? {
-        nil
+        let verifiedBalance = Decimal(synchronizer.initializer.getVerifiedBalance())
+        let balance = Decimal(synchronizer.initializer.getBalance())
+        let diff = balance - verifiedBalance
+
+        return !diff.isZero ? (diff / coinRate) : nil
     }
 
 }
@@ -296,7 +301,7 @@ extension ZСashAdapter: IDepositAdapter {
 extension ZСashAdapter: ISendZCashAdapter {
 
     var availableBalance: Decimal {
-        Decimal(synchronizer.initializer.getVerifiedBalance()) / coinRate
+        max(0, Decimal(synchronizer.initializer.getVerifiedBalance()) / coinRate - fee)
     }
 
     func validate(address: String) throws {
@@ -313,21 +318,19 @@ extension ZСashAdapter: ISendZCashAdapter {
         let amount = NSDecimalNumber(decimal: amount * coinRate).int64Value
         let synchronizer = self.synchronizer
 
-        return Single<PendingTransactionEntity>.create { single in
+        return Single<()>.create { [weak self] single in
             synchronizer.sendToAddress(spendingKey: spendingKey, zatoshi: amount, toAddress: address, memo: memo, from: 0) { result in
+                self?.syncPending()
                 switch result {
-                case .success(let tx):
-                    single(.success(tx))
+                case .success:
+                    single(.success(()))
                 case .failure(let error):
                     single(.error(error))
                 }
             }
 
             return Disposables.create()
-        }.map { [weak self] in
-            self?.updatePending(with: $0)
         }
-
     }
 
 }
@@ -376,3 +379,12 @@ private class ZCashLogger: ZcashLightClientKit.Logger {
     }
 
 }
+
+func description(_ tx: ConfirmedTransactionEntity) {
+    print("TX(Confirmed) === hash:\(tx.rawTransactionId?.hex.prefix(6) ?? "N/A") : \(tx.toAddress?.prefix(6) ?? "NoAddr") : \(tx.transactionIndex) height: \(tx.minedHeight) timestamp \(tx.blockTimeInMilliseconds.description) ")
+}
+
+func description(_ tx: PendingTransactionEntity) {
+    print("TX(Confirmed) === hash:\(tx.rawTransactionId?.hex.prefix(6) ?? "N/A") : \(tx.toAddress.prefix(6)) : N/A height: N/A timestamp \(tx.createTime.description) ")
+}
+

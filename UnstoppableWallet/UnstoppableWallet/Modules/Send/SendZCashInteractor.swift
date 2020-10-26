@@ -19,6 +19,10 @@ extension SendZCashInteractor: ISendZCashInteractor {
         try adapter.validate(address: address)
     }
 
+    var fee: Decimal {
+        adapter.fee
+    }
+
     func sendSingle(amount: Decimal, address: String, memo: String?) -> Single<Void> {
         adapter.sendSingle(amount: amount, address: address, memo: memo)
     }

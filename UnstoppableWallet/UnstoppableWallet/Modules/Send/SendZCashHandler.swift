@@ -10,13 +10,15 @@ class SendZCashHandler {
     private let amountModule: ISendAmountModule
     private let addressModule: ISendAddressModule
     private let memoModule: ISendMemoModule
+    private let feeModule: ISendFeeModule
 
-    init(interactor: ISendZCashInteractor, amountModule: ISendAmountModule, addressModule: ISendAddressModule, memoModule: ISendMemoModule) {
+    init(interactor: ISendZCashInteractor, amountModule: ISendAmountModule, addressModule: ISendAddressModule, memoModule: ISendMemoModule, feeModule: ISendFeeModule) {
         self.interactor = interactor
 
         self.amountModule = amountModule
         self.addressModule = addressModule
         self.memoModule = memoModule
+        self.feeModule = feeModule
     }
 
     private func syncValidation() {
@@ -24,7 +26,7 @@ class SendZCashHandler {
             _ = try amountModule.validAmount()
             _ = try addressModule.validAddress()
 
-            delegate?.onChange(isValid: true)
+            delegate?.onChange(isValid: feeModule.isValid)
         } catch {
             delegate?.onChange(isValid: false)
         }
@@ -40,6 +42,7 @@ extension SendZCashHandler: ISendHandler {
 
     func onViewDidLoad() {
         syncAvailableBalance()
+        feeModule.set(fee: interactor.fee)
     }
 
     func showKeyboard() {
@@ -55,6 +58,8 @@ extension SendZCashHandler: ISendHandler {
             viewItems.append(SendConfirmationMemoViewItem(memo: memo))
         }
 
+        viewItems.append(SendConfirmationFeeViewItem(primaryInfo: feeModule.primaryAmountInfo, secondaryInfo: feeModule.secondaryAmountInfo))
+
         return viewItems
     }
 
@@ -67,6 +72,7 @@ extension SendZCashHandler: ISendHandler {
 
     func sync(inputType: SendInputType) {
         amountModule.set(inputType: inputType)
+        feeModule.update(inputType: inputType)
     }
 
     func sendSingle(logger: Logger) throws -> Single<Void> {
@@ -83,6 +89,7 @@ extension SendZCashHandler: ISendAmountDelegate {
     }
 
     func onChange(inputType: SendInputType) {
+        feeModule.update(inputType: inputType)
     }
 
 }

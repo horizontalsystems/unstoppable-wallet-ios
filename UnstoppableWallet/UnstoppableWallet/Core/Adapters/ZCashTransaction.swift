@@ -73,3 +73,11 @@ extension ZCashTransaction: Hashable {
     }
 
 }
+
+extension ZCashTransaction {
+
+    var description: String {
+        "TX(ZCash) === hash:\(transactionHash.prefix(6)) : \(toAddress?.prefix(6) ?? "NoAddr") : \(transactionIndex) height: \(minedHeight?.description ?? "N/A") timestamp \(timestamp.description)"
+    }
+
+}

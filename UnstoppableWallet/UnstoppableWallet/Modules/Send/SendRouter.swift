@@ -181,14 +181,15 @@ extension SendRouter {
         let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
         let (addressView, addressModule, addressRouter) = SendAddressRouter.module(coin: coin)
         let (memoView, memoModule) = SendMemoRouter.module()
+        let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
 
         let interactor = SendZCashInteractor(adapter: adapter)
-        let presenter = SendZCashHandler(interactor: interactor, amountModule: amountModule, addressModule: addressModule, memoModule: memoModule)
+        let presenter = SendZCashHandler(interactor: interactor, amountModule: amountModule, addressModule: addressModule, memoModule: memoModule, feeModule: feeModule)
 
         amountModule.delegate = presenter
         addressModule.delegate = presenter
 
-        return (presenter, [amountView, addressView, memoView], [addressRouter])
+        return (presenter, [amountView, addressView, memoView, feeView], [addressRouter])
     }
 
 }
