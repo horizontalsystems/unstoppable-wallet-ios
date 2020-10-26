@@ -67,6 +67,12 @@ class FullTransactionDataProviderManager {
         ]
     }
 
+    private var zCashProviders: [IZCashProvider] {
+        [
+            ZCashProvider()
+        ]
+    }
+
     private let localStorage: ILocalStorage
     private let appConfigProvider: IAppConfigProvider
 
@@ -96,6 +102,8 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
             return dashProviders
         } else if case .binance = coin.type {
             return binanceProviders
+        } else if case .zCash = coin.type {
+            return zCashProviders
         } else if case .eos = coin.type {
             return eosProviders
         }
@@ -121,7 +129,11 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
         }
         if case .binance = coin.type {
             let name = localStorage.baseBinanceProvider ?? binanceProviders[0].name
-            return dash(for: name)
+            return binance(for: name)
+        }
+        if case .zCash = coin.type {
+            let name = localStorage.baseZCashProvider ?? zCashProviders[0].name
+            return zCash(for: name)
         }
         if case .eos = coin.type {
             let name = localStorage.baseEosProvider ?? eosProviders[0].name
@@ -142,6 +154,8 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
             localStorage.baseDashProvider = name
         } else if case .binance = coin.type {
             localStorage.baseBinanceProvider = name
+        } else if case .binance = coin.type {
+            localStorage.baseZCashProvider = name
         } else if case .eos = coin.type {
             localStorage.baseEosProvider = name
         } else {
@@ -183,6 +197,11 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
 
     func binance(for name: String) -> IBinanceProvider {
         let providers = binanceProviders
+        return providers.first(where: { provider in provider.name == name }) ?? providers[0]
+    }
+
+    func zCash(for name: String) -> IZCashProvider {
+        let providers = zCashProviders
         return providers.first(where: { provider in provider.name == name }) ?? providers[0]
     }
 

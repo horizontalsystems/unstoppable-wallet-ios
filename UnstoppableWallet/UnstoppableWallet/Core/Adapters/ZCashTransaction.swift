@@ -20,7 +20,7 @@ class ZCashTransaction {
         }
 
         id = confirmedTransaction.id?.description
-        transactionHash = rawTransactionId.hex
+        transactionHash = rawTransactionId.reversedHex
         transactionIndex = confirmedTransaction.transactionIndex
         toAddress = confirmedTransaction.toAddress
         minedHeight = confirmedTransaction.minedHeight
@@ -37,7 +37,7 @@ class ZCashTransaction {
         }
 
         id = pendingTransaction.id?.description
-        transactionHash = rawTransactionId.hex
+        transactionHash = rawTransactionId.reversedHex
         transactionIndex = -1
         toAddress = pendingTransaction.toAddress
         minedHeight = nil
@@ -77,7 +77,7 @@ extension ZCashTransaction: Hashable {
 extension ZCashTransaction {
 
     var description: String {
-        "TX(ZCash) === hash:\(transactionHash.prefix(6)) : \(toAddress?.prefix(6) ?? "NoAddr") : \(transactionIndex) height: \(minedHeight?.description ?? "N/A") timestamp \(timestamp.description)"
+        "TX(ZCash) === hash:\(transactionHash) : \(toAddress?.prefix(6) ?? "NoAddr") : \(transactionIndex) height: \(minedHeight?.description ?? "N/A") timestamp \(timestamp.description)"
     }
 
 }

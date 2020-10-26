@@ -7,7 +7,7 @@ class LocalStorage {
     private let keyBaseLitecoinProvider = "base_litecoin_provider"
     private let keyBaseBitcoinCashProvider = "base_bitcoin_cash_provider"
     private let keyBaseDashProvider = "base_dash_provider"
-    private let keyBaseBinanceProvider = "base_binance_provider"
+    private let keyBaseBinanceProvider = "base_z_cash_provider"
     private let keyBaseEosProvider = "base_eos_provider"
     private let keyBaseEthereumProvider = "base_ethereum_provider"
     private let agreementAcceptedKey = "i_understand_key"
@@ -64,6 +64,11 @@ extension LocalStorage: ILocalStorage {
     }
 
     var baseBinanceProvider: String? {
+        get { storage.value(for: keyBaseBinanceProvider) }
+        set { storage.set(value: newValue, for: keyBaseBinanceProvider) }
+    }
+
+    var baseZCashProvider: String? {
         get { storage.value(for: keyBaseBinanceProvider) }
         set { storage.set(value: newValue, for: keyBaseBinanceProvider) }
     }
