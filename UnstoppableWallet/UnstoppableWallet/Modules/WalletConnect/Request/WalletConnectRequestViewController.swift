@@ -12,7 +12,9 @@ class WalletConnectRequestViewController: ThemeViewController {
     private let onReject: () -> ()
 
     private let tableView = SectionsTableView(style: .grouped)
-    private let feeCell = SendEthereumFeeCell()
+    private let feeCell: SendFeeCell
+    private let feePriorityCell: SendFeePriorityCell
+    private var feeSliderCell: SendFeeSliderCell?
 
     private let buttonsHolder = BottomGradientHolder()
     private let approveButton = ThemeButton()
@@ -29,7 +31,24 @@ class WalletConnectRequestViewController: ThemeViewController {
         self.onApprove = onApprove
         self.onReject = onReject
 
+        feeCell = SendFeeCell(viewModel: feeViewModel)
+        feePriorityCell = SendFeePriorityCell(viewModel: feeViewModel)
+
         super.init()
+
+        feePriorityCell.viewController = self
+
+        feeViewModel.feeSliderDriver
+                .drive(onNext: { [weak self] viewItem in
+                    if let viewItem = viewItem {
+                        self?.feeSliderCell = SendFeeSliderCell(viewModel: feeViewModel, viewItem: viewItem)
+                    } else {
+                        self?.feeSliderCell = nil
+                    }
+
+                    self?.tableView.reload()
+                })
+                .disposed(by: disposeBag)
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -121,11 +140,7 @@ class WalletConnectRequestViewController: ThemeViewController {
                 })
                 .disposed(by: disposeBag)
 
-        feeViewModel.feeStatusDriver
-                .drive(onNext: { [weak self] status in
-                    self?.feeCell.bind(value: status)
-                })
-                .disposed(by: disposeBag)
+
 
         viewItems = viewModel.viewItems
         tableView.buildSections()
@@ -151,7 +166,31 @@ extension WalletConnectRequestViewController: SectionsDataSource {
             feeRows.append(errorRow(error: error))
         }
 
-        feeRows.append(feeRow)
+        feeRows.append(
+                StaticRow(
+                        cell: feeCell,
+                        id: "fee",
+                        height: 29
+                )
+        )
+
+        feeRows.append(
+                StaticRow(
+                        cell: feePriorityCell,
+                        id: "fee-priority",
+                        height: .heightSingleLineCell
+                )
+        )
+
+        if let feeSliderCell = feeSliderCell {
+            feeRows.append(
+                    StaticRow(
+                            cell: feeSliderCell,
+                            id: "fee-slider",
+                            height: 29
+                    )
+            )
+        }
 
         return [
             Section(
@@ -215,14 +254,6 @@ extension WalletConnectRequestViewController: SectionsDataSource {
                 bind: { cell, _ in
                     cell.bind(title: title, value: value)
                 }
-        )
-    }
-
-    private var feeRow: RowProtocol {
-        StaticRow(
-                cell: feeCell,
-                id: "fee",
-                height: .heightSingleLineCell
         )
     }
 

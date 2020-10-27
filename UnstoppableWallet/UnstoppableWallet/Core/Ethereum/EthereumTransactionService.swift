@@ -9,7 +9,7 @@ class EthereumTransactionService {
 
     private var transactionData: TransactionData?
 
-    private var gasPriceType: GasPriceType = .recommended {
+    private(set) var gasPriceType: GasPriceType = .recommended {
         didSet {
             gasPriceTypeRelay.accept(gasPriceType)
         }
