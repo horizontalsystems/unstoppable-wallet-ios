@@ -85,14 +85,6 @@ class EthereumFeeViewModel {
 
 }
 
-extension EthereumFeeViewModel {
-
-    var feeSliderDriver: Driver<SendFeeSliderViewItem?> {
-        feeSliderRelay.asDriver()
-    }
-
-}
-
 extension EthereumFeeViewModel: ISendFeeViewModel {
 
     var feeDriver: Driver<String> {
@@ -109,6 +101,10 @@ extension EthereumFeeViewModel: ISendFeePriorityViewModel {
 
     var openSelectPrioritySignal: Signal<[SendPriorityViewItem]> {
         openSelectPriorityRelay.asSignal()
+    }
+
+    var feeSliderDriver: Driver<SendFeeSliderViewItem?> {
+        feeSliderRelay.asDriver()
     }
 
     func openSelectPriority() {
@@ -144,10 +140,6 @@ extension EthereumFeeViewModel: ISendFeePriorityViewModel {
             service.set(gasPriceType: .custom(gasPrice: gasPrice))
         }
     }
-
-}
-
-extension EthereumFeeViewModel: ISendFeeSliderViewModel {
 
     func changeCustomPriority(value: Int) {
         service.set(gasPriceType: .custom(gasPrice: wei(gwei: value)))

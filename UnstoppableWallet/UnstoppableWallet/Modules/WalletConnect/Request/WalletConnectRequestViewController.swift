@@ -14,7 +14,6 @@ class WalletConnectRequestViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
     private let feeCell: SendFeeCell
     private let feePriorityCell: SendFeePriorityCell
-    private var feeSliderCell: SendFeeSliderCell?
 
     private let buttonsHolder = BottomGradientHolder()
     private let approveButton = ThemeButton()
@@ -36,19 +35,7 @@ class WalletConnectRequestViewController: ThemeViewController {
 
         super.init()
 
-        feePriorityCell.viewController = self
-
-        feeViewModel.feeSliderDriver
-                .drive(onNext: { [weak self] viewItem in
-                    if let viewItem = viewItem {
-                        self?.feeSliderCell = SendFeeSliderCell(viewModel: feeViewModel, viewItem: viewItem)
-                    } else {
-                        self?.feeSliderCell = nil
-                    }
-
-                    self?.tableView.reload()
-                })
-                .disposed(by: disposeBag)
+        feePriorityCell.delegate = self
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -140,8 +127,6 @@ class WalletConnectRequestViewController: ThemeViewController {
                 })
                 .disposed(by: disposeBag)
 
-
-
         viewItems = viewModel.viewItems
         tableView.buildSections()
     }
@@ -178,19 +163,9 @@ extension WalletConnectRequestViewController: SectionsDataSource {
                 StaticRow(
                         cell: feePriorityCell,
                         id: "fee-priority",
-                        height: .heightSingleLineCell
+                        height: feePriorityCell.currentHeight
                 )
         )
-
-        if let feeSliderCell = feeSliderCell {
-            feeRows.append(
-                    StaticRow(
-                            cell: feeSliderCell,
-                            id: "fee-slider",
-                            height: 29
-                    )
-            )
-        }
 
         return [
             Section(
@@ -276,6 +251,18 @@ extension WalletConnectRequestViewController: SectionsDataSource {
                     cell.bind(error: error)
                 }
         )
+    }
+
+}
+
+extension WalletConnectRequestViewController: ISendFeePriorityCellDelegate {
+
+    func open(viewController: UIViewController) {
+        present(viewController, animated: true)
+    }
+
+    func onChangeHeight() {
+        tableView.reload()
     }
 
 }
