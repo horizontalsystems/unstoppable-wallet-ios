@@ -25,6 +25,10 @@ class WalletConnectSendEthereumTransactionRequestService {
 
         transactionData = EthereumTransactionService.TransactionData(to: transaction.to, value: transaction.value, input: transaction.data)
 
+        if let gasPrice = transaction.gasPrice {
+            transactionService.set(gasPriceType: .custom(gasPrice: gasPrice))
+        }
+
         transactionService.transactionStatusObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)

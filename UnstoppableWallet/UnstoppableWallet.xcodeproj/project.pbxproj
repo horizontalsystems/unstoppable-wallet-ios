@@ -55,7 +55,6 @@
 		11B350EFCCD95031A497059D /* GuideRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3582E659A53CF52705FEC /* GuideRouter.swift */; };
 		11B350F5B7FBF0E97EB5FE63 /* RateTopListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D12977C85EF258F84BF /* RateTopListInteractor.swift */; };
 		11B350F6A97B17ABAC45FA64 /* FullTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E0F14A8CD40C6F49AE3 /* FullTransactionRecord.swift */; };
-		11B350F952A3094A876E01D3 /* SendFeeSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F7EEF942FBFC206E8C1 /* SendFeeSliderCell.swift */; };
 		11B350FB0BA2301455D7A0DB /* NotificationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355AE4EC2E1B56904AB13 /* NotificationSettingsViewController.swift */; };
 		11B3510476A82273C10A2FF2 /* WalletConnectMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A6882625D6646A10103 /* WalletConnectMainViewModel.swift */; };
 		11B3510BC26128273E969C7F /* TermsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B462980B0617E11FB05 /* TermsModule.swift */; };
@@ -469,7 +468,6 @@
 		11B357EAE56EFCA19EA87D68 /* AlertTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BF766EAC97E74CD620D /* AlertTitleCell.swift */; };
 		11B357EEC616915B3150DAE2 /* TermsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353010933750F8F920E1E /* TermsPresenter.swift */; };
 		11B357F29DCEF3BCA4FDD9B7 /* RateTopListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35125905C40BE0CBA9AA8 /* RateTopListRouter.swift */; };
-		11B357F6104D51B018254923 /* SendFeeSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F7EEF942FBFC206E8C1 /* SendFeeSliderCell.swift */; };
 		11B357F7E2B4475905941806 /* BalanceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DB3C4F3491CAAC2FC97 /* BalanceHeaderView.swift */; };
 		11B357F9FE00C09D2B6E3BCE /* SortTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C480773A445DC5A88BD /* SortTypeViewController.swift */; };
 		11B357FE4C2E1EC8E26ED68F /* GrdbStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A1AE56A94BEB52AC4D1 /* GrdbStorage.swift */; };
@@ -706,7 +704,6 @@
 		11B35B9A5E8700D417390E52 /* CoinToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35616B71EC65976BFDB86 /* CoinToggleCell.swift */; };
 		11B35B9B9617CE64AC6A8C78 /* DerivationSettingConfirmationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F906F0179A04BF9FE77 /* DerivationSettingConfirmationRouter.swift */; };
 		11B35BA21EAB383C3DE6FA5A /* BalanceRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DDABED90E97417092F5 /* BalanceRouter.swift */; };
-		11B35BA32252F2DC1757AABC /* SendFeeSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F7EEF942FBFC206E8C1 /* SendFeeSliderCell.swift */; };
 		11B35BA7B8DCE193883CE2ED /* WalletConnectNoEthereumKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3506182B3A5540AE86C93 /* WalletConnectNoEthereumKitViewController.swift */; };
 		11B35BAB21CC10FB5AE81F2C /* GuidesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E511F9D2B6C65792324 /* GuidesViewController.swift */; };
 		11B35BB4B685F557E8B319B4 /* RateDiffView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C8E5281BF85C421CB73 /* RateDiffView.swift */; };
@@ -2521,7 +2518,6 @@
 		11B35F682D5172BBDD66B4F2 /* ContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactViewController.swift; sourceTree = "<group>"; };
 		11B35F77ADC1D844A4A3390D /* SendFeePriorityPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeePriorityPresenter.swift; sourceTree = "<group>"; };
 		11B35F7D3814B59092D32FF9 /* FeeCoinProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeCoinProvider.swift; sourceTree = "<group>"; };
-		11B35F7EEF942FBFC206E8C1 /* SendFeeSliderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeeSliderCell.swift; sourceTree = "<group>"; };
 		11B35F8EA2C040DE4BA45D99 /* Term.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Term.swift; sourceTree = "<group>"; };
 		11B35F906F0179A04BF9FE77 /* DerivationSettingConfirmationRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DerivationSettingConfirmationRouter.swift; sourceTree = "<group>"; };
 		11B35F9BB34006CA79F6C0D1 /* BackupRequiredRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupRequiredRouter.swift; sourceTree = "<group>"; };
@@ -4348,7 +4344,6 @@
 				1A564920282E84A6E7EE05EB /* SendEthereumErrorCell.swift */,
 				3C7B9CD0F1A682A3ED03DD43 /* SendFeeCell.swift */,
 				11B353B6477E2A7B6850F2A0 /* SendFeePriorityCell.swift */,
-				11B35F7EEF942FBFC206E8C1 /* SendFeeSliderCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -6141,7 +6136,6 @@
 				1A5646149980BBAA7F08C686 /* SendEthereumErrorCell.swift in Sources */,
 				3C7B9A8A5B3ED8B63F5400D4 /* SendFeeCell.swift in Sources */,
 				11B35EA2F2B93219D8A8F4E9 /* SendFeePriorityCell.swift in Sources */,
-				11B350F952A3094A876E01D3 /* SendFeeSliderCell.swift in Sources */,
 				58AAA877BFF6DE79C55EF045 /* ZCashProvider.swift in Sources */,
 				58AAA635456D48ECB5D27FD2 /* ZCashTransactionInfoAdapter.swift in Sources */,
 			);
@@ -6885,7 +6879,6 @@
 				1A5647072B937BE4B69FFA1D /* SendEthereumErrorCell.swift in Sources */,
 				3C7B90D7327C07BAC5F5DC68 /* SendFeeCell.swift in Sources */,
 				11B35FBA34BC41F86EE4DF64 /* SendFeePriorityCell.swift in Sources */,
-				11B357F6104D51B018254923 /* SendFeeSliderCell.swift in Sources */,
 				58AAA65003DB1D7BB43C0965 /* ZCashProvider.swift in Sources */,
 				58AAA63E1613FD88108E3A94 /* ZCashTransactionInfoAdapter.swift in Sources */,
 			);
@@ -7591,7 +7584,6 @@
 				1A5643BCA38A75A63D57F1AB /* SendEthereumErrorCell.swift in Sources */,
 				3C7B9A545980D8C1DE8D8E40 /* SendFeeCell.swift in Sources */,
 				11B35984E23887F685268605 /* SendFeePriorityCell.swift in Sources */,
-				11B35BA32252F2DC1757AABC /* SendFeeSliderCell.swift in Sources */,
 				58AAAFF3DF29E5E93D25F6E6 /* ZCashProvider.swift in Sources */,
 				58AAA6E11BA00408F0824B75 /* ZCashTransactionInfoAdapter.swift in Sources */,
 			);

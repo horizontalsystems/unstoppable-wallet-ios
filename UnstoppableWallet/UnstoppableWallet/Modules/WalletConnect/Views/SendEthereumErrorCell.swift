@@ -1,7 +1,7 @@
 import UIKit
 
 class SendEthereumErrorCell: UITableViewCell {
-    private static let font: UIFont = .caption
+    private static let font: UIFont = .subhead2
     private static let padding: CGFloat = .margin4x
 
     private let errorLabel = UILabel()
