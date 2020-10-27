@@ -33,7 +33,6 @@ class ZCashTransactionInfoAdapter: IFullTransactionInfoAdapter {
         }
 
         // Fee
-
         var feeItems = [FullTransactionItem]()
         if let fee = txResponse.fee {
             let feeCoin = feeCoinProvider.feeCoin(coin: coin) ?? coin

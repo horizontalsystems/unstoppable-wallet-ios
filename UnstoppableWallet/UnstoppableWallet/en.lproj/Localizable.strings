@@ -108,13 +108,14 @@ bch.horizontalsystems.xyz/apg";
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may have access to clipboard data.";
-"error.send_eos.self_transfer" = "Can't transfer token to own account";
+"error.send.self_transfer" = "Sending to self is not supported";
 "error.send_eos.account_not_exist" = "Target account does not exist";
 "error.send_eos.insufficient_ram" = "Your EOS account doesn't have enough RAM to send this token. You need to increase RAM stake to proceed.";
 "error.send_eos.unknown" = "Something went wrong: %@";
 "error.send_ethereum.wrong_parameters" = "Wrong parameters";
 "error.send_binance.memo_required" = "Receiver requires non-empty memo in transfer transaction";
 "error.send_binance.only_digits_allowed" = "Requires the memo to contain only digits";
+"error.send_z_cash.transparent_address" = "Unstoppable doesn't support payments to a transparent address";
 "error.incubed_not_reachable" = "Incubed servers not reachable";
 
 "backup.confirmation.title" = "Check ...";

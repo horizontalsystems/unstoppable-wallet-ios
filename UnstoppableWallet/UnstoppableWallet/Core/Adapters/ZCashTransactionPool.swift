@@ -21,68 +21,30 @@ class ZCashTransactionPool {
     }
 
     @discardableResult private func sync(own: inout Set<ZCashTransaction>, incoming: [ZCashTransaction]) -> [ZCashTransaction] {
-        var newTx = [ZCashTransaction]()
+        var newTxs = [ZCashTransaction]()
         incoming.forEach { transaction in
             if own.insert(transaction).inserted {
-                newTx.append(transaction)
+                newTxs.append(transaction)
             }
         }
-        return newTx
+        return newTxs
     }
 
     func store(confirmedTransactions: [ConfirmedTransactionEntity], pendingTransactions: [PendingTransactionEntity]) {
-        print("=======================================")
-        print("Clear and storing again:")
-        print("---- pending ----")
-        pendingTransactions.forEach { print(description($0)) }
         self.pendingTransactions = Set(zCashTransactions(pendingTransactions))
-        print("---- confirmed ----")
-        confirmedTransactions.forEach { print(description($0)) }
         self.confirmedTransactions = Set(zCashTransactions(confirmedTransactions))
     }
 
-    func add(pendingTransaction: PendingTransactionEntity) -> ZCashTransaction? {
-        guard let transaction = ZCashTransaction(pendingTransaction: pendingTransaction) else {
-            return nil
-        }
-
-        print(" ---> Mapped to: \(transaction.transactionHash)")
-        print("pending txs: \(pendingTransactions)")
-
-        pendingTransactions.update(with: transaction)
-        return transaction
-    }
-
-    func add(confirmedTransaction: ConfirmedTransactionEntity) {
-        guard let transaction = ZCashTransaction(confirmedTransaction: confirmedTransaction) else {
-            return
-        }
-
-        confirmedTransactions.update(with: transaction)
-    }
-
     func sync(transactions: [PendingTransactionEntity]) -> [ZCashTransaction] {
-        print("=======================================")
-        print("sync coming pending transactions:")
-        transactions.forEach { print(description($0)) }
-
-        let new = sync(own: &pendingTransactions, incoming: zCashTransactions(transactions))
-        print("new transactions:")
-        new.forEach { print($0.description) }
-
-        return new
+        sync(own: &pendingTransactions, incoming: zCashTransactions(transactions))
     }
 
     func sync(transactions: [ConfirmedTransactionEntity]) -> [ZCashTransaction] {
-        print("=======================================")
-        print("sync coming confirmed transactions:")
-        transactions.forEach { print(description($0)) }
+        sync(own: &confirmedTransactions, incoming: zCashTransactions(transactions))
+    }
 
-        let new = sync(own: &confirmedTransactions, incoming: zCashTransactions(transactions))
-        print("new transactions:")
-        new.forEach { print($0.description) }
-
-        return new
+    func transaction(by hash: String) -> ZCashTransaction? {
+        transactions.first { $0.transactionHash == hash }
     }
 
 }

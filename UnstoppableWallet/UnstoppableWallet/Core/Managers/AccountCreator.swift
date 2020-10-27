@@ -16,13 +16,18 @@ class AccountCreator {
         case .binance:
             return try createMnemonicAccountType(wordsCount: 24)
         case .zCash:
-            return try createMnemonicAccountType(wordsCount: 24)
+            return try createZCashAccountType()
         }
     }
 
     private func createMnemonicAccountType(wordsCount: Int) throws -> AccountType {
         let words = try wordsManager.generateWords(count: wordsCount)
         return .mnemonic(words: words, salt: nil)
+    }
+
+    private func createZCashAccountType() throws -> AccountType {
+        let words = try wordsManager.generateWords(count: 24)
+        return .zCash(words: words)
     }
 
 }

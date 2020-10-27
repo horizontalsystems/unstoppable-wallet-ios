@@ -5,9 +5,11 @@ import RxSwift
 import HdWalletKit
 import HsToolKit
 
-class ZСashAdapter {
-    private let coinRate: Decimal = pow(10, 8)
-    let fee: Decimal = 0.0001
+class ZCashAdapter {
+    private let newWalletBlockHeight = 1_020_800
+
+    private static let coinRate = Decimal(ZcashSDK.ZATOSHI_PER_ZEC)
+    let fee = Decimal(ZcashSDK.MINERS_FEE_ZATOSHI) / ZCashAdapter.coinRate
 
     private let synchronizer: SDKSynchronizer
     private let transactionPool: ZCashTransactionPool
@@ -24,21 +26,22 @@ class ZСashAdapter {
 
     private(set) var state: AdapterState
 
-    init(wallet: Wallet, syncMode: SyncMode?, derivation: MnemonicDerivation?, testMode: Bool) throws {
+    init(wallet: Wallet, syncMode: SyncMode?, testMode: Bool) throws {
         guard case let .zCash(words) = wallet.account.type else {
             throw AdapterError.unsupportedAccount
         }
 
         let endPoint = testMode ? "lightwalletd.testnet.electriccoin.co" : "lightwalletd.electriccoin.co"
-        let birthday = testMode ? 620_000 : 995_000
-//        let birthday = testMode ? 620_000 : 663_174
 
-        let initializer = Initializer(cacheDbURL:try! ZСashAdapter.__cacheDbURL(),
-                                      dataDbURL: try! ZСashAdapter.__dataDbURL(),
-                                      pendingDbURL: try! ZСashAdapter.__pendingDbURL(),
+        let birthday = syncMode == .new ? newWalletBlockHeight : ZcashSDK.SAPLING_ACTIVATION_HEIGHT
+        let uniqueId = wallet.account.id
+
+        let initializer = Initializer(cacheDbURL:try! ZCashAdapter.cacheDbURL(uniqueId: uniqueId),
+                                      dataDbURL: try! ZCashAdapter.dataDbURL(uniqueId: uniqueId),
+                                      pendingDbURL: try! ZCashAdapter.pendingDbURL(uniqueId: uniqueId),
                 endpoint: LightWalletEndpoint(address: endPoint, port: 9067),
-                spendParamsURL: try! ZСashAdapter.__spendParamsURL(),
-                outputParamsURL: try! ZСashAdapter.__outputParamsURL(),
+                spendParamsURL: try! ZCashAdapter.spendParamsURL(uniqueId: uniqueId),
+                outputParamsURL: try! ZCashAdapter.outputParamsURL(uniqueId: uniqueId),
                 loggerProxy: loggingProxy)
 
 
@@ -81,7 +84,6 @@ class ZСashAdapter {
 
     @objc private func statusUpdated(_ notification: Notification) {
         var newState = state
-        print("===== STATUS: \(synchronizer.status) =====")
 
         switch synchronizer.status {
         case .disconnected: newState = .notSynced(error: AppError.noConnection)
@@ -91,33 +93,19 @@ class ZСashAdapter {
         }
 
         if newState != state {
-            print("===== ZCASH =====")
-            print("-> newState: \(newState)")
             state = newState
             stateUpdatedSubject.onNext(())
         }
     }
 
     @objc private func transactionsUpdated(_ notification: Notification) {
-        print("Transactions Updated with Mined+!")
-        if let userInfo = notification.userInfo, let txs2 = userInfo[SDKSynchronizer.NotificationKeys.foundTransactions] {
-            if let txs = txs2 as? [ConfirmedTransactionEntity] {
+        if let userInfo = notification.userInfo,
+           let txs = userInfo[SDKSynchronizer.NotificationKeys.foundTransactions] as? [ConfirmedTransactionEntity] {
+            let newTxs = transactionPool.sync(transactions: txs)
 
-                print("=======================================")
-                print("-> Updated TRANSACTION_FOUND txs count: \(txs.count)")
-                txs.forEach { description($0) }
-
-                print("=======================================")
-                let newTxs = transactionPool.sync(transactions: txs)
-
-                print("after pool sync:")
-                newTxs.forEach { print($0.description) }
-                print("result transactions count: \(newTxs.count)")
-
-                transactionRecordsSubject.onNext(newTxs.map {
-                    transactionRecord(fromTransaction: $0)
-                })
-            }
+            transactionRecordsSubject.onNext(newTxs.map {
+                transactionRecord(fromTransaction: $0)
+            })
         }
     }
 
@@ -125,9 +113,6 @@ class ZСashAdapter {
         if let userInfo = notification.userInfo, let blockHeight = userInfo[CompactBlockProcessorNotificationKey.progressHeight] as? BlockHeight {
             lastBlockHeight = blockHeight
             lastBlockUpdatedSubject.onNext(())
-
-            print("===== ZCASH =====")
-            print("-> BLOCK HEIGHT UPDATED: \(blockHeight)")
         }
 
         balanceUpdatedSubject.onNext(())
@@ -143,35 +128,13 @@ class ZСashAdapter {
         }
     }
 
-    private static func __documentsDirectory() throws -> URL {
-        try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-    }
-
-    private static func __cacheDbURL() throws -> URL {
-        try __documentsDirectory().appendingPathComponent(ZcashSDK.DEFAULT_DB_NAME_PREFIX+ZcashSDK.DEFAULT_CACHES_DB_NAME, isDirectory: false)
-    }
-
-    private static func __dataDbURL() throws -> URL {
-        try __documentsDirectory().appendingPathComponent(ZcashSDK.DEFAULT_DB_NAME_PREFIX+ZcashSDK.DEFAULT_DATA_DB_NAME, isDirectory: false)
-    }
-
-    private static func __pendingDbURL() throws -> URL {
-        try __documentsDirectory().appendingPathComponent(ZcashSDK.DEFAULT_DB_NAME_PREFIX+ZcashSDK.DEFAULT_PENDING_DB_NAME)
-    }
-
-    private static func __spendParamsURL() throws -> URL {
-        try __documentsDirectory().appendingPathComponent("sapling-spend.params")
-    }
-
-    private static func __outputParamsURL() throws -> URL {
-        try __documentsDirectory().appendingPathComponent("sapling-output.params")
-    }
-
     func transactionRecord(fromTransaction transaction: ZCashTransaction) -> TransactionRecord {
         var incoming = true
         if let toAddress = transaction.toAddress, toAddress != receiveAddress {
             incoming = false
         }
+
+        let showRawTransaction = transaction.minedHeight == nil || transaction.failed
 
         return TransactionRecord(
                 uid: transaction.transactionHash,
@@ -180,8 +143,8 @@ class ZСashAdapter {
                 interTransactionIndex: 0,
                 type: incoming ? .incoming : .outgoing,
                 blockHeight: transaction.minedHeight,
-                confirmationsThreshold: 10,
-                amount: Decimal(transaction.value) / coinRate,
+                confirmationsThreshold: ZcashSDK.DEFAULT_REWIND_DISTANCE,
+                amount: Decimal(transaction.value) / Self.coinRate,
                 fee: fee,
                 date: Date(timeIntervalSince1970: transaction.timestamp),
                 failed: transaction.failed,
@@ -189,7 +152,7 @@ class ZСashAdapter {
                 to: transaction.toAddress,
                 lockInfo: nil,
                 conflictingHash: nil,
-                showRawTransaction: false
+                showRawTransaction: showRawTransaction
         )
     }
 
@@ -201,7 +164,54 @@ class ZСashAdapter {
 
 }
 
-extension ZСashAdapter: IAdapter {
+extension ZCashAdapter {
+
+    private static func dataDirectoryUrl() throws -> URL {
+        let fileManager = FileManager.default
+
+        let url = try fileManager
+                .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+                .appendingPathComponent("z-cash-kit", isDirectory: true)
+
+        try fileManager.createDirectory(at: url, withIntermediateDirectories: true)
+
+        return url
+    }
+
+    private static func cacheDbURL(uniqueId: String) throws -> URL {
+        try dataDirectoryUrl().appendingPathComponent(ZcashSDK.DEFAULT_DB_NAME_PREFIX + uniqueId + ZcashSDK.DEFAULT_CACHES_DB_NAME, isDirectory: false)
+    }
+
+    private static func dataDbURL(uniqueId: String) throws -> URL {
+        try dataDirectoryUrl().appendingPathComponent(ZcashSDK.DEFAULT_DB_NAME_PREFIX + uniqueId + ZcashSDK.DEFAULT_DATA_DB_NAME, isDirectory: false)
+    }
+
+    private static func pendingDbURL(uniqueId: String) throws -> URL {
+        try dataDirectoryUrl().appendingPathComponent(ZcashSDK.DEFAULT_DB_NAME_PREFIX + uniqueId + ZcashSDK.DEFAULT_PENDING_DB_NAME, isDirectory: false)
+    }
+
+    private static func spendParamsURL(uniqueId: String) throws -> URL {
+        try dataDirectoryUrl().appendingPathComponent("sapling-spend_\(uniqueId).params")
+    }
+
+    private static func outputParamsURL(uniqueId: String) throws -> URL {
+        try dataDirectoryUrl().appendingPathComponent("sapling-output_\(uniqueId).params")
+    }
+
+    public static func clear(except excludedWalletIds: [String]) throws {
+        let fileManager = FileManager.default
+        let fileUrls = try fileManager.contentsOfDirectory(at: dataDirectoryUrl(), includingPropertiesForKeys: nil)
+
+        for filename in fileUrls {
+            if !excludedWalletIds.contains(where: { filename.lastPathComponent.contains($0) }) {
+                try fileManager.removeItem(at: filename)
+            }
+        }
+    }
+
+}
+
+extension ZCashAdapter: IAdapter {
 
     func start() {
         sync()
@@ -235,7 +245,7 @@ extension ZСashAdapter: IAdapter {
 
 }
 
-extension ZСashAdapter: ITransactionsAdapter {
+extension ZCashAdapter: ITransactionsAdapter {
 
     var lastBlockInfo: LastBlockInfo? {
         lastBlockHeight.map { LastBlockInfo(height: $0, timestamp: nil) }
@@ -251,19 +261,17 @@ extension ZСashAdapter: ITransactionsAdapter {
 
     func transactionsSingle(from: TransactionRecord?, limit: Int) -> Single<[TransactionRecord]> {
         transactionPool.transactionsSingle(from: from, limit: limit).map { [weak self] txs in
-            let txs = txs.compactMap { self?.transactionRecord(fromTransaction: $0) }
-            print(txs)
-            return txs
+            txs.compactMap { self?.transactionRecord(fromTransaction: $0) }
         }
     }
 
     func rawTransaction(hash: String) -> String? {
-        "hz-znaet"
+        transactionPool.transaction(by: hash)?.raw?.hex
     }
 
 }
 
-extension ZСashAdapter: IBalanceAdapter {
+extension ZCashAdapter: IBalanceAdapter {
 
     var stateUpdatedObservable: Observable<Void> {
         stateUpdatedSubject.asObservable()
@@ -274,9 +282,7 @@ extension ZСashAdapter: IBalanceAdapter {
     }
 
     var balance: Decimal {
-        print("STATE = \(synchronizer.status)")
-        print("balance = \(synchronizer.initializer.getBalance())")
-        return Decimal(synchronizer.initializer.getBalance()) / coinRate
+        Decimal(synchronizer.initializer.getBalance()) / Self.coinRate
     }
 
     var balanceLocked: Decimal? {
@@ -284,29 +290,37 @@ extension ZСashAdapter: IBalanceAdapter {
         let balance = Decimal(synchronizer.initializer.getBalance())
         let diff = balance - verifiedBalance
 
-        return !diff.isZero ? (diff / coinRate) : nil
+        return !diff.isZero ? (diff / Self.coinRate) : nil
     }
 
 }
 
-extension ZСashAdapter: IDepositAdapter {
+extension ZCashAdapter: IDepositAdapter {
 
     var receiveAddress: String {
-        // using only first account
+        // only first account
         synchronizer.getAddress(accountIndex: 0)
     }
 
 }
 
-extension ZСashAdapter: ISendZCashAdapter {
+extension ZCashAdapter: ISendZCashAdapter {
 
     var availableBalance: Decimal {
-        max(0, Decimal(synchronizer.initializer.getVerifiedBalance()) / coinRate - fee)
+        max(0, Decimal(synchronizer.initializer.getVerifiedBalance()) / Self.coinRate - fee)
     }
 
     func validate(address: String) throws {
-        guard synchronizer.initializer.isValidShieldedAddress(address) || synchronizer.initializer.isValidTransparentAddress(address) else {
-            throw AdapterError.wrongParameters
+        guard !synchronizer.initializer.isValidTransparentAddress(address) else {
+            throw AppError.zCash(reason: .transparentAddress)
+        }
+
+        guard synchronizer.initializer.isValidShieldedAddress(address) else {
+            throw AppError.addressInvalid
+        }
+
+        guard address != receiveAddress else {
+            throw AppError.zCash(reason: .sendToSelf)
         }
     }
 
@@ -315,7 +329,7 @@ extension ZСashAdapter: ISendZCashAdapter {
             return Single.error(AdapterError.unsupportedAccount)
         }
 
-        let amount = NSDecimalNumber(decimal: amount * coinRate).int64Value
+        let amount = NSDecimalNumber(decimal: amount * Self.coinRate).int64Value
         let synchronizer = self.synchronizer
 
         return Single<()>.create { [weak self] single in
@@ -331,14 +345,6 @@ extension ZСashAdapter: ISendZCashAdapter {
 
             return Disposables.create()
         }
-    }
-
-}
-
-extension ZСashAdapter {
-
-    static func clear(except excludedWalletIds: [String]) throws {
-//        try BitcoinKit.clear(exceptFor: excludedWalletIds)
     }
 
 }
@@ -379,12 +385,3 @@ private class ZCashLogger: ZcashLightClientKit.Logger {
     }
 
 }
-
-func description(_ tx: ConfirmedTransactionEntity) {
-    print("TX(Confirmed) === hash:\(tx.rawTransactionId?.reversedHex ?? "N/A") : \(tx.toAddress?.prefix(6) ?? "NoAddr") : \(tx.transactionIndex) height: \(tx.minedHeight) timestamp \(tx.blockTimeInMilliseconds.description) ")
-}
-
-func description(_ tx: PendingTransactionEntity) {
-    print("TX(Confirmed) === hash:\(tx.rawTransactionId?.reversedHex ?? "N/A") : \(tx.toAddress.prefix(6)) : N/A height: N/A timestamp \(tx.createTime.description) ")
-}
-

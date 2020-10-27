@@ -5,6 +5,7 @@ enum AppError: Error {
     case incubedNotReachable
     case eos(reason: EosError)
     case binance(reason: BinanceError)
+    case zCash(reason: ZCashError)
     case wordsValidation(reason: WordsValidationError)
     case addressInvalid
     case notSupportedByHodler
@@ -27,6 +28,11 @@ enum AppError: Error {
         case memoRequired
         case onlyDigitsAllowed
     }
+
+    enum ZCashError: Error {
+        case sendToSelf
+        case transparentAddress
+    }
 }
 
 
@@ -38,7 +44,7 @@ extension AppError: LocalizedError {
         case .incubedNotReachable: return "error.incubed_not_reachable".localized
         case .eos(let reason):
             switch reason {
-            case .selfTransfer: return "error.send_eos.self_transfer".localized
+            case .selfTransfer: return "error.send.self_transfer".localized
             case .accountNotExist: return "error.send_eos.account_not_exist".localized
             case .insufficientRam: return "error.send_eos.insufficient_ram".localized
             case .invalidPrivateKey: return "error.invalid_eos_key".localized
@@ -48,12 +54,16 @@ extension AppError: LocalizedError {
             case .memoRequired: return "error.send_binance.memo_required".localized
             case .onlyDigitsAllowed: return "error.send_binance.only_digits_allowed".localized
             }
+        case .zCash(let reason):
+            switch reason {
+            case .sendToSelf: return "error.send.self_transfer".localized
+            case .transparentAddress: return "error.send_z_cash.transparent_address".localized
+            }
         case .wordsValidation(let reason):
             switch reason {
             case .emptyWords: return "words_validator.empty_words".localized
             case .invalidConfirmation: return "words_validator.invalid_confirmation".localized
             case .invalidWords: return "restore.validation_failed".localized
-
             }
         case .addressInvalid: return "send.error.invalid_address".localized
         case .notSupportedByHodler: return "send.hodler_error.unsupported_address".localized

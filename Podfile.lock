@@ -552,7 +552,7 @@ CHECKOUT OPTIONS:
     :commit: c0ef7faf52500375de0912b041dd9015ae028384
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
   ZcashLightClientKit:
-    :commit: 6a762205f64ff320d84dbe8b1c141bf100ec0751
+    :commit: fa76c722b2264192e248ee04f9cb14c7344746a2
     :git: https://github.com/zcash/ZcashLightClientKit.git
 
 SPEC CHECKSUMS:

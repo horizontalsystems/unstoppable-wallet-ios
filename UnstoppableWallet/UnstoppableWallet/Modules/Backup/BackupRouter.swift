@@ -46,6 +46,8 @@ extension BackupRouter {
         switch account.type {
         case let .mnemonic(words, _):
             return BackupWordsRouter.module(delegate: delegate, predefinedAccountType: predefinedAccountType, words: words, isBackedUp: account.backedUp)
+        case let .zCash(words):
+            return BackupWordsRouter.module(delegate: delegate, predefinedAccountType: predefinedAccountType, words: words, isBackedUp: account.backedUp)
         case let .eos(account, activePrivateKey):
             return BackupEosRouter.module(delegate: delegate, account: account, activePrivateKey: activePrivateKey)
         default:
