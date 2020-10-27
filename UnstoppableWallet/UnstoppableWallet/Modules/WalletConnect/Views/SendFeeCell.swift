@@ -1,16 +1,24 @@
 import UIKit
+import RxSwift
+import RxCocoa
 
-class SendEthereumFeeCell: UITableViewCell {
+protocol ISendFeeViewModel {
+    var feeDriver: Driver<String> { get }
+}
+
+class SendFeeCell: UITableViewCell {
     private let feeTitleLabel = UILabel()
     private let feeValueLabel = UILabel()
 
-    override init(style: CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    private let disposeBag = DisposeBag()
+
+    init(viewModel: ISendFeeViewModel) {
+        super.init(style: .default, reuseIdentifier: nil)
 
         backgroundColor = .clear
         selectionStyle = .none
 
-        addSubview(feeTitleLabel)
+        contentView.addSubview(feeTitleLabel)
         feeTitleLabel.snp.makeConstraints { maker in
             maker.top.equalToSuperview()
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
@@ -20,7 +28,7 @@ class SendEthereumFeeCell: UITableViewCell {
         feeTitleLabel.font = .subhead2
         feeTitleLabel.textColor = .themeGray
 
-        addSubview(feeValueLabel)
+        contentView.addSubview(feeValueLabel)
         feeValueLabel.snp.makeConstraints { maker in
             maker.centerY.equalTo(feeTitleLabel.snp.centerY)
             maker.leading.equalTo(feeTitleLabel.snp.trailing).offset(CGFloat.margin4x)
@@ -30,14 +38,16 @@ class SendEthereumFeeCell: UITableViewCell {
         feeValueLabel.font = .subhead2
         feeValueLabel.textColor = .themeGray
         feeValueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+
+        viewModel.feeDriver
+                .drive(onNext: { [weak self] status in
+                    self?.feeValueLabel.text = status
+                })
+                .disposed(by: disposeBag)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    func bind(value: String?) {
-        feeValueLabel.text = value
     }
 
 }
