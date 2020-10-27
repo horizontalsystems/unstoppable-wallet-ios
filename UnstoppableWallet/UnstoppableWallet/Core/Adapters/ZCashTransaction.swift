@@ -2,6 +2,7 @@ import ZcashLightClientKit
 
 class ZCashTransaction {
     let id: String?
+    let raw: Data?
     let transactionHash: String
     let transactionIndex: Int
     let toAddress: String?
@@ -13,13 +14,12 @@ class ZCashTransaction {
     let failed: Bool
 
     init?(confirmedTransaction: ConfirmedTransactionEntity) {
-        print("mapping confirmed into zCash")
         guard let rawTransactionId = confirmedTransaction.rawTransactionId else {
-            print("rawTxID = nil!")
             return nil
         }
 
         id = confirmedTransaction.id?.description
+        raw = confirmedTransaction.raw
         transactionHash = rawTransactionId.reversedHex
         transactionIndex = confirmedTransaction.transactionIndex
         toAddress = confirmedTransaction.toAddress
@@ -37,6 +37,7 @@ class ZCashTransaction {
         }
 
         id = pendingTransaction.id?.description
+        raw = pendingTransaction.raw
         transactionHash = rawTransactionId.reversedHex
         transactionIndex = -1
         toAddress = pendingTransaction.toAddress
@@ -77,7 +78,7 @@ extension ZCashTransaction: Hashable {
 extension ZCashTransaction {
 
     var description: String {
-        "TX(ZCash) === hash:\(transactionHash) : \(toAddress?.prefix(6) ?? "NoAddr") : \(transactionIndex) height: \(minedHeight?.description ?? "N/A") timestamp \(timestamp.description)"
+        "TX(ZCash) === hash:\(transactionHash) : \(toAddress?.prefix(6) ?? "N/A") : \(transactionIndex) height: \(minedHeight?.description ?? "N/A") timestamp \(timestamp.description)"
     }
 
 }

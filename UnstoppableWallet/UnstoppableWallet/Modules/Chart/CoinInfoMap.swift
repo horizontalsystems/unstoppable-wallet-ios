@@ -87,6 +87,7 @@ class CoinInfoMap {
         "WBTC": CoinInfo(supply: 21_000_000, startDate: "27/11/2018", website: "https://wbtc.network/"),
         "WETH": CoinInfo(supply: 1_153_917, startDate: "31/12/2018", website: "https://weth.io/"),
         "COMP": CoinInfo(supply: 10_000_000, startDate: "04/03/2020", website: "https://compound.finance/"),
+        "ZEC": CoinInfo(supply: 21_000_000, startDate: "28/10/2016", website: "https://z.cash/"),
     ]
 
 }

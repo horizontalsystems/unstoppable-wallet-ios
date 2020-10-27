@@ -40,6 +40,9 @@ class AppStatusManager {
             if case let .mnemonic(words, _) = account.type {
                 status.append(("type", "mnemonic (\(words.count) words)"))
             }
+            if case let .zCash(words) = account.type {
+                status.append(("type", "zCash (\(words.count) words)"))
+            }
             if case let .eos(account, _) = account.type {
                 status.append(("name", account))
             }

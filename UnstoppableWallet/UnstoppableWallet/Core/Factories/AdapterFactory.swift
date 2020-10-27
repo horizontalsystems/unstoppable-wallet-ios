@@ -35,7 +35,7 @@ class AdapterFactory: IAdapterFactory {
         case .dash:
             return try? DashAdapter(wallet: wallet, syncMode: syncMode, testMode: appConfigProvider.testMode)
         case .zCash:
-            return try? ZСashAdapter(wallet: wallet, syncMode: syncMode, derivation: derivation, testMode: appConfigProvider.testMode)
+            return try? ZCashAdapter(wallet: wallet, syncMode: syncMode, testMode: appConfigProvider.testMode)
         case .ethereum:
             if let ethereumKit = try? ethereumKitManager.ethereumKit(account: wallet.account) {
                 return EthereumAdapter(ethereumKit: ethereumKit)

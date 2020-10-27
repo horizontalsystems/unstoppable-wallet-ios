@@ -23,6 +23,7 @@ extension KitCleaner: IKitCleaner {
             try? Erc20Adapter.clear(except: accountIds)
             try? EosAdapter.clear(except: accountIds)
             try? BinanceAdapter.clear(except: accountIds)
+            try? ZCashAdapter.clear(except: accountIds)
         }
     }
 
