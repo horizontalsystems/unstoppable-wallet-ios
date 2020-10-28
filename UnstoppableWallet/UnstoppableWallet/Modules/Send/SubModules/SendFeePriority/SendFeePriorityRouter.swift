@@ -32,7 +32,7 @@ extension SendFeePriorityRouter: ISendFeePriorityRouter {
         let alertController = AlertRouter.module(
                 title: "send.tx_speed".localized,
                 viewItems: items.map { item in
-                    AlertViewItem(text: "\(item.priority.title) \((item.duration?.approximateHoursOrMinutes).map { "(< \($0))" }  ?? "")", selected: item.selected)
+                    AlertViewItem(text: "\(item.priority.title) \((item.duration?.approximateHoursOrMinutes).map { "(~ \($0))" }  ?? "")", selected: item.selected)
                 }
         ) { index in
             onSelect(items[index])
