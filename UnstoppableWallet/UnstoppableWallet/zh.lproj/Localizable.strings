@@ -275,6 +275,7 @@ bch.horizontalsystems.xyz/apg";
 // Transaction Info
 
 "tx_info.title" = "Transaction";
+"tx_info.title_approval" = "Swap Approval";
 "tx_info.status.pending" = "Pending";
 "tx_info.status.confirmed" = "Confirmed";
 "tx_info.status.failed" = "Failed";
