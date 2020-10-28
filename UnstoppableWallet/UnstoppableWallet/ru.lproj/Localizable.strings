@@ -272,6 +272,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Transaction Info
 
 "tx_info.title" = "Транзакция";
+"tx_info.title_approval" = "Swap Approval";
 "tx_info.status.pending" = "В обработке";
 "tx_info.status.confirmed" = "Подтверждено";
 "tx_info.status.failed" = "Не удалось";
