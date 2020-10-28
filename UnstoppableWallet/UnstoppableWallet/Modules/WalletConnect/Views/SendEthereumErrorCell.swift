@@ -32,7 +32,7 @@ class SendEthereumErrorCell: UITableViewCell {
     }
 
     static func height(error: Error, containerWidth: CGFloat) -> CGFloat {
-        error.smartDescription.height(forContainerWidth: containerWidth, font: SendEthereumErrorCell.font) + SendEthereumErrorCell.padding
+        error.smartDescription.height(forContainerWidth: containerWidth - SendEthereumErrorCell.padding * 2, font: SendEthereumErrorCell.font) + SendEthereumErrorCell.padding
     }
 
 }
