@@ -29,8 +29,6 @@ class CoinToggleViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.hidesSearchBarWhenScrolling = false
-
         tableView.registerCell(forClass: CoinToggleCell.self)
         tableView.sectionDataSource = self
 
@@ -45,6 +43,8 @@ class CoinToggleViewController: ThemeViewController {
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchResultsUpdater = self
         definesPresentationContext = true
+
+        navigationItem.searchController = searchController
 
         viewModel.viewStateDriver
                 .drive(onNext: { [weak self] viewState in

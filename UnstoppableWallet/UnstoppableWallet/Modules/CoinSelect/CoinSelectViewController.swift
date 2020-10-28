@@ -32,7 +32,6 @@ class CoinSelectViewController: ThemeViewController {
 
         title = "choose_coin.title".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onClose))
-        navigationItem.hidesSearchBarWhenScrolling = false
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -50,6 +49,8 @@ class CoinSelectViewController: ThemeViewController {
 
         searchController.searchResultsUpdater = self
         definesPresentationContext = true
+
+        navigationItem.searchController = searchController
 
         subscribe(disposeBag, viewModel.coinViewItems) { [weak self] in self?.handle(viewItems: $0) }
     }
