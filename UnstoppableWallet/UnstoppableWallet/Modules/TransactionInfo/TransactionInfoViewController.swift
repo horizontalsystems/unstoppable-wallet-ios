@@ -293,18 +293,28 @@ extension TransactionInfoViewController: SectionsDataSource {
 extension TransactionInfoViewController: ITransactionInfoView {
 
     func set(date: Date, primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, type: TransactionType, lockState: TransactionLockState?) {
-        let iconImage: UIImage?
-        switch type {
-        case .incoming:
-            iconImage = UIImage(named: "Transaction In Icon")
-        case .outgoing, .sentToSelf:
-            iconImage = UIImage(named: "Transaction Out Icon")
-        case .approve:
-            iconImage = UIImage(named: "Transaction Approve Icon")?.tinted(with: .themeLeah)
-        }
+        let title: String = {
+            switch type {
+            case .approve:
+                return "tx_info.title_approval".localized
+            default:
+                return "tx_info.title".localized
+            }
+        }()
+
+        let iconImage: UIImage? = {
+            switch type {
+            case .incoming:
+                return UIImage(named: "Transaction In Icon")
+            case .outgoing, .sentToSelf:
+                return UIImage(named: "Transaction Out Icon")
+            case .approve:
+                return UIImage(named: "Transaction Approve Icon")?.tinted(with: .themeLeah)
+            }
+        }()
 
         titleView.bind(
-                title: "tx_info.title".localized,
+                title: title,
                 subtitle: DateHelper.instance.formatFullTime(from: date),
                 image: iconImage
         )
