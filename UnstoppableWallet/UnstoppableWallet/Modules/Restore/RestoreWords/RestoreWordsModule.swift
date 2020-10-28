@@ -10,7 +10,7 @@ struct RestoreWordsModule {
 
     enum RestoreAccountType {
         case mnemonic(wordsCount: Int)
-        case zCash
+        case zcash
     }
 
 }

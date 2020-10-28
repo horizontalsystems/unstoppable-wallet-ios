@@ -19,7 +19,7 @@ protocol ILocalStorage: class {
     var baseBitcoinCashProvider: String? { get set }
     var baseDashProvider: String? { get set }
     var baseBinanceProvider: String? { get set }
-    var baseZCashProvider: String? { get set }
+    var baseZcashProvider: String? { get set }
     var baseEosProvider: String? { get set }
     var baseEthereumProvider: String? { get set }
     var agreementAccepted: Bool { get set }
@@ -175,7 +175,7 @@ protocol ISendBinanceAdapter {
     func sendSingle(amount: Decimal, address: String, memo: String?) -> Single<Void>
 }
 
-protocol ISendZCashAdapter {
+protocol ISendZcashAdapter {
     var availableBalance: Decimal { get }
     func validate(address: String) throws
     var fee: Decimal { get }
@@ -380,7 +380,7 @@ protocol IFullTransactionDataProviderManager {
     func bitcoinCash(for name: String) -> IBitcoinForksProvider
     func ethereum(for name: String) -> IEthereumForksProvider
     func binance(for name: String) -> IBinanceProvider
-    func zCash(for name: String) -> IZCashProvider
+    func zcash(for name: String) -> IZcashProvider
 }
 
 protocol IPingManager {
@@ -403,8 +403,8 @@ protocol IBinanceProvider: IProvider {
     func convert(json: [String: Any]) -> IBinanceResponse?
 }
 
-protocol IZCashProvider: IProvider {
-    func convert(json: [String: Any]) -> IZCashResponse?
+protocol IZcashProvider: IProvider {
+    func convert(json: [String: Any]) -> IZcashResponse?
 }
 
 protocol ITransactionRateSyncer {

@@ -8,7 +8,7 @@ enum CoinType {
     case ethereum
     case erc20(address: String, fee: Decimal, minimumRequiredBalance: Decimal, minimumSpendableAmount: Decimal?)
     case binance(symbol: String)
-    case zCash
+    case zcash
     case eos(token: String, symbol: String)
 
     init(erc20Address: String, fee: Decimal = 0, minimumRequiredBalance: Decimal = 0, minimumSpendableAmount: Decimal? = nil) {
@@ -23,8 +23,8 @@ enum CoinType {
         case .binance:
             if case let .mnemonic(words, salt) = accountType, words.count == 24, salt == nil { return true }
             return false
-        case .zCash:
-            if case .zCash = accountType { return true }
+        case .zcash:
+            if case .zcash = accountType { return true }
             return false
         case .eos:
             if case .eos = accountType { return true }
@@ -38,8 +38,8 @@ enum CoinType {
             return .standard
         case .binance:
             return .binance
-        case .zCash:
-            return .zCash
+        case .zcash:
+            return .zcash
         case .eos:
             return .eos
         }
@@ -94,7 +94,7 @@ extension CoinType: Equatable {
             return lhsAddress == rhsAddress && lhsFee == rhsFee
         case (.binance(let lhsSymbol), .binance(let rhsSymbol)):
             return lhsSymbol == rhsSymbol
-        case (.zCash, .zCash): return true
+        case (.zcash, .zcash): return true
         case (.eos(let lhsToken, let lhsSymbol), .eos(let rhsToken, let rhsSymbol)):
             return lhsToken == rhsToken && lhsSymbol == rhsSymbol
         default: return false
@@ -121,8 +121,8 @@ extension CoinType: Hashable {
             hasher.combine("erc20_\(address)_\(fee)_\(minimumRequiredBalance)_\(minimumSpendableAmount.map { "\($0)" } ?? "nil")")
         case .binance(let symbol):
             hasher.combine("binance_\(symbol)")
-        case .zCash:
-            hasher.combine("zCash")
+        case .zcash:
+            hasher.combine("Zcash")
         case .eos(let token, let symbol):
             hasher.combine("eos_\(token)_\(symbol)")
         }

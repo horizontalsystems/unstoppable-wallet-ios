@@ -1,15 +1,15 @@
 import RxSwift
 
-class SendZCashInteractor {
-    private let adapter: ISendZCashAdapter
+class SendZcashInteractor {
+    private let adapter: ISendZcashAdapter
 
-    init(adapter: ISendZCashAdapter) {
+    init(adapter: ISendZcashAdapter) {
         self.adapter = adapter
     }
 
 }
 
-extension SendZCashInteractor: ISendZCashInteractor {
+extension SendZcashInteractor: ISendZcashInteractor {
 
     var availableBalance: Decimal {
         adapter.availableBalance

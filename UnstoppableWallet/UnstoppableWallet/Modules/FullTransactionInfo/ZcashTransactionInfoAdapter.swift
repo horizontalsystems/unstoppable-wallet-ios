@@ -1,11 +1,11 @@
 import Foundation
 
-class ZCashTransactionInfoAdapter: IFullTransactionInfoAdapter {
-    private let provider: IZCashProvider
+class ZcashTransactionInfoAdapter: IFullTransactionInfoAdapter {
+    private let provider: IZcashProvider
     private let feeCoinProvider: IFeeCoinProvider
     private let coin: Coin
 
-    init(provider: IZCashProvider, feeCoinProvider: IFeeCoinProvider, coin: Coin) {
+    init(provider: IZcashProvider, feeCoinProvider: IFeeCoinProvider, coin: Coin) {
         self.provider = provider
         self.feeCoinProvider = feeCoinProvider
         self.coin = coin

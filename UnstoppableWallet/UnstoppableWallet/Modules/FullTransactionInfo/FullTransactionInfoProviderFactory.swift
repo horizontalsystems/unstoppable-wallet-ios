@@ -40,10 +40,10 @@ extension FullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactor
             let binanceProvider = dataProviderManager.binance(for: providerName)
             provider = binanceProvider
             adapter = BinanceTransactionInfoAdapter(provider: binanceProvider, feeCoinProvider: App.shared.feeCoinProvider, coin: coin)
-        } else if case .zCash = coin.type {
-            let zCashProvider = dataProviderManager.zCash(for: providerName)
-            provider = zCashProvider
-            adapter = ZCashTransactionInfoAdapter(provider: zCashProvider, feeCoinProvider: App.shared.feeCoinProvider, coin: coin)
+        } else if case .zcash = coin.type {
+            let zcashProvider = dataProviderManager.zcash(for: providerName)
+            provider = zcashProvider
+            adapter = ZcashTransactionInfoAdapter(provider: zcashProvider, feeCoinProvider: App.shared.feeCoinProvider, coin: coin)
         } else if case .eos = coin.type {
             let eosProvider = dataProviderManager.eos(for: providerName)
             provider = eosProvider

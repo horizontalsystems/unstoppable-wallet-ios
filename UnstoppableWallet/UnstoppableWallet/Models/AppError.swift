@@ -5,7 +5,7 @@ enum AppError: Error {
     case incubedNotReachable
     case eos(reason: EosError)
     case binance(reason: BinanceError)
-    case zCash(reason: ZCashError)
+    case zcash(reason: ZcashError)
     case wordsValidation(reason: WordsValidationError)
     case addressInvalid
     case notSupportedByHodler
@@ -29,7 +29,7 @@ enum AppError: Error {
         case onlyDigitsAllowed
     }
 
-    enum ZCashError: Error {
+    enum ZcashError: Error {
         case sendToSelf
         case transparentAddress
     }
@@ -54,7 +54,7 @@ extension AppError: LocalizedError {
             case .memoRequired: return "error.send_binance.memo_required".localized
             case .onlyDigitsAllowed: return "error.send_binance.only_digits_allowed".localized
             }
-        case .zCash(let reason):
+        case .zcash(let reason):
             switch reason {
             case .sendToSelf: return "error.send.self_transfer".localized
             case .transparentAddress: return "error.send_z_cash.transparent_address".localized

@@ -1,6 +1,6 @@
 import ZcashLightClientKit
 
-class ZCashTransaction {
+class ZcashTransaction {
     let id: String?
     let raw: Data?
     let transactionHash: String
@@ -51,9 +51,9 @@ class ZCashTransaction {
 
 }
 
-extension ZCashTransaction: Comparable {
+extension ZcashTransaction: Comparable {
 
-    public static func <(lhs: ZCashTransaction, rhs: ZCashTransaction) -> Bool {
+    public static func <(lhs: ZcashTransaction, rhs: ZcashTransaction) -> Bool {
         if lhs.timestamp != rhs.timestamp {
             return lhs.timestamp > rhs.timestamp
         } else {
@@ -61,13 +61,13 @@ extension ZCashTransaction: Comparable {
         }
     }
 
-    public static func ==(lhs: ZCashTransaction, rhs: ZCashTransaction) -> Bool {
+    public static func ==(lhs: ZcashTransaction, rhs: ZcashTransaction) -> Bool {
         lhs.transactionHash == rhs.transactionHash
     }
 
 }
 
-extension ZCashTransaction: Hashable {
+extension ZcashTransaction: Hashable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(transactionHash)
@@ -75,10 +75,10 @@ extension ZCashTransaction: Hashable {
 
 }
 
-extension ZCashTransaction {
+extension ZcashTransaction {
 
     var description: String {
-        "TX(ZCash) === hash:\(transactionHash) : \(toAddress?.prefix(6) ?? "N/A") : \(transactionIndex) height: \(minedHeight?.description ?? "N/A") timestamp \(timestamp.description)"
+        "TX(Zcash) === hash:\(transactionHash) : \(toAddress?.prefix(6) ?? "N/A") : \(transactionIndex) height: \(minedHeight?.description ?? "N/A") timestamp \(timestamp.description)"
     }
 
 }
