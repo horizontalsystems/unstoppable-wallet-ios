@@ -23,10 +23,15 @@ class EthereumAdapter: EthereumBaseAdapter {
     private func transactionRecord(fromTransaction transactionWithInternal: TransactionWithInternal) -> TransactionRecord {
         let transaction = transactionWithInternal.transaction
 
+        var from = transaction.from
+        var to = transaction.to
+
         var amount = convertAmount(amount: transaction.value, fromAddress: transaction.from)
 
         amount += transactionWithInternal.internalTransactions.reduce(0) { internalAmount, internalTransaction in
-            internalAmount + convertAmount(amount: internalTransaction.value, fromAddress: internalTransaction.from)
+            from = internalTransaction.from
+            to = internalTransaction.to
+            return internalAmount + convertAmount(amount: internalTransaction.value, fromAddress: internalTransaction.from)
         }
 
         let type: TransactionType
@@ -53,8 +58,8 @@ class EthereumAdapter: EthereumBaseAdapter {
                 fee: transaction.gasUsed.map { Decimal(sign: .plus, exponent: -decimal, significand: Decimal($0 * transaction.gasPrice)) },
                 date: Date(timeIntervalSince1970: transaction.timestamp),
                 failed: failed,
-                from: transaction.from.hex,
-                to: transaction.to.hex,
+                from: from.hex,
+                to: to.hex,
                 lockInfo: nil,
                 conflictingHash: nil,
                 showRawTransaction: false
