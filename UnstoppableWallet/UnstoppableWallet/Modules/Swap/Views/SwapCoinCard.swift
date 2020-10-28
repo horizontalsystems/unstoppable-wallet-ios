@@ -15,7 +15,7 @@ class SwapCoinCard: UIView {
     private let titleLabel = UILabel()
     private let badgeView = BadgeView()
     private let paddingView = UIView()
-    private let tokenSelectView = RightSelectableValueView()
+    private let tokenSelectButton = UIButton()
 
     private let inputFieldWrapper = UIView()
     private let inputField = UITextField()
@@ -63,21 +63,28 @@ class SwapCoinCard: UIView {
         paddingView.setContentHuggingPriority(.defaultLow, for: .horizontal)
         paddingView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-        cardView.addSubview(tokenSelectView)
-        tokenSelectView.snp.makeConstraints { maker in
+        cardView.addSubview(tokenSelectButton)
+        tokenSelectButton.snp.makeConstraints { maker in
             maker.top.equalToSuperview()
             maker.height.equalTo(CGFloat.heightSingleLineCell)
             maker.trailing.equalToSuperview()
             maker.leading.equalTo(paddingView.snp.trailing)
         }
 
-        tokenSelectView.action = { [weak self] in
-            self?.tapTokenSelect()
-        }
+        tokenSelectButton.setContentHuggingPriority(.required, for: .horizontal)
+        tokenSelectButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+
+        tokenSelectButton.semanticContentAttribute = .forceRightToLeft
+        tokenSelectButton.setImage(UIImage(named: "Down")?.tinted(with: .themeGray), for: .normal)
+        tokenSelectButton.setTitleColor(.themeLeah, for: .normal)
+        tokenSelectButton.titleLabel?.font = UIFont.subhead1
+        tokenSelectButton.addTarget(self, action: #selector(onTapTokenSelect), for: .touchUpInside)
+        tokenSelectButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: .margin6x, bottom: 0, right: .margin4x)
+        tokenSelectButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -.margin2x, bottom: 0, right: .margin2x)
 
         cardView.addSubview(inputFieldWrapper)
         inputFieldWrapper.snp.makeConstraints { maker in
-            maker.top.equalTo(tokenSelectView.snp.bottom)
+            maker.top.equalTo(tokenSelectButton.snp.bottom)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin2x)
             maker.height.equalTo(CGFloat.heightSingleLineCell)
         }
@@ -131,7 +138,7 @@ class SwapCoinCard: UIView {
         subscribe(disposeBag, viewModel.balanceError) { [weak self] in self?.set(balanceError: $0) }
     }
 
-    private func tapTokenSelect() {
+    @objc private func onTapTokenSelect() {
         let coins = viewModel.tokensForSelection
 
         let vc = CoinSelectModule.instance(coins: coins, delegate: self)
@@ -152,11 +159,11 @@ extension SwapCoinCard {
 
     private func set(tokenCode: String?) {
         if let tokenCode = tokenCode {
-            tokenSelectView.set(title: tokenCode)
-            tokenSelectView.set(titleColor: .themeLeah)
+            tokenSelectButton.setTitle(tokenCode, for: .normal)
+            tokenSelectButton.setTitleColor(.themeLeah, for: .normal)
         } else {
-            tokenSelectView.set(title: "swap.token".localized)
-            tokenSelectView.set(titleColor:  .themeYellowD)
+            tokenSelectButton.setTitle("swap.token".localized, for: .normal)
+            tokenSelectButton.setTitleColor(.themeYellowD, for: .normal)
         }
     }
 
