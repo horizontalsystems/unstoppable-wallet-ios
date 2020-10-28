@@ -2,17 +2,17 @@ import Foundation
 import RxSwift
 import HsToolKit
 
-class SendZCashHandler {
+class SendZcashHandler {
     weak var delegate: ISendHandlerDelegate?
 
-    private let interactor: ISendZCashInteractor
+    private let interactor: ISendZcashInteractor
 
     private let amountModule: ISendAmountModule
     private let addressModule: ISendAddressModule
     private let memoModule: ISendMemoModule
     private let feeModule: ISendFeeModule
 
-    init(interactor: ISendZCashInteractor, amountModule: ISendAmountModule, addressModule: ISendAddressModule, memoModule: ISendMemoModule, feeModule: ISendFeeModule) {
+    init(interactor: ISendZcashInteractor, amountModule: ISendAmountModule, addressModule: ISendAddressModule, memoModule: ISendMemoModule, feeModule: ISendFeeModule) {
         self.interactor = interactor
 
         self.amountModule = amountModule
@@ -38,7 +38,7 @@ class SendZCashHandler {
 
 }
 
-extension SendZCashHandler: ISendHandler {
+extension SendZcashHandler: ISendHandler {
 
     func onViewDidLoad() {
         syncAvailableBalance()
@@ -77,12 +77,12 @@ extension SendZCashHandler: ISendHandler {
 
     func sendSingle(logger: Logger) throws -> Single<Void> {
         interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress(), memo: memoModule.memo)
-                .do(onSubscribe: { logger.debug("Sending to ISendZCashInteractor", save: true) })
+                .do(onSubscribe: { logger.debug("Sending to ISendZcashInteractor", save: true) })
     }
 
 }
 
-extension SendZCashHandler: ISendAmountDelegate {
+extension SendZcashHandler: ISendAmountDelegate {
 
     func onChangeAmount() {
         syncValidation()
@@ -94,7 +94,7 @@ extension SendZCashHandler: ISendAmountDelegate {
 
 }
 
-extension SendZCashHandler: ISendAddressDelegate {
+extension SendZcashHandler: ISendAddressDelegate {
 
     func validate(address: String) throws {
         try interactor.validate(address: address)

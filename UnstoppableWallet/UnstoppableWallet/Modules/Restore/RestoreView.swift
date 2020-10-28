@@ -53,8 +53,8 @@ class RestoreView {
                 return RestoreEosModule.viewController(restoreView: self)
             case .binance:
                 return RestoreWordsModule.viewController(restoreView: self, restoreAccountType: .mnemonic(wordsCount: 24))
-            case .zCash:
-                return RestoreWordsModule.viewController(restoreView: self, restoreAccountType: .zCash)
+            case .zcash:
+                return RestoreWordsModule.viewController(restoreView: self, restoreAccountType: .zcash)
             }
 
         case .selectCoins(let predefinedAccountType):

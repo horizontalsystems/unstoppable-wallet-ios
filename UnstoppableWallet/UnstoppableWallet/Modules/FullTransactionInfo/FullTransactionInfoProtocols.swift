@@ -77,7 +77,7 @@ protocol IBinanceResponse {
     var memo: String? { get }
 }
 
-protocol IZCashResponse {
+protocol IZcashResponse {
     var txId: String? { get }
     var blockTime: Int? { get }
     var blockHeight: Int? { get }

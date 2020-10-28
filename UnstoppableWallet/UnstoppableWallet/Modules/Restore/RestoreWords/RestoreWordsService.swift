@@ -13,7 +13,7 @@ class RestoreWordsService {
         switch restoreAccountType {
         case .mnemonic(let wordsCount):
             return wordsCount
-        case .zCash:
+        case .zcash:
             return 24
         }
     }
@@ -28,8 +28,8 @@ class RestoreWordsService {
         switch restoreAccountType {
         case .mnemonic:
             return .mnemonic(words: words, salt: nil)
-        case .zCash:
-            return .zCash(words: words)
+        case .zcash:
+            return .zcash(words: words)
         }
     }
 

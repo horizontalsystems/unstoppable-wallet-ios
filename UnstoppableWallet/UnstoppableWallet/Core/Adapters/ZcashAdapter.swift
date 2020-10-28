@@ -5,17 +5,17 @@ import RxSwift
 import HdWalletKit
 import HsToolKit
 
-class ZCashAdapter {
+class ZcashAdapter {
     private let newWalletBlockHeight = 1_020_800
 
     private static let coinRate = Decimal(ZcashSDK.ZATOSHI_PER_ZEC)
-    let fee = Decimal(ZcashSDK.MINERS_FEE_ZATOSHI) / ZCashAdapter.coinRate
+    let fee = Decimal(ZcashSDK.MINERS_FEE_ZATOSHI) / ZcashAdapter.coinRate
 
     private let synchronizer: SDKSynchronizer
-    private let transactionPool: ZCashTransactionPool
+    private let transactionPool: ZcashTransactionPool
 
     private let keys: [String]
-    private let loggingProxy = ZCashLogger(logLevel: .verbose)
+    private let loggingProxy = ZcashLogger(logLevel: .error)
 
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
     private let stateUpdatedSubject = PublishSubject<Void>()
@@ -27,7 +27,7 @@ class ZCashAdapter {
     private(set) var state: AdapterState
 
     init(wallet: Wallet, syncMode: SyncMode?, testMode: Bool) throws {
-        guard case let .zCash(words) = wallet.account.type else {
+        guard case let .zcash(words) = wallet.account.type else {
             throw AdapterError.unsupportedAccount
         }
 
@@ -36,12 +36,12 @@ class ZCashAdapter {
         let birthday = syncMode == .new ? newWalletBlockHeight : ZcashSDK.SAPLING_ACTIVATION_HEIGHT
         let uniqueId = wallet.account.id
 
-        let initializer = Initializer(cacheDbURL:try! ZCashAdapter.cacheDbURL(uniqueId: uniqueId),
-                                      dataDbURL: try! ZCashAdapter.dataDbURL(uniqueId: uniqueId),
-                                      pendingDbURL: try! ZCashAdapter.pendingDbURL(uniqueId: uniqueId),
+        let initializer = Initializer(cacheDbURL:try! ZcashAdapter.cacheDbURL(uniqueId: uniqueId),
+                                      dataDbURL: try! ZcashAdapter.dataDbURL(uniqueId: uniqueId),
+                                      pendingDbURL: try! ZcashAdapter.pendingDbURL(uniqueId: uniqueId),
                 endpoint: LightWalletEndpoint(address: endPoint, port: 9067),
-                spendParamsURL: try! ZCashAdapter.spendParamsURL(uniqueId: uniqueId),
-                outputParamsURL: try! ZCashAdapter.outputParamsURL(uniqueId: uniqueId),
+                spendParamsURL: try! ZcashAdapter.spendParamsURL(uniqueId: uniqueId),
+                outputParamsURL: try! ZcashAdapter.outputParamsURL(uniqueId: uniqueId),
                 loggerProxy: loggingProxy)
 
 
@@ -52,7 +52,7 @@ class ZCashAdapter {
         keys = try DerivationTool.default.deriveSpendingKeys(seed: seedData, numberOfAccounts: 1)
         synchronizer = try SDKSynchronizer(initializer: initializer)
 
-        transactionPool = ZCashTransactionPool()
+        transactionPool = ZcashTransactionPool()
         transactionPool.store(confirmedTransactions: synchronizer.clearedTransactions, pendingTransactions: synchronizer.pendingTransactions)
 
         state = .syncing(progress: 0, lastBlockDate: nil)
@@ -102,7 +102,6 @@ class ZCashAdapter {
         if let userInfo = notification.userInfo,
            let txs = userInfo[SDKSynchronizer.NotificationKeys.foundTransactions] as? [ConfirmedTransactionEntity] {
             let newTxs = transactionPool.sync(transactions: txs)
-
             transactionRecordsSubject.onNext(newTxs.map {
                 transactionRecord(fromTransaction: $0)
             })
@@ -128,7 +127,7 @@ class ZCashAdapter {
         }
     }
 
-    func transactionRecord(fromTransaction transaction: ZCashTransaction) -> TransactionRecord {
+    func transactionRecord(fromTransaction transaction: ZcashTransaction) -> TransactionRecord {
         var incoming = true
         if let toAddress = transaction.toAddress, toAddress != receiveAddress {
             incoming = false
@@ -164,7 +163,7 @@ class ZCashAdapter {
 
 }
 
-extension ZCashAdapter {
+extension ZcashAdapter {
 
     private static func dataDirectoryUrl() throws -> URL {
         let fileManager = FileManager.default
@@ -211,7 +210,7 @@ extension ZCashAdapter {
 
 }
 
-extension ZCashAdapter: IAdapter {
+extension ZcashAdapter: IAdapter {
 
     func start() {
         sync()
@@ -245,7 +244,7 @@ extension ZCashAdapter: IAdapter {
 
 }
 
-extension ZCashAdapter: ITransactionsAdapter {
+extension ZcashAdapter: ITransactionsAdapter {
 
     var lastBlockInfo: LastBlockInfo? {
         lastBlockHeight.map { LastBlockInfo(height: $0, timestamp: nil) }
@@ -271,7 +270,7 @@ extension ZCashAdapter: ITransactionsAdapter {
 
 }
 
-extension ZCashAdapter: IBalanceAdapter {
+extension ZcashAdapter: IBalanceAdapter {
 
     var stateUpdatedObservable: Observable<Void> {
         stateUpdatedSubject.asObservable()
@@ -295,7 +294,7 @@ extension ZCashAdapter: IBalanceAdapter {
 
 }
 
-extension ZCashAdapter: IDepositAdapter {
+extension ZcashAdapter: IDepositAdapter {
 
     var receiveAddress: String {
         // only first account
@@ -304,7 +303,7 @@ extension ZCashAdapter: IDepositAdapter {
 
 }
 
-extension ZCashAdapter: ISendZCashAdapter {
+extension ZcashAdapter: ISendZcashAdapter {
 
     var availableBalance: Decimal {
         max(0, Decimal(synchronizer.initializer.getVerifiedBalance()) / Self.coinRate - fee)
@@ -312,7 +311,7 @@ extension ZCashAdapter: ISendZCashAdapter {
 
     func validate(address: String) throws {
         guard !synchronizer.initializer.isValidTransparentAddress(address) else {
-            throw AppError.zCash(reason: .transparentAddress)
+            throw AppError.zcash(reason: .transparentAddress)
         }
 
         guard synchronizer.initializer.isValidShieldedAddress(address) else {
@@ -320,7 +319,7 @@ extension ZCashAdapter: ISendZCashAdapter {
         }
 
         guard address != receiveAddress else {
-            throw AppError.zCash(reason: .sendToSelf)
+            throw AppError.zcash(reason: .sendToSelf)
         }
     }
 
@@ -349,7 +348,7 @@ extension ZCashAdapter: ISendZCashAdapter {
 
 }
 
-private class ZCashLogger: ZcashLightClientKit.Logger {
+private class ZcashLogger: ZcashLightClientKit.Logger {
 
     private let level: HsToolKit.Logger.Level
     private let logger: HsToolKit.Logger

@@ -114,7 +114,7 @@ protocol ISendBinanceInteractor {
     func sendSingle(amount: Decimal, address: String, memo: String?) -> Single<Void>
 }
 
-protocol ISendZCashInteractor {
+protocol ISendZcashInteractor {
     var availableBalance: Decimal { get }
     func validate(address: String) throws
     var fee: Decimal { get }

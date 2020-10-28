@@ -68,7 +68,7 @@ extension LocalStorage: ILocalStorage {
         set { storage.set(value: newValue, for: keyBaseBinanceProvider) }
     }
 
-    var baseZCashProvider: String? {
+    var baseZcashProvider: String? {
         get { storage.value(for: keyBaseBinanceProvider) }
         set { storage.set(value: newValue, for: keyBaseBinanceProvider) }
     }

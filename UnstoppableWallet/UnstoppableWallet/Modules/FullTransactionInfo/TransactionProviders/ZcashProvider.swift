@@ -3,7 +3,7 @@ import Foundation
 import ObjectMapper
 import Alamofire
 
-class ZCashProvider: IZCashProvider {
+class ZcashProvider: IZcashProvider {
     let name = "Explorer.zcha.in"
 
     func url(for hash: String) -> String? {
@@ -18,13 +18,13 @@ class ZCashProvider: IZCashProvider {
         session.request("https://api.zcha.in/v2/mainnet/transactions/" + hash)
     }
 
-    func convert(json: [String: Any]) -> IZCashResponse? {
-        try? ZCashResponse(JSONObject: json)
+    func convert(json: [String: Any]) -> IZcashResponse? {
+        try? ZcashResponse(JSONObject: json)
     }
 
 }
 
-class ZCashResponse: IZCashResponse, ImmutableMappable {
+class ZcashResponse: IZcashResponse, ImmutableMappable {
     var txId: String?
     var blockTime: Int?
     var blockHeight: Int?
