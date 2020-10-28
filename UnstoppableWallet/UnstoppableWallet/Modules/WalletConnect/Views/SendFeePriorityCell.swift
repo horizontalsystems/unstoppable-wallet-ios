@@ -37,6 +37,7 @@ class SendFeePriorityCell: UITableViewCell {
 
     private let feeSliderWrapper = FeeSliderWrapper()
     private let feeRateView = FeeSliderValueView()
+    private var sliderLastValue: Int?
 
     private let disposeBag = DisposeBag()
 
@@ -84,6 +85,7 @@ class SendFeePriorityCell: UITableViewCell {
                         self?.feeSliderWrapper.set(value: viewItem.initialValue, range: viewItem.range)
                         self?.feeRateView.set(descriptionText: viewItem.unit)
                         self?.feeSliderWrapper.isHidden = false
+                        self?.sliderLastValue = viewItem.initialValue
                     } else {
                         self?.feeSliderWrapper.isHidden = true
                     }
@@ -146,6 +148,11 @@ class SendFeePriorityCell: UITableViewCell {
     private func finishTracking(value: Int) {
         HUD.instance.hide()
 
+        guard sliderLastValue != value else {
+            return
+        }
+
+        sliderLastValue = value
         viewModel.changeCustomPriority(value: value)
     }
 

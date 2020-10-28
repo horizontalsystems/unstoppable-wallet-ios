@@ -525,7 +525,7 @@ CHECKOUT OPTIONS:
     :commit: 8b6e7e3822cffbdad6f1ebba96500153241cc888
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   PinKit.swift:
-    :commit: 607113a2f1025b32a14ff331033b6942645bd236
+    :commit: aa76428dff4cc6f6e78a9f8463349c2058522703
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ScanQrKit.swift:
     :commit: 607113a2f1025b32a14ff331033b6942645bd236
