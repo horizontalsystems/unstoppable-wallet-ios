@@ -2,7 +2,6 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
-import HUD
 
 struct SendPriorityViewItem {
     let title: String
@@ -36,8 +35,6 @@ class SendFeePriorityCell: UITableViewCell {
     private let selectableValueView = SelectableValueView(title: "send.tx_speed".localized)
 
     private let feeSliderWrapper = FeeSliderWrapper()
-    private let feeRateView = FeeSliderValueView()
-    private var sliderLastValue: Int?
 
     private let disposeBag = DisposeBag()
 
@@ -60,9 +57,6 @@ class SendFeePriorityCell: UITableViewCell {
             maker.top.equalTo(selectableValueView.snp.bottom)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
-        feeSliderWrapper.onTracking = { [weak self] value, position in
-            self?.onTracking(value, position: position)
-        }
         feeSliderWrapper.finishTracking = { [weak self] value in
             self?.finishTracking(value: value)
         }
@@ -82,10 +76,8 @@ class SendFeePriorityCell: UITableViewCell {
         viewModel.feeSliderDriver
                 .drive(onNext: { [weak self] viewItem in
                     if let viewItem = viewItem {
-                        self?.feeSliderWrapper.set(value: viewItem.initialValue, range: viewItem.range)
-                        self?.feeRateView.set(descriptionText: viewItem.unit)
+                        self?.feeSliderWrapper.set(value: viewItem.initialValue, range: viewItem.range, description: viewItem.unit)
                         self?.feeSliderWrapper.isHidden = false
-                        self?.sliderLastValue = viewItem.initialValue
                     } else {
                         self?.feeSliderWrapper.isHidden = true
                     }
@@ -115,44 +107,8 @@ class SendFeePriorityCell: UITableViewCell {
         delegate?.open(viewController: alertController)
     }
 
-    private func hudConfig(position: CGPoint) -> HUDConfig {
-        var feeConfig = HUDConfig()
-
-        feeConfig.appearStyle = .alphaAppear
-        feeConfig.style = .banner(.top)
-        feeConfig.absoluteInsetsValue = true
-        feeConfig.userInteractionEnabled = true
-        feeConfig.hapticType = .none
-        feeConfig.blurEffectStyle = nil
-        feeConfig.blurEffectIntensity = nil
-        feeConfig.borderColor = .themeSteel20
-        feeConfig.borderWidth = .heightOnePixel
-        feeConfig.exactSize = true
-        feeConfig.preferredSize = CGSize(width: 74, height: 48)
-        feeConfig.cornerRadius = CGFloat.cornerRadius2x
-        feeConfig.handleKeyboard = .none
-        feeConfig.inAnimationDuration = 0
-        feeConfig.outAnimationDuration = 0
-
-        feeConfig.hudInset = convert(CGPoint(x: position.x - center.x, y: -feeConfig.preferredSize.height - CGFloat.margin2x), to: nil)
-        return feeConfig
-    }
-
-    private func onTracking(_ value: Int, position: CGPoint) {
-        HUD.instance.config = hudConfig(position: position)
-
-        feeRateView.set(value: "\(value)")
-        HUD.instance.showHUD(feeRateView)
-    }
 
     private func finishTracking(value: Int) {
-        HUD.instance.hide()
-
-        guard sliderLastValue != value else {
-            return
-        }
-
-        sliderLastValue = value
         viewModel.changeCustomPriority(value: value)
     }
 
