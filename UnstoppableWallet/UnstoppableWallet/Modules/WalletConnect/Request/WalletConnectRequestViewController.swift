@@ -147,10 +147,6 @@ extension WalletConnectRequestViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         var feeRows = [RowProtocol]()
 
-        if let error = error {
-            feeRows.append(errorRow(error: error))
-        }
-
         feeRows.append(
                 StaticRow(
                         cell: feeCell,
@@ -166,6 +162,10 @@ extension WalletConnectRequestViewController: SectionsDataSource {
                         height: feePriorityCell.currentHeight
                 )
         )
+
+        if let error = error {
+            feeRows.append(errorRow(error: error))
+        }
 
         return [
             Section(

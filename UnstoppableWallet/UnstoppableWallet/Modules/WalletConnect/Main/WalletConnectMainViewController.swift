@@ -76,7 +76,7 @@ class WalletConnectMainViewController: ThemeViewController {
 
         tableView.registerCell(forClass: TermsHeaderCell.self)
         tableView.registerCell(forClass: FullTransactionInfoTextCell.self)
-        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
+        tableView.registerCell(forClass: HighlightedDescriptionCell.self)
 
         view.addSubview(buttonsHolder)
         buttonsHolder.snp.makeConstraints { maker in
@@ -279,16 +279,24 @@ extension WalletConnectMainViewController: SectionsDataSource {
             rows.append(valueRow(title: "wallet_connect.url".localized, subtitle: url))
         }
 
-        return [Section(id: "wallet_connect", footerState: footer ?? .margin(height: 0), rows: rows)]
+        if let footerRow = footer {
+            rows.append(footerRow)
+        }
+
+        return [Section(id: "wallet_connect", rows: rows)]
     }
 
-    private var footer: ViewState<BottomDescriptionHeaderFooterView>? {
-        hint.map { hint -> ViewState<BottomDescriptionHeaderFooterView> in
-            .cellType(hash: "hint_footer", binder: { view in
-                view.bind(text: hint)
-            }, dynamicHeight: { width in
-                BottomDescriptionHeaderFooterView.height(containerWidth: width, text: hint)
-            })
+    private var footer: RowProtocol? {
+        hint.map { hint -> RowProtocol in
+            Row<HighlightedDescriptionCell>(
+                    id: "hint_footer",
+                    dynamicHeight: { width in
+                        HighlightedDescriptionCell.height(containerWidth: width, text: hint)
+                    },
+                    bind: { cell, _ in
+                        cell.bind(text: hint)
+                    }
+            )
         }
     }
 
