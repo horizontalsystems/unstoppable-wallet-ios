@@ -38,13 +38,7 @@ class FeeSlider: UISlider {
     }
 
     private func correctCenter(touch: UITouch) -> CGPoint {     // touch position may be not in center of thumb, we need correct centerX
-        let absolutePosition = touch.location(in: nil)
-        let relativePosition = touch.location(in: self)
-
-        let xShift = absolutePosition.x - relativePosition.x
-
-        let position = (width - thumbWidth) * CGFloat((value - minimumValue) / (maximumValue - minimumValue)) + thumbWidth / 2
-        return CGPoint(x: position + xShift, y: absolutePosition.y)
+        touch.location(in: nil)
     }
 
     override open func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
