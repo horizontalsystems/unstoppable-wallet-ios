@@ -130,8 +130,8 @@ class SendAmountView: UIView {
         inputField.keyboardType = .decimalPad
         inputField.tintColor = .themeInputFieldTintColor
         inputField.snp.makeConstraints { maker in
-            maker.centerY.equalTo(amountTypeLabel.snp.centerY).offset(CGFloat.heightOnePixel)
-            maker.leading.equalTo(amountTypeLabel.snp.trailing).offset(CGFloat.margin1x)
+            maker.firstBaseline.equalTo(amountTypeLabel.snp.firstBaseline)
+            maker.leading.equalTo(amountTypeLabel.snp.trailing).offset(CGFloat.margin2x)
             maker.trailing.equalTo(maxButton.snp.leading).offset(-CGFloat.margin1x)
         }
 
