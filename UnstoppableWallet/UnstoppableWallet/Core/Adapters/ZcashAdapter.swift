@@ -281,7 +281,7 @@ extension ZcashAdapter: IBalanceAdapter {
     }
 
     var balance: Decimal {
-        Decimal(synchronizer.initializer.getBalance()) / Self.coinRate
+        Decimal(synchronizer.initializer.getVerifiedBalance()) / Self.coinRate
     }
 
     var balanceLocked: Decimal? {
