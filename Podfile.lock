@@ -2,7 +2,7 @@ PODS:
   - ActionSheet.swift (1.2):
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1.1)
-  - Alamofire (5.2.2)
+  - Alamofire (5.3.0)
   - AlamofireImage (4.1.0):
     - Alamofire (~> 5.1)
   - BigInt (5.2.0)
@@ -81,7 +81,7 @@ PODS:
     - Secp256k1Kit.swift (~> 1.0)
     - X11Kit.swift (~> 1.0)
   - DeepDiff (2.3.1)
-  - Down (0.9.3)
+  - Down (0.9.4)
   - EosioSwift (0.4.0):
     - BigInt (~> 5.0)
     - PromiseKit (~> 6.8)
@@ -260,7 +260,7 @@ PODS:
     - SwiftNIOConcurrencyHelpers (< 3, >= 2.22.0)
     - SwiftNIOFoundationCompat (< 3, >= 2.22.0)
     - SwiftNIOTLS (< 3, >= 2.22.0)
-  - SwiftProtobuf (1.12.0)
+  - SwiftProtobuf (1.13.0)
   - SwiftyJSON (4.3.0)
   - ThemeKit.swift (1.0):
     - HUD.swift (~> 1.2)
@@ -459,28 +459,28 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   ActionSheet.swift:
-    :commit: 21838c0051ef021a4c6865fb02cccf326c793c4c
+    :commit: 9278b438d74e586f41996af8319ba519eff4e3cf
     :git: https://github.com/horizontalsystems/gui-kit/
   BinanceChainKit.swift:
     :commit: 90c82f0ed78dfcba30c5073f76c79e89511bd82d
     :git: https://github.com/horizontalsystems/binance-chain-kit-ios
   BitcoinCashKit.swift:
-    :commit: 8b6e7e3822cffbdad6f1ebba96500153241cc888
+    :commit: b77c8ec285959904cc697aa40cef07c6969e67d4
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinCore.swift:
-    :commit: 8b6e7e3822cffbdad6f1ebba96500153241cc888
+    :commit: b77c8ec285959904cc697aa40cef07c6969e67d4
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinKit.swift:
-    :commit: 8b6e7e3822cffbdad6f1ebba96500153241cc888
+    :commit: b77c8ec285959904cc697aa40cef07c6969e67d4
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
-    :commit: 21838c0051ef021a4c6865fb02cccf326c793c4c
+    :commit: 9278b438d74e586f41996af8319ba519eff4e3cf
     :git: https://github.com/horizontalsystems/gui-kit/
   CurrencyKit.swift:
-    :commit: 607113a2f1025b32a14ff331033b6942645bd236
+    :commit: 997f8d18a449be4352deedccec05544ddf899d68
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
-    :commit: 8b6e7e3822cffbdad6f1ebba96500153241cc888
+    :commit: b77c8ec285959904cc697aa40cef07c6969e67d4
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   EosioSwift:
     :commit: da261f581d9a19d7bbb4ef592bf649df1422fdb8
@@ -510,37 +510,37 @@ CHECKOUT OPTIONS:
     :commit: 3e3720f600d10929146e5e8583cf39a072b37e61
     :git: https://github.com/horizontalsystems/hd-wallet-kit-ios
   Hodler.swift:
-    :commit: 8b6e7e3822cffbdad6f1ebba96500153241cc888
+    :commit: b77c8ec285959904cc697aa40cef07c6969e67d4
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HsToolKit.swift:
     :commit: 52d655b99381d1940e215f22382f0814cc0c8bc3
     :git: https://github.com/horizontalsystems/hs-tool-kit-ios
   HUD.swift:
-    :commit: 21838c0051ef021a4c6865fb02cccf326c793c4c
+    :commit: 9278b438d74e586f41996af8319ba519eff4e3cf
     :git: https://github.com/horizontalsystems/gui-kit/
   LanguageKit.swift:
-    :commit: 607113a2f1025b32a14ff331033b6942645bd236
+    :commit: 997f8d18a449be4352deedccec05544ddf899d68
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
-    :commit: 8b6e7e3822cffbdad6f1ebba96500153241cc888
+    :commit: b77c8ec285959904cc697aa40cef07c6969e67d4
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   PinKit.swift:
-    :commit: aa76428dff4cc6f6e78a9f8463349c2058522703
+    :commit: 997f8d18a449be4352deedccec05544ddf899d68
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ScanQrKit.swift:
-    :commit: 607113a2f1025b32a14ff331033b6942645bd236
+    :commit: 997f8d18a449be4352deedccec05544ddf899d68
     :git: https://github.com/horizontalsystems/component-kit-ios/
   SectionsTableView.swift:
     :commit: 9278b438d74e586f41996af8319ba519eff4e3cf
     :git: https://github.com/horizontalsystems/gui-kit/
   StorageKit.swift:
-    :commit: 607113a2f1025b32a14ff331033b6942645bd236
+    :commit: 997f8d18a449be4352deedccec05544ddf899d68
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
     :commit: 7aa729f037302f4c74b4d032660c4a0f388af257
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
-    :commit: c8bede21609ca82f3820b52b200824643b84ff73
+    :commit: 9278b438d74e586f41996af8319ba519eff4e3cf
     :git: https://github.com/horizontalsystems/gui-kit/
   UniswapKit.swift:
     :commit: b0f50333a51e6aa22236b017a7acae5402bde0f1
@@ -552,12 +552,12 @@ CHECKOUT OPTIONS:
     :commit: c0ef7faf52500375de0912b041dd9015ae028384
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
   ZcashLightClientKit:
-    :commit: c89626d9ea7d3629b297db705e0da6df58ce66f5
+    :commit: 924ff6b71d2d5361112d51d0f3b1a4630ff2deae
     :git: https://github.com/zcash/ZcashLightClientKit.git
 
 SPEC CHECKSUMS:
   ActionSheet.swift: 60b3f9737bf8fff3c7b39de295291a9cd968be58
-  Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
+  Alamofire: 2c792affbdc2f18016e08fdbcacd60aebe1ba593
   AlamofireImage: c4a2ba349885fb3064feb74d2e547bd42ce9be10
   BigInt: f668a80089607f521586bbe29513d708491ef2f7
   BinanceChainKit.swift: 8b0f9f257b15a13673dcfa89584dc990c77dbf08
@@ -581,7 +581,7 @@ SPEC CHECKSUMS:
   CurrencyKit.swift: c1a37e0e43eac3828be95c8348693f192d67b376
   DashKit.swift: 0a0faf547999ed9a2e61fa788487cb892169e634
   DeepDiff: e5ae6c50d0321568e4508cec5930b9f10bb293fc
-  Down: 4553b984236807e384fa0ef7c7e360ef9f7c425d
+  Down: 276f2c3eeeaf30345873bdad25f44b2640fcfa3a
   EosioSwift: 2a09078be82227086a27891de9406b13083c78a3
   EosioSwiftAbieosSerializationProvider: eba59a5335200175ccb71546388b81e98cd3213d
   EosioSwiftEcc: 0e469473d2227200254a3a660feaf74b690c3a2e
@@ -628,7 +628,7 @@ SPEC CHECKSUMS:
   SwiftNIOSSL: fc672dc6a26e6ab78edd729568cd5a44aabb3409
   SwiftNIOTLS: 905a7e7e26a3f7d9661da34e0edf01be086c596d
   SwiftNIOTransportServices: 801923921fbecdcde1e1c1ff38e812167d01ead1
-  SwiftProtobuf: 4ef85479c18ca85b5482b343df9c319c62bda699
+  SwiftProtobuf: fd4693388a96c8c2df35d3b063272b0e7c499d00
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   ThemeKit.swift: ab5c081b10f6a80149d37751f3ee98f1292bf497
   UIExtensions.swift: 3ed084c0343ddd0f86c7c558d37759e1fd7d5778
