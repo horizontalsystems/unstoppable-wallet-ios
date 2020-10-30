@@ -32,17 +32,13 @@ class InputFieldButtonItem {
 
 }
 
-class InputFieldStackView: UIView {
-    static private let errorTopMargin: CGFloat = .margin1x
+class InputFieldStackView: UIStackView {
     static private let textViewMargin: CGFloat = .margin1x
     static private let textViewFont: UIFont = .body
 
     private let textViewWrapper = UIView()
     private let textView = UITextView()
     private let placeholderLabel = UILabel()
-
-    private let stackView = UIStackView()
-    private let errorLabel = UILabel()
 
     private var buttonItems = [InputFieldButtonItem]()
 
@@ -65,12 +61,6 @@ class InputFieldStackView: UIView {
 
     init() {
         super.init(frame: .zero)
-
-        backgroundColor = .themeLawrence
-
-        layer.cornerRadius = .cornerRadius2x
-        layer.borderWidth = CGFloat.heightOnePixel
-        layer.borderColor = UIColor.themeSteel20.cgColor
 
         textViewWrapper.addSubview(textView)
         textViewWrapper.snp.makeConstraints { maker in
@@ -103,24 +93,13 @@ class InputFieldStackView: UIView {
         placeholderLabel.textColor = .themeGray50
 
 
-        stackView.addArrangedSubview(textViewWrapper)
+        addArrangedSubview(textViewWrapper)
 
-        addSubview(stackView)
-        stackView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview().inset(CGFloat.margin2x)
-        }
-
-        stackView.spacing = .margin2x
-        stackView.alignment = .center
-
-        addSubview(errorLabel)
-
-        errorLabel.font = .caption
-        errorLabel.textColor = .themeLucian
-        errorLabel.numberOfLines = 0
+        spacing = .margin2x
+        alignment = .center
     }
 
-    required init?(coder: NSCoder) {
+    required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -133,12 +112,11 @@ class InputFieldStackView: UIView {
     }
 
     private func textViewDidChange() {
-        stackView
-                .arrangedSubviews
+        arrangedSubviews
                 .compactMap { $0 as? ThemeButton }
                 .forEach { updateVisibleState(button: $0, isEmptyText: textView.text.isEmpty) }
 
-        self.layoutIfNeeded()
+        layoutIfNeeded()
     }
 
     private func updateVisibleState(button: ThemeButton, isEmptyText: Bool) {
@@ -185,7 +163,7 @@ extension InputFieldStackView {
         placeholderLabel.textColor = color
     }
 
-    func add(item: InputFieldButtonItem) {
+    func append(item: InputFieldButtonItem) {
         let button = ThemeButton().apply(style: item.style)
 
         button.setTitle(item.title, for: .normal)
@@ -196,31 +174,8 @@ extension InputFieldStackView {
         button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         buttonItems.append(item)
-        stackView.addArrangedSubview(button)
+        addArrangedSubview(button)
         updateVisibleState(button: button, isEmptyText: textView.text.isEmpty)
-    }
-
-    func bind(error: String?) {
-        if let error = error {
-            errorLabel.isHidden = false
-            errorLabel.text = error
-
-            stackView.snp.remakeConstraints { maker in
-                maker.top.trailing.equalToSuperview().inset(CGFloat.margin2x)
-                maker.leading.equalToSuperview().inset(CGFloat.margin3x)
-            }
-            errorLabel.snp.remakeConstraints { maker in
-                maker.top.equalTo(stackView.snp.bottom).offset(Self.errorTopMargin)
-                maker.leading.trailing.bottom.equalToSuperview().inset(CGFloat.margin3x)
-            }
-        } else {
-            errorLabel.isHidden = true
-            errorLabel.snp.removeConstraints()
-            stackView.snp.remakeConstraints { maker in
-                maker.top.trailing.bottom.equalToSuperview().inset(CGFloat.margin2x)
-                maker.leading.equalToSuperview().inset(CGFloat.margin3x)
-            }
-        }
     }
 
 }
