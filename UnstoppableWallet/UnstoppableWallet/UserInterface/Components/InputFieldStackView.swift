@@ -2,11 +2,6 @@ import UIKit
 import RxSwift
 import ThemeKit
 
-protocol InputFieldDelegate: AnyObject {
-    func onChange(_ text: String?)
-    func isValid(_ text: String) -> Bool
-}
-
 enum ButtonVisibleState {
     case onEmpty
     case onFilled
@@ -35,14 +30,22 @@ class InputFieldButtonItem {
 class InputFieldStackView: UIStackView {
     static private let textViewMargin: CGFloat = .margin1x
     static private let textViewFont: UIFont = .body
+    static private let itemSpacing: CGFloat = .margin2x
 
     private let textViewWrapper = UIView()
     private let textView = UITextView()
     private let placeholderLabel = UILabel()
 
+    private var lastHeight = CGFloat.zero
     private var buttonItems = [InputFieldButtonItem]()
 
-    weak var delegate: InputFieldDelegate?
+    var inputText: String {
+        textView.text ?? ""
+    }
+
+    var onChangeText: ((String) -> ())?
+    var isValidText: ((String) -> Bool)?
+    var onChangeHeight: ((CGFloat) -> ())?
 
     var canEdit: Bool {
         get {
@@ -62,11 +65,11 @@ class InputFieldStackView: UIStackView {
     init() {
         super.init(frame: .zero)
 
-        textViewWrapper.addSubview(textView)
         textViewWrapper.snp.makeConstraints { maker in
             maker.height.equalTo(height(text: nil))
         }
 
+        textViewWrapper.addSubview(textView)
         textView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview().inset(Self.textViewMargin)
         }
@@ -95,7 +98,7 @@ class InputFieldStackView: UIStackView {
 
         addArrangedSubview(textViewWrapper)
 
-        spacing = .margin2x
+        spacing = Self.itemSpacing
         alignment = .center
     }
 
@@ -133,16 +136,26 @@ class InputFieldStackView: UIStackView {
 
     private func height(text: String?) -> CGFloat {
         guard let text = text, maximumNumberOfLines == 0 else {
+            //todo: calculate using text and choose minimum
             return CGFloat(maximumNumberOfLines) * Self.textViewFont.lineHeight + 2 * Self.textViewMargin
         }
+
         let containerWidth = textView.bounds.width - 2 * textView.textContainer.lineFragmentPadding
         let textHeight = text.height(forContainerWidth: containerWidth, font: Self.textViewFont)
+
         return textHeight + 2 * Self.textViewMargin
     }
 
     private func updateTextViewConstraints(for text: String, animated: Bool = false) {
+        let newHeight = height(text: text)
+
+        guard lastHeight != newHeight else {
+            return
+        }
+        lastHeight = newHeight
+
         textViewWrapper.snp.updateConstraints { maker in
-            maker.height.equalTo(height(text: text))
+            maker.height.equalTo(newHeight)
         }
 
         if animated {
@@ -152,15 +165,29 @@ class InputFieldStackView: UIStackView {
         } else {
             layoutIfNeeded()
         }
+
+        onChangeHeight?(newHeight)
     }
 
 }
 
 extension InputFieldStackView {
 
+    override func becomeFirstResponder() -> Bool {
+        textView.becomeFirstResponder()
+    }
+
     func set(placeholder: String, color: UIColor = UIColor.themeGray50) {
         placeholderLabel.text = placeholder
         placeholderLabel.textColor = color
+    }
+
+    func set(text: String?) {
+        textView.text = text ?? ""
+    }
+
+    func append(items: [InputFieldButtonItem]) {
+        items.forEach { append(item: $0) }
     }
 
     func append(item: InputFieldButtonItem) {
@@ -187,11 +214,11 @@ extension InputFieldStackView: UITextViewDelegate {
         updateTextViewConstraints(for: textView.text)
 
         placeholderLabel.isHidden = !textView.text.isEmpty
-        delegate?.onChange(textView.text)
+        onChangeText?(textView.text)
     }
 
     private func validate(text: String) -> Bool {
-        let isValid = delegate?.isValid(text) ?? true
+        let isValid = isValidText?(text) ?? true
         if !isValid {
             textView.shakeView()
         }
@@ -206,6 +233,37 @@ extension InputFieldStackView: UITextViewDelegate {
         }
 
         return validate(text: newText)
+    }
+
+}
+
+extension InputFieldStackView {
+
+    static func height(containerWidth: CGFloat, text: String, buttonItems: [InputFieldButtonItem], maximumNumberOfLines: Int) -> CGFloat {
+        let visibleState: ButtonVisibleState = text.isEmpty ? ButtonVisibleState.onEmpty : .onFilled
+        let showedButtons = buttonItems.filter { $0.visible == visibleState || $0.visible == .always }
+
+        var buttonsWidth: CGFloat = 0
+
+        showedButtons.forEach { item in
+            let buttonSize = ThemeButton.size(containerWidth: CGFloat.greatestFiniteMagnitude, text: item.title, icon: item.icon, style: item.style)
+            buttonsWidth += buttonSize.width
+        }
+
+        if showedButtons.count > 0 {
+            buttonsWidth += CGFloat(showedButtons.count) * Self.itemSpacing
+        }
+
+        let textWidth = containerWidth - buttonsWidth - 2 * Self.textViewMargin
+
+        var textHeight = text.height(forContainerWidth: textWidth, font: Self.textViewFont)
+
+        if maximumNumberOfLines > 0 {
+            let linesHeight = CGFloat(maximumNumberOfLines) * ceil(Self.textViewFont.lineHeight)
+            textHeight = min(textHeight, linesHeight)
+        }
+
+        return textHeight + 2 * Self.textViewMargin
     }
 
 }
