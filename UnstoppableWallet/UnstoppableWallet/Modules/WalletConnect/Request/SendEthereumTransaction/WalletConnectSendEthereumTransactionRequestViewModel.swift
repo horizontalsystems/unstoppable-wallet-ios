@@ -13,7 +13,7 @@ class WalletConnectSendEthereumTransactionRequestViewModel {
 
     private let approveEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let rejectEnabledRelay = BehaviorRelay<Bool>(value: false)
-    private let errorsRelay = BehaviorRelay<Error?>(value: nil)
+    private let errorRelay = BehaviorRelay<String?>(value: nil)
     private let sendingRelay = BehaviorRelay<Bool>(value: false)
     private let approveRelay = PublishRelay<Data>()
 
@@ -49,23 +49,21 @@ class WalletConnectSendEthereumTransactionRequestViewModel {
         rejectEnabledRelay.accept(state != .sending)
 
         if case .notReady(let errors) = state {
-            errorsRelay.accept(convert(error: errors.first))
+            errorRelay.accept(errors.first.map { convert(error: $0) })
         } else {
-            errorsRelay.accept(nil)
+            errorRelay.accept(nil)
         }
 
         sendingRelay.accept(state == .sending)
     }
 
-    private func convert(error: Error?) -> Error? {
-        if let transactionError = error as? WalletConnectSendEthereumTransactionRequestService.TransactionError {
-            switch transactionError {
-            case .insufficientBalance(let requiredBalance):
-                return SendError.insufficientBalance(requiredBalance: coinService.amountData(value: requiredBalance))
-            }
+    private func convert(error: Error) -> String {
+        if case WalletConnectSendEthereumTransactionRequestService.TransactionError.insufficientBalance(let requiredBalance) = error {
+            let amountData = coinService.amountData(value: requiredBalance)
+            return "ethereum_transaction.error.insufficient_balance".localized(amountData.formattedString)
         }
 
-        return error
+        return error.smartDescription
     }
 
 }
@@ -80,8 +78,8 @@ extension WalletConnectSendEthereumTransactionRequestViewModel {
         rejectEnabledRelay.asDriver()
     }
 
-    var errorsDriver: Driver<Error?> {
-        errorsRelay.asDriver()
+    var errorDriver: Driver<String?> {
+        errorRelay.asDriver()
     }
 
     var sendingDriver: Driver<Bool> {
@@ -94,21 +92,6 @@ extension WalletConnectSendEthereumTransactionRequestViewModel {
 
     func approve() {
         service.send()
-    }
-
-}
-
-extension WalletConnectSendEthereumTransactionRequestViewModel {
-
-    enum SendError: LocalizedError {
-        case insufficientBalance(requiredBalance: AmountData)
-
-        public var errorDescription: String? {
-            switch self {
-            case .insufficientBalance(let requiredBalance):
-                return "ethereum_transaction.error.insufficient_balance".localized(requiredBalance.formattedString)
-            }
-        }
     }
 
 }

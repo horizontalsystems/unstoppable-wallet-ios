@@ -20,7 +20,7 @@ class WalletConnectRequestViewController: ThemeViewController {
     private let rejectButton = ThemeButton()
 
     private var viewItems = [WalletConnectRequestViewItem]()
-    private var error: Error?
+    private var error: String?
 
     private let disposeBag = DisposeBag()
 
@@ -104,7 +104,7 @@ class WalletConnectRequestViewController: ThemeViewController {
                 })
                 .disposed(by: disposeBag)
 
-        viewModel.errorsDriver
+        viewModel.errorDriver
                 .drive(onNext: { [weak self] error in
                     self?.error = error
                     self?.tableView.reload()
@@ -164,7 +164,7 @@ extension WalletConnectRequestViewController: SectionsDataSource {
         )
 
         if let error = error {
-            feeRows.append(errorRow(error: error))
+            feeRows.append(errorRow(text: error))
         }
 
         return [
@@ -240,15 +240,15 @@ extension WalletConnectRequestViewController: SectionsDataSource {
         }
     }
 
-    private func errorRow(error: Error) -> RowProtocol {
+    private func errorRow(text: String) -> RowProtocol {
         Row<SendEthereumErrorCell>(
                 id: "error_row",
-                hash: error.smartDescription,
+                hash: text,
                 dynamicHeight: { width in
-                    SendEthereumErrorCell.height(error: error, containerWidth: width)
+                    SendEthereumErrorCell.height(text: text, containerWidth: width)
                 },
                 bind: { cell, _ in
-                    cell.bind(error: error)
+                    cell.bind(text: text)
                 }
         )
     }
