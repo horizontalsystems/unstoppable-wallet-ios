@@ -144,20 +144,12 @@ extension VerifiedInputCell {
         inputFieldView.becomeFirstResponder()
     }
 
-}
-
-extension VerifiedInputCell {
-
-    static func height(containerWidth: CGFloat, text: String, buttonItems: [InputFieldButtonItem], maximumNumberOfLines: Int, error: String?) -> CGFloat {
+    public func height(containerWidth: CGFloat) -> CGFloat {
         let stackContentWidth = containerWidth - 2 * Self.margin - 2 * Self.stackInsideMargin
 
-        var height = InputFieldStackView
-                .height(containerWidth: stackContentWidth,
-                text: text,
-                buttonItems: buttonItems,
-                maximumNumberOfLines: maximumNumberOfLines)
+        var height = inputFieldView.height(containerWidth: stackContentWidth)
 
-        if let error = error {
+        if let error = cautionLabel.text {
             let errorHeight = error.height(forContainerWidth: stackContentWidth, font: Self.cautionFont)
 
             height += errorHeight + Self.spacing

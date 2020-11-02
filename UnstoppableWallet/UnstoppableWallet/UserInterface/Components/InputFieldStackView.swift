@@ -210,6 +210,10 @@ extension InputFieldStackView {
         updateVisibleState(button: button, isEmptyText: textView.text.isEmpty)
     }
 
+    func height(containerWidth: CGFloat) -> CGFloat {
+        InputFieldStackView.height(containerWidth: containerWidth, text: inputText, buttonItems: buttonItems, maximumNumberOfLines: maximumNumberOfLines)
+    }
+
 }
 
 extension InputFieldStackView: UITextViewDelegate {
