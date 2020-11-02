@@ -27,12 +27,12 @@ class SendEthereumErrorCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(error: Error) {
-        errorLabel.text = error.smartDescription
+    func bind(text: String?) {
+        errorLabel.text = text
     }
 
-    static func height(error: Error, containerWidth: CGFloat) -> CGFloat {
-        error.smartDescription.height(forContainerWidth: containerWidth - SendEthereumErrorCell.padding * 2, font: SendEthereumErrorCell.font) + SendEthereumErrorCell.padding
+    static func height(text: String, containerWidth: CGFloat) -> CGFloat {
+        text.height(forContainerWidth: containerWidth - SendEthereumErrorCell.padding * 2, font: SendEthereumErrorCell.font) + SendEthereumErrorCell.padding
     }
 
 }
