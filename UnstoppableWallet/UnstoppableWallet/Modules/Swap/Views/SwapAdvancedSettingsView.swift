@@ -66,12 +66,7 @@ class SwapAdvancedSettingsView: ThemeViewController {
 extension SwapAdvancedSettingsView: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        let height = VerifiedInputCell
-                .height(containerWidth: view.width,
-                text: slippageCell.inputText,
-                buttonItems: slippageViewModel.inputFieldButtonItems,
-                maximumNumberOfLines: slippageViewModel.inputFieldMaximumNumberOfLines,
-                error: slippageViewModel.error)
+        let height = slippageCell.height(containerWidth: view.width)
 
         let slippageRow = StaticRow(
                 cell: slippageCell,
