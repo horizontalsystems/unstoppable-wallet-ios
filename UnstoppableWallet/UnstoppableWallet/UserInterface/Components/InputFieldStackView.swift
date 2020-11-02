@@ -135,13 +135,16 @@ class InputFieldStackView: UIStackView {
     }
 
     private func height(text: String?) -> CGFloat {
-        guard let text = text, maximumNumberOfLines == 0 else {
-            //todo: calculate using text and choose minimum
-            return CGFloat(maximumNumberOfLines) * Self.textViewFont.lineHeight + 2 * Self.textViewMargin
+        guard let text = text else {
+            return Self.textViewFont.lineHeight + 2 * Self.textViewMargin
         }
 
         let containerWidth = textView.bounds.width - 2 * textView.textContainer.lineFragmentPadding
-        let textHeight = text.height(forContainerWidth: containerWidth, font: Self.textViewFont)
+        var textHeight = text.height(forContainerWidth: containerWidth, font: Self.textViewFont)
+
+        if maximumNumberOfLines > 0 {
+            textHeight = min(textHeight, CGFloat(maximumNumberOfLines) * Self.textViewFont.lineHeight)
+        }
 
         return textHeight + 2 * Self.textViewMargin
     }
@@ -184,6 +187,8 @@ extension InputFieldStackView {
 
     func set(text: String?) {
         textView.text = text ?? ""
+
+        textViewDidChange()
     }
 
     func append(items: [InputFieldButtonItem]) {

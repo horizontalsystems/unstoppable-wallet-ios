@@ -27,12 +27,9 @@ class SwapAdvancedSettingsView: ThemeViewController {
 
         super.init()
 
-        subscribe(disposeBag, slippageViewModel.changeHeight) { [weak self] _ in
-            self?.tableView.reload()
-            _ = self?.slippageCell.becomeFirstResponder()
-        }
+        slippageCell.delegate = self
 
-        subscribe(disposeBag, slippageViewModel.errorDriver) { [weak self] _ in
+        subscribe(disposeBag, slippageViewModel.inputFieldCautionDriver) { [weak self] _ in
             self?.tableView.reload()
         }
 
@@ -72,8 +69,8 @@ extension SwapAdvancedSettingsView: SectionsDataSource {
         let height = VerifiedInputCell
                 .height(containerWidth: view.width,
                 text: slippageCell.inputText,
-                buttonItems: slippageViewModel.buttonItems,
-                maximumNumberOfLines: slippageViewModel.maximumNumberOfLines,
+                buttonItems: slippageViewModel.inputFieldButtonItems,
+                maximumNumberOfLines: slippageViewModel.inputFieldMaximumNumberOfLines,
                 error: slippageViewModel.error)
 
         let slippageRow = StaticRow(
@@ -114,6 +111,15 @@ extension SwapAdvancedSettingsView: SectionsDataSource {
 //                    rows: feeRows
 //            )
         ]
+    }
+
+}
+
+extension SwapAdvancedSettingsView: IDynamicHeightCellDelegate {
+
+    func onChangeHeight() {
+        tableView.reload()
+        _ = slippageCell.becomeFirstResponder()
     }
 
 }

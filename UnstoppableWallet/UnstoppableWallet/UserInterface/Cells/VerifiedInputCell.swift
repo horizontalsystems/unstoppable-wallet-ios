@@ -3,42 +3,67 @@ import ThemeKit
 import RxSwift
 import RxCocoa
 
-protocol IVerifiedInputViewModel {
-    var canEdit: Bool { get }
-    var maximumNumberOfLines: Int { get }
-    var buttonItems: [InputFieldButtonItem] { get }
+struct Caution {
+    let text: String
+    let type: CautionType
+}
 
-    var onChangeText: ((String) -> ())? { get }
-    var isValidText: ((String) -> Bool)? { get }
-    var onChangeHeight: ((CGFloat) -> ())? { get }
-    
-    var placeholderDriver: Driver<String> { get }
-    var errorDriver: Driver<String?> { get }
-    var errorColorDriver: Driver<UIColor> { get }
+enum CautionType {
+    case error
+    case warning
+
+    var color: UIColor {
+        switch self {
+        case .error: return .themeLucian
+        case .warning: return .themeJacob
+        }
+    }
+
+}
+
+protocol IVerifiedInputViewModel {
+    var inputFieldMaximumNumberOfLines: Int { get }
+    var inputFieldCanEdit: Bool { get }
+
+    var inputFieldButtonItems: [InputFieldButtonItem] { get }
+    var inputFieldInitialValue: String? { get }
+    var inputFieldPlaceholder: String? { get }
+
+    func inputFieldDidChange(text: String)
+    func inputFieldIsValid(text: String) -> Bool
+
+    var inputFieldCautionDriver: Driver<Caution?> { get }
 }
 
 extension IVerifiedInputViewModel {
-    var canEdit: Bool { true }
-    var maximumNumberOfLines: Int { 1 }
-    var buttonItems: [InputFieldButtonItem] { [] }
+    var inputFieldCanEdit: Bool { true }
+    var inputFieldMaximumNumberOfLines: Int { 1 }
+    var inputFieldButtonItems: [InputFieldButtonItem] { [] }
+    var inputFieldInitialValue: String? { nil }
+    var inputFieldPlaceholder: String? { nil }
 }
 
 class VerifiedInputCell: UITableViewCell {
     private static let margin = CGFloat.margin4x
     private static let stackInsideMargin = CGFloat.margin2x
-    private static let errorFont = UIFont.subhead2
-    private static let errorMargin = CGFloat.margin1x
+    private static let cautionFont = UIFont.subhead2
+    private static let cautionMargin = CGFloat.margin1x
     private static let spacing = CGFloat.margin1x
 
     private let verticalStackView = UIStackView()
 
     private let inputFieldView = InputFieldStackView()
-    private let errorLabelWrapper = UIView()
-    private let errorLabel = UILabel()
+    private let cautionLabelWrapper = UIView()
+    private let cautionLabel = UILabel()
 
     private let disposeBag = DisposeBag()
+    private let viewModel: IVerifiedInputViewModel
+
+    weak var delegate: IDynamicHeightCellDelegate?
 
     init(viewModel: IVerifiedInputViewModel) {
+        self.viewModel = viewModel
+
         super.init(style: .default, reuseIdentifier: nil)
 
         backgroundColor = .clear
@@ -59,38 +84,52 @@ class VerifiedInputCell: UITableViewCell {
         verticalStackView.layer.borderColor = UIColor.themeSteel20.cgColor
 
         verticalStackView.addArrangedSubview(inputFieldView)
-        verticalStackView.addArrangedSubview(errorLabelWrapper)
+        verticalStackView.addArrangedSubview(cautionLabelWrapper)
         verticalStackView.spacing = Self.spacing
 
-        inputFieldView.canEdit = viewModel.canEdit
-        inputFieldView.maximumNumberOfLines = viewModel.maximumNumberOfLines
-        inputFieldView.append(items: viewModel.buttonItems)
-        inputFieldView.onChangeText = viewModel.onChangeText
-        inputFieldView.isValidText = viewModel.isValidText
-        inputFieldView.onChangeHeight = viewModel.onChangeHeight
-
-        errorLabelWrapper.addSubview(errorLabel)
-        errorLabel.snp.makeConstraints { maker in
-            maker.top.bottom.equalToSuperview()
-            maker.leading.trailing.equalToSuperview().inset(Self.errorMargin)
+        inputFieldView.canEdit = viewModel.inputFieldCanEdit
+        inputFieldView.maximumNumberOfLines = viewModel.inputFieldMaximumNumberOfLines
+        inputFieldView.append(items: viewModel.inputFieldButtonItems)
+        inputFieldView.onChangeText = { [weak self] in
+            self?.viewModel.inputFieldDidChange(text: $0)
+        }
+        inputFieldView.isValidText = { [weak self] in
+            self?.viewModel.inputFieldIsValid(text: $0) ?? true
+        }
+        inputFieldView.onChangeHeight = { [weak self] _ in
+            self?.delegate?.onChangeHeight()
         }
 
-        errorLabel.font = Self.errorFont
-        errorLabel.numberOfLines = 0
-        errorLabelWrapper.isHidden = true
+        if let placeholder = viewModel.inputFieldPlaceholder {
+            inputFieldView.set(placeholder: placeholder)
+        }
+        inputFieldView.set(text: viewModel.inputFieldInitialValue)
 
-        subscribe(disposeBag, viewModel.placeholderDriver) { [weak self] in self?.inputFieldView.set(placeholder: $0) }
-        subscribe(disposeBag, viewModel.errorDriver) { [weak self] in self?.set(error: $0) }
-        subscribe(disposeBag, viewModel.errorColorDriver) { [weak self] in self?.errorLabel.textColor = $0 }
+        cautionLabelWrapper.addSubview(cautionLabel)
+        cautionLabel.snp.makeConstraints { maker in
+            maker.top.bottom.equalToSuperview()
+            maker.leading.trailing.equalToSuperview().inset(Self.cautionMargin)
+        }
+
+        cautionLabel.font = Self.cautionFont
+        cautionLabel.numberOfLines = 0
+        cautionLabelWrapper.isHidden = true
+
+        subscribe(disposeBag, viewModel.inputFieldCautionDriver) { [weak self] in self?.set(caution: $0) }
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func set(error: String?) {
-        errorLabelWrapper.isHidden = error == nil
-        errorLabel.text = error
+    private func set(caution: Caution?) {
+        //todo: change height for updated caution text.
+        cautionLabelWrapper.isHidden = caution == nil
+        guard let caution = caution else {
+            return
+        }
+        cautionLabel.text = caution.text
+        cautionLabel.textColor = caution.type.color
     }
 
 }
@@ -119,7 +158,7 @@ extension VerifiedInputCell {
                 maximumNumberOfLines: maximumNumberOfLines)
 
         if let error = error {
-            let errorHeight = error.height(forContainerWidth: stackContentWidth, font: Self.errorFont)
+            let errorHeight = error.height(forContainerWidth: stackContentWidth, font: Self.cautionFont)
 
             height += errorHeight + Self.spacing
         }

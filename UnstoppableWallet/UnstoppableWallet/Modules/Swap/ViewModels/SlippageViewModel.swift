@@ -3,28 +3,14 @@ import RxSwift
 import RxCocoa
 
 class SlippageViewModel {
-    private(set) var onChangeText: ((String) -> ())?
-    private(set) var isValidText: ((String) -> Bool)?
-    private(set) var onChangeHeight: ((CGFloat) -> ())?
-
     private let placeholderRelay = BehaviorRelay<String>(value: "0")
-    private let errorRelay = BehaviorRelay<String?>(value: nil)
-    private let errorColorRelay = BehaviorRelay<UIColor>(value: .themeLucian)
+    private let cautionRelay = BehaviorRelay<Caution?>(value: nil)
+    private let cautionTypeRelay = BehaviorRelay<CautionType>(value: .error)
     private let inputTextRelay = BehaviorRelay<String>(value: "")
-    private let changeHeightRelay = BehaviorRelay<CGFloat>(value: 0)
 
     public var error: String? {
         didSet {
-            errorRelay.accept(error)
-        }
-    }
-
-    init() {
-        onChangeText = { [weak self] in self?.inputTextRelay.accept($0) }
-        isValidText = { _ in true }
-        onChangeHeight = {[weak self] in
-            print("change height to : \($0)")
-            self?.changeHeightRelay.accept($0)
+            cautionRelay.accept(error.map { Caution(text: $0, type: .warning) })
         }
     }
 
@@ -32,13 +18,16 @@ class SlippageViewModel {
 
 extension SlippageViewModel: IVerifiedInputViewModel {
 
-    var maximumNumberOfLines: Int {
+    var inputFieldMaximumNumberOfLines: Int {
         0
     }
+    var inputFieldInitialValue: String? {
+        "abc"
+    }
 
-    var buttonItems: [InputFieldButtonItem] {
+    var inputFieldButtonItems: [InputFieldButtonItem] {
         [
-            InputFieldButtonItem(style: .secondaryIcon, title: "Ava", icon: UIImage(named: "Send Delete Icon"), visible: .onFilled) {
+            InputFieldButtonItem(style: .secondaryIcon, icon: UIImage(named: "Send Delete Icon"), visible: .onFilled) {
                 let showError = Int.random(in: 0...1) == 0
                 self.error = showError ? "Error label hfskladfhjfdshflaskdf h dsflksdhfsf sdhlfksdjfh sdlfkjdashf lkdsjfh" : nil
             },
@@ -49,24 +38,24 @@ extension SlippageViewModel: IVerifiedInputViewModel {
         ]
     }
 
-    var placeholderDriver: Driver<String> {
-        placeholderRelay.asDriver()
+    var inputFieldCautionDriver: Driver<Caution?> {
+        cautionRelay.asDriver()
     }
 
-    var errorDriver: Driver<String?> {
-        errorRelay.asDriver()
-    }
-
-    var errorColorDriver: Driver<UIColor> {
-        errorColorRelay.asDriver()
+    var cautionTypeDriver: Driver<CautionType> {
+        cautionTypeRelay.asDriver()
     }
 
     var inputTextDriver: Driver<String> {
         inputTextRelay.asDriver()
     }
 
-    var changeHeight: Driver<CGFloat> {
-        changeHeightRelay.asDriver()
+    func inputFieldDidChange(text: String) {
+        ()
+    }
+
+    func inputFieldIsValid(text: String) -> Bool {
+        true
     }
 
 }

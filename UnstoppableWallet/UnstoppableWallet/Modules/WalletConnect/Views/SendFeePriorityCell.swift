@@ -23,8 +23,11 @@ protocol ISendFeePriorityViewModel {
     func changeCustomPriority(value: Int)
 }
 
-protocol ISendFeePriorityCellDelegate: AnyObject {
+protocol ISendFeePriorityCellDelegate: IDynamicHeightCellDelegate {
     func open(viewController: UIViewController)
+}
+
+protocol IDynamicHeightCellDelegate: AnyObject {
     func onChangeHeight()
 }
 
