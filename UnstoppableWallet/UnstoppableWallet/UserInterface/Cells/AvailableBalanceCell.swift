@@ -2,13 +2,17 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+protocol IAvailableBalanceCellViewModel {
+    var balanceDriver: Driver<String> { get }
+}
+
 class AvailableBalanceCell: UITableViewCell {
     private let balanceTitleLabel = UILabel()
     private let balanceValueLabel = UILabel()
 
     private let disposeBag = DisposeBag()
 
-    init(balance: String) {
+    init(viewModel: IAvailableBalanceCellViewModel) {
         super.init(style: .default, reuseIdentifier: nil)
 
         backgroundColor = .clear
@@ -34,7 +38,12 @@ class AvailableBalanceCell: UITableViewCell {
         balanceValueLabel.font = .subhead2
         balanceValueLabel.textColor = .themeGray
         balanceValueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        balanceValueLabel.text = balance
+
+        viewModel.balanceDriver
+                .drive(onNext: { [weak self] balance in
+                    self?.balanceValueLabel.text = balance
+                })
+                .disposed(by: disposeBag)
     }
 
     required init?(coder: NSCoder) {

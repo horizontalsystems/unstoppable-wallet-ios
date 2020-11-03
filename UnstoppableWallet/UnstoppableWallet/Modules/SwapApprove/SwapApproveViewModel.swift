@@ -19,14 +19,11 @@ class SwapApproveViewModel {
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
     private let amountCharacterSet = CharacterSet.decimalDigits.union(CharacterSet(charactersIn: "."))
-    let availableBalance: String
 
     init(service: SwapApproveService, coinService: CoinService, ethereumCoinService: CoinService) {
         self.service = service
         self.coinService = coinService
         self.ethereumCoinService = ethereumCoinService
-
-        availableBalance = coinService.coinValue(value: service.erc20Balance).formattedString
 
         subscribe(disposeBag, service.stateObservable) { [weak self] approveState in self?.handle(approveState: approveState) }
     }

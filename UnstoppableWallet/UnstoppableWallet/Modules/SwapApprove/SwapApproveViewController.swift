@@ -21,14 +21,14 @@ class SwapApproveViewController: ThemeViewController {
 
     private var error: String?
 
-    init(viewModel: SwapApproveViewModel, feeViewModel: EthereumFeeViewModel, delegate: ISwapApproveDelegate) {
+    init(viewModel: SwapApproveViewModel, feeViewModel: EthereumFeeViewModel, availableBalanceViewModel: Erc20AvailableBalanceViewModel, delegate: ISwapApproveDelegate) {
         self.viewModel = viewModel
         self.feeViewModel = feeViewModel
         self.delegate = delegate
 
         feeCell = SendFeeCell(viewModel: feeViewModel)
         feePriorityCell = SendFeePriorityCell(viewModel: feeViewModel)
-        availableBalanceCell = AvailableBalanceCell(balance: viewModel.availableBalance)
+        availableBalanceCell = AvailableBalanceCell(viewModel: availableBalanceViewModel)
         amountCell = VerifiedInputCell(viewModel: viewModel)
         buttonCell = ButtonCell()
 
@@ -81,7 +81,6 @@ class SwapApproveViewController: ThemeViewController {
             }
 
             self?.error = errorString
-            print("errorDriver !!!!!!!")
             self?.tableView.reload()
         }
         subscribe(disposeBag, viewModel.approveErrorSignal) { [weak self] error in self?.show(error: error.convertedError.smartDescription) }

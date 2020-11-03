@@ -57,7 +57,7 @@ class SwapApproveService {
         ethereumKit.balance ?? 0
     }
 
-    var erc20Balance: BigUInt {
+    private var erc20Balance: BigUInt {
         erc20Kit.balance ?? 0
     }
 
