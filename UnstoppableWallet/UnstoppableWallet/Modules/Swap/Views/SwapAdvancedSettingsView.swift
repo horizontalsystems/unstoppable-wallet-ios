@@ -28,11 +28,6 @@ class SwapAdvancedSettingsView: ThemeViewController {
         super.init()
 
         slippageCell.delegate = self
-
-        subscribe(disposeBag, slippageViewModel.inputFieldCautionDriver) { [weak self] _ in
-            self?.tableView.reload()
-        }
-
 //        feePriorityCell.delegate = self
     }
 
@@ -66,12 +61,12 @@ class SwapAdvancedSettingsView: ThemeViewController {
 extension SwapAdvancedSettingsView: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        let height = slippageCell.height(containerWidth: view.width)
-
         let slippageRow = StaticRow(
                 cell: slippageCell,
-                id: "slippage_\(height.description)",
-                height: height)
+                id: "slippage",
+                dynamicHeight: { [weak self] width in
+                    self?.slippageCell.height(containerWidth: width) ?? .heightSingleLineCell
+                })
 
 //        var feeRows = [RowProtocol]()
 //
@@ -113,8 +108,10 @@ extension SwapAdvancedSettingsView: SectionsDataSource {
 extension SwapAdvancedSettingsView: IDynamicHeightCellDelegate {
 
     func onChangeHeight() {
-        tableView.reload()
-        _ = slippageCell.becomeFirstResponder()
+        UIView.performWithoutAnimation { [weak self] in
+            self?.tableView.beginUpdates()
+            self?.tableView.endUpdates()
+        }
     }
 
 }

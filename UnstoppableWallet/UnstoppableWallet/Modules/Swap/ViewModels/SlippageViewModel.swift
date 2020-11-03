@@ -31,10 +31,7 @@ extension SlippageViewModel: IVerifiedInputViewModel {
                 let showError = Int.random(in: 0...1) == 0
                 self.error = showError ? "Error label hfskladfhjfdshflaskdf h dsflksdhfsf sdhlfksdjfh sdlfkjdashf lkdsjfh" : nil
             },
-            InputFieldButtonItem(style: .secondaryDefault, title: "Second", icon: UIImage(named: "Send Delete Icon"), visible: .onFilled) {
-                let showError = Int.random(in: 0...1) == 0
-                self.error = showError ? "Error label hfskladfhjfdshflaskdf h dsflksdhfsf sdhlfksdjfh sdlfkjdashf lkdsjfh" : nil
-            }
+            InputFieldButtonItem(style: .secondaryDefault, title: "Second", icon: UIImage(named: "Send Delete Icon"), visible: .onFilled)
         ]
     }
 
@@ -51,7 +48,8 @@ extension SlippageViewModel: IVerifiedInputViewModel {
     }
 
     func inputFieldDidChange(text: String) {
-        ()
+        let showError = Int.random(in: 0...1) == 0
+        self.error = showError ? "Error label hfskladfhjfdshflaskdf h dsflksdhfsf sdhlfksdjfh sdlfkjdashf lkdsjfh" : nil
     }
 
     func inputFieldIsValid(text: String) -> Bool {
