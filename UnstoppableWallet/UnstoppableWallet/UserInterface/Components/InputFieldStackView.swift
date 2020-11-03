@@ -17,7 +17,7 @@ class InputFieldButtonItem {
     let visible: ButtonVisibleState
     let action: (() -> ())?
 
-    init(style: ThemeButtonStyle, title: String? = nil, icon: UIImage? = nil, visible: ButtonVisibleState, action: (() -> ())?) {
+    init(style: ThemeButtonStyle, title: String? = nil, icon: UIImage? = nil, visible: ButtonVisibleState, action: (() -> ())? = nil) {
         self.style = style
         self.title = title
         self.icon = icon
@@ -143,7 +143,7 @@ class InputFieldStackView: UIStackView {
         var textHeight = text.height(forContainerWidth: containerWidth, font: Self.textViewFont)
 
         if maximumNumberOfLines > 0 {
-            textHeight = min(textHeight, CGFloat(maximumNumberOfLines) * Self.textViewFont.lineHeight)
+            textHeight = min(textHeight, CGFloat(maximumNumberOfLines) * ceil(Self.textViewFont.lineHeight))
         }
 
         return textHeight + 2 * Self.textViewMargin

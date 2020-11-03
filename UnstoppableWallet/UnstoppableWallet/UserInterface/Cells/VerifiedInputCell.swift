@@ -71,7 +71,7 @@ class VerifiedInputCell: UITableViewCell {
 
         contentView.addSubview(verticalStackView)
         verticalStackView.snp.makeConstraints { maker in
-            maker.top.bottom.equalToSuperview()
+            maker.top.equalToSuperview()
             maker.leading.trailing.equalToSuperview().inset(Self.margin)
         }
 
@@ -123,13 +123,22 @@ class VerifiedInputCell: UITableViewCell {
     }
 
     private func set(caution: Caution?) {
-        //todo: change height for updated caution text.
-        cautionLabelWrapper.isHidden = caution == nil
-        guard let caution = caution else {
+        let setHidden = caution == nil
+        let newText = caution?.text
+
+        if setHidden {
+            cautionLabel.text = nil
+        }
+
+        if cautionLabelWrapper.isHidden == setHidden && cautionLabel.text == newText {
             return
         }
-        cautionLabel.text = caution.text
-        cautionLabel.textColor = caution.type.color
+
+        cautionLabelWrapper.isHidden = setHidden
+        cautionLabel.text = caution?.text
+        cautionLabel.textColor = caution?.type.color ?? cautionLabel.textColor
+
+        delegate?.onChangeHeight()
     }
 
 }
