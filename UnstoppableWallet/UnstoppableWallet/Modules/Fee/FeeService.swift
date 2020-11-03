@@ -72,16 +72,16 @@ class FeeService {
 
     private func handle(feeRate: FeeRate) {
         gasPrice = feeRate.feeRate(priority: priority)
-
-        return erc20Adapter.estimateApproveSingle(spenderAddress: spenderAddress, amount: amount, gasPrice: feeRate.feeRate(priority: priority))
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .observeOn(MainScheduler.instance)
-                .subscribe(onSuccess: { [weak self] gasLimit in
-                    self?.handle(gasLimit: gasLimit)
-                }, onError: { [weak self] error in
-                    self?.feeRelay.accept(.failed(error))
-                })
-                .disposed(by: disposeBag)
+//
+//        return erc20Adapter.estimateApproveSingle(spenderAddress: spenderAddress, amount: amount, gasPrice: feeRate.feeRate(priority: priority))
+//                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+//                .observeOn(MainScheduler.instance)
+//                .subscribe(onSuccess: { [weak self] gasLimit in
+//                    self?.handle(gasLimit: gasLimit)
+//                }, onError: { [weak self] error in
+//                    self?.feeRelay.accept(.failed(error))
+//                })
+//                .disposed(by: disposeBag)
     }
 
     private func fetchFeeRate() {

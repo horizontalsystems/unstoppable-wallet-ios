@@ -1,41 +1,46 @@
 import CurrencyKit
 import BigInt
 
-class EthereumCoinService {
-    private let appConfigProvider: IAppConfigProvider
+class CoinService {
+    private let coin: Coin
     private let currencyKit: ICurrencyKit
     private let rateManager: IRateManager
 
-    init(appConfigProvider: IAppConfigProvider, currencyKit: ICurrencyKit, rateManager: IRateManager) {
-        self.appConfigProvider = appConfigProvider
+    init(coin: Coin, currencyKit: ICurrencyKit, rateManager: IRateManager) {
+        self.coin = coin
         self.currencyKit = currencyKit
         self.rateManager = rateManager
     }
 
 }
 
-extension EthereumCoinService {
+extension CoinService {
 
-    var ethereumCoin: Coin {
-        appConfigProvider.ethereumCoin
-    }
-
-    var ethereumRate: CurrencyValue? {
+    var rate: CurrencyValue? {
         let baseCurrency = currencyKit.baseCurrency
 
-        return rateManager.marketInfo(coinCode: ethereumCoin.code, currencyCode: baseCurrency.code).map { marketInfo in
+        return rateManager.marketInfo(coinCode: coin.code, currencyCode: baseCurrency.code).map { marketInfo in
             CurrencyValue(currency: baseCurrency, value: marketInfo.rate)
         }
+    }
+
+    func coinValue(value: BigUInt) -> CoinValue {
+        let decimalValue = Decimal(bigUInt: value, decimal: coin.decimal) ?? 0
+        return CoinValue(coin: coin, value: decimalValue)
+    }
+
+    func bigUInt(value: Decimal) -> BigUInt {
+        BigUInt(value.roundedString(decimal: coin.decimal)) ?? 0
     }
 
     func amountData(value: BigUInt) -> AmountData {
         let primaryInfo: AmountInfo
         var secondaryInfo: AmountInfo?
 
-        let decimalValue = Decimal(bigUInt: value, decimal: ethereumCoin.decimal) ?? 0
-        let coinValue = CoinValue(coin: ethereumCoin, value: decimalValue)
+        let decimalValue = Decimal(bigUInt: value, decimal: coin.decimal) ?? 0
+        let coinValue = CoinValue(coin: coin, value: decimalValue)
 
-        if let rate = ethereumRate {
+        if let rate = rate {
             primaryInfo = .coinValue(coinValue: coinValue)
             secondaryInfo = .currencyValue(currencyValue: CurrencyValue(currency: rate.currency, value: rate.value * decimalValue))
         } else {

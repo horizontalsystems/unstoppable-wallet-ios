@@ -7,8 +7,8 @@ struct WalletConnectSendEthereumTransactionRequestModule {
             return nil
         }
 
-        let coinService = EthereumCoinService(
-                appConfigProvider: App.shared.appConfigProvider,
+        let coinService = CoinService(
+                coin: App.shared.appConfigProvider.ethereumCoin,
                 currencyKit: App.shared.currencyKit,
                 rateManager: App.shared.rateManager
         )
