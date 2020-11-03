@@ -4,7 +4,7 @@ import RxCocoa
 
 class WalletConnectSendEthereumTransactionRequestViewModel {
     private let service: WalletConnectSendEthereumTransactionRequestService
-    private let coinService: EthereumCoinService
+    private let coinService: CoinService
 
     private let disposeBag = DisposeBag()
 
@@ -17,7 +17,7 @@ class WalletConnectSendEthereumTransactionRequestViewModel {
     private let sendingRelay = BehaviorRelay<Bool>(value: false)
     private let approveRelay = PublishRelay<Data>()
 
-    init(service: WalletConnectSendEthereumTransactionRequestService, coinService: EthereumCoinService) {
+    init(service: WalletConnectSendEthereumTransactionRequestService, coinService: CoinService) {
         self.service = service
         self.coinService = coinService
 

@@ -255,7 +255,7 @@ extension InputFieldStackView {
         var buttonsWidth: CGFloat = 0
 
         showedButtons.forEach { item in
-            let buttonSize = ThemeButton.size(containerWidth: CGFloat.greatestFiniteMagnitude, text: item.title, icon: item.icon, style: item.style)
+            let buttonSize = ThemeButton.size(containerWidth: CGFloat.greatestFiniteMagnitude, text: item.title!, style: item.style)
             buttonsWidth += buttonSize.width
         }
 

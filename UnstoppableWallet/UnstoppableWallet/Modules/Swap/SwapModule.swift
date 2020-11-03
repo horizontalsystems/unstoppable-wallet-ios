@@ -5,7 +5,7 @@ import UniswapKit
 import EthereumKit
 import ThemeKit
 import CurrencyKit
-
+import BigInt
 
 //TODO: move to another place
 func subscribe<T>(_ disposeBag: DisposeBag, _ driver: Driver<T>, _ onNext: ((T) -> Void)? = nil) {
@@ -70,7 +70,8 @@ struct SwapModule {
     struct ApproveData {
         let coin: Coin
         let spenderAddress: Address
-        let amount: Decimal
+        let amount: BigUInt
+        let allowance: BigUInt
     }
 
     struct CoinBalanceItem {

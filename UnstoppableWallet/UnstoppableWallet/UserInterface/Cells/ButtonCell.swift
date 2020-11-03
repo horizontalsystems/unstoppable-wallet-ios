@@ -55,6 +55,9 @@ class ButtonCell: UITableViewCell {
         self.onTap = onTap
     }
 
+    func set(enabled: Bool) {
+        button.isEnabled = enabled
+    }
 }
 
 extension ButtonCell {

@@ -348,11 +348,11 @@ extension SwapViewController {
 
     private func openApprove(data: SwapModule.ApproveData?) {
         guard let data = data,
-              let vc = SwapApproveModule.instance(coin: data.coin, spenderAddress: data.spenderAddress, amount: data.amount, delegate: self) else {
+              let vc = SwapApproveModule.instance(data: data, delegate: self) else {
             return
         }
 
-        present(vc, animated: true)
+        self.present(vc, animated: true)
     }
 
     private func openConfirmation() {

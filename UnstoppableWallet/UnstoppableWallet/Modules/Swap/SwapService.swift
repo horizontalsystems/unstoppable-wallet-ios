@@ -4,6 +4,7 @@ import RxRelay
 import HsToolKit
 import UniswapKit
 import CurrencyKit
+import BigInt
 
 class SwapService {
     static private let refreshInterval: TimeInterval = 10
@@ -501,9 +502,12 @@ extension SwapService {
         guard let coinIn = coinIn, let amount = allowanceAmount(for: estimated) else {
             return nil
         }
+        let allowance = allowanceStateRelay.value?.data ?? 0
+
         return SwapModule.ApproveData(coin: coinIn,
                 spenderAddress: uniswapRepository.routerAddress,
-                amount: amount)
+                amount: BigUInt(amount.roundedString(decimal: coinIn.decimal)) ?? 0,
+                allowance: BigUInt(allowance.roundedString(decimal: coinIn.decimal)) ?? 0)
     }
 
     var estimatedObservable: Observable<TradeType> {

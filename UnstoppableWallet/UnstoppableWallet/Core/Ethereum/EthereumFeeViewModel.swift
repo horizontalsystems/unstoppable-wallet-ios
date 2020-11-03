@@ -7,7 +7,7 @@ class EthereumFeeViewModel {
     private let customFeeUnit = "gwei"
 
     private let service: EthereumTransactionService
-    private let coinService: EthereumCoinService
+    private let coinService: CoinService
 
     private let disposeBag = DisposeBag()
 
@@ -16,7 +16,7 @@ class EthereumFeeViewModel {
     private let openSelectPriorityRelay = PublishRelay<[SendPriorityViewItem]>()
     private let feeSliderRelay = BehaviorRelay<SendFeeSliderViewItem?>(value: nil)
 
-    init(service: EthereumTransactionService, coinService: EthereumCoinService) {
+    init(service: EthereumTransactionService, coinService: CoinService) {
         self.service = service
         self.coinService = coinService
 

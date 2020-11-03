@@ -2,28 +2,40 @@ import UIKit
 import ActionSheet
 import ThemeKit
 import RxSwift
+import SectionsTableView
 
-class SwapApproveViewController: ThemeActionSheetController {
+class SwapApproveViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private let viewModel: SwapApproveViewModel
+    private let feeViewModel: EthereumFeeViewModel
     private let delegate: ISwapApproveDelegate
 
-    private let titleView = BottomSheetTitleView()
-    private let descriptionView = HighlightedDescriptionView()
-    private let topSeparatorView = UIView()
-    private let amountView = SwapApproveAmountView()
-    private let middleSeparatorView = UIView()
-    private let feeView = AdditionalDataView()
-    private let transactionSpeedView = AdditionalDataView()
-    private let feeErrorLabel = UILabel()
-    private let approveButton = ThemeButton()
+    private let tableView = SectionsTableView(style: .grouped)
 
-    init(viewModel: SwapApproveViewModel, delegate: ISwapApproveDelegate) {
+    private let feeCell: SendFeeCell
+    private let feePriorityCell: SendFeePriorityCell
+    private let availableBalanceCell: AvailableBalanceCell
+    private let amountCell: VerifiedInputCell
+    private let buttonCell: ButtonCell
+
+    private var error: String?
+
+    init(viewModel: SwapApproveViewModel, feeViewModel: EthereumFeeViewModel, delegate: ISwapApproveDelegate) {
         self.viewModel = viewModel
+        self.feeViewModel = feeViewModel
         self.delegate = delegate
 
+        feeCell = SendFeeCell(viewModel: feeViewModel)
+        feePriorityCell = SendFeePriorityCell(viewModel: feeViewModel)
+        availableBalanceCell = AvailableBalanceCell(balance: viewModel.availableBalance)
+        amountCell = VerifiedInputCell(viewModel: viewModel)
+        buttonCell = ButtonCell()
+
         super.init()
+
+        feePriorityCell.delegate = self
+        amountCell.delegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -33,147 +45,184 @@ class SwapApproveViewController: ThemeActionSheetController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.addSubview(titleView)
-        titleView.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
+        title = "swap.approve.title".localized
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .done, target: self, action: #selector(onTapCancel))
+
+        tableView.registerCell(forClass: HighlightedDescriptionCell.self)
+        tableView.registerCell(forClass: SendEthereumErrorCell.self)
+
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
         }
 
-        titleView.onTapClose = { [weak self] in
-            self?.dismiss(animated: true)
-        }
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+        tableView.sectionDataSource = self
+        tableView.allowsSelection = false
 
-        view.addSubview(descriptionView)
-        descriptionView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin3x)
-        }
-        descriptionView.bind(text: "swap.approve.description".localized)
-
-        view.addSubview(topSeparatorView)
-        topSeparatorView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(descriptionView.snp.bottom).offset(CGFloat.margin3x)
-            maker.height.equalTo(CGFloat.heightOnePixel)
-        }
-
-        topSeparatorView.backgroundColor = .themeSteel20
-
-        view.addSubview(amountView)
-        amountView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(topSeparatorView.snp.bottom)
-            maker.height.equalTo(72)
-        }
-
-        view.addSubview(middleSeparatorView)
-        middleSeparatorView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(amountView.snp.bottom)
-            maker.height.equalTo(CGFloat.heightOnePixel)
-        }
-
-        middleSeparatorView.backgroundColor = .themeSteel20
-
-        view.addSubview(feeView)
-        feeView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(middleSeparatorView.snp.bottom).offset(CGFloat.margin3x)
-        }
-
-        view.addSubview(transactionSpeedView)
-        transactionSpeedView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(feeView.snp.bottom)
-        }
-
-        view.addSubview(feeErrorLabel)
-        feeErrorLabel.isHidden = true
-        feeErrorLabel.font = .subhead2
-        feeErrorLabel.textColor = .themeLucian
-        feeErrorLabel.numberOfLines = 0
-        feeErrorLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(middleSeparatorView.snp.bottom).offset(CGFloat.margin3x)
-        }
-
-        view.addSubview(approveButton)
-        approveButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(transactionSpeedView.snp.bottom).offset(CGFloat.margin6x)
-            maker.height.equalTo(CGFloat.heightButton)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin4x)
-        }
-
-        approveButton.apply(style: .primaryYellow)
-        approveButton.setTitle("button.approve".localized, for: .normal)
-        approveButton.addTarget(self, action: #selector(onTapApprove), for: .touchUpInside)
-
-        set(amountLabel: viewModel.coinAmount, coinTitle: viewModel.coinTitle)
-        set(transactionSpeed: viewModel.feePresenter.priorityTitle)
+        buttonCell.bind(style: .primaryYellow, title: "button.approve".localized, compact: false, onTap: { [weak self] in self?.onTapApprove() })
+        tableView.buildSections()
 
         subscribeToViewModel()
     }
 
     private func subscribeToViewModel() {
-        subscribe(disposeBag, viewModel.approveSuccess) { [weak self] in
+        subscribe(disposeBag, viewModel.approveSuccessSignal) { [weak self] in
             HudHelper.instance.showSuccess()
             self?.delegate.didApprove()
             self?.dismiss(animated: true)
         }
 
-        subscribe(disposeBag, viewModel.approveAllowed) { [weak self] approveAllowed in self?.set(approveButtonEnabled: approveAllowed) }
-        subscribe(disposeBag, viewModel.feePresenter.feeLoading) { [weak self] _ in self?.setFeeLoading() }
-        subscribe(disposeBag, viewModel.feePresenter.fee) { [weak self] fee in fee.flatMap { self?.set(fee: $0) } }
-        subscribe(disposeBag, viewModel.feePresenter.error) { [weak self] errorString in errorString.flatMap { self?.set(feeError: $0) } }
-        subscribe(disposeBag, viewModel.error) { [weak self] errorString in self?.show(error: errorString) }
+        subscribe(disposeBag, viewModel.approveAllowedDriver) { [weak self] approveAllowed in self?.buttonCell.set(enabled: approveAllowed) }
+        subscribe(disposeBag, viewModel.errorDriver) { [weak self] errorString in
+            guard self?.error != errorString else {
+                return
+            }
+
+            self?.error = errorString
+            print("errorDriver !!!!!!!")
+            self?.tableView.reload()
+        }
+        subscribe(disposeBag, viewModel.approveErrorSignal) { [weak self] error in self?.show(error: error.convertedError.smartDescription) }
     }
 
-    @objc private func onTapApprove() {
-        viewModel.onTapApprove()
+    private func onTapApprove() {
+        viewModel.approve()
+    }
+
+    @objc private func onTapCancel() {
+        view.endEditing(true)
+        self.dismiss(animated: true)
+    }
+
+}
+
+extension SwapApproveViewController: SectionsDataSource {
+
+    func buildSections() -> [SectionProtocol] {
+        [
+            Section(
+                    id: "main",
+                    rows: [descriptionRow]
+            ),
+            Section(
+                    id: "amount",
+                    headerState: .margin(height: CGFloat.margin4x),
+                    rows: [availableBalanceRow, amountRow]
+            ),
+            Section(
+                    id: "fee",
+                    headerState: .margin(height: CGFloat.margin4x),
+                    rows: feeRows
+            ),
+            Section(
+                    id: "approve_button",
+                    rows: [approveButtonRow]
+            )
+        ]
+    }
+
+    private var availableBalanceRow: RowProtocol {
+        StaticRow(
+                cell: availableBalanceCell,
+                id: "amount",
+                height: 29
+        )
+    }
+
+    private var amountRow: RowProtocol {
+        StaticRow(
+                cell: amountCell,
+                id: "amount",
+                dynamicHeight: { [weak self] width in
+                    self?.amountCell.height(containerWidth: width) ?? 0
+                }
+        )
+    }
+
+    private var feeRows: [RowProtocol] {
+        var rows = [RowProtocol]()
+
+        rows.append(contentsOf: [
+            StaticRow(
+                    cell: feeCell,
+                    id: "fee",
+                    height: 29
+            ),
+            StaticRow(
+                    cell: feePriorityCell,
+                    id: "fee-priority",
+                    dynamicHeight: { [weak self] _ in self?.feePriorityCell.currentHeight ?? 0 }
+            )
+        ])
+
+
+        if let error = error {
+            rows.append(errorRow(text: error))
+        }
+
+        return rows
+    }
+
+    private var descriptionRow: RowProtocol {
+        Row<HighlightedDescriptionCell>(
+                id: "description",
+                dynamicHeight: { width in
+                    HighlightedDescriptionCell.height(containerWidth: width, text: "swap.approve.description".localized)
+                },
+                bind: { cell, _ in
+                    cell.bind(text: "swap.approve.description".localized)
+                }
+        )
+    }
+
+    private func errorRow(text: String) -> RowProtocol {
+        Row<SendEthereumErrorCell>(
+                id: "error_row",
+                hash: text,
+                dynamicHeight: { width in
+                    SendEthereumErrorCell.height(text: text, containerWidth: width)
+                },
+                bind: { cell, _ in
+                    cell.bind(text: text)
+                }
+        )
+    }
+
+    private var approveButtonRow: RowProtocol {
+        StaticRow(
+                cell: buttonCell,
+                id: "approve-button",
+                height: ButtonCell.height(style: .primaryYellow)
+        )
+    }
+
+}
+
+extension SwapApproveViewController: IDynamicHeightCellDelegate {
+
+    func onChangeHeight() {
+        UIView.performWithoutAnimation { [weak self] in
+            self?.tableView.beginUpdates()
+            self?.tableView.endUpdates()
+        }
     }
 
 }
 
 extension SwapApproveViewController {
 
-    private func set(amountLabel: String?, coinTitle: String) {
-        titleView.bind(
-                title: "button.approve".localized,
-                subtitle: "swap.approve.subtitle".localized,
-                image: UIImage(named: "Swap Icon Medium")?.tinted(with: .themeGray))
-
-        amountView.bind(amount: amountLabel, description: coinTitle)
-    }
-
-    private func setFeeLoading() {
-        set(fee: "action.loading".localized)
-    }
-
-    private func set(fee: String) {
-        feeErrorLabel.isHidden = true
-        feeView.isHidden = false
-        feeView.bind(title: "swap.fee".localized, value: fee)
-    }
-
-    private func set(transactionSpeed: String) {
-        transactionSpeedView.isHidden = false
-        transactionSpeedView.bind(title: "swap.transactions_speed".localized, value: transactionSpeed)
-    }
-
-    private func set(feeError: String) {
-        feeView.isHidden = true
-        transactionSpeedView.isHidden = true
-        feeErrorLabel.isHidden = false
-        feeErrorLabel.text = feeError
-    }
-
-    private func set(approveButtonEnabled: Bool) {
-        approveButton.isEnabled = approveButtonEnabled
-    }
-
     private func show(error: String) {
         HudHelper.instance.showError(title: error)
+    }
+
+}
+
+extension SwapApproveViewController: ISendFeePriorityCellDelegate {
+
+    func open(viewController: UIViewController) {
+        present(viewController, animated: true)
     }
 
 }
