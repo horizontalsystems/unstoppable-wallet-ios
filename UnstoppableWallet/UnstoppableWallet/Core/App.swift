@@ -186,7 +186,7 @@ class App {
 
         erc20ContractInfoProvider = Erc20ContractInfoProvider(appConfigProvider: appConfigProvider, networkManager: networkManager)
 
-        walletConnectSessionStore = WalletConnectSessionStore()
+        walletConnectSessionStore = WalletConnectSessionStore(accountManager: accountManager, predefinedAccountTypeManager: predefinedAccountTypeManager)
 
         appManager = AppManager(
                 accountManager: accountManager,
