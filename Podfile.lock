@@ -153,8 +153,6 @@ PODS:
     - UIExtensions.swift (~> 1.1.1)
   - KeychainAccess (4.2.1)
   - LanguageKit.swift (1.0):
-    - SectionsTableView.swift (~> 1.1)
-    - ThemeKit.swift (~> 1.0)
     - UIExtensions.swift (~> 1.1)
   - LitecoinKit.swift (0.15.2):
     - BigInt (~> 5.0)
@@ -166,6 +164,11 @@ PODS:
     - RxSwift (~> 5.0)
     - Secp256k1Kit.swift (~> 1.0)
   - Logging (1.4.0)
+  - ModuleKit.swift (1.0):
+    - LanguageKit.swift (~> 1.0)
+    - SectionsTableView.swift (~> 1.1)
+    - ThemeKit.swift (~> 1.0)
+    - UIExtensions.swift (~> 1.1)
   - Nimble (9.0.0)
   - ObjectMapper (3.5.3)
   - OpenSslKit.swift (1.2.1)
@@ -264,6 +267,7 @@ PODS:
   - SwiftyJSON (4.3.0)
   - ThemeKit.swift (1.0):
     - HUD.swift (~> 1.2)
+    - LanguageKit.swift (~> 1.0)
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1)
   - UIExtensions.swift (1.1.1)
@@ -284,7 +288,7 @@ PODS:
     - ObjectMapper (~> 3.5.2)
     - RxSwift (~> 5.0)
     - RxSwiftExt (~> 5)
-  - ZcashLightClientKit (0.7.0):
+  - ZcashLightClientKit (0.7.1):
     - gRPC-Swift (= 1.0.0-alpha.19)
     - SQLite.swift (~> 0.12.2)
 
@@ -319,6 +323,7 @@ DEPENDENCIES:
   - KeychainAccess
   - LanguageKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - LitecoinKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
+  - ModuleKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - Nimble
   - ObjectMapper
   - PinKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
@@ -335,7 +340,7 @@ DEPENDENCIES:
   - UniswapKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - WalletConnect (from `https://github.com/horizontalsystems/wallet-connect-swift`, branch `master`)
   - XRatesKit.swift (from `https://github.com/horizontalsystems/xrates-kit-ios/`)
-  - ZcashLightClientKit (from `https://github.com/zcash/ZcashLightClientKit.git`, branch `wallet-history`)
+  - ZcashLightClientKit (from `https://github.com/zcash/ZcashLightClientKit.git`)
 
 SPEC REPOS:
   trunk:
@@ -434,6 +439,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
+  ModuleKit.swift:
+    :git: https://github.com/horizontalsystems/component-kit-ios/
   PinKit.swift:
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ScanQrKit.swift:
@@ -454,7 +461,6 @@ EXTERNAL SOURCES:
   XRatesKit.swift:
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
   ZcashLightClientKit:
-    :branch: wallet-history
     :git: https://github.com/zcash/ZcashLightClientKit.git
 
 CHECKOUT OPTIONS:
@@ -477,7 +483,7 @@ CHECKOUT OPTIONS:
     :commit: 9278b438d74e586f41996af8319ba519eff4e3cf
     :git: https://github.com/horizontalsystems/gui-kit/
   CurrencyKit.swift:
-    :commit: 997f8d18a449be4352deedccec05544ddf899d68
+    :commit: 0dcf1e8f840dcd955e07ea99fc87537a13050720
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
     :commit: b77c8ec285959904cc697aa40cef07c6969e67d4
@@ -519,25 +525,28 @@ CHECKOUT OPTIONS:
     :commit: 9278b438d74e586f41996af8319ba519eff4e3cf
     :git: https://github.com/horizontalsystems/gui-kit/
   LanguageKit.swift:
-    :commit: 997f8d18a449be4352deedccec05544ddf899d68
+    :commit: 0dcf1e8f840dcd955e07ea99fc87537a13050720
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
     :commit: b77c8ec285959904cc697aa40cef07c6969e67d4
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
+  ModuleKit.swift:
+    :commit: 0dcf1e8f840dcd955e07ea99fc87537a13050720
+    :git: https://github.com/horizontalsystems/component-kit-ios/
   PinKit.swift:
-    :commit: 997f8d18a449be4352deedccec05544ddf899d68
+    :commit: 0dcf1e8f840dcd955e07ea99fc87537a13050720
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ScanQrKit.swift:
-    :commit: 997f8d18a449be4352deedccec05544ddf899d68
+    :commit: 0dcf1e8f840dcd955e07ea99fc87537a13050720
     :git: https://github.com/horizontalsystems/component-kit-ios/
   SectionsTableView.swift:
     :commit: 9278b438d74e586f41996af8319ba519eff4e3cf
     :git: https://github.com/horizontalsystems/gui-kit/
   StorageKit.swift:
-    :commit: 997f8d18a449be4352deedccec05544ddf899d68
+    :commit: 0dcf1e8f840dcd955e07ea99fc87537a13050720
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: 7aa729f037302f4c74b4d032660c4a0f388af257
+    :commit: 0dcf1e8f840dcd955e07ea99fc87537a13050720
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :commit: 9278b438d74e586f41996af8319ba519eff4e3cf
@@ -552,7 +561,7 @@ CHECKOUT OPTIONS:
     :commit: c0ef7faf52500375de0912b041dd9015ae028384
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
   ZcashLightClientKit:
-    :commit: 924ff6b71d2d5361112d51d0f3b1a4630ff2deae
+    :commit: 08a2a2c282526909352c45a06da76a470eecddc9
     :git: https://github.com/zcash/ZcashLightClientKit.git
 
 SPEC CHECKSUMS:
@@ -598,9 +607,10 @@ SPEC CHECKSUMS:
   HsToolKit.swift: d47ef3e8c507a6e980f2f6d819c5b0cf05845910
   HUD.swift: 0260e8e89a290380fd23d95002b0ddbea890b6c9
   KeychainAccess: 9b07f665298d13c3a85881bd3171f6f49b8151c1
-  LanguageKit.swift: f1105c75fe9d04f482d2ab55e48eb91ed008abef
+  LanguageKit.swift: 8ca8b99dd6250a13cf481b637e0d9d16f7389a74
   LitecoinKit.swift: 361c0ff1b1c504c16831e619cc716efeac52c368
   Logging: beeb016c9c80cf77042d62e83495816847ef108b
+  ModuleKit.swift: 60a85485efe4cab836d53a77eacc72cb98328936
   Nimble: 3b4ec3fd40f1dc178058e0981107721c615643d8
   ObjectMapper: 97111c97e054a6ee25917662106689f0b4127b37
   OpenSslKit.swift: 0f9c774a09e406c320a0c17341d84fced0e1ba16
@@ -630,14 +640,14 @@ SPEC CHECKSUMS:
   SwiftNIOTransportServices: 801923921fbecdcde1e1c1ff38e812167d01ead1
   SwiftProtobuf: fd4693388a96c8c2df35d3b063272b0e7c499d00
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
-  ThemeKit.swift: ab5c081b10f6a80149d37751f3ee98f1292bf497
+  ThemeKit.swift: ef380a141bb93ae0d55f4a64c8229b1487d37711
   UIExtensions.swift: 3ed084c0343ddd0f86c7c558d37759e1fd7d5778
   UniswapKit.swift: b14da72cf5b4746fa880c32458723fd6d3d48114
   WalletConnect: 7253f3c123df3bba10d71459f0d62a900fee68ac
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: e30efad6badf909b67cad6914ac29e6dbc50079d
-  ZcashLightClientKit: 6a12b800a373f3330d4bc177480e56b499c23a8f
+  ZcashLightClientKit: ac7b123159008f51255c8b85861ff580f6a55faa
 
-PODFILE CHECKSUM: 5d7bbdeb81fd11c75debc89b6b88431336bb3e4b
+PODFILE CHECKSUM: 0ed3a7762c45a30b2a1a2792ea4d960aed081e77
 
 COCOAPODS: 1.9.3
