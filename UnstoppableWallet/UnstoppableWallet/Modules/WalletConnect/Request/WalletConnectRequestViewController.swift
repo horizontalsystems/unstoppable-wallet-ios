@@ -7,7 +7,6 @@ import HUD
 
 class WalletConnectRequestViewController: ThemeViewController {
     private let viewModel: WalletConnectSendEthereumTransactionRequestViewModel
-    private let feeViewModel: EthereumFeeViewModel
     private let onApprove: (Data) -> ()
     private let onReject: () -> ()
 
@@ -26,7 +25,6 @@ class WalletConnectRequestViewController: ThemeViewController {
 
     init(viewModel: WalletConnectSendEthereumTransactionRequestViewModel, feeViewModel: EthereumFeeViewModel, onApprove: @escaping (Data) -> (), onReject: @escaping () -> ()) {
         self.viewModel = viewModel
-        self.feeViewModel = feeViewModel
         self.onApprove = onApprove
         self.onReject = onReject
 
@@ -57,8 +55,7 @@ class WalletConnectRequestViewController: ThemeViewController {
 
         tableView.registerCell(forClass: SendConfirmationAmountCell.self)
 
-        tableView.registerCell(forClass: TransactionInfoFromToCell.self)
-        tableView.registerCell(forClass: TransactionInfoValueCell.self)
+        tableView.registerCell(forClass: D9Cell.self)
         tableView.registerCell(forClass: SendEthereumErrorCell.self)
         tableView.sectionDataSource = self
         tableView.allowsSelection = false
@@ -195,48 +192,25 @@ extension WalletConnectRequestViewController: SectionsDataSource {
         )
     }
 
-    private func fromToRow(title: String, value: String, onTap: @escaping () -> ()) -> RowProtocol {
-        Row<TransactionInfoFromToCell>(
+    private func buttonRow(title: String, viewItem: CopyableSecondaryButton.ViewItem) -> RowProtocol {
+        Row<D9Cell>(
                 id: title,
-                hash: value,
+                hash: viewItem.value,
                 height: .heightSingleLineCell,
                 bind: { cell, _ in
-                    cell.bind(title: title, value: value, onTap: onTap)
-                }
-        )
-    }
-
-    private func fromRow(value: String) -> RowProtocol {
-        fromToRow(title: "tx_info.from_hash".localized, value: TransactionInfoAddressMapper.map(value)) { [weak self] in
-        }
-    }
-
-    private func toRow(value: String) -> RowProtocol {
-        fromToRow(title: "tx_info.to_hash".localized, value: TransactionInfoAddressMapper.map(value)) { [weak self] in
-        }
-    }
-
-    private func inputRow(value: String) -> RowProtocol {
-        fromToRow(title: "tx_info.input".localized, value: value) { [weak self] in
-        }
-    }
-
-    private func valueRow(title: String, value: String?) -> RowProtocol {
-        Row<TransactionInfoValueCell>(
-                id: title,
-                hash: value ?? "",
-                height: .heightSingleLineCell,
-                bind: { cell, _ in
-                    cell.bind(title: title, value: value)
+                    cell.bind(title: title, viewItem: viewItem)
                 }
         )
     }
 
     private func row(viewItem: WalletConnectRequestViewItem) -> RowProtocol {
         switch viewItem {
-        case let .from(value): return fromRow(value: value)
-        case let .to(value): return toRow(value: value)
-        case let .input(value): return inputRow(value: value)
+        case let .from(value):
+            return buttonRow(title: "tx_info.from_hash".localized, viewItem: .init(title: TransactionInfoAddressMapper.title(value: value), value: value))
+        case let .to(value):
+            return buttonRow(title: "tx_info.to_hash".localized, viewItem: .init(title: TransactionInfoAddressMapper.title(value: value), value: value))
+        case let .input(value):
+            return buttonRow(title: "tx_info.input".localized, viewItem: .init(value: value))
         }
     }
 

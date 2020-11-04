@@ -14,7 +14,7 @@ def appPods
 
   pod 'BitcoinCore.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
 
-  pod 'ZcashLightClientKit', :git => 'https://github.com/zcash/ZcashLightClientKit.git', :branch => 'wallet-history'
+  pod 'ZcashLightClientKit', :git => 'https://github.com/zcash/ZcashLightClientKit.git'
 
   pod 'EthereumKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
   # pod 'EthereumKit.swift', path: '../ethereum-kit-ios/'
@@ -59,6 +59,8 @@ def appPods
   # pod 'ScanQrKit.swift', path: '../component-kit-ios/'
   pod 'CurrencyKit.swift', git: 'https://github.com/horizontalsystems/component-kit-ios/'
   # pod 'CurrencyKit.swift', path: '../component-kit-ios/'
+  pod 'ModuleKit.swift', git: 'https://github.com/horizontalsystems/component-kit-ios/'
+  # pod 'ModuleKit.swift', path: '../component-kit-ios/'
 
   pod 'ActionSheet.swift', git: 'https://github.com/horizontalsystems/gui-kit/'
   # pod 'ActionSheet.swift', path: '../gui-kit/'

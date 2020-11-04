@@ -118,7 +118,7 @@ extension ChartNotificationViewController: SectionsDataSource {
 
         if let header = sectionModel.header {
             headerState = .cellType(hash: "header_\(sectionIndex)", binder: { view in
-                view.bind(text: header.localized, uppercased: false)
+                view.bind(text: header.localized)
                 view.contentView.backgroundColor = .themeLawrence
             }, dynamicHeight: { containerWidth in
                 SubtitleHeaderFooterView.height

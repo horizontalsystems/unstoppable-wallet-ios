@@ -1,5 +1,5 @@
 import UIKit
-import LanguageKit
+import ModuleKit
 import CurrencyKit
 
 class MainSettingsRouter {
