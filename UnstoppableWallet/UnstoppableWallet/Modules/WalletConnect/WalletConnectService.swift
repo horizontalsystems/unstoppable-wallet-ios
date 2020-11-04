@@ -20,7 +20,10 @@ class WalletConnectService {
     private var connectionStateRelay = PublishRelay<WalletConnectInteractor.State>()
     private var requestRelay = PublishRelay<WalletConnectRequest>()
 
-    private var pendingRequests = [WalletConnectRequest]()
+    private var pendingRequests = [Int: WalletConnectRequest]()
+    private var requestIsProcessing = false
+
+    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-connect-service", qos: .userInitiated)
 
     private(set) var state: State = .idle {
         didSet {
@@ -60,22 +63,24 @@ class WalletConnectService {
     private func handleRequest(id: Int, requestResolver: () throws -> WalletConnectRequest) {
         do {
             let request = try requestResolver()
-
-            // todo: handle several requests in a row
-
-            pendingRequests.append(request)
-            requestRelay.accept(request)
+            pendingRequests[id] = request
+            processNextRequest()
         } catch {
             interactor?.rejectRequest(id: id, message: error.smartDescription)
         }
     }
 
-    private func converted(result: Any) -> String? {
-        if let dataResult = result as? Data {
-            return dataResult.toHexString()
+    private func processNextRequest() {
+        guard !requestIsProcessing else {
+            return
         }
 
-        return nil
+        guard let nextRequest = pendingRequests.values.first else {
+            return
+        }
+
+        requestRelay.accept(nextRequest)
+        requestIsProcessing = true
     }
 
 }
@@ -133,28 +138,25 @@ extension WalletConnectService {
     }
 
     func approveRequest(id: Int, result: Any) {
-        guard let index = pendingRequests.firstIndex(where: { $0.id == id }) else {
-            return
+        queue.async {
+            if let request = self.pendingRequests.removeValue(forKey: id), let convertedResult = request.convert(result: result) {
+                self.interactor?.approveRequest(id: id, result: convertedResult)
+            }
+
+            self.requestIsProcessing = false
+            self.processNextRequest()
         }
-
-        pendingRequests.remove(at: index)
-
-        if let convertedResult = converted(result: result) {
-            interactor?.approveRequest(id: id, result: convertedResult)
-        }
-
-        // todo: handle next pending request
     }
 
     func rejectRequest(id: Int) {
-        guard let index = pendingRequests.firstIndex(where: { $0.id == id }) else {
-            return
+        queue.async {
+            self.pendingRequests.removeValue(forKey: id)
+
+            self.interactor?.rejectRequest(id: id, message: "Rejected by user")
+
+            self.requestIsProcessing = false
+            self.processNextRequest()
         }
-
-        pendingRequests.remove(at: index)
-        interactor?.rejectRequest(id: id, message: "Rejected by user")
-
-        // todo: handle next pending request
     }
 
     func killSession() {
@@ -186,8 +188,10 @@ extension WalletConnectService: IWalletConnectInteractorDelegate {
     }
 
     func didRequestSendEthereumTransaction(id: Int, transaction: WCEthereumTransaction) {
-        handleRequest(id: id) {
-            try WalletConnectSendEthereumTransactionRequest(id: id, transaction: transaction)
+        queue.async {
+            self.handleRequest(id: id) {
+                try WalletConnectSendEthereumTransactionRequest(id: id, transaction: transaction)
+            }
         }
     }
 
