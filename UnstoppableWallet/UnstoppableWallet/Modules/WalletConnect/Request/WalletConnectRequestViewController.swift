@@ -43,7 +43,7 @@ class WalletConnectRequestViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "connect".localized
+        title = "wallet_connect.request_title".localized
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in

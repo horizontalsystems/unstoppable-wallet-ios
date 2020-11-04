@@ -56,8 +56,6 @@ class CoinToggleViewController: ThemeViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
-        navigationItem.searchController = searchController
-
         if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
             textField.textColor = .themeOz
 
