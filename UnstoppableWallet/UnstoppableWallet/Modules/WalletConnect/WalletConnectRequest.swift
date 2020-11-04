@@ -9,6 +9,10 @@ class WalletConnectRequest {
         self.id = id
     }
 
+    func convert(result: Any) -> String? {
+        nil
+    }
+
 }
 
 class WalletConnectSendEthereumTransactionRequest: WalletConnectRequest {
@@ -30,6 +34,10 @@ class WalletConnectSendEthereumTransactionRequest: WalletConnectRequest {
         )
 
         super.init(id: id)
+    }
+
+    override func convert(result: Any) -> String? {
+        (result as? Data)?.toHexString()
     }
 
     enum TransactionError: Error {
