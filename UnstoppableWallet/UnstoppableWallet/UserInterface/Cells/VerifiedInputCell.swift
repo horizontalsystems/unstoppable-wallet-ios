@@ -30,9 +30,10 @@ protocol IVerifiedInputViewModel {
     var inputFieldInitialValue: String? { get }
     var inputFieldPlaceholder: String? { get }
 
-    func inputFieldDidChange(text: String)
+    func inputFieldDidChange(text: String?)
     func inputFieldIsValid(text: String) -> Bool
 
+    var inputFieldValueDriver: Driver<String?> { get }
     var inputFieldCautionDriver: Driver<Caution?> { get }
 }
 
@@ -44,6 +45,13 @@ extension IVerifiedInputViewModel {
     var inputFieldButtonItems: [InputFieldButtonItem] { [] }
     var inputFieldInitialValue: String? { nil }
     var inputFieldPlaceholder: String? { nil }
+
+    func inputFieldDidChange(text: String?) {}
+
+    func inputFieldIsValid(text: String) -> Bool {
+        true
+    }
+
 }
 
 class VerifiedInputCell: UITableViewCell {
@@ -60,7 +68,7 @@ class VerifiedInputCell: UITableViewCell {
     private let cautionLabel = UILabel()
 
     private let disposeBag = DisposeBag()
-    private let viewModel: IVerifiedInputViewModel
+    let viewModel: IVerifiedInputViewModel
 
     weak var delegate: IDynamicHeightCellDelegate?
 
@@ -126,6 +134,7 @@ class VerifiedInputCell: UITableViewCell {
         cautionLabel.numberOfLines = 0
         cautionLabelWrapper.isHidden = true
 
+        subscribe(disposeBag, viewModel.inputFieldValueDriver) { [weak self] in self?.inputFieldView.set(text: $0) }
         subscribe(disposeBag, viewModel.inputFieldCautionDriver) { [weak self] in self?.set(caution: $0) }
     }
 
@@ -156,12 +165,21 @@ class VerifiedInputCell: UITableViewCell {
 
 extension VerifiedInputCell {
 
-    public var inputText: String {
-        inputFieldView.inputText
+    public var inputText: String? {
+        get {
+            inputFieldView.inputText
+        }
+        set {
+            inputFieldView.set(text: newValue)
+        }
     }
 
     override func becomeFirstResponder() -> Bool {
         inputFieldView.becomeFirstResponder()
+    }
+
+    public func append(items: [InputFieldButtonItem]) {
+        inputFieldView.append(items: items)
     }
 
     public func height(containerWidth: CGFloat) -> CGFloat {

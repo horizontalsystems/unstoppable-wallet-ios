@@ -59,6 +59,6 @@ protocol ISendAmountDelegate: class {
     func onChange(inputType: SendInputType)
 }
 
-protocol ISendAmountDecimalParser {
+protocol IAmountDecimalParser {
     func parseAnyDecimal(from string: String?) -> Decimal?
 }

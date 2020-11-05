@@ -263,8 +263,7 @@ class SwapViewController: ThemeViewController {
     }
 
     @objc func onSettingsButtonTouchUp() {
-        let slippageViewModel = SlippageViewModel()
-        let viewController = SwapAdvancedSettingsView(slippageViewModel: slippageViewModel)
+        let viewController = SwapTradeOptionsView(viewModel: viewModel.tradeOptionsViewModel)
         navigationController?.pushViewController(viewController, animated: true)
     }
 

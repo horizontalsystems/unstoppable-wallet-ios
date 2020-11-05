@@ -8,6 +8,15 @@ class ButtonCell: UITableViewCell {
 
     private var onTap: (() -> ())?
 
+    var isEnabled: Bool {
+        get {
+            button.isEnabled
+        }
+        set {
+            button.isEnabled = newValue
+        }
+    }
+
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 

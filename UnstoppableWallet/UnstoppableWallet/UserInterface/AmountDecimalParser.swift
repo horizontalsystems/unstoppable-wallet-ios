@@ -1,6 +1,6 @@
 import Foundation
 
-class SendAmountDecimalParser {
+class AmountDecimalParser {
 
     private let formatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -11,7 +11,7 @@ class SendAmountDecimalParser {
 
 }
 
-extension SendAmountDecimalParser: ISendAmountDecimalParser {
+extension AmountDecimalParser: IAmountDecimalParser {
 
     func parseAnyDecimal(from string: String?) -> Decimal? {
         if let string = string {

@@ -8,7 +8,7 @@ class SendAmountPresenter {
     weak var delegate: ISendAmountDelegate?
 
     private let interactor: ISendAmountInteractor
-    private let decimalParser: ISendAmountDecimalParser
+    private let decimalParser: IAmountDecimalParser
 
     private let coin: Coin
     private let currency: Currency
@@ -22,7 +22,7 @@ class SendAmountPresenter {
 
     private(set) var inputType: SendInputType = .coin
 
-    init(coin: Coin, interactor: ISendAmountInteractor, decimalParser: ISendAmountDecimalParser) {
+    init(coin: Coin, interactor: ISendAmountInteractor, decimalParser: IAmountDecimalParser) {
         self.coin = coin
         self.interactor = interactor
         self.decimalParser = decimalParser

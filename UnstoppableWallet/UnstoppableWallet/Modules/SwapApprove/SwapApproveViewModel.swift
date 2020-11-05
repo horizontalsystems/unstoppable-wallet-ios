@@ -12,6 +12,7 @@ class SwapApproveViewModel {
     private let coinService: CoinService
     private let ethereumCoinService: CoinService
 
+    private var inputFieldValueRelay = BehaviorRelay<String?>(value: nil)
     private var approveAllowedRelay = BehaviorRelay<Bool>(value: false)
     private var approveSuccessRelay = PublishRelay<Void>()
     private var approveErrorRelay = PublishRelay<String>()
@@ -19,7 +20,7 @@ class SwapApproveViewModel {
     private let balanceErrorRelay = BehaviorRelay<String?>(value: nil)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
-    private let decimalParser: ISendAmountDecimalParser
+    private let decimalParser = AmountDecimalParser()
 
     init(service: SwapApproveService, coinService: CoinService, ethereumCoinService: CoinService, decimalParser: ISendAmountDecimalParser) {
         self.service = service
@@ -75,12 +76,16 @@ class SwapApproveViewModel {
 
 extension SwapApproveViewModel: IVerifiedInputViewModel {
 
+    var inputFieldValueDriver: Driver<String?> {
+        inputFieldValueRelay.asDriver()
+    }
+
     var inputFieldInitialValue: String? {
         coinService.coinValue(value: service.amount).value.description
     }
 
-    func inputFieldDidChange(text: String) {
-        guard let amount = Decimal(string: text) else {
+    func inputFieldDidChange(text: String?) {
+        guard let text = text, let amount = Decimal(string: text) else {
             balanceErrorRelay.accept(nil)
             return
         }
@@ -89,8 +94,8 @@ extension SwapApproveViewModel: IVerifiedInputViewModel {
     }
 
     func inputFieldIsValid(text: String) -> Bool {
-        guard !text.isEmpty else {
-            return true
+        guard let amount = decimalParser.parseAnyDecimal(from: text) else {
+            return false
         }
 
         guard let value = decimalParser.parseAnyDecimal(from: text) else {
