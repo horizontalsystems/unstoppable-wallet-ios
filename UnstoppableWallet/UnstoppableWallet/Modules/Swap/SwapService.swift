@@ -42,6 +42,7 @@ class SwapService {
     private var stateRelay = BehaviorRelay<SwapModule.SwapState>(value: .idle)
 
     private var tradeData: TradeData?
+    var tradeOptions: TradeOptions = TradeOptions()
 
     private var approvingTimer: Timer?
     private var lastAllowance: Decimal?

@@ -40,7 +40,7 @@ class InputFieldStackView: UIStackView {
     private var buttonItems = [InputFieldButtonItem]()
 
     var inputText: String {
-        textView.text ?? ""
+        textView.text
     }
 
     var onChangeText: ((String) -> ())?
@@ -194,9 +194,11 @@ extension InputFieldStackView {
     }
 
     func set(text: String?) {
-        textView.text = text ?? ""
-
+        textView.text = text
         textViewDidChange()
+        updateTextViewConstraints(for: textView.text)
+
+        placeholderLabel.isHidden = !textView.text.isEmpty
     }
 
     func append(items: [InputFieldButtonItem]) {
@@ -263,7 +265,7 @@ extension InputFieldStackView {
         var buttonsWidth: CGFloat = 0
 
         showedButtons.forEach { item in
-            let buttonSize = ThemeButton.size(containerWidth: CGFloat.greatestFiniteMagnitude, text: item.title!, style: item.style)
+            let buttonSize = ThemeButton.size(containerWidth: CGFloat.greatestFiniteMagnitude, text: item.title, icon: item.icon, style: item.style)
             buttonsWidth += buttonSize.width
         }
 

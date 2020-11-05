@@ -28,7 +28,7 @@ class SwapViewModel {
 
     private let service: SwapService
     private let factory: SwapViewItemFactory
-    private let decimalParser: ISendAmountDecimalParser
+    private let decimalParser: IAmountDecimalParser
 
     private var isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private var isTradeDataHiddenRelay = BehaviorRelay<Bool>(value: true)
@@ -67,7 +67,11 @@ class SwapViewModel {
         SwapConfirmationViewModel(service: service, factory: factory)
     }
 
-    init(service: SwapService, factory: SwapViewItemFactory, decimalParser: ISendAmountDecimalParser) {
+    public var tradeOptionsViewModel: SwapTradeOptionsViewModel {
+        SwapTradeOptionsViewModel(service: SwapTradeOptionsService(tradeOptions: service.tradeOptions), decimalParser: AmountDecimalParser())
+    }
+
+    init(service: SwapService, factory: SwapViewItemFactory, decimalParser: IAmountDecimalParser) {
         self.service = service
         self.factory = factory
         self.decimalParser = decimalParser

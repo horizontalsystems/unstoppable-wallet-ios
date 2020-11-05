@@ -10,7 +10,7 @@ class BaseSwapInputViewModel {
 
     let service: SwapService
 
-    private let decimalParser: ISendAmountDecimalParser
+    private let decimalParser: IAmountDecimalParser
     private let decimalFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -41,7 +41,7 @@ class BaseSwapInputViewModel {
         fatalError("Must be implemented by Concrete subclass.")
     }
 
-    init(service: SwapService, decimalParser: ISendAmountDecimalParser) {
+    init(service: SwapService, decimalParser: IAmountDecimalParser) {
         self.service = service
         self.decimalParser = decimalParser
 

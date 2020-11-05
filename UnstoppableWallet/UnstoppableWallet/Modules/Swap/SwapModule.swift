@@ -112,7 +112,7 @@ struct SwapModule {
 
         let swapFeeRepository = SwapFeeRepository(uniswapKit: swapKit, adapterManager: App.shared.adapterManager, provider: feeRateProvider, rateManager: App.shared.rateManager, baseCurrency: App.shared.currencyKit.baseCurrency, feeCoin: feeCoin)
         let service = SwapService(uniswapRepository: UniswapRepository(swapKit: swapKit), allowanceRepository: allowanceRepository, swapFeeRepository: swapFeeRepository, swapCoinProvider: swapCoinProvider, adapterManager: App.shared.adapterManager, coin: wallet.coin)
-        let viewModel = SwapViewModel(service: service, factory: SwapViewItemFactory(), decimalParser: SendAmountDecimalParser())
+        let viewModel = SwapViewModel(service: service, factory: SwapViewItemFactory(), decimalParser: AmountDecimalParser())
 
         return ThemeNavigationController(rootViewController: SwapViewController(viewModel: viewModel))
     }
