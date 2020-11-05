@@ -62,6 +62,14 @@ class InputFieldStackView: UIStackView {
         }
     }
 
+    var decimalKeyboard: Bool = true {
+        didSet {
+            if decimalKeyboard {
+                textView.keyboardType = .decimalPad
+            }
+        }
+    }
+
     init() {
         super.init(frame: .zero)
 

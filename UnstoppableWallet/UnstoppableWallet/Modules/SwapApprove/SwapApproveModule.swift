@@ -30,8 +30,6 @@ struct SwapApproveModule {
                 feeRateProvider: App.shared.feeRateProviderFactory.provider(coinType: .ethereum) as! EthereumFeeRateProvider
         )
 
-        let erc20AvailableBalanceService = Erc20AvailableBalanceService(erc20Kit: erc20Adapter.erc20Kit)
-
         let service = SwapApproveService(
                 transactionService: transactionService,
                 erc20Kit: erc20Adapter.erc20Kit,
@@ -43,11 +41,9 @@ struct SwapApproveModule {
 
         let feeViewModel = EthereumFeeViewModel(service: transactionService, coinService: ethereumCoinService)
         let viewModel = SwapApproveViewModel(service: service, coinService: coinService, ethereumCoinService: ethereumCoinService)
-        let erc20AvailableBalanceViewModel = Erc20AvailableBalanceViewModel(service: erc20AvailableBalanceService, coinService: coinService)
         let viewController = SwapApproveViewController(
                 viewModel: viewModel,
                 feeViewModel: feeViewModel,
-                availableBalanceViewModel: erc20AvailableBalanceViewModel,
                 delegate: delegate
         )
 

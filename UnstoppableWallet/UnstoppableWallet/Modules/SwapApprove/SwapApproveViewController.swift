@@ -15,20 +15,19 @@ class SwapApproveViewController: ThemeViewController {
 
     private let feeCell: SendFeeCell
     private let feePriorityCell: SendFeePriorityCell
-    private let availableBalanceCell: AvailableBalanceCell
     private let amountCell: VerifiedInputCell
     private let buttonCell: ButtonCell
 
     private var error: String?
+    private var keyboardHeight: CGFloat?
 
-    init(viewModel: SwapApproveViewModel, feeViewModel: EthereumFeeViewModel, availableBalanceViewModel: Erc20AvailableBalanceViewModel, delegate: ISwapApproveDelegate) {
+    init(viewModel: SwapApproveViewModel, feeViewModel: EthereumFeeViewModel, delegate: ISwapApproveDelegate) {
         self.viewModel = viewModel
         self.feeViewModel = feeViewModel
         self.delegate = delegate
 
         feeCell = SendFeeCell(viewModel: feeViewModel)
         feePriorityCell = SendFeePriorityCell(viewModel: feeViewModel)
-        availableBalanceCell = AvailableBalanceCell(viewModel: availableBalanceViewModel)
         amountCell = VerifiedInputCell(viewModel: viewModel)
         buttonCell = ButtonCell()
 
@@ -60,6 +59,7 @@ class SwapApproveViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.sectionDataSource = self
         tableView.allowsSelection = false
+        tableView.keyboardDismissMode = .onDrag
 
         buttonCell.bind(style: .primaryYellow, title: "button.approve".localized, compact: false, onTap: { [weak self] in self?.onTapApprove() })
         tableView.buildSections()
@@ -97,6 +97,56 @@ class SwapApproveViewController: ThemeViewController {
 
 }
 
+extension SwapApproveViewController {
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    func adjustTableViewInsets(){
+        if let keyboardHeight = self.keyboardHeight {
+            let bottomPosition = tableView.contentSize.height - amountCell.y - amountCell.height
+            let bottomInset = max(0, keyboardHeight - bottomPosition + CGFloat.margin4x + feeCell.height)
+            
+            let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
+            tableView.contentInset = contentInset
+            tableView.setContentOffset(.zero, animated: true)
+        } else {
+            let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            tableView.contentInset = contentInset
+        }
+   }
+
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard keyboardHeight == nil else {
+            return
+        }
+        
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            keyboardHeight = keyboardSize.height
+            adjustTableViewInsets()
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        guard keyboardHeight != nil else {
+            return
+        }
+        
+        keyboardHeight = nil
+        adjustTableViewInsets()
+    }
+
+}
+
 extension SwapApproveViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
@@ -108,7 +158,7 @@ extension SwapApproveViewController: SectionsDataSource {
             Section(
                     id: "amount",
                     headerState: .margin(height: CGFloat.margin4x),
-                    rows: [availableBalanceRow, amountRow]
+                    rows: [amountRow]
             ),
             Section(
                     id: "fee",
@@ -120,14 +170,6 @@ extension SwapApproveViewController: SectionsDataSource {
                     rows: [approveButtonRow]
             )
         ]
-    }
-
-    private var availableBalanceRow: RowProtocol {
-        StaticRow(
-                cell: availableBalanceCell,
-                id: "amount",
-                height: 29
-        )
     }
 
     private var amountRow: RowProtocol {
@@ -206,6 +248,8 @@ extension SwapApproveViewController: IDynamicHeightCellDelegate {
             self?.tableView.beginUpdates()
             self?.tableView.endUpdates()
         }
+        
+        adjustTableViewInsets()
     }
 
 }
