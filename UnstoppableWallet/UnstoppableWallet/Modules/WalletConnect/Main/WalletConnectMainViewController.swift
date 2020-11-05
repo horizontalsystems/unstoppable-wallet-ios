@@ -92,7 +92,7 @@ class WalletConnectMainViewController: ThemeViewController {
             disconnectButtonHeightConstraint = maker.height.equalTo(CGFloat.heightButton).constraint
         }
 
-        disconnectButton.apply(style: .primaryRed)
+        disconnectButton.apply(style: .primaryGray)
         disconnectButton.setTitle("wallet_connect.button_disconnect".localized, for: .normal)
         disconnectButton.addTarget(self, action: #selector(onTapDisconnect), for: .touchUpInside)
 

@@ -30,6 +30,7 @@ class TermsHeaderCell: UITableViewCell {
         headerImageView.contentMode = .scaleAspectFill
         headerImageView.cornerRadius = .margin4x
         headerImageView.clipsToBounds = true
+        headerImageView.backgroundColor = .themeElena
 
         contentView.addSubview(labelsHolder)
         labelsHolder.snp.makeConstraints { maker in
