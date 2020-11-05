@@ -57,17 +57,9 @@ class SwapApproveService {
         ethereumKit.balance ?? 0
     }
 
-    private var erc20Balance: BigUInt {
-        erc20Kit.balance ?? 0
-    }
-
     private func syncState() {
         var errors = [Error]()
         var loading = false
-
-        if erc20Balance < amount {
-            errors.append(TransactionAmountError.insufficientBalance(availableBalance: erc20Balance))
-        }
 
         if allowance >= amount && amount > 0 {   // 0 amount is used for USDT to drop existing allowance
             errors.append(TransactionAmountError.alreadyApproved)
@@ -140,7 +132,6 @@ extension SwapApproveService {
     }
 
     enum TransactionAmountError: Error {
-        case insufficientBalance(availableBalance: BigUInt)
         case alreadyApproved
     }
 

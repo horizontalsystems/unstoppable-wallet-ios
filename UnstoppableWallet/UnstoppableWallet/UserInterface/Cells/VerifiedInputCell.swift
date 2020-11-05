@@ -24,6 +24,7 @@ enum CautionType {
 protocol IVerifiedInputViewModel {
     var inputFieldMaximumNumberOfLines: Int { get }
     var inputFieldCanEdit: Bool { get }
+    var decimalKeyboard: Bool { get }
 
     var inputFieldButtonItems: [InputFieldButtonItem] { get }
     var inputFieldInitialValue: String? { get }
@@ -37,6 +38,8 @@ protocol IVerifiedInputViewModel {
 
 extension IVerifiedInputViewModel {
     var inputFieldCanEdit: Bool { true }
+    var decimalKeyboard: Bool { true }
+    var inputFieldKeyBoardType: Int { 1 }
     var inputFieldMaximumNumberOfLines: Int { 1 }
     var inputFieldButtonItems: [InputFieldButtonItem] { [] }
     var inputFieldInitialValue: String? { nil }
@@ -69,25 +72,33 @@ class VerifiedInputCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
 
-        contentView.addSubview(verticalStackView)
-        verticalStackView.snp.makeConstraints { maker in
+        let wrapperView = UIView()
+        contentView.addSubview(wrapperView)
+        wrapperView.snp.makeConstraints { maker in
             maker.top.equalToSuperview()
             maker.leading.trailing.equalToSuperview().inset(Self.margin)
+        }
+
+        wrapperView.backgroundColor = .themeLawrence
+        wrapperView.layer.cornerRadius = .cornerRadius2x
+        wrapperView.layer.borderWidth = CGFloat.heightOnePixel
+        wrapperView.layer.borderColor = UIColor.themeSteel20.cgColor
+
+        wrapperView.addSubview(verticalStackView)
+        verticalStackView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
         }
 
         verticalStackView.axis = .vertical
         verticalStackView.isLayoutMarginsRelativeArrangement = true
         verticalStackView.layoutMargins = UIEdgeInsets(top: Self.stackInsideMargin, left: Self.stackInsideMargin, bottom: Self.stackInsideMargin, right: Self.stackInsideMargin)
-        verticalStackView.backgroundColor = .themeLawrence
-        verticalStackView.layer.cornerRadius = .cornerRadius2x
-        verticalStackView.layer.borderWidth = CGFloat.heightOnePixel
-        verticalStackView.layer.borderColor = UIColor.themeSteel20.cgColor
 
         verticalStackView.addArrangedSubview(inputFieldView)
         verticalStackView.addArrangedSubview(cautionLabelWrapper)
         verticalStackView.spacing = Self.spacing
 
         inputFieldView.canEdit = viewModel.inputFieldCanEdit
+        inputFieldView.decimalKeyboard = viewModel.decimalKeyboard
         inputFieldView.maximumNumberOfLines = viewModel.inputFieldMaximumNumberOfLines
         inputFieldView.append(items: viewModel.inputFieldButtonItems)
         inputFieldView.onChangeText = { [weak self] in

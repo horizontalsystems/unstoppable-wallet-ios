@@ -57,11 +57,6 @@ class SwapApproveViewModel {
     }
 
     private func convert(error: Error) -> String {
-        if case SwapApproveService.TransactionAmountError.insufficientBalance(let availableBalance) = error {
-            let coinValue = coinService.coinValue(value: availableBalance)
-            return "send.amount_error.balance".localized(coinValue.formattedString)
-        }
-
         if case SwapApproveService.TransactionAmountError.alreadyApproved = error {
             return "swap.approve.amount_error.already_approved".localized()
         }
