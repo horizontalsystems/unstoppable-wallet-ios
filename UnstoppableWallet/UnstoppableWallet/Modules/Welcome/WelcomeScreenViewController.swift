@@ -148,7 +148,7 @@ class WelcomeScreenViewController: UIViewController {
 
         logoWrapper.addSubview(logoImageView)
         logoImageView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin12x)
+            maker.centerX.equalToSuperview()
             maker.centerY.equalToSuperview()
         }
 
@@ -299,6 +299,7 @@ class WelcomeScreenViewController: UIViewController {
         } else {
             logoWrapper.snp.remakeConstraints { maker in
                 maker.leading.equalTo(view.snp.trailing)
+                maker.leading.trailing.equalTo(logoImageView)
                 maker.top.equalToSuperview()
                 maker.height.equalToSuperview().dividedBy(2)
             }
