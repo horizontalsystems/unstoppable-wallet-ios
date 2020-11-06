@@ -2,7 +2,7 @@ import CurrencyKit
 import BigInt
 
 class CoinService {
-    private let coin: Coin
+    let coin: Coin
     private let currencyKit: ICurrencyKit
     private let rateManager: IRateManager
 

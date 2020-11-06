@@ -5,6 +5,7 @@ import EthereumKit
 import BigInt
 
 class SwapApproveViewModel {
+    private let maxCoinDecimal = 8
     private let disposeBag = DisposeBag()
 
     private let service: SwapApproveService
@@ -13,17 +14,18 @@ class SwapApproveViewModel {
 
     private var approveAllowedRelay = BehaviorRelay<Bool>(value: false)
     private var approveSuccessRelay = PublishRelay<Void>()
-    private var approveErrorRelay = PublishRelay<Error>()
+    private var approveErrorRelay = PublishRelay<String>()
 
     private let balanceErrorRelay = BehaviorRelay<String?>(value: nil)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
-    private let amountCharacterSet = CharacterSet.decimalDigits.union(CharacterSet(charactersIn: "."))
+    private let decimalParser: ISendAmountDecimalParser
 
-    init(service: SwapApproveService, coinService: CoinService, ethereumCoinService: CoinService) {
+    init(service: SwapApproveService, coinService: CoinService, ethereumCoinService: CoinService, decimalParser: ISendAmountDecimalParser) {
         self.service = service
         self.coinService = coinService
         self.ethereumCoinService = ethereumCoinService
+        self.decimalParser = decimalParser
 
         subscribe(disposeBag, service.stateObservable) { [weak self] approveState in self?.handle(approveState: approveState) }
     }
@@ -35,7 +37,7 @@ class SwapApproveViewModel {
         }
 
         if case let .error(error) = approveState {
-            approveErrorRelay.accept(error)
+            approveErrorRelay.accept(error.convertedError.smartDescription)
             return
         }
 
@@ -91,7 +93,12 @@ extension SwapApproveViewModel: IVerifiedInputViewModel {
             return true
         }
 
-        return Decimal(string: text) != nil && CharacterSet(charactersIn: text).isSubset(of: amountCharacterSet)
+        guard let value = decimalParser.parseAnyDecimal(from: text) else {
+            return false
+        }
+
+        // TODO: Decimal count check must be implemented in coinService and used in other places too
+        return value.decimalCount <= min(coinService.coin.decimal, maxCoinDecimal)
     }
 
     var inputFieldCautionDriver: Driver<Caution?> {
@@ -116,7 +123,7 @@ extension SwapApproveViewModel {
         approveSuccessRelay.asSignal()
     }
 
-    var approveErrorSignal: Signal<Error> {
+    var approveErrorSignal: Signal<String> {
         approveErrorRelay.asSignal()
     }
 
