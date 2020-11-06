@@ -83,7 +83,7 @@ class SwapApproveViewController: ThemeViewController {
             self?.error = errorString
             self?.tableView.reload()
         }
-        subscribe(disposeBag, viewModel.approveErrorSignal) { [weak self] error in self?.show(error: error.convertedError.smartDescription) }
+        subscribe(disposeBag, viewModel.approveErrorSignal) { [weak self] error in self?.show(error: error) }
     }
 
     private func onTapApprove() {

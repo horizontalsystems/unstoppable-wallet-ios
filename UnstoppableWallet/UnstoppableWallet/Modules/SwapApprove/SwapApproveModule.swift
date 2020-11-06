@@ -39,8 +39,9 @@ struct SwapApproveModule {
                 allowance: data.allowance
         )
 
+        let decimalParser = SendAmountDecimalParser()
         let feeViewModel = EthereumFeeViewModel(service: transactionService, coinService: ethereumCoinService)
-        let viewModel = SwapApproveViewModel(service: service, coinService: coinService, ethereumCoinService: ethereumCoinService)
+        let viewModel = SwapApproveViewModel(service: service, coinService: coinService, ethereumCoinService: ethereumCoinService, decimalParser: decimalParser)
         let viewController = SwapApproveViewController(
                 viewModel: viewModel,
                 feeViewModel: feeViewModel,
