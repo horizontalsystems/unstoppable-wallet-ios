@@ -37,7 +37,7 @@ class AppStatusViewControllerNew: ThemeViewController {
         tableView.registerCell(forClass: TermsHeaderCell.self)
         tableView.registerCell(forClass: D1Cell.self)
         tableView.registerCell(forClass: D2Cell.self)
-        tableView.registerCell(forClass: D8Cell.self)
+        tableView.registerCell(forClass: D11Cell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.sectionDataSource = self
 
@@ -88,10 +88,10 @@ extension AppStatusViewControllerNew: SectionsDataSource {
                                 id: "linked-wallets",
                                 height: .heightSingleLineCell,
                                 bind: { [weak self] cell, _ in
-                                    cell.bind(
-                                            title: "app_status.linked_wallets".localized,
-                                            value: self.map { "\($0.viewModel.linkedWalletsCount)" }
-                                    )
+                                    cell.set(backgroundStyle: .lawrence)
+                                    cell.title = "app_status.linked_wallets".localized
+                                    cell.value = self.map { "\($0.viewModel.linkedWalletsCount)" }
+                                    cell.valueColor = .themeLeah
                                 },
                                 action: { [weak self] cell in
 
@@ -101,10 +101,8 @@ extension AppStatusViewControllerNew: SectionsDataSource {
                                 id: "version-history",
                                 height: .heightSingleLineCell,
                                 bind: { cell, _ in
-                                    cell.bind(
-                                            title: "app_status.version_history".localized,
-                                            last: true
-                                    )
+                                    cell.set(backgroundStyle: .lawrence, bottomSeparator: true)
+                                    cell.title = "app_status.version_history".localized
                                 },
                                 action: { [weak self] cell in
 
@@ -121,19 +119,20 @@ extension AppStatusViewControllerNew: SectionsDataSource {
                                 id: "blockchain-\(index)",
                                 height: .heightSingleLineCell,
                                 bind: { cell, _ in
-                                    let (statusTitle, statusColor): (String, UIColor) = {
-                                        switch viewItem.status {
-                                        case .syncing: return ("Syncing...", .themeGray)
-                                        case .notSynced: return ("Not Synced", .themeLucian)
-                                        case .synced: return ("Synced", .themeRemus)
-                                        }
-                                    }()
+                                    cell.set(backgroundStyle: .lawrence) // todo: show bottom separator for last item
+                                    cell.title = viewItem.name
 
-                                    cell.bind(
-                                            title: viewItem.name,
-                                            value: statusTitle,
-                                            valueColor: statusColor
-                                    )
+                                    switch viewItem.status {
+                                    case .syncing:
+                                        cell.value = "Syncing..."
+                                        cell.valueColor = .themeGray
+                                    case .notSynced:
+                                        cell.value = "Not Synced"
+                                        cell.valueColor = .themeLucian
+                                    case .synced:
+                                        cell.value = "Synced"
+                                        cell.valueColor = .themeRemus
+                                    }
                                 },
                                 action: { [weak self] cell in
 
