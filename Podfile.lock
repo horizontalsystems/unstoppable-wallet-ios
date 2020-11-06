@@ -2,7 +2,7 @@ PODS:
   - ActionSheet.swift (1.2):
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1.1)
-  - Alamofire (5.3.0)
+  - Alamofire (5.4.0)
   - AlamofireImage (4.1.0):
     - Alamofire (~> 5.1)
   - BigInt (5.2.0)
@@ -483,7 +483,7 @@ CHECKOUT OPTIONS:
     :commit: 9278b438d74e586f41996af8319ba519eff4e3cf
     :git: https://github.com/horizontalsystems/gui-kit/
   CurrencyKit.swift:
-    :commit: 0dcf1e8f840dcd955e07ea99fc87537a13050720
+    :commit: 28500c54b72759f44a36cbb9645d7bc3afc3a6ef
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
     :commit: b77c8ec285959904cc697aa40cef07c6969e67d4
@@ -525,28 +525,28 @@ CHECKOUT OPTIONS:
     :commit: 9278b438d74e586f41996af8319ba519eff4e3cf
     :git: https://github.com/horizontalsystems/gui-kit/
   LanguageKit.swift:
-    :commit: 0dcf1e8f840dcd955e07ea99fc87537a13050720
+    :commit: 28500c54b72759f44a36cbb9645d7bc3afc3a6ef
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
     :commit: b77c8ec285959904cc697aa40cef07c6969e67d4
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   ModuleKit.swift:
-    :commit: 0dcf1e8f840dcd955e07ea99fc87537a13050720
+    :commit: 28500c54b72759f44a36cbb9645d7bc3afc3a6ef
     :git: https://github.com/horizontalsystems/component-kit-ios/
   PinKit.swift:
-    :commit: 0dcf1e8f840dcd955e07ea99fc87537a13050720
+    :commit: 28500c54b72759f44a36cbb9645d7bc3afc3a6ef
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ScanQrKit.swift:
-    :commit: 0dcf1e8f840dcd955e07ea99fc87537a13050720
+    :commit: 28500c54b72759f44a36cbb9645d7bc3afc3a6ef
     :git: https://github.com/horizontalsystems/component-kit-ios/
   SectionsTableView.swift:
     :commit: 9278b438d74e586f41996af8319ba519eff4e3cf
     :git: https://github.com/horizontalsystems/gui-kit/
   StorageKit.swift:
-    :commit: 0dcf1e8f840dcd955e07ea99fc87537a13050720
+    :commit: 28500c54b72759f44a36cbb9645d7bc3afc3a6ef
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: 612a70840c2c5c6e7e956492b27a045f69b42789
+    :commit: 28500c54b72759f44a36cbb9645d7bc3afc3a6ef
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :commit: 9278b438d74e586f41996af8319ba519eff4e3cf
@@ -561,12 +561,12 @@ CHECKOUT OPTIONS:
     :commit: c0ef7faf52500375de0912b041dd9015ae028384
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
   ZcashLightClientKit:
-    :commit: 08a2a2c282526909352c45a06da76a470eecddc9
+    :commit: fb226d951fcafa45cff1c4763e42b2a71d9964e0
     :git: https://github.com/zcash/ZcashLightClientKit.git
 
 SPEC CHECKSUMS:
   ActionSheet.swift: 60b3f9737bf8fff3c7b39de295291a9cd968be58
-  Alamofire: 2c792affbdc2f18016e08fdbcacd60aebe1ba593
+  Alamofire: 3b6a534a3df22db367e4dedeeca73d1ddfcf0e2f
   AlamofireImage: c4a2ba349885fb3064feb74d2e547bd42ce9be10
   BigInt: f668a80089607f521586bbe29513d708491ef2f7
   BinanceChainKit.swift: 8b0f9f257b15a13673dcfa89584dc990c77dbf08

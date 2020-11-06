@@ -198,7 +198,9 @@ extension WalletConnectRequestViewController: SectionsDataSource {
                 hash: viewItem.value,
                 height: .heightSingleLineCell,
                 bind: { cell, _ in
-                    cell.bind(title: title, viewItem: viewItem)
+                    cell.set(backgroundStyle: .lawrence)
+                    cell.title = title
+                    cell.viewItem = viewItem
                 }
         )
     }
