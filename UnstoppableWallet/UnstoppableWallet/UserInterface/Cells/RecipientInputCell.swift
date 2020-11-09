@@ -3,13 +3,13 @@ import ThemeKit
 import RxSwift
 import RxCocoa
 
-protocol IOpenControllerDelegate: AnyObject {
-    func open(controller: UIViewController)
+protocol IPresentControllerDelegate: AnyObject {
+    func open(viewController: UIViewController)
 }
 
 class RecipientInputCell: VerifiedInputCell {
     private let disposeBag = DisposeBag()
-    weak var openDelegate: IOpenControllerDelegate?
+    weak var openDelegate: IPresentControllerDelegate?
 
     override init(viewModel: IVerifiedInputViewModel) {
         super.init(viewModel: viewModel)
@@ -36,19 +36,19 @@ class RecipientInputCell: VerifiedInputCell {
     private func onScanTapped() {
         let scanQrViewController = ScanQrViewController()
         scanQrViewController.delegate = self
-        openDelegate?.open(controller: scanQrViewController)
+        openDelegate?.open(viewController: scanQrViewController)
     }
 
     private func onPasteTapped() {
         guard let text = UIPasteboard.general.string?.replacingOccurrences(of: "\n", with: " ") else {
             return
         }
-        inputText = text
+        inputFieldText = text
         viewModel.inputFieldDidChange(text: text)
     }
 
     private func onDeleteTapped() {
-        inputText = nil
+        inputFieldText = nil
         viewModel.inputFieldDidChange(text: nil)
     }
 
@@ -57,7 +57,7 @@ class RecipientInputCell: VerifiedInputCell {
 extension RecipientInputCell: IScanQrViewControllerDelegate {
 
     func didScan(string: String) {
-        inputText = string
+        inputFieldText = string
         viewModel.inputFieldDidChange(text: string)
     }
 

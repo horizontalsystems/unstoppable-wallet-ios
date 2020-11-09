@@ -264,7 +264,7 @@ class SwapViewController: ThemeViewController {
 
     @objc func onSettingsButtonTouchUp() {
         let viewController = SwapTradeOptionsView(viewModel: viewModel.tradeOptionsViewModel)
-        navigationController?.pushViewController(viewController, animated: true)
+        present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
     @objc func onButtonTouchUp() {

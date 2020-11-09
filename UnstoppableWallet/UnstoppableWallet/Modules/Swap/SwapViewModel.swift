@@ -68,7 +68,7 @@ class SwapViewModel {
     }
 
     public var tradeOptionsViewModel: SwapTradeOptionsViewModel {
-        SwapTradeOptionsViewModel(service: SwapTradeOptionsService(tradeOptions: service.tradeOptions), decimalParser: AmountDecimalParser())
+        SwapTradeOptionsViewModel(service: SwapTradeOptionsService(tradeOptions: service.tradeOptions), swapService: service, decimalParser: AmountDecimalParser())
     }
 
     init(service: SwapService, factory: SwapViewItemFactory, decimalParser: IAmountDecimalParser) {

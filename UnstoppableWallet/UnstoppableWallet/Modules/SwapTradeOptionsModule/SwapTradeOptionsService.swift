@@ -45,13 +45,13 @@ class SwapTradeOptionsService {
         }
     }
 
-    var slippage: Decimal? {
+    var slippage: Decimal {
         didSet {
             sync()
         }
     }
 
-    var deadline: TimeInterval? {
+    var deadline: TimeInterval {
         didSet {
             sync()
         }
@@ -78,32 +78,24 @@ class SwapTradeOptionsService {
         var tradeOptions = TradeOptions()
         var correct = true
 
-        if let slippage = slippage {
-            print("slippage = \(slippage.description)")
-            if !limitSlippageBounds.contains(slippage) && !slippage.isZero {
-                correct = false
+        if limitSlippageBounds.contains(slippage) {
+            tradeOptions.allowedSlippage = slippage
+        } else {
+            correct = false
+
+            if !slippage.isZero {
                 let error: SwapTradeOptionsError = slippage < limitSlippageBounds.lowerBound ? .invalidSlippage(.lower) : .invalidSlippage(.higher)
                 errors.append(error)
-            } else {
-                tradeOptions.allowedSlippage = slippage
             }
-        } else {
-            print("slippage = N/A")
         }
 
-        if let deadline = deadline {
-            print("deadline = \(deadline.description)")
-            if deadline.isZero {
-                correct = false
-            } else {
-                tradeOptions.ttl = deadline
-            }
+        if !deadline.isZero {
+            tradeOptions.ttl = deadline
         } else {
-            print("deadline = N/A")
+            correct = false
         }
 
         if let recipient = recipient {
-            print("recipient = \(recipient.description)")
             if !recipient.isEmpty {
                 do {
                     tradeOptions.recipient = try Address(hex: recipient)
@@ -112,8 +104,6 @@ class SwapTradeOptionsService {
                     errors.append(SwapTradeOptionsError.invalidAddress)
                 }
             }
-        } else {
-            print("recipient = N/A")
         }
 
         errorsRelay.accept(errors)

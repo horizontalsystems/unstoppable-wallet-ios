@@ -39,8 +39,14 @@ class InputFieldStackView: UIStackView {
     private var lastHeight = CGFloat.zero
     private var buttonItems = [InputFieldButtonItem]()
 
-    var inputText: String {
-        textView.text
+    var text: String {
+        get {
+            textView.text
+        }
+        set {
+            textView.text = newValue
+            updateUI()
+        }
     }
 
     var onChangeText: ((String) -> ())?
@@ -120,6 +126,13 @@ class InputFieldStackView: UIStackView {
         }
 
         buttonItems[button.tag].action?()
+    }
+
+    private func updateUI() {
+        textViewDidChange()
+        updateTextViewConstraints(for: textView.text)
+
+        placeholderLabel.isHidden = !textView.text.isEmpty
     }
 
     private func textViewDidChange() {
@@ -221,7 +234,7 @@ extension InputFieldStackView {
     }
 
     func height(containerWidth: CGFloat) -> CGFloat {
-        InputFieldStackView.height(containerWidth: containerWidth, text: inputText, buttonItems: buttonItems, maximumNumberOfLines: maximumNumberOfLines)
+        InputFieldStackView.height(containerWidth: containerWidth, text: text, buttonItems: buttonItems, maximumNumberOfLines: maximumNumberOfLines)
     }
 
 }
@@ -229,10 +242,7 @@ extension InputFieldStackView {
 extension InputFieldStackView: UITextViewDelegate {
 
     public func textViewDidChange(_ textView: UITextView) {
-        textViewDidChange()
-        updateTextViewConstraints(for: textView.text)
-
-        placeholderLabel.isHidden = !textView.text.isEmpty
+        updateUI()
         onChangeText?(textView.text)
     }
 

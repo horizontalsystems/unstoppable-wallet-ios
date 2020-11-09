@@ -61,6 +61,7 @@ class VerifiedInputCell: UITableViewCell {
     private static let cautionMargin = CGFloat.margin1x
     private static let spacing = CGFloat.margin1x
 
+    private let wrapperView = UIView()
     private let verticalStackView = UIStackView()
 
     private let inputFieldView = InputFieldStackView()
@@ -71,6 +72,18 @@ class VerifiedInputCell: UITableViewCell {
     let viewModel: IVerifiedInputViewModel
 
     weak var delegate: IDynamicHeightCellDelegate?
+
+    var insets: UIEdgeInsets = .zero {
+        didSet {
+            wrapperView.snp.updateConstraints { maker in
+                maker.top.equalToSuperview().inset(insets.top)
+                maker.leading.trailing.equalToSuperview().inset(Self.margin + insets.left)
+                maker.trailing.equalToSuperview().inset(Self.margin + insets.right)
+            }
+            layoutIfNeeded()
+            delegate?.onChangeHeight()
+        }
+    }
 
     init(viewModel: IVerifiedInputViewModel) {
         self.viewModel = viewModel
@@ -83,8 +96,9 @@ class VerifiedInputCell: UITableViewCell {
         let wrapperView = UIView()
         contentView.addSubview(wrapperView)
         wrapperView.snp.makeConstraints { maker in
-            maker.top.equalToSuperview()
-            maker.leading.trailing.equalToSuperview().inset(Self.margin)
+            maker.top.equalToSuperview().inset(insets.top)
+            maker.leading.trailing.equalToSuperview().inset(Self.margin + insets.left)
+            maker.trailing.equalToSuperview().inset(Self.margin + insets.right)
         }
 
         wrapperView.backgroundColor = .themeLawrence
@@ -134,7 +148,7 @@ class VerifiedInputCell: UITableViewCell {
         cautionLabel.numberOfLines = 0
         cautionLabelWrapper.isHidden = true
 
-        subscribe(disposeBag, viewModel.inputFieldValueDriver) { [weak self] in self?.inputFieldView.set(text: $0) }
+        subscribe(disposeBag, viewModel.inputFieldValueDriver) { [weak self] in self?.inputFieldText = $0 }
         subscribe(disposeBag, viewModel.inputFieldCautionDriver) { [weak self] in self?.set(caution: $0) }
     }
 
@@ -165,9 +179,9 @@ class VerifiedInputCell: UITableViewCell {
 
 extension VerifiedInputCell {
 
-    public var inputText: String? {
+    public var inputFieldText: String? {
         get {
-            inputFieldView.inputText
+            inputFieldView.text
         }
         set {
             inputFieldView.set(text: newValue)
@@ -183,7 +197,7 @@ extension VerifiedInputCell {
     }
 
     public func height(containerWidth: CGFloat) -> CGFloat {
-        let stackContentWidth = containerWidth - 2 * Self.margin - 2 * Self.stackInsideMargin
+        let stackContentWidth = containerWidth - 2 * Self.margin - 2 * Self.stackInsideMargin - insets.width
 
         var height = inputFieldView.height(containerWidth: stackContentWidth)
 
@@ -193,7 +207,7 @@ extension VerifiedInputCell {
             height += errorHeight + Self.spacing
         }
 
-        return height + 2 * Self.stackInsideMargin
+        return height + 2 * Self.stackInsideMargin + insets.height
     }
 
 }

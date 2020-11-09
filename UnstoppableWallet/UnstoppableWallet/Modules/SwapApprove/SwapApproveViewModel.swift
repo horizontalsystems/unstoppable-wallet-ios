@@ -20,9 +20,9 @@ class SwapApproveViewModel {
     private let balanceErrorRelay = BehaviorRelay<String?>(value: nil)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
-    private let decimalParser = AmountDecimalParser()
+    private let decimalParser: IAmountDecimalParser
 
-    init(service: SwapApproveService, coinService: CoinService, ethereumCoinService: CoinService, decimalParser: ISendAmountDecimalParser) {
+    init(service: SwapApproveService, coinService: CoinService, ethereumCoinService: CoinService, decimalParser: IAmountDecimalParser) {
         self.service = service
         self.coinService = coinService
         self.ethereumCoinService = ethereumCoinService

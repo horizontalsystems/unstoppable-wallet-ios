@@ -16,23 +16,29 @@ class SwapDeadlineViewModel {
         self.service = service
         self.decimalParser = decimalParser
 
-//        subscribe(disposeBag, service.tradeOptionsObservable) { [weak self] in self?.update(tradeOptions: $0) }
+        setInitial()
+    }
+
+    private func toString(_ value: Double) -> String {
+        Decimal(floatLiteral: value).description
+    }
+
+    private func setInitial() {
+        if case let .valid(tradeOptions) = service.state, (floor(tradeOptions.ttl / 60)) != service.defaultDeadline {
+            valueRelay.accept(toString(floor(tradeOptions.ttl / 60)))
+        }
     }
 
     private func onLeftButtonTapped() {
-        valueRelay.accept(service.recommendedDeadlineBounds.lowerBound.description)
+        valueRelay.accept(toString(service.recommendedDeadlineBounds.lowerBound))
     }
 
     private func onRightButtonTapped() {
-        valueRelay.accept(service.recommendedDeadlineBounds.upperBound.description)
+        valueRelay.accept(toString(service.recommendedDeadlineBounds.upperBound))
     }
 
     private func map(_ deadline: TimeInterval) -> String {
-        [deadline.description, "swap.advanced_settings.deadline_minute".localized].joined(separator: " ")
-    }
-
-    private func update(tradeOptions: TradeOptions?) {
-        valueRelay.accept(tradeOptions?.allowedSlippage.description)
+        [toString(deadline), "swap.advanced_settings.deadline_minute".localized].joined(separator: " ")
     }
 
 }
@@ -52,7 +58,7 @@ extension SwapDeadlineViewModel: IVerifiedInputViewModel {
     }
 
     var inputFieldPlaceholder: String? {
-        service.defaultDeadline.description
+        toString(service.defaultDeadline)
     }
 
     var inputFieldValueDriver: Driver<String?> {
@@ -65,10 +71,11 @@ extension SwapDeadlineViewModel: IVerifiedInputViewModel {
 
     func inputFieldDidChange(text: String?) {
         guard let value = decimalParser.parseAnyDecimal(from: text) else {
+            service.deadline = service.defaultDeadline * 60
             return
         }
 
-        service.deadline = NSDecimalNumber(decimal: value).doubleValue
+        service.deadline = NSDecimalNumber(decimal: value).doubleValue * 60
     }
 
     func inputFieldIsValid(text: String) -> Bool {
