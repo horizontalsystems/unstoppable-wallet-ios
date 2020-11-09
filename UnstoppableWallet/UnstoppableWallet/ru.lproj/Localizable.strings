@@ -220,6 +220,19 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "swap.maximum_paid" = "Максимальная Выплата";
 "swap.minimum_got" = "Минимальная Выплата";
 
+// Swap Advanced Settings
+
+"swap.advanced_settings.slippage.header" = "Slippage Tolerance";
+"swap.advanced_settings.slippage.footer" = "Your Transaction will revert if the price change unfavorably by more than this precentage";
+"swap.advanced_settings.deadline.header" = "Transaction Deadline";
+"swap.advanced_settings.deadline.footer" = "Your Transaction will revert if it is pending for more than this long.";
+"swap.advanced_settings.recipient.footer" = "After the exchange operation, the amount will be transferred to the specified address";
+"swap.advanced_settings.deadline_minute" = "m";
+"swap.advanced_settings.recipient_address" = "Recipient Address";
+
+"swap.advanced_settings.error.lower_slippage" = "Your transaction is likely to fail.";
+"swap.advanced_settings.error.higher_slippage" = "Max. allowed value 20%.";
+
 "swap.fee" = "Комиссия за обмен";
 "swap.transactions_speed" = "Скорость Транзакции";
 "swap.transaction_fee" = "Комиссия за транзакцию";
