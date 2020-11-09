@@ -28,7 +28,7 @@ class SendAddressView: UIView {
             self?.delegate.onOpenScan(controller: controller)
         }
         addressInputField.onTextChange = { [weak self] string in
-            self?.delegate.onAddressChange(string: string)
+            self?.delegate.onAddressChange(string: string?.trimmingCharacters(in: .whitespaces))
         }
     }
 
