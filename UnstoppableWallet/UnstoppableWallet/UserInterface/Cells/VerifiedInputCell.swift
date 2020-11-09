@@ -150,10 +150,23 @@ class VerifiedInputCell: UITableViewCell {
 
         subscribe(disposeBag, viewModel.inputFieldValueDriver) { [weak self] in self?.inputFieldText = $0 }
         subscribe(disposeBag, viewModel.inputFieldCautionDriver) { [weak self] in self?.set(caution: $0) }
+
+        let buttons = [
+            InputFieldButtonItem(style: .secondaryIcon, icon: UIImage(named: "Send Delete Icon"), visible: .onFilled) { [weak self] in
+                self?.onDeleteTapped()
+            }
+        ]
+
+        append(items: buttons)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func onDeleteTapped() {
+        inputFieldText = nil
+        viewModel.inputFieldDidChange(text: nil)
     }
 
     private func set(caution: Caution?) {
