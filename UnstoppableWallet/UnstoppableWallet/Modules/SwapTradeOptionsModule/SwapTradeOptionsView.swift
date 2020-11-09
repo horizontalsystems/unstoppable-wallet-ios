@@ -15,7 +15,7 @@ class SwapTradeOptionsView: ThemeViewController {
     private let slippageCell: VerifiedInputCell
     private let deadlineCell: VerifiedInputCell
     private let buttonCell = ButtonCell(style: .default, reuseIdentifier: nil)
-    private let toggleCell = ToggleCell(style: .default, reuseIdentifier: nil)
+    private let toggleCell = D11Cell(style: .default, reuseIdentifier: nil)
     private let recipientCell: RecipientInputCell
 
     private var error: String?
@@ -68,7 +68,9 @@ class SwapTradeOptionsView: ThemeViewController {
         buttonCell.bind(style: .primaryYellow, title: "button.done".localized) { [weak self] in
             self?.doneDidTap()
         }
-        toggleCell.bind(title: "swap.advanced_settings.recipient_address".localized, isOn: false) { [weak self] _ in
+        toggleCell.set(backgroundStyle: .lawrence, topSeparator: true, bottomSeparator: true)
+        toggleCell.title = "swap.advanced_settings.recipient_address".localized
+        toggleCell.onToggle = { [weak self] _ in
             self?.tableView.reload()
         }
 
