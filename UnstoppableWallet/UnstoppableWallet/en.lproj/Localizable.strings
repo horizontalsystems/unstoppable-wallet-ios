@@ -232,7 +232,7 @@ bch.horizontalsystems.xyz/apg";
 "swap.advanced_settings.recipient.footer" = "After the exchange operation, the amount will be transferred to the specified address";
 "swap.advanced_settings.deadline_minute" = "m";
 "swap.advanced_settings.recipient_address" = "Recipient Address";
-
+"swap.advanced_settings.recipient.placeholder" = "Not set";
 "swap.advanced_settings.error.lower_slippage" = "Your transaction is likely to fail.";
 "swap.advanced_settings.error.higher_slippage" = "Max. allowed value 20%.";
 

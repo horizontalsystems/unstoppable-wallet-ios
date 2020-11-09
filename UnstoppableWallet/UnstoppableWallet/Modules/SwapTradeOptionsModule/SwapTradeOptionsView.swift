@@ -14,9 +14,8 @@ class SwapTradeOptionsView: ThemeViewController {
 
     private let slippageCell: VerifiedInputCell
     private let deadlineCell: VerifiedInputCell
-    private let buttonCell = ButtonCell(style: .default, reuseIdentifier: nil)
-    private let toggleCell = D11Cell(style: .default, reuseIdentifier: nil)
     private let recipientCell: RecipientInputCell
+    private let buttonCell = ButtonCell(style: .default, reuseIdentifier: nil)
 
     private var error: String?
 
@@ -68,11 +67,6 @@ class SwapTradeOptionsView: ThemeViewController {
         buttonCell.bind(style: .primaryYellow, title: "button.done".localized) { [weak self] in
             self?.doneDidTap()
         }
-        toggleCell.set(backgroundStyle: .lawrence, topSeparator: true, bottomSeparator: true)
-        toggleCell.title = "swap.advanced_settings.recipient_address".localized
-        toggleCell.onToggle = { [weak self] _ in
-            self?.tableView.reload()
-        }
 
         tableView.buildSections()
     }
@@ -117,8 +111,8 @@ class SwapTradeOptionsView: ThemeViewController {
 
         return Section(
                 id: "slippage",
-                headerState: header(hash: "slippage_header".localized, text: "swap.advanced_settings.slippage.header".localized),
-                footerState: footer(hash: "slippage_footer".localized, text: "swap.advanced_settings.slippage.footer".localized),
+                headerState: header(hash: "slippage_header", text: "swap.advanced_settings.slippage.header".localized),
+                footerState: footer(hash: "slippage_footer", text: "swap.advanced_settings.slippage.footer".localized),
                 rows: [slippageRow]
         )
     }
@@ -133,47 +127,26 @@ class SwapTradeOptionsView: ThemeViewController {
 
         return Section(
                 id: "deadline",
-                headerState: header(hash: "deadline_header".localized, text: "swap.advanced_settings.deadline.header".localized),
-                footerState: footer(hash: "deadline_footer".localized, text: "swap.advanced_settings.deadline.footer".localized),
+                headerState: header(hash: "deadline_header", text: "swap.advanced_settings.deadline.header".localized),
+                footerState: footer(hash: "deadline_footer", text: "swap.advanced_settings.deadline.footer".localized),
                 rows: [deadlineRow]
         )
     }
 
-    private var recipientSections: [SectionProtocol] {
-        var sections = [SectionProtocol]()
+    private var recipientSection: SectionProtocol {
 
-        let toggleRow = StaticRow(cell: toggleCell,
-                id: "toggle_recipient",
-                height: .heightSingleLineCell)
-        sections.append(
-                Section(
-                        id: "recipient_toggle",
-                        rows: [toggleRow]
-                ))
-
-        sections.append(
-                Section(
-                        id: "recipient_padding",
-                        footerState: .margin(height: toggleCell.isOn ? .margin3x : 0),
-                        rows: []
-                ))
-
-        var addressRows = [RowProtocol]()
-        if toggleCell.isOn {
-            addressRows.append(
-                    StaticRow(cell: recipientCell,
-                            id: "recipient_address",
-                            dynamicHeight: { [weak self] width in
-                                self?.recipientCell.height(containerWidth: width) ?? .heightSingleLineCell
-                            }))
-        }
-        sections.append(
-                Section(
+        let addressRow = StaticRow(cell: recipientCell,
                         id: "recipient_address",
-                        footerState: footer(hash: "recipient_footer".localized, text: "swap.advanced_settings.recipient.footer".localized),
-                        rows: addressRows
-                ))
-        return sections
+                        dynamicHeight: { [weak self] width in
+                            self?.recipientCell.height(containerWidth: width) ?? .heightSingleLineCell
+                        })
+
+        return Section(
+                id: "recipient_address",
+                headerState: header(hash: "recipient_header", text: "swap.advanced_settings.recipient_address".localized),
+                footerState: footer(hash: "recipient_footer", text: "swap.advanced_settings.recipient.footer".localized),
+                rows: [addressRow]
+        )
     }
 
     private var buttonSection: SectionProtocol {
@@ -206,7 +179,7 @@ extension SwapTradeOptionsView: SectionsDataSource {
 
         sections.append(slippageSection)
         sections.append(deadlineSection)
-        sections.append(contentsOf: recipientSections)
+        sections.append(recipientSection)
         sections.append(buttonSection)
 
         return sections

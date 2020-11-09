@@ -20,11 +20,7 @@ class RecipientInputCell: VerifiedInputCell {
             },
             InputFieldButtonItem(style: .secondaryDefault, title: "button.paste".localized, visible: .onEmpty) { [weak self] in
                 self?.onPasteTapped()
-            },
-            InputFieldButtonItem(style: .secondaryIcon, icon: UIImage(named: "Send Delete Icon"), visible: .onFilled) { [weak self] in
-                self?.onDeleteTapped()
-            }
-        ]
+        }]
 
         append(items: buttons)
     }
@@ -45,11 +41,6 @@ class RecipientInputCell: VerifiedInputCell {
         }
         inputFieldText = text
         viewModel.inputFieldDidChange(text: text)
-    }
-
-    private func onDeleteTapped() {
-        inputFieldText = nil
-        viewModel.inputFieldDidChange(text: nil)
     }
 
 }

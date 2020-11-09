@@ -49,4 +49,9 @@ extension RecipientAddressViewModel: IVerifiedInputViewModel {
     func inputFieldDidChange(text: String?) {
         service.recipient = text
     }
+
+    var inputFieldPlaceholder: String? {
+        "swap.advanced_settings.recipient.placeholder".localized
+    }
+
 }
