@@ -17,9 +17,14 @@ class SwapSlippageViewModel {
         self.service = service
         self.decimalParser = decimalParser
 
-//        subscribe(disposeBag, service.tradeOptionsObservable) { [weak self] in self?.update(tradeOptions: $0) }
+        setInitial()
         subscribe(disposeBag, service.errorsObservable) { [weak self] in self?.update(errors: $0) }
+    }
 
+    private func setInitial() {
+        if case let .valid(tradeOptions) = service.state, tradeOptions.allowedSlippage != service.defaultSlippage {
+            valueRelay.accept(tradeOptions.allowedSlippage.description)
+        }
     }
 
     private func onLeftButtonTapped() {
@@ -28,10 +33,6 @@ class SwapSlippageViewModel {
 
     private func onRightButtonTapped() {
         valueRelay.accept(service.recommendedSlippageBounds.upperBound.description)
-    }
-
-    private func update(tradeOptions: TradeOptions?) {
-        valueRelay.accept(tradeOptions?.allowedSlippage.description)
     }
 
     private func update(errors: [Error]) {
@@ -79,6 +80,7 @@ extension SwapSlippageViewModel: IVerifiedInputViewModel {
 
     func inputFieldDidChange(text: String?) {
         guard let value = decimalParser.parseAnyDecimal(from: text) else {
+            service.slippage = service.defaultSlippage
             return
         }
 
