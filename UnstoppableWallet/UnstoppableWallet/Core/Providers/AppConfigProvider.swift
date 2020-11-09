@@ -57,8 +57,8 @@ class AppConfigProvider: IAppConfigProvider {
     }
 
     var pnsUrl: String {
-        let development = "http://pns-dev.horizontalsystems.xyz/api/v1/"
-        let production = "http://pns.horizontalsystems.xyz/api/v1/"
+        let development = "https://pns-dev.horizontalsystems.xyz/api/v1/"
+        let production = "https://pns.horizontalsystems.xyz/api/v1/"
 
         return sandbox ? development : production
     }

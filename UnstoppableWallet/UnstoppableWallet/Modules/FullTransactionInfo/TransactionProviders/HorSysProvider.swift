@@ -15,8 +15,8 @@ class HorSysBitcoinProvider: IBitcoinForksProvider {
     }
 
     init(testMode: Bool) {
-        apiUrl = testMode ? "http://btc-testnet.horizontalsystems.xyz/apg/tx/" : "https://btc.horizontalsystems.xyz/apg/tx/"
-        reachabilityUrl = testMode ? "http://btc-testnet.horizontalsystems.xyz/apg/block/0" : "https://btc.horizontalsystems.xyz/apg/block/0"
+        apiUrl = testMode ? "https://btc-testnet.horizontalsystems.xyz/apg/tx/" : "https://btc.horizontalsystems.xyz/apg/tx/"
+        reachabilityUrl = testMode ? "https://btc-testnet.horizontalsystems.xyz/apg/block/0" : "https://btc.horizontalsystems.xyz/apg/block/0"
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
@@ -38,8 +38,8 @@ class HorSysLitecoinProvider: IBitcoinForksProvider {
     }
 
     init(testMode: Bool) {
-        apiUrl = testMode ? "http://ltc-testnet.horizontalsystems.xyz/api/tx/" : "https://ltc.horizontalsystems.xyz/api/tx/"
-        reachabilityUrl = testMode ? "http://ltc-testnet.horizontalsystems.xyz/api/block/0" : "https://ltc.horizontalsystems.xyz/api/block/0"
+        apiUrl = testMode ? "https://ltc-testnet.horizontalsystems.xyz/api/tx/" : "https://ltc.horizontalsystems.xyz/api/tx/"
+        reachabilityUrl = testMode ? "https://ltc-testnet.horizontalsystems.xyz/api/block/0" : "https://ltc.horizontalsystems.xyz/api/block/0"
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
@@ -62,9 +62,9 @@ class HorSysBitcoinCashProvider: IBitcoinForksProvider {
     }
 
     init(testMode: Bool) {
-        url = testMode ? "http://bch-testnet.horizontalsystems.xyz/apg/tx/" : "https://bch.horizontalsystems.xyz/apg/tx/"
+        url = testMode ? "https://bch-testnet.horizontalsystems.xyz/apg/tx/" : "https://bch.horizontalsystems.xyz/apg/tx/"
         apiUrl = url
-        reachabilityUrl = testMode ? "http://bch-testnet.horizontalsystems.xyz/apg/block/0" : "https://bch.horizontalsystems.xyz/apg/block/0"
+        reachabilityUrl = testMode ? "https://bch-testnet.horizontalsystems.xyz/apg/block/0" : "https://bch.horizontalsystems.xyz/apg/block/0"
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
@@ -88,9 +88,9 @@ class HorSysDashProvider: IBitcoinForksProvider {
     }
 
     init(testMode: Bool) {
-        url = testMode ? "http://dash-testnet.horizontalsystems.xyz/insight/tx/" : "https://dash.horizontalsystems.xyz/insight/tx/"
-        apiUrl = testMode ? "http://dash-testnet.horizontalsystems.xyz/apg/tx/" : "https://dash.horizontalsystems.xyz/apg/tx/"
-        reachabilityUrl = testMode ? "http://dash-testnet.horizontalsystems.xyz/apg/block/0" : "https://dash.horizontalsystems.xyz/apg/block/0"
+        url = testMode ? "https://dash-testnet.horizontalsystems.xyz/insight/tx/" : "https://dash.horizontalsystems.xyz/insight/tx/"
+        apiUrl = testMode ? "https://dash-testnet.horizontalsystems.xyz/apg/tx/" : "https://dash.horizontalsystems.xyz/apg/tx/"
+        reachabilityUrl = testMode ? "https://dash-testnet.horizontalsystems.xyz/apg/block/0" : "https://dash.horizontalsystems.xyz/apg/block/0"
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
@@ -113,9 +113,9 @@ class HorSysEthereumProvider: IEthereumForksProvider {
     }
 
     init(testMode: Bool) {
-        url = testMode ? "http://eth-ropsten.horizontalsystems.xyz/tx/" : "https://eth.horizontalsystems.xyz/tx/"
-        apiUrl = testMode ? "http://eth-ropsten.horizontalsystems.xyz/api?module=transaction&action=gettxinfo&txhash=" : "https://eth.horizontalsystems.xyz/api?module=transaction&action=gettxinfo&txhash="
-        reachabilityUrl = testMode ? "http://eth-ropsten.horizontalsystems.xyz/apg/block/0" : "https://eth.horizontalsystems.xyz/apg/block/0"
+        url = testMode ? "https://eth-ropsten.horizontalsystems.xyz/tx/" : "https://eth.horizontalsystems.xyz/tx/"
+        apiUrl = testMode ? "https://eth-ropsten.horizontalsystems.xyz/api?module=transaction&action=gettxinfo&txhash=" : "https://eth.horizontalsystems.xyz/api?module=transaction&action=gettxinfo&txhash="
+        reachabilityUrl = testMode ? "https://eth-ropsten.horizontalsystems.xyz/apg/block/0" : "https://eth.horizontalsystems.xyz/apg/block/0"
     }
 
     func convert(json: [String: Any]) -> IEthereumResponse? {
