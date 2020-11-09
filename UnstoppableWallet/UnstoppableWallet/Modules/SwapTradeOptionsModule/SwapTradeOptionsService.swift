@@ -95,14 +95,12 @@ class SwapTradeOptionsService {
             correct = false
         }
 
-        if let recipient = recipient {
-            if !recipient.isEmpty {
-                do {
-                    tradeOptions.recipient = try Address(hex: recipient)
-                } catch {
-                    correct = false
-                    errors.append(SwapTradeOptionsError.invalidAddress)
-                }
+        if let recipient = recipient?.trimmingCharacters(in: .whitespaces), !recipient.isEmpty {
+            do {
+                tradeOptions.recipient = try Address(hex: recipient)
+            } catch {
+                correct = false
+                errors.append(SwapTradeOptionsError.invalidAddress)
             }
         }
 
