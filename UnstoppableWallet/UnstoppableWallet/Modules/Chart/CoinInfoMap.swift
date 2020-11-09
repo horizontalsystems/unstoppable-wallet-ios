@@ -153,7 +153,7 @@ class CoinInfoMap {
         "TRYB":     CoinInfo(supply: nil,             startDate: "19/07/2019", website: "https://www.bilira.co/"),
         "UNI":      CoinInfo(supply: 1_000_000_000,   startDate: nil,          website: "https://uniswap.org/"),
         "UMA":      CoinInfo(supply: 101_104_951,     startDate: "09/01/2020", website: "https://umaproject.org/"),
-        "USDS":      CoinInfo(supply: 90_000_486_303, startDate: "15/08/2018", website: "https://www.stably.io/"),
+        "USDS":     CoinInfo(supply: 90_000_486_303,  startDate: "15/08/2018", website: "https://www.stably.io/"),
         "UBT":      CoinInfo(supply: 150_000_000,     startDate: "11/12/2017", website: "https://unibright.io/"),
         "USDC":     CoinInfo(supply: nil,             startDate: "17/05/2018", website: "https://www.centre.io/usdc"),
         "WTC":      CoinInfo(supply: 70_000_000,      startDate: "27/08/2017", website: "https://www.waltonchain.org/en/"),
@@ -162,7 +162,7 @@ class CoinInfoMap {
         "COMP":     CoinInfo(supply: 10_000_000,      startDate: "04/03/2020", website: "https://compound.finance/"),
         "VERI":     CoinInfo(supply: 100_000_000,     startDate: "25/04/2017", website: "http://veritas.veritaseum.com/"),
         "XCHF":     CoinInfo(supply: 100_000_000,     startDate: "01/11/2018", website: "https://swisscryptotokens.ch/"),
-        "XIO":     CoinInfo(supply: 100_000_000,      startDate: "22/10/2019", website: "https://xio.network/ "),
+        "XIO":      CoinInfo(supply: 100_000_000,     startDate: "22/10/2019", website: "https://xio.network/ "),
         "ZEC":      CoinInfo(supply: 21_000_000,      startDate: "28/10/2016", website: "https://z.cash/"),
     ]
 
