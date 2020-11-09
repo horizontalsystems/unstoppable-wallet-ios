@@ -160,7 +160,7 @@ class CoinInfoMap {
         "WBTC":     CoinInfo(supply: 21_000_000,      startDate: "27/11/2018", website: "https://wbtc.network/"),
         "WETH":     CoinInfo(supply: 1_153_917,       startDate: "31/12/2018", website: "https://weth.io/"),
         "COMP":     CoinInfo(supply: 10_000_000,      startDate: "04/03/2020", website: "https://compound.finance/"),
-        "VERI":     CoinInfo(supply: 100_000_000,     startDate: "25/04/2017", website: "http://veritas.veritaseum.com/"),
+        "VERI":     CoinInfo(supply: 100_000_000,     startDate: "25/04/2017", website: "https://veritas.veritaseum.com/"),
         "XCHF":     CoinInfo(supply: 100_000_000,     startDate: "01/11/2018", website: "https://swisscryptotokens.ch/"),
         "XIO":      CoinInfo(supply: 100_000_000,     startDate: "22/10/2019", website: "https://xio.network/ "),
         "ZEC":      CoinInfo(supply: 21_000_000,      startDate: "28/10/2016", website: "https://z.cash/"),
