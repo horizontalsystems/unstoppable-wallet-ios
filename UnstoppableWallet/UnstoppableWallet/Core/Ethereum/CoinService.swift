@@ -29,7 +29,13 @@ extension CoinService {
         return CoinValue(coin: coin, value: decimalValue)
     }
 
-    func bigUInt(value: Decimal) -> BigUInt {
+    // Example: Dollar, Bitcoin, Ether, etc
+    func monetaryValue(value: BigUInt) -> Decimal {
+        coinValue(value: value).value
+    }
+
+    // Example: Cent, Satoshi, GWei, etc
+    func fractionalMonetaryValue(value: Decimal) -> BigUInt {
         BigUInt(value.roundedString(decimal: coin.decimal)) ?? 0
     }
 
