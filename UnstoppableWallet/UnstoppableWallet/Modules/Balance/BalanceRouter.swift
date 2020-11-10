@@ -21,7 +21,7 @@ extension BalanceRouter: IBalanceRouter {
     }
 
     func openSwap(wallet: Wallet) {
-        if let module = SwapModule.instance(wallet: wallet) {
+        if let module = SwapModule.viewController(coinIn: wallet.coin) {
             viewController?.present(module, animated: true)
         }
     }

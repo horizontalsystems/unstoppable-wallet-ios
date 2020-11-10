@@ -88,7 +88,7 @@ extension EthereumTransactionService {
         transactionStatusRelay.asObservable()
     }
 
-    func set(transactionData: TransactionData) {
+    func set(transactionData: TransactionData?) {
         self.transactionData = transactionData
         sync()
     }

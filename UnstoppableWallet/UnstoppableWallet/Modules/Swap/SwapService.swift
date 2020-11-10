@@ -7,7 +7,7 @@ import CurrencyKit
 import BigInt
 
 class SwapService {
-    static private let refreshInterval: TimeInterval = 10
+    private static let refreshInterval: TimeInterval = 10
     private static let warningPriceImpact: Decimal = 1
     private static let forbiddenPriceImpact: Decimal = 5
 

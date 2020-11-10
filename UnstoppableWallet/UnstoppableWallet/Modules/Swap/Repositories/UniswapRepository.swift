@@ -80,7 +80,12 @@ extension UniswapRepository {
     }
 
     func swap(tradeData: TradeData, gasLimit: Int, gasPrice: Int) -> Single<TransactionWithInternal> {
-        swapKit.swapSingle(tradeData: tradeData, gasLimit: gasLimit, gasPrice: gasPrice)
+//        swapKit.swapSingle(tradeData: tradeData, gasLimit: gasLimit, gasPrice: gasPrice)
+        Single.error(AppError.unknownError)
+    }
+
+    func transactionData(tradeData: TradeData) throws -> TransactionData {
+        try swapKit.transactionData(tradeData: tradeData)
     }
 
 }

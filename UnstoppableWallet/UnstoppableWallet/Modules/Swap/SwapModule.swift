@@ -117,6 +117,52 @@ struct SwapModule {
         return ThemeNavigationController(rootViewController: SwapViewController(viewModel: viewModel))
     }
 
+    static func viewController(coinIn: Coin) -> UIViewController? {
+        guard let ethereumKit = App.shared.ethereumKitManager.ethereumKit else {
+            return nil
+        }
+
+        let swapKit = UniswapKit.Kit.instance(ethereumKit: ethereumKit)
+        let uniswapRepository = UniswapRepository(swapKit: swapKit)
+
+        let coinService = CoinService(
+                coin: App.shared.appConfigProvider.ethereumCoin,
+                currencyKit: App.shared.currencyKit,
+                rateManager: App.shared.rateManager
+        )
+
+        let tradeService = SwapTradeService(uniswapRepository: uniswapRepository)
+        let allowanceService = SwapAllowanceService()
+        let transactionService = EthereumTransactionService(
+                ethereumKit: ethereumKit,
+                feeRateProvider: App.shared.feeRateProviderFactory.provider(coinType: .ethereum) as! EthereumFeeRateProvider
+        )
+        let service = SwapServiceNew(
+                ethereumKit: ethereumKit,
+                tradeService: tradeService,
+                allowanceService: allowanceService,
+                transactionService: transactionService,
+                adapterManager: App.shared.adapterManager
+        )
+        let swapCoinService = SwapCoinService(
+                coinManager: App.shared.coinManager,
+                walletManager: App.shared.walletManager,
+                adapterManager: App.shared.adapterManager
+        )
+
+        let feeViewModel = EthereumFeeViewModel(service: transactionService, coinService: coinService)
+
+        let decimalParser = AmountDecimalParser()
+        let viewController = SwapViewControllerNew(
+                viewModel: SwapViewModelNew(service: service, tradeService: tradeService),
+                fromCoinCardViewModel: SwapFromCoinCardViewModel(service: service, tradeService: tradeService, coinService: swapCoinService, decimalParser: decimalParser),
+                toCoinCardViewModel: SwapToCoinCardViewModel(service: service, tradeService: tradeService, coinService: swapCoinService, decimalParser: decimalParser),
+                feeViewModel: feeViewModel
+        )
+
+        return ThemeNavigationController(rootViewController: viewController)
+    }
+
 }
 
 enum SwapValidationError: Hashable, Error, LocalizedError {
