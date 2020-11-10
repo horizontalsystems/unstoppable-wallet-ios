@@ -12,7 +12,7 @@ class SwapApproveService {
     private let erc20Kit: Erc20Kit.Kit
     private let ethereumKit: EthereumKit.Kit
 
-    private(set) var amount: BigUInt
+    private(set) var amount: BigUInt?
     private let spenderAddress: Address
     private let allowance: BigUInt
 
@@ -39,10 +39,10 @@ class SwapApproveService {
                 })
                 .disposed(by: disposeBag)
 
-        syncTransactionData()
+        syncTransactionData(amount: amount)
     }
 
-    private func syncTransactionData() {
+    private func syncTransactionData(amount: BigUInt) {
         let erc20KitTransactionData = erc20Kit.approveTransactionData(spenderAddress: spenderAddress, amount: amount)
         let transactionData = EthereumTransactionService.TransactionData(
                 to: erc20KitTransactionData.to,
@@ -58,6 +58,11 @@ class SwapApproveService {
     }
 
     private func syncState() {
+        guard let amount = amount else {
+            state = .approveNotAllowed(errors: [])
+            return
+        }
+
         var errors = [Error]()
         var loading = false
 
@@ -114,9 +119,14 @@ extension SwapApproveService {
                 .disposed(by: disposeBag)
     }
 
-    func set(amount: BigUInt) {
+    func set(amount: BigUInt?) {
         self.amount = amount
-        syncTransactionData()
+
+        if let amount = amount {
+            syncTransactionData(amount: amount)
+        } else {
+            syncState()
+        }
     }
 
 }

@@ -17,7 +17,7 @@ class SwapApproveViewModel {
     private var approveSuccessRelay = PublishRelay<Void>()
     private var approveErrorRelay = PublishRelay<String>()
 
-    private let balanceErrorRelay = BehaviorRelay<String?>(value: nil)
+    private let amountErrorRelay = BehaviorRelay<String?>(value: nil)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
     private let decimalParser: IAmountDecimalParser
@@ -29,6 +29,7 @@ class SwapApproveViewModel {
         self.decimalParser = decimalParser
 
         subscribe(disposeBag, service.stateObservable) { [weak self] approveState in self?.handle(approveState: approveState) }
+        inputFieldValueRelay.accept(service.amount.map { coinService.monetaryValue(value: $0).description })
     }
 
     private func handle(approveState: SwapApproveService.State) {
@@ -50,9 +51,9 @@ class SwapApproveViewModel {
 
         if case .approveNotAllowed(var errors) = approveState {
             if let balanceErrorIndex = errors.firstIndex(where: { $0 is SwapApproveService.TransactionAmountError }) {
-                balanceErrorRelay.accept(convert(error: errors.remove(at: balanceErrorIndex)))
+                amountErrorRelay.accept(convert(error: errors.remove(at: balanceErrorIndex)))
             } else {
-                balanceErrorRelay.accept(nil)
+                amountErrorRelay.accept(nil)
             }
 
             errorRelay.accept(errors.first.map { convert(error: $0) })
@@ -80,17 +81,12 @@ extension SwapApproveViewModel: IVerifiedInputViewModel {
         inputFieldValueRelay.asDriver()
     }
 
-    var inputFieldInitialValue: String? {
-        coinService.coinValue(value: service.amount).value.description
-    }
-
     func inputFieldDidChange(text: String?) {
-        guard let text = text, let amount = Decimal(string: text) else {
-            balanceErrorRelay.accept(nil)
-            return
-        }
+        let amount = text
+                .flatMap { Decimal(string: $0) }
+                .map { coinService.fractionalMonetaryValue(value: $0) }
 
-        service.set(amount: coinService.bigUInt(value: amount))
+        service.set(amount: amount)
     }
 
     func inputFieldIsValid(text: String) -> Bool {
@@ -98,16 +94,12 @@ extension SwapApproveViewModel: IVerifiedInputViewModel {
             return false
         }
 
-        guard let value = decimalParser.parseAnyDecimal(from: text) else {
-            return false
-        }
-
         // TODO: Decimal count check must be implemented in coinService and used in other places too
-        return value.decimalCount <= min(coinService.coin.decimal, maxCoinDecimal)
+        return amount.decimalCount <= min(coinService.coin.decimal, maxCoinDecimal)
     }
 
     var inputFieldCautionDriver: Driver<Caution?> {
-        balanceErrorRelay.asDriver().map { errorString in
+        amountErrorRelay.asDriver().map { errorString in
             errorString.map { Caution(text: $0, type: .error) }
         }
     }
