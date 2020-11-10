@@ -61,15 +61,16 @@ class SwapFeeRepository {
     }
 
     private func handle(coin: Coin, gasPrice: Int, tradeData: TradeData) -> Single<SwapModule.SwapFeeInfo> {
-        uniswapKit.estimateSwapSingle(tradeData: tradeData, gasPrice: gasPrice)
-                .flatMap { gasLimit in
-                    do {
-                        let info = try self.handle(coin: coin, gasLimit: gasLimit, gasPrice: gasPrice)
-                        return Single.just(info)
-                    } catch {
-                        return Single.error(error)
-                    }
-                }
+        Single.error(AppError.unknownError)
+//        uniswapKit.estimateSwapSingle(tradeData: tradeData, gasPrice: gasPrice)
+//                .flatMap { gasLimit in
+//                    do {
+//                        let info = try self.handle(coin: coin, gasLimit: gasLimit, gasPrice: gasPrice)
+//                        return Single.just(info)
+//                    } catch {
+//                        return Single.error(error)
+//                    }
+//                }
     }
 
     public func swapFeeInfo(coin: Coin, tradeData: TradeData) -> Single<SwapModule.SwapFeeInfo> {
