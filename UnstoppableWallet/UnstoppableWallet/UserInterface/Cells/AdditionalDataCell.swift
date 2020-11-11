@@ -12,7 +12,7 @@ class AdditionalDataCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
 
-        addSubview(additionalDataView)
+        contentView.addSubview(additionalDataView)
         additionalDataView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.top.equalToSuperview()
