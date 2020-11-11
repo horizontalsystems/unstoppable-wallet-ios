@@ -5,7 +5,7 @@ class SwapTradeOptionsViewModel {
     private let disposeBag = DisposeBag()
 
     private let service: SwapTradeOptionsService
-    private let swapService: SwapService
+    private let tradeService: SwapTradeService
     private let decimalParser: IAmountDecimalParser
 
     private let validStateRelay = BehaviorRelay<Bool>(value: true)
@@ -22,9 +22,9 @@ class SwapTradeOptionsViewModel {
         RecipientAddressViewModel(service: service)
     }
 
-    init(service: SwapTradeOptionsService, swapService: SwapService, decimalParser: IAmountDecimalParser) {
+    init(service: SwapTradeOptionsService, tradeService: SwapTradeService, decimalParser: IAmountDecimalParser) {
         self.service = service
-        self.swapService = swapService
+        self.tradeService = tradeService
         self.decimalParser = decimalParser
 
         subscribeToService()
@@ -49,10 +49,26 @@ extension SwapTradeOptionsViewModel {
 
     public func doneDidTap() -> Bool {
         if case let .valid(tradeOptions) = service.state {
-            swapService.tradeOptions = tradeOptions
+            tradeService.tradeOptions = tradeOptions
             return true
         }
         return false
+    }
+
+}
+
+extension SwapTradeOptionsService.TradeOptionsError: LocalizedError {
+
+    var errorDescription: String? {
+        switch self {
+        case .invalidSlippage(let type):
+            switch type {
+            case .lower: return "swap.advanced_settings.error.lower_slippage".localized
+            case .higher(let max): return "swap.advanced_settings.error.higher_slippage".localized(max.description)
+            }
+        case .invalidAddress: return "send.error.invalid_address".localized
+        default: return nil
+        }
     }
 
 }

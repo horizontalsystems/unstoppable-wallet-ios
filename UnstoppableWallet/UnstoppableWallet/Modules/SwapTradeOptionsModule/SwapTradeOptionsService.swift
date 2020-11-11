@@ -3,43 +3,16 @@ import EthereumKit
 import RxCocoa
 import RxSwift
 
-enum InvalidSlippageType {
-    case lower
-    case higher
-}
-enum SwapTradeOptionsError: Error {
-    case invalidSlippage(InvalidSlippageType)
-    case invalidAddress
-}
-
-enum SwapTradeOptionsState {
-    case valid(TradeOptions)
-    case invalid
-}
-
-extension SwapTradeOptionsError: LocalizedError {
-
-    var errorDescription: String? {
-        switch self {
-        case .invalidSlippage(let type): return type == .lower ? "swap.advanced_settings.error.lower_slippage".localized : "swap.advanced_settings.error.higher_slippage".localized
-        case .invalidAddress: return "send.error.invalid_address".localized
-        }
-    }
-
-}
-
 class SwapTradeOptionsService {
-    var defaultSlippage: Decimal { 0.5 }
     var recommendedSlippageBounds: ClosedRange<Decimal> { 0.1...1 }
     private var limitSlippageBounds: ClosedRange<Decimal> { 0.01...20 }
 
-    var defaultDeadline: TimeInterval { 20 }
-    var recommendedDeadlineBounds: ClosedRange<TimeInterval> { 10...30 }
+    var recommendedDeadlineBounds: ClosedRange<TimeInterval> { 600...1800 }
 
     private var errorsRelay = BehaviorRelay<[Error]>(value: [])
-    private var stateRelay = BehaviorRelay<SwapTradeOptionsState>(value: .invalid)
+    private var stateRelay = BehaviorRelay<State>(value: .invalid)
 
-    var state: SwapTradeOptionsState {
+    var state: State {
         didSet {
             stateRelay.accept(state)
         }
@@ -76,38 +49,33 @@ class SwapTradeOptionsService {
         var errors = [Error]()
 
         var tradeOptions = TradeOptions()
-        var correct = true
 
-        if limitSlippageBounds.contains(slippage) {
-            tradeOptions.allowedSlippage = slippage
+        if slippage == .zero {
+            errors.append(TradeOptionsError.zeroSlippage)
+        } else if slippage > limitSlippageBounds.upperBound {
+            errors.append(TradeOptionsError.invalidSlippage(.higher(max: limitSlippageBounds.upperBound)))
+        } else if slippage < limitSlippageBounds.lowerBound {
+            errors.append(TradeOptionsError.invalidSlippage(.lower(min: limitSlippageBounds.lowerBound)))
         } else {
-            correct = false
-
-            if !slippage.isZero {
-                let error: SwapTradeOptionsError = slippage < limitSlippageBounds.lowerBound ? .invalidSlippage(.lower) : .invalidSlippage(.higher)
-                errors.append(error)
-            }
+            tradeOptions.allowedSlippage = slippage
         }
 
         if !deadline.isZero {
             tradeOptions.ttl = deadline
         } else {
-            correct = false
+            errors.append(TradeOptionsError.zeroDeadline)
         }
 
-        if let recipient = recipient {
-            if !recipient.isEmpty {
-                do {
-                    tradeOptions.recipient = try Address(hex: recipient)
-                } catch {
-                    correct = false
-                    errors.append(SwapTradeOptionsError.invalidAddress)
-                }
+        if let recipient = recipient?.trimmingCharacters(in: .whitespaces), !recipient.isEmpty {
+            do {
+                tradeOptions.recipient = try Address(hex: recipient)
+            } catch {
+                errors.append(TradeOptionsError.invalidAddress)
             }
         }
 
         errorsRelay.accept(errors)
-        stateRelay.accept(correct ? .valid(tradeOptions) : .invalid)
+        state = errors.isEmpty ? .valid(tradeOptions) : .invalid
     }
 
 }
@@ -118,8 +86,29 @@ extension SwapTradeOptionsService {
         errorsRelay.asObservable()
     }
 
-    public var stateObservable: Observable<SwapTradeOptionsState> {
+    public var stateObservable: Observable<State> {
         stateRelay.asObservable()
+    }
+
+}
+
+extension SwapTradeOptionsService {
+
+    enum InvalidSlippageType {
+        case lower(min: Decimal)
+        case higher(max: Decimal)
+    }
+
+    enum TradeOptionsError: Error {
+        case zeroSlippage
+        case zeroDeadline
+        case invalidSlippage(InvalidSlippageType)
+        case invalidAddress
+    }
+
+    enum State {
+        case valid(TradeOptions)
+        case invalid
     }
 
 }

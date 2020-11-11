@@ -7,8 +7,8 @@ import CurrencyKit
 class SwapViewModelNew {
     private let disposeBag = DisposeBag()
 
-    private let service: SwapServiceNew
-    private let tradeService: SwapTradeService
+    public let service: SwapServiceNew
+    public let tradeService: SwapTradeService
 
     private var isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private var swapErrorRelay = BehaviorRelay<String?>(value: nil)

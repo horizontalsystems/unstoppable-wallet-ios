@@ -144,20 +144,12 @@ struct SwapModule {
                 transactionService: transactionService,
                 adapterManager: App.shared.adapterManager
         )
-        let swapCoinService = SwapCoinService(
-                coinManager: App.shared.coinManager,
-                walletManager: App.shared.walletManager,
-                adapterManager: App.shared.adapterManager
-        )
 
         let allowanceViewModel = SwapAllowanceViewModelNew(service: service, allowanceService: allowanceService)
         let feeViewModel = EthereumFeeViewModel(service: transactionService, coinService: coinService)
 
-        let decimalParser = AmountDecimalParser()
         let viewController = SwapViewControllerNew(
                 viewModel: SwapViewModelNew(service: service, tradeService: tradeService),
-                fromCoinCardViewModel: SwapFromCoinCardViewModel(service: service, tradeService: tradeService, coinService: swapCoinService, decimalParser: decimalParser),
-                toCoinCardViewModel: SwapToCoinCardViewModel(service: service, tradeService: tradeService, coinService: swapCoinService, decimalParser: decimalParser),
                 allowanceViewModel: allowanceViewModel,
                 feeViewModel: feeViewModel
         )

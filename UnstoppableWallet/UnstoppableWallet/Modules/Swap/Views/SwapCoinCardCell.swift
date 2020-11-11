@@ -123,14 +123,12 @@ class SwapCoinCardCell: UITableViewCell {
             maker.leading.trailing.equalToSuperview()
             //            maker.bottom.equalToSuperview()
         }
+
+        subscribeToViewModel()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    func viewDidLoad() {
-        subscribeToViewModel()
     }
 
     private func subscribeToViewModel() {

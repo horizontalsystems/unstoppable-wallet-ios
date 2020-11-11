@@ -20,12 +20,12 @@ class SwapDeadlineViewModel {
     }
 
     private func toString(_ value: Double) -> String {
-        Decimal(floatLiteral: value).description
+        Decimal(floatLiteral: floor(value / 60)).description
     }
 
     private func setInitial() {
-        if case let .valid(tradeOptions) = service.state, (floor(tradeOptions.ttl / 60)) != service.defaultDeadline {
-            valueRelay.accept(toString(floor(tradeOptions.ttl / 60)))
+        if case let .valid(tradeOptions) = service.state, tradeOptions.ttl != TradeOptions.defaultTtl {
+            valueRelay.accept(toString(tradeOptions.ttl))
         }
     }
 
@@ -58,7 +58,7 @@ extension SwapDeadlineViewModel: IVerifiedInputViewModel {
     }
 
     var inputFieldPlaceholder: String? {
-        toString(service.defaultDeadline)
+        toString(TradeOptions.defaultTtl)
     }
 
     var inputFieldValueDriver: Driver<String?> {
@@ -71,7 +71,7 @@ extension SwapDeadlineViewModel: IVerifiedInputViewModel {
 
     func inputFieldDidChange(text: String?) {
         guard let value = decimalParser.parseAnyDecimal(from: text) else {
-            service.deadline = service.defaultDeadline * 60
+            service.deadline = TradeOptions.defaultTtl
             return
         }
 
