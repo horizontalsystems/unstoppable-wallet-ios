@@ -18,7 +18,7 @@ class SwapViewControllerNew: ThemeViewController {
     private let fromCoinCardCell: SwapCoinCardCell
     private let priceCell = SwapPriceCell()
     private let toCoinCardCell: SwapCoinCardCell
-    //    private let allowanceCell: SwapAllowanceCell
+    private let allowanceCell: SwapAllowanceCell
 
     private let feeCell: SendFeeCell
     private let feePriorityCell: SendFeePriorityCell
@@ -27,12 +27,12 @@ class SwapViewControllerNew: ThemeViewController {
 
     private var tradeViewItem: SwapViewModelNew.TradeViewItem?
 
-    init(viewModel: SwapViewModelNew, fromCoinCardViewModel: SwapCoinCardViewModel, toCoinCardViewModel: SwapCoinCardViewModel, feeViewModel: EthereumFeeViewModel) {
+    init(viewModel: SwapViewModelNew, fromCoinCardViewModel: SwapCoinCardViewModel, toCoinCardViewModel: SwapCoinCardViewModel, allowanceViewModel: SwapAllowanceViewModelNew, feeViewModel: EthereumFeeViewModel) {
         self.viewModel = viewModel
 
         fromCoinCardCell = SwapCoinCardCell(viewModel: fromCoinCardViewModel)
         toCoinCardCell = SwapCoinCardCell(viewModel: toCoinCardViewModel)
-        //        allowanceCell = SwapAllowanceCell(viewModel: viewModel.allowancePresenter)
+        allowanceCell = SwapAllowanceCell(viewModel: allowanceViewModel)
 
         feeCell = SendFeeCell(viewModel: feeViewModel)
         feePriorityCell = SendFeePriorityCell(viewModel: feeViewModel)
@@ -41,6 +41,7 @@ class SwapViewControllerNew: ThemeViewController {
 
         fromCoinCardCell.presentDelegate = self
         toCoinCardCell.presentDelegate = self
+        allowanceCell.delegate = self
         feePriorityCell.delegate = self
 
         hidesBottomBarWhenPushed = true
@@ -142,6 +143,21 @@ extension SwapViewControllerNew: SectionsDataSource {
                     )
                 ]
         ))
+
+        if allowanceCell.isVisible {
+            sections.append(Section(
+                    id: "allowance",
+                    headerState: .margin(height: .margin3x),
+                    footerState: .margin(height: .margin3x),
+                    rows: [
+                        StaticRow(
+                                cell: allowanceCell,
+                                id: "allowance",
+                                height: SwapAllowanceCell.height
+                        )
+                    ]
+            ))
+        }
 
         if let tradeViewItem = tradeViewItem {
             sections.append(Section(

@@ -3,12 +3,16 @@ import RxSwift
 import RxCocoa
 
 class SwapAllowanceCell: UITableViewCell {
-    private var disposeBag = DisposeBag()
+    static let height: CGFloat = AdditionalDataView.height
 
-    private let viewModel: SwapAllowanceViewModel
-    private let allowanceView = AdditionalDataView()
+    weak var delegate: IDynamicHeightCellDelegate?
 
-    public init(viewModel: SwapAllowanceViewModel) {
+    private let disposeBag = DisposeBag()
+
+    private let viewModel: SwapAllowanceViewModelNew
+    private let additionalDataView = AdditionalDataView()
+
+    public init(viewModel: SwapAllowanceViewModelNew) {
         self.viewModel = viewModel
 
         super.init(style: .default, reuseIdentifier: nil)
@@ -16,44 +20,38 @@ class SwapAllowanceCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
 
-        contentView.addSubview(allowanceView)
-        allowanceView.snp.makeConstraints { maker in
+        contentView.addSubview(additionalDataView)
+        additionalDataView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
+
+        subscribe(disposeBag, viewModel.isVisibleSignal) { [weak self] in self?.handle(isVisible: $0) }
+        subscribe(disposeBag, viewModel.allowanceDriver) { [weak self] in self?.handle(allowance: $0) }
+        subscribe(disposeBag, viewModel.isErrorDriver) { [weak self] in self?.handle(isError: $0) }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("not implemented")
     }
 
-    func viewDidLoad() {
-        subscribeToViewModel()
+    private func handle(isVisible: Bool) {
+        delegate?.onChangeHeight()
     }
 
-    private func subscribeToViewModel() {
-        subscribe(disposeBag, viewModel.allowance) { [weak self] in self?.set(allowance: $0) }
-        subscribe(disposeBag, viewModel.insufficientAllowance) { [weak self] in self?.set(insufficientAllowance: $0) }
-        subscribe(disposeBag, viewModel.isLoading) { [weak self] in self?.set(loading: $0) }
-        subscribe(disposeBag, viewModel.isHidden) { [weak self] in self?.set(hidden: $0) }
+    private func handle(allowance: String?) {
+        additionalDataView.bind(title: "swap.allowance".localized, value: allowance)
     }
 
-    private func set(allowance: String?) {
-        allowanceView.bind(title: "swap.allowance".localized, value: allowance)
+    private func handle(isError: Bool) {
+        additionalDataView.setValue(color: isError ? .themeLucian : .themeGray)
     }
 
-    private func set(loading: Bool) {
-        if loading {
-            allowanceView.bind(title: "swap.allowance".localized, value: "action.loading".localized)
-            allowanceView.setValue(color: .themeGray)
-        }
-    }
+}
 
-    private func set(insufficientAllowance: Bool) {
-        allowanceView.setValue(color: insufficientAllowance ? .themeLucian : .themeGray)
-    }
+extension SwapAllowanceCell {
 
-    private func set(hidden: Bool) {
-        allowanceView.set(hidden: hidden)
+    var isVisible: Bool {
+        viewModel.isVisible
     }
 
 }
