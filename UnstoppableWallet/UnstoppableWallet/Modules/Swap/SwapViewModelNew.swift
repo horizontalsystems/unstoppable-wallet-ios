@@ -87,7 +87,7 @@ extension SwapViewModelNew {
     }
 
     func onTapSwitch() {
-//        service.switchCoins()
+        tradeService.switchCoins()
     }
 
     func onTapApprove() {
