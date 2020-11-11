@@ -27,11 +27,11 @@ class SwapViewControllerNew: ThemeViewController {
 
     private var tradeViewItem: SwapViewModelNew.TradeViewItem?
 
-    init(viewModel: SwapViewModelNew, fromCoinCardViewModel: SwapCoinCardViewModel, toCoinCardViewModel: SwapCoinCardViewModel, allowanceViewModel: SwapAllowanceViewModelNew, feeViewModel: EthereumFeeViewModel) {
+    init(viewModel: SwapViewModelNew, allowanceViewModel: SwapAllowanceViewModelNew, feeViewModel: EthereumFeeViewModel) {
         self.viewModel = viewModel
 
-        fromCoinCardCell = SwapCoinCardCell(viewModel: fromCoinCardViewModel)
-        toCoinCardCell = SwapCoinCardCell(viewModel: toCoinCardViewModel)
+        fromCoinCardCell = CoinCardModule.fromCell(service: viewModel.service, tradeService: viewModel.tradeService)
+        toCoinCardCell = CoinCardModule.toCell(service: viewModel.service, tradeService: viewModel.tradeService)
         allowanceCell = SwapAllowanceCell(viewModel: allowanceViewModel)
 
         feeCell = SendFeeCell(viewModel: feeViewModel)
@@ -68,17 +68,14 @@ class SwapViewControllerNew: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.sectionDataSource = self
-        tableView.allowsSelection = false
         tableView.keyboardDismissMode = .onDrag
 
         tableView.registerCell(forClass: AdditionalDataCell.self)
+        tableView.registerCell(forClass: D1Cell.self)
 
         buttonCell.bind(style: .primaryYellow, title: "Proceed") {
             // todo
         }
-
-        fromCoinCardCell.viewDidLoad()
-        toCoinCardCell.viewDidLoad()
 
         subscribeToViewModel()
 
@@ -112,6 +109,11 @@ class SwapViewControllerNew: ThemeViewController {
 
     private func handle(proceedAllowed: Bool) {
         buttonCell.set(enabled: proceedAllowed)
+    }
+
+    @objc func onSettingsButtonTouchUp() {
+        let viewController = SwapTradeOptionsModule.viewController(tradeService: viewModel.tradeService)
+        present(viewController, animated: true)
     }
 
 }
@@ -192,7 +194,6 @@ extension SwapViewControllerNew: SectionsDataSource {
         sections.append(Section(
                 id: "fee",
                 headerState: .margin(height: .margin3x),
-                footerState: .margin(height: .margin3x),
                 rows: [
                     StaticRow(
                             cell: feeCell,
@@ -207,10 +208,26 @@ extension SwapViewControllerNew: SectionsDataSource {
                 ]
         ))
 
+
+        sections.append(Section(
+                id: "advanced_settings",
+                rows: [
+                    Row<D1Cell>(
+                            id: "advanced",
+                            height: .heightSingleLineCell,
+                            autoDeselect: true,
+                            bind: { cell, _ in
+                                cell.set(backgroundStyle: .transparent, topSeparator: true)
+                                cell.title  = "swap.advanced_settings".localized
+                            },
+                            action: { [weak self] _ in
+                                self?.onSettingsButtonTouchUp()
+                            }
+                    ),
+                ]
+        ))
         sections.append(Section(
                 id: "button",
-                headerState: .margin(height: .margin3x),
-                footerState: .margin(height: .margin3x),
                 rows: [
                     StaticRow(
                             cell: buttonCell,
