@@ -44,6 +44,10 @@ class SwapViewControllerNew: ThemeViewController {
         allowanceCell.delegate = self
         feePriorityCell.delegate = self
 
+        priceCell.onSwitch = { [weak self] in
+            self?.viewModel.onTapSwitch()
+        }
+
         hidesBottomBarWhenPushed = true
     }
 

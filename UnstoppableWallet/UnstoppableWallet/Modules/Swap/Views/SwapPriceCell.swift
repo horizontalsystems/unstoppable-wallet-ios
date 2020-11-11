@@ -16,6 +16,8 @@ class SwapPriceCell: UITableViewCell {
     private let priceLabel = UILabel()
     private let switchButton = UIButton()
 
+    var onSwitch: (() -> ())?
+
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: nil)
 
@@ -60,7 +62,7 @@ class SwapPriceCell: UITableViewCell {
     }
 
     @objc private func onTapSwitch() {
-        // todo
+        onSwitch?()
     }
 
     func set(loading: Bool) {

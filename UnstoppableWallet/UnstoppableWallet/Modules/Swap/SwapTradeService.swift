@@ -58,8 +58,9 @@ class SwapTradeService {
 
     var tradeOptions = TradeOptions()
 
-    init(uniswapRepository: UniswapRepository) {
+    init(uniswapRepository: UniswapRepository, coin: Coin? = nil) {
         self.uniswapRepository = uniswapRepository
+        coinIn = coin
     }
 
     private func syncState() {
@@ -183,6 +184,12 @@ extension SwapTradeService {
         amountIn = nil
 
         syncState()
+    }
+
+    func switchCoins() {
+        let swapCoin = coinOut
+        coinOut = coinIn
+        coinIn = swapCoin
     }
 
 }
