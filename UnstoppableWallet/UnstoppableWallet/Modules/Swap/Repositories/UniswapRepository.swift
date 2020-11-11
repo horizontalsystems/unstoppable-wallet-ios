@@ -46,14 +46,14 @@ class UniswapRepository {
         }
     }
 
-    private func tradeData(swapData: SwapData, amount: Decimal, tradeType: TradeType) -> Single<TradeData> {
+    private func tradeData(swapData: SwapData, amount: Decimal, tradeType: TradeType, tradeOptions: TradeOptions) -> Single<TradeData> {
         do {
             let tradeData: TradeData
             switch tradeType {
             case .exactIn:
-                tradeData = try swapKit.bestTradeExactIn(swapData: swapData, amountIn: amount, options: TradeOptions())
+                tradeData = try swapKit.bestTradeExactIn(swapData: swapData, amountIn: amount, options: tradeOptions)
             case .exactOut:
-                tradeData = try swapKit.bestTradeExactOut(swapData: swapData, amountOut: amount, options: TradeOptions())
+                tradeData = try swapKit.bestTradeExactOut(swapData: swapData, amountOut: amount, options: tradeOptions)
             }
 
             return Single.just(tradeData)
@@ -70,9 +70,9 @@ extension UniswapRepository {
         swapKit.routerAddress
     }
 
-    func trade(coinIn: Coin, coinOut: Coin, amount: Decimal, tradeType: TradeType) -> Single<TradeData> {
+    func trade(coinIn: Coin, coinOut: Coin, amount: Decimal, tradeType: TradeType, tradeOptions: TradeOptions) -> Single<TradeData> {
         swapData(coinIn: coinIn, coinOut: coinOut).flatMap { [weak self] swapData in
-            guard let data = self?.tradeData(swapData: swapData, amount: amount, tradeType: tradeType) else {
+            guard let data = self?.tradeData(swapData: swapData, amount: amount, tradeType: tradeType, tradeOptions: tradeOptions) else {
                 return Single.error(AppError.unknownError)
             }
             return data

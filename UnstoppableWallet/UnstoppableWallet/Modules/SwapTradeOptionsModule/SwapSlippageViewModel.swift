@@ -22,7 +22,7 @@ class SwapSlippageViewModel {
     }
 
     private func setInitial() {
-        if case let .valid(tradeOptions) = service.state, tradeOptions.allowedSlippage != service.defaultSlippage {
+        if case let .valid(tradeOptions) = service.state, tradeOptions.allowedSlippage != TradeOptions.defaultSlippage {
             valueRelay.accept(tradeOptions.allowedSlippage.description)
         }
     }
@@ -36,14 +36,14 @@ class SwapSlippageViewModel {
     }
 
     private func update(errors: [Error]) {
-        var slippageError: SwapTradeOptionsError?
-        for error in errors.compactMap({ $0 as? SwapTradeOptionsError }) {
-            if case .invalidSlippage = error {
-                slippageError = error
-                break
+        let error = errors.first(where: {
+            if case .invalidSlippage = $0 as? SwapTradeOptionsService.TradeOptionsError {
+                return true
             }
-        }
-        cautionRelay.accept(slippageError.map { Caution(text: $0.smartDescription, type: .error)})
+            return false
+        })
+
+        cautionRelay.accept(error.map { Caution(text: $0.smartDescription, type: .error)})
     }
 
 }
@@ -63,7 +63,7 @@ extension SwapSlippageViewModel: IVerifiedInputViewModel {
     }
 
     var inputFieldPlaceholder: String? {
-        service.defaultSlippage.description
+        TradeOptions.defaultSlippage.description
     }
 
     var inputFieldValueDriver: Driver<String?> {
@@ -80,7 +80,7 @@ extension SwapSlippageViewModel: IVerifiedInputViewModel {
 
     func inputFieldDidChange(text: String?) {
         guard let value = decimalParser.parseAnyDecimal(from: text) else {
-            service.slippage = service.defaultSlippage
+            service.slippage = TradeOptions.defaultSlippage
             return
         }
 

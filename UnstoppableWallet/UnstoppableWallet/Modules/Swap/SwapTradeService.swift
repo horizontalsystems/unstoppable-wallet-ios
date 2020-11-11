@@ -56,6 +56,8 @@ class SwapTradeService {
         }
     }
 
+    var tradeOptions = TradeOptions()
+
     init(uniswapRepository: UniswapRepository) {
         self.uniswapRepository = uniswapRepository
     }
@@ -71,7 +73,7 @@ class SwapTradeService {
         state = .loading
 
         uniswapRepository
-                .trade(coinIn: coinIn, coinOut: coinOut, amount: amount, tradeType: tradeType)
+                .trade(coinIn: coinIn, coinOut: coinOut, amount: amount, tradeType: tradeType, tradeOptions: tradeOptions)
                 .subscribe(onSuccess: { [weak self] tradeData in
                     self?.handle(tradeData: tradeData)
                 }, onError: { [weak self] error in

@@ -12,18 +12,25 @@ class RecipientAddressViewModel {
     public init(service: SwapTradeOptionsService) {
         self.service = service
 
+        setInitial()
         subscribe(disposeBag, service.errorsObservable) { [weak self] in self?.update(errors: $0) }
     }
 
-    private func update(errors: [Error]) {
-        var slippageError: SwapTradeOptionsError?
-        for error in errors.compactMap({ $0 as? SwapTradeOptionsError }) {
-            if case .invalidAddress = error {
-                slippageError = error
-                break
-            }
+    private func setInitial() {
+        if case let .valid(tradeOptions) = service.state {
+            valueRelay.accept(tradeOptions.recipient?.hex)
         }
-        cautionRelay.accept(slippageError.map { Caution(text: $0.smartDescription, type: .error)})
+    }
+
+    private func update(errors: [Error]) {
+        let error = errors.first(where: {
+            if case .invalidAddress = $0 as? SwapTradeOptionsService.TradeOptionsError {
+                return true
+            }
+            return false
+        })
+
+        cautionRelay.accept(error.map { Caution(text: $0.smartDescription, type: .error) })
     }
 
 }

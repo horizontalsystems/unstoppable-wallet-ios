@@ -215,7 +215,7 @@ class SwapService {
 
         tradeDataState = .loading
         tradeDataDisposable = uniswapRepository
-                .trade(coinIn: coinIn, coinOut: coinOut, amount: amount, tradeType: estimated)
+                .trade(coinIn: coinIn, coinOut: coinOut, amount: amount, tradeType: estimated, tradeOptions: TradeOptions())
                 .subscribe(onSuccess: { [weak self] item in
                     self?.handle(tradeData: item, coinIn: coinIn, coinOut: coinOut)
                 }, onError: { [weak self] error in
@@ -486,15 +486,17 @@ extension SwapService {
         swapStateRelay.accept(.loading)
         swapDisposable?.dispose()
 
-        swapDisposable = uniswapRepository
-                .swap(tradeData: tradeData, gasLimit: feeData.gasLimit, gasPrice: feeData.gasPrice)
-                .subscribe(onSuccess: { [weak self] _ in
-                    self?.swapStateRelay.accept(.completed(Data()))
-
-                    self?.stateRelay.accept(.swapSuccess)
-                }, onError: { [weak self] error in
-                    self?.swapStateRelay.accept(.failed(error))
-                })
+        self.swapStateRelay.accept(.completed(Data()))
+        self.stateRelay.accept(.swapSuccess)
+//        swapDisposable = uniswapRepository
+//                .swap(tradeData: tradeData, gasLimit: feeData.gasLimit, gasPrice: feeData.gasPrice)
+//                .subscribe(onSuccess: { [weak self] _ in
+//                    self?.swapStateRelay.accept(.completed(Data()))
+//
+//                    self?.stateRelay.accept(.swapSuccess)
+//                }, onError: { [weak self] error in
+//                    self?.swapStateRelay.accept(.failed(error))
+//                })
 
         swapDisposable?.disposed(by: disposeBag)
     }

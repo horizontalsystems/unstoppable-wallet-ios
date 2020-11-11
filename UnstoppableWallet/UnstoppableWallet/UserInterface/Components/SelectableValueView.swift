@@ -37,7 +37,7 @@ class SelectableValueView: UIView {
         lineView.backgroundColor = .themeSteel20
 
         titleLabel.text = title
-        titleLabel.font = UIFont.subhead1
+        titleLabel.font = UIFont.subhead2
         titleLabel.textColor = .themeGray
         titleLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
