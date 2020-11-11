@@ -64,6 +64,7 @@ class SwapServiceNew {
                     self?.onUpdate(coinIn: coin)
                 })
                 .disposed(by: disposeBag)
+        onUpdate(coinIn: tradeService.coinIn)
 
         tradeService.coinOutObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))

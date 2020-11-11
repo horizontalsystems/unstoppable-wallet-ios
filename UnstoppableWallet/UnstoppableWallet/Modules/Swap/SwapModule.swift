@@ -131,7 +131,7 @@ struct SwapModule {
                 rateManager: App.shared.rateManager
         )
 
-        let tradeService = SwapTradeService(uniswapRepository: uniswapRepository)
+        let tradeService = SwapTradeService(uniswapRepository: uniswapRepository, coin: coinIn)
         let allowanceService = SwapAllowanceService(spenderAddress: uniswapRepository.routerAddress, adapterManager: App.shared.adapterManager)
         let transactionService = EthereumTransactionService(
                 ethereumKit: ethereumKit,

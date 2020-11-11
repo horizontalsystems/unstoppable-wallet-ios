@@ -605,5 +605,5 @@ protocol ISwapCoinManager {
 }
 
 protocol IPresentDelegate: AnyObject {
-    func  show(viewController: UIViewController)
+    func show(viewController: UIViewController)
 }
