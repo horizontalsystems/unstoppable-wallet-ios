@@ -118,6 +118,7 @@ class SwapServiceNew {
 
     private func onUpdate(coinIn: Coin?) {
         balanceIn = coinIn.flatMap { balance(coin: $0) }
+        allowanceService.set(coin: coinIn)
     }
 
     private func onUpdate(amountIn: Decimal?) {
@@ -133,27 +134,38 @@ class SwapServiceNew {
         var loading = false
 
         switch tradeService.state {
-        case .loading: loading = true
+        case .loading:
+            loading = true
         case .ready(let trade):
             if trade.impactLevel == .forbidden {
                 allErrors.append(SwapError.forbiddenPriceImpactLevel)
             }
-        case .notReady(let errors): allErrors.append(contentsOf: errors)
+        case .notReady(let errors):
+            allErrors.append(contentsOf: errors)
         }
 
-        switch allowanceService.state {
-        case .loading: loading = true
-        case .ready: ()
-        case .notReady(let errors): allErrors.append(contentsOf: errors)
+        if let allowanceState = allowanceService.state {
+            switch allowanceState {
+            case .loading:
+                loading = true
+            case .ready(let allowance):
+                if let amountIn = tradeService.amountIn, amountIn > allowance {
+                    allErrors.append(SwapError.insufficientAllowance)
+                }
+            case .notReady(let error):
+                allErrors.append(error)
+            }
         }
 
         switch transactionService.transactionStatus {
-        case .loading: loading = true
+        case .loading:
+            loading = true
         case .completed(let transaction):
             if transaction.totalAmount > ethereumBalance {
                 allErrors.append(TransactionError.insufficientBalance(requiredBalance: transaction.totalAmount))
             }
-        case .failed(let error): allErrors.append(error)
+        case .failed(let error):
+            allErrors.append(error)
         }
 
         if let amountIn = tradeService.amountIn, let balanceIn = balanceIn, amountIn > balanceIn {
@@ -214,6 +226,7 @@ extension SwapServiceNew {
 
     enum SwapError: Error {
         case insufficientBalanceIn
+        case insufficientAllowance
         case forbiddenPriceImpactLevel
     }
 
