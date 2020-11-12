@@ -16,13 +16,13 @@ class TransactionProcessingView: UIView {
             maker.centerY.equalTo(processingLabel)
             maker.height.equalTo(CGFloat.margin3x)
         }
+        barsProgressView.set(barsCount: BarsProgressView.progressStepsCount)
+
         processingLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(barsProgressView.snp.trailing).offset(CGFloat.margin2x)
             maker.top.bottom.trailing.equalToSuperview()
         }
-
-        barsProgressView.set(barsCount: BarsProgressView.progressStepsCount)
-
+        processingLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         processingLabel.font = .subhead2
         processingLabel.textColor = .themeGray
     }

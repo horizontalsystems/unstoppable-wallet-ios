@@ -16,63 +16,65 @@ class AmountInfoView: UIView {
 
         backgroundColor = .clear
 
-        addSubview(primaryAmountLabel)
-        addSubview(lockImageView)
-        addSubview(sentToSelfImageView)
-        addSubview(primaryAmountTitleLabel)
-        addSubview(secondaryAmountLabel)
-        addSubview(secondaryAmountTitleLabel)
+        let primaryAmountWrapper = UIView()
+        let secondaryAmountWrapper = UIView()
 
-        primaryAmountLabel.font = .headline1
-        primaryAmountLabel.textAlignment = .right
+        secondaryAmountWrapper.addSubview(secondaryAmountLabel)
+        secondaryAmountLabel.snp.makeConstraints { maker in
+            maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
+            maker.leading.equalToSuperview().inset(CGFloat.margin4x)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin1x)
+        }
+        secondaryAmountLabel.font = .subhead2
+        secondaryAmountLabel.textColor = .themeGray
+
+        secondaryAmountWrapper.addSubview(secondaryAmountTitleLabel)
+        secondaryAmountTitleLabel.snp.makeConstraints { maker in
+            maker.top.equalToSuperview().inset(CGFloat.margin3x)
+            maker.leading.equalToSuperview().inset(CGFloat.margin4x)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin1x)
+        }
+        secondaryAmountTitleLabel.font = .headline2
+        secondaryAmountTitleLabel.textColor = .themeOz
+
+        primaryAmountWrapper.addSubview(primaryAmountLabel)
         primaryAmountLabel.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(CGFloat.margin3x)
-            maker.leading.equalTo(secondaryAmountTitleLabel.snp.trailing).offset(CGFloat.margin4x)
+            maker.leading.equalToSuperview().inset(CGFloat.margin1x)
         }
+        primaryAmountLabel.font = .headline1
+        primaryAmountLabel.textAlignment = .right
 
-        lockImageView.snp.makeConstraints { maker in
-            maker.leading.equalTo(primaryAmountLabel.snp.trailing)
-            maker.top.equalToSuperview().inset(CGFloat.margin4x)
-            maker.size.equalTo(0)
-        }
+        primaryAmountWrapper.addSubview(lockImageView)
+        lockImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
         lockImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        
-        sentToSelfImageView.image = UIImage(named: "Transaction In Icon")
-        sentToSelfImageView.snp.makeConstraints { maker in
-            maker.leading.equalTo(lockImageView.snp.trailing)
-            maker.top.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.size.equalTo(0)
-        }
-        sentToSelfImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
+        primaryAmountWrapper.addSubview(sentToSelfImageView)
+        sentToSelfImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
+        sentToSelfImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        sentToSelfImageView.image = UIImage(named: "Transaction In Icon")
+
+        primaryAmountWrapper.addSubview(primaryAmountTitleLabel)
+        primaryAmountTitleLabel.snp.makeConstraints { maker in
+            maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
+        }
         primaryAmountTitleLabel.font = .subhead2
         primaryAmountTitleLabel.textColor = .themeGray
         primaryAmountTitleLabel.textAlignment = .right
-        primaryAmountTitleLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(secondaryAmountLabel.snp.trailing).offset(CGFloat.margin4x)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
+
+        addSubview(secondaryAmountWrapper)
+        secondaryAmountWrapper.snp.makeConstraints { maker in
+            maker.leading.top.bottom.equalToSuperview()
+            maker.width.equalToSuperview().multipliedBy(0.5)
         }
 
-        secondaryAmountTitleLabel.font = .headline2
-        secondaryAmountTitleLabel.textColor = .themeOz
-        secondaryAmountTitleLabel.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(CGFloat.margin3x)
-            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
+        addSubview(primaryAmountWrapper)
+        primaryAmountWrapper.snp.makeConstraints { maker in
+            maker.trailing.top.bottom.equalToSuperview()
+            maker.leading.equalTo(secondaryAmountWrapper.snp.trailing)
+            maker.width.equalToSuperview().multipliedBy(0.5)
         }
-
-        secondaryAmountLabel.font = .subhead2
-        secondaryAmountLabel.textColor = .themeGray
-        secondaryAmountLabel.snp.makeConstraints { maker in
-            maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
-            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
-        }
-
-        primaryAmountTitleLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        primaryAmountLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-
-        secondaryAmountTitleLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        secondaryAmountLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
     }
 
     required init?(coder aDecoder: NSCoder) {
