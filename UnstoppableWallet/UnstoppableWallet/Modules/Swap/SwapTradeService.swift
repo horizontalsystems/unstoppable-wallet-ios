@@ -137,7 +137,7 @@ extension SwapTradeService {
         try uniswapRepository.transactionData(tradeData: tradeData)
     }
 
-    func set(coinIn: Coin) {
+    func set(coinIn: Coin?) {
         guard self.coinIn != coinIn else {
             return
         }
@@ -153,7 +153,7 @@ extension SwapTradeService {
         syncState()
     }
 
-    func set(coinOut: Coin) {
+    func set(coinOut: Coin?) {
         guard self.coinOut != coinOut else {
             return
         }
@@ -198,7 +198,8 @@ extension SwapTradeService {
     func switchCoins() {
         let swapCoin = coinOut
         coinOut = coinIn
-        coinIn = swapCoin
+
+        set(coinIn: swapCoin)
     }
 
 }

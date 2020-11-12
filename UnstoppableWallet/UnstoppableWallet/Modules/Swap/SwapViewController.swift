@@ -355,8 +355,6 @@ extension SwapViewController {
     }
 
     private func openConfirmation() {
-        let vc = SwapConfirmationView(presenter: viewModel.confirmationPresenter, delegate: self)
-        navigationController?.pushViewController(vc, animated: true)
     }
 
 }

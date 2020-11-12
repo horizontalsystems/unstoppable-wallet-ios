@@ -5,8 +5,11 @@ import RxCocoa
 class SwapConfirmationViewModel {
     private let disposeBag = DisposeBag()
 
-    private let service: SwapService
-    private let factory: SwapViewItemHelper
+    private let tradeService: SwapTradeService
+    private let transactionService: EthereumTransactionService
+    private let ethereumCoinService: CoinService
+
+    private let viewItemHelper: SwapViewItemHelper
 
     private var amountDataRelay = BehaviorRelay<SwapModule.ConfirmationAmountViewItem?>(value: nil)
     private var additionalDataRelay = BehaviorRelay<[SwapModule.ConfirmationAdditionalViewItem]>(value: [])
@@ -15,23 +18,25 @@ class SwapConfirmationViewModel {
     private var successRelay = PublishRelay<()>()
     private var errorRelay = PublishRelay<Error?>()
 
-    init(service: SwapService, factory: SwapViewItemHelper) {
-        self.service = service
-        self.factory = factory
+    init(tradeService: SwapTradeService, transactionService: EthereumTransactionService, ethereumCoinService: CoinService, viewItemHelper: SwapViewItemHelper) {
+        self.tradeService = tradeService
+        self.viewItemHelper = viewItemHelper
+        self.transactionService = transactionService
+        self.ethereumCoinService = ethereumCoinService
 
         subscribeOnService()
         buildState()
     }
 
     private func subscribeOnService() {
-        subscribe(disposeBag, service.swapStateObservable) { [weak self] in self?.handle(swapState: $0) }
+//        subscribe(disposeBag, service.swapStateObservable) { [weak self] in self?.handle(swapState: $0) }
     }
 
     private func buildState() {
-        guard let coinIn = service.coinIn,
-              let amountIn = service.amountIn,
-              let amountOut = service.amountOut,
-              let coinOut = service.coinOut else {
+        guard let coinIn = tradeService.coinIn,
+              let amountIn = tradeService.amountIn,
+              let amountOut = tradeService.amountOut,
+              let coinOut = tradeService.coinOut else {
             return
         }
         let payValue = ValueFormatter.instance.format(coinValue: CoinValue(coin: coinIn, value: amountIn))
@@ -45,37 +50,37 @@ class SwapConfirmationViewModel {
 
         amountDataRelay.accept(amountData)
 
-        guard let item = service.tradeDataState?.data else {
+        var additionalData = [SwapModule.ConfirmationAdditionalViewItem]()
+
+        if let slippage = viewItemHelper.slippage(tradeService.tradeOptions.allowedSlippage) {
+            additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.advanced_settings.slippage".localized, value: slippage))
+        }
+        if let deadline = viewItemHelper.deadline(tradeService.tradeOptions.ttl) {
+            additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.advanced_settings.deadline".localized, value: deadline))
+        }
+        if let recipient = tradeService.tradeOptions.recipient?.hex {
+            additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.advanced_settings.recipient_address".localized, value: recipient))
+        }
+
+        guard case let .ready(trade) = tradeService.state else {
             return
         }
 
-        var additionalData = [SwapModule.ConfirmationAdditionalViewItem]()
-        fatalError()
-//        let minMaxValue = factory.minMaxValue(amount: item.minMaxAmount, coinIn: item.coinIn, coinOut: item.coinOut, type: item.type)
-//        let minMaxTitle = factory.minMaxTitle(type: item.type, coinOut: item.coinOut)
-//        additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: minMaxTitle, value: minMaxValue))
-//
-//        let price = factory.string(executionPrice: item.executionPrice, coinIn: item.coinIn, coinOut: item.coinOut)
-//        additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.price", value: price))
-//
-//        let priceImpact = factory.string(impactPrice: item.priceImpact)
-//        additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.price_impact", value: priceImpact))
-
-        if let providerFee = item.providerFee {
-            let coinValue = CoinValue(coin: coinIn, value: providerFee)
-            let swapFee = ValueFormatter.instance.format(coinValue: coinValue)
-            additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.fee", value: swapFee))
+        let minMaxTitle = viewItemHelper.minMaxTitle(type: trade.tradeData.type)
+        if let minMaxValue = viewItemHelper.minMaxValue(amount: trade.minMaxAmount, coinIn: coinIn, coinOut: coinOut, type: trade.tradeData.type) {
+            additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: minMaxTitle, value: minMaxValue.formattedString))
         }
 
-        additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.transactions_speed", value: service.feePriority.title))
-        if let feeData = service.feeState?.data {
-            let coinValue = ValueFormatter.instance.format(coinValue: feeData.coinAmount)
-            let currencyValue = feeData.currencyAmount.flatMap { ValueFormatter.instance.format(currencyValue: $0) }
+        if let price = viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, coinIn: coinIn, coinOut: coinOut) {
+            additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.price".localized, value: price.formattedString))
+        }
 
-            let array = [coinValue, currencyValue].compactMap { $0 }
-            let feeString = array.joined(separator: " | ")
+        let priceImpact = viewItemHelper.impactPrice(trade.tradeData.priceImpact)
+        additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.price_impact".localized, value: priceImpact))
 
-            additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.transaction_fee", value: feeString))
+        if let transaction = transactionService.transactionStatus.data {
+            let fee = ethereumCoinService.amountData(value: transaction.gasData.fee).formattedString
+            additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "fee", value: fee))
         }
 
         additionalDataRelay.accept(additionalData)

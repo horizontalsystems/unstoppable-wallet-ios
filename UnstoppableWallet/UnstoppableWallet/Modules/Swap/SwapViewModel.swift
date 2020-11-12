@@ -63,10 +63,6 @@ class SwapViewModel {
         SwapAllowanceViewModel(service: service)
     }
 
-    public var confirmationPresenter: SwapConfirmationViewModel {
-        SwapConfirmationViewModel(service: service, factory: factory)
-    }
-
     public var tradeOptionsViewModel: SwapTradeOptionsViewModel {
         fatalError()
 //        SwapTradeOptionsViewModel(service: SwapTradeOptionsService(tradeOptions: service.tradeOptions), tradeService: tra, decimalParser: AmountDecimalParser())
