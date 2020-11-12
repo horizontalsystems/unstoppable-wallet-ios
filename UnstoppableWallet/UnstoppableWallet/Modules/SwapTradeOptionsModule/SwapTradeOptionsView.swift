@@ -63,6 +63,7 @@ class SwapTradeOptionsView: ThemeViewController {
 
         tableView.sectionDataSource = self
         tableView.allowsSelection = false
+        tableView.keyboardDismissMode = .onDrag
 
         buttonCell.bind(style: .primaryYellow, title: "button.done".localized) { [weak self] in
             self?.doneDidTap()
@@ -111,7 +112,7 @@ class SwapTradeOptionsView: ThemeViewController {
 
         return Section(
                 id: "slippage",
-                headerState: header(hash: "slippage_header", text: "swap.advanced_settings.slippage.header".localized),
+                headerState: header(hash: "slippage_header", text: "swap.advanced_settings.slippage".localized),
                 footerState: footer(hash: "slippage_footer", text: "swap.advanced_settings.slippage.footer".localized),
                 rows: [slippageRow]
         )
@@ -127,7 +128,7 @@ class SwapTradeOptionsView: ThemeViewController {
 
         return Section(
                 id: "deadline",
-                headerState: header(hash: "deadline_header", text: "swap.advanced_settings.deadline.header".localized),
+                headerState: header(hash: "deadline_header", text: "swap.advanced_settings.deadline".localized),
                 footerState: footer(hash: "deadline_footer", text: "swap.advanced_settings.deadline.footer".localized),
                 rows: [deadlineRow]
         )

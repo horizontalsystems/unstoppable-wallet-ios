@@ -56,7 +56,12 @@ class SwapTradeService {
         }
     }
 
-    var tradeOptions = TradeOptions()
+    private let tradeOptionsRelay = PublishRelay<TradeOptions>()
+    var tradeOptions = TradeOptions() {
+        didSet {
+            tradeOptionsRelay.accept(tradeOptions)
+        }
+    }
 
     init(uniswapRepository: UniswapRepository, coin: Coin? = nil) {
         self.uniswapRepository = uniswapRepository
@@ -122,6 +127,10 @@ extension SwapTradeService {
 
     var amountOutObservable: Observable<Decimal?> {
         amountOutRelay.asObservable()
+    }
+
+    var tradeOptionsObservable: Observable<TradeOptions> {
+        tradeOptionsRelay.asObservable()
     }
 
     func transactionData(tradeData: TradeData) throws -> TransactionData {

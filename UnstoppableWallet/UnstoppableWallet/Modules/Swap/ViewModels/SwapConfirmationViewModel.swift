@@ -6,7 +6,7 @@ class SwapConfirmationViewModel {
     private let disposeBag = DisposeBag()
 
     private let service: SwapService
-    private let factory: SwapViewItemFactory
+    private let factory: SwapViewItemHelper
 
     private var amountDataRelay = BehaviorRelay<SwapModule.ConfirmationAmountViewItem?>(value: nil)
     private var additionalDataRelay = BehaviorRelay<[SwapModule.ConfirmationAdditionalViewItem]>(value: [])
@@ -15,7 +15,7 @@ class SwapConfirmationViewModel {
     private var successRelay = PublishRelay<()>()
     private var errorRelay = PublishRelay<Error?>()
 
-    init(service: SwapService, factory: SwapViewItemFactory) {
+    init(service: SwapService, factory: SwapViewItemHelper) {
         self.service = service
         self.factory = factory
 
@@ -50,16 +50,16 @@ class SwapConfirmationViewModel {
         }
 
         var additionalData = [SwapModule.ConfirmationAdditionalViewItem]()
-
-        let minMaxValue = factory.minMaxValue(amount: item.minMaxAmount, coinIn: item.coinIn, coinOut: item.coinOut, type: item.type)
-        let minMaxTitle = factory.minMaxTitle(type: item.type, coinOut: item.coinOut)
-        additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: minMaxTitle, value: minMaxValue))
-
-        let price = factory.string(executionPrice: item.executionPrice, coinIn: item.coinIn, coinOut: item.coinOut)
-        additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.price", value: price))
-
-        let priceImpact = factory.string(impactPrice: item.priceImpact)
-        additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.price_impact", value: priceImpact))
+        fatalError()
+//        let minMaxValue = factory.minMaxValue(amount: item.minMaxAmount, coinIn: item.coinIn, coinOut: item.coinOut, type: item.type)
+//        let minMaxTitle = factory.minMaxTitle(type: item.type, coinOut: item.coinOut)
+//        additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: minMaxTitle, value: minMaxValue))
+//
+//        let price = factory.string(executionPrice: item.executionPrice, coinIn: item.coinIn, coinOut: item.coinOut)
+//        additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.price", value: price))
+//
+//        let priceImpact = factory.string(impactPrice: item.priceImpact)
+//        additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.price_impact", value: priceImpact))
 
         if let providerFee = item.providerFee {
             let coinValue = CoinValue(coin: coinIn, value: providerFee)

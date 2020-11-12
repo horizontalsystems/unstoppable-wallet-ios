@@ -552,7 +552,7 @@ CHECKOUT OPTIONS:
     :commit: 9278b438d74e586f41996af8319ba519eff4e3cf
     :git: https://github.com/horizontalsystems/gui-kit/
   UniswapKit.swift:
-    :commit: 391d1dc8ebf674c88991cd4982bb258fde250c65
+    :commit: 74bf0497a104ac3e6bfdefa0d70adee93da408d3
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   WalletConnect:
     :commit: 467915ce2ba7b4bb831150be911bd0b8b1d94c36
