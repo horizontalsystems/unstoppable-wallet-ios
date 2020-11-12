@@ -2,28 +2,19 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class SwapAllowanceCell: UITableViewCell {
-    static let height: CGFloat = AdditionalDataView.height
-
+class SwapAllowanceCell: AdditionalDataCellNew {
     weak var delegate: IDynamicHeightCellDelegate?
 
     private let disposeBag = DisposeBag()
 
     private let viewModel: SwapAllowanceViewModelNew
-    private let additionalDataView = AdditionalDataView()
 
     public init(viewModel: SwapAllowanceViewModelNew) {
         self.viewModel = viewModel
 
         super.init(style: .default, reuseIdentifier: nil)
 
-        backgroundColor = .clear
-        selectionStyle = .none
-
-        contentView.addSubview(additionalDataView)
-        additionalDataView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
-        }
+        isVisible = viewModel.isVisible
 
         subscribe(disposeBag, viewModel.isVisibleSignal) { [weak self] in self?.handle(isVisible: $0) }
         subscribe(disposeBag, viewModel.allowanceDriver) { [weak self] in self?.handle(allowance: $0) }
@@ -35,23 +26,16 @@ class SwapAllowanceCell: UITableViewCell {
     }
 
     private func handle(isVisible: Bool) {
+        self.isVisible = isVisible
         delegate?.onChangeHeight()
     }
 
     private func handle(allowance: String?) {
-        additionalDataView.bind(title: "swap.allowance".localized, value: allowance)
+        value = allowance
     }
 
     private func handle(isError: Bool) {
-        additionalDataView.setValue(color: isError ? .themeLucian : .themeGray)
-    }
-
-}
-
-extension SwapAllowanceCell {
-
-    var isVisible: Bool {
-        viewModel.isVisible
+        valueColor = isError ? .themeLucian : .themeGray
     }
 
 }
