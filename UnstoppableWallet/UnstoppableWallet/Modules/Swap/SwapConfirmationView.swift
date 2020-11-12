@@ -13,16 +13,15 @@ protocol ISwapConfirmationDelegate: class {
 class SwapConfirmationView: ThemeViewController, SectionsDataSource {
     private let disposeBag = DisposeBag()
 
-    private let presenter: SwapConfirmationViewModel
-    private let delegate: ISwapConfirmationDelegate
+    private let viewModel: SwapConfirmationViewModel
+//    private let delegate: ISwapConfirmationDelegate
     private let tableView = SectionsTableView(style: .grouped)
 
     private var amountViewItem: SwapModule.ConfirmationAmountViewItem?
     private var additionalViewItems = [SwapModule.ConfirmationAdditionalViewItem]()
 
-    init(presenter: SwapConfirmationViewModel, delegate: ISwapConfirmationDelegate) {
-        self.presenter = presenter
-        self.delegate = delegate
+    init(viewModel: SwapConfirmationViewModel) {
+        self.viewModel = viewModel
 
         super.init()
     }
@@ -33,16 +32,16 @@ class SwapConfirmationView: ThemeViewController, SectionsDataSource {
 
     func subscribeToPresenter() {
 
-        subscribe(disposeBag, presenter.isLoading) { [weak self] in self?.handleLoading() }
-        subscribe(disposeBag, presenter.success) {
+        subscribe(disposeBag, viewModel.isLoading) { [weak self] in self?.handleLoading() }
+        subscribe(disposeBag, viewModel.success) {
             HudHelper.instance.showSuccess()
         }
-        subscribe(disposeBag, presenter.error) {
+        subscribe(disposeBag, viewModel.error) {
             HudHelper.instance.showError(title: $0?.smartDescription)
         }
 
-        subscribe(disposeBag, presenter.amountData) { [weak self] in self?.handle(amountData: $0) }
-        subscribe(disposeBag, presenter.additionalData) { [weak self] in self?.handle(additionalData: $0) }
+        subscribe(disposeBag, viewModel.amountData) { [weak self] in self?.handle(amountData: $0) }
+        subscribe(disposeBag, viewModel.additionalData) { [weak self] in self?.handle(additionalData: $0) }
     }
 
     override func viewDidLoad() {
@@ -71,7 +70,7 @@ class SwapConfirmationView: ThemeViewController, SectionsDataSource {
     }
 
     @objc private func onTapCancel() {
-        delegate.onCancel()
+//        delegate.onCancel()
     }
 
     private var swapAmountSectionRows: [RowProtocol] {
@@ -130,7 +129,7 @@ class SwapConfirmationView: ThemeViewController, SectionsDataSource {
     }
 
     private func onSwapTap() {
-        delegate.onSwap()
+//        delegate.onSwap()
     }
 
 }

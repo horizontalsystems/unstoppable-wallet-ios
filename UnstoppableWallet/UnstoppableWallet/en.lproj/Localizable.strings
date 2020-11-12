@@ -3,6 +3,7 @@
 "coin.ETH" = "Ethereum";
 
 "button.ok" = "OK";
+"button.apply" = "Apply";
 "button.cancel" = "Cancel";
 "button.close" = "Close";
 "button.done" = "Done";

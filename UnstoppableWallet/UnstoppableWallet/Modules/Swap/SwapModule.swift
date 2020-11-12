@@ -149,7 +149,7 @@ struct SwapModule {
         let feeViewModel = EthereumFeeViewModel(service: transactionService, coinService: coinService)
 
         let viewController = SwapViewControllerNew(
-                viewModel: SwapViewModelNew(service: service, tradeService: tradeService),
+                viewModel: SwapViewModelNew(service: service, tradeService: tradeService, transactionService: transactionService, viewItemHelper: SwapViewItemHelper()),
                 allowanceViewModel: allowanceViewModel,
                 feeViewModel: feeViewModel
         )
