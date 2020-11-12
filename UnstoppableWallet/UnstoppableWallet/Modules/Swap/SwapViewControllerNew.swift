@@ -18,7 +18,12 @@ class SwapViewControllerNew: ThemeViewController {
     private let fromCoinCardCell: SwapCoinCardCell
     private let priceCell = SwapPriceCell()
     private let toCoinCardCell: SwapCoinCardCell
+    private let slippageCell = AdditionalDataCellNew()
+    private let deadlineCell = AdditionalDataCellNew()
+    private let recipientCell = AdditionalDataCellNew()
     private let allowanceCell: SwapAllowanceCell
+    private let priceImpactCell = AdditionalDataCellNew()
+    private let guaranteedAmountCell = AdditionalDataCellNew()
 
     private let feeCell: SendFeeCell
     private let feePriorityCell: SendFeePriorityCell
@@ -79,6 +84,12 @@ class SwapViewControllerNew: ThemeViewController {
         tableView.registerCell(forClass: D1Cell.self)
         tableView.registerCell(forClass: D9Cell.self)
 
+        slippageCell.title = "swap.advanced_settings.slippage".localized
+        deadlineCell.title = "swap.advanced_settings.deadline".localized
+        recipientCell.title = "swap.advanced_settings.recipient_address".localized
+        allowanceCell.title = "swap.allowance".localized
+        priceImpactCell.title = "swap.price_impact".localized
+
         buttonCell.bind(style: .primaryYellow, title: "Proceed") {
             // todo
         }
@@ -110,22 +121,63 @@ class SwapViewControllerNew: ThemeViewController {
 
     private func handle(tradeViewItem: SwapViewModelNew.TradeViewItem?) {
         priceCell.set(price: tradeViewItem?.executionPrice)
-        self.tradeViewItem = tradeViewItem
-        tableView.reload()
+
+        if let tradeViewItem = tradeViewItem {
+            priceImpactCell.isVisible = true
+            priceImpactCell.value = tradeViewItem.priceImpact
+            let index = tradeViewItem.priceImpactLevel.rawValue % SwapViewControllerNew.levelColors.count
+            priceImpactCell.valueColor = SwapViewControllerNew.levelColors[index]
+
+            guaranteedAmountCell.isVisible = true
+            guaranteedAmountCell.title = tradeViewItem.minMaxTitle
+            guaranteedAmountCell.value = tradeViewItem.minMaxAmount
+        } else {
+            priceImpactCell.isVisible = false
+            guaranteedAmountCell.isVisible = false
+        }
+
+        reloadTable()
     }
 
     private func handle(tradeOptionsViewItem: SwapViewModelNew.TradeOptionsViewItem?) {
-        self.tradeOptionsViewItem = tradeOptionsViewItem
-        tableView.reload()
+        if let slippage = tradeOptionsViewItem?.slippage {
+            slippageCell.isVisible = true
+            slippageCell.value = slippage
+        } else {
+            slippageCell.isVisible = false
+        }
+
+        if let deadline = tradeOptionsViewItem?.deadline {
+            deadlineCell.isVisible = true
+            deadlineCell.value = deadline
+        } else {
+            deadlineCell.isVisible = false
+        }
+
+        if let recipient = tradeOptionsViewItem?.recipient {
+            recipientCell.isVisible = true
+            recipientCell.value = recipient
+        } else {
+            recipientCell.isVisible = false
+        }
+
+        reloadTable()
     }
 
     private func handle(proceedAllowed: Bool) {
         buttonCell.set(enabled: proceedAllowed)
     }
 
-    @objc func onSettingsButtonTouchUp() {
+    @objc func onTapButton() {
         let viewController = SwapTradeOptionsModule.viewController(tradeService: viewModel.tradeService)
         present(viewController, animated: true)
+    }
+
+    private func reloadTable() {
+        UIView.animate(withDuration: 0.1) {
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+        }
     }
 
 }
@@ -137,7 +189,6 @@ extension SwapViewControllerNew: SectionsDataSource {
 
         sections.append(Section(
                 id: "main",
-                footerState: .margin(height: .margin3x),
                 rows: [
                     StaticRow(
                             cell: fromCoinCardCell,
@@ -157,83 +208,53 @@ extension SwapViewControllerNew: SectionsDataSource {
                 ]
         ))
 
-        var infoRows = [RowProtocol]()
-
-        if let slippage = tradeOptionsViewItem?.slippage {
-            infoRows.append(Row<AdditionalDataCell>(
-                    id: "guaranteed-amount",
-                    hash: slippage,
-                    height: AdditionalDataCell.height,
-                    bind: { cell, _ in
-                        cell.bind(title: "swap.advanced_settings.slippage".localized, value: slippage)
-                        cell.set(valueColor: .themeGray)
-                    }
-            ))
-        }
-        if let deadline = tradeOptionsViewItem?.deadline {
-            infoRows.append(Row<AdditionalDataCell>(
-                    id: "guaranteed-amount",
-                    hash: deadline,
-                    height: AdditionalDataCell.height,
-                    bind: { cell, _ in
-                        cell.bind(title: "swap.advanced_settings.deadline".localized, value: deadline)
-                        cell.set(valueColor: .themeGray)
-                    }
-            ))
-        }
-        if let recipient = tradeOptionsViewItem?.recipient {
-            infoRows.append(Row<AdditionalDataCell>(
-                    id: "recipient",
-                    hash: recipient,
-                    height: AdditionalDataCell.height,
-                    bind: { cell, _ in
-                        cell.bind(title: "swap.advanced_settings.recipient_address".localized, value: recipient)
-                        cell.set(valueColor: .themeGray)
-                    }
-            ))
-        }
-
-        if allowanceCell.isVisible {
-            infoRows.append(StaticRow(
-                    cell: allowanceCell,
-                    id: "allowance",
-                    height: SwapAllowanceCell.height
-            ))
-        }
-
-        if let tradeViewItem = tradeViewItem {
-            if let priceImpact = tradeViewItem.priceImpact {
-                infoRows.append(Row<AdditionalDataCell>(
-                        id: "price-impact",
-                        hash: tradeViewItem.priceImpact,
-                        height: AdditionalDataCell.height,
-                        bind: { cell, _ in
-                            cell.bind(title: "swap.price_impact".localized, value: priceImpact)
-
-                            let index = tradeViewItem.priceImpactLevel.rawValue % SwapViewControllerNew.levelColors.count
-                            cell.set(valueColor: SwapViewControllerNew.levelColors[index])
-                        }
-                ))
-            }
-            if let minMaxAmount = tradeViewItem.minMaxAmount {
-                infoRows.append(Row<AdditionalDataCell>(
-                        id: "guaranteed-amount",
-                        hash: tradeViewItem.minMaxAmount,
-                        height: AdditionalDataCell.height,
-                        bind: { cell, _ in
-                            cell.bind(title: tradeViewItem.minMaxTitle, value: minMaxAmount)
-                            cell.set(valueColor: .themeGray)
-                        }
-                ))
-            }
-        }
-
-        if !infoRows.isEmpty {
-            sections.append(Section(
-                    id: "info",
-                    rows: infoRows
-            ))
-        }
+        sections.append(Section(
+                id: "info",
+                rows: [
+                    StaticRow(
+                            cell: slippageCell,
+                            id: "slippage",
+                            dynamicHeight: { [weak self] _ in
+                                self?.slippageCell.cellHeight ?? 0
+                            }
+                    ),
+                    StaticRow(
+                            cell: deadlineCell,
+                            id: "deadline",
+                            dynamicHeight: { [weak self] _ in
+                                self?.deadlineCell.cellHeight ?? 0
+                            }
+                    ),
+                    StaticRow(
+                            cell: recipientCell,
+                            id: "recipient",
+                            dynamicHeight: { [weak self] _ in
+                                self?.recipientCell.cellHeight ?? 0
+                            }
+                    ),
+                    StaticRow(
+                            cell: allowanceCell,
+                            id: "allowance",
+                            dynamicHeight: { [weak self] _ in
+                                self?.allowanceCell.cellHeight ?? 0
+                            }
+                    ),
+                    StaticRow(
+                            cell: priceImpactCell,
+                            id: "price-impact",
+                            dynamicHeight: { [weak self] _ in
+                                self?.priceImpactCell.cellHeight ?? 0
+                            }
+                    ),
+                    StaticRow(
+                            cell: guaranteedAmountCell,
+                            id: "guaranteed-amount",
+                            dynamicHeight: { [weak self] _ in
+                                self?.guaranteedAmountCell.cellHeight ?? 0
+                            }
+                    )
+                ]
+        ))
 
         sections.append(Section(
                 id: "fee",
@@ -246,11 +267,12 @@ extension SwapViewControllerNew: SectionsDataSource {
                     StaticRow(
                             cell: feePriorityCell,
                             id: "fee-priority",
-                            height: feePriorityCell.currentHeight
+                            dynamicHeight: { [weak self] _ in
+                                self?.feePriorityCell.currentHeight ?? 0
+                            }
                     )
                 ]
         ))
-
 
         sections.append(Section(
                 id: "advanced_settings",
@@ -264,11 +286,12 @@ extension SwapViewControllerNew: SectionsDataSource {
                                 cell.title  = "swap.advanced_settings".localized
                             },
                             action: { [weak self] _ in
-                                self?.onSettingsButtonTouchUp()
+                                self?.onTapButton()
                             }
                     ),
                 ]
         ))
+
         sections.append(Section(
                 id: "button",
                 rows: [
@@ -320,7 +343,7 @@ extension SwapViewControllerNew: ISendFeePriorityCellDelegate {
     }
 
     func onChangeHeight() {
-        tableView.reload()
+        reloadTable()
     }
 
 }
