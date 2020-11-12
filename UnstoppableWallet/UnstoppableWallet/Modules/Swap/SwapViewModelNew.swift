@@ -9,6 +9,9 @@ class SwapViewModelNew {
 
     public let service: SwapServiceNew
     public let tradeService: SwapTradeService
+    public let transactionService: EthereumTransactionService
+
+    public let viewItemHelper: SwapViewItemHelper
 
     private var isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private var swapErrorRelay = BehaviorRelay<String?>(value: nil)
@@ -16,9 +19,11 @@ class SwapViewModelNew {
     private var tradeOptionsViewItemRelay = BehaviorRelay<TradeOptionsViewItem?>(value: nil)
     private var proceedAllowedRelay = BehaviorRelay<Bool>(value: false)
 
-    init(service: SwapServiceNew, tradeService: SwapTradeService) {
+    init(service: SwapServiceNew, tradeService: SwapTradeService, transactionService: EthereumTransactionService, viewItemHelper: SwapViewItemHelper) {
         self.service = service
         self.tradeService = tradeService
+        self.transactionService = transactionService
+        self.viewItemHelper = viewItemHelper
 
         subscribeToService()
 
@@ -63,25 +68,18 @@ class SwapViewModelNew {
     }
 
     private func tradeViewItem(trade: SwapTradeService.Trade) -> TradeViewItem {
-        let minMaxCoin = trade.tradeData.type == .exactIn ? tradeService.coinOut : tradeService.coinIn
-        let minMaxCoinValue = minMaxCoin.map { CoinValue(coin: $0, value: trade.minMaxAmount ?? 0) }
-
-        return TradeViewItem(
-                executionPrice: "Ex price",
-                priceImpact: "\(trade.tradeData.priceImpact ?? 0)%",
+        TradeViewItem(
+                executionPrice: viewItemHelper.priceValue(executionPrice: trade.minMaxAmount, coinIn: tradeService.coinIn, coinOut: tradeService.coinOut)?.formattedString,
+                priceImpact: viewItemHelper.impactPrice(trade.tradeData.priceImpact),
                 priceImpactLevel: trade.impactLevel,
-                minMaxTitle: (trade.tradeData.type == .exactOut ? "swap.maximum_paid" : "swap.minimum_got").localized,
-                minMaxAmount: minMaxCoinValue?.formattedString
+                minMaxTitle: viewItemHelper.minMaxTitle(type: trade.tradeData.type).localized,
+                minMaxAmount: viewItemHelper.minMaxValue(amount: trade.minMaxAmount, coinIn: tradeService.coinIn, coinOut: tradeService.coinOut, type: trade.tradeData.type)?.formattedString
         )
     }
 
     private func tradeOptionsViewItem(tradeOptions: TradeOptions) -> TradeOptionsViewItem {
-        let slippageString = tradeOptions.allowedSlippage == TradeOptions.defaultSlippage ? nil : "\(tradeOptions.allowedSlippage)%"
-        let deadline = Decimal(floatLiteral: floor(tradeOptions.ttl / 60))
-        let deadlineString = tradeOptions.ttl == TradeOptions.defaultTtl ? nil : "swap.advanced_settings.deadline_minute".localized(deadline.description)
-
-        return TradeOptionsViewItem(slippage: slippageString,
-            deadline: deadlineString,
+        TradeOptionsViewItem(slippage: viewItemHelper.slippage(tradeOptions.allowedSlippage),
+            deadline: viewItemHelper.deadline(tradeOptions.ttl),
             recipient: tradeOptions.recipient?.hex)
     }
 

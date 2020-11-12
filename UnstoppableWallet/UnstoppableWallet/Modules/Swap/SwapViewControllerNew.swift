@@ -91,7 +91,9 @@ class SwapViewControllerNew: ThemeViewController {
         priceImpactCell.title = "swap.price_impact".localized
 
         buttonCell.bind(style: .primaryYellow, title: "Proceed") {
-            // todo
+            let viewController = SwapConfirmationModule.viewController(tradeService: self.viewModel.tradeService, transactionService: self.viewModel.transactionService)
+            self.navigationController?
+                    .pushViewController(viewController, animated: true)
         }
 
         subscribeToViewModel()

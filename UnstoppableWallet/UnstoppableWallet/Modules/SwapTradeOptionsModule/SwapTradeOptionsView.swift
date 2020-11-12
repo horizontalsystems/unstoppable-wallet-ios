@@ -44,7 +44,7 @@ class SwapTradeOptionsView: ThemeViewController {
         super.viewDidLoad()
 
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(closeDidTap))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(closeDidTap))
         title = "swap.advanced_settings".localized
 
         view.addSubview(tableView)
@@ -65,7 +65,7 @@ class SwapTradeOptionsView: ThemeViewController {
         tableView.allowsSelection = false
         tableView.keyboardDismissMode = .onDrag
 
-        buttonCell.bind(style: .primaryYellow, title: "button.done".localized) { [weak self] in
+        buttonCell.bind(style: .primaryYellow, title: "button.apply".localized) { [weak self] in
             self?.doneDidTap()
         }
 

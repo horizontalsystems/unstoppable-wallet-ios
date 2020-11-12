@@ -20,6 +20,8 @@ class SwapFromCoinCardViewModel: SwapCoinCardViewModel {
 
         update(amount: tradeService.amountIn)
         handle(coin: tradeService.coinIn)
+        handle(balance: service.balanceIn)
+
         subscribe(disposeBag, tradeService.amountInObservable) { [weak self] in self?.update(amount: $0) }
         subscribe(disposeBag, tradeService.coinInObservable) { [weak self] in self?.handle(coin: $0) }
         subscribe(disposeBag, service.balanceInObservable) { [weak self] in self?.handle(balance: $0) }
