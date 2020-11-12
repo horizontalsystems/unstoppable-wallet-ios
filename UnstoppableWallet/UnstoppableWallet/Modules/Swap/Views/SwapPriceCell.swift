@@ -3,7 +3,7 @@ import RxSwift
 import HUD
 
 class SwapPriceCell: UITableViewCell {
-    let cellHeight: CGFloat = 48
+    let cellHeight: CGFloat = 24
 
     private static let spinnerRadius: CGFloat = 8
     private static let spinnerLineWidth: CGFloat = 2

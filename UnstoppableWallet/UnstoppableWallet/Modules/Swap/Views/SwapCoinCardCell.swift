@@ -3,16 +3,14 @@ import ThemeKit
 import RxSwift
 
 class SwapCoinCardCell: UITableViewCell {
-    let cellHeight: CGFloat = 129
-
-    private static let insets = UIEdgeInsets.zero
+    let cellHeight: CGFloat = 129 + 2 * .margin3x
 
     private let disposeBag = DisposeBag()
 
     private let viewModel: SwapCoinCardViewModel
     weak var presentDelegate: IPresentDelegate?
 
-    private let cardView = CardView(insets: SwapCoinCardCell.insets)
+    private let cardView = CardView(insets: .zero)
 
     private let titleLabel = UILabel()
     private let badgeView = BadgeView()
@@ -35,10 +33,10 @@ class SwapCoinCardCell: UITableViewCell {
         contentView.addSubview(cardView)
         cardView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.bottom.equalToSuperview()
+            maker.top.bottom.equalToSuperview().inset(CGFloat.margin3x)
         }
 
-        cardView.addSubview(titleLabel)
+        cardView.contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(CGFloat.margin3x)
             maker.leading.equalToSuperview().inset(CGFloat.margin4x)
@@ -48,7 +46,7 @@ class SwapCoinCardCell: UITableViewCell {
         titleLabel.font = .body
         titleLabel.textColor = .themeOz
 
-        cardView.addSubview(badgeView)
+        cardView.contentView.addSubview(badgeView)
         badgeView.snp.makeConstraints { maker in
             maker.centerY.equalTo(titleLabel)
             maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin2x)
@@ -57,7 +55,7 @@ class SwapCoinCardCell: UITableViewCell {
         badgeView.set(text: "swap.estimated".localized.uppercased())
         badgeView.isHidden = true
 
-        cardView.addSubview(paddingView)
+        cardView.contentView.addSubview(paddingView)
         paddingView.snp.makeConstraints { maker in
             maker.centerY.equalTo(badgeView)
             maker.leading.equalTo(badgeView.snp.trailing).offset(CGFloat.margin2x)
@@ -67,7 +65,7 @@ class SwapCoinCardCell: UITableViewCell {
         paddingView.setContentHuggingPriority(.defaultLow, for: .horizontal)
         paddingView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-        cardView.addSubview(tokenSelectButton)
+        cardView.contentView.addSubview(tokenSelectButton)
         tokenSelectButton.snp.makeConstraints { maker in
             maker.top.equalToSuperview()
             maker.height.equalTo(CGFloat.heightSingleLineCell)
@@ -86,7 +84,7 @@ class SwapCoinCardCell: UITableViewCell {
         tokenSelectButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: .margin6x, bottom: 0, right: .margin4x)
         tokenSelectButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -.margin2x, bottom: 0, right: .margin2x)
 
-        cardView.addSubview(inputFieldWrapper)
+        cardView.contentView.addSubview(inputFieldWrapper)
         inputFieldWrapper.snp.makeConstraints { maker in
             maker.top.equalTo(tokenSelectButton.snp.bottom)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin2x)
@@ -117,11 +115,10 @@ class SwapCoinCardCell: UITableViewCell {
                 })
                 .disposed(by: disposeBag)
 
-        cardView.addSubview(balanceView)
+        cardView.contentView.addSubview(balanceView)
         balanceView.snp.makeConstraints { maker in
             maker.top.equalTo(inputFieldWrapper.snp.bottom).offset(CGFloat.margin3x)
             maker.leading.trailing.equalToSuperview()
-            //            maker.bottom.equalToSuperview()
         }
 
         subscribeToViewModel()
