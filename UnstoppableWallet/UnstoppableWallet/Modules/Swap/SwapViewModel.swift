@@ -27,7 +27,7 @@ class SwapViewModel {
     private let disposeBag = DisposeBag()
 
     private let service: SwapService
-    private let factory: SwapViewItemFactory
+    private let factory: SwapViewItemHelper
     private let decimalParser: IAmountDecimalParser
 
     private var isLoadingRelay = BehaviorRelay<Bool>(value: false)
@@ -72,7 +72,7 @@ class SwapViewModel {
 //        SwapTradeOptionsViewModel(service: SwapTradeOptionsService(tradeOptions: service.tradeOptions), tradeService: tra, decimalParser: AmountDecimalParser())
     }
 
-    init(service: SwapService, factory: SwapViewItemFactory, decimalParser: IAmountDecimalParser) {
+    init(service: SwapService, factory: SwapViewItemHelper, decimalParser: IAmountDecimalParser) {
         self.service = service
         self.factory = factory
         self.decimalParser = decimalParser
@@ -95,12 +95,7 @@ class SwapViewModel {
             return nil
         }
 
-        return SwapModule.TradeViewItem(
-            executionPrice: factory.string(executionPrice: item.executionPrice, coinIn: item.coinIn, coinOut: item.coinOut),
-            priceImpact: factory.string(impactPrice: item.priceImpact),
-            priceImpactLevel: item.priceImpactLevel,
-            minMaxTitle: factory.minMaxTitle(type: item.type, coinOut: item.coinOut),
-            minMaxAmount: factory.minMaxValue(amount: item.minMaxAmount, coinIn: item.coinIn, coinOut: item.coinOut, type: item.type))
+        fatalError()
     }
 
     private func resolveTrade(error: Error?) -> Error? {

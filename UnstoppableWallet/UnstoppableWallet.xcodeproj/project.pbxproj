@@ -1475,18 +1475,18 @@
 		3C7B9238F4E71EB3A358C961 /* WelcomeScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B99396FD9BBA3E8E3715F /* WelcomeScreenInteractor.swift */; };
 		3C7B92BBA978401F035B8CAC /* SwapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9F9A74156E9642605772 /* SwapViewModel.swift */; };
 		3C7B92C9DFF8A4A5940B3F93 /* SettingsDisclosureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9F14F757FE49C0975876 /* SettingsDisclosureView.swift */; };
-		3C7B92ECEA4C4B005E1E6618 /* SwapViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B90282B09BCEF768A64D3 /* SwapViewItemFactory.swift */; };
+		3C7B92ECEA4C4B005E1E6618 /* SwapViewItemHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B90282B09BCEF768A64D3 /* SwapViewItemHelper.swift */; };
 		3C7B9332423F320A74F69354 /* WelcomeScreenModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B92FD9F4CEC1CBB31B5A7 /* WelcomeScreenModule.swift */; };
 		3C7B936067D1C0A7CDC2635D /* UrlManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94F32F315F4F753D89AD /* UrlManager.swift */; };
 		3C7B9469B45EA1720D7FA071 /* WelcomeScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B95EF8087307F8266483C /* WelcomeScreenRouter.swift */; };
 		3C7B94B65E1C445819714F84 /* WelcomeScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9537271B4937DF028FEC /* WelcomeScreenPresenter.swift */; };
-		3C7B94BA8FFF13367E4DB77A /* SwapViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B90282B09BCEF768A64D3 /* SwapViewItemFactory.swift */; };
+		3C7B94BA8FFF13367E4DB77A /* SwapViewItemHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B90282B09BCEF768A64D3 /* SwapViewItemHelper.swift */; };
 		3C7B95CD8DC991FF890AC487 /* BackupConfirmationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94C6548A52D8576B8138 /* BackupConfirmationInteractor.swift */; };
 		3C7B9663B3AF4B2A8D7E8A46 /* WelcomeScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B95EF8087307F8266483C /* WelcomeScreenRouter.swift */; };
 		3C7B989E186C799AC2FD49F1 /* WelcomeScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9537271B4937DF028FEC /* WelcomeScreenPresenter.swift */; };
 		3C7B98EAF59280801E6583FD /* SwapModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94FF3EA2D191FBF77B12 /* SwapModule.swift */; };
 		3C7B993C4BDE65E87BE5A429 /* SwapModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94FF3EA2D191FBF77B12 /* SwapModule.swift */; };
-		3C7B99C86ECAE923A48196EE /* SwapViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B90282B09BCEF768A64D3 /* SwapViewItemFactory.swift */; };
+		3C7B99C86ECAE923A48196EE /* SwapViewItemHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B90282B09BCEF768A64D3 /* SwapViewItemHelper.swift */; };
 		3C7B99D3D6AE0B1C0D8E5F09 /* UrlManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94F32F315F4F753D89AD /* UrlManager.swift */; };
 		3C7B9A545980D8C1DE8D8E40 /* SendFeeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9CD0F1A682A3ED03DD43 /* SendFeeCell.swift */; };
 		3C7B9A553D6E06BE44720EF1 /* SwapModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94FF3EA2D191FBF77B12 /* SwapModule.swift */; };
@@ -2798,7 +2798,7 @@
 		3AF9F617253EF555000626A8 /* ZcashTransactionPool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZcashTransactionPool.swift; sourceTree = "<group>"; };
 		3AF9F618253EF555000626A8 /* ZcashAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZcashAdapter.swift; sourceTree = "<group>"; };
 		3AF9F619253EF555000626A8 /* ZcashTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZcashTransaction.swift; sourceTree = "<group>"; };
-		3C7B90282B09BCEF768A64D3 /* SwapViewItemFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapViewItemFactory.swift; sourceTree = "<group>"; };
+		3C7B90282B09BCEF768A64D3 /* SwapViewItemHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapViewItemHelper.swift; sourceTree = "<group>"; };
 		3C7B921FCC08FBEB38040D0A /* SwapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapViewController.swift; sourceTree = "<group>"; };
 		3C7B92FD9F4CEC1CBB31B5A7 /* WelcomeScreenModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeScreenModule.swift; sourceTree = "<group>"; };
 		3C7B94C6548A52D8576B8138 /* BackupConfirmationInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupConfirmationInteractor.swift; sourceTree = "<group>"; };
@@ -4525,7 +4525,7 @@
 				58AAA6D30B57AD2A960DEEA7 /* Views */,
 				58AAA614CBD8EBECD8EE5029 /* ViewModels */,
 				58AAACF9F67C579CBB8B50C8 /* SwapConfirmationView.swift */,
-				3C7B90282B09BCEF768A64D3 /* SwapViewItemFactory.swift */,
+				3C7B90282B09BCEF768A64D3 /* SwapViewItemHelper.swift */,
 				58AAA3DF45E8C7511F41C660 /* ContainerState.swift */,
 				11B3551720C79A077888F5AE /* SwapServiceNew.swift */,
 				11B35E6C6ED8DC8D42FB9471 /* SwapTradeService.swift */,
@@ -6211,7 +6211,7 @@
 				2FA5D1245A2089FF1B64DEC2 /* FeeModule.swift in Sources */,
 				58AAA86D6C445955350A702B /* SwapConfirmationView.swift in Sources */,
 				58AAAC2846EC9BFCF332EA86 /* SwapConfirmationViewModel.swift in Sources */,
-				3C7B92ECEA4C4B005E1E6618 /* SwapViewItemFactory.swift in Sources */,
+				3C7B92ECEA4C4B005E1E6618 /* SwapViewItemHelper.swift in Sources */,
 				11B356C10D87080725B489C4 /* ManageWalletsService.swift in Sources */,
 				11B35831F40B1FD2C53B7D92 /* ManageWalletsViewModel.swift in Sources */,
 				58AAA3C07FAF807A863F4CAE /* SwapFeeRepository.swift in Sources */,
@@ -6981,7 +6981,7 @@
 				2FA5DFABFEE9969A23A44925 /* FeeModule.swift in Sources */,
 				58AAA191D3AC4562FBED52A2 /* SwapConfirmationView.swift in Sources */,
 				58AAA51FA8BF986407A03FD9 /* SwapConfirmationViewModel.swift in Sources */,
-				3C7B94BA8FFF13367E4DB77A /* SwapViewItemFactory.swift in Sources */,
+				3C7B94BA8FFF13367E4DB77A /* SwapViewItemHelper.swift in Sources */,
 				58AAA1B69BBF28154DB51D6B /* SwapFeeRepository.swift in Sources */,
 				11B35ECD30CF372165CBE7D7 /* ManageWalletsService.swift in Sources */,
 				11B35E814CAC65E6BABA3D2C /* ManageWalletsViewModel.swift in Sources */,
@@ -7713,7 +7713,7 @@
 				2FA5D5576E70AF838C7B93BB /* FeeModule.swift in Sources */,
 				58AAA487FB731A3981208B26 /* SwapConfirmationView.swift in Sources */,
 				58AAA48C1DF6CB54DAA0E947 /* SwapConfirmationViewModel.swift in Sources */,
-				3C7B99C86ECAE923A48196EE /* SwapViewItemFactory.swift in Sources */,
+				3C7B99C86ECAE923A48196EE /* SwapViewItemHelper.swift in Sources */,
 				58AAA4E263CF01320C3EE117 /* SwapFeeRepository.swift in Sources */,
 				11B3563416F0CCA6AF376011 /* ManageWalletsService.swift in Sources */,
 				11B3538CD45F8761DE239355 /* ManageWalletsViewModel.swift in Sources */,
