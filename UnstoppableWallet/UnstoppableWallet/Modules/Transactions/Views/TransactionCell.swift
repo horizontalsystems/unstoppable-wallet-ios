@@ -22,50 +22,80 @@ class TransactionCell: ClaudeThemeCell {
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        contentView.addSubview(typeIconImageView)
-        typeIconImageView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(CGFloat.margin3x)
-            maker.top.equalToSuperview().offset(CGFloat.margin3x)
-        }
-        typeIconImageView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        typeIconImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        let wrapperView = UIView()
 
-        contentView.addSubview(doubleSpendImageView)
+        wrapperView.addSubview(typeIconImageView)
+        typeIconImageView.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().inset(CGFloat.margin3x)
+            maker.top.equalToSuperview().inset(CGFloat.margin3x)
+        }
+        typeIconImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
+        typeIconImageView.setContentHuggingPriority(.required, for: .horizontal)
+
+        wrapperView.addSubview(doubleSpendImageView)
         doubleSpendImageView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
             maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
         }
         doubleSpendImageView.image = UIImage(named: "Transaction Double Spend Icon")
-        doubleSpendImageView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        doubleSpendImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        doubleSpendImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
+        doubleSpendImageView.setContentHuggingPriority(.required, for: .horizontal)
         doubleSpendImageView.isHidden = true
 
-        dateLabel.font = .body
-        dateLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        dateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        contentView.addSubview(dateLabel)
+        wrapperView.addSubview(failedLabel)
+        failedLabel.snp.makeConstraints { maker in
+            maker.leading.equalTo(typeIconImageView.snp.trailing).offset(CGFloat.margin3x)
+            maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
+        }
+        failedLabel.font = .subhead2
+        failedLabel.textColor = .themeLucian
+        failedLabel.text = "transactions.failed".localized
+
+        wrapperView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(typeIconImageView.snp.trailing).offset(CGFloat.margin3x)
-            maker.top.equalToSuperview().offset(CGFloat.margin3x)
+            maker.trailing.lessThanOrEqualToSuperview().inset(CGFloat.margin3x)
+            maker.top.equalToSuperview().inset(CGFloat.margin3x)
+        }
+        dateLabel.font = .body
+        dateLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+        dateLabel.setContentHuggingPriority(.required, for: .horizontal)
+
+        wrapperView.addSubview(completedView)
+        completedView.snp.makeConstraints { maker in
+            maker.leading.equalTo(typeIconImageView.snp.trailing).offset(CGFloat.margin3x)
+            maker.trailing.lessThanOrEqualToSuperview().inset(CGFloat.margin3x)
+            maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
         }
 
-        currencyAmountLabel.font = .systemFont(ofSize: 22, weight: .semibold)
-        currencyAmountLabel.textAlignment = .right
+        wrapperView.addSubview(processingView)
+        processingView.snp.makeConstraints { maker in
+            maker.leading.equalTo(typeIconImageView.snp.trailing).offset(CGFloat.margin3x)
+            maker.trailing.lessThanOrEqualToSuperview().inset(CGFloat.margin3x)
+            maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
+        }
+
+        contentView.addSubview(wrapperView)
+        wrapperView.snp.makeConstraints { maker in
+            maker.leading.top.bottom.equalToSuperview()
+        }
+
         contentView.addSubview(currencyAmountLabel)
         currencyAmountLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.dateLabel.snp.trailing).offset(CGFloat.margin3x)
+            maker.leading.equalTo(wrapperView.snp.trailing).offset(CGFloat.margin3x)
             maker.top.equalToSuperview().offset(CGFloat.margin3x)
         }
+        currencyAmountLabel.font = .systemFont(ofSize: 22, weight: .semibold)
+        currencyAmountLabel.textAlignment = .right
 
         contentView.addSubview(lockImageView)
         lockImageView.snp.makeConstraints { maker in
-            maker.leading.equalTo(currencyAmountLabel.snp.trailing)
+            maker.leading.equalTo(currencyAmountLabel.snp.trailing).offset(CGFloat.margin3x)
             maker.top.equalToSuperview().inset(CGFloat.margin4x)
             maker.size.equalTo(0)
         }
         lockImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
-        sentToSelfImageView.image = UIImage(named: "Transaction In Icon")
         contentView.addSubview(sentToSelfImageView)
         sentToSelfImageView.snp.makeConstraints { maker in
             maker.leading.equalTo(lockImageView.snp.trailing)
@@ -74,36 +104,16 @@ class TransactionCell: ClaudeThemeCell {
             maker.size.equalTo(0)
         }
         sentToSelfImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        sentToSelfImageView.image = UIImage(named: "Transaction In Icon")
 
-        amountLabel.font = .subhead2
-        amountLabel.textAlignment = .right
         contentView.addSubview(amountLabel)
         amountLabel.snp.makeConstraints { maker in
-            maker.bottom.equalToSuperview().offset(-CGFloat.margin3x)
+            maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
+            maker.leading.equalTo(wrapperView.snp.trailing).offset(CGFloat.margin3x)
             maker.trailing.equalTo(contentView.snp.trailingMargin)
         }
-
-        contentView.addSubview(processingView)
-        processingView.snp.makeConstraints { maker in
-            maker.leading.equalTo(typeIconImageView.snp.trailing).offset(CGFloat.margin3x)
-            maker.centerY.equalTo(amountLabel)
-        }
-
-        contentView.addSubview(completedView)
-        completedView.snp.makeConstraints { maker in
-            maker.leading.equalTo(typeIconImageView.snp.trailing).offset(CGFloat.margin3x)
-            maker.centerY.equalTo(amountLabel)
-        }
-
-        contentView.addSubview(failedLabel)
-        failedLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(typeIconImageView.snp.trailing).offset(CGFloat.margin3x)
-            maker.centerY.equalTo(amountLabel)
-        }
-
-        failedLabel.font = .subhead2
-        failedLabel.textColor = .themeLucian
-        failedLabel.text = "transactions.failed".localized
+        amountLabel.font = .subhead2
+        amountLabel.textAlignment = .right
     }
 
     required init?(coder aDecoder: NSCoder) {

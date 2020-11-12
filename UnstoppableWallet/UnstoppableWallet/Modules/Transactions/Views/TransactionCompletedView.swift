@@ -12,17 +12,18 @@ class TransactionCompletedView: UIView {
         timeLabel.snp.makeConstraints { maker in
             maker.leading.top.bottom.equalToSuperview()
         }
+        timeLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+        timeLabel.textColor = .themeGray
+        timeLabel.font = .subhead2
 
         addSubview(completedImageView)
         completedImageView.snp.makeConstraints { maker in
             maker.leading.equalTo(timeLabel.snp.trailing).offset(CGFloat.margin2x)
+            maker.trailing.equalToSuperview()
             maker.centerY.equalTo(timeLabel)
         }
-
         completedImageView.image = UIImage(named: "Transaction Success Icon")
-
-        timeLabel.textColor = .themeGray
-        timeLabel.font = .subhead2
+        completedImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
     }
 
     required init?(coder aDecoder: NSCoder) {
