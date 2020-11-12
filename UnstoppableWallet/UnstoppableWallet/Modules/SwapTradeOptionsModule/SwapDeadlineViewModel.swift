@@ -37,10 +37,6 @@ class SwapDeadlineViewModel {
         valueRelay.accept(toString(service.recommendedDeadlineBounds.upperBound))
     }
 
-    private func map(_ deadline: TimeInterval) -> String {
-        [toString(deadline), "swap.advanced_settings.deadline_minute".localized].joined(separator: " ")
-    }
-
 }
 
 extension SwapDeadlineViewModel: IVerifiedInputViewModel {
@@ -48,10 +44,10 @@ extension SwapDeadlineViewModel: IVerifiedInputViewModel {
     var inputFieldButtonItems: [InputFieldButtonItem] {
         let bounds = service.recommendedDeadlineBounds
         return [
-            InputFieldButtonItem(style: .secondaryDefault, title: map(bounds.lowerBound), visible: .onEmpty) { [weak self] in
+            InputFieldButtonItem(style: .secondaryDefault, title: "swap.advanced_settings.deadline_minute".localized(toString(bounds.lowerBound)), visible: .onEmpty) { [weak self] in
                 self?.onLeftButtonTapped()
             },
-            InputFieldButtonItem(style: .secondaryDefault, title: map(bounds.upperBound), visible: .onEmpty) { [weak self] in
+            InputFieldButtonItem(style: .secondaryDefault, title: "swap.advanced_settings.deadline_minute".localized(toString(bounds.upperBound)), visible: .onEmpty) { [weak self] in
                 self?.onRightButtonTapped()
             }
         ]

@@ -148,7 +148,10 @@ class VerifiedInputCell: UITableViewCell {
         cautionLabel.numberOfLines = 0
         cautionLabelWrapper.isHidden = true
 
-        subscribe(disposeBag, viewModel.inputFieldValueDriver) { [weak self] in self?.inputFieldText = $0 }
+        subscribe(disposeBag, viewModel.inputFieldValueDriver) { [weak self] in
+            self?.inputFieldText = $0
+            self?.viewModel.inputFieldDidChange(text: $0)
+        }
         subscribe(disposeBag, viewModel.inputFieldCautionDriver) { [weak self] in self?.set(caution: $0) }
 
         let buttons = [
