@@ -173,8 +173,8 @@ extension Erc20Adapter: ISendEthereumAdapter {
 
 extension Erc20Adapter: IErc20Adapter {
 
-    func allowanceSingle(spenderAddress: Address) -> Single<Decimal> {
-        erc20Kit.allowanceSingle(spenderAddress: spenderAddress)
+    func allowanceSingle(spenderAddress: Address, defaultBlockParameter: DefaultBlockParameter = .latest) -> Single<Decimal> {
+        erc20Kit.allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: defaultBlockParameter)
                 .map { [unowned self] allowanceString in
                     if let significand = Decimal(string: allowanceString) {
                         return Decimal(sign: .plus, exponent: -self.decimal, significand: significand)

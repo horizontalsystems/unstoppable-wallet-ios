@@ -156,7 +156,7 @@ protocol ISendEthereumAdapter {
 protocol IErc20Adapter {
     var ethereumBalance: Decimal { get }
     func fee(gasPrice: Int, gasLimit: Int) -> Decimal
-    func allowanceSingle(spenderAddress: Address) -> Single<Decimal>
+    func allowanceSingle(spenderAddress: Address, defaultBlockParameter: DefaultBlockParameter) -> Single<Decimal>
 }
 
 protocol ISendEosAdapter {

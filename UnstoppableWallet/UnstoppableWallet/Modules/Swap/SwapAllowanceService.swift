@@ -16,7 +16,9 @@ class SwapAllowanceService {
     private let stateRelay = PublishRelay<State?>()
     private(set) var state: State? {
         didSet {
-            stateRelay.accept(state)
+            if oldValue != state {
+                stateRelay.accept(state)
+            }
         }
     }
 
@@ -48,7 +50,7 @@ class SwapAllowanceService {
         }
 
         adapter
-                .allowanceSingle(spenderAddress: spenderAddress)
+                .allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: .latest)
                 .subscribe(onSuccess: { [weak self] allowance in
                     self?.state = .ready(allowance: allowance)
                 }, onError: { [weak self] error in
@@ -91,10 +93,18 @@ extension SwapAllowanceService {
 
 extension SwapAllowanceService {
 
-    enum State {
+    enum State: Equatable {
         case loading
         case ready(allowance: Decimal)
         case notReady(error: Error)
+
+        static func ==(lhs: State, rhs: State) -> Bool {
+            switch (lhs, rhs) {
+            case (.loading, .loading): return true
+            case (.ready(let lhsAllowance), .ready(let rhsAllowance)): return lhsAllowance == rhsAllowance
+            default: return false
+            }
+        }
     }
 
     struct ApproveData {

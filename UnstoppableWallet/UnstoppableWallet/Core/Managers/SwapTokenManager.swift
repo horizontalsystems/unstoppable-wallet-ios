@@ -66,7 +66,7 @@ extension SwapTokenManager: ISwapCoinManager {
             return .error(SendTransactionError.wrongAmount)     // todo: change
         }
 
-        return adapter.allowanceSingle(spenderAddress: spenderAddress)
+        return adapter.allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: .latest)
     }
 
 }

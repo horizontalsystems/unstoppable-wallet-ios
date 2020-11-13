@@ -11,6 +11,7 @@ class SwapServiceNew {
     private let ethereumKit: EthereumKit.Kit
     private let tradeService: SwapTradeService
     private let allowanceService: SwapAllowanceService
+    private let pendingAllowanceService: SwapPendingAllowanceService
     private let transactionService: EthereumTransactionService
     private let adapterManager: IAdapterManager
 
@@ -19,7 +20,9 @@ class SwapServiceNew {
     private let stateRelay = PublishRelay<State>()
     private(set) var state: State = .notReady {
         didSet {
-            stateRelay.accept(state)
+            if oldValue != state {
+                stateRelay.accept(state)
+            }
         }
     }
 
@@ -46,10 +49,11 @@ class SwapServiceNew {
         }
     }
 
-    init(ethereumKit: EthereumKit.Kit, tradeService: SwapTradeService, allowanceService: SwapAllowanceService, transactionService: EthereumTransactionService, adapterManager: IAdapterManager) {
+    init(ethereumKit: EthereumKit.Kit, tradeService: SwapTradeService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, transactionService: EthereumTransactionService, adapterManager: IAdapterManager) {
         self.ethereumKit = ethereumKit
         self.tradeService = tradeService
         self.allowanceService = allowanceService
+        self.pendingAllowanceService = pendingAllowanceService
         self.transactionService = transactionService
         self.adapterManager = adapterManager
 
@@ -89,6 +93,13 @@ class SwapServiceNew {
                 })
                 .disposed(by: disposeBag)
 
+        pendingAllowanceService.isPendingObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] _ in
+                    self?.syncState()
+                })
+                .disposed(by: disposeBag)
+
         transactionService.transactionStatusObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] _ in
@@ -122,6 +133,7 @@ class SwapServiceNew {
     private func onUpdate(coinIn: Coin?) {
         balanceIn = coinIn.flatMap { balance(coin: $0) }
         allowanceService.set(coin: coinIn)
+        pendingAllowanceService.set(coin: coinIn)
     }
 
     private func onUpdate(amountIn: Decimal?) {
@@ -173,6 +185,10 @@ class SwapServiceNew {
 
         if let amountIn = tradeService.amountIn, let balanceIn = balanceIn, amountIn > balanceIn {
             allErrors.append(SwapError.insufficientBalanceIn)
+        }
+
+        if pendingAllowanceService.isPending {
+            loading = true
         }
 
         errors = allErrors
