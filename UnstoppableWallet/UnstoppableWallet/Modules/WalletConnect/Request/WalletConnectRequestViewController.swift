@@ -146,14 +146,6 @@ extension WalletConnectRequestViewController: SectionsDataSource {
 
         feeRows.append(
                 StaticRow(
-                        cell: feeCell,
-                        id: "fee",
-                        height: 29
-                )
-        )
-
-        feeRows.append(
-                StaticRow(
                         cell: feePriorityCell,
                         id: "fee-priority",
                         height: feePriorityCell.currentHeight
@@ -167,13 +159,23 @@ extension WalletConnectRequestViewController: SectionsDataSource {
         return [
             Section(
                     id: "main",
-                    footerState: .margin(height: CGFloat.margin3x),
+                    footerState: .margin(height: 6),
                     rows: [amountRow] + viewItems.map { viewItem in
                         row(viewItem: viewItem)
                     }
             ),
+            Section(id: "fee",
+                    rows: [
+                        StaticRow(
+                                cell: feeCell,
+                                id: "fee",
+                                height: 29
+                        )
+                    ]
+            ),
             Section(
-                    id: "fee",
+                    id: "fee-priority",
+                    headerState: .margin(height: 6),
                     rows: feeRows
             )
         ]

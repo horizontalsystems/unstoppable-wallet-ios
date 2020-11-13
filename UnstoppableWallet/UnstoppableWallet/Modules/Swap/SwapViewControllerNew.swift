@@ -302,7 +302,13 @@ extension SwapViewControllerNew: SectionsDataSource {
                             cell: feeCell,
                             id: "fee",
                             height: 29
-                    ),
+                    )
+                ]
+        ))
+        sections.append(Section(
+                id: "fee-priority",
+                headerState: .margin(height: 6),
+                rows: [
                     StaticRow(
                             cell: feePriorityCell,
                             id: "fee-priority",
