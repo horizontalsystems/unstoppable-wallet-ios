@@ -12,7 +12,6 @@ class SwapPendingAllowanceService {
     private var pendingAllowance: Decimal?
 
     private let disposeBag = DisposeBag()
-    private var allowanceDisposeBag = DisposeBag()
 
     private let isPendingRelay = PublishRelay<Bool>()
     private(set) var isPending: Bool = false {
@@ -62,26 +61,21 @@ extension SwapPendingAllowanceService {
         self.coin = coin
         pendingAllowance = nil
 
-        sync()
         syncAllowance()
     }
 
     func syncAllowance() {
-        allowanceDisposeBag = DisposeBag()
-
         guard let coin = coin, let adapter = adapterManager.adapter(for: coin) as? IErc20Adapter else {
             return
         }
 
-        adapter
-                .allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: .pending)
-                .subscribe(onSuccess: { [weak self] allowance in
-                    self?.pendingAllowance = allowance
-                    self?.sync()
-                }, onError: { _ in
-                    // todo
-                })
-                .disposed(by: allowanceDisposeBag)
+        for transaction in adapter.pendingTransactions {
+            if transaction.type == .approve {
+                pendingAllowance = transaction.amount
+            }
+        }
+
+        sync()
     }
 
 }

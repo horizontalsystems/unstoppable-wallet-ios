@@ -51,6 +51,7 @@ class SwapAllowanceService {
 
         adapter
                 .allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: .latest)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] allowance in
                     self?.state = .ready(allowance: allowance)
                 }, onError: { [weak self] error in
