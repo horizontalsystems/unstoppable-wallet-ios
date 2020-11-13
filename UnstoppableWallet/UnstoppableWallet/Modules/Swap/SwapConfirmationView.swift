@@ -5,16 +5,10 @@ import ThemeKit
 import RxSwift
 import RxCocoa
 
-protocol ISwapConfirmationDelegate: class {
-    func onSwap()
-    func onCancel()
-}
-
-class SwapConfirmationView: ThemeViewController, SectionsDataSource {
+class SwapConfirmationView: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private let viewModel: SwapConfirmationViewModel
-//    private let delegate: ISwapConfirmationDelegate
     private let tableView = SectionsTableView(style: .grouped)
 
     private var amountViewItem: SwapModule.ConfirmationAmountViewItem?
@@ -30,18 +24,14 @@ class SwapConfirmationView: ThemeViewController, SectionsDataSource {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func subscribeToPresenter() {
+    private func subscribeToPresenter() {
 
-        subscribe(disposeBag, viewModel.isLoading) { [weak self] in self?.handleLoading() }
-        subscribe(disposeBag, viewModel.success) {
-            HudHelper.instance.showSuccess()
-        }
-        subscribe(disposeBag, viewModel.error) {
-            HudHelper.instance.showError(title: $0?.smartDescription)
-        }
+        subscribe(disposeBag, viewModel.loadingSignal) { HudHelper.instance.showSpinner(userInteractionEnabled: false) }
+        subscribe(disposeBag, viewModel.errorSignal) { HudHelper.instance.showError(title: $0.smartDescription) }
+        subscribe(disposeBag, viewModel.completedSignal) { [weak self] in self?.showSuccess() }
 
-        subscribe(disposeBag, viewModel.amountData) { [weak self] in self?.handle(amountData: $0) }
-        subscribe(disposeBag, viewModel.additionalData) { [weak self] in self?.handle(additionalData: $0) }
+        subscribe(disposeBag, viewModel.amountData) { [weak self] in self?.handle(amountViewItem: $0) }
+        subscribe(disposeBag, viewModel.additionalData) { [weak self] in self?.handle(additionalViewItems: $0) }
     }
 
     override func viewDidLoad() {
@@ -67,10 +57,6 @@ class SwapConfirmationView: ThemeViewController, SectionsDataSource {
 
 
         subscribeToPresenter()
-    }
-
-    @objc private func onTapCancel() {
-//        delegate.onCancel()
     }
 
     private var swapAmountSectionRows: [RowProtocol] {
@@ -108,6 +94,24 @@ class SwapConfirmationView: ThemeViewController, SectionsDataSource {
         return rows
     }
 
+    @objc private func onTapCancel() {
+        dismiss(animated: true)
+    }
+
+    private func onTapSwap() {
+        viewModel.swap()
+    }
+
+    private func showSuccess() {
+        HudHelper.instance.showSuccess()
+
+        dismiss(animated: true)
+    }
+
+}
+
+extension SwapConfirmationView: SectionsDataSource {
+
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
@@ -115,39 +119,27 @@ class SwapConfirmationView: ThemeViewController, SectionsDataSource {
         sections.append(Section(id: "swap_additional_data_section", headerState: .margin(height: .margin3x), rows: swapAdditionalDataRows))
         sections.append(Section(id: "button_section", rows: [
             Row<ButtonCell>(
-                    id: "swap_row",
-                    height: ButtonCell.height(style: .primaryYellow),
-                    bind: { [weak self] cell, _ in
-                        cell.bind(style: .primaryYellow, title: "swap.confirmation.swap_button".localized) { [weak self] in
-                            self?.onSwapTap()
-                        }
+                id: "swap_row",
+                height: ButtonCell.height(style: .primaryYellow),
+                bind: { [weak self] cell, _ in
+                    cell.bind(style: .primaryYellow, title: "swap.confirmation.swap_button".localized) { [weak self] in
+                        self?.onTapSwap()
                     }
+                }
             )
         ]))
 
         return sections
     }
 
-    private func onSwapTap() {
-//        delegate.onSwap()
-    }
-
-}
-
-extension SwapConfirmationView {
-
-    func handleLoading() {
-        HudHelper.instance.showSpinner()
-    }
-
-    func handle(amountData: SwapModule.ConfirmationAmountViewItem?) {
-        self.amountViewItem = amountData
+    func handle(amountViewItem: SwapModule.ConfirmationAmountViewItem?) {
+        self.amountViewItem = amountViewItem
 
         tableView.reload()
     }
 
-    func handle(additionalData: [SwapModule.ConfirmationAdditionalViewItem]) {
-        self.additionalViewItems = additionalData
+    func handle(additionalViewItems: [SwapModule.ConfirmationAdditionalViewItem]) {
+        self.additionalViewItems = additionalViewItems
 
         tableView.reload()
     }
