@@ -10,6 +10,7 @@ class SwapViewModelNew {
     public let service: SwapServiceNew
     public let tradeService: SwapTradeService
     public let transactionService: EthereumTransactionService
+    public let pendingAllowanceService: SwapPendingAllowanceService
 
     public let viewItemHelper: SwapViewItemHelper
 
@@ -22,10 +23,11 @@ class SwapViewModelNew {
 
     private var openApproveRelay = PublishRelay<SwapAllowanceService.ApproveData>()
 
-    init(service: SwapServiceNew, tradeService: SwapTradeService, transactionService: EthereumTransactionService, viewItemHelper: SwapViewItemHelper) {
+    init(service: SwapServiceNew, tradeService: SwapTradeService, transactionService: EthereumTransactionService, pendingAllowanceService: SwapPendingAllowanceService, viewItemHelper: SwapViewItemHelper) {
         self.service = service
         self.tradeService = tradeService
         self.transactionService = transactionService
+        self.pendingAllowanceService = pendingAllowanceService
         self.viewItemHelper = viewItemHelper
 
         subscribeToService()
@@ -40,6 +42,7 @@ class SwapViewModelNew {
         subscribe(disposeBag, service.errorsObservable) { [weak self] in self?.sync(errors: $0) }
         subscribe(disposeBag, tradeService.stateObservable) { [weak self] in self?.sync(tradeState: $0) }
         subscribe(disposeBag, tradeService.tradeOptionsObservable) { [weak self] in self?.sync(tradeOptions: $0) }
+        subscribe(disposeBag, pendingAllowanceService.isPendingObservable) { [weak self] _ in self?.syncApproveAction() }
     }
 
     private func sync(state: SwapServiceNew.State? = nil) {
@@ -54,8 +57,7 @@ class SwapViewModelNew {
 
         swapErrorRelay.accept(errors.first.map { $0.convertedError.smartDescription })
 
-        let isInsufficientAllowance = errors.contains(where: { .insufficientAllowance == $0 as? SwapServiceNew.SwapError })
-        approveActionRelay.accept(isInsufficientAllowance ? .visible : .hidden)
+        syncApproveAction()
     }
 
     private func sync(tradeState: SwapTradeService.State? = nil) {
@@ -71,6 +73,15 @@ class SwapViewModelNew {
 
     private func sync(tradeOptions: TradeOptions) {
         tradeOptionsViewItemRelay.accept(tradeOptionsViewItem(tradeOptions: tradeOptions))
+    }
+
+    private func syncApproveAction() {
+        if pendingAllowanceService.isPending == true {
+            approveActionRelay.accept(.pending)
+        } else {
+            let isInsufficientAllowance = service.errors.contains(where: { .insufficientAllowance == $0 as? SwapServiceNew.SwapError })
+            approveActionRelay.accept(isInsufficientAllowance ? .visible : .hidden)
+        }
     }
 
     private func tradeViewItem(trade: SwapTradeService.Trade) -> TradeViewItem {
@@ -134,7 +145,7 @@ extension SwapViewModelNew {
     }
 
     func didApprove() {
-//        service.didApprove()
+        pendingAllowanceService.syncAllowance()
     }
 
 }

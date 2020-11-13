@@ -389,6 +389,7 @@
 		11B3562025CA3BE32D3A52A9 /* WalletConnectSessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353AEAF26CD0805C2AE7D /* WalletConnectSessionStore.swift */; };
 		11B356317DD349AF86F54EC0 /* ManageAccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358B4DFC88B488F3BC039 /* ManageAccountsViewController.swift */; };
 		11B3563416F0CCA6AF376011 /* ManageWalletsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353E8B5933D7158BAFB7B /* ManageWalletsService.swift */; };
+		11B356368E9DC40BCC6B4026 /* SwapPendingAllowanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35ADE5F2019F7156BB1A9 /* SwapPendingAllowanceService.swift */; };
 		11B3563891975E13F3BE6DB8 /* SendHodlerLockTimeIntervalPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EC5DAFCA4D62D629DC8 /* SendHodlerLockTimeIntervalPresenter.swift */; };
 		11B356390DC1BC69920A1B5C /* AddErc20TokenModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358A5B2FA437E8B42584E /* AddErc20TokenModule.swift */; };
 		11B35639423C2AC426CB658E /* WalletConnectRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CD5EBBB403D46BDEF0B /* WalletConnectRequest.swift */; };
@@ -540,6 +541,7 @@
 		11B3587EF674C1E8EEE61DE7 /* GuideBlockQuoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3552D3F84BA594EFE964C /* GuideBlockQuoteCell.swift */; };
 		11B35883290BAA462C0B8F9D /* RateAppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FA360A91FDE3EB0B85C /* RateAppManager.swift */; };
 		11B3588CAF988E82B990B7BD /* SortTypeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359FD5E4BE6F08D6EC16B /* SortTypeRouter.swift */; };
+		11B3588E62835F1994A4ED2B /* SwapPendingAllowanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35ADE5F2019F7156BB1A9 /* SwapPendingAllowanceService.swift */; };
 		11B3588E8DA44A45661351D7 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35614C6E244926AF48701 /* Account.swift */; };
 		11B358902CE8D7EF2AD38448 /* CoinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3550B863970039577CD00 /* CoinService.swift */; };
 		11B35891D2B5448227630380 /* SendInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FAF942FA80752EDBFA7 /* SendInteractorTests.swift */; };
@@ -1003,6 +1005,7 @@
 		11B35F70EA14A8CF9A8C9404 /* AlertItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35163E7C4454BBA9E2E9E /* AlertItemCell.swift */; };
 		11B35F710FE55C6DBC3292E1 /* PriceAlertStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353FED1586171A5C73554 /* PriceAlertStorage.swift */; };
 		11B35F7154E7B2E9FB4C866F /* AppStatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3525406D0B011EB76ACE6 /* AppStatusViewModel.swift */; };
+		11B35F81D3D33E90880E454D /* SwapPendingAllowanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35ADE5F2019F7156BB1A9 /* SwapPendingAllowanceService.swift */; };
 		11B35F82129FD49FE5EF67D2 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35614C6E244926AF48701 /* Account.swift */; };
 		11B35F82F6B8687DD7800C4A /* SendHodlerLockTimeIntervalModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35200D023A11126725DC9 /* SendHodlerLockTimeIntervalModule.swift */; };
 		11B35F888F6C83E0F42D9BF5 /* TransactionRecordPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B491E521F1ECC600DAE203 /* TransactionRecordPool.swift */; };
@@ -2502,6 +2505,7 @@
 		11B35ABCDFA169ACB186DE27 /* RestoreSelectCoinsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSelectCoinsViewController.swift; sourceTree = "<group>"; };
 		11B35AD310E6EAFAA0A8DF84 /* SendFeePriorityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeePriorityView.swift; sourceTree = "<group>"; };
 		11B35ADD30196056A9C6407C /* WordsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordsManager.swift; sourceTree = "<group>"; };
+		11B35ADE5F2019F7156BB1A9 /* SwapPendingAllowanceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapPendingAllowanceService.swift; sourceTree = "<group>"; };
 		11B35AF1A9722F56B5F9DA79 /* BalanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceCell.swift; sourceTree = "<group>"; };
 		11B35AF22887061DE1E59CA8 /* AddErc20TokenPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddErc20TokenPresenter.swift; sourceTree = "<group>"; };
 		11B35B051008127B14C2C093 /* DerivationSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DerivationSettingViewController.swift; sourceTree = "<group>"; };
@@ -4547,6 +4551,7 @@
 				11B35B88C1340F9DE3460FB7 /* SwapViewModelNew.swift */,
 				11B35336F8BF8CFDDB7DFC19 /* SwapViewControllerNew.swift */,
 				58AAA4C99357BB032665F97A /* SwapConfirmationModule.swift */,
+				11B35ADE5F2019F7156BB1A9 /* SwapPendingAllowanceService.swift */,
 			);
 			path = Swap;
 			sourceTree = "<group>";
@@ -6326,6 +6331,7 @@
 				11B357AB031D6B995AF4C83A /* AdditionalDataCellNew.swift in Sources */,
 				58AAAA422F014F839E1EAA7D /* SwapConfirmationModule.swift in Sources */,
 				11B35C07AB051401A9CCE927 /* StackViewCell.swift in Sources */,
+				11B3588E62835F1994A4ED2B /* SwapPendingAllowanceService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7099,6 +7105,7 @@
 				11B35DDFAF0532881A4F68B0 /* AdditionalDataCellNew.swift in Sources */,
 				58AAA840694ADA46E0CA7AE4 /* SwapConfirmationModule.swift in Sources */,
 				11B35D93B238BA992173E123 /* StackViewCell.swift in Sources */,
+				11B356368E9DC40BCC6B4026 /* SwapPendingAllowanceService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7834,6 +7841,7 @@
 				11B357BF378060E7E35F7052 /* AdditionalDataCellNew.swift in Sources */,
 				58AAAC1B52C13A3DAF8C3E35 /* SwapConfirmationModule.swift in Sources */,
 				11B3580E4A964C65BF8EDDE9 /* StackViewCell.swift in Sources */,
+				11B35F81D3D33E90880E454D /* SwapPendingAllowanceService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

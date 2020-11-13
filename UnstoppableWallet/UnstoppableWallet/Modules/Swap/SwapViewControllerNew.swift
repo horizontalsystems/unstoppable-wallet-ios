@@ -99,7 +99,7 @@ class SwapViewControllerNew: ThemeViewController {
         buttonStackCell.add(view: approveButton)
 
         proceedButton.apply(style: .primaryYellow)
-        proceedButton.setTitle("Proceed", for: .normal)
+        proceedButton.setTitle("swap.proceed_button".localized, for: .normal)
         proceedButton.addTarget(self, action: #selector((onTapProceedButton)), for: .touchUpInside)
         buttonStackCell.add(view: proceedButton)
 
@@ -188,11 +188,11 @@ class SwapViewControllerNew: ThemeViewController {
         case .visible:
             approveButton.isHidden = false
             approveButton.isEnabled = true
-            approveButton.setTitle("Approve", for: .normal)
+            approveButton.setTitle("button.approve".localized, for: .normal)
         case .pending:
             approveButton.isHidden = false
             approveButton.isEnabled = false
-            approveButton.setTitle("Approving...", for: .normal)
+            approveButton.setTitle("swap.approving_button".localized, for: .normal)
         }
     }
 

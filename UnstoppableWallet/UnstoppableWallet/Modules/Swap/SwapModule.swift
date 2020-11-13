@@ -131,8 +131,20 @@ struct SwapModule {
                 rateManager: App.shared.rateManager
         )
 
-        let tradeService = SwapTradeService(uniswapRepository: uniswapRepository, coin: coinIn)
-        let allowanceService = SwapAllowanceService(spenderAddress: uniswapRepository.routerAddress, adapterManager: App.shared.adapterManager, ethereumKit: ethereumKit)
+        let tradeService = SwapTradeService(
+                uniswapRepository: uniswapRepository,
+                coin: coinIn
+        )
+        let allowanceService = SwapAllowanceService(
+                spenderAddress: uniswapRepository.routerAddress,
+                adapterManager: App.shared.adapterManager,
+                ethereumKit: ethereumKit
+        )
+        let pendingAllowanceService = SwapPendingAllowanceService(
+                spenderAddress: uniswapRepository.routerAddress,
+                adapterManager: App.shared.adapterManager,
+                allowanceService: allowanceService
+        )
         let transactionService = EthereumTransactionService(
                 ethereumKit: ethereumKit,
                 feeRateProvider: App.shared.feeRateProviderFactory.provider(coinType: .ethereum) as! EthereumFeeRateProvider
@@ -141,15 +153,23 @@ struct SwapModule {
                 ethereumKit: ethereumKit,
                 tradeService: tradeService,
                 allowanceService: allowanceService,
+                pendingAllowanceService: pendingAllowanceService,
                 transactionService: transactionService,
                 adapterManager: App.shared.adapterManager
         )
 
         let allowanceViewModel = SwapAllowanceViewModelNew(service: service, allowanceService: allowanceService)
         let feeViewModel = EthereumFeeViewModel(service: transactionService, coinService: coinService)
+        let viewModel = SwapViewModelNew(
+                service: service,
+                tradeService: tradeService,
+                transactionService: transactionService,
+                pendingAllowanceService: pendingAllowanceService,
+                viewItemHelper: SwapViewItemHelper()
+        )
 
         let viewController = SwapViewControllerNew(
-                viewModel: SwapViewModelNew(service: service, tradeService: tradeService, transactionService: transactionService, viewItemHelper: SwapViewItemHelper()),
+                viewModel: viewModel,
                 allowanceViewModel: allowanceViewModel,
                 feeViewModel: feeViewModel
         )

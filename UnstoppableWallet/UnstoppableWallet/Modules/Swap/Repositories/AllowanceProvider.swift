@@ -19,7 +19,7 @@ extension AllowanceProvider {
             return .error(AdapterError.unsupportedAccount)
         }
 
-        return adapter.allowanceSingle(spenderAddress: spenderAddress)
+        return adapter.allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: .latest)
     }
 
 }
