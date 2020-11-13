@@ -182,9 +182,9 @@
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Всего";
 "send.confirmation.send_button" = "Отправить";
-"send.amount_error.balance" = "Balance %@";
-"send.amount_error.maximum_amount" = "Maximum amount %@";
-"send.amount_error.minimum_amount" = "Minimum amount %@";
+"send.amount_error.balance" = "Баланс %@";
+"send.amount_error.maximum_amount" = "Макс. сумма %@";
+"send.amount_error.minimum_amount" = "Мин. сумма %@";
 "send.amount_error.min_required_balance" = "Мин. обязательный остаток %@";
 "send.token.insufficient_fee_alert" = "Комиссии за транзакцию %@ (%@) взимаются в %@. Вам нужно %@.";
 
@@ -202,12 +202,12 @@
 "swap.balance" = "Баланс";
 "swap.allowance" = "Разрешение";
 "swap.you_get" = "Вы Получите";
-"swap.token" = "Select Token";
-"swap.advanced_settings" = "Advanced Settings";
+"swap.token" = "Выбрать Токен";
+"swap.advanced_settings" = "Дополнительные Настройки";
 "swap.proceed_button" = "Продолжить";
-"swap.approve.title" = "Swap Approve";
-"swap.approve.description" = "You should grant permission to a smart contract to swap given token on your behalf. This permission sets amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute approval transaction.\n\nWhile it may be done on demand before each trade, it's cheaper to approve higher amount in advance for us in future trades.";
-"swap.approve.amount_error.already_approved" = "You already have an allowance for this amount";
+"swap.approve.title" = "Подтверждение Обмена";
+"swap.approve.description" = "Вы должны предоставить разрешение на смарт-контракт для того, чтобы обменивать указанный токен от вашего имени. Это разрешение определяет сумму, которая может быть использована по смарт-контракту. Это не повлияет на ваш баланс, но для подтверждения транзакции будет взята небольшая комиссия за ее выполнение.\n\nРазрешение можно запрашивать перед каждой сделкой, но дешевле заранее утвердить более высокую сумму для будущих операций.";
+"swap.approve.amount_error.already_approved" = "У вас уже есть разрешение на эту сумму";
 "swap.approving_button" = "Подтверждение...";
 "swap.amount_error.maximum_amount" = "Баланс %@";
 "swap.amount_error.no_balance" = "Ошибка анализа баланса для токена";
@@ -222,16 +222,16 @@
 
 // Swap Advanced Settings
 
-"swap.advanced_settings.slippage.header" = "Slippage Tolerance";
-"swap.advanced_settings.slippage.footer" = "Your Transaction will revert if the price change unfavorably by more than this precentage";
-"swap.advanced_settings.deadline.header" = "Transaction Deadline";
-"swap.advanced_settings.deadline.footer" = "Your Transaction will revert if it is pending for more than this long.";
-"swap.advanced_settings.recipient.footer" = "After the exchange operation, the amount will be transferred to the specified address";
-"swap.advanced_settings.deadline_minute" = "min";
-"swap.advanced_settings.recipient_address" = "Recipient Address";
-"swap.advanced_settings.recipient.placeholder" = "Not set";
-"swap.advanced_settings.error.lower_slippage" = "Your transaction is likely to fail.";
-"swap.advanced_settings.error.higher_slippage" = "Max. allowed value 20%.";
+"swap.advanced_settings.slippage.header" = "Допустимость Отклонений";
+"swap.advanced_settings.slippage.footer" = "Ваша транзакция будет отменена, если цена изменится в неблагоприятную сторону более, чем на этот процент";
+"swap.advanced_settings.deadline.header" = "Срок Транзакции";
+"swap.advanced_settings.deadline.footer" = "Ваша транзакция будет отменена, если перевод займет больше указанного срока.";
+"swap.advanced_settings.recipient.footer" = "После операции обмена сумма будет переведена на указанный адрес";
+"swap.advanced_settings.deadline_minute" = "мин";
+"swap.advanced_settings.recipient_address" = "Адрес Получателя";
+"swap.advanced_settings.recipient.placeholder" = "Не задано";
+"swap.advanced_settings.error.lower_slippage" = "Ваша транзакция, скорее всего, не удастся.";
+"swap.advanced_settings.error.higher_slippage" = "Макс. допустимое значение 20%.";
 
 "swap.fee" = "Комиссия за обмен";
 "swap.transactions_speed" = "Скорость Транзакции";
@@ -251,26 +251,26 @@
 
 
 "swap.uniswap_info.title" = "Uniswap v.2";
-"swap.uniswap_info.description" = "This exchange service is powered by Uniswap, a decentralized token exchange protocol built on Ethereum blockchain.\n\nUniswap is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
+"swap.uniswap_info.description" = "Данный сервис обмена работает при поддержке Uniswap - децентрализированного протокола обмена токенов, основанного на блокчейне Ethereum.\n\nnСервис Uniswap полностью автоматизирован и управляется смарт-контрактами, которые надежным способом упрощают обмен токенами без каких-либо средств мошенничества.";
 "swap.uniswap_info.link_button" = "Веб-сайт Uniswap";
 
-"swap.uniswap_info.header_uniswap_related" = "Uniswap Related";
-"swap.uniswap_info.header_allowance" = "Allowance";
-"swap.uniswap_info.content_allowance" = "The amount of some currency that Uniswap can spend on your behalf when executing token swaps. Sufficient allowance is required before swap action can take place.";
+"swap.uniswap_info.header_uniswap_related" = "О Uniswap";
+"swap.uniswap_info.header_allowance" = "Разрешение";
+"swap.uniswap_info.content_allowance" = "Сумма в некоторых валютах, которую Uniswap может потратить от вашего имени при выполнении обмена токенов. Может потребоваться разрешение на использование достаточной суммы перед обменом.";
 "swap.uniswap_info.header_price_impact" = "Разница в цене";
-"swap.uniswap_info.content_price_impact" = "Expected price deviation from a shown price, typically increases with the swap amount.";
+"swap.uniswap_info.content_price_impact" = "Ожидаемое отклонение цены от указанной цены, обычно увеличивается при увеличении суммы обмена.";
 "swap.uniswap_info.header_swap_fee" = "Комиссия за обмен";
-"swap.uniswap_info.content_swap_fee" = "A service fee for the swap action on Uniswap platform, shown in the currency the user sells. For most orders it should be either 0.3 % or 0.6 %.";
-"swap.uniswap_info.header_guaranteed_amount" = "Guaranteed Amount";
-"swap.uniswap_info.content_guaranteed_amount" = "The minimum amount a user is going to receive as a result of a swap action.";
-"swap.uniswap_info.header_maximum_spend" = "Maximum Spend";
-"swap.uniswap_info.content_maximum_spend" = "The maximum amount a user is going to spend as a result of a swap action.";
+"swap.uniswap_info.content_swap_fee" = "Плата за услугу обмена на платформе Uniswap, показана в валюте, в которой продает пользователь. Для большинства заказов составляет или 0,3% или 0,6%.";
+"swap.uniswap_info.header_guaranteed_amount" = "Гарантированная Сумма";
+"swap.uniswap_info.content_guaranteed_amount" = "Минимальная сумма, которую получит пользователь в результате обмена.";
+"swap.uniswap_info.header_maximum_spend" = "Максимальная Трата";
+"swap.uniswap_info.content_maximum_spend" = "Максимальная сумма, которую получит пользователь в результате обмена.";
 
-"swap.uniswap_info.header_other" = "Other";
-"swap.uniswap_info.header_transaction_fee" = "Transaction Fee";
-"swap.uniswap_info.content_transaction_fee" = "The estimated processing cost of the given transaction on Ethereum blockchain. Uniswap related transactions will typically cost more than generic token transfer transactions.";
-"swap.uniswap_info.header_transaction_speed" = "Transaction Speed";
-"swap.uniswap_info.content_transaction_speed" = "Transactions with higher transaction fee will result in faster processing speeds. The opposite is true as well.";
+"swap.uniswap_info.header_other" = "Другое";
+"swap.uniswap_info.header_transaction_fee" = "Комиссия за транзакцию";
+"swap.uniswap_info.content_transaction_fee" = "Примерная стоимость услуги по обработке данной транзакции на блокчейне Ethereum. Стоимость транзакций, связанных с Uniswap, обычно выше, чем стоимость транзакций по передаче обычных токенов.";
+"swap.uniswap_info.header_transaction_speed" = "Скорость Транзакции";
+"swap.uniswap_info.content_transaction_speed" = "Обработка транзакций с более высокой комиссией будет ускорена. Также вено и обратное.";
 
 // Transactions
 
@@ -282,39 +282,39 @@
 "transactions.receiving" = "Получение";
 "transactions.failed" = "Не удалось";
 "transactions.sending" = "Отправка";
-"transactions.approval" = "Swap approval";
+"transactions.approval" = "Подтверждение обмена";
 
 // Transaction Info
 
 "tx_info.title" = "Транзакция";
-"tx_info.title_approval" = "Swap Approval";
+"tx_info.title_approval" = "Подтверждение обмена";
 "tx_info.status.pending" = "В обработке";
 "tx_info.status.confirmed" = "Подтверждено";
 "tx_info.status.failed" = "Не удалось";
 "tx_info.from_hash" = "От";
 "tx_info.transaction_id" = "ID Транзакции";
 "tx_info.to_hash" = "Кому";
-"tx_info.input" = "Input";
+"tx_info.input" = "Ввод";
 "tx_info.button_verify" = "Проверить";
 "tx_info.rate" = "Исторический Курс";
 "tx_info.fee" = "Комиссия";
-"tx_info.to_self_note" = "This transaction sent to own address";
-"tx_info.double_spent_note" = "Double Spend Risk!";
-"tx_info.locked_until" = "Locked until %@";
-"tx_info.unlocked_at" = "Unlocked at %@";
-"tx_info.recipient_hash" = "Recipient";
-"tx_info.raw_transaction" = "Raw Transaction";
+"tx_info.to_self_note" = "Данная транзакция отправлена на собственный адрес";
+"tx_info.double_spent_note" = "Риск Двойной Траты!";
+"tx_info.locked_until" = "Заблокировано до %@";
+"tx_info.unlocked_at" = "Разблокировано %@";
+"tx_info.recipient_hash" = "Получатель";
+"tx_info.raw_transaction" = "Неподтвержденная Транзакция";
 
 // Full Info
 
-"full_info.title" = "Transaction";
-"full_info.time" = "Time";
-"full_info.block" = "Block";
-"full_info.confirmations" = "Confirmations";
-"full_info.size" = "Size";
-"full_info.fee" = "Fee";
-"full_info.rate" = "Rate";
-"full_info.inputs" = "Inputs";
+"full_info.title" = "Транзакция";
+"full_info.time" = "Время";
+"full_info.block" = "Блок";
+"full_info.confirmations" = "Подтверждения";
+"full_info.size" = "Размер";
+"full_info.fee" = "Комиссия";
+"full_info.rate" = "Курс";
+"full_info.inputs" = "Входы";
 "full_info.outputs" = "Выходы";
 "full_info.source" = "Источник";
 "full_info.contract" = "Контракт";
@@ -510,11 +510,11 @@
 
 "unlock_pin.info" = "Код Доступа";
 "unlock_pin.cant_save_pin" = "Ой! Мы не можем сохранить ваш код доступа. Пожалуйста, свяжитесь с нами как можно скорее!";
-"unlock_pin.blocked_until" = "Disabled until: %@";
+"unlock_pin.blocked_until" = "Отключено до: %@";
 
 // Rate List
 
-"rate_list.portfolio" = "Portfolio";
+"rate_list.portfolio" = "Портфель";
 "rate_list.latest_news" = "Последние Новости";
 "top100_list.portfolio" = "ТОП-100";
 "top100_list.sort_by" = "Сортировать по";
@@ -598,13 +598,13 @@
 
 "intro.skip" = "Пропустить";
 "intro.next" = "Далее";
-"intro.brand.description" = "Store and Trade crypto. Have full control over assets. Remain anonymous.";
-"intro.independence.title" = "Be Independent";
-"intro.independence.description" = "Unstoppable is built to ensure users are able to access funds at any time from anywhere.";
-"intro.knowledge.title" = "Invest Wisely";
-"intro.knowledge.description" = "Unstoppable integrates unmatched trading, monitoring and analytical instruments.";
-"intro.privacy.title" = "Stay Private";
-"intro.privacy.description" = "Use this wallet to remain incognito and be able to keep your information private.";
+"intro.brand.description" = "Храните и торгуйте криптовалютой. Полностью контролируйте свои активы. Оставайтесь анонимными.";
+"intro.independence.title" = "Будьте Независимы";
+"intro.independence.description" = "Unstoppable создан для того, чтобы пользователи могли получать доступ к средствам в любое время, в любом месте.";
+"intro.knowledge.title" = "Инвестируйте с умом";
+"intro.knowledge.description" = "В Unstoppable доступны замечательные инструменты для торговли, мониторинга и аналитики.";
+"intro.privacy.title" = "Сохраняйте Конфиденциальность";
+"intro.privacy.description" = "Используйте этот кошелек, чтобы оставаться инкогнито и иметь возможность сохранить конфиденциальность вашей информации.";
 
 // Guides
 
@@ -643,20 +643,20 @@
 // Wallet Connect
 
 "wallet_connect.title" = "Wallet Connect";
-"wallet_connect.requirement" = "Requirement";
-"wallet_connect.requirement.description" = "For connect with browser you should to activate ethereum or any erc20 token on your balance tab";
-"wallet_connect.error.invalid_url" = "Invalid URL Address";
+"wallet_connect.requirement" = "Требования";
+"wallet_connect.requirement.description" = "Для подключения к браузеру вам нужно активировать ethereum или любой erc20 токен во вкладке \"Баланс\"";
+"wallet_connect.error.invalid_url" = "Неверный URL-адрес";
 "wallet_connect.url" = "URL";
-"wallet_connect.connect_description" = "By clicking approve, you allow this app to view your public address. This is important security step to protect your data from potential phishing risks.";
-"wallet_connect.usage_description" = "You can go to the browser. Do not close this page while interacting in the browser.";
-"wallet_connect.button_disconnect" = "Disconnect";
-"ethereum_transaction.error.insufficient_balance" = "Transaction requires %@ for sending.";
-"wallet_connect.request_title" = "Request";
+"wallet_connect.connect_description" = "Нажимая \"Подтвердить\", вы разрешаете этому приложению просматривать ваш общедоступный адрес. Это важный шаг для защиты ваших данных от потенциальных рисков фишинга.";
+"wallet_connect.usage_description" = "Вы можете перейти в браузер. Не закрывайте эту страницу во время использования браузера.";
+"wallet_connect.button_disconnect" = "Отсоединить";
+"ethereum_transaction.error.insufficient_balance" = "Для отправки транзакции требуется %@.";
+"wallet_connect.request_title" = "Запрос";
 
 // App Status
 
-"app_status.version" = "Version %@";
-"app_status.application_status" = "Application status";
-"app_status.linked_wallets" = "Linked Wallets";
-"app_status.version_history" = "Version History";
-"app_status.blockchain_status" = "Blockchain status";
+"app_status.version" = "Версия %@";
+"app_status.application_status" = "Статус приложения";
+"app_status.linked_wallets" = "Связанные кошельки";
+"app_status.version_history" = "История Версий";
+"app_status.blockchain_status" = "Статус блокчейна";
