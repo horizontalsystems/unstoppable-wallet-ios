@@ -650,6 +650,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "wallet_connect.usage_description" = "브라우저로 이동하십시오. 브라우저에서 상호 작용하는 동안에는 이 페이지를 닫지 마십시오.";
 "wallet_connect.button_disconnect" = "연결 해제";
 "ethereum_transaction.error.insufficient_balance" = "거래에서 전송하려면 %@가 필요합니다.";
+"ethereum_transaction.error.insufficient_balance_with_fee" = "Current ETH balance is below amount required to process this transaction including transaction fee.";
 "wallet_connect.request_title" = "요청";
 
 // App Status
