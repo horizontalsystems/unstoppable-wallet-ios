@@ -5,6 +5,7 @@ import RxCocoa
 class SwapConfirmationViewModel {
     private let disposeBag = DisposeBag()
 
+    private let service: SwapServiceNew
     private let tradeService: SwapTradeService
     private let transactionService: EthereumTransactionService
     private let ethereumCoinService: CoinService
@@ -15,24 +16,25 @@ class SwapConfirmationViewModel {
     private var additionalDataRelay = BehaviorRelay<[SwapModule.ConfirmationAdditionalViewItem]>(value: [])
 
     private var loadingRelay = PublishRelay<()>()
-    private var successRelay = PublishRelay<()>()
-    private var errorRelay = PublishRelay<Error?>()
+    private var completedRelay = PublishRelay<()>()
+    private var errorRelay = PublishRelay<Error>()
 
-    init(tradeService: SwapTradeService, transactionService: EthereumTransactionService, ethereumCoinService: CoinService, viewItemHelper: SwapViewItemHelper) {
+    init(service: SwapServiceNew, tradeService: SwapTradeService, transactionService: EthereumTransactionService, ethereumCoinService: CoinService, viewItemHelper: SwapViewItemHelper) {
+        self.service = service
         self.tradeService = tradeService
         self.viewItemHelper = viewItemHelper
         self.transactionService = transactionService
         self.ethereumCoinService = ethereumCoinService
 
         subscribeOnService()
-        buildState()
+        buildViewItems()
     }
 
     private func subscribeOnService() {
-//        subscribe(disposeBag, service.swapStateObservable) { [weak self] in self?.handle(swapState: $0) }
+        subscribe(disposeBag, service.swapEventObservable) { [weak self] in self?.sync(event: $0) }
     }
 
-    private func buildState() {
+    private func buildViewItems() {
         guard let coinIn = tradeService.coinIn,
               let amountIn = tradeService.amountIn,
               let amountOut = tradeService.amountOut,
@@ -80,28 +82,17 @@ class SwapConfirmationViewModel {
 
         if let transaction = transactionService.transactionStatus.data {
             let fee = ethereumCoinService.amountData(value: transaction.gasData.fee).formattedString
-            additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "fee", value: fee))
+            additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.fee".localized, value: fee))
         }
 
         additionalDataRelay.accept(additionalData)
     }
 
-    private func handle(swapState: DataStatus<Data>?) {
-        guard let swapState = swapState else {
-            return
-        }
-
-        if swapState == .loading {
-            loadingRelay.accept(())
-        }
-
-        if let error = swapState.error {
-            errorRelay.accept(error)
-            return
-        }
-
-        if swapState.data != nil {
-            successRelay.accept(())
+    private func sync(event: SwapServiceNew.SwapEvent) {
+        switch event {
+        case .swapping: loadingRelay.accept(())
+        case .completed: completedRelay.accept(())
+        case .failed(let error): errorRelay.accept(error)
         }
     }
 
@@ -117,16 +108,20 @@ extension SwapConfirmationViewModel {
         additionalDataRelay.asDriver()
     }
 
-    var isLoading: Driver<()> {
-        loadingRelay.asDriver(onErrorJustReturn: ())
+    var loadingSignal: Signal<()> {
+        loadingRelay.asSignal()
     }
 
-    var success: Driver<()> {
-        successRelay.asDriver(onErrorJustReturn: ())
+    var completedSignal: Signal<()> {
+        completedRelay.asSignal()
     }
 
-    var error: Driver<Error?> {
-        errorRelay.asDriver(onErrorJustReturn: nil)
+    var errorSignal: Signal<Error> {
+        errorRelay.asSignal()
+    }
+
+    func swap() {
+        service.swap()
     }
 
 }

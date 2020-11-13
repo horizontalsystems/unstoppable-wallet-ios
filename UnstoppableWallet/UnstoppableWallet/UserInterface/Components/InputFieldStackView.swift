@@ -109,7 +109,6 @@ class InputFieldStackView: UIStackView {
 
         placeholderLabel.textColor = .themeGray50
 
-
         addArrangedSubview(textViewWrapper)
 
         spacing = Self.itemSpacing

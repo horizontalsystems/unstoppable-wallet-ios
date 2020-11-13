@@ -374,15 +374,3 @@ extension SwapViewController: ISwapApproveDelegate {
     }
 
 }
-
-extension SwapViewController: ISwapConfirmationDelegate {
-
-    func onSwap() {
-        viewModel.onSwap()
-    }
-
-    func onCancel() {
-        navigationController?.popViewController(animated: true)
-    }
-
-}

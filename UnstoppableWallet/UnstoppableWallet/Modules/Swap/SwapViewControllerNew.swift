@@ -90,10 +90,8 @@ class SwapViewControllerNew: ThemeViewController {
         allowanceCell.title = "swap.allowance".localized
         priceImpactCell.title = "swap.price_impact".localized
 
-        buttonCell.bind(style: .primaryYellow, title: "Proceed") {
-            let viewController = SwapConfirmationModule.viewController(tradeService: self.viewModel.tradeService, transactionService: self.viewModel.transactionService)
-            self.navigationController?
-                    .pushViewController(viewController, animated: true)
+        buttonCell.bind(style: .primaryYellow, title: "Proceed") { [weak self] in
+            self?.onTapProceed()
         }
 
         subscribeToViewModel()
@@ -170,7 +168,14 @@ class SwapViewControllerNew: ThemeViewController {
         buttonCell.set(enabled: proceedAllowed)
     }
 
-    @objc func onTapButton() {
+    func onTapProceed() {
+        let vc = SwapConfirmationModule.viewController(service: viewModel.service,
+                tradeService: viewModel.tradeService,
+                transactionService: viewModel.transactionService)
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
+    @objc func onTapAdvancedSettings() {
         let viewController = SwapTradeOptionsModule.viewController(tradeService: viewModel.tradeService)
         present(viewController, animated: true)
     }
@@ -288,7 +293,7 @@ extension SwapViewControllerNew: SectionsDataSource {
                                 cell.title  = "swap.advanced_settings".localized
                             },
                             action: { [weak self] _ in
-                                self?.onTapButton()
+                                self?.onTapAdvancedSettings()
                             }
                     ),
                 ]
@@ -322,18 +327,6 @@ extension SwapViewControllerNew: ISwapApproveDelegate {
 
     func didApprove() {
         viewModel.didApprove()
-    }
-
-}
-
-extension SwapViewControllerNew: ISwapConfirmationDelegate {
-
-    func onSwap() {
-        viewModel.onSwap()
-    }
-
-    func onCancel() {
-        navigationController?.popViewController(animated: true)
     }
 
 }

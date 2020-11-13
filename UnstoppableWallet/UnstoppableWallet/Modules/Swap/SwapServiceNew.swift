@@ -23,6 +23,8 @@ class SwapServiceNew {
         }
     }
 
+    private let swapEventRelay = PublishRelay<SwapEvent>()
+
     private let errorsRelay = PublishRelay<[Error]>()
     private(set) var errors: [Error] = [] {
         didSet {
@@ -200,6 +202,10 @@ extension SwapServiceNew {
         stateRelay.asObservable()
     }
 
+    var swapEventObservable: Observable<SwapEvent> {
+        swapEventRelay.asObservable()
+    }
+
     var errorsObservable: Observable<[Error]> {
         errorsRelay.asObservable()
     }
@@ -212,6 +218,30 @@ extension SwapServiceNew {
         balanceOutRelay.asObservable()
     }
 
+    func swap() {
+        guard case .ready = state, let transaction = transactionService.transactionStatus.data else {
+            return
+        }
+
+        swapEventRelay.accept(.swapping)
+
+        ethereumKit.sendSingle(
+                        address: transaction.data.to,
+                        value: transaction.data.value,
+                        transactionInput: transaction.data.input,
+                        gasPrice: transaction.gasData.gasPrice,
+                        gasLimit: transaction.gasData.gasLimit
+                )
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onSuccess: { [weak self] transactionWithInternal in
+                    self?.swapEventRelay.accept(.completed)
+                }, onError: { error in
+                    self.swapEventRelay.accept(.failed(error: error))
+                })
+                .disposed(by: disposeBag)
+    }
+
 }
 
 extension SwapServiceNew {
@@ -220,9 +250,12 @@ extension SwapServiceNew {
         case loading
         case ready
         case notReady
-//        case swapping
-//        case swapSuccess
-//        case swapError(error: Error)
+    }
+
+    enum SwapEvent {
+        case swapping
+        case completed
+        case failed(error: Error)
     }
 
     enum SwapError: Error {
