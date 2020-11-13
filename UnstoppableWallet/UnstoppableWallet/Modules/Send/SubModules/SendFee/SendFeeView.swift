@@ -1,4 +1,5 @@
 import UIKit
+import EthereumKit
 
 class SendFeeView: UIView {
     private let delegate: ISendFeeViewDelegate
@@ -80,7 +81,11 @@ extension SendFeeView: ISendFeeView {
     }
 
     func set(error: Error?) {
-        errorLabel.text = error?.smartDescription
+        if let error = error, case EthereumKit.Kit.EstimatedLimitError.insufficientBalance = error {
+            errorLabel.text = "ethereum_transaction.error.insufficient_balance_with_fee".localized
+        } else {
+            errorLabel.text = error?.smartDescription
+        }
 
         let hide = error != nil
 
