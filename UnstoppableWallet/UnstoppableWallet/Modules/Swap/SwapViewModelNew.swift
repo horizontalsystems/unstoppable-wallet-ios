@@ -11,6 +11,7 @@ class SwapViewModelNew {
     public let tradeService: SwapTradeService
     public let transactionService: EthereumTransactionService
     public let pendingAllowanceService: SwapPendingAllowanceService
+    private let coinService: CoinService
 
     public let viewItemHelper: SwapViewItemHelper
 
@@ -23,11 +24,12 @@ class SwapViewModelNew {
 
     private var openApproveRelay = PublishRelay<SwapAllowanceService.ApproveData>()
 
-    init(service: SwapServiceNew, tradeService: SwapTradeService, transactionService: EthereumTransactionService, pendingAllowanceService: SwapPendingAllowanceService, viewItemHelper: SwapViewItemHelper) {
+    init(service: SwapServiceNew, tradeService: SwapTradeService, transactionService: EthereumTransactionService, pendingAllowanceService: SwapPendingAllowanceService, coinService: CoinService, viewItemHelper: SwapViewItemHelper) {
         self.service = service
         self.tradeService = tradeService
         self.transactionService = transactionService
         self.pendingAllowanceService = pendingAllowanceService
+        self.coinService = coinService
         self.viewItemHelper = viewItemHelper
 
         subscribeToService()
@@ -52,10 +54,28 @@ class SwapViewModelNew {
         proceedAllowedRelay.accept(state == .ready)
     }
 
+    private func convert(error: Error) -> String {
+        if case SwapServiceNew.TransactionError.insufficientBalance(let requiredBalance) = error {
+            let amountData = coinService.amountData(value: requiredBalance)
+            return "ethereum_transaction.error.insufficient_balance".localized(amountData.formattedString)
+        }
+
+        return error.convertedError.smartDescription
+    }
+
     private func sync(errors: [Error]? = nil) {
         let errors = errors ?? service.errors
 
-        swapErrorRelay.accept(errors.first.map { $0.convertedError.smartDescription })
+        let filtered = errors.filter { error in
+            switch error {
+            case let error as UniswapKit.Kit.TradeError: return error != .zeroAmount
+            case _ as EthereumTransactionService.GasDataError: return false
+            case _ as SwapServiceNew.SwapError: return false
+            default: return true
+            }
+        }
+
+        swapErrorRelay.accept(filtered.first.map { convert(error: $0) })
 
         syncApproveAction()
     }

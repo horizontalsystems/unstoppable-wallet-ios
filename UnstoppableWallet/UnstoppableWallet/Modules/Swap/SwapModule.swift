@@ -165,6 +165,7 @@ struct SwapModule {
                 tradeService: tradeService,
                 transactionService: transactionService,
                 pendingAllowanceService: pendingAllowanceService,
+                coinService: coinService,
                 viewItemHelper: SwapViewItemHelper()
         )
 
