@@ -18,6 +18,9 @@ class SwapViewModelNew {
     private var tradeViewItemRelay = BehaviorRelay<TradeViewItem?>(value: nil)
     private var tradeOptionsViewItemRelay = BehaviorRelay<TradeOptionsViewItem?>(value: nil)
     private var proceedAllowedRelay = BehaviorRelay<Bool>(value: false)
+    private var approveActionRelay = BehaviorRelay<ApproveActionState>(value: .hidden)
+
+    private var openApproveRelay = PublishRelay<SwapAllowanceService.ApproveData>()
 
     init(service: SwapServiceNew, tradeService: SwapTradeService, transactionService: EthereumTransactionService, viewItemHelper: SwapViewItemHelper) {
         self.service = service
@@ -50,6 +53,9 @@ class SwapViewModelNew {
         let errors = errors ?? service.errors
 
         swapErrorRelay.accept(errors.first.map { $0.convertedError.smartDescription })
+
+        let isInsufficientAllowance = errors.contains(where: { .insufficientAllowance == $0 as? SwapServiceNew.SwapError })
+        approveActionRelay.accept(isInsufficientAllowance ? .visible : .hidden)
     }
 
     private func sync(tradeState: SwapTradeService.State? = nil) {
@@ -107,24 +113,28 @@ extension SwapViewModelNew {
         proceedAllowedRelay.asDriver()
     }
 
+    var approveActionDriver: Driver<ApproveActionState> {
+        approveActionRelay.asDriver()
+    }
+
+    var openApproveSignal: Signal<SwapAllowanceService.ApproveData> {
+        openApproveRelay.asSignal()
+    }
+
     func onTapSwitch() {
         tradeService.switchCoins()
     }
 
     func onTapApprove() {
-//        openApproveRelay.accept(service.approveData)
-    }
+        guard let approveData = service.approveData else {
+            return
+        }
 
-    func onTapProceed() {
-//        service.proceed()
+        openApproveRelay.accept(approveData)
     }
 
     func didApprove() {
 //        service.didApprove()
-    }
-
-    func onSwap() {
-//        service.swap()
     }
 
 }
@@ -143,6 +153,12 @@ extension SwapViewModelNew {
         let slippage: String?
         let deadline: String?
         let recipient: String?
+    }
+
+    enum ApproveActionState {
+        case hidden
+        case visible
+        case pending
     }
 
 }
