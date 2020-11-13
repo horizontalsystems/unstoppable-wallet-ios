@@ -20,12 +20,12 @@ class SwapViewControllerNew: ThemeViewController {
     private let fromCoinCardCell: SwapCoinCardCell
     private let priceCell = SwapPriceCell()
     private let toCoinCardCell: SwapCoinCardCell
-    private let slippageCell = AdditionalDataCellNew()
-    private let deadlineCell = AdditionalDataCellNew()
-    private let recipientCell = AdditionalDataCellNew()
+//    private let slippageCell = AdditionalDataCellNew()
+//    private let deadlineCell = AdditionalDataCellNew()
+//    private let recipientCell = AdditionalDataCellNew()
     private let allowanceCell: SwapAllowanceCell
     private let priceImpactCell = AdditionalDataCellNew()
-    private let guaranteedAmountCell = AdditionalDataCellNew()
+//    private let guaranteedAmountCell = AdditionalDataCellNew()
 
     private let feeCell: SendFeeCell
     private let feePriorityCell: SendFeePriorityCell
@@ -87,9 +87,9 @@ class SwapViewControllerNew: ThemeViewController {
 
         tableView.registerCell(forClass: D1Cell.self)
 
-        slippageCell.title = "swap.advanced_settings.slippage".localized
-        deadlineCell.title = "swap.advanced_settings.deadline".localized
-        recipientCell.title = "swap.advanced_settings.recipient_address".localized
+//        slippageCell.title = "swap.advanced_settings.slippage".localized
+//        deadlineCell.title = "swap.advanced_settings.deadline".localized
+//        recipientCell.title = "swap.advanced_settings.recipient_address".localized
         allowanceCell.title = "swap.allowance".localized
         priceImpactCell.title = "swap.price_impact".localized
 
@@ -152,40 +152,40 @@ class SwapViewControllerNew: ThemeViewController {
             let index = tradeViewItem.priceImpactLevel.rawValue % SwapViewControllerNew.levelColors.count
             priceImpactCell.valueColor = SwapViewControllerNew.levelColors[index]
 
-            guaranteedAmountCell.isVisible = true
-            guaranteedAmountCell.title = tradeViewItem.minMaxTitle
-            guaranteedAmountCell.value = tradeViewItem.minMaxAmount
+//            guaranteedAmountCell.isVisible = true
+//            guaranteedAmountCell.title = tradeViewItem.minMaxTitle
+//            guaranteedAmountCell.value = tradeViewItem.minMaxAmount
         } else {
             priceImpactCell.isVisible = false
-            guaranteedAmountCell.isVisible = false
+//            guaranteedAmountCell.isVisible = false
         }
 
         reloadTable()
     }
 
     private func handle(tradeOptionsViewItem: SwapViewModelNew.TradeOptionsViewItem?) {
-        if let slippage = tradeOptionsViewItem?.slippage {
-            slippageCell.isVisible = true
-            slippageCell.value = slippage
-        } else {
-            slippageCell.isVisible = false
-        }
-
-        if let deadline = tradeOptionsViewItem?.deadline {
-            deadlineCell.isVisible = true
-            deadlineCell.value = deadline
-        } else {
-            deadlineCell.isVisible = false
-        }
-
-        if let recipient = tradeOptionsViewItem?.recipient {
-            recipientCell.isVisible = true
-            recipientCell.value = recipient
-        } else {
-            recipientCell.isVisible = false
-        }
-
-        reloadTable()
+//        if let slippage = tradeOptionsViewItem?.slippage {
+//            slippageCell.isVisible = true
+//            slippageCell.value = slippage
+//        } else {
+//            slippageCell.isVisible = false
+//        }
+//
+//        if let deadline = tradeOptionsViewItem?.deadline {
+//            deadlineCell.isVisible = true
+//            deadlineCell.value = deadline
+//        } else {
+//            deadlineCell.isVisible = false
+//        }
+//
+//        if let recipient = tradeOptionsViewItem?.recipient {
+//            recipientCell.isVisible = true
+//            recipientCell.value = recipient
+//        } else {
+//            recipientCell.isVisible = false
+//        }
+//
+//        reloadTable()
     }
 
     private func handle(proceedAllowed: Bool) {
@@ -273,21 +273,21 @@ extension SwapViewControllerNew: SectionsDataSource {
         sections.append(Section(
                 id: "info",
                 rows: [
-                    StaticRow(
-                            cell: slippageCell,
-                            id: "slippage",
-                            height: slippageCell.cellHeight
-                    ),
-                    StaticRow(
-                            cell: deadlineCell,
-                            id: "deadline",
-                            height: deadlineCell.cellHeight
-                    ),
-                    StaticRow(
-                            cell: recipientCell,
-                            id: "recipient",
-                            height: recipientCell.cellHeight
-                    ),
+//                    StaticRow(
+//                            cell: slippageCell,
+//                            id: "slippage",
+//                            height: slippageCell.cellHeight
+//                    ),
+//                    StaticRow(
+//                            cell: deadlineCell,
+//                            id: "deadline",
+//                            height: deadlineCell.cellHeight
+//                    ),
+//                    StaticRow(
+//                            cell: recipientCell,
+//                            id: "recipient",
+//                            height: recipientCell.cellHeight
+//                    ),
                     StaticRow(
                             cell: allowanceCell,
                             id: "allowance",
@@ -298,11 +298,11 @@ extension SwapViewControllerNew: SectionsDataSource {
                             id: "price-impact",
                             height: priceImpactCell.cellHeight
                     ),
-                    StaticRow(
-                            cell: guaranteedAmountCell,
-                            id: "guaranteed-amount",
-                            height: guaranteedAmountCell.cellHeight
-                    )
+//                    StaticRow(
+//                            cell: guaranteedAmountCell,
+//                            id: "guaranteed-amount",
+//                            height: guaranteedAmountCell.cellHeight
+//                    )
                 ]
         ))
 
