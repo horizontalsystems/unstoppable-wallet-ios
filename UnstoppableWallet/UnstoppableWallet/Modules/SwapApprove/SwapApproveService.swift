@@ -97,18 +97,17 @@ extension SwapApproveService {
     }
 
     func approve() {
-        guard case .completed(let transaction) = transactionService.transactionStatus else {
+        guard case .completed(let transaction) = transactionService.transactionStatus, let amount = self.amount else {
             return
         }
 
         state = .loading
 
-        ethereumKit.sendSingle(
-                        address: transaction.data.to,
-                        value: transaction.data.value,
-                        transactionInput: transaction.data.input,
-                        gasPrice: transaction.gasData.gasPrice,
-                        gasLimit: transaction.gasData.gasLimit
+        erc20Kit.approveSingle(
+                        spenderAddress: spenderAddress,
+                        amount: amount,
+                        gasLimit: transaction.gasData.gasLimit,
+                        gasPrice: transaction.gasData.gasPrice
                 )
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] transactionWithInternal in
