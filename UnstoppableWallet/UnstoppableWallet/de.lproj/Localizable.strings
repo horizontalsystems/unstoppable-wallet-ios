@@ -3,6 +3,7 @@
 "coin.ETH" = "Ethereum";
 
 "button.ok" = "OK";
+"button.apply" = "Apply";
 "button.cancel" = "Cancel";
 "button.close" = "Close";
 "button.done" = "Done";
@@ -159,7 +160,7 @@ bch.horizontalsystems.xyz/apg";
 "send.address_placeholder" = "Address";
 "send.account_placeholder" = "Account";
 "send.fee" = "Fee";
-"send.tx_speed" = "Transaction Speed";
+"send.tx_speed" = "Transaction Fee";
 "send.tx_speed_low" = "Low";
 "send.tx_speed_medium" = "Medium";
 "send.tx_speed_recommended" = "Recommended";
@@ -207,7 +208,7 @@ bch.horizontalsystems.xyz/apg";
 "swap.you_get" = "You Get";
 "swap.token" = "Select Token";
 "swap.advanced_settings" = "Advanced Settings";
-"swap.proceed_button" = "Proceed";
+"swap.proceed_button" = "Next";
 "swap.approve.title" = "Swap Approve";
 "swap.approve.description" = "You should grant permission to a smart contract to swap given token on your behalf. This permission sets amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute approval transaction.\n\nWhile it may be done on demand before each trade, it's cheaper to approve higher amount in advance for us in future trades.";
 "swap.approve.amount_error.already_approved" = "You already have an allowance for this amount";
@@ -225,16 +226,16 @@ bch.horizontalsystems.xyz/apg";
 
 // Swap Advanced Settings
 
-"swap.advanced_settings.slippage.header" = "Slippage Tolerance";
+"swap.advanced_settings.slippage" = "Slippage Tolerance";
 "swap.advanced_settings.slippage.footer" = "Your Transaction will revert if the price change unfavorably by more than this precentage";
-"swap.advanced_settings.deadline.header" = "Transaction Deadline";
+"swap.advanced_settings.deadline" = "Transaction Deadline";
 "swap.advanced_settings.deadline.footer" = "Your Transaction will revert if it is pending for more than this long.";
 "swap.advanced_settings.recipient.footer" = "After the exchange operation, the amount will be transferred to the specified address";
-"swap.advanced_settings.deadline_minute" = "min";
+"swap.advanced_settings.deadline_minute" = "%@ min";
 "swap.advanced_settings.recipient_address" = "Recipient Address";
 "swap.advanced_settings.recipient.placeholder" = "Not set";
 "swap.advanced_settings.error.lower_slippage" = "Your transaction is likely to fail.";
-"swap.advanced_settings.error.higher_slippage" = "Max. allowed value 20%.";
+"swap.advanced_settings.error.higher_slippage" = "Max. allowed value %@%%.";
 
 "swap.fee" = "Swap Fee";
 "swap.transactions_speed" = "Transaction Speed";
