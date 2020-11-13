@@ -218,6 +218,14 @@ extension SwapServiceNew {
         balanceOutRelay.asObservable()
     }
 
+    var approveData: SwapAllowanceService.ApproveData? {
+        guard let amount = tradeService.amountIn else {
+            return nil
+        }
+
+        return allowanceService.approveData(amount: amount)
+    }
+
     func swap() {
         guard case .ready = state, let transaction = transactionService.transactionStatus.data else {
             return

@@ -28,7 +28,9 @@ class SwapViewControllerNew: ThemeViewController {
     private let feeCell: SendFeeCell
     private let feePriorityCell: SendFeePriorityCell
 
-    private let buttonCell = ButtonCell()
+    private let buttonStackCell = StackViewCell()
+    private let approveButton = ThemeButton()
+    private let proceedButton = ThemeButton()
 
     private var tradeViewItem: SwapViewModelNew.TradeViewItem?
     private var tradeOptionsViewItem: SwapViewModelNew.TradeOptionsViewItem?
@@ -90,9 +92,14 @@ class SwapViewControllerNew: ThemeViewController {
         allowanceCell.title = "swap.allowance".localized
         priceImpactCell.title = "swap.price_impact".localized
 
-        buttonCell.bind(style: .primaryYellow, title: "Proceed") { [weak self] in
-            self?.onTapProceed()
-        }
+        approveButton.apply(style: .primaryGray)
+        approveButton.addTarget(self, action: #selector((onTapApproveButton)), for: .touchUpInside)
+        buttonStackCell.add(view: approveButton)
+
+        proceedButton.apply(style: .primaryYellow)
+        proceedButton.setTitle("Proceed", for: .normal)
+        proceedButton.addTarget(self, action: #selector((onTapProceedButton)), for: .touchUpInside)
+        buttonStackCell.add(view: proceedButton)
 
         subscribeToViewModel()
 
@@ -104,6 +111,9 @@ class SwapViewControllerNew: ThemeViewController {
         subscribe(disposeBag, viewModel.tradeViewItemDriver) { [weak self] in self?.handle(tradeViewItem: $0) }
         subscribe(disposeBag, viewModel.tradeOptionsViewItemDriver) { [weak self] in self?.handle(tradeOptionsViewItem: $0) }
         subscribe(disposeBag, viewModel.proceedAllowedDriver) { [weak self] in self?.handle(proceedAllowed: $0) }
+        subscribe(disposeBag, viewModel.approveActionDriver) { [weak self] in self?.handle(approveActionState: $0) }
+
+        subscribe(disposeBag, viewModel.openApproveSignal) { [weak self] in self?.openApprove(approveData: $0) }
     }
 
     @objc func onClose() {
@@ -165,19 +175,48 @@ class SwapViewControllerNew: ThemeViewController {
     }
 
     private func handle(proceedAllowed: Bool) {
-        buttonCell.set(enabled: proceedAllowed)
+        proceedButton.isEnabled = proceedAllowed
     }
 
-    func onTapProceed() {
-        let vc = SwapConfirmationModule.viewController(service: viewModel.service,
+    private func handle(approveActionState: SwapViewModelNew.ApproveActionState) {
+        switch approveActionState {
+        case .hidden:
+            approveButton.isHidden = true
+        case .visible:
+            approveButton.isHidden = false
+            approveButton.isEnabled = true
+            approveButton.setTitle("Approve", for: .normal)
+        case .pending:
+            approveButton.isHidden = false
+            approveButton.isEnabled = false
+            approveButton.setTitle("Approving...", for: .normal)
+        }
+    }
+
+    @objc private func onTapApproveButton() {
+        viewModel.onTapApprove()
+    }
+
+    @objc private func onTapProceedButton() {
+        let viewController = SwapConfirmationModule.viewController(
+                service: viewModel.service,
                 tradeService: viewModel.tradeService,
-                transactionService: viewModel.transactionService)
-        navigationController?.pushViewController(vc, animated: true)
+                transactionService: viewModel.transactionService
+        )
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
     @objc func onTapAdvancedSettings() {
         let viewController = SwapTradeOptionsModule.viewController(tradeService: viewModel.tradeService)
         present(viewController, animated: true)
+    }
+
+    private func openApprove(approveData: SwapAllowanceService.ApproveData) {
+        guard let viewController = SwapApproveModule.instance(data: approveData, delegate: self) else {
+            return
+        }
+
+        self.present(viewController, animated: true)
     }
 
     private func reloadTable() {
@@ -300,12 +339,14 @@ extension SwapViewControllerNew: SectionsDataSource {
         ))
 
         sections.append(Section(
-                id: "button",
+                id: "buttons",
+                headerState: .margin(height: .margin4x),
+                footerState: .margin(height: .margin8x),
                 rows: [
                     StaticRow(
-                            cell: buttonCell,
+                            cell: buttonStackCell,
                             id: "button",
-                            height: ButtonCell.height(style: .primaryYellow)
+                            height: ThemeButton.height(style: .primaryYellow)
                     )
                 ]
         ))
