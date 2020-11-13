@@ -30,6 +30,7 @@ class SwapViewControllerNew: ThemeViewController {
     private let feeCell: SendFeeCell
     private let feePriorityCell: SendFeePriorityCell
 
+    private let errorCell = SendEthereumErrorCell()
     private let buttonStackCell = StackViewCell()
     private let approveButton = ThemeButton()
     private let proceedButton = ThemeButton()
@@ -84,9 +85,7 @@ class SwapViewControllerNew: ThemeViewController {
         tableView.sectionDataSource = self
         tableView.keyboardDismissMode = .onDrag
 
-        tableView.registerCell(forClass: AdditionalDataCell.self)
         tableView.registerCell(forClass: D1Cell.self)
-        tableView.registerCell(forClass: D9Cell.self)
 
         slippageCell.title = "swap.advanced_settings.slippage".localized
         deadlineCell.title = "swap.advanced_settings.deadline".localized
@@ -111,6 +110,7 @@ class SwapViewControllerNew: ThemeViewController {
 
     private func subscribeToViewModel() {
         subscribe(disposeBag, viewModel.isLoadingDriver) { [weak self] in self?.handle(loading: $0) }
+        subscribe(disposeBag, viewModel.swapErrorDriver) { [weak self] in self?.handle(error: $0) }
         subscribe(disposeBag, viewModel.tradeViewItemDriver) { [weak self] in self?.handle(tradeViewItem: $0) }
         subscribe(disposeBag, viewModel.tradeOptionsViewItemDriver) { [weak self] in self?.handle(tradeOptionsViewItem: $0) }
         subscribe(disposeBag, viewModel.proceedAllowedDriver) { [weak self] in self?.handle(proceedAllowed: $0) }
@@ -130,6 +130,17 @@ class SwapViewControllerNew: ThemeViewController {
 
     private func handle(loading: Bool) {
         priceCell.set(loading: loading)
+    }
+
+    private func handle(error: String?) {
+        if let error = error {
+            errorCell.isVisible = true
+            errorCell.bind(text: error)
+        } else {
+            errorCell.isVisible = false
+        }
+
+        reloadTable()
     }
 
     private func handle(tradeViewItem: SwapViewModelNew.TradeViewItem?) {
@@ -332,6 +343,18 @@ extension SwapViewControllerNew: SectionsDataSource {
                                 self?.onTapAdvancedSettings()
                             }
                     ),
+                ]
+        ))
+
+        sections.append(Section(id: "error",
+                rows: [
+                    StaticRow(
+                            cell: errorCell,
+                            id: "error",
+                            dynamicHeight: { [weak self] width in
+                                self?.errorCell.cellHeight(width: width) ?? 0
+                            }
+                    )
                 ]
         ))
 

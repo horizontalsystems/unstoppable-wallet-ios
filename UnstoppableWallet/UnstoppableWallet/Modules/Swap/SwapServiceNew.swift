@@ -180,6 +180,10 @@ class SwapServiceNew {
             }
         }
 
+        if let amountIn = tradeService.amountIn, let balanceIn = balanceIn, amountIn > balanceIn {
+            allErrors.append(SwapError.insufficientBalanceIn)
+        }
+
         switch transactionService.transactionStatus {
         case .loading:
             loading = true
@@ -188,11 +192,15 @@ class SwapServiceNew {
                 allErrors.append(TransactionError.insufficientBalance(requiredBalance: transaction.totalAmount))
             }
         case .failed(let error):
-            allErrors.append(error)
-        }
-
-        if let amountIn = tradeService.amountIn, let balanceIn = balanceIn, amountIn > balanceIn {
-            allErrors.append(SwapError.insufficientBalanceIn)
+            if !allErrors.contains(where: { error in
+                switch error {
+                case _ as SwapError: return true
+                case _ as TransactionError: return true
+                default: return false
+                }
+            }) {
+                allErrors.append(error)
+            }
         }
 
         if pendingAllowanceService.isPending {
