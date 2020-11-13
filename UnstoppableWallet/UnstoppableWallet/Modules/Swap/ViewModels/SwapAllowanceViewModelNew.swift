@@ -8,7 +8,7 @@ class SwapAllowanceViewModelNew {
     private let service: SwapServiceNew
     private let allowanceService: SwapAllowanceService
 
-    private(set) var isVisible: Bool = false {
+    private(set) var isVisible: Bool {
         didSet {
             isVisibleRelay.accept(isVisible)
         }
@@ -20,6 +20,8 @@ class SwapAllowanceViewModelNew {
     init(service: SwapServiceNew, allowanceService: SwapAllowanceService) {
         self.service = service
         self.allowanceService = allowanceService
+
+        isVisible = allowanceService.state != nil
 
         subscribe(disposeBag, allowanceService.stateObservable) { [weak self] in self?.handle(allowanceState: $0) }
         subscribe(disposeBag, service.errorsObservable) { [weak self] in self?.handle(errors: $0) }
