@@ -1,454 +1,449 @@
 "coin.BTC" = "Bitcoin";
-"coin.BCH" = "Bitcoin Cash";
+"coin.BCH" = "Bitcoin Cash ";
 "coin.ETH" = "Ethereum";
 
-"button.ok" = "OK";
-"button.apply" = "Apply";
-"button.cancel" = "Cancel";
-"button.close" = "Close";
-"button.done" = "Done";
-"button.restore" = "Restore";
-"button.next" = "Next";
-"button.share" = "Share";
-"button.sync" = "Sync";
-"button.paste" = "Paste";
-"button.backup" = "Backup";
-"button.copy" = "Copy";
-"button.back" = "Back";
-"button.retry" = "Retry";
-"button.report" = "Report";
-"button.add" = "Add";
-"button.approve" = "Approve";
-"button.reject" = "Reject";
-"button.connect" = "Connect";
+"button.ok" = "확인";
+"button.apply" = "적용";
+"button.cancel" = "취소";
+"button.close" = "가까운, 닫힌";
+"button.done" = "완료";
+"button.restore" = "복구";
+"button.next" = "다음";
+"button.share" = "공유";
+"button.sync" = "동기화";
+"button.paste" = "불여넣기";
+"button.backup" = "백업";
+"button.copy" = "복사";
+"button.back" = "뒤로";
+"button.retry" = "재시도";
+"button.report" = "보고";
+"button.add" = "추가";
+"button.approve" = "승인";
+"button.reject" = "거절";
+"button.connect" = "연결";
 
-"alert.copied" = "Copied";
-"alert.no_internet" = "No Internet";
-"alert.wrong_amount" = "Wrong Amount";
-"alert.no_fee" = "Wrong Fee";
-"alert.network_issue" = "Network issues. Try again in a short moment";
-"alert.unknown_error" = "Unknown Error";
+"alert.copied" = "복사됨";
+"alert.no_internet" = "인터넷에 연결되지 않음";
+"alert.wrong_amount" = "잘못된 금액";
+"alert.no_fee" = "잘못된 요금";
+"alert.network_issue" = "네트워크에 문제가 있습니다. 잠시 후 다시 시도해 주세요";
+"alert.unknown_error" = "알수없는 오류";
 
-"action.loading" = "loading...";
-"placeholder.search" = "Search";
+"action.loading" = "로딩중";
+"placeholder.search" = "검색";
 
-"status" = "Status";
-"connecting" = "Connecting...";
-"online" = "Online";
-"offline" = "Offline";
-"confirm" = "Confirm";
-"connect" = "Connect";
+"status" = "상태";
+"connecting" = "연결 중...";
+"online" = "온라인";
+"offline" = "오프라인";
+"confirm" = "확인";
+"connect" = "연결";
 
-"n/a" = "N/A";
+"n/a" = "해당 없음 ";
 
-"biometric_usage_reason" = "Unlock wallet";
+"biometric_usage_reason" = "지갑 잠금 해제";
 
 // Access Camera
 
-"access_camera.message" = "Unstoppable needs access to your camera to scan QR code.
-
-Go to Settings - > Unstoppable and allow access to Camera.";
-"access_camera.settings" = "Settings";
+"access_camera.message" = "Unstoppable이 QR코드를 스캔하기 위해선 카메라에 대한 접근이 필요합니다. \n\n설정 -> Unstoppable으로 가서 카메라 접근을 허용해 주세요.";
+"access_camera.settings" = "설정";
 
 // Welcome
 
-"welcome.new_wallet" = "Create Wallet";
-"welcome.restore_wallet" = "Restore Wallet";
-"welcome.privacy_settings" = "Privacy Settings";
-"welcome.version" = "Version %@";
+"welcome.new_wallet" = "새 지갑";
+"welcome.restore_wallet" = "지갑 복원";
+"welcome.privacy_settings" = "개인 정보 설정";
+"welcome.version" = "버전 %@";
 
 // Restore
 
-"restore.title" = "Choose Wallet";
-"restore.enter_key" = "Enter Key";
-"restore.item_title" = "%@ Wallet";
-"restore.words.description" = "Enter your private key for %@ wallet which consists of %@ words. The words needs to be entered in correct order and separated by spaces.";
-"restore.validation_failed" = "Incorrect Key";
+"restore.title" = "지갑 선택";
+"restore.enter_key" = "암호를 입력하세요";
+"restore.item_title" = "%@ 지갑";
+"restore.words.description" = "개인 암호를 %@지갑에 입력해 주십시오";
+"restore.validation_failed" = "틀린 암호 입니다";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
 // Coin Settings
 
-"coin_settings.derivation.description.bip44" = "Older";
-"coin_settings.derivation.description.bip49" = "Popular";
-"coin_settings.derivation.description.bip84" = "Newest";
-"coin_settings.derivation.starts_with" = "starts with %@...";
-"coin_settings.derivation.description_create" = "This setting controls the address format for the Bitcoin in this wallet. We recommend using BIP49 if not sure.";
-"coin_settings.derivation.description_restore" = "Select the address format for the Bitcoin in the wallet you're trying to restore.";
-"coin_settings.title" = "Blockchain Settings";
-"coin_settings.sync_mode.title" = "Restore Source";
-"coin_settings.sync_mode.fast.description" = "0-2 hours, Recommended";
-"coin_settings.sync_mode.slow.description" = "1-24 hours";
-"coin_settings.sync_mode.description" = "API sources links:
-btc.horizontalsystems.xyz/apg
-dash.horizontalsystems.xyz/apg
-bch.horizontalsystems.xyz/apg";
-"sync_mode.from_blockchain" = "From Blockchain";
-"blockchain_settings.change_alert.title" = "Address Format";
-"blockchain_settings.change_alert.content" = "After this change the wallet will have to resync itself with the %@ blockchain.\n\nWhen you change the address format for %@ the current balance and transaction history will no longer be visible. Changing it back to previous setting will bring everything back after the wallet resyncs itself with the blockchain. We recommend not to change it if not sure what that is.";
-"blockchain_settings.change_alert.action_button_text" = "Change to %@";
-"blockchain_settings.sync_mode_change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin, Bitcoin Cash and Dash blockchains, if you have enabled any of these tokens. Your balance or transactions won\'t be affected.\n\nWe recommend not to change this setting if not sure what it does.";
-"blockchain_settings.sync_mode.blockchain" = "Blockchain";
+"coin_settings.derivation.description.bip44" = "더 오래된";
+"coin_settings.derivation.description.bip49" = "인기있는";
+"coin_settings.derivation.description.bip84" = "최신";
+"coin_settings.derivation.starts_with" = "%@부터 시작";
+"coin_settings.derivation.description_create" = "이 설정은 지갑에서 비트코인 주소 형식을 통제 합니다. 확실하지 않는 경우에는 BIP49를 사용하시는 것을 추천해드립니다.";
+"coin_settings.derivation.description_restore" = "복원을 하려는 지갑에서 비트코인의 주소 형식을 선택해 주세요.";
+"coin_settings.title" = "블록 체인 설정";
+"coin_settings.sync_mode.title" = "매개 변수 복원";
+"coin_settings.sync_mode.fast.description" = "0-2 시간, 권장";
+"coin_settings.sync_mode.slow.description" = "1-24 시간";
+"coin_settings.sync_mode.description" = "API 출처 링크: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
+"sync_mode.from_blockchain" = "블록체인으로 부터";
+"blockchain_settings.change_alert.title" = "주소 형식";
+"blockchain_settings.change_alert.content" = "이 변경 후 지갑은 %@ 블록체인과 다시 동기화 되어야합니다.\n\n\n%@ 의 주소 형식을 변경하실 때에 현재 잔액 및 거래 내역이 더 이상 잔액 탭에 표기되지 않습니다. 이전 설정으로 다시 변경하시면 지갑이 블록체인과 다시 동기화된 후 모든 것을 다시 가져옵니다. 저희는 그것이 확실치 않을시에 변경하지 않는 것을 권장합니다.";
+"blockchain_settings.change_alert.action_button_text" = "%@으로 변경";
+"blockchain_settings.sync_mode_change_alert.content" = "이 작업은 귀하께서 이러한 토큰을 활성화 하신 경우 언스타퍼블 앱이 비트코인, 비트코인 Cash 및 Dash 블록 체인과 다시 동기화 되어야 합니다. 귀하의 잔액 또는 거래에는 영향을 미치지 않습니다.\n\n저희는 이 기능이 확실치 않을 경우 설정을 변경하지 않는 것을 권장합니다.";
+"blockchain_settings.sync_mode.blockchain" = "블록 체인";
 "blockchain_settings.sync_mode.api" = "API";
-"blockchain_settings.title" = "Address Format";
+"blockchain_settings.title" = "주소 형식";
 // Backup
 
-"backup.close" = "Close";
-"backup.backup_required" = "Backup Required";
-"backup.private_key" = "Private Key";
+"backup.close" = "가까운, 닫힌";
+"backup.backup_required" = "백업이 필요합니다";
+"backup.private_key" = "개인 암호";
 
-"backup.intro.title_backup" = "Backup";
-"backup.intro.title_show" = "Show Key";
-"backup.intro.subtitle" = "The private key that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
-"backup.intro.later" = "Later";
-"backup.intro.backup_now" = "Backup";
-"backup.intro.show_key" = "Show Key";
+"backup.intro.title_backup" = "백업";
+"backup.intro.title_show" = "암호 보이기";
+"backup.intro.subtitle" = "다음에 나오게될 개인 암호는 귀하께서 휴대폰 분실, 도난, 파손 등을 당하셨을 경우에 귀하의 자금을 복원시킬 유일한 방법입니다.\n\n다른 사람이 귀하의 화면을 보지 못하게 하십시오.\n\n코인들은 이 암호로 통제됩니다.%@";
+"backup.intro.later" = "나중에";
+"backup.intro.backup_now" = "백업";
+"backup.intro.show_key" = "암호 보이기";
 
-"backup.words.confirmation_description" = "Enter words from your %@ Key";
+"backup.words.confirmation_description" = "귀하의 %@암호에서 단어를 입력해 주십시오.";
 
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
-"backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may have access to clipboard data.";
-"error.send.self_transfer" = "Sending to self is not supported";
-"error.send_eos.account_not_exist" = "Target account does not exist";
-"error.send_eos.insufficient_ram" = "Your EOS account doesn't have enough RAM to send this token. You need to increase RAM stake to proceed.";
-"error.send_eos.unknown" = "Something went wrong: %@";
-"error.send_ethereum.wrong_parameters" = "Wrong parameters";
-"error.send_binance.memo_required" = "Receiver requires non-empty memo in transfer transaction";
-"error.send_binance.only_digits_allowed" = "Requires the memo to contain only digits";
-"error.send_z_cash.transparent_address" = "Unstoppable doesn't support payments to a transparent address";
-"error.incubed_not_reachable" = "Incubed servers not reachable";
+"backup.eos.hint" = "클립보드 관리 앱 또는 클립보드 데이터에 접근할 수 있는 다른 앱을 사용하고 있다면 \"복사\"작업을 사용하여 암호를 복사하는 것은 위험할 수 있습니다.";
+"error.send.self_transfer" = "자체로 전송이 지원되지 않음";
+"error.send_eos.account_not_exist" = "회원 계정이 존재하지 않습니다";
+"error.send_eos.insufficient_ram" = "귀하의 EOS계정은 이 토큰을 보내기엔 RAM이 충분하지 않습니다. 진행하시려면 RAM량을 늘리셔야 합니다.";
+"error.send_eos.unknown" = "무언가 잘못 됐습니다: %@";
+"error.send_ethereum.wrong_parameters" = "잘못된 매개 변수";
+"error.send_binance.memo_required" = "수신자는 송금 내역에 메모 기록을 필요로 합니다";
+"error.send_binance.only_digits_allowed" = "메모에는 숫자만 포함하셔야 합니다";
+"error.send_z_cash.transparent_address" = "Unstoppable은 투명 주소에 대한 지불을 지원하지 않습니다";
+"error.incubed_not_reachable" = "Incubed 서버 접근 불가";
 
-"backup.confirmation.title" = "Check ...";
+"backup.confirmation.title" = "확인 중...";
 
-"words_validator.empty_words" = "Not all words are entered";
-"words_validator.invalid_confirmation" = "Words do not match";
+"words_validator.empty_words" = "모든 단어가 입력되지 않았습니다";
+"words_validator.invalid_confirmation" = "암호가 일치하지 않습니다";
 
 // Balance
 
-"balance.title" = "Balance";
-"balance.tab_bar_item" = "Balance";
-"balance.send" = "Send";
-"balance.swap" = "Swap";
-"balance.deposit" = "Receive";
-"balance.rate_per_coin" = "%@ per %@";
-"balance.syncing" = "Syncing...";
-"balance.searching" = "Searching transactions...";
+"balance.title" = "잔액";
+"balance.tab_bar_item" = "잔액";
+"balance.send" = "전송";
+"balance.swap" = "스왑";
+"balance.deposit" = "수신";
+"balance.rate_per_coin" = "%@ 당 %@";
+"balance.syncing" = "동기화 중입니다...";
+"balance.searching" = "거래 검색 중...";
 "balance.searching.count" = "%@ tx";
-"balance.syncing_percent" = "Syncing... %@";
-"balance.synced_through" = "until %@";
-"balance.add_coin" = "Add Coins";
-"balance.sort.header" = "Sort by";
-"balance.sort.valueHighToLow" = "Balance";
-"balance.sort.az" = "Name";
-"balance.sort.24h_change" = "24h Price(%)";
-"balance_error.description" = "The error text will be copied to your clipboard should you decide to report it.";
-"balance_error.change_source" = "Change Source";
-"balance_error.sync_error" = "Sync Error";
+"balance.syncing_percent" = "동기화 중... %@";
+"balance.synced_through" = "%@ 까지";
+"balance.add_coin" = "코인 추가";
+"balance.sort.header" = "정렬 기준";
+"balance.sort.valueHighToLow" = "잔액";
+"balance.sort.az" = "이름";
+"balance.sort.24h_change" = "24시간 가격(%)";
+"balance_error.description" = "나중에 보고할 수 있도록 에러 텍스트가 클립보드에 복사됩니다.";
+"balance_error.change_source" = "출처를 변경하다";
+"balance_error.sync_error" = "동기화 오류";
 
 // Deposit
 
-"deposit.receive_coin" = "Receive %@";
-"deposit.your_address" = "Your Address";
-"deposit.your_account" = "Your Account";
-"receive_alert.not_backed_up_description" = "You need to backup the %@ Wallet before you may receive %@.";
+"deposit.receive_coin" = "수신%@";
+"deposit.your_address" = "당신의 주소";
+"deposit.your_account" = "내 계정";
+"receive_alert.not_backed_up_description" = "귀하께서 %@를 받기전에 %@ 지갑의 백업이 필요합니다.";
 
 // Send
 
-"send.title" = "Send %@";
-"send.amount_placeholder" = "Amount";
-"send.address_placeholder" = "Address";
-"send.account_placeholder" = "Account";
-"send.fee" = "Fee";
-"send.tx_speed" = "Transaction Fee";
-"send.tx_speed_low" = "Low";
-"send.tx_speed_medium" = "Medium";
-"send.tx_speed_recommended" = "Recommended";
-"send.tx_speed_high" = "High";
-"send.tx_speed_custom" = "Custom";
-"send.tx_duration" = "Duration";
-"send.duration.instant" = "Instant";
-"send.duration.within" = "within %@";
-"send.duration.hours" = "%d h.";
-"send.duration.minutes" = "%d min.";
-"send.available_balance" = "Available Balance";
-"send.max_button" = "Max";
-"send.next_button" = "Next";
-"send.error.invalid_address" = "Invalid Address";
-"send.hodler_locktime" = "TimeLock";
-"send.hodler_locktime_hour" = "1 hour";
-"send.hodler_locktime_month" = "1 month";
-"send.hodler_locktime_half_year" = "6 months";
-"send.hodler_locktime_year" = "1 year";
-"send.hodler_locktime_off" = "Off";
-"send.hodler_error.unsupported_address" = "Time locking works only with P2PKH addresses (starting with 1)";
+"send.title" = "전송 %@";
+"send.amount_placeholder" = "양";
+"send.address_placeholder" = "주소";
+"send.account_placeholder" = "계정";
+"send.fee" = "수수료";
+"send.tx_speed" = "거래 수수료";
+"send.tx_speed_low" = "낮음";
+"send.tx_speed_medium" = "보통";
+"send.tx_speed_recommended" = "권장";
+"send.tx_speed_high" = "높음";
+"send.tx_speed_custom" = "사용자 지정";
+"send.tx_duration" = "기간";
+"send.duration.instant" = "즉시";
+"send.duration.within" = "%@ 안에";
+"send.duration.hours" = "%d 시";
+"send.duration.minutes" = "%d 분";
+"send.available_balance" = "사용 가능한 잔액";
+"send.max_button" = "최대";
+"send.next_button" = "다음";
+"send.error.invalid_address" = "잘못된 주소";
+"send.hodler_locktime" = "시간 자물쇠";
+"send.hodler_locktime_hour" = "1시간";
+"send.hodler_locktime_month" = "1 개월";
+"send.hodler_locktime_half_year" = "6개월";
+"send.hodler_locktime_year" = "1 년";
+"send.hodler_locktime_off" = "끄기";
+"send.hodler_error.unsupported_address" = "P2PKH (1으로 시작하는) 주소만 시간 잠금이 가능합니다.";
 
 "send.confirmation.memo_placeholder" = "Memo";
-"send.confirmation.total" = "Total";
-"send.confirmation.send_button" = "Send";
-"send.amount_error.balance" = "Balance %@";
-"send.amount_error.maximum_amount" = "Maximum amount %@";
-"send.amount_error.minimum_amount" = "Minimum amount %@";
-"send.amount_error.min_required_balance" = "Min. required remainder %@";
-"send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
+"send.confirmation.total" = "합계";
+"send.confirmation.send_button" = "전송";
+"send.amount_error.balance" = "잔액 %@";
+"send.amount_error.maximum_amount" = "최대 %@ 금액";
+"send.amount_error.minimum_amount" = "최소 %@ 금액";
+"send.amount_error.min_required_balance" = "최소 %@ 만큼의 필요 잔여금";
+"send.token.insufficient_fee_alert" = "%@ (%@) 에 대한 거래 수수료는 %@로 지불되었습니다. 귀하는 %@가 필요합니다.";
 
-"send.lock_time" = "TimeLock";
+"send.lock_time" = "시간 자물쇠";
 
 // CoinSelector
 
-"choose_coin.title" = "Choose Coin";
+"choose_coin.title" = "코인 선택";
 
 // Swap
 
-"swap.title" = "Swap";
-"swap.you_pay" = "You Pay";
-"swap.estimated" = "estimated";
-"swap.balance" = "Balance";
-"swap.allowance" = "Allowance";
-"swap.you_get" = "You Get";
-"swap.token" = "Select Token";
-"swap.advanced_settings" = "Advanced Settings";
-"swap.proceed_button" = "Next";
-"swap.approve.title" = "Swap Approve";
-"swap.approve.description" = "You should grant permission to a smart contract to swap given token on your behalf. This permission sets amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute approval transaction.\n\nWhile it may be done on demand before each trade, it's cheaper to approve higher amount in advance for us in future trades.";
-"swap.approve.amount_error.already_approved" = "You already have an allowance for this amount";
-"swap.approving_button" = "Approving...";
-"swap.amount_error.maximum_amount" = "Balance %@";
-"swap.amount_error.no_balance" = "Can't parse balance for token";
-"swap.trade_error.not_found" = "Can't swap these tokens";
-"swap.error.insufficient_fee_alert" = "Transaction fees paid in %@. You need %@.";
+"swap.title" = "스왑";
+"swap.you_pay" = "지불하기";
+"swap.estimated" = "예상";
+"swap.balance" = "잔액";
+"swap.allowance" = "허용량";
+"swap.you_get" = "얻기";
+"swap.token" = "토큰 선택";
+"swap.advanced_settings" = "고급 설정";
+"swap.proceed_button" = "다음";
+"swap.approve.title" = "스왑 승인";
+"swap.approve.description" = "귀하를 대신하여 주어진 토큰을 교환할 수 있는 스마트 계약에 권한을 부여해야 합니다. 이 허가는 스마트 계약으로 사용할 수 있는 금액을 설정합니다. 잔액에는 영향을 미치지 않지만, 승인거래를 하기 위해서는 소정의 수수료가 필요합니다.\n\n각 거래 전에 주문형으로 할 수 있지만, 향후 거래에서는 더 많은 금액을 미리 승인하는 것이 더 저렴합니다.";
+"swap.approve.amount_error.already_approved" = "귀하는 이미 이 금액에 대한 허용량을 가지고 있습니다.";
+"swap.approving_button" = "승인 중...";
+"swap.amount_error.maximum_amount" = "잔액 %@";
+"swap.amount_error.no_balance" = "토큰을 위해 잔액을 파싱할 수 없습니다";
+"swap.trade_error.not_found" = "이 토큰을 스왑할 수 없습니다";
+"swap.error.insufficient_fee_alert" = "거래 수수료는 %@로 지불되었습니다. 귀하는 %@가 필요합니다.";
 
-"swap.price" = "Price";
-"swap.price_impact" = "Price Impact";
-"swap.max_min" = "Max / Min";
-"swap.maximum_paid" = "Maximum Paid";
-"swap.minimum_got" = "Minimum Got";
+"swap.price" = "금액";
+"swap.price_impact" = "가격 영향";
+"swap.max_min" = "최대 / 최소";
+"swap.maximum_paid" = "최대 지불액";
+"swap.minimum_got" = "최대 지급액";
 
 // Swap Advanced Settings
 
-"swap.advanced_settings.slippage" = "Slippage Tolerance";
-"swap.advanced_settings.slippage.footer" = "Your Transaction will revert if the price change unfavorably by more than this precentage";
-"swap.advanced_settings.deadline" = "Transaction Deadline";
-"swap.advanced_settings.deadline.footer" = "Your Transaction will revert if it is pending for more than this long.";
-"swap.advanced_settings.recipient.footer" = "After the exchange operation, the amount will be transferred to the specified address";
-"swap.advanced_settings.deadline_minute" = "%@ min";
-"swap.advanced_settings.recipient_address" = "Recipient Address";
-"swap.advanced_settings.recipient.placeholder" = "Not set";
-"swap.advanced_settings.error.lower_slippage" = "Your transaction is likely to fail.";
-"swap.advanced_settings.error.higher_slippage" = "Max. allowed value %@%%.";
+"swap.advanced_settings.slippage" = "토큰 범위 설정";
+"swap.advanced_settings.slippage.footer" = "가격이 이 퍼센트보다 높게 불리한 조건으로 변경될 경우 귀하의 거래가 원상 복구됩니다.";
+"swap.advanced_settings.deadline" = "거래 마감 시간";
+"swap.advanced_settings.deadline.footer" = "귀하의 거래가 이 시간 이상 보류되면 원상 복귀됩니다.";
+"swap.advanced_settings.recipient.footer" = "교환 작업 후, 금액은 지정된 주소로 이체됩니다.";
+"swap.advanced_settings.deadline_minute" = "최소 %@";
+"swap.advanced_settings.recipient_address" = "수취인 주소";
+"swap.advanced_settings.recipient.placeholder" = "미설정";
+"swap.advanced_settings.error.lower_slippage" = "귀하의 거래가 실패할 것 같습니다.";
+"swap.advanced_settings.error.higher_slippage" = "최대 허용치 %@%%.";
 
-"swap.fee" = "Swap Fee";
-"swap.transactions_speed" = "Transaction Speed";
-"swap.transaction_fee" = "Transaction Fee";
+"swap.fee" = "스왑 비용";
+"swap.transactions_speed" = "거래 속도";
+"swap.transaction_fee" = "거래 비용";
 
-"swap.select_token.title" = "Choose Coin";
+"swap.select_token.title" = "코인 선택";
 
 // Swap Approving
 
-"swap.approve.subtitle" = "Swap";
+"swap.approve.subtitle" = "스왑";
 
 // Swap Confirmation
 
-"swap.confirmation.swap_button" = "Swap";
-"swap.confirmation.pay" = "Pay %@";
-"swap.confirmation.get" = "Get %@";
+"swap.confirmation.swap_button" = "스왑";
+"swap.confirmation.pay" = "%@ 지불";
+"swap.confirmation.get" = "%@ 지급";
 
 
 "swap.uniswap_info.title" = "Uniswap v.2";
-"swap.uniswap_info.description" = "This exchange service is powered by Uniswap, a decentralized token exchange protocol built on Ethereum blockchain.\n\nUniswap is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
-"swap.uniswap_info.link_button" = "Uniswap Site";
+"swap.uniswap_info.description" = "이 거래소 서비스는 Ethereum 블록체인을 기반으로 구축된 분산형 토큰 교환 프로토콜인 Uniswap에서 운영됩니다.\n\n\Uniswap는 스마트 계약에 의해 완전히 자동화되고 관리되어 부정행위를 할 수 있는 방법 없이 토큰 교환을 신뢰할 수 있는 방법으로 가능하게 합니다.";
+"swap.uniswap_info.link_button" = "Uniswap 사이트";
 
-"swap.uniswap_info.header_uniswap_related" = "Uniswap Related";
-"swap.uniswap_info.header_allowance" = "Allowance";
-"swap.uniswap_info.content_allowance" = "The amount of some currency that Uniswap can spend on your behalf when executing token swaps. Sufficient allowance is required before swap action can take place.";
-"swap.uniswap_info.header_price_impact" = "Price Impact";
-"swap.uniswap_info.content_price_impact" = "Expected price deviation from a shown price, typically increases with the swap amount.";
-"swap.uniswap_info.header_swap_fee" = "Swap Fee";
-"swap.uniswap_info.content_swap_fee" = "A service fee for the swap action on Uniswap platform, shown in the currency the user sells. For most orders it should be either 0.3 % or 0.6 %.";
-"swap.uniswap_info.header_guaranteed_amount" = "Guaranteed Amount";
-"swap.uniswap_info.content_guaranteed_amount" = "The minimum amount a user is going to receive as a result of a swap action.";
-"swap.uniswap_info.header_maximum_spend" = "Maximum Spend";
-"swap.uniswap_info.content_maximum_spend" = "The maximum amount a user is going to spend as a result of a swap action.";
+"swap.uniswap_info.header_uniswap_related" = "Uniswap 관련됨";
+"swap.uniswap_info.header_allowance" = "허용량";
+"swap.uniswap_info.content_allowance" = "토큰 스왑을 실행할 때 Uniswap이 대신 사용할 수 있는 일부 통화의 금액. 스왑 행위가 일어나기 전에 충분한 허용량이 필요됩니다.";
+"swap.uniswap_info.header_price_impact" = "가격 영향";
+"swap.uniswap_info.content_price_impact" = "표시된 가격과의 예상 가격 편차는 일반적으로 스왑 금액에 따라 증가합니다.";
+"swap.uniswap_info.header_swap_fee" = "스왑 비용";
+"swap.uniswap_info.content_swap_fee" = "사용자가 판매하는 통화에 표시된 Uniswap 플랫폼의 스왑 행위에 대한 서비스 요금. 대부분의 주문의 경우 0.3% 또는 0.6%여야 합니다.";
+"swap.uniswap_info.header_guaranteed_amount" = "보증 금액";
+"swap.uniswap_info.content_guaranteed_amount" = "스왑 행위로 인해 사용자가 받을 최소 금액.";
+"swap.uniswap_info.header_maximum_spend" = "최대 속도";
+"swap.uniswap_info.content_maximum_spend" = "스왑 행위로 인해 사용자가 사용할 최대 금액.";
 
-"swap.uniswap_info.header_other" = "Other";
-"swap.uniswap_info.header_transaction_fee" = "Transaction Fee";
-"swap.uniswap_info.content_transaction_fee" = "The estimated processing cost of the given transaction on Ethereum blockchain. Uniswap related transactions will typically cost more than generic token transfer transactions.";
-"swap.uniswap_info.header_transaction_speed" = "Transaction Speed";
-"swap.uniswap_info.content_transaction_speed" = "Transactions with higher transaction fee will result in faster processing speeds. The opposite is true as well.";
+"swap.uniswap_info.header_other" = "기타";
+"swap.uniswap_info.header_transaction_fee" = "거래 수수료";
+"swap.uniswap_info.content_transaction_fee" = "Ethereum 블록체인에 대한 해당 거래의 예상 처리 비용. Uniswap 관련 거래는 보통 일반적인 토큰 전송 거래보다 비용이 더 많이 듭니다.";
+"swap.uniswap_info.header_transaction_speed" = "거래 속도";
+"swap.uniswap_info.content_transaction_speed" = "거래 수수료가 높은 거래는 처리 속도가 빨라집니다. 반대로도 그렇습니다.";
 
 // Transactions
 
-"transactions.title" = "Transactions";
-"transactions.tab_bar_item" = "Transactions";
-"transactions.filter_all" = "All";
-"transactions.empty_text" = "You don't have any pending or past transactions yet";
-"transactions.pending" = "Pending";
-"transactions.receiving" = "Receiving";
-"transactions.failed" = "Failed";
-"transactions.sending" = "Sending";
-"transactions.approval" = "Swap approval";
+"transactions.title" = "거래기록";
+"transactions.tab_bar_item" = "거래기록";
+"transactions.filter_all" = "모든";
+"transactions.empty_text" = "당신은 아직 보류 중 또는 과거에 완료된 거래가 없습니다";
+"transactions.pending" = "보류 중";
+"transactions.receiving" = "수신 중";
+"transactions.failed" = "실패";
+"transactions.sending" = "전송중";
+"transactions.approval" = "스왑 승인";
 
 // Transaction Info
 
-"tx_info.title" = "Transaction";
-"tx_info.title_approval" = "Swap Approval";
-"tx_info.status.pending" = "Pending";
-"tx_info.status.confirmed" = "Confirmed";
-"tx_info.status.failed" = "Failed";
-"tx_info.from_hash" = "From";
-"tx_info.transaction_id" = "ID";
-"tx_info.to_hash" = "To";
-"tx_info.input" = "Input";
-"tx_info.button_verify" = "Verify";
-"tx_info.rate" = "Historical Rate";
-"tx_info.fee" = "Fee";
-"tx_info.to_self_note" = "This transaction sent to own address";
-"tx_info.double_spent_note" = "Double Spend Risk!";
-"tx_info.locked_until" = "Locked until %@";
-"tx_info.unlocked_at" = "Unlocked at %@";
-"tx_info.recipient_hash" = "Recipient";
-"tx_info.raw_transaction" = "Raw Transaction";
+"tx_info.title" = "거래기록";
+"tx_info.title_approval" = "스왑 승인";
+"tx_info.status.pending" = "보류 중";
+"tx_info.status.confirmed" = "확인";
+"tx_info.status.failed" = "실패";
+"tx_info.from_hash" = "로 부터";
+"tx_info.transaction_id" = "거래 ID";
+"tx_info.to_hash" = "에게";
+"tx_info.input" = "입력";
+"tx_info.button_verify" = "확인";
+"tx_info.rate" = "과거 환율";
+"tx_info.fee" = "수수료";
+"tx_info.to_self_note" = "이 거래는 귀하의 주소로 전송이 되었습니다";
+"tx_info.double_spent_note" = "이중 지출 위험!";
+"tx_info.locked_until" = "까지 잠그기 %@";
+"tx_info.unlocked_at" = "%@에서 잠금 해제됨";
+"tx_info.recipient_hash" = "수령인";
+"tx_info.raw_transaction" = "로우 트랜잭션";
 
 // Full Info
 
-"full_info.title" = "Transaction";
-"full_info.time" = "Time";
-"full_info.block" = "Block";
-"full_info.confirmations" = "Confirmations";
-"full_info.size" = "Size";
-"full_info.fee" = "Fee";
-"full_info.rate" = "Rate";
-"full_info.inputs" = "Inputs";
-"full_info.outputs" = "Outputs";
-"full_info.source" = "Source";
-"full_info.contract" = "Contract";
-"full_info.from" = "From";
-"full_info.to" = "To";
-"full_info.amount" = "Amount";
+"full_info.title" = "거래";
+"full_info.time" = "시간";
+"full_info.block" = "덩어리";
+"full_info.confirmations" = "확인";
+"full_info.size" = "크기";
+"full_info.fee" = "비용";
+"full_info.rate" = "비율, 속도, 평가";
+"full_info.inputs" = "입력값";
+"full_info.outputs" = "산출값";
+"full_info.source" = "원천, 자료";
+"full_info.contract" = "계약";
+"full_info.from" = "로 부터";
+"full_info.to" = "에게";
+"full_info.amount" = "양";
 "full_info.nonce" = "Nonce";
 "full_info.memo" = "Memo";
 "full_info.cpu" = "CPU Usage";
 "full_info.net" = "Net Usage";
-"full_info.milli_seconds" = "%@ μs";
+"full_info.milli_seconds" = "%@ μs\n";
 "full_info.bytes" = "%@ Bytes";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
-"full_info.gas_price" = "Gas Price";
+"full_info.gas_price" = "Gas Used";
 
-"full_info.source.title" = "Source";
+"full_info.source.title" = "원천, 자료";
 
-"full_info.error.server_offline" = "offline";
-"full_info.error.transaction_not_found" = "Transaction can not be found on the blockchain";
-"full_info.error.change_source" = "Change Source";
-"full_info.no_address" = "Empty Address";
+"full_info.error.server_offline" = "오프라인";
+"full_info.error.transaction_not_found" = "블록 체인에서 거래를 찾을 수 없습니다";
+"full_info.error.change_source" = "출처를 변경하다";
+"full_info.no_address" = "빈 주소";
 
 // Settings
 
-"settings.title" = "Settings";
-"settings.tab_bar_item" = "Settings";
-"settings.security_center" = "Security Center";
-"settings.manage_accounts" = "Manage Wallets";
-"settings.manage_coins" = "Manage Coins";
-"settings.app_status" = "App Status";
-"settings.experimental_features" = "Experimental Features";
-"settings.notifications" = "Notifications";
-"settings.base_currency" = "Base Currency";
-"settings.language" = "Language";
-"settings.terms" = "Terms";
-"settings.tell_friends" = "Tell Friends";
-"settings.contact" = "Contact";
-"settings.light_mode" = "Light Mode";
+"settings.title" = "설정";
+"settings.tab_bar_item" = "설정";
+"settings.security_center" = "보안 센터";
+"settings.manage_accounts" = "지갑 관리하기";
+"settings.manage_coins" = "코인 관리";
+"settings.app_status" = "앱 상태";
+"settings.experimental_features" = "실험적 기능";
+"settings.notifications" = "알림";
+"settings.base_currency" = "기초 통화";
+"settings.language" = "언어";
+"settings.terms" = "약관";
+"settings.tell_friends" = "친구에게 추천하기";
+"settings.contact" = "연락처";
+"settings.light_mode" = "밝은 모드";
 "settings.info_title" = "UNSTOPPABLE";
-"settings.info_subtitle" = "decentralized app";
+"settings.info_subtitle" = "분산형 앱";
 
 // Settings -> Notifications
 
-"settings_notifications.title" = "Notifications";
-"settings_notifications.toggle_title" = "Push Notifications";
-"settings_notifications.description" = "Set price change alerts for the coins you would like to watch\n\nYou will be alerted when the change in price for the last 24 hours exceeds selected threshold.\n\nPrice Trend Alert warns of a trend change for the short 1 week, for the long 6 month.";
-"settings_notifications.alert_off" = "Off";
-"settings.notifications.deactivate_all" = "Deactivate All";
-"settings.notifications.disabled_text" = "The notifications for Unstoppable Wallet app are disabled. You need to turn on Notifications and allow background app refresh in order to be able to receive price change alerts.";
-"settings.notifications.settings_button" = "Turn on in Settings";
-"settings_notifications.trend_short" = "Short Term 7D";
-"settings_notifications.trend_long" = "Long Term 6M";
-"settings_notifications.reset_all_title" = "Reset All";
-"settings_notifications.trend_settings_title" = "Price Trend";
+"settings_notifications.title" = "알림";
+"settings_notifications.toggle_title" = "알림 설정";
+"settings_notifications.description" = "보고 싶은 코인에 대한 가격 변경 알림 설정\n\n최근 24시간 동안의 가격 변동이 선택된 임계값을 초과할 경우 알림 메시지가 표시됨\n\n가격 동향 알림은 짧은 1주일, 긴 6개월 동안의 동향 변화에 대해 알려줍니다.";
+"settings_notifications.alert_off" = "끄기";
+"settings.notifications.deactivate_all" = "전부 비활성화";
+"settings.notifications.disabled_text" = "Unstoppable 지갑 앱을 위한 알림이 불가능합니다. 귀하께서는 가격 변동 알림을 받으시려면 앱을 켜놓는걸 필요로 합니다.";
+"settings.notifications.settings_button" = "설정에서 켜십시오";
+"settings_notifications.trend_short" = "단기 7D";
+"settings_notifications.trend_long" = "장기 6M";
+"settings_notifications.reset_all_title" = "전체 초기화";
+"settings_notifications.trend_settings_title" = "가격 동향";
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Choose Coins";
-"manage_coins.add_token" = "Add Token";
-"manage_coins.search" = "Search";
-"manage_coins.add_coin.title" = "Add %@";
-"manage_coins.add_coin.subtitle" = "%@ Wallet";
-"manage_coins.add_coin.text.set_up" = "You need to set up %@ wallet to be able to send or receive %@.";
-"manage_coins.add_coin.text.create_or_restore" = "Use the Create button below to set up a new %@ wallet, or Restore button to import the existing one.";
-"manage_coins.add_coin.text.create_only" = "At this point Unstoppable is not able to create new %@ wallet. You’re only able to restore the existing one.";
-"manage_coins.add_coin.text.tokens" = "You will be able to use this wallet for: %@.";
-"manage_coins.add_coin.create" = "Create";
-"manage_coins.add_coin.restore" = "Restore";
+"manage_coins.title" = "코인 선택";
+"manage_coins.add_token" = "토큰 추가";
+"manage_coins.search" = "검색";
+"manage_coins.add_coin.title" = "%@ 추가 ";
+"manage_coins.add_coin.subtitle" = "%@ 지갑";
+"manage_coins.add_coin.text.set_up" = "귀하께서는 %@ 을 보내거나 받으시려면 %@ 지갑을 설정하셔야 합니다.";
+"manage_coins.add_coin.text.create_or_restore" = "아래의 생성 버튼을 사용하여 새로운 %@ 지갑을 설정하거나 복원 버튼을 사용하여 기존 지갑을 가져옵니다.";
+"manage_coins.add_coin.text.create_only" = "현재 Unstoppable은 신규 %@ 지갑을 생성할 수 없습니다. 기존 지갑 복원만 가능합니다.";
+"manage_coins.add_coin.text.tokens" = "이 지갑은 다음 항목을 위해 사용할 수 있습니다: %@";
+"manage_coins.add_coin.create" = "만들기";
+"manage_coins.add_coin.restore" = "복구";
 
 // Settings -> Experimental Features
 
-"settings.experimental_features.title" = "Experimental";
-"settings.experimental_features.description" = "The features below are experimental and should be used with caution. While we have thoroughly tested these features using our own crypto funds we cannot guarantee they work as expected in all possible cases.";
-"settings.experimental_features.bitcoin_hodling" = "TimeLock";
+"settings.experimental_features.title" = "실험적인";
+"settings.experimental_features.description" = "아래 기능은 실험용이므로 주의해서 사용해 주세요. 자체 암호화된 자금을 사용하여 이러한 기능을 철저히 실험하였지만 가능한 모든 경우에 예상대로 작독한다고 보장 드릴 수는 없습니다.";
+"settings.experimental_features.bitcoin_hodling" = "시간 자물쇠";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
-"settings.bitcoin_hodling.title" = "TimeLock";
-"settings.bitcoin_hodling.lock_time" = "Activate";
-"settings.bitcoin_hodling.description" = "Enables you to send Bitcoins that cannot be spent until specified date.\n\nThe receiver of such transaction should use Unstoppable wallet app version 0.10 or newer with BIP44 address format for the Bitcoin.\n\nOnly Unstoppable wallet can correctly identify such transactions on Bitcoin network as well as enable receiver to spend those Bitcoins after the lock period expires.\n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transaction to yourself.\n\nBeing an experimental feature the maximum amount per transaction is limited to 0.5 BTC.";
+"settings.bitcoin_hodling.title" = "시간 자물쇠";
+"settings.bitcoin_hodling.lock_time" = "활성화";
+"settings.bitcoin_hodling.description" = "명시된 날짜까지 사용할수 없는 비트코인을 보낼 수 있습니다.\n\n이러한 거래의 수진자는 비트코인 사용에 대해 언스탑퍼플 지갑 앱 버젼 0.10 또는 더 새로운 BIP44 주소 형식을 사용해야 합니다.\n\n언스탑퍼블 지갑만이 비트코인 네트워크에서 이런 거래들을 올바르게 확인할 수 있고 또 수신자가 잠금 기간 만료 후에도 비트코인을 사용할 수 있게 할 수 있습니다.\n\n귀하께서 호들러 이시면, 이 기능을 사용하여 귀하에게 이러한 거래를 보냄으로써 호들링할 수 있습니다.\n\n실험적인 기능으로 거래당 최대 0.5 BTC로 제한이 되있습니다.";
 
 // Settings -> Terms
 
-"terms.title" = "Terms";
-"terms.app_subtitle" = "Decentralized App";
-"terms.description" = "The Unstoppable wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.
+"terms.title" = "약관";
+"terms.app_subtitle" = "분산형 앱";
+"terms.description" = "Unstoppable 지갑은 개인적이고 독립적인 방식으로 암호화폐를 투자하고 보관하려는 사람들을 위해 만들어졌습니다.
 
-It's a non-custodial, peer-to-peer wallet where only the user has control over funds. It doesn't collect any data and keeps user independent by not locking his/her wallet to a specific wallet app.
+이는 오직 사용자만이 자금을 통제할 수 있는 비관세적인 P2P 지갑입니다. 데이터를 수집하지 않고 특정 지갑 앱에 지갑을 잠그지 않아 사용자의 독립성을 유지합니다.
 
-The Unstoppable wallet is fully open-source and anyone can confirm that the app works exactly as it claims to.
+Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는 대로 정확히 작동하는지 확인할 수 있습니다.
 
-We built Unstoppable for ourselves as the available solutions were not up to par. Both from engineering and usability perspective we believe this wallet to be significantly ahead of alternative products.";
-"terms.site" = "Site";
-"terms.item.academy" = "I went through the Academy section of this app and got familiar with the fundamental aspects of storing cryptocurrencies.";
-"terms.item.backup" = "I have backed up the private key(s) for my wallets that were shown to me in a form of 12-24 words. I understand that these private keys are stored on my smartphone and not elsewhere.";
-"terms.item.owner" = "I understand that only the owner of my private key(s) can access and spend funds on my wallet and therefore these keys should never be shared with anyone.";
-"terms.item.recover" = "I understand that I will need my private keys in order to restore access to my funds should I lose my phone or if the app malfunctions. Without my private keys it will be impossible to recover access to my wallet.";
-"terms.item.phone" = "I understand that passing my phone to untrusted entities or leaving the wallet app without safe PIN lock may potentially endanger the safety of my funds.";
-"terms.item.root" = "I understand that jail breaking (rooting) my phone, installing third party apps from unknown sources, keeping the operating system outdated can potentially endanger the safety of my funds.";
-"terms.item.bugs" = "I understand there may be undiscovered software issues in the code powering this wallet app which may lead to unexpected behavior or the app malfunctioning.";
-"terms.footer" = "Thank you for choosing this wallet!";
+귀사는 이용 가능한 해결책이 기대에 미치지 못했기 때문에 스스로 Unstoppable 을 구축했습니다. 엔지니어링과 사용 편의성 측면에서 모두 귀사는 이 지갑이 대체 제품보다 상당히 앞서 있다고 믿고 있습니다.";
+"terms.site" = "사이트";
+"terms.item.academy" = "나는 이 앱의 아카데미 부문을 거치면서 가상화폐 저장의 근본적인 측면에 대해 알게 되었다.";
+"terms.item.backup" = "나는 12-24 단어 형식으로 보여 준 지갑의 개인 암호를 백업했습니다. 나는 이 개인 암호가 다른 곳이 아닌 내 스마트폰에 저장되어 있다는 것을 인지합니다.";
+"terms.item.owner" = "나는 내 개인 암호의 소유자만이 내 지갑에 접근하여 자금을 쓸 수 있고 따라서 이 암호들은 절대 누구와도 공유되어서는 안 된다는 것을 이해합니다.";
+"terms.item.recover" = "나는 휴대폰을 분실하거나 앱이 오작동할 경우 자금에 대한 액세스를 복원하기 위해 개인 키가 필요하다는 것을 알고 있습니다. 내 개인 키가 없으면 내 지갑에 대한 접근을 복구하는 것은 불가능할 것입니다.";
+"terms.item.phone" = "신뢰할 수 없는 단체에게 핸드폰을 건네거나 안전한 PIN 잠금 없이 지갑 앱을 탈퇴하는 것은 잠재적으로 내 자금의 안전을 위협할 수 있다는 것을 알고 있습니다.";
+"terms.item.root" = "나는 내 전화기를 탈선하고(루팅), 출처를 알 수 없는 제3자 앱을 설치하고, 운영 체제를 구식 상태로 유지하면 잠재적으로 내 자금의 안전을 위태롭게 할 수 있다는 것을 이해합니다.";
+"terms.item.bugs" = "나는 이 지갑 앱에 전원을 공급하는 코드에서 예기치 않은 동작이나 앱 오작동으로 이어질 수 있는 미발견된 소프트웨어 문제가 있을 수 있다는 것을 알고 있습니다.";
+"terms.footer" = "이 지갑을 선택해주셔서 감사합니다!";
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Unstoppable Wallet - a crypto wallet I recommend";
+"settings_tell_friends.text" = "Unstoppable 지갑 - 내가 추천하는 암호지갑";
 
 // Settings -> Security
 
-"settings_security.title" = "Security Center";
-"settings_security.blockchain_settings" = "Blockchain Settings";
-"settings_security.passcode" = "Passcode";
-"settings_security.privacy" = "Privacy";
-"settings_security.change_pin" = "Edit Passcode";
-"settings_security.touch_id" = "Touch ID";
-"settings_security.face_id" = "Face ID";
-"security_settings.delete_alert_button" = "Delete from Phone";
-"settings_privacy.title" = "Privacy";
-"settings_privacy.header_description" = "This app doesn't share any of your data. However, as it communicates with blockchains some public data like IP address can potentially be leaked. Use the info button on the top right to get detailed information about each section.";
-"settings_privacy.sorting_title" = "Inputs/Outputs";
-"settings_privacy.sorting.section_header" = "Blockchain Transactions";
-"settings_privacy.sorting.section_footer" = "Make your BTC, LTC, BCH transactions harder to trace by changing the way transactions are structured.";
-"settings_privacy.connection.section_header" = "Blockchain Sync";
-"settings_privacy.connection.section_footer" = "Some blockchains do not yet provide means for mobile apps to operate in peer to peer manner. The communications with BTC, BCH, LTC, DASH blockchains is fully peer to peer.";
-"settings_privacy.sync.section_header" = "Blockchain Restore";
-"settings_privacy.sync.section_footer" = "Select data source for restoring wallet with transactions.";
+"settings_security.title" = "보안 센터";
+"settings_security.blockchain_settings" = "블록 체인 설정";
+"settings_security.passcode" = "비밀번호";
+"settings_security.privacy" = "개인정보";
+"settings_security.change_pin" = "비밀번호 변경";
+"settings_security.touch_id" = "터치 아이디";
+"settings_security.face_id" = "얼굴인식 아이디";
+"security_settings.delete_alert_button" = "휴대전화에서 삭제";
+"settings_privacy.title" = "개인정보";
+"settings_privacy.header_description" = "이 앱은 귀하의 데이터를 공유하지 않습니다. 하지만 앱이 블록체인과 통신할 때 IP 주소와 같은 일부 공개 데이터가 유출 될 수도 있습니다. 각 섹션에 대한 자세한 정보를 확인하려면 오른쪽 상단의 정보 버튼을 누르십시오.";
+"settings_privacy.sorting_title" = "입력/출력";
+"settings_privacy.sorting.section_header" = "블록체인 매매거래";
+"settings_privacy.sorting.section_footer" = "매매거래 구성 방식을 변경하셔서 BTC, LTC, BCH 매매거래를 더 추적하기 어렵게 만들어 주세요.";
+"settings_privacy.connection.section_header" = "블록체인 동기화";
+"settings_privacy.connection.section_footer" = "몇몇의 블록체인은 아직 모바일 앱이 P2P 방식으로 작동하는 방법을 제공하지 않습니다. BTC, BCH, LTC, DASH 블록체인과의 통신은 전부 P2P 방식입니다.";
+"settings_privacy.sync.section_header" = "블록체인 복원";
+"settings_privacy.sync.section_footer" = "매매거래로 지갑을 복원 할 데이터 소스를 선택하세요.";
 
-"settings_privacy_info.title" = "Privacy Settings";
-"settings_privacy_info.description" = "Below you will find detailed explanation of the privacy settings that are available in the app. It's safe to consider them as settings for those that require extensive privacy.";
+"settings_privacy_info.title" = "개인 정보 설정";
+"settings_privacy_info.description" = "다음은 앱에서 사용할 수 있는 개인정보 설정에 관한 자세한 설명입니다. 강화된 개인정보 보호를 원하는 사용자를 위한 설정이라고 생각하시면 됩니다.";
 "settings_privacy_info.header_blockchain_transactions" = "Blockchain Transactions";
 "settings_privacy_info.content_blockchain_transactions" = "This setting controls the privacy level of user's transactions on Bitcoin, Bitcoin Cash and Litecoin blockchains.\n\nMost Bitcoin transactions generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party monitoring Bitcoin blockchain to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. The output returned to the sender can then be used in future transactions and further reveal the details to the monitoring party.\n\nUnstoppable wallet implements measures to makes it significantly harder to figure out which output goes where. There are two options available to Unstoppable users:\n\n1. Shuffle : The order of transaction outputs are randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, than consider this a recommended option.\n\n2. Deterministic : There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open source wallets that standard ensures that wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether transaction was sent from the wallet that uses that standard or not.";
 "settings_privacy_info.header_blockchain_connection" = "Blockchain Sync";
@@ -456,75 +451,75 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "settings_privacy_info.header_blockchain_restore" = "Blockchain Restore";
 "settings_privacy_info.content_blockchain_restore" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transactions history for a given coin so that the wallet app is able to display past transactions and calculate user's balance. This needs to happen only once, when user restores previously created wallet. At this point there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from API Server : There is a third-party predefined server which hosts the entire blockchain and has all the data processed and ready to provide it in a fast manner. This method is fast but can potentially keep track of the IP addresses and the data requested. This option is recommended due to its speed of getting data (5-10 minutes). The risks are minimal. If the user restoring from his own server then no privacy risks at all.\n\n2. from Blockchain : In this case the app tries to restore directly from a p2p network of the blockchain nodes. The app pings many of those nodes and requests data from them. Potentially these nodes can keep track of user's IP address and requests made however during restore the app can switch between nodes. There are close to 10,000 Bitcoin nodes on the network at any given time. This option is slow and can easily take 2-3 hours, app needs to be open while restore is happening...";
 
-"settings_privacy.alert_sync.title" = "Restore Source";
-"settings_privacy.alert_sync.description" = "After this change the wallet will have to resync itself with the %@ blockchain.";
-"settings_privacy.alert_sync.recommended" = "Recommended";
-"settings_privacy.alert_sync.more_private" = "More Private";
+"settings_privacy.alert_sync.title" = "매개 변수 복원";
+"settings_privacy.alert_sync.description" = "이 변경 후에 지갑은 %@ 블록체인과 다시 동기화 되어야합니다.";
+"settings_privacy.alert_sync.recommended" = "권장";
+"settings_privacy.alert_sync.more_private" = "더 개인";
 
-"settings_privacy.alert_connection.title" = "Blockchain Sync";
+"settings_privacy.alert_connection.title" = "블록체인 동기화";
 
-"settings_privacy.alert_sort.title" = "Blockchain Transactions";
-"settings_privacy.alert_sort.subtitle" = "Inputs/Outputs";
-"settings_privacy.sorting_default" = "Default";
-"settings_privacy.sorting_default.description" = "Without any settings";
-"settings_privacy.sorting_shuffle" = "Shuffle";
-"settings_privacy.sorting_shuffle.description" = "Random Indexing";
+"settings_privacy.alert_sort.title" = "블록체인 매매거래";
+"settings_privacy.alert_sort.subtitle" = "입력/출력";
+"settings_privacy.sorting_default" = "기본";
+"settings_privacy.sorting_default.description" = "설정없이";
+"settings_privacy.sorting_shuffle" = "셔플";
+"settings_privacy.sorting_shuffle.description" = "랜덤 인덱싱";
 "settings_privacy.sorting_bip69" = "Deterministic Bip69";
-"settings_privacy.sorting_bip69.description" = "Lexicographical Indexing";
+"settings_privacy.sorting_bip69.description" = "사전식 인덱싱";
 
 // Settings -> Contact
 
-"settings.contact.title" = "Contact";
+"settings.contact.title" = "연락처";
 "settings.contact.email" = "E-mail";
 "settings.contact.telegram_wallet" = "Telegram";
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Manage Wallets";
-"settings_manage_keys.item_title" = "%@ Wallet";
-"settings_manage_keys.add_wallet" = "Add Wallet";
-"settings_manage_keys.description" = "Highlighted below are your active wallets where each wallet controls a set of cryptocurrencies.\n\nYou must backup each highlighted wallet by backing up the private key for it. This key is the only way to restore and access your funds if your phone is ever lost, stolen or the app malfunctions.";
-"settings_manage_keys.delete" = "Delete";
-"settings_manage_keys.backup" = "Backup";
-"settings_manage_keys.show" = "Show Key";
-"settings_manage_keys.create" = "Create";
-"settings_manage_keys.restore" = "Restore";
-"settings_manage_keys.settings" = "Address Format";
-"settings_manage_keys.delete.cant_delete" = "You need to backup the private key for this wallet before it can be deleted from this phone.";
-"settings_manage_keys.delete.title" = "Delete Wallet";
-"settings_manage_keys.delete.confirmation_remove" = "The action will delete the %@ Wallet from this device.";
-"settings_manage_keys.delete.confirmation_disable" = "Coins that will be disabled: %@";
-"settings_manage_keys.delete.confirmation_loose" = "If you didn't backup the private key for this wallet, you will lose access to your funds.";
-"error.invalid_eos_key" = "Invalid key";
-"error.invalid_eos_account" = "Invalid account";
+"settings_manage_keys.title" = "지갑 관리하기";
+"settings_manage_keys.item_title" = "%@ 지갑";
+"settings_manage_keys.add_wallet" = "지갑 추가하기";
+"settings_manage_keys.description" = "아래 강조표시가 된부분은 각각의 지갑이 다른 세트의 가상화폐에 책임이 있는 귀하께서 사용중인 지갑입니다. \n\n귀하께서는 개인 암호를 백업 시킴으로써 각각의 강조표시된 지갑들도 백업을 하셔야 합니다. 이 암호는 귀하께서 휴대폰 분실, 도난, 파손 등을 당하셨을때 복원 할 수 있는 유일한 암호 입니다.";
+"settings_manage_keys.delete" = "삭제";
+"settings_manage_keys.backup" = "백업";
+"settings_manage_keys.show" = "표시";
+"settings_manage_keys.create" = "만들기";
+"settings_manage_keys.restore" = "복구";
+"settings_manage_keys.settings" = "주소 형식";
+"settings_manage_keys.delete.cant_delete" = "개인 암호가 휴대폰에서 지워질 수 있기 전에 귀하께서는 개인 암호를 백업 하셔야 합니다.";
+"settings_manage_keys.delete.title" = "지갑 삭제하기";
+"settings_manage_keys.delete.confirmation_remove" = "이 행동은 %@ 지갑을 장치에서 삭제합니다.";
+"settings_manage_keys.delete.confirmation_disable" = "비활성화될 코인: %@";
+"settings_manage_keys.delete.confirmation_loose" = "지갑에서 개인 암호를 백업 시키지 않으셨을 경우, 귀하께서는 자금 접근에 제한이 있을 것 입니다.";
+"error.invalid_eos_key" = "잘못된 암호입니다";
+"error.invalid_eos_account" = "계정이 존재하지 않습니다.";
 
 // Set PIN
 
-"set_pin.title" = "Passcode";
-"set_pin.info" = "Your passcode will be used to unlock your wallet";
-"set_pin.wrong_confirmation" = "Passcode did not match. Try again";
+"set_pin.title" = "비밀번호";
+"set_pin.info" = "너의 비밀번호는 너의 지갑을 열어주고 돈을 보내는데 사용될 것입니다.";
+"set_pin.wrong_confirmation" = "비밀번호가 일치하지 않는다. 다시 시도하세요.";
 
 // Edit PIN
 
-"edit_pin.title" = "Edit Passcode";
-"edit_pin.unlock_info" = "Current Passcode";
-"edit_pin.new_pin_info" = "New Passcode";
+"edit_pin.title" = "비밀번호 변경";
+"edit_pin.unlock_info" = "현재 비밀번호";
+"edit_pin.new_pin_info" = "새로운 비밀번호";
 
 // Unlock PIN
 
-"unlock_pin.info" = "Passcode";
-"unlock_pin.cant_save_pin" = "Ouch! We cannot save your passcode, please contact us asap!";
-"unlock_pin.blocked_until" = "Disabled until: %@";
+"unlock_pin.info" = "비밀번호";
+"unlock_pin.cant_save_pin" = "아야! 저희는 귀하의 비밀번호를 저장할 수 없습니다, 가능한 빨리 연락해 주시기 바랍니다!";
+"unlock_pin.blocked_until" = "~때까지 사용 안 함: %@";
 
 // Rate List
 
-"rate_list.portfolio" = "Portfolio";
-"rate_list.latest_news" = "Latest News";
-"top100_list.portfolio" = "Top 100";
-"top100_list.sort_by" = "Sort By";
-"top100_list.sort_type.rank" = "Rank";
-"top100_list.sort_type.top_winners" = "Top Winners";
-"top100_list.sort_type.top_losers" = "Top Losers";
+"rate_list.portfolio" = "포트폴리오";
+"rate_list.latest_news" = "최신 뉴스";
+"top100_list.portfolio" = "상위 100";
+"top100_list.sort_by" = "정렬 기준";
+"top100_list.sort_type.rank" = "순위";
+"top100_list.sort_type.top_winners" = "탑 위너";
+"top100_list.sort_type.top_losers" = "탑 루저";
 
 //NumPad
 
@@ -539,128 +534,128 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 
 // Key Types
 
-"chart.title" = "%@ Price";
-"chart.time_duration.today" = "Today";
-"chart.time_duration.day" = "24h";
-"chart.time_duration.week" = "7D";
-"chart.time_duration.week2" = "2W";
-"chart.time_duration.month" = "1M";
-"chart.time_duration.month3" = "3M";
-"chart.time_duration.halyear" = "6M";
-"chart.time_duration.year" = "1Y";
-"chart.time_duration.year2" = "2Y";
+"chart.title" = "%@ 금액";
+"chart.time_duration.today" = "오늘";
+"chart.time_duration.day" = "24 시간";
+"chart.time_duration.week" = "일주일";
+"chart.time_duration.week2" = "2주";
+"chart.time_duration.month" = "한 달";
+"chart.time_duration.month3" = "3개월";
+"chart.time_duration.halyear" = "6개월";
+"chart.time_duration.year" = "1년";
+"chart.time_duration.year2" = "2년";
 
-"chart.market_cap" = "Market Cap";
-"chart.market_cap.thousand" = "%@ k";
-"chart.market_cap.million" = "%@ M";
-"chart.market_cap.billion" = "%@ B";
-"chart.market_cap.trillion" = "%@ T";
-"chart.volume" = "Volume (24h)";
-"chart.circulation" = "In Circulation";
-"chart.max_supply" = "Total Supply";
-"chart.start_date" = "Launch Date";
-"chart.website" = "Project Website";
-"chart.error.not_available" = "Chart not available";
-"chart.selected.price" = "Price";
-"chart.selected.volume" = "Vol";
-"chart.trend_neutral" = "Neutral";
-"chart.trend_down" = "Down Trend";
-"chart.trend_up" = "Up Trend";
+"chart.market_cap" = "시가총액";
+"chart.market_cap.thousand" = "%@ 천";
+"chart.market_cap.million" = "%@ 백만";
+"chart.market_cap.billion" = "%@ 십억";
+"chart.market_cap.trillion" = "%@ 조";
+"chart.volume" = "볼륨 (24 시간)";
+"chart.circulation" = "유통";
+"chart.max_supply" = "총 발행량";
+"chart.start_date" = "출시일";
+"chart.website" = "프로젝트 웹사이트";
+"chart.error.not_available" = "차트 이용불가";
+"chart.selected.price" = "금액";
+"chart.selected.volume" = "음량";
+"chart.trend_neutral" = "중립";
+"chart.trend_down" = "하향 추세";
+"chart.trend_up" = "상향 추세";
 
 // Create Wallet
 
-"create_wallet.title" = "New Wallet";
-"create_wallet.create_button" = "Create";
+"create_wallet.title" = "새 지갑";
+"create_wallet.create_button" = "만들기";
 
 // Select Coins
 
-"select_coins.choose_crypto" = "Choose Crypto";
-"select_coins.next_button" = "Next";
+"select_coins.choose_crypto" = "암호화를 선택해 주세요";
+"select_coins.next_button" = "다음";
 
-"price_notification.up" = "up";
-"price_notification.down" = "down";
-"price_notification.multi_title" = "Notifications";
+"price_notification.up" = "위로";
+"price_notification.down" = "아래로";
+"price_notification.multi_title" = "알림";
 
 // Lock Info
 
-"lock_info.title" = "TimeLock";
-"lock_info.text" = "The sender sent these funds with a spending lock that will expire on shown date.\n\nNo worries, the received Bitcoins are already yours but until the lock period expires you cannot spend them on the Bitcoin network.";
+"lock_info.title" = "시간 자물쇠";
+"lock_info.text" = "발송자는 이러한 자금들을 표시된 날짜에 만료가 되는 잠금 지출과 함께 보냈습니다.\n\n걱정 하지마십시오, 수신된 비트코인은 이미 귀하의 것입니다 하지만 잠금 기간이 만료될때 까지 비트코인 네트워크에서 사용하실 수 없습니다.";
 
 // Double Spend Info
 
-"double_spend_info.title" = "Double Spend";
-"double_spend_info.header" = "Double Spend Risk! There is another transaction on blockchain that trying to spend inputs used in this transaction. Only one transaction will be accepted by the network";
-"double_spend_info.this_hash" = "This Tx";
-"double_spend_info.conflicting_hash" = "Conflicting Tx";
+"double_spend_info.title" = "이중 지출";
+"double_spend_info.header" = "이중 지출 위험! 블록 체인에 있는 거래에 지출된 정보를 사용하려는 또 다른 거래가 있습니다. 네트워크는 하나의 거래만 수용합니다";
+"double_spend_info.this_hash" = "이 Tx";
+"double_spend_info.conflicting_hash" = "충돌하는 Tx";
 
 // Relative Date
-"timestamp.days_ago" = "%lud ago";
-"timestamp.hours_ago" = "%luh ago";
-"timestamp.min_ago" = "%lum ago";
+"timestamp.days_ago" = "%lu일 전에";
+"timestamp.hours_ago" = "%lu시간 전에";
+"timestamp.min_ago" = "%lu분 전에";
 
 // Intro
 
-"intro.skip" = "Skip";
-"intro.next" = "Next";
-"intro.brand.description" = "Store and Trade crypto. Have full control over assets. Remain anonymous.";
-"intro.independence.title" = "Be Independent";
-"intro.independence.description" = "Unstoppable is built to ensure users are able to access funds at any time from anywhere.";
-"intro.knowledge.title" = "Invest Wisely";
-"intro.knowledge.description" = "Unstoppable integrates unmatched trading, monitoring and analytical instruments.";
-"intro.privacy.title" = "Stay Private";
-"intro.privacy.description" = "Use this wallet to remain incognito and be able to keep your information private.";
+"intro.skip" = "건너뛰기";
+"intro.next" = "다음";
+"intro.brand.description" = "암호를 저장 및 거래합니다. 자산을 완전히 통제합니다. 익명인 상태로 유지합니다.";
+"intro.independence.title" = "독립하십시오";
+"intro.independence.description" = "Unstoppable은 사용자들이 어디서든 언제든지 자금에 접근할 수 있도록 하기 위해 설계되었습니다.";
+"intro.knowledge.title" = "현명하게 투자";
+"intro.knowledge.description" = "Unstoppable은 비교할 수 없는 최고의 거래, 모니터링 및 분석 도구를 통합시킵니다.";
+"intro.privacy.title" = "개인 정보 유지";
+"intro.privacy.description" = "이 지갑을 사용하여 신분을 숨기고 귀하의 정보를 안전하게 보호할 수 있습니다.";
 
 // Guides
 
-"guides.tab_bar_item" = "Academy";
-"guides.title" = "Academy";
+"guides.tab_bar_item" = "아카데미";
+"guides.title" = "아카데미";
 
 // Add Token
 
-"add_token.choose_blockchain" = "Choose Blockchain";
-"add_token.add_token" = "Add Token";
-"add_token.erc20_token" = "ERC20 Token";
-"add_token.eos_token" = "EOS Token";
-"add_token.binance_token" = "Binance Token";
+"add_token.choose_blockchain" = "블록체인 선택";
+"add_token.add_token" = "토큰 추가";
+"add_token.erc20_token" = "ERC 20 토큰";
+"add_token.eos_token" = "EOS 토큰";
+"add_token.binance_token" = "Binance 토큰";
 
 // Add Erc20 Token
 
-"add_erc20_token.title" = "Add ERC20";
-"add_erc20_token.contract_address" = "Contract Address";
-"add_erc20_token.coin_name" = "Coin Name";
-"add_erc20_token.symbol" = "Symbol";
-"add_erc20_token.decimals" = "Decimals";
-"add_erc20_token.already_exists" = "This token is already in the coin manager list.";
-"add_erc20_token.contract_not_exist" = "Contract not found";
+"add_erc20_token.title" = "ERC20 추가";
+"add_erc20_token.contract_address" = "계약 주소";
+"add_erc20_token.coin_name" = "코인 이름";
+"add_erc20_token.symbol" = "심볼";
+"add_erc20_token.decimals" = "소수점";
+"add_erc20_token.already_exists" = "이 토큰은 이미 코인 매니저 리스트에 있습니다.";
+"add_erc20_token.contract_not_exist" = "거래 발견되지 않음";
 
-"change_24hour_up" = "%@ price: up %@%% %@";
-"change_24hour_down" = "%@ price: down %@%% %@";
-"trend_shortterm_up" = "%@ short term trend: up %@";
-"trend_shortterm_down" = "%@ short term trend: down %@";
-"trend_longterm_up" = "%@ long term trend: up %@";
-"trend_longterm_down" = "%@ long term trend: down %@";
+"change_24hour_up" = "%@ 가격: 상승 %@%% %@";
+"change_24hour_down" = "%@ 가격: 하락 %@%% %@";
+"trend_shortterm_up" = "%@ 단기 동향: 상승 %@";
+"trend_shortterm_down" = "%@ 단기 동향: 하락 %@";
+"trend_longterm_up" = "%@ 장기 동향: 상승 %@";
+"trend_longterm_down" = "%@ 장기 동향: 하락 %@";
 
-"chart_alert.title" = "Notification";
-"chart_alert.24h_description" = "Price Change 24h";
-"chart_alert.trend_description" = "Trend Change";
+"chart_alert.title" = "알림";
+"chart_alert.24h_description" = "가격 변동 24시간";
+"chart_alert.trend_description" = "동향 변화";
 
 // Wallet Connect
 
-"wallet_connect.title" = "Wallet Connect";
-"wallet_connect.requirement" = "Requirement";
-"wallet_connect.requirement.description" = "For connect with browser you should to activate ethereum or any erc20 token on your balance tab";
-"wallet_connect.error.invalid_url" = "Invalid URL Address";
-"wallet_connect.url" = "URL";
-"wallet_connect.connect_description" = "By clicking approve, you allow this app to view your public address. This is important security step to protect your data from potential phishing risks.";
-"wallet_connect.usage_description" = "You can go to the browser. Do not close this page while interacting in the browser.";
-"wallet_connect.button_disconnect" = "Disconnect";
-"ethereum_transaction.error.insufficient_balance" = "Transaction requires %@ for sending.";
-"wallet_connect.request_title" = "Request";
+"wallet_connect.title" = "지갑 연결";
+"wallet_connect.requirement" = "요구 사항";
+"wallet_connect.requirement.description" = "브라우저와 연결하려면 밸런스 탭의 ethereum 또는 erc20 토큰을 활성화하십시오.";
+"wallet_connect.error.invalid_url" = "잘못된 주소";
+"wallet_connect.url" = "URL 주소";
+"wallet_connect.connect_description" = "승인을 눌러 이 앱이 귀하의 공공 주소를 볼 수 있도록 허용하십시오. 이것은 잠재적인 피싱 위험으로부터 데이터를 보호하기 위한 중요한 보안 단계 입니다.";
+"wallet_connect.usage_description" = "브라우저로 이동하십시오. 브라우저에서 상호 작용하는 동안에는 이 페이지를 닫지 마십시오.";
+"wallet_connect.button_disconnect" = "연결 해제";
+"ethereum_transaction.error.insufficient_balance" = "거래에서 전송하려면 %@가 필요합니다.";
+"wallet_connect.request_title" = "요청";
 
 // App Status
 
-"app_status.version" = "Version %@";
-"app_status.application_status" = "Application status";
-"app_status.linked_wallets" = "Linked Wallets";
-"app_status.version_history" = "Version History";
-"app_status.blockchain_status" = "Blockchain status";
+"app_status.version" = "버전 %@";
+"app_status.application_status" = "신청 현황";
+"app_status.linked_wallets" = "연결된 지갑";
+"app_status.version_history" = "버전 역사";
+"app_status.blockchain_status" = "블록체인 상태";
