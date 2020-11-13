@@ -3,6 +3,7 @@
 "coin.ETH" = "Ethereum";
 
 "button.ok" = "OK";
+"button.apply" = "Apply";
 "button.cancel" = "Отменить";
 "button.close" = "Закрыть";
 "button.done" = "Готово";
@@ -156,7 +157,7 @@
 "send.address_placeholder" = "Адрес";
 "send.account_placeholder" = "Аккаунт";
 "send.fee" = "Комиссия";
-"send.tx_speed" = "Скорость Транзакции";
+"send.tx_speed" = "Transaction Fee";
 "send.tx_speed_low" = "Низкая";
 "send.tx_speed_medium" = "Средняя";
 "send.tx_speed_recommended" = "Рекомендовано";
@@ -204,7 +205,7 @@
 "swap.you_get" = "Вы Получите";
 "swap.token" = "Выбрать Токен";
 "swap.advanced_settings" = "Дополнительные Настройки";
-"swap.proceed_button" = "Продолжить";
+"swap.proceed_button" = "Next";
 "swap.approve.title" = "Подтверждение Обмена";
 "swap.approve.description" = "Вы должны предоставить разрешение на смарт-контракт для того, чтобы обменивать указанный токен от вашего имени. Это разрешение определяет сумму, которая может быть использована по смарт-контракту. Это не повлияет на ваш баланс, но для подтверждения транзакции будет взята небольшая комиссия за ее выполнение.\n\nРазрешение можно запрашивать перед каждой сделкой, но дешевле заранее утвердить более высокую сумму для будущих операций.";
 "swap.approve.amount_error.already_approved" = "У вас уже есть разрешение на эту сумму";
@@ -222,16 +223,16 @@
 
 // Swap Advanced Settings
 
-"swap.advanced_settings.slippage.header" = "Допустимость Отклонений";
+"swap.advanced_settings.slippage" = "Slippage Tolerance";
 "swap.advanced_settings.slippage.footer" = "Ваша транзакция будет отменена, если цена изменится в неблагоприятную сторону более, чем на этот процент";
-"swap.advanced_settings.deadline.header" = "Срок Транзакции";
+"swap.advanced_settings.deadline" = "Transaction Deadline";
 "swap.advanced_settings.deadline.footer" = "Ваша транзакция будет отменена, если перевод займет больше указанного срока.";
 "swap.advanced_settings.recipient.footer" = "После операции обмена сумма будет переведена на указанный адрес";
-"swap.advanced_settings.deadline_minute" = "мин";
+"swap.advanced_settings.deadline_minute" = "%@ min";
 "swap.advanced_settings.recipient_address" = "Адрес Получателя";
 "swap.advanced_settings.recipient.placeholder" = "Не задано";
 "swap.advanced_settings.error.lower_slippage" = "Ваша транзакция, скорее всего, не удастся.";
-"swap.advanced_settings.error.higher_slippage" = "Макс. допустимое значение 20%.";
+"swap.advanced_settings.error.higher_slippage" = "Max. allowed value %@%%.";
 
 "swap.fee" = "Комиссия за обмен";
 "swap.transactions_speed" = "Скорость Транзакции";
