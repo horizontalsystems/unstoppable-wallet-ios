@@ -3,9 +3,9 @@
 "coin.ETH" = "Ethereum";
 
 "button.ok" = "Tamam";
+"button.apply" = "Uygula";
 "button.cancel" = "İptal";
 "button.close" = "Kapat";
-"button.confirm" = "Onayla";
 "button.done" = "Bitti";
 "button.restore" = "Geri Yükle";
 "button.next" = "İleri";
@@ -17,6 +17,10 @@
 "button.back" = "Geri";
 "button.retry" = "Yeniden Dene";
 "button.report" = "Şikayet Et";
+"button.add" = "Ekle";
+"button.approve" = "Onayla";
+"button.reject" = "Reddet";
+"button.connect" = "Bağlan";
 
 "alert.copied" = "Kopyalandı";
 "alert.no_internet" = "Internet Bağlantısı Yok";
@@ -26,6 +30,14 @@
 "alert.unknown_error" = "Bilinmeyen Hata";
 
 "action.loading" = "yükleniyor...";
+"placeholder.search" = "Ara";
+
+"status" = "Durum";
+"connecting" = "Bağlanıyor...";
+"online" = "Çevrimiçi";
+"offline" = "Çevrimdışı";
+"confirm" = "Onayla";
+"connect" = "Bağlan";
 
 "n/a" = "N/A";
 
@@ -92,13 +104,14 @@
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Anahtarınızı \"Kopyala\" eylemiyle kopyalamanız anahtarınızın pano yönetisine ve panoya erişimi olan diğer uygulamalara sızma riskini taşır.";
-"error.send_eos.self_transfer" = "Bu kripto para kendi hesabınaza aktarılamıyor";
+"error.send.self_transfer" = "Kendine gönderme desteklenmiyor";
 "error.send_eos.account_not_exist" = "Hedef hesap yok";
 "error.send_eos.insufficient_ram" = "EOS hesabınızda bu kripto parayı göndermek için yeterli RAM bulunmuyor. Devam etmek için EOS RAM hissenizi arttırmak gerekiyor.";
 "error.send_eos.unknown" = "Beklenmeyen bir hata oluştu: %@";
 "error.send_ethereum.wrong_parameters" = "Yanlış parametreler";
 "error.send_binance.memo_required" = "Aktarım işleminde alıcı boş olmayan not istiyor";
 "error.send_binance.only_digits_allowed" = "Notun yalnızca rakam içermesini gerektirir";
+"error.send_z_cash.transparent_address" = "Unstoppable, bir transparan adrese yapılan ödemeleri desteklemez";
 "error.incubed_not_reachable" = "Incubed sunucularına erişilemiyor";
 
 "backup.confirmation.title" = "Kontrol etme ...";
@@ -142,9 +155,10 @@
 "send.address_placeholder" = "Adres";
 "send.account_placeholder" = "Hesap";
 "send.fee" = "Masraf";
-"send.tx_speed" = "İşlem hızı";
+"send.tx_speed" = "İşlem Ücreti";
 "send.tx_speed_low" = "Düşük";
 "send.tx_speed_medium" = "Orta";
+"send.tx_speed_recommended" = "Tavsiye Edilen";
 "send.tx_speed_high" = "Yüksek";
 "send.tx_speed_custom" = "Özel";
 "send.tx_duration" = "Süre";
@@ -164,7 +178,6 @@
 "send.hodler_locktime_off" = "Kapat";
 "send.hodler_error.unsupported_address" = "Zaman kilitleme sadece P2PKH adresleriyle çalışır (1 ile başlayan)";
 
-"send.confirmation.title" = "Onayla";
 "send.confirmation.memo_placeholder" = "Not";
 "send.confirmation.total" = "Toplam";
 "send.confirmation.send_button" = "Gönder";
@@ -188,10 +201,12 @@
 "swap.balance" = "Bakiye";
 "swap.allowance" = "Ödenek";
 "swap.you_get" = "Kazandığınız";
-"swap.token" = "Token";
-"swap.proceed_button" = "İlerle";
-"swap.approve_button" = "Onayla";
-"swap.approve.description" = "Fonlarınızı kullanarak alım satımı gerçekleştirmek için bir akıllı sözleşmeye izin vermelisiniz. Bu izin bakiyenizdeki fonları etkilemez";
+"swap.token" = "Jeton Seçin";
+"swap.advanced_settings" = "Gelişmiş Ayarlar";
+"swap.proceed_button" = "İleri";
+"swap.approve.title" = "Takas Onayı";
+"swap.approve.description" = "Verilen jetonu sizin adınıza swap yapmak için bir akıllı sözleşmeye izin vermelisiniz. Bu izin, akıllı sözleşme tarafından kullanılabilecek tutarı belirler. Bakiyenizi etkilemez ancak onay işlemini gerçekleştirmek için küçük bir ücret gerekir.\n\nHer alım satımdan önce talep üzerine yapılabilirken, ileriki alım satımlarda bizim için önceden daha yüksek tutarı onaylamanız durumunda çok daha ucuz olur.";
+"swap.approve.amount_error.already_approved" = "Bu miktar için zaten bir ödeneğiniz var";
 "swap.approving_button" = "Onaylanıyor...";
 "swap.amount_error.maximum_amount" = "%@ Bakiye";
 "swap.amount_error.no_balance" = "Token için bakiye ayrıştırılamıyor";
@@ -204,6 +219,19 @@
 "swap.maximum_paid" = "Maksimum Ödenen";
 "swap.minimum_got" = "Minimum Kazanılan";
 
+// Swap Advanced Settings
+
+"swap.advanced_settings.slippage" = "Slipaj Toleransı";
+"swap.advanced_settings.slippage.footer" = "Fiyat bu yüzde oranından daha fazla olumsuz olarak değişirse, İşleminiz geri alınacaktır";
+"swap.advanced_settings.deadline" = "İşlem Son Günü";
+"swap.advanced_settings.deadline.footer" = "Bundan daha uzun süre beklemede olursa, İşleminiz geri alınacaktır.";
+"swap.advanced_settings.recipient.footer" = "Takas etme işleminden sonra, tutar belirtilen adrese transfer edilecektir";
+"swap.advanced_settings.deadline_minute" = "%@ dk";
+"swap.advanced_settings.recipient_address" = "Alıcı Adresi";
+"swap.advanced_settings.recipient.placeholder" = "Ayarlı değil";
+"swap.advanced_settings.error.lower_slippage" = "İşleminizin başarısız olması muhtemeldir.";
+"swap.advanced_settings.error.higher_slippage" = "Maksimum izin verilen değer %@%%.";
+
 "swap.fee" = "Takas Ücreti";
 "swap.transactions_speed" = "İşlem hızı";
 "swap.transaction_fee" = "İşlem Ücreti";
@@ -212,27 +240,36 @@
 
 // Swap Approving
 
-"swap.approve.title" = "Onayla";
 "swap.approve.subtitle" = "Takas";
 
 // Swap Confirmation
 
-"swap.confirmation.title" = "Onayla";
 "swap.confirmation.swap_button" = "Takas";
 "swap.confirmation.pay" = "Ödeyin %@";
 "swap.confirmation.get" = "%@ al";
 
 
 "swap.uniswap_info.title" = "Uniswap v.2";
-"swap.uniswap_info.description" = "
-Uniswap, Ethereum'da otomatik likidite tedariki için tamamen merkezi olmayan bir protokoldür.\n\nBasit biçimlendirilmiş bir denklem, binlerce kullanıcı ve yüzlerce uygulama için durdurulamaz likidite sağlar.\n\nUniswap, geliştiricilere, likidite sağlayıcılarına ve tüccarlara herkese açık ve erişilebilir bir finans piyasasına katılma yetkisi verir.    ";
-"swap.uniswap_info.header_minimum_received" = "Minimum Alınan";
-"swap.uniswap_info.content_minimum_received" = "Onaylanmadan önce büyük, olumsuz bir fiyat hareketi varsa alım satım işleminiz geri alınacaktır.";
-"swap.uniswap_info.header_price_impact" = "Fiyat Etkisi";
-"swap.uniswap_info.content_price_impact" = "Ticaret hacmine bağlı olarak piyasa fiyatı ile tahmini fiyat arasındaki fark.";
-"swap.uniswap_info.header_swap_fee" = "Takas Ücreti";
-"swap.uniswap_info.content_swap_fee" = "Her işlemin bir kısmı (% 0.3) bir protokol teşvik primi olarak likidite sağlayıcılarına gider.";
+"swap.uniswap_info.description" = "Bu takas etme hizmeti, Ethereum blok zinciri üzerine inşa edilmiş ve merkezi olmayan jeton takas etme protokolü olan Uniswap tarafından desteklenmektedir.\n\nUniswap, tamamen otomatiktir ve hile yapmadan jeton takaslarını güvenilir bir şekilde kolaylaştıran akıllı sözleşmelerle yönetilir.";
 "swap.uniswap_info.link_button" = "Uniswap Web Sitesi";
+
+"swap.uniswap_info.header_uniswap_related" = "Uniswap Bağlantılı";
+"swap.uniswap_info.header_allowance" = "Ödenek";
+"swap.uniswap_info.content_allowance" = "Uniswap'ın jeton swaplarını gerçekleştirirken sizin adınıza harcayabileceği bazı para birimlerindeki tutar. Swap işleminin gerçekleşebilmesi için yeterli ödeme miktarı gereklidir.";
+"swap.uniswap_info.header_price_impact" = "Fiyat Etkisi";
+"swap.uniswap_info.content_price_impact" = "Gösterilen bir fiyattan beklenen fiyat sapması, tipik olarak swap tutarı ile artar.";
+"swap.uniswap_info.header_swap_fee" = "Takas Ücreti";
+"swap.uniswap_info.content_swap_fee" = "Uniswap platformunda swap işlemi için kullanıcının sattığı para biriminde gösterilen bir hizmet ücreti. Çoğu talimatlar için % 0.3 veya % 0.6 olmalıdır.";
+"swap.uniswap_info.header_guaranteed_amount" = "Garantili Tutar";
+"swap.uniswap_info.content_guaranteed_amount" = "Bir swap işlemi sonucunda bir kullanıcının alacağı minimum tutar.";
+"swap.uniswap_info.header_maximum_spend" = "Maksimum Harcama";
+"swap.uniswap_info.content_maximum_spend" = "Bir swap işlemi sonucunda bir kullanıcının harcayacağı maksimum tutar.";
+
+"swap.uniswap_info.header_other" = "Diğer";
+"swap.uniswap_info.header_transaction_fee" = "İşlem Ücreti";
+"swap.uniswap_info.content_transaction_fee" = "Ethereum blok zincirinde verilen işlemin tahmini işleme maliyeti. Uniswap bağlantılı işlemler genellikle eşdeğer jeton transfer işlemlerinden daha pahalı olur.";
+"swap.uniswap_info.header_transaction_speed" = "İşlem hızı";
+"swap.uniswap_info.content_transaction_speed" = "Daha yüksek işlem ücretli işlemler, daha hızlı işleme hızlarıyla sonuçlanacaktır. Elbette bunun tersi de doğrudur.";
 
 // Transactions
 
@@ -244,17 +281,19 @@ Uniswap, Ethereum'da otomatik likidite tedariki için tamamen merkezi olmayan bi
 "transactions.receiving" = "Alınıyor";
 "transactions.failed" = "Başarısız";
 "transactions.sending" = "Gönderiliyor";
+"transactions.approval" = "Swap onaylama";
 
 // Transaction Info
 
 "tx_info.title" = "Hesap işlemi";
-"tx_info.status" = "Durum";
+"tx_info.title_approval" = "Swap Onaylama";
 "tx_info.status.pending" = "Devam ediyor";
 "tx_info.status.confirmed" = "Onaylandı";
 "tx_info.status.failed" = "Başarısız";
 "tx_info.from_hash" = "Gönderen";
 "tx_info.transaction_id" = "İşlem ID'si";
 "tx_info.to_hash" = "Alan";
+"tx_info.input" = "Giriş";
 "tx_info.button_verify" = "Doğrula";
 "tx_info.rate" = "Geçmiş Kur";
 "tx_info.fee" = "Ücret";
@@ -282,7 +321,6 @@ Uniswap, Ethereum'da otomatik likidite tedariki için tamamen merkezi olmayan bi
 "full_info.to" = "Alan";
 "full_info.amount" = "Tutar";
 "full_info.nonce" = "Nonce";
-"full_info.status" = "Durum";
 "full_info.memo" = "Memo";
 "full_info.cpu" = "CPU Usage";
 "full_info.net" = "Net Usage";
@@ -294,8 +332,6 @@ Uniswap, Ethereum'da otomatik likidite tedariki için tamamen merkezi olmayan bi
 "full_info.gas_price" = "Gas Price";
 
 "full_info.source.title" = "Kaynak";
-"full_info.source.online" = "çevrimiçi";
-"full_info.source.offline" = "çevrimdışı";
 
 "full_info.error.server_offline" = "çevrimdışı";
 "full_info.error.transaction_not_found" = "Işlem Blockchain'de bulunamadı";
@@ -406,14 +442,14 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "settings_privacy.sync.section_header" = "Blockchain Geri Yükleme";
 "settings_privacy.sync.section_footer" = "Cüzdanı işlemlerle geri yüklemek için veri kaynağını seçin.";
 
-"settings_privacy_info.title" = "Privacy Settings";
+"settings_privacy_info.title" = "Gizlilik Ayarları";
 "settings_privacy_info.description" = "Aşağıda bulunan gizlilik ayarlarının ayrıntılı bir açıklamasını bulacaksınız. Bunları, kapsamlı gizlilik gerektiren kişiler için ayarlar olarak düşünülebilir. ";
 "settings_privacy_info.header_blockchain_transactions" = "Blockchain Transactions";
-"settings_privacy_info.content_blockchain_transactions" = "This setting controls the privacy level of user's transactions on Bitcoin, Bitcoin Cash and Litecoin blockchains.\n\nMost Bitcoin transactions generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party monitoring Bitcoin blockchain to understand which of the outputs went to the receiving party and which one was the change returned to the sender. The output returned to the sender can then be used in future transactions and further reveal the details to the monitoring party.\n\nUnstoppable wallet implements measures to makes it significantly harder to figure out which output goes where. There are two options available to Unstoppable users:\n\n1. Shuffle : The order of transaction outputs are randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then this is regarded as the recommended option.\n\n2. Deterministic : There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open source wallets that standard ensures that wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether transaction was sent from the wallet that uses that standard or not.";
+"settings_privacy_info.content_blockchain_transactions" = "This setting controls the privacy level of user's transactions on Bitcoin, Bitcoin Cash and Litecoin blockchains.\n\nMost Bitcoin transactions generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party monitoring Bitcoin blockchain to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. The output returned to the sender can then be used in future transactions and further reveal the details to the monitoring party.\n\nUnstoppable wallet implements measures to makes it significantly harder to figure out which output goes where. There are two options available to Unstoppable users:\n\n1. Shuffle : The order of transaction outputs are randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, than consider this a recommended option.\n\n2. Deterministic : There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open source wallets that standard ensures that wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether transaction was sent from the wallet that uses that standard or not.";
 "settings_privacy_info.header_blockchain_connection" = "Blockchain Sync";
-"settings_privacy_info.content_blockchain_connection" = "This setting controls how this app interacts with blockchains (sending/receiving transactions). In case of Bitcoin, Bitcoin Cash, Litecoin and Dash it is fully peer to peer. The app pings many nodes and communicates with them. Potentially these nodes can record IP address and data requested but since they are chosen randomly, each time the app connects to a different node.\n\nIn case of Ethereum, there is no alternative for mobile wallets to interact with blockchain other than via third party service providers (i.e. Infura.io) or personal Ethereum nodes. Third party services can potentially record IP addresses and the requests made. That info can reveal location, balance, transactions etc. Moreover, the wallet has to trust that information returned is correct. There is a an alternative known as Incubed which in essence is a network of special Ethereum nodes. These nodes can also record IP addresses and requests made, but they are chosen randomly each time. While being slightly slower than Infura, the way Incubed works pretty much guarantees that the information returned is correct (not fake).\n\nWhen it comes to other blockchains like EOSIO and Binance Chain, at this point they only provide centralized means of connecting, without viable alternatives. Potentially they can be recording IP addresses and requests made.\n";
+"settings_privacy_info.content_blockchain_connection" = "This setting controls how this app interacts with blockchains (sending/receiving transactions). In case of Bitcoin, Bitcoin Cash, Litecoin and Dash it is fully peer to peer. The app pings many nodes and communicates with them. Potentially these nodes can record IP address and data requested but since they are chosen randomly, each time the app connects to a different node.\n\nIn case of Ethereum, there is no alternative for mobile wallets to interact with blockchain other than via third party providers (i.e. Infura.io) or personal Ethereum nodes. Third party services can potentially record IP addresses and the requests made. That info can reveal location, balance, transactions etc. Moreover, the wallet has to trust that information returned is correct. There is a an alternative known as Incubed which in essence is a network of special Ethereum nodes. These nodes can also record IP addresses and requests made, but they are chosen randomly each time. While being slightly slower than Infura, the way Incubed works pretty much guarantees that the information returned is correct (not fake).\n\nWhen it comes to other blockchains like EOSIO and Binance Chain, at this point they only provide centralized means of connecting, without viable alternatives. Potentially they can be recording IP addresses and requests made.";
 "settings_privacy_info.header_blockchain_restore" = "Blockchain Restore";
-"settings_privacy_info.content_blockchain_restore" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transactions history for a given coin so that the wallet app is able to display past transactions and figure out latest balance. This needs to happen only once, when user restores previously created wallet. At this point there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from API Server : There is a predefined server which hosts the entire blockchain and has all the data processed and ready to provide it in a fast manner. This method is fast but can potentially keep track of the IP addresses and the data requested. This option is recommended due to its speed of getting data (5-10 minutes). The risks are minimal. If the user restoring from his own server then no privacy risks at all.\n\n2. from Blockchain : In this case the app tries to restore directly from a p2p network of the blockchain nodes. The app pings many of those nodes and requests data from them. Potentially these nodes can keep track of user's IP address and requests made however during restore the app can switch between nodes. There are close to 10,000 Bitcoin nodes on the network at any given time. This option is slow and can easily take 2-3 hours, app needs to be open while restore is happening.\n";
+"settings_privacy_info.content_blockchain_restore" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transactions history for a given coin so that the wallet app is able to display past transactions and calculate user's balance. This needs to happen only once, when user restores previously created wallet. At this point there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from API Server : There is a third-party predefined server which hosts the entire blockchain and has all the data processed and ready to provide it in a fast manner. This method is fast but can potentially keep track of the IP addresses and the data requested. This option is recommended due to its speed of getting data (5-10 minutes). The risks are minimal. If the user restoring from his own server then no privacy risks at all.\n\n2. from Blockchain : In this case the app tries to restore directly from a p2p network of the blockchain nodes. The app pings many of those nodes and requests data from them. Potentially these nodes can keep track of user's IP address and requests made however during restore the app can switch between nodes. There are close to 10,000 Bitcoin nodes on the network at any given time. This option is slow and can easily take 2-3 hours, app needs to be open while restore is happening...";
 
 "settings_privacy.alert_sync.title" = "Geri Yükleme Kaynağı";
 "settings_privacy.alert_sync.description" = "Bu değişiklikten sonra cüzdan %@ blok zinciri ile kendini yeniden senkronize etmek zorunda kalacak.";
@@ -461,7 +497,6 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 "set_pin.title" = "Kod";
 "set_pin.info" = "Şifre, programı açmak ve para göndermek için kullanılacak";
-"set_pin.confirm.info" = "Onayla";
 "set_pin.wrong_confirmation" = "Şifre uyuşmadı. Tekrar deneyin";
 
 // Edit PIN
@@ -500,7 +535,8 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 // Key Types
 
 "chart.title" = "%@ Fiyat";
-"chart.time_duration.day" = "1G";
+"chart.time_duration.today" = "Bugün";
+"chart.time_duration.day" = "24 sa";
 "chart.time_duration.week" = "7G";
 "chart.time_duration.week2" = "2H";
 "chart.time_duration.month" = "1A";
@@ -509,7 +545,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "chart.time_duration.year" = "1Yıl";
 "chart.time_duration.year2" = "2Yıl";
 
-"chart.market_cap" = "P. Değeri";
+"chart.market_cap" = "Market kap.";
 "chart.market_cap.thousand" = "%@ bin";
 "chart.market_cap.million" = "%@ M-n";
 "chart.market_cap.billion" = "%@ M-r";
@@ -561,17 +597,18 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 "intro.skip" = "Atla";
 "intro.next" = "İleri";
-"intro.independence.title" = "Bağımsızlık";
-"intro.independence.description" = "Kripto varlıklarını her zaman güvende, el koyulamaz ve erişilebilir tutun";
-"intro.knowledge.title" = "Bilgi";
-"intro.knowledge.description" = "Haberdar olun ve erken aşamalarda büyüyen blockchain projelerini keşfedin";
-"intro.privacy.title" = "Gizlilik";
-"intro.privacy.description" = "Servetinizi büyütürken gizli ve radarın altında kalın";
+"intro.brand.description" = "Kripto Biriktirin ve Ticaretini Yapın. Mevduat üzerinde tam kontrole sahip olun. Anonim kalın.";
+"intro.independence.title" = "Bağımsız Olun";
+"intro.independence.description" = "Unstoppable, kullanıcıların istedikleri anda istedikleri yerde paraya erişebilmelerini sağlamak için geliştirilmiştir.";
+"intro.knowledge.title" = "Akıllıca Yatırım Yapın";
+"intro.knowledge.description" = "Unstoppable, benzersiz alım satım, izleme ve analitik araçların entegrasyonlarını sağlar.";
+"intro.privacy.title" = "Gizli Kalın";
+"intro.privacy.description" = "Gizli kalmak ve bilgilerinizi gizli tutmak için bu cüzdanı kullanın.";
 
 // Guides
 
 "guides.tab_bar_item" = "Akademi";
-"guides.title" = "Academy";
+"guides.title" = "Akademi";
 
 // Add Token
 
@@ -579,7 +616,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "add_token.add_token" = "Token Ekle";
 "add_token.erc20_token" = "ERC20 tokenleri";
 "add_token.eos_token" = "EOS Token";
-"add_token.binance_token" = "Binance Token";
+"add_token.binance_token" = "Binance Jetonu";
 
 // Add Erc20 Token
 
@@ -589,7 +626,6 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "add_erc20_token.symbol" = "Sembol";
 "add_erc20_token.decimals" = "Ondalıklar";
 "add_erc20_token.already_exists" = "Bu token zaten kripto para yöneticisi listesindedir.";
-"add_erc20_token.add" = "Ekle";
 "add_erc20_token.contract_not_exist" = "Sözleşme bulunamadı";
 
 "change_24hour_up" = "%@ fiyat: yukarı %@%% %@";
@@ -602,3 +638,25 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "chart_alert.title" = "Bildirim";
 "chart_alert.24h_description" = "Fiyat Değişimi 24s";
 "chart_alert.trend_description" = "Trend Değişimi";
+
+// Wallet Connect
+
+"wallet_connect.title" = "Cüzdan Bağlantısı";
+"wallet_connect.requirement" = "Gereksinim";
+"wallet_connect.requirement.description" = "Tarayıcıyla bağlanmak için, bakiye sekmenizdeki ethereum ya da herhangi erc20 jetonunu etkinleştirmeniz gerekir";
+"wallet_connect.error.invalid_url" = "Geçersiz URL Adresi";
+"wallet_connect.url" = "URL";
+"wallet_connect.connect_description" = "Onayla butonunu tıklayarak, bu uygulamanın açık adresinizi görüntülemesine izin vermiş olursunuz. Bu, verilerinizi olası kimlik hırsızlığı risklerinden korumak için önemli bir güvenlik adımıdır.";
+"wallet_connect.usage_description" = "Tarayıcıya gidebilirsiniz. Tarayıcıda etkileşim içindeyken bu sayfayı kapatmayın.";
+"wallet_connect.button_disconnect" = "Bağlantıyı Kes";
+"ethereum_transaction.error.insufficient_balance" = "İşlem, göndermek için %@ gerektirir.";
+"ethereum_transaction.error.insufficient_balance_with_fee" = "Mevcut ETH bakiyesi, işlem ücreti dahil bu işlemi gerçekleştirmek için gereken miktarın altında.";
+"wallet_connect.request_title" = "İstek";
+
+// App Status
+
+"app_status.version" = "Sürüm %@";
+"app_status.application_status" = "Uygulama durumu";
+"app_status.linked_wallets" = "Bağlantılı Cüzdanlar";
+"app_status.version_history" = "Sürüm Geçmişi";
+"app_status.blockchain_status" = "Blok Zinciri durumu";

@@ -3,9 +3,9 @@
 "coin.ETH" = "Ethereum";
 
 "button.ok" = "OK";
+"button.apply" = "Übernehmen";
 "button.cancel" = "Abbrechen";
 "button.close" = "Schließen";
-"button.confirm" = "Bestätigen";
 "button.done" = "Fertig";
 "button.restore" = "Wiederherstellen";
 "button.next" = "Weiter";
@@ -17,6 +17,10 @@
 "button.back" = "Zurück";
 "button.retry" = "Wiederholen";
 "button.report" = "Melden";
+"button.add" = "Hinzufügen";
+"button.approve" = "Bestätigen";
+"button.reject" = "Verwerfen";
+"button.connect" = "Verbinden";
 
 "alert.copied" = "Kopiert";
 "alert.no_internet" = "Kein Internet";
@@ -26,6 +30,14 @@
 "alert.unknown_error" = "Unbekannter Fehler";
 
 "action.loading" = "wird geladen ...";
+"placeholder.search" = "Suche";
+
+"status" = "Status";
+"connecting" = "Verbinde...";
+"online" = "Online";
+"offline" = "Offline";
+"confirm" = "Bestätigen";
+"connect" = "Verbinden";
 
 "n/a" = "N/A";
 
@@ -92,13 +104,14 @@
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Den Key einfach mit „Kopieren“ zu kopieren, ist riskant, da Sie womöglich Zwischenablage-Management-Apps oder andere Apps nutzen, die Zugriff auf die Daten in der Zwischenablage haben. Ein Hacker könnte so heimlich auf Ihre Zwischenablage zugreifen und Ihre Coins stehlen. Das gilt es natürlich zu vermeiden.";
-"error.send_eos.self_transfer" = "Token kann nicht auf das eigene Konto übertragen werden";
+"error.send.self_transfer" = "Sich selbst zu senden wird nicht unterstützt";
 "error.send_eos.account_not_exist" = "Das Zielkonto existiert nicht";
 "error.send_eos.insufficient_ram" = "Ihr EOS-Konto hat nicht genügend RAM, um dieses Token zu senden. Um fortfahren zu können, müssen Sie den RAM-Stake erhöhen.";
 "error.send_eos.unknown" = "Etwas ist schief gelaufen: %@";
 "error.send_ethereum.wrong_parameters" = "Falsche Parameter";
 "error.send_binance.memo_required" = "Empfänger benötigt nicht-leeren Vermerk bei Transfer einer Transaktion";
 "error.send_binance.only_digits_allowed" = "Der Vermerk darf nur Zahlen enthalten";
+"error.send_z_cash.transparent_address" = "Unstoppable unterstützt keine Zahlungen an eine transparente Adresse";
 "error.incubed_not_reachable" = "Incubed Server nicht erreichbar";
 
 "backup.confirmation.title" = "Prüfen …";
@@ -142,9 +155,10 @@
 "send.address_placeholder" = "Adresse";
 "send.account_placeholder" = "Account";
 "send.fee" = "Gebühr";
-"send.tx_speed" = "Transaktionsgeschwindigkeit";
+"send.tx_speed" = "Transaktionsgebühr";
 "send.tx_speed_low" = "Niedrig";
 "send.tx_speed_medium" = "Mittel";
+"send.tx_speed_recommended" = "Empfohlen";
 "send.tx_speed_high" = "Hoch";
 "send.tx_speed_custom" = "Benutzerdefiniert";
 "send.tx_duration" = "Dauer";
@@ -164,7 +178,6 @@
 "send.hodler_locktime_off" = "Aus";
 "send.hodler_error.unsupported_address" = "Zeitsperre funktioniert nur mit P2PKH-Adressen (beginnend mit 1) ";
 
-"send.confirmation.title" = "Bestätigen";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Insgesamt";
 "send.confirmation.send_button" = "Senden";
@@ -188,10 +201,12 @@
 "swap.balance" = "Guthaben";
 "swap.allowance" = "Vergütung";
 "swap.you_get" = "Sie erhalten";
-"swap.token" = "Token";
-"swap.proceed_button" = "Fortfahren";
-"swap.approve_button" = "Bestätigen";
-"swap.approve.description" = "Sie sollten einem intelligenten Vertrag die Erlaubnis erteilen, den Handel mit Ihrem Guthaben auszuführen. Diese Berechtigung wirkt sich nicht auf das Guthaben auf Ihrem Saldo aus";
+"swap.token" = "Token auswählen";
+"swap.advanced_settings" = "Erweiterte Einstellungen";
+"swap.proceed_button" = "Weiter";
+"swap.approve.title" = "Tausch genehmigen";
+"swap.approve.description" = "Sie sollten einem intelligenten Vertrag die Erlaubnis erteilen, in Ihrem Namen gegebene Token einzutauschen. Diese Erlaubnis legt einen Betrag fest, der von einem intelligenten Vertrag verwendet werden kann. Sie wirkt sich nicht auf Ihr Guthaben aus, erfordert jedoch eine geringe Gebühr für die Ausführung der Genehmigungstransaktion.\n\nEs kann zwar vor jedem Handel auf Anfrage erfolgen, es ist jedoch günstiger, bei zukünftigen Handelsgeschäften einen höheren Betrag im Voraus für uns zu genehmigen.";
+"swap.approve.amount_error.already_approved" = "Sie haben bereits eine Vergütung für diesen Betrag";
 "swap.approving_button" = "Wird bestätigt...";
 "swap.amount_error.maximum_amount" = "Guthaben %@";
 "swap.amount_error.no_balance" = "Kann Saldo für Token nicht verarbeiten";
@@ -204,6 +219,19 @@
 "swap.maximum_paid" = "Maximal bezahlt";
 "swap.minimum_got" = "Mindestens erhalten";
 
+// Swap Advanced Settings
+
+"swap.advanced_settings.slippage" = "Slippage Tolerance";
+"swap.advanced_settings.slippage.footer" = "Ihre Transaktion wird rückgängig gemacht, wenn die Preisänderung ungünstig um mehr als diese Vorstufe geht";
+"swap.advanced_settings.deadline" = "Transaktionsfrist";
+"swap.advanced_settings.deadline.footer" = "Ihre Transaktion wird rückgängig gemacht, wenn sie länger als diese aussteht.";
+"swap.advanced_settings.recipient.footer" = "Nach dem Umtauschvorgang wird der Betrag an die angegebene Adresse überwiesen";
+"swap.advanced_settings.deadline_minute" = "%@ Min";
+"swap.advanced_settings.recipient_address" = "Empfängeradresse";
+"swap.advanced_settings.recipient.placeholder" = "Nicht angegeben";
+"swap.advanced_settings.error.lower_slippage" = "Ihre Transaktion wird wahrscheinlich fehlschlagen.";
+"swap.advanced_settings.error.higher_slippage" = "Max. erlaubter Wert ist %@%%.";
+
 "swap.fee" = "Tauschgebühr";
 "swap.transactions_speed" = "Transaktionsgeschwindigkeit";
 "swap.transaction_fee" = "Transaktionsgebühr";
@@ -212,26 +240,36 @@
 
 // Swap Approving
 
-"swap.approve.title" = "Bestätigen";
 "swap.approve.subtitle" = "Tausch";
 
 // Swap Confirmation
 
-"swap.confirmation.title" = "Bestätigen";
 "swap.confirmation.swap_button" = "Tauschen";
 "swap.confirmation.pay" = "%@ bezahlen";
 "swap.confirmation.get" = "%@ erhalten";
 
 
 "swap.uniswap_info.title" = "Uniswap v.2";
-"swap.uniswap_info.description" = "Uniswap ist ein vollständig dezentralisiertes Protokoll zur automatisierten Liquiditätsbereitstellung für Ethereum.\n\nEine einfache festgeschriebene Gleichung treibt unaufhaltsame Liquidität für tausende Benutzer und hunderte Anwendungen an.\n\nUniswap ermöglicht Entwicklern, Liquiditätsanbietern und Händlern die Teilnahme an einem offenen und für alle zugänglichen Finanzmarkt.";
-"swap.uniswap_info.header_minimum_received" = "Mindestens erhalten";
-"swap.uniswap_info.content_minimum_received" = "Ihre Transaktion wird rückgängig gemacht, wenn es eine große, ungünstige Kursbewegung vor der Bestätigung gibt.";
-"swap.uniswap_info.header_price_impact" = "Preisauswirkungen";
-"swap.uniswap_info.content_price_impact" = "Die Differenz zwischen dem Marktpreis und dem geschätzten Preis aufgrund der Handelsgröße.";
-"swap.uniswap_info.header_swap_fee" = "Tauschgebühr";
-"swap.uniswap_info.content_swap_fee" = "Ein Teil jedes Handels (0,3%) geht als Protokollanreiz an Liquiditätsanbieter.";
+"swap.uniswap_info.description" = "Dieser Tauschdienst wird von Uniswap betrieben, einem dezentralisierten und auf der Ethereum Blockchain aufbauenden Token-Austauschprotokoll.\n\nUniswap ist vollständig automatisiert und wird durch intelligente Verträge verwaltet, die den zuverlässigen Austausch von Token ohne jegliche Betrugsmöglichkeit ermöglichen.";
 "swap.uniswap_info.link_button" = "Uniswap-Seite";
+
+"swap.uniswap_info.header_uniswap_related" = "Uniswap-bezogen";
+"swap.uniswap_info.header_allowance" = "Vergütung";
+"swap.uniswap_info.content_allowance" = "Der Betrag einer Währung, den Uniswap bei der Durchführung von Token-Tauschgeschäften in Ihrem Namen ausgeben kann. Bevor ein Tauschgeschäft durchgeführt werden kann, ist eine entsprechende Vergütung erforderlich.";
+"swap.uniswap_info.header_price_impact" = "Preisauswirkungen";
+"swap.uniswap_info.content_price_impact" = "Erwartete Preisabweichung von einem angezeigten Preis, steigt normalerweise mit dem Tauschbetrag.";
+"swap.uniswap_info.header_swap_fee" = "Tauschgebühr";
+"swap.uniswap_info.content_swap_fee" = "Eine Servicegebühr für die Tauschaktion auf der Uniswap-Plattform, angegeben in der Währung, die der Benutzer verkauft. Für die meisten Aufträge beträgt diese entweder 0,3 % oder 0,6 %.";
+"swap.uniswap_info.header_guaranteed_amount" = "Garantierter Betrag";
+"swap.uniswap_info.content_guaranteed_amount" = "Der Mindestbetrag, den ein Benutzer als Ergebnis einer Tauschaktion erhalten wird.";
+"swap.uniswap_info.header_maximum_spend" = "Maximale Ausgaben";
+"swap.uniswap_info.content_maximum_spend" = "Der Maximalbetrag, den ein Benutzer als Ergebnis einer Tauschaktion ausgeben wird.";
+
+"swap.uniswap_info.header_other" = "Andere";
+"swap.uniswap_info.header_transaction_fee" = "Transaktionsgebühr";
+"swap.uniswap_info.content_transaction_fee" = "Die geschätzten Verarbeitungskosten der gegebenen Transaktion auf der Ethereum Blockchain. Uniswap-bezogene Transaktionen kosten normalerweise mehr als generische Token-Transfer-Transaktionen.";
+"swap.uniswap_info.header_transaction_speed" = "Transaktionsgeschwindigkeit";
+"swap.uniswap_info.content_transaction_speed" = "Transaktionen mit höheren Transaktionsgebühren führen zu schnelleren Bearbeitungsgeschwindigkeiten. Auch das Gegenteil ist der Fall.";
 
 // Transactions
 
@@ -243,17 +281,19 @@
 "transactions.receiving" = "Empfangen";
 "transactions.failed" = "Fehlgeschlagen";
 "transactions.sending" = "Senden";
+"transactions.approval" = "Tausch-Genehmigung";
 
 // Transaction Info
 
 "tx_info.title" = "Transaktion";
-"tx_info.status" = "Status";
+"tx_info.title_approval" = "Tausch-Genehmigung";
 "tx_info.status.pending" = "Anstehend";
 "tx_info.status.confirmed" = "Bestätigt";
 "tx_info.status.failed" = "Fehlgeschlagen";
 "tx_info.from_hash" = "Von";
 "tx_info.transaction_id" = "Transaktion ID";
 "tx_info.to_hash" = "An";
+"tx_info.input" = "Eingabe";
 "tx_info.button_verify" = "Prüfen";
 "tx_info.rate" = "Historischer Rate";
 "tx_info.fee" = "Gebühr";
@@ -262,7 +302,7 @@
 "tx_info.locked_until" = "Gesperrt bis %@";
 "tx_info.unlocked_at" = "Freigegeben am %@";
 "tx_info.recipient_hash" = "Empfänger";
-"tx_info.raw_transaction" = "Raw Transaction";
+"tx_info.raw_transaction" = "Rohdaten der Transaktion";
 
 // Full Info
 
@@ -281,7 +321,6 @@
 "full_info.to" = "An";
 "full_info.amount" = "Betrag";
 "full_info.nonce" = "Nonce";
-"full_info.status" = "Status";
 "full_info.memo" = "Memo";
 "full_info.cpu" = "CPU Usage";
 "full_info.net" = "Net Usage";
@@ -293,8 +332,6 @@
 "full_info.gas_price" = "Gas Price";
 
 "full_info.source.title" = "Quelle";
-"full_info.source.online" = "online";
-"full_info.source.offline" = "offline";
 
 "full_info.error.server_offline" = "offline";
 "full_info.error.transaction_not_found" = "Transaktion kann in der Blockchain nicht gefunden werden";
@@ -405,18 +442,14 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "settings_privacy.sync.section_header" = "Blockchain-Wiederherstellung";
 "settings_privacy.sync.section_footer" = "Wählen Sie die Datenquelle für die Wiederherstellung des Wallets mit Transaktionen aus.";
 
-"settings_privacy_info.title" = "Privacy Settings";
-"settings_privacy_info.description" = "Below you will find detailed explanation of the privacy settings that are available in the app. It's safe to consider them as settings for those that require extensive privacy.";
-"settings_privacy_info.header_blockchain_transactions" = "Blockchain Transactions";
-"settings_privacy_info.content_blockchain_transactions" = "This setting controls the privacy level of user's transactions on Bitcoin, Bitcoin Cash and Litecoin blockchains.\n\nMost Bitcoin transactions generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party monitoring Bitcoin blockchain to understand which of the outputs went to the receiving party and which one was the change returned to the sender. The output returned to the sender can then be used in future transactions and further reveal the details to the monitoring party.\n\nUnstoppable wallet implements measures to makes it significantly harder to figure out which output goes where. There are two options available to Unstoppable users:\n\n1. Shuffle : The order of transaction outputs are randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then this is regarded as the recommended option.\n\n2. Deterministic : There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open source wallets that standard ensures that wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether transaction was sent from the wallet that uses that standard or not.";
+"settings_privacy_info.title" = "Privatsphäre-Einstellungen";
+"settings_privacy_info.description" = "Unten finden Sie eine detaillierte Erklärung der in der App verfügbaren Privatsphäre-Einstellungen. Sie können sie ohne Bedenken als Einstellungen für diejenigen betrachten, die eine umfangreiche Privatsphäre benötigen.";
+"settings_privacy_info.header_blockchain_transactions" = "Blockchain-Transaktionen";
+"settings_privacy_info.content_blockchain_transactions" = "This setting controls the privacy level of user's transactions on Bitcoin, Bitcoin Cash and Litecoin blockchains.\n\nMost Bitcoin transactions generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party monitoring Bitcoin blockchain to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. The output returned to the sender can then be used in future transactions and further reveal the details to the monitoring party.\n\nUnstoppable wallet implements measures to makes it significantly harder to figure out which output goes where. There are two options available to Unstoppable users:\n\n1. Shuffle : The order of transaction outputs are randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, than consider this a recommended option.\n\n2. Deterministic : There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open source wallets that standard ensures that wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether transaction was sent from the wallet that uses that standard or not.";
 "settings_privacy_info.header_blockchain_connection" = "Blockchain Sync";
-"settings_privacy_info.content_blockchain_connection" = "This setting controls how this app interacts with blockchains (sending/receiving transactions). In case of Bitcoin, Bitcoin Cash, Litecoin and Dash it is fully peer to peer. The app pings many nodes and communicates with them. Potentially these nodes can record IP address and data requested but since they are chosen randomly, each time the app connects to a different node.\n\nIn case of Ethereum, there is no alternative for mobile wallets to interact with blockchain other than via third party service providers (i.e. Infura.io) or personal Ethereum nodes. Third party services can potentially record IP addresses and the requests made. That info can reveal location, balance, transactions etc. Moreover, the wallet has to trust that information returned is correct. There is a an alternative known as Incubed which in essence is a network of special Ethereum nodes. These nodes can also record IP addresses and requests made, but they are chosen randomly each time. While being slightly slower than Infura, the way Incubed works pretty much guarantees that the information returned is correct (not fake).\n\nWhen it comes to other blockchains like EOSIO and Binance Chain, at this point they only provide centralized means of connecting, without viable alternatives. Potentially they can be recording IP addresses and requests made.";
-"settings_privacy_info.header_blockchain_restore" = "Blockchain Restore";
-"settings_privacy_info.content_blockchain_restore" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transactions history for a given coin so that the wallet app is able to display past transactions and figure out latest balance. This needs to happen only once, when user restores previously created wallet. At this point there are two potential ways for a mobile wallet like Unstoppable to do this:
-
-1. from API Server : There is a predefined server which hosts the entire blockchain and has all the data processed and ready to provide it in a fast manner. This method is fast but can potentially keep track of the IP addresses and the data requested. This option is recommended due to its speed of getting data (5-10 minutes). The risks are minimal. If the user restoring from his own server then no privacy risks at all.
-
-2. from Blockchain : In this case the app tries to restore directly from a p2p network of the blockchain nodes. The app pings many of those nodes and requests data from them. Potentially these nodes can keep track of user's IP address and requests made however during restore the app can switch between nodes. There are close to 10,000 Bitcoin nodes on the network at any given time. This option is slow and can easily take 2-3 hours, app needs to be open while restore is happening.";
+"settings_privacy_info.content_blockchain_connection" = "This setting controls how this app interacts with blockchains (sending/receiving transactions). In case of Bitcoin, Bitcoin Cash, Litecoin and Dash it is fully peer to peer. The app pings many nodes and communicates with them. Potentially these nodes can record IP address and data requested but since they are chosen randomly, each time the app connects to a different node.\n\nIn case of Ethereum, there is no alternative for mobile wallets to interact with blockchain other than via third party providers (i.e. Infura.io) or personal Ethereum nodes. Third party services can potentially record IP addresses and the requests made. That info can reveal location, balance, transactions etc. Moreover, the wallet has to trust that information returned is correct. There is a an alternative known as Incubed which in essence is a network of special Ethereum nodes. These nodes can also record IP addresses and requests made, but they are chosen randomly each time. While being slightly slower than Infura, the way Incubed works pretty much guarantees that the information returned is correct (not fake).\n\nWhen it comes to other blockchains like EOSIO and Binance Chain, at this point they only provide centralized means of connecting, without viable alternatives. Potentially they can be recording IP addresses and requests made.";
+"settings_privacy_info.header_blockchain_restore" = "Blockchain-Wiederherstellung";
+"settings_privacy_info.content_blockchain_restore" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transactions history for a given coin so that the wallet app is able to display past transactions and calculate user's balance. This needs to happen only once, when user restores previously created wallet. At this point there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from API Server : There is a third-party predefined server which hosts the entire blockchain and has all the data processed and ready to provide it in a fast manner. This method is fast but can potentially keep track of the IP addresses and the data requested. This option is recommended due to its speed of getting data (5-10 minutes). The risks are minimal. If the user restoring from his own server then no privacy risks at all.\n\n2. from Blockchain : In this case the app tries to restore directly from a p2p network of the blockchain nodes. The app pings many of those nodes and requests data from them. Potentially these nodes can keep track of user's IP address and requests made however during restore the app can switch between nodes. There are close to 10,000 Bitcoin nodes on the network at any given time. This option is slow and can easily take 2-3 hours, app needs to be open while restore is happening...";
 
 "settings_privacy.alert_sync.title" = "Parameter wiederherstellen";
 "settings_privacy.alert_sync.description" = "Nach dieser Änderung muss sich das Wallet mit der %@ Blockchain neu synchronisieren.";
@@ -464,7 +497,6 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 "set_pin.title" = "Code";
 "set_pin.info" = "Dein Code ist notwendig, um deinen Wallet zu entsperren und Geld zu schicken";
-"set_pin.confirm.info" = "Bestätigen";
 "set_pin.wrong_confirmation" = "Der eingegebene Code scheint nicht richtig zu sein. Bitte versuchen Sie es erneut.";
 
 // Edit PIN
@@ -503,7 +535,8 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 // Key Types
 
 "chart.title" = "%@ Preis";
-"chart.time_duration.day" = "1T";
+"chart.time_duration.today" = "Heute";
+"chart.time_duration.day" = "24h";
 "chart.time_duration.week" = "7T";
 "chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "1M";
@@ -564,12 +597,13 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 "intro.skip" = "Überspringen";
 "intro.next" = "Weiter";
-"intro.independence.title" = "Unabhängigkeit";
-"intro.independence.description" = "Verwahren Sie Krypto-Vermögen sicher, uneinziehbar und jederzeit zugänglich";
-"intro.knowledge.title" = "Wissen";
-"intro.knowledge.description" = "Informieren Sie sich und entdecken Sie wachsende Blockchain-Projekte in einem frühen Stadium";
-"intro.privacy.title" = "Privatsphäre";
-"intro.privacy.description" = "Bleiben Sie inkognito und unbemerkt, während Sie Ihr Vermögen vermehren";
+"intro.brand.description" = "Krypto aufbewahren und handeln. Volle Kontrolle über die Vermögenswerte haben. Bleiben Sie anonym.";
+"intro.independence.title" = "Unabhängig sein";
+"intro.independence.description" = "Unstoppable wurde entwickelt, um sicherzustellen, dass Benutzer jederzeit und von überall her auf Finanzmittel zugreifen können.";
+"intro.knowledge.title" = "Klug investieren";
+"intro.knowledge.description" = "Unstoppable integriert unvergleichliche Handels-, Überwachungs- und Analyseinstrumente.";
+"intro.privacy.title" = "Privat bleiben";
+"intro.privacy.description" = "Benutzen Sie dieses Wallet, um inkognito zu bleiben und Ihre Informationen geheim halten zu können.";
 
 // Guides
 
@@ -592,7 +626,6 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "add_erc20_token.symbol" = "Symbol";
 "add_erc20_token.decimals" = "Dezimalen";
 "add_erc20_token.already_exists" = "Dieser Token befindet sich bereits in der Coin-Verwaltungsliste.";
-"add_erc20_token.add" = "Hinzufügen";
 "add_erc20_token.contract_not_exist" = "Vertrag nicht gefunden";
 
 "change_24hour_up" = "%@ Preis: %@%% %@ höher";
@@ -605,3 +638,25 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "chart_alert.title" = "Benachrichtigung";
 "chart_alert.24h_description" = "Preisänderung 24h";
 "chart_alert.trend_description" = "Trendänderung";
+
+// Wallet Connect
+
+"wallet_connect.title" = "Wallet-Verbindung";
+"wallet_connect.requirement" = "Anforderung";
+"wallet_connect.requirement.description" = "Um eine Verbindung mit dem Browser herzustellen, sollten Sie Ethereum oder ein beliebiges erc20-Token auf Ihrer Registerkarte Kontostand aktivieren";
+"wallet_connect.error.invalid_url" = "Ungültige URL-Adresse";
+"wallet_connect.url" = "URL";
+"wallet_connect.connect_description" = "Indem Sie auf \"Genehmigen\" klicken, erlauben Sie dieser App, Ihre öffentliche Adresse anzuzeigen. Dies ist ein wichtiger Sicherheitsschritt, um Ihre Daten vor potenziellen Phishing-Risiken zu schützen.";
+"wallet_connect.usage_description" = "Sie können den Browser aufrufen. Schließen Sie diese Seite nicht, während Sie im Browser interagieren.";
+"wallet_connect.button_disconnect" = "Verbindung trennen";
+"ethereum_transaction.error.insufficient_balance" = "Die Transaktion erfordert %@ zum Senden.";
+"ethereum_transaction.error.insufficient_balance_with_fee" = "Das aktuelle ETH-Guthaben liegt unter dem für die Abwicklung dieser Transaktion erforderlichen Betrag einschließlich der Transaktionsgebühr.";
+"wallet_connect.request_title" = "Anforderung";
+
+// App Status
+
+"app_status.version" = "Version %@";
+"app_status.application_status" = "Antragsstatus";
+"app_status.linked_wallets" = "Verknüpfte Wallets";
+"app_status.version_history" = "Versionsverlauf";
+"app_status.blockchain_status" = "Blockchain-Status";
