@@ -6,10 +6,12 @@ import RxRelay
 class SwapAllowanceService {
     private let spenderAddress: Address
     private let adapterManager: IAdapterManager
+    private let ethereumKit: EthereumKit.Kit
 
     private var coin: Coin?
 
-    private var disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
+    private var allowanceDisposeBag = DisposeBag()
 
     private let stateRelay = PublishRelay<State?>()
     private(set) var state: State? {
@@ -18,9 +20,41 @@ class SwapAllowanceService {
         }
     }
 
-    init(spenderAddress: Address, adapterManager: IAdapterManager) {
+    init(spenderAddress: Address, adapterManager: IAdapterManager, ethereumKit: EthereumKit.Kit) {
         self.spenderAddress = spenderAddress
         self.adapterManager = adapterManager
+        self.ethereumKit = ethereumKit
+
+        ethereumKit.lastBlockHeightObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] blockNumber in
+                    self?.sync()
+                })
+                .disposed(by: disposeBag)
+    }
+
+    private func sync() {
+        allowanceDisposeBag = DisposeBag()
+
+        guard let coin = coin, let adapter = adapterManager.adapter(for: coin) as? IErc20Adapter else {
+            state = nil
+            return
+        }
+
+        if let state = state, case .ready = state {
+            // no need to set loading, simply update to new allowance value
+        } else {
+            state = .loading
+        }
+
+        adapter
+                .allowanceSingle(spenderAddress: spenderAddress)
+                .subscribe(onSuccess: { [weak self] allowance in
+                    self?.state = .ready(allowance: allowance)
+                }, onError: { [weak self] error in
+                    self?.state = .notReady(error: error)
+                })
+                .disposed(by: allowanceDisposeBag)
     }
 
 }
@@ -32,25 +66,8 @@ extension SwapAllowanceService {
     }
 
     func set(coin: Coin?) {
-        guard let coin = coin, let adapter = adapterManager.adapter(for: coin) as? IErc20Adapter else {
-            state = nil
-            return
-        }
-
         self.coin = coin
-
-        disposeBag = DisposeBag()
-
-        state = .loading
-
-        adapter
-                .allowanceSingle(spenderAddress: spenderAddress)
-                .subscribe(onSuccess: { [weak self] allowance in
-                    self?.state = .ready(allowance: allowance)
-                }, onError: { [weak self] error in
-                    self?.state = .notReady(error: error)
-                })
-                .disposed(by: disposeBag)
+        sync()
     }
 
     func approveData(amount: Decimal) -> ApproveData? {
