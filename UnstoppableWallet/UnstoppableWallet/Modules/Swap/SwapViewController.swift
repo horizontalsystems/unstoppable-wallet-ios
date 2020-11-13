@@ -346,12 +346,12 @@ extension SwapViewController {
     }
 
     private func openApprove(data: SwapModule.ApproveData?) {
-        guard let data = data,
-              let vc = SwapApproveModule.instance(data: data, delegate: self) else {
-            return
-        }
-
-        self.present(vc, animated: true)
+//        guard let data = data,
+//              let vc = SwapApproveModule.instance(data: data, delegate: self) else {
+//            return
+//        }
+//
+//        self.present(vc, animated: true)
     }
 
     private func openConfirmation() {

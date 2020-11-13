@@ -7,6 +7,8 @@ class SwapAllowanceService {
     private let spenderAddress: Address
     private let adapterManager: IAdapterManager
 
+    private var coin: Coin?
+
     private var disposeBag = DisposeBag()
 
     private let stateRelay = PublishRelay<State?>()
@@ -35,6 +37,8 @@ extension SwapAllowanceService {
             return
         }
 
+        self.coin = coin
+
         disposeBag = DisposeBag()
 
         state = .loading
@@ -49,6 +53,23 @@ extension SwapAllowanceService {
                 .disposed(by: disposeBag)
     }
 
+    func approveData(amount: Decimal) -> ApproveData? {
+        guard case .ready(let allowance) = state else {
+            return nil
+        }
+
+        guard let coin = coin else {
+            return nil
+        }
+
+        return ApproveData(
+                coin: coin,
+                spenderAddress: spenderAddress,
+                amount: amount,
+                allowance: allowance
+        )
+    }
+
 }
 
 extension SwapAllowanceService {
@@ -57,6 +78,13 @@ extension SwapAllowanceService {
         case loading
         case ready(allowance: Decimal)
         case notReady(error: Error)
+    }
+
+    struct ApproveData {
+        let coin: Coin
+        let spenderAddress: Address
+        let amount: Decimal
+        let allowance: Decimal
     }
 
 }

@@ -5,7 +5,7 @@ import BigInt
 
 struct SwapApproveModule {
 
-    static func instance(data: SwapModule.ApproveData, delegate: ISwapApproveDelegate) -> UIViewController? {
+    static func instance(data: SwapAllowanceService.ApproveData, delegate: ISwapApproveDelegate) -> UIViewController? {
         guard let ethereumKit = App.shared.ethereumKitManager.ethereumKit,
               let wallet = App.shared.walletManager.wallets.first(where: { $0.coin == data.coin }),
               let erc20Adapter = App.shared.adapterManager.adapter(for: wallet) as? Erc20Adapter else {
@@ -34,9 +34,9 @@ struct SwapApproveModule {
                 transactionService: transactionService,
                 erc20Kit: erc20Adapter.erc20Kit,
                 ethereumKit: ethereumKit,
-                amount: data.amount,
+                amount: BigUInt(data.amount.roundedString(decimal: data.coin.decimal)) ?? 0,
                 spenderAddress: data.spenderAddress,
-                allowance: data.allowance
+                allowance: BigUInt(data.allowance.roundedString(decimal: data.coin.decimal)) ?? 0
         )
 
         let decimalParser = AmountDecimalParser()
