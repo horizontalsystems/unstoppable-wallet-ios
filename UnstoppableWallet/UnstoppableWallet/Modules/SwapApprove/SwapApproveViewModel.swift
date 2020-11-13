@@ -70,6 +70,10 @@ class SwapApproveViewModel {
             return "ethereum_transaction.error.insufficient_balance".localized(amountData.formattedString)
         }
 
+        if case EthereumKit.Kit.EstimatedLimitError.insufficientBalance = error {
+            return "ethereum_transaction.error.insufficient_balance_with_fee".localized
+        }
+
         return error.smartDescription
     }
 
