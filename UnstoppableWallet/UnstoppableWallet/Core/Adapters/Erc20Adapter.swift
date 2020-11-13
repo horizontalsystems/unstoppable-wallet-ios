@@ -173,6 +173,10 @@ extension Erc20Adapter: ISendEthereumAdapter {
 
 extension Erc20Adapter: IErc20Adapter {
 
+    var pendingTransactions: [TransactionRecord] {
+        erc20Kit.pendingTransactions().map { transactionRecord(fromTransaction: $0) }
+    }
+
     func allowanceSingle(spenderAddress: Address, defaultBlockParameter: DefaultBlockParameter = .latest) -> Single<Decimal> {
         erc20Kit.allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: defaultBlockParameter)
                 .map { [unowned self] allowanceString in
