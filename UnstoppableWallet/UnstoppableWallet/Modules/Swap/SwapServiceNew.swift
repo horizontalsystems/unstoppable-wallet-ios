@@ -95,8 +95,8 @@ class SwapServiceNew {
 
         pendingAllowanceService.isPendingObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] _ in
-                    self?.syncState()
+                .subscribe(onNext: { [weak self] isPending in
+                    self?.onUpdate(isAllowancePending: isPending)
                 })
                 .disposed(by: disposeBag)
 
@@ -142,6 +142,14 @@ class SwapServiceNew {
 
     private func onUpdate(coinOut: Coin?) {
         balanceOut = coinOut.flatMap { balance(coin: $0) }
+    }
+
+    private func onUpdate(isAllowancePending: Bool) {
+        syncState()
+
+        if case .failed = transactionService.transactionStatus, !isAllowancePending {
+            transactionService.resync() // after required allowance is approved, transaction service state should be resynced
+        }
     }
 
     private func syncState() {

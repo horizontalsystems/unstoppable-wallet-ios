@@ -98,6 +98,10 @@ extension EthereumTransactionService {
         sync()
     }
 
+    func resync() {
+        sync()
+    }
+
 }
 
 extension EthereumTransactionService {

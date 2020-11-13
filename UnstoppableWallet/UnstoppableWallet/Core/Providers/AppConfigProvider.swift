@@ -272,6 +272,7 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "BNB",       title: "Binance Chain",                 code: "BNB",     decimal: 8,  type: .binance(symbol: "BNB")),
         Coin(id: "EOS",       title: "EOS",                           code: "EOS",     decimal: 4,  type: .eos(token: "eosio.token", symbol: "EOS")),
         Coin(id: "DAI",       title: "Dai",                           code: "DAI",     decimal: 18, type: CoinType(erc20Address: "0xad6d458402f60fd3bd25163575031acdce07538d")),
+        Coin(id: "WEENUS",    title: "WEENUS",                        code: "WEENUS",  decimal: 18, type: CoinType(erc20Address: "0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA")),
     ]
 
 }
