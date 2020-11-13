@@ -7,6 +7,8 @@ import RxCocoa
 import SectionsTableView
 
 class SwapViewControllerNew: ThemeViewController {
+    private let animationDuration: TimeInterval = 0.2
+
     private static let levelColors: [UIColor] = [.themeGray, .themeRemus, .themeJacob, .themeLucian]
 
     private let disposeBag = DisposeBag()
@@ -101,9 +103,10 @@ class SwapViewControllerNew: ThemeViewController {
         proceedButton.addTarget(self, action: #selector((onTapProceedButton)), for: .touchUpInside)
         buttonStackCell.add(view: proceedButton)
 
-        subscribeToViewModel()
-
         tableView.buildSections()
+        tableView.reloadData()
+
+        subscribeToViewModel()
     }
 
     private func subscribeToViewModel() {
@@ -220,7 +223,9 @@ class SwapViewControllerNew: ThemeViewController {
     }
 
     private func reloadTable() {
-        UIView.animate(withDuration: 0.1) {
+        tableView.buildSections()
+
+        UIView.animate(withDuration: animationDuration) {
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
         }
@@ -260,44 +265,32 @@ extension SwapViewControllerNew: SectionsDataSource {
                     StaticRow(
                             cell: slippageCell,
                             id: "slippage",
-                            dynamicHeight: { [weak self] _ in
-                                self?.slippageCell.cellHeight ?? 0
-                            }
+                            height: slippageCell.cellHeight
                     ),
                     StaticRow(
                             cell: deadlineCell,
                             id: "deadline",
-                            dynamicHeight: { [weak self] _ in
-                                self?.deadlineCell.cellHeight ?? 0
-                            }
+                            height: deadlineCell.cellHeight
                     ),
                     StaticRow(
                             cell: recipientCell,
                             id: "recipient",
-                            dynamicHeight: { [weak self] _ in
-                                self?.recipientCell.cellHeight ?? 0
-                            }
+                            height: recipientCell.cellHeight
                     ),
                     StaticRow(
                             cell: allowanceCell,
                             id: "allowance",
-                            dynamicHeight: { [weak self] _ in
-                                self?.allowanceCell.cellHeight ?? 0
-                            }
+                            height: allowanceCell.cellHeight
                     ),
                     StaticRow(
                             cell: priceImpactCell,
                             id: "price-impact",
-                            dynamicHeight: { [weak self] _ in
-                                self?.priceImpactCell.cellHeight ?? 0
-                            }
+                            height: priceImpactCell.cellHeight
                     ),
                     StaticRow(
                             cell: guaranteedAmountCell,
                             id: "guaranteed-amount",
-                            dynamicHeight: { [weak self] _ in
-                                self?.guaranteedAmountCell.cellHeight ?? 0
-                            }
+                            height: guaranteedAmountCell.cellHeight
                     )
                 ]
         ))
@@ -313,9 +306,7 @@ extension SwapViewControllerNew: SectionsDataSource {
                     StaticRow(
                             cell: feePriorityCell,
                             id: "fee-priority",
-                            dynamicHeight: { [weak self] _ in
-                                self?.feePriorityCell.currentHeight ?? 0
-                            }
+                            height: feePriorityCell.currentHeight
                     )
                 ]
         ))
