@@ -18,8 +18,8 @@
 "button.report" = "Пожаловаться";
 "button.add" = "Добавить";
 "button.approve" = "Подтвердить";
-"button.reject" = "Reject";
-"button.connect" = "Connect";
+"button.reject" = "Отклонить";
+"button.connect" = "Подключиться";
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет Интернета";
@@ -32,11 +32,11 @@
 "placeholder.search" = "Поиск";
 
 "status" = "Статус";
-"connecting" = "Connecting...";
-"online" = "Online";
-"offline" = "Offline";
-"confirm" = "Confirm";
-"connect" = "Connect";
+"connecting" = "Подключение...";
+"online" = "Доступен";
+"offline" = "Не доступен";
+"confirm" = "Подтвердить";
+"connect" = "Подключиться";
 
 "n/a" = "Нет данных";
 
@@ -44,17 +44,17 @@
 
 // Access Camera
 
-"access_camera.message" = "Unstoppable needs access to your camera to scan QR code.
+"access_camera.message" = "Unstoppable требуется доступ к вашей камере для сканирования QR-кода.
 
-Go to Settings - > Unstoppable and allow access to Camera.";
-"access_camera.settings" = "Settings";
+Перейдите в \"Настройки\" - > Unstoppable и разрешите доступ к камере.";
+"access_camera.settings" = "Настройки";
 
 // Welcome
 
-"welcome.new_wallet" = "Create Wallet";
-"welcome.restore_wallet" = "Restore Wallet";
-"welcome.privacy_settings" = "Privacy Settings";
-"welcome.version" = "Version %@";
+"welcome.new_wallet" = "Создать Кошелек";
+"welcome.restore_wallet" = "Восстановить Кошелек";
+"welcome.privacy_settings" = "Настройки Приватности";
+"welcome.version" = "Версия %@";
 
 // Restore
 
@@ -73,7 +73,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "coin_settings.derivation.description.bip84" = "Новые";
 "coin_settings.derivation.starts_with" = "начинается с %@...";
 "coin_settings.derivation.description_create" = "Этот параметр определяет формат адреса Bitcoin в этом кошельке. Мы рекомендуем использовать BIP49.";
-"coin_settings.derivation.description_restore" = "Select the address format for the Bitcoin in the wallet you're trying to restore.";
+"coin_settings.derivation.description_restore" = "Выберите формат адреса для Bitcoin в кошельке, который вы пытаетесь восстановить.";
 "coin_settings.title" = "Настройки Блокчейна";
 "coin_settings.sync_mode.title" = "Источник Восстановления";
 "coin_settings.sync_mode.fast.description" = "0-2 часа (рекомендуется)";
@@ -81,9 +81,9 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "coin_settings.sync_mode.description" = "Ссылки на источники API: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg";
 "sync_mode.from_blockchain" = "Из Блокчейна";
 "blockchain_settings.change_alert.title" = "Формат Адреса";
-"blockchain_settings.change_alert.content" = "After this change the wallet will have to resync itself with the %@ blockchain.\n\nWhen you change the address format for %@ the current balance and transaction history will no longer be visible. Changing it back to previous setting will bring everything back after the wallet resyncs itself with the blockchain. We recommend not to change it if not sure what that is.";
+"blockchain_settings.change_alert.content" = "После того, как данное изменение вступит в силу, кошелек должен будет повторно синхронизироваться с блокчейном %@.\n\nПри изменении формата адреса для %@ текущий баланс и история транзакций больше не будут отображаться. При возвращении предыдущих настроек баланс и история восстановятся после того, как кошелек повторно синхронизируется с блокчейном. Рекомендуем не менять настройки, если вы не уверены, что это такое.";
 "blockchain_settings.change_alert.action_button_text" = "Изменить на %@";
-"blockchain_settings.sync_mode_change_alert.content" = "This action will require Unstoppable app to resync itself with Bitcoin, Bitcoin Cash and Dash blockchains, if you have enabled any of these tokens. Your balance or transactions won\'t be affected.\n\nWe recommend not to change this setting if not sure what it does.";
+"blockchain_settings.sync_mode_change_alert.content" = "После применения этого действия потребуется ресинхронизация приложения Unstoppable с Bitcoin, а также блокчейнами Bitcoin Cash и Dash в случае, если вы активировали любые из этих токенов. Это не повлияет на ваш баланс или транзакции.\n\nМы не рекомендуем изменять эту настройку, если вы не уверены, каким будет результат этих изменений.";
 "blockchain_settings.sync_mode.blockchain" = "Блокчейн";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "Формат Адреса";
@@ -105,14 +105,14 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Копирование ключа с помощью действия «копировать» подвергает вас определенному риску, если вы используете какие-либо приложения для управления буфером обмена, или другие приложения, которые могут иметь доступ к данным буфера обмена.";
-"error.send.self_transfer" = "Sending to self is not supported";
+"error.send.self_transfer" = "Отправка самому себе невозможна";
 "error.send_eos.account_not_exist" = "Этот аккаунт не существует";
 "error.send_eos.insufficient_ram" = "У вашего аккаунта EOS недостаточно оперативной памяти для отправки этого токена. Для продолжения необходимо увеличить ставку RAM.";
 "error.send_eos.unknown" = "Что-то пошло не так: %@";
 "error.send_ethereum.wrong_parameters" = "Неверные параметры";
 "error.send_binance.memo_required" = "При отправке транзакции получателю необходимо заполнить поле мемо";
 "error.send_binance.only_digits_allowed" = "Поле мемо должно содержать только цифры";
-"error.send_z_cash.transparent_address" = "Unstoppable doesn't support payments to a transparent address";
+"error.send_z_cash.transparent_address" = "Unstoppable не поддерживает платежи на публичный адрес";
 "error.incubed_not_reachable" = "Сервера Incubed недоступны";
 
 "backup.confirmation.title" = "Проверка...";
@@ -127,61 +127,61 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "balance.send" = "Отправить";
 "balance.swap" = "Обменять";
 "balance.deposit" = "Получить";
-"balance.rate_per_coin" = "%@ per %@";
-"balance.syncing" = "Syncing...";
-"balance.searching" = "Searching transactions...";
+"balance.rate_per_coin" = "%@ за %@";
+"balance.syncing" = "Синхронизация...";
+"balance.searching" = "Поиск транзакций...";
 "balance.searching.count" = "%@ tx";
-"balance.syncing_percent" = "Syncing... %@";
-"balance.synced_through" = "until %@";
-"balance.add_coin" = "Add Coins";
-"balance.sort.header" = "Sort by";
-"balance.sort.valueHighToLow" = "Balance";
-"balance.sort.az" = "Name";
-"balance.sort.24h_change" = "24h Price(%)";
-"balance_error.description" = "The error text will be copied to your clipboard should you decide to report it.";
-"balance_error.change_source" = "Change Source";
-"balance_error.sync_error" = "Sync Error";
+"balance.syncing_percent" = "Синхронизация... %@";
+"balance.synced_through" = "до %@";
+"balance.add_coin" = "Добавить Токены";
+"balance.sort.header" = "Сортировать по";
+"balance.sort.valueHighToLow" = "Балансу";
+"balance.sort.az" = "Названию";
+"balance.sort.24h_change" = "Цене(%) за 24 ч";
+"balance_error.description" = "Сообщение об ошибке будет скопировано в ваш буфер обмена на случай, если вы решите о ней сообщить.";
+"balance_error.change_source" = "Сменить Источник";
+"balance_error.sync_error" = "Ошибка Синхронизации";
 
 // Deposit
 
-"deposit.receive_coin" = "Receive %@";
-"deposit.your_address" = "Your Address";
-"deposit.your_account" = "Your Account";
-"receive_alert.not_backed_up_description" = "You need to backup the %@ Wallet before you may receive %@.";
+"deposit.receive_coin" = "Получить %@";
+"deposit.your_address" = "Ваш Адрес";
+"deposit.your_account" = "Ваш Аккаунт";
+"receive_alert.not_backed_up_description" = "Вам нужно сделать резервную копию %@ Кошелька, прежде чем вы сможете получать %@.";
 
 // Send
 
-"send.title" = "Send %@";
-"send.amount_placeholder" = "Amount";
-"send.address_placeholder" = "Address";
-"send.account_placeholder" = "Account";
-"send.fee" = "Fee";
-"send.tx_speed" = "Transaction Speed";
-"send.tx_speed_low" = "Low";
-"send.tx_speed_medium" = "Medium";
-"send.tx_speed_recommended" = "Recommended";
-"send.tx_speed_high" = "High";
-"send.tx_speed_custom" = "Custom";
-"send.tx_duration" = "Duration";
-"send.duration.instant" = "Instant";
-"send.duration.within" = "within %@";
-"send.duration.hours" = "%d h.";
-"send.duration.minutes" = "%d min.";
-"send.available_balance" = "Available Balance";
-"send.max_button" = "Max";
-"send.next_button" = "Next";
-"send.error.invalid_address" = "Invalid Address";
+"send.title" = "Отправить %@";
+"send.amount_placeholder" = "Сумма";
+"send.address_placeholder" = "Адрес";
+"send.account_placeholder" = "Аккаунт";
+"send.fee" = "Комиссия";
+"send.tx_speed" = "Скорость Транзакции";
+"send.tx_speed_low" = "Низкая";
+"send.tx_speed_medium" = "Средняя";
+"send.tx_speed_recommended" = "Рекомендовано";
+"send.tx_speed_high" = "Высокая";
+"send.tx_speed_custom" = "Индивидуальная";
+"send.tx_duration" = "Продолжительность";
+"send.duration.instant" = "Мгновенно";
+"send.duration.within" = "в течение %@";
+"send.duration.hours" = "%d ч.";
+"send.duration.minutes" = "%d мин.";
+"send.available_balance" = "Доступный Баланс";
+"send.max_button" = "Макс.";
+"send.next_button" = "Далее";
+"send.error.invalid_address" = "Неверный Адрес";
 "send.hodler_locktime" = "TimeLock";
-"send.hodler_locktime_hour" = "1 hour";
-"send.hodler_locktime_month" = "1 month";
-"send.hodler_locktime_half_year" = "6 months";
-"send.hodler_locktime_year" = "1 year";
-"send.hodler_locktime_off" = "Off";
-"send.hodler_error.unsupported_address" = "Time locking works only with P2PKH addresses (starting with 1)";
+"send.hodler_locktime_hour" = "1 час";
+"send.hodler_locktime_month" = "1 месяц";
+"send.hodler_locktime_half_year" = "6 месяцев";
+"send.hodler_locktime_year" = "1 год";
+"send.hodler_locktime_off" = "Выкл.";
+"send.hodler_error.unsupported_address" = "Блокировка по времени работает только с адресами P2PKH (начиная с 1)";
 
 "send.confirmation.memo_placeholder" = "Memo";
-"send.confirmation.total" = "Total";
-"send.confirmation.send_button" = "Send";
+"send.confirmation.total" = "Всего";
+"send.confirmation.send_button" = "Отправить";
 "send.amount_error.balance" = "Balance %@";
 "send.amount_error.maximum_amount" = "Maximum amount %@";
 "send.amount_error.minimum_amount" = "Minimum amount %@";
@@ -315,12 +315,12 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "full_info.fee" = "Fee";
 "full_info.rate" = "Rate";
 "full_info.inputs" = "Inputs";
-"full_info.outputs" = "Outputs";
-"full_info.source" = "Source";
-"full_info.contract" = "Contract";
-"full_info.from" = "From";
-"full_info.to" = "To";
-"full_info.amount" = "Amount";
+"full_info.outputs" = "Выходы";
+"full_info.source" = "Источник";
+"full_info.contract" = "Контракт";
+"full_info.from" = "От";
+"full_info.to" = "Кому";
+"full_info.amount" = "Сумма";
 "full_info.nonce" = "Nonce";
 "full_info.memo" = "Memo";
 "full_info.cpu" = "CPU Usage";
@@ -332,42 +332,42 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "full_info.gas_used" = "Gas Used";
 "full_info.gas_price" = "Gas Price";
 
-"full_info.source.title" = "Source";
+"full_info.source.title" = "Источник";
 
-"full_info.error.server_offline" = "offline";
-"full_info.error.transaction_not_found" = "Transaction can not be found on the blockchain";
-"full_info.error.change_source" = "Change Source";
-"full_info.no_address" = "Empty Address";
+"full_info.error.server_offline" = "не доступен";
+"full_info.error.transaction_not_found" = "Транзакция не найдена в блокчейне";
+"full_info.error.change_source" = "Изменить Источник";
+"full_info.no_address" = "Пустой Адрес";
 
 // Settings
 
-"settings.title" = "Settings";
-"settings.tab_bar_item" = "Settings";
-"settings.security_center" = "Security Center";
-"settings.manage_accounts" = "Manage Wallets";
-"settings.manage_coins" = "Manage Coins";
-"settings.app_status" = "App Status";
-"settings.experimental_features" = "Experimental Features";
-"settings.notifications" = "Notifications";
-"settings.base_currency" = "Base Currency";
-"settings.language" = "Language";
-"settings.terms" = "Terms";
-"settings.tell_friends" = "Tell Friends";
+"settings.title" = "Настройки";
+"settings.tab_bar_item" = "Настройки";
+"settings.security_center" = "Центр Безопасности";
+"settings.manage_accounts" = "Управление Кошельками";
+"settings.manage_coins" = "Управление Токенами";
+"settings.app_status" = "Статус Приложения";
+"settings.experimental_features" = "Экспериментальные Функции";
+"settings.notifications" = "Уведомления";
+"settings.base_currency" = "Базовая Валюта";
+"settings.language" = "Язык";
+"settings.terms" = "Условия Использования";
+"settings.tell_friends" = "Рассказать Друзьям";
 "settings.contact" = "Kонтакты";
-"settings.light_mode" = "Light Mode";
+"settings.light_mode" = "Светлый Режим";
 "settings.info_title" = "UNSTOPPABLE";
-"settings.info_subtitle" = "decentralized app";
+"settings.info_subtitle" = "децентрализованное приложение";
 
 // Settings -> Notifications
 
-"settings_notifications.title" = "Notifications";
-"settings_notifications.toggle_title" = "Push Notifications";
-"settings_notifications.description" = "Set price change alerts for the coins you would like to watch\n\nYou will be alerted when the change in price for the last 24 hours exceeds selected threshold.\n\nPrice Trend Alert warns of a trend change for the short 1 week, for the long 6 month.";
-"settings_notifications.alert_off" = "Off";
-"settings.notifications.deactivate_all" = "Deactivate All";
-"settings.notifications.disabled_text" = "The notifications for Unstoppable Wallet app are disabled. You need to turn on Notifications and allow background app refresh in order to be able to receive price change alerts.";
-"settings.notifications.settings_button" = "Turn on in Settings";
-"settings_notifications.trend_short" = "Short Term 7D";
+"settings_notifications.title" = "Уведомления";
+"settings_notifications.toggle_title" = "Push-уведомления";
+"settings_notifications.description" = "Установите уведомления об изменении курса отслеживаемых вами монет.\n\nВы получите уведомление, когда изменение курса за последние 24 часа превысит выбранный порог.\n\n Уведомление о тенденции цен предупреждает об изменениях в движении цен в краткосрочной перспективе (1 неделя), и долгосрочной перспективе (6 месяцев).";
+"settings_notifications.alert_off" = "Выкл.";
+"settings.notifications.deactivate_all" = "Отключить всё";
+"settings.notifications.disabled_text" = "Уведомления для приложения Unstoppable Wallet отключены. Чтобы получать уведомления об изменении цен, вам нужно включить уведомления и разрешить запуск приложения в фоновом режиме.";
+"settings.notifications.settings_button" = "Включить в настройках";
+"settings_notifications.trend_short" = "Краткосрочно 7Д";
 "settings_notifications.trend_long" = "Долгосрочно 6М";
 "settings_notifications.reset_all_title" = "Сбросить всё";
 "settings_notifications.trend_settings_title" = "Тенденция Цен";
@@ -413,7 +413,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "terms.item.academy" = "Я зашел в раздел \"Академия\" в этом приложении и ознакомился с базовыми аспектами хранения криптовалют.";
 "terms.item.backup" = "Я создал резервную копию приватного ключа (-ей) для своих кошельков, показанных мне в виде 12-24 слов. Я понимаю, что эти приватные ключи хранятся на моем смартфоне, а не в другом месте.";
 "terms.item.owner" = "Я понимаю, что только владелец моего приватного ключа(-ей) может получить доступ к моему кошельку и потратить доступные в нем средства, и поэтому эти ключи никогда не должны передаваться посторонним людям.";
-"terms.item.recover" = "I understand that I will need my private keys in order to restore access to my funds should I lose my phone or if the app malfunctions. Without my private keys it will be impossible to recover access to my wallet.";
+"terms.item.recover" = "Я понимаю, что в случае если я потеряю телефон или не будет работать приложение, для восстановления доступа к моим средствам мне понадобятся приватные ключи. Я не смогу восстановить доступ к моему кошельку без персональных ключей.";
 "terms.item.phone" = "Я понимаю, что передача моего телефона ненадежным лицам или оставление кошелька без безопасной блокировки с помощью PIN-кода может поставить под угрозу безопасность моих средств.";
 "terms.item.root" = "Я понимаю, что джейлбрейк (или рутинг) моего телефона, установка приложений из неизвестных источников и устаревшая операционная система могут поставить под угрозу безопасность моих средств.";
 "terms.item.bugs" = "Я понимаю, что в коде этого кошелька могут быть необнаруженные проблемы с программным обеспечением, что может привести к неожиданному поведению или сбоям в работе приложения.";
@@ -444,12 +444,12 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "settings_privacy.sync.section_footer" = "Выберите источник данных для восстановления кошелька с транзакциями.";
 
 "settings_privacy_info.title" = "Настройки Приватности";
-"settings_privacy_info.description" = "Ниже вы найдете подробное описание настроек конфиденциальности, доступных в приложении. Их можно безопасно рассматривать как настройки для тех, кому требуется полная конфиденциальность.";
-"settings_privacy_info.header_blockchain_transactions" = "Tранзакции Блокчейна";
+"settings_privacy_info.description" = "Below you will find detailed explanation of the privacy settings that are available in the app. It's safe to consider them as settings for those that require extensive privacy.";
+"settings_privacy_info.header_blockchain_transactions" = "Blockchain Transactions";
 "settings_privacy_info.content_blockchain_transactions" = "This setting controls the privacy level of user's transactions on Bitcoin, Bitcoin Cash and Litecoin blockchains.\n\nMost Bitcoin transactions generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party monitoring Bitcoin blockchain to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. The output returned to the sender can then be used in future transactions and further reveal the details to the monitoring party.\n\nUnstoppable wallet implements measures to makes it significantly harder to figure out which output goes where. There are two options available to Unstoppable users:\n\n1. Shuffle : The order of transaction outputs are randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, than consider this a recommended option.\n\n2. Deterministic : There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open source wallets that standard ensures that wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether transaction was sent from the wallet that uses that standard or not.";
-"settings_privacy_info.header_blockchain_connection" = "Синхронизация Блокчейна";
+"settings_privacy_info.header_blockchain_connection" = "Blockchain Sync";
 "settings_privacy_info.content_blockchain_connection" = "This setting controls how this app interacts with blockchains (sending/receiving transactions). In case of Bitcoin, Bitcoin Cash, Litecoin and Dash it is fully peer to peer. The app pings many nodes and communicates with them. Potentially these nodes can record IP address and data requested but since they are chosen randomly, each time the app connects to a different node.\n\nIn case of Ethereum, there is no alternative for mobile wallets to interact with blockchain other than via third party providers (i.e. Infura.io) or personal Ethereum nodes. Third party services can potentially record IP addresses and the requests made. That info can reveal location, balance, transactions etc. Moreover, the wallet has to trust that information returned is correct. There is a an alternative known as Incubed which in essence is a network of special Ethereum nodes. These nodes can also record IP addresses and requests made, but they are chosen randomly each time. While being slightly slower than Infura, the way Incubed works pretty much guarantees that the information returned is correct (not fake).\n\nWhen it comes to other blockchains like EOSIO and Binance Chain, at this point they only provide centralized means of connecting, without viable alternatives. Potentially they can be recording IP addresses and requests made.";
-"settings_privacy_info.header_blockchain_restore" = "Восстановить Блокчейн";
+"settings_privacy_info.header_blockchain_restore" = "Blockchain Restore";
 "settings_privacy_info.content_blockchain_restore" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transactions history for a given coin so that the wallet app is able to display past transactions and calculate user's balance. This needs to happen only once, when user restores previously created wallet. At this point there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from API Server : There is a third-party predefined server which hosts the entire blockchain and has all the data processed and ready to provide it in a fast manner. This method is fast but can potentially keep track of the IP addresses and the data requested. This option is recommended due to its speed of getting data (5-10 minutes). The risks are minimal. If the user restoring from his own server then no privacy risks at all.\n\n2. from Blockchain : In this case the app tries to restore directly from a p2p network of the blockchain nodes. The app pings many of those nodes and requests data from them. Potentially these nodes can keep track of user's IP address and requests made however during restore the app can switch between nodes. There are close to 10,000 Bitcoin nodes on the network at any given time. This option is slow and can easily take 2-3 hours, app needs to be open while restore is happening...";
 
 "settings_privacy.alert_sync.title" = "Источник Восстановления";
@@ -461,55 +461,55 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 "settings_privacy.alert_sort.title" = "Tранзакции Блокчейна";
 "settings_privacy.alert_sort.subtitle" = "Входы/Выходы";
-"settings_privacy.sorting_default" = "Default";
-"settings_privacy.sorting_default.description" = "Without any settings";
-"settings_privacy.sorting_shuffle" = "Shuffle";
-"settings_privacy.sorting_shuffle.description" = "Random Indexing";
-"settings_privacy.sorting_bip69" = "Deterministic Bip69";
-"settings_privacy.sorting_bip69.description" = "Lexicographical Indexing";
+"settings_privacy.sorting_default" = "По умолчанию";
+"settings_privacy.sorting_default.description" = "Без настроек";
+"settings_privacy.sorting_shuffle" = "Перемешать";
+"settings_privacy.sorting_shuffle.description" = "Случайное Индексирование";
+"settings_privacy.sorting_bip69" = "Детерминированный BIP69";
+"settings_privacy.sorting_bip69.description" = "Лексикографическая Индексация";
 
 // Settings -> Contact
 
-"settings.contact.title" = "Contact";
-"settings.contact.email" = "E-mail";
+"settings.contact.title" = "Kонтакты";
+"settings.contact.email" = "Эл. почта";
 "settings.contact.telegram_wallet" = "Telegram";
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Manage Wallets";
-"settings_manage_keys.item_title" = "%@ Wallet";
-"settings_manage_keys.add_wallet" = "Add Wallet";
-"settings_manage_keys.description" = "Highlighted below are your active wallets where each wallet controls a set of cryptocurrencies.\n\nYou must backup each highlighted wallet by backing up the private key for it. This key is the only way to restore and access your funds if your phone is ever lost, stolen or the app malfunctions.";
-"settings_manage_keys.delete" = "Delete";
-"settings_manage_keys.backup" = "Backup";
-"settings_manage_keys.show" = "Show Key";
-"settings_manage_keys.create" = "Create";
-"settings_manage_keys.restore" = "Restore";
-"settings_manage_keys.settings" = "Address Format";
-"settings_manage_keys.delete.cant_delete" = "You need to backup the private key for this wallet before it can be deleted from this phone.";
-"settings_manage_keys.delete.title" = "Delete Wallet";
-"settings_manage_keys.delete.confirmation_remove" = "The action will delete the %@ Wallet from this device.";
-"settings_manage_keys.delete.confirmation_disable" = "Coins that will be disabled: %@";
-"settings_manage_keys.delete.confirmation_loose" = "If you didn't backup the private key for this wallet, you will lose access to your funds.";
-"error.invalid_eos_key" = "Invalid key";
-"error.invalid_eos_account" = "Invalid account";
+"settings_manage_keys.title" = "Кошельки";
+"settings_manage_keys.item_title" = "%@ Кошелек";
+"settings_manage_keys.add_wallet" = "Добавить Кошелёк";
+"settings_manage_keys.description" = "Ниже выделены ваши активные кошельки, каждый кошелек отвечает за разный набор криптовалют.\n\nВы должны сделать резервную копию каждого выделенного кошелька, записав его персональный ключ. Приватный ключ – единственный способ восстановления ваших средств в случае утери, кражи или поломки вашего телефона.";
+"settings_manage_keys.delete" = "Удалить";
+"settings_manage_keys.backup" = "Резервная копия";
+"settings_manage_keys.show" = "Показать Ключ";
+"settings_manage_keys.create" = "Создать";
+"settings_manage_keys.restore" = "Восстановить";
+"settings_manage_keys.settings" = "Формат Адреса";
+"settings_manage_keys.delete.cant_delete" = "Вам нужно сделать резервную копию приватного ключа для этого кошелька, прежде чем он будет удален с этого телефона.";
+"settings_manage_keys.delete.title" = "Удалить Кошелек";
+"settings_manage_keys.delete.confirmation_remove" = "Это действие удалит ваш %@ кошелек с этого устройства.";
+"settings_manage_keys.delete.confirmation_disable" = "Токены, которые будут отключены: %@";
+"settings_manage_keys.delete.confirmation_loose" = "Если вы не сделали резервную копию приватного ключа для этого кошелька, вы потеряете доступ к вашим средствам.";
+"error.invalid_eos_key" = "Неверный Ключ";
+"error.invalid_eos_account" = "Неверный Аккаунт";
 
 // Set PIN
 
-"set_pin.title" = "Passcode";
-"set_pin.info" = "Your passcode will be used to unlock your wallet";
-"set_pin.wrong_confirmation" = "Passcode did not match. Try again";
+"set_pin.title" = "Код Доступа";
+"set_pin.info" = "Код доступа будет использоваться для разблокировки вашего кошелька";
+"set_pin.wrong_confirmation" = "Код доступа не совпадает. Попробуйте ещё раз";
 
 // Edit PIN
 
-"edit_pin.title" = "Edit Passcode";
-"edit_pin.unlock_info" = "Current Passcode";
-"edit_pin.new_pin_info" = "New Passcode";
+"edit_pin.title" = "Изменить Код";
+"edit_pin.unlock_info" = "Текущий Код";
+"edit_pin.new_pin_info" = "Новый Код";
 
 // Unlock PIN
 
-"unlock_pin.info" = "Passcode";
-"unlock_pin.cant_save_pin" = "Ouch! We cannot save your passcode, please contact us asap!";
+"unlock_pin.info" = "Код Доступа";
+"unlock_pin.cant_save_pin" = "Ой! Мы не можем сохранить ваш код доступа. Пожалуйста, свяжитесь с нами как можно скорее!";
 "unlock_pin.blocked_until" = "Disabled until: %@";
 
 // Rate List
