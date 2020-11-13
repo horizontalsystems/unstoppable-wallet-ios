@@ -429,7 +429,7 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 // Settings -> Security
 
 "settings_security.title" = "Security Center";
-"settings_security.blockchain_settings" = "Blockchain Settings";
+"settings_security.blockchain_settings" = "Paramètres de la Blockchain";
 "settings_security.passcode" = "Passcode";
 "settings_security.privacy" = "Privacy";
 "settings_security.change_pin" = "Edit Passcode";
