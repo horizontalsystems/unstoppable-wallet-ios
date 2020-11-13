@@ -70,8 +70,8 @@ class EthereumTransactionService {
                 .observeOn(MainScheduler.instance)
                 .subscribe(onSuccess: { [weak self] transaction in
                     self?.transactionStatus = .completed(transaction)
-                }, onError: { error in
-                    self.transactionStatus = .failed(error)
+                }, onError: { [weak self] error in
+                     self?.transactionStatus = .failed(error)
                 })
                 .disposed(by: disposeBag)
     }

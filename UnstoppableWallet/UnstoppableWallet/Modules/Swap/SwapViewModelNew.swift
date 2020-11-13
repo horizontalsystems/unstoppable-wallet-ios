@@ -3,6 +3,7 @@ import RxSwift
 import RxCocoa
 import UniswapKit
 import CurrencyKit
+import EthereumKit
 
 class SwapViewModelNew {
     private let disposeBag = DisposeBag()
@@ -58,6 +59,9 @@ class SwapViewModelNew {
         if case SwapServiceNew.TransactionError.insufficientBalance(let requiredBalance) = error {
             let amountData = coinService.amountData(value: requiredBalance)
             return "ethereum_transaction.error.insufficient_balance".localized(amountData.formattedString)
+        }
+        if case EthereumKit.Kit.EstimatedLimitError.insufficientBalance = error {
+            return "ethereum_transaction.error.insufficient_balance_with_fee".localized
         }
 
         return error.convertedError.smartDescription

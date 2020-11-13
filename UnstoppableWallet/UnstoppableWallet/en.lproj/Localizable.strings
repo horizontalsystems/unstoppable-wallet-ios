@@ -655,6 +655,7 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "wallet_connect.usage_description" = "You can go to the browser. Do not close this page while interacting in the browser.";
 "wallet_connect.button_disconnect" = "Disconnect";
 "ethereum_transaction.error.insufficient_balance" = "Transaction requires %@ for sending.";
+"ethereum_transaction.error.insufficient_balance_with_fee" = "Current ETH balance is below amount required to process this transaction including transaction fee.";
 "wallet_connect.request_title" = "Request";
 
 // App Status
