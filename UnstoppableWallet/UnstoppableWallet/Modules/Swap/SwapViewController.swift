@@ -88,7 +88,7 @@ class SwapViewController: ThemeViewController {
             maker.top.bottom.equalTo(self.scrollView)
         }
 
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Info Icon Medium")?.tinted(with: .themeJacob), style: .plain, target: self, action: #selector(onInfo))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Info Icon")?.tinted(with: .themeJacob), style: .plain, target: self, action: #selector(onInfo))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onClose))
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 

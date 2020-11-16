@@ -168,7 +168,7 @@ extension ChartNotificationViewController: IChartNotificationView {
         titleView.bind(
                 title: titleViewModel.title.localized,
                 subtitle: titleViewModel.subtitle,
-                image: UIImage(named: "Notification Medium Icon")
+                image: UIImage(named: "Notification Icon")?.tinted(with: .themeJacob)
         )
     }
 

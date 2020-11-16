@@ -5,11 +5,9 @@ class BalanceHeaderView: UICollectionReusableView {
     static let height: CGFloat = 40
 
     private let amountLabel = UILabel()
-    private let hideButton = UIButton()
     private let sortButton = UIButton()
 
     var onTapSortType: (() -> ())?
-    var onTapHide: (() -> ())?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,17 +36,6 @@ class BalanceHeaderView: UICollectionReusableView {
 
         sortButton.setImage(UIImage(named: "Balance Sort Icon")?.tinted(with: .themeJacob), for: .normal)
         sortButton.addTarget(self, action: #selector(_onTapSortType), for: .touchUpInside)
-
-        addSubview(hideButton)
-        hideButton.snp.makeConstraints { maker in
-            maker.leading.equalTo(amountLabel.snp.trailing)
-            maker.top.equalToSuperview()
-            maker.width.equalTo(CGFloat.margin8x)
-            maker.height.equalTo(BalanceHeaderView.height)
-        }
-
-        hideButton.setImage(UIImage(named: "Balance Hide Icon"), for: .normal)
-        hideButton.addTarget(self, action: #selector(_onTapHide), for: .touchUpInside)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -63,10 +50,6 @@ class BalanceHeaderView: UICollectionReusableView {
 
     @objc private func _onTapSortType() {
         onTapSortType?()
-    }
-
-    @objc private func _onTapHide() {
-        onTapHide?()
     }
 
 }

@@ -305,9 +305,9 @@ extension TransactionInfoViewController: ITransactionInfoView {
         let iconImage: UIImage? = {
             switch type {
             case .incoming:
-                return UIImage(named: "Transaction In Icon")
+                return UIImage(named: "Transaction In Icon")?.tinted(with: .themeRemus)
             case .outgoing, .sentToSelf:
-                return UIImage(named: "Transaction Out Icon")
+                return UIImage(named: "Transaction Out Icon")?.tinted(with: .themeJacob)
             case .approve:
                 return UIImage(named: "Transaction Approve Icon")?.tinted(with: .themeLeah)
             }

@@ -34,8 +34,7 @@ class CoinToggleCell: ThemeCell {
             maker.centerY.equalToSuperview()
         }
 
-        addImageView.image = UIImage(named: "Edit Coins Icon")?.withRenderingMode(.alwaysTemplate)
-        addImageView.tintColor = .themeGray
+        addImageView.image = UIImage(named: "Edit Coins Icon")
     }
 
     @objc func switchChanged() {

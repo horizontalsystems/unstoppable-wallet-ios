@@ -231,10 +231,10 @@ class ChartViewController: ThemeViewController {
     private func updateAlertBarItem(alertMode: ChartPriceAlertMode) {
         switch alertMode {
         case .on:
-            let image = UIImage(named: "Notification Medium Icon")?.tinted(with: .themeJacob)?.withRenderingMode(.alwaysOriginal)
+            let image = UIImage(named: "Notification Icon Active")?.tinted(with: .themeJacob)?.withRenderingMode(.alwaysOriginal)
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(onAlertTap))
         case .off:
-            let image = UIImage(named: "Notification Medium Icon")?.tinted(with: .themeGray)?.withRenderingMode(.alwaysOriginal)
+            let image = UIImage(named: "Notification Icon")?.tinted(with: .themeGray)?.withRenderingMode(.alwaysOriginal)
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(onAlertTap))
         case .hidden:
             navigationItem.rightBarButtonItem = nil

@@ -104,7 +104,7 @@ class TransactionCell: ClaudeThemeCell {
             maker.size.equalTo(0)
         }
         sentToSelfImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        sentToSelfImageView.image = UIImage(named: "Transaction In Icon")
+        sentToSelfImageView.image = UIImage(named: "Transaction In Icon")?.tinted(with: .themeRemus)
 
         contentView.addSubview(amountLabel)
         amountLabel.snp.makeConstraints { maker in
@@ -129,10 +129,10 @@ class TransactionCell: ClaudeThemeCell {
         switch item.type {
         case .incoming:
             currencyAmountLabel.textColor = .themeGreenD
-            typeIconImageView.image = UIImage(named: "Transaction In Icon")
+            typeIconImageView.image = UIImage(named: "Transaction In Icon")?.tinted(with: .themeRemus)
         case .outgoing, .sentToSelf:
             currencyAmountLabel.textColor = .themeYellowD
-            typeIconImageView.image = UIImage(named: "Transaction Out Icon")
+            typeIconImageView.image = UIImage(named: "Transaction Out Icon")?.tinted(with: .themeJacob)
         case .approve:
             currencyAmountLabel.textColor = .themeLeah
             typeIconImageView.image = UIImage(named: "Transaction Approve Icon")?.tinted(with: .themeLeah)
