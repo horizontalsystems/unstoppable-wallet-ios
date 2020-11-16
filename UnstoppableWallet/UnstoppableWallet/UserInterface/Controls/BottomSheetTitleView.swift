@@ -55,8 +55,7 @@ class BottomSheetTitleView: UIView {
         }
 
         closeButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        closeButton.setImage(UIImage(named: "Close Icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        closeButton.tintColor = .themeGray
+        closeButton.setImage(UIImage(named: "Close Icon"), for: .normal)
         closeButton.addTarget(self, action: #selector(_onTapClose), for: .touchUpInside)
 
         addSubview(separatorView)

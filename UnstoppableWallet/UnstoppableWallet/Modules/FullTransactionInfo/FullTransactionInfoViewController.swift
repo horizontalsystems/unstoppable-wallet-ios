@@ -10,9 +10,6 @@ class FullTransactionInfoViewController: ThemeViewController, SectionsDataSource
     static let spinnerLineWidth: CGFloat = 4
     static let spinnerSideSize: CGFloat = 32
 
-    private let cellName = String(describing: FullTransactionInfoTextCell.self)
-    private let closeButtonImage = UIImage(named: "Close Icon")
-    private let shareButtonImage = UIImage(named: "Share Full Transaction Icon")
     private let attentionImage = UIImage(named: "Attention Icon Large", in: Bundle(for: RequestErrorView.self), compatibleWith: nil)?.tinted(with: .themeGray)
     private let errorImage =  UIImage(named: "Error Icon", in: Bundle(for: RequestErrorView.self), compatibleWith: nil)?.tinted(with: .themeGray)
 

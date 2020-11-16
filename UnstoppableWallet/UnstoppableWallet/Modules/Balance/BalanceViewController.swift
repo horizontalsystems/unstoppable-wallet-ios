@@ -87,6 +87,10 @@ class BalanceViewController: ThemeViewController {
         delegate.onTriggerRefresh()
     }
 
+    @objc private func onTapHideBalance() {
+        delegate.onTapHideBalance()
+    }
+
     @objc private func onTapShowBalance() {
         delegate.onTapShowBalance()
     }
@@ -100,10 +104,10 @@ class BalanceViewController: ThemeViewController {
             return false
         }) {
             DispatchQueue.main.sync {
-                self.headerViewItem = newHeaderViewItem
-                self.viewItems = newViewItems
-                self.collectionView.reloadData()
-                self.syncShowBalanceButton()
+                headerViewItem = newHeaderViewItem
+                viewItems = newViewItems
+                collectionView.reloadData()
+                syncShowBalanceButton()
             }
             return
         }
@@ -141,9 +145,9 @@ class BalanceViewController: ThemeViewController {
         }
 
         DispatchQueue.main.sync {
-            self.headerViewItem = newHeaderViewItem
-            self.viewItems = newViewItems
-            self.syncShowBalanceButton()
+            headerViewItem = newHeaderViewItem
+            viewItems = newViewItems
+            syncShowBalanceButton()
 
             if let view = collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: 0)) as? BalanceHeaderView {
                 bind(view: view)
@@ -194,19 +198,16 @@ class BalanceViewController: ThemeViewController {
             view.onTapSortType = { [weak self] in
                 self?.delegate.onTapSortType()
             }
-
-            view.onTapHide = { [weak self] in
-                self?.delegate.onTapHideBalance()
-            }
         }
     }
 
     private func syncShowBalanceButton() {
         if headerViewItem == nil {
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Balance Show Icon"), style: .plain, target: self, action: #selector(onTapShowBalance))
-            navigationItem.rightBarButtonItem?.tintColor = .themeGray
+            navigationItem.rightBarButtonItem?.tintColor = .themeJacob
         } else {
-            navigationItem.rightBarButtonItem = nil
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Balance Hide Icon"), style: .plain, target: self, action: #selector(onTapHideBalance))
+            navigationItem.rightBarButtonItem?.tintColor = .themeGray
         }
     }
 

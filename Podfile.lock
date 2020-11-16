@@ -534,7 +534,7 @@ CHECKOUT OPTIONS:
     :commit: 28500c54b72759f44a36cbb9645d7bc3afc3a6ef
     :git: https://github.com/horizontalsystems/component-kit-ios/
   PinKit.swift:
-    :commit: 28500c54b72759f44a36cbb9645d7bc3afc3a6ef
+    :commit: 631c44e07c91b7a135748a0fc0a649d230d52fca
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ScanQrKit.swift:
     :commit: 28500c54b72759f44a36cbb9645d7bc3afc3a6ef

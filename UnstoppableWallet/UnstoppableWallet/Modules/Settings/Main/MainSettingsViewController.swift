@@ -99,7 +99,7 @@ class MainSettingsViewController: ThemeViewController {
     private var appearanceRows: [RowProtocol] {
         [
             Row<TitleCell>(id: "notifications", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Notification Icon"), title: "settings.notifications".localized, showDisclosure: true)
+                cell.bind(titleIcon: UIImage(named: "Notification Small Icon"), title: "settings.notifications".localized, showDisclosure: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapNotifications()
             }),
