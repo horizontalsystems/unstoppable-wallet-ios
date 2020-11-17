@@ -37,8 +37,8 @@ class ZcashAdapter {
         let uniqueId = wallet.account.id
 
         let initializer = Initializer(cacheDbURL:try! ZcashAdapter.cacheDbURL(uniqueId: uniqueId),
-                                      dataDbURL: try! ZcashAdapter.dataDbURL(uniqueId: uniqueId),
-                                      pendingDbURL: try! ZcashAdapter.pendingDbURL(uniqueId: uniqueId),
+                dataDbURL: try! ZcashAdapter.dataDbURL(uniqueId: uniqueId),
+                pendingDbURL: try! ZcashAdapter.pendingDbURL(uniqueId: uniqueId),
                 endpoint: LightWalletEndpoint(address: endPoint, port: 9067),
                 spendParamsURL: try! ZcashAdapter.spendParamsURL(uniqueId: uniqueId),
                 outputParamsURL: try! ZcashAdapter.outputParamsURL(uniqueId: uniqueId),
@@ -57,6 +57,9 @@ class ZcashAdapter {
 
         state = .syncing(progress: 0, lastBlockDate: nil)
         lastBlockHeight = try? synchronizer.latestHeight()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
 
         subscribeSynchronizerNotifications()
     }
@@ -80,6 +83,16 @@ class ZcashAdapter {
 
         //latestHeight
         center.addObserver(self, selector: #selector(blockHeightUpdated(_:)), name: Notification.Name.blockProcessorUpdated, object: synchronizer.blockProcessor)
+    }
+
+    @objc private func didEnterBackground(_ notification: Notification) {
+        synchronizer.stop()
+    }
+
+    @objc private func willEnterForeground(_ notification: Notification) {
+        if synchronizer.status == .stopped || synchronizer.status == .disconnected {
+            try? synchronizer.start()
+        }
     }
 
     @objc private func statusUpdated(_ notification: Notification) {
