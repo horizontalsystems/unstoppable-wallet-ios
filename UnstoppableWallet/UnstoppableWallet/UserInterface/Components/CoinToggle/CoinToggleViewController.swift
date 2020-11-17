@@ -5,16 +5,13 @@ import ThemeKit
 import RxSwift
 import RxCocoa
 
-class CoinToggleViewController: ThemeViewController {
+class CoinToggleViewController: ThemeSearchViewController {
     private let viewModel: ICoinToggleViewModel
 
     let disposeBag = DisposeBag()
     private var viewState: CoinToggleViewModel.ViewState = .empty
 
     private let tableView = SectionsTableView(style: .grouped)
-    let searchController = UISearchController(searchResultsController: nil)
-
-    private var currentFilter: String?
 
     init(viewModel: ICoinToggleViewModel) {
         self.viewModel = viewModel
@@ -40,30 +37,11 @@ class CoinToggleViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchResultsUpdater = self
-        definesPresentationContext = true
-
-        navigationItem.searchController = searchController
-
         viewModel.viewStateDriver
                 .drive(onNext: { [weak self] viewState in
                     self?.onUpdate(viewState: viewState)
                 })
                 .disposed(by: disposeBag)
-    }
-
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-
-        if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
-            textField.textColor = .themeOz
-
-            if let leftView = textField.leftView as? UIImageView {
-                leftView.image = leftView.image?.withRenderingMode(.alwaysTemplate)
-                leftView.tintColor = .themeGray
-            }
-        }
     }
 
     private func onUpdate(viewState: CoinToggleViewModel.ViewState) {
@@ -102,6 +80,10 @@ class CoinToggleViewController: ThemeViewController {
 
     func onSelect(viewItem: CoinToggleViewModel.ViewItem) {
     }
+
+      override func onUpdate(filter: String?) {
+          viewModel.onUpdate(filter: filter)
+      }
 
     private func onToggle(viewItem: CoinToggleViewModel.ViewItem, enabled: Bool) {
         if enabled {
@@ -146,23 +128,6 @@ extension CoinToggleViewController: SectionsDataSource {
                     rows: rows(viewItems: viewState.viewItems)
             )
         ]
-    }
-
-}
-
-extension CoinToggleViewController: UISearchResultsUpdating {
-
-    public func updateSearchResults(for searchController: UISearchController) {
-        var filter = searchController.searchBar.text?.trimmingCharacters(in: .whitespaces)
-
-        if filter == "" {
-            filter = nil
-        }
-
-        if filter != currentFilter {
-            currentFilter = filter
-            viewModel.onUpdate(filter: filter)
-        }
     }
 
 }
