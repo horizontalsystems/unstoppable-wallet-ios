@@ -37,8 +37,8 @@ class ZcashAdapter {
         let uniqueId = wallet.account.id
 
         let initializer = Initializer(cacheDbURL:try! ZcashAdapter.cacheDbURL(uniqueId: uniqueId),
-                                      dataDbURL: try! ZcashAdapter.dataDbURL(uniqueId: uniqueId),
-                                      pendingDbURL: try! ZcashAdapter.pendingDbURL(uniqueId: uniqueId),
+                dataDbURL: try! ZcashAdapter.dataDbURL(uniqueId: uniqueId),
+                pendingDbURL: try! ZcashAdapter.pendingDbURL(uniqueId: uniqueId),
                 endpoint: LightWalletEndpoint(address: endPoint, port: 9067),
                 spendParamsURL: try! ZcashAdapter.spendParamsURL(uniqueId: uniqueId),
                 outputParamsURL: try! ZcashAdapter.outputParamsURL(uniqueId: uniqueId),
