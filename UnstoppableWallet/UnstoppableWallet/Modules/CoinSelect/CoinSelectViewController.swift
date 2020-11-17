@@ -4,15 +4,12 @@ import SnapKit
 import ThemeKit
 import RxSwift
 
-class CoinSelectViewController: ThemeViewController {
+class CoinSelectViewController: ThemeSearchViewController {
     private let disposeBag = DisposeBag()
     private let delegate: ICoinSelectDelegate
 
     private let viewModel: CoinSelectViewModel
     private let tableView = SectionsTableView(style: .grouped)
-    let searchController = UISearchController(searchResultsController: nil)
-
-    private var currentFilter: String?
 
     private var viewItems = [CoinBalanceViewItem]()
 
@@ -44,36 +41,12 @@ class CoinSelectViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
-        searchController.searchBar.placeholder = "placeholder.search".localized
-        searchController.obscuresBackgroundDuringPresentation = false
-
-        searchController.searchResultsUpdater = self
-        definesPresentationContext = true
-
-        navigationItem.searchController = searchController
+        navigationItem.searchController?.searchBar.placeholder = "placeholder.search".localized
 
         subscribe(disposeBag, viewModel.coinViewItems) { [weak self] in self?.handle(viewItems: $0) }
     }
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-
-        navigationItem.searchController = searchController
-
-        if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
-            textField.textColor = .themeOz
-
-            if let leftView = textField.leftView as? UIImageView {
-                leftView.image = leftView.image?.withRenderingMode(.alwaysTemplate)
-                leftView.tintColor = .themeGray
-            }
-        }
-    }
-
     @objc func onClose() {
-        if searchController.isActive {
-            searchController.dismiss(animated: false)
-        }
         dismiss(animated: true)
     }
 
@@ -107,6 +80,10 @@ class CoinSelectViewController: ThemeViewController {
         tableView.reload()
     }
 
+    override func onUpdate(filter: String?) {
+        viewModel.onUpdate(filter: filter)
+    }
+
 }
 
 extension CoinSelectViewController: SectionsDataSource {
@@ -120,23 +97,6 @@ extension CoinSelectViewController: SectionsDataSource {
                     rows: rows(viewItems: viewItems)
             )
         ]
-    }
-
-}
-
-extension CoinSelectViewController: UISearchResultsUpdating {
-
-    public func updateSearchResults(for searchController: UISearchController) {
-        var filter = searchController.searchBar.text?.trimmingCharacters(in: .whitespaces)
-
-        if filter == "" {
-            filter = nil
-        }
-
-        if filter != currentFilter {
-            currentFilter = filter
-            viewModel.onUpdate(filter: filter)
-        }
     }
 
 }

@@ -24,7 +24,7 @@ class CreateWalletViewController: CoinToggleViewController {
         super.viewDidLoad()
 
         title = "select_coins.choose_crypto".localized
-        searchController.searchBar.placeholder = "placeholder.search".localized
+        navigationItem.searchController?.searchBar.placeholder = "placeholder.search".localized
 
         if navigationController?.viewControllers.first == self {
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancelButton))
