@@ -1,7 +1,7 @@
 import UIKit
 import ThemeKit
 
-class GuideTextView: UITextView {
+class MarkdownTextView: UITextView {
 
     init() {
         super.init(frame: .zero, textContainer: nil)

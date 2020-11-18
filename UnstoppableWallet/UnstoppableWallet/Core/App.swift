@@ -20,6 +20,7 @@ class App {
 
     let pasteboardManager: IPasteboardManager
     let reachabilityManager: IReachabilityManager
+    let networkManager: NetworkManager
 
     let wordsManager: IWordsManager
 
@@ -92,7 +93,7 @@ class App {
         logRecordManager = LogRecordManager(storage: storage)
 
         logger = Logger(minLogLevel: .error, storage: logRecordManager)
-        let networkManager = NetworkManager(logger: logger)
+        networkManager = NetworkManager(logger: logger)
 
         keychainKit = KeychainKit(service: "io.horizontalsystems.bank.dev")
 

@@ -566,7 +566,6 @@ protocol ISortTypeManager: AnyObject {
 
 protocol IGuidesManager {
     func guideCategoriesSingle(url: URL) -> Single<[GuideCategory]>
-    func guideContentSingle(url: URL) -> Single<String>
 }
 
 protocol IErc20ContractInfoProvider {

@@ -2,9 +2,9 @@ import UIKit
 import Down
 import libcmark
 
-protocol GuideBlock: CustomStringConvertible {}
+protocol MarkdownBlock: CustomStringConvertible {}
 
-class GuideVisitor {
+class MarkdownVisitor {
     private let attributedStringVisitor: AttributedStringVisitor
     private let styler: Styler
 
@@ -15,18 +15,18 @@ class GuideVisitor {
 
 }
 
-extension GuideVisitor: Visitor {
-    public typealias Result = GuideBlock
+extension MarkdownVisitor: Visitor {
+    public typealias Result = MarkdownBlock
 
-    public func visit(document node: Document) -> GuideBlock {
+    public func visit(document node: Document) -> MarkdownBlock {
         DocumentBlock(blocks: visitChildren(of: node))
     }
 
-    public func visit(blockQuote node: BlockQuote) -> GuideBlock {
+    public func visit(blockQuote node: BlockQuote) -> MarkdownBlock {
         BlockQuoteBlock(blocks: visitChildren(of: node))
     }
 
-    public func visit(list node: List) -> GuideBlock {
+    public func visit(list node: List) -> MarkdownBlock {
         var startOrder: Int?
 
         if case .ordered(let start) = node.listType {
@@ -36,23 +36,23 @@ extension GuideVisitor: Visitor {
         return ListBlock(blocks: visitChildren(of: node), tight: node.isTight, startOrder: startOrder)
     }
 
-    public func visit(item node: Item) -> GuideBlock {
+    public func visit(item node: Item) -> MarkdownBlock {
         ItemBlock(blocks: visitChildren(of: node))
     }
 
-    public func visit(codeBlock node: CodeBlock) -> GuideBlock {
+    public func visit(codeBlock node: CodeBlock) -> MarkdownBlock {
         UnhandledBlock(type: "CodeBlock")
     }
 
-    public func visit(htmlBlock node: HtmlBlock) -> GuideBlock {
+    public func visit(htmlBlock node: HtmlBlock) -> MarkdownBlock {
         UnhandledBlock(type: "HtmlBlock")
     }
 
-    public func visit(customBlock node: CustomBlock) -> GuideBlock {
+    public func visit(customBlock node: CustomBlock) -> MarkdownBlock {
         UnhandledBlock(type: "CustomBlock")
     }
 
-    public func visit(paragraph node: Paragraph) -> GuideBlock {
+    public func visit(paragraph node: Paragraph) -> MarkdownBlock {
         // handle paragraph with single image
         if node.children.count == 1, let image = node.children.first as? Image {
             return visit(image: image)
@@ -63,62 +63,62 @@ extension GuideVisitor: Visitor {
         return ParagraphBlock(attributedString: s)
     }
 
-    public func visit(heading node: Heading) -> GuideBlock {
+    public func visit(heading node: Heading) -> MarkdownBlock {
         let s = attributedStringVisitor.visitChildren(of: node).joined
         styler.style(heading: s, level: node.headingLevel)
         return HeadingBlock(attributedString: s, level: node.headingLevel)
     }
 
-    public func visit(thematicBreak node: ThematicBreak) -> GuideBlock {
+    public func visit(thematicBreak node: ThematicBreak) -> MarkdownBlock {
         UnhandledBlock(type: "ThematicBreak")
     }
 
-    public func visit(text node: Text) -> GuideBlock {
+    public func visit(text node: Text) -> MarkdownBlock {
         UnhandledBlock(type: "Text")
     }
 
-    public func visit(softBreak node: SoftBreak) -> GuideBlock {
+    public func visit(softBreak node: SoftBreak) -> MarkdownBlock {
         UnhandledBlock(type: "SoftBreak")
     }
 
-    public func visit(lineBreak node: LineBreak) -> GuideBlock {
+    public func visit(lineBreak node: LineBreak) -> MarkdownBlock {
         UnhandledBlock(type: "LineBreak")
     }
 
-    public func visit(code node: Code) -> GuideBlock {
+    public func visit(code node: Code) -> MarkdownBlock {
         UnhandledBlock(type: "Code")
     }
 
-    public func visit(htmlInline node: HtmlInline) -> GuideBlock {
+    public func visit(htmlInline node: HtmlInline) -> MarkdownBlock {
         UnhandledBlock(type: "HtmlInline")
     }
 
-    public func visit(customInline node: CustomInline) -> GuideBlock {
+    public func visit(customInline node: CustomInline) -> MarkdownBlock {
         UnhandledBlock(type: "CustomInline")
     }
 
-    public func visit(emphasis node: Emphasis) -> GuideBlock {
+    public func visit(emphasis node: Emphasis) -> MarkdownBlock {
         UnhandledBlock(type: "Emphasis")
     }
 
-    public func visit(strong node: Strong) -> GuideBlock {
+    public func visit(strong node: Strong) -> MarkdownBlock {
         UnhandledBlock(type: "Strong")
     }
 
-    public func visit(link node: Link) -> GuideBlock {
+    public func visit(link node: Link) -> MarkdownBlock {
         UnhandledBlock(type: "Link")
     }
 
-    public func visit(image node: Image) -> GuideBlock {
+    public func visit(image node: Image) -> MarkdownBlock {
         ImageBlock(title: node.title, url: node.url)
     }
 
 }
 
-extension GuideVisitor {
+extension MarkdownVisitor {
 
-    struct DocumentBlock: GuideBlock {
-        let blocks: [GuideBlock]
+    struct DocumentBlock: MarkdownBlock {
+        let blocks: [MarkdownBlock]
 
         var description: String {
             "DocumentBlock: \(blocks.count) blocks:\n\(blocks.map { "\($0)" }.joined(separator: "\n"))\n\n"
@@ -126,7 +126,7 @@ extension GuideVisitor {
 
     }
 
-    struct HeadingBlock: GuideBlock {
+    struct HeadingBlock: MarkdownBlock {
         let attributedString: NSAttributedString
         let level: Int
 
@@ -136,7 +136,7 @@ extension GuideVisitor {
 
     }
 
-    struct ParagraphBlock: GuideBlock {
+    struct ParagraphBlock: MarkdownBlock {
         let attributedString: NSAttributedString
 
         var description: String {
@@ -145,7 +145,7 @@ extension GuideVisitor {
 
     }
 
-    struct ImageBlock: GuideBlock {
+    struct ImageBlock: MarkdownBlock {
         let title: String?
         let url: String?
 
@@ -155,8 +155,8 @@ extension GuideVisitor {
 
     }
 
-    struct ListBlock: GuideBlock {
-        let blocks: [GuideBlock]
+    struct ListBlock: MarkdownBlock {
+        let blocks: [MarkdownBlock]
         let tight: Bool
         var startOrder: Int?
 
@@ -170,8 +170,8 @@ extension GuideVisitor {
 
     }
 
-    struct ItemBlock: GuideBlock {
-        let blocks: [GuideBlock]
+    struct ItemBlock: MarkdownBlock {
+        let blocks: [MarkdownBlock]
 
         var paragraphBlocks: [ParagraphBlock] {
             blocks.compactMap { $0 as? ParagraphBlock }
@@ -183,8 +183,8 @@ extension GuideVisitor {
 
     }
 
-    struct BlockQuoteBlock: GuideBlock {
-        let blocks: [GuideBlock]
+    struct BlockQuoteBlock: MarkdownBlock {
+        let blocks: [MarkdownBlock]
 
         var paragraphBlocks: [ParagraphBlock] {
             blocks.compactMap { $0 as? ParagraphBlock }
@@ -196,7 +196,7 @@ extension GuideVisitor {
 
     }
 
-    struct UnhandledBlock: GuideBlock {
+    struct UnhandledBlock: MarkdownBlock {
         let type: String
 
         var description: String {
