@@ -2,7 +2,7 @@ import UIKit
 import ThemeKit
 import Down
 
-class GuideParser {
+class MarkdownParser {
 
     private let colors = StaticColorCollection(
             heading1: .themeOz,
@@ -27,11 +27,7 @@ class GuideParser {
         return paragraphStyles
     }()
 
-}
-
-extension GuideParser: IGuideParser {
-
-    func viewItems(guideContent: String, guideUrl: URL, fontSize: Int) -> [GuideBlockViewItem] {
+    func viewItems(content: String, url: URL, fontSize: Int) -> [MarkdownBlockViewItem] {
         let fonts = StaticFontCollection(
                 heading1: .title2,
                 heading2: .title3,
@@ -39,7 +35,7 @@ extension GuideParser: IGuideParser {
                 body: .systemFont(ofSize: CGFloat(fontSize), weight: .regular)
         )
 
-        let down = Down(markdownString: guideContent)
+        let down = Down(markdownString: content)
 
         let configuration = DownStylerConfiguration(
                 fonts: fonts,
@@ -57,28 +53,28 @@ extension GuideParser: IGuideParser {
             }
 
             let attributedStringVisitor = AttributedStringVisitor(styler: styler)
-            let visitor = GuideVisitor(attributedStringVisitor: attributedStringVisitor, styler: styler)
+            let visitor = MarkdownVisitor(attributedStringVisitor: attributedStringVisitor, styler: styler)
             let block = document.accept(visitor)
 
 //            print(block)
 //            print(document.accept(DebugVisitor()))
 
-            guard let documentBlock = block as? GuideVisitor.DocumentBlock else {
+            guard let documentBlock = block as? MarkdownVisitor.DocumentBlock else {
                 return []
             }
 
-            var viewItems = [GuideBlockViewItem]()
+            var viewItems = [MarkdownBlockViewItem]()
 
             for (blockIndex, block) in documentBlock.blocks.enumerated() {
-                if let headingBlock = block as? GuideVisitor.HeadingBlock {
+                if let headingBlock = block as? MarkdownVisitor.HeadingBlock {
                     viewItems.append(.header(attributedString: headingBlock.attributedString, level: headingBlock.level))
                 }
 
-                if let paragraphBlock = block as? GuideVisitor.ParagraphBlock {
+                if let paragraphBlock = block as? MarkdownVisitor.ParagraphBlock {
                     viewItems.append(.text(attributedString: paragraphBlock.attributedString))
                 }
 
-                if let listBlock = block as? GuideVisitor.ListBlock {
+                if let listBlock = block as? MarkdownVisitor.ListBlock {
                     var order = listBlock.startOrder
 
                     for (itemIndex, itemBlock) in listBlock.itemBlocks.enumerated() {
@@ -97,7 +93,7 @@ extension GuideParser: IGuideParser {
                     }
                 }
 
-                if let blockQuoteBlock = block as? GuideVisitor.BlockQuoteBlock {
+                if let blockQuoteBlock = block as? MarkdownVisitor.BlockQuoteBlock {
                     for (paragraphIndex, paragraphBlock) in blockQuoteBlock.paragraphBlocks.enumerated() {
                         viewItems.append(.blockQuote(
                                 attributedString: paragraphBlock.attributedString,
@@ -107,8 +103,8 @@ extension GuideParser: IGuideParser {
                     }
                 }
 
-                if let imageBlock = block as? GuideVisitor.ImageBlock, let urlString = imageBlock.url, let url = URL(string: urlString, relativeTo: guideUrl) {
-                    var type: GuideImageType = .square
+                if let imageBlock = block as? MarkdownVisitor.ImageBlock, let urlString = imageBlock.url, let url = URL(string: urlString, relativeTo: url) {
+                    var type: MarkdownImageType = .square
 
                     if let letter = url.deletingPathExtension().lastPathComponent.split(separator: "-").last {
                         if letter == "l" {

@@ -3,24 +3,27 @@ import SnapKit
 import ThemeKit
 import SectionsTableView
 import HUD
+import RxSwift
+import RxCocoa
 
-class GuideViewController: ThemeViewController {
+class MarkdownViewController: ThemeViewController {
     private static let spinnerRadius: CGFloat = 8
     private static let spinnerLineWidth: CGFloat = 2
 
-    private let delegate: IGuideViewDelegate
+    private let viewModel: MarkdownViewModel
+    private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
     private let spinner = HUDProgressView(
-            strokeLineWidth: GuideViewController.spinnerLineWidth,
-            radius: GuideViewController.spinnerRadius,
+            strokeLineWidth: MarkdownViewController.spinnerLineWidth,
+            radius: MarkdownViewController.spinnerRadius,
             strokeColor: .themeGray
     )
 
-    private var viewItems = [GuideBlockViewItem]()
+    private var viewItems: [MarkdownBlockViewItem]?
 
-    init(delegate: IGuideViewDelegate) {
-        self.delegate = delegate
+    init(viewModel: MarkdownViewModel) {
+        self.viewModel = viewModel
 
         super.init()
 
@@ -35,8 +38,6 @@ class GuideViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Attention Icon")?.tinted(with: .themeJacob), style: .plain, target: self, action: #selector(onTapFontSizeButton))
-
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
@@ -46,29 +47,43 @@ class GuideViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
-        tableView.registerCell(forClass: GuideHeader1Cell.self)
-        tableView.registerCell(forClass: GuideHeader3Cell.self)
-        tableView.registerCell(forClass: GuideTextCell.self)
-        tableView.registerCell(forClass: GuideListItemCell.self)
-        tableView.registerCell(forClass: GuideBlockQuoteCell.self)
-        tableView.registerCell(forClass: GuideImageCell.self)
-        tableView.registerCell(forClass: GuideImageTitleCell.self)
+        tableView.registerCell(forClass: MarkdownHeader1Cell.self)
+        tableView.registerCell(forClass: MarkdownHeader3Cell.self)
+        tableView.registerCell(forClass: MarkdownTextCell.self)
+        tableView.registerCell(forClass: MarkdownListItemCell.self)
+        tableView.registerCell(forClass: MarkdownBlockQuoteCell.self)
+        tableView.registerCell(forClass: MarkdownImageCell.self)
+        tableView.registerCell(forClass: MarkdownImageTitleCell.self)
         tableView.registerCell(forClass: BrandFooterCell.self)
         tableView.sectionDataSource = self
 
         view.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
-            maker.width.height.equalTo(GuideViewController.spinnerRadius * 2 + GuideViewController.spinnerLineWidth)
+            maker.width.height.equalTo(MarkdownViewController.spinnerRadius * 2 + MarkdownViewController.spinnerLineWidth)
         }
 
-        delegate.onLoad()
+        subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
+            self?.spinner.isHidden = !loading
+
+            if loading {
+                self?.spinner.startAnimating()
+            } else {
+                self?.spinner.stopAnimating()
+            }
+        }
+
+        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] viewItems in
+            self?.viewItems = viewItems
+            self?.tableView.reload()
+        }
+
+        subscribe(disposeBag, viewModel.openUrlSignal) { [weak self] url in
+            let viewController = MarkdownModule.viewController(url: url)
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }
 
         tableView.buildSections()
-    }
-
-    @objc private func onTapFontSizeButton() {
-        delegate.onTapFontSize()
     }
 
     private func headerRow(id: String, attributedString: NSAttributedString, level: Int) -> RowProtocol {
@@ -80,10 +95,10 @@ class GuideViewController: ThemeViewController {
     }
 
     private func header1Row(id: String, attributedString: NSAttributedString) -> RowProtocol {
-        Row<GuideHeader1Cell>(
+        Row<MarkdownHeader1Cell>(
                 id: id,
                 dynamicHeight: { containerWidth in
-                    GuideHeader1Cell.height(containerWidth: containerWidth, attributedString: attributedString)
+                    MarkdownHeader1Cell.height(containerWidth: containerWidth, attributedString: attributedString)
                 },
                 bind: { cell, _ in
                     cell.bind(attributedString: attributedString)
@@ -92,10 +107,10 @@ class GuideViewController: ThemeViewController {
     }
 
     private func header3Row(id: String, attributedString: NSAttributedString) -> RowProtocol {
-        Row<GuideHeader3Cell>(
+        Row<MarkdownHeader3Cell>(
                 id: id,
                 dynamicHeight: { containerWidth in
-                    GuideHeader3Cell.height(containerWidth: containerWidth, attributedString: attributedString)
+                    MarkdownHeader3Cell.height(containerWidth: containerWidth, attributedString: attributedString)
                 },
                 bind: { cell, _ in
                     cell.bind(attributedString: attributedString)
@@ -104,10 +119,10 @@ class GuideViewController: ThemeViewController {
     }
 
     private func textRow(id: String, attributedString: NSAttributedString) -> RowProtocol {
-        Row<GuideTextCell>(
+        Row<MarkdownTextCell>(
                 id: id,
                 dynamicHeight: { containerWidth in
-                    GuideTextCell.height(containerWidth: containerWidth, attributedString: attributedString)
+                    MarkdownTextCell.height(containerWidth: containerWidth, attributedString: attributedString)
                 },
                 bind: { [weak self] cell, _ in
                     cell.bind(attributedString: attributedString, delegate: self)
@@ -116,10 +131,10 @@ class GuideViewController: ThemeViewController {
     }
 
     private func listItemRow(id: String, attributedString: NSAttributedString, prefix: String?, tightTop: Bool, tightBottom: Bool) -> RowProtocol {
-        Row<GuideListItemCell>(
+        Row<MarkdownListItemCell>(
                 id: id,
                 dynamicHeight: { containerWidth in
-                    GuideListItemCell.height(containerWidth: containerWidth, attributedString: attributedString, tightTop: tightTop, tightBottom: tightBottom)
+                    MarkdownListItemCell.height(containerWidth: containerWidth, attributedString: attributedString, tightTop: tightTop, tightBottom: tightBottom)
                 },
                 bind: { [weak self] cell, _ in
                     cell.bind(attributedString: attributedString, delegate: self, prefix: prefix, tightTop: tightTop, tightBottom: tightBottom)
@@ -128,10 +143,10 @@ class GuideViewController: ThemeViewController {
     }
 
     private func blockQuoteRow(id: String, attributedString: NSAttributedString, tightTop: Bool, tightBottom: Bool) -> RowProtocol {
-        Row<GuideBlockQuoteCell>(
+        Row<MarkdownBlockQuoteCell>(
                 id: id,
                 dynamicHeight: { containerWidth in
-                    GuideBlockQuoteCell.height(containerWidth: containerWidth, attributedString: attributedString, tightTop: tightTop, tightBottom: tightBottom)
+                    MarkdownBlockQuoteCell.height(containerWidth: containerWidth, attributedString: attributedString, tightTop: tightTop, tightBottom: tightBottom)
                 },
                 bind: { [weak self] cell, _ in
                     cell.bind(attributedString: attributedString, delegate: self, tightTop: tightTop, tightBottom: tightBottom)
@@ -139,11 +154,11 @@ class GuideViewController: ThemeViewController {
         )
     }
 
-    private func imageRow(id: String, url: URL, type: GuideImageType, tight: Bool) -> RowProtocol {
-        Row<GuideImageCell>(
+    private func imageRow(id: String, url: URL, type: MarkdownImageType, tight: Bool) -> RowProtocol {
+        Row<MarkdownImageCell>(
                 id: id,
                 dynamicHeight: { containerWidth in
-                    GuideImageCell.height(containerWidth: containerWidth, type: type, tight: tight)
+                    MarkdownImageCell.height(containerWidth: containerWidth, type: type, tight: tight)
                 },
                 bind: { cell, _ in
                     cell.bind(imageUrl: url, type: type, tight: tight)
@@ -152,10 +167,10 @@ class GuideViewController: ThemeViewController {
     }
 
     private func imageTitleRow(id: String, text: String) -> RowProtocol {
-        Row<GuideImageTitleCell>(
+        Row<MarkdownImageTitleCell>(
                 id: id,
                 dynamicHeight: { containerWidth in
-                    GuideImageTitleCell.height(containerWidth: containerWidth, text: text)
+                    MarkdownImageTitleCell.height(containerWidth: containerWidth, text: text)
                 },
                 bind: { cell, _ in
                     cell.bind(text: text)
@@ -163,7 +178,7 @@ class GuideViewController: ThemeViewController {
         )
     }
 
-    private func row(index: Int, viewItem: GuideBlockViewItem) -> RowProtocol {
+    private func row(index: Int, viewItem: MarkdownBlockViewItem) -> RowProtocol {
         switch viewItem {
         case let .header(attributedString, level):
             return headerRow(
@@ -208,10 +223,14 @@ class GuideViewController: ThemeViewController {
 
 }
 
-extension GuideViewController: SectionsDataSource {
+extension MarkdownViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        [
+        guard let viewItems = viewItems else {
+            return []
+        }
+
+        return [
             Section(
                     id: "blocks",
                     rows: viewItems.enumerated().map { row(index: $0, viewItem: $1) }
@@ -232,39 +251,16 @@ extension GuideViewController: SectionsDataSource {
 
 }
 
-extension GuideViewController: UITextViewDelegate {
+extension MarkdownViewController: UITextViewDelegate {
 
     public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         guard URL.pathExtension == "md" else {
             return true
         }
 
-        delegate.onTapGuide(url: URL)
+        viewModel.onTap(url: URL)
 
         return false
-    }
-
-}
-
-extension GuideViewController: IGuideView {
-
-    func set(viewItems: [GuideBlockViewItem]) {
-        self.viewItems = viewItems
-    }
-
-    func refresh() {
-        tableView.reload()
-    }
-
-    func setSpinner(visible: Bool) {
-        tableView.isHidden = visible
-        spinner.isHidden = !visible
-
-        if visible {
-            spinner.startAnimating()
-        } else {
-            spinner.stopAnimating()
-        }
     }
 
 }

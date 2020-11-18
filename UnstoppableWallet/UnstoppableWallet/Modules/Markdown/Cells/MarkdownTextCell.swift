@@ -2,11 +2,11 @@ import UIKit
 import SnapKit
 import ThemeKit
 
-class GuideTextCell: UITableViewCell {
+class MarkdownTextCell: UITableViewCell {
     private static let verticalPadding: CGFloat = .margin3x
     private static let horizontalPadding: CGFloat = .margin6x
 
-    private let textView = GuideTextView()
+    private let textView = MarkdownTextView()
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -15,8 +15,8 @@ class GuideTextCell: UITableViewCell {
 
         contentView.addSubview(textView)
         textView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(GuideTextCell.horizontalPadding)
-            maker.top.bottom.equalToSuperview().inset(GuideTextCell.verticalPadding)
+            maker.leading.trailing.equalToSuperview().inset(MarkdownTextCell.horizontalPadding)
+            maker.top.bottom.equalToSuperview().inset(MarkdownTextCell.verticalPadding)
         }
     }
 
@@ -31,7 +31,7 @@ class GuideTextCell: UITableViewCell {
 
 }
 
-extension GuideTextCell {
+extension MarkdownTextCell {
 
     static func height(containerWidth: CGFloat, attributedString: NSAttributedString) -> CGFloat {
         let textWidth = containerWidth - 2 * horizontalPadding

@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 import ThemeKit
 
-class GuideImageTitleCell: UITableViewCell {
+class MarkdownImageTitleCell: UITableViewCell {
     private static let verticalPadding: CGFloat = .margin3x
     private static let horizontalPadding: CGFloat = .margin6x
     private static let labelFont: UIFont = .subhead2
@@ -16,12 +16,12 @@ class GuideImageTitleCell: UITableViewCell {
 
         contentView.addSubview(label)
         label.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(GuideImageTitleCell.horizontalPadding)
-            maker.top.equalToSuperview().offset(GuideImageTitleCell.verticalPadding)
+            maker.leading.trailing.equalToSuperview().inset(MarkdownImageTitleCell.horizontalPadding)
+            maker.top.equalToSuperview().offset(MarkdownImageTitleCell.verticalPadding)
         }
 
         label.numberOfLines = 0
-        label.font = GuideImageTitleCell.labelFont
+        label.font = MarkdownImageTitleCell.labelFont
         label.textColor = .themeGray
     }
 
@@ -35,7 +35,7 @@ class GuideImageTitleCell: UITableViewCell {
 
 }
 
-extension GuideImageTitleCell {
+extension MarkdownImageTitleCell {
 
     static func height(containerWidth: CGFloat, text: String) -> CGFloat {
         let textWidth = containerWidth - 2 * horizontalPadding

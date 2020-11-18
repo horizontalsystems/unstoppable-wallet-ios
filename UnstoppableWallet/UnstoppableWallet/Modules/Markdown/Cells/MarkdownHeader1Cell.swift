@@ -2,14 +2,14 @@ import UIKit
 import SnapKit
 import ThemeKit
 
-class GuideHeader1Cell: UITableViewCell {
+class MarkdownHeader1Cell: UITableViewCell {
     private static let topPadding: CGFloat = .margin6x
     private static let bottomPadding: CGFloat = .margin3x
     private static let horizontalPadding: CGFloat = .margin6x
     private static let separatorHeight: CGFloat = .heightOnePixel
     private static let separatorTopMargin: CGFloat = .margin2x
 
-    private let textView = GuideTextView()
+    private let textView = MarkdownTextView()
     private let separatorView = UIView()
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -19,16 +19,16 @@ class GuideHeader1Cell: UITableViewCell {
 
         contentView.addSubview(textView)
         textView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(GuideHeader1Cell.horizontalPadding)
-            maker.top.equalToSuperview().inset(GuideHeader1Cell.topPadding)
+            maker.leading.trailing.equalToSuperview().inset(MarkdownHeader1Cell.horizontalPadding)
+            maker.top.equalToSuperview().inset(MarkdownHeader1Cell.topPadding)
         }
 
         contentView.addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(GuideHeader1Cell.horizontalPadding)
-            maker.top.equalTo(textView.snp.bottom).offset(GuideHeader1Cell.separatorTopMargin)
-            maker.bottom.equalToSuperview().inset(GuideHeader1Cell.bottomPadding)
-            maker.height.equalTo(GuideHeader1Cell.separatorHeight)
+            maker.leading.trailing.equalToSuperview().inset(MarkdownHeader1Cell.horizontalPadding)
+            maker.top.equalTo(textView.snp.bottom).offset(MarkdownHeader1Cell.separatorTopMargin)
+            maker.bottom.equalToSuperview().inset(MarkdownHeader1Cell.bottomPadding)
+            maker.height.equalTo(MarkdownHeader1Cell.separatorHeight)
         }
 
         separatorView.backgroundColor = .themeGray50
@@ -44,7 +44,7 @@ class GuideHeader1Cell: UITableViewCell {
 
 }
 
-extension GuideHeader1Cell {
+extension MarkdownHeader1Cell {
 
     static func height(containerWidth: CGFloat, attributedString: NSAttributedString) -> CGFloat {
         let textWidth = containerWidth - 2 * horizontalPadding

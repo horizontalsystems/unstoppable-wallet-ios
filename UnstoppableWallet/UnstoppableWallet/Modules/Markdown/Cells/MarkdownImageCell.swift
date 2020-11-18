@@ -3,11 +3,11 @@ import SnapKit
 import ThemeKit
 import AlamofireImage
 
-class GuideImageCell: UITableViewCell {
+class MarkdownImageCell: UITableViewCell {
     private static let verticalPadding: CGFloat = .margin3x
 
     private let placeholderImageView = UIImageView()
-    private let guideImageView = UIImageView()
+    private let markdownImageView = UIImageView()
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -19,28 +19,28 @@ class GuideImageCell: UITableViewCell {
             maker.edges.equalToSuperview() // constraints are remade in bind
         }
 
-        placeholderImageView.image = UIImage(named: "Guide Image Placeholder")
+        placeholderImageView.image = UIImage(named: "Markdown Image Placeholder")
         placeholderImageView.contentMode = .center
         placeholderImageView.backgroundColor = .themeSteel20
 
-        contentView.addSubview(guideImageView)
-        guideImageView.snp.makeConstraints { maker in
+        contentView.addSubview(markdownImageView)
+        markdownImageView.snp.makeConstraints { maker in
             maker.edges.equalTo(placeholderImageView)
         }
 
-        guideImageView.contentMode = .scaleAspectFill
-        guideImageView.clipsToBounds = true
+        markdownImageView.contentMode = .scaleAspectFill
+        markdownImageView.clipsToBounds = true
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(imageUrl: URL, type: GuideImageType, tight: Bool) {
+    func bind(imageUrl: URL, type: MarkdownImageType, tight: Bool) {
         placeholderImageView.isHidden = false
-        guideImageView.image = nil
+        markdownImageView.image = nil
 
-        guideImageView.af.setImage(withURL: imageUrl, completion: { [weak self] response in
+        markdownImageView.af.setImage(withURL: imageUrl, completion: { [weak self] response in
             if case .success = response.result {
                 self?.placeholderImageView.isHidden = true
             }
@@ -48,15 +48,15 @@ class GuideImageCell: UITableViewCell {
 
         placeholderImageView.snp.remakeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.bottom.equalToSuperview().inset(tight ? 0 : GuideImageCell.verticalPadding)
+            maker.top.bottom.equalToSuperview().inset(tight ? 0 : MarkdownImageCell.verticalPadding)
         }
     }
 
 }
 
-extension GuideImageCell {
+extension MarkdownImageCell {
 
-    static func height(containerWidth: CGFloat, type: GuideImageType, tight: Bool) -> CGFloat {
+    static func height(containerWidth: CGFloat, type: MarkdownImageType, tight: Bool) -> CGFloat {
         var imageHeight: CGFloat
 
         switch type {

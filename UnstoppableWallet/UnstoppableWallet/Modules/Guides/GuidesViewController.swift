@@ -142,7 +142,7 @@ extension GuidesViewController: UITableViewDataSource, UITableViewDelegate {
             return
         }
 
-        let module = GuideRouter.module(guideUrl: url)
+        let module = MarkdownModule.viewController(url: url)
         navigationController?.pushViewController(module, animated: true)
     }
 

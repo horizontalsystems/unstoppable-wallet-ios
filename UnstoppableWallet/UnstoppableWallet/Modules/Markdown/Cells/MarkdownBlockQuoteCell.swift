@@ -2,13 +2,13 @@ import UIKit
 import SnapKit
 import ThemeKit
 
-class GuideBlockQuoteCell: UITableViewCell {
+class MarkdownBlockQuoteCell: UITableViewCell {
     private static let verticalMargin: CGFloat = .margin3x
     private static let verticalPadding: CGFloat = .margin3x
     private static let horizontalPadding: CGFloat = .margin6x
 
     private let wrapperView = UIView()
-    private let textView = GuideTextView()
+    private let textView = MarkdownTextView()
     private let lineView = UIView()
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -25,8 +25,8 @@ class GuideBlockQuoteCell: UITableViewCell {
 
         wrapperView.addSubview(textView)
         textView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(GuideBlockQuoteCell.horizontalPadding)
-            maker.top.bottom.equalToSuperview().inset(GuideBlockQuoteCell.verticalPadding)
+            maker.leading.trailing.equalToSuperview().inset(MarkdownBlockQuoteCell.horizontalPadding)
+            maker.top.bottom.equalToSuperview().inset(MarkdownBlockQuoteCell.verticalPadding)
         }
 
         wrapperView.addSubview(lineView)
@@ -48,14 +48,14 @@ class GuideBlockQuoteCell: UITableViewCell {
 
         wrapperView.snp.remakeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalToSuperview().inset(tightTop ? 0 : GuideBlockQuoteCell.verticalMargin)
-            maker.bottom.equalToSuperview().inset(tightBottom ? 0 : GuideBlockQuoteCell.verticalMargin)
+            maker.top.equalToSuperview().inset(tightTop ? 0 : MarkdownBlockQuoteCell.verticalMargin)
+            maker.bottom.equalToSuperview().inset(tightBottom ? 0 : MarkdownBlockQuoteCell.verticalMargin)
         }
     }
 
 }
 
-extension GuideBlockQuoteCell {
+extension MarkdownBlockQuoteCell {
 
     static func height(containerWidth: CGFloat, attributedString: NSAttributedString, tightTop: Bool, tightBottom: Bool) -> CGFloat {
         let textWidth = containerWidth - 2 * horizontalPadding
