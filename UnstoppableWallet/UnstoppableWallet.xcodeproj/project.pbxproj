@@ -7961,7 +7961,6 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.18;
-				MAX = LOH;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OfficeMode = "";
@@ -8034,7 +8033,6 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.18;
-				MAX = LOH;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OfficeMode = "";
 				Production = YES;
