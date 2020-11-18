@@ -27,7 +27,7 @@ class WalletConnectConfirmDisconnectViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.bind(title: "wallet_connect.button_disconnect".localized, subtitle: remotePeerName, image: UIImage(named: "Wallet Connect Icon")?.tinted(with: .themeGray))
+        titleView.bind(title: "wallet_connect.button_disconnect".localized, subtitle: remotePeerName, image: UIImage(named: "Wallet Connect Icon Large")?.tinted(with: .themeJacob))
 
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)

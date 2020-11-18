@@ -34,7 +34,7 @@ class BalanceHeaderView: UICollectionReusableView {
             maker.height.equalTo(BalanceHeaderView.height)
         }
 
-        sortButton.setImage(UIImage(named: "Balance Sort Icon")?.tinted(with: .themeJacob), for: .normal)
+        sortButton.setImage(UIImage(named: "Balance Sort Icon"), for: .normal)
         sortButton.addTarget(self, action: #selector(_onTapSortType), for: .touchUpInside)
     }
 
