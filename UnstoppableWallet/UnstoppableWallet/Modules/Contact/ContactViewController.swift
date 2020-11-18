@@ -53,7 +53,7 @@ class ContactViewController: ThemeViewController {
                     autoDeselect: true,
                     bind: { [weak self] cell, _ in
                         cell.bind(
-                                image: UIImage(named: "Email Icon")?.tinted(with: .themeJacob),
+                                image: UIImage(named: "Email Icon"),
                                 title: "settings.contact.email".localized,
                                 subtitle: self?.email
                         )
@@ -68,7 +68,7 @@ class ContactViewController: ThemeViewController {
                     autoDeselect: true,
                     bind: { [weak self] cell, _ in
                         cell.bind(
-                                image: UIImage(named: "Telegram Icon")?.tinted(with: .themeJacob),
+                                image: UIImage(named: "Telegram Icon"),
                                 title: "settings.contact.telegram_wallet".localized,
                                 subtitle: self?.telegramWalletHelpAccount,
                                 last: true

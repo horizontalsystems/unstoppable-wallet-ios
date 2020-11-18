@@ -17,7 +17,7 @@ class WalletConnectNoEthereumKitViewController: ThemeActionSheetController {
         titleView.bind(
                 title: "wallet_connect.title".localized,
                 subtitle: "wallet_connect.requirement".localized,
-                image: UIImage(named: "Wallet Connect Icon")?.tinted(with: .themeGray)
+                image: UIImage(named: "Wallet Connect Icon Large")?.tinted(with: .themeJacob)
         )
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)
