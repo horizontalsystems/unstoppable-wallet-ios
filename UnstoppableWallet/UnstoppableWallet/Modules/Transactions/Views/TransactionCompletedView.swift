@@ -22,7 +22,7 @@ class TransactionCompletedView: UIView {
             maker.trailing.equalToSuperview()
             maker.centerY.equalTo(timeLabel)
         }
-        completedImageView.image = UIImage(named: "Transaction Success Icon")
+        completedImageView.image = UIImage(named: "success_icon_20")
         completedImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
     }
 

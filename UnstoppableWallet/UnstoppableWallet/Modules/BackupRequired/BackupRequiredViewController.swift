@@ -22,7 +22,7 @@ class BackupRequiredViewController: ThemeActionSheetController {
         titleView.bind(
                 title: "backup.backup_required".localized,
                 subtitle: subtitle,
-                image: UIImage(named: "Attention Icon")?.tinted(with: .themeLucian)
+                image: UIImage(named: "attention_icon_24")?.tinted(with: .themeLucian)
         )
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)
