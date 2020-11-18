@@ -12,7 +12,7 @@ class DataProviderCell: ThemeCell {
     private let subtitleLabel = UILabel()
 
     private let checkmarkImageView = TintImageView(
-            image: UIImage(named: "Transaction Success Icon"),
+            image: UIImage(named: "success_icon_20"),
             tintColor: .themeJacob,
             selectedTintColor: .themeJacob
     )

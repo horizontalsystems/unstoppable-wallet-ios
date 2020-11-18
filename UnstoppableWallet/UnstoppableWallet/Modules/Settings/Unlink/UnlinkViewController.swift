@@ -118,7 +118,7 @@ extension UnlinkViewController: IUnlinkView {
         titleView.bind(
                 title: "settings_manage_keys.delete.title".localized,
                 subtitle: accountTypeTitle,
-                image: UIImage(named: "Attention Icon")?.tinted(with: .themeLucian)
+                image: UIImage(named: "attention_icon_24")?.tinted(with: .themeLucian)
         )
     }
 
