@@ -26,7 +26,7 @@ class AccountStorage {
             guard let words = recoverStringArray(id: id, typeName: typeName, keyName: .words) else {
                 return nil
             }
-            let salt = recoverString(id: id, typeName: typeName, keyName: .salt)
+            let salt: String? = recover(id: id, typeName: typeName, keyName: .salt)
 
             type = .mnemonic(words: words, salt: salt)
         case .privateKey:
@@ -39,7 +39,7 @@ class AccountStorage {
             guard let eosAccount = record.eosAccount else {
                 return nil
             }
-            guard let activePrivateKey = recoverString(id: id, typeName: typeName, keyName: .privateKey) else {
+            guard let activePrivateKey: String = recover(id: id, typeName: typeName, keyName: .privateKey) else {
                 return nil
             }
 
@@ -49,7 +49,8 @@ class AccountStorage {
                 return nil
             }
 
-            type = .zcash(words: words)
+            let birthdayHeight: Int? = recover(id: id, typeName: typeName, keyName: .birthdayHeight)
+            type = .zcash(words: words, birthdayHeight: birthdayHeight)
         }
 
         return Account(
@@ -67,6 +68,7 @@ class AccountStorage {
         let typeName: TypeName
         var wordsKey: String?
         var saltKey: String?
+        var birthdayHeightKey: String?
         var dataKey: String?
         var eosAccount: String?
 
@@ -74,17 +76,20 @@ class AccountStorage {
         case .mnemonic(let words, let salt):
             typeName = .mnemonic
             wordsKey = try store(stringArray: words, id: id, typeName: typeName, keyName: .words)
-            saltKey = try store(string: salt, id: id, typeName: typeName, keyName: .salt)
+            saltKey = try store(salt, id: id, typeName: typeName, keyName: .salt)
         case .privateKey(let data):
             typeName = .privateKey
             dataKey = try store(data: data, id: id, typeName: typeName, keyName: .data)
         case .eos(let account, let activePrivateKey):
             typeName = .eos
             eosAccount = account
-            dataKey = try store(string: activePrivateKey, id: id, typeName: typeName, keyName: .privateKey)
-        case .zcash(let words):
+            dataKey = try store(activePrivateKey, id: id, typeName: typeName, keyName: .privateKey)
+        case .zcash(let words, let birthdayHeight):
             typeName = .zcash
             wordsKey = try store(stringArray: words, id: id, typeName: typeName, keyName: .words)
+            if let height = birthdayHeight {
+                birthdayHeightKey = try store(height, id: id, typeName: typeName, keyName: .birthdayHeight)
+            }
         }
 
         return AccountRecord(
@@ -95,6 +100,7 @@ class AccountStorage {
                 backedUp: account.backedUp,
                 wordsKey: wordsKey,
                 saltKey: saltKey,
+                birthdayHeightKey: birthdayHeightKey,
                 dataKey: dataKey,
                 eosAccount: eosAccount
         )
@@ -113,6 +119,7 @@ class AccountStorage {
             try secureStorage.removeValue(for: secureKey(id: id, typeName: .eos, keyName: .privateKey))
         case .zcash:
             try secureStorage.removeValue(for: secureKey(id: id, typeName: .mnemonic, keyName: .words))
+            try secureStorage.removeValue(for: secureKey(id: id, typeName: .mnemonic, keyName: .birthdayHeight))
         }
     }
 
@@ -121,12 +128,12 @@ class AccountStorage {
     }
 
     private func store(stringArray: [String], id: String, typeName: TypeName, keyName: KeyName) throws -> String {
-        try store(string: stringArray.joined(separator: ","), id: id, typeName: typeName, keyName: keyName) 
+        try store(stringArray.joined(separator: ","), id: id, typeName: typeName, keyName: keyName)
     }
 
-    private func store(string: String?, id: String, typeName: TypeName, keyName: KeyName) throws -> String {
+    private func store<T: LosslessStringConvertible>(_ value: T?, id: String, typeName: TypeName, keyName: KeyName) throws -> String {
         let key = secureKey(id: id, typeName: typeName, keyName: keyName)
-        try secureStorage.set(value: string, for: key)
+        try secureStorage.set(value: value, for: key)
         return key
     }
 
@@ -137,10 +144,11 @@ class AccountStorage {
     }
 
     private func recoverStringArray(id: String, typeName: TypeName, keyName: KeyName) -> [String]? {
-        recoverString(id: id, typeName: typeName, keyName: keyName)?.split(separator: ",").map { String($0) }
+        let string: String? = recover(id: id, typeName: typeName, keyName: keyName)
+        return string?.split(separator: ",").map { String($0) }
     }
 
-    private func recoverString(id: String, typeName: TypeName, keyName: KeyName) -> String? {
+    private func recover<T: LosslessStringConvertible>(id: String, typeName: TypeName, keyName: KeyName) -> T? {
         let key = secureKey(id: id, typeName: typeName, keyName: keyName)
         return secureStorage.value(for: key)
     }
@@ -187,6 +195,7 @@ extension AccountStorage {
     private enum KeyName: String {
         case words
         case salt
+        case birthdayHeight
         case data
         case privateKey
     }

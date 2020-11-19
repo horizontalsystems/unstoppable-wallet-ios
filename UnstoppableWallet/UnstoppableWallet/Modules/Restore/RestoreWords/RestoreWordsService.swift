@@ -18,18 +18,32 @@ class RestoreWordsService {
         }
     }
 
+    var birthdayHeightEnabled: Bool {
+        switch restoreAccountType {
+        case .mnemonic: return false
+        case .zcash: return true
+        }
+    }
+
+    var accountTitle: String {
+        switch restoreAccountType {
+        case .mnemonic(let wordsCount): return wordsCount == 24 ? PredefinedAccountType.binance.title : PredefinedAccountType.standard.title
+        case .zcash: return PredefinedAccountType.zcash.title
+        }
+    }
+
     var defaultWords: [String] {
         appConfigProvider.defaultWords(count: wordCount)
     }
 
-    func accountType(words: [String]) throws -> AccountType {
+    func accountType(words: [String], birthdayHeight: Int?) throws -> AccountType {
         try wordsManager.validate(words: words, requiredWordsCount: wordCount)
 
         switch restoreAccountType {
         case .mnemonic:
             return .mnemonic(words: words, salt: nil)
         case .zcash:
-            return .zcash(words: words)
+            return .zcash(words: words, birthdayHeight: birthdayHeight)
         }
     }
 

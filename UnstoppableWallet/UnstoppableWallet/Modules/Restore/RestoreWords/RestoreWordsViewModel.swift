@@ -16,6 +16,14 @@ class RestoreWordsViewModel {
         service.wordCount
     }
 
+    var accountTitle: String {
+        service.accountTitle
+    }
+
+    var birthdayHeightEnabled: Bool {
+        service.birthdayHeightEnabled
+    }
+
     var defaultWordsText: String {
         service.defaultWords.joined(separator: " ")
     }
@@ -28,7 +36,7 @@ class RestoreWordsViewModel {
         errorRelay.asSignal()
     }
 
-    func onProceed(text: String?) {
+    func onProceed(text: String?, birthdayHeight: String?) {
         do {
             guard let text = text else {
                 throw WordsError.emptyText
@@ -39,7 +47,9 @@ class RestoreWordsViewModel {
                     .filter { !$0.isEmpty }
                     .map { $0.lowercased() }
 
-            let accountType = try service.accountType(words: words)
+            let birthdayHeight = birthdayHeight.flatMap { Int($0) }
+
+            let accountType = try service.accountType(words: words, birthdayHeight: birthdayHeight)
 
             accountTypeRelay.accept(accountType)
         } catch {

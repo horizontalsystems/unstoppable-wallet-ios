@@ -167,6 +167,7 @@ class GrdbStorage {
                         backedUp: oldAccount.backedUp,
                         wordsKey: oldAccount.wordsKey,
                         saltKey: oldAccount.saltKey,
+                        birthdayHeightKey: nil,
                         dataKey: oldAccount.dataKey,
                         eosAccount: oldAccount.eosAccount
                 )
@@ -294,6 +295,12 @@ class GrdbStorage {
                 t.column(LogRecord.Columns.level.name, .integer).notNull()
                 t.column(LogRecord.Columns.context.name, .text).notNull()
                 t.column(LogRecord.Columns.message.name, .text).notNull()
+            }
+        }
+
+        migrator.registerMigration("addBirthdayHeightToAccountRecord") { db in
+            try db.alter(table: AccountRecord.databaseTableName) { t in
+                t.add(column: AccountRecord.Columns.birthdayHeightKey.name, .text)
             }
         }
 
