@@ -41,8 +41,8 @@ class GuidesRepository {
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] categories in
                     self?.categoriesRelay.accept(.success(result: categories))
-                }, onError: { error in
-                    self.categoriesRelay.accept(.error(error: error))
+                }, onError: { [weak self] error in
+                    self?.categoriesRelay.accept(.error(error: error))
                 })
                 .disposed(by: disposeBag)
     }

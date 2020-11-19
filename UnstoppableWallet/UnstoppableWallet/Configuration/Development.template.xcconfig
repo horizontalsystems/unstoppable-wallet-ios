@@ -4,6 +4,7 @@ etherscan_api_key = GKNHXT22ED7PRVCKZATFZQD1YI7FK9AAYE          // Required for 
 btc_core_rpc_url = https:/$()/134.209.138.9/                     // Required for BTC core provider
 coinmarketcap_com_api_key = 51a3a136-adc9-4e38-8fc2-8c175c810e74  // Optional for XRatesKit.swift
 guides_index_url = https:/$()/raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/develop/index.json
+faq_index_url = https:/$()/raw.githubusercontent.com/horizontalsystems/unstoppable-wallet-website/master/src/faq.json
 pns_username = user
 pns_password = secret
 

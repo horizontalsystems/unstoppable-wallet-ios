@@ -1,0 +1,76 @@
+import RxSwift
+import RxRelay
+import HsToolKit
+
+class FaqRepository {
+    private let disposeBag = DisposeBag()
+
+    private let networkManager: NetworkManager
+    private let appConfigProvider: IAppConfigProvider
+    private let reachabilityManager: IReachabilityManager
+
+    private let faqRelay = BehaviorRelay<DataStatus<[[String: Faq]]>>(value: .loading)
+
+    init(networkManager: NetworkManager, appConfigProvider: IAppConfigProvider, reachabilityManager: IReachabilityManager) {
+        self.networkManager = networkManager
+        self.appConfigProvider = appConfigProvider
+        self.reachabilityManager = reachabilityManager
+
+        reachabilityManager.reachabilityObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] reachable in
+                    if reachable {
+                        self?.onReachable()
+                    }
+                })
+                .disposed(by: disposeBag)
+
+        fetch()
+    }
+
+    private func onReachable() {
+        if case .failed = faqRelay.value {
+            fetch()
+        }
+    }
+
+    private func fetch() {
+        faqRelay.accept(.loading)
+
+        let request = networkManager.session.request(appConfigProvider.faqIndexUrl)
+
+        networkManager.single(request: request, mapper: self)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onSuccess: { [weak self] faq in
+                    self?.faqRelay.accept(.completed(faq))
+                }, onError: { [weak self] error in
+                    self?.faqRelay.accept(.failed(error))
+                })
+                .disposed(by: disposeBag)
+    }
+
+}
+
+extension FaqRepository {
+
+    var faqObservable: Observable<DataStatus<[[String: Faq]]>> {
+        faqRelay.asObservable()
+    }
+
+}
+
+extension FaqRepository: IApiMapper {
+
+    public func map(statusCode: Int, data: Any?) throws -> [[String: Faq]] {
+        guard let array = data as? [[String: Any]] else {
+            throw NetworkManager.RequestError.invalidResponse(statusCode: statusCode, data: data)
+        }
+
+        return try array.map { languageMap in
+            try languageMap.mapValues { faqJson in
+                try Faq(JSONObject: faqJson)
+            }
+        }
+    }
+
+}

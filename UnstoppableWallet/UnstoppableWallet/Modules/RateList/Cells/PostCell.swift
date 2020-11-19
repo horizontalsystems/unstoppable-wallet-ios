@@ -70,7 +70,8 @@ class PostCell: ThemeCell {
 extension PostCell {
 
     static func height(containerWidth: CGFloat, viewItem: RateListModule.PostViewItem) -> CGFloat {
-        let titleHeight = viewItem.title.height(forContainerWidth: containerWidth, font: titleFont)
+        let titleWidth = containerWidth - 2 * horizontalPadding
+        let titleHeight = viewItem.title.height(forContainerWidth: titleWidth, font: titleFont)
 
         return verticalPadding + titleHeight + subtitleTopMargin + dateFont.lineHeight + verticalPadding
     }

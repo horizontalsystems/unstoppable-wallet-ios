@@ -265,6 +265,7 @@ protocol IAppConfigProvider {
     var reportEmail: String { get }
     var telegramWalletHelpAccount: String { get }
     var guidesIndexUrl: URL { get }
+    var faqIndexUrl: URL { get }
 
     var testMode: Bool { get }
     var officeMode: Bool { get }
