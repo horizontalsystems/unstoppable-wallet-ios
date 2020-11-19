@@ -61,6 +61,8 @@
 "restore.enter_key" = "Schlüssel Eingeben";
 "restore.item_title" = "%@ Wallet";
 "restore.words.description" = "Geben Sie Ihren Private Key für %@ Wallet ein, der aus %@ Wörtern besteht. Die Wörter müssen in der korrekten Reihenfolge eingegeben und durch Leerzeichen getrennt werden.";
+"restore.birthday_height.placeholder" = "Wallet Geburtstagsgröße (freiwillig)";
+"restore.birthday_height.description" = "Dadurch wird festgelegt, an welcher Stelle mit dem Scannen nach Transaktionen begonnen werden soll. Lassen Sie das Feld leer, um von Anfang an zu scannen, dies dauert eine Weile.";
 "restore.validation_failed" = "Falscher Schlüssel";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
