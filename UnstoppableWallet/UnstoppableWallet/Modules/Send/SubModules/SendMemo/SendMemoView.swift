@@ -31,7 +31,7 @@ class SendMemoView: UIView {
 
         memoInputField.snp.makeConstraints { maker in
             maker.top.bottom.equalToSuperview()
-            maker.leading.trailing.equalToSuperview().offset(CGFloat.margin3x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin3x)
             maker.centerY.equalToSuperview()
             maker.height.equalTo(inputFieldFont.lineHeight + CGFloat.margin3x * 2)
         }
