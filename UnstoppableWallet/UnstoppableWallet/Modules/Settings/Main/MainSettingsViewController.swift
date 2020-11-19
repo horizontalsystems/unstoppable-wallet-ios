@@ -134,6 +134,12 @@ class MainSettingsViewController: ThemeViewController {
         let termsAttentionImage = termsAccepted ? nil : UIImage(named: "Attention Icon")
 
         return [
+            Row<TitleCell>(id: "faq", height: .heightSingleLineCell, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Contact Icon"), title: "settings.faq".localized, showDisclosure: true)
+            }, action: { [weak self] _ in
+                self?.navigationController?.pushViewController(FaqModule.viewController(), animated: true)
+            }),
+
             Row<TitleCell>(id: "contact", height: .heightSingleLineCell, bind: { cell, _ in
                 cell.bind(titleIcon: UIImage(named: "Contact Icon"), title: "settings.contact".localized, showDisclosure: true)
             }, action: { [weak self] _ in

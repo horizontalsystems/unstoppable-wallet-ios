@@ -276,8 +276,8 @@ extension SwapServiceNew {
                 .observeOn(MainScheduler.instance)
                 .subscribe(onSuccess: { [weak self] transactionWithInternal in
                     self?.swapEventRelay.accept(.completed)
-                }, onError: { error in
-                    self.swapEventRelay.accept(.failed(error: error))
+                }, onError: { [weak self] error in
+                    self?.swapEventRelay.accept(.failed(error: error))
                 })
                 .disposed(by: disposeBag)
     }

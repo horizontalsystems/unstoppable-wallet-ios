@@ -76,5 +76,7 @@
 	<string>${pns_password}</string>
 	<key>GuidesIndexUrl</key>
 	<string>${guides_index_url}</string>
+	<key>FaqIndexUrl</key>
+	<string>${faq_index_url}</string>
 </dict>
 </plist>

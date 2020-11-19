@@ -358,6 +358,7 @@ bch.horizontalsystems.xyz/apg";
 "settings.terms" = "Terms";
 "settings.tell_friends" = "Tell Friends";
 "settings.contact" = "Contact";
+"settings.faq" = "FAQ";
 "settings.light_mode" = "Light Mode";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -665,3 +666,7 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "app_status.linked_wallets" = "Linked Wallets";
 "app_status.version_history" = "Version History";
 "app_status.blockchain_status" = "Blockchain status";
+
+// FAQ
+
+"faq.title" = "FAQ";
