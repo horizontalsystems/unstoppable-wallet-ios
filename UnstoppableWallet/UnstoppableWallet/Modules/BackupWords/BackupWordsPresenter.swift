@@ -3,13 +3,15 @@ class BackupWordsPresenter: IBackupWordsPresenter {
     private let router: IBackupWordsRouter
 
     private(set) var words: [String]
+    private(set) var additionalItems: [BackupAdditionalItem]
     let isBackedUp: Bool
     let predefinedAccountType: PredefinedAccountType
 
-    init(router: IBackupWordsRouter, predefinedAccountType: PredefinedAccountType, words: [String], isBackedUp: Bool) {
+    init(router: IBackupWordsRouter, predefinedAccountType: PredefinedAccountType, words: [String], additionalItems: [BackupAdditionalItem] = [], isBackedUp: Bool) {
         self.router = router
         self.predefinedAccountType = predefinedAccountType
         self.words = words
+        self.additionalItems = additionalItems
         self.isBackedUp = isBackedUp
     }
 

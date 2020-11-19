@@ -10,8 +10,13 @@ class RestoreWordsViewController: ThemeViewController {
     private let textViewInset: CGFloat = .margin3x
     private let textViewFont: UIFont = .body
 
-    private let containerView = UIView()
+    private let scrollView = UIScrollView()
+    private var translucentContentOffset: CGFloat = 0
+    private var keyboardFrame: CGRect?
+
+    private let contentView = UIView()
     private let textView = UITextView()
+    private var birthdayTextView: InputFieldStackView?
 
     private let disposeBag = DisposeBag()
 
@@ -48,10 +53,27 @@ class RestoreWordsViewController: ThemeViewController {
 
         navigationItem.largeTitleDisplayMode = .never
 
-        view.addSubview(containerView)
-        containerView.snp.makeConstraints { maker in
-            maker.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            maker.leading.trailing.bottom.equalToSuperview()
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        scrollView.alwaysBounceVertical = true
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.keyboardDismissMode = .interactive
+
+        scrollView.addSubview(contentView)
+        contentView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.bottom.equalToSuperview()
+            maker.width.equalTo(self.view)
+        }
+
+        contentView.addSubview(textView)
+        textView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalTo(view).inset(CGFloat.margin4x)
+            maker.top.equalToSuperview().offset(CGFloat.margin3x)
+            maker.height.greaterThanOrEqualTo(minimalTextViewHeight).priority(.required)
+            maker.height.equalTo(0).priority(.low)
         }
 
         textView.keyboardAppearance = .themeDefault
@@ -68,26 +90,64 @@ class RestoreWordsViewController: ThemeViewController {
 
         textView.delegate = self
 
-        containerView.addSubview(textView)
-        textView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalTo(view).inset(CGFloat.margin4x)
-            maker.top.equalToSuperview().offset(CGFloat.margin3x)
-            maker.height.greaterThanOrEqualTo(minimalTextViewHeight).priority(.required)
-            maker.height.equalTo(0).priority(.low)
-        }
-
         let descriptionView = BottomDescriptionView()
         descriptionView.bind(text: descriptionText)
 
-        containerView.addSubview(descriptionView)
-        descriptionView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        contentView.addSubview(descriptionView)
         descriptionView.snp.makeConstraints { maker in
             maker.leading.trailing.equalTo(view)
             maker.top.equalTo(textView.snp.bottom)
-            maker.bottom.lessThanOrEqualToSuperview()
+            if !viewModel.birthdayHeightEnabled {
+                maker.bottom.equalToSuperview()
+            }
         }
 
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        descriptionView.setContentCompressionResistancePriority(.required, for: .vertical)
+
+        if viewModel.birthdayHeightEnabled {
+            let wrapperView = UIView()
+            contentView.addSubview(wrapperView)
+            wrapperView.snp.makeConstraints { maker in
+                maker.leading.trailing.equalTo(view).inset(CGFloat.margin4x)
+                maker.top.equalTo(descriptionView.snp.bottom).offset(CGFloat.margin3x)
+                maker.height.equalTo(CGFloat.heightSingleLineCell)
+            }
+
+            wrapperView.backgroundColor = .themeLawrence
+            wrapperView.layer.cornerRadius = .cornerRadius2x
+            wrapperView.layer.borderWidth = CGFloat.heightOnePixel
+            wrapperView.layer.borderColor = UIColor.themeSteel20.cgColor
+
+            let inputFieldView = InputFieldStackView()
+
+            wrapperView.addSubview(inputFieldView)
+            inputFieldView.snp.makeConstraints { maker in
+                maker.leading.trailing.equalToSuperview().inset(CGFloat.margin3x)
+                maker.top.bottom.equalToSuperview()
+            }
+
+            inputFieldView.decimalKeyboard = true
+            inputFieldView.isValidText = { text in
+                Int(text) != nil
+            }
+            inputFieldView.set(placeholder: "restore.birthday_height.placeholder".localized)
+
+            self.birthdayTextView = inputFieldView
+
+            let descriptionView = BottomDescriptionView()
+            descriptionView.bind(text: "restore.birthday_height.description".localized)
+
+            contentView.addSubview(descriptionView)
+            descriptionView.setContentCompressionResistancePriority(.required, for: .vertical)
+            descriptionView.snp.makeConstraints { maker in
+                maker.leading.trailing.equalTo(view)
+                maker.top.equalTo(wrapperView.snp.bottom)
+                maker.bottom.equalToSuperview()
+            }
+        }
+
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 
         view.layoutIfNeeded()
 
@@ -109,26 +169,61 @@ class RestoreWordsViewController: ThemeViewController {
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        DispatchQueue.main.async  {
-            self.textView.becomeFirstResponder()
+        translucentContentOffset = scrollView.contentOffset.y
+
+        if !viewModel.birthdayHeightEnabled {
+            DispatchQueue.main.async  {
+                self.textView.becomeFirstResponder()
+            }
         }
     }
 
-    @objc private func keyboardWillChangeFrame(notification: Notification) {
-        if let info = notification.userInfo,
-           let endFrame = info[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
-           let duration = info[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval {
-            guard let superview = containerView.superview else {
-                return
-            }
-            let inset = endFrame.origin.y >= view.height ? 0 : endFrame.height
-            containerView.snp.updateConstraints { maker in
-                maker.bottom.equalTo(self.view).inset(inset)
-            }
-            UIView.animate(withDuration: duration, delay: 0, options: [.curveEaseInOut], animations: {
-                superview.layoutIfNeeded()
-            })
+    private func updateInsets() {
+        guard let responder = firstResponder(view: contentView) as? UITextInput,
+              let responderView = responder as? UIView,
+              let keyboardFrame = keyboardFrame,
+              keyboardFrame.origin.y < view.height else {
+
+            return
         }
+
+        var shift: CGFloat = 0
+        if let cursorPosition = responder.selectedTextRange?.start {
+            let caretPositionFrame: CGRect = responderView.convert(responder.caretRect(for: cursorPosition), to: nil)
+            let caretVisiblePosition = caretPositionFrame.origin.y - .margin2x + translucentContentOffset
+            if caretVisiblePosition < 0 {
+                shift = caretVisiblePosition + scrollView.contentOffset.y
+            } else {
+                shift = max(0, caretPositionFrame.origin.y + caretPositionFrame.height + .margin2x - keyboardFrame.origin.y) + scrollView.contentOffset.y
+            }
+        }
+
+        scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height, right: 0)
+        scrollView.setContentOffset(CGPoint(x: 0, y: shift), animated: true)
+    }
+
+    func firstResponder(view: UIView) -> UIView? {
+        for subview in view.subviews {
+            if let result = firstResponder(view: subview) {
+                return result
+            }
+        }
+        return view.isFirstResponder ? view : nil
+    }
+
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let oldKeyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue,
+              let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
+              oldKeyboardFrame != keyboardFrame else {
+            return
+        }
+        self.keyboardFrame = keyboardFrame
+        updateInsets()
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        keyboardFrame = nil
+        scrollView.contentInset = .zero
     }
 
     private func height(text: String) -> CGFloat {
@@ -162,14 +257,13 @@ class RestoreWordsViewController: ThemeViewController {
 
     private var descriptionText: String? {
 //        temp solution until multi-wallet feature is implemented
-        let predefinedAccountType: PredefinedAccountType = viewModel.wordCount == 12 ? .standard : .binance
-        return "restore.words.description".localized(predefinedAccountType.title, String(viewModel.wordCount))
+        "restore.words.description".localized(viewModel.accountTitle, String(viewModel.wordCount))
     }
 
     @objc private func proceedDidTap() {
         view.endEditing(true)
 
-        viewModel.onProceed(text: textView.text)
+        viewModel.onProceed(text: textView.text, birthdayHeight: birthdayTextView?.text)
     }
 
     @objc private func cancelDidTap() {
@@ -185,6 +279,10 @@ extension RestoreWordsViewController: UITextViewDelegate {
         updateTextViewConstraints(for: newText)
 
         return true
+    }
+
+    public func textViewDidChange(_ textView: UITextView) {
+        updateInsets()
     }
 
 }

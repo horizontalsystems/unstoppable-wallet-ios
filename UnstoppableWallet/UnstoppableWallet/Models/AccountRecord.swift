@@ -8,10 +8,11 @@ class AccountRecord: Record {
     let backedUp: Bool
     var wordsKey: String?
     var saltKey: String?
+    var birthdayHeightKey: String?
     var dataKey: String?
     var eosAccount: String?
 
-    init(id: String, name: String, type: String, origin: String, backedUp: Bool, wordsKey: String?, saltKey: String?, dataKey: String?, eosAccount: String?) {
+    init(id: String, name: String, type: String, origin: String, backedUp: Bool, wordsKey: String?, saltKey: String?, birthdayHeightKey: String?, dataKey: String?, eosAccount: String?) {
         self.id = id
         self.name = name
         self.type = type
@@ -19,6 +20,7 @@ class AccountRecord: Record {
         self.backedUp = backedUp
         self.wordsKey = wordsKey
         self.saltKey = saltKey
+        self.birthdayHeightKey = birthdayHeightKey
         self.dataKey = dataKey
         self.eosAccount = eosAccount
 
@@ -30,7 +32,7 @@ class AccountRecord: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case id, name, type, origin, backedUp, wordsKey, saltKey, dataKey, eosAccount
+        case id, name, type, origin, backedUp, wordsKey, saltKey, birthdayHeightKey, dataKey, eosAccount
     }
 
     required init(row: Row) {
@@ -41,6 +43,7 @@ class AccountRecord: Record {
         backedUp = row[Columns.backedUp]
         wordsKey = row[Columns.wordsKey]
         saltKey = row[Columns.saltKey]
+        birthdayHeightKey = row[Columns.birthdayHeightKey]
         dataKey = row[Columns.dataKey]
         eosAccount = row[Columns.eosAccount]
 
@@ -55,6 +58,7 @@ class AccountRecord: Record {
         container[Columns.backedUp] = backedUp
         container[Columns.wordsKey] = wordsKey
         container[Columns.saltKey] = saltKey
+        container[Columns.birthdayHeightKey] = birthdayHeightKey
         container[Columns.dataKey] = dataKey
         container[Columns.eosAccount] = eosAccount
     }
