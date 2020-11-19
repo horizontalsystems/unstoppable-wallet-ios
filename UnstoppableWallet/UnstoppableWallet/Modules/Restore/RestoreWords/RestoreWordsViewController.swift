@@ -186,11 +186,11 @@ class RestoreWordsViewController: ThemeViewController {
 
             return
         }
-
         var shift: CGFloat = 0
         if let cursorPosition = responder.selectedTextRange?.start {
             let caretPositionFrame: CGRect = responderView.convert(responder.caretRect(for: cursorPosition), to: nil)
             let caretVisiblePosition = caretPositionFrame.origin.y - .margin2x + translucentContentOffset
+
             if caretVisiblePosition < 0 {
                 shift = caretVisiblePosition + scrollView.contentOffset.y
             } else {
@@ -198,7 +198,7 @@ class RestoreWordsViewController: ThemeViewController {
             }
         }
 
-        scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height, right: 0)
+        scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height - view.safeAreaInsets.bottom, right: 0)
         scrollView.setContentOffset(CGPoint(x: 0, y: shift), animated: true)
     }
 
