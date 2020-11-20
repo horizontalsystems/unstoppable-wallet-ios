@@ -74,7 +74,7 @@ class BalanceCell: UICollectionViewCell {
         }
 
         if let viewItem = viewItem.lockedAmountViewItem {
-            lockedAmountView.bind(image: UIImage(named: "Transaction Lock Icon"), coinValue: viewItem.lockedCoinValue, currencyValue: viewItem.lockedCurrencyValue)
+            lockedAmountView.bind(image: UIImage(named: "lock_16"), coinValue: viewItem.lockedCoinValue, currencyValue: viewItem.lockedCurrencyValue)
             lockedAmountView.layoutIfNeeded()
         }
         lockedAmountView.set(hidden: viewItem.lockedAmountViewItem == nil, animated: animated, duration: duration)

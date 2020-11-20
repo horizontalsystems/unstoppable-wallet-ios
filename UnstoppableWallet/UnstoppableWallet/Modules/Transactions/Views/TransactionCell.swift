@@ -83,28 +83,17 @@ class TransactionCell: ClaudeThemeCell {
         contentView.addSubview(currencyAmountLabel)
         currencyAmountLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(wrapperView.snp.trailing).offset(CGFloat.margin3x)
-            maker.top.equalToSuperview().offset(CGFloat.margin3x)
+            maker.top.equalToSuperview().offset(CGFloat.margin2x)
         }
-        currencyAmountLabel.font = .systemFont(ofSize: 22, weight: .semibold)
+        currencyAmountLabel.font = .headline1
         currencyAmountLabel.textAlignment = .right
 
         contentView.addSubview(lockImageView)
-        lockImageView.snp.makeConstraints { maker in
-            maker.leading.equalTo(currencyAmountLabel.snp.trailing).offset(CGFloat.margin3x)
-            maker.top.equalToSuperview().inset(CGFloat.margin4x)
-            maker.size.equalTo(0)
-        }
         lockImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         contentView.addSubview(sentToSelfImageView)
-        sentToSelfImageView.snp.makeConstraints { maker in
-            maker.leading.equalTo(lockImageView.snp.trailing)
-            maker.trailing.equalTo(contentView.snp.trailingMargin)
-            maker.top.equalToSuperview().inset(CGFloat.margin4x)
-            maker.size.equalTo(0)
-        }
         sentToSelfImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        sentToSelfImageView.image = UIImage(named: "Transaction In Icon")?.tinted(with: .themeRemus)
+        sentToSelfImageView.image = UIImage(named: "transaction_in_20")?.tinted(with: .themeRemus)
 
         contentView.addSubview(amountLabel)
         amountLabel.snp.makeConstraints { maker in
@@ -129,13 +118,13 @@ class TransactionCell: ClaudeThemeCell {
         switch item.type {
         case .incoming:
             currencyAmountLabel.textColor = .themeGreenD
-            typeIconImageView.image = UIImage(named: "Transaction In Icon")?.tinted(with: .themeRemus)
+            typeIconImageView.image = UIImage(named: "transaction_in_20")?.tinted(with: .themeRemus)
         case .outgoing, .sentToSelf:
             currencyAmountLabel.textColor = .themeYellowD
-            typeIconImageView.image = UIImage(named: "Transaction Out Icon")?.tinted(with: .themeJacob)
+            typeIconImageView.image = UIImage(named: "transaction_out_20")?.tinted(with: .themeJacob)
         case .approve:
             currencyAmountLabel.textColor = .themeLeah
-            typeIconImageView.image = UIImage(named: "Transaction Approve Icon")?.tinted(with: .themeLeah)
+            typeIconImageView.image = UIImage(named: "transaction_approve_20")?.tinted(with: .themeLeah)
         }
         amountLabel.textColor = .themeGray
 
@@ -151,31 +140,30 @@ class TransactionCell: ClaudeThemeCell {
         }
 
         if let lockState = item.lockState {
-            lockImageView.image = UIImage(named: lockState.locked ? "Transaction Lock Icon" : "Transaction Unlock Icon")
+            lockImageView.image = UIImage(named: lockState.locked ? "lock_20" : "unlock_20")
             lockImageView.snp.remakeConstraints { maker in
                 maker.leading.equalTo(currencyAmountLabel.snp.trailing).offset(CGFloat.margin1x)
-                maker.top.equalToSuperview().inset(CGFloat.margin4x)
+                maker.centerY.equalTo(currencyAmountLabel)
             }
         } else {
             lockImageView.snp.remakeConstraints { maker in
                 maker.leading.equalTo(currencyAmountLabel.snp.trailing)
-                maker.top.equalToSuperview().inset(CGFloat.margin4x)
+                maker.centerY.equalTo(currencyAmountLabel)
                 maker.size.equalTo(0)
             }
         }
 
         if item.type == .sentToSelf {
             sentToSelfImageView.snp.remakeConstraints { maker in
-                maker.leading.equalTo(lockImageView.snp.trailing).offset(CGFloat.margin1x)
-                maker.trailing.equalTo(contentView.snp.trailingMargin)
-                maker.top.equalToSuperview().inset(CGFloat.margin4x)
-                maker.size.equalTo(16)
+                maker.leading.equalTo(lockImageView.snp.trailing).offset(CGFloat.margin05x)
+                maker.centerY.equalTo(currencyAmountLabel)
+                maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
             }
         } else {
             sentToSelfImageView.snp.remakeConstraints { maker in
                 maker.leading.equalTo(lockImageView.snp.trailing)
-                maker.trailing.equalTo(contentView.snp.trailingMargin)
-                maker.top.equalToSuperview().inset(CGFloat.margin4x)
+                maker.centerY.equalTo(currencyAmountLabel)
+                maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
                 maker.size.equalTo(0)
             }
         }

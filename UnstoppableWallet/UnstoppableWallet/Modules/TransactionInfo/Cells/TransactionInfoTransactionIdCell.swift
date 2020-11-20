@@ -36,7 +36,7 @@ class TransactionInfoTransactionIdCell: ThemeCell {
         }
 
         shareButton.apply(style: .secondaryIcon)
-        shareButton.apply(secondaryIconImage: UIImage(named: "Share Transaction Icon"))
+        shareButton.apply(secondaryIconImage: UIImage(named: "share_20"))
         shareButton.addTarget(self, action: #selector(_onTapShare), for: .touchUpInside)
     }
 

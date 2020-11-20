@@ -259,7 +259,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
 
     private func lockInfoRow(lockState: TransactionLockState) -> RowProtocol {
         let id = "lock_info"
-        let image = UIImage(named: lockState.locked ? "Transaction Lock Icon" : "Transaction Unlock Icon")
+        let image = UIImage(named: lockState.locked ? "lock_20" : "unlock_20")
         let formattedDate = DateHelper.instance.formatFullTime(from: lockState.date)
 
         if lockState.locked {
@@ -287,7 +287,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
     private func sentToSelfRow() -> RowProtocol {
         noteRow(
                 id: "sent_to_self",
-                image: UIImage(named: "Transaction In Icon")?.tinted(with: .themeRemus),
+                image: UIImage(named: "transaction_in_20")?.tinted(with: .themeRemus),
                 text: "tx_info.to_self_note".localized
         )
     }
@@ -359,11 +359,11 @@ extension TransactionInfoViewController: ITransactionInfoView {
         let iconImage: UIImage? = {
             switch type {
             case .incoming:
-                return UIImage(named: "Transaction In Icon")?.tinted(with: .themeRemus)
+                return UIImage(named: "transaction_in_24")?.tinted(with: .themeRemus)
             case .outgoing, .sentToSelf:
-                return UIImage(named: "Transaction Out Icon")?.tinted(with: .themeJacob)
+                return UIImage(named: "transaction_out_24")?.tinted(with: .themeJacob)
             case .approve:
-                return UIImage(named: "Transaction Approve Icon")?.tinted(with: .themeLeah)
+                return UIImage(named: "transaction_approve_24")?.tinted(with: .themeLeah)
             }
         }()
 
