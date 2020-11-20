@@ -324,7 +324,8 @@ class TransactionInfoViewController: ThemeActionSheetController {
     }
 
     private func openStatusInfo() {
-        // todo
+        let viewController = TransactionStatusInfoViewController()
+        present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
 }
