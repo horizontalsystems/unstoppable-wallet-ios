@@ -4,7 +4,7 @@ class AppConfigProvider: IAppConfigProvider {
     let companyWebPageLink = "https://horizontalsystems.io"
     let appWebPageLink = "https://unstoppable.money"
     let appGitHubLink = "https://github.com/horizontalsystems/unstoppable-wallet-ios"
-    let reportEmail = "hsdao@protonmail.ch"
+    let reportEmail = "support.unstoppable@protonmail.ch"
     let telegramWalletHelpAccount = "UnstoppableWallet"
 
     var guidesIndexUrl: URL {

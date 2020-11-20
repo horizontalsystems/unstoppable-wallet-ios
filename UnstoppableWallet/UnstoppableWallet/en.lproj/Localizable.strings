@@ -541,7 +541,7 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 // Key Types
 
 "chart.title" = "%@ Price";
-"chart.time_duration.today" = "Today";
+"chart.time_duration.today" = "TDY";
 "chart.time_duration.day" = "24h";
 "chart.time_duration.week" = "7D";
 "chart.time_duration.week2" = "2W";
