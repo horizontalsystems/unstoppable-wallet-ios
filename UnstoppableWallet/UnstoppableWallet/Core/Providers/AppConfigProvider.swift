@@ -203,6 +203,7 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "NEXO",      title: "Nexo",                          code: "NEXO",    decimal: 18, type: CoinType(erc20Address: "0xB62132e35a6c13ee1EE0f84dC5d40bad8d815206")),
         Coin(id: "NMR",       title: "Numeraire",                     code: "NMR",     decimal: 18, type: CoinType(erc20Address: "0x1776e1f26f98b1a5df9cd347953a26dd3cb46671")),
         Coin(id: "OCEAN",     title: "Ocean Token",                   code: "OCEAN",   decimal: 18, type: CoinType(erc20Address: "0x967da4048cD07aB37855c090aAF366e4ce1b9F48")),
+        Coin(id: "XFT",       title: "Offshift",                      code: "XFT",     decimal: 18, type: CoinType(erc20Address: "0xabe580e7ee158da464b51ee1a83ac0289622e6be")),
         Coin(id: "OMG",       title: "OmiseGO",                       code: "OMG",     decimal: 18, type: CoinType(erc20Address: "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07")),
         Coin(id: "ORBS",      title: "Orbs",                          code: "ORBS",    decimal: 18, type: CoinType(erc20Address: "0xff56Cc6b1E6dEd347aA0B7676C85AB0B3D08B0FA")),
         Coin(id: "OXT",       title: "Orchid",                        code: "OXT",     decimal: 18, type: CoinType(erc20Address: "0x4575f41308EC1483f3d399aa9a2826d74Da13Deb")),

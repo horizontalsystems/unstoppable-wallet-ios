@@ -162,6 +162,7 @@ class CoinInfoMap {
         "COMP":     CoinInfo(supply: 10_000_000,      startDate: "04/03/2020", website: "https://compound.finance/"),
         "VERI":     CoinInfo(supply: 100_000_000,     startDate: "25/04/2017", website: "https://veritas.veritaseum.com/"),
         "XCHF":     CoinInfo(supply: 100_000_000,     startDate: "01/11/2018", website: "https://swisscryptotokens.ch/"),
+        "XFT":      CoinInfo(supply: 10_000_000,      startDate: nil,          website: "https://offshift.io/"),
         "XIO":      CoinInfo(supply: 100_000_000,     startDate: "22/10/2019", website: "https://xio.network/ "),
         "ZEC":      CoinInfo(supply: 21_000_000,      startDate: "28/10/2016", website: "https://z.cash/"),
     ]
