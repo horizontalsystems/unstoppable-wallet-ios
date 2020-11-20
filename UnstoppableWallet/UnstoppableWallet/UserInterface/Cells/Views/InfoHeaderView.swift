@@ -2,6 +2,7 @@ import UIKit
 
 class InfoHeaderView: UITableViewHeaderFooterView {
     private static let topPadding = CGFloat.margin6x
+    private static let bottomPadding = CGFloat.margin3x
     private static let horizontalPadding = CGFloat.margin6x
     private static let font: UIFont = .headline2
 
@@ -35,7 +36,7 @@ extension InfoHeaderView {
 
     static func height(containerWidth: CGFloat, text: String) -> CGFloat {
         let textHeight = text.height(forContainerWidth: containerWidth - 2 * horizontalPadding, font: font)
-        return textHeight + topPadding
+        return textHeight + topPadding + bottomPadding
     }
 
 }
