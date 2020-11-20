@@ -3,7 +3,7 @@ import ThemeKit
 
 class TransactionInfoNoteCell: ThemeCell {
     private static let imageViewLeadingMargin: CGFloat = .margin4x
-    private static let imageViewSize: CGFloat = 16
+    private static let imageViewSize: CGFloat = 20
     private static let labelHorizontalMargin: CGFloat = .margin4x
     private static let labelVerticalMargin: CGFloat = 13.5
     private static let labelFont: UIFont = .subhead2

@@ -3,7 +3,7 @@ import ThemeKit
 
 class TransactionInfoWarningCell: ThemeCell {
     private static let imageViewLeadingMargin: CGFloat = .margin4x
-    private static let imageViewSize: CGFloat = 16
+    private static let imageViewSize: CGFloat = 20
     private static let labelLeadingMargin: CGFloat = .margin4x
     private static let labelVerticalMargin: CGFloat = 13.5
     private static let labelFont: UIFont = .subhead2
@@ -42,7 +42,7 @@ class TransactionInfoWarningCell: ThemeCell {
             maker.width.equalTo(TransactionInfoWarningCell.buttonWidth)
         }
 
-        button.setImage(UIImage(named: "Info Icon")?.tinted(with: .themeJacob), for: .normal)
+        button.setImage(UIImage(named: "info_20")?.tinted(with: .themeJacob), for: .normal)
         button.addTarget(self, action: #selector(_onTapButton), for: .touchUpInside)
     }
 
@@ -57,7 +57,7 @@ class TransactionInfoWarningCell: ThemeCell {
     func bind(image: UIImage?, text: String, onTapButton: @escaping () -> ()) {
         super.bind(bottomSeparatorVisible: true)
 
-        iconImageView.image = image?.tinted(with: .themeGray)
+        iconImageView.image = image
         label.text = text
 
         self.onTapButton = onTapButton

@@ -99,7 +99,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
                     cell.set(backgroundStyle: .lawrence, topSeparator: false, bottomSeparator: true)
                     cell.title = "status".localized
                     cell.value = "tx_info.status.confirmed".localized
-                    cell.valueImage = UIImage(named: "Transaction Info Completed Icon")?.tinted(with: .themeRemus)
+                    cell.valueImage = UIImage(named: "success_20")?.tinted(with: .themeRemus)
                 }
         )
     }
@@ -112,9 +112,9 @@ class TransactionInfoViewController: ThemeActionSheetController {
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, topSeparator: false, bottomSeparator: true)
                     cell.title = "status".localized
-                    cell.titleImage = UIImage(named: "Info Icon")?.tinted(with: .themeJacob)
+                    cell.titleImage = UIImage(named: "info_20")?.tinted(with: .themeJacob)
                     cell.value = "tx_info.status.failed".localized
-                    cell.valueImage = UIImage(named: "Attention Icon")?.tinted(with: .themeLucian)
+                    cell.valueImage = UIImage(named: "attention_20")?.tinted(with: .themeLucian)
                     cell.titleImageAction = { [weak self] in
                         self?.openStatusInfo()
                     }
@@ -250,7 +250,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
     private func doubleSpendRow() -> RowProtocol {
         warningRow(
                 id: "double_spend",
-                image: UIImage(named: "Transaction Double Spend Icon"),
+                image: UIImage(named: "double_spend_20"),
                 text: "tx_info.double_spent_note".localized
         ) { [weak self] in
             self?.delegate.onTapDoubleSpendInfo()
