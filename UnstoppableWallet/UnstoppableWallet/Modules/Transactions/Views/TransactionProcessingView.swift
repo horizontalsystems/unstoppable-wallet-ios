@@ -39,12 +39,9 @@ class TransactionProcessingView: UIView {
         case .incoming:
             text = "transactions.receiving".localized
             filledColor = .themeGreenD
-        case .outgoing, .sentToSelf:
-            text = "transactions.sending".localized
+        case .outgoing, .sentToSelf, .approve:
+            text = "transactions.pending".localized
             filledColor = .themeYellowD
-        case .approve:
-            text = "transactions.approval".localized
-            filledColor = .themeLeah
         }
 
         processingLabel.text = text

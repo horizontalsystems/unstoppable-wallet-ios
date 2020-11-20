@@ -58,13 +58,15 @@ class TransactionInfoViewController: ThemeActionSheetController {
             maker.top.equalTo(amountInfoView.snp.bottom)
         }
 
-        tableView.registerCell(forClass: TransactionInfoStatusCell.self)
+        tableView.registerCell(forClass: TransactionInfoPendingStatusCell.self)
         tableView.registerCell(forClass: TransactionInfoFromToCell.self)
         tableView.registerCell(forClass: TransactionInfoTransactionIdCell.self)
         tableView.registerCell(forClass: TransactionInfoValueCell.self)
         tableView.registerCell(forClass: TransactionInfoWarningCell.self)
         tableView.registerCell(forClass: TransactionInfoNoteCell.self)
         tableView.registerCell(forClass: TransactionInfoCopyCell.self)
+        tableView.registerCell(forClass: D6Cell.self)
+        tableView.registerCell(forClass: C6Cell.self)
         tableView.sectionDataSource = self
         tableView.allowsSelection = false
 
@@ -88,15 +90,63 @@ class TransactionInfoViewController: ThemeActionSheetController {
         delegate.onTapVerify()
     }
 
-    private func statusRow(status: TransactionStatus, incoming: Bool) -> RowProtocol {
-        Row<TransactionInfoStatusCell>(
+    private var completedStatusCell: RowProtocol {
+        Row<D6Cell>(
                 id: "status",
-                hash: "\(status)",
+                hash: "completed",
                 height: .heightSingleLineCell,
                 bind: { cell, _ in
-                    cell.bind(status: status, incoming: incoming)
+                    cell.set(backgroundStyle: .lawrence, topSeparator: false, bottomSeparator: true)
+                    cell.title = "status".localized
+                    cell.value = "tx_info.status.confirmed".localized
+                    cell.valueImage = UIImage(named: "Transaction Info Completed Icon")?.tinted(with: .themeRemus)
                 }
         )
+    }
+
+    private var failedStatusCell: RowProtocol {
+        Row<C6Cell>(
+                id: "status",
+                hash: "failed",
+                height: .heightSingleLineCell,
+                bind: { cell, _ in
+                    cell.set(backgroundStyle: .lawrence, topSeparator: false, bottomSeparator: true)
+                    cell.title = "status".localized
+                    cell.titleImage = UIImage(named: "Info Icon")?.tinted(with: .themeJacob)
+                    cell.value = "tx_info.status.failed".localized
+                    cell.valueImage = UIImage(named: "Attention Icon")?.tinted(with: .themeLucian)
+                    cell.titleImageAction = { [weak self] in
+                        self?.openStatusInfo()
+                    }
+                }
+        )
+    }
+
+    private func pendingStatusCell(progress: Double, incoming: Bool) -> RowProtocol {
+        Row<TransactionInfoPendingStatusCell>(
+                id: "status",
+                hash: "pending-\(progress)-\(incoming)",
+                height: .heightSingleLineCell,
+                bind: { cell, _ in
+                    cell.set(backgroundStyle: .lawrence, topSeparator: false, bottomSeparator: true)
+                    cell.bind(progress: progress, incoming: incoming) { [weak self] in
+                        self?.openStatusInfo()
+                    }
+                }
+        )
+    }
+
+    private func statusRow(status: TransactionStatus, incoming: Bool) -> RowProtocol {
+        switch status {
+        case .completed:
+            return completedStatusCell
+        case .failed:
+            return failedStatusCell
+        case .pending:
+            return pendingStatusCell(progress: 0, incoming: incoming)
+        case .processing(let progress):
+            return pendingStatusCell(progress: progress, incoming: incoming)
+        }
     }
 
     private func fromToRow(title: String, value: String, onTap: @escaping () -> ()) -> RowProtocol {
@@ -271,6 +321,10 @@ class TransactionInfoViewController: ThemeActionSheetController {
         case .sentToSelf: return sentToSelfRow()
         case .rawTransaction: return rawTransactionRow()
         }
+    }
+
+    private func openStatusInfo() {
+        // todo
     }
 
 }

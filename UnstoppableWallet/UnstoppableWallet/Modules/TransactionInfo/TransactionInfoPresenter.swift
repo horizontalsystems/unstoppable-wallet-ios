@@ -64,6 +64,8 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
 
         var viewItems = [TransactionInfoModule.ViewItem]()
 
+        viewItems.append(.status(status: status, incoming: transaction.type == .incoming))
+
         if let rate = rate {
             viewItems.append(.rate(currencyValue: rate, coinCode: coin.code))
         }
@@ -94,8 +96,6 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
         } else {
             viewItems.append(.id(value: transaction.transactionHash))
         }
-
-        viewItems.append(.status(status: status, incoming: transaction.type == .incoming))
 
         if transaction.conflictingHash != nil {
             viewItems.append(.doubleSpend)

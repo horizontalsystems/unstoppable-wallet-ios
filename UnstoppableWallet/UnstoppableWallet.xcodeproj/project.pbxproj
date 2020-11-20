@@ -158,7 +158,7 @@
 		11B3527D20636D21F0F45C80 /* CurrentDateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35779E6353B98B298FF29 /* CurrentDateProvider.swift */; };
 		11B352839BBDEC888ACCFFF7 /* RestoreWordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C49E6B99C4B3CE6B9CA /* RestoreWordsViewController.swift */; };
 		11B35293733280FC1D6E2497 /* SendMemoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BF93F697057885AC62A /* SendMemoRouter.swift */; };
-		11B3529861813E5E19E894E5 /* TransactionInfoStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C8C8BAC409D02AEDD1D /* TransactionInfoStatusCell.swift */; };
+		11B3529861813E5E19E894E5 /* TransactionInfoPendingStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C8C8BAC409D02AEDD1D /* TransactionInfoPendingStatusCell.swift */; };
 		11B35299556E6EF88F241A25 /* PrivacySortModePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FD8874AAFB34B3A377C /* PrivacySortModePresenter.swift */; };
 		11B35299F0C9CBE119C458ED /* BalanceAmountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359279331554A99F2DB22 /* BalanceAmountView.swift */; };
 		11B3529B3DD134BC0770BD20 /* MarkdownModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35609D3FA1729A7D80153 /* MarkdownModule.swift */; };
@@ -713,7 +713,7 @@
 		11B35AF67D9BA187050E8F0D /* TransactionViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358E4D11420A3D0B7A283 /* TransactionViewItemFactory.swift */; };
 		11B35AFE607E4B25984A83B1 /* MarkdownBlockQuoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3552D3F84BA594EFE964C /* MarkdownBlockQuoteCell.swift */; };
 		11B35B068DF7197164BDAD4B /* BackupEosRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3537D10E0DC42026B43EC /* BackupEosRouter.swift */; };
-		11B35B0712356BCDC57C477C /* TransactionInfoStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C8C8BAC409D02AEDD1D /* TransactionInfoStatusCell.swift */; };
+		11B35B0712356BCDC57C477C /* TransactionInfoPendingStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C8C8BAC409D02AEDD1D /* TransactionInfoPendingStatusCell.swift */; };
 		11B35B077A52041C9939C6E8 /* FaqCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3528090862B6792A76DA4 /* FaqCell.swift */; };
 		11B35B0826C2795CCEFF8B8C /* ManageAccountsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355330C2EB2870BD7087A /* ManageAccountsInteractor.swift */; };
 		11B35B0B1BBEE95059B799A1 /* SortTypePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E791179A3827B0485F2 /* SortTypePresenter.swift */; };
@@ -970,7 +970,7 @@
 		11B35EBB0DC7C0CE6F51E9DA /* BarsProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A686DD5BA335FEB6BEB /* BarsProgressView.swift */; };
 		11B35EC7F06AEAB8E555B833 /* AppStatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3525406D0B011EB76ACE6 /* AppStatusViewModel.swift */; };
 		11B35EC7FDD947309458265D /* PriceAlertStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353FED1586171A5C73554 /* PriceAlertStorage.swift */; };
-		11B35ECCE59E558DAA1BD331 /* TransactionInfoStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C8C8BAC409D02AEDD1D /* TransactionInfoStatusCell.swift */; };
+		11B35ECCE59E558DAA1BD331 /* TransactionInfoPendingStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C8C8BAC409D02AEDD1D /* TransactionInfoPendingStatusCell.swift */; };
 		11B35ECD30CF372165CBE7D7 /* ManageWalletsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353E8B5933D7158BAFB7B /* ManageWalletsService.swift */; };
 		11B35ED28A224521738CAC59 /* TransactionRecordPoolRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B93B5B43FF00B24528B /* TransactionRecordPoolRepo.swift */; };
 		11B35ED36B4DDD19C5D14EEC /* AddErc20TokenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35AF22887061DE1E59CA8 /* AddErc20TokenPresenter.swift */; };
@@ -2575,7 +2575,7 @@
 		11B35C6D66CF7BCBF59E67D6 /* BottomSheetCheckmarkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomSheetCheckmarkCell.swift; sourceTree = "<group>"; };
 		11B35C7DCF9B7894F7600623 /* LaunchRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchRouter.swift; sourceTree = "<group>"; };
 		11B35C8856A137E92441AF19 /* IndexedInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndexedInputField.swift; sourceTree = "<group>"; };
-		11B35C8C8BAC409D02AEDD1D /* TransactionInfoStatusCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoStatusCell.swift; sourceTree = "<group>"; };
+		11B35C8C8BAC409D02AEDD1D /* TransactionInfoPendingStatusCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoPendingStatusCell.swift; sourceTree = "<group>"; };
 		11B35C8E5281BF85C421CB73 /* RateDiffView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateDiffView.swift; sourceTree = "<group>"; };
 		11B35C9740FFE70C764CC71C /* NotificationSettingsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettingsInteractor.swift; sourceTree = "<group>"; };
 		11B35C9F199E2A1D297480A4 /* AlertModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertModule.swift; sourceTree = "<group>"; };
@@ -3477,7 +3477,7 @@
 			isa = PBXGroup;
 			children = (
 				11B35CA40778FB3783D186C7 /* Views */,
-				11B35C8C8BAC409D02AEDD1D /* TransactionInfoStatusCell.swift */,
+				11B35C8C8BAC409D02AEDD1D /* TransactionInfoPendingStatusCell.swift */,
 				11B35DF34CA46AFA139D23AF /* TransactionInfoFromToCell.swift */,
 				11B35B4FE35F6A9122C7688B /* TransactionInfoTransactionIdCell.swift */,
 				11B351E46B028BA34AB5F192 /* TransactionInfoValueCell.swift */,
@@ -6126,7 +6126,7 @@
 				11B351B48D171634D896D41C /* DerivationSettingConfirmationViewController.swift in Sources */,
 				11B35F0222DD4D2671F68937 /* DerivationSettingConfirmationModule.swift in Sources */,
 				11B35CF4456C62D1B1497289 /* DerivationSettingConfirmationRouter.swift in Sources */,
-				11B35ECCE59E558DAA1BD331 /* TransactionInfoStatusCell.swift in Sources */,
+				11B35ECCE59E558DAA1BD331 /* TransactionInfoPendingStatusCell.swift in Sources */,
 				11B357BA7B48CEE5F90D392F /* TransactionInfoTitleView.swift in Sources */,
 				11B3527B671281A5DE818078 /* TransactionInfoFromToCell.swift in Sources */,
 				11B351292C46308D0380DED9 /* TransactionInfoTransactionIdCell.swift in Sources */,
@@ -6907,7 +6907,7 @@
 				11B357800441857F2E6DCEA0 /* DerivationSettingConfirmationViewController.swift in Sources */,
 				11B35AA4AA5F26E7A7C80E6C /* DerivationSettingConfirmationModule.swift in Sources */,
 				11B353F76D63345101E15C6B /* DerivationSettingConfirmationRouter.swift in Sources */,
-				11B3529861813E5E19E894E5 /* TransactionInfoStatusCell.swift in Sources */,
+				11B3529861813E5E19E894E5 /* TransactionInfoPendingStatusCell.swift in Sources */,
 				11B35CAF39034FAD05130DD2 /* TransactionInfoTitleView.swift in Sources */,
 				11B35DD11863080EFAE18F92 /* TransactionInfoFromToCell.swift in Sources */,
 				11B35A4F668BF94A56BA27C4 /* TransactionInfoTransactionIdCell.swift in Sources */,
@@ -7649,7 +7649,7 @@
 				11B35723699E0165AD9E7FA3 /* DerivationSettingConfirmationViewController.swift in Sources */,
 				11B352BF9F4A74CF1C968260 /* DerivationSettingConfirmationModule.swift in Sources */,
 				11B35B9B9617CE64AC6A8C78 /* DerivationSettingConfirmationRouter.swift in Sources */,
-				11B35B0712356BCDC57C477C /* TransactionInfoStatusCell.swift in Sources */,
+				11B35B0712356BCDC57C477C /* TransactionInfoPendingStatusCell.swift in Sources */,
 				11B358A9A1E29D7750EC3B07 /* TransactionInfoTitleView.swift in Sources */,
 				11B350E75BE7007E176B9996 /* TransactionInfoFromToCell.swift in Sources */,
 				11B35C083B5DA616347D90DF /* TransactionInfoTransactionIdCell.swift in Sources */,
