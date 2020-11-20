@@ -147,7 +147,7 @@ class MainSettingsViewController: ThemeViewController {
             }),
 
             Row<TitleCell>(id: "tell_friends", height: .heightSingleLineCell, autoDeselect: true, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Tell Friends Icon"), title: "settings.tell_friends".localized, showDisclosure: true)
+                cell.bind(titleIcon: UIImage(named: "share_20"), title: "settings.tell_friends".localized, showDisclosure: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapTellFriends()
             }),

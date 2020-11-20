@@ -52,7 +52,7 @@ class AmountInfoView: UIView {
         primaryAmountWrapper.addSubview(sentToSelfImageView)
         sentToSelfImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
         sentToSelfImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        sentToSelfImageView.image = UIImage(named: "Transaction In Icon")?.tinted(with: .themeRemus)
+        sentToSelfImageView.image = UIImage(named: "transaction_in_20")?.tinted(with: .themeRemus)
 
         primaryAmountWrapper.addSubview(primaryAmountTitleLabel)
         primaryAmountTitleLabel.snp.makeConstraints { maker in
@@ -115,7 +115,7 @@ class AmountInfoView: UIView {
         }
 
         if let lockState = lockState {
-            lockImageView.image = UIImage(named: lockState.locked ? "Transaction Lock Icon" : "Transaction Unlock Icon")
+            lockImageView.image = UIImage(named: lockState.locked ? "lock_20" : "unlock_20")
             lockImageView.snp.remakeConstraints { maker in
                 maker.leading.equalTo(primaryAmountLabel.snp.trailing).offset(CGFloat.margin1x)
                 maker.top.equalToSuperview().inset(CGFloat.margin4x)
@@ -132,7 +132,6 @@ class AmountInfoView: UIView {
             sentToSelfImageView.snp.remakeConstraints { maker in
                 maker.leading.equalTo(lockImageView.snp.trailing).offset(CGFloat.margin1x)
                 maker.top.trailing.equalToSuperview().inset(CGFloat.margin4x)
-                maker.size.equalTo(16)
             }
         } else {
             sentToSelfImageView.snp.remakeConstraints { maker in

@@ -38,7 +38,7 @@ class IndexedInputField: UIView, UITextFieldDelegate {
         }
 
         clearTextButton.apply(style: .secondaryIcon)
-        clearTextButton.apply(secondaryIconImage: UIImage(named: "Send Delete Icon"))
+        clearTextButton.apply(secondaryIconImage: UIImage(named: "delete_20"))
         clearTextButton.addTarget(self, action: #selector(onClearText), for: .touchUpInside)
         clearTextButton.isHidden = true
 
