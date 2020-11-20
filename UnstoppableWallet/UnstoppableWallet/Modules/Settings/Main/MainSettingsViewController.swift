@@ -62,8 +62,8 @@ class MainSettingsViewController: ThemeViewController {
     }
 
     private var securityRows: [RowProtocol] {
-        let manageAccountAttentionIcon = allBackedUp ? nil : UIImage(named: "Attention Icon")
-        let securityAttentionIcon = pinSet ? nil : UIImage(named: "Attention Icon")
+        let manageAccountAttentionIcon = allBackedUp ? nil : UIImage(named: "attention_20")
+        let securityAttentionIcon = pinSet ? nil : UIImage(named: "attention_20")
 
         return [
             Row<RightImageCell>(id: "manage_accounts", height: .heightSingleLineCell, bind: { cell, _ in
@@ -131,7 +131,7 @@ class MainSettingsViewController: ThemeViewController {
     }
 
     private var aboutRows: [RowProtocol] {
-        let termsAttentionImage = termsAccepted ? nil : UIImage(named: "Attention Icon")
+        let termsAttentionImage = termsAccepted ? nil : UIImage(named: "attention_20")
 
         return [
             Row<TitleCell>(id: "faq", height: .heightSingleLineCell, bind: { cell, _ in

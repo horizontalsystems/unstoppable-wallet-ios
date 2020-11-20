@@ -28,7 +28,7 @@ class PrivacyViewController: ThemeViewController {
 
         title = "settings_privacy.title".localized
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Info Icon")?.tinted(with: .themeJacob), style: .plain, target: self, action: #selector(onTapInfo))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "info_24")?.tinted(with: .themeJacob), style: .plain, target: self, action: #selector(onTapInfo))
 
         tableView.registerCell(forClass: HighlightedDescriptionCell.self)
         tableView.registerCell(forClass: PrivacyCell.self)
@@ -114,7 +114,7 @@ class PrivacyViewController: ThemeViewController {
     }
 
     private func row(id: String, item: PrivacyViewItem, action: (() -> ())?) -> RowProtocol {
-        Row<PrivacyCell>(id: id, hash: "\(item.title)_\(item.value)_\(item.changable)", height: .heightSingleLineCell, autoDeselect: true, bind: { cell, _ in 
+        Row<PrivacyCell>(id: id, hash: "\(item.title)_\(item.value)_\(item.changable)", height: .heightSingleLineCell, autoDeselect: true, bind: { cell, _ in
             cell.bind(image: UIImage(named: item.iconName.lowercased()), title: item.title, value: item.value, showDisclosure: item.changable)
         }, action: { _ in
             action?()

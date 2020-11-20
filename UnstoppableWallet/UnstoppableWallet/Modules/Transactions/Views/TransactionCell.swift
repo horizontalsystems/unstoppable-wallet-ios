@@ -37,7 +37,7 @@ class TransactionCell: ClaudeThemeCell {
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
             maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
         }
-        doubleSpendImageView.image = UIImage(named: "Transaction Double Spend Icon")
+        doubleSpendImageView.image = UIImage(named: "double_spend_20")
         doubleSpendImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
         doubleSpendImageView.setContentHuggingPriority(.required, for: .horizontal)
         doubleSpendImageView.isHidden = true

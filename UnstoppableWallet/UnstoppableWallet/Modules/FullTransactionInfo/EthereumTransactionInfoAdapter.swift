@@ -31,7 +31,7 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
             topSectionItems.append(FullTransactionItem(icon: "Block Icon", title: "full_info.block".localized, value: "#\(blockHeight)"))
         }
         if let confirmations = txResponse.confirmations {
-            topSectionItems.append(FullTransactionItem(icon: "success_icon_20", title: "full_info.confirmations".localized, value: "\(confirmations)"))
+            topSectionItems.append(FullTransactionItem(icon: "success_20", title: "full_info.confirmations".localized, value: "\(confirmations)"))
         }
         if let weiValue = txResponse.value {
             let value: Decimal = weiValue / pow(10, coin.decimal)

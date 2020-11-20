@@ -32,7 +32,7 @@ class EosTransactionInfoAdapter: IFullTransactionInfoAdapter {
             topSectionItems.append(FullTransactionItem(icon: "Block Icon", title: "full_info.block".localized, value: "#\(blockNumber)"))
         }
         if let status = txResponse.status {
-            topSectionItems.append(FullTransactionItem(icon: "success_icon_20", title: "status".localized, value: "\(status)"))
+            topSectionItems.append(FullTransactionItem(icon: "success_20", title: "status".localized, value: "\(status)"))
         }
         if !topSectionItems.isEmpty {
             sections.append(FullTransactionSection(title: nil, items: topSectionItems))

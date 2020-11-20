@@ -37,7 +37,7 @@ class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
             blockItems.append(FullTransactionItem(icon: "Block Icon", title: "full_info.block".localized, value: "#\(blockHeight)"))
         }
         if let confirmations = txResponse.confirmations {
-            blockItems.append(FullTransactionItem(icon: "success_icon_20", title: "full_info.confirmations".localized, value: "\(confirmations)"))
+            blockItems.append(FullTransactionItem(icon: "success_20", title: "full_info.confirmations".localized, value: "\(confirmations)"))
         }
         if !blockItems.isEmpty {
             sections.append(FullTransactionSection(title: nil, items: blockItems))
