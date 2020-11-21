@@ -9,7 +9,7 @@ import SectionsTableView
 class SwapViewControllerNew: ThemeViewController {
     private let animationDuration: TimeInterval = 0.2
 
-    private static let levelColors: [UIColor] = [.themeGray, .themeRemus, .themeJacob, .themeLucian]
+    private static let levelColors: [UIColor] = [.themeRemus, .themeJacob, .themeLucian]
 
     private let disposeBag = DisposeBag()
 
@@ -146,17 +146,20 @@ class SwapViewControllerNew: ThemeViewController {
     private func handle(tradeViewItem: SwapViewModelNew.TradeViewItem?) {
         priceCell.set(price: tradeViewItem?.executionPrice)
 
-        if let tradeViewItem = tradeViewItem {
+        if let viewItem = tradeViewItem?.priceImpact {
             priceImpactCell.isVisible = true
-            priceImpactCell.value = tradeViewItem.priceImpact
-            let index = tradeViewItem.priceImpactLevel.rawValue % SwapViewControllerNew.levelColors.count
+            priceImpactCell.value = viewItem.value
+            let index = viewItem.level.rawValue % SwapViewControllerNew.levelColors.count
             priceImpactCell.valueColor = SwapViewControllerNew.levelColors[index]
-
-            guaranteedAmountCell.isVisible = true
-            guaranteedAmountCell.title = tradeViewItem.minMaxTitle
-            guaranteedAmountCell.value = tradeViewItem.minMaxAmount
         } else {
             priceImpactCell.isVisible = false
+        }
+
+        if let viewItem = tradeViewItem?.guaranteedAmount {
+            guaranteedAmountCell.isVisible = true
+            guaranteedAmountCell.title = viewItem.title
+            guaranteedAmountCell.value = viewItem.value
+        } else {
             guaranteedAmountCell.isVisible = false
         }
 

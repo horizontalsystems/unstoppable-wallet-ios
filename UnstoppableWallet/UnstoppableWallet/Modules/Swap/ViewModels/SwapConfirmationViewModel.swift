@@ -68,17 +68,17 @@ class SwapConfirmationViewModel {
             return
         }
 
-        let minMaxTitle = viewItemHelper.minMaxTitle(type: trade.tradeData.type)
-        if let minMaxValue = viewItemHelper.minMaxValue(amount: trade.minMaxAmount, coinIn: coinIn, coinOut: coinOut, type: trade.tradeData.type) {
-            additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: minMaxTitle, value: minMaxValue.formattedString))
+        if let viewItem = viewItemHelper.guaranteedAmountViewItem(tradeData: trade.tradeData, coinIn: coinIn, coinOut: coinOut) {
+            additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: viewItem.title, value: viewItem.value))
         }
 
         if let price = viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, coinIn: coinIn, coinOut: coinOut) {
             additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.price".localized, value: price.formattedString))
         }
 
-        let priceImpact = viewItemHelper.impactPrice(trade.tradeData.priceImpact)
-        additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.price_impact".localized, value: priceImpact))
+        if let viewItem = viewItemHelper.priceImpactViewItem(trade: trade) {
+            additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.price_impact".localized, value: viewItem.value))
+        }
 
         if let transaction = transactionService.transactionStatus.data {
             let fee = ethereumCoinService.amountData(value: transaction.gasData.fee).formattedString

@@ -213,7 +213,6 @@ extension SwapTradeService {
     }
 
     enum PriceImpactLevel: Int {
-        case none
         case normal
         case warning
         case forbidden
@@ -221,26 +220,19 @@ extension SwapTradeService {
 
     struct Trade {
         let tradeData: TradeData
-        let impactLevel: PriceImpactLevel
+        let impactLevel: PriceImpactLevel?
 
         init(tradeData: TradeData) {
             self.tradeData = tradeData
 
-            if let priceImpact = tradeData.priceImpact {
+            impactLevel = tradeData.priceImpact.map { priceImpact in
                 switch priceImpact {
-                case 0..<SwapTradeService.warningPriceImpact: impactLevel = .normal
-                case SwapTradeService.warningPriceImpact..<SwapTradeService.forbiddenPriceImpact: impactLevel = .warning
-                default: impactLevel = .forbidden
+                case 0..<SwapTradeService.warningPriceImpact: return .normal
+                case SwapTradeService.warningPriceImpact..<SwapTradeService.forbiddenPriceImpact: return .warning
+                default: return .forbidden
                 }
-            } else {
-                impactLevel = .none
             }
         }
-
-        var minMaxAmount: Decimal? {
-            tradeData.type == .exactIn ? tradeData.amountOutMin : tradeData.amountInMax
-        }
-
     }
 
 }

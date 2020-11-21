@@ -3,29 +3,46 @@ import UniswapKit
 class SwapViewItemHelper {
 
     func priceValue(executionPrice: Decimal?, coinIn: Coin?, coinOut: Coin?) -> PriceCoinValue? {
-        guard let coinIn = coinIn else {
+        guard let price = executionPrice, let coinOut = coinOut, let coinIn = coinIn else {
             return nil
         }
-        guard let price = executionPrice,
-              let coinOut = coinOut else {
 
-            return nil
-        }
 //        let value = price.isZero ? 0 : 1 / price
         return PriceCoinValue(baseCoin: coinIn, quoteCoin: CoinValue(coin: coinOut, value: price))
     }
 
-    func impactPrice(_ price: Decimal?) -> String {
-        (price?.description ?? "0") + "%"
+    func priceImpactViewItem(trade: SwapTradeService.Trade, minLevel: SwapTradeService.PriceImpactLevel = .normal) -> SwapModule.PriceImpactViewItem? {
+        guard let priceImpact = trade.tradeData.priceImpact, let impactLevel = trade.impactLevel, impactLevel.rawValue >= minLevel.rawValue else {
+            return nil
+        }
+
+        return SwapModule.PriceImpactViewItem(
+                value: priceImpact.description + "%",
+                level: impactLevel
+        )
     }
 
-    func minMaxTitle(type: TradeType) -> String {
-        type == .exactOut ? "swap.maximum_paid" : "swap.minimum_got"
-    }
+    func guaranteedAmountViewItem(tradeData: TradeData, coinIn: Coin?, coinOut: Coin?) -> SwapModule.GuaranteedAmountViewItem? {
+        switch tradeData.type {
+        case .exactIn:
+            guard let amount = tradeData.amountOutMin, let coin = coinOut else {
+                return nil
+            }
 
-    func minMaxValue(amount: Decimal?, coinIn: Coin?, coinOut: Coin?, type: TradeType) -> CoinValue? {
-        let minMaxCoin = type == .exactIn ? coinOut : coinIn
-        return minMaxCoin.map { CoinValue(coin: $0, value: amount ?? 0) }
+            return SwapModule.GuaranteedAmountViewItem(
+                    title: "swap.minimum_got".localized,
+                    value: CoinValue(coin: coin, value: amount).formattedString
+            )
+        case .exactOut:
+            guard let amount = tradeData.amountInMax, let coin = coinIn else {
+                return nil
+            }
+
+            return SwapModule.GuaranteedAmountViewItem(
+                    title: "swap.maximum_paid".localized,
+                    value: CoinValue(coin: coin, value: amount).formattedString
+            )
+        }
     }
 
     func slippage(_ slippage: Decimal) -> String? {
