@@ -25,7 +25,7 @@ class SwapViewControllerNew: ThemeViewController {
 //    private let recipientCell = AdditionalDataCellNew()
     private let allowanceCell: SwapAllowanceCell
     private let priceImpactCell = AdditionalDataCellNew()
-//    private let guaranteedAmountCell = AdditionalDataCellNew()
+    private let guaranteedAmountCell = AdditionalDataCellNew()
 
     private let feeCell: SendFeeCell
     private let feePriorityCell: SendFeePriorityCell
@@ -152,12 +152,12 @@ class SwapViewControllerNew: ThemeViewController {
             let index = tradeViewItem.priceImpactLevel.rawValue % SwapViewControllerNew.levelColors.count
             priceImpactCell.valueColor = SwapViewControllerNew.levelColors[index]
 
-//            guaranteedAmountCell.isVisible = true
-//            guaranteedAmountCell.title = tradeViewItem.minMaxTitle
-//            guaranteedAmountCell.value = tradeViewItem.minMaxAmount
+            guaranteedAmountCell.isVisible = true
+            guaranteedAmountCell.title = tradeViewItem.minMaxTitle
+            guaranteedAmountCell.value = tradeViewItem.minMaxAmount
         } else {
             priceImpactCell.isVisible = false
-//            guaranteedAmountCell.isVisible = false
+            guaranteedAmountCell.isVisible = false
         }
 
         reloadTable()
@@ -271,7 +271,27 @@ extension SwapViewControllerNew: SectionsDataSource {
         ))
 
         sections.append(Section(
+                id: "advanced_settings",
+                rows: [
+                    Row<D1Cell>(
+                            id: "advanced",
+                            height: .heightSingleLineCell,
+                            autoDeselect: true,
+                            bind: { cell, _ in
+                                cell.set(backgroundStyle: .transparent, bottomSeparator: true)
+                                cell.title  = "swap.advanced_settings".localized
+                            },
+                            action: { [weak self] _ in
+                                self?.onTapAdvancedSettings()
+                            }
+                    ),
+                ]
+        ))
+
+        sections.append(Section(
                 id: "info",
+                headerState: .margin(height: 6),
+                footerState: .margin(height: 6),
                 rows: [
 //                    StaticRow(
 //                            cell: slippageCell,
@@ -298,51 +318,27 @@ extension SwapViewControllerNew: SectionsDataSource {
                             id: "price-impact",
                             height: priceImpactCell.cellHeight
                     ),
-//                    StaticRow(
-//                            cell: guaranteedAmountCell,
-//                            id: "guaranteed-amount",
-//                            height: guaranteedAmountCell.cellHeight
-//                    )
+                    StaticRow(
+                            cell: guaranteedAmountCell,
+                            id: "guaranteed-amount",
+                            height: guaranteedAmountCell.cellHeight
+                    ),
+                    StaticRow(
+                            cell: feeCell,
+                            id: "fee",
+                            height: feeCell.cellHeight
+                    )
                 ]
         ))
 
         sections.append(Section(
-                id: "fee",
-                rows: [
-                    StaticRow(
-                            cell: feeCell,
-                            id: "fee",
-                            height: 29
-                    )
-                ]
-        ))
-        sections.append(Section(
                 id: "fee-priority",
-                headerState: .margin(height: 6),
                 rows: [
                     StaticRow(
                             cell: feePriorityCell,
                             id: "fee-priority",
                             height: feePriorityCell.currentHeight
                     )
-                ]
-        ))
-
-        sections.append(Section(
-                id: "advanced_settings",
-                rows: [
-                    Row<D1Cell>(
-                            id: "advanced",
-                            height: .heightSingleLineCell,
-                            autoDeselect: true,
-                            bind: { cell, _ in
-                                cell.set(backgroundStyle: .transparent, topSeparator: true)
-                                cell.title  = "swap.advanced_settings".localized
-                            },
-                            action: { [weak self] _ in
-                                self?.onTapAdvancedSettings()
-                            }
-                    ),
                 ]
         ))
 
