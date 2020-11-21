@@ -2,15 +2,16 @@ import RxSwift
 import RxCocoa
 import UniswapKit
 
-class BaseSwapInputViewModel {
-    static private let unavailableBalanceIndex = 0
-    static private let maxValidDecimals = 8
+class SwapCoinCardViewModel {
+    private static let unavailableBalanceIndex = 0
+    private static let maxValidDecimals = 8
 
     let disposeBag = DisposeBag()
 
     let service: SwapService
+    let tradeService: SwapTradeService
 
-    private let decimalParser: IAmountDecimalParser
+    let decimalParser: IAmountDecimalParser
     private let decimalFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -25,9 +26,7 @@ class BaseSwapInputViewModel {
     var balanceErrorRelay = BehaviorRelay<Bool>(value: false)
     var tokenCodeRelay = BehaviorRelay<String?>(value: nil)
 
-    private var validDecimals = BaseSwapInputViewModel.maxValidDecimals
-
-    var balanceErrors = ContainerState<Int, Error>()
+    private var validDecimals = SwapCoinCardViewModel.maxValidDecimals
 
     var type: TradeType {
         fatalError("Must be implemented by Concrete subclass.")
@@ -41,8 +40,9 @@ class BaseSwapInputViewModel {
         fatalError("Must be implemented by Concrete subclass.")
     }
 
-    init(service: SwapService, decimalParser: IAmountDecimalParser) {
+    init(service: SwapService, tradeService: SwapTradeService, decimalParser: IAmountDecimalParser) {
         self.service = service
+        self.tradeService = tradeService
         self.decimalParser = decimalParser
 
         titleRelay.accept(_description)
@@ -51,17 +51,17 @@ class BaseSwapInputViewModel {
     }
 
     func subscribeToService() {
-        handle(estimated: service.estimated)
-        subscribe(disposeBag, service.estimatedObservable) { [weak self] in self?.handle(estimated: $0) }
-        subscribe(disposeBag, service.validationErrorsObservable) { [weak self] in self?.handle(errors: $0) }
+        handle(tradeType: tradeService.tradeType)
+        subscribe(disposeBag, tradeService.tradeTypeObservable) { [weak self] in self?.handle(tradeType: $0) }
+        subscribe(disposeBag, service.errorsObservable) { [weak self] in self?.handle(errors: $0) }
     }
 
-    private func handle(estimated: TradeType) {
-        isEstimatedRelay.accept(estimated != type)
+    private func handle(tradeType: TradeType) {
+        isEstimatedRelay.accept(tradeType != type)
     }
 
     func update(amount: Decimal?) {
-        guard self.type != service.estimated else {
+        guard type != tradeService.tradeType else {
             return
         }
 
@@ -72,7 +72,7 @@ class BaseSwapInputViewModel {
     }
 
     func handle(coin: Coin?) {
-        let max = SwapToInputViewModel.maxValidDecimals
+        let max = SwapCoinCardViewModel.maxValidDecimals
         validDecimals = min(max, (coin?.decimal ?? max))
 
         tokenCodeRelay.accept(coin?.code)
@@ -94,15 +94,17 @@ class BaseSwapInputViewModel {
     }
 
     func handle(errors: [Error]) {
-        let error = errors.first(where: { SwapValidationError.unavailableBalance(type: type) == $0 as? SwapValidationError })
-        balanceErrors.set(to: Self.unavailableBalanceIndex, value: error)
+    }
 
-        balanceErrorRelay.accept(balanceErrors.first != nil)
+    func onChange(amount: String?) {
+    }
+
+    func onSelect(coin: Coin) {
     }
 
 }
 
-extension BaseSwapInputViewModel {
+extension SwapCoinCardViewModel {
 
     var isEstimated: Driver<Bool> {
         isEstimatedRelay.asDriver()
@@ -134,18 +136,6 @@ extension BaseSwapInputViewModel {
 
     var tokenCode: Driver<String?> {
         tokenCodeRelay.asDriver()
-    }
-
-    func onChange(amount: String?) {
-        service.onChange(type: type, amount: decimalParser.parseAnyDecimal(from: amount))
-    }
-
-    var tokensForSelection: [SwapModule.CoinBalanceItem] {
-        service.tokensForSelection(type: type)
-    }
-
-    func onSelect(coin: SwapModule.CoinBalanceItem) {
-        service.onSelect(type: type, coin: coin.coin)
     }
 
 }

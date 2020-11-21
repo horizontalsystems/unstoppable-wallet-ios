@@ -4,56 +4,60 @@ import UniswapKit
 import HUD
 import RxSwift
 import RxCocoa
+import SectionsTableView
 
 class SwapViewController: ThemeViewController {
-    private static let levelColors: [UIColor] = [.themeGray, .themeRemus, .themeJacob, .themeLucian]
-    private static let spinnerRadius: CGFloat = 8
-    private static let spinnerLineWidth: CGFloat = 2
+    private let animationDuration: TimeInterval = 0.2
 
-    private static let processTag = 0, approveTag = 1, approvingTag = 2
+    private static let levelColors: [UIColor] = [.themeRemus, .themeJacob, .themeLucian]
 
     private let disposeBag = DisposeBag()
 
     private let viewModel: SwapViewModel
 
-    private let scrollView = UIScrollView()
-    private let container = UIView()
+    private let tableView = SectionsTableView(style: .grouped)
 
-    private let fromCoinCard: SwapCoinCard
-    private let toCoinCard: SwapCoinCard
+    private let fromCoinCardCell: SwapCoinCardCell
+    private let priceCell = SwapPriceCell()
+    private let toCoinCardCell: SwapCoinCardCell
+//    private let slippageCell = AdditionalDataCellNew()
+//    private let deadlineCell = AdditionalDataCellNew()
+//    private let recipientCell = AdditionalDataCellNew()
+    private let allowanceCell: SwapAllowanceCell
+    private let priceImpactCell = AdditionalDataCellNew()
+    private let guaranteedAmountCell = AdditionalDataCellNew()
 
-    private let loadingSpinner = HUDProgressView(
-            strokeLineWidth: SwapViewController.spinnerLineWidth,
-            radius: SwapViewController.spinnerRadius,
-            strokeColor: .themeOz
-    )
-    private let priceLabel = UILabel()
-    private let switchButton = UIButton()
+    private let feeCell: SendFeeCell
+    private let feePriorityCell: SendFeePriorityCell
 
-    private let allowanceView: SwapAllowanceView
+    private let errorCell = SendEthereumErrorCell()
+    private let buttonStackCell = StackViewCell()
+    private let approveButton = ThemeButton()
+    private let proceedButton = ThemeButton()
 
-    private let swapAreaWrapper = UIView()
-    private let priceImpactView = AdditionalDataView()
-    private let minMaxView = AdditionalDataView()
-    private let separatorView = UIView()
-    private let settingsView = SettingsDisclosureView()
+    private var tradeViewItem: SwapViewModel.TradeViewItem?
+    private var tradeOptionsViewItem: SwapViewModel.TradeOptionsViewItem?
 
-    private let button = ThemeButton()
-
-    private let swapErrorLabel = UILabel()
-    private let validationErrorLabel = UILabel()
-
-    init(viewModel: SwapViewModel) {
+    init(viewModel: SwapViewModel, allowanceViewModel: SwapAllowanceViewModel, feeViewModel: EthereumFeeViewModel) {
         self.viewModel = viewModel
 
-        fromCoinCard = SwapCoinCard(viewModel: viewModel.fromInputPresenter)
-        toCoinCard = SwapCoinCard(viewModel: viewModel.toInputPresenter)
-        allowanceView = SwapAllowanceView(viewModel: viewModel.allowancePresenter)
+        fromCoinCardCell = CoinCardModule.fromCell(service: viewModel.service, tradeService: viewModel.tradeService)
+        toCoinCardCell = CoinCardModule.toCell(service: viewModel.service, tradeService: viewModel.tradeService)
+        allowanceCell = SwapAllowanceCell(viewModel: allowanceViewModel)
+
+        feeCell = SendFeeCell(viewModel: feeViewModel)
+        feePriorityCell = SendFeePriorityCell(viewModel: feeViewModel)
 
         super.init()
 
-        fromCoinCard.presentDelegate = self
-        toCoinCard.presentDelegate = self
+        fromCoinCardCell.presentDelegate = self
+        toCoinCardCell.presentDelegate = self
+        allowanceCell.delegate = self
+        feePriorityCell.delegate = self
+
+        priceCell.onSwitch = { [weak self] in
+            self?.viewModel.onTapSwitch()
+        }
 
         hidesBottomBarWhenPushed = true
     }
@@ -65,188 +69,54 @@ class SwapViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "guides.title".localized
-
         title = "swap.title".localized
-        view.backgroundColor = .themeDarker
-
-        view.addSubview(scrollView)
-
-        scrollView.snp.makeConstraints { maker in
-            maker.top.equalToSuperview()
-            maker.leading.trailing.equalToSuperview()
-            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
-        }
-
-        scrollView.alwaysBounceVertical = true
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.keyboardDismissMode = .onDrag
-
-        scrollView.addSubview(container)
-        container.snp.makeConstraints { maker in
-            maker.leading.trailing.equalTo(self.view)
-            maker.top.bottom.equalTo(self.scrollView)
-        }
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "info_24")?.tinted(with: .themeJacob), style: .plain, target: self, action: #selector(onInfo))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onClose))
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
-        initLayout()
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+        tableView.sectionDataSource = self
+        tableView.keyboardDismissMode = .onDrag
+
+        tableView.registerCell(forClass: D1Cell.self)
+
+//        slippageCell.title = "swap.advanced_settings.slippage".localized
+//        deadlineCell.title = "swap.advanced_settings.deadline".localized
+//        recipientCell.title = "swap.advanced_settings.recipient_address".localized
+        allowanceCell.title = "swap.allowance".localized
+        priceImpactCell.title = "swap.price_impact".localized
+
+        approveButton.apply(style: .primaryGray)
+        approveButton.addTarget(self, action: #selector((onTapApproveButton)), for: .touchUpInside)
+        buttonStackCell.add(view: approveButton)
+
+        proceedButton.apply(style: .primaryYellow)
+        proceedButton.setTitle("swap.proceed_button".localized, for: .normal)
+        proceedButton.addTarget(self, action: #selector((onTapProceedButton)), for: .touchUpInside)
+        buttonStackCell.add(view: proceedButton)
+
+        tableView.buildSections()
+        tableView.reloadData()
+
         subscribeToViewModel()
     }
 
-    private func initLayout() {
-        container.addSubview(fromCoinCard)
-        fromCoinCard.snp.makeConstraints { maker in
-            maker.top.equalToSuperview()//.offset(CGFloat.margin3x)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-        }
-
-        container.addSubview(loadingSpinner)
-        loadingSpinner.snp.makeConstraints { maker in
-            maker.top.equalTo(fromCoinCard.snp.bottom).offset(CGFloat.margin3x)
-            maker.leading.equalToSuperview().inset(CGFloat.margin4x)
-            maker.width.height.equalTo(SwapViewController.spinnerRadius * 2 + SwapViewController.spinnerLineWidth)
-        }
-
-        loadingSpinner.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        loadingSpinner.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        loadingSpinner.isHidden = false
-
-        container.addSubview(priceLabel)
-        priceLabel.snp.makeConstraints { maker in
-            maker.centerY.equalTo(loadingSpinner)
-            maker.leading.equalTo(loadingSpinner.snp.trailing).offset(CGFloat.margin2x)
-        }
-
-        priceLabel.font = .subhead2
-        priceLabel.textAlignment = .center
-        set(price: nil)
-
-        container.addSubview(switchButton)
-        switchButton.snp.makeConstraints { maker in
-            maker.top.equalTo(fromCoinCard.snp.bottom)
-            maker.leading.equalTo(priceLabel.snp.trailing).offset(CGFloat.margin2x)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.bottom.equalTo(loadingSpinner).offset(CGFloat.margin3x)
-        }
-
-        switchButton.setImage(UIImage(named: "Swap Switch Icon")?.tinted(with: .themeGray), for: .normal)
-        switchButton.addTarget(self, action: #selector(onSwitchTap), for: .touchUpInside)
-        switchButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        switchButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-
-        container.addSubview(toCoinCard)
-        toCoinCard.snp.makeConstraints { maker in
-            maker.top.equalTo(loadingSpinner.snp.bottom).offset(CGFloat.margin3x)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-        }
-
-        container.addSubview(allowanceView)
-        allowanceView.snp.makeConstraints {maker in
-            maker.top.equalTo(toCoinCard.snp.bottom).offset(CGFloat.margin3x)
-            maker.leading.trailing.equalToSuperview()
-        }
-
-
-        container.addSubview(swapAreaWrapper)
-        swapAreaWrapper.snp.makeConstraints { maker in
-            maker.top.equalTo(allowanceView.snp.bottom)
-            maker.leading.trailing.equalToSuperview()
-            maker.bottom.equalToSuperview()
-        }
-
-        swapAreaWrapper.isHidden = true
-
-        swapAreaWrapper.addSubview(priceImpactView)
-        priceImpactView.snp.makeConstraints { maker in
-            maker.top.equalToSuperview()
-            maker.leading.trailing.equalToSuperview()
-        }
-
-        swapAreaWrapper.addSubview(minMaxView)
-        minMaxView.snp.makeConstraints { maker in
-            maker.top.equalTo(priceImpactView.snp.bottom)
-            maker.leading.trailing.equalToSuperview()
-        }
-
-        swapAreaWrapper.addSubview(validationErrorLabel)
-        validationErrorLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(minMaxView.snp.bottom)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-        }
-
-        validationErrorLabel.setContentCompressionResistancePriority(.required, for: .vertical)
-        validationErrorLabel.font = .subhead2
-        validationErrorLabel.textColor = .themeLucian
-        validationErrorLabel.numberOfLines = 0
-
-        swapAreaWrapper.addSubview(separatorView)
-        separatorView.snp.makeConstraints { maker in
-            maker.top.equalTo(validationErrorLabel.snp.bottom)
-            maker.height.equalTo(CGFloat.heightOnePixel)
-            maker.leading.trailing.equalToSuperview()
-        }
-
-        separatorView.backgroundColor = .themeSteel20
-
-        swapAreaWrapper.addSubview(settingsView)
-        settingsView.snp.makeConstraints { maker in
-            maker.top.equalTo(separatorView)
-            maker.height.equalTo(CGFloat.heightSingleLineCell)
-            maker.leading.trailing.equalToSuperview()
-        }
-
-        settingsView.set(title: "swap.advanced_settings".localized)
-        settingsView.onTouchUp = { [weak self] in
-            self?.onSettingsButtonTouchUp()
-        }
-
-        swapAreaWrapper.addSubview(button)
-        button.snp.makeConstraints { maker in
-            maker.top.equalTo(settingsView.snp.bottom).offset(CGFloat.margin4x)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.bottom.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightButton)
-        }
-
-        button.addTarget(self, action: #selector(onButtonTouchUp), for: .touchUpInside)
-        button.apply(style: .primaryYellow)
-        button.setTitle("swap.proceed_button".localized, for: .normal)
-        button.isEnabled = false
-
-        container.addSubview(swapErrorLabel)
-        swapErrorLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(allowanceView.snp.bottom)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-        }
-
-        swapErrorLabel.setContentCompressionResistancePriority(.required, for: .vertical)
-        swapErrorLabel.font = .subhead2
-        swapErrorLabel.textColor = .themeLucian
-        swapErrorLabel.numberOfLines = 0
-
-        fromCoinCard.viewDidLoad()
-        toCoinCard.viewDidLoad()
-        allowanceView.viewDidLoad()
-    }
-
     private func subscribeToViewModel() {
-        subscribe(disposeBag, viewModel.isLoading) { [weak self] in self?.set(loading: $0) }
-        subscribe(disposeBag, viewModel.swapError) { [weak self] in self?.set(swapError: $0) }
-        subscribe(disposeBag, viewModel.validationError) { [weak self] in self?.set(validationError: $0) }
+        subscribe(disposeBag, viewModel.isLoadingDriver) { [weak self] in self?.handle(loading: $0) }
+        subscribe(disposeBag, viewModel.swapErrorDriver) { [weak self] in self?.handle(error: $0) }
+        subscribe(disposeBag, viewModel.tradeViewItemDriver) { [weak self] in self?.handle(tradeViewItem: $0) }
+        subscribe(disposeBag, viewModel.tradeOptionsViewItemDriver) { [weak self] in self?.handle(tradeOptionsViewItem: $0) }
+        subscribe(disposeBag, viewModel.proceedAllowedDriver) { [weak self] in self?.handle(proceedAllowed: $0) }
+        subscribe(disposeBag, viewModel.approveActionDriver) { [weak self] in self?.handle(approveActionState: $0) }
 
-        subscribe(disposeBag, viewModel.tradeViewItem) { [weak self] in self?.handle(tradeViewItem: $0) }
-        subscribe(disposeBag, viewModel.showProcess) { [weak self] in self?.setButton(tag: SwapViewController.processTag) }
-        subscribe(disposeBag, viewModel.showApprove) { [weak self] in self?.setButton(tag: SwapViewController.approveTag) }
-        subscribe(disposeBag, viewModel.showApproving) { [weak self] in self?.setButton(tag: SwapViewController.approvingTag) }
-        subscribe(disposeBag, viewModel.isActionEnabled) { [weak self] in self?.button.isEnabled = $0 }
-        subscribe(disposeBag, viewModel.isTradeDataHidden) { [weak self] in self?.set(swapDataHidden: $0) }
-
-        subscribe(disposeBag, viewModel.openApprove) { [weak self] in self?.openApprove(data: $0) }
-        subscribe(disposeBag, viewModel.openConfirmation) { [weak self] in self?.openConfirmation() }
-        subscribe(disposeBag, viewModel.close) { [weak self] in self?.onClose() }
+        subscribe(disposeBag, viewModel.openApproveSignal) { [weak self] in self?.openApprove(approveData: $0) }
     }
 
     @objc func onClose() {
@@ -258,103 +128,249 @@ class SwapViewController: ThemeViewController {
         present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 
-    @objc func onSwitchTap() {
-        viewModel.onTapSwitch()
+    private func handle(loading: Bool) {
+        priceCell.set(loading: loading)
     }
 
-    @objc func onSettingsButtonTouchUp() {
-        let viewController = SwapTradeOptionsView(viewModel: viewModel.tradeOptionsViewModel)
-        present(ThemeNavigationController(rootViewController: viewController), animated: true)
-    }
-
-    @objc func onButtonTouchUp() {
-        switch button.tag {
-        case SwapViewController.approveTag: viewModel.onTapApprove()
-        case SwapViewController.processTag: openConfirmation()
-        default: ()
-        }
-    }
-
-    private func set(loading: Bool) {
-        loadingSpinner.isHidden = !loading
-        if loading {
-            loadingSpinner.startAnimating()
+    private func handle(error: String?) {
+        if let error = error {
+            errorCell.isVisible = true
+            errorCell.bind(text: error)
         } else {
-            loadingSpinner.stopAnimating()
+            errorCell.isVisible = false
+        }
+
+        reloadTable()
+    }
+
+    private func handle(tradeViewItem: SwapViewModel.TradeViewItem?) {
+        priceCell.set(price: tradeViewItem?.executionPrice)
+
+        if let viewItem = tradeViewItem?.priceImpact {
+            priceImpactCell.isVisible = true
+            priceImpactCell.value = viewItem.value
+            let index = viewItem.level.rawValue % SwapViewController.levelColors.count
+            priceImpactCell.valueColor = SwapViewController.levelColors[index]
+        } else {
+            priceImpactCell.isVisible = false
+        }
+
+        if let viewItem = tradeViewItem?.guaranteedAmount {
+            guaranteedAmountCell.isVisible = true
+            guaranteedAmountCell.title = viewItem.title
+            guaranteedAmountCell.value = viewItem.value
+        } else {
+            guaranteedAmountCell.isVisible = false
+        }
+
+        reloadTable()
+    }
+
+    private func handle(tradeOptionsViewItem: SwapViewModel.TradeOptionsViewItem?) {
+//        if let slippage = tradeOptionsViewItem?.slippage {
+//            slippageCell.isVisible = true
+//            slippageCell.value = slippage
+//        } else {
+//            slippageCell.isVisible = false
+//        }
+//
+//        if let deadline = tradeOptionsViewItem?.deadline {
+//            deadlineCell.isVisible = true
+//            deadlineCell.value = deadline
+//        } else {
+//            deadlineCell.isVisible = false
+//        }
+//
+//        if let recipient = tradeOptionsViewItem?.recipient {
+//            recipientCell.isVisible = true
+//            recipientCell.value = recipient
+//        } else {
+//            recipientCell.isVisible = false
+//        }
+//
+//        reloadTable()
+    }
+
+    private func handle(proceedAllowed: Bool) {
+        proceedButton.isEnabled = proceedAllowed
+    }
+
+    private func handle(approveActionState: SwapViewModel.ApproveActionState) {
+        switch approveActionState {
+        case .hidden:
+            approveButton.isHidden = true
+        case .visible:
+            approveButton.isHidden = false
+            approveButton.isEnabled = true
+            approveButton.setTitle("button.approve".localized, for: .normal)
+        case .pending:
+            approveButton.isHidden = false
+            approveButton.isEnabled = false
+            approveButton.setTitle("swap.approving_button".localized, for: .normal)
         }
     }
 
-    private func set(price: String?) {
-        guard let price = price else {
-            priceLabel.textColor = .themeGray50
-            priceLabel.text = "Price"
+    @objc private func onTapApproveButton() {
+        viewModel.onTapApprove()
+    }
+
+    @objc private func onTapProceedButton() {
+        let viewController = SwapConfirmationModule.viewController(
+                service: viewModel.service,
+                tradeService: viewModel.tradeService,
+                transactionService: viewModel.transactionService
+        )
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    @objc func onTapAdvancedSettings() {
+        let viewController = SwapTradeOptionsModule.viewController(tradeService: viewModel.tradeService)
+        present(viewController, animated: true)
+    }
+
+    private func openApprove(approveData: SwapAllowanceService.ApproveData) {
+        guard let viewController = SwapApproveModule.instance(data: approveData, delegate: self) else {
             return
         }
-        priceLabel.textColor = .themeGray
-        priceLabel.text = price
+
+        self.present(viewController, animated: true)
+    }
+
+    private func reloadTable() {
+        tableView.buildSections()
+
+        UIView.animate(withDuration: animationDuration) {
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+        }
     }
 
 }
 
-extension SwapViewController {
+extension SwapViewController: SectionsDataSource {
 
-    private func set(swapError: String?) {
-        swapErrorLabel.text = swapError
-    }
+    func buildSections() -> [SectionProtocol] {
+        var sections = [SectionProtocol]()
 
-    private func set(validationError: String?) {
-        validationErrorLabel.text = validationError
-        separatorView.snp.updateConstraints { maker in
-            maker.top.equalTo(validationErrorLabel.snp.bottom).offset(validationError == nil ? 0 : CGFloat.margin3x)
-        }
-        view.layoutIfNeeded()
-    }
+        sections.append(Section(
+                id: "main",
+                rows: [
+                    StaticRow(
+                            cell: fromCoinCardCell,
+                            id: "from-card",
+                            height: fromCoinCardCell.cellHeight
+                    ),
+                    StaticRow(
+                            cell: priceCell,
+                            id: "price",
+                            height: priceCell.cellHeight
+                    ),
+                    StaticRow(
+                            cell: toCoinCardCell,
+                            id: "to-card",
+                            height: toCoinCardCell.cellHeight
+                    )
+                ]
+        ))
 
-    private func color(for level: SwapModule.PriceImpactLevel) -> UIColor {
-        let index = level.rawValue % SwapViewController.levelColors.count
-        return SwapViewController.levelColors[index]
-    }
+        sections.append(Section(
+                id: "advanced_settings",
+                rows: [
+                    Row<D1Cell>(
+                            id: "advanced",
+                            height: .heightSingleLineCell,
+                            autoDeselect: true,
+                            bind: { cell, _ in
+                                cell.set(backgroundStyle: .transparent, bottomSeparator: true)
+                                cell.title  = "swap.advanced_settings".localized
+                            },
+                            action: { [weak self] _ in
+                                self?.onTapAdvancedSettings()
+                            }
+                    ),
+                ]
+        ))
 
-    private func handle(tradeViewItem: SwapModule.TradeViewItem?) {
-        set(price: tradeViewItem?.executionPrice)
+        sections.append(Section(
+                id: "info",
+                headerState: .margin(height: 6),
+                footerState: .margin(height: 6),
+                rows: [
+//                    StaticRow(
+//                            cell: slippageCell,
+//                            id: "slippage",
+//                            height: slippageCell.cellHeight
+//                    ),
+//                    StaticRow(
+//                            cell: deadlineCell,
+//                            id: "deadline",
+//                            height: deadlineCell.cellHeight
+//                    ),
+//                    StaticRow(
+//                            cell: recipientCell,
+//                            id: "recipient",
+//                            height: recipientCell.cellHeight
+//                    ),
+                    StaticRow(
+                            cell: allowanceCell,
+                            id: "allowance",
+                            height: allowanceCell.cellHeight
+                    ),
+                    StaticRow(
+                            cell: priceImpactCell,
+                            id: "price-impact",
+                            height: priceImpactCell.cellHeight
+                    ),
+                    StaticRow(
+                            cell: guaranteedAmountCell,
+                            id: "guaranteed-amount",
+                            height: guaranteedAmountCell.cellHeight
+                    ),
+                    StaticRow(
+                            cell: feeCell,
+                            id: "fee",
+                            height: feeCell.cellHeight
+                    )
+                ]
+        ))
 
-        guard let viewItem = tradeViewItem else {
-            priceImpactView.clear()
-            minMaxView.clear()
+        sections.append(Section(
+                id: "fee-priority",
+                rows: [
+                    StaticRow(
+                            cell: feePriorityCell,
+                            id: "fee-priority",
+                            height: feePriorityCell.currentHeight
+                    )
+                ]
+        ))
 
-            return
-        }
+        sections.append(Section(id: "error",
+                rows: [
+                    StaticRow(
+                            cell: errorCell,
+                            id: "error",
+                            dynamicHeight: { [weak self] width in
+                                self?.errorCell.cellHeight(width: width) ?? 0
+                            }
+                    )
+                ]
+        ))
 
-        priceImpactView.bind(title: "swap.price_impact".localized, value: viewItem.priceImpact?.localized)
-        priceImpactView.setValue(color: color(for: viewItem.priceImpactLevel))
+        sections.append(Section(
+                id: "buttons",
+                headerState: .margin(height: .margin4x),
+                footerState: .margin(height: .margin8x),
+                rows: [
+                    StaticRow(
+                            cell: buttonStackCell,
+                            id: "button",
+                            height: ThemeButton.height(style: .primaryYellow)
+                    )
+                ]
+        ))
 
-        minMaxView.bind(title: viewItem.minMaxTitle?.localized, value: viewItem.minMaxAmount?.localized)
-    }
-
-    private func setButton(tag: Int) {
-        button.tag = tag
-
-        switch tag {
-        case SwapViewController.approveTag: button.setTitle("button.approve".localized, for: .normal)
-        case SwapViewController.approvingTag: button.setTitle("swap.approving_button".localized, for: .normal)
-        default: button.setTitle("swap.proceed_button".localized, for: .normal)
-        }
-    }
-
-    private func set(swapDataHidden: Bool) {
-        swapAreaWrapper.isHidden = swapDataHidden
-    }
-
-    private func openApprove(data: SwapModule.ApproveData?) {
-//        guard let data = data,
-//              let vc = SwapApproveModule.instance(data: data, delegate: self) else {
-//            return
-//        }
-//
-//        self.present(vc, animated: true)
-    }
-
-    private func openConfirmation() {
+        return sections
     }
 
 }
@@ -371,6 +387,18 @@ extension SwapViewController: ISwapApproveDelegate {
 
     func didApprove() {
         viewModel.didApprove()
+    }
+
+}
+
+extension SwapViewController: ISendFeePriorityCellDelegate {
+
+    func open(viewController: UIViewController) {
+        present(viewController, animated: true)
+    }
+
+    func onChangeHeight() {
+        reloadTable()
     }
 
 }

@@ -3,63 +3,65 @@ import RxSwift
 import RxCocoa
 
 class CoinSelectViewModel {
+    private let service: CoinSelectService
     private let disposeBag = DisposeBag()
 
-    private var coinViewItemsRelay = BehaviorRelay<[CoinBalanceViewItem]>(value: [])
-    private let coins: [SwapModule.CoinBalanceItem]
-
+    private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
     private var filter: String?
 
-    init(coins: [SwapModule.CoinBalanceItem]) {
-        self.coins = coins
+    init(service: CoinSelectService) {
+        self.service = service
 
         sync()
     }
 
-    private var filtered :[SwapModule.CoinBalanceItem] {
-        guard let filter = filter else {
-            return coins
-        }
-
-        return coins.filter { item in
-            item.coin.title.localizedCaseInsensitiveContains(filter)  || item.coin.code.localizedCaseInsensitiveContains(filter)
-        }
-    }
-
     private func sync() {
-        let viewItems = filtered.map { item -> CoinBalanceViewItem in
+        let viewItems = filteredItems.map { item -> ViewItem in
             let formatted = item.balance
                     .flatMap { CoinValue(coin: item.coin, value: $0) }
                     .flatMap { ValueFormatter.instance.format(coinValue: $0, fractionPolicy: .threshold(high: 0.01, low: 0)) }
 
-            return CoinBalanceViewItem(coin: item.coin, balance: formatted, blockchainType: item.blockchainType)
+            return ViewItem(coin: item.coin, balance: formatted, fiatBalance: nil, blockchainType: item.blockchainType)
         }
-        coinViewItemsRelay.accept(viewItems)
+
+        viewItemsRelay.accept(viewItems)
+    }
+
+    private var filteredItems: [CoinSelectService.Item] {
+        guard let filter = filter else {
+            return service.items
+        }
+
+        return service.items.filter { item in
+            item.coin.title.localizedCaseInsensitiveContains(filter)  || item.coin.code.localizedCaseInsensitiveContains(filter)
+        }
     }
 
 }
 
 extension CoinSelectViewModel {
 
-    public var coinViewItems: Driver<[CoinBalanceViewItem]> {
-        coinViewItemsRelay.asDriver()
+    public var viewItemsDriver: Driver<[ViewItem]> {
+        viewItemsRelay.asDriver()
     }
 
-    public func coin(at index: Int) -> SwapModule.CoinBalanceItem? {
-        let coins = filtered
-
-        guard index < coins.count else {
-            return nil
-        }
-        return coins[index]
-    }
-
-    func onUpdate(filter: String?) {
+    func apply(filter: String?) {
         self.filter = filter
 
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             self?.sync()
         }
+    }
+
+}
+
+extension CoinSelectViewModel {
+
+    struct ViewItem {
+        let coin: Coin
+        let balance: String?
+        let fiatBalance: String?
+        let blockchainType: String?
     }
 
 }

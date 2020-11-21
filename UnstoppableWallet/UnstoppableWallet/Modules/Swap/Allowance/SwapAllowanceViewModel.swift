@@ -2,10 +2,10 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class SwapAllowanceViewModelNew {
+class SwapAllowanceViewModel {
     private let disposeBag = DisposeBag()
 
-    private let service: SwapServiceNew
+    private let service: SwapService
     private let allowanceService: SwapAllowanceService
 
     private(set) var isVisible: Bool {
@@ -17,7 +17,7 @@ class SwapAllowanceViewModelNew {
     private var allowanceRelay = BehaviorRelay<String?>(value: nil)
     private var isErrorRelay = BehaviorRelay<Bool>(value: false)
 
-    init(service: SwapServiceNew, allowanceService: SwapAllowanceService) {
+    init(service: SwapService, allowanceService: SwapAllowanceService) {
         self.service = service
         self.allowanceService = allowanceService
 
@@ -36,7 +36,7 @@ class SwapAllowanceViewModelNew {
     }
 
     private func handle(errors: [Error]) {
-        let error = errors.first(where: { .insufficientAllowance == $0 as? SwapServiceNew.SwapError })
+        let error = errors.first(where: { .insufficientAllowance == $0 as? SwapService.SwapError })
         isErrorRelay.accept(error != nil)
     }
 
@@ -53,7 +53,7 @@ class SwapAllowanceViewModelNew {
 
 }
 
-extension SwapAllowanceViewModelNew {
+extension SwapAllowanceViewModel {
 
     var isVisibleSignal: Signal<Bool> {
         isVisibleRelay.asSignal()

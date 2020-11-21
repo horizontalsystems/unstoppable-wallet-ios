@@ -1,22 +1,21 @@
 import UIKit
 import ThemeKit
 
-protocol ICoinSelectDelegate {
-    func didSelect(coin: SwapModule.CoinBalanceItem)
-}
-
-struct CoinBalanceViewItem {
-    let coin: Coin
-    let balance: String?
-    let blockchainType: String?
+protocol ICoinSelectDelegate: AnyObject {
+    func didSelect(coin: Coin)
 }
 
 struct CoinSelectModule {
 
-    static func instance(coins: [SwapModule.CoinBalanceItem], delegate: ICoinSelectDelegate) -> UIViewController {
-        let viewModel = CoinSelectViewModel(coins: coins)
+    static func viewController(delegate: ICoinSelectDelegate) -> UIViewController {
+        let service = CoinSelectService(
+                coinManager: App.shared.coinManager,
+                walletManager: App.shared.walletManager,
+                adapterManager: App.shared.adapterManager
+        )
+        let viewModel = CoinSelectViewModel(service: service)
 
-        return ThemeNavigationController(rootViewController: CoinSelectViewController(viewModel: viewModel, delegate: delegate))
+        return CoinSelectViewController(viewModel: viewModel, delegate: delegate)
     }
 
 }

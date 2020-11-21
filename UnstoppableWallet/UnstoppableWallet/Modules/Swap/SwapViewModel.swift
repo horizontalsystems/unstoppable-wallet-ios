@@ -3,244 +3,193 @@ import RxSwift
 import RxCocoa
 import UniswapKit
 import CurrencyKit
+import EthereumKit
 
 class SwapViewModel {
-    private enum LoadingType: Int, Comparable {
-        case allowance
-        case tradeData
-        case fee
-        case waitingForApprove
-
-        static func <(lhs: LoadingType, rhs: LoadingType) -> Bool {
-            lhs.rawValue < rhs.rawValue
-        }
-    }
-
-    private enum ValidationErrorType: Int, Comparable, Hashable {
-        case fee, validation
-
-        static func <(lhs: ValidationErrorType, rhs: ValidationErrorType) -> Bool {
-            lhs.rawValue < rhs.rawValue
-        }
-    }
-
     private let disposeBag = DisposeBag()
 
-    private let service: SwapService
-    private let factory: SwapViewItemHelper
-    private let decimalParser: IAmountDecimalParser
+    public let service: SwapService
+    public let tradeService: SwapTradeService
+    public let transactionService: EthereumTransactionService
+    public let pendingAllowanceService: SwapPendingAllowanceService
+    private let coinService: CoinService
+
+    public let viewItemHelper: SwapViewItemHelper
 
     private var isLoadingRelay = BehaviorRelay<Bool>(value: false)
-    private var isTradeDataHiddenRelay = BehaviorRelay<Bool>(value: true)
-    private var swapErrorRelay = PublishRelay<Error?>()
-    private var tradeViewItemRelay = BehaviorRelay<SwapModule.TradeViewItem?>(value: nil)
+    private var swapErrorRelay = BehaviorRelay<String?>(value: nil)
+    private var tradeViewItemRelay = BehaviorRelay<TradeViewItem?>(value: nil)
+    private var tradeOptionsViewItemRelay = BehaviorRelay<TradeOptionsViewItem?>(value: nil)
+    private var proceedAllowedRelay = BehaviorRelay<Bool>(value: false)
+    private var approveActionRelay = BehaviorRelay<ApproveActionState>(value: .hidden)
 
-    private var validationErrorRelay = PublishRelay<Error?>()
+    private var openApproveRelay = PublishRelay<SwapAllowanceService.ApproveData>()
 
-    private var showProcessRelay = PublishRelay<()>()
-    private var showApproveRelay = PublishRelay<()>()
-    private var showApprovingRelay = PublishRelay<()>()
-    private var isActionEnabledRelay = PublishRelay<Bool>()
-
-    private var openApproveRelay = PublishRelay<SwapModule.ApproveData?>()
-    private var openConfirmationRelay = PublishRelay<()>()
-    private var closeRelay = PublishRelay<()>()
-
-    private var validationErrorState = ContainerState<ValidationErrorType, Error>()
-    private var loadingState = ContainerState<LoadingType, Bool>()
-
-
-    // Swap Module Presenters
-    public var fromInputPresenter: BaseSwapInputViewModel {
-        SwapFromInputViewModel(service: service, decimalParser: decimalParser)
-    }
-
-    public var toInputPresenter: BaseSwapInputViewModel {
-        SwapToInputViewModel(service: service, decimalParser: decimalParser)
-    }
-
-    public var allowancePresenter: SwapAllowanceViewModel {
-        SwapAllowanceViewModel(service: service)
-    }
-
-    public var tradeOptionsViewModel: SwapTradeOptionsViewModel {
-        fatalError()
-//        SwapTradeOptionsViewModel(service: SwapTradeOptionsService(tradeOptions: service.tradeOptions), tradeService: tra, decimalParser: AmountDecimalParser())
-    }
-
-    init(service: SwapService, factory: SwapViewItemHelper, decimalParser: IAmountDecimalParser) {
+    init(service: SwapService, tradeService: SwapTradeService, transactionService: EthereumTransactionService, pendingAllowanceService: SwapPendingAllowanceService, coinService: CoinService, viewItemHelper: SwapViewItemHelper) {
         self.service = service
-        self.factory = factory
-        self.decimalParser = decimalParser
+        self.tradeService = tradeService
+        self.transactionService = transactionService
+        self.pendingAllowanceService = pendingAllowanceService
+        self.coinService = coinService
+        self.viewItemHelper = viewItemHelper
 
         subscribeToService()
+
+        sync(state: service.state)
+        sync(errors: service.errors)
+        sync(tradeState: tradeService.state)
     }
 
     private func subscribeToService() {
-        handle(tradeData: service.tradeDataState)
-
-        subscribe(disposeBag, service.validationErrorsObservable) { [weak self] errors in self?.handle(validationErrors: errors) }
-        subscribe(disposeBag, service.tradeDataObservable) { [weak self] in self?.handle(tradeData: $0) }
-        subscribe(disposeBag, service.allowanceObservable) { [weak self] in self?.handle(allowance: $0) }
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.handle(state: $0) }
-        subscribe(disposeBag, service.feeStateObservable) { [weak self] in self?.handle(feeState: $0)}
+        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+        subscribe(disposeBag, service.errorsObservable) { [weak self] in self?.sync(errors: $0) }
+        subscribe(disposeBag, tradeService.stateObservable) { [weak self] in self?.sync(tradeState: $0) }
+        subscribe(disposeBag, tradeService.tradeOptionsObservable) { [weak self] in self?.sync(tradeOptions: $0) }
+        subscribe(disposeBag, pendingAllowanceService.isPendingObservable) { [weak self] _ in self?.syncApproveAction() }
     }
 
-    private func tradeViewItem(item: SwapModule.TradeItem?) -> SwapModule.TradeViewItem? {
-        guard let item = item else {
-            return nil
+    private func sync(state: SwapService.State? = nil) {
+        let state = state ?? service.state
+
+        isLoadingRelay.accept(state == .loading)
+        proceedAllowedRelay.accept(state == .ready)
+    }
+
+    private func convert(error: Error) -> String {
+        if case SwapService.TransactionError.insufficientBalance(let requiredBalance) = error {
+            let amountData = coinService.amountData(value: requiredBalance)
+            return "ethereum_transaction.error.insufficient_balance".localized(amountData.formattedString)
+        }
+        if case EthereumKit.Kit.EstimatedLimitError.insufficientBalance = error {
+            return "ethereum_transaction.error.insufficient_balance_with_fee".localized
         }
 
-        fatalError()
+        return error.convertedError.smartDescription
     }
 
-    private func resolveTrade(error: Error?) -> Error? {
-        guard let error = error else {
-            return nil
-        }
+    private func sync(errors: [Error]? = nil) {
+        let errors = errors ?? service.errors
 
-        if case UniswapKit.Kit.TradeError.zeroAmount = error {
-            return nil
-        }
-        return error
-    }
-
-    private func updateValidationError(type: ValidationErrorType, error: Error?) {
-        validationErrorState.set(to: type, value: error)
-        validationErrorRelay.accept(validationErrorState.first)
-    }
-}
-
-extension SwapViewModel {
-
-    private func handle(validationErrors: [Error]) {
-        let error = validationErrors.first(where: {
-            if case .insufficientFeeBalance(_) = $0 as? FeeModule.FeeError {
-                return true
+        let filtered = errors.filter { error in
+            switch error {
+            case let error as UniswapKit.Kit.TradeError: return error != .zeroAmount
+            case _ as EthereumTransactionService.GasDataError: return false
+            case _ as SwapService.SwapError: return false
+            default: return true
             }
-            return false
-        })
+        }
 
-        updateValidationError(type: .validation, error: error)
+        swapErrorRelay.accept(filtered.first.map { convert(error: $0) })
+
+        syncApproveAction()
     }
 
-    private func handle(tradeData: DataStatus<SwapModule.TradeItem>?) {
-        loadingState.set(to: .tradeData, value: tradeData?.isLoading ?? false)
-        isLoadingRelay.accept(loadingState.isActive)
-
-        isTradeDataHiddenRelay.accept(tradeData == nil || tradeData?.error != nil || tradeData?.isLoading == true)
-
-        tradeViewItemRelay.accept(tradeViewItem(item: tradeData?.data))
-
-        let resolved = resolveTrade(error: tradeData?.error)
-        swapErrorRelay.accept(resolved)
-    }
-
-    private func handle(allowance: DataStatus<Decimal>?) {
-        loadingState.set(to: .allowance, value: allowance?.isLoading ?? false)
-
-        isLoadingRelay.accept(loadingState.isActive)
-    }
-
-    private func handle(state: SwapModule.SwapState) {
-        loadingState.set(to: .waitingForApprove, value: false)
+    private func sync(tradeState: SwapTradeService.State? = nil) {
+        let state = tradeState ?? tradeService.state
 
         switch state {
-        case .idle, .proceedAllowed:
-            showProcessRelay.accept(())
-            isActionEnabledRelay.accept(state == .proceedAllowed)
-        case .approveRequired:
-            showApproveRelay.accept(())
-            isActionEnabledRelay.accept(true)
-        case .waitingForApprove:
-            loadingState.set(to: .waitingForApprove, value: true)
-            showApprovingRelay.accept(())
-            isActionEnabledRelay.accept(false)
-        case .swapping:
-            ()
-        case .swapSuccess:
-            closeRelay.accept(())
+        case .ready(let trade):
+            tradeViewItemRelay.accept(tradeViewItem(trade: trade))
+        default:
+            tradeViewItemRelay.accept(nil)
         }
-
-        isLoadingRelay.accept(loadingState.isActive)
     }
 
-    func handle(feeState: DataStatus<SwapModule.SwapFeeInfo>?) {
-        updateValidationError(type: .fee, error: feeState?.error)
-        loadingState.set(to: .fee, value: feeState?.isLoading ?? false)
-        isLoadingRelay.accept(loadingState.isActive)
+    private func sync(tradeOptions: TradeOptions) {
+        tradeOptionsViewItemRelay.accept(tradeOptionsViewItem(tradeOptions: tradeOptions))
+    }
+
+    private func syncApproveAction() {
+        if pendingAllowanceService.isPending == true {
+            approveActionRelay.accept(.pending)
+        } else {
+            let isInsufficientAllowance = service.errors.contains(where: { .insufficientAllowance == $0 as? SwapService.SwapError })
+            approveActionRelay.accept(isInsufficientAllowance ? .visible : .hidden)
+        }
+    }
+
+    private func tradeViewItem(trade: SwapTradeService.Trade) -> TradeViewItem {
+        TradeViewItem(
+                executionPrice: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, coinIn: tradeService.coinIn, coinOut: tradeService.coinOut)?.formattedString,
+                priceImpact: viewItemHelper.priceImpactViewItem(trade: trade, minLevel: .warning),
+                guaranteedAmount: viewItemHelper.guaranteedAmountViewItem(tradeData: trade.tradeData, coinIn: tradeService.coinIn, coinOut: tradeService.coinOut)
+        )
+    }
+
+    private func tradeOptionsViewItem(tradeOptions: TradeOptions) -> TradeOptionsViewItem {
+        TradeOptionsViewItem(slippage: viewItemHelper.slippage(tradeOptions.allowedSlippage),
+            deadline: viewItemHelper.deadline(tradeOptions.ttl),
+            recipient: tradeOptions.recipient?.hex)
     }
 
 }
 
 extension SwapViewModel {
 
-    var isLoading: Driver<Bool> {
+    var isLoadingDriver: Driver<Bool> {
         isLoadingRelay.asDriver()
     }
 
-    var swapError: Signal<String?> {
-        swapErrorRelay.asSignal().map { $0?.convertedError.smartDescription }
+    var swapErrorDriver: Driver<String?> {
+        swapErrorRelay.asDriver()
     }
 
-    var tradeViewItem: Driver<SwapModule.TradeViewItem?> {
+    var tradeViewItemDriver: Driver<TradeViewItem?> {
         tradeViewItemRelay.asDriver()
     }
 
-    var isTradeDataHidden: Driver<Bool> {
-        isTradeDataHiddenRelay.asDriver()
+    var tradeOptionsViewItemDriver: Driver<TradeOptionsViewItem?> {
+        tradeOptionsViewItemRelay.asDriver()
     }
 
-    var validationError: Signal<String?> {
-        validationErrorRelay.asSignal().map { $0?.convertedError.smartDescription }
+    var proceedAllowedDriver: Driver<Bool> {
+        proceedAllowedRelay.asDriver()
     }
 
-    var showApprove: Signal<()> {
-        showApproveRelay.asSignal()
+    var approveActionDriver: Driver<ApproveActionState> {
+        approveActionRelay.asDriver()
     }
 
-    var showProcess: Signal<()> {
-        showProcessRelay.asSignal()
-    }
-
-    var showApproving: Signal<()> {
-        showApprovingRelay.asSignal()
-    }
-
-    var isActionEnabled: Signal<Bool> {
-        isActionEnabledRelay.asSignal()
-    }
-
-    var close: Driver<()> {
-        closeRelay.asDriver(onErrorJustReturn: ())
-    }
-
-    var openApprove: Signal<SwapModule.ApproveData?> {
+    var openApproveSignal: Signal<SwapAllowanceService.ApproveData> {
         openApproveRelay.asSignal()
     }
 
-    var openConfirmation: Signal<()> {
-        openConfirmationRelay.asSignal()
-    }
-
     func onTapSwitch() {
-        service.switchCoins()
+        tradeService.switchCoins()
     }
 
     func onTapApprove() {
-        openApproveRelay.accept(service.approveData)
-    }
+        guard let approveData = service.approveData else {
+            return
+        }
 
-    func onTapProceed() {
-        service.proceed()
+        openApproveRelay.accept(approveData)
     }
 
     func didApprove() {
-        service.didApprove()
+        pendingAllowanceService.syncAllowance()
     }
 
-    func onSwap() {
-        service.swap()
+}
+
+extension SwapViewModel {
+
+    struct TradeViewItem {
+        let executionPrice: String?
+        let priceImpact: SwapModule.PriceImpactViewItem?
+        let guaranteedAmount: SwapModule.GuaranteedAmountViewItem?
+    }
+
+    struct TradeOptionsViewItem {
+        let slippage: String?
+        let deadline: String?
+        let recipient: String?
+    }
+
+    enum ApproveActionState {
+        case hidden
+        case visible
+        case pending
     }
 
 }
