@@ -178,9 +178,10 @@ extension SwapTradeOptionsView: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
+        sections.append(Section(id: "margin", headerState: .margin(height: .margin3x)))
+        sections.append(recipientSection)
         sections.append(slippageSection)
         sections.append(deadlineSection)
-        sections.append(recipientSection)
         sections.append(buttonSection)
 
         return sections
