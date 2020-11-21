@@ -160,7 +160,7 @@ class SwapServiceNew {
         case .loading:
             loading = true
         case .ready(let trade):
-            if trade.impactLevel == .forbidden {
+            if let impactLevel = trade.impactLevel, impactLevel == .forbidden {
                 allErrors.append(SwapError.forbiddenPriceImpactLevel)
             }
         case .notReady(let errors):

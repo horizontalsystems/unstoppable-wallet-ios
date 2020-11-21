@@ -117,6 +117,16 @@ struct SwapModule {
         return ThemeNavigationController(rootViewController: SwapViewController(viewModel: viewModel))
     }
 
+    struct PriceImpactViewItem {
+        let value: String
+        let level: SwapTradeService.PriceImpactLevel
+    }
+
+    struct GuaranteedAmountViewItem {
+        let title: String
+        let value: String
+    }
+
     static func viewController(coinIn: Coin) -> UIViewController? {
         guard let ethereumKit = App.shared.ethereumKitManager.ethereumKit else {
             return nil

@@ -110,11 +110,9 @@ class SwapViewModelNew {
 
     private func tradeViewItem(trade: SwapTradeService.Trade) -> TradeViewItem {
         TradeViewItem(
-                executionPrice: viewItemHelper.priceValue(executionPrice: trade.minMaxAmount, coinIn: tradeService.coinIn, coinOut: tradeService.coinOut)?.formattedString,
-                priceImpact: viewItemHelper.impactPrice(trade.tradeData.priceImpact),
-                priceImpactLevel: trade.impactLevel,
-                minMaxTitle: viewItemHelper.minMaxTitle(type: trade.tradeData.type).localized,
-                minMaxAmount: viewItemHelper.minMaxValue(amount: trade.minMaxAmount, coinIn: tradeService.coinIn, coinOut: tradeService.coinOut, type: trade.tradeData.type)?.formattedString
+                executionPrice: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, coinIn: tradeService.coinIn, coinOut: tradeService.coinOut)?.formattedString,
+                priceImpact: viewItemHelper.priceImpactViewItem(trade: trade, minLevel: .warning),
+                guaranteedAmount: viewItemHelper.guaranteedAmountViewItem(tradeData: trade.tradeData, coinIn: tradeService.coinIn, coinOut: tradeService.coinOut)
         )
     }
 
@@ -178,10 +176,8 @@ extension SwapViewModelNew {
 
     struct TradeViewItem {
         let executionPrice: String?
-        let priceImpact: String?
-        let priceImpactLevel: SwapTradeService.PriceImpactLevel
-        let minMaxTitle: String?
-        let minMaxAmount: String?
+        let priceImpact: SwapModule.PriceImpactViewItem?
+        let guaranteedAmount: SwapModule.GuaranteedAmountViewItem?
     }
 
     struct TradeOptionsViewItem {
