@@ -138,10 +138,8 @@ class SwapCoinCardCell: UITableViewCell {
     }
 
     @objc private func onTapTokenSelect() {
-        let coins = viewModel.tokensForSelection
-
-        let vc = CoinSelectModule.instance(coins: coins, delegate: self)
-        presentDelegate?.show(viewController: vc)
+        let viewController = CoinSelectModule.viewController(delegate: self)
+        presentDelegate?.show(viewController: ThemeNavigationController(rootViewController: viewController))
     }
 
 }
@@ -211,7 +209,7 @@ extension SwapCoinCardCell: UITextFieldDelegate {
 
 extension SwapCoinCardCell: ICoinSelectDelegate {
 
-    func didSelect(coin: SwapModule.CoinBalanceItem) {
+    func didSelect(coin: Coin) {
         viewModel.onSelect(coin: coin)
     }
 

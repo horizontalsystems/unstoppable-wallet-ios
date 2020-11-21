@@ -3,7 +3,7 @@ import ThemeKit
 
 struct SwapConfirmationModule {
 
-    static func viewController(service: SwapServiceNew, tradeService: SwapTradeService, transactionService: EthereumTransactionService) -> UIViewController {
+    static func viewController(service: SwapService, tradeService: SwapTradeService, transactionService: EthereumTransactionService) -> UIViewController {
         let ethereumCoinService = CoinService(
                 coin: App.shared.appConfigProvider.ethereumCoin,
                 currencyKit: App.shared.currencyKit,

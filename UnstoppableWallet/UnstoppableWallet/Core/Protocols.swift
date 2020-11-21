@@ -598,13 +598,6 @@ protocol ITermsManager {
     func update(term: Term)
 }
 
-protocol ISwapCoinManager {
-    func balance(coin: Coin) -> Decimal?
-    func items(accountCoins: Bool, exclude: [Coin]) -> [SwapModule.CoinBalanceItem]
-
-    func allowanceSingle(coin: Coin, spenderAddress: Address) -> Single<Decimal>
-}
-
 protocol IPresentDelegate: AnyObject {
     func show(viewController: UIViewController)
 }

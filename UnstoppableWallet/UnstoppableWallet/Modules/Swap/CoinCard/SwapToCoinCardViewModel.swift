@@ -28,12 +28,8 @@ class SwapToCoinCardViewModel: SwapCoinCardViewModel {
         tradeService.set(amountOut: decimalParser.parseAnyDecimal(from: amount))
     }
 
-    override var tokensForSelection: [SwapModule.CoinBalanceItem] {
-        coinService.coins(accountCoins: false, exclude: [])
-    }
-
-    override func onSelect(coin: SwapModule.CoinBalanceItem) {
-        tradeService.set(coinOut: coin.coin)
+    override func onSelect(coin: Coin) {
+        tradeService.set(coinOut: coin)
     }
 
 }

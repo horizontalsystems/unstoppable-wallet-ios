@@ -30,7 +30,7 @@ class SwapFromCoinCardViewModel: SwapCoinCardViewModel {
     override func handle(errors: [Error]) {
         super.handle(errors: errors)
 
-        let error = errors.first(where: { .insufficientBalanceIn == $0 as? SwapServiceNew.SwapError })
+        let error = errors.first(where: { .insufficientBalanceIn == $0 as? SwapService.SwapError })
         balanceErrorRelay.accept(error != nil)
     }
 
@@ -38,12 +38,8 @@ class SwapFromCoinCardViewModel: SwapCoinCardViewModel {
         tradeService.set(amountIn: decimalParser.parseAnyDecimal(from: amount))
     }
 
-    override var tokensForSelection: [SwapModule.CoinBalanceItem] {
-        coinService.coins(accountCoins: true, exclude: [])
-    }
-
-    override func onSelect(coin: SwapModule.CoinBalanceItem) {
-        tradeService.set(coinIn: coin.coin)
+    override func onSelect(coin: Coin) {
+        tradeService.set(coinIn: coin)
     }
 
 }

@@ -5,13 +5,12 @@ import ThemeKit
 import RxSwift
 
 class CoinSelectViewController: ThemeSearchViewController {
-    private let disposeBag = DisposeBag()
-    private let delegate: ICoinSelectDelegate
-
     private let viewModel: CoinSelectViewModel
-    private let tableView = SectionsTableView(style: .grouped)
+    private weak var delegate: ICoinSelectDelegate?
+    private let disposeBag = DisposeBag()
 
-    private var viewItems = [CoinBalanceViewItem]()
+    private let tableView = SectionsTableView(style: .grouped)
+    private var viewItems = [CoinSelectViewModel.ViewItem]()
 
     init(viewModel: CoinSelectViewModel, delegate: ICoinSelectDelegate) {
         self.viewModel = viewModel
@@ -28,7 +27,7 @@ class CoinSelectViewController: ThemeSearchViewController {
         super.viewDidLoad()
 
         title = "choose_coin.title".localized
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onClose))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -43,45 +42,26 @@ class CoinSelectViewController: ThemeSearchViewController {
 
         navigationItem.searchController?.searchBar.placeholder = "placeholder.search".localized
 
-        subscribe(disposeBag, viewModel.coinViewItems) { [weak self] in self?.handle(viewItems: $0) }
+        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.handle(viewItems: $0) }
     }
 
-    @objc func onClose() {
+    @objc func onTapClose() {
         dismiss(animated: true)
     }
 
-    private func rows(viewItems: [CoinBalanceViewItem]) -> [RowProtocol] {
-        viewItems.enumerated().map { (index, viewItem) in
-            Row<SwapTokenSelectCell>(
-                id: "coin_\(viewItem.coin.id)",
-                height: .heightDoubleLineCell,
-                autoDeselect: true,
-                bind: { cell, _ in
-                    cell.bind(coin: viewItem.coin, balance: viewItem.balance, blockchainType: viewItem.blockchainType, last: index == viewItems.count - 1)
-                },
-                action: { [weak self] _ in
-                    self?.onSelectCoin(at: index)
-                }
-            )
-        }
+    private func onSelect(coin: Coin) {
+        delegate?.didSelect(coin: coin)
+        dismiss(animated: true)
     }
 
-    private func onSelectCoin(at index: Int) {
-        if let coin = viewModel.coin(at: index) {
-            delegate.didSelect(coin: coin)
-        }
-
-        onClose()
-    }
-
-    private func handle(viewItems: [CoinBalanceViewItem]) {
+    private func handle(viewItems: [CoinSelectViewModel.ViewItem]) {
         self.viewItems = viewItems
 
         tableView.reload()
     }
 
     override func onUpdate(filter: String?) {
-        viewModel.onUpdate(filter: filter)
+        viewModel.apply(filter: filter)
     }
 
 }
@@ -94,7 +74,26 @@ extension CoinSelectViewController: SectionsDataSource {
                     id: "coins",
                     headerState: .margin(height: .margin3x),
                     footerState: .margin(height: .margin8x),
-                    rows: rows(viewItems: viewItems)
+                    rows: viewItems.enumerated().map { index, viewItem in
+                        let last = index == viewItems.count - 1
+
+                        return Row<SwapTokenSelectCell>(
+                                id: "coin_\(viewItem.coin.id)",
+                                height: .heightDoubleLineCell,
+                                autoDeselect: true,
+                                bind: { cell, _ in
+                                    cell.bind(
+                                            coin: viewItem.coin,
+                                            balance: viewItem.balance,
+                                            blockchainType: viewItem.blockchainType,
+                                            last: last
+                                    )
+                                },
+                                action: { [weak self] _ in
+                                    self?.onSelect(coin: viewItem.coin)
+                                }
+                        )
+                    }
             )
         ]
     }

@@ -7,9 +7,9 @@ class SwapAllowanceCell: AdditionalDataCellNew {
 
     private let disposeBag = DisposeBag()
 
-    private let viewModel: SwapAllowanceViewModelNew
+    private let viewModel: SwapAllowanceViewModel
 
-    public init(viewModel: SwapAllowanceViewModelNew) {
+    public init(viewModel: SwapAllowanceViewModel) {
         self.viewModel = viewModel
 
         super.init(style: .default, reuseIdentifier: nil)

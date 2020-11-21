@@ -5,7 +5,7 @@ import RxCocoa
 class SwapConfirmationViewModel {
     private let disposeBag = DisposeBag()
 
-    private let service: SwapServiceNew
+    private let service: SwapService
     private let tradeService: SwapTradeService
     private let transactionService: EthereumTransactionService
     private let ethereumCoinService: CoinService
@@ -19,7 +19,7 @@ class SwapConfirmationViewModel {
     private var completedRelay = PublishRelay<()>()
     private var errorRelay = PublishRelay<Error>()
 
-    init(service: SwapServiceNew, tradeService: SwapTradeService, transactionService: EthereumTransactionService, ethereumCoinService: CoinService, viewItemHelper: SwapViewItemHelper) {
+    init(service: SwapService, tradeService: SwapTradeService, transactionService: EthereumTransactionService, ethereumCoinService: CoinService, viewItemHelper: SwapViewItemHelper) {
         self.service = service
         self.tradeService = tradeService
         self.viewItemHelper = viewItemHelper
@@ -88,7 +88,7 @@ class SwapConfirmationViewModel {
         additionalDataRelay.accept(additionalData)
     }
 
-    private func sync(event: SwapServiceNew.SwapEvent) {
+    private func sync(event: SwapService.SwapEvent) {
         switch event {
         case .swapping: loadingRelay.accept(())
         case .completed: completedRelay.accept(())
