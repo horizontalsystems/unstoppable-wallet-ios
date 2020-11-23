@@ -287,7 +287,7 @@ class SwapViewController: ThemeViewController {
     private func set(price: String?) {
         guard let price = price else {
             priceLabel.textColor = .themeGray50
-            priceLabel.text = "Price"
+            priceLabel.text = "swap.price".localized
             return
         }
         priceLabel.textColor = .themeGray

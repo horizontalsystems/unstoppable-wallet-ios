@@ -29,7 +29,7 @@ class ZcashAdapter {
             throw AdapterError.unsupportedAccount
         }
 
-        let endPoint = testMode ? "lightwalletd.testnet.electriccoin.co" : "lightwalletd.electriccoin.co"
+        let endPoint = testMode ? "lightwalletd.testnet.electriccoin.co" : "zcash.horizontalsystems.xyz"
 
         let uniqueId = wallet.account.id
         let birthday: Int
