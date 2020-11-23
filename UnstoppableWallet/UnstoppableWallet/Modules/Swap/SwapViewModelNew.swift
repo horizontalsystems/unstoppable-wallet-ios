@@ -110,7 +110,7 @@ class SwapViewModelNew {
 
     private func tradeViewItem(trade: SwapTradeService.Trade) -> TradeViewItem {
         TradeViewItem(
-                executionPrice: viewItemHelper.priceValue(executionPrice: trade.minMaxAmount, coinIn: tradeService.coinIn, coinOut: tradeService.coinOut)?.formattedString,
+                executionPrice: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, coinIn: tradeService.coinIn, coinOut: tradeService.coinOut)?.formattedString,
                 priceImpact: viewItemHelper.impactPrice(trade.tradeData.priceImpact),
                 priceImpactLevel: trade.impactLevel,
                 minMaxTitle: viewItemHelper.minMaxTitle(type: trade.tradeData.type).localized,
