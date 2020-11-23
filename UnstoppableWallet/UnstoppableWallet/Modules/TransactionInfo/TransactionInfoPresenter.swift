@@ -148,6 +148,14 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
         router.showShare(value: transaction.transactionHash)
     }
 
+    func onTapShareRawTransaction() {
+        guard let rawTransaction = interactor.rawTransaction(hash: transaction.transactionHash) else {
+            return
+        }
+
+        router.showShare(value: rawTransaction)
+    }
+
     func onTapVerify() {
         router.showFullInfo(transactionHash: transaction.transactionHash, wallet: wallet)
     }
@@ -162,15 +170,6 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
         }
 
         router.showDoubleSpendInfo(txHash: transaction.transactionHash, conflictingTxHash: conflictingHash)
-    }
-
-    func onTapCopyRawTransaction() {
-        guard let rawTransaction = interactor.rawTransaction(hash: transaction.transactionHash) else {
-            return
-        }
-
-        interactor.copy(value: rawTransaction)
-        view?.showCopied()
     }
 
 }

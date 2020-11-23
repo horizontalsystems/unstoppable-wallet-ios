@@ -21,7 +21,7 @@ class TransactionInfoWarningCell: ThemeCell {
         contentView.addSubview(iconImageView)
         iconImageView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(TransactionInfoWarningCell.imageViewLeadingMargin)
-            maker.top.equalToSuperview().offset(14)
+            maker.top.equalToSuperview().offset(CGFloat.margin3x)
             maker.size.equalTo(TransactionInfoWarningCell.imageViewSize)
         }
 
