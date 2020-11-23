@@ -14,10 +14,10 @@ protocol ITransactionInfoViewDelegate: class {
     func onTapRecipient()
     func onTapTransactionId()
     func onTapShareTransactionId()
+    func onTapShareRawTransaction()
     func onTapVerify()
     func onTapLockInfo()
     func onTapDoubleSpendInfo()
-    func onTapCopyRawTransaction()
 }
 
 protocol ITransactionInfoInteractor {

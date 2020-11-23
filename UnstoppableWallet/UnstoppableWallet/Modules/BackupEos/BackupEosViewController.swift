@@ -48,20 +48,16 @@ class BackupEosViewController: ThemeViewController {
         }
 
         container.addSubview(accountLabel)
-        container.addSubview(accountField)
-        container.addSubview(activePrivateKeyLabel)
-        container.addSubview(activePrivateKeyField)
-        container.addSubview(hintLabel)
-        container.addSubview(qrCodeImageView)
-
-        accountLabel.text = "backup.eos.account_name".localized.uppercased()
-        accountLabel.font = .subhead1
-        accountLabel.textColor = .themeGray
         accountLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin6x)
             maker.top.equalToSuperview().offset(CGFloat.margin3x + CGFloat.margin2x) // simulate placement in header
         }
 
+        accountLabel.text = "backup.eos.account_name".localized.uppercased()
+        accountLabel.font = .subhead1
+        accountLabel.textColor = .themeGray
+
+        container.addSubview(accountField)
         accountField.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.top.equalTo(accountLabel.snp.bottom).offset(CGFloat.margin2x)
@@ -71,14 +67,17 @@ class BackupEosViewController: ThemeViewController {
             self?.delegate.onCopyAddress()
         }
 
-        activePrivateKeyLabel.text = "backup.eos.active_private_key".localized.uppercased()
-        activePrivateKeyLabel.font = .subhead1
-        activePrivateKeyLabel.textColor = .themeGray
+        container.addSubview(activePrivateKeyLabel)
         activePrivateKeyLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin6x)
             maker.top.equalTo(self.accountField.snp.bottom).offset(CGFloat.margin3x + CGFloat.margin2x) // simulate placement in header
         }
 
+        activePrivateKeyLabel.text = "backup.eos.active_private_key".localized.uppercased()
+        activePrivateKeyLabel.font = .subhead1
+        activePrivateKeyLabel.textColor = .themeGray
+
+        container.addSubview(activePrivateKeyField)
         activePrivateKeyField.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.top.equalTo(activePrivateKeyLabel.snp.bottom).offset(CGFloat.margin2x)
@@ -88,6 +87,7 @@ class BackupEosViewController: ThemeViewController {
             self?.delegate.onCopyPrivateKey()
         }
 
+        container.addSubview(hintLabel)
         hintLabel.snp.makeConstraints { maker in
             maker.leading.trailing.equalTo(self.view).inset(CGFloat.margin6x)
             maker.top.equalTo(self.activePrivateKeyField.snp.bottom).offset(CGFloat.margin3x)
@@ -98,15 +98,18 @@ class BackupEosViewController: ThemeViewController {
         hintLabel.font = .subhead2
         hintLabel.textColor = .themeGray
 
-        qrCodeImageView.backgroundColor = .white
-        qrCodeImageView.contentMode = .center
-        qrCodeImageView.clipsToBounds = true
-        qrCodeImageView.layer.cornerRadius = .cornerRadius1x
+        container.addSubview(qrCodeImageView)
         qrCodeImageView.snp.makeConstraints { maker in
             maker.centerX.equalTo(self.view)
             maker.top.equalTo(hintLabel.snp.bottom).offset(CGFloat.margin6x)
             maker.size.equalTo(120)
+            maker.bottom.equalToSuperview()
         }
+
+        qrCodeImageView.backgroundColor = .white
+        qrCodeImageView.contentMode = .center
+        qrCodeImageView.clipsToBounds = true
+        qrCodeImageView.layer.cornerRadius = .cornerRadius1x
 
         view.addSubview(closeButtonHolder)
         closeButtonHolder.snp.makeConstraints { maker in

@@ -17,7 +17,7 @@ class TransactionInfoNoteCell: ThemeCell {
         contentView.addSubview(iconImageView)
         iconImageView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(TransactionInfoNoteCell.imageViewLeadingMargin)
-            maker.top.equalToSuperview().offset(14)
+            maker.top.equalToSuperview().offset(CGFloat.margin3x)
             maker.size.equalTo(TransactionInfoNoteCell.imageViewSize)
         }
 

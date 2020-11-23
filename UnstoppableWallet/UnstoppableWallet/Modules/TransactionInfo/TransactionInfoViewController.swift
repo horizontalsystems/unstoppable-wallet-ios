@@ -64,7 +64,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
         tableView.registerCell(forClass: TransactionInfoValueCell.self)
         tableView.registerCell(forClass: TransactionInfoWarningCell.self)
         tableView.registerCell(forClass: TransactionInfoNoteCell.self)
-        tableView.registerCell(forClass: TransactionInfoCopyCell.self)
+        tableView.registerCell(forClass: TransactionInfoShareCell.self)
         tableView.registerCell(forClass: D6Cell.self)
         tableView.registerCell(forClass: C6Cell.self)
         tableView.sectionDataSource = self
@@ -293,14 +293,14 @@ class TransactionInfoViewController: ThemeActionSheetController {
     }
 
     private func rawTransactionRow() -> RowProtocol {
-        Row<TransactionInfoCopyCell>(
+        Row<TransactionInfoShareCell>(
                 id: "raw_transaction",
                 height: .heightSingleLineCell,
                 bind: { [weak self] cell, _ in
                     cell.bind(
                             title: "tx_info.raw_transaction".localized,
-                            onTapCopy: {
-                                self?.delegate.onTapCopyRawTransaction()
+                            onTapShare: {
+                                self?.delegate.onTapShareRawTransaction()
                             }
                     )
                 }

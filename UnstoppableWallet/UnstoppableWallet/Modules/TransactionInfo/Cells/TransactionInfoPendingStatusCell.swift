@@ -33,7 +33,7 @@ class TransactionInfoPendingStatusCell: BaseThemeCell {
         barsProgressView.set(barsCount: BarsProgressView.progressStepsCount)
 
         leftView.text = "status".localized
-        leftView.image = UIImage(named: "info_20")
+        leftView.image = UIImage(named: "info_20")?.tinted(with: .themeJacob)
     }
 
     required init?(coder: NSCoder) {
