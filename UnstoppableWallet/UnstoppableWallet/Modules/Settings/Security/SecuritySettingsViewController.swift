@@ -61,7 +61,7 @@ class SecuritySettingsViewController: ThemeViewController {
     private var privacyRows: [RowProtocol] {
         [
             Row<TitleCell>(id: "privacy", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Privacy Icon"), title: "settings_security.privacy".localized, showDisclosure: true, last: true)
+                cell.bind(titleIcon: UIImage(named: "privacy_20"), title: "settings_security.privacy".localized, showDisclosure: true, last: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapPrivacy()
             })
@@ -73,10 +73,14 @@ class SecuritySettingsViewController: ThemeViewController {
 
         var rows: [RowProtocol] = [
             Row<ToggleCell>(id: "pin", height: .heightSingleLineCell, bind: { [unowned self] cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Passcode Icon"), title: "settings_security.passcode".localized,
-                        rightImage: attentionIcon?.tinted(with: .themeLucian), isOn: self.pinSet, last: !self.editPinVisible, onToggle: { [weak self] isOn in
-                    self?.delegate.didSwitch(pinSet: isOn)
-                })
+                cell.bind(
+                        titleIcon: UIImage(named: "passcode_20"),
+                        title: "settings_security.passcode".localized,
+                        rightImage: attentionIcon?.tinted(with: .themeLucian),
+                        isOn: pinSet, last: !editPinVisible,
+                        onToggle: { [weak self] isOn in
+                            self?.delegate.didSwitch(pinSet: isOn)
+                        })
             })
         ]
 
@@ -96,8 +100,8 @@ class SecuritySettingsViewController: ThemeViewController {
     private var biometryRow: RowProtocol? {
         biometryType.flatMap {
             switch $0 {
-            case .touchId: return createBiometryRow(title: "settings_security.touch_id".localized, icon: "Touch Id Icon")
-            case .faceId: return createBiometryRow(title: "settings_security.face_id".localized, icon: "Face Id Icon")
+            case .touchId: return createBiometryRow(title: "settings_security.touch_id".localized, icon: "touch_id_20")
+            case .faceId: return createBiometryRow(title: "settings_security.face_id".localized, icon: "face_id_20")
             default: return nil
             }
         }
