@@ -67,19 +67,19 @@ class MainSettingsViewController: ThemeViewController {
 
         return [
             Row<RightImageCell>(id: "manage_accounts", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Wallet Icon"), title: "settings.manage_accounts".localized, rightImage: manageAccountAttentionIcon, rightImageTintColor: .themeLucian, showDisclosure: true, last: false)
+                cell.bind(titleIcon: UIImage(named: "wallet_20"), title: "settings.manage_accounts".localized, rightImage: manageAccountAttentionIcon, rightImageTintColor: .themeLucian, showDisclosure: true, last: false)
             }, action: { [weak self] _ in
                 self?.delegate.onManageAccounts()
             }),
 
             Row<RightImageCell>(id: "security_center", hash: "security_center.\(pinSet)", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.security_center".localized, rightImage: securityAttentionIcon, rightImageTintColor: .themeLucian, showDisclosure: true)
+                cell.bind(titleIcon: UIImage(named: "security_20"), title: "settings.security_center".localized, rightImage: securityAttentionIcon, rightImageTintColor: .themeLucian, showDisclosure: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapSecurity()
             }),
 
             Row<TitleCell>(id: "app_status", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "App Status Icon"), title: "settings.app_status".localized, showDisclosure: true, last: true)
+                cell.bind(titleIcon: UIImage(named: "app_status_20"), title: "settings.app_status".localized, showDisclosure: true, last: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapAppStatus()
             })
@@ -89,7 +89,7 @@ class MainSettingsViewController: ThemeViewController {
     private var walletConnectRows: [RowProtocol] {
         [
             Row<RightLabelCell>(id: "wallet_connect", height: .heightSingleLineCell, autoDeselect: true, bind: { [weak self] cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Wallet Connect Icon"), title: "wallet_connect.title".localized, rightText: self?.currentWalletConnectPeer, showDisclosure: true)
+                cell.bind(titleIcon: UIImage(named: "wallet_connect_20"), title: "wallet_connect.title".localized, rightText: self?.currentWalletConnectPeer, showDisclosure: true)
             }, action: { [weak self] _ in
                 WalletConnectModule.start(sourceViewController: self)
             }),
@@ -99,31 +99,31 @@ class MainSettingsViewController: ThemeViewController {
     private var appearanceRows: [RowProtocol] {
         [
             Row<TitleCell>(id: "notifications", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Notification Small Icon"), title: "settings.notifications".localized, showDisclosure: true)
+                cell.bind(titleIcon: UIImage(named: "notification_20"), title: "settings.notifications".localized, showDisclosure: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapNotifications()
             }),
 
             Row<RightLabelCell>(id: "base_currency", height: .heightSingleLineCell, bind: { [weak self] cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Currency Icon"), title: "settings.base_currency".localized, rightText: self?.currentBaseCurrency, showDisclosure: true)
+                cell.bind(titleIcon: UIImage(named: "currency_20"), title: "settings.base_currency".localized, rightText: self?.currentBaseCurrency, showDisclosure: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapBaseCurrency()
             }),
 
             Row<RightLabelCell>(id: "language", height: .heightSingleLineCell, bind: { [weak self] cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Language Icon"), title: "settings.language".localized, rightText: self?.currentLanguage, showDisclosure: true)
+                cell.bind(titleIcon: UIImage(named: "language_20"), title: "settings.language".localized, rightText: self?.currentLanguage, showDisclosure: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapLanguage()
             }),
 
             Row<ToggleCell>(id: "light_mode", height: .heightSingleLineCell, bind: { [unowned self] cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.light_mode".localized, isOn: self.lightMode, onToggle: { [weak self] isOn in
+                cell.bind(titleIcon: UIImage(named: "light_mode_20"), title: "settings.light_mode".localized, isOn: self.lightMode, onToggle: { [weak self] isOn in
                     self?.delegate.didSwitch(lightMode: isOn)
                 })
             }),
 
             Row<TitleCell>(id: "experimental_features", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Experimental Features Icon"), title: "settings.experimental_features".localized, showDisclosure: true, last: true)
+                cell.bind(titleIcon: UIImage(named: "experimental_features_20"), title: "settings.experimental_features".localized, showDisclosure: true, last: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapExperimentalFeatures()
             })
@@ -135,13 +135,13 @@ class MainSettingsViewController: ThemeViewController {
 
         return [
             Row<TitleCell>(id: "faq", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Contact Icon"), title: "settings.faq".localized, showDisclosure: true)
+                cell.bind(titleIcon: UIImage(named: "contact_20"), title: "settings.faq".localized, showDisclosure: true)
             }, action: { [weak self] _ in
                 self?.navigationController?.pushViewController(FaqModule.viewController(), animated: true)
             }),
 
             Row<TitleCell>(id: "contact", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Contact Icon"), title: "settings.contact".localized, showDisclosure: true)
+                cell.bind(titleIcon: UIImage(named: "contact_20"), title: "settings.contact".localized, showDisclosure: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapContact()
             }),
@@ -153,7 +153,7 @@ class MainSettingsViewController: ThemeViewController {
             }),
 
             Row<RightImageCell>(id: "terms", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Terms Icon"), title: "settings.terms".localized, rightImage: termsAttentionImage, rightImageTintColor: .themeLucian, showDisclosure: true, last: true)
+                cell.bind(titleIcon: UIImage(named: "terms_20"), title: "settings.terms".localized, rightImage: termsAttentionImage, rightImageTintColor: .themeLucian, showDisclosure: true, last: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapTerms()
             })

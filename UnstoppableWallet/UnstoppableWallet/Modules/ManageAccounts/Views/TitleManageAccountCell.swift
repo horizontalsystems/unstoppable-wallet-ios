@@ -1,7 +1,7 @@
 import UIKit
 
 class TitleManageAccountCell: BaseManageAccountCell {
-    private static let walletImage = UIImage(named: "Wallet Icon Large")?.withRenderingMode(.alwaysTemplate)
+    private static let walletImage = UIImage(named: "wallet_24")?.withRenderingMode(.alwaysTemplate)
     private static let walletImageLeftMargin: CGFloat = .margin4x
     private static let textsHorizontalMargin: CGFloat = .margin4x
     private static let titleTopMargin: CGFloat = 10

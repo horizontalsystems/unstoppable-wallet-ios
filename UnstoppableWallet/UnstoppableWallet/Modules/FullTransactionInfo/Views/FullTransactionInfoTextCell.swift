@@ -15,8 +15,6 @@ class FullTransactionInfoTextCell: TitleCell {
         titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
 
-        iconImageView.tintColor = .themeGray
-
         contentView.addSubview(label)
         label.snp.makeConstraints { maker in
             maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin4x)
