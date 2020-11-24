@@ -180,8 +180,10 @@ class SwapService {
             }
         }
 
-        if let amountIn = tradeService.amountIn, let balanceIn = balanceIn, amountIn > balanceIn {
-            allErrors.append(SwapError.insufficientBalanceIn)
+        if let amountIn = tradeService.amountIn {
+            if balanceIn == nil || amountIn > balanceIn ?? 0 {
+                allErrors.append(SwapError.insufficientBalanceIn)
+            }
         }
 
         switch transactionService.transactionStatus {

@@ -85,7 +85,7 @@ struct SwapModule {
                 adapterManager: App.shared.adapterManager
         )
 
-        let allowanceViewModel = SwapAllowanceViewModel(service: service, allowanceService: allowanceService)
+        let allowanceViewModel = SwapAllowanceViewModel(service: service, allowanceService: allowanceService, pendingAllowanceService: pendingAllowanceService)
         let feeViewModel = EthereumFeeViewModel(service: transactionService, coinService: coinService)
         let viewModel = SwapViewModel(
                 service: service,
