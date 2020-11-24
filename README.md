@@ -23,17 +23,20 @@ You can use sample configurations in `.template.xcconfig` files.
 
 3. Install Zcash library dependencies
 
-curl https://sh.rustup.rs -sSf | sh
-- select default
+```
+$ curl https://sh.rustup.rs -sSf | sh
+```
 
-cargo install cargo-lipo
-rustup target add aarch64-apple-ios x86_64-apple-ios
+* select `Default`
 
-brew install sourcery
+```
+$ cargo install cargo-lipo
+$ rustup target add aarch64-apple-ios x86_64-apple-ios
+```
 
-maybe need:
-sudo chown -R $(whoami) /usr/local/sbin
-brew install sourcery
+```
+$ brew install sourcery
+```
 
 4. Open in Xcode and run.
  
