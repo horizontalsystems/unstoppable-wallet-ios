@@ -7,8 +7,9 @@ class SwapAllowanceViewModel {
 
     private let service: SwapService
     private let allowanceService: SwapAllowanceService
+    private let pendingAllowanceService: SwapPendingAllowanceService
 
-    private(set) var isVisible: Bool {
+    private(set) var isVisible: Bool = false {
         didSet {
             isVisibleRelay.accept(isVisible)
         }
@@ -17,18 +18,38 @@ class SwapAllowanceViewModel {
     private var allowanceRelay = BehaviorRelay<String?>(value: nil)
     private var isErrorRelay = BehaviorRelay<Bool>(value: false)
 
-    init(service: SwapService, allowanceService: SwapAllowanceService) {
+    init(service: SwapService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService) {
         self.service = service
         self.allowanceService = allowanceService
+        self.pendingAllowanceService = pendingAllowanceService
 
-        isVisible = allowanceService.state != nil
+        syncVisible()
 
         subscribe(disposeBag, allowanceService.stateObservable) { [weak self] in self?.handle(allowanceState: $0) }
         subscribe(disposeBag, service.errorsObservable) { [weak self] in self?.handle(errors: $0) }
     }
 
+    private func syncVisible(allowanceState: SwapAllowanceService.State? = nil) {
+        let allowanceState = allowanceState ?? allowanceService.state
+
+        guard let state = allowanceState else {
+            isVisible = false
+            return
+        }
+
+        guard !pendingAllowanceService.isPending else {
+            isVisible = true
+            return
+        }
+
+        switch state {
+        case .notReady: isVisible = true
+        default: isVisible = isErrorRelay.value
+        }
+    }
+
     private func handle(allowanceState: SwapAllowanceService.State?) {
-        isVisible = allowanceState != nil
+        syncVisible(allowanceState: allowanceState)
 
         if let state = allowanceState {
             allowanceRelay.accept(allowance(state: state))
@@ -38,6 +59,8 @@ class SwapAllowanceViewModel {
     private func handle(errors: [Error]) {
         let error = errors.first(where: { .insufficientAllowance == $0 as? SwapService.SwapError })
         isErrorRelay.accept(error != nil)
+
+        syncVisible()
     }
 
     private func allowance(state: SwapAllowanceService.State) -> String? {
