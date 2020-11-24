@@ -63,6 +63,8 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "restore.enter_key" = "Enter Key";
 "restore.item_title" = "%@ Wallet";
 "restore.words.description" = "Enter your private key for %@ wallet which consists of %@ words. The words needs to be entered in correct order and separated by spaces.";
+"restore.birthday_height.placeholder" = "Wallet Birthday (optional)";
+"restore.birthday_height.description" = "This allows wallet app to sync with Zcash blockchain much faster. Leave blank if you don’t remember it.";
 "restore.validation_failed" = "Incorrect Key";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
@@ -109,6 +111,8 @@ bch.horizontalsystems.xyz/apg";
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may have access to clipboard data.";
+"backup.birthday_height" = "Birthday Height";
+
 "error.send.self_transfer" = "Sending to self is not supported";
 "error.send_eos.account_not_exist" = "Target account does not exist";
 "error.send_eos.insufficient_ram" = "Your EOS account doesn't have enough RAM to send this token. You need to increase RAM stake to proceed.";

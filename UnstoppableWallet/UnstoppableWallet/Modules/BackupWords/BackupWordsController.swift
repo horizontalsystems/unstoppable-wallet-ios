@@ -4,6 +4,7 @@ import ThemeKit
 import UIExtensions
 
 class BackupWordsController: ThemeViewController {
+    private static let horizontalMargin = CGFloat.margin4x
     private let delegate: IBackupWordsViewDelegate
 
     private let collectionView: UICollectionView
@@ -18,6 +19,8 @@ class BackupWordsController: ThemeViewController {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 
         collectionView.register(BackupWordsCell.self, forCellWithReuseIdentifier: String(describing: BackupWordsCell.self))
+        collectionView.register(D8CollectionCell.self, forCellWithReuseIdentifier: String(describing: D8CollectionCell.self))
+        collectionView.register(D9CollectionCell.self, forCellWithReuseIdentifier: String(describing: D9CollectionCell.self))
 
         super.init()
     }
@@ -34,7 +37,7 @@ class BackupWordsController: ThemeViewController {
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { maker in
             maker.top.equalToSuperview()
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
+            maker.leading.trailing.equalToSuperview()
         }
 
         collectionView.dataSource = self
@@ -65,7 +68,11 @@ class BackupWordsController: ThemeViewController {
         Array(delegate.words.suffix(from: index * BackupWordsCell.maxWordsCount).prefix(BackupWordsCell.maxWordsCount))
     }
 
-    @objc func nextDidTap() {
+    private var wordSectionIndex: Int {
+        (delegate.additionalItems.isEmpty ? 0 : 1)
+    }
+
+    @objc private func nextDidTap() {
         delegate.didTapProceed()
     }
 
@@ -73,12 +80,28 @@ class BackupWordsController: ThemeViewController {
 
 extension BackupWordsController: UICollectionViewDataSource {
 
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+        wordSectionIndex + 1
+    }
+
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        delegate.words.count / BackupWordsCell.maxWordsCount + (delegate.words.count % BackupWordsCell.maxWordsCount != 0 ? 1 : 0)
+        if section == wordSectionIndex {
+            return delegate.words.count / BackupWordsCell.maxWordsCount + (delegate.words.count % BackupWordsCell.maxWordsCount != 0 ? 1 : 0)
+        }
+
+        return delegate.additionalItems.count
     }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: BackupWordsCell.self), for: indexPath)
+        if indexPath.section == wordSectionIndex {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: BackupWordsCell.self), for: indexPath)
+        }
+
+        if delegate.additionalItems[indexPath.row].copyable {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: D9CollectionCell.self), for: indexPath)
+        } else {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: D8CollectionCell.self), for: indexPath)
+        }
     }
 
 }
@@ -89,6 +112,20 @@ extension BackupWordsController: UICollectionViewDelegate {
         if let cell = cell as? BackupWordsCell {
             cell.bind(startIndex: indexPath.row * BackupWordsCell.maxWordsCount + 1, words: words(for: indexPath.row))
         }
+
+        if let cell = cell as? D8CollectionCell, indexPath.row < delegate.additionalItems.count {
+            let item = delegate.additionalItems[indexPath.row]
+
+            cell.set(backgroundStyle: .lawrence, bottomSeparator: true)
+            cell.title = item.title.localized
+            cell.value = item.value
+        } else if let cell = cell as? D9CollectionCell, indexPath.row < delegate.additionalItems.count {
+            let item = delegate.additionalItems[indexPath.row]
+
+            cell.set(backgroundStyle: .lawrence, bottomSeparator: true)
+            cell.title = item.title.localized
+            cell.viewItem = CopyableSecondaryButton.ViewItem(value: item.value)
+        }
     }
 
 }
@@ -96,7 +133,17 @@ extension BackupWordsController: UICollectionViewDelegate {
 extension BackupWordsController: UICollectionViewDelegateFlowLayout {
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: collectionView.width / 2, height: BackupWordsCell.heightFor(words: words(for: indexPath.row)))
+        if indexPath.section == wordSectionIndex {
+            return CGSize(width: collectionView.width / 2 - Self.horizontalMargin, height: BackupWordsCell.heightFor(words: words(for: indexPath.row)))
+        }
+        return CGSize(width: collectionView.width, height: .heightSingleLineCell)
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        if section == wordSectionIndex {
+            return UIEdgeInsets(top: 0, left: Self.horizontalMargin, bottom: 0, right: Self.horizontalMargin)
+        }
+        return UIEdgeInsets(top: 0, left: 0, bottom: .margin8x, right: 0)
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -104,7 +151,10 @@ extension BackupWordsController: UICollectionViewDelegateFlowLayout {
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        CGFloat.margin6x
+        if section == wordSectionIndex {
+            return CGFloat.margin6x
+        }
+        return 0
     }
 
 }

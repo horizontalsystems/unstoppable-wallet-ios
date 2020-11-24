@@ -6,8 +6,6 @@ import HdWalletKit
 import HsToolKit
 
 class ZcashAdapter {
-    private let newWalletBlockHeight = 1_020_800
-
     private static let coinRate = Decimal(ZcashSDK.ZATOSHI_PER_ZEC)
     let fee = Decimal(ZcashSDK.MINERS_FEE_ZATOSHI) / ZcashAdapter.coinRate
 
@@ -27,14 +25,23 @@ class ZcashAdapter {
     private(set) var state: AdapterState
 
     init(wallet: Wallet, syncMode: SyncMode?, testMode: Bool) throws {
-        guard case let .zcash(words) = wallet.account.type else {
+        guard case let .zcash(words, birthdayHeight) = wallet.account.type else {
             throw AdapterError.unsupportedAccount
         }
 
-        let endPoint = testMode ? "lightwalletd.testnet.electriccoin.co" : "lightwalletd.electriccoin.co"
+        let endPoint = testMode ? "lightwalletd.testnet.electriccoin.co" : "zcash.horizontalsystems.xyz"
 
-        let birthday = syncMode == .new ? newWalletBlockHeight : ZcashSDK.SAPLING_ACTIVATION_HEIGHT
         let uniqueId = wallet.account.id
+        let birthday: Int
+        switch syncMode {
+        case .new: birthday = Self.newBirthdayHeight
+        default:
+            if let height = birthdayHeight {
+                birthday = WalletBirthday.birthday(with: max(height, ZcashSDK.SAPLING_ACTIVATION_HEIGHT)).height
+            } else {
+                birthday = ZcashSDK.SAPLING_ACTIVATION_HEIGHT
+            }
+        }
 
         let initializer = Initializer(cacheDbURL:try! ZcashAdapter.cacheDbURL(uniqueId: uniqueId),
                 dataDbURL: try! ZcashAdapter.dataDbURL(uniqueId: uniqueId),
@@ -177,6 +184,10 @@ class ZcashAdapter {
 }
 
 extension ZcashAdapter {
+
+    public static var newBirthdayHeight: Int {
+        WalletBirthday.birthday(with: 0).height
+    }
 
     private static func dataDirectoryUrl() throws -> URL {
         let fileManager = FileManager.default
