@@ -101,8 +101,6 @@ open class BalanceButtonsView: UIView {
     }
 
     public func bind(receiveEnabled: Bool, sendEnabled: Bool, swapHidden: Bool, receiveAction: @escaping () -> (), sendAction: @escaping () -> (), swapAction: @escaping () -> ()) {
-        let swapHidden = true
-
         receiveButton.isEnabled = receiveEnabled
         sendButton.isEnabled = sendEnabled
         updateSwap(hidden: swapHidden)
