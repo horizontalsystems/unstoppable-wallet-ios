@@ -3,9 +3,13 @@ import SectionsTableView
 import SnapKit
 import ThemeKit
 import UIExtensions
+import ModuleKit
+import RxSwift
+import RxCocoa
 
 class MainSettingsViewController: ThemeViewController {
-    private let delegate: IMainSettingsViewDelegate
+    private let viewModel: MainSettingsViewModel
+    private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
 
@@ -18,8 +22,8 @@ class MainSettingsViewController: ThemeViewController {
     private let aboutCell = A3Cell()
     private let footerCell = MainSettingsFooterCell()
 
-    init(delegate: IMainSettingsViewDelegate) {
-        self.delegate = delegate
+    init(viewModel: MainSettingsViewModel) {
+        self.viewModel = viewModel
 
         super.init()
 
@@ -48,7 +52,6 @@ class MainSettingsViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-
         manageAccountsCell.set(backgroundStyle: .lawrence)
         manageAccountsCell.titleImage = UIImage(named: "wallet_20")
         manageAccountsCell.title = "settings.manage_accounts".localized
@@ -68,23 +71,45 @@ class MainSettingsViewController: ThemeViewController {
         languageCell.set(backgroundStyle: .lawrence)
         languageCell.titleImage = UIImage(named: "language_20")
         languageCell.title = "settings.language".localized
+        languageCell.value = viewModel.currentLanguage
 
         lightModeCell.set(backgroundStyle: .lawrence)
         lightModeCell.titleImage = UIImage(named: "light_mode_20")
         lightModeCell.title = "settings.light_mode".localized
+        lightModeCell.isOn = viewModel.lightMode
         lightModeCell.onToggle = { [weak self] isOn in
-            self?.delegate.didSwitch(lightMode: isOn)
+            self?.viewModel.onSwitch(lightMode: isOn)
+            UIApplication.shared.keyWindow?.set(newRootController: MainModule.instance(selectedTab: .settings))
         }
 
         aboutCell.set(backgroundStyle: .lawrence, bottomSeparator: true)
         aboutCell.titleImage = UIImage(named: "uw_20")
         aboutCell.title = "settings.about_app.title".localized
 
+        footerCell.set(appVersion: viewModel.appVersion)
         footerCell.onTapLogo = { [weak self] in
-            self?.delegate.didTapCompanyLink()
+            self?.viewModel.onTapCompanyLink()
         }
 
-        delegate.viewDidLoad()
+        subscribe(disposeBag, viewModel.manageWalletsAlertDriver) { [weak self] alert in
+            self?.manageAccountsCell.valueImage = alert ? UIImage(named: "attention_20")?.tinted(with: .themeLucian) : nil
+        }
+        subscribe(disposeBag, viewModel.securityCenterAlertDriver) { [weak self] alert in
+            self?.securityCenterCell.valueImage = alert ? UIImage(named: "attention_20")?.tinted(with: .themeLucian) : nil
+        }
+        subscribe(disposeBag, viewModel.walletConnectPeerDriver) { [weak self] peer in
+            self?.walletConnectCell.value = peer
+        }
+        subscribe(disposeBag, viewModel.baseCurrencyDriver) { [weak self] baseCurrency in
+            self?.baseCurrencyCell.value = baseCurrency
+        }
+        subscribe(disposeBag, viewModel.aboutAlertDriver) { [weak self] alert in
+            self?.aboutCell.valueImage = alert ? UIImage(named: "attention_20")?.tinted(with: .themeLucian) : nil
+        }
+
+        subscribe(disposeBag, viewModel.openLinkSignal) { url in
+            UIApplication.shared.open(url)
+        }
 
         tableView.buildSections()
     }
@@ -100,7 +125,7 @@ class MainSettingsViewController: ThemeViewController {
                     id: "manage-accounts",
                     height: .heightSingleLineCell,
                     action: { [weak self] in
-                        self?.delegate.onManageAccounts()
+                        self?.navigationController?.pushViewController(ManageAccountsRouter.module(), animated: true)
                     }
             ),
             StaticRow(
@@ -108,7 +133,7 @@ class MainSettingsViewController: ThemeViewController {
                     id: "security-center",
                     height: .heightSingleLineCell,
                     action: { [weak self] in
-                        self?.delegate.didTapSecurity()
+                        self?.navigationController?.pushViewController(SecuritySettingsRouter.module(), animated: true)
                     }
             )
         ]
@@ -139,7 +164,7 @@ class MainSettingsViewController: ThemeViewController {
                         cell.title = "settings.notifications".localized
                     },
                     action: { [weak self] _ in
-                        self?.delegate.didTapNotifications()
+                        self?.navigationController?.pushViewController(NotificationSettingsRouter.module(), animated: true)
                     }
             ),
             StaticRow(
@@ -147,7 +172,7 @@ class MainSettingsViewController: ThemeViewController {
                     id: "base-currency",
                     height: .heightSingleLineCell,
                     action: { [weak self] in
-                        self?.delegate.didTapBaseCurrency()
+                        self?.navigationController?.pushViewController(App.shared.currencyKit.baseCurrencySettingsModule, animated: true)
                     }
             ),
             StaticRow(
@@ -155,7 +180,8 @@ class MainSettingsViewController: ThemeViewController {
                     id: "language",
                     height: .heightSingleLineCell,
                     action: { [weak self] in
-                        self?.delegate.didTapLanguage()
+                        let module = LanguageSettingsRouter.module { MainModule.instance(selectedTab: .settings) }
+                        self?.navigationController?.pushViewController(module, animated: true)
                     }
             ),
             StaticRow(
@@ -172,7 +198,7 @@ class MainSettingsViewController: ThemeViewController {
                         cell.title = "settings.experimental_features".localized
                     },
                     action: { [weak self] _ in
-                        self?.delegate.didTapExperimentalFeatures()
+                        self?.navigationController?.pushViewController(ExperimentalFeaturesRouter.module(), animated: true)
                     }
             )
         ]
@@ -281,46 +307,6 @@ extension MainSettingsViewController: SectionsDataSource {
             Section(id: "about", headerState: .margin(height: .margin32), rows: aboutRows),
             Section(id: "footer", headerState: .margin(height: .margin32), footerState: .margin(height: .margin32), rows: footerRows)
         ]
-    }
-
-}
-
-extension MainSettingsViewController: IMainSettingsView {
-
-    func refresh() {
-        tableView.reload()
-    }
-
-    func set(allBackedUp: Bool) {
-        manageAccountsCell.valueImage = allBackedUp ? nil : UIImage(named: "attention_20")?.tinted(with: .themeLucian)
-    }
-
-    func set(pinSet: Bool) {
-        securityCenterCell.valueImage = pinSet ? nil : UIImage(named: "attention_20")?.tinted(with: .themeLucian)
-    }
-
-    func set(termsAccepted: Bool) {
-        aboutCell.valueImage = termsAccepted ? nil : UIImage(named: "attention_20")?.tinted(with: .themeLucian)
-    }
-
-    func set(currentWalletConnectPeer: String?) {
-        walletConnectCell.value = currentWalletConnectPeer
-    }
-
-    func set(currentBaseCurrency: String) {
-        baseCurrencyCell.value = currentBaseCurrency
-    }
-
-    func set(currentLanguage: String?) {
-        languageCell.value = currentLanguage
-    }
-
-    func set(lightMode: Bool) {
-        lightModeCell.isOn = lightMode
-    }
-
-    func set(appVersion: String) {
-        footerCell.set(appVersion: appVersion)
     }
 
 }

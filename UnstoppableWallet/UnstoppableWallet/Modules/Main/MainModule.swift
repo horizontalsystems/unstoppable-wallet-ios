@@ -39,7 +39,7 @@ struct MainModule {
     }
 
     private static var settingsNavigation: UIViewController {
-        ThemeNavigationController(rootViewController: MainSettingsRouter.module())
+        ThemeNavigationController(rootViewController: MainSettingsModule.viewController())
     }
 
 }
