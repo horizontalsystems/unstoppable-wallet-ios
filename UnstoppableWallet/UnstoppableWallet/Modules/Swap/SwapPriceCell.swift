@@ -55,8 +55,6 @@ class SwapPriceCell: UITableViewCell {
         switchButton.addTarget(self, action: #selector(onTapSwitch), for: .touchUpInside)
         switchButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         switchButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-
-        switchButton.isHidden = true // temporarily hide Switch button
     }
 
     required init?(coder: NSCoder) {

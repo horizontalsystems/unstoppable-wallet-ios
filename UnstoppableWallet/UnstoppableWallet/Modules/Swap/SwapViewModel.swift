@@ -104,7 +104,9 @@ class SwapViewModel {
             approveActionRelay.accept(.pending)
         } else {
             let isInsufficientAllowance = service.errors.contains(where: { .insufficientAllowance == $0 as? SwapService.SwapError })
-            approveActionRelay.accept(isInsufficientAllowance ? .visible : .hidden)
+            let isVisible = (service.balanceIn ?? 0) != 0 && isInsufficientAllowance
+
+            approveActionRelay.accept(isVisible ? .visible : .hidden)
         }
     }
 
