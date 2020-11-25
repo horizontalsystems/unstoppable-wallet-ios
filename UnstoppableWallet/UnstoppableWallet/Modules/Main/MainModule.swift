@@ -4,7 +4,7 @@ import ThemeKit
 struct MainModule {
 
     enum Tab: Int {
-        case balance, transactions, guides, settings
+        case balance, transactions, settings
     }
 
     static func instance(selectedTab: Tab = .balance) -> UIViewController {
@@ -20,7 +20,6 @@ struct MainModule {
         let viewControllers = [
             balanceNavigation,
             transactionsNavigation,
-            guidesNavigation,
             settingsNavigation,
         ]
 
@@ -41,10 +40,6 @@ struct MainModule {
 
     private static var settingsNavigation: UIViewController {
         ThemeNavigationController(rootViewController: MainSettingsRouter.module())
-    }
-
-    private static var guidesNavigation: UIViewController {
-        ThemeNavigationController(rootViewController: GuidesModule.instance())
     }
 
 }

@@ -9,14 +9,14 @@ class MainSettingsViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    private var allBackedUp: Bool = true
-    private var pinSet: Bool = true
-    private var termsAccepted: Bool = true
-    private var currentWalletConnectPeer: String?
-    private var currentBaseCurrency: String?
-    private var currentLanguage: String?
-    private var lightMode: Bool = true
-    private var appVersion: String?
+    private let manageAccountsCell = A3Cell()
+    private let securityCenterCell = A3Cell()
+    private let walletConnectCell = A2Cell()
+    private let baseCurrencyCell = A2Cell()
+    private let languageCell = A2Cell()
+    private let lightModeCell = A11Cell()
+    private let aboutCell = A3Cell()
+    private let footerCell = MainSettingsFooterCell()
 
     init(delegate: IMainSettingsViewDelegate) {
         self.delegate = delegate
@@ -36,11 +36,7 @@ class MainSettingsViewController: ThemeViewController {
         title = "settings.title".localized
         navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
 
-        tableView.registerCell(forClass: TitleCell.self)
-        tableView.registerCell(forClass: RightImageCell.self)
-        tableView.registerCell(forClass: RightLabelCell.self)
-        tableView.registerCell(forClass: ToggleCell.self)
-        tableView.registerHeaderFooter(forClass: MainSettingsFooter.self)
+        tableView.registerCell(forClass: A1Cell.self)
 
         tableView.sectionDataSource = self
 
@@ -50,6 +46,42 @@ class MainSettingsViewController: ThemeViewController {
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
+        }
+
+
+        manageAccountsCell.set(backgroundStyle: .lawrence)
+        manageAccountsCell.titleImage = UIImage(named: "wallet_20")
+        manageAccountsCell.title = "settings.manage_accounts".localized
+
+        securityCenterCell.set(backgroundStyle: .lawrence, bottomSeparator: true)
+        securityCenterCell.titleImage = UIImage(named: "security_20")
+        securityCenterCell.title = "settings.security_center".localized
+
+        walletConnectCell.set(backgroundStyle: .lawrence, bottomSeparator: true)
+        walletConnectCell.titleImage = UIImage(named: "wallet_connect_20")
+        walletConnectCell.title = "wallet_connect.title".localized
+
+        baseCurrencyCell.set(backgroundStyle: .lawrence)
+        baseCurrencyCell.titleImage = UIImage(named: "currency_20")
+        baseCurrencyCell.title = "settings.base_currency".localized
+
+        languageCell.set(backgroundStyle: .lawrence)
+        languageCell.titleImage = UIImage(named: "language_20")
+        languageCell.title = "settings.language".localized
+
+        lightModeCell.set(backgroundStyle: .lawrence)
+        lightModeCell.titleImage = UIImage(named: "light_mode_20")
+        lightModeCell.title = "settings.light_mode".localized
+        lightModeCell.onToggle = { [weak self] isOn in
+            self?.delegate.didSwitch(lightMode: isOn)
+        }
+
+        aboutCell.set(backgroundStyle: .lawrence, bottomSeparator: true)
+        aboutCell.titleImage = UIImage(named: "uw_20")
+        aboutCell.title = "settings.about_app.title".localized
+
+        footerCell.onTapLogo = { [weak self] in
+            self?.delegate.didTapCompanyLink()
         }
 
         delegate.viewDidLoad()
@@ -62,112 +94,177 @@ class MainSettingsViewController: ThemeViewController {
     }
 
     private var securityRows: [RowProtocol] {
-        let manageAccountAttentionIcon = allBackedUp ? nil : UIImage(named: "attention_20")
-        let securityAttentionIcon = pinSet ? nil : UIImage(named: "attention_20")
-
-        return [
-            Row<RightImageCell>(id: "manage_accounts", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "wallet_20"), title: "settings.manage_accounts".localized, rightImage: manageAccountAttentionIcon, rightImageTintColor: .themeLucian, showDisclosure: true, last: false)
-            }, action: { [weak self] _ in
-                self?.delegate.onManageAccounts()
-            }),
-
-            Row<RightImageCell>(id: "security_center", hash: "security_center.\(pinSet)", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "security_20"), title: "settings.security_center".localized, rightImage: securityAttentionIcon, rightImageTintColor: .themeLucian, showDisclosure: true)
-            }, action: { [weak self] _ in
-                self?.delegate.didTapSecurity()
-            }),
-
-            Row<TitleCell>(id: "app_status", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "app_status_20"), title: "settings.app_status".localized, showDisclosure: true, last: true)
-            }, action: { [weak self] _ in
-                self?.delegate.didTapAppStatus()
-            })
+        [
+            StaticRow(
+                    cell: manageAccountsCell,
+                    id: "manage-accounts",
+                    height: .heightSingleLineCell,
+                    action: { [weak self] in
+                        self?.delegate.onManageAccounts()
+                    }
+            ),
+            StaticRow(
+                    cell: securityCenterCell,
+                    id: "security-center",
+                    height: .heightSingleLineCell,
+                    action: { [weak self] in
+                        self?.delegate.didTapSecurity()
+                    }
+            )
         ]
     }
 
     private var walletConnectRows: [RowProtocol] {
         [
-            Row<RightLabelCell>(id: "wallet_connect", height: .heightSingleLineCell, autoDeselect: true, bind: { [weak self] cell, _ in
-                cell.bind(titleIcon: UIImage(named: "wallet_connect_20"), title: "wallet_connect.title".localized, rightText: self?.currentWalletConnectPeer, showDisclosure: true)
-            }, action: { [weak self] _ in
-                WalletConnectModule.start(sourceViewController: self)
-            }),
+            StaticRow(
+                    cell: walletConnectCell,
+                    id: "wallet-connect",
+                    height: .heightSingleLineCell,
+                    autoDeselect: true,
+                    action: { [weak self] in
+                        WalletConnectModule.start(sourceViewController: self)
+                    }
+            )
         ]
     }
 
     private var appearanceRows: [RowProtocol] {
         [
-            Row<TitleCell>(id: "notifications", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "notification_20"), title: "settings.notifications".localized, showDisclosure: true)
-            }, action: { [weak self] _ in
-                self?.delegate.didTapNotifications()
-            }),
+            Row<A1Cell>(
+                    id: "notifications",
+                    height: .heightSingleLineCell,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence)
+                        cell.titleImage = UIImage(named: "notification_20")
+                        cell.title = "settings.notifications".localized
+                    },
+                    action: { [weak self] _ in
+                        self?.delegate.didTapNotifications()
+                    }
+            ),
+            StaticRow(
+                    cell: baseCurrencyCell,
+                    id: "base-currency",
+                    height: .heightSingleLineCell,
+                    action: { [weak self] in
+                        self?.delegate.didTapBaseCurrency()
+                    }
+            ),
+            StaticRow(
+                    cell: languageCell,
+                    id: "language",
+                    height: .heightSingleLineCell,
+                    action: { [weak self] in
+                        self?.delegate.didTapLanguage()
+                    }
+            ),
+            StaticRow(
+                    cell: lightModeCell,
+                    id: "light-mode",
+                    height: .heightSingleLineCell
+            ),
+            Row<A1Cell>(
+                    id: "experimental-features",
+                    height: .heightSingleLineCell,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, bottomSeparator: true)
+                        cell.titleImage = UIImage(named: "experimental_features_20")
+                        cell.title = "settings.experimental_features".localized
+                    },
+                    action: { [weak self] _ in
+                        self?.delegate.didTapExperimentalFeatures()
+                    }
+            )
+        ]
+    }
 
-            Row<RightLabelCell>(id: "base_currency", height: .heightSingleLineCell, bind: { [weak self] cell, _ in
-                cell.bind(titleIcon: UIImage(named: "currency_20"), title: "settings.base_currency".localized, rightText: self?.currentBaseCurrency, showDisclosure: true)
-            }, action: { [weak self] _ in
-                self?.delegate.didTapBaseCurrency()
-            }),
+    private var knowledgeRows: [RowProtocol] {
+        [
+            Row<A1Cell>(
+                    id: "faq",
+                    height: .heightSingleLineCell,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence)
+                        cell.titleImage = UIImage(named: "contact_20")
+                        cell.title = "settings.faq".localized
+                    },
+                    action: { [weak self] _ in
+                        self?.navigationController?.pushViewController(FaqModule.viewController(), animated: true)
+                    }
+            ),
+            Row<A1Cell>(
+                    id: "academy",
+                    height: .heightSingleLineCell,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, bottomSeparator: true)
+                        cell.titleImage = UIImage(named: "academy_20")
+                        cell.title = "guides.title".localized
+                    },
+                    action: { [weak self] _ in
+                        self?.navigationController?.pushViewController(GuidesModule.instance(), animated: true)
+                    }
+            )
+        ]
+    }
 
-            Row<RightLabelCell>(id: "language", height: .heightSingleLineCell, bind: { [weak self] cell, _ in
-                cell.bind(titleIcon: UIImage(named: "language_20"), title: "settings.language".localized, rightText: self?.currentLanguage, showDisclosure: true)
-            }, action: { [weak self] _ in
-                self?.delegate.didTapLanguage()
-            }),
-
-            Row<ToggleCell>(id: "light_mode", height: .heightSingleLineCell, bind: { [unowned self] cell, _ in
-                cell.bind(titleIcon: UIImage(named: "light_mode_20"), title: "settings.light_mode".localized, isOn: self.lightMode, onToggle: { [weak self] isOn in
-                    self?.delegate.didSwitch(lightMode: isOn)
-                })
-            }),
-
-            Row<TitleCell>(id: "experimental_features", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "experimental_features_20"), title: "settings.experimental_features".localized, showDisclosure: true, last: true)
-            }, action: { [weak self] _ in
-                self?.delegate.didTapExperimentalFeatures()
-            })
+    private var contactRows: [RowProtocol] {
+        [
+            Row<A1Cell>(
+                    id: "telegram",
+                    height: .heightSingleLineCell,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence)
+                        cell.titleImage = UIImage(named: "telegram_20")
+                        cell.title = "Telegram"
+                    },
+                    action: { [weak self] _ in
+                    }
+            ),
+            Row<A1Cell>(
+                    id: "twitter",
+                    height: .heightSingleLineCell,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence)
+                        cell.titleImage = UIImage(named: "twitter_20")
+                        cell.title = "Twitter"
+                    },
+                    action: { [weak self] _ in
+                    }
+            ),
+            Row<A1Cell>(
+                    id: "reddit",
+                    height: .heightSingleLineCell,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, bottomSeparator: true)
+                        cell.titleImage = UIImage(named: "reddit_20")
+                        cell.title = "Reddit"
+                    },
+                    action: { [weak self] _ in
+                    }
+            )
         ]
     }
 
     private var aboutRows: [RowProtocol] {
-        let termsAttentionImage = termsAccepted ? nil : UIImage(named: "attention_20")
-
-        return [
-            Row<TitleCell>(id: "faq", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "contact_20"), title: "settings.faq".localized, showDisclosure: true)
-            }, action: { [weak self] _ in
-                self?.navigationController?.pushViewController(FaqModule.viewController(), animated: true)
-            }),
-
-            Row<TitleCell>(id: "contact", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "contact_20"), title: "settings.contact".localized, showDisclosure: true)
-            }, action: { [weak self] _ in
-                self?.delegate.didTapContact()
-            }),
-
-            Row<TitleCell>(id: "tell_friends", height: .heightSingleLineCell, autoDeselect: true, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "share_20"), title: "settings.tell_friends".localized, showDisclosure: true)
-            }, action: { [weak self] _ in
-                self?.delegate.didTapTellFriends()
-            }),
-
-            Row<RightImageCell>(id: "terms", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "terms_20"), title: "settings.terms".localized, rightImage: termsAttentionImage, rightImageTintColor: .themeLucian, showDisclosure: true, last: true)
-            }, action: { [weak self] _ in
-                self?.delegate.didTapTerms()
-            })
+        [
+            StaticRow(
+                    cell: aboutCell,
+                    id: "about",
+                    height: .heightSingleLineCell,
+                    action: { [weak self] in
+                    }
+            )
         ]
     }
 
-    private var footer: ViewState<MainSettingsFooter> {
-        .cellType(hash: "about_footer", binder: { [weak self] view in
-            view.bind(appVersion: self?.appVersion) { [weak self] in
-                self?.delegate.didTapCompanyLink()
-            }
-        }, dynamicHeight: { _ in
-            194
-        })
+    private var footerRows: [RowProtocol] {
+        [
+            StaticRow(
+                    cell: footerCell,
+                    id: "footer",
+                    height: footerCell.cellHeight
+            )
+        ]
     }
 
 }
@@ -176,10 +273,13 @@ extension MainSettingsViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         [
-            Section(id: "security_settings", headerState: .margin(height: .margin3x), rows: securityRows),
-            Section(id: "wallet_connect", headerState: .margin(height: .margin8x), rows: walletConnectRows),
-            Section(id: "appearance_settings", headerState: .margin(height: .margin8x), rows: appearanceRows),
-            Section(id: "about", headerState: .margin(height: .margin8x), footerState: footer, rows: aboutRows)
+            Section(id: "security_settings", headerState: .margin(height: .margin12), rows: securityRows),
+            Section(id: "wallet_connect", headerState: .margin(height: .margin32), rows: walletConnectRows),
+            Section(id: "appearance_settings", headerState: .margin(height: .margin32), rows: appearanceRows),
+            Section(id: "knowledge", headerState: .margin(height: .margin32), rows: knowledgeRows),
+            Section(id: "contact", headerState: .margin(height: .margin32), rows: contactRows),
+            Section(id: "about", headerState: .margin(height: .margin32), rows: aboutRows),
+            Section(id: "footer", headerState: .margin(height: .margin32), footerState: .margin(height: .margin32), rows: footerRows)
         ]
     }
 
@@ -192,35 +292,35 @@ extension MainSettingsViewController: IMainSettingsView {
     }
 
     func set(allBackedUp: Bool) {
-        self.allBackedUp = allBackedUp
+        manageAccountsCell.valueImage = allBackedUp ? nil : UIImage(named: "attention_20")?.tinted(with: .themeLucian)
     }
 
     func set(pinSet: Bool) {
-        self.pinSet = pinSet
+        securityCenterCell.valueImage = pinSet ? nil : UIImage(named: "attention_20")?.tinted(with: .themeLucian)
     }
 
     func set(termsAccepted: Bool) {
-        self.termsAccepted = termsAccepted
+        aboutCell.valueImage = termsAccepted ? nil : UIImage(named: "attention_20")?.tinted(with: .themeLucian)
     }
 
     func set(currentWalletConnectPeer: String?) {
-        self.currentWalletConnectPeer = currentWalletConnectPeer
+        walletConnectCell.value = currentWalletConnectPeer
     }
 
     func set(currentBaseCurrency: String) {
-        self.currentBaseCurrency = currentBaseCurrency
+        baseCurrencyCell.value = currentBaseCurrency
     }
 
     func set(currentLanguage: String?) {
-        self.currentLanguage = currentLanguage
+        languageCell.value = currentLanguage
     }
 
     func set(lightMode: Bool) {
-        self.lightMode = lightMode
+        lightModeCell.isOn = lightMode
     }
 
     func set(appVersion: String) {
-        self.appVersion = appVersion
+        footerCell.set(appVersion: appVersion)
     }
 
 }
