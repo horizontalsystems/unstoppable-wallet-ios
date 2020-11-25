@@ -266,7 +266,7 @@
 		11B35407D5515FD5412EDD7C /* AppStatusViewControllerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BC177A5E610E53F58BD /* AppStatusViewControllerNew.swift */; };
 		11B35408F081D573F974F7C7 /* SendHodlerLockTimeIntervalModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35200D023A11126725DC9 /* SendHodlerLockTimeIntervalModule.swift */; };
 		11B3540A84B85F40F4414756 /* RestoreSelectPredefinedAccountTypeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351307CCA52E991995C4D /* RestoreSelectPredefinedAccountTypeService.swift */; };
-		11B3540F182F3EDE74245EC7 /* MainSettingsFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BD9A836C953CCF8D077 /* MainSettingsFooter.swift */; };
+		11B3540F182F3EDE74245EC7 /* MainSettingsFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BD9A836C953CCF8D077 /* MainSettingsFooterCell.swift */; };
 		11B354132492E8F57F985F52 /* SwapPriceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350EEEF9A51144F39AC33 /* SwapPriceCell.swift */; };
 		11B35418EC59877BB05558B3 /* TransactionRecordPoolRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B93B5B43FF00B24528B /* TransactionRecordPoolRepo.swift */; };
 		11B3541D3F7AFB8C651BEE2B /* Guide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353B4C04282FDBB1B6563 /* Guide.swift */; };
@@ -419,7 +419,7 @@
 		11B35667896D13573EFD0E97 /* PriceAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356B1873BCF37E0C42B09 /* PriceAlertManager.swift */; };
 		11B3566FA2A855E903F5A746 /* AccountRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E9B9C7A88B7584507DF /* AccountRecord.swift */; };
 		11B3567FCB0A136C731C9F6F /* TransactionsMetadataDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B491E721F1ECC600DAE203 /* TransactionsMetadataDataSource.swift */; };
-		11B3568BE6C23380659D8510 /* MainSettingsFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BD9A836C953CCF8D077 /* MainSettingsFooter.swift */; };
+		11B3568BE6C23380659D8510 /* MainSettingsFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BD9A836C953CCF8D077 /* MainSettingsFooterCell.swift */; };
 		11B3568BED326A8D78BA637C /* NoAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E5DF58C01A920CE48F3 /* NoAccountViewController.swift */; };
 		11B35697C6AFBD7702C11EC6 /* SwapFromCoinCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E14976133868EFDE7B5 /* SwapFromCoinCardViewModel.swift */; };
 		11B356AA0EC12A1E035A7200 /* SendAccountModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358A912E1FE080F1DFEFD /* SendAccountModule.swift */; };
@@ -748,7 +748,7 @@
 		11B35B33D69229C63682EF25 /* PrivacyEthereumRpcModeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354E1774092C21CCB6E78 /* PrivacyEthereumRpcModeRouter.swift */; };
 		11B35B3821C6CCB647B98F9A /* MarkdownService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35801399EA004F5A2A1F7 /* MarkdownService.swift */; };
 		11B35B3B2C5483F4FDB39D63 /* AlertRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3516415E7A3217BBB1681 /* AlertRouter.swift */; };
-		11B35B3F384758B223A7218C /* MainSettingsFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BD9A836C953CCF8D077 /* MainSettingsFooter.swift */; };
+		11B35B3F384758B223A7218C /* MainSettingsFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BD9A836C953CCF8D077 /* MainSettingsFooterCell.swift */; };
 		11B35B46532011DB9D9312BF /* CreateWalletService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C5BC369F31A6B7C0C2C /* CreateWalletService.swift */; };
 		11B35B4663DCA98F747129CA /* SwapPriceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350EEEF9A51144F39AC33 /* SwapPriceCell.swift */; };
 		11B35B466C32DB144EA0E8CB /* ManageAccountsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CDAE70C1D4C434FE954 /* ManageAccountsPresenter.swift */; };
@@ -2526,7 +2526,7 @@
 		11B35B9CC5848E3D4DECB9FA /* SwapAllowanceViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapAllowanceViewModel.swift; sourceTree = "<group>"; };
 		11B35BBC9FB99B388F1A388F /* AccountRecord_v_0_10.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountRecord_v_0_10.swift; sourceTree = "<group>"; };
 		11B35BC177A5E610E53F58BD /* AppStatusViewControllerNew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStatusViewControllerNew.swift; sourceTree = "<group>"; };
-		11B35BD9A836C953CCF8D077 /* MainSettingsFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsFooter.swift; sourceTree = "<group>"; };
+		11B35BD9A836C953CCF8D077 /* MainSettingsFooterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsFooterCell.swift; sourceTree = "<group>"; };
 		11B35BDC2E3F845A52C442AD /* EnabledWallet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnabledWallet.swift; sourceTree = "<group>"; };
 		11B35BDC4FD741BE033D1956 /* TermsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsRouter.swift; sourceTree = "<group>"; };
 		11B35BE183E3728495CA9D32 /* RateTopListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateTopListViewController.swift; sourceTree = "<group>"; };
@@ -4344,7 +4344,7 @@
 				1A564D73251DBFA0CFE34D12 /* MainSettingsInteractor.swift */,
 				1A5640528EFD15137E218EA3 /* MainSettingsPresenter.swift */,
 				1A564879AD72301AAB78F8F5 /* MainSettingsViewController.swift */,
-				11B35BD9A836C953CCF8D077 /* MainSettingsFooter.swift */,
+				11B35BD9A836C953CCF8D077 /* MainSettingsFooterCell.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -5902,7 +5902,7 @@
 				11B35D325B26EB022F1E7C65 /* FullTransactionRecord.swift in Sources */,
 				58AAA3F38047AE459F40B388 /* SendConfirmationReceiverCell.swift in Sources */,
 				58AAA968A557089285DBA907 /* SendConfirmationMemoCell.swift in Sources */,
-				11B3568BE6C23380659D8510 /* MainSettingsFooter.swift in Sources */,
+				11B3568BE6C23380659D8510 /* MainSettingsFooterCell.swift in Sources */,
 				11B359335CD8CA1457A9BA2F /* CreateWalletModule.swift in Sources */,
 				D31C476E238BF18D008CB818 /* DerivationSettingsPresenter.swift in Sources */,
 				11B3595B1520B6C0C2367440 /* NotificationManager.swift in Sources */,
@@ -6674,7 +6674,7 @@
 				11B351DA80E68F92F109090F /* FullTransactionRecord.swift in Sources */,
 				58AAAC3952B36CC12934C4F8 /* SendConfirmationReceiverCell.swift in Sources */,
 				58AAAEA1BB14407C32A80DD7 /* SendConfirmationMemoCell.swift in Sources */,
-				11B35B3F384758B223A7218C /* MainSettingsFooter.swift in Sources */,
+				11B35B3F384758B223A7218C /* MainSettingsFooterCell.swift in Sources */,
 				11B35E0451AC6A023FEB2316 /* CreateWalletModule.swift in Sources */,
 				D31C476F238BF18D008CB818 /* DerivationSettingsPresenter.swift in Sources */,
 				11B357BD4518CB78D7290055 /* NotificationManager.swift in Sources */,
@@ -7407,7 +7407,7 @@
 				11B350F6A97B17ABAC45FA64 /* FullTransactionRecord.swift in Sources */,
 				58AAA23D9F9C8C74E53A84E5 /* SendConfirmationReceiverCell.swift in Sources */,
 				58AAAB6C9699F02DC27892FA /* SendConfirmationMemoCell.swift in Sources */,
-				11B3540F182F3EDE74245EC7 /* MainSettingsFooter.swift in Sources */,
+				11B3540F182F3EDE74245EC7 /* MainSettingsFooterCell.swift in Sources */,
 				11B35C1BE57AC5D48AE5D232 /* CreateWalletModule.swift in Sources */,
 				D31C4770238BF18D008CB818 /* DerivationSettingsPresenter.swift in Sources */,
 				11B3519526D833BD0D46D3CC /* NotificationManager.swift in Sources */,

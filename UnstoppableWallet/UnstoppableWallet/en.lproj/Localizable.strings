@@ -503,6 +503,10 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "error.invalid_eos_key" = "Invalid key";
 "error.invalid_eos_account" = "Invalid account";
 
+// Settings -> About App
+
+"settings.about_app.title" = "About App";
+
 // Set PIN
 
 "set_pin.title" = "Passcode";
