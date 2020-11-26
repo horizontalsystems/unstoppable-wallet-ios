@@ -498,6 +498,10 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "error.invalid_eos_key" = "Geçersiz anahtar";
 "error.invalid_eos_account" = "Geçersiz hesap";
 
+// Settings -> About App
+
+"settings.about_app.title" = "About App";
+
 // Set PIN
 
 "set_pin.title" = "Kod";
