@@ -500,6 +500,10 @@
 "error.invalid_eos_key" = "Неверный Ключ";
 "error.invalid_eos_account" = "Неверный Аккаунт";
 
+// Settings -> About App
+
+"settings.about_app.title" = "About App";
+
 // Set PIN
 
 "set_pin.title" = "Код Доступа";
