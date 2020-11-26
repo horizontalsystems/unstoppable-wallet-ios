@@ -106,6 +106,8 @@
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Copiar su clave utilizando la acción \"copiar\" implica ciertos riesgos si utiliza aplicaciones de gestión de portapapeles u otra aplicación que pueda tener acceso a la información del portapapeles.";
+"backup.birthday_height" = "Birthday Height";
+
 "error.send.self_transfer" = "Enviarte a vos mismo no está soportado";
 "error.send_eos.account_not_exist" = "La cuenta de destino no existe";
 "error.send_eos.insufficient_ram" = "Su cuenta EOS no tiene suficiente memoria RAM para enviar este token. Necesita aumentar la capacidad RAM para continuar.";
@@ -355,6 +357,7 @@
 "settings.terms" = "Términos";
 "settings.tell_friends" = "Recomendar a un amigo";
 "settings.contact" = "Contacto";
+"settings.faq" = "FAQ";
 "settings.light_mode" = "Modo ligero";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "app descentralizada";
@@ -663,3 +666,19 @@ poner en peligro la seguridad de mis fondos.";
 "app_status.linked_wallets" = "Monederos vinculados";
 "app_status.version_history" = "Historial de la versión";
 "app_status.blockchain_status" = "Estado del Blockchain";
+
+// FAQ
+
+"faq.title" = "FAQ";
+
+// Status Info
+
+"status_info.title" = "Status";
+"status_info.pending.title" = "Pending";
+"status_info.pending.content" = "Transaction has not been confirmed on the blockchain yet. This step can take anywhere from a few minutes to a few hours depending on the transaction fee. Transactions sent with a very low fee usually get processed within a few days or can be rejected by network i.e. no transaction took place.";
+"status_info.receiving.title" = "Receiving";
+"status_info.receiving.content" = "The sender has sent you a transaction but it's not final yet. For larger payments it's suggested to wait until the transaction status changes to 'completed'. Usually this should happen within an hour but can take longer sometimes if the sender sent the transaction with a low fee.";
+"status_info.confirmed.title" = "Confirmed";
+"status_info.confirmed.content" = "Transaction is final and irreversible.";
+"status_info.failed.title" = "Failed";
+"status_info.failed.content" = "Transaction did not get processed as intended and no token value transfer took place. On Ethereum blockchain failed transactions do consume transaction fees.";
