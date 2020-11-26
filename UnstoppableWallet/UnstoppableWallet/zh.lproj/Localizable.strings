@@ -106,6 +106,8 @@
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "如果您有使用任何剪贴板管理应用或其他可存取剪贴板数据的应用，那么适用”复制“操作复制您的密钥将会带来风险。";
+"backup.birthday_height" = "Birthday Height";
+
 "error.send.self_transfer" = "不支持发送给自己";
 "error.send_eos.account_not_exist" = "目标账户不存在";
 "error.send_eos.insufficient_ram" = "您的EOS账户没有足够的RAM来发送此令牌。您必须增加RAM才能继续。";
@@ -355,6 +357,7 @@
 "settings.terms" = "条款";
 "settings.tell_friends" = "分享给好友";
 "settings.contact" = "报告问题";
+"settings.faq" = "FAQ";
 "settings.light_mode" = "简单模式";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "分布式应用程序";
@@ -662,3 +665,19 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "app_status.linked_wallets" = "已链接钱包";
 "app_status.version_history" = "版本历史";
 "app_status.blockchain_status" = "区块链状态";
+
+// FAQ
+
+"faq.title" = "FAQ";
+
+// Status Info
+
+"status_info.title" = "Status";
+"status_info.pending.title" = "Pending";
+"status_info.pending.content" = "Transaction has not been confirmed on the blockchain yet. This step can take anywhere from a few minutes to a few hours depending on the transaction fee. Transactions sent with a very low fee usually get processed within a few days or can be rejected by network i.e. no transaction took place.";
+"status_info.receiving.title" = "Receiving";
+"status_info.receiving.content" = "The sender has sent you a transaction but it's not final yet. For larger payments it's suggested to wait until the transaction status changes to 'completed'. Usually this should happen within an hour but can take longer sometimes if the sender sent the transaction with a low fee.";
+"status_info.confirmed.title" = "Confirmed";
+"status_info.confirmed.content" = "Transaction is final and irreversible.";
+"status_info.failed.title" = "Failed";
+"status_info.failed.content" = "Transaction did not get processed as intended and no token value transfer took place. On Ethereum blockchain failed transactions do consume transaction fees.";
