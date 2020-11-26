@@ -498,6 +498,10 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "error.invalid_eos_key" = "Ungültiger Schlüssel";
 "error.invalid_eos_account" = "Ungültiger Account";
 
+// Settings -> About App
+
+"settings.about_app.title" = "About App";
+
 // Set PIN
 
 "set_pin.title" = "Code";
