@@ -5,7 +5,9 @@ class AppConfigProvider: IAppConfigProvider {
     let appWebPageLink = "https://unstoppable.money"
     let appGitHubLink = "https://github.com/horizontalsystems/unstoppable-wallet-ios"
     let reportEmail = "support.unstoppable@protonmail.ch"
-    let telegramWalletHelpAccount = "UnstoppableWallet"
+    let telegramAccount = "unstoppable_announcements"
+    let twitterAccount = "UnstoppableByHS"
+    let redditAccount = "UNSTOPPABLEWallet"
 
     var guidesIndexUrl: URL {
         URL(string: (Bundle.main.object(forInfoDictionaryKey: "GuidesIndexUrl") as! String))!

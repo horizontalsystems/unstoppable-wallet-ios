@@ -239,34 +239,40 @@ class MainSettingsViewController: ThemeViewController {
             Row<A1Cell>(
                     id: "telegram",
                     height: .heightSingleLineCell,
+                    autoDeselect: true,
                     bind: { cell, _ in
                         cell.set(backgroundStyle: .lawrence)
                         cell.titleImage = UIImage(named: "telegram_20")
                         cell.title = "Telegram"
                     },
                     action: { [weak self] _ in
+                        self?.openTelegram()
                     }
             ),
             Row<A1Cell>(
                     id: "twitter",
                     height: .heightSingleLineCell,
+                    autoDeselect: true,
                     bind: { cell, _ in
                         cell.set(backgroundStyle: .lawrence)
                         cell.titleImage = UIImage(named: "twitter_20")
                         cell.title = "Twitter"
                     },
                     action: { [weak self] _ in
+                        self?.openTwitter()
                     }
             ),
             Row<A1Cell>(
                     id: "reddit",
                     height: .heightSingleLineCell,
+                    autoDeselect: true,
                     bind: { cell, _ in
                         cell.set(backgroundStyle: .lawrence, bottomSeparator: true)
                         cell.titleImage = UIImage(named: "reddit_20")
                         cell.title = "Reddit"
                     },
                     action: { [weak self] _ in
+                        self?.openReddit()
                     }
             )
         ]
@@ -293,6 +299,32 @@ class MainSettingsViewController: ThemeViewController {
                     height: footerCell.cellHeight
             )
         ]
+    }
+
+    private func openTelegram() {
+        let account = viewModel.telegramAccount
+
+        if let appUrl = URL(string: "tg://resolve?domain=\(account)"), UIApplication.shared.canOpenURL(appUrl) {
+            UIApplication.shared.open(appUrl)
+        } else if let webUrl = URL(string: "https://t.me/\(account)") {
+            UIApplication.shared.open(webUrl)
+        }
+    }
+
+    private func openTwitter() {
+        let account = viewModel.twitterAccount
+
+        if let appUrl = URL(string: "twitter://user?screen_name=\(account)"), UIApplication.shared.canOpenURL(appUrl) {
+            UIApplication.shared.open(appUrl)
+        } else if let webUrl = URL(string: "https://twitter.com/\(account)") {
+            UIApplication.shared.open(webUrl)
+        }
+    }
+
+    private func openReddit() {
+        if let url = URL(string: "https://reddit.com/r/\(viewModel.redditAccount)") {
+            UIApplication.shared.open(url)
+        }
     }
 
 }

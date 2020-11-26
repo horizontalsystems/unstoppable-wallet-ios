@@ -95,6 +95,18 @@ extension MainSettingsViewModel {
         service.lightMode
     }
 
+    var telegramAccount: String {
+        service.telegramAccount
+    }
+
+    var twitterAccount: String {
+        service.twitterAccount
+    }
+
+    var redditAccount: String {
+        service.redditAccount
+    }
+
     var appVersion: String {
         service.appVersion
     }
