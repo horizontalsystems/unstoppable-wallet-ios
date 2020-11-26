@@ -498,6 +498,10 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "error.invalid_eos_key" = "错误密钥";
 "error.invalid_eos_account" = "无效账户";
 
+// Settings -> About App
+
+"settings.about_app.title" = "About App";
+
 // Set PIN
 
 "set_pin.title" = "密码";
