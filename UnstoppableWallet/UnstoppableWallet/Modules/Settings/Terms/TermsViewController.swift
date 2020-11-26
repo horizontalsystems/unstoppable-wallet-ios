@@ -35,9 +35,8 @@ class TermsViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
-        tableView.registerCell(forClass: TermsHeaderCell.self)
         tableView.registerCell(forClass: DescriptionCell.self)
-        tableView.registerCell(forClass: TermsButtonsCell.self)
+        tableView.registerCell(forClass: TermsSeparatorCell.self)
         tableView.registerCell(forClass: CheckboxCell.self)
         tableView.registerCell(forClass: TermsFooterCell.self)
         tableView.registerCell(forClass: BrandFooterCell.self)
@@ -73,15 +72,9 @@ extension TermsViewController: SectionsDataSource {
 
         return [
             Section(
-                    id: "main",
+                    id: "description",
+                    headerState: .margin(height: .margin12),
                     rows: [
-                        Row<TermsHeaderCell>(
-                                id: "header",
-                                height: TermsHeaderCell.height,
-                                bind: { cell, _ in
-                                    cell.bind(image: UIImage(named: "App Icon"), title: "Unstoppable", subtitle: "terms.app_subtitle".localized)
-                                }
-                        ),
                         Row<DescriptionCell>(
                                 id: "description",
                                 dynamicHeight: { containerWidth in
@@ -91,16 +84,9 @@ extension TermsViewController: SectionsDataSource {
                                     cell.bind(text: descriptionText)
                                 }
                         ),
-                        Row<TermsButtonsCell>(
-                                id: "buttons",
-                                height: TermsButtonsCell.height,
-                                bind: { [weak self] cell, _ in
-                                    cell.bind(onTapGithub: {
-                                        self?.delegate.onTapGitHubButton()
-                                    }, onTapSite: {
-                                        self?.delegate.onTapSiteButton()
-                                    })
-                                }
+                        Row<TermsSeparatorCell>(
+                                id: "separator",
+                                height: TermsSeparatorCell.height
                         )
                     ]
             ),

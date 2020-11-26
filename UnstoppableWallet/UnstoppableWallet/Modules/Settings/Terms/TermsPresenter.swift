@@ -3,13 +3,11 @@ import PinKit
 class TermsPresenter {
     weak var view: ITermsView?
 
-    private let router: ITermsRouter
     private let interactor: ITermsInteractor
 
     private var terms = [Term]()
 
-    init(router: ITermsRouter, interactor: ITermsInteractor) {
-        self.router = router
+    init(interactor: ITermsInteractor) {
         self.interactor = interactor
     }
 
@@ -22,14 +20,6 @@ extension TermsPresenter: ITermsViewDelegate {
         view?.set(terms: terms)
     }
 
-    func onTapGitHubButton() {
-        router.open(link: interactor.gitHubLink)
-    }
-
-    func onTapSiteButton() {
-        router.open(link: interactor.siteLink)
-    }
-
     func onTapTerm(index: Int) {
         terms[index].accepted = !terms[index].accepted
 
@@ -38,9 +28,5 @@ extension TermsPresenter: ITermsViewDelegate {
         view?.set(terms: terms)
         view?.refresh()
     }
-
-}
-
-extension TermsPresenter: ITermsInteractorDelegate {
 
 }

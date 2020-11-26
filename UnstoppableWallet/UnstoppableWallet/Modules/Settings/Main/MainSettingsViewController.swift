@@ -6,6 +6,7 @@ import UIExtensions
 import ModuleKit
 import RxSwift
 import RxCocoa
+import SafariServices
 
 class MainSettingsViewController: ThemeViewController {
     private let viewModel: MainSettingsViewModel
@@ -107,8 +108,8 @@ class MainSettingsViewController: ThemeViewController {
             self?.aboutCell.valueImage = alert ? UIImage(named: "attention_20")?.tinted(with: .themeLucian) : nil
         }
 
-        subscribe(disposeBag, viewModel.openLinkSignal) { url in
-            UIApplication.shared.open(url)
+        subscribe(disposeBag, viewModel.openLinkSignal) { [weak self] url in
+            self?.present(SFSafariViewController(url: url, configuration: SFSafariViewController.Configuration()), animated: true)
         }
 
         tableView.buildSections()
@@ -278,6 +279,7 @@ class MainSettingsViewController: ThemeViewController {
                     id: "about",
                     height: .heightSingleLineCell,
                     action: { [weak self] in
+                        self?.navigationController?.pushViewController(AboutModule.viewController(), animated: true)
                     }
             )
         ]

@@ -23,7 +23,7 @@ class AppStatusViewControllerNew: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "settings.app_status".localized
+        title = "app_status.title".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.share".localized, style: .plain, target: self, action: #selector(onTapShare))
 
         view.addSubview(tableView)
@@ -44,7 +44,7 @@ class AppStatusViewControllerNew: ThemeViewController {
         headerCell.bind(
                 image: UIImage(named: "App Icon"),
                 title: "Unstoppable",
-                subtitle: "app_status.version".localized(viewModel.version)
+                subtitle: "version".localized(viewModel.version)
         )
 
         tableView.buildSections()
