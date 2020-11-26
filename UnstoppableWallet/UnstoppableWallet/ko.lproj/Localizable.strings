@@ -39,6 +39,8 @@
 "confirm" = "확인";
 "connect" = "연결";
 
+"version" = "Version %@";
+
 "n/a" = "해당 없음 ";
 
 "biometric_usage_reason" = "지갑 잠금 해제";
@@ -53,7 +55,6 @@
 "welcome.new_wallet" = "새 지갑";
 "welcome.restore_wallet" = "지갑 복원";
 "welcome.privacy_settings" = "개인 정보 설정";
-"welcome.version" = "버전 %@";
 
 // Restore
 
@@ -349,14 +350,10 @@
 "settings.security_center" = "보안 센터";
 "settings.manage_accounts" = "지갑 관리하기";
 "settings.manage_coins" = "코인 관리";
-"settings.app_status" = "앱 상태";
 "settings.experimental_features" = "실험적 기능";
 "settings.notifications" = "알림";
 "settings.base_currency" = "기초 통화";
 "settings.language" = "언어";
-"settings.terms" = "약관";
-"settings.tell_friends" = "친구에게 추천하기";
-"settings.contact" = "연락처";
 "settings.faq" = "FAQ";
 "settings.light_mode" = "밝은 모드";
 "settings.info_title" = "UNSTOPPABLE";
@@ -405,7 +402,6 @@
 // Settings -> Terms
 
 "terms.title" = "약관";
-"terms.app_subtitle" = "분산형 앱";
 "terms.description" = "Unstoppable 지갑은 개인적이고 독립적인 방식으로 암호화폐를 투자하고 보관하려는 사람들을 위해 만들어졌습니다.
 
 이는 오직 사용자만이 자금을 통제할 수 있는 비관세적인 P2P 지갑입니다. 데이터를 수집하지 않고 특정 지갑 앱에 지갑을 잠그지 않아 사용자의 독립성을 유지합니다.
@@ -413,7 +409,6 @@
 Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는 대로 정확히 작동하는지 확인할 수 있습니다.
 
 귀사는 이용 가능한 해결책이 기대에 미치지 못했기 때문에 스스로 Unstoppable 을 구축했습니다. 엔지니어링과 사용 편의성 측면에서 모두 귀사는 이 지갑이 대체 제품보다 상당히 앞서 있다고 믿고 있습니다.";
-"terms.site" = "사이트";
 "terms.item.academy" = "나는 이 앱의 아카데미 부문을 거치면서 가상화폐 저장의 근본적인 측면에 대해 알게 되었다.";
 "terms.item.backup" = "나는 12-24 단어 형식으로 보여 준 지갑의 개인 암호를 백업했습니다. 나는 이 개인 암호가 다른 곳이 아닌 내 스마트폰에 저장되어 있다는 것을 인지합니다.";
 "terms.item.owner" = "나는 내 개인 암호의 소유자만이 내 지갑에 접근하여 자금을 쓸 수 있고 따라서 이 암호들은 절대 누구와도 공유되어서는 안 된다는 것을 이해합니다.";
@@ -472,12 +467,6 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "settings_privacy.sorting_bip69" = "Deterministic Bip69";
 "settings_privacy.sorting_bip69.description" = "사전식 인덱싱";
 
-// Settings -> Contact
-
-"settings.contact.title" = "연락처";
-"settings.contact.email" = "E-mail";
-"settings.contact.telegram_wallet" = "Telegram";
-
 // Manage Keys
 
 "settings_manage_keys.title" = "지갑 관리하기";
@@ -501,6 +490,12 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 // Settings -> About App
 
 "settings.about_app.title" = "About App";
+"settings.about_app.app_name" = "Unstoppable Wallet";
+"settings.about_app.site" = "Site";
+"settings.about_app.contact" = "Contact";
+"settings.about_app.rate_us" = "Rate Us";
+"settings.about_app.tell_friends" = "Tell Friends";
+"settings.about_app.email_copied" = "Email address copied";
 
 // Set PIN
 
@@ -664,7 +659,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 // App Status
 
-"app_status.version" = "버전 %@";
+"app_status.title" = "App Status";
 "app_status.application_status" = "신청 현황";
 "app_status.linked_wallets" = "연결된 지갑";
 "app_status.version_history" = "버전 역사";
