@@ -39,6 +39,8 @@
 "confirm" = "Bestätigen";
 "connect" = "Verbinden";
 
+"version" = "Version %@";
+
 "n/a" = "N/A";
 
 "biometric_usage_reason" = "Wallet entsperren";
@@ -53,7 +55,6 @@
 "welcome.new_wallet" = "Wallet Erstellen";
 "welcome.restore_wallet" = "Wallet Wiederherstellen";
 "welcome.privacy_settings" = "Privatsphäre-Einstellungen";
-"welcome.version" = "Version %@";
 
 // Restore
 
@@ -349,14 +350,10 @@
 "settings.security_center" = "Sicherheit";
 "settings.manage_accounts" = "Wallets verwalten";
 "settings.manage_coins" = "Coins Managen";
-"settings.app_status" = "App-Status";
 "settings.experimental_features" = "Experimentelles Feature";
 "settings.notifications" = "Benachrichtigungen";
 "settings.base_currency" = "Währung";
 "settings.language" = "Sprache";
-"settings.terms" = "Bedingungen";
-"settings.tell_friends" = "Freunden erzählen";
-"settings.contact" = "Kontakt";
 "settings.faq" = "FAQ";
 "settings.light_mode" = "Licht Modus";
 "settings.info_title" = "UNSTOPPABLE";
@@ -405,7 +402,6 @@
 // Settings -> Terms
 
 "terms.title" = "Bedingungen";
-"terms.app_subtitle" = "Dezentralisierte App";
 "terms.description" = "Das Unstoppable Wallet ist für diejenigen gedacht, die in Kryptowährungen auf private und unabhängige Weise investieren und diese sparen möchten.
 
 Es ist ein Non-Custodial, Peer-to-Peer Wallet, bei dem nur der Benutzer die Kontrolle über das Guthaben hat. Es sammelt keine Daten und hält Benutzer unabhängig, indem es sein Wallet nicht an eine bestimmte Wallet-App verknüpft.
@@ -413,7 +409,6 @@ Es ist ein Non-Custodial, Peer-to-Peer Wallet, bei dem nur der Benutzer die Kont
 Das Unstoppable Wallet ist vollständig Open Source und jeder kann bestätigen, dass die App genau so funktioniert, wie sie es vorgibt.
 
 Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen nicht gut waren. Sowohl aus technischer Sicht als auch aus Sicht der Nutzbarkeit sind wir der Meinung, dass diese Wallets den alternativen Produkten deutlich voraus ist.";
-"terms.site" = "Seite";
 "terms.item.academy" = "Ich bin durch den Academy-Bereich dieser App gegangen und machte mich mit den grundlegenden Aspekten der Aufbewahrung von Kryptowährungen vertraut.";
 "terms.item.backup" = "Ich habe den/die Private Key(s) für meine Wallets gesichert, die mir in Form von 12-24 Wörtern angezeigt wurden. Mir ist bewusst, dass diese Private Keys auf meinem Smartphone und nirgendwo anders gespeichert werden.";
 "terms.item.owner" = "Mir ist bewusst, dass nur der Eigentümer meines/meiner Private Key(s) auf mein Wallet zugreifen und Geld ausgeben kann und dass diese Keys daher niemals mit irgendjemandem geteilt werden sollten.";
@@ -472,12 +467,6 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "settings_privacy.sorting_bip69" = "Deterministische Bip69";
 "settings_privacy.sorting_bip69.description" = "Lexikographische Indizierung";
 
-// Settings -> Contact
-
-"settings.contact.title" = "Kontakt";
-"settings.contact.email" = "E-mail";
-"settings.contact.telegram_wallet" = "Telegram";
-
 // Manage Keys
 
 "settings_manage_keys.title" = "Wallets verwalten";
@@ -501,6 +490,12 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 // Settings -> About App
 
 "settings.about_app.title" = "About App";
+"settings.about_app.app_name" = "Unstoppable Wallet";
+"settings.about_app.site" = "Site";
+"settings.about_app.contact" = "Contact";
+"settings.about_app.rate_us" = "Rate Us";
+"settings.about_app.tell_friends" = "Tell Friends";
+"settings.about_app.email_copied" = "Email address copied";
 
 // Set PIN
 
@@ -664,7 +659,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 // App Status
 
-"app_status.version" = "Version %@";
+"app_status.title" = "App Status";
 "app_status.application_status" = "Antragsstatus";
 "app_status.linked_wallets" = "Verknüpfte Wallets";
 "app_status.version_history" = "Versionsverlauf";
