@@ -39,6 +39,8 @@
 "confirm" = "确认";
 "connect" = "连接";
 
+"version" = "Version %@";
+
 "n/a" = "不可用";
 
 "biometric_usage_reason" = "解锁钱包";
@@ -53,7 +55,6 @@
 "welcome.new_wallet" = "创建钱包";
 "welcome.restore_wallet" = "恢复钱包";
 "welcome.privacy_settings" = "隐私设置";
-"welcome.version" = "版本%@";
 
 // Restore
 
@@ -349,14 +350,10 @@
 "settings.security_center" = "安全中心";
 "settings.manage_accounts" = "管理钱包";
 "settings.manage_coins" = "管理Coins";
-"settings.app_status" = "应用状态";
 "settings.experimental_features" = "实验性功能";
 "settings.notifications" = "通知";
 "settings.base_currency" = "基本货币";
 "settings.language" = "语言";
-"settings.terms" = "条款";
-"settings.tell_friends" = "分享给好友";
-"settings.contact" = "报告问题";
 "settings.faq" = "FAQ";
 "settings.light_mode" = "简单模式";
 "settings.info_title" = "UNSTOPPABLE";
@@ -405,7 +402,6 @@
 // Settings -> Terms
 
 "terms.title" = "条款";
-"terms.app_subtitle" = "去中心化应用";
 "terms.description" = "Unstoppable钱包是为寻求以私密和独立的方式投资和储存加密货币的人士而创立。
 
 这是一个非监护式对等钱包，只有用户能够对资金进行控制。它不收集任何数据并通过不把用户钱包锁定至特定的钱包应用来保证他/她的独立性。
@@ -413,7 +409,6 @@
 Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的方式运行。
 
 我们为我们自己创立了Unstoppable作为符合标准的可用的解决方案。从工程和可用性角度而言，我们相信此钱包远远领先于其他产品。";
-"terms.site" = "网站";
 "terms.item.academy" = "我浏览了此应用的“学院”（Academy）部分并掌握了储存加密货币的基础知识。";
 "terms.item.backup" = "我已对我钱包的私钥备份，该私钥以12-24字的格式展示给我。我理解这些私钥将保存在我的智能手机而不是其他地方。";
 "terms.item.owner" = "我理解只有私钥的所有人可以访问和消费我钱包上的资金，因此不得和任何人共享这些私钥。";
@@ -472,12 +467,6 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "settings_privacy.sorting_bip69" = "BIP69";
 "settings_privacy.sorting_bip69.description" = "词典索引";
 
-// Settings -> Contact
-
-"settings.contact.title" = "报告问题";
-"settings.contact.email" = "电子邮箱";
-"settings.contact.telegram_wallet" = "电报";
-
 // Manage Keys
 
 "settings_manage_keys.title" = "管理钱包";
@@ -501,6 +490,12 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 // Settings -> About App
 
 "settings.about_app.title" = "About App";
+"settings.about_app.app_name" = "Unstoppable Wallet";
+"settings.about_app.site" = "Site";
+"settings.about_app.contact" = "Contact";
+"settings.about_app.rate_us" = "Rate Us";
+"settings.about_app.tell_friends" = "Tell Friends";
+"settings.about_app.email_copied" = "Email address copied";
 
 // Set PIN
 
@@ -664,7 +659,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // App Status
 
-"app_status.version" = "版本%@";
+"app_status.title" = "App Status";
 "app_status.application_status" = "应用程序状态";
 "app_status.linked_wallets" = "已链接钱包";
 "app_status.version_history" = "版本历史";
