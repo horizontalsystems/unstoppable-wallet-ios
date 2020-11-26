@@ -499,6 +499,10 @@ poner en peligro la seguridad de mis fondos.";
 "error.invalid_eos_key" = "Clave inválida";
 "error.invalid_eos_account" = "Cuenta inválida";
 
+// Settings -> About App
+
+"settings.about_app.title" = "About App";
+
 // Set PIN
 
 "set_pin.title" = "Código de acceso";
