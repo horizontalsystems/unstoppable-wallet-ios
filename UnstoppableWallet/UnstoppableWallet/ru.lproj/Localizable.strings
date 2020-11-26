@@ -39,6 +39,8 @@
 "confirm" = "Подтвердить";
 "connect" = "Подключиться";
 
+"version" = "Version %@";
+
 "n/a" = "Нет данных";
 
 "biometric_usage_reason" = "Разблокировать Кошелек";
@@ -55,7 +57,6 @@
 "welcome.new_wallet" = "Создать Кошелек";
 "welcome.restore_wallet" = "Восстановить Кошелек";
 "welcome.privacy_settings" = "Настройки Приватности";
-"welcome.version" = "Версия %@";
 
 // Restore
 
@@ -351,14 +352,10 @@
 "settings.security_center" = "Центр Безопасности";
 "settings.manage_accounts" = "Управление Кошельками";
 "settings.manage_coins" = "Управление Токенами";
-"settings.app_status" = "Статус Приложения";
 "settings.experimental_features" = "Экспериментальные Функции";
 "settings.notifications" = "Уведомления";
 "settings.base_currency" = "Базовая Валюта";
 "settings.language" = "Язык";
-"settings.terms" = "Условия Использования";
-"settings.tell_friends" = "Рассказать Друзьям";
-"settings.contact" = "Kонтакты";
 "settings.faq" = "FAQ";
 "settings.light_mode" = "Светлый Режим";
 "settings.info_title" = "UNSTOPPABLE";
@@ -407,7 +404,6 @@
 // Settings -> Terms
 
 "terms.title" = "Условия Использования";
-"terms.app_subtitle" = "Децентрализованное Приложение";
 "terms.description" = "Кошелек Unstoppable предназначен для тех, кто хочет инвестировать и хранить криптовалюты частным и независимым образом.
 
 Это некастодиальный децентрализованный кошелек, в котором только пользователь может контролировать свои средства. Кошелек не собирает какие-либо данные и позволяет пользователю сохранять независимость, не завязывая учетную запись под одно приложение-кошелек.
@@ -415,7 +411,6 @@
 Кошелек Unstoppable имеет открытый исходный программный код, и любой может убедиться в том, что приложение работает должным образом.
 
 Мы создали кошелек Unstoppable для себя, так как доступные в сети решения не предлагают необходимый функционал на должном уровне. С точки зрения инженерии и простоты использования, мы считаем, что этот кошелек значительно опережает альтернативные продукты.";
-"terms.site" = "Веб-сайт";
 "terms.item.academy" = "Я зашел в раздел \"Академия\" в этом приложении и ознакомился с базовыми аспектами хранения криптовалют.";
 "terms.item.backup" = "Я создал резервную копию приватного ключа (-ей) для своих кошельков, показанных мне в виде 12-24 слов. Я понимаю, что эти приватные ключи хранятся на моем смартфоне, а не в другом месте.";
 "terms.item.owner" = "Я понимаю, что только владелец моего приватного ключа(-ей) может получить доступ к моему кошельку и потратить доступные в нем средства, и поэтому эти ключи никогда не должны передаваться посторонним людям.";
@@ -474,12 +469,6 @@
 "settings_privacy.sorting_bip69" = "Детерминированный BIP69";
 "settings_privacy.sorting_bip69.description" = "Лексикографическая Индексация";
 
-// Settings -> Contact
-
-"settings.contact.title" = "Kонтакты";
-"settings.contact.email" = "Эл. почта";
-"settings.contact.telegram_wallet" = "Telegram";
-
 // Manage Keys
 
 "settings_manage_keys.title" = "Кошельки";
@@ -503,6 +492,12 @@
 // Settings -> About App
 
 "settings.about_app.title" = "About App";
+"settings.about_app.app_name" = "Unstoppable Wallet";
+"settings.about_app.site" = "Site";
+"settings.about_app.contact" = "Contact";
+"settings.about_app.rate_us" = "Rate Us";
+"settings.about_app.tell_friends" = "Tell Friends";
+"settings.about_app.email_copied" = "Email address copied";
 
 // Set PIN
 
@@ -666,7 +661,7 @@
 
 // App Status
 
-"app_status.version" = "Версия %@";
+"app_status.title" = "App Status";
 "app_status.application_status" = "Статус приложения";
 "app_status.linked_wallets" = "Связанные кошельки";
 "app_status.version_history" = "История Версий";
