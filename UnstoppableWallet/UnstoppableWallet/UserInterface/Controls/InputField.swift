@@ -78,7 +78,7 @@ class InputField: UIView {
         }
 
         deleteButton.apply(style: .secondaryIcon)
-        deleteButton.apply(secondaryIconImage: UIImage(named: "delete_20"))
+        deleteButton.apply(secondaryIconImage: UIImage(named: "trash_20"))
         deleteButton.addTarget(self, action: #selector(onTapDelete), for: .touchUpInside)
 
         addSubview(scanButton)
@@ -88,7 +88,7 @@ class InputField: UIView {
         }
 
         scanButton.apply(style: .secondaryIcon)
-        scanButton.apply(secondaryIconImage: UIImage(named: "scan_qr_20"))
+        scanButton.apply(secondaryIconImage: UIImage(named: "qr_scan_20"))
         scanButton.isHidden = !showQrButton
         scanButton.addTarget(self, action: #selector(onTapScan), for: .touchUpInside)
 

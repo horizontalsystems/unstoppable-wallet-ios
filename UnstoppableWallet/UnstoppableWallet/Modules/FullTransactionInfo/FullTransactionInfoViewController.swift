@@ -10,8 +10,7 @@ class FullTransactionInfoViewController: ThemeViewController, SectionsDataSource
     static let spinnerLineWidth: CGFloat = 4
     static let spinnerSideSize: CGFloat = 32
 
-    //todo change icon to 48 cross in circle
-    private let attentionImage = UIImage(named: "Attention Icon Large", in: Bundle(for: RequestErrorView.self), compatibleWith: nil)?.tinted(with: .themeGray)
+    private let attentionImage = UIImage(named: "close_48", in: Bundle(for: RequestErrorView.self), compatibleWith: nil)?.tinted(with: .themeGray)
     private let errorImage =  UIImage(named: "Error Icon", in: Bundle(for: RequestErrorView.self), compatibleWith: nil)?.tinted(with: .themeGray)
 
     private let delegate: IFullTransactionInfoViewDelegate

@@ -25,13 +25,13 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
         var topSectionItems = [FullTransactionItem]()
         if let blockTime = txResponse.blockTime, let time = TimeInterval(exactly: blockTime) {
             let blockDate = Date(timeIntervalSince1970: time)
-            topSectionItems.append(FullTransactionItem(icon: "Date Icon", title: "full_info.time".localized, value: DateHelper.instance.formatFullTime(from: blockDate)))
+            topSectionItems.append(FullTransactionItem(icon: "circle_clock_20", title: "full_info.time".localized, value: DateHelper.instance.formatFullTime(from: blockDate)))
         }
         if let blockHeight = txResponse.blockHeight {
-            topSectionItems.append(FullTransactionItem(icon: "Block Icon", title: "full_info.block".localized, value: "#\(blockHeight)"))
+            topSectionItems.append(FullTransactionItem(icon: "blocks_20", title: "full_info.block".localized, value: "#\(blockHeight)"))
         }
         if let confirmations = txResponse.confirmations {
-            topSectionItems.append(FullTransactionItem(icon: "success_20", title: "full_info.confirmations".localized, value: "\(confirmations)"))
+            topSectionItems.append(FullTransactionItem(icon: "circle_check_20", title: "full_info.confirmations".localized, value: "\(confirmations)"))
         }
         if let weiValue = txResponse.value {
             let value: Decimal = weiValue / pow(10, coin.decimal)
@@ -52,13 +52,13 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
         if let fee = txResponse.fee {
             let feeCoin = feeCoinProvider.feeCoin(coin: coin) ?? coin
             let feeValue = CoinValue(coin: feeCoin, value: fee)
-            feeGasItems.append(FullTransactionItem(title: "full_info.fee".localized, value: ValueFormatter.instance.format(coinValue: feeValue)))
+            feeGasItems.append(FullTransactionItem(icon: "circle_coin_20", title: "full_info.fee".localized, value: ValueFormatter.instance.format(coinValue: feeValue)))
         }
         if let size = txResponse.size {
-            feeGasItems.append(FullTransactionItem(title: "full_info.size".localized, value: "\(size) (bytes)"))
+            feeGasItems.append(FullTransactionItem(icon: "size_20", title: "full_info.size".localized, value: "\(size) (bytes)"))
         }
         if let gasLimit = txResponse.gasLimit {
-            feeGasItems.append(FullTransactionItem(title: "full_info.gas_limit".localized, value: "\(gasLimit)"))
+            feeGasItems.append(FullTransactionItem(icon: "chart_20", title: "full_info.gas_limit".localized, value: "\(gasLimit)"))
         }
 
         if let gasPrice = txResponse.gasPrice {

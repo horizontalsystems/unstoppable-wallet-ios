@@ -15,7 +15,7 @@ class RecipientInputCell: VerifiedInputCell {
         super.init(viewModel: viewModel)
 
         let buttons = [
-            InputFieldButtonItem(icon: UIImage(named: "scan_qr_20"), visible: .onEmpty) { [weak self] in
+            InputFieldButtonItem(icon: UIImage(named: "qr_scan_20"), visible: .onEmpty) { [weak self] in
                 self?.onScanTapped()
             },
             InputFieldButtonItem(title: "button.paste".localized, visible: .onEmpty) { [weak self] in

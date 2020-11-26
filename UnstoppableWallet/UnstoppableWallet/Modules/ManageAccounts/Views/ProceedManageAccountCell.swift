@@ -4,8 +4,8 @@ class ProceedManageAccountCell: BaseManageAccountCell {
     static let height: CGFloat = .heightSingleLineCell
 
     private let titleLabel = UILabel()
-    private let warningImageView = UIImageView(image: UIImage(named: "attention_20")?.tinted(with: .themeLucian))
-    private let disclosureImageView = UIImageView(image: UIImage(named: "Disclosure Indicator"))
+    private let warningImageView = UIImageView(image: UIImage(named: "warning_2_20")?.tinted(with: .themeLucian))
+    private let disclosureImageView = UIImageView(image: UIImage(named: "arrow_big_forward_20"))
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

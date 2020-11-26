@@ -63,7 +63,7 @@ class AboutViewController: ThemeViewController {
         }
 
         termsCell.set(backgroundStyle: .lawrence)
-        termsCell.titleImage = UIImage(named: "wallet_20")
+        termsCell.titleImage = UIImage(named: "unordered_20")
         termsCell.title = "terms.title".localized
 
         subscribe(disposeBag, viewModel.termsAlertDriver) { [weak self] alert in
@@ -128,7 +128,7 @@ extension AboutViewController: SectionsDataSource {
                                 autoDeselect: true,
                                 bind: { cell, _ in
                                     cell.set(backgroundStyle: .lawrence)
-                                    cell.titleImage = UIImage(named: "notification_20")
+                                    cell.titleImage = UIImage(named: "at_20")
                                     cell.title = "settings.about_app.contact".localized
                                 },
                                 action: { [weak self] _ in
@@ -140,7 +140,7 @@ extension AboutViewController: SectionsDataSource {
                                 height: .heightSingleLineCell,
                                 bind: { cell, _ in
                                     cell.set(backgroundStyle: .lawrence)
-                                    cell.titleImage = UIImage(named: "notification_20")
+                                    cell.titleImage = UIImage(named: "app_status_20")
                                     cell.title = "app_status.title".localized
                                 },
                                 action: { [weak self] _ in
@@ -161,7 +161,7 @@ extension AboutViewController: SectionsDataSource {
                                 autoDeselect: true,
                                 bind: { cell, _ in
                                     cell.set(backgroundStyle: .lawrence)
-                                    cell.titleImage = UIImage(named: "notification_20")
+                                    cell.titleImage = UIImage(named: "rate_20")
                                     cell.title = "settings.about_app.rate_us".localized
                                 },
                                 action: { [weak self] _ in
@@ -174,7 +174,7 @@ extension AboutViewController: SectionsDataSource {
                                 autoDeselect: true,
                                 bind: { cell, _ in
                                     cell.set(backgroundStyle: .lawrence, bottomSeparator: true)
-                                    cell.titleImage = UIImage(named: "notification_20")
+                                    cell.titleImage = UIImage(named: "share_1_20")
                                     cell.title = "settings.about_app.tell_friends".localized
                                 },
                                 action: { [weak self] _ in

@@ -5,7 +5,7 @@ class PrivacyCell: ThemeCell {
     private let leftView = UIImageView()
     private let middleView = UILabel()
     private let rightView = UILabel()
-    private let disclosureView = UIImageView(image: UIImage(named: "Privacy Drop Down"))
+    private let disclosureView = UIImageView(image: UIImage(named: "arrow_small_down_20"))
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -39,7 +39,7 @@ class PrivacyCell: ThemeCell {
 
         contentView.addSubview(disclosureView)
         disclosureView.snp.makeConstraints { maker in
-            maker.leading.equalTo(rightView.snp.trailing).offset(CGFloat.margin2x)
+            maker.leading.equalTo(rightView.snp.trailing)
             maker.centerY.equalToSuperview()
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.size.equalTo(12)

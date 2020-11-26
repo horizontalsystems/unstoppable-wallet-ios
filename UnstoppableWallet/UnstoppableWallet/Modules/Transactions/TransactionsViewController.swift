@@ -29,7 +29,7 @@ class TransactionsViewController: ThemeViewController {
 
         super.init()
 
-        tabBarItem = UITabBarItem(title: "transactions.tab_bar_item".localized, image: UIImage(named: "transactions.tab_bar_item"), tag: 0)
+        tabBarItem = UITabBarItem(title: "transactions.tab_bar_item".localized, image: UIImage(named: "filled_transaction_2n_24"), tag: 0)
     }
 
     required init?(coder aDecoder: NSCoder) {

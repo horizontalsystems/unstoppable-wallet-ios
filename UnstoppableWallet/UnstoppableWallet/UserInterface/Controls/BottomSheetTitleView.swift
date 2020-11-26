@@ -55,7 +55,7 @@ class BottomSheetTitleView: UIView {
         }
 
         closeButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        closeButton.setImage(UIImage(named: "Close Icon"), for: .normal)
+        closeButton.setImage(UIImage(named: "close_3_24"), for: .normal)
         closeButton.addTarget(self, action: #selector(_onTapClose), for: .touchUpInside)
 
         addSubview(separatorView)

@@ -31,13 +31,13 @@ class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
 
         if let blockTime = txResponse.blockTime, let time = TimeInterval(exactly: blockTime) {
             let blockDate = Date(timeIntervalSince1970: time)
-            blockItems.append(FullTransactionItem(icon: "Date Icon", title: "full_info.time".localized, value: DateHelper.instance.formatFullTime(from: blockDate)))
+            blockItems.append(FullTransactionItem(icon: "circle_clock_20", title: "full_info.time".localized, value: DateHelper.instance.formatFullTime(from: blockDate)))
         }
         if let blockHeight = txResponse.blockHeight {
-            blockItems.append(FullTransactionItem(icon: "Block Icon", title: "full_info.block".localized, value: "#\(blockHeight)"))
+            blockItems.append(FullTransactionItem(icon: "blocks_20", title: "full_info.block".localized, value: "#\(blockHeight)"))
         }
         if let confirmations = txResponse.confirmations {
-            blockItems.append(FullTransactionItem(icon: "success_20", title: "full_info.confirmations".localized, value: "\(confirmations)"))
+            blockItems.append(FullTransactionItem(icon: "circle_check_20", title: "full_info.confirmations".localized, value: "\(confirmations)"))
         }
         if !blockItems.isEmpty {
             sections.append(FullTransactionSection(title: nil, items: blockItems))
@@ -47,14 +47,14 @@ class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
         var transactionItems = [FullTransactionItem]()
         if let fee = txResponse.fee {
             let feeValue = CoinValue(coin: coin, value: fee)
-            transactionItems.append(FullTransactionItem(title: "full_info.fee".localized, value: ValueFormatter.instance.format(coinValue: feeValue)))
+            transactionItems.append(FullTransactionItem(icon: "circle_coin_20", title: "full_info.fee".localized, value: ValueFormatter.instance.format(coinValue: feeValue)))
         }
         if let size = txResponse.size {
-            transactionItems.append(FullTransactionItem(title: "full_info.size".localized, value: "\(size) (bytes)"))
+            transactionItems.append(FullTransactionItem(icon: "size_20", title: "full_info.size".localized, value: "\(size) (bytes)"))
         }
         if let feeRate = txResponse.feePerByte, let formattedValue = BitcoinTransactionInfoAdapter.feeRateFormatter.string(from: feeRate as NSNumber) {
             let feeRateValue = "\(formattedValue) (\(unitName))"
-            transactionItems.append(FullTransactionItem(title: "full_info.rate".localized, value: feeRateValue))
+            transactionItems.append(FullTransactionItem(icon: "chart_20", title: "full_info.rate".localized, value: feeRateValue))
         }
         if !transactionItems.isEmpty {
             sections.append(FullTransactionSection(title: nil, items: transactionItems))

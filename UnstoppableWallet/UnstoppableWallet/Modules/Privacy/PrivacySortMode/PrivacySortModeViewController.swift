@@ -32,7 +32,7 @@ class PrivacySortModeViewController: ThemeActionSheetController {
         titleView.bind(
                 title: "settings_privacy.alert_sort.title".localized,
                 subtitle: "settings_privacy.alert_sort.subtitle".localized,
-                image: UIImage(named: "Sort Icon")?.tinted(with: .themeGray)
+                image: UIImage(named: "transaction_24")?.tinted(with: .themeGray)
         )
 
         titleView.onTapClose = { [weak self] in

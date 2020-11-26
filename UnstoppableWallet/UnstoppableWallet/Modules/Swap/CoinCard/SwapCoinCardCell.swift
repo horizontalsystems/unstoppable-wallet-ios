@@ -78,7 +78,7 @@ class SwapCoinCardCell: UITableViewCell {
         tokenSelectButton.setContentCompressionResistancePriority(.required, for: .horizontal)
 
         tokenSelectButton.semanticContentAttribute = .forceRightToLeft
-        tokenSelectButton.setImage(UIImage(named: "Down")?.tinted(with: .themeGray), for: .normal)
+        tokenSelectButton.setImage(UIImage(named: "arrow_small_down_20"), for: .normal)
         tokenSelectButton.setTitleColor(.themeLeah, for: .normal)
         tokenSelectButton.titleLabel?.font = UIFont.subhead1
         tokenSelectButton.addTarget(self, action: #selector(onTapTokenSelect), for: .touchUpInside)

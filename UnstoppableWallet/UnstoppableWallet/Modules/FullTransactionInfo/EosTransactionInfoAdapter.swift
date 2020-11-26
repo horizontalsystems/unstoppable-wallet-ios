@@ -26,13 +26,13 @@ class EosTransactionInfoAdapter: IFullTransactionInfoAdapter {
 
         var topSectionItems = [FullTransactionItem]()
         if let blockTime = txResponse.blockTime {
-            topSectionItems.append(FullTransactionItem(icon: "Date Icon", title: "full_info.time".localized, value: DateHelper.instance.formatFullTime(from: blockTime)))
+            topSectionItems.append(FullTransactionItem(icon: "circle_clock_20", title: "full_info.time".localized, value: DateHelper.instance.formatFullTime(from: blockTime)))
         }
         if let blockNumber = txResponse.blockNumber {
-            topSectionItems.append(FullTransactionItem(icon: "Block Icon", title: "full_info.block".localized, value: "#\(blockNumber)"))
+            topSectionItems.append(FullTransactionItem(icon: "blocks_20", title: "full_info.block".localized, value: "#\(blockNumber)"))
         }
         if let status = txResponse.status {
-            topSectionItems.append(FullTransactionItem(icon: "success_20", title: "status".localized, value: "\(status)"))
+            topSectionItems.append(FullTransactionItem(icon: "circle_check_20", title: "status".localized, value: "\(status)"))
         }
         if !topSectionItems.isEmpty {
             sections.append(FullTransactionSection(title: nil, items: topSectionItems))

@@ -22,7 +22,7 @@ class BinanceTransactionInfoAdapter: IFullTransactionInfoAdapter {
 
         var topSectionItems = [FullTransactionItem]()
         if let blockHeight = txResponse.blockHeight {
-            topSectionItems.append(FullTransactionItem(icon: "Block Icon", title: "full_info.block".localized, value: "#\(blockHeight)"))
+            topSectionItems.append(FullTransactionItem(icon: "blocks_20", title: "full_info.block".localized, value: "#\(blockHeight)"))
         }
         if let centValue = txResponse.value {
             let value = centValue / pow(10, 8)

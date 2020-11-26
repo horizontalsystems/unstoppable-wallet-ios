@@ -60,7 +60,7 @@ class SelectableValueView: UIView {
             maker.height.equalToSuperview()
         }
 
-        dropDownImageView.image = UIImage(named: "Down")?.tinted(with: .themeGray)
+        dropDownImageView.image = UIImage(named: "arrow_small_down_20")
         dropDownImageView.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview()
             maker.centerY.equalToSuperview()

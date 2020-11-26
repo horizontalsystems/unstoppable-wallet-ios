@@ -22,7 +22,7 @@ class BalanceEditCell: UICollectionViewCell {
         button.titleLabel?.font = .subhead1
         button.contentEdgeInsets = UIEdgeInsets(top: .margin4x, left: .margin8x, bottom: .margin4x, right: .margin8x)
 
-        let image = UIImage(named: "Plus Icon")
+        let image = UIImage(named: "circle_plus_20")
         button.setImage(image?.tinted(with: .themeGray), for: .normal)
         button.setImage(image?.tinted(with: .themeGray50), for: .highlighted)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -.margin4x, bottom: 0, right: 0)

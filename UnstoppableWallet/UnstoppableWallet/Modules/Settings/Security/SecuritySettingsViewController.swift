@@ -61,7 +61,7 @@ class SecuritySettingsViewController: ThemeViewController {
     private var privacyRows: [RowProtocol] {
         [
             Row<TitleCell>(id: "privacy", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "privacy_20"), title: "settings_security.privacy".localized, showDisclosure: true, last: true)
+                cell.bind(titleIcon: UIImage(named: "user_20"), title: "settings_security.privacy".localized, showDisclosure: true, last: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapPrivacy()
             })
@@ -69,12 +69,12 @@ class SecuritySettingsViewController: ThemeViewController {
     }
 
     private var pinRows: [RowProtocol] {
-        let attentionIcon = pinSet ? nil : UIImage(named: "attention_20")
+        let attentionIcon = pinSet ? nil : UIImage(named: "warning_2_20")
 
         var rows: [RowProtocol] = [
             Row<ToggleCell>(id: "pin", height: .heightSingleLineCell, bind: { [unowned self] cell, _ in
                 cell.bind(
-                        titleIcon: UIImage(named: "passcode_20"),
+                        titleIcon: UIImage(named: "dialpad_alt_2_20"),
                         title: "settings_security.passcode".localized,
                         rightImage: attentionIcon?.tinted(with: .themeLucian),
                         isOn: pinSet, last: !editPinVisible,
@@ -100,7 +100,7 @@ class SecuritySettingsViewController: ThemeViewController {
     private var biometryRow: RowProtocol? {
         biometryType.flatMap {
             switch $0 {
-            case .touchId: return createBiometryRow(title: "settings_security.touch_id".localized, icon: "touch_id_20")
+            case .touchId: return createBiometryRow(title: "settings_security.touch_id".localized, icon: "touch_id_2_20")
             case .faceId: return createBiometryRow(title: "settings_security.face_id".localized, icon: "face_id_20")
             default: return nil
             }

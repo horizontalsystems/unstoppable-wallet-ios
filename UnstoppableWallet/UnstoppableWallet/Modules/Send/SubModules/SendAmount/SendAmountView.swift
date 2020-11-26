@@ -140,7 +140,7 @@ class SendAmountView: UIView {
         }
 
         switchButton.apply(style: .secondaryIcon)
-        switchButton.apply(secondaryIconImage: UIImage(named: "Send Switch Icon"))
+        switchButton.apply(secondaryIconImage: UIImage(named: "arrow_swap_20"))
         switchButton.addTarget(self, action: #selector(onTapSwitch), for: .touchUpInside)
 
         hintLabel.font = .caption

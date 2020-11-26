@@ -52,7 +52,7 @@ class AmountInfoView: UIView {
         primaryAmountWrapper.addSubview(sentToSelfImageView)
         sentToSelfImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
         sentToSelfImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        sentToSelfImageView.image = UIImage(named: "transaction_in_20")?.tinted(with: .themeRemus)
+        sentToSelfImageView.image = UIImage(named: "arrow_medium_main_down_left_20")?.tinted(with: .themeRemus)
 
         primaryAmountWrapper.addSubview(primaryAmountTitleLabel)
         primaryAmountTitleLabel.snp.makeConstraints { maker in

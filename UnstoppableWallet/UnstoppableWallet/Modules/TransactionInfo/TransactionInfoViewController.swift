@@ -99,7 +99,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
                     cell.set(backgroundStyle: .lawrence, topSeparator: false, bottomSeparator: true)
                     cell.title = "status".localized
                     cell.value = "tx_info.status.confirmed".localized
-                    cell.valueImage = UIImage(named: "success_20")?.tinted(with: .themeRemus)
+                    cell.valueImage = UIImage(named: "check_1_20")?.tinted(with: .themeRemus)
                 }
         )
     }
@@ -112,9 +112,9 @@ class TransactionInfoViewController: ThemeActionSheetController {
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, topSeparator: false, bottomSeparator: true)
                     cell.title = "status".localized
-                    cell.titleImage = UIImage(named: "info_20")?.tinted(with: .themeJacob)
+                    cell.titleImage = UIImage(named: "circle_information_20")?.tinted(with: .themeJacob)
                     cell.value = "tx_info.status.failed".localized
-                    cell.valueImage = UIImage(named: "attention_20")?.tinted(with: .themeLucian)
+                    cell.valueImage = UIImage(named: "warning_2_20")?.tinted(with: .themeLucian)
                     cell.titleImageAction = { [weak self] in
                         self?.openStatusInfo()
                     }
@@ -250,7 +250,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
     private func doubleSpendRow() -> RowProtocol {
         warningRow(
                 id: "double_spend",
-                image: UIImage(named: "double_spend_20"),
+                image: UIImage(named: "double_send_20"),
                 text: "tx_info.double_spent_note".localized
         ) { [weak self] in
             self?.delegate.onTapDoubleSpendInfo()
@@ -287,7 +287,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
     private func sentToSelfRow() -> RowProtocol {
         noteRow(
                 id: "sent_to_self",
-                image: UIImage(named: "transaction_in_20")?.tinted(with: .themeRemus),
+                image: UIImage(named: "arrow_medium_main_down_left_20")?.tinted(with: .themeRemus),
                 text: "tx_info.to_self_note".localized
         )
     }
@@ -360,11 +360,11 @@ extension TransactionInfoViewController: ITransactionInfoView {
         let iconImage: UIImage? = {
             switch type {
             case .incoming:
-                return UIImage(named: "transaction_in_24")?.tinted(with: .themeRemus)
+                return UIImage(named: "arrow_medium_3_down_left_24")?.tinted(with: .themeRemus)
             case .outgoing, .sentToSelf:
-                return UIImage(named: "transaction_out_24")?.tinted(with: .themeJacob)
+                return UIImage(named: "arrow_medium_3_up_right_24")?.tinted(with: .themeJacob)
             case .approve:
-                return UIImage(named: "transaction_approve_24")?.tinted(with: .themeLeah)
+                return UIImage(named: "arrow_swap_approval_2_24")?.tinted(with: .themeLeah)
             }
         }()
 

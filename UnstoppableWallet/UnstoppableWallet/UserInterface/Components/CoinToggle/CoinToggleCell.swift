@@ -34,7 +34,7 @@ class CoinToggleCell: ThemeCell {
             maker.centerY.equalToSuperview()
         }
 
-        addImageView.image = UIImage(named: "Edit Coins Icon")
+        addImageView.image = UIImage(named: "plus_20")
     }
 
     @objc func switchChanged() {
