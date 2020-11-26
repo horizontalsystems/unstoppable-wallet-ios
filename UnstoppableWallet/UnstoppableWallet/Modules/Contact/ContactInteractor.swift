@@ -16,7 +16,7 @@ extension ContactInteractor: IContactInteractor {
     }
 
     var telegramWalletHelpAccount: String {
-        appConfigProvider.telegramWalletHelpAccount
+        appConfigProvider.telegramAccount
     }
 
     func copyToClipboard(string: String) {
