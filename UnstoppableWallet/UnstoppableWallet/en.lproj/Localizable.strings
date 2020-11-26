@@ -39,6 +39,8 @@
 "confirm" = "Confirm";
 "connect" = "Connect";
 
+"version" = "Version %@";
+
 "n/a" = "N/A";
 
 "biometric_usage_reason" = "Unlock wallet";
@@ -55,7 +57,6 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "welcome.new_wallet" = "Create Wallet";
 "welcome.restore_wallet" = "Restore Wallet";
 "welcome.privacy_settings" = "Privacy Settings";
-"welcome.version" = "Version %@";
 
 // Restore
 
@@ -354,14 +355,10 @@ bch.horizontalsystems.xyz/apg";
 "settings.security_center" = "Security Center";
 "settings.manage_accounts" = "Manage Wallets";
 "settings.manage_coins" = "Manage Coins";
-"settings.app_status" = "App Status";
 "settings.experimental_features" = "Experimental Features";
 "settings.notifications" = "Notifications";
 "settings.base_currency" = "Base Currency";
 "settings.language" = "Language";
-"settings.terms" = "Terms";
-"settings.tell_friends" = "Tell Friends";
-"settings.contact" = "Contact";
 "settings.faq" = "FAQ";
 "settings.light_mode" = "Light Mode";
 "settings.info_title" = "UNSTOPPABLE";
@@ -410,7 +407,6 @@ bch.horizontalsystems.xyz/apg";
 // Settings -> Terms
 
 "terms.title" = "Terms";
-"terms.app_subtitle" = "Decentralized App";
 "terms.description" = "The Unstoppable wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.
 
 It's a non-custodial, peer-to-peer wallet where only the user has control over funds. It doesn't collect any data and keeps user independent by not locking his/her wallet to a specific wallet app.
@@ -418,7 +414,6 @@ It's a non-custodial, peer-to-peer wallet where only the user has control over f
 The Unstoppable wallet is fully open-source and anyone can confirm that the app works exactly as it claims to.
 
 We built Unstoppable for ourselves as the available solutions were not up to par. Both from engineering and usability perspective we believe this wallet to be significantly ahead of alternative products.";
-"terms.site" = "Site";
 "terms.item.academy" = "I went through the Academy section of this app and got familiar with the fundamental aspects of storing cryptocurrencies.";
 "terms.item.backup" = "I have backed up the private key(s) for my wallets that were shown to me in a form of 12-24 words. I understand that these private keys are stored on my smartphone and not elsewhere.";
 "terms.item.owner" = "I understand that only the owner of my private key(s) can access and spend funds on my wallet and therefore these keys should never be shared with anyone.";
@@ -477,12 +472,6 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "settings_privacy.sorting_bip69" = "Deterministic Bip69";
 "settings_privacy.sorting_bip69.description" = "Lexicographical Indexing";
 
-// Settings -> Contact
-
-"settings.contact.title" = "Contact";
-"settings.contact.email" = "E-mail";
-"settings.contact.telegram_wallet" = "Telegram";
-
 // Manage Keys
 
 "settings_manage_keys.title" = "Manage Wallets";
@@ -506,6 +495,12 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 // Settings -> About App
 
 "settings.about_app.title" = "About App";
+"settings.about_app.app_name" = "Unstoppable Wallet";
+"settings.about_app.site" = "Site";
+"settings.about_app.contact" = "Contact";
+"settings.about_app.rate_us" = "Rate Us";
+"settings.about_app.tell_friends" = "Tell Friends";
+"settings.about_app.email_copied" = "Email address copied";
 
 // Set PIN
 
@@ -669,7 +664,7 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 
 // App Status
 
-"app_status.version" = "Version %@";
+"app_status.title" = "App Status";
 "app_status.application_status" = "Application status";
 "app_status.linked_wallets" = "Linked Wallets";
 "app_status.version_history" = "Version History";

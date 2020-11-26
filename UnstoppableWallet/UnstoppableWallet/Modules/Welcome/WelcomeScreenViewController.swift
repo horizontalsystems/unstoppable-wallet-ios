@@ -374,7 +374,7 @@ extension WelcomeScreenViewController: UIScrollViewDelegate {
 extension WelcomeScreenViewController: IWelcomeScreenView {
 
     func set(appVersion: String) {
-        versionLabel.text = "welcome.version".localized(appVersion)
+        versionLabel.text = "version".localized(appVersion)
     }
 
 }
