@@ -498,6 +498,10 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "error.invalid_eos_key" = "잘못된 암호입니다";
 "error.invalid_eos_account" = "계정이 존재하지 않습니다.";
 
+// Settings -> About App
+
+"settings.about_app.title" = "About App";
+
 // Set PIN
 
 "set_pin.title" = "비밀번호";
