@@ -28,7 +28,7 @@ class MainSettingsViewController: ThemeViewController {
 
         super.init()
 
-        tabBarItem = UITabBarItem(title: "settings.tab_bar_item".localized, image: UIImage(named: "settings.tab_bar_item"), tag: 0)
+        tabBarItem = UITabBarItem(title: "settings.tab_bar_item".localized, image: UIImage(named: "filled_settings_2_24"), tag: 0)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -58,7 +58,7 @@ class MainSettingsViewController: ThemeViewController {
         manageAccountsCell.title = "settings.manage_accounts".localized
 
         securityCenterCell.set(backgroundStyle: .lawrence, bottomSeparator: true)
-        securityCenterCell.titleImage = UIImage(named: "security_20")
+        securityCenterCell.titleImage = UIImage(named: "shield_20")
         securityCenterCell.title = "settings.security_center".localized
 
         walletConnectCell.set(backgroundStyle: .lawrence, bottomSeparator: true)
@@ -66,16 +66,16 @@ class MainSettingsViewController: ThemeViewController {
         walletConnectCell.title = "wallet_connect.title".localized
 
         baseCurrencyCell.set(backgroundStyle: .lawrence)
-        baseCurrencyCell.titleImage = UIImage(named: "currency_20")
+        baseCurrencyCell.titleImage = UIImage(named: "usd_20")
         baseCurrencyCell.title = "settings.base_currency".localized
 
         languageCell.set(backgroundStyle: .lawrence)
-        languageCell.titleImage = UIImage(named: "language_20")
+        languageCell.titleImage = UIImage(named: "globe_20")
         languageCell.title = "settings.language".localized
         languageCell.value = viewModel.currentLanguage
 
         lightModeCell.set(backgroundStyle: .lawrence)
-        lightModeCell.titleImage = UIImage(named: "light_mode_20")
+        lightModeCell.titleImage = UIImage(named: "light_20")
         lightModeCell.title = "settings.light_mode".localized
         lightModeCell.isOn = viewModel.lightMode
         lightModeCell.onToggle = { [weak self] isOn in
@@ -161,7 +161,7 @@ class MainSettingsViewController: ThemeViewController {
                     height: .heightSingleLineCell,
                     bind: { cell, _ in
                         cell.set(backgroundStyle: .lawrence)
-                        cell.titleImage = UIImage(named: "notification_20")
+                        cell.titleImage = UIImage(named: "bell_ring_20")
                         cell.title = "settings.notifications".localized
                     },
                     action: { [weak self] _ in
@@ -195,7 +195,7 @@ class MainSettingsViewController: ThemeViewController {
                     height: .heightSingleLineCell,
                     bind: { cell, _ in
                         cell.set(backgroundStyle: .lawrence, bottomSeparator: true)
-                        cell.titleImage = UIImage(named: "experimental_features_20")
+                        cell.titleImage = UIImage(named: "flask_20")
                         cell.title = "settings.experimental_features".localized
                     },
                     action: { [weak self] _ in
@@ -212,7 +212,7 @@ class MainSettingsViewController: ThemeViewController {
                     height: .heightSingleLineCell,
                     bind: { cell, _ in
                         cell.set(backgroundStyle: .lawrence)
-                        cell.titleImage = UIImage(named: "contact_20")
+                        cell.titleImage = UIImage(named: "message_square_20")
                         cell.title = "settings.faq".localized
                     },
                     action: { [weak self] _ in
@@ -224,7 +224,7 @@ class MainSettingsViewController: ThemeViewController {
                     height: .heightSingleLineCell,
                     bind: { cell, _ in
                         cell.set(backgroundStyle: .lawrence, bottomSeparator: true)
-                        cell.titleImage = UIImage(named: "academy_20")
+                        cell.titleImage = UIImage(named: "academy_1_20")
                         cell.title = "guides.title".localized
                     },
                     action: { [weak self] _ in

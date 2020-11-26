@@ -33,7 +33,7 @@ class BalanceViewController: ThemeViewController {
 
         super.init()
 
-        tabBarItem = UITabBarItem(title: "balance.tab_bar_item".localized, image: UIImage(named: "balance.tab_bar_item"), tag: 0)
+        tabBarItem = UITabBarItem(title: "balance.tab_bar_item".localized, image: UIImage(named: "filled_wallet_24"), tag: 0)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -203,10 +203,10 @@ class BalanceViewController: ThemeViewController {
 
     private func syncShowBalanceButton() {
         if headerViewItem == nil {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Balance Show Icon"), style: .plain, target: self, action: #selector(onTapShowBalance))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "eye_2_off_24"), style: .plain, target: self, action: #selector(onTapShowBalance))
             navigationItem.rightBarButtonItem?.tintColor = .themeJacob
         } else {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Balance Hide Icon"), style: .plain, target: self, action: #selector(onTapHideBalance))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "eye_2_24"), style: .plain, target: self, action: #selector(onTapHideBalance))
             navigationItem.rightBarButtonItem?.tintColor = .themeGray
         }
     }

@@ -29,7 +29,7 @@ class WalletConnectErrorViewController: ThemeViewController {
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
-        errorView.bind(image: UIImage(named: "Error Cross Icon"), text: error.smartDescription)
+        errorView.bind(image: UIImage(named: "close_48"), text: error.smartDescription)
 
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints { maker in

@@ -51,7 +51,7 @@ class SwapPriceCell: UITableViewCell {
             maker.top.bottom.equalToSuperview()
         }
 
-        switchButton.setImage(UIImage(named: "Swap Switch Icon")?.tinted(with: .themeGray), for: .normal)
+        switchButton.setImage(UIImage(named: "arrow_medium_2_swap_24")?.tinted(with: .themeGray), for: .normal)
         switchButton.addTarget(self, action: #selector(onTapSwitch), for: .touchUpInside)
         switchButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         switchButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)

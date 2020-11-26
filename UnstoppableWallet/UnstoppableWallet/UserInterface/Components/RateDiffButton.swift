@@ -19,7 +19,7 @@ class RateDiffButton: UIButton {
 
         addSubview(iconImageView)
         iconImageView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(CGFloat.margin1x)
+            maker.leading.equalToSuperview()
             maker.centerY.equalToSuperview()
         }
 
@@ -27,7 +27,7 @@ class RateDiffButton: UIButton {
 
         addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
-            maker.leading.equalTo(iconImageView.snp.trailing).offset(CGFloat.margin1x)
+            maker.leading.equalTo(iconImageView.snp.trailing)
             maker.top.bottom.equalToSuperview().inset(CGFloat.margin2x)
             maker.width.equalTo(CGFloat.heightOneDp)
         }
@@ -50,7 +50,7 @@ class RateDiffButton: UIButton {
 
     func show(value: Decimal, dimmed: Bool) {
         let color: UIColor = dimmed ? .themeGray50 : (value.isSignMinus ? .themeLucian : .themeRemus)
-        let imageName = value.isSignMinus ? "Price Down" : "Price Up"
+        let imageName = value.isSignMinus ? "arrow_medium_2_down_20" : "arrow_medium_2_up_20"
 
         iconImageView.image = UIImage(named: imageName)?.tinted(with: color)
 

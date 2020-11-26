@@ -24,7 +24,7 @@ class ChartCurrentRateView: UIView {
         addSubview(diffLabel)
 
         diffLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(diffImageView.snp.trailing).offset(CGFloat.margin1x)
+            maker.leading.equalTo(diffImageView.snp.trailing)
             maker.top.bottom.equalToSuperview()
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
@@ -52,7 +52,7 @@ class ChartCurrentRateView: UIView {
             return
         }
         let color: UIColor = diff.isSignMinus ? .themeLucian : .themeRemus
-        let imageName = diff.isSignMinus ? "Price Down" : "Price Up"
+        let imageName = diff.isSignMinus ? "arrow_medium_2_down_20" : "arrow_medium_2_up_20"
 
         diffImageView.image = UIImage(named: imageName)?.tinted(with: color)
 

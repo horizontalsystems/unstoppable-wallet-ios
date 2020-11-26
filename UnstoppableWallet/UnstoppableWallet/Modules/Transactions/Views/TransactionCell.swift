@@ -37,7 +37,7 @@ class TransactionCell: ClaudeThemeCell {
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
             maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
         }
-        doubleSpendImageView.image = UIImage(named: "double_spend_20")
+        doubleSpendImageView.image = UIImage(named: "double_send_20")
         doubleSpendImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
         doubleSpendImageView.setContentHuggingPriority(.required, for: .horizontal)
         doubleSpendImageView.isHidden = true
@@ -93,7 +93,7 @@ class TransactionCell: ClaudeThemeCell {
 
         contentView.addSubview(sentToSelfImageView)
         sentToSelfImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        sentToSelfImageView.image = UIImage(named: "transaction_in_20")?.tinted(with: .themeRemus)
+        sentToSelfImageView.image = UIImage(named: "arrow_medium_main_down_left_20")?.tinted(with: .themeRemus)
 
         contentView.addSubview(amountLabel)
         amountLabel.snp.makeConstraints { maker in
@@ -118,13 +118,13 @@ class TransactionCell: ClaudeThemeCell {
         switch item.type {
         case .incoming:
             currencyAmountLabel.textColor = .themeGreenD
-            typeIconImageView.image = UIImage(named: "transaction_in_20")?.tinted(with: .themeRemus)
+            typeIconImageView.image = UIImage(named: "arrow_medium_main_down_left_20")?.tinted(with: .themeRemus)
         case .outgoing, .sentToSelf:
             currencyAmountLabel.textColor = .themeYellowD
-            typeIconImageView.image = UIImage(named: "transaction_out_20")?.tinted(with: .themeJacob)
+            typeIconImageView.image = UIImage(named: "arrow_medium_main_up_right_20")?.tinted(with: .themeJacob)
         case .approve:
             currencyAmountLabel.textColor = .themeLeah
-            typeIconImageView.image = UIImage(named: "transaction_approve_20")?.tinted(with: .themeLeah)
+            typeIconImageView.image = UIImage(named: "arrow_swap_approval_2_20")?.tinted(with: .themeLeah)
         }
         amountLabel.textColor = .themeGray
 

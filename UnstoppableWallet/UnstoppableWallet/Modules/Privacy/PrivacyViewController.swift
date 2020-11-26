@@ -28,7 +28,7 @@ class PrivacyViewController: ThemeViewController {
 
         title = "settings_privacy.title".localized
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "info_24")?.tinted(with: .themeJacob), style: .plain, target: self, action: #selector(onTapInfo))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "circle_information_24")?.tinted(with: .themeJacob), style: .plain, target: self, action: #selector(onTapInfo))
 
         tableView.registerCell(forClass: HighlightedDescriptionCell.self)
         tableView.registerCell(forClass: PrivacyCell.self)

@@ -12,7 +12,7 @@ class DataProviderCell: ThemeCell {
     private let subtitleLabel = UILabel()
 
     private let checkmarkImageView = TintImageView(
-            image: UIImage(named: "success_20"),
+            image: UIImage(named: "check_1_20"),
             tintColor: .themeJacob,
             selectedTintColor: .themeJacob
     )

@@ -53,7 +53,7 @@ class RateListHeaderFooterView: UITableViewHeaderFooterView {
             maker.width.equalTo(CGFloat.margin4x + 24 + CGFloat.margin4x)
         }
 
-        sortButton.setImage(UIImage(named: "Balance Sort Icon")?.tinted(with: .themeJacob), for: .normal)
+        sortButton.setImage(UIImage(named: "sort_6_24")?.tinted(with: .themeJacob), for: .normal)
         sortButton.addTarget(self, action: #selector(onTapSortButton), for: .touchUpInside)
     }
 

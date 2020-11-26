@@ -23,10 +23,10 @@ class ZcashTransactionInfoAdapter: IFullTransactionInfoAdapter {
         var topSectionItems = [FullTransactionItem]()
         if let blockTime = txResponse.blockTime, let time = TimeInterval(exactly: blockTime) {
             let blockDate = Date(timeIntervalSince1970: time)
-            topSectionItems.append(FullTransactionItem(icon: "Date Icon", title: "full_info.time".localized, value: DateHelper.instance.formatFullTime(from: blockDate)))
+            topSectionItems.append(FullTransactionItem(icon: "circle_clock_20", title: "full_info.time".localized, value: DateHelper.instance.formatFullTime(from: blockDate)))
         }
         if let blockHeight = txResponse.blockHeight {
-            topSectionItems.append(FullTransactionItem(icon: "Block Icon", title: "full_info.block".localized, value: "#\(blockHeight)"))
+            topSectionItems.append(FullTransactionItem(icon: "blocks_20", title: "full_info.block".localized, value: "#\(blockHeight)"))
         }
         if !topSectionItems.isEmpty {
             sections.append(FullTransactionSection(title: nil, items: topSectionItems))
@@ -37,7 +37,7 @@ class ZcashTransactionInfoAdapter: IFullTransactionInfoAdapter {
         if let fee = txResponse.fee {
             let feeCoin = feeCoinProvider.feeCoin(coin: coin) ?? coin
             let feeValue = CoinValue(coin: feeCoin, value: fee)
-            feeItems.append(FullTransactionItem(title: "full_info.fee".localized, value: ValueFormatter.instance.format(coinValue: feeValue)))
+            feeItems.append(FullTransactionItem(icon: "circle_coin_20", title: "full_info.fee".localized, value: ValueFormatter.instance.format(coinValue: feeValue)))
         }
         if !feeItems.isEmpty {
             sections.append(FullTransactionSection(title: nil, items: feeItems))
