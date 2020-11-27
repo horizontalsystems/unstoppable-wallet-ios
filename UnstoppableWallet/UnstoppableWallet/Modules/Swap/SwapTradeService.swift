@@ -146,9 +146,9 @@ extension SwapTradeService {
 
         if coinOut == coinIn {
             coinOut = nil
+            amountOut = nil
         }
 
-//        amountOut = nil
 
         syncState()
     }
@@ -162,9 +162,9 @@ extension SwapTradeService {
 
         if coinIn == coinOut {
             coinIn = nil
+            amountIn = nil
         }
 
-//        amountIn = nil
 
         syncState()
     }

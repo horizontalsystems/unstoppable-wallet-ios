@@ -22,7 +22,7 @@ class SwapCoinCardCell: UITableViewCell {
 
     private let balanceView = AdditionalDataView()
 
-    public init(viewModel: SwapCoinCardViewModel) {
+    public init(viewModel: SwapCoinCardViewModel, title: String) {
         self.viewModel = viewModel
 
         super.init(style: .default, reuseIdentifier: nil)
@@ -45,6 +45,7 @@ class SwapCoinCardCell: UITableViewCell {
         titleLabel.setContentHuggingPriority(.required, for: .horizontal)
         titleLabel.font = .body
         titleLabel.textColor = .themeOz
+        titleLabel.text = title
 
         cardView.contentView.addSubview(badgeView)
         badgeView.snp.makeConstraints { maker in
@@ -129,7 +130,6 @@ class SwapCoinCardCell: UITableViewCell {
     }
 
     private func subscribeToViewModel() {
-        subscribe(disposeBag, viewModel.description) { [weak self] in self?.set(title: $0) }
         subscribe(disposeBag, viewModel.isEstimated) { [weak self] in self?.setBadge(hidden: !$0) }
         subscribe(disposeBag, viewModel.amount) { [weak self] in self?.set(text: $0) }
         subscribe(disposeBag, viewModel.tokenCode) { [weak self] in self?.set(tokenCode: $0) }
@@ -146,10 +146,6 @@ class SwapCoinCardCell: UITableViewCell {
 
 extension SwapCoinCardCell {
 
-    private func set(title: String?) {
-        titleLabel.text = title?.localized
-    }
-
     private func setBadge(hidden: Bool) {
         badgeView.isHidden = hidden
     }
@@ -165,7 +161,9 @@ extension SwapCoinCardCell {
     }
 
     private func set(text: String?) {
-        inputField.text = text
+        if inputField.text != text {
+            inputField.text = text
+        }
     }
 
     private func set(balance: String?) {

@@ -70,7 +70,7 @@ class SwapAllowanceViewModel {
         case .notReady:
             return "n/a".localized
         case .ready(let allowance):
-            return "\(allowance)"
+            return allowance.formattedString
         }
     }
 

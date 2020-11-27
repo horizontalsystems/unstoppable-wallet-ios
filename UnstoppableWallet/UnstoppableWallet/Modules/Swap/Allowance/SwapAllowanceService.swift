@@ -53,7 +53,7 @@ class SwapAllowanceService {
                 .allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: .latest)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] allowance in
-                    self?.state = .ready(allowance: allowance)
+                    self?.state = .ready(allowance: CoinValue(coin: coin, value: allowance))
                 }, onError: { [weak self] error in
                     self?.state = .notReady(error: error)
                 })
@@ -86,7 +86,7 @@ extension SwapAllowanceService {
                 coin: coin,
                 spenderAddress: spenderAddress,
                 amount: amount,
-                allowance: allowance
+                allowance: allowance.value
         )
     }
 
@@ -96,7 +96,7 @@ extension SwapAllowanceService {
 
     enum State: Equatable {
         case loading
-        case ready(allowance: Decimal)
+        case ready(allowance: CoinValue)
         case notReady(error: Error)
 
         static func ==(lhs: State, rhs: State) -> Bool {
