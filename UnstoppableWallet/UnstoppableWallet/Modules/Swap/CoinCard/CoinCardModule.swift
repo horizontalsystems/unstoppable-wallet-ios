@@ -22,7 +22,7 @@ struct CoinCardModule {
     static func fromCell(service: SwapService, tradeService: SwapTradeService) -> SwapCoinCardCell {
         let fiatService = FiatService(currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManager)
         let viewModel = SwapCoinCardViewModel(
-                coinCardService: FromCoinCardService(service: service, tradeService: tradeService),
+                coinCardService: SwapFromCoinCardService(service: service, tradeService: tradeService),
                 fiatService: fiatService,
                 decimalParser: AmountDecimalParser()
         )
@@ -32,7 +32,7 @@ struct CoinCardModule {
     static func toCell(service: SwapService, tradeService: SwapTradeService) -> SwapCoinCardCell {
         let fiatService = FiatService(currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManager)
         let viewModel = SwapCoinCardViewModel(
-                coinCardService: ToCoinCardService(service: service, tradeService: tradeService),
+                coinCardService: SwapToCoinCardService(service: service, tradeService: tradeService),
                 fiatService: fiatService,
                 decimalParser: AmountDecimalParser()
         )
@@ -41,8 +41,8 @@ struct CoinCardModule {
 
 }
 
-class FromCoinCardService: ISwapCoinCardService {
-    private let cardType: TradeType = .exactIn
+class SwapFromCoinCardService: ISwapCoinCardService {
+    private static let cardType: TradeType = .exactIn
     private let service: SwapService
     private let tradeService: SwapTradeService
 
@@ -51,12 +51,12 @@ class FromCoinCardService: ISwapCoinCardService {
         self.tradeService = tradeService
     }
 
-    var isEstimated: Bool { tradeService.tradeType != cardType }
+    var isEstimated: Bool { tradeService.tradeType != Self.cardType }
     var amount: Decimal? { tradeService.amountIn }
     var coin: Coin? { tradeService.coinIn }
     var balance: Decimal? { service.balanceIn }
 
-    var isEstimatedObservable: Observable<Bool> { tradeService.tradeTypeObservable.map { $0 != cardType } }
+    var isEstimatedObservable: Observable<Bool> { tradeService.tradeTypeObservable.map { $0 != Self.cardType } }
     var amountObservable: Observable<Decimal?> { tradeService.amountInObservable }
     var coinObservable: Observable<Coin?> { tradeService.coinInObservable }
     var balanceObservable: Observable<Decimal?> { service.balanceInObservable }
@@ -76,8 +76,8 @@ class FromCoinCardService: ISwapCoinCardService {
 
 }
 
-class ToCoinCardService: ISwapCoinCardService {
-    private let cardType: TradeType = .exactOut
+class SwapToCoinCardService: ISwapCoinCardService {
+    private static let cardType: TradeType = .exactOut
     private let service: SwapService
     private let tradeService: SwapTradeService
 
@@ -86,12 +86,12 @@ class ToCoinCardService: ISwapCoinCardService {
         self.tradeService = tradeService
     }
 
-    var isEstimated: Bool { tradeService.tradeType != cardType }
+    var isEstimated: Bool { tradeService.tradeType != Self.cardType }
     var amount: Decimal? { tradeService.amountOut }
     var coin: Coin? { tradeService.coinOut }
     var balance: Decimal? { service.balanceOut }
 
-    var isEstimatedObservable: Observable<Bool> { tradeService.tradeTypeObservable.map { $0 != cardType } }
+    var isEstimatedObservable: Observable<Bool> { tradeService.tradeTypeObservable.map { $0 != Self.cardType } }
     var amountObservable: Observable<Decimal?> { tradeService.amountOutObservable }
     var coinObservable: Observable<Coin?> { tradeService.coinOutObservable }
     var balanceObservable: Observable<Decimal?> { service.balanceOutObservable }

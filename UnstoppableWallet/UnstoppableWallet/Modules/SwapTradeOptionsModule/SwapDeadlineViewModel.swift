@@ -44,10 +44,10 @@ extension SwapDeadlineViewModel: IVerifiedInputViewModel {
     var inputFieldButtonItems: [InputFieldButtonItem] {
         let bounds = service.recommendedDeadlineBounds
         return [
-            InputFieldButtonItem(style: .secondaryDefault, title: "swap.advanced_settings.deadline_minute".localized(toString(bounds.lowerBound)), visible: .onEmpty) { [weak self] in
+            InputFieldButtonItem(title: "swap.advanced_settings.deadline_minute".localized(toString(bounds.lowerBound)), visible: .onEmpty) { [weak self] in
                 self?.onLeftButtonTapped()
             },
-            InputFieldButtonItem(style: .secondaryDefault, title: "swap.advanced_settings.deadline_minute".localized(toString(bounds.upperBound)), visible: .onEmpty) { [weak self] in
+            InputFieldButtonItem(title: "swap.advanced_settings.deadline_minute".localized(toString(bounds.upperBound)), visible: .onEmpty) { [weak self] in
                 self?.onRightButtonTapped()
             }
         ]
