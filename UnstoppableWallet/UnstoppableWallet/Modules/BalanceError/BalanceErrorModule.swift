@@ -1,6 +1,7 @@
 protocol IBalanceErrorView: class {
     func set(coinTitle: String)
     func setChangeSourceButton(hidden: Bool)
+    func openReport(email: String, error: String)
 }
 
 protocol IBalanceErrorViewDelegate {
@@ -13,7 +14,7 @@ protocol IBalanceErrorViewDelegate {
 }
 
 protocol IBalanceErrorInteractor {
-    func copyToClipboard(text: String)
+    var contactEmail: String { get }
     func refresh(wallet: Wallet)
 }
 
@@ -23,5 +24,4 @@ protocol IBalanceErrorInteractorDelegate: class {
 protocol IBalanceErrorRouter {
     func close()
     func closeAndOpenPrivacySettings()
-    func closeAndOpenReport()
 }

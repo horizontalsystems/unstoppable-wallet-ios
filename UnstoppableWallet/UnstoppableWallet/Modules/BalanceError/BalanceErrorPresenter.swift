@@ -30,10 +30,7 @@ extension BalanceErrorPresenter: IBalanceErrorViewDelegate {
 
     func onLoad() {
         view?.set(coinTitle: wallet.coin.title)
-
         view?.setChangeSourceButton(hidden: !isSourceChangeable(coinType: wallet.coin.type))
-
-        interactor.copyToClipboard(text: "\(error)")
     }
 
     func onTapRetry() {
@@ -47,9 +44,7 @@ extension BalanceErrorPresenter: IBalanceErrorViewDelegate {
     }
 
     func onTapReport() {
-        interactor.copyToClipboard(text: "\(error)")
-
-        router.closeAndOpenReport()
+        view?.openReport(email: interactor.contactEmail, error: "\(error)")
     }
 
     func onTapClose() {

@@ -1,6 +1,7 @@
 import UIKit
 import ThemeKit
 import SnapKit
+import MessageUI
 
 class BalanceErrorViewController: ThemeActionSheetController {
     private let delegate: IBalanceErrorViewDelegate
@@ -107,6 +108,28 @@ extension BalanceErrorViewController: IBalanceErrorView {
             maker.top.equalTo(retryButton.snp.bottom).offset(hidden ? 0 : CGFloat.margin4x)
             maker.height.equalTo(hidden ? 0 : CGFloat.heightButton)
         }
+    }
+
+    func openReport(email: String, error: String) {
+        if MFMailComposeViewController.canSendMail() {
+            let controller = MFMailComposeViewController()
+            controller.setToRecipients([email])
+            controller.setMessageBody(error, isHTML: false)
+            controller.mailComposeDelegate = self
+
+            present(controller, animated: true)
+        } else {
+            UIPasteboard.general.setValue(email, forPasteboardType: "public.plain-text")
+            HudHelper.instance.showSuccess(title: "settings.about_app.email_copied".localized)
+        }
+    }
+
+}
+
+extension BalanceErrorViewController: MFMailComposeViewControllerDelegate {
+
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
     }
 
 }
