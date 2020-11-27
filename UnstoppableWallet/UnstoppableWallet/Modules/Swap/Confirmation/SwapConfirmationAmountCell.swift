@@ -93,7 +93,7 @@ class SwapConfirmationAmountCell: ThemeCell {
     }
 
     func bind(payTitle: String?, payValue: String?, getTitle: String?, getValue: String?) {
-        super.bind(showDisclosure: false, last: false)
+        super.bind(last: false)
 
         payTitleLabel.text = payTitle
         payValueLabel.text = payValue

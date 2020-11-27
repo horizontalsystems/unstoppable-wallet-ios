@@ -2,26 +2,26 @@ import UIKit
 import SnapKit
 
 class TransactionProcessingView: UIView {
-    private let barsProgressView = BarsProgressView(barWidth: 4, color: .themeGray50, inactiveColor: .themeSteel20)
+    private let barsProgressView = BarsProgressView(color: .themeGray50, inactiveColor: .themeSteel20)
     private let processingLabel = UILabel()
 
     init() {
         super.init(frame: .zero)
 
         addSubview(barsProgressView)
-        addSubview(processingLabel)
-
         barsProgressView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview()
-            maker.centerY.equalTo(processingLabel)
-            maker.height.equalTo(CGFloat.margin3x)
+            maker.leading.top.bottom.equalToSuperview()
         }
+
         barsProgressView.set(barsCount: BarsProgressView.progressStepsCount)
 
+        addSubview(processingLabel)
         processingLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(barsProgressView.snp.trailing).offset(CGFloat.margin2x)
-            maker.top.bottom.trailing.equalToSuperview()
+            maker.leading.equalTo(barsProgressView.snp.trailing).offset(CGFloat.margin16)
+            maker.trailing.equalToSuperview()
+            maker.centerY.equalTo(barsProgressView)
         }
+
         processingLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         processingLabel.font = .subhead2
         processingLabel.textColor = .themeGray

@@ -1170,7 +1170,7 @@
 		1A5644B2C50078A92C5DDC00 /* TitleManageAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56482D2289F167040EBD90 /* TitleManageAccountCell.swift */; };
 		1A5644CF2BEC2E7C6227BDC7 /* AppStatusModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56404C1C16B85434117DB7 /* AppStatusModule.swift */; };
 		1A5644D3099665DAE701D526 /* InfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564495F3D50379931F27CD /* InfoHeaderView.swift */; };
-		1A5644D62DFE3B0E45B58D88 /* TransactionCompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564CB5E9C751F39838CFF6 /* TransactionCompletedView.swift */; };
+		1A5644D62DFE3B0E45B58D88 /* TransactionStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564CB5E9C751F39838CFF6 /* TransactionStatusView.swift */; };
 		1A5644DDDC89B581087F770D /* IndicatorSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564424585C28DDD2157098 /* IndicatorSelectView.swift */; };
 		1A5644E20BE5CFDE9CF4CC76 /* EosTransactionInfoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640C2D323C183A63D0319 /* EosTransactionInfoAdapter.swift */; };
 		1A5644E728C862F3C5C77102 /* BalanceCoinIconHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56452E2D06913B4EDBBAE0 /* BalanceCoinIconHolder.swift */; };
@@ -1208,7 +1208,7 @@
 		1A56466A3F234475F72ADE4C /* InfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564495F3D50379931F27CD /* InfoHeaderView.swift */; };
 		1A56466AB1F20C3BD9AE7638 /* PrivacyInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564EB4A7A10C5299DA6A7D /* PrivacyInteractor.swift */; };
 		1A56467CB37628451DDFD579 /* AppStatusRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56446DB0696819B2ABC567 /* AppStatusRouter.swift */; };
-		1A564680877414A21BCEC6D1 /* TransactionCompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564CB5E9C751F39838CFF6 /* TransactionCompletedView.swift */; };
+		1A564680877414A21BCEC6D1 /* TransactionStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564CB5E9C751F39838CFF6 /* TransactionStatusView.swift */; };
 		1A564685DDF41780A93B92E9 /* BlurManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BB88BF3ED779F8C21DC /* BlurManager.swift */; };
 		1A56468D166D58664EE1F06D /* FullTransactionHashHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F5499700A46A1515B6 /* FullTransactionHashHeaderView.swift */; };
 		1A56469A339B6EDB5E3F509B /* PrivacyInfoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647CEF3A3BACA78B79487 /* PrivacyInfoRouter.swift */; };
@@ -1261,7 +1261,7 @@
 		1A564928A28CAA37F4F42FF1 /* SecuritySettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56446DB62F52AC4C3C2C30 /* SecuritySettingsPresenter.swift */; };
 		1A56493305A34486152BEAB2 /* AddressParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E38A79F3308EC1B437A /* AddressParser.swift */; };
 		1A564947E6731A05DF6C19F4 /* FullTransactionInfoTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56424F4DB6D8384D8F2489 /* FullTransactionInfoTextCell.swift */; };
-		1A56495C591C36060A433A0E /* TransactionCompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564CB5E9C751F39838CFF6 /* TransactionCompletedView.swift */; };
+		1A56495C591C36060A433A0E /* TransactionStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564CB5E9C751F39838CFF6 /* TransactionStatusView.swift */; };
 		1A564966E82BE974A42E5021 /* PostFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564502E2B9B8455D452D4A /* PostFooterView.swift */; };
 		1A564966E9369E5BA04BB1AE /* RemoteAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645E4DE579618A4BC39AC /* RemoteAlertManager.swift */; };
 		1A564975B127F4EA2FCF61EB /* BitcoinBaseAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56450DA6DF97C9E1FFE987 /* BitcoinBaseAdapter.swift */; };
@@ -2749,7 +2749,7 @@
 		1A564C297C2A9BA9B9F1AD13 /* MacdPointView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacdPointView.swift; sourceTree = "<group>"; };
 		1A564C46FB773A67E29D9D32 /* BlockchainSettingRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockchainSettingRecord.swift; sourceTree = "<group>"; };
 		1A564C8BA986A5635B1222FB /* AppStatusManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStatusManager.swift; sourceTree = "<group>"; };
-		1A564CB5E9C751F39838CFF6 /* TransactionCompletedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCompletedView.swift; sourceTree = "<group>"; };
+		1A564CB5E9C751F39838CFF6 /* TransactionStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionStatusView.swift; sourceTree = "<group>"; };
 		1A564CE56CEC73B78C9DB6B5 /* BalanceErrorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceErrorViewController.swift; sourceTree = "<group>"; };
 		1A564D0418F6ACD6558999D3 /* TransactionViewStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionViewStatus.swift; sourceTree = "<group>"; };
 		1A564D5E55767404ED6C88E0 /* Decimal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Decimal.swift; sourceTree = "<group>"; };
@@ -4362,7 +4362,7 @@
 			children = (
 				1A5643AAE35C8D8C5DA5924C /* TransactionCell.swift */,
 				1A5648754F4509112DF492DD /* TransactionProcessingView.swift */,
-				1A564CB5E9C751F39838CFF6 /* TransactionCompletedView.swift */,
+				1A564CB5E9C751F39838CFF6 /* TransactionStatusView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -5938,7 +5938,7 @@
 				1A564F707048DC88C8183D77 /* AppStatusViewController.swift in Sources */,
 				11B35F4C1AEA693876B4837E /* RateManager.swift in Sources */,
 				1A564E969D4B3A663B3BF809 /* TransactionProcessingView.swift in Sources */,
-				1A5644D62DFE3B0E45B58D88 /* TransactionCompletedView.swift in Sources */,
+				1A5644D62DFE3B0E45B58D88 /* TransactionStatusView.swift in Sources */,
 				58AAA87CA53468D7169FA265 /* ChartTypeIntervalConverter.swift in Sources */,
 				2FA5DAB492A3C8EFB9261A8C /* SendHodlerPresenter.swift in Sources */,
 				2FA5D321784316EE976FA909 /* SendHodlerModule.swift in Sources */,
@@ -6706,7 +6706,7 @@
 				1A564D0E3139291B3FD3613B /* AppStatusViewController.swift in Sources */,
 				11B35618C22C1E7D84ED6265 /* RateManager.swift in Sources */,
 				1A5647D8232B287283058F99 /* TransactionProcessingView.swift in Sources */,
-				1A564680877414A21BCEC6D1 /* TransactionCompletedView.swift in Sources */,
+				1A564680877414A21BCEC6D1 /* TransactionStatusView.swift in Sources */,
 				58AAA44FC19684B426489776 /* ChartTypeIntervalConverter.swift in Sources */,
 				2FA5DB0DDC7575B952CD1A44 /* SendHodlerPresenter.swift in Sources */,
 				2FA5DBF99496E39CD3C30681 /* SendHodlerModule.swift in Sources */,
@@ -7435,7 +7435,7 @@
 				1A564ACAD8825F7A94B08DF2 /* AppStatusViewController.swift in Sources */,
 				11B35DB041C7780D832397A5 /* RateManager.swift in Sources */,
 				1A564210AB54839DAAB1D1EF /* TransactionProcessingView.swift in Sources */,
-				1A56495C591C36060A433A0E /* TransactionCompletedView.swift in Sources */,
+				1A56495C591C36060A433A0E /* TransactionStatusView.swift in Sources */,
 				58AAA5FDC26FC291E9E82928 /* ChartTypeIntervalConverter.swift in Sources */,
 				2FA5DA496EA180A42F716C83 /* SendHodlerPresenter.swift in Sources */,
 				2FA5D4E349D2594747DF9B71 /* SendHodlerModule.swift in Sources */,

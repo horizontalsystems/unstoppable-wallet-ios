@@ -49,7 +49,7 @@ class SendConfirmationMemoCell: ThemeCell {
     }
 
     func bind(memo: String?, last: Bool = true) {
-        super.bind(showDisclosure: false, last: last)
+        super.bind(last: last)
         memoLabel.text = memo
     }
 
