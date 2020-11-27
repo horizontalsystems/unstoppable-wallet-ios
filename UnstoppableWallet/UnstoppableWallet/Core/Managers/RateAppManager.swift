@@ -24,8 +24,6 @@ class RateAppManager {
     }
 
     private func onCountdownPass() {
-//        print("on countdown pass")
-
         let hasBalance = walletManager.wallets.contains { wallet in
             guard let adapter = adapterManager.balanceAdapter(for: wallet) else {
                 return false
@@ -35,7 +33,6 @@ class RateAppManager {
         }
 
         guard hasBalance else {
-//            print("has no balance")
             return
         }
 
@@ -49,7 +46,10 @@ class RateAppManager {
             return
         }
 
-//        print("showing")
+        show()
+    }
+
+    private func show() {
         SKStoreReviewController.requestReview()
 
         localStorage.rateAppLastRequestDate = Date()
@@ -71,16 +71,13 @@ extension RateAppManager: IRateAppManager {
 
     func onLaunch() {
         if let lastRequestDate = localStorage.rateAppLastRequestDate, Date().timeIntervalSince1970 - lastRequestDate.timeIntervalSince1970 < repeatedRequestTimeInterval {
-//            print("last request date not enough: \(Date().timeIntervalSince1970 - lastRequestDate.timeIntervalSince1970)")
             return
         }
 
         let launchCount = localStorage.appLaunchCount
-//        print("On Launch: launch count: \(launchCount)")
 
         guard launchCount >= minLaunchCount else {
             localStorage.appLaunchCount = launchCount + 1
-//            print("Not enough launch count")
             return
         }
 
@@ -90,7 +87,6 @@ extension RateAppManager: IRateAppManager {
     func onBecomeActive() {
         guard isCountdownAllowed, !isCountdownPassed else { return }
 
-//        print("countdown started")
         timer = Timer.scheduledTimer(withTimeInterval: countdownTimeInterval, repeats: false) { [weak self] _ in
             self?.isCountdownPassed = true
             self?.onCountdownPass()
@@ -99,6 +95,13 @@ extension RateAppManager: IRateAppManager {
 
     func onResignActive() {
         timer?.invalidate()
+    }
+
+    func forceShow() {
+        isCountdownAllowed = false
+        timer?.invalidate()
+
+        show()
     }
 
 }

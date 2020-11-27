@@ -526,6 +526,7 @@ protocol IRateAppManager {
     func onLaunch()
     func onBecomeActive()
     func onResignActive()
+    func forceShow()
 }
 
 protocol IRemoteAlertManager {

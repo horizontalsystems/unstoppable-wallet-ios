@@ -164,8 +164,8 @@ extension AboutViewController: SectionsDataSource {
                                     cell.titleImage = UIImage(named: "notification_20")
                                     cell.title = "settings.about_app.rate_us".localized
                                 },
-                                action: { _ in
-                                    // todo
+                                action: { [weak self] _ in
+                                    self?.viewModel.onTapRateApp()
                                 }
                         ),
                         Row<A1Cell>(
