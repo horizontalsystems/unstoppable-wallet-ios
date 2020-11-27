@@ -9,16 +9,13 @@ enum ButtonVisibleState {
 }
 
 class InputFieldButtonItem {
-    let style: ThemeButtonStyle
-
     let title: String?
     let icon: UIImage?
 
     let visible: ButtonVisibleState
     let action: (() -> ())?
 
-    init(style: ThemeButtonStyle, title: String? = nil, icon: UIImage? = nil, visible: ButtonVisibleState, action: (() -> ())? = nil) {
-        self.style = style
+    init(title: String? = nil, icon: UIImage? = nil, visible: ButtonVisibleState, action: (() -> ())? = nil) {
         self.title = title
         self.icon = icon
         self.visible = visible
@@ -218,7 +215,12 @@ extension InputFieldStackView {
     }
 
     func append(item: InputFieldButtonItem) {
-        let button = ThemeButton().apply(style: item.style)
+        let button = ThemeButton()
+        if item.icon != nil {
+            button.apply(style: .secondaryIcon)
+        } else {
+            button.apply(style: .secondaryDefault)
+        }
 
         button.setTitle(item.title, for: .normal)
         button.apply(secondaryIconImage: item.icon)
@@ -274,7 +276,8 @@ extension InputFieldStackView {
         var buttonsWidth: CGFloat = 0
 
         showedButtons.forEach { item in
-            let buttonSize = ThemeButton.size(containerWidth: CGFloat.greatestFiniteMagnitude, text: item.title, icon: item.icon, style: item.style)
+            let style: ThemeButtonStyle = item.icon != nil ? .secondaryIcon : .secondaryDefault
+            let buttonSize = ThemeButton.size(containerWidth: CGFloat.greatestFiniteMagnitude, text: item.title, icon: item.icon, style: style)
             buttonsWidth += buttonSize.width
         }
 

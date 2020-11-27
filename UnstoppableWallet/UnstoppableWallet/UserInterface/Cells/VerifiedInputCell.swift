@@ -155,7 +155,7 @@ class VerifiedInputCell: UITableViewCell {
         subscribe(disposeBag, viewModel.inputFieldCautionDriver) { [weak self] in self?.set(caution: $0) }
 
         let buttons = [
-            InputFieldButtonItem(style: .secondaryIcon, icon: UIImage(named: "delete_20"), visible: .onFilled) { [weak self] in
+            InputFieldButtonItem(icon: UIImage(named: "delete_20"), visible: .onFilled) { [weak self] in
                 self?.onDeleteTapped()
             }
         ]

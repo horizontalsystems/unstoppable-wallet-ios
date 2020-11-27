@@ -53,10 +53,10 @@ extension SwapSlippageViewModel: IVerifiedInputViewModel {
     var inputFieldButtonItems: [InputFieldButtonItem] {
         let bounds = service.recommendedSlippageBounds
         return [
-            InputFieldButtonItem(style: .secondaryDefault, title: "\(bounds.lowerBound.description)%", visible: .onEmpty) { [weak self] in
+            InputFieldButtonItem(title: "\(bounds.lowerBound.description)%", visible: .onEmpty) { [weak self] in
                 self?.onLeftButtonTapped()
             },
-            InputFieldButtonItem(style: .secondaryDefault, title: "\(bounds.upperBound.description)%", visible: .onEmpty) { [weak self] in
+            InputFieldButtonItem(title: "\(bounds.upperBound.description)%", visible: .onEmpty) { [weak self] in
                 self?.onRightButtonTapped()
             }
         ]
