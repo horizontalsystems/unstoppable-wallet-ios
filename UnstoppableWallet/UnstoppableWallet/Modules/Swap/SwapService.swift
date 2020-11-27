@@ -172,7 +172,7 @@ class SwapService {
             case .loading:
                 loading = true
             case .ready(let allowance):
-                if let amountIn = tradeService.amountIn, amountIn > allowance {
+                if let amountIn = tradeService.amountIn, amountIn > allowance.value {
                     allErrors.append(SwapError.insufficientAllowance)
                 }
             case .notReady(let error):

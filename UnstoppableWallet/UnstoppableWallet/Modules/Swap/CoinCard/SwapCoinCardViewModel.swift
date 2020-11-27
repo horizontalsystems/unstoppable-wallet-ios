@@ -8,10 +8,11 @@ class SwapCoinCardViewModel {
 
     let disposeBag = DisposeBag()
 
-    let service: SwapService
-    let tradeService: SwapTradeService
+    private let coinCardService: ISwapCoinCardService
+    private let fiatService: FiatService
 
     let decimalParser: IAmountDecimalParser
+
     private let decimalFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -19,7 +20,6 @@ class SwapCoinCardViewModel {
         return formatter
     }()
 
-    var titleRelay = BehaviorRelay<String?>(value: nil)
     var isEstimatedRelay = BehaviorRelay<Bool>(value: false)
     var amountRelay = BehaviorRelay<String?>(value: nil)
     var balanceRelay = BehaviorRelay<String?>(value: nil)
@@ -28,42 +28,33 @@ class SwapCoinCardViewModel {
 
     private var validDecimals = SwapCoinCardViewModel.maxValidDecimals
 
-    var type: TradeType {
-        fatalError("Must be implemented by Concrete subclass.")
-    }
-
-    var _description: String {
-        fatalError("Must be implemented by Concrete subclass.")
-    }
-
-    var coin: Coin? {
-        fatalError("Must be implemented by Concrete subclass.")
-    }
-
-    init(service: SwapService, tradeService: SwapTradeService, decimalParser: IAmountDecimalParser) {
-        self.service = service
-        self.tradeService = tradeService
+    init(coinCardService: ISwapCoinCardService, fiatService: FiatService, decimalParser: IAmountDecimalParser) {
+        self.coinCardService = coinCardService
+        self.fiatService = fiatService
         self.decimalParser = decimalParser
-
-        titleRelay.accept(_description)
 
         subscribeToService()
     }
 
     func subscribeToService() {
-        handle(tradeType: tradeService.tradeType)
-        subscribe(disposeBag, tradeService.tradeTypeObservable) { [weak self] in self?.handle(tradeType: $0) }
-        subscribe(disposeBag, service.errorsObservable) { [weak self] in self?.handle(errors: $0) }
+        sync(estimated: coinCardService.isEstimated)
+        sync(amount: coinCardService.amount)
+        sync(coin: coinCardService.coin)
+        sync(balance: coinCardService.balance)
+
+        subscribe(disposeBag, coinCardService.isEstimatedObservable) { [weak self] in self?.sync(estimated: $0) }
+        subscribe(disposeBag, coinCardService.amountObservable) { [weak self] in self?.sync(amount: $0) }
+        subscribe(disposeBag, coinCardService.coinObservable) { [weak self] in self?.sync(coin: $0) }
+        subscribe(disposeBag, coinCardService.balanceObservable) { [weak self] in self?.sync(balance: $0) }
+        subscribe(disposeBag, coinCardService.errorObservable) { [weak self] in self?.sync(error: $0) }
     }
 
-    private func handle(tradeType: TradeType) {
-        isEstimatedRelay.accept(tradeType != type)
+    private func sync(estimated: Bool) {
+        isEstimatedRelay.accept(estimated)
     }
 
-    func update(amount: Decimal?) {
-        guard type != tradeService.tradeType else {
-            return
-        }
+    func sync(amount: Decimal?) {
+        fiatService.amount = amount
 
         decimalFormatter.maximumFractionDigits = validDecimals
         let amountString = amount.flatMap { decimalFormatter.string(from: $0 as NSNumber) }
@@ -71,15 +62,16 @@ class SwapCoinCardViewModel {
         amountRelay.accept(amountString)
     }
 
-    func handle(coin: Coin?) {
+    func sync(coin: Coin?) {
         let max = SwapCoinCardViewModel.maxValidDecimals
         validDecimals = min(max, (coin?.decimal ?? max))
 
+        fiatService.coin = coin
         tokenCodeRelay.accept(coin?.code)
     }
 
-    func handle(balance: Decimal?) {
-        guard let coin = self.coin else {
+    func sync(balance: Decimal?) {
+        guard let coin = coinCardService.coin else {
             balanceRelay.accept(nil)
             return
         }
@@ -93,13 +85,20 @@ class SwapCoinCardViewModel {
         balanceRelay.accept(ValueFormatter.instance.format(coinValue: coinValue))
     }
 
-    func handle(errors: [Error]) {
+    func sync(error: Error?) {
+        balanceErrorRelay.accept(error != nil)
     }
 
     func onChange(amount: String?) {
+        let amount = decimalParser.parseAnyDecimal(from: amount)
+
+        fiatService.amount = amount
+        coinCardService.onChange(amount: amount)
     }
 
     func onSelect(coin: Coin) {
+        fiatService.coin = coin
+        coinCardService.onChange(coin: coin)
     }
 
 }
@@ -116,10 +115,6 @@ extension SwapCoinCardViewModel {
         }
 
         return amount.decimalCount <= validDecimals
-    }
-
-    var description: Driver<String?> {
-        titleRelay.asDriver()
     }
 
     var amount: Driver<String?> {

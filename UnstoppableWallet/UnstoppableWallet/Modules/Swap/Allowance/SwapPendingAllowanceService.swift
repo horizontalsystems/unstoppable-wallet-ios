@@ -46,7 +46,7 @@ class SwapPendingAllowanceService {
             return
         }
 
-        isPending = pendingAllowance != allowance
+        isPending = pendingAllowance != allowance.value
     }
 
 }
