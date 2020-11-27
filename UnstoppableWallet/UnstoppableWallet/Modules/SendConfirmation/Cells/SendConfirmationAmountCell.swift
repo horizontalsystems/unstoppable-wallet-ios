@@ -26,7 +26,7 @@ class SendConfirmationAmountCell: ThemeCell {
     }
 
     func bind(primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?) {
-        super.bind(showDisclosure: false, last: false)
+        super.bind(last: false)
         amountInfoView.bind(primaryAmountInfo: primaryAmountInfo, secondaryAmountInfo: secondaryAmountInfo)
     }
 

@@ -9,8 +9,9 @@ class BarsProgressView: UIView {
     private let disposeBag = DisposeBag()
     private var animateDisposable: Disposable?
 
+    private let barsHolder = UIView()
     private var bars: [UIView] = []
-    private let barWidth: CGFloat
+    private let barWidth: CGFloat = 3
     private let color: UIColor
     private let inactiveColor: UIColor
     private var filledColor: UIColor
@@ -24,13 +25,22 @@ class BarsProgressView: UIView {
         }
     }
 
-    init(barWidth: CGFloat, color: UIColor, inactiveColor: UIColor) {
-        self.barWidth = barWidth
+    init(color: UIColor, inactiveColor: UIColor) {
         self.color = color
         self.inactiveColor = inactiveColor
         filledColor = color
 
         super.init(frame: .zero)
+
+        addSubview(barsHolder)
+        barsHolder.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+            maker.height.equalTo(14)
+        }
+
+        snp.makeConstraints { maker in
+            maker.size.equalTo(20)   //you can not change height unless it's changed in design
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -53,14 +63,14 @@ class BarsProgressView: UIView {
         }
 
         for i in 0..<bars.count {
-            addSubview(bars[i])
+            barsHolder.addSubview(bars[i])
 
             bars[i].snp.makeConstraints { maker in
                 maker.top.bottom.equalToSuperview()
                 maker.width.equalTo(barWidth)
 
                 if i > 0 {
-                    maker.leading.equalTo(self.bars[i - 1].snp.trailing).offset(barWidth * 0.9)
+                    maker.leading.equalTo(self.bars[i - 1].snp.trailing).offset(3)
                 }
             }
 

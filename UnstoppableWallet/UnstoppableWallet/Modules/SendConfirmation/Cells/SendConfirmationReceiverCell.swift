@@ -47,7 +47,7 @@ class SendConfirmationReceiverCell: ThemeCell {
     }
 
     func bind(receiver: String, last: Bool = false, onHashTap: (() -> ())?) {
-        super.bind(showDisclosure: false, last: last)
+        super.bind(last: last)
         _onHashTap = onHashTap
 
         addressButton.setTitle(receiver, for: .normal)

@@ -10,8 +10,7 @@ class TransactionCell: ClaudeThemeCell {
     private let dateLabel = UILabel()
 
     private let processingView = TransactionProcessingView()
-    private let completedView = TransactionCompletedView()
-    private let failedLabel = UILabel()
+    private let statusView = TransactionStatusView()
 
     private let currencyAmountLabel = UILabel()
     private let amountLabel = UILabel()
@@ -26,7 +25,7 @@ class TransactionCell: ClaudeThemeCell {
 
         wrapperView.addSubview(typeIconImageView)
         typeIconImageView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().inset(CGFloat.margin3x)
+            maker.leading.equalToSuperview().inset(CGFloat.margin16)
             maker.top.equalToSuperview().inset(CGFloat.margin3x)
         }
         typeIconImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -42,18 +41,9 @@ class TransactionCell: ClaudeThemeCell {
         doubleSpendImageView.setContentHuggingPriority(.required, for: .horizontal)
         doubleSpendImageView.isHidden = true
 
-        wrapperView.addSubview(failedLabel)
-        failedLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(typeIconImageView.snp.trailing).offset(CGFloat.margin3x)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
-        }
-        failedLabel.font = .subhead2
-        failedLabel.textColor = .themeLucian
-        failedLabel.text = "transactions.failed".localized
-
         wrapperView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(typeIconImageView.snp.trailing).offset(CGFloat.margin3x)
+            maker.leading.equalTo(typeIconImageView.snp.trailing).offset(CGFloat.margin16)
             maker.trailing.lessThanOrEqualToSuperview().inset(CGFloat.margin3x)
             maker.top.equalToSuperview().inset(CGFloat.margin3x)
         }
@@ -61,16 +51,16 @@ class TransactionCell: ClaudeThemeCell {
         dateLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         dateLabel.setContentHuggingPriority(.required, for: .horizontal)
 
-        wrapperView.addSubview(completedView)
-        completedView.snp.makeConstraints { maker in
-            maker.leading.equalTo(typeIconImageView.snp.trailing).offset(CGFloat.margin3x)
+        wrapperView.addSubview(statusView)
+        statusView.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().inset(CGFloat.margin16)
             maker.trailing.lessThanOrEqualToSuperview().inset(CGFloat.margin3x)
             maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
         }
 
         wrapperView.addSubview(processingView)
         processingView.snp.makeConstraints { maker in
-            maker.leading.equalTo(typeIconImageView.snp.trailing).offset(CGFloat.margin3x)
+            maker.leading.equalToSuperview().inset(CGFloat.margin16)
             maker.trailing.lessThanOrEqualToSuperview().inset(CGFloat.margin3x)
             maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
         }
@@ -155,7 +145,7 @@ class TransactionCell: ClaudeThemeCell {
 
         if item.type == .sentToSelf {
             sentToSelfImageView.snp.remakeConstraints { maker in
-                maker.leading.equalTo(lockImageView.snp.trailing).offset(CGFloat.margin05x)
+                maker.leading.equalTo(lockImageView.snp.trailing).offset(CGFloat.margin4)
                 maker.centerY.equalTo(currencyAmountLabel)
                 maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
             }
@@ -170,35 +160,32 @@ class TransactionCell: ClaudeThemeCell {
 
         switch status {
         case .failed:
-            failedLabel.isHidden = false
+            statusView.bind(image: UIImage(named: "warning_2_20")?.tinted(with: .themeLucian), status: "transactions.failed".localized)
+            statusView.isHidden = false
 
             processingView.stopAnimating()
             processingView.isHidden = true
-            completedView.isHidden = true
 
         case .pending:
             processingView.bind(type: item.type, progress: 0)
             processingView.startAnimating()
             processingView.isHidden = false
 
-            completedView.isHidden = true
-            failedLabel.isHidden = true
+            statusView.isHidden = true
 
         case .processing(let progress):
             processingView.bind(type: item.type, progress: progress)
             processingView.startAnimating()
             processingView.isHidden = false
 
-            completedView.isHidden = true
-            failedLabel.isHidden = true
+            statusView.isHidden = true
 
         case .completed:
-            completedView.bind(date: item.date)
-            completedView.isHidden = false
+            statusView.bind(image: UIImage(named: "check_1_20"), status: DateHelper.instance.formatTransactionTime(from: item.date))
+            statusView.isHidden = false
 
             processingView.stopAnimating()
             processingView.isHidden = true
-            failedLabel.isHidden = true
         }
     }
 

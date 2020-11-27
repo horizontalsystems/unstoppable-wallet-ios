@@ -6,7 +6,7 @@ class TransactionInfoPendingStatusCell: BaseThemeCell {
     private let rightView = UIView()
 
     private let statusLabel = UILabel()
-    private let barsProgressView = BarsProgressView(barWidth: 4, color: .themeGray50, inactiveColor: .themeSteel20)
+    private let barsProgressView = BarsProgressView(color: .themeGray50, inactiveColor: .themeSteel20)
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -24,10 +24,9 @@ class TransactionInfoPendingStatusCell: BaseThemeCell {
 
         rightView.addSubview(barsProgressView)
         barsProgressView.snp.makeConstraints { maker in
-            maker.leading.equalTo(statusLabel.snp.trailing).offset(CGFloat.margin2x)
+            maker.leading.equalTo(statusLabel.snp.trailing).offset(CGFloat.margin8)
             maker.trailing.equalToSuperview()
             maker.centerY.equalToSuperview()
-            maker.height.equalTo(18)
         }
 
         barsProgressView.set(barsCount: BarsProgressView.progressStepsCount)
