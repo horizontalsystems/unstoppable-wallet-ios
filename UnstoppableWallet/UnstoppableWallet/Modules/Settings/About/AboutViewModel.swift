@@ -62,4 +62,8 @@ extension AboutViewModel {
         openLinkRelay.accept(url)
     }
 
+    func onTapRateApp() {
+        service.rateApp()
+    }
+
 }
