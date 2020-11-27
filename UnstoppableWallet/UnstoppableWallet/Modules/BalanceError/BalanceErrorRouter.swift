@@ -22,19 +22,13 @@ extension BalanceErrorRouter: IBalanceErrorRouter {
         }
     }
 
-    func closeAndOpenReport() {
-        viewController?.dismiss(animated: true) { [weak self] in
-            self?.navigationController?.pushViewController(ContactRouter.module(), animated: true)
-        }
-    }
-
 }
 
 extension BalanceErrorRouter {
 
     static func module(wallet: Wallet, error: Error, navigationController: UINavigationController?) -> UIViewController {
         let router = BalanceErrorRouter(navigationController: navigationController)
-        let interactor = BalanceErrorInteractor(pasteboardManager: App.shared.pasteboardManager, adapterManager: App.shared.adapterManager)
+        let interactor = BalanceErrorInteractor(adapterManager: App.shared.adapterManager, appConfigProvider: App.shared.appConfigProvider)
         let presenter = BalanceErrorPresenter(wallet: wallet, error: error, interactor: interactor, router: router)
         let viewController = BalanceErrorViewController(delegate: presenter)
 

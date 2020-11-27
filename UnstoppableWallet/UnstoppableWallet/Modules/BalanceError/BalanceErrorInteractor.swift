@@ -1,18 +1,18 @@
 class BalanceErrorInteractor {
-    private let pasteboardManager: IPasteboardManager
     private let adapterManager: IAdapterManager
+    private let appConfigProvider: IAppConfigProvider
 
-    init(pasteboardManager: IPasteboardManager, adapterManager: IAdapterManager) {
-        self.pasteboardManager = pasteboardManager
+    init(adapterManager: IAdapterManager, appConfigProvider: IAppConfigProvider) {
         self.adapterManager = adapterManager
+        self.appConfigProvider = appConfigProvider
     }
 
 }
 
 extension BalanceErrorInteractor: IBalanceErrorInteractor {
 
-    func copyToClipboard(text: String) {
-        pasteboardManager.set(value: text)
+    var contactEmail: String {
+        appConfigProvider.reportEmail
     }
 
     func refresh(wallet: Wallet) {
