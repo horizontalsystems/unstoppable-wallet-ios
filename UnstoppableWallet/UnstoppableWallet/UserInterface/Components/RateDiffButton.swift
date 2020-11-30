@@ -21,6 +21,7 @@ class RateDiffButton: UIButton {
         iconImageView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview()
             maker.centerY.equalToSuperview()
+            maker.size.equalTo(20)
         }
 
         iconImageView.setContentHuggingPriority(.required, for: .horizontal)
