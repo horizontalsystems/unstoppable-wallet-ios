@@ -494,7 +494,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "settings.about_app.site" = "网站";
 "settings.about_app.contact" = "报告问题";
 "settings.about_app.rate_us" = "Rate Us";
-"settings.about_app.tell_friends" = "Tell Friends";
+"settings.about_app.tell_friends" = "分享给好友";
 "settings.about_app.email_copied" = "Email address copied";
 
 // Set PIN
@@ -671,10 +671,10 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // Status Info
 
-"status_info.title" = "Status";
-"status_info.pending.title" = "Pending";
+"status_info.title" = "状态";
+"status_info.pending.title" = "待处理";
 "status_info.pending.content" = "Transaction has not been confirmed on the blockchain yet. This step can take anywhere from a few minutes to a few hours depending on the transaction fee. Transactions sent with a very low fee usually get processed within a few days or can be rejected by network i.e. no transaction took place.";
-"status_info.receiving.title" = "Receiving";
+"status_info.receiving.title" = "正在接收";
 "status_info.receiving.content" = "The sender has sent you a transaction but it's not final yet. For larger payments it's suggested to wait until the transaction status changes to 'completed'. Usually this should happen within an hour but can take longer sometimes if the sender sent the transaction with a low fee.";
 "status_info.confirmed.title" = "Confirmed";
 "status_info.confirmed.content" = "Transaction is final and irreversible.";
