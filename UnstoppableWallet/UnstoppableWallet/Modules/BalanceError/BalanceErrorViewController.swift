@@ -7,7 +7,6 @@ class BalanceErrorViewController: ThemeActionSheetController {
     private let delegate: IBalanceErrorViewDelegate
 
     private let titleView = BottomSheetTitleView()
-    private let descriptionLabel = UILabel()
     private let retryButton = ThemeButton()
     private let changeSourceButton = ThemeButton()
     private let reportButton = ThemeButton()
@@ -34,21 +33,10 @@ class BalanceErrorViewController: ThemeActionSheetController {
             self?.delegate.onTapClose()
         }
 
-        view.addSubview(descriptionLabel)
-        descriptionLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
-            maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin3x)
-        }
-
-        descriptionLabel.font = .subhead2
-        descriptionLabel.textColor = .themeGray
-        descriptionLabel.numberOfLines = 0
-        descriptionLabel.text = "balance_error.description".localized
-
         view.addSubview(retryButton)
         retryButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(descriptionLabel.snp.bottom).offset(CGFloat.margin6x)
+            maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin3x)
             maker.height.equalTo(CGFloat.heightButton)
         }
 

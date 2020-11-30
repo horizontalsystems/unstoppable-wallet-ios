@@ -147,7 +147,6 @@ bch.horizontalsystems.xyz/apg";
 "balance.sort.valueHighToLow" = "Balance";
 "balance.sort.az" = "Name";
 "balance.sort.24h_change"  = "24h Price(%)";
-"balance_error.description" = "The error text will be copied to your clipboard should you decide to report it.";
 "balance_error.change_source" = "Change Source";
 "balance_error.sync_error" = "Sync Error";
 
