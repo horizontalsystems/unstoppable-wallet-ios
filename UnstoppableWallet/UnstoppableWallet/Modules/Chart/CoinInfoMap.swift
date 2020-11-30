@@ -103,7 +103,7 @@ class CoinInfoMap {
         "PAR":      CoinInfo(supply: 999_628_334,     startDate: nil,          website: "https://www.parachutetoken.com/"),
         "PAX":      CoinInfo(supply: 249_952_065,     startDate: "10/09/2018", website: "https://www.paxos.com/pax/"),
         "PNK":      CoinInfo(supply: 764_626_704,     startDate: "15/03/2018", website: "https://kleros.io/"),
-        "POA20":    CoinInfo(supply: nil,             startDate: nil,          website: "https://poa.net/"),
+        "POA":      CoinInfo(supply: nil,             startDate: nil,          website: "https://poa.net/"),
         "PAXG":     CoinInfo(supply: 2_410,           startDate: "29/08/2019", website: "https://www.paxos.com/paxgold"),
         "PTI":      CoinInfo(supply: 3_600_000_000,   startDate: "13/03/2018", website: "https://tokensale.paytomat.com"),
         "POLY":     CoinInfo(supply: 1_000_000_000,   startDate: "25/12/2017", website: "https://www.polymath.network"),
