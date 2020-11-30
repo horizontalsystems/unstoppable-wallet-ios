@@ -142,7 +142,6 @@
 "balance.sort.valueHighToLow" = "余额";
 "balance.sort.az" = "名称";
 "balance.sort.24h_change" = "24小时价格（%）";
-"balance_error.description" = "如果您选择报告故障，则其文本将被复制";
 "balance_error.change_source" = "更改源";
 "balance_error.sync_error" = "同步出错";
 
@@ -614,23 +613,28 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "guides.tab_bar_item" = "学院";
 "guides.title" = "学院";
 
+// Add Token Selector
+
+"add_token_selector.choose_blockchain" = "Choose Blockchain";
+"add_token_selector.add_token" = "Add Token";
+"add_token_selector.erc20_token" = "ERC20 Token";
+"add_token_selector.eos_token" = "EOS Token";
+"add_token_selector.binance_token" = "Binance Token";
+
 // Add Token
 
-"add_token.choose_blockchain" = "选择区块链";
-"add_token.add_token" = "添加代币";
-"add_token.erc20_token" = "ERC 20 代币";
-"add_token.eos_token" = "EOS 代币";
-"add_token.binance_token" = "Binance 代币";
-
-// Add Erc20 Token
+"add_token.coin_name" = "Coin Name";
+"add_token.symbol" = "Symbol";
+"add_token.decimals" = "Decimals";
+"add_token.already_exists" = "This token is already in the coin manager list.";
 
 "add_erc20_token.title" = "添加ERC20";
 "add_erc20_token.contract_address" = "智能合约地址";
-"add_erc20_token.coin_name" = "代币图片";
-"add_erc20_token.symbol" = "标志";
-"add_erc20_token.decimals" = "小数";
-"add_erc20_token.already_exists" = "该代币已在代币管理列表中.";
 "add_erc20_token.contract_not_exist" = "没找到合同";
+
+"add_bep2_token.title" = "Add BEP2";
+"add_bep2_token.token_symbol" = "Token Symbol";
+"add_bep2_token.token_not_exist" = "Token not found";
 
 "change_24hour_up" = "%@ 价格：上升 %@%% %@";
 "change_24hour_down" = "%@ 价格：下跌 %@%% %@";
