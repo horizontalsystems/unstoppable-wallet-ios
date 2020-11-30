@@ -494,7 +494,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "settings.about_app.site" = "Site";
 "settings.about_app.contact" = "Contact";
 "settings.about_app.rate_us" = "Rate Us";
-"settings.about_app.tell_friends" = "Tell Friends";
+"settings.about_app.tell_friends" = "Partager avec ami";
 "settings.about_app.email_copied" = "Email address copied";
 
 // Set PIN
@@ -519,7 +519,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 "rate_list.portfolio" = "Portfolio";
 "rate_list.latest_news" = "Dernières nouvelles";
-"top100_list.portfolio" = "Top 100";
+"top100_list.portfolio" = "A B C";
 "top100_list.sort_by" = "Trier par";
 "top100_list.sort_type.rank" = "Rang";
 "top100_list.sort_type.top_winners" = "Les grands gagnants";
@@ -659,7 +659,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 // App Status
 
-"app_status.title" = "App Status";
+"app_status.title" = "Statut de l'appli";
 "app_status.application_status" = "Statut de l'application";
 "app_status.linked_wallets" = "Portefeuilles associés";
 "app_status.version_history" = "Historique des versions";
@@ -671,12 +671,12 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 // Status Info
 
-"status_info.title" = "Status";
-"status_info.pending.title" = "Pending";
+"status_info.title" = "Statut";
+"status_info.pending.title" = "En attente";
 "status_info.pending.content" = "Transaction has not been confirmed on the blockchain yet. This step can take anywhere from a few minutes to a few hours depending on the transaction fee. Transactions sent with a very low fee usually get processed within a few days or can be rejected by network i.e. no transaction took place.";
 "status_info.receiving.title" = "Receiving";
 "status_info.receiving.content" = "The sender has sent you a transaction but it's not final yet. For larger payments it's suggested to wait until the transaction status changes to 'completed'. Usually this should happen within an hour but can take longer sometimes if the sender sent the transaction with a low fee.";
-"status_info.confirmed.title" = "Confirmed";
+"status_info.confirmed.title" = "Confirmé";
 "status_info.confirmed.content" = "Transaction is final and irreversible.";
 "status_info.failed.title" = "Failed";
 "status_info.failed.content" = "Transaction did not get processed as intended and no token value transfer took place. On Ethereum blockchain failed transactions do consume transaction fees.";
