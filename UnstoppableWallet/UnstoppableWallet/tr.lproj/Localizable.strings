@@ -39,7 +39,7 @@
 "confirm" = "Onayla";
 "connect" = "Bağlan";
 
-"version" = "Version %@";
+"version" = "Sürüm %@";
 
 "n/a" = "N/A";
 
@@ -142,7 +142,6 @@
 "balance.sort.valueHighToLow" = "Bakiye";
 "balance.sort.az" = "İsim";
 "balance.sort.24h_change" = "24 saat Fiyat(%)";
-"balance_error.description" = "\nBildirmeye karar verirseniz hata metni clipboardnıza kopyalanır.";
 "balance_error.change_source" = "Kaynağı Değiştir";
 "balance_error.sync_error" = "Senk. hatası";
 
@@ -490,11 +489,11 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 // Settings -> About App
 
 "settings.about_app.title" = "About App";
-"settings.about_app.app_name" = "Unstoppable Wallet";
-"settings.about_app.site" = "Site";
-"settings.about_app.contact" = "Contact";
+"settings.about_app.app_name" = "Unstoppable Cüzdan";
+"settings.about_app.site" = "Web Sitesi";
+"settings.about_app.contact" = "Iletişim";
 "settings.about_app.rate_us" = "Rate Us";
-"settings.about_app.tell_friends" = "Tell Friends";
+"settings.about_app.tell_friends" = "Arkadaşlarına bahset";
 "settings.about_app.email_copied" = "Email address copied";
 
 // Set PIN
@@ -614,23 +613,28 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "guides.tab_bar_item" = "Akademi";
 "guides.title" = "Akademi";
 
+// Add Token Selector
+
+"add_token_selector.choose_blockchain" = "Blockchain Seç";
+"add_token_selector.add_token" = "Token Ekle";
+"add_token_selector.erc20_token" = "ERC20 tokenleri";
+"add_token_selector.eos_token" = "EOS Token";
+"add_token_selector.binance_token" = "Binance Jetonu";
+
 // Add Token
 
-"add_token.choose_blockchain" = "Blockchain Seç";
-"add_token.add_token" = "Token Ekle";
-"add_token.erc20_token" = "ERC20 tokenleri";
-"add_token.eos_token" = "EOS Token";
-"add_token.binance_token" = "Binance Jetonu";
-
-// Add Erc20 Token
+"add_token.coin_name" = "Kripto Para Adı";
+"add_token.symbol" = "Sembol";
+"add_token.decimals" = "Ondalıklar";
+"add_token.already_exists" = "Bu token zaten kripto para yöneticisi listesindedir.";
 
 "add_erc20_token.title" = "ERC20 Ekle";
 "add_erc20_token.contract_address" = "Sözleşme Adresi";
-"add_erc20_token.coin_name" = "Kripto Para Adı";
-"add_erc20_token.symbol" = "Sembol";
-"add_erc20_token.decimals" = "Ondalıklar";
-"add_erc20_token.already_exists" = "Bu token zaten kripto para yöneticisi listesindedir.";
 "add_erc20_token.contract_not_exist" = "Sözleşme bulunamadı";
+
+"add_bep2_token.title" = "BEP2 Ekle";
+"add_bep2_token.token_symbol" = "Token Symbol";
+"add_bep2_token.token_not_exist" = "Token not found";
 
 "change_24hour_up" = "%@ fiyat: yukarı %@%% %@";
 "change_24hour_down" = "%@ fiyat: aşağı %@%% %@";
@@ -659,7 +663,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 // App Status
 
-"app_status.title" = "App Status";
+"app_status.title" = "Uygulama Durumu";
 "app_status.application_status" = "Uygulama durumu";
 "app_status.linked_wallets" = "Bağlantılı Cüzdanlar";
 "app_status.version_history" = "Sürüm Geçmişi";
@@ -671,12 +675,12 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 // Status Info
 
-"status_info.title" = "Status";
-"status_info.pending.title" = "Pending";
+"status_info.title" = "Durum";
+"status_info.pending.title" = "Devam ediyor";
 "status_info.pending.content" = "Transaction has not been confirmed on the blockchain yet. This step can take anywhere from a few minutes to a few hours depending on the transaction fee. Transactions sent with a very low fee usually get processed within a few days or can be rejected by network i.e. no transaction took place.";
-"status_info.receiving.title" = "Receiving";
+"status_info.receiving.title" = "Alınıyor";
 "status_info.receiving.content" = "The sender has sent you a transaction but it's not final yet. For larger payments it's suggested to wait until the transaction status changes to 'completed'. Usually this should happen within an hour but can take longer sometimes if the sender sent the transaction with a low fee.";
-"status_info.confirmed.title" = "Confirmed";
+"status_info.confirmed.title" = "Onaylandı";
 "status_info.confirmed.content" = "Transaction is final and irreversible.";
-"status_info.failed.title" = "Failed";
+"status_info.failed.title" = "Başarısız";
 "status_info.failed.content" = "Transaction did not get processed as intended and no token value transfer took place. On Ethereum blockchain failed transactions do consume transaction fees.";
