@@ -267,6 +267,7 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "WTC",       title: "Waltonchain",                   code: "WTC",     decimal: 18, type: CoinType(erc20Address: "0xb7cB1C96dB6B22b0D3d9536E0108d062BD488F74")),
         Coin(id: "WBTC",      title: "Wrapped Bitcoin",               code: "WBTC",    decimal: 8,  type: CoinType(erc20Address: "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599")),
         Coin(id: "WETH",      title: "Wrapped Ethereum",              code: "WETH",    decimal: 18, type: CoinType(erc20Address: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")),
+        Coin(id: "WFIL",      title: "Wrapped Filecoin",              code: "WFIL",    decimal: 18, type: CoinType(erc20Address: "0x6e1A19F235bE7ED8E3369eF73b196C07257494DE")),
         Coin(id: "XIO",       title: "XIO Network",                   code: "XIO",     decimal: 18, type: CoinType(erc20Address: "0x0f7F961648aE6Db43C75663aC7E5414Eb79b5704")),
 
     ]
