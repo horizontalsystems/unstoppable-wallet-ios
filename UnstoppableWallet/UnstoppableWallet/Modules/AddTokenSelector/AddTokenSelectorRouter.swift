@@ -1,7 +1,7 @@
 import UIKit
 import ThemeKit
 
-class AddTokenRouter {
+class AddTokenSelectorRouter {
     weak var viewController: UIViewController?
     weak var sourceViewController: UIViewController?
 
@@ -11,15 +11,22 @@ class AddTokenRouter {
 
 }
 
-extension AddTokenRouter: IAddTokenRouter {
+extension AddTokenSelectorRouter: IAddTokenSelectorRouter {
 
     func closeAndShowAddErc20Token() {
-        let module = AddErc20TokenRouter.module()
+        let module = AddErc20TokenModule.viewController()
 
         viewController?.dismiss(animated: true) { [weak self] in
             self?.sourceViewController?.present(module, animated: true)
         }
+    }
 
+    func closeAndShowAddBinanceToken() {
+        let module = AddBinanceTokenModule.viewController()
+
+        viewController?.dismiss(animated: true) { [weak self] in
+            self?.sourceViewController?.present(module, animated: true)
+        }
     }
 
     func close() {
@@ -28,12 +35,12 @@ extension AddTokenRouter: IAddTokenRouter {
 
 }
 
-extension AddTokenRouter {
+extension AddTokenSelectorRouter {
 
     static func module(sourceViewController: UIViewController?) -> UIViewController {
-        let router = AddTokenRouter(sourceViewController: sourceViewController)
-        let presenter = AddTokenPresenter(router: router)
-        let viewController = AddTokenViewController(delegate: presenter)
+        let router = AddTokenSelectorRouter(sourceViewController: sourceViewController)
+        let presenter = AddTokenSelectorPresenter(router: router)
+        let viewController = AddTokenSelectorViewController(delegate: presenter)
 
         router.viewController = viewController
 

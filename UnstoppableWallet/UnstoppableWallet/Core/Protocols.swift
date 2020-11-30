@@ -580,7 +580,6 @@ protocol ICoinManager {
     var coinAddedObservable: Observable<Coin> { get }
     var coins: [Coin] { get }
     var featuredCoins: [Coin] { get }
-    func existingCoin(erc20Address: String) -> Coin?
     func save(coin: Coin)
 }
 

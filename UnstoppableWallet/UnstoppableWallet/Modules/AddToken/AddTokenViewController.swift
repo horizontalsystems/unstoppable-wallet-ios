@@ -1,17 +1,28 @@
-import UIKit
-import ActionSheet
 import ThemeKit
+import SnapKit
+import SectionsTableView
+import RxSwift
+import RxCocoa
 
-class AddTokenViewController: ThemeActionSheetController {
-    private let delegate: IAddTokenViewDelegate
+class AddTokenViewController: ThemeViewController {
+    private let viewModel: AddTokenViewModel
+    private let pageTitle: String
+    private let referenceTitle: String
 
-    private let titleView = BottomSheetTitleView()
-    private let erc20Button = ThemeButton()
-    private let eosButton = ThemeButton()
-    private let binanceButton = ThemeButton()
+    private let disposeBag = DisposeBag()
 
-    init(delegate: IAddTokenViewDelegate) {
-        self.delegate = delegate
+    private let tableView = SectionsTableView(style: .grouped)
+
+    private var error: Error?
+    private var loading = false
+    private var viewItem: AddTokenViewModel.ViewItem?
+    private var warningVisible = false
+    private var buttonVisible = false
+
+    init(viewModel: AddTokenViewModel, pageTitle: String, referenceTitle: String) {
+        self.viewModel = viewModel
+        self.pageTitle = pageTitle
+        self.referenceTitle = referenceTitle
 
         super.init()
     }
@@ -23,58 +34,151 @@ class AddTokenViewController: ThemeActionSheetController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.addSubview(titleView)
-        titleView.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
+        title = pageTitle
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancelButton))
+
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
         }
 
-        titleView.bind(
-                title: "add_token.choose_blockchain".localized,
-                subtitle: "add_token.add_token".localized,
-                image: UIImage(named: "circle_plus_24")?.tinted(with: .themeGray)
-        )
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+        tableView.sectionDataSource = self
 
-        titleView.onTapClose = { [weak self] in
-            self?.delegate.onTapClose()
+        tableView.registerCell(forClass: InputFieldCell.self)
+        tableView.registerCell(forClass: AddTokenSpinnerCell.self)
+        tableView.registerCell(forClass: AdditionalDataCell.self)
+        tableView.registerCell(forClass: HighlightedDescriptionCell.self)
+        tableView.registerCell(forClass: ButtonCell.self)
+
+        subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
+            self?.loading = loading
+            self?.tableView.reload()
         }
-
-        view.addSubview(erc20Button)
-        erc20Button.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin4x)
-            maker.height.equalTo(CGFloat.heightButton)
+        subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] viewItem in
+            self?.viewItem = viewItem
+            self?.tableView.reload()
         }
-
-        erc20Button.apply(style: .primaryGray)
-        erc20Button.setTitle("add_token.erc20_token".localized, for: .normal)
-        erc20Button.addTarget(self, action: #selector(onTapErc20), for: .touchUpInside)
-
-        view.addSubview(eosButton)
-        eosButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(erc20Button.snp.bottom).offset(CGFloat.margin4x)
-            maker.height.equalTo(CGFloat.heightButton)
+        subscribe(disposeBag, viewModel.warningVisibleDriver) { [weak self] visible in
+            self?.warningVisible = visible
+            self?.tableView.reload()
         }
-
-        eosButton.isEnabled = false
-        eosButton.apply(style: .primaryGray)
-        eosButton.setTitle("add_token.eos_token".localized, for: .normal)
-
-        view.addSubview(binanceButton)
-        binanceButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(eosButton.snp.bottom).offset(CGFloat.margin4x)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin4x)
-            maker.height.equalTo(CGFloat.heightButton)
+        subscribe(disposeBag, viewModel.buttonVisibleDriver) { [weak self] visible in
+            self?.buttonVisible = visible
+            self?.tableView.reload()
         }
-
-        binanceButton.isEnabled = false
-        binanceButton.apply(style: .primaryGray)
-        binanceButton.setTitle("add_token.binance_token".localized, for: .normal)
+        subscribe(disposeBag, viewModel.errorDriver) { [weak self] error in
+            self?.error = error
+            self?.tableView.reload()
+        }
+        subscribe(disposeBag, viewModel.finishSignal) { [weak self] in
+            HudHelper.instance.showSuccess()
+            self?.dismiss(animated: true)
+        }
     }
 
-    @objc private func onTapErc20() {
-        delegate.onTapErc20()
+    @objc private func onTapCancelButton() {
+        dismiss(animated: true)
+    }
+
+    private func inputFieldRow(error: Error?) -> RowProtocol {
+        Row<InputFieldCell>(
+                id: "input_field",
+                hash: error?.localizedDescription,
+                dynamicHeight: { containerWidth in
+                    InputFieldCell.height(containerWidth: containerWidth, error: error)
+                },
+                bind: { [weak self] cell, _ in
+                    cell.bind(
+                            placeholder: self?.referenceTitle,
+                            canEdit: false,
+                            error: error,
+                            onTextChange: {
+                                self?.viewModel.onEnter(reference: $0)
+                            }
+                    )
+                }
+        )
+    }
+
+    private func warningRow(text: String) -> RowProtocol {
+        Row<HighlightedDescriptionCell>(
+                id: "warning",
+                hash: text,
+                dynamicHeight: { containerWidth in
+                    HighlightedDescriptionCell.height(containerWidth: containerWidth, text: text)
+                },
+                bind: { cell, _ in
+                    cell.bind(text: text)
+                }
+        )
+    }
+
+    private func spinnerRow() -> RowProtocol {
+        Row<AddTokenSpinnerCell>(
+                id: "spinner",
+                height: .heightSingleLineCell,
+                bind: { cell, _ in
+                    cell.startAnimating()
+                }
+        )
+    }
+
+    private func additionalDataRow(title: String, value: String?) -> RowProtocol {
+        Row<AdditionalDataCell>(
+                id: title,
+                hash: value,
+                height: AdditionalDataCell.height,
+                bind: { cell, _ in
+                    cell.bind(title: title, value: value, highlighted: true)
+                }
+        )
+    }
+
+    private func buttonRow() -> RowProtocol {
+        Row<ButtonCell>(
+                id: "add_button",
+                height: ButtonCell.height(style: .primaryYellow),
+                bind: { [weak self] cell, _ in
+                    cell.bind(style: .primaryYellow, title: "button.add".localized) {
+                        self?.viewModel.onTapButton()
+                    }
+                }
+        )
+    }
+
+}
+
+extension AddTokenViewController: SectionsDataSource {
+
+    func buildSections() -> [SectionProtocol] {
+        var rows: [RowProtocol] = [inputFieldRow(error: error)]
+
+        if loading {
+            rows.append(spinnerRow())
+        }
+
+        if let viewItem = viewItem {
+            rows.append(additionalDataRow(title: "add_token.coin_name".localized, value: viewItem.coinName))
+            rows.append(additionalDataRow(title: "add_token.symbol".localized, value: viewItem.symbol))
+            rows.append(additionalDataRow(title: "add_token.decimals".localized, value: "\(viewItem.decimals)"))
+        }
+
+        if warningVisible {
+            rows.append(warningRow(text: "add_token.already_exists".localized))
+        }
+
+        if buttonVisible {
+            rows.append(buttonRow())
+        }
+
+        return [
+            Section(
+                    id: "main",
+                    rows: rows
+            )
+        ]
     }
 
 }

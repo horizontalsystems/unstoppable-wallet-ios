@@ -304,6 +304,12 @@ class GrdbStorage {
             }
         }
 
+        migrator.registerMigration("addBep2SymbolToCoins") { db in
+            try db.alter(table: CoinRecord.databaseTableName) { t in
+                t.add(column: CoinRecord.Columns.bep2Symbol.name, .text)
+            }
+        }
+
         return migrator
     }
 

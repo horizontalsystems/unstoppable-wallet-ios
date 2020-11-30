@@ -41,7 +41,7 @@ class ManageWalletsViewController: CoinToggleViewController {
     }
 
     @objc func onTapAddTokenButton() {
-        let module = AddTokenRouter.module(sourceViewController: self)
+        let module = AddTokenSelectorRouter.module(sourceViewController: self)
         present(module, animated: true)
     }
 
