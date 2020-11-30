@@ -142,7 +142,6 @@
 "balance.sort.valueHighToLow" = "잔액";
 "balance.sort.az" = "이름";
 "balance.sort.24h_change" = "24시간 가격(%)";
-"balance_error.description" = "나중에 보고할 수 있도록 에러 텍스트가 클립보드에 복사됩니다.";
 "balance_error.change_source" = "출처를 변경하다";
 "balance_error.sync_error" = "동기화 오류";
 
@@ -491,8 +490,8 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 "settings.about_app.title" = "About App";
 "settings.about_app.app_name" = "Unstoppable Wallet";
-"settings.about_app.site" = "Site";
-"settings.about_app.contact" = "Contact";
+"settings.about_app.site" = "사이트";
+"settings.about_app.contact" = "연락처";
 "settings.about_app.rate_us" = "Rate Us";
 "settings.about_app.tell_friends" = "Tell Friends";
 "settings.about_app.email_copied" = "Email address copied";
@@ -614,23 +613,28 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "guides.tab_bar_item" = "아카데미";
 "guides.title" = "아카데미";
 
+// Add Token Selector
+
+"add_token_selector.choose_blockchain" = "Choose Blockchain";
+"add_token_selector.add_token" = "Add Token";
+"add_token_selector.erc20_token" = "ERC20 Token";
+"add_token_selector.eos_token" = "EOS Token";
+"add_token_selector.binance_token" = "Binance Token";
+
 // Add Token
 
-"add_token.choose_blockchain" = "블록체인 선택";
-"add_token.add_token" = "토큰 추가";
-"add_token.erc20_token" = "ERC 20 토큰";
-"add_token.eos_token" = "EOS 토큰";
-"add_token.binance_token" = "Binance 토큰";
-
-// Add Erc20 Token
+"add_token.coin_name" = "Coin Name";
+"add_token.symbol" = "Symbol";
+"add_token.decimals" = "Decimals";
+"add_token.already_exists" = "This token is already in the coin manager list.";
 
 "add_erc20_token.title" = "ERC20 추가";
 "add_erc20_token.contract_address" = "계약 주소";
-"add_erc20_token.coin_name" = "코인 이름";
-"add_erc20_token.symbol" = "심볼";
-"add_erc20_token.decimals" = "소수점";
-"add_erc20_token.already_exists" = "이 토큰은 이미 코인 매니저 리스트에 있습니다.";
 "add_erc20_token.contract_not_exist" = "거래 발견되지 않음";
+
+"add_bep2_token.title" = "Add BEP2";
+"add_bep2_token.token_symbol" = "Token Symbol";
+"add_bep2_token.token_not_exist" = "Token not found";
 
 "change_24hour_up" = "%@ 가격: 상승 %@%% %@";
 "change_24hour_down" = "%@ 가격: 하락 %@%% %@";
@@ -659,7 +663,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 // App Status
 
-"app_status.title" = "App Status";
+"app_status.title" = "앱 상태";
 "app_status.application_status" = "신청 현황";
 "app_status.linked_wallets" = "연결된 지갑";
 "app_status.version_history" = "버전 역사";
@@ -671,10 +675,10 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 // Status Info
 
-"status_info.title" = "Status";
-"status_info.pending.title" = "Pending";
+"status_info.title" = "상태";
+"status_info.pending.title" = "보류 중";
 "status_info.pending.content" = "Transaction has not been confirmed on the blockchain yet. This step can take anywhere from a few minutes to a few hours depending on the transaction fee. Transactions sent with a very low fee usually get processed within a few days or can be rejected by network i.e. no transaction took place.";
-"status_info.receiving.title" = "Receiving";
+"status_info.receiving.title" = "수신 중";
 "status_info.receiving.content" = "The sender has sent you a transaction but it's not final yet. For larger payments it's suggested to wait until the transaction status changes to 'completed'. Usually this should happen within an hour but can take longer sometimes if the sender sent the transaction with a low fee.";
 "status_info.confirmed.title" = "Confirmed";
 "status_info.confirmed.content" = "Transaction is final and irreversible.";
