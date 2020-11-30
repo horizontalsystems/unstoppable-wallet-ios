@@ -144,7 +144,6 @@
 "balance.sort.valueHighToLow" = "Балансу";
 "balance.sort.az" = "Названию";
 "balance.sort.24h_change" = "Цене(%) за 24 ч";
-"balance_error.description" = "Сообщение об ошибке будет скопировано в ваш буфер обмена на случай, если вы решите о ней сообщить.";
 "balance_error.change_source" = "Сменить Источник";
 "balance_error.sync_error" = "Ошибка Синхронизации";
 
@@ -616,23 +615,28 @@
 "guides.tab_bar_item" = "Академия";
 "guides.title" = "Академия";
 
+// Add Token Selector
+
+"add_token_selector.choose_blockchain" = "Choose Blockchain";
+"add_token_selector.add_token" = "Добавить Токен";
+"add_token_selector.erc20_token" = "Токен ERC20";
+"add_token_selector.eos_token" = "Токен EOS";
+"add_token_selector.binance_token" = "Токен Binance";
+
 // Add Token
 
-"add_token.choose_blockchain" = "Выбрать Блокчейн";
-"add_token.add_token" = "Добавить Токен";
-"add_token.erc20_token" = "ERC20 Токен";
-"add_token.eos_token" = "EOS Токен";
-"add_token.binance_token" = "Binance Токен";
-
-// Add Erc20 Token
+"add_token.coin_name" = "Название Токена";
+"add_token.symbol" = "Символ";
+"add_token.decimals" = "Десятичные знаки";
+"add_token.already_exists" = "Этот токен уже есть в списке поддерживаемых токенов.";
 
 "add_erc20_token.title" = "Добавить ERC20";
 "add_erc20_token.contract_address" = "Адрес Контракта";
-"add_erc20_token.coin_name" = "Название Токена";
-"add_erc20_token.symbol" = "Символ";
-"add_erc20_token.decimals" = "Десятичные знаки";
-"add_erc20_token.already_exists" = "Этот токен уже есть в списке поддерживаемых токенов.";
 "add_erc20_token.contract_not_exist" = "Контракт не найден";
+
+"add_bep2_token.title" = "Добавить BEP2";
+"add_bep2_token.token_symbol" = "Token Symbol";
+"add_bep2_token.token_not_exist" = "Token not found";
 
 "change_24hour_up" = "%@ цена: повысилась на %@%%%@";
 "change_24hour_down" = "%@ цена: понизилась на %@%%%@";
