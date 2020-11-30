@@ -17,6 +17,12 @@ class CoinStorage {
             }
 
             return coin(record: record, coinType: CoinType(erc20Address: address))
+        case .bep2:
+            guard let symbol = record.bep2Symbol else {
+                return nil
+            }
+
+            return coin(record: record, coinType: .binance(symbol: symbol))
         }
     }
 
@@ -55,6 +61,11 @@ extension CoinStorage: ICoinStorage {
             record.erc20Address = address
             storage.save(coinRecord: record)
             return true
+        case .binance(let symbol):
+            let record = coinRecord(coin: coin, tokenType: .bep2)
+            record.bep2Symbol = symbol
+            storage.save(coinRecord: record)
+            return true
         default: ()
         }
 
@@ -67,6 +78,7 @@ extension CoinStorage {
 
     enum TokenType: String {
         case erc20
+        case bep2
     }
 
 }

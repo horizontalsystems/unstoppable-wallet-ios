@@ -1,7 +1,7 @@
 import UIKit
 import ThemeKit
 
-class AddErc20TokenSpinnerCell: UITableViewCell {
+class AddTokenSpinnerCell: UITableViewCell {
     private let spinner = UIActivityIndicatorView()
 
     override init(style: CellStyle, reuseIdentifier: String?) {

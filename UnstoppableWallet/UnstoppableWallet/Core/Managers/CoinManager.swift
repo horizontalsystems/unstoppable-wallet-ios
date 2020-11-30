@@ -32,16 +32,6 @@ extension CoinManager: ICoinManager {
         appConfigProvider.featuredCoins
     }
 
-    func existingCoin(erc20Address: String) -> Coin? {
-        coins.first { coin in
-            if case .erc20(let address, _, _, _) = coin.type, address.lowercased() == erc20Address.lowercased() {
-                return true
-            }
-
-            return false
-        }
-    }
-
     func save(coin: Coin) {
         if storage.save(coin: coin) {
             subject.onNext(coin)

@@ -619,23 +619,28 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "guides.tab_bar_item" = "Academy";
 "guides.title" = "Academy";
 
+// Add Token Selector
+
+"add_token_selector.choose_blockchain" = "Choose Blockchain";
+"add_token_selector.add_token" = "Add Token";
+"add_token_selector.erc20_token" = "ERC20 Token";
+"add_token_selector.eos_token" = "EOS Token";
+"add_token_selector.binance_token" = "Binance Token";
+
 // Add Token
 
-"add_token.choose_blockchain" = "Choose Blockchain";
-"add_token.add_token" = "Add Token";
-"add_token.erc20_token" = "ERC20 Token";
-"add_token.eos_token" = "EOS Token";
-"add_token.binance_token" = "Binance Token";
-
-// Add Erc20 Token
+"add_token.coin_name" = "Coin Name";
+"add_token.symbol" = "Symbol";
+"add_token.decimals" = "Decimals";
+"add_token.already_exists" = "This token is already in the coin manager list.";
 
 "add_erc20_token.title" = "Add ERC20";
 "add_erc20_token.contract_address" = "Contract Address";
-"add_erc20_token.coin_name" = "Coin Name";
-"add_erc20_token.symbol" = "Symbol";
-"add_erc20_token.decimals" = "Decimals";
-"add_erc20_token.already_exists" = "This token is already in the coin manager list.";
 "add_erc20_token.contract_not_exist" = "Contract not found";
+
+"add_bep2_token.title" = "Add BEP2";
+"add_bep2_token.token_symbol" = "Token Symbol";
+"add_bep2_token.token_not_exist" = "Token not found";
 
 "change_24hour_up" = "%@ price: up %@%% %@";
 "change_24hour_down" = "%@ price: down %@%% %@";

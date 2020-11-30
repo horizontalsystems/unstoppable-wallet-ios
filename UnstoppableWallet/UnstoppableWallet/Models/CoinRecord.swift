@@ -8,6 +8,7 @@ class CoinRecord: Record {
     let tokenType: String
 
     var erc20Address: String?
+    var bep2Symbol: String?
 
     init(id: String, title: String, code: String, decimal: Int, tokenType: String) {
         self.id = id
@@ -24,7 +25,7 @@ class CoinRecord: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case coinId, title, code, decimal, tokenType, erc20Address
+        case coinId, title, code, decimal, tokenType, erc20Address, bep2Symbol
     }
 
     required init(row: Row) {
@@ -34,6 +35,7 @@ class CoinRecord: Record {
         decimal = row[Columns.decimal]
         tokenType = row[Columns.tokenType]
         erc20Address = row[Columns.erc20Address]
+        bep2Symbol = row[Columns.bep2Symbol]
 
         super.init(row: row)
     }
@@ -45,6 +47,7 @@ class CoinRecord: Record {
         container[Columns.decimal] = decimal
         container[Columns.tokenType] = tokenType
         container[Columns.erc20Address] = erc20Address
+        container[Columns.bep2Symbol] = bep2Symbol
     }
 
 }
