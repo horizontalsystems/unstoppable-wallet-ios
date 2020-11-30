@@ -39,7 +39,7 @@
 "confirm" = "Confirmar";
 "connect" = "Conectar";
 
-"version" = "Version %@";
+"version" = "Versión %@";
 
 "n/a" = "N/A";
 
@@ -142,7 +142,6 @@
 "balance.sort.valueHighToLow" = "Saldo";
 "balance.sort.az" = "Nombre";
 "balance.sort.24h_change" = "Precio(%) 24H";
-"balance_error.description" = "El texto de error se copiará al portapapeles si decides reportarlo.";
 "balance_error.change_source" = "Cambiar Origen";
 "balance_error.sync_error" = "Error de sincronización";
 
@@ -443,7 +442,7 @@ poner en peligro la seguridad de mis fondos.";
 "settings_privacy.sync.section_header" = "Restaurar blockchain";
 "settings_privacy.sync.section_footer" = "Seleccione la fuente de información para restaurar el monedero con las transacciones.";
 
-"settings_privacy_info.title" = "Privacy Settings";
+"settings_privacy_info.title" = "Ajustes de privacidad";
 "settings_privacy_info.description" = "Below you will find detailed explanation of the privacy settings that are available in the app. It's safe to consider them as settings for those that require extensive privacy.";
 "settings_privacy_info.header_blockchain_transactions" = "Blockchain Transactions";
 "settings_privacy_info.content_blockchain_transactions" = "Estos ajustes controlan el nivel de privacidad de las transacciones de usuario en Bitcoin, Bitcon Cash y Litecoin blockchains. La mayoría de las transacciones de Bitcoin generan 2 salidas. Una salida es la cantidad que se envía al receptor y la otra es la salida de cambio que se devuelve al emisor. La forma en que la mayoría de los monderos construyen transacciones hace fácil que un tercero supervise Bitcoin blockchain para entender cuál de las salidas fue a la parte receptora y cuál fue la cantidad de cambio devuelta al remitente. La salida devuelta al remitente puede ser entonces utilizada en transacciones futuras y revelar los detalles a la parte supervisora. Unstoppable wallet implementa medidas para hacer que sea significativamente más difícil averiguar qué salida va a dónde. Hay dos opciones disponibles para los usuarios de Unstoppable: 1. Mezclar: El orden de salida de las transacciones se aleatoriza en cada transacción. A veces el cambio puede ser la primera salida, a veces puede ser la segunda. Si un usuario confía en el desarrollador de la aplicación, más que en una opción recomendada. 2. Determinista : Existe un patrón comúnmente acordado para ordenar salidas de transacciones (conocido como BIP69). En las carteras de código abierto este patrón asegura que los usuarios del monedero no necesiten confiar en cómo los desarrolladores de la aplicación implementan el patrón de las salidas. Como este patrón es nuevo, no muchas billeteras lo han implementado todavía. Como resultado, es algo posible ver en el blockchain si la transacción fue enviada desde el monedero que utiliza ese patrón o no.";
@@ -491,11 +490,11 @@ poner en peligro la seguridad de mis fondos.";
 // Settings -> About App
 
 "settings.about_app.title" = "About App";
-"settings.about_app.app_name" = "Unstoppable Wallet";
-"settings.about_app.site" = "Site";
-"settings.about_app.contact" = "Contact";
+"settings.about_app.app_name" = "Monedero Unstoppable";
+"settings.about_app.site" = "Sitio";
+"settings.about_app.contact" = "Contacto";
 "settings.about_app.rate_us" = "Rate Us";
-"settings.about_app.tell_friends" = "Tell Friends";
+"settings.about_app.tell_friends" = "Recomendar a un amigo";
 "settings.about_app.email_copied" = "Email address copied";
 
 // Set PIN
@@ -615,23 +614,28 @@ poner en peligro la seguridad de mis fondos.";
 "guides.tab_bar_item" = "Academia";
 "guides.title" = "Academia";
 
+// Add Token Selector
+
+"add_token_selector.choose_blockchain" = "Choose Blockchain";
+"add_token_selector.add_token" = "Add Token";
+"add_token_selector.erc20_token" = "ERC20 Token";
+"add_token_selector.eos_token" = "EOS Token";
+"add_token_selector.binance_token" = "Binance Token";
+
 // Add Token
 
-"add_token.choose_blockchain" = "Elegir Blockchain";
-"add_token.add_token" = "Añadir Token";
-"add_token.erc20_token" = "ERC20 Token";
-"add_token.eos_token" = "EOS Token";
-"add_token.binance_token" = "Binance Token";
-
-// Add Erc20 Token
+"add_token.coin_name" = "Coin Name";
+"add_token.symbol" = "Symbol";
+"add_token.decimals" = "Decimals";
+"add_token.already_exists" = "This token is already in the coin manager list.";
 
 "add_erc20_token.title" = "Añadir ERC20";
 "add_erc20_token.contract_address" = "Dirección del contrato";
-"add_erc20_token.coin_name" = "Nombre de moneda";
-"add_erc20_token.symbol" = "Símbolo";
-"add_erc20_token.decimals" = "Decimales";
-"add_erc20_token.already_exists" = "Este token ya está en la lista del gestor de monedas.";
 "add_erc20_token.contract_not_exist" = "Contrato no encontrado";
+
+"add_bep2_token.title" = "Add BEP2";
+"add_bep2_token.token_symbol" = "Token Symbol";
+"add_bep2_token.token_not_exist" = "Token not found";
 
 "change_24hour_up" = "Precio %@: subió %@%% %@";
 "change_24hour_down" = "Precio %@: bajó %@%% %@";
@@ -672,10 +676,10 @@ poner en peligro la seguridad de mis fondos.";
 
 // Status Info
 
-"status_info.title" = "Status";
-"status_info.pending.title" = "Pending";
+"status_info.title" = "Estado";
+"status_info.pending.title" = "Pendiente";
 "status_info.pending.content" = "Transaction has not been confirmed on the blockchain yet. This step can take anywhere from a few minutes to a few hours depending on the transaction fee. Transactions sent with a very low fee usually get processed within a few days or can be rejected by network i.e. no transaction took place.";
-"status_info.receiving.title" = "Receiving";
+"status_info.receiving.title" = "Recibiendo";
 "status_info.receiving.content" = "The sender has sent you a transaction but it's not final yet. For larger payments it's suggested to wait until the transaction status changes to 'completed'. Usually this should happen within an hour but can take longer sometimes if the sender sent the transaction with a low fee.";
 "status_info.confirmed.title" = "Confirmed";
 "status_info.confirmed.content" = "Transaction is final and irreversible.";
