@@ -67,7 +67,7 @@ class AboutViewController: ThemeViewController {
         termsCell.title = "terms.title".localized
 
         subscribe(disposeBag, viewModel.termsAlertDriver) { [weak self] alert in
-            self?.termsCell.valueImage = alert ? UIImage(named: "attention_20")?.tinted(with: .themeLucian) : nil
+            self?.termsCell.valueImage = alert ? UIImage(named: "warning_2_20")?.tinted(with: .themeLucian) : nil
         }
         subscribe(disposeBag, viewModel.openLinkSignal) { [weak self] url in
             self?.present(SFSafariViewController(url: url, configuration: SFSafariViewController.Configuration()), animated: true)
