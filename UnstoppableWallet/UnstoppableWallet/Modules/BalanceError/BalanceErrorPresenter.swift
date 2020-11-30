@@ -19,7 +19,7 @@ class BalanceErrorPresenter {
 
     private func isSourceChangeable(coinType: CoinType) -> Bool {
         switch coinType {
-        case .binance, .eos: return false
+        case .ethereum, .erc20, .binance, .eos: return false
         default: return true
         }
     }
