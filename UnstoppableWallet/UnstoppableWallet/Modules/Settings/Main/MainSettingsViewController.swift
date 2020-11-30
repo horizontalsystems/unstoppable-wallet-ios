@@ -93,10 +93,10 @@ class MainSettingsViewController: ThemeViewController {
         }
 
         subscribe(disposeBag, viewModel.manageWalletsAlertDriver) { [weak self] alert in
-            self?.manageAccountsCell.valueImage = alert ? UIImage(named: "attention_20")?.tinted(with: .themeLucian) : nil
+            self?.manageAccountsCell.valueImage = alert ? UIImage(named: "warning_2_20")?.tinted(with: .themeLucian) : nil
         }
         subscribe(disposeBag, viewModel.securityCenterAlertDriver) { [weak self] alert in
-            self?.securityCenterCell.valueImage = alert ? UIImage(named: "attention_20")?.tinted(with: .themeLucian) : nil
+            self?.securityCenterCell.valueImage = alert ? UIImage(named: "warning_2_20")?.tinted(with: .themeLucian) : nil
         }
         subscribe(disposeBag, viewModel.walletConnectPeerDriver) { [weak self] peer in
             self?.walletConnectCell.value = peer
@@ -105,7 +105,7 @@ class MainSettingsViewController: ThemeViewController {
             self?.baseCurrencyCell.value = baseCurrency
         }
         subscribe(disposeBag, viewModel.aboutAlertDriver) { [weak self] alert in
-            self?.aboutCell.valueImage = alert ? UIImage(named: "attention_20")?.tinted(with: .themeLucian) : nil
+            self?.aboutCell.valueImage = alert ? UIImage(named: "warning_2_20")?.tinted(with: .themeLucian) : nil
         }
 
         subscribe(disposeBag, viewModel.openLinkSignal) { [weak self] url in
