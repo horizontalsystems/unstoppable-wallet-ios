@@ -142,7 +142,6 @@
 "balance.sort.valueHighToLow" = "Balance";
 "balance.sort.az" = "Nom";
 "balance.sort.24h_change" = "Prix 24h (%)";
-"balance_error.description" = "Le texte de l'erreur sera copié dans votre presse-papiers si vous décidez de le signaler.";
 "balance_error.change_source" = "Changer la Source";
 "balance_error.sync_error" = "Erreur de synchronisation";
 
@@ -614,23 +613,28 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "guides.tab_bar_item" = "Académie";
 "guides.title" = "Académie";
 
+// Add Token Selector
+
+"add_token_selector.choose_blockchain" = "Choose Blockchain";
+"add_token_selector.add_token" = "Add Token";
+"add_token_selector.erc20_token" = "ERC20 Token";
+"add_token_selector.eos_token" = "EOS Token";
+"add_token_selector.binance_token" = "Binance Token";
+
 // Add Token
 
-"add_token.choose_blockchain" = "Choisir la blockchain";
-"add_token.add_token" = "Ajouter le token";
-"add_token.erc20_token" = "ERC20 Token";
-"add_token.eos_token" = "EOS Token";
-"add_token.binance_token" = "Binance Token";
-
-// Add Erc20 Token
+"add_token.coin_name" = "Coin Name";
+"add_token.symbol" = "Symbol";
+"add_token.decimals" = "Decimals";
+"add_token.already_exists" = "This token is already in the coin manager list.";
 
 "add_erc20_token.title" = "Ajouter ERC20";
 "add_erc20_token.contract_address" = "Adresse du contrat";
-"add_erc20_token.coin_name" = "Nom de la pièce";
-"add_erc20_token.symbol" = "Symbole";
-"add_erc20_token.decimals" = "Decimales";
-"add_erc20_token.already_exists" = "Ce token figure déjà sur la liste du gestionnaire des pièces.";
 "add_erc20_token.contract_not_exist" = "Contrat non trouvé";
+
+"add_bep2_token.title" = "Add BEP2";
+"add_bep2_token.token_symbol" = "Token Symbol";
+"add_bep2_token.token_not_exist" = "Token not found";
 
 "change_24hour_up" = "%@ prix: hausse %@%% %@";
 "change_24hour_down" = "%@ prix: baisse %@%% %@";
