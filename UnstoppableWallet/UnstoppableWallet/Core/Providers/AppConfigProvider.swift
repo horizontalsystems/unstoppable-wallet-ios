@@ -214,7 +214,7 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "PAXG",      title: "PAX Gold",                      code: "PAXG",    decimal: 18, type: CoinType(erc20Address: "0x45804880De22913dAFE09f4980848ECE6EcbAf78")),
         Coin(id: "PTI",       title: "Paytomat",                      code: "PTI",     decimal: 4,  type: .eos(token: "ptitokenhome", symbol: "PTI")),
         Coin(id: "PNK",       title: "Pinakion",                      code: "PNK",     decimal: 18, type: CoinType(erc20Address: "0x93ed3fbe21207ec2e8f2d3c3de6e058cb73bc04d")),
-        Coin(id: "POA20",     title: "POA ERC20 on Foundation",       code: "POA",     decimal: 18, type: CoinType(erc20Address: "0x6758b7d441a9739b98552b373703d8d3d14f9e62")),
+        Coin(id: "POA",       title: "POA ERC20 on Foundation",       code: "POA",     decimal: 18, type: CoinType(erc20Address: "0x6758b7d441a9739b98552b373703d8d3d14f9e62")),
         Coin(id: "POLY",      title: "Polymath",                      code: "POLY",    decimal: 18, type: CoinType(erc20Address: "0x9992eC3cF6A55b00978cdDF2b27BC6882d88D1eC")),
         Coin(id: "PPT",       title: "Populous",                      code: "PPT",     decimal: 8,  type: CoinType(erc20Address: "0xd4fa1460F537bb9085d22C7bcCB5DD450Ef28e3a")),
         Coin(id: "PGL",       title: "Prospectors Gold",              code: "PGL",     decimal: 4,  type: .eos(token: "prospectorsg", symbol: "PGL")),
