@@ -39,7 +39,7 @@
 "confirm" = "确认";
 "connect" = "连接";
 
-"version" = "Version %@";
+"version" = "版本%@";
 
 "n/a" = "不可用";
 
@@ -442,7 +442,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "settings_privacy.sync.section_header" = "区块链恢复";
 "settings_privacy.sync.section_footer" = "通过交易为恢复钱包选择数据源。";
 
-"settings_privacy_info.title" = "Privacy Settings";
+"settings_privacy_info.title" = "隐私设置";
 "settings_privacy_info.description" = "Below you will find detailed explanation of the privacy settings that are available in the app. It's safe to consider them as settings for those that require extensive privacy.";
 "settings_privacy_info.header_blockchain_transactions" = "Blockchain Transactions";
 "settings_privacy_info.content_blockchain_transactions" = "This setting controls the privacy level of user's transactions on Bitcoin, Bitcoin Cash and Litecoin blockchains.\n\nMost Bitcoin transactions generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party monitoring Bitcoin blockchain to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. The output returned to the sender can then be used in future transactions and further reveal the details to the monitoring party.\n\nUnstoppable wallet implements measures to makes it significantly harder to figure out which output goes where. There are two options available to Unstoppable users:\n\n1. Shuffle : The order of transaction outputs are randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, than consider this a recommended option.\n\n2. Deterministic : There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open source wallets that standard ensures that wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether transaction was sent from the wallet that uses that standard or not.";
@@ -490,9 +490,9 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 // Settings -> About App
 
 "settings.about_app.title" = "About App";
-"settings.about_app.app_name" = "Unstoppable Wallet";
-"settings.about_app.site" = "Site";
-"settings.about_app.contact" = "Contact";
+"settings.about_app.app_name" = "Unstoppable钱包";
+"settings.about_app.site" = "网站";
+"settings.about_app.contact" = "报告问题";
 "settings.about_app.rate_us" = "Rate Us";
 "settings.about_app.tell_friends" = "Tell Friends";
 "settings.about_app.email_copied" = "Email address copied";
