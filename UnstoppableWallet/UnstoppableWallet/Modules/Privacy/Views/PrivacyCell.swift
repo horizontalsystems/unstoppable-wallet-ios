@@ -42,7 +42,7 @@ class PrivacyCell: ThemeCell {
             maker.leading.equalTo(rightView.snp.trailing)
             maker.centerY.equalToSuperview()
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.size.equalTo(12)
+            maker.size.equalTo(20)
         }
     }
 
@@ -62,7 +62,7 @@ class PrivacyCell: ThemeCell {
 
         disclosureView.snp.updateConstraints { maker in
             maker.leading.equalTo(rightView.snp.trailing).offset(showDisclosure ? CGFloat.margin2x : 0)
-            maker.size.equalTo(showDisclosure ? 12 : 0)
+            maker.size.equalTo(showDisclosure ? 20 : 0)
         }
 
         selectionStyle = showDisclosure ? .default : .none
