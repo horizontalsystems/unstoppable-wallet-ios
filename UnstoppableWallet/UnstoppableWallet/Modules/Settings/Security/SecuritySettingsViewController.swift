@@ -85,7 +85,7 @@ class SecuritySettingsViewController: ThemeViewController {
         ]
 
         if editPinVisible {
-            rows.append(Row<TitleCell>(id: "edit_pin", height: .heightSingleLineCell, bind: { cell, _ in
+            rows.append(Row<TitleCell>(id: "edit_pin", height: .heightSingleLineCell, autoDeselect: true, bind: { cell, _ in
                 cell.bind(titleIcon: nil, title: "settings_security.change_pin".localized, showDisclosure: true, last: true)
             }, action: { [weak self] _ in
                 DispatchQueue.main.async {
