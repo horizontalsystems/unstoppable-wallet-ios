@@ -281,7 +281,7 @@ protocol IAppConfigProvider {
     var pnsPassword: String { get }
     var pnsUsername: String { get }
 
-    func defaultWords(count: Int) -> [String]
+    func defaultWords(count: Int) -> String
     var defaultEosCredentials: (String, String) { get }
 
     var ethereumCoin: Coin { get }

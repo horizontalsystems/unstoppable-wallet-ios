@@ -29,12 +29,8 @@ class AppConfigProvider: IAppConfigProvider {
         Bundle.main.object(forInfoDictionaryKey: "Sandbox") as? String == "true"
     }
 
-    func defaultWords(count: Int) -> [String] {
-        guard let wordsString = Bundle.main.object(forInfoDictionaryKey: "DefaultWords\(count)") as? String else {
-            return []
-        }
-
-        return wordsString.split(separator: " ", omittingEmptySubsequences: true).map(String.init)
+    func defaultWords(count: Int) -> String {
+        Bundle.main.object(forInfoDictionaryKey: "DefaultWords\(count)") as? String ?? ""
     }
 
     var defaultEosCredentials: (String, String) {
