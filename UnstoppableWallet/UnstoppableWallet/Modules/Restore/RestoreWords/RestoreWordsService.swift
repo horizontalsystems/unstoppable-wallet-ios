@@ -51,15 +51,11 @@ extension RestoreWordsService {
     }
 
     func accountType(words: [String], birthdayHeight: Int?) throws -> AccountType {
-        for word in words {
-            guard isWordExists(word: word) else {
-                throw ValidationError.invalidWord(word: word)
-            }
-        }
-
         guard words.count == wordCount else {
             throw ValidationError.invalidWordsCount(count: words.count, requiredCount: wordCount)
         }
+
+        try Mnemonic.validate(words: words)
 
         switch restoreAccountType {
         case .mnemonic:

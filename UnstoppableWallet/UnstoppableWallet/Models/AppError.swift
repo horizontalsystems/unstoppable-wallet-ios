@@ -6,16 +6,10 @@ enum AppError: Error {
     case eos(reason: EosError)
     case binance(reason: BinanceError)
     case zcash(reason: ZcashError)
-    case wordsValidation(reason: WordsValidationError)
+    case wordsChecksum
     case addressInvalid
     case notSupportedByHodler
     case unknownError
-
-    enum WordsValidationError: Error {
-        case emptyWords
-        case invalidConfirmation
-        case invalidWords
-    }
 
     enum EosError: Error {
         case selfTransfer
@@ -59,12 +53,8 @@ extension AppError: LocalizedError {
             case .sendToSelf: return "error.send.self_transfer".localized
             case .transparentAddress: return "error.send_z_cash.transparent_address".localized
             }
-        case .wordsValidation(let reason):
-            switch reason {
-            case .emptyWords: return "words_validator.empty_words".localized
-            case .invalidConfirmation: return "words_validator.invalid_confirmation".localized
-            case .invalidWords: return "restore.validation_failed".localized
-            }
+        case .wordsChecksum:
+            return "restore.checksum_error".localized
         case .addressInvalid: return "send.error.invalid_address".localized
         case .notSupportedByHodler: return "send.hodler_error.unsupported_address".localized
         case .unknownError: return "Unknown Error"
