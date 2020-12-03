@@ -6,14 +6,12 @@ import HdWalletKit
 class RestoreWordsService {
     private let restoreAccountType: RestoreWordsModule.RestoreAccountType
     private let wordsManager: IWordsManager
-    private let appConfigProvider: IAppConfigProvider
 
     private let wordList = Mnemonic.wordList(for: .english).map(String.init)
 
-    init(restoreAccountType: RestoreWordsModule.RestoreAccountType, wordsManager: IWordsManager, appConfigProvider: IAppConfigProvider) {
+    init(restoreAccountType: RestoreWordsModule.RestoreAccountType, wordsManager: IWordsManager) {
         self.restoreAccountType = restoreAccountType
         self.wordsManager = wordsManager
-        self.appConfigProvider = appConfigProvider
     }
 }
 

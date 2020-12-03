@@ -137,6 +137,8 @@ class RestoreWordsViewController: ScrollViewController {
         subscribe(disposeBag, viewModel.accountTypeSignal) { [weak self] accountType in
             self?.restoreView.viewModel.onEnter(accountType: accountType)
         }
+
+        showDefaultWords()
     }
 
     override open func viewDidAppear(_ animated: Bool) {
@@ -196,6 +198,19 @@ class RestoreWordsViewController: ScrollViewController {
         textView.attributedText = attributedString
         textView.selectedRange = range
     }
+
+    private func showDefaultWords() {
+        let text = App.shared.appConfigProvider.defaultWords(count: viewModel.wordCount)
+
+        textView.text = text
+
+        DispatchQueue.main.async {
+            self.updateTextViewConstraints(for: text, animated: false)
+        }
+
+        viewModel.onChange(text: text, cursorOffset: text.count)
+    }
+
 }
 
 extension RestoreWordsViewController: UITextViewDelegate {
