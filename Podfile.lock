@@ -137,7 +137,7 @@ PODS:
     - SwiftNIOSSL (< 3, >= 2.8.0)
     - SwiftNIOTransportServices (< 2, >= 1.6.0)
     - SwiftProtobuf (< 2, >= 1.9.0)
-  - HdWalletKit.swift (1.5):
+  - HdWalletKit.swift (1.5.1):
     - OpenSslKit.swift (~> 1.0)
     - Secp256k1Kit.swift (~> 1.0)
   - Hodler.swift (0.15.3):
@@ -513,7 +513,7 @@ CHECKOUT OPTIONS:
     :commit: 5d5e66a8f23c08ca0fe7137380c0a39c60955185
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
   HdWalletKit.swift:
-    :commit: 3e3720f600d10929146e5e8583cf39a072b37e61
+    :commit: dd560907666008fc326c1715c6437a40266cca19
     :git: https://github.com/horizontalsystems/hd-wallet-kit-ios
   Hodler.swift:
     :commit: 9c9f48120e62c90df57712055811d8822ffc12c6
@@ -602,7 +602,7 @@ SPEC CHECKSUMS:
   GRDB.swift: 8cc3ab7c8b8b4ac1761deb8dca4b51c1c9d429f8
   GRKOpenSSLFramework: 4abc733a8fcbc37060619a86a54202d2938dd70e
   gRPC-Swift: 75a7a8d7cd08177165ef971159afb84e5130cfc9
-  HdWalletKit.swift: 4af4ef744a446904261971e5c31daf2eea8403c5
+  HdWalletKit.swift: 30b1ab08c736422eeefe346369ced89574e2ec00
   Hodler.swift: dce58f443e653d0e7a5778d526b7c342b08cc871
   HsToolKit.swift: d47ef3e8c507a6e980f2f6d819c5b0cf05845910
   HUD.swift: 0260e8e89a290380fd23d95002b0ddbea890b6c9
@@ -648,6 +648,6 @@ SPEC CHECKSUMS:
   XRatesKit.swift: e30efad6badf909b67cad6914ac29e6dbc50079d
   ZcashLightClientKit: bfdadb8e91b62edd0b15d972db4147dbceb16b42
 
-PODFILE CHECKSUM: 0ed3a7762c45a30b2a1a2792ea4d960aed081e77
+PODFILE CHECKSUM: 0ca5a96fe319a0398d2c8f84edb1262472f012a2
 
 COCOAPODS: 1.10.0

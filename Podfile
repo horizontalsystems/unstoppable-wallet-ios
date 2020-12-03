@@ -36,6 +36,7 @@ def appPods
   # pod 'BinanceChainKit.swift', path: '../binance-chain-kit-ios/'
 
   pod 'HdWalletKit.swift', git: 'https://github.com/horizontalsystems/hd-wallet-kit-ios'
+  # pod 'HdWalletKit.swift', path: '../hd-wallet-kit-ios/'
 
   pod 'XRatesKit.swift', git: 'https://github.com/horizontalsystems/xrates-kit-ios/'
   # pod 'XRatesKit.swift', path: '../xrates-kit-ios/'

@@ -183,7 +183,6 @@ protocol ISendZcashAdapter {
 
 protocol IWordsManager {
     func generateWords(count: Int) throws -> [String]
-    func validate(words: [String], requiredWordsCount: Int) throws
 }
 
 protocol IAuthManager {

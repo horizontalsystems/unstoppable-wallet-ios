@@ -24,9 +24,18 @@ class WordsValidator {
 
 extension WordsValidator {
 
-    enum ValidationError: Error {
+    enum ValidationError: LocalizedError {
         case emptyWords
         case invalidConfirmation
+
+        var errorDescription: String? {
+            switch self {
+                case .emptyWords:
+                    return "words_validator.empty_words".localized
+                case .invalidConfirmation:
+                    return "words_validator.invalid_confirmation".localized
+            }
+        }
     }
 
 }

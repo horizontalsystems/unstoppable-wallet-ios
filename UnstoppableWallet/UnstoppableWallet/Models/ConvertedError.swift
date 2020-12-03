@@ -70,22 +70,13 @@ extension BinanceError: ConvertibleError {
     }
 }
 
-extension WordsValidator.ValidationError: ConvertibleError {
-    var convertedError: Error {
-        switch self {
-        case .emptyWords:
-             return AppError.wordsValidation(reason: .emptyWords)
-        case .invalidConfirmation:
-            return AppError.wordsValidation(reason: .invalidConfirmation)
-        }
-    }
-}
-
 extension Mnemonic.ValidationError: ConvertibleError {
     var convertedError: Error {
         switch self {
-        case .invalidWordsCount, .invalidWords:
-            return AppError.wordsValidation(reason: .invalidWords)
+        case .invalidChecksum:
+            return AppError.wordsChecksum
+        default:
+            return self
         }
     }
 }

@@ -93,7 +93,7 @@ extension RestoreWordsViewModel {
 
             accountTypeRelay.accept(accountType)
         } catch {
-            errorRelay.accept(error.smartDescription)
+            errorRelay.accept(error.convertedError.smartDescription)
         }
     }
 
