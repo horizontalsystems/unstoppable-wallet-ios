@@ -1,13 +1,23 @@
+import Foundation
+import RxSwift
+import RxRelay
+import HdWalletKit
+
 class RestoreWordsService {
     private let restoreAccountType: RestoreWordsModule.RestoreAccountType
     private let wordsManager: IWordsManager
     private let appConfigProvider: IAppConfigProvider
+
+    private let wordList = Mnemonic.wordList(for: .english).map(String.init)
 
     init(restoreAccountType: RestoreWordsModule.RestoreAccountType, wordsManager: IWordsManager, appConfigProvider: IAppConfigProvider) {
         self.restoreAccountType = restoreAccountType
         self.wordsManager = wordsManager
         self.appConfigProvider = appConfigProvider
     }
+}
+
+extension RestoreWordsService {
 
     var wordCount: Int {
         switch restoreAccountType {
@@ -32,12 +42,24 @@ class RestoreWordsService {
         }
     }
 
-    var defaultWords: [String] {
-        appConfigProvider.defaultWords(count: wordCount)
+    func isWordExists(word: String) -> Bool {
+        wordList.contains(word)
+    }
+
+    func isWordPartiallyExists(word: String) -> Bool {
+        wordList.contains { $0.hasPrefix(word) }
     }
 
     func accountType(words: [String], birthdayHeight: Int?) throws -> AccountType {
-        try wordsManager.validate(words: words, requiredWordsCount: wordCount)
+        for word in words {
+            guard isWordExists(word: word) else {
+                throw ValidationError.invalidWord(word: word)
+            }
+        }
+
+        guard words.count == wordCount else {
+            throw ValidationError.invalidWordsCount(count: words.count, requiredCount: wordCount)
+        }
 
         switch restoreAccountType {
         case .mnemonic:
@@ -45,6 +67,25 @@ class RestoreWordsService {
         case .zcash:
             return .zcash(words: words, birthdayHeight: birthdayHeight)
         }
+    }
+
+}
+
+extension RestoreWordsService {
+
+    enum ValidationError: LocalizedError {
+        case invalidWord(word: String)
+        case invalidWordsCount(count: Int, requiredCount: Int)
+
+        public var errorDescription: String? {
+            switch self {
+            case .invalidWord(let word):
+                return "invalid word: \(word)"
+            case .invalidWordsCount(let count, let requiredCount):
+                return "restore_error.words_count".localized("\(requiredCount)", "\(count)")
+            }
+        }
+
     }
 
 }

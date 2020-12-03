@@ -57,8 +57,6 @@ class RestoreWordsViewController: ScrollViewController {
         textView.layer.cornerRadius = .cornerRadius2x
         textView.layer.borderWidth = .heightOnePixel
         textView.layer.borderColor = UIColor.themeSteel20.cgColor
-        textView.textColor = .themeOz
-        textView.font = textViewFont
         textView.tintColor = .themeJacob
         textView.textContainerInset = UIEdgeInsets(top: textViewInset, left: textViewInset, bottom: textViewInset, right: textViewInset)
         textView.autocapitalizationType = .none
@@ -107,8 +105,11 @@ class RestoreWordsViewController: ScrollViewController {
                 Int(text) != nil
             }
             inputFieldView.set(placeholder: "restore.birthday_height.placeholder".localized)
+            inputFieldView.onChangeText = { [weak self] text in
+                self?.viewModel.onChange(birthdayHeight: text)
+            }
 
-            self.birthdayTextView = inputFieldView
+            birthdayTextView = inputFieldView
 
             let descriptionView = BottomDescriptionView()
             descriptionView.bind(text: "restore.birthday_height.description".localized)
@@ -127,19 +128,15 @@ class RestoreWordsViewController: ScrollViewController {
 
         view.layoutIfNeeded()
 
-        showDefaultWords()
-
-        viewModel.accountTypeSignal
-                .emit(onNext: { [weak self] accountType in
-                    self?.restoreView.viewModel.onEnter(accountType: accountType)
-                })
-                .disposed(by: disposeBag)
-
-        viewModel.errorSignal
-                .emit(onNext: { error in
-                    HudHelper.instance.showError(title: error.localizedDescription)
-                })
-                .disposed(by: disposeBag)
+        subscribe(disposeBag, viewModel.invalidRangesDriver) { [weak self] invalidRanges in
+            self?.handle(invalidRanges: invalidRanges)
+        }
+        subscribe(disposeBag, viewModel.errorSignal) { error in
+            HudHelper.instance.showError(title: error)
+        }
+        subscribe(disposeBag, viewModel.accountTypeSignal) { [weak self] accountType in
+            self?.restoreView.viewModel.onEnter(accountType: accountType)
+        }
     }
 
     override open func viewDidAppear(_ animated: Bool) {
@@ -172,30 +169,33 @@ class RestoreWordsViewController: ScrollViewController {
         }
     }
 
-    private func showDefaultWords() {
-        let text = viewModel.defaultWordsText
-        textView.text = text
-
-        DispatchQueue.main.async {
-            self.updateTextViewConstraints(for: text, animated: false)
-        }
-    }
-
     private var descriptionText: String? {
 //        temp solution until multi-wallet feature is implemented
         "restore.words.description".localized(viewModel.accountTitle, String(viewModel.wordCount))
     }
 
     @objc private func proceedDidTap() {
-        view.endEditing(true)
-
-        viewModel.onProceed(text: textView.text, birthdayHeight: birthdayTextView?.text)
+        viewModel.onTapProceed()
     }
 
     @objc private func cancelDidTap() {
         dismiss(animated: true)
     }
 
+    private func handle(invalidRanges: [NSRange]) {
+        let attributedString = NSMutableAttributedString(string: textView.text, attributes: [
+            .foregroundColor: UIColor.themeOz,
+            .font: textViewFont
+        ])
+
+        for range in invalidRanges {
+            attributedString.addAttribute(.foregroundColor, value: UIColor.themeLucian, range: range)
+        }
+
+        let range = textView.selectedRange
+        textView.attributedText = attributedString
+        textView.selectedRange = range
+    }
 }
 
 extension RestoreWordsViewController: UITextViewDelegate {
@@ -209,6 +209,14 @@ extension RestoreWordsViewController: UITextViewDelegate {
 
     public func textViewDidChange(_ textView: UITextView) {
         updateScrollView()
+
+        guard let selectedTextRange = textView.selectedTextRange else {
+            return
+        }
+
+        let cursorOffset = textView.offset(from: textView.beginningOfDocument, to: selectedTextRange.start)
+
+        viewModel.onChange(text: textView.text, cursorOffset: cursorOffset)
     }
 
 }
