@@ -540,7 +540,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 "chart.title" = "%@ 금액";
 "chart.time_duration.today" = "오늘";
-"chart.time_duration.day" = "24 시간";
+"chart.time_duration.day" = "24H";
 "chart.time_duration.week" = "일주일";
 "chart.time_duration.week2" = "2주";
 "chart.time_duration.month" = "한 달";
@@ -620,7 +620,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "add_token_selector.add_token" = "Add Token";
 "add_token_selector.erc20_token" = "ERC20 Token";
 "add_token_selector.eos_token" = "EOS Token";
-"add_token_selector.binance_token" = "Binance Token";
+"add_token_selector.binance_token" = "BEP2 Token";
 
 // Add Token
 
