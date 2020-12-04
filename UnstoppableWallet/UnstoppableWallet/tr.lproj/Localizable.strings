@@ -64,9 +64,10 @@
 "restore.words.description" = "%@ cüzdanı için gizli anahtarı gir";
 "restore.birthday_height.placeholder" = "Cüzdan oluşturulma günü üst sınırı (isteğe bağlı)";
 "restore.birthday_height.description" = "Bu, işlemler için taramaya nereden başlanacağını belirler. Biraz zaman alacak olan en baştan tarama için boş bırakınız.";
-"restore.validation_failed" = "Yanlış Anahtar";
 "restore.placeholder.account_name" = "Hesap Adı";
 "restore.placeholder.private_key" = "Active Private key";
+"restore_error.words_count" = "Wrong words count. Must be %@. You entered: %@";
+"restore.checksum_error" = "Invalid checksum";
 
 // Coin Settings
 
