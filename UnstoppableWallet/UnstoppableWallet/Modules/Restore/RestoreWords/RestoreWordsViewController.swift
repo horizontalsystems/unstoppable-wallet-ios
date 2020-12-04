@@ -8,6 +8,7 @@ class RestoreWordsViewController: ScrollViewController {
 
     private let minimalTextViewHeight: CGFloat = 88
     private let textViewInset: CGFloat = .margin3x
+    private let textViewTextColor: UIColor = .themeOz
     private let textViewFont: UIFont = .body
 
     private let textView = UITextView()
@@ -57,6 +58,8 @@ class RestoreWordsViewController: ScrollViewController {
         textView.layer.cornerRadius = .cornerRadius2x
         textView.layer.borderWidth = .heightOnePixel
         textView.layer.borderColor = UIColor.themeSteel20.cgColor
+        textView.textColor = textViewTextColor
+        textView.font = textViewFont
         textView.tintColor = .themeJacob
         textView.textContainerInset = UIEdgeInsets(top: textViewInset, left: textViewInset, bottom: textViewInset, right: textViewInset)
         textView.autocapitalizationType = .none
@@ -186,7 +189,7 @@ class RestoreWordsViewController: ScrollViewController {
 
     private func handle(invalidRanges: [NSRange]) {
         let attributedString = NSMutableAttributedString(string: textView.text, attributes: [
-            .foregroundColor: UIColor.themeOz,
+            .foregroundColor: textViewTextColor,
             .font: textViewFont
         ])
 
