@@ -3,27 +3,6 @@ import RxSwift
 import RxRelay
 import XRatesKit
 
-struct FullAmountInfo {
-    let primaryInfo: AmountInfo
-    let secondaryInfo: AmountInfo?
-    let coinValue: CoinValue
-
-    var primaryValue: Decimal {
-        switch primaryInfo {
-        case .currencyValue(let currency): return currency.value
-        case .coinValue(let coin): return coin.value
-        }
-    }
-
-    var primaryDecimal: Int {
-        switch primaryInfo {
-        case .currencyValue(let currency): return currency.currency.decimal
-        case .coinValue(let coin): return coin.coin.decimal
-        }
-    }
-
-}
-
 class FiatService {
     private var disposeBag = DisposeBag()
     private var marketInfoDisposeBag = DisposeBag()
@@ -36,27 +15,20 @@ class FiatService {
     private var coinAmount: Decimal?
     private var currencyAmount: Decimal?
 
-    var toggleAvailableRelay = PublishRelay<Bool>()
-    var toggleAvailable = false {
+    private var toggleAvailableRelay = PublishRelay<Bool>()
+    private(set) var toggleAvailable = false {
         didSet {
             toggleAvailableRelay.accept(toggleAvailable)
         }
     }
 
-    private var marketInfo: MarketInfo?
-    private var rate: Decimal? {
-        guard let marketInfo = marketInfo, !marketInfo.expired else {
-            return nil
-        }
-        return marketInfo.rate
-    }
+    private var rate: Decimal?
 
     var currency: Currency {
         currencyKit.baseCurrency
     }
 
     private let fullAmountInfoRelay = PublishRelay<FullAmountInfo?>()
-    private var fullAmountInfo: FullAmountInfo?
 
     init(switchService: AmountTypeSwitchService, currencyKit: ICurrencyKit, rateManager: IRateManager) {
         self.switchService = switchService
@@ -85,24 +57,25 @@ class FiatService {
     }
 
     private func sync(marketInfo: MarketInfo?) {
-        self.marketInfo = marketInfo
+        if let marketInfo = marketInfo, !marketInfo.expired {
+            rate = marketInfo.rate
+        } else {
+            rate = nil
+        }
         toggleAvailable = rate != nil
 
-        syncFullData()
-        fullAmountInfoRelay.accept(fullAmountInfo)
+        fullAmountInfoRelay.accept(fullAmountInfo())
     }
 
-    private func sync(amountType: AmountType) {
-        syncFullData()
-        fullAmountInfoRelay.accept(fullAmountInfo)
+    private func sync(amountType: AmountTypeSwitchService.AmountType) {
+        fullAmountInfoRelay.accept(fullAmountInfo())
     }
 
-    private func syncFullData() {
+    private func fullAmountInfo() -> FullAmountInfo? {
         guard let coin = coin,
               let coinAmount = coinAmount else {
 
-            fullAmountInfo = nil
-            return
+            return nil
         }
 
         switch switchService.amountType {
@@ -110,21 +83,20 @@ class FiatService {
             let primary = CoinValue(coin: coin, value: coinAmount)
             let secondary = currencyAmount.map { CurrencyValue(currency: currency, value: $0) }
 
-            fullAmountInfo = FullAmountInfo(
+            return FullAmountInfo(
                             primaryInfo: .coinValue(coinValue: primary),
                             secondaryInfo: secondary.map { .currencyValue(currencyValue: $0) },
                             coinValue: primary
                     )
         case .currency:
             guard let currencyAmount = currencyAmount else {
-                fullAmountInfo = nil
-                return
+                return nil
             }
 
             let primary = CurrencyValue(currency: currency, value: currencyAmount)
             let secondary = CoinValue(coin: coin, value: coinAmount)
 
-            fullAmountInfo = FullAmountInfo(
+            return FullAmountInfo(
                             primaryInfo: .currencyValue(currencyValue: primary),
                             secondaryInfo: .coinValue(coinValue: secondary),
                             coinValue: secondary
@@ -146,8 +118,7 @@ extension FiatService {
             return coinAmount * rate
         }
 
-        syncFullData()
-        return fullAmountInfo
+        return fullAmountInfo()
     }
 
     func buildForCurrency(amount: Decimal?) -> FullAmountInfo? {
@@ -161,8 +132,7 @@ extension FiatService {
             return rate == 0 ? 0 : currencyAmount / rate
         }
 
-        syncFullData()
-        return fullAmountInfo
+        return fullAmountInfo()
     }
 
     func buildAmountInfo(amount: Decimal?) -> FullAmountInfo? {                        // Force change from inputView
@@ -175,7 +145,7 @@ extension FiatService {
     func set(coin: Coin?) {
         self.coin = coin
 
-        marketInfo = nil
+        rate = nil
         subscribeToMarketInfo()
 
         switch switchService.amountType {
@@ -194,6 +164,31 @@ extension FiatService: IToggleAvailableDelegate {
 
     var toggleAvailableObservable: Observable<Bool> {
         toggleAvailableRelay.asObservable()
+    }
+
+}
+
+extension FiatService {
+
+    struct FullAmountInfo {
+        let primaryInfo: AmountInfo
+        let secondaryInfo: AmountInfo?
+        let coinValue: CoinValue
+
+        var primaryValue: Decimal {
+            switch primaryInfo {
+            case .currencyValue(let currency): return currency.value
+            case .coinValue(let coin): return coin.value
+            }
+        }
+
+        var primaryDecimal: Int {
+            switch primaryInfo {
+            case .currencyValue(let currency): return currency.currency.decimal
+            case .coinValue(let coin): return coin.coin.decimal
+            }
+        }
+
     }
 
 }
