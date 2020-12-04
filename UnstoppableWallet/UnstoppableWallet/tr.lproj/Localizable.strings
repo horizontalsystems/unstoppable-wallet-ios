@@ -540,7 +540,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 "chart.title" = "%@ Fiyat";
 "chart.time_duration.today" = "Bugün";
-"chart.time_duration.day" = "24 sa";
+"chart.time_duration.day" = "24H";
 "chart.time_duration.week" = "7G";
 "chart.time_duration.week2" = "2H";
 "chart.time_duration.month" = "1A";
@@ -620,7 +620,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "add_token_selector.add_token" = "Token Ekle";
 "add_token_selector.erc20_token" = "ERC20 tokenleri";
 "add_token_selector.eos_token" = "EOS Token";
-"add_token_selector.binance_token" = "Binance Jetonu";
+"add_token_selector.binance_token" = "BEP2 Token";
 
 // Add Token
 
