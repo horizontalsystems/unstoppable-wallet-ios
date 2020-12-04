@@ -17,6 +17,10 @@ class AppConfigProvider: IAppConfigProvider {
         URL(string: (Bundle.main.object(forInfoDictionaryKey: "FaqIndexUrl") as! String))!
     }
 
+    var uniswapSubgraphUrl: String {
+        (Bundle.main.object(forInfoDictionaryKey: "UniswapGraphUrl") as? String) ?? ""
+    }
+
     var testMode: Bool {
         Bundle.main.object(forInfoDictionaryKey: "TestMode") as? String == "true"
     }
@@ -57,6 +61,10 @@ class AppConfigProvider: IAppConfigProvider {
 
     var coinMarketCapApiKey: String {
         (Bundle.main.object(forInfoDictionaryKey: "CoinMarketCapKey") as? String) ?? ""
+    }
+
+    var cryptoCompareApiKey: String? {
+        (Bundle.main.object(forInfoDictionaryKey: "CryptoCompareApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
 
     var pnsUrl: String {

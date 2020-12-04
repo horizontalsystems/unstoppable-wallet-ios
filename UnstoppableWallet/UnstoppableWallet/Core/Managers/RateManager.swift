@@ -11,12 +11,12 @@ class RateManager {
 
     private let kit: XRatesKit
 
-    init(walletManager: IWalletManager, currencyKit: ICurrencyKit, rateCoinMapper: IRateCoinMapper, feeCoinProvider: IFeeCoinProvider, coinMarketCapApiKey: String) {
+    init(walletManager: IWalletManager, currencyKit: ICurrencyKit, rateCoinMapper: IRateCoinMapper, feeCoinProvider: IFeeCoinProvider, coinMarketCapApiKey: String, cryptoCompareApiKey: String?, uniswapSubgraphUrl: String) {
         self.walletManager = walletManager
         self.rateCoinMapper = rateCoinMapper
         self.feeCoinProvider = feeCoinProvider
 
-        kit = XRatesKit.instance(currencyCode: currencyKit.baseCurrency.code, coinMarketCapApiKey: coinMarketCapApiKey, indicatorPointCount: 50, marketInfoExpirationInterval: 10 * 60, topMarketsCount: 100)
+        kit = XRatesKit.instance(currencyCode: currencyKit.baseCurrency.code, coinMarketCapApiKey: coinMarketCapApiKey, cryptoCompareApiKey: cryptoCompareApiKey, uniswapSubgraphUrl: uniswapSubgraphUrl, indicatorPointCount: 50, marketInfoExpirationInterval: 10 * 60, topMarketsCount: 100, minLogLevel: .verbose)
 
         walletManager.walletsUpdatedObservable
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -34,17 +34,31 @@ class RateManager {
     }
 
     private func onUpdate(wallets: [Wallet]) {
-        let allCoinCodes = wallets.reduce(into: [CoinCode]()) { result, wallet in
-            result.append(wallet.coin.code)
+        let allCoins = wallets.reduce(into: [Coin]()) { result, wallet in
+            result.append(wallet.coin)
 
             if let feeCoin = feeCoinProvider.feeCoin(coin: wallet.coin) {
-                result.append(feeCoin.code)
+                result.append(feeCoin)
             }
         }
-        let convertedCoinCodes = allCoinCodes.compactMap { rateCoinMapper.convert(coinCode: $0) }
+        let convertedCoinCodes = allCoins.compactMap { rateCoinMapper.convert(coin: $0) }
         let uniqueCoinCodes = Array(Set(convertedCoinCodes))
+        
+        let kitCoins = uniqueCoinCodes.map { coin -> XRatesKit.Coin in
+            switch coin.type {
+                case .binance: return XRatesKit.Coin(code: coin.code, title: coin.title, type: .binance)
+                case .bitcoin: return XRatesKit.Coin(code: coin.code, title: coin.title, type: .bitcoin)
+                case .bitcoinCash: return XRatesKit.Coin(code: coin.code, title: coin.title, type: .bitcoinCash)
+                case .dash: return XRatesKit.Coin(code: coin.code, title: coin.title, type: .dash)
+                case .eos: return XRatesKit.Coin(code: coin.code, title: coin.title, type: .eos)
+                case .erc20(let address, _, _, _): return XRatesKit.Coin(code: coin.code, title: coin.title, type: .erc20(address: address))
+                case .ethereum: return XRatesKit.Coin(code: coin.code, title: coin.title, type: .ethereum)
+                case .litecoin: return XRatesKit.Coin(code: coin.code, title: coin.title, type: .litecoin)
+                case .zcash: return XRatesKit.Coin(code: coin.code, title: coin.title, type: .zcash)
+            }
+        }
 
-        kit.set(coinCodes: uniqueCoinCodes)
+        kit.set(coins: kitCoins)
     }
 
     private func onUpdate(baseCurrency: Currency) {

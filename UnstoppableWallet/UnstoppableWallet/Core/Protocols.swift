@@ -246,6 +246,7 @@ protocol IPostsManager {
 }
 
 protocol IRateCoinMapper {
+    func convert(coin: Coin) -> Coin?
     func convert(coinCode: String) -> String?
     func unconvert(coinCode: String) -> [String]
 }
@@ -267,6 +268,7 @@ protocol IAppConfigProvider {
     var redditAccount: String { get }
     var guidesIndexUrl: URL { get }
     var faqIndexUrl: URL { get }
+    var uniswapSubgraphUrl: String { get }
 
     var testMode: Bool { get }
     var officeMode: Bool { get }
@@ -275,6 +277,7 @@ protocol IAppConfigProvider {
     var btcCoreRpcUrl: String { get }
     var etherscanKey: String { get }
     var coinMarketCapApiKey: String { get }
+    var cryptoCompareApiKey: String? { get }
     var currencyCodes: [String] { get }
 
     var pnsUrl: String { get }
