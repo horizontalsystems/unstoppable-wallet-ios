@@ -540,7 +540,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 "chart.title" = "%@ Preis";
 "chart.time_duration.today" = "Heute";
-"chart.time_duration.day" = "24h";
+"chart.time_duration.day" = "24H";
 "chart.time_duration.week" = "7T";
 "chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "1M";
@@ -620,7 +620,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "add_token_selector.add_token" = "Add Token";
 "add_token_selector.erc20_token" = "ERC20 Token";
 "add_token_selector.eos_token" = "EOS Token";
-"add_token_selector.binance_token" = "Binance Token";
+"add_token_selector.binance_token" = "BEP2 Token";
 
 // Add Token
 
