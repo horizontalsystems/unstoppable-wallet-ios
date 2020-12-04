@@ -217,7 +217,7 @@ extension SwapCoinCardCell {
         prefixLabel.text = prefix
     }
 
-    private func set(secondaryInfo: SecondaryInfoViewItem?) {
+    private func set(secondaryInfo: SwapCoinCardViewModel.SecondaryInfoViewItem?) {
         secondaryInfoLabel.text = secondaryInfo?.text
         if let type = secondaryInfo?.type {
             secondaryInfoLabel.textColor = type == .placeholder ? .themeGray50 : .themeLeah

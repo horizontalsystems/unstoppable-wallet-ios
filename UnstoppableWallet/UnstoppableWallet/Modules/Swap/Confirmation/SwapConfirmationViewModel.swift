@@ -73,7 +73,7 @@ class SwapConfirmationViewModel {
         }
 
         if let price = viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, coinIn: coinIn, coinOut: coinOut) {
-                additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.price".localized, value: price.formattedString))
+            additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.price".localized, value: price.formattedString))
         }
 
         if let viewItem = viewItemHelper.priceImpactViewItem(trade: trade) {

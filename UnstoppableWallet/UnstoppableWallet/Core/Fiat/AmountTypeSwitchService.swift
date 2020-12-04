@@ -1,16 +1,6 @@
 import RxSwift
 import RxRelay
 
-enum AmountType {
-    case coin
-    case currency
-
-    static prefix func ! (lhs: Self) -> Self {
-        lhs == .coin ? currency : coin
-    }
-
-}
-
 protocol IToggleAvailableDelegate: AnyObject {
     var toggleAvailable: Bool { get }
     var toggleAvailableObservable: Observable<Bool> { get }
@@ -38,16 +28,18 @@ class AmountTypeSwitchService {
     }
 
     private let amountTypeRelay = PublishRelay<AmountType>()
-    var amountType: AmountType {
+    private(set) var amountType: AmountType {
         didSet {
             amountTypeRelay.accept(amountType)
         }
     }
 
     private var toggleAvailableRelay = PublishRelay<Bool>()
-    var toggleAvailable: Bool = false {
+    private(set) var toggleAvailable: Bool = false {
         didSet {
-            toggleAvailableRelay.accept(toggleAvailable)
+            if toggleAvailable != oldValue {
+                toggleAvailableRelay.accept(toggleAvailable)
+            }
         }
     }
 
@@ -56,10 +48,7 @@ class AmountTypeSwitchService {
     }
 
     private func syncToggleAvailable() {
-        let available = (fromDelegate?.toggleAvailable ?? false) && (toDelegate?.toggleAvailable ?? false)
-        if toggleAvailable != available {       // disable toggle in viewModel for all views
-            toggleAvailable = available
-        }
+        toggleAvailable = (fromDelegate?.toggleAvailable ?? false) && (toDelegate?.toggleAvailable ?? false)
 
         if !toggleAvailable && amountType == .currency { // reset input type if it was set to currency
             amountType = .coin
@@ -82,6 +71,20 @@ extension AmountTypeSwitchService: IToggleAvailableDelegate {
 
     var toggleAvailableObservable: Observable<Bool> {
         toggleAvailableRelay.asObservable()
+    }
+
+}
+
+extension AmountTypeSwitchService {
+
+    enum AmountType {
+        case coin
+        case currency
+
+        static prefix func ! (lhs: Self) -> Self {
+            lhs == .coin ? currency : coin
+        }
+
     }
 
 }

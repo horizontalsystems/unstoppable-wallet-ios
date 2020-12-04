@@ -3,16 +3,6 @@ import RxCocoa
 import UniswapKit
 import CurrencyKit
 
-enum SecondaryInfoType {
-    case placeholder
-    case value
-}
-
-struct SecondaryInfoViewItem {
-    let text: String?
-    let type: SecondaryInfoType
-}
-
 class SwapCoinCardViewModel {
     private static let maxValidDecimals = 8
 
@@ -116,7 +106,7 @@ class SwapCoinCardViewModel {
         }
     }
 
-    private func sync(fullAmountInfo: FullAmountInfo?, force: Bool = false, inputAmount: Decimal? = nil) {
+    private func sync(fullAmountInfo: FiatService.FullAmountInfo?, force: Bool = false, inputAmount: Decimal? = nil) {
         prefixRelay.accept(switchService.amountType == .currency ? fiatService.currency.symbol : nil)
 
         guard let fullAmountInfo = fullAmountInfo else {
@@ -215,6 +205,20 @@ extension SwapCoinCardViewModel {
 
     var tokenCodeDriver: Driver<String?> {
         tokenCodeRelay.asDriver()
+    }
+
+}
+
+extension SwapCoinCardViewModel {
+
+    enum SecondaryInfoType {
+        case placeholder
+        case value
+    }
+
+    struct SecondaryInfoViewItem {
+        let text: String?
+        let type: SecondaryInfoType
     }
 
 }
