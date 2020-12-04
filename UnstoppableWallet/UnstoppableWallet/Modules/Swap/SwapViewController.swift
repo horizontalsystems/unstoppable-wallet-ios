@@ -41,8 +41,8 @@ class SwapViewController: ThemeViewController {
     init(viewModel: SwapViewModel, allowanceViewModel: SwapAllowanceViewModel, feeViewModel: EthereumFeeViewModel) {
         self.viewModel = viewModel
 
-        fromCoinCardCell = CoinCardModule.fromCell(service: viewModel.service, tradeService: viewModel.tradeService)
-        toCoinCardCell = CoinCardModule.toCell(service: viewModel.service, tradeService: viewModel.tradeService)
+        fromCoinCardCell = CoinCardModule.fromCell(service: viewModel.service, tradeService: viewModel.tradeService, fiatSwitchService: viewModel.fiatSwitchService)
+        toCoinCardCell = CoinCardModule.toCell(service: viewModel.service, tradeService: viewModel.tradeService, fiatSwitchService: viewModel.fiatSwitchService)
         allowanceCell = SwapAllowanceCell(viewModel: allowanceViewModel)
 
         feeCell = SendFeeCell(viewModel: feeViewModel)

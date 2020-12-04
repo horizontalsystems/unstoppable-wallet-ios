@@ -73,6 +73,12 @@ class InputFieldStackView: UIStackView {
         }
     }
 
+    var keyboardAppearance: UIKeyboardAppearance = .themeDefault {
+        didSet {
+            textView.keyboardAppearance = keyboardAppearance
+        }
+    }
+
     init() {
         super.init(frame: .zero)
 
@@ -87,7 +93,7 @@ class InputFieldStackView: UIStackView {
 
         textView.delegate = self
         textView.tintColor = .themeInputFieldTintColor
-        textView.keyboardAppearance = .themeDefault
+        textView.keyboardAppearance = keyboardAppearance
         textView.autocapitalizationType = .none
         textView.textContainer.maximumNumberOfLines = maximumNumberOfLines
         textView.textColor = .themeOz
@@ -208,6 +214,14 @@ extension InputFieldStackView {
         updateTextViewConstraints(for: textView.text)
 
         placeholderLabel.isHidden = !textView.text.isEmpty
+    }
+
+    func append(view: UIView) {
+        addArrangedSubview(view)
+    }
+
+    func prepend(view: UIView) {
+        insertArrangedSubview(view, at: 0)
     }
 
     func append(items: [InputFieldButtonItem]) {
