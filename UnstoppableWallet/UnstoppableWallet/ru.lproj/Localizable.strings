@@ -542,7 +542,7 @@
 
 "chart.title" = "%@ Цена";
 "chart.time_duration.today" = "Сегодня";
-"chart.time_duration.day" = "24ч";
+"chart.time_duration.day" = "24H";
 "chart.time_duration.week" = "7Д";
 "chart.time_duration.week2" = "2Н";
 "chart.time_duration.month" = "1М";
@@ -622,7 +622,7 @@
 "add_token_selector.add_token" = "Добавить Токен";
 "add_token_selector.erc20_token" = "Токен ERC20";
 "add_token_selector.eos_token" = "Токен EOS";
-"add_token_selector.binance_token" = "Токен Binance";
+"add_token_selector.binance_token" = "BEP2 Token";
 
 // Add Token
 
