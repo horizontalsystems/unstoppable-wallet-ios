@@ -90,6 +90,7 @@ struct SwapModule {
         let viewModel = SwapViewModel(
                 service: service,
                 tradeService: tradeService,
+                fiatSwitchService: AmountTypeSwitchService(),
                 transactionService: transactionService,
                 pendingAllowanceService: pendingAllowanceService,
                 coinService: coinService,

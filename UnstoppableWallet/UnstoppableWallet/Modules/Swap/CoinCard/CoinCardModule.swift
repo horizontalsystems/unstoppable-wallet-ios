@@ -19,21 +19,25 @@ protocol ISwapCoinCardService: AnyObject {
 
 struct CoinCardModule {
 
-    static func fromCell(service: SwapService, tradeService: SwapTradeService) -> SwapCoinCardCell {
-        let fiatService = FiatService(currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManager)
+    static func fromCell(service: SwapService, tradeService: SwapTradeService, fiatSwitchService: AmountTypeSwitchService) -> SwapCoinCardCell {
+        let fiatService = FiatService(switchService: fiatSwitchService, currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManager)
+        fiatSwitchService.fromDelegate = fiatService
         let viewModel = SwapCoinCardViewModel(
                 coinCardService: SwapFromCoinCardService(service: service, tradeService: tradeService),
                 fiatService: fiatService,
+                switchService: fiatSwitchService,
                 decimalParser: AmountDecimalParser()
         )
         return SwapCoinCardCell(viewModel: viewModel, title: "swap.you_pay".localized)
     }
 
-    static func toCell(service: SwapService, tradeService: SwapTradeService) -> SwapCoinCardCell {
-        let fiatService = FiatService(currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManager)
+    static func toCell(service: SwapService, tradeService: SwapTradeService, fiatSwitchService: AmountTypeSwitchService) -> SwapCoinCardCell {
+        let fiatService = FiatService(switchService: fiatSwitchService, currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManager)
+        fiatSwitchService.toDelegate = fiatService
         let viewModel = SwapCoinCardViewModel(
                 coinCardService: SwapToCoinCardService(service: service, tradeService: tradeService),
                 fiatService: fiatService,
+                switchService: fiatSwitchService,
                 decimalParser: AmountDecimalParser()
         )
         return SwapCoinCardCell(viewModel: viewModel, title: "swap.you_get".localized)

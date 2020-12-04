@@ -3,7 +3,7 @@ import ThemeKit
 import RxSwift
 
 class SwapCoinCardCell: UITableViewCell {
-    let cellHeight: CGFloat = 129 + 2 * .margin3x
+    let cellHeight: CGFloat = 160 + 2 * .margin12
 
     private let disposeBag = DisposeBag()
 
@@ -18,7 +18,11 @@ class SwapCoinCardCell: UITableViewCell {
     private let tokenSelectButton = UIButton()
 
     private let inputFieldWrapper = UIView()
-    private let inputField = UITextField()
+    private let horizontalStackView = UIStackView()
+    private let prefixLabel = UILabel()
+    private let inputField = InputFieldStackView()
+    private let switchButton = ThemeButton()
+    private let secondaryInfoLabel = UILabel()
 
     private let balanceView = AdditionalDataView()
 
@@ -32,14 +36,14 @@ class SwapCoinCardCell: UITableViewCell {
 
         contentView.addSubview(cardView)
         cardView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.bottom.equalToSuperview().inset(CGFloat.margin3x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.top.bottom.equalToSuperview().inset(CGFloat.margin12)
         }
 
         cardView.contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(CGFloat.margin3x)
-            maker.leading.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalToSuperview().offset(CGFloat.margin12)
+            maker.leading.equalToSuperview().inset(CGFloat.margin16)
         }
 
         titleLabel.setContentHuggingPriority(.required, for: .horizontal)
@@ -50,7 +54,7 @@ class SwapCoinCardCell: UITableViewCell {
         cardView.contentView.addSubview(badgeView)
         badgeView.snp.makeConstraints { maker in
             maker.centerY.equalTo(titleLabel)
-            maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin2x)
+            maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin8)
         }
 
         badgeView.set(text: "swap.estimated".localized.uppercased())
@@ -59,7 +63,7 @@ class SwapCoinCardCell: UITableViewCell {
         cardView.contentView.addSubview(paddingView)
         paddingView.snp.makeConstraints { maker in
             maker.centerY.equalTo(badgeView)
-            maker.leading.equalTo(badgeView.snp.trailing).offset(CGFloat.margin2x)
+            maker.leading.equalTo(badgeView.snp.trailing).offset(CGFloat.margin8)
             maker.height.equalTo(10)
         }
 
@@ -82,43 +86,76 @@ class SwapCoinCardCell: UITableViewCell {
         tokenSelectButton.setTitleColor(.themeLeah, for: .normal)
         tokenSelectButton.titleLabel?.font = UIFont.subhead1
         tokenSelectButton.addTarget(self, action: #selector(onTapTokenSelect), for: .touchUpInside)
-        tokenSelectButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: .margin6x, bottom: 0, right: .margin4x)
-        tokenSelectButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -.margin2x, bottom: 0, right: .margin2x)
+        tokenSelectButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: .margin24, bottom: 0, right: .margin16)
+        tokenSelectButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -.margin8, bottom: 0, right: .margin8)
 
         cardView.contentView.addSubview(inputFieldWrapper)
         inputFieldWrapper.snp.makeConstraints { maker in
             maker.top.equalTo(tokenSelectButton.snp.bottom)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin2x)
-            maker.height.equalTo(CGFloat.heightSingleLineCell)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin8)
+            maker.height.equalTo(75)
         }
 
         inputFieldWrapper.layer.cornerRadius = .cornerRadius2x
         inputFieldWrapper.layer.borderWidth = CGFloat.heightOnePixel
         inputFieldWrapper.layer.borderColor = UIColor.themeSteel20.cgColor
 
-        inputFieldWrapper.addSubview(inputField)
-        inputField.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview().inset(CGFloat.margin3x)
+        inputFieldWrapper.addSubview(horizontalStackView)
+        horizontalStackView.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().inset(CGFloat.margin8)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin8)
+            maker.top.equalToSuperview()
+            maker.height.equalTo(CGFloat.heightSingleLineCell)
         }
 
-        inputField.delegate = self
-        inputField.font = .body
-        inputField.textColor = .themeOz
-        inputField.attributedPlaceholder = NSAttributedString(string: "0", attributes: [NSAttributedString.Key.foregroundColor: UIColor.themeGray50])
-        inputField.keyboardAppearance = .themeDefault
-        inputField.keyboardType = .decimalPad
-        inputField.tintColor = .themeInputFieldTintColor
+        horizontalStackView.spacing = 0
+        horizontalStackView.addArrangedSubview(prefixLabel)
 
-        inputField.rx.controlEvent(.editingChanged)
-                .asObservable()
-                .subscribe(onNext: { [weak self] _ in
-                    self?.viewModel.onChange(amount: self?.inputField.text)
-                })
-                .disposed(by: disposeBag)
+        prefixLabel.font = .body
+        prefixLabel.textColor = .themeLeah
+        prefixLabel.setContentHuggingPriority(.required, for:.horizontal)
+        prefixLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+
+        horizontalStackView.addArrangedSubview(inputField)
+
+        inputField.set(placeholder: "0", color: .themeGray50)
+        inputField.onChangeText = { [weak self] text in
+            self?.viewModel.onChange(amount: text)
+        }
+        inputField.isValidText = { [weak self] text in
+            self?.viewModel.isValid(amount: text) ?? true
+        }
+        switchButton.apply(style: .secondaryIcon)
+        switchButton.apply(secondaryIconImage: UIImage(named: "arrow_swap_20"))
+        switchButton.addTarget(self, action: #selector(onTapSwitch), for: .touchUpInside)
+        switchButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        inputField.append(view: switchButton)
+
+        let separatorView = UIView()
+        inputFieldWrapper.addSubview(separatorView)
+        separatorView.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().inset(CGFloat.margin12)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin8)
+            maker.top.equalTo(horizontalStackView.snp.bottom)
+            maker.height.equalTo(CGFloat.heightOnePixel)
+        }
+
+        separatorView.backgroundColor = .themeSteel20
+
+        inputFieldWrapper.addSubview(secondaryInfoLabel)
+        secondaryInfoLabel.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().inset(CGFloat.margin12)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin8)
+            maker.top.equalTo(separatorView.snp.bottom)
+            maker.bottom.equalToSuperview()
+        }
+
+        secondaryInfoLabel.font = .caption
+        secondaryInfoLabel.textColor = .themeLeah
 
         cardView.contentView.addSubview(balanceView)
         balanceView.snp.makeConstraints { maker in
-            maker.top.equalTo(inputFieldWrapper.snp.bottom).offset(CGFloat.margin3x)
+            maker.top.equalTo(inputFieldWrapper.snp.bottom).offset(CGFloat.margin12)
             maker.leading.trailing.equalToSuperview()
         }
 
@@ -131,15 +168,22 @@ class SwapCoinCardCell: UITableViewCell {
 
     private func subscribeToViewModel() {
         subscribe(disposeBag, viewModel.isEstimated) { [weak self] in self?.setBadge(hidden: !$0) }
-        subscribe(disposeBag, viewModel.amount) { [weak self] in self?.set(text: $0) }
-        subscribe(disposeBag, viewModel.tokenCode) { [weak self] in self?.set(tokenCode: $0) }
-        subscribe(disposeBag, viewModel.balance) { [weak self] in self?.set(balance: $0) }
-        subscribe(disposeBag, viewModel.balanceError) { [weak self] in self?.set(balanceError: $0) }
+        subscribe(disposeBag, viewModel.prefixDriver) { [weak self] in self?.set(prefix: $0) }
+        subscribe(disposeBag, viewModel.amountDriver) { [weak self] in self?.set(text: $0) }
+        subscribe(disposeBag, viewModel.switchEnabledDriver) { [weak self] in self?.switchButton.isEnabled = $0 }
+        subscribe(disposeBag, viewModel.secondaryInfoDriver) { [weak self] in self?.set(secondaryInfo: $0) }
+        subscribe(disposeBag, viewModel.tokenCodeDriver) { [weak self] in self?.set(tokenCode: $0) }
+        subscribe(disposeBag, viewModel.balanceDriver) { [weak self] in self?.set(balance: $0) }
+        subscribe(disposeBag, viewModel.balanceErrorDriver) { [weak self] in self?.set(balanceError: $0) }
     }
 
     @objc private func onTapTokenSelect() {
         let viewController = CoinSelectModule.viewController(delegate: self)
         presentDelegate?.show(viewController: ThemeNavigationController(rootViewController: viewController))
+    }
+
+    @objc private func onTapSwitch() {
+        viewModel.onSwitch()
     }
 
 }
@@ -161,8 +205,22 @@ extension SwapCoinCardCell {
     }
 
     private func set(text: String?) {
-        if inputField.text != text {
-            inputField.text = text
+        guard inputField.text != text && !viewModel.equalValue(lhs: inputField.text, rhs: text) else { //avoid issue with point ("1" and "1.")
+            return
+        }
+
+        inputField.set(text: text)
+    }
+
+    private func set(prefix: String?) {
+        prefixLabel.set(hidden: prefix == nil)
+        prefixLabel.text = prefix
+    }
+
+    private func set(secondaryInfo: SecondaryInfoViewItem?) {
+        secondaryInfoLabel.text = secondaryInfo?.text
+        if let type = secondaryInfo?.type {
+            secondaryInfoLabel.textColor = type == .placeholder ? .themeGray50 : .themeLeah
         }
     }
 
@@ -174,33 +232,6 @@ extension SwapCoinCardCell {
         let color: UIColor = balanceError ? .themeLucian : .themeGray
         balanceView.setTitle(color: color)
         balanceView.setValue(color: color)
-    }
-
-}
-
-extension SwapCoinCardCell: UITextFieldDelegate {
-
-    private func validate(text: String) -> Bool {
-        let isValid = viewModel.isValid(amount: text)
-        if !isValid {
-            inputField.shakeView()
-        }
-        return isValid
-
-    }
-
-    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if let text = inputField.text, let textRange = Range(range, in: text) {
-            guard string != "" else {       // allow backspacing in inputView
-                return true
-            }
-            let text = text.replacingCharacters(in: textRange, with: string)
-            guard !text.isEmpty else {
-                return true
-            }
-            return validate(text: text)
-        }
-        return validate(text: string)
     }
 
 }

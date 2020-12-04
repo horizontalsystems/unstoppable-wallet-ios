@@ -7,8 +7,8 @@ class SwapViewItemHelper {
             return nil
         }
 
-//        let value = price.isZero ? 0 : 1 / price
-        return PriceCoinValue(baseCoin: coinIn, quoteCoin: CoinValue(coin: coinOut, value: price))
+        let value = price.isZero ? 0 : 1 / price
+        return PriceCoinValue(baseCoin: coinOut, quoteCoin: CoinValue(coin: coinIn, value: value))
     }
 
     func priceImpactViewItem(trade: SwapTradeService.Trade, minLevel: SwapTradeService.PriceImpactLevel = .normal) -> SwapModule.PriceImpactViewItem? {

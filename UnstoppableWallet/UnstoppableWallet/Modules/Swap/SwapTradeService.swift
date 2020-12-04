@@ -90,6 +90,7 @@ class SwapTradeService {
 
     private func handle(tradeData: TradeData) {
         let estimatedAmount = tradeData.type == .exactIn ? tradeData.amountOut : tradeData.amountIn
+
         switch tradeData.type {
         case .exactIn:
             amountOut = estimatedAmount
