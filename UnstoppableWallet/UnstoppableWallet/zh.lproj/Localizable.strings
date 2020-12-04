@@ -540,7 +540,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "chart.title" = "%@ 价格";
 "chart.time_duration.today" = "今天";
-"chart.time_duration.day" = "24小时";
+"chart.time_duration.day" = "24H";
 "chart.time_duration.week" = "7天";
 "chart.time_duration.week2" = "2周";
 "chart.time_duration.month" = "1个月";
@@ -620,7 +620,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "add_token_selector.add_token" = "Add Token";
 "add_token_selector.erc20_token" = "ERC20 Token";
 "add_token_selector.eos_token" = "EOS Token";
-"add_token_selector.binance_token" = "Binance Token";
+"add_token_selector.binance_token" = "BEP2 Token";
 
 // Add Token
 
