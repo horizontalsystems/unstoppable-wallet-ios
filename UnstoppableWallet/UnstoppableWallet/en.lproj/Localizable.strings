@@ -211,7 +211,7 @@ bch.horizontalsystems.xyz/apg";
 "swap.balance" = "Balance";
 "swap.allowance" = "Allowance";
 "swap.you_get" = "You Get";
-"swap.token" = "Select Token";
+"swap.token" = "Select";
 "swap.advanced_settings" = "Advanced Settings";
 "swap.proceed_button" = "Next";
 "swap.approve.title" = "Swap Approve";
@@ -425,7 +425,7 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Unstoppable Wallet - a crypto wallet I recommend";
+"settings_tell_friends.text" = "👋️ Hey there! Have a look at Unstoppable, it's my favorite crypto wallet.";
 
 // Settings -> Security
 
