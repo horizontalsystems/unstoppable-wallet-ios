@@ -6,12 +6,16 @@ import HdWalletKit
 import HsToolKit
 
 class ZcashAdapter {
+    private let disposeBag = DisposeBag()
+
     private static let coinRate = Decimal(ZcashSDK.ZATOSHI_PER_ZEC)
     let fee = Decimal(ZcashSDK.MINERS_FEE_ZATOSHI) / ZcashAdapter.coinRate
 
+    private let saplingDownloader = DownloadService(queueLabel: "io.SaplingDownloader")
     private let synchronizer: SDKSynchronizer
     private let transactionPool: ZcashTransactionPool
 
+    private let uniqueId: String
     private let keys: [String]
     private let loggingProxy = ZcashLogger(logLevel: .error)
 
@@ -31,7 +35,7 @@ class ZcashAdapter {
 
         let endPoint = testMode ? "lightwalletd.testnet.electriccoin.co" : "zcash.horizontalsystems.xyz"
 
-        let uniqueId = wallet.account.id
+        uniqueId = wallet.account.id
         let birthday: Int
         switch syncMode {
         case .new: birthday = Self.newBirthdayHeight
@@ -65,10 +69,10 @@ class ZcashAdapter {
         state = .syncing(progress: 0, lastBlockDate: nil)
         lastBlockHeight = try? synchronizer.latestHeight()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
 
         subscribeSynchronizerNotifications()
+        subscribeDownloadService()
     }
 
     private func subscribeSynchronizerNotifications() {
@@ -92,13 +96,20 @@ class ZcashAdapter {
         center.addObserver(self, selector: #selector(blockHeightUpdated(_:)), name: Notification.Name.blockProcessorUpdated, object: synchronizer.blockProcessor)
     }
 
-    @objc private func didEnterBackground(_ notification: Notification) {
-        synchronizer.stop()
+    private func subscribeDownloadService() {
+        subscribe(disposeBag, DownloadService.instance.stateObservable) { [weak self] in self?.downloaderStatusUpdated(state: $0) }
     }
 
-    @objc private func willEnterForeground(_ notification: Notification) {
-        if synchronizer.status == .stopped || synchronizer.status == .disconnected {
-            try? synchronizer.start()
+    @objc private func didEnterBackground(_ notification: Notification) {
+       stop()
+    }
+
+    private func downloaderStatusUpdated(state: DownloadService.State) {
+        switch state {
+        case .idle: sync()
+        case .inProgress(let progress):
+            self.state = .syncing(progress: Int(progress * 100), lastBlockDate: nil)
+            stateUpdatedSubject.onNext(())
         }
     }
 
@@ -175,6 +186,34 @@ class ZcashAdapter {
         )
     }
 
+    static private var cloudSpendParamsURL: URL? {
+        URL(string: ZcashSDK.CLOUD_PARAM_DIR_URL + ZcashSDK.SPEND_PARAM_FILE_NAME)
+    }
+
+    static private var cloudOutputParamsURL: URL? {
+        URL(string: ZcashSDK.CLOUD_PARAM_DIR_URL + ZcashSDK.OUTPUT_PARAM_FILE_NAME)
+    }
+
+    private func saplingDataExist() -> Bool {
+        var isExist = true
+
+        if let cloudSpendParamsURL = Self.cloudOutputParamsURL,
+           let destinationURL = try? Self.outputParamsURL(uniqueId: uniqueId),
+           !DownloadService.existing(url: destinationURL) {
+            isExist = false
+            DownloadService.instance.download(source: cloudSpendParamsURL, destination: destinationURL)
+        }
+
+        if let cloudSpendParamsURL = Self.cloudSpendParamsURL,
+           let destinationURL = try? Self.spendParamsURL(uniqueId: uniqueId),
+           !DownloadService.existing(url: destinationURL) {
+            isExist = false
+            DownloadService.instance.download(source: cloudSpendParamsURL, destination: destinationURL)
+        }
+
+        return isExist
+    }
+
     deinit {
         NotificationCenter.default.removeObserver(self)
         self.synchronizer.blockProcessor?.stop()
@@ -237,7 +276,9 @@ extension ZcashAdapter {
 extension ZcashAdapter: IAdapter {
 
     func start() {
-        sync()
+        if saplingDataExist() {
+            sync()
+        }
     }
 
     func stop() {
@@ -245,7 +286,9 @@ extension ZcashAdapter: IAdapter {
     }
 
     func refresh() {
-        sync()
+        if saplingDataExist() {
+            sync()
+        }
     }
 
     private func sync() {

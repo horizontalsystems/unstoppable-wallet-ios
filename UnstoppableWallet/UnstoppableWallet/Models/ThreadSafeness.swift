@@ -2,7 +2,11 @@ import Foundation
 
 class SynchronizedDictionary<KeyType: Hashable, ValueType> {
     private var dictionary: [KeyType: ValueType] = [:]
-    private let queue = DispatchQueue(label: "SynchronizedDictionaryAccess", attributes: .concurrent)
+    private let queue: DispatchQueue
+
+    init(queueLabel: String = "SynchronizedDictionaryAccess") {
+        queue = DispatchQueue(label: "SynchronizedDictionaryAccess", attributes: .concurrent)
+    }
 
     subscript(key: KeyType) -> ValueType? {
         set {
@@ -30,10 +34,40 @@ class SynchronizedDictionary<KeyType: Hashable, ValueType> {
         }
     }
 
+    var count: Int {
+        var count = 0
+
+        self.queue.sync {
+            count = self.dictionary.count
+        }
+
+        return count
+    }
+
     func removeValue(forKey key: KeyType) {
         queue.async(flags: .barrier) {
             self.dictionary.removeValue(forKey: key)
         }
+    }
+
+    func contains(where predicate: ((key: KeyType, value: ValueType)) throws -> Bool) rethrows -> Bool {
+        var contains = false
+
+        try self.queue.sync {
+            contains = try self.dictionary.contains(where: predicate)
+        }
+
+        return contains
+    }
+
+    func min(by areInIncreasingOrder: ((key: KeyType, value: ValueType), (key: KeyType, value: ValueType)) throws -> Bool) rethrows -> (key: KeyType, value: ValueType)? {
+        var min: (key: KeyType, value: ValueType)? = nil
+
+        try self.queue.sync {
+            min = try self.dictionary.min(by: areInIncreasingOrder)
+        }
+
+        return min
     }
 
 }
