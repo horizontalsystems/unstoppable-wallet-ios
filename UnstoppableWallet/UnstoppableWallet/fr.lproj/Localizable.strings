@@ -209,7 +209,7 @@
 "swap.token" = "Sélectionner le token";
 "swap.advanced_settings" = "Configuration avancée";
 "swap.proceed_button" = "Suivant";
-"swap.approve.title" = "Swap Approve";
+"swap.approve.title" = "Swap approuvé";
 "swap.approve.description" = "Vous devez autoriser un contrat intelligent pour échanger un token donné en votre nom. Cette autorisation fixe le montant qui peut être utilisé par un contrat intelligent. Elle n'affecte pas votre solde, mais nécessite des frais minimes pour l'exécution de la transaction de validation.\n\nBien que cela puisse être fait à la demande avant chaque transaction, il est moins coûteux d'approuver à l'avance un montant plus élevé pour de futures transactions.";
 "swap.approve.amount_error.already_approved" = "Vous avez déjà une provision pour ce montant";
 "swap.approving_button" = "En cours d'approbation...";
@@ -489,13 +489,13 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 // Settings -> About App
 
-"settings.about_app.title" = "About App";
+"settings.about_app.title" = "À propos de l'application";
 "settings.about_app.app_name" = "Unstoppable Wallet";
 "settings.about_app.site" = "Site";
 "settings.about_app.contact" = "Contact";
-"settings.about_app.rate_us" = "Rate Us";
+"settings.about_app.rate_us" = "Evaluez-nous";
 "settings.about_app.tell_friends" = "Partager avec ami";
-"settings.about_app.email_copied" = "Email address copied";
+"settings.about_app.email_copied" = "Adresse email copiée";
 
 // Set PIN
 
@@ -540,7 +540,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 "chart.title" = "%@ Prix";
 "chart.time_duration.today" = "Aujourd'hui";
-"chart.time_duration.day" = "24H";
+"chart.time_duration.day" = "24 h";
 "chart.time_duration.week" = "7J";
 "chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "1M";
@@ -616,8 +616,8 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 // Add Token Selector
 
-"add_token_selector.choose_blockchain" = "Choose Blockchain";
-"add_token_selector.add_token" = "Add Token";
+"add_token_selector.choose_blockchain" = "Choisissez la Blockchain";
+"add_token_selector.add_token" = "Ajouter le token";
 "add_token_selector.erc20_token" = "ERC20 Token";
 "add_token_selector.eos_token" = "EOS Token";
 "add_token_selector.binance_token" = "BEP2 Token";
@@ -625,17 +625,17 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 // Add Token
 
 "add_token.coin_name" = "Nom de la pièce";
-"add_token.symbol" = "Symbol";
-"add_token.decimals" = "Decimals";
-"add_token.already_exists" = "This token is already in the coin manager list.";
+"add_token.symbol" = "Symbole";
+"add_token.decimals" = "Decimales";
+"add_token.already_exists" = "Ce token figure déjà sur la liste du gestionnaire des pièces.";
 
 "add_erc20_token.title" = "Ajouter ERC20";
 "add_erc20_token.contract_address" = "Adresse du contrat";
 "add_erc20_token.contract_not_exist" = "Contrat non trouvé";
 
-"add_bep2_token.title" = "Add BEP2";
-"add_bep2_token.token_symbol" = "Token Symbol";
-"add_bep2_token.token_not_exist" = "Token not found";
+"add_bep2_token.title" = "Ajouter BEP2";
+"add_bep2_token.token_symbol" = "Symbole du token";
+"add_bep2_token.token_not_exist" = "Token non trouvé";
 
 "change_24hour_up" = "%@ prix: hausse %@%% %@";
 "change_24hour_down" = "%@ prix: baisse %@%% %@";
@@ -678,8 +678,8 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 "status_info.title" = "Statut";
 "status_info.pending.title" = "En attente";
-"status_info.pending.content" = "Transaction has not been confirmed on the blockchain yet. This step can take anywhere from a few minutes to a few hours depending on the transaction fee. Transactions sent with a very low fee usually get processed within a few days or can be rejected by network i.e. no transaction took place.";
-"status_info.receiving.title" = "Receiving";
+"status_info.pending.content" = "La transaction n'a pas encore été confirmée sur la blockchain. Cette étape peut prendre de quelques minutes à quelques heures selon les frais de transaction. Les transactions envoyées avec des frais très bas sont généralement traitées en quelques jours ou peuvent être rejetées par le réseau, ce qui signifie que la transaction n'a pas eu lieu.";
+"status_info.receiving.title" = "Réception en cours";
 "status_info.receiving.content" = "The sender has sent you a transaction but it's not final yet. For larger payments it's suggested to wait until the transaction status changes to 'completed'. Usually this should happen within an hour but can take longer sometimes if the sender sent the transaction with a low fee.";
 "status_info.confirmed.title" = "Confirmé";
 "status_info.confirmed.content" = "Transaction is final and irreversible.";
