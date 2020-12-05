@@ -624,7 +624,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 // Add Token
 
-"add_token.coin_name" = "Coin Name";
+"add_token.coin_name" = "Nom de la pièce";
 "add_token.symbol" = "Symbol";
 "add_token.decimals" = "Decimals";
 "add_token.already_exists" = "This token is already in the coin manager list.";
