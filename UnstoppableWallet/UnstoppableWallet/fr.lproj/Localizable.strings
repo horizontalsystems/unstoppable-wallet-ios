@@ -67,7 +67,7 @@
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 "restore_error.words_count" = "Mauvais nombre de mots. Doit être %@. Vous avez saisi : %@";
-"restore.checksum_error" = "Invalid checksum";
+"restore.checksum_error" = "Somme de contrôle invalide";
 
 // Coin Settings
 
@@ -108,7 +108,7 @@
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Copier votre clé en utilisant l'action « copier » apporte le des risques si vous utilisez des applications de gestion du presse-papiers ou d'autres applications qui peuvent avoir accès aux données du presse-papiers.";
-"backup.birthday_height" = "Birthday Height";
+"backup.birthday_height" = "Hauteur de l'anniversaire";
 
 "error.send.self_transfer" = "L'envoi à soi-même n'est pas pris en charge";
 "error.send_eos.account_not_exist" = "Ce compte n'existe pas";
