@@ -680,8 +680,8 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "status_info.pending.title" = "En attente";
 "status_info.pending.content" = "La transaction n'a pas encore été confirmée sur la blockchain. Cette étape peut prendre de quelques minutes à quelques heures selon les frais de transaction. Les transactions envoyées avec des frais très bas sont généralement traitées en quelques jours ou peuvent être rejetées par le réseau, ce qui signifie que la transaction n'a pas eu lieu.";
 "status_info.receiving.title" = "Réception en cours";
-"status_info.receiving.content" = "The sender has sent you a transaction but it's not final yet. For larger payments it's suggested to wait until the transaction status changes to 'completed'. Usually this should happen within an hour but can take longer sometimes if the sender sent the transaction with a low fee.";
+"status_info.receiving.content" = "L'expéditeur vous a envoyé une transaction, mais elle n'est pas encore définitive. Pour les paiements plus importants, il est conseillé d'attendre que l'opération passe au statut \"terminé\". En général, cela devrait se produire dans l'heure qui suit, mais cela peut parfois prendre plus longtemps si l'expéditeur a envoyé la transaction avec des frais peu élevés.";
 "status_info.confirmed.title" = "Confirmé";
-"status_info.confirmed.content" = "Transaction is final and irreversible.";
-"status_info.failed.title" = "Failed";
-"status_info.failed.content" = "Transaction did not get processed as intended and no token value transfer took place. On Ethereum blockchain failed transactions do consume transaction fees.";
+"status_info.confirmed.content" = "La transaction est définitive et irréversible.";
+"status_info.failed.title" = "Échec";
+"status_info.failed.content" = "La transaction n'a pas été traitée comme prévu et aucun transfert de token n'a eu lieu. Sur la blockchain Ethereum, les transactions qui échouent entraînent des frais de transaction.";
