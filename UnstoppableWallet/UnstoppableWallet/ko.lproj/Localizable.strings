@@ -618,8 +618,8 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 "add_token_selector.choose_blockchain" = "Choose Blockchain";
 "add_token_selector.add_token" = "Add Token";
-"add_token_selector.erc20_token" = "ERC20 Token";
-"add_token_selector.eos_token" = "EOS Token";
+"add_token_selector.erc20_token" = "ERC 20 토큰";
+"add_token_selector.eos_token" = "EOS 토큰";
 "add_token_selector.binance_token" = "BEP2 Token";
 
 // Add Token
