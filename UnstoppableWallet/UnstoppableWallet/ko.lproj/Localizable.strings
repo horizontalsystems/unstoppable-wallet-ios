@@ -66,8 +66,8 @@
 "restore.birthday_height.description" = "이를 통해 월렛 앱이 Zcash 블록체인과 훨씬 빠르게 동기화할 수 있습니다. 기억이 나지 않을 경우, 칸을 비워주세요.";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
-"restore_error.words_count" = "Wrong words count. Must be %@. You entered: %@";
-"restore.checksum_error" = "Invalid checksum";
+"restore_error.words_count" = "잘못된 단어 수입니다. %@개여야 합니다. 입력한 단어 수: %@";
+"restore.checksum_error" = "유효하지 않은 체크섬";
 
 // Coin Settings
 
@@ -108,7 +108,7 @@
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "클립보드 관리 앱 또는 클립보드 데이터에 접근할 수 있는 다른 앱을 사용하고 있다면 \"복사\"작업을 사용하여 암호를 복사하는 것은 위험할 수 있습니다.";
-"backup.birthday_height" = "Birthday Height";
+"backup.birthday_height" = "생일 신장";
 
 "error.send.self_transfer" = "자체로 전송이 지원되지 않음";
 "error.send_eos.account_not_exist" = "회원 계정이 존재하지 않습니다";
@@ -354,7 +354,7 @@
 "settings.notifications" = "알림";
 "settings.base_currency" = "기초 통화";
 "settings.language" = "언어";
-"settings.faq" = "FAQ";
+"settings.faq" = "자주 묻는 질문";
 "settings.light_mode" = "밝은 모드";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "분산형 앱";
@@ -489,13 +489,13 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 // Settings -> About App
 
-"settings.about_app.title" = "About App";
+"settings.about_app.title" = "앱 정보";
 "settings.about_app.app_name" = "Unstoppable Wallet";
 "settings.about_app.site" = "사이트";
 "settings.about_app.contact" = "연락처";
-"settings.about_app.rate_us" = "Rate Us";
-"settings.about_app.tell_friends" = "Tell Friends";
-"settings.about_app.email_copied" = "Email address copied";
+"settings.about_app.rate_us" = "앱 평가";
+"settings.about_app.tell_friends" = "친구에게 추천하기";
+"settings.about_app.email_copied" = "이메일 주소 복사됨";
 
 // Set PIN
 
@@ -540,7 +540,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 "chart.title" = "%@ 금액";
 "chart.time_duration.today" = "오늘";
-"chart.time_duration.day" = "24H";
+"chart.time_duration.day" = "24시";
 "chart.time_duration.week" = "일주일";
 "chart.time_duration.week2" = "2주";
 "chart.time_duration.month" = "한 달";
@@ -616,26 +616,26 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 // Add Token Selector
 
-"add_token_selector.choose_blockchain" = "Choose Blockchain";
-"add_token_selector.add_token" = "Add Token";
+"add_token_selector.choose_blockchain" = "블록체인 선택";
+"add_token_selector.add_token" = "토큰 추가";
 "add_token_selector.erc20_token" = "ERC 20 토큰";
 "add_token_selector.eos_token" = "EOS 토큰";
-"add_token_selector.binance_token" = "BEP2 Token";
+"add_token_selector.binance_token" = "BEP2 토큰";
 
 // Add Token
 
-"add_token.coin_name" = "Coin Name";
-"add_token.symbol" = "Symbol";
-"add_token.decimals" = "Decimals";
-"add_token.already_exists" = "This token is already in the coin manager list.";
+"add_token.coin_name" = "코인 이름";
+"add_token.symbol" = "기호";
+"add_token.decimals" = "소수점";
+"add_token.already_exists" = "이 토큰은 이미 코인 매니저 리스트에 있습니다.";
 
 "add_erc20_token.title" = "ERC20 추가";
 "add_erc20_token.contract_address" = "계약 주소";
 "add_erc20_token.contract_not_exist" = "거래 발견되지 않음";
 
-"add_bep2_token.title" = "Add BEP2";
-"add_bep2_token.token_symbol" = "Token Symbol";
-"add_bep2_token.token_not_exist" = "Token not found";
+"add_bep2_token.title" = "BEP2 추가";
+"add_bep2_token.token_symbol" = "토큰 심볼";
+"add_bep2_token.token_not_exist" = "토큰 찾을 수 없음";
 
 "change_24hour_up" = "%@ 가격: 상승 %@%% %@";
 "change_24hour_down" = "%@ 가격: 하락 %@%% %@";
@@ -672,16 +672,16 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 // FAQ
 
-"faq.title" = "FAQ";
+"faq.title" = "자주 묻는 질문";
 
 // Status Info
 
 "status_info.title" = "상태";
 "status_info.pending.title" = "보류 중";
-"status_info.pending.content" = "Transaction has not been confirmed on the blockchain yet. This step can take anywhere from a few minutes to a few hours depending on the transaction fee. Transactions sent with a very low fee usually get processed within a few days or can be rejected by network i.e. no transaction took place.";
+"status_info.pending.content" = "거래가 아직 블록체인에서 확인되지 않았습니다. 거래 수수료에 따라 거래 확인에 수 분에서 수 시간까지 소요될 수 있습니다. 거래 수수료가 매우 적은 경우에는 거래 확인에 수 일이 소요되거나 네트워크에 의해 거래가 거절될 수도 있습니다. 예시: 거래가 완료되지 않았습니다.";
 "status_info.receiving.title" = "수신 중";
-"status_info.receiving.content" = "The sender has sent you a transaction but it's not final yet. For larger payments it's suggested to wait until the transaction status changes to 'completed'. Usually this should happen within an hour but can take longer sometimes if the sender sent the transaction with a low fee.";
-"status_info.confirmed.title" = "Confirmed";
-"status_info.confirmed.content" = "Transaction is final and irreversible.";
-"status_info.failed.title" = "Failed";
-"status_info.failed.content" = "Transaction did not get processed as intended and no token value transfer took place. On Ethereum blockchain failed transactions do consume transaction fees.";
+"status_info.receiving.content" = "전송자가 거래를 전송했으나 거래가 아직 완료되지는 않았습니다. 거래 금액이 큰 경우 거래 상태가 '완료됨'으로 변경될 때까지 대기하는 것을 권장합니다. 거래 완료는 보통 한 시간 안에 완료되나 전송자가 낮은 수수료로 거래를 보내는 경우 더 오래 걸릴 수도 있습니다.";
+"status_info.confirmed.title" = "확인됨";
+"status_info.confirmed.content" = "거래가 완료되었으며 취소할 수 없습니다.";
+"status_info.failed.title" = "실패";
+"status_info.failed.content" = "거래가 의도한 대로 처리되지 않았으며 전송된 토큰 값이 없습니다. 이더리움 블록체인에서는 실패한 거래에도 거래 수수료가 부과됩니다.";
