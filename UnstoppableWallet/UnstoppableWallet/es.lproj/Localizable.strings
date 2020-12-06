@@ -627,7 +627,7 @@ poner en peligro la seguridad de mis fondos.";
 
 "add_token.coin_name" = "Coin Name";
 "add_token.symbol" = "Symbol";
-"add_token.decimals" = "Decimals";
+"add_token.decimals" = "Decimales";
 "add_token.already_exists" = "This token is already in the coin manager list.";
 
 "add_erc20_token.title" = "Añadir ERC20";
