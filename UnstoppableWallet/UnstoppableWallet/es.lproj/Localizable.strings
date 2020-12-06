@@ -625,8 +625,8 @@ poner en peligro la seguridad de mis fondos.";
 
 // Add Token
 
-"add_token.coin_name" = "Coin Name";
-"add_token.symbol" = "Symbol";
+"add_token.coin_name" = "Nombre de moneda";
+"add_token.symbol" = "Símbolo";
 "add_token.decimals" = "Decimales";
 "add_token.already_exists" = "This token is already in the coin manager list.";
 
