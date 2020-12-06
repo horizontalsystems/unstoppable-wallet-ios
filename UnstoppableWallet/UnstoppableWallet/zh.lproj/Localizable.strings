@@ -624,8 +624,8 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // Add Token
 
-"add_token.coin_name" = "Coin Name";
-"add_token.symbol" = "Symbol";
+"add_token.coin_name" = "代币图片";
+"add_token.symbol" = "标志";
 "add_token.decimals" = "Decimals";
 "add_token.already_exists" = "This token is already in the coin manager list.";
 
