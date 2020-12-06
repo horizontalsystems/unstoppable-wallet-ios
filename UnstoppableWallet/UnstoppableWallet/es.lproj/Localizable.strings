@@ -66,7 +66,7 @@
 "restore.birthday_height.description" = "Esto determina desde dónde empezar a escanear por transacciones. Déjalo en blanco para escanear desde el principio, esto puede demorar un poco.";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key\n";
-"restore_error.words_count" = "Wrong words count. Must be %@. You entered: %@";
+"restore_error.words_count" = "Número de palabras errónes. Deberian ser %@. Usted a ingresado: %@";
 "restore.checksum_error" = "Invalid checksum";
 
 // Coin Settings
