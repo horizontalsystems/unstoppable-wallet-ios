@@ -67,7 +67,7 @@
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key\n";
 "restore_error.words_count" = "Número de palabras errónes. Deberian ser %@. Usted a ingresado: %@";
-"restore.checksum_error" = "Invalid checksum";
+"restore.checksum_error" = "Suma de verificación inválida";
 
 // Coin Settings
 
@@ -108,7 +108,7 @@
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Copiar su clave utilizando la acción \"copiar\" implica ciertos riesgos si utiliza aplicaciones de gestión de portapapeles u otra aplicación que pueda tener acceso a la información del portapapeles.";
-"backup.birthday_height" = "Birthday Height";
+"backup.birthday_height" = "Altura de Cumpleaños";
 
 "error.send.self_transfer" = "Enviarte a vos mismo no está soportado";
 "error.send_eos.account_not_exist" = "La cuenta de destino no existe";
@@ -354,7 +354,7 @@
 "settings.notifications" = "Notificaciones";
 "settings.base_currency" = "Moneda principal";
 "settings.language" = "Idioma";
-"settings.faq" = "FAQ";
+"settings.faq" = "Preguntas más frecuentes";
 "settings.light_mode" = "Modo ligero";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "app descentralizada";
@@ -490,13 +490,13 @@ poner en peligro la seguridad de mis fondos.";
 
 // Settings -> About App
 
-"settings.about_app.title" = "About App";
+"settings.about_app.title" = "Sobre la aplicacion";
 "settings.about_app.app_name" = "Monedero Unstoppable";
 "settings.about_app.site" = "Sitio";
 "settings.about_app.contact" = "Contacto";
-"settings.about_app.rate_us" = "Rate Us";
+"settings.about_app.rate_us" = "Califícanos";
 "settings.about_app.tell_friends" = "Recomendar a un amigo";
-"settings.about_app.email_copied" = "Email address copied";
+"settings.about_app.email_copied" = "Dirección de correo electrónico copiada";
 
 // Set PIN
 
@@ -541,7 +541,7 @@ poner en peligro la seguridad de mis fondos.";
 
 "chart.title" = "%@ Precio";
 "chart.time_duration.today" = "Hoy";
-"chart.time_duration.day" = "24H";
+"chart.time_duration.day" = "24 horas";
 "chart.time_duration.week" = "7 D";
 "chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "1M";
@@ -617,8 +617,8 @@ poner en peligro la seguridad de mis fondos.";
 
 // Add Token Selector
 
-"add_token_selector.choose_blockchain" = "Choose Blockchain";
-"add_token_selector.add_token" = "Add Token";
+"add_token_selector.choose_blockchain" = "Elegir Blockchain";
+"add_token_selector.add_token" = "Añadir Token";
 "add_token_selector.erc20_token" = "ERC20 Token";
 "add_token_selector.eos_token" = "EOS Token";
 "add_token_selector.binance_token" = "BEP2 Token";
@@ -628,15 +628,15 @@ poner en peligro la seguridad de mis fondos.";
 "add_token.coin_name" = "Nombre de moneda";
 "add_token.symbol" = "Símbolo";
 "add_token.decimals" = "Decimales";
-"add_token.already_exists" = "This token is already in the coin manager list.";
+"add_token.already_exists" = "Este token ya está en la lista del gestor de monedas.";
 
 "add_erc20_token.title" = "Añadir ERC20";
 "add_erc20_token.contract_address" = "Dirección del contrato";
 "add_erc20_token.contract_not_exist" = "Contrato no encontrado";
 
-"add_bep2_token.title" = "Add BEP2";
-"add_bep2_token.token_symbol" = "Token Symbol";
-"add_bep2_token.token_not_exist" = "Token not found";
+"add_bep2_token.title" = "Añadir BEP2";
+"add_bep2_token.token_symbol" = "Símbolo del token";
+"add_bep2_token.token_not_exist" = "Token no encontrado";
 
 "change_24hour_up" = "Precio %@: subió %@%% %@";
 "change_24hour_down" = "Precio %@: bajó %@%% %@";
@@ -665,7 +665,7 @@ poner en peligro la seguridad de mis fondos.";
 
 // App Status
 
-"app_status.title" = "App Status";
+"app_status.title" = "Estado de la aplicación";
 "app_status.application_status" = "Estado del formulario";
 "app_status.linked_wallets" = "Monederos vinculados";
 "app_status.version_history" = "Historial de la versión";
@@ -673,16 +673,16 @@ poner en peligro la seguridad de mis fondos.";
 
 // FAQ
 
-"faq.title" = "FAQ";
+"faq.title" = "Preguntas más frecuentes";
 
 // Status Info
 
 "status_info.title" = "Estado";
 "status_info.pending.title" = "Pendiente";
-"status_info.pending.content" = "Transaction has not been confirmed on the blockchain yet. This step can take anywhere from a few minutes to a few hours depending on the transaction fee. Transactions sent with a very low fee usually get processed within a few days or can be rejected by network i.e. no transaction took place.";
+"status_info.pending.content" = "La transacción todavía no ha sido confirmada en la blockchain. Este paso puede tomar desde unos minutos hasta unas pocas horas dependiendo de la tasa de transacción. Las transacciones enviadas con una tarifa muy baja normalmente se procesan dentro de unos días o pueden ser rechazadas por la red, es decir, sin ser realizadas.";
 "status_info.receiving.title" = "Recibiendo";
-"status_info.receiving.content" = "The sender has sent you a transaction but it's not final yet. For larger payments it's suggested to wait until the transaction status changes to 'completed'. Usually this should happen within an hour but can take longer sometimes if the sender sent the transaction with a low fee.";
-"status_info.confirmed.title" = "Confirmed";
-"status_info.confirmed.content" = "Transaction is final and irreversible.";
-"status_info.failed.title" = "Failed";
-"status_info.failed.content" = "Transaction did not get processed as intended and no token value transfer took place. On Ethereum blockchain failed transactions do consume transaction fees.";
+"status_info.receiving.content" = "El remitente te ha enviado una transacción pero aún no es definitiva. Para pagos más grandes se sugiere esperar hasta que el estado de la transacción cambie a 'completado'. Normalmente esto debería ocurrir dentro de una hora, pero puede tardar más en ocasiones si el remitente envió la transacción con una tarifa baja.";
+"status_info.confirmed.title" = "Confirmado";
+"status_info.confirmed.content" = "La transacción es definitiva e irreversible.";
+"status_info.failed.title" = "Falló";
+"status_info.failed.content" = "La transacción no se procesó como se pretendía y no tuvo lugar ninguna transferencia de valor de token. En las transacciones fallidas de Ethereum las transacciones consumen comisiones de transacción.";
