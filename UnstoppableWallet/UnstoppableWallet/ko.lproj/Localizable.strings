@@ -206,7 +206,7 @@
 "swap.balance" = "잔액";
 "swap.allowance" = "허용량";
 "swap.you_get" = "얻기";
-"swap.token" = "토큰 선택";
+"swap.token" = "Select";
 "swap.advanced_settings" = "고급 설정";
 "swap.proceed_button" = "다음";
 "swap.approve.title" = "스왑 승인";
@@ -420,7 +420,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Unstoppable 지갑 - 내가 추천하는 암호지갑";
+"settings_tell_friends.text" = "👋️ Hey there! Have a look at Unstoppable, it's my favorite crypto wallet.";
 
 // Settings -> Security
 
