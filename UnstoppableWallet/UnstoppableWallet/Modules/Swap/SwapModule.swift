@@ -92,6 +92,7 @@ struct SwapModule {
                 tradeService: tradeService,
                 fiatSwitchService: AmountTypeSwitchService(),
                 transactionService: transactionService,
+                allowanceService: allowanceService,
                 pendingAllowanceService: pendingAllowanceService,
                 coinService: coinService,
                 viewItemHelper: SwapViewItemHelper()

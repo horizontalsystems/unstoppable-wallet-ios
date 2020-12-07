@@ -35,8 +35,7 @@ class SwapViewController: ThemeViewController {
     private let approveButton = ThemeButton()
     private let proceedButton = ThemeButton()
 
-    private var tradeViewItem: SwapViewModel.TradeViewItem?
-    private var tradeOptionsViewItem: SwapViewModel.TradeOptionsViewItem?
+    private var advancedSettingsVisible = false
 
     init(viewModel: SwapViewModel, allowanceViewModel: SwapAllowanceViewModel, feeViewModel: EthereumFeeViewModel) {
         self.viewModel = viewModel
@@ -98,7 +97,6 @@ class SwapViewController: ThemeViewController {
         buttonStackCell.add(view: approveButton)
 
         proceedButton.apply(style: .primaryYellow)
-        proceedButton.setTitle("swap.proceed_button".localized, for: .normal)
         proceedButton.addTarget(self, action: #selector((onTapProceedButton)), for: .touchUpInside)
         buttonStackCell.add(view: proceedButton)
 
@@ -113,7 +111,9 @@ class SwapViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.swapErrorDriver) { [weak self] in self?.handle(error: $0) }
         subscribe(disposeBag, viewModel.tradeViewItemDriver) { [weak self] in self?.handle(tradeViewItem: $0) }
         subscribe(disposeBag, viewModel.tradeOptionsViewItemDriver) { [weak self] in self?.handle(tradeOptionsViewItem: $0) }
-        subscribe(disposeBag, viewModel.proceedAllowedDriver) { [weak self] in self?.handle(proceedAllowed: $0) }
+        subscribe(disposeBag, viewModel.advancedSettingsVisibleDriver) { [weak self] in self?.handle(advancedSettingsVisible: $0) }
+        subscribe(disposeBag, viewModel.feeVisibleDriver) { [weak self] in self?.handle(feeVisible: $0) }
+        subscribe(disposeBag, viewModel.proceedActionDriver) { [weak self] in self?.handle(proceedActionState: $0) }
         subscribe(disposeBag, viewModel.approveActionDriver) { [weak self] in self?.handle(approveActionState: $0) }
 
         subscribe(disposeBag, viewModel.openApproveSignal) { [weak self] in self?.openApprove(approveData: $0) }
@@ -191,22 +191,37 @@ class SwapViewController: ThemeViewController {
 //        reloadTable()
     }
 
-    private func handle(proceedAllowed: Bool) {
-        proceedButton.isEnabled = proceedAllowed
+    private func handle(advancedSettingsVisible: Bool) {
+        self.advancedSettingsVisible = advancedSettingsVisible
+        reloadTable()
     }
 
-    private func handle(approveActionState: SwapViewModel.ApproveActionState) {
-        switch approveActionState {
+    private func handle(feeVisible: Bool) {
+        feeCell.isVisible = feeVisible
+        feePriorityCell.isVisible = feeVisible
+        reloadTable()
+    }
+
+    private func handle(proceedActionState: SwapViewModel.ActionState) {
+        handle(actionState: proceedActionState, button: proceedButton)
+    }
+
+    private func handle(approveActionState: SwapViewModel.ActionState) {
+        handle(actionState: approveActionState, button: approveButton)
+    }
+
+    private func handle(actionState: SwapViewModel.ActionState, button: ThemeButton) {
+        switch actionState {
         case .hidden:
-            approveButton.isHidden = true
-        case .visible:
-            approveButton.isHidden = false
-            approveButton.isEnabled = true
-            approveButton.setTitle("button.approve".localized, for: .normal)
-        case .pending:
-            approveButton.isHidden = false
-            approveButton.isEnabled = false
-            approveButton.setTitle("swap.approving_button".localized, for: .normal)
+            button.isHidden = true
+        case .enabled(let title):
+            button.isHidden = false
+            button.isEnabled = true
+            button.setTitle(title, for: .normal)
+        case .disabled(let title):
+            button.isHidden = false
+            button.isEnabled = false
+            button.setTitle(title, for: .normal)
         }
     }
 
@@ -276,11 +291,13 @@ extension SwapViewController: SectionsDataSource {
         sections.append(Section(
                 id: "advanced_settings",
                 rows: [
+                    // todo: change this cell to handle its height itself
                     Row<D1Cell>(
                             id: "advanced",
-                            height: .heightSingleLineCell,
+                            height: advancedSettingsVisible ? .heightSingleLineCell : 0,
                             autoDeselect: true,
                             bind: { cell, _ in
+                                cell.clipsToBounds = true
                                 cell.set(backgroundStyle: .transparent, bottomSeparator: true)
                                 cell.title  = "swap.advanced_settings".localized
                             },
@@ -340,7 +357,7 @@ extension SwapViewController: SectionsDataSource {
                     StaticRow(
                             cell: feePriorityCell,
                             id: "fee-priority",
-                            height: feePriorityCell.currentHeight
+                            height: feePriorityCell.cellHeight
                     )
                 ]
         ))
