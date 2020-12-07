@@ -206,7 +206,7 @@
 "swap.balance" = "Bakiye";
 "swap.allowance" = "Ödenek";
 "swap.you_get" = "Kazandığınız";
-"swap.token" = "Select";
+"swap.token" = "Seç";
 "swap.advanced_settings" = "Gelişmiş Ayarlar";
 "swap.proceed_button" = "İleri";
 "swap.approve.title" = "Takas Onayı";
