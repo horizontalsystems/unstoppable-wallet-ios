@@ -206,7 +206,7 @@
 "swap.balance" = "余额";
 "swap.allowance" = "补贴";
 "swap.you_get" = "您获得";
-"swap.token" = "选择代币";
+"swap.token" = "Select";
 "swap.advanced_settings" = "高级设置";
 "swap.proceed_button" = "继续";
 "swap.approve.title" = "互兑批准";
@@ -420,7 +420,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Unstoppable Wallet——我强烈推荐的一款加密货币钱包";
+"settings_tell_friends.text" = "👋️ Hey there! Have a look at Unstoppable, it's my favorite crypto wallet.";
 
 // Settings -> Security
 
