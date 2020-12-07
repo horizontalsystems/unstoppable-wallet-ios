@@ -119,6 +119,7 @@ class SwapCoinCardCell: UITableViewCell {
         horizontalStackView.addArrangedSubview(inputField)
 
         inputField.set(placeholder: "0", color: .themeGray50)
+        inputField.decimalKeyboard = true
         inputField.onChangeText = { [weak self] text in
             self?.viewModel.onChange(amount: text)
         }

@@ -50,15 +50,15 @@ PODS:
   - Chart.swift (1.2):
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1.1)
-  - CNIOAtomics (2.23.0)
-  - CNIOBoringSSL (2.9.2)
-  - CNIOBoringSSLShims (2.9.2):
-    - CNIOBoringSSL (= 2.9.2)
-  - CNIODarwin (2.23.0)
-  - CNIOHTTPParser (2.23.0)
-  - CNIOLinux (2.23.0)
-  - CNIOSHA1 (2.23.0)
-  - CNIOWindows (2.23.0)
+  - CNIOAtomics (2.25.0)
+  - CNIOBoringSSL (2.10.1)
+  - CNIOBoringSSLShims (2.10.1):
+    - CNIOBoringSSL (= 2.10.1)
+  - CNIODarwin (2.25.0)
+  - CNIOHTTPParser (2.25.0)
+  - CNIOLinux (2.25.0)
+  - CNIOSHA1 (2.25.0)
+  - CNIOWindows (2.25.0)
   - CryptoSwift (1.3.5)
   - Cuckoo (1.4.1):
     - Cuckoo/Swift (= 1.4.1)
@@ -225,44 +225,44 @@ PODS:
     - KeychainAccess (~> 4.1)
     - LanguageKit.swift (~> 1.0)
     - ThemeKit.swift (~> 1.0)
-  - SwiftNIO (2.23.0):
-    - CNIOAtomics (= 2.23.0)
-    - CNIODarwin (= 2.23.0)
-    - CNIOLinux (= 2.23.0)
-    - CNIOSHA1 (= 2.23.0)
-    - CNIOWindows (= 2.23.0)
-    - SwiftNIOConcurrencyHelpers (= 2.23.0)
-  - SwiftNIOConcurrencyHelpers (2.23.0):
-    - CNIOAtomics (= 2.23.0)
-  - SwiftNIOFoundationCompat (2.23.0):
-    - SwiftNIO (= 2.23.0)
-  - SwiftNIOHPACK (1.15.0):
-    - SwiftNIO (< 3, >= 2.11.0)
-    - SwiftNIOConcurrencyHelpers (< 3, >= 2.11.0)
-    - SwiftNIOHTTP1 (< 3, >= 2.11.0)
-  - SwiftNIOHTTP1 (2.23.0):
-    - CNIOHTTPParser (= 2.23.0)
-    - SwiftNIO (= 2.23.0)
-    - SwiftNIOConcurrencyHelpers (= 2.23.0)
-  - SwiftNIOHTTP2 (1.15.0):
-    - SwiftNIO (< 3, >= 2.11.0)
-    - SwiftNIOConcurrencyHelpers (< 3, >= 2.11.0)
-    - SwiftNIOHPACK (= 1.15.0)
-    - SwiftNIOHTTP1 (< 3, >= 2.11.0)
-    - SwiftNIOTLS (< 3, >= 2.11.0)
-  - SwiftNIOSSL (2.9.2):
-    - CNIOBoringSSL (= 2.9.2)
-    - CNIOBoringSSLShims (= 2.9.2)
+  - SwiftNIO (2.25.0):
+    - CNIOAtomics (= 2.25.0)
+    - CNIODarwin (= 2.25.0)
+    - CNIOLinux (= 2.25.0)
+    - CNIOSHA1 (= 2.25.0)
+    - CNIOWindows (= 2.25.0)
+    - SwiftNIOConcurrencyHelpers (= 2.25.0)
+  - SwiftNIOConcurrencyHelpers (2.25.0):
+    - CNIOAtomics (= 2.25.0)
+  - SwiftNIOFoundationCompat (2.25.0):
+    - SwiftNIO (= 2.25.0)
+  - SwiftNIOHPACK (1.16.0):
+    - SwiftNIO (< 3, >= 2.18.0)
+    - SwiftNIOConcurrencyHelpers (< 3, >= 2.18.0)
+    - SwiftNIOHTTP1 (< 3, >= 2.18.0)
+  - SwiftNIOHTTP1 (2.25.0):
+    - CNIOHTTPParser (= 2.25.0)
+    - SwiftNIO (= 2.25.0)
+    - SwiftNIOConcurrencyHelpers (= 2.25.0)
+  - SwiftNIOHTTP2 (1.16.0):
+    - SwiftNIO (< 3, >= 2.18.0)
+    - SwiftNIOConcurrencyHelpers (< 3, >= 2.18.0)
+    - SwiftNIOHPACK (= 1.16.0)
+    - SwiftNIOHTTP1 (< 3, >= 2.18.0)
+    - SwiftNIOTLS (< 3, >= 2.18.0)
+  - SwiftNIOSSL (2.10.1):
+    - CNIOBoringSSL (= 2.10.1)
+    - CNIOBoringSSLShims (= 2.10.1)
     - SwiftNIO (< 3, >= 2.15.0)
     - SwiftNIOConcurrencyHelpers (< 3, >= 2.15.0)
     - SwiftNIOTLS (< 3, >= 2.15.0)
-  - SwiftNIOTLS (2.23.0):
-    - SwiftNIO (= 2.23.0)
-  - SwiftNIOTransportServices (1.9.0):
-    - SwiftNIO (< 3, >= 2.22.0)
-    - SwiftNIOConcurrencyHelpers (< 3, >= 2.22.0)
-    - SwiftNIOFoundationCompat (< 3, >= 2.22.0)
-    - SwiftNIOTLS (< 3, >= 2.22.0)
+  - SwiftNIOTLS (2.25.0):
+    - SwiftNIO (= 2.25.0)
+  - SwiftNIOTransportServices (1.9.1):
+    - SwiftNIO (< 3, >= 2.19.0)
+    - SwiftNIOConcurrencyHelpers (< 3, >= 2.19.0)
+    - SwiftNIOFoundationCompat (< 3, >= 2.19.0)
+    - SwiftNIOTLS (< 3, >= 2.19.0)
   - SwiftProtobuf (1.13.0)
   - SwiftyJSON (4.3.0)
   - ThemeKit.swift (1.0):
@@ -288,7 +288,7 @@ PODS:
     - ObjectMapper (~> 3.5.2)
     - RxSwift (~> 5.0)
     - RxSwiftExt (~> 5)
-  - ZcashLightClientKit (0.7.2):
+  - ZcashLightClientKit (0.8.0):
     - gRPC-Swift (= 1.0.0-alpha.19)
     - SQLite.swift (~> 0.12.2)
 
@@ -561,7 +561,7 @@ CHECKOUT OPTIONS:
     :commit: 2dfbfd36d44c50c38ebaf00b7b178725d9ce86c7
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
   ZcashLightClientKit:
-    :commit: ac2b4623c8baf999ab6a42da7953414a8d66b17c
+    :commit: 940695354d48c8adc3680728d9fcdd8ec6d09630
     :git: https://github.com/zcash/ZcashLightClientKit.git
 
 SPEC CHECKSUMS:
@@ -577,14 +577,14 @@ SPEC CHECKSUMS:
   BlueSocket: 1acd943acb07b55905291d608649fcfbf8cbd57d
   CGRPCZlib: befd9b92013c647f18aa9b7d9e9231d52e1ced1b
   Chart.swift: 523ce3685ad997cbb902c5b61a3dbd5e9d33c993
-  CNIOAtomics: 9f81e08a07afa84d14f93828071f5f28d2c120be
-  CNIOBoringSSL: 0148c2789bab42bcc6e52eb45a8ac0c1a004ece0
-  CNIOBoringSSLShims: 28455716e829ee9ef14db643c00a43901c6f0686
-  CNIODarwin: 1c9538456b597430c897f5a31398b9b94c84b7a0
-  CNIOHTTPParser: da679ec58791620a89c2153bfd2ff2f05786f54d
-  CNIOLinux: e4487ef3f25ce7b0019224cbf621ae2153d1f8bb
-  CNIOSHA1: cdd2e93752f5273b528946560337ca092cdbe0aa
-  CNIOWindows: a0f8814c907c2621b66bc2789682d5e889602b45
+  CNIOAtomics: d078a498a16e2d0d89eb45e854d49afb168ee4ad
+  CNIOBoringSSL: bf8cb0eb8abddef7c948a563ea6aba66719736e5
+  CNIOBoringSSLShims: 157c38a28100623bbf6ae1d8c988225189ce5d8f
+  CNIODarwin: 0df880826baf5b2ca89ed6b2c29e39e142afba32
+  CNIOHTTPParser: 783f1e413b6c6a9ded49747687a330f8e0a25e95
+  CNIOLinux: dbcbe20bf8ab6baeb424aa58107ece92fb955aa8
+  CNIOSHA1: 1ff64088bd91417abef09db5e3e1936dbfd3bf0b
+  CNIOWindows: cda9fd9fb08758e842fcf7d5954e49e4733d3317
   CryptoSwift: 82a5798c280a72ec105e2392d607a456e8ae63b6
   Cuckoo: 4625f7f54d9bb880123270e8969898d6c1d036b5
   CurrencyKit.swift: c1a37e0e43eac3828be95c8348693f192d67b376
@@ -629,15 +629,15 @@ SPEC CHECKSUMS:
   SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
   StorageKit.swift: 1b618d59978510ac2f32971a01f87e54cddbe0da
-  SwiftNIO: 6de64e420297508cfcf7582e556c7ab027ac8bc7
-  SwiftNIOConcurrencyHelpers: 6ddf30c130f872fae39c590f8fa88517b336ee0b
-  SwiftNIOFoundationCompat: 15cc9abc4922445833f69972237e252d810eb839
-  SwiftNIOHPACK: 4f7a01905cac8eb583f0fb60915c9855071f79dd
-  SwiftNIOHTTP1: fee56f32e365ab83dbfbe2fe7a251f563b1bc480
-  SwiftNIOHTTP2: f88c52a54507911d27a34ae5a5ea58938ee37876
-  SwiftNIOSSL: fc672dc6a26e6ab78edd729568cd5a44aabb3409
-  SwiftNIOTLS: 905a7e7e26a3f7d9661da34e0edf01be086c596d
-  SwiftNIOTransportServices: 801923921fbecdcde1e1c1ff38e812167d01ead1
+  SwiftNIO: 9ac0801d52488056b7874fe0d42885afbcd9ef6b
+  SwiftNIOConcurrencyHelpers: 35b622016ccbd7b0723f39abd9c24e172df05086
+  SwiftNIOFoundationCompat: 92c330e2d7663243c5d3fde9e380436e8b49ab32
+  SwiftNIOHPACK: 1c0b1ca04a5c7012c63c5c14d224b69ff6c06756
+  SwiftNIOHTTP1: 6d8ca045225f1da1b8b47268374e97a46169c0db
+  SwiftNIOHTTP2: 5d77df99b769e662aa14e0e1f169954fdab17f9f
+  SwiftNIOSSL: 4b50e3b7e2d5baf97c185eacbacdf11a88efdde4
+  SwiftNIOTLS: 32818e9a4baf5251993ab597f0eb096b3211c90f
+  SwiftNIOTransportServices: a8a17a43695a09bfdd5a56426f6e515120d5dbf3
   SwiftProtobuf: fd4693388a96c8c2df35d3b063272b0e7c499d00
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   ThemeKit.swift: ef380a141bb93ae0d55f4a64c8229b1487d37711
@@ -646,7 +646,7 @@ SPEC CHECKSUMS:
   WalletConnect: 7253f3c123df3bba10d71459f0d62a900fee68ac
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: e30efad6badf909b67cad6914ac29e6dbc50079d
-  ZcashLightClientKit: bfdadb8e91b62edd0b15d972db4147dbceb16b42
+  ZcashLightClientKit: 82c225b8ebe4bb44983acc6fb47e043d68a01651
 
 PODFILE CHECKSUM: 0ca5a96fe319a0398d2c8f84edb1262472f012a2
 
