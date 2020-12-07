@@ -206,7 +206,7 @@
 "swap.balance" = "Bakiye";
 "swap.allowance" = "Ödenek";
 "swap.you_get" = "Kazandığınız";
-"swap.token" = "Jeton Seçin";
+"swap.token" = "Select";
 "swap.advanced_settings" = "Gelişmiş Ayarlar";
 "swap.proceed_button" = "İleri";
 "swap.approve.title" = "Takas Onayı";
@@ -420,7 +420,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Unstoppable Wallet - kullanmanız gereken kripto para cüzdanı";
+"settings_tell_friends.text" = "👋️ Hey there! Have a look at Unstoppable, it's my favorite crypto wallet.";
 
 // Settings -> Security
 
