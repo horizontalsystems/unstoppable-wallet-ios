@@ -39,6 +39,8 @@
 "confirm" = "Bestätigen";
 "connect" = "Verbinden";
 
+"version" = "Version %@";
+
 "n/a" = "N/A";
 
 "biometric_usage_reason" = "Wallet entsperren";
@@ -53,7 +55,6 @@
 "welcome.new_wallet" = "Wallet Erstellen";
 "welcome.restore_wallet" = "Wallet Wiederherstellen";
 "welcome.privacy_settings" = "Privatsphäre-Einstellungen";
-"welcome.version" = "Version %@";
 
 // Restore
 
@@ -63,9 +64,10 @@
 "restore.words.description" = "Geben Sie Ihren Private Key für %@ Wallet ein, der aus %@ Wörtern besteht. Die Wörter müssen in der korrekten Reihenfolge eingegeben und durch Leerzeichen getrennt werden.";
 "restore.birthday_height.placeholder" = "Wallet Geburtstagsgröße (freiwillig)";
 "restore.birthday_height.description" = "Dadurch wird festgelegt, an welcher Stelle mit dem Scannen nach Transaktionen begonnen werden soll. Lassen Sie das Feld leer, um von Anfang an zu scannen, dies dauert eine Weile.";
-"restore.validation_failed" = "Falscher Schlüssel";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
+"restore_error.words_count" = "Falsche Wortzahl. Muss %@sein. Sie eingegeben: %@";
+"restore.checksum_error" = "Ungültige Prüfsumme";
 
 // Coin Settings
 
@@ -106,6 +108,8 @@
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Den Key einfach mit „Kopieren“ zu kopieren, ist riskant, da Sie womöglich Zwischenablage-Management-Apps oder andere Apps nutzen, die Zugriff auf die Daten in der Zwischenablage haben. Ein Hacker könnte so heimlich auf Ihre Zwischenablage zugreifen und Ihre Coins stehlen. Das gilt es natürlich zu vermeiden.";
+"backup.birthday_height" = "Geburtstagshöhe";
+
 "error.send.self_transfer" = "Sich selbst zu senden wird nicht unterstützt";
 "error.send_eos.account_not_exist" = "Das Zielkonto existiert nicht";
 "error.send_eos.insufficient_ram" = "Ihr EOS-Konto hat nicht genügend RAM, um dieses Token zu senden. Um fortfahren zu können, müssen Sie den RAM-Stake erhöhen.";
@@ -139,7 +143,6 @@
 "balance.sort.valueHighToLow" = "Guthaben";
 "balance.sort.az" = "Name";
 "balance.sort.24h_change" = "24h Preis(%)";
-"balance_error.description" = "Der Fehlertext wird in die Zwischenablage kopiert, falls Sie den Fehler melden möchten.";
 "balance_error.change_source" = "Quelle ändern";
 "balance_error.sync_error" = "Sync-Fehler";
 
@@ -203,7 +206,7 @@
 "swap.balance" = "Guthaben";
 "swap.allowance" = "Vergütung";
 "swap.you_get" = "Sie erhalten";
-"swap.token" = "Token auswählen";
+"swap.token" = "Auswählen";
 "swap.advanced_settings" = "Erweiterte Einstellungen";
 "swap.proceed_button" = "Weiter";
 "swap.approve.title" = "Tausch genehmigen";
@@ -347,14 +350,11 @@
 "settings.security_center" = "Sicherheit";
 "settings.manage_accounts" = "Wallets verwalten";
 "settings.manage_coins" = "Coins Managen";
-"settings.app_status" = "App-Status";
 "settings.experimental_features" = "Experimentelles Feature";
 "settings.notifications" = "Benachrichtigungen";
 "settings.base_currency" = "Währung";
 "settings.language" = "Sprache";
-"settings.terms" = "Bedingungen";
-"settings.tell_friends" = "Freunden erzählen";
-"settings.contact" = "Kontakt";
+"settings.faq" = "FAQ";
 "settings.light_mode" = "Licht Modus";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized";
@@ -402,7 +402,6 @@
 // Settings -> Terms
 
 "terms.title" = "Bedingungen";
-"terms.app_subtitle" = "Dezentralisierte App";
 "terms.description" = "Das Unstoppable Wallet ist für diejenigen gedacht, die in Kryptowährungen auf private und unabhängige Weise investieren und diese sparen möchten.
 
 Es ist ein Non-Custodial, Peer-to-Peer Wallet, bei dem nur der Benutzer die Kontrolle über das Guthaben hat. Es sammelt keine Daten und hält Benutzer unabhängig, indem es sein Wallet nicht an eine bestimmte Wallet-App verknüpft.
@@ -410,7 +409,6 @@ Es ist ein Non-Custodial, Peer-to-Peer Wallet, bei dem nur der Benutzer die Kont
 Das Unstoppable Wallet ist vollständig Open Source und jeder kann bestätigen, dass die App genau so funktioniert, wie sie es vorgibt.
 
 Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen nicht gut waren. Sowohl aus technischer Sicht als auch aus Sicht der Nutzbarkeit sind wir der Meinung, dass diese Wallets den alternativen Produkten deutlich voraus ist.";
-"terms.site" = "Seite";
 "terms.item.academy" = "Ich bin durch den Academy-Bereich dieser App gegangen und machte mich mit den grundlegenden Aspekten der Aufbewahrung von Kryptowährungen vertraut.";
 "terms.item.backup" = "Ich habe den/die Private Key(s) für meine Wallets gesichert, die mir in Form von 12-24 Wörtern angezeigt wurden. Mir ist bewusst, dass diese Private Keys auf meinem Smartphone und nirgendwo anders gespeichert werden.";
 "terms.item.owner" = "Mir ist bewusst, dass nur der Eigentümer meines/meiner Private Key(s) auf mein Wallet zugreifen und Geld ausgeben kann und dass diese Keys daher niemals mit irgendjemandem geteilt werden sollten.";
@@ -422,7 +420,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Hi! Schau mal hier, das Unstoppable-Wallet. Das ist das Krypta-Wallet, dass ich dir empfehle.";
+"settings_tell_friends.text" = "👋 Hey! Schau dir Unstoppable an, es ist mein Lieblingskrypto-Wallet.";
 
 // Settings -> Security
 
@@ -469,12 +467,6 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "settings_privacy.sorting_bip69" = "Deterministische Bip69";
 "settings_privacy.sorting_bip69.description" = "Lexikographische Indizierung";
 
-// Settings -> Contact
-
-"settings.contact.title" = "Kontakt";
-"settings.contact.email" = "E-mail";
-"settings.contact.telegram_wallet" = "Telegram";
-
 // Manage Keys
 
 "settings_manage_keys.title" = "Wallets verwalten";
@@ -494,6 +486,16 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "settings_manage_keys.delete.confirmation_loose" = "ACHTUNG: Wenn Sie den privaten Private Key für dieses Wallet nicht gesichert haben, verlieren Sie den Zugriff auf Ihr Guthaben.";
 "error.invalid_eos_key" = "Ungültiger Schlüssel";
 "error.invalid_eos_account" = "Ungültiger Account";
+
+// Settings -> About App
+
+"settings.about_app.title" = "Über die App";
+"settings.about_app.app_name" = "Unstoppable Wallet";
+"settings.about_app.site" = "Seite";
+"settings.about_app.contact" = "Kontakt";
+"settings.about_app.rate_us" = "Bewerten Sie uns";
+"settings.about_app.tell_friends" = "Freunden erzählen";
+"settings.about_app.email_copied" = "E-Mail-Adresse kopiert";
 
 // Set PIN
 
@@ -538,7 +540,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 "chart.title" = "%@ Preis";
 "chart.time_duration.today" = "Heute";
-"chart.time_duration.day" = "24h";
+"chart.time_duration.day" = "24Std";
 "chart.time_duration.week" = "7T";
 "chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "1M";
@@ -612,23 +614,28 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "guides.tab_bar_item" = "Akademie";
 "guides.title" = "Akademie";
 
+// Add Token Selector
+
+"add_token_selector.choose_blockchain" = "Blockchain auswählen";
+"add_token_selector.add_token" = "Token hinzufügen";
+"add_token_selector.erc20_token" = "ERC20 Token";
+"add_token_selector.eos_token" = "EOS Token";
+"add_token_selector.binance_token" = "BEP2 Token";
+
 // Add Token
 
-"add_token.choose_blockchain" = "Blockchain auswählen";
-"add_token.add_token" = "Token hinzufügen";
-"add_token.erc20_token" = "ERC20 Token";
-"add_token.eos_token" = "EOS Token";
-"add_token.binance_token" = "Binance Token";
-
-// Add Erc20 Token
+"add_token.coin_name" = "Coin Name";
+"add_token.symbol" = "Symbol";
+"add_token.decimals" = "Dezimalen";
+"add_token.already_exists" = "Dieser Token befindet sich bereits in der Coin-Verwaltungsliste.";
 
 "add_erc20_token.title" = "ERC-20 hinzufügen";
 "add_erc20_token.contract_address" = "Vertragsadresse";
-"add_erc20_token.coin_name" = "Coin Name";
-"add_erc20_token.symbol" = "Symbol";
-"add_erc20_token.decimals" = "Dezimalen";
-"add_erc20_token.already_exists" = "Dieser Token befindet sich bereits in der Coin-Verwaltungsliste.";
 "add_erc20_token.contract_not_exist" = "Vertrag nicht gefunden";
+
+"add_bep2_token.title" = "BEP2 hinzufügen";
+"add_bep2_token.token_symbol" = "Tokensymbol";
+"add_bep2_token.token_not_exist" = "Token nicht gefunden";
 
 "change_24hour_up" = "%@ Preis: %@%% %@ höher";
 "change_24hour_down" = "%@ Preis: %@%% %@ niedriger";
@@ -657,8 +664,24 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 // App Status
 
-"app_status.version" = "Version %@";
+"app_status.title" = "App-Status";
 "app_status.application_status" = "Antragsstatus";
 "app_status.linked_wallets" = "Verknüpfte Wallets";
 "app_status.version_history" = "Versionsverlauf";
 "app_status.blockchain_status" = "Blockchain-Status";
+
+// FAQ
+
+"faq.title" = "FAQ";
+
+// Status Info
+
+"status_info.title" = "Status";
+"status_info.pending.title" = "Anstehend";
+"status_info.pending.content" = "Transaktion wurde noch nicht auf der Blockchain bestätigt. Dieser Schritt kann von wenigen Minuten bis zu einigen Stunden dauern, je nach Transaktionsgebühr. Transaktionen, die mit einer sehr niedrigen Gebühr gesendet werden, werden in der Regel innerhalb weniger Tage bearbeitet oder können vom Netzwerk abgelehnt werden, d.h. es hat keine Transaktion gegeben.";
+"status_info.receiving.title" = "Empfangen";
+"status_info.receiving.content" = "Der Absender hat dir eine Transaktion geschickt, aber sie ist noch nicht endgültig. Bei größeren Zahlungen empfiehlt es sich zu warten, bis sich der Transaktionsstatus auf \"abgeschlossen\" ändert. Normalerweise sollte dies innerhalb einer Stunde geschehen, kann aber manchmal länger dauern, wenn der Absender die Transaktion mit einer geringen Gebühr verschickt.";
+"status_info.confirmed.title" = "Bestätigt";
+"status_info.confirmed.content" = "Die Transaktion ist endgültig und unumkehrbar.";
+"status_info.failed.title" = "Fehlgeschlagen";
+"status_info.failed.content" = "Die Transaktion wurde nicht als beabsichtigt verarbeitet und es wurde kein Token Value-Transfer durchgeführt.";

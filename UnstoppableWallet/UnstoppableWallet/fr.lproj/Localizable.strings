@@ -39,6 +39,8 @@
 "confirm" = "Confirmer";
 "connect" = "Connecter";
 
+"version" = "Version %@";
+
 "n/a" = "S. O.";
 
 "biometric_usage_reason" = "Déverrouiller le porte-monnaie";
@@ -53,7 +55,6 @@
 "welcome.new_wallet" = "Nouveau Porte-Monnaie";
 "welcome.restore_wallet" = "Restaurer le porte-monnaie";
 "welcome.privacy_settings" = "Paramètres de Confidentialité";
-"welcome.version" = "Version %@";
 
 // Restore
 
@@ -63,9 +64,10 @@
 "restore.words.description" = "Entrez votre clé privée pour %@ Portefeuille qui se compose de %@ mots. Les mots doivent être entrés dans l'ordre correct et séparés par des espaces.";
 "restore.birthday_height.placeholder" = "D’anniversaire du porte-feuille (optionel)";
 "restore.birthday_height.description" = "Ce champ détermine où commencer à scanner les transactions. Laissez-le vide pour scanner depuis le début, ce qui prendra un certain temps.";
-"restore.validation_failed" = "Clé incorrect";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
+"restore_error.words_count" = "Mauvais nombre de mots. Doit être %@. Vous avez saisi : %@";
+"restore.checksum_error" = "Somme de contrôle invalide";
 
 // Coin Settings
 
@@ -106,6 +108,8 @@
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Copier votre clé en utilisant l'action « copier » apporte le des risques si vous utilisez des applications de gestion du presse-papiers ou d'autres applications qui peuvent avoir accès aux données du presse-papiers.";
+"backup.birthday_height" = "Hauteur de l'anniversaire";
+
 "error.send.self_transfer" = "L'envoi à soi-même n'est pas pris en charge";
 "error.send_eos.account_not_exist" = "Ce compte n'existe pas";
 "error.send_eos.insufficient_ram" = "Votre compte EOS ne dispose pas de suffisamment de RAM pour envoyer ce token. Vous devez augmenter la participation RAM pour continuer.";
@@ -139,7 +143,6 @@
 "balance.sort.valueHighToLow" = "Balance";
 "balance.sort.az" = "Nom";
 "balance.sort.24h_change" = "Prix 24h (%)";
-"balance_error.description" = "Le texte de l'erreur sera copié dans votre presse-papiers si vous décidez de le signaler.";
 "balance_error.change_source" = "Changer la Source";
 "balance_error.sync_error" = "Erreur de synchronisation";
 
@@ -203,10 +206,10 @@
 "swap.balance" = "Balance";
 "swap.allowance" = "Allocation";
 "swap.you_get" = "Vous recevez";
-"swap.token" = "Sélectionner le token";
+"swap.token" = "Sélectionner";
 "swap.advanced_settings" = "Configuration avancée";
 "swap.proceed_button" = "Suivant";
-"swap.approve.title" = "Swap Approve";
+"swap.approve.title" = "Swap approuvé";
 "swap.approve.description" = "Vous devez autoriser un contrat intelligent pour échanger un token donné en votre nom. Cette autorisation fixe le montant qui peut être utilisé par un contrat intelligent. Elle n'affecte pas votre solde, mais nécessite des frais minimes pour l'exécution de la transaction de validation.\n\nBien que cela puisse être fait à la demande avant chaque transaction, il est moins coûteux d'approuver à l'avance un montant plus élevé pour de futures transactions.";
 "swap.approve.amount_error.already_approved" = "Vous avez déjà une provision pour ce montant";
 "swap.approving_button" = "En cours d'approbation...";
@@ -347,14 +350,11 @@
 "settings.security_center" = "Centre de Sécurité";
 "settings.manage_accounts" = "Gérer les portefeuilles";
 "settings.manage_coins" = "Gérer les coins";
-"settings.app_status" = "Statut de l'appli";
 "settings.experimental_features" = "Fonctionnalités expérimentales";
 "settings.notifications" = "Notifications";
 "settings.base_currency" = "Devise de Base";
 "settings.language" = "Langue";
-"settings.terms" = "Conditions";
-"settings.tell_friends" = "Partager avec ami";
-"settings.contact" = "Contact";
+"settings.faq" = "FAQ";
 "settings.light_mode" = "Mode lumineux";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -402,7 +402,6 @@
 // Settings -> Terms
 
 "terms.title" = "Conditions";
-"terms.app_subtitle" = "Decentralized app";
 "terms.description" = "Unstoppable Wallet est conçu pour ceux qui cherchent à investir et à stocker des cryptomonnaies de manière privée et indépendante.
 
 Il s'agit d'un portefeuille non privatif de liberté, de type pair à pair, où seul l'utilisateur a le contrôle des fonds. Il ne collecte aucune donnée et permet à l'utilisateur de rester indépendant en ne verrouillant pas son portefeuille à une application de portefeuille spécifique.
@@ -410,7 +409,6 @@ Il s'agit d'un portefeuille non privatif de liberté, de type pair à pair, où 
 L'application Unstoppable Wallet est entièrement open-source et tout le monde peut confirmer que l'application fonctionne exactement comme elle le prétend.
 
 Nous avons construit Unstoppable à notre intention car les solutions disponibles n'étaient pas à la hauteur de nos attentes. Tant du point de vue de l'ingénierie que de la convivialité, nous pensons que ce portefeuille a une avance considérable sur les produits alternatifs.";
-"terms.site" = "Site";
 "terms.item.academy" = "J'ai parcouru la section Académie de cette application et me suis familiarisé avec les aspects fondamentaux du stockage des cryptomonnaies.";
 "terms.item.backup" = "J'ai sauvegardé la/les clé(s) privée(s) de mes portefeuilles qui m'ont été présentées sous une formule de 12 à 24 mots. Je comprends que ces clés privées sont stockées sur mon smartphone et non ailleurs.";
 "terms.item.owner" = "Je comprends que seul le propriétaire de ma (mes) clé(s) privée(s) peut accéder à mon portefeuille et y dépenser des fonds, et que ces clés ne doivent donc jamais être partagées avec qui que ce soit.";
@@ -422,7 +420,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Unstoppable Wallet - un porte-monnaie crypto que je recommande";
+"settings_tell_friends.text" = "👋 Bonjour ! Jetez un coup d'oeil à Unstoppable, c'est mon portefeuille de cryptomonnaies préféré.";
 
 // Settings -> Security
 
@@ -469,12 +467,6 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "settings_privacy.sorting_bip69" = "BIP69 déterministe";
 "settings_privacy.sorting_bip69.description" = "Indexation lexicographique";
 
-// Settings -> Contact
-
-"settings.contact.title" = "Contact";
-"settings.contact.email" = "E-mail";
-"settings.contact.telegram_wallet" = "Telegram";
-
 // Manage Keys
 
 "settings_manage_keys.title" = "Gérer les portefeuilles";
@@ -494,6 +486,16 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "settings_manage_keys.delete.confirmation_loose" = "Si vous n'avez pas sauvegardé la clé privée de ce portefeuille, vous perdrez l'accès à vos fonds.";
 "error.invalid_eos_key" = "Clé invalide";
 "error.invalid_eos_account" = "Compte invalide";
+
+// Settings -> About App
+
+"settings.about_app.title" = "À propos de l'application";
+"settings.about_app.app_name" = "Unstoppable Wallet";
+"settings.about_app.site" = "Site";
+"settings.about_app.contact" = "Contact";
+"settings.about_app.rate_us" = "Evaluez-nous";
+"settings.about_app.tell_friends" = "Partager avec ami";
+"settings.about_app.email_copied" = "Adresse email copiée";
 
 // Set PIN
 
@@ -517,7 +519,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 "rate_list.portfolio" = "Portfolio";
 "rate_list.latest_news" = "Dernières nouvelles";
-"top100_list.portfolio" = "Top 100";
+"top100_list.portfolio" = "A B C";
 "top100_list.sort_by" = "Trier par";
 "top100_list.sort_type.rank" = "Rang";
 "top100_list.sort_type.top_winners" = "Les grands gagnants";
@@ -538,7 +540,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 "chart.title" = "%@ Prix";
 "chart.time_duration.today" = "Aujourd'hui";
-"chart.time_duration.day" = "24h";
+"chart.time_duration.day" = "24 h";
 "chart.time_duration.week" = "7J";
 "chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "1M";
@@ -612,23 +614,28 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "guides.tab_bar_item" = "Académie";
 "guides.title" = "Académie";
 
+// Add Token Selector
+
+"add_token_selector.choose_blockchain" = "Choisissez la Blockchain";
+"add_token_selector.add_token" = "Ajouter le token";
+"add_token_selector.erc20_token" = "ERC20 Token";
+"add_token_selector.eos_token" = "EOS Token";
+"add_token_selector.binance_token" = "BEP2 Token";
+
 // Add Token
 
-"add_token.choose_blockchain" = "Choisir la blockchain";
-"add_token.add_token" = "Ajouter le token";
-"add_token.erc20_token" = "ERC20 Token";
-"add_token.eos_token" = "EOS Token";
-"add_token.binance_token" = "Binance Token";
-
-// Add Erc20 Token
+"add_token.coin_name" = "Nom de la pièce";
+"add_token.symbol" = "Symbole";
+"add_token.decimals" = "Decimales";
+"add_token.already_exists" = "Ce token figure déjà sur la liste du gestionnaire des pièces.";
 
 "add_erc20_token.title" = "Ajouter ERC20";
 "add_erc20_token.contract_address" = "Adresse du contrat";
-"add_erc20_token.coin_name" = "Nom de la pièce";
-"add_erc20_token.symbol" = "Symbole";
-"add_erc20_token.decimals" = "Decimales";
-"add_erc20_token.already_exists" = "Ce token figure déjà sur la liste du gestionnaire des pièces.";
 "add_erc20_token.contract_not_exist" = "Contrat non trouvé";
+
+"add_bep2_token.title" = "Ajouter BEP2";
+"add_bep2_token.token_symbol" = "Symbole du token";
+"add_bep2_token.token_not_exist" = "Token non trouvé";
 
 "change_24hour_up" = "%@ prix: hausse %@%% %@";
 "change_24hour_down" = "%@ prix: baisse %@%% %@";
@@ -657,8 +664,24 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 // App Status
 
-"app_status.version" = "Version %@";
+"app_status.title" = "Statut de l'appli";
 "app_status.application_status" = "Statut de l'application";
 "app_status.linked_wallets" = "Portefeuilles associés";
 "app_status.version_history" = "Historique des versions";
 "app_status.blockchain_status" = "Statut de la blockchain";
+
+// FAQ
+
+"faq.title" = "FAQ";
+
+// Status Info
+
+"status_info.title" = "Statut";
+"status_info.pending.title" = "En attente";
+"status_info.pending.content" = "La transaction n'a pas encore été confirmée sur la blockchain. Cette étape peut prendre de quelques minutes à quelques heures selon les frais de transaction. Les transactions envoyées avec des frais très bas sont généralement traitées en quelques jours ou peuvent être rejetées par le réseau, ce qui signifie que la transaction n'a pas eu lieu.";
+"status_info.receiving.title" = "Réception en cours";
+"status_info.receiving.content" = "L'expéditeur vous a envoyé une transaction, mais elle n'est pas encore définitive. Pour les paiements plus importants, il est conseillé d'attendre que l'opération passe au statut \"terminé\". En général, cela devrait se produire dans l'heure qui suit, mais cela peut parfois prendre plus longtemps si l'expéditeur a envoyé la transaction avec des frais peu élevés.";
+"status_info.confirmed.title" = "Confirmé";
+"status_info.confirmed.content" = "La transaction est définitive et irréversible.";
+"status_info.failed.title" = "Échec";
+"status_info.failed.content" = "La transaction n'a pas été traitée comme prévu et aucun transfert de token n'a eu lieu. Sur la blockchain Ethereum, les transactions qui échouent entraînent des frais de transaction.";

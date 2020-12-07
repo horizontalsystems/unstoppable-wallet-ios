@@ -39,6 +39,8 @@
 "confirm" = "确认";
 "connect" = "连接";
 
+"version" = "版本%@";
+
 "n/a" = "不可用";
 
 "biometric_usage_reason" = "解锁钱包";
@@ -53,7 +55,6 @@
 "welcome.new_wallet" = "创建钱包";
 "welcome.restore_wallet" = "恢复钱包";
 "welcome.privacy_settings" = "隐私设置";
-"welcome.version" = "版本%@";
 
 // Restore
 
@@ -63,9 +64,10 @@
 "restore.words.description" = "为%@钱包输入私钥，其中应包含%@个单词。这些单词必须以正确的顺序输入并用空格分隔。";
 "restore.birthday_height.placeholder" = "钱包生日高度 (自主性)";
 "restore.birthday_height.description" = "这将决定从哪里开始对交易进行扫描。留空即可从开始时进行扫描，这需要一定的时间。";
-"restore.validation_failed" = "密钥不正确";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
+"restore_error.words_count" = "字数有误。必须为%@。您输入了：%@";
+"restore.checksum_error" = "校验和无效";
 
 // Coin Settings
 
@@ -106,6 +108,8 @@
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "如果您有使用任何剪贴板管理应用或其他可存取剪贴板数据的应用，那么适用”复制“操作复制您的密钥将会带来风险。";
+"backup.birthday_height" = "生日高度";
+
 "error.send.self_transfer" = "不支持发送给自己";
 "error.send_eos.account_not_exist" = "目标账户不存在";
 "error.send_eos.insufficient_ram" = "您的EOS账户没有足够的RAM来发送此令牌。您必须增加RAM才能继续。";
@@ -139,7 +143,6 @@
 "balance.sort.valueHighToLow" = "余额";
 "balance.sort.az" = "名称";
 "balance.sort.24h_change" = "24小时价格（%）";
-"balance_error.description" = "如果您选择报告故障，则其文本将被复制";
 "balance_error.change_source" = "更改源";
 "balance_error.sync_error" = "同步出错";
 
@@ -203,7 +206,7 @@
 "swap.balance" = "余额";
 "swap.allowance" = "补贴";
 "swap.you_get" = "您获得";
-"swap.token" = "选择代币";
+"swap.token" = "选择";
 "swap.advanced_settings" = "高级设置";
 "swap.proceed_button" = "继续";
 "swap.approve.title" = "互兑批准";
@@ -347,14 +350,11 @@
 "settings.security_center" = "安全中心";
 "settings.manage_accounts" = "管理钱包";
 "settings.manage_coins" = "管理Coins";
-"settings.app_status" = "应用状态";
 "settings.experimental_features" = "实验性功能";
 "settings.notifications" = "通知";
 "settings.base_currency" = "基本货币";
 "settings.language" = "语言";
-"settings.terms" = "条款";
-"settings.tell_friends" = "分享给好友";
-"settings.contact" = "报告问题";
+"settings.faq" = "常见问题";
 "settings.light_mode" = "简单模式";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "分布式应用程序";
@@ -402,7 +402,6 @@
 // Settings -> Terms
 
 "terms.title" = "条款";
-"terms.app_subtitle" = "去中心化应用";
 "terms.description" = "Unstoppable钱包是为寻求以私密和独立的方式投资和储存加密货币的人士而创立。
 
 这是一个非监护式对等钱包，只有用户能够对资金进行控制。它不收集任何数据并通过不把用户钱包锁定至特定的钱包应用来保证他/她的独立性。
@@ -410,7 +409,6 @@
 Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的方式运行。
 
 我们为我们自己创立了Unstoppable作为符合标准的可用的解决方案。从工程和可用性角度而言，我们相信此钱包远远领先于其他产品。";
-"terms.site" = "网站";
 "terms.item.academy" = "我浏览了此应用的“学院”（Academy）部分并掌握了储存加密货币的基础知识。";
 "terms.item.backup" = "我已对我钱包的私钥备份，该私钥以12-24字的格式展示给我。我理解这些私钥将保存在我的智能手机而不是其他地方。";
 "terms.item.owner" = "我理解只有私钥的所有人可以访问和消费我钱包上的资金，因此不得和任何人共享这些私钥。";
@@ -422,7 +420,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Unstoppable Wallet——我强烈推荐的一款加密货币钱包";
+"settings_tell_friends.text" = "👋 嘿! 看看不可阻挡, 这是我最喜欢的加密钱包。";
 
 // Settings -> Security
 
@@ -444,7 +442,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "settings_privacy.sync.section_header" = "区块链恢复";
 "settings_privacy.sync.section_footer" = "通过交易为恢复钱包选择数据源。";
 
-"settings_privacy_info.title" = "Privacy Settings";
+"settings_privacy_info.title" = "隐私设置";
 "settings_privacy_info.description" = "Below you will find detailed explanation of the privacy settings that are available in the app. It's safe to consider them as settings for those that require extensive privacy.";
 "settings_privacy_info.header_blockchain_transactions" = "Blockchain Transactions";
 "settings_privacy_info.content_blockchain_transactions" = "This setting controls the privacy level of user's transactions on Bitcoin, Bitcoin Cash and Litecoin blockchains.\n\nMost Bitcoin transactions generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party monitoring Bitcoin blockchain to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. The output returned to the sender can then be used in future transactions and further reveal the details to the monitoring party.\n\nUnstoppable wallet implements measures to makes it significantly harder to figure out which output goes where. There are two options available to Unstoppable users:\n\n1. Shuffle : The order of transaction outputs are randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, than consider this a recommended option.\n\n2. Deterministic : There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open source wallets that standard ensures that wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether transaction was sent from the wallet that uses that standard or not.";
@@ -469,12 +467,6 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "settings_privacy.sorting_bip69" = "BIP69";
 "settings_privacy.sorting_bip69.description" = "词典索引";
 
-// Settings -> Contact
-
-"settings.contact.title" = "报告问题";
-"settings.contact.email" = "电子邮箱";
-"settings.contact.telegram_wallet" = "电报";
-
 // Manage Keys
 
 "settings_manage_keys.title" = "管理钱包";
@@ -494,6 +486,16 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "settings_manage_keys.delete.confirmation_loose" = "如果您尚未对此钱包备份私钥，您将失去您的资金。";
 "error.invalid_eos_key" = "错误密钥";
 "error.invalid_eos_account" = "无效账户";
+
+// Settings -> About App
+
+"settings.about_app.title" = "关于应用";
+"settings.about_app.app_name" = "Unstoppable钱包";
+"settings.about_app.site" = "网站";
+"settings.about_app.contact" = "报告问题";
+"settings.about_app.rate_us" = "评价我们";
+"settings.about_app.tell_friends" = "分享给好友";
+"settings.about_app.email_copied" = "电子邮件地址已复制";
 
 // Set PIN
 
@@ -612,23 +614,28 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "guides.tab_bar_item" = "学院";
 "guides.title" = "学院";
 
+// Add Token Selector
+
+"add_token_selector.choose_blockchain" = "选择区块链";
+"add_token_selector.add_token" = "添加代币";
+"add_token_selector.erc20_token" = "ERC20 Token";
+"add_token_selector.eos_token" = "EOS Token";
+"add_token_selector.binance_token" = "BEP2 Token";
+
 // Add Token
 
-"add_token.choose_blockchain" = "选择区块链";
-"add_token.add_token" = "添加代币";
-"add_token.erc20_token" = "ERC 20 代币";
-"add_token.eos_token" = "EOS 代币";
-"add_token.binance_token" = "Binance 代币";
-
-// Add Erc20 Token
+"add_token.coin_name" = "代币图片";
+"add_token.symbol" = "标志";
+"add_token.decimals" = "小数";
+"add_token.already_exists" = "该代币已在代币管理器列表中。";
 
 "add_erc20_token.title" = "添加ERC20";
 "add_erc20_token.contract_address" = "智能合约地址";
-"add_erc20_token.coin_name" = "代币图片";
-"add_erc20_token.symbol" = "标志";
-"add_erc20_token.decimals" = "小数";
-"add_erc20_token.already_exists" = "该代币已在代币管理列表中.";
 "add_erc20_token.contract_not_exist" = "没找到合同";
+
+"add_bep2_token.title" = "添加BEP2";
+"add_bep2_token.token_symbol" = "代币符号";
+"add_bep2_token.token_not_exist" = "找不到代币";
 
 "change_24hour_up" = "%@ 价格：上升 %@%% %@";
 "change_24hour_down" = "%@ 价格：下跌 %@%% %@";
@@ -657,8 +664,24 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // App Status
 
-"app_status.version" = "版本%@";
+"app_status.title" = "应用状态";
 "app_status.application_status" = "应用程序状态";
 "app_status.linked_wallets" = "已链接钱包";
 "app_status.version_history" = "版本历史";
 "app_status.blockchain_status" = "区块链状态";
+
+// FAQ
+
+"faq.title" = "常见问题";
+
+// Status Info
+
+"status_info.title" = "状态";
+"status_info.pending.title" = "待处理";
+"status_info.pending.content" = "交易尚未在区块链上确认。 根据交易费用的不同，此步骤可能需要几分钟到几个小时。通过极低费用发送的交易通常会在几天内得到处理或被网络拒绝，即没有进行交易。";
+"status_info.receiving.title" = "正在接收";
+"status_info.receiving.content" = "发送者已向您发送交易，但交易尚未完成。对于较大笔的付款，建议等到交易状态更改为“已完成”。这通常应在一个小时内发生，但如果发送人以较低的费用发送交易，则可能需要更长时间。";
+"status_info.confirmed.title" = "已确认";
+"status_info.confirmed.content" = "交易是最终且不可逆的。";
+"status_info.failed.title" = "失败";
+"status_info.failed.content" = "交易没有按预定方式处理，也没有进行代币价值转移。在Etherum区块链中，失败的交易会消耗交易费用。";

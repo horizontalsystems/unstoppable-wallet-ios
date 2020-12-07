@@ -39,6 +39,8 @@
 "confirm" = "Confirmar";
 "connect" = "Conectar";
 
+"version" = "Versión %@";
+
 "n/a" = "N/A";
 
 "biometric_usage_reason" = "Desbloquear monedero";
@@ -53,7 +55,6 @@
 "welcome.new_wallet" = "Crear Monedero";
 "welcome.restore_wallet" = "Restaurar Monedero";
 "welcome.privacy_settings" = "Ajustes de privacidad";
-"welcome.version" = "Versión %@";
 
 // Restore
 
@@ -63,9 +64,10 @@
 "restore.words.description" = "Introduzca su clave privada para el monedero %@, la cual consta de %@ palabras. Las palabras deben ser introducidas en orden correcto y separadas por espacios.";
 "restore.birthday_height.placeholder" = "Talla de cumpleaños del monedero (opcional)";
 "restore.birthday_height.description" = "Esto determina desde dónde empezar a escanear por transacciones. Déjalo en blanco para escanear desde el principio, esto puede demorar un poco.";
-"restore.validation_failed" = "Clave incorrecta";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key\n";
+"restore_error.words_count" = "Número de palabras errónes. Deberian ser %@. Usted a ingresado: %@";
+"restore.checksum_error" = "Suma de verificación inválida";
 
 // Coin Settings
 
@@ -106,6 +108,8 @@
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Copiar su clave utilizando la acción \"copiar\" implica ciertos riesgos si utiliza aplicaciones de gestión de portapapeles u otra aplicación que pueda tener acceso a la información del portapapeles.";
+"backup.birthday_height" = "Altura de Cumpleaños";
+
 "error.send.self_transfer" = "Enviarte a vos mismo no está soportado";
 "error.send_eos.account_not_exist" = "La cuenta de destino no existe";
 "error.send_eos.insufficient_ram" = "Su cuenta EOS no tiene suficiente memoria RAM para enviar este token. Necesita aumentar la capacidad RAM para continuar.";
@@ -139,7 +143,6 @@
 "balance.sort.valueHighToLow" = "Saldo";
 "balance.sort.az" = "Nombre";
 "balance.sort.24h_change" = "Precio(%) 24H";
-"balance_error.description" = "El texto de error se copiará al portapapeles si decides reportarlo.";
 "balance_error.change_source" = "Cambiar Origen";
 "balance_error.sync_error" = "Error de sincronización";
 
@@ -203,7 +206,7 @@
 "swap.balance" = "Saldo";
 "swap.allowance" = "Permiso de acceso";
 "swap.you_get" = "Obtienes";
-"swap.token" = "Seleccione un Token";
+"swap.token" = "Seleccionar";
 "swap.advanced_settings" = "Configuración avanzada";
 "swap.proceed_button" = "Siguiente";
 "swap.approve.title" = "Aprobación de Swap";
@@ -347,14 +350,11 @@
 "settings.security_center" = "Centro de seguridad";
 "settings.manage_accounts" = "Gestionar monederos";
 "settings.manage_coins" = "Gestionar monedas";
-"settings.app_status" = "Estado de la aplicación";
 "settings.experimental_features" = "Características experimentales";
 "settings.notifications" = "Notificaciones";
 "settings.base_currency" = "Moneda principal";
 "settings.language" = "Idioma";
-"settings.terms" = "Términos";
-"settings.tell_friends" = "Recomendar a un amigo";
-"settings.contact" = "Contacto";
+"settings.faq" = "Preguntas más frecuentes";
 "settings.light_mode" = "Modo ligero";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "app descentralizada";
@@ -402,7 +402,6 @@
 // Settings -> Terms
 
 "terms.title" = "Términos";
-"terms.app_subtitle" = "Decentralized app";
 "terms.description" = "El monedero Unstoppable fue creado para aquellos que buscan invertir y almacenar criptomonedas de forma privada e independiente.
 
 Es un monedero peer-to-peer sin custodio, donde sólo el usuario tiene control sobre los fondos. No recopila ningún dato y mantiene al usuario independiente al no enlazar su cartera a un único monedero.
@@ -410,7 +409,6 @@ Es un monedero peer-to-peer sin custodio, donde sólo el usuario tiene control s
 El monedero Unstoppable es completamente de código abierto y cualquiera puede verificar que la aplicación funciona exactamente como se afirma.
 
 Desarrollamos Unstoppable para nosotros mismos ya que las soluciones disponibles no estaban a la altura. Desde una perspectiva de ingenieria y practicidad, creemos que este monedero está significativamente por delante de los productos alternativos.";
-"terms.site" = "Sitio";
 "terms.item.academy" = "He pasado por la sección Academia de esta aplicación y me he familiarizado con los aspectos fundamentales del almacenamiento de criptomonedas.";
 "terms.item.backup" = "He respaldado la(s) clave(s) privada(s) para mis monederos que se me mostraron en forma de 12-24 palabras. Entiendo que estas claves privadas se almacenan en mi smartphone y no en ningún otro lugar.";
 "terms.item.owner" = "Entiendo que sólo el propietario de mi(s) clave(s) privada(s) puede acceder y gastar fondos en mi monedero y, por lo tanto, estas claves no deben ser compartidas con nadie.";
@@ -423,7 +421,7 @@ poner en peligro la seguridad de mis fondos.";
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Monedero Unstoppable - un monedero de criptomonedas que yo recomiendo";
+"settings_tell_friends.text" = "👋 ¡Hola! Echa un vistazo a Imparable, es mi criptocartera favorita.";
 
 // Settings -> Security
 
@@ -445,7 +443,7 @@ poner en peligro la seguridad de mis fondos.";
 "settings_privacy.sync.section_header" = "Restaurar blockchain";
 "settings_privacy.sync.section_footer" = "Seleccione la fuente de información para restaurar el monedero con las transacciones.";
 
-"settings_privacy_info.title" = "Privacy Settings";
+"settings_privacy_info.title" = "Ajustes de privacidad";
 "settings_privacy_info.description" = "Below you will find detailed explanation of the privacy settings that are available in the app. It's safe to consider them as settings for those that require extensive privacy.";
 "settings_privacy_info.header_blockchain_transactions" = "Blockchain Transactions";
 "settings_privacy_info.content_blockchain_transactions" = "Estos ajustes controlan el nivel de privacidad de las transacciones de usuario en Bitcoin, Bitcon Cash y Litecoin blockchains. La mayoría de las transacciones de Bitcoin generan 2 salidas. Una salida es la cantidad que se envía al receptor y la otra es la salida de cambio que se devuelve al emisor. La forma en que la mayoría de los monderos construyen transacciones hace fácil que un tercero supervise Bitcoin blockchain para entender cuál de las salidas fue a la parte receptora y cuál fue la cantidad de cambio devuelta al remitente. La salida devuelta al remitente puede ser entonces utilizada en transacciones futuras y revelar los detalles a la parte supervisora. Unstoppable wallet implementa medidas para hacer que sea significativamente más difícil averiguar qué salida va a dónde. Hay dos opciones disponibles para los usuarios de Unstoppable: 1. Mezclar: El orden de salida de las transacciones se aleatoriza en cada transacción. A veces el cambio puede ser la primera salida, a veces puede ser la segunda. Si un usuario confía en el desarrollador de la aplicación, más que en una opción recomendada. 2. Determinista : Existe un patrón comúnmente acordado para ordenar salidas de transacciones (conocido como BIP69). En las carteras de código abierto este patrón asegura que los usuarios del monedero no necesiten confiar en cómo los desarrolladores de la aplicación implementan el patrón de las salidas. Como este patrón es nuevo, no muchas billeteras lo han implementado todavía. Como resultado, es algo posible ver en el blockchain si la transacción fue enviada desde el monedero que utiliza ese patrón o no.";
@@ -470,12 +468,6 @@ poner en peligro la seguridad de mis fondos.";
 "settings_privacy.sorting_bip69" = "Bip69 determinista";
 "settings_privacy.sorting_bip69.description" = "Indexación Lexicográfica";
 
-// Settings -> Contact
-
-"settings.contact.title" = "Contacto";
-"settings.contact.email" = "Email";
-"settings.contact.telegram_wallet" = "Telegram";
-
 // Manage Keys
 
 "settings_manage_keys.title" = "Gestionar monederos";
@@ -495,6 +487,16 @@ poner en peligro la seguridad de mis fondos.";
 "settings_manage_keys.delete.confirmation_loose" = "Si usted no respaldó la clave privada para este monedero, perderá el acceso a sus fondos.";
 "error.invalid_eos_key" = "Clave inválida";
 "error.invalid_eos_account" = "Cuenta inválida";
+
+// Settings -> About App
+
+"settings.about_app.title" = "Sobre la aplicacion";
+"settings.about_app.app_name" = "Monedero Unstoppable";
+"settings.about_app.site" = "Sitio";
+"settings.about_app.contact" = "Contacto";
+"settings.about_app.rate_us" = "Califícanos";
+"settings.about_app.tell_friends" = "Recomendar a un amigo";
+"settings.about_app.email_copied" = "Dirección de correo electrónico copiada";
 
 // Set PIN
 
@@ -539,7 +541,7 @@ poner en peligro la seguridad de mis fondos.";
 
 "chart.title" = "%@ Precio";
 "chart.time_duration.today" = "Hoy";
-"chart.time_duration.day" = "24h";
+"chart.time_duration.day" = "24 horas";
 "chart.time_duration.week" = "7 D";
 "chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "1M";
@@ -613,23 +615,28 @@ poner en peligro la seguridad de mis fondos.";
 "guides.tab_bar_item" = "Academia";
 "guides.title" = "Academia";
 
+// Add Token Selector
+
+"add_token_selector.choose_blockchain" = "Elegir Blockchain";
+"add_token_selector.add_token" = "Añadir Token";
+"add_token_selector.erc20_token" = "ERC20 Token";
+"add_token_selector.eos_token" = "EOS Token";
+"add_token_selector.binance_token" = "BEP2 Token";
+
 // Add Token
 
-"add_token.choose_blockchain" = "Elegir Blockchain";
-"add_token.add_token" = "Añadir Token";
-"add_token.erc20_token" = "ERC20 Token";
-"add_token.eos_token" = "EOS Token";
-"add_token.binance_token" = "Binance Token";
-
-// Add Erc20 Token
+"add_token.coin_name" = "Nombre de moneda";
+"add_token.symbol" = "Símbolo";
+"add_token.decimals" = "Decimales";
+"add_token.already_exists" = "Este token ya está en la lista del gestor de monedas.";
 
 "add_erc20_token.title" = "Añadir ERC20";
 "add_erc20_token.contract_address" = "Dirección del contrato";
-"add_erc20_token.coin_name" = "Nombre de moneda";
-"add_erc20_token.symbol" = "Símbolo";
-"add_erc20_token.decimals" = "Decimales";
-"add_erc20_token.already_exists" = "Este token ya está en la lista del gestor de monedas.";
 "add_erc20_token.contract_not_exist" = "Contrato no encontrado";
+
+"add_bep2_token.title" = "Añadir BEP2";
+"add_bep2_token.token_symbol" = "Símbolo del token";
+"add_bep2_token.token_not_exist" = "Token no encontrado";
 
 "change_24hour_up" = "Precio %@: subió %@%% %@";
 "change_24hour_down" = "Precio %@: bajó %@%% %@";
@@ -658,8 +665,24 @@ poner en peligro la seguridad de mis fondos.";
 
 // App Status
 
-"app_status.version" = "Versión %@";
+"app_status.title" = "Estado de la aplicación";
 "app_status.application_status" = "Estado del formulario";
 "app_status.linked_wallets" = "Monederos vinculados";
 "app_status.version_history" = "Historial de la versión";
 "app_status.blockchain_status" = "Estado del Blockchain";
+
+// FAQ
+
+"faq.title" = "Preguntas más frecuentes";
+
+// Status Info
+
+"status_info.title" = "Estado";
+"status_info.pending.title" = "Pendiente";
+"status_info.pending.content" = "La transacción todavía no ha sido confirmada en la blockchain. Este paso puede tomar desde unos minutos hasta unas pocas horas dependiendo de la tasa de transacción. Las transacciones enviadas con una tarifa muy baja normalmente se procesan dentro de unos días o pueden ser rechazadas por la red, es decir, sin ser realizadas.";
+"status_info.receiving.title" = "Recibiendo";
+"status_info.receiving.content" = "El remitente te ha enviado una transacción pero aún no es definitiva. Para pagos más grandes se sugiere esperar hasta que el estado de la transacción cambie a 'completado'. Normalmente esto debería ocurrir dentro de una hora, pero puede tardar más en ocasiones si el remitente envió la transacción con una tarifa baja.";
+"status_info.confirmed.title" = "Confirmado";
+"status_info.confirmed.content" = "La transacción es definitiva e irreversible.";
+"status_info.failed.title" = "Falló";
+"status_info.failed.content" = "La transacción no se procesó como se pretendía y no tuvo lugar ninguna transferencia de valor de token. En las transacciones fallidas de Ethereum las transacciones consumen comisiones de transacción.";
