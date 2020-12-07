@@ -219,6 +219,8 @@
 "swap.amount_error.no_balance" = "Ошибка анализа баланса для токена";
 "swap.trade_error.not_found" = "Невозможно обменять эти токены";
 "swap.error.insufficient_fee_alert" = "Комиссии за транзакцию взимаются в %@. Вам требуется %@.";
+"swap.button_error.insufficient_balance" = "Insufficient balance";
+"swap.button_error.impact_too_high" = "High price impact";
 
 "swap.price" = "Цена";
 "swap.price_impact" = "Колебание Цен";
