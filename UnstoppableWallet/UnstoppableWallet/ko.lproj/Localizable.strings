@@ -206,7 +206,7 @@
 "swap.balance" = "잔액";
 "swap.allowance" = "허용량";
 "swap.you_get" = "얻기";
-"swap.token" = "Select";
+"swap.token" = "선택";
 "swap.advanced_settings" = "고급 설정";
 "swap.proceed_button" = "다음";
 "swap.approve.title" = "스왑 승인";
