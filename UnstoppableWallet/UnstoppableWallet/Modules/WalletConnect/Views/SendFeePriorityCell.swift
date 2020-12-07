@@ -41,6 +41,8 @@ class SendFeePriorityCell: UITableViewCell {
 
     private let disposeBag = DisposeBag()
 
+    var isVisible = true
+
     init(viewModel: ISendFeePriorityViewModel) {
         self.viewModel = viewModel
 
@@ -48,6 +50,7 @@ class SendFeePriorityCell: UITableViewCell {
 
         backgroundColor = .clear
         selectionStyle = .none
+        clipsToBounds = true
 
         contentView.addSubview(selectableValueView)
         selectableValueView.snp.makeConstraints { maker in
@@ -119,8 +122,8 @@ class SendFeePriorityCell: UITableViewCell {
 
 extension SendFeePriorityCell {
 
-    var currentHeight: CGFloat {
-        feeSliderWrapper.isHidden ? .heightSingleLineCell : 73
+    var cellHeight: CGFloat {
+        isVisible ? (feeSliderWrapper.isHidden ? .heightSingleLineCell : 73) : 0
     }
 
 }

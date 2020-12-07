@@ -148,7 +148,7 @@ extension WalletConnectRequestViewController: SectionsDataSource {
                 StaticRow(
                         cell: feePriorityCell,
                         id: "fee-priority",
-                        height: feePriorityCell.currentHeight
+                        height: feePriorityCell.cellHeight
                 )
         )
 

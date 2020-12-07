@@ -194,7 +194,7 @@ extension SwapApproveViewController: SectionsDataSource {
             StaticRow(
                     cell: feePriorityCell,
                     id: "fee-priority",
-                    dynamicHeight: { [weak self] _ in self?.feePriorityCell.currentHeight ?? 0 }
+                    dynamicHeight: { [weak self] _ in self?.feePriorityCell.cellHeight ?? 0 }
             )
         ])
 
