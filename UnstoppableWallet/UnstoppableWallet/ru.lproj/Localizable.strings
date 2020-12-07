@@ -208,7 +208,7 @@
 "swap.balance" = "Баланс";
 "swap.allowance" = "Разрешение";
 "swap.you_get" = "Вы Получите";
-"swap.token" = "Select";
+"swap.token" = "Выбрать";
 "swap.advanced_settings" = "Дополнительные Настройки";
 "swap.proceed_button" = "Далее";
 "swap.approve.title" = "Подтверждение Обмена";
@@ -356,7 +356,7 @@
 "settings.notifications" = "Уведомления";
 "settings.base_currency" = "Базовая Валюта";
 "settings.language" = "Язык";
-"settings.faq" = "ЧАВО";
+"settings.faq" = "ЧaВо";
 "settings.light_mode" = "Светлый Режим";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "децентрализованное приложение";
@@ -674,7 +674,7 @@
 
 // FAQ
 
-"faq.title" = "FAQ";
+"faq.title" = "ЧaВо";
 
 // Status Info
 
