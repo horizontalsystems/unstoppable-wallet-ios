@@ -206,7 +206,7 @@
 "swap.balance" = "Balance";
 "swap.allowance" = "Allocation";
 "swap.you_get" = "Vous recevez";
-"swap.token" = "Select";
+"swap.token" = "Sélectionner";
 "swap.advanced_settings" = "Configuration avancée";
 "swap.proceed_button" = "Suivant";
 "swap.approve.title" = "Swap approuvé";
@@ -420,7 +420,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "👋️ Hey there! Have a look at Unstoppable, it's my favorite crypto wallet.";
+"settings_tell_friends.text" = "👋 Bonjour ! Jetez un coup d'oeil à Unstoppable, c'est mon portefeuille de cryptomonnaies préféré.";
 
 // Settings -> Security
 
