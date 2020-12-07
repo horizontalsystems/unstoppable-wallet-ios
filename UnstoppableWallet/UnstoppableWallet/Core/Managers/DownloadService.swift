@@ -3,9 +3,8 @@ import RxSwift
 import RxRelay
 
 class DownloadService {
-    static let instance = DownloadService()
-
-    private var downloads: SynchronizedDictionary<String, Double>
+    private let queue: DispatchQueue
+    private var downloads = [String: Double]()
 
     private let stateRelay = PublishRelay<State>()
     private(set) var state: State = .idle {
@@ -17,7 +16,7 @@ class DownloadService {
     }
 
     init(queueLabel: String = "io.SynchronizedDownloader") {
-        downloads = SynchronizedDictionary<String, Double>(queueLabel: queueLabel)
+        queue = DispatchQueue(label: queueLabel, qos: .background)
     }
 
     private func request(source: URLConvertible, destination: @escaping DownloadRequest.Destination, progress: ((Double) -> ())? = nil, completion: ((Bool) -> ())? = nil) {
@@ -25,7 +24,11 @@ class DownloadService {
             return
         }
 
-        guard !downloads.contains(where: { (existKey, _) in key == existKey }) else {
+        let alreadyDownloading = queue.sync {
+            downloads.contains(where: { (existKey, _) in key == existKey })
+        }
+
+        guard !alreadyDownloading else {
             return
         }
 
@@ -45,29 +48,33 @@ class DownloadService {
     }
 
     private func handle(progress: Double, key: String) {
+        queue.async {
             self.downloads[key] = progress
             self.syncState()
+        }
     }
 
     private func handle(response: AFDownloadResponse<Data>, key: String) {
+        queue.async {
             self.downloads[key] = nil
             self.syncState()
+        }
     }
 
     private func syncState() {
-            var lastProgress: Double = 0
+        var lastProgress: Double = 0
 
-            if case let .inProgress(value) = state {
-                lastProgress = value
-            }
-        
-            guard downloads.count != 0 else {
-                state = .idle
-                return
-            }
+        if case let .inProgress(value) = state {
+            lastProgress = value
+        }
 
-            let minimalProgress = downloads.min(by: { a, b in a.value < b.value })?.value ?? lastProgress
-            state = .inProgress(value: max(minimalProgress, lastProgress))
+        guard downloads.count != 0 else {
+            state = .idle
+            return
+        }
+
+        let minimalProgress = downloads.min(by: { a, b in a.value < b.value })?.value ?? lastProgress
+        state = .inProgress(value: max(minimalProgress, lastProgress))
     }
 
 }
