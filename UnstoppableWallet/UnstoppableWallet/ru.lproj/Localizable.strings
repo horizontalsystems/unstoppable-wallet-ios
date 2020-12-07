@@ -494,7 +494,7 @@
 "settings.about_app.title" = "About App";
 "settings.about_app.app_name" = "Unstoppable Кошелек";
 "settings.about_app.site" = "Веб-сайт";
-"settings.about_app.contact" = "Contact";
+"settings.about_app.contact" = "Kонтакты";
 "settings.about_app.rate_us" = "Rate Us";
 "settings.about_app.tell_friends" = "Рассказать Друзьям";
 "settings.about_app.email_copied" = "Email address copied";
@@ -542,7 +542,7 @@
 
 "chart.title" = "%@ Цена";
 "chart.time_duration.today" = "Сегодня";
-"chart.time_duration.day" = "24H";
+"chart.time_duration.day" = "24ч";
 "chart.time_duration.week" = "7Д";
 "chart.time_duration.week2" = "2Н";
 "chart.time_duration.month" = "1М";
@@ -622,7 +622,7 @@
 "add_token_selector.add_token" = "Добавить Токен";
 "add_token_selector.erc20_token" = "Токен ERC20";
 "add_token_selector.eos_token" = "Токен EOS";
-"add_token_selector.binance_token" = "BEP2 Token";
+"add_token_selector.binance_token" = "Токен BEP2";
 
 // Add Token
 
@@ -685,5 +685,5 @@
 "status_info.receiving.content" = "The sender has sent you a transaction but it's not final yet. For larger payments it's suggested to wait until the transaction status changes to 'completed'. Usually this should happen within an hour but can take longer sometimes if the sender sent the transaction with a low fee.";
 "status_info.confirmed.title" = "Подтверждено";
 "status_info.confirmed.content" = "Transaction is final and irreversible.";
-"status_info.failed.title" = "Failed";
+"status_info.failed.title" = "Не удалось";
 "status_info.failed.content" = "Transaction did not get processed as intended and no token value transfer took place. On Ethereum blockchain failed transactions do consume transaction fees.";
