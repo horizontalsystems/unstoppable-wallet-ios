@@ -110,7 +110,7 @@
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Копирование ключа с помощью действия «копировать» подвергает вас определенному риску, если вы используете какие-либо приложения для управления буфером обмена, или другие приложения, которые могут иметь доступ к данным буфера обмена.";
-"backup.birthday_height" = "Дата рождения Рост";
+"backup.birthday_height" = "Блок создания";
 
 "error.send.self_transfer" = "Отправка самому себе невозможна";
 "error.send_eos.account_not_exist" = "Этот аккаунт не существует";
@@ -208,7 +208,7 @@
 "swap.balance" = "Баланс";
 "swap.allowance" = "Разрешение";
 "swap.you_get" = "Вы Получите";
-"swap.token" = "Выбрать Токен";
+"swap.token" = "Select";
 "swap.advanced_settings" = "Дополнительные Настройки";
 "swap.proceed_button" = "Далее";
 "swap.approve.title" = "Подтверждение Обмена";
@@ -422,7 +422,7 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Unstoppable Wallet – криптокошелек, который я рекомендую";
+"settings_tell_friends.text" = "👋️ Hey there! Have a look at Unstoppable, it's my favorite crypto wallet.";
 
 // Settings -> Security
 
