@@ -97,7 +97,7 @@ class ZcashAdapter {
     }
 
     private func subscribeDownloadService() {
-        subscribe(disposeBag, DownloadService.instance.stateObservable) { [weak self] in self?.downloaderStatusUpdated(state: $0) }
+        subscribe(disposeBag, saplingDownloader.stateObservable) { [weak self] in self?.downloaderStatusUpdated(state: $0) }
     }
 
     @objc private func didEnterBackground(_ notification: Notification) {
@@ -201,14 +201,14 @@ class ZcashAdapter {
            let destinationURL = try? Self.outputParamsURL(uniqueId: uniqueId),
            !DownloadService.existing(url: destinationURL) {
             isExist = false
-            DownloadService.instance.download(source: cloudSpendParamsURL, destination: destinationURL)
+            saplingDownloader.download(source: cloudSpendParamsURL, destination: destinationURL)
         }
 
         if let cloudSpendParamsURL = Self.cloudSpendParamsURL,
            let destinationURL = try? Self.spendParamsURL(uniqueId: uniqueId),
            !DownloadService.existing(url: destinationURL) {
             isExist = false
-            DownloadService.instance.download(source: cloudSpendParamsURL, destination: destinationURL)
+            saplingDownloader.download(source: cloudSpendParamsURL, destination: destinationURL)
         }
 
         return isExist
