@@ -206,7 +206,7 @@
 "swap.balance" = "Saldo";
 "swap.allowance" = "Permiso de acceso";
 "swap.you_get" = "Obtienes";
-"swap.token" = "Seleccione un Token";
+"swap.token" = "Select";
 "swap.advanced_settings" = "Configuración avanzada";
 "swap.proceed_button" = "Siguiente";
 "swap.approve.title" = "Aprobación de Swap";
@@ -421,7 +421,7 @@ poner en peligro la seguridad de mis fondos.";
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Monedero Unstoppable - un monedero de criptomonedas que yo recomiendo";
+"settings_tell_friends.text" = "👋️ Hey there! Have a look at Unstoppable, it's my favorite crypto wallet.";
 
 // Settings -> Security
 
