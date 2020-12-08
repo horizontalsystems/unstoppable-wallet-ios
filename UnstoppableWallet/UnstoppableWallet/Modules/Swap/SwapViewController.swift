@@ -23,6 +23,7 @@ class SwapViewController: ThemeViewController {
 //    private let slippageCell = AdditionalDataCellNew()
 //    private let deadlineCell = AdditionalDataCellNew()
 //    private let recipientCell = AdditionalDataCellNew()
+    private let advancedSettingsCell = D1Cell()
     private let allowanceCell: SwapAllowanceCell
     private let priceImpactCell = AdditionalDataCellNew()
     private let guaranteedAmountCell = AdditionalDataCellNew()
@@ -35,7 +36,7 @@ class SwapViewController: ThemeViewController {
     private let approveButton = ThemeButton()
     private let proceedButton = ThemeButton()
 
-    private var advancedSettingsVisible = false
+    private var isLoaded = false
 
     init(viewModel: SwapViewModel, allowanceViewModel: SwapAllowanceViewModel, feeViewModel: EthereumFeeViewModel) {
         self.viewModel = viewModel
@@ -84,7 +85,8 @@ class SwapViewController: ThemeViewController {
         tableView.sectionDataSource = self
         tableView.keyboardDismissMode = .onDrag
 
-        tableView.registerCell(forClass: D1Cell.self)
+        advancedSettingsCell.set(backgroundStyle: .transparent, bottomSeparator: true)
+        advancedSettingsCell.title  = "swap.advanced_settings".localized
 
 //        slippageCell.title = "swap.advanced_settings.slippage".localized
 //        deadlineCell.title = "swap.advanced_settings.deadline".localized
@@ -104,6 +106,8 @@ class SwapViewController: ThemeViewController {
         tableView.reloadData()
 
         subscribeToViewModel()
+
+        isLoaded = true
     }
 
     private func subscribeToViewModel() {
@@ -192,7 +196,7 @@ class SwapViewController: ThemeViewController {
     }
 
     private func handle(advancedSettingsVisible: Bool) {
-        self.advancedSettingsVisible = advancedSettingsVisible
+        advancedSettingsCell.isVisible = advancedSettingsVisible
         reloadTable()
     }
 
@@ -254,6 +258,10 @@ class SwapViewController: ThemeViewController {
     private func reloadTable() {
         tableView.buildSections()
 
+        guard isLoaded else {
+            return
+        }
+
         UIView.animate(withDuration: animationDuration) {
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
@@ -291,20 +299,15 @@ extension SwapViewController: SectionsDataSource {
         sections.append(Section(
                 id: "advanced_settings",
                 rows: [
-                    // todo: change this cell to handle its height itself
-                    Row<D1Cell>(
-                            id: "advanced",
-                            height: advancedSettingsVisible ? .heightSingleLineCell : 0,
+                    StaticRow(
+                            cell: advancedSettingsCell,
+                            id: "advanced-settings",
+                            height: advancedSettingsCell.cellHeight,
                             autoDeselect: true,
-                            bind: { cell, _ in
-                                cell.clipsToBounds = true
-                                cell.set(backgroundStyle: .transparent, bottomSeparator: true)
-                                cell.title  = "swap.advanced_settings".localized
-                            },
-                            action: { [weak self] _ in
+                            action: { [weak self] in
                                 self?.onTapAdvancedSettings()
                             }
-                    ),
+                    )
                 ]
         ))
 
