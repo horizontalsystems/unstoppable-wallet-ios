@@ -110,7 +110,7 @@ class SwapCoinCardViewModel {
         prefixRelay.accept(switchService.amountType == .currency ? fiatService.currency.symbol : nil)
 
         guard let fullAmountInfo = fullAmountInfo else {
-            if !force {
+            if !force && coinCardService.isEstimated {
                 amountRelay.accept(nil)
             }
 
