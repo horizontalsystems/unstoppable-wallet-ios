@@ -217,6 +217,8 @@
 "swap.amount_error.no_balance" = "Kann Saldo für Token nicht verarbeiten";
 "swap.trade_error.not_found" = "Diese Token sind nicht tauschbar";
 "swap.error.insufficient_fee_alert" = "Transaktionsgebühren in %@ bezahlt. Sie benötigen %@.";
+"swap.button_error.insufficient_balance" = "Unzureichendes Guthaben";
+"swap.button_error.impact_too_high" = "Hohe Preisauswirkung";
 
 "swap.price" = "Preis";
 "swap.price_impact" = "Preisauswirkungen";
@@ -650,7 +652,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 // Wallet Connect
 
-"wallet_connect.title" = "Wallet-Verbindung";
+"wallet_connect.title" = "Wallet Connect";
 "wallet_connect.requirement" = "Anforderung";
 "wallet_connect.requirement.description" = "Um eine Verbindung mit dem Browser herzustellen, sollten Sie Ethereum oder ein beliebiges erc20-Token auf Ihrer Registerkarte Kontostand aktivieren";
 "wallet_connect.error.invalid_url" = "Ungültige URL-Adresse";

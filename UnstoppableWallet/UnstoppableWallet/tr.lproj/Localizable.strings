@@ -217,6 +217,8 @@
 "swap.amount_error.no_balance" = "Token için bakiye ayrıştırılamıyor";
 "swap.trade_error.not_found" = "Bu token swap edilemez";
 "swap.error.insufficient_fee_alert" = "İşlem ücreti %@ hesabından ödenir. Asgari %@ gerekiyor.";
+"swap.button_error.insufficient_balance" = "Yetersiz bakiye";
+"swap.button_error.impact_too_high" = "Yüksek fiyat etkisi";
 
 "swap.price" = "Fiyat";
 "swap.price_impact" = "Fiyat Etkisi";
@@ -354,7 +356,7 @@
 "settings.notifications" = "Bildirimler";
 "settings.base_currency" = "Para birimi";
 "settings.language" = "Dil";
-"settings.faq" = "SSS";
+"settings.faq" = "FAQ";
 "settings.light_mode" = "Aydınlık mod";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized uygulama";
@@ -650,7 +652,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 // Wallet Connect
 
-"wallet_connect.title" = "Cüzdan Bağlantısı";
+"wallet_connect.title" = "Wallet Connect";
 "wallet_connect.requirement" = "Gereksinim";
 "wallet_connect.requirement.description" = "Tarayıcıyla bağlanmak için, bakiye sekmenizdeki ethereum ya da herhangi erc20 jetonunu etkinleştirmeniz gerekir";
 "wallet_connect.error.invalid_url" = "Geçersiz URL Adresi";
@@ -672,7 +674,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 // FAQ
 
-"faq.title" = "SSS";
+"faq.title" = "FAQ";
 
 // Status Info
 

@@ -217,6 +217,8 @@
 "swap.amount_error.no_balance" = "토큰을 위해 잔액을 파싱할 수 없습니다";
 "swap.trade_error.not_found" = "이 토큰을 스왑할 수 없습니다";
 "swap.error.insufficient_fee_alert" = "거래 수수료는 %@로 지불되었습니다. 귀하는 %@가 필요합니다.";
+"swap.button_error.insufficient_balance" = "잔액이 부족합니다";
+"swap.button_error.impact_too_high" = "높은 가격 영향";
 
 "swap.price" = "금액";
 "swap.price_impact" = "가격 영향";
@@ -650,7 +652,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 // Wallet Connect
 
-"wallet_connect.title" = "지갑 연결";
+"wallet_connect.title" = "Wallet Connect";
 "wallet_connect.requirement" = "요구 사항";
 "wallet_connect.requirement.description" = "브라우저와 연결하려면 밸런스 탭의 ethereum 또는 erc20 토큰을 활성화하십시오.";
 "wallet_connect.error.invalid_url" = "잘못된 주소";
