@@ -166,6 +166,31 @@ class CoinInfoMap {
         "XFT":      CoinInfo(supply: 10_000_000,      startDate: nil,          website: "https://offshift.io/"),
         "XIO":      CoinInfo(supply: 100_000_000,     startDate: "22/10/2019", website: "https://xio.network/ "),
         "ZEC":      CoinInfo(supply: 21_000_000,      startDate: "28/10/2016", website: "https://z.cash/"),
+        "THKDB":    CoinInfo(supply: 90_000_000_000,  startDate: nil,          website: "https://trusttoken.com"),
+        "TUSDB":    CoinInfo(supply: 90_000_000_000,  startDate: nil,          website: "https://trusttoken.com"),
+        "TAUDB":    CoinInfo(supply: 90_000_000_000,  startDate: nil,          website: "https://trusttoken.com"),
+        "USDSB":    CoinInfo(supply: 90_000_000_000,  startDate: nil,          website: "https://www.stably.io"),
+        "HYN":      CoinInfo(supply: 10_000_000_000,  startDate: nil,          website: "https://www.hyn.space"),
+        "DEFI":     CoinInfo(supply: 2_500_000_000,   startDate: nil,          website: "https://www.defilab.com"),
+        "RUNE":     CoinInfo(supply: 500_000_000,     startDate: nil,          website: "https://thorchain.org"),
+        "MATIC-BEP2": CoinInfo(supply: 10_000_000_000,startDate: nil,          website: nil),
+        "ONE":      CoinInfo(supply: 12_600_000_000,  startDate: nil,          website: "https://harmony.one/"),
+        "IRIS":     CoinInfo(supply: 2_000_000_000,   startDate: nil,          website: "https://www.irisnet.org/"),
+        "ETH-BEP2": CoinInfo(supply: 215_000,         startDate: nil,          website: nil),
+        "SWINGBY":  CoinInfo(supply: 1_000_000_000,   startDate: nil,          website: "https://swingby.network"),
+        "CHZ":      CoinInfo(supply: 8_888_888_888,   startDate: nil,          website: "https://www.chiliz.com"),
+        "SHR":      CoinInfo(supply: 4_396_000_000,   startDate: nil,          website: "https://sharering.network/"),
+        "USDTBEP2": CoinInfo(supply: 80_000_000,      startDate: nil,          website: nil),
+        "WICC":     CoinInfo(supply: 210_000_000,     startDate: nil,          website: "https://www.waykichain.com/"),
+        "WRX":      CoinInfo(supply: 995_833_334,     startDate: nil,          website: "https://wazirx.com"),
+        "COS":      CoinInfo(supply: 9_400_000_000,   startDate: nil,          website: "https://www.contentos.io"),
+        "LTO":      CoinInfo(supply: 500_000_000,     startDate: nil,          website: "https://lto.network"),
+        "MTXLT":    CoinInfo(supply: 90_000,          startDate: nil,          website: "https://tixl.me"),
+
+
+
+
+
     ]
 
 }
