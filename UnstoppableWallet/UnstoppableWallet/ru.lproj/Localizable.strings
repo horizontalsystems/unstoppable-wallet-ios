@@ -203,11 +203,11 @@
 // Swap
 
 "swap.title" = "Обменять";
-"swap.you_pay" = "Вы Платите";
+"swap.you_pay" = "Платите";
 "swap.estimated" = "приблизительно";
 "swap.balance" = "Баланс";
 "swap.allowance" = "Разрешение";
-"swap.you_get" = "Вы Получите";
+"swap.you_get" = "Получите";
 "swap.token" = "Выбрать";
 "swap.advanced_settings" = "Дополнительные Настройки";
 "swap.proceed_button" = "Далее";
@@ -379,7 +379,7 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Выберите Токены";
+"manage_coins.title" = "Выбрать";
 "manage_coins.add_token" = "Добавить Токен";
 "manage_coins.search" = "Поиск";
 "manage_coins.add_coin.title" = "Добавить %@";
