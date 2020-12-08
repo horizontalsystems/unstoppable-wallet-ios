@@ -652,7 +652,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 // Wallet Connect
 
-"wallet_connect.title" = "Wallet-Verbindung";
+"wallet_connect.title" = "Wallet Connect";
 "wallet_connect.requirement" = "Anforderung";
 "wallet_connect.requirement.description" = "Um eine Verbindung mit dem Browser herzustellen, sollten Sie Ethereum oder ein beliebiges erc20-Token auf Ihrer Registerkarte Kontostand aktivieren";
 "wallet_connect.error.invalid_url" = "Ungültige URL-Adresse";
