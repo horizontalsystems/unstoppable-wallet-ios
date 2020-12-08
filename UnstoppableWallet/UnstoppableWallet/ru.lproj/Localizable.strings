@@ -220,10 +220,10 @@
 "swap.trade_error.not_found" = "Невозможно обменять эти токены";
 "swap.error.insufficient_fee_alert" = "Комиссии за транзакцию взимаются в %@. Вам требуется %@.";
 "swap.button_error.insufficient_balance" = "Недостаточный баланс";
-"swap.button_error.impact_too_high" = "High price impact";
+"swap.button_error.impact_too_high" = "Высокое отклонение цены";
 
 "swap.price" = "Цена";
-"swap.price_impact" = "Колебание Цен";
+"swap.price_impact" = "Отклонение от рын. цены";
 "swap.max_min" = "Макс / Мин";
 "swap.maximum_paid" = "Максимальная Выплата";
 "swap.minimum_got" = "Минимальная Выплата";
@@ -259,13 +259,13 @@
 
 
 "swap.uniswap_info.title" = "Uniswap v.2";
-"swap.uniswap_info.description" = "Данный сервис обмена работает при поддержке Uniswap - децентрализированного протокола обмена токенов, основанного на блокчейне Ethereum.\n\nnСервис Uniswap полностью автоматизирован и управляется смарт-контрактами, которые надежным способом упрощают обмен токенами без каких-либо средств мошенничества.";
+"swap.uniswap_info.description" = "Данный сервис обмена работает при поддержке Uniswap - децентрализированного протокола обмена токенов, основанного на блокчейне Ethereum.\n\nСервис Uniswap полностью автоматизирован и управляется смарт-контрактами, которые надежным способом упрощают обмен токенами без каких-либо средств мошенничества.";
 "swap.uniswap_info.link_button" = "Веб-сайт Uniswap";
 
 "swap.uniswap_info.header_uniswap_related" = "О Uniswap";
 "swap.uniswap_info.header_allowance" = "Разрешение";
 "swap.uniswap_info.content_allowance" = "Сумма в некоторых валютах, которую Uniswap может потратить от вашего имени при выполнении обмена токенов. Может потребоваться разрешение на использование достаточной суммы перед обменом.";
-"swap.uniswap_info.header_price_impact" = "Разница в цене";
+"swap.uniswap_info.header_price_impact" = "Отклонение от рын. цены";
 "swap.uniswap_info.content_price_impact" = "Ожидаемое отклонение цены от указанной цены, обычно увеличивается при увеличении суммы обмена.";
 "swap.uniswap_info.header_swap_fee" = "Комиссия за обмен";
 "swap.uniswap_info.content_swap_fee" = "Плата за услугу обмена на платформе Uniswap, показана в валюте, в которой продает пользователь. Для большинства заказов составляет или 0,3% или 0,6%.";
