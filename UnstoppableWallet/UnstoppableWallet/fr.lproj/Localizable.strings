@@ -217,8 +217,8 @@
 "swap.amount_error.no_balance" = "Impossible d'analyser le solde pour le token";
 "swap.trade_error.not_found" = "Impossible d'échanger ces tokens";
 "swap.error.insufficient_fee_alert" = "Frais de transaction payés en %@. Vous avez besoin de %@.";
-"swap.button_error.insufficient_balance" = "Insufficient balance";
-"swap.button_error.impact_too_high" = "High price impact";
+"swap.button_error.insufficient_balance" = "Solde insuffisant";
+"swap.button_error.impact_too_high" = "Impact élevé sur les prix";
 
 "swap.price" = "Prix";
 "swap.price_impact" = "Impact prix";
