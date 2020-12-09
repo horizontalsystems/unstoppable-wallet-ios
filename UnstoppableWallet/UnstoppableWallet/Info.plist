@@ -2,12 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UniswapGraphUrl</key>
-	<string>$(uniswap_graph_url)</string>
-	<key>CryptoCompareApiKey</key>
-	<string>$(cryptocompare_com_api_key)</string>
-	<key>CoinMarketCapKey</key>
-	<string>$(coinmarketcap_com_api_key)</string>
 	<key>BtcCoreRpcUrl</key>
 	<string>${btc_core_rpc_url}</string>
 	<key>CFBundleDevelopmentRegion</key>
@@ -25,7 +19,11 @@
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>CoinMarketCapKey</key>
+	<string>$(coinmarketcap_com_api_key)</string>
+	<key>CryptoCompareApiKey</key>
+	<string>$(cryptocompare_com_api_key)</string>
 	<key>DefaultEosAccount</key>
 	<string>${default_eos_account}</string>
 	<key>DefaultEosPrivateKey</key>
@@ -36,6 +34,10 @@
 	<string>${default_words_24}</string>
 	<key>EtherscanApiKey</key>
 	<string>${etherscan_api_key}</string>
+	<key>FaqIndexUrl</key>
+	<string>${faq_index_url}</string>
+	<key>GuidesIndexUrl</key>
+	<string>${guides_index_url}</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>InfuraProjectId</key>
@@ -55,6 +57,10 @@
 	<string>We use Face ID to unlock wallet.</string>
 	<key>OfficeMode</key>
 	<string>${OfficeMode}</string>
+	<key>PnsPassword</key>
+	<string>${pns_password}</string>
+	<key>PnsUsername</key>
+	<string>${pns_username}</string>
 	<key>Sandbox</key>
 	<string>${Sandbox}</string>
 	<key>ShowBuildNumber</key>
@@ -75,13 +81,7 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>PnsUsername</key>
-	<string>${pns_username}</string>
-	<key>PnsPassword</key>
-	<string>${pns_password}</string>
-	<key>GuidesIndexUrl</key>
-	<string>${guides_index_url}</string>
-	<key>FaqIndexUrl</key>
-	<string>${faq_index_url}</string>
+	<key>UniswapGraphUrl</key>
+	<string>$(uniswap_graph_url)</string>
 </dict>
 </plist>
