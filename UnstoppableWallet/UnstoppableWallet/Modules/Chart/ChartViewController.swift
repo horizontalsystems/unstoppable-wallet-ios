@@ -36,9 +36,7 @@ class ChartViewController: ThemeViewController {
     private var indicatorViews = [ChartIndicatorSet : IndicatorSelectView]()
     private let chartInfoView = ChartInfoView()
 
-    private let loadingView = HUDProgressView(strokeLineWidth: FullTransactionInfoViewController.spinnerLineWidth,
-            radius: FullTransactionInfoViewController.spinnerSideSize / 2 - FullTransactionInfoViewController.spinnerLineWidth / 2,
-            strokeColor: .themeGray)
+    private let loadingView = HUDActivityView.create(with: .medium24)
 
     init(delegate: IChartViewDelegate & IChartViewTouchDelegate, configuration: ChartConfiguration) {
         self.delegate = delegate
@@ -100,7 +98,7 @@ class ChartViewController: ThemeViewController {
 
         container.addSubview(loadingView)
         loadingView.snp.makeConstraints { maker in
-            maker.edges.equalTo(chartView)
+            maker.center.equalTo(chartView)
         }
         loadingView.set(hidden: true)
         loadingView.backgroundColor = view.backgroundColor

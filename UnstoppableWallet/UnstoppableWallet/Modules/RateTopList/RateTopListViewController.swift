@@ -5,17 +5,10 @@ import ThemeKit
 import HUD
 
 class RateTopListViewController: ThemeViewController {
-    private static let spinnerRadius: CGFloat = 8
-    private static let spinnerLineWidth: CGFloat = 2
-
     private let delegate: IRateTopListViewDelegate
 
     private let tableView = SectionsTableView(style: .plain)
-    private let spinner = HUDProgressView(
-            strokeLineWidth: RateTopListViewController.spinnerLineWidth,
-            radius: RateTopListViewController.spinnerRadius,
-            strokeColor: .themeGray
-    )
+    private let spinner = HUDActivityView.create(with: .large48)
 
     private var viewItems = [RateTopListModule.ViewItem]()
     private var lastUpdated: Date?
@@ -49,7 +42,6 @@ class RateTopListViewController: ThemeViewController {
         view.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
-            maker.width.height.equalTo(RateTopListViewController.spinnerRadius * 2 + RateTopListViewController.spinnerLineWidth)
         }
 
         delegate.onLoad()

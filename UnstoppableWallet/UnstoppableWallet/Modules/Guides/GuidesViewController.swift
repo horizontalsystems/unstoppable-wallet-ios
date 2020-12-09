@@ -6,19 +6,12 @@ import HUD
 import RxSwift
 
 class GuidesViewController: ThemeViewController {
-    private static let spinnerRadius: CGFloat = 8
-    private static let spinnerLineWidth: CGFloat = 2
-
     private let viewModel: IGuidesViewModel
 
     private let tableView = UITableView(frame: .zero, style: .plain)
     private let filterHeaderView = FilterHeaderView()
 
-    private let spinner = HUDProgressView(
-            strokeLineWidth: GuidesViewController.spinnerLineWidth,
-            radius: GuidesViewController.spinnerRadius,
-            strokeColor: .themeGray
-    )
+    private let spinner = HUDActivityView.create(with: .large48)
 
     private let errorLabel = UILabel()
 
@@ -63,7 +56,6 @@ class GuidesViewController: ThemeViewController {
         view.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
-            maker.width.height.equalTo(GuidesViewController.spinnerRadius * 2 + GuidesViewController.spinnerLineWidth)
         }
 
         view.addSubview(errorLabel)
