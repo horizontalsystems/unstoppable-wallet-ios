@@ -522,7 +522,7 @@ CHECKOUT OPTIONS:
     :commit: 52d655b99381d1940e215f22382f0814cc0c8bc3
     :git: https://github.com/horizontalsystems/hs-tool-kit-ios
   HUD.swift:
-    :commit: 4356cc42f5b733ba0fd11928dbd61fa3e000431e
+    :commit: e50f6e0d05b8769f3e4e038a29e454f7ef109823
     :git: https://github.com/horizontalsystems/gui-kit/
   LanguageKit.swift:
     :commit: dbbb721e89b4da3b9f6b5f44866b07f28bca67c1
@@ -546,7 +546,7 @@ CHECKOUT OPTIONS:
     :commit: dbbb721e89b4da3b9f6b5f44866b07f28bca67c1
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: d5f9508f3906ece8df52decba0ede9db5febe449
+    :commit: 75e0258b72fb86d7036c6cc8aadbaca3e4e586cd
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :commit: 1f37d58e745ad53f62cf23a935fda3ab6419f305

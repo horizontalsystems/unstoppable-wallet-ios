@@ -7,16 +7,11 @@ import SectionsTableView
 import SnapKit
 
 class WalletConnectMainViewController: ThemeViewController {
-    private static let spinnerLineWidth: CGFloat = 2
-    private static let spinnerSideSize: CGFloat = 20
-
     private let baseViewModel: WalletConnectViewModel
     private let viewModel: WalletConnectMainViewModel
     private weak var sourceViewController: UIViewController?
 
-    private let loadingView = HUDProgressView(strokeLineWidth: WalletConnectMainViewController.spinnerLineWidth,
-            radius: WalletConnectMainViewController.spinnerSideSize / 2 - WalletConnectMainViewController.spinnerLineWidth / 2,
-            strokeColor: .themeGray)
+    private let spinner = HUDActivityView.create(with: .large48)
 
     private let buttonsHolder = BottomGradientHolder()
 
@@ -57,12 +52,12 @@ class WalletConnectMainViewController: ThemeViewController {
 
         title = "wallet_connect.title".localized
 
-        view.addSubview(loadingView)
-        loadingView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+        view.addSubview(spinner)
+        spinner.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
         }
 
-        loadingView.set(hidden: true)
+        spinner.set(hidden: true)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -193,11 +188,11 @@ class WalletConnectMainViewController: ThemeViewController {
     }
 
     private func sync(connecting: Bool) {
-        loadingView.set(hidden: !connecting)
+        spinner.set(hidden: !connecting)
         if connecting {
-            loadingView.startAnimating()
+            spinner.startAnimating()
         } else {
-            loadingView.stopAnimating()
+            spinner.stopAnimating()
         }
     }
 

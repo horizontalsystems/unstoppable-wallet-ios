@@ -21,7 +21,7 @@ class TransactionsViewController: ThemeViewController {
 
     private var items: [TransactionViewItem]?
 
-    private let syncSpinner = HUDProgressView(strokeLineWidth: 2, radius: 9, strokeColor: .themeGray, duration: 2)
+    private let syncSpinner = HUDActivityView.create(with: .medium24)
 
     init(delegate: ITransactionsViewDelegate, differ: IDiffer) {
         self.delegate = delegate

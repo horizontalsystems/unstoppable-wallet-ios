@@ -7,18 +7,11 @@ import RxSwift
 import RxCocoa
 
 class MarkdownViewController: ThemeViewController {
-    private static let spinnerRadius: CGFloat = 8
-    private static let spinnerLineWidth: CGFloat = 2
-
     private let viewModel: MarkdownViewModel
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
-    private let spinner = HUDProgressView(
-            strokeLineWidth: MarkdownViewController.spinnerLineWidth,
-            radius: MarkdownViewController.spinnerRadius,
-            strokeColor: .themeGray
-    )
+    private let spinner = HUDActivityView.create(with: .large48)
 
     private var viewItems: [MarkdownBlockViewItem]?
 
@@ -60,7 +53,6 @@ class MarkdownViewController: ThemeViewController {
         view.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
-            maker.width.height.equalTo(MarkdownViewController.spinnerRadius * 2 + MarkdownViewController.spinnerLineWidth)
         }
 
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in

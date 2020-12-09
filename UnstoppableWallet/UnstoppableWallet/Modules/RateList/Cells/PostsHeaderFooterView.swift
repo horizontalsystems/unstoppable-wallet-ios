@@ -4,15 +4,8 @@ import ThemeKit
 import HUD
 
 class PostsHeaderFooterView: UITableViewHeaderFooterView {
-    private static let spinnerRadius: CGFloat = 8
-    private static let spinnerLineWidth: CGFloat = 2
-
     private let titleLabel = UILabel()
-    private let spinner = HUDProgressView(
-            strokeLineWidth: PostsHeaderFooterView.spinnerLineWidth,
-            radius: PostsHeaderFooterView.spinnerRadius,
-            strokeColor: .themeGray
-    )
+    private let spinner = HUDActivityView.create(with: .small20)
     private let topSeparator = UIView()
     private let bottomSeparator = UIView()
 
@@ -37,7 +30,6 @@ class PostsHeaderFooterView: UITableViewHeaderFooterView {
             maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin4x)
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.centerY.equalToSuperview()
-            maker.width.height.equalTo(2 * PostsHeaderFooterView.spinnerRadius + PostsHeaderFooterView.spinnerLineWidth)
         }
 
         addSubview(topSeparator)

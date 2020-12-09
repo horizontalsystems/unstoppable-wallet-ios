@@ -6,9 +6,6 @@ import CurrencyKit
 import ThemeKit
 
 class SendAmountView: UIView {
-    private static let spinnerRadius: CGFloat = 8
-    private static let spinnerLineWidth: CGFloat = 2
-
     private let delegate: ISendAmountViewDelegate
 
     private var disposeBag = DisposeBag()
@@ -17,11 +14,7 @@ class SendAmountView: UIView {
 
     private let availableBalanceTitleLabel = UILabel()
     private let availableBalanceValueLabel = UILabel()
-    private let processSpinner = HUDProgressView(
-            strokeLineWidth: SendAmountView.spinnerLineWidth,
-            radius: SendAmountView.spinnerRadius,
-            strokeColor: .themeOz
-    )
+    private let spinner = HUDActivityView.create(with: .small20)
 
     private let amountTypeLabel = UILabel()
     private let inputField = UITextField()
@@ -66,13 +59,12 @@ class SendAmountView: UIView {
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
-        addSubview(processSpinner)
-        processSpinner.snp.makeConstraints { maker in
+        addSubview(spinner)
+        spinner.snp.makeConstraints { maker in
             maker.centerY.equalTo(availableBalanceTitleLabel.snp.centerY)
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.width.height.equalTo(SendAmountView.spinnerRadius * 2 + SendAmountView.spinnerLineWidth)
         }
-        processSpinner.isHidden = true
+        spinner.isHidden = true
 
         addSubview(holderView)
 
@@ -223,8 +215,8 @@ extension SendAmountView: ISendAmountView {
 
     func set(loading: Bool) {
         availableBalanceValueLabel.isHidden = loading
-        processSpinner.isHidden = !loading
-        processSpinner.startAnimating()
+        spinner.isHidden = !loading
+        spinner.startAnimating()
     }
 
     func set(availableBalance: AmountInfo?) {

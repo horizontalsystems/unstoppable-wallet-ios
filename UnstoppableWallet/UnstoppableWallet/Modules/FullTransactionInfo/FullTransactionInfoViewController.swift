@@ -7,9 +7,6 @@ import RxSwift
 import ThemeKit
 
 class FullTransactionInfoViewController: ThemeViewController, SectionsDataSource {
-    static let spinnerLineWidth: CGFloat = 4
-    static let spinnerSideSize: CGFloat = 32
-
     private let attentionImage = UIImage(named: "close_48", in: Bundle(for: RequestErrorView.self), compatibleWith: nil)?.tinted(with: .themeGray)
     private let errorImage =  UIImage(named: "Error Icon", in: Bundle(for: RequestErrorView.self), compatibleWith: nil)?.tinted(with: .themeGray)
 
@@ -21,9 +18,7 @@ class FullTransactionInfoViewController: ThemeViewController, SectionsDataSource
 
     private let closeButton = UIButton(frame: .zero)
     private let errorView = RequestErrorView()
-    private let loadingView = HUDProgressView(strokeLineWidth: FullTransactionInfoViewController.spinnerLineWidth,
-            radius: FullTransactionInfoViewController.spinnerSideSize / 2 - FullTransactionInfoViewController.spinnerLineWidth / 2,
-            strokeColor: .themeGray)
+    private let spinner = HUDActivityView.create(with: .large48)
 
     init(delegate: IFullTransactionInfoViewDelegate) {
         self.delegate = delegate
@@ -55,11 +50,11 @@ class FullTransactionInfoViewController: ThemeViewController, SectionsDataSource
         tableView.sectionDataSource = self
         tableView.separatorStyle = .none
 
-        view.addSubview(loadingView)
-        loadingView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+        view.addSubview(spinner)
+        spinner.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
         }
-        loadingView.set(hidden: true)
+        spinner.set(hidden: true)
 
         view.addSubview(errorView)
 
@@ -179,13 +174,13 @@ class FullTransactionInfoViewController: ThemeViewController, SectionsDataSource
 extension FullTransactionInfoViewController: IFullTransactionInfoView {
 
     func showLoading() {
-        loadingView.set(hidden: false)
-        loadingView.startAnimating()
+        spinner.set(hidden: false)
+        spinner.startAnimating()
     }
 
     func hideLoading() {
-        self.loadingView.set(hidden: true)
-        loadingView.stopAnimating()
+        spinner.set(hidden: true)
+        spinner.stopAnimating()
     }
 
     func showCopied() {
