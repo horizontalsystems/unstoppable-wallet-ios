@@ -60,6 +60,7 @@ class SwapTradeService {
     var tradeOptions = TradeOptions() {
         didSet {
             tradeOptionsRelay.accept(tradeOptions)
+            syncState()
         }
     }
 
