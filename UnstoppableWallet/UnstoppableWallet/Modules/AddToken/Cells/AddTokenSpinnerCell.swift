@@ -1,8 +1,9 @@
 import UIKit
 import ThemeKit
+import HUD
 
 class AddTokenSpinnerCell: UITableViewCell {
-    private let spinner = UIActivityIndicatorView()
+    private let spinner = HUDActivityView.create(with: .small20)
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -14,8 +15,6 @@ class AddTokenSpinnerCell: UITableViewCell {
         spinner.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
         }
-
-        spinner.color = .themeOz
     }
 
     required init?(coder: NSCoder) {
