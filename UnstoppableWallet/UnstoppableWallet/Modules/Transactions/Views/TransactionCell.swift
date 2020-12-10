@@ -5,7 +5,6 @@ import ThemeKit
 
 class TransactionCell: ClaudeThemeCell {
     private let typeIconImageView = UIImageView()
-    private let doubleSpendImageView = UIImageView()
 
     private let dateLabel = UILabel()
 
@@ -30,16 +29,6 @@ class TransactionCell: ClaudeThemeCell {
         }
         typeIconImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
         typeIconImageView.setContentHuggingPriority(.required, for: .horizontal)
-
-        wrapperView.addSubview(doubleSpendImageView)
-        doubleSpendImageView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
-        }
-        doubleSpendImageView.image = UIImage(named: "double_send_20")
-        doubleSpendImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
-        doubleSpendImageView.setContentHuggingPriority(.required, for: .horizontal)
-        doubleSpendImageView.isHidden = true
 
         wrapperView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { maker in
@@ -121,8 +110,6 @@ class TransactionCell: ClaudeThemeCell {
         dateLabel.text = DateHelper.instance.formatTransactionDate(from: item.date).uppercased()
         amountLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue, fractionPolicy: .threshold(high: 0.01, low: 0))
 
-        doubleSpendImageView.isHidden = item.conflictingTxHash == nil
-
         if let value = item.currencyValue?.nonZero, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.01)) {
             currencyAmountLabel.text = formattedValue
         } else {
@@ -167,14 +154,14 @@ class TransactionCell: ClaudeThemeCell {
             processingView.isHidden = true
 
         case .pending:
-            processingView.bind(type: item.type, progress: 0)
+            processingView.bind(type: item.type, progress: 0, hideDoubleSpendImage: item.conflictingTxHash == nil)
             processingView.startAnimating()
             processingView.isHidden = false
 
             statusView.isHidden = true
 
         case .processing(let progress):
-            processingView.bind(type: item.type, progress: progress)
+            processingView.bind(type: item.type, progress: progress, hideDoubleSpendImage: item.conflictingTxHash == nil)
             processingView.startAnimating()
             processingView.isHidden = false
 
