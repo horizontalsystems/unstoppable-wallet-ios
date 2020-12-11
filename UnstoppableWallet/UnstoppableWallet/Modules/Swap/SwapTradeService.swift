@@ -5,12 +5,13 @@ import RxSwift
 import RxRelay
 
 class SwapTradeService {
+    private var disposeBag = DisposeBag()
     private static let warningPriceImpact: Decimal = 1
     private static let forbiddenPriceImpact: Decimal = 5
 
     private let uniswapRepository: UniswapRepository
 
-    private var disposeBag = DisposeBag()
+    private var tradeDataDisposable = DisposeBag()
 
     private(set) var coinIn: Coin? {
         didSet {
@@ -64,9 +65,16 @@ class SwapTradeService {
         }
     }
 
-    init(uniswapRepository: UniswapRepository, coin: Coin? = nil) {
+    init(uniswapRepository: UniswapRepository, coin: Coin? = nil, ethereumKit: EthereumKit.Kit) {
         self.uniswapRepository = uniswapRepository
         coinIn = coin
+
+        ethereumKit.lastBlockHeightObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] blockNumber in
+                    self?.syncState()
+                })
+                .disposed(by: disposeBag)
     }
 
     private func syncState() {
@@ -75,7 +83,7 @@ class SwapTradeService {
             return
         }
 
-        disposeBag = DisposeBag()
+        tradeDataDisposable = DisposeBag()
 
         state = .loading
 
@@ -86,7 +94,7 @@ class SwapTradeService {
                 }, onError: { [weak self] error in
                     self?.state = .notReady(errors: [error])
                 })
-                .disposed(by: disposeBag)
+                .disposed(by: tradeDataDisposable)
     }
 
     private func handle(tradeData: TradeData) {
