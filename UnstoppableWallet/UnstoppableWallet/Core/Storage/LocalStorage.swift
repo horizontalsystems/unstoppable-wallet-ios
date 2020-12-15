@@ -27,6 +27,8 @@ class LocalStorage {
     private let keyEthereumRpcMode = "ethereum_rpc_mode"
     private let keyPushToken = "push_token"
     private let keyPushNotificationsOn = "push_notifications_on"
+    private let keyDefaultMarketCategory = "default_market_category"
+    private let keyMarketFavoriteCoins = "market_favorite_coins"
 
     private let storage: StorageKit.ILocalStorage
 
@@ -181,6 +183,16 @@ extension LocalStorage: ILocalStorage {
     var pushNotificationsOn: Bool {
         get { storage.value(for: keyPushNotificationsOn) ?? false }
         set { storage.set(value: newValue, for: keyPushNotificationsOn) }
+    }
+
+    var defaultMarketCategory: Int? {
+        get { storage.value(for: keyDefaultMarketCategory) }
+        set { storage.set(value: newValue, for: keyDefaultMarketCategory) }
+    }
+
+    var marketFavoriteCoins: [String] {
+        get { storage.value(for: keyMarketFavoriteCoins) ?? [] }
+        set { storage.set(value: newValue, for: keyMarketFavoriteCoins) }
     }
 
 }
