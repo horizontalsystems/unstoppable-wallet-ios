@@ -8,6 +8,8 @@ class FormCautionView: UIView {
 
     private let label = UILabel()
 
+    var onChangeHeight: (() -> ())?
+
     init() {
         super.init(frame: .zero)
 
@@ -16,6 +18,7 @@ class FormCautionView: UIView {
             maker.leading.top.trailing.equalToSuperview().inset(padding)
         }
 
+        label.numberOfLines = 0
         label.font = font
     }
 
@@ -34,6 +37,8 @@ extension FormCautionView {
         } else {
             label.text = nil
         }
+
+        onChangeHeight?()
     }
 
     func height(containerWidth: CGFloat) -> CGFloat {
