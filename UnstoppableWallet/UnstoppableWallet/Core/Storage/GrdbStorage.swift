@@ -439,11 +439,9 @@ extension GrdbStorage: IBlockchainSettingsRecordStorage {
         }
     }
 
-    func save(blockchainSettings: [BlockchainSettingRecord]) {
+    func save(blockchainSetting: BlockchainSettingRecord) {
         _ = try! dbPool.write { db in
-            for setting in blockchainSettings {
-                try setting.insert(db)
-            }
+            try blockchainSetting.insert(db)
         }
     }
 

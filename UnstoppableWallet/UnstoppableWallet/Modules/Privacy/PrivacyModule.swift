@@ -7,7 +7,7 @@ protocol IPrivacyRouter {
 
 protocol IPrivacyInteractor {
     var wallets: [Wallet] { get }
-    var syncSettings: [(setting: InitialSyncSetting, coins: [Coin], changeable: Bool)] { get }
+    var syncSettings: [(setting: InitialSyncSetting, coin: Coin, changeable: Bool)] { get }
     var sortMode: TransactionDataSortMode { get }
     var ethereumConnection: EthereumRpcMode { get }
     func save(syncSetting: InitialSyncSetting)

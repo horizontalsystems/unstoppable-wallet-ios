@@ -34,7 +34,7 @@ extension NoAccountPresenter: INoAccountViewDelegate {
 
     func onTapCreate() {
         do {
-            if interactor.derivationSettings(coin: coin) != nil {
+            if predefinedAccountType == .standard {
                 interactor.resetDerivationSettings()
             }
 

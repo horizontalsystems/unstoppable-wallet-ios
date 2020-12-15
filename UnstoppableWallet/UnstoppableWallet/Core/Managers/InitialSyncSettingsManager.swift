@@ -26,26 +26,24 @@ class InitialSyncSettingsManager {
 
 extension InitialSyncSettingsManager: IInitialSyncSettingsManager {
 
-    var allSettings: [(setting: InitialSyncSetting, coins: [Coin], changeable: Bool)] {
+    var allSettings: [(setting: InitialSyncSetting, coin: Coin, changeable: Bool)] {
         let coins = appConfigProvider.defaultCoins
 
         return supportedCoinTypes.compactMap { supportedCoinType in
-            let coinTypeCoins = coins.filter { $0.type == supportedCoinType.coinType }
-
-            guard !coinTypeCoins.isEmpty else {
+            guard let coinTypeCoin = (coins.first { $0.type == supportedCoinType.coinType }) else {
                 return nil
             }
 
-            guard let setting = setting(coinType: supportedCoinType.coinType) else {
+            guard let setting = setting(coinType: supportedCoinType.coinType, accountOrigin: .restored) else {
                 return nil
             }
 
-            return (setting: setting, coins: coinTypeCoins, supportedCoinType.changeable)
+            return (setting: setting, coin: coinTypeCoin, supportedCoinType.changeable)
         }
     }
 
     func save(setting: InitialSyncSetting) {
-        storage.save(initialSyncSettings: [setting])
+        storage.save(initialSyncSetting: setting)
 
         let walletsForUpdate = walletManager.wallets.filter { $0.coin.type == setting.coinType && $0.account.origin == .restored }
 
@@ -54,9 +52,13 @@ extension InitialSyncSettingsManager: IInitialSyncSettingsManager {
         }
     }
 
-    func setting(coinType: CoinType) -> InitialSyncSetting? {
+    func setting(coinType: CoinType, accountOrigin: AccountOrigin) -> InitialSyncSetting? {
         guard let supportedCoinType = supportedCoinTypes.first(where: { $0.coinType == coinType }) else {
             return nil
+        }
+
+        guard accountOrigin != .created else {
+            return InitialSyncSetting(coinType: coinType, syncMode: .new)
         }
 
         guard supportedCoinType.changeable else {
