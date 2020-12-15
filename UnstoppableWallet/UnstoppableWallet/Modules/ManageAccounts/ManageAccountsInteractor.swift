@@ -37,7 +37,7 @@ extension ManageAccountsInteractor: IManageAccountsInteractor {
         predefinedAccountTypeManager.allTypes
     }
 
-    var allActiveDerivationSettings: [(setting: DerivationSetting, wallets: [Wallet])] {
+    var allActiveDerivationSettings: [(setting: DerivationSetting, coin: Coin)] {
         derivationSettingsManager.allActiveSettings
     }
 
