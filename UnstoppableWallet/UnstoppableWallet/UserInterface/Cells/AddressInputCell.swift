@@ -3,8 +3,6 @@ import ThemeKit
 import SnapKit
 
 class AddressInputCell: UITableViewCell {
-    weak var openDelegate: IPresentControllerDelegate?
-
     private let formValidatedView: FormValidatedView
     private let inputStackView = InputStackView()
 
@@ -13,6 +11,7 @@ class AddressInputCell: UITableViewCell {
     private let pasteView = InputButtonWrapperView(style: .secondaryDefault)
 
     var onChangeText: ((String?) -> ())?
+    var onOpenViewController: ((UIViewController) -> ())?
 
     init() {
         formValidatedView = FormValidatedView(contentView: inputStackView, padding: UIEdgeInsets(top: 0, left: .margin16, bottom: 0, right: .margin16))
@@ -59,7 +58,7 @@ class AddressInputCell: UITableViewCell {
     private func onTapScan() {
         let scanQrViewController = ScanQrViewController()
         scanQrViewController.delegate = self
-        openDelegate?.open(viewController: scanQrViewController)
+        onOpenViewController?(scanQrViewController)
     }
 
     private func onTapPaste() {
