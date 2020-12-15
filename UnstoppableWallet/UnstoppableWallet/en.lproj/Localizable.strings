@@ -288,6 +288,13 @@ bch.horizontalsystems.xyz/apg";
 "swap.uniswap_info.header_transaction_speed" = "Transaction Speed";
 "swap.uniswap_info.content_transaction_speed" = "Transactions with higher transaction fee will result in faster processing speeds. The opposite is true as well.";
 
+// Market
+
+"market.tab_bar_item" = "Market";
+"market.title" = "Market";
+"market.category.all" = "All";
+"market.category.favorites" = "Watchlist";
+
 // Transactions
 
 "transactions.title" = "Transactions";

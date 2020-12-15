@@ -18,6 +18,7 @@ struct MainModule {
         let viewModel = MainViewModel(showService: showService, badgeService: badgeService)
 
         let viewControllers = [
+            marketNavigation,
             balanceNavigation,
             transactionsNavigation,
             settingsNavigation,
@@ -28,6 +29,10 @@ struct MainModule {
         App.shared.pinKitDelegate.viewController = viewController
 
         return viewController
+    }
+
+    private static var marketNavigation: UIViewController {
+        ThemeNavigationController(rootViewController: MarketModule.viewController())
     }
 
     private static var balanceNavigation: UIViewController {
