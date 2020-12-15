@@ -302,6 +302,7 @@
 		11B3547137C95EA9E173B019 /* RestoreSelectPredefinedAccountTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D49ACB1956086D8DD56 /* RestoreSelectPredefinedAccountTypeViewController.swift */; };
 		11B3547B3B778CC892BDB602 /* SortType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35141611EF64A4C6FA8F5 /* SortType.swift */; };
 		11B3547C43F7FD29D8BC5E62 /* TransactionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EA7951903DA3790E945 /* TransactionInfoViewController.swift */; };
+		11B354818AF255852802134F /* AddressInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A382720D6531AE92F72 /* AddressInputView.swift */; };
 		11B35484FEB0F76CD1A7BCE2 /* DerivationSettingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D0BE71F996F294752A6 /* DerivationSettingRouter.swift */; };
 		11B354859C677ADA1F46D631 /* BinanceKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D0672D73C973EBE5E1B /* BinanceKitManager.swift */; };
 		11B354874F95CC09A538E5FC /* SendAccountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E61992B00453B34887E /* SendAccountRouter.swift */; };
@@ -622,6 +623,7 @@
 		11B3595B1520B6C0C2367440 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359907F922F6935929D0B /* NotificationManager.swift */; };
 		11B3595CF65B69B3B04635E0 /* TermsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EB9BA551F2F1AF7739D /* TermsManager.swift */; };
 		11B35965E596BF6F3D86A85B /* TransactionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EA7951903DA3790E945 /* TransactionInfoViewController.swift */; };
+		11B35968D5BDA7A46C900548 /* AddressInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A382720D6531AE92F72 /* AddressInputView.swift */; };
 		11B3596A11DFE43392DD41FC /* RateTopListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BEF3827409AA9333197 /* RateTopListPresenter.swift */; };
 		11B3596BFD9EA15221EDC0E9 /* PrivacyEthereumRpcModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C1A6DF9A49DDB98A6D3 /* PrivacyEthereumRpcModeViewController.swift */; };
 		11B359727F8987B8D97640D2 /* DoubleButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356CFE9BC77C779574010 /* DoubleButtonCell.swift */; };
@@ -1049,6 +1051,7 @@
 		11B35F4C1AEA693876B4837E /* RateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B10B1F0DFF9144C785D /* RateManager.swift */; };
 		11B35F4CCFC683B6BF412403 /* AdditionalDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355F6D50A7099E7455822 /* AdditionalDataCell.swift */; };
 		11B35F4CE3BD699E684014F1 /* PriceAlertRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C1528814607B0474707 /* PriceAlertRecord.swift */; };
+		11B35F5EBB5E8CDDD488314C /* AddressInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A382720D6531AE92F72 /* AddressInputView.swift */; };
 		11B35F6305DC6D459B9A4B6A /* SendBinanceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F571876EA99794DD145 /* SendBinanceHandler.swift */; };
 		11B35F663F7E12BFDDE3C88B /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35872950C107E4810AB6B /* AccountManager.swift */; };
 		11B35F66D2561CD9555C8857 /* UnlinkModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3529D276325D741CAEEF5 /* UnlinkModule.swift */; };
@@ -2521,6 +2524,7 @@
 		11B35A22DBE53901A5C23627 /* SwapAllowanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapAllowanceCell.swift; sourceTree = "<group>"; };
 		11B35A2C34C3D62CCA5BFFB5 /* GuidesRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuidesRepository.swift; sourceTree = "<group>"; };
 		11B35A2E3E51CD42F8A619DF /* TransactionInfoWarningCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoWarningCell.swift; sourceTree = "<group>"; };
+		11B35A382720D6531AE92F72 /* AddressInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressInputView.swift; sourceTree = "<group>"; };
 		11B35A5DE20DD6DD486FAFC0 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		11B35A6288D971DDEE900DF3 /* TransactionStatusInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionStatusInfoViewController.swift; sourceTree = "<group>"; };
 		11B35A65D7F2EADB3618DA64 /* RandomManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomManager.swift; sourceTree = "<group>"; };
@@ -4130,6 +4134,7 @@
 				11B35614A0EE4AC0FAD9F83A /* FormValidatedView.swift */,
 				11B3568F6FAF721301DEC188 /* FormCautionView.swift */,
 				11B35D5C4EEEAABF83A67D95 /* InputButtonWrapperView.swift */,
+				11B35A382720D6531AE92F72 /* AddressInputView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -6404,6 +6409,7 @@
 				11B3560EA893B19E88CEF133 /* FormCautionCell.swift in Sources */,
 				11B35F82A95A77638DA14248 /* InputButtonWrapperView.swift in Sources */,
 				11B35759685D64AEAAFE61FA /* ShortcutInputCell.swift in Sources */,
+				11B354818AF255852802134F /* AddressInputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7182,6 +7188,7 @@
 				11B35B6C15E23CB81DFF5B9E /* FormCautionCell.swift in Sources */,
 				11B35DFFD52E10918F760DD5 /* InputButtonWrapperView.swift in Sources */,
 				11B356A8E75C3F3C9FC4E530 /* ShortcutInputCell.swift in Sources */,
+				11B35968D5BDA7A46C900548 /* AddressInputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7922,6 +7929,7 @@
 				11B35678A2523AEDBE824743 /* FormCautionCell.swift in Sources */,
 				11B35780A8D573216864D763 /* InputButtonWrapperView.swift in Sources */,
 				11B3512144B36B8E7D4E4CD8 /* ShortcutInputCell.swift in Sources */,
+				11B35F5EBB5E8CDDD488314C /* AddressInputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -2,33 +2,46 @@ import UIKit
 import RxSwift
 
 class SendAddressView: UIView {
-    private let addressInputField: InputField
     private let delegate: ISendAddressViewDelegate
+
+    private let addressInputView = AddressInputView()
+    private let cautionView = FormCautionView()
 
     public init(delegate: ISendAddressViewDelegate) {
         self.delegate = delegate
-        addressInputField = InputField()
 
         super.init(frame: .zero)
 
         backgroundColor = .clear
 
-        addSubview(addressInputField)
-        addressInputField.snp.makeConstraints { maker in
+        addSubview(addressInputView)
+        addressInputView.snp.makeConstraints { maker in
             maker.top.equalToSuperview().inset(CGFloat.margin3x)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.bottom.equalToSuperview()
+            maker.leading.trailing.equalToSuperview()
+            maker.height.equalTo(addressInputView.height(containerWidth: width))
         }
 
-        addressInputField.placeholder = "send.address_placeholder".localized
-        addressInputField.showQrButton = true
-        addressInputField.canEdit = false
-
-        addressInputField.openScan = { [weak self] controller in
+        addressInputView.inputPlaceholder = "send.address_placeholder".localized
+        addressInputView.onOpenViewController = { [weak self] controller in
             self?.delegate.onOpenScan(controller: controller)
         }
-        addressInputField.onTextChange = { [weak self] string in
-            self?.delegate.onAddressChange(string: string?.trimmingCharacters(in: .whitespaces))
+        addressInputView.onChangeText = { [weak self] string in
+            self?.delegate.onAddressChange(string: string?.trimmingCharacters(in: .whitespacesAndNewlines))
+        }
+        addressInputView.onChangeHeight = { [weak self] in
+            self?.updateInputHeight()
+        }
+
+        addSubview(cautionView)
+        cautionView.snp.makeConstraints { maker in
+            maker.top.equalTo(addressInputView.snp.bottom)
+            maker.leading.trailing.equalToSuperview()
+            maker.bottom.equalToSuperview()
+            maker.height.equalTo(cautionView.height(containerWidth: width))
+        }
+
+        cautionView.onChangeHeight = { [weak self] in
+            self?.updateCautionHeight()
         }
     }
 
@@ -36,12 +49,30 @@ class SendAddressView: UIView {
         fatalError("not implemented")
     }
 
+    private func updateInputHeight() {
+        addressInputView.snp.updateConstraints { maker in
+            maker.height.equalTo(addressInputView.height(containerWidth: width))
+        }
+    }
+
+    private func updateCautionHeight() {
+        cautionView.snp.updateConstraints { maker in
+            maker.height.equalTo(cautionView.height(containerWidth: width))
+        }
+    }
+
 }
 
 extension SendAddressView: ISendAddressView {
 
     func set(error: Error?) {
-        addressInputField.bind(error: error)
+        if let error = error {
+            cautionView.set(caution: Caution(text: error.smartDescription, type: .error))
+            addressInputView.set(cautionType: .error)
+        } else {
+            cautionView.set(caution: nil)
+            addressInputView.set(cautionType: nil)
+        }
     }
 
 }

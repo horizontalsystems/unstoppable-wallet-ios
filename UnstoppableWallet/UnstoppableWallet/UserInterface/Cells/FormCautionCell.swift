@@ -5,8 +5,6 @@ import SnapKit
 class FormCautionCell: UITableViewCell {
     private let cautionView = FormCautionView()
 
-    var onChangeHeight: (() -> ())?
-
     init() {
         super.init(style: .default, reuseIdentifier: nil)
 
@@ -30,7 +28,11 @@ extension FormCautionCell {
 
     func set(caution: Caution?) {
         cautionView.set(caution: caution)
-        onChangeHeight?()
+    }
+
+    var onChangeHeight: (() -> ())? {
+        get { cautionView.onChangeHeight }
+        set { cautionView.onChangeHeight = newValue }
     }
 
     func height(containerWidth: CGFloat) -> CGFloat {
