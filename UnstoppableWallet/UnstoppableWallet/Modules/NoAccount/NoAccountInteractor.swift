@@ -26,7 +26,7 @@ extension NoAccountInteractor: INoAccountInteractor {
     }
 
     func resetDerivationSettings() {
-        derivationSettingsManager.reset()
+        derivationSettingsManager.resetStandardSettings()
     }
 
 }

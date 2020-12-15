@@ -346,17 +346,17 @@ protocol IPriceAlertRequestRecordStorage {
 
 protocol IBlockchainSettingsRecordStorage {
     func blockchainSettings(coinTypeKey: String, settingKey: String) -> BlockchainSettingRecord?
-    func save(blockchainSettings: [BlockchainSettingRecord])
+    func save(blockchainSetting: BlockchainSettingRecord)
     func deleteAll(settingKey: String)
 }
 
 protocol IBlockchainSettingsStorage {
     func derivationSetting(coinType: CoinType) -> DerivationSetting?
-    func save(derivationSettings: [DerivationSetting])
+    func save(derivationSetting: DerivationSetting)
     func deleteDerivationSettings()
 
     func initialSyncSetting(coinType: CoinType) -> InitialSyncSetting?
-    func save(initialSyncSettings: [InitialSyncSetting])
+    func save(initialSyncSetting: InitialSyncSetting)
 }
 
 protocol IKitCleaner {
@@ -546,12 +546,12 @@ protocol IDerivationSettingsManager: AnyObject {
     var allActiveSettings: [(setting: DerivationSetting, wallets: [Wallet])] { get }
     func setting(coinType: CoinType) -> DerivationSetting?
     func save(setting: DerivationSetting)
-    func reset()
+    func resetStandardSettings()
 }
 
 protocol IInitialSyncSettingsManager: AnyObject {
-    var allSettings: [(setting: InitialSyncSetting, coins: [Coin], changeable: Bool)] { get }
-    func setting(coinType: CoinType) -> InitialSyncSetting?
+    var allSettings: [(setting: InitialSyncSetting, coin: Coin, changeable: Bool)] { get }
+    func setting(coinType: CoinType, accountOrigin: AccountOrigin) -> InitialSyncSetting?
     func save(setting: InitialSyncSetting)
 }
 

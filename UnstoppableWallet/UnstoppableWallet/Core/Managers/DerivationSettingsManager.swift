@@ -50,7 +50,7 @@ extension DerivationSettingsManager: IDerivationSettingsManager {
     }
 
     func save(setting: DerivationSetting) {
-        storage.save(derivationSettings: [setting])
+        storage.save(derivationSetting: setting)
 
         let walletsForUpdate = walletManager.wallets.filter { $0.coin.type == setting.coinType }
 
@@ -59,7 +59,7 @@ extension DerivationSettingsManager: IDerivationSettingsManager {
         }
     }
 
-    func reset() {
+    func resetStandardSettings() {
         storage.deleteDerivationSettings()
     }
 

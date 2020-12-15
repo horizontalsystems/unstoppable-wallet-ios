@@ -1,8 +1,8 @@
 class BlockchainSettingsStorage {
     let storage: IBlockchainSettingsRecordStorage
 
-    let derivationKey = "derivation"
-    let initialSyncKey = "initial_sync"
+    let derivationKey = "derivation"     //
+    let initialSyncKey = "initial_sync"  //use these two only for standard wallet
 
     init(storage: IBlockchainSettingsRecordStorage) {
         self.storage = storage
@@ -26,15 +26,12 @@ extension BlockchainSettingsStorage: IBlockchainSettingsStorage {
                 }
     }
 
-    func save(derivationSettings: [DerivationSetting]) {
-        let settingRecords: [BlockchainSettingRecord] = derivationSettings.compactMap { setting in
-            guard let coinTypeKey = BlockchainSettingRecord.key(for: setting.coinType) else {
-                return nil
-            }
-            return BlockchainSettingRecord(coinType: coinTypeKey, key: derivationKey, value: setting.derivation.rawValue)
+    func save(derivationSetting: DerivationSetting) {
+        guard let coinTypeKey = BlockchainSettingRecord.key(for: derivationSetting.coinType) else {
+            return
         }
 
-        storage.save(blockchainSettings: settingRecords)
+        storage.save(blockchainSetting: BlockchainSettingRecord(coinType: coinTypeKey, key: derivationKey, value: derivationSetting.derivation.rawValue))
     }
 
     func deleteDerivationSettings() {
@@ -55,16 +52,13 @@ extension BlockchainSettingsStorage: IBlockchainSettingsStorage {
                 }
     }
 
-    func save(initialSyncSettings: [InitialSyncSetting]) {
-        let settingRecords: [BlockchainSettingRecord] = initialSyncSettings.compactMap { setting in
-            let coinType = setting.coinType
-            guard let coinTypeKey = BlockchainSettingRecord.key(for: coinType) else {
-                return nil
-            }
-            return BlockchainSettingRecord(coinType: coinTypeKey, key: initialSyncKey, value: setting.syncMode.rawValue)
+    func save(initialSyncSetting: InitialSyncSetting) {
+        let coinType = initialSyncSetting.coinType
+        guard let coinTypeKey = BlockchainSettingRecord.key(for: coinType) else {
+            return
         }
 
-        storage.save(blockchainSettings: settingRecords)
+        storage.save(blockchainSetting: BlockchainSettingRecord(coinType: coinTypeKey, key: initialSyncKey, value: initialSyncSetting.syncMode.rawValue))
     }
 
 }

@@ -9,6 +9,7 @@ struct CreateWalletModule {
                 coinManager: App.shared.coinManager,
                 accountCreator: App.shared.accountCreator,
                 accountManager: App.shared.accountManager,
+                predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager,
                 walletManager: App.shared.walletManager,
                 derivationSettingsManager: App.shared.derivationSettingsManager
         )
