@@ -13,8 +13,8 @@ class DerivationSettingsPresenter {
     }
 
     private func updateUI() {
-        items = interactor.allActiveSettings.map { setting, wallets in
-            DerivationSettingsItem(firstCoin: wallets[0].coin, setting: setting)
+        items = interactor.allActiveSettings.map { setting, coin in
+            DerivationSettingsItem(firstCoin: coin, setting: setting)
         }
 
         let viewItems = items.map { factory.sectionViewItem(item: $0) }

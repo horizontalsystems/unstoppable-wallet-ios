@@ -543,7 +543,7 @@ protocol IRemoteAlertManager {
 }
 
 protocol IDerivationSettingsManager: AnyObject {
-    var allActiveSettings: [(setting: DerivationSetting, wallets: [Wallet])] { get }
+    var allActiveSettings: [(setting: DerivationSetting, coin: Coin)] { get }
     func setting(coinType: CoinType) -> DerivationSetting?
     func save(setting: DerivationSetting)
     func resetStandardSettings()

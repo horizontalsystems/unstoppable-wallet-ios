@@ -3,7 +3,7 @@ protocol IDerivationSettingsView: class {
 }
 
 protocol IDerivationSettingsInteractor: class {
-    var allActiveSettings: [(setting: DerivationSetting, wallets: [Wallet])] { get }
+    var allActiveSettings: [(setting: DerivationSetting, coin: Coin)] { get }
     var wallets: [Wallet] { get }
 
     func save(setting: DerivationSetting)

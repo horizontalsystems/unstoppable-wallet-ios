@@ -26,13 +26,11 @@ class DerivationSettingsManager {
 
 extension DerivationSettingsManager: IDerivationSettingsManager {
 
-    var allActiveSettings: [(setting: DerivationSetting, wallets: [Wallet])] {
+    var allActiveSettings: [(setting: DerivationSetting, coin: Coin)] {
         let wallets = walletManager.wallets
 
         return supportedCoinTypes.compactMap { (coinType, _) in
-            let coinTypeWallets = wallets.filter { $0.coin.type == coinType }
-
-            guard !coinTypeWallets.isEmpty else {
+            guard let coinTypeWallet = (wallets.first { $0.coin.type == coinType }) else {
                 return nil
             }
 
@@ -40,7 +38,7 @@ extension DerivationSettingsManager: IDerivationSettingsManager {
                 return nil
             }
 
-            return (setting: setting, wallets: coinTypeWallets)
+            return (setting: setting, coin: coinTypeWallet.coin)
         }
     }
 

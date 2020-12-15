@@ -11,7 +11,7 @@ class DerivationSettingsInteractor {
 
 extension DerivationSettingsInteractor: IDerivationSettingsInteractor {
 
-    var allActiveSettings: [(setting: DerivationSetting, wallets: [Wallet])] {
+    var allActiveSettings: [(setting: DerivationSetting, coin: Coin)] {
         derivationSettingsManager.allActiveSettings
     }
 
