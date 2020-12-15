@@ -35,22 +35,6 @@ class FormValidatedView: UIView {
 
 }
 
-extension FormValidatedView: IHeightControlView {
-
-    var onChangeHeight: (() -> ())? {
-        get { contentView.onChangeHeight }
-        set { contentView.onChangeHeight = newValue }
-    }
-
-    func height(containerWidth: CGFloat) -> CGFloat {
-        let contentViewWidth = containerWidth - padding.width
-        let contentViewHeight = contentView.height(containerWidth: contentViewWidth)
-
-        return contentViewHeight + padding.height
-    }
-
-}
-
 extension FormValidatedView {
 
     func set(cautionType: CautionType?) {
@@ -63,6 +47,18 @@ extension FormValidatedView {
         }
 
         wrapperView.layer.borderColor = borderColor.cgColor
+    }
+
+    var onChangeHeight: (() -> ())? {
+        get { contentView.onChangeHeight }
+        set { contentView.onChangeHeight = newValue }
+    }
+
+    func height(containerWidth: CGFloat) -> CGFloat {
+        let contentViewWidth = containerWidth - padding.width
+        let contentViewHeight = contentView.height(containerWidth: contentViewWidth)
+
+        return contentViewHeight + padding.height
     }
 
 }
