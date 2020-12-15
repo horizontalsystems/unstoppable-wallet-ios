@@ -31,8 +31,6 @@ class SwapTradeOptionsView: ThemeViewController {
 
         super.init()
 
-        recipientCell.openDelegate = self
-
         subscribe(disposeBag, recipientViewModel.cautionDriver) { [weak self] in
             self?.recipientCell.set(cautionType: $0?.type)
             self?.recipientCautionCell.set(caution: $0)
@@ -76,6 +74,7 @@ class SwapTradeOptionsView: ThemeViewController {
         recipientCell.inputText = recipientViewModel.initialValue
         recipientCell.onChangeHeight = { [weak self] in self?.reloadTable() }
         recipientCell.onChangeText = { [weak self] text in self?.recipientViewModel.onChange(text: text) }
+        recipientCell.onOpenViewController = { [weak self] in self?.present($0, animated: true) }
 
         recipientCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
 
@@ -228,25 +227,6 @@ extension SwapTradeOptionsView: SectionsDataSource {
                     ]
             )
         ]
-    }
-
-}
-
-extension SwapTradeOptionsView: IDynamicHeightCellDelegate {
-
-    func onChangeHeight() {
-        UIView.performWithoutAnimation { [weak self] in
-            self?.tableView.beginUpdates()
-            self?.tableView.endUpdates()
-        }
-    }
-
-}
-
-extension SwapTradeOptionsView: IPresentControllerDelegate {
-
-    func open(viewController: UIViewController) {
-        present(viewController, animated: true)
     }
 
 }

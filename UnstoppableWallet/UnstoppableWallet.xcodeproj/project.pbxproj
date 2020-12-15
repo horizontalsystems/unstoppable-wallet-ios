@@ -1811,7 +1811,6 @@
 		58AAA6B67B8FD1ABBA513FEB /* SendAmountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAEB485F977A3723BE738 /* SendAmountRouter.swift */; };
 		58AAA6BA6516314DE5153AF1 /* ConnectionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA610E99CF0429135DD1D /* ConnectionError.swift */; };
 		58AAA6D081B20EA97A0F3180 /* BackupWordsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC411BF9546AD24CDE23 /* BackupWordsController.swift */; };
-		58AAA6D14E26A3937CC67B93 /* RecipientInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAABD4555F45DB1DC06705 /* RecipientInputCell.swift */; };
 		58AAA6D40A2C4447AB85A285 /* SendConfirmationAmountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAFA9479D63145A24BD9C /* SendConfirmationAmountCell.swift */; };
 		58AAA6D5094499C7E718A280 /* FiatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7A1FC5676A8CB0021CA /* FiatService.swift */; };
 		58AAA6E11BA00408F0824B75 /* ZcashTransactionInfoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA20B7F3A1C9324CBC3F4 /* ZcashTransactionInfoAdapter.swift */; };
@@ -1857,7 +1856,6 @@
 		58AAA8517E6A2C55FEC9BE00 /* LockScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4A027BD92BD062748CC /* LockScreenController.swift */; };
 		58AAA87153C727D520EE3557 /* RateListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA31FF3C379E7AFD16C94 /* RateListViewController.swift */; };
 		58AAA8730B0F7AE6122B863D /* SwapTradeOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF6ED404054D799B32E7 /* SwapTradeOptionsViewModel.swift */; };
-		58AAA875423E7E77E85B1D47 /* RecipientInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAABD4555F45DB1DC06705 /* RecipientInputCell.swift */; };
 		58AAA877BFF6DE79C55EF045 /* ZcashProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6B78C0A450C35AF837B /* ZcashProvider.swift */; };
 		58AAA87CA53468D7169FA265 /* ChartTypeIntervalConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8CCC7252ECFFDC51578 /* ChartTypeIntervalConverter.swift */; };
 		58AAA88B26D590A1BA7EA124 /* SendFeeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6205C47965E48E4BAC3 /* SendFeeView.swift */; };
@@ -1980,7 +1978,6 @@
 		58AAAC932FCD8F3A61640752 /* FullTransactionInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA687FC0253AD175BA756 /* FullTransactionInfoInteractor.swift */; };
 		58AAAC939B0D62B4D1230C75 /* AmountInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF4E453A954DBFA84E89 /* AmountInfoView.swift */; };
 		58AAAC9555B7217B0238798C /* SwapDeadlineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA2C876DAFB98AF111F13 /* SwapDeadlineViewModel.swift */; };
-		58AAAC96FED224A99B63677A /* RecipientInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAABD4555F45DB1DC06705 /* RecipientInputCell.swift */; };
 		58AAAC9D265EE3AA6751604A /* CoinInfoMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB7A3593CAFEA65729C2 /* CoinInfoMap.swift */; };
 		58AAAC9FBAE63C597F82120F /* BaseThemeCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA65DB8DBBE7A24180387 /* BaseThemeCollectionCell.swift */; };
 		58AAACA87940BF3CC5401691 /* FullTransactionInfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD82EF02D5AA6E8ED4CB /* FullTransactionInfoProvider.swift */; };
@@ -3022,7 +3019,6 @@
 		58AAAB7A3593CAFEA65729C2 /* CoinInfoMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinInfoMap.swift; sourceTree = "<group>"; };
 		58AAAB99897A0344B040F6E2 /* InfoHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoHeaderView.swift; sourceTree = "<group>"; };
 		58AAABC875624B234499359D /* DoubleSpendInfoPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSpendInfoPresenter.swift; sourceTree = "<group>"; };
-		58AAABD4555F45DB1DC06705 /* RecipientInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipientInputCell.swift; sourceTree = "<group>"; };
 		58AAAC01A1CB85BAC663F222 /* UniswapRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniswapRepository.swift; sourceTree = "<group>"; };
 		58AAAC123E3138007B4D6E05 /* FullTransactionHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionHeaderCell.swift; sourceTree = "<group>"; };
 		58AAAC2D03916C80C8DC5FE5 /* FeeSliderWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeSliderWrapper.swift; sourceTree = "<group>"; };
@@ -3313,7 +3309,6 @@
 				11B3515BDAF15B6F7EEAB609 /* DescriptionCell.swift */,
 				11B355DF40EB498107EDAA4A /* BrandFooterCell.swift */,
 				58AAA863AE317EE16E35DA44 /* VerifiedInputCell.swift */,
-				58AAABD4555F45DB1DC06705 /* RecipientInputCell.swift */,
 				2FA5DB06251C30FF58B5F4C2 /* AvailableBalanceCell.swift */,
 				11B35E67C1B1AB7A13074894 /* AdditionalDataCellNew.swift */,
 				11B35AAE4114A56DF13ECF0F /* StackViewCell.swift */,
@@ -6350,7 +6345,6 @@
 				58AAAD67414CEB7A9F4AE166 /* AmountDecimalParser.swift in Sources */,
 				58AAA8730B0F7AE6122B863D /* SwapTradeOptionsViewModel.swift in Sources */,
 				58AAA896F016F14080F80079 /* RecipientAddressViewModel.swift in Sources */,
-				58AAAC96FED224A99B63677A /* RecipientInputCell.swift in Sources */,
 				11B3585107E9879518281D1E /* SwapService.swift in Sources */,
 				11B356FB190BE6D46D39EF4B /* SwapTradeService.swift in Sources */,
 				11B3511FBB1FE3976886506D /* SwapViewModel.swift in Sources */,
@@ -7129,7 +7123,6 @@
 				58AAAAE261DEB08128441641 /* AmountDecimalParser.swift in Sources */,
 				58AAAE372ECDC60A359C383C /* SwapTradeOptionsViewModel.swift in Sources */,
 				58AAA83A868B13E1D971E25F /* RecipientAddressViewModel.swift in Sources */,
-				58AAA875423E7E77E85B1D47 /* RecipientInputCell.swift in Sources */,
 				11B35D4BA7A88A791C8F264A /* SwapService.swift in Sources */,
 				11B35A07578BF3E13F599111 /* SwapTradeService.swift in Sources */,
 				11B3530AAA1ED2B90462AE84 /* SwapViewModel.swift in Sources */,
@@ -7870,7 +7863,6 @@
 				58AAA0642CB9B7B19C6235B5 /* AmountDecimalParser.swift in Sources */,
 				58AAA94D9908270AA745B61B /* SwapTradeOptionsViewModel.swift in Sources */,
 				58AAA1B687FB2BC2EE9B3F7F /* RecipientAddressViewModel.swift in Sources */,
-				58AAA6D14E26A3937CC67B93 /* RecipientInputCell.swift in Sources */,
 				11B350EDF233432B9A3BFF6B /* SwapService.swift in Sources */,
 				11B350CC92E5E48FBDFC5709 /* SwapTradeService.swift in Sources */,
 				11B35B5EC4F5919A7E741DB9 /* SwapViewModel.swift in Sources */,
