@@ -2,24 +2,20 @@ import RxSwift
 import RxCocoa
 
 class RecipientAddressViewModel {
+    private let service: SwapTradeOptionsService
     private let disposeBag = DisposeBag()
 
-    private let valueRelay = BehaviorRelay<String?>(value: nil)
     private let cautionRelay = BehaviorRelay<Caution?>(value: nil)
 
-    private let service: SwapTradeOptionsService
-
-    public init(service: SwapTradeOptionsService) {
+    init(service: SwapTradeOptionsService) {
         self.service = service
 
-        setInitial()
-        subscribe(disposeBag, service.errorsObservable) { [weak self] in self?.update(errors: $0) }
-    }
-
-    private func setInitial() {
-        if case let .valid(tradeOptions) = service.state {
-            valueRelay.accept(tradeOptions.recipient?.hex)
-        }
+        service.errorsObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] in
+                    self?.update(errors: $0)
+                })
+                .disposed(by: disposeBag)
     }
 
     private func update(errors: [Error]) {
@@ -35,30 +31,22 @@ class RecipientAddressViewModel {
 
 }
 
-extension RecipientAddressViewModel: IVerifiedInputViewModel {
+extension RecipientAddressViewModel {
 
-    var inputFieldMaximumNumberOfLines: Int {
-        2
+    var initialValue: String? {
+        guard case let .valid(tradeOptions) = service.state else {
+            return nil
+        }
+
+        return tradeOptions.recipient?.hex
     }
 
-    var inputFieldCanEdit: Bool {
-        false
-    }
-
-    var inputFieldValueDriver: Driver<String?> {
-        valueRelay.asDriver()
-    }
-
-    var inputFieldCautionDriver: Driver<Caution?> {
+    var cautionDriver: Driver<Caution?> {
         cautionRelay.asDriver()
     }
 
-    func inputFieldDidChange(text: String?) {
+    func onChange(text: String?) {
         service.recipient = text
-    }
-
-    var inputFieldPlaceholder: String? {
-        "swap.advanced_settings.recipient.placeholder".localized
     }
 
 }

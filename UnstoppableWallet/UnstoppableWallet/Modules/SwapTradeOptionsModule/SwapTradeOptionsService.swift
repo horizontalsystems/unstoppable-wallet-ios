@@ -66,7 +66,7 @@ class SwapTradeOptionsService {
             errors.append(TradeOptionsError.zeroDeadline)
         }
 
-        if let recipient = recipient?.trimmingCharacters(in: .whitespaces), !recipient.isEmpty {
+        if let recipient = recipient?.trimmingCharacters(in: .whitespacesAndNewlines), !recipient.isEmpty {
             do {
                 tradeOptions.recipient = try Address(hex: recipient)
             } catch {
