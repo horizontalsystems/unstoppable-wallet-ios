@@ -28,19 +28,19 @@ class UniswapRepository {
         self.swapData[self.uniqueCoinId(coinIn: coinIn, coinOut: coinOut)] = swapData
     }
 
-    private func swapData(coinIn: Coin, coinOut: Coin) -> Single<SwapData> {
+    private func swapData(coinIn: Coin, coinOut: Coin, forcedSync: Bool) -> Single<SwapData> {
         do {
             let tokenIn = try uniswapToken(coin: coinIn)
             let tokenOut = try uniswapToken(coin: coinOut)
 
-            if let swapData = swapData[uniqueCoinId(coinIn: coinIn, coinOut: coinOut)] {
-                return Single.just(swapData)
+            guard !forcedSync, let swapData = swapData[uniqueCoinId(coinIn: coinIn, coinOut: coinOut)] else {
+                return swapKit.swapDataSingle(tokenIn: tokenIn, tokenOut: tokenOut)
+                        .do(onSuccess: { [weak self] swapData in
+                            self?.save(swapData: swapData, coinIn: coinIn, coinOut: coinOut)
+                        })
             }
 
-            return swapKit.swapDataSingle(tokenIn: tokenIn, tokenOut: tokenOut)
-                    .do(onSuccess: { [weak self] swapData in
-                        self?.save(swapData: swapData, coinIn: coinIn, coinOut: coinOut)
-                    })
+            return Single.just(swapData)
         } catch {
             return Single.error(error)
         }
@@ -70,8 +70,8 @@ extension UniswapRepository {
         swapKit.routerAddress
     }
 
-    func trade(coinIn: Coin, coinOut: Coin, amount: Decimal, tradeType: TradeType, tradeOptions: TradeOptions) -> Single<TradeData> {
-        swapData(coinIn: coinIn, coinOut: coinOut).flatMap { [weak self] swapData in
+    func trade(coinIn: Coin, coinOut: Coin, amount: Decimal, tradeType: TradeType, tradeOptions: TradeOptions, forcedSync: Bool) -> Single<TradeData> {
+        swapData(coinIn: coinIn, coinOut: coinOut, forcedSync: forcedSync).flatMap { [weak self] swapData in
             guard let data = self?.tradeData(swapData: swapData, amount: amount, tradeType: tradeType, tradeOptions: tradeOptions) else {
                 return Single.error(AppError.unknownError)
             }

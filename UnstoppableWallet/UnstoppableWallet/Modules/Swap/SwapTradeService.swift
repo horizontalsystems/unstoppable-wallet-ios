@@ -72,12 +72,12 @@ class SwapTradeService {
         ethereumKit.lastBlockHeightObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] blockNumber in
-                    self?.syncState()
+                    self?.syncState(forcedSync: true)
                 })
                 .disposed(by: disposeBag)
     }
 
-    private func syncState() {
+    private func syncState(forcedSync: Bool = false) {
         guard let coinIn = coinIn, let coinOut = coinOut, let amount = tradeType == .exactIn ? amountIn : amountOut else {
             state = .notReady(errors: [])
             return
@@ -88,7 +88,7 @@ class SwapTradeService {
         state = .loading
 
         uniswapRepository
-                .trade(coinIn: coinIn, coinOut: coinOut, amount: amount, tradeType: tradeType, tradeOptions: tradeOptions)
+                .trade(coinIn: coinIn, coinOut: coinOut, amount: amount, tradeType: tradeType, tradeOptions: tradeOptions, forcedSync: forcedSync)
                 .subscribe(onSuccess: { [weak self] tradeData in
                     self?.handle(tradeData: tradeData)
                 }, onError: { [weak self] error in
