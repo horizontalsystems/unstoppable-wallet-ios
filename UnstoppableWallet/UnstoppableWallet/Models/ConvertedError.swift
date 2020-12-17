@@ -130,3 +130,11 @@ extension BitcoinCoreErrors.AddressConversionErrors: ConvertibleError {
         AppError.addressInvalid
     }
 }
+
+extension EthereumKit.WebSocketState.StateError: ConvertibleError {
+    var convertedError: Error {
+        switch self {
+        case .notConnected: return AppError.noConnection
+        }
+    }
+}
