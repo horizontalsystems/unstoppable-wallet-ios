@@ -9,9 +9,11 @@ class SwapTradeService {
     private static let warningPriceImpact: Decimal = 1
     private static let forbiddenPriceImpact: Decimal = 5
 
-    private let uniswapRepository: UniswapRepository
+    private let uniswapRepository: UniswapProvider
 
-    private var tradeDataDisposable = DisposeBag()
+    private var swapDataDisposeBag = DisposeBag()
+
+    private var swapData: SwapData?
 
     private(set) var coinIn: Coin? {
         didSet {
@@ -61,40 +63,61 @@ class SwapTradeService {
     var tradeOptions = TradeOptions() {
         didSet {
             tradeOptionsRelay.accept(tradeOptions)
-            syncState()
+            syncTradeData()
         }
     }
 
-    init(uniswapRepository: UniswapRepository, coin: Coin? = nil, ethereumKit: EthereumKit.Kit) {
+    init(uniswapRepository: UniswapProvider, coin: Coin? = nil, ethereumKit: EthereumKit.Kit) {
         self.uniswapRepository = uniswapRepository
         coinIn = coin
 
         ethereumKit.lastBlockHeightObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] blockNumber in
-                    self?.syncState(forcedSync: true)
+                    self?.syncSwapData()
                 })
                 .disposed(by: disposeBag)
     }
 
-    private func syncState(forcedSync: Bool = false) {
-        guard let coinIn = coinIn, let coinOut = coinOut, let amount = tradeType == .exactIn ? amountIn : amountOut else {
+    private func syncSwapData() {
+        guard let coinIn = coinIn, let coinOut = coinOut else {
             state = .notReady(errors: [])
             return
         }
 
-        tradeDataDisposable = DisposeBag()
+        swapDataDisposeBag = DisposeBag()
 
-        state = .loading
+        if swapData == nil {
+            state = .loading
+        }
 
         uniswapRepository
-                .trade(coinIn: coinIn, coinOut: coinOut, amount: amount, tradeType: tradeType, tradeOptions: tradeOptions, forcedSync: forcedSync)
-                .subscribe(onSuccess: { [weak self] tradeData in
-                    self?.handle(tradeData: tradeData)
+                .swapDataSingle(coinIn: coinIn, coinOut: coinOut)
+                .subscribe(onSuccess: { [weak self] swapData in
+                    self?.swapData = swapData
+                    self?.syncTradeData()
                 }, onError: { [weak self] error in
                     self?.state = .notReady(errors: [error])
                 })
-                .disposed(by: tradeDataDisposable)
+                .disposed(by: swapDataDisposeBag)
+    }
+
+    private func syncTradeData() {
+        guard let swapData = swapData else {
+            return
+        }
+
+        guard let amount = tradeType == .exactIn ? amountIn : amountOut else {
+            state = .notReady(errors: [])
+            return
+        }
+
+        do {
+            let tradeData = try uniswapRepository.tradeData(swapData: swapData, amount: amount, tradeType: tradeType, tradeOptions: tradeOptions)
+            handle(tradeData: tradeData)
+        } catch {
+            state = .notReady(errors: [error])
+        }
     }
 
     private func handle(tradeData: TradeData) {
@@ -159,8 +182,8 @@ extension SwapTradeService {
             amountOut = nil
         }
 
-
-        syncState()
+        swapData = nil
+        syncSwapData()
     }
 
     func set(coinOut: Coin?) {
@@ -175,8 +198,8 @@ extension SwapTradeService {
             amountIn = nil
         }
 
-
-        syncState()
+        swapData = nil
+        syncSwapData()
     }
 
     func set(amountIn: Decimal?) {
@@ -189,7 +212,7 @@ extension SwapTradeService {
         self.amountIn = amountIn
         amountOut = nil
 
-        syncState()
+        syncTradeData()
     }
 
     func set(amountOut: Decimal?) {
@@ -202,7 +225,7 @@ extension SwapTradeService {
         self.amountOut = amountOut
         amountIn = nil
 
-        syncState()
+        syncTradeData()
     }
 
     func switchCoins() {
