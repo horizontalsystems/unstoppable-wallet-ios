@@ -1772,7 +1772,7 @@
 		58AAA58ED4B9DF77A5EED3E9 /* ChartPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA54C0CDDBE5FEEFC08B0 /* ChartPresenter.swift */; };
 		58AAA5930B8040CE9D9119CF /* BackupConfirmationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA2D3E1840EA8931E12D0 /* BackupConfirmationRouter.swift */; };
 		58AAA59DF74C10DDCA79F35F /* AdditionalDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9E19A578FD13792D2B7 /* AdditionalDataView.swift */; };
-		58AAA59E29F23D2F9EC625B8 /* UniswapRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC01A1CB85BAC663F222 /* UniswapRepository.swift */; };
+		58AAA59E29F23D2F9EC625B8 /* UniswapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC01A1CB85BAC663F222 /* UniswapProvider.swift */; };
 		58AAA5B439E08563952F1388 /* CoinInfoMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB7A3593CAFEA65729C2 /* CoinInfoMap.swift */; };
 		58AAA5B75E0E9CD7325C5B28 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0702945DEEE381088CA /* ChartViewController.swift */; };
 		58AAA5BAC927BD8C5524F4C4 /* FullTransactionInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA687FC0253AD175BA756 /* FullTransactionInfoInteractor.swift */; };
@@ -1904,7 +1904,7 @@
 		58AAA9B29938CA65FA3CB3F0 /* AdditionalDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9E19A578FD13792D2B7 /* AdditionalDataView.swift */; };
 		58AAA9B84E2A8DCC4177DAEC /* FullTransactionInfoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA79D129F7B3E64598E5F /* FullTransactionInfoModule.swift */; };
 		58AAA9CC5A70A0AA29C5964B /* FeeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAED2B77420F32AC4BAD6 /* FeeService.swift */; };
-		58AAA9E6DEDF8D5D65F18C50 /* UniswapRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC01A1CB85BAC663F222 /* UniswapRepository.swift */; };
+		58AAA9E6DEDF8D5D65F18C50 /* UniswapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC01A1CB85BAC663F222 /* UniswapProvider.swift */; };
 		58AAA9E965507E040D6FEF8E /* CurrencyCompactFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAAA2E81C192F6356ADCD /* CurrencyCompactFormatter.swift */; };
 		58AAA9EB37923915A52CFFFF /* ConnectionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA610E99CF0429135DD1D /* ConnectionError.swift */; };
 		58AAA9EFD7F9CB98975F26E7 /* HorSysProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA976A6B67FD47D5958E8 /* HorSysProvider.swift */; };
@@ -1964,7 +1964,7 @@
 		58AAAC1C5B2E8569B5E8386F /* FullTransactionLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA407F55E644523FC8EF8 /* FullTransactionLinkView.swift */; };
 		58AAAC1F6C9D7F092ECFF261 /* FullTransactionInfoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA842D6734B75D88E578C /* FullTransactionInfoRouter.swift */; };
 		58AAAC279682FB4B8BC2C93D /* ChartCurrentRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD70A38E76F7B47C2204 /* ChartCurrentRateView.swift */; };
-		58AAAC27AFB2339A1A0A6A38 /* UniswapRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC01A1CB85BAC663F222 /* UniswapRepository.swift */; };
+		58AAAC27AFB2339A1A0A6A38 /* UniswapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC01A1CB85BAC663F222 /* UniswapProvider.swift */; };
 		58AAAC27D62C87BEB5F5D633 /* DataProviderSettingsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA36085141C5488E11A72 /* DataProviderSettingsPresenterTests.swift */; };
 		58AAAC38EB05790D3F4A2554 /* SwapTradeOptionsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA916A5FC2477F193C1FA /* SwapTradeOptionsModule.swift */; };
 		58AAAC3952B36CC12934C4F8 /* SendConfirmationReceiverCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0A7DCC834864D9AD4D5 /* SendConfirmationReceiverCell.swift */; };
@@ -3023,7 +3023,7 @@
 		58AAAB7A3593CAFEA65729C2 /* CoinInfoMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinInfoMap.swift; sourceTree = "<group>"; };
 		58AAAB99897A0344B040F6E2 /* InfoHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoHeaderView.swift; sourceTree = "<group>"; };
 		58AAABC875624B234499359D /* DoubleSpendInfoPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSpendInfoPresenter.swift; sourceTree = "<group>"; };
-		58AAAC01A1CB85BAC663F222 /* UniswapRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniswapRepository.swift; sourceTree = "<group>"; };
+		58AAAC01A1CB85BAC663F222 /* UniswapProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniswapProvider.swift; sourceTree = "<group>"; };
 		58AAAC123E3138007B4D6E05 /* FullTransactionHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionHeaderCell.swift; sourceTree = "<group>"; };
 		58AAAC2D03916C80C8DC5FE5 /* FeeSliderWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeSliderWrapper.swift; sourceTree = "<group>"; };
 		58AAAC411BF9546AD24CDE23 /* BackupWordsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupWordsController.swift; sourceTree = "<group>"; };
@@ -4630,7 +4630,7 @@
 		3C7B9999764FB6418F52EE2F /* Swap */ = {
 			isa = PBXGroup;
 			children = (
-				58AAAF7AC1137C47D5BBB0F0 /* Repositories */,
+				58AAAF7AC1137C47D5BBB0F0 /* Providers */,
 				11B35E33B64B364D8AB2E2ED /* CoinCard */,
 				11B3564F0873B64A4BFD146E /* Allowance */,
 				11B351CF83E5AB7B8CB0B5F5 /* Confirmation */,
@@ -5058,12 +5058,12 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		58AAAF7AC1137C47D5BBB0F0 /* Repositories */ = {
+		58AAAF7AC1137C47D5BBB0F0 /* Providers */ = {
 			isa = PBXGroup;
 			children = (
-				58AAAC01A1CB85BAC663F222 /* UniswapRepository.swift */,
+				58AAAC01A1CB85BAC663F222 /* UniswapProvider.swift */,
 			);
-			path = Repositories;
+			path = Providers;
 			sourceTree = "<group>";
 		};
 		95AD93BB0A2D5F5C4A435252 /* Frameworks */ = {
@@ -6271,7 +6271,7 @@
 				58AAA266D508022836BC1BA4 /* FeePresenter.swift in Sources */,
 				58AAA8CD1221ED4F96F23F6D /* FeeService.swift in Sources */,
 				3C7B9A553D6E06BE44720EF1 /* SwapModule.swift in Sources */,
-				58AAA9E6DEDF8D5D65F18C50 /* UniswapRepository.swift in Sources */,
+				58AAA9E6DEDF8D5D65F18C50 /* UniswapProvider.swift in Sources */,
 				58AAA7732560D76B81D007E7 /* CoinSelectViewModel.swift in Sources */,
 				2FA5D1245A2089FF1B64DEC2 /* FeeModule.swift in Sources */,
 				3C7B92ECEA4C4B005E1E6618 /* SwapViewItemHelper.swift in Sources */,
@@ -7050,7 +7050,7 @@
 				58AAA6AC3DD7234287F9F77F /* FeePresenter.swift in Sources */,
 				58AAA9CC5A70A0AA29C5964B /* FeeService.swift in Sources */,
 				3C7B993C4BDE65E87BE5A429 /* SwapModule.swift in Sources */,
-				58AAAC27AFB2339A1A0A6A38 /* UniswapRepository.swift in Sources */,
+				58AAAC27AFB2339A1A0A6A38 /* UniswapProvider.swift in Sources */,
 				58AAAFE644C1B236B9714B47 /* CoinSelectViewModel.swift in Sources */,
 				2FA5DFABFEE9969A23A44925 /* FeeModule.swift in Sources */,
 				3C7B94BA8FFF13367E4DB77A /* SwapViewItemHelper.swift in Sources */,
@@ -7791,7 +7791,7 @@
 				58AAAE6A9BE666B7F1A66E68 /* FeePresenter.swift in Sources */,
 				58AAA84C69F1E036E4F27CFC /* FeeService.swift in Sources */,
 				3C7B98EAF59280801E6583FD /* SwapModule.swift in Sources */,
-				58AAA59E29F23D2F9EC625B8 /* UniswapRepository.swift in Sources */,
+				58AAA59E29F23D2F9EC625B8 /* UniswapProvider.swift in Sources */,
 				58AAA29F80AC65D37BD1D289 /* CoinSelectViewModel.swift in Sources */,
 				2FA5D5576E70AF838C7B93BB /* FeeModule.swift in Sources */,
 				3C7B99C86ECAE923A48196EE /* SwapViewItemHelper.swift in Sources */,

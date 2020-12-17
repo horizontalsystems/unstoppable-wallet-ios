@@ -50,7 +50,7 @@ struct SwapModule {
         }
 
         let swapKit = UniswapKit.Kit.instance(ethereumKit: ethereumKit)
-        let uniswapRepository = UniswapRepository(swapKit: swapKit)
+        let uniswapRepository = UniswapProvider(swapKit: swapKit)
 
         let coinService = CoinService(
                 coin: App.shared.appConfigProvider.ethereumCoin,
