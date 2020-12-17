@@ -176,6 +176,9 @@ extension SwapTradeService {
         }
 
         self.coinIn = coinIn
+        if tradeType == .exactOut {
+            amountIn = nil
+        }
 
         if coinOut == coinIn {
             coinOut = nil
@@ -192,6 +195,9 @@ extension SwapTradeService {
         }
 
         self.coinOut = coinOut
+        if tradeType == .exactIn {
+            amountOut = nil
+        }
 
         if coinIn == coinOut {
             coinIn = nil
