@@ -310,6 +310,13 @@ class GrdbStorage {
             }
         }
 
+        migrator.registerMigration("addCoinTypeBlockchainSettingForBitcoinCash") { db in
+            if try EnabledWallet.filter(EnabledWallet.Columns.coinId == "BCH").fetchOne(db) != nil {
+                let record = BlockchainSettingRecord(coinType: "bitcoinCash", key: "network_coin_type", value: "type0")
+                try record.insert(db)
+            }
+        }
+
         return migrator
     }
 
