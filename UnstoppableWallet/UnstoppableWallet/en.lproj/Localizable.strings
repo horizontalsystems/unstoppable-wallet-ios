@@ -87,6 +87,10 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 btc.horizontalsystems.xyz/apg
 dash.horizontalsystems.xyz/apg
 bch.horizontalsystems.xyz/apg";
+"coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "New";
+"coin_settings.bitcoin_cash_coin_type.description.type0" = "Older wallets (before Aug 2017)";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "Newer wallets";
 "sync_mode.from_blockchain" = "From Blockchain";
 "blockchain_settings.change_alert.title" = "Address Format";
 "blockchain_settings.change_alert.content" = "After this change the wallet will have to resync itself with the %@ blockchain.\n\nWhen you change the address format for %@ the current balance and transaction history will no longer be visible. Changing it back to previous setting will bring everything back after the wallet resyncs itself with the blockchain. We recommend not to change it if not sure what that is.";
@@ -95,6 +99,7 @@ bch.horizontalsystems.xyz/apg";
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "Address Format";
+
 // Backup
 
 "backup.close" = "Close";
