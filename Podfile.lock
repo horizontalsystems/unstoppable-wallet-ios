@@ -471,13 +471,13 @@ CHECKOUT OPTIONS:
     :commit: 65f41dce6897e943d8b973b5d087bddf9ece8b39
     :git: https://github.com/horizontalsystems/binance-chain-kit-ios
   BitcoinCashKit.swift:
-    :commit: ff4da743e62491bb77479e40c97f0146887de5c1
+    :commit: 9f4f7a9f3e907a7587526d471a214511f3ac0660
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinCore.swift:
-    :commit: ff4da743e62491bb77479e40c97f0146887de5c1
+    :commit: 6a3600a94288eba06683e2b0cd9a13c8e156163f
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinKit.swift:
-    :commit: ff4da743e62491bb77479e40c97f0146887de5c1
+    :commit: 6a3600a94288eba06683e2b0cd9a13c8e156163f
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
     :commit: 1f37d58e745ad53f62cf23a935fda3ab6419f305
@@ -486,7 +486,7 @@ CHECKOUT OPTIONS:
     :commit: dbbb721e89b4da3b9f6b5f44866b07f28bca67c1
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
-    :commit: ff4da743e62491bb77479e40c97f0146887de5c1
+    :commit: 6a3600a94288eba06683e2b0cd9a13c8e156163f
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   EosioSwift:
     :commit: da261f581d9a19d7bbb4ef592bf649df1422fdb8
@@ -516,7 +516,7 @@ CHECKOUT OPTIONS:
     :commit: dd560907666008fc326c1715c6437a40266cca19
     :git: https://github.com/horizontalsystems/hd-wallet-kit-ios
   Hodler.swift:
-    :commit: ff4da743e62491bb77479e40c97f0146887de5c1
+    :commit: 6a3600a94288eba06683e2b0cd9a13c8e156163f
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HsToolKit.swift:
     :commit: 52d655b99381d1940e215f22382f0814cc0c8bc3
@@ -528,7 +528,7 @@ CHECKOUT OPTIONS:
     :commit: dbbb721e89b4da3b9f6b5f44866b07f28bca67c1
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
-    :commit: ff4da743e62491bb77479e40c97f0146887de5c1
+    :commit: 6a3600a94288eba06683e2b0cd9a13c8e156163f
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   ModuleKit.swift:
     :commit: dbbb721e89b4da3b9f6b5f44866b07f28bca67c1
@@ -648,6 +648,6 @@ SPEC CHECKSUMS:
   XRatesKit.swift: e0bd2c964d6b70786611bbf1c64774614779dcf5
   ZcashLightClientKit: 82c225b8ebe4bb44983acc6fb47e043d68a01651
 
-PODFILE CHECKSUM: 0ca5a96fe319a0398d2c8f84edb1262472f012a2
+PODFILE CHECKSUM: 2f5cd3b63f4cb6517a0f8ec40410ffa5d560f81b
 
 COCOAPODS: 1.10.0

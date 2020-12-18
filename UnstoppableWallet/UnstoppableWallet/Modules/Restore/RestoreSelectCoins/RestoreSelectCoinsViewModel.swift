@@ -3,20 +3,36 @@ import RxCocoa
 
 class RestoreSelectCoinsViewModel {
     private let service: RestoreSelectCoinsService
+    private let blockchainSettingsService: BlockchainSettingsService
 
     private let disposeBag = DisposeBag()
     private let viewStateRelay = BehaviorRelay<CoinToggleViewModel.ViewState>(value: .empty)
-    private let openDerivationSettingsRelay = PublishRelay<(coin: Coin, currentDerivation: MnemonicDerivation)>()
     private let enabledCoinsRelay = PublishRelay<[Coin]>()
+    private let disableCoinRelay = PublishRelay<Coin>()
     private var filter: String?
 
-    init(service: RestoreSelectCoinsService) {
+    init(service: RestoreSelectCoinsService, blockchainSettingsService: BlockchainSettingsService) {
         self.service = service
+        self.blockchainSettingsService = blockchainSettingsService
 
         service.stateObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] state in
                     self?.syncViewState(state: state)
+                })
+                .disposed(by: disposeBag)
+
+        blockchainSettingsService.approveEnableCoinObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] coin in
+                    self?.service.enable(coin: coin)
+                })
+                .disposed(by: disposeBag)
+
+        blockchainSettingsService.rejectEnableCoinObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] coin in
+                    self?.disableCoinRelay.accept(coin)
                 })
                 .disposed(by: disposeBag)
 
@@ -55,18 +71,6 @@ class RestoreSelectCoinsViewModel {
         viewStateRelay.accept(viewState)
     }
 
-    private func enable(coin: Coin, derivationSetting: DerivationSetting? = nil) {
-        do {
-            try service.enable(coin: coin, derivationSetting: derivationSetting)
-        } catch let error as RestoreSelectCoinsService.EnableCoinError {
-            switch error {
-            case .derivationNotConfirmed(let currentDerivation):
-                openDerivationSettingsRelay.accept((coin: coin, currentDerivation: currentDerivation))
-            }
-        } catch {
-        }
-    }
-
 }
 
 extension RestoreSelectCoinsViewModel: ICoinToggleViewModel {
@@ -76,7 +80,7 @@ extension RestoreSelectCoinsViewModel: ICoinToggleViewModel {
     }
 
     func onEnable(coin: Coin) {
-        enable(coin: coin)
+        blockchainSettingsService.approveEnable(coin: coin, accountOrigin: .restored)
     }
 
     func onDisable(coin: Coin) {
@@ -95,20 +99,16 @@ extension RestoreSelectCoinsViewModel: ICoinToggleViewModel {
 
 extension RestoreSelectCoinsViewModel {
 
+    var disableCoinSignal: Signal<Coin> {
+        disableCoinRelay.asSignal()
+    }
+
     var restoreEnabledDriver: Driver<Bool> {
         service.canRestoreObservable.asDriver(onErrorJustReturn: false)
     }
 
     var enabledCoinsSignal: Signal<[Coin]> {
         enabledCoinsRelay.asSignal()
-    }
-
-    var openDerivationSettingsSignal: Signal<(coin: Coin, currentDerivation: MnemonicDerivation)> {
-        openDerivationSettingsRelay.asSignal()
-    }
-
-    func onSelect(derivationSetting: DerivationSetting, coin: Coin) {
-        enable(coin: coin, derivationSetting: derivationSetting)
     }
 
     func onRestore() {

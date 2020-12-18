@@ -3,6 +3,7 @@ import BitcoinCore
 class AdapterFactory: IAdapterFactory {
     weak var derivationSettingsManager: IDerivationSettingsManager?
     weak var initialSyncSettingsManager: IInitialSyncSettingsManager?
+    weak var bitcoinCashCoinTypeManager: BitcoinCashCoinTypeManager?
 
     private let appConfigProvider: IAppConfigProvider
     private let ethereumKitManager: EthereumKitManager
@@ -26,7 +27,8 @@ class AdapterFactory: IAdapterFactory {
         case .litecoin:
             return try? LitecoinAdapter(wallet: wallet, syncMode: syncMode, derivation: derivation, testMode: appConfigProvider.testMode)
         case .bitcoinCash:
-            return try? BitcoinCashAdapter(wallet: wallet, syncMode: syncMode, testMode: appConfigProvider.testMode)
+            let bitcoinCashCoinType = bitcoinCashCoinTypeManager?.bitcoinCashCoinType
+            return try? BitcoinCashAdapter(wallet: wallet, syncMode: syncMode, bitcoinCashCoinType: bitcoinCashCoinType, testMode: appConfigProvider.testMode)
         case .dash:
             return try? DashAdapter(wallet: wallet, syncMode: syncMode, testMode: appConfigProvider.testMode)
         case .zcash:

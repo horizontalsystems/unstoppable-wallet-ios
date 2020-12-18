@@ -1,22 +1,39 @@
 import RxSwift
 import RxRelay
 import RxCocoa
+import BitcoinCashKit
 
 class ManageWalletsViewModel {
     private let service: ManageWalletsService
+    private let blockchainSettingsService: BlockchainSettingsService
 
     private let disposeBag = DisposeBag()
     private let viewStateRelay = BehaviorRelay<CoinToggleViewModel.ViewState>(value: .empty)
-    private let openDerivationSettingsRelay = PublishRelay<(coin: Coin, currentDerivation: MnemonicDerivation)>()
+    private let disableCoinRelay = PublishRelay<Coin>()
     private var filter: String?
 
-    init(service: ManageWalletsService) {
+    init(service: ManageWalletsService, blockchainSettingsService: BlockchainSettingsService) {
         self.service = service
+        self.blockchainSettingsService = blockchainSettingsService
 
         service.stateObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] state in
                     self?.syncViewState(state: state)
+                })
+                .disposed(by: disposeBag)
+
+        blockchainSettingsService.approveEnableCoinObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] coin in
+                    self?.service.enable(coin: coin)
+                })
+                .disposed(by: disposeBag)
+
+        blockchainSettingsService.rejectEnableCoinObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] coin in
+                    self?.disableCoinRelay.accept(coin)
                 })
                 .disposed(by: disposeBag)
 
@@ -64,19 +81,6 @@ class ManageWalletsViewModel {
         viewStateRelay.accept(viewState)
     }
 
-    private func enable(coin: Coin, derivationSetting: DerivationSetting? = nil) {
-        do {
-            try service.enable(coin: coin, derivationSetting: derivationSetting)
-        } catch let error as ManageWalletsService.EnableCoinError {
-            switch error {
-            case .derivationNotConfirmed(let currentDerivation):
-                openDerivationSettingsRelay.accept((coin: coin, currentDerivation: currentDerivation))
-            default: ()
-            }
-        } catch {
-        }
-    }
-
 }
 
 extension ManageWalletsViewModel: ICoinToggleViewModel {
@@ -86,7 +90,11 @@ extension ManageWalletsViewModel: ICoinToggleViewModel {
     }
 
     func onEnable(coin: Coin) {
-        enable(coin: coin)
+        guard let account = service.account(coin: coin) else {
+            return // impossible case
+        }
+
+        blockchainSettingsService.approveEnable(coin: coin, accountOrigin: account.origin)
     }
 
     func onDisable(coin: Coin) {
@@ -105,12 +113,8 @@ extension ManageWalletsViewModel: ICoinToggleViewModel {
 
 extension ManageWalletsViewModel {
 
-    var openDerivationSettingsSignal: Signal<(coin: Coin, currentDerivation: MnemonicDerivation)> {
-        openDerivationSettingsRelay.asSignal()
-    }
-
-    func onSelect(derivationSetting: DerivationSetting, coin: Coin) {
-        enable(coin: coin, derivationSetting: derivationSetting)
+    var disableCoinSignal: Signal<Coin> {
+        disableCoinRelay.asSignal()
     }
 
 }

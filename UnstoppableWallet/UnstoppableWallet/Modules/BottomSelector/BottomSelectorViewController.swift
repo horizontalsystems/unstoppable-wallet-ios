@@ -3,17 +3,28 @@ import ActionSheet
 import ThemeKit
 import SectionsTableView
 
-class DerivationSettingViewController: ThemeActionSheetController {
-    private let delegate: IDerivationSettingViewDelegate
+protocol IBottomSelectorDelegate: AnyObject {
+    func bottomSelectorOnSelect(index: Int)
+    func bottomSelectorOnCancel()
+}
+
+class BottomSelectorViewController: ThemeActionSheetController {
+    private let config: Config
+    private weak var delegate: IBottomSelectorDelegate?
 
     private let titleView = BottomSheetTitleView()
     private let tableView = SelfSizedSectionsTableView(style: .grouped)
     private let doneButton = ThemeButton()
 
-    private var viewItems = [DerivationSettingModule.ViewItem]()
+    private var currentIndex: Int
+    private var didTapDone = false
 
-    init(delegate: IDerivationSettingViewDelegate) {
+    init(config: Config, delegate: IBottomSelectorDelegate) {
+        self.config = config
         self.delegate = delegate
+
+        currentIndex = config.selectedIndex
+
         super.init()
     }
 
@@ -29,6 +40,11 @@ class DerivationSettingViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
+        titleView.bind(
+                title: config.title,
+                subtitle: config.subtitle,
+                image: config.icon
+        )
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)
         }
@@ -51,10 +67,8 @@ class DerivationSettingViewController: ThemeActionSheetController {
         }
 
         doneButton.apply(style: .primaryYellow)
-        doneButton.setTitle("Done".localized, for: .normal)
-        doneButton.addTarget(self, action: #selector(_onTapDone), for: .touchUpInside)
-
-        delegate.onLoad()
+        doneButton.setTitle("button.done".localized, for: .normal)
+        doneButton.addTarget(self, action: #selector(onTapDone), for: .touchUpInside)
 
         tableView.reload()
     }
@@ -62,35 +76,44 @@ class DerivationSettingViewController: ThemeActionSheetController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        delegate.onBeforeClose()
+        if !didTapDone {
+            delegate?.bottomSelectorOnCancel()
+        }
     }
 
-    @objc private func _onTapDone() {
-        delegate.onTapDone()
+    @objc private func onTapDone() {
+        delegate?.bottomSelectorOnSelect(index: currentIndex)
+
+        didTapDone = true
+        dismiss(animated: true)
     }
 
 }
 
-extension DerivationSettingViewController: SectionsDataSource {
+extension BottomSelectorViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         [
             Section(
                     id: "main",
-                    rows: viewItems.enumerated().map { index, viewItem in
-                        Row<BottomSheetCheckmarkCell>(
+                    rows: config.viewItems.enumerated().map { index, viewItem in
+                        let selected = index == currentIndex
+
+                        return Row<BottomSheetCheckmarkCell>(
                                 id: "item_\(index)",
-                                hash: "\(viewItem.selected)",
+                                hash: "\(selected)",
                                 height: .heightDoubleLineCell,
+                                autoDeselect: true,
                                 bind: { cell, _ in
                                     cell.bind(
                                             title: viewItem.title,
                                             subtitle: viewItem.subtitle,
-                                            checkmarkVisible: viewItem.selected
+                                            checkmarkVisible: selected
                                     )
                                 },
                                 action: { [weak self] _ in
-                                    self?.delegate.onTapViewItem(index: index)
+                                    self?.currentIndex = index
+                                    self?.tableView.reload(animated: true)
                                 }
                         )
                     }
@@ -100,19 +123,19 @@ extension DerivationSettingViewController: SectionsDataSource {
 
 }
 
-extension DerivationSettingViewController: IDerivationSettingView {
+extension BottomSelectorViewController {
 
-    func set(coinTitle: String, coinCode: String, blockchainType: String?) {
-        titleView.bind(
-                title: "blockchain_settings.title".localized,
-                subtitle: coinTitle,
-                image: .image(coinCode: coinCode, blockchainType: blockchainType)
-        )
+    struct Config {
+        let icon: UIImage?
+        let title: String
+        let subtitle: String
+        let selectedIndex: Int
+        let viewItems: [ViewItem]
     }
 
-    func set(viewItems: [DerivationSettingModule.ViewItem]) {
-        self.viewItems = viewItems
-        tableView.reload()
+    struct ViewItem {
+        let title: String
+        let subtitle: String
     }
 
 }

@@ -5,7 +5,6 @@ class ManageWalletsService {
     private let coinManager: ICoinManager
     private let walletManager: IWalletManager
     private let accountManager: IAccountManager
-    private let derivationSettingsManager: IDerivationSettingsManager
 
     private let disposeBag = DisposeBag()
     private var wallets = [Coin: Wallet]()
@@ -18,11 +17,10 @@ class ManageWalletsService {
         }
     }
 
-    init(coinManager: ICoinManager, walletManager: IWalletManager, accountManager: IAccountManager, derivationSettingsManager: IDerivationSettingsManager) {
+    init(coinManager: ICoinManager, walletManager: IWalletManager, accountManager: IAccountManager) {
         self.coinManager = coinManager
         self.walletManager = walletManager
         self.accountManager = accountManager
-        self.derivationSettingsManager = derivationSettingsManager
 
         accountManager.accountsObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
@@ -43,10 +41,6 @@ class ManageWalletsService {
         }
 
         syncState()
-    }
-
-    private func account(coin: Coin) -> Account? {
-        accountManager.accounts.first { coin.type.canSupport(accountType: $0.type) }
     }
 
     private func item(coin: Coin) -> Item {
@@ -74,17 +68,13 @@ extension ManageWalletsService {
         stateRelay.asObservable()
     }
 
-    func enable(coin: Coin, derivationSetting: DerivationSetting? = nil) throws {
+    func account(coin: Coin) -> Account? {
+        accountManager.accounts.first { coin.type.canSupport(accountType: $0.type) }
+    }
+
+    func enable(coin: Coin) {
         guard let account = account(coin: coin) else {
-            throw EnableCoinError.noAccount
-        }
-
-        if account.origin == .restored, let setting = derivationSettingsManager.setting(coinType: coin.type) {
-            guard let derivationSetting = derivationSetting else {
-                throw EnableCoinError.derivationNotConfirmed(currentDerivation: setting.derivation)
-            }
-
-            derivationSettingsManager.save(setting: derivationSetting)
+            return // impossible case
         }
 
         let wallet = Wallet(coin: coin, account: account)
@@ -132,11 +122,6 @@ extension ManageWalletsService {
     enum ItemState: CustomStringConvertible {
         case noAccount
         case hasAccount(hasWallet: Bool)
-    }
-
-    enum EnableCoinError: Error {
-        case noAccount
-        case derivationNotConfirmed(currentDerivation: MnemonicDerivation)
     }
 
 }

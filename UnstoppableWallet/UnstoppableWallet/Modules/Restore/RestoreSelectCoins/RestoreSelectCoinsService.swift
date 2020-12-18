@@ -4,7 +4,6 @@ import RxRelay
 class RestoreSelectCoinsService {
     private var predefinedAccountType: PredefinedAccountType
     private let coinManager: ICoinManager
-    private let derivationSettingsManager: IDerivationSettingsManager
 
     private(set) var enabledCoins = Set<Coin>()
 
@@ -17,10 +16,9 @@ class RestoreSelectCoinsService {
         }
     }
 
-    init(predefinedAccountType: PredefinedAccountType, coinManager: ICoinManager, derivationSettingsManager: IDerivationSettingsManager) {
+    init(predefinedAccountType: PredefinedAccountType, coinManager: ICoinManager) {
         self.predefinedAccountType = predefinedAccountType
         self.coinManager = coinManager
-        self.derivationSettingsManager = derivationSettingsManager
 
         syncState()
     }
@@ -59,15 +57,7 @@ extension RestoreSelectCoinsService {
         canRestoreRelay.asObservable()
     }
 
-    func enable(coin: Coin, derivationSetting: DerivationSetting? = nil) throws {
-        if let setting = derivationSettingsManager.setting(coinType: coin.type) {
-            guard let derivationSetting = derivationSetting else {
-                throw EnableCoinError.derivationNotConfirmed(currentDerivation: setting.derivation)
-            }
-
-            derivationSettingsManager.save(setting: derivationSetting)
-        }
-
+    func enable(coin: Coin) {
         enabledCoins.insert(coin)
 
         syncState()
@@ -102,10 +92,6 @@ extension RestoreSelectCoinsService {
             self.coin = coin
             self.enabled = enabled
         }
-    }
-
-    enum EnableCoinError: Error {
-        case derivationNotConfirmed(currentDerivation: MnemonicDerivation)
     }
 
 }
