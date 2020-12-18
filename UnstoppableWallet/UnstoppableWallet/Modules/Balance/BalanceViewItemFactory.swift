@@ -71,6 +71,7 @@ class BalanceViewItemFactory {
         return BalanceButtonsViewItem(
                 receiveButtonEnabled: state != nil,
                 sendButtonEnabled: state == .synced,
+                swapButtonEnabled: state == .synced,
                 swapButtonHidden: !item.wallet.coin.type.swappable
         )
     }

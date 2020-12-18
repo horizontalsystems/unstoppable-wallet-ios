@@ -62,6 +62,7 @@ open class BalanceButtonsView: UIView {
 
         swapButton.apply(style: swapStyle)
         swapButton.setImage(UIImage(named: "arrow_swap_2_24")?.tinted(with: .black), for: .normal)
+        swapButton.setImage(UIImage(named: "arrow_swap_2_24")?.tinted(with: .themeGray50), for: .disabled)
         swapButton.addTarget(self, action: #selector(onSwap), for: .touchUpInside)
     }
 
@@ -100,9 +101,10 @@ open class BalanceButtonsView: UIView {
         sendButton.setTitle(sendTitle, for: .normal)
     }
 
-    public func bind(receiveEnabled: Bool, sendEnabled: Bool, swapHidden: Bool, receiveAction: @escaping () -> (), sendAction: @escaping () -> (), swapAction: @escaping () -> ()) {
+    public func bind(receiveEnabled: Bool, sendEnabled: Bool, swapEnabled: Bool, swapHidden: Bool, receiveAction: @escaping () -> (), sendAction: @escaping () -> (), swapAction: @escaping () -> ()) {
         receiveButton.isEnabled = receiveEnabled
         sendButton.isEnabled = sendEnabled
+        swapButton.isEnabled = swapEnabled
         updateSwap(hidden: swapHidden)
 
         onTapReceive = receiveAction
