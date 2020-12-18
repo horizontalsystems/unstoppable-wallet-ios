@@ -65,6 +65,7 @@ class App {
 
     let initialSyncSettingsManager: IInitialSyncSettingsManager
     let derivationSettingsManager: IDerivationSettingsManager
+    let bitcoinCashCoinTypeManager: BitcoinCashCoinTypeManager
     let ethereumRpcModeSettingsManager: IEthereumRpcModeSettingsManager
 
     let transactionDataSortModeSettingManager: ITransactionDataSortModeSettingManager
@@ -144,12 +145,14 @@ class App {
         let settingsStorage: IBlockchainSettingsStorage = BlockchainSettingsStorage(storage: storage)
         derivationSettingsManager = DerivationSettingsManager(walletManager: walletManager, adapterManager: adapterManager, storage: settingsStorage)
         initialSyncSettingsManager = InitialSyncSettingsManager(walletManager: walletManager, adapterManager: adapterManager, appConfigProvider: appConfigProvider, storage: settingsStorage)
+        bitcoinCashCoinTypeManager = BitcoinCashCoinTypeManager(walletManager: walletManager, adapterManager: adapterManager, storage: settingsStorage)
         ethereumRpcModeSettingsManager = EthereumRpcModeSettingsManager(ethereumKitManager: ethereumKitManager, walletManager: walletManager, adapterManager: adapterManager, localStorage: localStorage)
 
         transactionDataSortModeSettingManager = TransactionDataSortModeSettingManager(storage: localStorage)
 
         adapterFactory.derivationSettingsManager = derivationSettingsManager
         adapterFactory.initialSyncSettingsManager = initialSyncSettingsManager
+        adapterFactory.bitcoinCashCoinTypeManager = bitcoinCashCoinTypeManager
         ethereumKitManager.ethereumRpcModeSettingsManager = ethereumRpcModeSettingsManager
 
         pinKit = PinKit.Kit(secureStorage: keychainKit.secureStorage, localStorage: StorageKit.LocalStorage.default)

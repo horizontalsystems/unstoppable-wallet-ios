@@ -350,7 +350,9 @@ protocol IBlockchainSettingsRecordStorage {
     func deleteAll(settingKey: String)
 }
 
-protocol IBlockchainSettingsStorage {
+protocol IBlockchainSettingsStorage: AnyObject {
+    var bitcoinCashCoinType: BitcoinCashCoinType? { get set }
+
     func derivationSetting(coinType: CoinType) -> DerivationSetting?
     func save(derivationSetting: DerivationSetting)
     func deleteDerivationSettings()
