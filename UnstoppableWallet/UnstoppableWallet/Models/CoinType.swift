@@ -79,6 +79,15 @@ enum CoinType {
         }
     }
 
+    var title: String {
+        switch self {
+        case .bitcoin: return "Bitcoin"
+        case .litecoin: return "Litecoin"
+        case .bitcoinCash: return "Bitcoin Cash"
+        default: return ""
+        }
+    }
+
 }
 
 extension CoinType: Equatable {

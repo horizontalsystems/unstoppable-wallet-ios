@@ -19,6 +19,10 @@ extension BitcoinCashCoinTypeManager {
         storage.bitcoinCashCoinType ?? defaultCoinType
     }
 
+    var hasActiveSetting: Bool {
+        walletManager.wallets.contains { $0.coin.type == .bitcoinCash }
+    }
+
     func save(bitcoinCashCoinType: BitcoinCashCoinType) {
         storage.bitcoinCashCoinType = bitcoinCashCoinType
 

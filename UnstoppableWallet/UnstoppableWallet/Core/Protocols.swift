@@ -545,7 +545,7 @@ protocol IRemoteAlertManager {
 }
 
 protocol IDerivationSettingsManager: AnyObject {
-    var allActiveSettings: [(setting: DerivationSetting, coin: Coin)] { get }
+    var allActiveSettings: [(setting: DerivationSetting, coinType: CoinType)] { get }
     func setting(coinType: CoinType) -> DerivationSetting?
     func save(setting: DerivationSetting)
     func resetStandardSettings()

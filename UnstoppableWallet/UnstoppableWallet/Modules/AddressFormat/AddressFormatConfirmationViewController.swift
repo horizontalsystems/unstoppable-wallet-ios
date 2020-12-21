@@ -2,15 +2,24 @@ import UIKit
 import ActionSheet
 import ThemeKit
 
-class DerivationSettingConfirmationViewController: ThemeActionSheetController {
-    private let delegate: IDerivationSettingConfirmationViewDelegate
+protocol IAddressFormatConfirmationDelegate: AnyObject {
+    func onConfirm()
+}
+
+class AddressFormatConfirmationViewController: ThemeActionSheetController {
+    private let coinTypeTitle: String
+    private let settingName: String
+    private weak var delegate: IAddressFormatConfirmationDelegate?
 
     private let titleView = BottomSheetTitleView()
     private let descriptionView = HighlightedDescriptionView()
     private let confirmButton = ThemeButton()
 
-    init(delegate: IDerivationSettingConfirmationViewDelegate) {
+    init(coinTypeTitle: String, settingName: String, delegate: IAddressFormatConfirmationDelegate) {
+        self.settingName = settingName
+        self.coinTypeTitle = coinTypeTitle
         self.delegate = delegate
+
         super.init()
     }
 
@@ -26,6 +35,11 @@ class DerivationSettingConfirmationViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
+        titleView.bind(
+                title: "blockchain_settings.change_alert.title".localized,
+                subtitle: settingName,
+                image: UIImage(named: "warning_2_24")?.tinted(with: .themeJacob)
+        )
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)
         }
@@ -36,6 +50,8 @@ class DerivationSettingConfirmationViewController: ThemeActionSheetController {
             maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin3x)
         }
 
+        descriptionView.bind(text: "blockchain_settings.change_alert.content".localized(coinTypeTitle, coinTypeTitle))
+
         view.addSubview(confirmButton)
         confirmButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
@@ -45,28 +61,13 @@ class DerivationSettingConfirmationViewController: ThemeActionSheetController {
         }
 
         confirmButton.apply(style: .primaryYellow)
-        confirmButton.addTarget(self, action: #selector(_onTapConfirm), for: .touchUpInside)
-
-        delegate.onLoad()
+        confirmButton.addTarget(self, action: #selector(onTapConfirm), for: .touchUpInside)
+        confirmButton.setTitle("blockchain_settings.change_alert.action_button_text".localized(settingName), for: .normal)
     }
 
-    @objc private func _onTapConfirm() {
-        delegate.onTapConfirm()
-    }
-
-}
-
-extension DerivationSettingConfirmationViewController: IDerivationSettingConfirmationView {
-
-    func set(coinTitle: String, settingTitle: String) {
-        titleView.bind(
-                title: "blockchain_settings.change_alert.title".localized,
-                subtitle: settingTitle,
-                image: UIImage(named: "warning_2_24")?.tinted(with: .themeJacob)
-        )
-
-        descriptionView.bind(text: "blockchain_settings.change_alert.content".localized(coinTitle, coinTitle))
-        confirmButton.setTitle("blockchain_settings.change_alert.action_button_text".localized(settingTitle), for: .normal)
+    @objc private func onTapConfirm() {
+        delegate?.onConfirm()
+        dismiss(animated: true)
     }
 
 }
