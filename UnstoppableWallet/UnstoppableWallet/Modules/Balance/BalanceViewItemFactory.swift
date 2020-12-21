@@ -66,13 +66,12 @@ class BalanceViewItemFactory {
             return nil
         }
 
-        let state = item.state
+        let sendButtonsState: ButtonState = item.state == .synced ? .enabled : .disabled
 
         return BalanceButtonsViewItem(
-                receiveButtonEnabled: state != nil,
-                sendButtonEnabled: state == .synced,
-                swapButtonEnabled: state == .synced,
-                swapButtonHidden: !item.wallet.coin.type.swappable
+                receiveButtonState: item.state != nil ? .enabled : .disabled,
+                sendButtonState: sendButtonsState,
+                swapButtonState: !item.wallet.coin.type.swappable ? sendButtonsState : .hidden
         )
     }
 

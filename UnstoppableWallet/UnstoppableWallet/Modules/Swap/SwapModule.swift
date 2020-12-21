@@ -59,7 +59,7 @@ struct SwapModule {
         )
 
         let tradeService = SwapTradeService(
-                uniswapRepository: uniswapRepository,
+                uniswapProvider: uniswapRepository,
                 coin: coinIn,
                 ethereumKit: ethereumKit
         )
