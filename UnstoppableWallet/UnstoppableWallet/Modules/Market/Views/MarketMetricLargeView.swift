@@ -2,6 +2,14 @@ import UIKit
 import SnapKit
 
 class MarketMetricLargeView: UIView {
+    private static let formatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
+        formatter.groupingSeparator = ""
+        return formatter
+    }()
+
     private let titleLabel = UILabel()
     private let gradientCircle = GradientPercentCircle()
     private let valueLabel = UILabel()
@@ -15,36 +23,37 @@ class MarketMetricLargeView: UIView {
             maker.leading.top.trailing.equalToSuperview()
         }
 
+        titleLabel.numberOfLines = 2
         titleLabel.font = .micro
         titleLabel.textColor = .themeGray
 
-        addSubview(gradientCircle)
-        gradientCircle.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview()
-            maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin6)
-            maker.width.equalTo(GradientPercentBar.width)
-            maker.height.equalTo(GradientPercentBar.height)
-        }
-
         addSubview(valueLabel)
         valueLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(gradientCircle.snp.trailing).offset(CGFloat.margin12)
-            maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin6)
-            maker.trailing.equalToSuperview()
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin12)
         }
 
-        valueLabel.font = .subhead2
-        valueLabel.textColor = .themeBran
+        valueLabel.font = .headline1
+        valueLabel.textColor = .themeLeah
+        valueLabel.adjustsFontSizeToFitWidth = true
+
+        addSubview(gradientCircle)
+        gradientCircle.snp.makeConstraints { maker in
+            maker.leading.bottom.equalToSuperview()
+//            maker.top.equalTo(valueLabel.snp.bottom).offset(10)
+            maker.width.equalTo(GradientPercentCircle.width)
+            maker.height.equalTo(GradientPercentCircle.height)
+        }
 
         addSubview(diffLabel)
         diffLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(gradientCircle.snp.trailing).offset(CGFloat.margin12)
-            maker.top.equalTo(valueLabel.snp.bottom).offset(CGFloat.margin2)
-            maker.trailing.equalToSuperview()
-            maker.bottom.equalToSuperview()
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(valueLabel.snp.bottom).offset(CGFloat.margin32)
+            maker.bottom.equalToSuperview().inset(CGFloat.margin16)
         }
 
-        valueLabel.font = .caption
+        diffLabel.font = .body
+        diffLabel.textAlignment = .center
     }
 
     required init?(coder: NSCoder) {
@@ -68,7 +77,9 @@ extension MarketMetricLargeView {
 
         gradientCircle.set(value: diff.cgFloatValue)
         let sign = diff >= 0 ? "+" : "-"
-        let diffString = sign + diff.roundedString(decimal: 2) + "%"
+
+        let formattedDiff = Self.formatter.string(from: abs(diff * 100) as NSNumber)
+        let diffString = formattedDiff.map { sign + $0 + "%" }
 
         diffLabel.text = diffString
         diffLabel.textColor = diff >= 0 ? .themeRemus : .themeLucian

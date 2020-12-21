@@ -294,6 +294,11 @@ bch.horizontalsystems.xyz/apg";
 "market.title" = "Market";
 "market.category.all" = "All";
 "market.category.favorites" = "Watchlist";
+"market.total_market_cap" = "Total\nMarket Cap";
+"market.24h_volume" = "24h Volume";
+"market.btc_dominance" = "BTC Dominance";
+"market.defi_cap" = "DeFi Cap";
+"market.defi_tvl" = "TVL in DeFi";
 
 // Transactions
 
