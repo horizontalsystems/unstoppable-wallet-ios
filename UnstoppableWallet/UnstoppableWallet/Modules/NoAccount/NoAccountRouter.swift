@@ -29,7 +29,7 @@ extension NoAccountRouter {
 
     static func module(coin: Coin, sourceViewController: UIViewController?) -> UIViewController {
         let router = NoAccountRouter(sourceViewController: sourceViewController)
-        let interactor = NoAccountInteractor(accountManager: App.shared.accountManager, accountCreator: App.shared.accountCreator, derivationSettingsManager: App.shared.derivationSettingsManager)
+        let interactor = NoAccountInteractor(accountManager: App.shared.accountManager, accountCreator: App.shared.accountCreator, derivationSettingsManager: App.shared.derivationSettingsManager, bitcoinCashCoinTypeManager: App.shared.bitcoinCashCoinTypeManager)
         let presenter = NoAccountPresenter(coin: coin, interactor: interactor, router: router)
 
         let viewController = NoAccountViewController(delegate: presenter)

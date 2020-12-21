@@ -11,7 +11,8 @@ struct CreateWalletModule {
                 accountManager: App.shared.accountManager,
                 predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager,
                 walletManager: App.shared.walletManager,
-                derivationSettingsManager: App.shared.derivationSettingsManager
+                derivationSettingsManager: App.shared.derivationSettingsManager,
+                bitcoinCashCoinTypeManager: App.shared.bitcoinCashCoinTypeManager
         )
         let viewModel = CreateWalletViewModel(service: service)
         let view = CreateWalletViewController(viewModel: viewModel, onComplete: onComplete)
