@@ -7,10 +7,12 @@ class ManageAccountsInteractor {
 
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let derivationSettingsManager: IDerivationSettingsManager
+    private let bitcoinCashCoinTypeManager: BitcoinCashCoinTypeManager
 
-    init(predefinedAccountTypeManager: IPredefinedAccountTypeManager, accountManager: IAccountManager, derivationSettingsManager: IDerivationSettingsManager, walletManager: IWalletManager) {
+    init(predefinedAccountTypeManager: IPredefinedAccountTypeManager, accountManager: IAccountManager, derivationSettingsManager: IDerivationSettingsManager, bitcoinCashCoinTypeManager: BitcoinCashCoinTypeManager, walletManager: IWalletManager) {
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
         self.derivationSettingsManager = derivationSettingsManager
+        self.bitcoinCashCoinTypeManager = bitcoinCashCoinTypeManager
 
         accountManager.accountsObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
@@ -37,8 +39,8 @@ extension ManageAccountsInteractor: IManageAccountsInteractor {
         predefinedAccountTypeManager.allTypes
     }
 
-    var allActiveDerivationSettings: [(setting: DerivationSetting, coin: Coin)] {
-        derivationSettingsManager.allActiveSettings
+    var hasAddressFormatSettings: Bool {
+        !derivationSettingsManager.allActiveSettings.isEmpty || bitcoinCashCoinTypeManager.hasActiveSetting
     }
 
     func account(predefinedAccountType: PredefinedAccountType) -> Account? {

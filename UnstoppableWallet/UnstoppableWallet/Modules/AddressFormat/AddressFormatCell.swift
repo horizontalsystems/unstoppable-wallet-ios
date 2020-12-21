@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 import ThemeKit
 
-class DerivationSettingCell: ThemeCell {
+class AddressFormatCell: ThemeCell {
     private let leftView = DoubleLineCellView()
     private let rightView = CheckmarkCellView()
 

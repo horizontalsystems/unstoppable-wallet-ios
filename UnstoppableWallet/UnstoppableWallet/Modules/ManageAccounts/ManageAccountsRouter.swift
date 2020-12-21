@@ -36,7 +36,7 @@ extension ManageAccountsRouter: IManageAccountsRouter {
     }
 
     func showSettings() {
-        let module = DerivationSettingsRouter.module()
+        let module = AddressFormatModule.viewController()
         viewController?.navigationController?.pushViewController(module, animated: true)
     }
 
@@ -50,7 +50,7 @@ extension ManageAccountsRouter {
 
     static func module() -> UIViewController {
         let router = ManageAccountsRouter()
-        let interactor = ManageAccountsInteractor(predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager, accountManager: App.shared.accountManager, derivationSettingsManager: App.shared.derivationSettingsManager, walletManager: App.shared.walletManager)
+        let interactor = ManageAccountsInteractor(predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager, accountManager: App.shared.accountManager, derivationSettingsManager: App.shared.derivationSettingsManager, bitcoinCashCoinTypeManager: App.shared.bitcoinCashCoinTypeManager, walletManager: App.shared.walletManager)
         let presenter = ManageAccountsPresenter(interactor: interactor, router: router)
         let viewController = ManageAccountsViewController(delegate: presenter)
 
