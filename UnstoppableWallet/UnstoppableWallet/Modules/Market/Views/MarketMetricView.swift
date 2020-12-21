@@ -2,6 +2,16 @@ import UIKit
 import SnapKit
 
 class MarketMetricView: UIView {
+    private static let formatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
+        formatter.groupingSeparator = ""
+        return formatter
+    }()
+
+    static let width: CGFloat = 78
+
     private let titleLabel = UILabel()
     private let gradientBar = GradientPercentBar()
     private let valueLabel = UILabel()
@@ -44,7 +54,7 @@ class MarketMetricView: UIView {
             maker.bottom.equalToSuperview()
         }
 
-        valueLabel.font = .caption
+        diffLabel.font = .caption
     }
 
     required init?(coder: NSCoder) {
@@ -67,8 +77,11 @@ extension MarketMetricView {
         }
 
         gradientBar.set(value: diff)
+        //todo: extract
         let sign = diff >= 0 ? "+" : "-"
-        let diffString = sign + diff.roundedString(decimal: 2) + "%"
+
+        let formattedDiff = Self.formatter.string(from: abs(diff * 100) as NSNumber)
+        let diffString = formattedDiff.map { sign + $0 + "%" }
 
         diffLabel.text = diffString
         diffLabel.textColor = diff >= 0 ? .themeRemus : .themeLucian
