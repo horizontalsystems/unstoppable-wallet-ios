@@ -233,8 +233,8 @@ bch.horizontalsystems.xyz/apg";
 "swap.price" = "Price";
 "swap.price_impact" = "Price Impact";
 "swap.max_min" = "Max / Min";
-"swap.maximum_paid" = "Maximum Paid";
-"swap.minimum_got" = "Minimum Got";
+"swap.maximum_paid" = "Maximum Amount";
+"swap.minimum_got" = "Guaranteed Amount";
 
 // Swap Advanced Settings
 
