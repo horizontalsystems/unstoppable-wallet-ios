@@ -35,7 +35,7 @@ extension NoAccountPresenter: INoAccountViewDelegate {
     func onTapCreate() {
         do {
             if predefinedAccountType == .standard {
-                interactor.resetDerivationSettings()
+                interactor.resetAddressFormatSettings()
             }
 
             let account = try interactor.createAccount(predefinedAccountType: predefinedAccountType)
