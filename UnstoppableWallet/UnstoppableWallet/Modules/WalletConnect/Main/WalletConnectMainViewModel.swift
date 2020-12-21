@@ -198,12 +198,6 @@ extension WalletConnectMainViewModel {
         let icon: String?
     }
 
-    enum ButtonState {
-        case enabled
-        case disabled
-        case hidden
-    }
-
     enum Status {
         case connecting
         case online

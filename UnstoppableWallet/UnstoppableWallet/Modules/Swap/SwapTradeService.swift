@@ -9,7 +9,7 @@ class SwapTradeService {
     private static let warningPriceImpact: Decimal = 1
     private static let forbiddenPriceImpact: Decimal = 5
 
-    private let uniswapRepository: UniswapProvider
+    private let uniswapProvider: UniswapProvider
 
     private var swapDataDisposeBag = DisposeBag()
 
@@ -67,8 +67,8 @@ class SwapTradeService {
         }
     }
 
-    init(uniswapRepository: UniswapProvider, coin: Coin? = nil, ethereumKit: EthereumKit.Kit) {
-        self.uniswapRepository = uniswapRepository
+    init(uniswapProvider: UniswapProvider, coin: Coin? = nil, ethereumKit: EthereumKit.Kit) {
+        self.uniswapProvider = uniswapProvider
         coinIn = coin
 
         ethereumKit.lastBlockHeightObservable
@@ -91,7 +91,7 @@ class SwapTradeService {
             state = .loading
         }
 
-        uniswapRepository
+        uniswapProvider
                 .swapDataSingle(coinIn: coinIn, coinOut: coinOut)
                 .subscribe(onSuccess: { [weak self] swapData in
                     self?.swapData = swapData
@@ -113,7 +113,7 @@ class SwapTradeService {
         }
 
         do {
-            let tradeData = try uniswapRepository.tradeData(swapData: swapData, amount: amount, tradeType: tradeType, tradeOptions: tradeOptions)
+            let tradeData = try uniswapProvider.tradeData(swapData: swapData, amount: amount, tradeType: tradeType, tradeOptions: tradeOptions)
             handle(tradeData: tradeData)
         } catch {
             state = .notReady(errors: [error])
@@ -167,7 +167,7 @@ extension SwapTradeService {
     }
 
     func transactionData(tradeData: TradeData) throws -> TransactionData {
-        try uniswapRepository.transactionData(tradeData: tradeData)
+        try uniswapProvider.transactionData(tradeData: tradeData)
     }
 
     func set(coinIn: Coin?) {

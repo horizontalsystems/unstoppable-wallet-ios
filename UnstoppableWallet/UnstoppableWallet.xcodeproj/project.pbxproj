@@ -1330,12 +1330,15 @@
 		1A564A7CB794B4367A87C5E2 /* FilterHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564293D88587642800717B /* FilterHeaderCell.swift */; };
 		1A564A7ECB966C4711CA1A86 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56404690D0235A5183C12D /* Coin.swift */; };
 		1A564A7F1300F5308AEDAD64 /* TitleManageAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56482D2289F167040EBD90 /* TitleManageAccountCell.swift */; };
+		1A564A7FC32D071B17C1C757 /* ButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642E9B9E5592E04373C16 /* ButtonState.swift */; };
 		1A564A8DEA3ED1AC9631670E /* PostFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564502E2B9B8455D452D4A /* PostFooterView.swift */; };
+		1A564A905233BD9AB9241916 /* ButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642E9B9E5592E04373C16 /* ButtonState.swift */; };
 		1A564A9AE5427FF9BE806CEA /* PrivacyConnectionSelectViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640B9ED5333E033280CE3 /* PrivacyConnectionSelectViewItem.swift */; };
 		1A564AB50152BF82514BAC3C /* HighlightedDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564730E8F235240D62124B /* HighlightedDescriptionView.swift */; };
 		1A564ABC706EAB84C3C81A46 /* NotificationBackendError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647BF3C655F65A017314E /* NotificationBackendError.swift */; };
 		1A564ABF3417C13718D78F57 /* ThemeSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564EA6F1CCDF88F78351F8 /* ThemeSearchViewController.swift */; };
 		1A564ABFB7858EFB6C304B2E /* InitialSyncSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A91EC9D94E0ECC79B38 /* InitialSyncSetting.swift */; };
+		1A564AC9AA4084E742D979B2 /* ButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642E9B9E5592E04373C16 /* ButtonState.swift */; };
 		1A564ACAD8825F7A94B08DF2 /* AppStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56420928E5E0E9BC27E67B /* AppStatusViewController.swift */; };
 		1A564AF14CCBD62E209B02CA /* TransactionViewStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D0418F6ACD6558999D3 /* TransactionViewStatus.swift */; };
 		1A564B096FFE228DF453A66D /* TransactionInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564091A9C12F224A18B740 /* TransactionInfoPresenter.swift */; };
@@ -2704,6 +2707,7 @@
 		1A564293D88587642800717B /* FilterHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterHeaderCell.swift; sourceTree = "<group>"; };
 		1A5642992929CF74471FE0B4 /* ManageWalletsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageWalletsViewController.swift; sourceTree = "<group>"; };
 		1A5642BC4431A456126A6C5F /* InfoSeparatorHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InfoSeparatorHeaderView.swift; path = ../../UserInterface/Cells/Views/InfoSeparatorHeaderView.swift; sourceTree = "<group>"; };
+		1A5642E9B9E5592E04373C16 /* ButtonState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonState.swift; sourceTree = "<group>"; };
 		1A56433D5D39CCA995F97777 /* Development.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 		1A56435BAABBDC9BD5E84C40 /* EtherscanEthereumProviderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EtherscanEthereumProviderTests.swift; sourceTree = "<group>"; };
 		1A564370A637B30D34776F2A /* Production.template.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = file.template; path = Production.template.xcconfig; sourceTree = "<group>"; };
@@ -3441,6 +3445,7 @@
 				1A5644974136176D43DAD5EB /* BottomGradientHolder.swift */,
 				58AAAF740AE2BEBD7CEBD563 /* AmountDecimalParser.swift */,
 				58AAAA009C3F836C6FFB6978 /* CollectionCells */,
+				1A5642E9B9E5592E04373C16 /* ButtonState.swift */,
 			);
 			path = UserInterface;
 			sourceTree = "<group>";
@@ -6430,6 +6435,7 @@
 				11B3535B68E5BC399EBDD70F /* BlockchainSettingsViewModel.swift in Sources */,
 				11B35661B9959F20F22E13E2 /* BlockchainSettingsView.swift in Sources */,
 				11B358356ACC350CF919FDF3 /* BlockchainSettingsService.swift in Sources */,
+				1A564A7FC32D071B17C1C757 /* ButtonState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7211,6 +7217,7 @@
 				11B35AB1CE23AF08DB344F62 /* BlockchainSettingsViewModel.swift in Sources */,
 				11B35AC2293510F47700EE0E /* BlockchainSettingsView.swift in Sources */,
 				11B35892C8F25CC1E844F100 /* BlockchainSettingsService.swift in Sources */,
+				1A564A905233BD9AB9241916 /* ButtonState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7954,6 +7961,7 @@
 				11B359EE149AE495B2908EAB /* BlockchainSettingsViewModel.swift in Sources */,
 				11B351F2F99E4CB05AE7788C /* BlockchainSettingsView.swift in Sources */,
 				11B351C33460CE83DF1730AE /* BlockchainSettingsService.swift in Sources */,
+				1A564AC9AA4084E742D979B2 /* ButtonState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
