@@ -4,6 +4,12 @@ import SnapKit
 class BadgeView: UIView {
     private let label = UILabel()
 
+    public var compressionResistance: UILayoutPriority = .required {
+        didSet {
+            label.setContentCompressionResistancePriority(compressionResistance, for: .horizontal)
+        }
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 

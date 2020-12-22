@@ -57,6 +57,7 @@ class SwapCoinCardCell: UITableViewCell {
             maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin8)
         }
 
+        badgeView.compressionResistance = .defaultLow
         badgeView.set(text: "swap.estimated".localized.uppercased())
         badgeView.isHidden = true
 
@@ -67,7 +68,6 @@ class SwapCoinCardCell: UITableViewCell {
             maker.height.equalTo(10)
         }
 
-        paddingView.setContentHuggingPriority(.defaultLow, for: .horizontal)
         paddingView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
         cardView.contentView.addSubview(tokenSelectButton)
@@ -86,7 +86,7 @@ class SwapCoinCardCell: UITableViewCell {
         tokenSelectButton.setTitleColor(.themeLeah, for: .normal)
         tokenSelectButton.titleLabel?.font = UIFont.subhead1
         tokenSelectButton.addTarget(self, action: #selector(onTapTokenSelect), for: .touchUpInside)
-        tokenSelectButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: .margin24, bottom: 0, right: .margin16)
+        tokenSelectButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: .margin8, bottom: 0, right: .margin16)
         tokenSelectButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -.margin8, bottom: 0, right: .margin8)
 
         cardView.contentView.addSubview(inputFieldWrapper)
