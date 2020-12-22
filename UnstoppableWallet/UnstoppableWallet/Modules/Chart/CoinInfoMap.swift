@@ -186,7 +186,24 @@ class CoinInfoMap {
         "COS":      CoinInfo(supply: 9_400_000_000,   startDate: nil,          website: "https://www.contentos.io"),
         "LTO":      CoinInfo(supply: 500_000_000,     startDate: nil,          website: "https://lto.network"),
         "MTXLT":    CoinInfo(supply: 90_000,          startDate: nil,          website: "https://tixl.me"),
-
+        "GRT":      CoinInfo(supply: 10_000_000_000,  startDate: nil,          website: "https://thegraph.com/"),
+        "WCK":      CoinInfo(supply: 90_000,          startDate: nil,          website: "https://tixl.me"),
+        "PAN":      CoinInfo(supply: nil,             startDate: nil,          website: "https://panvala.com/"),
+        "MGN":      CoinInfo(supply: nil,             startDate: nil,          website: "https://gnosis.io/"),
+        "0xBTC":    CoinInfo(supply: 20_999_984,      startDate: nil,          website: nil),
+        "DHT":      CoinInfo(supply: 100_000_000,     startDate: nil,          website: "https://www.dhedge.org/"),
+        "SUSD":     CoinInfo(supply: 22_510_653,      startDate: nil,          website: "https://www.synthetix.io/"),
+        "BID":      CoinInfo(supply: 4_000_000_000,   startDate: nil,          website: "https://bidaochain.com/"),
+        "XOR":      CoinInfo(supply: 350_000,         startDate: nil,          website: "https://sora.org/"),
+        "UTK":      CoinInfo(supply: 500_000_000,     startDate: nil,          website: "https://utrust.com/"),
+        "CHAI":     CoinInfo(supply: nil,             startDate: nil,          website: nil),
+        "iDAI":     CoinInfo(supply: nil,             startDate: nil,          website: "https://bzx.network/"),
+        "iSAI":     CoinInfo(supply: nil,             startDate: nil,          website: "https://bzx.network/"),
+        "sETH":     CoinInfo(supply: 29_935,          startDate: nil,          website: "https://www.synthetix.io/"),
+        "sXAU":     CoinInfo(supply: 225.36884553,    startDate: nil,          website: "https://www.synthetix.io/"),
+        "USD++":    CoinInfo(supply: nil,             startDate: nil,          website: nil),
+        "BTC++":    CoinInfo(supply: 89.87534,        startDate: nil,          website: nil),
+        "USDx":     CoinInfo(supply: nil,             startDate: nil,          website: nil),
 
 
 
