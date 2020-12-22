@@ -8,10 +8,12 @@ class MarketTopView: ThemeViewController {
     private let viewModel: MarketTopViewModel
 
     private let tableView = SectionsTableView(style: .plain)
-    private let marketMetricsCell = MarketMetricsCell()
+    private let marketMetricsCell: MarketMetricsCell
 
     init(viewModel: MarketTopViewModel) {
         self.viewModel = viewModel
+
+        marketMetricsCell = MarketMetricsModule.cell()
 
         super.init()
     }
@@ -35,7 +37,6 @@ class MarketTopView: ThemeViewController {
 
         tableView.sectionDataSource = self
 //        tableView.contentInset = UIEdgeInsets(top: 128, left: 0, bottom: 0, right: 0)
-        tableView.registerCell(forClass: MarketMetricsCell.self)
 
         tableView.buildSections()
 

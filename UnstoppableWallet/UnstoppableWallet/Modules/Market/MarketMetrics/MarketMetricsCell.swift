@@ -15,8 +15,12 @@ class MarketMetricsCell: UITableViewCell {
     private let deFiCapView = MarketMetricView()
     private let deFiTvlView = MarketMetricView()
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    private let viewModel: MarketMetricsViewModel
+
+    init(viewModel: MarketMetricsViewModel) {
+        self.viewModel = viewModel
+
+        super.init(frame: .zero)
 
         backgroundColor = .clear
         selectionStyle = .none
@@ -82,7 +86,11 @@ class MarketMetricsCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
 
-    func bind(marketMetrics: MarketMetrics) {
+}
+
+extension MarketMetricsCell {
+
+    public func bind(marketMetrics: MarketMetrics) {
         marketLargeView.set(title: "market.total_market_cap".localized,
                 value: marketMetrics.totalMarketCap.value,
                 diff: marketMetrics.totalMarketCap.diff
@@ -107,6 +115,10 @@ class MarketMetricsCell: UITableViewCell {
                 value: marketMetrics.defiTvl.value,
                 diff: marketMetrics.defiTvl.diff
         )
+    }
+
+    public func refresh() {
+        viewModel.refresh()
     }
 
 }
