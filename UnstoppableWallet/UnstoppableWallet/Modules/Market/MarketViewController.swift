@@ -34,7 +34,7 @@ class MarketViewController: ThemeSearchViewController {
 
         let router = LockScreenRouter(appStart: false)
 
-        viewControllers.append(MarketTopModule.view(service: MarketTopService()))
+        viewControllers.append(MarketTop100Module.view(service: MarketTop100Service()))
         viewControllers.append(MarketWatchlistModule.view(service: MarketWatchlistService()))
     }
 
@@ -57,7 +57,8 @@ class MarketViewController: ThemeSearchViewController {
         view.addSubview(pageViewController.view)
         pageViewController.view.snp.makeConstraints { maker in
             maker.top.equalTo(categoriesHeaderView.snp.bottom)
-            maker.leading.trailing.bottom.equalToSuperview()
+            maker.leading.trailing.equalToSuperview()
+            maker.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
 
         syncPageViewController()
