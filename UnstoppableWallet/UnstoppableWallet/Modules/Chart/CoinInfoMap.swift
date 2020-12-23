@@ -204,10 +204,7 @@ class CoinInfoMap {
         "USD++":    CoinInfo(supply: nil,             startDate: nil,          website: nil),
         "BTC++":    CoinInfo(supply: 89.87534,        startDate: nil,          website: nil),
         "USDx":     CoinInfo(supply: nil,             startDate: nil,          website: nil),
-
-
-
-
+        "WZEC":     CoinInfo(supply: 9_082,           startDate: nil,          website: "https://www.wrapped.com/"),
     ]
 
 }

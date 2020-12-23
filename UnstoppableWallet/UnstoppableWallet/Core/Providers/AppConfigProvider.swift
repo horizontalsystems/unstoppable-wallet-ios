@@ -311,6 +311,7 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "WCK",       title: "Wrapped CryptoKitties",         code: "WCK",     decimal: 18, type: CoinType(erc20Address: "0x09fE5f0236F0Ea5D930197DCE254d77B04128075")),
         Coin(id: "WETH",      title: "Wrapped Ethereum",              code: "WETH",    decimal: 18, type: CoinType(erc20Address: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")),
         Coin(id: "WFIL",      title: "Wrapped Filecoin",              code: "WFIL",    decimal: 18, type: CoinType(erc20Address: "0x6e1A19F235bE7ED8E3369eF73b196C07257494DE")),
+        Coin(id: "WZEC",      title: "Wrapped ZEC",                   code: "WZEC",    decimal: 18, type: CoinType(erc20Address: "0x4a64515e5e1d1073e83f30cb97bed20400b66e10")),
         Coin(id: "XIO",       title: "XIO Network",                   code: "XIO",     decimal: 18, type: CoinType(erc20Address: "0x0f7F961648aE6Db43C75663aC7E5414Eb79b5704")),
     ]
 
