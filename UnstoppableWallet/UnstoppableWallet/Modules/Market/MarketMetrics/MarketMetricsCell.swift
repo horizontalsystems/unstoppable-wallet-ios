@@ -20,7 +20,7 @@ class MarketMetricsCell: UITableViewCell {
     init(viewModel: MarketMetricsViewModel) {
         self.viewModel = viewModel
 
-        super.init(frame: .zero)
+        super.init(style: .default, reuseIdentifier: nil)
 
         backgroundColor = .clear
         selectionStyle = .none
@@ -83,14 +83,14 @@ class MarketMetricsCell: UITableViewCell {
     }
 
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
 
 }
 
 extension MarketMetricsCell {
 
-    public func bind(marketMetrics: MarketMetrics) {
+    public func bind(marketMetrics: MarketMetricsService.MarketMetrics) {
         marketLargeView.set(title: "market.total_market_cap".localized,
                 value: marketMetrics.totalMarketCap.value,
                 diff: marketMetrics.totalMarketCap.diff

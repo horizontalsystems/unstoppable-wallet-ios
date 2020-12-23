@@ -1,17 +1,17 @@
-import Foundation
+import RxSwift
+import RxCocoa
 
 class MarketMetricsViewModel {
     private let disposeBag = DisposeBag()
 
     public let service: MarketMetricsService
 
-    private let metricsRelay = BehaviourRelay<MarketMetrics?>(value: nil)
-    private var metrics: MarketMetrics?
+    private let metricsRelay = BehaviorRelay<MarketMetricsService.MarketMetrics?>(value: nil)
 
-    private let isLoadingRelay = BehaviourRelay<Bool>(value: false)
+    private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private var isLoading: Bool = false
 
-    private let errorRelay = BehaviourRelay<String?>(value: nil)
+    private let errorRelay = BehaviorRelay<String?>(value: nil)
     private var error: String?
 
     init(service: MarketMetricsService) {
@@ -20,7 +20,7 @@ class MarketMetricsViewModel {
         subscribe(disposeBag, service.marketMetricsObservable) { [weak self] in self?.sync(marketMetrics: $0) }
     }
 
-    private func sync(marketMetrics: DataStatus<MarketMetrics>) {
+    private func sync(marketMetrics: DataStatus<MarketMetricsService.MarketMetrics>) {
         if let data = marketMetrics.data {
             metricsRelay.accept(data)
         }
@@ -32,7 +32,7 @@ class MarketMetricsViewModel {
 
 extension MarketMetricsViewModel {
 
-    var metricsDriver: Driver<MarketMetrics?> {
+    var metricsDriver: Driver<MarketMetricsService.MarketMetrics?> {
         metricsRelay.asDriver()
     }
 

@@ -3,14 +3,16 @@ import RxSwift
 import ThemeKit
 import SectionsTableView
 
-class MarketTopView: ThemeViewController {
+class MarketTop100ViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
-    private let viewModel: MarketTopViewModel
+    private let viewModel: MarketTop100ViewModel
 
     private let tableView = SectionsTableView(style: .plain)
-    private let marketMetricsCell: MarketMetricsCell
 
-    init(viewModel: MarketTopViewModel) {
+    private let marketMetricsCell: MarketMetricsCell
+    private let marketTopView = MarketTopModule.view()
+
+    init(viewModel: MarketTop100ViewModel) {
         self.viewModel = viewModel
 
         marketMetricsCell = MarketMetricsModule.cell()
@@ -36,7 +38,13 @@ class MarketTopView: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
-//        tableView.contentInset = UIEdgeInsets(top: 128, left: 0, bottom: 0, right: 0)
+
+        marketTopView.registeringCellClasses.forEach { tableView.registerCell(forClass: $0) }
+        marketTopView.openController = { [weak self] in
+            self?.present($0, animated: true)
+        }
+
+        subscribe(disposeBag, marketTopView.sectionUpdatedSignal) { [weak self] in self?.tableView.reload() }
 
         tableView.buildSections()
 
@@ -46,19 +54,19 @@ class MarketTopView: ThemeViewController {
     }
 
     func stubCells() {
-        let metrics = MarketMetrics(
-                totalMarketCap: MetricData(value: "$498.61B", diff: -1.2413),
-                volume24h: MetricData(value: "$167.84B", diff: -0.1591),
-                btcDominance: MetricData(value: "64.09%", diff: -0.691),
-                defiCap: MetricData(value: "$16.31B", diff: 0.0291),
-                defiTvl: MetricData(value: "$17.5B", diff: 1.2413))
+        let metrics = MarketMetricsService.MarketMetrics(
+                totalMarketCap: MarketMetricsService.MetricData(value: "$498.61B", diff: -1.2413),
+                volume24h: MarketMetricsService.MetricData(value: "$167.84B", diff: -0.1591),
+                btcDominance: MarketMetricsService.MetricData(value: "64.09%", diff: -0.691),
+                defiCap: MarketMetricsService.MetricData(value: "$16.31B", diff: 0.0291),
+                defiTvl: MarketMetricsService.MetricData(value: "$17.5B", diff: 1.2413))
 
         marketMetricsCell.bind(marketMetrics: metrics)
     }
 
 }
 
-extension MarketTopView: SectionsDataSource {
+extension MarketTop100ViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
 
@@ -72,7 +80,7 @@ extension MarketTopView: SectionsDataSource {
                 )
         )
 
-        return [Section(id: "123", rows: rows)]
+        return [Section(id: "123", rows: rows), marketTopView.section]
     }
 
 }

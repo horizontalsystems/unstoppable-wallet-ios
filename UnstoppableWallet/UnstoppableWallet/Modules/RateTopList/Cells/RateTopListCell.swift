@@ -61,4 +61,14 @@ class RateTopListCell: ClaudeThemeCell {
         rightView.bind(viewItem: viewItem.rate)
     }
 
+    func bind(rank: Int, coinCode: String, coinName: String, rate: String, diff: Decimal, last: Bool = false) {
+        super.bind(last: last)
+
+        rankLabel.text = "\(rank)"
+        titleLabel.text = coinName
+        coinLabel.text = coinCode
+
+        rightView.bind(rate: rate, diff: diff)
+    }
+
 }

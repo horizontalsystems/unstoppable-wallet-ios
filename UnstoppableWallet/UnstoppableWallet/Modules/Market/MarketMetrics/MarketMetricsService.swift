@@ -27,12 +27,29 @@ class MarketMetricsService {
 
 extension MarketMetricsService {
 
-    public let marketMetricsObservable: Observable<DataStatus<MarketMetrics>> {
+    public var marketMetricsObservable: Observable<DataStatus<MarketMetrics>> {
         marketMetricsRelay.asObservable()
     }
 
     public func refresh() {
         fetchMarketMetrics()
+    }
+
+}
+
+extension MarketMetricsService {
+
+    struct MetricData {
+        let value: String
+        let diff: Decimal
+    }
+
+    struct MarketMetrics {
+        let totalMarketCap: MetricData
+        let volume24h: MetricData
+        let btcDominance: MetricData
+        let defiCap: MetricData
+        let defiTvl: MetricData
     }
 
 }

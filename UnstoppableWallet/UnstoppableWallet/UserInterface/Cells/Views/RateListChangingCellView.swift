@@ -73,6 +73,17 @@ class RateListChangingCellView: UIView {
         }
     }
 
+    func bind(rate: String, diff: Decimal) {
+        rateLabel.text = rate
+        rateLabel.textColor = .themeLeah
+
+        rateDiffView.isHidden = false
+        rateDiffView.set(value: diff, highlightText: true)
+
+        diffPlaceholderLabel.isHidden = true
+        diffPlaceholderLabel.text = nil
+    }
+
 }
 
 struct RateViewItem {
