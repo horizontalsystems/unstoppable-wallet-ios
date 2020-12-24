@@ -138,3 +138,11 @@ extension EthereumKit.WebSocketState.StateError: ConvertibleError {
         }
     }
 }
+
+extension EthereumKit.Kit.EstimatedLimitError: ConvertibleError {
+    var convertedError: Error {
+        switch self {
+        case .insufficientBalance: return AppError.ethereum(reason: .insufficientBalance)
+        }
+    }
+}

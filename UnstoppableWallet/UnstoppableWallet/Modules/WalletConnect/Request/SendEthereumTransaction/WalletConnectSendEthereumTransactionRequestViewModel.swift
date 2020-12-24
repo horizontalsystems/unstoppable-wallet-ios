@@ -63,7 +63,7 @@ class WalletConnectSendEthereumTransactionRequestViewModel {
             return "ethereum_transaction.error.insufficient_balance".localized(amountData.formattedString)
         }
 
-        return error.smartDescription
+        return error.convertedError.smartDescription
     }
 
 }
