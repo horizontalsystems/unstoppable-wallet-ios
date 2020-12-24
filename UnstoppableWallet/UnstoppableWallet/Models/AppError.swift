@@ -6,6 +6,7 @@ enum AppError: Error {
     case eos(reason: EosError)
     case binance(reason: BinanceError)
     case zcash(reason: ZcashError)
+    case ethereum(reason: EthereumError)
     case wordsChecksum
     case addressInvalid
     case notSupportedByHodler
@@ -26,6 +27,10 @@ enum AppError: Error {
     enum ZcashError: Error {
         case sendToSelf
         case transparentAddress
+    }
+
+    enum EthereumError: Error {
+        case insufficientBalance
     }
 }
 
@@ -52,6 +57,10 @@ extension AppError: LocalizedError {
             switch reason {
             case .sendToSelf: return "error.send.self_transfer".localized
             case .transparentAddress: return "error.send_z_cash.transparent_address".localized
+            }
+        case .ethereum(let reason):
+            switch reason {
+            case .insufficientBalance: return "ethereum_transaction.error.insufficient_balance_with_fee".localized
             }
         case .wordsChecksum:
             return "restore.checksum_error".localized
