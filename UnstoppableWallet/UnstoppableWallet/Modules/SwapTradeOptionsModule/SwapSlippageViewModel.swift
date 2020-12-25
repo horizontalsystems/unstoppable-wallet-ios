@@ -15,13 +15,23 @@ class SwapSlippageViewModel {
         self.service = service
         self.decimalParser = decimalParser
 
-        subscribe(disposeBag, service.errorsObservable) { [weak self] in self?.update(errors: $0) }
+        service.errorsObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] errors in
+                    self?.sync(errors: errors)
+                })
+                .disposed(by: disposeBag)
+
+        sync(errors: service.errors)
     }
 
-    private func update(errors: [Error]) {
+    private func sync(errors: [Error]) {
         let error = errors.first(where: {
-            if case .invalidSlippage = $0 as? SwapTradeOptionsService.TradeOptionsError {
-                return true
+            if let error = $0 as? SwapTradeOptionsService.SlippageError {
+                switch error {
+                case .zeroValue: return false
+                default: return true
+                }
             }
             return false
         })

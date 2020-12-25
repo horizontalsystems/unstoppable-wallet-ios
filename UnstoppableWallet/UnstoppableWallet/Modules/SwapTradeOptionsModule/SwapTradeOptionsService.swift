@@ -9,7 +9,13 @@ class SwapTradeOptionsService {
 
     var recommendedDeadlineBounds: ClosedRange<TimeInterval> { 600...1800 }
 
-    private var errorsRelay = BehaviorRelay<[Error]>(value: [])
+    private(set) var errors: [Error] = [] {
+        didSet {
+            errorsRelay.accept(errors)
+        }
+    }
+    private let errorsRelay = PublishRelay<[Error]>()
+
     private var stateRelay = BehaviorRelay<State>(value: .invalid)
 
     var state: State {
@@ -50,12 +56,20 @@ class SwapTradeOptionsService {
 
         var tradeOptions = TradeOptions()
 
+        if let recipient = recipient?.trimmingCharacters(in: .whitespacesAndNewlines), !recipient.isEmpty {
+            do {
+                tradeOptions.recipient = try Address(hex: recipient)
+            } catch {
+                errors.append(AddressError.invalidAddress)
+            }
+        }
+
         if slippage == .zero {
-            errors.append(TradeOptionsError.zeroSlippage)
+            errors.append(SlippageError.zeroValue)
         } else if slippage > limitSlippageBounds.upperBound {
-            errors.append(TradeOptionsError.invalidSlippage(.higher(max: limitSlippageBounds.upperBound)))
+            errors.append(SlippageError.tooHigh(max: limitSlippageBounds.upperBound))
         } else if slippage < limitSlippageBounds.lowerBound {
-            errors.append(TradeOptionsError.invalidSlippage(.lower(min: limitSlippageBounds.lowerBound)))
+            errors.append(SlippageError.tooLow(min: limitSlippageBounds.lowerBound))
         } else {
             tradeOptions.allowedSlippage = slippage
         }
@@ -63,18 +77,11 @@ class SwapTradeOptionsService {
         if !deadline.isZero {
             tradeOptions.ttl = deadline
         } else {
-            errors.append(TradeOptionsError.zeroDeadline)
+            errors.append(DeadlineError.zeroValue)
         }
 
-        if let recipient = recipient?.trimmingCharacters(in: .whitespacesAndNewlines), !recipient.isEmpty {
-            do {
-                tradeOptions.recipient = try Address(hex: recipient)
-            } catch {
-                errors.append(TradeOptionsError.invalidAddress)
-            }
-        }
+        self.errors = errors
 
-        errorsRelay.accept(errors)
         state = errors.isEmpty ? .valid(tradeOptions) : .invalid
     }
 
@@ -82,11 +89,11 @@ class SwapTradeOptionsService {
 
 extension SwapTradeOptionsService {
 
-    public var errorsObservable: Observable<[Error]> {
+    var errorsObservable: Observable<[Error]> {
         errorsRelay.asObservable()
     }
 
-    public var stateObservable: Observable<State> {
+    var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
 
@@ -94,16 +101,18 @@ extension SwapTradeOptionsService {
 
 extension SwapTradeOptionsService {
 
-    enum InvalidSlippageType {
-        case lower(min: Decimal)
-        case higher(max: Decimal)
+    enum AddressError: Error {
+        case invalidAddress
     }
 
-    enum TradeOptionsError: Error {
-        case zeroSlippage
-        case zeroDeadline
-        case invalidSlippage(InvalidSlippageType)
-        case invalidAddress
+    enum SlippageError: Error {
+        case zeroValue
+        case tooLow(min: Decimal)
+        case tooHigh(max: Decimal)
+    }
+
+    enum DeadlineError: Error {
+        case zeroValue
     }
 
     enum State {

@@ -63,6 +63,11 @@ extension InputStackView {
         set { formTextView.onChangeText = newValue }
     }
 
+    var onChangeEditing: ((Bool) -> ())? {
+        get { formTextView.onChangeEditing }
+        set { formTextView.onChangeEditing = newValue }
+    }
+
     var isValidText: ((String) -> Bool)? {
         get { formTextView.isValidText }
         set { formTextView.isValidText = newValue }
