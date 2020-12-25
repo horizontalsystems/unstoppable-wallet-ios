@@ -10,6 +10,7 @@ class FormTextView: UIView {
 
     var onChangeHeight: (() -> ())?
     var onChangeText: ((String?) -> ())?
+    var onChangeEditing: ((Bool) -> ())?
     var isValidText: ((String) -> Bool)?
 
     init() {
@@ -143,6 +144,14 @@ extension FormTextView: UITextViewDelegate {
         }
 
         return isValid
+    }
+
+    public func textViewDidBeginEditing(_ textView: UITextView) {
+        onChangeEditing?(true)
+    }
+
+    public func textViewDidEndEditing(_ textView: UITextView) {
+        onChangeEditing?(false)
     }
 
 }

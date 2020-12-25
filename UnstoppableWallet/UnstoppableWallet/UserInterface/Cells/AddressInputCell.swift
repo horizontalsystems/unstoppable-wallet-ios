@@ -39,9 +39,18 @@ extension AddressInputCell {
         addressInputView.set(cautionType: cautionType)
     }
 
+    func set(isLoading: Bool) {
+        addressInputView.set(isLoading: isLoading)
+    }
+
     var onChangeText: ((String?) -> ())? {
         get { addressInputView.onChangeText }
         set { addressInputView.onChangeText = newValue }
+    }
+
+    var onChangeEditing: ((Bool) -> ())? {
+        get { addressInputView.onChangeEditing }
+        set { addressInputView.onChangeEditing = newValue }
     }
 
     var onOpenViewController: ((UIViewController) -> ())? {

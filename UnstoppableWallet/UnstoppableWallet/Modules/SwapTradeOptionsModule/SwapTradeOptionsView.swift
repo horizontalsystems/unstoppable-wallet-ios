@@ -30,20 +30,6 @@ class SwapTradeOptionsView: ThemeViewController {
         deadlineViewModel = viewModel.deadlineViewModel
 
         super.init()
-
-        subscribe(disposeBag, recipientViewModel.cautionDriver) { [weak self] in
-            self?.recipientCell.set(cautionType: $0?.type)
-            self?.recipientCautionCell.set(caution: $0)
-        }
-
-        subscribe(disposeBag, slippageViewModel.cautionDriver) { [weak self] in
-            self?.slippageCell.set(cautionType: $0?.type)
-            self?.slippageCautionCell.set(caution: $0)
-        }
-
-        subscribe(disposeBag, viewModel.validStateDriver) { [weak self] in
-            self?.buttonCell.isEnabled = $0
-        }
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -74,6 +60,7 @@ class SwapTradeOptionsView: ThemeViewController {
         recipientCell.inputText = recipientViewModel.initialValue
         recipientCell.onChangeHeight = { [weak self] in self?.reloadTable() }
         recipientCell.onChangeText = { [weak self] text in self?.recipientViewModel.onChange(text: text) }
+        recipientCell.onChangeEditing = { [weak self] editing in self?.recipientViewModel.onChange(editing: editing) }
         recipientCell.onOpenViewController = { [weak self] in self?.present($0, animated: true) }
 
         recipientCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
@@ -98,6 +85,31 @@ class SwapTradeOptionsView: ThemeViewController {
 
         buttonCell.bind(style: .primaryYellow, title: "button.apply".localized) { [weak self] in
             self?.didTapApply()
+        }
+
+        subscribe(disposeBag, recipientViewModel.cautionDriver) { [weak self] in
+            self?.recipientCell.set(cautionType: $0?.type)
+            self?.recipientCautionCell.set(caution: $0)
+        }
+
+        subscribe(disposeBag, recipientViewModel.isLoadingDriver) { [weak self] in
+            self?.recipientCell.set(isLoading: $0)
+        }
+
+        subscribe(disposeBag, slippageViewModel.cautionDriver) { [weak self] in
+            self?.slippageCell.set(cautionType: $0?.type)
+            self?.slippageCautionCell.set(caution: $0)
+        }
+
+        subscribe(disposeBag, viewModel.actionDriver) { [weak self] actionState in
+            switch actionState {
+            case .enabled:
+                self?.buttonCell.isEnabled = true
+                self?.buttonCell.title = "button.apply".localized
+            case .disabled(let title):
+                self?.buttonCell.isEnabled = false
+                self?.buttonCell.title = title
+            }
         }
 
         tableView.buildSections()
