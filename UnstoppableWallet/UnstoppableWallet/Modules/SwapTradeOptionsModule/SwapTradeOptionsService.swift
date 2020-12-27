@@ -100,6 +100,33 @@ extension SwapTradeOptionsService {
 
 }
 
+extension SwapTradeOptionsService: IRecipientAddressService {
+
+    var initialAddress: Address? {
+        guard case let .valid(tradeOptions) = state else {
+            return nil
+        }
+
+        return tradeOptions.recipient
+
+    }
+
+    var error: Error? {
+        errors.first { $0 is SwapTradeOptionsService.AddressError }
+    }
+
+    var errorObservable: Observable<Error> {
+        errorsRelay.compactMap { errors -> Error? in
+            errors.first { $0 is SwapTradeOptionsService.AddressError }
+        }
+    }
+
+    func set(address: Address?) {
+        recipient = address
+    }
+
+}
+
 extension SwapTradeOptionsService {
 
     enum AddressError: Error {

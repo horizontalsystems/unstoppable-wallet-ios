@@ -1,8 +1,15 @@
 import RxSwift
 import RxCocoa
 
+protocol IRecipientAddressService {
+    var initialAddress: Address? { get }
+    var error: Error? { get }
+    var errorObservable: Observable<Error> { get }
+    func set(address: Address?)
+}
+
 class RecipientAddressViewModel {
-    private let service: SwapTradeOptionsService
+    private let service: IRecipientAddressService
     private let resolutionService = AddressResolutionService()
     private let disposeBag = DisposeBag()
 
@@ -11,10 +18,10 @@ class RecipientAddressViewModel {
     private var editing = false
     private var forceShowError = false
 
-    init(service: SwapTradeOptionsService) {
+    init(service: IRecipientAddressService) {
         self.service = service
 
-        service.errorsObservable
+        service.errorObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] _ in
                     self?.sync()
@@ -24,7 +31,7 @@ class RecipientAddressViewModel {
         resolutionService.addressObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] address in
-                    self?.service.recipient = address
+                    self?.service.set(address: address)
                 })
                 .disposed(by: disposeBag)
 
@@ -44,12 +51,10 @@ class RecipientAddressViewModel {
     }
 
     private func sync() {
-        let error = service.errors.first(where: { $0 is SwapTradeOptionsService.AddressError })
-
         if (editing && !forceShowError) || resolutionService.isResolving {
             cautionRelay.accept(nil)
         } else {
-            cautionRelay.accept(error.map { Caution(text: $0.smartDescription, type: .error) })
+            cautionRelay.accept(service.error.map { Caution(text: $0.smartDescription, type: .error) })
         }
     }
 
@@ -58,11 +63,7 @@ class RecipientAddressViewModel {
 extension RecipientAddressViewModel {
 
     var initialValue: String? {
-        guard case let .valid(tradeOptions) = service.state else {
-            return nil
-        }
-
-        return tradeOptions.recipient?.title
+        service.initialAddress?.title
     }
 
     var cautionDriver: Driver<Caution?> {
