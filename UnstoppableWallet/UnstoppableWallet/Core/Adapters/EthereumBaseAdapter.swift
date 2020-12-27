@@ -15,7 +15,7 @@ class EthereumBaseAdapter {
     }
 
     func validate(address: String) throws {
-        _ = try Address(hex: address)
+        _ = try EthereumKit.Address(hex: address)
     }
 
     func balanceDecimal(kitBalance: BigUInt?, decimal: Int) -> Decimal {

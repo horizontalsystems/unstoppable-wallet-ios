@@ -59,10 +59,10 @@ class SwapTradeService {
         }
     }
 
-    private let tradeOptionsRelay = PublishRelay<TradeOptions>()
-    var tradeOptions = TradeOptions() {
+    private let swapTradeOptionsRelay = PublishRelay<SwapTradeOptions>()
+    var swapTradeOptions = SwapTradeOptions() {
         didSet {
-            tradeOptionsRelay.accept(tradeOptions)
+            swapTradeOptionsRelay.accept(swapTradeOptions)
             syncTradeData()
         }
     }
@@ -113,7 +113,7 @@ class SwapTradeService {
         }
 
         do {
-            let tradeData = try uniswapProvider.tradeData(swapData: swapData, amount: amount, tradeType: tradeType, tradeOptions: tradeOptions)
+            let tradeData = try uniswapProvider.tradeData(swapData: swapData, amount: amount, tradeType: tradeType, tradeOptions: swapTradeOptions.tradeOptions)
             handle(tradeData: tradeData)
         } catch {
             state = .notReady(errors: [error])
@@ -162,8 +162,8 @@ extension SwapTradeService {
         amountOutRelay.asObservable()
     }
 
-    var tradeOptionsObservable: Observable<TradeOptions> {
-        tradeOptionsRelay.asObservable()
+    var swapTradeOptionsObservable: Observable<SwapTradeOptions> {
+        swapTradeOptionsRelay.asObservable()
     }
 
     func transactionData(tradeData: TradeData) throws -> TransactionData {

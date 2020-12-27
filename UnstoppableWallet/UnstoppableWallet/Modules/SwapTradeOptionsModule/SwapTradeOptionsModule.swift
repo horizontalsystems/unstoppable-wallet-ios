@@ -4,7 +4,7 @@ import ThemeKit
 struct SwapTradeOptionsModule {
 
     static func viewController(tradeService: SwapTradeService) -> UIViewController {
-        let service = SwapTradeOptionsService(tradeOptions: tradeService.tradeOptions)
+        let service = SwapTradeOptionsService(tradeOptions: tradeService.swapTradeOptions)
         let viewModel = SwapTradeOptionsViewModel(service: service, tradeService: tradeService, decimalParser: AmountDecimalParser())
         let viewController = SwapTradeOptionsView(viewModel: viewModel)
 

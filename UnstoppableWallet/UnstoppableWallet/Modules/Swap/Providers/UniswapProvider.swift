@@ -12,7 +12,7 @@ class UniswapProvider {
 
     private func uniswapToken(coin: Coin) throws -> Token {
         if case let .erc20(address, _, _, _) = coin.type {
-            return swapKit.token(contractAddress: try Address(hex: address), decimals: coin.decimal)
+            return swapKit.token(contractAddress: try EthereumKit.Address(hex: address), decimals: coin.decimal)
         }
 
         return swapKit.etherToken
@@ -22,7 +22,7 @@ class UniswapProvider {
 
 extension UniswapProvider {
 
-    var routerAddress: Address {
+    var routerAddress: EthereumKit.Address {
         swapKit.routerAddress
     }
 

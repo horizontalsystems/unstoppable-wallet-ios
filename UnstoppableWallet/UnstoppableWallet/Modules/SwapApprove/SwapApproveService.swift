@@ -13,7 +13,7 @@ class SwapApproveService {
     private let ethereumKit: EthereumKit.Kit
 
     private(set) var amount: BigUInt?
-    private let spenderAddress: Address
+    private let spenderAddress: EthereumKit.Address
     private let allowance: BigUInt
 
     private(set) var state: State = .approveNotAllowed(errors: []) {
@@ -23,7 +23,7 @@ class SwapApproveService {
     }
     private let stateRelay = BehaviorRelay<State>(value: .approveNotAllowed(errors: []))
 
-    init(transactionService: EthereumTransactionService, erc20Kit: Erc20Kit.Kit, ethereumKit: EthereumKit.Kit, amount: BigUInt, spenderAddress: Address, allowance: BigUInt) {
+    init(transactionService: EthereumTransactionService, erc20Kit: Erc20Kit.Kit, ethereumKit: EthereumKit.Kit, amount: BigUInt, spenderAddress: EthereumKit.Address, allowance: BigUInt) {
         self.transactionService = transactionService
         self.erc20Kit = erc20Kit
         self.ethereumKit = ethereumKit

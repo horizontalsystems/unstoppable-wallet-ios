@@ -107,7 +107,7 @@ extension EthereumTransactionService {
 extension EthereumTransactionService {
 
     struct TransactionData {
-        var to: Address
+        var to: EthereumKit.Address
         var value: BigUInt
         var input: Data
     }

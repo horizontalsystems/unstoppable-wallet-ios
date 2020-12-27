@@ -62,7 +62,7 @@ extension RecipientAddressViewModel {
             return nil
         }
 
-        return tradeOptions.recipient?.hex
+        return tradeOptions.recipient?.title
     }
 
     var cautionDriver: Driver<Caution?> {

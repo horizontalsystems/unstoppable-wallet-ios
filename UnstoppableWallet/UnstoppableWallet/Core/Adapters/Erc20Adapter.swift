@@ -8,13 +8,13 @@ import class Erc20Kit.Transaction
 class Erc20Adapter: EthereumBaseAdapter {
     private static let approveConfirmationsThreshold: Int? = nil
     let erc20Kit: Erc20Kit.Kit
-    private let contractAddress: Address
+    private let contractAddress: EthereumKit.Address
     private let fee: Decimal
     private(set) var minimumRequiredBalance: Decimal
     private(set) var minimumSpendableAmount: Decimal?
 
     init(ethereumKit: EthereumKit.Kit, contractAddress: String, decimal: Int, fee: Decimal, minimumRequiredBalance: Decimal, minimumSpendableAmount: Decimal?) throws {
-        let address = try Address(hex: contractAddress)
+        let address = try EthereumKit.Address(hex: contractAddress)
         self.erc20Kit = try Erc20Kit.Kit.instance(ethereumKit: ethereumKit, contractAddress: address)
         self.contractAddress = address
         self.fee = fee
@@ -75,7 +75,7 @@ class Erc20Adapter: EthereumBaseAdapter {
         }
 
         do {
-            return try erc20Kit.sendSingle(to: Address(hex: address), value: amount, gasPrice: gasPrice, gasLimit: gasLimit)
+            return try erc20Kit.sendSingle(to: EthereumKit.Address(hex: address), value: amount, gasPrice: gasPrice, gasLimit: gasLimit)
                     .do(onSubscribe: { logger.debug("Sending to Erc20Kit", save: true) })
                     .map { _ in ()}
                     .catchError { [weak self] error in
@@ -160,9 +160,9 @@ extension Erc20Adapter: ISendEthereumAdapter {
             return Single.error(SendTransactionError.wrongAmount)
         }
 
-        var tokenAddress: Address?
+        var tokenAddress: EthereumKit.Address?
         if let address = address {
-            tokenAddress = try? Address(hex: address)
+            tokenAddress = try? EthereumKit.Address(hex: address)
         }
 
 
@@ -177,7 +177,7 @@ extension Erc20Adapter: IErc20Adapter {
         erc20Kit.pendingTransactions().map { transactionRecord(fromTransaction: $0) }
     }
 
-    func allowanceSingle(spenderAddress: Address, defaultBlockParameter: DefaultBlockParameter = .latest) -> Single<Decimal> {
+    func allowanceSingle(spenderAddress: EthereumKit.Address, defaultBlockParameter: DefaultBlockParameter = .latest) -> Single<Decimal> {
         erc20Kit.allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: defaultBlockParameter)
                 .map { [unowned self] allowanceString in
                     if let significand = Decimal(string: allowanceString) {

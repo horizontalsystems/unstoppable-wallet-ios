@@ -196,8 +196,8 @@ class SwapViewController: ThemeViewController {
     }
 
     private func handle(advancedSettingsVisible: Bool) {
-        advancedSettingsCell.isVisible = advancedSettingsVisible
-        reloadTable()
+//        advancedSettingsCell.isVisible = advancedSettingsVisible
+//        reloadTable()
     }
 
     private func handle(feeVisible: Bool) {

@@ -66,7 +66,7 @@ extension SwapTradeOptionsViewModel {
 
     public func doneDidTap() -> Bool {
         if case let .valid(tradeOptions) = service.state {
-            tradeService.tradeOptions = tradeOptions
+            tradeService.swapTradeOptions = tradeOptions
             return true
         }
         return false

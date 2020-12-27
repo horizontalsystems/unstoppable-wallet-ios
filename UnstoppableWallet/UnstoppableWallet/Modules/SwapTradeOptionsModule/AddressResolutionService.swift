@@ -12,7 +12,7 @@ class AddressResolutionService {
     }
     private let isResolvingRelay = PublishRelay<Bool>()
 
-    private let addressRelay = PublishRelay<String?>()
+    private let addressRelay = PublishRelay<Address?>()
 
     init() {
     }
@@ -21,7 +21,7 @@ class AddressResolutionService {
 
 extension AddressResolutionService {
 
-    var addressObservable: Observable<String?> {
+    var addressObservable: Observable<Address?> {
         addressRelay.asObservable()
     }
 
@@ -32,7 +32,7 @@ extension AddressResolutionService {
     func set(text: String?) {
         disposeBag = DisposeBag()
 
-        addressRelay.accept(text)
+        addressRelay.accept(text.map { Address(raw: $0) })
 
         if let text = text, provider.isValid(domain: text) {
             isResolving = true
@@ -40,7 +40,7 @@ extension AddressResolutionService {
             provider.resolutionSingle(domain: text)
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                     .subscribe(onSuccess: { [weak self] address in
-                        self?.addressRelay.accept(address)
+                        self?.addressRelay.accept(Address(raw: address, domain: text))
                         self?.isResolving = false
                     }, onError: { [weak self] error in
                         self?.isResolving = false
