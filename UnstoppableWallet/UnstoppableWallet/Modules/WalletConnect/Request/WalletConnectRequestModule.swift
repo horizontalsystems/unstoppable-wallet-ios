@@ -4,8 +4,8 @@ import EthereumKit
 import BigInt
 
 struct WalletConnectTransaction {
-    let from: Address
-    let to: Address
+    let from: EthereumKit.Address
+    let to: EthereumKit.Address
     let nonce: Int?
     let gasPrice: Int?
     let gasLimit: Int?

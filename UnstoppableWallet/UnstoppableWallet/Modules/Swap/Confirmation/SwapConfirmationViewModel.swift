@@ -54,13 +54,13 @@ class SwapConfirmationViewModel {
 
         var additionalData = [SwapModule.ConfirmationAdditionalViewItem]()
 
-        if let slippage = viewItemHelper.slippage(tradeService.tradeOptions.allowedSlippage) {
+        if let slippage = viewItemHelper.slippage(tradeService.swapTradeOptions.allowedSlippage) {
             additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.advanced_settings.slippage".localized, value: slippage))
         }
-        if let deadline = viewItemHelper.deadline(tradeService.tradeOptions.ttl) {
+        if let deadline = viewItemHelper.deadline(tradeService.swapTradeOptions.ttl) {
             additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.advanced_settings.deadline".localized, value: deadline))
         }
-        if let recipient = tradeService.tradeOptions.recipient?.hex {
+        if let recipient = tradeService.swapTradeOptions.recipient?.title {
             additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.advanced_settings.recipient_address".localized, value: recipient))
         }
 

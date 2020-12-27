@@ -10,7 +10,7 @@ class EthereumAdapter: EthereumBaseAdapter {
         super.init(ethereumKit: ethereumKit, decimal: EthereumAdapter.decimal)
     }
 
-    private func convertAmount(amount: BigUInt, fromAddress: Address) -> Decimal {
+    private func convertAmount(amount: BigUInt, fromAddress: EthereumKit.Address) -> Decimal {
         guard let significand = Decimal(string: amount.description), significand != 0 else {
             return 0
         }
@@ -71,7 +71,7 @@ class EthereumAdapter: EthereumBaseAdapter {
             return Single.error(SendTransactionError.wrongAmount)
         }
         do {
-            return try ethereumKit.sendSingle(address: Address(hex: address), value: amount, gasPrice: gasPrice, gasLimit: gasLimit)
+            return try ethereumKit.sendSingle(address: EthereumKit.Address(hex: address), value: amount, gasPrice: gasPrice, gasLimit: gasLimit)
                     .do(onSubscribe: { logger.debug("Sending to EthereumKit", save: true) })
                     .map { _ in ()}
                     .catchError { [weak self] error in
@@ -166,9 +166,9 @@ extension EthereumAdapter: ISendEthereumAdapter {
             return Single.error(SendTransactionError.wrongAmount)
         }
 
-        var ethAddress: Address?
+        var ethAddress: EthereumKit.Address?
         if let address = address {
-            ethAddress = try? Address(hex: address)
+            ethAddress = try? EthereumKit.Address(hex: address)
         }
 
         return ethereumKit.estimateGas(to: ethAddress, amount: amount, gasPrice: gasPrice)

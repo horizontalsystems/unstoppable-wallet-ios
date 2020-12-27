@@ -4,7 +4,7 @@ import RxSwift
 import RxRelay
 
 class SwapAllowanceService {
-    private let spenderAddress: Address
+    private let spenderAddress: EthereumKit.Address
     private let adapterManager: IAdapterManager
     private let ethereumKit: EthereumKit.Kit
 
@@ -22,7 +22,7 @@ class SwapAllowanceService {
         }
     }
 
-    init(spenderAddress: Address, adapterManager: IAdapterManager, ethereumKit: EthereumKit.Kit) {
+    init(spenderAddress: EthereumKit.Address, adapterManager: IAdapterManager, ethereumKit: EthereumKit.Kit) {
         self.spenderAddress = spenderAddress
         self.adapterManager = adapterManager
         self.ethereumKit = ethereumKit
@@ -110,7 +110,7 @@ extension SwapAllowanceService {
 
     struct ApproveData {
         let coin: Coin
-        let spenderAddress: Address
+        let spenderAddress: EthereumKit.Address
         let amount: Decimal
         let allowance: Decimal
     }

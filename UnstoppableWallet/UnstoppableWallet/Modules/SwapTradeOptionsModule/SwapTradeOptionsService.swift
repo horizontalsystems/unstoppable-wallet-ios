@@ -36,16 +36,16 @@ class SwapTradeOptionsService {
         }
     }
 
-    var recipient: String? {
+    var recipient: Address? {
         didSet {
             sync()
         }
     }
 
-    init(tradeOptions: TradeOptions) {
+    init(tradeOptions: SwapTradeOptions) {
         slippage = tradeOptions.allowedSlippage
         deadline = tradeOptions.ttl
-        recipient = tradeOptions.recipient?.hex
+        recipient = tradeOptions.recipient
 
         state = .valid(tradeOptions)
         sync()
@@ -54,11 +54,12 @@ class SwapTradeOptionsService {
     private func sync() {
         var errors = [Error]()
 
-        var tradeOptions = TradeOptions()
+        var tradeOptions = SwapTradeOptions()
 
-        if let recipient = recipient?.trimmingCharacters(in: .whitespacesAndNewlines), !recipient.isEmpty {
+        if let recipient = recipient, !recipient.raw.isEmpty {
             do {
-                tradeOptions.recipient = try Address(hex: recipient)
+                _ = try EthereumKit.Address(hex: recipient.raw)
+                tradeOptions.recipient = recipient
             } catch {
                 errors.append(AddressError.invalidAddress)
             }
@@ -116,7 +117,7 @@ extension SwapTradeOptionsService {
     }
 
     enum State {
-        case valid(TradeOptions)
+        case valid(SwapTradeOptions)
         case invalid
     }
 
