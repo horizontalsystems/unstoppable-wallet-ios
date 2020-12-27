@@ -31,15 +31,15 @@ class SendDashHandler {
     }
 
     private func syncAvailableBalance() {
-        interactor.fetchAvailableBalance(address: addressModule.currentAddress)
+        interactor.fetchAvailableBalance(address: addressModule.currentAddress?.raw)
     }
 
     private func syncMinimumAmount() {
-        interactor.fetchMinimumAmount(address: addressModule.currentAddress)
+        interactor.fetchMinimumAmount(address: addressModule.currentAddress?.raw)
     }
 
     private func syncFee() {
-        interactor.fetchFee(amount: amountModule.currentAmount, address: addressModule.currentAddress)
+        interactor.fetchFee(amount: amountModule.currentAmount, address: addressModule.currentAddress?.raw)
     }
 
 }
@@ -75,7 +75,7 @@ extension SendDashHandler: ISendHandler {
     }
 
     func sendSingle(logger: Logger) throws -> Single<Void> {
-        interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress(), logger: logger)
+        interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress().raw, logger: logger)
     }
 
 }

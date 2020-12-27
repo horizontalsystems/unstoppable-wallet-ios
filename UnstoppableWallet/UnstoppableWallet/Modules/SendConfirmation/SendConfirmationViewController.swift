@@ -107,9 +107,9 @@ extension SendConfirmationViewController: ISendConfirmationView {
         let primaryRow = Row<SendConfirmationAmountCell>(id: "send_primary_row", height: SendConfirmationAmountCell.height, bind: { cell, _ in
             cell.bind(primaryAmountInfo: viewItem.primaryInfo, secondaryAmountInfo: viewItem.secondaryInfo)
         })
-        let receiverRow = Row<SendConfirmationReceiverCell>(id: "send_receiver_row", height: SendConfirmationReceiverCell.height(forContainerWidth: view.bounds.width, text: viewItem.receiver), bind: { [weak self] cell, _ in
-            cell.bind(receiver: viewItem.receiver, last: self?.noMemo ?? false) { [weak self] in
-                self?.onHashTap(receiver: viewItem.receiver)
+        let receiverRow = Row<SendConfirmationReceiverCell>(id: "send_receiver_row", height: SendConfirmationReceiverCell.height(forContainerWidth: view.bounds.width, text: viewItem.receiver.title), bind: { [weak self] cell, _ in
+            cell.bind(receiver: viewItem.receiver.title, last: self?.noMemo ?? false) { [weak self] in
+                self?.onHashTap(receiver: viewItem.receiver.raw)
             }
         })
         topRows.append(primaryRow)

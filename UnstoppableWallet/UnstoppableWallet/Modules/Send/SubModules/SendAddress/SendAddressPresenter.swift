@@ -6,11 +6,10 @@ import RxRelay
 class SendAddressPresenter {
     weak var delegate: ISendAddressDelegate?
 
-    private let interactor: ISendAddressInteractor
     private let router: ISendAddressRouter
 
-    private var enteredAddress: String?
-    var currentAddress: String?
+    private var enteredAddress: Address?
+    var currentAddress: Address?
 
     private(set) var error: Error? {
         didSet {
@@ -19,19 +18,17 @@ class SendAddressPresenter {
     }
     private let errorRelay = PublishRelay<Error?>()
 
-    init(interactor: ISendAddressInteractor, router: ISendAddressRouter) {
-        self.interactor = interactor
+    init(router: ISendAddressRouter) {
         self.router = router
     }
 
-    private func onEnter(address: String) {
-        let (parsedAddress, amount) = interactor.parse(address: address)
-
-        enteredAddress = parsedAddress
+    private func onEnter(address: Address) {
+        enteredAddress = address
         try? validateAddress()
 
         delegate?.onUpdateAddress()
-        if let amount = amount {
+
+        if let amount = address.amount {
             delegate?.onUpdate(amount: amount)
         }
     }
@@ -55,7 +52,7 @@ extension SendAddressPresenter: ISendAddressModule {
         }
 
         do {
-            try delegate?.validate(address: address)
+            try delegate?.validate(address: address.raw)
             currentAddress = address
             error = nil
         } catch {
@@ -65,7 +62,7 @@ extension SendAddressPresenter: ISendAddressModule {
         }
     }
 
-    func validAddress() throws -> String {
+    func validAddress() throws -> Address {
         guard let address = currentAddress else {
             throw AppError.addressInvalid
         }
@@ -86,7 +83,7 @@ extension SendAddressPresenter: IRecipientAddressService {
     }
 
     func set(address: Address?) {
-        guard let address = address?.raw, !address.isEmpty else {
+        guard let address = address, !address.raw.isEmpty else {
             error = nil
             currentAddress = nil
             enteredAddress = nil

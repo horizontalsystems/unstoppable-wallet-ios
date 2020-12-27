@@ -203,7 +203,7 @@ protocol ISendConfirmationViewItemNew {
 struct SendConfirmationAmountViewItem: ISendConfirmationViewItemNew {
     let primaryInfo: AmountInfo
     var secondaryInfo: AmountInfo?
-    let receiver: String
+    let receiver: Address
 }
 
 struct SendConfirmationFeeViewItem: ISendConfirmationViewItemNew {

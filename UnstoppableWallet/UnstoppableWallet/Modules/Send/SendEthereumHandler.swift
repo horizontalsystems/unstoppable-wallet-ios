@@ -79,7 +79,7 @@ class SendEthereumHandler {
         estimateGasLimitState = .loading
         syncState()
 
-        interactor.estimateGasLimit(to: try? addressModule.validAddress(), value: amountModule.currentAmount, gasPrice: feePriorityModule.feeRate)
+        interactor.estimateGasLimit(to: try? addressModule.validAddress().raw, value: amountModule.currentAmount, gasPrice: feePriorityModule.feeRate)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onSuccess: onReceive, onError: onGasLimitError)
@@ -136,7 +136,7 @@ extension SendEthereumHandler: ISendHandler {
         guard let feeRate = feePriorityModule.feeRate, case let .value(gasLimit) = estimateGasLimitState else {
             throw SendTransactionError.noFee
         }
-        return interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress(), gasPrice: feeRate, gasLimit: gasLimit, logger: logger)
+        return interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress().raw, gasPrice: feeRate, gasLimit: gasLimit, logger: logger)
     }
 
 }

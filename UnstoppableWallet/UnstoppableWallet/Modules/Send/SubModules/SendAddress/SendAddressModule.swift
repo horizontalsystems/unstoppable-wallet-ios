@@ -4,16 +4,12 @@ protocol ISendAddressViewDelegate {
     func onOpenScan(controller: UIViewController)
 }
 
-protocol ISendAddressInteractor {
-    func parse(address: String) -> (String, Decimal?)
-}
-
 protocol ISendAddressModule: AnyObject {
     var delegate: ISendAddressDelegate? { get set }
 
-    var currentAddress: String? { get }
+    var currentAddress: Address? { get }
     func validateAddress() throws
-    func validAddress() throws -> String
+    func validAddress() throws -> Address
 }
 
 protocol ISendAddressDelegate: class {

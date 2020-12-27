@@ -150,16 +150,16 @@ extension SendRouter {
 
     private static func module(coin: Coin, adapter: ISendEosAdapter) -> (ISendHandler, [UIView], [ISendSubRouter]) {
         let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
-        let (accountView, accountModule, accountRouter) = SendAccountRouter.module()
+        let (addressView, addressModule, addressRouter) = SendAddressRouter.module(coin: coin, placeholder: "send.account_placeholder".localized)
         let (memoView, memoModule) = SendMemoRouter.module()
 
         let interactor = SendEosInteractor(adapter: adapter)
-        let presenter = SendEosHandler(interactor: interactor, amountModule: amountModule, accountModule: accountModule, memoModule: memoModule)
+        let presenter = SendEosHandler(interactor: interactor, amountModule: amountModule, addressModule: addressModule, memoModule: memoModule)
 
         amountModule.delegate = presenter
-        accountModule.delegate = presenter
+        addressModule.delegate = presenter
 
-        return (presenter, [amountView, accountView, memoView], [accountRouter])
+        return (presenter, [amountView, addressView, memoView], [addressRouter])
     }
 
     private static func module(coin: Coin, adapter: ISendBinanceAdapter) -> (ISendHandler, [UIView], [ISendSubRouter]) {
