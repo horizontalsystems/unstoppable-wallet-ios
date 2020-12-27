@@ -8,21 +8,21 @@ class SendEosHandler {
     private let interactor: ISendEosInteractor
 
     private let amountModule: ISendAmountModule
-    private let accountModule: ISendAccountModule
+    private let addressModule: ISendAddressModule
     private let memoModule: ISendMemoModule
 
-    init(interactor: ISendEosInteractor, amountModule: ISendAmountModule, accountModule: ISendAccountModule, memoModule: ISendMemoModule) {
+    init(interactor: ISendEosInteractor, amountModule: ISendAmountModule, addressModule: ISendAddressModule, memoModule: ISendMemoModule) {
         self.interactor = interactor
 
         self.amountModule = amountModule
-        self.accountModule = accountModule
+        self.addressModule = addressModule
         self.memoModule = memoModule
     }
 
     private func syncValidation() {
         do {
             _ = try amountModule.validAmount()
-            _ = try accountModule.validAccount()
+            _ = try addressModule.validAddress()
 
             delegate?.onChange(isValid: true)
         } catch {
@@ -48,7 +48,7 @@ extension SendEosHandler: ISendHandler {
 
     func confirmationViewItems() throws -> [ISendConfirmationViewItemNew] {
         var viewItems: [ISendConfirmationViewItemNew] = [
-            SendConfirmationAmountViewItem(primaryInfo: try amountModule.primaryAmountInfo(), secondaryInfo: try amountModule.secondaryAmountInfo(), receiver: try accountModule.validAccount())
+            SendConfirmationAmountViewItem(primaryInfo: try amountModule.primaryAmountInfo(), secondaryInfo: try amountModule.secondaryAmountInfo(), receiver: try addressModule.validAddress())
         ]
 
         if let memo = memoModule.memo {
@@ -70,7 +70,7 @@ extension SendEosHandler: ISendHandler {
     }
 
     func sendSingle(logger: Logger) throws -> Single<Void> {
-        interactor.sendSingle(amount: try amountModule.validAmount(), account: try accountModule.validAccount(), memo: memoModule.memo)
+        interactor.sendSingle(amount: try amountModule.validAmount(), account: try addressModule.validAddress().raw, memo: memoModule.memo)
                 .do(onSubscribe: { logger.debug("Sending to ISendEosInteractor", save: true) })
     }
 
@@ -87,14 +87,17 @@ extension SendEosHandler: ISendAmountDelegate {
 
 }
 
-extension SendEosHandler: ISendAccountDelegate {
+extension SendEosHandler: ISendAddressDelegate {
 
-    func validate(account: String) throws {
-        try interactor.validate(account: account)
+    func validate(address: String) throws {
+        try interactor.validate(account: address)
     }
 
-    func onUpdateAccount() {
+    func onUpdateAddress() {
         syncValidation()
+    }
+
+    func onUpdate(amount: Decimal) {
     }
 
 }

@@ -73,7 +73,7 @@ extension SendBinanceHandler: ISendHandler {
     }
 
     func sendSingle(logger: Logger) throws -> Single<Void> {
-        interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress(), memo: memoModule.memo)
+        interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress().raw, memo: memoModule.memo)
                 .do(onSubscribe: { logger.debug("Sending to ISendBinanceInteractor", save: true) })
     }
 

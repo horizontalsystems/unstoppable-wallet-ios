@@ -10,7 +10,7 @@ class SendAddressView: UIView {
     private let addressInputView = AddressInputView()
     private let cautionView = FormCautionView()
 
-    public init(viewModel: RecipientAddressViewModel, delegate: ISendAddressViewDelegate) {
+    public init(viewModel: RecipientAddressViewModel, placeholder: String, delegate: ISendAddressViewDelegate) {
         self.viewModel = viewModel
         self.delegate = delegate
 
@@ -25,7 +25,7 @@ class SendAddressView: UIView {
             maker.height.equalTo(addressInputView.height(containerWidth: width))
         }
 
-        addressInputView.inputPlaceholder = "send.address_placeholder".localized
+        addressInputView.inputPlaceholder = placeholder
         addressInputView.inputText = viewModel.initialValue
         addressInputView.onOpenViewController = { [weak self] controller in
             self?.delegate.onOpenScan(controller: controller)
