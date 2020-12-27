@@ -2,12 +2,16 @@ import UIKit
 import RxSwift
 
 class SendAddressView: UIView {
+    private let viewModel: RecipientAddressViewModel
     private let delegate: ISendAddressViewDelegate
+
+    private let disposeBag = DisposeBag()
 
     private let addressInputView = AddressInputView()
     private let cautionView = FormCautionView()
 
-    public init(delegate: ISendAddressViewDelegate) {
+    public init(viewModel: RecipientAddressViewModel, delegate: ISendAddressViewDelegate) {
+        self.viewModel = viewModel
         self.delegate = delegate
 
         super.init(frame: .zero)
@@ -22,11 +26,15 @@ class SendAddressView: UIView {
         }
 
         addressInputView.inputPlaceholder = "send.address_placeholder".localized
+        addressInputView.inputText = viewModel.initialValue
         addressInputView.onOpenViewController = { [weak self] controller in
             self?.delegate.onOpenScan(controller: controller)
         }
         addressInputView.onChangeText = { [weak self] string in
-            self?.delegate.onAddressChange(string: string?.trimmingCharacters(in: .whitespacesAndNewlines))
+            self?.viewModel.onChange(text: string)
+        }
+        addressInputView.onChangeEditing = { [weak self] editing in
+            self?.viewModel.onChange(editing: editing)
         }
         addressInputView.onChangeHeight = { [weak self] in
             self?.updateInputHeight()
@@ -43,6 +51,15 @@ class SendAddressView: UIView {
         cautionView.onChangeHeight = { [weak self] in
             self?.updateCautionHeight()
         }
+
+        subscribe(disposeBag, viewModel.cautionDriver) { [weak self] in
+            self?.addressInputView.set(cautionType: $0?.type)
+            self?.cautionView.set(caution: $0)
+        }
+
+        subscribe(disposeBag, viewModel.isLoadingDriver) { [weak self] in
+            self?.addressInputView.set(isLoading: $0)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -58,20 +75,6 @@ class SendAddressView: UIView {
     private func updateCautionHeight() {
         cautionView.snp.updateConstraints { maker in
             maker.height.equalTo(cautionView.height(containerWidth: width))
-        }
-    }
-
-}
-
-extension SendAddressView: ISendAddressView {
-
-    func set(error: Error?) {
-        if let error = error {
-            cautionView.set(caution: Caution(text: error.smartDescription, type: .error))
-            addressInputView.set(cautionType: .error)
-        } else {
-            cautionView.set(caution: nil)
-            addressInputView.set(cautionType: nil)
         }
     }
 

@@ -4,7 +4,7 @@ import RxCocoa
 protocol IRecipientAddressService {
     var initialAddress: Address? { get }
     var error: Error? { get }
-    var errorObservable: Observable<Error> { get }
+    var errorObservable: Observable<Error?> { get }
     func set(address: Address?)
 }
 
@@ -30,6 +30,7 @@ class RecipientAddressViewModel {
 
         resolutionService.addressObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .observeOn(MainScheduler.instance) // todo: required for current Send module, remove this after refactoring to MVVM
                 .subscribe(onNext: { [weak self] address in
                     self?.service.set(address: address)
                 })

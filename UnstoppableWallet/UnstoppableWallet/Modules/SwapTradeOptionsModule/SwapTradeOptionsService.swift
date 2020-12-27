@@ -115,8 +115,8 @@ extension SwapTradeOptionsService: IRecipientAddressService {
         errors.first { $0 is SwapTradeOptionsService.AddressError }
     }
 
-    var errorObservable: Observable<Error> {
-        errorsRelay.compactMap { errors -> Error? in
+    var errorObservable: Observable<Error?> {
+        errorsRelay.map { errors -> Error? in
             errors.first { $0 is SwapTradeOptionsService.AddressError }
         }
     }

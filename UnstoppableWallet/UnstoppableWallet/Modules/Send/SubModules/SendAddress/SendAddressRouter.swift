@@ -18,12 +18,11 @@ extension SendAddressRouter {
         let addressParserFactory = AddressParserFactory()
 
         let router = SendAddressRouter()
-        let interactor = SendAddressInteractor(pasteboardManager: App.shared.pasteboardManager, addressParser: addressParserFactory.parser(coin: coin))
+        let interactor = SendAddressInteractor(addressParser: addressParserFactory.parser(coin: coin))
 
         let presenter = SendAddressPresenter(interactor: interactor, router: router)
-        let view = SendAddressView(delegate: presenter)
-
-        presenter.view = view
+        let viewModel = RecipientAddressViewModel(service: presenter)
+        let view = SendAddressView(viewModel: viewModel, delegate: presenter)
 
         return (view, presenter, router)
     }
