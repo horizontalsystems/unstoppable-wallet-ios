@@ -1,8 +1,9 @@
 import Foundation
 import Hodler
+import RxSwift
+import RxRelay
 
 class SendAddressPresenter {
-    weak var view: ISendAddressView?
     weak var delegate: ISendAddressDelegate?
 
     private let interactor: ISendAddressInteractor
@@ -10,6 +11,13 @@ class SendAddressPresenter {
 
     private var enteredAddress: String?
     var currentAddress: String?
+
+    private(set) var error: Error? {
+        didSet {
+            errorRelay.accept(error)
+        }
+    }
+    private let errorRelay = PublishRelay<Error?>()
 
     init(interactor: ISendAddressInteractor, router: ISendAddressRouter) {
         self.interactor = interactor
@@ -36,18 +44,6 @@ extension SendAddressPresenter: ISendAddressViewDelegate {
         router.openScan(controller: controller)
     }
 
-    func onAddressChange(string: String?) {
-        guard let address = string, !address.isEmpty else {
-            view?.set(error: nil)
-            currentAddress = nil
-            enteredAddress = nil
-            delegate?.onUpdateAddress()
-
-            return
-        }
-        onEnter(address: address)
-    }
-
 }
 
 extension SendAddressPresenter: ISendAddressModule {
@@ -61,10 +57,10 @@ extension SendAddressPresenter: ISendAddressModule {
         do {
             try delegate?.validate(address: address)
             currentAddress = address
-            view?.set(error: nil)
+            error = nil
         } catch {
             currentAddress = nil
-            view?.set(error: error.convertedError)
+            self.error = error.convertedError
             throw error
         }
     }
@@ -75,6 +71,31 @@ extension SendAddressPresenter: ISendAddressModule {
         }
 
         return address
+    }
+
+}
+
+extension SendAddressPresenter: IRecipientAddressService {
+
+    var initialAddress: Address? {
+        nil
+    }
+
+    var errorObservable: Observable<Error?> {
+        errorRelay.asObservable()
+    }
+
+    func set(address: Address?) {
+        guard let address = address?.raw, !address.isEmpty else {
+            error = nil
+            currentAddress = nil
+            enteredAddress = nil
+            delegate?.onUpdateAddress()
+
+            return
+        }
+
+        onEnter(address: address)
     }
 
 }
