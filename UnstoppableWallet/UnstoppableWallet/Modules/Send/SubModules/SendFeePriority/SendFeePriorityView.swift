@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 import UIExtensions
+import ThemeKit
 
 class SendFeePriorityView: UIView {
     let delegate: ISendFeePriorityViewDelegate
@@ -9,7 +10,8 @@ class SendFeePriorityView: UIView {
     private let durationValueLabel = UILabel()
 
     private let feeSliderWrapper = FeeSliderWrapper()
-    private let selectableValueView = SelectableValueView(title: "send.tx_speed".localized)
+    private let separator = UIView()
+    private let selectableValueView = C5Cell(style: .default, reuseIdentifier: nil)
 
     private let customPriorityUnit: CustomPriorityUnit?
 
@@ -50,15 +52,32 @@ class SendFeePriorityView: UIView {
         }
         feeSliderWrapper.isHidden = true
 
-        addSubview(selectableValueView)
-        selectableValueView.snp.makeConstraints { maker in
+        addSubview(separator)
+        separator.snp.makeConstraints { maker in
+            maker.top.equalTo(durationTitleLabel.snp.bottom).offset(CGFloat.margin3x)
+            maker.leading.trailing.equalToSuperview()
+            maker.height.equalTo(CGFloat.heightOnePixel)
+        }
+
+        separator.backgroundColor = .themeSteel20
+
+        addSubview(selectableValueView.contentView)
+        selectableValueView.contentView.snp.makeConstraints { maker in
             maker.top.equalTo(durationTitleLabel.snp.bottom).offset(CGFloat.margin3x)
             maker.top.equalTo(feeSliderWrapper.snp.bottom)
             maker.bottom.leading.trailing.equalToSuperview()
+            maker.height.equalTo(CGFloat.heightSingleLineCell)
         }
-        selectableValueView.delegate = self
-        selectableValueView.set(value: delegate.feeRatePriority.title)
 
+        selectableValueView.title = "send.tx_speed".localized
+        selectableValueView.titleImage = UIImage(named: "circle_information_20")?.tinted(with: .themeJacob)
+        selectableValueView.titleImageAction = { [weak self] in
+            self?.openFeeInfo()
+        }
+        selectableValueView.valueAction = { [weak self] in
+            self?.delegate.onFeePrioritySelectorTap()
+        }
+        selectableValueView.value = delegate.feeRatePriority.title
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -81,17 +100,22 @@ class SendFeePriorityView: UIView {
         delegate.selectCustom(feeRatePriority: .custom(value: convert(value, toPresent: false), range: realRange))
     }
 
+    private func openFeeInfo() {
+        //todo
+        print("open fee info")
+    }
+
 }
 
 extension SendFeePriorityView: ISendFeePriorityView {
 
     func setPriority() {
-        selectableValueView.set(value: delegate.feeRatePriority.title)
+        selectableValueView.value = delegate.feeRatePriority.title
     }
 
     func set(enabled: Bool) {
         DispatchQueue.main.async {
-            self.selectableValueView.set(enabled: enabled)
+            self.selectableValueView.valueActionEnabled = enabled
         }
     }
 
@@ -108,14 +132,6 @@ extension SendFeePriorityView: ISendFeePriorityView {
 
     func set(duration: TimeInterval?) {
         durationValueLabel.text = duration.map { "send.duration.within".localized($0.approximateHoursOrMinutes) } ?? "send.duration.instant".localized
-    }
-
-}
-
-extension SendFeePriorityView: ISelectableValueViewDelegate {
-
-    func onSelectorTap() {
-        self.delegate.onFeePrioritySelectorTap()
     }
 
 }
