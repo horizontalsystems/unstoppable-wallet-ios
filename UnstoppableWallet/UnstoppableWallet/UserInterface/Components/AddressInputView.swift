@@ -13,6 +13,7 @@ class AddressInputView: UIView {
     private let pasteView = InputButtonWrapperView(style: .secondaryDefault)
 
     var onChangeText: ((String?) -> ())?
+    var onFetchText: ((String?) -> ())?
     var onOpenViewController: ((UIViewController) -> ())?
 
     init() {
@@ -70,7 +71,7 @@ class AddressInputView: UIView {
             return
         }
 
-        inputStackView.text = text
+        onFetchText?(text)
     }
 
     private func handleChange(text: String?) {
@@ -131,7 +132,7 @@ extension AddressInputView {
 extension AddressInputView: IScanQrViewControllerDelegate {
 
     func didScan(string: String) {
-        inputStackView.text = string
+        onFetchText?(string)
     }
 
 }

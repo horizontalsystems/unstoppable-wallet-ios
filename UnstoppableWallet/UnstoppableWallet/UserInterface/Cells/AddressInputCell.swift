@@ -48,6 +48,11 @@ extension AddressInputCell {
         set { addressInputView.onChangeText = newValue }
     }
 
+    var onFetchText: ((String?) -> ())? {
+        get { addressInputView.onFetchText }
+        set { addressInputView.onFetchText = newValue }
+    }
+
     var onChangeEditing: ((Bool) -> ())? {
         get { addressInputView.onChangeEditing }
         set { addressInputView.onChangeEditing = newValue }

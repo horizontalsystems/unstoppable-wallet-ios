@@ -12,7 +12,6 @@ class AddressResolutionService {
         }
     }
     private let isResolvingRelay = PublishRelay<Bool>()
-
     private let addressRelay = PublishRelay<Address?>()
 
     init(coinCode: String) {
@@ -34,15 +33,13 @@ extension AddressResolutionService {
     func set(text: String?) {
         disposeBag = DisposeBag()
 
-        addressRelay.accept(text.map { Address(raw: $0) })
-
         if let text = text, provider.isValid(domain: text) {
             isResolving = true
 
             provider.resolveSingle(domain: text, ticker: coinCode)
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                    .subscribe(onSuccess: { [weak self] address in
-                        self?.addressRelay.accept(Address(raw: address, domain: text))
+                    .subscribe(onSuccess: { [weak self] resolvedAddress in
+                        self?.addressRelay.accept(Address(raw: resolvedAddress, domain: text))
                         self?.isResolving = false
                     }, onError: { [weak self] error in
                         self?.isResolving = false
