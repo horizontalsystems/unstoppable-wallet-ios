@@ -5,7 +5,9 @@ PODS:
   - Alamofire (5.4.0)
   - AlamofireImage (4.1.0):
     - Alamofire (~> 5.1)
-  - BigInt (5.2.0)
+  - Base58Swift (2.1.10):
+    - BigInt (~> 5.0.0)
+  - BigInt (5.0.0)
   - BinanceChainKit.swift (0.3.4):
     - GRDB.swift (~> 4.0)
     - HdWalletKit.swift (~> 1.5)
@@ -111,6 +113,12 @@ PODS:
     - RxSwift (~> 5.0)
     - Secp256k1Kit.swift (~> 1.0)
     - UIExtensions.swift (~> 1.1.0)
+  - EthereumABI (1.3.1):
+    - BigInt (~> 5.0)
+    - CryptoSwift (~> 1.0)
+    - EthereumAddress (~> 1.3)
+  - EthereumAddress (1.3.0):
+    - CryptoSwift (~> 1.0)
   - EthereumKit.swift (0.11.1):
     - BigInt (~> 5.0)
     - BlueSocket (~> 1.0)
@@ -277,6 +285,9 @@ PODS:
     - OpenSslKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
     - Secp256k1Kit.swift (~> 1.0)
+  - UnstoppableDomainsResolution (0.1.6):
+    - Base58Swift (~> 2.1)
+    - EthereumABI (~> 1.3)
   - WalletConnect (0.1.0):
     - CryptoSwift
     - PromiseKit
@@ -296,6 +307,7 @@ DEPENDENCIES:
   - ActionSheet.swift (from `https://github.com/horizontalsystems/gui-kit/`)
   - Alamofire
   - AlamofireImage
+  - Base58Swift (~> 2.1.10)
   - BigInt
   - BinanceChainKit.swift (from `https://github.com/horizontalsystems/binance-chain-kit-ios`)
   - BitcoinCashKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
@@ -313,6 +325,7 @@ DEPENDENCIES:
   - EosioSwiftSoftkeySignatureProvider (from `https://github.com/horizontalsystems/eosio-swift-softkey-signature-provider.git`)
   - EosKit.swift (from `https://github.com/horizontalsystems/eos-kit-ios`)
   - Erc20Kit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
+  - EthereumABI (from `https://github.com/horizontalsystems/EthereumABI`)
   - EthereumKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - FeeRateKit.swift (from `https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios`)
   - GRDB.swift
@@ -338,6 +351,7 @@ DEPENDENCIES:
   - ThemeKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - UIExtensions.swift (from `https://github.com/horizontalsystems/gui-kit/`)
   - UniswapKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
+  - UnstoppableDomainsResolution
   - WalletConnect (from `https://github.com/horizontalsystems/wallet-connect-swift`, branch `master`)
   - XRatesKit.swift (from `https://github.com/horizontalsystems/xrates-kit-ios/`)
   - ZcashLightClientKit (from `https://github.com/zcash/ZcashLightClientKit.git`)
@@ -346,6 +360,7 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - AlamofireImage
+    - Base58Swift
     - BigInt
     - BlsKit.swift
     - BlueSocket
@@ -362,6 +377,7 @@ SPEC REPOS:
     - Cuckoo
     - DeepDiff
     - Down
+    - EthereumAddress
     - GRDB.swift
     - GRKOpenSSLFramework
     - gRPC-Swift
@@ -392,6 +408,7 @@ SPEC REPOS:
     - SwiftNIOTransportServices
     - SwiftProtobuf
     - SwiftyJSON
+    - UnstoppableDomainsResolution
     - X11Kit.swift
 
 EXTERNAL SOURCES:
@@ -423,6 +440,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/eos-kit-ios
   Erc20Kit.swift:
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
+  EthereumABI:
+    :git: https://github.com/horizontalsystems/EthereumABI
   EthereumKit.swift:
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
@@ -506,6 +525,9 @@ CHECKOUT OPTIONS:
   Erc20Kit.swift:
     :commit: c810d1120f3d081132b7fd123a24d2e5c5357b85
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
+  EthereumABI:
+    :commit: f77b49868885e9f909bd7dcf4c50c42e84f43ef7
+    :git: https://github.com/horizontalsystems/EthereumABI
   EthereumKit.swift:
     :commit: 9692d9f60041e80d5384b81956634d4ab38b0e92
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
@@ -568,7 +590,8 @@ SPEC CHECKSUMS:
   ActionSheet.swift: 60b3f9737bf8fff3c7b39de295291a9cd968be58
   Alamofire: 3b6a534a3df22db367e4dedeeca73d1ddfcf0e2f
   AlamofireImage: c4a2ba349885fb3064feb74d2e547bd42ce9be10
-  BigInt: f668a80089607f521586bbe29513d708491ef2f7
+  Base58Swift: 53d551f0b33d9478fa63b3445e453a772d6b31a7
+  BigInt: 74b4d88367b0e819d9f77393549226d36faeb0d8
   BinanceChainKit.swift: 8b0f9f257b15a13673dcfa89584dc990c77dbf08
   BitcoinCashKit.swift: 18a33dadb8ac457e18f72b2047ae4dc5f5863c79
   BitcoinCore.swift: 65c4d576344d27c8f169b218c8af9637267f8879
@@ -597,6 +620,8 @@ SPEC CHECKSUMS:
   EosioSwiftSoftkeySignatureProvider: 1edcefc7f238b3193cb21b48f74e36e815eaa952
   EosKit.swift: 3fe1c100dda7b730c7f74da34472f2e7af335678
   Erc20Kit.swift: 67a2b09cbb67881b6063ff758dcf54dc133c2f49
+  EthereumABI: a999809dee0ccf1f945a76fe5ed7394eaa73a27b
+  EthereumAddress: 39fe8e11cf04e4e9902b55ae653dbc4e0aee5f30
   EthereumKit.swift: e07c58547b5ff30ae536b555ef060bc313f04160
   FeeRateKit.swift: fbf599802e96d999d1d9e45127ab0ad05a6163f8
   GRDB.swift: 8cc3ab7c8b8b4ac1761deb8dca4b51c1c9d429f8
@@ -643,11 +668,12 @@ SPEC CHECKSUMS:
   ThemeKit.swift: ef380a141bb93ae0d55f4a64c8229b1487d37711
   UIExtensions.swift: 3ed084c0343ddd0f86c7c558d37759e1fd7d5778
   UniswapKit.swift: b14da72cf5b4746fa880c32458723fd6d3d48114
+  UnstoppableDomainsResolution: dc89a8d9e51f3786b46274b457875a231d5bdbb8
   WalletConnect: 7253f3c123df3bba10d71459f0d62a900fee68ac
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: e0bd2c964d6b70786611bbf1c64774614779dcf5
   ZcashLightClientKit: 82c225b8ebe4bb44983acc6fb47e043d68a01651
 
-PODFILE CHECKSUM: 2f5cd3b63f4cb6517a0f8ec40410ffa5d560f81b
+PODFILE CHECKSUM: 8ca053b04a086ba5915c3ee260a929aa7ff19c24
 
 COCOAPODS: 1.10.0

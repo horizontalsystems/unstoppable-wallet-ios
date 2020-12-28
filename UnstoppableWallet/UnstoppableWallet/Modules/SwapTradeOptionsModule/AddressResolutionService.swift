@@ -3,6 +3,7 @@ import RxRelay
 
 class AddressResolutionService {
     private let provider = AddressResolutionProvider()
+    private let coinCode: String
     private var disposeBag = DisposeBag()
 
     private(set) var isResolving: Bool = false {
@@ -14,7 +15,8 @@ class AddressResolutionService {
 
     private let addressRelay = PublishRelay<Address?>()
 
-    init() {
+    init(coinCode: String) {
+        self.coinCode = coinCode
     }
 
 }
@@ -37,7 +39,7 @@ extension AddressResolutionService {
         if let text = text, provider.isValid(domain: text) {
             isResolving = true
 
-            provider.resolutionSingle(domain: text)
+            provider.resolveSingle(domain: text, ticker: coinCode)
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                     .subscribe(onSuccess: { [weak self] address in
                         self?.addressRelay.accept(Address(raw: address, domain: text))
@@ -49,36 +51,6 @@ extension AddressResolutionService {
         } else {
             isResolving = false
         }
-    }
-
-}
-
-class AddressResolutionProvider {
-
-    func isValid(domain: String) -> Bool {
-        domain.hasSuffix("zil") || domain.hasSuffix("crypto")
-    }
-
-    func resolutionSingle(domain: String) -> Single<String> {
-        Single<String>.create { observer in
-            Thread.sleep(forTimeInterval: 2)
-
-            if domain.hasSuffix("zil") {
-                observer(.success("0xe94B8B542f474e3Dd52Ff92c6c60c0908a9F1235"))
-            } else {
-                observer(.error(ResolutionError.invalidDomain))
-            }
-
-            return Disposables.create()
-        }
-    }
-
-}
-
-extension AddressResolutionProvider {
-
-    enum ResolutionError: Error {
-        case invalidDomain
     }
 
 }

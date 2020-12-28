@@ -23,11 +23,11 @@ class SwapTradeOptionsView: ThemeViewController {
 
     private let buttonCell = ButtonCell(style: .default, reuseIdentifier: nil)
 
-    init(viewModel: SwapTradeOptionsViewModel) {
+    init(viewModel: SwapTradeOptionsViewModel, recipientViewModel: RecipientAddressViewModel, slippageViewModel: SwapSlippageViewModel, deadlineViewModel: SwapDeadlineViewModel) {
         self.viewModel = viewModel
-        recipientViewModel = viewModel.recipientViewModel
-        slippageViewModel = viewModel.slippageViewModel
-        deadlineViewModel = viewModel.deadlineViewModel
+        self.recipientViewModel = recipientViewModel
+        self.slippageViewModel = slippageViewModel
+        self.deadlineViewModel = deadlineViewModel
 
         super.init()
     }

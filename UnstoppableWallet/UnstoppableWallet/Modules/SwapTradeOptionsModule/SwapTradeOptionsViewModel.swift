@@ -10,18 +10,6 @@ class SwapTradeOptionsViewModel {
 
     private let actionRelay = BehaviorRelay<ActionState>(value: .enabled)
 
-    public var slippageViewModel: SwapSlippageViewModel {
-        SwapSlippageViewModel(service: service, decimalParser: AmountDecimalParser())
-    }
-
-    public var deadlineViewModel: SwapDeadlineViewModel {
-        SwapDeadlineViewModel(service: service, decimalParser: AmountDecimalParser())
-    }
-
-    public var recipientViewModel: RecipientAddressViewModel {
-        RecipientAddressViewModel(service: service)
-    }
-
     init(service: SwapTradeOptionsService, tradeService: SwapTradeService, decimalParser: IAmountDecimalParser) {
         self.service = service
         self.tradeService = tradeService

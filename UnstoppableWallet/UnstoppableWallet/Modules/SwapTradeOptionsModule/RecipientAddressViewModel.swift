@@ -10,7 +10,7 @@ protocol IRecipientAddressService {
 
 class RecipientAddressViewModel {
     private let service: IRecipientAddressService
-    private let resolutionService = AddressResolutionService()
+    private let resolutionService: AddressResolutionService
     private let disposeBag = DisposeBag()
 
     private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
@@ -18,8 +18,9 @@ class RecipientAddressViewModel {
     private var editing = false
     private var forceShowError = false
 
-    init(service: IRecipientAddressService) {
+    init(service: IRecipientAddressService, resolutionService: AddressResolutionService) {
         self.service = service
+        self.resolutionService = resolutionService
 
         service.errorObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))

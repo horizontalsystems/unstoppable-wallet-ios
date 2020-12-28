@@ -17,7 +17,7 @@ extension SendAddressRouter {
     static func module(coin: Coin, placeholder: String = "send.address_placeholder".localized) -> (UIView, ISendAddressModule, ISendSubRouter) {
         let router = SendAddressRouter()
         let presenter = SendAddressPresenter(router: router)
-        let viewModel = RecipientAddressViewModel(service: presenter)
+        let viewModel = RecipientAddressViewModel(service: presenter, resolutionService: AddressResolutionService(coinCode: coin.code))
         let view = SendAddressView(viewModel: viewModel, placeholder: placeholder, delegate: presenter)
 
         return (view, presenter, router)
