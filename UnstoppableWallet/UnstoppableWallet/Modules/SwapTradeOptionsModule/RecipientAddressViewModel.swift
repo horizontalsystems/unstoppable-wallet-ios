@@ -6,21 +6,27 @@ protocol IRecipientAddressService {
     var error: Error? { get }
     var errorObservable: Observable<Error?> { get }
     func set(address: Address?)
+    func set(amount: Decimal)
 }
 
 class RecipientAddressViewModel {
     private let service: IRecipientAddressService
     private let resolutionService: AddressResolutionService
+    private let addressParser: IAddressParser
+    private let isResolutionEnabled: Bool
     private let disposeBag = DisposeBag()
 
     private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private let cautionRelay = BehaviorRelay<Caution?>(value: nil)
+    private let setTextRelay = PublishRelay<String?>()
     private var editing = false
     private var forceShowError = false
 
-    init(service: IRecipientAddressService, resolutionService: AddressResolutionService) {
+    init(service: IRecipientAddressService, resolutionService: AddressResolutionService, addressParser: IAddressParser, isResolutionEnabled: Bool = true) {
         self.service = service
         self.resolutionService = resolutionService
+        self.addressParser = addressParser
+        self.isResolutionEnabled = isResolutionEnabled
 
         service.errorObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
@@ -68,18 +74,40 @@ extension RecipientAddressViewModel {
         service.initialAddress?.title
     }
 
+    var isLoadingDriver: Driver<Bool> {
+        isLoadingRelay.asDriver()
+    }
+
     var cautionDriver: Driver<Caution?> {
         cautionRelay.asDriver()
     }
 
-    var isLoadingDriver: Driver<Bool> {
-        isLoadingRelay.asDriver()
+    var setTextSignal: Signal<String?> {
+        setTextRelay.asSignal()
     }
 
     func onChange(text: String?) {
         forceShowError = false
 
-        resolutionService.set(text: text)
+        service.set(address: text.map { Address(raw: $0) })
+
+        if isResolutionEnabled {
+            resolutionService.set(text: text)
+        }
+    }
+
+    func onFetch(text: String?) {
+        guard let text = text, !text.isEmpty else {
+            return
+        }
+
+        let addressData = addressParser.parse(paymentAddress: text)
+
+        setTextRelay.accept(addressData.address)
+
+        if let amount = addressData.amount {
+            service.set(amount: Decimal(amount))
+        }
     }
 
     func onChange(editing: Bool) {

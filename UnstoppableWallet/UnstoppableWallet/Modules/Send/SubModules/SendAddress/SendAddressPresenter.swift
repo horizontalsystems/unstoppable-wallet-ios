@@ -27,10 +27,6 @@ class SendAddressPresenter {
         try? validateAddress()
 
         delegate?.onUpdateAddress()
-
-        if let amount = address.amount {
-            delegate?.onUpdate(amount: amount)
-        }
     }
 
 }
@@ -93,6 +89,10 @@ extension SendAddressPresenter: IRecipientAddressService {
         }
 
         onEnter(address: address)
+    }
+
+    func set(amount: Decimal) {
+        delegate?.onUpdate(amount: amount)
     }
 
 }

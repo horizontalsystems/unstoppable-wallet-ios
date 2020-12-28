@@ -125,6 +125,9 @@ extension SwapTradeOptionsService: IRecipientAddressService {
         recipient = address
     }
 
+    func set(amount: Decimal) {
+    }
+
 }
 
 extension SwapTradeOptionsService {

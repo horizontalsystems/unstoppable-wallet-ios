@@ -33,6 +33,9 @@ class SendAddressView: UIView {
         addressInputView.onChangeText = { [weak self] string in
             self?.viewModel.onChange(text: string)
         }
+        addressInputView.onFetchText = { [weak self] string in
+            self?.viewModel.onFetch(text: string)
+        }
         addressInputView.onChangeEditing = { [weak self] editing in
             self?.viewModel.onChange(editing: editing)
         }
@@ -56,9 +59,11 @@ class SendAddressView: UIView {
             self?.addressInputView.set(cautionType: $0?.type)
             self?.cautionView.set(caution: $0)
         }
-
         subscribe(disposeBag, viewModel.isLoadingDriver) { [weak self] in
             self?.addressInputView.set(isLoading: $0)
+        }
+        subscribe(disposeBag, viewModel.setTextSignal) { [weak self] in
+            self?.addressInputView.inputText = $0
         }
     }
 

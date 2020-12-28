@@ -14,10 +14,17 @@ extension SendAddressRouter: ISendAddressRouter {
 
 extension SendAddressRouter {
 
-    static func module(coin: Coin, placeholder: String = "send.address_placeholder".localized) -> (UIView, ISendAddressModule, ISendSubRouter) {
+    static func module(coin: Coin, placeholder: String = "send.address_placeholder".localized, isResolutionEnabled: Bool = true) -> (UIView, ISendAddressModule, ISendSubRouter) {
+        let addressParserFactory = AddressParserFactory()
+
         let router = SendAddressRouter()
         let presenter = SendAddressPresenter(router: router)
-        let viewModel = RecipientAddressViewModel(service: presenter, resolutionService: AddressResolutionService(coinCode: coin.code))
+        let viewModel = RecipientAddressViewModel(
+                service: presenter,
+                resolutionService: AddressResolutionService(coinCode: coin.code),
+                addressParser: addressParserFactory.parser(coin: coin),
+                isResolutionEnabled: isResolutionEnabled
+        )
         let view = SendAddressView(viewModel: viewModel, placeholder: placeholder, delegate: presenter)
 
         return (view, presenter, router)

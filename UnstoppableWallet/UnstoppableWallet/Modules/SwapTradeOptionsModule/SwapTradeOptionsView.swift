@@ -59,8 +59,9 @@ class SwapTradeOptionsView: ThemeViewController {
         recipientCell.inputPlaceholder = "swap.advanced_settings.recipient.placeholder".localized
         recipientCell.inputText = recipientViewModel.initialValue
         recipientCell.onChangeHeight = { [weak self] in self?.reloadTable() }
-        recipientCell.onChangeText = { [weak self] text in self?.recipientViewModel.onChange(text: text) }
-        recipientCell.onChangeEditing = { [weak self] editing in self?.recipientViewModel.onChange(editing: editing) }
+        recipientCell.onChangeText = { [weak self] in self?.recipientViewModel.onChange(text: $0) }
+        recipientCell.onFetchText = { [weak self] in self?.recipientViewModel.onFetch(text: $0) }
+        recipientCell.onChangeEditing = { [weak self] in self?.recipientViewModel.onChange(editing: $0) }
         recipientCell.onOpenViewController = { [weak self] in self?.present($0, animated: true) }
 
         recipientCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
@@ -91,9 +92,11 @@ class SwapTradeOptionsView: ThemeViewController {
             self?.recipientCell.set(cautionType: $0?.type)
             self?.recipientCautionCell.set(caution: $0)
         }
-
         subscribe(disposeBag, recipientViewModel.isLoadingDriver) { [weak self] in
             self?.recipientCell.set(isLoading: $0)
+        }
+        subscribe(disposeBag, recipientViewModel.setTextSignal) { [weak self] in
+            self?.recipientCell.inputText = $0
         }
 
         subscribe(disposeBag, slippageViewModel.cautionDriver) { [weak self] in
