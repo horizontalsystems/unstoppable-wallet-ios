@@ -331,7 +331,7 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
 
 extension SendAmountPresenter {
 
-    private enum ValidationError: Error, LocalizedError {
+    enum ValidationError: Error, LocalizedError {
         case emptyValue
         case insufficientBalance(availableBalance: AmountInfo)
         case noMinimumRequiredBalance(minimumRequiredBalance: AmountInfo)
