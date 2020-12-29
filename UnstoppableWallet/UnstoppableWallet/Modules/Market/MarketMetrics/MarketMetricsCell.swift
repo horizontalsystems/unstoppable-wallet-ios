@@ -1,10 +1,13 @@
 import UIKit
 import SnapKit
 import ThemeKit
+import RxSwift
 
 class MarketMetricsCell: UITableViewCell {
     private static let ellipseDiameter: CGFloat = 124
     static let cellHeight: CGFloat = 160 + 2 * .margin12
+
+    private let disposeBag = DisposeBag()
 
     private let cardView = UIView()
     private let ellipseView = UIImageView()
@@ -80,6 +83,8 @@ class MarketMetricsCell: UITableViewCell {
             maker.bottom.trailing.equalToSuperview()
             maker.width.equalTo(MarketMetricView.width)
         }
+
+        subscribe(disposeBag, viewModel.metricsDriver) { [weak self] in self?.bind(marketMetrics: $0)}
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -90,30 +95,30 @@ class MarketMetricsCell: UITableViewCell {
 
 extension MarketMetricsCell {
 
-    public func bind(marketMetrics: MarketMetricsService.MarketMetrics) {
+    public func bind(marketMetrics: MarketMetricsService.MarketMetrics?) {
         marketLargeView.set(title: "market.total_market_cap".localized,
-                value: marketMetrics.totalMarketCap.value,
-                diff: marketMetrics.totalMarketCap.diff
+                value: marketMetrics?.totalMarketCap.value,
+                diff: marketMetrics?.totalMarketCap.diff
         )
 
         volume24hView.set(title: "market.24h_volume".localized,
-                value: marketMetrics.volume24h.value,
-                diff: marketMetrics.volume24h.diff
+                value: marketMetrics?.volume24h.value,
+                diff: marketMetrics?.volume24h.diff
         )
 
         btcDominanceView.set(title: "market.btc_dominance".localized,
-                value: marketMetrics.btcDominance.value,
-                diff: marketMetrics.btcDominance.diff
+                value: marketMetrics?.btcDominance.value,
+                diff: marketMetrics?.btcDominance.diff
         )
 
         deFiCapView.set(title: "market.defi_cap".localized,
-                value: marketMetrics.defiCap.value,
-                diff: marketMetrics.defiCap.diff
+                value: marketMetrics?.defiCap.value,
+                diff: marketMetrics?.defiCap.diff
         )
 
         deFiTvlView.set(title: "market.defi_tvl".localized,
-                value: marketMetrics.defiTvl.value,
-                diff: marketMetrics.defiTvl.diff
+                value: marketMetrics?.defiTvl.value,
+                diff: marketMetrics?.defiTvl.diff
         )
     }
 

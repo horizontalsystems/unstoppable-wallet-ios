@@ -10,12 +10,14 @@ class MarketTop100ViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .plain)
 
     private let marketMetricsCell: MarketMetricsCell
+    private let marketTickerCell: MarketTickerCell
     private let marketTopView = MarketTopModule.view()
 
     init(viewModel: MarketTop100ViewModel) {
         self.viewModel = viewModel
 
         marketMetricsCell = MarketMetricsModule.cell()
+        marketTickerCell = MarketTickerModule.cell()
 
         super.init()
     }
@@ -47,21 +49,6 @@ class MarketTop100ViewController: ThemeViewController {
         subscribe(disposeBag, marketTopView.sectionUpdatedSignal) { [weak self] in self?.tableView.reload() }
 
         tableView.buildSections()
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { () -> () in
-            self.stubCells()
-        }
-    }
-
-    func stubCells() {
-        let metrics = MarketMetricsService.MarketMetrics(
-                totalMarketCap: MarketMetricsService.MetricData(value: "$498.61B", diff: -1.2413),
-                volume24h: MarketMetricsService.MetricData(value: "$167.84B", diff: -0.1591),
-                btcDominance: MarketMetricsService.MetricData(value: "64.09%", diff: -0.691),
-                defiCap: MarketMetricsService.MetricData(value: "$16.31B", diff: 0.0291),
-                defiTvl: MarketMetricsService.MetricData(value: "$17.5B", diff: 1.2413))
-
-        marketMetricsCell.bind(marketMetrics: metrics)
     }
 
 }
@@ -77,6 +64,13 @@ extension MarketTop100ViewController: SectionsDataSource {
                         id: "metrics",
                         height: MarketMetricsCell.cellHeight
 
+                )
+        )
+        rows.append(
+                StaticRow(
+                        cell: marketTickerCell,
+                        id: "ticker",
+                        height: MarketTickerCell.cellHeight
                 )
         )
 
