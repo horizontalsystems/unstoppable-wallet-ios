@@ -10,7 +10,7 @@ protocol ISendView: class {
     func showCopied()
     func show(error: Error)
     func showProgress()
-    func set(sendButtonEnabled: Bool)
+    func set(actionState: SendPresenter.ActionState)
     func dismissKeyboard()
     func dismissWithSuccess()
 }
@@ -55,7 +55,7 @@ protocol ISendHandler: AnyObject {
 }
 
 protocol ISendHandlerDelegate: AnyObject {
-    func onChange(isValid: Bool)
+    func onChange(isValid: Bool, amountError: Error?, addressError: Error?)
 }
 
 protocol ISendBitcoinInteractor {

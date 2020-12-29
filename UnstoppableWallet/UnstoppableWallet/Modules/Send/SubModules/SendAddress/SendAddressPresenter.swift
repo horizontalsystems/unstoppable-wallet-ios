@@ -44,7 +44,7 @@ extension SendAddressPresenter: ISendAddressModule {
     func validateAddress() throws {
         guard let address = enteredAddress else {
             currentAddress = nil
-            throw AppError.addressInvalid
+            throw ValidationError.emptyValue
         }
 
         do {
@@ -60,7 +60,7 @@ extension SendAddressPresenter: ISendAddressModule {
 
     func validAddress() throws -> Address {
         guard let address = currentAddress else {
-            throw AppError.addressInvalid
+            throw ValidationError.emptyValue
         }
 
         return address
@@ -93,6 +93,14 @@ extension SendAddressPresenter: IRecipientAddressService {
 
     func set(amount: Decimal) {
         delegate?.onUpdate(amount: amount)
+    }
+
+}
+
+extension SendAddressPresenter {
+
+    enum ValidationError: Error {
+        case emptyValue
     }
 
 }

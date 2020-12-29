@@ -148,8 +148,17 @@ extension SendViewController: ISendView {
         HudHelper.instance.showSpinner(userInteractionEnabled: false)
     }
 
-    func set(sendButtonEnabled: Bool) {
-        sendButton.isEnabled = sendButtonEnabled
+    func set(actionState: SendPresenter.ActionState) {
+        let defaultTitle = "send.next_button".localized
+
+        switch actionState {
+        case .enabled:
+            sendButton.isEnabled = true
+            sendButton.setTitle(defaultTitle, for: .normal)
+        case .disabled(let error):
+            sendButton.isEnabled = false
+            sendButton.setTitle(error ?? defaultTitle, for: .normal)
+        }
     }
 
     func dismissKeyboard() {

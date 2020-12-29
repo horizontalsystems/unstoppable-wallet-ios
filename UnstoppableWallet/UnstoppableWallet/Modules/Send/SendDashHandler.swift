@@ -20,14 +20,22 @@ class SendDashHandler {
     }
 
     private func syncValidation() {
+        var amountError: Error?
+        var addressError: Error?
+
         do {
             _ = try amountModule.validAmount()
-            try addressModule.validateAddress()
-
-            delegate?.onChange(isValid: true)
         } catch {
-            delegate?.onChange(isValid: false)
+            amountError = error
         }
+
+        do {
+            try addressModule.validateAddress()
+        } catch {
+            addressError = error
+        }
+
+        delegate?.onChange(isValid: amountError == nil && addressError == nil, amountError: amountError, addressError: addressError)
     }
 
     private func syncAvailableBalance() {

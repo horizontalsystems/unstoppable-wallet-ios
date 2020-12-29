@@ -27,20 +27,26 @@ class SendEthereumHandler {
     }
 
     @discardableResult private func syncValidation() -> Bool {
-        var success = false
+        var amountError: Error?
+        var addressError: Error?
 
         do {
             _ = try amountModule.validAmount()
-            try addressModule.validateAddress()
-
-            delegate?.onChange(isValid: feeModule.isValid && feePriorityModule.feeRateState.isValid && estimateGasLimitState.isValid)
-
-            success = true
         } catch {
-            delegate?.onChange(isValid: false)
+            amountError = error
         }
 
-        return success
+        do {
+            try addressModule.validateAddress()
+        } catch {
+            addressError = error
+        }
+
+        let isValid = amountError == nil && addressError == nil && feeModule.isValid && feePriorityModule.feeRateState.isValid && estimateGasLimitState.isValid
+
+        delegate?.onChange(isValid: isValid, amountError: amountError, addressError: addressError)
+
+        return isValid
     }
 
     private func processFee(error: Error) {
