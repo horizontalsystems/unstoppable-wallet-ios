@@ -10,7 +10,7 @@ class UniswapInfoRouter {
 
 }
 
-extension UniswapInfoRouter: IUniswapInfoRouter {
+extension UniswapInfoRouter: IInfoRouter {
 
     func open(url: String) {
         urlManager.open(url: url, from: viewController)
@@ -26,8 +26,8 @@ extension UniswapInfoRouter {
 
     static func module() -> UIViewController {
         let router = UniswapInfoRouter(urlManager: UrlManager(inApp: true))
-        let presenter = UniswapInfoPresenter(router: router)
-        let viewController = UniswapInfoViewController(delegate: presenter)
+        let presenter = InfoPresenter(router: router, url: "https://uniswap.org/")
+        let viewController = InfoViewController(title: "swap.uniswap_info.title".localized, delegate: presenter, sectionDataSource: UniswapInfoSectionDataSource(rowsFactory: InfoRowsFactory()))
 
         router.viewController = viewController
 

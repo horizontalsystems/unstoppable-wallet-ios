@@ -1,5 +1,6 @@
 import UIKit
 import ActionSheet
+import ThemeKit
 
 class TransactionInfoRouter {
     weak var viewController: UIViewController?
@@ -21,7 +22,8 @@ extension TransactionInfoRouter: ITransactionInfoRouter {
     }
 
     func showLockInfo() {
-        viewController?.present(InfoRouter.module(title: "lock_info.title".localized, text: "lock_info.text".localized), animated: true)
+        let controller = TimeLockInfoRouter.module()
+        viewController?.present(ThemeNavigationController(rootViewController: controller), animated: true)
     }
 
     func showShare(value: String) {
