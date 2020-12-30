@@ -205,7 +205,14 @@ class CoinInfoMap {
         "BTC++":    CoinInfo(supply: 89.87534,        startDate: nil,          website: nil),
         "USDx":     CoinInfo(supply: nil,             startDate: nil,          website: nil),
         "WZEC":     CoinInfo(supply: 9_082,           startDate: nil,          website: "https://www.wrapped.com/"),
+        "1INCH":    CoinInfo(supply: 1_500_000_000,   startDate: nil,          website: "https://1inch.exchange/"),
+        "LINA":     CoinInfo(supply: 10_000_000_199,  startDate: "16/09/2020", website: "https://linear.finance"),
+        "ORN":      CoinInfo(supply: 100_000_000,     startDate: "13/07/2020", website: "https://orionprotocol.io/"),
+        "BASE":     CoinInfo(supply: 65_370_936,      startDate: nil,          website: "https://www.baseprotocol.org/"),
+        "FYZ":      CoinInfo(supply: 50_000_000,      startDate: nil,          website: "https://www.fyooz.io/"),
+        "RFI":      CoinInfo(supply: 10_000_000,      startDate: nil,          website: "https://reflect.finance"),
     ]
+
 
 }
 
