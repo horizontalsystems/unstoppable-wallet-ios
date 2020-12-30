@@ -117,8 +117,8 @@ class SendFeePriorityCell: UITableViewCell {
     }
 
     private func openFeeInfo() {
-        //todo
-        print("open fee info")
+        let infoController = FeeInfoRouter.module()
+        delegate?.open(viewController: ThemeNavigationController(rootViewController: infoController))
     }
 
     private func openSelectPriority(viewItems: [SendPriorityViewItem]) {

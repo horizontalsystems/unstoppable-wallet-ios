@@ -1,9 +1,9 @@
-protocol IUniswapInfoRouter {
+protocol IInfoRouter {
     func open(url: String)
     func close()
 }
 
-protocol IUniswapInfoViewDelegate {
+protocol IInfoViewDelegate {
     func onTapLink()
     func onTapClose()
 }

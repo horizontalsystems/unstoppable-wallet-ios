@@ -79,6 +79,10 @@ extension SendFeePriorityPresenter: ISendFeePriorityViewDelegate {
         delegate?.onUpdateFeePriority()
     }
 
+    func onOpenFeeInfo() {
+        router.openFeeInfo()
+    }
+
     private func updateFeeRatePriority(selectedItem: PriorityItem) {
         if case let .custom(value: defaultValue, range: range) = selectedItem.priority {
             var value = feeRate ?? defaultValue                  // set feeRate from previous choice when select to custom slider

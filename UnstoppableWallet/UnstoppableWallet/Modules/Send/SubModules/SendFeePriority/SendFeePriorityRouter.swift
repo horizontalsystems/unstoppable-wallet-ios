@@ -1,4 +1,5 @@
 import UIKit
+import ThemeKit
 
 class SendFeePriorityRouter {
     weak var viewController: UIViewController?
@@ -39,6 +40,11 @@ extension SendFeePriorityRouter: ISendFeePriorityRouter {
         }
 
         viewController?.present(alertController, animated: true)
+    }
+
+    func openFeeInfo() {
+        let controller = FeeInfoRouter.module()
+        viewController?.present(ThemeNavigationController(rootViewController: controller), animated: true)
     }
 
 }

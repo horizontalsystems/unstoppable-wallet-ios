@@ -12,6 +12,7 @@ protocol ISendFeePriorityViewDelegate {
     var feeRatePriority: FeeRatePriority { get }
     func onFeePrioritySelectorTap()
     func selectCustom(feeRatePriority: FeeRatePriority)
+    func onOpenFeeInfo()
 }
 
 protocol ISendFeePriorityInteractor {
@@ -27,6 +28,7 @@ protocol ISendFeePriorityInteractorDelegate {
 
 protocol ISendFeePriorityRouter {
     func openPriorities(items: [PriorityItem], onSelect: @escaping (PriorityItem) -> ())
+    func openFeeInfo()
 }
 
 protocol ISendFeePriorityDelegate: class {

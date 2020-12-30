@@ -4,7 +4,10 @@ class PrivacyInfoRouter {
     weak var viewController: UIViewController?
 }
 
-extension PrivacyInfoRouter: IPrivacyInfoRouter {
+extension PrivacyInfoRouter: IInfoRouter {
+
+    func open(url: String) {
+    }
 
     func close() {
         viewController?.dismiss(animated: true)
@@ -16,8 +19,8 @@ extension PrivacyInfoRouter {
 
     static func module() -> UIViewController {
         let router = PrivacyInfoRouter()
-        let presenter = PrivacyInfoPresenter(router: router)
-        let viewController = PrivacyInfoViewController(delegate: presenter)
+        let presenter = InfoPresenter(router: router)
+        let viewController = InfoViewController(title: "settings_privacy_info.title".localized, delegate: presenter, sectionDataSource: PrivacyInfoSectionDataSource(rowsFactory: InfoRowsFactory()))
 
         router.viewController = viewController
 

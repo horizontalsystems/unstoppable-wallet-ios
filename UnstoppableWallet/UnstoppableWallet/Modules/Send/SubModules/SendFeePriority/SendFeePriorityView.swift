@@ -101,8 +101,7 @@ class SendFeePriorityView: UIView {
     }
 
     private func openFeeInfo() {
-        //todo
-        print("open fee info")
+        delegate.onOpenFeeInfo()
     }
 
 }
