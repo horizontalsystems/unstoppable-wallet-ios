@@ -29,6 +29,19 @@ class SendAddressPresenter {
         delegate?.onUpdateAddress()
     }
 
+    private func onSet(address: Address?) {
+        guard let address = address, !address.raw.isEmpty else {
+            error = nil
+            currentAddress = nil
+            enteredAddress = nil
+            delegate?.onUpdateAddress()
+
+            return
+        }
+
+        onEnter(address: address)
+    }
+
 }
 
 extension SendAddressPresenter: ISendAddressViewDelegate {
@@ -79,16 +92,9 @@ extension SendAddressPresenter: IRecipientAddressService {
     }
 
     func set(address: Address?) {
-        guard let address = address, !address.raw.isEmpty else {
-            error = nil
-            currentAddress = nil
-            enteredAddress = nil
-            delegate?.onUpdateAddress()
-
-            return
+        DispatchQueue.main.async { [weak self] in
+            self?.onSet(address: address)
         }
-
-        onEnter(address: address)
     }
 
     func set(amount: Decimal) {

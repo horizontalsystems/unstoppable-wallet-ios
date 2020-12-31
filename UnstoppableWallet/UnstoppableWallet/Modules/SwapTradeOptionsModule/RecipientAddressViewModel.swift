@@ -13,20 +13,18 @@ class RecipientAddressViewModel {
     private let service: IRecipientAddressService
     private let resolutionService: AddressResolutionService
     private let addressParser: IAddressParser
-    private let isResolutionEnabled: Bool
     private let disposeBag = DisposeBag()
 
-    private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private let cautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let setTextRelay = PublishRelay<String?>()
+
     private var editing = false
     private var forceShowError = false
 
-    init(service: IRecipientAddressService, resolutionService: AddressResolutionService, addressParser: IAddressParser, isResolutionEnabled: Bool = true) {
+    init(service: IRecipientAddressService, resolutionService: AddressResolutionService, addressParser: IAddressParser) {
         self.service = service
         self.resolutionService = resolutionService
         self.addressParser = addressParser
-        self.isResolutionEnabled = isResolutionEnabled
 
         service.errorObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
@@ -35,22 +33,15 @@ class RecipientAddressViewModel {
                 })
                 .disposed(by: disposeBag)
 
-        resolutionService.addressObservable
+        resolutionService.resolveFinishedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .observeOn(MainScheduler.instance) // todo: required for current Send module, remove this after refactoring to MVVM
                 .subscribe(onNext: { [weak self] address in
-                    self?.service.set(address: address)
-                })
-                .disposed(by: disposeBag)
+                    self?.forceShowError = true
 
-        resolutionService.isResolvingObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] isResolving in
-                    self?.sync()
-                    self?.isLoadingRelay.accept(isResolving)
-
-                    if isResolving {
-                        self?.forceShowError = true
+                    if let address = address {
+                        self?.service.set(address: address)
+                    } else {
+                        self?.sync()
                     }
                 })
                 .disposed(by: disposeBag)
@@ -75,7 +66,7 @@ extension RecipientAddressViewModel {
     }
 
     var isLoadingDriver: Driver<Bool> {
-        isLoadingRelay.asDriver()
+        resolutionService.isResolvingObservable.asDriver(onErrorJustReturn: false)
     }
 
     var cautionDriver: Driver<Caution?> {
@@ -90,10 +81,7 @@ extension RecipientAddressViewModel {
         forceShowError = false
 
         service.set(address: text.map { Address(raw: $0) })
-
-        if isResolutionEnabled {
-            resolutionService.set(text: text)
-        }
+        resolutionService.set(text: text)
     }
 
     func onFetch(text: String?) {
