@@ -113,7 +113,7 @@ class TransactionCell: ClaudeThemeCell {
         if let value = item.currencyValue?.nonZero, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.01)) {
             currencyAmountLabel.text = formattedValue
         } else {
-            currencyAmountLabel.text = nil
+            currencyAmountLabel.text = " "
         }
 
         if let lockState = item.lockState {
