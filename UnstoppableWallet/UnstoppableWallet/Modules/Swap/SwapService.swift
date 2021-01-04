@@ -253,7 +253,7 @@ extension SwapService {
     }
 
     var approveData: SwapAllowanceService.ApproveData? {
-        guard let amount = tradeService.amountIn else {
+        guard let amount = balanceIn else {
             return nil
         }
 
