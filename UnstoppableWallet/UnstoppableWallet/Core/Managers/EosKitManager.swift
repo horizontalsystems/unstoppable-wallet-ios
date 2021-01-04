@@ -5,12 +5,14 @@ class EosKitManager {
     private let appConfigProvider: IAppConfigProvider
     weak var eosKit: EosKit?
 
+    private var currentAccount: Account?
+
     init(appConfigProvider: IAppConfigProvider) {
         self.appConfigProvider = appConfigProvider
     }
 
     func eosKit(account: Account) throws -> EosKit {
-        if let eosKit = self.eosKit {
+        if let eosKit = eosKit, let currentAccount = currentAccount, currentAccount == account {
             return eosKit
         }
 
@@ -29,6 +31,7 @@ class EosKitManager {
         eosKit.refresh()
 
         self.eosKit = eosKit
+        currentAccount = account
 
         return eosKit
     }

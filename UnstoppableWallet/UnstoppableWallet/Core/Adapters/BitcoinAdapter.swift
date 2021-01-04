@@ -6,7 +6,7 @@ class BitcoinAdapter: BitcoinBaseAdapter {
     private let bitcoinKit: Kit
 
     init(wallet: Wallet, syncMode: SyncMode?, derivation: MnemonicDerivation?, testMode: Bool) throws {
-        guard case let .mnemonic(words, _) = wallet.account.type else {
+        guard case let .mnemonic(words, _) = wallet.account.type, words.count == 12 else {
             throw AdapterError.unsupportedAccount
         }
 
