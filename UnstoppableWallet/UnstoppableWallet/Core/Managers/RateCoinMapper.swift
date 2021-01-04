@@ -1,10 +1,8 @@
 import Foundation
 
 class RateCoinMapper {
-    private let disabledCoins = ["EOSDT", "PGL", "PPT", "SAI", "WBTC", "WETH", "SWAP"]
-    private let convertedCoins = [
-        "HOT": "HOLO",
-    ]
+    private let disabledCoins = ["EOSDT", "PGL"]
+    private let convertedCoins = [CoinCode: CoinCode]()
 }
 
 extension RateCoinMapper: IRateCoinMapper {
