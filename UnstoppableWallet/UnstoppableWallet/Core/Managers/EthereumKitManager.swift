@@ -8,16 +8,18 @@ class EthereumKitManager {
     private let appConfigProvider: IAppConfigProvider
     weak var ethereumKit: EthereumKit.Kit?
 
+    private var currentAccount: Account?
+
     init(appConfigProvider: IAppConfigProvider) {
         self.appConfigProvider = appConfigProvider
     }
 
     func ethereumKit(account: Account) throws -> EthereumKit.Kit {
-        if let ethereumKit = self.ethereumKit {
+        if let ethereumKit = ethereumKit, let currentAccount = currentAccount, currentAccount == account {
             return ethereumKit
         }
 
-        guard case let .mnemonic(words, _) = account.type else {
+        guard case let .mnemonic(words, _) = account.type, words.count == 12 else {
             throw AdapterError.unsupportedAccount
         }
 
@@ -36,6 +38,7 @@ class EthereumKitManager {
         ethereumKit.start()
 
         self.ethereumKit = ethereumKit
+        currentAccount = account
 
         return ethereumKit
     }
