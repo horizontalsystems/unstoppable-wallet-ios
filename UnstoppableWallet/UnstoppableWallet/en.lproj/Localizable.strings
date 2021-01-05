@@ -167,7 +167,7 @@ bch.horizontalsystems.xyz/apg";
 
 "send.title" = "Send %@";
 "send.amount_placeholder" = "Amount";
-"send.address_placeholder" = "Address";
+"send.address_placeholder" = "Address or Domain";
 "send.account_placeholder" = "Account";
 "send.fee" = "Fee";
 "send.tx_speed" = "Transaction Fee";
@@ -193,6 +193,9 @@ bch.horizontalsystems.xyz/apg";
 "send.hodler_locktime_off" = "Off";
 "send.hodler_error.unsupported_address" = "Time locking works only with P2PKH addresses (starting with 1)";
 
+"send.confirmation.domain" = "Domain";
+"send.confirmation.address" = "Address";
+"send.confirmation.account" = "Account";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total";
 "send.confirmation.send_button" = "Send";
@@ -245,7 +248,6 @@ bch.horizontalsystems.xyz/apg";
 "swap.advanced_settings.recipient.footer" = "After the exchange operation, the amount will be transferred to the specified address";
 "swap.advanced_settings.deadline_minute" = "%@ min";
 "swap.advanced_settings.recipient_address" = "Recipient Address";
-"swap.advanced_settings.recipient.placeholder" = "Not set";
 "swap.advanced_settings.error.lower_slippage" = "Your transaction is likely to fail.";
 "swap.advanced_settings.error.higher_slippage" = "Max. allowed value %@%%.";
 "swap.advanced_settings.error.invalid_address" = "Invalid Address";
