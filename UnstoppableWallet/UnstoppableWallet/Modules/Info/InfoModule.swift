@@ -1,9 +1,11 @@
-protocol IInfoRouter {
-    func open(url: String)
-    func close()
-}
+import UIKit
 
-protocol IInfoViewDelegate {
-    func onTapLink()
-    func onTapClose()
+struct InfoModule {
+
+    static func viewController(title: String, dataSource: InfoDataSourceNew) -> UIViewController {
+        let viewModel = InfoViewModel(dataSource: dataSource)
+
+        return InfoViewControllerNew(title: title, viewModel: viewModel, urlManager: UrlManager(inApp: true))
+    }
+
 }
