@@ -1,6 +1,8 @@
 import Foundation
 
-class PrivacyInfoDataSource: InfoDataSourceNew {
+class PrivacyInfoDataSource: InfoDataSource {
+    let title = "settings_privacy_info.title".localized
+
     var viewItems: [InfoViewModel.ViewItem] {
         [
             .separator,

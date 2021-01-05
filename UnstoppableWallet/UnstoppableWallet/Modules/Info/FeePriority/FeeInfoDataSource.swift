@@ -1,6 +1,8 @@
 import Foundation
 
-class FeeInfoDataSource: InfoDataSourceNew {
+class FeeInfoDataSource: InfoDataSource {
+    let title = "send.fee_info.title".localized
+
     var viewItems: [InfoViewModel.ViewItem] {
         [
             .separator,

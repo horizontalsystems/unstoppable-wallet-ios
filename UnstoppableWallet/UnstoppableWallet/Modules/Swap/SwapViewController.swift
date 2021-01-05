@@ -128,7 +128,7 @@ class SwapViewController: ThemeViewController {
     }
 
     @objc func onInfo() {
-        let module = InfoModule.viewController(title: "swap.uniswap_info.title".localized, dataSource: UniswapInfoDataSource())
+        let module = InfoModule.viewController(dataSource: UniswapInfoDataSource())
         present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 
