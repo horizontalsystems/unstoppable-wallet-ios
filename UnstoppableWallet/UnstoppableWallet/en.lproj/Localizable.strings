@@ -167,7 +167,7 @@ bch.horizontalsystems.xyz/apg";
 
 "send.title" = "Send %@";
 "send.amount_placeholder" = "Amount";
-"send.address_placeholder" = "Address";
+"send.address_placeholder" = "Address or Domain";
 "send.account_placeholder" = "Account";
 "send.fee" = "Fee";
 "send.tx_speed" = "Transaction Fee";
@@ -202,6 +202,9 @@ bch.horizontalsystems.xyz/apg";
 "send.fee_info.content_fast" = "For transactions where priority is important we recommend using high fee setting. It's expected that selecting high fee setting will be sufficient for transaction to be completed within 10 minutes for Bitcoin and within a few minutes for Ethereum.";
 "send.fee_info.content_conclusion" = "The Unstoppable wallet makes an educated guess based on the network activity and can't not guarantee that the suggested fee values will always result in expected behavior.";
 
+"send.confirmation.domain" = "Domain";
+"send.confirmation.address" = "Address";
+"send.confirmation.account" = "Account";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total";
 "send.confirmation.send_button" = "Send";
@@ -254,7 +257,6 @@ bch.horizontalsystems.xyz/apg";
 "swap.advanced_settings.recipient.footer" = "After the exchange operation, the amount will be transferred to the specified address";
 "swap.advanced_settings.deadline_minute" = "%@ min";
 "swap.advanced_settings.recipient_address" = "Recipient Address";
-"swap.advanced_settings.recipient.placeholder" = "Not set";
 "swap.advanced_settings.error.lower_slippage" = "Your transaction is likely to fail.";
 "swap.advanced_settings.error.higher_slippage" = "Max. allowed value %@%%.";
 "swap.advanced_settings.error.invalid_address" = "Invalid Address";

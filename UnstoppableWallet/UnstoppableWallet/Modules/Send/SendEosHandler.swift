@@ -56,7 +56,7 @@ extension SendEosHandler: ISendHandler {
 
     func confirmationViewItems() throws -> [ISendConfirmationViewItemNew] {
         var viewItems: [ISendConfirmationViewItemNew] = [
-            SendConfirmationAmountViewItem(primaryInfo: try amountModule.primaryAmountInfo(), secondaryInfo: try amountModule.secondaryAmountInfo(), receiver: try addressModule.validAddress())
+            SendConfirmationAmountViewItem(primaryInfo: try amountModule.primaryAmountInfo(), secondaryInfo: try amountModule.secondaryAmountInfo(), receiver: try addressModule.validAddress(), isAccount: true)
         ]
 
         if let memo = memoModule.memo {

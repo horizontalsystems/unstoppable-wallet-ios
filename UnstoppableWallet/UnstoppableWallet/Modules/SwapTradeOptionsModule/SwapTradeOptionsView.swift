@@ -56,7 +56,7 @@ class SwapTradeOptionsView: ThemeViewController {
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
 
-        recipientCell.inputPlaceholder = "swap.advanced_settings.recipient.placeholder".localized
+        recipientCell.inputPlaceholder = "send.address_placeholder".localized
         recipientCell.inputText = recipientViewModel.initialValue
         recipientCell.onChangeHeight = { [weak self] in self?.reloadTable() }
         recipientCell.onChangeText = { [weak self] in self?.recipientViewModel.onChange(text: $0) }
