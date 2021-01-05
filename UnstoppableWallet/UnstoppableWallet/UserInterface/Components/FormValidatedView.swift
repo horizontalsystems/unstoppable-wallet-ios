@@ -41,7 +41,7 @@ extension FormValidatedView {
         let borderColor: UIColor
 
         if let cautionType = cautionType {
-            borderColor = cautionType.color
+            borderColor = cautionType.borderColor
         } else {
             borderColor = .themeSteel20
         }

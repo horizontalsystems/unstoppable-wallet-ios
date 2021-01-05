@@ -33,7 +33,7 @@ extension FormCautionView {
     func set(caution: Caution?) {
         if let caution = caution {
             label.text = caution.text
-            label.textColor = caution.type.color
+            label.textColor = caution.type.labelColor
         } else {
             label.text = nil
         }
