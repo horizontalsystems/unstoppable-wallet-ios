@@ -1,6 +1,8 @@
 import Foundation
 
-class TimeLockInfoDataSource: InfoDataSourceNew {
+class TimeLockInfoDataSource: InfoDataSource {
+    let title = "lock_info.title".localized
+
     var viewItems: [InfoViewModel.ViewItem] {
         [
             .separator,

@@ -22,7 +22,7 @@ extension TransactionInfoRouter: ITransactionInfoRouter {
     }
 
     func showLockInfo() {
-        let controller = InfoModule.viewController(title: "lock_info.title".localized, dataSource: TimeLockInfoDataSource())
+        let controller = InfoModule.viewController(dataSource: TimeLockInfoDataSource())
         viewController?.present(ThemeNavigationController(rootViewController: controller), animated: true)
     }
 

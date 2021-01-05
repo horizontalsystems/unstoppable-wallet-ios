@@ -117,7 +117,7 @@ class SendFeePriorityCell: UITableViewCell {
     }
 
     private func openFeeInfo() {
-        let infoController = InfoModule.viewController(title: "send.fee_info.title".localized, dataSource: FeeInfoDataSource())
+        let infoController = InfoModule.viewController(dataSource: FeeInfoDataSource())
         delegate?.open(viewController: ThemeNavigationController(rootViewController: infoController))
     }
 

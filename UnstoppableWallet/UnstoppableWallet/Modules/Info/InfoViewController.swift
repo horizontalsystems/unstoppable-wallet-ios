@@ -2,20 +2,18 @@ import UIKit
 import SectionsTableView
 import ThemeKit
 
-class InfoViewControllerNew: ThemeViewController {
+class InfoViewController: ThemeViewController {
     private var urlManager: IUrlManager
     private let viewModel: InfoViewModel
 
     private let tableView = SectionsTableView(style: .grouped)
 
 
-    init(title: String, viewModel: InfoViewModel, urlManager: IUrlManager) {
+    init(viewModel: InfoViewModel, urlManager: IUrlManager) {
         self.viewModel = viewModel
         self.urlManager = urlManager
 
         super.init()
-
-        self.title = title
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -24,6 +22,8 @@ class InfoViewControllerNew: ThemeViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        title = viewModel.dataSource.title
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onClose))
 
@@ -121,7 +121,7 @@ class InfoViewControllerNew: ThemeViewController {
 
 }
 
-extension InfoViewControllerNew: SectionsDataSource {
+extension InfoViewController: SectionsDataSource {
 
     public func buildSections() -> [SectionProtocol] {
         [

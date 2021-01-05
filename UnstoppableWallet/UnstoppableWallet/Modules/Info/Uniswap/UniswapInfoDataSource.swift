@@ -1,6 +1,8 @@
 import Foundation
 
-class UniswapInfoDataSource: InfoDataSourceNew {
+class UniswapInfoDataSource: InfoDataSource {
+    let title = "swap.uniswap_info.title".localized
+
     var viewItems: [InfoViewModel.ViewItem] {
         [
             .separator,
