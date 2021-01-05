@@ -43,7 +43,7 @@ extension SendFeePriorityRouter: ISendFeePriorityRouter {
     }
 
     func openFeeInfo() {
-        let controller = FeeInfoRouter.module()
+        let controller = InfoModule.viewController(title: "send.fee_info.title".localized, dataSource: FeeInfoDataSource())
         viewController?.present(ThemeNavigationController(rootViewController: controller), animated: true)
     }
 
