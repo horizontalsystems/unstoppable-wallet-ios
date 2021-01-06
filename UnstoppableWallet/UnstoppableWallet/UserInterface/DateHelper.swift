@@ -8,8 +8,8 @@ class DateHelper {
 
     func formatTransactionDate(from date: Date) -> String {
         let correctDate = min(date, Date())
-        let interval = date.interval(forDate: correctDate)
-        let format = interval == .more ? "yyyy MMM d" : "MMM d"
+        let isThisYear = Calendar.current.isDate(correctDate, equalTo: Date(), toGranularity: .year)
+        let format = isThisYear ? "MMM d" : "yyyy MMM d"
         return DateFormatter.cachedFormatter(format: format).string(from: date)
     }
 
@@ -75,14 +75,6 @@ class DateHelper {
             return DateFormatter.cachedFormatter(format: short ? "d MMM" : "MMMM d")
         }
         return DateFormatter.cachedFormatter(format: short ? "MM/dd/yy" : "MMMM d, yyyy")
-    }
-
-    private func dateTimeFormatter(interval: DateInterval, forDate date: Date, shortWeek: Bool = false) -> DateFormatter {
-        switch interval {
-        case .future, .today: return timeOnly()
-        case .yesterday, .inWeek, .inYear: return DateFormatter.cachedFormatter(format: "d MMMM")
-        case .more: return DateFormatter.cachedFormatter(format: "MM/dd/yy")
-        }
     }
 
 }
