@@ -21,6 +21,11 @@ extension Date {
 
     public func interval(forDate date: Date) -> DateInterval {
         let days = Date().daysAfterDate(date)
+
+        guard Calendar.current.isDate(date, equalTo: Date(), toGranularity: .year) else {
+            return .more
+        }
+
         if days < 0 {
             return .future
         } else if Calendar.current.isDateInToday(date) {
