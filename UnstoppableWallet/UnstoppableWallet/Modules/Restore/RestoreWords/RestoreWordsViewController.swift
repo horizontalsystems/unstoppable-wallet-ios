@@ -2,7 +2,7 @@ import ThemeKit
 import RxSwift
 import RxCocoa
 
-class RestoreWordsViewController: ScrollViewController {
+class RestoreWordsViewController: KeyboardAwareViewController {
     private let restoreView: RestoreView
     private let viewModel: RestoreWordsViewModel
 
@@ -11,8 +11,8 @@ class RestoreWordsViewController: ScrollViewController {
     private let textViewTextColor: UIColor = .themeOz
     private let textViewFont: UIFont = .body
 
+    private let scrollView = UIScrollView()
     private let textView = UITextView()
-    private var birthdayTextView: InputFieldStackView?
 
     private let disposeBag = DisposeBag()
 
@@ -20,7 +20,7 @@ class RestoreWordsViewController: ScrollViewController {
         self.restoreView = restoreView
         self.viewModel = viewModel
 
-        super.init()
+        super.init(scrollView: scrollView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -45,6 +45,19 @@ class RestoreWordsViewController: ScrollViewController {
 
         navigationItem.largeTitleDisplayMode = .never
 
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        let contentView = UIView()
+
+        scrollView.addSubview(contentView)
+        contentView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.bottom.equalToSuperview()
+            maker.width.equalTo(self.view)
+        }
+
         contentView.addSubview(textView)
         textView.snp.makeConstraints { maker in
             maker.leading.trailing.equalTo(view).inset(CGFloat.margin4x)
@@ -56,7 +69,7 @@ class RestoreWordsViewController: ScrollViewController {
         textView.keyboardAppearance = .themeDefault
         textView.backgroundColor = .themeLawrence
         textView.layer.cornerRadius = .cornerRadius2x
-        textView.layer.borderWidth = .heightOnePixel
+        textView.layer.borderWidth = .heightOneDp
         textView.layer.borderColor = UIColor.themeSteel20.cgColor
         textView.textColor = textViewTextColor
         textView.font = textViewFont
@@ -82,37 +95,26 @@ class RestoreWordsViewController: ScrollViewController {
         descriptionView.setContentCompressionResistancePriority(.required, for: .vertical)
 
         if viewModel.birthdayHeightEnabled {
-            let wrapperView = UIView()
-            contentView.addSubview(wrapperView)
-            wrapperView.snp.makeConstraints { maker in
-                maker.leading.trailing.equalTo(view).inset(CGFloat.margin4x)
+            let inputView = InputView()
+
+            contentView.addSubview(inputView)
+            inputView.snp.makeConstraints { maker in
+                maker.leading.trailing.equalTo(view)
                 maker.top.equalTo(descriptionView.snp.bottom).offset(CGFloat.margin3x)
-                maker.height.equalTo(CGFloat.heightSingleLineCell)
             }
 
-            wrapperView.backgroundColor = .themeLawrence
-            wrapperView.layer.cornerRadius = .cornerRadius2x
-            wrapperView.layer.borderWidth = CGFloat.heightOnePixel
-            wrapperView.layer.borderColor = UIColor.themeSteel20.cgColor
-
-            let inputFieldView = InputFieldStackView()
-
-            wrapperView.addSubview(inputFieldView)
-            inputFieldView.snp.makeConstraints { maker in
-                maker.leading.trailing.equalToSuperview().inset(CGFloat.margin3x)
-                maker.top.bottom.equalToSuperview()
+            inputView.inputPlaceholder = "restore.birthday_height.placeholder".localized
+            inputView.keyboardType = .decimalPad
+            inputView.isValidText = {
+                if let value = Int($0), value != 0 {
+                    return true
+                } else {
+                    return false
+                }
             }
-
-            inputFieldView.decimalKeyboard = true
-            inputFieldView.isValidText = { text in
-                Int(text) != nil
-            }
-            inputFieldView.set(placeholder: "restore.birthday_height.placeholder".localized)
-            inputFieldView.onChangeText = { [weak self] text in
+            inputView.onChangeText = { [weak self] text in
                 self?.viewModel.onChange(birthdayHeight: text)
             }
-
-            birthdayTextView = inputFieldView
 
             let descriptionView = BottomDescriptionView()
             descriptionView.bind(text: "restore.birthday_height.description".localized)
@@ -121,13 +123,10 @@ class RestoreWordsViewController: ScrollViewController {
             descriptionView.setContentCompressionResistancePriority(.required, for: .vertical)
             descriptionView.snp.makeConstraints { maker in
                 maker.leading.trailing.equalTo(view)
-                maker.top.equalTo(wrapperView.snp.bottom)
+                maker.top.equalTo(inputView.snp.bottom)
                 maker.bottom.equalToSuperview()
             }
         }
-
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 
         view.layoutIfNeeded()
 
@@ -226,7 +225,7 @@ extension RestoreWordsViewController: UITextViewDelegate {
     }
 
     public func textViewDidChange(_ textView: UITextView) {
-        updateScrollView()
+        syncContentOffsetIfRequired(textView: textView)
 
         guard let selectedTextRange = textView.selectedTextRange else {
             return
