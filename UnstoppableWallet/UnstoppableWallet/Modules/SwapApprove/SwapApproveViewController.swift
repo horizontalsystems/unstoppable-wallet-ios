@@ -4,7 +4,7 @@ import ThemeKit
 import RxSwift
 import SectionsTableView
 
-class SwapApproveViewController: ThemeViewController {
+class SwapApproveViewController: KeyboardAwareViewController {
     private let disposeBag = DisposeBag()
 
     private let viewModel: SwapApproveViewModel
@@ -13,13 +13,14 @@ class SwapApproveViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
 
+    private let amountCell = InputCell()
+    private let amountCautionCell = FormCautionCell()
     private let feeCell: SendFeeCell
     private let feePriorityCell: SendFeePriorityCell
-    private let amountCell: VerifiedInputCell
+    private let errorCell = SendEthereumErrorCell()
     private let buttonCell: ButtonCell
 
-    private var error: String?
-    private var keyboardHeight: CGFloat?
+    private var isLoaded = false
 
     init(viewModel: SwapApproveViewModel, feeViewModel: EthereumFeeViewModel, delegate: ISwapApproveDelegate) {
         self.viewModel = viewModel
@@ -28,13 +29,11 @@ class SwapApproveViewController: ThemeViewController {
 
         feeCell = SendFeeCell(viewModel: feeViewModel)
         feePriorityCell = SendFeePriorityCell(viewModel: feeViewModel)
-        amountCell = VerifiedInputCell(viewModel: viewModel)
         buttonCell = ButtonCell()
 
-        super.init()
+        super.init(scrollView: tableView)
 
         feePriorityCell.delegate = self
-        amountCell.delegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -59,12 +58,22 @@ class SwapApproveViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.sectionDataSource = self
         tableView.allowsSelection = false
-        tableView.keyboardDismissMode = .onDrag
+        tableView.keyboardDismissMode = .interactive
+
+        amountCell.inputText = viewModel.initialAmount
+        amountCell.inputPlaceholder = "send.amount_placeholder".localized
+        amountCell.keyboardType = .decimalPad
+        amountCell.isValidText = { [weak self] in self?.viewModel.isValid(amount: $0) ?? true }
+        amountCell.onChangeText = { [weak self] in self?.viewModel.onChange(amount: $0) }
+
+        amountCautionCell.onChangeHeight = { [weak self] in self?.onChangeHeight() }
 
         buttonCell.bind(style: .primaryYellow, title: "button.approve".localized, compact: false, onTap: { [weak self] in self?.onTapApprove() })
-        tableView.buildSections()
 
         subscribeToViewModel()
+        tableView.buildSections()
+
+        isLoaded = true
     }
 
     private func subscribeToViewModel() {
@@ -75,15 +84,22 @@ class SwapApproveViewController: ThemeViewController {
         }
 
         subscribe(disposeBag, viewModel.approveAllowedDriver) { [weak self] approveAllowed in self?.buttonCell.set(enabled: approveAllowed) }
-        subscribe(disposeBag, viewModel.errorDriver) { [weak self] errorString in
-            guard self?.error != errorString else {
-                return
+        subscribe(disposeBag, viewModel.errorDriver) { [weak self] error in
+            if let error = error {
+                self?.errorCell.isVisible = true
+                self?.errorCell.bind(text: error)
+            } else {
+                self?.errorCell.isVisible = false
             }
 
-            self?.error = errorString
-            self?.tableView.reload()
+            self?.onChangeHeight()
         }
         subscribe(disposeBag, viewModel.approveErrorSignal) { [weak self] error in self?.show(error: error) }
+
+        subscribe(disposeBag, viewModel.amountCautionDriver) { [weak self] caution in
+            self?.amountCell.set(cautionType: caution?.type)
+            self?.amountCautionCell.set(caution: caution)
+        }
     }
 
     private func onTapApprove() {
@@ -92,57 +108,7 @@ class SwapApproveViewController: ThemeViewController {
 
     @objc private func onTapCancel() {
         view.endEditing(true)
-        self.dismiss(animated: true)
-    }
-
-}
-
-extension SwapApproveViewController {
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self)
-    }
-
-    func adjustTableViewInsets(){
-        if let keyboardHeight = self.keyboardHeight {
-            let bottomPosition = tableView.contentSize.height - amountCell.y - amountCell.height
-            let bottomInset = max(0, keyboardHeight - bottomPosition + CGFloat.margin4x + feeCell.height)
-            
-            let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
-            tableView.contentInset = contentInset
-            tableView.setContentOffset(.zero, animated: true)
-        } else {
-            let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            tableView.contentInset = contentInset
-        }
-   }
-
-    @objc func keyboardWillShow(notification: NSNotification) {
-        guard keyboardHeight == nil else {
-            return
-        }
-        
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            keyboardHeight = keyboardSize.height
-            adjustTableViewInsets()
-        }
-    }
-
-    @objc func keyboardWillHide(notification: NSNotification) {
-        guard keyboardHeight != nil else {
-            return
-        }
-        
-        keyboardHeight = nil
-        adjustTableViewInsets()
+        dismiss(animated: true)
     }
 
 }
@@ -153,90 +119,79 @@ extension SwapApproveViewController: SectionsDataSource {
         [
             Section(
                     id: "main",
-                    rows: [descriptionRow]
+                    rows: [
+                        Row<HighlightedDescriptionCell>(
+                                id: "description",
+                                dynamicHeight: { width in
+                                    HighlightedDescriptionCell.height(containerWidth: width, text: "swap.approve.description".localized)
+                                },
+                                bind: { cell, _ in
+                                    cell.bind(text: "swap.approve.description".localized)
+                                }
+                        )
+                    ]
             ),
             Section(
                     id: "amount",
                     headerState: .margin(height: CGFloat.margin4x),
-                    rows: [amountRow]
+                    rows: [
+                        StaticRow(
+                                cell: amountCell,
+                                id: "amount",
+                                dynamicHeight: { [weak self] width in
+                                    self?.amountCell.height(containerWidth: width) ?? 0
+                                }
+                        ),
+                        StaticRow(
+                                cell: amountCautionCell,
+                                id: "amount-caution",
+                                dynamicHeight: { [weak self] width in
+                                    self?.amountCautionCell.height(containerWidth: width) ?? 0
+                                }
+                        )
+                    ]
             ),
             Section(
                     id: "fee",
                     headerState: .margin(height: CGFloat.margin4x),
-                    rows: feeRows
+                    rows: [
+                        StaticRow(
+                                cell: feeCell,
+                                id: "fee",
+                                height: feeCell.cellHeight
+                        ),
+                        StaticRow(
+                                cell: feePriorityCell,
+                                id: "fee-priority",
+                                dynamicHeight: { [weak self] _ in
+                                    self?.feePriorityCell.cellHeight ?? 0
+                                }
+                        )
+                    ]
+            ),
+            Section(
+                    id: "error",
+                    rows: [
+                        StaticRow(
+                                cell: errorCell,
+                                id: "error",
+                                dynamicHeight: { [weak self] width in
+                                    self?.errorCell.cellHeight(width: width) ?? 0
+                                }
+                        )
+                    ]
             ),
             Section(
                     id: "approve_button",
-                    rows: [approveButtonRow]
+                    rows: [
+                        StaticRow(
+                                cell: buttonCell,
+                                id: "approve-button",
+                                height: ButtonCell.height(style: .primaryYellow)
+                        )
+                    ]
             )
         ]
-    }
-
-    private var amountRow: RowProtocol {
-        StaticRow(
-                cell: amountCell,
-                id: "amount",
-                dynamicHeight: { [weak self] width in
-                    self?.amountCell.height(containerWidth: width) ?? 0
-                }
-        )
-    }
-
-    private var feeRows: [RowProtocol] {
-        var rows = [RowProtocol]()
-
-        rows.append(contentsOf: [
-            StaticRow(
-                    cell: feeCell,
-                    id: "fee",
-                    height: 29
-            ),
-            StaticRow(
-                    cell: feePriorityCell,
-                    id: "fee-priority",
-                    dynamicHeight: { [weak self] _ in self?.feePriorityCell.cellHeight ?? 0 }
-            )
-        ])
-
-
-        if let error = error {
-            rows.append(errorRow(text: error))
-        }
-
-        return rows
-    }
-
-    private var descriptionRow: RowProtocol {
-        Row<HighlightedDescriptionCell>(
-                id: "description",
-                dynamicHeight: { width in
-                    HighlightedDescriptionCell.height(containerWidth: width, text: "swap.approve.description".localized)
-                },
-                bind: { cell, _ in
-                    cell.bind(text: "swap.approve.description".localized)
-                }
-        )
-    }
-
-    private func errorRow(text: String) -> RowProtocol {
-        Row<SendEthereumErrorCell>(
-                id: "error_row",
-                hash: text,
-                dynamicHeight: { width in
-                    SendEthereumErrorCell.height(text: text, containerWidth: width)
-                },
-                bind: { cell, _ in
-                    cell.bind(text: text)
-                }
-        )
-    }
-
-    private var approveButtonRow: RowProtocol {
-        StaticRow(
-                cell: buttonCell,
-                id: "approve-button",
-                height: ButtonCell.height(style: .primaryYellow)
-        )
     }
 
 }
@@ -244,12 +199,14 @@ extension SwapApproveViewController: SectionsDataSource {
 extension SwapApproveViewController: IDynamicHeightCellDelegate {
 
     func onChangeHeight() {
-        UIView.performWithoutAnimation { [weak self] in
+        guard isLoaded else {
+            return
+        }
+
+        UIView.animate(withDuration: 0.2) { [weak self] in
             self?.tableView.beginUpdates()
             self?.tableView.endUpdates()
         }
-        
-        adjustTableViewInsets()
     }
 
 }

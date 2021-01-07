@@ -97,7 +97,7 @@ extension SwapApproveService {
     }
 
     func approve() {
-        guard case .completed(let transaction) = transactionService.transactionStatus, let amount = self.amount else {
+        guard case .completed(let transaction) = transactionService.transactionStatus, let amount = amount else {
             return
         }
 
