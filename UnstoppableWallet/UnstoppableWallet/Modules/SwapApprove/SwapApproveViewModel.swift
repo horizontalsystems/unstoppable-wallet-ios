@@ -12,12 +12,11 @@ class SwapApproveViewModel {
     private let coinService: CoinService
     private let ethereumCoinService: CoinService
 
-    private var inputFieldValueRelay = BehaviorRelay<String?>(value: nil)
     private var approveAllowedRelay = BehaviorRelay<Bool>(value: false)
     private var approveSuccessRelay = PublishRelay<Void>()
     private var approveErrorRelay = PublishRelay<String>()
 
-    private let amountErrorRelay = BehaviorRelay<String?>(value: nil)
+    private let amountCautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
     private let decimalParser: IAmountDecimalParser
@@ -28,8 +27,12 @@ class SwapApproveViewModel {
         self.ethereumCoinService = ethereumCoinService
         self.decimalParser = decimalParser
 
-        subscribe(disposeBag, service.stateObservable) { [weak self] approveState in self?.handle(approveState: approveState) }
-        inputFieldValueRelay.accept(service.amount.map { coinService.monetaryValue(value: $0).description })
+        service.stateObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] approveState in
+                    self?.handle(approveState: approveState)
+                })
+                .disposed(by: disposeBag)
     }
 
     private func handle(approveState: SwapApproveService.State) {
@@ -51,9 +54,10 @@ class SwapApproveViewModel {
 
         if case .approveNotAllowed(var errors) = approveState {
             if let balanceErrorIndex = errors.firstIndex(where: { $0 is SwapApproveService.TransactionAmountError }) {
-                amountErrorRelay.accept(convert(error: errors.remove(at: balanceErrorIndex)))
+                let errorString = convert(error: errors.remove(at: balanceErrorIndex))
+                amountCautionRelay.accept(Caution(text: errorString, type: .error))
             } else {
-                amountErrorRelay.accept(nil)
+                amountCautionRelay.accept(nil)
             }
 
             errorRelay.accept(errors.first.map { convert(error: $0) })
@@ -79,41 +83,18 @@ class SwapApproveViewModel {
 
 }
 
-extension SwapApproveViewModel: IVerifiedInputViewModel {
-
-    var inputFieldValueDriver: Driver<String?> {
-        inputFieldValueRelay.asDriver()
-    }
-
-    func inputFieldDidChange(text: String?) {
-        let amount = text
-                .flatMap { Decimal(string: $0) }
-                .map { coinService.fractionalMonetaryValue(value: $0) }
-
-        service.set(amount: amount)
-    }
-
-    func inputFieldIsValid(text: String) -> Bool {
-        guard let amount = decimalParser.parseAnyDecimal(from: text) else {
-            return false
-        }
-
-        // TODO: Decimal count check must be implemented in coinService and used in other places too
-        return amount.decimalCount <= min(coinService.coin.decimal, maxCoinDecimal)
-    }
-
-    var inputFieldCautionDriver: Driver<Caution?> {
-        amountErrorRelay.asDriver().map { errorString in
-            errorString.map { Caution(text: $0, type: .error) }
-        }
-    }
-
-}
-
 extension SwapApproveViewModel {
+
+    var initialAmount: String? {
+        service.amount.map { coinService.monetaryValue(value: $0).description }
+    }
 
     var errorDriver: Driver<String?> {
         errorRelay.asDriver()
+    }
+
+    var amountCautionDriver: Driver<Caution?> {
+        amountCautionRelay.asDriver()
     }
 
     var approveAllowedDriver: Driver<Bool> {
@@ -126,6 +107,23 @@ extension SwapApproveViewModel {
 
     var approveErrorSignal: Signal<String> {
         approveErrorRelay.asSignal()
+    }
+
+    func isValid(amount: String) -> Bool {
+        guard let amount = decimalParser.parseAnyDecimal(from: amount) else {
+            return false
+        }
+
+        // TODO: Decimal count check must be implemented in coinService and used in other places too
+        return amount.decimalCount <= min(coinService.coin.decimal, maxCoinDecimal)
+    }
+
+    func onChange(amount: String?) {
+        let amount = amount
+                .flatMap { Decimal(string: $0) }
+                .map { coinService.fractionalMonetaryValue(value: $0) }
+
+        service.set(amount: amount)
     }
 
     func approve() {
