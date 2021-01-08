@@ -12,6 +12,12 @@ class AmountInputView: UIView {
     private let prefixView = InputPrefixWrapperView()
     private let maxView = InputButtonWrapperView(style: .secondaryDefault)
 
+    var maxButtonVisible = false {
+        didSet {
+            syncButtonStates()
+        }
+    }
+
     var onChangeText: ((String?) -> ())?
     var onTapMax: (() -> ())?
     var onTapSecondary: (() -> ())?
@@ -70,6 +76,10 @@ class AmountInputView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func becomeFirstResponder() -> Bool {
+        inputStackView.becomeFirstResponder()
+    }
+
     @objc private func onTapSecondaryButton() {
         onTapSecondary?()
     }
@@ -83,7 +93,7 @@ class AmountInputView: UIView {
         if let text = inputStackView.text, !text.isEmpty {
             maxView.isHidden = true
         } else {
-            maxView.isHidden = onTapMax == nil
+            maxView.isHidden = !maxButtonVisible
         }
     }
 
@@ -122,6 +132,19 @@ extension AmountInputView {
     var isValidText: ((String) -> Bool)? {
         get { inputStackView.isValidText }
         set { inputStackView.isValidText = newValue }
+    }
+
+}
+
+extension AmountInputView: IHeightControlView { // required in FormValidatedView, but not used yet
+
+    var onChangeHeight: (() -> ())? {
+        get { nil }
+        set {}
+    }
+
+    func height(containerWidth: CGFloat) -> CGFloat {
+        0
     }
 
 }

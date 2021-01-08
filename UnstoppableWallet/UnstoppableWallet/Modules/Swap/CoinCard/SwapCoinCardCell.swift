@@ -171,7 +171,7 @@ extension SwapCoinCardCell {
     }
 
     private func set(secondaryText: String?) {
-        amountInput.secondaryButtonText = secondaryText
+        amountInput.secondaryButtonText = secondaryText ?? "n/a".localized
     }
 
     private func set(balance: String?) {

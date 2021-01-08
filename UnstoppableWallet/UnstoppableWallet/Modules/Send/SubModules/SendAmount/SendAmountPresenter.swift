@@ -32,8 +32,8 @@ class SendAmountPresenter {
 
     private func syncAmountType() {
         switch inputType {
-        case .coin: view?.set(amountType: coin.code)
-        case .currency: view?.set(amountType: currency.symbol)
+        case .coin: view?.set(prefix: nil)
+        case .currency: view?.set(prefix: currency.symbol)
         }
     }
 
@@ -342,8 +342,8 @@ extension SendAmountPresenter {
             switch self {
             case .emptyValue:
                 return "send.amount_error.empty".localized
-            case .insufficientBalance(let availableBalance):
-                return "send.amount_error.balance".localized(availableBalance.formattedString ?? "")
+            case .insufficientBalance:
+                return "send.amount_error.balance".localized
             case .noMinimumRequiredBalance(let minimumRequiredBalance):
                 return "send.amount_error.min_required_balance".localized(minimumRequiredBalance.formattedString ?? "")
             case .maximumAmountExceeded(let maximumAmount):
