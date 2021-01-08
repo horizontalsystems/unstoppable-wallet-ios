@@ -24,7 +24,7 @@ class SwapCoinCardViewModel {
     private var isEstimatedRelay = BehaviorRelay<Bool>(value: false)
     private var prefixRelay = BehaviorRelay<String?>(value: nil)
     private var amountRelay = BehaviorRelay<String?>(value: nil)
-    private var secondaryInfoRelay = BehaviorRelay<SecondaryInfoViewItem?>(value: nil)
+    private var secondaryTextRelay = BehaviorRelay<String?>(value: nil)
     private var balanceRelay = BehaviorRelay<String?>(value: nil)
     private var balanceErrorRelay = BehaviorRelay<Bool>(value: false)
     private var tokenCodeRelay = BehaviorRelay<String?>(value: nil)
@@ -95,14 +95,14 @@ class SwapCoinCardViewModel {
         balanceErrorRelay.accept(error != nil)
     }
 
-    private var secondaryPlaceholder: SecondaryInfoViewItem {
+    private var secondaryPlaceholder: String? {
         switch switchService.amountType {
         case .coin:
             let amountInfo = AmountInfo.currencyValue(currencyValue: CurrencyValue(currency: fiatService.currency, value: 0))
-            return SecondaryInfoViewItem(text: amountInfo.formattedString, type: .placeholder)
+            return amountInfo.formattedString
         case .currency:
             let amountInfo = coinCardService.coin.map { AmountInfo.coinValue(coinValue: CoinValue(coin: $0, value: 0)) }
-            return SecondaryInfoViewItem(text: amountInfo?.formattedString, type: .placeholder)
+            return amountInfo?.formattedString
         }
     }
 
@@ -114,7 +114,7 @@ class SwapCoinCardViewModel {
                 amountRelay.accept(nil)
             }
 
-            secondaryInfoRelay.accept(secondaryPlaceholder)
+            secondaryTextRelay.accept(secondaryPlaceholder)
 
             setCoinValueToService(coinValue: inputAmount, force: force)
             return
@@ -124,7 +124,7 @@ class SwapCoinCardViewModel {
         let amountString = decimalFormatter.string(from: fullAmountInfo.primaryValue as NSNumber)
 
         amountRelay.accept(amountString)
-        secondaryInfoRelay.accept(SecondaryInfoViewItem(text:fullAmountInfo.secondaryInfo?.formattedString, type: .value))
+        secondaryTextRelay.accept(fullAmountInfo.secondaryInfo?.formattedString)
 
         setCoinValueToService(coinValue: fullAmountInfo.coinValue.value, force: force)
     }
@@ -191,8 +191,8 @@ extension SwapCoinCardViewModel {
         switchEnabledRelay.asDriver()
     }
 
-    var secondaryInfoDriver: Driver<SecondaryInfoViewItem?> {
-        secondaryInfoRelay.asDriver()
+    var secondaryTextDriver: Driver<String?> {
+        secondaryTextRelay.asDriver()
     }
 
     var balanceDriver: Driver<String?> {
@@ -205,20 +205,6 @@ extension SwapCoinCardViewModel {
 
     var tokenCodeDriver: Driver<String?> {
         tokenCodeRelay.asDriver()
-    }
-
-}
-
-extension SwapCoinCardViewModel {
-
-    enum SecondaryInfoType {
-        case placeholder
-        case value
-    }
-
-    struct SecondaryInfoViewItem {
-        let text: String?
-        let type: SecondaryInfoType
     }
 
 }

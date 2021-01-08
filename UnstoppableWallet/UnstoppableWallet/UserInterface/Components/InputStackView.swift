@@ -5,7 +5,8 @@ import SnapKit
 class InputStackView: UIView {
     private let stackView = UIStackView()
     private let formTextView = FormTextView()
-    private var sideViews = [ISizeAwareView]()
+    private var leftViews = [(ISizeAwareView, CGFloat)]()
+    private var rightViews = [ISizeAwareView]()
 
     init() {
         super.init(frame: .zero)
@@ -73,13 +74,19 @@ extension InputStackView {
         set { formTextView.isValidText = newValue }
     }
 
-    func prependSubview(_ view: ISizeAwareView) {
-        sideViews.insert(view, at: 0)
+    func prependSubview(_ view: ISizeAwareView, customSpacing: CGFloat? = nil) {
+        let spacing = customSpacing ?? stackView.spacing
+
+        leftViews.insert((view, spacing), at: 0)
         stackView.insertArrangedSubview(view, at: 0)
+
+        if let customSpacing = customSpacing {
+            stackView.setCustomSpacing(customSpacing, after: view)
+        }
     }
 
     func appendSubview(_ view: ISizeAwareView) {
-        sideViews.append(view)
+        rightViews.append(view)
         stackView.addArrangedSubview(view)
     }
 
@@ -94,10 +101,16 @@ extension InputStackView: IHeightControlView {
 
     func height(containerWidth: CGFloat) -> CGFloat {
         var textViewWidth = containerWidth - stackView.layoutMargins.width
-        let visibleSideViews = sideViews.filter { !$0.isHidden }
+        let visibleLeftViews = leftViews.filter { !$0.0.isHidden }
+        let visibleRightViews = rightViews.filter { !$0.isHidden }
 
-        for sideView in visibleSideViews {
-            textViewWidth -= sideView.size(containerWidth: .greatestFiniteMagnitude).width + stackView.spacing
+        for (view, spacing) in visibleLeftViews {
+            textViewWidth -= view.width(containerWidth: .greatestFiniteMagnitude) + spacing
+        }
+
+
+        for view in visibleRightViews {
+            textViewWidth -= view.width(containerWidth: .greatestFiniteMagnitude) + stackView.spacing
         }
 
         return formTextView.height(containerWidth: textViewWidth)
@@ -106,5 +119,5 @@ extension InputStackView: IHeightControlView {
 }
 
 protocol ISizeAwareView: UIView {
-    func size(containerWidth: CGFloat) -> CGSize
+    func width(containerWidth: CGFloat) -> CGFloat
 }
