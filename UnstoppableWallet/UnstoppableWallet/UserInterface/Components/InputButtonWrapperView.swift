@@ -20,6 +20,7 @@ class InputButtonWrapperView: UIView, ISizeAwareView {
         }
 
         button.apply(style: style)
+        button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
     }
 

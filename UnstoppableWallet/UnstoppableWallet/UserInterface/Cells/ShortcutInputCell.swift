@@ -42,6 +42,7 @@ class ShortcutInputCell: UITableViewCell {
 
     private func onTapDelete() {
         inputStackView.text = nil
+        handleChange(text: nil)
     }
 
     private func handleChange(text: String?) {
@@ -70,7 +71,10 @@ extension ShortcutInputCell {
 
     var inputText: String? {
         get { inputStackView.text }
-        set { inputStackView.text = newValue }
+        set {
+            inputStackView.text = newValue
+            syncButtonStates()
+        }
     }
 
     var isEditable: Bool {
@@ -99,8 +103,8 @@ extension ShortcutInputCell {
             view.button.setTitle(shortcut.title, for: .normal)
             view.onTapButton = { [weak self] in
                 self?.inputStackView.text = shortcut.value
+                self?.handleChange(text: shortcut.value)
             }
-            view.button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
             inputStackView.appendSubview(view)
 
