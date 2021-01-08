@@ -51,11 +51,6 @@ class FormTextView: UIView {
         notifyHeightChangedIfRequired()
     }
 
-    private func handleTextChange() {
-        onChangeText?(textView.text)
-        placeholderLabel.isHidden = !textView.text.isEmpty
-    }
-
     private func height(text: String, width: CGFloat) -> CGFloat {
         let textWidth = width - textView.textContainerInset.width - 2 * textView.textContainer.lineFragmentPadding
         var textHeight: CGFloat
@@ -75,6 +70,10 @@ class FormTextView: UIView {
         }
     }
 
+    private func syncPlaceholder() {
+        placeholderLabel.isHidden = !textView.text.isEmpty
+    }
+
 }
 
 extension FormTextView {
@@ -85,7 +84,7 @@ extension FormTextView {
         }
         set {
             textView.text = newValue
-            handleTextChange()
+            syncPlaceholder()
         }
     }
 
@@ -126,7 +125,8 @@ extension FormTextView {
 extension FormTextView: UITextViewDelegate {
 
     public func textViewDidChange(_ textView: UITextView) {
-        handleTextChange()
+        onChangeText?(textView.text)
+        syncPlaceholder()
         notifyHeightChangedIfRequired()
     }
 

@@ -58,6 +58,7 @@ class AddressInputView: UIView {
 
     private func onTapDelete() {
         inputStackView.text = nil
+        handleChange(text: nil)
     }
 
     private func onTapScan() {
@@ -102,7 +103,10 @@ extension AddressInputView {
 
     var inputText: String? {
         get { inputStackView.text }
-        set { inputStackView.text = newValue }
+        set {
+            inputStackView.text = newValue
+            syncButtonStates()
+        }
     }
 
     func set(cautionType: CautionType?) {

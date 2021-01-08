@@ -40,6 +40,7 @@ class InputView: UIView {
 
     private func onTapDelete() {
         inputStackView.text = nil
+        handleChange(text: nil)
     }
 
     private func handleChange(text: String?) {
@@ -66,7 +67,10 @@ extension InputView {
 
     var inputText: String? {
         get { inputStackView.text }
-        set { inputStackView.text = newValue }
+        set {
+            inputStackView.text = newValue
+            syncButtonStates()
+        }
     }
 
     var keyboardType: UIKeyboardType {

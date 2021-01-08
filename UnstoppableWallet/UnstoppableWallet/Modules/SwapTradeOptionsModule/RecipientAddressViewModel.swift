@@ -92,6 +92,7 @@ extension RecipientAddressViewModel {
         let addressData = addressParser.parse(paymentAddress: text)
 
         setTextRelay.accept(addressData.address)
+        onChange(text: addressData.address)
 
         if let amount = addressData.amount {
             service.set(amount: Decimal(amount))
