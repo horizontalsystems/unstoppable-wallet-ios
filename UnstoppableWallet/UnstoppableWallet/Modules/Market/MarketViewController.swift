@@ -32,14 +32,17 @@ class MarketViewController: ThemeSearchViewController {
         title = "market.title".localized
         tabBarItem = UITabBarItem(title: "market.tab_bar_item".localized, image: UIImage(named: "market_2_24"), tag: 0)
 
-        let router = LockScreenRouter(appStart: false)
-
         viewControllers.append(MarketTop100Module.view(service: MarketTop100Service()))
-        viewControllers.append(MarketWatchlistModule.view(service: MarketWatchlistService()))
+        viewControllers.append(MarketDefiModule.view())
+//        viewControllers.append(MarketFavoritesModule.view())
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
 
     override func viewDidLoad() {
@@ -51,8 +54,6 @@ class MarketViewController: ThemeSearchViewController {
             maker.leading.trailing.equalToSuperview()
             maker.height.equalTo(40)
         }
-
-        navigationItem.largeTitleDisplayMode = .never
 
         view.addSubview(pageViewController.view)
         pageViewController.view.snp.makeConstraints { maker in

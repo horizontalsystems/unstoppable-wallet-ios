@@ -308,6 +308,7 @@ bch.horizontalsystems.xyz/apg";
 "market.tab_bar_item" = "Market";
 "market.title" = "Market";
 "market.category.all" = "All";
+"market.category.defi" = "DeFi";
 "market.category.favorites" = "Watchlist";
 "market.total_market_cap" = "Total\nMarket Cap";
 "market.24h_volume" = "24h Volume";
@@ -327,10 +328,13 @@ bch.horizontalsystems.xyz/apg";
 "market.top.top_gainers" = "Top Gainers";
 "market.top.top_loosers" = "Top Loosers";
 
+"market.top.period_1h" = "1 hour";
 "market.top.period_24h" = "24 hours";
+"market.top.period_day_start" = "Day Start";
 "market.top.period_one_day" = "1 day";
 "market.top.period_one_week" = "1 week";
 "market.top.period_one_month" = "1 month";
+"market.top.period_one_year" = "1 year";
 
 // Transactions
 

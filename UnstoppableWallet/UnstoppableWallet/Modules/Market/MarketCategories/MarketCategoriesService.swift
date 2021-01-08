@@ -31,7 +31,7 @@ class MarketCategoriesService {
 extension MarketCategoriesService {
 
     public var categories: [Category] {
-        [.all, .favorites]
+        [.all, .defi]
     }
 
     public var currentCategoryChangedObservable: Observable<()> {
@@ -44,7 +44,8 @@ extension MarketCategoriesService {
 
     public enum Category: Int {
         case all
-        case favorites
+        case defi
+//        case favorites
     }
 
 }
