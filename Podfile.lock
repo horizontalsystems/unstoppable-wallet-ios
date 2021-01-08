@@ -299,7 +299,7 @@ PODS:
     - ObjectMapper (~> 3.5.2)
     - RxSwift (~> 5.0)
     - RxSwiftExt (~> 5)
-  - ZcashLightClientKit (0.9.0):
+  - ZcashLightClientKit (0.9.1):
     - gRPC-Swift (= 1.0.0-alpha.19)
     - SQLite.swift (~> 0.12.2)
 
@@ -580,10 +580,10 @@ CHECKOUT OPTIONS:
     :commit: 467915ce2ba7b4bb831150be911bd0b8b1d94c36
     :git: https://github.com/horizontalsystems/wallet-connect-swift
   XRatesKit.swift:
-    :commit: ea37d7336508f7a8f30146de18def06024a64d9a
+    :commit: a47c811a718bc1f18a23adc6ee19a3295e6f5200
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
   ZcashLightClientKit:
-    :commit: 876edab2631dc264c951eafed6f8d1000386b3e2
+    :commit: 50b4cdb55c65cc6d318150ed8d7856ec2dc38920
     :git: https://github.com/zcash/ZcashLightClientKit.git
 
 SPEC CHECKSUMS:
@@ -672,7 +672,7 @@ SPEC CHECKSUMS:
   WalletConnect: 7253f3c123df3bba10d71459f0d62a900fee68ac
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: e0bd2c964d6b70786611bbf1c64774614779dcf5
-  ZcashLightClientKit: 470ddb62cfdaeea3c144341e7bf8fba172105931
+  ZcashLightClientKit: d5a681033b3f59c59c93837232ed7890d3e07918
 
 PODFILE CHECKSUM: 8ca053b04a086ba5915c3ee260a929aa7ff19c24
 

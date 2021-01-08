@@ -3,10 +3,10 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
-class MarketTopViewModel {
+class MarketListViewModel {
     private let disposeBag = DisposeBag()
 
-    public let service: MarketTopService
+    public let service: MarketListService
 
     private var currentSortingField: SortingField = .highestCap
 
@@ -19,20 +19,16 @@ class MarketTopViewModel {
     }
 
     private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
-
     private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
-    private var isLoading: Bool = false
-
     private let errorRelay = BehaviorRelay<String?>(value: nil)
-    private var error: String?
 
-    init(service: MarketTopService) {
+    init(service: MarketListService) {
         self.service = service
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
     }
 
-    private func sync(state: MarketTopService.State) {
+    private func sync(state: MarketListService.State) {
         if case .loaded = state {
             syncViewItemsBySortingField()
         }
@@ -50,7 +46,7 @@ class MarketTopViewModel {
         }
     }
 
-    private func sorted(topItems: [MarketTopService.MarketTopItem]) -> [MarketTopService.MarketTopItem] {
+    private func sorted(topItems: [MarketListDataSource.Item]) -> [MarketListDataSource.Item] {
         topItems.sorted { item, item2 in
             switch currentSortingField {
             case .highestCap: return item.marketCap > item2.marketCap
@@ -66,7 +62,7 @@ class MarketTopViewModel {
     }
 
     private func syncViewItemsBySortingField() {
-        let viewItems: [ViewItem] = sorted(topItems: service.marketTopItems).map {
+        let viewItems: [ViewItem] = sorted(topItems: service.items).map {
             let rateValue = CurrencyValue(currency: service.currency, value: $0.price)
             let rate = ValueFormatter.instance.format(currencyValue: rateValue) ?? ""
 
@@ -84,7 +80,7 @@ class MarketTopViewModel {
 
 }
 
-extension MarketTopViewModel {
+extension MarketListViewModel {
 
     var viewItemsDriver: Driver<[ViewItem]> {
         viewItemsRelay.asDriver()
@@ -103,7 +99,7 @@ extension MarketTopViewModel {
     }
 
     public var periods: [String] {
-        MarketTopService.Period.allCases.map { $0.title }
+        MarketListDataSource.Period.allCases.map { $0.title }
     }
 
 
@@ -118,12 +114,12 @@ extension MarketTopViewModel {
     }
 
     public func setPeriod(at index: Int) {
-        service.period = MarketTopService.Period(rawValue: index) ?? .period24h
+        service.period = MarketListDataSource.Period(rawValue: index) ?? .day
     }
 
 }
 
-extension MarketTopViewModel {
+extension MarketListViewModel {
 
     struct ViewItem {
         let rank: Int
@@ -160,13 +156,16 @@ extension MarketTopViewModel {
 
 }
 
-extension MarketTopService.Period {
+extension MarketListDataSource.Period {
 
     var title: String {
         switch self {
-        case .period24h: return "market.top.period_24h".localized
-        case .periodWeek: return "market.top.period_one_week".localized
-        case .periodMonth: return "market.top.period_one_month".localized
+        case .hour: return "market.top.period_1h".localized
+        case .day: return "market.top.period_24h".localized
+        case .dayStart: return "market.top.period_day_start".localized
+        case .week: return "market.top.period_one_week".localized
+        case .month: return "market.top.period_one_month".localized
+        case .year: return "market.top.period_one_year".localized
         }
     }
 

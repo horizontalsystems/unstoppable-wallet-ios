@@ -61,7 +61,7 @@ class RateListPresenter {
                 rate: marketInfo.map { marketInfo in
                     RateViewItem(
                             currencyValue: CurrencyValue(currency: currency, value: marketInfo.rate),
-                            diff: marketInfo.diff,
+                            diff: marketInfo.rateDiff,
                             dimmed: marketInfo.expired
                     )
                 }

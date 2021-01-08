@@ -122,7 +122,7 @@ class BalanceViewItemFactory {
             return nil
         }
 
-        return (value: marketInfo.diff, dimmed: marketInfo.expired)
+        return (value: marketInfo.rate, dimmed: marketInfo.expired)
     }
 
     private func coinValue(coin: Coin, value: Decimal, state: AdapterState) -> (text: String?, dimmed: Bool) {

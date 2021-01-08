@@ -26,16 +26,16 @@ class RateTopListPresenter {
         case .rank:
             items.sort { $0.rank < $1.rank }
         case .topWinners:
-            items.sort { $0.topMarket.marketInfo.diff > $1.topMarket.marketInfo.diff }
+            items.sort { $0.topMarket.marketInfo.rateDiff > $1.topMarket.marketInfo.rateDiff }
         case .topLosers: ()
-            items.sort { $0.topMarket.marketInfo.diff < $1.topMarket.marketInfo.diff }
+            items.sort { $0.topMarket.marketInfo.rateDiff < $1.topMarket.marketInfo.rateDiff }
         }
     }
 
     private func syncMarketInfo() {
         for (coinCode, marketInfo) in marketInfos {
             for (itemIndex, item) in items.enumerated() {
-                if coinCode == item.topMarket.coinCode {
+                if coinCode == item.topMarket.coin.code {
                     items[itemIndex].topMarket.marketInfo = marketInfo
                 }
             }
@@ -57,11 +57,11 @@ class RateTopListPresenter {
     private func viewItem(item: RateTopListModule.TopMarketItem) -> RateTopListModule.ViewItem {
         RateTopListModule.ViewItem(
                 rank: item.rank,
-                coinCode: item.topMarket.coinCode,
-                coinTitle: item.topMarket.coinName,
+                coinCode: item.topMarket.coin.code,
+                coinTitle: item.topMarket.coin.title,
                 rate: RateViewItem(
                         currencyValue: CurrencyValue(currency: currency, value: item.topMarket.marketInfo.rate),
-                        diff: item.topMarket.marketInfo.diff,
+                        diff: item.topMarket.marketInfo.rateDiff,
                         dimmed: item.topMarket.marketInfo.expired
                 )
         )
@@ -97,7 +97,7 @@ extension RateTopListPresenter: IRateTopListViewDelegate {
     func onSelect(index: Int) {
         let item = items[index]
 
-        router.showChart(coinCode: item.topMarket.coinCode, coinTitle: item.topMarket.coinName)
+        router.showChart(coinCode: item.topMarket.coin.code, coinTitle: item.topMarket.coin.title)
     }
 
     func onTapSort() {

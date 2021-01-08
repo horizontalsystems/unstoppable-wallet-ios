@@ -2,18 +2,20 @@ import SectionsTableView
 import RxSwift
 import RxCocoa
 
-class MarketTopView {
+class MarketListView {
     private let disposeBag = DisposeBag()
 
-    private let viewModel: MarketTopViewModel
+    private let viewModel: MarketListViewModel
     var openController: ((UIViewController) -> ())?
 
+    private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
+    private let errorRelay = BehaviorRelay<String?>(value: nil)
     private let sectionUpdatedRelay = PublishRelay<()>()
-    private var viewItems = [MarketTopViewModel.ViewItem]()
+    private var viewItems = [MarketListViewModel.ViewItem]()
 
     private let headerView = MarketListHeaderView()
 
-    init(viewModel: MarketTopViewModel) {
+    init(viewModel: MarketListViewModel) {
         self.viewModel = viewModel
 
         headerView.set(sortingField: viewModel.sortingField)
@@ -22,6 +24,8 @@ class MarketTopView {
         headerView.set(periodAction: { [weak self] in self?.onTapPeriod() })
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
+        subscribe(disposeBag, viewModel.isLoadingDriver) { [weak self] in self?.isLoadingRelay.accept($0) }
+        subscribe(disposeBag, viewModel.errorDriver) { [weak self] in self?.errorRelay.accept($0) }
     }
 
     private func onTapSortingField() {
@@ -68,13 +72,13 @@ class MarketTopView {
         headerView.set(period: viewModel.period)
     }
 
-    private func sync(viewItems: [MarketTopViewModel.ViewItem]) {
+    private func sync(viewItems: [MarketListViewModel.ViewItem]) {
         self.viewItems = viewItems
 
         sectionUpdatedRelay.accept(())
     }
 
-    private func row(index: Int, viewItem: MarketTopViewModel.ViewItem) -> RowProtocol {
+    private func row(index: Int, viewItem: MarketListViewModel.ViewItem) -> RowProtocol {
         let last = index == viewItems.count - 1
 
         return Row<RateTopListCell>(
@@ -101,7 +105,15 @@ class MarketTopView {
 
 }
 
-extension MarketTopView {
+extension MarketListView {
+
+    var isLoadingDriver: Driver<Bool> {
+        isLoadingRelay.asDriver()
+    }
+
+    var errorDriver: Driver<String?> {
+        errorRelay.asDriver()
+    }
 
     public var sectionUpdatedSignal: Signal<()> {
         sectionUpdatedRelay.asSignal()
