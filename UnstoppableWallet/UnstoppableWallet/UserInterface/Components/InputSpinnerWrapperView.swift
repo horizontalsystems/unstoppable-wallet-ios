@@ -20,10 +20,6 @@ class InputSpinnerWrapperView: UIView, ISizeAwareView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func size(containerWidth: CGFloat) -> CGSize {
-        CGSize(width: 20, height: 20)
-    }
-
     override var isHidden: Bool {
         get {
             super.isHidden
@@ -37,6 +33,10 @@ class InputSpinnerWrapperView: UIView, ISizeAwareView {
                 spinner.startAnimating()
             }
         }
+    }
+
+    func width(containerWidth: CGFloat) -> CGFloat {
+        20
     }
 
 }

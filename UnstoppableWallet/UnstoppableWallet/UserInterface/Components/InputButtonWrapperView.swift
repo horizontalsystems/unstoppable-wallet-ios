@@ -32,8 +32,8 @@ class InputButtonWrapperView: UIView, ISizeAwareView {
         onTapButton?()
     }
 
-    func size(containerWidth: CGFloat) -> CGSize {
-        ThemeButton.size(containerWidth: containerWidth, text: button.title(for: .normal), icon: button.image(for: .normal), style: style)
+    func width(containerWidth: CGFloat) -> CGFloat {
+        ThemeButton.size(containerWidth: containerWidth, text: button.title(for: .normal), icon: button.image(for: .normal), style: style).width
     }
 
 }
