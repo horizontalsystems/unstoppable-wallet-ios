@@ -11,7 +11,7 @@ class InputView: UIView {
     var onChangeText: ((String?) -> ())?
 
     init() {
-        formValidatedView = FormValidatedView(contentView: inputStackView, padding: UIEdgeInsets(top: 0, left: .margin16, bottom: 0, right: .margin16))
+        formValidatedView = FormValidatedView(contentView: inputStackView)
 
         super.init(frame: .zero)
 

@@ -51,6 +51,10 @@ class FormTextView: UIView {
         notifyHeightChangedIfRequired()
     }
 
+    override func becomeFirstResponder() -> Bool {
+        textView.becomeFirstResponder()
+    }
+
     private func height(text: String, width: CGFloat) -> CGFloat {
         let textWidth = width - textView.textContainerInset.width - 2 * textView.textContainer.lineFragmentPadding
         var textHeight: CGFloat

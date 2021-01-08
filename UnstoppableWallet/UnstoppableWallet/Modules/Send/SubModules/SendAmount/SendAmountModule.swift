@@ -3,7 +3,7 @@ import CurrencyKit
 
 protocol ISendAmountView: class {
     func set(loading: Bool)
-    func set(amountType: String)
+    func set(prefix: String?)
     func set(availableBalance: AmountInfo?)
     func set(amount: AmountInfo?)
     func set(hint: AmountInfo?)

@@ -7,7 +7,7 @@ class FormValidatedView: UIView {
     private let contentView: IHeightControlView
     private let padding: UIEdgeInsets
 
-    init(contentView: IHeightControlView, padding: UIEdgeInsets = UIEdgeInsets(top: .margin12, left: .margin16, bottom: .margin12, right: .margin16)) {
+    init(contentView: IHeightControlView, padding: UIEdgeInsets = UIEdgeInsets(top: 0, left: .margin16, bottom: 0, right: .margin16)) {
         self.contentView = contentView
         self.padding = padding
 

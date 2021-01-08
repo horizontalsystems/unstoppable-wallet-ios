@@ -30,6 +30,10 @@ class InputStackView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func becomeFirstResponder() -> Bool {
+        formTextView.becomeFirstResponder()
+    }
+
 }
 
 extension InputStackView {

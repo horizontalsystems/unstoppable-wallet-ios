@@ -12,7 +12,7 @@ class ShortcutInputCell: UITableViewCell {
     var onChangeText: ((String?) -> ())?
 
     init() {
-        formValidatedView = FormValidatedView(contentView: inputStackView, padding: UIEdgeInsets(top: 0, left: .margin16, bottom: 0, right: .margin16))
+        formValidatedView = FormValidatedView(contentView: inputStackView)
 
         super.init(style: .default, reuseIdentifier: nil)
 
