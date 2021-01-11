@@ -6,7 +6,7 @@ import HUD
 import RxSwift
 import RxCocoa
 
-class MarketViewController: ThemeSearchViewController {
+class MarketViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private let viewModel: MarketViewModel
@@ -47,6 +47,7 @@ class MarketViewController: ThemeSearchViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(UIView()) //prevent Large Title from Collapsing
 
         view.addSubview(categoriesHeaderView)
         categoriesHeaderView.snp.makeConstraints { maker in
