@@ -179,7 +179,7 @@ extension SendRouter {
 
     private static func module(coin: Coin, adapter: ISendZcashAdapter) -> (ISendHandler, [UIView], [ISendSubRouter]) {
         let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
-        let (addressView, addressModule, addressRouter) = SendAddressRouter.module(coin: coin)
+        let (addressView, addressModule, addressRouter) = SendAddressRouter.module(coin: coin, placeholder: "send.address_placeholder".localized, isResolutionEnabled: false)
         let (memoView, memoModule) = SendMemoRouter.module()
         let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
 
