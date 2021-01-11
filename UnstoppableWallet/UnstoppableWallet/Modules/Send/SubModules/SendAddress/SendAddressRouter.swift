@@ -14,7 +14,7 @@ extension SendAddressRouter: ISendAddressRouter {
 
 extension SendAddressRouter {
 
-    static func module(coin: Coin, placeholder: String = "send.address_placeholder".localized, isResolutionEnabled: Bool = true) -> (UIView, ISendAddressModule, ISendSubRouter) {
+    static func module(coin: Coin, placeholder: String = "send.address_or_domain_placeholder".localized, isResolutionEnabled: Bool = true) -> (UIView, ISendAddressModule, ISendSubRouter) {
         let addressParserFactory = AddressParserFactory()
 
         let router = SendAddressRouter()
