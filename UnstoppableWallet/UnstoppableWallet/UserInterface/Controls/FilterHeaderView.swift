@@ -38,6 +38,7 @@ class FilterHeaderView: UIView {
         collectionView.contentInset = UIEdgeInsets(top: 6, left: layoutMargins.left * 2, bottom: 6, right: layoutMargins.right * 2)
         collectionView.allowsMultipleSelection = false
         collectionView.backgroundColor = .clear
+        collectionView.scrollsToTop = false
         collectionView.showsHorizontalScrollIndicator = false
 
         collectionView.registerCell(forClass: FilterHeaderCell.self)
