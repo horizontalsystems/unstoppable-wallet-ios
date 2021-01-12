@@ -52,6 +52,7 @@ class TransactionInfoModule {
         case lockInfo(lockState: TransactionLockState)
         case sentToSelf
         case rawTransaction
+        case memo(text: String)
     }
 
     struct ExplorerData {

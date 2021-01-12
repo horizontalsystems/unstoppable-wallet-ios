@@ -62,7 +62,8 @@ class EthereumAdapter: EthereumBaseAdapter {
                 to: to?.hex,
                 lockInfo: nil,
                 conflictingHash: nil,
-                showRawTransaction: false
+                showRawTransaction: false,
+                memo: nil
         )
     }
 

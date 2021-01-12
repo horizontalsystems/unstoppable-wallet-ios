@@ -107,7 +107,8 @@ class BitcoinBaseAdapter {
                 to: type == .outgoing ? anyNotMineToAddress : nil,
                 lockInfo: lockInfo,
                 conflictingHash: transaction.conflictingHash,
-                showRawTransaction: transaction.status == .new || transaction.status == .invalid
+                showRawTransaction: transaction.status == .new || transaction.status == .invalid,
+                memo: nil
         )
     }
 

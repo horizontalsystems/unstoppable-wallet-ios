@@ -43,7 +43,8 @@ class BinanceAdapter {
                 to: transaction.to,
                 lockInfo: nil,
                 conflictingHash: nil,
-                showRawTransaction: false
+                showRawTransaction: false,
+                memo: transaction.memo
         )
     }
 

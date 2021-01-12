@@ -182,7 +182,8 @@ class ZcashAdapter {
                 to: transaction.toAddress,
                 lockInfo: nil,
                 conflictingHash: nil,
-                showRawTransaction: showRawTransaction
+                showRawTransaction: showRawTransaction,
+                memo: transaction.memo
         )
     }
 
