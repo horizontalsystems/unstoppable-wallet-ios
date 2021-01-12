@@ -14,14 +14,6 @@ protocol IRandomManager {
 }
 
 protocol ILocalStorage: class {
-    var baseBitcoinProvider: String? { get set }
-    var baseLitecoinProvider: String? { get set }
-    var baseBitcoinCashProvider: String? { get set }
-    var baseDashProvider: String? { get set }
-    var baseBinanceProvider: String? { get set }
-    var baseZcashProvider: String? { get set }
-    var baseEosProvider: String? { get set }
-    var baseEthereumProvider: String? { get set }
     var agreementAccepted: Bool { get set }
     var sortType: SortType? { get set }
     var debugLog: String? { get set }
@@ -295,17 +287,6 @@ protocol IAppConfigProvider {
     var defaultCoins: [Coin] { get }
 }
 
-protocol IFullTransactionInfoProvider {
-    var providerName: String { get }
-    func url(for hash: String) -> String?
-
-    func retrieveTransactionInfo(transactionHash: String) -> Single<FullTransactionRecord?>
-}
-
-protocol IFullTransactionInfoAdapter {
-    func convert(json: [String: Any]) -> FullTransactionRecord?
-}
-
 protocol IEnabledWalletStorage {
     var enabledWallets: [EnabledWallet] { get }
     func save(enabledWallets: [EnabledWallet])
@@ -375,45 +356,8 @@ protocol IAccountRecordStorage {
     func deleteAllAccountRecords()
 }
 
-protocol IFullTransactionDataProviderManager {
-    var dataProviderUpdatedObservable: Observable<Void> { get }
-
-    func providers(for coin: Coin) -> [IProvider]
-    func baseProvider(for coin: Coin) -> IProvider
-    func setBaseProvider(name: String, for coin: Coin)
-
-    func bitcoin(for name: String) -> IBitcoinForksProvider
-    func litecoin(for name: String) -> IBitcoinForksProvider
-    func dash(for name: String) -> IBitcoinForksProvider
-    func eos(for name: String) -> IEosProvider
-    func bitcoinCash(for name: String) -> IBitcoinForksProvider
-    func ethereum(for name: String) -> IEthereumForksProvider
-    func binance(for name: String) -> IBinanceProvider
-    func zcash(for name: String) -> IZcashProvider
-}
-
 protocol IPingManager {
     func serverAvailable(url: String, timeoutInterval: TimeInterval) -> Observable<TimeInterval>
-}
-
-protocol IEosProvider: IProvider {
-    func convert(json: [String: Any], account: String) -> IEosResponse?
-}
-
-protocol IBitcoinForksProvider: IProvider {
-    func convert(json: [String: Any]) -> IBitcoinResponse?
-}
-
-protocol IEthereumForksProvider: IProvider {
-    func convert(json: [String: Any]) -> IEthereumResponse?
-}
-
-protocol IBinanceProvider: IProvider {
-    func convert(json: [String: Any]) -> IBinanceResponse?
-}
-
-protocol IZcashProvider: IProvider {
-    func convert(json: [String: Any]) -> IZcashResponse?
 }
 
 protocol ITransactionRateSyncer {
@@ -428,24 +372,6 @@ protocol IPasteboardManager {
 
 protocol IUrlManager {
     func open(url: String, from controller: UIViewController?)
-}
-
-protocol IFullTransactionInfoProviderFactory {
-    func provider(`for` wallet: Wallet) -> IFullTransactionInfoProvider
-}
-
-protocol ISettingsProviderMap {
-    func providers(for coinCode: String) -> [IProvider]
-    func bitcoin(for name: String) -> IBitcoinForksProvider
-    func bitcoinCash(for name: String) -> IBitcoinForksProvider
-    func ethereum(for name: String) -> IEthereumForksProvider
-}
-
-protocol IProvider {
-    var name: String { get }
-    var reachabilityUrl: String { get }
-    func url(for hash: String) -> String?
-    func request(session: Session, hash: String) -> DataRequest
 }
 
 protocol ICurrentDateProvider {

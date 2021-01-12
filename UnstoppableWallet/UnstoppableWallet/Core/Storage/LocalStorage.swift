@@ -3,13 +3,6 @@ import StorageKit
 import XRatesKit
 
 class LocalStorage {
-    private let keyBaseBitcoinProvider = "base_bitcoin_provider"
-    private let keyBaseLitecoinProvider = "base_litecoin_provider"
-    private let keyBaseBitcoinCashProvider = "base_bitcoin_cash_provider"
-    private let keyBaseDashProvider = "base_dash_provider"
-    private let keyBaseBinanceProvider = "base_z_cash_provider"
-    private let keyBaseEosProvider = "base_eos_provider"
-    private let keyBaseEthereumProvider = "base_ethereum_provider"
     private let agreementAcceptedKey = "i_understand_key"
     private let keySortType = "balance_sort_key"
     private let biometricOnKey = "biometric_on_key"
@@ -43,46 +36,6 @@ extension LocalStorage: ILocalStorage {
     var debugLog: String? {
         get { storage.value(for: debugLogKey) }
         set { storage.set(value: newValue, for: debugLogKey) }
-    }
-
-    var baseBitcoinProvider: String? {
-        get { storage.value(for: keyBaseBitcoinProvider) }
-        set { storage.set(value: newValue, for: keyBaseBitcoinProvider) }
-    }
-
-    var baseLitecoinProvider: String? {
-        get { storage.value(for: keyBaseLitecoinProvider) }
-        set { storage.set(value: newValue, for: keyBaseLitecoinProvider) }
-    }
-
-    var baseBitcoinCashProvider: String? {
-        get { storage.value(for: keyBaseBitcoinCashProvider) }
-        set { storage.set(value: newValue, for: keyBaseBitcoinCashProvider) }
-    }
-
-    var baseDashProvider: String? {
-        get { storage.value(for: keyBaseDashProvider) }
-        set { storage.set(value: newValue, for: keyBaseDashProvider) }
-    }
-
-    var baseBinanceProvider: String? {
-        get { storage.value(for: keyBaseBinanceProvider) }
-        set { storage.set(value: newValue, for: keyBaseBinanceProvider) }
-    }
-
-    var baseZcashProvider: String? {
-        get { storage.value(for: keyBaseBinanceProvider) }
-        set { storage.set(value: newValue, for: keyBaseBinanceProvider) }
-    }
-
-    var baseEosProvider: String? {
-        get { storage.value(for: keyBaseEosProvider) }
-        set { storage.set(value: newValue, for: keyBaseEosProvider) }
-    }
-
-    var baseEthereumProvider: String? {
-        get { storage.value(for: keyBaseEthereumProvider) }
-        set { storage.set(value: newValue, for: keyBaseEthereumProvider) }
     }
 
     var agreementAccepted: Bool {

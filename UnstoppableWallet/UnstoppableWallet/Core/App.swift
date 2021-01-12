@@ -46,9 +46,6 @@ class App {
 
     let adapterManager: IAdapterManager
 
-    let dataProviderManager: IFullTransactionDataProviderManager
-    let fullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactory
-
     private let testModeIndicator: TestModeIndicator
     private let walletRemover: WalletRemover
 
@@ -157,9 +154,6 @@ class App {
 
         pinKit = PinKit.Kit(secureStorage: keychainKit.secureStorage, localStorage: StorageKit.LocalStorage.default)
         let blurManager: IBlurManager = BlurManager(pinKit: pinKit)
-
-        dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
-        fullTransactionInfoProviderFactory = FullTransactionInfoProviderFactory(networkManager: networkManager, dataProviderManager: dataProviderManager)
 
         testModeIndicator = TestModeIndicator(appConfigProvider: appConfigProvider)
         walletRemover = WalletRemover(accountManager: accountManager, walletManager: walletManager)
