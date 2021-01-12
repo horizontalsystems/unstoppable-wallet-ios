@@ -61,7 +61,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
         tableView.registerCell(forClass: TransactionInfoPendingStatusCell.self)
         tableView.registerCell(forClass: TransactionInfoFromToCell.self)
         tableView.registerCell(forClass: TransactionInfoTransactionIdCell.self)
-        tableView.registerCell(forClass: TransactionInfoValueCell.self)
+        tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: TransactionInfoWarningCell.self)
         tableView.registerCell(forClass: TransactionInfoNoteCell.self)
         tableView.registerCell(forClass: TransactionInfoShareCell.self)
@@ -196,13 +196,18 @@ class TransactionInfoViewController: ThemeActionSheetController {
         )
     }
 
-    private func valueRow(title: String, value: String?) -> RowProtocol {
-        Row<TransactionInfoValueCell>(
+    private func valueRow(title: String, value: String?, valueItalic: Bool = false) -> RowProtocol {
+        Row<D7Cell>(
                 id: title,
                 hash: value ?? "",
-                height: .heightSingleLineCell,
+                dynamicHeight: { width in
+                    D7Cell.height(containerWidth: width, title: title, value: value, valueItalic: valueItalic)
+                },
                 bind: { cell, _ in
-                    cell.bind(title: title, value: value)
+                    cell.set(backgroundStyle: .lawrence, topSeparator: false, bottomSeparator: true)
+                    cell.title = title
+                    cell.value = value
+                    cell.valueItalic = valueItalic
                 }
         )
     }
@@ -319,6 +324,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
         case let .lockInfo(lockState): return lockInfoRow(lockState: lockState)
         case .sentToSelf: return sentToSelfRow()
         case .rawTransaction: return rawTransactionRow()
+        case let .memo(text): return valueRow(title: "tx_info.memo".localized, value: text, valueItalic: true)
         }
     }
 

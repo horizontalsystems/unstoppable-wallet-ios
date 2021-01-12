@@ -65,7 +65,8 @@ class Erc20Adapter: EthereumBaseAdapter {
                 to: transaction.to.hex,
                 lockInfo: nil,
                 conflictingHash: nil,
-                showRawTransaction: false
+                showRawTransaction: false,
+                memo: nil
         )
     }
 

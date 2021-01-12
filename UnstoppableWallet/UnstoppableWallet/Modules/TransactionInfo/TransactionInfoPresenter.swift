@@ -34,7 +34,7 @@ class TransactionInfoPresenter {
         case .binance:
             explorerData = .init(title: "binance.org", url: testMode ? "https://testnet-explorer.binance.org/tx/" + hash : "https://explorer.binance.org/tx/" + hash)
         case .zcash:
-            explorerData = .init(title: "zcha.in", url: testMode ? nil : "https://api.zcha.in/transactions/" + hash)
+            explorerData = .init(title: "zcha.in", url: testMode ? nil : "https://explorer.zcha.in/transactions/" + hash)
         case .eos:
             explorerData = .init(title: "greymass.com", url: nil)
         }
@@ -119,6 +119,10 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
             viewItems.append(.rawTransaction)
         } else {
             viewItems.append(.id(value: transaction.transactionHash))
+        }
+
+        if let memo = transaction.memo, !memo.isEmpty {
+            viewItems.append(.memo(text: memo))
         }
 
         if transaction.conflictingHash != nil {

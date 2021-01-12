@@ -368,6 +368,7 @@ bch.horizontalsystems.xyz/apg";
 "tx_info.unlocked_at" = "Unlocked at %@";
 "tx_info.recipient_hash" = "Recipient";
 "tx_info.raw_transaction" = "Raw Transaction";
+"tx_info.memo" = "Memo";
 
 // Settings
 
