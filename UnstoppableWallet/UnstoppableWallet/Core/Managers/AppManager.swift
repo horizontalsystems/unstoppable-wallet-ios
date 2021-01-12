@@ -82,6 +82,8 @@ extension AppManager {
     }
 
     func willEnterForeground() {
+        accountManager.handleForeground()
+
         debugBackgroundLogger?.logEnterForeground()
         willEnterForegroundSubject.onNext(())
 

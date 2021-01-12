@@ -196,6 +196,7 @@ protocol IAccountManager {
     func save(account: Account)
     func delete(account: Account)
     func clear()
+    func handleForeground()
 }
 
 protocol IBackupManager {

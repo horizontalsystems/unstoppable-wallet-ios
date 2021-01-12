@@ -6,7 +6,7 @@ class TermsManager {
 
     private let subject = PublishSubject<Bool>()
 
-    private let termIds = ["academy", "backup", "owner", "recover", "phone", "root", "bugs"]
+    private let termIds = ["academy", "backup", "owner", "recover", "phone", "root", "bugs", "pin"]
 
     init(storage: StorageKit.ILocalStorage) {
         self.storage = storage
