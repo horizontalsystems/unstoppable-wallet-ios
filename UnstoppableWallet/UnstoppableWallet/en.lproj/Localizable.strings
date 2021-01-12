@@ -359,7 +359,7 @@ bch.horizontalsystems.xyz/apg";
 "tx_info.transaction_id" = "ID";
 "tx_info.to_hash" = "To";
 "tx_info.input" = "Input";
-"tx_info.button_verify" = "Verify";
+"tx_info.button_explorer" = "View on %@";
 "tx_info.rate" = "Historical Rate";
 "tx_info.fee" = "Fee";
 "tx_info.to_self_note" = "This transaction sent to own address";

@@ -78,15 +78,14 @@ class TransactionInfoViewController: ThemeActionSheetController {
         }
 
         verifyButton.apply(style: .primaryTransparent)
-        verifyButton.setTitle("tx_info.button_verify".localized, for: .normal)
-        verifyButton.addTarget(self, action: #selector(_onTapVerify), for: .touchUpInside)
+        verifyButton.addTarget(self, action: #selector(onTapVerify), for: .touchUpInside)
 
         delegate.onLoad()
 
         tableView.reload()
     }
 
-    @objc private func _onTapVerify() {
+    @objc private func onTapVerify() {
         delegate.onTapVerify()
     }
 
@@ -384,6 +383,11 @@ extension TransactionInfoViewController: ITransactionInfoView {
 
     func set(viewItems: [TransactionInfoModule.ViewItem]) {
         self.viewItems = viewItems
+    }
+
+    func set(explorerTitle: String, enabled: Bool) {
+        verifyButton.setTitle("tx_info.button_explorer".localized(explorerTitle), for: .normal)
+        verifyButton.isEnabled = enabled
     }
 
     func showCopied() {
