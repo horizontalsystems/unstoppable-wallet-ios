@@ -16,21 +16,21 @@ class AccountManager {
 extension AccountManager: IAccountManager {
 
     var accounts: [Account] {
-        return cache.accounts
+        cache.accounts
     }
 
     func account(coinType: CoinType) -> Account? {
-        return accounts.first { account in
-            return coinType.canSupport(accountType: account.type)
+        accounts.first { account in
+            coinType.canSupport(accountType: account.type)
         }
     }
 
     var accountsObservable: Observable<[Account]> {
-        return accountsSubject.asObservable()
+        accountsSubject.asObservable()
     }
 
     var deleteAccountObservable: Observable<Account> {
-        return deleteAccountSubject.asObservable()
+        deleteAccountSubject.asObservable()
     }
 
     func preloadAccounts() {
@@ -68,11 +68,17 @@ extension AccountManager: IAccountManager {
 
     func handleForeground() {
         let storedAccounts = storage.allAccounts
+
         let lostAccounts = cache.accounts.filter {
             storedAccounts.firstIndex(of: $0) == nil
         }
+        lostAccounts.forEach { account in
+            storage.delete(account: account)
+            deleteAccountSubject.onNext(account)
+        }
 
-        lostAccounts.forEach(delete)
+        cache.set(accounts: storedAccounts)
+        accountsSubject.onNext(accounts)
     }
 
 }
@@ -83,7 +89,7 @@ extension AccountManager {
         private var array = [Account]()
 
         var accounts: [Account] {
-            return array
+            array
         }
 
         func set(accounts: [Account]) {
