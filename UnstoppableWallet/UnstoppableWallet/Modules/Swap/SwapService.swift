@@ -109,13 +109,13 @@ class SwapService {
     }
 
     private var ethereumBalance: BigUInt {
-        ethereumKit.balance ?? 0
+        ethereumKit.accountState?.balance ?? 0
     }
 
     private func onUpdateTrade(state: SwapTradeService.State) {
         if case .ready(let trade) = state {
             if let kitTransactionData = try? tradeService.transactionData(tradeData: trade.tradeData) { // todo: handle throwing function correctly
-                let transactionData = EthereumTransactionService.TransactionData(
+                let transactionData = TransactionData(
                         to: kitTransactionData.to,
                         value: kitTransactionData.value,
                         input: kitTransactionData.input

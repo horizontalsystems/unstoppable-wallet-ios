@@ -43,7 +43,7 @@ class EthereumTransactionService {
     }
 
     private func gasLimitSingle(gasPrice: Int, transactionData: TransactionData) -> Single<Int> {
-        ethereumKit.estimateGas(to: transactionData.to, amount: transactionData.value, gasPrice: gasPrice, data: transactionData.input)
+        ethereumKit.estimateGas(transactionData: transactionData, gasPrice: gasPrice)
     }
 
     private func sync() {
@@ -105,12 +105,6 @@ extension EthereumTransactionService {
 }
 
 extension EthereumTransactionService {
-
-    struct TransactionData {
-        var to: EthereumKit.Address
-        var value: BigUInt
-        var input: Data
-    }
 
     struct GasData {
         let gasLimit: Int

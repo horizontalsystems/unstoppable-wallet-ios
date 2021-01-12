@@ -20,15 +20,16 @@ class EthereumAdapter: EthereumBaseAdapter {
         return Decimal(sign: sign, exponent: -decimal, significand: significand)
     }
 
-    private func transactionRecord(fromTransaction transactionWithInternal: TransactionWithInternal) -> TransactionRecord {
-        let transaction = transactionWithInternal.transaction
+    private func transactionRecord(fromTransaction fullTransaction: FullTransaction) -> TransactionRecord {
+        let transaction = fullTransaction.transaction
+        let receipt = fullTransaction.receiptWithLogs?.receipt
 
         var from = transaction.from
         var to = transaction.to
 
         var amount = convertAmount(amount: transaction.value, fromAddress: transaction.from)
 
-        amount += transactionWithInternal.internalTransactions.reduce(0) { internalAmount, internalTransaction in
+        amount += fullTransaction.internalTransactions.reduce(0) { internalAmount, internalTransaction in
             from = internalTransaction.from
             to = internalTransaction.to
             return internalAmount + convertAmount(amount: internalTransaction.value, fromAddress: internalTransaction.from)
@@ -43,23 +44,22 @@ class EthereumAdapter: EthereumBaseAdapter {
             type = .incoming
         }
 
-        let failed = (transaction.isError ?? 0) != 0
         let txHash = transaction.hash.toHexString()
 
         return TransactionRecord(
                 uid: txHash,
                 transactionHash: txHash,
-                transactionIndex: transaction.transactionIndex ?? 0,
+                transactionIndex: receipt?.transactionIndex ?? 0,
                 interTransactionIndex: 0,
                 type: type,
-                blockHeight: transaction.blockNumber,
+                blockHeight: receipt?.blockNumber,
                 confirmationsThreshold: EthereumBaseAdapter.confirmationsThreshold,
                 amount: abs(amount),
-                fee: transaction.gasUsed.map { Decimal(sign: .plus, exponent: -decimal, significand: Decimal($0 * transaction.gasPrice)) },
-                date: Date(timeIntervalSince1970: transaction.timestamp),
-                failed: failed,
+                fee: receipt.map { Decimal(sign: .plus, exponent: -decimal, significand: Decimal($0.cumulativeGasUsed * transaction.gasPrice)) },
+                date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
+                failed: fullTransaction.failed,
                 from: from.hex,
-                to: to.hex,
+                to: to?.hex,
                 lockInfo: nil,
                 conflictingHash: nil,
                 showRawTransaction: false
@@ -129,11 +129,11 @@ extension EthereumAdapter: IBalanceAdapter {
     }
 
     var balance: Decimal {
-        balanceDecimal(kitBalance: ethereumKit.balance, decimal: EthereumAdapter.decimal)
+        balanceDecimal(kitBalance: ethereumKit.accountState?.balance, decimal: EthereumAdapter.decimal)
     }
 
     var balanceUpdatedObservable: Observable<Void> {
-        ethereumKit.balanceObservable.map { _ in () }
+        ethereumKit.accountStateObservable.map { _ in () }
     }
 
 }
@@ -179,13 +179,13 @@ extension EthereumAdapter: ISendEthereumAdapter {
 extension EthereumAdapter: ITransactionsAdapter {
 
     var transactionRecordsObservable: Observable<[TransactionRecord]> {
-        ethereumKit.transactionsObservable.map { [weak self] in
+        ethereumKit.etherTransactionsObservable.map { [weak self] in
             $0.compactMap { self?.transactionRecord(fromTransaction: $0) }
         }
     }
 
     func transactionsSingle(from: TransactionRecord?, limit: Int) -> Single<[TransactionRecord]> {
-        ethereumKit.transactionsSingle(fromHash: from.flatMap { Data(hex: $0.transactionHash) }, limit: limit)
+        ethereumKit.etherTransactionsSingle(fromHash: from.flatMap { Data(hex: $0.transactionHash) }, limit: limit)
                 .map { [weak self] transactions -> [TransactionRecord] in
                     transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
                 }
