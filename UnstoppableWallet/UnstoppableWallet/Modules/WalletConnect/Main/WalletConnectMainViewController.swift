@@ -70,7 +70,7 @@ class WalletConnectMainViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.registerCell(forClass: TermsHeaderCell.self)
-        tableView.registerCell(forClass: FullTransactionInfoTextCell.self)
+        tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: HighlightedDescriptionCell.self)
 
         view.addSubview(buttonsHolder)
@@ -267,11 +267,11 @@ extension WalletConnectMainViewController: SectionsDataSource {
         }
 
         if let status = status {
-            rows.append(valueRow(title: "status".localized, subtitle: status.title, subtitleColor: status.color))
+            rows.append(valueRow(title: "status".localized, value: status.title, valueColor: status.color))
         }
 
         if let url = peerMeta?.url {
-            rows.append(valueRow(title: "wallet_connect.url".localized, subtitle: url))
+            rows.append(valueRow(title: "wallet_connect.url".localized, value: url))
         }
 
         if let footerRow = footer {
@@ -301,10 +301,17 @@ extension WalletConnectMainViewController: SectionsDataSource {
         })
     }
 
-    private func valueRow(title: String, subtitle: String, subtitleColor: UIColor? = nil) -> RowProtocol {
-        Row<FullTransactionInfoTextCell>(id: "row_\(title)", height: .heightSingleLineCell, bind: { cell, _ in
-            cell.bind(title: title, subtitle: subtitle, subtitleColor: subtitleColor)
-        })
+    private func valueRow(title: String, value: String, valueColor: UIColor? = nil) -> RowProtocol {
+        Row<D7Cell>(
+                id: "row_\(title)",
+                height: .heightSingleLineCell,
+                bind: { cell, _ in
+                    cell.set(backgroundStyle: .lawrence)
+                    cell.title = title
+                    cell.value = value
+                    cell.valueColor = valueColor ?? .themeLeah
+                }
+        )
     }
 
 }
