@@ -18,8 +18,8 @@ class MarketListView {
     init(viewModel: MarketListViewModel) {
         self.viewModel = viewModel
 
-        headerView.set(sortingField: viewModel.sortingField)
-        headerView.set(period: viewModel.period)
+        headerView.set(sortingField: viewModel.sortingFieldTitle)
+        headerView.set(period: viewModel.periodTitle)
         headerView.set(sortingFieldAction: { [weak self] in self?.onTapSortingField() })
         headerView.set(periodAction: { [weak self] in self?.onTapPeriod() })
 
@@ -34,7 +34,7 @@ class MarketListView {
                 viewItems: viewModel.sortingFields.map { item in
                     AlertViewItem(
                             text: item,
-                            selected: item == viewModel.sortingField
+                            selected: item == viewModel.sortingFieldTitle
                     )
                 }
         ) { [weak self] index in
@@ -50,7 +50,7 @@ class MarketListView {
                 viewItems: viewModel.periods.map { item in
                     AlertViewItem(
                             text: item,
-                            selected: item == viewModel.period
+                            selected: item == viewModel.periodTitle
                     )
                 }
         ) { [weak self] index in
@@ -63,13 +63,13 @@ class MarketListView {
     private func setSortingField(at index: Int) {
         viewModel.setSortingField(at: index)
 
-        headerView.set(sortingField: viewModel.sortingField)
+        headerView.set(sortingField: viewModel.sortingFieldTitle)
     }
 
     private func setPeriod(at index: Int) {
         viewModel.setPeriod(at: index)
 
-        headerView.set(period: viewModel.period)
+        headerView.set(period: viewModel.periodTitle)
     }
 
     private func sync(viewItems: [MarketListViewModel.ViewItem]) {

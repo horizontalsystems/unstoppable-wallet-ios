@@ -12,7 +12,7 @@ class MarketListService {
     private let dataSource: IMarketListDataSource
 
     private let stateRelay = BehaviorRelay<State>(value: .loading)
-    private(set) var items = [MarketListDataSource.Item]()
+    private(set) var items = [Item]()
 
     public var period: MarketListDataSource.Period = .day {
         didSet {
@@ -27,6 +27,17 @@ class MarketListService {
         fetch()
     }
 
+    private func convertItem(rank: Int, topMarket: TopMarket) -> Item {
+        Item(
+            rank: rank,
+            coinCode: topMarket.coin.code,
+            coinName: topMarket.coin.title,
+            marketCap: topMarket.marketInfo.marketCap,
+            price: topMarket.marketInfo.rate,
+            diff: topMarket.marketInfo.rateDiffPeriod,
+            volume: topMarket.marketInfo.volume)
+    }
+
     private func fetch() {
         topItemsDisposable?.dispose()
         topItemsDisposable = nil
@@ -39,8 +50,10 @@ class MarketListService {
         topItemsDisposable?.disposed(by: disposeBag)
     }
 
-    private func sync(items: [MarketListDataSource.Item]) {
-        self.items = items
+    private func sync(items: [TopMarket]) {
+        self.items = items.enumerated().map { (index, topMarket) in
+            convertItem(rank: index + 1, topMarket: topMarket)
+        }
 
         stateRelay.accept(.loaded)
     }
@@ -54,7 +67,11 @@ extension MarketListService {
     }
 
     public var periods: [MarketListDataSource.Period] {
-        MarketListDataSource.Period.allCases
+        dataSource.periods
+    }
+
+    public var sortingFields: [MarketListDataSource.SortingField] {
+        dataSource.sortingFields
     }
 
     public var stateObservable: Observable<State> {
@@ -73,6 +90,16 @@ extension MarketListService {
         case loaded
         case loading
         case error(error: Error)
+    }
+
+    struct Item {
+        let rank: Int
+        let coinCode: String
+        let coinName: String
+        let marketCap: Decimal
+        let price: Decimal
+        let diff: Decimal
+        let volume: Decimal
     }
 
 }

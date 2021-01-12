@@ -10,14 +10,12 @@ class MarketTop100ViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .plain)
 
     private let marketMetricsCell: MarketMetricsCell
-    private let marketTickerCell: MarketTickerCell
     private let marketTopView = MarketListModule.topView()
 
     init(viewModel: MarketTop100ViewModel) {
         self.viewModel = viewModel
 
         marketMetricsCell = MarketMetricsModule.cell()
-        marketTickerCell = MarketTickerModule.cell()
 
         super.init()
     }
@@ -63,13 +61,6 @@ extension MarketTop100ViewController: SectionsDataSource {
                         id: "metrics",
                         height: MarketMetricsCell.cellHeight
 
-                )
-        )
-        rows.append(
-                StaticRow(
-                        cell: marketTickerCell,
-                        id: "ticker",
-                        height: MarketTickerCell.cellHeight
                 )
         )
 
