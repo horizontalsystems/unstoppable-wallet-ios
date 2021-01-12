@@ -9,11 +9,35 @@ class TransactionInfoPresenter {
     private let transaction: TransactionRecord
     private let wallet: Wallet
 
+    private let explorerData: TransactionInfoModule.ExplorerData
+
     init(transaction: TransactionRecord, wallet: Wallet, interactor: ITransactionInfoInteractor, router: ITransactionInfoRouter) {
         self.transaction = transaction
         self.wallet = wallet
         self.interactor = interactor
         self.router = router
+
+        let testMode = interactor.testMode
+        let hash = transaction.transactionHash
+
+        switch wallet.coin.type {
+        case .bitcoin:
+            explorerData = .init(title: "btc.com", url: testMode ? nil : "https://btc.com/" + hash)
+        case .bitcoinCash:
+            explorerData = .init(title: "btc.com", url: testMode ? nil : "https://bch.btc.com/" + hash)
+        case .litecoin:
+            explorerData = .init(title: "blockchair.com", url: testMode ? nil : "https://blockchair.com/litecoin/transaction/" + hash)
+        case .dash:
+            explorerData = .init(title: "dash.org", url: testMode ? nil : "https://insight.dash.org/insight/tx/" + hash)
+        case .ethereum, .erc20:
+            explorerData = .init(title: "etherscan.io", url: testMode ? "https://ropsten.etherscan.io/tx/" + hash : "https://etherscan.io/tx/" + hash)
+        case .binance:
+            explorerData = .init(title: "binance.org", url: testMode ? "https://testnet-explorer.binance.org/tx/" + hash : "https://explorer.binance.org/tx/" + hash)
+        case .zcash:
+            explorerData = .init(title: "zcha.in", url: testMode ? nil : "https://api.zcha.in/transactions/" + hash)
+        case .eos:
+            explorerData = .init(title: "greymass.com", url: nil)
+        }
     }
 
     private func showFromAddress(for type: CoinType) -> Bool {
@@ -110,6 +134,8 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
         }
 
         view?.set(viewItems: viewItems)
+
+        view?.set(explorerTitle: explorerData.title, enabled: explorerData.url != nil)
     }
 
     func onTapFrom() {
@@ -157,7 +183,11 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
     }
 
     func onTapVerify() {
-        router.showFullInfo(transactionHash: transaction.transactionHash, wallet: wallet)
+        guard let url = explorerData.url else {
+            return
+        }
+
+        router.open(url: url)
     }
 
     func onTapLockInfo() {

@@ -7,13 +7,15 @@ class TransactionInfoInteractor {
     private let currencyKit: ICurrencyKit
     private let feeCoinProvider: IFeeCoinProvider
     private let pasteboardManager: IPasteboardManager
+    private let appConfigProvider: IAppConfigProvider
 
-    init(adapter: ITransactionsAdapter, rateManager: IRateManager, currencyKit: ICurrencyKit, feeCoinProvider: IFeeCoinProvider, pasteboardManager: IPasteboardManager) {
+    init(adapter: ITransactionsAdapter, rateManager: IRateManager, currencyKit: ICurrencyKit, feeCoinProvider: IFeeCoinProvider, pasteboardManager: IPasteboardManager, appConfigProvider: IAppConfigProvider) {
         self.adapter = adapter
         self.rateManager = rateManager
         self.currencyKit = currencyKit
         self.feeCoinProvider = feeCoinProvider
         self.pasteboardManager = pasteboardManager
+        self.appConfigProvider = appConfigProvider
     }
 
 }
@@ -25,6 +27,10 @@ extension TransactionInfoInteractor: ITransactionInfoInteractor {
 
     var lastBlockInfo: LastBlockInfo? {
         adapter.lastBlockInfo
+    }
+
+    var testMode: Bool {
+        appConfigProvider.testMode
     }
 
     func rate(coinCode: String, currencyCode: String, timestamp: TimeInterval) -> Decimal? {
