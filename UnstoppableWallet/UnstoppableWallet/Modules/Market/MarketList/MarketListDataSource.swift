@@ -1,14 +1,27 @@
 import RxSwift
+import RxRelay
 import XRatesKit
 
 protocol IMarketListDataSource {
-    var dataUpdatedAsync: Observable<()> { get }
-    func itemsSingle(currencyCode: String, period: MarketListDataSource.Period) -> Single<[MarketListDataSource.Item]>
+    var periods: [MarketListDataSource.Period] { get }
+    var sortingFields: [MarketListDataSource.SortingField] { get }
+
+    var dataUpdatedObservable: Observable<()> { get }
+    func itemsSingle(currencyCode: String, period: MarketListDataSource.Period) -> Single<[TopMarket]>
+}
+
+extension IMarketListDataSource {
+
+    var periods: [MarketListDataSource.Period] {
+        MarketListDataSource.Period.allCases
+    }
+
 }
 
 class MarketTopDataSource {
     private let rateManager: IRateManager
     private let factory: MarketDataSourceFactory
+    private let dataUpdatedRelay = PublishRelay<()>()
 
     init(rateManager: IRateManager, factory: MarketDataSourceFactory) {
         self.rateManager = rateManager
@@ -19,18 +32,16 @@ class MarketTopDataSource {
 
 extension MarketTopDataSource: IMarketListDataSource {
 
-    var dataUpdatedAsync: Observable<()> {
-        Observable.empty()
+    var sortingFields: [MarketListDataSource.SortingField] {
+        MarketListDataSource.SortingField.allCases
     }
 
-    func itemsSingle(currencyCode: String, period: MarketListDataSource.Period) -> Single<[MarketListDataSource.Item]> {
-        rateManager
-            .topMarketsSingle(currencyCode: currencyCode, fetchDiffPeriod: factory.marketListPeriod(period: period))
-            .map { topMarkets in
-                topMarkets.enumerated().compactMap { [weak self] (index, topMarket) in
-                    self?.factory.marketListItem(rank: index + 1, topMarket: topMarket)
-                }
-            }
+    var dataUpdatedObservable: Observable<()> {
+        dataUpdatedRelay.asObservable()
+    }
+
+    public func itemsSingle(currencyCode: String, period: MarketListDataSource.Period) -> Single<[TopMarket]> {
+        rateManager.topMarketsSingle(currencyCode: currencyCode, fetchDiffPeriod: factory.marketListPeriod(period: period))
     }
 
 }
@@ -38,6 +49,7 @@ extension MarketTopDataSource: IMarketListDataSource {
 class MarketDefiDataSource {
     private let rateManager: IRateManager
     private let factory: MarketDataSourceFactory
+    private let dataUpdatedRelay = PublishRelay<()>()
 
     init(rateManager: IRateManager, factory: MarketDataSourceFactory) {
         self.rateManager = rateManager
@@ -48,18 +60,16 @@ class MarketDefiDataSource {
 
 extension MarketDefiDataSource: IMarketListDataSource {
 
-    var dataUpdatedAsync: Observable<()> {
-        Observable.empty()
+    var sortingFields: [MarketListDataSource.SortingField] {
+        MarketListDataSource.SortingField.allCases
     }
 
-    func itemsSingle(currencyCode: String, period: MarketListDataSource.Period) -> Single<[MarketListDataSource.Item]> {
-        rateManager
-            .topDefiMarketsSingle(currencyCode: currencyCode, fetchDiffPeriod: factory.marketListPeriod(period: period))
-            .map { topMarkets in
-                topMarkets.enumerated().compactMap { [weak self] (index, topMarket) in
-                    self?.factory.marketListItem(rank: index + 1, topMarket: topMarket)
-                }
-            }
+    var dataUpdatedObservable: Observable<()> {
+        dataUpdatedRelay.asObservable()
+    }
+
+    public func itemsSingle(currencyCode: String, period: MarketListDataSource.Period) -> Single<[TopMarket]> {
+        rateManager.topDefiMarketsSingle(currencyCode: currencyCode, fetchDiffPeriod: factory.marketListPeriod(period: period))
     }
 
 }
@@ -75,14 +85,15 @@ class MarketListDataSource {
         case year
     }
 
-    struct Item {
-        let rank: Int
-        let coinCode: String
-        let coinName: String
-        let marketCap: Decimal
-        let price: Decimal
-        let diff: Decimal
-        let volume: Decimal
+    enum SortingField: Int, CaseIterable {
+        case highestCap
+        case lowestCap
+        case highestVolume
+        case lowestVolume
+        case highestPrice
+        case lowestPrice
+        case topGainers
+        case topLoosers
     }
 
 }

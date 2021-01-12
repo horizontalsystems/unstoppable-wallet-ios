@@ -8,23 +8,16 @@ class MarketListViewModel {
 
     public let service: MarketListService
 
-    private var currentSortingField: SortingField = .highestCap
-
-    var sortingField: String {
-        currentSortingField.title
-    }
-
-    var period: String {
-        service.period.title
-    }
-
     private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
     private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
+    private var sortingField: MarketListDataSource.SortingField
+
     init(service: MarketListService) {
         self.service = service
 
+        sortingField = service.sortingFields.first ?? .highestPrice
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
     }
 
@@ -46,9 +39,9 @@ class MarketListViewModel {
         }
     }
 
-    private func sorted(topItems: [MarketListDataSource.Item]) -> [MarketListDataSource.Item] {
-        topItems.sorted { item, item2 in
-            switch currentSortingField {
+    private func sort(items: [MarketListService.Item], by sortingField: MarketListDataSource.SortingField) -> [MarketListService.Item] {
+        items.sorted { item, item2 in
+            switch sortingField {
             case .highestCap: return item.marketCap > item2.marketCap
             case .lowestCap: return item.marketCap < item2.marketCap
             case .highestVolume: return item.volume > item2.volume
@@ -62,7 +55,7 @@ class MarketListViewModel {
     }
 
     private func syncViewItemsBySortingField() {
-        let viewItems: [ViewItem] = sorted(topItems: service.items).map {
+        let viewItems: [ViewItem] = sort(items: service.items, by: sortingField).map {
             let rateValue = CurrencyValue(currency: service.currency, value: $0.price)
             let rate = ValueFormatter.instance.format(currencyValue: rateValue) ?? ""
 
@@ -82,33 +75,40 @@ class MarketListViewModel {
 
 extension MarketListViewModel {
 
-    var viewItemsDriver: Driver<[ViewItem]> {
+    public var sortingFieldTitle: String {
+        sortingField.title
+    }
+
+    public var periodTitle: String {
+        service.period.title
+    }
+
+    public var viewItemsDriver: Driver<[ViewItem]> {
         viewItemsRelay.asDriver()
     }
 
-    var isLoadingDriver: Driver<Bool> {
+    public var isLoadingDriver: Driver<Bool> {
         isLoadingRelay.asDriver()
     }
 
-    var errorDriver: Driver<String?> {
+    public var errorDriver: Driver<String?> {
         errorRelay.asDriver()
     }
 
     public var sortingFields: [String] {
-        SortingField.allCases.map { $0.title }
+        service.sortingFields.map { $0.title }
     }
 
     public var periods: [String] {
-        MarketListDataSource.Period.allCases.map { $0.title }
+        service.periods.map { $0.title }
     }
-
 
     public func refresh() {
         service.refresh()
     }
 
     public func setSortingField(at index: Int) {
-        currentSortingField = SortingField(rawValue: index) ?? .highestPrice
+        sortingField = MarketListDataSource.SortingField(rawValue: index) ?? .highestPrice
 
         syncViewItemsBySortingField()
     }
@@ -129,31 +129,6 @@ extension MarketListViewModel {
         let diff: Decimal
     }
 
-    enum SortingField: Int, CaseIterable {
-        case highestCap
-        case lowestCap
-        case highestVolume
-        case lowestVolume
-        case highestPrice
-        case lowestPrice
-        case topGainers
-        case topLoosers
-
-        var title: String {
-            switch self {
-            case .highestCap: return "market.top.highest_cap".localized
-            case .lowestCap: return "market.top.lowest_cap".localized
-            case .highestVolume: return "market.top.highest_volume".localized
-            case .lowestVolume: return "market.top.lowest_volume".localized
-            case .highestPrice: return "market.top.highest_price".localized
-            case .lowestPrice: return "market.top.lowest_price".localized
-            case .topGainers: return "market.top.top_gainers".localized
-            case .topLoosers: return "market.top.top_loosers".localized
-            }
-        }
-
-    }
-
 }
 
 extension MarketListDataSource.Period {
@@ -171,3 +146,19 @@ extension MarketListDataSource.Period {
 
 }
 
+extension MarketListDataSource.SortingField {
+
+    var title: String {
+        switch self {
+        case .highestCap: return "market.top.highest_cap".localized
+        case .lowestCap: return "market.top.lowest_cap".localized
+        case .highestVolume: return "market.top.highest_volume".localized
+        case .lowestVolume: return "market.top.lowest_volume".localized
+        case .highestPrice: return "market.top.highest_price".localized
+        case .lowestPrice: return "market.top.lowest_price".localized
+        case .topGainers: return "market.top.top_gainers".localized
+        case .topLoosers: return "market.top.top_loosers".localized
+        }
+    }
+
+}

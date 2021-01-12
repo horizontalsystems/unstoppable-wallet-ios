@@ -76,13 +76,19 @@ extension MarketMetricLargeView {
         }
 
         gradientCircle.set(value: diff.cgFloatValue)
-        let sign = diff >= 0 ? "+" : "-"
+        let plusSign = diff >= 0 ? "+" : ""
 
-        let formattedDiff = Self.formatter.string(from: abs(diff * 100) as NSNumber)
-        let diffString = formattedDiff.map { sign + $0 + "%" }
+        let formattedDiff = Self.formatter.string(from: diff as NSNumber)
+        let diffString = formattedDiff.map { plusSign + $0 + "%" }
 
         diffLabel.text = diffString
         diffLabel.textColor = diff >= 0 ? .themeRemus : .themeLucian
+    }
+
+    public func clear() {
+        titleLabel.text = nil
+        valueLabel.text = nil
+        diffLabel.text = nil
     }
 
 }

@@ -95,30 +95,40 @@ class MarketMetricsCell: UITableViewCell {
 
 extension MarketMetricsCell {
 
-    public func bind(marketMetrics: MarketMetricsService.MarketMetrics?) {
+    public func bind(marketMetrics: MarketMetricsViewModel.MarketMetrics?) {
+        guard let marketMetrics = marketMetrics else {
+            marketLargeView.clear()
+            volume24hView.clear()
+            btcDominanceView.clear()
+            deFiCapView.clear()
+            deFiTvlView.clear()
+
+            return
+        }
+
         marketLargeView.set(title: "market.total_market_cap".localized,
-                value: marketMetrics?.totalMarketCap.value,
-                diff: marketMetrics?.totalMarketCap.diff
+                value: marketMetrics.totalMarketCap.value,
+                diff: marketMetrics.totalMarketCap.diff
         )
 
         volume24hView.set(title: "market.24h_volume".localized,
-                value: marketMetrics?.volume24h.value,
-                diff: marketMetrics?.volume24h.diff
+                value: marketMetrics.volume24h.value,
+                diff: marketMetrics.volume24h.diff
         )
 
         btcDominanceView.set(title: "market.btc_dominance".localized,
-                value: marketMetrics?.btcDominance.value,
-                diff: marketMetrics?.btcDominance.diff
+                value: marketMetrics.btcDominance.value,
+                diff: marketMetrics.btcDominance.diff
         )
 
         deFiCapView.set(title: "market.defi_cap".localized,
-                value: marketMetrics?.defiCap.value,
-                diff: marketMetrics?.defiCap.diff
+                value: marketMetrics.defiCap.value,
+                diff: marketMetrics.defiCap.diff
         )
 
         deFiTvlView.set(title: "market.defi_tvl".localized,
-                value: marketMetrics?.defiTvl.value,
-                diff: marketMetrics?.defiTvl.diff
+                value: marketMetrics.defiTvl.value,
+                diff: marketMetrics.defiTvl.diff
         )
     }
 
