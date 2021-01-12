@@ -44,7 +44,7 @@ class SwapApproveService {
 
     private func syncTransactionData(amount: BigUInt) {
         let erc20KitTransactionData = erc20Kit.approveTransactionData(spenderAddress: spenderAddress, amount: amount)
-        let transactionData = EthereumTransactionService.TransactionData(
+        let transactionData = TransactionData(
                 to: erc20KitTransactionData.to,
                 value: erc20KitTransactionData.value,
                 input: erc20KitTransactionData.input
@@ -54,7 +54,7 @@ class SwapApproveService {
     }
 
     private var ethereumBalance: BigUInt {
-        ethereumKit.balance ?? 0
+        ethereumKit.accountState?.balance ?? 0
     }
 
     private func syncState() {
@@ -97,17 +97,18 @@ extension SwapApproveService {
     }
 
     func approve() {
-        guard case .completed(let transaction) = transactionService.transactionStatus, let amount = amount else {
+        guard case .completed(let transaction) = transactionService.transactionStatus else {
             return
         }
 
         state = .loading
 
-        erc20Kit.approveSingle(
-                        spenderAddress: spenderAddress,
-                        amount: amount,
-                        gasLimit: transaction.gasData.gasLimit,
-                        gasPrice: transaction.gasData.gasPrice
+        ethereumKit.sendSingle(
+                        address: transaction.data.to,
+                        value: transaction.data.value,
+                        transactionInput: transaction.data.input,
+                        gasPrice: transaction.gasData.gasPrice,
+                        gasLimit: transaction.gasData.gasLimit
                 )
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] transactionWithInternal in
