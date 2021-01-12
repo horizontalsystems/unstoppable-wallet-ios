@@ -66,6 +66,15 @@ extension AccountManager: IAccountManager {
         accountsSubject.onNext(accounts)
     }
 
+    func handleForeground() {
+        let storedAccounts = storage.allAccounts
+        let lostAccounts = cache.accounts.filter {
+            storedAccounts.firstIndex(of: $0) == nil
+        }
+
+        lostAccounts.forEach(delete)
+    }
+
 }
 
 extension AccountManager {
