@@ -19,7 +19,6 @@ class PrivacyPresenter {
     private func updateConnection() {
         view?.set(connectionItems: [
             PrivacyViewItem(iconName: "ETH", title: "Ethereum", value: interactor.ethereumConnection.address, changable: false),
-            PrivacyViewItem(iconName: "EOS", title: "EOS", value: "eos.greymass.com", changable: false),
             PrivacyViewItem(iconName: "BNB", title: "Binance", value: "dex.binance.com", changable: false)
         ])
     }

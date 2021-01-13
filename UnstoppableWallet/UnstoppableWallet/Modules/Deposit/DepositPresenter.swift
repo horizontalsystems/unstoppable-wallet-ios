@@ -19,7 +19,6 @@ class DepositPresenter {
 
     private var addressType: DepositModule.AddressType {
         switch coin.type {
-        case .eos: return .account
         default: return .address
         }
     }

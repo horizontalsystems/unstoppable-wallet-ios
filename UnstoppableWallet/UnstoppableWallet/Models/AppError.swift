@@ -3,7 +3,6 @@ import Foundation
 enum AppError: Error {
     case noConnection
     case incubedNotReachable
-    case eos(reason: EosError)
     case binance(reason: BinanceError)
     case zcash(reason: ZcashError)
     case ethereum(reason: EthereumError)
@@ -11,13 +10,6 @@ enum AppError: Error {
     case addressInvalid
     case notSupportedByHodler
     case unknownError
-
-    enum EosError: Error {
-        case selfTransfer
-        case accountNotExist
-        case insufficientRam
-        case invalidPrivateKey
-    }
 
     enum BinanceError: Error {
         case memoRequired
@@ -41,13 +33,6 @@ extension AppError: LocalizedError {
         switch self {
         case .noConnection: return "alert.no_internet".localized
         case .incubedNotReachable: return "error.incubed_not_reachable".localized
-        case .eos(let reason):
-            switch reason {
-            case .selfTransfer: return "error.send.self_transfer".localized
-            case .accountNotExist: return "error.send_eos.account_not_exist".localized
-            case .insufficientRam: return "error.send_eos.insufficient_ram".localized
-            case .invalidPrivateKey: return "error.invalid_eos_key".localized
-            }
         case .binance(let reason):
             switch reason {
             case .memoRequired: return "error.send_binance.memo_required".localized

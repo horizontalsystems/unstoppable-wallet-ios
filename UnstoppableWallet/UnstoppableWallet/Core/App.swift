@@ -133,11 +133,10 @@ class App {
         sortTypeManager = SortTypeManager(localStorage: localStorage)
 
         ethereumKitManager = EthereumKitManager(appConfigProvider: appConfigProvider)
-        let eosKitManager = EosKitManager(appConfigProvider: appConfigProvider)
         let binanceKitManager = BinanceKitManager(appConfigProvider: appConfigProvider)
 
-        let adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager)
-        adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager)
+        let adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, binanceKitManager: binanceKitManager)
+        adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager)
 
         let settingsStorage: IBlockchainSettingsStorage = BlockchainSettingsStorage(storage: storage)
         derivationSettingsManager = DerivationSettingsManager(walletManager: walletManager, adapterManager: adapterManager, storage: settingsStorage)
@@ -168,7 +167,7 @@ class App {
 
         remoteAlertManager.notificationManager = notificationManager
 
-        appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage, predefinedAccountTypeManager: predefinedAccountTypeManager, walletManager: walletManager, adapterManager: adapterManager, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, logRecordManager: logRecordManager)
+        appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage, predefinedAccountTypeManager: predefinedAccountTypeManager, walletManager: walletManager, adapterManager: adapterManager, ethereumKitManager: ethereumKitManager, binanceKitManager: binanceKitManager, logRecordManager: logRecordManager)
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, localStorage: localStorage)
 
         keychainKitDelegate = KeychainKitDelegate(accountManager: accountManager, walletManager: walletManager)

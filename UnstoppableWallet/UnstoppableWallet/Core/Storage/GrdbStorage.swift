@@ -142,24 +142,24 @@ class GrdbStorage {
 
             try db.drop(table: AccountRecord_v_0_10.databaseTableName)
 
-            try db.create(table: AccountRecord.databaseTableName) { t in
-                t.column(AccountRecord.Columns.id.name, .text).notNull()
-                t.column(AccountRecord.Columns.name.name, .text).notNull()
-                t.column(AccountRecord.Columns.type.name, .text).notNull()
-                t.column(AccountRecord.Columns.origin.name, .text).notNull()
-                t.column(AccountRecord.Columns.backedUp.name, .boolean).notNull()
-                t.column(AccountRecord.Columns.wordsKey.name, .text)
-                t.column(AccountRecord.Columns.saltKey.name, .text)
-                t.column(AccountRecord.Columns.dataKey.name, .text)
-                t.column(AccountRecord.Columns.eosAccount.name, .text)
+            try db.create(table: AccountRecord_v_0_19.databaseTableName) { t in
+                t.column(AccountRecord_v_0_19.Columns.id.name, .text).notNull()
+                t.column(AccountRecord_v_0_19.Columns.name.name, .text).notNull()
+                t.column(AccountRecord_v_0_19.Columns.type.name, .text).notNull()
+                t.column(AccountRecord_v_0_19.Columns.origin.name, .text).notNull()
+                t.column(AccountRecord_v_0_19.Columns.backedUp.name, .boolean).notNull()
+                t.column(AccountRecord_v_0_19.Columns.wordsKey.name, .text)
+                t.column(AccountRecord_v_0_19.Columns.saltKey.name, .text)
+                t.column(AccountRecord_v_0_19.Columns.dataKey.name, .text)
+                t.column(AccountRecord_v_0_19.Columns.eosAccount.name, .text)
 
-                t.primaryKey([AccountRecord.Columns.id.name], onConflict: .replace)
+                t.primaryKey([AccountRecord_v_0_19.Columns.id.name], onConflict: .replace)
             }
 
             for oldAccount in oldAccounts {
                 let origin = oldAccount.defaultSyncMode == "new" ? "created" : "restored"
 
-                let newAccount = AccountRecord(
+                let newAccount = AccountRecord_v_0_19(
                         id: oldAccount.id,
                         name: oldAccount.name,
                         type: oldAccount.type,
@@ -299,8 +299,8 @@ class GrdbStorage {
         }
 
         migrator.registerMigration("addBirthdayHeightToAccountRecord") { db in
-            try db.alter(table: AccountRecord.databaseTableName) { t in
-                t.add(column: AccountRecord.Columns.birthdayHeightKey.name, .text)
+            try db.alter(table: AccountRecord_v_0_19.databaseTableName) { t in
+                t.add(column: AccountRecord_v_0_19.Columns.birthdayHeightKey.name, .text)
             }
         }
 
@@ -314,6 +314,47 @@ class GrdbStorage {
             if try EnabledWallet.filter(EnabledWallet.Columns.coinId == "BCH").fetchOne(db) != nil {
                 let record = BlockchainSettingRecord(coinType: "bitcoinCash", key: "network_coin_type", value: "type0")
                 try record.insert(db)
+            }
+        }
+
+        migrator.registerMigration("deleteEosAccountFromAccountRecordAndRemoveEosAccountAndWallets") { db in
+            let oldAccounts = try AccountRecord_v_0_19.fetchAll(db)
+
+            try db.drop(table: AccountRecord_v_0_19.databaseTableName)
+
+            try db.create(table: AccountRecord.databaseTableName) { t in
+                t.column(AccountRecord.Columns.id.name, .text).notNull()
+                t.column(AccountRecord.Columns.name.name, .text).notNull()
+                t.column(AccountRecord.Columns.type.name, .text).notNull()
+                t.column(AccountRecord.Columns.origin.name, .text).notNull()
+                t.column(AccountRecord.Columns.backedUp.name, .boolean).notNull()
+                t.column(AccountRecord.Columns.wordsKey.name, .text)
+                t.column(AccountRecord.Columns.saltKey.name, .text)
+                t.column(AccountRecord.Columns.birthdayHeightKey.name, .text)
+                t.column(AccountRecord.Columns.dataKey.name, .text)
+
+                t.primaryKey([AccountRecord.Columns.id.name], onConflict: .replace)
+            }
+
+            for oldAccount in oldAccounts {
+                if oldAccount.type == "eos" {
+                    try EnabledWallet.filter(EnabledWallet.Columns.accountId == oldAccount.id).deleteAll(db)
+                    continue
+                }
+
+                let newAccount = AccountRecord(
+                        id: oldAccount.id,
+                        name: oldAccount.name,
+                        type: oldAccount.type,
+                        origin: oldAccount.origin,
+                        backedUp: oldAccount.backedUp,
+                        wordsKey: oldAccount.wordsKey,
+                        saltKey: oldAccount.saltKey,
+                        birthdayHeightKey: oldAccount.birthdayHeightKey,
+                        dataKey: oldAccount.dataKey
+                )
+
+                try newAccount.insert(db)
             }
         }
 
