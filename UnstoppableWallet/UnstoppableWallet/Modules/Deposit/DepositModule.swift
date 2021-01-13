@@ -32,12 +32,6 @@ class DepositModule {
         let blockchainType: String?
         let address: String
         let additionalInfo: String?
-        let type: AddressType
-    }
-
-    enum AddressType {
-        case account
-        case address
     }
 
 }
