@@ -179,6 +179,22 @@ class CoinInfoMap {
         "RFI":      CoinInfo(supply: 10_000_000,      startDate: nil,          website: "https://reflect.finance"),
         "FLASH":    CoinInfo(supply: 900_000_000,     startDate: nil,          website: "https://flashstake.io"),
         "POLS":     CoinInfo(supply: 100_000_000,     startDate: nil,          website: "https://www.polkastarter.com"),
+        "SPDR":     CoinInfo(supply: nil,             startDate: nil,          website: "https://spiderdao.io"),
+        "LGCY":     CoinInfo(supply: nil,             startDate: nil,          website: "https://lgcy.network"),
+        "KP3R":     CoinInfo(supply: nil,             startDate: nil,          website: "https://keep3r.network"),
+        "RFuel":    CoinInfo(supply: nil,             startDate: nil,          website: "https://riodefi.com"),
+        "0chain":   CoinInfo(supply: nil,             startDate: nil,          website: "https://0chain.net"),
+        "HEGIC":    CoinInfo(supply: nil,             startDate: nil,          website: "https://www.hegic.co"),
+        "COVER":    CoinInfo(supply: nil,             startDate: nil,          website: "https://www.coverprotocol.com"),
+        "AUC":      CoinInfo(supply: nil,             startDate: nil,          website: "https://auctus.org"),
+        "Nsure":    CoinInfo(supply: nil,             startDate: nil,          website: "https://nsure.network"),
+        "BOND":     CoinInfo(supply: nil,             startDate: nil,          website: "https://barnbridge.com"),
+        "HLAND":    CoinInfo(supply: nil,             startDate: nil,          website: "https://htw.land"),
+        "SWFL":     CoinInfo(supply: nil,             startDate: nil,          website: "https://swapfol.io"),
+        "WHITE":    CoinInfo(supply: nil,             startDate: nil,          website: "https://www.whiteheart.finance"),
+        "DEFO":     CoinInfo(supply: nil,             startDate: nil,          website: "https://defhold.com"),
+        "API3":     CoinInfo(supply: nil,             startDate: nil,          website: "https://api3.org"),
+        "NEST":     CoinInfo(supply: nil,             startDate: nil,          website: "https://nestprotocol.org"),
     ]
 
 
