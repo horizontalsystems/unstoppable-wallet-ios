@@ -1,7 +1,6 @@
 import BitcoinCore
 import BinanceChainKit
 import FeeRateKit
-import EosKit
 import Erc20Kit
 import EthereumKit
 import HdWalletKit
@@ -38,17 +37,6 @@ extension NetworkManager.RequestError: ConvertibleError {
     }
 }
 
-extension BackendError: ConvertibleError {
-    var convertedError: Error {
-        switch self {
-        case .selfTransfer: return AppError.eos(reason: .selfTransfer)
-        case .accountNotExist: return AppError.eos(reason: .accountNotExist)
-        case .insufficientRam: return AppError.eos(reason: .insufficientRam)
-        default: return self
-        }
-    }
-}
-
 extension IncubedRpcApiProvider.IncubedError: ConvertibleError {
     var convertedError: Error {
         switch self {
@@ -77,15 +65,6 @@ extension Mnemonic.ValidationError: ConvertibleError {
             return AppError.wordsChecksum
         default:
             return self
-        }
-    }
-}
-
-extension EosKit.ValidationError: ConvertibleError {
-    var convertedError: Error {
-        switch self {
-        case .invalidPrivateKey:
-            return AppError.eos(reason: .invalidPrivateKey)
         }
     }
 }

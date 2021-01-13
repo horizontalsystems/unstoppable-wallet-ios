@@ -11,8 +11,6 @@ class AccountCreator {
         switch predefinedAccountType {
         case .standard:
             return try createMnemonicAccountType(wordsCount: 12)
-        case .eos:
-            throw CreateError.eosNotSupported
         case .binance:
             return try createMnemonicAccountType(wordsCount: 24)
         case .zcash:
@@ -50,14 +48,6 @@ extension AccountCreator: IAccountCreator {
                 origin: .restored,
                 backedUp: true
         )
-    }
-
-}
-
-extension AccountCreator {
-
-    enum CreateError: Error {
-        case eosNotSupported
     }
 
 }

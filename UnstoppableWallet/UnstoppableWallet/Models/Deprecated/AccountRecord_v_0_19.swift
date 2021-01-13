@@ -1,6 +1,6 @@
 import GRDB
 
-class AccountRecord: Record {
+class AccountRecord_v_0_19: Record {
     let id: String
     let name: String
     let type: String
@@ -10,8 +10,9 @@ class AccountRecord: Record {
     var saltKey: String?
     var birthdayHeightKey: String?
     var dataKey: String?
+    var eosAccount: String?
 
-    init(id: String, name: String, type: String, origin: String, backedUp: Bool, wordsKey: String?, saltKey: String?, birthdayHeightKey: String?, dataKey: String?) {
+    init(id: String, name: String, type: String, origin: String, backedUp: Bool, wordsKey: String?, saltKey: String?, birthdayHeightKey: String?, dataKey: String?, eosAccount: String?) {
         self.id = id
         self.name = name
         self.type = type
@@ -21,6 +22,7 @@ class AccountRecord: Record {
         self.saltKey = saltKey
         self.birthdayHeightKey = birthdayHeightKey
         self.dataKey = dataKey
+        self.eosAccount = eosAccount
 
         super.init()
     }
@@ -30,7 +32,7 @@ class AccountRecord: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case id, name, type, origin, backedUp, wordsKey, saltKey, birthdayHeightKey, dataKey
+        case id, name, type, origin, backedUp, wordsKey, saltKey, birthdayHeightKey, dataKey, eosAccount
     }
 
     required init(row: Row) {
@@ -43,6 +45,7 @@ class AccountRecord: Record {
         saltKey = row[Columns.saltKey]
         birthdayHeightKey = row[Columns.birthdayHeightKey]
         dataKey = row[Columns.dataKey]
+        eosAccount = row[Columns.eosAccount]
 
         super.init(row: row)
     }
@@ -57,6 +60,7 @@ class AccountRecord: Record {
         container[Columns.saltKey] = saltKey
         container[Columns.birthdayHeightKey] = birthdayHeightKey
         container[Columns.dataKey] = dataKey
+        container[Columns.eosAccount] = eosAccount
     }
 
 }

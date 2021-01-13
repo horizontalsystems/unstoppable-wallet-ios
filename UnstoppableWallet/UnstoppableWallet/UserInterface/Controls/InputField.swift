@@ -217,9 +217,9 @@ extension InputField: UITextViewDelegate {
     }
 
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if text.contains(words: "\n") {
-            return false
-        }
+//        if text.contains(words: "\n") {
+//            return false
+//        }
         return true
     }
 

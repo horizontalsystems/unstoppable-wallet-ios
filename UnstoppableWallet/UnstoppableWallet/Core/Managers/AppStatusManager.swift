@@ -10,11 +10,10 @@ class AppStatusManager {
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
     private let ethereumKitManager: EthereumKitManager
-    private let eosKitManager: EosKitManager
     private let binanceKitManager: BinanceKitManager
 
     init(systemInfoManager: ISystemInfoManager, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager,
-         walletManager: IWalletManager, adapterManager: IAdapterManager, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager,
+         walletManager: IWalletManager, adapterManager: IAdapterManager, ethereumKitManager: EthereumKitManager,
          binanceKitManager: BinanceKitManager, logRecordManager: ILogRecordManager) {
         self.systemInfoManager = systemInfoManager
         self.localStorage = localStorage
@@ -22,7 +21,6 @@ class AppStatusManager {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.ethereumKitManager = ethereumKitManager
-        self.eosKitManager = eosKitManager
         self.binanceKitManager = binanceKitManager
         self.logRecordManager = logRecordManager
     }
@@ -42,9 +40,6 @@ class AppStatusManager {
             }
             if case let .zcash(words, birthdayHeight) = account.type {
                 status.append(("type", "Zcash (\(words.count) words) : \(birthdayHeight?.description  ?? "N/A") birthday"))
-            }
-            if case let .eos(account, _) = account.type {
-                status.append(("name", account))
             }
 
             return ($0.title, status)
@@ -66,9 +61,6 @@ class AppStatusManager {
 
         if let ethereumStatus = ethereumKitManager.statusInfo {
             status.append(("Ethereum", ethereumStatus))
-        }
-        if let eosStatus = eosKitManager.statusInfo {
-            status.append(("EOS", eosStatus))
         }
         if let binanceStatus = binanceKitManager.statusInfo {
             status.append(("Binance", binanceStatus))

@@ -50,7 +50,6 @@ class RateManager {
                 case .bitcoin: return XRatesKit.Coin(code: coin.code, title: coin.title, type: .bitcoin)
                 case .bitcoinCash: return XRatesKit.Coin(code: coin.code, title: coin.title, type: .bitcoinCash)
                 case .dash: return XRatesKit.Coin(code: coin.code, title: coin.title, type: .dash)
-                case .eos: return XRatesKit.Coin(code: coin.code, title: coin.title, type: .eos)
                 case .erc20(let address, _, _, _): return XRatesKit.Coin(code: coin.code, title: coin.title, type: .erc20(address: address))
                 case .ethereum: return XRatesKit.Coin(code: coin.code, title: coin.title, type: .ethereum)
                 case .litecoin: return XRatesKit.Coin(code: coin.code, title: coin.title, type: .litecoin)

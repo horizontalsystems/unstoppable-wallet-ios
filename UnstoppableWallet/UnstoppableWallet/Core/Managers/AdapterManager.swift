@@ -5,7 +5,6 @@ class AdapterManager {
 
     private let adapterFactory: IAdapterFactory
     private let ethereumKitManager: EthereumKitManager
-    private let eosKitManager: EosKitManager
     private let binanceKitManager: BinanceKitManager
     private let walletManager: IWalletManager
 
@@ -14,10 +13,9 @@ class AdapterManager {
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.adapter_manager", qos: .userInitiated)
     private var adapters = [Wallet: IAdapter]()
 
-    init(adapterFactory: IAdapterFactory, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager, walletManager: IWalletManager) {
+    init(adapterFactory: IAdapterFactory, ethereumKitManager: EthereumKitManager, binanceKitManager: BinanceKitManager, walletManager: IWalletManager) {
         self.adapterFactory = adapterFactory
         self.ethereumKitManager = ethereumKitManager
-        self.eosKitManager = eosKitManager
         self.binanceKitManager = binanceKitManager
         self.walletManager = walletManager
 
@@ -105,7 +103,6 @@ extension AdapterManager: IAdapterManager {
         }
 
         ethereumKitManager.ethereumKit?.refresh()
-        eosKitManager.eosKit?.refresh()
         binanceKitManager.refresh()
     }
 
@@ -128,8 +125,6 @@ extension AdapterManager: IAdapterManager {
             binanceKitManager.refresh()
         case is EthereumBaseAdapter:
             ethereumKitManager.ethereumKit?.refresh()
-        case is EosAdapter:
-            eosKitManager.eosKit?.refresh()
         default:
             adapter?.refresh()
         }

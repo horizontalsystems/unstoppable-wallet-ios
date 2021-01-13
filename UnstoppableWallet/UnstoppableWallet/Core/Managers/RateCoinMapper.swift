@@ -1,7 +1,7 @@
 import Foundation
 
 class RateCoinMapper {
-    private let disabledCoins = ["EOSDT", "PGL"]
+    private let disabledCoins = [CoinCode]()
     private let convertedCoins = [CoinCode: CoinCode]()
 }
 

@@ -9,7 +9,6 @@ enum CoinType {
     case erc20(address: String, fee: Decimal, minimumRequiredBalance: Decimal, minimumSpendableAmount: Decimal?)
     case binance(symbol: String)
     case zcash
-    case eos(token: String, symbol: String)
 
     init(erc20Address: String, fee: Decimal = 0, minimumRequiredBalance: Decimal = 0, minimumSpendableAmount: Decimal? = nil) {
         self = .erc20(address: erc20Address, fee: fee, minimumRequiredBalance: minimumRequiredBalance, minimumSpendableAmount: minimumSpendableAmount)
@@ -26,9 +25,6 @@ enum CoinType {
         case .zcash:
             if case .zcash = accountType { return true }
             return false
-        case .eos:
-            if case .eos = accountType { return true }
-            return false
         }
     }
 
@@ -40,8 +36,6 @@ enum CoinType {
             return .binance
         case .zcash:
             return .zcash
-        case .eos:
-            return .eos
         }
     }
 
@@ -51,10 +45,6 @@ enum CoinType {
         case .binance(let symbol):
             if symbol != "BNB" {
                 return "BEP2"
-            }
-        case .eos(let token, _):
-            if token != "eosio.token" {
-                return "EOSIO"
             }
         default: ()
         }
@@ -104,8 +94,6 @@ extension CoinType: Equatable {
         case (.binance(let lhsSymbol), .binance(let rhsSymbol)):
             return lhsSymbol == rhsSymbol
         case (.zcash, .zcash): return true
-        case (.eos(let lhsToken, let lhsSymbol), .eos(let rhsToken, let rhsSymbol)):
-            return lhsToken == rhsToken && lhsSymbol == rhsSymbol
         default: return false
         }
     }
@@ -132,8 +120,6 @@ extension CoinType: Hashable {
             hasher.combine("binance_\(symbol)")
         case .zcash:
             hasher.combine("Zcash")
-        case .eos(let token, let symbol):
-            hasher.combine("eos_\(token)_\(symbol)")
         }
     }
 

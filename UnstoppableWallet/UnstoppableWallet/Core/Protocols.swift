@@ -154,12 +154,6 @@ protocol IErc20Adapter {
     func allowanceSingle(spenderAddress: EthereumKit.Address, defaultBlockParameter: DefaultBlockParameter) -> Single<Decimal>
 }
 
-protocol ISendEosAdapter {
-    var availableBalance: Decimal { get }
-    func validate(account: String) throws
-    func sendSingle(amount: Decimal, account: String, memo: String?) -> Single<Void>
-}
-
 protocol ISendBinanceAdapter {
     var availableBalance: Decimal { get }
     var availableBinanceBalance: Decimal { get }
@@ -282,7 +276,6 @@ protocol IAppConfigProvider {
     var pnsUsername: String { get }
 
     func defaultWords(count: Int) -> String
-    var defaultEosCredentials: (String, String) { get }
 
     var ethereumCoin: Coin { get }
     var featuredCoins: [Coin] { get }

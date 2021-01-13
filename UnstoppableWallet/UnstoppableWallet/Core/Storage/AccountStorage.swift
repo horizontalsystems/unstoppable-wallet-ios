@@ -35,15 +35,6 @@ class AccountStorage {
             }
 
             type = .privateKey(data: data)
-        case .eos:
-            guard let eosAccount = record.eosAccount else {
-                return nil
-            }
-            guard let activePrivateKey: String = recover(id: id, typeName: typeName, keyName: .privateKey) else {
-                return nil
-            }
-
-            type = .eos(account: eosAccount, activePrivateKey: activePrivateKey)
         case .zcash:
             guard let words = recoverStringArray(id: id, typeName: typeName, keyName: .words) else {
                 return nil
@@ -70,7 +61,6 @@ class AccountStorage {
         var saltKey: String?
         var birthdayHeightKey: String?
         var dataKey: String?
-        var eosAccount: String?
 
         switch account.type {
         case .mnemonic(let words, let salt):
@@ -80,10 +70,6 @@ class AccountStorage {
         case .privateKey(let data):
             typeName = .privateKey
             dataKey = try store(data: data, id: id, typeName: typeName, keyName: .data)
-        case .eos(let account, let activePrivateKey):
-            typeName = .eos
-            eosAccount = account
-            dataKey = try store(activePrivateKey, id: id, typeName: typeName, keyName: .privateKey)
         case .zcash(let words, let birthdayHeight):
             typeName = .zcash
             wordsKey = try store(stringArray: words, id: id, typeName: typeName, keyName: .words)
@@ -101,8 +87,7 @@ class AccountStorage {
                 wordsKey: wordsKey,
                 saltKey: saltKey,
                 birthdayHeightKey: birthdayHeightKey,
-                dataKey: dataKey,
-                eosAccount: eosAccount
+                dataKey: dataKey
         )
     }
 
@@ -115,8 +100,6 @@ class AccountStorage {
             try secureStorage.removeValue(for: secureKey(id: id, typeName: .mnemonic, keyName: .salt))
         case .privateKey:
             try secureStorage.removeValue(for: secureKey(id: id, typeName: .privateKey, keyName: .data))
-        case .eos:
-            try secureStorage.removeValue(for: secureKey(id: id, typeName: .eos, keyName: .privateKey))
         case .zcash:
             try secureStorage.removeValue(for: secureKey(id: id, typeName: .mnemonic, keyName: .words))
             try secureStorage.removeValue(for: secureKey(id: id, typeName: .mnemonic, keyName: .birthdayHeight))
@@ -188,7 +171,6 @@ extension AccountStorage {
     private enum TypeName: String {
         case mnemonic
         case privateKey
-        case eos
         case zcash
     }
 

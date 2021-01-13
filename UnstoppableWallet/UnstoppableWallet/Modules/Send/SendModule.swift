@@ -100,12 +100,6 @@ protocol ISendEthereumInteractor {
     func sendSingle(amount: Decimal, address: String, gasPrice: Int, gasLimit: Int, logger: Logger) -> Single<Void>
 }
 
-protocol ISendEosInteractor {
-    var availableBalance: Decimal { get }
-    func validate(account: String) throws
-    func sendSingle(amount: Decimal, account: String, memo: String?) -> Single<Void>
-}
-
 protocol ISendBinanceInteractor {
     var availableBalance: Decimal { get }
     var availableBinanceBalance: Decimal { get }

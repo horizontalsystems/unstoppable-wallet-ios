@@ -37,14 +37,6 @@ class AppConfigProvider: IAppConfigProvider {
         Bundle.main.object(forInfoDictionaryKey: "DefaultWords\(count)") as? String ?? ""
     }
 
-    var defaultEosCredentials: (String, String) {
-        guard let account = Bundle.main.object(forInfoDictionaryKey: "DefaultEosAccount") as? String, let privateKey = Bundle.main.object(forInfoDictionaryKey: "DefaultEosPrivateKey") as? String else {
-            return ("", "")
-        }
-
-        return (account, privateKey)
-    }
-
     var infuraCredentials: (id: String, secret: String?) {
         let id = (Bundle.main.object(forInfoDictionaryKey: "InfuraProjectId") as? String) ?? ""
         let secret = Bundle.main.object(forInfoDictionaryKey: "InfuraProjectSecret") as? String
@@ -99,7 +91,6 @@ class AppConfigProvider: IAppConfigProvider {
             defaultCoins[4],
             defaultCoins[5],
             defaultCoins[6],
-            defaultCoins[7],
         ]
     }
 
@@ -115,7 +106,6 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "DASH",      title: "Dash",                          code: "DASH",    decimal: 8,  type: .dash),
         Coin(id: "BNB",       title: "Binance Chain",                 code: "BNB",     decimal: 8,  type: .binance(symbol: "BNB")),
         Coin(id: "ZEC",       title: "Zcash",                         code: "ZEC",     decimal: 8,  type: .zcash),
-        Coin(id: "EOS",       title: "EOS",                           code: "EOS",     decimal: 4,  type: .eos(token: "eosio.token", symbol: "EOS")),
         Coin(id: "ZRX",       title: "0x Protocol",                   code: "ZRX",     decimal: 18, type: CoinType(erc20Address: "0xE41d2489571d322189246DaFA5ebDe1F4699F498")),
         Coin(id: "1INCH",     title: "1INCH Token",                   code: "1INCH",   decimal: 18, type: CoinType(erc20Address: "0x111111111117dc0aa78b770fa6a738034120c302")),
         Coin(id: "LEND",      title: "Aave",                          code: "LEND",    decimal: 18, type: CoinType(erc20Address: "0x80fB784B7eD66730e8b1DBd9820aFD29931aab03")),
@@ -169,10 +159,8 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "DOS",       title: "DOS Network",                   code: "DOS",     decimal: 8,  type: .binance(symbol: "DOS-120")),
         Coin(id: "DOS-ERC20", title: "DOS Network",                   code: "DOS",     decimal: 18, type: CoinType(erc20Address: "0x0A913beaD80F321E7Ac35285Ee10d9d922659cB7")),
         Coin(id: "ENJ",       title: "Enjin Coin",                    code: "ENJ",     decimal: 18, type: CoinType(erc20Address: "0xF629cBd94d3791C9250152BD8dfBDF380E2a3B9c")),
-        Coin(id: "EOSDT",     title: "EOSDT",                         code: "EOSDT",   decimal: 9,  type: .eos(token: "eosdtsttoken", symbol: "EOSDT")),
         Coin(id: "ETH-BEP2",  title: "ETH BEP2",                      code: "ETH",     decimal: 8,  type: .binance(symbol: "ETH-1C9")),
         Coin(id: "DIP",       title: "Etherisc DIP Token",            code: "DIP",     decimal: 18, type: CoinType(erc20Address: "0xc719d010b63e5bbf2c0551872cd5316ed26acd83")),
-        Coin(id: "IQ",        title: "Everipedia",                    code: "IQ",      decimal: 3,  type: .eos(token: "everipediaiq", symbol: "IQ")),
         Coin(id: "FLASH",     title: "Flash Token",                   code: "FLASH",   decimal: 18, type: CoinType(erc20Address: "0xb4467e8d621105312a914f1d42f10770c0ffe3c8")),
         Coin(id: "FOAM",      title: "FOAM Token",                    code: "FOAM",    decimal: 18, type: CoinType(erc20Address: "0x4946fcea7c692606e8908002e55a582af44ac121")),
         Coin(id: "FUN",       title: "FunFair",                       code: "FUN",     decimal: 8,  type: CoinType(erc20Address: "0x419d0d8bdd9af5e606ae2232ed285aff190e711b")),
@@ -210,8 +198,6 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "MTA",       title: "Meta",                          code: "MTA",     decimal: 18, type: CoinType(erc20Address: "0xa3BeD4E1c75D00fa6f4E5E6922DB7261B5E9AcD2")),
         Coin(id: "MUSD",      title: "mStable USD",                   code: "MUSD",    decimal: 18, type: CoinType(erc20Address: "0xe2f2a5c287993345a840db3b0845fbc70f5935a5")),
         Coin(id: "TKN",       title: "Monolith",                      code: "TKN",     decimal: 8,  type: CoinType(erc20Address: "0xaaaf91d9b90df800df4f55c205fd6989c977e73a")),
-        Coin(id: "NUT",       title: "Native Utility Token",          code: "NUT",     decimal: 9,  type: .eos(token: "eosdtnutoken", symbol: "NUT")),
-        Coin(id: "NDX",       title: "Newdex",                        code: "NDX",     decimal: 4,  type: .eos(token: "newdexissuer", symbol: "NDX")),
         Coin(id: "NEXO",      title: "Nexo",                          code: "NEXO",    decimal: 18, type: CoinType(erc20Address: "0xB62132e35a6c13ee1EE0f84dC5d40bad8d815206")),
         Coin(id: "NMR",       title: "Numeraire",                     code: "NMR",     decimal: 18, type: CoinType(erc20Address: "0x1776e1f26f98b1a5df9cd347953a26dd3cb46671")),
         Coin(id: "OCEAN",     title: "Ocean Token",                   code: "OCEAN",   decimal: 18, type: CoinType(erc20Address: "0x967da4048cD07aB37855c090aAF366e4ce1b9F48")),
@@ -223,13 +209,11 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "PAN",       title: "Panvala pan",                   code: "PAN",     decimal: 18, type: CoinType(erc20Address: "0xD56daC73A4d6766464b38ec6D91eB45Ce7457c44")),
         Coin(id: "PAR",       title: "Parachute",                     code: "PAR",     decimal: 18, type: CoinType(erc20Address: "0x1beef31946fbbb40b877a72e4ae04a8d1a5cee06")),
         Coin(id: "PAX",       title: "Paxos Standard",                code: "PAX",     decimal: 18, type: CoinType(erc20Address: "0x8E870D67F660D95d5be530380D0eC0bd388289E1")),
-        Coin(id: "PTI",       title: "Paytomat",                      code: "PTI",     decimal: 4,  type: .eos(token: "ptitokenhome", symbol: "PTI")),
         Coin(id: "PNK",       title: "Kleros",                        code: "PNK",     decimal: 18, type: CoinType(erc20Address: "0x93ed3fbe21207ec2e8f2d3c3de6e058cb73bc04d")),
         Coin(id: "POA",       title: "POA",                           code: "POA",     decimal: 18, type: CoinType(erc20Address: "0x6758b7d441a9739b98552b373703d8d3d14f9e62")),
         Coin(id: "POLS",      title: "PolkastarterToken",             code: "POLS",    decimal: 18, type: CoinType(erc20Address: "0x83e6f1E41cdd28eAcEB20Cb649155049Fac3D5Aa")),
         Coin(id: "POLY",      title: "Polymath",                      code: "POLY",    decimal: 18, type: CoinType(erc20Address: "0x9992eC3cF6A55b00978cdDF2b27BC6882d88D1eC")),
         Coin(id: "PPT",       title: "Populous",                      code: "PPT",     decimal: 8,  type: CoinType(erc20Address: "0xd4fa1460F537bb9085d22C7bcCB5DD450Ef28e3a")),
-        Coin(id: "PGL",       title: "Prospectors Gold",              code: "PGL",     decimal: 4,  type: .eos(token: "prospectorsg", symbol: "PGL")),
         Coin(id: "NPXS",      title: "Pundi X",                       code: "NPXS",    decimal: 18, type: CoinType(erc20Address: "0xA15C7Ebe1f07CaF6bFF097D8a589fb8AC49Ae5B3")),
         Coin(id: "QNT",       title: "Quant",                         code: "QNT",     decimal: 18, type: CoinType(erc20Address: "0x4a220e6096b25eadb88358cb44068a3248254675")),
         Coin(id: "QSP",       title: "Quantstamp",                    code: "QSP",     decimal: 18, type: CoinType(erc20Address: "0x99ea4db9ee77acd40b119bd1dc4e33e1c070b80d")),
@@ -303,7 +287,6 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "DASH",      title: "Dash",                          code: "DASH",    decimal: 8,  type: .dash),
         Coin(id: "BNB",       title: "Binance Chain",                 code: "BNB",     decimal: 8,  type: .binance(symbol: "BNB")),
         Coin(id: "ZEC",       title: "Zcash",                         code: "ZEC",     decimal: 8,  type: .zcash),
-        Coin(id: "EOS",       title: "EOS",                           code: "EOS",     decimal: 4,  type: .eos(token: "eosio.token", symbol: "EOS")),
         Coin(id: "DAI",       title: "Dai",                           code: "DAI",     decimal: 18, type: CoinType(erc20Address: "0xad6d458402f60fd3bd25163575031acdce07538d")),
         Coin(id: "WEENUS",    title: "WEENUS",                        code: "WEENUS",  decimal: 18, type: CoinType(erc20Address: "0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA")),
     ]

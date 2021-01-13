@@ -84,27 +84,6 @@ PODS:
     - X11Kit.swift (~> 1.0)
   - DeepDiff (2.3.1)
   - Down (0.9.4)
-  - EosioSwift (0.4.0):
-    - BigInt (~> 5.0)
-    - PromiseKit (~> 6.8)
-    - UIExtensions.swift (~> 1.1.1)
-  - EosioSwiftAbieosSerializationProvider (0.4.0):
-    - EosioSwift (~> 0.4.0)
-  - EosioSwiftEcc (0.4.0):
-    - EosioSwift (~> 0.4.0)
-    - GRKOpenSSLFramework (= 1.0.2.19)
-    - UIExtensions.swift (~> 1.1.1)
-  - EosioSwiftSoftkeySignatureProvider (0.4.0):
-    - EosioSwift (~> 0.4.0)
-    - EosioSwiftEcc (~> 0.4.0)
-    - UIExtensions.swift (~> 1.1.1)
-  - EosKit.swift (0.3.6):
-    - EosioSwift (~> 0.4.0)
-    - EosioSwiftAbieosSerializationProvider (~> 0.4.0)
-    - EosioSwiftSoftkeySignatureProvider (~> 0.4.0)
-    - GRDB.swift (~> 4.0)
-    - HsToolKit.swift (~> 1.0)
-    - RxSwift (~> 5.0)
   - Erc20Kit.swift (0.11.1):
     - BigInt (~> 5.0)
     - EthereumKit.swift (~> 0.11)
@@ -136,7 +115,6 @@ PODS:
   - GRDB.swift (4.14.0):
     - GRDB.swift/standard (= 4.14.0)
   - GRDB.swift/standard (4.14.0)
-  - GRKOpenSSLFramework (1.0.2.19)
   - gRPC-Swift (1.0.0-alpha.19):
     - CGRPCZlib (= 1.0.0-alpha.19)
     - Logging (< 2, >= 1.2.0)
@@ -319,11 +297,6 @@ DEPENDENCIES:
   - DashKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
   - DeepDiff
   - Down
-  - EosioSwift (from `https://github.com/horizontalsystems/eosio-swift`)
-  - EosioSwiftAbieosSerializationProvider (from `https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git`)
-  - EosioSwiftEcc (from `https://github.com/horizontalsystems/eosio-swift-ecc.git`)
-  - EosioSwiftSoftkeySignatureProvider (from `https://github.com/horizontalsystems/eosio-swift-softkey-signature-provider.git`)
-  - EosKit.swift (from `https://github.com/horizontalsystems/eos-kit-ios`)
   - Erc20Kit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - EthereumABI (from `https://github.com/horizontalsystems/EthereumABI`)
   - EthereumKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
@@ -379,7 +352,6 @@ SPEC REPOS:
     - Down
     - EthereumAddress
     - GRDB.swift
-    - GRKOpenSSLFramework
     - gRPC-Swift
     - KeychainAccess
     - Logging
@@ -428,16 +400,6 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
-  EosioSwift:
-    :git: https://github.com/horizontalsystems/eosio-swift
-  EosioSwiftAbieosSerializationProvider:
-    :git: https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git
-  EosioSwiftEcc:
-    :git: https://github.com/horizontalsystems/eosio-swift-ecc.git
-  EosioSwiftSoftkeySignatureProvider:
-    :git: https://github.com/horizontalsystems/eosio-swift-softkey-signature-provider.git
-  EosKit.swift:
-    :git: https://github.com/horizontalsystems/eos-kit-ios
   Erc20Kit.swift:
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   EthereumABI:
@@ -507,21 +469,6 @@ CHECKOUT OPTIONS:
   DashKit.swift:
     :commit: 9f4f7a9f3e907a7587526d471a214511f3ac0660
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
-  EosioSwift:
-    :commit: da261f581d9a19d7bbb4ef592bf649df1422fdb8
-    :git: https://github.com/horizontalsystems/eosio-swift
-  EosioSwiftAbieosSerializationProvider:
-    :commit: 40f8c7e604667c0c16713143501e74e1b0b958de
-    :git: https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git
-  EosioSwiftEcc:
-    :commit: e3eb5da3af35e2a2884ce2c91f2c491f9a9fb7ce
-    :git: https://github.com/horizontalsystems/eosio-swift-ecc.git
-  EosioSwiftSoftkeySignatureProvider:
-    :commit: d53547ac2b5525c3ff3a27156015a97782d6d8fc
-    :git: https://github.com/horizontalsystems/eosio-swift-softkey-signature-provider.git
-  EosKit.swift:
-    :commit: 09c5aaab6593354e1ab624582827fa3e15835c08
-    :git: https://github.com/horizontalsystems/eos-kit-ios
   Erc20Kit.swift:
     :commit: e1a01268a9cbbc2cb28532330169da9abf84c69a
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
@@ -614,18 +561,12 @@ SPEC CHECKSUMS:
   DashKit.swift: 652d5e7786d34decd8b8b1092cf8351a4278471f
   DeepDiff: e5ae6c50d0321568e4508cec5930b9f10bb293fc
   Down: 276f2c3eeeaf30345873bdad25f44b2640fcfa3a
-  EosioSwift: 2a09078be82227086a27891de9406b13083c78a3
-  EosioSwiftAbieosSerializationProvider: eba59a5335200175ccb71546388b81e98cd3213d
-  EosioSwiftEcc: 0e469473d2227200254a3a660feaf74b690c3a2e
-  EosioSwiftSoftkeySignatureProvider: 1edcefc7f238b3193cb21b48f74e36e815eaa952
-  EosKit.swift: 3fe1c100dda7b730c7f74da34472f2e7af335678
   Erc20Kit.swift: 67a2b09cbb67881b6063ff758dcf54dc133c2f49
   EthereumABI: a999809dee0ccf1f945a76fe5ed7394eaa73a27b
   EthereumAddress: 39fe8e11cf04e4e9902b55ae653dbc4e0aee5f30
   EthereumKit.swift: e07c58547b5ff30ae536b555ef060bc313f04160
   FeeRateKit.swift: fbf599802e96d999d1d9e45127ab0ad05a6163f8
   GRDB.swift: 8cc3ab7c8b8b4ac1761deb8dca4b51c1c9d429f8
-  GRKOpenSSLFramework: 4abc733a8fcbc37060619a86a54202d2938dd70e
   gRPC-Swift: 75a7a8d7cd08177165ef971159afb84e5130cfc9
   HdWalletKit.swift: 30b1ab08c736422eeefe346369ced89574e2ec00
   Hodler.swift: c95e921bf4d5d0536e627f97ecdb5f3214ee73d1
@@ -674,6 +615,6 @@ SPEC CHECKSUMS:
   XRatesKit.swift: e0bd2c964d6b70786611bbf1c64774614779dcf5
   ZcashLightClientKit: d5a681033b3f59c59c93837232ed7890d3e07918
 
-PODFILE CHECKSUM: 8ca053b04a086ba5915c3ee260a929aa7ff19c24
+PODFILE CHECKSUM: e83a13d9376a063fc097493006f2f246a08ed297
 
 COCOAPODS: 1.10.0

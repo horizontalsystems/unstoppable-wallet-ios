@@ -7,7 +7,6 @@ class AddTokenSelectorViewController: ThemeActionSheetController {
 
     private let titleView = BottomSheetTitleView()
     private let erc20Button = ThemeButton()
-    private let eosButton = ThemeButton()
     private let binanceButton = ThemeButton()
 
     init(delegate: IAddTokenSelectorViewDelegate) {
@@ -49,21 +48,10 @@ class AddTokenSelectorViewController: ThemeActionSheetController {
         erc20Button.setTitle("add_token_selector.erc20_token".localized, for: .normal)
         erc20Button.addTarget(self, action: #selector(onTapErc20), for: .touchUpInside)
 
-        view.addSubview(eosButton)
-        eosButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(erc20Button.snp.bottom).offset(CGFloat.margin4x)
-            maker.height.equalTo(CGFloat.heightButton)
-        }
-
-        eosButton.isEnabled = false
-        eosButton.apply(style: .primaryGray)
-        eosButton.setTitle("add_token_selector.eos_token".localized, for: .normal)
-
         view.addSubview(binanceButton)
         binanceButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(eosButton.snp.bottom).offset(CGFloat.margin4x)
+            maker.top.equalTo(erc20Button.snp.bottom).offset(CGFloat.margin4x)
             maker.bottom.equalToSuperview().inset(CGFloat.margin4x)
             maker.height.equalTo(CGFloat.heightButton)
         }

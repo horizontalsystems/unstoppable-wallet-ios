@@ -24,15 +24,6 @@ def appPods
   pod 'UniswapKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
   # pod 'UniswapKit.swift', :path => '../ethereum-kit-ios'
 
-  pod 'EosKit.swift', git: 'https://github.com/horizontalsystems/eos-kit-ios'
-  # pod 'EosKit.swift', path: '../eos-kit-ios/'
-  pod 'EosioSwiftAbieosSerializationProvider', git: 'https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git'
-  # pod 'EosioSwiftAbieosSerializationProvider', path: '../eosio-swift-abieos-serialization-provider/'
-  pod 'EosioSwift', git: 'https://github.com/horizontalsystems/eosio-swift'
-  # pod 'EosioSwift', path: '../eosio-swift/'
-  pod 'EosioSwiftEcc', git: 'https://github.com/horizontalsystems/eosio-swift-ecc.git'
-  pod 'EosioSwiftSoftkeySignatureProvider', git: 'https://github.com/horizontalsystems/eosio-swift-softkey-signature-provider.git'
-
   pod 'BinanceChainKit.swift', git: 'https://github.com/horizontalsystems/binance-chain-kit-ios'
   # pod 'BinanceChainKit.swift', path: '../binance-chain-kit-ios/'
 

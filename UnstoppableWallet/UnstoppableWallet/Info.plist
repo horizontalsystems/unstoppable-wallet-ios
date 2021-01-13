@@ -24,10 +24,6 @@
 	<string>$(coinmarketcap_com_api_key)</string>
 	<key>CryptoCompareApiKey</key>
 	<string>$(cryptocompare_com_api_key)</string>
-	<key>DefaultEosAccount</key>
-	<string>${default_eos_account}</string>
-	<key>DefaultEosPrivateKey</key>
-	<string>${default_eos_private_key}</string>
 	<key>DefaultWords12</key>
 	<string>${default_words_12}</string>
 	<key>DefaultWords24</key>
