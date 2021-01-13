@@ -5,7 +5,7 @@ import HUD
 class SwapPriceCell: UITableViewCell {
     let cellHeight: CGFloat = 24
 
-    private let spinner = HUDActivityView.create(with: .small20)
+    private let spinner = HUDActivityView.create(with: .medium24)
     private let priceLabel = UILabel()
     private let switchButton = UIButton()
 
