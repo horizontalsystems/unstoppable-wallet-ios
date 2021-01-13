@@ -38,7 +38,7 @@ class TransactionsInteractor {
         for wallet in walletManager.wallets {
             if let adapter = adapterManager.transactionsAdapter(for: wallet) {
                 walletsData.append((wallet, adapter.lastBlockInfo))
-                states[wallet.coin] = adapter.state
+                states[wallet.coin] = adapter.transactionState
 
                 adapter.transactionRecordsObservable
                         .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -48,10 +48,10 @@ class TransactionsInteractor {
                         })
                         .disposed(by: transactionRecordsDisposeBag)
 
-                adapter.stateUpdatedObservable
+                adapter.transactionStateUpdatedObservable
                         .observeOn(serialQueueScheduler)
                         .subscribe(onNext: { [weak self] in
-                            self?.delegate?.didUpdate(state: adapter.state, wallet: wallet)
+                            self?.delegate?.didUpdate(state: adapter.transactionState, wallet: wallet)
                         })
                         .disposed(by: statesDisposeBag)
             }

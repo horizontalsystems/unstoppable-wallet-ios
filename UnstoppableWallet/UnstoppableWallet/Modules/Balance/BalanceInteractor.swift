@@ -82,7 +82,7 @@ extension BalanceInteractor: IBalanceInteractor {
     }
 
     func state(wallet: Wallet) -> AdapterState? {
-        adapterManager.balanceAdapter(for: wallet)?.state
+        adapterManager.balanceAdapter(for: wallet)?.balanceState
     }
 
     func subscribeToWallets() {
@@ -116,10 +116,10 @@ extension BalanceInteractor: IBalanceInteractor {
                     })
                     .disposed(by: adaptersDisposeBag)
 
-            adapter.stateUpdatedObservable
+            adapter.balanceStateUpdatedObservable
                     .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                     .subscribe(onNext: { [weak self] in
-                        self?.delegate?.didUpdate(state: adapter.state, wallet: wallet)
+                        self?.delegate?.didUpdate(state: adapter.balanceState, wallet: wallet)
                     })
                     .disposed(by: adaptersDisposeBag)
         }

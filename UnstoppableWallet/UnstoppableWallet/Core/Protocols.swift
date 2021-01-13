@@ -94,8 +94,8 @@ protocol IAdapter: class {
 }
 
 protocol IBalanceAdapter {
-    var state: AdapterState { get }
-    var stateUpdatedObservable: Observable<Void> { get }
+    var balanceState: AdapterState { get }
+    var balanceStateUpdatedObservable: Observable<Void> { get }
     var balance: Decimal { get }
     var balanceLocked: Decimal? { get }
     var balanceUpdatedObservable: Observable<Void> { get }
@@ -110,8 +110,8 @@ protocol IDepositAdapter {
 }
 
 protocol ITransactionsAdapter {
-    var state: AdapterState { get }
-    var stateUpdatedObservable: Observable<Void> { get }
+    var transactionState: AdapterState { get }
+    var transactionStateUpdatedObservable: Observable<Void> { get }
     var lastBlockInfo: LastBlockInfo? { get }
     var lastBlockUpdatedObservable: Observable<Void> { get }
     var transactionRecordsObservable: Observable<[TransactionRecord]> { get }

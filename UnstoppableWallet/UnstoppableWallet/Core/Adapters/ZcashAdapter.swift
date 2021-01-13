@@ -26,7 +26,12 @@ class ZcashAdapter {
 
     private var lastBlockHeight: Int? = 0
 
-    private(set) var state: AdapterState
+    private(set) var balanceState: AdapterState {
+        didSet {
+            transactionState = balanceState
+        }
+    }
+    private(set) var transactionState: AdapterState
 
     init(wallet: Wallet, syncMode: SyncMode?, testMode: Bool) throws {
         guard case let .zcash(words, birthdayHeight) = wallet.account.type else {
@@ -66,7 +71,8 @@ class ZcashAdapter {
         transactionPool = ZcashTransactionPool()
         transactionPool.store(confirmedTransactions: synchronizer.clearedTransactions, pendingTransactions: synchronizer.pendingTransactions)
 
-        state = .syncing(progress: 0, lastBlockDate: nil)
+        balanceState = .syncing(progress: 0, lastBlockDate: nil)
+        transactionState = balanceState
         lastBlockHeight = try? synchronizer.latestHeight()
 
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
@@ -108,13 +114,13 @@ class ZcashAdapter {
         switch state {
         case .idle: sync()
         case .inProgress(let progress):
-            self.state = .syncing(progress: Int(progress * 100), lastBlockDate: nil)
+            self.balanceState = .syncing(progress: Int(progress * 100), lastBlockDate: nil)
             stateUpdatedSubject.onNext(())
         }
     }
 
     @objc private func statusUpdated(_ notification: Notification) {
-        var newState = state
+        var newState = balanceState
 
         switch synchronizer.status {
         case .disconnected: newState = .notSynced(error: AppError.noConnection)
@@ -123,8 +129,8 @@ class ZcashAdapter {
         case .syncing: newState = .syncing(progress: Int(synchronizer.progress * 100), lastBlockDate: nil)
         }
 
-        if newState != state {
-            state = newState
+        if newState != balanceState {
+            balanceState = newState
             stateUpdatedSubject.onNext(())
         }
     }
@@ -296,7 +302,7 @@ extension ZcashAdapter: IAdapter {
         do {
             try synchronizer.start()
         } catch {
-            state = .notSynced(error: error)
+            balanceState = .notSynced(error: error)
             stateUpdatedSubject.onNext(())
         }
     }
@@ -316,6 +322,10 @@ extension ZcashAdapter: ITransactionsAdapter {
 
     var lastBlockInfo: LastBlockInfo? {
         lastBlockHeight.map { LastBlockInfo(height: $0, timestamp: nil) }
+    }
+
+    var transactionStateUpdatedObservable: Observable<Void> {
+        stateUpdatedSubject.asObservable()
     }
 
     var lastBlockUpdatedObservable: Observable<Void> {
@@ -340,7 +350,7 @@ extension ZcashAdapter: ITransactionsAdapter {
 
 extension ZcashAdapter: IBalanceAdapter {
 
-    var stateUpdatedObservable: Observable<Void> {
+    var balanceStateUpdatedObservable: Observable<Void> {
         stateUpdatedSubject.asObservable()
     }
 
