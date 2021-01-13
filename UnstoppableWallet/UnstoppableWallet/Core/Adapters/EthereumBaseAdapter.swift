@@ -38,6 +38,14 @@ class EthereumBaseAdapter {
         error.convertedError
     }
 
+    func convertToAdapterState(ethereumSyncState: EthereumKit.SyncState) -> AdapterState {
+        switch ethereumSyncState {
+            case .synced: return .synced
+            case .notSynced(let error): return .notSynced(error: error.convertedError)
+            case .syncing: return .syncing(progress: 50, lastBlockDate: nil)
+        }
+    }
+
 }
 
 // ISendEthereumAdapter

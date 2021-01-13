@@ -119,15 +119,11 @@ extension Erc20Adapter: IAdapter {
 
 extension Erc20Adapter: IBalanceAdapter {
 
-    var state: AdapterState {
-        switch erc20Kit.syncState {
-        case .synced: return .synced
-        case .notSynced(let error): return .notSynced(error: error.convertedError)
-        case .syncing: return .syncing(progress: 50, lastBlockDate: nil)
-        }
+    var balanceState: AdapterState {
+        convertToAdapterState(ethereumSyncState: erc20Kit.syncState)
     }
 
-    var stateUpdatedObservable: Observable<Void> {
+    var balanceStateUpdatedObservable: Observable<Void> {
         erc20Kit.syncStateObservable.map { _ in () }
     }
 
@@ -191,6 +187,14 @@ extension Erc20Adapter: IErc20Adapter {
 }
 
 extension Erc20Adapter: ITransactionsAdapter {
+
+    var transactionState: AdapterState {
+        convertToAdapterState(ethereumSyncState: erc20Kit.transactionsSyncState)
+    }
+
+    var transactionStateUpdatedObservable: Observable<Void> {
+        erc20Kit.transactionsSyncStateObservable.map { _ in () }
+    }
 
     var transactionRecordsObservable: Observable<[TransactionRecord]> {
         erc20Kit.transactionsObservable.map { [weak self] in

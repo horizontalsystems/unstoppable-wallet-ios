@@ -46,11 +46,9 @@ class TransactionRecordPool {
     }
 
     func add(records: [TransactionRecord]) {
-        print("fetched \(records.count) records")
         if records.isEmpty {
             state.allLoaded = true
         } else {
-            print("adding new records fetched")
             state.add(records: records)
         }
     }

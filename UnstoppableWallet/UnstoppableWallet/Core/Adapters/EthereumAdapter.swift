@@ -117,15 +117,11 @@ extension EthereumAdapter: IAdapter {
 
 extension EthereumAdapter: IBalanceAdapter {
 
-    var state: AdapterState {
-        switch ethereumKit.syncState {
-        case .synced: return .synced
-        case .notSynced(let error): return .notSynced(error: error.convertedError)
-        case .syncing: return .syncing(progress: 50, lastBlockDate: nil)
-        }
+    var balanceState: AdapterState {
+        convertToAdapterState(ethereumSyncState: ethereumKit.syncState)
     }
 
-    var stateUpdatedObservable: Observable<Void> {
+    var balanceStateUpdatedObservable: Observable<Void> {
         ethereumKit.syncStateObservable.map { _ in () }
     }
 
@@ -178,6 +174,14 @@ extension EthereumAdapter: ISendEthereumAdapter {
 }
 
 extension EthereumAdapter: ITransactionsAdapter {
+
+    var transactionState: AdapterState {
+        convertToAdapterState(ethereumSyncState: ethereumKit.transactionsSyncState)
+    }
+
+    var transactionStateUpdatedObservable: Observable<Void> {
+        ethereumKit.transactionsSyncStateObservable.map { _ in () }
+    }
 
     var transactionRecordsObservable: Observable<[TransactionRecord]> {
         ethereumKit.etherTransactionsObservable.map { [weak self] in
