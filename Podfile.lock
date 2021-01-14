@@ -512,7 +512,7 @@ CHECKOUT OPTIONS:
     :commit: 392186c18e8df97d40ca0f4587d857259d878dd4
     :git: https://github.com/horizontalsystems/gui-kit/
   StorageKit.swift:
-    :commit: 63b7845004b8fe7e020507023d2105d9cc6c3182
+    :commit: defa2ee3771fb0d2ca0c6315f77e62ad3a05e7cd
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
     :commit: f7820e3a47e42303a51cf057016cefc8b7026e49
