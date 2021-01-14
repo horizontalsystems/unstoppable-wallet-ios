@@ -292,7 +292,6 @@ protocol IEnabledWalletStorage {
 
 protocol IAccountStorage {
     var allAccounts: [Account] { get }
-    var lostAccountsObservable: Observable<()> { get }
     func save(account: Account)
     func delete(account: Account)
     func clear()
