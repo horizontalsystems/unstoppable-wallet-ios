@@ -107,6 +107,9 @@ class SwapCoinCardCell: UITableViewCell {
         amountInput.onChangeText = { [weak self] text in
             self?.viewModel.onChange(amount: text)
         }
+        amountInput.onTapMax = { [weak self] in
+            self?.viewModel.onTapMax()
+        }
         amountInput.onTapSecondary = { [weak self] in
             self?.viewModel.onSwitch()
         }
@@ -128,6 +131,7 @@ class SwapCoinCardCell: UITableViewCell {
         subscribe(disposeBag, viewModel.isEstimated) { [weak self] in self?.setBadge(hidden: !$0) }
         subscribe(disposeBag, viewModel.prefixDriver) { [weak self] in self?.set(prefix: $0) }
         subscribe(disposeBag, viewModel.amountDriver) { [weak self] in self?.set(text: $0) }
+        subscribe(disposeBag, viewModel.isMaxEnabledDriver) { [weak self] in self?.amountInput.maxButtonVisible = $0 }
         subscribe(disposeBag, viewModel.switchEnabledDriver) { [weak self] in self?.amountInput.secondaryButtonEnabled = $0 }
         subscribe(disposeBag, viewModel.secondaryTextDriver) { [weak self] in self?.set(secondaryText: $0) }
         subscribe(disposeBag, viewModel.tokenCodeDriver) { [weak self] in self?.set(tokenCode: $0) }
