@@ -1,4 +1,5 @@
 import RxSwift
+import RxRelay
 
 class AccountManager {
     private let storage: IAccountStorage
@@ -6,6 +7,7 @@ class AccountManager {
 
     private let accountsSubject = PublishSubject<[Account]>()
     private let deleteAccountSubject = PublishSubject<Account>()
+    private let lostAccountsRelay = PublishRelay<()>()
 
     init(storage: IAccountStorage) {
         self.storage = storage
@@ -34,7 +36,7 @@ extension AccountManager: IAccountManager {
     }
 
     var lostAccountsObservable: Observable<()> {
-        storage.lostAccountsObservable
+        lostAccountsRelay.asObservable()
     }
 
     func preloadAccounts() {
@@ -76,6 +78,11 @@ extension AccountManager: IAccountManager {
         let lostAccounts = cache.accounts.filter {
             storedAccounts.firstIndex(of: $0) == nil
         }
+
+        guard !lostAccounts.isEmpty else {
+            return
+        }
+
         lostAccounts.forEach { account in
             storage.delete(account: account)
             deleteAccountSubject.onNext(account)
@@ -83,6 +90,8 @@ extension AccountManager: IAccountManager {
 
         cache.set(accounts: storedAccounts)
         accountsSubject.onNext(accounts)
+
+        lostAccountsRelay.accept(())
     }
 
 }
