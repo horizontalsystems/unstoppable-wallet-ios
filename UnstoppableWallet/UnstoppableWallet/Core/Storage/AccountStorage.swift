@@ -1,8 +1,12 @@
 import StorageKit
+import RxRelay
+import RxSwift
 
 class AccountStorage {
     private let secureStorage: ISecureStorage
     private let storage: IAccountRecordStorage
+
+    private let lostAccountsRelay = PublishRelay<()>()
 
     init(secureStorage: ISecureStorage, storage: IAccountRecordStorage) {
         self.secureStorage = secureStorage
@@ -24,6 +28,8 @@ class AccountStorage {
         switch typeName {
         case .mnemonic:
             guard let words = recoverStringArray(id: id, typeName: typeName, keyName: .words) else {
+                storage.deleteAccountRecord(by: record.id)
+                lostAccountsRelay.accept(())
                 return nil
             }
             let salt: String? = recover(id: id, typeName: typeName, keyName: .salt)
@@ -31,12 +37,16 @@ class AccountStorage {
             type = .mnemonic(words: words, salt: salt)
         case .privateKey:
             guard let data = recoverData(id: id, typeName: typeName, keyName: .data) else {
+                storage.deleteAccountRecord(by: record.id)
+                lostAccountsRelay.accept(())
                 return nil
             }
 
             type = .privateKey(data: data)
         case .zcash:
             guard let words = recoverStringArray(id: id, typeName: typeName, keyName: .words) else {
+                storage.deleteAccountRecord(by: record.id)
+                lostAccountsRelay.accept(())
                 return nil
             }
 
@@ -147,6 +157,10 @@ extension AccountStorage: IAccountStorage {
 
     var allAccounts: [Account] {
         storage.allAccountRecords.compactMap { createAccount(record: $0) }
+    }
+
+    var lostAccountsObservable: Observable<()> {
+        lostAccountsRelay.asObservable()
     }
 
     func save(account: Account) {

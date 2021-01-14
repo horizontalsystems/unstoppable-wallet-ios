@@ -317,4 +317,8 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         view?.hideRefresh()
     }
 
+    func onLostAccounts() {
+        view?.showLostAccounts()
+    }
+
 }

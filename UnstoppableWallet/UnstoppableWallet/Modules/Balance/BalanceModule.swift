@@ -7,6 +7,7 @@ protocol IBalanceView: class {
     func set(headerViewItem: BalanceHeaderViewItem?, viewItems: [BalanceViewItem])
     func hideRefresh()
     func show(error: Error)
+    func showLostAccounts()
 }
 
 protocol IBalanceViewDelegate {
@@ -67,6 +68,7 @@ protocol IBalanceInteractorDelegate: class {
     func didUpdate(sortType: SortType)
 
     func didRefresh()
+    func onLostAccounts()
 }
 
 protocol IBalanceRouter {

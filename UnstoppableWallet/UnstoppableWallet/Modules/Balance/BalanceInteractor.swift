@@ -17,8 +17,9 @@ class BalanceInteractor {
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let rateManager: IRateManager
     private let rateAppManager: IRateAppManager
+    private let accountManager: IAccountManager
 
-    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyKit: ICurrencyKit, localStorage: ILocalStorage, sortTypeManager: ISortTypeManager, predefinedAccountTypeManager: IPredefinedAccountTypeManager, rateManager: IRateManager, rateAppManager: IRateAppManager) {
+    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyKit: ICurrencyKit, localStorage: ILocalStorage, sortTypeManager: ISortTypeManager, predefinedAccountTypeManager: IPredefinedAccountTypeManager, rateManager: IRateManager, rateAppManager: IRateAppManager, accountManager: IAccountManager) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.currencyKit = currencyKit
@@ -27,6 +28,7 @@ class BalanceInteractor {
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
         self.rateManager = rateManager
         self.rateAppManager = rateAppManager
+        self.accountManager = accountManager
 
         currencyKit.baseCurrencyUpdatedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
@@ -43,6 +45,13 @@ class BalanceInteractor {
                 })
                 .disposed(by: disposeBag)
 
+        accountManager.lostAccountsObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] baseCurrency in
+                    self?.delegate?.onLostAccounts()
+                })
+                .disposed(by: disposeBag)
     }
 
     private func onUpdate(wallets: [Wallet]) {
