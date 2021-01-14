@@ -12,7 +12,9 @@ extension LaunchPresenter: ILaunchPresenter {
     var launchMode: LaunchMode {
         let isPinSet = interactor.isPinSet
 
-        if interactor.passcodeLocked {
+        if interactor.jailbroken {
+            return .jailbreak
+        } else if interactor.passcodeLocked {
             return .noPasscode
         } else if isPinSet {
             return .unlock

@@ -6,12 +6,14 @@ class LaunchInteractor {
     private let pinKit: IPinKit
     private let keychainKit: IKeychainKit
     private let localStorage: ILocalStorage
+    private let jailbreakTestManager: JailbreakTestManager
 
-    init(accountManager: IAccountManager, pinKit: IPinKit, keychainKit: IKeychainKit, localStorage: ILocalStorage) {
+    init(accountManager: IAccountManager, pinKit: IPinKit, keychainKit: IKeychainKit, localStorage: ILocalStorage, jailbreakTestManager: JailbreakTestManager) {
         self.accountManager = accountManager
         self.pinKit = pinKit
         self.keychainKit = keychainKit
         self.localStorage = localStorage
+        self.jailbreakTestManager = jailbreakTestManager
     }
 
 }
@@ -32,6 +34,10 @@ extension LaunchInteractor: ILaunchInteractor {
 
     var mainShownOnce: Bool {
         localStorage.mainShownOnce
+    }
+
+    var jailbroken: Bool {
+        jailbreakTestManager.isJailbroken
     }
 
 }

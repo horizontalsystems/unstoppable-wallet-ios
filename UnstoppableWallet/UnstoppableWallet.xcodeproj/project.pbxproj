@@ -1614,6 +1614,9 @@
 		5046E671259C491000A941E5 /* InfoSeparatorHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6FB0AF97333CD9D007F /* InfoSeparatorHeaderView.swift */; };
 		5046E672259C491100A941E5 /* InfoSeparatorHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6FB0AF97333CD9D007F /* InfoSeparatorHeaderView.swift */; };
 		5046E673259C491200A941E5 /* InfoSeparatorHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6FB0AF97333CD9D007F /* InfoSeparatorHeaderView.swift */; };
+		50701ACE25B041E600EDE51B /* JailbreakTestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D2011D7A4E80B2B7B92 /* JailbreakTestManager.swift */; };
+		50701ACF25B041E600EDE51B /* JailbreakTestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D2011D7A4E80B2B7B92 /* JailbreakTestManager.swift */; };
+		50701AD025B041E700EDE51B /* JailbreakTestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D2011D7A4E80B2B7B92 /* JailbreakTestManager.swift */; };
 		50959EEC24C16AD8002D095A /* ChartNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50959EE524C16AD7002D095A /* ChartNotificationViewController.swift */; };
 		50959EED24C16AD8002D095A /* ChartNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50959EE524C16AD7002D095A /* ChartNotificationViewController.swift */; };
 		50959EEE24C16AD8002D095A /* ChartNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50959EE524C16AD7002D095A /* ChartNotificationViewController.swift */; };
@@ -2746,6 +2749,7 @@
 		1A564CB5E9C751F39838CFF6 /* TransactionStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionStatusView.swift; sourceTree = "<group>"; };
 		1A564CE56CEC73B78C9DB6B5 /* BalanceErrorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceErrorViewController.swift; sourceTree = "<group>"; };
 		1A564D0418F6ACD6558999D3 /* TransactionViewStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionViewStatus.swift; sourceTree = "<group>"; };
+		1A564D2011D7A4E80B2B7B92 /* JailbreakTestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JailbreakTestManager.swift; sourceTree = "<group>"; };
 		1A564D5E55767404ED6C88E0 /* Decimal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Decimal.swift; sourceTree = "<group>"; };
 		1A564D73251DBFA0CFE34D12 /* MainSettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsService.swift; sourceTree = "<group>"; };
 		1A564DDACAD5CFB092AE6496 /* BalanceEditCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceEditCell.swift; sourceTree = "<group>"; };
@@ -3481,6 +3485,7 @@
 				2FA5D690E78A4568F9FD9554 /* LogRecordManager.swift */,
 				58AAA2B7F82F42442ED27A67 /* DownloadService.swift */,
 				11B357C8E1513CD601995C8A /* BitcoinCashCoinTypeManager.swift */,
+				1A564D2011D7A4E80B2B7B92 /* JailbreakTestManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -6122,6 +6127,7 @@
 				11B3592697ED97B1C1FA8871 /* WalletConnectService.swift in Sources */,
 				11B35342BD0F75857FB27A91 /* WalletConnectErrorViewController.swift in Sources */,
 				11B35FC0A9AD0595FCE6FC5D /* WalletConnectScanQrViewModel.swift in Sources */,
+				50701AD025B041E700EDE51B /* JailbreakTestManager.swift in Sources */,
 				1A56418D597D6AABD0EF9CDA /* RequestErrorViewNew.swift in Sources */,
 				58AAA99D16A2AE38D1E3512C /* CustomFeePriorityUnit.swift in Sources */,
 				11B35C1C11868F03253D693F /* WalletConnectRequestViewController.swift in Sources */,
@@ -6886,6 +6892,7 @@
 				11B35328A1DEC617A657A305 /* WalletConnectService.swift in Sources */,
 				11B35B86C7BF9D142806D231 /* WalletConnectErrorViewController.swift in Sources */,
 				11B355A68C21C9FDAA71B982 /* WalletConnectScanQrViewModel.swift in Sources */,
+				50701ACF25B041E600EDE51B /* JailbreakTestManager.swift in Sources */,
 				1A564194644F51AF4F5DF6AB /* RequestErrorViewNew.swift in Sources */,
 				58AAABEF307C633D1F5513B6 /* CustomFeePriorityUnit.swift in Sources */,
 				11B3582D3298B7C072FBAD86 /* WalletConnectRequestViewController.swift in Sources */,
@@ -7612,6 +7619,7 @@
 				11B3543FCB1C67619A0DAA27 /* WalletConnectService.swift in Sources */,
 				11B35FFEA9F3D6707A2BAB0B /* WalletConnectErrorViewController.swift in Sources */,
 				11B35B4A1BB674EE71205AC2 /* WalletConnectScanQrViewModel.swift in Sources */,
+				50701ACE25B041E600EDE51B /* JailbreakTestManager.swift in Sources */,
 				1A564A69306F819FF36D9F24 /* RequestErrorViewNew.swift in Sources */,
 				58AAAC8B0C5DB88F9251712D /* CustomFeePriorityUnit.swift in Sources */,
 				11B35A8456750E9838BBEA93 /* WalletConnectRequestViewController.swift in Sources */,

@@ -24,7 +24,7 @@ extension KeychainKitDelegate: IKeychainKitDelegate {
     }
 
     public func onLock() {
-        show(viewController: NoPasscodeViewController())
+        show(viewController: NoPasscodeViewController(mode: .noPasscode))
     }
 
     public func onUnlock() {
