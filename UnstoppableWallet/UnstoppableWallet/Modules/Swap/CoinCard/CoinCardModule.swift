@@ -26,7 +26,8 @@ struct CoinCardModule {
                 coinCardService: SwapFromCoinCardService(service: service, tradeService: tradeService),
                 fiatService: fiatService,
                 switchService: fiatSwitchService,
-                decimalParser: AmountDecimalParser()
+                decimalParser: AmountDecimalParser(),
+                isMaxSupported: true
         )
         return SwapCoinCardCell(viewModel: viewModel, title: "swap.you_pay".localized)
     }
@@ -38,7 +39,8 @@ struct CoinCardModule {
                 coinCardService: SwapToCoinCardService(service: service, tradeService: tradeService),
                 fiatService: fiatService,
                 switchService: fiatSwitchService,
-                decimalParser: AmountDecimalParser()
+                decimalParser: AmountDecimalParser(),
+                isMaxSupported: false
         )
         return SwapCoinCardCell(viewModel: viewModel, title: "swap.you_get".localized)
     }

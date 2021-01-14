@@ -108,7 +108,10 @@ extension AmountInputView {
 
     var inputText: String? {
         get { inputStackView.text }
-        set { inputStackView.text = newValue }
+        set {
+            inputStackView.text = newValue
+            syncButtonStates()
+        }
     }
 
     var prefix: String? {
