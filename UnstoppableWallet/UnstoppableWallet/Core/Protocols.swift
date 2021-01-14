@@ -184,6 +184,7 @@ protocol IAccountManager {
 
     var accountsObservable: Observable<[Account]> { get }
     var deleteAccountObservable: Observable<Account> { get }
+    var lostAccountsObservable: Observable<()> { get }
 
     func preloadAccounts()
     func update(account: Account)
@@ -291,6 +292,7 @@ protocol IEnabledWalletStorage {
 
 protocol IAccountStorage {
     var allAccounts: [Account] { get }
+    var lostAccountsObservable: Observable<()> { get }
     func save(account: Account)
     func delete(account: Account)
     func clear()

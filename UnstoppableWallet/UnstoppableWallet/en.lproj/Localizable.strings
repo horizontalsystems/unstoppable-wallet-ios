@@ -149,7 +149,8 @@ bch.horizontalsystems.xyz/apg";
 "balance.sort.24h_change"  = "24h Price(%)";
 "balance_error.change_source" = "Change Source";
 "balance_error.sync_error" = "Sync Error";
-
+"lost_accounts.warning_title" = "iOS Keychain Error";
+"lost_accounts.warning_message" = "The encrypted data holding your wallet was recently invalidated because your iOS lock screen was changed";
 // Deposit
 
 "deposit.receive_coin" = "Receive %@";

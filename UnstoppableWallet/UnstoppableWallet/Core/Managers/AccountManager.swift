@@ -33,6 +33,10 @@ extension AccountManager: IAccountManager {
         deleteAccountSubject.asObservable()
     }
 
+    var lostAccountsObservable: Observable<()> {
+        storage.lostAccountsObservable
+    }
+
     func preloadAccounts() {
         cache.set(accounts: storage.allAccounts)
     }
