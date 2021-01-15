@@ -39,7 +39,9 @@ extension NoAccountPresenter: INoAccountViewDelegate {
             }
 
             let account = try interactor.createAccount(predefinedAccountType: predefinedAccountType)
+
             interactor.save(account: account)
+            interactor.createWallet(coin: coin, account: account)
 
             view?.showSuccess()
             router.close()
@@ -49,7 +51,7 @@ extension NoAccountPresenter: INoAccountViewDelegate {
     }
 
     func onTapRestore() {
-        router.closeAndShowRestore(predefinedAccountType: predefinedAccountType)
+        router.closeAndShowRestore(predefinedAccountType: predefinedAccountType, coin: coin)
     }
 
     func onTapClose() {
