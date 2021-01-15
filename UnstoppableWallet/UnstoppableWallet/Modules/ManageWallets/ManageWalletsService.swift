@@ -36,8 +36,21 @@ class ManageWalletsService {
                 })
                 .disposed(by: disposeBag)
 
-        for wallet in walletManager.wallets {
-            wallets[wallet.coin] = wallet
+        walletManager.walletsUpdatedObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] wallets in
+                    self?.sync(wallets: wallets)
+                })
+                .disposed(by: disposeBag)
+
+        sync(wallets: walletManager.wallets)
+    }
+
+    private func sync(wallets: [Wallet]) {
+        self.wallets = [:]
+
+        for wallet in wallets {
+            self.wallets[wallet.coin] = wallet
         }
 
         syncState()
@@ -69,7 +82,7 @@ extension ManageWalletsService {
     }
 
     func account(coin: Coin) -> Account? {
-        accountManager.accounts.first { coin.type.canSupport(accountType: $0.type) }
+        accountManager.account(coinType: coin.type)
     }
 
     func enable(coin: Coin) {
@@ -80,9 +93,6 @@ extension ManageWalletsService {
         let wallet = Wallet(coin: coin, account: account)
 
         walletManager.save(wallets: [wallet])
-        wallets[coin] = wallet
-
-        syncState()
     }
 
     func disable(coin: Coin) {
@@ -91,9 +101,6 @@ extension ManageWalletsService {
         }
 
         walletManager.delete(wallets: [wallet])
-        wallets.removeValue(forKey: coin)
-
-        syncState()
     }
 
 }

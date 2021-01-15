@@ -109,6 +109,11 @@ extension AddressInputView {
         }
     }
 
+    var isEditable: Bool {
+        get { inputStackView.isEditable }
+        set { inputStackView.isEditable = newValue }
+    }
+
     func set(cautionType: CautionType?) {
         formValidatedView.set(cautionType: cautionType)
     }

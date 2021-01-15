@@ -8,7 +8,7 @@ struct AddErc20TokenModule {
                 networkManager: App.shared.networkManager
         )
 
-        let service = AddTokenService(blockchainService: blockchainService, coinManager: App.shared.coinManager)
+        let service = AddTokenService(blockchainService: blockchainService, coinManager: App.shared.coinManager, walletManager: App.shared.walletManager, accountManager: App.shared.accountManager)
         let viewModel = AddTokenViewModel(service: service)
 
         let viewController = AddTokenViewController(

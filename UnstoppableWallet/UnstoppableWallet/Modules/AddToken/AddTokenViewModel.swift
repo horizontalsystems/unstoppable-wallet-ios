@@ -8,9 +8,8 @@ class AddTokenViewModel {
 
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
-    private let warningVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let buttonVisibleRelay = BehaviorRelay<Bool>(value: false)
-    private let errorRelay = BehaviorRelay<Error?>(value: nil)
+    private let cautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let finishRelay = PublishRelay<Void>()
 
     init(service: AddTokenService) {
@@ -41,12 +40,6 @@ class AddTokenViewModel {
             viewItemRelay.accept(nil)
         }
 
-        if case .alreadyExists = state {
-            warningVisibleRelay.accept(true)
-        } else {
-            warningVisibleRelay.accept(false)
-        }
-
         if case .fetched = state {
             buttonVisibleRelay.accept(true)
         } else {
@@ -54,9 +47,11 @@ class AddTokenViewModel {
         }
 
         if case .failed(let error) = state {
-            errorRelay.accept(error.convertedError)
+            cautionRelay.accept(Caution(text: error.convertedError.localizedDescription, type: .error))
+        } else if case .alreadyExists = state {
+            cautionRelay.accept(Caution(text: "add_token.already_exists".localized, type: .warning))
         } else {
-            errorRelay.accept(nil)
+            cautionRelay.accept(nil)
         }
     }
 
@@ -76,16 +71,12 @@ extension AddTokenViewModel {
         viewItemRelay.asDriver()
     }
 
-    var warningVisibleDriver: Driver<Bool> {
-        warningVisibleRelay.asDriver()
-    }
-
     var buttonVisibleDriver: Driver<Bool> {
         buttonVisibleRelay.asDriver()
     }
 
-    var errorDriver: Driver<Error?> {
-        errorRelay.asDriver()
+    var cautionDriver: Driver<Caution?> {
+        cautionRelay.asDriver()
     }
 
     var finishSignal: Signal<Void> {

@@ -35,6 +35,11 @@ extension AddressInputCell {
         set { addressInputView.inputText = newValue }
     }
 
+    var isEditable: Bool {
+        get { addressInputView.isEditable }
+        set { addressInputView.isEditable = newValue }
+    }
+
     func set(cautionType: CautionType?) {
         addressInputView.set(cautionType: cautionType)
     }
