@@ -14,11 +14,12 @@ protocol INoAccountViewDelegate {
 protocol INoAccountInteractor {
     func createAccount(predefinedAccountType: PredefinedAccountType) throws -> Account
     func save(account: Account)
+    func createWallet(coin: Coin, account: Account)
     func resetAddressFormatSettings()
 }
 
 protocol INoAccountRouter {
-    func closeAndShowRestore(predefinedAccountType: PredefinedAccountType)
+    func closeAndShowRestore(predefinedAccountType: PredefinedAccountType, coin: Coin)
     func close()
 }
 

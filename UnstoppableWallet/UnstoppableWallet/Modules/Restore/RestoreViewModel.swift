@@ -5,13 +5,15 @@ import RxCocoa
 class RestoreViewModel {
     private let service: RestoreService
     let selectCoins: Bool
+    private let coinToEnable: Coin?
 
     private let openScreenRelay = PublishRelay<Screen>()
     private let finishRelay = PublishRelay<Void>()
 
-    init(service: RestoreService, selectCoins: Bool) {
+    init(service: RestoreService, selectCoins: Bool, coinToEnable: Coin?) {
         self.service = service
         self.selectCoins = selectCoins
+        self.coinToEnable = coinToEnable
     }
 
     private func restore(coins: [Coin] = []) {
@@ -54,7 +56,7 @@ extension RestoreViewModel {
         if selectCoins, let predefinedAccountType = service.predefinedAccountType {
             openScreenRelay.accept(.selectCoins(predefinedAccountType: predefinedAccountType))
         } else {
-            restore()
+            restore(coins: coinToEnable.map { [$0] } ?? [])
         }
     }
 
