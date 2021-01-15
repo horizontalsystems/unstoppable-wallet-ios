@@ -49,8 +49,8 @@ extension InputStackView {
     }
 
     var isEditable: Bool {
-        get { formTextView.isUserInteractionEnabled }
-        set { formTextView.isUserInteractionEnabled = newValue }
+        get { formTextView.isEditable }
+        set { formTextView.isEditable = newValue }
     }
 
     var maximumNumberOfLines: Int {
