@@ -22,7 +22,7 @@ extension CoinManager: ICoinManager {
     var coins: [Coin] {
         let defaultCoins = appConfigProvider.defaultCoins
         let storedCoins = storage.coins.filter { coin in
-            !defaultCoins.contains { $0.id == coin.id }
+            !defaultCoins.contains { $0.type == coin.type }
         }
 
         return storedCoins + defaultCoins
