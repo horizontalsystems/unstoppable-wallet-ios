@@ -82,6 +82,10 @@
 "coin_settings.sync_mode.fast.description" = "0-2 horas, Recomendado";
 "coin_settings.sync_mode.slow.description" = "1-24 horas";
 "coin_settings.sync_mode.description" = "Enlaces de fuentes API: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
+"coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "New";
+"coin_settings.bitcoin_cash_coin_type.description.type0" = "Older wallets (before Aug 2017)";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "Newer wallets";
 "sync_mode.from_blockchain" = "Desde Blockchain";
 "blockchain_settings.change_alert.title" = "Formato de Dirección";
 "blockchain_settings.change_alert.content" = "Después de este cambio, el monedero tendrá que resincronizarse con el blockchain %@.\n\n\nCuando cambie el formato de dirección para %@, el saldo actual y el historial de transacciones dejarán de ser visibles. Cambiarlo de vuelta a la configuración anterior traerá todo de vuelta después de que el monedero se resincronice a sí mismo con el blockchain. Recomendamos no cambiarlo si no está seguro de lo que es.";
@@ -90,6 +94,7 @@
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "Formato de Dirección";
+
 // Backup
 
 "backup.close" = "Cerrar";
@@ -105,15 +110,9 @@
 
 "backup.words.confirmation_description" = "Insertar palabras de su clave %@";
 
-"backup.eos.account_name" = "Account Name";
-"backup.eos.active_private_key" = "Active Private Key";
-"backup.eos.hint" = "Copiar su clave utilizando la acción \"copiar\" implica ciertos riesgos si utiliza aplicaciones de gestión de portapapeles u otra aplicación que pueda tener acceso a la información del portapapeles.";
 "backup.birthday_height" = "Altura de Cumpleaños";
 
 "error.send.self_transfer" = "Enviarte a vos mismo no está soportado";
-"error.send_eos.account_not_exist" = "La cuenta de destino no existe";
-"error.send_eos.insufficient_ram" = "Su cuenta EOS no tiene suficiente memoria RAM para enviar este token. Necesita aumentar la capacidad RAM para continuar.";
-"error.send_eos.unknown" = "Algo ha fallado: %@";
 "error.send_ethereum.wrong_parameters" = "Parámetros incorrectos";
 "error.send_binance.memo_required" = "El receptor requiere que el memo no esté vacío en la transacción de transferencia";
 "error.send_binance.only_digits_allowed" = "Es necesario que el memo contenga únicamente dígitos";
@@ -145,12 +144,12 @@
 "balance.sort.24h_change" = "Precio(%) 24H";
 "balance_error.change_source" = "Cambiar Origen";
 "balance_error.sync_error" = "Error de sincronización";
-
+"lost_accounts.warning_title" = "iOS Keychain Error";
+"lost_accounts.warning_message" = "The encrypted data holding your wallet was recently invalidated because your iOS lock screen was changed";
 // Deposit
 
 "deposit.receive_coin" = "Recibir %@";
 "deposit.your_address" = "Su dirección";
-"deposit.your_account" = "Su cuenta";
 "receive_alert.not_backed_up_description" = "Necesita respaldar el monedero %@ antes de poder recibir %@.";
 
 // Send
@@ -158,7 +157,7 @@
 "send.title" = "Enviar %@";
 "send.amount_placeholder" = "Importe";
 "send.address_placeholder" = "Dirección";
-"send.account_placeholder" = "Cuenta";
+"send.address_or_domain_placeholder" = "Address or Domain";
 "send.fee" = "Comisión";
 "send.tx_speed" = "Tarifa de Transacción";
 "send.tx_speed_low" = "Bajo";
@@ -182,7 +181,19 @@
 "send.hodler_locktime_year" = "1 año";
 "send.hodler_locktime_off" = "Apagado";
 "send.hodler_error.unsupported_address" = "El bloqueo del tiempo solo funciona con direcciones P2PKH (a partir de 1)";
+"send.fee_info.title" = "Transaction Speed";
+"send.fee_info.description" = "Both Bitcoin and Ethereum blockchains require users to pay usage fees while sending transactions on the blockchain.\n\nUnstoppable uses public fee estimate services to help user determine appropriate transaction fees for the moment. The fees are higher when there are a lot of transactions taking place and lower when the blockchain is less busy.";
+"send.fee_info.header_slow" = "Slow";
+"send.fee_info.content_slow" = "Selecting a value from this range may result in transaction being pending for hours or being rejected entirely. The lower the value the longer it will take for the transaction to confirm.";
+"send.fee_info.header_average" = "Average";
+"send.fee_info.content_average" = "Typically, this fee range should be sufficient for transaction to be processed within minutes/hour for Bitcoin and within minutes for Ethereum.";
+"send.fee_info.header_fast" = "Fast";
+"send.fee_info.content_fast" = "For transactions where priority is important we recommend using high fee setting. It's expected that selecting high fee setting will be sufficient for transaction to be completed within 10 minutes for Bitcoin and within a few minutes for Ethereum.";
+"send.fee_info.content_conclusion" = "The Unstoppable wallet makes an educated guess based on the network activity and can't not guarantee that the suggested fee values will always result in expected behavior.";
 
+"send.confirmation.domain" = "Domain";
+"send.confirmation.address" = "Address";
+"send.confirmation.account" = "Account";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total";
 "send.confirmation.send_button" = "Enviar";
@@ -235,9 +246,11 @@
 "swap.advanced_settings.recipient.footer" = "Después de la operación de cambio, el monto se transferirá a la dirección especificada";
 "swap.advanced_settings.deadline_minute" = "%@ min";
 "swap.advanced_settings.recipient_address" = "Dirección del destinatario";
-"swap.advanced_settings.recipient.placeholder" = "No establecido";
 "swap.advanced_settings.error.lower_slippage" = "Es probable que su transacción falle.";
 "swap.advanced_settings.error.higher_slippage" = "Valor máximo permitido %@%%.";
+"swap.advanced_settings.error.invalid_address" = "Invalid Address";
+"swap.advanced_settings.error.invalid_slippage" = "Invalid Slippage";
+"swap.advanced_settings.error.invalid_deadline" = "Invalid Deadline";
 
 "swap.fee" = "Tarifa por permutar";
 "swap.transactions_speed" = "Velocidad de transacción";
@@ -278,6 +291,39 @@
 "swap.uniswap_info.header_transaction_speed" = "Velocidad de transacción";
 "swap.uniswap_info.content_transaction_speed" = "Las transacciones con una tarifa de transacción más alta darán como resultado velocidades de procesamiento más rápidas. Lo opuesto también.";
 
+// Market
+
+"market.tab_bar_item" = "Market";
+"market.title" = "Market";
+"market.category.all" = "All";
+"market.category.defi" = "DeFi";
+"market.category.favorites" = "Watchlist";
+"market.total_market_cap" = "Total\nMarket Cap";
+"market.24h_volume" = "24h Volume";
+"market.btc_dominance" = "BTC Dominance";
+"market.defi_cap" = "DeFi Cap";
+"market.defi_tvl" = "TVL in DeFi";
+
+"market.sort_by" = "Sort By";
+"market.changes" = "Changes";
+
+"market.top.highest_cap" = "Highest Cap";
+"market.top.lowest_cap" = "Lowest Cap";
+"market.top.highest_volume" = "Highest Volume";
+"market.top.lowest_volume" = "Lowest Volume";
+"market.top.highest_price" = "Highest Price";
+"market.top.lowest_price" = "Lowest Price";
+"market.top.top_gainers" = "Top Gainers";
+"market.top.top_loosers" = "Top Loosers";
+
+"market.top.period_1h" = "1 hour";
+"market.top.period_24h" = "24 hours";
+"market.top.period_day_start" = "Day Start";
+"market.top.period_one_day" = "1 day";
+"market.top.period_one_week" = "1 week";
+"market.top.period_one_month" = "1 month";
+"market.top.period_one_year" = "1 year";
+
 // Transactions
 
 "transactions.title" = "Transacciones";
@@ -301,7 +347,7 @@
 "tx_info.transaction_id" = "Identificación de la transacción";
 "tx_info.to_hash" = "Para";
 "tx_info.input" = "Entrada";
-"tx_info.button_verify" = "Verificar";
+"tx_info.button_explorer" = "View on %@";
 "tx_info.rate" = "Tasa histórica";
 "tx_info.fee" = "Comisión";
 "tx_info.to_self_note" = "Esta transacción fue enviada a su propia dirección";
@@ -310,40 +356,7 @@
 "tx_info.unlocked_at" = "Desbloqueado en %@";
 "tx_info.recipient_hash" = "Destinatario";
 "tx_info.raw_transaction" = "Transacción sin procesar";
-
-// Full Info
-
-"full_info.title" = "Transacción";
-"full_info.time" = "Hora";
-"full_info.block" = "Bloquear";
-"full_info.confirmations" = "Confirmaciones";
-"full_info.size" = "Tamaño";
-"full_info.fee" = "Comisión";
-"full_info.rate" = "Tasa";
-"full_info.inputs" = "Aportaciones";
-"full_info.outputs" = "Rendimientos";
-"full_info.source" = "Origen";
-"full_info.contract" = "Contrato";
-"full_info.from" = "Desde ";
-"full_info.to" = "Para";
-"full_info.amount" = "Importe";
-"full_info.nonce" = "Nonce";
-"full_info.memo" = "Memo";
-"full_info.cpu" = "Uso de CPU";
-"full_info.net" = "Uso de red";
-"full_info.milli_seconds" = "%@ μs";
-"full_info.bytes" = "%@ Bytes";
-
-"full_info.gas_limit" = "Límite de gas";
-"full_info.gas_used" = "Gas usado";
-"full_info.gas_price" = "Precio de gas";
-
-"full_info.source.title" = "Origen";
-
-"full_info.error.server_offline" = "desconectado";
-"full_info.error.transaction_not_found" = "La transacción no se pudo encontrar en el blockchain";
-"full_info.error.change_source" = "Cambiar origen";
-"full_info.no_address" = "Dirección vacía";
+"tx_info.memo" = "Memo";
 
 // Settings
 
@@ -419,6 +432,7 @@ Desarrollamos Unstoppable para nosotros mismos ya que las soluciones disponibles
 "terms.item.root" = "Entiendo que rootear mi teléfono (rooting), instalando aplicaciones de terceros de fuentes desconocidas o mantener el sistema operativo desactualizado puede, potencialmente,
 poner en peligro la seguridad de mis fondos.";
 "terms.item.bugs" = "Entiendo que puede haber problemas de software sin descubrir en el código que hace funcionar esta aplicación, lo que puede llevar a un comportamiento inesperado o al mal funcionamiento de la aplicación.";
+"terms.item.pin" = "I understand that disabling the phone unlock passcode in Settings of iOS will erase wallet private keys from my device. I will need my private keys to regain access to my wallet.";
 "terms.footer" = "¡Gracias por elegir este monedero!";
 
 // Settings -> Tell Friends
@@ -487,8 +501,6 @@ poner en peligro la seguridad de mis fondos.";
 "settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará los monederos %@ de este dispositivo.";
 "settings_manage_keys.delete.confirmation_disable" = "Monedas que serán deshabilitadas: %@";
 "settings_manage_keys.delete.confirmation_loose" = "Si usted no respaldó la clave privada para este monedero, perderá el acceso a sus fondos.";
-"error.invalid_eos_key" = "Clave inválida";
-"error.invalid_eos_account" = "Cuenta inválida";
 
 // Settings -> About App
 
@@ -622,7 +634,6 @@ poner en peligro la seguridad de mis fondos.";
 "add_token_selector.choose_blockchain" = "Elegir Blockchain";
 "add_token_selector.add_token" = "Añadir Token";
 "add_token_selector.erc20_token" = "ERC20 Token";
-"add_token_selector.eos_token" = "EOS Token";
 "add_token_selector.binance_token" = "BEP2 Token";
 
 // Add Token
