@@ -82,6 +82,10 @@
 "coin_settings.sync_mode.fast.description" = "0-2 saat, Tavsiye edilen";
 "coin_settings.sync_mode.slow.description" = "1-24 saat";
 "coin_settings.sync_mode.description" = "API kaynak linkleri: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg\n";
+"coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "New";
+"coin_settings.bitcoin_cash_coin_type.description.type0" = "Older wallets (before Aug 2017)";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "Newer wallets";
 "sync_mode.from_blockchain" = "Blockchain çıkışlı";
 "blockchain_settings.change_alert.title" = "Adres Formatı";
 "blockchain_settings.change_alert.content" = "Bu değişiklikten sonra cüzdan %@ blok zinciri ile kendini yeniden senkronize etmek zorunda kalacak.\n\n%@ için adres biçimini değiştirdiğinizde, mevcut bakiye ve işlem geçmişi artık bakiye sekmesinde görünmeyecek. Bir önceki ayara geri döndürmek, cüzdan blok zinciriyle kendini yeniden senkronize ettikten sonra her şeyi geri getirecektir. Bunun ne olduğundan emin değilseniz değiştirmemenizi öneririz.";
@@ -90,6 +94,7 @@
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "Adres Formatı";
+
 // Backup
 
 "backup.close" = "Kapat";
@@ -105,15 +110,9 @@
 
 "backup.words.confirmation_description" = "%@ Anahtarınızda ki kelimeleri girin";
 
-"backup.eos.account_name" = "Account Name";
-"backup.eos.active_private_key" = "Active Private Key";
-"backup.eos.hint" = "Anahtarınızı \"Kopyala\" eylemiyle kopyalamanız anahtarınızın pano yönetisine ve panoya erişimi olan diğer uygulamalara sızma riskini taşır.";
 "backup.birthday_height" = "Oluşturulma Günü Üst Sınırı";
 
 "error.send.self_transfer" = "Kendine gönderme desteklenmiyor";
-"error.send_eos.account_not_exist" = "Hedef hesap yok";
-"error.send_eos.insufficient_ram" = "EOS hesabınızda bu kripto parayı göndermek için yeterli RAM bulunmuyor. Devam etmek için EOS RAM hissenizi arttırmak gerekiyor.";
-"error.send_eos.unknown" = "Beklenmeyen bir hata oluştu: %@";
 "error.send_ethereum.wrong_parameters" = "Yanlış parametreler";
 "error.send_binance.memo_required" = "Aktarım işleminde alıcı boş olmayan not istiyor";
 "error.send_binance.only_digits_allowed" = "Notun yalnızca rakam içermesini gerektirir";
@@ -145,12 +144,12 @@
 "balance.sort.24h_change" = "24 saat Fiyat(%)";
 "balance_error.change_source" = "Kaynağı Değiştir";
 "balance_error.sync_error" = "Senk. hatası";
-
+"lost_accounts.warning_title" = "iOS Keychain Error";
+"lost_accounts.warning_message" = "The encrypted data holding your wallet was recently invalidated because your iOS lock screen was changed";
 // Deposit
 
 "deposit.receive_coin" = "%@ al";
 "deposit.your_address" = "Adresiniz";
-"deposit.your_account" = "Senin Hesabın";
 "receive_alert.not_backed_up_description" = "Öncelikle %@ cüzdanınızı yedeklemeniz gerekiyor daha sonra %@ kripto parasını alabilirsiniz.";
 
 // Send
@@ -158,7 +157,7 @@
 "send.title" = "%@ gönder";
 "send.amount_placeholder" = "Tutar";
 "send.address_placeholder" = "Adres";
-"send.account_placeholder" = "Hesap";
+"send.address_or_domain_placeholder" = "Address or Domain";
 "send.fee" = "Masraf";
 "send.tx_speed" = "İşlem Ücreti";
 "send.tx_speed_low" = "Düşük";
@@ -182,7 +181,19 @@
 "send.hodler_locktime_year" = "1 yıl";
 "send.hodler_locktime_off" = "Kapat";
 "send.hodler_error.unsupported_address" = "Zaman kilitleme sadece P2PKH adresleriyle çalışır (1 ile başlayan)";
+"send.fee_info.title" = "Transaction Speed";
+"send.fee_info.description" = "Both Bitcoin and Ethereum blockchains require users to pay usage fees while sending transactions on the blockchain.\n\nUnstoppable uses public fee estimate services to help user determine appropriate transaction fees for the moment. The fees are higher when there are a lot of transactions taking place and lower when the blockchain is less busy.";
+"send.fee_info.header_slow" = "Slow";
+"send.fee_info.content_slow" = "Selecting a value from this range may result in transaction being pending for hours or being rejected entirely. The lower the value the longer it will take for the transaction to confirm.";
+"send.fee_info.header_average" = "Average";
+"send.fee_info.content_average" = "Typically, this fee range should be sufficient for transaction to be processed within minutes/hour for Bitcoin and within minutes for Ethereum.";
+"send.fee_info.header_fast" = "Fast";
+"send.fee_info.content_fast" = "For transactions where priority is important we recommend using high fee setting. It's expected that selecting high fee setting will be sufficient for transaction to be completed within 10 minutes for Bitcoin and within a few minutes for Ethereum.";
+"send.fee_info.content_conclusion" = "The Unstoppable wallet makes an educated guess based on the network activity and can't not guarantee that the suggested fee values will always result in expected behavior.";
 
+"send.confirmation.domain" = "Domain";
+"send.confirmation.address" = "Address";
+"send.confirmation.account" = "Account";
 "send.confirmation.memo_placeholder" = "Not";
 "send.confirmation.total" = "Toplam";
 "send.confirmation.send_button" = "Gönder";
@@ -235,9 +246,11 @@
 "swap.advanced_settings.recipient.footer" = "Takas etme işleminden sonra, tutar belirtilen adrese transfer edilecektir";
 "swap.advanced_settings.deadline_minute" = "%@ dk";
 "swap.advanced_settings.recipient_address" = "Alıcı Adresi";
-"swap.advanced_settings.recipient.placeholder" = "Ayarlı değil";
 "swap.advanced_settings.error.lower_slippage" = "İşleminizin başarısız olması muhtemeldir.";
 "swap.advanced_settings.error.higher_slippage" = "Maksimum izin verilen değer %@%%.";
+"swap.advanced_settings.error.invalid_address" = "Invalid Address";
+"swap.advanced_settings.error.invalid_slippage" = "Invalid Slippage";
+"swap.advanced_settings.error.invalid_deadline" = "Invalid Deadline";
 
 "swap.fee" = "Takas Ücreti";
 "swap.transactions_speed" = "İşlem hızı";
@@ -278,6 +291,39 @@
 "swap.uniswap_info.header_transaction_speed" = "İşlem hızı";
 "swap.uniswap_info.content_transaction_speed" = "Daha yüksek işlem ücretli işlemler, daha hızlı işleme hızlarıyla sonuçlanacaktır. Elbette bunun tersi de doğrudur.";
 
+// Market
+
+"market.tab_bar_item" = "Market";
+"market.title" = "Market";
+"market.category.all" = "All";
+"market.category.defi" = "DeFi";
+"market.category.favorites" = "Watchlist";
+"market.total_market_cap" = "Total\nMarket Cap";
+"market.24h_volume" = "24h Volume";
+"market.btc_dominance" = "BTC Dominance";
+"market.defi_cap" = "DeFi Cap";
+"market.defi_tvl" = "TVL in DeFi";
+
+"market.sort_by" = "Sort By";
+"market.changes" = "Changes";
+
+"market.top.highest_cap" = "Highest Cap";
+"market.top.lowest_cap" = "Lowest Cap";
+"market.top.highest_volume" = "Highest Volume";
+"market.top.lowest_volume" = "Lowest Volume";
+"market.top.highest_price" = "Highest Price";
+"market.top.lowest_price" = "Lowest Price";
+"market.top.top_gainers" = "Top Gainers";
+"market.top.top_loosers" = "Top Loosers";
+
+"market.top.period_1h" = "1 hour";
+"market.top.period_24h" = "24 hours";
+"market.top.period_day_start" = "Day Start";
+"market.top.period_one_day" = "1 day";
+"market.top.period_one_week" = "1 week";
+"market.top.period_one_month" = "1 month";
+"market.top.period_one_year" = "1 year";
+
 // Transactions
 
 "transactions.title" = "Hesap işlemleri";
@@ -301,7 +347,7 @@
 "tx_info.transaction_id" = "İşlem ID'si";
 "tx_info.to_hash" = "Alan";
 "tx_info.input" = "Giriş";
-"tx_info.button_verify" = "Doğrula";
+"tx_info.button_explorer" = "View on %@";
 "tx_info.rate" = "Geçmiş Kur";
 "tx_info.fee" = "Ücret";
 "tx_info.to_self_note" = "Bu işlem kendi adresine gönderildi";
@@ -310,40 +356,7 @@
 "tx_info.unlocked_at" = "Kilid açıldı %@";
 "tx_info.recipient_hash" = "Alıcı";
 "tx_info.raw_transaction" = "Ham işlem";
-
-// Full Info
-
-"full_info.title" = "Hesap işlemi";
-"full_info.time" = "Tarih";
-"full_info.block" = "Blok numarası";
-"full_info.confirmations" = "Onaylama";
-"full_info.size" = "Boyut";
-"full_info.fee" = "Masraf";
-"full_info.rate" = "Oran";
-"full_info.inputs" = "Girişler";
-"full_info.outputs" = "Çıkışlar";
-"full_info.source" = "Kaynak";
-"full_info.contract" = "Sözleşme";
-"full_info.from" = "Gönderen";
-"full_info.to" = "Alan";
-"full_info.amount" = "Tutar";
-"full_info.nonce" = "Nonce";
-"full_info.memo" = "Memo";
-"full_info.cpu" = "CPU Usage";
-"full_info.net" = "Net Usage";
-"full_info.milli_seconds" = "%@ μs";
-"full_info.bytes" = "%@ Bytes";
-
-"full_info.gas_limit" = "Gas Limit";
-"full_info.gas_used" = "Gas Used";
-"full_info.gas_price" = "Gas Price";
-
-"full_info.source.title" = "Kaynak";
-
-"full_info.error.server_offline" = "çevrimdışı";
-"full_info.error.transaction_not_found" = "Işlem Blockchain'de bulunamadı";
-"full_info.error.change_source" = "Kaynağı Değiştir";
-"full_info.no_address" = "Boş adres";
+"tx_info.memo" = "Memo";
 
 // Settings
 
@@ -418,6 +431,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "terms.item.phone" = "Telefonumu güvenilmeyen kişilere vermenin veya cüzdan uygulamasından güvenli PIN kilidi olmadan çıkmanın fonlarımın güvenliğini potansiyel olarak tehlikeye atabileceğini anladım.";
 "terms.item.root" = "Telefonumun yazılımını kırmanın (rootlama), bilinmeyen kaynaklardan üçüncü taraf uygulamaları yüklemenin, işletim sistemini güncel tutmamanın fonlarımın güvenliğini potansiyel olarak tehlikeye atabileceğini anladım.";
 "terms.item.bugs" = "Bu cüzdan uygulamasını çalıştıran kodda beklenmeyen durumlara veya uygulamanın hatalı çalışmasına neden olabilecek keşfedilmemiş yazılım sorunları olabileceğini anladım.";
+"terms.item.pin" = "I understand that disabling the phone unlock passcode in Settings of iOS will erase wallet private keys from my device. I will need my private keys to regain access to my wallet.";
 "terms.footer" = "Bu cüzdanı seçtiğiniz için teşekkür ederiz!";
 
 // Settings -> Tell Friends
@@ -486,8 +500,6 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "settings_manage_keys.delete.confirmation_remove" = "Bu işlem %@ Cüzdanını bu cihazdan kaldıracak.";
 "settings_manage_keys.delete.confirmation_disable" = "Etkisizleştirilecek cüzdanlar: %@";
 "settings_manage_keys.delete.confirmation_loose" = "Bu cüzdanın özel anahtarını yedeklemediyseniz, fonlarınıza erişiminizi kaybedersiniz.";
-"error.invalid_eos_key" = "Geçersiz anahtar";
-"error.invalid_eos_account" = "Geçersiz hesap";
 
 // Settings -> About App
 
@@ -621,7 +633,6 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "add_token_selector.choose_blockchain" = "Blockchain Seç";
 "add_token_selector.add_token" = "Token Ekle";
 "add_token_selector.erc20_token" = "ERC20 tokenleri";
-"add_token_selector.eos_token" = "EOS Token";
 "add_token_selector.binance_token" = "BEP2 Token";
 
 // Add Token
