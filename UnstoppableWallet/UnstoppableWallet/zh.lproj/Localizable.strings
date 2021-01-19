@@ -82,6 +82,10 @@
 "coin_settings.sync_mode.fast.description" = "0 小时 (推荐)";
 "coin_settings.sync_mode.slow.description" = "1- 24 小时";
 "coin_settings.sync_mode.description" = "API 源链接： \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
+"coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "New";
+"coin_settings.bitcoin_cash_coin_type.description.type0" = "Older wallets (before Aug 2017)";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "Newer wallets";
 "sync_mode.from_blockchain" = "来自区块链";
 "blockchain_settings.change_alert.title" = "地址格式";
 "blockchain_settings.change_alert.content" = "此更改后，钱包将必须与 %@ 区块链重新同步。\n\n\n当您更改地址格式的 %@ 时，当前余额和交易历史将不再可见。 将其更改为以前的设置将在钱包与区块链重新同步后恢复所有设置。 如果不确定，我们建议不要进行更改。";
@@ -90,6 +94,7 @@
 "blockchain_settings.sync_mode.blockchain" = "区块链";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "地址格式";
+
 // Backup
 
 "backup.close" = "关闭";
@@ -105,15 +110,9 @@
 
 "backup.words.confirmation_description" = "输入您%@密钥中的文字";
 
-"backup.eos.account_name" = "Account Name";
-"backup.eos.active_private_key" = "Active Private Key";
-"backup.eos.hint" = "如果您有使用任何剪贴板管理应用或其他可存取剪贴板数据的应用，那么适用”复制“操作复制您的密钥将会带来风险。";
 "backup.birthday_height" = "生日高度";
 
 "error.send.self_transfer" = "不支持发送给自己";
-"error.send_eos.account_not_exist" = "目标账户不存在";
-"error.send_eos.insufficient_ram" = "您的EOS账户没有足够的RAM来发送此令牌。您必须增加RAM才能继续。";
-"error.send_eos.unknown" = "出错了：%@";
 "error.send_ethereum.wrong_parameters" = "错误参数";
 "error.send_binance.memo_required" = "收款人要求在转账交易中包含非空的备注";
 "error.send_binance.only_digits_allowed" = "要求备注仅包含数字";
@@ -145,12 +144,12 @@
 "balance.sort.24h_change" = "24小时价格（%）";
 "balance_error.change_source" = "更改源";
 "balance_error.sync_error" = "同步出错";
-
+"lost_accounts.warning_title" = "iOS Keychain Error";
+"lost_accounts.warning_message" = "The encrypted data holding your wallet was recently invalidated because your iOS lock screen was changed";
 // Deposit
 
 "deposit.receive_coin" = "收到%@";
 "deposit.your_address" = "您的地址";
-"deposit.your_account" = "您的账户";
 "receive_alert.not_backed_up_description" = "您必须在接收%@之前先备份%@钱包。";
 
 // Send
@@ -158,7 +157,7 @@
 "send.title" = "发送%@";
 "send.amount_placeholder" = "金额";
 "send.address_placeholder" = "地址";
-"send.account_placeholder" = "账户";
+"send.address_or_domain_placeholder" = "Address or Domain";
 "send.fee" = "费用";
 "send.tx_speed" = "交易费用";
 "send.tx_speed_low" = "低";
@@ -182,7 +181,19 @@
 "send.hodler_locktime_year" = "1 年";
 "send.hodler_locktime_off" = "关";
 "send.hodler_error.unsupported_address" = "时间锁定只能和P2PKH地址（以1开头）一起使用";
+"send.fee_info.title" = "Transaction Speed";
+"send.fee_info.description" = "Both Bitcoin and Ethereum blockchains require users to pay usage fees while sending transactions on the blockchain.\n\nUnstoppable uses public fee estimate services to help user determine appropriate transaction fees for the moment. The fees are higher when there are a lot of transactions taking place and lower when the blockchain is less busy.";
+"send.fee_info.header_slow" = "Slow";
+"send.fee_info.content_slow" = "Selecting a value from this range may result in transaction being pending for hours or being rejected entirely. The lower the value the longer it will take for the transaction to confirm.";
+"send.fee_info.header_average" = "Average";
+"send.fee_info.content_average" = "Typically, this fee range should be sufficient for transaction to be processed within minutes/hour for Bitcoin and within minutes for Ethereum.";
+"send.fee_info.header_fast" = "Fast";
+"send.fee_info.content_fast" = "For transactions where priority is important we recommend using high fee setting. It's expected that selecting high fee setting will be sufficient for transaction to be completed within 10 minutes for Bitcoin and within a few minutes for Ethereum.";
+"send.fee_info.content_conclusion" = "The Unstoppable wallet makes an educated guess based on the network activity and can't not guarantee that the suggested fee values will always result in expected behavior.";
 
+"send.confirmation.domain" = "Domain";
+"send.confirmation.address" = "Address";
+"send.confirmation.account" = "Account";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "总额";
 "send.confirmation.send_button" = "发送​​";
@@ -235,9 +246,11 @@
 "swap.advanced_settings.recipient.footer" = "在兑换操作之后，金额将转移至指定地址";
 "swap.advanced_settings.deadline_minute" = "%@分钟。";
 "swap.advanced_settings.recipient_address" = "接收人地址";
-"swap.advanced_settings.recipient.placeholder" = "未设置";
 "swap.advanced_settings.error.lower_slippage" = "您的交易可能失败。";
 "swap.advanced_settings.error.higher_slippage" = "最大允许值是 %@%%.";
+"swap.advanced_settings.error.invalid_address" = "Invalid Address";
+"swap.advanced_settings.error.invalid_slippage" = "Invalid Slippage";
+"swap.advanced_settings.error.invalid_deadline" = "Invalid Deadline";
 
 "swap.fee" = "掉期交易费用";
 "swap.transactions_speed" = "交易速度";
@@ -278,6 +291,39 @@
 "swap.uniswap_info.header_transaction_speed" = "交易速度";
 "swap.uniswap_info.content_transaction_speed" = "交易费用较高的交易会实现更快的处理速度。反之亦然。";
 
+// Market
+
+"market.tab_bar_item" = "Market";
+"market.title" = "Market";
+"market.category.all" = "All";
+"market.category.defi" = "DeFi";
+"market.category.favorites" = "Watchlist";
+"market.total_market_cap" = "Total\nMarket Cap";
+"market.24h_volume" = "24h Volume";
+"market.btc_dominance" = "BTC Dominance";
+"market.defi_cap" = "DeFi Cap";
+"market.defi_tvl" = "TVL in DeFi";
+
+"market.sort_by" = "Sort By";
+"market.changes" = "Changes";
+
+"market.top.highest_cap" = "Highest Cap";
+"market.top.lowest_cap" = "Lowest Cap";
+"market.top.highest_volume" = "Highest Volume";
+"market.top.lowest_volume" = "Lowest Volume";
+"market.top.highest_price" = "Highest Price";
+"market.top.lowest_price" = "Lowest Price";
+"market.top.top_gainers" = "Top Gainers";
+"market.top.top_loosers" = "Top Loosers";
+
+"market.top.period_1h" = "1 hour";
+"market.top.period_24h" = "24 hours";
+"market.top.period_day_start" = "Day Start";
+"market.top.period_one_day" = "1 day";
+"market.top.period_one_week" = "1 week";
+"market.top.period_one_month" = "1 month";
+"market.top.period_one_year" = "1 year";
+
 // Transactions
 
 "transactions.title" = "交易";
@@ -301,7 +347,7 @@
 "tx_info.transaction_id" = "交易ID";
 "tx_info.to_hash" = "接收人";
 "tx_info.input" = "输入";
-"tx_info.button_verify" = "验证";
+"tx_info.button_explorer" = "View on %@";
 "tx_info.rate" = "历史价格";
 "tx_info.fee" = "费用";
 "tx_info.to_self_note" = "交易已发送至自有地址";
@@ -310,40 +356,7 @@
 "tx_info.unlocked_at" = "在 %@ 解锁了";
 "tx_info.recipient_hash" = "收款人";
 "tx_info.raw_transaction" = "原始交易";
-
-// Full Info
-
-"full_info.title" = "交易";
-"full_info.time" = "时间";
-"full_info.block" = "区块";
-"full_info.confirmations" = "确认";
-"full_info.size" = "大小";
-"full_info.fee" = "费用";
-"full_info.rate" = "价格";
-"full_info.inputs" = "输入";
-"full_info.outputs" = "输出";
-"full_info.source" = "源";
-"full_info.contract" = "合同";
-"full_info.from" = "发件人";
-"full_info.to" = "接收人";
-"full_info.amount" = "金额";
-"full_info.nonce" = "Nonce";
-"full_info.memo" = "Memo";
-"full_info.cpu" = "CPU Usage";
-"full_info.net" = "Net Usage";
-"full_info.milli_seconds" = "%@ μs";
-"full_info.bytes" = "%@ Bytes";
-
-"full_info.gas_limit" = "Gas Limit ";
-"full_info.gas_used" = "Gas Used";
-"full_info.gas_price" = "Gas Price";
-
-"full_info.source.title" = "源";
-
-"full_info.error.server_offline" = "离线";
-"full_info.error.transaction_not_found" = "无法在区块链上找到交易";
-"full_info.error.change_source" = "更改源";
-"full_info.no_address" = "空地址";
+"tx_info.memo" = "Memo";
 
 // Settings
 
@@ -418,6 +431,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "terms.item.phone" = "我理解，将我的手机交给不可信的实体或者在未设置安全PIN码锁定的情况下离开钱包应用可能会危害我的资金安全。";
 "terms.item.root" = "我理解对我的手机进行越狱（root）、安装来源不明的第三方应用、未及时更新操作系统可能会危害我的资金安全。";
 "terms.item.bugs" = "我理解，在实现此钱包应用的代码中可能存在未发现的软件问题，这可能会导致意外行为或应用故障的发生。";
+"terms.item.pin" = "I understand that disabling the phone unlock passcode in Settings of iOS will erase wallet private keys from my device. I will need my private keys to regain access to my wallet.";
 "terms.footer" = "感谢您选择我们的钱包！";
 
 // Settings -> Tell Friends
@@ -486,8 +500,6 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "settings_manage_keys.delete.confirmation_remove" = "该操作将从此设备删除%@钱包。";
 "settings_manage_keys.delete.confirmation_disable" = "将被禁用的代币：%@";
 "settings_manage_keys.delete.confirmation_loose" = "如果您尚未对此钱包备份私钥，您将失去您的资金。";
-"error.invalid_eos_key" = "错误密钥";
-"error.invalid_eos_account" = "无效账户";
 
 // Settings -> About App
 
@@ -621,7 +633,6 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "add_token_selector.choose_blockchain" = "选择区块链";
 "add_token_selector.add_token" = "添加代币";
 "add_token_selector.erc20_token" = "ERC20 Token";
-"add_token_selector.eos_token" = "EOS Token";
 "add_token_selector.binance_token" = "BEP2 Token";
 
 // Add Token
