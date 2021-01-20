@@ -103,7 +103,6 @@ class SwapViewController: ThemeViewController {
         buttonStackCell.add(view: proceedButton)
 
         tableView.buildSections()
-        tableView.reloadData()
 
         subscribeToViewModel()
 
