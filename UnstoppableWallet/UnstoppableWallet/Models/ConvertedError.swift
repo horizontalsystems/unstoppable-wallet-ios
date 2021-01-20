@@ -1,6 +1,5 @@
 import BitcoinCore
 import BinanceChainKit
-import FeeRateKit
 import Erc20Kit
 import EthereumKit
 import HdWalletKit

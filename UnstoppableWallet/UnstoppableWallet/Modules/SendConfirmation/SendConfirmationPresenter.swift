@@ -22,7 +22,6 @@ extension SendConfirmationPresenter: ISendConfirmationViewDelegate {
             case let item as SendConfirmationMemoViewItem: self.view?.show(viewItem: item)
             case let item as SendConfirmationFeeViewItem: self.view?.show(viewItem: item)
             case let item as SendConfirmationTotalViewItem: self.view?.show(viewItem: item)
-            case let item as SendConfirmationDurationViewItem: self.view?.show(viewItem: item)
             case let item as SendConfirmationLockUntilViewItem: self.view?.show(viewItem: item)
             default: ()
             }

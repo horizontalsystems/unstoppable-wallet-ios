@@ -8,7 +8,7 @@ class SendFeePriorityPresenter {
     private let router: ISendFeePriorityRouter
     private let coin: Coin
 
-    private var feeRateData: FeeRate?
+    var feeRate: Int?
     private var error: Error?
 
     private(set) var feeRatePriority: FeeRatePriority
@@ -25,32 +25,23 @@ class SendFeePriorityPresenter {
 
 extension SendFeePriorityPresenter: ISendFeePriorityModule {
 
-    var feeRate: Int? {
-        feeRateData?.feeRate(priority: feeRatePriority)
-    }
-
-    var duration: TimeInterval? {
-        feeRateData?.duration(priority: feeRatePriority)
-    }
-
     var feeRateState: FeeState {
         if let error = error {
             return .error(error)
         }
-        if let feeRateData = feeRateData {
-            return .value(feeRateData.feeRate(priority: feeRatePriority))
+        if let feeRate = feeRate {
+            return .value(feeRate)
         }
         return .loading
     }
 
     func fetchFeeRate() {
-        feeRateData = nil
+        feeRate = nil
         error = nil
 
-        view?.set(duration: nil)
         view?.set(enabled: false)
 
-        interactor.syncFeeRate()
+        interactor.syncFeeRate(priority: feeRatePriority)
     }
 
 }
@@ -58,13 +49,9 @@ extension SendFeePriorityPresenter: ISendFeePriorityModule {
 extension SendFeePriorityPresenter: ISendFeePriorityViewDelegate {
 
     func onFeePrioritySelectorTap() {
-        guard let feeRateData = feeRateData else {
-            return
-        }
         let items = interactor.feeRatePriorityList.map { priority in
             PriorityItem(
                     priority: priority,
-                    duration: feeRateData.duration(priority: priority),
                     selected: priority == feeRatePriority
             )
         }
@@ -76,7 +63,7 @@ extension SendFeePriorityPresenter: ISendFeePriorityViewDelegate {
 
     func selectCustom(feeRatePriority: FeeRatePriority) {
         self.feeRatePriority = feeRatePriority
-        delegate?.onUpdateFeePriority()
+        fetchFeeRate()
     }
 
     func onOpenFeeInfo() {
@@ -93,21 +80,19 @@ extension SendFeePriorityPresenter: ISendFeePriorityViewDelegate {
             feeRatePriority = .custom(value: value, range: range)
         } else {
             view?.set(customVisible: false)
-            view?.set(duration: selectedItem.duration)
             feeRatePriority = selectedItem.priority
         }
         view?.setPriority()
-        delegate?.onUpdateFeePriority()
+        fetchFeeRate()
     }
 
 }
 
 extension SendFeePriorityPresenter: ISendFeePriorityInteractorDelegate {
 
-    func didUpdate(feeRate: FeeRate) {
-        self.feeRateData = feeRate
+    func didUpdate(feeRate: Int) {
+        self.feeRate = feeRate
 
-        view?.set(duration: feeRate.duration(priority: feeRatePriority))
         view?.set(enabled: true)
 
         delegate?.onUpdateFeePriority()

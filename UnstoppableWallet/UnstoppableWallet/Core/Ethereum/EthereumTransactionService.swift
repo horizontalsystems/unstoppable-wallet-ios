@@ -33,10 +33,7 @@ class EthereumTransactionService {
     private func gasPriceSingle(gasPriceType: GasPriceType) -> Single<Int> {
         switch gasPriceType {
         case .recommended:
-            return feeRateProvider.feeRate
-                    .map { rate in
-                        rate.feeRate(priority: .recommended)
-                    }
+            return feeRateProvider.feeRate(priority: .recommended)
         case .custom(let gasPrice):
             return Single.just(gasPrice)
         }

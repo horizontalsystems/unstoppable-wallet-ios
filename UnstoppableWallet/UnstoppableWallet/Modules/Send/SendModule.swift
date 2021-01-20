@@ -223,10 +223,6 @@ struct SendConfirmationMemoViewItem: ISendConfirmationViewItemNew {
     let memo: String
 }
 
-struct SendConfirmationDurationViewItem: ISendConfirmationViewItemNew {
-    let timeInterval: TimeInterval?
-}
-
 struct SendConfirmationLockUntilViewItem: ISendConfirmationViewItemNew {
     let lockValue: String
 }
