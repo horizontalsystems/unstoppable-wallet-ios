@@ -6,16 +6,26 @@ class SendFeePriorityPresenter {
 
     private let interactor: ISendFeePriorityInteractor
     private let router: ISendFeePriorityRouter
+    private let feeRateAdjustmentHelper: FeeRateAdjustmentHelper
     private let coin: Coin
 
-    var feeRate: Int?
-    private var error: Error?
+    private var amount: Decimal?
+    private var customFeeRate: Int?
+    private var fetchedFeeRate: Int?
 
+    private var error: Error?
     private(set) var feeRatePriority: FeeRatePriority
 
-   init(interactor: ISendFeePriorityInteractor, router: ISendFeePriorityRouter, coin: Coin) {
+    var feeRate: Int? {
+        customFeeRate ?? fetchedFeeRate.flatMap { rate in
+            feeRateAdjustmentHelper.applyRule(coinType: coin.type, amount: amount, feeRate: rate)
+        }
+    }
+
+    init(interactor: ISendFeePriorityInteractor, router: ISendFeePriorityRouter, feeRateAdjustmentHelper: FeeRateAdjustmentHelper, coin: Coin) {
         self.interactor = interactor
         self.router = router
+        self.feeRateAdjustmentHelper = feeRateAdjustmentHelper
         self.coin = coin
 
         feeRatePriority = interactor.defaultFeeRatePriority
@@ -36,12 +46,16 @@ extension SendFeePriorityPresenter: ISendFeePriorityModule {
     }
 
     func fetchFeeRate() {
-        feeRate = nil
+        fetchedFeeRate = nil
         error = nil
 
         view?.set(enabled: false)
 
         interactor.syncFeeRate(priority: feeRatePriority)
+    }
+
+    func set(amount: Decimal) {
+        self.amount = amount
     }
 
 }
@@ -63,7 +77,11 @@ extension SendFeePriorityPresenter: ISendFeePriorityViewDelegate {
 
     func selectCustom(feeRatePriority: FeeRatePriority) {
         self.feeRatePriority = feeRatePriority
-        fetchFeeRate()
+        if case let .custom(value, _) = feeRatePriority {
+            customFeeRate = value
+        }
+
+        delegate?.onUpdateFeePriority()
     }
 
     func onOpenFeeInfo() {
@@ -74,16 +92,22 @@ extension SendFeePriorityPresenter: ISendFeePriorityViewDelegate {
         if case let .custom(value: defaultValue, range: range) = selectedItem.priority {
             var value = feeRate ?? defaultValue                  // set feeRate from previous choice when select to custom slider
             value = min(value, range.upperBound)                 // value can't be more than slider upper range
+            feeRatePriority = .custom(value: value, range: range)
 
             view?.set(customVisible: true)
             view?.set(customFeeRateValue: value, customFeeRateRange: range)
-            feeRatePriority = .custom(value: value, range: range)
+            view?.setPriority()
+
+            delegate?.onUpdateFeePriority()
         } else {
-            view?.set(customVisible: false)
+            customFeeRate = nil
             feeRatePriority = selectedItem.priority
+
+            view?.set(customVisible: false)
+            view?.setPriority()
+
+            fetchFeeRate()
         }
-        view?.setPriority()
-        fetchFeeRate()
     }
 
 }
@@ -91,7 +115,7 @@ extension SendFeePriorityPresenter: ISendFeePriorityViewDelegate {
 extension SendFeePriorityPresenter: ISendFeePriorityInteractorDelegate {
 
     func didUpdate(feeRate: Int) {
-        self.feeRate = feeRate
+        fetchedFeeRate = feeRate
 
         view?.set(enabled: true)
 

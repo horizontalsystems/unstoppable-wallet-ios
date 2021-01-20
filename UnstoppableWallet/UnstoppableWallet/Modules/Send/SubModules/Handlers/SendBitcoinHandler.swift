@@ -151,6 +151,7 @@ extension SendBitcoinHandler: ISendBitcoinInteractorDelegate {
 extension SendBitcoinHandler: ISendAmountDelegate {
 
     func onChangeAmount() {
+        feePriorityModule.set(amount: amountModule.currentAmount)
         syncState()
         syncValidation()
     }

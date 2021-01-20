@@ -1430,6 +1430,7 @@
 		2FA5D321784316EE976FA909 /* SendHodlerModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DCB3F647B2A0DE10A0E4 /* SendHodlerModule.swift */; };
 		2FA5D3577AE809D563B14FB1 /* KitCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D02D8F5C2AE32C6FF923 /* KitCleaner.swift */; };
 		2FA5D40E1007CBA5067A68C8 /* LogRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D73DA43455B86DF104FE /* LogRecord.swift */; };
+		2FA5D411AB77B68CAEC4D498 /* FeeRateAdjustmentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D0D01268B444930AC3F2 /* FeeRateAdjustmentHelper.swift */; };
 		2FA5D419610C9D1B86DE8AD8 /* SendHodlerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DF7B14D5A200DDF5168D /* SendHodlerView.swift */; };
 		2FA5D4911967E0DC4E7477C1 /* ExperimentalFeaturesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DC34FD081A36371936F2 /* ExperimentalFeaturesRouter.swift */; };
 		2FA5D4E349D2594747DF9B71 /* SendHodlerModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DCB3F647B2A0DE10A0E4 /* SendHodlerModule.swift */; };
@@ -1447,6 +1448,7 @@
 		2FA5D8D13ADF4AABED3DDD9C /* Erc20AvailableBalanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D69E0937472AB2B9CA81 /* Erc20AvailableBalanceViewModel.swift */; };
 		2FA5D914A678911785854772 /* ExperimentalFeaturesModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D106113680415EF6A168 /* ExperimentalFeaturesModule.swift */; };
 		2FA5D98D7EE8F90744430243 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D6E7A21AAD357C6D8EEA /* TimeInterval.swift */; };
+		2FA5D9AA4CAF93736F0ED927 /* FeeRateAdjustmentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D0D01268B444930AC3F2 /* FeeRateAdjustmentHelper.swift */; };
 		2FA5DA1EA4F381B056AA6BF5 /* ExperimentalFeaturesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DC34FD081A36371936F2 /* ExperimentalFeaturesRouter.swift */; };
 		2FA5DA3D15F168E6E25F4C35 /* TransactionLockInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D11954688FDC8AEC549C /* TransactionLockInfo.swift */; };
 		2FA5DA496EA180A42F716C83 /* SendHodlerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D28E8178D1FB4706011E /* SendHodlerPresenter.swift */; };
@@ -1467,6 +1469,7 @@
 		2FA5DD5B94905A977FEC3BE4 /* LogRecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D690E78A4568F9FD9554 /* LogRecordManager.swift */; };
 		2FA5DD621ABED0867ABBA8D4 /* ExperimentalFeaturesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEDE33019B5FEA33994A /* ExperimentalFeaturesPresenter.swift */; };
 		2FA5DDDD98533BAFCF3819C8 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D6E7A21AAD357C6D8EEA /* TimeInterval.swift */; };
+		2FA5DDEE04ABB6526A0BFB5C /* FeeRateAdjustmentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D0D01268B444930AC3F2 /* FeeRateAdjustmentHelper.swift */; };
 		2FA5DF0F2378EB4850BAE9AF /* ExperimentalFeaturesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DC34FD081A36371936F2 /* ExperimentalFeaturesRouter.swift */; };
 		2FA5DFE7462E9CB81DCF6CDD /* Erc20AvailableBalanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DF52F644EC0336AD9CD1 /* Erc20AvailableBalanceService.swift */; };
 		3A6E283D22D33B6D00211177 /* BackupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D66E95B16C32E3796E8 /* BackupRouter.swift */; };
@@ -2756,6 +2759,7 @@
 		1A564FD2BE42EF4AADB0372C /* ManageWalletsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageWalletsModule.swift; sourceTree = "<group>"; };
 		25748001A7D0AF250F7F2A6B /* Pods-Unstoppable Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unstoppable Tests.release.xcconfig"; path = "Target Support Files/Pods-Unstoppable Tests/Pods-Unstoppable Tests.release.xcconfig"; sourceTree = "<group>"; };
 		2FA5D02D8F5C2AE32C6FF923 /* KitCleaner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KitCleaner.swift; sourceTree = "<group>"; };
+		2FA5D0D01268B444930AC3F2 /* FeeRateAdjustmentHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeRateAdjustmentHelper.swift; sourceTree = "<group>"; };
 		2FA5D106113680415EF6A168 /* ExperimentalFeaturesModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentalFeaturesModule.swift; sourceTree = "<group>"; };
 		2FA5D11954688FDC8AEC549C /* TransactionLockInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionLockInfo.swift; sourceTree = "<group>"; };
 		2FA5D28E8178D1FB4706011E /* SendHodlerPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendHodlerPresenter.swift; sourceTree = "<group>"; };
@@ -4101,6 +4105,7 @@
 		11B35E09302A0C47B89EB045 /* SendFeePriority */ = {
 			isa = PBXGroup;
 			children = (
+				2FA5D0D01268B444930AC3F2 /* FeeRateAdjustmentHelper.swift */,
 				11B35324DB86C78E30BBA775 /* SendFeePriorityModule.swift */,
 				11B35AD310E6EAFAA0A8DF84 /* SendFeePriorityView.swift */,
 				11B35D64EA4FDD339C8DC162 /* SendFeePriorityRouter.swift */,
@@ -6236,6 +6241,7 @@
 				179E73F14987E34685CF6C16 /* FavoriteCoinRecord.swift in Sources */,
 				11B3586D976CBF577704F33A /* AccountRecord_v_0_19.swift in Sources */,
 				58AAA0411F3AF68B31191C28 /* FavoritesManager.swift in Sources */,
+				2FA5D411AB77B68CAEC4D498 /* FeeRateAdjustmentHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6996,6 +7002,7 @@
 				179E746F1E3D7BC613BD0AFC /* FavoriteCoinRecord.swift in Sources */,
 				11B35A42D28B8BC4CDA57D8E /* AccountRecord_v_0_19.swift in Sources */,
 				58AAA4F8A13A1BF32A97FC0E /* FavoritesManager.swift in Sources */,
+				2FA5D9AA4CAF93736F0ED927 /* FeeRateAdjustmentHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7718,6 +7725,7 @@
 				179E7EBD494842280D9F19A4 /* FavoriteCoinRecord.swift in Sources */,
 				11B35C3AFFA5B40481AF15B9 /* AccountRecord_v_0_19.swift in Sources */,
 				58AAAE9A64100BC6B700DD5B /* FavoritesManager.swift in Sources */,
+				2FA5DDEE04ABB6526A0BFB5C /* FeeRateAdjustmentHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
