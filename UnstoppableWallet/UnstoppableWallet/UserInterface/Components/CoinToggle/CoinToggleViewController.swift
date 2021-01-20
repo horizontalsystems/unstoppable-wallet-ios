@@ -13,6 +13,8 @@ class CoinToggleViewController: ThemeSearchViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
 
+    private var isLoaded = false
+
     init(viewModel: ICoinToggleViewModel) {
         self.viewModel = viewModel
 
@@ -42,12 +44,19 @@ class CoinToggleViewController: ThemeSearchViewController {
                     self?.onUpdate(viewState: viewState)
                 })
                 .disposed(by: disposeBag)
+
+        tableView.buildSections()
+
+        isLoaded = true
     }
 
     private func onUpdate(viewState: CoinToggleViewModel.ViewState) {
         let animated = self.viewState.featuredViewItems.count == viewState.featuredViewItems.count && self.viewState.viewItems.count == viewState.viewItems.count
         self.viewState = viewState
-        tableView.reload(animated: animated)
+
+        if isLoaded {
+            tableView.reload(animated: animated)
+        }
     }
 
     private func rows(viewItems: [CoinToggleViewModel.ViewItem]) -> [RowProtocol] {
