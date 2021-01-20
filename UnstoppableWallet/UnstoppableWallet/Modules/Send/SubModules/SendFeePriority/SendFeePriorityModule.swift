@@ -40,6 +40,7 @@ protocol ISendFeePriorityModule: AnyObject {
     var feeRate: Int? { get }
 
     func fetchFeeRate()
+    func set(amount: Decimal)
 }
 
 struct PriorityItem {

@@ -148,6 +148,7 @@ extension SendEthereumHandler: ISendHandler {
 extension SendEthereumHandler: ISendAmountDelegate {
 
     func onChangeAmount() {
+        feePriorityModule.set(amount: amountModule.currentAmount)
         if syncValidation() {
             syncEstimateGasLimit()
         }
