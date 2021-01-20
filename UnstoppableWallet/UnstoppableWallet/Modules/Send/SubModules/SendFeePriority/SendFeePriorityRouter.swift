@@ -7,7 +7,7 @@ class SendFeePriorityRouter {
 
 extension SendFeePriorityRouter {
 
-    static func module(coin: Coin, customPriorityUnit: CustomPriorityUnit? = nil) -> (UIView, ISendFeePriorityModule, ISendSubRouter)? {
+    static func module(coin: Coin, customPriorityUnit: CustomPriorityUnit? = nil) -> (UIView?, ISendFeePriorityModule, ISendSubRouter)? {
         let feeCoin = App.shared.feeCoinProvider.feeCoin(coin: coin) ?? coin
 
         guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: feeCoin.type) else {
@@ -17,10 +17,13 @@ extension SendFeePriorityRouter {
         let router = SendFeePriorityRouter()
         let interactor = SendFeePriorityInteractor(provider: feeRateProvider)
         let presenter = SendFeePriorityPresenter(interactor: interactor, router: router, coin: coin)
-        let view = SendFeePriorityView(delegate: presenter, customPriorityUnit: customPriorityUnit)
-
         interactor.delegate = presenter
-        presenter.view = view
+
+        var view: SendFeePriorityView? = nil
+        if !feeRateProvider.feeRatePriorityList.isEmpty {
+            view = SendFeePriorityView(delegate: presenter, customPriorityUnit: customPriorityUnit)
+            presenter.view = view
+        }
 
         return (view, presenter, router)
     }
@@ -33,7 +36,7 @@ extension SendFeePriorityRouter: ISendFeePriorityRouter {
         let alertController = AlertRouter.module(
                 title: "send.tx_speed".localized,
                 viewItems: items.map { item in
-                    AlertViewItem(text: "\(item.priority.title) \((item.duration?.approximateHoursOrMinutes).map { "(~ \($0))" }  ?? "")", selected: item.selected)
+                    AlertViewItem(text: "\(item.priority.title)", selected: item.selected)
                 }
         ) { index in
             onSelect(items[index])

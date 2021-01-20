@@ -5,7 +5,6 @@ protocol ISendFeePriorityView: class {
     func set(customVisible: Bool)
     func set(customFeeRateValue: Int, customFeeRateRange: ClosedRange<Int>)
     func set(enabled: Bool)
-    func set(duration: TimeInterval?)
 }
 
 protocol ISendFeePriorityViewDelegate {
@@ -16,13 +15,13 @@ protocol ISendFeePriorityViewDelegate {
 }
 
 protocol ISendFeePriorityInteractor {
-    func syncFeeRate()
+    func syncFeeRate(priority: FeeRatePriority)
     var defaultFeeRatePriority: FeeRatePriority { get }
     var feeRatePriorityList: [FeeRatePriority] { get }
 }
 
 protocol ISendFeePriorityInteractorDelegate {
-    func didUpdate(feeRate: FeeRate)
+    func didUpdate(feeRate: Int)
     func didReceiveError(error: Error)
 }
 
@@ -38,15 +37,12 @@ protocol ISendFeePriorityDelegate: class {
 protocol ISendFeePriorityModule: AnyObject {
     var delegate: ISendFeePriorityDelegate? { get set }
     var feeRateState: FeeState { get }
-
     var feeRate: Int? { get }
-    var duration: TimeInterval? { get }
 
     func fetchFeeRate()
 }
 
 struct PriorityItem {
     let priority: FeeRatePriority
-    let duration: TimeInterval?
     let selected: Bool
 }

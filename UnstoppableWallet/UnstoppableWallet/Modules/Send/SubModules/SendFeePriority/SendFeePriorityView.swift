@@ -6,9 +6,6 @@ import ThemeKit
 class SendFeePriorityView: UIView {
     let delegate: ISendFeePriorityViewDelegate
 
-    private let durationTitleLabel = UILabel()
-    private let durationValueLabel = UILabel()
-
     private let feeSliderWrapper = FeeSliderWrapper()
     private let separator = UIView()
     private let selectableValueView = C5Cell(style: .default, reuseIdentifier: nil)
@@ -23,25 +20,6 @@ class SendFeePriorityView: UIView {
 
         backgroundColor = .clear
 
-        addSubview(durationTitleLabel)
-        durationTitleLabel.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(CGFloat.margin3x)
-            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
-        }
-        durationTitleLabel.text = "send.tx_duration".localized
-        durationTitleLabel.font = .subhead2
-        durationTitleLabel.textColor = .themeGray
-
-        addSubview(durationValueLabel)
-        durationValueLabel.snp.makeConstraints { maker in
-            maker.centerY.equalTo(durationTitleLabel.snp.centerY)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.leading.equalTo(durationTitleLabel.snp.trailing).offset(CGFloat.margin4x)
-        }
-        durationValueLabel.font = .subhead2
-        durationValueLabel.textColor = .themeGray
-        durationValueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-
         addSubview(feeSliderWrapper)
         feeSliderWrapper.snp.makeConstraints { maker in
             maker.top.equalToSuperview()
@@ -54,8 +32,8 @@ class SendFeePriorityView: UIView {
 
         addSubview(separator)
         separator.snp.makeConstraints { maker in
-            maker.top.equalTo(durationTitleLabel.snp.bottom).offset(CGFloat.margin3x)
-            maker.leading.trailing.equalToSuperview()
+            maker.top.equalToSuperview().offset(CGFloat.margin3x)
+            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
             maker.height.equalTo(CGFloat.heightOnePixel)
         }
 
@@ -63,7 +41,6 @@ class SendFeePriorityView: UIView {
 
         addSubview(selectableValueView.contentView)
         selectableValueView.contentView.snp.makeConstraints { maker in
-            maker.top.equalTo(durationTitleLabel.snp.bottom).offset(CGFloat.margin3x)
             maker.top.equalTo(feeSliderWrapper.snp.bottom)
             maker.bottom.leading.trailing.equalToSuperview()
             maker.height.equalTo(CGFloat.heightSingleLineCell)
@@ -120,17 +97,11 @@ extension SendFeePriorityView: ISendFeePriorityView {
 
     func set(customVisible: Bool) {
         feeSliderWrapper.isHidden = !customVisible
-        durationTitleLabel.isHidden = customVisible
-        durationValueLabel.isHidden = customVisible
     }
 
     func set(customFeeRateValue: Int, customFeeRateRange: ClosedRange<Int>) {
         let presentationRange = convert(customFeeRateRange)
         feeSliderWrapper.set(value: convert(customFeeRateValue), range: presentationRange, description: customPriorityUnit?.presentationName)
-    }
-
-    func set(duration: TimeInterval?) {
-        durationValueLabel.text = duration.map { "send.duration.within".localized($0.approximateHoursOrMinutes) } ?? "send.duration.instant".localized
     }
 
 }

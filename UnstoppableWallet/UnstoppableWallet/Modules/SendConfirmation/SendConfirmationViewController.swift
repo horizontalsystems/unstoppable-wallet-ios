@@ -211,20 +211,6 @@ extension SendConfirmationViewController: ISendConfirmationView {
         bottomRows.append(row)
     }
 
-    func show(viewItem: SendConfirmationDurationViewItem) {
-        let row = Row<AdditionalDataCell>(
-                id: "send_duration_row",
-                height: AdditionalDataCell.height,
-                bind: { cell, _ in
-                    cell.bind(title: "send.tx_duration".localized, value: viewItem.timeInterval.map {
-                        "send.duration.within".localized($0.approximateHoursOrMinutes)
-                    } ?? "send.duration.instant".localized)
-                }
-        )
-
-        bottomRows.append(row)
-    }
-
     func show(viewItem: SendConfirmationLockUntilViewItem) {
         let row = Row<AdditionalDataCell>(
                 id: "send_lock_until_row",

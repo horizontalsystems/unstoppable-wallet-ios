@@ -82,7 +82,9 @@ extension SendRouter {
         guard let (feePriorityView, feePriorityModule, feePriorityRouter) = SendFeePriorityRouter.module(coin: coin, customPriorityUnit: .satoshi) else {
             return nil
         }
-        views.append(feePriorityView)
+        if let view = feePriorityView {
+            views.append(view)
+        }
         routers.append(feePriorityRouter)
 
         if interactor.lockTimeEnabled && coin.type == .bitcoin {
@@ -132,8 +134,13 @@ extension SendRouter {
         let (addressView, addressModule, addressRouter) = SendAddressRouter.module(coin: coin)
         let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
 
+        var views: [UIView] = [amountView, addressView, feeView]
+
         guard let (feePriorityView, feePriorityModule, feePriorityRouter) = SendFeePriorityRouter.module(coin: coin, customPriorityUnit: .gwei) else {
             return nil
+        }
+        if let view = feePriorityView {
+            views.append(view)
         }
 
         let interactor = SendEthereumInteractor(adapter: adapter)
@@ -143,7 +150,7 @@ extension SendRouter {
         addressModule.delegate = presenter
         feePriorityModule.delegate = presenter
 
-        return (presenter, [amountView, addressView, feeView, feePriorityView], [addressRouter, feePriorityRouter])
+        return (presenter, views, [addressRouter, feePriorityRouter])
     }
 
     private static func module(coin: Coin, adapter: ISendBinanceAdapter) -> (ISendHandler, [UIView], [ISendSubRouter]) {

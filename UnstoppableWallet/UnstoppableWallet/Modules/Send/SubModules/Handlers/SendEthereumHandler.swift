@@ -1,7 +1,6 @@
 import Foundation
 import RxSwift
 import EthereumKit
-import FeeRateKit
 import Erc20Kit
 import HsToolKit
 
@@ -117,7 +116,6 @@ extension SendEthereumHandler: ISendHandler {
     func confirmationViewItems() throws -> [ISendConfirmationViewItemNew] {
         [
             SendConfirmationAmountViewItem(primaryInfo: try amountModule.primaryAmountInfo(), secondaryInfo: try amountModule.secondaryAmountInfo(), receiver: try addressModule.validAddress()),
-            SendConfirmationDurationViewItem(timeInterval: feePriorityModule.duration),
             SendConfirmationFeeViewItem(primaryInfo: feeModule.primaryAmountInfo, secondaryInfo: feeModule.secondaryAmountInfo)
         ]
     }
