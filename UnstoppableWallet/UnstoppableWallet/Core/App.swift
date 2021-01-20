@@ -13,7 +13,7 @@ class App {
     let appConfigProvider: IAppConfigProvider
 
     let localStorage: ILocalStorage & IChartTypeStorage
-    let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & ICoinRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage
+    let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & ICoinRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage
 
     let themeManager: ThemeManager
     let systemInfoManager: ISystemInfoManager
@@ -38,6 +38,7 @@ class App {
     let currencyKit: ICurrencyKit
 
     let rateManager: IRateManager & IPostsManager
+    let favoritesManager: IFavoritesManager
 
     let feeCoinProvider: IFeeCoinProvider
     let feeRateProviderFactory: FeeRateProviderFactory
@@ -129,6 +130,7 @@ class App {
         feeRateProviderFactory = FeeRateProviderFactory(appConfigProvider: appConfigProvider)
 
         rateManager = RateManager(walletManager: walletManager, currencyKit: currencyKit, rateCoinMapper: RateCoinMapper(), feeCoinProvider: feeCoinProvider, coinMarketCapApiKey: appConfigProvider.coinMarketCapApiKey, cryptoCompareApiKey: appConfigProvider.cryptoCompareApiKey, uniswapSubgraphUrl: appConfigProvider.uniswapSubgraphUrl)
+        favoritesManager = FavoritesManager(storage: storage)
 
         sortTypeManager = SortTypeManager(localStorage: localStorage)
 

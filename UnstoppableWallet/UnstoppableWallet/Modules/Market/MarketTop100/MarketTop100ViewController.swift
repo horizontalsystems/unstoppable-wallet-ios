@@ -12,6 +12,8 @@ class MarketTop100ViewController: ThemeViewController {
     private let marketMetricsCell: MarketMetricsCell
     private let marketTopView = MarketListModule.topView()
 
+    var pushController: ((UIViewController) -> ())?
+
     init(viewModel: MarketTop100ViewModel) {
         self.viewModel = viewModel
 
@@ -32,15 +34,18 @@ class MarketTop100ViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        tableView.allowsSelection = false
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
 
         marketTopView.registeringCellClasses.forEach { tableView.registerCell(forClass: $0) }
+
         marketTopView.openController = { [weak self] in
             self?.present($0, animated: true)
+        }
+        marketTopView.pushController = { [weak self] in
+            self?.pushController?($0)
         }
 
         subscribe(disposeBag, marketTopView.sectionUpdatedSignal) { [weak self] in self?.tableView.reload() }
@@ -60,11 +65,10 @@ extension MarketTop100ViewController: SectionsDataSource {
                         cell: marketMetricsCell,
                         id: "metrics",
                         height: MarketMetricsCell.cellHeight
-
                 )
         )
 
-        return [Section(id: "123", rows: rows), marketTopView.section]
+        return [Section(id: "market_metrics", rows: rows), marketTopView.section]
     }
 
 }

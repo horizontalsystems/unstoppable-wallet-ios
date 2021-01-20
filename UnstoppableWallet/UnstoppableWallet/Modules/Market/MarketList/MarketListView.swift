@@ -7,6 +7,7 @@ class MarketListView {
 
     private let viewModel: MarketListViewModel
     var openController: ((UIViewController) -> ())?
+    var pushController: ((UIViewController) -> ())?
 
     private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
@@ -95,12 +96,16 @@ class MarketListView {
                         diff: viewItem.diff,
                         last: last)
                 },
-                action: { _ in
-                    //todo: show chart page
-//                    self?.delegate.onSelect(index: index)
+                action: { [weak self] _ in
+                    self?.onSelect(viewItem: viewItem)
                 }
         )
 
+    }
+
+    private func onSelect(viewItem: MarketListViewModel.ViewItem) {
+        let viewController = ChartRouter.module(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinName, coinType: viewItem.coinType))
+        pushController?(viewController)
     }
 
 }

@@ -12,8 +12,8 @@ class RateListRouter {
 
 extension RateListRouter: IRateListRouter {
 
-    func showChart(coinCode: String, coinTitle: String) {
-        navigationRouter?.push(viewController: ChartRouter.module(launchMode: .partial(coinCode: coinCode, coinTitle: coinTitle)))
+    func showChart(coinCode: String, coinTitle: String, coinType: CoinType?) {
+        navigationRouter?.push(viewController: ChartRouter.module(launchMode: .partial(coinCode: coinCode, coinTitle: coinTitle, coinType: coinType)))
     }
 
     func open(link: String) {

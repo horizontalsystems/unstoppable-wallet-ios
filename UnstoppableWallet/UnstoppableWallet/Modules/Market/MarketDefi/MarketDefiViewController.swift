@@ -14,6 +14,8 @@ class MarketDefiViewController: ThemeViewController {
     private let marketTickerCell: MarketTickerCell
     private let marketDefiView = MarketListModule.defiView()
 
+    var pushController: ((UIViewController) -> ())?
+
     init() {
         marketMetricsCell = MarketMetricsModule.cell()
         marketTickerCell = MarketTickerModule.cell()
@@ -48,6 +50,9 @@ class MarketDefiViewController: ThemeViewController {
         marketDefiView.registeringCellClasses.forEach { tableView.registerCell(forClass: $0) }
         marketDefiView.openController = { [weak self] in
             self?.present($0, animated: true)
+        }
+        marketDefiView.pushController = { [weak self] in
+            self?.pushController?($0)
         }
 
         subscribe(disposeBag, marketDefiView.sectionUpdatedSignal) { [weak self] in self?.tableView.reload() }

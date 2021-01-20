@@ -358,6 +358,13 @@ class GrdbStorage {
             }
         }
 
+        migrator.registerMigration("createFavoriteCoins") { db in
+            try db.create(table: FavoriteCoinRecord.databaseTableName) { t in
+                t.column(FavoriteCoinRecord.Columns.coinCode.name, .text).notNull()
+                t.column(FavoriteCoinRecord.Columns.coinType.name, .text)
+            }
+        }
+
         return migrator
     }
 
@@ -512,6 +519,44 @@ extension GrdbStorage: ICoinRecordStorage {
     func save(coinRecord: CoinRecord) {
         _ = try! dbPool.write { db in
             try coinRecord.insert(db)
+        }
+    }
+
+}
+
+extension GrdbStorage: IFavoriteCoinRecordStorage {
+
+    var favoriteCoinRecords: [FavoriteCoinRecord] {
+        try! dbPool.read { db in
+            try FavoriteCoinRecord.order(FavoriteCoinRecord.Columns.coinCode.asc).fetchAll(db)
+        }
+    }
+
+    func save(coinCode: String, coinType: CoinType?) {
+        let favoriteCoinRecord = FavoriteCoinRecord(coinCode: coinCode, coinType: coinType)
+
+        _ = try! dbPool.write { db in
+            try favoriteCoinRecord.insert(db)
+        }
+    }
+
+    func deleteFavoriteCoinRecord(coinCode: String, coinType: CoinType?) {
+        let coinType = coinType?.rawValue
+
+        _ = try! dbPool.write { db in
+            try FavoriteCoinRecord
+                    .filter(FavoriteCoinRecord.Columns.coinCode == coinCode && FavoriteCoinRecord.Columns.coinType == coinType)
+                    .deleteAll(db)
+        }
+    }
+
+    func inFavorites(coinCode: String, coinType: CoinType?) -> Bool {
+        let coinType = coinType?.rawValue
+
+        return try! dbPool.read { db in
+            try FavoriteCoinRecord
+                    .filter(FavoriteCoinRecord.Columns.coinCode == coinCode && FavoriteCoinRecord.Columns.coinType == coinType)
+                    .fetchCount(db) > 0
         }
     }
 

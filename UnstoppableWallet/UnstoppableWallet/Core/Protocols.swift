@@ -220,16 +220,29 @@ protocol IBlurManager {
 
 protocol IRateManager {
     func refresh()
+
+    func convertCoinTypeToXRateKitCoinType(coinType: CoinType) -> XRatesKit.CoinType
+    func convertXRateCoinTypeToCoinType(coinType: XRatesKit.CoinType) -> CoinType?
+
     func marketInfo(coinCode: String, currencyCode: String) -> MarketInfo?
-    func globalMarketInfoSingle(currencyCode: String) -> Single<GlobalMarketInfo>
-    func topMarketsSingle(currencyCode: String, fetchDiffPeriod: TimePeriod) -> Single<[TopMarket]>
-    func topDefiMarketsSingle(currencyCode: String, fetchDiffPeriod: TimePeriod) -> Single<[TopMarket]>
+    func globalMarketInfoSingle(currencyCode: String) -> Single<GlobalCoinMarket>
+    func topMarketsSingle(currencyCode: String, fetchDiffPeriod: TimePeriod) -> Single<[CoinMarket]>
+    func topDefiMarketsSingle(currencyCode: String, fetchDiffPeriod: TimePeriod) -> Single<[CoinMarket]>
     func marketInfoObservable(coinCode: String, currencyCode: String) -> Observable<MarketInfo>
     func marketInfosObservable(currencyCode: String) -> Observable<[String: MarketInfo]>
     func historicalRate(coinCode: String, currencyCode: String, timestamp: TimeInterval) -> Single<Decimal>
     func historicalRate(coinCode: String, currencyCode: String, timestamp: TimeInterval) -> Decimal?
     func chartInfo(coinCode: String, currencyCode: String, chartType: ChartType) -> ChartInfo?
     func chartInfoObservable(coinCode: String, currencyCode: String, chartType: ChartType) -> Observable<ChartInfo>
+}
+
+protocol IFavoritesManager {
+    var dataUpdatedObservable: Observable<()> { get }
+    var all: [FavoriteCoinRecord] { get }
+
+    func add(coinCode: String, coinType: CoinType?)
+    func remove(coinCode: String, coinType: CoinType?)
+    func isFavorite(coinCode: String, coinType: CoinType?) -> Bool
 }
 
 protocol IPostsManager {
@@ -520,6 +533,13 @@ protocol ICoinRecordStorage {
 protocol ICoinStorage {
     var coins: [Coin] { get }
     func save(coin: Coin) -> Bool
+}
+
+protocol IFavoriteCoinRecordStorage {
+    var favoriteCoinRecords: [FavoriteCoinRecord] { get }
+    func save(coinCode: String, coinType: CoinType?)
+    func deleteFavoriteCoinRecord(coinCode: String, coinType: CoinType?)
+    func inFavorites(coinCode: String, coinType: CoinType?) -> Bool
 }
 
 protocol ITermsManager {

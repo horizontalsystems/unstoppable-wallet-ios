@@ -21,7 +21,7 @@ class MarketMetricsViewModel {
         subscribe(disposeBag, service.globalMarketInfoObservable) { [weak self] in self?.sync(marketInfo: $0) }
     }
 
-    private func sync(marketInfo: DataStatus<GlobalMarketInfo>) {
+    private func sync(marketInfo: DataStatus<GlobalCoinMarket>) {
         if let data = marketInfo.data {
 
             metricsRelay.accept(marketMetrics(marketInfo: data))
@@ -30,7 +30,7 @@ class MarketMetricsViewModel {
         errorRelay.accept(marketInfo.error?.smartDescription)
     }
 
-    private func marketMetrics(marketInfo: GlobalMarketInfo) -> MarketMetrics? {
+    private func marketMetrics(marketInfo: GlobalCoinMarket) -> MarketMetrics? {
         let formatter = CurrencyCompactFormatter.instance
 
         guard let totalMarketCap = formatter.format(currency: service.currency, value: marketInfo.marketCap),

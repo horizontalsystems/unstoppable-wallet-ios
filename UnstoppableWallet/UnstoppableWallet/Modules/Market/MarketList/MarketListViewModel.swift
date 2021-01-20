@@ -17,7 +17,7 @@ class MarketListViewModel {
     init(service: MarketListService) {
         self.service = service
 
-        sortingField = service.sortingFields.first ?? .highestPrice
+        sortingField = service.sortingFields[0]
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
     }
 
@@ -42,6 +42,8 @@ class MarketListViewModel {
     private func sort(items: [MarketListService.Item], by sortingField: MarketListDataSource.SortingField) -> [MarketListService.Item] {
         items.sorted { item, item2 in
             switch sortingField {
+            case .highestLiquidity: return (item.liquidity ?? 0) > (item2.liquidity ?? 0)
+            case .lowestLiquidity: return (item.liquidity ?? 0) < (item2.liquidity ?? 0)
             case .highestCap: return item.marketCap > item2.marketCap
             case .lowestCap: return item.marketCap < item2.marketCap
             case .highestVolume: return item.volume > item2.volume
@@ -63,6 +65,7 @@ class MarketListViewModel {
                     rank: $0.rank,
                     coinName: $0.coinName,
                     coinCode: $0.coinCode,
+                    coinType: $0.coinType,
                     rate: rate,
                     diff: $0.diff
             )
@@ -108,13 +111,13 @@ extension MarketListViewModel {
     }
 
     public func setSortingField(at index: Int) {
-        sortingField = MarketListDataSource.SortingField(rawValue: index) ?? .highestPrice
+        sortingField = service.sortingFields[index]
 
         syncViewItemsBySortingField()
     }
 
     public func setPeriod(at index: Int) {
-        service.period = MarketListDataSource.Period(rawValue: index) ?? .day
+        service.period = service.periods[index]
     }
 
 }
@@ -125,6 +128,7 @@ extension MarketListViewModel {
         let rank: Int
         let coinName: String
         let coinCode: String
+        let coinType: CoinType?
         let rate: String
         let diff: Decimal
     }
@@ -150,6 +154,8 @@ extension MarketListDataSource.SortingField {
 
     var title: String {
         switch self {
+        case .highestLiquidity: return "market.top.highest_liquidity".localized
+        case .lowestLiquidity: return "market.top.lowest_liquidity".localized
         case .highestCap: return "market.top.highest_cap".localized
         case .lowestCap: return "market.top.lowest_cap".localized
         case .highestVolume: return "market.top.highest_volume".localized
