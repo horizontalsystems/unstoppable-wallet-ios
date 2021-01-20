@@ -7,7 +7,7 @@ class MarketMetricsService {
     private let disposeBag = DisposeBag()
     private var timer: Timer?
 
-    private let globalMarketInfoRelay = BehaviorRelay<DataStatus<GlobalMarketInfo>>(value: .loading)
+    private let globalMarketInfoRelay = BehaviorRelay<DataStatus<GlobalCoinMarket>>(value: .loading)
 
     private let rateManager: IRateManager
     private let currencyKit: ICurrencyKit
@@ -38,7 +38,7 @@ extension MarketMetricsService {
         currencyKit.baseCurrency
     }
 
-    public var globalMarketInfoObservable: Observable<DataStatus<GlobalMarketInfo>> {
+    public var globalMarketInfoObservable: Observable<DataStatus<GlobalCoinMarket>> {
         globalMarketInfoRelay.asObservable()
     }
 

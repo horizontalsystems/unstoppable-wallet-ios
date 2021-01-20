@@ -32,8 +32,17 @@ class MarketViewController: ThemeViewController {
         title = "market.title".localized
         tabBarItem = UITabBarItem(title: "market.tab_bar_item".localized, image: UIImage(named: "market_2_24"), tag: 0)
 
-        viewControllers.append(MarketTop100Module.view(service: MarketTop100Service()))
-        viewControllers.append(MarketDefiModule.view())
+        let pushController: (UIViewController) -> () = { [weak self] in
+            self?.navigationController?.pushViewController($0, animated: true)
+        }
+
+        let market100ViewController = MarketTop100Module.view(service: MarketTop100Service())
+        market100ViewController.pushController = pushController
+
+        let marketDefiViewController = MarketDefiModule.view()
+        marketDefiViewController.pushController = pushController
+
+        viewControllers = [market100ViewController, marketDefiViewController]
 //        viewControllers.append(MarketFavoritesModule.view())
     }
 

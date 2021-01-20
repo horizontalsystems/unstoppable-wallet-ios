@@ -7,7 +7,7 @@ protocol IMarketListDataSource {
     var sortingFields: [MarketListDataSource.SortingField] { get }
 
     var dataUpdatedObservable: Observable<()> { get }
-    func itemsSingle(currencyCode: String, period: MarketListDataSource.Period) -> Single<[TopMarket]>
+    func itemsSingle(currencyCode: String, period: MarketListDataSource.Period) -> Single<[CoinMarket]>
 }
 
 extension IMarketListDataSource {
@@ -33,14 +33,14 @@ class MarketTopDataSource {
 extension MarketTopDataSource: IMarketListDataSource {
 
     var sortingFields: [MarketListDataSource.SortingField] {
-        MarketListDataSource.SortingField.allCases
+        [.highestCap, .lowestCap, .highestVolume, .lowestVolume, .highestPrice, .lowestPrice, .topGainers, .topLoosers]
     }
 
     var dataUpdatedObservable: Observable<()> {
         dataUpdatedRelay.asObservable()
     }
 
-    public func itemsSingle(currencyCode: String, period: MarketListDataSource.Period) -> Single<[TopMarket]> {
+    public func itemsSingle(currencyCode: String, period: MarketListDataSource.Period) -> Single<[CoinMarket]> {
         rateManager.topMarketsSingle(currencyCode: currencyCode, fetchDiffPeriod: factory.marketListPeriod(period: period))
     }
 
@@ -61,14 +61,14 @@ class MarketDefiDataSource {
 extension MarketDefiDataSource: IMarketListDataSource {
 
     var sortingFields: [MarketListDataSource.SortingField] {
-        MarketListDataSource.SortingField.allCases
+        [.highestLiquidity, .lowestLiquidity, .highestVolume, .lowestVolume, .highestPrice, .lowestPrice, .topGainers, .topLoosers]
     }
 
     var dataUpdatedObservable: Observable<()> {
         dataUpdatedRelay.asObservable()
     }
 
-    public func itemsSingle(currencyCode: String, period: MarketListDataSource.Period) -> Single<[TopMarket]> {
+    public func itemsSingle(currencyCode: String, period: MarketListDataSource.Period) -> Single<[CoinMarket]> {
         rateManager.topDefiMarketsSingle(currencyCode: currencyCode, fetchDiffPeriod: factory.marketListPeriod(period: period))
     }
 
@@ -88,6 +88,8 @@ class MarketListDataSource {
     enum SortingField: Int, CaseIterable {
         case highestCap
         case lowestCap
+        case highestLiquidity
+        case lowestLiquidity
         case highestVolume
         case lowestVolume
         case highestPrice

@@ -25,11 +25,11 @@ protocol IRateTopListInteractor {
 
 protocol IRateTopListInteractorDelegate: AnyObject {
     func didReceive(marketInfos: [String: MarketInfo])
-    func didReceive(topMarkets: [TopMarket])
+    func didReceive(topMarkets: [RateTopListModule.TopMarketItem])
 }
 
 protocol IRateTopListRouter {
-    func showChart(coinCode: String, coinTitle: String)
+    func showChart(coinCode: String, coinTitle: String, coinType: CoinType?)
     func showSortType(selected: RateTopListModule.SortType, onSelect: @escaping (RateTopListModule.SortType) -> ())
 }
 
@@ -37,7 +37,12 @@ class RateTopListModule {
 
     struct TopMarketItem {
         let rank: Int
-        var topMarket: TopMarket
+
+        let coinCode: String
+        let coinName: String
+        let coinType: CoinType?
+
+        var marketInfo: MarketInfo
     }
 
     struct ViewItem {
