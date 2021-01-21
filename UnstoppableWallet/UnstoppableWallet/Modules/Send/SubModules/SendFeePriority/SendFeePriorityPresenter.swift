@@ -54,8 +54,8 @@ extension SendFeePriorityPresenter: ISendFeePriorityModule {
         interactor.syncFeeRate(priority: feeRatePriority)
     }
 
-    func set(amount: Decimal) {
-        self.amount = amount
+    func set(currencyAmount: Decimal?) {
+        amount = currencyAmount
     }
 
 }

@@ -8,7 +8,7 @@ class FeeRateAdjustmentHelper {
             (amountRange: 5000..<10000, coefficient: 1.20),
             (amountRange: 1000..<5000,  coefficient: 1.15),
             (amountRange: 500..<1000, coefficient: 1.10),
-            (amountRange: 0..<5000, coefficient: 1.05),
+            (amountRange: 0..<500, coefficient: 1.05),
             (amountRange: nil, coefficient: 1.10)
         ],
         .ethereum: [
@@ -16,7 +16,7 @@ class FeeRateAdjustmentHelper {
             (amountRange: 5000..<10000, coefficient: 1.20),
             (amountRange: 1000..<5000,  coefficient: 1.15),
             (amountRange: 500..<1000, coefficient: 1.10),
-            (amountRange: 0..<5000, coefficient: 1.05),
+            (amountRange: 0..<500, coefficient: 1.05),
             (amountRange: nil, coefficient: 1.10)
         ]
     ]

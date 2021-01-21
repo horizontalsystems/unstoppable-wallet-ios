@@ -73,6 +73,15 @@ class SendBitcoinHandler {
         }
     }
 
+    private func syncCurrencyAmount() {
+        var currencyAmount: Decimal? = nil
+        if let amount = amountModule.amount, let rate = amountModule.rateValue {
+            currencyAmount = amount * rate
+        }
+
+        feePriorityModule.set(currencyAmount: currencyAmount)
+    }
+
 }
 
 extension SendBitcoinHandler: ISendHandler {
@@ -108,6 +117,7 @@ extension SendBitcoinHandler: ISendHandler {
     }
 
     func sync(rateValue: Decimal?) {
+        syncCurrencyAmount()
         amountModule.set(rateValue: rateValue)
     }
 
@@ -151,7 +161,7 @@ extension SendBitcoinHandler: ISendBitcoinInteractorDelegate {
 extension SendBitcoinHandler: ISendAmountDelegate {
 
     func onChangeAmount() {
-        feePriorityModule.set(amount: amountModule.currentAmount)
+        syncCurrencyAmount()
         syncState()
         syncValidation()
     }
