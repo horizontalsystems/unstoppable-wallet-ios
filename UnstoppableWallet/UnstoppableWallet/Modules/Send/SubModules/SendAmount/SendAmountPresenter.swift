@@ -12,15 +12,16 @@ class SendAmountPresenter {
 
     private let coin: Coin
     private let currency: Currency
-    private var rateValue: Decimal?
 
-    private var amount: Decimal?
     private var availableBalance: Decimal?
     private var maximumAmount: Decimal?
     private var minimumAmount: Decimal?
     private var minimumRequiredBalance: Decimal = 0
 
     private(set) var inputType: SendInputType = .coin
+
+    var rateValue: Decimal?
+    var amount: Decimal?
 
     init(coin: Coin, interactor: ISendAmountInteractor, decimalParser: IAmountDecimalParser) {
         self.coin = coin

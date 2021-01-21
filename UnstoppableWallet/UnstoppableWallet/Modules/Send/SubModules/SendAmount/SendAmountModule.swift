@@ -36,6 +36,8 @@ protocol ISendAmountInteractor {
 protocol ISendAmountModule: AnyObject {
     var delegate: ISendAmountDelegate? { get set }
 
+    var rateValue: Decimal? { get }
+    var amount: Decimal? { get }
     var currentAmount: Decimal { get }
     func validAmount() throws -> Decimal
 
