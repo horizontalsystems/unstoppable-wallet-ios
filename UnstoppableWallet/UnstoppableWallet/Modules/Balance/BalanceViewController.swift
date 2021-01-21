@@ -332,7 +332,7 @@ extension BalanceViewController: IBalanceView {
     func showLostAccounts() {
         let controller = UIAlertController(title: "lost_accounts.warning_title".localized, message: "lost_accounts.warning_message".localized, preferredStyle: .alert)
         controller.addAction(UIAlertAction(title: "button.ok".localized, style: .default))
-        present(controller, animated: true)
+        controller.show()
     }
 
 }

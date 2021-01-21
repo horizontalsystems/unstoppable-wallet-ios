@@ -7,7 +7,7 @@ class AccountManager {
 
     private let accountsSubject = PublishSubject<[Account]>()
     private let deleteAccountSubject = PublishSubject<Account>()
-    private let lostAccountsRelay = PublishRelay<()>()
+    private let lostAccountsRelay = BehaviorRelay<Bool>(value: false)
 
     init(storage: IAccountStorage) {
         self.storage = storage
@@ -35,7 +35,7 @@ extension AccountManager: IAccountManager {
         deleteAccountSubject.asObservable()
     }
 
-    var lostAccountsObservable: Observable<()> {
+    var lostAccountsObservable: Observable<Bool> {
         lostAccountsRelay.asObservable()
     }
 
@@ -72,26 +72,28 @@ extension AccountManager: IAccountManager {
         accountsSubject.onNext(accounts)
     }
 
+    func handleLaunch() {
+        lostAccountsRelay.accept(storage.checkLostAccounts())
+    }
+
     func handleForeground() {
+        guard storage.checkLostAccounts() else {
+            return
+        }
+        lostAccountsRelay.accept(true)
+
         let storedAccounts = storage.allAccounts
 
         let lostAccounts = cache.accounts.filter {
             storedAccounts.firstIndex(of: $0) == nil
         }
 
-        guard !lostAccounts.isEmpty else {
-            return
-        }
-
         lostAccounts.forEach { account in
-            storage.delete(account: account)
             deleteAccountSubject.onNext(account)
         }
 
         cache.set(accounts: storedAccounts)
         accountsSubject.onNext(accounts)
-
-        lostAccountsRelay.accept(())
     }
 
 }

@@ -48,8 +48,10 @@ class BalanceInteractor {
         accountManager.lostAccountsObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] baseCurrency in
-                    self?.delegate?.onLostAccounts()
+                .subscribe(onNext: { [weak self] isAccountsLost in
+                    if isAccountsLost {
+                        self?.delegate?.onLostAccounts()
+                    }
                 })
                 .disposed(by: disposeBag)
     }
