@@ -184,13 +184,14 @@ protocol IAccountManager {
 
     var accountsObservable: Observable<[Account]> { get }
     var deleteAccountObservable: Observable<Account> { get }
-    var lostAccountsObservable: Observable<()> { get }
+    var lostAccountsObservable: Observable<Bool> { get }
 
     func preloadAccounts()
     func update(account: Account)
     func save(account: Account)
     func delete(account: Account)
     func clear()
+    func handleLaunch()
     func handleForeground()
 }
 
@@ -306,6 +307,7 @@ protocol IEnabledWalletStorage {
 protocol IAccountStorage {
     var allAccounts: [Account] { get }
     func save(account: Account)
+    func checkLostAccounts() -> Bool
     func delete(account: Account)
     func clear()
 }

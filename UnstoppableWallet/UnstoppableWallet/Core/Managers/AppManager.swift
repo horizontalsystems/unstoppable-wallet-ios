@@ -49,6 +49,7 @@ extension AppManager {
         debugBackgroundLogger?.logFinishLaunching()
 
         keychainKit.handleLaunch()
+        accountManager.handleLaunch()
         accountManager.preloadAccounts()
         walletManager.preloadWallets()
         pinKit.didFinishLaunching()

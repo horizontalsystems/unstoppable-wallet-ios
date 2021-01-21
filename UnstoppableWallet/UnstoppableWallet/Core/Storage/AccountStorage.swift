@@ -155,6 +155,22 @@ extension AccountStorage: IAccountStorage {
         }
     }
 
+    func checkLostAccounts() -> Bool {
+        let lostAccountIds: [String] = storage.allAccountRecords.compactMap { accountRecord in
+            if createAccount(record: accountRecord) == nil {
+                return accountRecord.id
+            }
+
+            return nil
+        }
+
+        lostAccountIds.forEach {
+            storage.deleteAccountRecord(by: $0)
+        }
+
+        return !lostAccountIds.isEmpty
+    }
+
     func delete(account: Account) {
         storage.deleteAccountRecord(by: account.id)
         try? clearSecureStorage(account: account)
@@ -180,6 +196,10 @@ extension AccountStorage {
         case birthdayHeight
         case data
         case privateKey
+    }
+
+    public enum StorageError: Error {
+        case accountsLost
     }
 
 }
