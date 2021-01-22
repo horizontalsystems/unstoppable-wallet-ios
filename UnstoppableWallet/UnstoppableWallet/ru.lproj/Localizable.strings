@@ -702,3 +702,12 @@
 "status_info.confirmed.content" = "Транзакция окончательна и необратима.";
 "status_info.failed.title" = "Не удалось";
 "status_info.failed.content" = "Транзакция не была обработана как планировалось, и передача токена не состоялась. На Ethereum за отклонённые транзакции взимают комиссионные сборы.";
+
+// Enable Coins
+
+"enable_coins.title" = "Enable Coins";
+"enable_coins.description" = "Enable all %@ coins that have any balance";
+"enable_coins.enable_button" = "Enable";
+"enable_coins.enabling" = "Enabling...";
+"enable_coins.enabled_coins" = "Enabled %@ coins";
+"enable_coins.enabled_no_coins" = "No coins found with balance";
