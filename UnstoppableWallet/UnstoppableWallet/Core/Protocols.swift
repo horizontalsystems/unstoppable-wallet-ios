@@ -307,8 +307,9 @@ protocol IEnabledWalletStorage {
 protocol IAccountStorage {
     var allAccounts: [Account] { get }
     func save(account: Account)
-    func checkLostAccounts() -> Bool
+    func lostAccountIds() -> [String]
     func delete(account: Account)
+    func delete(accountId: String)
     func clear()
 }
 

@@ -13,6 +13,14 @@ class AccountManager {
         self.storage = storage
     }
 
+    private func clearAccounts(ids: [String]) {
+        ids.forEach {
+            storage.delete(accountId: $0)
+        }
+
+        lostAccountsRelay.accept(true)
+    }
+
 }
 
 extension AccountManager: IAccountManager {
@@ -73,26 +81,31 @@ extension AccountManager: IAccountManager {
     }
 
     func handleLaunch() {
-        lostAccountsRelay.accept(storage.checkLostAccounts())
+        let lostAccountIds = storage.lostAccountIds()
+        guard !lostAccountIds.isEmpty else {
+            return
+        }
+
+        clearAccounts(ids: lostAccountIds)
     }
 
     func handleForeground() {
-        guard storage.checkLostAccounts() else {
+        let lostAccountIds = storage.lostAccountIds()
+        guard !lostAccountIds.isEmpty else {
             return
         }
-        lostAccountsRelay.accept(true)
 
-        let storedAccounts = storage.allAccounts
+        clearAccounts(ids: lostAccountIds)
 
-        let lostAccounts = cache.accounts.filter {
-            storedAccounts.firstIndex(of: $0) == nil
+        let lostAccounts = cache.accounts.filter { account in
+            lostAccountIds.contains(account.id)
         }
 
         lostAccounts.forEach { account in
+            cache.remove(account: account)
             deleteAccountSubject.onNext(account)
         }
 
-        cache.set(accounts: storedAccounts)
         accountsSubject.onNext(accounts)
     }
 
