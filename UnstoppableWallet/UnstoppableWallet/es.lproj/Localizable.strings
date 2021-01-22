@@ -701,3 +701,12 @@ poner en peligro la seguridad de mis fondos.";
 "status_info.confirmed.content" = "La transacción es definitiva e irreversible.";
 "status_info.failed.title" = "Falló";
 "status_info.failed.content" = "La transacción no se procesó como se pretendía y no tuvo lugar ninguna transferencia de valor de token. En las transacciones fallidas de Ethereum las transacciones consumen comisiones de transacción.";
+
+// Enable Coins
+
+"enable_coins.title" = "Enable Coins";
+"enable_coins.description" = "Enable all %@ coins that have any balance";
+"enable_coins.enable_button" = "Enable";
+"enable_coins.enabling" = "Enabling...";
+"enable_coins.enabled_coins" = "Enabled %@ coins";
+"enable_coins.enabled_no_coins" = "No coins found with balance";
