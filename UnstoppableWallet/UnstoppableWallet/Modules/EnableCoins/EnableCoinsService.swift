@@ -1,10 +1,12 @@
 import RxSwift
 import RxRelay
 import EthereumKit
+import BinanceChainKit
 
 class EnableCoinsService {
     private let appConfigProvider: IAppConfigProvider
     private let ethereumProvider: EnableCoinsErc20Provider
+    private let binanceProvider: EnableCoinsBep2Provider
     private let coinManager: ICoinManager
     private let disposeBag = DisposeBag()
 
@@ -17,9 +19,10 @@ class EnableCoinsService {
         }
     }
 
-    init(appConfigProvider: IAppConfigProvider, ethereumProvider: EnableCoinsErc20Provider, coinManager: ICoinManager) {
+    init(appConfigProvider: IAppConfigProvider, ethereumProvider: EnableCoinsErc20Provider, binanceProvider: EnableCoinsBep2Provider, coinManager: ICoinManager) {
         self.appConfigProvider = appConfigProvider
         self.ethereumProvider = ethereumProvider
+        self.binanceProvider = binanceProvider
         self.coinManager = coinManager
     }
 
@@ -72,6 +75,42 @@ class EnableCoinsService {
         enableCoinsRelay.accept(coins)
     }
 
+    private func fetchBep2Tokens(words: [String]) {
+        do {
+            let single = try binanceProvider.tokenSymbolsSingle(words: words)
+
+            state = .loading
+
+            single
+                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                    .subscribe(onSuccess: { [weak self] tokenSymbols in
+                        self?.handleFetchBep2(tokenSymbols: tokenSymbols)
+                    }, onError: { [weak self] error in
+                        self?.state = .failure(error: error)
+                    })
+                    .disposed(by: disposeBag)
+        } catch {
+            state = .failure(error: error)
+        }
+    }
+
+    private func handleFetchBep2(tokenSymbols: [String]) {
+        let allCoins = coinManager.coins
+
+        let coins = tokenSymbols.compactMap { tokenSymbol -> Coin? in
+            if tokenSymbol == "BNB" {
+                return nil
+            }
+
+            return allCoins.first { coin in
+                coin.type == .binance(symbol: tokenSymbol)
+            }
+        }
+
+        state = .success(coins: coins)
+        enableCoinsRelay.accept(coins)
+    }
+
 }
 
 extension EnableCoinsService {
@@ -101,7 +140,7 @@ extension EnableCoinsService {
         case .erc20(let words):
             fetchErc20Tokens(words: words)
         case .bep2(let words):
-            ()
+            fetchBep2Tokens(words: words)
         }
     }
 

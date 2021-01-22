@@ -15,6 +15,7 @@ struct ManageWalletsModule {
         let enableCoinsService = EnableCoinsService(
                 appConfigProvider: App.shared.appConfigProvider,
                 ethereumProvider: EnableCoinsErc20Provider(networkManager: App.shared.networkManager),
+                binanceProvider: EnableCoinsBep2Provider(appConfigProvider: App.shared.appConfigProvider),
                 coinManager: App.shared.coinManager
         )
 
