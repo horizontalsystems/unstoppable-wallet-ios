@@ -700,3 +700,12 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "status_info.confirmed.content" = "İşlem sonlandı ve geri alınamaz.";
 "status_info.failed.title" = "Başarısız";
 "status_info.failed.content" = "İşlem amaçlandığı gibi işlenmedi ve token değeri aktarımı gerçekleşmedi. Ethereum blok zincirinde başarısız işlemler, işlem ücretlerini tüketir.";
+
+// Enable Coins
+
+"enable_coins.title" = "Enable Coins";
+"enable_coins.description" = "Enable all %@ coins that have any balance";
+"enable_coins.enable_button" = "Enable";
+"enable_coins.enabling" = "Enabling...";
+"enable_coins.enabled_coins" = "Enabled %@ coins";
+"enable_coins.enabled_no_coins" = "No coins found with balance";
