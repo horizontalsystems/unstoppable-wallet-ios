@@ -102,12 +102,12 @@ class CoinToggleViewController: ThemeSearchViewController {
         }
     }
 
-    func revert(coin: Coin) {
-        revert(coin: coin, viewItems: viewState.featuredViewItems, section: 0)
-        revert(coin: coin, viewItems: viewState.viewItems, section: 1)
+    func setToggle(on: Bool, coin: Coin) {
+        setToggle(on: on, coin: coin, viewItems: viewState.featuredViewItems, section: 0)
+        setToggle(on: on, coin: coin, viewItems: viewState.viewItems, section: 1)
     }
 
-    private func revert(coin: Coin, viewItems: [CoinToggleViewModel.ViewItem], section: Int) {
+    private func setToggle(on: Bool, coin: Coin, viewItems: [CoinToggleViewModel.ViewItem], section: Int) {
         guard let index = viewItems.firstIndex(where: { $0.coin == coin }) else {
             return
         }
@@ -116,7 +116,7 @@ class CoinToggleViewController: ThemeSearchViewController {
             return
         }
 
-        cell.setToggleOff()
+        cell.setToggle(on: on)
     }
 
 }

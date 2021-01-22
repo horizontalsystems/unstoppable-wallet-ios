@@ -705,3 +705,12 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "status_info.confirmed.content" = "Transaction is final and irreversible.";
 "status_info.failed.title" = "Failed";
 "status_info.failed.content" = "Transaction did not get processed as intended and no token value transfer took place. On Ethereum blockchain failed transactions do consume transaction fees.";
+
+// Enable Coins
+
+"enable_coins.title" = "Enable Coins";
+"enable_coins.description" = "Enable all %@ coins that have any balance";
+"enable_coins.enable_button" = "Enable";
+"enable_coins.enabling" = "Enabling...";
+"enable_coins.enabled_coins" = "Enabled %@ coins";
+"enable_coins.enabled_no_coins" = "No coins found with balance";

@@ -89,8 +89,8 @@ extension CoinType: Equatable {
         case (.bitcoinCash, .bitcoinCash): return true
         case (.dash, .dash): return true
         case (.ethereum, .ethereum): return true
-        case (.erc20(let lhsAddress, let lhsFee, _, _), .erc20(let rhsAddress, let rhsFee, _, _)):
-            return lhsAddress == rhsAddress && lhsFee == rhsFee
+        case (.erc20(let lhsAddress, _, _, _), .erc20(let rhsAddress, _, _, _)):
+            return lhsAddress.lowercased() == rhsAddress.lowercased()
         case (.binance(let lhsSymbol), .binance(let rhsSymbol)):
             return lhsSymbol == rhsSymbol
         case (.zcash, .zcash): return true

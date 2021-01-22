@@ -5,16 +5,15 @@ import BitcoinCashKit
 
 class ManageWalletsViewModel {
     private let service: ManageWalletsService
-    private let blockchainSettingsService: BlockchainSettingsService
 
     private let disposeBag = DisposeBag()
     private let viewStateRelay = BehaviorRelay<CoinToggleViewModel.ViewState>(value: .empty)
+    private let enableCoinRelay = PublishRelay<Coin>()
     private let disableCoinRelay = PublishRelay<Coin>()
     private var filter: String?
 
-    init(service: ManageWalletsService, blockchainSettingsService: BlockchainSettingsService) {
+    init(service: ManageWalletsService) {
         self.service = service
-        self.blockchainSettingsService = blockchainSettingsService
 
         service.stateObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
@@ -23,14 +22,14 @@ class ManageWalletsViewModel {
                 })
                 .disposed(by: disposeBag)
 
-        blockchainSettingsService.approveEnableCoinObservable
+        service.enableCoinObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] coin in
-                    self?.service.enable(coin: coin)
+                    self?.enableCoinRelay.accept(coin)
                 })
                 .disposed(by: disposeBag)
 
-        blockchainSettingsService.rejectEnableCoinObservable
+        service.cancelEnableCoinObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] coin in
                     self?.disableCoinRelay.accept(coin)
@@ -46,7 +45,7 @@ class ManageWalletsViewModel {
         switch item.state {
         case .noAccount:
             state = .toggleHidden
-        case .hasAccount(let hasWallet):
+        case .hasAccount(_, let hasWallet):
             state = .toggleVisible(enabled: hasWallet)
         }
 
@@ -90,11 +89,7 @@ extension ManageWalletsViewModel: ICoinToggleViewModel {
     }
 
     func onEnable(coin: Coin) {
-        guard let account = service.account(coin: coin) else {
-            return // impossible case
-        }
-
-        blockchainSettingsService.approveEnable(coin: coin, accountOrigin: account.origin)
+        service.enable(coin: coin)
     }
 
     func onDisable(coin: Coin) {
@@ -115,6 +110,14 @@ extension ManageWalletsViewModel {
 
     var disableCoinSignal: Signal<Coin> {
         disableCoinRelay.asSignal()
+    }
+
+    var enableCoinSignal: Signal<Coin> {
+        enableCoinRelay.asSignal()
+    }
+
+    func onAddAccount(coin: Coin) {
+        service.storeCoinToEnable(coin: coin)
     }
 
 }
