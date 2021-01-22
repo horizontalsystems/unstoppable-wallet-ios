@@ -55,8 +55,8 @@ class RestoreView {
                 return RestoreWordsModule.viewController(restoreView: self, restoreAccountType: .zcash)
             }
 
-        case .selectCoins(let predefinedAccountType):
-            return RestoreSelectCoinsModule.viewController(predefinedAccountType: predefinedAccountType, restoreView: self)
+        case .selectCoins(let predefinedAccountType, let accountType):
+            return RestoreSelectCoinsModule.viewController(predefinedAccountType: predefinedAccountType, accountType: accountType, restoreView: self)
 
         }
     }

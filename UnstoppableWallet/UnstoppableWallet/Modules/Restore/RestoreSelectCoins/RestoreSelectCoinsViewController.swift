@@ -7,11 +7,13 @@ class RestoreSelectCoinsViewController: CoinToggleViewController {
     private let restoreView: RestoreView
     private let viewModel: RestoreSelectCoinsViewModel
     private let blockchainSettingsView: BlockchainSettingsView
+    private let enableCoinsView: EnableCoinsView
 
-    init(restoreView: RestoreView, viewModel: RestoreSelectCoinsViewModel, blockchainSettingsView: BlockchainSettingsView) {
+    init(restoreView: RestoreView, viewModel: RestoreSelectCoinsViewModel, blockchainSettingsView: BlockchainSettingsView, enableCoinsView: EnableCoinsView) {
         self.restoreView = restoreView
         self.viewModel = viewModel
         self.blockchainSettingsView = blockchainSettingsView
+        self.enableCoinsView = enableCoinsView
 
         super.init(viewModel: viewModel)
     }
@@ -29,6 +31,9 @@ class RestoreSelectCoinsViewController: CoinToggleViewController {
         blockchainSettingsView.onOpenController = { [weak self] controller in
             self?.present(controller, animated: true)
         }
+        enableCoinsView.onOpenController = { [weak self] controller in
+            self?.present(controller, animated: true)
+        }
 
         subscribe(disposeBag, viewModel.restoreEnabledDriver) { [weak self] enabled in
             self?.navigationItem.rightBarButtonItem?.isEnabled = enabled
@@ -39,7 +44,7 @@ class RestoreSelectCoinsViewController: CoinToggleViewController {
         }
 
         subscribe(disposeBag, viewModel.disableCoinSignal) { [weak self] coin in
-            self?.revert(coin: coin)
+            self?.setToggle(on: false, coin: coin)
         }
     }
 

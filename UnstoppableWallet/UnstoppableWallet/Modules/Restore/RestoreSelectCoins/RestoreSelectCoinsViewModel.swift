@@ -3,17 +3,15 @@ import RxCocoa
 
 class RestoreSelectCoinsViewModel {
     private let service: RestoreSelectCoinsService
-    private let blockchainSettingsService: BlockchainSettingsService
-
     private let disposeBag = DisposeBag()
+
     private let viewStateRelay = BehaviorRelay<CoinToggleViewModel.ViewState>(value: .empty)
-    private let enabledCoinsRelay = PublishRelay<[Coin]>()
     private let disableCoinRelay = PublishRelay<Coin>()
+    private let enabledCoinsRelay = PublishRelay<[Coin]>()
     private var filter: String?
 
-    init(service: RestoreSelectCoinsService, blockchainSettingsService: BlockchainSettingsService) {
+    init(service: RestoreSelectCoinsService) {
         self.service = service
-        self.blockchainSettingsService = blockchainSettingsService
 
         service.stateObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
@@ -22,14 +20,7 @@ class RestoreSelectCoinsViewModel {
                 })
                 .disposed(by: disposeBag)
 
-        blockchainSettingsService.approveEnableCoinObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] coin in
-                    self?.service.enable(coin: coin)
-                })
-                .disposed(by: disposeBag)
-
-        blockchainSettingsService.rejectEnableCoinObservable
+        service.cancelEnableCoinObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] coin in
                     self?.disableCoinRelay.accept(coin)
@@ -80,7 +71,7 @@ extension RestoreSelectCoinsViewModel: ICoinToggleViewModel {
     }
 
     func onEnable(coin: Coin) {
-        blockchainSettingsService.approveEnable(coin: coin, accountOrigin: .restored)
+        service.enable(coin: coin)
     }
 
     func onDisable(coin: Coin) {

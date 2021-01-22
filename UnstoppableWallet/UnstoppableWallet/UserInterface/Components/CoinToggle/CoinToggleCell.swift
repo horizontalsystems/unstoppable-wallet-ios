@@ -69,8 +69,8 @@ class CoinToggleCell: ThemeCell {
         self.onToggle = onToggle
     }
 
-    func setToggleOff() {
-        toggleView.setOn(false, animated: true)
+    func setToggle(on: Bool) {
+        toggleView.setOn(on, animated: true)
     }
 
 }

@@ -45,7 +45,7 @@ class CreateWalletViewController: CoinToggleViewController {
 
         viewModel.enableFailedSignal
                 .emit(onNext: { [weak self] coin in
-                    self?.revert(coin: coin)
+                    self?.setToggle(on: false, coin: coin)
                 })
                 .disposed(by: disposeBag)
 

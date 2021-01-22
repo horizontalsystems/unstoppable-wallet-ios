@@ -12,18 +12,30 @@ struct ManageWalletsModule {
         let blockchainSettingsViewModel = BlockchainSettingsViewModel(service: blockchainSettingsService)
         let blockchainSettingsView = BlockchainSettingsView(viewModel: blockchainSettingsViewModel)
 
+        let enableCoinsService = EnableCoinsService(
+                appConfigProvider: App.shared.appConfigProvider,
+                ethereumProvider: EnableCoinsErc20Provider(networkManager: App.shared.networkManager),
+                coinManager: App.shared.coinManager
+        )
+
+        let enableCoinsViewModel = EnableCoinsViewModel(service: enableCoinsService)
+        let enableCoinsView = EnableCoinsView(viewModel: enableCoinsViewModel)
+
         let service = ManageWalletsService(
                 coinManager: App.shared.coinManager,
                 walletManager: App.shared.walletManager,
-                accountManager: App.shared.accountManager
-        )
-
-        let viewModel = ManageWalletsViewModel(
-                service: service,
+                accountManager: App.shared.accountManager,
+                enableCoinsService: enableCoinsService,
                 blockchainSettingsService: blockchainSettingsService
         )
 
-        let viewController = ManageWalletsViewController(viewModel: viewModel, blockchainSettingsView: blockchainSettingsView)
+        let viewModel = ManageWalletsViewModel(service: service)
+
+        let viewController = ManageWalletsViewController(
+                viewModel: viewModel,
+                blockchainSettingsView: blockchainSettingsView,
+                enableCoinsView: enableCoinsView
+        )
 
         return ThemeNavigationController(rootViewController: viewController)
     }
