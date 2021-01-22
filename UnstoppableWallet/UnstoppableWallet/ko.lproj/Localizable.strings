@@ -700,3 +700,12 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "status_info.confirmed.content" = "거래가 완료되었으며 취소할 수 없습니다.";
 "status_info.failed.title" = "실패";
 "status_info.failed.content" = "거래가 의도한 대로 처리되지 않았으며 전송된 토큰 값이 없습니다. 이더리움 블록체인에서는 실패한 거래에도 거래 수수료가 부과됩니다.";
+
+// Enable Coins
+
+"enable_coins.title" = "Enable Coins";
+"enable_coins.description" = "Enable all %@ coins that have any balance";
+"enable_coins.enable_button" = "Enable";
+"enable_coins.enabling" = "Enabling...";
+"enable_coins.enabled_coins" = "Enabled %@ coins";
+"enable_coins.enabled_no_coins" = "No coins found with balance";
