@@ -127,7 +127,11 @@ class ManageWalletsService {
     }
 
     private func enable(coins: [Coin]) {
-        walletManager.save(wallets: coins.compactMap { wallet(coin: $0) })
+        let nonEnabledCoins = coins.filter { coin in
+            !wallets.keys.contains(coin)
+        }
+
+        walletManager.save(wallets: nonEnabledCoins.compactMap { wallet(coin: $0) })
     }
 
     private func handleAccountsChanged() {
