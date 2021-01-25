@@ -1,4 +1,5 @@
 import UIKit
+import CurrencyKit
 
 protocol ISendFeePriorityView: class {
     func setPriority()
@@ -40,7 +41,7 @@ protocol ISendFeePriorityModule: AnyObject {
     var feeRate: Int? { get }
 
     func fetchFeeRate()
-    func set(currencyAmount: Decimal?)
+    func set(currencyValue: CurrencyValue?)
 }
 
 struct PriorityItem {

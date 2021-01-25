@@ -20,8 +20,16 @@ class SendAmountPresenter {
 
     private(set) var inputType: SendInputType = .coin
 
-    var rateValue: Decimal?
-    var amount: Decimal?
+    private var rateValue: Decimal?
+    private var amount: Decimal?
+
+    var currencyValue: CurrencyValue? {
+        guard let amount = amount, let rate = rateValue else {
+            return nil
+        }
+
+        return CurrencyValue(currency: currency, value: amount * rate)
+    }
 
     init(coin: Coin, interactor: ISendAmountInteractor, decimalParser: IAmountDecimalParser) {
         self.coin = coin

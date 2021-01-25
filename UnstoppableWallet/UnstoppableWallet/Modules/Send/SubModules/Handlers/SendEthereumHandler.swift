@@ -91,15 +91,6 @@ class SendEthereumHandler {
                 .disposed(by: gasDisposeBag)
     }
 
-    private func syncCurrencyAmount() {
-        var currencyAmount: Decimal? = nil
-        if let amount = amountModule.amount, let rate = amountModule.rateValue {
-            currencyAmount = amount * rate
-        }
-
-        feePriorityModule.set(currencyAmount: currencyAmount)
-    }
-
 }
 
 extension SendEthereumHandler: ISendHandler {
@@ -137,7 +128,7 @@ extension SendEthereumHandler: ISendHandler {
     }
 
     func sync(rateValue: Decimal?) {
-        syncCurrencyAmount()
+        feePriorityModule.set(currencyValue: amountModule.currencyValue)
         amountModule.set(rateValue: rateValue)
     }
 
@@ -158,7 +149,7 @@ extension SendEthereumHandler: ISendHandler {
 extension SendEthereumHandler: ISendAmountDelegate {
 
     func onChangeAmount() {
-        syncCurrencyAmount()
+        feePriorityModule.set(currencyValue: amountModule.currencyValue)
         if syncValidation() {
             syncEstimateGasLimit()
         }

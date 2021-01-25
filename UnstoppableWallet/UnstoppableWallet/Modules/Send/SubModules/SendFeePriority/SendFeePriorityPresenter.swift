@@ -1,4 +1,5 @@
 import Foundation
+import CurrencyKit
 
 class SendFeePriorityPresenter {
     weak var view: ISendFeePriorityView?
@@ -9,7 +10,7 @@ class SendFeePriorityPresenter {
     private let feeRateAdjustmentHelper: FeeRateAdjustmentHelper
     private let coin: Coin
 
-    private var amount: Decimal?
+    private var currencyValue: CurrencyValue?
     private var customFeeRate: Int?
     private var fetchedFeeRate: Int?
 
@@ -18,7 +19,7 @@ class SendFeePriorityPresenter {
 
     var feeRate: Int? {
         customFeeRate ?? fetchedFeeRate.flatMap { rate in
-            feeRateAdjustmentHelper.applyRule(coinType: coin.type, amount: amount, feeRate: rate)
+            feeRateAdjustmentHelper.applyRule(coinType: coin.type, currencyValue: currencyValue, feeRate: rate)
         }
     }
 
@@ -54,8 +55,8 @@ extension SendFeePriorityPresenter: ISendFeePriorityModule {
         interactor.syncFeeRate(priority: feeRatePriority)
     }
 
-    func set(currencyAmount: Decimal?) {
-        amount = currencyAmount
+    func set(currencyValue: CurrencyValue?) {
+        self.currencyValue = currencyValue
     }
 
 }
