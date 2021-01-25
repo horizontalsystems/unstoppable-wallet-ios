@@ -32,7 +32,7 @@ extension EnableCoinsErc20Provider {
         let tokens: [Token]
 
         init(map: Map) throws {
-            tokens = try map.value("tokens")
+            tokens = (try? map.value("tokens")) ?? []
         }
     }
 
