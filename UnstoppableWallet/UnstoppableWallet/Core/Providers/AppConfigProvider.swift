@@ -75,6 +75,7 @@ class AppConfigProvider: IAppConfigProvider {
     }
 
     let currencyCodes: [String] = ["USD", "EUR", "GBP", "JPY"]
+    let feeRateAdjustedForCurrencyCodes: [String] = ["USD", "EUR"]
 
     private static let ethereumCoin = Coin(id: "ETH", title: "Ethereum", code: "ETH", decimal: 18, type: .ethereum)
 

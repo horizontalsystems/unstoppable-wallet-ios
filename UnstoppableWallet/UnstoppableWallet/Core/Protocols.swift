@@ -285,6 +285,7 @@ protocol IAppConfigProvider {
     var coinMarketCapApiKey: String { get }
     var cryptoCompareApiKey: String? { get }
     var currencyCodes: [String] { get }
+    var feeRateAdjustedForCurrencyCodes: [String] { get }
 
     var pnsUrl: String { get }
     var pnsPassword: String { get }
