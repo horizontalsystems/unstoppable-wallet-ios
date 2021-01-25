@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
 class BalanceTopView: UIView {
     static let height: CGFloat = 50
@@ -76,7 +77,7 @@ class BalanceTopView: UIView {
         nameLabel.text = viewItem.coinTitle
 
         if let blockchainBadge = viewItem.blockchainBadge {
-            blockchainBadgeView.set(text: blockchainBadge)
+            blockchainBadgeView.text = blockchainBadge
             blockchainBadgeView.isHidden = false
         } else {
             blockchainBadgeView.isHidden = true

@@ -49,7 +49,7 @@ extension RateTopListInteractor: IRateTopListInteractor {
     }
 
     func updateTopMarkets(currencyCode: String) {
-        rateManager.topMarketsSingle(currencyCode: currencyCode, fetchDiffPeriod: .hour24)
+        rateManager.topMarketsSingle(currencyCode: currencyCode)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onSuccess: { [weak self] infos in
                     self?.update(coinMarkets: infos)

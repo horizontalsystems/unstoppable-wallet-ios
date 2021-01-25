@@ -15,12 +15,6 @@ class MarketListService {
     private let stateRelay = BehaviorRelay<State>(value: .loading)
     private(set) var items = [Item]()
 
-    public var period: MarketListDataSource.Period = .day {
-        didSet {
-            fetch()
-        }
-    }
-
     init(currencyKit: ICurrencyKit, rateManager: IRateManager, dataSource: IMarketListDataSource) {
         self.currencyKit = currencyKit
         self.rateManager = rateManager
@@ -48,7 +42,7 @@ class MarketListService {
 
         stateRelay.accept(.loading)
 
-        topItemsDisposable = dataSource.itemsSingle(currencyCode: currency.code, period: period)
+        topItemsDisposable = dataSource.itemsSingle(currencyCode: currency.code)
                 .subscribe(onSuccess: { [weak self] in self?.sync(items: $0) })
 
         topItemsDisposable?.disposed(by: disposeBag)
@@ -68,10 +62,6 @@ extension MarketListService {
 
     public var currency: Currency {
         currencyKit.baseCurrency
-    }
-
-    public var periods: [MarketListDataSource.Period] {
-        dataSource.periods
     }
 
     public var sortingFields: [MarketListDataSource.SortingField] {

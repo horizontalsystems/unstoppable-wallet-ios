@@ -227,8 +227,8 @@ protocol IRateManager {
 
     func marketInfo(coinCode: String, currencyCode: String) -> MarketInfo?
     func globalMarketInfoSingle(currencyCode: String) -> Single<GlobalCoinMarket>
-    func topMarketsSingle(currencyCode: String, fetchDiffPeriod: TimePeriod) -> Single<[CoinMarket]>
-    func topDefiMarketsSingle(currencyCode: String, fetchDiffPeriod: TimePeriod) -> Single<[CoinMarket]>
+    func topMarketsSingle(currencyCode: String) -> Single<[CoinMarket]>
+    func topDefiMarketsSingle(currencyCode: String) -> Single<[CoinMarket]>
     func marketInfoObservable(coinCode: String, currencyCode: String) -> Observable<MarketInfo>
     func marketInfosObservable(currencyCode: String) -> Observable<[String: MarketInfo]>
     func historicalRate(coinCode: String, currencyCode: String, timestamp: TimeInterval) -> Single<Decimal>

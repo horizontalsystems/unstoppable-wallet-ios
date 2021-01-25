@@ -4,7 +4,7 @@ import ThemeKit
 import SectionsTableView
 import HUD
 
-class MarketDefiViewController: ThemeViewController {
+class MarketDiscoveryViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .plain)
@@ -12,11 +12,14 @@ class MarketDefiViewController: ThemeViewController {
 
     private let marketMetricsCell: MarketMetricsCell
     private let marketTickerCell: MarketTickerCell
-    private let marketDefiView = MarketListModule.defiView()
+
+    private let viewModel: MarketDiscoveryViewModel
 
     var pushController: ((UIViewController) -> ())?
 
-    init() {
+    init(viewModel: MarketDiscoveryViewModel) {
+        self.viewModel = viewModel
+
         marketMetricsCell = MarketMetricsModule.cell()
         marketTickerCell = MarketTickerModule.cell()
 
@@ -39,6 +42,9 @@ class MarketDefiViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
+
+        tableView.registerHeaderFooter(forClass: MarketListHeaderView.self)
+
         tableView.sectionDataSource = self
 
         view.addSubview(spinner)
@@ -46,17 +52,6 @@ class MarketDefiViewController: ThemeViewController {
             maker.center.equalToSuperview()
         }
         sync(isLoading: false)
-
-        marketDefiView.registeringCellClasses.forEach { tableView.registerCell(forClass: $0) }
-        marketDefiView.openController = { [weak self] in
-            self?.present($0, animated: true)
-        }
-        marketDefiView.pushController = { [weak self] in
-            self?.pushController?($0)
-        }
-
-        subscribe(disposeBag, marketDefiView.sectionUpdatedSignal) { [weak self] in self?.tableView.reload() }
-        subscribe(disposeBag, marketDefiView.isLoadingDriver) { [weak self] in self?.sync(isLoading: $0) }
 
         tableView.buildSections()
     }
@@ -75,10 +70,19 @@ class MarketDefiViewController: ThemeViewController {
 
 }
 
-extension MarketDefiViewController: SectionsDataSource {
+extension MarketDiscoveryViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        [marketDefiView.section]
+        let headerState: ViewState<MarketListHeaderView> = .cellType(hash: "section_header",
+                binder: { view in
+                    view.set { [weak self] in
+                        print("setted new sortItem")
+                    }
+                }, dynamicHeight: { containerWidth in
+            MarketListHeaderView.height
+        })
+
+        return [Section(id: "tokens", headerState: headerState, rows: [])]
     }
 
 }

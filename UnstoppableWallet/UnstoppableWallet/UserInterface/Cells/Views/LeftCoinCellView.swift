@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
 class LeftCoinCellView: UIView {
     private let coinImageView = UIImageView()
@@ -57,7 +58,7 @@ class LeftCoinCellView: UIView {
 
         if let blockchainType = blockchainType, showBadge {
             blockchainBadgeView.isHidden = false
-            blockchainBadgeView.set(text: blockchainType)
+            blockchainBadgeView.text = blockchainType
         } else {
             blockchainBadgeView.isHidden = true
         }

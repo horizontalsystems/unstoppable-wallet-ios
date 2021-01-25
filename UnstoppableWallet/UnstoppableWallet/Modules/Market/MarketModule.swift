@@ -14,3 +14,21 @@ struct MarketModule {
     }
 
 }
+
+extension MarketModule {
+
+    enum MarketField: Int, CaseIterable {
+        case marketCap
+        case volume
+        case price
+
+        var title: String {
+            switch self {
+            case .marketCap: return "market.market_field.mcap".localized
+            case .volume: return "market.market_field.vol".localized
+            case .price: return "market.market_field.price".localized
+            }
+        }
+    }
+
+}
