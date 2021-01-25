@@ -3,27 +3,24 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
-class MarketListViewModel {
+class MarketOverviewViewModel {
     private let disposeBag = DisposeBag()
 
     public let service: MarketListService
 
-    private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
+    private let viewItemsRelay = BehaviorRelay<[Section]>(value: [])
     private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
-
-    private var sortingField: MarketListDataSource.SortingField
 
     init(service: MarketListService) {
         self.service = service
 
-        sortingField = service.sortingFields[0]
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
     }
 
     private func sync(state: MarketListService.State) {
         if case .loaded = state {
-            syncViewItemsBySortingField()
+            syncViewItems()
         }
 
         if case .loading = state {
@@ -56,33 +53,55 @@ class MarketListViewModel {
         }
     }
 
-    private func syncViewItemsBySortingField() {
-        let viewItems: [ViewItem] = sort(items: service.items, by: sortingField).map {
+    private func sectionItems(by sectionType: SectionType, count: Int = 3) -> Section {
+        let sortingField: MarketListDataSource.SortingField
+        switch sectionType {
+        case .topGainers: sortingField = .topGainers
+        case .topLoosers: sortingField = .topLoosers
+        case .topVolume: sortingField = .highestVolume
+        }
+
+        let viewItems: [ViewItem] = Array(sort(items: service.items, by: sortingField).map {
             let rateValue = CurrencyValue(currency: service.currency, value: $0.price)
-            let rate = ValueFormatter.instance.format(currencyValue: rateValue) ?? ""
+
+            let additionalField: AdditionalField
+            switch sectionType {
+            case .topVolume:
+                additionalField = .volume(CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0.volume) ?? "n/a".localized)
+            default:
+                additionalField = .diff($0.diff)
+            }
+
+            let rate = ValueFormatter.instance.format(currencyValue: rateValue) ?? "n/a".localized
 
             return ViewItem(
-                    rank: $0.rank,
+                    rank: .index($0.rank),
                     coinName: $0.coinName,
                     coinCode: $0.coinCode,
                     coinType: $0.coinType,
                     rate: rate,
-                    diff: $0.diff
+                    additionalField: additionalField
             )
-        }
+        }.prefix(count))
 
-        viewItemsRelay.accept(viewItems)
+        return Section(type: sectionType, viewItems: viewItems)
+    }
+
+    private func syncViewItems() {
+        let sections = [
+            sectionItems(by: .topGainers),
+            sectionItems(by: .topLoosers),
+            sectionItems(by: .topVolume)
+        ]
+
+        viewItemsRelay.accept(sections)
     }
 
 }
 
-extension MarketListViewModel {
+extension MarketOverviewViewModel {
 
-    public var sortingFieldTitle: String {
-        sortingField.title
-    }
-
-    public var viewItemsDriver: Driver<[ViewItem]> {
+    public var viewItemsDriver: Driver<[Section]> {
         viewItemsRelay.asDriver()
     }
 
@@ -102,42 +121,46 @@ extension MarketListViewModel {
         service.refresh()
     }
 
-    public func setSortingField(at index: Int) {
-        sortingField = service.sortingFields[index]
-
-        syncViewItemsBySortingField()
-    }
-
 }
 
-extension MarketListViewModel {
+extension MarketOverviewViewModel {
+
+    enum Rank {
+        case index(Int)
+        case score(index: Int, title: String)
+
+        var index: Int {
+            switch self {
+            case .index(let index): return index
+            case .score(let index, _): return index
+            }
+        }
+    }
+
+    enum AdditionalField {
+        case diff(Decimal)
+        case volume(String)
+        case marketCap(String)
+    }
+
+    enum SectionType: String {
+        case topGainers
+        case topLoosers
+        case topVolume
+    }
 
     struct ViewItem {
-        let rank: Int
+        let rank: Rank
         let coinName: String
         let coinCode: String
         let coinType: CoinType?
         let rate: String
-        let diff: Decimal
+        let additionalField: AdditionalField
     }
 
-}
-
-extension MarketListDataSource.SortingField {
-
-    var title: String {
-        switch self {
-        case .highestLiquidity: return "market.top.highest_liquidity".localized
-        case .lowestLiquidity: return "market.top.lowest_liquidity".localized
-        case .highestCap: return "market.top.highest_cap".localized
-        case .lowestCap: return "market.top.lowest_cap".localized
-        case .highestVolume: return "market.top.highest_volume".localized
-        case .lowestVolume: return "market.top.lowest_volume".localized
-        case .highestPrice: return "market.top.highest_price".localized
-        case .lowestPrice: return "market.top.lowest_price".localized
-        case .topGainers: return "market.top.top_gainers".localized
-        case .topLoosers: return "market.top.top_loosers".localized
-        }
+    struct Section {
+        let type: SectionType
+        let viewItems: [ViewItem]
     }
 
 }

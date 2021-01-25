@@ -54,7 +54,7 @@ class SwapCoinCardCell: UITableViewCell {
         }
 
         badgeView.compressionResistance = .defaultLow
-        badgeView.set(text: "swap.estimated".localized.uppercased())
+        badgeView.text = "swap.estimated".localized.uppercased()
         badgeView.isHidden = true
 
         cardView.contentView.addSubview(paddingView)

@@ -3,29 +3,18 @@ import RxRelay
 import XRatesKit
 
 protocol IMarketListDataSource {
-    var periods: [MarketListDataSource.Period] { get }
     var sortingFields: [MarketListDataSource.SortingField] { get }
 
     var dataUpdatedObservable: Observable<()> { get }
-    func itemsSingle(currencyCode: String, period: MarketListDataSource.Period) -> Single<[CoinMarket]>
-}
-
-extension IMarketListDataSource {
-
-    var periods: [MarketListDataSource.Period] {
-        MarketListDataSource.Period.allCases
-    }
-
+    func itemsSingle(currencyCode: String) -> Single<[CoinMarket]>
 }
 
 class MarketTopDataSource {
     private let rateManager: IRateManager
-    private let factory: MarketDataSourceFactory
     private let dataUpdatedRelay = PublishRelay<()>()
 
-    init(rateManager: IRateManager, factory: MarketDataSourceFactory) {
+    init(rateManager: IRateManager) {
         self.rateManager = rateManager
-        self.factory = factory
     }
 
 }
@@ -40,20 +29,18 @@ extension MarketTopDataSource: IMarketListDataSource {
         dataUpdatedRelay.asObservable()
     }
 
-    public func itemsSingle(currencyCode: String, period: MarketListDataSource.Period) -> Single<[CoinMarket]> {
-        rateManager.topMarketsSingle(currencyCode: currencyCode, fetchDiffPeriod: factory.marketListPeriod(period: period))
+    public func itemsSingle(currencyCode: String) -> Single<[CoinMarket]> {
+        rateManager.topMarketsSingle(currencyCode: currencyCode)
     }
 
 }
 
 class MarketDefiDataSource {
     private let rateManager: IRateManager
-    private let factory: MarketDataSourceFactory
     private let dataUpdatedRelay = PublishRelay<()>()
 
-    init(rateManager: IRateManager, factory: MarketDataSourceFactory) {
+    init(rateManager: IRateManager) {
         self.rateManager = rateManager
-        self.factory = factory
     }
 
 }
@@ -68,22 +55,13 @@ extension MarketDefiDataSource: IMarketListDataSource {
         dataUpdatedRelay.asObservable()
     }
 
-    public func itemsSingle(currencyCode: String, period: MarketListDataSource.Period) -> Single<[CoinMarket]> {
-        rateManager.topDefiMarketsSingle(currencyCode: currencyCode, fetchDiffPeriod: factory.marketListPeriod(period: period))
+    public func itemsSingle(currencyCode: String) -> Single<[CoinMarket]> {
+        rateManager.topDefiMarketsSingle(currencyCode: currencyCode)
     }
 
 }
 
 class MarketListDataSource {
-
-    enum Period: Int, CaseIterable {
-        case hour
-        case dayStart
-        case day
-        case week
-        case month
-        case year
-    }
 
     enum SortingField: Int, CaseIterable {
         case highestCap

@@ -13,7 +13,7 @@ class MarketMetricLargeView: UIView {
     private let titleLabel = UILabel()
     private let gradientCircle = GradientPercentCircle()
     private let valueLabel = UILabel()
-    private let diffLabel = UILabel()
+    private let diffLabel = RateDiffLabel()
 
     init() {
         super.init(frame: .zero)
@@ -69,26 +69,21 @@ extension MarketMetricLargeView {
         valueLabel.text = value
 
         guard let diff = diff else {
-            diffLabel.text = nil
+            diffLabel.set(value: nil)
             gradientCircle.set(value: nil)
 
             return
         }
 
         gradientCircle.set(value: diff.cgFloatValue)
-        let plusSign = diff >= 0 ? "+" : ""
 
-        let formattedDiff = Self.formatter.string(from: diff as NSNumber)
-        let diffString = formattedDiff.map { plusSign + $0 + "%" }
-
-        diffLabel.text = diffString
-        diffLabel.textColor = diff >= 0 ? .themeRemus : .themeLucian
+        diffLabel.set(value: diff)
     }
 
     public func clear() {
         titleLabel.text = nil
         valueLabel.text = nil
-        diffLabel.text = nil
+        diffLabel.set(value: nil)
     }
 
 }

@@ -4,11 +4,13 @@ import ThemeKit
 import SnapKit
 
 class MarketListHeaderView: UITableViewHeaderFooterView {
+    static let height: CGFloat = .heightSingleLineCell
+
     private let fieldSelectionButton = SelectionButton()
-    private let periodSelectionButton = SelectionButton()
+    private let marketFieldModeView = MarketFieldModeView()
 
     private var onTapSortField: (() -> ())?
-    private var onTapPeriod: (() -> ())?
+    private var onSelect: ((MarketModule.MarketField) -> ())?
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -24,15 +26,19 @@ class MarketListHeaderView: UITableViewHeaderFooterView {
 
         fieldSelectionButton.setTitle(color: .themeGray)
         fieldSelectionButton.action = { [weak self] in self?.onTapSortField?() }
+        fieldSelectionButton.setContentHuggingPriority(.required, for: .horizontal)
 
-        contentView.addSubview(periodSelectionButton)
-        periodSelectionButton.snp.makeConstraints { maker in
-            maker.trailing.equalToSuperview()
-            maker.top.bottom.equalToSuperview()
+        contentView.addSubview(marketFieldModeView)
+        marketFieldModeView.snp.makeConstraints { maker in
+            maker.leading.greaterThanOrEqualTo(fieldSelectionButton.snp.trailing).offset(CGFloat.margin8)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.top.bottom.equalToSuperview().inset(10)
         }
 
-        periodSelectionButton.setTitle(color: .themeGray)
-        periodSelectionButton.action = { [weak self] in self?.onTapPeriod?() }
+        marketFieldModeView.onSelect = { [weak self] field in
+            self?.onSelect?(field)
+        }
+
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -43,16 +49,8 @@ class MarketListHeaderView: UITableViewHeaderFooterView {
         fieldSelectionButton.set(title: sortingField)
     }
 
-    func set(period: String?) {
-        periodSelectionButton.set(title: period)
-    }
-
     func set(sortingFieldAction: (() -> ())?) {
         onTapSortField = sortingFieldAction
-    }
-
-    func set(periodAction: (() -> ())?) {
-        onTapPeriod = periodAction
     }
 
 }

@@ -3,7 +3,7 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
-class MarketListViewModel {
+class MarketDiscoveryViewModel {
     private let disposeBag = DisposeBag()
 
     public let service: MarketListService
@@ -23,7 +23,7 @@ class MarketListViewModel {
 
     private func sync(state: MarketListService.State) {
         if case .loaded = state {
-            syncViewItemsBySortingField()
+            syncViewItems()
         }
 
         if case .loading = state {
@@ -56,10 +56,12 @@ class MarketListViewModel {
         }
     }
 
-    private func syncViewItemsBySortingField() {
+    private func syncViewItems() {
         let viewItems: [ViewItem] = sort(items: service.items, by: sortingField).map {
             let rateValue = CurrencyValue(currency: service.currency, value: $0.price)
             let rate = ValueFormatter.instance.format(currencyValue: rateValue) ?? ""
+            let volume = CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0.volume)
+            let marketCap = CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0.marketCap)
 
             return ViewItem(
                     rank: $0.rank,
@@ -67,7 +69,9 @@ class MarketListViewModel {
                     coinCode: $0.coinCode,
                     coinType: $0.coinType,
                     rate: rate,
-                    diff: $0.diff
+                    diff: $0.diff,
+                    volume: volume ?? "",
+                    marketCap: marketCap ?? ""
             )
         }
 
@@ -76,7 +80,7 @@ class MarketListViewModel {
 
 }
 
-extension MarketListViewModel {
+extension MarketDiscoveryViewModel {
 
     public var sortingFieldTitle: String {
         sortingField.title
@@ -105,12 +109,12 @@ extension MarketListViewModel {
     public func setSortingField(at index: Int) {
         sortingField = service.sortingFields[index]
 
-        syncViewItemsBySortingField()
+        syncViewItems()
     }
 
 }
 
-extension MarketListViewModel {
+extension MarketDiscoveryViewModel {
 
     struct ViewItem {
         let rank: Int
@@ -119,25 +123,8 @@ extension MarketListViewModel {
         let coinType: CoinType?
         let rate: String
         let diff: Decimal
-    }
-
-}
-
-extension MarketListDataSource.SortingField {
-
-    var title: String {
-        switch self {
-        case .highestLiquidity: return "market.top.highest_liquidity".localized
-        case .lowestLiquidity: return "market.top.lowest_liquidity".localized
-        case .highestCap: return "market.top.highest_cap".localized
-        case .lowestCap: return "market.top.lowest_cap".localized
-        case .highestVolume: return "market.top.highest_volume".localized
-        case .lowestVolume: return "market.top.lowest_volume".localized
-        case .highestPrice: return "market.top.highest_price".localized
-        case .lowestPrice: return "market.top.lowest_price".localized
-        case .topGainers: return "market.top.top_gainers".localized
-        case .topLoosers: return "market.top.top_loosers".localized
-        }
+        let volume: String
+        let marketCap: String
     }
 
 }

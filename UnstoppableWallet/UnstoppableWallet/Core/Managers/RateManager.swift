@@ -108,12 +108,12 @@ extension RateManager: IRateManager {
         kit.globalMarketInfoSingle(currencyCode: currencyCode)
     }
 
-    func topMarketsSingle(currencyCode: String, fetchDiffPeriod: TimePeriod) -> Single<[CoinMarket]> {
-        kit.topMarketsSingle(currencyCode: currencyCode, fetchDiffPeriod: fetchDiffPeriod)
+    func topMarketsSingle(currencyCode: String) -> Single<[CoinMarket]> {
+        kit.topMarketsSingle(currencyCode: currencyCode, fetchDiffPeriod: .hour24)
     }
 
-    func topDefiMarketsSingle(currencyCode: String, fetchDiffPeriod: TimePeriod) -> Single<[CoinMarket]> {
-        kit.topDefiMarketsSingle(currencyCode: currencyCode, fetchDiffPeriod: fetchDiffPeriod)
+    func topDefiMarketsSingle(currencyCode: String) -> Single<[CoinMarket]> {
+        kit.topDefiMarketsSingle(currencyCode: currencyCode, fetchDiffPeriod: .hour24)
     }
 
     func marketInfoObservable(coinCode: String, currencyCode: String) -> Observable<MarketInfo> {

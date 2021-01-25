@@ -15,7 +15,7 @@ class MarketMetricView: UIView {
     private let titleLabel = UILabel()
     private let gradientBar = GradientPercentBar()
     private let valueLabel = UILabel()
-    private let diffLabel = UILabel()
+    private let diffLabel = RateDiffLabel()
 
     init() {
         super.init(frame: .zero)
@@ -70,26 +70,20 @@ extension MarketMetricView {
         valueLabel.text = value
 
         guard let diff = diff else {
-            diffLabel.text = nil
+            diffLabel.set(value: nil)
             gradientBar.set(value: nil)
 
             return
         }
 
         gradientBar.set(value: diff)
-        let plusSign = diff >= 0 ? "+" : ""
-
-        let formattedDiff = Self.formatter.string(from: diff as NSNumber)
-        let diffString = formattedDiff.map { plusSign + $0 + "%" }
-
-        diffLabel.text = diffString
-        diffLabel.textColor = diff >= 0 ? .themeRemus : .themeLucian
+        diffLabel.set(value: diff)
     }
 
     public func clear() {
         titleLabel.text = nil
         valueLabel.text = nil
-        diffLabel.text = nil
+        diffLabel.set(value: nil)
     }
 
 }
