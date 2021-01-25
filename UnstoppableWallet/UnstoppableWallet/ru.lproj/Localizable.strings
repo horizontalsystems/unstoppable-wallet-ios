@@ -298,13 +298,24 @@
 "market.tab_bar_item" = "Market";
 "market.title" = "Market";
 "market.category.all" = "All";
-"market.category.defi" = "DeFi";
+"market.category.defi" = "Discovery";
 "market.category.favorites" = "Watchlist";
 "market.total_market_cap" = "Total\nMarket Cap";
 "market.24h_volume" = "24h Volume";
 "market.btc_dominance" = "BTC Dominance";
 "market.defi_cap" = "DeFi Cap";
 "market.defi_tvl" = "TVL in DeFi";
+
+"market.top.section.header.see_all" = "See All";
+"market.top.section.header.top_gainers" = "Top Gainers";
+"market.top.section.header.top_loosers" = "Top Loosers";
+"market.top.section.header.top_volume" = "Top By Volume";
+"market.top.volume.title" = "Vol";
+"market.top.market_cap.title" = "MCap";
+
+"market.market_field.mcap" = "MCap";
+"market.market_field.vol" = "Vol";
+"market.market_field.price" = "Price";
 
 "market.sort_by" = "Sort By";
 "market.changes" = "Changes";
