@@ -28,7 +28,7 @@ class BitcoinHodlingViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        tableView.registerCell(forClass: ToggleCell.self)
+        tableView.registerCell(forClass: B11Cell.self)
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
@@ -59,15 +59,14 @@ extension BitcoinHodlingViewController: SectionsDataSource {
                     headerState: .margin(height: .margin3x),
                     footerState: footerState,
                     rows: [
-                        Row<ToggleCell>(
+                        Row<B11Cell>(
                                 id: "lock_time",
-                                height: .heightSingleLineCell,
-                                bind: { [unowned self] cell, _ in
-                                    cell.bind(
-                                            title: "settings.bitcoin_hodling.lock_time".localized,
-                                            isOn: self.lockTimeIsOn,
-                                            last: true
-                                    ) { [weak self] isOn in
+                                height: .heightCell48,
+                                bind: { [weak self] cell, _ in
+                                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                                    cell.title = "settings.bitcoin_hodling.lock_time".localized
+                                    cell.isOn = self?.lockTimeIsOn ?? false
+                                    cell.onToggle = { [weak self] isOn in
                                         self?.delegate.onSwitchLockTime(isOn: isOn)
                                     }
                                 }

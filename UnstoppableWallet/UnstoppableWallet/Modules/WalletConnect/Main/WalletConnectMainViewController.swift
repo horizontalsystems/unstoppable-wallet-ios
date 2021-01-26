@@ -267,11 +267,11 @@ extension WalletConnectMainViewController: SectionsDataSource {
         }
 
         if let status = status {
-            rows.append(valueRow(title: "status".localized, value: status.title, valueColor: status.color))
+            rows.append(valueRow(title: "status".localized, value: status.title, isFirst: true, isLast: peerMeta == nil, valueColor: status.color))
         }
 
         if let url = peerMeta?.url {
-            rows.append(valueRow(title: "wallet_connect.url".localized, value: url))
+            rows.append(valueRow(title: "wallet_connect.url".localized, value: url, isFirst: status == nil, isLast: true))
         }
 
         if let footerRow = footer {
@@ -301,12 +301,12 @@ extension WalletConnectMainViewController: SectionsDataSource {
         })
     }
 
-    private func valueRow(title: String, value: String, valueColor: UIColor? = nil) -> RowProtocol {
+    private func valueRow(title: String, value: String, isFirst: Bool, isLast: Bool, valueColor: UIColor? = nil) -> RowProtocol {
         Row<D7Cell>(
                 id: "row_\(title)",
-                height: .heightSingleLineCell,
+                height: .heightCell48,
                 bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence)
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                     cell.title = title
                     cell.value = value
                     cell.valueColor = valueColor ?? .themeLeah

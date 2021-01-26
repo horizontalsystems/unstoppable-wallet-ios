@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 import ThemeKit
 
-class SendConfirmationAmountCell: ThemeCell {
+class SendConfirmationAmountCell: BaseThemeCell {
     static let height: CGFloat = 72
 
     private let amountInfoView = AmountInfoView()
@@ -10,12 +10,7 @@ class SendConfirmationAmountCell: ThemeCell {
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        contentView.backgroundColor = .themeLawrence
-        backgroundColor = .clear
-        selectionStyle = .none
-
-        addSubview(amountInfoView)
-
+        wrapperView.addSubview(amountInfoView)
         amountInfoView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
@@ -26,7 +21,6 @@ class SendConfirmationAmountCell: ThemeCell {
     }
 
     func bind(primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?) {
-        super.bind(last: false)
         amountInfoView.bind(primaryAmountInfo: primaryAmountInfo, secondaryAmountInfo: secondaryAmountInfo)
     }
 

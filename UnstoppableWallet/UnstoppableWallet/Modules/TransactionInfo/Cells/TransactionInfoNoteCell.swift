@@ -1,7 +1,7 @@
 import UIKit
 import ThemeKit
 
-class TransactionInfoNoteCell: ThemeCell {
+class TransactionInfoNoteCell: BaseThemeCell {
     private static let imageViewLeadingMargin: CGFloat = .margin4x
     private static let imageViewSize: CGFloat = 20
     private static let labelHorizontalMargin: CGFloat = .margin4x
@@ -38,8 +38,6 @@ class TransactionInfoNoteCell: ThemeCell {
     }
 
     func bind(image: UIImage?, text: String) {
-        super.bind(bottomSeparatorVisible: true)
-
         iconImageView.image = image
         label.text = text
     }

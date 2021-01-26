@@ -9,7 +9,6 @@ class TransactionInfoViewController: ThemeActionSheetController {
 
     private let titleView = BottomSheetTitleView()
     private let amountInfoView = AmountInfoView()
-    private let separatorView = UIView()
     private let tableView = SelfSizedSectionsTableView(style: .grouped)
     private let verifyButton = ThemeButton()
 
@@ -43,15 +42,6 @@ class TransactionInfoViewController: ThemeActionSheetController {
             maker.height.equalTo(72)
         }
 
-        view.addSubview(separatorView)
-        separatorView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.bottom.equalTo(amountInfoView)
-            maker.height.equalTo(1 / UIScreen.main.scale)
-        }
-
-        separatorView.backgroundColor = .themeSteel20
-
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
@@ -59,7 +49,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
         }
 
         tableView.registerCell(forClass: TransactionInfoPendingStatusCell.self)
-        tableView.registerCell(forClass: TransactionInfoFromToCell.self)
+        tableView.registerCell(forClass: D9Cell.self)
         tableView.registerCell(forClass: TransactionInfoTransactionIdCell.self)
         tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: TransactionInfoWarningCell.self)
@@ -69,6 +59,17 @@ class TransactionInfoViewController: ThemeActionSheetController {
         tableView.registerCell(forClass: C6Cell.self)
         tableView.sectionDataSource = self
         tableView.allowsSelection = false
+
+        let separator = UIView()
+
+        view.addSubview(separator)
+        separator.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(tableView.snp.bottom)
+            maker.height.equalTo(CGFloat.heightOneDp)
+        }
+
+        separator.backgroundColor = .themeSteel10
 
         view.addSubview(verifyButton)
         verifyButton.snp.makeConstraints { maker in
@@ -95,7 +96,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
                 hash: "completed",
                 height: .heightSingleLineCell,
                 bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence, topSeparator: false, bottomSeparator: true)
+                    cell.set(backgroundStyle: .transparent)
                     cell.title = "status".localized
                     cell.value = "tx_info.status.confirmed".localized
                     cell.valueImage = UIImage(named: "check_1_20")?.tinted(with: .themeRemus)
@@ -109,7 +110,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
                 hash: "failed",
                 height: .heightSingleLineCell,
                 bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence, topSeparator: false, bottomSeparator: true)
+                    cell.set(backgroundStyle: .transparent)
                     cell.title = "status".localized
                     cell.titleImage = UIImage(named: "circle_information_20")?.tinted(with: .themeJacob)
                     cell.value = "tx_info.status.failed".localized
@@ -127,7 +128,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
                 hash: "pending-\(progress)-\(incoming)",
                 height: .heightSingleLineCell,
                 bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence, topSeparator: false, bottomSeparator: true)
+                    cell.set(backgroundStyle: .transparent)
                     cell.bind(progress: progress, incoming: incoming) { [weak self] in
                         self?.openStatusInfo()
                     }
@@ -148,33 +149,29 @@ class TransactionInfoViewController: ThemeActionSheetController {
         }
     }
 
-    private func fromToRow(title: String, value: String, onTap: @escaping () -> ()) -> RowProtocol {
-        Row<TransactionInfoFromToCell>(
+    private func fromToRow(title: String, value: String) -> RowProtocol {
+        Row<D9Cell>(
                 id: title,
                 hash: value,
                 height: .heightSingleLineCell,
                 bind: { cell, _ in
-                    cell.bind(title: title, value: value, onTap: onTap)
+                    cell.set(backgroundStyle: .transparent)
+                    cell.title = title
+                    cell.viewItem = .init(title: TransactionInfoAddressMapper.title(value: value), value: value)
                 }
         )
     }
 
     private func fromRow(value: String) -> RowProtocol {
-        fromToRow(title: "tx_info.from_hash".localized, value: TransactionInfoAddressMapper.map(value)) { [weak self] in
-            self?.delegate.onTapFrom()
-        }
+        fromToRow(title: "tx_info.from_hash".localized, value: value)
     }
 
     private func toRow(value: String) -> RowProtocol {
-        fromToRow(title: "tx_info.to_hash".localized, value: TransactionInfoAddressMapper.map(value)) { [weak self] in
-            self?.delegate.onTapTo()
-        }
+        fromToRow(title: "tx_info.to_hash".localized, value: value)
     }
 
     private func recipientRow(value: String) -> RowProtocol {
-        fromToRow(title: "tx_info.recipient_hash".localized, value: TransactionInfoAddressMapper.map(value)) { [weak self] in
-            self?.delegate.onTapRecipient()
-        }
+        fromToRow(title: "tx_info.recipient_hash".localized, value: value)
     }
 
     private func idRow(value: String) -> RowProtocol {
@@ -183,6 +180,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
                 hash: value,
                 height: .heightSingleLineCell,
                 bind: { [weak self] cell, _ in
+                    cell.set(backgroundStyle: .transparent)
                     cell.bind(
                             value: value,
                             onTapId: {
@@ -204,7 +202,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
                     D7Cell.height(containerWidth: width, title: title, value: value, valueItalic: valueItalic)
                 },
                 bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence, topSeparator: false, bottomSeparator: true)
+                    cell.set(backgroundStyle: .transparent)
                     cell.title = title
                     cell.value = value
                     cell.valueItalic = valueItalic
@@ -246,6 +244,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
                     TransactionInfoWarningCell.height(containerWidth: containerWidth, text: text)
                 },
                 bind: { cell, _ in
+                    cell.set(backgroundStyle: .transparent)
                     cell.bind(image: image, text: text, onTapButton: onTapButton)
                 }
         )
@@ -283,6 +282,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
                     TransactionInfoNoteCell.height(containerWidth: containerWidth, text: text)
                 },
                 bind: { cell, _ in
+                    cell.set(backgroundStyle: .transparent)
                     cell.bind(image: image, text: text)
                 }
         )
@@ -301,6 +301,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
                 id: "raw_transaction",
                 height: .heightSingleLineCell,
                 bind: { [weak self] cell, _ in
+                    cell.set(backgroundStyle: .transparent)
                     cell.bind(
                             title: "tx_info.raw_transaction".localized,
                             onTapShare: {

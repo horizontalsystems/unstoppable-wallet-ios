@@ -61,10 +61,10 @@ class BottomSheetTitleView: UIView {
         addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
             maker.leading.trailing.bottom.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightOnePixel)
+            maker.height.equalTo(CGFloat.heightOneDp)
         }
 
-        separatorView.backgroundColor = .themeSteel20
+        separatorView.backgroundColor = .themeSteel10
     }
 
     required init?(coder aDecoder: NSCoder) {

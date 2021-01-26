@@ -29,9 +29,9 @@ class NotificationSettingsViewController: ThemeViewController {
 
         title = "settings_notifications.title".localized
 
-        tableView.registerCell(forClass: ToggleCell.self)
-        tableView.registerCell(forClass: SingleLineValueDropdownCell.self)
-        tableView.registerCell(forClass: TitleCell.self)
+        tableView.registerCell(forClass: B11Cell.self)
+        tableView.registerCell(forClass: B5Cell.self)
+        tableView.registerCell(forClass: BCell.self)
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
 
@@ -116,14 +116,17 @@ extension NotificationSettingsViewController: SectionsDataSource {
                 headerState: .margin(height: .margin3x),
                 footerState: footerState,
                 rows: [
-                    Row<ToggleCell>(
+                    Row<B11Cell>(
                             id: "toggle_cell",
                             hash: "\(pushNotificationsOn)",
-                            height: CGFloat.heightSingleLineCell,
+                            height: .heightCell48,
                             bind: { [weak self] cell, _ in
-                                cell.bind(title: "settings_notifications.toggle_title".localized, isOn: self?.pushNotificationsOn ?? false, last: true, onToggle: { on in
-                                    self?.delegate.didToggleNotifications(on: on)
-                                })
+                                cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                                cell.title = "settings_notifications.toggle_title".localized
+                                cell.isOn = self?.pushNotificationsOn ?? false
+                                cell.onToggle = { [weak self] isOn in
+                                    self?.delegate.didToggleNotifications(on: isOn)
+                                }
                             }
                     )
                 ]
@@ -150,22 +153,23 @@ extension NotificationSettingsViewController: SectionsDataSource {
                 headerState: headerState,
                 footerState: .margin(height: 20),
                 rows: viewItem.rowItems.enumerated().compactMap { [weak self] index, item in
-                    self?.itemRow(index: index, viewItem: item, last: index == itemsCount - 1)
+                    self?.itemRow(index: index, viewItem: item, isFirst: index == 0, isLast: index == itemsCount - 1)
                 }
         )
     }
 
-    private func itemRow(index: Int, viewItem: NotificationSettingRowViewItem, last: Bool) -> RowProtocol {
-        Row<SingleLineValueDropdownCell>(
+    private func itemRow(index: Int, viewItem: NotificationSettingRowViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
+        Row<B5Cell>(
                 id: "item_row_\(index)",
                 hash: "\(viewItem.value)",
-                height: .heightSingleLineCell,
-                autoDeselect: true,
+                height: .heightCell48,
                 bind: { cell, _ in
-                    cell.bind(title: viewItem.title.localized, value: viewItem.value, last: true)
-                },
-                action: { _ in
-                    viewItem.onTap()
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                    cell.title = viewItem.title.localized
+                    cell.value = viewItem.value
+                    cell.valueAction = {
+                        viewItem.onTap()
+                    }
                 }
         )
     }
@@ -176,12 +180,14 @@ extension NotificationSettingsViewController: SectionsDataSource {
                 headerState: .margin(height: .margin3x),
                 footerState: .margin(height: .margin8x),
                 rows: [
-                    Row<TitleCell>(
+                    Row<BCell>(
                             id: "reset_all_cell",
-                            height: CGFloat.heightSingleLineCell,
+                            height: .heightCell48,
                             autoDeselect: true,
                             bind: { cell, _ in
-                                cell.bind(title: "settings_notifications.reset_all_title".localized, titleColor: .themeLucian, last: true)
+                                cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                                cell.title = "settings_notifications.reset_all_title".localized
+                                cell.titleColor = .themeLucian
                             },
                             action: { [weak self] _ in
                                 self?.delegate.didTapDeactivateAll()

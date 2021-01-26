@@ -85,7 +85,7 @@ class SwapViewController: ThemeViewController {
         tableView.sectionDataSource = self
         tableView.keyboardDismissMode = .onDrag
 
-        advancedSettingsCell.set(backgroundStyle: .transparent, bottomSeparator: true)
+        advancedSettingsCell.set(backgroundStyle: .transparent, isLast: true)
         advancedSettingsCell.title  = "swap.advanced_settings".localized
 
 //        slippageCell.title = "swap.advanced_settings.slippage".localized

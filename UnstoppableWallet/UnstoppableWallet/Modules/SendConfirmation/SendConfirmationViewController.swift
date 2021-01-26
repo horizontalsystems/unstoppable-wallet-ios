@@ -108,6 +108,7 @@ extension SendConfirmationViewController: ISendConfirmationView {
                 id: "send_primary_row",
                 height: SendConfirmationAmountCell.height,
                 bind: { cell, _ in
+                    cell.set(backgroundStyle: .lawrence, isFirst: true)
                     cell.bind(primaryAmountInfo: viewItem.primaryInfo, secondaryAmountInfo: viewItem.secondaryInfo)
                 }
         ))
@@ -115,7 +116,7 @@ extension SendConfirmationViewController: ISendConfirmationView {
         if let domain = viewItem.receiver.domain {
             topRows.append(Row<D7Cell>(
                     id: "domain",
-                    height: .heightSingleLineCell,
+                    height: .heightCell48,
                     bind: { cell, _ in
                         cell.set(backgroundStyle: .lawrence)
                         cell.title = "send.confirmation.domain".localized
@@ -127,9 +128,9 @@ extension SendConfirmationViewController: ISendConfirmationView {
 
         topRows.append(Row<D9Cell>(
                 id: "address",
-                height: .heightSingleLineCell,
+                height: .heightCell48,
                 bind: { [weak self] cell, _ in
-                    cell.set(backgroundStyle: .lawrence, bottomSeparator: self?.noMemo ?? false)
+                    cell.set(backgroundStyle: .lawrence, isLast: self?.noMemo ?? false)
                     cell.title = viewItem.isAccount ? "send.confirmation.account".localized : "send.confirmation.address".localized
                     cell.viewItem = .init(value: viewItem.receiver.raw)
                 }
@@ -144,9 +145,9 @@ extension SendConfirmationViewController: ISendConfirmationView {
 
         topRows.append(Row<D7Cell>(
                 id: "memo",
-                height: .heightSingleLineCell,
+                height: .heightCell48,
                 bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence, bottomSeparator: true)
+                    cell.set(backgroundStyle: .lawrence, isLast: true)
                     cell.title = "send.confirmation.memo_placeholder".localized
                     cell.value = viewItem.memo
                     cell.valueItalic = true

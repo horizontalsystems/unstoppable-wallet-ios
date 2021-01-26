@@ -160,8 +160,8 @@ extension WalletConnectRequestViewController: SectionsDataSource {
             Section(
                     id: "main",
                     footerState: .margin(height: 6),
-                    rows: [amountRow] + viewItems.map { viewItem in
-                        row(viewItem: viewItem)
+                    rows: [amountRow(isLast: viewItems.isEmpty)] + viewItems.enumerated().map { index, viewItem in
+                        row(viewItem: viewItem, isLast: index == viewItems.count - 1)
                     }
             ),
             Section(id: "fee",
@@ -181,7 +181,7 @@ extension WalletConnectRequestViewController: SectionsDataSource {
         ]
     }
 
-    private var amountRow: RowProtocol {
+    private func amountRow(isLast: Bool) -> RowProtocol {
         let amountViewItem = viewModel.amountData
 
         return Row<SendConfirmationAmountCell>(
@@ -189,32 +189,33 @@ extension WalletConnectRequestViewController: SectionsDataSource {
                 hash: amountViewItem.primary.formattedString,
                 height: SendConfirmationAmountCell.height,
                 bind: { cell, _ in
+                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: isLast)
                     cell.bind(primaryAmountInfo: amountViewItem.primary, secondaryAmountInfo: amountViewItem.secondary)
                 }
         )
     }
 
-    private func buttonRow(title: String, viewItem: CopyableSecondaryButton.ViewItem) -> RowProtocol {
+    private func buttonRow(title: String, viewItem: CopyableSecondaryButton.ViewItem, isLast: Bool) -> RowProtocol {
         Row<D9Cell>(
                 id: title,
                 hash: viewItem.value,
                 height: .heightSingleLineCell,
                 bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence)
+                    cell.set(backgroundStyle: .lawrence, isLast: isLast)
                     cell.title = title
                     cell.viewItem = viewItem
                 }
         )
     }
 
-    private func row(viewItem: WalletConnectRequestViewItem) -> RowProtocol {
+    private func row(viewItem: WalletConnectRequestViewItem, isLast: Bool) -> RowProtocol {
         switch viewItem {
         case let .from(value):
-            return buttonRow(title: "tx_info.from_hash".localized, viewItem: .init(title: TransactionInfoAddressMapper.title(value: value), value: value))
+            return buttonRow(title: "tx_info.from_hash".localized, viewItem: .init(title: TransactionInfoAddressMapper.title(value: value), value: value), isLast: isLast)
         case let .to(value):
-            return buttonRow(title: "tx_info.to_hash".localized, viewItem: .init(title: TransactionInfoAddressMapper.title(value: value), value: value))
+            return buttonRow(title: "tx_info.to_hash".localized, viewItem: .init(title: TransactionInfoAddressMapper.title(value: value), value: value), isLast: isLast)
         case let .input(value):
-            return buttonRow(title: "tx_info.input".localized, viewItem: .init(value: value))
+            return buttonRow(title: "tx_info.input".localized, viewItem: .init(value: value), isLast: isLast)
         }
     }
 
