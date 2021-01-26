@@ -297,9 +297,9 @@
 
 "market.tab_bar_item" = "Market";
 "market.title" = "Market";
-"market.category.all" = "All";
-"market.category.defi" = "Discovery";
-"market.category.favorites" = "Watchlist";
+"market.category.overview" = "All";
+"market.category.discovery" = "Discovery";
+"market.category.watchlist" = "Watchlist";
 "market.total_market_cap" = "Total\nMarket Cap";
 "market.24h_volume" = "24h Volume";
 "market.btc_dominance" = "BTC Dominance";
