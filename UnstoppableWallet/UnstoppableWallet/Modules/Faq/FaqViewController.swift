@@ -105,7 +105,8 @@ extension FaqViewController: SectionsDataSource {
                     headerState: .margin(height: .margin3x),
                     footerState: .margin(height: .margin8x),
                     rows: items.enumerated().map { index, item in
-                        let last = index == items.count - 1
+                        let isFirst = index == 0
+                        let isLast = index == items.count - 1
 
                         return Row<FaqCell>(
                                 id: "faq_\(index)",
@@ -113,7 +114,7 @@ extension FaqViewController: SectionsDataSource {
                                     FaqCell.height(containerWidth: containerWidth, text: item.text)
                                 },
                                 bind: { cell, _ in
-                                    cell.set(backgroundStyle: .lawrence, bottomSeparator: last)
+                                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                                     cell.title = item.text
                                 },
                                 action: { [weak self] _ in

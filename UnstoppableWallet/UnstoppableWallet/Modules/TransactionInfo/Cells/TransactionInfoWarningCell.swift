@@ -1,7 +1,7 @@
 import UIKit
 import ThemeKit
 
-class TransactionInfoWarningCell: ThemeCell {
+class TransactionInfoWarningCell: BaseThemeCell {
     private static let imageViewLeadingMargin: CGFloat = .margin4x
     private static let imageViewSize: CGFloat = 20
     private static let labelLeadingMargin: CGFloat = .margin4x
@@ -55,8 +55,6 @@ class TransactionInfoWarningCell: ThemeCell {
     }
 
     func bind(image: UIImage?, text: String, onTapButton: @escaping () -> ()) {
-        super.bind(bottomSeparatorVisible: true)
-
         iconImageView.image = image
         label.text = text
 

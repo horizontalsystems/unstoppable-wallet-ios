@@ -101,7 +101,7 @@ extension AppStatusViewControllerNew: SectionsDataSource {
                                 id: "version-history",
                                 height: .heightSingleLineCell,
                                 bind: { cell, _ in
-                                    cell.set(backgroundStyle: .lawrence, bottomSeparator: true)
+                                    cell.set(backgroundStyle: .lawrence, isLast: true)
                                     cell.title = "app_status.version_history".localized
                                 },
                                 action: { [weak self] cell in

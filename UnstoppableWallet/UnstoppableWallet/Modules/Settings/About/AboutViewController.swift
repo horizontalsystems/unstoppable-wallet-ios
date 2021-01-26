@@ -124,10 +124,10 @@ extension AboutViewController: SectionsDataSource {
                         ),
                         Row<A1Cell>(
                                 id: "contact",
-                                height: .heightSingleLineCell,
+                                height: .heightCell48,
                                 autoDeselect: true,
                                 bind: { cell, _ in
-                                    cell.set(backgroundStyle: .lawrence)
+                                    cell.set(backgroundStyle: .lawrence, isFirst: true)
                                     cell.titleImage = UIImage(named: "at_20")
                                     cell.title = "settings.about_app.contact".localized
                                 },
@@ -137,7 +137,7 @@ extension AboutViewController: SectionsDataSource {
                         ),
                         Row<A1Cell>(
                                 id: "app-status",
-                                height: .heightSingleLineCell,
+                                height: .heightCell48,
                                 bind: { cell, _ in
                                     cell.set(backgroundStyle: .lawrence)
                                     cell.titleImage = UIImage(named: "app_status_20")
@@ -150,14 +150,14 @@ extension AboutViewController: SectionsDataSource {
                         StaticRow(
                                 cell: termsCell,
                                 id: "terms",
-                                height: .heightSingleLineCell,
+                                height: .heightCell48,
                                 action: { [weak self] in
                                     self?.navigationController?.pushViewController(TermsRouter.module(), animated: true)
                                 }
                         ),
                         Row<A1Cell>(
                                 id: "rate-us",
-                                height: .heightSingleLineCell,
+                                height: .heightCell48,
                                 autoDeselect: true,
                                 bind: { cell, _ in
                                     cell.set(backgroundStyle: .lawrence)
@@ -170,10 +170,10 @@ extension AboutViewController: SectionsDataSource {
                         ),
                         Row<A1Cell>(
                                 id: "tell-friends",
-                                height: .heightSingleLineCell,
+                                height: .heightCell48,
                                 autoDeselect: true,
                                 bind: { cell, _ in
-                                    cell.set(backgroundStyle: .lawrence, bottomSeparator: true)
+                                    cell.set(backgroundStyle: .lawrence, isLast: true)
                                     cell.titleImage = UIImage(named: "share_1_20")
                                     cell.title = "settings.about_app.tell_friends".localized
                                 },

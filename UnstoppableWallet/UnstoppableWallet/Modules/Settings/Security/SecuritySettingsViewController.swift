@@ -35,9 +35,9 @@ class SecuritySettingsViewController: ThemeViewController {
         title = "settings_security.title".localized
         navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
 
-        tableView.registerCell(forClass: TitleCell.self)
-        tableView.registerCell(forClass: RightImageCell.self)
-        tableView.registerCell(forClass: ToggleCell.self)
+        tableView.registerCell(forClass: A1Cell.self)
+        tableView.registerCell(forClass: B1Cell.self)
+        tableView.registerCell(forClass: A11Cell.self)
 
         tableView.sectionDataSource = self
 
@@ -60,11 +60,18 @@ class SecuritySettingsViewController: ThemeViewController {
 
     private var privacyRows: [RowProtocol] {
         [
-            Row<TitleCell>(id: "privacy", height: .heightSingleLineCell, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "user_20"), title: "settings_security.privacy".localized, showDisclosure: true, last: true)
-            }, action: { [weak self] _ in
-                self?.delegate.didTapPrivacy()
-            })
+            Row<A1Cell>(
+                    id: "privacy",
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                        cell.titleImage = UIImage(named: "user_20")
+                        cell.title = "settings_security.privacy".localized
+                    },
+                    action: { [weak self] _ in
+                        self?.delegate.didTapPrivacy()
+                    }
+            )
         ]
     }
 
@@ -72,26 +79,39 @@ class SecuritySettingsViewController: ThemeViewController {
         let attentionIcon = pinSet ? nil : UIImage(named: "warning_2_20")
 
         var rows: [RowProtocol] = [
-            Row<ToggleCell>(id: "pin", height: .heightSingleLineCell, bind: { [unowned self] cell, _ in
-                cell.bind(
-                        titleIcon: UIImage(named: "dialpad_alt_2_20"),
-                        title: "settings_security.passcode".localized,
-                        rightImage: attentionIcon?.tinted(with: .themeLucian),
-                        isOn: pinSet, last: !editPinVisible,
-                        onToggle: { [weak self] isOn in
+            Row<A11Cell>(
+                    id: "pin",
+                    height: .heightCell48,
+                    bind: { [unowned self] cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !editPinVisible)
+                        cell.titleImage = UIImage(named: "dialpad_alt_2_20")
+                        cell.title = "settings_security.passcode".localized
+                        cell.rightImage = attentionIcon?.tinted(with: .themeLucian)
+                        cell.isOn = pinSet
+                        cell.onToggle = { [weak self] isOn in
                             self?.delegate.didSwitch(pinSet: isOn)
-                        })
-            })
+                        }
+                    }
+            )
         ]
 
         if editPinVisible {
-            rows.append(Row<TitleCell>(id: "edit_pin", height: .heightSingleLineCell, autoDeselect: true, bind: { cell, _ in
-                cell.bind(titleIcon: nil, title: "settings_security.change_pin".localized, showDisclosure: true, last: true)
-            }, action: { [weak self] _ in
-                DispatchQueue.main.async {
-                    self?.delegate.didTapEditPin()
-                }
-            }))
+            rows.append(
+                    Row<B1Cell>(
+                            id: "edit_pin",
+                            height: .heightCell48,
+                            autoDeselect: true,
+                            bind: { cell, _ in
+                                cell.set(backgroundStyle: .lawrence, isLast: true)
+                                cell.title = "settings_security.change_pin".localized
+                            },
+                            action: { [weak self] _ in
+                                DispatchQueue.main.async {
+                                    self?.delegate.didTapEditPin()
+                                }
+                            }
+                    )
+            )
         }
 
         return rows
@@ -108,11 +128,20 @@ class SecuritySettingsViewController: ThemeViewController {
     }
 
     private func createBiometryRow(title: String, icon: String) -> RowProtocol {
-        Row<ToggleCell>(id: "biometry", height: .heightSingleLineCell, bind: { [unowned self] cell, _ in
-            cell.bind(titleIcon: UIImage(named: icon), title: title, isOn: self.biometryEnabled, last: true, onToggle: { [weak self] isOn in
-                self?.delegate.didSwitch(biometryEnabled: isOn)
-            })
-        })
+        Row<A11Cell>(
+                id: "biometry",
+                height: .heightCell48,
+                bind: { [unowned self] cell, _ in
+                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                    cell.titleImage = UIImage(named: icon)
+                    cell.title = title
+                    cell.rightImage = nil
+                    cell.isOn = biometryEnabled
+                    cell.onToggle = { [weak self] isOn in
+                        self?.delegate.didSwitch(biometryEnabled: isOn)
+                    }
+                }
+        )
     }
 
 }

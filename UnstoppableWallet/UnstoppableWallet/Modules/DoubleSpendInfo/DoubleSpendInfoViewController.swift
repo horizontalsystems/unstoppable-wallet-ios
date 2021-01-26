@@ -36,7 +36,7 @@ class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
             maker.edges.equalToSuperview()
         }
 
-        tableView.registerCell(forClass: DoubleSpendInfoCell.self)
+        tableView.registerCell(forClass: D9Cell.self)
         tableView.registerHeaderFooter(forClass: TopDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
         tableView.separatorStyle = .none
@@ -66,32 +66,22 @@ class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
                     headerState: header,
                     footerState: .margin(height: .margin6x),
                     rows: [
-                        Row<DoubleSpendInfoCell>(
+                        Row<D9Cell>(
                                 id: "row_txHash",
-                                height: .heightSingleLineCell,
+                                height: .heightCell48,
                                 bind: { [weak self] cell, _ in
-                                    cell.bind(
-                                            title: "double_spend_info.this_hash".localized,
-                                            hash: self?.transactionHash,
-                                            last: false,
-                                            onTap: { [weak self] in
-                                                self?.onTapHash()
-                                            }
-                                    )
+                                    cell.set(backgroundStyle: .lawrence, isFirst: true)
+                                    cell.title = "double_spend_info.this_hash".localized
+                                    cell.viewItem = CopyableSecondaryButton.ViewItem(value: self?.transactionHash ?? "")
                                 }
                         ),
-                        Row<DoubleSpendInfoCell>(
+                        Row<D9Cell>(
                                 id: "row_conflictingTxHash",
-                                height: .heightSingleLineCell,
+                                height: .heightCell48,
                                 bind: { [weak self] cell, _ in
-                                    cell.bind(
-                                            title: "double_spend_info.conflicting_hash".localized,
-                                            hash: self?.conflictingTransactionHash,
-                                            last: true,
-                                            onTap: { [weak self] in
-                                                self?.onConflictingTapHash()
-                                            }
-                                    )
+                                    cell.set(backgroundStyle: .lawrence, isLast: true)
+                                    cell.title = "double_spend_info.conflicting_hash".localized
+                                    cell.viewItem = CopyableSecondaryButton.ViewItem(value: self?.conflictingTransactionHash ?? "")
                                 }
                         )
                     ]
