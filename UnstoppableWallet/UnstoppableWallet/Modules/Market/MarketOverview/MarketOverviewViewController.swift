@@ -46,7 +46,6 @@ class MarketOverviewViewController: ThemeViewController {
 
         tableView.registerHeaderFooter(forClass: MarketSectionHeaderView.self)
         tableView.registerCell(forClass: GRanked14Cell.self)
-        tableView.registerCell(forClass: GRanked14TitledCell.self)
 
         tableView.buildSections()
     }
@@ -55,54 +54,6 @@ class MarketOverviewViewController: ThemeViewController {
         self.viewItems = viewItems
 
         tableView.reload()
-    }
-
-    private func bind<T: UITableViewCell>(cell: T, viewItem: MarketOverviewViewModel.ViewItem) {
-        let image = UIImage.image(
-                coinCode: viewItem.coinCode,
-                blockchainType: viewItem.coinType?.blockchainType
-        ) ?? UIImage(named: "placeholder")
-
-        if let cell = cell as? GRanked14Cell {
-            cell.set(backgroundStyle: .lawrence)
-            cell.leftImage = image
-            cell.topText = viewItem.coinName
-            cell.bottomText = viewItem.coinCode.uppercased()
-            cell.rankText = viewItem.rank.index.description
-            cell.priceText = viewItem.rate
-            if case let .diff(diff) = viewItem.additionalField {
-                cell.diffText = ValueFormatter.instance.format(percentValue: diff)
-                cell.diffTextColor = diff.isSignMinus ? .themeLucian : .themeRemus
-            } else {
-                cell.diffText = nil
-            }
-        } else if let cell = cell as? GRanked14TitledCell {
-            cell.set(backgroundStyle: .lawrence)
-            cell.leftImage = image
-            cell.topText = viewItem.coinName
-            cell.bottomText = viewItem.coinCode.uppercased()
-            cell.rankText = viewItem.rank.index.description
-            cell.priceText = viewItem.rate
-            cell.additionalTitleText = "market.top.volume.title".localized
-            if case let .volume(volume) = viewItem.additionalField {
-                cell.additionalValueText = volume
-            } else {
-                cell.additionalValueText = nil
-            }
-        }
-    }
-
-    private func row<T: UITableViewCell>(cellType: T.Type, viewItem: MarketOverviewViewModel.ViewItem) -> RowProtocol {
-        Row<T>(
-                id: viewItem.coinCode,
-                height: .heightDoubleLineCell,
-                bind: { [weak self] cell, _ in
-                    self?.bind(cell: cell, viewItem: viewItem)
-                },
-                action: { [weak self] _ in
-                    self?.onSelect(viewItem: viewItem)
-                }
-        )
     }
 
     private func headerState(type: MarketOverviewViewModel.SectionType) -> ViewState<MarketSectionHeaderView> {
@@ -124,7 +75,20 @@ class MarketOverviewViewController: ThemeViewController {
         })
     }
 
-    private func onSelect(viewItem: MarketOverviewViewModel.ViewItem) {
+    private func row(viewItem: MarketModule.MarketViewItem) -> RowProtocol {
+        Row<GRanked14Cell>(
+                id: viewItem.coinCode,
+                height: .heightDoubleLineCell,
+                bind: { cell, _ in
+                    MarketModule.bind(cell: cell, viewItem: viewItem)
+                },
+                action: { [weak self] _ in
+                    self?.onSelect(viewItem: viewItem)
+                }
+        )
+    }
+
+    private func onSelect(viewItem: MarketModule.MarketViewItem) {
         let viewController = ChartRouter.module(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinName, coinType: viewItem.coinType))
         pushController?(viewController)
     }
@@ -150,11 +114,8 @@ extension MarketOverviewViewController: SectionsDataSource {
                 id: section.type.rawValue,
                 headerState: headerState(type: section.type),
                 footerState: .margin(height: CGFloat.margin12),
-                rows: section.viewItems.map { viewItem in
-                    switch section.type {
-                    case .topVolume: return row(cellType: GRanked14TitledCell.self, viewItem: viewItem)
-                    default: return row(cellType: GRanked14Cell.self, viewItem: viewItem)
-                }
+                rows: section.viewItems.map {
+                    row(viewItem: $0)
             })
         })
 
@@ -163,6 +124,19 @@ extension MarketOverviewViewController: SectionsDataSource {
 
     public func refresh() {
         viewModel.refresh()
+    }
+
+}
+
+extension MarketModule.RankColor {
+
+    var color: UIColor {
+        switch self {
+        case .a: return .themeJacob
+        case .b: return .blue
+        case .c: return .themeGray
+        case .d: return .lightGray
+        }
     }
 
 }

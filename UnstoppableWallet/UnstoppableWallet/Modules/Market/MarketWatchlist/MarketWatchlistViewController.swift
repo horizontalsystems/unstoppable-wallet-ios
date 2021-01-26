@@ -2,24 +2,31 @@ import UIKit
 import RxSwift
 import ThemeKit
 import SectionsTableView
+import HUD
 
-class MarketWatchlistView: ThemeViewController {
+class MarketWatchlistViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
-    private let viewModel: MarketWatchlistViewModel
 
     private let tableView = SectionsTableView(style: .plain)
+    private let spinner = HUDActivityView.create(with: .large48)
 
+    private let viewModel: MarketWatchlistViewModel
+
+    var pushController: ((UIViewController) -> ())?
+
+    private var viewItems = [MarketModule.MarketViewItem]()
 
     init(viewModel: MarketWatchlistViewModel) {
         self.viewModel = viewModel
 
         super.init()
+
+        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,36 +36,103 @@ class MarketWatchlistView: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        tableView.allowsSelection = false
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
+
+        tableView.registerHeaderFooter(forClass: MarketListHeaderView.self)
+        tableView.registerCell(forClass: GRanked14Cell.self)
+
         tableView.sectionDataSource = self
-//        tableView.contentInset = UIEdgeInsets(Watchlist: 128, left: 0, bottom: 0, right: 0)
-        tableView.registerCell(forClass: AdditionalDataCell.self)
+
+        view.addSubview(spinner)
+        spinner.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+        sync(isLoading: false)
 
         tableView.buildSections()
+    }
 
+    private func sync(viewItems: [MarketModule.MarketViewItem]) {
+        self.viewItems = viewItems
+
+        tableView.reload()
+    }
+
+    private func sync(isLoading: Bool) {
+        guard isLoading && tableView.visibleCells.isEmpty else {
+            spinner.isHidden = true
+            spinner.stopAnimating()
+
+            return
+        }
+
+        spinner.isHidden = false
+        spinner.startAnimating()
+    }
+
+    private func bindHeader(headerView: MarketListHeaderView) {
+        headerView.setSortingField(title: viewModel.sortingFieldTitle)
+        headerView.onTapSortField = { [weak self] in
+            self?.onTapSortingField()
+        }
+        headerView.onSelect = { [weak self] field in
+            self?.viewModel.set(marketField: field)
+        }
+    }
+
+    private func onTapSortingField() {
+        let alertController = AlertRouter.module(
+                title: "market.sort_by".localized,
+                viewItems: viewModel.sortingFields.map { item in
+                    AlertViewItem(
+                            text: item,
+                            selected: item == viewModel.sortingFieldTitle
+                    )
+                }
+        ) { [weak self] index in
+            self?.viewModel.setSortingField(at: index)
+        }
+
+        present(alertController, animated: true)
+    }
+
+    private func row(viewItem: MarketModule.MarketViewItem) -> RowProtocol {
+        Row<GRanked14Cell>(
+                id: viewItem.coinCode,
+                height: .heightDoubleLineCell,
+                bind: { cell, _ in
+                    MarketModule.bind(cell: cell, viewItem: viewItem)
+                },
+                action: { [weak self] _ in
+                    self?.onSelect(viewItem: viewItem)
+                }
+        )
+    }
+
+    private func onSelect(viewItem: MarketModule.MarketViewItem) {
+        let viewController = ChartRouter.module(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinName, coinType: viewItem.coinType))
+        pushController?(viewController)
     }
 
 }
 
-extension MarketWatchlistView: SectionsDataSource {
+extension MarketWatchlistViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
+        let headerState: ViewState<MarketListHeaderView> = .cellType(
+                hash: "section_header",
+                binder: { [weak self] view in
+                    self?.bindHeader(headerView: view)
+                },
+                dynamicHeight: { _ in
+                    MarketListHeaderView.height
+                })
 
-        var rows = [RowProtocol]()
-        for i in 0..<40 {
-            rows.append(Row<AdditionalDataCell>(
-                    id: "\(i)",
-                    height: AdditionalDataCell.height,
-                    bind: { cell, _ in
-                        cell.bind(title: "\(i)87efherf90843rehf", value: "\(i)3943yfkjsfy4389r", highlighted: true)
-                    }
-            ))
-        }
-
-        return [Section(id: "123", rows: rows)]
+        return [Section(id: "tokens",
+                headerState: headerState,
+                rows: viewItems.map { row(viewItem: $0) })]
     }
 
 }

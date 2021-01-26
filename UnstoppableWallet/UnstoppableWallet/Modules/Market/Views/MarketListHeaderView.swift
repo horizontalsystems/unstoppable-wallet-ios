@@ -9,8 +9,8 @@ class MarketListHeaderView: UITableViewHeaderFooterView {
     private let fieldSelectionButton = SelectionButton()
     private let marketFieldModeView = MarketFieldModeView()
 
-    private var onTapSortField: (() -> ())?
-    private var onSelect: ((MarketModule.MarketField) -> ())?
+    var onTapSortField: (() -> ())?
+    var onSelect: ((MarketModule.MarketField) -> ())?
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -18,9 +18,18 @@ class MarketListHeaderView: UITableViewHeaderFooterView {
         backgroundView = UIView()
         backgroundView?.backgroundColor = .themeNavigationBarBackground
 
+        let separatorView = UIView()
+        separatorView.backgroundColor = .themeSteel20
+        contentView.addSubview(separatorView)
+        separatorView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalToSuperview()
+            maker.height.equalTo(CGFloat.heightOnePixel)
+        }
+
         contentView.addSubview(fieldSelectionButton)
         fieldSelectionButton.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview()
+            maker.leading.equalToSuperview().offset(CGFloat.margin8)
             maker.top.bottom.equalToSuperview()
         }
 
@@ -45,12 +54,12 @@ class MarketListHeaderView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func set(sortingField: String?) {
-        fieldSelectionButton.set(title: sortingField)
-    }
+}
 
-    func set(sortingFieldAction: (() -> ())?) {
-        onTapSortField = sortingFieldAction
+extension MarketListHeaderView {
+    
+    public func setSortingField(title: String) {
+        fieldSelectionButton.set(title: title)
     }
 
 }

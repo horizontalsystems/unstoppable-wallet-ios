@@ -92,7 +92,7 @@ protocol IChartInteractor {
     func priceAlert(coin: Coin?) -> PriceAlert?
     func subscribeToAlertUpdates()
 
-    func favorite(coinCode: String, coinType: CoinType?)
+    func favorite(coinCode: String, coinTitle: String, coinType: CoinType?)
     func unfavorite(coinCode: String, coinType: CoinType?)
     func isFavorite(coinCode: String, coinType: CoinType?) -> Bool
 }
