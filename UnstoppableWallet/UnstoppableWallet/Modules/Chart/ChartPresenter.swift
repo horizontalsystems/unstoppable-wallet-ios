@@ -107,7 +107,7 @@ extension ChartPresenter: IChartViewDelegate {
     }
 
     func onTapFavorite() {
-        interactor.favorite(coinCode: launchMode.coinCode, coinType: launchMode.coinType)
+        interactor.favorite(coinCode: launchMode.coinCode, coinTitle: launchMode.coinTitle, coinType: launchMode.coinType)
     }
 
     func onTapUnfavorite() {

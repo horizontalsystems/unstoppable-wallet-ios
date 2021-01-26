@@ -8,11 +8,12 @@ class MarketDiscoveryViewModel {
 
     public let service: MarketListService
 
-    private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
+    private let viewItemsRelay = BehaviorRelay<[MarketModule.MarketViewItem]>(value: [])
     private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
     private var sortingField: MarketListDataSource.SortingField
+    private(set) var marketField: MarketModule.MarketField = .marketCap
 
     init(service: MarketListService) {
         self.service = service
@@ -57,21 +58,25 @@ class MarketDiscoveryViewModel {
     }
 
     private func syncViewItems() {
-        let viewItems: [ViewItem] = sort(items: service.items, by: sortingField).map {
+        let viewItems: [MarketModule.MarketViewItem] = sort(items: service.items, by: sortingField).map {
+            let marketDataValue: MarketModule.MarketDataValue
+            switch marketField {
+            case .price: marketDataValue = .diff($0.diff)
+            case .volume:
+                marketDataValue = .volume(CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0.volume) ?? "-")
+            case .marketCap:
+                marketDataValue = .marketCap(CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0.marketCap) ?? "-")
+            }
             let rateValue = CurrencyValue(currency: service.currency, value: $0.price)
             let rate = ValueFormatter.instance.format(currencyValue: rateValue) ?? ""
-            let volume = CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0.volume)
-            let marketCap = CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0.marketCap)
 
-            return ViewItem(
-                    rank: $0.rank,
+            return MarketModule.MarketViewItem(
+                    rank: .index($0.rank.description),
                     coinName: $0.coinName,
                     coinCode: $0.coinCode,
                     coinType: $0.coinType,
                     rate: rate,
-                    diff: $0.diff,
-                    volume: volume ?? "",
-                    marketCap: marketCap ?? ""
+                    marketDataValue: marketDataValue
             )
         }
 
@@ -86,7 +91,7 @@ extension MarketDiscoveryViewModel {
         sortingField.title
     }
 
-    public var viewItemsDriver: Driver<[ViewItem]> {
+    public var viewItemsDriver: Driver<[MarketModule.MarketViewItem]> {
         viewItemsRelay.asDriver()
     }
 
@@ -112,19 +117,29 @@ extension MarketDiscoveryViewModel {
         syncViewItems()
     }
 
+    public func set(marketField: MarketModule.MarketField) {
+        self.marketField = marketField
+
+        syncViewItems()
+    }
+
 }
 
-extension MarketDiscoveryViewModel {
+extension MarketListDataSource.SortingField {
 
-    struct ViewItem {
-        let rank: Int
-        let coinName: String
-        let coinCode: String
-        let coinType: CoinType?
-        let rate: String
-        let diff: Decimal
-        let volume: String
-        let marketCap: String
+    var title: String {
+        switch self {
+        case .highestLiquidity: return "market.top.highest_liquidity".localized
+        case .lowestLiquidity: return "market.top.lowest_liquidity".localized
+        case .highestCap: return "market.top.highest_cap".localized
+        case .lowestCap: return "market.top.lowest_cap".localized
+        case .highestVolume: return "market.top.highest_volume".localized
+        case .lowestVolume: return "market.top.lowest_volume".localized
+        case .highestPrice: return "market.top.highest_price".localized
+        case .lowestPrice: return "market.top.lowest_price".localized
+        case .topGainers: return "market.top.top_gainers".localized
+        case .topLoosers: return "market.top.top_loosers".localized
+        }
     }
 
 }

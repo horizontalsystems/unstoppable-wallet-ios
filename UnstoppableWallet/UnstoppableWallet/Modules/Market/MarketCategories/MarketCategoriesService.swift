@@ -7,7 +7,7 @@ class MarketCategoriesService {
     private let localStorage: ILocalStorage
 
     private var currentCategoryChangedRelay = PublishRelay<()>()
-    public var currentCategory: Category = .all {
+    public var currentCategory: Category = .overview {
         didSet {
             if currentCategory != oldValue {
                 localStorage.defaultMarketCategory = currentCategory.rawValue
@@ -23,7 +23,7 @@ class MarketCategoriesService {
     }
 
     private var savedCategory: Category {
-        localStorage.defaultMarketCategory.flatMap { Category(rawValue: $0) } ?? Category.all
+        localStorage.defaultMarketCategory.flatMap { Category(rawValue: $0) } ?? Category.overview
     }
 
 }
@@ -31,7 +31,7 @@ class MarketCategoriesService {
 extension MarketCategoriesService {
 
     public var categories: [Category] {
-        [.all, .defi]
+        [.overview, .discovery, .watchlist]
     }
 
     public var currentCategoryChangedObservable: Observable<()> {
@@ -43,9 +43,9 @@ extension MarketCategoriesService {
 extension MarketCategoriesService {
 
     public enum Category: Int {
-        case all
-        case defi
-//        case favorites
+        case overview
+        case discovery
+        case watchlist
     }
 
 }

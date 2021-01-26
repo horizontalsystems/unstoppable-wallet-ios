@@ -43,9 +43,9 @@ extension MarketCategoriesService.Category {
 
     var title: String {
         switch self {
-        case .all: return "market.category.all".localized
-        case .defi: return "market.category.defi".localized
-//        case .favorites: return "market.category.favorites".localized
+        case .overview: return "market.category.overview".localized
+        case .discovery: return "market.category.discovery".localized
+        case .watchlist: return "market.category.watchlist".localized
         }
     }
 

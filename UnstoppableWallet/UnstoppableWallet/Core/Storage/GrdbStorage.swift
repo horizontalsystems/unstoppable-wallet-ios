@@ -361,6 +361,7 @@ class GrdbStorage {
         migrator.registerMigration("createFavoriteCoins") { db in
             try db.create(table: FavoriteCoinRecord.databaseTableName) { t in
                 t.column(FavoriteCoinRecord.Columns.coinCode.name, .text).notNull()
+                t.column(FavoriteCoinRecord.Columns.coinTitle.name, .text).notNull()
                 t.column(FavoriteCoinRecord.Columns.coinType.name, .text)
             }
         }
@@ -532,8 +533,8 @@ extension GrdbStorage: IFavoriteCoinRecordStorage {
         }
     }
 
-    func save(coinCode: String, coinType: CoinType?) {
-        let favoriteCoinRecord = FavoriteCoinRecord(coinCode: coinCode, coinType: coinType)
+    func save(coinCode: String, coinTitle: String, coinType: CoinType?) {
+        let favoriteCoinRecord = FavoriteCoinRecord(coinCode: coinCode, coinTitle: coinTitle, coinType: coinType)
 
         _ = try! dbPool.write { db in
             try favoriteCoinRecord.insert(db)

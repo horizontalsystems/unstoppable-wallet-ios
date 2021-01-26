@@ -10,20 +10,18 @@ class MarketDiscoveryViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .plain)
     private let spinner = HUDActivityView.create(with: .large48)
 
-    private let marketMetricsCell: MarketMetricsCell
-    private let marketTickerCell: MarketTickerCell
-
     private let viewModel: MarketDiscoveryViewModel
 
     var pushController: ((UIViewController) -> ())?
 
+    private var viewItems = [MarketModule.MarketViewItem]()
+
     init(viewModel: MarketDiscoveryViewModel) {
         self.viewModel = viewModel
 
-        marketMetricsCell = MarketMetricsModule.cell()
-        marketTickerCell = MarketTickerModule.cell()
-
         super.init()
+
+        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
     }
 
     required init?(coder: NSCoder) {
@@ -38,12 +36,12 @@ class MarketDiscoveryViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        tableView.allowsSelection = false
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
 
         tableView.registerHeaderFooter(forClass: MarketListHeaderView.self)
+        tableView.registerCell(forClass: GRanked14Cell.self)
 
         tableView.sectionDataSource = self
 
@@ -54,6 +52,12 @@ class MarketDiscoveryViewController: ThemeViewController {
         sync(isLoading: false)
 
         tableView.buildSections()
+    }
+
+    private func sync(viewItems: [MarketModule.MarketViewItem]) {
+        self.viewItems = viewItems
+
+        tableView.reload()
     }
 
     private func sync(isLoading: Bool) {
@@ -68,21 +72,67 @@ class MarketDiscoveryViewController: ThemeViewController {
         spinner.startAnimating()
     }
 
+    private func bindHeader(headerView: MarketListHeaderView) {
+        headerView.setSortingField(title: viewModel.sortingFieldTitle)
+        headerView.onTapSortField = { [weak self] in
+            self?.onTapSortingField()
+        }
+        headerView.onSelect = { [weak self] field in
+            self?.viewModel.set(marketField: field)
+        }
+    }
+
+    private func onTapSortingField() {
+        let alertController = AlertRouter.module(
+                title: "market.sort_by".localized,
+                viewItems: viewModel.sortingFields.map { item in
+                    AlertViewItem(
+                            text: item,
+                            selected: item == viewModel.sortingFieldTitle
+                    )
+                }
+        ) { [weak self] index in
+            self?.viewModel.setSortingField(at: index)
+        }
+
+        present(alertController, animated: true)
+    }
+
+    private func row(viewItem: MarketModule.MarketViewItem) -> RowProtocol {
+        Row<GRanked14Cell>(
+                id: viewItem.coinCode,
+                height: .heightDoubleLineCell,
+                bind: { cell, _ in
+                    MarketModule.bind(cell: cell, viewItem: viewItem)
+                },
+                action: { [weak self] _ in
+                    self?.onSelect(viewItem: viewItem)
+                }
+        )
+    }
+
+    private func onSelect(viewItem: MarketModule.MarketViewItem) {
+        let viewController = ChartRouter.module(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinName, coinType: viewItem.coinType))
+        pushController?(viewController)
+    }
+
 }
 
 extension MarketDiscoveryViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        let headerState: ViewState<MarketListHeaderView> = .cellType(hash: "section_header",
-                binder: { view in
-                    view.set { [weak self] in
-                        print("setted new sortItem")
-                    }
-                }, dynamicHeight: { containerWidth in
-            MarketListHeaderView.height
-        })
+        let headerState: ViewState<MarketListHeaderView> = .cellType(
+            hash: "section_header",
+            binder: { [weak self] view in
+                self?.bindHeader(headerView: view)
+            },
+            dynamicHeight: { _ in
+                MarketListHeaderView.height
+            })
 
-        return [Section(id: "tokens", headerState: headerState, rows: [])]
+        return [Section(id: "tokens",
+                headerState: headerState,
+                rows: viewItems.map { row(viewItem: $0) })]
     }
 
 }

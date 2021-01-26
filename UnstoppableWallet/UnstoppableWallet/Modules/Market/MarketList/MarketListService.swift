@@ -21,6 +21,9 @@ class MarketListService {
         self.dataSource = dataSource
 
         fetch()
+        subscribe(disposeBag, dataSource.dataUpdatedObservable) { [weak self] in
+            self?.fetch()
+        }
     }
 
     private func convertItem(rank: Int, topMarket: CoinMarket) -> Item {

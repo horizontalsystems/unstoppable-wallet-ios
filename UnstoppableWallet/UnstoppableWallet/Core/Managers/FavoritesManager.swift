@@ -22,8 +22,8 @@ extension FavoritesManager: IFavoritesManager {
         storage.favoriteCoinRecords
     }
 
-    public func add(coinCode: String, coinType: CoinType?) {
-        storage.save(coinCode: coinCode, coinType: coinType)
+    public func add(coinCode: String, coinTitle: String, coinType: CoinType?) {
+        storage.save(coinCode: coinCode, coinTitle: coinTitle, coinType: coinType)
 
         dataUpdatedRelay.accept(())
     }

@@ -9,7 +9,15 @@ protocol IMarketListDataSource {
     func itemsSingle(currencyCode: String) -> Single<[CoinMarket]>
 }
 
-class MarketTopDataSource {
+extension IMarketListDataSource {
+
+    var sortingFields: [MarketListDataSource.SortingField] {
+        [.highestCap, .lowestCap, .highestVolume, .lowestVolume, .highestPrice, .lowestPrice, .topGainers, .topLoosers]
+    }
+
+}
+
+class MarketListDataSource {
     private let rateManager: IRateManager
     private let dataUpdatedRelay = PublishRelay<()>()
 
@@ -19,11 +27,7 @@ class MarketTopDataSource {
 
 }
 
-extension MarketTopDataSource: IMarketListDataSource {
-
-    var sortingFields: [MarketListDataSource.SortingField] {
-        [.highestCap, .lowestCap, .highestVolume, .lowestVolume, .highestPrice, .lowestPrice, .topGainers, .topLoosers]
-    }
+extension MarketListDataSource: IMarketListDataSource {
 
     var dataUpdatedObservable: Observable<()> {
         dataUpdatedRelay.asObservable()
@@ -35,33 +39,37 @@ extension MarketTopDataSource: IMarketListDataSource {
 
 }
 
-class MarketDefiDataSource {
+class MarketWatchlistDataSource {
+    private let disposeBag = DisposeBag()
     private let rateManager: IRateManager
+    private let favoritesManager: IFavoritesManager
+
     private let dataUpdatedRelay = PublishRelay<()>()
 
-    init(rateManager: IRateManager) {
+    init(rateManager: IRateManager, favoritesManager: IFavoritesManager) {
         self.rateManager = rateManager
+        self.favoritesManager = favoritesManager
+
+        subscribe(disposeBag, favoritesManager.dataUpdatedObservable) { [weak self] in
+            self?.dataUpdatedRelay.accept(())
+        }
     }
 
 }
 
-extension MarketDefiDataSource: IMarketListDataSource {
-
-    var sortingFields: [MarketListDataSource.SortingField] {
-        [.highestLiquidity, .lowestLiquidity, .highestVolume, .lowestVolume, .highestPrice, .lowestPrice, .topGainers, .topLoosers]
-    }
+extension MarketWatchlistDataSource: IMarketListDataSource {
 
     var dataUpdatedObservable: Observable<()> {
         dataUpdatedRelay.asObservable()
     }
 
     public func itemsSingle(currencyCode: String) -> Single<[CoinMarket]> {
-        rateManager.topDefiMarketsSingle(currencyCode: currencyCode)
+        rateManager.watchlistSingle(currencyCode: currencyCode, coins: favoritesManager.all)
     }
 
 }
 
-class MarketListDataSource {
+extension MarketListDataSource {
 
     enum SortingField: Int, CaseIterable {
         case highestCap

@@ -42,7 +42,12 @@ class MarketViewController: ThemeViewController {
             self?.navigationController?.pushViewController($0, animated: true)
         }
 
-        viewControllers = [marketOverviewController, marketDiscoveryViewController]
+        let marketWatchlistViewController = MarketWatchlistModule.view()
+        marketWatchlistViewController.pushController = { [weak self] in
+            self?.navigationController?.pushViewController($0, animated: true)
+        }
+
+        viewControllers = [marketOverviewController, marketDiscoveryViewController, marketWatchlistViewController]
     }
 
     required init?(coder aDecoder: NSCoder) {

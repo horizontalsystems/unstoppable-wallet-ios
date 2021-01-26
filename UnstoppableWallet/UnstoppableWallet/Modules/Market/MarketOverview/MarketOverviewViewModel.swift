@@ -61,26 +61,26 @@ class MarketOverviewViewModel {
         case .topVolume: sortingField = .highestVolume
         }
 
-        let viewItems: [ViewItem] = Array(sort(items: service.items, by: sortingField).map {
+        let viewItems: [MarketModule.MarketViewItem] = Array(sort(items: service.items, by: sortingField).map {
             let rateValue = CurrencyValue(currency: service.currency, value: $0.price)
 
-            let additionalField: AdditionalField
+            let marketDataValue: MarketModule.MarketDataValue
             switch sectionType {
             case .topVolume:
-                additionalField = .volume(CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0.volume) ?? "n/a".localized)
+                marketDataValue = .volume(CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0.volume) ?? "n/a".localized)
             default:
-                additionalField = .diff($0.diff)
+                marketDataValue = .diff($0.diff)
             }
 
             let rate = ValueFormatter.instance.format(currencyValue: rateValue) ?? "n/a".localized
 
-            return ViewItem(
-                    rank: .index($0.rank),
+            return MarketModule.MarketViewItem(
+                    rank: .index($0.rank.description),
                     coinName: $0.coinName,
                     coinCode: $0.coinCode,
                     coinType: $0.coinType,
                     rate: rate,
-                    additionalField: additionalField
+                    marketDataValue: marketDataValue
             )
         }.prefix(count))
 
@@ -113,10 +113,6 @@ extension MarketOverviewViewModel {
         errorRelay.asDriver()
     }
 
-    public var sortingFields: [String] {
-        service.sortingFields.map { $0.title }
-    }
-
     public func refresh() {
         service.refresh()
     }
@@ -125,42 +121,16 @@ extension MarketOverviewViewModel {
 
 extension MarketOverviewViewModel {
 
-    enum Rank {
-        case index(Int)
-        case score(index: Int, title: String)
-
-        var index: Int {
-            switch self {
-            case .index(let index): return index
-            case .score(let index, _): return index
-            }
-        }
-    }
-
-    enum AdditionalField {
-        case diff(Decimal)
-        case volume(String)
-        case marketCap(String)
-    }
-
     enum SectionType: String {
         case topGainers
         case topLoosers
         case topVolume
     }
 
-    struct ViewItem {
-        let rank: Rank
-        let coinName: String
-        let coinCode: String
-        let coinType: CoinType?
-        let rate: String
-        let additionalField: AdditionalField
-    }
 
     struct Section {
         let type: SectionType
-        let viewItems: [ViewItem]
+        let viewItems: [MarketModule.MarketViewItem]
     }
 
 }

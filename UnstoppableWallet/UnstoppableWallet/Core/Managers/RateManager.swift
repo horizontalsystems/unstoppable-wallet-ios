@@ -116,6 +116,20 @@ extension RateManager: IRateManager {
         kit.topDefiMarketsSingle(currencyCode: currencyCode, fetchDiffPeriod: .hour24)
     }
 
+    func watchlistSingle(currencyCode: String, coins: [FavoriteCoinRecord]) -> Single<[CoinMarket]> {
+        let coins: [XRatesKit.Coin] = coins.map {
+            let coinType = $0.coinType
+                .flatMap {
+                    CoinType(rawValue: $0)
+                }.map {
+                    convertCoinTypeToXRateKitCoinType(coinType: $0)
+                }
+
+            return XRatesKit.Coin(code: $0.coinCode, title: $0.coinTitle, type: coinType)
+        }
+        return kit.favorites(currencyCode: currencyCode, coins: coins)
+    }
+
     func marketInfoObservable(coinCode: String, currencyCode: String) -> Observable<MarketInfo> {
         guard let convertedCoinCode = rateCoinMapper.convert(coinCode: coinCode) else {
             return Observable.error(RateError.disabledCoin)
