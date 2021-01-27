@@ -117,6 +117,7 @@ extension SendPresenter: ISendInteractorDelegate {
     func didReceive(marketInfo: MarketInfo) {
         if !marketInfo.expired {
             handler.sync(rateValue: marketInfo.rate)
+            return
         }
         handler.sync(rateValue: nil)
     }

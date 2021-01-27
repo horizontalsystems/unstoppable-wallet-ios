@@ -1,5 +1,5 @@
-enum FeeState {
-    static let zero: FeeState = .value(0)
+enum FeeRateState {
+    static let zero: FeeRateState = .value(0)
 
     case loading
     case value(Int)

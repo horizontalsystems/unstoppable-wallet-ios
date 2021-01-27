@@ -1,3 +1,4 @@
+import Foundation
 import RxSwift
 import EthereumKit
 import HsToolKit
@@ -15,6 +16,10 @@ extension SendEthereumInteractor: ISendEthereumInteractor {
 
     func availableBalance(gasPrice: Int, gasLimit: Int) -> Decimal {
         adapter.availableBalance(gasPrice: gasPrice, gasLimit: gasLimit)
+    }
+
+    var balance: Decimal {
+        adapter.balance
     }
 
     var ethereumBalance: Decimal {

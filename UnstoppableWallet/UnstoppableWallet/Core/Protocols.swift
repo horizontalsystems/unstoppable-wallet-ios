@@ -120,6 +120,7 @@ protocol ITransactionsAdapter {
 }
 
 protocol ISendBitcoinAdapter {
+    var balance: Decimal { get }
     func availableBalance(feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData]) -> Decimal
     func maximumSendAmount(pluginData: [UInt8: IBitcoinPluginData]) -> Decimal?
     func minimumSendAmount(address: String?) -> Decimal
@@ -137,6 +138,7 @@ protocol ISendDashAdapter {
 }
 
 protocol ISendEthereumAdapter {
+    var balance: Decimal { get }
     func availableBalance(gasPrice: Int, gasLimit: Int) -> Decimal
     var ethereumBalance: Decimal { get }
     var minimumRequiredBalance: Decimal { get }

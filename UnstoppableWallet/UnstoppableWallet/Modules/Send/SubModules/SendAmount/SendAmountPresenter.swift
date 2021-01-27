@@ -11,7 +11,7 @@ class SendAmountPresenter {
     private let decimalParser: IAmountDecimalParser
 
     private let coin: Coin
-    private let currency: Currency
+    let currency: Currency
 
     private var availableBalance: Decimal?
     private var maximumAmount: Decimal?
@@ -20,16 +20,10 @@ class SendAmountPresenter {
 
     private(set) var inputType: SendInputType = .coin
 
-    private var rateValue: Decimal?
     private var amount: Decimal?
 
-    var currencyValue: CurrencyValue? {
-        guard let amount = amount, let rate = rateValue else {
-            return nil
-        }
-
-        return CurrencyValue(currency: currency, value: amount * rate)
-    }
+    var sendAmountInfo: SendAmountInfo = .notEntered
+    var rateValue: Decimal?
 
     init(coin: Coin, interactor: ISendAmountInteractor, decimalParser: IAmountDecimalParser) {
         self.coin = coin
@@ -209,6 +203,7 @@ extension SendAmountPresenter: ISendAmountModule {
 
     func set(amount: Decimal) {
         self.amount = amount
+        sendAmountInfo = .entered(amount: amount)
 
         syncAmount()
         syncHint()
@@ -219,7 +214,7 @@ extension SendAmountPresenter: ISendAmountModule {
     }
 
     func set(rateValue: Decimal?) {
-         self.rateValue = rateValue
+        self.rateValue = rateValue
 
         syncSwitchButton()
 
@@ -301,6 +296,12 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
             }
         }
 
+        if let coinAmount = amount {
+            sendAmountInfo = .entered(amount: coinAmount)
+        } else {
+            sendAmountInfo = .notEntered
+        }
+
         syncHint()
         syncMaxButton()
         syncError()
@@ -316,6 +317,7 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
         }
 
         amount = availableBalance - minimumRequiredBalance
+        sendAmountInfo = .max
 
         syncAmount()
         syncHint()
