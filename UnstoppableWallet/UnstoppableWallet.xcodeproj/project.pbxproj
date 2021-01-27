@@ -2020,9 +2020,6 @@
 		D31C4765238BF176008CB818 /* PredefinedAccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C475B238BF175008CB818 /* PredefinedAccountType.swift */; };
 		D31C4766238BF176008CB818 /* PredefinedAccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C475B238BF175008CB818 /* PredefinedAccountType.swift */; };
 		D31C4767238BF176008CB818 /* PredefinedAccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C475B238BF175008CB818 /* PredefinedAccountType.swift */; };
-		D31C477A238BF18D008CB818 /* AddressFormatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C476D238BF18D008CB818 /* AddressFormatCell.swift */; };
-		D31C477B238BF18D008CB818 /* AddressFormatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C476D238BF18D008CB818 /* AddressFormatCell.swift */; };
-		D31C477C238BF18D008CB818 /* AddressFormatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C476D238BF18D008CB818 /* AddressFormatCell.swift */; };
 		D3285F4620BD158E00644076 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3285F4520BD158E00644076 /* AppDelegate.swift */; };
 		D3373D9520BEC7B30082BC4A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3373D9420BEC7B30082BC4A /* AVFoundation.framework */; };
 		D3373DB220C52F640082BC4A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3373DB120C52F640082BC4A /* LaunchScreen.xib */; };
@@ -2987,7 +2984,6 @@
 		D31C4759238BF175008CB818 /* MnemonicDerivation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicDerivation.swift; sourceTree = "<group>"; };
 		D31C475A238BF175008CB818 /* FeeState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeState.swift; sourceTree = "<group>"; };
 		D31C475B238BF175008CB818 /* PredefinedAccountType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredefinedAccountType.swift; sourceTree = "<group>"; };
-		D31C476D238BF18D008CB818 /* AddressFormatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressFormatCell.swift; sourceTree = "<group>"; };
 		D3285F4220BD158E00644076 /* Unstoppable DT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unstoppable DT.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3285F4520BD158E00644076 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3285F4C20BD158F00644076 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -5038,7 +5034,6 @@
 				D39C8D7C259099370060E97C /* AddressFormatViewModel.swift */,
 				D39C8D7B259099370060E97C /* AddressFormatViewController.swift */,
 				D39C8D7E259099380060E97C /* AddressFormatConfirmationViewController.swift */,
-				D31C476D238BF18D008CB818 /* AddressFormatCell.swift */,
 			);
 			path = AddressFormat;
 			sourceTree = "<group>";
@@ -5790,7 +5785,6 @@
 				1A56471A8064478CF4651913 /* AppStatusManager.swift in Sources */,
 				11B358B481453690049253C1 /* RateDiffView.swift in Sources */,
 				11B35ABFA517B8F4256EB2C8 /* CaptionValueView.swift in Sources */,
-				D31C477A238BF18D008CB818 /* AddressFormatCell.swift in Sources */,
 				1A5641F2CD76EB15899B4266 /* UIDevice.swift in Sources */,
 				3AB67780259B5AD6002197A5 /* MarketTickerService.swift in Sources */,
 				1A5646DDDD9A1E132BE1885E /* AppVersion.swift in Sources */,
@@ -6549,7 +6543,6 @@
 				1A564E49B65B5396F2CB47FB /* AppStatusManager.swift in Sources */,
 				11B355FE18611306A36061CD /* RateDiffView.swift in Sources */,
 				11B3557CB2595D2884C94498 /* CaptionValueView.swift in Sources */,
-				D31C477B238BF18D008CB818 /* AddressFormatCell.swift in Sources */,
 				1A564F73B7FE144D39DEA34F /* UIDevice.swift in Sources */,
 				3AB6777F259B5AD5002197A5 /* MarketTickerService.swift in Sources */,
 				1A5648D7D29951DC4762B392 /* AppVersion.swift in Sources */,
@@ -7269,7 +7262,6 @@
 				1A56450B62EC2CABE49F2ABF /* AppStatusManager.swift in Sources */,
 				11B35BB4B685F557E8B319B4 /* RateDiffView.swift in Sources */,
 				11B35D51B52EF0000711CE05 /* CaptionValueView.swift in Sources */,
-				D31C477C238BF18D008CB818 /* AddressFormatCell.swift in Sources */,
 				1A5647EF2A5B8141F0BE4320 /* UIDevice.swift in Sources */,
 				1A5646C3220E1735309D2927 /* AppVersion.swift in Sources */,
 				3AB6777E259B5AD5002197A5 /* MarketTickerService.swift in Sources */,
