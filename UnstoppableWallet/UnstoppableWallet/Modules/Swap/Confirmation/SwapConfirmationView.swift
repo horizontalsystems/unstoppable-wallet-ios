@@ -70,6 +70,7 @@ class SwapConfirmationView: ThemeViewController {
                 id: "swap_amount",
                 height: SwapConfirmationAmountCell.height,
                 bind: { cell, _ in
+                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
                     cell.bind(payTitle: "swap.confirmation.pay".localized(viewItem.payTitle),
                             payValue: viewItem.payValue,
                             getTitle: "swap.confirmation.get".localized(viewItem.getTitle),
