@@ -86,8 +86,8 @@
 "coin_settings.sync_mode.description" = "Ссылки на источники API: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "Новый";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "Older wallets (before Aug 2017)";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "Newer wallets";
+"coin_settings.bitcoin_cash_coin_type.description.type0" = "Старые кошельки (до августа 2017 г.)";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "Новые кошельки";
 "sync_mode.from_blockchain" = "Из Блокчейна";
 "blockchain_settings.change_alert.title" = "Формат Адреса";
 "blockchain_settings.change_alert.content" = "После того, как данное изменение вступит в силу, кошелек должен будет повторно синхронизироваться с блокчейном %@.\n\nПри изменении формата адреса для %@ текущий баланс и история транзакций больше не будут отображаться. При возвращении предыдущих настроек баланс и история восстановятся после того, как кошелек повторно синхронизируется с блокчейном. Рекомендуем не менять настройки, если вы не уверены, что это такое.";
@@ -146,8 +146,8 @@
 "balance.sort.24h_change" = "Цене(%) за 24 ч";
 "balance_error.change_source" = "Сменить Источник";
 "balance_error.sync_error" = "Ошибка Синхронизации";
-"lost_accounts.warning_title" = "iOS Keychain Error";
-"lost_accounts.warning_message" = "The encrypted data holding your wallet was recently invalidated because your iOS lock screen was changed";
+"lost_accounts.warning_title" = "Ошибка связки ключей iOS";
+"lost_accounts.warning_message" = "Зашифрованные данные вашего кошелька были недавно аннулированы, поскольку ваш экран блокировки iOS был изменен";
 // Deposit
 
 "deposit.receive_coin" = "Получить %@";
@@ -159,7 +159,7 @@
 "send.title" = "Отправить %@";
 "send.amount_placeholder" = "Сумма";
 "send.address_placeholder" = "Адрес";
-"send.address_or_domain_placeholder" = "Address or Domain";
+"send.address_or_domain_placeholder" = "Адрес или домен";
 "send.fee" = "Комиссия";
 "send.tx_speed" = "Комиссия за транзакцию";
 "send.tx_speed_low" = "Низкая";
@@ -183,18 +183,18 @@
 "send.hodler_locktime_year" = "1 год";
 "send.hodler_locktime_off" = "Выкл.";
 "send.hodler_error.unsupported_address" = "Блокировка по времени работает только с адресами P2PKH (начиная с 1)";
-"send.fee_info.title" = "Transaction Speed";
-"send.fee_info.description" = "Both Bitcoin and Ethereum blockchains require users to pay usage fees while sending transactions on the blockchain.\n\nUnstoppable uses public fee estimate services to help user determine appropriate transaction fees for the moment. The fees are higher when there are a lot of transactions taking place and lower when the blockchain is less busy.";
-"send.fee_info.header_slow" = "Slow";
-"send.fee_info.content_slow" = "Selecting a value from this range may result in transaction being pending for hours or being rejected entirely. The lower the value the longer it will take for the transaction to confirm.";
-"send.fee_info.header_average" = "Average";
-"send.fee_info.content_average" = "Typically, this fee range should be sufficient for transaction to be processed within minutes/hour for Bitcoin and within minutes for Ethereum.";
-"send.fee_info.header_fast" = "Fast";
-"send.fee_info.content_fast" = "For transactions where priority is important we recommend using high fee setting. It's expected that selecting high fee setting will be sufficient for transaction to be completed within 10 minutes for Bitcoin and within a few minutes for Ethereum.";
-"send.fee_info.content_conclusion" = "The Unstoppable wallet makes an educated guess based on the network activity and can't not guarantee that the suggested fee values will always result in expected behavior.";
+"send.fee_info.title" = "Скорость транзакции";
+"send.fee_info.description" = "При использования блокчейнов Bitcoin и Ethereum пользователи должны платить комиссию при отправке транзакций.\n\nUnstoppable использует общественные сервисы оценки сумм комиссионных сборов, чтобы помогать пользователю определять размеры соответствующих комиссий на данный момент. Размеры комиссий возрастают при совершении большого количества транзакций и понижаются при меньшей занятости блокчейна.";
+"send.fee_info.header_slow" = "Медленно";
+"send.fee_info.content_slow" = "Выбор значения из данного диапазона может привести к откладыванию транзакции на некоторое время или ее полному отклонению. Чем меньше размер транзакции, тем дольше займет процесс ее подтверждения.";
+"send.fee_info.header_average" = "Cреднее";
+"send.fee_info.content_average" = "Обычно для этого диапазона комиссий характерна обработка транзакций в течение нескольких минут/часа для Bitcoin и в течение нескольких минут для Ethereum.";
+"send.fee_info.header_fast" = "Быстро";
+"send.fee_info.content_fast" = "В случае с приоритетными транзакциями лучше всего использовать настройку высокой комиссии. При выборе высокой комиссии транзакция Bitcoin будет обработана в течение 10 минут, ну а транзакция Ethereum будет обработана еще быстрее.";
+"send.fee_info.content_conclusion" = "Кошелек Unstoppable делает обоснованное предположение на основе сетевой активности и не может гарантировать, что предлагаемые значения комиссии всегда будут давать желаемый результат.";
 
-"send.confirmation.domain" = "Domain";
-"send.confirmation.address" = "Address";
+"send.confirmation.domain" = "Домен";
+"send.confirmation.address" = "Адрес";
 "send.confirmation.account" = "Account";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Всего";
@@ -250,9 +250,9 @@
 "swap.advanced_settings.recipient_address" = "Адрес Получателя";
 "swap.advanced_settings.error.lower_slippage" = "Ваша транзакция, скорее всего, не удастся.";
 "swap.advanced_settings.error.higher_slippage" = "Макс. допустимое значение %@%%.";
-"swap.advanced_settings.error.invalid_address" = "Invalid Address";
-"swap.advanced_settings.error.invalid_slippage" = "Invalid Slippage";
-"swap.advanced_settings.error.invalid_deadline" = "Invalid Deadline";
+"swap.advanced_settings.error.invalid_address" = "Неверный адрес";
+"swap.advanced_settings.error.invalid_slippage" = "Неверное проскальзывание";
+"swap.advanced_settings.error.invalid_deadline" = "Недопустимый срок";
 
 "swap.fee" = "Комиссия за обмен";
 "swap.transactions_speed" = "Скорость Транзакции";
@@ -295,21 +295,21 @@
 
 // Market
 
-"market.tab_bar_item" = "Market";
-"market.title" = "Market";
+"market.tab_bar_item" = "Рынок";
+"market.title" = "Рынок";
 "market.category.overview" = "Все";
-"market.category.discovery" = "Discovery";
-"market.category.watchlist" = "Watchlist";
-"market.total_market_cap" = "Total\nMarket Cap";
-"market.24h_volume" = "24h Volume";
-"market.btc_dominance" = "BTC Dominance";
-"market.defi_cap" = "DeFi Cap";
-"market.defi_tvl" = "TVL in DeFi";
+"market.category.discovery" = "Находка";
+"market.category.watchlist" = "Список для отслеживания";
+"market.total_market_cap" = "Общая\nрыночная стоимость";
+"market.24h_volume" = "Объем за 24 ч.";
+"market.btc_dominance" = "Преобладание BTC";
+"market.defi_cap" = "Рыночная стоимость DeFi";
+"market.defi_tvl" = "TVL в DeFi";
 
-"market.top.section.header.see_all" = "See All";
-"market.top.section.header.top_gainers" = "Top Gainers";
-"market.top.section.header.top_loosers" = "Top Loosers";
-"market.top.section.header.top_volume" = "Top By Volume";
+"market.top.section.header.see_all" = "Показать все";
+"market.top.section.header.top_gainers" = "Лучшие майнеры";
+"market.top.section.header.top_loosers" = "Топ прогоревших";
+"market.top.section.header.top_volume" = "Топ по объему";
 "market.top.volume.title" = "Объём";
 "market.top.market_cap.title" = "Рын. Кап.";
 
@@ -318,22 +318,22 @@
 "market.market_field.price" = "Цена";
 
 "market.sort_by" = "Сортировать по";
-"market.changes" = "Changes";
+"market.changes" = "Изменения";
 
-"market.top.highest_liquidity" = "Highest Liquidity";
-"market.top.lowest_liquidity" = "Lowest Liquidity";
-"market.top.highest_cap" = "Highest Cap";
-"market.top.lowest_cap" = "Lowest Cap";
-"market.top.highest_volume" = "Highest Volume";
-"market.top.lowest_volume" = "Lowest Volume";
-"market.top.highest_price" = "Highest Price";
-"market.top.lowest_price" = "Lowest Price";
-"market.top.top_gainers" = "Top Gainers";
-"market.top.top_loosers" = "Top Loosers";
+"market.top.highest_liquidity" = "Самая высокая ликвидность";
+"market.top.lowest_liquidity" = "Самая низкая ликвидность";
+"market.top.highest_cap" = "Самый высокий кэп";
+"market.top.lowest_cap" = "Самый низкий кэп";
+"market.top.highest_volume" = "Самый высокий объем";
+"market.top.lowest_volume" = "Самый низкий объем";
+"market.top.highest_price" = "Самая высокая цена";
+"market.top.lowest_price" = "Самая низкая цена";
+"market.top.top_gainers" = "Лучшие майнеры";
+"market.top.top_loosers" = "Топ прогоревших";
 
 "market.top.period_1h" = "1 час";
 "market.top.period_24h" = "24- часа";
-"market.top.period_day_start" = "Day Start";
+"market.top.period_day_start" = "Дневной старт";
 "market.top.period_one_day" = "1 день";
 "market.top.period_one_week" = "1 неделя";
 "market.top.period_one_month" = "1 месяц";
@@ -362,7 +362,7 @@
 "tx_info.transaction_id" = "ID Транзакции";
 "tx_info.to_hash" = "Кому";
 "tx_info.input" = "Ввод";
-"tx_info.button_explorer" = "View on %@";
+"tx_info.button_explorer" = "Посмотреть на %@";
 "tx_info.rate" = "Исторический Курс";
 "tx_info.fee" = "Комиссия";
 "tx_info.to_self_note" = "Данная транзакция отправлена на собственный адрес";
@@ -446,7 +446,7 @@
 "terms.item.phone" = "Я понимаю, что передача моего телефона ненадежным лицам или оставление кошелька без безопасной блокировки с помощью PIN-кода может поставить под угрозу безопасность моих средств.";
 "terms.item.root" = "Я понимаю, что джейлбрейк (или рутинг) моего телефона, установка приложений из неизвестных источников и устаревшая операционная система могут поставить под угрозу безопасность моих средств.";
 "terms.item.bugs" = "Я понимаю, что в коде этого кошелька могут быть необнаруженные проблемы с программным обеспечением, что может привести к неожиданному поведению или сбоям в работе приложения.";
-"terms.item.pin" = "I understand that disabling the phone unlock passcode in Settings of iOS will erase wallet private keys from my device. I will need my private keys to regain access to my wallet.";
+"terms.item.pin" = "Я понимаю, что отключение секретного кода разблокировки телефона в Настройках iOS удалит приватные ключи кошелька с моего устройства. Мне понадобятся приватные ключи для восстановления доступа к моему кошельку.";
 "terms.footer" = "Благодарим вас за выбор данного кошелька!";
 
 // Settings -> Tell Friends
@@ -474,12 +474,12 @@
 "settings_privacy.sync.section_footer" = "Выберите источник данных для восстановления кошелька с транзакциями.";
 
 "settings_privacy_info.title" = "Настройки Приватности";
-"settings_privacy_info.description" = "Below you will find detailed explanation of the privacy settings that are available in the app. It's safe to consider them as settings for those that require extensive privacy.";
-"settings_privacy_info.header_blockchain_transactions" = "Blockchain Transactions";
+"settings_privacy_info.description" = "Ниже вы найдете подробное описание доступных в приложении настроек конфиденциальности. Эти настройки предназначены для тех, кому нужна полная конфиденциальность.";
+"settings_privacy_info.header_blockchain_transactions" = "Tранзакции Блокчейна";
 "settings_privacy_info.content_blockchain_transactions" = "This setting controls the privacy level of user's transactions on Bitcoin, Bitcoin Cash and Litecoin blockchains.\n\nMost Bitcoin transactions generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party monitoring Bitcoin blockchain to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. The output returned to the sender can then be used in future transactions and further reveal the details to the monitoring party.\n\nUnstoppable wallet implements measures to makes it significantly harder to figure out which output goes where. There are two options available to Unstoppable users:\n\n1. Shuffle : The order of transaction outputs are randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, than consider this a recommended option.\n\n2. Deterministic : There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open source wallets that standard ensures that wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether transaction was sent from the wallet that uses that standard or not.";
-"settings_privacy_info.header_blockchain_connection" = "Blockchain Sync";
+"settings_privacy_info.header_blockchain_connection" = "Синхронизировать блокчейн";
 "settings_privacy_info.content_blockchain_connection" = "This setting controls how this app interacts with blockchains (sending/receiving transactions). In case of Bitcoin, Bitcoin Cash, Litecoin and Dash it is fully peer to peer. The app pings many nodes and communicates with them. Potentially these nodes can record IP address and data requested but since they are chosen randomly, each time the app connects to a different node.\n\nIn case of Ethereum, there is no alternative for mobile wallets to interact with blockchain other than via third party providers (i.e. Infura.io) or personal Ethereum nodes. Third party services can potentially record IP addresses and the requests made. That info can reveal location, balance, transactions etc. Moreover, the wallet has to trust that information returned is correct. There is a an alternative known as Incubed which in essence is a network of special Ethereum nodes. These nodes can also record IP addresses and requests made, but they are chosen randomly each time. While being slightly slower than Infura, the way Incubed works pretty much guarantees that the information returned is correct (not fake).\n\nWhen it comes to other blockchains like EOSIO and Binance Chain, at this point they only provide centralized means of connecting, without viable alternatives. Potentially they can be recording IP addresses and requests made.";
-"settings_privacy_info.header_blockchain_restore" = "Blockchain Restore";
+"settings_privacy_info.header_blockchain_restore" = "Восстановить блокчейн";
 "settings_privacy_info.content_blockchain_restore" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transactions history for a given coin so that the wallet app is able to display past transactions and calculate user's balance. This needs to happen only once, when user restores previously created wallet. At this point there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from API Server : There is a third-party predefined server which hosts the entire blockchain and has all the data processed and ready to provide it in a fast manner. This method is fast but can potentially keep track of the IP addresses and the data requested. This option is recommended due to its speed of getting data (5-10 minutes). The risks are minimal. If the user restoring from his own server then no privacy risks at all.\n\n2. from Blockchain : In this case the app tries to restore directly from a p2p network of the blockchain nodes. The app pings many of those nodes and requests data from them. Potentially these nodes can keep track of user's IP address and requests made however during restore the app can switch between nodes. There are close to 10,000 Bitcoin nodes on the network at any given time. This option is slow and can easily take 2-3 hours, app needs to be open while restore is happening...";
 
 "settings_privacy.alert_sync.title" = "Источник Восстановления";
@@ -678,7 +678,7 @@
 
 // Wallet Connect
 
-"wallet_connect.title" = "Wallet Connect";
+"wallet_connect.title" = "Подключить кошелек";
 "wallet_connect.requirement" = "Требования";
 "wallet_connect.requirement.description" = "Для подключения к браузеру вам нужно активировать ethereum или любой erc20 токен во вкладке \"Баланс\"";
 "wallet_connect.error.invalid_url" = "Неверный URL-адрес";
@@ -716,9 +716,9 @@
 
 // Enable Coins
 
-"enable_coins.title" = "Enable Coins";
-"enable_coins.description" = "Enable all %@ coins that have any balance";
-"enable_coins.enable_button" = "Enable";
-"enable_coins.enabling" = "Enabling...";
-"enable_coins.enabled_coins" = "Enabled %@ coins";
-"enable_coins.enabled_no_coins" = "No coins found with balance";
+"enable_coins.title" = "Активировать монеты";
+"enable_coins.description" = "Активировать все %@ монеты с любым балансом";
+"enable_coins.enable_button" = "Активировать";
+"enable_coins.enabling" = "Идет активация...";
+"enable_coins.enabled_coins" = "Активировано %@ монет";
+"enable_coins.enabled_no_coins" = "На балансе нет монет";
