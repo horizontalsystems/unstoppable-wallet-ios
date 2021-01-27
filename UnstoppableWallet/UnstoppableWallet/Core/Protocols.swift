@@ -228,7 +228,6 @@ protocol IRateManager {
     func marketInfo(coinCode: String, currencyCode: String) -> MarketInfo?
     func globalMarketInfoSingle(currencyCode: String) -> Single<GlobalCoinMarket>
     func topMarketsSingle(currencyCode: String) -> Single<[CoinMarket]>
-    func topDefiMarketsSingle(currencyCode: String) -> Single<[CoinMarket]>
     func watchlistSingle(currencyCode: String, coins: [FavoriteCoinRecord]) -> Single<[CoinMarket]>
     func marketInfoObservable(coinCode: String, currencyCode: String) -> Observable<MarketInfo>
     func marketInfosObservable(currencyCode: String) -> Observable<[String: MarketInfo]>
@@ -242,9 +241,9 @@ protocol IFavoritesManager {
     var dataUpdatedObservable: Observable<()> { get }
     var all: [FavoriteCoinRecord] { get }
 
-    func add(coinCode: String, coinTitle: String, coinType: CoinType?)
-    func remove(coinCode: String, coinType: CoinType?)
-    func isFavorite(coinCode: String, coinType: CoinType?) -> Bool
+    func add(coinCode: String)
+    func remove(coinCode: String)
+    func isFavorite(coinCode: String) -> Bool
 }
 
 protocol IPostsManager {
@@ -543,9 +542,9 @@ protocol ICoinStorage {
 
 protocol IFavoriteCoinRecordStorage {
     var favoriteCoinRecords: [FavoriteCoinRecord] { get }
-    func save(coinCode: String, coinTitle: String, coinType: CoinType?)
-    func deleteFavoriteCoinRecord(coinCode: String, coinType: CoinType?)
-    func inFavorites(coinCode: String, coinType: CoinType?) -> Bool
+    func save(coinCode: String)
+    func deleteFavoriteCoinRecord(coinCode: String)
+    func inFavorites(coinCode: String) -> Bool
 }
 
 protocol ITermsManager {

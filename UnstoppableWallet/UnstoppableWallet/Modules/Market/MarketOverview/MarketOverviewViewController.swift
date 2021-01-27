@@ -75,11 +75,12 @@ class MarketOverviewViewController: ThemeViewController {
         })
     }
 
-    private func row(viewItem: MarketModule.MarketViewItem) -> RowProtocol {
+    private func row(viewItem: MarketModule.MarketViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
         Row<GRanked14Cell>(
                 id: viewItem.coinCode,
                 height: .heightDoubleLineCell,
                 bind: { cell, _ in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                     MarketModule.bind(cell: cell, viewItem: viewItem)
                 },
                 action: { [weak self] _ in
@@ -114,8 +115,8 @@ extension MarketOverviewViewController: SectionsDataSource {
                 id: section.type.rawValue,
                 headerState: headerState(type: section.type),
                 footerState: .margin(height: CGFloat.margin12),
-                rows: section.viewItems.map {
-                    row(viewItem: $0)
+                rows: section.viewItems.enumerated().map { (index, item) in
+                    row(viewItem: item, isFirst: index == 0, isLast: index == section.viewItems.count - 1)
             })
         })
 

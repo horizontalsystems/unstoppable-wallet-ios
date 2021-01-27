@@ -98,11 +98,12 @@ class MarketDiscoveryViewController: ThemeViewController {
         present(alertController, animated: true)
     }
 
-    private func row(viewItem: MarketModule.MarketViewItem) -> RowProtocol {
+    private func row(viewItem: MarketModule.MarketViewItem, isLast: Bool) -> RowProtocol {
         Row<GRanked14Cell>(
                 id: viewItem.coinCode,
                 height: .heightDoubleLineCell,
                 bind: { cell, _ in
+                    cell.set(backgroundStyle: .claude, isLast: isLast)
                     MarketModule.bind(cell: cell, viewItem: viewItem)
                 },
                 action: { [weak self] _ in
@@ -132,7 +133,7 @@ extension MarketDiscoveryViewController: SectionsDataSource {
 
         return [Section(id: "tokens",
                 headerState: headerState,
-                rows: viewItems.map { row(viewItem: $0) })]
+                rows: viewItems.enumerated().map { row(viewItem: $1, isLast: $0 == viewItems.count - 1) })]
     }
 
 }

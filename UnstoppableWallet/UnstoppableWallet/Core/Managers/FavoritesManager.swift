@@ -22,20 +22,20 @@ extension FavoritesManager: IFavoritesManager {
         storage.favoriteCoinRecords
     }
 
-    public func add(coinCode: String, coinTitle: String, coinType: CoinType?) {
-        storage.save(coinCode: coinCode, coinTitle: coinTitle, coinType: coinType)
+    public func add(coinCode: String) {
+        storage.save(coinCode: coinCode)
 
         dataUpdatedRelay.accept(())
     }
 
-    public func remove(coinCode: String, coinType: CoinType?) {
-        storage.deleteFavoriteCoinRecord(coinCode: coinCode, coinType: coinType)
+    public func remove(coinCode: String) {
+        storage.deleteFavoriteCoinRecord(coinCode: coinCode)
 
         dataUpdatedRelay.accept(())
     }
 
-    public func isFavorite(coinCode: String, coinType: CoinType?) -> Bool {
-        return storage.inFavorites(coinCode: coinCode, coinType: coinType)
+    public func isFavorite(coinCode: String) -> Bool {
+        return storage.inFavorites(coinCode: coinCode)
     }
 
 }

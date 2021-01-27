@@ -2,13 +2,9 @@ import GRDB
 
 class FavoriteCoinRecord: Record {
     let coinCode: String
-    let coinTitle: String
-    let coinType: String?
 
-    init(coinCode: String, coinTitle: String, coinType: CoinType?) {
+    init(coinCode: String) {
         self.coinCode = coinCode
-        self.coinTitle = coinTitle
-        self.coinType = coinType?.rawValue
 
         super.init()
     }
@@ -19,21 +15,17 @@ class FavoriteCoinRecord: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case coinCode, coinTitle, coinType
+        case coinCode
     }
 
     required init(row: Row) {
         coinCode = row[Columns.coinCode]
-        coinTitle = row[Columns.coinTitle]
-        coinType = row[Columns.coinType]
 
         super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
         container[Columns.coinCode] = coinCode
-        container[Columns.coinTitle] = coinTitle
-        container[Columns.coinType] = coinType
     }
 
 }
