@@ -192,7 +192,7 @@
 "send.fee_info.content_conclusion" = "The Unstoppable wallet makes an educated guess based on the network activity and can't not guarantee that the suggested fee values will always result in expected behavior.";
 
 "send.confirmation.domain" = "Domain";
-"send.confirmation.address" = "Address";
+"send.confirmation.address" = "주소";
 "send.confirmation.account" = "Account";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "합계";
@@ -248,7 +248,7 @@
 "swap.advanced_settings.recipient_address" = "수취인 주소";
 "swap.advanced_settings.error.lower_slippage" = "귀하의 거래가 실패할 것 같습니다.";
 "swap.advanced_settings.error.higher_slippage" = "최대 허용치 %@%%.";
-"swap.advanced_settings.error.invalid_address" = "Invalid Address";
+"swap.advanced_settings.error.invalid_address" = "잘못된 주소";
 "swap.advanced_settings.error.invalid_slippage" = "Invalid Slippage";
 "swap.advanced_settings.error.invalid_deadline" = "Invalid Deadline";
 
@@ -329,7 +329,7 @@
 "market.top.top_gainers" = "Top Gainers";
 "market.top.top_loosers" = "Top Loosers";
 
-"market.top.period_1h" = "1 hour";
+"market.top.period_1h" = "1시간";
 "market.top.period_24h" = "24 hours";
 "market.top.period_day_start" = "Day Start";
 "market.top.period_one_day" = "1 day";
