@@ -192,7 +192,7 @@
 "send.fee_info.content_conclusion" = "The Unstoppable wallet makes an educated guess based on the network activity and can't not guarantee that the suggested fee values will always result in expected behavior.";
 
 "send.confirmation.domain" = "Domain";
-"send.confirmation.address" = "Address";
+"send.confirmation.address" = "Dirección";
 "send.confirmation.account" = "Account";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total";
@@ -295,7 +295,7 @@
 
 "market.tab_bar_item" = "Market";
 "market.title" = "Market";
-"market.category.overview" = "All";
+"market.category.overview" = "Todo";
 "market.category.discovery" = "Discovery";
 "market.category.watchlist" = "Watchlist";
 "market.total_market_cap" = "Total\nMarket Cap";
