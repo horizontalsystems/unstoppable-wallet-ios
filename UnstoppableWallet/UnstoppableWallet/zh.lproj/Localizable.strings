@@ -192,7 +192,7 @@
 "send.fee_info.content_conclusion" = "The Unstoppable wallet makes an educated guess based on the network activity and can't not guarantee that the suggested fee values will always result in expected behavior.";
 
 "send.confirmation.domain" = "Domain";
-"send.confirmation.address" = "Address";
+"send.confirmation.address" = "地址";
 "send.confirmation.account" = "Account";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "总额";
