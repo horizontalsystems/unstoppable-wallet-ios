@@ -15,7 +15,7 @@ class SendEthereumHandler {
     private let feePriorityModule: ISendFeePriorityModule
     private let feeModule: ISendFeeModule
 
-    private var estimateGasLimitState: FeeState = .zero
+    private var estimateGasLimitState: FeeRateState = .zero
 
     init(interactor: ISendEthereumInteractor, amountModule: ISendAmountModule, addressModule: ISendAddressModule, feeModule: ISendFeeModule, feePriorityModule: ISendFeePriorityModule) {
         self.interactor = interactor
@@ -96,6 +96,7 @@ class SendEthereumHandler {
 extension SendEthereumHandler: ISendHandler {
 
     func onViewDidLoad() {
+        feePriorityModule.set(balance: interactor.balance)
         feePriorityModule.fetchFeeRate()
 
         amountModule.set(minimumRequiredBalance: interactor.minimumRequiredBalance)
@@ -128,7 +129,7 @@ extension SendEthereumHandler: ISendHandler {
     }
 
     func sync(rateValue: Decimal?) {
-        feePriorityModule.set(currencyValue: amountModule.currencyValue)
+        feePriorityModule.set(xRate: rateValue)
         amountModule.set(rateValue: rateValue)
     }
 
@@ -149,10 +150,8 @@ extension SendEthereumHandler: ISendHandler {
 extension SendEthereumHandler: ISendAmountDelegate {
 
     func onChangeAmount() {
-        feePriorityModule.set(currencyValue: amountModule.currencyValue)
-        if syncValidation() {
-            syncEstimateGasLimit()
-        }
+        feePriorityModule.set(amountInfo: amountModule.sendAmountInfo)
+        syncEstimateGasLimit()
     }
 
     func onChange(inputType: SendInputType) {

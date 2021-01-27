@@ -60,6 +60,7 @@ protocol ISendHandlerDelegate: AnyObject {
 
 protocol ISendBitcoinInteractor {
     var lockTimeEnabled: Bool { get }
+    var balance: Decimal { get }
     func fetchAvailableBalance(feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData])
     func fetchMaximumAmount(pluginData: [UInt8: IBitcoinPluginData])
     func fetchMinimumAmount(address: String?)
@@ -90,6 +91,7 @@ protocol ISendDashInteractorDelegate: class {
 }
 
 protocol ISendEthereumInteractor {
+    var balance: Decimal { get }
     func availableBalance(gasPrice: Int, gasLimit: Int) -> Decimal
     var ethereumBalance: Decimal { get }
     var minimumRequiredBalance: Decimal { get }

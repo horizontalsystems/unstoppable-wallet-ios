@@ -27,28 +27,36 @@ class FeeRateAdjustmentHelper {
         allowedCurrencyCodes = currencyCodes
     }
 
-    private func feeRateCoefficient(rules: [Rule], currencyValue: CurrencyValue?, feeRate: Int) -> Double {
-        guard let currencyValue = currencyValue else {
+    private func feeRateCoefficient(rules: [Rule], feeRateAdjustmentInfo: FeeRateAdjustmentInfo, feeRate: Int) -> Double {
+        guard allowedCurrencyCodes.contains(feeRateAdjustmentInfo.currency.code) else {
             return fallbackCoefficient
         }
 
-        guard allowedCurrencyCodes.contains(currencyValue.currency.code) else {
+        var resolvedCoinAmount: Decimal? = nil
+        switch feeRateAdjustmentInfo.amountInfo {
+        case .max: resolvedCoinAmount = feeRateAdjustmentInfo.balance
+        case .entered(let amount): resolvedCoinAmount = amount
+        case .notEntered: resolvedCoinAmount = feeRateAdjustmentInfo.balance
+        }
+        guard let coinAmount = resolvedCoinAmount, let xRate = feeRateAdjustmentInfo.xRate else {
             return fallbackCoefficient
         }
 
-        if let rule = rules.first(where: { $0.amountRange.contains(currencyValue.value) }) {
+        let fiatAmount = coinAmount * xRate
+
+        if let rule = rules.first(where: { $0.amountRange.contains(fiatAmount) }) {
             return rule.coefficient
         }
 
         return fallbackCoefficient
     }
 
-    func applyRule(coinType: CoinType, currencyValue: CurrencyValue?, feeRate: Int) -> Int {
+    func applyRule(coinType: CoinType, feeRateAdjustmentInfo: FeeRateAdjustmentInfo, feeRate: Int) -> Int {
         guard let rules = rules[coinType] else {
             return feeRate
         }
 
-        let coefficient = feeRateCoefficient(rules: rules, currencyValue: currencyValue, feeRate: feeRate)
+        let coefficient = feeRateCoefficient(rules: rules, feeRateAdjustmentInfo: feeRateAdjustmentInfo, feeRate: feeRate)
 
         return Int((Double(feeRate) * coefficient).rounded())
     }

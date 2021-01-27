@@ -10,7 +10,7 @@ class SendFeePriorityPresenter {
     private let feeRateAdjustmentHelper: FeeRateAdjustmentHelper
     private let coin: Coin
 
-    private var currencyValue: CurrencyValue?
+    private var feeRateAdjustmentInfo: FeeRateAdjustmentInfo
     private var customFeeRate: Int?
     private var fetchedFeeRate: Int?
 
@@ -19,7 +19,7 @@ class SendFeePriorityPresenter {
 
     var feeRate: Int? {
         customFeeRate ?? fetchedFeeRate.flatMap { rate in
-            feeRateAdjustmentHelper.applyRule(coinType: coin.type, currencyValue: currencyValue, feeRate: rate)
+            feeRateAdjustmentHelper.applyRule(coinType: coin.type, feeRateAdjustmentInfo: feeRateAdjustmentInfo, feeRate: rate)
         }
     }
 
@@ -30,13 +30,14 @@ class SendFeePriorityPresenter {
         self.coin = coin
 
         feeRatePriority = interactor.defaultFeeRatePriority
+        feeRateAdjustmentInfo = FeeRateAdjustmentInfo(amountInfo: .notEntered, xRate: nil, currency: interactor.baseCurrency, balance: nil)
     }
 
 }
 
 extension SendFeePriorityPresenter: ISendFeePriorityModule {
 
-    var feeRateState: FeeState {
+    var feeRateState: FeeRateState {
         if let error = error {
             return .error(error)
         }
@@ -55,10 +56,17 @@ extension SendFeePriorityPresenter: ISendFeePriorityModule {
         interactor.syncFeeRate(priority: feeRatePriority)
     }
 
-    func set(currencyValue: CurrencyValue?) {
-        self.currencyValue = currencyValue
+    func set(amountInfo: SendAmountInfo) {
+        feeRateAdjustmentInfo.amountInfo = amountInfo
     }
 
+    func set(xRate: Decimal?) {
+        feeRateAdjustmentInfo.xRate = xRate
+    }
+
+    func set(balance: Decimal) {
+        feeRateAdjustmentInfo.balance = balance
+    }
 }
 
 extension SendFeePriorityPresenter: ISendFeePriorityViewDelegate {

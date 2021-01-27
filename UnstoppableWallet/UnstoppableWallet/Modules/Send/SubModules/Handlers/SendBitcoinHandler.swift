@@ -78,6 +78,7 @@ class SendBitcoinHandler {
 extension SendBitcoinHandler: ISendHandler {
 
     func onViewDidLoad() {
+        feePriorityModule.set(balance: interactor.balance)
         feePriorityModule.fetchFeeRate()
 
         syncState()
@@ -108,7 +109,7 @@ extension SendBitcoinHandler: ISendHandler {
     }
 
     func sync(rateValue: Decimal?) {
-        feePriorityModule.set(currencyValue: amountModule.currencyValue)
+        feePriorityModule.set(xRate: rateValue)
         amountModule.set(rateValue: rateValue)
     }
 
@@ -152,7 +153,8 @@ extension SendBitcoinHandler: ISendBitcoinInteractorDelegate {
 extension SendBitcoinHandler: ISendAmountDelegate {
 
     func onChangeAmount() {
-        feePriorityModule.set(currencyValue: amountModule.currencyValue)
+        feePriorityModule.set(amountInfo: amountModule.sendAmountInfo)
+
         syncState()
         syncValidation()
     }

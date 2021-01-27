@@ -20,10 +20,13 @@ class SendFeePriorityView: UIView {
 
         backgroundColor = .clear
 
+        snp.makeConstraints { maker in
+            maker.height.equalTo(57)
+        }
+
         addSubview(feeSliderWrapper)
         feeSliderWrapper.snp.makeConstraints { maker in
-            maker.top.equalToSuperview()
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin3x)
         }
         feeSliderWrapper.finishTracking = { [weak self] value in
             self?.finishTracking(value: value)
@@ -32,8 +35,8 @@ class SendFeePriorityView: UIView {
 
         addSubview(separator)
         separator.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(CGFloat.margin3x)
-            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
+            maker.top.equalTo(feeSliderWrapper.snp.bottom).offset(CGFloat.margin3x)
+            maker.leading.trailing.equalToSuperview()
             maker.height.equalTo(CGFloat.heightOnePixel)
         }
 
@@ -41,7 +44,7 @@ class SendFeePriorityView: UIView {
 
         addSubview(selectableValueView.contentView)
         selectableValueView.contentView.snp.makeConstraints { maker in
-            maker.top.equalTo(feeSliderWrapper.snp.bottom)
+            maker.top.equalTo(separator.snp.bottom)
             maker.bottom.leading.trailing.equalToSuperview()
             maker.height.equalTo(CGFloat.heightSingleLineCell)
         }
@@ -96,6 +99,10 @@ extension SendFeePriorityView: ISendFeePriorityView {
     }
 
     func set(customVisible: Bool) {
+        snp.updateConstraints { maker in
+            maker.height.equalTo(customVisible ? 90 : 57)
+        }
+
         feeSliderWrapper.isHidden = !customVisible
     }
 

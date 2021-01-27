@@ -1,14 +1,17 @@
 import Foundation
 import RxSwift
+import CurrencyKit
 
 class SendFeePriorityInteractor {
     var delegate: ISendFeePriorityInteractorDelegate?
 
     private var disposeBag = DisposeBag()
     private let provider: IFeeRateProvider
+    private let currencyKit: ICurrencyKit
 
-    init(provider: IFeeRateProvider) {
+    init(provider: IFeeRateProvider, currencyKit: ICurrencyKit) {
         self.provider = provider
+        self.currencyKit = currencyKit
     }
 
 }
@@ -31,6 +34,10 @@ extension SendFeePriorityInteractor: ISendFeePriorityInteractor {
 
     var defaultFeeRatePriority: FeeRatePriority {
         provider.defaultFeeRatePriority
+    }
+
+    var baseCurrency: Currency {
+        currencyKit.baseCurrency
     }
 
 }

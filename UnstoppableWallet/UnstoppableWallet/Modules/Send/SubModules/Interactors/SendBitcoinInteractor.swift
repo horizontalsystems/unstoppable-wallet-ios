@@ -1,3 +1,4 @@
+import Foundation
 import RxSwift
 import HsToolKit
 
@@ -17,6 +18,10 @@ class SendBitcoinInteractor {
 }
 
 extension SendBitcoinInteractor: ISendBitcoinInteractor {
+
+    var balance: Decimal {
+        adapter.balance
+    }
 
     var lockTimeEnabled: Bool {
         localStorage.lockTimeEnabled

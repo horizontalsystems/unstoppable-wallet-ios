@@ -19,6 +19,7 @@ protocol ISendFeePriorityInteractor {
     func syncFeeRate(priority: FeeRatePriority)
     var defaultFeeRatePriority: FeeRatePriority { get }
     var feeRatePriorityList: [FeeRatePriority] { get }
+    var baseCurrency: Currency { get }
 }
 
 protocol ISendFeePriorityInteractorDelegate {
@@ -37,11 +38,13 @@ protocol ISendFeePriorityDelegate: class {
 
 protocol ISendFeePriorityModule: AnyObject {
     var delegate: ISendFeePriorityDelegate? { get set }
-    var feeRateState: FeeState { get }
+    var feeRateState: FeeRateState { get }
     var feeRate: Int? { get }
 
     func fetchFeeRate()
-    func set(currencyValue: CurrencyValue?)
+    func set(amountInfo: SendAmountInfo)
+    func set(xRate: Decimal?)
+    func set(balance: Decimal)
 }
 
 struct PriorityItem {

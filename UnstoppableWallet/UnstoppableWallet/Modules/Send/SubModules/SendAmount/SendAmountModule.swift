@@ -36,7 +36,7 @@ protocol ISendAmountInteractor {
 protocol ISendAmountModule: AnyObject {
     var delegate: ISendAmountDelegate? { get set }
 
-    var currencyValue: CurrencyValue? { get }
+    var sendAmountInfo: SendAmountInfo { get }
     var currentAmount: Decimal { get }
     func validAmount() throws -> Decimal
 
@@ -62,4 +62,10 @@ protocol ISendAmountDelegate: class {
 
 protocol IAmountDecimalParser {
     func parseAnyDecimal(from string: String?) -> Decimal?
+}
+
+enum SendAmountInfo {
+    case max
+    case entered(amount: Decimal)
+    case notEntered
 }

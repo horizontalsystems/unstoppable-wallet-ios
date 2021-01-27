@@ -16,7 +16,7 @@ extension SendFeePriorityRouter {
 
         let router = SendFeePriorityRouter()
         let feeRateAdjustmentHelper = FeeRateAdjustmentHelper(currencyCodes: App.shared.appConfigProvider.feeRateAdjustedForCurrencyCodes)
-        let interactor = SendFeePriorityInteractor(provider: feeRateProvider)
+        let interactor = SendFeePriorityInteractor(provider: feeRateProvider, currencyKit: App.shared.currencyKit)
         let presenter = SendFeePriorityPresenter(interactor: interactor, router: router, feeRateAdjustmentHelper: feeRateAdjustmentHelper, coin: coin)
         interactor.delegate = presenter
 
