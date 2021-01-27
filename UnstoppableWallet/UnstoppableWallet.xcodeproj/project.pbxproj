@@ -30,7 +30,6 @@
 		11B3507DDEBA587C023CE898 /* DashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358CA18471A93188933B4 /* DashAdapter.swift */; };
 		11B3507E1E23542835E76929 /* PriceAlertStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353FED1586171A5C73554 /* PriceAlertStorage.swift */; };
 		11B3507ED156929CC706EE93 /* SendInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354AB8441E2204D1DFED3 /* SendInteractor.swift */; };
-		11B35081661EE48C2CFC885E /* CoinToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35616B71EC65976BFDB86 /* CoinToggleCell.swift */; };
 		11B35085A2DC14934410E00C /* RateTopListModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357F7CA03BBDDD0E1B3C7 /* RateTopListModule.swift */; };
 		11B35086794EE9142E2DE534 /* BitcoinHodlingInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352A09443C11A200EB72E /* BitcoinHodlingInteractor.swift */; };
 		11B35092371E91FD93E447F2 /* RestoreSelectPredefinedAccountTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EA87D8363443736D9E8 /* RestoreSelectPredefinedAccountTypeCell.swift */; };
@@ -243,7 +242,6 @@
 		11B353CE3E5D70C96DC069F3 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352884D47E0B23DCF2C2C /* AppManager.swift */; };
 		11B353D45C91245873862997 /* MarkdownService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35801399EA004F5A2A1F7 /* MarkdownService.swift */; };
 		11B353DB123B854AC40341F4 /* GuidesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E511F9D2B6C65792324 /* GuidesViewController.swift */; };
-		11B353E091B130DF52CA9255 /* CoinToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35616B71EC65976BFDB86 /* CoinToggleCell.swift */; };
 		11B353E6CDDA798BF23716E7 /* FormTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35392439DBC8C06DCCB60 /* FormTextView.swift */; };
 		11B353EDF27AB81FCF2A36EE /* GuidesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352E6CB5B964E2A1521CC /* GuidesViewModel.swift */; };
 		11B353EF5918D9EB8C627E97 /* SwapAllowanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352EE91EBA43258087ED4 /* SwapAllowanceService.swift */; };
@@ -750,7 +748,6 @@
 		11B35B9351ADD99FA8919EEE /* FaqViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C09B59EF5DEB6D7EB07 /* FaqViewModel.swift */; };
 		11B35B99C84075296D6F26DE /* UnlinkPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35419B0C846238DDC50F3 /* UnlinkPresenter.swift */; };
 		11B35B99F2CB665E76E66A91 /* TransactionsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3520E9F70FFB8CC2D25A3 /* TransactionsRouter.swift */; };
-		11B35B9A5E8700D417390E52 /* CoinToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35616B71EC65976BFDB86 /* CoinToggleCell.swift */; };
 		11B35BA21EAB383C3DE6FA5A /* BalanceRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DDABED90E97417092F5 /* BalanceRouter.swift */; };
 		11B35BA7B8DCE193883CE2ED /* WalletConnectNoEthereumKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3506182B3A5540AE86C93 /* WalletConnectNoEthereumKitViewController.swift */; };
 		11B35BAB21CC10FB5AE81F2C /* GuidesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E511F9D2B6C65792324 /* GuidesViewController.swift */; };
@@ -2374,7 +2371,6 @@
 		11B3560A4A022A150CACD69C /* EthereumTransactionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumTransactionService.swift; sourceTree = "<group>"; };
 		11B35614A0EE4AC0FAD9F83A /* FormValidatedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormValidatedView.swift; sourceTree = "<group>"; };
 		11B35614C6E244926AF48701 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
-		11B35616B71EC65976BFDB86 /* CoinToggleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinToggleCell.swift; sourceTree = "<group>"; };
 		11B35618811C4BEAA19F7BD5 /* CoinManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinManager.swift; sourceTree = "<group>"; };
 		11B3562F8443FCE8B3425219 /* RestoreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreView.swift; sourceTree = "<group>"; };
 		11B3563ED22080EE222848A5 /* MarkdownImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownImageCell.swift; sourceTree = "<group>"; };
@@ -3984,7 +3980,6 @@
 			children = (
 				11B358DB8B5A48ADBA6F378B /* CoinToggleViewModel.swift */,
 				11B3586BD835C7BD6896A210 /* CoinToggleViewController.swift */,
-				11B35616B71EC65976BFDB86 /* CoinToggleCell.swift */,
 			);
 			path = CoinToggle;
 			sourceTree = "<group>";
@@ -6060,7 +6055,6 @@
 				3AB67779259B5ACE002197A5 /* MarketTickerCell.swift in Sources */,
 				11B35E4F0EDA059469052F08 /* CoinToggleViewController.swift in Sources */,
 				11B3572041EF03489D03C328 /* CoinToggleViewModel.swift in Sources */,
-				11B35081661EE48C2CFC885E /* CoinToggleCell.swift in Sources */,
 				11B357E2016F9E3FDE2E64AD /* RestoreViewModel.swift in Sources */,
 				11B351D28EADC943BD233374 /* RestoreService.swift in Sources */,
 				11B35A07771D483322BECFA9 /* RestoreView.swift in Sources */,
@@ -6820,7 +6814,6 @@
 				3AB6777A259B5ACE002197A5 /* MarketTickerCell.swift in Sources */,
 				11B356D7125781313375C11B /* CoinToggleViewController.swift in Sources */,
 				11B35D8E24C7D068FAD4A1CE /* CoinToggleViewModel.swift in Sources */,
-				11B35B9A5E8700D417390E52 /* CoinToggleCell.swift in Sources */,
 				11B3507D7E8A59915FF0727F /* RestoreViewModel.swift in Sources */,
 				11B35E7FBC30B746796EA3DD /* RestoreService.swift in Sources */,
 				11B35F417D264E2BDF95FE10 /* RestoreView.swift in Sources */,
@@ -7542,7 +7535,6 @@
 				3AB67773259B5ACB002197A5 /* MarketTickerCell.swift in Sources */,
 				11B35DD137983C322072C4CA /* CoinToggleViewController.swift in Sources */,
 				11B35A54DC2C39F8D0B16500 /* CoinToggleViewModel.swift in Sources */,
-				11B353E091B130DF52CA9255 /* CoinToggleCell.swift in Sources */,
 				11B35168BB96A4B82AB180CD /* RestoreViewModel.swift in Sources */,
 				11B3576349978C6B2A7DBA03 /* RestoreService.swift in Sources */,
 				11B35CB580236C55DDE63AE4 /* RestoreView.swift in Sources */,

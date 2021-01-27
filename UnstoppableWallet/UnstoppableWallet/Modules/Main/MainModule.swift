@@ -4,7 +4,7 @@ import ThemeKit
 struct MainModule {
 
     enum Tab: Int {
-        case balance, transactions, settings
+        case market, balance, transactions, settings
     }
 
     static func instance(selectedTab: Tab = .balance) -> UIViewController {

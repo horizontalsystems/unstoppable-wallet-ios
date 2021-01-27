@@ -34,7 +34,7 @@ class AddressFormatViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
-        tableView.registerCell(forClass: AddressFormatCell.self)
+        tableView.registerCell(forClass: F4Cell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.sectionDataSource = self
 
@@ -77,20 +77,19 @@ extension AddressFormatViewController: SectionsDataSource {
                     headerState: header(text: sectionViewItem.coinTypeName),
                     footerState: .margin(height: .margin8x),
                     rows: sectionViewItem.viewItems.enumerated().map { index, viewItem in
-                        let last = index == sectionViewItem.viewItems.count - 1
+                        let isFirst = index == 0
+                        let isLast = index == sectionViewItem.viewItems.count - 1
 
-                        return Row<AddressFormatCell>(
+                        return Row<F4Cell>(
                                 id: viewItem.title,
                                 hash: "\(viewItem.selected)",
                                 height: .heightDoubleLineCell,
                                 autoDeselect: true,
                                 bind: { cell, _ in
-                                    cell.bind(
-                                            title: viewItem.title,
-                                            subtitle: viewItem.subtitle,
-                                            selected: viewItem.selected,
-                                            last: last
-                                    )
+                                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                                    cell.title = viewItem.title
+                                    cell.subtitle = viewItem.subtitle
+                                    cell.valueImage = viewItem.selected ? UIImage(named: "check_1_20")?.tinted(with: .themeJacob) : nil
                                 },
                                 action: { [weak self] _ in
                                     self?.viewModel.onSelect(sectionIndex: sectionIndex, index: index)
