@@ -83,9 +83,9 @@
 "coin_settings.sync_mode.slow.description" = "1-24 heures";
 "coin_settings.sync_mode.description" = "Liens vers les sources de l'API : \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "New";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "Older wallets (before Aug 2017)";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "Newer wallets";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "Nouveau";
+"coin_settings.bitcoin_cash_coin_type.description.type0" = "Portefeuilles plus anciens (avant août 2017)";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "Portefeuilles plus récents";
 "sync_mode.from_blockchain" = "De la Blockchain";
 "blockchain_settings.change_alert.title" = "Format de l'adresse";
 "blockchain_settings.change_alert.content" = "Après ce changement, le portefeuille devra se resynchroniser avec la blockchain %@.\n\n\nSi vous changez le format d'adresse pour %@ , l'historique du solde actuel et des transactions ne sera plus visible. Si vous revenez au paramètre précédent, tout sera remis en place une fois que le portefeuille se sera resynchronisé avec la blockchain. Nous vous recommandons de ne pas faire de modification si vous n'êtes pas sûr de vous.";
@@ -144,8 +144,8 @@
 "balance.sort.24h_change" = "Prix 24h (%)";
 "balance_error.change_source" = "Changer la Source";
 "balance_error.sync_error" = "Erreur de synchronisation";
-"lost_accounts.warning_title" = "iOS Keychain Error";
-"lost_accounts.warning_message" = "The encrypted data holding your wallet was recently invalidated because your iOS lock screen was changed";
+"lost_accounts.warning_title" = "Erreur du trousseau d’accès iOS";
+"lost_accounts.warning_message" = "Les données cryptées concernant votre portefeuille ont été récemment invalidées parce que l'écran de verrouillage de votre iOS a été modifié";
 // Deposit
 
 "deposit.receive_coin" = "Recevoir %@";
@@ -157,7 +157,7 @@
 "send.title" = "Envoyer %@";
 "send.amount_placeholder" = "Montant";
 "send.address_placeholder" = "Adresse";
-"send.address_or_domain_placeholder" = "Address or Domain";
+"send.address_or_domain_placeholder" = "Adresse ou domaine";
 "send.fee" = "Frais";
 "send.tx_speed" = "Frais de transaction";
 "send.tx_speed_low" = "Faible";
@@ -181,18 +181,18 @@
 "send.hodler_locktime_year" = "1 an";
 "send.hodler_locktime_off" = "Désactivé";
 "send.hodler_error.unsupported_address" = "Time lock ne fonctionne qu'avec les adresses P2PKH (commençant par 1)";
-"send.fee_info.title" = "Transaction Speed";
-"send.fee_info.description" = "Both Bitcoin and Ethereum blockchains require users to pay usage fees while sending transactions on the blockchain.\n\nUnstoppable uses public fee estimate services to help user determine appropriate transaction fees for the moment. The fees are higher when there are a lot of transactions taking place and lower when the blockchain is less busy.";
-"send.fee_info.header_slow" = "Slow";
-"send.fee_info.content_slow" = "Selecting a value from this range may result in transaction being pending for hours or being rejected entirely. The lower the value the longer it will take for the transaction to confirm.";
-"send.fee_info.header_average" = "Average";
-"send.fee_info.content_average" = "Typically, this fee range should be sufficient for transaction to be processed within minutes/hour for Bitcoin and within minutes for Ethereum.";
-"send.fee_info.header_fast" = "Fast";
-"send.fee_info.content_fast" = "For transactions where priority is important we recommend using high fee setting. It's expected that selecting high fee setting will be sufficient for transaction to be completed within 10 minutes for Bitcoin and within a few minutes for Ethereum.";
-"send.fee_info.content_conclusion" = "The Unstoppable wallet makes an educated guess based on the network activity and can't not guarantee that the suggested fee values will always result in expected behavior.";
+"send.fee_info.title" = "Vitesse de transaction";
+"send.fee_info.description" = "Les blockchains Bitcoin et Ethereum imposent aux utilisateurs des frais d'utilisation lors de l'envoi de transactions sur la blockchain.\n\nUnstoppable utilise des services publics d'estimation des frais pour aider l'utilisateur à déterminer les frais de transaction appropriés sur le moment. Les frais sont plus élevés lorsque de nombreuses transactions sont effectuées et plus réduits lorsque la blockchain est moins fréquentée.";
+"send.fee_info.header_slow" = "Lent";
+"send.fee_info.content_slow" = "La sélection d'une valeur dans cette fourchette peut entraîner une transaction en attente pendant des heures ou un rejet total. Plus la valeur est faible, plus il faudra de temps pour que la transaction soit confirmée.";
+"send.fee_info.header_average" = "Moyen";
+"send.fee_info.content_average" = "Généralement, cette fourchette de frais devrait être suffisante pour que la transaction soit traitée en quelques minutes/heure pour Bitcoin et en quelques minutes pour Ethereum.";
+"send.fee_info.header_fast" = "Rapide";
+"send.fee_info.content_fast" = "Pour les transactions où la priorité est importante, nous recommandons de prévoir des frais élevés. Le choix d'une tarification élevée devrait suffire pour que la transaction soit effectuée dans les 10 minutes pour Bitcoin et dans les quelques minutes pour Ethereum.";
+"send.fee_info.content_conclusion" = "Le portefeuille Unstoppable fait une évaluation éclairée sur la base de l'activité du réseau et ne peut pas garantir que les frais suggérés se traduiront toujours par le comportement attendu.";
 
-"send.confirmation.domain" = "Domain";
-"send.confirmation.address" = "Address";
+"send.confirmation.domain" = "Domaine";
+"send.confirmation.address" = "Adresse";
 "send.confirmation.account" = "Account";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total";
@@ -248,9 +248,9 @@
 "swap.advanced_settings.recipient_address" = "Adresse du destinataire";
 "swap.advanced_settings.error.lower_slippage" = "Votre transaction est susceptible de ne pas aboutir.";
 "swap.advanced_settings.error.higher_slippage" = "La valeur maximale autorisée est %@%%.";
-"swap.advanced_settings.error.invalid_address" = "Invalid Address";
-"swap.advanced_settings.error.invalid_slippage" = "Invalid Slippage";
-"swap.advanced_settings.error.invalid_deadline" = "Invalid Deadline";
+"swap.advanced_settings.error.invalid_address" = "Addresse invalide";
+"swap.advanced_settings.error.invalid_slippage" = "Slippage invalide";
+"swap.advanced_settings.error.invalid_deadline" = "Date limite invalide";
 
 "swap.fee" = "Frais d'échange";
 "swap.transactions_speed" = "Vitesse de transaction ";
@@ -293,20 +293,20 @@
 
 // Market
 
-"market.tab_bar_item" = "Market";
-"market.title" = "Market";
-"market.category.overview" = "All";
-"market.category.discovery" = "Discovery";
-"market.category.watchlist" = "Watchlist";
+"market.tab_bar_item" = "Marché";
+"market.title" = "Marché";
+"market.category.overview" = "Tout";
+"market.category.discovery" = "Découverte";
+"market.category.watchlist" = "Liste de suivi";
 "market.total_market_cap" = "Total\nMarket Cap";
-"market.24h_volume" = "24h Volume";
+"market.24h_volume" = "Volume des dernières 24h";
 "market.btc_dominance" = "BTC Dominance";
 "market.defi_cap" = "DeFi Cap";
-"market.defi_tvl" = "TVL in DeFi";
+"market.defi_tvl" = "TVL en DeFi";
 
-"market.top.section.header.see_all" = "See All";
-"market.top.section.header.top_gainers" = "Top Gainers";
-"market.top.section.header.top_loosers" = "Top Loosers";
+"market.top.section.header.see_all" = "Tout voir";
+"market.top.section.header.top_gainers" = "Les grands gagnants";
+"market.top.section.header.top_loosers" = "Les gros perdants";
 "market.top.section.header.top_volume" = "Top By Volume";
 "market.top.volume.title" = "Vol";
 "market.top.market_cap.title" = "MCap";
@@ -315,7 +315,7 @@
 "market.market_field.vol" = "Vol";
 "market.market_field.price" = "Price";
 
-"market.sort_by" = "Sort By";
+"market.sort_by" = "Trier par";
 "market.changes" = "Changes";
 
 "market.top.highest_liquidity" = "Highest Liquidity";
@@ -329,8 +329,8 @@
 "market.top.top_gainers" = "Top Gainers";
 "market.top.top_loosers" = "Top Loosers";
 
-"market.top.period_1h" = "1 hour";
-"market.top.period_24h" = "24 hours";
+"market.top.period_1h" = "1 heure";
+"market.top.period_24h" = "24 heures";
 "market.top.period_day_start" = "Day Start";
 "market.top.period_one_day" = "1 day";
 "market.top.period_one_week" = "1 week";
