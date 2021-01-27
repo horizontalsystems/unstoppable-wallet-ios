@@ -83,9 +83,9 @@
 "coin_settings.sync_mode.slow.description" = "1 - 24 Stunden";
 "coin_settings.sync_mode.description" = "Links zu API-Quellen: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "New";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "Older wallets (before Aug 2017)";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "Newer wallets";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "Neu";
+"coin_settings.bitcoin_cash_coin_type.description.type0" = "Ältere Wallets (vor August 2017)";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "Neuere Wallets";
 "sync_mode.from_blockchain" = "Von Blockchain";
 "blockchain_settings.change_alert.title" = "Adressformatierung";
 "blockchain_settings.change_alert.content" = "Nach dieser Änderung muss sich das Wallet mit der %@ Blockchain neu synchronisieren.\n\nWenn Sie das Adressformat für %@ ändern, sind der aktuelle Saldo und die Transaktionshistorie nicht mehr sichtbar. Wenn Sie es auf die vorherige Einstellung zurücksetzen, wird alles wieder hergestellt, nachdem sich das Wallet mit der Blockchain synchronisiert hat. Wir empfehlen, dies nicht zu ändern, falls Sie nicht sicher sind, was das ist.";
@@ -144,8 +144,8 @@
 "balance.sort.24h_change" = "24h Preis(%)";
 "balance_error.change_source" = "Quelle ändern";
 "balance_error.sync_error" = "Sync-Fehler";
-"lost_accounts.warning_title" = "iOS Keychain Error";
-"lost_accounts.warning_message" = "The encrypted data holding your wallet was recently invalidated because your iOS lock screen was changed";
+"lost_accounts.warning_title" = "iOS-Keychain-Fehler";
+"lost_accounts.warning_message" = "Die verschlüsselten Daten Ihres Wallets wurden kürzlich ungültig, weil Ihr iOS-Sperrbildschirm geändert wurde";
 // Deposit
 
 "deposit.receive_coin" = "%@ Anfordern ";
@@ -157,7 +157,7 @@
 "send.title" = "Senden %@";
 "send.amount_placeholder" = "Betrag";
 "send.address_placeholder" = "Adresse";
-"send.address_or_domain_placeholder" = "Address or Domain";
+"send.address_or_domain_placeholder" = "Adresse oder Domäne";
 "send.fee" = "Gebühr";
 "send.tx_speed" = "Transaktionsgebühr";
 "send.tx_speed_low" = "Niedrig";
@@ -181,11 +181,11 @@
 "send.hodler_locktime_year" = "1 Jahr";
 "send.hodler_locktime_off" = "Aus";
 "send.hodler_error.unsupported_address" = "Zeitsperre funktioniert nur mit P2PKH-Adressen (beginnend mit 1) ";
-"send.fee_info.title" = "Transaction Speed";
-"send.fee_info.description" = "Both Bitcoin and Ethereum blockchains require users to pay usage fees while sending transactions on the blockchain.\n\nUnstoppable uses public fee estimate services to help user determine appropriate transaction fees for the moment. The fees are higher when there are a lot of transactions taking place and lower when the blockchain is less busy.";
-"send.fee_info.header_slow" = "Slow";
-"send.fee_info.content_slow" = "Selecting a value from this range may result in transaction being pending for hours or being rejected entirely. The lower the value the longer it will take for the transaction to confirm.";
-"send.fee_info.header_average" = "Average";
+"send.fee_info.title" = "Transaktionsgeschwindigkeit";
+"send.fee_info.description" = "Sowohl bei der Bitcoin- als auch bei der Ethereum-Blockchain müssen Benutzer Nutzungsgebühren zahlen, wenn sie Transaktionen auf der Blockchain durchführen.\n\nUnstoppable verwendet öffentliche Gebührenschätzungsdienste, um dem Benutzer zu helfen, angemessene Transaktionsgebühren für den Moment zu bestimmen. Die Gebühren sind höher, wenn viele Transaktionen stattfinden und niedriger, wenn die Blockchain weniger ausgelastet ist.";
+"send.fee_info.header_slow" = "Langsam";
+"send.fee_info.content_slow" = "Die Auswahl eines Wertes aus diesem Bereich kann dazu führen, dass die Transaktion für mehrere Stunden aussteht oder ganz abgelehnt wird. Je niedriger der Wert, desto länger dauert es, bis die Transaktion bestätigt wird.";
+"send.fee_info.header_average" = "Durchschnitt";
 "send.fee_info.content_average" = "Typically, this fee range should be sufficient for transaction to be processed within minutes/hour for Bitcoin and within minutes for Ethereum.";
 "send.fee_info.header_fast" = "Fast";
 "send.fee_info.content_fast" = "For transactions where priority is important we recommend using high fee setting. It's expected that selecting high fee setting will be sufficient for transaction to be completed within 10 minutes for Bitcoin and within a few minutes for Ethereum.";
