@@ -85,7 +85,7 @@
 "coin_settings.sync_mode.slow.description" = "1-24 часа";
 "coin_settings.sync_mode.description" = "Ссылки на источники API: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "New";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "Новый";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "Older wallets (before Aug 2017)";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "Newer wallets";
 "sync_mode.from_blockchain" = "Из Блокчейна";
@@ -297,7 +297,7 @@
 
 "market.tab_bar_item" = "Market";
 "market.title" = "Market";
-"market.category.overview" = "All";
+"market.category.overview" = "Все";
 "market.category.discovery" = "Discovery";
 "market.category.watchlist" = "Watchlist";
 "market.total_market_cap" = "Total\nMarket Cap";
@@ -310,14 +310,14 @@
 "market.top.section.header.top_gainers" = "Top Gainers";
 "market.top.section.header.top_loosers" = "Top Loosers";
 "market.top.section.header.top_volume" = "Top By Volume";
-"market.top.volume.title" = "Vol";
-"market.top.market_cap.title" = "MCap";
+"market.top.volume.title" = "Объём";
+"market.top.market_cap.title" = "Рын. Кап.";
 
-"market.market_field.mcap" = "MCap";
-"market.market_field.vol" = "Vol";
-"market.market_field.price" = "Price";
+"market.market_field.mcap" = "Рын. Кап.";
+"market.market_field.vol" = "Объём";
+"market.market_field.price" = "Цена";
 
-"market.sort_by" = "Sort By";
+"market.sort_by" = "Сортировать по";
 "market.changes" = "Changes";
 
 "market.top.highest_liquidity" = "Highest Liquidity";
@@ -331,13 +331,13 @@
 "market.top.top_gainers" = "Top Gainers";
 "market.top.top_loosers" = "Top Loosers";
 
-"market.top.period_1h" = "1 hour";
-"market.top.period_24h" = "24 hours";
+"market.top.period_1h" = "1 час";
+"market.top.period_24h" = "24- часа";
 "market.top.period_day_start" = "Day Start";
-"market.top.period_one_day" = "1 day";
-"market.top.period_one_week" = "1 week";
-"market.top.period_one_month" = "1 month";
-"market.top.period_one_year" = "1 year";
+"market.top.period_one_day" = "1 день";
+"market.top.period_one_week" = "1 неделя";
+"market.top.period_one_month" = "1 месяц";
+"market.top.period_one_year" = "1 год";
 
 // Transactions
 
