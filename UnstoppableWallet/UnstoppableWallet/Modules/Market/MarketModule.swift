@@ -20,7 +20,6 @@ struct MarketModule {
                 blockchainType: viewItem.coinType?.blockchainType
         ) ?? UIImage(named: "placeholder")
 
-        cell.set(backgroundStyle: .lawrence)
         cell.leftImage = image
         cell.topText = viewItem.coinName
         cell.bottomText = viewItem.coinCode.uppercased()

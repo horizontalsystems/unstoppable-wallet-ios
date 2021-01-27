@@ -27,15 +27,6 @@ struct ChartModule {
             }
         }
 
-        var coinType: CoinType? {
-            switch self {
-            case let .partial(_, _, coinType):
-                return coinType
-            case let .coin(coin):
-                return coin.type
-            }
-        }
-
         var coin: Coin? {
             if case let .coin(coin) = self {
                 return coin
@@ -92,9 +83,9 @@ protocol IChartInteractor {
     func priceAlert(coin: Coin?) -> PriceAlert?
     func subscribeToAlertUpdates()
 
-    func favorite(coinCode: String, coinTitle: String, coinType: CoinType?)
-    func unfavorite(coinCode: String, coinType: CoinType?)
-    func isFavorite(coinCode: String, coinType: CoinType?) -> Bool
+    func favorite(coinCode: String)
+    func unfavorite(coinCode: String)
+    func isFavorite(coinCode: String) -> Bool
 }
 
 protocol IChartInteractorDelegate: class {

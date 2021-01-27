@@ -107,11 +107,11 @@ extension ChartPresenter: IChartViewDelegate {
     }
 
     func onTapFavorite() {
-        interactor.favorite(coinCode: launchMode.coinCode, coinTitle: launchMode.coinTitle, coinType: launchMode.coinType)
+        interactor.favorite(coinCode: launchMode.coinCode)
     }
 
     func onTapUnfavorite() {
-        interactor.unfavorite(coinCode: launchMode.coinCode, coinType: launchMode.coinType)
+        interactor.unfavorite(coinCode: launchMode.coinCode)
     }
 
 }
@@ -145,7 +145,7 @@ extension ChartPresenter: IChartInteractorDelegate {
     }
 
     func updateFavorite() {
-        view?.set(favorite: interactor.isFavorite(coinCode: launchMode.coinCode, coinType: launchMode.coinType))
+        view?.set(favorite: interactor.isFavorite(coinCode: launchMode.coinCode))
     }
 
 }

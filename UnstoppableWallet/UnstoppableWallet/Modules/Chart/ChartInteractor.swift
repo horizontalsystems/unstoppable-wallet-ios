@@ -89,20 +89,20 @@ extension ChartInteractor: IChartInteractor {
                 .disposed(by: disposeBag)
     }
 
-    func favorite(coinCode: String, coinTitle: String, coinType: CoinType?) {
-        favoritesManager.add(coinCode: coinCode, coinTitle: coinTitle, coinType: coinType)
+    func favorite(coinCode: String) {
+        favoritesManager.add(coinCode: coinCode)
 
         delegate?.updateFavorite()
     }
 
-    func unfavorite(coinCode: String, coinType: CoinType?) {
-        favoritesManager.remove(coinCode: coinCode, coinType: coinType)
+    func unfavorite(coinCode: String) {
+        favoritesManager.remove(coinCode: coinCode)
 
         delegate?.updateFavorite()
     }
 
-    func isFavorite(coinCode: String, coinType: CoinType?) -> Bool {
-        favoritesManager.isFavorite(coinCode: coinCode, coinType: coinType)
+    func isFavorite(coinCode: String) -> Bool {
+        favoritesManager.isFavorite(coinCode: coinCode)
     }
 
 }
