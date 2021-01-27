@@ -298,42 +298,42 @@
 "market.category.overview" = "Tout";
 "market.category.discovery" = "Découverte";
 "market.category.watchlist" = "Liste de suivi";
-"market.total_market_cap" = "Total\nMarket Cap";
+"market.total_market_cap" = "Total\nCap marché";
 "market.24h_volume" = "Volume des dernières 24h";
 "market.btc_dominance" = "BTC Dominance";
-"market.defi_cap" = "DeFi Cap";
+"market.defi_cap" = "Cap DeFi";
 "market.defi_tvl" = "TVL en DeFi";
 
 "market.top.section.header.see_all" = "Tout voir";
 "market.top.section.header.top_gainers" = "Les grands gagnants";
 "market.top.section.header.top_loosers" = "Les gros perdants";
-"market.top.section.header.top_volume" = "Top By Volume";
-"market.top.volume.title" = "Vol";
-"market.top.market_cap.title" = "MCap";
+"market.top.section.header.top_volume" = "Classement par volume";
+"market.top.volume.title" = "Volume";
+"market.top.market_cap.title" = "CapM";
 
-"market.market_field.mcap" = "MCap";
-"market.market_field.vol" = "Vol";
-"market.market_field.price" = "Price";
+"market.market_field.mcap" = "CapM";
+"market.market_field.vol" = "Volume";
+"market.market_field.price" = "Prix";
 
 "market.sort_by" = "Trier par";
-"market.changes" = "Changes";
+"market.changes" = "Modifications";
 
-"market.top.highest_liquidity" = "Highest Liquidity";
-"market.top.lowest_liquidity" = "Lowest Liquidity";
-"market.top.highest_cap" = "Highest Cap";
-"market.top.lowest_cap" = "Lowest Cap";
-"market.top.highest_volume" = "Highest Volume";
-"market.top.lowest_volume" = "Lowest Volume";
-"market.top.highest_price" = "Highest Price";
-"market.top.lowest_price" = "Lowest Price";
-"market.top.top_gainers" = "Top Gainers";
-"market.top.top_loosers" = "Top Loosers";
+"market.top.highest_liquidity" = "Liquidité la plus élevée";
+"market.top.lowest_liquidity" = "Liquidité la plus basse";
+"market.top.highest_cap" = "Cap la plus élevée";
+"market.top.lowest_cap" = "Cap la plus basse";
+"market.top.highest_volume" = "Volume le plus élevé";
+"market.top.lowest_volume" = "Volume le plus bas";
+"market.top.highest_price" = "Prix le plus élevé";
+"market.top.lowest_price" = "Prix le plus bas";
+"market.top.top_gainers" = "Les grands gagnants";
+"market.top.top_loosers" = "Les gros perdants";
 
 "market.top.period_1h" = "1 heure";
 "market.top.period_24h" = "24 heures";
-"market.top.period_day_start" = "Day Start";
-"market.top.period_one_day" = "1 day";
-"market.top.period_one_week" = "1 week";
+"market.top.period_day_start" = "Jour de début";
+"market.top.period_one_day" = "1 jour";
+"market.top.period_one_week" = "1 semaine";
 "market.top.period_one_month" = "1 month";
 "market.top.period_one_year" = "1 year";
 
