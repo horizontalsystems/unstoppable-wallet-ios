@@ -49,7 +49,8 @@ class TransactionsInteractor {
                         .disposed(by: transactionRecordsDisposeBag)
 
                 adapter.transactionStateUpdatedObservable
-                        .observeOn(serialQueueScheduler)
+                        .subscribeOn(serialQueueScheduler)
+                        .observeOn(MainScheduler.instance)
                         .subscribe(onNext: { [weak self] in
                             self?.delegate?.didUpdate(state: adapter.transactionState, wallet: wallet)
                         })
