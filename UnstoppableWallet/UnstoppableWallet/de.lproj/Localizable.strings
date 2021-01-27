@@ -186,12 +186,12 @@
 "send.fee_info.header_slow" = "Langsam";
 "send.fee_info.content_slow" = "Die Auswahl eines Wertes aus diesem Bereich kann dazu führen, dass die Transaktion für mehrere Stunden aussteht oder ganz abgelehnt wird. Je niedriger der Wert, desto länger dauert es, bis die Transaktion bestätigt wird.";
 "send.fee_info.header_average" = "Durchschnitt";
-"send.fee_info.content_average" = "Typically, this fee range should be sufficient for transaction to be processed within minutes/hour for Bitcoin and within minutes for Ethereum.";
-"send.fee_info.header_fast" = "Fast";
-"send.fee_info.content_fast" = "For transactions where priority is important we recommend using high fee setting. It's expected that selecting high fee setting will be sufficient for transaction to be completed within 10 minutes for Bitcoin and within a few minutes for Ethereum.";
-"send.fee_info.content_conclusion" = "The Unstoppable wallet makes an educated guess based on the network activity and can't not guarantee that the suggested fee values will always result in expected behavior.";
+"send.fee_info.content_average" = "Typischerweise sollte diese Gebührenspanne ausreichen, um eine Transaktion innerhalb von Minuten/Stunde für Bitcoin und innerhalb von Minuten für Ethereum zu verarbeiten.";
+"send.fee_info.header_fast" = "Schnell";
+"send.fee_info.content_fast" = "Für Transaktionen, bei denen die Priorität wichtig ist, empfehlen wir die Einstellung „Hohe Gebühr“. Es wird erwartet, dass die Einstellung „Hohe Gebühr“ ausreicht, um eine Transaktion innerhalb von 10 Minuten für Bitcoin und innerhalb von ein paar Minuten für Ethereum abzuschließen.";
+"send.fee_info.content_conclusion" = "Das Wallet von Unstoppable macht eine fundierte Vermutung basierend auf der Netzwerkaktivität und kann nicht garantieren, dass die vorgeschlagenen Gebührenwerte immer zu dem erwarteten Verhalten führen.";
 
-"send.confirmation.domain" = "Domain";
+"send.confirmation.domain" = "Domäne";
 "send.confirmation.address" = "Adresse";
 "send.confirmation.account" = "Account";
 "send.confirmation.memo_placeholder" = "Memo";
@@ -239,7 +239,7 @@
 
 // Swap Advanced Settings
 
-"swap.advanced_settings.slippage" = "Slippage Tolerance";
+"swap.advanced_settings.slippage" = "Slippage-Toleranz";
 "swap.advanced_settings.slippage.footer" = "Ihre Transaktion wird rückgängig gemacht, wenn die Preisänderung ungünstig um mehr als diese Vorstufe geht";
 "swap.advanced_settings.deadline" = "Transaktionsfrist";
 "swap.advanced_settings.deadline.footer" = "Ihre Transaktion wird rückgängig gemacht, wenn sie länger als diese aussteht.";
@@ -248,9 +248,9 @@
 "swap.advanced_settings.recipient_address" = "Empfängeradresse";
 "swap.advanced_settings.error.lower_slippage" = "Ihre Transaktion wird wahrscheinlich fehlschlagen.";
 "swap.advanced_settings.error.higher_slippage" = "Max. erlaubter Wert ist %@%%.";
-"swap.advanced_settings.error.invalid_address" = "Invalid Address";
-"swap.advanced_settings.error.invalid_slippage" = "Invalid Slippage";
-"swap.advanced_settings.error.invalid_deadline" = "Invalid Deadline";
+"swap.advanced_settings.error.invalid_address" = "Ungültige Adresse";
+"swap.advanced_settings.error.invalid_slippage" = "Ungültige Slippage";
+"swap.advanced_settings.error.invalid_deadline" = "Ungültige Frist";
 
 "swap.fee" = "Tauschgebühr";
 "swap.transactions_speed" = "Transaktionsgeschwindigkeit";
@@ -293,40 +293,40 @@
 
 // Market
 
-"market.tab_bar_item" = "Market";
-"market.title" = "Market";
-"market.category.overview" = "All";
-"market.category.discovery" = "Discovery";
-"market.category.watchlist" = "Watchlist";
-"market.total_market_cap" = "Total\nMarket Cap";
-"market.24h_volume" = "24h Volume";
-"market.btc_dominance" = "BTC Dominance";
-"market.defi_cap" = "DeFi Cap";
+"market.tab_bar_item" = "Markt";
+"market.title" = "Markt";
+"market.category.overview" = "Alle";
+"market.category.discovery" = "Entdeckung";
+"market.category.watchlist" = "Merkliste";
+"market.total_market_cap" = "Gesamte\nMarktobergrenze";
+"market.24h_volume" = "24h-Volumen";
+"market.btc_dominance" = "BTC-Dominanz";
+"market.defi_cap" = "DeFi-Obergrenze";
 "market.defi_tvl" = "TVL in DeFi";
 
-"market.top.section.header.see_all" = "See All";
-"market.top.section.header.top_gainers" = "Top Gainers";
-"market.top.section.header.top_loosers" = "Top Loosers";
-"market.top.section.header.top_volume" = "Top By Volume";
+"market.top.section.header.see_all" = "Alle anzeigen";
+"market.top.section.header.top_gainers" = "Top-Gewinner";
+"market.top.section.header.top_loosers" = "Top-Verlierer";
+"market.top.section.header.top_volume" = "Top nach Volumen";
 "market.top.volume.title" = "Vol";
-"market.top.market_cap.title" = "MCap";
+"market.top.market_cap.title" = "Mkt. Obergr.";
 
-"market.market_field.mcap" = "MCap";
+"market.market_field.mcap" = "Mkt. Obergr.";
 "market.market_field.vol" = "Vol";
-"market.market_field.price" = "Price";
+"market.market_field.price" = "Preis";
 
-"market.sort_by" = "Sort By";
-"market.changes" = "Changes";
+"market.sort_by" = "Sortieren nach";
+"market.changes" = "Änderungen";
 
-"market.top.highest_liquidity" = "Highest Liquidity";
-"market.top.lowest_liquidity" = "Lowest Liquidity";
-"market.top.highest_cap" = "Highest Cap";
-"market.top.lowest_cap" = "Lowest Cap";
-"market.top.highest_volume" = "Highest Volume";
-"market.top.lowest_volume" = "Lowest Volume";
-"market.top.highest_price" = "Highest Price";
-"market.top.lowest_price" = "Lowest Price";
-"market.top.top_gainers" = "Top Gainers";
+"market.top.highest_liquidity" = "Höchste Liquidität";
+"market.top.lowest_liquidity" = "Niedrigste Liquidität";
+"market.top.highest_cap" = "Höchste Obergrenze";
+"market.top.lowest_cap" = "Niedrigste Obergrenze";
+"market.top.highest_volume" = "Höchstes Volumen";
+"market.top.lowest_volume" = "Niedrigstes Volumen";
+"market.top.highest_price" = "Höchster Preis";
+"market.top.lowest_price" = "Niedrigster Preis";
+"market.top.top_gainers" = "Top-Gewinner";
 "market.top.top_loosers" = "Top Loosers";
 
 "market.top.period_1h" = "1 Stunde";
