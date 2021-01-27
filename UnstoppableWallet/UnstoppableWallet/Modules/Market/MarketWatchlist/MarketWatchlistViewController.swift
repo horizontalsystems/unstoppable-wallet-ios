@@ -41,7 +41,7 @@ class MarketWatchlistViewController: ThemeViewController {
 
 
         tableView.registerHeaderFooter(forClass: MarketListHeaderView.self)
-        tableView.registerCell(forClass: GRanked14Cell.self)
+        tableView.registerCell(forClass: GB14Cell.self)
 
         tableView.sectionDataSource = self
 
@@ -99,7 +99,7 @@ class MarketWatchlistViewController: ThemeViewController {
     }
 
     private func row(viewItem: MarketModule.MarketViewItem, isLast: Bool) -> RowProtocol {
-        Row<GRanked14Cell>(
+        Row<GB14Cell>(
                 id: viewItem.coinCode,
                 height: .heightDoubleLineCell,
                 bind: { cell, _ in

@@ -14,7 +14,7 @@ struct MarketModule {
         return viewController
     }
 
-    static func bind(cell: GRanked14Cell, viewItem: MarketViewItem) {
+    static func bind(cell: GB14Cell, viewItem: MarketViewItem) {
         let image = UIImage.image(
                 coinCode: viewItem.coinCode,
                 blockchainType: viewItem.coinType?.blockchainType
@@ -24,11 +24,11 @@ struct MarketModule {
         cell.topText = viewItem.coinName
         cell.bottomText = viewItem.coinCode.uppercased()
 
-        cell.rankText = viewItem.rank.title
+        cell.badgeText = viewItem.rank.title
         if case let .score(_, rankColor) = viewItem.rank {
-            cell.rankBackgroundColor = rankColor.color
+            cell.badgeBackgroundColor = rankColor.color
         } else {
-            cell.rankBackgroundColor = .themeJeremy
+            cell.badgeBackgroundColor = .themeJeremy
         }
 
         cell.primaryValueText = viewItem.rate

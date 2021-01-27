@@ -28,7 +28,8 @@ class CoinToggleViewController: ThemeSearchViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.registerCell(forClass: CoinToggleCell.self)
+        tableView.registerCell(forClass: GA4Cell.self)
+        tableView.registerCell(forClass: GA11Cell.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -51,7 +52,7 @@ class CoinToggleViewController: ThemeSearchViewController {
     }
 
     private func onUpdate(viewState: CoinToggleViewModel.ViewState) {
-        let animated = self.viewState.featuredViewItems.count == viewState.featuredViewItems.count && self.viewState.viewItems.count == viewState.viewItems.count
+        let animated = isAnimated(viewItemsA: self.viewState.featuredViewItems, viewItemsB: viewState.featuredViewItems) && isAnimated(viewItemsA: self.viewState.viewItems, viewItemsB: viewState.viewItems)
         self.viewState = viewState
 
         if isLoaded {
@@ -59,31 +60,65 @@ class CoinToggleViewController: ThemeSearchViewController {
         }
     }
 
-    private func rows(viewItems: [CoinToggleViewModel.ViewItem]) -> [RowProtocol] {
-        viewItems.enumerated().map { (index, viewItem) in
-            var action: ((CoinToggleCell) -> ())?
+    private func isAnimated(viewItemsA: [CoinToggleViewModel.ViewItem], viewItemsB: [CoinToggleViewModel.ViewItem]) -> Bool {
+        guard viewItemsA.count == viewItemsB.count else {
+            return false
+        }
 
-            if case .toggleHidden = viewItem.state {
-                action = { [weak self] _ in
-                    self?.onSelect(viewItem: viewItem)
-                }
+        for (index, viewItemA) in viewItemsA.enumerated() {
+            let viewItemB = viewItemsB[index]
+
+            switch (viewItemA.state, viewItemB.state) {
+            case (.toggleHidden, .toggleVisible), (.toggleVisible, .toggleHidden): return false
+            default: ()
             }
+        }
 
-            return Row<CoinToggleCell>(
-                    id: "coin_\(viewItem.coin.id)",
-                    hash: "coin_\(viewItem.state)",
-                    height: .heightDoubleLineCell,
-                    autoDeselect: true,
-                    bind: { [weak self] cell, _ in
-                        cell.bind(
-                                viewItem: viewItem,
-                                last: index == viewItems.count - 1
-                        ) { [weak self] enabled in
-                            self?.onToggle(viewItem: viewItem, enabled: enabled)
+        return true
+    }
+
+    private func rows(viewItems: [CoinToggleViewModel.ViewItem]) -> [RowProtocol] {
+        viewItems.enumerated().map { index, viewItem in
+            let isFirst = index == 0
+            let isLast = index == viewItems.count - 1
+
+            switch viewItem.state {
+            case .toggleHidden:
+                return Row<GA4Cell>(
+                        id: "coin_\(viewItem.coin.id)",
+                        hash: "coin_\(viewItem.state)",
+                        height: .heightDoubleLineCell,
+                        autoDeselect: true,
+                        bind: { cell, _ in
+                            cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                            cell.titleImage = .image(coinCode: viewItem.coin.code, blockchainType: viewItem.coin.type.blockchainType)
+                            cell.title = viewItem.coin.title
+                            cell.subtitle = viewItem.coin.code
+                            cell.badgeText = viewItem.coin.type.blockchainType
+                            cell.valueImage = UIImage(named: "plus_20")
+                        },
+                        action: { [weak self] _ in
+                            self?.onSelect(viewItem: viewItem)
                         }
-                    },
-                    action: action
-            )
+                )
+            case .toggleVisible(let enabled):
+                return Row<GA11Cell>(
+                        id: "coin_\(viewItem.coin.id)",
+                        hash: "coin_\(viewItem.state)",
+                        height: .heightDoubleLineCell,
+                        bind: { [weak self] cell, _ in
+                            cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                            cell.titleImage = .image(coinCode: viewItem.coin.code, blockchainType: viewItem.coin.type.blockchainType)
+                            cell.title = viewItem.coin.title
+                            cell.subtitle = viewItem.coin.code
+                            cell.badgeText = viewItem.coin.type.blockchainType
+                            cell.isOn = enabled
+                            cell.onToggle = { [weak self] enabled in
+                                self?.onToggle(viewItem: viewItem, enabled: enabled)
+                            }
+                        }
+                )
+            }
         }
     }
 
@@ -112,11 +147,11 @@ class CoinToggleViewController: ThemeSearchViewController {
             return
         }
 
-        guard let cell = tableView.cellForRow(at: IndexPath(row: index, section: section)) as? CoinToggleCell else {
+        guard let cell = tableView.cellForRow(at: IndexPath(row: index, section: section)) as? GA11Cell else {
             return
         }
 
-        cell.setToggle(on: on)
+        cell.set(isOn: on, animated: true)
     }
 
 }
