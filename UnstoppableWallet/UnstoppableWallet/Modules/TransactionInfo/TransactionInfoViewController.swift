@@ -199,7 +199,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
                 id: title,
                 hash: value ?? "",
                 dynamicHeight: { width in
-                    D7Cell.height(containerWidth: width, title: title, value: value, valueItalic: valueItalic)
+                    D7Cell.height(containerWidth: width, backgroundStyle: .transparent, title: title, value: value, valueItalic: valueItalic)
                 },
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .transparent)
