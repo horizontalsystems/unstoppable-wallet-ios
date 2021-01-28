@@ -94,7 +94,7 @@ class TransactionsViewController: ThemeViewController {
         let item = items[indexPath.row]
         if let cell = cell as? TransactionCell {
             delegate.willShow(item: item)
-            cell.set(backgroundStyle: .claude, isLast: tableView.numberOfRows(inSection: indexPath.section) == indexPath.row + 1)
+            cell.set(backgroundStyle: .claude, isFirst: indexPath.row != 0, isLast: true)
             cell.bind(item: item)
         }
 
