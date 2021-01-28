@@ -1,0 +1,32 @@
+{    
+    "categories": [
+        { "id": "blockhain", "name": "Blockhain" },
+        { "id": "privacy", "name": "Privacy" },
+        { "id": "scaling", "name": "Scaling" },
+        { "id": "tokenized_bitcoin", "name": "Tokenized Bitcon" },
+        { "id": "algo_stablecoins", "name": "Algo Stablecoins" }
+    ],
+    "coins": [
+        {
+            "code": "BTC",
+            "name": "Bitcoin",
+            "categories": ["blockhain","privacy"],
+            "active": true,
+            "rate": ""
+        },
+        {
+            "code": "BCH",
+            "name": "Bitcoin Cash",
+            "categories": ["blockhain","scaling"],
+            "active": true,
+            "rate": ""
+        },
+        {
+            "code": "LTC",
+            "name": "Litecoin",
+            "categories": ["blockhain"],
+            "active": true,
+            "rate": ""
+        }
+     ]
+}

@@ -102,6 +102,7 @@ class MarketWatchlistViewController: ThemeViewController {
         Row<GB14Cell>(
                 id: viewItem.coinCode,
                 height: .heightDoubleLineCell,
+                autoDeselect: true,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .claude, isLast: isLast)
                     MarketModule.bind(cell: cell, viewItem: viewItem)

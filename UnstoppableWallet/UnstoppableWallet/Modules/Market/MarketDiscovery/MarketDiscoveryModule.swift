@@ -3,8 +3,8 @@ import Foundation
 struct MarketDiscoveryModule {
 
     static func viewController() -> MarketDiscoveryViewController {
-        let dataSource = MarketListDataSource(rateManager: App.shared.rateManager)
-        let service = MarketListService(currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManager, dataSource: dataSource)
+        let categoriesProvider = MarketCategoriesProvider()
+        let service = MarketDiscoveryService(currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManager, categoriesProvider: categoriesProvider)
 
         let viewModel = MarketDiscoveryViewModel(service: service)
         return MarketDiscoveryViewController(viewModel: viewModel)

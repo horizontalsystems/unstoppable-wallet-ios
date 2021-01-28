@@ -47,6 +47,7 @@ class MarketOverviewViewController: ThemeViewController {
 
         tableView.registerHeaderFooter(forClass: MarketSectionHeaderView.self)
         tableView.registerCell(forClass: GB14Cell.self)
+        tableView.registerCell(forClass: A2Cell.self)
 
         tableView.buildSections()
     }
@@ -57,32 +58,39 @@ class MarketOverviewViewController: ThemeViewController {
         tableView.reload()
     }
 
-    private func headerState(type: MarketOverviewViewModel.SectionType) -> ViewState<MarketSectionHeaderView> {
-        .cellType(hash: "section_header_\(type.rawValue)",
-                binder: { view in
+    private func headerRow(type: MarketOverviewViewModel.SectionType) -> RowProtocol {
+        Row<A2Cell>(
+                id: "section_header_\(type.rawValue)",
+                height: .heightSingleLineCell,
+                autoDeselect: true,
+                bind: { cell, _ in
+                    cell.set(backgroundStyle: .claude, isFirst: true)
+                    cell.value = "market.top.section.header.see_all".localized
+                    cell.valueColor = .themeGray
+
                     switch type {
                     case .topGainers:
-                        view.set(image: UIImage(named: "circle_up_20"))
-                        view.set(title: "market.top.section.header.top_gainers".localized)
+                        cell.titleImage = UIImage(named: "circle_up_20")
+                        cell.title = "market.top.section.header.top_gainers".localized
                     case .topLoosers:
-                        view.set(image: UIImage(named: "circle_down_20"))
-                        view.set(title: "market.top.section.header.top_loosers".localized)
+                        cell.titleImage = UIImage(named: "circle_down_20")
+                        cell.title = "market.top.section.header.top_loosers".localized
                     case .topVolume:
-                        view.set(image: UIImage(named: "chart_20"))
-                        view.set(title: "market.top.section.header.top_volume".localized)
+                        cell.titleImage = UIImage(named: "chart_20")
+                        cell.title = "market.top.section.header.top_volume".localized
                     }
-                    view.onTapSeeAll = { [weak self] in
-                        self?.didTapSeeAll(type: type)
-                    }
-                }, dynamicHeight: { containerWidth in
-            MarketSectionHeaderView.height
-        })
+                },
+                action: { [weak self] _ in
+                    self?.didTapSeeAll(type: type)
+                }
+        )
     }
 
     private func row(viewItem: MarketModule.MarketViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
         Row<GB14Cell>(
                 id: viewItem.coinCode,
                 height: .heightDoubleLineCell,
+                autoDeselect: true,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                     MarketModule.bind(cell: cell, viewItem: viewItem)
@@ -121,7 +129,6 @@ extension MarketOverviewViewController: SectionsDataSource {
         sections.append(contentsOf: viewItems.map { section in
             Section(
                 id: section.type.rawValue,
-                headerState: headerState(type: section.type),
                 footerState: .margin(height: CGFloat.margin12),
                 rows: section.viewItems.enumerated().map { (index, item) in
                     row(viewItem: item, isFirst: index == 0, isLast: index == section.viewItems.count - 1)

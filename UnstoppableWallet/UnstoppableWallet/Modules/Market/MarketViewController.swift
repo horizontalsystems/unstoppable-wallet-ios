@@ -15,7 +15,7 @@ class MarketViewController: ThemeViewController {
     private var viewControllers = [UIViewController]()
     private let discoveryViewController: MarketDiscoveryViewController
 
-    private let categoriesHeaderView: MarketCategoriesView
+    private let categoriesHeaderView: MarketTabsView
     private let syncSpinner = HUDProgressView(
             strokeLineWidth: 2,
             radius: 9,
@@ -26,7 +26,7 @@ class MarketViewController: ThemeViewController {
     init(viewModel: MarketViewModel) {
         self.viewModel = viewModel
 
-        categoriesHeaderView = MarketCategoriesModule.view(service: viewModel.categoriesService)
+        categoriesHeaderView = MarketTabsModule.view(service: viewModel.tabsService)
 
         let overviewController = MarketOverviewModule.viewController()
         discoveryViewController = MarketDiscoveryModule.viewController()
@@ -79,16 +79,16 @@ class MarketViewController: ThemeViewController {
         }
 
         syncPageViewController()
-        subscribe(disposeBag, viewModel.updateCategorySignal) { [weak self] in self?.syncPageViewController() }
+        subscribe(disposeBag, viewModel.updateTabSignal) { [weak self] in self?.syncPageViewController() }
     }
 
     private func syncPageViewController() {
-        pageViewController.setViewControllers([viewControllers[viewModel.currentCategoryIndex]], direction: .forward, animated: false)
+        pageViewController.setViewControllers([viewControllers[viewModel.currentTabIndex]], direction: .forward, animated: false)
     }
 
     private func showDiscovery(type: MarketOverviewViewModel.SectionType) {
         discoveryViewController.setPreferences(for: type)
-        viewModel.currentCategoryIndex = MarketModule.Category.discovery.rawValue
+        viewModel.currentTabIndex = MarketModule.Tab.discovery.rawValue
     }
 
 }

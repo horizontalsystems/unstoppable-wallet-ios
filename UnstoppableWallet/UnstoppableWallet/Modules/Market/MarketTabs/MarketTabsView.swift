@@ -1,27 +1,27 @@
 import UIKit
 import RxSwift
 
-class MarketCategoriesView: UITableViewHeaderFooterView {
+class MarketTabsView: UITableViewHeaderFooterView {
     private let disposeBag = DisposeBag()
-    private let viewModel: MarketCategoriesViewModel
+    private let viewModel: MarketTabsViewModel
 
-    private let categoriesView = FilterHeaderView()
+    private let tabsView = FilterHeaderView()
 
-    init(viewModel: MarketCategoriesViewModel) {
+    init(viewModel: MarketTabsViewModel) {
         self.viewModel = viewModel
 
         super.init(reuseIdentifier: nil)
 
-        contentView.addSubview(categoriesView)
-        categoriesView.snp.makeConstraints { maker in
+        contentView.addSubview(tabsView)
+        tabsView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
 
-        categoriesView.onSelect = { [weak self] index in
+        tabsView.onSelect = { [weak self] index in
             self?.onSelect(index: index)
         }
 
-        categoriesView.reload(filters: viewModel.categories)
+        tabsView.reload(filters: viewModel.tabs)
 
         syncIndex()
         subscribe(disposeBag, viewModel.updateIndexSignal) { [weak self] in self?.syncIndex() }
@@ -32,7 +32,7 @@ class MarketCategoriesView: UITableViewHeaderFooterView {
     }
 
     private func syncIndex() {
-        categoriesView.select(index: viewModel.currentIndex)
+        tabsView.select(index: viewModel.currentIndex)
     }
 
     private func onSelect(index: Int) {
