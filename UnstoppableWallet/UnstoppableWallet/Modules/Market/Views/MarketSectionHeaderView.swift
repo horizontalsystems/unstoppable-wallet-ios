@@ -13,7 +13,7 @@ class MarketSectionHeaderView: UITableViewHeaderFooterView {
     private let seeAllClosureView = UIImageView()
     private let seeAllButton = UIButton()
 
-    private var onTapSeeAll: (() -> ())?
+    var onTapSeeAll: (() -> ())?
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -73,11 +73,21 @@ class MarketSectionHeaderView: UITableViewHeaderFooterView {
             maker.trailing.equalToSuperview()
             maker.top.bottom.equalToSuperview()
         }
+
+        seeAllButton.addTarget(self, action: #selector(tapSeeAll), for: .touchUpInside)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    @objc private func tapSeeAll() {
+        onTapSeeAll?()
+    }
+
+}
+
+extension MarketSectionHeaderView {
 
     func set(image: UIImage?) {
         imageView.image = image

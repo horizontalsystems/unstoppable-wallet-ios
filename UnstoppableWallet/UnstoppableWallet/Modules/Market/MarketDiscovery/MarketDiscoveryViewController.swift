@@ -11,6 +11,7 @@ class MarketDiscoveryViewController: ThemeViewController {
     private let spinner = HUDActivityView.create(with: .large48)
 
     private let viewModel: MarketDiscoveryViewModel
+    private let sectionHeaderView = MarketListHeaderView()
 
     var pushController: ((UIViewController) -> ())?
 
@@ -39,7 +40,6 @@ class MarketDiscoveryViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
-
         tableView.registerHeaderFooter(forClass: MarketListHeaderView.self)
         tableView.registerCell(forClass: GB14Cell.self)
 
@@ -50,6 +50,14 @@ class MarketDiscoveryViewController: ThemeViewController {
             maker.center.equalToSuperview()
         }
         sync(isLoading: false)
+
+        sectionHeaderView.setSortingField(title: viewModel.sortingFieldTitle)
+        sectionHeaderView.onTapSortField = { [weak self] in
+            self?.onTapSortingField()
+        }
+        sectionHeaderView.onSelect = { [weak self] field in
+            self?.viewModel.set(marketField: field)
+        }
 
         tableView.buildSections()
     }
@@ -70,16 +78,6 @@ class MarketDiscoveryViewController: ThemeViewController {
 
         spinner.isHidden = false
         spinner.startAnimating()
-    }
-
-    private func bindHeader(headerView: MarketListHeaderView) {
-        headerView.setSortingField(title: viewModel.sortingFieldTitle)
-        headerView.onTapSortField = { [weak self] in
-            self?.onTapSortingField()
-        }
-        headerView.onSelect = { [weak self] field in
-            self?.viewModel.set(marketField: field)
-        }
     }
 
     private func onTapSortingField() {
@@ -119,17 +117,20 @@ class MarketDiscoveryViewController: ThemeViewController {
 
 }
 
+extension MarketDiscoveryViewController {
+
+    func setPreferences(for type: MarketOverviewViewModel.SectionType) {
+        viewModel.setPreferences(for: type)
+        sectionHeaderView.setMarketField(field: viewModel.marketField)
+    }
+
+}
+
 extension MarketDiscoveryViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        let headerState: ViewState<MarketListHeaderView> = .cellType(
-            hash: "section_header",
-            binder: { [weak self] view in
-                self?.bindHeader(headerView: view)
-            },
-            dynamicHeight: { _ in
-                MarketListHeaderView.height
-            })
+        sectionHeaderView.setSortingField(title: viewModel.sortingFieldTitle)
+        let headerState: ViewState<MarketListHeaderView> = .static(view: sectionHeaderView, height: MarketListHeaderView.height)
 
         return [Section(id: "tokens",
                 headerState: headerState,

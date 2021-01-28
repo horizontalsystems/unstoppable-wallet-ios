@@ -8,7 +8,7 @@ class MarketFieldModeView: UIView {
     private var allButtons = [UIButton]()
 
     var onSelect: ((MarketModule.MarketField) -> ())?
-    var currentSelected: MarketModule.MarketField
+    private var currentSelected: MarketModule.MarketField
 
     init() {
         currentSelected = MarketModule.MarketField.allCases[0]

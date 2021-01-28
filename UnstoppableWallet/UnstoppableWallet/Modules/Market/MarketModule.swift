@@ -4,11 +4,9 @@ import ThemeKit
 struct MarketModule {
 
     static func viewController() -> UIViewController {
-        let marketService = MarketService()
         let categoriesService = MarketCategoriesService(localStorage: App.shared.localStorage)
 
-        let marketViewModel = MarketViewModel(service: marketService, categoriesService: categoriesService)
-
+        let marketViewModel = MarketViewModel(categoriesService: categoriesService)
 
         let viewController = MarketViewController(viewModel: marketViewModel)
         return viewController
@@ -51,6 +49,12 @@ struct MarketModule {
 }
 
 extension MarketModule {
+
+    public enum Category: Int, CaseIterable {
+        case overview
+        case discovery
+        case watchlist
+    }
 
     enum MarketField: Int, CaseIterable {
         case marketCap

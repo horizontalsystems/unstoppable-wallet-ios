@@ -40,25 +40,8 @@ class MarketDiscoveryViewModel {
         }
     }
 
-    private func sort(items: [MarketListService.Item], by sortingField: MarketListDataSource.SortingField) -> [MarketListService.Item] {
-        items.sorted { item, item2 in
-            switch sortingField {
-            case .highestLiquidity: return (item.liquidity ?? 0) > (item2.liquidity ?? 0)
-            case .lowestLiquidity: return (item.liquidity ?? 0) < (item2.liquidity ?? 0)
-            case .highestCap: return item.marketCap > item2.marketCap
-            case .lowestCap: return item.marketCap < item2.marketCap
-            case .highestVolume: return item.volume > item2.volume
-            case .lowestVolume: return item.volume < item2.volume
-            case .highestPrice: return item.price > item2.price
-            case .lowestPrice: return item.price < item2.price
-            case .topGainers: return item.diff > item2.diff
-            case .topLoosers: return item.diff < item2.diff
-            }
-        }
-    }
-
     private func syncViewItems() {
-        let viewItems: [MarketModule.MarketViewItem] = sort(items: service.items, by: sortingField).map {
+        let viewItems: [MarketModule.MarketViewItem] = service.items.sort(by: sortingField).map {
             let marketDataValue: MarketModule.MarketDataValue
             switch marketField {
             case .price: marketDataValue = .diff($0.diff)
@@ -123,6 +106,22 @@ extension MarketDiscoveryViewModel {
         syncViewItems()
     }
 
+    public func setPreferences(for type: MarketOverviewViewModel.SectionType) {
+        switch type {
+        case .topGainers:
+            marketField = .price
+            sortingField = .topGainers
+        case .topLoosers:
+            marketField = .price
+            sortingField = .topLoosers
+        case .topVolume:
+            marketField = .volume
+            sortingField = .highestVolume
+        }
+
+        syncViewItems()
+    }
+
 }
 
 extension MarketListDataSource.SortingField {
@@ -139,6 +138,27 @@ extension MarketListDataSource.SortingField {
         case .lowestPrice: return "market.top.lowest_price".localized
         case .topGainers: return "market.top.top_gainers".localized
         case .topLoosers: return "market.top.top_loosers".localized
+        }
+    }
+
+}
+
+extension Array where Element == MarketListService.Item {
+
+    func sort(by sortingField: MarketListDataSource.SortingField) -> [MarketListService.Item] {
+        sorted { item, item2 in
+            switch sortingField {
+            case .highestLiquidity: return (item.liquidity ?? 0) > (item2.liquidity ?? 0)
+            case .lowestLiquidity: return (item.liquidity ?? 0) < (item2.liquidity ?? 0)
+            case .highestCap: return item.marketCap > item2.marketCap
+            case .lowestCap: return item.marketCap < item2.marketCap
+            case .highestVolume: return item.volume > item2.volume
+            case .lowestVolume: return item.volume < item2.volume
+            case .highestPrice: return item.price > item2.price
+            case .lowestPrice: return item.price < item2.price
+            case .topGainers: return item.diff > item2.diff
+            case .topLoosers: return item.diff < item2.diff
+            }
         }
     }
 

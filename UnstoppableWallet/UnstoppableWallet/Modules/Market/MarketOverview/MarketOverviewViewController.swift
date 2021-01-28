@@ -11,7 +11,8 @@ class MarketOverviewViewController: ThemeViewController {
 
     private let marketMetricsCell: MarketMetricsCell
 
-    var pushController: ((UIViewController) -> ())?
+    var pushController: ((UIViewController) -> Void)?
+    var seeAll: ((MarketOverviewViewModel.SectionType) -> ())?
 
     private var viewItems = [MarketOverviewViewModel.Section]()
 
@@ -70,6 +71,9 @@ class MarketOverviewViewController: ThemeViewController {
                         view.set(image: UIImage(named: "chart_20"))
                         view.set(title: "market.top.section.header.top_volume".localized)
                     }
+                    view.onTapSeeAll = { [weak self] in
+                        self?.didTapSeeAll(type: type)
+                    }
                 }, dynamicHeight: { containerWidth in
             MarketSectionHeaderView.height
         })
@@ -92,6 +96,10 @@ class MarketOverviewViewController: ThemeViewController {
     private func onSelect(viewItem: MarketModule.MarketViewItem) {
         let viewController = ChartRouter.module(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinName, coinType: viewItem.coinType))
         pushController?(viewController)
+    }
+
+    private func didTapSeeAll(type: MarketOverviewViewModel.SectionType) {
+        seeAll?(type)
     }
 
 }
