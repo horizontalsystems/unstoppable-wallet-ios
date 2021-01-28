@@ -45,7 +45,7 @@ class PrivacyEthereumRpcModeViewController: ThemeActionSheetController {
             maker.top.equalTo(titleView.snp.bottom)
         }
 
-        tableView.registerCell(forClass: BottomSheetCheckmarkCell.self)
+        tableView.registerCell(forClass: F4Cell.self)
         tableView.sectionDataSource = self
 
         view.addSubview(doneButton)
@@ -78,16 +78,18 @@ extension PrivacyEthereumRpcModeViewController: SectionsDataSource {
             Section(
                     id: "main",
                     rows: viewItems.enumerated().map { index, viewItem in
-                        Row<BottomSheetCheckmarkCell>(
+                        let isFirst = index == 0
+                        let isLast = index == viewItems.count - 1
+
+                        return Row<F4Cell>(
                                 id: "item_\(index)",
                                 hash: "\(viewItem.selected)",
                                 height: .heightDoubleLineCell,
                                 bind: { cell, _ in
-                                    cell.bind(
-                                            title: viewItem.title,
-                                            subtitle: viewItem.subtitle,
-                                            checkmarkVisible: viewItem.selected
-                                    )
+                                    cell.set(backgroundStyle: .transparent, isFirst: isFirst, isLast: isLast)
+                                    cell.title = viewItem.title
+                                    cell.subtitle = viewItem.subtitle
+                                    cell.valueImage = viewItem.selected ? UIImage(named: "check_1_20")?.tinted(with: .themeJacob) : nil
                                 },
                                 action: { [weak self] _ in
                                     self?.delegate.onTapViewItem(index: index)

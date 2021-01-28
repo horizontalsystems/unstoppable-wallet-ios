@@ -6,14 +6,13 @@ import HUD
 class PostsHeaderFooterView: UITableViewHeaderFooterView {
     private let titleLabel = UILabel()
     private let spinner = HUDActivityView.create(with: .small20)
-    private let topSeparator = UIView()
     private let bottomSeparator = UIView()
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
 
         backgroundView = UIView()
-        backgroundView?.backgroundColor = .themeLawrence
+        backgroundView?.backgroundColor = .themeClaude
 
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
@@ -32,21 +31,13 @@ class PostsHeaderFooterView: UITableViewHeaderFooterView {
             maker.centerY.equalToSuperview()
         }
 
-        addSubview(topSeparator)
-        topSeparator.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightOnePixel)
-        }
-
-        topSeparator.backgroundColor = .themeSteel20
-
         addSubview(bottomSeparator)
         bottomSeparator.snp.makeConstraints { maker in
             maker.leading.trailing.bottom.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightOnePixel)
+            maker.height.equalTo(CGFloat.heightOneDp)
         }
 
-        bottomSeparator.backgroundColor = .themeSteel20
+        bottomSeparator.backgroundColor = .themeSteel10
     }
 
     required init?(coder aDecoder: NSCoder) {

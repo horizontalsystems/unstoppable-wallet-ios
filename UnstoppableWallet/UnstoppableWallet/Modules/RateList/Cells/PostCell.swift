@@ -1,7 +1,7 @@
 import UIKit
 import ThemeKit
 
-class PostCell: ThemeCell {
+class PostCell: BaseSelectableThemeCell {
     private static let verticalPadding: CGFloat = .margin4x
     private static let horizontalPadding: CGFloat = .margin4x
     private static let subtitleTopMargin: CGFloat = .margin1x
@@ -13,8 +13,6 @@ class PostCell: ThemeCell {
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
-        backgroundColor = .themeLawrence
 
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
@@ -59,8 +57,6 @@ class PostCell: ThemeCell {
     }
 
     func bind(viewItem: RateListModule.PostViewItem) {
-        super.bind(topSeparatorVisible: false, bottomSeparatorVisible: true)
-
         titleLabel.text = viewItem.title
         dateLabel.text = timeAgo(date: viewItem.date)
     }

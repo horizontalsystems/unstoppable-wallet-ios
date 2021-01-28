@@ -70,7 +70,7 @@ class RateListViewController: ThemeViewController {
     }
 
     private func coinRow(index: Int, viewItem: RateListModule.CoinViewItem) -> RowProtocol {
-        let last = index == coinViewItems.count - 1
+        let isLast = index == coinViewItems.count - 1
 
         return Row<RateListCell>(
                 id: "coin_rate_\(index)",
@@ -78,7 +78,8 @@ class RateListViewController: ThemeViewController {
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
                 bind: { cell, _ in
-                    cell.bind(viewItem: viewItem, last: last)
+                    cell.set(backgroundStyle: .claude, isLast: isLast)
+                    cell.bind(viewItem: viewItem)
                 },
                 action: { [weak self] _ in
                     self?.delegate.onSelectCoin(index: index)
@@ -87,7 +88,7 @@ class RateListViewController: ThemeViewController {
 
     }
 
-    private func postRow(index: Int, viewItem: RateListModule.PostViewItem) -> RowProtocol {
+    private func postRow(index: Int, viewItem: RateListModule.PostViewItem, isLast: Bool) -> RowProtocol {
         Row<PostCell>(
                 id: "post_\(index)",
                 autoDeselect: true,
@@ -95,6 +96,7 @@ class RateListViewController: ThemeViewController {
                     PostCell.height(containerWidth: containerWidth, viewItem: viewItem)
                 },
                 bind: { cell, _ in
+                    cell.set(backgroundStyle: .claude, isFirst: index == 0, isLast: isLast)
                     cell.bind(viewItem: viewItem)
                 },
                 action: { [weak self] _ in
@@ -123,7 +125,7 @@ extension RateListViewController: SectionsDataSource {
                 headerState: postsHeader(spinnerVisible: postSpinnerVisible),
                 footerState: .marginColor(height: .margin8x, color: .clear),
                 rows: postViewItems.enumerated().map { index, viewItem in
-                    postRow(index: index, viewItem: viewItem)
+                    postRow(index: index, viewItem: viewItem, isLast: index == postViewItems.count - 1)
                 }
             ),
         ]

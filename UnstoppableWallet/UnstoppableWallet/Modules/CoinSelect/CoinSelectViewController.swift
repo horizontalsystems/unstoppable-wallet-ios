@@ -75,18 +75,18 @@ extension CoinSelectViewController: SectionsDataSource {
                     headerState: .margin(height: .margin3x),
                     footerState: .margin(height: .margin8x),
                     rows: viewItems.enumerated().map { index, viewItem in
-                        let last = index == viewItems.count - 1
+                        let isLast = index == viewItems.count - 1
 
                         return Row<SwapTokenSelectCell>(
                                 id: "coin_\(viewItem.coin.id)",
                                 height: .heightDoubleLineCell,
                                 autoDeselect: true,
                                 bind: { cell, _ in
+                                    cell.set(backgroundStyle: .claude, isLast: isLast)
                                     cell.bind(
                                             coin: viewItem.coin,
                                             balance: viewItem.balance,
-                                            blockchainType: viewItem.blockchainType,
-                                            last: last
+                                            blockchainType: viewItem.blockchainType
                                     )
                                 },
                                 action: { [weak self] _ in

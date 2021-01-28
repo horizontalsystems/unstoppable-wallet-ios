@@ -54,7 +54,7 @@ class ChartNotificationViewController: ThemeViewController {
             maker.leading.trailing.bottom.equalToSuperview()
         }
 
-        tableView.registerCell(forClass: SingleLineCheckmarkCell.self)
+        tableView.registerCell(forClass: B4Cell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.sectionDataSource = self
 
@@ -136,17 +136,15 @@ extension ChartNotificationViewController: SectionsDataSource {
     }
 
     func row(rowModel: PriceAlertSectionViewModel.Row, sectionIndex: Int, rowIndex: Int, last: Bool) -> RowProtocol {
-        Row<SingleLineCheckmarkCell>(
+        Row<B4Cell>(
                 id: "row_\(rowIndex)",
                 hash: "\(rowModel.selected)",
-                height: CGFloat.heightSingleLineCell,
+                height: .heightSingleLineCell,
                 autoDeselect: true,
                 bind: { cell, _ in
-                    cell.bind(
-                            text: rowModel.title,
-                            checkmarkVisible: rowModel.selected,
-                            last: last
-                    )
+                    cell.set(backgroundStyle: .transparent, isLast: last)
+                    cell.title = rowModel.title
+                    cell.valueImage = rowModel.selected ? UIImage(named: "check_1_20")?.tinted(with: .themeJacob) : nil
                 },
                 action: { _ in
                     rowModel.action(rowIndex)

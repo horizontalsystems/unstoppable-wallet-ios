@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 import ThemeKit
 
-class RateListCell: ClaudeThemeCell {
+class RateListCell: BaseSelectableThemeCell {
     private let leftCoinView = LeftCoinCellView()
     private let rightView = RateListChangingCellView()
 
@@ -26,9 +26,7 @@ class RateListCell: ClaudeThemeCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(viewItem: RateListModule.CoinViewItem, last: Bool = false) {
-        super.bind(last: last)
-
+    func bind(viewItem: RateListModule.CoinViewItem) {
         selectionStyle = viewItem.rate == nil ? .none : .default
 
         leftCoinView.bind(coinTitle: viewItem.coinTitle, coinCode: viewItem.coinCode, blockchainType: viewItem.blockchainType)

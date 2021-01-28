@@ -70,7 +70,7 @@ class RateTopListViewController: ThemeViewController {
     }
 
     private func row(index: Int, viewItem: RateTopListModule.ViewItem) -> RowProtocol {
-        let last = index == viewItems.count - 1
+        let isLast = index == viewItems.count - 1
 
         return Row<RateTopListCell>(
                 id: "coin_rate_\(index)",
@@ -78,7 +78,8 @@ class RateTopListViewController: ThemeViewController {
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
                 bind: { cell, _ in
-                    cell.bind(viewItem: viewItem, last: last)
+                    cell.set(backgroundStyle: .claude, isLast: isLast)
+                    cell.bind(viewItem: viewItem)
                 },
                 action: { [weak self] _ in
                     self?.delegate.onSelect(index: index)
