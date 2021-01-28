@@ -83,9 +83,9 @@
 "coin_settings.sync_mode.slow.description" = "1- 24 小时";
 "coin_settings.sync_mode.description" = "API 源链接： \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "New";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "Older wallets (before Aug 2017)";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "Newer wallets";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "新";
+"coin_settings.bitcoin_cash_coin_type.description.type0" = "旧钱包（2017年之前）";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "较新的钱包";
 "sync_mode.from_blockchain" = "来自区块链";
 "blockchain_settings.change_alert.title" = "地址格式";
 "blockchain_settings.change_alert.content" = "此更改后，钱包将必须与 %@ 区块链重新同步。\n\n\n当您更改地址格式的 %@ 时，当前余额和交易历史将不再可见。 将其更改为以前的设置将在钱包与区块链重新同步后恢复所有设置。 如果不确定，我们建议不要进行更改。";
@@ -144,8 +144,8 @@
 "balance.sort.24h_change" = "24小时价格（%）";
 "balance_error.change_source" = "更改源";
 "balance_error.sync_error" = "同步出错";
-"lost_accounts.warning_title" = "iOS Keychain Error";
-"lost_accounts.warning_message" = "The encrypted data holding your wallet was recently invalidated because your iOS lock screen was changed";
+"lost_accounts.warning_title" = "iOS Keychain 错误";
+"lost_accounts.warning_message" = "因为您的 iOS 锁定屏幕已被更改，所以保存您钱包的加密数据目前已失效";
 // Deposit
 
 "deposit.receive_coin" = "收到%@";
@@ -157,7 +157,7 @@
 "send.title" = "发送%@";
 "send.amount_placeholder" = "金额";
 "send.address_placeholder" = "地址";
-"send.address_or_domain_placeholder" = "Address or Domain";
+"send.address_or_domain_placeholder" = "地址或域名";
 "send.fee" = "费用";
 "send.tx_speed" = "交易费用";
 "send.tx_speed_low" = "低";
