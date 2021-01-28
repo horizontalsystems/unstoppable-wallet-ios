@@ -28,8 +28,7 @@ protocol ILocalStorage: class {
     var ethereumRpcMode: EthereumRpcMode? { get set }
     var pushToken: String? { get set }
     var pushNotificationsOn: Bool { get set }
-    var defaultMarketCategory: Int? { get set }
-    var marketFavoriteCoins: [String] { get set }
+    var marketCategory: Int? { get set }
 }
 
 protocol ILogRecordManager {

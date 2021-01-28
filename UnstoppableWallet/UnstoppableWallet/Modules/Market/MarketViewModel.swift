@@ -6,13 +6,11 @@ import RxCocoa
 class MarketViewModel {
     private let disposeBag = DisposeBag()
 
-    public let service: MarketService
     public let categoriesService: MarketCategoriesService
 
     private let updateCategoryRelay = PublishRelay<()>()
 
-    init(service: MarketService, categoriesService: MarketCategoriesService) {
-        self.service = service
+    init(categoriesService: MarketCategoriesService) {
         self.categoriesService = categoriesService
 
         subscribe(disposeBag, categoriesService.currentCategoryChangedObservable) { [weak self] in self?.updateCategory() }
@@ -31,7 +29,15 @@ extension MarketViewModel {
     }
 
     var currentCategoryIndex: Int {
-        categoriesService.currentCategory.rawValue
+        get {
+            categoriesService.currentCategory.rawValue
+        }
+        set {
+            guard let category = MarketModule.Category(rawValue: newValue) else {
+                return
+            }
+            categoriesService.currentCategory = category
+        }
     }
 
 }

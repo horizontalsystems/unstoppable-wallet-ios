@@ -13,6 +13,7 @@ class MarketViewController: ThemeViewController {
 
     private let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
     private var viewControllers = [UIViewController]()
+    private let discoveryViewController: MarketDiscoveryViewController
 
     private let categoriesHeaderView: MarketCategoriesView
     private let syncSpinner = HUDProgressView(
@@ -27,27 +28,28 @@ class MarketViewController: ThemeViewController {
 
         categoriesHeaderView = MarketCategoriesModule.view(service: viewModel.categoriesService)
 
+        let overviewController = MarketOverviewModule.viewController()
+        discoveryViewController = MarketDiscoveryModule.viewController()
+        let watchlistViewController = MarketWatchlistModule.viewController()
+
         super.init()
 
         title = "market.title".localized
         tabBarItem = UITabBarItem(title: "market.tab_bar_item".localized, image: UIImage(named: "market_2_24"), tag: 0)
 
-        let marketOverviewController = MarketOverviewModule.view()
-        marketOverviewController.pushController = { [weak self] in
+        let pushAction: ((UIViewController) -> ()) = { [weak self] in
             self?.navigationController?.pushViewController($0, animated: true)
         }
 
-        let marketDiscoveryViewController = MarketDiscoveryModule.view()
-        marketDiscoveryViewController.pushController = { [weak self] in
-            self?.navigationController?.pushViewController($0, animated: true)
+        overviewController.seeAll = { [weak self] type in
+            self?.showDiscovery(type: type)
         }
 
-        let marketWatchlistViewController = MarketWatchlistModule.view()
-        marketWatchlistViewController.pushController = { [weak self] in
-            self?.navigationController?.pushViewController($0, animated: true)
-        }
+        overviewController.pushController = pushAction
+        discoveryViewController.pushController = pushAction
+        watchlistViewController.pushController = pushAction
 
-        viewControllers = [marketOverviewController, marketDiscoveryViewController, marketWatchlistViewController]
+        viewControllers = [overviewController, discoveryViewController, watchlistViewController]
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -82,6 +84,11 @@ class MarketViewController: ThemeViewController {
 
     private func syncPageViewController() {
         pageViewController.setViewControllers([viewControllers[viewModel.currentCategoryIndex]], direction: .forward, animated: false)
+    }
+
+    private func showDiscovery(type: MarketOverviewViewModel.SectionType) {
+        discoveryViewController.setPreferences(for: type)
+        viewModel.currentCategoryIndex = MarketModule.Category.discovery.rawValue
     }
 
 }

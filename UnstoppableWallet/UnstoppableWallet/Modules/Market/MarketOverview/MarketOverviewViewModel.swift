@@ -36,23 +36,6 @@ class MarketOverviewViewModel {
         }
     }
 
-    private func sort(items: [MarketListService.Item], by sortingField: MarketListDataSource.SortingField) -> [MarketListService.Item] {
-        items.sorted { item, item2 in
-            switch sortingField {
-            case .highestLiquidity: return (item.liquidity ?? 0) > (item2.liquidity ?? 0)
-            case .lowestLiquidity: return (item.liquidity ?? 0) < (item2.liquidity ?? 0)
-            case .highestCap: return item.marketCap > item2.marketCap
-            case .lowestCap: return item.marketCap < item2.marketCap
-            case .highestVolume: return item.volume > item2.volume
-            case .lowestVolume: return item.volume < item2.volume
-            case .highestPrice: return item.price > item2.price
-            case .lowestPrice: return item.price < item2.price
-            case .topGainers: return item.diff > item2.diff
-            case .topLoosers: return item.diff < item2.diff
-            }
-        }
-    }
-
     private func sectionItems(by sectionType: SectionType, count: Int = 3) -> Section {
         let sortingField: MarketListDataSource.SortingField
         switch sectionType {
@@ -61,24 +44,24 @@ class MarketOverviewViewModel {
         case .topVolume: sortingField = .highestVolume
         }
 
-        let viewItems: [MarketModule.MarketViewItem] = Array(sort(items: service.items, by: sortingField).map {
-            let rateValue = CurrencyValue(currency: service.currency, value: $0.price)
+        let viewItems: [MarketModule.MarketViewItem] = Array(service.items.sort(by: sortingField).map { items in
+            let rateValue = CurrencyValue(currency: service.currency, value: items.price)
 
             let marketDataValue: MarketModule.MarketDataValue
             switch sectionType {
             case .topVolume:
-                marketDataValue = .volume(CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0.volume) ?? "n/a".localized)
+                marketDataValue = .volume(CurrencyCompactFormatter.instance.format(currency: service.currency, value: items.volume) ?? "n/a".localized)
             default:
-                marketDataValue = .diff($0.diff)
+                marketDataValue = .diff(items.diff)
             }
 
             let rate = ValueFormatter.instance.format(currencyValue: rateValue) ?? "n/a".localized
 
             return MarketModule.MarketViewItem(
-                    rank: .index($0.rank.description),
-                    coinName: $0.coinName,
-                    coinCode: $0.coinCode,
-                    coinType: $0.coinType,
+                    rank: .index(items.rank.description),
+                    coinName: items.coinName,
+                    coinCode: items.coinCode,
+                    coinType: items.coinType,
                     rate: rate,
                     marketDataValue: marketDataValue
             )

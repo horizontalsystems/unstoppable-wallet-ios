@@ -39,7 +39,7 @@ extension MarketCategoriesViewModel {
 
 }
 
-extension MarketCategoriesService.Category {
+extension MarketModule.Category {
 
     var title: String {
         switch self {

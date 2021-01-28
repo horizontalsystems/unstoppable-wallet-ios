@@ -62,4 +62,8 @@ extension MarketListHeaderView {
         fieldSelectionButton.set(title: title)
     }
 
+    public func setMarketField(field: MarketModule.MarketField) {
+        marketFieldModeView.setSelected(field: field)
+    }
+
 }

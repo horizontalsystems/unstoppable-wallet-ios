@@ -21,7 +21,6 @@ class LocalStorage {
     private let keyPushToken = "push_token"
     private let keyPushNotificationsOn = "push_notifications_on"
     private let keyDefaultMarketCategory = "default_market_category"
-    private let keyMarketFavoriteCoins = "market_favorite_coins"
 
     private let storage: StorageKit.ILocalStorage
 
@@ -138,14 +137,9 @@ extension LocalStorage: ILocalStorage {
         set { storage.set(value: newValue, for: keyPushNotificationsOn) }
     }
 
-    var defaultMarketCategory: Int? {
+    var marketCategory: Int? {
         get { storage.value(for: keyDefaultMarketCategory) }
         set { storage.set(value: newValue, for: keyDefaultMarketCategory) }
-    }
-
-    var marketFavoriteCoins: [String] {
-        get { storage.value(for: keyMarketFavoriteCoins) ?? [] }
-        set { storage.set(value: newValue, for: keyMarketFavoriteCoins) }
     }
 
 }
