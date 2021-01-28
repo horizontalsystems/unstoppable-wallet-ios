@@ -520,8 +520,8 @@
 
 "settings.about_app.title" = "Информация о приложении";
 "settings.about_app.app_name" = "Unstoppable Кошелек";
-"settings.about_app.site" = "Веб-сайт";
-"settings.about_app.contact" = "Kонтакты";
+"settings.about_app.website" = "Website";
+"settings.about_app.email" = "Email";
 "settings.about_app.rate_us" = "Оцените наше приложение";
 "settings.about_app.tell_friends" = "Рассказать Друзьям";
 "settings.about_app.email_copied" = "Адрес электронной почты скопирован";
