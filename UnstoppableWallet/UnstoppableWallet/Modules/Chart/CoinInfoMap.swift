@@ -195,6 +195,18 @@ class CoinInfoMap {
         "DEFO":     CoinInfo(supply: nil,             startDate: nil,          website: "https://defhold.com"),
         "API3":     CoinInfo(supply: nil,             startDate: nil,          website: "https://api3.org"),
         "NEST":     CoinInfo(supply: nil,             startDate: nil,          website: "https://nestprotocol.org"),
+        "ORAI":     CoinInfo(supply: 23_037_721,      startDate: nil,          website: "https://orai.io"),
+        "FLUX":     CoinInfo(supply: 259_186,         startDate: nil,          website: "https://datamine.network"),
+        "PLOT":     CoinInfo(supply: 200_000_000,     startDate: nil,          website: "https://plotx.io"),
+        "OCTO":     CoinInfo(supply: 800_000,         startDate: nil,          website: "https://octo.fi"),
+        "PICKLE":   CoinInfo(supply: 1_289_763,       startDate: nil,          website: "https://pickle.finance"),
+        "YAX":      CoinInfo(supply: 305_540,         startDate: nil,          website: "https://yaxis.io"),
+        "ALPHA":    CoinInfo(supply: 1_000_000,       startDate: nil,          website: "https://alphafinance.io"),
+        "YAX":      CoinInfo(supply: 305_540,         startDate: nil,          website: "https://yaxis.io"),
+        "SWRV":      CoinInfo(supply: 33_000_000,     startDate: nil,          website: "https://swerve.fi"),
+        "LON":      CoinInfo(supply:  200_000_000,     startDate: nil,         website: "https://tokenlon.im/lon"),
+        "PERP":      CoinInfo(supply: 150_000_000,     startDate: nil,         website: "https://perp.fi"),
+        "MCB":      CoinInfo(supply: 150_000_000,     startDate: nil,           website: "https://mcdex.io"),
     ]
 
 
