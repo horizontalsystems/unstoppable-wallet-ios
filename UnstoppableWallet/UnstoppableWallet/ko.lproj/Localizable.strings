@@ -183,11 +183,11 @@
 "send.hodler_error.unsupported_address" = "P2PKH (1으로 시작하는) 주소만 시간 잠금이 가능합니다.";
 "send.fee_info.title" = "Transaction Speed";
 "send.fee_info.description" = "Both Bitcoin and Ethereum blockchains require users to pay usage fees while sending transactions on the blockchain.\n\nUnstoppable uses public fee estimate services to help user determine appropriate transaction fees for the moment. The fees are higher when there are a lot of transactions taking place and lower when the blockchain is less busy.";
-"send.fee_info.header_slow" = "Slow";
+"send.fee_info.header_slow" = "느리게";
 "send.fee_info.content_slow" = "Selecting a value from this range may result in transaction being pending for hours or being rejected entirely. The lower the value the longer it will take for the transaction to confirm.";
 "send.fee_info.header_average" = "Average";
 "send.fee_info.content_average" = "Typically, this fee range should be sufficient for transaction to be processed within minutes/hour for Bitcoin and within minutes for Ethereum.";
-"send.fee_info.header_fast" = "Fast";
+"send.fee_info.header_fast" = "빠르게";
 "send.fee_info.content_fast" = "For transactions where priority is important we recommend using high fee setting. It's expected that selecting high fee setting will be sufficient for transaction to be completed within 10 minutes for Bitcoin and within a few minutes for Ethereum.";
 "send.fee_info.content_conclusion" = "The Unstoppable wallet makes an educated guess based on the network activity and can't not guarantee that the suggested fee values will always result in expected behavior.";
 
@@ -312,10 +312,10 @@
 "market.top.market_cap.title" = "MCap";
 
 "market.market_field.mcap" = "MCap";
-"market.market_field.vol" = "Vol";
-"market.market_field.price" = "Price";
+"market.market_field.vol" = "음량";
+"market.market_field.price" = "금액";
 
-"market.sort_by" = "Sort By";
+"market.sort_by" = "정렬 기준";
 "market.changes" = "Changes";
 
 "market.top.highest_liquidity" = "Highest Liquidity";
@@ -518,8 +518,8 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 "settings.about_app.title" = "앱 정보";
 "settings.about_app.app_name" = "Unstoppable Wallet";
-"settings.about_app.site" = "사이트";
-"settings.about_app.contact" = "연락처";
+"settings.about_app.website" = "Website";
+"settings.about_app.email" = "Email";
 "settings.about_app.rate_us" = "앱 평가";
 "settings.about_app.tell_friends" = "친구에게 추천하기";
 "settings.about_app.email_copied" = "이메일 주소 복사됨";
