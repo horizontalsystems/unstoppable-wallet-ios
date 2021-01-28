@@ -337,6 +337,31 @@
 "market.top.period_one_month" = "1 month";
 "market.top.period_one_year" = "1 year";
 
+"market_discovery.filter_rated" = "Rated";
+"market_discovery.filter_blockchains" = "Blockchains";
+"market_discovery.filter_privacy" = "Privacy";
+"market_discovery.filter_scaling" = "Scaling";
+"market_discovery.filter_infrastructure" = "Infrastructure";
+"market_discovery.filter_risk_management" = "RiskManagement";
+"market_discovery.filter_oracles" = "oracles";
+"market_discovery.filter_prediction_markets" = "Prediction Markets";
+"market_discovery.filter_yield_aggregators" = "Yield Aggregators";
+"market_discovery.filter_dexEs" = "DEXes";
+"market_discovery.filter_synthetics" = "Synthetics";
+"market_discovery.filter_metals" = "Metals";
+"market_discovery.filter_lending" = "Lending";
+"market_discovery.filter_gaming_and_vr" = "Gaming and VR";
+"market_discovery.filter_fundraising" = "Fundraising";
+"market_discovery.filter_internet_of_things" = "Internet Of Things";
+"market_discovery.filter_b2b" = "B2B";
+"market_discovery.filter_nft" = "NFT";
+"market_discovery.filter_wallets" = "Wallets";
+"market_discovery.filter_staking" = "Staking";
+"market_discovery.filter_fiat_stable_coins" = "Fiat Stable Coins";
+"market_discovery.filter_tokenized_bitcoin" = "Tokenized Bitcoin";
+"market_discovery.filter_algo_stable_coins" = "Algo Stable Coins";
+"market_discovery.filter_exchange_tokens" = "Exchange Tokens";
+
 // Transactions
 
 "transactions.title" = "Hesap işlemleri";
