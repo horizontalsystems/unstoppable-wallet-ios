@@ -64,7 +64,7 @@ extension MarketWatchlistDataSource: IMarketListDataSource {
     }
 
     public func itemsSingle(currencyCode: String) -> Single<[CoinMarket]> {
-        rateManager.watchlistSingle(currencyCode: currencyCode, coins: favoritesManager.all)
+        rateManager.coinsMarketSingle(currencyCode: currencyCode, coinCodes: favoritesManager.all.map { $0.coinCode })
     }
 
 }

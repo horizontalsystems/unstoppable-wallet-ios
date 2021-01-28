@@ -6,37 +6,37 @@ import RxCocoa
 class MarketViewModel {
     private let disposeBag = DisposeBag()
 
-    public let categoriesService: MarketCategoriesService
+    public let tabsService: MarketTabsService
 
-    private let updateCategoryRelay = PublishRelay<()>()
+    private let updateTabRelay = PublishRelay<()>()
 
-    init(categoriesService: MarketCategoriesService) {
-        self.categoriesService = categoriesService
+    init(tabsService: MarketTabsService) {
+        self.tabsService = tabsService
 
-        subscribe(disposeBag, categoriesService.currentCategoryChangedObservable) { [weak self] in self?.updateCategory() }
+        subscribe(disposeBag, tabsService.currentTabChangedObservable) { [weak self] in self?.updateTab() }
     }
 
-    private func updateCategory() {
-        updateCategoryRelay.accept(())
+    private func updateTab() {
+        updateTabRelay.accept(())
     }
 
 }
 
 extension MarketViewModel {
 
-    var updateCategorySignal: Signal<()> {
-        updateCategoryRelay.asSignal()
+    var updateTabSignal: Signal<()> {
+        updateTabRelay.asSignal()
     }
 
-    var currentCategoryIndex: Int {
+    var currentTabIndex: Int {
         get {
-            categoriesService.currentCategory.rawValue
+            tabsService.currentTab.rawValue
         }
         set {
-            guard let category = MarketModule.Category(rawValue: newValue) else {
+            guard let category = MarketModule.Tab(rawValue: newValue) else {
                 return
             }
-            categoriesService.currentCategory = category
+            tabsService.currentTab = category
         }
     }
 

@@ -112,9 +112,9 @@ extension RateManager: IRateManager {
         kit.topMarketsSingle(currencyCode: currencyCode, fetchDiffPeriod: .hour24)
     }
 
-    func watchlistSingle(currencyCode: String, coins: [FavoriteCoinRecord]) -> Single<[CoinMarket]> {
-        let coins: [XRatesKit.Coin] = coins.map {
-            XRatesKit.Coin(code: $0.coinCode, title: "")
+    func coinsMarketSingle(currencyCode: String, coinCodes: [String]) -> Single<[CoinMarket]> {
+        let coins: [XRatesKit.Coin] = coinCodes.map {
+            XRatesKit.Coin(code: $0, title: "")
         }
         return kit.favorites(currencyCode: currencyCode, coins: coins)
     }

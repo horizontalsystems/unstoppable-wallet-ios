@@ -6,7 +6,7 @@ import RxCocoa
 class MarketDiscoveryViewModel {
     private let disposeBag = DisposeBag()
 
-    public let service: MarketListService
+    public let service: MarketDiscoveryService
 
     private let viewItemsRelay = BehaviorRelay<[MarketModule.MarketViewItem]>(value: [])
     private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
@@ -15,14 +15,14 @@ class MarketDiscoveryViewModel {
     private var sortingField: MarketListDataSource.SortingField
     private(set) var marketField: MarketModule.MarketField = .marketCap
 
-    init(service: MarketListService) {
+    init(service: MarketDiscoveryService) {
         self.service = service
 
-        sortingField = service.sortingFields[0]
+        sortingField = .highestCap
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
     }
 
-    private func sync(state: MarketListService.State) {
+    private func sync(state: MarketDiscoveryService.State) {
         if case .loaded = state {
             syncViewItems()
         }
@@ -87,7 +87,7 @@ extension MarketDiscoveryViewModel {
     }
 
     public var sortingFields: [String] {
-        service.sortingFields.map { $0.title }
+        []
     }
 
     public func refresh() {
@@ -95,7 +95,7 @@ extension MarketDiscoveryViewModel {
     }
 
     public func setSortingField(at index: Int) {
-        sortingField = service.sortingFields[index]
+//        sortingField = service.sortingFields[index]
 
         syncViewItems()
     }

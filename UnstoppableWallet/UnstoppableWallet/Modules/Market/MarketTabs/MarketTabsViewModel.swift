@@ -3,34 +3,34 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
-class MarketCategoriesViewModel {
+class MarketTabsViewModel {
     private let disposeBag = DisposeBag()
-    private let service: MarketCategoriesService
+    private let service: MarketTabsService
 
     private var updateIndexRelay = PublishRelay<()>()
 
-    init(service: MarketCategoriesService) {
+    init(service: MarketTabsService) {
         self.service = service
 
-        subscribe(disposeBag, service.currentCategoryChangedObservable) { [weak self] in self?.syncCurrentCategory() }
+        subscribe(disposeBag, service.currentTabChangedObservable) { [weak self] in self?.syncCurrentTab() }
     }
 
-    private func syncCurrentCategory() {
+    private func syncCurrentTab() {
         updateIndexRelay.accept(())
     }
 
 }
 
-extension MarketCategoriesViewModel {
-    public var currentIndex: Int { service.currentCategory.rawValue }
-    public var categories: [FilterHeaderView.ViewItem] { service.categories.map { FilterHeaderView.ViewItem.item(title: $0.title) } }
+extension MarketTabsViewModel {
+    public var currentIndex: Int { service.currentTab.rawValue }
+    public var tabs: [FilterHeaderView.ViewItem] { service.tabs.map { FilterHeaderView.ViewItem.item(title: $0.title) } }
 
     public func didSelect(index: Int) {
-        guard index < categories.count else {
+        guard index < tabs.count else {
             return
         }
 
-        service.currentCategory = service.categories[index]
+        service.currentTab = service.tabs[index]
     }
 
     public var updateIndexSignal: Signal<()> {
@@ -39,7 +39,7 @@ extension MarketCategoriesViewModel {
 
 }
 
-extension MarketModule.Category {
+extension MarketModule.Tab {
 
     var title: String {
         switch self {
