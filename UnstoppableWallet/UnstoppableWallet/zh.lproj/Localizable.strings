@@ -181,13 +181,13 @@
 "send.hodler_locktime_year" = "1 年";
 "send.hodler_locktime_off" = "关";
 "send.hodler_error.unsupported_address" = "时间锁定只能和P2PKH地址（以1开头）一起使用";
-"send.fee_info.title" = "Transaction Speed";
+"send.fee_info.title" = "交易速度";
 "send.fee_info.description" = "Both Bitcoin and Ethereum blockchains require users to pay usage fees while sending transactions on the blockchain.\n\nUnstoppable uses public fee estimate services to help user determine appropriate transaction fees for the moment. The fees are higher when there are a lot of transactions taking place and lower when the blockchain is less busy.";
-"send.fee_info.header_slow" = "Slow";
+"send.fee_info.header_slow" = "慢";
 "send.fee_info.content_slow" = "Selecting a value from this range may result in transaction being pending for hours or being rejected entirely. The lower the value the longer it will take for the transaction to confirm.";
 "send.fee_info.header_average" = "Average";
 "send.fee_info.content_average" = "Typically, this fee range should be sufficient for transaction to be processed within minutes/hour for Bitcoin and within minutes for Ethereum.";
-"send.fee_info.header_fast" = "Fast";
+"send.fee_info.header_fast" = "快";
 "send.fee_info.content_fast" = "For transactions where priority is important we recommend using high fee setting. It's expected that selecting high fee setting will be sufficient for transaction to be completed within 10 minutes for Bitcoin and within a few minutes for Ethereum.";
 "send.fee_info.content_conclusion" = "The Unstoppable wallet makes an educated guess based on the network activity and can't not guarantee that the suggested fee values will always result in expected behavior.";
 
@@ -466,9 +466,9 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "settings_privacy.sorting_title" = "输入/输出";
 "settings_privacy.sorting.section_header" = "区块链交易";
 "settings_privacy.sorting.section_footer" = "通过改变交易结构的方式使您的BTC、LTC、BCH交易更难被追踪。";
-"settings_privacy.connection.section_header" = "同步区块链";
+"settings_privacy.connection.section_header" = "Blockchain Sync";
 "settings_privacy.connection.section_footer" = "部分区块链未为手机应用提供以点对点运行的方法。与BTC、BCH、LTC、DASH 区块链的通信属于完全点对点。";
-"settings_privacy.sync.section_header" = "区块链恢复";
+"settings_privacy.sync.section_header" = "Blockchain Restore";
 "settings_privacy.sync.section_footer" = "通过交易为恢复钱包选择数据源。";
 
 "settings_privacy_info.title" = "隐私设置";
@@ -698,7 +698,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // FAQ
 
-"faq.title" = "常见问题";
+"faq.title" = "FAQ";
 
 // Status Info
 
