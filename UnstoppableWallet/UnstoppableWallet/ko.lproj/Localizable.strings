@@ -83,7 +83,7 @@
 "coin_settings.sync_mode.slow.description" = "1-24 시간";
 "coin_settings.sync_mode.description" = "API 출처 링크: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "New";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "신규";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "Older wallets (before Aug 2017)";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "Newer wallets";
 "sync_mode.from_blockchain" = "블록체인으로 부터";
