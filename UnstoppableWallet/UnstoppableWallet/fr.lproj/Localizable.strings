@@ -518,8 +518,8 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 "settings.about_app.title" = "À propos de l'application";
 "settings.about_app.app_name" = "Unstoppable Wallet";
-"settings.about_app.site" = "Site";
-"settings.about_app.contact" = "Contact";
+"settings.about_app.website" = "Website";
+"settings.about_app.email" = "Email";
 "settings.about_app.rate_us" = "Evaluez-nous";
 "settings.about_app.tell_friends" = "Partager avec ami";
 "settings.about_app.email_copied" = "Adresse email copiée";
