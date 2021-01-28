@@ -451,7 +451,6 @@
 		11B3573B9D3B1B6587567FAC /* PriceAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35394931A964455585870 /* PriceAlert.swift */; };
 		11B3573F90C5FC665821673F /* SwapAllowanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A22DBE53901A5C23627 /* SwapAllowanceCell.swift */; };
 		11B3574A7ED0152C3B8632A5 /* GuidesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352E6CB5B964E2A1521CC /* GuidesViewModel.swift */; };
-		11B3574E036AB78A70DE3A9B /* BottomSheetCheckmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C6D66CF7BCBF59E67D6 /* BottomSheetCheckmarkCell.swift */; };
 		11B35751F696373A51EE433E /* CoinType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35878592C2E37DA1EBE1E /* CoinType.swift */; };
 		11B35752E5A6B88E5B9AF5AB /* AddTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355E8892971578502EF33 /* AddTokenViewModel.swift */; };
 		11B35756DCD76F190AAD27A2 /* RestoreSelectPredefinedAccountTypeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C2263DE87DA0867FC51 /* RestoreSelectPredefinedAccountTypeViewModel.swift */; };
@@ -601,7 +600,6 @@
 		11B359775AFC78BEEE512003 /* NoAccountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FC7D295A34D8B2123AA /* NoAccountRouter.swift */; };
 		11B35977B3EF42365D513055 /* BalanceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DB3C4F3491CAAC2FC97 /* BalanceHeaderView.swift */; };
 		11B35983B0C3D4EFC115043A /* MarkdownImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3563ED22080EE222848A5 /* MarkdownImageCell.swift */; };
-		11B3598429881061A11FDF7B /* BottomSheetCheckmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C6D66CF7BCBF59E67D6 /* BottomSheetCheckmarkCell.swift */; };
 		11B35984E23887F685268605 /* SendFeePriorityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353B6477E2A7B6850F2A0 /* SendFeePriorityCell.swift */; };
 		11B35986EB197D5C17EA63B4 /* SendMemoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3580B3D1353962FB5AD45 /* SendMemoModule.swift */; };
 		11B3598788AE4487956D70F5 /* RateTopListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BEF3827409AA9333197 /* RateTopListPresenter.swift */; };
@@ -1042,7 +1040,6 @@
 		11B35FE7BFBD75F7E0A7F357 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3532F755C7B758D5AB2A2 /* AboutViewController.swift */; };
 		11B35FEB7788281AB6F42937 /* AccountStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E87C15A3AE82F471007 /* AccountStorage.swift */; };
 		11B35FED00C5102FF0947F4C /* RestoreSelectPredefinedAccountTypeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353191636E9509025B44B /* RestoreSelectPredefinedAccountTypeModule.swift */; };
-		11B35FF33569134AC4ED66DC /* BottomSheetCheckmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C6D66CF7BCBF59E67D6 /* BottomSheetCheckmarkCell.swift */; };
 		11B35FF65FCE441A69822E1C /* InputPrefixWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35743158763BD8E336770 /* InputPrefixWrapperView.swift */; };
 		11B35FF91ADA961994F2BB21 /* SendHodlerLockTimeIntervalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B7C60AD3D8E0D468A5F /* SendHodlerLockTimeIntervalViewController.swift */; };
 		11B35FFBA9F39F126BBAB811 /* SwapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35336F8BF8CFDDB7DFC19 /* SwapViewController.swift */; };
@@ -2516,7 +2513,6 @@
 		11B35C4FFB99D10A8F343E9C /* LanguageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
 		11B35C5381D15FAFC0E9C39B /* WalletConnectScanQrViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectScanQrViewModel.swift; sourceTree = "<group>"; };
 		11B35C5BC369F31A6B7C0C2C /* CreateWalletService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateWalletService.swift; sourceTree = "<group>"; };
-		11B35C6D66CF7BCBF59E67D6 /* BottomSheetCheckmarkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomSheetCheckmarkCell.swift; sourceTree = "<group>"; };
 		11B35C6E66B194744A1658C8 /* AddErc20TokenBlockchainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddErc20TokenBlockchainService.swift; sourceTree = "<group>"; };
 		11B35C7DCF9B7894F7600623 /* LaunchRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchRouter.swift; sourceTree = "<group>"; };
 		11B35C8856A137E92441AF19 /* IndexedInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndexedInputField.swift; sourceTree = "<group>"; };
@@ -3206,7 +3202,6 @@
 				11B35216E1F4300730E08C5D /* CheckboxCell.swift */,
 				11B35BF766EAC97E74CD620D /* AlertTitleCell.swift */,
 				11B35163E7C4454BBA9E2E9E /* AlertItemCell.swift */,
-				11B35C6D66CF7BCBF59E67D6 /* BottomSheetCheckmarkCell.swift */,
 				11B354E55E901615862E7CD4 /* ButtonCell.swift */,
 				11B355F6D50A7099E7455822 /* AdditionalDataCell.swift */,
 				11B35CEE91732D3F18290263 /* HighlightedDescriptionCell.swift */,
@@ -5910,7 +5905,6 @@
 				11B350E64363B2A198F13F76 /* AlertPresenter.swift in Sources */,
 				11B35B3B2C5483F4FDB39D63 /* AlertRouter.swift in Sources */,
 				11B35133B2ACB9BA9C9A5C4B /* SortTypeManager.swift in Sources */,
-				11B35FF33569134AC4ED66DC /* BottomSheetCheckmarkCell.swift in Sources */,
 				11B35A1A0F8687A583590CA5 /* PrivacySortModePresenter.swift in Sources */,
 				11B35CC261FA370180C22A9E /* PrivacySortModeViewController.swift in Sources */,
 				11B352D8DEAC018B9F5EC75D /* PrivacySortModeModule.swift in Sources */,
@@ -6668,7 +6662,6 @@
 				11B35383F24853BDDB27618A /* AlertPresenter.swift in Sources */,
 				11B35D835774B7F4E286BF32 /* AlertRouter.swift in Sources */,
 				11B35DC784A87FF72EB860C4 /* SortTypeManager.swift in Sources */,
-				11B3574E036AB78A70DE3A9B /* BottomSheetCheckmarkCell.swift in Sources */,
 				11B35D6C0E436839A68E22BA /* PrivacySortModePresenter.swift in Sources */,
 				11B35FE573990DCCB7EEE64F /* PrivacySortModeViewController.swift in Sources */,
 				11B357CF81EF5E24554E02C0 /* PrivacySortModeModule.swift in Sources */,
@@ -7387,7 +7380,6 @@
 				3A73FC78258B1AE500FE4D34 /* MarketViewModel.swift in Sources */,
 				11B35E81542268ACDC17502A /* AlertRouter.swift in Sources */,
 				11B3564B4013ACE373FFD199 /* SortTypeManager.swift in Sources */,
-				11B3598429881061A11FDF7B /* BottomSheetCheckmarkCell.swift in Sources */,
 				11B35299556E6EF88F241A25 /* PrivacySortModePresenter.swift in Sources */,
 				11B35652B7EE997B81F97445 /* PrivacySortModeViewController.swift in Sources */,
 				11B35039584062D21F9D1A7A /* PrivacySortModeModule.swift in Sources */,

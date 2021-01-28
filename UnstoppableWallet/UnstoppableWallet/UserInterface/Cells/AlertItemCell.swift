@@ -1,7 +1,7 @@
 import UIKit
 import ThemeKit
 
-class AlertItemCell: ThemeCell {
+class AlertItemCell: BaseSelectableThemeCell {
     private let label = UILabel()
 
     override init(style: CellStyle, reuseIdentifier: String?) {
@@ -22,8 +22,6 @@ class AlertItemCell: ThemeCell {
     }
 
     func bind(viewItem: AlertViewItem) {
-        super.bind()
-
         label.text = viewItem.text
         label.textColor = viewItem.selected ? .themeJacob : .themeOz
     }

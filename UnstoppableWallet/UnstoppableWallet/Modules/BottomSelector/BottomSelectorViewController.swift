@@ -55,7 +55,7 @@ class BottomSelectorViewController: ThemeActionSheetController {
             maker.top.equalTo(titleView.snp.bottom)
         }
 
-        tableView.registerCell(forClass: BottomSheetCheckmarkCell.self)
+        tableView.registerCell(forClass: F4Cell.self)
         tableView.sectionDataSource = self
 
         view.addSubview(doneButton)
@@ -98,18 +98,19 @@ extension BottomSelectorViewController: SectionsDataSource {
                     id: "main",
                     rows: config.viewItems.enumerated().map { index, viewItem in
                         let selected = index == currentIndex
+                        let isFirst = index == 0
+                        let isLast = index == config.viewItems.count - 1
 
-                        return Row<BottomSheetCheckmarkCell>(
+                        return Row<F4Cell>(
                                 id: "item_\(index)",
                                 hash: "\(selected)",
                                 height: .heightDoubleLineCell,
                                 autoDeselect: true,
                                 bind: { cell, _ in
-                                    cell.bind(
-                                            title: viewItem.title,
-                                            subtitle: viewItem.subtitle,
-                                            checkmarkVisible: selected
-                                    )
+                                    cell.set(backgroundStyle: .transparent, isFirst: isFirst, isLast: isLast)
+                                    cell.title = viewItem.title
+                                    cell.subtitle = viewItem.subtitle
+                                    cell.valueImage = selected ? UIImage(named: "check_1_20")?.tinted(with: .themeJacob) : nil
                                 },
                                 action: { [weak self] _ in
                                     self?.currentIndex = index

@@ -58,6 +58,7 @@ class AlertViewController: ThemeActionSheetController {
                 hash: "\(viewItem.selected)",
                 height: .heightSingleLineCell,
                 bind: { cell, _ in
+                    cell.set(backgroundStyle: .transparent)
                     cell.bind(viewItem: viewItem)
                 },
                 action: { [weak self] _ in
