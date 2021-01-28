@@ -519,8 +519,8 @@ poner en peligro la seguridad de mis fondos.";
 
 "settings.about_app.title" = "Sobre la aplicacion";
 "settings.about_app.app_name" = "Monedero Unstoppable";
-"settings.about_app.site" = "Sitio";
-"settings.about_app.contact" = "Contacto";
+"settings.about_app.website" = "Website";
+"settings.about_app.email" = "Email";
 "settings.about_app.rate_us" = "Califícanos";
 "settings.about_app.tell_friends" = "Recomendar a un amigo";
 "settings.about_app.email_copied" = "Dirección de correo electrónico copiada";
