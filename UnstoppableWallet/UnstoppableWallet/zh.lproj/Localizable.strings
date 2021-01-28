@@ -182,16 +182,16 @@
 "send.hodler_locktime_off" = "关";
 "send.hodler_error.unsupported_address" = "时间锁定只能和P2PKH地址（以1开头）一起使用";
 "send.fee_info.title" = "交易速度";
-"send.fee_info.description" = "Both Bitcoin and Ethereum blockchains require users to pay usage fees while sending transactions on the blockchain.\n\nUnstoppable uses public fee estimate services to help user determine appropriate transaction fees for the moment. The fees are higher when there are a lot of transactions taking place and lower when the blockchain is less busy.";
+"send.fee_info.description" = "比特币（Bitcoin）和 以太币（Etherum）区块链都要求用户在区块链上发送交易时支付使用费。\n\nUnstoppable使用公共费用估算服务来帮助用户确定当前合适的交易费用。 当大量交易正在进行时，费用较高，而当区块链不那么繁忙时，费用较低。";
 "send.fee_info.header_slow" = "慢";
-"send.fee_info.content_slow" = "Selecting a value from this range may result in transaction being pending for hours or being rejected entirely. The lower the value the longer it will take for the transaction to confirm.";
-"send.fee_info.header_average" = "Average";
-"send.fee_info.content_average" = "Typically, this fee range should be sufficient for transaction to be processed within minutes/hour for Bitcoin and within minutes for Ethereum.";
+"send.fee_info.content_slow" = "选择此范围中的值可能导致交易需等待数小时或被完全拒绝。值越低，确认交易的所需时间越长。";
+"send.fee_info.header_average" = "平均";
+"send.fee_info.content_average" = "通常，此费用范围应足以使比特币（Bitcoin）交易在数分钟/小时、以太币（Ethereum）在数分钟内得到处理。";
 "send.fee_info.header_fast" = "快";
-"send.fee_info.content_fast" = "For transactions where priority is important we recommend using high fee setting. It's expected that selecting high fee setting will be sufficient for transaction to be completed within 10 minutes for Bitcoin and within a few minutes for Ethereum.";
-"send.fee_info.content_conclusion" = "The Unstoppable wallet makes an educated guess based on the network activity and can't not guarantee that the suggested fee values will always result in expected behavior.";
+"send.fee_info.content_fast" = "对于优先级具有重要意义的交易，我们建议使用高费用设置。可以预期，选择高费用设置将足以使比特币（Bitcoin）交易在10分钟、以太币（Ethereum）交易在数分钟内完成。";
+"send.fee_info.content_conclusion" = "Unstoppable钱包以网络活动为基础作出有根据的猜测，但不能保证所建议费用值总能实现预期行为。";
 
-"send.confirmation.domain" = "Domain";
+"send.confirmation.domain" = "域名";
 "send.confirmation.address" = "地址";
 "send.confirmation.account" = "Account";
 "send.confirmation.memo_placeholder" = "Memo";
@@ -248,9 +248,9 @@
 "swap.advanced_settings.recipient_address" = "接收人地址";
 "swap.advanced_settings.error.lower_slippage" = "您的交易可能失败。";
 "swap.advanced_settings.error.higher_slippage" = "最大允许值是 %@%%.";
-"swap.advanced_settings.error.invalid_address" = "Invalid Address";
-"swap.advanced_settings.error.invalid_slippage" = "Invalid Slippage";
-"swap.advanced_settings.error.invalid_deadline" = "Invalid Deadline";
+"swap.advanced_settings.error.invalid_address" = "无效地址";
+"swap.advanced_settings.error.invalid_slippage" = "无效延误";
+"swap.advanced_settings.error.invalid_deadline" = "无效截止日期";
 
 "swap.fee" = "掉期交易费用";
 "swap.transactions_speed" = "交易速度";
@@ -293,45 +293,45 @@
 
 // Market
 
-"market.tab_bar_item" = "Market";
-"market.title" = "Market";
-"market.category.overview" = "All";
-"market.category.discovery" = "Discovery";
-"market.category.watchlist" = "Watchlist";
-"market.total_market_cap" = "Total\nMarket Cap";
-"market.24h_volume" = "24h Volume";
-"market.btc_dominance" = "BTC Dominance";
-"market.defi_cap" = "DeFi Cap";
-"market.defi_tvl" = "TVL in DeFi";
+"market.tab_bar_item" = "市场";
+"market.title" = "市场";
+"market.category.overview" = "全部";
+"market.category.discovery" = "发现";
+"market.category.watchlist" = "关注列表";
+"market.total_market_cap" = "总计\n市场价值";
+"market.24h_volume" = "24小时交易量";
+"market.btc_dominance" = "BTC主导";
+"market.defi_cap" = "DeFi市场价值";
+"market.defi_tvl" = "DeFi中的TVL";
 
-"market.top.section.header.see_all" = "See All";
-"market.top.section.header.top_gainers" = "Top Gainers";
-"market.top.section.header.top_loosers" = "Top Loosers";
-"market.top.section.header.top_volume" = "Top By Volume";
-"market.top.volume.title" = "Vol";
-"market.top.market_cap.title" = "MCap";
+"market.top.section.header.see_all" = "查看全部";
+"market.top.section.header.top_gainers" = "最高盈利";
+"market.top.section.header.top_loosers" = "最高受损";
+"market.top.section.header.top_volume" = "最高交易量";
+"market.top.volume.title" = "交易量";
+"market.top.market_cap.title" = "市场价值";
 
-"market.market_field.mcap" = "MCap";
-"market.market_field.vol" = "Vol";
-"market.market_field.price" = "Price";
+"market.market_field.mcap" = "市场价值";
+"market.market_field.vol" = "交易量";
+"market.market_field.price" = "价格";
 
-"market.sort_by" = "Sort By";
-"market.changes" = "Changes";
+"market.sort_by" = "排序方式";
+"market.changes" = "更改";
 
-"market.top.highest_liquidity" = "Highest Liquidity";
-"market.top.lowest_liquidity" = "Lowest Liquidity";
-"market.top.highest_cap" = "Highest Cap";
-"market.top.lowest_cap" = "Lowest Cap";
-"market.top.highest_volume" = "Highest Volume";
-"market.top.lowest_volume" = "Lowest Volume";
-"market.top.highest_price" = "Highest Price";
-"market.top.lowest_price" = "Lowest Price";
-"market.top.top_gainers" = "Top Gainers";
-"market.top.top_loosers" = "Top Loosers";
+"market.top.highest_liquidity" = "最高流动性";
+"market.top.lowest_liquidity" = "最低流动性";
+"market.top.highest_cap" = "最高市场价值";
+"market.top.lowest_cap" = "最低市场价值";
+"market.top.highest_volume" = "最高交易量";
+"market.top.lowest_volume" = "最低交易量";
+"market.top.highest_price" = "最高价格";
+"market.top.lowest_price" = "最低价格";
+"market.top.top_gainers" = "最高盈利";
+"market.top.top_loosers" = "最高受损";
 
-"market.top.period_1h" = "1 hour";
-"market.top.period_24h" = "24 hours";
-"market.top.period_day_start" = "Day Start";
+"market.top.period_1h" = "1 小时";
+"market.top.period_24h" = "24 小时";
+"market.top.period_day_start" = "一天开始于";
 "market.top.period_one_day" = "1 day";
 "market.top.period_one_week" = "1 week";
 "market.top.period_one_month" = "1 month";
