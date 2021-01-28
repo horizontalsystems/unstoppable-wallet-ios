@@ -13,7 +13,6 @@ class AboutViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private let headerCell = TermsHeaderCell()
-    private let buttonsCell = DoubleButtonCell()
     private let termsCell = A3Cell()
 
     init(viewModel: AboutViewModel) {
@@ -43,8 +42,6 @@ class AboutViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.sectionDataSource = self
 
-        tableView.registerCell(forClass: TermsHeaderCell.self)
-        tableView.registerCell(forClass: DoubleButtonCell.self)
         tableView.registerCell(forClass: A1Cell.self)
 
         headerCell.bind(
@@ -52,15 +49,6 @@ class AboutViewController: ThemeViewController {
                 title: "settings.about_app.app_name".localized,
                 subtitle: "version".localized(viewModel.appVersion)
         )
-
-        buttonsCell.leftTitle = "GitHub"
-        buttonsCell.rightTitle = "settings.about_app.site".localized
-        buttonsCell.onTapLeft = { [weak self] in
-            self?.viewModel.onTapGithubLink()
-        }
-        buttonsCell.onTapRight = { [weak self] in
-            self?.viewModel.onTapWebPageLink()
-        }
 
         termsCell.set(backgroundStyle: .lawrence)
         termsCell.titleImage = UIImage(named: "unordered_20")
@@ -108,38 +96,26 @@ extension AboutViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "main",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin32),
+                    id: "header",
+                    headerState: .margin(height: .margin8),
+                    footerState: .margin(height: .margin16),
                     rows: [
                         StaticRow(
                                 cell: headerCell,
                                 id: "header",
                                 height: TermsHeaderCell.height
-                        ),
-                        StaticRow(
-                                cell: buttonsCell,
-                                id: "buttons",
-                                height: buttonsCell.cellHeight
-                        ),
-                        Row<A1Cell>(
-                                id: "contact",
-                                height: .heightCell48,
-                                autoDeselect: true,
-                                bind: { cell, _ in
-                                    cell.set(backgroundStyle: .lawrence, isFirst: true)
-                                    cell.titleImage = UIImage(named: "at_20")
-                                    cell.title = "settings.about_app.contact".localized
-                                },
-                                action: { [weak self] _ in
-                                    self?.handleContact()
-                                }
-                        ),
+                        )
+                    ]
+            ),
+            Section(
+                    id: "main",
+                    footerState: .margin(height: .margin32),
+                    rows: [
                         Row<A1Cell>(
                                 id: "app-status",
                                 height: .heightCell48,
                                 bind: { cell, _ in
-                                    cell.set(backgroundStyle: .lawrence)
+                                    cell.set(backgroundStyle: .lawrence, isFirst: true)
                                     cell.titleImage = UIImage(named: "app_status_20")
                                     cell.title = "app_status.title".localized
                                 },
@@ -179,6 +155,51 @@ extension AboutViewController: SectionsDataSource {
                                 },
                                 action: { [weak self] _ in
                                     self?.openTellFriends()
+                                }
+                        )
+                    ]
+            ),
+            Section(
+                    id: "contact",
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        Row<A1Cell>(
+                                id: "website",
+                                height: .heightCell48,
+                                autoDeselect: true,
+                                bind: { cell, _ in
+                                    cell.set(backgroundStyle: .lawrence, isFirst: true)
+                                    cell.titleImage = UIImage(named: "globe_20")
+                                    cell.title = "settings.about_app.website".localized
+                                },
+                                action: { [weak self] _ in
+                                    self?.viewModel.onTapWebPageLink()
+                                }
+                        ),
+                        Row<A1Cell>(
+                                id: "github",
+                                height: .heightCell48,
+                                autoDeselect: true,
+                                bind: { cell, _ in
+                                    cell.set(backgroundStyle: .lawrence)
+                                    cell.titleImage = UIImage(named: "github_20")
+                                    cell.title = "GitHub"
+                                },
+                                action: { [weak self] _ in
+                                    self?.viewModel.onTapGithubLink()
+                                }
+                        ),
+                        Row<A1Cell>(
+                                id: "email",
+                                height: .heightCell48,
+                                autoDeselect: true,
+                                bind: { cell, _ in
+                                    cell.set(backgroundStyle: .lawrence, isLast: true)
+                                    cell.titleImage = UIImage(named: "at_20")
+                                    cell.title = "settings.about_app.email".localized
+                                },
+                                action: { [weak self] _ in
+                                    self?.handleContact()
                                 }
                         )
                     ]
