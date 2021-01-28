@@ -10,6 +10,8 @@ class MarketDiscoveryViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .plain)
     private let spinner = HUDActivityView.create(with: .large48)
 
+    private let filterHeaderView = MarketDiscoveryFilterHeaderView()
+
     private let viewModel: MarketDiscoveryViewModel
     private let sectionHeaderView = MarketListHeaderView()
 
@@ -57,6 +59,10 @@ class MarketDiscoveryViewController: ThemeViewController {
         }
         sectionHeaderView.onSelect = { [weak self] field in
             self?.viewModel.set(marketField: field)
+        }
+
+        filterHeaderView.onSelect = { filterIndex in
+            print("selected filter: \(MarketDiscoveryFilter.allCases[filterIndex])")
         }
 
         tableView.buildSections()
@@ -130,12 +136,19 @@ extension MarketDiscoveryViewController {
 extension MarketDiscoveryViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
+        let filterHeaderState: ViewState<MarketDiscoveryFilterHeaderView> = .static(view: filterHeaderView, height: MarketDiscoveryFilterHeaderView.headerHeight)
+
         sectionHeaderView.setSortingField(title: viewModel.sortingFieldTitle)
         let headerState: ViewState<MarketListHeaderView> = .static(view: sectionHeaderView, height: MarketListHeaderView.height)
 
-        return [Section(id: "tokens",
-                headerState: headerState,
-                rows: viewItems.enumerated().map { row(viewItem: $1, isLast: $0 == viewItems.count - 1) })]
+        return [
+            Section(id: "filter",
+                    headerState: filterHeaderState,
+                    rows: []),
+            Section(id: "tokens",
+                    headerState: headerState,
+                    rows: viewItems.enumerated().map { row(viewItem: $1, isLast: $0 == viewItems.count - 1) })
+        ]
     }
 
 }
