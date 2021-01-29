@@ -73,7 +73,7 @@ extension Erc20ContractInfoProvider {
                     title: tokenName,
                     code: tokenSymbol,
                     decimal: tokenDecimal,
-                    type: CoinType(erc20Address: address)
+                    type: .erc20(address: address)
             )
         }
 

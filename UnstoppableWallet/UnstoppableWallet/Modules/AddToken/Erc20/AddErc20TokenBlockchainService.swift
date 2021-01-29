@@ -23,7 +23,7 @@ extension AddErc20TokenBlockchainService: IAddTokenBlockchainService {
 
     func existingCoin(reference: String, coins: [Coin]) -> Coin? {
         coins.first { coin in
-            if case .erc20(let address, _, _, _) = coin.type, address.lowercased() == reference.lowercased() {
+            if case .erc20(let address) = coin.type, address.lowercased() == reference.lowercased() {
                 return true
             }
 
@@ -88,7 +88,7 @@ extension AddErc20TokenBlockchainService {
                     title: tokenName,
                     code: tokenSymbol,
                     decimal: tokenDecimal,
-                    type: CoinType(erc20Address: address)
+                    type: .erc20(address: address)
             )
         }
 

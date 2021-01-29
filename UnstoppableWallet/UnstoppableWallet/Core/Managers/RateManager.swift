@@ -76,7 +76,7 @@ extension RateManager: IRateManager {
         case .bitcoinCash: return .bitcoinCash
         case .dash: return .dash
         case .ethereum: return .ethereum
-        case .erc20(let address, _, _, _): return .erc20(address: address)
+        case .erc20(let address): return .erc20(address: address)
         case .binance: return .binance
         case .zcash: return .zcash
         }
@@ -89,7 +89,7 @@ extension RateManager: IRateManager {
         case .bitcoinCash: return .bitcoinCash
         case .dash: return .dash
         case .ethereum: return .ethereum
-        case .erc20(let address): return CoinType(erc20Address: address)
+        case .erc20(let address): return .erc20(address: address)
         case .binance: return .binance(symbol: "")
         case .zcash: return .zcash
         case .eos: return nil

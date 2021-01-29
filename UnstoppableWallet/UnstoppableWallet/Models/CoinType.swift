@@ -6,13 +6,9 @@ enum CoinType {
     case bitcoinCash
     case dash
     case ethereum
-    case erc20(address: String, fee: Decimal, minimumRequiredBalance: Decimal, minimumSpendableAmount: Decimal?)
+    case erc20(address: String)
     case binance(symbol: String)
     case zcash
-
-    init(erc20Address: String, fee: Decimal = 0, minimumRequiredBalance: Decimal = 0, minimumSpendableAmount: Decimal? = nil) {
-        self = .erc20(address: erc20Address, fee: fee, minimumRequiredBalance: minimumRequiredBalance, minimumSpendableAmount: minimumSpendableAmount)
-    }
 
     func canSupport(accountType: AccountType) -> Bool {
         switch self {
@@ -89,7 +85,7 @@ extension CoinType: Equatable {
         case (.bitcoinCash, .bitcoinCash): return true
         case (.dash, .dash): return true
         case (.ethereum, .ethereum): return true
-        case (.erc20(let lhsAddress, _, _, _), .erc20(let rhsAddress, _, _, _)):
+        case (.erc20(let lhsAddress), .erc20(let rhsAddress)):
             return lhsAddress.lowercased() == rhsAddress.lowercased()
         case (.binance(let lhsSymbol), .binance(let rhsSymbol)):
             return lhsSymbol == rhsSymbol
@@ -114,8 +110,8 @@ extension CoinType: Hashable {
             hasher.combine("dash")
         case .ethereum:
             hasher.combine("ethereum")
-        case .erc20(let address, let fee, let minimumRequiredBalance, let minimumSpendableAmount):
-            hasher.combine("erc20_\(address)_\(fee)_\(minimumRequiredBalance)_\(minimumSpendableAmount.map { "\($0)" } ?? "nil")")
+        case .erc20(let address):
+            hasher.combine("erc20_\(address)")
         case .binance(let symbol):
             hasher.combine("binance_\(symbol)")
         case .zcash:
@@ -130,7 +126,7 @@ extension CoinType: RawRepresentable {
 
     public init?(rawValue: RawValue) {
         if rawValue.hasPrefix("erc20"), let address = rawValue.split(separator: "|").last {
-            self = .erc20(address: String(address), fee: 0, minimumRequiredBalance: 0, minimumSpendableAmount: nil)
+            self = .erc20(address: String(address))
             return
         }
 
@@ -164,7 +160,7 @@ extension CoinType: RawRepresentable {
         case .bitcoinCash: return "bitcoinCash"
         case .dash: return "dash"
         case .ethereum: return "ethereum"
-        case .erc20(let address, _, _, _): return "erc20|\(address)"
+        case .erc20(let address): return "erc20|\(address)"
         case .binance(let symbol): return "binance|\(symbol)"
         case .zcash: return "zcash"
         }

@@ -35,9 +35,16 @@ class AdapterFactory: IAdapterFactory {
             if let ethereumKit = try? ethereumKitManager.ethereumKit(account: wallet.account) {
                 return EthereumAdapter(ethereumKit: ethereumKit)
             }
-        case let .erc20(address, fee, minimumRequiredBalance, minimumSpendableAmount):
+        case let .erc20(address):
             if let ethereumKit = try? ethereumKitManager.ethereumKit(account: wallet.account) {
-                return try? Erc20Adapter(ethereumKit: ethereumKit, contractAddress: address, decimal: wallet.coin.decimal, fee: fee, minimumRequiredBalance: minimumRequiredBalance, minimumSpendableAmount: minimumSpendableAmount)
+                let smartContractFee = appConfigProvider.smartContractFees[wallet.coin.type] ?? 0
+                let minimumBalance = appConfigProvider.minimumBalances[wallet.coin.type] ?? 0
+                let minimumSpendableAmount = appConfigProvider.minimumSpendableAmounts[wallet.coin.type]
+
+                return try? Erc20Adapter(
+                        ethereumKit: ethereumKit, contractAddress: address, decimal: wallet.coin.decimal,
+                        fee: smartContractFee, minimumRequiredBalance: minimumBalance, minimumSpendableAmount: minimumSpendableAmount
+                )
             }
         case let .binance(symbol):
             if let binanceKit = try? binanceKitManager.binanceKit(account: wallet.account) {
