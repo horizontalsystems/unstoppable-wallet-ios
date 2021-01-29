@@ -543,7 +543,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "settings.about_app.title" = "关于应用";
 "settings.about_app.app_name" = "Unstoppable钱包";
 "settings.about_app.website" = "Website";
-"settings.about_app.email" = "Email";
+"settings.about_app.contact" = "Contact";
 "settings.about_app.rate_us" = "评价我们";
 "settings.about_app.tell_friends" = "分享给好友";
 "settings.about_app.email_copied" = "电子邮件地址已复制";
