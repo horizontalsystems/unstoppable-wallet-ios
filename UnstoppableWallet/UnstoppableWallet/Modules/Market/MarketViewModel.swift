@@ -1,43 +1,44 @@
-import Foundation
 import RxSwift
 import RxRelay
 import RxCocoa
 
 class MarketViewModel {
+    private let service: MarketService
     private let disposeBag = DisposeBag()
 
-    public let tabsService: MarketTabsService
+    private let currentTabRelay: BehaviorRelay<MarketModule.Tab>
+    private let discoveryPreferenceRelay = PublishRelay<MarketModule.Preference>()
 
-    private let updateTabRelay = PublishRelay<()>()
+    init(service: MarketService) {
+        self.service = service
 
-    init(tabsService: MarketTabsService) {
-        self.tabsService = tabsService
-
-        subscribe(disposeBag, tabsService.currentTabChangedObservable) { [weak self] in self?.updateTab() }
-    }
-
-    private func updateTab() {
-        updateTabRelay.accept(())
+        currentTabRelay = BehaviorRelay<MarketModule.Tab>(value: service.currentTab ?? .overview)
     }
 
 }
 
 extension MarketViewModel {
 
-    var updateTabSignal: Signal<()> {
-        updateTabRelay.asSignal()
+    var currentTabDriver: Driver<MarketModule.Tab> {
+        currentTabRelay.asDriver()
     }
 
-    var currentTabIndex: Int {
-        get {
-            tabsService.currentTab.rawValue
-        }
-        set {
-            guard let category = MarketModule.Tab(rawValue: newValue) else {
-                return
-            }
-            tabsService.currentTab = category
-        }
+    var discoveryPreferenceSignal: Signal<MarketModule.Preference> {
+        discoveryPreferenceRelay.asSignal()
+    }
+
+    var tabs: [MarketModule.Tab] {
+        MarketModule.Tab.allCases
+    }
+
+    func onSelect(tab: MarketModule.Tab) {
+        service.currentTab = tab
+        currentTabRelay.accept(tab)
+    }
+
+    func handleTapSeeAll(sectionType: MarketModule.SectionType) {
+        discoveryPreferenceRelay.accept(sectionType.preference)
+        onSelect(tab: .discovery)
     }
 
 }

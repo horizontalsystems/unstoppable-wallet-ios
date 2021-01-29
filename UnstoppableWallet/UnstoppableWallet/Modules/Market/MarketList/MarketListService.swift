@@ -67,7 +67,7 @@ extension MarketListService {
         currencyKit.baseCurrency
     }
 
-    public var sortingFields: [MarketListDataSource.SortingField] {
+    public var sortingFields: [MarketModule.SortingField] {
         dataSource.sortingFields
     }
 

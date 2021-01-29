@@ -1,71 +1,44 @@
-import UIKit
-import SnapKit
 import ThemeKit
-import SectionsTableView
-import HUD
+import SnapKit
 import RxSwift
 import RxCocoa
 
 class MarketViewController: ThemeViewController {
+    private let viewModel: MarketViewModel
     private let disposeBag = DisposeBag()
 
-    private let viewModel: MarketViewModel
-
+    private let tabsView = FilterHeaderView()
     private let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
-    private var viewControllers = [UIViewController]()
-    private let discoveryViewController: MarketDiscoveryViewController
 
-    private let categoriesHeaderView: MarketTabsView
-    private let syncSpinner = HUDProgressView(
-            strokeLineWidth: 2,
-            radius: 9,
-            strokeColor: .themeGray,
-            duration: 2
-    )
+    private let overviewController: MarketOverviewViewController
+    private let discoveryViewController: MarketDiscoveryViewController
+    private let watchlistViewController: MarketWatchlistViewController
 
     init(viewModel: MarketViewModel) {
         self.viewModel = viewModel
 
-        categoriesHeaderView = MarketTabsModule.view(service: viewModel.tabsService)
-
-        let overviewController = MarketOverviewModule.viewController()
-        discoveryViewController = MarketDiscoveryModule.viewController()
-        let watchlistViewController = MarketWatchlistModule.viewController()
+        overviewController = MarketOverviewModule.viewController(marketViewModel: viewModel)
+        discoveryViewController = MarketDiscoveryModule.viewController(marketViewModel: viewModel)
+        watchlistViewController = MarketWatchlistModule.viewController()
 
         super.init()
 
-        title = "market.title".localized
         tabBarItem = UITabBarItem(title: "market.tab_bar_item".localized, image: UIImage(named: "market_2_24"), tag: 0)
-
-        let pushAction: ((UIViewController) -> ()) = { [weak self] in
-            self?.navigationController?.pushViewController($0, animated: true)
-        }
-
-        overviewController.seeAll = { [weak self] type in
-            self?.showDiscovery(type: type)
-        }
-
-        overviewController.pushController = pushAction
-        discoveryViewController.pushController = pushAction
-        watchlistViewController.pushController = pushAction
-
-        viewControllers = [overviewController, discoveryViewController, watchlistViewController]
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(UIView()) //prevent Large Title from Collapsing
 
-        view.addSubview(categoriesHeaderView)
-        categoriesHeaderView.snp.makeConstraints { maker in
+        view.addSubview(UIView()) // prevent Large Title from Collapsing
+
+        title = "market.title".localized
+
+        view.addSubview(tabsView)
+        tabsView.snp.makeConstraints { maker in
             maker.top.equalTo(view.safeAreaLayoutGuide)
             maker.leading.trailing.equalToSuperview()
             maker.height.equalTo(40)
@@ -73,22 +46,49 @@ class MarketViewController: ThemeViewController {
 
         view.addSubview(pageViewController.view)
         pageViewController.view.snp.makeConstraints { maker in
-            maker.top.equalTo(categoriesHeaderView.snp.bottom)
+            maker.top.equalTo(tabsView.snp.bottom)
             maker.leading.trailing.equalToSuperview()
             maker.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
 
-        syncPageViewController()
-        subscribe(disposeBag, viewModel.updateTabSignal) { [weak self] in self?.syncPageViewController() }
+        tabsView.reload(filters: viewModel.tabs.map {
+            FilterHeaderView.ViewItem.item(title: $0.title)
+        })
+
+        tabsView.onSelect = { [weak self] index in
+            self?.onSelectTab(index: index)
+        }
+
+        overviewController.parentNavigationController = navigationController
+        discoveryViewController.parentNavigationController = navigationController
+        watchlistViewController.parentNavigationController = navigationController
+
+        subscribe(disposeBag, viewModel.currentTabDriver) { [weak self] in self?.sync(currentTab: $0) }
     }
 
-    private func syncPageViewController() {
-        pageViewController.setViewControllers([viewControllers[viewModel.currentTabIndex]], direction: .forward, animated: false)
+    private func sync(currentTab: MarketModule.Tab) {
+        tabsView.select(index: currentTab.rawValue)
+        setViewPager(tab: currentTab)
     }
 
-    private func showDiscovery(type: MarketOverviewViewModel.SectionType) {
-        discoveryViewController.setPreferences(for: type)
-        viewModel.currentTabIndex = MarketModule.Tab.discovery.rawValue
+    private func onSelectTab(index: Int) {
+        guard let tab = MarketModule.Tab(rawValue: index) else {
+            return
+        }
+
+        viewModel.onSelect(tab: tab)
+    }
+
+    private func setViewPager(tab: MarketModule.Tab) {
+        pageViewController.setViewControllers([viewController(tab: tab)], direction: .forward, animated: false)
+    }
+
+    private func viewController(tab: MarketModule.Tab) -> UIViewController {
+        switch tab {
+        case .overview: return overviewController
+        case .discovery: return discoveryViewController
+        case .watchlist: return watchlistViewController
+        }
     }
 
 }

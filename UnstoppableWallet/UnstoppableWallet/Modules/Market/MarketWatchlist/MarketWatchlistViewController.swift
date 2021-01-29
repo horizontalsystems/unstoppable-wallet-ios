@@ -12,7 +12,7 @@ class MarketWatchlistViewController: ThemeViewController {
 
     private let viewModel: MarketWatchlistViewModel
 
-    var pushController: ((UIViewController) -> ())?
+    weak var parentNavigationController: UINavigationController?
 
     private var viewItems = [MarketModule.MarketViewItem]()
 
@@ -115,7 +115,7 @@ class MarketWatchlistViewController: ThemeViewController {
 
     private func onSelect(viewItem: MarketModule.MarketViewItem) {
         let viewController = ChartRouter.module(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinName, coinType: viewItem.coinType))
-        pushController?(viewController)
+        parentNavigationController?.pushViewController(viewController, animated: true)
     }
 
 }

@@ -12,7 +12,7 @@ class MarketWatchlistViewModel {
     private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
-    private var sortingField: MarketListDataSource.SortingField
+    private var sortingField: MarketModule.SortingField
     private(set) var marketField: MarketModule.MarketField = .marketCap
 
     init(service: MarketListService) {
@@ -40,7 +40,7 @@ class MarketWatchlistViewModel {
         }
     }
 
-    private func sort(items: [MarketListService.Item], by sortingField: MarketListDataSource.SortingField) -> [MarketListService.Item] {
+    private func sort(items: [MarketListService.Item], by sortingField: MarketModule.SortingField) -> [MarketListService.Item] {
         items.sorted { item, item2 in
             switch sortingField {
             case .highestLiquidity: return (item.liquidity ?? 0) > (item2.liquidity ?? 0)
@@ -52,7 +52,7 @@ class MarketWatchlistViewModel {
             case .highestPrice: return item.price > item2.price
             case .lowestPrice: return item.price < item2.price
             case .topGainers: return item.diff > item2.diff
-            case .topLoosers: return item.diff < item2.diff
+            case .topLosers: return item.diff < item2.diff
             }
         }
     }

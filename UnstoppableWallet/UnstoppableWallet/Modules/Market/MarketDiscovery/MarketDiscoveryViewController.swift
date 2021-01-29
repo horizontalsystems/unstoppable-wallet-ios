@@ -5,26 +5,28 @@ import SectionsTableView
 import HUD
 
 class MarketDiscoveryViewController: ThemeViewController {
+    private let marketViewModel: MarketViewModel
+    private let viewModel: MarketDiscoveryViewModel
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .plain)
     private let spinner = HUDActivityView.create(with: .large48)
 
     private let filterHeaderView = MarketDiscoveryFilterHeaderView()
-
-    private let viewModel: MarketDiscoveryViewModel
     private let sectionHeaderView = MarketListHeaderView()
 
-    var pushController: ((UIViewController) -> ())?
+    weak var parentNavigationController: UINavigationController?
 
     private var viewItems = [MarketModule.MarketViewItem]()
 
-    init(viewModel: MarketDiscoveryViewModel) {
+    init(marketViewModel: MarketViewModel, viewModel: MarketDiscoveryViewModel) {
+        self.marketViewModel = marketViewModel
         self.viewModel = viewModel
 
         super.init()
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
+        subscribe(disposeBag, marketViewModel.discoveryPreferenceSignal) { [weak self] in self?.handle(preference: $0) }
     }
 
     required init?(coder: NSCoder) {
@@ -119,15 +121,11 @@ class MarketDiscoveryViewController: ThemeViewController {
 
     private func onSelect(viewItem: MarketModule.MarketViewItem) {
         let viewController = ChartRouter.module(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinName, coinType: viewItem.coinType))
-        pushController?(viewController)
+        parentNavigationController?.pushViewController(viewController, animated: true)
     }
 
-}
-
-extension MarketDiscoveryViewController {
-
-    func setPreferences(for type: MarketOverviewViewModel.SectionType) {
-        viewModel.setPreferences(for: type)
+    private func handle(preference: MarketModule.Preference) {
+        viewModel.set(preference: preference)
         sectionHeaderView.setMarketField(field: viewModel.marketField)
     }
 

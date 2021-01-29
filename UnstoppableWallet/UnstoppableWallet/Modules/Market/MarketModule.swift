@@ -4,12 +4,9 @@ import ThemeKit
 struct MarketModule {
 
     static func viewController() -> UIViewController {
-        let categoriesService = MarketTabsService(localStorage: App.shared.localStorage)
-
-        let marketViewModel = MarketViewModel(tabsService: categoriesService)
-
-        let viewController = MarketViewController(viewModel: marketViewModel)
-        return viewController
+        let service = MarketService(localStorage: App.shared.localStorage)
+        let viewModel = MarketViewModel(service: service)
+        return MarketViewController(viewModel: viewModel)
     }
 
     static func bind(cell: GB14Cell, viewItem: MarketViewItem) {
@@ -50,10 +47,63 @@ struct MarketModule {
 
 extension MarketModule {
 
-    public enum Tab: Int, CaseIterable {
+    enum Tab: Int, CaseIterable {
         case overview
         case discovery
         case watchlist
+
+        var title: String {
+            switch self {
+            case .overview: return "market.category.overview".localized
+            case .discovery: return "market.category.discovery".localized
+            case .watchlist: return "market.category.watchlist".localized
+            }
+        }
+    }
+
+    enum SectionType: String {
+        case topGainers
+        case topLosers
+        case topVolume
+
+        var preference: Preference {
+            switch self {
+            case .topGainers:
+                return .init(sortingField: .topGainers, marketField: .price)
+            case .topLosers:
+                return .init(sortingField: .topLosers, marketField: .price)
+            case .topVolume:
+                return .init(sortingField: .highestVolume, marketField: .volume)
+            }
+        }
+    }
+
+    enum SortingField: Int, CaseIterable {
+        case highestCap
+        case lowestCap
+        case highestLiquidity
+        case lowestLiquidity
+        case highestVolume
+        case lowestVolume
+        case highestPrice
+        case lowestPrice
+        case topGainers
+        case topLosers
+
+        var title: String {
+            switch self {
+            case .highestLiquidity: return "market.top.highest_liquidity".localized
+            case .lowestLiquidity: return "market.top.lowest_liquidity".localized
+            case .highestCap: return "market.top.highest_cap".localized
+            case .lowestCap: return "market.top.lowest_cap".localized
+            case .highestVolume: return "market.top.highest_volume".localized
+            case .lowestVolume: return "market.top.lowest_volume".localized
+            case .highestPrice: return "market.top.highest_price".localized
+            case .lowestPrice: return "market.top.lowest_price".localized
+            case .topGainers: return "market.top.top_gainers".localized
+            case .topLosers: return "market.top.top_loosers".localized
+            }
+        }
     }
 
     enum MarketField: Int, CaseIterable {
@@ -68,6 +118,11 @@ extension MarketModule {
             case .price: return "market.market_field.price".localized
             }
         }
+    }
+
+    struct Preference {
+        let sortingField: SortingField
+        let marketField: MarketField
     }
 
     enum RankColor {

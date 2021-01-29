@@ -6,7 +6,7 @@ import RxCocoa
 class MarketOverviewViewModel {
     private let disposeBag = DisposeBag()
 
-    public let service: MarketListService
+    private let service: MarketListService
 
     private let viewItemsRelay = BehaviorRelay<[Section]>(value: [])
     private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
@@ -36,20 +36,15 @@ class MarketOverviewViewModel {
         }
     }
 
-    private func sectionItems(by sectionType: SectionType, count: Int = 3) -> Section {
-        let sortingField: MarketListDataSource.SortingField
-        switch sectionType {
-        case .topGainers: sortingField = .topGainers
-        case .topLoosers: sortingField = .topLoosers
-        case .topVolume: sortingField = .highestVolume
-        }
+    private func sectionItems(by sectionType: MarketModule.SectionType, count: Int = 3) -> Section {
+        let preference = sectionType.preference
 
-        let viewItems: [MarketModule.MarketViewItem] = Array(service.items.sort(by: sortingField).map { items in
+        let viewItems: [MarketModule.MarketViewItem] = Array(service.items.sort(by: preference.sortingField).map { items in
             let rateValue = CurrencyValue(currency: service.currency, value: items.price)
 
             let marketDataValue: MarketModule.MarketDataValue
-            switch sectionType {
-            case .topVolume:
+            switch preference.marketField {
+            case .volume:
                 marketDataValue = .volume(CurrencyCompactFormatter.instance.format(currency: service.currency, value: items.volume) ?? "n/a".localized)
             default:
                 marketDataValue = .diff(items.diff)
@@ -73,7 +68,7 @@ class MarketOverviewViewModel {
     private func syncViewItems() {
         let sections = [
             sectionItems(by: .topGainers),
-            sectionItems(by: .topLoosers),
+            sectionItems(by: .topLosers),
             sectionItems(by: .topVolume)
         ]
 
@@ -84,19 +79,19 @@ class MarketOverviewViewModel {
 
 extension MarketOverviewViewModel {
 
-    public var viewItemsDriver: Driver<[Section]> {
+    var viewItemsDriver: Driver<[Section]> {
         viewItemsRelay.asDriver()
     }
 
-    public var isLoadingDriver: Driver<Bool> {
+    var isLoadingDriver: Driver<Bool> {
         isLoadingRelay.asDriver()
     }
 
-    public var errorDriver: Driver<String?> {
+    var errorDriver: Driver<String?> {
         errorRelay.asDriver()
     }
 
-    public func refresh() {
+    func refresh() {
         service.refresh()
     }
 
@@ -104,15 +99,8 @@ extension MarketOverviewViewModel {
 
 extension MarketOverviewViewModel {
 
-    enum SectionType: String {
-        case topGainers
-        case topLoosers
-        case topVolume
-    }
-
-
     struct Section {
-        let type: SectionType
+        let type: MarketModule.SectionType
         let viewItems: [MarketModule.MarketViewItem]
     }
 
