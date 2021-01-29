@@ -30,10 +30,10 @@ class CategorizedCoin: ImmutableMappable {
 
     required public init(map: Map) throws {
         code = try map.value("code")
-        title = try map.value("name")
-        active = try map.value("active")
-        categories = try map.value("categories", using: StringArrayTransform())
-        rate = try map.value("rate")
+        title = (try? map.value("name")) ?? ""
+        active = (try? map.value("active")) ?? false
+        categories = (try? map.value("categories", using: StringArrayTransform())) ?? []
+        rate = (try? map.value("rating")) ?? ""
     }
 
 }

@@ -87,7 +87,7 @@ extension MarketDiscoveryViewModel {
     }
 
     public var sortingFields: [String] {
-        []
+        MarketListDataSource.SortingField.allCases.map { $0.title }
     }
 
     public func refresh() {
@@ -95,7 +95,7 @@ extension MarketDiscoveryViewModel {
     }
 
     public func setSortingField(at index: Int) {
-//        sortingField = service.sortingFields[index]
+        sortingField = MarketListDataSource.SortingField.allCases[index]
 
         syncViewItems()
     }
@@ -104,6 +104,15 @@ extension MarketDiscoveryViewModel {
         self.marketField = marketField
 
         syncViewItems()
+    }
+
+    public func setFilter(at index: Int?) {
+        guard let index = index, index < MarketDiscoveryFilter.allCases.count else {
+            service.currentCategory = nil
+            return
+        }
+
+        service.currentCategory = MarketDiscoveryFilter.allCases[index]
     }
 
     public func setPreferences(for type: MarketOverviewViewModel.SectionType) {

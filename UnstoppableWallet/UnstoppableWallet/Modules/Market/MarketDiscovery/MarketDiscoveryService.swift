@@ -12,7 +12,11 @@ class MarketDiscoveryService {
     private let rateManager: IRateManager
 
     private let categoriesProvider: MarketCategoriesProvider
-    private var currentCategory: String?
+    var currentCategory: MarketDiscoveryFilter? {
+        didSet {
+            fetch()
+        }
+    }
 
     private let stateRelay = BehaviorRelay<State>(value: .loading)
     var items = [MarketListService.Item]()
@@ -45,8 +49,8 @@ class MarketDiscoveryService {
         stateRelay.accept(.loading)
 
         let single: Single<[CoinMarket]>
-        if let category = currentCategory {
-            let coinCodes = categoriesProvider.coinCodes(for: category)
+        if let category = currentCategory, category != .rated { //todo: make rated case
+            let coinCodes = categoriesProvider.coinCodes(for: category.rawValue)
             single = rateManager.coinsMarketSingle(currencyCode: currencyKit.baseCurrency.code, coinCodes: coinCodes)
         } else {
             single = rateManager.topMarketsSingle(currencyCode: currencyKit.baseCurrency.code)

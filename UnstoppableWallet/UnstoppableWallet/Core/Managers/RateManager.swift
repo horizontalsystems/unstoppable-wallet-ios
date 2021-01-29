@@ -113,10 +113,7 @@ extension RateManager: IRateManager {
     }
 
     func coinsMarketSingle(currencyCode: String, coinCodes: [String]) -> Single<[CoinMarket]> {
-        let coins: [XRatesKit.Coin] = coinCodes.map {
-            XRatesKit.Coin(code: $0, title: "")
-        }
-        return kit.favorites(currencyCode: currencyCode, coins: coins)
+        kit.favorites(currencyCode: currencyCode, coinCodes: coinCodes)
     }
 
     func marketInfoObservable(coinCode: String, currencyCode: String) -> Observable<MarketInfo> {
