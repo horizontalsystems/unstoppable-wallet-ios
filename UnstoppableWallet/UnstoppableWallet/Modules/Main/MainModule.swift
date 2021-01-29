@@ -7,7 +7,7 @@ struct MainModule {
         case market, balance, transactions, settings
     }
 
-    static func instance(selectedTab: Tab = .balance) -> UIViewController {
+    static func instance(selectedTab: Tab = .market) -> UIViewController {
         let showService = MainShowService(localStorage: App.shared.localStorage)
         let badgeService = MainBadgeService(
                 backupManager: App.shared.backupManager,

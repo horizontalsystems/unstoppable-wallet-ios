@@ -4,19 +4,20 @@ import ThemeKit
 import SectionsTableView
 
 class MarketOverviewViewController: ThemeViewController {
-    private let disposeBag = DisposeBag()
+    private let marketViewModel: MarketViewModel
     private let viewModel: MarketOverviewViewModel
+    private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
 
     private let marketMetricsCell: MarketMetricsCell
 
-    var pushController: ((UIViewController) -> Void)?
-    var seeAll: ((MarketOverviewViewModel.SectionType) -> ())?
+    weak var parentNavigationController: UINavigationController?
 
     private var viewItems = [MarketOverviewViewModel.Section]()
 
-    init(viewModel: MarketOverviewViewModel) {
+    init(marketViewModel: MarketViewModel, viewModel: MarketOverviewViewModel) {
+        self.marketViewModel = marketViewModel
         self.viewModel = viewModel
 
         marketMetricsCell = MarketMetricsModule.cell()
@@ -58,7 +59,7 @@ class MarketOverviewViewController: ThemeViewController {
         tableView.reload()
     }
 
-    private func headerRow(type: MarketOverviewViewModel.SectionType) -> RowProtocol {
+    private func headerRow(type: MarketModule.SectionType) -> RowProtocol {
         Row<A2Cell>(
                 id: "section_header_\(type.rawValue)",
                 height: .heightSingleLineCell,
@@ -72,7 +73,7 @@ class MarketOverviewViewController: ThemeViewController {
                     case .topGainers:
                         cell.titleImage = UIImage(named: "circle_up_20")
                         cell.title = "market.top.section.header.top_gainers".localized
-                    case .topLoosers:
+                    case .topLosers:
                         cell.titleImage = UIImage(named: "circle_down_20")
                         cell.title = "market.top.section.header.top_loosers".localized
                     case .topVolume:
@@ -81,7 +82,7 @@ class MarketOverviewViewController: ThemeViewController {
                     }
                 },
                 action: { [weak self] _ in
-                    self?.didTapSeeAll(type: type)
+                    self?.didTapSeeAll(sectionType: type)
                 }
         )
     }
@@ -103,11 +104,11 @@ class MarketOverviewViewController: ThemeViewController {
 
     private func onSelect(viewItem: MarketModule.MarketViewItem) {
         let viewController = ChartRouter.module(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinName, coinType: viewItem.coinType))
-        pushController?(viewController)
+        parentNavigationController?.pushViewController(viewController, animated: true)
     }
 
-    private func didTapSeeAll(type: MarketOverviewViewModel.SectionType) {
-        seeAll?(type)
+    private func didTapSeeAll(sectionType: MarketModule.SectionType) {
+        marketViewModel.handleTapSeeAll(sectionType: sectionType)
     }
 
 }

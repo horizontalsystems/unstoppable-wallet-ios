@@ -17,7 +17,10 @@ func subscribe<T>(_ disposeBag: DisposeBag, _ signal: Signal<T>, _ onNext: ((T) 
 }
 
 func subscribe<T>(_ disposeBag: DisposeBag, _ observable: Observable<T>, _ onNext: ((T) -> Void)? = nil) {
-    observable.subscribe(onNext: onNext).disposed(by: disposeBag)
+    observable
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: onNext)
+            .disposed(by: disposeBag)
 }
 
 struct SwapModule {
