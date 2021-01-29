@@ -295,7 +295,7 @@
 
 "market.tab_bar_item" = "市场";
 "market.title" = "市场";
-"market.category.overview" = "全部";
+"market.category.overview" = "Overview";
 "market.category.discovery" = "发现";
 "market.category.watchlist" = "关注列表";
 "market.total_market_cap" = "总计\n市场价值";
