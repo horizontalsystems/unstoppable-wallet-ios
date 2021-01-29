@@ -297,7 +297,7 @@
 
 "market.tab_bar_item" = "Рынок";
 "market.title" = "Рынок";
-"market.category.overview" = "Все";
+"market.category.overview" = "Overview";
 "market.category.discovery" = "Находка";
 "market.category.watchlist" = "Список для отслеживания";
 "market.total_market_cap" = "Общая\nрыночная стоимость";
