@@ -61,8 +61,8 @@ class MarketDiscoveryViewController: ThemeViewController {
             self?.viewModel.set(marketField: field)
         }
 
-        filterHeaderView.onSelect = { filterIndex in
-            print("selected filter: \(MarketDiscoveryFilter.allCases[filterIndex])")
+        filterHeaderView.onSelect = { [weak self] filterIndex in
+            self?.viewModel.setFilter(at: filterIndex )
         }
 
         tableView.buildSections()

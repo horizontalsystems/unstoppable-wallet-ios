@@ -19,13 +19,14 @@ class MarketListHeaderView: UITableViewHeaderFooterView {
         backgroundView?.backgroundColor = .themeNavigationBarBackground
 
         let separatorView = UIView()
-        separatorView.backgroundColor = .themeSteel20
         contentView.addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.top.equalToSuperview()
             maker.height.equalTo(CGFloat.heightOnePixel)
         }
+
+        separatorView.backgroundColor = .themeSteel20
 
         contentView.addSubview(fieldSelectionButton)
         fieldSelectionButton.snp.makeConstraints { maker in

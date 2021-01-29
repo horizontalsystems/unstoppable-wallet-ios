@@ -64,7 +64,7 @@ class MarketOverviewViewController: ThemeViewController {
                 height: .heightSingleLineCell,
                 autoDeselect: true,
                 bind: { cell, _ in
-                    cell.set(backgroundStyle: .claude, isFirst: true)
+                    cell.set(backgroundStyle: .claude)
                     cell.value = "market.top.section.header.see_all".localized
                     cell.valueColor = .themeGray
 
@@ -126,14 +126,23 @@ extension MarketOverviewViewController: SectionsDataSource {
             )
         )
 
-        sections.append(contentsOf: viewItems.map { section in
-            Section(
-                id: section.type.rawValue,
-                footerState: .margin(height: CGFloat.margin12),
-                rows: section.viewItems.enumerated().map { (index, item) in
-                    row(viewItem: item, isFirst: index == 0, isLast: index == section.viewItems.count - 1)
-            })
-        })
+        viewItems.forEach { section in
+            sections.append(
+                Section(id: "header_\(section.type.rawValue)",
+                    footerState: .margin(height: CGFloat.margin12),
+                    rows: [
+                        headerRow(type: section.type)
+                ])
+            )
+            sections.append(
+                Section(
+                    id: section.type.rawValue,
+                    footerState: .margin(height: CGFloat.margin12),
+                    rows: section.viewItems.enumerated().map { (index, item) in
+                        row(viewItem: item, isFirst: index == 0, isLast: index == section.viewItems.count - 1)
+                })
+            )
+        }
 
         return sections
     }

@@ -1,34 +1,35 @@
-enum MarketDiscoveryFilter: CaseIterable {
-    case rated
-    case blockchains
-    case privacy
-    case scaling
-    case infrastructure
-    case riskManagement
-    case oracles
-    case predictionMarkets
-    case yieldAggregators
-    case dexEs
-    case synthetics
-    case metals
-    case lending
-    case gamingNVr
-    case fundraising
-    case internetOfThings
-    case b2b
-    case nft
-    case wallets
-    case staking
-    case fiatStableCoins
-    case tokenizedBitcoin
-    case algoStableCoins
-    case exchangeTokens
+enum MarketDiscoveryFilter: String, CaseIterable {
+    case rated = "rated"
+    case blockchains = "blockchain"
+    case privacy = "privacy"
+    case scaling = "scaling"
+    case infrastructure = "infrastructure"
+    case riskManagement = "risk_management_and_hedging"
+    case oracles = "oracles"
+    case predictionMarkets = "prediction_markets"
+    case defiAggregators = "defi_aggregators"
+    case dexEs = "dexes"
+    case synthetics = "synthetics"
+    case metals = "metals"
+    case lending = "lending"
+    case gamingNVr = "gaming_and_vr"
+    case fundraising = "fundraising"
+    case internetOfThings = "iot"
+    case b2b = "b2b"
+    case nft = "nft"
+    case wallets = "wallets"
+    case staking = "staking"
+    case fiatStableCoins = "fiat_stablecoins"
+    case tokenizedBitcoin = "tokenized_bitcoin"
+    case algoStableCoins = "algo_stablecoins"
 }
 
 extension MarketDiscoveryFilter {
+
     var icon: String {
         "aave"
     }
+
     var title: String {
         switch self {
         case .rated: return "market_discovery.filter_rated".localized
@@ -39,8 +40,8 @@ extension MarketDiscoveryFilter {
         case .riskManagement: return "market_discovery.filter_risk_management".localized
         case .oracles: return "market_discovery.filter_oracles".localized
         case .predictionMarkets: return "market_discovery.filter_prediction_markets".localized
-        case .yieldAggregators: return "market_discovery.filter_yield_aggregators".localized
-        case .dexEs: return "market_discovery.filter_dexEs".localized
+        case .defiAggregators: return "market_discovery.filter_defi_aggregators".localized
+        case .dexEs: return "market_discovery.filter_dexes".localized
         case .synthetics: return "market_discovery.filter_synthetics".localized
         case .metals: return "market_discovery.filter_metals".localized
         case .lending: return "market_discovery.filter_lending".localized
@@ -54,10 +55,11 @@ extension MarketDiscoveryFilter {
         case .fiatStableCoins: return "market_discovery.filter_fiat_stable_coins".localized
         case .tokenizedBitcoin: return "market_discovery.filter_tokenized_bitcoin".localized
         case .algoStableCoins: return "market_discovery.filter_algo_stable_coins".localized
-        case .exchangeTokens: return "market_discovery.filter_exchange_tokens".localized
         }
     }
+
     var description: String {
         "Ratings follow a specialized rating system to represent the quality and risk"
     }
+
 }

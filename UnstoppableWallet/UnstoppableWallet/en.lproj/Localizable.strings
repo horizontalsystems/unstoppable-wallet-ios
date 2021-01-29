@@ -347,11 +347,11 @@ bch.horizontalsystems.xyz/apg";
 "market_discovery.filter_privacy" = "Privacy";
 "market_discovery.filter_scaling" = "Scaling";
 "market_discovery.filter_infrastructure" = "Infrastructure";
-"market_discovery.filter_risk_management" = "RiskManagement";
+"market_discovery.filter_risk_management" = "Risk Management";
 "market_discovery.filter_oracles" = "oracles";
 "market_discovery.filter_prediction_markets" = "Prediction Markets";
-"market_discovery.filter_yield_aggregators" = "Yield Aggregators";
-"market_discovery.filter_dexEs" = "DEXes";
+"market_discovery.filter_defi_aggregators" = "Yield Aggregators";
+"market_discovery.filter_dexes" = "DEXes";
 "market_discovery.filter_synthetics" = "Synthetics";
 "market_discovery.filter_metals" = "Metals";
 "market_discovery.filter_lending" = "Lending";
@@ -365,7 +365,6 @@ bch.horizontalsystems.xyz/apg";
 "market_discovery.filter_fiat_stable_coins" = "Fiat Stable Coins";
 "market_discovery.filter_tokenized_bitcoin" = "Tokenized Bitcoin";
 "market_discovery.filter_algo_stable_coins" = "Algo Stable Coins";
-"market_discovery.filter_exchange_tokens" = "Exchange Tokens";
 
 // Transactions
 
