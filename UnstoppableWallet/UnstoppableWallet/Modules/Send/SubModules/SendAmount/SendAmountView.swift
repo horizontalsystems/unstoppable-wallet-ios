@@ -10,8 +10,8 @@ class SendAmountView: UIView {
 
     private var disposeBag = DisposeBag()
 
-    private let availableBalanceTitleLabel = UILabel()
-    private let availableBalanceValueLabel = UILabel()
+    private let availableAmountTitleLabel = UILabel()
+    private let availableAmountValueLabel = UILabel()
     private let spinner = HUDActivityView.create(with: .small20)
 
     private let amountInput = AmountInputView()
@@ -33,27 +33,27 @@ class SendAmountView: UIView {
 
         backgroundColor = .clear
 
-        addSubview(availableBalanceTitleLabel)
-        availableBalanceTitleLabel.text = "send.available_balance".localized
-        availableBalanceTitleLabel.font = .subhead2
-        availableBalanceTitleLabel.textColor = .themeGray
-        availableBalanceTitleLabel.snp.makeConstraints { maker in
+        addSubview(availableAmountTitleLabel)
+        availableAmountTitleLabel.text = "send.available_balance".localized
+        availableAmountTitleLabel.font = .subhead2
+        availableAmountTitleLabel.textColor = .themeGray
+        availableAmountTitleLabel.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(CGFloat.margin2x)
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
         }
 
-        addSubview(availableBalanceValueLabel)
-        availableBalanceValueLabel.font = .subhead1
+        addSubview(availableAmountValueLabel)
+        availableAmountValueLabel.font = .subhead1
 
-        availableBalanceValueLabel.textColor = .themeOz
-        availableBalanceValueLabel.snp.makeConstraints { maker in
-            maker.centerY.equalTo(availableBalanceTitleLabel.snp.centerY)
+        availableAmountValueLabel.textColor = .themeOz
+        availableAmountValueLabel.snp.makeConstraints { maker in
+            maker.centerY.equalTo(availableAmountTitleLabel.snp.centerY)
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
         addSubview(spinner)
         spinner.snp.makeConstraints { maker in
-            maker.centerY.equalTo(availableBalanceTitleLabel.snp.centerY)
+            maker.centerY.equalTo(availableAmountTitleLabel.snp.centerY)
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
         spinner.isHidden = true
@@ -61,7 +61,7 @@ class SendAmountView: UIView {
         addSubview(amountInputWrapper)
         amountInputWrapper.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(availableBalanceTitleLabel.snp.bottom).offset(CGFloat.margin3x)
+            maker.top.equalTo(availableAmountTitleLabel.snp.bottom).offset(CGFloat.margin3x)
             maker.height.equalTo(amountInput.viewHeight)
         }
 
@@ -143,22 +143,22 @@ extension SendAmountView: ISendAmountView {
     }
 
     func set(loading: Bool) {
-        availableBalanceValueLabel.isHidden = loading
+        availableAmountValueLabel.isHidden = loading
         spinner.isHidden = !loading
         spinner.startAnimating()
     }
 
-    func set(availableBalance: AmountInfo?) {
-        guard let availableBalance = availableBalance else {
-            availableBalanceValueLabel.text = nil
+    func set(availableAmount: AmountInfo?) {
+        guard let availableAmount = availableAmount else {
+            availableAmountValueLabel.text = nil
             return
         }
 
-        switch availableBalance {
+        switch availableAmount {
         case .coinValue(let coinValue):
-            availableBalanceValueLabel.text = ValueFormatter.instance.format(coinValue: coinValue)
+            availableAmountValueLabel.text = ValueFormatter.instance.format(coinValue: coinValue)
         case .currencyValue(let currencyValue):
-            availableBalanceValueLabel.text = ValueFormatter.instance.format(currencyValue: currencyValue)
+            availableAmountValueLabel.text = ValueFormatter.instance.format(currencyValue: currencyValue)
         }
     }
 
