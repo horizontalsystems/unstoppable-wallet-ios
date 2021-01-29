@@ -50,7 +50,7 @@ class AboutViewController: ThemeViewController {
                 subtitle: "version".localized(viewModel.appVersion)
         )
 
-        termsCell.set(backgroundStyle: .lawrence)
+        termsCell.set(backgroundStyle: .lawrence, isLast: true)
         termsCell.titleImage = UIImage(named: "unordered_20")
         termsCell.title = "terms.title".localized
 
@@ -107,6 +107,7 @@ extension AboutViewController: SectionsDataSource {
                         )
                     ]
             ),
+
             Section(
                     id: "main",
                     footerState: .margin(height: .margin32),
@@ -130,13 +131,52 @@ extension AboutViewController: SectionsDataSource {
                                 action: { [weak self] in
                                     self?.navigationController?.pushViewController(TermsRouter.module(), animated: true)
                                 }
+                        )
+                    ]
+            ),
+
+            Section(
+                    id: "web",
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        Row<A1Cell>(
+                                id: "github",
+                                height: .heightCell48,
+                                autoDeselect: true,
+                                bind: { cell, _ in
+                                    cell.set(backgroundStyle: .lawrence, isFirst: true)
+                                    cell.titleImage = UIImage(named: "github_20")
+                                    cell.title = "GitHub"
+                                },
+                                action: { [weak self] _ in
+                                    self?.viewModel.onTapGithubLink()
+                                }
                         ),
+                        Row<A1Cell>(
+                                id: "website",
+                                height: .heightCell48,
+                                autoDeselect: true,
+                                bind: { cell, _ in
+                                    cell.set(backgroundStyle: .lawrence, isLast: true)
+                                    cell.titleImage = UIImage(named: "globe_20")
+                                    cell.title = "settings.about_app.website".localized
+                                },
+                                action: { [weak self] _ in
+                                    self?.viewModel.onTapWebPageLink()
+                                }
+                        )
+                    ]
+            ),
+            Section(
+                    id: "share",
+                    footerState: .margin(height: .margin32),
+                    rows: [
                         Row<A1Cell>(
                                 id: "rate-us",
                                 height: .heightCell48,
                                 autoDeselect: true,
                                 bind: { cell, _ in
-                                    cell.set(backgroundStyle: .lawrence)
+                                    cell.set(backgroundStyle: .lawrence, isFirst: true)
                                     cell.titleImage = UIImage(named: "rate_20")
                                     cell.title = "settings.about_app.rate_us".localized
                                 },
@@ -164,39 +204,13 @@ extension AboutViewController: SectionsDataSource {
                     footerState: .margin(height: .margin32),
                     rows: [
                         Row<A1Cell>(
-                                id: "website",
-                                height: .heightCell48,
-                                autoDeselect: true,
-                                bind: { cell, _ in
-                                    cell.set(backgroundStyle: .lawrence, isFirst: true)
-                                    cell.titleImage = UIImage(named: "globe_20")
-                                    cell.title = "settings.about_app.website".localized
-                                },
-                                action: { [weak self] _ in
-                                    self?.viewModel.onTapWebPageLink()
-                                }
-                        ),
-                        Row<A1Cell>(
-                                id: "github",
-                                height: .heightCell48,
-                                autoDeselect: true,
-                                bind: { cell, _ in
-                                    cell.set(backgroundStyle: .lawrence)
-                                    cell.titleImage = UIImage(named: "github_20")
-                                    cell.title = "GitHub"
-                                },
-                                action: { [weak self] _ in
-                                    self?.viewModel.onTapGithubLink()
-                                }
-                        ),
-                        Row<A1Cell>(
                                 id: "email",
                                 height: .heightCell48,
                                 autoDeselect: true,
                                 bind: { cell, _ in
-                                    cell.set(backgroundStyle: .lawrence, isLast: true)
+                                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
                                     cell.titleImage = UIImage(named: "at_20")
-                                    cell.title = "settings.about_app.email".localized
+                                    cell.title = "settings.about_app.contact".localized
                                 },
                                 action: { [weak self] _ in
                                     self?.handleContact()
