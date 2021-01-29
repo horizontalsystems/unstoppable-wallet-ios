@@ -64,7 +64,7 @@ class MarketDiscoveryViewController: ThemeViewController {
         }
 
         filterHeaderView.onSelect = { [weak self] filterIndex in
-            self?.viewModel.setFilter(at: filterIndex )
+            self?.viewModel.setFilter(at: filterIndex)
         }
 
         tableView.buildSections()

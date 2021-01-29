@@ -13,6 +13,8 @@ class FilterCard: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        contentView.cornerRadius = .margin16
+
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(FilterCard.sideMargin)

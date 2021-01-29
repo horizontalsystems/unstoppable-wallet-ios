@@ -8,7 +8,7 @@ class MarketDiscoveryFilterHeaderView: UITableViewHeaderFooterView {
 
     private let collectionView: UICollectionView
 
-    var onSelect: ((Int) -> ())?
+    var onSelect: ((Int?) -> ())?
 
     init() {
         let layout = UICollectionViewFlowLayout()
@@ -18,9 +18,10 @@ class MarketDiscoveryFilterHeaderView: UITableViewHeaderFooterView {
 
         super.init(reuseIdentifier: nil)
 
-        backgroundColor = .themeNavigationBarBackground
+        backgroundView = UIView()
+        backgroundView?.backgroundColor = .themeNavigationBarBackground
 
-        addSubview(collectionView)
+        contentView.addSubview(collectionView)
         collectionView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
@@ -28,7 +29,7 @@ class MarketDiscoveryFilterHeaderView: UITableViewHeaderFooterView {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.contentInset = UIEdgeInsets(top: .margin12, left: .margin16, bottom: .margin12, right: .margin16)
-        collectionView.allowsMultipleSelection = false
+        collectionView.allowsMultipleSelection = true
         collectionView.backgroundColor = .clear
         collectionView.scrollsToTop = false
         collectionView.showsHorizontalScrollIndicator = false
@@ -76,9 +77,33 @@ extension MarketDiscoveryFilterHeaderView: UICollectionViewDelegateFlowLayout, U
         .margin12
     }
 
+    public func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        if let selectedIndexPath = collectionView.indexPathsForSelectedItems?.first {
+            collectionView.deselectItem(at: selectedIndexPath, animated: true)
+
+            collectionView.performBatchUpdates {  }
+        }
+
+        return true
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, shouldDeselectItemAt indexPath: IndexPath) -> Bool {
+        if collectionView.indexPathsForSelectedItems?.first == indexPath {
+            onSelect?(nil)
+        }
+
+        return true
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        collectionView.performBatchUpdates {  }
+    }
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         onSelect?(indexPath.item)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+
+        collectionView.performBatchUpdates {  }
     }
 
 }

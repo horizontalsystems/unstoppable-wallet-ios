@@ -4234,8 +4234,8 @@
 		179E75D6DA6A15017AEC274B /* MarketDiscovery */ = {
 			isa = PBXGroup;
 			children = (
-				3AB68ACF25C2ADD7002197A5 /* MarketCategoryCoins.json */,
 				1A5647DEEE20175EFAF0CB2A /* Filter */,
+				3AB68ACF25C2ADD7002197A5 /* MarketCategoryCoins.json */,
 				3AB682A125BADC20002197A5 /* MarketDiscoveryModule.swift */,
 				3AB682A025BADC20002197A5 /* MarketDiscoveryViewModel.swift */,
 				179E7D99F8FC6A4C9F089005 /* MarketDiscoveryViewController.swift */,
