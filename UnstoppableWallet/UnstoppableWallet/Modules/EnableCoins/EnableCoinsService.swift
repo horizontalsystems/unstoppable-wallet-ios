@@ -67,7 +67,7 @@ class EnableCoinsService {
 
         let coins = addresses.compactMap { address in
             allCoins.first { coin in
-                coin.type == CoinType(erc20Address: address)
+                coin.type == .erc20(address: address)
             }
         }
 

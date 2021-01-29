@@ -15,7 +15,7 @@ class Erc20Adapter: EthereumBaseAdapter {
 
     init(ethereumKit: EthereumKit.Kit, contractAddress: String, decimal: Int, fee: Decimal, minimumRequiredBalance: Decimal, minimumSpendableAmount: Decimal?) throws {
         let address = try EthereumKit.Address(hex: contractAddress)
-        self.erc20Kit = try Erc20Kit.Kit.instance(ethereumKit: ethereumKit, contractAddress: address)
+        erc20Kit = try Erc20Kit.Kit.instance(ethereumKit: ethereumKit, contractAddress: address)
         self.contractAddress = address
         self.fee = fee
         self.minimumRequiredBalance = minimumRequiredBalance

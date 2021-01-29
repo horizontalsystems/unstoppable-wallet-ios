@@ -297,6 +297,9 @@ protocol IAppConfigProvider {
     var ethereumCoin: Coin { get }
     var featuredCoins: [Coin] { get }
     var defaultCoins: [Coin] { get }
+    var smartContractFees: [CoinType: Decimal] { get }
+    var minimumBalances: [CoinType: Decimal] { get }
+    var minimumSpendableAmounts: [CoinType: Decimal] { get }
 }
 
 protocol IEnabledWalletStorage {
