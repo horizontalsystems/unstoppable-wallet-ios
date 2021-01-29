@@ -7,7 +7,7 @@ class MarketViewModel {
     private let disposeBag = DisposeBag()
 
     private let currentTabRelay: BehaviorRelay<MarketModule.Tab>
-    private let discoveryPreferenceRelay = PublishRelay<MarketModule.Preference>()
+    private let discoveryListTypeRelay = PublishRelay<MarketModule.ListType>()
 
     init(service: MarketService) {
         self.service = service
@@ -23,8 +23,8 @@ extension MarketViewModel {
         currentTabRelay.asDriver()
     }
 
-    var discoveryPreferenceSignal: Signal<MarketModule.Preference> {
-        discoveryPreferenceRelay.asSignal()
+    var discoveryListTypeSignal: Signal<MarketModule.ListType> {
+        discoveryListTypeRelay.asSignal()
     }
 
     var tabs: [MarketModule.Tab] {
@@ -36,8 +36,8 @@ extension MarketViewModel {
         currentTabRelay.accept(tab)
     }
 
-    func handleTapSeeAll(sectionType: MarketModule.SectionType) {
-        discoveryPreferenceRelay.accept(sectionType.preference)
+    func handleTapSeeAll(listType: MarketModule.ListType) {
+        discoveryListTypeRelay.accept(listType)
         onSelect(tab: .discovery)
     }
 

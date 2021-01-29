@@ -59,9 +59,9 @@ class MarketOverviewViewController: ThemeViewController {
         tableView.reload()
     }
 
-    private func headerRow(type: MarketModule.SectionType) -> RowProtocol {
+    private func headerRow(listType: MarketModule.ListType) -> RowProtocol {
         Row<A2Cell>(
-                id: "section_header_\(type.rawValue)",
+                id: "section_header_\(listType.rawValue)",
                 height: .heightSingleLineCell,
                 autoDeselect: true,
                 bind: { cell, _ in
@@ -69,7 +69,7 @@ class MarketOverviewViewController: ThemeViewController {
                     cell.value = "market.top.section.header.see_all".localized
                     cell.valueColor = .themeGray
 
-                    switch type {
+                    switch listType {
                     case .topGainers:
                         cell.titleImage = UIImage(named: "circle_up_20")
                         cell.title = "market.top.section.header.top_gainers".localized
@@ -82,7 +82,7 @@ class MarketOverviewViewController: ThemeViewController {
                     }
                 },
                 action: { [weak self] _ in
-                    self?.didTapSeeAll(sectionType: type)
+                    self?.didTapSeeAll(listType: listType)
                 }
         )
     }
@@ -107,8 +107,8 @@ class MarketOverviewViewController: ThemeViewController {
         parentNavigationController?.pushViewController(viewController, animated: true)
     }
 
-    private func didTapSeeAll(sectionType: MarketModule.SectionType) {
-        marketViewModel.handleTapSeeAll(sectionType: sectionType)
+    private func didTapSeeAll(listType: MarketModule.ListType) {
+        marketViewModel.handleTapSeeAll(listType: listType)
     }
 
 }
@@ -129,15 +129,15 @@ extension MarketOverviewViewController: SectionsDataSource {
 
         viewItems.forEach { section in
             sections.append(
-                Section(id: "header_\(section.type.rawValue)",
+                Section(id: "header_\(section.listType.rawValue)",
                     footerState: .margin(height: CGFloat.margin12),
                     rows: [
-                        headerRow(type: section.type)
+                        headerRow(listType: section.listType)
                 ])
             )
             sections.append(
                 Section(
-                    id: section.type.rawValue,
+                    id: section.listType.rawValue,
                     footerState: .margin(height: CGFloat.margin12),
                     rows: section.viewItems.enumerated().map { (index, item) in
                         row(viewItem: item, isFirst: index == 0, isLast: index == section.viewItems.count - 1)

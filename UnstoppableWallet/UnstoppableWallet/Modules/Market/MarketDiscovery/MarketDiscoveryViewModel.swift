@@ -115,9 +115,9 @@ extension MarketDiscoveryViewModel {
         service.currentCategory = MarketDiscoveryFilter.allCases[index]
     }
 
-    func set(preference: MarketModule.Preference) {
-        sortingField = preference.sortingField
-        marketField = preference.marketField
+    func set(listType: MarketModule.ListType) {
+        sortingField = listType.sortingField
+        marketField = listType.marketField
 
         syncViewItems()
     }

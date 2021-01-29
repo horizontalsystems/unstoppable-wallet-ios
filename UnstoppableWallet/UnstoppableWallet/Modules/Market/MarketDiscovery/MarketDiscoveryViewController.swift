@@ -26,7 +26,7 @@ class MarketDiscoveryViewController: ThemeViewController {
         super.init()
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
-        subscribe(disposeBag, marketViewModel.discoveryPreferenceSignal) { [weak self] in self?.handle(preference: $0) }
+        subscribe(disposeBag, marketViewModel.discoveryListTypeSignal) { [weak self] in self?.handle(listType: $0) }
     }
 
     required init?(coder: NSCoder) {
@@ -124,8 +124,8 @@ class MarketDiscoveryViewController: ThemeViewController {
         parentNavigationController?.pushViewController(viewController, animated: true)
     }
 
-    private func handle(preference: MarketModule.Preference) {
-        viewModel.set(preference: preference)
+    private func handle(listType: MarketModule.ListType) {
+        viewModel.set(listType: listType)
         sectionHeaderView.setMarketField(field: viewModel.marketField)
     }
 

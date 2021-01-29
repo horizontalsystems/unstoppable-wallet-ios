@@ -36,14 +36,12 @@ class MarketOverviewViewModel {
         }
     }
 
-    private func sectionItems(by sectionType: MarketModule.SectionType, count: Int = 3) -> Section {
-        let preference = sectionType.preference
-
-        let viewItems: [MarketModule.MarketViewItem] = Array(service.items.sort(by: preference.sortingField).map { items in
+    private func sectionItems(by listType: MarketModule.ListType, count: Int = 3) -> Section {
+        let viewItems: [MarketModule.MarketViewItem] = Array(service.items.sort(by: listType.sortingField).map { items in
             let rateValue = CurrencyValue(currency: service.currency, value: items.price)
 
             let marketDataValue: MarketModule.MarketDataValue
-            switch preference.marketField {
+            switch listType.marketField {
             case .volume:
                 marketDataValue = .volume(CurrencyCompactFormatter.instance.format(currency: service.currency, value: items.volume) ?? "n/a".localized)
             default:
@@ -62,7 +60,7 @@ class MarketOverviewViewModel {
             )
         }.prefix(count))
 
-        return Section(type: sectionType, viewItems: viewItems)
+        return Section(listType: listType, viewItems: viewItems)
     }
 
     private func syncViewItems() {
@@ -100,7 +98,7 @@ extension MarketOverviewViewModel {
 extension MarketOverviewViewModel {
 
     struct Section {
-        let type: MarketModule.SectionType
+        let listType: MarketModule.ListType
         let viewItems: [MarketModule.MarketViewItem]
     }
 

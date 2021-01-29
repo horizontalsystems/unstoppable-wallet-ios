@@ -61,19 +61,23 @@ extension MarketModule {
         }
     }
 
-    enum SectionType: String {
+    enum ListType: String {
         case topGainers
         case topLosers
         case topVolume
 
-        var preference: Preference {
+        var sortingField: SortingField {
             switch self {
-            case .topGainers:
-                return .init(sortingField: .topGainers, marketField: .price)
-            case .topLosers:
-                return .init(sortingField: .topLosers, marketField: .price)
-            case .topVolume:
-                return .init(sortingField: .highestVolume, marketField: .volume)
+            case .topGainers: return .topGainers
+            case .topLosers: return .topLosers
+            case .topVolume: return .highestVolume
+            }
+        }
+
+        var marketField: MarketField {
+            switch self {
+            case .topGainers, .topLosers: return .price
+            case .topVolume: return .volume
             }
         }
     }
@@ -118,11 +122,6 @@ extension MarketModule {
             case .price: return "market.market_field.price".localized
             }
         }
-    }
-
-    struct Preference {
-        let sortingField: SortingField
-        let marketField: MarketField
     }
 
     enum RankColor {
