@@ -295,7 +295,7 @@
 
 "market.tab_bar_item" = "Market";
 "market.title" = "Market";
-"market.category.overview" = "Todo";
+"market.category.overview" = "Overview";
 "market.category.discovery" = "Discovery";
 "market.category.watchlist" = "Watchlist";
 "market.total_market_cap" = "Total\nMarket Cap";
