@@ -50,6 +50,10 @@ class MarketDiscoveryFilterHeaderView: UITableViewHeaderFooterView {
         collectionView.reloadData()
     }
 
+    private func reloadLayout() {
+        collectionView.performBatchUpdates {  }
+    }
+
 }
 
 extension MarketDiscoveryFilterHeaderView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
@@ -81,7 +85,7 @@ extension MarketDiscoveryFilterHeaderView: UICollectionViewDelegateFlowLayout, U
         if let selectedIndexPath = collectionView.indexPathsForSelectedItems?.first {
             collectionView.deselectItem(at: selectedIndexPath, animated: true)
 
-            collectionView.performBatchUpdates {  }
+            reloadLayout()
         }
 
         return true
@@ -96,14 +100,14 @@ extension MarketDiscoveryFilterHeaderView: UICollectionViewDelegateFlowLayout, U
     }
 
     public func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        collectionView.performBatchUpdates {  }
+        reloadLayout()
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         onSelect?(indexPath.item)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
 
-        collectionView.performBatchUpdates {  }
+        reloadLayout()
     }
 
 }
