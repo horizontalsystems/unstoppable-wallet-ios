@@ -10,29 +10,45 @@ class FilterCard: UICollectionViewCell {
     private let titleLabel = UILabel()
     private let descriptionLabel = UILabel()
 
+    private var titleTopConstraint: Constraint?
+    private var titleBottomConstraint: Constraint?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         contentView.cornerRadius = .margin16
 
+        contentView.addSubview(iconImageView)
+        iconImageView.snp.makeConstraints { maker in
+            maker.leading.top.equalToSuperview().inset(FilterCard.sideMargin)
+        }
+
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(FilterCard.sideMargin)
-            maker.top.equalToSuperview().inset(FilterCard.sideMargin)
+
+            titleTopConstraint = maker.top.equalToSuperview().inset(FilterCard.sideMargin).constraint
+            titleBottomConstraint = maker.bottom.equalToSuperview().inset(FilterCard.sideMargin).constraint
         }
+        titleTopConstraint?.isActive = false
+        titleBottomConstraint?.isActive = true
 
         titleLabel.font = FilterCard.titleFont
+        titleLabel.textColor = .themeLight
 
         contentView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(FilterCard.sideMargin)
+            maker.leading.equalToSuperview().inset(FilterCard.sideMargin)
+            maker.width.equalTo(188)
             maker.bottom.equalToSuperview().inset(FilterCard.sideMargin)
         }
 
         descriptionLabel.font = .caption
-        titleLabel.textColor = .themeDark
+        descriptionLabel.numberOfLines = 0
+        descriptionLabel.alpha = 0
 
-        bind(selected: false)
+        contentView.layoutIfNeeded()
+        contentView.backgroundColor = .themeLawrence
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -54,7 +70,15 @@ class FilterCard: UICollectionViewCell {
     func bind(selected: Bool) {
         titleLabel.textColor = selected ? .themeDark : .themeLight
 
-        descriptionLabel.isHidden = !selected
+        titleTopConstraint?.isActive = selected
+        titleBottomConstraint?.isActive = !selected
+
+        UIView.animate(withDuration: .themeAnimationDuration) { [weak self] in
+            self?.contentView.layoutIfNeeded()
+            self?.iconImageView.alpha = selected ?  0 : 1
+            self?.descriptionLabel.alpha = selected ?  1 : 0
+        }
+
         contentView.backgroundColor = selected ? .themeJacob : .themeLawrence
     }
 
