@@ -208,7 +208,6 @@ class CoinInfoMap {
         "MCB":      CoinInfo(supply: 150_000_000,     startDate: nil,           website: "https://mcdex.io"),
     ]
 
-
 }
 
 struct CoinInfo {

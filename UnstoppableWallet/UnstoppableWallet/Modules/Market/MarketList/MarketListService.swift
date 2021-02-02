@@ -28,7 +28,7 @@ class MarketListService {
 
     private func convertItem(rank: Int, topMarket: CoinMarket) -> Item {
         Item(
-            rank: rank,
+            score: .rank(rank),
             coinCode: topMarket.coin.code,
             coinName: topMarket.coin.title,
             coinType: topMarket.coin.type.flatMap { rateManager.convertXRateCoinTypeToCoinType(coinType: $0) },
@@ -67,10 +67,6 @@ extension MarketListService {
         currencyKit.baseCurrency
     }
 
-    public var sortingFields: [MarketModule.SortingField] {
-        dataSource.sortingFields
-    }
-
     public var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -83,6 +79,11 @@ extension MarketListService {
 
 extension MarketListService {
 
+    enum Score {
+        case rank(Int)
+        case rating(String)
+    }
+
     enum State {
         case loaded
         case loading
@@ -90,7 +91,7 @@ extension MarketListService {
     }
 
     struct Item {
-        let rank: Int
+        let score: Score?
         let coinCode: String
         let coinName: String
         let coinType: CoinType?

@@ -47,7 +47,7 @@ class MarketOverviewViewController: ThemeViewController {
         tableView.sectionDataSource = self
 
         tableView.registerHeaderFooter(forClass: MarketSectionHeaderView.self)
-        tableView.registerCell(forClass: GB14Cell.self)
+        tableView.registerCell(forClass: G14Cell.self)
         tableView.registerCell(forClass: A2Cell.self)
 
         tableView.buildSections()
@@ -65,7 +65,7 @@ class MarketOverviewViewController: ThemeViewController {
                 height: .heightSingleLineCell,
                 autoDeselect: true,
                 bind: { cell, _ in
-                    cell.set(backgroundStyle: .claude)
+                    cell.set(backgroundStyle: .transparent)
                     cell.value = "market.top.section.header.see_all".localized
                     cell.valueColor = .themeGray
 
@@ -88,7 +88,7 @@ class MarketOverviewViewController: ThemeViewController {
     }
 
     private func row(viewItem: MarketModule.MarketViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        Row<GB14Cell>(
+        Row<G14Cell>(
                 id: viewItem.coinCode,
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
@@ -150,19 +150,6 @@ extension MarketOverviewViewController: SectionsDataSource {
 
     public func refresh() {
         viewModel.refresh()
-    }
-
-}
-
-extension MarketModule.RankColor {
-
-    var color: UIColor {
-        switch self {
-        case .a: return .themeJacob
-        case .b: return .blue
-        case .c: return .themeGray
-        case .d: return .lightGray
-        }
     }
 
 }

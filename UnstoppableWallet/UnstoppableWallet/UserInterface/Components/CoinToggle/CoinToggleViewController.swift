@@ -28,8 +28,8 @@ class CoinToggleViewController: ThemeSearchViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.registerCell(forClass: GA4Cell.self)
-        tableView.registerCell(forClass: GA11Cell.self)
+        tableView.registerCell(forClass: G4Cell.self)
+        tableView.registerCell(forClass: G11Cell.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -84,7 +84,7 @@ class CoinToggleViewController: ThemeSearchViewController {
 
             switch viewItem.state {
             case .toggleHidden:
-                return Row<GA4Cell>(
+                return Row<G4Cell>(
                         id: "coin_\(viewItem.coin.id)",
                         hash: "coin_\(viewItem.state)",
                         height: .heightDoubleLineCell,
@@ -94,7 +94,7 @@ class CoinToggleViewController: ThemeSearchViewController {
                             cell.titleImage = .image(coinCode: viewItem.coin.code, blockchainType: viewItem.coin.type.blockchainType)
                             cell.title = viewItem.coin.title
                             cell.subtitle = viewItem.coin.code
-                            cell.badgeText = viewItem.coin.type.blockchainType
+                            cell.leftBadgeText = viewItem.coin.type.blockchainType
                             cell.valueImage = UIImage(named: "plus_20")
                         },
                         action: { [weak self] _ in
@@ -102,7 +102,7 @@ class CoinToggleViewController: ThemeSearchViewController {
                         }
                 )
             case .toggleVisible(let enabled):
-                return Row<GA11Cell>(
+                return Row<G11Cell>(
                         id: "coin_\(viewItem.coin.id)",
                         hash: "coin_\(viewItem.state)",
                         height: .heightDoubleLineCell,
@@ -111,7 +111,7 @@ class CoinToggleViewController: ThemeSearchViewController {
                             cell.titleImage = .image(coinCode: viewItem.coin.code, blockchainType: viewItem.coin.type.blockchainType)
                             cell.title = viewItem.coin.title
                             cell.subtitle = viewItem.coin.code
-                            cell.badgeText = viewItem.coin.type.blockchainType
+                            cell.leftBadgeText = viewItem.coin.type.blockchainType
                             cell.isOn = enabled
                             cell.onToggle = { [weak self] enabled in
                                 self?.onToggle(viewItem: viewItem, enabled: enabled)
@@ -147,7 +147,7 @@ class CoinToggleViewController: ThemeSearchViewController {
             return
         }
 
-        guard let cell = tableView.cellForRow(at: IndexPath(row: index, section: section)) as? GA11Cell else {
+        guard let cell = tableView.cellForRow(at: IndexPath(row: index, section: section)) as? G11Cell else {
             return
         }
 

@@ -18,7 +18,7 @@ class MarketWatchlistViewModel {
     init(service: MarketListService) {
         self.service = service
 
-        sortingField = service.sortingFields[0]
+        sortingField = MarketModule.SortingField.allCases[0]
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
     }
 
@@ -40,25 +40,8 @@ class MarketWatchlistViewModel {
         }
     }
 
-    private func sort(items: [MarketListService.Item], by sortingField: MarketModule.SortingField) -> [MarketListService.Item] {
-        items.sorted { item, item2 in
-            switch sortingField {
-            case .highestLiquidity: return (item.liquidity ?? 0) > (item2.liquidity ?? 0)
-            case .lowestLiquidity: return (item.liquidity ?? 0) < (item2.liquidity ?? 0)
-            case .highestCap: return item.marketCap > item2.marketCap
-            case .lowestCap: return item.marketCap < item2.marketCap
-            case .highestVolume: return item.volume > item2.volume
-            case .lowestVolume: return item.volume < item2.volume
-            case .highestPrice: return item.price > item2.price
-            case .lowestPrice: return item.price < item2.price
-            case .topGainers: return item.diff > item2.diff
-            case .topLosers: return item.diff < item2.diff
-            }
-        }
-    }
-
     private func syncViewItems() {
-        let viewItems: [MarketModule.MarketViewItem] = sort(items: service.items, by: sortingField).map {
+        let viewItems: [MarketModule.MarketViewItem] = service.items.sort(by: sortingField).map {
             let marketDataValue: MarketModule.MarketDataValue
             switch marketField {
             case .price: marketDataValue = .diff($0.diff)
@@ -71,7 +54,7 @@ class MarketWatchlistViewModel {
             let rate = ValueFormatter.instance.format(currencyValue: rateValue) ?? ""
 
             return MarketModule.MarketViewItem(
-                    rank: .index($0.rank.description),
+                    score: nil,
                     coinName: $0.coinName,
                     coinCode: $0.coinCode,
                     coinType: $0.coinType,
@@ -104,7 +87,7 @@ extension MarketWatchlistViewModel {
     }
 
     public var sortingFields: [String] {
-        service.sortingFields.map { $0.title }
+        MarketModule.SortingField.allCases.map { $0.title }
     }
 
     public func refresh() {
@@ -112,7 +95,7 @@ extension MarketWatchlistViewModel {
     }
 
     public func setSortingField(at index: Int) {
-        sortingField = service.sortingFields[index]
+        sortingField = MarketModule.SortingField.allCases[index]
 
         syncViewItems()
     }

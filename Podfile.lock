@@ -202,6 +202,7 @@ PODS:
   - SectionsTableView.swift (1.1):
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1.1)
+  - SkeletonView (1.11.0)
   - SnapKit (5.0.1)
   - SQLite.swift (0.12.2):
     - SQLite.swift/standard (= 0.12.2)
@@ -254,6 +255,7 @@ PODS:
   - ThemeKit.swift (1.0):
     - HUD.swift (~> 1.2)
     - LanguageKit.swift (~> 1.0)
+    - SkeletonView (~> 1.11)
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1)
   - UIExtensions.swift (1.1.1)
@@ -366,6 +368,7 @@ SPEC REPOS:
     - RxSwift
     - RxSwiftExt
     - Secp256k1Kit.swift
+    - SkeletonView
     - SnapKit
     - SQLite.swift
     - Starscream
@@ -515,7 +518,7 @@ CHECKOUT OPTIONS:
     :commit: ff3f1f23fbd15077342c6ef002f329021f3c1507
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: f12d7457c6bcf178e463988a730f6fc983e10f09
+    :commit: fe7ed3cfd429db8657e5c9f7bae8a586d4a81973
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :commit: 392186c18e8df97d40ca0f4587d857259d878dd4
@@ -527,7 +530,7 @@ CHECKOUT OPTIONS:
     :commit: 467915ce2ba7b4bb831150be911bd0b8b1d94c36
     :git: https://github.com/horizontalsystems/wallet-connect-swift
   XRatesKit.swift:
-    :commit: 58fdc8e4a98deb9df2a8693d91a475d3aac65dc4
+    :commit: e34227c169229a9ad0f95a31f56954d926bf7b38
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
   ZcashLightClientKit:
     :commit: b72f9f1c356448bd95db13fd60b7ec55d1d75058
@@ -591,6 +594,7 @@ SPEC CHECKSUMS:
   ScanQrKit.swift: ac548dac6dec848f20afe6afc97cd419128d1b01
   Secp256k1Kit.swift: 322a66c4b3e95e96a397d73d45ad4d79af991bab
   SectionsTableView.swift: 1541226d2cff974a131cfc2df3b8908d4902d703
+  SkeletonView: cc84ce90a804dd0dd7198dd802833411c8a64eaf
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
@@ -606,7 +610,7 @@ SPEC CHECKSUMS:
   SwiftNIOTransportServices: a8a17a43695a09bfdd5a56426f6e515120d5dbf3
   SwiftProtobuf: 3320217e9d8fb75f36b40282e78c482640fd75dd
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
-  ThemeKit.swift: ef380a141bb93ae0d55f4a64c8229b1487d37711
+  ThemeKit.swift: 8f61fc73aeebccb9e4bf4976dbdc60046e81300b
   UIExtensions.swift: 3ed084c0343ddd0f86c7c558d37759e1fd7d5778
   UniswapKit.swift: b14da72cf5b4746fa880c32458723fd6d3d48114
   UnstoppableDomainsResolution: 2e5b9de4370aaed9feec504fa5b4e5cfc3ab8a4d

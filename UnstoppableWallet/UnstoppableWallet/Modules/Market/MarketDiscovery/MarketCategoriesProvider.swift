@@ -29,8 +29,12 @@ class MarketCategoriesProvider {
 
 extension MarketCategoriesProvider {
 
-    func coinCodes(for category: String) -> [String] {
-        coins
+    func coinCodes(for category: String? = nil) -> [String] {
+        guard let category = category else {
+            return coins.map { $0.code }
+        }
+
+        return coins
             .filter { coin in coin.categories.contains(category) }
             .map { $0.code }
     }
