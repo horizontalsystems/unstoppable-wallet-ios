@@ -202,10 +202,17 @@ class CoinInfoMap {
         "PICKLE":   CoinInfo(supply: 1_289_763,       startDate: nil,          website: "https://pickle.finance"),
         "YAX":      CoinInfo(supply: 305_540,         startDate: nil,          website: "https://yaxis.io"),
         "ALPHA":    CoinInfo(supply: 1_000_000,       startDate: nil,          website: "https://alphafinance.io"),
-        "SWRV":      CoinInfo(supply: 33_000_000,     startDate: nil,          website: "https://swerve.fi"),
-        "LON":      CoinInfo(supply:  200_000_000,     startDate: nil,         website: "https://tokenlon.im/lon"),
-        "PERP":      CoinInfo(supply: 150_000_000,     startDate: nil,         website: "https://perp.fi"),
-        "MCB":      CoinInfo(supply: 150_000_000,     startDate: nil,           website: "https://mcdex.io"),
+        "SWRV":     CoinInfo(supply: 33_000_000,      startDate: nil,          website: "https://swerve.fi"),
+        "LON":      CoinInfo(supply:  200_000_000,    startDate: nil,          website: "https://tokenlon.im/lon"),
+        "PERP":     CoinInfo(supply: 150_000_000,     startDate: nil,          website: "https://perp.fi"),
+        "MCB":      CoinInfo(supply: 150_000_000,     startDate: nil,          website: "https://mcdex.io"),
+        "NXM":      CoinInfo(supply: 6_696_774,       startDate: nil,          website: "https://nexusmutual.io"),
+        "SWISS":    CoinInfo(supply: 10_000,          startDate: nil,          website: "https://swissfarming.finance"),
+        "APY":      CoinInfo(supply: 100_000_000,     startDate: nil,          website: "https://apy.finance"),
+        "FARM":     CoinInfo(supply: 471_639,         startDate: nil,          website: "https://harvest.finance"),
+        "YFI":      CoinInfo(supply: 30_000,          startDate: nil,          website: "https://yearn.finance"),
+        "YFII":     CoinInfo(supply: 39_375,          startDate: nil,          website: "https://dfi.money"),
+        "YFIM":     CoinInfo(supply: 60_000,          startDate: nil,          website: nil),
     ]
 
 
