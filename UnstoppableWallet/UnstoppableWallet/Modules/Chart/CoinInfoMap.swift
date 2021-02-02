@@ -202,7 +202,6 @@ class CoinInfoMap {
         "PICKLE":   CoinInfo(supply: 1_289_763,       startDate: nil,          website: "https://pickle.finance"),
         "YAX":      CoinInfo(supply: 305_540,         startDate: nil,          website: "https://yaxis.io"),
         "ALPHA":    CoinInfo(supply: 1_000_000,       startDate: nil,          website: "https://alphafinance.io"),
-        "YAX":      CoinInfo(supply: 305_540,         startDate: nil,          website: "https://yaxis.io"),
         "SWRV":      CoinInfo(supply: 33_000_000,     startDate: nil,          website: "https://swerve.fi"),
         "LON":      CoinInfo(supply:  200_000_000,     startDate: nil,         website: "https://tokenlon.im/lon"),
         "PERP":      CoinInfo(supply: 150_000_000,     startDate: nil,         website: "https://perp.fi"),
