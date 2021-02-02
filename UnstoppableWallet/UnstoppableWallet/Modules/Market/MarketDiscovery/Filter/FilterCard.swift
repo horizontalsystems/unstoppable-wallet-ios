@@ -34,7 +34,7 @@ class FilterCard: UICollectionViewCell {
         titleBottomConstraint?.isActive = true
 
         titleLabel.font = FilterCard.titleFont
-        titleLabel.textColor = .themeLight
+        titleLabel.textColor = .themeOz
 
         contentView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { maker in
@@ -47,7 +47,6 @@ class FilterCard: UICollectionViewCell {
         descriptionLabel.numberOfLines = 0
         descriptionLabel.alpha = 0
 
-        contentView.layoutIfNeeded()
         contentView.backgroundColor = .themeLawrence
     }
 
@@ -68,7 +67,7 @@ class FilterCard: UICollectionViewCell {
     }
 
     func bind(selected: Bool) {
-        titleLabel.textColor = selected ? .themeDark : .themeLight
+        titleLabel.textColor = selected ? .themeDark : .themeOz
 
         titleTopConstraint?.isActive = selected
         titleBottomConstraint?.isActive = !selected
@@ -85,7 +84,7 @@ class FilterCard: UICollectionViewCell {
             }
         }
 
-        contentView.backgroundColor = selected ? .themeJacob : .themeLawrence
+        contentView.backgroundColor = selected ? .themeYellowD : .themeLawrence
     }
 
     static func size(item: MarketFilterViewItem, selected: Bool) -> CGSize {
