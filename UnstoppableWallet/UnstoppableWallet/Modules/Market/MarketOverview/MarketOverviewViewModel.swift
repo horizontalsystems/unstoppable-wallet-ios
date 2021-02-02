@@ -37,24 +37,34 @@ class MarketOverviewViewModel {
     }
 
     private func sectionItems(by listType: MarketModule.ListType, count: Int = 3) -> Section {
-        let viewItems: [MarketModule.MarketViewItem] = Array(service.items.sort(by: listType.sortingField).map { items in
-            let rateValue = CurrencyValue(currency: service.currency, value: items.price)
+        let viewItems: [MarketModule.MarketViewItem] = Array(service.items.sort(by: listType.sortingField).map { item in
+            let rateValue = CurrencyValue(currency: service.currency, value: item.price)
 
             let marketDataValue: MarketModule.MarketDataValue
             switch listType.marketField {
             case .volume:
-                marketDataValue = .volume(CurrencyCompactFormatter.instance.format(currency: service.currency, value: items.volume) ?? "n/a".localized)
+                marketDataValue = .volume(CurrencyCompactFormatter.instance.format(currency: service.currency, value: item.volume) ?? "n/a".localized)
             default:
-                marketDataValue = .diff(items.diff)
+                marketDataValue = .diff(item.diff)
             }
 
             let rate = ValueFormatter.instance.format(currencyValue: rateValue) ?? "n/a".localized
 
+            let scoreViewItem: MarketModule.Score?
+            switch item.score {
+            case .rank(let index):
+                scoreViewItem = .rank(index.description)
+            case .rating(let rating):
+                scoreViewItem = .rating(rating)
+            case .none:
+                scoreViewItem = nil
+            }
+
             return MarketModule.MarketViewItem(
-                    rank: .index(items.rank.description),
-                    coinName: items.coinName,
-                    coinCode: items.coinCode,
-                    coinType: items.coinType,
+                    score: scoreViewItem,
+                    coinName: item.coinName,
+                    coinCode: item.coinCode,
+                    coinType: item.coinType,
                     rate: rate,
                     marketDataValue: marketDataValue
             )

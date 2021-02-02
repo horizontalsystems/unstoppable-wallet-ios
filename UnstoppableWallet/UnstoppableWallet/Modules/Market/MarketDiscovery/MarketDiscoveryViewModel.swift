@@ -53,8 +53,18 @@ class MarketDiscoveryViewModel {
             let rateValue = CurrencyValue(currency: service.currency, value: $0.price)
             let rate = ValueFormatter.instance.format(currencyValue: rateValue) ?? ""
 
+            let scoreViewItem: MarketModule.Score?
+            switch $0.score {
+            case .rank(let index):
+                scoreViewItem = .rank(index.description)
+            case .rating(let rating):
+                scoreViewItem = .rating(rating)
+            case .none:
+                scoreViewItem = nil
+            }
+
             return MarketModule.MarketViewItem(
-                    rank: .index($0.rank.description),
+                    score: scoreViewItem,
                     coinName: $0.coinName,
                     coinCode: $0.coinCode,
                     coinType: $0.coinType,
@@ -129,8 +139,6 @@ extension Array where Element == MarketListService.Item {
     func sort(by sortingField: MarketModule.SortingField) -> [MarketListService.Item] {
         sorted { item, item2 in
             switch sortingField {
-            case .highestLiquidity: return (item.liquidity ?? 0) > (item2.liquidity ?? 0)
-            case .lowestLiquidity: return (item.liquidity ?? 0) < (item2.liquidity ?? 0)
             case .highestCap: return item.marketCap > item2.marketCap
             case .lowestCap: return item.marketCap < item2.marketCap
             case .highestVolume: return item.volume > item2.volume

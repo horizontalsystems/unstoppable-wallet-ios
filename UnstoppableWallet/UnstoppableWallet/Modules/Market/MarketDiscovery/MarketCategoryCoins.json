@@ -67,7 +67,7 @@
                 "reddit": "https://www.reddit.com/r/litecoin/",
                 "telegram": ""
             },
-            "rating": ""
+            "rating": "D"
         },
         {
             "code": "ETH",
@@ -82,7 +82,7 @@
                 "reddit": "https://www.reddit.com/r/ethereum",
                 "telegram": ""
             },
-            "rating": ""
+            "rating": "C"
         },
         {
             "code": "DASH",
@@ -97,7 +97,7 @@
                 "reddit": "https://www.reddit.com/r/dashpay",
                 "telegram": "https://t.me/dash_chat"
             },
-            "rating": ""
+            "rating": "B"
         },
         {
             "code": "ZEC",
@@ -142,7 +142,7 @@
                 "reddit": "https://www.reddit.com",
                 "telegram": "https://t.me/PolkadotOfficial"
             },
-            "rating": ""
+            "rating": "A"
         },
         {
             "code": "CORE",
@@ -198,7 +198,7 @@
                 "reddit": "https://www.reddit.com/r/Tronix",
                 "telegram": "https://t.me/tronnetworkEN03"
             },
-            "rating": ""
+            "rating": "B"
         },
         {
             "code": "XEM",
@@ -367,7 +367,7 @@
                 "reddit": "",
                 "telegram": ""
             },
-            "rating": ""
+            "rating": "A"
         },
         {
             "code": "TXL",

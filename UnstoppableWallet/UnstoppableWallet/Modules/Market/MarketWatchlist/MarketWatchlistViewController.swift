@@ -39,9 +39,8 @@ class MarketWatchlistViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
-
         tableView.registerHeaderFooter(forClass: MarketListHeaderView.self)
-        tableView.registerCell(forClass: GB14Cell.self)
+        tableView.registerCell(forClass: G14Cell.self)
 
         tableView.sectionDataSource = self
 
@@ -99,18 +98,17 @@ class MarketWatchlistViewController: ThemeViewController {
     }
 
     private func row(viewItem: MarketModule.MarketViewItem, isLast: Bool) -> RowProtocol {
-        Row<GB14Cell>(
-                id: viewItem.coinCode,
-                height: .heightDoubleLineCell,
-                autoDeselect: true,
-                bind: { cell, _ in
-                    cell.set(backgroundStyle: .claude, isLast: isLast)
-                    MarketModule.bind(cell: cell, viewItem: viewItem)
-                },
-                action: { [weak self] _ in
-                    self?.onSelect(viewItem: viewItem)
-                }
-        )
+        Row<G14Cell>(
+            id: viewItem.coinCode,
+            height: .heightDoubleLineCell,
+            autoDeselect: true,
+            bind: { cell, _ in
+                cell.set(backgroundStyle: .transparent, isLast: isLast)
+                MarketModule.bind(cell: cell, viewItem: viewItem)
+            },
+            action: { [weak self] _ in
+                self?.onSelect(viewItem: viewItem)
+            })
     }
 
     private func onSelect(viewItem: MarketModule.MarketViewItem) {

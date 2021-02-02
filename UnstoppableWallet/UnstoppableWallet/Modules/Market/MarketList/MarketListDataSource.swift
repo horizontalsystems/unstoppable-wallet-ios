@@ -3,18 +3,8 @@ import RxRelay
 import XRatesKit
 
 protocol IMarketListDataSource {
-    var sortingFields: [MarketModule.SortingField] { get }
-
     var dataUpdatedObservable: Observable<()> { get }
     func itemsSingle(currencyCode: String) -> Single<[CoinMarket]>
-}
-
-extension IMarketListDataSource {
-
-    var sortingFields: [MarketModule.SortingField] {
-        [.highestCap, .lowestCap, .highestVolume, .lowestVolume, .highestPrice, .lowestPrice, .topGainers, .topLosers]
-    }
-
 }
 
 class MarketListDataSource {

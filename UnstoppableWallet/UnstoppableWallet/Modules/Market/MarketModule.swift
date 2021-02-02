@@ -9,7 +9,40 @@ struct MarketModule {
         return MarketViewController(viewModel: viewModel)
     }
 
-    static func bind(cell: GB14Cell, viewItem: MarketViewItem) {
+    static func color(rate: String) -> UIColor? {
+        switch rate.lowercased() {
+        case "a": return .themeYellowD
+        case "b": return .themeIssykBlue
+        case "c": return .themeGray
+        case "d": return .themeLightGray
+        default: return nil
+        }
+    }
+
+    static func marketFieldPreference(marketDataValue: MarketDataValue) -> (title: String?, value: String?, color: UIColor) {
+        let title: String?
+        let value: String?
+        let color: UIColor
+
+        switch marketDataValue {
+        case .diff(let diff):
+            title = nil
+            value = ValueFormatter.instance.format(percentValue: diff)
+            color = diff.isSignMinus ? .themeLucian : .themeRemus
+        case .volume(let volume):
+            title = "market.top.volume.title".localized
+            value = volume
+            color = .themeGray
+        case .marketCap(let marketCap):
+            title = "market.top.market_cap.title".localized
+            value = marketCap
+            color = .themeGray
+        }
+
+        return (title: title, value: value, color: color)
+    }
+
+    static func bind(cell: G14Cell, viewItem: MarketViewItem) {
         let image = UIImage.image(
                 coinCode: viewItem.coinCode,
                 blockchainType: viewItem.coinType?.blockchainType
@@ -19,28 +52,24 @@ struct MarketModule {
         cell.topText = viewItem.coinName
         cell.bottomText = viewItem.coinCode.uppercased()
 
-        cell.badgeText = viewItem.rank.title
-        if case let .score(_, rankColor) = viewItem.rank {
-            cell.badgeBackgroundColor = rankColor.color
-        } else {
-            cell.badgeBackgroundColor = .themeJeremy
+        cell.leftBadgeText = viewItem.score?.title
+
+        switch viewItem.score {
+        case let .rating(rate):
+            cell.leftBadgeBackgroundColor = color(rate: rate)
+            cell.leftBadgeTextColor = .themeDarker
+        case .rank:
+            cell.leftBadgeBackgroundColor = .themeJeremy
+            cell.leftBadgeTextColor = .themeGray
+        case .none: ()
         }
 
         cell.primaryValueText = viewItem.rate
-        switch viewItem.marketDataValue {
-        case .diff(let diff):
-            cell.secondaryTitleText = nil
-            cell.secondaryValueText = ValueFormatter.instance.format(percentValue: diff)
-            cell.secondaryValueTextColor = diff.isSignMinus ? .themeLucian : .themeRemus
-        case .volume(let volume):
-            cell.secondaryTitleText = "market.top.volume.title".localized
-            cell.secondaryValueText = volume
-            cell.secondaryValueTextColor = .themeGray
-        case .marketCap(let marketCap):
-            cell.secondaryTitleText = "market.top.market_cap.title".localized
-            cell.secondaryValueText = marketCap
-            cell.secondaryValueTextColor = .themeGray
-        }
+
+        let marketFieldData = marketFieldPreference(marketDataValue: viewItem.marketDataValue)
+        cell.secondaryTitleText = marketFieldData.title
+        cell.secondaryValueText = marketFieldData.value
+        cell.secondaryValueTextColor = marketFieldData.color
     }
 
 }
@@ -85,8 +114,6 @@ extension MarketModule {
     enum SortingField: Int, CaseIterable {
         case highestCap
         case lowestCap
-        case highestLiquidity
-        case lowestLiquidity
         case highestVolume
         case lowestVolume
         case highestPrice
@@ -96,8 +123,6 @@ extension MarketModule {
 
         var title: String {
             switch self {
-            case .highestLiquidity: return "market.top.highest_liquidity".localized
-            case .lowestLiquidity: return "market.top.lowest_liquidity".localized
             case .highestCap: return "market.top.highest_cap".localized
             case .lowestCap: return "market.top.lowest_cap".localized
             case .highestVolume: return "market.top.highest_volume".localized
@@ -124,18 +149,14 @@ extension MarketModule {
         }
     }
 
-    enum RankColor {
-        case a, b, c, d
-    }
-
-    enum Rank {
-        case index(String)
-        case score(title: String, color: RankColor)
+    enum Score {
+        case rank(String)
+        case rating(String)
 
         var title: String {
             switch self {
-            case .index(let index): return index
-            case .score(let title, _): return title
+            case .rank(let index): return index
+            case .rating(let title): return title
             }
         }
     }
@@ -147,7 +168,7 @@ extension MarketModule {
     }
 
     struct MarketViewItem {
-        let rank: Rank
+        let score: Score?
         let coinName: String
         let coinCode: String
         let coinType: CoinType?

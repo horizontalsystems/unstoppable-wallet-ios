@@ -323,8 +323,6 @@ bch.horizontalsystems.xyz/apg";
 "market.sort_by" = "Sort By";
 "market.changes" = "Changes";
 
-"market.top.highest_liquidity" = "Highest Liquidity";
-"market.top.lowest_liquidity" = "Lowest Liquidity";
 "market.top.highest_cap" = "Highest Cap";
 "market.top.lowest_cap" = "Lowest Cap";
 "market.top.highest_volume" = "Highest Volume";
