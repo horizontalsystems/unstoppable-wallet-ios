@@ -320,8 +320,6 @@
 "market.sort_by" = "Сортировать по";
 "market.changes" = "Изменения";
 
-"market.top.highest_liquidity" = "Самая высокая ликвидность";
-"market.top.lowest_liquidity" = "Самая низкая ликвидность";
 "market.top.highest_cap" = "Самый высокий кэп";
 "market.top.lowest_cap" = "Самый низкий кэп";
 "market.top.highest_volume" = "Самый высокий объем";
