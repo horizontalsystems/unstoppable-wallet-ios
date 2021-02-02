@@ -318,8 +318,6 @@
 "market.sort_by" = "Sortieren nach";
 "market.changes" = "Änderungen";
 
-"market.top.highest_liquidity" = "Höchste Liquidität";
-"market.top.lowest_liquidity" = "Niedrigste Liquidität";
 "market.top.highest_cap" = "Höchste Obergrenze";
 "market.top.lowest_cap" = "Niedrigste Obergrenze";
 "market.top.highest_volume" = "Höchstes Volumen";
