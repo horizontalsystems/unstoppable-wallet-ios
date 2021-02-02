@@ -318,8 +318,6 @@
 "market.sort_by" = "정렬 기준";
 "market.changes" = "변경";
 
-"market.top.highest_liquidity" = "최고 유동성";
-"market.top.lowest_liquidity" = "최저 유동성";
 "market.top.highest_cap" = "최고 총액";
 "market.top.lowest_cap" = "최저 총액";
 "market.top.highest_volume" = "최고 거래량";
