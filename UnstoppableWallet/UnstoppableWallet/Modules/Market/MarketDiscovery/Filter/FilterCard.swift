@@ -73,10 +73,16 @@ class FilterCard: UICollectionViewCell {
         titleTopConstraint?.isActive = selected
         titleBottomConstraint?.isActive = !selected
 
-        UIView.animate(withDuration: .themeAnimationDuration) { [weak self] in
-            self?.contentView.layoutIfNeeded()
-            self?.iconImageView.alpha = selected ?  0 : 1
-            self?.descriptionLabel.alpha = selected ?  1 : 0
+        UIView.animateKeyframes(withDuration: .themeAnimationDuration, delay: 0) { [weak self] in
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1) {
+                self?.contentView.layoutIfNeeded()
+                self?.iconImageView.alpha = selected ?  0 : 1
+            }
+
+            let descriptionAnimationStartTime: TimeInterval = selected ? 0.6 : 0
+            UIView.addKeyframe(withRelativeStartTime: descriptionAnimationStartTime, relativeDuration: 0.4) {
+                self?.descriptionLabel.alpha = selected ? 1 : 0
+            }
         }
 
         contentView.backgroundColor = selected ? .themeJacob : .themeLawrence
