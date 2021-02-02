@@ -5,7 +5,7 @@ import RxSwift
 
 class MarketMetricsCell: UITableViewCell {
     private static let ellipseDiameter: CGFloat = 124
-    static let cellHeight: CGFloat = 160 + 2 * .margin12
+    static let cellHeight: CGFloat = 156 + 2 * .margin12
 
     private let disposeBag = DisposeBag()
 
@@ -44,7 +44,7 @@ class MarketMetricsCell: UITableViewCell {
             maker.size.equalTo(Self.ellipseDiameter)
         }
 
-        ellipseView.image = UIImage(named: "ellipse_111")?.tinted(with: .themeClaude)
+        ellipseView.image = UIImage(named: "ellipse_111")?.tinted(with: .themeTyler)
 
         cardView.addSubview(marketLargeView)
         marketLargeView.snp.makeConstraints { maker in

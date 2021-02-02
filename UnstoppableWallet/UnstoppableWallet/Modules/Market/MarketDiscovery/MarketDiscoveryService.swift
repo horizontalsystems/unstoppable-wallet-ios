@@ -19,7 +19,7 @@ class MarketDiscoveryService {
     }
 
     private let stateRelay = BehaviorRelay<State>(value: .loading)
-    var items = [MarketListService.Item]()
+    var items = [MarketModule.Item]()
 
     init(currencyKit: ICurrencyKit, rateManager: IRateManager, categoriesProvider: MarketCategoriesProvider) {
         self.currencyKit = currencyKit
@@ -27,19 +27,6 @@ class MarketDiscoveryService {
         self.categoriesProvider = categoriesProvider
 
         fetch()
-    }
-
-    private func convertItem(score: MarketListService.Score?, topMarket: CoinMarket) -> MarketListService.Item {
-        MarketListService.Item(
-            score: score,
-            coinCode: topMarket.coin.code,
-            coinName: topMarket.coin.title,
-            coinType: topMarket.coin.type.flatMap { rateManager.convertXRateCoinTypeToCoinType(coinType: $0) },
-            marketCap: topMarket.marketInfo.marketCap,
-            liquidity: topMarket.marketInfo.liquidity,
-            price: topMarket.marketInfo.rate,
-            diff: topMarket.marketInfo.rateDiffPeriod,
-            volume: topMarket.marketInfo.volume)
     }
 
     private func fetch() {
@@ -63,11 +50,11 @@ class MarketDiscoveryService {
     }
 
     private func sync(items: [CoinMarket]) {
-        self.items = items.enumerated().compactMap { (index, topMarket) in
-            let score: MarketListService.Score?
+        self.items = items.enumerated().compactMap { (index, coinMarket) in
+            let score: MarketModule.Score?
             switch currentCategory {
             case .rated:
-                let rate = categoriesProvider.rate(for: topMarket.coin.code)
+                let rate = categoriesProvider.rate(for: coinMarket.coin.code)
                 guard !(rate?.isEmpty ?? true) else {
                     return nil
                 }
@@ -78,7 +65,7 @@ class MarketDiscoveryService {
             default:
                 score = nil
             }
-            return convertItem(score: score, topMarket: topMarket)
+            return MarketModule.Item(coinMarket: coinMarket, score: score)
         }
 
         stateRelay.accept(.loaded)
@@ -89,7 +76,8 @@ class MarketDiscoveryService {
 extension MarketDiscoveryService {
 
     public var currency: Currency {
-        currencyKit.baseCurrency
+        //todo: refactor to use current currency and handle changing
+        currencyKit.currencies.first { $0.code == "USD" } ?? currencyKit.currencies[0]
     }
 
     public var stateObservable: Observable<State> {

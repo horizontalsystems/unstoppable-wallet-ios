@@ -1,10 +1,10 @@
 import Foundation
+import CurrencyKit
 
 struct MarketWatchlistModule {
 
     static func viewController() -> MarketWatchlistViewController {
-        let dataSource = MarketWatchlistDataSource(rateManager: App.shared.rateManager, favoritesManager: App.shared.favoritesManager)
-        let service = MarketListService(currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManager, dataSource: dataSource)
+        let service = MarketWatchlistService(currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManager, favoritesManager: App.shared.favoritesManager)
 
         let viewModel = MarketWatchlistViewModel(service: service)
         return MarketWatchlistViewController(viewModel: viewModel)

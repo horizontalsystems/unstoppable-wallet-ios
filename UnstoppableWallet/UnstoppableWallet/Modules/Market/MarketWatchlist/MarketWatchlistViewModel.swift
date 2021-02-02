@@ -6,23 +6,23 @@ import RxCocoa
 class MarketWatchlistViewModel {
     private let disposeBag = DisposeBag()
 
-    public let service: MarketListService
+    public let service: MarketWatchlistService
 
-    private let viewItemsRelay = BehaviorRelay<[MarketModule.MarketViewItem]>(value: [])
+    private let viewItemsRelay = BehaviorRelay<[MarketModule.ViewItem]>(value: [])
     private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
     private var sortingField: MarketModule.SortingField
     private(set) var marketField: MarketModule.MarketField = .marketCap
 
-    init(service: MarketListService) {
+    init(service: MarketWatchlistService) {
         self.service = service
 
         sortingField = MarketModule.SortingField.allCases[0]
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
     }
 
-    private func sync(state: MarketListService.State) {
+    private func sync(state: MarketWatchlistService.State) {
         if case .loaded = state {
             syncViewItems()
         }
@@ -41,26 +41,8 @@ class MarketWatchlistViewModel {
     }
 
     private func syncViewItems() {
-        let viewItems: [MarketModule.MarketViewItem] = service.items.sort(by: sortingField).map {
-            let marketDataValue: MarketModule.MarketDataValue
-            switch marketField {
-            case .price: marketDataValue = .diff($0.diff)
-            case .volume:
-                marketDataValue = .volume(CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0.volume) ?? "-")
-            case .marketCap:
-                marketDataValue = .marketCap(CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0.marketCap) ?? "-")
-            }
-            let rateValue = CurrencyValue(currency: service.currency, value: $0.price)
-            let rate = ValueFormatter.instance.format(currencyValue: rateValue) ?? ""
-
-            return MarketModule.MarketViewItem(
-                    score: nil,
-                    coinName: $0.coinName,
-                    coinCode: $0.coinCode,
-                    coinType: $0.coinType,
-                    rate: rate,
-                    marketDataValue: marketDataValue
-            )
+        let viewItems: [MarketModule.ViewItem] = service.items.sort(by: sortingField).map {
+            MarketModule.ViewItem(item: $0, marketField: marketField, currency: service.currency)
         }
 
         viewItemsRelay.accept(viewItems)
@@ -74,7 +56,7 @@ extension MarketWatchlistViewModel {
         sortingField.title
     }
 
-    public var viewItemsDriver: Driver<[MarketModule.MarketViewItem]> {
+    public var viewItemsDriver: Driver<[MarketModule.ViewItem]> {
         viewItemsRelay.asDriver()
     }
 

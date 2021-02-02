@@ -6,19 +6,19 @@ import RxCocoa
 class MarketOverviewViewModel {
     private let disposeBag = DisposeBag()
 
-    private let service: MarketListService
+    private let service: MarketOverviewService
 
     private let viewItemsRelay = BehaviorRelay<[Section]>(value: [])
     private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
-    init(service: MarketListService) {
+    init(service: MarketOverviewService) {
         self.service = service
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
     }
 
-    private func sync(state: MarketListService.State) {
+    private func sync(state: MarketOverviewService.State) {
         if case .loaded = state {
             syncViewItems()
         }
@@ -37,38 +37,13 @@ class MarketOverviewViewModel {
     }
 
     private func sectionItems(by listType: MarketModule.ListType, count: Int = 3) -> Section {
-        let viewItems: [MarketModule.MarketViewItem] = Array(service.items.sort(by: listType.sortingField).map { item in
-            let rateValue = CurrencyValue(currency: service.currency, value: item.price)
-
-            let marketDataValue: MarketModule.MarketDataValue
-            switch listType.marketField {
-            case .volume:
-                marketDataValue = .volume(CurrencyCompactFormatter.instance.format(currency: service.currency, value: item.volume) ?? "n/a".localized)
-            default:
-                marketDataValue = .diff(item.diff)
+        let viewItems: [MarketModule.ViewItem] = Array(service.items
+            .sort(by: listType.sortingField)
+            .map {
+                MarketModule.ViewItem(item: $0, marketField: listType.marketField, currency: service.currency)
             }
-
-            let rate = ValueFormatter.instance.format(currencyValue: rateValue) ?? "n/a".localized
-
-            let scoreViewItem: MarketModule.Score?
-            switch item.score {
-            case .rank(let index):
-                scoreViewItem = .rank(index.description)
-            case .rating(let rating):
-                scoreViewItem = .rating(rating)
-            case .none:
-                scoreViewItem = nil
-            }
-
-            return MarketModule.MarketViewItem(
-                    score: scoreViewItem,
-                    coinName: item.coinName,
-                    coinCode: item.coinCode,
-                    coinType: item.coinType,
-                    rate: rate,
-                    marketDataValue: marketDataValue
-            )
-        }.prefix(count))
+            .prefix(count)
+        )
 
         return Section(listType: listType, viewItems: viewItems)
     }
@@ -109,7 +84,7 @@ extension MarketOverviewViewModel {
 
     struct Section {
         let listType: MarketModule.ListType
-        let viewItems: [MarketModule.MarketViewItem]
+        let viewItems: [MarketModule.ViewItem]
     }
 
 }
