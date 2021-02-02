@@ -318,8 +318,6 @@
 "market.sort_by" = "排序方式";
 "market.changes" = "更改";
 
-"market.top.highest_liquidity" = "最高流动性";
-"market.top.lowest_liquidity" = "最低流动性";
 "market.top.highest_cap" = "最高市场价值";
 "market.top.lowest_cap" = "最低市场价值";
 "market.top.highest_volume" = "最高交易量";
