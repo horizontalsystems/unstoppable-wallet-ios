@@ -87,7 +87,7 @@ class MarketOverviewViewController: ThemeViewController {
         )
     }
 
-    private func row(viewItem: MarketModule.MarketViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
+    private func row(viewItem: MarketModule.ViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
         Row<G14Cell>(
                 id: viewItem.coinCode,
                 height: .heightDoubleLineCell,
@@ -102,8 +102,8 @@ class MarketOverviewViewController: ThemeViewController {
         )
     }
 
-    private func onSelect(viewItem: MarketModule.MarketViewItem) {
-        let viewController = ChartRouter.module(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinName, coinType: viewItem.coinType))
+    private func onSelect(viewItem: MarketModule.ViewItem) {
+        let viewController = ChartRouter.module(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinName, coinType: nil))
         parentNavigationController?.pushViewController(viewController, animated: true)
     }
 

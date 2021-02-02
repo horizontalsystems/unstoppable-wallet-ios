@@ -1,8 +1,9 @@
 import UIKit
 import ThemeKit
+import XRatesKit
+import CurrencyKit
 
 struct MarketModule {
-
     static func viewController() -> UIViewController {
         let service = MarketService(localStorage: App.shared.localStorage)
         let viewModel = MarketViewModel(service: service)
@@ -42,10 +43,9 @@ struct MarketModule {
         return (title: title, value: value, color: color)
     }
 
-    static func bind(cell: G14Cell, viewItem: MarketViewItem) {
+    static func bind(cell: G14Cell, viewItem: ViewItem) {
         let image = UIImage.image(
-                coinCode: viewItem.coinCode,
-                blockchainType: viewItem.coinType?.blockchainType
+                coinCode: viewItem.coinCode
         ) ?? UIImage(named: "placeholder")
 
         cell.leftImage = image
@@ -149,7 +149,62 @@ extension MarketModule {
         }
     }
 
+}
+
+extension MarketModule { // Service Items
+
     enum Score {
+        case rank(Int)
+        case rating(String)
+    }
+
+    struct Item {
+        let score: Score?
+        let coinCode: String
+        let coinName: String
+        let marketCap: Decimal
+        let liquidity: Decimal?
+        let price: Decimal
+        let diff: Decimal
+        let volume: Decimal
+
+        init(coinMarket: CoinMarket, score: Score? = nil) {
+            self.score = score
+
+            coinCode = coinMarket.coin.code
+            coinName = coinMarket.coin.title
+            marketCap = coinMarket.marketInfo.marketCap
+            liquidity = coinMarket.marketInfo.liquidity
+            price = coinMarket.marketInfo.rate
+            diff = coinMarket.marketInfo.rateDiffPeriod
+            volume = coinMarket.marketInfo.volume
+        }
+    }
+
+}
+
+extension Array where Element == MarketModule.Item {
+
+    func sort(by sortingField: MarketModule.SortingField) -> [MarketModule.Item] {
+        sorted { item, item2 in
+            switch sortingField {
+            case .highestCap: return item.marketCap > item2.marketCap
+            case .lowestCap: return item.marketCap < item2.marketCap
+            case .highestVolume: return item.volume > item2.volume
+            case .lowestVolume: return item.volume < item2.volume
+            case .highestPrice: return item.price > item2.price
+            case .lowestPrice: return item.price < item2.price
+            case .topGainers: return item.diff > item2.diff
+            case .topLosers: return item.diff < item2.diff
+            }
+        }
+    }
+
+}
+
+extension MarketModule {  // ViewModel Items
+
+    enum ViewScore {
         case rank(String)
         case rating(String)
 
@@ -167,13 +222,33 @@ extension MarketModule {
         case marketCap(String)
     }
 
-    struct MarketViewItem {
-        let score: Score?
+    struct ViewItem {
+        let score: ViewScore?
         let coinName: String
         let coinCode: String
-        let coinType: CoinType?
         let rate: String
         let marketDataValue: MarketDataValue
+
+        init(item: Item, marketField: MarketField, currency: Currency) {
+            switch marketField {
+            case .price: marketDataValue = .diff(item.diff)
+            case .volume: marketDataValue = .volume(CurrencyCompactFormatter.instance.format(currency: currency, value: item.volume) ?? "-")
+            case .marketCap: marketDataValue = .marketCap(CurrencyCompactFormatter.instance.format(currency: currency, value: item.marketCap) ?? "-")
+            }
+
+            coinCode = item.coinCode
+            coinName = item.coinName
+
+            let rateValue = CurrencyValue(currency: currency, value: item.price)
+            rate = ValueFormatter.instance.format(currencyValue: rateValue) ?? ""
+
+            switch item.score {
+            case .rank(let index): score = .rank(index.description)
+            case .rating(let rating): score = .rating(rating)
+            case .none: score = nil
+            }
+
+        }
     }
 
 }

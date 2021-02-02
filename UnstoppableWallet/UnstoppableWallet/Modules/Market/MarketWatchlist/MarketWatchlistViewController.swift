@@ -14,7 +14,7 @@ class MarketWatchlistViewController: ThemeViewController {
 
     weak var parentNavigationController: UINavigationController?
 
-    private var viewItems = [MarketModule.MarketViewItem]()
+    private var viewItems = [MarketModule.ViewItem]()
 
     init(viewModel: MarketWatchlistViewModel) {
         self.viewModel = viewModel
@@ -53,7 +53,7 @@ class MarketWatchlistViewController: ThemeViewController {
         tableView.buildSections()
     }
 
-    private func sync(viewItems: [MarketModule.MarketViewItem]) {
+    private func sync(viewItems: [MarketModule.ViewItem]) {
         self.viewItems = viewItems
 
         tableView.reload()
@@ -97,7 +97,7 @@ class MarketWatchlistViewController: ThemeViewController {
         present(alertController, animated: true)
     }
 
-    private func row(viewItem: MarketModule.MarketViewItem, isLast: Bool) -> RowProtocol {
+    private func row(viewItem: MarketModule.ViewItem, isLast: Bool) -> RowProtocol {
         Row<G14Cell>(
             id: viewItem.coinCode,
             height: .heightDoubleLineCell,
@@ -111,8 +111,8 @@ class MarketWatchlistViewController: ThemeViewController {
             })
     }
 
-    private func onSelect(viewItem: MarketModule.MarketViewItem) {
-        let viewController = ChartRouter.module(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinName, coinType: viewItem.coinType))
+    private func onSelect(viewItem: MarketModule.ViewItem) {
+        let viewController = ChartRouter.module(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinName, coinType: nil))
         parentNavigationController?.pushViewController(viewController, animated: true)
     }
 
