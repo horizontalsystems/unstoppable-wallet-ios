@@ -37,7 +37,8 @@ class MarketDiscoveryService {
 
         let single: Single<[CoinMarket]>
         if let category = currentCategory {
-            let coinCodes = categoriesProvider.coinCodes(for: category == .rated ? nil : category.rawValue)
+//            let coinCodes = categoriesProvider.coinCodes(for: category == .rated ? nil : category.rawValue)
+            let coinCodes = categoriesProvider.coinCodes(for: category.rawValue)
             single = rateManager.coinsMarketSingle(currencyCode: currencyKit.baseCurrency.code, coinCodes: coinCodes)
         } else {
             single = rateManager.topMarketsSingle(currencyCode: currencyKit.baseCurrency.code, itemCount: 250)
@@ -53,13 +54,13 @@ class MarketDiscoveryService {
         self.items = items.enumerated().compactMap { (index, coinMarket) in
             let score: MarketModule.Score?
             switch currentCategory {
-            case .rated:
-                let rate = categoriesProvider.rate(for: coinMarket.coin.code)
-                guard !(rate?.isEmpty ?? true) else {
-                    return nil
-                }
-
-                score = rate.flatMap { $0.isEmpty ? nil : .rating($0) }
+//            case .rated:
+//                let rate = categoriesProvider.rate(for: coinMarket.coin.code)
+//                guard !(rate?.isEmpty ?? true) else {
+//                    return nil
+//                }
+//
+//                score = rate.flatMap { $0.isEmpty ? nil : .rating($0) }
             case .none:
                 score = .rank(index + 1)
             default:
