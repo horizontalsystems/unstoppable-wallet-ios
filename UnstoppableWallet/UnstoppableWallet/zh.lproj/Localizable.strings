@@ -304,6 +304,8 @@
 "market.defi_cap" = "DeFi市场价值";
 "market.defi_tvl" = "DeFi中的TVL";
 
+"market.sync_error" = "Sync Error";
+
 "market.top.section.header.see_all" = "查看全部";
 "market.top.section.header.top_gainers" = "最高盈利";
 "market.top.section.header.top_loosers" = "最高受损";
