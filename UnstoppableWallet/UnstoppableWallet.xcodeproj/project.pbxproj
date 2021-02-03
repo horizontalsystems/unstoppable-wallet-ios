@@ -1797,6 +1797,7 @@
 		58AAA6FD8C7EE715B791F566 /* SendFeeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6205C47965E48E4BAC3 /* SendFeeView.swift */; };
 		58AAA70DA6DB5AE33CA2DBD9 /* FullTransactionInfoProviderFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4D67CF8410B7F073319 /* FullTransactionInfoProviderFactoryTests.swift */; };
 		58AAA71527931A59BCC2DF29 /* FiatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7A1FC5676A8CB0021CA /* FiatService.swift */; };
+		58AAA7217BF975D4D6F45128 /* CautionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5BB11003A1862BDCEA6 /* CautionView.swift */; };
 		58AAA72BF33F0AF251128499 /* PingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA3CCBFC02D7F6438DE3E /* PingManager.swift */; };
 		58AAA73C535D82C9DD991417 /* FullTransactionInfoInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA12F81B0D2587DB52D94 /* FullTransactionInfoInteractorTests.swift */; };
 		58AAA741A17DE37F1FBD7156 /* InfoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD7AC450FEF913E5417F /* InfoModule.swift */; };
@@ -1827,6 +1828,7 @@
 		58AAA87153C727D520EE3557 /* RateListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA31FF3C379E7AFD16C94 /* RateListViewController.swift */; };
 		58AAA8730B0F7AE6122B863D /* SwapTradeOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF6ED404054D799B32E7 /* SwapTradeOptionsViewModel.swift */; };
 		58AAA87CA53468D7169FA265 /* ChartTypeIntervalConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8CCC7252ECFFDC51578 /* ChartTypeIntervalConverter.swift */; };
+		58AAA87CCD4D7A071F773757 /* CautionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6D10B39575B1E5D3954 /* CautionView.swift */; };
 		58AAA88B26D590A1BA7EA124 /* SendFeeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6205C47965E48E4BAC3 /* SendFeeView.swift */; };
 		58AAA896F016F14080F80079 /* RecipientAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAACB246BA843EA8627D9B /* RecipientAddressViewModel.swift */; };
 		58AAA8A2E62A986089EFFED1 /* FullTransactionInfoProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4679CB188876817185B /* FullTransactionInfoProviderTests.swift */; };
@@ -1936,6 +1938,7 @@
 		58AAACB6E152D982AFFDE7A3 /* BackupWordsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA09DA724157D53259309 /* BackupWordsCell.swift */; };
 		58AAACB8B91002B5578F18BE /* SwapTradeOptionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAA441653483BACFA564E /* SwapTradeOptionsService.swift */; };
 		58AAACB9409D23B076794CA4 /* LastBlockInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9D55F97CE089EC67766 /* LastBlockInfo.swift */; };
+		58AAACD0B47DDDD2E7F6B019 /* CautionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5BB11003A1862BDCEA6 /* CautionView.swift */; };
 		58AAACD7A57AA93736CDB54D /* SwapApproveAmountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA1233617C06AC975285A /* SwapApproveAmountView.swift */; };
 		58AAACEDCB8C71F78A4EE72D /* LockScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4A027BD92BD062748CC /* LockScreenController.swift */; };
 		58AAACF69195400BFD9AE04E /* BackupModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA88D3ED8D5570474B589 /* BackupModule.swift */; };
@@ -1973,6 +1976,7 @@
 		58AAAE4456D5FD8002A71F29 /* SendFeePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6C29584EFCDD8209363 /* SendFeePresenter.swift */; };
 		58AAAE5B44096255591C5F0F /* MarketOverviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA43E8D805F2CF705EDEA /* MarketOverviewService.swift */; };
 		58AAAE666BAD91283206BA1C /* SwapApproveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA43491E0E4F17D020455 /* SwapApproveViewModel.swift */; };
+		58AAAE714AF684C58CB4C8D9 /* CautionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6D10B39575B1E5D3954 /* CautionView.swift */; };
 		58AAAE8294960D8E52FB9C6C /* SwapSlippageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAA99B654719E4777DF3C /* SwapSlippageViewModel.swift */; };
 		58AAAE86B7C201A1E096E78F /* ChartModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA744EE8408F5FF940B9A /* ChartModule.swift */; };
 		58AAAE86C076E1C7418874D3 /* BackupConfirmationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA2D3E1840EA8931E12D0 /* BackupConfirmationRouter.swift */; };
@@ -1995,6 +1999,7 @@
 		58AAAF136638706D73F2D937 /* ChartRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5945ADC3279D803E8FC /* ChartRouter.swift */; };
 		58AAAF1386F8AC9AA6058A68 /* SendAmountPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0DEFC3C5CD097CF3FF4 /* SendAmountPresenter.swift */; };
 		58AAAF1F37DECF9E02E9FEB6 /* MarketListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4BC2A3A101A2276F906 /* MarketListHeaderView.swift */; };
+		58AAAF2827254D9E17223AFD /* CautionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5BB11003A1862BDCEA6 /* CautionView.swift */; };
 		58AAAF38117DDD5A5CB9BFE7 /* SendAddressModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA07EAD7DFA4B9CDA00C8 /* SendAddressModule.swift */; };
 		58AAAF3B036996C53A18991C /* SendAmountInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD6F502BE56E4FECFBA0 /* SendAmountInteractor.swift */; };
 		58AAAF3B68B9F64DF20FA5AB /* FeeSliderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC2D03916C80C8DC5FE5 /* FeeSliderWrapper.swift */; };
@@ -2854,7 +2859,6 @@
 		58AAA18F75B95ACBBAE94DF3 /* DebugLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugLogger.swift; sourceTree = "<group>"; };
 		58AAA24B6EB7103CB072A53D /* FeeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeSlider.swift; sourceTree = "<group>"; };
 		58AAA251C8ADF1AE43EAF65F /* SwapApproveModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapApproveModule.swift; sourceTree = "<group>"; };
-		58AAA280397EA2B76064FA07 /* RateDiffLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateDiffLabel.swift; sourceTree = "<group>"; };
 		58AAA2833E26BB948D3E06D2 /* BackupConfirmationModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupConfirmationModule.swift; sourceTree = "<group>"; };
 		58AAA28AAA6976AA8A84D918 /* RateListPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateListPresenter.swift; sourceTree = "<group>"; };
 		58AAA28ABE08D74D89C2BF50 /* ChartRateFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartRateFactory.swift; sourceTree = "<group>"; };
@@ -2893,6 +2897,7 @@
 		58AAA5AE34C515816D2D4977 /* DoubleSpendInfoRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSpendInfoRouter.swift; sourceTree = "<group>"; };
 		58AAA5B958B9F7D75D37A42A /* EmojiHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiHelperTests.swift; sourceTree = "<group>"; };
 		58AAA5B9EF4DD882EF4020C5 /* LockScreenModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockScreenModule.swift; sourceTree = "<group>"; };
+		58AAA5BB11003A1862BDCEA6 /* CautionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CautionView.swift; sourceTree = "<group>"; };
 		58AAA5F63E9C788A68C8AF5A /* BackupPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupPresenter.swift; sourceTree = "<group>"; };
 		58AAA6021E4709D0ED818A18 /* ChartInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartInteractor.swift; sourceTree = "<group>"; };
 		58AAA610E99CF0429135DD1D /* ConnectionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionError.swift; sourceTree = "<group>"; };
@@ -2904,6 +2909,7 @@
 		58AAA681BF5F2CBDCD0D8898 /* SwapApproveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapApproveViewController.swift; sourceTree = "<group>"; };
 		58AAA68E59622ED7B1FCB3D7 /* ChartDoubleLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartDoubleLineView.swift; sourceTree = "<group>"; };
 		58AAA6C29584EFCDD8209363 /* SendFeePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeePresenter.swift; sourceTree = "<group>"; };
+		58AAA6D10B39575B1E5D3954 /* CautionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CautionView.swift; sourceTree = "<group>"; };
 		58AAA6FB0AF97333CD9D007F /* InfoSeparatorHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoSeparatorHeaderView.swift; sourceTree = "<group>"; };
 		58AAA705C07A98577339714D /* D9CollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = D9CollectionCell.swift; sourceTree = "<group>"; };
 		58AAA72BD42697A894C2383C /* DoubleSpendInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSpendInfoViewController.swift; sourceTree = "<group>"; };
@@ -4033,7 +4039,7 @@
 				11B352E52084020190C21D8C /* InputView.swift */,
 				11B355B546A9CA0324F2F0AE /* AmountInputView.swift */,
 				11B35743158763BD8E336770 /* InputPrefixWrapperView.swift */,
-				58AAA280397EA2B76064FA07 /* RateDiffLabel.swift */,
+				58AAA5BB11003A1862BDCEA6 /* CautionView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -4514,6 +4520,7 @@
 			isa = PBXGroup;
 			children = (
 				D3373DCC20C6B21C0082BC4A /* RestoreWordsViewController.swift */,
+				58AAA6D10B39575B1E5D3954 /* CautionView.swift */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -6230,6 +6237,8 @@
 				11B35AFD184A69136B4CA0D9 /* MarketService.swift in Sources */,
 				58AAA624521FD7206993DAC3 /* MarketWatchlistService.swift in Sources */,
 				58AAA6E35BC43FC07EF949E2 /* MarketOverviewService.swift in Sources */,
+				58AAAE714AF684C58CB4C8D9 /* CautionView.swift in Sources */,
+				58AAA7217BF975D4D6F45128 /* CautionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6990,6 +6999,7 @@
 				11B35BC88B04B3F61667B4D0 /* MarketService.swift in Sources */,
 				58AAAA8975F5B63340672D00 /* MarketWatchlistService.swift in Sources */,
 				58AAA00D10602392A56A98EE /* MarketOverviewService.swift in Sources */,
+				58AAACD0B47DDDD2E7F6B019 /* CautionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7712,6 +7722,8 @@
 				11B35CC3E3265780ED4195AB /* MarketService.swift in Sources */,
 				58AAA8D67EB6C19719BD760B /* MarketWatchlistService.swift in Sources */,
 				58AAAE5B44096255591C5F0F /* MarketOverviewService.swift in Sources */,
+				58AAA87CCD4D7A071F773757 /* CautionView.swift in Sources */,
+				58AAAF2827254D9E17223AFD /* CautionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
