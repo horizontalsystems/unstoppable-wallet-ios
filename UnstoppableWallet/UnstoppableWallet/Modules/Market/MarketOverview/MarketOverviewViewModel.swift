@@ -4,39 +4,39 @@ import RxRelay
 import RxCocoa
 
 class MarketOverviewViewModel {
+    private let service: MarketOverviewService
     private let disposeBag = DisposeBag()
 
-    private let service: MarketOverviewService
-
-    private let viewItemsRelay = BehaviorRelay<[Section]>(value: [])
-    private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
-    private let errorRelay = BehaviorRelay<String?>(value: nil)
+    private let stateRelay = BehaviorRelay<State>(value: .loading)
 
     init(service: MarketOverviewService) {
         self.service = service
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+
+        sync(state: service.state)
     }
 
     private func sync(state: MarketOverviewService.State) {
-        if case .loaded = state {
-            syncViewItems()
-        }
-
-        if case .loading = state {
-            isLoadingRelay.accept(true)
-        } else {
-            isLoadingRelay.accept(false)
-        }
-
-        if case let .error(error: error) = state {
-            errorRelay.accept(error.smartDescription)
-        } else {
-            errorRelay.accept(nil)
+        switch state {
+        case .loading:
+            switch stateRelay.value {
+            case .loading, .error:
+                stateRelay.accept(.loading)
+            default: ()
+            }
+        case .loaded:
+            stateRelay.accept(.loaded(sectionViewItems: [
+                sectionViewItem(by: .topGainers),
+                sectionViewItem(by: .topLosers),
+                sectionViewItem(by: .topVolume)
+            ]))
+        case .failed:
+            stateRelay.accept(.error(description: "market.sync_error".localized))
         }
     }
 
-    private func sectionItems(by listType: MarketModule.ListType, count: Int = 3) -> Section {
+    private func sectionViewItem(by listType: MarketModule.ListType, count: Int = 3) -> SectionViewItem {
         let viewItems: [MarketModule.ViewItem] = Array(service.items
             .sort(by: listType.sortingField)
             .map {
@@ -45,33 +45,15 @@ class MarketOverviewViewModel {
             .prefix(count)
         )
 
-        return Section(listType: listType, viewItems: viewItems)
-    }
-
-    private func syncViewItems() {
-        let sections = [
-            sectionItems(by: .topGainers),
-            sectionItems(by: .topLosers),
-            sectionItems(by: .topVolume)
-        ]
-
-        viewItemsRelay.accept(sections)
+        return SectionViewItem(listType: listType, viewItems: viewItems)
     }
 
 }
 
 extension MarketOverviewViewModel {
 
-    var viewItemsDriver: Driver<[Section]> {
-        viewItemsRelay.asDriver()
-    }
-
-    var isLoadingDriver: Driver<Bool> {
-        isLoadingRelay.asDriver()
-    }
-
-    var errorDriver: Driver<String?> {
-        errorRelay.asDriver()
+    var stateDriver: Driver<State> {
+        stateRelay.asDriver()
     }
 
     func refresh() {
@@ -82,9 +64,15 @@ extension MarketOverviewViewModel {
 
 extension MarketOverviewViewModel {
 
-    struct Section {
+    struct SectionViewItem {
         let listType: MarketModule.ListType
         let viewItems: [MarketModule.ViewItem]
+    }
+
+    enum State {
+        case loading
+        case loaded(sectionViewItems: [SectionViewItem])
+        case error(description: String)
     }
 
 }
