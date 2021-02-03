@@ -40,7 +40,7 @@ class MarketDiscoveryService {
             let coinCodes = categoriesProvider.coinCodes(for: category == .rated ? nil : category.rawValue)
             single = rateManager.coinsMarketSingle(currencyCode: currencyKit.baseCurrency.code, coinCodes: coinCodes)
         } else {
-            single = rateManager.topMarketsSingle(currencyCode: currencyKit.baseCurrency.code)
+            single = rateManager.topMarketsSingle(currencyCode: currencyKit.baseCurrency.code, itemCount: 250)
         }
 
         discoveryItemsDisposable = single

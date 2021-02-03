@@ -31,9 +31,9 @@ class MarketMetricView: UIView {
         addSubview(gradientBar)
         gradientBar.snp.makeConstraints { maker in
             maker.leading.equalToSuperview()
-            maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin6)
-            maker.width.equalTo(GradientPercentBar.width)
             maker.height.equalTo(GradientPercentBar.height)
+            maker.width.equalTo(GradientPercentBar.width)
+            maker.bottom.equalToSuperview()
         }
 
         addSubview(valueLabel)
@@ -44,7 +44,6 @@ class MarketMetricView: UIView {
         }
 
         valueLabel.font = .subhead2
-        valueLabel.textColor = .themeBran
 
         addSubview(diffLabel)
         diffLabel.snp.makeConstraints { maker in
@@ -65,9 +64,11 @@ class MarketMetricView: UIView {
 
 extension MarketMetricView {
 
-    public func set(title: String?, value: String?, diff: Decimal?) {
+    public func set(title: String, value: String?, diff: Decimal?) {
         titleLabel.text = title
-        valueLabel.text = value
+
+        valueLabel.textColor = value == nil ? .themeGray50 : .themeBran
+        valueLabel.text = value ?? "n/a".localized
 
         guard let diff = diff else {
             diffLabel.set(value: nil)
@@ -83,7 +84,7 @@ extension MarketMetricView {
     public func clear() {
         titleLabel.text = nil
         valueLabel.text = nil
-        diffLabel.set(value: nil)
+        diffLabel.clear()
     }
 
 }
