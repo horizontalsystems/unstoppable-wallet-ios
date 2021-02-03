@@ -304,6 +304,8 @@
 "market.defi_cap" = "DeFi-Obergrenze";
 "market.defi_tvl" = "TVL in DeFi";
 
+"market.sync_error" = "Sync Error";
+
 "market.top.section.header.see_all" = "Alle anzeigen";
 "market.top.section.header.top_gainers" = "Top-Gewinner";
 "market.top.section.header.top_loosers" = "Top-Verlierer";
