@@ -27,7 +27,7 @@ class MarketOverviewService {
 
         stateRelay.accept(.loading)
 
-        topItemsDisposable = rateManager.topMarketsSingle(currencyCode: currency.code)
+        topItemsDisposable = rateManager.topMarketsSingle(currencyCode: currency.code, itemCount: 250)
                 .subscribe(onSuccess: { [weak self] in self?.sync(items: $0) })
 
         topItemsDisposable?.disposed(by: disposeBag)

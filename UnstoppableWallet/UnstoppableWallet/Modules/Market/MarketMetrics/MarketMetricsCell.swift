@@ -84,7 +84,7 @@ class MarketMetricsCell: UITableViewCell {
             maker.width.equalTo(MarketMetricView.width)
         }
 
-        subscribe(disposeBag, viewModel.metricsDriver) { [weak self] in self?.bind(marketMetrics: $0)}
+        subscribe(disposeBag, viewModel.metricsDriver) { [weak self] in self?.bind(marketMetrics: $0) }
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -35,8 +35,8 @@ class MarketMetricsViewModel {
 
         guard let totalMarketCap = formatter.format(currency: service.currency, value: marketInfo.marketCap),
               let volume24h = formatter.format(currency: service.currency, value: marketInfo.volume24h),
-              let defiCap = formatter.format(currency: service.currency, value: marketInfo.defiMarketCap),
-              let defiTvl = formatter.format(currency: service.currency, value: marketInfo.defiTvl) else {
+              let defiCap = formatter.format(currency: service.currency, value: marketInfo.defiMarketCap) else {
+//              let defiTvl = formatter.format(currency: service.currency, value: marketInfo.defiTvl) else {
 
             return nil
         }
@@ -45,8 +45,8 @@ class MarketMetricsViewModel {
             totalMarketCap: MetricData(value: totalMarketCap, diff: marketInfo.marketCapDiff24h),
             volume24h: MetricData(value: volume24h, diff: marketInfo.volume24hDiff24h),
             btcDominance: MetricData(value: "\(marketInfo.btcDominance)%", diff: marketInfo.btcDominanceDiff24h),
-            defiCap: MetricData(value: defiCap, diff: marketInfo.defiMarketCapDiff24h),
-            defiTvl: MetricData(value: defiTvl, diff: marketInfo.defiTvlDiff24h))
+            defiCap: MetricData(value: defiCap, diff: nil),
+            defiTvl: MetricData(value: nil, diff: nil))
     }
 
 }
@@ -74,8 +74,8 @@ extension MarketMetricsViewModel {
 extension MarketMetricsViewModel {
 
     struct MetricData {
-        let value: String
-        let diff: Decimal
+        let value: String?
+        let diff: Decimal?
     }
 
     struct MarketMetrics {

@@ -15,7 +15,6 @@ class GradientPercentBar: UIView {
     init() {
         super.init(frame: .zero)
 
-        backgroundColor = .clear
         layer.cornerRadius = .cornerRadius05x
         clipsToBounds = true
 
@@ -117,9 +116,10 @@ extension GradientPercentBar {
                 hide(layer: gradientLayer, animated: animated)
                 currentValue = nil
             }
-
+            backgroundColor = .themeGray50
             return
         }
+        backgroundColor = .clear
 
         guard let currentValue = currentValue else {        // alpha change from nil to new (show)
             gradientLayer.contents = (value >= 0 ? Self.positiveGradient : Self.negativeGradient)?.cgImage

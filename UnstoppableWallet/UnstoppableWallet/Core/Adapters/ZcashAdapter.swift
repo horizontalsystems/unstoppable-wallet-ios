@@ -9,7 +9,7 @@ class ZcashAdapter {
     private let disposeBag = DisposeBag()
 
     private static let coinRate = Decimal(ZcashSDK.ZATOSHI_PER_ZEC)
-    let fee = Decimal(ZcashSDK.MINERS_FEE_ZATOSHI) / ZcashAdapter.coinRate
+    var fee: Decimal { defaultFee() }
 
     private let saplingDownloader = DownloadService(queueLabel: "io.SaplingDownloader")
     private let synchronizer: SDKSynchronizer
@@ -32,6 +32,16 @@ class ZcashAdapter {
         }
     }
     private(set) var transactionState: AdapterState
+
+    private func defaultFee(height: Int? = nil) -> Decimal {
+        let fee: Int64
+        if let lastBlockHeight = height {
+            fee = ZcashSDK.defaultFee(for: lastBlockHeight)
+        } else {
+            fee = ZcashSDK.defaultFee()
+        }
+        return Decimal(fee) / Self.coinRate
+    }
 
     init(wallet: Wallet, syncMode: SyncMode?, testMode: Bool) throws {
         guard case let .zcash(words, birthdayHeight) = wallet.account.type else {
@@ -171,7 +181,6 @@ class ZcashAdapter {
         }
 
         let showRawTransaction = transaction.minedHeight == nil || transaction.failed
-
         return TransactionRecord(
                 uid: transaction.transactionHash,
                 transactionHash: transaction.transactionHash,
@@ -181,7 +190,7 @@ class ZcashAdapter {
                 blockHeight: transaction.minedHeight,
                 confirmationsThreshold: ZcashSDK.DEFAULT_REWIND_DISTANCE,
                 amount: Decimal(transaction.value) / Self.coinRate,
-                fee: fee,
+                fee: defaultFee(height: transaction.minedHeight),
                 date: Date(timeIntervalSince1970: transaction.timestamp),
                 failed: transaction.failed,
                 from: nil,

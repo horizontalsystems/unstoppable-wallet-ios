@@ -2,7 +2,6 @@ import UIKit
 import SnapKit
 
 class RateDiffLabel: UILabel {
-    private let label = UILabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -16,7 +15,8 @@ class RateDiffLabel: UILabel {
 
     func set(value: Decimal?, highlightText: Bool = true) {
         guard let value = value else {
-            label.text = nil
+            text = "----"
+            textColor = .themeGray50
             return
         }
 
@@ -24,6 +24,10 @@ class RateDiffLabel: UILabel {
         textColor = highlightText ? color : .themeGray
 
         text = ValueFormatter.instance.format(percentValue: value)
+    }
+
+    func clear() {
+        text = nil
     }
 
 }

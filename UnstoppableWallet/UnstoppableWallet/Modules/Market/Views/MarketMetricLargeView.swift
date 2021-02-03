@@ -83,7 +83,7 @@ extension MarketMetricLargeView {
     public func clear() {
         titleLabel.text = nil
         valueLabel.text = nil
-        diffLabel.set(value: nil)
+        diffLabel.clear()
     }
 
 }
