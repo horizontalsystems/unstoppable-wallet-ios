@@ -306,6 +306,8 @@
 "market.defi_cap" = "Рыночная стоимость DeFi";
 "market.defi_tvl" = "TVL в DeFi";
 
+"market.sync_error" = "Sync Error";
+
 "market.top.section.header.see_all" = "Показать все";
 "market.top.section.header.top_gainers" = "Лучшие майнеры";
 "market.top.section.header.top_loosers" = "Топ прогоревших";
