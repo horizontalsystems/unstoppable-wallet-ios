@@ -304,6 +304,8 @@
 "market.defi_cap" = "Cap DeFi";
 "market.defi_tvl" = "TVL en DeFi";
 
+"market.sync_error" = "Sync Error";
+
 "market.top.section.header.see_all" = "Tout voir";
 "market.top.section.header.top_gainers" = "Les grands gagnants";
 "market.top.section.header.top_loosers" = "Les gros perdants";
