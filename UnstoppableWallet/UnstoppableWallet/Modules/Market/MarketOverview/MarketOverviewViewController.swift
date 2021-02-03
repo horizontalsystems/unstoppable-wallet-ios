@@ -9,12 +9,13 @@ class MarketOverviewViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
+    private let refreshControl = UIRefreshControl()
 
     private let marketMetricsCell: MarketMetricsCell
 
     weak var parentNavigationController: UINavigationController?
 
-    private var viewItems = [MarketOverviewViewModel.Section]()
+    private var state: MarketOverviewViewModel.State = .loading
 
     init(marketViewModel: MarketViewModel, viewModel: MarketOverviewViewModel) {
         self.marketViewModel = marketViewModel
@@ -23,10 +24,6 @@ class MarketOverviewViewController: ThemeViewController {
         marketMetricsCell = MarketMetricsModule.cell()
 
         super.init()
-
-        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
-        subscribe(disposeBag, viewModel.isLoadingDriver) { [weak self] _ in () }
-        subscribe(disposeBag, viewModel.errorDriver) { [weak self] _ in () }
     }
 
     required init?(coder: NSCoder) {
@@ -35,6 +32,10 @@ class MarketOverviewViewController: ThemeViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        refreshControl.tintColor = .themeLeah
+        refreshControl.alpha = 0.6
+        refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -49,14 +50,27 @@ class MarketOverviewViewController: ThemeViewController {
         tableView.registerHeaderFooter(forClass: MarketSectionHeaderView.self)
         tableView.registerCell(forClass: G14Cell.self)
         tableView.registerCell(forClass: A2Cell.self)
+        tableView.registerCell(forClass: SpinnerCell.self)
+        tableView.registerCell(forClass: ErrorCell.self)
 
-        tableView.buildSections()
+        subscribe(disposeBag, viewModel.stateDriver) { [weak self] state in
+            self?.state = state
+            self?.tableView.reload()
+        }
     }
 
-    private func sync(viewItems: [MarketOverviewViewModel.Section]) {
-        self.viewItems = viewItems
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
 
-        tableView.reload()
+        tableView.refreshControl = refreshControl
+    }
+
+    @objc func onRefresh() {
+        viewModel.refresh()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.refreshControl.endRefreshing()
+        }
     }
 
     private func headerRow(listType: MarketModule.ListType) -> RowProtocol {
@@ -117,31 +131,70 @@ extension MarketOverviewViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
+
         sections.append(
-            Section(id: "market_metrics", rows: [
-                StaticRow(
-                    cell: marketMetricsCell,
-                    id: "metrics",
-                    height: MarketMetricsCell.cellHeight
-                )]
-            )
+                Section(
+                        id: "market_metrics",
+                        rows: [
+                            StaticRow(
+                                    cell: marketMetricsCell,
+                                    id: "metrics",
+                                    height: MarketMetricsCell.cellHeight
+                            )
+                        ]
+                )
         )
 
-        viewItems.forEach { section in
+        switch state {
+        case .loading:
             sections.append(
-                Section(id: "header_\(section.listType.rawValue)",
-                    footerState: .margin(height: CGFloat.margin12),
-                    rows: [
-                        headerRow(listType: section.listType)
-                ])
+                    Section(
+                            id: "spinner",
+                            rows: [
+                                Row<SpinnerCell>(
+                                        id: "spinner",
+                                        height: 120
+                                )
+                            ]
+                    )
             )
+
+        case .loaded(let sectionViewItems):
+            sectionViewItems.enumerated().forEach { index, sectionViewItem in
+                let isLastSection = index == sectionViewItems.count - 1
+
+                sections.append(
+                        Section(id: "header_\(sectionViewItem.listType.rawValue)",
+                                footerState: .margin(height: .margin12),
+                                rows: [
+                                    headerRow(listType: sectionViewItem.listType)
+                                ])
+                )
+
+                sections.append(
+                        Section(
+                                id: sectionViewItem.listType.rawValue,
+                                footerState: .margin(height: isLastSection ? .margin32 : .margin12),
+                                rows: sectionViewItem.viewItems.enumerated().map { (index, item) in
+                                    row(viewItem: item, isFirst: index == 0, isLast: index == sectionViewItem.viewItems.count - 1)
+                                })
+                )
+            }
+
+        case .error(let errorDescription):
             sections.append(
-                Section(
-                    id: section.listType.rawValue,
-                    footerState: .margin(height: CGFloat.margin12),
-                    rows: section.viewItems.enumerated().map { (index, item) in
-                        row(viewItem: item, isFirst: index == 0, isLast: index == section.viewItems.count - 1)
-                })
+                    Section(
+                            id: "error",
+                            rows: [
+                                Row<ErrorCell>(
+                                        id: "error",
+                                        height: 120,
+                                        bind: { cell, _ in
+                                            cell.errorText = errorDescription
+                                        }
+                                )
+                            ]
+                    )
             )
         }
 
@@ -149,6 +202,7 @@ extension MarketOverviewViewController: SectionsDataSource {
     }
 
     public func refresh() {
+        marketMetricsCell.refresh()
         viewModel.refresh()
     }
 

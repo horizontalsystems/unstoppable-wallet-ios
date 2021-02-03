@@ -5,13 +5,18 @@ import RxSwift
 import RxRelay
 
 class MarketOverviewService {
-    private let disposeBag = DisposeBag()
-    private var topItemsDisposable: Disposable?
+    private var disposeBag = DisposeBag()
 
     private let currencyKit: ICurrencyKit
     private let rateManager: IRateManager
 
-    private let stateRelay = BehaviorRelay<State>(value: .loading)
+    private let stateRelay = PublishRelay<State>()
+    private(set) var state: State = .loading {
+        didSet {
+            stateRelay.accept(state)
+        }
+    }
+
     private(set) var items = [MarketModule.Item]()
 
     init(currencyKit: ICurrencyKit, rateManager: IRateManager) {
@@ -22,39 +27,45 @@ class MarketOverviewService {
     }
 
     private func fetch() {
-        topItemsDisposable?.dispose()
-        topItemsDisposable = nil
+        disposeBag = DisposeBag()
 
-        stateRelay.accept(.loading)
+        state = .loading
 
-        topItemsDisposable = rateManager.topMarketsSingle(currencyCode: currency.code, itemCount: 250)
-                .subscribe(onSuccess: { [weak self] in self?.sync(items: $0) })
-
-        topItemsDisposable?.disposed(by: disposeBag)
+        rateManager.topMarketsSingle(currencyCode: currency.code, itemCount: 250)
+                .subscribe(onSuccess: { [weak self] in
+                    self?.onFetchSuccess(items: $0)
+                }, onError: { [weak self] error in
+                    self?.onFetchFailed(error: error)
+                })
+                .disposed(by: disposeBag)
     }
 
-    private func sync(items: [CoinMarket]) {
+    private func onFetchSuccess(items: [CoinMarket]) {
         self.items = items.enumerated().map { (index, coinMarket) in
             MarketModule.Item(coinMarket: coinMarket, score: .rank(index + 1))
         }
 
-        stateRelay.accept(.loaded)
+        state = .loaded
+    }
+
+    private func onFetchFailed(error: Error) {
+        state = .failed(error: error)
     }
 
 }
 
 extension MarketOverviewService {
 
-    public var currency: Currency {
+    var currency: Currency {
         //todo: refactor to use current currency and handle changing
         currencyKit.currencies.first { $0.code == "USD" } ?? currencyKit.currencies[0]
     }
 
-    public var stateObservable: Observable<State> {
+    var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
 
-    public func refresh() {
+    func refresh() {
         fetch()
     }
 
@@ -65,7 +76,7 @@ extension MarketOverviewService {
     enum State {
         case loaded
         case loading
-        case error(error: Error)
+        case failed(error: Error)
     }
 
 }

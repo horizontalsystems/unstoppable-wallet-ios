@@ -55,7 +55,7 @@ class EthereumAdapter: EthereumBaseAdapter {
                 blockHeight: receipt?.blockNumber,
                 confirmationsThreshold: EthereumBaseAdapter.confirmationsThreshold,
                 amount: abs(amount),
-                fee: receipt.map { Decimal(sign: .plus, exponent: -decimal, significand: Decimal($0.cumulativeGasUsed * transaction.gasPrice)) },
+                fee: receipt.map { Decimal(sign: .plus, exponent: -decimal, significand: Decimal($0.gasUsed * transaction.gasPrice)) },
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
                 failed: fullTransaction.failed,
                 from: from.hex,

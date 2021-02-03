@@ -2,11 +2,13 @@ import UIKit
 import SnapKit
 import ThemeKit
 import RxSwift
+import HUD
 
 class MarketMetricsCell: UITableViewCell {
     private static let ellipseDiameter: CGFloat = 124
     static let cellHeight: CGFloat = 156 + 2 * .margin12
 
+    private let viewModel: MarketMetricsViewModel
     private let disposeBag = DisposeBag()
 
     private let cardView = UIView()
@@ -18,7 +20,8 @@ class MarketMetricsCell: UITableViewCell {
     private let deFiCapView = MarketMetricView()
     private let deFiTvlView = MarketMetricView()
 
-    private let viewModel: MarketMetricsViewModel
+    private let spinner = HUDActivityView.create(with: .medium24)
+    private let errorView = ErrorView()
 
     init(viewModel: MarketMetricsViewModel) {
         self.viewModel = viewModel
@@ -84,18 +87,26 @@ class MarketMetricsCell: UITableViewCell {
             maker.width.equalTo(MarketMetricView.width)
         }
 
-        subscribe(disposeBag, viewModel.metricsDriver) { [weak self] in self?.bind(marketMetrics: $0) }
+        cardView.addSubview(spinner)
+        spinner.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+
+        cardView.addSubview(errorView)
+        errorView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview().inset(CGFloat.margin16)
+        }
+
+        subscribe(disposeBag, viewModel.metricsDriver) { [weak self] in self?.sync(marketMetrics: $0) }
+        subscribe(disposeBag, viewModel.isLoadingDriver) { [weak self] in self?.sync(isLoading: $0) }
+        subscribe(disposeBag, viewModel.errorDriver) { [weak self] in self?.sync(error: $0) }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-}
-
-extension MarketMetricsCell {
-
-    public func bind(marketMetrics: MarketMetricsViewModel.MarketMetrics?) {
+    private func sync(marketMetrics: MarketMetricsViewModel.MarketMetrics?) {
         guard let marketMetrics = marketMetrics else {
             marketLargeView.clear()
             volume24hView.clear()
@@ -132,7 +143,26 @@ extension MarketMetricsCell {
         )
     }
 
-    public func refresh() {
+    private func sync(isLoading: Bool) {
+        if isLoading {
+            spinner.isHidden = false
+            spinner.startAnimating()
+        } else {
+            spinner.isHidden = true
+            spinner.stopAnimating()
+        }
+    }
+
+    private func sync(error: String?) {
+        errorView.isHidden = error == nil
+        errorView.text = error
+    }
+
+}
+
+extension MarketMetricsCell {
+
+    func refresh() {
         viewModel.refresh()
     }
 
