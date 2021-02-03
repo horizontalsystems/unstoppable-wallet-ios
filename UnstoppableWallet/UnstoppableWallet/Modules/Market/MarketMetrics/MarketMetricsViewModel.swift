@@ -3,17 +3,12 @@ import RxCocoa
 import XRatesKit
 
 class MarketMetricsViewModel {
+    private let service: MarketMetricsService
     private let disposeBag = DisposeBag()
 
-    public let service: MarketMetricsService
-
     private let metricsRelay = BehaviorRelay<MarketMetrics?>(value: nil)
-
     private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
-    private var isLoading: Bool = false
-
     private let errorRelay = BehaviorRelay<String?>(value: nil)
-    private var error: String?
 
     init(service: MarketMetricsService) {
         self.service = service
@@ -22,12 +17,9 @@ class MarketMetricsViewModel {
     }
 
     private func sync(marketInfo: DataStatus<GlobalCoinMarket>) {
-        if let data = marketInfo.data {
-
-            metricsRelay.accept(marketMetrics(marketInfo: data))
-        }
-        isLoadingRelay.accept(marketInfo.isLoading)
-        errorRelay.accept(marketInfo.error?.smartDescription)
+        metricsRelay.accept(marketInfo.data.flatMap { marketMetrics(marketInfo: $0) })
+        isLoadingRelay.accept(marketInfo.isLoading && metricsRelay.value == nil)
+        errorRelay.accept(marketInfo.error.map { _ in "market.sync_error".localized } )
     }
 
     private func marketMetrics(marketInfo: GlobalCoinMarket) -> MarketMetrics? {
@@ -65,7 +57,7 @@ extension MarketMetricsViewModel {
         errorRelay.asDriver()
     }
 
-    public func refresh() {
+    func refresh() {
         service.refresh()
     }
 
