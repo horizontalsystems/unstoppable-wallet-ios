@@ -1,25 +1,31 @@
 import CurrencyKit
 import XRatesKit
-import Foundation
 import RxSwift
 import RxRelay
 
 class MarketDiscoveryService {
-    private let disposeBag = DisposeBag()
-    private var discoveryItemsDisposable: Disposable?
-
     private let currencyKit: ICurrencyKit
     private let rateManager: IRateManager
-
     private let categoriesProvider: MarketCategoriesProvider
-    var currentCategory: MarketDiscoveryFilter? {
+    private var disposeBag = DisposeBag()
+
+    private let stateRelay = PublishRelay<State>()
+    private(set) var state: State = .loading {
         didSet {
-            fetch()
+            stateRelay.accept(state)
         }
     }
 
-    private let stateRelay = BehaviorRelay<State>(value: .loading)
-    var items = [MarketModule.Item]()
+    private(set) var items = [MarketModule.Item]()
+
+    private let currentCategoryRelay = PublishRelay<MarketDiscoveryFilter?>()
+    var currentCategory: MarketDiscoveryFilter? {
+        didSet {
+            currentCategoryRelay.accept(currentCategory)
+            items = []
+            fetch()
+        }
+    }
 
     init(currencyKit: ICurrencyKit, rateManager: IRateManager, categoriesProvider: MarketCategoriesProvider) {
         self.currencyKit = currencyKit
@@ -30,12 +36,12 @@ class MarketDiscoveryService {
     }
 
     private func fetch() {
-        discoveryItemsDisposable?.dispose()
-        discoveryItemsDisposable = nil
+        disposeBag = DisposeBag()
 
-        stateRelay.accept(.loading)
+        state = .loading
 
         let single: Single<[CoinMarket]>
+
         if let category = currentCategory {
 //            let coinCodes = categoriesProvider.coinCodes(for: category == .rated ? nil : category.rawValue)
             let coinCodes = categoriesProvider.coinCodes(for: category.rawValue)
@@ -44,23 +50,25 @@ class MarketDiscoveryService {
             single = rateManager.topMarketsSingle(currencyCode: currencyKit.baseCurrency.code, itemCount: 250)
         }
 
-        discoveryItemsDisposable = single
-                .subscribe(onSuccess: { [weak self] in self?.sync(items: $0) })
-
-        discoveryItemsDisposable?.disposed(by: disposeBag)
+        single
+                .subscribe(onSuccess: { [weak self] coinMarkets in
+                    self?.onFetchSuccess(coinMarkets: coinMarkets)
+                }, onError: { [weak self] error in
+                    self?.onFetchFailed(error: error)
+                })
+                .disposed(by: disposeBag)
     }
 
-    private func sync(items: [CoinMarket]) {
-        self.items = items.enumerated().compactMap { (index, coinMarket) in
+    private func onFetchSuccess(coinMarkets: [CoinMarket]) {
+        items = coinMarkets.enumerated().compactMap { index, coinMarket in
             let score: MarketModule.Score?
             switch currentCategory {
 //            case .rated:
-//                let rate = categoriesProvider.rate(for: coinMarket.coin.code)
-//                guard !(rate?.isEmpty ?? true) else {
+//                guard let rate = categoriesProvider.rate(for: coinMarket.coin.code), !rate.isEmpty else {
 //                    return nil
 //                }
 //
-//                score = rate.flatMap { $0.isEmpty ? nil : .rating($0) }
+//                score = .rating(rate)
             case .none:
                 score = .rank(index + 1)
             default:
@@ -69,23 +77,31 @@ class MarketDiscoveryService {
             return MarketModule.Item(coinMarket: coinMarket, score: score)
         }
 
-        stateRelay.accept(.loaded)
+        state = .loaded
+    }
+
+    private func onFetchFailed(error: Error) {
+        state = .failed(error: error)
     }
 
 }
 
 extension MarketDiscoveryService {
 
-    public var currency: Currency {
+    var currency: Currency {
         //todo: refactor to use current currency and handle changing
         currencyKit.currencies.first { $0.code == "USD" } ?? currencyKit.currencies[0]
     }
 
-    public var stateObservable: Observable<State> {
+    var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
 
-    public func refresh() {
+    var currentCategoryObservable: Observable<MarketDiscoveryFilter?> {
+        currentCategoryRelay.asObservable()
+    }
+
+    func refresh() {
         fetch()
     }
 
@@ -96,7 +112,7 @@ extension MarketDiscoveryService {
     enum State {
         case loaded
         case loading
-        case error(error: Error)
+        case failed(error: Error)
     }
 
 }
