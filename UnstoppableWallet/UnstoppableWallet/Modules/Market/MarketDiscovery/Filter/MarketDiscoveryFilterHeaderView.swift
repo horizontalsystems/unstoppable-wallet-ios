@@ -45,11 +45,6 @@ class MarketDiscoveryFilterHeaderView: UITableViewHeaderFooterView {
         fatalError("not implemented")
     }
 
-    func reload(filters: [MarketFilterViewItem]) {
-        self.filters = filters
-        collectionView.reloadData()
-    }
-
     private func reloadLayout() {
         collectionView.performBatchUpdates {  }
     }
@@ -107,6 +102,16 @@ extension MarketDiscoveryFilterHeaderView: UICollectionViewDelegateFlowLayout, U
         onSelect?(indexPath.item)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
 
+        reloadLayout()
+    }
+
+}
+
+extension MarketDiscoveryFilterHeaderView {
+
+    func setSelected(index: Int?) {
+        let indexPath = index.map { IndexPath(item: $0, section: 0) }
+        collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
         reloadLayout()
     }
 

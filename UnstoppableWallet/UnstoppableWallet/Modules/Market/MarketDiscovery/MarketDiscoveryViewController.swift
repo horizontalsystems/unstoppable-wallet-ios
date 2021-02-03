@@ -10,23 +10,19 @@ class MarketDiscoveryViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .plain)
-    private let spinner = HUDActivityView.create(with: .large48)
 
     private let filterHeaderView = MarketDiscoveryFilterHeaderView()
     private let sectionHeaderView = MarketListHeaderView()
 
     weak var parentNavigationController: UINavigationController?
 
-    private var viewItems = [MarketModule.ViewItem]()
+    private var state: MarketDiscoveryViewModel.State = .loading
 
     init(marketViewModel: MarketViewModel, viewModel: MarketDiscoveryViewModel) {
         self.marketViewModel = marketViewModel
         self.viewModel = viewModel
 
         super.init()
-
-        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
-        subscribe(disposeBag, marketViewModel.discoveryListTypeSignal) { [weak self] in self?.handle(listType: $0) }
     }
 
     required init?(coder: NSCoder) {
@@ -46,16 +42,11 @@ class MarketDiscoveryViewController: ThemeViewController {
 
         tableView.registerHeaderFooter(forClass: MarketListHeaderView.self)
         tableView.registerCell(forClass: G14Cell.self)
+        tableView.registerCell(forClass: SpinnerCell.self)
+        tableView.registerCell(forClass: ErrorCell.self)
 
         tableView.sectionDataSource = self
 
-        view.addSubview(spinner)
-        spinner.snp.makeConstraints { maker in
-            maker.center.equalToSuperview()
-        }
-        sync(isLoading: false)
-
-        sectionHeaderView.setSortingField(title: viewModel.sortingFieldTitle)
         sectionHeaderView.onTapSortField = { [weak self] in
             self?.onTapSortingField()
         }
@@ -67,34 +58,29 @@ class MarketDiscoveryViewController: ThemeViewController {
             self?.viewModel.setFilter(at: filterIndex)
         }
 
-        tableView.buildSections()
-    }
-
-    private func sync(viewItems: [MarketModule.ViewItem]) {
-        self.viewItems = viewItems
-
-        tableView.reload()
-    }
-
-    private func sync(isLoading: Bool) {
-        guard isLoading && tableView.visibleCells.isEmpty else {
-            spinner.isHidden = true
-            spinner.stopAnimating()
-
-            return
+        subscribe(disposeBag, viewModel.stateDriver) { [weak self] state in
+            self?.state = state
+            self?.tableView.reload()
         }
-
-        spinner.isHidden = false
-        spinner.startAnimating()
+        subscribe(disposeBag, viewModel.sortingFieldTitleDriver) { [weak self] title in
+            self?.sectionHeaderView.setSortingField(title: title)
+        }
+        subscribe(disposeBag, viewModel.marketFieldDriver) { [weak self] marketField in
+            self?.sectionHeaderView.setMarketField(field: marketField)
+        }
+        subscribe(disposeBag, viewModel.selectedFilterIndexDriver) { [weak self] index in
+            self?.filterHeaderView.setSelected(index: index)
+        }
+        subscribe(disposeBag, marketViewModel.discoveryListTypeSignal) { [weak self] in self?.handle(listType: $0) }
     }
 
     private func onTapSortingField() {
         let alertController = AlertRouter.module(
                 title: "market.sort_by".localized,
-                viewItems: viewModel.sortingFields.map { item in
+                viewItems: viewModel.sortingFieldViewItems.map { viewItem in
                     AlertViewItem(
-                            text: item,
-                            selected: item == viewModel.sortingFieldTitle
+                            text: viewItem.title,
+                            selected: viewItem.selected
                     )
                 }
         ) { [weak self] index in
@@ -140,7 +126,6 @@ class MarketDiscoveryViewController: ThemeViewController {
 
     private func handle(listType: MarketModule.ListType) {
         viewModel.set(listType: listType)
-        sectionHeaderView.setMarketField(field: viewModel.marketField)
     }
 
 }
@@ -148,19 +133,57 @@ class MarketDiscoveryViewController: ThemeViewController {
 extension MarketDiscoveryViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        let filterHeaderState: ViewState<MarketDiscoveryFilterHeaderView> = .static(view: filterHeaderView, height: MarketDiscoveryFilterHeaderView.headerHeight)
+        var rows = [RowProtocol]()
 
-        sectionHeaderView.setSortingField(title: viewModel.sortingFieldTitle)
-        let headerState: ViewState<MarketListHeaderView> = .static(view: sectionHeaderView, height: MarketListHeaderView.height)
+        if case .loaded(let viewItems) = state {
+            rows = viewItems.enumerated().map { row(viewItem: $1, isLast: $0 == viewItems.count - 1) }
+        }
 
-        return [
-            Section(id: "filter",
-                    headerState: filterHeaderState,
-                    rows: []),
+        var sections: [SectionProtocol] = [
+            Section(
+                    id: "filter",
+                    headerState: .static(view: filterHeaderView, height: MarketDiscoveryFilterHeaderView.headerHeight)
+            ),
             Section(id: "tokens",
-                    headerState: headerState,
-                    rows: viewItems.enumerated().map { row(viewItem: $1, isLast: $0 == viewItems.count - 1) })
+                    headerState: .static(view: sectionHeaderView, height: MarketListHeaderView.height),
+                    rows: rows
+            )
         ]
+
+        switch state {
+        case .loading:
+            sections.append(
+                    Section(
+                            id: "spinner",
+                            rows: [
+                                Row<SpinnerCell>(
+                                        id: "spinner",
+                                        height: 120
+                                )
+                            ]
+                    )
+            )
+
+        case .error(let errorDescription):
+            sections.append(
+                    Section(
+                            id: "error",
+                            rows: [
+                                Row<ErrorCell>(
+                                        id: "error",
+                                        height: 120,
+                                        bind: { cell, _ in
+                                            cell.errorText = errorDescription
+                                        }
+                                )
+                            ]
+                    )
+            )
+
+        default: ()
+        }
+
+        return sections
     }
 
 }

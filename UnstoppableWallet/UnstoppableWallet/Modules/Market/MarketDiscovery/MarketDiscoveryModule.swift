@@ -1,5 +1,3 @@
-import Foundation
-
 struct MarketDiscoveryModule {
 
     static func viewController(marketViewModel: MarketViewModel) -> MarketDiscoveryViewController {
