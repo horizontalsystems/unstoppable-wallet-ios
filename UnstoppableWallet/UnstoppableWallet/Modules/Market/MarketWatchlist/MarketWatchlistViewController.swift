@@ -9,6 +9,7 @@ class MarketWatchlistViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .plain)
     private let spinner = HUDActivityView.create(with: .large48)
+    private let emptyWatchlistView = CautionView()
 
     private let viewModel: MarketWatchlistViewModel
 
@@ -48,6 +49,16 @@ class MarketWatchlistViewController: ThemeViewController {
         spinner.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
         }
+
+        view.addSubview(emptyWatchlistView)
+        emptyWatchlistView.snp.makeConstraints { maker in
+            maker.centerY.equalToSuperview()
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin48)
+        }
+
+        emptyWatchlistView.image = UIImage(named: "rate_48")
+        emptyWatchlistView.text = "market_watchlist.empty.caption".localized
+
         sync(isLoading: false)
 
         tableView.buildSections()
@@ -56,6 +67,7 @@ class MarketWatchlistViewController: ThemeViewController {
     private func sync(viewItems: [MarketModule.ViewItem]) {
         self.viewItems = viewItems
 
+        emptyWatchlistView.isHidden = !viewItems.isEmpty
         tableView.reload()
     }
 
