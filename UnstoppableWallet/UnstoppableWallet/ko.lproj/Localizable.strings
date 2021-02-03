@@ -395,6 +395,7 @@
 "market_discovery.filter_description.cross_chain" = "Cross-chain protocols.";
 "market_discovery.filter_description.computing" = "Decentralized on-demand computing solutions.";
 
+"market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favourites by click to star icon in the asset page";
 // Transactions
 
 "transactions.title" = "거래기록";
