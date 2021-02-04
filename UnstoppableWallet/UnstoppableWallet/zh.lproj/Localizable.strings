@@ -324,8 +324,6 @@
 "market.top.lowest_cap" = "最低市场价值";
 "market.top.highest_volume" = "最高交易量";
 "market.top.lowest_volume" = "最低交易量";
-"market.top.highest_price" = "最高价格";
-"market.top.lowest_price" = "最低价格";
 "market.top.top_gainers" = "最高盈利";
 "market.top.top_loosers" = "最高受损";
 
