@@ -62,16 +62,12 @@ class CautionView: UIView {
 
     var textColor: UIColor {
         get { captionLabel.textColor }
-        set {
-            captionLabel.textColor = newValue
-        }
+        set { captionLabel.textColor = newValue }
     }
 
     var font: UIFont {
         get { captionLabel.font }
-        set {
-            captionLabel.font = newValue
-        }
+        set { captionLabel.font = newValue }
     }
 
 }

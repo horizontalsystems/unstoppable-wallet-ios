@@ -1,18 +1,23 @@
 import CurrencyKit
 import XRatesKit
-import Foundation
 import RxSwift
 import RxRelay
 
 class MarketWatchlistService {
-    private let disposeBag = DisposeBag()
-    private var itemsDisposable: Disposable?
-
     private let currencyKit: ICurrencyKit
     private let rateManager: IRateManager
     private let favoritesManager: IFavoritesManager
 
-    private let stateRelay = BehaviorRelay<State>(value: .loading)
+    private let disposeBag = DisposeBag()
+    private var marketsDisposeBag = DisposeBag()
+
+    private let stateRelay = PublishRelay<State>()
+    private(set) var state: State = .loading {
+        didSet {
+            stateRelay.accept(state)
+        }
+    }
+
     private(set) var items = [MarketModule.Item]()
 
     init(currencyKit: ICurrencyKit, rateManager: IRateManager, favoritesManager: IFavoritesManager) {
@@ -20,47 +25,54 @@ class MarketWatchlistService {
         self.rateManager = rateManager
         self.favoritesManager = favoritesManager
 
-        fetch()
         subscribe(disposeBag, favoritesManager.dataUpdatedObservable) { [weak self] in
             self?.fetch()
         }
+
+        fetch()
     }
 
     private func fetch() {
-        itemsDisposable?.dispose()
-        itemsDisposable = nil
+        marketsDisposeBag = DisposeBag()
 
-        stateRelay.accept(.loading)
+        state = .loading
 
         let coinCodes = favoritesManager.all.map { $0.coinCode }
-        itemsDisposable = rateManager.coinsMarketSingle(currencyCode: currency.code, coinCodes: coinCodes)
-                .subscribe(onSuccess: { [weak self] in self?.sync(items: $0) })
-
-        itemsDisposable?.disposed(by: disposeBag)
+        rateManager.coinsMarketSingle(currencyCode: currency.code, coinCodes: coinCodes)
+                .subscribe(onSuccess: { [weak self] coinMarkets in
+                    self?.onFetchSuccess(coinMarkets: coinMarkets)
+                }, onError: { [weak self] error in
+                    self?.onFetchFailed(error: error)
+                })
+                .disposed(by: marketsDisposeBag)
     }
 
-    private func sync(items: [CoinMarket]) {
-        self.items = items.map { coinMarket in
+    private func onFetchSuccess(coinMarkets: [CoinMarket]) {
+        items = coinMarkets.map { coinMarket in
             MarketModule.Item(coinMarket: coinMarket)
         }
 
-        stateRelay.accept(.loaded)
+        state = .loaded
+    }
+
+    private func onFetchFailed(error: Error) {
+        state = .failed(error: error)
     }
 
 }
 
 extension MarketWatchlistService {
 
-    public var currency: Currency {
+    var currency: Currency {
         //todo: refactor to use current currency and handle changing
         currencyKit.currencies.first { $0.code == "USD" } ?? currencyKit.currencies[0]
     }
 
-    public var stateObservable: Observable<State> {
+    var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
 
-    public func refresh() {
+    func refresh() {
         fetch()
     }
 
@@ -71,7 +83,7 @@ extension MarketWatchlistService {
     enum State {
         case loaded
         case loading
-        case error(error: Error)
+        case failed(error: Error)
     }
 
 }

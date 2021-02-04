@@ -2,27 +2,25 @@ import UIKit
 import RxSwift
 import ThemeKit
 import SectionsTableView
-import HUD
 
 class MarketWatchlistViewController: ThemeViewController {
+    private let viewModel: MarketWatchlistViewModel
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .plain)
-    private let spinner = HUDActivityView.create(with: .large48)
-    private let emptyWatchlistView = CautionView()
+    private let headerView = MarketListHeaderView()
+    private let refreshControl = UIRefreshControl()
 
-    private let viewModel: MarketWatchlistViewModel
+    private let cautionCell = CautionCell()
 
     weak var parentNavigationController: UINavigationController?
 
-    private var viewItems = [MarketModule.ViewItem]()
+    private var state: MarketWatchlistViewModel.State = .loading
 
     init(viewModel: MarketWatchlistViewModel) {
         self.viewModel = viewModel
 
         super.init()
-
-        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
     }
 
     required init?(coder: NSCoder) {
@@ -31,6 +29,10 @@ class MarketWatchlistViewController: ThemeViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        refreshControl.tintColor = .themeLeah
+        refreshControl.alpha = 0.6
+        refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -45,61 +47,49 @@ class MarketWatchlistViewController: ThemeViewController {
 
         tableView.sectionDataSource = self
 
-        view.addSubview(spinner)
-        spinner.snp.makeConstraints { maker in
-            maker.center.equalToSuperview()
-        }
+        cautionCell.cautionImage = UIImage(named: "rate_48")
+        cautionCell.cautionText = "market_watchlist.empty.caption".localized
 
-        view.addSubview(emptyWatchlistView)
-        emptyWatchlistView.snp.makeConstraints { maker in
-            maker.centerY.equalToSuperview()
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin48)
-        }
-
-        emptyWatchlistView.image = UIImage(named: "rate_48")
-        emptyWatchlistView.text = "market_watchlist.empty.caption".localized
-
-        sync(isLoading: false)
-
-        tableView.buildSections()
-    }
-
-    private func sync(viewItems: [MarketModule.ViewItem]) {
-        self.viewItems = viewItems
-
-        emptyWatchlistView.isHidden = !viewItems.isEmpty
-        tableView.reload()
-    }
-
-    private func sync(isLoading: Bool) {
-        guard isLoading && tableView.visibleCells.isEmpty else {
-            spinner.isHidden = true
-            spinner.stopAnimating()
-
-            return
-        }
-
-        spinner.isHidden = false
-        spinner.startAnimating()
-    }
-
-    private func bindHeader(headerView: MarketListHeaderView) {
-        headerView.setSortingField(title: viewModel.sortingFieldTitle)
         headerView.onTapSortField = { [weak self] in
             self?.onTapSortingField()
         }
         headerView.onSelect = { [weak self] field in
             self?.viewModel.set(marketField: field)
         }
+
+        subscribe(disposeBag, viewModel.stateDriver) { [weak self] state in
+            self?.state = state
+            self?.tableView.reload()
+        }
+        subscribe(disposeBag, viewModel.sortingFieldTitleDriver) { [weak self] title in
+            self?.headerView.setSortingField(title: title)
+        }
+        subscribe(disposeBag, viewModel.marketFieldDriver) { [weak self] marketField in
+            self?.headerView.setMarketField(field: marketField)
+        }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        tableView.refreshControl = refreshControl
+    }
+
+    @objc func onRefresh() {
+        viewModel.refresh()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.refreshControl.endRefreshing()
+        }
     }
 
     private func onTapSortingField() {
         let alertController = AlertRouter.module(
                 title: "market.sort_by".localized,
-                viewItems: viewModel.sortingFields.map { item in
+                viewItems: viewModel.sortingFieldViewItems.map { viewItem in
                     AlertViewItem(
-                            text: item,
-                            selected: item == viewModel.sortingFieldTitle
+                            text: viewItem.title,
+                            selected: viewItem.selected
                     )
                 }
         ) { [weak self] index in
@@ -133,18 +123,53 @@ class MarketWatchlistViewController: ThemeViewController {
 extension MarketWatchlistViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        let headerState: ViewState<MarketListHeaderView> = .cellType(
-                hash: "section_header",
-                binder: { [weak self] view in
-                    self?.bindHeader(headerView: view)
-                },
-                dynamicHeight: { _ in
-                    MarketListHeaderView.height
-                })
+        let rows: [RowProtocol]
+        var headerState: ViewState<MarketListHeaderView> = .margin(height: 0)
 
-        return [Section(id: "tokens",
-                headerState: headerState,
-                rows: viewItems.enumerated().map { row(viewItem: $1, isLast: $0 == viewItems.count - 1) })]
+        switch state {
+        case .loading:
+            rows = [
+                Row<SpinnerCell>(
+                        id: "spinner",
+                        dynamicHeight: { [weak self] _ in
+                            max(0, (self?.tableView.height ?? 0) - MarketListHeaderView.height)
+                        }
+                )
+            ]
+
+        case .loaded(let viewItems):
+            if viewItems.isEmpty {
+                rows = [
+                    StaticRow(
+                            cell: cautionCell,
+                            id: "caution",
+                            dynamicHeight: { [weak self] _ in
+                                max(0, (self?.tableView.height ?? 0) - MarketListHeaderView.height)
+                            }
+                    )
+                ]
+            } else {
+                headerState = .static(view: headerView, height: MarketListHeaderView.height)
+                rows = viewItems.enumerated().map { row(viewItem: $1, isLast: $0 == viewItems.count - 1) }
+            }
+
+        case .error(let errorDescription):
+            rows = [
+                Row<ErrorCell>(
+                        id: "error",
+                        dynamicHeight: { [weak self] _ in
+                            max(0, (self?.tableView.height ?? 0) - MarketListHeaderView.height)
+                        },
+                        bind: { cell, _ in
+                            cell.errorText = errorDescription
+                        }
+                )
+            ]
+        }
+
+        return [
+            Section(id: "tokens", headerState: headerState, rows: rows)
+        ]
     }
 
 }

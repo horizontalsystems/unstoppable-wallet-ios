@@ -130,34 +130,29 @@ class MarketOverviewViewController: ThemeViewController {
 extension MarketOverviewViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        var sections = [SectionProtocol]()
-
-        sections.append(
-                Section(
-                        id: "market_metrics",
-                        rows: [
-                            StaticRow(
-                                    cell: marketMetricsCell,
-                                    id: "metrics",
-                                    height: MarketMetricsCell.cellHeight
-                            )
-                        ]
-                )
-        )
+        var sections: [SectionProtocol] = [
+            Section(
+                    id: "market_metrics",
+                    rows: [
+                        StaticRow(
+                                cell: marketMetricsCell,
+                                id: "metrics",
+                                height: MarketMetricsCell.cellHeight
+                        )
+                    ]
+            )
+        ]
 
         switch state {
         case .loading:
-            sections.append(
-                    Section(
-                            id: "spinner",
-                            rows: [
-                                Row<SpinnerCell>(
-                                        id: "spinner",
-                                        height: 120
-                                )
-                            ]
-                    )
+            let row = Row<SpinnerCell>(
+                    id: "spinner",
+                    dynamicHeight: { [weak self] _ in
+                        max(0, (self?.tableView.height ?? 0) - MarketMetricsCell.cellHeight)
+                    }
             )
+
+            sections.append(Section(id: "spinner", rows: [row]))
 
         case .loaded(let sectionViewItems):
             sectionViewItems.enumerated().forEach { index, sectionViewItem in
@@ -182,20 +177,17 @@ extension MarketOverviewViewController: SectionsDataSource {
             }
 
         case .error(let errorDescription):
-            sections.append(
-                    Section(
-                            id: "error",
-                            rows: [
-                                Row<ErrorCell>(
-                                        id: "error",
-                                        height: 120,
-                                        bind: { cell, _ in
-                                            cell.errorText = errorDescription
-                                        }
-                                )
-                            ]
-                    )
+            let row = Row<ErrorCell>(
+                    id: "error",
+                    dynamicHeight: { [weak self] _ in
+                        max(0, (self?.tableView.height ?? 0) - MarketMetricsCell.cellHeight)
+                    },
+                    bind: { cell, _ in
+                        cell.errorText = errorDescription
+                    }
             )
+
+            sections.append(Section(id: "error", rows: [row]))
         }
 
         return sections

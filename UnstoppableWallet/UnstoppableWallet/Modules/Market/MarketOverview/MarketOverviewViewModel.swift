@@ -26,14 +26,18 @@ class MarketOverviewViewModel {
             default: ()
             }
         case .loaded:
-            stateRelay.accept(.loaded(sectionViewItems: [
-                sectionViewItem(by: .topGainers),
-                sectionViewItem(by: .topLosers),
-                sectionViewItem(by: .topVolume)
-            ]))
+            stateRelay.accept(.loaded(sectionViewItems: sectionViewItems))
         case .failed:
             stateRelay.accept(.error(description: "market.sync_error".localized))
         }
+    }
+
+    private var sectionViewItems: [SectionViewItem] {
+        [
+            sectionViewItem(by: .topGainers),
+            sectionViewItem(by: .topLosers),
+            sectionViewItem(by: .topVolume)
+        ]
     }
 
     private func sectionViewItem(by listType: MarketModule.ListType, count: Int = 3) -> SectionViewItem {
