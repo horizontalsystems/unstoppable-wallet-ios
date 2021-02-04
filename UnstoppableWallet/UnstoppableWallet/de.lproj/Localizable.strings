@@ -324,8 +324,6 @@
 "market.top.lowest_cap" = "Niedrigste Obergrenze";
 "market.top.highest_volume" = "Höchstes Volumen";
 "market.top.lowest_volume" = "Niedrigstes Volumen";
-"market.top.highest_price" = "Höchster Preis";
-"market.top.lowest_price" = "Niedrigster Preis";
 "market.top.top_gainers" = "Top-Gewinner";
 "market.top.top_loosers" = "Top Loosers";
 
