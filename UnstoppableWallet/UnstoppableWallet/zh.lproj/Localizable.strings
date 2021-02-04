@@ -350,7 +350,7 @@
 "market_discovery.filter_title.algo_stablecoins" = "Algo Stablecoins";
 "market_discovery.filter_title.tokenized_bitcoin" = "Tokenized Bitcoin";
 "market_discovery.filter_title.stablecoin_issuers" = "Stablecoin Issuers";
-"market_discovery.filter_title.exchange_tokens" = "Exchange tokens";
+"market_discovery.filter_title.exchange_tokens" = "Exchange Tokens";
 "market_discovery.filter_title.metals" = "Metals";
 "market_discovery.filter_title.risk_management" = "Risk Management";
 "market_discovery.filter_title.wallets" = "Wallets";
