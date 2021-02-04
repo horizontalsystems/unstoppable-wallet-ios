@@ -35,7 +35,11 @@ class MarketListHeaderView: UITableViewHeaderFooterView {
         }
 
         fieldSelectionButton.apply(style: .secondaryTransparentIcon)
-        fieldSelectionButton.setImage(UIImage(named: "arrow_small_down_20"), for: .normal)
+
+        let image = UIImage(named: "arrow_small_down_20")
+        fieldSelectionButton.setImage(image?.tinted(with: .themeGray), for: .normal)
+        fieldSelectionButton.setImage(image?.tinted(with: .themeGray50), for: .highlighted)
+
         fieldSelectionButton.addTarget(self, action: #selector(tapSortField), for: .touchUpInside)
 
         contentView.addSubview(marketFieldModeView)

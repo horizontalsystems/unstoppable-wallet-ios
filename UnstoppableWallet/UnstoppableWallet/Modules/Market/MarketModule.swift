@@ -116,8 +116,6 @@ extension MarketModule {
         case lowestCap
         case highestVolume
         case lowestVolume
-        case highestPrice
-        case lowestPrice
         case topGainers
         case topLosers
 
@@ -127,8 +125,6 @@ extension MarketModule {
             case .lowestCap: return "market.top.lowest_cap".localized
             case .highestVolume: return "market.top.highest_volume".localized
             case .lowestVolume: return "market.top.lowest_volume".localized
-            case .highestPrice: return "market.top.highest_price".localized
-            case .lowestPrice: return "market.top.lowest_price".localized
             case .topGainers: return "market.top.top_gainers".localized
             case .topLosers: return "market.top.top_loosers".localized
             }
@@ -192,8 +188,6 @@ extension Array where Element == MarketModule.Item {
             case .lowestCap: return item.marketCap < item2.marketCap
             case .highestVolume: return item.volume > item2.volume
             case .lowestVolume: return item.volume < item2.volume
-            case .highestPrice: return item.price > item2.price
-            case .lowestPrice: return item.price < item2.price
             case .topGainers: return item.diff > item2.diff
             case .topLosers: return item.diff < item2.diff
             }
