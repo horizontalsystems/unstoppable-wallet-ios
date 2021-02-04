@@ -181,7 +181,7 @@
 "send.hodler_locktime_year" = "1 año";
 "send.hodler_locktime_off" = "Apagado";
 "send.hodler_error.unsupported_address" = "El bloqueo del tiempo solo funciona con direcciones P2PKH (a partir de 1)";
-"send.fee_info.title" = "Transaction Speed";
+"send.fee_info.title" = "Velocidad de transacción";
 "send.fee_info.description" = "Both Bitcoin and Ethereum blockchains require users to pay usage fees while sending transactions on the blockchain.\n\nUnstoppable uses public fee estimate services to help user determine appropriate transaction fees for the moment. The fees are higher when there are a lot of transactions taking place and lower when the blockchain is less busy.";
 "send.fee_info.header_slow" = "Slow";
 "send.fee_info.content_slow" = "Selecting a value from this range may result in transaction being pending for hours or being rejected entirely. The lower the value the longer it will take for the transaction to confirm.";
@@ -329,7 +329,7 @@
 "market.top.top_gainers" = "Top Gainers";
 "market.top.top_loosers" = "Top Loosers";
 
-"market.top.period_1h" = "1 hour";
+"market.top.period_1h" = "1 hora";
 "market.top.period_24h" = "24 hours";
 "market.top.period_day_start" = "Day Start";
 "market.top.period_one_day" = "1 day";
@@ -350,7 +350,7 @@
 "market_discovery.filter_title.algo_stablecoins" = "Algo Stablecoins";
 "market_discovery.filter_title.tokenized_bitcoin" = "Tokenized Bitcoin";
 "market_discovery.filter_title.stablecoin_issuers" = "Stablecoin Issuers";
-"market_discovery.filter_title.exchange_tokens" = "Exchange tokens";
+"market_discovery.filter_title.exchange_tokens" = "Exchange Tokens";
 "market_discovery.filter_title.metals" = "Metals";
 "market_discovery.filter_title.risk_management" = "Risk Management";
 "market_discovery.filter_title.wallets" = "Wallets";
@@ -387,7 +387,7 @@
 "market_discovery.filter_description.index_funds" = "Assets that pegged in price to a set of tokens.";
 "market_discovery.filter_description.nft" = "Marketplaces for NFT tokens.";
 "market_discovery.filter_description.fundraising" = "Fundraising and token sale platforms.";
-"market_discovery.filter_description.gaming" = "Crypto projects in gaming and VR sector.";
+"market_discovery.filter_description.gaming" = "Fundraising and token sale platforms.";
 "market_discovery.filter_description.b2b" = "B2B service providers.";
 "market_discovery.filter_description.infrastructure" = "Projects building infrastructure solutions.";
 "market_discovery.filter_description.staking_eth_2_0" = "Protocols that reward liquidity providers.";
