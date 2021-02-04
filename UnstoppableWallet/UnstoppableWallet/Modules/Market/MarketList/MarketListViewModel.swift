@@ -3,8 +3,8 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
-class MarketWatchlistViewModel {
-    public let service: MarketWatchlistService
+class MarketListViewModel {
+    private let service: MarketListService
     private let disposeBag = DisposeBag()
 
     private let stateRelay = BehaviorRelay<State>(value: .loading)
@@ -17,7 +17,7 @@ class MarketWatchlistViewModel {
         }
     }
 
-    init(service: MarketWatchlistService) {
+    init(service: MarketListService) {
         self.service = service
         sortingFieldTitleRelay = BehaviorRelay(value: sortingField.title)
 
@@ -26,7 +26,7 @@ class MarketWatchlistViewModel {
         sync(state: service.state)
     }
 
-    private func sync(state: MarketWatchlistService.State) {
+    private func sync(state: MarketListService.State) {
         switch state {
         case .loading:
             if service.items.isEmpty {
@@ -55,7 +55,7 @@ class MarketWatchlistViewModel {
 
 }
 
-extension MarketWatchlistViewModel {
+extension MarketListViewModel {
 
     var stateDriver: Driver<State> {
         stateRelay.asDriver()
@@ -90,13 +90,20 @@ extension MarketWatchlistViewModel {
         syncViewItemsIfPossible()
     }
 
+    func set(listType: MarketModule.ListType) {
+        sortingField = listType.sortingField
+        marketFieldRelay.accept(listType.marketField)
+
+        syncViewItemsIfPossible()
+    }
+
     func refresh() {
         service.refresh()
     }
 
 }
 
-extension MarketWatchlistViewModel {
+extension MarketListViewModel {
 
     struct SortingFieldViewItem {
         let title: String
