@@ -326,8 +326,6 @@
 "market.top.lowest_cap" = "Самый низкий кэп";
 "market.top.highest_volume" = "Самый высокий объем";
 "market.top.lowest_volume" = "Самый низкий объем";
-"market.top.highest_price" = "Самая высокая цена";
-"market.top.lowest_price" = "Самая низкая цена";
 "market.top.top_gainers" = "Лучшие майнеры";
 "market.top.top_loosers" = "Топ прогоревших";
 
