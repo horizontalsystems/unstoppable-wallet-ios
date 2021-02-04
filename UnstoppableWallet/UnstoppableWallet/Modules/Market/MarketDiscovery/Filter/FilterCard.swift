@@ -60,6 +60,14 @@ class FilterCard: UICollectionViewCell {
         }
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        iconImageView.image = nil
+        titleLabel.text = nil
+        descriptionLabel.text = nil
+    }
+
     func bind(item: MarketFilterViewItem) {
         iconImageView.image = UIImage(named: item.icon)
         titleLabel.text = item.title
