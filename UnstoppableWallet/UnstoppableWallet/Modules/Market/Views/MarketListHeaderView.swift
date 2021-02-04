@@ -6,7 +6,7 @@ import SnapKit
 class MarketListHeaderView: UITableViewHeaderFooterView {
     static let height: CGFloat = .heightSingleLineCell
 
-    private let fieldSelectionButton = SelectionButton()
+    private let fieldSelectionButton = ThemeButton()
     private let marketFieldModeView = MarketFieldModeView()
 
     var onTapSortField: (() -> ())?
@@ -30,13 +30,13 @@ class MarketListHeaderView: UITableViewHeaderFooterView {
 
         contentView.addSubview(fieldSelectionButton)
         fieldSelectionButton.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(CGFloat.margin8)
+            maker.leading.equalToSuperview()
             maker.top.bottom.equalToSuperview()
         }
 
-        fieldSelectionButton.setTitle(color: .themeGray)
-        fieldSelectionButton.action = { [weak self] in self?.onTapSortField?() }
-        fieldSelectionButton.setContentHuggingPriority(.required, for: .horizontal)
+        fieldSelectionButton.apply(style: .secondaryTransparentIcon)
+        fieldSelectionButton.setImage(UIImage(named: "arrow_small_down_20"), for: .normal)
+        fieldSelectionButton.addTarget(self, action: #selector(tapSortField), for: .touchUpInside)
 
         contentView.addSubview(marketFieldModeView)
         marketFieldModeView.snp.makeConstraints { maker in
@@ -55,12 +55,16 @@ class MarketListHeaderView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    @objc private func tapSortField() {
+        onTapSortField?()
+    }
+
 }
 
 extension MarketListHeaderView {
     
     public func setSortingField(title: String) {
-        fieldSelectionButton.set(title: title)
+        fieldSelectionButton.setTitle(title, for: .normal)
     }
 
     public func setMarketField(field: MarketModule.MarketField) {

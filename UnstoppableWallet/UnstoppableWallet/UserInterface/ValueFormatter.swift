@@ -98,8 +98,8 @@ class ValueFormatter {
         return result
     }
 
-    func format(percentValue: Decimal) -> String? {
-        let plusSign = percentValue >= 0 ? "+" : ""
+    func format(percentValue: Decimal, signed: Bool = true) -> String? {
+        let plusSign = (percentValue >= 0 && signed) ? "+" : ""
 
         let formattedDiff = percentFormatter.string(from: percentValue as NSNumber)
         return formattedDiff.map { plusSign + $0 + "%" }
