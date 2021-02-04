@@ -501,7 +501,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "terms.item.phone" = "我理解，将我的手机交给不可信的实体或者在未设置安全PIN码锁定的情况下离开钱包应用可能会危害我的资金安全。";
 "terms.item.root" = "我理解对我的手机进行越狱（root）、安装来源不明的第三方应用、未及时更新操作系统可能会危害我的资金安全。";
 "terms.item.bugs" = "我理解，在实现此钱包应用的代码中可能存在未发现的软件问题，这可能会导致意外行为或应用故障的发生。";
-"terms.item.pin" = "I understand that disabling the phone unlock passcode in Settings of iOS will erase wallet private keys from my device. I will need my private keys to regain access to my wallet.";
+"terms.item.pin" = "我知道在iOS的设置中禁用手机解锁密码将从我的设备中擦除钱包私钥。我需要我的私钥才能重新访问我的钱包。";
 "terms.footer" = "感谢您选择我们的钱包！";
 
 // Settings -> Tell Friends
@@ -575,8 +575,8 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "settings.about_app.title" = "关于应用";
 "settings.about_app.app_name" = "Unstoppable钱包";
-"settings.about_app.website" = "Website";
-"settings.about_app.contact" = "Contact";
+"settings.about_app.website" = "网站";
+"settings.about_app.contact" = "联系";
 "settings.about_app.rate_us" = "评价我们";
 "settings.about_app.tell_friends" = "分享给好友";
 "settings.about_app.email_copied" = "电子邮件地址已复制";
@@ -771,9 +771,9 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // Enable Coins
 
-"enable_coins.title" = "Enable Coins";
-"enable_coins.description" = "Enable all %@ coins that have any balance";
-"enable_coins.enable_button" = "Enable";
-"enable_coins.enabling" = "Enabling...";
-"enable_coins.enabled_coins" = "Enabled %@ coins";
-"enable_coins.enabled_no_coins" = "No coins found with balance";
+"enable_coins.title" = "启用代币";
+"enable_coins.description" = "启用有余额的所有%@代币";
+"enable_coins.enable_button" = "启用";
+"enable_coins.enabling" = "正在启用...";
+"enable_coins.enabled_coins" = "已启用%@代币";
+"enable_coins.enabled_no_coins" = "找不到有余额的代币";
