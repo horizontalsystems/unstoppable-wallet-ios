@@ -116,7 +116,7 @@ extension GradientPercentBar {
                 hide(layer: gradientLayer, animated: animated)
                 currentValue = nil
             }
-            backgroundColor = .themeGray50
+            backgroundColor = .themeJeremy
             return
         }
         backgroundColor = .clear

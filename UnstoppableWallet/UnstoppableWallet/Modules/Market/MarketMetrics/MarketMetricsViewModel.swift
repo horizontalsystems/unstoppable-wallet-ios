@@ -33,10 +33,12 @@ class MarketMetricsViewModel {
             return nil
         }
 
+        let btcDominance = ValueFormatter.instance.format(percentValue: marketInfo.btcDominance, signed: false)
         return MarketMetrics(
+
             totalMarketCap: MetricData(value: totalMarketCap, diff: marketInfo.marketCapDiff24h),
             volume24h: MetricData(value: volume24h, diff: marketInfo.volume24hDiff24h),
-            btcDominance: MetricData(value: "\(marketInfo.btcDominance)%", diff: marketInfo.btcDominanceDiff24h),
+            btcDominance: MetricData(value: btcDominance, diff: marketInfo.btcDominanceDiff24h),
             defiCap: MetricData(value: defiCap, diff: nil),
             defiTvl: MetricData(value: nil, diff: nil))
     }
