@@ -395,7 +395,7 @@
 "market_discovery.filter_description.cross_chain" = "Cross-chain protocols.";
 "market_discovery.filter_description.computing" = "Decentralized on-demand computing solutions.";
 
-"market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favourites by click to star icon in the asset page";
+"market_watchlist.empty.caption" = "Vous n'avez pas d'actifs préférés.\n Vous pouvez ajouter des favoris en cliquant sur l'icône en forme d'étoile dans la page des actifs";
 // Transactions
 
 "transactions.title" = "Transactions";
@@ -419,7 +419,7 @@
 "tx_info.transaction_id" = "ID de transaction";
 "tx_info.to_hash" = "À";
 "tx_info.input" = "Entrées";
-"tx_info.button_explorer" = "View on %@";
+"tx_info.button_explorer" = "Afficher sur %@";
 "tx_info.rate" = "Taux historique";
 "tx_info.fee" = "Frais";
 "tx_info.to_self_note" = "Cette transaction a été envoyée à votre propre adresse";
@@ -503,7 +503,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "terms.item.phone" = "Je comprends que le fait de confier mon téléphone à des entités non fiables ou de laisser l'application portefeuille sans verrouillage du code PIN peut potentiellement compromettre la sécurité de mes fonds.";
 "terms.item.root" = "Je comprends que le fait débrider (rooting) mon téléphone, d'installer des applications tierces de sources inconnues, de conserver un système d'exploitation obsolète peut potentiellement mettre en danger la sécurité de mes fonds.";
 "terms.item.bugs" = "Je suis conscient qu'il pourrait y avoir des problèmes non détectés dans le code de cette application de portefeuille, ce qui pourrait entraîner un comportement inattendu ou un dysfonctionnement de l'application.";
-"terms.item.pin" = "I understand that disabling the phone unlock passcode in Settings of iOS will erase wallet private keys from my device. I will need my private keys to regain access to my wallet.";
+"terms.item.pin" = "Je comprends que la désactivation du code de déverrouillage du téléphone dans les paramètres iOS effacera les clés privées du portefeuille de mon appareil. J'aurai besoin de mes clés privées pour pouvoir accéder à mon portefeuille.";
 "terms.footer" = "Merci d'avoir choisi ce portefeuille !";
 
 // Settings -> Tell Friends
@@ -773,9 +773,9 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 // Enable Coins
 
-"enable_coins.title" = "Enable Coins";
-"enable_coins.description" = "Enable all %@ coins that have any balance";
-"enable_coins.enable_button" = "Enable";
-"enable_coins.enabling" = "Enabling...";
-"enable_coins.enabled_coins" = "Enabled %@ coins";
-"enable_coins.enabled_no_coins" = "No coins found with balance";
+"enable_coins.title" = "Activer les Pièces";
+"enable_coins.description" = "Activer toutes les pièces %@ qui ont un solde";
+"enable_coins.enable_button" = "Activer";
+"enable_coins.enabling" = "Activation...";
+"enable_coins.enabled_coins" = "%@ pièces activées";
+"enable_coins.enabled_no_coins" = "Aucune pièce trouvée avec un solde";
