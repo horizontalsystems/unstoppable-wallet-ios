@@ -2,7 +2,6 @@ import UIKit
 import RxSwift
 import ThemeKit
 import SectionsTableView
-import HUD
 
 class MarketDiscoveryViewController: ThemeViewController {
     private let marketViewModel: MarketViewModel
@@ -12,7 +11,8 @@ class MarketDiscoveryViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .plain)
 
     private let filterHeaderView = MarketDiscoveryFilterHeaderView()
-    private let sectionHeaderView = MarketListHeaderView()
+    private let headerView = MarketListHeaderView()
+    private let refreshControl = UIRefreshControl()
 
     weak var parentNavigationController: UINavigationController?
 
@@ -32,6 +32,10 @@ class MarketDiscoveryViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        refreshControl.tintColor = .themeLeah
+        refreshControl.alpha = 0.6
+        refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
+
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
@@ -47,10 +51,10 @@ class MarketDiscoveryViewController: ThemeViewController {
 
         tableView.sectionDataSource = self
 
-        sectionHeaderView.onTapSortField = { [weak self] in
+        headerView.onTapSortField = { [weak self] in
             self?.onTapSortingField()
         }
-        sectionHeaderView.onSelect = { [weak self] field in
+        headerView.onSelect = { [weak self] field in
             self?.viewModel.set(marketField: field)
         }
 
@@ -63,15 +67,29 @@ class MarketDiscoveryViewController: ThemeViewController {
             self?.tableView.reload()
         }
         subscribe(disposeBag, viewModel.sortingFieldTitleDriver) { [weak self] title in
-            self?.sectionHeaderView.setSortingField(title: title)
+            self?.headerView.setSortingField(title: title)
         }
         subscribe(disposeBag, viewModel.marketFieldDriver) { [weak self] marketField in
-            self?.sectionHeaderView.setMarketField(field: marketField)
+            self?.headerView.setMarketField(field: marketField)
         }
         subscribe(disposeBag, viewModel.selectedFilterIndexDriver) { [weak self] index in
             self?.filterHeaderView.setSelected(index: index)
         }
         subscribe(disposeBag, marketViewModel.discoveryListTypeSignal) { [weak self] in self?.handle(listType: $0) }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        tableView.refreshControl = refreshControl
+    }
+
+    @objc func onRefresh() {
+        viewModel.refresh()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.refreshControl.endRefreshing()
+        }
     }
 
     private func onTapSortingField() {
@@ -133,57 +151,49 @@ class MarketDiscoveryViewController: ThemeViewController {
 extension MarketDiscoveryViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        var rows = [RowProtocol]()
+        let rows: [RowProtocol]
+        var headerState: ViewState<MarketListHeaderView> = .margin(height: 0)
 
-        if case .loaded(let viewItems) = state {
+        switch state {
+        case .loading:
+            rows = [
+                Row<SpinnerCell>(
+                        id: "spinner",
+                        dynamicHeight: { [weak self] _ in
+                            max(0, (self?.tableView.height ?? 0) - MarketDiscoveryFilterHeaderView.headerHeight - MarketListHeaderView.height)
+                        }
+                )
+            ]
+
+        case .loaded(let viewItems):
+            headerState = .static(view: headerView, height: MarketListHeaderView.height)
             rows = viewItems.enumerated().map { row(viewItem: $1, isLast: $0 == viewItems.count - 1) }
+
+        case .error(let errorDescription):
+            rows = [
+                Row<ErrorCell>(
+                        id: "error",
+                        dynamicHeight: { [weak self] _ in
+                            max(0, (self?.tableView.height ?? 0) - MarketDiscoveryFilterHeaderView.headerHeight - MarketListHeaderView.height)
+                        },
+                        bind: { cell, _ in
+                            cell.errorText = errorDescription
+                        }
+                )
+            ]
         }
 
-        var sections: [SectionProtocol] = [
+        return [
             Section(
                     id: "filter",
                     headerState: .static(view: filterHeaderView, height: MarketDiscoveryFilterHeaderView.headerHeight)
             ),
-            Section(id: "tokens",
-                    headerState: .static(view: sectionHeaderView, height: MarketListHeaderView.height),
+            Section(
+                    id: "tokens",
+                    headerState: headerState,
                     rows: rows
             )
         ]
-
-        switch state {
-        case .loading:
-            sections.append(
-                    Section(
-                            id: "spinner",
-                            rows: [
-                                Row<SpinnerCell>(
-                                        id: "spinner",
-                                        height: 120
-                                )
-                            ]
-                    )
-            )
-
-        case .error(let errorDescription):
-            sections.append(
-                    Section(
-                            id: "error",
-                            rows: [
-                                Row<ErrorCell>(
-                                        id: "error",
-                                        height: 120,
-                                        bind: { cell, _ in
-                                            cell.errorText = errorDescription
-                                        }
-                                )
-                            ]
-                    )
-            )
-
-        default: ()
-        }
-
-        return sections
     }
 
 }

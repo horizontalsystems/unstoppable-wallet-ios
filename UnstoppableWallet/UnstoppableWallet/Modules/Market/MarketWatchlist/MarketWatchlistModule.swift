@@ -1,4 +1,3 @@
-import Foundation
 import CurrencyKit
 
 struct MarketWatchlistModule {
