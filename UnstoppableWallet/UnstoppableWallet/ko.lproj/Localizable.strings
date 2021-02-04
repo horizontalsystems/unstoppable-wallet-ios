@@ -324,8 +324,6 @@
 "market.top.lowest_cap" = "최저 총액";
 "market.top.highest_volume" = "최고 거래량";
 "market.top.lowest_volume" = "최저 거래량";
-"market.top.highest_price" = "최고 가격";
-"market.top.lowest_price" = "최저 가격";
 "market.top.top_gainers" = "상위 게이너";
 "market.top.top_loosers" = "상위 루저";
 
