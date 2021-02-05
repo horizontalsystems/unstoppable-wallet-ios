@@ -3,7 +3,7 @@ import SnapKit
 import ThemeKit
 
 class BrandFooterCell: UITableViewCell {
-    static let brandText = "© Horizontal Systems 2020"
+    static let brandText = "© Horizontal Systems 2021"
 
     private static let topPadding: CGFloat = .margin12
     private static let bottomPadding: CGFloat = .margin32

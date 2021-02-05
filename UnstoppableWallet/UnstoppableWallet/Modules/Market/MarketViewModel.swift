@@ -7,7 +7,7 @@ class MarketViewModel {
     private let disposeBag = DisposeBag()
 
     private let currentTabRelay: BehaviorRelay<MarketModule.Tab>
-    private let discoveryListTypeRelay = PublishRelay<MarketModule.ListType>()
+    private let discoveryListTypeRelay = BehaviorRelay<MarketModule.ListType?>(value: nil)
 
     init(service: MarketService) {
         self.service = service
@@ -23,8 +23,8 @@ extension MarketViewModel {
         currentTabRelay.asDriver()
     }
 
-    var discoveryListTypeSignal: Signal<MarketModule.ListType> {
-        discoveryListTypeRelay.asSignal()
+    var discoveryListTypeDriver: Driver<MarketModule.ListType?> {
+        discoveryListTypeRelay.asDriver()
     }
 
     var tabs: [MarketModule.Tab] {
