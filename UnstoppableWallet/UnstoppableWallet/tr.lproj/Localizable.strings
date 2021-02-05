@@ -189,7 +189,7 @@
 "send.fee_info.content_average" = "Tipik olarak bu ücret miktarı, işlemin Bitcoin için dakikalar / saat içinde ve Ethereum için dakikalar içinde işlenmesi için yeterli olmalıdır.";
 "send.fee_info.header_fast" = "Hızlı";
 "send.fee_info.content_fast" = "Önceliğin önemli olduğu işlemler için yüksek ücret ayarını kullanmanızı öneririz. İşlemin Bitcoin için 10 dakika, Ethereum için birkaç dakika içinde tamamlanması için yüksek ücret ayarının seçilmesinin yeterli olması bekleniyor.";
-"send.fee_info.content_conclusion" = "The Unstoppable wallet makes an educated guess based on the network activity and can't not guarantee that the suggested fee values will always result in expected behavior.";
+"send.fee_info.content_conclusion" = "Unstoppable cüzdan, ağ etkinliğine dayalı olarak eğitimli bir tahmin yapar ve önerilen ücret değerlerinin her zaman beklenen davranışla sonuçlanacağını garanti edemez.";
 
 "send.confirmation.domain" = "Domain";
 "send.confirmation.address" = "Adres";
@@ -248,9 +248,9 @@
 "swap.advanced_settings.recipient_address" = "Alıcı Adresi";
 "swap.advanced_settings.error.lower_slippage" = "İşleminizin başarısız olması muhtemeldir.";
 "swap.advanced_settings.error.higher_slippage" = "Maksimum izin verilen değer %@%%.";
-"swap.advanced_settings.error.invalid_address" = "Invalid Address";
-"swap.advanced_settings.error.invalid_slippage" = "Invalid Slippage";
-"swap.advanced_settings.error.invalid_deadline" = "Invalid Deadline";
+"swap.advanced_settings.error.invalid_address" = "Geçersiz adres";
+"swap.advanced_settings.error.invalid_slippage" = "Geçersiz Kayma";
+"swap.advanced_settings.error.invalid_deadline" = "Geçersiz Son Tarih";
 
 "swap.fee" = "Takas Ücreti";
 "swap.transactions_speed" = "İşlem hızı";
@@ -501,12 +501,12 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "terms.item.phone" = "Telefonumu güvenilmeyen kişilere vermenin veya cüzdan uygulamasından güvenli PIN kilidi olmadan çıkmanın fonlarımın güvenliğini potansiyel olarak tehlikeye atabileceğini anladım.";
 "terms.item.root" = "Telefonumun yazılımını kırmanın (rootlama), bilinmeyen kaynaklardan üçüncü taraf uygulamaları yüklemenin, işletim sistemini güncel tutmamanın fonlarımın güvenliğini potansiyel olarak tehlikeye atabileceğini anladım.";
 "terms.item.bugs" = "Bu cüzdan uygulamasını çalıştıran kodda beklenmeyen durumlara veya uygulamanın hatalı çalışmasına neden olabilecek keşfedilmemiş yazılım sorunları olabileceğini anladım.";
-"terms.item.pin" = "I understand that disabling the phone unlock passcode in Settings of iOS will erase wallet private keys from my device. I will need my private keys to regain access to my wallet.";
+"terms.item.pin" = "iOS Ayarlarında telefon kilit açma şifresini devre dışı bırakmanın, cihazımdaki cüzdan özel anahtarlarını sileceğini anlıyorum. Cüzdanıma yeniden erişmek için özel anahtarlarıma ihtiyacım olacak.";
 "terms.footer" = "Bu cüzdanı seçtiğiniz için teşekkür ederiz!";
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "👋️ Hey there! Have a look at Unstoppable, it's my favorite crypto wallet.";
+"settings_tell_friends.text" = "👋️ Selam! Unstoppable'a bir göz atın, bu benim favori kripto cüzdanım.";
 
 // Settings -> Security
 
@@ -771,9 +771,9 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 // Enable Coins
 
-"enable_coins.title" = "Enable Coins";
-"enable_coins.description" = "Enable all %@ coins that have any balance";
+"enable_coins.title" = "Kripto Paraları Etkinleştir";
+"enable_coins.description" = "Bakiyesi olan tüm %@ kripto paraları etkinleştirin";
 "enable_coins.enable_button" = "Etkinleştir";
 "enable_coins.enabling" = "Etkinleştiriliyor…";
-"enable_coins.enabled_coins" = "Enabled %@ coins";
-"enable_coins.enabled_no_coins" = "No coins found with balance";
+"enable_coins.enabled_coins" = "%@ Kripto Para etkinleştirildi";
+"enable_coins.enabled_no_coins" = "Bakiyesi olan para bulunamadı";
