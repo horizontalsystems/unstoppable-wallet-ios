@@ -251,7 +251,7 @@
 "swap.advanced_settings.error.lower_slippage" = "Ваша транзакция, скорее всего, не удастся.";
 "swap.advanced_settings.error.higher_slippage" = "Макс. допустимое значение %@%%.";
 "swap.advanced_settings.error.invalid_address" = "Неверный адрес";
-"swap.advanced_settings.error.invalid_slippage" = "Неверное проскальзывание";
+"swap.advanced_settings.error.invalid_slippage" = "Неверное Отклонение";
 "swap.advanced_settings.error.invalid_deadline" = "Недопустимый срок";
 
 "swap.fee" = "Комиссия за обмен";
@@ -295,47 +295,47 @@
 
 // Market
 
-"market.tab_bar_item" = "Рынок";
-"market.title" = "Рынок";
+"market.tab_bar_item" = "Market";
+"market.title" = "Market";
 "market.category.overview" = "Overview";
-"market.category.discovery" = "Находка";
-"market.category.watchlist" = "Список для отслеживания";
-"market.total_market_cap" = "Общая\nрыночная стоимость";
-"market.24h_volume" = "Объем за 24 ч.";
-"market.btc_dominance" = "Преобладание BTC";
-"market.defi_cap" = "Рыночная стоимость DeFi";
-"market.defi_tvl" = "TVL в DeFi";
+"market.category.discovery" = "Discovery";
+"market.category.watchlist" = "Watchlist";
+"market.total_market_cap" = "Total\nMarket Cap";
+"market.24h_volume" = "24h Volume";
+"market.btc_dominance" = "BTC Dominance";
+"market.defi_cap" = "DeFi Cap";
+"market.defi_tvl" = "TVL in DeFi";
 
 "market.sync_error" = "Sync Error";
 
-"market.top.section.header.see_all" = "Показать все";
-"market.top.section.header.top_gainers" = "Лучшие майнеры";
-"market.top.section.header.top_loosers" = "Топ прогоревших";
-"market.top.section.header.top_volume" = "Топ по объему";
-"market.top.volume.title" = "Объём";
-"market.top.market_cap.title" = "Рын. Кап.";
+"market.top.section.header.see_all" = "See All";
+"market.top.section.header.top_gainers" = "Top Gainers";
+"market.top.section.header.top_loosers" = "Top Loosers";
+"market.top.section.header.top_volume" = "Top By Volume";
+"market.top.volume.title" = "Vol";
+"market.top.market_cap.title" = "MCap";
 
-"market.market_field.mcap" = "Рын. Кап.";
-"market.market_field.vol" = "Объём";
-"market.market_field.price" = "Цена";
+"market.market_field.mcap" = "MCap";
+"market.market_field.vol" = "Vol";
+"market.market_field.price" = "Price";
 
-"market.sort_by" = "Сортировать по";
-"market.changes" = "Изменения";
+"market.sort_by" = "Sort By";
+"market.changes" = "Changes";
 
-"market.top.highest_cap" = "Самый высокий кэп";
-"market.top.lowest_cap" = "Самый низкий кэп";
-"market.top.highest_volume" = "Самый высокий объем";
-"market.top.lowest_volume" = "Самый низкий объем";
-"market.top.top_gainers" = "Лучшие майнеры";
-"market.top.top_loosers" = "Топ прогоревших";
+"market.top.highest_cap" = "Highest Cap";
+"market.top.lowest_cap" = "Lowest Cap";
+"market.top.highest_volume" = "Highest Volume";
+"market.top.lowest_volume" = "Lowest Volume";
+"market.top.top_gainers" = "Top Gainers";
+"market.top.top_loosers" = "Top Loosers";
 
-"market.top.period_1h" = "1 час";
-"market.top.period_24h" = "24- часа";
-"market.top.period_day_start" = "Дневной старт";
-"market.top.period_one_day" = "1 день";
+"market.top.period_1h" = "1 hour";
+"market.top.period_24h" = "24 hours";
+"market.top.period_day_start" = "Day Start";
+"market.top.period_one_day" = "1 day";
 "market.top.period_one_week" = "1 неделя";
-"market.top.period_one_month" = "1 месяц";
-"market.top.period_one_year" = "1 год";
+"market.top.period_one_month" = "1 month";
+"market.top.period_one_year" = "1 год1 year";
 
 "market_discovery.filter_title.rated" = "Rated";
 "market_discovery.filter_title.blockchain" = "Blockchains";
@@ -635,7 +635,7 @@
 "chart.time_duration.year" = "1Г";
 "chart.time_duration.year2" = "2Г";
 
-"chart.market_cap" = "Рын. Кап.";
+"chart.market_cap" = "Market Cap";
 "chart.market_cap.thousand" = "%@ к";
 "chart.market_cap.million" = "%@ млн.";
 "chart.market_cap.billion" = "%@ млр.";
