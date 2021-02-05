@@ -52,6 +52,7 @@ class MarketOverviewViewController: ThemeViewController {
         tableView.registerCell(forClass: A2Cell.self)
         tableView.registerCell(forClass: SpinnerCell.self)
         tableView.registerCell(forClass: ErrorCell.self)
+        tableView.registerCell(forClass: BrandFooterCell.self)
 
         subscribe(disposeBag, viewModel.stateDriver) { [weak self] state in
             self?.state = state
@@ -156,8 +157,6 @@ extension MarketOverviewViewController: SectionsDataSource {
 
         case .loaded(let sectionViewItems):
             sectionViewItems.enumerated().forEach { index, sectionViewItem in
-                let isLastSection = index == sectionViewItems.count - 1
-
                 sections.append(
                         Section(id: "header_\(sectionViewItem.listType.rawValue)",
                                 footerState: .margin(height: .margin12),
@@ -169,12 +168,32 @@ extension MarketOverviewViewController: SectionsDataSource {
                 sections.append(
                         Section(
                                 id: sectionViewItem.listType.rawValue,
-                                footerState: .margin(height: isLastSection ? .margin32 : .margin12),
+                                footerState: .margin(height: .margin12),
                                 rows: sectionViewItem.viewItems.enumerated().map { (index, item) in
                                     row(viewItem: item, isFirst: index == 0, isLast: index == sectionViewItem.viewItems.count - 1)
                                 })
                 )
             }
+
+            let brandText = "Powered by CoinGecko API"
+
+            sections.append(
+                    Section(
+                            id: "brand",
+                            headerState: .margin(height: .margin24),
+                            rows: [
+                                Row<BrandFooterCell>(
+                                        id: "brand",
+                                        dynamicHeight: { containerWidth in
+                                            BrandFooterCell.height(containerWidth: containerWidth, title: brandText)
+                                        },
+                                        bind: { cell, _ in
+                                            cell.title = brandText
+                                        }
+                                )
+                            ]
+                    )
+            )
 
         case .error(let errorDescription):
             let row = Row<ErrorCell>(
