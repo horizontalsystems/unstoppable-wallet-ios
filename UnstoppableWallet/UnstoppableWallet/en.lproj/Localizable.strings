@@ -353,7 +353,7 @@ bch.horizontalsystems.xyz/apg";
 "market_discovery.filter_title.algo_stablecoins" = "Algo Stablecoins";
 "market_discovery.filter_title.tokenized_bitcoin" = "Tokenized Bitcoin";
 "market_discovery.filter_title.stablecoin_issuers" = "Stablecoin Issuers";
-"market_discovery.filter_title.exchange_tokens" = "Exchange tokens";
+"market_discovery.filter_title.exchange_tokens" = "Exchange Tokens";
 "market_discovery.filter_title.metals" = "Metals";
 "market_discovery.filter_title.risk_management" = "Risk Management";
 "market_discovery.filter_title.wallets" = "Wallets";
@@ -398,7 +398,7 @@ bch.horizontalsystems.xyz/apg";
 "market_discovery.filter_description.cross_chain" = "Cross-chain protocols.";
 "market_discovery.filter_description.computing" = "Decentralized on-demand computing solutions.";
 
-"market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favourites by click to star icon in the asset page";
+"market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favorites by click to star icon in the asset page";
 // Transactions
 
 "transactions.title" = "Transactions";
