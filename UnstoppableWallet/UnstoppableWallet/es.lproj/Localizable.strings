@@ -82,6 +82,10 @@
 "coin_settings.sync_mode.fast.description" = "0-2 horas, Recomendado";
 "coin_settings.sync_mode.slow.description" = "1-24 horas";
 "coin_settings.sync_mode.description" = "Enlaces de fuentes API: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
+"coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "Nuevo";
+"coin_settings.bitcoin_cash_coin_type.description.type0" = "Monederos antiguos (antes de Agosto 2017)";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "Monederos más nuevos";
 "sync_mode.from_blockchain" = "Desde Blockchain";
 "blockchain_settings.change_alert.title" = "Formato de Dirección";
 "blockchain_settings.change_alert.content" = "Después de este cambio, el monedero tendrá que resincronizarse con el blockchain %@.\n\n\nCuando cambie el formato de dirección para %@, el saldo actual y el historial de transacciones dejarán de ser visibles. Cambiarlo de vuelta a la configuración anterior traerá todo de vuelta después de que el monedero se resincronice a sí mismo con el blockchain. Recomendamos no cambiarlo si no está seguro de lo que es.";
@@ -90,6 +94,7 @@
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "Formato de Dirección";
+
 // Backup
 
 "backup.close" = "Cerrar";
@@ -105,15 +110,9 @@
 
 "backup.words.confirmation_description" = "Insertar palabras de su clave %@";
 
-"backup.eos.account_name" = "Account Name";
-"backup.eos.active_private_key" = "Active Private Key";
-"backup.eos.hint" = "Copiar su clave utilizando la acción \"copiar\" implica ciertos riesgos si utiliza aplicaciones de gestión de portapapeles u otra aplicación que pueda tener acceso a la información del portapapeles.";
 "backup.birthday_height" = "Altura de Cumpleaños";
 
 "error.send.self_transfer" = "Enviarte a vos mismo no está soportado";
-"error.send_eos.account_not_exist" = "La cuenta de destino no existe";
-"error.send_eos.insufficient_ram" = "Su cuenta EOS no tiene suficiente memoria RAM para enviar este token. Necesita aumentar la capacidad RAM para continuar.";
-"error.send_eos.unknown" = "Algo ha fallado: %@";
 "error.send_ethereum.wrong_parameters" = "Parámetros incorrectos";
 "error.send_binance.memo_required" = "El receptor requiere que el memo no esté vacío en la transacción de transferencia";
 "error.send_binance.only_digits_allowed" = "Es necesario que el memo contenga únicamente dígitos";
@@ -145,12 +144,12 @@
 "balance.sort.24h_change" = "Precio(%) 24H";
 "balance_error.change_source" = "Cambiar Origen";
 "balance_error.sync_error" = "Error de sincronización";
-
+"lost_accounts.warning_title" = "Error de la cadena de Claves del iOs ";
+"lost_accounts.warning_message" = "Los datos encriptados de su monedero han sido recientemente invalidados porque se cambió la pantalla de bloqueo de tu iOS";
 // Deposit
 
 "deposit.receive_coin" = "Recibir %@";
 "deposit.your_address" = "Su dirección";
-"deposit.your_account" = "Su cuenta";
 "receive_alert.not_backed_up_description" = "Necesita respaldar el monedero %@ antes de poder recibir %@.";
 
 // Send
@@ -158,7 +157,7 @@
 "send.title" = "Enviar %@";
 "send.amount_placeholder" = "Importe";
 "send.address_placeholder" = "Dirección";
-"send.account_placeholder" = "Cuenta";
+"send.address_or_domain_placeholder" = "Dominio o dirección";
 "send.fee" = "Comisión";
 "send.tx_speed" = "Tarifa de Transacción";
 "send.tx_speed_low" = "Bajo";
@@ -182,7 +181,19 @@
 "send.hodler_locktime_year" = "1 año";
 "send.hodler_locktime_off" = "Apagado";
 "send.hodler_error.unsupported_address" = "El bloqueo del tiempo solo funciona con direcciones P2PKH (a partir de 1)";
+"send.fee_info.title" = "Velocidad de transacción";
+"send.fee_info.description" = "Las blockchains de Ethereum y Bitcoin requieren que los usuarios paguen tarifas de uso mientras envian transaciones en la blockchain \n\n Unstoppable utiliza tarifas de servicios publicos estimados para ayudar al usuario a determinar tarifas de transación apropiadas para el momento. Las tarifas son altas cuando hay muchas transacciones ocurriendo al mismo tiempo y menos cuando la blockchain se encuentra menos ocupada. ";
+"send.fee_info.header_slow" = "Lento";
+"send.fee_info.content_slow" = "Seleccionar un valor de este rango puede resultar en que la transacción esté pendiente por horas o sea rechazada por completo. Cuanto más bajo sea el valor, más tardará en confirmar la transacción.";
+"send.fee_info.header_average" = "Promedio";
+"send.fee_info.content_average" = "Por lo general, este rango de honorarios debería ser suficiente para que la transacción sea procesada entre un minuto/hora para Bitcoin y dentro de minutos para Ethereum.";
+"send.fee_info.header_fast" = "Rápido";
+"send.fee_info.content_fast" = "Para las transacciones en las que la prioridad sea importante, recomendamos utilizar la configuración de una mayor tarifa. Se espera que la selección de un ajuste de una tarifa mayor sea suficiente para que la transacción se complete dentro de 10 minutos para Bitcoin y dentro de unos minutos para Ethereum.";
+"send.fee_info.content_conclusion" = "El monedero Unstoppable hace una conjetura adecuada basada en la actividad de la red y no puede garantizar que los valores de comisión sugeridos siempre resulten en un comportamiento esperado.";
 
+"send.confirmation.domain" = "Dominio";
+"send.confirmation.address" = "Dirección";
+"send.confirmation.account" = "Account";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total";
 "send.confirmation.send_button" = "Enviar";
@@ -235,9 +246,11 @@
 "swap.advanced_settings.recipient.footer" = "Después de la operación de cambio, el monto se transferirá a la dirección especificada";
 "swap.advanced_settings.deadline_minute" = "%@ min";
 "swap.advanced_settings.recipient_address" = "Dirección del destinatario";
-"swap.advanced_settings.recipient.placeholder" = "No establecido";
 "swap.advanced_settings.error.lower_slippage" = "Es probable que su transacción falle.";
 "swap.advanced_settings.error.higher_slippage" = "Valor máximo permitido %@%%.";
+"swap.advanced_settings.error.invalid_address" = "Dirección inválida";
+"swap.advanced_settings.error.invalid_slippage" = "Deslizamiento no válido";
+"swap.advanced_settings.error.invalid_deadline" = "Fecha límite no válida";
 
 "swap.fee" = "Tarifa por permutar";
 "swap.transactions_speed" = "Velocidad de transacción";
@@ -278,6 +291,109 @@
 "swap.uniswap_info.header_transaction_speed" = "Velocidad de transacción";
 "swap.uniswap_info.content_transaction_speed" = "Las transacciones con una tarifa de transacción más alta darán como resultado velocidades de procesamiento más rápidas. Lo opuesto también.";
 
+// Market
+
+"market.tab_bar_item" = "Market";
+"market.title" = "Market";
+"market.category.overview" = "Overview";
+"market.category.discovery" = "Discovery";
+"market.category.watchlist" = "Watchlist";
+"market.total_market_cap" = "Total\nMarket Cap";
+"market.24h_volume" = "24h Volume";
+"market.btc_dominance" = "BTC Dominance";
+"market.defi_cap" = "DeFi Cap";
+"market.defi_tvl" = "TVL in DeFi";
+
+"market.sync_error" = "Sync Error";
+
+"market.top.section.header.see_all" = "See All";
+"market.top.section.header.top_gainers" = "Top Gainers";
+"market.top.section.header.top_loosers" = "Top Loosers";
+"market.top.section.header.top_volume" = "Top By Volume";
+"market.top.volume.title" = "Vol";
+"market.top.market_cap.title" = "MCap";
+
+"market.market_field.mcap" = "MCap";
+"market.market_field.vol" = "Vol";
+"market.market_field.price" = "Price";
+
+"market.sort_by" = "Sort By";
+"market.changes" = "Changes";
+
+"market.top.highest_cap" = "Highest Cap";
+"market.top.lowest_cap" = "Lowest Cap";
+"market.top.highest_volume" = "Highest Volume";
+"market.top.lowest_volume" = "Lowest Volume";
+"market.top.top_gainers" = "Top Gainers";
+"market.top.top_loosers" = "Top Loosers";
+
+"market.top.period_1h" = "1 hora";
+"market.top.period_24h" = "24 horas";
+"market.top.period_day_start" = "Día de inicio";
+"market.top.period_one_day" = "1 día";
+"market.top.period_one_week" = "1 semana";
+"market.top.period_one_month" = "1 mes";
+"market.top.period_one_year" = "1 año";
+
+"market_discovery.filter_title.rated" = "Rated";
+"market_discovery.filter_title.blockchain" = "Blockchains";
+"market_discovery.filter_title.dexes" = "DEXes";
+"market_discovery.filter_title.lending" = "Lending";
+"market_discovery.filter_title.privacy" = "Privacy";
+"market_discovery.filter_title.scaling" = "Scaling";
+"market_discovery.filter_title.oracles" = "Oracles";
+"market_discovery.filter_title.prediction_markets" = "Prediction";
+"market_discovery.filter_title.yield_aggregators" = "Yield Aggregators";
+"market_discovery.filter_title.fiat_stablecoins" = "Fiat Stablecoins";
+"market_discovery.filter_title.algo_stablecoins" = "Algo Stablecoins";
+"market_discovery.filter_title.tokenized_bitcoin" = "Tokenized Bitcoin";
+"market_discovery.filter_title.stablecoin_issuers" = "Stablecoin Issuers";
+"market_discovery.filter_title.exchange_tokens" = "Exchange Tokens";
+"market_discovery.filter_title.metals" = "Metals";
+"market_discovery.filter_title.risk_management" = "Risk Management";
+"market_discovery.filter_title.wallets" = "Wallets";
+"market_discovery.filter_title.synthetics" = "Synthetics";
+"market_discovery.filter_title.index_funds" = "Index Funds";
+"market_discovery.filter_title.nft" = "NFT";
+"market_discovery.filter_title.fundraising" = "Fundraising";
+"market_discovery.filter_title.gaming" = "Gaming & VR";
+"market_discovery.filter_title.b2b" = "B2B";
+"market_discovery.filter_title.infrastructure" = "Infrastructure";
+"market_discovery.filter_title.staking_eth_2_0" = "Staking ETH 2.0";
+"market_discovery.filter_title.governance" = "Governance";
+"market_discovery.filter_title.cross_chain" = "Cross Chain";
+"market_discovery.filter_title.computing" = "Computing";
+
+"market_discovery.filter_description.rated" = "Rated based on security, volume and distribution.";
+"market_discovery.filter_description.blockchain" = "Native cryptocurrencies on major blockchains.";
+"market_discovery.filter_description.dexes" = "Decentralized cryptocurrency exchanges.";
+"market_discovery.filter_description.lending" = "Protocols for lending and borrowing.";
+"market_discovery.filter_description.privacy" = "Projects working on privacy solutions.";
+"market_discovery.filter_description.scaling" = "Solutions for faster blockchain transactions.";
+"market_discovery.filter_description.oracles" = "Connecting real world data to smart contracts.";
+"market_discovery.filter_description.prediction_markets" = "Markets to bet on events in the future.";
+"market_discovery.filter_description.yield_aggregators" = "Solutions for earning from idle crypto assets.";
+"market_discovery.filter_description.fiat_stablecoins" = "Crypto tokens pegged 1-1 to fiat currency.";
+"market_discovery.filter_description.algo_stablecoins" = "Stablecoins with algorithmic 1-1 price peg to fiat.";
+"market_discovery.filter_description.tokenized_bitcoin" = "Crypto tokens pegged 1-1 to Bitcoin price.";
+"market_discovery.filter_description.stablecoin_issuers" = "Decentralized issuers of fiat pegged stablecoin tokens.";
+"market_discovery.filter_description.exchange_tokens" = "Tokens issued by centralized exchanges.";
+"market_discovery.filter_description.metals" = "Tokens pegged to metal prices.";
+"market_discovery.filter_description.risk_management" = "Risk assessment, insurance and hedging.";
+"market_discovery.filter_description.wallets" = "Tokens issued by cryptocurrency wallets.";
+"market_discovery.filter_description.synthetics" = "Platforms for creating decentralized synthetic assets.";
+"market_discovery.filter_description.index_funds" = "Assets that pegged in price to a set of tokens.";
+"market_discovery.filter_description.nft" = "Marketplaces for NFT tokens.";
+"market_discovery.filter_description.fundraising" = "Fundraising and token sale platforms.";
+"market_discovery.filter_description.gaming" = "Fundraising and token sale platforms.";
+"market_discovery.filter_description.b2b" = "B2B service providers.";
+"market_discovery.filter_description.infrastructure" = "Projects building infrastructure solutions.";
+"market_discovery.filter_description.staking_eth_2_0" = "Protocols that reward liquidity providers.";
+"market_discovery.filter_description.governance" = "Decentralized governance protocols for DAOs.";
+"market_discovery.filter_description.cross_chain" = "Cross-chain protocols.";
+"market_discovery.filter_description.computing" = "Decentralized on-demand computing solutions.";
+
+"market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favorites by click to star icon in the asset page";
 // Transactions
 
 "transactions.title" = "Transacciones";
@@ -301,7 +417,7 @@
 "tx_info.transaction_id" = "Identificación de la transacción";
 "tx_info.to_hash" = "Para";
 "tx_info.input" = "Entrada";
-"tx_info.button_verify" = "Verificar";
+"tx_info.button_explorer" = "View on %@";
 "tx_info.rate" = "Tasa histórica";
 "tx_info.fee" = "Comisión";
 "tx_info.to_self_note" = "Esta transacción fue enviada a su propia dirección";
@@ -310,40 +426,7 @@
 "tx_info.unlocked_at" = "Desbloqueado en %@";
 "tx_info.recipient_hash" = "Destinatario";
 "tx_info.raw_transaction" = "Transacción sin procesar";
-
-// Full Info
-
-"full_info.title" = "Transacción";
-"full_info.time" = "Hora";
-"full_info.block" = "Bloquear";
-"full_info.confirmations" = "Confirmaciones";
-"full_info.size" = "Tamaño";
-"full_info.fee" = "Comisión";
-"full_info.rate" = "Tasa";
-"full_info.inputs" = "Aportaciones";
-"full_info.outputs" = "Rendimientos";
-"full_info.source" = "Origen";
-"full_info.contract" = "Contrato";
-"full_info.from" = "Desde ";
-"full_info.to" = "Para";
-"full_info.amount" = "Importe";
-"full_info.nonce" = "Nonce";
-"full_info.memo" = "Memo";
-"full_info.cpu" = "Uso de CPU";
-"full_info.net" = "Uso de red";
-"full_info.milli_seconds" = "%@ μs";
-"full_info.bytes" = "%@ Bytes";
-
-"full_info.gas_limit" = "Límite de gas";
-"full_info.gas_used" = "Gas usado";
-"full_info.gas_price" = "Precio de gas";
-
-"full_info.source.title" = "Origen";
-
-"full_info.error.server_offline" = "desconectado";
-"full_info.error.transaction_not_found" = "La transacción no se pudo encontrar en el blockchain";
-"full_info.error.change_source" = "Cambiar origen";
-"full_info.no_address" = "Dirección vacía";
+"tx_info.memo" = "Memo";
 
 // Settings
 
@@ -419,6 +502,7 @@ Desarrollamos Unstoppable para nosotros mismos ya que las soluciones disponibles
 "terms.item.root" = "Entiendo que rootear mi teléfono (rooting), instalando aplicaciones de terceros de fuentes desconocidas o mantener el sistema operativo desactualizado puede, potencialmente,
 poner en peligro la seguridad de mis fondos.";
 "terms.item.bugs" = "Entiendo que puede haber problemas de software sin descubrir en el código que hace funcionar esta aplicación, lo que puede llevar a un comportamiento inesperado o al mal funcionamiento de la aplicación.";
+"terms.item.pin" = "Entiendo que deshabilitar el teléfono desbloqueará el código de acceso en la Configuración del iOS y esto borrará las claves privadas de mi dispositivo. Necesitaré mis claves privadas para recuperar el acceso a mi monedero.";
 "terms.footer" = "¡Gracias por elegir este monedero!";
 
 // Settings -> Tell Friends
@@ -487,14 +571,12 @@ poner en peligro la seguridad de mis fondos.";
 "settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará los monederos %@ de este dispositivo.";
 "settings_manage_keys.delete.confirmation_disable" = "Monedas que serán deshabilitadas: %@";
 "settings_manage_keys.delete.confirmation_loose" = "Si usted no respaldó la clave privada para este monedero, perderá el acceso a sus fondos.";
-"error.invalid_eos_key" = "Clave inválida";
-"error.invalid_eos_account" = "Cuenta inválida";
 
 // Settings -> About App
 
 "settings.about_app.title" = "Sobre la aplicacion";
 "settings.about_app.app_name" = "Monedero Unstoppable";
-"settings.about_app.site" = "Sitio";
+"settings.about_app.website" = "Sitio Web";
 "settings.about_app.contact" = "Contacto";
 "settings.about_app.rate_us" = "Califícanos";
 "settings.about_app.tell_friends" = "Recomendar a un amigo";
@@ -622,7 +704,6 @@ poner en peligro la seguridad de mis fondos.";
 "add_token_selector.choose_blockchain" = "Elegir Blockchain";
 "add_token_selector.add_token" = "Añadir Token";
 "add_token_selector.erc20_token" = "ERC20 Token";
-"add_token_selector.eos_token" = "EOS Token";
 "add_token_selector.binance_token" = "BEP2 Token";
 
 // Add Token
@@ -688,3 +769,12 @@ poner en peligro la seguridad de mis fondos.";
 "status_info.confirmed.content" = "La transacción es definitiva e irreversible.";
 "status_info.failed.title" = "Falló";
 "status_info.failed.content" = "La transacción no se procesó como se pretendía y no tuvo lugar ninguna transferencia de valor de token. En las transacciones fallidas de Ethereum las transacciones consumen comisiones de transacción.";
+
+// Enable Coins
+
+"enable_coins.title" = "Activar monedas";
+"enable_coins.description" = "Habilitar todas las %@ monedas que tengan saldo";
+"enable_coins.enable_button" = "Habilitar";
+"enable_coins.enabling" = "Activando...";
+"enable_coins.enabled_coins" = "%@ créditos habilitados";
+"enable_coins.enabled_no_coins" = "No hay monedas con saldo";

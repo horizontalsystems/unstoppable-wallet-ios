@@ -82,6 +82,10 @@
 "coin_settings.sync_mode.fast.description" = "0 小时 (推荐)";
 "coin_settings.sync_mode.slow.description" = "1- 24 小时";
 "coin_settings.sync_mode.description" = "API 源链接： \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
+"coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "新";
+"coin_settings.bitcoin_cash_coin_type.description.type0" = "旧钱包（2017年之前）";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "较新的钱包";
 "sync_mode.from_blockchain" = "来自区块链";
 "blockchain_settings.change_alert.title" = "地址格式";
 "blockchain_settings.change_alert.content" = "此更改后，钱包将必须与 %@ 区块链重新同步。\n\n\n当您更改地址格式的 %@ 时，当前余额和交易历史将不再可见。 将其更改为以前的设置将在钱包与区块链重新同步后恢复所有设置。 如果不确定，我们建议不要进行更改。";
@@ -90,6 +94,7 @@
 "blockchain_settings.sync_mode.blockchain" = "区块链";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "地址格式";
+
 // Backup
 
 "backup.close" = "关闭";
@@ -105,15 +110,9 @@
 
 "backup.words.confirmation_description" = "输入您%@密钥中的文字";
 
-"backup.eos.account_name" = "Account Name";
-"backup.eos.active_private_key" = "Active Private Key";
-"backup.eos.hint" = "如果您有使用任何剪贴板管理应用或其他可存取剪贴板数据的应用，那么适用”复制“操作复制您的密钥将会带来风险。";
 "backup.birthday_height" = "生日高度";
 
 "error.send.self_transfer" = "不支持发送给自己";
-"error.send_eos.account_not_exist" = "目标账户不存在";
-"error.send_eos.insufficient_ram" = "您的EOS账户没有足够的RAM来发送此令牌。您必须增加RAM才能继续。";
-"error.send_eos.unknown" = "出错了：%@";
 "error.send_ethereum.wrong_parameters" = "错误参数";
 "error.send_binance.memo_required" = "收款人要求在转账交易中包含非空的备注";
 "error.send_binance.only_digits_allowed" = "要求备注仅包含数字";
@@ -145,12 +144,12 @@
 "balance.sort.24h_change" = "24小时价格（%）";
 "balance_error.change_source" = "更改源";
 "balance_error.sync_error" = "同步出错";
-
+"lost_accounts.warning_title" = "iOS Keychain 错误";
+"lost_accounts.warning_message" = "因为您的 iOS 锁定屏幕已被更改，所以保存您钱包的加密数据目前已失效";
 // Deposit
 
 "deposit.receive_coin" = "收到%@";
 "deposit.your_address" = "您的地址";
-"deposit.your_account" = "您的账户";
 "receive_alert.not_backed_up_description" = "您必须在接收%@之前先备份%@钱包。";
 
 // Send
@@ -158,7 +157,7 @@
 "send.title" = "发送%@";
 "send.amount_placeholder" = "金额";
 "send.address_placeholder" = "地址";
-"send.account_placeholder" = "账户";
+"send.address_or_domain_placeholder" = "地址或域名";
 "send.fee" = "费用";
 "send.tx_speed" = "交易费用";
 "send.tx_speed_low" = "低";
@@ -182,7 +181,19 @@
 "send.hodler_locktime_year" = "1 年";
 "send.hodler_locktime_off" = "关";
 "send.hodler_error.unsupported_address" = "时间锁定只能和P2PKH地址（以1开头）一起使用";
+"send.fee_info.title" = "交易速度";
+"send.fee_info.description" = "比特币（Bitcoin）和 以太币（Etherum）区块链都要求用户在区块链上发送交易时支付使用费。\n\nUnstoppable使用公共费用估算服务来帮助用户确定当前合适的交易费用。 当大量交易正在进行时，费用较高，而当区块链不那么繁忙时，费用较低。";
+"send.fee_info.header_slow" = "慢";
+"send.fee_info.content_slow" = "选择此范围中的值可能导致交易需等待数小时或被完全拒绝。值越低，确认交易的所需时间越长。";
+"send.fee_info.header_average" = "平均";
+"send.fee_info.content_average" = "通常，此费用范围应足以使比特币（Bitcoin）交易在数分钟/小时、以太币（Ethereum）在数分钟内得到处理。";
+"send.fee_info.header_fast" = "快";
+"send.fee_info.content_fast" = "对于优先级具有重要意义的交易，我们建议使用高费用设置。可以预期，选择高费用设置将足以使比特币（Bitcoin）交易在10分钟、以太币（Ethereum）交易在数分钟内完成。";
+"send.fee_info.content_conclusion" = "Unstoppable钱包以网络活动为基础作出有根据的猜测，但不能保证所建议费用值总能实现预期行为。";
 
+"send.confirmation.domain" = "域名";
+"send.confirmation.address" = "地址";
+"send.confirmation.account" = "Account";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "总额";
 "send.confirmation.send_button" = "发送​​";
@@ -235,9 +246,11 @@
 "swap.advanced_settings.recipient.footer" = "在兑换操作之后，金额将转移至指定地址";
 "swap.advanced_settings.deadline_minute" = "%@分钟。";
 "swap.advanced_settings.recipient_address" = "接收人地址";
-"swap.advanced_settings.recipient.placeholder" = "未设置";
 "swap.advanced_settings.error.lower_slippage" = "您的交易可能失败。";
 "swap.advanced_settings.error.higher_slippage" = "最大允许值是 %@%%.";
+"swap.advanced_settings.error.invalid_address" = "无效地址";
+"swap.advanced_settings.error.invalid_slippage" = "无效延误";
+"swap.advanced_settings.error.invalid_deadline" = "无效截止日期";
 
 "swap.fee" = "掉期交易费用";
 "swap.transactions_speed" = "交易速度";
@@ -278,6 +291,109 @@
 "swap.uniswap_info.header_transaction_speed" = "交易速度";
 "swap.uniswap_info.content_transaction_speed" = "交易费用较高的交易会实现更快的处理速度。反之亦然。";
 
+// Market
+
+"market.tab_bar_item" = "市场";
+"market.title" = "市场";
+"market.category.overview" = "Overview";
+"market.category.discovery" = "发现";
+"market.category.watchlist" = "关注列表";
+"market.total_market_cap" = "总计\n市场价值";
+"market.24h_volume" = "24小时交易量";
+"market.btc_dominance" = "BTC主导";
+"market.defi_cap" = "DeFi市场价值";
+"market.defi_tvl" = "DeFi中的TVL";
+
+"market.sync_error" = "Sync Error";
+
+"market.top.section.header.see_all" = "查看全部";
+"market.top.section.header.top_gainers" = "最高盈利";
+"market.top.section.header.top_loosers" = "最高受损";
+"market.top.section.header.top_volume" = "最高交易量";
+"market.top.volume.title" = "交易量";
+"market.top.market_cap.title" = "市场价值";
+
+"market.market_field.mcap" = "市场价值";
+"market.market_field.vol" = "交易量";
+"market.market_field.price" = "价格";
+
+"market.sort_by" = "排序方式";
+"market.changes" = "更改";
+
+"market.top.highest_cap" = "最高市场价值";
+"market.top.lowest_cap" = "最低市场价值";
+"market.top.highest_volume" = "最高交易量";
+"market.top.lowest_volume" = "最低交易量";
+"market.top.top_gainers" = "最高盈利";
+"market.top.top_loosers" = "最高受损";
+
+"market.top.period_1h" = "1 小时";
+"market.top.period_24h" = "24 小时";
+"market.top.period_day_start" = "一天开始于";
+"market.top.period_one_day" = "1 day";
+"market.top.period_one_week" = "1 week";
+"market.top.period_one_month" = "1 month";
+"market.top.period_one_year" = "1 year";
+
+"market_discovery.filter_title.rated" = "Rated";
+"market_discovery.filter_title.blockchain" = "Blockchains";
+"market_discovery.filter_title.dexes" = "DEXes";
+"market_discovery.filter_title.lending" = "Lending";
+"market_discovery.filter_title.privacy" = "Privacy";
+"market_discovery.filter_title.scaling" = "Scaling";
+"market_discovery.filter_title.oracles" = "Oracles";
+"market_discovery.filter_title.prediction_markets" = "Prediction";
+"market_discovery.filter_title.yield_aggregators" = "Yield Aggregators";
+"market_discovery.filter_title.fiat_stablecoins" = "Fiat Stablecoins";
+"market_discovery.filter_title.algo_stablecoins" = "Algo Stablecoins";
+"market_discovery.filter_title.tokenized_bitcoin" = "Tokenized Bitcoin";
+"market_discovery.filter_title.stablecoin_issuers" = "Stablecoin Issuers";
+"market_discovery.filter_title.exchange_tokens" = "Exchange Tokens";
+"market_discovery.filter_title.metals" = "Metals";
+"market_discovery.filter_title.risk_management" = "Risk Management";
+"market_discovery.filter_title.wallets" = "Wallets";
+"market_discovery.filter_title.synthetics" = "Synthetics";
+"market_discovery.filter_title.index_funds" = "Index Funds";
+"market_discovery.filter_title.nft" = "NFT";
+"market_discovery.filter_title.fundraising" = "Fundraising";
+"market_discovery.filter_title.gaming" = "Gaming & VR";
+"market_discovery.filter_title.b2b" = "B2B";
+"market_discovery.filter_title.infrastructure" = "Infrastructure";
+"market_discovery.filter_title.staking_eth_2_0" = "Staking ETH 2.0";
+"market_discovery.filter_title.governance" = "Governance";
+"market_discovery.filter_title.cross_chain" = "Cross Chain";
+"market_discovery.filter_title.computing" = "Computing";
+
+"market_discovery.filter_description.rated" = "Rated based on security, volume and distribution.";
+"market_discovery.filter_description.blockchain" = "Native cryptocurrencies on major blockchains.";
+"market_discovery.filter_description.dexes" = "Decentralized cryptocurrency exchanges.";
+"market_discovery.filter_description.lending" = "Protocols for lending and borrowing.";
+"market_discovery.filter_description.privacy" = "Projects working on privacy solutions.";
+"market_discovery.filter_description.scaling" = "Solutions for faster blockchain transactions.";
+"market_discovery.filter_description.oracles" = "Connecting real world data to smart contracts.";
+"market_discovery.filter_description.prediction_markets" = "Markets to bet on events in the future.";
+"market_discovery.filter_description.yield_aggregators" = "Solutions for earning from idle crypto assets.";
+"market_discovery.filter_description.fiat_stablecoins" = "Crypto tokens pegged 1-1 to fiat currency.";
+"market_discovery.filter_description.algo_stablecoins" = "Stablecoins with algorithmic 1-1 price peg to fiat.";
+"market_discovery.filter_description.tokenized_bitcoin" = "Crypto tokens pegged 1-1 to Bitcoin price.";
+"market_discovery.filter_description.stablecoin_issuers" = "Decentralized issuers of fiat pegged stablecoin tokens.";
+"market_discovery.filter_description.exchange_tokens" = "Tokens issued by centralized exchanges.";
+"market_discovery.filter_description.metals" = "Tokens pegged to metal prices.";
+"market_discovery.filter_description.risk_management" = "Risk assessment, insurance and hedging.";
+"market_discovery.filter_description.wallets" = "Tokens issued by cryptocurrency wallets.";
+"market_discovery.filter_description.synthetics" = "Platforms for creating decentralized synthetic assets.";
+"market_discovery.filter_description.index_funds" = "Assets that pegged in price to a set of tokens.";
+"market_discovery.filter_description.nft" = "Marketplaces for NFT tokens.";
+"market_discovery.filter_description.fundraising" = "Fundraising and token sale platforms.";
+"market_discovery.filter_description.gaming" = "Crypto projects in gaming and VR sector.";
+"market_discovery.filter_description.b2b" = "B2B service providers.";
+"market_discovery.filter_description.infrastructure" = "Projects building infrastructure solutions.";
+"market_discovery.filter_description.staking_eth_2_0" = "Protocols that reward liquidity providers.";
+"market_discovery.filter_description.governance" = "Decentralized governance protocols for DAOs.";
+"market_discovery.filter_description.cross_chain" = "Cross-chain protocols.";
+"market_discovery.filter_description.computing" = "Decentralized on-demand computing solutions.";
+
+"market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favorites by click to star icon in the asset page";
 // Transactions
 
 "transactions.title" = "交易";
@@ -301,7 +417,7 @@
 "tx_info.transaction_id" = "交易ID";
 "tx_info.to_hash" = "接收人";
 "tx_info.input" = "输入";
-"tx_info.button_verify" = "验证";
+"tx_info.button_explorer" = "View on %@";
 "tx_info.rate" = "历史价格";
 "tx_info.fee" = "费用";
 "tx_info.to_self_note" = "交易已发送至自有地址";
@@ -310,40 +426,7 @@
 "tx_info.unlocked_at" = "在 %@ 解锁了";
 "tx_info.recipient_hash" = "收款人";
 "tx_info.raw_transaction" = "原始交易";
-
-// Full Info
-
-"full_info.title" = "交易";
-"full_info.time" = "时间";
-"full_info.block" = "区块";
-"full_info.confirmations" = "确认";
-"full_info.size" = "大小";
-"full_info.fee" = "费用";
-"full_info.rate" = "价格";
-"full_info.inputs" = "输入";
-"full_info.outputs" = "输出";
-"full_info.source" = "源";
-"full_info.contract" = "合同";
-"full_info.from" = "发件人";
-"full_info.to" = "接收人";
-"full_info.amount" = "金额";
-"full_info.nonce" = "Nonce";
-"full_info.memo" = "Memo";
-"full_info.cpu" = "CPU Usage";
-"full_info.net" = "Net Usage";
-"full_info.milli_seconds" = "%@ μs";
-"full_info.bytes" = "%@ Bytes";
-
-"full_info.gas_limit" = "Gas Limit ";
-"full_info.gas_used" = "Gas Used";
-"full_info.gas_price" = "Gas Price";
-
-"full_info.source.title" = "源";
-
-"full_info.error.server_offline" = "离线";
-"full_info.error.transaction_not_found" = "无法在区块链上找到交易";
-"full_info.error.change_source" = "更改源";
-"full_info.no_address" = "空地址";
+"tx_info.memo" = "Memo";
 
 // Settings
 
@@ -418,6 +501,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "terms.item.phone" = "我理解，将我的手机交给不可信的实体或者在未设置安全PIN码锁定的情况下离开钱包应用可能会危害我的资金安全。";
 "terms.item.root" = "我理解对我的手机进行越狱（root）、安装来源不明的第三方应用、未及时更新操作系统可能会危害我的资金安全。";
 "terms.item.bugs" = "我理解，在实现此钱包应用的代码中可能存在未发现的软件问题，这可能会导致意外行为或应用故障的发生。";
+"terms.item.pin" = "我知道在iOS的设置中禁用手机解锁密码将从我的设备中擦除钱包私钥。我需要我的私钥才能重新访问我的钱包。";
 "terms.footer" = "感谢您选择我们的钱包！";
 
 // Settings -> Tell Friends
@@ -439,9 +523,9 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "settings_privacy.sorting_title" = "输入/输出";
 "settings_privacy.sorting.section_header" = "区块链交易";
 "settings_privacy.sorting.section_footer" = "通过改变交易结构的方式使您的BTC、LTC、BCH交易更难被追踪。";
-"settings_privacy.connection.section_header" = "同步区块链";
+"settings_privacy.connection.section_header" = "Blockchain Sync";
 "settings_privacy.connection.section_footer" = "部分区块链未为手机应用提供以点对点运行的方法。与BTC、BCH、LTC、DASH 区块链的通信属于完全点对点。";
-"settings_privacy.sync.section_header" = "区块链恢复";
+"settings_privacy.sync.section_header" = "Blockchain Restore";
 "settings_privacy.sync.section_footer" = "通过交易为恢复钱包选择数据源。";
 
 "settings_privacy_info.title" = "隐私设置";
@@ -486,15 +570,13 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "settings_manage_keys.delete.confirmation_remove" = "该操作将从此设备删除%@钱包。";
 "settings_manage_keys.delete.confirmation_disable" = "将被禁用的代币：%@";
 "settings_manage_keys.delete.confirmation_loose" = "如果您尚未对此钱包备份私钥，您将失去您的资金。";
-"error.invalid_eos_key" = "错误密钥";
-"error.invalid_eos_account" = "无效账户";
 
 // Settings -> About App
 
 "settings.about_app.title" = "关于应用";
 "settings.about_app.app_name" = "Unstoppable钱包";
-"settings.about_app.site" = "网站";
-"settings.about_app.contact" = "报告问题";
+"settings.about_app.website" = "网站";
+"settings.about_app.contact" = "联系";
 "settings.about_app.rate_us" = "评价我们";
 "settings.about_app.tell_friends" = "分享给好友";
 "settings.about_app.email_copied" = "电子邮件地址已复制";
@@ -621,7 +703,6 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "add_token_selector.choose_blockchain" = "选择区块链";
 "add_token_selector.add_token" = "添加代币";
 "add_token_selector.erc20_token" = "ERC20 Token";
-"add_token_selector.eos_token" = "EOS Token";
 "add_token_selector.binance_token" = "BEP2 Token";
 
 // Add Token
@@ -674,7 +755,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // FAQ
 
-"faq.title" = "常见问题";
+"faq.title" = "FAQ";
 
 // Status Info
 
@@ -687,3 +768,12 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "status_info.confirmed.content" = "交易是最终且不可逆的。";
 "status_info.failed.title" = "失败";
 "status_info.failed.content" = "交易没有按预定方式处理，也没有进行代币价值转移。在Etherum区块链中，失败的交易会消耗交易费用。";
+
+// Enable Coins
+
+"enable_coins.title" = "启用代币";
+"enable_coins.description" = "启用有余额的所有%@代币";
+"enable_coins.enable_button" = "启用";
+"enable_coins.enabling" = "正在启用...";
+"enable_coins.enabled_coins" = "已启用%@代币";
+"enable_coins.enabled_no_coins" = "找不到有余额的代币";
