@@ -83,9 +83,9 @@
 "coin_settings.sync_mode.slow.description" = "1-24 saat";
 "coin_settings.sync_mode.description" = "API kaynak linkleri: \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg\n";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "New";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "Older wallets (before Aug 2017)";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "Newer wallets";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "Yeni";
+"coin_settings.bitcoin_cash_coin_type.description.type0" = "Eski cüzdanlar (Ağustos 2017'den önce)";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "Yeni cüzdanlar";
 "sync_mode.from_blockchain" = "Blockchain çıkışlı";
 "blockchain_settings.change_alert.title" = "Adres Formatı";
 "blockchain_settings.change_alert.content" = "Bu değişiklikten sonra cüzdan %@ blok zinciri ile kendini yeniden senkronize etmek zorunda kalacak.\n\n%@ için adres biçimini değiştirdiğinizde, mevcut bakiye ve işlem geçmişi artık bakiye sekmesinde görünmeyecek. Bir önceki ayara geri döndürmek, cüzdan blok zinciriyle kendini yeniden senkronize ettikten sonra her şeyi geri getirecektir. Bunun ne olduğundan emin değilseniz değiştirmemenizi öneririz.";
@@ -144,8 +144,8 @@
 "balance.sort.24h_change" = "24 saat Fiyat(%)";
 "balance_error.change_source" = "Kaynağı Değiştir";
 "balance_error.sync_error" = "Senk. hatası";
-"lost_accounts.warning_title" = "iOS Keychain Error";
-"lost_accounts.warning_message" = "The encrypted data holding your wallet was recently invalidated because your iOS lock screen was changed";
+"lost_accounts.warning_title" = "iOS Keychain Hatası";
+"lost_accounts.warning_message" = "iOS cihazınızın kilidi değiştirildiğinden cüzdan bilginizi tutan şifreli dosya artık geçersiz";
 // Deposit
 
 "deposit.receive_coin" = "%@ al";
@@ -157,7 +157,7 @@
 "send.title" = "%@ gönder";
 "send.amount_placeholder" = "Tutar";
 "send.address_placeholder" = "Adres";
-"send.address_or_domain_placeholder" = "Address or Domain";
+"send.address_or_domain_placeholder" = "Adres veya Domain";
 "send.fee" = "Masraf";
 "send.tx_speed" = "İşlem Ücreti";
 "send.tx_speed_low" = "Düşük";
@@ -181,18 +181,18 @@
 "send.hodler_locktime_year" = "1 yıl";
 "send.hodler_locktime_off" = "Kapat";
 "send.hodler_error.unsupported_address" = "Zaman kilitleme sadece P2PKH adresleriyle çalışır (1 ile başlayan)";
-"send.fee_info.title" = "Transaction Speed";
-"send.fee_info.description" = "Both Bitcoin and Ethereum blockchains require users to pay usage fees while sending transactions on the blockchain.\n\nUnstoppable uses public fee estimate services to help user determine appropriate transaction fees for the moment. The fees are higher when there are a lot of transactions taking place and lower when the blockchain is less busy.";
-"send.fee_info.header_slow" = "Slow";
-"send.fee_info.content_slow" = "Selecting a value from this range may result in transaction being pending for hours or being rejected entirely. The lower the value the longer it will take for the transaction to confirm.";
-"send.fee_info.header_average" = "Average";
-"send.fee_info.content_average" = "Typically, this fee range should be sufficient for transaction to be processed within minutes/hour for Bitcoin and within minutes for Ethereum.";
-"send.fee_info.header_fast" = "Fast";
-"send.fee_info.content_fast" = "For transactions where priority is important we recommend using high fee setting. It's expected that selecting high fee setting will be sufficient for transaction to be completed within 10 minutes for Bitcoin and within a few minutes for Ethereum.";
+"send.fee_info.title" = "İşlem hızı";
+"send.fee_info.description" = "Bitcoin ve Ethereum blok zincirleri kullanıcıların blok zincirinde işlem gönderirken kullanım ücreti ödemesini gerektirir. \n\nUnstoppable kullanıcının o an için en uygun işlem ücretlerini belirlemesine yardımcı olmak için kamuya açık ücret tahmin hizmetlerini kullanır. Blok zincirindeki ücretler o andaki işlem yüküne göre belirlenir, çok sayıda işlem gerçekleştiğinde ücretler yüksek ve az işlem gerçekleştiğinde ücretler düşüktür.";
+"send.fee_info.header_slow" = "Yavaş";
+"send.fee_info.content_slow" = "Bu aralıktan bir değer seçmek, işlemin saatlerce beklemesine veya tamamen reddedilmesine neden olabilir. Değer ne kadar düşükse işlemin onaylanması o kadar uzun sürer.";
+"send.fee_info.header_average" = "Ortalama";
+"send.fee_info.content_average" = "Tipik olarak bu ücret miktarı, işlemin Bitcoin için dakikalar / saat içinde ve Ethereum için dakikalar içinde işlenmesi için yeterli olmalıdır.";
+"send.fee_info.header_fast" = "Hızlı";
+"send.fee_info.content_fast" = "Önceliğin önemli olduğu işlemler için yüksek ücret ayarını kullanmanızı öneririz. İşlemin Bitcoin için 10 dakika, Ethereum için birkaç dakika içinde tamamlanması için yüksek ücret ayarının seçilmesinin yeterli olması bekleniyor.";
 "send.fee_info.content_conclusion" = "The Unstoppable wallet makes an educated guess based on the network activity and can't not guarantee that the suggested fee values will always result in expected behavior.";
 
 "send.confirmation.domain" = "Domain";
-"send.confirmation.address" = "Address";
+"send.confirmation.address" = "Adres";
 "send.confirmation.account" = "Account";
 "send.confirmation.memo_placeholder" = "Not";
 "send.confirmation.total" = "Toplam";
@@ -327,8 +327,8 @@
 "market.top.top_gainers" = "Top Gainers";
 "market.top.top_loosers" = "Top Loosers";
 
-"market.top.period_1h" = "1 hour";
-"market.top.period_24h" = "24 hours";
+"market.top.period_1h" = "1 saat";
+"market.top.period_24h" = "24 Saat";
 "market.top.period_day_start" = "Day Start";
 "market.top.period_one_day" = "1 day";
 "market.top.period_one_week" = "1 week";
@@ -348,7 +348,7 @@
 "market_discovery.filter_title.algo_stablecoins" = "Algo Stablecoins";
 "market_discovery.filter_title.tokenized_bitcoin" = "Tokenized Bitcoin";
 "market_discovery.filter_title.stablecoin_issuers" = "Stablecoin Issuers";
-"market_discovery.filter_title.exchange_tokens" = "Exchange tokens";
+"market_discovery.filter_title.exchange_tokens" = "Exchange Tokens";
 "market_discovery.filter_title.metals" = "Metals";
 "market_discovery.filter_title.risk_management" = "Risk Management";
 "market_discovery.filter_title.wallets" = "Wallets";
@@ -393,7 +393,7 @@
 "market_discovery.filter_description.cross_chain" = "Cross-chain protocols.";
 "market_discovery.filter_description.computing" = "Decentralized on-demand computing solutions.";
 
-"market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favourites by click to star icon in the asset page";
+"market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favorites by click to star icon in the asset page";
 // Transactions
 
 "transactions.title" = "Hesap işlemleri";
@@ -773,7 +773,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 "enable_coins.title" = "Enable Coins";
 "enable_coins.description" = "Enable all %@ coins that have any balance";
-"enable_coins.enable_button" = "Enable";
-"enable_coins.enabling" = "Enabling...";
+"enable_coins.enable_button" = "Etkinleştir";
+"enable_coins.enabling" = "Etkinleştiriliyor…";
 "enable_coins.enabled_coins" = "Enabled %@ coins";
 "enable_coins.enabled_no_coins" = "No coins found with balance";
