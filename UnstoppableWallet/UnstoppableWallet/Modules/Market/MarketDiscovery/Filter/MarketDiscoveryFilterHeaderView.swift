@@ -99,7 +99,9 @@ extension MarketDiscoveryFilterHeaderView: UICollectionViewDelegateFlowLayout, U
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true) //call scroll to item firstly, so layout of collection view performed before containing table view layout it's subviews leading to jump instead of scroll
+        DispatchQueue.main.async { // to fix wrong centering of cell
+            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true) //call scroll to item firstly, so layout of collection view performed before containing table view layout it's subviews leading to jump instead of scroll
+        }
         onSelect?(indexPath.item)
 
         reloadLayout()
