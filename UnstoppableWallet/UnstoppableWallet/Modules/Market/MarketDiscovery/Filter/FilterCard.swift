@@ -46,6 +46,7 @@ class FilterCard: UICollectionViewCell {
         descriptionLabel.font = .caption
         descriptionLabel.numberOfLines = 0
         descriptionLabel.alpha = 0
+        descriptionLabel.textColor = .themeDark
 
         contentView.backgroundColor = .themeLawrence
     }

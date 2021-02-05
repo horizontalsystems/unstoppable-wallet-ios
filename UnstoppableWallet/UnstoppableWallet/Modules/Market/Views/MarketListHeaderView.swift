@@ -66,7 +66,7 @@ class MarketListHeaderView: UITableViewHeaderFooterView {
 }
 
 extension MarketListHeaderView {
-    
+
     public func setSortingField(title: String) {
         fieldSelectionButton.setTitle(title, for: .normal)
     }
