@@ -31,10 +31,14 @@ class MarketDiscoveryViewController: MarketListViewController {
         subscribe(disposeBag, viewModel.selectedFilterIndexDriver) { [weak self] index in
             self?.filterHeaderView.setSelected(index: index)
         }
-        subscribe(disposeBag, marketViewModel.discoveryListTypeSignal) { [weak self] in self?.handle(listType: $0) }
+        subscribe(disposeBag, marketViewModel.discoveryListTypeDriver) { [weak self] in self?.handle(listType: $0) }
     }
 
-    private func handle(listType: MarketModule.ListType) {
+    private func handle(listType: MarketModule.ListType?) {
+        guard let listType = listType else {
+            return
+        }
+
         listViewModel.set(listType: listType)
         viewModel.resetCategory()
     }
