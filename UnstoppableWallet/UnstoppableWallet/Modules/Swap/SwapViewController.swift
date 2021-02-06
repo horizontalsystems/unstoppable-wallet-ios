@@ -28,7 +28,8 @@ class SwapViewController: ThemeViewController {
     private let priceImpactCell = AdditionalDataCellNew()
     private let guaranteedAmountCell = AdditionalDataCellNew()
 
-    private let feeCell: SendFeeCell
+    private let estimatedFeeCell: SendEstimatedFeeCell
+    private let maxFeeCell: SendMaxFeeCell
     private let feePriorityCell: SendFeePriorityCell
 
     private let errorCell = SendEthereumErrorCell()
@@ -45,7 +46,8 @@ class SwapViewController: ThemeViewController {
         toCoinCardCell = CoinCardModule.toCell(service: viewModel.service, tradeService: viewModel.tradeService, fiatSwitchService: viewModel.fiatSwitchService)
         allowanceCell = SwapAllowanceCell(viewModel: allowanceViewModel)
 
-        feeCell = SendFeeCell(viewModel: feeViewModel)
+        estimatedFeeCell = SendEstimatedFeeCell(viewModel: feeViewModel)
+        maxFeeCell = SendMaxFeeCell(viewModel: feeViewModel)
         feePriorityCell = SendFeePriorityCell(viewModel: feeViewModel)
 
         super.init()
@@ -200,7 +202,8 @@ class SwapViewController: ThemeViewController {
     }
 
     private func handle(feeVisible: Bool) {
-        feeCell.isVisible = feeVisible
+        estimatedFeeCell.isVisible = feeVisible
+        maxFeeCell.isVisible = feeVisible
         feePriorityCell.isVisible = feeVisible
         reloadTable()
     }
@@ -346,9 +349,14 @@ extension SwapViewController: SectionsDataSource {
                             height: guaranteedAmountCell.cellHeight
                     ),
                     StaticRow(
-                            cell: feeCell,
+                            cell: estimatedFeeCell,
+                            id: "estimated-fee",
+                            height: estimatedFeeCell.cellHeight
+                    ),
+                    StaticRow(
+                            cell: maxFeeCell,
                             id: "fee",
-                            height: feeCell.cellHeight
+                            height: maxFeeCell.cellHeight
                     )
                 ]
         ))

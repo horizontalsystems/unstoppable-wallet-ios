@@ -78,7 +78,8 @@ struct SwapModule {
         )
         let transactionService = EthereumTransactionService(
                 ethereumKit: ethereumKit,
-                feeRateProvider: App.shared.feeRateProviderFactory.provider(coinType: .ethereum) as! EthereumFeeRateProvider
+                feeRateProvider: App.shared.feeRateProviderFactory.provider(coinType: .ethereum) as! EthereumFeeRateProvider,
+                gasLimitSurchargePercent: 20
         )
         let service = SwapService(
                 ethereumKit: ethereumKit,
