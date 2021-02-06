@@ -81,8 +81,11 @@ class SwapConfirmationViewModel {
         }
 
         if let transaction = transactionService.transactionStatus.data {
-            let fee = ethereumCoinService.amountData(value: transaction.gasData.fee).formattedString
-            additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.fee".localized, value: fee))
+            let estimatedFee = ethereumCoinService.amountData(value: transaction.gasData.estimatedFee).formattedString
+            additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "send.estimated_fee".localized, value: estimatedFee))
+
+            let maxFee = ethereumCoinService.amountData(value: transaction.gasData.fee).formattedString
+            additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "send.max_fee".localized, value: maxFee))
         }
 
         additionalDataRelay.accept(additionalData)

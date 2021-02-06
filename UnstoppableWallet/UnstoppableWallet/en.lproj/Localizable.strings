@@ -164,6 +164,8 @@ bch.horizontalsystems.xyz/apg";
 "send.address_placeholder" = "Address";
 "send.address_or_domain_placeholder" = "Address or Domain";
 "send.fee" = "Fee";
+"send.estimated_fee" = "Estimated Fee";
+"send.max_fee" = "Max Fee";
 "send.tx_speed" = "Transaction Fee";
 "send.tx_speed_low" = "Low";
 "send.tx_speed_medium" = "Medium";

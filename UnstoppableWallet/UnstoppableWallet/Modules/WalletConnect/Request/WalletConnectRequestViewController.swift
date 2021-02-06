@@ -11,7 +11,8 @@ class WalletConnectRequestViewController: ThemeViewController {
     private let onReject: () -> ()
 
     private let tableView = SectionsTableView(style: .grouped)
-    private let feeCell: SendFeeCell
+    private let estimatedFeeCell: SendEstimatedFeeCell
+    private let maxFeeCell: SendMaxFeeCell
     private let feePriorityCell: SendFeePriorityCell
 
     private let buttonsHolder = BottomGradientHolder()
@@ -28,7 +29,8 @@ class WalletConnectRequestViewController: ThemeViewController {
         self.onApprove = onApprove
         self.onReject = onReject
 
-        feeCell = SendFeeCell(viewModel: feeViewModel)
+        estimatedFeeCell = SendEstimatedFeeCell(viewModel: feeViewModel)
+        maxFeeCell = SendMaxFeeCell(viewModel: feeViewModel)
         feePriorityCell = SendFeePriorityCell(viewModel: feeViewModel)
 
         super.init()
@@ -167,9 +169,14 @@ extension WalletConnectRequestViewController: SectionsDataSource {
             Section(id: "fee",
                     rows: [
                         StaticRow(
-                                cell: feeCell,
+                                cell: estimatedFeeCell,
+                                id: "estimated-fee",
+                                height: estimatedFeeCell.cellHeight
+                        ),
+                        StaticRow(
+                                cell: maxFeeCell,
                                 id: "fee",
-                                height: 29
+                                height: maxFeeCell.cellHeight
                         )
                     ]
             ),

@@ -11,6 +11,7 @@ class EthereumFeeViewModel {
 
     private let disposeBag = DisposeBag()
 
+    private let estimatedFeeStatusRelay = BehaviorRelay<String>(value: "")
     private let feeStatusRelay = BehaviorRelay<String>(value: "")
     private let priorityRelay = BehaviorRelay<String>(value: "")
     private let openSelectPriorityRelay = PublishRelay<[SendPriorityViewItem]>()
@@ -39,7 +40,19 @@ class EthereumFeeViewModel {
     }
 
     private func sync(transactionStatus: DataStatus<EthereumTransactionService.Transaction>) {
+        estimatedFeeStatusRelay.accept(estimatedFeeStatus(transactionStatus: transactionStatus))
         feeStatusRelay.accept(feeStatus(transactionStatus: transactionStatus))
+    }
+
+    private func estimatedFeeStatus(transactionStatus: DataStatus<EthereumTransactionService.Transaction>) -> String {
+        switch transactionStatus {
+        case .loading:
+            return "action.loading".localized
+        case .failed:
+            return "n/a".localized
+        case .completed(let transaction):
+            return coinService.amountData(value: transaction.gasData.estimatedFee).formattedString
+        }
     }
 
     private func feeStatus(transactionStatus: DataStatus<EthereumTransactionService.Transaction>) -> String {
@@ -86,6 +99,10 @@ class EthereumFeeViewModel {
 }
 
 extension EthereumFeeViewModel: ISendFeeViewModel {
+
+    var estimatedFeeDriver: Driver<String> {
+        estimatedFeeStatusRelay.asDriver()
+    }
 
     var feeDriver: Driver<String> {
         feeStatusRelay.asDriver()
