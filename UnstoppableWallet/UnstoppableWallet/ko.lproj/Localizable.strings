@@ -159,6 +159,8 @@
 "send.address_placeholder" = "주소";
 "send.address_or_domain_placeholder" = "주소 또는 도메인";
 "send.fee" = "수수료";
+"send.estimated_fee" = "Estimated Fee";
+"send.max_fee" = "Max Fee";
 "send.tx_speed" = "거래 수수료";
 "send.tx_speed_low" = "낮음";
 "send.tx_speed_medium" = "보통";
