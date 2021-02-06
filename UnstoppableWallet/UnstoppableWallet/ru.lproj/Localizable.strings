@@ -161,6 +161,8 @@
 "send.address_placeholder" = "Адрес";
 "send.address_or_domain_placeholder" = "Адрес или домен";
 "send.fee" = "Комиссия";
+"send.estimated_fee" = "Estimated Fee";
+"send.max_fee" = "Max Fee";
 "send.tx_speed" = "Комиссия за транзакцию";
 "send.tx_speed_low" = "Низкая";
 "send.tx_speed_medium" = "Средняя";
