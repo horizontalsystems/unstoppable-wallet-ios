@@ -358,7 +358,7 @@
 "market_discovery.filter_title.index_funds" = "Index Funds";
 "market_discovery.filter_title.nft" = "NFT";
 "market_discovery.filter_title.fundraising" = "Fundraising";
-"market_discovery.filter_title.gaming" = "Gaming & VR";
+"market_discovery.filter_title.gaming" = "Gaming";
 "market_discovery.filter_title.b2b" = "B2B";
 "market_discovery.filter_title.infrastructure" = "Infrastructure";
 "market_discovery.filter_title.staking_eth_2_0" = "Staking ETH 2.0";
@@ -395,7 +395,7 @@
 "market_discovery.filter_description.cross_chain" = "Cross-chain protocols.";
 "market_discovery.filter_description.computing" = "Decentralized on-demand computing solutions.";
 
-"market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favorites by click to star icon in the asset page";
+"market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favorites by clicking on star icon in the asset page";
 // Transactions
 
 "transactions.title" = "Hesap işlemleri";
