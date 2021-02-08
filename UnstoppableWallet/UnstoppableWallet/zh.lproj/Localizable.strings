@@ -159,8 +159,8 @@
 "send.address_placeholder" = "地址";
 "send.address_or_domain_placeholder" = "地址或域名";
 "send.fee" = "费用";
-"send.estimated_fee" = "Estimated Fee";
-"send.max_fee" = "Max Fee";
+"send.estimated_fee" = "预估费用";
+"send.max_fee" = "最大手续费";
 "send.tx_speed" = "交易费用";
 "send.tx_speed_low" = "低";
 "send.tx_speed_medium" = "中";
