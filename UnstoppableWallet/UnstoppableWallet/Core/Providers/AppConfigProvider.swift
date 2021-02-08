@@ -208,7 +208,7 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "GRT",       title: "Graph Token",                       code: "GRT",     decimal: 18, type: .erc20(address: "0xc944e90c64b2c07662a292be6244bdf05cda44a7")),
         Coin(id: "GRID",      title: "Grid",                              code: "GRID",    decimal: 12, type: .erc20(address: "0x12b19d3e2ccc14da04fae33e63652ce469b3f2fd")),
         Coin(id: "XCHF",      title: "GryptoFranc",                       code: "XCHF",    decimal: 18, type: .erc20(address: "0xb4272071ecadd69d933adcd19ca99fe80664fc08")),
-        Coin(id: "CC10",      title: "Cryptocurrency Top10 Tokens Index", code: "ZAI",     decimal: 18, type: .erc20(address: "0x17ac188e09a7890a1844e5e65471fe8b0ccfadf3")),
+        Coin(id: "CC10",      title: "Cryptocurrency Top10 Tokens Index", code: "CC10",    decimal: 18, type: .erc20(address: "0x17ac188e09a7890a1844e5e65471fe8b0ccfadf3")),
         Coin(id: "ONE",       title: "Harmony",                           code: "ONE",     decimal: 8,  type: .binance(symbol: "ONE-5F9")),
         Coin(id: "HEGIC",     title: "Hegic",                             code: "HEGIC",   decimal: 18, type: .erc20(address: "0x584bC13c7D411c00c01A62e8019472dE68768430")),
         Coin(id: "HEDG",      title: "HEDG",                              code: "HEDG",    decimal: 18, type: .erc20(address: "0xf1290473e210b2108a85237fbcd7b6eb42cc654f")),
