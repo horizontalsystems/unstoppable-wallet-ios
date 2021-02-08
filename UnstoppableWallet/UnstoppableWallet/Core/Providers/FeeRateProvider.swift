@@ -65,11 +65,11 @@ class BitcoinFeeRateProvider: IFeeRateProvider {
 
     func feeRate(priority: FeeRatePriority) -> Single<Int> {
         switch priority {
-        case let .low:
+        case .low:
             return feeRateProvider.bitcoinFeeRate(blockCount: lowPriorityBlockCount)
-        case let .medium:
+        case .medium:
             return feeRateProvider.bitcoinFeeRate(blockCount: mediumPriorityBlockCount)
-        case let .high:
+        case .high:
             return feeRateProvider.bitcoinFeeRate(blockCount: highPriorityBlockCount)
         case .recommended:
             return feeRateProvider.bitcoinFeeRate(blockCount: mediumPriorityBlockCount)

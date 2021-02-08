@@ -1,7 +1,7 @@
 import UIKit
 
 class ProceedManageAccountCell: BaseManageAccountCell {
-    static let height: CGFloat = .heightSingleLineCell
+    static let height: CGFloat = .heightCell48
 
     private let titleLabel = UILabel()
     private let warningImageView = UIImageView(image: UIImage(named: "warning_2_20")?.tinted(with: .themeLucian))
