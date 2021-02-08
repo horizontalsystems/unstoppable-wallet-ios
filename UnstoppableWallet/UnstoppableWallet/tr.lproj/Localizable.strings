@@ -159,8 +159,8 @@
 "send.address_placeholder" = "Adres";
 "send.address_or_domain_placeholder" = "Adres veya Domain";
 "send.fee" = "Masraf";
-"send.estimated_fee" = "Estimated Fee";
-"send.max_fee" = "Max Fee";
+"send.estimated_fee" = "Tahmini Ücret";
+"send.max_fee" = "Maksimum Ücret";
 "send.tx_speed" = "İşlem Ücreti";
 "send.tx_speed_low" = "Düşük";
 "send.tx_speed_medium" = "Orta";
