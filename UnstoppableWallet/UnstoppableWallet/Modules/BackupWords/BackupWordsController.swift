@@ -136,7 +136,7 @@ extension BackupWordsController: UICollectionViewDelegateFlowLayout {
         if indexPath.section == wordSectionIndex {
             return CGSize(width: collectionView.width / 2 - Self.horizontalMargin, height: BackupWordsCell.heightFor(words: words(for: indexPath.row)))
         }
-        return CGSize(width: collectionView.width, height: .heightSingleLineCell)
+        return CGSize(width: collectionView.width, height: .heightCell48)
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

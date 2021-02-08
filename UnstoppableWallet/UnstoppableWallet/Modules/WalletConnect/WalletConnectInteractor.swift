@@ -36,7 +36,6 @@ class WalletConnectInteractor {
         }
 
         interactor.onDisconnect = { [weak self] error in
-            print("Disconnected: \(error)")
             self?.state = .disconnected
         }
 

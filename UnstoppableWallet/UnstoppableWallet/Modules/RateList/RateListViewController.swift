@@ -64,7 +64,7 @@ class RateListViewController: ThemeViewController {
                     view.bind(spinnerVisible: spinnerVisible)
                 },
                 dynamicHeight: { _ in
-                    .heightSingleLineCell
+                    .heightCell48
                 }
         )
     }

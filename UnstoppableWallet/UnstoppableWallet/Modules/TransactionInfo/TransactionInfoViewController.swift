@@ -94,7 +94,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
         Row<D6Cell>(
                 id: "status",
                 hash: "completed",
-                height: .heightSingleLineCell,
+                height: .heightCell48,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .transparent)
                     cell.title = "status".localized
@@ -108,7 +108,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
         Row<C6Cell>(
                 id: "status",
                 hash: "failed",
-                height: .heightSingleLineCell,
+                height: .heightCell48,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .transparent)
                     cell.title = "status".localized
@@ -126,7 +126,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
         Row<TransactionInfoPendingStatusCell>(
                 id: "status",
                 hash: "pending-\(progress)-\(incoming)",
-                height: .heightSingleLineCell,
+                height: .heightCell48,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .transparent)
                     cell.bind(progress: progress, incoming: incoming) { [weak self] in
@@ -153,7 +153,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
         Row<D9Cell>(
                 id: title,
                 hash: value,
-                height: .heightSingleLineCell,
+                height: .heightCell48,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .transparent)
                     cell.title = title
@@ -178,7 +178,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
         Row<TransactionInfoTransactionIdCell>(
                 id: "transaction_id",
                 hash: value,
-                height: .heightSingleLineCell,
+                height: .heightCell48,
                 bind: { [weak self] cell, _ in
                     cell.set(backgroundStyle: .transparent)
                     cell.bind(
@@ -299,7 +299,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
     private func rawTransactionRow() -> RowProtocol {
         Row<TransactionInfoShareCell>(
                 id: "raw_transaction",
-                height: .heightSingleLineCell,
+                height: .heightCell48,
                 bind: { [weak self] cell, _ in
                     cell.set(backgroundStyle: .transparent)
                     cell.bind(

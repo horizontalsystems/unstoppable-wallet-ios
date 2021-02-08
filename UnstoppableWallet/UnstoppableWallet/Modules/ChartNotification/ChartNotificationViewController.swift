@@ -139,7 +139,7 @@ extension ChartNotificationViewController: SectionsDataSource {
         Row<B4Cell>(
                 id: "row_\(rowIndex)",
                 hash: "\(rowModel.selected)",
-                height: .heightSingleLineCell,
+                height: .heightCell48,
                 autoDeselect: true,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .transparent, isLast: last)

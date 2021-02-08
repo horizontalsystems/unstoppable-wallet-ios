@@ -206,7 +206,7 @@ extension WalletConnectRequestViewController: SectionsDataSource {
         Row<D9Cell>(
                 id: title,
                 hash: viewItem.value,
-                height: .heightSingleLineCell,
+                height: .heightCell48,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, isLast: isLast)
                     cell.title = title

@@ -54,7 +54,7 @@ class AlertViewController: ThemeActionSheetController {
         Row<AlertItemCell>(
                 id: "item_\(index)",
                 hash: "\(viewItem.selected)",
-                height: .heightSingleLineCell,
+                height: .heightCell48,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .transparent)
                     cell.title = viewItem.text
