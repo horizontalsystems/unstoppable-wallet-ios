@@ -29,7 +29,6 @@ class MarketDiscoveryFilterHeaderView: UITableViewHeaderFooterView {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.contentInset = UIEdgeInsets(top: .margin12, left: .margin16, bottom: .margin12, right: .margin16)
-        collectionView.allowsMultipleSelection = true
         collectionView.backgroundColor = .clear
         collectionView.scrollsToTop = false
         collectionView.showsHorizontalScrollIndicator = false
@@ -43,10 +42,6 @@ class MarketDiscoveryFilterHeaderView: UITableViewHeaderFooterView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("not implemented")
-    }
-
-    private func reloadLayout() {
-        collectionView.performBatchUpdates {  }
     }
 
 }
@@ -68,8 +63,7 @@ extension MarketDiscoveryFilterHeaderView: UICollectionViewDelegateFlowLayout, U
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let selected = collectionView.indexPathsForSelectedItems?.first?.item == indexPath.item
-        return FilterCard.size(item: filters[indexPath.item], selected: selected)
+        FilterCard.size(item: filters[indexPath.item], selected: collectionView.indexPathsForSelectedItems?.first == indexPath)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -77,34 +71,38 @@ extension MarketDiscoveryFilterHeaderView: UICollectionViewDelegateFlowLayout, U
     }
 
     public func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        if let selectedIndexPath = collectionView.indexPathsForSelectedItems?.first {
-            collectionView.deselectItem(at: selectedIndexPath, animated: true)
-
-            reloadLayout()
+        guard collectionView.indexPathsForSelectedItems?.first == indexPath else {
+            return true
         }
 
-        return true
-    }
-
-    public func collectionView(_ collectionView: UICollectionView, shouldDeselectItemAt indexPath: IndexPath) -> Bool {
-        if collectionView.indexPathsForSelectedItems?.first == indexPath {
-            onSelect?(nil)
+        UIView.animate(withDuration: .themeAnimationDuration) {
+            collectionView.performBatchUpdates {
+                collectionView.deselectItem(at: indexPath, animated: false)
+            }
         }
 
-        return true
-    }
+        handleSelect()
 
-    public func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        reloadLayout()
+        return false
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        DispatchQueue.main.async { // to fix wrong centering of cell
-            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true) //call scroll to item firstly, so layout of collection view performed before containing table view layout it's subviews leading to jump instead of scroll
-        }
-        onSelect?(indexPath.item)
+        UIView.animate(withDuration: .themeAnimationDuration) {
+            collectionView.performBatchUpdates {
+                collectionView.collectionViewLayout.invalidateLayout()
 
-        reloadLayout()
+                // explicitly set content size in order to fix behavior of scrollToItem
+                collectionView.contentSize = collectionView.collectionViewLayout.collectionViewContentSize
+
+                collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+            }
+        }
+
+        handleSelect()
+    }
+
+    private func handleSelect() {
+        onSelect?(collectionView.indexPathsForSelectedItems?.first?.item)
     }
 
 }
@@ -118,7 +116,7 @@ extension MarketDiscoveryFilterHeaderView {
 
         let indexPath = index.map { IndexPath(item: $0, section: 0) }
         collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
-        reloadLayout()
+        collectionView.performBatchUpdates(nil)
     }
 
 }
