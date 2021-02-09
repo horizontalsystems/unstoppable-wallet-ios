@@ -79,7 +79,7 @@ class GradientPercentCircle: UIView {
 extension GradientPercentCircle {
 
     public func set(value: CGFloat?, animated: Bool = true) {
-        guard let value = value else {
+        guard let percentValue = value else {
             if currentValue != nil {                                // alpha change from current to nil (hide)
                 hide(layer: gradientLayer, animated: animated)
                 currentValue = nil
@@ -87,6 +87,7 @@ extension GradientPercentCircle {
 
             return
         }
+        let value = percentValue / 100
 
         guard currentValue != nil else {                    // alpha change from nil to new (show)
             show(layer: gradientLayer, value: value, animated: animated)

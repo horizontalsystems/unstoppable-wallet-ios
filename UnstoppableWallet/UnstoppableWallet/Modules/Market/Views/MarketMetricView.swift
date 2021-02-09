@@ -70,12 +70,13 @@ extension MarketMetricView {
         valueLabel.textColor = value == nil ? .themeGray50 : .themeBran
         valueLabel.text = value ?? "n/a".localized
 
-        guard let diff = diff else {
+        guard let percentDiff = diff else {
             diffLabel.set(value: nil)
             gradientBar.set(value: nil)
 
             return
         }
+        let diff = percentDiff / 100
 
         gradientBar.set(value: diff)
         diffLabel.set(value: diff)
