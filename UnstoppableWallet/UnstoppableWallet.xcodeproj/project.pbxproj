@@ -1836,7 +1836,6 @@
 		58AAA87153C727D520EE3557 /* RateListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA31FF3C379E7AFD16C94 /* RateListViewController.swift */; };
 		58AAA8730B0F7AE6122B863D /* SwapTradeOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF6ED404054D799B32E7 /* SwapTradeOptionsViewModel.swift */; };
 		58AAA87CA53468D7169FA265 /* ChartTypeIntervalConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8CCC7252ECFFDC51578 /* ChartTypeIntervalConverter.swift */; };
-		58AAA87CCD4D7A071F773757 /* CautionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6D10B39575B1E5D3954 /* CautionView.swift */; };
 		58AAA88B26D590A1BA7EA124 /* SendFeeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6205C47965E48E4BAC3 /* SendFeeView.swift */; };
 		58AAA896F016F14080F80079 /* RecipientAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAACB246BA843EA8627D9B /* RecipientAddressViewModel.swift */; };
 		58AAA8A2E62A986089EFFED1 /* FullTransactionInfoProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4679CB188876817185B /* FullTransactionInfoProviderTests.swift */; };
@@ -1983,7 +1982,6 @@
 		58AAAE4456D5FD8002A71F29 /* SendFeePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6C29584EFCDD8209363 /* SendFeePresenter.swift */; };
 		58AAAE5B44096255591C5F0F /* MarketOverviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA43E8D805F2CF705EDEA /* MarketOverviewService.swift */; };
 		58AAAE666BAD91283206BA1C /* SwapApproveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA43491E0E4F17D020455 /* SwapApproveViewModel.swift */; };
-		58AAAE714AF684C58CB4C8D9 /* CautionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6D10B39575B1E5D3954 /* CautionView.swift */; };
 		58AAAE8294960D8E52FB9C6C /* SwapSlippageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAA99B654719E4777DF3C /* SwapSlippageViewModel.swift */; };
 		58AAAE86B7C201A1E096E78F /* ChartModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA744EE8408F5FF940B9A /* ChartModule.swift */; };
 		58AAAE86C076E1C7418874D3 /* BackupConfirmationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA2D3E1840EA8931E12D0 /* BackupConfirmationRouter.swift */; };
@@ -6253,7 +6251,6 @@
 				11B35AFD184A69136B4CA0D9 /* MarketService.swift in Sources */,
 				58AAA624521FD7206993DAC3 /* MarketWatchlistService.swift in Sources */,
 				58AAA6E35BC43FC07EF949E2 /* MarketOverviewService.swift in Sources */,
-				58AAAE714AF684C58CB4C8D9 /* CautionView.swift in Sources */,
 				58AAA7217BF975D4D6F45128 /* CautionView.swift in Sources */,
 				11B35390DB08780768CF4F20 /* CautionCell.swift in Sources */,
 				11B3552105C1E348F65351AB /* MarketListViewController.swift in Sources */,
@@ -7742,7 +7739,6 @@
 				11B35CC3E3265780ED4195AB /* MarketService.swift in Sources */,
 				58AAA8D67EB6C19719BD760B /* MarketWatchlistService.swift in Sources */,
 				58AAAE5B44096255591C5F0F /* MarketOverviewService.swift in Sources */,
-				58AAA87CCD4D7A071F773757 /* CautionView.swift in Sources */,
 				58AAAF2827254D9E17223AFD /* CautionView.swift in Sources */,
 				11B354F03A433E5A3D12AD0F /* CautionCell.swift in Sources */,
 				11B35C8E09922F59B200E347 /* MarketListViewController.swift in Sources */,
