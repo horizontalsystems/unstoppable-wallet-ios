@@ -3,15 +3,18 @@ import ThemeKit
 import SnapKit
 
 class FilterCard: UICollectionViewCell {
-    static let titleFont: UIFont = .subhead1
-    static let sideMargin: CGFloat = .margin12
+    private static let titleFont: UIFont = .subhead1
+    private static let sideMargin: CGFloat = .margin12
 
     private let iconImageView = UIImageView()
-    private let titleLabel = UILabel()
+    private let titleLightLabel = UILabel()
+    private let titleDarkLabel = UILabel()
     private let descriptionLabel = UILabel()
 
-    private var titleTopConstraint: Constraint?
-    private var titleBottomConstraint: Constraint?
+    private var titleLightTopConstraint: Constraint?
+    private var titleLightBottomConstraint: Constraint?
+    private var titleDarkTopConstraint: Constraint?
+    private var titleDarkBottomConstraint: Constraint?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,18 +26,32 @@ class FilterCard: UICollectionViewCell {
             maker.leading.top.equalToSuperview().inset(FilterCard.sideMargin)
         }
 
-        contentView.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { maker in
+        contentView.addSubview(titleLightLabel)
+        titleLightLabel.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(FilterCard.sideMargin)
 
-            titleTopConstraint = maker.top.equalToSuperview().inset(FilterCard.sideMargin).constraint
-            titleBottomConstraint = maker.bottom.equalToSuperview().inset(FilterCard.sideMargin).constraint
+            titleLightTopConstraint = maker.top.equalToSuperview().inset(FilterCard.sideMargin).constraint
+            titleLightBottomConstraint = maker.bottom.equalToSuperview().inset(FilterCard.sideMargin).constraint
         }
-        titleTopConstraint?.isActive = false
-        titleBottomConstraint?.isActive = true
+        titleLightTopConstraint?.isActive = false
+        titleLightBottomConstraint?.isActive = true
 
-        titleLabel.font = FilterCard.titleFont
-        titleLabel.textColor = .themeOz
+        titleLightLabel.font = FilterCard.titleFont
+        titleLightLabel.textColor = .themeOz
+
+        contentView.addSubview(titleDarkLabel)
+        titleDarkLabel.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(FilterCard.sideMargin)
+
+            titleDarkTopConstraint = maker.top.equalToSuperview().inset(FilterCard.sideMargin).constraint
+            titleDarkBottomConstraint = maker.bottom.equalToSuperview().inset(FilterCard.sideMargin).constraint
+        }
+        titleDarkTopConstraint?.isActive = false
+        titleDarkBottomConstraint?.isActive = true
+
+        titleDarkLabel.alpha = 0
+        titleDarkLabel.font = FilterCard.titleFont
+        titleDarkLabel.textColor = .themeDark
 
         contentView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { maker in
@@ -65,41 +82,46 @@ class FilterCard: UICollectionViewCell {
         super.prepareForReuse()
 
         iconImageView.image = nil
-        titleLabel.text = nil
+        titleLightLabel.text = nil
+        titleDarkLabel.text = nil
         descriptionLabel.text = nil
     }
 
     func bind(item: MarketFilterViewItem) {
         iconImageView.image = UIImage(named: item.icon)
-        titleLabel.text = item.title
+        titleLightLabel.text = item.title
+        titleDarkLabel.text = item.title
         descriptionLabel.text = item.description
     }
 
     func bind(selected: Bool) {
-        titleLabel.textColor = selected ? .themeDark : .themeOz
+        titleLightTopConstraint?.isActive = selected
+        titleLightBottomConstraint?.isActive = !selected
+        titleDarkTopConstraint?.isActive = selected
+        titleDarkBottomConstraint?.isActive = !selected
 
-        titleTopConstraint?.isActive = selected
-        titleBottomConstraint?.isActive = !selected
-
-        UIView.animateKeyframes(withDuration: .themeAnimationDuration, delay: 0) { [weak self] in
+        UIView.animateKeyframes(withDuration: .themeAnimationDuration, delay: 0) {
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1) {
-                self?.contentView.layoutIfNeeded()
-                self?.iconImageView.alpha = selected ?  0 : 1
+                self.contentView.layoutIfNeeded()
+                self.titleLightLabel.alpha = selected ? 0 : 1
+                self.titleDarkLabel.alpha = selected ? 1 : 0
             }
 
-            let descriptionAnimationStartTime: TimeInterval = selected ? 0.6 : 0
-            UIView.addKeyframe(withRelativeStartTime: descriptionAnimationStartTime, relativeDuration: 0.4) {
-                self?.descriptionLabel.alpha = selected ? 1 : 0
+            UIView.addKeyframe(withRelativeStartTime: selected ? 0 : 0.5, relativeDuration: 0.5) {
+                self.iconImageView.alpha = selected ?  0 : 1
             }
+
+            UIView.addKeyframe(withRelativeStartTime: selected ? 0.6 : 0, relativeDuration: 0.4) {
+                self.descriptionLabel.alpha = selected ? 1 : 0
+            }
+
+            self.contentView.backgroundColor = selected ? .themeYellowD : .themeLawrence
         }
-
-        contentView.backgroundColor = selected ? .themeYellowD : .themeLawrence
     }
 
     static func size(item: MarketFilterViewItem, selected: Bool) -> CGSize {
         let titleWidth = item.title.size(containerWidth: .greatestFiniteMagnitude, font: FilterCard.titleFont).width
-        var unselectedWidth = titleWidth + 2 * FilterCard.sideMargin
-        unselectedWidth = max(unselectedWidth, 100)
+        let unselectedWidth = max(100, titleWidth + 2 * FilterCard.sideMargin)
 
         return CGSize(width: selected ? 212 : unselectedWidth, height: 94)
     }
