@@ -23,4 +23,8 @@ class MarketWatchlistViewController: MarketListViewController {
         cautionCell
     }
 
+    override var headerAlwaysVisible: Bool {
+        false
+    }
+
 }
