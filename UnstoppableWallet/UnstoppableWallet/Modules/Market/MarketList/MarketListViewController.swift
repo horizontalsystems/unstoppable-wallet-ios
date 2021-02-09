@@ -125,13 +125,17 @@ class MarketListViewController: ThemeViewController {
         nil
     }
 
+    var headerAlwaysVisible: Bool {
+        true
+    }
+
 }
 
 extension MarketListViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         let rows: [RowProtocol]
-        var headerState: ViewState<MarketListHeaderView> = .margin(height: 0)
+        var headerVisible = headerAlwaysVisible
 
         switch state {
         case .loading:
@@ -160,7 +164,7 @@ extension MarketListViewController: SectionsDataSource {
                     rows = []
                 }
             } else {
-                headerState = .static(view: headerView, height: MarketListHeaderView.height)
+                headerVisible = true
                 rows = viewItems.enumerated().map { row(viewItem: $1, isLast: $0 == viewItems.count - 1) }
             }
 
@@ -177,6 +181,8 @@ extension MarketListViewController: SectionsDataSource {
                 )
             ]
         }
+
+        let headerState: ViewState<MarketListHeaderView> = headerVisible ? .static(view: headerView, height: MarketListHeaderView.height) : .margin(height: 0)
 
         return topSections + [
             Section(
