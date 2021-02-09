@@ -3,7 +3,6 @@ import UIKit
 class TermsRouter {
 
     static func module() -> UIViewController {
-        let router = TermsRouter()
         let interactor = TermsInteractor(termsManager: App.shared.termsManager)
         let presenter = TermsPresenter(interactor: interactor)
         let view = TermsViewController(delegate: presenter)

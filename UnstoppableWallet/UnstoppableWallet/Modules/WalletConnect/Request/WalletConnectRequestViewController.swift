@@ -11,7 +11,8 @@ class WalletConnectRequestViewController: ThemeViewController {
     private let onReject: () -> ()
 
     private let tableView = SectionsTableView(style: .grouped)
-    private let feeCell: SendFeeCell
+    private let estimatedFeeCell: SendEstimatedFeeCell
+    private let maxFeeCell: SendMaxFeeCell
     private let feePriorityCell: SendFeePriorityCell
 
     private let buttonsHolder = BottomGradientHolder()
@@ -28,7 +29,8 @@ class WalletConnectRequestViewController: ThemeViewController {
         self.onApprove = onApprove
         self.onReject = onReject
 
-        feeCell = SendFeeCell(viewModel: feeViewModel)
+        estimatedFeeCell = SendEstimatedFeeCell(viewModel: feeViewModel)
+        maxFeeCell = SendMaxFeeCell(viewModel: feeViewModel)
         feePriorityCell = SendFeePriorityCell(viewModel: feeViewModel)
 
         super.init()
@@ -160,16 +162,21 @@ extension WalletConnectRequestViewController: SectionsDataSource {
             Section(
                     id: "main",
                     footerState: .margin(height: 6),
-                    rows: [amountRow] + viewItems.map { viewItem in
-                        row(viewItem: viewItem)
+                    rows: [amountRow(isLast: viewItems.isEmpty)] + viewItems.enumerated().map { index, viewItem in
+                        row(viewItem: viewItem, isLast: index == viewItems.count - 1)
                     }
             ),
             Section(id: "fee",
                     rows: [
                         StaticRow(
-                                cell: feeCell,
+                                cell: estimatedFeeCell,
+                                id: "estimated-fee",
+                                height: estimatedFeeCell.cellHeight
+                        ),
+                        StaticRow(
+                                cell: maxFeeCell,
                                 id: "fee",
-                                height: 29
+                                height: maxFeeCell.cellHeight
                         )
                     ]
             ),
@@ -181,7 +188,7 @@ extension WalletConnectRequestViewController: SectionsDataSource {
         ]
     }
 
-    private var amountRow: RowProtocol {
+    private func amountRow(isLast: Bool) -> RowProtocol {
         let amountViewItem = viewModel.amountData
 
         return Row<SendConfirmationAmountCell>(
@@ -189,32 +196,33 @@ extension WalletConnectRequestViewController: SectionsDataSource {
                 hash: amountViewItem.primary.formattedString,
                 height: SendConfirmationAmountCell.height,
                 bind: { cell, _ in
+                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: isLast)
                     cell.bind(primaryAmountInfo: amountViewItem.primary, secondaryAmountInfo: amountViewItem.secondary)
                 }
         )
     }
 
-    private func buttonRow(title: String, viewItem: CopyableSecondaryButton.ViewItem) -> RowProtocol {
+    private func buttonRow(title: String, viewItem: CopyableSecondaryButton.ViewItem, isLast: Bool) -> RowProtocol {
         Row<D9Cell>(
                 id: title,
                 hash: viewItem.value,
-                height: .heightSingleLineCell,
+                height: .heightCell48,
                 bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence)
+                    cell.set(backgroundStyle: .lawrence, isLast: isLast)
                     cell.title = title
                     cell.viewItem = viewItem
                 }
         )
     }
 
-    private func row(viewItem: WalletConnectRequestViewItem) -> RowProtocol {
+    private func row(viewItem: WalletConnectRequestViewItem, isLast: Bool) -> RowProtocol {
         switch viewItem {
         case let .from(value):
-            return buttonRow(title: "tx_info.from_hash".localized, viewItem: .init(title: TransactionInfoAddressMapper.title(value: value), value: value))
+            return buttonRow(title: "tx_info.from_hash".localized, viewItem: .init(title: TransactionInfoAddressMapper.title(value: value), value: value), isLast: isLast)
         case let .to(value):
-            return buttonRow(title: "tx_info.to_hash".localized, viewItem: .init(title: TransactionInfoAddressMapper.title(value: value), value: value))
+            return buttonRow(title: "tx_info.to_hash".localized, viewItem: .init(title: TransactionInfoAddressMapper.title(value: value), value: value), isLast: isLast)
         case let .input(value):
-            return buttonRow(title: "tx_info.input".localized, viewItem: .init(value: value))
+            return buttonRow(title: "tx_info.input".localized, viewItem: .init(value: value), isLast: isLast)
         }
     }
 

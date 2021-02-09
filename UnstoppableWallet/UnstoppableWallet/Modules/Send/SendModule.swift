@@ -10,7 +10,7 @@ protocol ISendView: class {
     func showCopied()
     func show(error: Error)
     func showProgress()
-    func set(sendButtonEnabled: Bool)
+    func set(actionState: SendPresenter.ActionState)
     func dismissKeyboard()
     func dismissWithSuccess()
 }
@@ -55,11 +55,12 @@ protocol ISendHandler: AnyObject {
 }
 
 protocol ISendHandlerDelegate: AnyObject {
-    func onChange(isValid: Bool)
+    func onChange(isValid: Bool, amountError: Error?, addressError: Error?)
 }
 
 protocol ISendBitcoinInteractor {
     var lockTimeEnabled: Bool { get }
+    var balance: Decimal { get }
     func fetchAvailableBalance(feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData])
     func fetchMaximumAmount(pluginData: [UInt8: IBitcoinPluginData])
     func fetchMinimumAmount(address: String?)
@@ -90,6 +91,7 @@ protocol ISendDashInteractorDelegate: class {
 }
 
 protocol ISendEthereumInteractor {
+    var balance: Decimal { get }
     func availableBalance(gasPrice: Int, gasLimit: Int) -> Decimal
     var ethereumBalance: Decimal { get }
     var minimumRequiredBalance: Decimal { get }
@@ -98,12 +100,6 @@ protocol ISendEthereumInteractor {
     func fee(gasPrice: Int, gasLimit: Int) -> Decimal
     func estimateGasLimit(to address: String?, value: Decimal, gasPrice: Int?) -> Single<Int>
     func sendSingle(amount: Decimal, address: String, gasPrice: Int, gasLimit: Int, logger: Logger) -> Single<Void>
-}
-
-protocol ISendEosInteractor {
-    var availableBalance: Decimal { get }
-    func validate(account: String) throws
-    func sendSingle(amount: Decimal, account: String, memo: String?) -> Single<Void>
 }
 
 protocol ISendBinanceInteractor {
@@ -202,8 +198,17 @@ protocol ISendConfirmationViewItemNew {
 
 struct SendConfirmationAmountViewItem: ISendConfirmationViewItemNew {
     let primaryInfo: AmountInfo
-    var secondaryInfo: AmountInfo?
-    let receiver: String
+    let secondaryInfo: AmountInfo?
+    let receiver: Address
+    let isAccount: Bool
+
+    init(primaryInfo: AmountInfo, secondaryInfo: AmountInfo?, receiver: Address, isAccount: Bool = false) {
+        self.primaryInfo = primaryInfo
+        self.secondaryInfo = secondaryInfo
+        self.receiver = receiver
+        self.isAccount = isAccount
+    }
+
 }
 
 struct SendConfirmationFeeViewItem: ISendConfirmationViewItemNew {
@@ -218,10 +223,6 @@ struct SendConfirmationTotalViewItem: ISendConfirmationViewItemNew {
 
 struct SendConfirmationMemoViewItem: ISendConfirmationViewItemNew {
     let memo: String
-}
-
-struct SendConfirmationDurationViewItem: ISendConfirmationViewItemNew {
-    let timeInterval: TimeInterval?
 }
 
 struct SendConfirmationLockUntilViewItem: ISendConfirmationViewItemNew {

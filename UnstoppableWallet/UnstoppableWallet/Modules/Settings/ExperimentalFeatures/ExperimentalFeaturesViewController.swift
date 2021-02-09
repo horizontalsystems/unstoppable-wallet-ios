@@ -29,7 +29,7 @@ class ExperimentalFeaturesViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        tableView.registerCell(forClass: TitleCell.self)
+        tableView.registerCell(forClass: B1Cell.self)
         tableView.registerHeaderFooter(forClass: TopDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
@@ -61,11 +61,12 @@ extension ExperimentalFeaturesViewController: SectionsDataSource {
                     id: "bitcoin_hodling_section",
                     headerState: headerState,
                     rows: [
-                        Row<TitleCell>(
+                        Row<B1Cell>(
                                 id: "bitcoin_hodling",
-                                height: .heightSingleLineCell,
+                                height: .heightCell48,
                                 bind: { cell, _ in
-                                    cell.bind(title: "settings.experimental_features.bitcoin_hodling".localized, showDisclosure: true, last: true)
+                                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                                    cell.title = "settings.experimental_features.bitcoin_hodling".localized
                                 },
                                 action: { [weak self] _ in
                                     self?.delegate.didTapBitcoinHodling()

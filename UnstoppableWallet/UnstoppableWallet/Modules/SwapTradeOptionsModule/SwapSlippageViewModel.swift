@@ -5,10 +5,8 @@ import UniswapKit
 class SwapSlippageViewModel {
     private let disposeBag = DisposeBag()
 
-    private let placeholderRelay = BehaviorRelay<String>(value: "0")
     private let valueRelay = BehaviorRelay<String?>(value: nil)
     private let cautionRelay = BehaviorRelay<Caution?>(value: nil)
-    private let cautionTypeRelay = BehaviorRelay<CautionType>(value: .error)
 
     private let service: SwapTradeOptionsService
     private let decimalParser: IAmountDecimalParser
@@ -17,28 +15,23 @@ class SwapSlippageViewModel {
         self.service = service
         self.decimalParser = decimalParser
 
-        setInitial()
-        subscribe(disposeBag, service.errorsObservable) { [weak self] in self?.update(errors: $0) }
+        service.errorsObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] errors in
+                    self?.sync(errors: errors)
+                })
+                .disposed(by: disposeBag)
+
+        sync(errors: service.errors)
     }
 
-    private func setInitial() {
-        if case let .valid(tradeOptions) = service.state, tradeOptions.allowedSlippage != TradeOptions.defaultSlippage {
-            valueRelay.accept(tradeOptions.allowedSlippage.description)
-        }
-    }
-
-    private func onLeftButtonTapped() {
-        valueRelay.accept(service.recommendedSlippageBounds.lowerBound.description)
-    }
-
-    private func onRightButtonTapped() {
-        valueRelay.accept(service.recommendedSlippageBounds.upperBound.description)
-    }
-
-    private func update(errors: [Error]) {
+    private func sync(errors: [Error]) {
         let error = errors.first(where: {
-            if case .invalidSlippage = $0 as? SwapTradeOptionsService.TradeOptionsError {
-                return true
+            if let error = $0 as? SwapTradeOptionsService.SlippageError {
+                switch error {
+                case .zeroValue: return false
+                default: return true
+                }
             }
             return false
         })
@@ -48,37 +41,34 @@ class SwapSlippageViewModel {
 
 }
 
-extension SwapSlippageViewModel: IVerifiedInputViewModel {
+extension SwapSlippageViewModel {
 
-    var inputFieldButtonItems: [InputFieldButtonItem] {
-        let bounds = service.recommendedSlippageBounds
-        return [
-            InputFieldButtonItem(title: "\(bounds.lowerBound.description)%", visible: .onEmpty) { [weak self] in
-                self?.onLeftButtonTapped()
-            },
-            InputFieldButtonItem(title: "\(bounds.upperBound.description)%", visible: .onEmpty) { [weak self] in
-                self?.onRightButtonTapped()
-            }
-        ]
-    }
-
-    var inputFieldPlaceholder: String? {
+    var placeholder: String {
         TradeOptions.defaultSlippage.description
     }
 
-    var inputFieldValueDriver: Driver<String?> {
-        valueRelay.asDriver()
+    var initialValue: String? {
+        guard case let .valid(tradeOptions) = service.state, tradeOptions.allowedSlippage != TradeOptions.defaultSlippage else {
+            return nil
+        }
+
+        return tradeOptions.allowedSlippage.description
     }
 
-    var inputFieldCautionDriver: Driver<Caution?> {
+    var shortcuts: [InputShortcut] {
+        let bounds = service.recommendedSlippageBounds
+
+        return [
+            InputShortcut(title: "\(bounds.lowerBound.description)%", value: bounds.lowerBound.description),
+            InputShortcut(title: "\(bounds.upperBound.description)%", value: bounds.upperBound.description),
+        ]
+    }
+
+    var cautionDriver: Driver<Caution?> {
         cautionRelay.asDriver()
     }
 
-    var cautionTypeDriver: Driver<CautionType> {
-        cautionTypeRelay.asDriver()
-    }
-
-    func inputFieldDidChange(text: String?) {
+    func onChange(text: String?) {
         guard let value = decimalParser.parseAnyDecimal(from: text) else {
             service.slippage = TradeOptions.defaultSlippage
             return
@@ -87,7 +77,7 @@ extension SwapSlippageViewModel: IVerifiedInputViewModel {
         service.slippage = value
     }
 
-    func inputFieldIsValid(text: String) -> Bool {
+    func isValid(text: String) -> Bool {
         guard let amount = decimalParser.parseAnyDecimal(from: text) else {
             return false
         }

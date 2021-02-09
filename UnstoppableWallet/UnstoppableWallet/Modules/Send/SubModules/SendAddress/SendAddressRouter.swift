@@ -14,16 +14,20 @@ extension SendAddressRouter: ISendAddressRouter {
 
 extension SendAddressRouter {
 
-    static func module(coin: Coin) -> (UIView, ISendAddressModule, ISendSubRouter) {
+    static func module(coin: Coin, isResolutionEnabled: Bool = true) -> (UIView, ISendAddressModule, ISendSubRouter) {
         let addressParserFactory = AddressParserFactory()
 
         let router = SendAddressRouter()
-        let interactor = SendAddressInteractor(pasteboardManager: App.shared.pasteboardManager, addressParser: addressParserFactory.parser(coin: coin))
+        let presenter = SendAddressPresenter(router: router)
 
-        let presenter = SendAddressPresenter(interactor: interactor, router: router)
-        let view = SendAddressView(delegate: presenter)
+        let resolutionService = AddressResolutionService(coinCode: coin.code, isResolutionEnabled: isResolutionEnabled)
 
-        presenter.view = view
+        let viewModel = RecipientAddressViewModel(
+                service: presenter,
+                resolutionService: resolutionService,
+                addressParser: addressParserFactory.parser(coin: coin)
+        )
+        let view = SendAddressView(viewModel: viewModel, isResolutionEnabled: isResolutionEnabled, delegate: presenter)
 
         return (view, presenter, router)
     }

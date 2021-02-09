@@ -3,8 +3,8 @@ import CurrencyKit
 
 protocol ISendAmountView: class {
     func set(loading: Bool)
-    func set(amountType: String)
-    func set(availableBalance: AmountInfo?)
+    func set(prefix: String?)
+    func set(availableAmount: AmountInfo?)
     func set(amount: AmountInfo?)
     func set(hint: AmountInfo?)
     func set(error: Error?)
@@ -36,6 +36,7 @@ protocol ISendAmountInteractor {
 protocol ISendAmountModule: AnyObject {
     var delegate: ISendAmountDelegate? { get set }
 
+    var sendAmountInfo: SendAmountInfo { get }
     var currentAmount: Decimal { get }
     func validAmount() throws -> Decimal
 
@@ -61,4 +62,10 @@ protocol ISendAmountDelegate: class {
 
 protocol IAmountDecimalParser {
     func parseAnyDecimal(from string: String?) -> Decimal?
+}
+
+enum SendAmountInfo {
+    case max
+    case entered(amount: Decimal)
+    case notEntered
 }

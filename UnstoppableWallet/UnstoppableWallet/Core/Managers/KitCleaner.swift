@@ -21,7 +21,6 @@ extension KitCleaner: IKitCleaner {
             try? DashAdapter.clear(except: accountIds)
             try? EthereumAdapter.clear(except: accountIds)
             try? Erc20Adapter.clear(except: accountIds)
-            try? EosAdapter.clear(except: accountIds)
             try? BinanceAdapter.clear(except: accountIds)
             try? ZcashAdapter.clear(except: accountIds)
         }

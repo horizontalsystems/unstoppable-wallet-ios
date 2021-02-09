@@ -53,15 +53,15 @@ class MainSettingsViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        manageAccountsCell.set(backgroundStyle: .lawrence)
+        manageAccountsCell.set(backgroundStyle: .lawrence, isFirst: true)
         manageAccountsCell.titleImage = UIImage(named: "wallet_20")
         manageAccountsCell.title = "settings.manage_accounts".localized
 
-        securityCenterCell.set(backgroundStyle: .lawrence, bottomSeparator: true)
+        securityCenterCell.set(backgroundStyle: .lawrence, isLast: true)
         securityCenterCell.titleImage = UIImage(named: "shield_20")
         securityCenterCell.title = "settings.security_center".localized
 
-        walletConnectCell.set(backgroundStyle: .lawrence, bottomSeparator: true)
+        walletConnectCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         walletConnectCell.titleImage = UIImage(named: "wallet_connect_20")
         walletConnectCell.title = "wallet_connect.title".localized
 
@@ -83,7 +83,7 @@ class MainSettingsViewController: ThemeViewController {
             UIApplication.shared.keyWindow?.set(newRootController: MainModule.instance(selectedTab: .settings))
         }
 
-        aboutCell.set(backgroundStyle: .lawrence, bottomSeparator: true)
+        aboutCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         aboutCell.titleImage = UIImage(named: "uw_20")
         aboutCell.title = "settings.about_app.title".localized
 
@@ -124,7 +124,7 @@ class MainSettingsViewController: ThemeViewController {
             StaticRow(
                     cell: manageAccountsCell,
                     id: "manage-accounts",
-                    height: .heightSingleLineCell,
+                    height: .heightCell48,
                     action: { [weak self] in
                         self?.navigationController?.pushViewController(ManageAccountsRouter.module(), animated: true)
                     }
@@ -132,7 +132,7 @@ class MainSettingsViewController: ThemeViewController {
             StaticRow(
                     cell: securityCenterCell,
                     id: "security-center",
-                    height: .heightSingleLineCell,
+                    height: .heightCell48,
                     action: { [weak self] in
                         self?.navigationController?.pushViewController(SecuritySettingsRouter.module(), animated: true)
                     }
@@ -145,7 +145,7 @@ class MainSettingsViewController: ThemeViewController {
             StaticRow(
                     cell: walletConnectCell,
                     id: "wallet-connect",
-                    height: .heightSingleLineCell,
+                    height: .heightCell48,
                     autoDeselect: true,
                     action: { [weak self] in
                         WalletConnectModule.start(sourceViewController: self)
@@ -158,9 +158,9 @@ class MainSettingsViewController: ThemeViewController {
         [
             Row<A1Cell>(
                     id: "notifications",
-                    height: .heightSingleLineCell,
+                    height: .heightCell48,
                     bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence)
+                        cell.set(backgroundStyle: .lawrence, isFirst: true)
                         cell.titleImage = UIImage(named: "bell_ring_20")
                         cell.title = "settings.notifications".localized
                     },
@@ -171,7 +171,7 @@ class MainSettingsViewController: ThemeViewController {
             StaticRow(
                     cell: baseCurrencyCell,
                     id: "base-currency",
-                    height: .heightSingleLineCell,
+                    height: .heightCell48,
                     action: { [weak self] in
                         self?.navigationController?.pushViewController(App.shared.currencyKit.baseCurrencySettingsModule, animated: true)
                     }
@@ -179,7 +179,7 @@ class MainSettingsViewController: ThemeViewController {
             StaticRow(
                     cell: languageCell,
                     id: "language",
-                    height: .heightSingleLineCell,
+                    height: .heightCell48,
                     action: { [weak self] in
                         let module = LanguageSettingsRouter.module { MainModule.instance(selectedTab: .settings) }
                         self?.navigationController?.pushViewController(module, animated: true)
@@ -188,13 +188,13 @@ class MainSettingsViewController: ThemeViewController {
             StaticRow(
                     cell: lightModeCell,
                     id: "light-mode",
-                    height: .heightSingleLineCell
+                    height: .heightCell48
             ),
             Row<A1Cell>(
                     id: "experimental-features",
-                    height: .heightSingleLineCell,
+                    height: .heightCell48,
                     bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, bottomSeparator: true)
+                        cell.set(backgroundStyle: .lawrence, isLast: true)
                         cell.titleImage = UIImage(named: "flask_20")
                         cell.title = "settings.experimental_features".localized
                     },
@@ -209,9 +209,9 @@ class MainSettingsViewController: ThemeViewController {
         [
             Row<A1Cell>(
                     id: "faq",
-                    height: .heightSingleLineCell,
+                    height: .heightCell48,
                     bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence)
+                        cell.set(backgroundStyle: .lawrence, isFirst: true)
                         cell.titleImage = UIImage(named: "message_square_20")
                         cell.title = "settings.faq".localized
                     },
@@ -221,9 +221,9 @@ class MainSettingsViewController: ThemeViewController {
             ),
             Row<A1Cell>(
                     id: "academy",
-                    height: .heightSingleLineCell,
+                    height: .heightCell48,
                     bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, bottomSeparator: true)
+                        cell.set(backgroundStyle: .lawrence, isLast: true)
                         cell.titleImage = UIImage(named: "academy_1_20")
                         cell.title = "guides.title".localized
                     },
@@ -238,10 +238,10 @@ class MainSettingsViewController: ThemeViewController {
         [
             Row<A1Cell>(
                     id: "telegram",
-                    height: .heightSingleLineCell,
+                    height: .heightCell48,
                     autoDeselect: true,
                     bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence)
+                        cell.set(backgroundStyle: .lawrence, isFirst: true)
                         cell.titleImage = UIImage(named: "telegram_20")
                         cell.title = "Telegram"
                     },
@@ -251,7 +251,7 @@ class MainSettingsViewController: ThemeViewController {
             ),
             Row<A1Cell>(
                     id: "twitter",
-                    height: .heightSingleLineCell,
+                    height: .heightCell48,
                     autoDeselect: true,
                     bind: { cell, _ in
                         cell.set(backgroundStyle: .lawrence)
@@ -264,10 +264,10 @@ class MainSettingsViewController: ThemeViewController {
             ),
             Row<A1Cell>(
                     id: "reddit",
-                    height: .heightSingleLineCell,
+                    height: .heightCell48,
                     autoDeselect: true,
                     bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, bottomSeparator: true)
+                        cell.set(backgroundStyle: .lawrence, isLast: true)
                         cell.titleImage = UIImage(named: "reddit_20")
                         cell.title = "Reddit"
                     },
@@ -283,7 +283,7 @@ class MainSettingsViewController: ThemeViewController {
             StaticRow(
                     cell: aboutCell,
                     id: "about",
-                    height: .heightSingleLineCell,
+                    height: .heightCell48,
                     action: { [weak self] in
                         self?.navigationController?.pushViewController(AboutModule.viewController(), animated: true)
                     }

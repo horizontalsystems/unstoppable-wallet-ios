@@ -37,9 +37,9 @@ struct BalanceLockedAmountViewItem {
 }
 
 struct BalanceButtonsViewItem {
-    let receiveButtonEnabled: Bool
-    let sendButtonEnabled: Bool
-    let swapButtonHidden: Bool
+    let receiveButtonState: ButtonState
+    let sendButtonState: ButtonState
+    let swapButtonState: ButtonState
 }
 
 extension BalanceTopViewItem: Equatable {
@@ -92,8 +92,9 @@ extension BalanceLockedAmountViewItem: Equatable {
 extension BalanceButtonsViewItem: Equatable {
 
     static func ==(lhs: BalanceButtonsViewItem, rhs: BalanceButtonsViewItem) -> Bool {
-        lhs.receiveButtonEnabled == rhs.receiveButtonEnabled &&
-                lhs.sendButtonEnabled == rhs.sendButtonEnabled
+        lhs.receiveButtonState == rhs.receiveButtonState &&
+                lhs.sendButtonState == rhs.sendButtonState &&
+                lhs.swapButtonState == rhs.swapButtonState
     }
 
 }

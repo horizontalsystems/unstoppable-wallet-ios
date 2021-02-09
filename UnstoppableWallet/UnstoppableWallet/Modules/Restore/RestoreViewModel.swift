@@ -52,7 +52,7 @@ extension RestoreViewModel {
         service.accountType = accountType
 
         if selectCoins, let predefinedAccountType = service.predefinedAccountType {
-            openScreenRelay.accept(.selectCoins(predefinedAccountType: predefinedAccountType))
+            openScreenRelay.accept(.selectCoins(predefinedAccountType: predefinedAccountType, accountType: accountType))
         } else {
             restore()
         }
@@ -69,7 +69,7 @@ extension RestoreViewModel {
     enum Screen {
         case selectPredefinedAccountType
         case restoreAccountType(predefinedAccountType: PredefinedAccountType)
-        case selectCoins(predefinedAccountType: PredefinedAccountType)
+        case selectCoins(predefinedAccountType: PredefinedAccountType, accountType: AccountType)
     }
 
 }

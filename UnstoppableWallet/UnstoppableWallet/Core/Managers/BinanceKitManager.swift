@@ -5,16 +5,18 @@ class BinanceKitManager {
     private let appConfigProvider: IAppConfigProvider
     weak var binanceKit: BinanceChainKit?
 
+    private var currentAccount: Account?
+
     init(appConfigProvider: IAppConfigProvider) {
         self.appConfigProvider = appConfigProvider
     }
 
     func binanceKit(account: Account) throws -> BinanceChainKit {
-        if let binanceKit = self.binanceKit {
+        if let binanceKit = binanceKit, let currentAccount = currentAccount, currentAccount == account {
             return binanceKit
         }
 
-        guard case let .mnemonic(words, _) = account.type else {
+        guard case let .mnemonic(words, _) = account.type, words.count == 24 else {
             throw AdapterError.unsupportedAccount
         }
 
@@ -28,6 +30,7 @@ class BinanceKitManager {
         binanceKit.refresh()
 
         self.binanceKit = binanceKit
+        currentAccount = account
 
         return binanceKit
     }

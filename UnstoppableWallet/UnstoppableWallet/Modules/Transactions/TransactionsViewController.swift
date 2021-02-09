@@ -21,7 +21,7 @@ class TransactionsViewController: ThemeViewController {
 
     private var items: [TransactionViewItem]?
 
-    private let syncSpinner = HUDProgressView(strokeLineWidth: 2, radius: 9, strokeColor: .themeGray, duration: 2)
+    private let syncSpinner = HUDActivityView.create(with: .medium24)
 
     init(delegate: ITransactionsViewDelegate, differ: IDiffer) {
         self.delegate = delegate
@@ -94,7 +94,8 @@ class TransactionsViewController: ThemeViewController {
         let item = items[indexPath.row]
         if let cell = cell as? TransactionCell {
             delegate.willShow(item: item)
-            cell.bind(item: item, first: indexPath.row == 0, last: tableView.numberOfRows(inSection: indexPath.section) == indexPath.row + 1)
+            cell.set(backgroundStyle: .claude, isFirst: indexPath.row != 0, isLast: true)
+            cell.bind(item: item)
         }
 
         if indexPath.row >= self.tableView(tableView, numberOfRowsInSection: 0) - 1 {
@@ -110,7 +111,7 @@ class TransactionsViewController: ThemeViewController {
 
     private func reload(with changes: ChangeWithIndexPath, animated: Bool) {
         if !isViewLoaded || view.window == nil {
-            self.tableView.reloadData()
+            tableView.reloadData()
             return
         }
 

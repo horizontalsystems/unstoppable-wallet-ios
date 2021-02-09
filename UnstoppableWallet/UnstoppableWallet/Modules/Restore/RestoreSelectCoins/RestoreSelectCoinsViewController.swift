@@ -6,10 +6,14 @@ import RxCocoa
 class RestoreSelectCoinsViewController: CoinToggleViewController {
     private let restoreView: RestoreView
     private let viewModel: RestoreSelectCoinsViewModel
+    private let blockchainSettingsView: BlockchainSettingsView
+    private let enableCoinsView: EnableCoinsView
 
-    init(restoreView: RestoreView, viewModel: RestoreSelectCoinsViewModel) {
+    init(restoreView: RestoreView, viewModel: RestoreSelectCoinsViewModel, blockchainSettingsView: BlockchainSettingsView, enableCoinsView: EnableCoinsView) {
         self.restoreView = restoreView
         self.viewModel = viewModel
+        self.blockchainSettingsView = blockchainSettingsView
+        self.enableCoinsView = enableCoinsView
 
         super.init(viewModel: viewModel)
     }
@@ -24,44 +28,28 @@ class RestoreSelectCoinsViewController: CoinToggleViewController {
         title = "select_coins.choose_crypto".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.restore".localized, style: .done, target: self, action: #selector(onTapRightBarButton))
 
-        viewModel.restoreEnabledDriver
-                .drive(onNext: { [weak self] enabled in
-                    self?.navigationItem.rightBarButtonItem?.isEnabled = enabled
-                })
-                .disposed(by: disposeBag)
+        blockchainSettingsView.onOpenController = { [weak self] controller in
+            self?.present(controller, animated: true)
+        }
+        enableCoinsView.onOpenController = { [weak self] controller in
+            self?.present(controller, animated: true)
+        }
 
-        viewModel.openDerivationSettingsSignal
-                .emit(onNext: { [weak self] coin, currentDerivation in
-                    self?.showDerivationSettings(coin: coin, currentDerivation: currentDerivation)
-                })
-                .disposed(by: disposeBag)
+        subscribe(disposeBag, viewModel.restoreEnabledDriver) { [weak self] enabled in
+            self?.navigationItem.rightBarButtonItem?.isEnabled = enabled
+        }
 
-        viewModel.enabledCoinsSignal
-                .emit(onNext: { [weak self] coins in
-                    self?.restoreView.viewModel.onSelect(coins: coins)
-                })
-                .disposed(by: disposeBag)
+        subscribe(disposeBag, viewModel.enabledCoinsSignal) { [weak self] coins in
+            self?.restoreView.viewModel.onSelect(coins: coins)
+        }
+
+        subscribe(disposeBag, viewModel.disableCoinSignal) { [weak self] coin in
+            self?.setToggle(on: false, coin: coin)
+        }
     }
 
     @objc func onTapRightBarButton() {
         viewModel.onRestore()
-    }
-
-    private func showDerivationSettings(coin: Coin, currentDerivation: MnemonicDerivation) {
-        let module = DerivationSettingRouter.module(coin: coin, currentDerivation: currentDerivation, delegate: self)
-        present(module, animated: true)
-    }
-
-}
-
-extension RestoreSelectCoinsViewController: IDerivationSettingDelegate {
-
-    func onSelect(derivationSetting: DerivationSetting, coin: Coin) {
-        viewModel.onSelect(derivationSetting: derivationSetting, coin: coin)
-    }
-
-    func onCancelSelectDerivation(coin: Coin) {
-        revert(coin: coin)
     }
 
 }

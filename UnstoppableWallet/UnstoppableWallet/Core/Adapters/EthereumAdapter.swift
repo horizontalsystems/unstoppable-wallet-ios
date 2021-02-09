@@ -10,7 +10,7 @@ class EthereumAdapter: EthereumBaseAdapter {
         super.init(ethereumKit: ethereumKit, decimal: EthereumAdapter.decimal)
     }
 
-    private func convertAmount(amount: BigUInt, fromAddress: Address) -> Decimal {
+    private func convertAmount(amount: BigUInt, fromAddress: EthereumKit.Address) -> Decimal {
         guard let significand = Decimal(string: amount.description), significand != 0 else {
             return 0
         }
@@ -20,15 +20,16 @@ class EthereumAdapter: EthereumBaseAdapter {
         return Decimal(sign: sign, exponent: -decimal, significand: significand)
     }
 
-    private func transactionRecord(fromTransaction transactionWithInternal: TransactionWithInternal) -> TransactionRecord {
-        let transaction = transactionWithInternal.transaction
+    private func transactionRecord(fromTransaction fullTransaction: FullTransaction) -> TransactionRecord {
+        let transaction = fullTransaction.transaction
+        let receipt = fullTransaction.receiptWithLogs?.receipt
 
         var from = transaction.from
         var to = transaction.to
 
         var amount = convertAmount(amount: transaction.value, fromAddress: transaction.from)
 
-        amount += transactionWithInternal.internalTransactions.reduce(0) { internalAmount, internalTransaction in
+        amount += fullTransaction.internalTransactions.reduce(0) { internalAmount, internalTransaction in
             from = internalTransaction.from
             to = internalTransaction.to
             return internalAmount + convertAmount(amount: internalTransaction.value, fromAddress: internalTransaction.from)
@@ -43,26 +44,26 @@ class EthereumAdapter: EthereumBaseAdapter {
             type = .incoming
         }
 
-        let failed = (transaction.isError ?? 0) != 0
         let txHash = transaction.hash.toHexString()
 
         return TransactionRecord(
                 uid: txHash,
                 transactionHash: txHash,
-                transactionIndex: transaction.transactionIndex ?? 0,
+                transactionIndex: receipt?.transactionIndex ?? 0,
                 interTransactionIndex: 0,
                 type: type,
-                blockHeight: transaction.blockNumber,
+                blockHeight: receipt?.blockNumber,
                 confirmationsThreshold: EthereumBaseAdapter.confirmationsThreshold,
                 amount: abs(amount),
-                fee: transaction.gasUsed.map { Decimal(sign: .plus, exponent: -decimal, significand: Decimal($0 * transaction.gasPrice)) },
-                date: Date(timeIntervalSince1970: transaction.timestamp),
-                failed: failed,
+                fee: receipt.map { Decimal(sign: .plus, exponent: -decimal, significand: Decimal($0.gasUsed * transaction.gasPrice)) },
+                date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
+                failed: fullTransaction.failed,
                 from: from.hex,
-                to: to.hex,
+                to: to?.hex,
                 lockInfo: nil,
                 conflictingHash: nil,
-                showRawTransaction: false
+                showRawTransaction: false,
+                memo: nil
         )
     }
 
@@ -71,7 +72,7 @@ class EthereumAdapter: EthereumBaseAdapter {
             return Single.error(SendTransactionError.wrongAmount)
         }
         do {
-            return try ethereumKit.sendSingle(address: Address(hex: address), value: amount, gasPrice: gasPrice, gasLimit: gasLimit)
+            return try ethereumKit.sendSingle(address: EthereumKit.Address(hex: address), value: amount, gasPrice: gasPrice, gasLimit: gasLimit)
                     .do(onSubscribe: { logger.debug("Sending to EthereumKit", save: true) })
                     .map { _ in ()}
                     .catchError { [weak self] error in
@@ -116,24 +117,20 @@ extension EthereumAdapter: IAdapter {
 
 extension EthereumAdapter: IBalanceAdapter {
 
-    var state: AdapterState {
-        switch ethereumKit.syncState {
-        case .synced: return .synced
-        case .notSynced(let error): return .notSynced(error: error.convertedError)
-        case .syncing: return .syncing(progress: 50, lastBlockDate: nil)
-        }
+    var balanceState: AdapterState {
+        convertToAdapterState(ethereumSyncState: ethereumKit.syncState)
     }
 
-    var stateUpdatedObservable: Observable<Void> {
+    var balanceStateUpdatedObservable: Observable<Void> {
         ethereumKit.syncStateObservable.map { _ in () }
     }
 
     var balance: Decimal {
-        balanceDecimal(kitBalance: ethereumKit.balance, decimal: EthereumAdapter.decimal)
+        balanceDecimal(kitBalance: ethereumKit.accountState?.balance, decimal: EthereumAdapter.decimal)
     }
 
     var balanceUpdatedObservable: Observable<Void> {
-        ethereumKit.balanceObservable.map { _ in () }
+        ethereumKit.accountStateObservable.map { _ in () }
     }
 
 }
@@ -166,9 +163,9 @@ extension EthereumAdapter: ISendEthereumAdapter {
             return Single.error(SendTransactionError.wrongAmount)
         }
 
-        var ethAddress: Address?
+        var ethAddress: EthereumKit.Address?
         if let address = address {
-            ethAddress = try? Address(hex: address)
+            ethAddress = try? EthereumKit.Address(hex: address)
         }
 
         return ethereumKit.estimateGas(to: ethAddress, amount: amount, gasPrice: gasPrice)
@@ -178,14 +175,22 @@ extension EthereumAdapter: ISendEthereumAdapter {
 
 extension EthereumAdapter: ITransactionsAdapter {
 
+    var transactionState: AdapterState {
+        convertToAdapterState(ethereumSyncState: ethereumKit.transactionsSyncState)
+    }
+
+    var transactionStateUpdatedObservable: Observable<Void> {
+        ethereumKit.transactionsSyncStateObservable.map { _ in () }
+    }
+
     var transactionRecordsObservable: Observable<[TransactionRecord]> {
-        ethereumKit.transactionsObservable.map { [weak self] in
+        ethereumKit.etherTransactionsObservable.map { [weak self] in
             $0.compactMap { self?.transactionRecord(fromTransaction: $0) }
         }
     }
 
     func transactionsSingle(from: TransactionRecord?, limit: Int) -> Single<[TransactionRecord]> {
-        ethereumKit.transactionsSingle(fromHash: from.flatMap { Data(hex: $0.transactionHash) }, limit: limit)
+        ethereumKit.etherTransactionsSingle(fromHash: from.flatMap { Data(hex: $0.transactionHash) }, limit: limit)
                 .map { [weak self] transactions -> [TransactionRecord] in
                     transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
                 }

@@ -36,9 +36,10 @@ class ChartViewController: ThemeViewController {
     private var indicatorViews = [ChartIndicatorSet : IndicatorSelectView]()
     private let chartInfoView = ChartInfoView()
 
-    private let loadingView = HUDProgressView(strokeLineWidth: FullTransactionInfoViewController.spinnerLineWidth,
-            radius: FullTransactionInfoViewController.spinnerSideSize / 2 - FullTransactionInfoViewController.spinnerLineWidth / 2,
-            strokeColor: .themeGray)
+    private var favoriteButtonItem: UIBarButtonItem?
+    private var alertButtonItem: UIBarButtonItem?
+
+    private let loadingView = HUDActivityView.create(with: .medium24)
 
     init(delegate: IChartViewDelegate & IChartViewTouchDelegate, configuration: ChartConfiguration) {
         self.delegate = delegate
@@ -100,7 +101,7 @@ class ChartViewController: ThemeViewController {
 
         container.addSubview(loadingView)
         loadingView.snp.makeConstraints { maker in
-            maker.edges.equalTo(chartView)
+            maker.center.equalTo(chartView)
         }
         loadingView.set(hidden: true)
         loadingView.backgroundColor = view.backgroundColor
@@ -232,17 +233,31 @@ class ChartViewController: ThemeViewController {
         switch alertMode {
         case .on:
             let image = UIImage(named: "bell_ring_24")?.tinted(with: .themeJacob)?.withRenderingMode(.alwaysOriginal)
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(onAlertTap))
+            alertButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(onAlertTap))
         case .off:
             let image = UIImage(named: "bell_24")?.tinted(with: .themeGray)?.withRenderingMode(.alwaysOriginal)
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(onAlertTap))
+            alertButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(onAlertTap))
         case .hidden:
-            navigationItem.rightBarButtonItem = nil
+            alertButtonItem = nil
         }
+
+        updateBarButtons()
+    }
+
+    private func updateBarButtons() {
+        navigationItem.rightBarButtonItems = [favoriteButtonItem, alertButtonItem].compactMap { $0 }
     }
 
     @objc private func onAlertTap() {
         delegate.onTapAlert()
+    }
+
+    @objc private func onFavoriteTap() {
+        delegate.onTapFavorite()
+    }
+
+    @objc private func onUnfavoriteTap() {
+        delegate.onTapUnfavorite()
     }
 
 }
@@ -251,6 +266,16 @@ extension ChartViewController: IChartView {
 
     func set(title: String) {
         self.title = title.localized
+    }
+
+    func set(favorite: Bool) {
+        let selector = favorite ? #selector(onUnfavoriteTap) : #selector(onFavoriteTap)
+        let color = favorite ? UIColor.themeJacob : UIColor.themeGray
+
+        let favoriteImage = UIImage(named: "rate_24")?.tinted(with: color)?.withRenderingMode(.alwaysOriginal)
+        favoriteButtonItem = UIBarButtonItem(image: favoriteImage, style: .plain, target: self, action: selector)
+
+        updateBarButtons()
     }
 
     // Interval selecting functions

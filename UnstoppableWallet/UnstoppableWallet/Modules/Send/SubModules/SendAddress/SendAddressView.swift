@@ -2,33 +2,68 @@ import UIKit
 import RxSwift
 
 class SendAddressView: UIView {
-    private let addressInputField: InputField
+    private let viewModel: RecipientAddressViewModel
     private let delegate: ISendAddressViewDelegate
 
-    public init(delegate: ISendAddressViewDelegate) {
+    private let disposeBag = DisposeBag()
+
+    private let addressInputView = AddressInputView()
+    private let cautionView = FormCautionView()
+
+    public init(viewModel: RecipientAddressViewModel, isResolutionEnabled: Bool, delegate: ISendAddressViewDelegate) {
+        self.viewModel = viewModel
         self.delegate = delegate
-        addressInputField = InputField()
 
         super.init(frame: .zero)
 
         backgroundColor = .clear
 
-        addSubview(addressInputField)
-        addressInputField.snp.makeConstraints { maker in
+        addSubview(addressInputView)
+        addressInputView.snp.makeConstraints { maker in
             maker.top.equalToSuperview().inset(CGFloat.margin3x)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.bottom.equalToSuperview()
+            maker.leading.trailing.equalToSuperview()
+            maker.height.equalTo(addressInputView.height(containerWidth: width))
         }
 
-        addressInputField.placeholder = "send.address_placeholder".localized
-        addressInputField.showQrButton = true
-        addressInputField.canEdit = false
-
-        addressInputField.openScan = { [weak self] controller in
+        addressInputView.inputPlaceholder = isResolutionEnabled ? "send.address_or_domain_placeholder".localized : "send.address_placeholder".localized
+        addressInputView.inputText = viewModel.initialValue
+        addressInputView.onOpenViewController = { [weak self] controller in
             self?.delegate.onOpenScan(controller: controller)
         }
-        addressInputField.onTextChange = { [weak self] string in
-            self?.delegate.onAddressChange(string: string?.trimmingCharacters(in: .whitespaces))
+        addressInputView.onChangeText = { [weak self] string in
+            self?.viewModel.onChange(text: string)
+        }
+        addressInputView.onFetchText = { [weak self] string in
+            self?.viewModel.onFetch(text: string)
+        }
+        addressInputView.onChangeEditing = { [weak self] editing in
+            self?.viewModel.onChange(editing: editing)
+        }
+        addressInputView.onChangeHeight = { [weak self] in
+            self?.updateInputHeight()
+        }
+
+        addSubview(cautionView)
+        cautionView.snp.makeConstraints { maker in
+            maker.top.equalTo(addressInputView.snp.bottom)
+            maker.leading.trailing.equalToSuperview()
+            maker.bottom.equalToSuperview()
+            maker.height.equalTo(cautionView.height(containerWidth: width))
+        }
+
+        cautionView.onChangeHeight = { [weak self] in
+            self?.updateCautionHeight()
+        }
+
+        subscribe(disposeBag, viewModel.cautionDriver) { [weak self] in
+            self?.addressInputView.set(cautionType: $0?.type)
+            self?.cautionView.set(caution: $0)
+        }
+        subscribe(disposeBag, viewModel.isLoadingDriver) { [weak self] in
+            self?.addressInputView.set(isLoading: $0)
+        }
+        subscribe(disposeBag, viewModel.setTextSignal) { [weak self] in
+            self?.addressInputView.inputText = $0
         }
     }
 
@@ -36,12 +71,16 @@ class SendAddressView: UIView {
         fatalError("not implemented")
     }
 
-}
+    private func updateInputHeight() {
+        addressInputView.snp.updateConstraints { maker in
+            maker.height.equalTo(addressInputView.height(containerWidth: width))
+        }
+    }
 
-extension SendAddressView: ISendAddressView {
-
-    func set(error: Error?) {
-        addressInputField.bind(error: error)
+    private func updateCautionHeight() {
+        cautionView.snp.updateConstraints { maker in
+            maker.height.equalTo(cautionView.height(containerWidth: width))
+        }
     }
 
 }

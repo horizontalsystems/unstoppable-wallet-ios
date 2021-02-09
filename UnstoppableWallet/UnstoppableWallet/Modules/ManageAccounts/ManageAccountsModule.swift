@@ -16,7 +16,7 @@ protocol IManageAccountsViewDelegate {
 
 protocol IManageAccountsInteractor {
     var predefinedAccountTypes: [PredefinedAccountType] { get }
-    var allActiveDerivationSettings: [(setting: DerivationSetting, wallets: [Wallet])] { get }
+    var hasAddressFormatSettings: Bool { get }
     func account(predefinedAccountType: PredefinedAccountType) -> Account?
 }
 

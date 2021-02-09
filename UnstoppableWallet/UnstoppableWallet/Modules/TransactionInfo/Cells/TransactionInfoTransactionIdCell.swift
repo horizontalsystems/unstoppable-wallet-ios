@@ -1,7 +1,7 @@
 import UIKit
 import ThemeKit
 
-class TransactionInfoTransactionIdCell: ThemeCell {
+class TransactionInfoTransactionIdCell: BaseThemeCell {
     private let titleView = TransactionInfoTitleView()
     private let idButton = ThemeButton()
     private let shareButton = ThemeButton()
@@ -53,8 +53,6 @@ class TransactionInfoTransactionIdCell: ThemeCell {
     }
 
     func bind(value: String, onTapId: @escaping () -> (), onTapShare: @escaping () -> ()) {
-        super.bind(bottomSeparatorVisible: true)
-
         idButton.setTitle(value, for: .normal)
 
         self.onTapId = onTapId

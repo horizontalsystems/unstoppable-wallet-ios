@@ -27,7 +27,7 @@ class BalanceViewController: ThemeViewController {
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.balance_view", qos: .userInitiated)
 
     init(viewDelegate: IBalanceViewDelegate) {
-        self.delegate = viewDelegate
+        delegate = viewDelegate
 
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 
@@ -327,6 +327,12 @@ extension BalanceViewController: IBalanceView {
         DispatchQueue.main.async {
             HudHelper.instance.showError(title: error.smartDescription)
         }
+    }
+
+    func showLostAccounts() {
+        let controller = UIAlertController(title: "lost_accounts.warning_title".localized, message: "lost_accounts.warning_message".localized, preferredStyle: .alert)
+        controller.addAction(UIAlertAction(title: "button.ok".localized, style: .default))
+        controller.show()
     }
 
 }

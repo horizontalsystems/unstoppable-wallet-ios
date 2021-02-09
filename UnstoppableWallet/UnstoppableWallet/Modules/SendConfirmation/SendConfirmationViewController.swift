@@ -39,8 +39,8 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
         title = "confirm".localized
 
         tableView.registerCell(forClass: SendConfirmationAmountCell.self)
-        tableView.registerCell(forClass: SendConfirmationReceiverCell.self)
-        tableView.registerCell(forClass: SendConfirmationMemoCell.self)
+        tableView.registerCell(forClass: D7Cell.self)
+        tableView.registerCell(forClass: D9Cell.self)
         tableView.registerCell(forClass: AdditionalDataCell.self)
         tableView.registerCell(forClass: ButtonCell.self)
         tableView.sectionDataSource = self
@@ -104,16 +104,37 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
 extension SendConfirmationViewController: ISendConfirmationView {
 
     func show(viewItem: SendConfirmationAmountViewItem) {
-        let primaryRow = Row<SendConfirmationAmountCell>(id: "send_primary_row", height: SendConfirmationAmountCell.height, bind: { cell, _ in
-            cell.bind(primaryAmountInfo: viewItem.primaryInfo, secondaryAmountInfo: viewItem.secondaryInfo)
-        })
-        let receiverRow = Row<SendConfirmationReceiverCell>(id: "send_receiver_row", height: SendConfirmationReceiverCell.height(forContainerWidth: view.bounds.width, text: viewItem.receiver), bind: { [weak self] cell, _ in
-            cell.bind(receiver: viewItem.receiver, last: self?.noMemo ?? false) { [weak self] in
-                self?.onHashTap(receiver: viewItem.receiver)
-            }
-        })
-        topRows.append(primaryRow)
-        topRows.append(receiverRow)
+        topRows.append(Row<SendConfirmationAmountCell>(
+                id: "send_primary_row",
+                height: SendConfirmationAmountCell.height,
+                bind: { cell, _ in
+                    cell.set(backgroundStyle: .lawrence, isFirst: true)
+                    cell.bind(primaryAmountInfo: viewItem.primaryInfo, secondaryAmountInfo: viewItem.secondaryInfo)
+                }
+        ))
+
+        if let domain = viewItem.receiver.domain {
+            topRows.append(Row<D7Cell>(
+                    id: "domain",
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence)
+                        cell.title = "send.confirmation.domain".localized
+                        cell.value = domain
+                        cell.valueItalic = false
+                    }
+            ))
+        }
+
+        topRows.append(Row<D9Cell>(
+                id: "address",
+                height: .heightCell48,
+                bind: { [weak self] cell, _ in
+                    cell.set(backgroundStyle: .lawrence, isLast: self?.noMemo ?? false)
+                    cell.title = viewItem.isAccount ? "send.confirmation.account".localized : "send.confirmation.address".localized
+                    cell.viewItem = .init(value: viewItem.receiver.raw)
+                }
+        ))
     }
 
     func show(viewItem: SendConfirmationMemoViewItem) {
@@ -121,11 +142,17 @@ extension SendConfirmationViewController: ISendConfirmationView {
             return
         }
         noMemo = false
-        let row = Row<SendConfirmationMemoCell>(id: "send_memo_row", height: .heightSingleLineCell, bind: { cell, _ in
-            cell.bind(memo: viewItem.memo)
-        })
 
-        topRows.append(row)
+        topRows.append(Row<D7Cell>(
+                id: "memo",
+                height: .heightCell48,
+                bind: { cell, _ in
+                    cell.set(backgroundStyle: .lawrence, isLast: true)
+                    cell.title = "send.confirmation.memo_placeholder".localized
+                    cell.value = viewItem.memo
+                    cell.valueItalic = true
+                }
+        ))
     }
 
     func show(viewItem: SendConfirmationFeeViewItem) {
@@ -179,20 +206,6 @@ extension SendConfirmationViewController: ISendConfirmationView {
                 height: AdditionalDataCell.height,
                 bind: { cell, _ in
                     cell.bind(title: "send.confirmation.total".localized, value: primaryText)
-                }
-        )
-
-        bottomRows.append(row)
-    }
-
-    func show(viewItem: SendConfirmationDurationViewItem) {
-        let row = Row<AdditionalDataCell>(
-                id: "send_duration_row",
-                height: AdditionalDataCell.height,
-                bind: { cell, _ in
-                    cell.bind(title: "send.tx_duration".localized, value: viewItem.timeInterval.map {
-                        "send.duration.within".localized($0.approximateHoursOrMinutes)
-                    } ?? "send.duration.instant".localized)
                 }
         )
 

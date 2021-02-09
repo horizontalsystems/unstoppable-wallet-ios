@@ -1,8 +1,9 @@
 class BlockchainSettingsStorage {
-    let storage: IBlockchainSettingsRecordStorage
+    private let storage: IBlockchainSettingsRecordStorage
 
-    let derivationKey = "derivation"
-    let initialSyncKey = "initial_sync"
+    private let networkCoinTypeKey = "network_coin_type"
+    private let derivationKey = "derivation"     //
+    private let initialSyncKey = "initial_sync"  //use these two only for standard wallet
 
     init(storage: IBlockchainSettingsRecordStorage) {
         self.storage = storage
@@ -11,6 +12,31 @@ class BlockchainSettingsStorage {
 }
 
 extension BlockchainSettingsStorage: IBlockchainSettingsStorage {
+
+    var bitcoinCashCoinType: BitcoinCashCoinType? {
+        get {
+            guard let coinTypeKey = BlockchainSettingRecord.key(for: .bitcoinCash) else {
+                return nil
+            }
+
+            return storage.blockchainSettings(coinTypeKey: coinTypeKey, settingKey: networkCoinTypeKey)
+                    .flatMap { record in
+                        BitcoinCashCoinType(rawValue: record.value)
+                    }
+        }
+        set {
+            guard let newValue = newValue else {
+                storage.deleteAll(settingKey: networkCoinTypeKey)
+                return
+            }
+
+            guard let coinTypeKey = BlockchainSettingRecord.key(for: .bitcoinCash) else {
+                return
+            }
+
+            storage.save(blockchainSetting: BlockchainSettingRecord(coinType: coinTypeKey, key: networkCoinTypeKey, value: newValue.rawValue))
+        }
+    }
 
     func derivationSetting(coinType: CoinType) -> DerivationSetting? {
         guard let coinTypeKey = BlockchainSettingRecord.key(for: coinType) else {
@@ -26,15 +52,12 @@ extension BlockchainSettingsStorage: IBlockchainSettingsStorage {
                 }
     }
 
-    func save(derivationSettings: [DerivationSetting]) {
-        let settingRecords: [BlockchainSettingRecord] = derivationSettings.compactMap { setting in
-            guard let coinTypeKey = BlockchainSettingRecord.key(for: setting.coinType) else {
-                return nil
-            }
-            return BlockchainSettingRecord(coinType: coinTypeKey, key: derivationKey, value: setting.derivation.rawValue)
+    func save(derivationSetting: DerivationSetting) {
+        guard let coinTypeKey = BlockchainSettingRecord.key(for: derivationSetting.coinType) else {
+            return
         }
 
-        storage.save(blockchainSettings: settingRecords)
+        storage.save(blockchainSetting: BlockchainSettingRecord(coinType: coinTypeKey, key: derivationKey, value: derivationSetting.derivation.rawValue))
     }
 
     func deleteDerivationSettings() {
@@ -55,16 +78,13 @@ extension BlockchainSettingsStorage: IBlockchainSettingsStorage {
                 }
     }
 
-    func save(initialSyncSettings: [InitialSyncSetting]) {
-        let settingRecords: [BlockchainSettingRecord] = initialSyncSettings.compactMap { setting in
-            let coinType = setting.coinType
-            guard let coinTypeKey = BlockchainSettingRecord.key(for: coinType) else {
-                return nil
-            }
-            return BlockchainSettingRecord(coinType: coinTypeKey, key: initialSyncKey, value: setting.syncMode.rawValue)
+    func save(initialSyncSetting: InitialSyncSetting) {
+        let coinType = initialSyncSetting.coinType
+        guard let coinTypeKey = BlockchainSettingRecord.key(for: coinType) else {
+            return
         }
 
-        storage.save(blockchainSettings: settingRecords)
+        storage.save(blockchainSetting: BlockchainSettingRecord(coinType: coinTypeKey, key: initialSyncKey, value: initialSyncSetting.syncMode.rawValue))
     }
 
 }

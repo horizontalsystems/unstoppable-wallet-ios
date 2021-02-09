@@ -14,14 +14,6 @@ protocol IRandomManager {
 }
 
 protocol ILocalStorage: class {
-    var baseBitcoinProvider: String? { get set }
-    var baseLitecoinProvider: String? { get set }
-    var baseBitcoinCashProvider: String? { get set }
-    var baseDashProvider: String? { get set }
-    var baseBinanceProvider: String? { get set }
-    var baseZcashProvider: String? { get set }
-    var baseEosProvider: String? { get set }
-    var baseEthereumProvider: String? { get set }
     var agreementAccepted: Bool { get set }
     var sortType: SortType? { get set }
     var debugLog: String? { get set }
@@ -36,6 +28,7 @@ protocol ILocalStorage: class {
     var ethereumRpcMode: EthereumRpcMode? { get set }
     var pushToken: String? { get set }
     var pushNotificationsOn: Bool { get set }
+    var marketCategory: Int? { get set }
 }
 
 protocol ILogRecordManager {
@@ -100,8 +93,8 @@ protocol IAdapter: class {
 }
 
 protocol IBalanceAdapter {
-    var state: AdapterState { get }
-    var stateUpdatedObservable: Observable<Void> { get }
+    var balanceState: AdapterState { get }
+    var balanceStateUpdatedObservable: Observable<Void> { get }
     var balance: Decimal { get }
     var balanceLocked: Decimal? { get }
     var balanceUpdatedObservable: Observable<Void> { get }
@@ -116,8 +109,8 @@ protocol IDepositAdapter {
 }
 
 protocol ITransactionsAdapter {
-    var state: AdapterState { get }
-    var stateUpdatedObservable: Observable<Void> { get }
+    var transactionState: AdapterState { get }
+    var transactionStateUpdatedObservable: Observable<Void> { get }
     var lastBlockInfo: LastBlockInfo? { get }
     var lastBlockUpdatedObservable: Observable<Void> { get }
     var transactionRecordsObservable: Observable<[TransactionRecord]> { get }
@@ -126,6 +119,7 @@ protocol ITransactionsAdapter {
 }
 
 protocol ISendBitcoinAdapter {
+    var balance: Decimal { get }
     func availableBalance(feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData]) -> Decimal
     func maximumSendAmount(pluginData: [UInt8: IBitcoinPluginData]) -> Decimal?
     func minimumSendAmount(address: String?) -> Decimal
@@ -143,6 +137,7 @@ protocol ISendDashAdapter {
 }
 
 protocol ISendEthereumAdapter {
+    var balance: Decimal { get }
     func availableBalance(gasPrice: Int, gasLimit: Int) -> Decimal
     var ethereumBalance: Decimal { get }
     var minimumRequiredBalance: Decimal { get }
@@ -157,13 +152,7 @@ protocol IErc20Adapter {
     var ethereumBalance: Decimal { get }
     var pendingTransactions: [TransactionRecord] { get }
     func fee(gasPrice: Int, gasLimit: Int) -> Decimal
-    func allowanceSingle(spenderAddress: Address, defaultBlockParameter: DefaultBlockParameter) -> Single<Decimal>
-}
-
-protocol ISendEosAdapter {
-    var availableBalance: Decimal { get }
-    func validate(account: String) throws
-    func sendSingle(amount: Decimal, account: String, memo: String?) -> Single<Void>
+    func allowanceSingle(spenderAddress: EthereumKit.Address, defaultBlockParameter: DefaultBlockParameter) -> Single<Decimal>
 }
 
 protocol ISendBinanceAdapter {
@@ -196,12 +185,15 @@ protocol IAccountManager {
 
     var accountsObservable: Observable<[Account]> { get }
     var deleteAccountObservable: Observable<Account> { get }
+    var lostAccountsObservable: Observable<Bool> { get }
 
     func preloadAccounts()
     func update(account: Account)
     func save(account: Account)
     func delete(account: Account)
     func clear()
+    func handleLaunch()
+    func handleForeground()
 }
 
 protocol IBackupManager {
@@ -230,14 +222,29 @@ protocol IBlurManager {
 
 protocol IRateManager {
     func refresh()
+
+    func convertCoinTypeToXRateKitCoinType(coinType: CoinType) -> XRatesKit.CoinType
+    func convertXRateCoinTypeToCoinType(coinType: XRatesKit.CoinType) -> CoinType?
+
     func marketInfo(coinCode: String, currencyCode: String) -> MarketInfo?
-    func topMarketInfos(currencyCode: String) -> Single<[TopMarket]>
+    func globalMarketInfoSingle(currencyCode: String) -> Single<GlobalCoinMarket>
+    func topMarketsSingle(currencyCode: String, itemCount: Int) -> Single<[CoinMarket]>
+    func coinsMarketSingle(currencyCode: String, coinCodes: [String]) -> Single<[CoinMarket]>
     func marketInfoObservable(coinCode: String, currencyCode: String) -> Observable<MarketInfo>
     func marketInfosObservable(currencyCode: String) -> Observable<[String: MarketInfo]>
     func historicalRate(coinCode: String, currencyCode: String, timestamp: TimeInterval) -> Single<Decimal>
     func historicalRate(coinCode: String, currencyCode: String, timestamp: TimeInterval) -> Decimal?
     func chartInfo(coinCode: String, currencyCode: String, chartType: ChartType) -> ChartInfo?
     func chartInfoObservable(coinCode: String, currencyCode: String, chartType: ChartType) -> Observable<ChartInfo>
+}
+
+protocol IFavoritesManager {
+    var dataUpdatedObservable: Observable<()> { get }
+    var all: [FavoriteCoinRecord] { get }
+
+    func add(coinCode: String)
+    func remove(coinCode: String)
+    func isFavorite(coinCode: String) -> Bool
 }
 
 protocol IPostsManager {
@@ -279,28 +286,20 @@ protocol IAppConfigProvider {
     var coinMarketCapApiKey: String { get }
     var cryptoCompareApiKey: String? { get }
     var currencyCodes: [String] { get }
+    var feeRateAdjustedForCurrencyCodes: [String] { get }
 
     var pnsUrl: String { get }
     var pnsPassword: String { get }
     var pnsUsername: String { get }
 
     func defaultWords(count: Int) -> String
-    var defaultEosCredentials: (String, String) { get }
 
     var ethereumCoin: Coin { get }
     var featuredCoins: [Coin] { get }
     var defaultCoins: [Coin] { get }
-}
-
-protocol IFullTransactionInfoProvider {
-    var providerName: String { get }
-    func url(for hash: String) -> String?
-
-    func retrieveTransactionInfo(transactionHash: String) -> Single<FullTransactionRecord?>
-}
-
-protocol IFullTransactionInfoAdapter {
-    func convert(json: [String: Any]) -> FullTransactionRecord?
+    var smartContractFees: [CoinType: Decimal] { get }
+    var minimumBalances: [CoinType: Decimal] { get }
+    var minimumSpendableAmounts: [CoinType: Decimal] { get }
 }
 
 protocol IEnabledWalletStorage {
@@ -313,7 +312,9 @@ protocol IEnabledWalletStorage {
 protocol IAccountStorage {
     var allAccounts: [Account] { get }
     func save(account: Account)
+    func lostAccountIds() -> [String]
     func delete(account: Account)
+    func delete(accountId: String)
     func clear()
 }
 
@@ -346,17 +347,19 @@ protocol IPriceAlertRequestRecordStorage {
 
 protocol IBlockchainSettingsRecordStorage {
     func blockchainSettings(coinTypeKey: String, settingKey: String) -> BlockchainSettingRecord?
-    func save(blockchainSettings: [BlockchainSettingRecord])
+    func save(blockchainSetting: BlockchainSettingRecord)
     func deleteAll(settingKey: String)
 }
 
-protocol IBlockchainSettingsStorage {
+protocol IBlockchainSettingsStorage: AnyObject {
+    var bitcoinCashCoinType: BitcoinCashCoinType? { get set }
+
     func derivationSetting(coinType: CoinType) -> DerivationSetting?
-    func save(derivationSettings: [DerivationSetting])
+    func save(derivationSetting: DerivationSetting)
     func deleteDerivationSettings()
 
     func initialSyncSetting(coinType: CoinType) -> InitialSyncSetting?
-    func save(initialSyncSettings: [InitialSyncSetting])
+    func save(initialSyncSetting: InitialSyncSetting)
 }
 
 protocol IKitCleaner {
@@ -370,45 +373,8 @@ protocol IAccountRecordStorage {
     func deleteAllAccountRecords()
 }
 
-protocol IFullTransactionDataProviderManager {
-    var dataProviderUpdatedObservable: Observable<Void> { get }
-
-    func providers(for coin: Coin) -> [IProvider]
-    func baseProvider(for coin: Coin) -> IProvider
-    func setBaseProvider(name: String, for coin: Coin)
-
-    func bitcoin(for name: String) -> IBitcoinForksProvider
-    func litecoin(for name: String) -> IBitcoinForksProvider
-    func dash(for name: String) -> IBitcoinForksProvider
-    func eos(for name: String) -> IEosProvider
-    func bitcoinCash(for name: String) -> IBitcoinForksProvider
-    func ethereum(for name: String) -> IEthereumForksProvider
-    func binance(for name: String) -> IBinanceProvider
-    func zcash(for name: String) -> IZcashProvider
-}
-
 protocol IPingManager {
     func serverAvailable(url: String, timeoutInterval: TimeInterval) -> Observable<TimeInterval>
-}
-
-protocol IEosProvider: IProvider {
-    func convert(json: [String: Any], account: String) -> IEosResponse?
-}
-
-protocol IBitcoinForksProvider: IProvider {
-    func convert(json: [String: Any]) -> IBitcoinResponse?
-}
-
-protocol IEthereumForksProvider: IProvider {
-    func convert(json: [String: Any]) -> IEthereumResponse?
-}
-
-protocol IBinanceProvider: IProvider {
-    func convert(json: [String: Any]) -> IBinanceResponse?
-}
-
-protocol IZcashProvider: IProvider {
-    func convert(json: [String: Any]) -> IZcashResponse?
 }
 
 protocol ITransactionRateSyncer {
@@ -425,24 +391,6 @@ protocol IUrlManager {
     func open(url: String, from controller: UIViewController?)
 }
 
-protocol IFullTransactionInfoProviderFactory {
-    func provider(`for` wallet: Wallet) -> IFullTransactionInfoProvider
-}
-
-protocol ISettingsProviderMap {
-    func providers(for coinCode: String) -> [IProvider]
-    func bitcoin(for name: String) -> IBitcoinForksProvider
-    func bitcoinCash(for name: String) -> IBitcoinForksProvider
-    func ethereum(for name: String) -> IEthereumForksProvider
-}
-
-protocol IProvider {
-    var name: String { get }
-    var reachabilityUrl: String { get }
-    func url(for hash: String) -> String?
-    func request(session: Session, hash: String) -> DataRequest
-}
-
 protocol ICurrentDateProvider {
     var currentDate: Date { get }
 }
@@ -452,9 +400,10 @@ protocol IAddressParser {
 }
 
 protocol IFeeRateProvider {
-    var feeRate: Single<FeeRate> { get }
     var feeRatePriorityList: [FeeRatePriority] { get }
     var defaultFeeRatePriority: FeeRatePriority { get }
+    var recommendedFeeRate: Single<Int> { get }
+    func feeRate(priority: FeeRatePriority) -> Single<Int>
 }
 
 protocol IEncryptionManager {
@@ -543,15 +492,15 @@ protocol IRemoteAlertManager {
 }
 
 protocol IDerivationSettingsManager: AnyObject {
-    var allActiveSettings: [(setting: DerivationSetting, wallets: [Wallet])] { get }
+    var allActiveSettings: [(setting: DerivationSetting, coinType: CoinType)] { get }
     func setting(coinType: CoinType) -> DerivationSetting?
     func save(setting: DerivationSetting)
-    func reset()
+    func resetStandardSettings()
 }
 
 protocol IInitialSyncSettingsManager: AnyObject {
-    var allSettings: [(setting: InitialSyncSetting, coins: [Coin], changeable: Bool)] { get }
-    func setting(coinType: CoinType) -> InitialSyncSetting?
+    var allSettings: [(setting: InitialSyncSetting, coin: Coin, changeable: Bool)] { get }
+    func setting(coinType: CoinType, accountOrigin: AccountOrigin) -> InitialSyncSetting?
     func save(setting: InitialSyncSetting)
 }
 
@@ -593,6 +542,13 @@ protocol ICoinRecordStorage {
 protocol ICoinStorage {
     var coins: [Coin] { get }
     func save(coin: Coin) -> Bool
+}
+
+protocol IFavoriteCoinRecordStorage {
+    var favoriteCoinRecords: [FavoriteCoinRecord] { get }
+    func save(coinCode: String)
+    func deleteFavoriteCoinRecord(coinCode: String)
+    func inFavorites(coinCode: String) -> Bool
 }
 
 protocol ITermsManager {

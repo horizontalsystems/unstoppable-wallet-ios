@@ -7,9 +7,13 @@ import RxCocoa
 
 class ManageWalletsViewController: CoinToggleViewController {
     private let viewModel: ManageWalletsViewModel
+    private let blockchainSettingsView: BlockchainSettingsView
+    private let enableCoinsView: EnableCoinsView
 
-    init(viewModel: ManageWalletsViewModel) {
+    init(viewModel: ManageWalletsViewModel, blockchainSettingsView: BlockchainSettingsView, enableCoinsView: EnableCoinsView) {
         self.viewModel = viewModel
+        self.blockchainSettingsView = blockchainSettingsView
+        self.enableCoinsView = enableCoinsView
 
         super.init(viewModel: viewModel)
 
@@ -29,11 +33,23 @@ class ManageWalletsViewController: CoinToggleViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(onTapDoneButton))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "manage_coins.add_token".localized, style: .plain, target: self, action: #selector(onTapAddTokenButton))
 
-        viewModel.openDerivationSettingsSignal
-                .emit(onNext: { [weak self] coin, currentDerivation in
-                    self?.showDerivationSettings(coin: coin, currentDerivation: currentDerivation)
-                })
-                .disposed(by: disposeBag)
+        blockchainSettingsView.onOpenController = { [weak self] controller in
+            DispatchQueue.main.async {
+                self?.present(controller, animated: true)
+            }
+        }
+        enableCoinsView.onOpenController = { [weak self] controller in
+            DispatchQueue.main.async {
+                self?.present(controller, animated: true)
+            }
+        }
+
+        subscribe(disposeBag, viewModel.enableCoinSignal) { [weak self] coin in
+            self?.setToggle(on: true, coin: coin)
+        }
+        subscribe(disposeBag, viewModel.disableCoinSignal) { [weak self] coin in
+            self?.setToggle(on: false, coin: coin)
+        }
     }
 
     @objc func onTapDoneButton() {
@@ -48,23 +64,8 @@ class ManageWalletsViewController: CoinToggleViewController {
     override func onSelect(viewItem: CoinToggleViewModel.ViewItem) {
         let module = NoAccountRouter.module(coin: viewItem.coin, sourceViewController: self)
         present(module, animated: true)
-    }
 
-    private func showDerivationSettings(coin: Coin, currentDerivation: MnemonicDerivation) {
-        let module = DerivationSettingRouter.module(coin: coin, currentDerivation: currentDerivation, delegate: self)
-        present(module, animated: true)
-    }
-
-}
-
-extension ManageWalletsViewController: IDerivationSettingDelegate {
-
-    func onSelect(derivationSetting: DerivationSetting, coin: Coin) {
-        viewModel.onSelect(derivationSetting: derivationSetting, coin: coin)
-    }
-
-    func onCancelSelectDerivation(coin: Coin) {
-        revert(coin: coin)
+        viewModel.onAddAccount(coin: viewItem.coin)
     }
 
 }

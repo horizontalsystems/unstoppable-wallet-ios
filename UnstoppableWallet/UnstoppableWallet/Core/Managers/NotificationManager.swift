@@ -29,9 +29,8 @@ extension NotificationManager: INotificationManager {
 
     func requestPermission(onComplete: @escaping (Bool) -> ()) {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { (granted, error) in
-            UIApplication.shared.registerForRemoteNotifications()
-
             DispatchQueue.main.async {
+                UIApplication.shared.registerForRemoteNotifications()
                 onComplete(granted)
             }
         }

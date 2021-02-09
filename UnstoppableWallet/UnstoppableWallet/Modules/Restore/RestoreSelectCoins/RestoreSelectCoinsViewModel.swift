@@ -3,10 +3,10 @@ import RxCocoa
 
 class RestoreSelectCoinsViewModel {
     private let service: RestoreSelectCoinsService
-
     private let disposeBag = DisposeBag()
+
     private let viewStateRelay = BehaviorRelay<CoinToggleViewModel.ViewState>(value: .empty)
-    private let openDerivationSettingsRelay = PublishRelay<(coin: Coin, currentDerivation: MnemonicDerivation)>()
+    private let disableCoinRelay = PublishRelay<Coin>()
     private let enabledCoinsRelay = PublishRelay<[Coin]>()
     private var filter: String?
 
@@ -17,6 +17,13 @@ class RestoreSelectCoinsViewModel {
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] state in
                     self?.syncViewState(state: state)
+                })
+                .disposed(by: disposeBag)
+
+        service.cancelEnableCoinObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] coin in
+                    self?.disableCoinRelay.accept(coin)
                 })
                 .disposed(by: disposeBag)
 
@@ -55,18 +62,6 @@ class RestoreSelectCoinsViewModel {
         viewStateRelay.accept(viewState)
     }
 
-    private func enable(coin: Coin, derivationSetting: DerivationSetting? = nil) {
-        do {
-            try service.enable(coin: coin, derivationSetting: derivationSetting)
-        } catch let error as RestoreSelectCoinsService.EnableCoinError {
-            switch error {
-            case .derivationNotConfirmed(let currentDerivation):
-                openDerivationSettingsRelay.accept((coin: coin, currentDerivation: currentDerivation))
-            }
-        } catch {
-        }
-    }
-
 }
 
 extension RestoreSelectCoinsViewModel: ICoinToggleViewModel {
@@ -76,7 +71,7 @@ extension RestoreSelectCoinsViewModel: ICoinToggleViewModel {
     }
 
     func onEnable(coin: Coin) {
-        enable(coin: coin)
+        service.enable(coin: coin)
     }
 
     func onDisable(coin: Coin) {
@@ -95,20 +90,16 @@ extension RestoreSelectCoinsViewModel: ICoinToggleViewModel {
 
 extension RestoreSelectCoinsViewModel {
 
+    var disableCoinSignal: Signal<Coin> {
+        disableCoinRelay.asSignal()
+    }
+
     var restoreEnabledDriver: Driver<Bool> {
         service.canRestoreObservable.asDriver(onErrorJustReturn: false)
     }
 
     var enabledCoinsSignal: Signal<[Coin]> {
         enabledCoinsRelay.asSignal()
-    }
-
-    var openDerivationSettingsSignal: Signal<(coin: Coin, currentDerivation: MnemonicDerivation)> {
-        openDerivationSettingsRelay.asSignal()
-    }
-
-    func onSelect(derivationSetting: DerivationSetting, coin: Coin) {
-        enable(coin: coin, derivationSetting: derivationSetting)
     }
 
     func onRestore() {

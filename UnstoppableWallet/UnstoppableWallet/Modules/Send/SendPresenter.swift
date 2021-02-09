@@ -22,6 +22,22 @@ class SendPresenter {
         self.logger = logger
     }
 
+    private func isEmptyAmountError(error: Error) -> Bool {
+        if case SendAmountPresenter.ValidationError.emptyValue = error {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    private func isEmptyAddressError(error: Error) -> Bool {
+        if case SendAddressPresenter.ValidationError.emptyValue = error {
+            return true
+        } else {
+            return false
+        }
+    }
+
 }
 
 extension SendPresenter: ISendViewDelegate {
@@ -66,8 +82,20 @@ extension SendPresenter: ISendViewDelegate {
 
 extension SendPresenter: ISendHandlerDelegate {
 
-    func onChange(isValid: Bool) {
-        view?.set(sendButtonEnabled: isValid)
+    func onChange(isValid: Bool, amountError: Error?, addressError: Error?) {
+        let actionState: ActionState
+
+        if isValid {
+            actionState = .enabled
+        } else if let error = amountError, !isEmptyAmountError(error: error) {
+            actionState = .disabled(error: "Invalid Amount")
+        } else if let error = addressError, !isEmptyAddressError(error: error) {
+            actionState = .disabled(error: "Invalid Address")
+        } else {
+            actionState = .disabled(error: nil)
+        }
+
+        view?.set(actionState: actionState)
     }
 
 }
@@ -89,6 +117,7 @@ extension SendPresenter: ISendInteractorDelegate {
     func didReceive(marketInfo: MarketInfo) {
         if !marketInfo.expired {
             handler.sync(rateValue: marketInfo.rate)
+            return
         }
         handler.sync(rateValue: nil)
     }
@@ -113,6 +142,15 @@ extension SendPresenter: ISendConfirmationDelegate {
 
     func onCancelClicked() {
         router.dismiss()
+    }
+
+}
+
+extension SendPresenter {
+
+    enum ActionState {
+        case enabled
+        case disabled(error: String?)
     }
 
 }

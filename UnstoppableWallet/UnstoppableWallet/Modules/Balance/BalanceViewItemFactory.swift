@@ -66,12 +66,12 @@ class BalanceViewItemFactory {
             return nil
         }
 
-        let state = item.state
+        let sendButtonsState: ButtonState = item.state == .synced ? .enabled : .disabled
 
         return BalanceButtonsViewItem(
-                receiveButtonEnabled: state != nil,
-                sendButtonEnabled: state == .synced,
-                swapButtonHidden: !item.wallet.coin.type.swappable
+                receiveButtonState: item.state != nil ? .enabled : .disabled,
+                sendButtonState: sendButtonsState,
+                swapButtonState: item.wallet.coin.type.swappable ? sendButtonsState : .hidden
         )
     }
 
@@ -122,7 +122,7 @@ class BalanceViewItemFactory {
             return nil
         }
 
-        return (value: marketInfo.diff, dimmed: marketInfo.expired)
+        return (value: marketInfo.rateDiff, dimmed: marketInfo.expired)
     }
 
     private func coinValue(coin: Coin, value: Decimal, state: AdapterState) -> (text: String?, dimmed: Bool) {

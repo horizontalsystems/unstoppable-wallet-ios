@@ -1,31 +1,45 @@
 import Foundation
 import Hodler
+import RxSwift
+import RxRelay
 
 class SendAddressPresenter {
-    weak var view: ISendAddressView?
     weak var delegate: ISendAddressDelegate?
 
-    private let interactor: ISendAddressInteractor
     private let router: ISendAddressRouter
 
-    private var enteredAddress: String?
-    var currentAddress: String?
+    private var enteredAddress: Address?
+    var currentAddress: Address?
 
-    init(interactor: ISendAddressInteractor, router: ISendAddressRouter) {
-        self.interactor = interactor
+    private(set) var error: Error? {
+        didSet {
+            errorRelay.accept(error)
+        }
+    }
+    private let errorRelay = PublishRelay<Error?>()
+
+    init(router: ISendAddressRouter) {
         self.router = router
     }
 
-    private func onEnter(address: String) {
-        let (parsedAddress, amount) = interactor.parse(address: address)
-
-        enteredAddress = parsedAddress
+    private func onEnter(address: Address) {
+        enteredAddress = address
         try? validateAddress()
 
         delegate?.onUpdateAddress()
-        if let amount = amount {
-            delegate?.onUpdate(amount: amount)
+    }
+
+    private func onSet(address: Address?) {
+        guard let address = address, !address.raw.isEmpty else {
+            error = nil
+            currentAddress = nil
+            enteredAddress = nil
+            delegate?.onUpdateAddress()
+
+            return
         }
+
+        onEnter(address: address)
     }
 
 }
@@ -36,18 +50,6 @@ extension SendAddressPresenter: ISendAddressViewDelegate {
         router.openScan(controller: controller)
     }
 
-    func onAddressChange(string: String?) {
-        guard let address = string, !address.isEmpty else {
-            view?.set(error: nil)
-            currentAddress = nil
-            enteredAddress = nil
-            delegate?.onUpdateAddress()
-
-            return
-        }
-        onEnter(address: address)
-    }
-
 }
 
 extension SendAddressPresenter: ISendAddressModule {
@@ -55,26 +57,56 @@ extension SendAddressPresenter: ISendAddressModule {
     func validateAddress() throws {
         guard let address = enteredAddress else {
             currentAddress = nil
-            throw AppError.addressInvalid
+            throw ValidationError.emptyValue
         }
 
         do {
-            try delegate?.validate(address: address)
+            try delegate?.validate(address: address.raw)
             currentAddress = address
-            view?.set(error: nil)
+            error = nil
         } catch {
             currentAddress = nil
-            view?.set(error: error.convertedError)
+            self.error = error.convertedError
             throw error
         }
     }
 
-    func validAddress() throws -> String {
+    func validAddress() throws -> Address {
         guard let address = currentAddress else {
-            throw AppError.addressInvalid
+            throw ValidationError.emptyValue
         }
 
         return address
+    }
+
+}
+
+extension SendAddressPresenter: IRecipientAddressService {
+
+    var initialAddress: Address? {
+        nil
+    }
+
+    var errorObservable: Observable<Error?> {
+        errorRelay.asObservable()
+    }
+
+    func set(address: Address?) {
+        DispatchQueue.main.async { [weak self] in
+            self?.onSet(address: address)
+        }
+    }
+
+    func set(amount: Decimal) {
+        delegate?.onUpdate(amount: amount)
+    }
+
+}
+
+extension SendAddressPresenter {
+
+    enum ValidationError: Error {
+        case emptyValue
     }
 
 }

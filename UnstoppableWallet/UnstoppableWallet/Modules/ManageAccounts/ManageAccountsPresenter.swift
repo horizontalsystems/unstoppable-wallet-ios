@@ -8,7 +8,7 @@ class ManageAccountsPresenter {
 
     private var items = [ManageAccountItem]()
 
-    private var hasDerivationSettings = false
+    private var hasAddressFormatSettings = false
 
     init(interactor: IManageAccountsInteractor, router: IManageAccountsRouter) {
         self.interactor = interactor
@@ -22,11 +22,11 @@ class ManageAccountsPresenter {
     }
 
     private func updateView() {
-        view?.set(viewItems: items.map { self.viewItemFactory.viewItem(item: $0, hasDerivationSettings: hasDerivationSettings) })
+        view?.set(viewItems: items.map { self.viewItemFactory.viewItem(item: $0, hasAddressFormatSettings: hasAddressFormatSettings) })
     }
 
-    private func syncDerivationSettings() {
-        hasDerivationSettings = !interactor.allActiveDerivationSettings.isEmpty
+    private func syncAddressFormatSettings() {
+        hasAddressFormatSettings = interactor.hasAddressFormatSettings
     }
 
 }
@@ -35,7 +35,7 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
 
     func viewDidLoad() {
         buildItems()
-        syncDerivationSettings()
+        syncAddressFormatSettings()
         updateView()
     }
 
@@ -86,7 +86,7 @@ extension ManageAccountsPresenter: IManageAccountsInteractorDelegate {
     }
 
     func didUpdateWallets() {
-        syncDerivationSettings()
+        syncAddressFormatSettings()
         updateView()
     }
 

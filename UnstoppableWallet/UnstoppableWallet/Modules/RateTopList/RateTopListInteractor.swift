@@ -15,6 +15,18 @@ class RateTopListInteractor {
         self.walletManager = walletManager
     }
 
+    private func update(coinMarkets: [CoinMarket]) {
+        let items = coinMarkets.enumerated().map { index, coinMarket in
+            RateTopListModule.TopMarketItem(
+                    rank: index + 1,
+                    coinCode: coinMarket.coin.code,
+                    coinName: coinMarket.coin.title,
+                    coinType: coinMarket.coin.type.flatMap { rateManager.convertXRateCoinTypeToCoinType(coinType: $0) },
+                    marketInfo: coinMarket.marketInfo)
+        }
+        delegate?.didReceive(topMarkets: items)
+    }
+
 }
 
 extension RateTopListInteractor: IRateTopListInteractor {
@@ -37,10 +49,10 @@ extension RateTopListInteractor: IRateTopListInteractor {
     }
 
     func updateTopMarkets(currencyCode: String) {
-        rateManager.topMarketInfos(currencyCode: currencyCode)
+        rateManager.topMarketsSingle(currencyCode: currencyCode, itemCount: 100)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onSuccess: { [weak self] infos in
-                    self?.delegate?.didReceive(topMarkets: infos)
+                    self?.update(coinMarkets: infos)
                 })
                 .disposed(by: disposeBag)
     }

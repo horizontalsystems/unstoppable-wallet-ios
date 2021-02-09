@@ -3,7 +3,7 @@ import UIExtensions
 import SnapKit
 import ThemeKit
 
-class TransactionCell: ClaudeThemeCell {
+class TransactionCell: BaseSelectableThemeCell {
     private let typeIconImageView = UIImageView()
 
     private let dateLabel = UILabel()
@@ -20,9 +20,9 @@ class TransactionCell: ClaudeThemeCell {
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        let wrapperView = UIView()
+        let leftWrapperView = UIView()
 
-        wrapperView.addSubview(typeIconImageView)
+        leftWrapperView.addSubview(typeIconImageView)
         typeIconImageView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().inset(CGFloat.margin16)
             maker.top.equalToSuperview().inset(CGFloat.margin3x)
@@ -30,7 +30,7 @@ class TransactionCell: ClaudeThemeCell {
         typeIconImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
         typeIconImageView.setContentHuggingPriority(.required, for: .horizontal)
 
-        wrapperView.addSubview(dateLabel)
+        leftWrapperView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(typeIconImageView.snp.trailing).offset(CGFloat.margin16)
             maker.trailing.lessThanOrEqualToSuperview().inset(CGFloat.margin3x)
@@ -40,45 +40,45 @@ class TransactionCell: ClaudeThemeCell {
         dateLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         dateLabel.setContentHuggingPriority(.required, for: .horizontal)
 
-        wrapperView.addSubview(statusView)
+        leftWrapperView.addSubview(statusView)
         statusView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().inset(CGFloat.margin16)
             maker.trailing.lessThanOrEqualToSuperview().inset(CGFloat.margin3x)
             maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
         }
 
-        wrapperView.addSubview(processingView)
+        leftWrapperView.addSubview(processingView)
         processingView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().inset(CGFloat.margin16)
             maker.trailing.lessThanOrEqualToSuperview().inset(CGFloat.margin3x)
             maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
         }
 
-        contentView.addSubview(wrapperView)
-        wrapperView.snp.makeConstraints { maker in
+        wrapperView.addSubview(leftWrapperView)
+        leftWrapperView.snp.makeConstraints { maker in
             maker.leading.top.bottom.equalToSuperview()
         }
 
-        contentView.addSubview(currencyAmountLabel)
+        wrapperView.addSubview(currencyAmountLabel)
         currencyAmountLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(wrapperView.snp.trailing).offset(CGFloat.margin3x)
+            maker.leading.equalTo(leftWrapperView.snp.trailing).offset(CGFloat.margin3x)
             maker.top.equalToSuperview().offset(CGFloat.margin2x)
         }
         currencyAmountLabel.font = .headline1
         currencyAmountLabel.textAlignment = .right
 
-        contentView.addSubview(lockImageView)
+        wrapperView.addSubview(lockImageView)
         lockImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
-        contentView.addSubview(sentToSelfImageView)
+        wrapperView.addSubview(sentToSelfImageView)
         sentToSelfImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         sentToSelfImageView.image = UIImage(named: "arrow_medium_main_down_left_20")?.tinted(with: .themeRemus)
 
-        contentView.addSubview(amountLabel)
+        wrapperView.addSubview(amountLabel)
         amountLabel.snp.makeConstraints { maker in
             maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
-            maker.leading.equalTo(wrapperView.snp.trailing).offset(CGFloat.margin3x)
-            maker.trailing.equalTo(contentView.snp.trailingMargin)
+            maker.leading.equalTo(leftWrapperView.snp.trailing).offset(CGFloat.margin3x)
+            maker.trailing.equalTo(wrapperView.snp.trailingMargin)
         }
         amountLabel.font = .subhead2
         amountLabel.textAlignment = .right
@@ -88,9 +88,7 @@ class TransactionCell: ClaudeThemeCell {
         fatalError("not implemented")
     }
 
-    func bind(item: TransactionViewItem, first: Bool, last: Bool) {
-        super.bind(last: last)
-
+    func bind(item: TransactionViewItem) {
         let status = item.status
 
         dateLabel.textColor = .themeLeah
@@ -113,7 +111,7 @@ class TransactionCell: ClaudeThemeCell {
         if let value = item.currencyValue?.nonZero, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.01)) {
             currencyAmountLabel.text = formattedValue
         } else {
-            currencyAmountLabel.text = nil
+            currencyAmountLabel.text = " "
         }
 
         if let lockState = item.lockState {

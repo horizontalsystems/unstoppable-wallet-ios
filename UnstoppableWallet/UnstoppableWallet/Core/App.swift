@@ -13,7 +13,7 @@ class App {
     let appConfigProvider: IAppConfigProvider
 
     let localStorage: ILocalStorage & IChartTypeStorage
-    let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & ICoinRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage
+    let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & ICoinRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage
 
     let themeManager: ThemeManager
     let systemInfoManager: ISystemInfoManager
@@ -38,6 +38,7 @@ class App {
     let currencyKit: ICurrencyKit
 
     let rateManager: IRateManager & IPostsManager
+    let favoritesManager: IFavoritesManager
 
     let feeCoinProvider: IFeeCoinProvider
     let feeRateProviderFactory: FeeRateProviderFactory
@@ -45,9 +46,6 @@ class App {
     let sortTypeManager: ISortTypeManager
 
     let adapterManager: IAdapterManager
-
-    let dataProviderManager: IFullTransactionDataProviderManager
-    let fullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactory
 
     private let testModeIndicator: TestModeIndicator
     private let walletRemover: WalletRemover
@@ -65,6 +63,7 @@ class App {
 
     let initialSyncSettingsManager: IInitialSyncSettingsManager
     let derivationSettingsManager: IDerivationSettingsManager
+    let bitcoinCashCoinTypeManager: BitcoinCashCoinTypeManager
     let ethereumRpcModeSettingsManager: IEthereumRpcModeSettingsManager
 
     let transactionDataSortModeSettingManager: ITransactionDataSortModeSettingManager
@@ -131,32 +130,31 @@ class App {
         feeRateProviderFactory = FeeRateProviderFactory(appConfigProvider: appConfigProvider)
 
         rateManager = RateManager(walletManager: walletManager, currencyKit: currencyKit, rateCoinMapper: RateCoinMapper(), feeCoinProvider: feeCoinProvider, coinMarketCapApiKey: appConfigProvider.coinMarketCapApiKey, cryptoCompareApiKey: appConfigProvider.cryptoCompareApiKey, uniswapSubgraphUrl: appConfigProvider.uniswapSubgraphUrl)
+        favoritesManager = FavoritesManager(storage: storage)
 
         sortTypeManager = SortTypeManager(localStorage: localStorage)
 
         ethereumKitManager = EthereumKitManager(appConfigProvider: appConfigProvider)
-        let eosKitManager = EosKitManager(appConfigProvider: appConfigProvider)
         let binanceKitManager = BinanceKitManager(appConfigProvider: appConfigProvider)
 
-        let adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager)
-        adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager)
+        let adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, binanceKitManager: binanceKitManager)
+        adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager)
 
         let settingsStorage: IBlockchainSettingsStorage = BlockchainSettingsStorage(storage: storage)
         derivationSettingsManager = DerivationSettingsManager(walletManager: walletManager, adapterManager: adapterManager, storage: settingsStorage)
         initialSyncSettingsManager = InitialSyncSettingsManager(walletManager: walletManager, adapterManager: adapterManager, appConfigProvider: appConfigProvider, storage: settingsStorage)
+        bitcoinCashCoinTypeManager = BitcoinCashCoinTypeManager(walletManager: walletManager, adapterManager: adapterManager, storage: settingsStorage)
         ethereumRpcModeSettingsManager = EthereumRpcModeSettingsManager(ethereumKitManager: ethereumKitManager, walletManager: walletManager, adapterManager: adapterManager, localStorage: localStorage)
 
         transactionDataSortModeSettingManager = TransactionDataSortModeSettingManager(storage: localStorage)
 
         adapterFactory.derivationSettingsManager = derivationSettingsManager
         adapterFactory.initialSyncSettingsManager = initialSyncSettingsManager
+        adapterFactory.bitcoinCashCoinTypeManager = bitcoinCashCoinTypeManager
         ethereumKitManager.ethereumRpcModeSettingsManager = ethereumRpcModeSettingsManager
 
         pinKit = PinKit.Kit(secureStorage: keychainKit.secureStorage, localStorage: StorageKit.LocalStorage.default)
         let blurManager: IBlurManager = BlurManager(pinKit: pinKit)
-
-        dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
-        fullTransactionInfoProviderFactory = FullTransactionInfoProviderFactory(networkManager: networkManager, dataProviderManager: dataProviderManager)
 
         testModeIndicator = TestModeIndicator(appConfigProvider: appConfigProvider)
         walletRemover = WalletRemover(accountManager: accountManager, walletManager: walletManager)
@@ -171,7 +169,7 @@ class App {
 
         remoteAlertManager.notificationManager = notificationManager
 
-        appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage, predefinedAccountTypeManager: predefinedAccountTypeManager, walletManager: walletManager, adapterManager: adapterManager, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, logRecordManager: logRecordManager)
+        appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage, predefinedAccountTypeManager: predefinedAccountTypeManager, walletManager: walletManager, adapterManager: adapterManager, ethereumKitManager: ethereumKitManager, binanceKitManager: binanceKitManager, logRecordManager: logRecordManager)
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, localStorage: localStorage)
 
         keychainKitDelegate = KeychainKitDelegate(accountManager: accountManager, walletManager: walletManager)

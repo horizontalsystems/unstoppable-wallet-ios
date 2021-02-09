@@ -1,5 +1,7 @@
 import UIKit
 import ActionSheet
+import ThemeKit
+import SafariServices
 
 class TransactionInfoRouter {
     weak var viewController: UIViewController?
@@ -13,15 +15,21 @@ class TransactionInfoRouter {
 
 extension TransactionInfoRouter: ITransactionInfoRouter {
 
-    func showFullInfo(transactionHash: String, wallet: Wallet) {
-        let module = FullTransactionInfoRouter.module(transactionHash: transactionHash, wallet: wallet)
+    func open(url: String) {
+        guard let  url = URL(string: url) else {
+            return
+        }
+
+        let controller = SFSafariViewController(url: url, configuration: SFSafariViewController.Configuration())
+
         viewController?.dismiss(animated: true) { [weak self] in
-            self?.sourceViewController?.present(module, animated: true)
+            self?.sourceViewController?.present(controller, animated: true)
         }
     }
 
     func showLockInfo() {
-        viewController?.present(InfoRouter.module(title: "lock_info.title".localized, text: "lock_info.text".localized), animated: true)
+        let controller = InfoModule.viewController(dataSource: TimeLockInfoDataSource())
+        viewController?.present(ThemeNavigationController(rootViewController: controller), animated: true)
     }
 
     func showShare(value: String) {
@@ -43,7 +51,7 @@ extension TransactionInfoRouter {
         }
 
         let router = TransactionInfoRouter(sourceViewController: sourceViewController)
-        let interactor = TransactionInfoInteractor(adapter: adapter, rateManager: App.shared.rateManager, currencyKit: App.shared.currencyKit, feeCoinProvider: App.shared.feeCoinProvider, pasteboardManager: App.shared.pasteboardManager)
+        let interactor = TransactionInfoInteractor(adapter: adapter, rateManager: App.shared.rateManager, currencyKit: App.shared.currencyKit, feeCoinProvider: App.shared.feeCoinProvider, pasteboardManager: App.shared.pasteboardManager, appConfigProvider: App.shared.appConfigProvider)
         let presenter = TransactionInfoPresenter(transaction: transaction, wallet: wallet, interactor: interactor, router: router)
         let viewController = TransactionInfoViewController(delegate: presenter)
 

@@ -9,7 +9,6 @@ class AddressParserFactory {
         case .ethereum: return AddressParser(validScheme: "ethereum", removeScheme: true)
         case .zcash: return AddressParser(validScheme: "zcash", removeScheme: true)
         case .erc20: return AddressParser(validScheme: nil, removeScheme: true)
-        case .eos: return AddressParser(validScheme: "eos", removeScheme: true)
         case .binance: return AddressParser(validScheme: "binance", removeScheme: true)
         }
     }

@@ -33,6 +33,15 @@ class RateManager {
                 .disposed(by: disposeBag)
     }
 
+    private func mapCoinForXRates(coins: [Coin]) -> [XRatesKit.Coin] {
+        coins.compactMap { coin in
+            let coinType = coin.type
+            return rateCoinMapper.convert(coin: coin).map {
+                XRatesKit.Coin(code: $0.code, title: $0.title, type: convertCoinTypeToXRateKitCoinType(coinType: coinType))
+            }
+        }
+    }
+
     private func onUpdate(wallets: [Wallet]) {
         let allCoins = wallets.reduce(into: [Coin]()) { result, wallet in
             result.append(wallet.coin)
@@ -43,22 +52,9 @@ class RateManager {
         }
         let convertedCoinCodes = allCoins.compactMap { rateCoinMapper.convert(coin: $0) }
         let uniqueCoinCodes = Array(Set(convertedCoinCodes))
-        
-        let kitCoins = uniqueCoinCodes.map { coin -> XRatesKit.Coin in
-            switch coin.type {
-                case .binance: return XRatesKit.Coin(code: coin.code, title: coin.title, type: .binance)
-                case .bitcoin: return XRatesKit.Coin(code: coin.code, title: coin.title, type: .bitcoin)
-                case .bitcoinCash: return XRatesKit.Coin(code: coin.code, title: coin.title, type: .bitcoinCash)
-                case .dash: return XRatesKit.Coin(code: coin.code, title: coin.title, type: .dash)
-                case .eos: return XRatesKit.Coin(code: coin.code, title: coin.title, type: .eos)
-                case .erc20(let address, _, _, _): return XRatesKit.Coin(code: coin.code, title: coin.title, type: .erc20(address: address))
-                case .ethereum: return XRatesKit.Coin(code: coin.code, title: coin.title, type: .ethereum)
-                case .litecoin: return XRatesKit.Coin(code: coin.code, title: coin.title, type: .litecoin)
-                case .zcash: return XRatesKit.Coin(code: coin.code, title: coin.title, type: .zcash)
-            }
-        }
 
-        kit.set(coins: kitCoins)
+
+        kit.set(coins: mapCoinForXRates(coins: uniqueCoinCodes))
     }
 
     private func onUpdate(baseCurrency: Currency) {
@@ -73,6 +69,33 @@ extension RateManager: IRateManager {
         kit.refresh()
     }
 
+    func convertCoinTypeToXRateKitCoinType(coinType: CoinType) -> XRatesKit.CoinType {
+        switch coinType {
+        case .bitcoin: return .bitcoin
+        case .litecoin: return .litecoin
+        case .bitcoinCash: return .bitcoinCash
+        case .dash: return .dash
+        case .ethereum: return .ethereum
+        case .erc20(let address): return .erc20(address: address)
+        case .binance: return .binance
+        case .zcash: return .zcash
+        }
+    }
+
+    func convertXRateCoinTypeToCoinType(coinType: XRatesKit.CoinType) -> CoinType? {
+        switch coinType {
+        case .bitcoin: return .bitcoin
+        case .litecoin: return .litecoin
+        case .bitcoinCash: return .bitcoinCash
+        case .dash: return .dash
+        case .ethereum: return .ethereum
+        case .erc20(let address): return .erc20(address: address)
+        case .binance: return .binance(symbol: "")
+        case .zcash: return .zcash
+        case .eos: return nil
+        }
+    }
+
     func marketInfo(coinCode: String, currencyCode: String) -> MarketInfo? {
         guard let convertedCoinCode = rateCoinMapper.convert(coinCode: coinCode) else {
             return nil
@@ -81,8 +104,16 @@ extension RateManager: IRateManager {
         return kit.marketInfo(coinCode: convertedCoinCode, currencyCode: currencyCode)
     }
 
-    func topMarketInfos(currencyCode: String) -> Single<[TopMarket]> {
-        kit.topMarketInfos(currencyCode: currencyCode)
+    func globalMarketInfoSingle(currencyCode: String) -> Single<GlobalCoinMarket> {
+        kit.globalMarketInfoSingle(currencyCode: currencyCode)
+    }
+
+    func topMarketsSingle(currencyCode: String, itemCount: Int) -> Single<[CoinMarket]> {
+        kit.topMarketsSingle(currencyCode: currencyCode, fetchDiffPeriod: .hour24, itemsCount: itemCount)
+    }
+
+    func coinsMarketSingle(currencyCode: String, coinCodes: [String]) -> Single<[CoinMarket]> {
+        kit.favorites(currencyCode: currencyCode, coinCodes: coinCodes)
     }
 
     func marketInfoObservable(coinCode: String, currencyCode: String) -> Observable<MarketInfo> {

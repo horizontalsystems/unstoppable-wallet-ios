@@ -17,7 +17,10 @@ func subscribe<T>(_ disposeBag: DisposeBag, _ signal: Signal<T>, _ onNext: ((T) 
 }
 
 func subscribe<T>(_ disposeBag: DisposeBag, _ observable: Observable<T>, _ onNext: ((T) -> Void)? = nil) {
-    observable.subscribe(onNext: onNext).disposed(by: disposeBag)
+    observable
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: onNext)
+            .disposed(by: disposeBag)
 }
 
 struct SwapModule {
@@ -50,7 +53,7 @@ struct SwapModule {
         }
 
         let swapKit = UniswapKit.Kit.instance(ethereumKit: ethereumKit)
-        let uniswapRepository = UniswapRepository(swapKit: swapKit)
+        let uniswapRepository = UniswapProvider(swapKit: swapKit)
 
         let coinService = CoinService(
                 coin: App.shared.appConfigProvider.ethereumCoin,
@@ -59,8 +62,9 @@ struct SwapModule {
         )
 
         let tradeService = SwapTradeService(
-                uniswapRepository: uniswapRepository,
-                coin: coinIn
+                uniswapProvider: uniswapRepository,
+                coin: coinIn,
+                ethereumKit: ethereumKit
         )
         let allowanceService = SwapAllowanceService(
                 spenderAddress: uniswapRepository.routerAddress,
@@ -74,7 +78,8 @@ struct SwapModule {
         )
         let transactionService = EthereumTransactionService(
                 ethereumKit: ethereumKit,
-                feeRateProvider: App.shared.feeRateProviderFactory.provider(coinType: .ethereum) as! EthereumFeeRateProvider
+                feeRateProvider: App.shared.feeRateProviderFactory.provider(coinType: .ethereum) as! EthereumFeeRateProvider,
+                gasLimitSurchargePercent: 20
         )
         let service = SwapService(
                 ethereumKit: ethereumKit,

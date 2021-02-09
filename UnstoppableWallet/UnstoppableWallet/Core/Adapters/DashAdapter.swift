@@ -5,10 +5,10 @@ import HsToolKit
 class DashAdapter: BitcoinBaseAdapter {
     private let feeRate = 1
 
-    private let dashKit: DashKit
+    private let dashKit: Kit
 
     init(wallet: Wallet, syncMode: SyncMode?, testMode: Bool) throws {
-        guard case let .mnemonic(words, _) = wallet.account.type else {
+        guard case let .mnemonic(words, _) = wallet.account.type, words.count == 12 else {
             throw AdapterError.unsupportedAccount
         }
 
@@ -16,10 +16,10 @@ class DashAdapter: BitcoinBaseAdapter {
             throw AdapterError.wrongParameters
         }
 
-        let networkType: DashKit.NetworkType = testMode ? .testNet : .mainNet
+        let networkType: Kit.NetworkType = testMode ? .testNet : .mainNet
         let logger = App.shared.logger.scoped(with: "DashKit")
 
-        dashKit = try DashKit(withWords: words, walletId: wallet.account.id, syncMode: BitcoinBaseAdapter.kitMode(from: walletSyncMode), networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold, logger: logger)
+        dashKit = try Kit(withWords: words, walletId: wallet.account.id, syncMode: BitcoinBaseAdapter.kitMode(from: walletSyncMode), networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold, logger: logger)
 
         super.init(abstractKit: dashKit)
 
@@ -68,7 +68,7 @@ extension DashAdapter: ISendDashAdapter {
 extension DashAdapter {
 
     static func clear(except excludedWalletIds: [String]) throws {
-        try DashKit.clear(exceptFor: excludedWalletIds)
+        try Kit.clear(exceptFor: excludedWalletIds)
     }
 
 }

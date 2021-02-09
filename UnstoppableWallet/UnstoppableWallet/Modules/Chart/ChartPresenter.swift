@@ -73,6 +73,8 @@ extension ChartPresenter: IChartViewDelegate {
         view?.set(types: types.map { $0.title })
         view?.setSelectedType(at: types.firstIndex(of: chartType))
 
+        updateFavorite()
+
         fetchInfo()
     }
 
@@ -104,6 +106,14 @@ extension ChartPresenter: IChartViewDelegate {
         router.openAlertSettings(coin: coin)
     }
 
+    func onTapFavorite() {
+        interactor.favorite(coinCode: launchMode.coinCode)
+    }
+
+    func onTapUnfavorite() {
+        interactor.unfavorite(coinCode: launchMode.coinCode)
+    }
+
 }
 
 extension ChartPresenter: IChartInteractorDelegate {
@@ -132,6 +142,10 @@ extension ChartPresenter: IChartInteractorDelegate {
         }
 
         updateChart()
+    }
+
+    func updateFavorite() {
+        view?.set(favorite: interactor.isFavorite(coinCode: launchMode.coinCode))
     }
 
 }

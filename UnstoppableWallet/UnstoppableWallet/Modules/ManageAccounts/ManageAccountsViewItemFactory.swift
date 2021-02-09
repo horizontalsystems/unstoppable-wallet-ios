@@ -1,7 +1,7 @@
 class ManageAccountsViewItemFactory {
 
-    func viewItem(item: ManageAccountItem, hasDerivationSettings: Bool) -> ManageAccountViewItem {
-        let topButtonState: ManageAccountButtonState? = item.predefinedAccountType == .standard && hasDerivationSettings ? .settings : nil
+    func viewItem(item: ManageAccountItem, hasAddressFormatSettings: Bool) -> ManageAccountViewItem {
+        let topButtonState: ManageAccountButtonState? = item.predefinedAccountType == .standard && hasAddressFormatSettings ? .settings : nil
 
         var middleButtonState: ManageAccountButtonState?
 

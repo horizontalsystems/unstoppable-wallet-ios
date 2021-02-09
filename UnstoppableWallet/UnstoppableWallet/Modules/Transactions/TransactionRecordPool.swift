@@ -69,7 +69,7 @@ class TransactionRecordPool {
             } else if index == 0 {
                 return .newData
             }
-        } else if state.allLoaded && unusedRecords.isEmpty {
+        } else if state.allLoaded {
             state.add(records: [record])
             return .newData
         }

@@ -17,8 +17,9 @@ class BalanceInteractor {
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let rateManager: IRateManager
     private let rateAppManager: IRateAppManager
+    private let accountManager: IAccountManager
 
-    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyKit: ICurrencyKit, localStorage: ILocalStorage, sortTypeManager: ISortTypeManager, predefinedAccountTypeManager: IPredefinedAccountTypeManager, rateManager: IRateManager, rateAppManager: IRateAppManager) {
+    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyKit: ICurrencyKit, localStorage: ILocalStorage, sortTypeManager: ISortTypeManager, predefinedAccountTypeManager: IPredefinedAccountTypeManager, rateManager: IRateManager, rateAppManager: IRateAppManager, accountManager: IAccountManager) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.currencyKit = currencyKit
@@ -27,6 +28,7 @@ class BalanceInteractor {
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
         self.rateManager = rateManager
         self.rateAppManager = rateAppManager
+        self.accountManager = accountManager
 
         currencyKit.baseCurrencyUpdatedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
@@ -43,6 +45,15 @@ class BalanceInteractor {
                 })
                 .disposed(by: disposeBag)
 
+        accountManager.lostAccountsObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] isAccountsLost in
+                    if isAccountsLost {
+                        self?.delegate?.onLostAccounts()
+                    }
+                })
+                .disposed(by: disposeBag)
     }
 
     private func onUpdate(wallets: [Wallet]) {
@@ -82,7 +93,7 @@ extension BalanceInteractor: IBalanceInteractor {
     }
 
     func state(wallet: Wallet) -> AdapterState? {
-        adapterManager.balanceAdapter(for: wallet)?.state
+        adapterManager.balanceAdapter(for: wallet)?.balanceState
     }
 
     func subscribeToWallets() {
@@ -116,10 +127,10 @@ extension BalanceInteractor: IBalanceInteractor {
                     })
                     .disposed(by: adaptersDisposeBag)
 
-            adapter.stateUpdatedObservable
+            adapter.balanceStateUpdatedObservable
                     .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                     .subscribe(onNext: { [weak self] in
-                        self?.delegate?.didUpdate(state: adapter.state, wallet: wallet)
+                        self?.delegate?.didUpdate(state: adapter.balanceState, wallet: wallet)
                     })
                     .disposed(by: adaptersDisposeBag)
         }

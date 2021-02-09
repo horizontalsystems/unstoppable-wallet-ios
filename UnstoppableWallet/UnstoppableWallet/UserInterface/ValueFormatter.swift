@@ -22,6 +22,13 @@ class ValueFormatter {
         return formatter
     }()
 
+    private let percentFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
+        return formatter
+    }()
+
     func format(coinValue: CoinValue, fractionPolicy: FractionPolicy = .full) -> String? {
         let absoluteValue = abs(coinValue.value)
 
@@ -89,6 +96,13 @@ class ValueFormatter {
         }
 
         return result
+    }
+
+    func format(percentValue: Decimal, signed: Bool = true) -> String? {
+        let plusSign = (percentValue >= 0 && signed) ? "+" : ""
+
+        let formattedDiff = percentFormatter.string(from: percentValue as NSNumber)
+        return formattedDiff.map { plusSign + $0 + "%" }
     }
 
 }

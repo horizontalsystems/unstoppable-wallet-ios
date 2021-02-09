@@ -83,9 +83,9 @@ class BalanceCell: UICollectionViewCell {
         }
 
         if let viewItem = viewItem.buttonsViewItem {
-            buttonsView.bind(receiveEnabled: viewItem.receiveButtonEnabled,
-                    sendEnabled: viewItem.sendButtonEnabled,
-                    swapHidden: viewItem.swapButtonHidden,
+            buttonsView.bind(receiveButtonState: viewItem.receiveButtonState,
+                    sendButtonState: viewItem.sendButtonState,
+                    swapButtonState: viewItem.swapButtonState,
                     receiveAction: onReceive,
                     sendAction: onPay,
                     swapAction: onSwap)

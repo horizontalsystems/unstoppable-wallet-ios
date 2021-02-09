@@ -11,8 +11,8 @@ class SwapCoinCardViewModel {
     private let coinCardService: ISwapCoinCardService
     private let fiatService: FiatService
     private let switchService: AmountTypeSwitchService
-
-    let decimalParser: IAmountDecimalParser
+    private let decimalParser: IAmountDecimalParser
+    private let isMaxSupported: Bool
 
     private let decimalFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -24,7 +24,8 @@ class SwapCoinCardViewModel {
     private var isEstimatedRelay = BehaviorRelay<Bool>(value: false)
     private var prefixRelay = BehaviorRelay<String?>(value: nil)
     private var amountRelay = BehaviorRelay<String?>(value: nil)
-    private var secondaryInfoRelay = BehaviorRelay<SecondaryInfoViewItem?>(value: nil)
+    private var isMaxEnabledRelay = BehaviorRelay<Bool>(value: false)
+    private var secondaryTextRelay = BehaviorRelay<String?>(value: nil)
     private var balanceRelay = BehaviorRelay<String?>(value: nil)
     private var balanceErrorRelay = BehaviorRelay<Bool>(value: false)
     private var tokenCodeRelay = BehaviorRelay<String?>(value: nil)
@@ -32,11 +33,12 @@ class SwapCoinCardViewModel {
 
     private var validDecimals = SwapCoinCardViewModel.maxValidDecimals
 
-    init(coinCardService: ISwapCoinCardService, fiatService: FiatService, switchService: AmountTypeSwitchService, decimalParser: IAmountDecimalParser) {
+    init(coinCardService: ISwapCoinCardService, fiatService: FiatService, switchService: AmountTypeSwitchService, decimalParser: IAmountDecimalParser, isMaxSupported: Bool) {
         self.coinCardService = coinCardService
         self.fiatService = fiatService
         self.switchService = switchService
         self.decimalParser = decimalParser
+        self.isMaxSupported = isMaxSupported
 
         subscribeToService()
     }
@@ -79,30 +81,33 @@ class SwapCoinCardViewModel {
     private func sync(balance: Decimal?) {
         guard let coin = coinCardService.coin else {
             balanceRelay.accept(nil)
+            isMaxEnabledRelay.accept(false)
             return
         }
 
         guard let balance = balance else {
             balanceRelay.accept("n/a".localized)
+            isMaxEnabledRelay.accept(false)
             return
         }
 
         let coinValue = CoinValue(coin: coin, value: balance)
         balanceRelay.accept(ValueFormatter.instance.format(coinValue: coinValue))
+        isMaxEnabledRelay.accept(balance > 0 && coin.type != .ethereum && isMaxSupported)
     }
 
     private func sync(error: Error?) {
         balanceErrorRelay.accept(error != nil)
     }
 
-    private var secondaryPlaceholder: SecondaryInfoViewItem {
+    private var secondaryPlaceholder: String? {
         switch switchService.amountType {
         case .coin:
             let amountInfo = AmountInfo.currencyValue(currencyValue: CurrencyValue(currency: fiatService.currency, value: 0))
-            return SecondaryInfoViewItem(text: amountInfo.formattedString, type: .placeholder)
+            return amountInfo.formattedString
         case .currency:
             let amountInfo = coinCardService.coin.map { AmountInfo.coinValue(coinValue: CoinValue(coin: $0, value: 0)) }
-            return SecondaryInfoViewItem(text: amountInfo?.formattedString, type: .placeholder)
+            return amountInfo?.formattedString
         }
     }
 
@@ -114,7 +119,7 @@ class SwapCoinCardViewModel {
                 amountRelay.accept(nil)
             }
 
-            secondaryInfoRelay.accept(secondaryPlaceholder)
+            secondaryTextRelay.accept(secondaryPlaceholder)
 
             setCoinValueToService(coinValue: inputAmount, force: force)
             return
@@ -124,7 +129,7 @@ class SwapCoinCardViewModel {
         let amountString = decimalFormatter.string(from: fullAmountInfo.primaryValue as NSNumber)
 
         amountRelay.accept(amountString)
-        secondaryInfoRelay.accept(SecondaryInfoViewItem(text:fullAmountInfo.secondaryInfo?.formattedString, type: .value))
+        secondaryTextRelay.accept(fullAmountInfo.secondaryInfo?.formattedString)
 
         setCoinValueToService(coinValue: fullAmountInfo.coinValue.value, force: force)
     }
@@ -133,22 +138,6 @@ class SwapCoinCardViewModel {
         if force || !coinCardService.isEstimated {
             coinCardService.onChange(amount: coinValue)
         }
-    }
-
-    func onChange(amount: String?) {                     // Force change from inputView
-        let amount = decimalParser.parseAnyDecimal(from: amount)
-
-        let fullAmountInfo = fiatService.buildAmountInfo(amount: amount)
-        sync(fullAmountInfo: fullAmountInfo, force: true, inputAmount: amount)
-    }
-
-    func onSelect(coin: Coin) {
-        coinCardService.onChange(coin: coin)
-        fiatService.set(coin: coin)
-    }
-
-    func onSwitch() {
-        switchService.toggle()
     }
 
 }
@@ -187,12 +176,16 @@ extension SwapCoinCardViewModel {
         amountRelay.asDriver()
     }
 
+    var isMaxEnabledDriver: Driver<Bool> {
+        isMaxEnabledRelay.asDriver()
+    }
+
     var switchEnabledDriver: Driver<Bool> {
         switchEnabledRelay.asDriver()
     }
 
-    var secondaryInfoDriver: Driver<SecondaryInfoViewItem?> {
-        secondaryInfoRelay.asDriver()
+    var secondaryTextDriver: Driver<String?> {
+        secondaryTextRelay.asDriver()
     }
 
     var balanceDriver: Driver<String?> {
@@ -207,18 +200,29 @@ extension SwapCoinCardViewModel {
         tokenCodeRelay.asDriver()
     }
 
-}
+    func onChange(amount: String?) {                     // Force change from inputView
+        let amount = decimalParser.parseAnyDecimal(from: amount)
 
-extension SwapCoinCardViewModel {
-
-    enum SecondaryInfoType {
-        case placeholder
-        case value
+        let fullAmountInfo = fiatService.buildAmountInfo(amount: amount)
+        sync(fullAmountInfo: fullAmountInfo, force: true, inputAmount: amount)
     }
 
-    struct SecondaryInfoViewItem {
-        let text: String?
-        let type: SecondaryInfoType
+    func onTapMax() {
+        guard let balance = coinCardService.balance else {
+            return
+        }
+
+        let fullAmountInfo = fiatService.buildForCoin(amount: balance)
+        sync(fullAmountInfo: fullAmountInfo, force: true, inputAmount: balance)
+    }
+
+    func onSelect(coin: Coin) {
+        coinCardService.onChange(coin: coin)
+        fiatService.set(coin: coin)
+    }
+
+    func onSwitch() {
+        switchService.toggle()
     }
 
 }

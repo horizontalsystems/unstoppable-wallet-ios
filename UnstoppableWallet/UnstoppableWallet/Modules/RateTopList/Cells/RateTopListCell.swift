@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 import ThemeKit
 
-class RateTopListCell: ClaudeThemeCell {
+class RateTopListCell: BaseSelectableThemeCell {
     private let rankLabel = UILabel()
     private let titleLabel = UILabel()
     private let coinLabel = UILabel()
@@ -51,14 +51,20 @@ class RateTopListCell: ClaudeThemeCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(viewItem: RateTopListModule.ViewItem, last: Bool = false) {
-        super.bind(last: last)
-
+    func bind(viewItem: RateTopListModule.ViewItem) {
         rankLabel.text = "\(viewItem.rank)"
         titleLabel.text = viewItem.coinTitle
         coinLabel.text = viewItem.coinCode
 
         rightView.bind(viewItem: viewItem.rate)
+    }
+
+    func bind(rank: Int, coinCode: String, coinName: String, rate: String, diff: Decimal) {
+        rankLabel.text = "\(rank)"
+        titleLabel.text = coinName
+        coinLabel.text = coinCode
+
+        rightView.bind(rate: rate, diff: diff)
     }
 
 }

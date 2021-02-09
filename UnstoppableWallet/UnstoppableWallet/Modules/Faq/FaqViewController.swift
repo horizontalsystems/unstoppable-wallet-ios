@@ -6,18 +6,11 @@ import HUD
 import RxSwift
 
 class FaqViewController: ThemeViewController {
-    private static let spinnerRadius: CGFloat = 8
-    private static let spinnerLineWidth: CGFloat = 2
-
     private let viewModel: FaqViewModel
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    private let spinner = HUDProgressView(
-            strokeLineWidth: FaqViewController.spinnerLineWidth,
-            radius: FaqViewController.spinnerRadius,
-            strokeColor: .themeGray
-    )
+    private let spinner = HUDActivityView.create(with: .large48)
 
     private let errorLabel = UILabel()
     private var items = [FaqService.Item]()
@@ -55,7 +48,6 @@ class FaqViewController: ThemeViewController {
         view.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
-            maker.width.height.equalTo(FaqViewController.spinnerRadius * 2 + FaqViewController.spinnerLineWidth)
         }
 
         view.addSubview(errorLabel)
@@ -113,7 +105,8 @@ extension FaqViewController: SectionsDataSource {
                     headerState: .margin(height: .margin3x),
                     footerState: .margin(height: .margin8x),
                     rows: items.enumerated().map { index, item in
-                        let last = index == items.count - 1
+                        let isFirst = index == 0
+                        let isLast = index == items.count - 1
 
                         return Row<FaqCell>(
                                 id: "faq_\(index)",
@@ -121,7 +114,7 @@ extension FaqViewController: SectionsDataSource {
                                     FaqCell.height(containerWidth: containerWidth, text: item.text)
                                 },
                                 bind: { cell, _ in
-                                    cell.set(backgroundStyle: .lawrence, bottomSeparator: last)
+                                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                                     cell.title = item.text
                                 },
                                 action: { [weak self] _ in

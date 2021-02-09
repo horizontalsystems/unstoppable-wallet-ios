@@ -26,17 +26,17 @@ class RateTopListPresenter {
         case .rank:
             items.sort { $0.rank < $1.rank }
         case .topWinners:
-            items.sort { $0.topMarket.marketInfo.diff > $1.topMarket.marketInfo.diff }
+            items.sort { $0.marketInfo.rateDiff > $1.marketInfo.rateDiff }
         case .topLosers: ()
-            items.sort { $0.topMarket.marketInfo.diff < $1.topMarket.marketInfo.diff }
+            items.sort { $0.marketInfo.rateDiff < $1.marketInfo.rateDiff }
         }
     }
 
     private func syncMarketInfo() {
         for (coinCode, marketInfo) in marketInfos {
             for (itemIndex, item) in items.enumerated() {
-                if coinCode == item.topMarket.coinCode {
-                    items[itemIndex].topMarket.marketInfo = marketInfo
+                if coinCode == item.coinCode {
+                    items[itemIndex].marketInfo = marketInfo
                 }
             }
         }
@@ -48,7 +48,7 @@ class RateTopListPresenter {
         }
         view?.set(viewItems: viewItems)
 
-        let timestamps = items.map { $0.topMarket.marketInfo.timestamp }
+        let timestamps = items.map { $0.marketInfo.timestamp }
         if let timestamp = timestamps.max() {
             view?.set(lastUpdated: Date(timeIntervalSince1970: timestamp))
         }
@@ -57,12 +57,12 @@ class RateTopListPresenter {
     private func viewItem(item: RateTopListModule.TopMarketItem) -> RateTopListModule.ViewItem {
         RateTopListModule.ViewItem(
                 rank: item.rank,
-                coinCode: item.topMarket.coinCode,
-                coinTitle: item.topMarket.coinName,
+                coinCode: item.coinCode,
+                coinTitle: item.coinName,
                 rate: RateViewItem(
-                        currencyValue: CurrencyValue(currency: currency, value: item.topMarket.marketInfo.rate),
-                        diff: item.topMarket.marketInfo.diff,
-                        dimmed: item.topMarket.marketInfo.expired
+                        currencyValue: CurrencyValue(currency: currency, value: item.marketInfo.rate),
+                        diff: item.marketInfo.rateDiff,
+                        dimmed: item.marketInfo.expired
                 )
         )
     }
@@ -97,7 +97,7 @@ extension RateTopListPresenter: IRateTopListViewDelegate {
     func onSelect(index: Int) {
         let item = items[index]
 
-        router.showChart(coinCode: item.topMarket.coinCode, coinTitle: item.topMarket.coinName)
+        router.showChart(coinCode: item.coinCode, coinTitle: item.coinName, coinType: item.coinType)
     }
 
     func onTapSort() {
@@ -121,10 +121,8 @@ extension RateTopListPresenter: IRateTopListInteractorDelegate {
         interactor.updateTopMarkets(currencyCode: currency.code)
     }
 
-    func didReceive(topMarkets: [TopMarket]) {
-        items = topMarkets.enumerated().map { index, topMarket in
-            RateTopListModule.TopMarketItem(rank: index + 1, topMarket: topMarket)
-        }
+    func didReceive(topMarkets: [RateTopListModule.TopMarketItem]) {
+        items = topMarkets
 
         view?.setSpinner(visible: false)
         view?.setSortButton(enabled: true)

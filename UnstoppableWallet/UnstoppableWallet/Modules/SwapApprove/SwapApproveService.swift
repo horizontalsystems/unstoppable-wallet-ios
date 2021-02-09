@@ -13,7 +13,7 @@ class SwapApproveService {
     private let ethereumKit: EthereumKit.Kit
 
     private(set) var amount: BigUInt?
-    private let spenderAddress: Address
+    private let spenderAddress: EthereumKit.Address
     private let allowance: BigUInt
 
     private(set) var state: State = .approveNotAllowed(errors: []) {
@@ -23,7 +23,7 @@ class SwapApproveService {
     }
     private let stateRelay = BehaviorRelay<State>(value: .approveNotAllowed(errors: []))
 
-    init(transactionService: EthereumTransactionService, erc20Kit: Erc20Kit.Kit, ethereumKit: EthereumKit.Kit, amount: BigUInt, spenderAddress: Address, allowance: BigUInt) {
+    init(transactionService: EthereumTransactionService, erc20Kit: Erc20Kit.Kit, ethereumKit: EthereumKit.Kit, amount: BigUInt, spenderAddress: EthereumKit.Address, allowance: BigUInt) {
         self.transactionService = transactionService
         self.erc20Kit = erc20Kit
         self.ethereumKit = ethereumKit
@@ -44,7 +44,7 @@ class SwapApproveService {
 
     private func syncTransactionData(amount: BigUInt) {
         let erc20KitTransactionData = erc20Kit.approveTransactionData(spenderAddress: spenderAddress, amount: amount)
-        let transactionData = EthereumTransactionService.TransactionData(
+        let transactionData = TransactionData(
                 to: erc20KitTransactionData.to,
                 value: erc20KitTransactionData.value,
                 input: erc20KitTransactionData.input
@@ -54,7 +54,7 @@ class SwapApproveService {
     }
 
     private var ethereumBalance: BigUInt {
-        ethereumKit.balance ?? 0
+        ethereumKit.accountState?.balance ?? 0
     }
 
     private func syncState() {
@@ -97,17 +97,18 @@ extension SwapApproveService {
     }
 
     func approve() {
-        guard case .completed(let transaction) = transactionService.transactionStatus, let amount = self.amount else {
+        guard case .completed(let transaction) = transactionService.transactionStatus else {
             return
         }
 
         state = .loading
 
-        erc20Kit.approveSingle(
-                        spenderAddress: spenderAddress,
-                        amount: amount,
-                        gasLimit: transaction.gasData.gasLimit,
-                        gasPrice: transaction.gasData.gasPrice
+        ethereumKit.sendSingle(
+                        address: transaction.data.to,
+                        value: transaction.data.value,
+                        transactionInput: transaction.data.input,
+                        gasPrice: transaction.gasData.gasPrice,
+                        gasLimit: transaction.gasData.gasLimit
                 )
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] transactionWithInternal in

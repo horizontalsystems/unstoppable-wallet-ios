@@ -6,8 +6,10 @@ class CreateWalletService {
     private let coinManager: ICoinManager
     private let accountCreator: IAccountCreator
     private let accountManager: IAccountManager
+    private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let walletManager: IWalletManager
     private let derivationSettingsManager: IDerivationSettingsManager
+    private let bitcoinCashCoinTypeManager: BitcoinCashCoinTypeManager
 
     private var accounts = [PredefinedAccountType: Account]()
     private var wallets = [Coin: Wallet]()
@@ -21,13 +23,15 @@ class CreateWalletService {
         }
     }
 
-    init(predefinedAccountType: PredefinedAccountType?, coinManager: ICoinManager, accountCreator: IAccountCreator, accountManager: IAccountManager, walletManager: IWalletManager, derivationSettingsManager: IDerivationSettingsManager) {
+    init(predefinedAccountType: PredefinedAccountType?, coinManager: ICoinManager, accountCreator: IAccountCreator, accountManager: IAccountManager, predefinedAccountTypeManager: IPredefinedAccountTypeManager, walletManager: IWalletManager, derivationSettingsManager: IDerivationSettingsManager, bitcoinCashCoinTypeManager: BitcoinCashCoinTypeManager) {
         self.predefinedAccountType = predefinedAccountType
         self.coinManager = coinManager
         self.accountCreator = accountCreator
         self.accountManager = accountManager
+        self.predefinedAccountTypeManager = predefinedAccountTypeManager
         self.walletManager = walletManager
         self.derivationSettingsManager = derivationSettingsManager
+        self.bitcoinCashCoinTypeManager = bitcoinCashCoinTypeManager
 
         syncState()
     }
@@ -110,7 +114,15 @@ extension CreateWalletService {
             accountManager.save(account: account)
         }
 
-        derivationSettingsManager.reset()
+
+        let creatingStandardAccount = accounts.contains { account in
+            predefinedAccountTypeManager.predefinedAccountType(accountType: account.type) == .standard
+        }
+
+        if creatingStandardAccount {
+            derivationSettingsManager.resetStandardSettings()
+            bitcoinCashCoinTypeManager.reset()
+        }
 
         walletManager.save(wallets: Array(wallets.values))
     }

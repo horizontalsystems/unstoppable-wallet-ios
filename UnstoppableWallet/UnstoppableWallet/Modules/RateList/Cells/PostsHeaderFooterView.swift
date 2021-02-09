@@ -4,23 +4,15 @@ import ThemeKit
 import HUD
 
 class PostsHeaderFooterView: UITableViewHeaderFooterView {
-    private static let spinnerRadius: CGFloat = 8
-    private static let spinnerLineWidth: CGFloat = 2
-
     private let titleLabel = UILabel()
-    private let spinner = HUDProgressView(
-            strokeLineWidth: PostsHeaderFooterView.spinnerLineWidth,
-            radius: PostsHeaderFooterView.spinnerRadius,
-            strokeColor: .themeGray
-    )
-    private let topSeparator = UIView()
+    private let spinner = HUDActivityView.create(with: .small20)
     private let bottomSeparator = UIView()
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
 
         backgroundView = UIView()
-        backgroundView?.backgroundColor = .themeLawrence
+        backgroundView?.backgroundColor = .themeClaude
 
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
@@ -37,24 +29,15 @@ class PostsHeaderFooterView: UITableViewHeaderFooterView {
             maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin4x)
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.centerY.equalToSuperview()
-            maker.width.height.equalTo(2 * PostsHeaderFooterView.spinnerRadius + PostsHeaderFooterView.spinnerLineWidth)
         }
-
-        addSubview(topSeparator)
-        topSeparator.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightOnePixel)
-        }
-
-        topSeparator.backgroundColor = .themeSteel20
 
         addSubview(bottomSeparator)
         bottomSeparator.snp.makeConstraints { maker in
             maker.leading.trailing.bottom.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightOnePixel)
+            maker.height.equalTo(CGFloat.heightOneDp)
         }
 
-        bottomSeparator.backgroundColor = .themeSteel20
+        bottomSeparator.backgroundColor = .themeSteel10
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -9,7 +9,13 @@ class SwapTradeOptionsService {
 
     var recommendedDeadlineBounds: ClosedRange<TimeInterval> { 600...1800 }
 
-    private var errorsRelay = BehaviorRelay<[Error]>(value: [])
+    private(set) var errors: [Error] = [] {
+        didSet {
+            errorsRelay.accept(errors)
+        }
+    }
+    private let errorsRelay = PublishRelay<[Error]>()
+
     private var stateRelay = BehaviorRelay<State>(value: .invalid)
 
     var state: State {
@@ -30,16 +36,16 @@ class SwapTradeOptionsService {
         }
     }
 
-    var recipient: String? {
+    var recipient: Address? {
         didSet {
             sync()
         }
     }
 
-    init(tradeOptions: TradeOptions) {
+    init(tradeOptions: SwapTradeOptions) {
         slippage = tradeOptions.allowedSlippage
         deadline = tradeOptions.ttl
-        recipient = tradeOptions.recipient?.hex
+        recipient = tradeOptions.recipient
 
         state = .valid(tradeOptions)
         sync()
@@ -48,14 +54,23 @@ class SwapTradeOptionsService {
     private func sync() {
         var errors = [Error]()
 
-        var tradeOptions = TradeOptions()
+        var tradeOptions = SwapTradeOptions()
+
+        if let recipient = recipient, !recipient.raw.isEmpty {
+            do {
+                _ = try EthereumKit.Address(hex: recipient.raw)
+                tradeOptions.recipient = recipient
+            } catch {
+                errors.append(AddressError.invalidAddress)
+            }
+        }
 
         if slippage == .zero {
-            errors.append(TradeOptionsError.zeroSlippage)
+            errors.append(SlippageError.zeroValue)
         } else if slippage > limitSlippageBounds.upperBound {
-            errors.append(TradeOptionsError.invalidSlippage(.higher(max: limitSlippageBounds.upperBound)))
+            errors.append(SlippageError.tooHigh(max: limitSlippageBounds.upperBound))
         } else if slippage < limitSlippageBounds.lowerBound {
-            errors.append(TradeOptionsError.invalidSlippage(.lower(min: limitSlippageBounds.lowerBound)))
+            errors.append(SlippageError.tooLow(min: limitSlippageBounds.lowerBound))
         } else {
             tradeOptions.allowedSlippage = slippage
         }
@@ -63,18 +78,11 @@ class SwapTradeOptionsService {
         if !deadline.isZero {
             tradeOptions.ttl = deadline
         } else {
-            errors.append(TradeOptionsError.zeroDeadline)
+            errors.append(DeadlineError.zeroValue)
         }
 
-        if let recipient = recipient?.trimmingCharacters(in: .whitespaces), !recipient.isEmpty {
-            do {
-                tradeOptions.recipient = try Address(hex: recipient)
-            } catch {
-                errors.append(TradeOptionsError.invalidAddress)
-            }
-        }
+        self.errors = errors
 
-        errorsRelay.accept(errors)
         state = errors.isEmpty ? .valid(tradeOptions) : .invalid
     }
 
@@ -82,32 +90,64 @@ class SwapTradeOptionsService {
 
 extension SwapTradeOptionsService {
 
-    public var errorsObservable: Observable<[Error]> {
+    var errorsObservable: Observable<[Error]> {
         errorsRelay.asObservable()
     }
 
-    public var stateObservable: Observable<State> {
+    var stateObservable: Observable<State> {
         stateRelay.asObservable()
+    }
+
+}
+
+extension SwapTradeOptionsService: IRecipientAddressService {
+
+    var initialAddress: Address? {
+        guard case let .valid(tradeOptions) = state else {
+            return nil
+        }
+
+        return tradeOptions.recipient
+
+    }
+
+    var error: Error? {
+        errors.first { $0 is SwapTradeOptionsService.AddressError }
+    }
+
+    var errorObservable: Observable<Error?> {
+        errorsRelay.map { errors -> Error? in
+            errors.first { $0 is SwapTradeOptionsService.AddressError }
+        }
+    }
+
+    func set(address: Address?) {
+        recipient = address
+    }
+
+    func set(amount: Decimal) {
     }
 
 }
 
 extension SwapTradeOptionsService {
 
-    enum InvalidSlippageType {
-        case lower(min: Decimal)
-        case higher(max: Decimal)
-    }
-
-    enum TradeOptionsError: Error {
-        case zeroSlippage
-        case zeroDeadline
-        case invalidSlippage(InvalidSlippageType)
+    enum AddressError: Error {
         case invalidAddress
     }
 
+    enum SlippageError: Error {
+        case zeroValue
+        case tooLow(min: Decimal)
+        case tooHigh(max: Decimal)
+    }
+
+    enum DeadlineError: Error {
+        case zeroValue
+    }
+
     enum State {
-        case valid(TradeOptions)
+        case valid(SwapTradeOptions)
         case invalid
     }
 

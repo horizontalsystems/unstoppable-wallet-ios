@@ -29,13 +29,11 @@ class AlertViewController: ThemeActionSheetController {
             maker.edges.equalToSuperview()
         }
 
+        tableView.allowsSelection = false
+
         tableView.registerCell(forClass: AlertTitleCell.self)
         tableView.registerCell(forClass: AlertItemCell.self)
         tableView.sectionDataSource = self
-
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
-        tableView.alwaysBounceVertical = false
 
         delegate?.onLoad()
 
@@ -56,12 +54,14 @@ class AlertViewController: ThemeActionSheetController {
         Row<AlertItemCell>(
                 id: "item_\(index)",
                 hash: "\(viewItem.selected)",
-                height: .heightSingleLineCell,
+                height: .heightCell48,
                 bind: { cell, _ in
-                    cell.bind(viewItem: viewItem)
-                },
-                action: { [weak self] _ in
-                    self?.delegate?.onTapViewItem(index: index)
+                    cell.set(backgroundStyle: .transparent)
+                    cell.title = viewItem.text
+                    cell.isSelected = viewItem.selected
+                    cell.onSelect = { [weak self] in
+                        self?.delegate?.onTapViewItem(index: index)
+                    }
                 }
         )
     }

@@ -5,14 +5,7 @@ import HUD
 class SwapPriceCell: UITableViewCell {
     let cellHeight: CGFloat = 24
 
-    private static let spinnerRadius: CGFloat = 8
-    private static let spinnerLineWidth: CGFloat = 2
-
-    private let loadingSpinner = HUDProgressView(
-            strokeLineWidth: SwapPriceCell.spinnerLineWidth,
-            radius: SwapPriceCell.spinnerRadius,
-            strokeColor: .themeOz
-    )
+    private let spinner = HUDActivityView.create(with: .medium24)
     private let priceLabel = UILabel()
     private let switchButton = UIButton()
 
@@ -24,21 +17,20 @@ class SwapPriceCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
 
-        contentView.addSubview(loadingSpinner)
-        loadingSpinner.snp.makeConstraints { maker in
+        contentView.addSubview(spinner)
+        spinner.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().inset(CGFloat.margin4x)
             maker.centerY.equalToSuperview()
-            maker.width.height.equalTo(SwapPriceCell.spinnerRadius * 2 + SwapPriceCell.spinnerLineWidth)
         }
 
-        loadingSpinner.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        loadingSpinner.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        loadingSpinner.isHidden = false
+        spinner.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        spinner.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        spinner.isHidden = false
 
         contentView.addSubview(priceLabel)
         priceLabel.snp.makeConstraints { maker in
-            maker.centerY.equalTo(loadingSpinner)
-            maker.leading.equalTo(loadingSpinner.snp.trailing).offset(CGFloat.margin2x)
+            maker.centerY.equalTo(spinner)
+            maker.leading.equalTo(spinner.snp.trailing).offset(CGFloat.margin2x)
         }
 
         priceLabel.font = .subhead2
@@ -66,11 +58,11 @@ class SwapPriceCell: UITableViewCell {
     }
 
     func set(loading: Bool) {
-        loadingSpinner.isHidden = !loading
+        spinner.isHidden = !loading
         if loading {
-            loadingSpinner.startAnimating()
+            spinner.startAnimating()
         } else {
-            loadingSpinner.stopAnimating()
+            spinner.stopAnimating()
         }
     }
 

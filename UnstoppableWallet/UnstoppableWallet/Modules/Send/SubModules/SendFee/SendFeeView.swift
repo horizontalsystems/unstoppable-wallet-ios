@@ -81,11 +81,7 @@ extension SendFeeView: ISendFeeView {
     }
 
     func set(error: Error?) {
-        if let error = error, case EthereumKit.Kit.EstimatedLimitError.insufficientBalance = error {
-            errorLabel.text = "ethereum_transaction.error.insufficient_balance_with_fee".localized
-        } else {
-            errorLabel.text = error?.smartDescription
-        }
+        errorLabel.text = error?.convertedError.smartDescription
 
         let hide = error != nil
 

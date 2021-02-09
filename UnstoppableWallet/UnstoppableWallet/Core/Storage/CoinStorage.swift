@@ -16,7 +16,7 @@ class CoinStorage {
                 return nil
             }
 
-            return coin(record: record, coinType: CoinType(erc20Address: address))
+            return coin(record: record, coinType: .erc20(address: address))
         case .bep2:
             guard let symbol = record.bep2Symbol else {
                 return nil
@@ -56,7 +56,7 @@ extension CoinStorage: ICoinStorage {
 
     func save(coin: Coin) -> Bool {
         switch coin.type {
-        case .erc20(let address, _, _, _):
+        case .erc20(let address):
             let record = coinRecord(coin: coin, tokenType: .erc20)
             record.erc20Address = address
             storage.save(coinRecord: record)

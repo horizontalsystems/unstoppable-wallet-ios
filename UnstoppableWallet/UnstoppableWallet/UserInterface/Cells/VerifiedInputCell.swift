@@ -12,10 +12,17 @@ enum CautionType {
     case error
     case warning
 
-    var color: UIColor {
+    var labelColor: UIColor {
         switch self {
         case .error: return .themeLucian
         case .warning: return .themeJacob
+        }
+    }
+
+    var borderColor: UIColor {
+        switch self {
+        case .error: return .themeRed50
+        case .warning: return .themeYellow50
         }
     }
 
@@ -186,7 +193,7 @@ class VerifiedInputCell: UITableViewCell {
 
         cautionLabelWrapper.isHidden = setHidden
         cautionLabel.text = caution?.text
-        cautionLabel.textColor = caution?.type.color ?? cautionLabel.textColor
+        cautionLabel.textColor = caution?.type.labelColor ?? cautionLabel.textColor
 
         delegate?.onChangeHeight()
     }

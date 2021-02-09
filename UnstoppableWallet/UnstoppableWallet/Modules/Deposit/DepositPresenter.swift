@@ -17,13 +17,6 @@ class DepositPresenter {
         address = interactor.address
     }
 
-    private var addressType: DepositModule.AddressType {
-        switch coin.type {
-        case .eos: return .account
-        default: return .address
-        }
-    }
-
 }
 
 extension DepositPresenter: IDepositViewDelegate {
@@ -34,8 +27,7 @@ extension DepositPresenter: IDepositViewDelegate {
                 coinCode: coin.code,
                 blockchainType: coin.type.blockchainType,
                 address: address,
-                additionalInfo: interactor.derivationSetting(coinType: coin.type)?.derivation.addressType,
-                type: addressType
+                additionalInfo: interactor.derivationSetting(coinType: coin.type)?.derivation.addressType
         )
 
         view?.set(viewItem: viewItem)

@@ -108,11 +108,20 @@ extension TermsViewController: SectionsDataSource {
                                 dynamicHeight: { containerWidth in
                                     TermsFooterCell.height(containerWidth: containerWidth)
                                 }
-                        ),
+                        )
+                    ]
+            ),
+            Section(
+                    id: "brand",
+                    headerState: .margin(height: .margin32),
+                    rows: [
                         Row<BrandFooterCell>(
                                 id: "brand",
                                 dynamicHeight: { containerWidth in
-                                    BrandFooterCell.height(containerWidth: containerWidth)
+                                    BrandFooterCell.height(containerWidth: containerWidth, title: BrandFooterCell.brandText)
+                                },
+                                bind: { cell, _ in
+                                    cell.title = BrandFooterCell.brandText
                                 }
                         )
                     ]

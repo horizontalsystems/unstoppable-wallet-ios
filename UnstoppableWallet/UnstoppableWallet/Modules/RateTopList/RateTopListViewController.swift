@@ -5,17 +5,10 @@ import ThemeKit
 import HUD
 
 class RateTopListViewController: ThemeViewController {
-    private static let spinnerRadius: CGFloat = 8
-    private static let spinnerLineWidth: CGFloat = 2
-
     private let delegate: IRateTopListViewDelegate
 
     private let tableView = SectionsTableView(style: .plain)
-    private let spinner = HUDProgressView(
-            strokeLineWidth: RateTopListViewController.spinnerLineWidth,
-            radius: RateTopListViewController.spinnerRadius,
-            strokeColor: .themeGray
-    )
+    private let spinner = HUDActivityView.create(with: .large48)
 
     private var viewItems = [RateTopListModule.ViewItem]()
     private var lastUpdated: Date?
@@ -49,7 +42,6 @@ class RateTopListViewController: ThemeViewController {
         view.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
-            maker.width.height.equalTo(RateTopListViewController.spinnerRadius * 2 + RateTopListViewController.spinnerLineWidth)
         }
 
         delegate.onLoad()
@@ -78,7 +70,7 @@ class RateTopListViewController: ThemeViewController {
     }
 
     private func row(index: Int, viewItem: RateTopListModule.ViewItem) -> RowProtocol {
-        let last = index == viewItems.count - 1
+        let isLast = index == viewItems.count - 1
 
         return Row<RateTopListCell>(
                 id: "coin_rate_\(index)",
@@ -86,7 +78,8 @@ class RateTopListViewController: ThemeViewController {
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
                 bind: { cell, _ in
-                    cell.bind(viewItem: viewItem, last: last)
+                    cell.set(backgroundStyle: .claude, isLast: isLast)
+                    cell.bind(viewItem: viewItem)
                 },
                 action: { [weak self] _ in
                     self?.delegate.onSelect(index: index)

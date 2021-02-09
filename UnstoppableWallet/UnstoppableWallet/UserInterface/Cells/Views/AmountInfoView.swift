@@ -27,6 +27,7 @@ class AmountInfoView: UIView {
         }
         secondaryAmountLabel.font = .subhead2
         secondaryAmountLabel.textColor = .themeGray
+        secondaryAmountLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
 
         secondaryAmountWrapper.addSubview(secondaryAmountTitleLabel)
         secondaryAmountTitleLabel.snp.makeConstraints { maker in
@@ -36,6 +37,7 @@ class AmountInfoView: UIView {
         }
         secondaryAmountTitleLabel.font = .headline2
         secondaryAmountTitleLabel.textColor = .themeOz
+        secondaryAmountTitleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
 
         primaryAmountWrapper.addSubview(primaryAmountLabel)
         primaryAmountLabel.snp.makeConstraints { maker in
@@ -66,14 +68,13 @@ class AmountInfoView: UIView {
         addSubview(secondaryAmountWrapper)
         secondaryAmountWrapper.snp.makeConstraints { maker in
             maker.leading.top.bottom.equalToSuperview()
-            maker.width.equalToSuperview().multipliedBy(0.5)
+            maker.width.lessThanOrEqualToSuperview().multipliedBy(0.5)
         }
 
         addSubview(primaryAmountWrapper)
         primaryAmountWrapper.snp.makeConstraints { maker in
             maker.trailing.top.bottom.equalToSuperview()
             maker.leading.equalTo(secondaryAmountWrapper.snp.trailing)
-            maker.width.equalToSuperview().multipliedBy(0.5)
         }
     }
 

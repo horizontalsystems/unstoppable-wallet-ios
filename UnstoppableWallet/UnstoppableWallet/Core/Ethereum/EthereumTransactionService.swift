@@ -6,6 +6,7 @@ import RxRelay
 class EthereumTransactionService {
     private let ethereumKit: Kit
     private let feeRateProvider: EthereumFeeRateProvider
+    private let gasLimitSurchargePercent: Int
 
     private var transactionData: TransactionData?
 
@@ -25,25 +26,23 @@ class EthereumTransactionService {
 
     private var disposeBag = DisposeBag()
 
-    init(ethereumKit: Kit, feeRateProvider: EthereumFeeRateProvider) {
+    init(ethereumKit: Kit, feeRateProvider: EthereumFeeRateProvider, gasLimitSurchargePercent: Int = 0) {
         self.ethereumKit = ethereumKit
         self.feeRateProvider = feeRateProvider
+        self.gasLimitSurchargePercent = gasLimitSurchargePercent
     }
 
     private func gasPriceSingle(gasPriceType: GasPriceType) -> Single<Int> {
         switch gasPriceType {
         case .recommended:
-            return feeRateProvider.feeRate
-                    .map { rate in
-                        rate.feeRate(priority: .recommended)
-                    }
+            return feeRateProvider.feeRate(priority: .recommended)
         case .custom(let gasPrice):
             return Single.just(gasPrice)
         }
     }
 
     private func gasLimitSingle(gasPrice: Int, transactionData: TransactionData) -> Single<Int> {
-        ethereumKit.estimateGas(to: transactionData.to, amount: transactionData.value, gasPrice: gasPrice, data: transactionData.input)
+        ethereumKit.estimateGas(transactionData: transactionData, gasPrice: gasPrice)
     }
 
     private func sync() {
@@ -59,10 +58,12 @@ class EthereumTransactionService {
         gasPriceSingle(gasPriceType: gasPriceType)
                 .flatMap { [unowned self] gasPrice -> Single<Transaction> in
                     gasLimitSingle(gasPrice: gasPrice, transactionData: transactionData)
-                            .map { gasLimit -> Transaction in
-                                Transaction(
+                            .map { [unowned self] estimatedGasLimit -> Transaction in
+                                let gasLimit = estimatedGasLimit + Int(Double(estimatedGasLimit) / 100.0 * Double(gasLimitSurchargePercent))
+
+                                return Transaction(
                                         data: transactionData,
-                                        gasData: GasData(gasLimit: gasLimit, gasPrice: gasPrice)
+                                        gasData: GasData(estimatedGasLimit: estimatedGasLimit, gasLimit: gasLimit, gasPrice: gasPrice)
                                 )
                             }
                 }
@@ -106,15 +107,14 @@ extension EthereumTransactionService {
 
 extension EthereumTransactionService {
 
-    struct TransactionData {
-        var to: Address
-        var value: BigUInt
-        var input: Data
-    }
-
     struct GasData {
+        let estimatedGasLimit: Int
         let gasLimit: Int
         let gasPrice: Int
+
+        var estimatedFee: BigUInt {
+            BigUInt(estimatedGasLimit * gasPrice)
+        }
 
         var fee: BigUInt {
             BigUInt(gasLimit * gasPrice)

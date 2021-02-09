@@ -3,12 +3,12 @@ import SnapKit
 import ThemeKit
 
 class BrandFooterCell: UITableViewCell {
-    private static let verticalPadding: CGFloat = .margin8x
-    private static let horizontalPadding: CGFloat = .margin6x
-    private static let labelTopMargin: CGFloat = .margin3x
-    private static let labelFont: UIFont = .caption
+    static let brandText = "© Horizontal Systems 2021"
 
-    private static let text = "© Horizontal Systems 2020"
+    private static let topPadding: CGFloat = .margin12
+    private static let bottomPadding: CGFloat = .margin32
+    private static let horizontalPadding: CGFloat = .margin24
+    private static let labelFont: UIFont = .caption
 
     private let separatorView = UIView()
     private let label = UILabel()
@@ -21,19 +21,18 @@ class BrandFooterCell: UITableViewCell {
         contentView.addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalToSuperview().inset(BrandFooterCell.verticalPadding)
-            maker.height.equalTo(CGFloat.heightOnePixel)
+            maker.top.equalToSuperview()
+            maker.height.equalTo(CGFloat.heightOneDp)
         }
 
-        separatorView.backgroundColor = .themeSteel20
+        separatorView.backgroundColor = .themeSteel10
 
         contentView.addSubview(label)
         label.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(BrandFooterCell.horizontalPadding)
-            maker.top.equalTo(separatorView.snp.top).offset(BrandFooterCell.labelTopMargin)
+            maker.top.equalTo(separatorView.snp.top).offset(BrandFooterCell.topPadding)
         }
 
-        label.text = BrandFooterCell.text
         label.numberOfLines = 0
         label.textAlignment = .center
         label.font = BrandFooterCell.labelFont
@@ -44,15 +43,20 @@ class BrandFooterCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    var title: String? {
+        get { label.text }
+        set { label.text = newValue }
+    }
+
 }
 
 extension BrandFooterCell {
 
-    static func height(containerWidth: CGFloat) -> CGFloat {
+    static func height(containerWidth: CGFloat, title: String) -> CGFloat {
         let textWidth = containerWidth - 2 * horizontalPadding
-        let textHeight = text.height(forContainerWidth: textWidth, font: labelFont)
+        let textHeight = title.height(forContainerWidth: textWidth, font: labelFont)
 
-        return verticalPadding + labelTopMargin + textHeight + verticalPadding
+        return topPadding + textHeight + bottomPadding
     }
 
 }

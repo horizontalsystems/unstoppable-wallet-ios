@@ -50,7 +50,7 @@ class SwapViewModel {
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
         subscribe(disposeBag, service.errorsObservable) { [weak self] in self?.sync(errors: $0) }
         subscribe(disposeBag, tradeService.stateObservable) { [weak self] in self?.sync(tradeState: $0) }
-        subscribe(disposeBag, tradeService.tradeOptionsObservable) { [weak self] in self?.sync(tradeOptions: $0) }
+        subscribe(disposeBag, tradeService.swapTradeOptionsObservable) { [weak self] in self?.sync(swapTradeOptions: $0) }
         subscribe(disposeBag, pendingAllowanceService.isPendingObservable) { [weak self] in self?.sync(isApprovePending: $0) }
     }
 
@@ -65,9 +65,6 @@ class SwapViewModel {
         if case SwapService.TransactionError.insufficientBalance(let requiredBalance) = error {
             let amountData = coinService.amountData(value: requiredBalance)
             return "ethereum_transaction.error.insufficient_balance".localized(amountData.formattedString)
-        }
-        if case EthereumKit.Kit.EstimatedLimitError.insufficientBalance = error {
-            return "ethereum_transaction.error.insufficient_balance_with_fee".localized
         }
 
         return error.convertedError.smartDescription
@@ -108,8 +105,8 @@ class SwapViewModel {
         syncApproveAction()
     }
 
-    private func sync(tradeOptions: TradeOptions) {
-        tradeOptionsViewItemRelay.accept(tradeOptionsViewItem(tradeOptions: tradeOptions))
+    private func sync(swapTradeOptions: SwapTradeOptions) {
+        tradeOptionsViewItemRelay.accept(tradeOptionsViewItem(swapTradeOptions: swapTradeOptions))
     }
 
     private func sync(isApprovePending: Bool) {
@@ -183,10 +180,10 @@ class SwapViewModel {
         )
     }
 
-    private func tradeOptionsViewItem(tradeOptions: TradeOptions) -> TradeOptionsViewItem {
-        TradeOptionsViewItem(slippage: viewItemHelper.slippage(tradeOptions.allowedSlippage),
-            deadline: viewItemHelper.deadline(tradeOptions.ttl),
-            recipient: tradeOptions.recipient?.hex)
+    private func tradeOptionsViewItem(swapTradeOptions: SwapTradeOptions) -> TradeOptionsViewItem {
+        TradeOptionsViewItem(slippage: viewItemHelper.slippage(swapTradeOptions.allowedSlippage),
+            deadline: viewItemHelper.deadline(swapTradeOptions.ttl),
+            recipient: swapTradeOptions.recipient?.title)
     }
 
 }

@@ -4,10 +4,10 @@ import ThemeKit
 struct MainModule {
 
     enum Tab: Int {
-        case balance, transactions, settings
+        case market, balance, transactions, settings
     }
 
-    static func instance(selectedTab: Tab = .balance) -> UIViewController {
+    static func instance(selectedTab: Tab = .market) -> UIViewController {
         let showService = MainShowService(localStorage: App.shared.localStorage)
         let badgeService = MainBadgeService(
                 backupManager: App.shared.backupManager,
@@ -18,6 +18,7 @@ struct MainModule {
         let viewModel = MainViewModel(showService: showService, badgeService: badgeService)
 
         let viewControllers = [
+            marketNavigation,
             balanceNavigation,
             transactionsNavigation,
             settingsNavigation,
@@ -28,6 +29,10 @@ struct MainModule {
         App.shared.pinKitDelegate.viewController = viewController
 
         return viewController
+    }
+
+    private static var marketNavigation: UIViewController {
+        ThemeNavigationController(rootViewController: MarketModule.viewController())
     }
 
     private static var balanceNavigation: UIViewController {

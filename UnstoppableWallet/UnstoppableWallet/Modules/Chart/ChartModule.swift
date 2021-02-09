@@ -6,12 +6,12 @@ import Chart
 struct ChartModule {
 
     enum LaunchMode {
-        case partial(coinCode: String, coinTitle: String)
+        case partial(coinCode: String, coinTitle: String, coinType: CoinType?)
         case coin(coin: Coin)
 
         var coinCode: String {
             switch self {
-            case let .partial(coinCode, _):
+            case let .partial(coinCode, _, _):
                 return coinCode
             case let .coin(coin):
                 return coin.code
@@ -20,7 +20,7 @@ struct ChartModule {
 
         var coinTitle: String {
             switch self {
-            case let .partial(_, coinTitle):
+            case let .partial(_, coinTitle, _):
                 return coinTitle
             case let .coin(coin):
                 return coin.title
@@ -40,6 +40,7 @@ struct ChartModule {
 
 protocol IChartView: class {
     func set(title: String)
+    func set(favorite: Bool)
 
     func set(viewItem: ChartViewItem)
 
@@ -66,6 +67,8 @@ protocol IChartViewDelegate {
     func onTapLink()
 
     func onTapAlert()
+    func onTapFavorite()
+    func onTapUnfavorite()
 }
 
 protocol IChartInteractor {
@@ -79,6 +82,10 @@ protocol IChartInteractor {
     func subscribeToMarketInfo(coinCode: CoinCode, currencyCode: String)
     func priceAlert(coin: Coin?) -> PriceAlert?
     func subscribeToAlertUpdates()
+
+    func favorite(coinCode: String)
+    func unfavorite(coinCode: String)
+    func isFavorite(coinCode: String) -> Bool
 }
 
 protocol IChartInteractorDelegate: class {
@@ -86,6 +93,7 @@ protocol IChartInteractorDelegate: class {
     func didReceive(marketInfo: MarketInfo)
     func onChartInfoError(error: Error)
     func didUpdate(alerts: [PriceAlert])
+    func updateFavorite()
 }
 
 protocol IChartRateFactory {

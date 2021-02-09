@@ -23,7 +23,7 @@ extension PrivacyRouter: IPrivacyRouter {
     }
 
     func showPrivacyInfo() {
-        let module = PrivacyInfoRouter.module()
+        let module = InfoModule.viewController(dataSource: PrivacyInfoDataSource())
         viewController?.present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 

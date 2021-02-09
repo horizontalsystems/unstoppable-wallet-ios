@@ -56,6 +56,11 @@ class ButtonCell: UITableViewCell {
         onTap?()
     }
 
+    var title: String? {
+        get { button.title(for: .normal) }
+        set { button.setTitle(newValue, for: .normal) }
+    }
+
     func bind(style: ThemeButtonStyle, title: String?, compact: Bool = false, onTap: (() -> ())?) {
         makeConstraints(style: style, compact: compact)
 
@@ -67,6 +72,7 @@ class ButtonCell: UITableViewCell {
     func set(enabled: Bool) {
         button.isEnabled = enabled
     }
+
 }
 
 extension ButtonCell {

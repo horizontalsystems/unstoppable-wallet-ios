@@ -8,7 +8,7 @@ class WalletConnectSendEthereumTransactionRequestService {
     private let transactionService: EthereumTransactionService
     private var ethereumKit: EthereumKit.Kit
 
-    let transactionData: EthereumTransactionService.TransactionData
+    let transactionData: TransactionData
 
     private(set) var state: State = .notReady(errors: []) {
         didSet {
@@ -23,7 +23,7 @@ class WalletConnectSendEthereumTransactionRequestService {
         self.transactionService = transactionService
         self.ethereumKit = ethereumKit
 
-        transactionData = EthereumTransactionService.TransactionData(to: transaction.to, value: transaction.value, input: transaction.data)
+        transactionData = TransactionData(to: transaction.to, value: transaction.value, input: transaction.data)
 
         if let gasPrice = transaction.gasPrice {
             transactionService.set(gasPriceType: .custom(gasPrice: gasPrice))
@@ -41,7 +41,7 @@ class WalletConnectSendEthereumTransactionRequestService {
     }
 
     private var ethereumBalance: BigUInt {
-        ethereumKit.balance ?? 0
+        ethereumKit.accountState?.balance ?? 0
     }
 
     private func syncState() {
@@ -75,16 +75,14 @@ extension WalletConnectSendEthereumTransactionRequestService {
         state = .sending
 
         ethereumKit.sendSingle(
-                address: transaction.data.to,
-                value: transaction.data.value,
-                transactionInput: transaction.data.input,
+                transactionData: transactionData,
                 gasPrice: transaction.gasData.gasPrice,
                 gasLimit: transaction.gasData.gasLimit
         )
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
-                .subscribe(onSuccess: { [weak self] transactionWithInternal in
-                    self?.state = .sent(transactionHash: transactionWithInternal.transaction.hash)
+                .subscribe(onSuccess: { [weak self] fullTransaction in
+                    self?.state = .sent(transactionHash: fullTransaction.transaction.hash)
                 }, onError: { error in
                     // todo
                 })

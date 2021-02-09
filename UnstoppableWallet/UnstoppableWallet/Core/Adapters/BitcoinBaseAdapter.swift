@@ -14,12 +14,18 @@ class BitcoinBaseAdapter {
     private let balanceUpdatedSubject = PublishSubject<Void>()
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
 
-    private(set) var state: AdapterState
+    private(set) var balanceState: AdapterState {
+        didSet {
+            transactionState = balanceState
+        }
+    }
+    private(set) var transactionState: AdapterState
 
     init(abstractKit: AbstractKit) {
         self.abstractKit = abstractKit
 
-        state = .notSynced(error: AppError.unknownError)
+        balanceState = .notSynced(error: AppError.unknownError)
+        transactionState = balanceState
     }
 
     func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
@@ -107,7 +113,8 @@ class BitcoinBaseAdapter {
                 to: type == .outgoing ? anyNotMineToAddress : nil,
                 lockInfo: lockInfo,
                 conflictingHash: transaction.conflictingHash,
-                showRawTransaction: transaction.status == .new || transaction.status == .invalid
+                showRawTransaction: transaction.status == .new || transaction.status == .invalid,
+                memo: nil
         )
     }
 
@@ -191,39 +198,39 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
     func kitStateUpdated(state: BitcoinCore.KitState) {
         switch state {
         case .synced:
-            if case .synced = self.state {
+            if case .synced = self.balanceState {
                 return
             }
 
-            self.state = .synced
+            self.balanceState = .synced
             stateUpdatedSubject.onNext(())
         case .notSynced(let error):
             let converted = error.convertedError
 
-            if case .notSynced(let appError) = self.state, "\(converted)" == "\(appError)" {
+            if case .notSynced(let appError) = self.balanceState, "\(converted)" == "\(appError)" {
                 return
             }
 
-            self.state = .notSynced(error: converted)
+            self.balanceState = .notSynced(error: converted)
             stateUpdatedSubject.onNext(())
         case .syncing(let progress):
             let newProgress = Int(progress * 100)
             let newDate = abstractKit.lastBlockInfo?.timestamp.map { Date(timeIntervalSince1970: Double($0)) }
 
-            if case let .syncing(currentProgress, currentDate) = self.state, newProgress == currentProgress {
+            if case let .syncing(currentProgress, currentDate) = self.balanceState, newProgress == currentProgress {
                 if let currentDate = currentDate, let newDate = newDate, currentDate.isSameDay(as: newDate) {
                     return
                 }
             }
 
-            self.state = .syncing(progress: newProgress, lastBlockDate: newDate)
+            self.balanceState = .syncing(progress: newProgress, lastBlockDate: newDate)
             stateUpdatedSubject.onNext(())
         case .apiSyncing(let newCount):
-            if case .searchingTxs(let count) = self.state, newCount == count {
+            if case .searchingTxs(let count) = self.balanceState, newCount == count {
                 return
             }
 
-            self.state = .searchingTxs(count: newCount)
+            self.balanceState = .searchingTxs(count: newCount)
             stateUpdatedSubject.onNext(())
         }
     }
@@ -232,7 +239,7 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
 
 extension BitcoinBaseAdapter: IBalanceAdapter {
 
-    var stateUpdatedObservable: Observable<Void> {
+    var balanceStateUpdatedObservable: Observable<Void> {
         stateUpdatedSubject.asObservable()
     }
 
@@ -309,6 +316,10 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
 
     var lastBlockInfo: LastBlockInfo? {
         abstractKit.lastBlockInfo.map { LastBlockInfo(height: $0.height, timestamp: $0.timestamp) }
+    }
+
+    var transactionStateUpdatedObservable: Observable<Void> {
+        stateUpdatedSubject.asObservable()
     }
 
     var lastBlockUpdatedObservable: Observable<Void> {

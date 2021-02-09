@@ -17,7 +17,6 @@ extension AppStatusViewModel {
         [
             BlockchainViewItem(name: "Bitcoin", status: .syncing),
             BlockchainViewItem(name: "Ethereum", status: .synced),
-            BlockchainViewItem(name: "EOS", status: .notSynced)
         ]
     }
 

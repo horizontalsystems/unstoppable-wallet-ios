@@ -7,16 +7,11 @@ import SectionsTableView
 import SnapKit
 
 class WalletConnectMainViewController: ThemeViewController {
-    private static let spinnerLineWidth: CGFloat = 2
-    private static let spinnerSideSize: CGFloat = 20
-
     private let baseViewModel: WalletConnectViewModel
     private let viewModel: WalletConnectMainViewModel
     private weak var sourceViewController: UIViewController?
 
-    private let loadingView = HUDProgressView(strokeLineWidth: WalletConnectMainViewController.spinnerLineWidth,
-            radius: WalletConnectMainViewController.spinnerSideSize / 2 - WalletConnectMainViewController.spinnerLineWidth / 2,
-            strokeColor: .themeGray)
+    private let spinner = HUDActivityView.create(with: .large48)
 
     private let buttonsHolder = BottomGradientHolder()
 
@@ -57,12 +52,12 @@ class WalletConnectMainViewController: ThemeViewController {
 
         title = "wallet_connect.title".localized
 
-        view.addSubview(loadingView)
-        loadingView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+        view.addSubview(spinner)
+        spinner.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
         }
 
-        loadingView.set(hidden: true)
+        spinner.set(hidden: true)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -75,7 +70,7 @@ class WalletConnectMainViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.registerCell(forClass: TermsHeaderCell.self)
-        tableView.registerCell(forClass: FullTransactionInfoTextCell.self)
+        tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: HighlightedDescriptionCell.self)
 
         view.addSubview(buttonsHolder)
@@ -193,11 +188,11 @@ class WalletConnectMainViewController: ThemeViewController {
     }
 
     private func sync(connecting: Bool) {
-        loadingView.set(hidden: !connecting)
+        spinner.set(hidden: !connecting)
         if connecting {
-            loadingView.startAnimating()
+            spinner.startAnimating()
         } else {
-            loadingView.stopAnimating()
+            spinner.stopAnimating()
         }
     }
 
@@ -272,11 +267,11 @@ extension WalletConnectMainViewController: SectionsDataSource {
         }
 
         if let status = status {
-            rows.append(valueRow(title: "status".localized, subtitle: status.title, subtitleColor: status.color))
+            rows.append(valueRow(title: "status".localized, value: status.title, isFirst: true, isLast: peerMeta == nil, valueColor: status.color))
         }
 
         if let url = peerMeta?.url {
-            rows.append(valueRow(title: "wallet_connect.url".localized, subtitle: url))
+            rows.append(valueRow(title: "wallet_connect.url".localized, value: url, isFirst: status == nil, isLast: true))
         }
 
         if let footerRow = footer {
@@ -306,10 +301,17 @@ extension WalletConnectMainViewController: SectionsDataSource {
         })
     }
 
-    private func valueRow(title: String, subtitle: String, subtitleColor: UIColor? = nil) -> RowProtocol {
-        Row<FullTransactionInfoTextCell>(id: "row_\(title)", height: .heightSingleLineCell, bind: { cell, _ in
-            cell.bind(title: title, subtitle: subtitle, subtitleColor: subtitleColor)
-        })
+    private func valueRow(title: String, value: String, isFirst: Bool, isLast: Bool, valueColor: UIColor? = nil) -> RowProtocol {
+        Row<D7Cell>(
+                id: "row_\(title)",
+                height: .heightCell48,
+                bind: { cell, _ in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                    cell.title = title
+                    cell.value = value
+                    cell.valueColor = valueColor ?? .themeLeah
+                }
+        )
     }
 
 }

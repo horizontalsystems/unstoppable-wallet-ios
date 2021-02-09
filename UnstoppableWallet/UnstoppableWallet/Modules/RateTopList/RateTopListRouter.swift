@@ -11,8 +11,8 @@ class RateTopListRouter {
 
 extension RateTopListRouter: IRateTopListRouter {
 
-    func showChart(coinCode: String, coinTitle: String) {
-        navigationRouter?.push(viewController: ChartRouter.module(launchMode: .partial(coinCode: coinCode, coinTitle: coinTitle)))
+    func showChart(coinCode: String, coinTitle: String, coinType: CoinType?) {
+        navigationRouter?.push(viewController: ChartRouter.module(launchMode: .partial(coinCode: coinCode, coinTitle: coinTitle, coinType: coinType)))
     }
 
     func showSortType(selected: RateTopListModule.SortType, onSelect: @escaping (RateTopListModule.SortType) -> ()) {

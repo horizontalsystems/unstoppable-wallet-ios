@@ -6,14 +6,9 @@ enum CoinType {
     case bitcoinCash
     case dash
     case ethereum
-    case erc20(address: String, fee: Decimal, minimumRequiredBalance: Decimal, minimumSpendableAmount: Decimal?)
+    case erc20(address: String)
     case binance(symbol: String)
     case zcash
-    case eos(token: String, symbol: String)
-
-    init(erc20Address: String, fee: Decimal = 0, minimumRequiredBalance: Decimal = 0, minimumSpendableAmount: Decimal? = nil) {
-        self = .erc20(address: erc20Address, fee: fee, minimumRequiredBalance: minimumRequiredBalance, minimumSpendableAmount: minimumSpendableAmount)
-    }
 
     func canSupport(accountType: AccountType) -> Bool {
         switch self {
@@ -26,9 +21,6 @@ enum CoinType {
         case .zcash:
             if case .zcash = accountType { return true }
             return false
-        case .eos:
-            if case .eos = accountType { return true }
-            return false
         }
     }
 
@@ -40,8 +32,6 @@ enum CoinType {
             return .binance
         case .zcash:
             return .zcash
-        case .eos:
-            return .eos
         }
     }
 
@@ -51,10 +41,6 @@ enum CoinType {
         case .binance(let symbol):
             if symbol != "BNB" {
                 return "BEP2"
-            }
-        case .eos(let token, _):
-            if token != "eosio.token" {
-                return "EOSIO"
             }
         default: ()
         }
@@ -79,6 +65,15 @@ enum CoinType {
         }
     }
 
+    var title: String {
+        switch self {
+        case .bitcoin: return "Bitcoin"
+        case .litecoin: return "Litecoin"
+        case .bitcoinCash: return "Bitcoin Cash"
+        default: return ""
+        }
+    }
+
 }
 
 extension CoinType: Equatable {
@@ -90,13 +85,11 @@ extension CoinType: Equatable {
         case (.bitcoinCash, .bitcoinCash): return true
         case (.dash, .dash): return true
         case (.ethereum, .ethereum): return true
-        case (.erc20(let lhsAddress, let lhsFee, _, _), .erc20(let rhsAddress, let rhsFee, _, _)):
-            return lhsAddress == rhsAddress && lhsFee == rhsFee
+        case (.erc20(let lhsAddress), .erc20(let rhsAddress)):
+            return lhsAddress.lowercased() == rhsAddress.lowercased()
         case (.binance(let lhsSymbol), .binance(let rhsSymbol)):
             return lhsSymbol == rhsSymbol
         case (.zcash, .zcash): return true
-        case (.eos(let lhsToken, let lhsSymbol), .eos(let rhsToken, let rhsSymbol)):
-            return lhsToken == rhsToken && lhsSymbol == rhsSymbol
         default: return false
         }
     }
@@ -117,14 +110,59 @@ extension CoinType: Hashable {
             hasher.combine("dash")
         case .ethereum:
             hasher.combine("ethereum")
-        case .erc20(let address, let fee, let minimumRequiredBalance, let minimumSpendableAmount):
-            hasher.combine("erc20_\(address)_\(fee)_\(minimumRequiredBalance)_\(minimumSpendableAmount.map { "\($0)" } ?? "nil")")
+        case .erc20(let address):
+            hasher.combine("erc20_\(address)")
         case .binance(let symbol):
             hasher.combine("binance_\(symbol)")
         case .zcash:
             hasher.combine("Zcash")
-        case .eos(let token, let symbol):
-            hasher.combine("eos_\(token)_\(symbol)")
+        }
+    }
+
+}
+
+extension CoinType: RawRepresentable {
+    public typealias RawValue = String
+
+    public init?(rawValue: RawValue) {
+        if rawValue.hasPrefix("erc20"), let address = rawValue.split(separator: "|").last {
+            self = .erc20(address: String(address))
+            return
+        }
+
+        if rawValue.hasPrefix("binance"), let symbol = rawValue.split(separator: "|").last {
+            self = .binance(symbol: String(symbol))
+        }
+
+        var type: Self?
+
+        switch rawValue {
+        case "bitcoin": type = .bitcoin
+        case "litecoin": type = .litecoin
+        case "bitcoinCash": type = .bitcoinCash
+        case "dash": type = .dash
+        case "ethereum": type = .ethereum
+        case "zcash": type = .zcash
+        default: type = nil
+        }
+
+        guard let coinType = type else {
+            return nil
+        }
+
+        self = coinType
+    }
+
+    public var rawValue: RawValue {
+        switch self {
+        case .bitcoin: return "bitcoin"
+        case .litecoin: return "litecoin"
+        case .bitcoinCash: return "bitcoinCash"
+        case .dash: return "dash"
+        case .ethereum: return "ethereum"
+        case .erc20(let address): return "erc20|\(address)"
+        case .binance(let symbol): return "binance|\(symbol)"
+        case .zcash: return "zcash"
         }
     }
 

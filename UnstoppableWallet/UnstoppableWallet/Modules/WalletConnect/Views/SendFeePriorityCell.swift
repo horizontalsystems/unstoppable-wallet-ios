@@ -2,6 +2,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import ThemeKit
 
 struct SendPriorityViewItem {
     let title: String
@@ -35,7 +36,8 @@ class SendFeePriorityCell: UITableViewCell {
     weak var delegate: ISendFeePriorityCellDelegate?
 
     private let viewModel: ISendFeePriorityViewModel
-    private let selectableValueView = SelectableValueView(title: "send.tx_speed".localized)
+    private let separator = UIView()
+    private let selectableValueView = C5Cell(style: .default, reuseIdentifier: nil)
 
     private let feeSliderWrapper = FeeSliderWrapper()
 
@@ -52,15 +54,32 @@ class SendFeePriorityCell: UITableViewCell {
         selectionStyle = .none
         clipsToBounds = true
 
-        contentView.addSubview(selectableValueView)
-        selectableValueView.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
+        addSubview(separator)
+        separator.snp.makeConstraints { maker in
+            maker.top.leading.trailing.equalToSuperview()
+            maker.height.equalTo(CGFloat.heightOnePixel)
         }
-        selectableValueView.delegate = self
+
+        separator.backgroundColor = .themeSteel20
+
+        contentView.addSubview(selectableValueView.contentView)
+        selectableValueView.contentView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+            maker.height.equalTo(CGFloat.heightSingleLineCell)
+        }
+
+        selectableValueView.title = "send.tx_speed".localized
+        selectableValueView.titleImage = UIImage(named: "circle_information_20")?.tinted(with: .themeJacob)
+        selectableValueView.titleImageAction = { [weak self] in
+            self?.openFeeInfo()
+        }
+       selectableValueView.valueAction = { [weak self] in
+            self?.viewModel.openSelectPriority()
+        }
 
         contentView.addSubview(feeSliderWrapper)
         feeSliderWrapper.snp.makeConstraints { maker in
-            maker.top.equalTo(selectableValueView.snp.bottom)
+            maker.top.equalTo(selectableValueView.contentView.snp.bottom)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
         feeSliderWrapper.finishTracking = { [weak self] value in
@@ -69,7 +88,7 @@ class SendFeePriorityCell: UITableViewCell {
 
         viewModel.priorityDriver
                 .drive(onNext: { [weak self] priority in
-                    self?.selectableValueView.set(value: priority)
+                    self?.selectableValueView.value = priority
                 })
                 .disposed(by: disposeBag)
 
@@ -95,6 +114,11 @@ class SendFeePriorityCell: UITableViewCell {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func openFeeInfo() {
+        let infoController = InfoModule.viewController(dataSource: FeeInfoDataSource())
+        delegate?.open(viewController: ThemeNavigationController(rootViewController: infoController))
     }
 
     private func openSelectPriority(viewItems: [SendPriorityViewItem]) {
@@ -124,14 +148,6 @@ extension SendFeePriorityCell {
 
     var cellHeight: CGFloat {
         isVisible ? (feeSliderWrapper.isHidden ? .heightSingleLineCell : 73) : 0
-    }
-
-}
-
-extension SendFeePriorityCell: ISelectableValueViewDelegate {
-
-    func onSelectorTap() {
-        viewModel.openSelectPriority()
     }
 
 }

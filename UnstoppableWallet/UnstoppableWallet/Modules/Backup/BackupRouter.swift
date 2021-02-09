@@ -53,8 +53,6 @@ extension BackupRouter {
             }
 
             return BackupWordsRouter.module(delegate: delegate, predefinedAccountType: predefinedAccountType, words: words, additionalItems: additionalItems, isBackedUp: account.backedUp)
-        case let .eos(account, activePrivateKey):
-            return BackupEosRouter.module(delegate: delegate, account: account, activePrivateKey: activePrivateKey)
         default:
             return nil
         }

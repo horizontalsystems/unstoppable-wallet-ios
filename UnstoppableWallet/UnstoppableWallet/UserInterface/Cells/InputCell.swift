@@ -1,0 +1,71 @@
+import UIKit
+import ThemeKit
+import SnapKit
+
+class InputCell: UITableViewCell {
+    private let anInputView = InputView()
+
+    init() {
+        super.init(style: .default, reuseIdentifier: nil)
+
+        backgroundColor = .clear
+        selectionStyle = .none
+
+        contentView.addSubview(anInputView)
+        anInputView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+}
+
+extension InputCell {
+
+    var inputPlaceholder: String? {
+        get { anInputView.inputPlaceholder }
+        set { anInputView.inputPlaceholder = newValue }
+    }
+
+    var inputText: String? {
+        get { anInputView.inputText }
+        set { anInputView.inputText = newValue }
+    }
+
+    var keyboardType: UIKeyboardType {
+        get { anInputView.keyboardType }
+        set { anInputView.keyboardType = newValue }
+    }
+
+    func set(cautionType: CautionType?) {
+        anInputView.set(cautionType: cautionType)
+    }
+
+    var onChangeText: ((String?) -> ())? {
+        get { anInputView.onChangeText }
+        set { anInputView.onChangeText = newValue }
+    }
+
+    var onChangeEditing: ((Bool) -> ())? {
+        get { anInputView.onChangeEditing }
+        set { anInputView.onChangeEditing = newValue }
+    }
+
+    var onChangeHeight: (() -> ())? {
+        get { anInputView.onChangeHeight }
+        set { anInputView.onChangeHeight = newValue }
+    }
+
+    var isValidText: ((String) -> Bool)? {
+        get { anInputView.isValidText }
+        set { anInputView.isValidText = newValue }
+    }
+
+    func height(containerWidth: CGFloat) -> CGFloat {
+        anInputView.height(containerWidth: containerWidth)
+    }
+
+}

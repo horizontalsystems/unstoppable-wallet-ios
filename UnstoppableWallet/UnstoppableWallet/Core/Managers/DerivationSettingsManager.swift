@@ -26,13 +26,11 @@ class DerivationSettingsManager {
 
 extension DerivationSettingsManager: IDerivationSettingsManager {
 
-    var allActiveSettings: [(setting: DerivationSetting, wallets: [Wallet])] {
+    var allActiveSettings: [(setting: DerivationSetting, coinType: CoinType)] {
         let wallets = walletManager.wallets
 
         return supportedCoinTypes.compactMap { (coinType, _) in
-            let coinTypeWallets = wallets.filter { $0.coin.type == coinType }
-
-            guard !coinTypeWallets.isEmpty else {
+            guard wallets.contains(where: { $0.coin.type == coinType }) else {
                 return nil
             }
 
@@ -40,7 +38,7 @@ extension DerivationSettingsManager: IDerivationSettingsManager {
                 return nil
             }
 
-            return (setting: setting, wallets: coinTypeWallets)
+            return (setting: setting, coinType: coinType)
         }
     }
 
@@ -50,7 +48,7 @@ extension DerivationSettingsManager: IDerivationSettingsManager {
     }
 
     func save(setting: DerivationSetting) {
-        storage.save(derivationSettings: [setting])
+        storage.save(derivationSetting: setting)
 
         let walletsForUpdate = walletManager.wallets.filter { $0.coin.type == setting.coinType }
 
@@ -59,7 +57,7 @@ extension DerivationSettingsManager: IDerivationSettingsManager {
         }
     }
 
-    func reset() {
+    func resetStandardSettings() {
         storage.deleteDerivationSettings()
     }
 

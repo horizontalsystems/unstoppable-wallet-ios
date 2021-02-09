@@ -9,13 +9,15 @@ class ChartInteractor {
     private var chartsDisposeBag = DisposeBag()
 
     private let rateManager: IRateManager
+    private let favoritesManager: IFavoritesManager
     private let chartTypeStorage: IChartTypeStorage
     private let currentDateProvider: ICurrentDateProvider
     private let priceAlertManager: IPriceAlertManager
     private let localStorage: ILocalStorage
 
-    init(rateManager: IRateManager, chartTypeStorage: IChartTypeStorage, currentDateProvider: ICurrentDateProvider, priceAlertManager: IPriceAlertManager, localStorage: ILocalStorage) {
+    init(rateManager: IRateManager, favoritesManager: IFavoritesManager, chartTypeStorage: IChartTypeStorage, currentDateProvider: ICurrentDateProvider, priceAlertManager: IPriceAlertManager, localStorage: ILocalStorage) {
         self.rateManager = rateManager
+        self.favoritesManager = favoritesManager
         self.chartTypeStorage = chartTypeStorage
         self.currentDateProvider = currentDateProvider
         self.priceAlertManager = priceAlertManager
@@ -85,6 +87,22 @@ extension ChartInteractor: IChartInteractor {
                     self?.delegate?.didUpdate(alerts: alerts)
                 })
                 .disposed(by: disposeBag)
+    }
+
+    func favorite(coinCode: String) {
+        favoritesManager.add(coinCode: coinCode)
+
+        delegate?.updateFavorite()
+    }
+
+    func unfavorite(coinCode: String) {
+        favoritesManager.remove(coinCode: coinCode)
+
+        delegate?.updateFavorite()
+    }
+
+    func isFavorite(coinCode: String) -> Bool {
+        favoritesManager.isFavorite(coinCode: coinCode)
     }
 
 }

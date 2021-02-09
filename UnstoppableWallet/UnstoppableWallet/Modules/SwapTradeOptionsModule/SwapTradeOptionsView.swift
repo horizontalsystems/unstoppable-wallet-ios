@@ -2,38 +2,34 @@ import ThemeKit
 import RxSwift
 import RxCocoa
 import SectionsTableView
-import CurrencyKit
-import HUD
 
 class SwapTradeOptionsView: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private let viewModel: SwapTradeOptionsViewModel
+    private let recipientViewModel: RecipientAddressViewModel
+    private let slippageViewModel: SwapSlippageViewModel
+    private let deadlineViewModel: SwapDeadlineViewModel
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    private let slippageCell: VerifiedInputCell
-    private let deadlineCell: VerifiedInputCell
-    private let recipientCell: RecipientInputCell
+    private let recipientCell = AddressInputCell()
+    private let recipientCautionCell = FormCautionCell()
+
+    private let slippageCell = ShortcutInputCell()
+    private let slippageCautionCell = FormCautionCell()
+
+    private let deadlineCell = ShortcutInputCell()
+
     private let buttonCell = ButtonCell(style: .default, reuseIdentifier: nil)
 
-    private var error: String?
-
-    init(viewModel: SwapTradeOptionsViewModel) {
+    init(viewModel: SwapTradeOptionsViewModel, recipientViewModel: RecipientAddressViewModel, slippageViewModel: SwapSlippageViewModel, deadlineViewModel: SwapDeadlineViewModel) {
         self.viewModel = viewModel
-
-        slippageCell = VerifiedInputCell(viewModel: viewModel.slippageViewModel)
-        deadlineCell = VerifiedInputCell(viewModel: viewModel.deadlineViewModel)
-        recipientCell = RecipientInputCell(viewModel: viewModel.recipientViewModel)
+        self.recipientViewModel = recipientViewModel
+        self.slippageViewModel = slippageViewModel
+        self.deadlineViewModel = deadlineViewModel
 
         super.init()
-
-        slippageCell.delegate = self
-        deadlineCell.delegate = self
-        recipientCell.delegate = self
-        recipientCell.openDelegate = self
-
-        subscribeToViewModel()
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -43,9 +39,8 @@ class SwapTradeOptionsView: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(closeDidTap))
         title = "swap.advanced_settings".localized
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(didTapCancel))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -54,28 +49,85 @@ class SwapTradeOptionsView: ThemeViewController {
 
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
+        tableView.allowsSelection = false
+        tableView.keyboardDismissMode = .onDrag
+        tableView.sectionDataSource = self
 
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
-        tableView.registerCell(forClass: VerifiedInputCell.self)
-        tableView.registerCell(forClass: ButtonCell.self)
-        tableView.registerCell(forClass: ToggleCell.self)
 
-        tableView.sectionDataSource = self
-        tableView.allowsSelection = false
-        tableView.keyboardDismissMode = .onDrag
+        recipientCell.inputPlaceholder = "send.address_or_domain_placeholder".localized
+        recipientCell.inputText = recipientViewModel.initialValue
+        recipientCell.onChangeHeight = { [weak self] in self?.reloadTable() }
+        recipientCell.onChangeText = { [weak self] in self?.recipientViewModel.onChange(text: $0) }
+        recipientCell.onFetchText = { [weak self] in self?.recipientViewModel.onFetch(text: $0) }
+        recipientCell.onChangeEditing = { [weak self] in self?.recipientViewModel.onChange(editing: $0) }
+        recipientCell.onOpenViewController = { [weak self] in self?.present($0, animated: true) }
+
+        recipientCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
+
+        slippageCell.inputPlaceholder = slippageViewModel.placeholder
+        slippageCell.inputText = slippageViewModel.initialValue
+        slippageCell.set(shortcuts: slippageViewModel.shortcuts)
+        slippageCell.keyboardType = .decimalPad
+        slippageCell.isValidText = { [weak self] text in self?.slippageViewModel.isValid(text: text) ?? true }
+        slippageCell.onChangeHeight = { [weak self] in self?.reloadTable() }
+        slippageCell.onChangeText = { [weak self] text in self?.slippageViewModel.onChange(text: text) }
+
+        slippageCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
+
+        deadlineCell.inputPlaceholder = deadlineViewModel.placeholder
+        deadlineCell.inputText = deadlineViewModel.initialValue
+        deadlineCell.set(shortcuts: deadlineViewModel.shortcuts)
+        deadlineCell.keyboardType = .numberPad
+        deadlineCell.isValidText = { [weak self] text in self?.deadlineViewModel.isValid(text: text) ?? true }
+        deadlineCell.onChangeHeight = { [weak self] in self?.reloadTable() }
+        deadlineCell.onChangeText = { [weak self] text in self?.deadlineViewModel.onChange(text: text) }
 
         buttonCell.bind(style: .primaryYellow, title: "button.apply".localized) { [weak self] in
-            self?.doneDidTap()
+            self?.didTapApply()
+        }
+
+        subscribe(disposeBag, recipientViewModel.cautionDriver) { [weak self] in
+            self?.recipientCell.set(cautionType: $0?.type)
+            self?.recipientCautionCell.set(caution: $0)
+        }
+        subscribe(disposeBag, recipientViewModel.isLoadingDriver) { [weak self] in
+            self?.recipientCell.set(isLoading: $0)
+        }
+        subscribe(disposeBag, recipientViewModel.setTextSignal) { [weak self] in
+            self?.recipientCell.inputText = $0
+        }
+
+        subscribe(disposeBag, slippageViewModel.cautionDriver) { [weak self] in
+            self?.slippageCell.set(cautionType: $0?.type)
+            self?.slippageCautionCell.set(caution: $0)
+        }
+
+        subscribe(disposeBag, viewModel.actionDriver) { [weak self] actionState in
+            switch actionState {
+            case .enabled:
+                self?.buttonCell.isEnabled = true
+                self?.buttonCell.title = "button.apply".localized
+            case .disabled(let title):
+                self?.buttonCell.isEnabled = false
+                self?.buttonCell.title = title
+            }
         }
 
         tableView.buildSections()
     }
 
-    private func subscribeToViewModel() {
-        subscribe(disposeBag, viewModel.validStateDriver) { [weak self] in
-            self?.buttonCell.isEnabled = $0
+    @objc private func didTapApply() {
+        if viewModel.doneDidTap() {
+            dismiss(animated: true)
+        } else {
+            HudHelper.instance.showError(title: "alert.unknown_error".localized)
         }
+    }
+
+    @objc private func didTapCancel() {
+        dismiss(animated: true)
     }
 
     private func header(hash: String, text: String) -> ViewState<SubtitleHeaderFooterView> {
@@ -102,73 +154,11 @@ class SwapTradeOptionsView: ThemeViewController {
         )
     }
 
-    private var slippageSection: SectionProtocol {
-        let slippageRow = StaticRow(
-                cell: slippageCell,
-                id: "slippage",
-                dynamicHeight: { [weak self] width in
-                    self?.slippageCell.height(containerWidth: width) ?? .heightSingleLineCell
-                })
-
-        return Section(
-                id: "slippage",
-                headerState: header(hash: "slippage_header", text: "swap.advanced_settings.slippage".localized),
-                footerState: footer(hash: "slippage_footer", text: "swap.advanced_settings.slippage.footer".localized),
-                rows: [slippageRow]
-        )
-    }
-
-    private var deadlineSection: SectionProtocol {
-        let deadlineRow = StaticRow(
-                cell: deadlineCell,
-                id: "deadline",
-                dynamicHeight: { [weak self] width in
-                    self?.deadlineCell.height(containerWidth: width) ?? .heightSingleLineCell
-                })
-
-        return Section(
-                id: "deadline",
-                headerState: header(hash: "deadline_header", text: "swap.advanced_settings.deadline".localized),
-                footerState: footer(hash: "deadline_footer", text: "swap.advanced_settings.deadline.footer".localized),
-                rows: [deadlineRow]
-        )
-    }
-
-    private var recipientSection: SectionProtocol {
-
-        let addressRow = StaticRow(cell: recipientCell,
-                        id: "recipient_address",
-                        dynamicHeight: { [weak self] width in
-                            self?.recipientCell.height(containerWidth: width) ?? .heightSingleLineCell
-                        })
-
-        return Section(
-                id: "recipient_address",
-                headerState: header(hash: "recipient_header", text: "swap.advanced_settings.recipient_address".localized),
-                footerState: footer(hash: "recipient_footer", text: "swap.advanced_settings.recipient.footer".localized),
-                rows: [addressRow]
-        )
-    }
-
-    private var buttonSection: SectionProtocol {
-        let buttonRow = StaticRow(cell: buttonCell,
-                id: "done",
-                height: ButtonCell.height(style: .primaryYellow))
-
-        return Section(id: "button_section",
-                rows: [buttonRow])
-    }
-
-    @objc func doneDidTap() {
-        if viewModel.doneDidTap() {
-            dismiss(animated: true)
-        } else {
-            HudHelper.instance.showError(title: "alert.unknown_error".localized)
+    private func reloadTable() {
+        UIView.animate(withDuration: 0.2) {
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
         }
-    }
-
-    @objc func closeDidTap() {
-        dismiss(animated: true)
     }
 
 }
@@ -176,34 +166,82 @@ class SwapTradeOptionsView: ThemeViewController {
 extension SwapTradeOptionsView: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        var sections = [SectionProtocol]()
+        [
+            Section(
+                    id: "top-margin",
+                    headerState: .margin(height: .margin12)
+            ),
 
-        sections.append(Section(id: "margin", headerState: .margin(height: .margin3x)))
-        sections.append(recipientSection)
-        sections.append(slippageSection)
-        sections.append(deadlineSection)
-        sections.append(buttonSection)
+            Section(
+                    id: "recipient",
+                    headerState: header(hash: "recipient_header", text: "swap.advanced_settings.recipient_address".localized),
+                    footerState: footer(hash: "recipient_footer", text: "swap.advanced_settings.recipient.footer".localized),
+                    rows: [
+                        StaticRow(
+                                cell: recipientCell,
+                                id: "recipient-input",
+                                dynamicHeight: { [weak self] width in
+                                    self?.recipientCell.height(containerWidth: width) ?? 0
+                                }
+                        ),
+                        StaticRow(
+                                cell: recipientCautionCell,
+                                id: "recipient-caution",
+                                dynamicHeight: { [weak self] width in
+                                    self?.recipientCautionCell.height(containerWidth: width) ?? 0
+                                }
+                        )
+                    ]
+            ),
 
-        return sections
-    }
+            Section(
+                    id: "slippage",
+                    headerState: header(hash: "slippage_header", text: "swap.advanced_settings.slippage".localized),
+                    footerState: footer(hash: "slippage_footer", text: "swap.advanced_settings.slippage.footer".localized),
+                    rows: [
+                        StaticRow(
+                                cell: slippageCell,
+                                id: "slippage",
+                                dynamicHeight: { [weak self] width in
+                                    self?.slippageCell.height(containerWidth: width) ?? 0
+                                }
+                        ),
+                        StaticRow(
+                                cell: slippageCautionCell,
+                                id: "slippage-caution",
+                                dynamicHeight: { [weak self] width in
+                                    self?.slippageCautionCell.height(containerWidth: width) ?? 0
+                                }
+                        )
+                    ]
+            ),
 
-}
+            Section(
+                    id: "deadline",
+                    headerState: header(hash: "deadline_header", text: "swap.advanced_settings.deadline".localized),
+                    footerState: footer(hash: "deadline_footer", text: "swap.advanced_settings.deadline.footer".localized),
+                    rows: [
+                        StaticRow(
+                                cell: deadlineCell,
+                                id: "deadline",
+                                dynamicHeight: { [weak self] width in
+                                    self?.deadlineCell.height(containerWidth: width) ?? 0
+                                }
+                        )
+                    ]
+            ),
 
-extension SwapTradeOptionsView: IDynamicHeightCellDelegate {
-
-    func onChangeHeight() {
-        UIView.performWithoutAnimation { [weak self] in
-            self?.tableView.beginUpdates()
-            self?.tableView.endUpdates()
-        }
-    }
-
-}
-
-extension SwapTradeOptionsView: IPresentControllerDelegate {
-
-    func open(viewController: UIViewController) {
-        present(viewController, animated: true)
+            Section(
+                    id: "button",
+                    rows: [
+                        StaticRow(
+                                cell: buttonCell,
+                                id: "button",
+                                height: ButtonCell.height(style: .primaryYellow)
+                        )
+                    ]
+            )
+        ]
     }
 
 }

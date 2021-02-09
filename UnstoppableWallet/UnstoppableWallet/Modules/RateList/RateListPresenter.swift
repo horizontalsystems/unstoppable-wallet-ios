@@ -61,7 +61,7 @@ class RateListPresenter {
                 rate: marketInfo.map { marketInfo in
                     RateViewItem(
                             currencyValue: CurrencyValue(currency: currency, value: marketInfo.rate),
-                            diff: marketInfo.diff,
+                            diff: marketInfo.rateDiff,
                             dimmed: marketInfo.expired
                     )
                 }
@@ -103,7 +103,7 @@ extension RateListPresenter: IRateListViewDelegate {
             return
         }
 
-        router.showChart(coinCode: coin.code, coinTitle: coin.title)
+        router.showChart(coinCode: coin.code, coinTitle: coin.title, coinType: coin.type)
     }
 
     func onSelectPost(index: Int) {

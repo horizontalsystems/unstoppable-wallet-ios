@@ -4,6 +4,7 @@ import CurrencyKit
 protocol ITransactionInfoView: AnyObject {
     func set(date: Date, primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, type: TransactionType, lockState: TransactionLockState?)
     func set(viewItems: [TransactionInfoModule.ViewItem])
+    func set(explorerTitle: String, enabled: Bool)
     func showCopied()
 }
 
@@ -23,6 +24,7 @@ protocol ITransactionInfoViewDelegate: class {
 protocol ITransactionInfoInteractor {
     var baseCurrency: Currency { get }
     var lastBlockInfo: LastBlockInfo? { get }
+    var testMode: Bool { get }
     func rate(coinCode: String, currencyCode: String, timestamp: TimeInterval) -> Decimal?
     func rawTransaction(hash: String) -> String?
     func feeCoin(coin: Coin) -> Coin?
@@ -30,7 +32,7 @@ protocol ITransactionInfoInteractor {
 }
 
 protocol ITransactionInfoRouter {
-    func showFullInfo(transactionHash: String, wallet: Wallet)
+    func open(url: String)
     func showLockInfo()
     func showShare(value: String)
     func showDoubleSpendInfo(txHash: String, conflictingTxHash: String)
@@ -50,6 +52,12 @@ class TransactionInfoModule {
         case lockInfo(lockState: TransactionLockState)
         case sentToSelf
         case rawTransaction
+        case memo(text: String)
+    }
+
+    struct ExplorerData {
+        let title: String
+        let url: String?
     }
 
 }

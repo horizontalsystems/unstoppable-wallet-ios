@@ -31,7 +31,9 @@ class PrivacyViewController: ThemeViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "circle_information_24")?.tinted(with: .themeJacob), style: .plain, target: self, action: #selector(onTapInfo))
 
         tableView.registerCell(forClass: HighlightedDescriptionCell.self)
-        tableView.registerCell(forClass: PrivacyCell.self)
+        tableView.registerCell(forClass: A5Cell.self)
+        tableView.registerCell(forClass: B5Cell.self)
+        tableView.registerCell(forClass: A7Cell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
 
@@ -78,11 +80,19 @@ class PrivacyViewController: ThemeViewController {
                 headerState: header(hash: "sort_header", text: "settings_privacy.sorting.section_header".localized),
                 footerState: footer(hash: "sort_footer", text: "settings_privacy.sorting.section_footer".localized),
                 rows: [
-                    Row<PrivacyCell>(id: "sorting_cell", hash: "\(sortModeTitle)", height: .heightSingleLineCell, autoDeselect: true, bind: { cell, _ in
-                        cell.bind(image: nil, title: "settings_privacy.sorting_title".localized, value: sortModeTitle, showDisclosure: true)
-                    }, action: { [weak self] _ in
-                        self?.delegate.onSelectSortMode()
-                    })
+                    Row<B5Cell>(
+                            id: "sorting_cell",
+                            hash: "\(sortModeTitle)",
+                            height: .heightCell48,
+                            bind: { cell, _ in
+                                cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                                cell.title = "settings_privacy.sorting_title".localized
+                                cell.value = sortModeTitle
+                                cell.valueAction = { [weak self] in
+                                    self?.delegate.onSelectSortMode()
+                                }
+                            }
+                    )
                 ]
         )
     }
@@ -93,7 +103,7 @@ class PrivacyViewController: ThemeViewController {
                 headerState: header(hash: "connection_header", text: "settings_privacy.connection.section_header".localized),
                 footerState: footer(hash: "connection_footer", text: "settings_privacy.connection.section_footer".localized),
                 rows: items.enumerated().map { index, item in
-                    row(id: "connection_cell", item: item, action: { [weak self] in
+                    row(id: "connection_cell", item: item, isFirst: index == 0, isLast: index == items.count - 1, action: { [weak self] in
                         self?.delegate.onSelectConnection(index: index)
                     })
                 }
@@ -106,19 +116,42 @@ class PrivacyViewController: ThemeViewController {
                 headerState: header(hash: "sync_header", text: "settings_privacy.sync.section_header".localized),
                 footerState: footer(hash: "sync_footer", text: "settings_privacy.sync.section_footer".localized),
                 rows: items.enumerated().map { index, item in
-                    row(id: "sync_cell", item: item, action: { [weak self] in
+                    row(id: "sync_cell", item: item, isFirst: index == 0, isLast: index == items.count - 1, action: { [weak self] in
                         self?.delegate.onSelectSync(index: index)
                     })
                 }
         )
     }
 
-    private func row(id: String, item: PrivacyViewItem, action: (() -> ())?) -> RowProtocol {
-        Row<PrivacyCell>(id: id, hash: "\(item.title)_\(item.value)_\(item.changable)", height: .heightSingleLineCell, autoDeselect: true, bind: { cell, _ in
-            cell.bind(image: UIImage(named: item.iconName.lowercased()), title: item.title, value: item.value, showDisclosure: item.changable)
-        }, action: { _ in
-            action?()
-        })
+    private func row(id: String, item: PrivacyViewItem, isFirst: Bool, isLast: Bool, action: (() -> ())?) -> RowProtocol {
+        if item.changable {
+            return Row<A5Cell>(
+                    id: id,
+                    hash: "\(item.value)",
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                        cell.titleImage = UIImage(named: item.iconName.lowercased())
+                        cell.title = item.title
+                        cell.value = item.value
+                        cell.valueAction = {
+                            action?()
+                        }
+                    }
+            )
+        } else {
+            return Row<A7Cell>(
+                    id: id,
+                    hash: "\(item.value)",
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                        cell.titleImage = UIImage(named: item.iconName.lowercased())
+                        cell.title = item.title
+                        cell.value = item.value
+                    }
+            )
+        }
     }
 
     private func header(hash: String, text: String) -> ViewState<SubtitleHeaderFooterView> {

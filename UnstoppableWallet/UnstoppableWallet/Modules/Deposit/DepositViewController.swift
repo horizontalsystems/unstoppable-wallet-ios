@@ -111,12 +111,7 @@ extension DepositViewController: IDepositView {
                 image: .image(coinCode: viewItem.coinCode, blockchainType: viewItem.blockchainType)
         )
 
-        var addressTitle: String
-
-        switch viewItem.type {
-        case .address: addressTitle = "deposit.your_address".localized
-        case .account: addressTitle = "deposit.your_account".localized
-        }
+        var addressTitle = "deposit.your_address".localized
 
         if let additionalInfo = viewItem.additionalInfo {
             addressTitle += " (\(additionalInfo))"

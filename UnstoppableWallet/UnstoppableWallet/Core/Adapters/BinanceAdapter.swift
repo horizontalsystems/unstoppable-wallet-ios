@@ -43,7 +43,8 @@ class BinanceAdapter {
                 to: transaction.to,
                 lockInfo: nil,
                 conflictingHash: nil,
-                showRawTransaction: false
+                showRawTransaction: false,
+                memo: transaction.memo
         )
     }
 
@@ -83,7 +84,7 @@ extension BinanceAdapter: IAdapter {
 
 extension BinanceAdapter: IBalanceAdapter {
 
-    var state: AdapterState {
+    var balanceState: AdapterState {
         switch binanceKit.syncState {
         case .synced: return .synced
         case .notSynced(let error): return .notSynced(error: error.convertedError)
@@ -91,7 +92,7 @@ extension BinanceAdapter: IBalanceAdapter {
         }
     }
 
-    var stateUpdatedObservable: Observable<Void> {
+    var balanceStateUpdatedObservable: Observable<Void> {
         binanceKit.syncStateObservable.map { _ in () }
     }
 
@@ -141,12 +142,24 @@ extension BinanceAdapter: ISendBinanceAdapter {
 
 extension BinanceAdapter: ITransactionsAdapter {
 
+    var transactionState: AdapterState {
+        switch binanceKit.syncState {
+            case .synced: return .synced
+            case .notSynced(let error): return .notSynced(error: error.convertedError)
+            case .syncing: return .syncing(progress: 50, lastBlockDate: nil)
+        }
+    }
+
     var lastBlockInfo: LastBlockInfo? {
         binanceKit.lastBlockHeight.map { LastBlockInfo(height: $0, timestamp: nil) }
     }
 
     var lastBlockUpdatedObservable: Observable<Void> {
         binanceKit.lastBlockHeightObservable.map { _ in () }
+    }
+
+    var transactionStateUpdatedObservable: Observable<Void> {
+        binanceKit.syncStateObservable.map { _ in () }
     }
 
     var transactionRecordsObservable: Observable<[TransactionRecord]> {

@@ -9,6 +9,7 @@ def appPods
   pod 'BitcoinKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
   pod 'LitecoinKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
   pod 'BitcoinCashKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
+  # pod 'BitcoinCashKit.swift', path: '../bitcoin-kit-ios/'
   pod 'DashKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
   pod 'Hodler.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
 
@@ -22,15 +23,6 @@ def appPods
   # pod 'Erc20Kit.swift', path: '../ethereum-kit-ios/'
   pod 'UniswapKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
   # pod 'UniswapKit.swift', :path => '../ethereum-kit-ios'
-
-  pod 'EosKit.swift', git: 'https://github.com/horizontalsystems/eos-kit-ios'
-  # pod 'EosKit.swift', path: '../eos-kit-ios/'
-  pod 'EosioSwiftAbieosSerializationProvider', git: 'https://github.com/horizontalsystems/eosio-swift-abieos-serialization-provider.git'
-  # pod 'EosioSwiftAbieosSerializationProvider', path: '../eosio-swift-abieos-serialization-provider/'
-  pod 'EosioSwift', git: 'https://github.com/horizontalsystems/eosio-swift'
-  # pod 'EosioSwift', path: '../eosio-swift/'
-  pod 'EosioSwiftEcc', git: 'https://github.com/horizontalsystems/eosio-swift-ecc.git'
-  pod 'EosioSwiftSoftkeySignatureProvider', git: 'https://github.com/horizontalsystems/eosio-swift-softkey-signature-provider.git'
 
   pod 'BinanceChainKit.swift', git: 'https://github.com/horizontalsystems/binance-chain-kit-ios'
   # pod 'BinanceChainKit.swift', path: '../binance-chain-kit-ios/'
@@ -90,6 +82,10 @@ def appPods
   pod 'Down'
 
   pod 'WalletConnect', git: 'https://github.com/horizontalsystems/wallet-connect-swift', branch: 'master'
+
+  pod 'EthereumABI', git: 'https://github.com/horizontalsystems/EthereumABI'
+  pod 'Base58Swift', '~> 2.1.10'
+  pod 'UnstoppableDomainsResolution'
 end
 
 target 'Unstoppable Dev T' do

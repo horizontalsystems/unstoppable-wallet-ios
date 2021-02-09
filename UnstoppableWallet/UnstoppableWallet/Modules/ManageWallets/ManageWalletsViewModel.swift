@@ -1,13 +1,15 @@
 import RxSwift
 import RxRelay
 import RxCocoa
+import BitcoinCashKit
 
 class ManageWalletsViewModel {
     private let service: ManageWalletsService
 
     private let disposeBag = DisposeBag()
     private let viewStateRelay = BehaviorRelay<CoinToggleViewModel.ViewState>(value: .empty)
-    private let openDerivationSettingsRelay = PublishRelay<(coin: Coin, currentDerivation: MnemonicDerivation)>()
+    private let enableCoinRelay = PublishRelay<Coin>()
+    private let disableCoinRelay = PublishRelay<Coin>()
     private var filter: String?
 
     init(service: ManageWalletsService) {
@@ -20,6 +22,20 @@ class ManageWalletsViewModel {
                 })
                 .disposed(by: disposeBag)
 
+        service.enableCoinObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] coin in
+                    self?.enableCoinRelay.accept(coin)
+                })
+                .disposed(by: disposeBag)
+
+        service.cancelEnableCoinObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] coin in
+                    self?.disableCoinRelay.accept(coin)
+                })
+                .disposed(by: disposeBag)
+
         syncViewState()
     }
 
@@ -29,7 +45,7 @@ class ManageWalletsViewModel {
         switch item.state {
         case .noAccount:
             state = .toggleHidden
-        case .hasAccount(let hasWallet):
+        case .hasAccount(_, let hasWallet):
             state = .toggleVisible(enabled: hasWallet)
         }
 
@@ -64,19 +80,6 @@ class ManageWalletsViewModel {
         viewStateRelay.accept(viewState)
     }
 
-    private func enable(coin: Coin, derivationSetting: DerivationSetting? = nil) {
-        do {
-            try service.enable(coin: coin, derivationSetting: derivationSetting)
-        } catch let error as ManageWalletsService.EnableCoinError {
-            switch error {
-            case .derivationNotConfirmed(let currentDerivation):
-                openDerivationSettingsRelay.accept((coin: coin, currentDerivation: currentDerivation))
-            default: ()
-            }
-        } catch {
-        }
-    }
-
 }
 
 extension ManageWalletsViewModel: ICoinToggleViewModel {
@@ -86,7 +89,7 @@ extension ManageWalletsViewModel: ICoinToggleViewModel {
     }
 
     func onEnable(coin: Coin) {
-        enable(coin: coin)
+        service.enable(coin: coin)
     }
 
     func onDisable(coin: Coin) {
@@ -105,12 +108,16 @@ extension ManageWalletsViewModel: ICoinToggleViewModel {
 
 extension ManageWalletsViewModel {
 
-    var openDerivationSettingsSignal: Signal<(coin: Coin, currentDerivation: MnemonicDerivation)> {
-        openDerivationSettingsRelay.asSignal()
+    var disableCoinSignal: Signal<Coin> {
+        disableCoinRelay.asSignal()
     }
 
-    func onSelect(derivationSetting: DerivationSetting, coin: Coin) {
-        enable(coin: coin, derivationSetting: derivationSetting)
+    var enableCoinSignal: Signal<Coin> {
+        enableCoinRelay.asSignal()
+    }
+
+    func onAddAccount(coin: Coin) {
+        service.storeCoinToEnable(coin: coin)
     }
 
 }

@@ -3,10 +3,10 @@ import BitcoinCore
 import RxSwift
 
 class BitcoinAdapter: BitcoinBaseAdapter {
-    private let bitcoinKit: BitcoinKit
+    private let bitcoinKit: Kit
 
     init(wallet: Wallet, syncMode: SyncMode?, derivation: MnemonicDerivation?, testMode: Bool) throws {
-        guard case let .mnemonic(words, _) = wallet.account.type else {
+        guard case let .mnemonic(words, _) = wallet.account.type, words.count == 12 else {
             throw AdapterError.unsupportedAccount
         }
 
@@ -18,12 +18,12 @@ class BitcoinAdapter: BitcoinBaseAdapter {
             throw AdapterError.wrongParameters
         }
 
-        let networkType: BitcoinKit.NetworkType = testMode ? .testNet : .mainNet
+        let networkType: Kit.NetworkType = testMode ? .testNet : .mainNet
         let bip = BitcoinBaseAdapter.bip(from: walletDerivation)
         let syncMode = BitcoinBaseAdapter.kitMode(from: walletSyncMode)
         let logger = App.shared.logger.scoped(with: "BitcoinKit")
 
-        bitcoinKit = try BitcoinKit(withWords: words, bip: bip, walletId: wallet.account.id, syncMode: syncMode, networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold, logger: logger)
+        bitcoinKit = try Kit(withWords: words, bip: bip, walletId: wallet.account.id, syncMode: syncMode, networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold, logger: logger)
 
         super.init(abstractKit: bitcoinKit)
 
@@ -38,7 +38,7 @@ extension BitcoinAdapter: ISendBitcoinAdapter {
 extension BitcoinAdapter {
 
     static func clear(except excludedWalletIds: [String]) throws {
-        try BitcoinKit.clear(exceptFor: excludedWalletIds)
+        try Kit.clear(exceptFor: excludedWalletIds)
     }
 
 }

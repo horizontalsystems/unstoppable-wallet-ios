@@ -8,14 +8,14 @@ import class Erc20Kit.Transaction
 class Erc20Adapter: EthereumBaseAdapter {
     private static let approveConfirmationsThreshold: Int? = nil
     let erc20Kit: Erc20Kit.Kit
-    private let contractAddress: Address
+    private let contractAddress: EthereumKit.Address
     private let fee: Decimal
     private(set) var minimumRequiredBalance: Decimal
     private(set) var minimumSpendableAmount: Decimal?
 
     init(ethereumKit: EthereumKit.Kit, contractAddress: String, decimal: Int, fee: Decimal, minimumRequiredBalance: Decimal, minimumSpendableAmount: Decimal?) throws {
-        let address = try Address(hex: contractAddress)
-        self.erc20Kit = try Erc20Kit.Kit.instance(ethereumKit: ethereumKit, contractAddress: address)
+        let address = try EthereumKit.Address(hex: contractAddress)
+        erc20Kit = try Erc20Kit.Kit.instance(ethereumKit: ethereumKit, contractAddress: address)
         self.contractAddress = address
         self.fee = fee
         self.minimumRequiredBalance = minimumRequiredBalance
@@ -47,7 +47,7 @@ class Erc20Adapter: EthereumBaseAdapter {
             }
         }
         
-        let txHash = transaction.transactionHash.toHexString()
+        let txHash = transaction.hash.toHexString()
 
         return TransactionRecord(
             uid: txHash + String(transaction.interTransactionIndex) + contractAddress.hex,
@@ -55,35 +55,35 @@ class Erc20Adapter: EthereumBaseAdapter {
                 transactionIndex: transaction.transactionIndex ?? 0,
                 interTransactionIndex: transaction.interTransactionIndex,
                 type: type,
-                blockHeight: transaction.blockNumber,
+                blockHeight: transaction.fullTransaction.receiptWithLogs?.receipt.blockNumber,
                 confirmationsThreshold: confirmationsThreshold,
                 amount: abs(amount),
                 fee: nil,
-                date: Date(timeIntervalSince1970: transaction.timestamp),
+                date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
                 failed: transaction.isError,
                 from: transaction.from.hex,
                 to: transaction.to.hex,
                 lockInfo: nil,
                 conflictingHash: nil,
-                showRawTransaction: false
+                showRawTransaction: false,
+                memo: nil
         )
     }
 
     override func sendSingle(to address: String, value: Decimal, gasPrice: Int, gasLimit: Int, logger: Logger) -> Single<Void> {
-        guard let amount = BigUInt(value.roundedString(decimal: decimal)) else {
+        guard let amount = BigUInt(value.roundedString(decimal: decimal)),
+              let toAddress = try? EthereumKit.Address(hex: address) else {
             return Single.error(SendTransactionError.wrongAmount)
         }
 
-        do {
-            return try erc20Kit.sendSingle(to: Address(hex: address), value: amount, gasPrice: gasPrice, gasLimit: gasLimit)
-                    .do(onSubscribe: { logger.debug("Sending to Erc20Kit", save: true) })
-                    .map { _ in ()}
-                    .catchError { [weak self] error in
-                        Single.error(self?.createSendError(from: error) ?? error)
-                    }
-        } catch {
-            return Single.error(error)
-        }
+        let transactionInput = erc20Kit.transferTransactionData(to: toAddress, value: amount)
+
+        return ethereumKit.sendSingle(address: transactionInput.to, value: transactionInput.value, transactionInput: transactionInput.input, gasPrice: gasPrice, gasLimit: gasLimit)
+            .do(onSubscribe: { logger.debug("Sending to Erc20Kit", save: true) })
+            .map { _ in ()}
+            .catchError { [weak self] error in
+                Single.error(self?.createSendError(from: error) ?? error)
+            }
     }
 
 }
@@ -100,10 +100,11 @@ extension Erc20Adapter {
 extension Erc20Adapter: IAdapter {
 
     func start() {
-        erc20Kit.refresh()
+        erc20Kit.start()
     }
 
     func stop() {
+        erc20Kit.stop()
     }
 
     func refresh() {
@@ -118,15 +119,11 @@ extension Erc20Adapter: IAdapter {
 
 extension Erc20Adapter: IBalanceAdapter {
 
-    var state: AdapterState {
-        switch erc20Kit.syncState {
-        case .synced: return .synced
-        case .notSynced(let error): return .notSynced(error: error.convertedError)
-        case .syncing: return .syncing(progress: 50, lastBlockDate: nil)
-        }
+    var balanceState: AdapterState {
+        convertToAdapterState(ethereumSyncState: erc20Kit.syncState)
     }
 
-    var stateUpdatedObservable: Observable<Void> {
+    var balanceStateUpdatedObservable: Observable<Void> {
         erc20Kit.syncStateObservable.map { _ in () }
     }
 
@@ -147,7 +144,7 @@ extension Erc20Adapter: ISendEthereumAdapter {
     }
 
     var ethereumBalance: Decimal {
-        balanceDecimal(kitBalance: ethereumKit.balance, decimal: EthereumAdapter.decimal)
+        balanceDecimal(kitBalance: ethereumKit.accountState?.balance, decimal: EthereumAdapter.decimal)
     }
 
     func fee(gasPrice: Int, gasLimit: Int) -> Decimal {
@@ -160,13 +157,12 @@ extension Erc20Adapter: ISendEthereumAdapter {
             return Single.error(SendTransactionError.wrongAmount)
         }
 
-        var tokenAddress: Address?
-        if let address = address {
-            tokenAddress = try? Address(hex: address)
+        guard let address = address, let toAddress = try? EthereumKit.Address(hex: address) else {
+            return Single.just(EthereumKit.Kit.defaultGasLimit)
         }
 
-
-        return erc20Kit.estimateGas(to: tokenAddress, contractAddress: contractAddress, value: amount, gasPrice: gasPrice)
+        let data = erc20Kit.transferTransactionData(to: toAddress, value: amount)
+        return ethereumKit.estimateGas(transactionData: data, gasPrice: gasPrice)
     }
 
 }
@@ -177,7 +173,7 @@ extension Erc20Adapter: IErc20Adapter {
         erc20Kit.pendingTransactions().map { transactionRecord(fromTransaction: $0) }
     }
 
-    func allowanceSingle(spenderAddress: Address, defaultBlockParameter: DefaultBlockParameter = .latest) -> Single<Decimal> {
+    func allowanceSingle(spenderAddress: EthereumKit.Address, defaultBlockParameter: DefaultBlockParameter = .latest) -> Single<Decimal> {
         erc20Kit.allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: defaultBlockParameter)
                 .map { [unowned self] allowanceString in
                     if let significand = Decimal(string: allowanceString) {
@@ -191,6 +187,14 @@ extension Erc20Adapter: IErc20Adapter {
 }
 
 extension Erc20Adapter: ITransactionsAdapter {
+
+    var transactionState: AdapterState {
+        convertToAdapterState(ethereumSyncState: erc20Kit.transactionsSyncState)
+    }
+
+    var transactionStateUpdatedObservable: Observable<Void> {
+        erc20Kit.transactionsSyncStateObservable.map { _ in () }
+    }
 
     var transactionRecordsObservable: Observable<[TransactionRecord]> {
         erc20Kit.transactionsObservable.map { [weak self] in

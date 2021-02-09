@@ -14,7 +14,7 @@ class SendEthereumErrorCell: UITableViewCell {
         selectionStyle = .none
         clipsToBounds = true
 
-        addSubview(errorLabel)
+        contentView.addSubview(errorLabel)
         errorLabel.snp.makeConstraints { maker in
             maker.top.equalToSuperview()
             maker.leading.trailing.equalToSuperview().inset(SendEthereumErrorCell.padding)

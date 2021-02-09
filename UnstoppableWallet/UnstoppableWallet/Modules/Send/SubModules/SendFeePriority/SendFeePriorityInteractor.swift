@@ -1,23 +1,26 @@
 import Foundation
 import RxSwift
+import CurrencyKit
 
 class SendFeePriorityInteractor {
     var delegate: ISendFeePriorityInteractorDelegate?
 
     private var disposeBag = DisposeBag()
     private let provider: IFeeRateProvider
+    private let currencyKit: ICurrencyKit
 
-    init(provider: IFeeRateProvider) {
+    init(provider: IFeeRateProvider, currencyKit: ICurrencyKit) {
         self.provider = provider
+        self.currencyKit = currencyKit
     }
 
 }
 
 extension SendFeePriorityInteractor: ISendFeePriorityInteractor {
 
-    func syncFeeRate() {
+    func syncFeeRate(priority: FeeRatePriority) {
         disposeBag = DisposeBag()
-        provider.feeRate
+        provider.feeRate(priority: priority)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onSuccess: delegate?.didUpdate, onError: delegate?.didReceiveError)
@@ -31,6 +34,10 @@ extension SendFeePriorityInteractor: ISendFeePriorityInteractor {
 
     var defaultFeeRatePriority: FeeRatePriority {
         provider.defaultFeeRatePriority
+    }
+
+    var baseCurrency: Currency {
+        currencyKit.baseCurrency
     }
 
 }

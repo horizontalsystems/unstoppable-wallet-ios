@@ -54,13 +54,13 @@ class SwapConfirmationViewModel {
 
         var additionalData = [SwapModule.ConfirmationAdditionalViewItem]()
 
-        if let slippage = viewItemHelper.slippage(tradeService.tradeOptions.allowedSlippage) {
+        if let slippage = viewItemHelper.slippage(tradeService.swapTradeOptions.allowedSlippage) {
             additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.advanced_settings.slippage".localized, value: slippage))
         }
-        if let deadline = viewItemHelper.deadline(tradeService.tradeOptions.ttl) {
+        if let deadline = viewItemHelper.deadline(tradeService.swapTradeOptions.ttl) {
             additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.advanced_settings.deadline".localized, value: deadline))
         }
-        if let recipient = tradeService.tradeOptions.recipient?.hex {
+        if let recipient = tradeService.swapTradeOptions.recipient?.title {
             additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.advanced_settings.recipient_address".localized, value: recipient))
         }
 
@@ -81,8 +81,11 @@ class SwapConfirmationViewModel {
         }
 
         if let transaction = transactionService.transactionStatus.data {
-            let fee = ethereumCoinService.amountData(value: transaction.gasData.fee).formattedString
-            additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "swap.fee".localized, value: fee))
+            let estimatedFee = ethereumCoinService.amountData(value: transaction.gasData.estimatedFee).formattedString
+            additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "send.estimated_fee".localized, value: estimatedFee))
+
+            let maxFee = ethereumCoinService.amountData(value: transaction.gasData.fee).formattedString
+            additionalData.append(SwapModule.ConfirmationAdditionalViewItem(title: "send.max_fee".localized, value: maxFee))
         }
 
         additionalDataRelay.accept(additionalData)

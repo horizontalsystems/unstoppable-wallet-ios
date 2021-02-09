@@ -19,7 +19,6 @@ class PrivacyPresenter {
     private func updateConnection() {
         view?.set(connectionItems: [
             PrivacyViewItem(iconName: "ETH", title: "Ethereum", value: interactor.ethereumConnection.address, changable: false),
-            PrivacyViewItem(iconName: "EOS", title: "EOS", value: "eos.greymass.com", changable: false),
             PrivacyViewItem(iconName: "BNB", title: "Binance", value: "dex.binance.com", changable: false)
         ])
     }
@@ -44,12 +43,8 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
         updateConnection()
 
         if !standardCreatedWalletExists {
-            syncItems = interactor.syncSettings.compactMap {(setting, coins, changeable) in
-                guard let coin = coins.first else {
-                    return nil
-                }
-
-                return PrivacySyncItem(coin: coin, setting: setting, changeable: changeable)
+            syncItems = interactor.syncSettings.compactMap {(setting, coin, changeable) in
+                PrivacySyncItem(coin: coin, setting: setting, changeable: changeable)
             }
 
             updateSync()

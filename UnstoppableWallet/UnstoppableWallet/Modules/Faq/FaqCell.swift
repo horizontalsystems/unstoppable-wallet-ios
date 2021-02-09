@@ -2,7 +2,7 @@ import UIKit
 import ThemeKit
 
 class FaqCell: BaseSelectableThemeCell {
-    private static let padding: CGFloat = .margin4x
+    private static let padding: CGFloat = .margin16
     private static let font: UIFont = .subhead1
 
     private let label = UILabel()
@@ -10,7 +10,7 @@ class FaqCell: BaseSelectableThemeCell {
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        addSubview(label)
+        wrapperView.addSubview(label)
         label.snp.makeConstraints { maker in
             maker.edges.equalToSuperview().inset(FaqCell.padding)
         }

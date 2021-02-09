@@ -15,7 +15,8 @@ struct WalletConnectSendEthereumTransactionRequestModule {
 
         let transactionService = EthereumTransactionService(
                 ethereumKit: ethereumKit,
-                feeRateProvider: App.shared.feeRateProviderFactory.provider(coinType: .ethereum) as! EthereumFeeRateProvider
+                feeRateProvider: App.shared.feeRateProviderFactory.provider(coinType: .ethereum) as! EthereumFeeRateProvider,
+                gasLimitSurchargePercent: 10
         )
 
         let service = WalletConnectSendEthereumTransactionRequestService(

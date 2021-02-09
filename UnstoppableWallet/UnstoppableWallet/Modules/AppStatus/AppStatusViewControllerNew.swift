@@ -86,25 +86,25 @@ extension AppStatusViewControllerNew: SectionsDataSource {
                     rows: [
                         Row<D2Cell>(
                                 id: "linked-wallets",
-                                height: .heightSingleLineCell,
+                                height: .heightCell48,
                                 bind: { [weak self] cell, _ in
                                     cell.set(backgroundStyle: .lawrence)
                                     cell.title = "app_status.linked_wallets".localized
                                     cell.value = self.map { "\($0.viewModel.linkedWalletsCount)" }
                                     cell.valueColor = .themeLeah
                                 },
-                                action: { [weak self] cell in
+                                action: { cell in
 
                                 }
                         ),
                         Row<D1Cell>(
                                 id: "version-history",
-                                height: .heightSingleLineCell,
+                                height: .heightCell48,
                                 bind: { cell, _ in
-                                    cell.set(backgroundStyle: .lawrence, bottomSeparator: true)
+                                    cell.set(backgroundStyle: .lawrence, isLast: true)
                                     cell.title = "app_status.version_history".localized
                                 },
-                                action: { [weak self] cell in
+                                action: { cell in
 
                                 }
                         )
@@ -117,7 +117,7 @@ extension AppStatusViewControllerNew: SectionsDataSource {
                     rows: viewModel.blockchainViewItems.enumerated().map { index, viewItem in
                         Row<D2Cell>(
                                 id: "blockchain-\(index)",
-                                height: .heightSingleLineCell,
+                                height: .heightCell48,
                                 bind: { cell, _ in
                                     cell.set(backgroundStyle: .lawrence) // todo: show bottom separator for last item
                                     cell.title = viewItem.name
@@ -134,7 +134,7 @@ extension AppStatusViewControllerNew: SectionsDataSource {
                                         cell.valueColor = .themeRemus
                                     }
                                 },
-                                action: { [weak self] cell in
+                                action: { cell in
 
                                 }
                         )

@@ -1,4 +1,5 @@
 import RxSwift
+import RxRelay
 
 class AccountManager {
     private let storage: IAccountStorage
@@ -6,9 +7,18 @@ class AccountManager {
 
     private let accountsSubject = PublishSubject<[Account]>()
     private let deleteAccountSubject = PublishSubject<Account>()
+    private let lostAccountsRelay = BehaviorRelay<Bool>(value: false)
 
     init(storage: IAccountStorage) {
         self.storage = storage
+    }
+
+    private func clearAccounts(ids: [String]) {
+        ids.forEach {
+            storage.delete(accountId: $0)
+        }
+
+        lostAccountsRelay.accept(true)
     }
 
 }
@@ -16,21 +26,25 @@ class AccountManager {
 extension AccountManager: IAccountManager {
 
     var accounts: [Account] {
-        return cache.accounts
+        cache.accounts
     }
 
     func account(coinType: CoinType) -> Account? {
-        return accounts.first { account in
-            return coinType.canSupport(accountType: account.type)
+        accounts.first { account in
+            coinType.canSupport(accountType: account.type)
         }
     }
 
     var accountsObservable: Observable<[Account]> {
-        return accountsSubject.asObservable()
+        accountsSubject.asObservable()
     }
 
     var deleteAccountObservable: Observable<Account> {
-        return deleteAccountSubject.asObservable()
+        deleteAccountSubject.asObservable()
+    }
+
+    var lostAccountsObservable: Observable<Bool> {
+        lostAccountsRelay.asObservable()
     }
 
     func preloadAccounts() {
@@ -66,6 +80,35 @@ extension AccountManager: IAccountManager {
         accountsSubject.onNext(accounts)
     }
 
+    func handleLaunch() {
+        let lostAccountIds = storage.lostAccountIds()
+        guard !lostAccountIds.isEmpty else {
+            return
+        }
+
+        clearAccounts(ids: lostAccountIds)
+    }
+
+    func handleForeground() {
+        let lostAccountIds = storage.lostAccountIds()
+        guard !lostAccountIds.isEmpty else {
+            return
+        }
+
+        clearAccounts(ids: lostAccountIds)
+
+        let lostAccounts = cache.accounts.filter { account in
+            lostAccountIds.contains(account.id)
+        }
+
+        lostAccounts.forEach { account in
+            cache.remove(account: account)
+            deleteAccountSubject.onNext(account)
+        }
+
+        accountsSubject.onNext(accounts)
+    }
+
 }
 
 extension AccountManager {
@@ -74,7 +117,7 @@ extension AccountManager {
         private var array = [Account]()
 
         var accounts: [Account] {
-            return array
+            array
         }
 
         func set(accounts: [Account]) {
