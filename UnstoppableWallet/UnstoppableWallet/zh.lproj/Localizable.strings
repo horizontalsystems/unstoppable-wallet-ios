@@ -298,10 +298,10 @@
 "market.tab_bar_item" = "市场";
 "market.title" = "市场";
 "market.category.overview" = "Overview";
-"market.category.discovery" = "发现";
-"market.category.watchlist" = "关注列表";
+"market.category.discovery" = "Discovery";
+"market.category.watchlist" = "Watchlist";
 "market.total_market_cap" = "总计\n市场价值";
-"market.24h_volume" = "24小时交易量";
+"market.24h_volume" = "24h Volume";
 "market.btc_dominance" = "BTC主导";
 "market.defi_cap" = "DeFi市场价值";
 "market.defi_tvl" = "DeFi中的TVL";
@@ -309,9 +309,9 @@
 "market.sync_error" = "Sync Error";
 
 "market.top.section.header.see_all" = "查看全部";
-"market.top.section.header.top_gainers" = "最高盈利";
-"market.top.section.header.top_loosers" = "最高受损";
-"market.top.section.header.top_volume" = "最高交易量";
+"market.top.section.header.top_gainers" = "Top Gainers";
+"market.top.section.header.top_loosers" = "Top Loosers";
+"market.top.section.header.top_volume" = "Top By Volume";
 "market.top.volume.title" = "交易量";
 "market.top.market_cap.title" = "市场价值";
 
@@ -322,12 +322,12 @@
 "market.sort_by" = "排序方式";
 "market.changes" = "更改";
 
-"market.top.highest_cap" = "最高市场价值";
-"market.top.lowest_cap" = "最低市场价值";
-"market.top.highest_volume" = "最高交易量";
-"market.top.lowest_volume" = "最低交易量";
-"market.top.top_gainers" = "最高盈利";
-"market.top.top_loosers" = "最高受损";
+"market.top.highest_cap" = "Highest Cap";
+"market.top.lowest_cap" = "Lowest Cap";
+"market.top.highest_volume" = "Highest Volume";
+"market.top.lowest_volume" = "Lowest Volume";
+"market.top.top_gainers" = "Top Gainers";
+"market.top.top_loosers" = "Top Loosers";
 
 "market.top.period_1h" = "1 小时";
 "market.top.period_24h" = "24 小时";
