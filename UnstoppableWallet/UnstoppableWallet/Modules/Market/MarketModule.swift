@@ -234,7 +234,7 @@ extension MarketModule {  // ViewModel Items
             coinName = item.coinName
 
             let rateValue = CurrencyValue(currency: currency, value: item.price)
-            rate = ValueFormatter.instance.format(currencyValue: rateValue) ?? ""
+            rate = ValueFormatter.instance.format(currencyValue: rateValue, fractionPolicy: .threshold(high: 1000, low: 0.000001), trimmable: false) ?? ""
 
             switch item.score {
             case .rank(let index): score = .rank(index.description)
