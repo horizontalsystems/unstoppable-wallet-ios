@@ -312,7 +312,7 @@
 
 "market.top.section.header.see_all" = "See All";
 "market.top.section.header.top_gainers" = "Top Gainers";
-"market.top.section.header.top_loosers" = "Top Loosers";
+"market.top.section.header.top_losers" = "Top Losers";
 "market.top.section.header.top_volume" = "Top By Volume";
 "market.top.volume.title" = "Vol";
 "market.top.market_cap.title" = "MCap";
@@ -329,7 +329,7 @@
 "market.top.highest_volume" = "Highest Volume";
 "market.top.lowest_volume" = "Lowest Volume";
 "market.top.top_gainers" = "Top Gainers";
-"market.top.top_loosers" = "Top Loosers";
+"market.top.top_losers" = "Top Losers";
 
 "market.top.period_1h" = "1 hour";
 "market.top.period_24h" = "24 hours";

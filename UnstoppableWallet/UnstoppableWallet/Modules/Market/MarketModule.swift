@@ -126,7 +126,7 @@ extension MarketModule {
             case .highestVolume: return "market.top.highest_volume".localized
             case .lowestVolume: return "market.top.lowest_volume".localized
             case .topGainers: return "market.top.top_gainers".localized
-            case .topLosers: return "market.top.top_loosers".localized
+            case .topLosers: return "market.top.top_losers".localized
             }
         }
     }
