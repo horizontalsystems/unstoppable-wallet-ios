@@ -18,7 +18,9 @@ class AccountManager {
             storage.delete(accountId: $0)
         }
 
-        lostAccountsRelay.accept(true)
+        if storage.allAccounts.isEmpty {
+            lostAccountsRelay.accept(true)
+        }
     }
 
 }
