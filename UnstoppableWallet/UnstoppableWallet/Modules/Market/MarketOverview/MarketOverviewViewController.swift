@@ -90,7 +90,7 @@ class MarketOverviewViewController: ThemeViewController {
                         cell.title = "market.top.section.header.top_gainers".localized
                     case .topLosers:
                         cell.titleImage = UIImage(named: "circle_down_20")
-                        cell.title = "market.top.section.header.top_loosers".localized
+                        cell.title = "market.top.section.header.top_losers".localized
                     case .topVolume:
                         cell.titleImage = UIImage(named: "chart_20")
                         cell.title = "market.top.section.header.top_volume".localized
