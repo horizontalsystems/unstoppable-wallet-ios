@@ -784,3 +784,9 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "enable_coins.enabling" = "Enabling...";
 "enable_coins.enabled_coins" = "Enabled %@ coins";
 "enable_coins.enabled_no_coins" = "No coins found with balance";
+
+// Onboarding
+
+"onboarding.balance.description" = "You don’t have an installed wallet yet. Create or restore an existing wallet.";
+"onboarding.balance.create" = "Create";
+"onboarding.balance.restore" = "Restore";
