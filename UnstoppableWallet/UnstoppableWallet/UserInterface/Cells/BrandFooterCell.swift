@@ -17,6 +17,7 @@ class BrandFooterCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         backgroundColor = .clear
+        selectionStyle = .none
 
         contentView.addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
