@@ -8,19 +8,18 @@ class MainViewController: ThemeTabBarController {
 
     private let viewModel: MainViewModel
 
-    init(viewModel: MainViewModel, viewControllers: [UIViewController], selectedIndex: Int) {
+    private let marketModule = ThemeNavigationController(rootViewController: MarketModule.viewController())
+    private let balanceModule = ThemeNavigationController(rootViewController: BalanceRouter.module())
+    private let onboardingModule = ThemeNavigationController(rootViewController: OnboardingBalanceViewController())
+    private let transactionsModule = ThemeNavigationController(rootViewController: TransactionsRouter.module())
+    private let settingsModule = ThemeNavigationController(rootViewController: MainSettingsModule.viewController())
+
+    init(viewModel: MainViewModel, selectedIndex: Int) {
         self.viewModel = viewModel
 
         super.init()
 
-        self.viewControllers = viewControllers
         self.selectedIndex = selectedIndex
-
-        viewModel.settingsBadgeDriver
-                .drive(onNext: { [weak self] visible in
-                    self?.setSettingsBadge(visible: visible)
-                })
-                .disposed(by: disposeBag)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -30,20 +29,35 @@ class MainViewController: ThemeTabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        subscribe(disposeBag, viewModel.balanceTabStateDriver) { [weak self] in self?.sync(balanceTabState: $0) }
+        subscribe(disposeBag, viewModel.transactionsTabEnabledDriver) { [weak self] in self?.syncTransactionsTab(enabled: $0) }
+        subscribe(disposeBag, viewModel.settingsBadgeDriver) { [weak self] in self?.setSettingsBadge(visible: $0) }
+
         viewModel.onLoad()
     }
 
-    private func setSettingsBadge(visible: Bool) {
-        guard let viewControllers = viewControllers else {
-            return
+    private func sync(balanceTabState: MainViewModel.BalanceTabState) {
+        let balanceTabModule: UIViewController
+
+        switch balanceTabState {
+        case .balance: balanceTabModule = balanceModule
+        case .onboarding: balanceTabModule = onboardingModule
         }
 
-        for viewController in viewControllers {
-            if let navigationController = viewController as? UINavigationController, navigationController.viewControllers.first is MainSettingsViewController {
-                viewController.tabBarItem.setDotBadge(visible: visible)
-                break
-            }
-        }
+        viewControllers = [
+            marketModule,
+            balanceTabModule,
+            transactionsModule,
+            settingsModule
+        ]
+    }
+
+    private func syncTransactionsTab(enabled: Bool) {
+        transactionsModule.viewControllers.first?.tabBarItem.isEnabled = enabled
+    }
+
+    private func setSettingsBadge(visible: Bool) {
+        settingsModule.viewControllers.first?.tabBarItem.setDotBadge(visible: visible)
     }
 
 }

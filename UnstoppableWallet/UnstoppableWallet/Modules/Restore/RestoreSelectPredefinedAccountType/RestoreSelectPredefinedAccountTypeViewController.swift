@@ -30,6 +30,10 @@ class RestoreSelectPredefinedAccountTypeViewController: ThemeViewController {
 
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "button.back".localized, style: .plain, target: nil, action: nil)
 
+        if navigationController?.viewControllers.first == self {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
+        }
+
         tableView.registerCell(forClass: RestoreSelectPredefinedAccountTypeCell.self)
         tableView.registerHeaderFooter(forClass: TopDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
@@ -43,6 +47,10 @@ class RestoreSelectPredefinedAccountTypeViewController: ThemeViewController {
         }
 
         tableView.buildSections()
+    }
+
+    @objc private func onTapCancel() {
+        dismiss(animated: true)
     }
 
     private var walletRows: [RowProtocol] {
