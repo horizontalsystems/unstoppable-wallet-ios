@@ -27,7 +27,7 @@ class OnboardingBalanceViewController: ThemeViewController {
             maker.top.equalTo(view.safeAreaLayoutGuide)
         }
 
-        let cautionView = CautionView()
+        let cautionView = CircleCautionView()
 
         cautionWrapper.addSubview(cautionView)
         cautionView.snp.makeConstraints { maker in
@@ -35,7 +35,7 @@ class OnboardingBalanceViewController: ThemeViewController {
             maker.centerY.equalToSuperview()
         }
 
-        cautionView.image = UIImage(named: "rate_48")
+        cautionView.image = UIImage(named: "wallet_48")
         cautionView.text = "onboarding.balance.description".localized
 
         let createButton = ThemeButton()
