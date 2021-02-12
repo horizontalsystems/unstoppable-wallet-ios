@@ -5,13 +5,14 @@
       "scale" : "1x"
     },
     {
-      "filename" : "sETH@2x.png",
+
       "idiom" : "universal",
+      "filename" : "SETH@2x.png",
       "scale" : "2x"
     },
     {
-      "filename" : "sETH@3x.png",
       "idiom" : "universal",
+      "filename" : "SETH@3x.png",
       "scale" : "3x"
     }
   ],
