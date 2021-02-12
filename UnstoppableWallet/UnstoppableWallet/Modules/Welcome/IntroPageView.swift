@@ -4,7 +4,7 @@ import ThemeKit
 
 class IntroPageView: UIView {
 
-    init(title: String?, description: String) {
+    init(title: String?, description: String, bottomInset: CGFloat) {
         super.init(frame: .zero)
 
         let wrapperView = UIView()
@@ -12,7 +12,8 @@ class IntroPageView: UIView {
         addSubview(wrapperView)
         wrapperView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.bottom.equalTo(self.safeAreaLayoutGuide)
+            maker.top.equalTo(self.safeAreaLayoutGuide)
+            maker.bottom.equalTo(self.safeAreaLayoutGuide).inset(bottomInset)
         }
 
         let textWrapperView = UIView()
@@ -20,20 +21,21 @@ class IntroPageView: UIView {
         wrapperView.addSubview(textWrapperView)
         textWrapperView.snp.makeConstraints { maker in
             maker.leading.trailing.bottom.equalToSuperview()
-            maker.height.equalToSuperview().multipliedBy(2.0 / 5.0)
+            maker.height.equalToSuperview().multipliedBy(1.0 / 3.0)
         }
 
         let titleLabel = UILabel()
 
         textWrapperView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin12x)
-            maker.top.equalToSuperview().offset(title == nil ? 0 : CGFloat.margin4x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin48)
+            maker.top.equalToSuperview()
             if title == nil {
                 maker.height.equalTo(0)
             }
         }
 
+        titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .center
         titleLabel.font = .title3
         titleLabel.textColor = .themeLight
@@ -43,8 +45,8 @@ class IntroPageView: UIView {
 
         textWrapperView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin12x)
-            maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin4x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin48)
+            maker.top.equalTo(titleLabel.snp.bottom).offset(title == nil ? 0 : CGFloat.margin16)
         }
 
         descriptionLabel.numberOfLines = 0
