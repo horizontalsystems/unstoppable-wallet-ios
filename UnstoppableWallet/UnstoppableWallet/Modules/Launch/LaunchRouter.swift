@@ -16,7 +16,7 @@ class LaunchRouter {
         switch presenter.launchMode {
         case .jailbreak: return NoPasscodeViewController(mode: .jailbreak)
         case .noPasscode: return NoPasscodeViewController(mode: .noPasscode)
-        case .intro: return WelcomeScreenRouter.module()
+        case .intro: return WelcomeScreenViewController()
         case .unlock: return LockScreenRouter.module(pinKit: App.shared.pinKit, appStart: true)
         case .main: return MainModule.instance()
         }

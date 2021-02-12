@@ -690,15 +690,15 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 
 // Intro
 
-"intro.skip" = "Skip";
 "intro.next" = "Next";
+"intro.start" = "Start";
 "intro.brand.description" = "Store and Trade crypto. Have full control over assets. Remain anonymous.";
-"intro.independence.title" = "Be Independent";
-"intro.independence.description" = "Unstoppable is built to ensure users are able to access funds at any time from anywhere.";
+"intro.independence.title" = "Make finances independent";
+"intro.independence.description" = "The funds are under your exclusive control and no other entity";
+"intro.privacy.title" = "Keep your privacy safe";
+"intro.privacy.description" = "Remain incognito and be able to keep your information private";
 "intro.knowledge.title" = "Invest Wisely";
-"intro.knowledge.description" = "Unstoppable integrates unmatched trading, monitoring and analytical instruments.";
-"intro.privacy.title" = "Stay Private";
-"intro.privacy.description" = "Use this wallet to remain incognito and be able to keep your information private.";
+"intro.knowledge.description" = "Unmatched trading, monitoring and analytical instruments";
 
 // Guides
 
