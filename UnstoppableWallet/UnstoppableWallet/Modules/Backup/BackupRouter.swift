@@ -10,7 +10,7 @@ extension BackupRouter: IBackupRouter {
 
     func showUnlock(delegate: IUnlockDelegate) {
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: 48, right: 0)
-        viewController?.present(App.shared.pinKit.unlockPinModule(delegate: delegate, biometryUnlockMode: .disabled, insets: insets, cancellable: true), animated: true)
+        viewController?.present(App.shared.pinKit.unlockPinModule(delegate: delegate, biometryUnlockMode: .disabled, insets: insets, cancellable: true, autoDismiss: true), animated: true)
     }
 
     func showBackup(account: Account, predefinedAccountType: PredefinedAccountType, delegate: IBackupDelegate) {
