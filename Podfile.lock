@@ -506,7 +506,7 @@ CHECKOUT OPTIONS:
     :commit: ff3f1f23fbd15077342c6ef002f329021f3c1507
     :git: https://github.com/horizontalsystems/component-kit-ios/
   PinKit.swift:
-    :commit: ff3f1f23fbd15077342c6ef002f329021f3c1507
+    :commit: 87ec7eef413711ef21abb76bb6ce47a53ec40e66
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ScanQrKit.swift:
     :commit: ff3f1f23fbd15077342c6ef002f329021f3c1507

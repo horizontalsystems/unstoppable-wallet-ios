@@ -132,7 +132,7 @@ class WelcomeScreenViewController: UIViewController {
     }
 
     @objc private func onTapStart() {
-        UIApplication.shared.keyWindow?.set(newRootController: MainModule.instance(selectedTab: .market))
+        UIApplication.shared.keyWindow?.set(newRootController: MainModule.instance())
     }
 
     private func onSwitchSlide(index: Int) {

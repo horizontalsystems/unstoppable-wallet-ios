@@ -2,9 +2,11 @@ import PinKit
 
 class LockScreenPresenter {
     private let router: ILockScreenRouter
+    private let appStart: Bool
 
-    init(router: ILockScreenRouter) {
+    init(router: ILockScreenRouter, appStart: Bool) {
         self.router = router
+        self.appStart = appStart
     }
 
 }
@@ -12,7 +14,9 @@ class LockScreenPresenter {
 extension LockScreenPresenter: IUnlockDelegate {
 
     func onUnlock() {
-        router.dismiss()
+        if appStart {
+            router.reloadAppInterface()
+        }
     }
 
     func onCancelUnlock() {
