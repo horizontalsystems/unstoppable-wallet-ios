@@ -13,8 +13,12 @@ extension AddTokenSelectorPresenter: IAddTokenSelectorViewDelegate {
         router.closeAndShowAddErc20Token()
     }
 
-    func onTapBinance() {
-        router.closeAndShowAddBinanceToken()
+    func onTapBep20() {
+        router.closeAndShowAddBep20Token()
+    }
+
+    func onTapBep2() {
+        router.closeAndShowAddBep2Token()
     }
 
     func onTapClose() {

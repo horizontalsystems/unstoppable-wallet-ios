@@ -21,8 +21,16 @@ extension AddTokenSelectorRouter: IAddTokenSelectorRouter {
         }
     }
 
-    func closeAndShowAddBinanceToken() {
-        let module = AddBinanceTokenModule.viewController()
+    func closeAndShowAddBep20Token() {
+        let module = AddBep20TokenModule.viewController()
+
+        viewController?.dismiss(animated: true) { [weak self] in
+            self?.sourceViewController?.present(module, animated: true)
+        }
+    }
+
+    func closeAndShowAddBep2Token() {
+        let module = AddBep2TokenModule.viewController()
 
         viewController?.dismiss(animated: true) { [weak self] in
             self?.sourceViewController?.present(module, animated: true)

@@ -1,11 +1,13 @@
 protocol IAddTokenSelectorViewDelegate {
     func onTapErc20()
-    func onTapBinance()
+    func onTapBep20()
+    func onTapBep2()
     func onTapClose()
 }
 
 protocol IAddTokenSelectorRouter {
     func closeAndShowAddErc20Token()
-    func closeAndShowAddBinanceToken()
+    func closeAndShowAddBep20Token()
+    func closeAndShowAddBep2Token()
     func close()
 }
