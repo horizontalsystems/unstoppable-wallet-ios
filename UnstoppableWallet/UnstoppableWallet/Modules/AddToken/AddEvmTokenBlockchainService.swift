@@ -5,19 +5,18 @@ import HsToolKit
 import EthereumKit
 
 protocol IAddEvmTokenResolver {
-    func apiUrl(testMode: Bool) -> String
+    var apiUrl: String { get }
+    var explorerKey: String { get }
     func does(coin: Coin, matchReference reference: String) -> Bool
     func coinType(address: String) -> CoinType
 }
 
 class AddEvmTokenBlockchainService {
     private let resolver: IAddEvmTokenResolver
-    private let appConfigProvider: IAppConfigProvider
     private let networkManager: NetworkManager
 
-    init(resolver: IAddEvmTokenResolver, appConfigProvider: IAppConfigProvider, networkManager: NetworkManager) {
+    init(resolver: IAddEvmTokenResolver, networkManager: NetworkManager) {
         self.resolver = resolver
-        self.appConfigProvider = appConfigProvider
         self.networkManager = networkManager
     }
 
@@ -42,11 +41,10 @@ extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
             "contractaddress": reference,
             "page": 1,
             "offset": 1,
-            "apikey": appConfigProvider.etherscanKey
+            "apikey": resolver.explorerKey
         ]
 
-        let apiUrl = resolver.apiUrl(testMode: appConfigProvider.testMode)
-        let request = networkManager.session.request(apiUrl, parameters: parameters)
+        let request = networkManager.session.request(resolver.apiUrl, parameters: parameters)
 
         return networkManager.single(request: request, mapper: ApiMapper(coinType: resolver.coinType(address: reference)) )
     }

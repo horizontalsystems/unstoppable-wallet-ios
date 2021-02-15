@@ -30,6 +30,8 @@
 	<string>${default_words_24}</string>
 	<key>EtherscanApiKey</key>
 	<string>${etherscan_api_key}</string>
+	<key>BscscanApiKey</key>
+	<string>${bscscan_api_key}</string>
 	<key>FaqIndexUrl</key>
 	<string>${faq_index_url}</string>
 	<key>GuidesIndexUrl</key>

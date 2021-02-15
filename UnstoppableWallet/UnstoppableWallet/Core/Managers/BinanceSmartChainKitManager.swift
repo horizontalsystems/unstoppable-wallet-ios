@@ -2,9 +2,7 @@ import RxSwift
 import EthereumKit
 import Erc20Kit
 
-class EthereumKitManager {
-    weak var ethereumRpcModeSettingsManager: IEthereumRpcModeSettingsManager?
-
+class BinanceSmartChainKitManager {
     private let appConfigProvider: IAppConfigProvider
     weak var evmKit: EthereumKit.Kit?
 
@@ -19,21 +17,19 @@ class EthereumKitManager {
             return evmKit
         }
 
-        guard case let .mnemonic(words, _) = account.type, words.count == 12 else {
+        guard case let .mnemonic(words, _) = account.type, words.count == 24 else {
             throw AdapterError.unsupportedAccount
         }
 
-        let networkType: NetworkType = appConfigProvider.testMode ? .ropsten : .ethMainNet
-
-        guard let syncSource = EthereumKit.Kit.infuraWebsocketSyncSource(networkType: networkType, projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret) else {
+        guard let syncSource = EthereumKit.Kit.defaultBscWebsocketSyncSource() else {
             throw AdapterError.wrongParameters
         }
 
         let evmKit = try EthereumKit.Kit.instance(
                 words: words,
-                networkType: networkType,
+                networkType: .bscMainNet,
                 syncSource: syncSource,
-                etherscanApiKey: appConfigProvider.etherscanKey,
+                etherscanApiKey: appConfigProvider.bscscanKey,
                 walletId: account.id,
                 minLogLevel: .error
         )

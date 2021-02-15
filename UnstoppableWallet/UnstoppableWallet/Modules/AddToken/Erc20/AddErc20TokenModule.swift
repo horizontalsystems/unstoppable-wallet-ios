@@ -4,8 +4,7 @@ struct AddErc20TokenModule {
 
     static func viewController() -> UIViewController {
         let blockchainService = AddEvmTokenBlockchainService(
-                resolver: AddErc20TokenResolver(),
-                appConfigProvider: App.shared.appConfigProvider,
+                resolver: AddErc20TokenResolver(appConfigProvider: App.shared.appConfigProvider),
                 networkManager: App.shared.networkManager
         )
 

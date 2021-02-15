@@ -3,11 +3,11 @@ import RxSwift
 import BigInt
 import HsToolKit
 
-class EthereumAdapter: EthereumBaseAdapter {
+class EvmAdapter: BaseEvmAdapter {
     static let decimal = 18
 
-    init(ethereumKit: EthereumKit.Kit) {
-        super.init(ethereumKit: ethereumKit, decimal: EthereumAdapter.decimal)
+    init(evmKit: EthereumKit.Kit) {
+        super.init(evmKit: evmKit, decimal: EvmAdapter.decimal)
     }
 
     private func convertAmount(amount: BigUInt, fromAddress: EthereumKit.Address) -> Decimal {
@@ -15,7 +15,7 @@ class EthereumAdapter: EthereumBaseAdapter {
             return 0
         }
 
-        let fromMine = fromAddress == ethereumKit.receiveAddress
+        let fromMine = fromAddress == evmKit.receiveAddress
         let sign: FloatingPointSign = fromMine ? .minus : .plus
         return Decimal(sign: sign, exponent: -decimal, significand: significand)
     }
@@ -53,7 +53,7 @@ class EthereumAdapter: EthereumBaseAdapter {
                 interTransactionIndex: 0,
                 type: type,
                 blockHeight: receipt?.blockNumber,
-                confirmationsThreshold: EthereumBaseAdapter.confirmationsThreshold,
+                confirmationsThreshold: BaseEvmAdapter.confirmationsThreshold,
                 amount: abs(amount),
                 fee: receipt.map { Decimal(sign: .plus, exponent: -decimal, significand: Decimal($0.gasUsed * transaction.gasPrice)) },
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
@@ -72,7 +72,7 @@ class EthereumAdapter: EthereumBaseAdapter {
             return Single.error(SendTransactionError.wrongAmount)
         }
         do {
-            return try ethereumKit.sendSingle(address: EthereumKit.Address(hex: address), value: amount, gasPrice: gasPrice, gasLimit: gasLimit)
+            return try evmKit.sendSingle(address: EthereumKit.Address(hex: address), value: amount, gasPrice: gasPrice, gasLimit: gasLimit)
                     .do(onSubscribe: { logger.debug("Sending to EthereumKit", save: true) })
                     .map { _ in ()}
                     .catchError { [weak self] error in
@@ -86,7 +86,7 @@ class EthereumAdapter: EthereumBaseAdapter {
 
 }
 
-extension EthereumAdapter {
+extension EvmAdapter {
 
     static func clear(except excludedWalletIds: [String]) throws {
         try EthereumKit.Kit.clear(exceptFor: excludedWalletIds)
@@ -95,7 +95,7 @@ extension EthereumAdapter {
 }
 
 // IAdapter
-extension EthereumAdapter: IAdapter {
+extension EvmAdapter: IAdapter {
 
     func start() {
         // started via EthereumKitManager
@@ -110,32 +110,32 @@ extension EthereumAdapter: IAdapter {
     }
 
     var debugInfo: String {
-        ethereumKit.debugInfo
+        evmKit.debugInfo
     }
 
 }
 
-extension EthereumAdapter: IBalanceAdapter {
+extension EvmAdapter: IBalanceAdapter {
 
     var balanceState: AdapterState {
-        convertToAdapterState(ethereumSyncState: ethereumKit.syncState)
+        convertToAdapterState(evmSyncState: evmKit.syncState)
     }
 
     var balanceStateUpdatedObservable: Observable<Void> {
-        ethereumKit.syncStateObservable.map { _ in () }
+        evmKit.syncStateObservable.map { _ in () }
     }
 
     var balance: Decimal {
-        balanceDecimal(kitBalance: ethereumKit.accountState?.balance, decimal: EthereumAdapter.decimal)
+        balanceDecimal(kitBalance: evmKit.accountState?.balance, decimal: EvmAdapter.decimal)
     }
 
     var balanceUpdatedObservable: Observable<Void> {
-        ethereumKit.accountStateObservable.map { _ in () }
+        evmKit.accountStateObservable.map { _ in () }
     }
 
 }
 
-extension EthereumAdapter: ISendEthereumAdapter {
+extension EvmAdapter: ISendEthereumAdapter {
 
     func availableBalance(gasPrice: Int, gasLimit: Int) -> Decimal {
         max(0, balance - fee(gasPrice: gasPrice, gasLimit: gasLimit))
@@ -155,7 +155,7 @@ extension EthereumAdapter: ISendEthereumAdapter {
 
     func fee(gasPrice: Int, gasLimit: Int) -> Decimal {
         let value = Decimal(gasPrice) * Decimal(gasLimit)
-        return value / pow(10, EthereumAdapter.decimal)
+        return value / pow(10, EvmAdapter.decimal)
     }
 
     func estimateGasLimit(to address: String?, value: Decimal, gasPrice: Int?) -> Single<Int> {
@@ -163,34 +163,34 @@ extension EthereumAdapter: ISendEthereumAdapter {
             return Single.error(SendTransactionError.wrongAmount)
         }
 
-        var ethAddress: EthereumKit.Address?
+        var evmAddress: EthereumKit.Address?
         if let address = address {
-            ethAddress = try? EthereumKit.Address(hex: address)
+            evmAddress = try? EthereumKit.Address(hex: address)
         }
 
-        return ethereumKit.estimateGas(to: ethAddress, amount: amount, gasPrice: gasPrice)
+        return evmKit.estimateGas(to: evmAddress, amount: amount, gasPrice: gasPrice)
     }
 
 }
 
-extension EthereumAdapter: ITransactionsAdapter {
+extension EvmAdapter: ITransactionsAdapter {
 
     var transactionState: AdapterState {
-        convertToAdapterState(ethereumSyncState: ethereumKit.transactionsSyncState)
+        convertToAdapterState(evmSyncState: evmKit.transactionsSyncState)
     }
 
     var transactionStateUpdatedObservable: Observable<Void> {
-        ethereumKit.transactionsSyncStateObservable.map { _ in () }
+        evmKit.transactionsSyncStateObservable.map { _ in () }
     }
 
     var transactionRecordsObservable: Observable<[TransactionRecord]> {
-        ethereumKit.etherTransactionsObservable.map { [weak self] in
+        evmKit.etherTransactionsObservable.map { [weak self] in
             $0.compactMap { self?.transactionRecord(fromTransaction: $0) }
         }
     }
 
     func transactionsSingle(from: TransactionRecord?, limit: Int) -> Single<[TransactionRecord]> {
-        ethereumKit.etherTransactionsSingle(fromHash: from.flatMap { Data(hex: $0.transactionHash) }, limit: limit)
+        evmKit.etherTransactionsSingle(fromHash: from.flatMap { Data(hex: $0.transactionHash) }, limit: limit)
                 .map { [weak self] transactions -> [TransactionRecord] in
                     transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
                 }

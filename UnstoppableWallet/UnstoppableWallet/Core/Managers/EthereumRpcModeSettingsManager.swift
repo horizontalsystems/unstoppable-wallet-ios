@@ -30,7 +30,7 @@ extension EthereumRpcModeSettingsManager: IEthereumRpcModeSettingsManager {
         }
 
         if !walletsForUpdate.isEmpty {
-            ethereumKitManager.ethereumKit = nil
+            ethereumKitManager.evmKit = nil
             adapterManager.refreshAdapters(wallets: walletsForUpdate)
         }
     }

@@ -3,7 +3,7 @@ import UIKit
 struct WalletConnectSendEthereumTransactionRequestModule {
 
     static func viewController(transaction: WalletConnectTransaction, onApprove: @escaping (Data) -> (), onReject: @escaping () -> ()) -> UIViewController? {
-        guard let ethereumKit = App.shared.ethereumKitManager.ethereumKit else {
+        guard let ethereumKit = App.shared.ethereumKitManager.evmKit else {
             return nil
         }
 

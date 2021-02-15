@@ -48,11 +48,14 @@ struct SwapModule {
     }
 
     static func viewController(coinIn: Coin) -> UIViewController? {
-        guard let ethereumKit = App.shared.ethereumKitManager.ethereumKit else {
+        guard let ethereumKit = App.shared.ethereumKitManager.evmKit else {
             return nil
         }
 
-        let swapKit = UniswapKit.Kit.instance(ethereumKit: ethereumKit)
+        guard let swapKit = try? UniswapKit.Kit.instance(ethereumKit: ethereumKit) else {
+            return nil
+        }
+
         let uniswapRepository = UniswapProvider(swapKit: swapKit)
 
         let coinService = CoinService(
