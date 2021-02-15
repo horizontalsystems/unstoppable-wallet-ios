@@ -710,7 +710,8 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "add_token_selector.choose_blockchain" = "Choose Blockchain";
 "add_token_selector.add_token" = "Add Token";
 "add_token_selector.erc20_token" = "ERC20 Token";
-"add_token_selector.binance_token" = "BEP2 Token";
+"add_token_selector.bep20_token" = "BEP20 Token";
+"add_token_selector.bep2_token" = "BEP2 Token";
 
 // Add Token
 
@@ -719,9 +720,12 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "add_token.decimals" = "Decimals";
 "add_token.already_exists" = "This token is already in the coin manager list.";
 
+"add_evm_token.contract_not_exist" = "Contract not found";
+"add_evm_token.contract_address" = "Contract Address";
+
 "add_erc20_token.title" = "Add ERC20";
-"add_erc20_token.contract_address" = "Contract Address";
-"add_erc20_token.contract_not_exist" = "Contract not found";
+
+"add_bep20_token.title" = "Add BEP20";
 
 "add_bep2_token.title" = "Add BEP2";
 "add_bep2_token.token_symbol" = "Token Symbol";

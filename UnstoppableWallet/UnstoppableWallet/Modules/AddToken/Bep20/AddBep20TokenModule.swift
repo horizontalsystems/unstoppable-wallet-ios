@@ -1,10 +1,10 @@
 import ThemeKit
 
-struct AddErc20TokenModule {
+struct AddBep20TokenModule {
 
     static func viewController() -> UIViewController {
         let blockchainService = AddEvmTokenBlockchainService(
-                resolver: AddErc20TokenResolver(),
+                resolver: AddBep20TokenResolver(),
                 appConfigProvider: App.shared.appConfigProvider,
                 networkManager: App.shared.networkManager
         )
@@ -14,7 +14,7 @@ struct AddErc20TokenModule {
 
         let viewController = AddTokenViewController(
                 viewModel: viewModel,
-                pageTitle: "add_erc20_token.title".localized,
+                pageTitle: "add_bep20_token.title".localized,
                 referenceTitle: "add_evm_token.contract_address".localized
         )
 

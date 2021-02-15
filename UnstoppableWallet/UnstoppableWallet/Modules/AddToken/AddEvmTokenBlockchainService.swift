@@ -4,18 +4,26 @@ import Alamofire
 import HsToolKit
 import EthereumKit
 
-class AddErc20TokenBlockchainService {
+protocol IAddEvmTokenResolver {
+    func apiUrl(testMode: Bool) -> String
+    func does(coin: Coin, matchReference reference: String) -> Bool
+    func coinType(address: String) -> CoinType
+}
+
+class AddEvmTokenBlockchainService {
+    private let resolver: IAddEvmTokenResolver
     private let appConfigProvider: IAppConfigProvider
     private let networkManager: NetworkManager
 
-    init(appConfigProvider: IAppConfigProvider, networkManager: NetworkManager) {
+    init(resolver: IAddEvmTokenResolver, appConfigProvider: IAppConfigProvider, networkManager: NetworkManager) {
+        self.resolver = resolver
         self.appConfigProvider = appConfigProvider
         self.networkManager = networkManager
     }
 
 }
 
-extension AddErc20TokenBlockchainService: IAddTokenBlockchainService {
+extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
 
     func validate(reference: String) throws {
         _ = try EthereumKit.Address(hex: reference)
@@ -23,11 +31,7 @@ extension AddErc20TokenBlockchainService: IAddTokenBlockchainService {
 
     func existingCoin(reference: String, coins: [Coin]) -> Coin? {
         coins.first { coin in
-            if case .erc20(let address) = coin.type, address.lowercased() == reference.lowercased() {
-                return true
-            }
-
-            return false
+            resolver.does(coin: coin, matchReference: reference)
         }
     }
 
@@ -41,21 +45,21 @@ extension AddErc20TokenBlockchainService: IAddTokenBlockchainService {
             "apikey": appConfigProvider.etherscanKey
         ]
 
-        let apiUrl = appConfigProvider.testMode ? "https://api-ropsten.etherscan.io/api" : "https://api.etherscan.io/api"
+        let apiUrl = resolver.apiUrl(testMode: appConfigProvider.testMode)
         let request = networkManager.session.request(apiUrl, parameters: parameters)
 
-        return networkManager.single(request: request, mapper: ApiMapper(address: reference))
+        return networkManager.single(request: request, mapper: ApiMapper(coinType: resolver.coinType(address: reference)) )
     }
 
 }
 
-extension AddErc20TokenBlockchainService {
+extension AddEvmTokenBlockchainService {
 
     class ApiMapper: IApiMapper {
-        private let address: String
+        private let coinType: CoinType
 
-        init(address: String) {
-            self.address = address
+        init(coinType: CoinType) {
+            self.coinType = coinType
         }
 
         public func map(statusCode: Int, data: Any?) throws -> Coin {
@@ -88,7 +92,7 @@ extension AddErc20TokenBlockchainService {
                     title: tokenName,
                     code: tokenSymbol,
                     decimal: tokenDecimal,
-                    type: .erc20(address: address)
+                    type: coinType
             )
         }
 
@@ -96,7 +100,7 @@ extension AddErc20TokenBlockchainService {
 
 }
 
-extension AddErc20TokenBlockchainService {
+extension AddEvmTokenBlockchainService {
 
     enum ApiError: LocalizedError {
         case contractDoesNotExist
@@ -104,7 +108,7 @@ extension AddErc20TokenBlockchainService {
 
         var errorDescription: String? {
             switch self {
-            case .contractDoesNotExist: return "add_erc20_token.contract_not_exist".localized
+            case .contractDoesNotExist: return "add_evm_token.contract_not_exist".localized
             default: return "\(self)"
             }
         }

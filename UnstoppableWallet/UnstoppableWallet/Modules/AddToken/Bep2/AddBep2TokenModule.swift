@@ -1,9 +1,9 @@
 import ThemeKit
 
-struct AddBinanceTokenModule {
+struct AddBep2TokenModule {
 
     static func viewController() -> UIViewController {
-        let blockchainService = AddBinanceTokenBlockchainService(
+        let blockchainService = AddBep2TokenBlockchainService(
                 appConfigProvider: App.shared.appConfigProvider,
                 networkManager: App.shared.networkManager
         )

@@ -3,7 +3,7 @@ import HsToolKit
 import Alamofire
 import ObjectMapper
 
-class AddBinanceTokenBlockchainService {
+class AddBep2TokenBlockchainService {
     private let appConfigProvider: IAppConfigProvider
     private let networkManager: NetworkManager
 
@@ -14,7 +14,7 @@ class AddBinanceTokenBlockchainService {
 
 }
 
-extension AddBinanceTokenBlockchainService: IAddTokenBlockchainService {
+extension AddBep2TokenBlockchainService: IAddTokenBlockchainService {
 
     func validate(reference: String) throws {
         // todo
@@ -58,7 +58,7 @@ extension AddBinanceTokenBlockchainService: IAddTokenBlockchainService {
 
 }
 
-extension AddBinanceTokenBlockchainService {
+extension AddBep2TokenBlockchainService {
 
     struct Token: ImmutableMappable {
         let name: String
