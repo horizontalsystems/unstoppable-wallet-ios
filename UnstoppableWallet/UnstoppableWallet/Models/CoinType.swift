@@ -7,6 +7,8 @@ enum CoinType {
     case dash
     case ethereum
     case erc20(address: String)
+    case binanceSmartChain
+    case bep20(address: String)
     case binance(symbol: String)
     case zcash
 
@@ -15,7 +17,7 @@ enum CoinType {
         case .bitcoin, .litecoin, .bitcoinCash, .dash, .ethereum, .erc20:
             if case let .mnemonic(words, salt) = accountType, words.count == 12, salt == nil { return true }
             return false
-        case .binance:
+        case .binanceSmartChain, .bep20, .binance:
             if case let .mnemonic(words, salt) = accountType, words.count == 24, salt == nil { return true }
             return false
         case .zcash:
@@ -28,7 +30,7 @@ enum CoinType {
         switch self {
         case .bitcoin, .litecoin, .bitcoinCash, .dash, .ethereum, .erc20:
             return .standard
-        case .binance:
+        case .binanceSmartChain, .bep20, .binance:
             return .binance
         case .zcash:
             return .zcash
@@ -38,10 +40,8 @@ enum CoinType {
     var blockchainType: String? {
         switch self {
         case .erc20: return "ERC20"
-        case .binance(let symbol):
-            if symbol != "BNB" {
-                return "BEP2"
-            }
+        case .bep20: return "BEP20"
+        case .binance: return "BEP2"
         default: ()
         }
 
@@ -87,6 +87,9 @@ extension CoinType: Equatable {
         case (.ethereum, .ethereum): return true
         case (.erc20(let lhsAddress), .erc20(let rhsAddress)):
             return lhsAddress.lowercased() == rhsAddress.lowercased()
+        case (.binanceSmartChain, .binanceSmartChain): return true
+        case (.bep20(let lhsAddress), .bep20(let rhsAddress)):
+            return lhsAddress.lowercased() == rhsAddress.lowercased()
         case (.binance(let lhsSymbol), .binance(let rhsSymbol)):
             return lhsSymbol == rhsSymbol
         case (.zcash, .zcash): return true
@@ -112,6 +115,10 @@ extension CoinType: Hashable {
             hasher.combine("ethereum")
         case .erc20(let address):
             hasher.combine("erc20_\(address)")
+        case .binanceSmartChain:
+            hasher.combine("binanceSmartChain")
+        case .bep20(let address):
+            hasher.combine("bep20_\(address)")
         case .binance(let symbol):
             hasher.combine("binance_\(symbol)")
         case .zcash:
@@ -130,6 +137,11 @@ extension CoinType: RawRepresentable {
             return
         }
 
+        if rawValue.hasPrefix("bep20"), let address = rawValue.split(separator: "|").last {
+            self = .bep20(address: String(address))
+            return
+        }
+
         if rawValue.hasPrefix("binance"), let symbol = rawValue.split(separator: "|").last {
             self = .binance(symbol: String(symbol))
         }
@@ -142,6 +154,7 @@ extension CoinType: RawRepresentable {
         case "bitcoinCash": type = .bitcoinCash
         case "dash": type = .dash
         case "ethereum": type = .ethereum
+        case "binanceSmartChain": type = .binanceSmartChain
         case "zcash": type = .zcash
         default: type = nil
         }
@@ -161,6 +174,8 @@ extension CoinType: RawRepresentable {
         case .dash: return "dash"
         case .ethereum: return "ethereum"
         case .erc20(let address): return "erc20|\(address)"
+        case .binanceSmartChain: return "binanceSmartChain"
+        case .bep20(let address): return "bep20|\(address)"
         case .binance(let symbol): return "binance|\(symbol)"
         case .zcash: return "zcash"
         }

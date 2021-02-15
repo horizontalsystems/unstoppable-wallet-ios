@@ -223,7 +223,7 @@ protocol IBlurManager {
 protocol IRateManager {
     func refresh()
 
-    func convertCoinTypeToXRateKitCoinType(coinType: CoinType) -> XRatesKit.CoinType
+    func convertCoinTypeToXRateKitCoinType(coinType: CoinType) -> XRatesKit.CoinType?
     func convertXRateCoinTypeToCoinType(coinType: XRatesKit.CoinType) -> CoinType?
 
     func marketInfo(coinCode: String, currencyCode: String) -> MarketInfo?

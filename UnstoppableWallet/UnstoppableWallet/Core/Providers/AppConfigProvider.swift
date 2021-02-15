@@ -92,6 +92,7 @@ class AppConfigProvider: IAppConfigProvider {
             defaultCoins[4],
             defaultCoins[5],
             defaultCoins[6],
+            defaultCoins[7],
         ]
     }
 
@@ -105,7 +106,8 @@ class AppConfigProvider: IAppConfigProvider {
         ethereumCoin,
         Coin(id: "BCH",       title: "Bitcoin Cash",                      code: "BCH",     decimal: 8,  type: .bitcoinCash),
         Coin(id: "DASH",      title: "Dash",                              code: "DASH",    decimal: 8,  type: .dash),
-        Coin(id: "BNB",       title: "Binance Chain",                     code: "BNB",     decimal: 8,  type: .binance(symbol: "BNB")),
+        Coin(id: "BNB-BSC",   title: "Binance Smart Chain",               code: "BNB",     decimal: 18, type: .binanceSmartChain),
+        Coin(id: "BNB",       title: "Binance Coin",                      code: "BNB",     decimal: 8,  type: .binance(symbol: "BNB")),
         Coin(id: "ZEC",       title: "Zcash",                             code: "ZEC",     decimal: 8,  type: .zcash),
         Coin(id: "$BASED",    title: "$BASED",                            code: "$BASED",  decimal: 18, type: .erc20(address: "0x68A118Ef45063051Eac49c7e647CE5Ace48a68a5")),
         Coin(id: "ZCN",       title: "0chain",                            code: "ZCN",     decimal: 10, type: .erc20(address: "0xb9EF770B6A5e12E45983C5D80545258aA38F3B78")),
@@ -137,6 +139,7 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(id: "BOND",      title: "BarnBridge",                        code: "BOND",    decimal: 18, type: .erc20(address: "0x0391D2021f89DC339F60Fff84546EA23E337750f")),
         Coin(id: "BASE",      title: "Base Protocol",                     code: "BASE",    decimal: 9,  type: .erc20(address: "0x07150e919b4de5fd6a63de1f9384828396f25fdc")),
         Coin(id: "BAT",       title: "Basic Attention Token",             code: "BAT",     decimal: 18, type: .erc20(address: "0x0D8775F648430679A709E98d2b0Cb6250d2887EF")),
+        Coin(id: "BIFI",      title: "beefy.finance",                     code: "BIFI",    decimal: 18, type: .bep20(address: "0xca3f508b8e4dd382ee878a314789373d80a5190a")),
         Coin(id: "BID",       title: "Bidao",                             code: "BID",     decimal: 18, type: .erc20(address: "0x25e1474170c4c0aA64fa98123bdc8dB49D7802fa")),
         Coin(id: "BNB-ERC20", title: "Binance ERC20",                     code: "BNB",     decimal: 18, type: .erc20(address: "0xB8c77482e45F1F44dE1745F52C74426C631bDD52")),
         Coin(id: "BUSD",      title: "Binance USD",                       code: "BUSD",    decimal: 8,  type: .binance(symbol: "BUSD-BD1")),

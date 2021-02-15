@@ -31,6 +31,8 @@ class TransactionInfoPresenter {
             explorerData = .init(title: "dash.org", url: testMode ? nil : "https://insight.dash.org/insight/tx/" + hash)
         case .ethereum, .erc20:
             explorerData = .init(title: "etherscan.io", url: testMode ? "https://ropsten.etherscan.io/tx/" + hash : "https://etherscan.io/tx/" + hash)
+        case .binanceSmartChain, .bep20:
+            explorerData = .init(title: "bscscan.com", url: testMode ? nil : "https://bscscan.com/tx/" + hash)
         case .binance:
             explorerData = .init(title: "binance.org", url: testMode ? "https://testnet-explorer.binance.org/tx/" + hash : "https://explorer.binance.org/tx/" + hash)
         case .zcash:
