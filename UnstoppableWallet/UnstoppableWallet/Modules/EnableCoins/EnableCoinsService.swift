@@ -45,7 +45,7 @@ class EnableCoinsService {
 
     private func fetchErc20Tokens(words: [String]) {
         do {
-            let address = try Kit.address(words: words, networkType: appConfigProvider.testMode ? .ropsten : .mainNet)
+            let address = try Kit.address(words: words, networkType: appConfigProvider.testMode ? .ropsten : .ethMainNet)
 
             state = .loading
 

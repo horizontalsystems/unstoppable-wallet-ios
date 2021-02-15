@@ -77,12 +77,11 @@ class App {
     let guidesManager: IGuidesManager
     let termsManager: ITermsManager
 
-    let erc20ContractInfoProvider: IErc20ContractInfoProvider
-
     let walletConnectSessionStore: WalletConnectSessionStore
 
     let appManager: AppManager
     let ethereumKitManager: EthereumKitManager
+    let binanceSmartChainKitManager: BinanceSmartChainKitManager
 
     init() {
         appConfigProvider = AppConfigProvider()
@@ -135,10 +134,11 @@ class App {
         sortTypeManager = SortTypeManager(localStorage: localStorage)
 
         ethereumKitManager = EthereumKitManager(appConfigProvider: appConfigProvider)
+        binanceSmartChainKitManager = BinanceSmartChainKitManager(appConfigProvider: appConfigProvider)
         let binanceKitManager = BinanceKitManager(appConfigProvider: appConfigProvider)
 
-        let adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, binanceKitManager: binanceKitManager)
-        adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager)
+        let adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager, binanceKitManager: binanceKitManager)
+        adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager)
 
         let settingsStorage: IBlockchainSettingsStorage = BlockchainSettingsStorage(storage: storage)
         derivationSettingsManager = DerivationSettingsManager(walletManager: walletManager, adapterManager: adapterManager, storage: settingsStorage)
@@ -169,7 +169,7 @@ class App {
 
         remoteAlertManager.notificationManager = notificationManager
 
-        appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage, predefinedAccountTypeManager: predefinedAccountTypeManager, walletManager: walletManager, adapterManager: adapterManager, ethereumKitManager: ethereumKitManager, binanceKitManager: binanceKitManager, logRecordManager: logRecordManager)
+        appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage, predefinedAccountTypeManager: predefinedAccountTypeManager, walletManager: walletManager, adapterManager: adapterManager, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager, binanceKitManager: binanceKitManager, logRecordManager: logRecordManager)
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, localStorage: localStorage)
 
         keychainKitDelegate = KeychainKitDelegate(accountManager: accountManager, walletManager: walletManager)
@@ -182,8 +182,6 @@ class App {
 
         guidesManager = GuidesManager(networkManager: networkManager)
         termsManager = TermsManager(storage: StorageKit.LocalStorage.default)
-
-        erc20ContractInfoProvider = Erc20ContractInfoProvider(appConfigProvider: appConfigProvider, networkManager: networkManager)
 
         walletConnectSessionStore = WalletConnectSessionStore(accountManager: accountManager, predefinedAccountTypeManager: predefinedAccountTypeManager)
 

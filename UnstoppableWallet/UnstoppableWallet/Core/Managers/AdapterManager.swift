@@ -5,6 +5,7 @@ class AdapterManager {
 
     private let adapterFactory: IAdapterFactory
     private let ethereumKitManager: EthereumKitManager
+    private let binanceSmartChainKitManager: BinanceSmartChainKitManager
     private let binanceKitManager: BinanceKitManager
     private let walletManager: IWalletManager
 
@@ -13,9 +14,10 @@ class AdapterManager {
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.adapter_manager", qos: .userInitiated)
     private var adapters = [Wallet: IAdapter]()
 
-    init(adapterFactory: IAdapterFactory, ethereumKitManager: EthereumKitManager, binanceKitManager: BinanceKitManager, walletManager: IWalletManager) {
+    init(adapterFactory: IAdapterFactory, ethereumKitManager: EthereumKitManager, binanceSmartChainKitManager: BinanceSmartChainKitManager, binanceKitManager: BinanceKitManager, walletManager: IWalletManager) {
         self.adapterFactory = adapterFactory
         self.ethereumKitManager = ethereumKitManager
+        self.binanceSmartChainKitManager = binanceSmartChainKitManager
         self.binanceKitManager = binanceKitManager
         self.walletManager = walletManager
 
@@ -102,7 +104,8 @@ extension AdapterManager: IAdapterManager {
             }
         }
 
-        ethereumKitManager.ethereumKit?.refresh()
+        ethereumKitManager.evmKit?.refresh()
+        binanceSmartChainKitManager.evmKit?.refresh()
         binanceKitManager.refresh()
     }
 
@@ -123,8 +126,12 @@ extension AdapterManager: IAdapterManager {
         switch adapter {
         case is BinanceAdapter:
             binanceKitManager.refresh()
-        case is EthereumBaseAdapter:
-            ethereumKitManager.ethereumKit?.refresh()
+        case is BaseEvmAdapter:
+            switch wallet.coin.type {
+            case .ethereum, .erc20: ethereumKitManager.evmKit?.refresh()
+            case .binanceSmartChain, .bep20: binanceSmartChainKitManager.evmKit?.refresh()
+            default: ()
+            }
         default:
             adapter?.refresh()
         }

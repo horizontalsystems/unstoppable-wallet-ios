@@ -7,11 +7,13 @@ class AdapterFactory: IAdapterFactory {
 
     private let appConfigProvider: IAppConfigProvider
     private let ethereumKitManager: EthereumKitManager
+    private let binanceSmartChainKitManager: BinanceSmartChainKitManager
     private let binanceKitManager: BinanceKitManager
 
-    init(appConfigProvider: IAppConfigProvider, ethereumKitManager: EthereumKitManager, binanceKitManager: BinanceKitManager) {
+    init(appConfigProvider: IAppConfigProvider, ethereumKitManager: EthereumKitManager, binanceSmartChainKitManager: BinanceSmartChainKitManager, binanceKitManager: BinanceKitManager) {
         self.appConfigProvider = appConfigProvider
         self.ethereumKitManager = ethereumKitManager
+        self.binanceSmartChainKitManager = binanceSmartChainKitManager
         self.binanceKitManager = binanceKitManager
     }
 
@@ -32,24 +34,35 @@ class AdapterFactory: IAdapterFactory {
         case .zcash:
             return try? ZcashAdapter(wallet: wallet, syncMode: syncMode, testMode: appConfigProvider.testMode)
         case .ethereum:
-            if let ethereumKit = try? ethereumKitManager.ethereumKit(account: wallet.account) {
-                return EthereumAdapter(ethereumKit: ethereumKit)
+            if let evmKit = try? ethereumKitManager.evmKit(account: wallet.account) {
+                return EvmAdapter(evmKit: evmKit)
             }
         case let .erc20(address):
-            if let ethereumKit = try? ethereumKitManager.ethereumKit(account: wallet.account) {
+            if let evmKit = try? ethereumKitManager.evmKit(account: wallet.account) {
                 let smartContractFee = appConfigProvider.smartContractFees[wallet.coin.type] ?? 0
                 let minimumBalance = appConfigProvider.minimumBalances[wallet.coin.type] ?? 0
                 let minimumSpendableAmount = appConfigProvider.minimumSpendableAmounts[wallet.coin.type]
 
-                return try? Erc20Adapter(
-                        ethereumKit: ethereumKit, contractAddress: address, decimal: wallet.coin.decimal,
+                return try? Evm20Adapter(
+                        evmKit: evmKit, contractAddress: address, decimal: wallet.coin.decimal,
                         fee: smartContractFee, minimumRequiredBalance: minimumBalance, minimumSpendableAmount: minimumSpendableAmount
                 )
             }
         case .binanceSmartChain:
-            return nil
+            if let evmKit = try? binanceSmartChainKitManager.evmKit(account: wallet.account) {
+                return EvmAdapter(evmKit: evmKit)
+            }
         case let .bep20(address):
-            return nil
+            if let evmKit = try? binanceSmartChainKitManager.evmKit(account: wallet.account) {
+                let smartContractFee = appConfigProvider.smartContractFees[wallet.coin.type] ?? 0
+                let minimumBalance = appConfigProvider.minimumBalances[wallet.coin.type] ?? 0
+                let minimumSpendableAmount = appConfigProvider.minimumSpendableAmounts[wallet.coin.type]
+
+                return try? Evm20Adapter(
+                        evmKit: evmKit, contractAddress: address, decimal: wallet.coin.decimal,
+                        fee: smartContractFee, minimumRequiredBalance: minimumBalance, minimumSpendableAmount: minimumSpendableAmount
+                )
+            }
         case let .binance(symbol):
             if let binanceKit = try? binanceKitManager.binanceKit(account: wallet.account) {
                 return BinanceAdapter(binanceKit: binanceKit, symbol: symbol)

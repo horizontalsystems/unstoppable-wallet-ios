@@ -3,14 +3,14 @@ import RxSwift
 import BigInt
 import HsToolKit
 
-class EthereumBaseAdapter {
+class BaseEvmAdapter {
     static let confirmationsThreshold = 12
-    let ethereumKit: EthereumKit.Kit
+    let evmKit: EthereumKit.Kit
 
     let decimal: Int
 
-    init(ethereumKit: EthereumKit.Kit, decimal: Int) {
-        self.ethereumKit = ethereumKit
+    init(evmKit: EthereumKit.Kit, decimal: Int) {
+        self.evmKit = evmKit
         self.decimal = decimal
     }
 
@@ -38,8 +38,8 @@ class EthereumBaseAdapter {
         error.convertedError
     }
 
-    func convertToAdapterState(ethereumSyncState: EthereumKit.SyncState) -> AdapterState {
-        switch ethereumSyncState {
+    func convertToAdapterState(evmSyncState: EthereumKit.SyncState) -> AdapterState {
+        switch evmSyncState {
             case .synced: return .synced
             case .notSynced(let error): return .notSynced(error: error.convertedError)
             case .syncing: return .syncing(progress: 50, lastBlockDate: nil)
@@ -49,7 +49,7 @@ class EthereumBaseAdapter {
 }
 
 // ISendEthereumAdapter
-extension EthereumBaseAdapter {
+extension BaseEvmAdapter {
 
     func sendSingle(amount: Decimal, address: String, gasPrice: Int, gasLimit: Int, logger: Logger) -> Single<Void> {
         sendSingle(to: address, value: amount, gasPrice: gasPrice, gasLimit: gasLimit, logger: logger)
@@ -58,22 +58,22 @@ extension EthereumBaseAdapter {
 }
 
 // ITransactionsAdapter
-extension EthereumBaseAdapter {
+extension BaseEvmAdapter {
 
     var lastBlockInfo: LastBlockInfo? {
-        ethereumKit.lastBlockHeight.map { LastBlockInfo(height: $0, timestamp: nil) }
+        evmKit.lastBlockHeight.map { LastBlockInfo(height: $0, timestamp: nil) }
     }
 
     var lastBlockUpdatedObservable: Observable<Void> {
-        ethereumKit.lastBlockHeightObservable.map { _ in () }
+        evmKit.lastBlockHeightObservable.map { _ in () }
     }
 
 }
 
-extension EthereumBaseAdapter: IDepositAdapter {
+extension BaseEvmAdapter: IDepositAdapter {
 
     var receiveAddress: String {
-        ethereumKit.receiveAddress.hex
+        evmKit.receiveAddress.hex
     }
 
 }

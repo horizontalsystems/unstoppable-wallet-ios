@@ -36,7 +36,7 @@ class WalletConnectService {
     }
 
     init(ethereumKitManager: EthereumKitManager, sessionStore: WalletConnectSessionStore, reachabilityManager: IReachabilityManager) {
-        ethereumKit = ethereumKitManager.ethereumKit
+        ethereumKit = ethereumKitManager.evmKit
         self.sessionStore = sessionStore
         self.reachabilityManager = reachabilityManager
 

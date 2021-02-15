@@ -5,31 +5,31 @@ import BigInt
 import HsToolKit
 import class Erc20Kit.Transaction
 
-class Erc20Adapter: EthereumBaseAdapter {
+class Evm20Adapter: BaseEvmAdapter {
     private static let approveConfirmationsThreshold: Int? = nil
-    let erc20Kit: Erc20Kit.Kit
+    let evm20Kit: Erc20Kit.Kit
     private let contractAddress: EthereumKit.Address
     private let fee: Decimal
     private(set) var minimumRequiredBalance: Decimal
     private(set) var minimumSpendableAmount: Decimal?
 
-    init(ethereumKit: EthereumKit.Kit, contractAddress: String, decimal: Int, fee: Decimal, minimumRequiredBalance: Decimal, minimumSpendableAmount: Decimal?) throws {
+    init(evmKit: EthereumKit.Kit, contractAddress: String, decimal: Int, fee: Decimal, minimumRequiredBalance: Decimal, minimumSpendableAmount: Decimal?) throws {
         let address = try EthereumKit.Address(hex: contractAddress)
-        erc20Kit = try Erc20Kit.Kit.instance(ethereumKit: ethereumKit, contractAddress: address)
+        evm20Kit = try Erc20Kit.Kit.instance(ethereumKit: evmKit, contractAddress: address)
         self.contractAddress = address
         self.fee = fee
         self.minimumRequiredBalance = minimumRequiredBalance
         self.minimumSpendableAmount = minimumSpendableAmount
 
-        super.init(ethereumKit: ethereumKit, decimal: decimal)
+        super.init(evmKit: evmKit, decimal: decimal)
     }
 
     private func transactionRecord(fromTransaction transaction: Transaction) -> TransactionRecord {
-        let mineAddress = ethereumKit.receiveAddress
+        let mineAddress = evmKit.receiveAddress
 
         var type: TransactionType = .sentToSelf
         var amount: Decimal = 0
-        var confirmationsThreshold: Int? = EthereumBaseAdapter.confirmationsThreshold
+        var confirmationsThreshold: Int? = BaseEvmAdapter.confirmationsThreshold
 
         if let significand = Decimal(string: transaction.value.description) {
             amount = Decimal(sign: .plus, exponent: -decimal, significand: significand)
@@ -76,9 +76,9 @@ class Erc20Adapter: EthereumBaseAdapter {
             return Single.error(SendTransactionError.wrongAmount)
         }
 
-        let transactionInput = erc20Kit.transferTransactionData(to: toAddress, value: amount)
+        let transactionInput = evm20Kit.transferTransactionData(to: toAddress, value: amount)
 
-        return ethereumKit.sendSingle(address: transactionInput.to, value: transactionInput.value, transactionInput: transactionInput.input, gasPrice: gasPrice, gasLimit: gasLimit)
+        return evmKit.sendSingle(address: transactionInput.to, value: transactionInput.value, transactionInput: transactionInput.input, gasPrice: gasPrice, gasLimit: gasLimit)
             .do(onSubscribe: { logger.debug("Sending to Erc20Kit", save: true) })
             .map { _ in ()}
             .catchError { [weak self] error in
@@ -88,7 +88,7 @@ class Erc20Adapter: EthereumBaseAdapter {
 
 }
 
-extension Erc20Adapter {
+extension Evm20Adapter {
 
     static func clear(except excludedWalletIds: [String]) throws {
         try Erc20Kit.Kit.clear(exceptFor: excludedWalletIds)
@@ -97,59 +97,59 @@ extension Erc20Adapter {
 }
 
 // IAdapter
-extension Erc20Adapter: IAdapter {
+extension Evm20Adapter: IAdapter {
 
     func start() {
-        erc20Kit.start()
+        evm20Kit.start()
     }
 
     func stop() {
-        erc20Kit.stop()
+        evm20Kit.stop()
     }
 
     func refresh() {
-        erc20Kit.refresh()
+        evm20Kit.refresh()
     }
 
     var debugInfo: String {
-        ethereumKit.debugInfo
+        evmKit.debugInfo
     }
 
 }
 
-extension Erc20Adapter: IBalanceAdapter {
+extension Evm20Adapter: IBalanceAdapter {
 
     var balanceState: AdapterState {
-        convertToAdapterState(ethereumSyncState: erc20Kit.syncState)
+        convertToAdapterState(evmSyncState: evm20Kit.syncState)
     }
 
     var balanceStateUpdatedObservable: Observable<Void> {
-        erc20Kit.syncStateObservable.map { _ in () }
+        evm20Kit.syncStateObservable.map { _ in () }
     }
 
     var balance: Decimal {
-        balanceDecimal(kitBalance: erc20Kit.balance, decimal: decimal)
+        balanceDecimal(kitBalance: evm20Kit.balance, decimal: decimal)
     }
 
     var balanceUpdatedObservable: Observable<Void> {
-        erc20Kit.balanceObservable.map { _ in () }
+        evm20Kit.balanceObservable.map { _ in () }
     }
 
 }
 
-extension Erc20Adapter: ISendEthereumAdapter {
+extension Evm20Adapter: ISendEthereumAdapter {
 
     func availableBalance(gasPrice: Int, gasLimit: Int) -> Decimal {
         max(0, balance - fee)
     }
 
     var ethereumBalance: Decimal {
-        balanceDecimal(kitBalance: ethereumKit.accountState?.balance, decimal: EthereumAdapter.decimal)
+        balanceDecimal(kitBalance: evmKit.accountState?.balance, decimal: EvmAdapter.decimal)
     }
 
     func fee(gasPrice: Int, gasLimit: Int) -> Decimal {
         let value = Decimal(gasPrice) * Decimal(gasLimit)
-        return value / pow(10, EthereumAdapter.decimal)
+        return value / pow(10, EvmAdapter.decimal)
     }
 
     func estimateGasLimit(to address: String?, value: Decimal, gasPrice: Int?) -> Single<Int> {
@@ -161,20 +161,20 @@ extension Erc20Adapter: ISendEthereumAdapter {
             return Single.just(EthereumKit.Kit.defaultGasLimit)
         }
 
-        let data = erc20Kit.transferTransactionData(to: toAddress, value: amount)
-        return ethereumKit.estimateGas(transactionData: data, gasPrice: gasPrice)
+        let data = evm20Kit.transferTransactionData(to: toAddress, value: amount)
+        return evmKit.estimateGas(transactionData: data, gasPrice: gasPrice)
     }
 
 }
 
-extension Erc20Adapter: IErc20Adapter {
+extension Evm20Adapter: IErc20Adapter {
 
     var pendingTransactions: [TransactionRecord] {
-        erc20Kit.pendingTransactions().map { transactionRecord(fromTransaction: $0) }
+        evm20Kit.pendingTransactions().map { transactionRecord(fromTransaction: $0) }
     }
 
     func allowanceSingle(spenderAddress: EthereumKit.Address, defaultBlockParameter: DefaultBlockParameter = .latest) -> Single<Decimal> {
-        erc20Kit.allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: defaultBlockParameter)
+        evm20Kit.allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: defaultBlockParameter)
                 .map { [unowned self] allowanceString in
                     if let significand = Decimal(string: allowanceString) {
                         return Decimal(sign: .plus, exponent: -self.decimal, significand: significand)
@@ -186,18 +186,18 @@ extension Erc20Adapter: IErc20Adapter {
 
 }
 
-extension Erc20Adapter: ITransactionsAdapter {
+extension Evm20Adapter: ITransactionsAdapter {
 
     var transactionState: AdapterState {
-        convertToAdapterState(ethereumSyncState: erc20Kit.transactionsSyncState)
+        convertToAdapterState(evmSyncState: evm20Kit.transactionsSyncState)
     }
 
     var transactionStateUpdatedObservable: Observable<Void> {
-        erc20Kit.transactionsSyncStateObservable.map { _ in () }
+        evm20Kit.transactionsSyncStateObservable.map { _ in () }
     }
 
     var transactionRecordsObservable: Observable<[TransactionRecord]> {
-        erc20Kit.transactionsObservable.map { [weak self] in
+        evm20Kit.transactionsObservable.map { [weak self] in
             $0.compactMap { self?.transactionRecord(fromTransaction: $0) }
         }
     }
@@ -209,7 +209,7 @@ extension Erc20Adapter: ITransactionsAdapter {
                     (hash: $0, interTransactionIndex: record.interTransactionIndex)
                 }
             }
-            return try erc20Kit.transactionsSingle(from: fromData, limit: limit)
+            return try evm20Kit.transactionsSingle(from: fromData, limit: limit)
                     .map { [weak self] transactions -> [TransactionRecord] in
                         transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
                     }

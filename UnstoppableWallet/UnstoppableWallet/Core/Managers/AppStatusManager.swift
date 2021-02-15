@@ -10,10 +10,11 @@ class AppStatusManager {
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
     private let ethereumKitManager: EthereumKitManager
+    private let binanceSmartChainKitManager: BinanceSmartChainKitManager
     private let binanceKitManager: BinanceKitManager
 
     init(systemInfoManager: ISystemInfoManager, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager,
-         walletManager: IWalletManager, adapterManager: IAdapterManager, ethereumKitManager: EthereumKitManager,
+         walletManager: IWalletManager, adapterManager: IAdapterManager, ethereumKitManager: EthereumKitManager, binanceSmartChainKitManager: BinanceSmartChainKitManager,
          binanceKitManager: BinanceKitManager, logRecordManager: ILogRecordManager) {
         self.systemInfoManager = systemInfoManager
         self.localStorage = localStorage
@@ -21,6 +22,7 @@ class AppStatusManager {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.ethereumKitManager = ethereumKitManager
+        self.binanceSmartChainKitManager = binanceSmartChainKitManager
         self.binanceKitManager = binanceKitManager
         self.logRecordManager = logRecordManager
     }
@@ -61,6 +63,9 @@ class AppStatusManager {
 
         if let ethereumStatus = ethereumKitManager.statusInfo {
             status.append(("Ethereum", ethereumStatus))
+        }
+        if let binanceSmartChainStatus = binanceSmartChainKitManager.statusInfo {
+            status.append(("Binance Smart Chain", binanceSmartChainStatus))
         }
         if let binanceStatus = binanceKitManager.statusInfo {
             status.append(("Binance", binanceStatus))

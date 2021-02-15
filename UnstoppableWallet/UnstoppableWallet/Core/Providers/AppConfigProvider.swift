@@ -51,6 +51,10 @@ class AppConfigProvider: IAppConfigProvider {
         (Bundle.main.object(forInfoDictionaryKey: "EtherscanApiKey") as? String) ?? ""
     }
 
+    var bscscanKey: String {
+        (Bundle.main.object(forInfoDictionaryKey: "BscscanApiKey") as? String) ?? ""
+    }
+
     var coinMarketCapApiKey: String {
         (Bundle.main.object(forInfoDictionaryKey: "CoinMarketCapKey") as? String) ?? ""
     }
