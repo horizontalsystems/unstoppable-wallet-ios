@@ -94,7 +94,7 @@ class CoinToggleViewController: ThemeSearchViewController {
                             cell.titleImage = .image(coinCode: viewItem.coin.code, blockchainType: viewItem.coin.type.blockchainType)
                             cell.title = viewItem.coin.title
                             cell.subtitle = viewItem.coin.code
-                            cell.leftBadgeText = viewItem.coin.type.blockchainType
+                            cell.rightBadgeText = viewItem.coin.type.blockchainType
                             cell.valueImage = UIImage(named: "plus_20")
                         },
                         action: { [weak self] _ in
@@ -111,7 +111,7 @@ class CoinToggleViewController: ThemeSearchViewController {
                             cell.titleImage = .image(coinCode: viewItem.coin.code, blockchainType: viewItem.coin.type.blockchainType)
                             cell.title = viewItem.coin.title
                             cell.subtitle = viewItem.coin.code
-                            cell.leftBadgeText = viewItem.coin.type.blockchainType
+                            cell.rightBadgeText = viewItem.coin.type.blockchainType
                             cell.isOn = enabled
                             cell.onToggle = { [weak self] enabled in
                                 self?.onToggle(viewItem: viewItem, enabled: enabled)

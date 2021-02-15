@@ -14,7 +14,7 @@ enum PredefinedAccountType: CaseIterable {
     var coinCodes: String {
         switch self {
         case .standard: return "BTC, ETH, LTC, BCH, DASH, ERC20 tokens"
-        case .binance: return "BNB, BEP2 tokens"
+        case .binance: return "BNB, BEP20, BEP2 tokens"
         case .zcash: return "ZEC"
         }
     }

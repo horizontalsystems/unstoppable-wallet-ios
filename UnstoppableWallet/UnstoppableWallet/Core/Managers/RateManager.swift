@@ -69,7 +69,7 @@ extension RateManager: IRateManager {
         kit.refresh()
     }
 
-    func convertCoinTypeToXRateKitCoinType(coinType: CoinType) -> XRatesKit.CoinType {
+    func convertCoinTypeToXRateKitCoinType(coinType: CoinType) -> XRatesKit.CoinType? {
         switch coinType {
         case .bitcoin: return .bitcoin
         case .litecoin: return .litecoin
@@ -79,6 +79,7 @@ extension RateManager: IRateManager {
         case .erc20(let address): return .erc20(address: address)
         case .binance: return .binance
         case .zcash: return .zcash
+        default: return nil
         }
     }
 

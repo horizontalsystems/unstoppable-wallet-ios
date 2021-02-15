@@ -46,6 +46,10 @@ class AdapterFactory: IAdapterFactory {
                         fee: smartContractFee, minimumRequiredBalance: minimumBalance, minimumSpendableAmount: minimumSpendableAmount
                 )
             }
+        case .binanceSmartChain:
+            return nil
+        case let .bep20(address):
+            return nil
         case let .binance(symbol):
             if let binanceKit = try? binanceKitManager.binanceKit(account: wallet.account) {
                 return BinanceAdapter(binanceKit: binanceKit, symbol: symbol)
