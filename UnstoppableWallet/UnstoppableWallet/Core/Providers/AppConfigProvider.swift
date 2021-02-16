@@ -82,9 +82,14 @@ class AppConfigProvider: IAppConfigProvider {
     let feeRateAdjustedForCurrencyCodes: [String] = ["USD", "EUR"]
 
     private static let ethereumCoin = Coin(id: "ETH", title: "Ethereum", code: "ETH", decimal: 18, type: .ethereum)
+    private static let binanceSmartChainCoin = Coin(id: "BNB-BSC", title: "Binance Smart Chain", code: "BNB", decimal: 18, type: .binanceSmartChain)
 
     var ethereumCoin: Coin {
         Self.ethereumCoin
+    }
+
+    var binanceSmartChainCoin: Coin {
+        Self.binanceSmartChainCoin
     }
 
     var featuredCoins: [Coin] {
@@ -110,7 +115,7 @@ class AppConfigProvider: IAppConfigProvider {
         ethereumCoin,
         Coin(id: "BCH",       title: "Bitcoin Cash",                      code: "BCH",     decimal: 8,  type: .bitcoinCash),
         Coin(id: "DASH",      title: "Dash",                              code: "DASH",    decimal: 8,  type: .dash),
-        Coin(id: "BNB-BSC",   title: "Binance Smart Chain",               code: "BNB",     decimal: 18, type: .binanceSmartChain),
+        binanceSmartChainCoin,
         Coin(id: "BNB",       title: "Binance Coin",                      code: "BNB",     decimal: 8,  type: .binance(symbol: "BNB")),
         Coin(id: "ZEC",       title: "Zcash",                             code: "ZEC",     decimal: 8,  type: .zcash),
         Coin(id: "$BASED",    title: "$BASED",                            code: "$BASED",  decimal: 18, type: .erc20(address: "0x68A118Ef45063051Eac49c7e647CE5Ace48a68a5")),
