@@ -13,8 +13,8 @@ struct WalletConnectSendEthereumTransactionRequestModule {
                 rateManager: App.shared.rateManager
         )
 
-        let transactionService = EthereumTransactionService(
-                ethereumKit: ethereumKit,
+        let transactionService = EvmTransactionService(
+                evmKit: ethereumKit,
                 feeRateProvider: App.shared.feeRateProviderFactory.provider(coinType: .ethereum) as! EthereumFeeRateProvider,
                 gasLimitSurchargePercent: 10
         )

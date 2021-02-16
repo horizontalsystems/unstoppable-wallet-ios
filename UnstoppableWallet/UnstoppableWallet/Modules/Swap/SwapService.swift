@@ -8,11 +8,12 @@ import EthereumKit
 import Foundation
 
 class SwapService {
-    private let ethereumKit: EthereumKit.Kit
+    let dex: SwapModule.Dex
+    private let evmKit: EthereumKit.Kit
     private let tradeService: SwapTradeService
     private let allowanceService: SwapAllowanceService
     private let pendingAllowanceService: SwapPendingAllowanceService
-    private let transactionService: EthereumTransactionService
+    private let transactionService: EvmTransactionService
     private let adapterManager: IAdapterManager
 
     private let disposeBag = DisposeBag()
@@ -49,8 +50,9 @@ class SwapService {
         }
     }
 
-    init(ethereumKit: EthereumKit.Kit, tradeService: SwapTradeService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, transactionService: EthereumTransactionService, adapterManager: IAdapterManager) {
-        self.ethereumKit = ethereumKit
+    init(dex: SwapModule.Dex, evmKit: EthereumKit.Kit, tradeService: SwapTradeService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, transactionService: EvmTransactionService, adapterManager: IAdapterManager) {
+        self.dex = dex
+        self.evmKit = evmKit
         self.tradeService = tradeService
         self.allowanceService = allowanceService
         self.pendingAllowanceService = pendingAllowanceService
@@ -109,7 +111,7 @@ class SwapService {
     }
 
     private var ethereumBalance: BigUInt {
-        ethereumKit.accountState?.balance ?? 0
+        evmKit.accountState?.balance ?? 0
     }
 
     private func onUpdateTrade(state: SwapTradeService.State) {
@@ -257,7 +259,7 @@ extension SwapService {
             return nil
         }
 
-        return allowanceService.approveData(amount: amount)
+        return allowanceService.approveData(dex: dex, amount: amount)
     }
 
     func swap() {
@@ -267,7 +269,7 @@ extension SwapService {
 
         swapEventRelay.accept(.swapping)
 
-        ethereumKit.sendSingle(
+        evmKit.sendSingle(
                         address: transaction.data.to,
                         value: transaction.data.value,
                         transactionInput: transaction.data.input,

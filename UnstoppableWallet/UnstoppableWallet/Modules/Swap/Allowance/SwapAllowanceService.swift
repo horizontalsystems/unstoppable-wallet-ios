@@ -6,7 +6,6 @@ import RxRelay
 class SwapAllowanceService {
     private let spenderAddress: EthereumKit.Address
     private let adapterManager: IAdapterManager
-    private let ethereumKit: EthereumKit.Kit
 
     private var coin: Coin?
 
@@ -22,12 +21,11 @@ class SwapAllowanceService {
         }
     }
 
-    init(spenderAddress: EthereumKit.Address, adapterManager: IAdapterManager, ethereumKit: EthereumKit.Kit) {
+    init(spenderAddress: EthereumKit.Address, adapterManager: IAdapterManager, evmKit: EthereumKit.Kit) {
         self.spenderAddress = spenderAddress
         self.adapterManager = adapterManager
-        self.ethereumKit = ethereumKit
 
-        ethereumKit.lastBlockHeightObservable
+        evmKit.lastBlockHeightObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] blockNumber in
                     self?.sync()
@@ -73,7 +71,7 @@ extension SwapAllowanceService {
         sync()
     }
 
-    func approveData(amount: Decimal) -> ApproveData? {
+    func approveData(dex: SwapModule.Dex, amount: Decimal) -> ApproveData? {
         guard case .ready(let allowance) = state else {
             return nil
         }
@@ -83,6 +81,7 @@ extension SwapAllowanceService {
         }
 
         return ApproveData(
+                dex: dex,
                 coin: coin,
                 spenderAddress: spenderAddress,
                 amount: amount,
@@ -109,6 +108,7 @@ extension SwapAllowanceService {
     }
 
     struct ApproveData {
+        let dex: SwapModule.Dex
         let coin: Coin
         let spenderAddress: EthereumKit.Address
         let amount: Decimal

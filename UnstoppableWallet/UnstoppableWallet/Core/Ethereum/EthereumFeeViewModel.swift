@@ -6,7 +6,7 @@ class EthereumFeeViewModel {
     private let customFeeRange: ClosedRange<Int> = 1...400
     private let customFeeUnit = "gwei"
 
-    private let service: EthereumTransactionService
+    private let service: EvmTransactionService
     private let coinService: CoinService
 
     private let disposeBag = DisposeBag()
@@ -17,7 +17,7 @@ class EthereumFeeViewModel {
     private let openSelectPriorityRelay = PublishRelay<[SendPriorityViewItem]>()
     private let feeSliderRelay = BehaviorRelay<SendFeeSliderViewItem?>(value: nil)
 
-    init(service: EthereumTransactionService, coinService: CoinService) {
+    init(service: EvmTransactionService, coinService: CoinService) {
         self.service = service
         self.coinService = coinService
 
@@ -39,12 +39,12 @@ class EthereumFeeViewModel {
                 .disposed(by: disposeBag)
     }
 
-    private func sync(transactionStatus: DataStatus<EthereumTransactionService.Transaction>) {
+    private func sync(transactionStatus: DataStatus<EvmTransactionService.Transaction>) {
         estimatedFeeStatusRelay.accept(estimatedFeeStatus(transactionStatus: transactionStatus))
         feeStatusRelay.accept(feeStatus(transactionStatus: transactionStatus))
     }
 
-    private func estimatedFeeStatus(transactionStatus: DataStatus<EthereumTransactionService.Transaction>) -> String {
+    private func estimatedFeeStatus(transactionStatus: DataStatus<EvmTransactionService.Transaction>) -> String {
         switch transactionStatus {
         case .loading:
             return "action.loading".localized
@@ -55,7 +55,7 @@ class EthereumFeeViewModel {
         }
     }
 
-    private func feeStatus(transactionStatus: DataStatus<EthereumTransactionService.Transaction>) -> String {
+    private func feeStatus(transactionStatus: DataStatus<EvmTransactionService.Transaction>) -> String {
         switch transactionStatus {
         case .loading:
             return "action.loading".localized
@@ -66,7 +66,7 @@ class EthereumFeeViewModel {
         }
     }
 
-    private func sync(gasPriceType: EthereumTransactionService.GasPriceType) {
+    private func sync(gasPriceType: EvmTransactionService.GasPriceType) {
         priorityRelay.accept(priority(gasPriceType: gasPriceType).description)
 
         switch gasPriceType {
@@ -81,7 +81,7 @@ class EthereumFeeViewModel {
         }
     }
 
-    private func priority(gasPriceType: EthereumTransactionService.GasPriceType) -> Priority {
+    private func priority(gasPriceType: EvmTransactionService.GasPriceType) -> Priority {
         switch gasPriceType {
         case .recommended: return .recommended
         case .custom: return .custom

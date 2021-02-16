@@ -140,7 +140,7 @@ class SwapCoinCardCell: UITableViewCell {
     }
 
     @objc private func onTapTokenSelect() {
-        let viewController = CoinSelectModule.viewController(delegate: self)
+        let viewController = CoinSelectModule.viewController(dex: viewModel.dex, delegate: self)
         presentDelegate?.show(viewController: ThemeNavigationController(rootViewController: viewController))
     }
 

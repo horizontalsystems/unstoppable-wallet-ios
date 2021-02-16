@@ -6,9 +6,9 @@ import BigInt
 struct SwapApproveModule {
 
     static func instance(data: SwapAllowanceService.ApproveData, delegate: ISwapApproveDelegate) -> UIViewController? {
-        guard let ethereumKit = App.shared.ethereumKitManager.evmKit,
+        guard let evmKit = data.dex.evmKit,
               let wallet = App.shared.walletManager.wallets.first(where: { $0.coin == data.coin }),
-              let erc20Adapter = App.shared.adapterManager.adapter(for: wallet) as? Evm20Adapter else {
+              let evm20Adapter = App.shared.adapterManager.adapter(for: wallet) as? Evm20Adapter else {
 
             return nil
         }
@@ -25,15 +25,15 @@ struct SwapApproveModule {
                 rateManager: App.shared.rateManager
         )
 
-        let transactionService = EthereumTransactionService(
-                ethereumKit: ethereumKit,
+        let transactionService = EvmTransactionService(
+                evmKit: evmKit,
                 feeRateProvider: App.shared.feeRateProviderFactory.provider(coinType: .ethereum) as! EthereumFeeRateProvider
         )
 
         let service = SwapApproveService(
                 transactionService: transactionService,
-                erc20Kit: erc20Adapter.evm20Kit,
-                ethereumKit: ethereumKit,
+                erc20Kit: evm20Adapter.evm20Kit,
+                evmKit: evmKit,
                 amount: BigUInt(data.amount.roundedString(decimal: data.coin.decimal)) ?? 0,
                 spenderAddress: data.spenderAddress,
                 allowance: BigUInt(data.allowance.roundedString(decimal: data.coin.decimal)) ?? 0

@@ -2,6 +2,7 @@ import UniswapKit
 import RxSwift
 
 protocol ISwapCoinCardService: AnyObject {
+    var dex: SwapModule.Dex { get }
     var isEstimated: Bool { get }
     var amount: Decimal? { get }
     var coin: Coin? { get }
@@ -57,6 +58,7 @@ class SwapFromCoinCardService: ISwapCoinCardService {
         self.tradeService = tradeService
     }
 
+    var dex: SwapModule.Dex { service.dex }
     var isEstimated: Bool { tradeService.tradeType != Self.cardType }
     var amount: Decimal? { tradeService.amountIn }
     var coin: Coin? { tradeService.coinIn }
@@ -92,6 +94,7 @@ class SwapToCoinCardService: ISwapCoinCardService {
         self.tradeService = tradeService
     }
 
+    var dex: SwapModule.Dex { service.dex }
     var isEstimated: Bool { tradeService.tradeType != Self.cardType }
     var amount: Decimal? { tradeService.amountOut }
     var coin: Coin? { tradeService.coinOut }

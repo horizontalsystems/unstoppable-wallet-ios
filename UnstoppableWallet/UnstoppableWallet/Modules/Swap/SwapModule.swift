@@ -48,11 +48,19 @@ struct SwapModule {
     }
 
     static func viewController(coinIn: Coin) -> UIViewController? {
-        guard let ethereumKit = App.shared.ethereumKitManager.evmKit else {
+        switch coinIn.type {
+        case .ethereum, .erc20: return viewController(dex: .uniswap, coinIn: coinIn)
+        case .binanceSmartChain, .bep20: return viewController(dex: .pancake, coinIn: coinIn)
+        default: return nil
+        }
+    }
+
+    static func viewController(dex: Dex, coinIn: Coin? = nil) -> UIViewController? {
+        guard let evmKit = dex.evmKit else {
             return nil
         }
 
-        guard let swapKit = try? UniswapKit.Kit.instance(ethereumKit: ethereumKit) else {
+        guard let swapKit = try? UniswapKit.Kit.instance(ethereumKit: evmKit) else {
             return nil
         }
 
@@ -67,25 +75,26 @@ struct SwapModule {
         let tradeService = SwapTradeService(
                 uniswapProvider: uniswapRepository,
                 coin: coinIn,
-                ethereumKit: ethereumKit
+                evmKit: evmKit
         )
         let allowanceService = SwapAllowanceService(
                 spenderAddress: uniswapRepository.routerAddress,
                 adapterManager: App.shared.adapterManager,
-                ethereumKit: ethereumKit
+                evmKit: evmKit
         )
         let pendingAllowanceService = SwapPendingAllowanceService(
                 spenderAddress: uniswapRepository.routerAddress,
                 adapterManager: App.shared.adapterManager,
                 allowanceService: allowanceService
         )
-        let transactionService = EthereumTransactionService(
-                ethereumKit: ethereumKit,
+        let transactionService = EvmTransactionService(
+                evmKit: evmKit,
                 feeRateProvider: App.shared.feeRateProviderFactory.provider(coinType: .ethereum) as! EthereumFeeRateProvider,
                 gasLimitSurchargePercent: 20
         )
         let service = SwapService(
-                ethereumKit: ethereumKit,
+                dex: dex,
+                evmKit: evmKit,
                 tradeService: tradeService,
                 allowanceService: allowanceService,
                 pendingAllowanceService: pendingAllowanceService,
@@ -113,6 +122,22 @@ struct SwapModule {
         )
 
         return ThemeNavigationController(rootViewController: viewController)
+    }
+
+}
+
+extension SwapModule {
+
+    enum Dex {
+        case uniswap
+        case pancake
+
+        var evmKit: EthereumKit.Kit? {
+            switch self {
+            case .uniswap: return App.shared.ethereumKitManager.evmKit
+            case .pancake: return App.shared.binanceSmartChainKitManager.evmKit
+            }
+        }
     }
 
 }

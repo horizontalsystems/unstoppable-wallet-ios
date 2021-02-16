@@ -3,8 +3,8 @@ import BigInt
 import RxSwift
 import RxRelay
 
-class EthereumTransactionService {
-    private let ethereumKit: Kit
+class EvmTransactionService {
+    private let evmKit: Kit
     private let feeRateProvider: EthereumFeeRateProvider
     private let gasLimitSurchargePercent: Int
 
@@ -26,8 +26,8 @@ class EthereumTransactionService {
 
     private var disposeBag = DisposeBag()
 
-    init(ethereumKit: Kit, feeRateProvider: EthereumFeeRateProvider, gasLimitSurchargePercent: Int = 0) {
-        self.ethereumKit = ethereumKit
+    init(evmKit: Kit, feeRateProvider: EthereumFeeRateProvider, gasLimitSurchargePercent: Int = 0) {
+        self.evmKit = evmKit
         self.feeRateProvider = feeRateProvider
         self.gasLimitSurchargePercent = gasLimitSurchargePercent
     }
@@ -42,7 +42,7 @@ class EthereumTransactionService {
     }
 
     private func gasLimitSingle(gasPrice: Int, transactionData: TransactionData) -> Single<Int> {
-        ethereumKit.estimateGas(transactionData: transactionData, gasPrice: gasPrice)
+        evmKit.estimateGas(transactionData: transactionData, gasPrice: gasPrice)
     }
 
     private func sync() {
@@ -79,7 +79,7 @@ class EthereumTransactionService {
 
 }
 
-extension EthereumTransactionService {
+extension EvmTransactionService {
 
     var gasPriceTypeObservable: Observable<GasPriceType> {
         gasPriceTypeRelay.asObservable()
@@ -105,7 +105,7 @@ extension EthereumTransactionService {
 
 }
 
-extension EthereumTransactionService {
+extension EvmTransactionService {
 
     struct GasData {
         let estimatedGasLimit: Int

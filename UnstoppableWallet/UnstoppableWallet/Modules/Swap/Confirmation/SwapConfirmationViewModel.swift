@@ -7,7 +7,7 @@ class SwapConfirmationViewModel {
 
     private let service: SwapService
     private let tradeService: SwapTradeService
-    private let transactionService: EthereumTransactionService
+    private let transactionService: EvmTransactionService
     private let ethereumCoinService: CoinService
 
     private let viewItemHelper: SwapViewItemHelper
@@ -19,7 +19,7 @@ class SwapConfirmationViewModel {
     private var completedRelay = PublishRelay<()>()
     private var errorRelay = PublishRelay<Error>()
 
-    init(service: SwapService, tradeService: SwapTradeService, transactionService: EthereumTransactionService, ethereumCoinService: CoinService, viewItemHelper: SwapViewItemHelper) {
+    init(service: SwapService, tradeService: SwapTradeService, transactionService: EvmTransactionService, ethereumCoinService: CoinService, viewItemHelper: SwapViewItemHelper) {
         self.service = service
         self.tradeService = tradeService
         self.viewItemHelper = viewItemHelper
