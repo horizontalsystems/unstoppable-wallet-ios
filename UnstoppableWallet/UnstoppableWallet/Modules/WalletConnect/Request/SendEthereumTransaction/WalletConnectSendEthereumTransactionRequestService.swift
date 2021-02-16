@@ -5,7 +5,7 @@ import CurrencyKit
 import BigInt
 
 class WalletConnectSendEthereumTransactionRequestService {
-    private let transactionService: EthereumTransactionService
+    private let transactionService: EvmTransactionService
     private var ethereumKit: EthereumKit.Kit
 
     let transactionData: TransactionData
@@ -19,7 +19,7 @@ class WalletConnectSendEthereumTransactionRequestService {
 
     private let disposeBag = DisposeBag()
 
-    init(transaction: WalletConnectTransaction, transactionService: EthereumTransactionService, ethereumKit: EthereumKit.Kit) {
+    init(transaction: WalletConnectTransaction, transactionService: EvmTransactionService, ethereumKit: EthereumKit.Kit) {
         self.transactionService = transactionService
         self.ethereumKit = ethereumKit
 

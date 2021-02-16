@@ -2,6 +2,7 @@ import RxSwift
 import RxRelay
 
 class CoinSelectService {
+    private let dex: SwapModule.Dex
     private let coinManager: ICoinManager
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
@@ -9,7 +10,8 @@ class CoinSelectService {
 
     private(set) var items = [Item]()
 
-    init(coinManager: ICoinManager, walletManager: IWalletManager, adapterManager: IAdapterManager) {
+    init(dex: SwapModule.Dex, coinManager: ICoinManager, walletManager: IWalletManager, adapterManager: IAdapterManager) {
+        self.dex = dex
         self.coinManager = coinManager
         self.walletManager = walletManager
         self.adapterManager = adapterManager
@@ -17,9 +19,17 @@ class CoinSelectService {
         loadItems()
     }
 
+    private func dexSupports(coin: Coin) -> Bool {
+        switch coin.type {
+        case .ethereum, .erc20: return dex == .uniswap
+        case .binanceSmartChain, .bep20: return dex == .pancake
+        default: return false
+        }
+    }
+
     private func loadItems() {
         var balanceCoins = walletManager.wallets.compactMap { wallet -> (coin: Coin, balance: Decimal)? in
-            guard wallet.coin.type.swappable else {
+            guard dexSupports(coin: wallet.coin) else {
                 return nil
             }
 
@@ -39,7 +49,7 @@ class CoinSelectService {
         }
 
         let remainingCoins = coinManager.coins.filter { coin in
-            coin.type.swappable && !walletItems.contains { $0.coin == coin }
+            dexSupports(coin: coin) && !walletItems.contains { $0.coin == coin }
         }
 
         let coinItems = remainingCoins.map { coin in

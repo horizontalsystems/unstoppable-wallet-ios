@@ -11,7 +11,7 @@ class SwapViewModel {
     public let service: SwapService
     public let tradeService: SwapTradeService
     public let fiatSwitchService: AmountTypeSwitchService
-    public let transactionService: EthereumTransactionService
+    public let transactionService: EvmTransactionService
     public let allowanceService: SwapAllowanceService
     public let pendingAllowanceService: SwapPendingAllowanceService
     private let coinService: CoinService
@@ -29,7 +29,7 @@ class SwapViewModel {
 
     private var openApproveRelay = PublishRelay<SwapAllowanceService.ApproveData>()
 
-    init(service: SwapService, tradeService: SwapTradeService, fiatSwitchService: AmountTypeSwitchService, transactionService: EthereumTransactionService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, coinService: CoinService, viewItemHelper: SwapViewItemHelper) {
+    init(service: SwapService, tradeService: SwapTradeService, fiatSwitchService: AmountTypeSwitchService, transactionService: EvmTransactionService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, coinService: CoinService, viewItemHelper: SwapViewItemHelper) {
         self.service = service
         self.tradeService = tradeService
         self.fiatSwitchService = fiatSwitchService
@@ -76,7 +76,7 @@ class SwapViewModel {
         let filtered = errors.filter { error in
             switch error {
             case let error as UniswapKit.Kit.TradeError: return error != .zeroAmount
-            case _ as EthereumTransactionService.GasDataError: return false
+            case _ as EvmTransactionService.GasDataError: return false
             case _ as SwapService.SwapError: return false
             default: return true
             }

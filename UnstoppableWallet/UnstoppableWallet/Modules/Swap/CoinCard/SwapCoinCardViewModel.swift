@@ -144,6 +144,10 @@ class SwapCoinCardViewModel {
 
 extension SwapCoinCardViewModel {
 
+    var dex: SwapModule.Dex {
+        coinCardService.dex
+    }
+
     var isEstimated: Driver<Bool> {
         isEstimatedRelay.asDriver()
     }

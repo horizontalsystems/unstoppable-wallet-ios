@@ -67,11 +67,11 @@ class SwapTradeService {
         }
     }
 
-    init(uniswapProvider: UniswapProvider, coin: Coin? = nil, ethereumKit: EthereumKit.Kit) {
+    init(uniswapProvider: UniswapProvider, coin: Coin? = nil, evmKit: EthereumKit.Kit) {
         self.uniswapProvider = uniswapProvider
         coinIn = coin
 
-        ethereumKit.lastBlockHeightObservable
+        evmKit.lastBlockHeightObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] blockNumber in
                     self?.syncSwapData()

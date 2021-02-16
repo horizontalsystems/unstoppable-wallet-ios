@@ -50,7 +50,7 @@ enum CoinType {
 
     var swappable: Bool {
         switch self {
-        case .ethereum, .erc20: return true
+        case .ethereum, .erc20, .binanceSmartChain, .bep20: return true
         default: return false
         }
     }

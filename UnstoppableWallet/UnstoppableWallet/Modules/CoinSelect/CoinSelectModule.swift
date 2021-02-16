@@ -7,8 +7,9 @@ protocol ICoinSelectDelegate: AnyObject {
 
 struct CoinSelectModule {
 
-    static func viewController(delegate: ICoinSelectDelegate) -> UIViewController {
+    static func viewController(dex: SwapModule.Dex, delegate: ICoinSelectDelegate) -> UIViewController {
         let service = CoinSelectService(
+                dex: dex,
                 coinManager: App.shared.coinManager,
                 walletManager: App.shared.walletManager,
                 adapterManager: App.shared.adapterManager

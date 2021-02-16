@@ -8,9 +8,9 @@ import BigInt
 class SwapApproveService {
     private let disposeBag = DisposeBag()
 
-    private let transactionService: EthereumTransactionService
+    private let transactionService: EvmTransactionService
     private let erc20Kit: Erc20Kit.Kit
-    private let ethereumKit: EthereumKit.Kit
+    private let evmKit: EthereumKit.Kit
 
     private(set) var amount: BigUInt?
     private let spenderAddress: EthereumKit.Address
@@ -23,10 +23,10 @@ class SwapApproveService {
     }
     private let stateRelay = BehaviorRelay<State>(value: .approveNotAllowed(errors: []))
 
-    init(transactionService: EthereumTransactionService, erc20Kit: Erc20Kit.Kit, ethereumKit: EthereumKit.Kit, amount: BigUInt, spenderAddress: EthereumKit.Address, allowance: BigUInt) {
+    init(transactionService: EvmTransactionService, erc20Kit: Erc20Kit.Kit, evmKit: EthereumKit.Kit, amount: BigUInt, spenderAddress: EthereumKit.Address, allowance: BigUInt) {
         self.transactionService = transactionService
         self.erc20Kit = erc20Kit
-        self.ethereumKit = ethereumKit
+        self.evmKit = evmKit
 
         self.amount = amount
         self.spenderAddress = spenderAddress
@@ -54,7 +54,7 @@ class SwapApproveService {
     }
 
     private var ethereumBalance: BigUInt {
-        ethereumKit.accountState?.balance ?? 0
+        evmKit.accountState?.balance ?? 0
     }
 
     private func syncState() {
@@ -103,7 +103,7 @@ extension SwapApproveService {
 
         state = .loading
 
-        ethereumKit.sendSingle(
+        evmKit.sendSingle(
                         address: transaction.data.to,
                         value: transaction.data.value,
                         transactionInput: transaction.data.input,
