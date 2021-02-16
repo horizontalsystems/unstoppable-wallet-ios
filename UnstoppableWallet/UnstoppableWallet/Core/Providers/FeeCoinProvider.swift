@@ -5,10 +5,6 @@ class FeeCoinProvider {
         self.appConfigProvider = appConfigProvider
     }
 
-    private var erc20FeeCoinProtocol: String {
-        "ERC20"
-    }
-
     private func binanceFeeCoin(symbol: String) -> Coin? {
         guard symbol != "BNB" else {
             return nil
@@ -27,7 +23,7 @@ class FeeCoinProvider {
             return nil
         }
 
-        return "BEP-2"
+        return "BEP2"
     }
 
 }
@@ -38,6 +34,8 @@ extension FeeCoinProvider: IFeeCoinProvider {
         switch coin.type {
         case .erc20:
             return appConfigProvider.ethereumCoin
+        case .bep20:
+            return appConfigProvider.binanceSmartChainCoin
         case .binance(let symbol):
             return binanceFeeCoin(symbol: symbol)
         default:
@@ -48,7 +46,9 @@ extension FeeCoinProvider: IFeeCoinProvider {
     func feeCoinProtocol(coin: Coin) -> String? {
         switch coin.type {
         case .erc20:
-            return erc20FeeCoinProtocol
+            return "ERC20"
+        case .bep20:
+            return "BEP20"
         case .binance(let symbol):
             return binanceFeeCoinProtocol(symbol: symbol)
         default:

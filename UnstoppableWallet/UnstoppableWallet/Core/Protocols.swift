@@ -296,6 +296,7 @@ protocol IAppConfigProvider {
     func defaultWords(count: Int) -> String
 
     var ethereumCoin: Coin { get }
+    var binanceSmartChainCoin: Coin { get }
     var featuredCoins: [Coin] { get }
     var defaultCoins: [Coin] { get }
     var smartContractFees: [CoinType: Decimal] { get }

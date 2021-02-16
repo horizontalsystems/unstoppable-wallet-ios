@@ -5,8 +5,10 @@ class FeeRateProvider {
     private let feeRateKit: FeeRateKit.Kit
 
     init(appConfigProvider: IAppConfigProvider) {
-        let providerConfig = FeeProviderConfig(infuraProjectId: appConfigProvider.infuraCredentials.id,
-                infuraProjectSecret: appConfigProvider.infuraCredentials.secret,
+        let providerConfig = FeeProviderConfig(
+                ethEvmUrl: FeeProviderConfig.infuraUrl(projectId: appConfigProvider.infuraCredentials.id),
+                ethEvmAuth: appConfigProvider.infuraCredentials.secret,
+                bscEvmUrl: FeeProviderConfig.defaultBscEvmUrl,
                 btcCoreRpcUrl: appConfigProvider.btcCoreRpcUrl,
                 btcCoreRpcUser: nil,
                 btcCoreRpcPassword: nil
@@ -18,6 +20,10 @@ class FeeRateProvider {
 
     var ethereumGasPrice: Single<Int> {
         feeRateKit.ethereum
+    }
+
+    var binanceSmartChainGasPrice: Single<Int> {
+        feeRateKit.binanceSmartChain
     }
 
     var litecoinFeeRate: Single<Int> {
@@ -115,6 +121,23 @@ class EthereumFeeRateProvider: IFeeRateProvider {
     }
 
     var recommendedFeeRate: Single<Int> { feeRateProvider.ethereumGasPrice }
+    var feeRatePriorityList: [FeeRatePriority] {
+        [.recommended, .custom(value: lower, range: lower...upper)]
+    }
+
+}
+
+class BinanceSmartChainFeeRateProvider: IFeeRateProvider {
+    private let lower = 1_000_000_000
+    private let upper = 400_000_000_000
+
+    private let feeRateProvider: FeeRateProvider
+
+    init(feeRateProvider: FeeRateProvider) {
+        self.feeRateProvider = feeRateProvider
+    }
+
+    var recommendedFeeRate: Single<Int> { feeRateProvider.binanceSmartChainGasPrice }
     var feeRatePriorityList: [FeeRatePriority] {
         [.recommended, .custom(value: lower, range: lower...upper)]
     }
