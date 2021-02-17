@@ -5,7 +5,7 @@ struct SwapConfirmationModule {
 
     static func viewController(service: SwapService, tradeService: SwapTradeService, transactionService: EvmTransactionService) -> UIViewController {
         let ethereumCoinService = CoinService(
-                coin: App.shared.appConfigProvider.ethereumCoin,
+                coin: service.dex.coin,
                 currencyKit: App.shared.currencyKit,
                 rateManager: App.shared.rateManager
         )

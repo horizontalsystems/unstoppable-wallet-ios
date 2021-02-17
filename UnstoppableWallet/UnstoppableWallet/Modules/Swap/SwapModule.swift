@@ -60,14 +60,15 @@ struct SwapModule {
             return nil
         }
 
-        guard let swapKit = try? UniswapKit.Kit.instance(ethereumKit: evmKit) else {
+        guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: dex.coin.type) else {
             return nil
         }
 
+        let swapKit = UniswapKit.Kit.instance(evmKit: evmKit)
         let uniswapRepository = UniswapProvider(swapKit: swapKit)
 
         let coinService = CoinService(
-                coin: App.shared.appConfigProvider.ethereumCoin,
+                coin: dex.coin,
                 currencyKit: App.shared.currencyKit,
                 rateManager: App.shared.rateManager
         )
@@ -89,7 +90,7 @@ struct SwapModule {
         )
         let transactionService = EvmTransactionService(
                 evmKit: evmKit,
-                feeRateProvider: App.shared.feeRateProviderFactory.provider(coinType: .ethereum) as! EthereumFeeRateProvider,
+                feeRateProvider: feeRateProvider,
                 gasLimitSurchargePercent: 20
         )
         let service = SwapService(
@@ -138,6 +139,14 @@ extension SwapModule {
             case .pancake: return App.shared.binanceSmartChainKitManager.evmKit
             }
         }
+
+        var coin: Coin {
+            switch self {
+            case .uniswap: return App.shared.appConfigProvider.ethereumCoin
+            case .pancake: return App.shared.appConfigProvider.binanceSmartChainCoin
+            }
+        }
+
     }
 
 }
