@@ -28,7 +28,7 @@ class CurrencyCompactFormatter {
         return (value: value / pow(ten, (index - 1) * 3), postfix: postfix)
     }
 
-    public func format(currency: Currency, value: Decimal?) -> String? {
+    public func format(currency: Currency, value: Decimal?, fractionMaximumFractionDigits: Int = 1) -> String? {
         guard let value = value else {
             return nil
         }
@@ -36,6 +36,7 @@ class CurrencyCompactFormatter {
 
         currencyFormatter.currencyCode = currency.code
         currencyFormatter.currencySymbol = currency.symbol
+        currencyFormatter.maximumFractionDigits = fractionMaximumFractionDigits
 
         guard let formattedValue = currencyFormatter.string(from: data.value as NSNumber) else {
             return nil
