@@ -295,8 +295,8 @@
 
 // Market
 
-"market.tab_bar_item" = "Market";
-"market.title" = "Market";
+"market.tab_bar_item" = "Markets";
+"market.title" = "Markets";
 "market.category.overview" = "Overview";
 "market.category.discovery" = "Discovery";
 "market.category.watchlist" = "Watchlist";

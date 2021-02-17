@@ -269,6 +269,11 @@ class CoinInfoMap {
         "sETH":       CoinInfo(supply: 29_935,          startDate: nil,          website: "https://www.synthetix.io"),
         "sXAU":       CoinInfo(supply: 225.36884553,    startDate: nil,          website: "https://www.synthetix.io"),
         "wANATHA":    CoinInfo(supply: nil,             startDate: nil,          website: "https://anatha.io"),
+
+        "FTT":        CoinInfo(supply: 345_219_294,     startDate: nil,          website: "https://ftx.com"),
+        "MX":         CoinInfo(supply: 608_002_217,     startDate: nil,          website: "https://www.mxc.ceo"),
+        "GT":         CoinInfo(supply: 300_000_000,     startDate: nil,          website: "https://gatechain.io"),
+
     ]
 
 }
