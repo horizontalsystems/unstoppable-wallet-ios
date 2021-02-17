@@ -33,7 +33,7 @@ class ChartViewController: ThemeViewController {
     private let selectedRateView = ChartPointInfoView()
 
     private let chartView: RateChartView
-    private var indicatorViews = [ChartIndicatorSet : IndicatorSelectView]()
+    private var indicatorViews = [ChartIndicatorSet : UIButton]()
     private let chartInfoView = ChartInfoView()
 
     private var favoriteButtonItem: UIBarButtonItem?
@@ -80,6 +80,7 @@ class ChartViewController: ThemeViewController {
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
             maker.height.equalTo(40)
         }
+        selectedRateView.isHidden = true
 
         container.addSubview(intervalSelectView)
         intervalSelectView.snp.makeConstraints { maker in
@@ -106,51 +107,67 @@ class ChartViewController: ThemeViewController {
         loadingView.set(hidden: true)
         loadingView.backgroundColor = view.backgroundColor
 
-        let emaIndicatorView = IndicatorSelectView(title: "EMA")
-        container.addSubview(emaIndicatorView)
-        emaIndicatorView.snp.makeConstraints { maker in
-            maker.top.equalTo(chartView.snp.bottom).offset(CGFloat.margin2x)
+        let indicatorSelectorsHolder = UIView()
+        container.addSubview(indicatorSelectorsHolder)
+        indicatorSelectorsHolder.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.height.equalTo(44)
+            maker.top.equalTo(chartView.snp.bottom)
+            maker.height.equalTo(CGFloat.heightSingleLineCell)
         }
-        emaIndicatorView.onTap = { [weak self] in
-            self?.delegate.onTap(indicator: .ema)
+
+        let emaIndicatorView = ThemeButton().apply(style: .tertiary)
+        indicatorSelectorsHolder.addSubview(emaIndicatorView)
+        emaIndicatorView.snp.makeConstraints { maker in
+            maker.centerY.equalToSuperview()
+            maker.leading.equalToSuperview().inset(CGFloat.margin16)
+            maker.height.equalTo(24)
         }
+
+        emaIndicatorView.addTarget(self, action: #selector(onTapIndicator), for: .touchUpInside)
+        emaIndicatorView.setTitle("EMA", for: .normal)
+        emaIndicatorView.tag = Int(ChartIndicatorSet.ema.rawValue)
         indicatorViews[.ema] = emaIndicatorView
 
-        let macdIndicatorView = IndicatorSelectView(title: "MACD")
-        container.addSubview(macdIndicatorView)
+        let macdIndicatorView = ThemeButton().apply(style: .tertiary)
+        indicatorSelectorsHolder.addSubview(macdIndicatorView)
         macdIndicatorView.snp.makeConstraints { maker in
-            maker.top.equalTo(emaIndicatorView.snp.bottom)
-            maker.leading.trailing.equalToSuperview()
-            maker.height.equalTo(44)
+            maker.centerY.equalToSuperview()
+            maker.leading.equalTo(emaIndicatorView.snp.trailing).offset(CGFloat.margin8)
+            maker.height.equalTo(24)
         }
-        macdIndicatorView.onTap = { [weak self] in
-            self?.delegate.onTap(indicator: .macd)
-        }
+
+        macdIndicatorView.addTarget(self, action: #selector(onTapIndicator), for: .touchUpInside)
+        macdIndicatorView.setTitle("MACD", for: .normal)
+        macdIndicatorView.tag = Int(ChartIndicatorSet.macd.rawValue)
         indicatorViews[.macd] = macdIndicatorView
 
-        let rsiIndicatorView = IndicatorSelectView(title: "RSI")
-        container.addSubview(rsiIndicatorView)
+        let rsiIndicatorView = ThemeButton().apply(style: .tertiary)
+        indicatorSelectorsHolder.addSubview(rsiIndicatorView)
         rsiIndicatorView.snp.makeConstraints { maker in
-            maker.top.equalTo(macdIndicatorView.snp.bottom)
-            maker.leading.trailing.equalToSuperview()
-            maker.height.equalTo(44)
+            maker.centerY.equalToSuperview()
+            maker.leading.equalTo(macdIndicatorView.snp.trailing).offset(CGFloat.margin8)
+            maker.height.equalTo(24)
         }
-        rsiIndicatorView.onTap = { [weak self] in
-            self?.delegate.onTap(indicator: .rsi)
-        }
+
+        rsiIndicatorView.addTarget(self, action: #selector(onTapIndicator), for: .touchUpInside)
+        rsiIndicatorView.setTitle("RSI", for: .normal)
+        rsiIndicatorView.tag = Int(ChartIndicatorSet.rsi.rawValue)
         indicatorViews[.rsi] = rsiIndicatorView
 
         container.addSubview(chartInfoView)
         chartInfoView.snp.makeConstraints { maker in
-            maker.top.equalTo(rsiIndicatorView.snp.bottom)
+            maker.top.equalTo(indicatorSelectorsHolder.snp.bottom)
             maker.leading.trailing.equalToSuperview()
         }
 
         view.layoutIfNeeded()
 
         delegate.onLoad()
+    }
+
+    @objc private func onTapIndicator(sender: UIButton) {
+        let indicator = ChartIndicatorSet(rawValue: UInt8(sender.tag))
+        delegate.onTap(indicator: indicator)
     }
 
     // Chart Loading functions
@@ -208,7 +225,7 @@ class ChartViewController: ThemeViewController {
             ChartIndicatorSet.all.forEach { indicator in
                 let show = viewItem.selectedIndicator.contains(indicator)
 
-                indicatorViews[indicator]?.bind(selected: show, trend: data.trends[indicator])
+                indicatorViews[indicator]?.isSelected = show
                 set(indicator: indicator, hidden: !show)
             }
         }
@@ -225,7 +242,7 @@ class ChartViewController: ThemeViewController {
 
     private func deactivateIndicators() {
         indicatorViews.forEach { _, view in
-            view.bind(selected: false, trend: nil)
+            view.isSelected = false
         }
     }
 

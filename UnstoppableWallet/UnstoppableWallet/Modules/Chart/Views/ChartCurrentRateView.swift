@@ -36,7 +36,6 @@ class ChartCurrentRateView: UIView {
         diffImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
         diffLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         diffLabel.font = .subhead1
-        diffLabel.textColor = .themeLeah
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -58,6 +57,7 @@ class ChartCurrentRateView: UIView {
 
         let formattedDiff = ChartCurrentRateView.formatter.string(from: abs(diff) as NSNumber)
         diffLabel.text = formattedDiff.map { "\($0)%" }
+        diffLabel.textColor = color
     }
 
 }
