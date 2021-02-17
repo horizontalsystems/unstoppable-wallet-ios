@@ -442,7 +442,7 @@
 "settings.base_currency" = "基本货币";
 "settings.language" = "语言";
 "settings.faq" = "常见问题";
-"settings.light_mode" = "简单模式";
+"settings.light_mode" = "明亮模式";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "分布式应用程序";
 
