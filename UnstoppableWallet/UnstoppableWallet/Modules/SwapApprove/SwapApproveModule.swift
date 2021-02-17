@@ -9,7 +9,10 @@ struct SwapApproveModule {
         guard let evmKit = data.dex.evmKit,
               let wallet = App.shared.walletManager.wallets.first(where: { $0.coin == data.coin }),
               let evm20Adapter = App.shared.adapterManager.adapter(for: wallet) as? Evm20Adapter else {
+            return nil
+        }
 
+        guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: data.dex.coin.type) else {
             return nil
         }
 
@@ -20,14 +23,14 @@ struct SwapApproveModule {
         )
 
         let ethereumCoinService = CoinService(
-                coin: App.shared.appConfigProvider.ethereumCoin,
+                coin: data.dex.coin,
                 currencyKit: App.shared.currencyKit,
                 rateManager: App.shared.rateManager
         )
 
         let transactionService = EvmTransactionService(
                 evmKit: evmKit,
-                feeRateProvider: App.shared.feeRateProviderFactory.provider(coinType: .ethereum) as! EthereumFeeRateProvider
+                feeRateProvider: feeRateProvider
         )
 
         let service = SwapApproveService(

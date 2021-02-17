@@ -5,7 +5,7 @@ import RxRelay
 
 class EvmTransactionService {
     private let evmKit: Kit
-    private let feeRateProvider: EthereumFeeRateProvider
+    private let feeRateProvider: IFeeRateProvider
     private let gasLimitSurchargePercent: Int
 
     private var transactionData: TransactionData?
@@ -26,7 +26,7 @@ class EvmTransactionService {
 
     private var disposeBag = DisposeBag()
 
-    init(evmKit: Kit, feeRateProvider: EthereumFeeRateProvider, gasLimitSurchargePercent: Int = 0) {
+    init(evmKit: Kit, feeRateProvider: IFeeRateProvider, gasLimitSurchargePercent: Int = 0) {
         self.evmKit = evmKit
         self.feeRateProvider = feeRateProvider
         self.gasLimitSurchargePercent = gasLimitSurchargePercent
