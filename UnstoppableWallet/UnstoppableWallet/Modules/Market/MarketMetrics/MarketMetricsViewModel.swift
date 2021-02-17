@@ -25,10 +25,10 @@ class MarketMetricsViewModel {
     private func marketMetrics(marketInfo: GlobalCoinMarket) -> MarketMetrics? {
         let formatter = CurrencyCompactFormatter.instance
 
-        guard let totalMarketCap = formatter.format(currency: service.currency, value: marketInfo.marketCap),
+        guard let totalMarketCap = formatter.format(currency: service.currency, value: marketInfo.marketCap, fractionMaximumFractionDigits: 2),
               let volume24h = formatter.format(currency: service.currency, value: marketInfo.volume24h),
-              let defiCap = formatter.format(currency: service.currency, value: marketInfo.defiMarketCap) else {
-//              let defiTvl = formatter.format(currency: service.currency, value: marketInfo.defiTvl) else {
+              let defiCap = formatter.format(currency: service.currency, value: marketInfo.defiMarketCap),
+              let defiTvl = formatter.format(currency: service.currency, value: marketInfo.defiTvl) else {
 
             return nil
         }
@@ -39,8 +39,8 @@ class MarketMetricsViewModel {
             totalMarketCap: MetricData(value: totalMarketCap, diff: marketInfo.marketCapDiff24h),
             volume24h: MetricData(value: volume24h, diff: marketInfo.volume24hDiff24h),
             btcDominance: MetricData(value: btcDominance, diff: marketInfo.btcDominanceDiff24h),
-            defiCap: MetricData(value: defiCap, diff: nil),
-            defiTvl: MetricData(value: nil, diff: nil))
+            defiCap: MetricData(value: defiCap, diff: marketInfo.defiMarketCapDiff24h),
+            defiTvl: MetricData(value: defiTvl, diff: marketInfo.defiTvlDiff24h))
     }
 
 }
