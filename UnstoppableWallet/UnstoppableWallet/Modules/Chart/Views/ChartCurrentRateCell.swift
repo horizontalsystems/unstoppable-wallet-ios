@@ -1,16 +1,19 @@
 import UIKit
 
-class ChartCurrentRateView: UIView {
+class ChartCurrentRateCell: UITableViewCell {
+    static let cellHeight: CGFloat = 40
+
     private let rateLabel = UILabel()
     private let diffImageView = UIImageView()
     private let diffLabel = UILabel()
 
-    init() {
-        super.init(frame: .zero)
+    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         backgroundColor = .clear
+        contentView.backgroundColor = .clear
 
-        addSubview(rateLabel)
+        contentView.addSubview(rateLabel)
         rateLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
             maker.centerY.equalToSuperview()
@@ -20,8 +23,8 @@ class ChartCurrentRateView: UIView {
         rateLabel.textColor = .themeOz
         rateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
-        addSubview(diffImageView)
-        addSubview(diffLabel)
+        contentView.addSubview(diffImageView)
+        contentView.addSubview(diffLabel)
 
         diffLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(diffImageView.snp.trailing)
@@ -55,14 +58,14 @@ class ChartCurrentRateView: UIView {
 
         diffImageView.image = UIImage(named: imageName)?.tinted(with: color)
 
-        let formattedDiff = ChartCurrentRateView.formatter.string(from: abs(diff) as NSNumber)
+        let formattedDiff = ChartCurrentRateCell.formatter.string(from: abs(diff) as NSNumber)
         diffLabel.text = formattedDiff.map { "\($0)%" }
         diffLabel.textColor = color
     }
 
 }
 
-extension ChartCurrentRateView {
+extension ChartCurrentRateCell {
 
     private static let formatter: NumberFormatter = {
         let formatter = NumberFormatter()
