@@ -93,7 +93,7 @@ class SwapCoinCardViewModel {
 
         let coinValue = CoinValue(coin: coin, value: balance)
         balanceRelay.accept(ValueFormatter.instance.format(coinValue: coinValue))
-        isMaxEnabledRelay.accept(balance > 0 && coin.type != .ethereum && isMaxSupported)
+        isMaxEnabledRelay.accept(balance > 0 && coin.type != .ethereum && coin.type != .binanceSmartChain && isMaxSupported)
     }
 
     private func sync(error: Error?) {

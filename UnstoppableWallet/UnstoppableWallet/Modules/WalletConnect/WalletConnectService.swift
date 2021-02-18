@@ -8,7 +8,7 @@ import HsToolKit
 
 class WalletConnectService {
     private var ethereumKit: EthereumKit.Kit?
-    private let sessionStore: WalletConnectSessionStore
+    private let sessionManager: WalletConnectSessionManager
     private let reachabilityManager: IReachabilityManager
 
     private let disposeBag = DisposeBag()
@@ -35,12 +35,12 @@ class WalletConnectService {
         interactor?.state ?? .disconnected
     }
 
-    init(ethereumKitManager: EthereumKitManager, sessionStore: WalletConnectSessionStore, reachabilityManager: IReachabilityManager) {
+    init(ethereumKitManager: EthereumKitManager, sessionManager: WalletConnectSessionManager, reachabilityManager: IReachabilityManager) {
         ethereumKit = ethereumKitManager.evmKit
-        self.sessionStore = sessionStore
+        self.sessionManager = sessionManager
         self.reachabilityManager = reachabilityManager
 
-        if let storeItem = sessionStore.storedItem {
+        if let storeItem = sessionManager.storedSession {
             remotePeerData = PeerData(id: storeItem.peerId, meta: storeItem.peerMeta)
 
             interactor = WalletConnectInteractor(session: storeItem.session, remotePeerId: storeItem.peerId)
@@ -121,7 +121,15 @@ extension WalletConnectService {
         interactor.approveSession(address: ethereumKit.address.eip55, chainId: ethereumKit.networkType.chainId)
 
         if let peerData = remotePeerData {
-            sessionStore.store(session: interactor.session, peerId: peerData.id, peerMeta: peerData.meta)
+            let session = WalletConnectSession(
+                    chainId: ethereumKit.networkType.chainId,
+                    accountId: "",
+                    session: interactor.session,
+                    peerId: peerData.id,
+                    peerMeta: peerData.meta
+            )
+
+            sessionManager.store(session: session)
         }
 
         state = .ready
@@ -182,7 +190,7 @@ extension WalletConnectService: IWalletConnectInteractorDelegate {
     }
 
     func didKillSession() {
-        sessionStore.clear()
+        sessionManager.clear()
 
         state = .killed
     }

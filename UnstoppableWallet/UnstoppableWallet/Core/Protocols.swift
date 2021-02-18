@@ -563,3 +563,9 @@ protocol ITermsManager {
 protocol IPresentDelegate: AnyObject {
     func show(viewController: UIViewController)
 }
+
+protocol IWalletConnectSessionStorage {
+    var sessions: [WalletConnectSession] { get }
+    func save(session: WalletConnectSession)
+    func deleteAll()
+}

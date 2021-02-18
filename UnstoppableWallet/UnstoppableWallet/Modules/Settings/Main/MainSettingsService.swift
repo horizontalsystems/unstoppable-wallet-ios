@@ -13,11 +13,11 @@ class MainSettingsService {
     private let systemInfoManager: ISystemInfoManager
     private let currencyKit: ICurrencyKit
     private let appConfigProvider: IAppConfigProvider
-    private let walletConnectSessionStore: WalletConnectSessionStore
+    private let walletConnectSessionManager: WalletConnectSessionManager
 
     init(backupManager: IBackupManager, pinKit: IPinKit, termsManager: ITermsManager, themeManager: ThemeManager,
          systemInfoManager: ISystemInfoManager, currencyKit: ICurrencyKit, appConfigProvider: IAppConfigProvider,
-         walletConnectSessionStore: WalletConnectSessionStore) {
+         walletConnectSessionManager: WalletConnectSessionManager) {
         self.backupManager = backupManager
         self.pinKit = pinKit
         self.termsManager = termsManager
@@ -25,7 +25,7 @@ class MainSettingsService {
         self.systemInfoManager = systemInfoManager
         self.currencyKit = currencyKit
         self.appConfigProvider = appConfigProvider
-        self.walletConnectSessionStore = walletConnectSessionStore
+        self.walletConnectSessionManager = walletConnectSessionManager
     }
 
 }
@@ -61,11 +61,11 @@ extension MainSettingsService {
     }
 
     var walletConnectPeerMeta: WCPeerMeta? {
-        walletConnectSessionStore.storedPeerMeta
+        walletConnectSessionManager.storedPeerMeta
     }
 
     var walletConnectPeerMetaObservable: Observable<WCPeerMeta?> {
-        walletConnectSessionStore.storedPeerMetaObservable
+        walletConnectSessionManager.storedPeerMetaObservable
     }
 
     var currentLanguageDisplayName: String? {

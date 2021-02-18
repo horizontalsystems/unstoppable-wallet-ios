@@ -2,14 +2,16 @@ import WalletConnect
 import RxSwift
 import RxRelay
 
-class WalletConnectSessionStore {
+class WalletConnectSessionManager {
+    private let storage: IWalletConnectSessionStorage
     private let accountManager: IAccountManager
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
 
     private let storedPeerMetaRelay = PublishRelay<WCPeerMeta?>()
     private let disposeBag = DisposeBag()
 
-    init(accountManager: IAccountManager, predefinedAccountTypeManager: IPredefinedAccountTypeManager) {
+    init(storage: IWalletConnectSessionStorage, accountManager: IAccountManager, predefinedAccountTypeManager: IPredefinedAccountTypeManager) {
+        self.storage = storage
         self.accountManager = accountManager
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
 
@@ -37,29 +39,27 @@ class WalletConnectSessionStore {
 
 }
 
-extension WalletConnectSessionStore {
+extension WalletConnectSessionManager {
 
-    var storedItem: WCSessionStoreItem? {
-        WCSessionStore.allSessions.first?.value
+    var storedSession: WalletConnectSession? {
+        storage.sessions.first
     }
 
     var storedPeerMeta: WCPeerMeta? {
-        storedItem?.peerMeta
+        storedSession?.peerMeta
     }
 
     var storedPeerMetaObservable: Observable<WCPeerMeta?> {
         storedPeerMetaRelay.asObservable()
     }
 
-    func store(session: WCSession, peerId: String, peerMeta: WCPeerMeta) {
-        WCSessionStore.store(session, peerId: peerId, peerMeta: peerMeta)
-
-        storedPeerMetaRelay.accept(peerMeta)
+    func store(session: WalletConnectSession) {
+        storage.save(session: session)
+        storedPeerMetaRelay.accept(session.peerMeta)
     }
 
     func clear() {
-        WCSessionStore.clearAll()
-
+        storage.deleteAll()
         storedPeerMetaRelay.accept(nil)
     }
 

@@ -364,6 +364,18 @@ class GrdbStorage {
             }
         }
 
+        migrator.registerMigration("createWalletConnectSessions") { db in
+            try db.create(table: WalletConnectSession.databaseTableName) { t in
+                t.column(WalletConnectSession.Columns.chainId.name, .integer).notNull()
+                t.column(WalletConnectSession.Columns.accountId.name, .text).notNull()
+                t.column(WalletConnectSession.Columns.session.name, .text).notNull()
+                t.column(WalletConnectSession.Columns.peerId.name, .text).notNull()
+                t.column(WalletConnectSession.Columns.peerMeta.name, .text).notNull()
+
+                t.primaryKey([WalletConnectSession.Columns.chainId.name, WalletConnectSession.Columns.accountId.name, WalletConnectSession.Columns.peerId.name], onConflict: .replace)
+            }
+        }
+
         return migrator
     }
 
@@ -586,6 +598,28 @@ extension GrdbStorage: ILogRecordStorage {
             if let last = logs.last {
                 try LogRecord.filter(LogRecord.Columns.date <= last.date).deleteAll(db)
             }
+        }
+    }
+
+}
+
+extension GrdbStorage: IWalletConnectSessionStorage {
+
+    var sessions: [WalletConnectSession] {
+        try! dbPool.read { db in
+            try WalletConnectSession.fetchAll(db)
+        }
+    }
+
+    func save(session: WalletConnectSession) {
+        _ = try! dbPool.write { db in
+            try session.insert(db)
+        }
+    }
+
+    func deleteAll() {
+        _ = try! dbPool.write { db in
+            try WalletConnectSession.deleteAll(db)
         }
     }
 

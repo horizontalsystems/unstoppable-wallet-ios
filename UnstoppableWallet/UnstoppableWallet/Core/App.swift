@@ -13,7 +13,7 @@ class App {
     let appConfigProvider: IAppConfigProvider
 
     let localStorage: ILocalStorage & IChartTypeStorage
-    let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & ICoinRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage
+    let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & ICoinRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage
 
     let themeManager: ThemeManager
     let systemInfoManager: ISystemInfoManager
@@ -77,7 +77,7 @@ class App {
     let guidesManager: IGuidesManager
     let termsManager: ITermsManager
 
-    let walletConnectSessionStore: WalletConnectSessionStore
+    let walletConnectSessionManager: WalletConnectSessionManager
 
     let appManager: AppManager
     let ethereumKitManager: EthereumKitManager
@@ -183,7 +183,7 @@ class App {
         guidesManager = GuidesManager(networkManager: networkManager)
         termsManager = TermsManager(storage: StorageKit.LocalStorage.default)
 
-        walletConnectSessionStore = WalletConnectSessionStore(accountManager: accountManager, predefinedAccountTypeManager: predefinedAccountTypeManager)
+        walletConnectSessionManager = WalletConnectSessionManager(storage: storage, accountManager: accountManager, predefinedAccountTypeManager: predefinedAccountTypeManager)
 
         appManager = AppManager(
                 accountManager: accountManager,
