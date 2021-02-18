@@ -25,25 +25,21 @@ extension ChartType {
 class ChartViewController: ThemeViewController {
     private let delegate: IChartViewDelegate & IChartViewTouchDelegate
 
-    private let tableView = UITableView(frame: .zero, style: .grouped)
+    private let tableView = SectionsTableView(style: .grouped)
     private let container = UIView()
 
-    private let currentRateView = ChartCurrentRateView()
-    private let intervalSelectView = FilterHeaderView()
-    private let selectedRateView = ChartPointInfoView()
-
-    private let chartView: RateChartView
-    private var indicatorViews = [ChartIndicatorSet : UIButton]()
-    private let chartInfoView = ChartInfoView()
+    private let currentRateCell = ChartCurrentRateCell()
+    private let chartIntervalAndSelectedRateCell = ChartIntervalAndSelectedRateCell()
+    private let chartViewCell: ChartViewCell
+    private let indicatorSelectorCell = IndicatorSelectorCell()
+    private let chartInfoCell = ChartInfoCell()
 
     private var favoriteButtonItem: UIBarButtonItem?
     private var alertButtonItem: UIBarButtonItem?
 
-    private let loadingView = HUDActivityView.create(with: .medium24)
-
     init(delegate: IChartViewDelegate & IChartViewTouchDelegate, configuration: ChartConfiguration) {
         self.delegate = delegate
-        self.chartView = RateChartView(configuration: configuration)
+        chartViewCell = ChartViewCell(delegate: delegate, configuration: configuration)
 
         super.init()
 
@@ -62,187 +58,60 @@ class ChartViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.backgroundColor = .clear
+        tableView.sectionDataSource = self
+
         tableView.separatorStyle = .none
-        tableView.registerCell(forClass: UITableViewCell.self)
+        tableView.backgroundColor = .clear
 
-        container.addSubview(currentRateView)
-        currentRateView.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
-            maker.height.equalTo(40)
-        }
-
-        container.addSubview(selectedRateView)
-        selectedRateView.snp.makeConstraints { maker in
-            maker.top.equalTo(currentRateView.snp.bottom)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.height.equalTo(40)
-        }
-        selectedRateView.isHidden = true
-
-        container.addSubview(intervalSelectView)
-        intervalSelectView.snp.makeConstraints { maker in
-            maker.top.bottom.equalTo(selectedRateView)
-            maker.leading.trailing.equalToSuperview()
-        }
-
-        intervalSelectView.onSelect = { [weak self] index in
+        chartIntervalAndSelectedRateCell.onSelectInterval = { [weak self] index in
             self?.delegate.onSelectType(at: index)
         }
-
-        container.addSubview(chartView)
-        chartView.snp.makeConstraints { maker in
-            maker.top.equalTo(intervalSelectView.snp.bottom).offset(CGFloat.margin2x)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+        indicatorSelectorCell.onTapIndicator = { [weak self] indicator in
+            self?.delegate.onTap(indicator: indicator)
         }
 
-        chartView.delegate = delegate
-
-        container.addSubview(loadingView)
-        loadingView.snp.makeConstraints { maker in
-            maker.center.equalTo(chartView)
-        }
-        loadingView.set(hidden: true)
-        loadingView.backgroundColor = view.backgroundColor
-
-        let indicatorSelectorsHolder = UIView()
-        container.addSubview(indicatorSelectorsHolder)
-        indicatorSelectorsHolder.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(chartView.snp.bottom)
-            maker.height.equalTo(CGFloat.heightSingleLineCell)
-        }
-
-        let emaIndicatorView = ThemeButton().apply(style: .tertiary)
-        indicatorSelectorsHolder.addSubview(emaIndicatorView)
-        emaIndicatorView.snp.makeConstraints { maker in
-            maker.centerY.equalToSuperview()
-            maker.leading.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(24)
-        }
-
-        emaIndicatorView.addTarget(self, action: #selector(onTapIndicator), for: .touchUpInside)
-        emaIndicatorView.setTitle("EMA", for: .normal)
-        emaIndicatorView.tag = Int(ChartIndicatorSet.ema.rawValue)
-        indicatorViews[.ema] = emaIndicatorView
-
-        let macdIndicatorView = ThemeButton().apply(style: .tertiary)
-        indicatorSelectorsHolder.addSubview(macdIndicatorView)
-        macdIndicatorView.snp.makeConstraints { maker in
-            maker.centerY.equalToSuperview()
-            maker.leading.equalTo(emaIndicatorView.snp.trailing).offset(CGFloat.margin8)
-            maker.height.equalTo(24)
-        }
-
-        macdIndicatorView.addTarget(self, action: #selector(onTapIndicator), for: .touchUpInside)
-        macdIndicatorView.setTitle("MACD", for: .normal)
-        macdIndicatorView.tag = Int(ChartIndicatorSet.macd.rawValue)
-        indicatorViews[.macd] = macdIndicatorView
-
-        let rsiIndicatorView = ThemeButton().apply(style: .tertiary)
-        indicatorSelectorsHolder.addSubview(rsiIndicatorView)
-        rsiIndicatorView.snp.makeConstraints { maker in
-            maker.centerY.equalToSuperview()
-            maker.leading.equalTo(macdIndicatorView.snp.trailing).offset(CGFloat.margin8)
-            maker.height.equalTo(24)
-        }
-
-        rsiIndicatorView.addTarget(self, action: #selector(onTapIndicator), for: .touchUpInside)
-        rsiIndicatorView.setTitle("RSI", for: .normal)
-        rsiIndicatorView.tag = Int(ChartIndicatorSet.rsi.rawValue)
-        indicatorViews[.rsi] = rsiIndicatorView
-
-        container.addSubview(chartInfoView)
-        chartInfoView.snp.makeConstraints { maker in
-            maker.top.equalTo(indicatorSelectorsHolder.snp.bottom)
-            maker.leading.trailing.equalToSuperview()
-        }
-
-        view.layoutIfNeeded()
+        tableView.buildSections()
 
         delegate.onLoad()
     }
 
-    @objc private func onTapIndicator(sender: UIButton) {
-        let indicator = ChartIndicatorSet(rawValue: UInt8(sender.tag))
-        delegate.onTap(indicator: indicator)
-    }
-
-    // Chart Loading functions
-    private func showLoading() {
-        chartView.isHidden = true
-
-        loadingView.set(hidden: false)
-        loadingView.startAnimating()
-    }
-
-    private func hideLoading() {
-        chartView.isHidden = false
-
-        loadingView.set(hidden: true)
-        loadingView.stopAnimating()
-    }
-
     private func updateViews(viewItem: ChartViewItem) {
-        currentRateView.bind(rate: viewItem.currentRate, diff: nil)
+        currentRateCell.bind(rate: viewItem.currentRate, diff: nil)
         updateAlertBarItem(alertMode: viewItem.priceAlertMode)
 
         if let marketViewItem = viewItem.marketInfoStatus.data {
-            chartInfoView.bind(marketCap: marketViewItem.marketCap, volume: marketViewItem.volume, supply: marketViewItem.supply, maxSupply: marketViewItem.maxSupply, startDate: marketViewItem.startDate, website: marketViewItem.website, onTapLink: { [weak self] in
+            chartInfoCell.bind(marketCap: marketViewItem.marketCap, volume: marketViewItem.volume, supply: marketViewItem.supply, maxSupply: marketViewItem.maxSupply, startDate: marketViewItem.startDate, website: marketViewItem.website, onTapLink: { [weak self] in
                 self?.delegate.onTapLink()
             })
         }
 
         switch viewItem.chartDataStatus {
         case .loading:
-            showLoading()
+            chartViewCell.showLoading()
             deactivateIndicators()
         case .failed:
 //            hideLoading()//todo need error design
             deactivateIndicators()
         case .completed(let data):
-            hideLoading()
+            chartViewCell.hideLoading()
 
-            currentRateView.bind(rate: viewItem.currentRate, diff: data.chartDiff)
-            switch data.chartTrend {
-            case .neutral:
-                chartView.setCurve(color: .themeGray)
-            case .up:
-                chartView.setCurve(color: .themeGreenD)
-            case .down:
-                chartView.setCurve(color: .themeRedD)
-            }
+            currentRateCell.bind(rate: viewItem.currentRate, diff: data.chartDiff)
 
-            chartView.set(chartData: data.chartData)
+            chartViewCell.bind(data: data, viewItem: viewItem)
 
-            chartView.set(timeline: data.timeline, start: data.chartData.startWindow, end: data.chartData.endWindow)
-
-            chartView.set(highLimitText: data.maxValue, lowLimitText: data.minValue)
-
-            chartView.setVolumes(hidden: viewItem.selectedIndicator.showVolumes)
             ChartIndicatorSet.all.forEach { indicator in
                 let show = viewItem.selectedIndicator.contains(indicator)
 
-                indicatorViews[indicator]?.isSelected = show
-                set(indicator: indicator, hidden: !show)
-            }
-        }
-    }
+                chartViewCell.bind(indicator: indicator, hidden: !show)
 
-    private func set(indicator: ChartIndicatorSet, hidden: Bool) {
-        switch indicator {
-        case .rsi: chartView.setRsi(hidden: hidden)
-        case .macd: chartView.setMacd(hidden: hidden)
-        case .ema: chartView.setEma(hidden: hidden)
-        default: ()
+                indicatorSelectorCell.bind(indicator: indicator, selected: show)
+            }
         }
     }
 
     private func deactivateIndicators() {
-        indicatorViews.forEach { _, view in
-            view.isSelected = false
+        ChartIndicatorSet.all.forEach { indicator in
+            indicatorSelectorCell.bind(indicator: indicator, selected: false)
         }
     }
 
@@ -297,7 +166,7 @@ extension ChartViewController: IChartView {
 
     // Interval selecting functions
     func set(types: [String]) {
-        intervalSelectView.reload(filters: types.map { .item(title: $0.uppercased()) })
+        chartIntervalAndSelectedRateCell.bind(filters: types.map { .item(title: $0.uppercased()) })
     }
 
     func setSelectedType(at index: Int?) {
@@ -305,7 +174,7 @@ extension ChartViewController: IChartView {
             return
         }
 
-        intervalSelectView.select(index: index)
+        chartIntervalAndSelectedRateCell.select(index: index)
     }
 
     // Chart data functions
@@ -314,12 +183,11 @@ extension ChartViewController: IChartView {
     }
 
     func setSelectedState(hidden: Bool) {
-        selectedRateView.isHidden = hidden
-        intervalSelectView.isHidden = !hidden
+        chartIntervalAndSelectedRateCell.bind(displayMode: hidden ? .interval : .selectedRate)
     }
 
     func showSelectedPoint(viewItem: SelectedPointViewItem) {
-        selectedRateView.bind(viewItem: viewItem)
+        chartIntervalAndSelectedRateCell.bind(selectedPointViewItem: viewItem)
     }
 
 }
@@ -349,3 +217,38 @@ extension ChartViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
 }
+
+extension ChartViewController: SectionsDataSource {
+
+    public func buildSections() -> [SectionProtocol] {
+        [Section(id: "chart", footerState: .margin(height: .margin32), rows: [
+            StaticRow(
+                    cell: currentRateCell,
+                    id: "current_rate",
+                    height: ChartCurrentRateCell.cellHeight
+            ),
+            StaticRow(
+                    cell: chartIntervalAndSelectedRateCell,
+                    id: "select_interval",
+                    height: .heightSingleLineCell
+            ),
+            StaticRow(
+                    cell: chartViewCell,
+                    id: "chart_view",
+                    height: ChartViewCell.cellHeight
+            ),
+            StaticRow(
+                    cell: indicatorSelectorCell,
+                    id: "indicator_selector",
+                    height: .heightSingleLineCell
+            ),
+            StaticRow(
+                    cell: chartInfoCell,
+                    id: "indicator_selector",
+                    height: ChartInfoCell.cellHeight
+            ),
+        ])]
+    }
+
+}
+
