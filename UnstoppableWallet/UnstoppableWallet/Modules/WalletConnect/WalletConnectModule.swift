@@ -5,7 +5,7 @@ struct WalletConnectModule {
     static func start(sourceViewController: UIViewController?) {
         let service = WalletConnectService(
                 ethereumKitManager: App.shared.ethereumKitManager,
-                sessionStore: App.shared.walletConnectSessionStore,
+                sessionManager: App.shared.walletConnectSessionManager,
                 reachabilityManager: App.shared.reachabilityManager
         )
         let viewModel = WalletConnectViewModel(service: service)
