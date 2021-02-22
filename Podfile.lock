@@ -253,6 +253,7 @@ PODS:
   - SwiftProtobuf (1.15.0)
   - SwiftyJSON (4.3.0)
   - ThemeKit.swift (1.0):
+    - AlamofireImage (~> 4.1)
     - HUD.swift (~> 1.2)
     - LanguageKit.swift (~> 1.0)
     - SkeletonView (~> 1.11)
@@ -520,7 +521,7 @@ CHECKOUT OPTIONS:
     :commit: 87ec7eef413711ef21abb76bb6ce47a53ec40e66
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: 87ec7eef413711ef21abb76bb6ce47a53ec40e66
+    :commit: eb35cfa68a542d5c5662ab7a6319c7b98599ba64
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :commit: 392186c18e8df97d40ca0f4587d857259d878dd4
@@ -612,7 +613,7 @@ SPEC CHECKSUMS:
   SwiftNIOTransportServices: a8a17a43695a09bfdd5a56426f6e515120d5dbf3
   SwiftProtobuf: 3320217e9d8fb75f36b40282e78c482640fd75dd
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
-  ThemeKit.swift: 8f61fc73aeebccb9e4bf4976dbdc60046e81300b
+  ThemeKit.swift: 0420634f3f3f5a0d500912760beef7ba4bfb7bd0
   UIExtensions.swift: 3ed084c0343ddd0f86c7c558d37759e1fd7d5778
   UniswapKit.swift: 248c7be1ed89715c588f08ea05d835f53da7049c
   UnstoppableDomainsResolution: 1ddbca0988240260220b0963f8b9b6c4cec5e8f2
