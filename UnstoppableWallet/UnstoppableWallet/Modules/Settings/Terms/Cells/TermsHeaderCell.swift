@@ -1,7 +1,6 @@
 import UIKit
 import SnapKit
 import ThemeKit
-import SnapKit
 
 class TermsHeaderCell: UITableViewCell {
     static let height: CGFloat = 104

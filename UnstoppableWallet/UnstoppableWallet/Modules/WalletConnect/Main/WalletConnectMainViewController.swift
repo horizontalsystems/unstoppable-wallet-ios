@@ -238,15 +238,7 @@ class WalletConnectMainViewController: ThemeViewController {
 
         switch request {
         case let request as WalletConnectSendEthereumTransactionRequest:
-            viewController = WalletConnectSendEthereumTransactionRequestModule.viewController(
-                    transaction: request.transaction,
-                    onApprove: { [weak self] transactionId in
-                        self?.viewModel.approveRequest(id: request.id, result: transactionId)
-                    },
-                    onReject: { [weak self] in
-                        self?.viewModel.rejectRequest(id: request.id)
-                    }
-            )
+            viewController = WalletConnectSendEthereumTransactionRequestModule.viewController(baseService: baseViewModel.service, requestId: request.id)
         default: ()
         }
 

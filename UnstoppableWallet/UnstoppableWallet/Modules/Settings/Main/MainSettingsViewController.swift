@@ -98,8 +98,8 @@ class MainSettingsViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.securityCenterAlertDriver) { [weak self] alert in
             self?.securityCenterCell.valueImage = alert ? UIImage(named: "warning_2_20")?.tinted(with: .themeLucian) : nil
         }
-        subscribe(disposeBag, viewModel.walletConnectPeerDriver) { [weak self] peer in
-            self?.walletConnectCell.value = peer
+        subscribe(disposeBag, viewModel.walletConnectSessionCountDriver) { [weak self] count in
+            self?.walletConnectCell.value = count
         }
         subscribe(disposeBag, viewModel.baseCurrencyDriver) { [weak self] baseCurrency in
             self?.baseCurrencyCell.value = baseCurrency
@@ -148,7 +148,7 @@ class MainSettingsViewController: ThemeViewController {
                     height: .heightCell48,
                     autoDeselect: true,
                     action: { [weak self] in
-                        WalletConnectModule.start(sourceViewController: self)
+                        self?.navigationController?.pushViewController(WalletConnectListModule.viewController(), animated: true)
                     }
             )
         ]

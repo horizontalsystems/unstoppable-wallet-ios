@@ -9,7 +9,7 @@ class MainSettingsViewModel {
 
     private let manageWalletsAlertRelay: BehaviorRelay<Bool>
     private let securityCenterAlertRelay: BehaviorRelay<Bool>
-    private let walletConnectPeerRelay: BehaviorRelay<String?>
+    private let walletConnectSessionCountRelay: BehaviorRelay<String?>
     private let baseCurrencyRelay: BehaviorRelay<String>
     private let aboutAlertRelay: BehaviorRelay<Bool>
     private let openLinkRelay = PublishRelay<URL>()
@@ -19,7 +19,7 @@ class MainSettingsViewModel {
 
         manageWalletsAlertRelay = BehaviorRelay(value: !service.allBackedUp)
         securityCenterAlertRelay = BehaviorRelay(value: !service.isPinSet)
-        walletConnectPeerRelay = BehaviorRelay(value: service.walletConnectPeerMeta?.name)
+        walletConnectSessionCountRelay = BehaviorRelay(value: Self.convert(walletConnectSessionCount: service.walletConnectSessionCount))
         baseCurrencyRelay = BehaviorRelay(value: service.baseCurrency.code)
         aboutAlertRelay = BehaviorRelay(value: !service.termsAccepted)
 
@@ -37,10 +37,10 @@ class MainSettingsViewModel {
                 })
                 .disposed(by: disposeBag)
 
-        service.walletConnectPeerMetaObservable
+        service.walletConnectSessionCountObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] peerMeta in
-                    self?.walletConnectPeerRelay.accept(peerMeta?.name)
+                .subscribe(onNext: { [weak self] count in
+                    self?.walletConnectSessionCountRelay.accept(Self.convert(walletConnectSessionCount: count))
                 })
                 .disposed(by: disposeBag)
 
@@ -59,6 +59,10 @@ class MainSettingsViewModel {
                 .disposed(by: disposeBag)
     }
 
+    private static func convert(walletConnectSessionCount: Int) -> String? {
+        walletConnectSessionCount > 0 ? "\(walletConnectSessionCount)" : nil
+    }
+
 }
 
 extension MainSettingsViewModel {
@@ -75,8 +79,8 @@ extension MainSettingsViewModel {
         securityCenterAlertRelay.asDriver()
     }
 
-    var walletConnectPeerDriver: Driver<String?> {
-        walletConnectPeerRelay.asDriver()
+    var walletConnectSessionCountDriver: Driver<String?> {
+        walletConnectSessionCountRelay.asDriver()
     }
 
     var baseCurrencyDriver: Driver<String> {

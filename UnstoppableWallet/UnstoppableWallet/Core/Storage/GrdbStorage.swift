@@ -617,9 +617,15 @@ extension GrdbStorage: IWalletConnectSessionStorage {
         }
     }
 
-    func deleteAll() {
+    func deleteSession(peerId: String) {
         _ = try! dbPool.write { db in
-            try WalletConnectSession.deleteAll(db)
+            try WalletConnectSession.filter(WalletConnectSession.Columns.peerId == peerId).deleteAll(db)
+        }
+    }
+
+    func deleteSession(accountId: String) {
+        _ = try! dbPool.write { db in
+            try WalletConnectSession.filter(WalletConnectSession.Columns.accountId == accountId).deleteAll(db)
         }
     }
 

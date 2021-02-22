@@ -5,15 +5,13 @@ import RxRelay
 class WalletConnectSessionManager {
     private let storage: IWalletConnectSessionStorage
     private let accountManager: IAccountManager
-    private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
-
-    private let storedPeerMetaRelay = PublishRelay<WCPeerMeta?>()
     private let disposeBag = DisposeBag()
 
-    init(storage: IWalletConnectSessionStorage, accountManager: IAccountManager, predefinedAccountTypeManager: IPredefinedAccountTypeManager) {
+    private let sessionsRelay = PublishRelay<[WalletConnectSession]>()
+
+    init(storage: IWalletConnectSessionStorage, accountManager: IAccountManager) {
         self.storage = storage
         self.accountManager = accountManager
-        self.predefinedAccountTypeManager = predefinedAccountTypeManager
 
         accountManager.deleteAccountObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -24,43 +22,30 @@ class WalletConnectSessionManager {
     }
 
     private func handleDeleted(account: Account) {
-        // since there is no multi-account support yet, we delete WC stored session for account that satisfies Standard predefined account type
-
-        guard let predefinedAccountType = predefinedAccountTypeManager.predefinedAccountType(accountType: account.type) else {
-            return
-        }
-
-        guard predefinedAccountType == .standard else {
-            return
-        }
-
-        clear()
+        storage.deleteSession(accountId: account.id)
+        sessionsRelay.accept(sessions)
     }
 
 }
 
 extension WalletConnectSessionManager {
 
-    var storedSession: WalletConnectSession? {
-        storage.sessions.first
+    var sessions: [WalletConnectSession] {
+        storage.sessions
     }
 
-    var storedPeerMeta: WCPeerMeta? {
-        storedSession?.peerMeta
+    var sessionsObservable: Observable<[WalletConnectSession]> {
+        sessionsRelay.asObservable()
     }
 
-    var storedPeerMetaObservable: Observable<WCPeerMeta?> {
-        storedPeerMetaRelay.asObservable()
-    }
-
-    func store(session: WalletConnectSession) {
+    func save(session: WalletConnectSession) {
         storage.save(session: session)
-        storedPeerMetaRelay.accept(session.peerMeta)
+        sessionsRelay.accept(sessions)
     }
 
-    func clear() {
-        storage.deleteAll()
-        storedPeerMetaRelay.accept(nil)
+    func deleteSession(peerId: String) {
+        storage.deleteSession(peerId: peerId)
+        sessionsRelay.accept(sessions)
     }
 
 }

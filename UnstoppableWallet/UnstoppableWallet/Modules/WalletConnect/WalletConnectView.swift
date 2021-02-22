@@ -11,8 +11,6 @@ class WalletConnectView {
 
     var initialViewController: UIViewController {
         switch viewModel.initialScreen {
-        case .noEthereumKit:
-            return WalletConnectNoEthereumKitViewController().toBottomSheet
         case .scanQrCode:
             return WalletConnectScanQrViewController(baseViewModel: viewModel, sourceViewController: sourceViewController)
         case .main:

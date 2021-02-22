@@ -7,8 +7,6 @@ import HUD
 
 class WalletConnectRequestViewController: ThemeViewController {
     private let viewModel: WalletConnectSendEthereumTransactionRequestViewModel
-    private let onApprove: (Data) -> ()
-    private let onReject: () -> ()
 
     private let tableView = SectionsTableView(style: .grouped)
     private let estimatedFeeCell: SendEstimatedFeeCell
@@ -24,10 +22,8 @@ class WalletConnectRequestViewController: ThemeViewController {
 
     private let disposeBag = DisposeBag()
 
-    init(viewModel: WalletConnectSendEthereumTransactionRequestViewModel, feeViewModel: EthereumFeeViewModel, onApprove: @escaping (Data) -> (), onReject: @escaping () -> ()) {
+    init(viewModel: WalletConnectSendEthereumTransactionRequestViewModel, feeViewModel: EthereumFeeViewModel) {
         self.viewModel = viewModel
-        self.onApprove = onApprove
-        self.onReject = onReject
 
         estimatedFeeCell = SendEstimatedFeeCell(viewModel: feeViewModel)
         maxFeeCell = SendMaxFeeCell(viewModel: feeViewModel)
@@ -118,11 +114,13 @@ class WalletConnectRequestViewController: ThemeViewController {
                 })
                 .disposed(by: disposeBag)
 
-        viewModel.approveSignal
-                .emit(onNext: { [weak self] transactionId in
-                    self?.onApprove(transactionId)
+        viewModel.finishSignal
+                .emit(onNext: { [weak self] success in
                     self?.dismiss(animated: true)
-                    HudHelper.instance.showSuccess()
+
+                    if success {
+                        HudHelper.instance.showSuccess()
+                    }
                 })
                 .disposed(by: disposeBag)
 
@@ -135,8 +133,7 @@ class WalletConnectRequestViewController: ThemeViewController {
     }
 
     @objc private func onTapReject() {
-        onReject()
-        dismiss(animated: true)
+        viewModel.reject()
     }
 
 }
