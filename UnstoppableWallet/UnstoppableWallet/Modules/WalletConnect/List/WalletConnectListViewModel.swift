@@ -6,47 +6,58 @@ class WalletConnectListViewModel {
     private let service: WalletConnectListService
     private let disposeBag = DisposeBag()
 
-    private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
+    private let sectionViewItemsRelay = BehaviorRelay<[SectionViewItem]>(value: [])
 
     init(service: WalletConnectListService) {
         self.service = service
 
-        subscribe(disposeBag, service.sessionsObservable) { [weak self] in self?.sync(sessions: $0) }
+        subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
 
-        sync(sessions: service.sessions)
+        sync(items: service.items)
     }
 
-    private func sync(sessions: [WalletConnectSession]) {
-        print(sessions.first?.peerId)
-        let viewItems = sessions.map { session in
-            ViewItem(
-                    session: session,
-                    title: session.peerMeta.name,
-                    imageUrl: session.peerMeta.icons.first,
-                    address: ""
+    private func sync(items: [WalletConnectListService.Item]) {
+        let sectionViewItems = items.map { item in
+            SectionViewItem(
+                    title: item.predefinedAccountType.title,
+                    address: item.address.eip55,
+                    viewItems: item.sessions.map { session in
+                        ViewItem(
+                                session: session,
+                                title: session.peerMeta.name,
+                                url: session.peerMeta.url,
+                                imageUrl: session.peerMeta.icons.last
+                        )
+                    }
             )
         }
 
-        viewItemsRelay.accept(viewItems)
+        sectionViewItemsRelay.accept(sectionViewItems)
     }
 
 }
 
 extension WalletConnectListViewModel {
 
-    var viewItemsDriver: Driver<[ViewItem]> {
-        viewItemsRelay.asDriver()
+    var sectionViewItemsDriver: Driver<[SectionViewItem]> {
+        sectionViewItemsRelay.asDriver()
     }
 
 }
 
 extension WalletConnectListViewModel {
+
+    struct SectionViewItem {
+        let title: String
+        let address: String
+        let viewItems: [ViewItem]
+    }
 
     struct ViewItem {
         let session: WalletConnectSession
         let title: String
+        let url: String
         let imageUrl: String?
-        let address: String
     }
 
 }
