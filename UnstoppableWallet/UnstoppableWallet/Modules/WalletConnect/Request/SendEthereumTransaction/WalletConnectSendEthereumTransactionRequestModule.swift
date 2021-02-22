@@ -1,34 +1,47 @@
 import UIKit
+import EthereumKit
 
 struct WalletConnectSendEthereumTransactionRequestModule {
 
-    static func viewController(transaction: WalletConnectTransaction, onApprove: @escaping (Data) -> (), onReject: @escaping () -> ()) -> UIViewController? {
-        guard let ethereumKit = App.shared.ethereumKitManager.evmKit else {
+    static func viewController(baseService: WalletConnectService, requestId: Int) -> UIViewController? {
+        guard let request = baseService.pendingRequest(requestId: requestId) as? WalletConnectSendEthereumTransactionRequest, let evmKit = baseService.evmKit else {
+            return nil
+        }
+
+        let coin: Coin
+
+        switch evmKit.networkType {
+        case .ethMainNet, .kovan, .ropsten: coin = App.shared.appConfigProvider.ethereumCoin
+        case .bscMainNet: coin = App.shared.appConfigProvider.binanceSmartChainCoin
+        }
+
+        guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: coin.type) else {
             return nil
         }
 
         let coinService = CoinService(
-                coin: App.shared.appConfigProvider.ethereumCoin,
+                coin: coin,
                 currencyKit: App.shared.currencyKit,
                 rateManager: App.shared.rateManager
         )
 
         let transactionService = EvmTransactionService(
-                evmKit: ethereumKit,
-                feeRateProvider: App.shared.feeRateProviderFactory.provider(coinType: .ethereum) as! EthereumFeeRateProvider,
+                evmKit: evmKit,
+                feeRateProvider: feeRateProvider,
                 gasLimitSurchargePercent: 10
         )
 
         let service = WalletConnectSendEthereumTransactionRequestService(
-                transaction: transaction,
+                request: request,
+                baseService: baseService,
                 transactionService: transactionService,
-                ethereumKit: ethereumKit
+                evmKit: evmKit
         )
 
         let viewModel = WalletConnectSendEthereumTransactionRequestViewModel(service: service, coinService: coinService)
         let feeViewModel = EthereumFeeViewModel(service: transactionService, coinService: coinService)
 
-        return WalletConnectRequestViewController(viewModel: viewModel, feeViewModel: feeViewModel, onApprove: onApprove, onReject: onReject)
+        return WalletConnectRequestViewController(viewModel: viewModel, feeViewModel: feeViewModel)
     }
 
 }

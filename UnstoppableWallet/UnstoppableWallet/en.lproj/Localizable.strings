@@ -745,8 +745,6 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 // Wallet Connect
 
 "wallet_connect.title" = "Wallet Connect";
-"wallet_connect.requirement" = "Requirement";
-"wallet_connect.requirement.description" = "For connect with browser you should to activate ethereum or any erc20 token on your balance tab";
 "wallet_connect.error.invalid_url" = "Invalid URL Address";
 "wallet_connect.url" = "URL";
 "wallet_connect.connect_description" = "By clicking approve, you allow this app to view your public address. This is important security step to protect your data from potential phishing risks.";
@@ -755,6 +753,9 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "ethereum_transaction.error.insufficient_balance" = "Transaction requires %@ for sending.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Current ETH balance is below amount required to process this transaction including transaction fee.";
 "wallet_connect.request_title" = "Request";
+
+"wallet_connect_list.title" = "Wallet Connect";
+"wallet_connect_list.new_connection" = "New Connection";
 
 // App Status
 

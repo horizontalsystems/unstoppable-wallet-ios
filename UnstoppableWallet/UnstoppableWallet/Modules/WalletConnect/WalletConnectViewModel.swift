@@ -3,7 +3,7 @@ import RxSwift
 import RxCocoa
 
 class WalletConnectViewModel {
-    private let service: WalletConnectService
+    let service: WalletConnectService
 
     init(service: WalletConnectService) {
         self.service = service
@@ -22,10 +22,6 @@ extension WalletConnectViewModel {
     }
 
     var initialScreen: InitialScreen {
-        if !service.isEthereumKitReady {
-            return .noEthereumKit
-        }
-
         if service.state == .idle {
             return .scanQrCode
         }
@@ -38,7 +34,6 @@ extension WalletConnectViewModel {
 extension WalletConnectViewModel {
 
     enum InitialScreen {
-        case noEthereumKit
         case scanQrCode
         case main
     }

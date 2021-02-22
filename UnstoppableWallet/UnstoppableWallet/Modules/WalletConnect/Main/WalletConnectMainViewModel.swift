@@ -74,6 +74,8 @@ class WalletConnectMainViewModel {
 
     private func hint(state: WalletConnectService.State) -> String? {
         switch state {
+        case .invalid(let error):
+            return error.smartDescription
         case .waitingForApproveSession:
             return "wallet_connect.connect_description".localized
         case .ready:

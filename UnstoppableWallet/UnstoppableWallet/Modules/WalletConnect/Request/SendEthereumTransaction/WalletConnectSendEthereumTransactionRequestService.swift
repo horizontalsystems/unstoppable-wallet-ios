@@ -5,8 +5,10 @@ import CurrencyKit
 import BigInt
 
 class WalletConnectSendEthereumTransactionRequestService {
+    private let request: WalletConnectSendEthereumTransactionRequest
+    private let baseService: WalletConnectService
     private let transactionService: EvmTransactionService
-    private var ethereumKit: EthereumKit.Kit
+    private var evmKit: EthereumKit.Kit
 
     let transactionData: TransactionData
 
@@ -19,9 +21,13 @@ class WalletConnectSendEthereumTransactionRequestService {
 
     private let disposeBag = DisposeBag()
 
-    init(transaction: WalletConnectTransaction, transactionService: EvmTransactionService, ethereumKit: EthereumKit.Kit) {
+    init(request: WalletConnectSendEthereumTransactionRequest, baseService: WalletConnectService, transactionService: EvmTransactionService, evmKit: EthereumKit.Kit) {
+        self.request = request
+        self.baseService = baseService
         self.transactionService = transactionService
-        self.ethereumKit = ethereumKit
+        self.evmKit = evmKit
+
+        let transaction = request.transaction
 
         transactionData = TransactionData(to: transaction.to, value: transaction.value, input: transaction.data)
 
@@ -41,7 +47,7 @@ class WalletConnectSendEthereumTransactionRequestService {
     }
 
     private var ethereumBalance: BigUInt {
-        ethereumKit.accountState?.balance ?? 0
+        evmKit.accountState?.balance ?? 0
     }
 
     private func syncState() {
@@ -59,6 +65,11 @@ class WalletConnectSendEthereumTransactionRequestService {
         }
     }
 
+    private func handleSent(transactionHash: Data) {
+        baseService.approveRequest(id: request.id, result: transactionHash)
+        state = .sent
+    }
+
 }
 
 extension WalletConnectSendEthereumTransactionRequestService {
@@ -67,14 +78,14 @@ extension WalletConnectSendEthereumTransactionRequestService {
         stateRelay.asObservable()
     }
 
-    func send() {
+    func approve() {
         guard case .ready = state, case .completed(let transaction) = transactionService.transactionStatus else {
             return
         }
 
         state = .sending
 
-        ethereumKit.sendSingle(
+        evmKit.sendSingle(
                 transactionData: transactionData,
                 gasPrice: transaction.gasData.gasPrice,
                 gasLimit: transaction.gasData.gasLimit
@@ -82,11 +93,15 @@ extension WalletConnectSendEthereumTransactionRequestService {
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onSuccess: { [weak self] fullTransaction in
-                    self?.state = .sent(transactionHash: fullTransaction.transaction.hash)
+                    self?.handleSent(transactionHash: fullTransaction.transaction.hash)
                 }, onError: { error in
                     // todo
                 })
                 .disposed(by: disposeBag)
+    }
+
+    func reject() {
+        baseService.rejectRequest(id: request.id)
     }
 
 }
@@ -97,7 +112,7 @@ extension WalletConnectSendEthereumTransactionRequestService {
         case ready
         case notReady(errors: [Error])
         case sending
-        case sent(transactionHash: Data)
+        case sent
 
         static func ==(lhs: State, rhs: State) -> Bool {
             switch (lhs, rhs) {

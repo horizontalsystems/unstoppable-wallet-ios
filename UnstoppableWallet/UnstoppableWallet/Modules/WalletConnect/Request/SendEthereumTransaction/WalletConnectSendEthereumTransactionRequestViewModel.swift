@@ -15,7 +15,7 @@ class WalletConnectSendEthereumTransactionRequestViewModel {
     private let rejectEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
     private let sendingRelay = BehaviorRelay<Bool>(value: false)
-    private let approveRelay = PublishRelay<Data>()
+    private let finishRelay = PublishRelay<Bool>()
 
     init(service: WalletConnectSendEthereumTransactionRequestService, coinService: CoinService) {
         self.service = service
@@ -40,8 +40,8 @@ class WalletConnectSendEthereumTransactionRequestViewModel {
     }
 
     private func sync(state: WalletConnectSendEthereumTransactionRequestService.State) {
-        if case .sent(let transactionHash) = state {
-            approveRelay.accept(transactionHash)
+        if case .sent = state {
+            finishRelay.accept(true)
             return
         }
 
@@ -86,12 +86,17 @@ extension WalletConnectSendEthereumTransactionRequestViewModel {
         sendingRelay.asDriver()
     }
 
-    var approveSignal: Signal<Data> {
-        approveRelay.asSignal()
+    var finishSignal: Signal<Bool> {
+        finishRelay.asSignal()
     }
 
     func approve() {
-        service.send()
+        service.approve()
+    }
+
+    func reject() {
+        service.reject()
+        finishRelay.accept(false)
     }
 
 }

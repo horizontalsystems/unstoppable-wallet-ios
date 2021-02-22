@@ -60,12 +60,12 @@ extension MainSettingsService {
         termsManager.termsAcceptedObservable
     }
 
-    var walletConnectPeerMeta: WCPeerMeta? {
-        walletConnectSessionManager.storedPeerMeta
+    var walletConnectSessionCount: Int {
+        walletConnectSessionManager.sessions.count
     }
 
-    var walletConnectPeerMetaObservable: Observable<WCPeerMeta?> {
-        walletConnectSessionManager.storedPeerMetaObservable
+    var walletConnectSessionCountObservable: Observable<Int> {
+        walletConnectSessionManager.sessionsObservable.map { $0.count }
     }
 
     var currentLanguageDisplayName: String? {
