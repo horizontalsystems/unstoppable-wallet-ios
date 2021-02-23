@@ -1,4 +1,5 @@
 import UIKit
+import CoinKit
 
 class BalanceErrorPresenter {
     weak var view: IBalanceErrorView?
@@ -19,7 +20,7 @@ class BalanceErrorPresenter {
 
     private func isSourceChangeable(coinType: CoinType) -> Bool {
         switch coinType {
-        case .ethereum, .erc20, .binance: return false
+        case .ethereum, .erc20, .bep2: return false
         default: return true
         }
     }

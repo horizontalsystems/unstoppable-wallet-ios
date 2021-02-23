@@ -1,5 +1,6 @@
 import UIKit
 import ThemeKit
+import CoinKit
 
 class SendRouter {
     weak var viewController: UIViewController?

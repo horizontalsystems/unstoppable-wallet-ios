@@ -1,6 +1,7 @@
 import RxSwift
 import RxRelay
 import HsToolKit
+import CoinKit
 
 protocol IAddTokenBlockchainService {
     func validate(reference: String) throws

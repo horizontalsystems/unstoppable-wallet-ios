@@ -1,4 +1,5 @@
 import UIKit
+import CoinKit
 
 class BalanceRouter {
     weak var viewController: UIViewController?

@@ -63,10 +63,12 @@ class AdapterFactory: IAdapterFactory {
                         fee: smartContractFee, minimumRequiredBalance: minimumBalance, minimumSpendableAmount: minimumSpendableAmount
                 )
             }
-        case let .binance(symbol):
+        case let .bep2(symbol):
             if let binanceKit = try? binanceKitManager.binanceKit(account: wallet.account) {
                 return BinanceAdapter(binanceKit: binanceKit, symbol: symbol)
             }
+        case .unsupported:
+            ()
         }
 
         return nil

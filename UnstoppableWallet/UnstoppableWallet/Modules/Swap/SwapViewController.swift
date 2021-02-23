@@ -236,16 +236,20 @@ class SwapViewController: ThemeViewController {
     }
 
     @objc private func onTapProceedButton() {
-        let viewController = SwapConfirmationModule.viewController(
+        guard let viewController = SwapConfirmationModule.viewController(
                 service: viewModel.service,
                 tradeService: viewModel.tradeService,
                 transactionService: viewModel.transactionService
-        )
+        ) else {
+            return
+        }
         navigationController?.pushViewController(viewController, animated: true)
     }
 
     @objc func onTapAdvancedSettings() {
-        let viewController = SwapTradeOptionsModule.viewController(tradeService: viewModel.tradeService)
+        guard let viewController = SwapTradeOptionsModule.viewController(tradeService: viewModel.tradeService) else {
+            return
+        }
         present(viewController, animated: true)
     }
 

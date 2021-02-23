@@ -1,4 +1,5 @@
 import Foundation
+import CoinKit
 
 struct CoinValue {
     let coin: Coin

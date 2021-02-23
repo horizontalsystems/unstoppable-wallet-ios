@@ -3,6 +3,7 @@ import SectionsTableView
 import SnapKit
 import ThemeKit
 import RxSwift
+import CoinKit
 
 class CoinSelectViewController: ThemeSearchViewController {
     private let viewModel: CoinSelectViewModel

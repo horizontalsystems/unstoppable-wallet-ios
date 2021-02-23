@@ -2,6 +2,7 @@ import UniswapKit
 import RxSwift
 import EthereumKit
 import Foundation
+import CoinKit
 
 class UniswapProvider {
     private let swapKit: UniswapKit.Kit

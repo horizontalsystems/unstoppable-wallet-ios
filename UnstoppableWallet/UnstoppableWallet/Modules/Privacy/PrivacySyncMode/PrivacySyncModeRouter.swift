@@ -1,4 +1,5 @@
 import UIKit
+import CoinKit
 
 class PrivacySyncModeRouter {
     weak var viewController: UIViewController?

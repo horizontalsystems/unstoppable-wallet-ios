@@ -2,6 +2,7 @@ import RxSwift
 import RxRelay
 import RxCocoa
 import BitcoinCashKit
+import CoinKit
 
 class ManageWalletsViewModel {
     private let service: ManageWalletsService

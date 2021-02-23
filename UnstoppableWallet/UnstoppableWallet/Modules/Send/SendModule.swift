@@ -3,6 +3,7 @@ import RxSwift
 import CurrencyKit
 import XRatesKit
 import HsToolKit
+import CoinKit
 
 protocol ISendView: class {
     func set(coin: Coin)

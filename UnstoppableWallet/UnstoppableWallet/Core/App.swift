@@ -3,17 +3,19 @@ import StorageKit
 import PinKit
 import CurrencyKit
 import HsToolKit
-
+import CoinKit
 class App {
     static let shared = App()
 
     let keychainKit: IKeychainKit
     let pinKit: IPinKit
 
+    let coinKit: CoinKit
+
     let appConfigProvider: IAppConfigProvider
 
     let localStorage: ILocalStorage & IChartTypeStorage
-    let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & ICoinRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage
+    let storage: ICoinMigration & IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & ICoinRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage
 
     let themeManager: ThemeManager
     let systemInfoManager: ISystemInfoManager
@@ -91,6 +93,9 @@ class App {
         storage = GrdbStorage(appConfigProvider: appConfigProvider)
         logRecordManager = LogRecordManager(storage: storage)
 
+        coinKit = try! CoinKit.instance(testNet: appConfigProvider.testMode)
+        coinKit.coinMigrationObservable = storage.coinMigrationObservable
+
         logger = Logger(minLogLevel: .error, storage: logRecordManager)
         networkManager = NetworkManager(logger: logger)
 
@@ -115,7 +120,7 @@ class App {
         kitCleaner = KitCleaner(accountManager: accountManager)
 
         let coinStorage: ICoinStorage = CoinStorage(storage: storage)
-        coinManager = CoinManager(appConfigProvider: appConfigProvider, storage: coinStorage)
+        coinManager = CoinManager(appConfigProvider: appConfigProvider, coinKit: coinKit, storage: coinStorage)
 
         walletFactory = WalletFactory()
         let walletStorage: IWalletStorage = WalletStorage(coinManager: coinManager, walletFactory: walletFactory, storage: storage)
@@ -126,7 +131,7 @@ class App {
 
         currencyKit = CurrencyKit.Kit(localStorage: StorageKit.LocalStorage.default, currencyCodes: appConfigProvider.currencyCodes)
 
-        feeCoinProvider = FeeCoinProvider(appConfigProvider: appConfigProvider)
+        feeCoinProvider = FeeCoinProvider(coinKit: coinKit)
         feeRateProviderFactory = FeeRateProviderFactory(appConfigProvider: appConfigProvider)
 
         rateManager = RateManager(walletManager: walletManager, currencyKit: currencyKit, rateCoinMapper: RateCoinMapper(), feeCoinProvider: feeCoinProvider, coinMarketCapApiKey: appConfigProvider.coinMarketCapApiKey, cryptoCompareApiKey: appConfigProvider.cryptoCompareApiKey, uniswapSubgraphUrl: appConfigProvider.uniswapSubgraphUrl)
@@ -143,7 +148,7 @@ class App {
 
         let settingsStorage: IBlockchainSettingsStorage = BlockchainSettingsStorage(storage: storage)
         derivationSettingsManager = DerivationSettingsManager(walletManager: walletManager, adapterManager: adapterManager, storage: settingsStorage)
-        initialSyncSettingsManager = InitialSyncSettingsManager(walletManager: walletManager, adapterManager: adapterManager, appConfigProvider: appConfigProvider, storage: settingsStorage)
+        initialSyncSettingsManager = InitialSyncSettingsManager(walletManager: walletManager, adapterManager: adapterManager, coinKit: coinKit, storage: settingsStorage)
         bitcoinCashCoinTypeManager = BitcoinCashCoinTypeManager(walletManager: walletManager, adapterManager: adapterManager, storage: settingsStorage)
         ethereumRpcModeSettingsManager = EthereumRpcModeSettingsManager(ethereumKitManager: ethereumKitManager, walletManager: walletManager, adapterManager: adapterManager, localStorage: localStorage)
 

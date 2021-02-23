@@ -12,7 +12,8 @@ struct SwapApproveModule {
             return nil
         }
 
-        guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: data.dex.coin.type) else {
+        guard let coin = data.dex.coin,
+              let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: coin.type) else {
             return nil
         }
 
@@ -23,7 +24,7 @@ struct SwapApproveModule {
         )
 
         let ethereumCoinService = CoinService(
-                coin: data.dex.coin,
+                coin: coin,
                 currencyKit: App.shared.currencyKit,
                 rateManager: App.shared.rateManager
         )

@@ -3,6 +3,7 @@ import XRatesKit
 import CurrencyKit
 import LanguageKit
 import Chart
+import CoinKit
 
 class ChartRateFactory: IChartRateFactory {
     private let timelineHelper: ITimelineHelper

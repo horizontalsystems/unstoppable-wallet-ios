@@ -1,3 +1,5 @@
+import CoinKit
+
 class RestoreService {
     private let walletManager: IWalletManager
     private let accountCreator: IAccountCreator

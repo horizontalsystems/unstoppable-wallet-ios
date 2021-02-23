@@ -1,5 +1,6 @@
 import Foundation
 import CurrencyKit
+import CoinKit
 
 class FeeRateAdjustmentHelper {
     typealias Rule = (amountRange: Range<Decimal>, coefficient: Double)

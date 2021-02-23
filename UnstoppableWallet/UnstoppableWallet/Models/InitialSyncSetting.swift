@@ -1,3 +1,5 @@
+import CoinKit
+
 struct InitialSyncSetting {
     let coinType: CoinType
     let syncMode: SyncMode

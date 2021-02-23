@@ -1,5 +1,6 @@
 import CurrencyKit
 import BigInt
+import CoinKit
 
 class CoinService {
     let coin: Coin

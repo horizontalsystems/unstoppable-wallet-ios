@@ -2,6 +2,7 @@ import Foundation
 import EthereumKit
 import RxSwift
 import RxRelay
+import CoinKit
 
 class SwapAllowanceService {
     private let spenderAddress: EthereumKit.Address

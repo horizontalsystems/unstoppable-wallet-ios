@@ -2,6 +2,7 @@ import Foundation
 import XRatesKit
 import CurrencyKit
 import Chart
+import CoinKit
 
 struct ChartModule {
 

@@ -1,13 +1,17 @@
 import RxSwift
+import RxCocoa
 import GRDB
 import RxGRDB
 import KeychainAccess
 import HsToolKit
+import CoinKit
 
 class GrdbStorage {
     private let dbPool: DatabasePool
 
     private let appConfigProvider: IAppConfigProvider
+
+    private var coinMigrationRelay = BehaviorRelay<[Coin]>(value: [])
 
     init(appConfigProvider: IAppConfigProvider) {
         self.appConfigProvider = appConfigProvider
@@ -242,15 +246,17 @@ class GrdbStorage {
             }
         }
 
-        migrator.registerMigration("fillBlockchainSettingsFromEnabledWallets") { db in
+        migrator.registerMigration("fillBlockchainSettingsFromEnabledWallets") { [weak self] db in
             let wallets = try EnabledWallet_v_0_13.filter(EnabledWallet_v_0_13.Columns.coinId == "BTC" ||
                     EnabledWallet_v_0_13.Columns.coinId == "LTC" ||
                     EnabledWallet_v_0_13.Columns.coinId == "BCH" ||
                     EnabledWallet_v_0_13.Columns.coinId == "DASH").fetchAll(db)
 
-            let derivationSettings: [BlockchainSettingRecord] = wallets.compactMap { [weak self] wallet in
+            let testNet = self?.appConfigProvider.testMode ?? false
+            let coins = CoinKit.defaultCoins(testNet: testNet)
+            let derivationSettings: [BlockchainSettingRecord] = wallets.compactMap { wallet in
                 guard
-                        let coin = self?.appConfigProvider.defaultCoins.first(where: { $0.id == wallet.coinId }),
+                        let coin = coins.first(where: { $0.id == wallet.coinId }),
                         let coinTypeKey = BlockchainSetting.key(for: coin.type),
                         let derivation = wallet.derivation
                         else {
@@ -259,9 +265,9 @@ class GrdbStorage {
 
                 return BlockchainSettingRecord(coinType: coinTypeKey, key: "derivation", value: derivation)
             }
-            let syncSettings: [BlockchainSettingRecord] = wallets.compactMap { [weak self] wallet in
+            let syncSettings: [BlockchainSettingRecord] = wallets.compactMap { wallet in
                 guard
-                        let coin = self?.appConfigProvider.defaultCoins.first(where: { $0.id == wallet.coinId }),
+                        let coin = coins.first(where: { $0.id == wallet.coinId }),
                         let coinTypeKey = BlockchainSetting.key(for: coin.type),
                         let syncMode = wallet.syncMode
                         else {
@@ -277,15 +283,15 @@ class GrdbStorage {
         }
 
         migrator.registerMigration("createCoins") { db in
-            try db.create(table: CoinRecord.databaseTableName) { t in
-                t.column(CoinRecord.Columns.coinId.name, .text).notNull()
-                t.column(CoinRecord.Columns.title.name, .text).notNull()
-                t.column(CoinRecord.Columns.code.name, .text).notNull()
-                t.column(CoinRecord.Columns.decimal.name, .integer).notNull()
-                t.column(CoinRecord.Columns.tokenType.name, .text).notNull()
-                t.column(CoinRecord.Columns.erc20Address.name, .text)
+            try db.create(table: CoinRecord_v19.databaseTableName) { t in
+                t.column(CoinRecord_v19.Columns.coinId.name, .text).notNull()
+                t.column(CoinRecord_v19.Columns.title.name, .text).notNull()
+                t.column(CoinRecord_v19.Columns.code.name, .text).notNull()
+                t.column(CoinRecord_v19.Columns.decimal.name, .integer).notNull()
+                t.column(CoinRecord_v19.Columns.tokenType.name, .text).notNull()
+                t.column(CoinRecord_v19.Columns.erc20Address.name, .text)
 
-                t.primaryKey([CoinRecord.Columns.coinId.name], onConflict: .replace)
+                t.primaryKey([CoinRecord_v19.Columns.coinId.name], onConflict: .replace)
             }
         }
 
@@ -305,8 +311,8 @@ class GrdbStorage {
         }
 
         migrator.registerMigration("addBep2SymbolToCoins") { db in
-            try db.alter(table: CoinRecord.databaseTableName) { t in
-                t.add(column: CoinRecord.Columns.bep2Symbol.name, .text)
+            try db.alter(table: CoinRecord_v19.databaseTableName) { t in
+                t.add(column: CoinRecord_v19.Columns.bep2Symbol.name, .text)
             }
         }
 
@@ -376,7 +382,49 @@ class GrdbStorage {
             }
         }
 
+        migrator.registerMigration("extractCoinsAndChangeCoinIds") { [weak self] db in
+            // extract coins
+            let coinRecords = try CoinRecord_v19.fetchAll(db)
+            let coins: [Coin] = coinRecords.compactMap { record in
+                let coinId = record.migrationId
+                return CoinType(id: coinId).map { Coin(title: record.title, code: record.code, decimal: record.decimal, type: $0) }
+            }
+
+            self?.coinMigrationRelay.accept(coins)
+
+            // change coinIds in enabled wallets
+            let testNet = self?.appConfigProvider.testMode ?? false
+            let allCoins = CoinKit.defaultCoins(testNet: testNet) + coins
+
+            let enabledWallets = try EnabledWallet.fetchAll(db)
+            let changedWallets: [EnabledWallet] = enabledWallets.compactMap { wallet in
+                guard let newId = CoinIdMigration.new(from: wallet.coinId, coins: allCoins) else {
+                    return nil
+                }
+                return EnabledWallet(coinId: newId, accountId: wallet.accountId)
+            }
+
+            //change coinIds for alerts
+
+            //apply changes in database
+            try db.drop(table: CoinRecord_v19.databaseTableName)
+
+            try enabledWallets.forEach { try $0.delete(db) }
+            try changedWallets.forEach { try $0.insert(db) }
+
+            let priceAlertRecords = try PriceAlertRecord.fetchAll(db)
+            try PriceAlertRecord.deleteAll(db)
+        }
+
         return migrator
+    }
+
+}
+
+extension GrdbStorage: ICoinMigration {
+
+    public var coinMigrationObservable: Observable<[Coin]> {
+        coinMigrationRelay.asObservable()
     }
 
 }
@@ -521,13 +569,13 @@ extension GrdbStorage: IBlockchainSettingsRecordStorage {
 
 extension GrdbStorage: ICoinRecordStorage {
 
-    var coinRecords: [CoinRecord] {
+    var coinRecords: [CoinRecord_v19] {
         try! dbPool.read { db in
-            try CoinRecord.order(CoinRecord.Columns.title.asc).fetchAll(db)
+            try CoinRecord_v19.order(CoinRecord_v19.Columns.title.asc).fetchAll(db)
         }
     }
 
-    func save(coinRecord: CoinRecord) {
+    func save(coinRecord: CoinRecord_v19) {
         _ = try! dbPool.write { db in
             try coinRecord.insert(db)
         }

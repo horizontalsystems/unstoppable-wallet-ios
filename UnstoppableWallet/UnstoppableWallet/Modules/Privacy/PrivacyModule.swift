@@ -1,3 +1,5 @@
+import CoinKit
+
 protocol IPrivacyRouter {
     func showSortMode(currentSortMode: TransactionDataSortMode, delegate: IPrivacySortModeDelegate)
     func showEthereumRpcMode(currentMode: EthereumRpcMode, delegate: IPrivacyEthereumRpcModeDelegate)

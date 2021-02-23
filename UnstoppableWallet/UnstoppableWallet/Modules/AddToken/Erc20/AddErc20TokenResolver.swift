@@ -1,3 +1,5 @@
+import CoinKit
+
 class AddErc20TokenResolver: IAddEvmTokenResolver {
     private let appConfigProvider: IAppConfigProvider
 

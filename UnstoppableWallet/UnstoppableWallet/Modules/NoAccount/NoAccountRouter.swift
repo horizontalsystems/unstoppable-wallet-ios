@@ -1,5 +1,7 @@
 import UIKit
 import ThemeKit
+import CoinKit
+import CoinKit
 
 class NoAccountRouter {
     weak var viewController: UIViewController?

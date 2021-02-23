@@ -1,5 +1,6 @@
 import RxSwift
 import RxCocoa
+import CoinKit
 
 class RestoreSelectCoinsViewModel {
     private let service: RestoreSelectCoinsService

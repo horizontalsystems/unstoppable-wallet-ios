@@ -1,5 +1,6 @@
 import Foundation
 import CurrencyKit
+import CoinKit
 
 class SendAmountPresenter {
     private let maxCoinDecimal = 8

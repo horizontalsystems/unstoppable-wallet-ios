@@ -1,6 +1,7 @@
 import RxSwift
 import RxRelay
 import RxCocoa
+import CoinKit
 
 class AddTokenViewModel {
     private let service: AddTokenService

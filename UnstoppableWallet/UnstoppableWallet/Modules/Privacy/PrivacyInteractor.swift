@@ -1,3 +1,5 @@
+import CoinKit
+
 class PrivacyInteractor {
     private let walletManager: IWalletManager
     private let initialSyncSettingsManager: IInitialSyncSettingsManager

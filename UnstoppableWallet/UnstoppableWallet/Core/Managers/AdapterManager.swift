@@ -1,4 +1,5 @@
 import RxSwift
+import CoinKit
 
 class AdapterManager {
     private let disposeBag = DisposeBag()

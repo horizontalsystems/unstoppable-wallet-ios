@@ -1,3 +1,5 @@
+import CoinKit
+
 class PrivacySyncModePresenter {
     weak var view: IPrivacySyncModeView?
     weak var delegate: IPrivacySyncModeDelegate?

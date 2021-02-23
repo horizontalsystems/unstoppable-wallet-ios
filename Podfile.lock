@@ -61,6 +61,11 @@ PODS:
   - CNIOLinux (2.25.1)
   - CNIOSHA1 (2.25.1)
   - CNIOWindows (2.25.1)
+  - CoinKit.swift (0.1.0):
+    - GRDB.swift (~> 4.0)
+    - ObjectMapper (~> 3.5.2)
+    - RxSwift (~> 5.0)
+    - RxSwiftExt (~> 5)
   - CryptoSwift (1.3.8)
   - Cuckoo (1.4.1):
     - Cuckoo/Swift (= 1.4.1)
@@ -297,6 +302,7 @@ DEPENDENCIES:
   - BitcoinCore.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
   - BitcoinKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
   - Chart.swift (from `https://github.com/horizontalsystems/gui-kit/`)
+  - CoinKit.swift (from `https://github.com/horizontalsystems/coin-kit-ios`)
   - Cuckoo
   - CurrencyKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - DashKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
@@ -402,6 +408,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
     :git: https://github.com/horizontalsystems/gui-kit/
+  CoinKit.swift:
+    :git: https://github.com/horizontalsystems/coin-kit-ios
   CurrencyKit.swift:
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
@@ -469,6 +477,9 @@ CHECKOUT OPTIONS:
   Chart.swift:
     :commit: 392186c18e8df97d40ca0f4587d857259d878dd4
     :git: https://github.com/horizontalsystems/gui-kit/
+  CoinKit.swift:
+    :commit: 3fdf5babfafd17298bd42fc19534db8450a8d1d8
+    :git: https://github.com/horizontalsystems/coin-kit-ios
   CurrencyKit.swift:
     :commit: 87ec7eef413711ef21abb76bb6ce47a53ec40e66
     :git: https://github.com/horizontalsystems/component-kit-ios/
@@ -561,6 +572,7 @@ SPEC CHECKSUMS:
   CNIOLinux: e6394d7fd56d36ff43ada5796e9d96c14fcb3546
   CNIOSHA1: 43c4a0cfdea5e8be20927d9d2237ebe4233071f8
   CNIOWindows: 89048520e4a1484bcd5e20c252edf4089913aa7d
+  CoinKit.swift: 2a36b726e88989b22254a2bb48b2965a06e1e033
   CryptoSwift: 01b0f0cba1d5c212e5a335ff6c054fb75a204f00
   Cuckoo: 4625f7f54d9bb880123270e8969898d6c1d036b5
   CurrencyKit.swift: c1a37e0e43eac3828be95c8348693f192d67b376
@@ -622,6 +634,6 @@ SPEC CHECKSUMS:
   XRatesKit.swift: 83bff92740261f9522484e611010b38c187c25c7
   ZcashLightClientKit: 56d5c41ecf19d290a2aa25437775f11285edb4fe
 
-PODFILE CHECKSUM: e83a13d9376a063fc097493006f2f246a08ed297
+PODFILE CHECKSUM: 9959ea13d56e5b7c5f9a908a74d9a905a6b27213
 
 COCOAPODS: 1.10.1

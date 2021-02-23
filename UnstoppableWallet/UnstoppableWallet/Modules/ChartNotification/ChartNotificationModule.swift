@@ -1,3 +1,5 @@
+import CoinKit
+
 protocol IChartNotificationView: AnyObject {
     func set(spacerMode: NotificationSettingPresentMode)
     func set(titleViewModel: PriceAlertTitleViewModel)

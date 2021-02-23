@@ -1,3 +1,5 @@
+import CoinKit
+
 class AddressParserFactory {
 
     func parser(coin: Coin) -> IAddressParser {
@@ -10,8 +12,9 @@ class AddressParserFactory {
         case .erc20: return AddressParser(validScheme: nil, removeScheme: true)
         case .binanceSmartChain: return AddressParser(validScheme: nil, removeScheme: true)
         case .bep20: return AddressParser(validScheme: nil, removeScheme: true)
-        case .binance: return AddressParser(validScheme: "binance", removeScheme: true)
+        case .bep2: return AddressParser(validScheme: "binance", removeScheme: true)
         case .zcash: return AddressParser(validScheme: "zcash", removeScheme: true)
+        case .unsupported: return AddressParser(validScheme: nil, removeScheme: false)
         }
     }
 

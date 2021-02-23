@@ -1,3 +1,5 @@
+import CoinKit
+
 class DerivationSettingsManager {
     private let supportedCoinTypes: [(coinType: CoinType, defaultDerivation: MnemonicDerivation)] = [
         (.bitcoin, .bip49),

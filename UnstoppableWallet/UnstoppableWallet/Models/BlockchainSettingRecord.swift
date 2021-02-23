@@ -1,4 +1,5 @@
 import GRDB
+import CoinKit
 
 class BlockchainSettingRecord: Record {
     let coinType: String

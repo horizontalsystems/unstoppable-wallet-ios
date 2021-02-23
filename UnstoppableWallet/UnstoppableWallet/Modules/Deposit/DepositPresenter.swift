@@ -1,4 +1,5 @@
 import UIKit
+import CoinKit
 
 class DepositPresenter {
     weak var view: IDepositView?

@@ -1,5 +1,6 @@
 import Foundation
 import CurrencyKit
+import CoinKit
 
 class SendFeePriorityPresenter {
     weak var view: ISendFeePriorityView?

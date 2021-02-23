@@ -2,6 +2,7 @@ import Foundation
 import RxSwift
 import RxRelay
 import CurrencyKit
+import CoinKit
 
 class MarketTickerService {
     private let disposeBag = DisposeBag()
@@ -18,18 +19,18 @@ class MarketTickerService {
     }
 
     private func fetchTickerData() {
-        let tickerData = [
-            Item(
-                coin: App.shared.appConfigProvider.featuredCoins[0],
-                currencyValue: CurrencyValue(currency: currencyKit.baseCurrency, value: 1234),
-                timeInterval: 40 * 60, fee: 75),
-            Item(
-                coin: App.shared.appConfigProvider.featuredCoins[1],
-                currencyValue: CurrencyValue(currency: currencyKit.baseCurrency, value: 354),
-                timeInterval: 40 * 60, fee: 25),
-        ]
+//        let tickerData = [
+//            Item(
+//                coin: App.shared.appConfigProvider.featuredCoins[0],
+//                currencyValue: CurrencyValue(currency: currencyKit.baseCurrency, value: 1234),
+//                timeInterval: 40 * 60, fee: 75),
+//            Item(
+//                coin: App.shared.appConfigProvider.featuredCoins[1],
+//                currencyValue: CurrencyValue(currency: currencyKit.baseCurrency, value: 354),
+//                timeInterval: 40 * 60, fee: 25),
+//        ]
 
-        marketTickerRelay.accept(.completed(tickerData))
+        marketTickerRelay.accept(.completed([]))
     }
 
 }

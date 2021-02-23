@@ -1,3 +1,5 @@
+import CoinKit
+
 class PrivacyPresenter {
     weak var view: IPrivacyView?
 

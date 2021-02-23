@@ -1,5 +1,6 @@
 import RxSwift
 import RxRelay
+import CoinKit
 
 class BlockchainSettingsService {
     private let derivationSettingsManager: IDerivationSettingsManager

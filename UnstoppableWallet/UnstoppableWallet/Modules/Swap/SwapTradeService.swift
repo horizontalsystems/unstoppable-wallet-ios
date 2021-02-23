@@ -3,6 +3,7 @@ import EthereumKit
 import UniswapKit
 import RxSwift
 import RxRelay
+import CoinKit
 
 class SwapTradeService {
     private var disposeBag = DisposeBag()

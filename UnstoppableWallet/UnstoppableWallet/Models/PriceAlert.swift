@@ -1,4 +1,4 @@
-import Foundation
+import CoinKit
 
 struct PriceAlert {
     let coin: Coin

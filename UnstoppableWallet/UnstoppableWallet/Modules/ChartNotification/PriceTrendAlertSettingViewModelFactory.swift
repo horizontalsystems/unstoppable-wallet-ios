@@ -1,3 +1,5 @@
+import CoinKit
+
 class PriceTrendAlertSettingViewModelFactory: IChartNotificationViewModelFactory {
 
     func titleViewModel(coin: Coin) -> PriceAlertTitleViewModel {

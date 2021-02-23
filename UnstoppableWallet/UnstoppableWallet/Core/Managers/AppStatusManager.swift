@@ -1,4 +1,5 @@
 import Foundation
+import CoinKit
 
 class AppStatusManager {
     static let statusBitcoinCoreTypes: [CoinType] = [.bitcoin, .litecoin, .bitcoinCash, .dash]

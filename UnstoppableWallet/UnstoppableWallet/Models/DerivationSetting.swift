@@ -1,3 +1,5 @@
+import CoinKit
+
 struct DerivationSetting {
     let coinType: CoinType
     let derivation: MnemonicDerivation

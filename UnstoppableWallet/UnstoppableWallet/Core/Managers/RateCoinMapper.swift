@@ -1,4 +1,5 @@
 import Foundation
+import CoinKit
 
 class RateCoinMapper {
     private let disabledCoins = [CoinCode]()
@@ -13,7 +14,7 @@ extension RateCoinMapper: IRateCoinMapper {
         }
 
         if let convertedCoiCode = convertedCoins[coin.code] {
-            return Coin(id: coin.id, title: coin.title, code: convertedCoiCode, decimal: coin.decimal, type: coin.type)
+            return Coin(title: coin.title, code: convertedCoiCode, decimal: coin.decimal, type: coin.type)
         } else {
             return coin
         }

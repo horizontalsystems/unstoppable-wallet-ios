@@ -1,6 +1,7 @@
 import RxSwift
 import CurrencyKit
 import XRatesKit
+import CoinKit
 
 class RateManager {
     private let disposeBag = DisposeBag()
@@ -77,7 +78,7 @@ extension RateManager: IRateManager {
         case .dash: return .dash
         case .ethereum: return .ethereum
         case .erc20(let address): return .erc20(address: address)
-        case .binance: return .binance
+        case .bep2: return .binance
         case .zcash: return .zcash
         default: return nil
         }
@@ -91,7 +92,7 @@ extension RateManager: IRateManager {
         case .dash: return .dash
         case .ethereum: return .ethereum
         case .erc20(let address): return .erc20(address: address)
-        case .binance: return .binance(symbol: "")
+        case .binance: return .bep2(symbol: "")
         case .zcash: return .zcash
         case .eos: return nil
         }

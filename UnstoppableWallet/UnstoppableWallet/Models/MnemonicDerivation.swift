@@ -1,3 +1,5 @@
+import CoinKit
+
 enum MnemonicDerivation: String, CaseIterable {
     case bip44
     case bip49

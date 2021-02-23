@@ -1,5 +1,6 @@
 import UniswapKit
 import RxSwift
+import CoinKit
 
 protocol ISwapCoinCardService: AnyObject {
     var dex: SwapModule.Dex { get }

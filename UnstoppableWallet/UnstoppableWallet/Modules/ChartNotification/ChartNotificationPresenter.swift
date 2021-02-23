@@ -1,3 +1,5 @@
+import CoinKit
+
 class ChartNotificationPresenter {
     weak var view: IChartNotificationView?
 

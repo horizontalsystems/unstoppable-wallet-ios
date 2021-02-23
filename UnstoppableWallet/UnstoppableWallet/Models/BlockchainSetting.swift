@@ -1,3 +1,5 @@
+import CoinKit
+
 struct BlockchainSetting {
     var coinType: CoinType?
 
