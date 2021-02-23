@@ -140,7 +140,7 @@ extension MarketModule {
             switch self {
             case .marketCap: return "market.market_field.mcap".localized
             case .volume: return "market.market_field.vol".localized
-            case .price: return "market.market_field.price".localized
+            case .price: return "price".localized
             }
         }
     }
