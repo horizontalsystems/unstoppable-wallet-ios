@@ -203,3 +203,23 @@ enum ChartPriceAlertMode {
     case off
     case hidden
 }
+
+struct PriceIndicatorViewItem: CustomStringConvertible {
+    enum Range {
+        case day
+        case year
+
+        var description: String {
+            switch self {
+            case .day: return "chart.price_indicator_range.day".localized
+            case .year: return "chart.price_indicator_range.year".localized
+            }
+        }
+
+    }
+
+    let low: String
+    let high: String
+    let range: Range
+    let currentPercentage: CGFloat
+}

@@ -33,9 +33,13 @@ class ChartViewController: ThemeViewController {
     private let chartViewCell: ChartViewCell
     private let indicatorSelectorCell = IndicatorSelectorCell()
     private let chartInfoCell = ChartInfoCell()
+    private let ratingCell = A2Cell()
+    private let priceHeaderCell = B4Cell()
 
     private var favoriteButtonItem: UIBarButtonItem?
     private var alertButtonItem: UIBarButtonItem?
+
+    private var priceIndicatorItems = [PriceIndicatorViewItem]()
 
     init(delegate: IChartViewDelegate & IChartViewTouchDelegate, configuration: ChartConfiguration) {
         self.delegate = delegate
@@ -63,12 +67,28 @@ class ChartViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
+        tableView.registerCell(forClass: PriceIndicatorCell.self)
+
         chartIntervalAndSelectedRateCell.onSelectInterval = { [weak self] index in
             self?.delegate.onSelectType(at: index)
         }
         indicatorSelectorCell.onTapIndicator = { [weak self] indicator in
             self?.delegate.onTap(indicator: indicator)
         }
+
+        ratingCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+        ratingCell.title = ""
+        ratingCell.value = "chart.rating_details".localized
+
+        ratingCell.titleImage = UIImage(named: "rating_a_24")?.tinted(with: .themeJacob)//todo get icon from view model
+
+        priceIndicatorItems = [//todo price indicators
+            PriceIndicatorViewItem(low: "$19345", high: "$43310", range: .day, currentPercentage: 0.4),
+            PriceIndicatorViewItem(low: "$5000", high: "$50000", range: .year, currentPercentage: 0.78)
+        ]
+
+        priceHeaderCell.set(backgroundStyle: .transparent)
+        priceHeaderCell.title = "price".localized
 
         tableView.buildSections()
 
@@ -90,7 +110,6 @@ class ChartViewController: ThemeViewController {
             chartViewCell.showLoading()
             deactivateIndicators()
         case .failed:
-//            hideLoading()//todo need error design
             deactivateIndicators()
         case .completed(let data):
             chartViewCell.hideLoading()
@@ -221,34 +240,70 @@ extension ChartViewController: UITableViewDelegate, UITableViewDataSource {
 extension ChartViewController: SectionsDataSource {
 
     public func buildSections() -> [SectionProtocol] {
-        [Section(id: "chart", footerState: .margin(height: .margin32), rows: [
-            StaticRow(
-                    cell: currentRateCell,
-                    id: "current_rate",
-                    height: ChartCurrentRateCell.cellHeight
-            ),
-            StaticRow(
-                    cell: chartIntervalAndSelectedRateCell,
-                    id: "select_interval",
-                    height: .heightSingleLineCell
-            ),
-            StaticRow(
-                    cell: chartViewCell,
-                    id: "chart_view",
-                    height: ChartViewCell.cellHeight
-            ),
-            StaticRow(
-                    cell: indicatorSelectorCell,
-                    id: "indicator_selector",
-                    height: .heightSingleLineCell
-            ),
-            StaticRow(
-                    cell: chartInfoCell,
-                    id: "indicator_selector",
-                    height: ChartInfoCell.cellHeight
-            ),
-        ])]
+        var sections = [SectionProtocol]()
+        sections.append(
+                Section(id: "chart", footerState: .margin(height: .margin12), rows: [
+                    StaticRow(
+                            cell: currentRateCell,
+                            id: "current_rate",
+                            height: ChartCurrentRateCell.cellHeight
+                    ),
+                    StaticRow(
+                            cell: chartIntervalAndSelectedRateCell,
+                            id: "select_interval",
+                            height: .heightSingleLineCell
+                    ),
+                    StaticRow(
+                            cell: chartViewCell,
+                            id: "chart_view",
+                            height: ChartViewCell.cellHeight
+                    ),
+                    StaticRow(
+                            cell: indicatorSelectorCell,
+                            id: "indicator_selector",
+                            height: .heightSingleLineCell
+                    ),
+                ]))
+
+        if !priceIndicatorItems.isEmpty {
+            sections.append(contentsOf: [
+                Section(id: "rating", footerState: .margin(height: .margin12), rows: [
+                    StaticRow(
+                            cell: ratingCell,
+                            id: "rating",
+                            height: .heightCell48,
+                            autoDeselect: true,
+                            action: {
+                                print("open rating details")
+                            }
+                    ),
+                ]),
+                Section(id: "price_header", footerState: .margin(height: .margin12), rows: [
+                    StaticRow(
+                            cell: priceHeaderCell,
+                            id: "wallet-connect",
+                            height: .heightCell48
+                    ),
+                ]),
+                Section(id: "price_indicators", footerState: .margin(height: .margin12), rows: priceIndicatorRows())
+            ])
+        }
+
+        return sections
+    }
+
+    private func priceIndicatorRows() -> [Row<PriceIndicatorCell>] {
+        priceIndicatorItems.enumerated().map { index, item in
+            let count = priceIndicatorItems.count
+            return Row<PriceIndicatorCell>(
+                    id: item.range.description,
+                    hash: item.range.description,
+                    height: PriceIndicatorCell.cellHeight,
+                    bind: { cell, _ in
+                        cell.bind(viewItem: item)
+                        cell.set(backgroundStyle: .lawrence, isFirst: index == 0, isLast: count - 1 == index)
+                    })
+        }
     }
 
 }
-
