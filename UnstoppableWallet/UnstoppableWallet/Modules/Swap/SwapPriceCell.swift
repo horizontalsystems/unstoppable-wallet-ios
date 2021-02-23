@@ -72,7 +72,7 @@ class SwapPriceCell: UITableViewCell {
             priceLabel.text = price
         } else {
             priceLabel.textColor = .themeGray50
-            priceLabel.text = "swap.price".localized
+            priceLabel.text = "price".localized
         }
     }
 

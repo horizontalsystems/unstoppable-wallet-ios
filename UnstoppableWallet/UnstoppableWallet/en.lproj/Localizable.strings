@@ -38,6 +38,7 @@
 "offline" = "Offline";
 "confirm" = "Confirm";
 "connect" = "Connect";
+"price" = "Price";
 
 "version" = "Version %@";
 
@@ -238,7 +239,6 @@ bch.horizontalsystems.xyz/apg";
 "swap.button_error.insufficient_balance" = "Insufficient balance";
 "swap.button_error.impact_too_high" = "High price impact";
 
-"swap.price" = "Price";
 "swap.price_impact" = "Price Impact";
 "swap.max_min" = "Max / Min";
 "swap.maximum_paid" = "Maximum Amount";
@@ -322,7 +322,6 @@ bch.horizontalsystems.xyz/apg";
 
 "market.market_field.mcap" = "MCap";
 "market.market_field.vol" = "Vol";
-"market.market_field.price" = "Price";
 
 "market.sort_by" = "Sort By";
 "market.changes" = "Changes";
@@ -651,11 +650,13 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "chart.start_date" = "Launch Date";
 "chart.website" = "Project Website";
 "chart.error.not_available" = "Chart not available";
-"chart.selected.price" = "Price";
 "chart.selected.volume" = "Vol";
 "chart.trend_neutral" = "Neutral";
 "chart.trend_down" = "Down Trend";
 "chart.trend_up" = "Up Trend";
+"chart.rating_details" = "Rating Details";
+"chart.price_indicator_range.day" = "24h Range";
+"chart.price_indicator_range.year" = "52w Range";
 
 // Create Wallet
 
