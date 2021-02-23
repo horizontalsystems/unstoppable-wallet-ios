@@ -1,3 +1,5 @@
+import CoinKit
+
 class DepositInteractor {
     private let depositAdapter: IDepositAdapter
     private let derivationSettingsManager: IDerivationSettingsManager

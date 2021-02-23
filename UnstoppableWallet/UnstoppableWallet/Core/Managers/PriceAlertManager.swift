@@ -1,4 +1,5 @@
 import RxSwift
+import CoinKit
 
 class PriceAlertManager {
     private let disposeBag = DisposeBag()
@@ -26,9 +27,9 @@ class PriceAlertManager {
     }
 
     private func onUpdate(wallets: [Wallet]) {
-        let coinIds = wallets.map { $0.coin.id }
+        let coinCodes = wallets.map { $0.coin.id }
 
-        let alertsToDeactivate = storage.activePriceAlerts.filter { !coinIds.contains($0.coin.id) }
+        let alertsToDeactivate = storage.activePriceAlerts.filter { !coinCodes.contains($0.coin.id) }
 
         storage.save(priceAlerts: alertsToDeactivate.map { PriceAlert(coin: $0.coin, changeState: .off, trendState: .off) })
 

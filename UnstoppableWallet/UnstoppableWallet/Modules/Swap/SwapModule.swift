@@ -6,6 +6,7 @@ import EthereumKit
 import ThemeKit
 import CurrencyKit
 import BigInt
+import CoinKit
 
 //TODO: move to another place
 func subscribe<T>(_ disposeBag: DisposeBag, _ driver: Driver<T>, _ onNext: ((T) -> Void)? = nil) {
@@ -60,7 +61,8 @@ struct SwapModule {
             return nil
         }
 
-        guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: dex.coin.type) else {
+        guard let coin = dex.coin,
+              let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: coin.type) else {
             return nil
         }
 
@@ -68,7 +70,7 @@ struct SwapModule {
         let uniswapRepository = UniswapProvider(swapKit: swapKit)
 
         let coinService = CoinService(
-                coin: dex.coin,
+                coin: coin,
                 currencyKit: App.shared.currencyKit,
                 rateManager: App.shared.rateManager
         )
@@ -140,10 +142,10 @@ extension SwapModule {
             }
         }
 
-        var coin: Coin {
+        var coin: Coin? {
             switch self {
-            case .uniswap: return App.shared.appConfigProvider.ethereumCoin
-            case .pancake: return App.shared.appConfigProvider.binanceSmartChainCoin
+            case .uniswap: return App.shared.coinKit.coin(type: .ethereum)
+            case .pancake: return App.shared.coinKit.coin(type: .binanceSmartChain)
             }
         }
 

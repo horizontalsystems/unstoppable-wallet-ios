@@ -1,5 +1,6 @@
 import RxSwift
 import RxRelay
+import CoinKit
 
 class ManageWalletsService {
     private let coinManager: ICoinManager

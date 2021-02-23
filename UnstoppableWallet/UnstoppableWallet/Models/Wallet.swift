@@ -1,3 +1,5 @@
+import CoinKit
+
 struct Wallet {
     let coin: Coin
     let account: Account

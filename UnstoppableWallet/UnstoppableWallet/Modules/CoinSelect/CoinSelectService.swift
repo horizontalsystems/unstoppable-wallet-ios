@@ -1,5 +1,6 @@
 import RxSwift
 import RxRelay
+import CoinKit
 
 class CoinSelectService {
     private let dex: SwapModule.Dex

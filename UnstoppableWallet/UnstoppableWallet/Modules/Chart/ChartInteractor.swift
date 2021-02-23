@@ -1,6 +1,7 @@
 import UIKit
 import RxSwift
 import XRatesKit
+import CoinKit
 
 class ChartInteractor {
     weak var delegate: IChartInteractorDelegate?

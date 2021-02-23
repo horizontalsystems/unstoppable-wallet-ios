@@ -1,4 +1,5 @@
 import UIKit
+import CoinKit
 
 class SendAddressRouter: ISendSubRouter {
     weak var viewController: UIViewController?

@@ -1,3 +1,5 @@
+import CoinKit
+
 class InitialSyncSettingsManager {
     private let supportedCoinTypes = [
         SupportedCoinType(coinType: .bitcoin, defaultSyncMode: .fast, changeable: true),
@@ -8,13 +10,13 @@ class InitialSyncSettingsManager {
 
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
-    private let appConfigProvider: IAppConfigProvider
+    private let coinKit: CoinKit
     private let storage: IBlockchainSettingsStorage
 
-    init(walletManager: IWalletManager, adapterManager: IAdapterManager, appConfigProvider: IAppConfigProvider, storage: IBlockchainSettingsStorage) {
+    init(walletManager: IWalletManager, adapterManager: IAdapterManager, coinKit: CoinKit, storage: IBlockchainSettingsStorage) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
-        self.appConfigProvider = appConfigProvider
+        self.coinKit = coinKit
         self.storage = storage
     }
 
@@ -27,7 +29,7 @@ class InitialSyncSettingsManager {
 extension InitialSyncSettingsManager: IInitialSyncSettingsManager {
 
     var allSettings: [(setting: InitialSyncSetting, coin: Coin, changeable: Bool)] {
-        let coins = appConfigProvider.defaultCoins
+        let coins = coinKit.coins
 
         return supportedCoinTypes.compactMap { supportedCoinType in
             guard let coinTypeCoin = (coins.first { $0.type == supportedCoinType.coinType }) else {

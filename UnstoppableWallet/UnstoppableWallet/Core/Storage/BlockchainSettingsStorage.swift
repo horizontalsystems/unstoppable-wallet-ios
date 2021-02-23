@@ -1,3 +1,5 @@
+import CoinKit
+
 class BlockchainSettingsStorage {
     private let storage: IBlockchainSettingsRecordStorage
 

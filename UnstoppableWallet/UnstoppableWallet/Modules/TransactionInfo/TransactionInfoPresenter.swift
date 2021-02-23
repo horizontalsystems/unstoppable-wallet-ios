@@ -1,4 +1,5 @@
 import CurrencyKit
+import CoinKit
 
 class TransactionInfoPresenter {
     weak var view: ITransactionInfoView?
@@ -33,10 +34,12 @@ class TransactionInfoPresenter {
             explorerData = .init(title: "etherscan.io", url: testMode ? "https://ropsten.etherscan.io/tx/" + hash : "https://etherscan.io/tx/" + hash)
         case .binanceSmartChain, .bep20:
             explorerData = .init(title: "bscscan.com", url: testMode ? nil : "https://bscscan.com/tx/" + hash)
-        case .binance:
+        case .bep2:
             explorerData = .init(title: "binance.org", url: testMode ? "https://testnet-explorer.binance.org/tx/" + hash : "https://explorer.binance.org/tx/" + hash)
         case .zcash:
             explorerData = .init(title: "zcha.in", url: testMode ? nil : "https://explorer.zcha.in/transactions/" + hash)
+        case .unsupported:
+            explorerData = .init(title: "", url: nil)
         }
     }
 

@@ -2,6 +2,7 @@ import RxSwift
 import RxRelay
 import EthereumKit
 import BinanceChainKit
+import CoinKit
 
 class EnableCoinsService {
     private let appConfigProvider: IAppConfigProvider
@@ -32,7 +33,7 @@ class EnableCoinsService {
             if words.count == 12 {
                 return .erc20(words: words)
             }
-        case (.binance(let symbol), .mnemonic(let words, _)):
+        case (.bep2(let symbol), .mnemonic(let words, _)):
             if symbol == "BNB", words.count == 24 {
                 return .bep2(words: words)
             }
@@ -103,7 +104,7 @@ class EnableCoinsService {
             }
 
             return allCoins.first { coin in
-                coin.type == .binance(symbol: tokenSymbol)
+                coin.type == .bep2(symbol: tokenSymbol)
             }
         }
 

@@ -4,6 +4,7 @@ import SnapKit
 import ThemeKit
 import RxSwift
 import RxCocoa
+import CoinKit
 
 class CoinToggleViewController: ThemeSearchViewController {
     private let viewModel: ICoinToggleViewModel

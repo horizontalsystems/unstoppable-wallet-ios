@@ -1,5 +1,6 @@
 import UIKit
 import ThemeKit
+import CoinKit
 
 protocol ICoinSelectDelegate: AnyObject {
     func didSelect(coin: Coin)

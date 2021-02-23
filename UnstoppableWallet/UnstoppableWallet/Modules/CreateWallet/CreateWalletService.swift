@@ -1,5 +1,6 @@
 import RxSwift
 import RxRelay
+import CoinKit
 
 class CreateWalletService {
     private var predefinedAccountType: PredefinedAccountType?

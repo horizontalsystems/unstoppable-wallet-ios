@@ -1,6 +1,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import CoinKit
 
 class CoinSelectViewModel {
     private let service: CoinSelectService

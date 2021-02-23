@@ -2,6 +2,7 @@ import RxSwift
 import RxCocoa
 import UniswapKit
 import CurrencyKit
+import CoinKit
 
 class SwapCoinCardViewModel {
     private static let maxValidDecimals = 8

@@ -2,6 +2,7 @@ import Foundation
 import RxSwift
 import CurrencyKit
 import HsToolKit
+import CoinKit
 
 class TransactionsInteractor {
     private let disposeBag = DisposeBag()

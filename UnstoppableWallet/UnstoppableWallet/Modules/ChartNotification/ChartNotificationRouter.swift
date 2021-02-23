@@ -1,4 +1,5 @@
 import UIKit
+import CoinKit
 
 class ChartNotificationRouter {
     weak var viewController: UIViewController?

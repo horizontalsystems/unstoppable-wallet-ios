@@ -1,4 +1,5 @@
 import RxSwift
+import CoinKit
 
 class PriceAlertStorage {
     private let coinManager: ICoinManager

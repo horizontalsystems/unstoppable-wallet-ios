@@ -1,6 +1,7 @@
 import UIKit
 import CurrencyKit
 import XRatesKit
+import CoinKit
 
 protocol ISendFeeView: class {
     func set(loading: Bool)

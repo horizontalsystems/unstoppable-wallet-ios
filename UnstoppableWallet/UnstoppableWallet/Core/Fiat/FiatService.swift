@@ -2,6 +2,7 @@ import CurrencyKit
 import RxSwift
 import RxRelay
 import XRatesKit
+import CoinKit
 
 class FiatService {
     private var disposeBag = DisposeBag()

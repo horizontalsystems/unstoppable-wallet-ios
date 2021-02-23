@@ -2,6 +2,7 @@ import UIKit
 import RxSwift
 import SnapKit
 import ThemeKit
+import CoinKit
 
 class SendViewController: ThemeViewController {
     private let disposeBag = DisposeBag()

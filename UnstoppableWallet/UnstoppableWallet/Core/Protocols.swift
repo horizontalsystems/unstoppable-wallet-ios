@@ -6,6 +6,7 @@ import EthereumKit
 import ThemeKit
 import Alamofire
 import HsToolKit
+import CoinKit
 
 typealias CoinCode = String
 
@@ -293,15 +294,16 @@ protocol IAppConfigProvider {
     var pnsPassword: String { get }
     var pnsUsername: String { get }
 
+    var featuredCoins: [Coin] { get }
     func defaultWords(count: Int) -> String
 
-    var ethereumCoin: Coin { get }
-    var binanceSmartChainCoin: Coin { get }
-    var featuredCoins: [Coin] { get }
-    var defaultCoins: [Coin] { get }
     var smartContractFees: [CoinType: Decimal] { get }
     var minimumBalances: [CoinType: Decimal] { get }
     var minimumSpendableAmounts: [CoinType: Decimal] { get }
+}
+
+protocol ICoinMigration {
+    var coinMigrationObservable: Observable<[Coin]> { get }
 }
 
 protocol IEnabledWalletStorage {
@@ -537,8 +539,8 @@ protocol ICoinManager {
 }
 
 protocol ICoinRecordStorage {
-    var coinRecords: [CoinRecord] { get }
-    func save(coinRecord: CoinRecord)
+    var coinRecords: [CoinRecord_v19] { get }
+    func save(coinRecord: CoinRecord_v19)
 }
 
 protocol ICoinStorage {

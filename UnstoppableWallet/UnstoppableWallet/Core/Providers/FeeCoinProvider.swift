@@ -1,8 +1,10 @@
-class FeeCoinProvider {
-    private let appConfigProvider: IAppConfigProvider
+import CoinKit
 
-    init(appConfigProvider: IAppConfigProvider) {
-        self.appConfigProvider = appConfigProvider
+class FeeCoinProvider {
+    private let coinKit: CoinKit
+
+    init(coinKit: CoinKit) {
+        self.coinKit = coinKit
     }
 
     private func binanceFeeCoin(symbol: String) -> Coin? {
@@ -10,12 +12,7 @@ class FeeCoinProvider {
             return nil
         }
 
-        return appConfigProvider.defaultCoins.first(where: { coin in
-            if case let .binance(symbol) = coin.type {
-                return symbol == "BNB"
-            }
-            return false
-        })
+        return coinKit.coin(type: .bep2(symbol: symbol))
     }
 
     private func binanceFeeCoinProtocol(symbol: String) -> String? {
@@ -33,10 +30,10 @@ extension FeeCoinProvider: IFeeCoinProvider {
     func feeCoin(coin: Coin) -> Coin? {
         switch coin.type {
         case .erc20:
-            return appConfigProvider.ethereumCoin
+            return coinKit.coin(type: .ethereum)
         case .bep20:
-            return appConfigProvider.binanceSmartChainCoin
-        case .binance(let symbol):
+            return coinKit.coin(type: .binanceSmartChain)
+        case .bep2(let symbol):
             return binanceFeeCoin(symbol: symbol)
         default:
             return nil
@@ -49,7 +46,7 @@ extension FeeCoinProvider: IFeeCoinProvider {
             return "ERC20"
         case .bep20:
             return "BEP20"
-        case .binance(let symbol):
+        case .bep2(let symbol):
             return binanceFeeCoinProtocol(symbol: symbol)
         default:
             return nil

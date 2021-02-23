@@ -1,5 +1,6 @@
 import RxSwift
 import RxRelay
+import CoinKit
 
 class RestoreSelectCoinsService {
     private let predefinedAccountType: PredefinedAccountType
@@ -53,6 +54,7 @@ class RestoreSelectCoinsService {
     }
 
     private func filteredCoins(coins: [Coin]) -> [Coin] {
+
         coins.filter { $0.type.predefinedAccountType == predefinedAccountType }
     }
 

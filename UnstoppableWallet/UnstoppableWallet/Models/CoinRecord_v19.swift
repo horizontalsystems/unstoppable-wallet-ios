@@ -1,6 +1,6 @@
 import GRDB
 
-class CoinRecord: Record {
+class CoinRecord_v19: Record {
     let id: String
     let title: String
     let code: String
@@ -9,6 +9,12 @@ class CoinRecord: Record {
 
     var erc20Address: String?
     var bep2Symbol: String?
+
+    var migrationId: String {
+        let extra = erc20Address ?? bep2Symbol ?? ""
+
+        return [tokenType, extra].joined(separator: "|")
+    }
 
     init(id: String, title: String, code: String, decimal: Int, tokenType: String) {
         self.id = id

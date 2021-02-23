@@ -1,6 +1,7 @@
 import RxSwift
 import RxRelay
 import RxCocoa
+import CoinKit
 
 class RestoreViewModel {
     private let service: RestoreService

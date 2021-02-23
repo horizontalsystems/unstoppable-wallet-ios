@@ -1,3 +1,5 @@
+import CoinKit
+
 protocol IDepositView: class {
     func set(viewItem: DepositModule.AddressViewItem)
     func showCopied()

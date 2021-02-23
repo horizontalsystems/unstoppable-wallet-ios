@@ -1,6 +1,7 @@
 import Foundation
 import CurrencyKit
 import XRatesKit
+import CoinKit
 
 class SendFeePresenter {
     weak var view: ISendFeeView?

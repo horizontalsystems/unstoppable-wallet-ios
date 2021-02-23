@@ -6,6 +6,7 @@ import CurrencyKit
 import BigInt
 import EthereumKit
 import Foundation
+import CoinKit
 
 class SwapService {
     let dex: SwapModule.Dex

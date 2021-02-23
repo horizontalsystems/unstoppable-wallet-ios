@@ -3,6 +3,7 @@ import ThemeKit
 import LanguageKit
 import Chart
 import SafariServices
+import CoinKit
 
 class ChartRouter {
     weak var viewController: UIViewController?

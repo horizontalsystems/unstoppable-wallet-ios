@@ -1,6 +1,7 @@
 import Foundation
 import CurrencyKit
 import RxSwift
+import CoinKit
 
 class SendFeeInteractor {
     private let rateManager: IRateManager

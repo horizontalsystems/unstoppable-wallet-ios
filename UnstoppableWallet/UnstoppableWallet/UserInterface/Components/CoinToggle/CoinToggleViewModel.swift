@@ -1,5 +1,6 @@
 import RxSwift
 import RxCocoa
+import CoinKit
 
 protocol ICoinToggleViewModel {
     var viewStateDriver: Driver<CoinToggleViewModel.ViewState> { get }

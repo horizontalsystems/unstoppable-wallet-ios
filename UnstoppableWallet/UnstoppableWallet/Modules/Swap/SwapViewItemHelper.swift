@@ -1,4 +1,5 @@
 import UniswapKit
+import CoinKit
 
 class SwapViewItemHelper {
 

@@ -1,5 +1,6 @@
 import UIKit
 import EthereumKit
+import CoinKit
 
 struct WalletConnectSendEthereumTransactionRequestModule {
 
@@ -8,14 +9,14 @@ struct WalletConnectSendEthereumTransactionRequestModule {
             return nil
         }
 
-        let coin: Coin
+        let feeCoin: Coin?
 
         switch evmKit.networkType {
-        case .ethMainNet, .kovan, .ropsten: coin = App.shared.appConfigProvider.ethereumCoin
-        case .bscMainNet: coin = App.shared.appConfigProvider.binanceSmartChainCoin
+        case .ethMainNet, .kovan, .ropsten: feeCoin = App.shared.coinKit.coin(type: .ethereum)
+        case .bscMainNet: feeCoin = App.shared.coinKit.coin(type: .binanceSmartChain)
         }
 
-        guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: coin.type) else {
+        guard let coin = feeCoin, let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: coin.type) else {
             return nil
         }
 

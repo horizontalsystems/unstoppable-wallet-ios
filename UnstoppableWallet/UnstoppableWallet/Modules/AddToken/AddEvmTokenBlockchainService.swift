@@ -3,6 +3,7 @@ import RxSwift
 import Alamofire
 import HsToolKit
 import EthereumKit
+import CoinKit
 
 protocol IAddEvmTokenResolver {
     var apiUrl: String { get }
@@ -86,7 +87,6 @@ extension AddEvmTokenBlockchainService {
             }
 
             return Coin(
-                    id: tokenSymbol,
                     title: tokenName,
                     code: tokenSymbol,
                     decimal: tokenDecimal,

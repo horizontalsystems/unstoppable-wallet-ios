@@ -1,6 +1,7 @@
 import Foundation
 import DeepDiff
 import CurrencyKit
+import CoinKit
 
 protocol ITransactionsView: class {
     func set(status: TransactionViewStatus)

@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 import ThemeKit
+import CoinKit
 
 class SwapTokenSelectCell: BaseSelectableThemeCell {
     private let leftCoinView = LeftCoinCellView()

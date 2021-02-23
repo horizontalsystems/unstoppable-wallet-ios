@@ -2,6 +2,7 @@ import Foundation
 import RxSwift
 import XRatesKit
 import HsToolKit
+import CoinKit
 
 class SendPresenter {
     weak var view: ISendView?

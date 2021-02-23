@@ -1,6 +1,7 @@
 import RxSwift
 import DeepDiff
 import CurrencyKit
+import CoinKit
 
 class TransactionsPresenter {
     private let interactor: ITransactionsInteractor

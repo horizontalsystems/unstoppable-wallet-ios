@@ -1,3 +1,5 @@
+import CoinKit
+
 protocol IPrivacySyncModeView: AnyObject {
     func set(coinTitle: String, coinCode: String, blockchainType: String?)
     func set(viewItems: [PrivacySyncModeModule.ViewItem])

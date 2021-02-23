@@ -3,13 +3,16 @@ import ThemeKit
 
 struct SwapTradeOptionsModule {
 
-    static func viewController(tradeService: SwapTradeService) -> UIViewController {
+    static func viewController(tradeService: SwapTradeService) -> UIViewController? {
+        guard let ethereumCoin = App.shared.coinKit.coin(type: .ethereum) else {
+            return nil
+        }
+
         let addressParserFactory = AddressParserFactory()
 
         let service = SwapTradeOptionsService(tradeOptions: tradeService.swapTradeOptions)
         let viewModel = SwapTradeOptionsViewModel(service: service, tradeService: tradeService, decimalParser: AmountDecimalParser())
 
-        let ethereumCoin = App.shared.appConfigProvider.ethereumCoin
         let recipientViewModel = RecipientAddressViewModel(
                 service: service,
                 resolutionService: AddressResolutionService(coinCode: ethereumCoin.code),

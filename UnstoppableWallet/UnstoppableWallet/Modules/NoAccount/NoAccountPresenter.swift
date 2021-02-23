@@ -1,3 +1,5 @@
+import CoinKit
+
 class NoAccountPresenter {
     weak var view: INoAccountView?
 

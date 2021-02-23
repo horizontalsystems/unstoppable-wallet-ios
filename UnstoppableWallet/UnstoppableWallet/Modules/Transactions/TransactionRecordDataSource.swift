@@ -1,5 +1,6 @@
 import Foundation
 import CurrencyKit
+import CoinKit
 
 class TransactionRecordDataSource {
     private let poolRepo: TransactionRecordPoolRepo

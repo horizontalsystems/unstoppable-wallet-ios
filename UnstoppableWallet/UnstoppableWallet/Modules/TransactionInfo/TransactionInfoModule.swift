@@ -1,5 +1,6 @@
 import Foundation
 import CurrencyKit
+import CoinKit
 
 protocol ITransactionInfoView: AnyObject {
     func set(date: Date, primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, type: TransactionType, lockState: TransactionLockState?)

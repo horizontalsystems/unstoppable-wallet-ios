@@ -1,3 +1,5 @@
+import CoinKit
+
 class CoinStorage {
     private let storage: ICoinRecordStorage
 
@@ -5,7 +7,7 @@ class CoinStorage {
         self.storage = storage
     }
 
-    private func coin(record: CoinRecord) -> Coin? {
+    private func coin(record: CoinRecord_v19) -> Coin? {
         guard let tokenType = TokenType(rawValue: record.tokenType) else {
             return nil
         }
@@ -28,12 +30,12 @@ class CoinStorage {
                 return nil
             }
 
-            return coin(record: record, coinType: .binance(symbol: symbol))
+            return coin(record: record, coinType: .bep2(symbol: symbol))
         }
     }
 
-    private func coinRecord(coin: Coin, tokenType: TokenType) -> CoinRecord {
-        CoinRecord(
+    private func coinRecord(coin: Coin, tokenType: TokenType) -> CoinRecord_v19 {
+        CoinRecord_v19(
                 id: coin.id,
                 title: coin.title,
                 code: coin.code,
@@ -42,9 +44,8 @@ class CoinStorage {
         )
     }
 
-    private func coin(record: CoinRecord, coinType: CoinType) -> Coin {
+    private func coin(record: CoinRecord_v19, coinType: CoinType) -> Coin {
         Coin(
-                id: record.id,
                 title: record.title,
                 code: record.code,
                 decimal: record.decimal,
@@ -72,7 +73,7 @@ extension CoinStorage: ICoinStorage {
             record.erc20Address = address
             storage.save(coinRecord: record)
             return true
-        case .binance(let symbol):
+        case .bep2(let symbol):
             let record = coinRecord(coin: coin, tokenType: .bep2)
             record.bep2Symbol = symbol
             storage.save(coinRecord: record)

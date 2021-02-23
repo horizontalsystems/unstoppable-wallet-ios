@@ -2,6 +2,7 @@ import RxSwift
 import HsToolKit
 import Alamofire
 import ObjectMapper
+import CoinKit
 
 class AddBep2TokenBlockchainService {
     private let appConfigProvider: IAppConfigProvider
@@ -22,7 +23,7 @@ extension AddBep2TokenBlockchainService: IAddTokenBlockchainService {
 
     func existingCoin(reference: String, coins: [Coin]) -> Coin? {
         coins.first { coin in
-            if case .binance(let symbol) = coin.type, symbol.lowercased() == reference.lowercased() {
+            if case .bep2(let symbol) = coin.type, symbol.lowercased() == reference.lowercased() {
                 return true
             }
 
@@ -43,11 +44,10 @@ extension AddBep2TokenBlockchainService: IAddTokenBlockchainService {
         return tokensSingle.flatMap { tokens -> Single<Coin> in
             if let token = tokens.first(where: { $0.symbol.lowercased() == reference.lowercased() }) {
                 let coin = Coin(
-                        id: token.symbol,
                         title: token.name,
                         code: token.originalSymbol,
                         decimal: 8,
-                        type: .binance(symbol: token.symbol)
+                        type: .bep2(symbol: token.symbol)
                 )
                 return Single.just(coin)
             } else {
