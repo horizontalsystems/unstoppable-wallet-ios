@@ -38,6 +38,7 @@ class WalletConnectListViewController: ThemeViewController {
         tableView.separatorStyle = .none
 
         tableView.registerCell(forClass: A1Cell.self)
+        tableView.registerCell(forClass: F4Cell.self)
         tableView.registerCell(forClass: G1Cell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
@@ -74,32 +75,49 @@ class WalletConnectListViewController: ThemeViewController {
         )
     }
 
-    private func accountSection(sectionViewItem: WalletConnectListViewModel.SectionViewItem) -> SectionProtocol {
-        Section(
-                id: "connections",
-                headerState: header(hash: sectionViewItem.address, text: sectionViewItem.title),
-                footerState: footer(hash: sectionViewItem.address, text: sectionViewItem.address),
-                rows: sectionViewItem.viewItems.enumerated().map { index, viewItem in
-                    let isFirst = index == 0
-                    let isLast = index == sectionViewItem.viewItems.count - 1
+    private func accountSections(sectionViewItem: WalletConnectListViewModel.SectionViewItem) -> [SectionProtocol] {
+        [
+            Section(
+                    id: "header_\(sectionViewItem.address)",
+                    footerState: .margin(height: .margin12),
+                    rows: [
+                        Row<F4Cell>(
+                                id: "header_\(sectionViewItem.address)",
+                                height: .heightDoubleLineCell,
+                                bind: { cell, _ in
+                                    cell.selectionStyle = .none
+                                    cell.set(backgroundStyle: .transparent)
+                                    cell.title = sectionViewItem.title
+                                    cell.subtitle = sectionViewItem.address
+                                }
+                        )
+                    ]
+            ),
+            Section(
+                    id: "sessions_\(sectionViewItem.address)",
+                    footerState: .margin(height: .margin32),
+                    rows: sectionViewItem.viewItems.enumerated().map { index, viewItem in
+                        let isFirst = index == 0
+                        let isLast = index == sectionViewItem.viewItems.count - 1
 
-                    return Row<G1Cell>(
-                            id: viewItem.session.peerId,
-                            height: .heightDoubleLineCell,
-                            autoDeselect: true,
-                            bind: { cell, _ in
-                                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                                cell.titleImageCornerRadius = .cornerRadius4
-                                cell.setTitleImage(urlString: viewItem.imageUrl)
-                                cell.title = viewItem.title
-                                cell.subtitle = viewItem.url
-                            },
-                            action: { [weak self] _ in
-                                WalletConnectModule.start(session: viewItem.session, sourceViewController: self)
-                            }
-                    )
-                }
-        )
+                        return Row<G1Cell>(
+                                id: viewItem.session.peerId,
+                                height: .heightDoubleLineCell,
+                                autoDeselect: true,
+                                bind: { cell, _ in
+                                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                                    cell.titleImageCornerRadius = .cornerRadius4
+                                    cell.setTitleImage(urlString: viewItem.imageUrl)
+                                    cell.title = viewItem.title
+                                    cell.subtitle = viewItem.url
+                                },
+                                action: { [weak self] _ in
+                                    WalletConnectModule.start(session: viewItem.session, sourceViewController: self)
+                                }
+                        )
+                    }
+            )
+        ]
     }
 
     private func header(hash: String, text: String) -> ViewState<SubtitleHeaderFooterView> {
@@ -131,7 +149,13 @@ class WalletConnectListViewController: ThemeViewController {
 extension WalletConnectListViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        [newConnectionSection] + sectionViewItems.map { accountSection(sectionViewItem: $0) }
+        var sections: [SectionProtocol] = [newConnectionSection]
+
+        for sectionViewItem in sectionViewItems {
+            sections += accountSections(sectionViewItem: sectionViewItem)
+        }
+
+        return sections
     }
 
 }
