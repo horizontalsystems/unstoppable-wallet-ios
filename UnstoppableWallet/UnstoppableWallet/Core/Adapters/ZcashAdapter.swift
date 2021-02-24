@@ -415,11 +415,13 @@ extension ZcashAdapter: ISendZcashAdapter {
             return Single.error(AdapterError.unsupportedAccount)
         }
 
-        let amount = NSDecimalNumber(decimal: amount * Self.coinRate).int64Value
+        let handler = NSDecimalNumberHandler(roundingMode: .down, scale: 0, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
+        let zatoshi = NSDecimalNumber(decimal: amount * Self.coinRate).rounding(accordingToBehavior: handler).int64Value
+
         let synchronizer = self.synchronizer
 
         return Single<()>.create { [weak self] single in
-            synchronizer.sendToAddress(spendingKey: spendingKey, zatoshi: amount, toAddress: address, memo: memo, from: 0) { result in
+            synchronizer.sendToAddress(spendingKey: spendingKey, zatoshi: zatoshi, toAddress: address, memo: memo, from: 0) { result in
                 self?.syncPending()
                 switch result {
                 case .success:
