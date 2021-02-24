@@ -12,6 +12,7 @@ class ChartCurrentRateCell: UITableViewCell {
 
         backgroundColor = .clear
         contentView.backgroundColor = .clear
+        selectionStyle = .none
 
         contentView.addSubview(rateLabel)
         rateLabel.snp.makeConstraints { maker in

@@ -11,6 +11,7 @@ class IndicatorSelectorCell: UITableViewCell {
 
         backgroundColor = .clear
         contentView.backgroundColor = .clear
+        selectionStyle = .none
 
         let emaIndicatorView = ThemeButton().apply(style: .tertiary)
         contentView.addSubview(emaIndicatorView)
