@@ -21,8 +21,8 @@ extension UIImage {
     static func image(coinCode: String, blockchainType: String? = nil) -> UIImage? {
         var image = UIImage(named: "\(coinCode.lowercased())")
 
-        if image == nil, let blockchainType = blockchainType {
-            image = UIImage(named: blockchainType.lowercased())
+        if image == nil {
+            image = UIImage(named: blockchainType?.lowercased() ?? "emptyCoin") ?? UIImage(named: "emptyCoin")
         }
 
         return image?.tinted(with: .themeGray)
