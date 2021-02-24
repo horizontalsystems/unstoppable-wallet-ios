@@ -17,6 +17,7 @@ class ChartInfoCell: UITableViewCell {
 
         backgroundColor = .clear
         contentView.backgroundColor = .clear
+        selectionStyle = .none
 
         separator.backgroundColor = .themeSteel20
 

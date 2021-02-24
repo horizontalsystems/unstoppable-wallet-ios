@@ -16,6 +16,7 @@ class ChartIntervalAndSelectedRateCell: UITableViewCell {
 
         backgroundColor = .clear
         contentView.backgroundColor = .clear
+        selectionStyle = .none
 
         contentView.addSubview(selectedRateView)
         selectedRateView.snp.makeConstraints { maker in

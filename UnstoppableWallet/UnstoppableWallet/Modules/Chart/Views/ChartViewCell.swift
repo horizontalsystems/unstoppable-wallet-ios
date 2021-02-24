@@ -16,6 +16,7 @@ class ChartViewCell: UITableViewCell {
 
         backgroundColor = .clear
         contentView.backgroundColor = .clear
+        selectionStyle = .none
 
         contentView.addSubview(chartView)
         chartView.snp.makeConstraints { maker in

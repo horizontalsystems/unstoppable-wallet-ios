@@ -89,6 +89,7 @@ class ChartViewController: ThemeViewController {
 
         priceHeaderCell.set(backgroundStyle: .transparent)
         priceHeaderCell.title = "price".localized
+        priceHeaderCell.selectionStyle = .none
 
         tableView.buildSections()
 
