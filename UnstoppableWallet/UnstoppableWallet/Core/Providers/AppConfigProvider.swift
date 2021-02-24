@@ -83,7 +83,7 @@ class AppConfigProvider: IAppConfigProvider {
     let feeRateAdjustedForCurrencyCodes: [String] = ["USD", "EUR"]
 
     var featuredCoins: [Coin] {
-        Array(CoinKit.defaultCoins(testNet: testMode).prefix(8))
+        Array(CoinKit.Kit.defaultCoins(testNet: testMode).prefix(8))
     }
 
     let smartContractFees: [CoinType: Decimal] = [:]

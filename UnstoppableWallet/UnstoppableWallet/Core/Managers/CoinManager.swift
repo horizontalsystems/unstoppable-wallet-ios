@@ -3,15 +3,13 @@ import CoinKit
 
 class CoinManager {
     private let appConfigProvider: IAppConfigProvider
-    private let coinKit: CoinKit
-    private let storage: ICoinStorage
+    private let coinKit: CoinKit.Kit
 
     private let subject = PublishSubject<Coin>()
 
-    init(appConfigProvider: IAppConfigProvider, coinKit: CoinKit, storage: ICoinStorage) {
+    init(appConfigProvider: IAppConfigProvider, coinKit: CoinKit.Kit) {
         self.appConfigProvider = appConfigProvider
         self.coinKit = coinKit
-        self.storage = storage
     }
 
 }
@@ -28,6 +26,10 @@ extension CoinManager: ICoinManager {
 
     var featuredCoins: [Coin] {
         appConfigProvider.featuredCoins
+    }
+
+    func coin(type: CoinType) -> Coin? {
+        coinKit.coin(type: type)
     }
 
     func save(coin: Coin) {

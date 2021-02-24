@@ -253,7 +253,7 @@ class GrdbStorage {
                     EnabledWallet_v_0_13.Columns.coinId == "DASH").fetchAll(db)
 
             let testNet = self?.appConfigProvider.testMode ?? false
-            let coins = CoinKit.defaultCoins(testNet: testNet)
+            let coins = CoinKit.Kit.defaultCoins(testNet: testNet)
             let derivationSettings: [BlockchainSettingRecord] = wallets.compactMap { wallet in
                 guard
                         let coin = coins.first(where: { $0.id == wallet.coinId }),
@@ -394,7 +394,7 @@ class GrdbStorage {
 
             // change coinIds in enabled wallets
             let testNet = self?.appConfigProvider.testMode ?? false
-            let allCoins = CoinKit.defaultCoins(testNet: testNet) + coins
+            let allCoins = CoinKit.Kit.defaultCoins(testNet: testNet) + coins
 
             let enabledWallets = try EnabledWallet.fetchAll(db)
             let changedWallets: [EnabledWallet] = enabledWallets.compactMap { wallet in
@@ -562,22 +562,6 @@ extension GrdbStorage: IBlockchainSettingsRecordStorage {
     func deleteAll(settingKey: String) {
         _ = try! dbPool.write { db in
             try BlockchainSettingRecord.filter(BlockchainSettingRecord.Columns.key == settingKey).deleteAll(db)
-        }
-    }
-
-}
-
-extension GrdbStorage: ICoinRecordStorage {
-
-    var coinRecords: [CoinRecord_v19] {
-        try! dbPool.read { db in
-            try CoinRecord_v19.order(CoinRecord_v19.Columns.title.asc).fetchAll(db)
-        }
-    }
-
-    func save(coinRecord: CoinRecord_v19) {
-        _ = try! dbPool.write { db in
-            try coinRecord.insert(db)
         }
     }
 

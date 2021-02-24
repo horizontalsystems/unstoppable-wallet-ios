@@ -21,14 +21,8 @@ extension AddBep2TokenBlockchainService: IAddTokenBlockchainService {
         // todo
     }
 
-    func existingCoin(reference: String, coins: [Coin]) -> Coin? {
-        coins.first { coin in
-            if case .bep2(let symbol) = coin.type, symbol.lowercased() == reference.lowercased() {
-                return true
-            }
-
-            return false
-        }
+    func coinType(reference: String) -> CoinType {
+        .bep2(symbol: reference.uppercased())
     }
 
     func coinSingle(reference: String) -> Single<Coin> {

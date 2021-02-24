@@ -5,7 +5,7 @@ import CoinKit
 
 protocol IAddTokenBlockchainService {
     func validate(reference: String) throws
-    func existingCoin(reference: String, coins: [Coin]) -> Coin?
+    func coinType(reference: String) -> CoinType
     func coinSingle(reference: String) -> Single<Coin>
 }
 
@@ -54,7 +54,7 @@ extension AddTokenService {
             return
         }
 
-        if let existingCoin = blockchainService.existingCoin(reference: reference, coins: coinManager.coins) {
+        if let existingCoin = coinManager.coin(type: blockchainService.coinType(reference: reference)) {
             state = .alreadyExists(coin: existingCoin)
             return
         }

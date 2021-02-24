@@ -1,9 +1,9 @@
 import CoinKit
 
 class FeeCoinProvider {
-    private let coinKit: CoinKit
+    private let coinKit: CoinKit.Kit
 
-    init(coinKit: CoinKit) {
+    init(coinKit: CoinKit.Kit) {
         self.coinKit = coinKit
     }
 

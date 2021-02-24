@@ -10,12 +10,12 @@ class App {
     let keychainKit: IKeychainKit
     let pinKit: IPinKit
 
-    let coinKit: CoinKit
+    let coinKit: CoinKit.Kit
 
     let appConfigProvider: IAppConfigProvider
 
     let localStorage: ILocalStorage & IChartTypeStorage
-    let storage: ICoinMigration & IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & ICoinRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage
+    let storage: ICoinMigration & IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage
 
     let themeManager: ThemeManager
     let systemInfoManager: ISystemInfoManager
@@ -93,7 +93,7 @@ class App {
         storage = GrdbStorage(appConfigProvider: appConfigProvider)
         logRecordManager = LogRecordManager(storage: storage)
 
-        coinKit = try! CoinKit.instance(testNet: appConfigProvider.testMode)
+        coinKit = try! CoinKit.Kit.instance(testNet: appConfigProvider.testMode)
         coinKit.coinMigrationObservable = storage.coinMigrationObservable
 
         logger = Logger(minLogLevel: .error, storage: logRecordManager)
@@ -119,8 +119,7 @@ class App {
 
         kitCleaner = KitCleaner(accountManager: accountManager)
 
-        let coinStorage: ICoinStorage = CoinStorage(storage: storage)
-        coinManager = CoinManager(appConfigProvider: appConfigProvider, coinKit: coinKit, storage: coinStorage)
+        coinManager = CoinManager(appConfigProvider: appConfigProvider, coinKit: coinKit)
 
         walletFactory = WalletFactory()
         let walletStorage: IWalletStorage = WalletStorage(coinManager: coinManager, walletFactory: walletFactory, storage: storage)
