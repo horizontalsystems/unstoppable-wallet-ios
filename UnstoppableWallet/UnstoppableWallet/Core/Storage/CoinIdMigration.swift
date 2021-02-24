@@ -44,15 +44,15 @@ class CoinIdMigration {
             return coinId
         }
 
-        guard let tokenType = CoinStorage.TokenType(rawValue: coinRecord.tokenType) else {
-            return nil
+        if coinRecord.tokenType == "erc20" {
+            return CoinType.erc20(address: coinRecord.id).id
+        } else if coinRecord.tokenType == "bep20" {
+            return CoinType.bep20(address: coinRecord.id).id
+        } else if coinRecord.tokenType == "bep2" {
+            return CoinType.bep2(symbol: coinRecord.id).id
         }
 
-        switch tokenType {
-        case .erc20: return CoinType.erc20(address: coinRecord.id).id
-        case .bep2: return CoinType.bep2(symbol: coinRecord.id).id
-        case .bep20: return CoinType.bep20(address: coinRecord.id).id
-        }
+        return nil
     }
 
 }

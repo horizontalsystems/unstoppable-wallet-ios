@@ -433,7 +433,6 @@
 		11B356D7125781313375C11B /* CoinToggleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3586BD835C7BD6896A210 /* CoinToggleViewController.swift */; };
 		11B356D88F46DE9AB3754434 /* EthereumFeeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35427EBB66D26E943D7A8 /* EthereumFeeViewModel.swift */; };
 		11B356DB3835A587CE7495D9 /* SendEthereumInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FCB0C9375B426F06D95 /* SendEthereumInteractor.swift */; };
-		11B356DBB9558C163670A2D3 /* CoinStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35011FD1CFBCA39E8013A /* CoinStorage.swift */; };
 		11B356E01BF81231780AF029 /* AddressInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35420B8191814543CBFA8 /* AddressInputCell.swift */; };
 		11B356E03534507B25FF4097 /* TermsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EB9BA551F2F1AF7739D /* TermsManager.swift */; };
 		11B356E34E90E8566545DED9 /* PredefinedAccountTypeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35981A2EDBC21C82D13A5 /* PredefinedAccountTypeManager.swift */; };
@@ -791,7 +790,6 @@
 		11B35C126B0199D514D27E8B /* NoAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E5DF58C01A920CE48F3 /* NoAccountViewController.swift */; };
 		11B35C16BE16B6AEEA0690EC /* AlertModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C9F199E2A1D297480A4 /* AlertModule.swift */; };
 		11B35C1743DC5866EBD16A90 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352D393EDFE4F015B0DEA /* Address.swift */; };
-		11B35C1745403D4C48930A3C /* CoinStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35011FD1CFBCA39E8013A /* CoinStorage.swift */; };
 		11B35C196C80132DEF6F2C11 /* TransactionRecordPoolState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3592889642D8823BEDAE2 /* TransactionRecordPoolState.swift */; };
 		11B35C1BE57AC5D48AE5D232 /* CreateWalletModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3504AB2C44D79FDB6883B /* CreateWalletModule.swift */; };
 		11B35C1C029BC7DF041F5A0A /* SendFeePriorityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F77ADC1D844A4A3390D /* SendFeePriorityPresenter.swift */; };
@@ -976,7 +974,6 @@
 		11B35EEB5F85215779D22A56 /* NoAccountInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352E66ADEAAF94B937BE8 /* NoAccountInteractor.swift */; };
 		11B35EF151041B9B6B2538E8 /* UnlinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352A8C9C3AA2AB1776F3C /* UnlinkViewController.swift */; };
 		11B35EF35C59A81D62BCA81C /* SendBitcoinHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3552CDCF73BC9041AD0C0 /* SendBitcoinHandler.swift */; };
-		11B35EF78FA03556DB429137 /* CoinStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35011FD1CFBCA39E8013A /* CoinStorage.swift */; };
 		11B35EF9D9E8C1A814005CFD /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35747FAD8381F2AD48276 /* MainViewModel.swift */; };
 		11B35EFAFFA1E30F7765FEB2 /* MainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B6D6FCA3745DE0750BD /* MainService.swift */; };
 		11B35F03EFFD7149C7CFD595 /* TermsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35812D1F62D1839D5DCDC /* TermsHeaderCell.swift */; };
@@ -2221,7 +2218,6 @@
 		0B6F4260BBC5A8BD53346F70 /* Pods-Unstoppable.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unstoppable.debug.xcconfig"; path = "Target Support Files/Pods-Unstoppable/Pods-Unstoppable.debug.xcconfig"; sourceTree = "<group>"; };
 		11B3500621E6BB91F9CE181B /* PrivacySyncModeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacySyncModeViewController.swift; sourceTree = "<group>"; };
 		11B350097B17D90CD768125E /* SendBitcoinInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendBitcoinInteractor.swift; sourceTree = "<group>"; };
-		11B35011FD1CFBCA39E8013A /* CoinStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinStorage.swift; sourceTree = "<group>"; };
 		11B35022E1749DB910D156ED /* RestoreWordsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreWordsViewModel.swift; sourceTree = "<group>"; };
 		11B350369A891BEA3A525E5B /* UITabBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITabBarItem.swift; sourceTree = "<group>"; };
 		11B350401B0CFDA2B06432E1 /* RestoreWordsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreWordsModule.swift; sourceTree = "<group>"; };
@@ -3765,7 +3761,6 @@
 				11B353FED1586171A5C73554 /* PriceAlertStorage.swift */,
 				11B3555A19D9E41785D88A5E /* KeychainKitDelegate.swift */,
 				1A56443BF752CB6537E45F5A /* BlockchainSettingsStorage.swift */,
-				11B35011FD1CFBCA39E8013A /* CoinStorage.swift */,
 				1A5643F43C587EA8BA419357 /* PriceAlertRequestStorage.swift */,
 				58AAA4C71C2C4021826B3D62 /* CoinIdMigration.swift */,
 			);
@@ -5948,7 +5943,6 @@
 				1A56400FEC5C916B16FC4C45 /* ChartInfoCell.swift in Sources */,
 				11B359EF4EEF3E0B938A6597 /* CoinManager.swift in Sources */,
 				11B3514721BBBC2A0B698617 /* CoinRecord_v19.swift in Sources */,
-				11B356DBB9558C163670A2D3 /* CoinStorage.swift in Sources */,
 				11B359A9A816A47CD1B14A96 /* MarkdownImageTitleCell.swift in Sources */,
 				11B35F9F494543D2E07BA9CE /* MarkdownVisitor.swift in Sources */,
 				11B3558CA09FE505C4731B76 /* MarkdownListItemCell.swift in Sources */,
@@ -6198,8 +6192,8 @@
 				11B35C7A5E9F5C7ABBEE2227 /* AddBep20TokenResolver.swift in Sources */,
 				11B3546E7B7162C7E9A6BF9C /* AddEvmTokenBlockchainService.swift in Sources */,
 				11B35EB01F6B34ED67605742 /* BinanceSmartChainKitManager.swift in Sources */,
-                58AAA943AA1C1E56D9BF0590 /* CoinIdMigration.swift in Sources */,
-                11B356D6D8407D6A0834B73F /* WalletConnectSession.swift in Sources */,
+				58AAA943AA1C1E56D9BF0590 /* CoinIdMigration.swift in Sources */,
+				11B356D6D8407D6A0834B73F /* WalletConnectSession.swift in Sources */,
 				1A564303766B1A269633A04B /* ChartIntervalAndSelectedRateCell.swift in Sources */,
 				1A56485C475F491E4BB861B8 /* ChartViewCell.swift in Sources */,
 				1A56468CC99E8A4C9FE4E176 /* IndicatorSelectorCell.swift in Sources */,
@@ -6705,7 +6699,6 @@
 				1A56428F167A71E2102EB0DB /* ChartInfoCell.swift in Sources */,
 				11B350183A4C156507B9BD02 /* CoinManager.swift in Sources */,
 				11B35A39A7A785FC352AD598 /* CoinRecord_v19.swift in Sources */,
-				11B35C1745403D4C48930A3C /* CoinStorage.swift in Sources */,
 				11B3546AC03E6B632D155766 /* MarkdownImageTitleCell.swift in Sources */,
 				11B3542831EAA647A1D16E8A /* MarkdownVisitor.swift in Sources */,
 				11B357D211A75BDFED448AA4 /* MarkdownListItemCell.swift in Sources */,
@@ -7424,7 +7417,6 @@
 				1A5641A7DAAE63B7E5BE1EAD /* ChartInfoCell.swift in Sources */,
 				11B353845C68A831A0AEBCE9 /* CoinManager.swift in Sources */,
 				11B359B216614C6E70162C74 /* CoinRecord_v19.swift in Sources */,
-				11B35EF78FA03556DB429137 /* CoinStorage.swift in Sources */,
 				11B351B49FF886F8F29EDA26 /* MarkdownImageTitleCell.swift in Sources */,
 				11B35F4A3EAF8D2C66E8D6E5 /* MarkdownVisitor.swift in Sources */,
 				11B3511B03A70BEA48637907 /* MarkdownListItemCell.swift in Sources */,
@@ -7674,8 +7666,8 @@
 				11B359A6288B335F82BCD72D /* AddBep20TokenResolver.swift in Sources */,
 				11B3556FCACE2ECE022138DF /* AddEvmTokenBlockchainService.swift in Sources */,
 				11B359E5AA59492DB046549E /* BinanceSmartChainKitManager.swift in Sources */,
-                58AAAB80EBC0684C009575E3 /* CoinIdMigration.swift in Sources */,
-                11B35201583EC6E1EB476ADB /* WalletConnectSession.swift in Sources */,
+				58AAAB80EBC0684C009575E3 /* CoinIdMigration.swift in Sources */,
+				11B35201583EC6E1EB476ADB /* WalletConnectSession.swift in Sources */,
 				1A5648E710841D1317AB52A6 /* ChartIntervalAndSelectedRateCell.swift in Sources */,
 				1A5645405F87A275694DF000 /* ChartViewCell.swift in Sources */,
 				1A5644A0C22BB90771F009BF /* IndicatorSelectorCell.swift in Sources */,

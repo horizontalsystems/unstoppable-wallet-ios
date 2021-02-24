@@ -10,10 +10,10 @@ class InitialSyncSettingsManager {
 
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
-    private let coinKit: CoinKit
+    private let coinKit: CoinKit.Kit
     private let storage: IBlockchainSettingsStorage
 
-    init(walletManager: IWalletManager, adapterManager: IAdapterManager, coinKit: CoinKit, storage: IBlockchainSettingsStorage) {
+    init(walletManager: IWalletManager, adapterManager: IAdapterManager, coinKit: CoinKit.Kit, storage: IBlockchainSettingsStorage) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.coinKit = coinKit

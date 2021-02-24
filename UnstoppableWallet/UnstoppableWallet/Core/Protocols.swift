@@ -535,17 +535,8 @@ protocol ICoinManager {
     var coinAddedObservable: Observable<Coin> { get }
     var coins: [Coin] { get }
     var featuredCoins: [Coin] { get }
+    func coin(type: CoinType) -> Coin?
     func save(coin: Coin)
-}
-
-protocol ICoinRecordStorage {
-    var coinRecords: [CoinRecord_v19] { get }
-    func save(coinRecord: CoinRecord_v19)
-}
-
-protocol ICoinStorage {
-    var coins: [Coin] { get }
-    func save(coin: Coin) -> Bool
 }
 
 protocol IFavoriteCoinRecordStorage {

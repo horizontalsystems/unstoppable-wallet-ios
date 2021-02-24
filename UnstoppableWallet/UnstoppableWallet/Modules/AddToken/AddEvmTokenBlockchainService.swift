@@ -8,7 +8,6 @@ import CoinKit
 protocol IAddEvmTokenResolver {
     var apiUrl: String { get }
     var explorerKey: String { get }
-    func does(coin: Coin, matchReference reference: String) -> Bool
     func coinType(address: String) -> CoinType
 }
 
@@ -29,13 +28,13 @@ extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
         _ = try EthereumKit.Address(hex: reference)
     }
 
-    func existingCoin(reference: String, coins: [Coin]) -> Coin? {
-        coins.first { coin in
-            resolver.does(coin: coin, matchReference: reference)
-        }
+    func coinType(reference: String) -> CoinType {
+        resolver.coinType(address: reference.lowercased())
     }
 
     func coinSingle(reference: String) -> Single<Coin> {
+        let reference = reference.lowercased()
+
         let parameters: Parameters = [
             "module": "account",
             "action": "tokentx",
