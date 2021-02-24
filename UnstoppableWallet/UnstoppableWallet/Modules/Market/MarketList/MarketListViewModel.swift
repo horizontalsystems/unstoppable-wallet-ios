@@ -9,7 +9,7 @@ class MarketListViewModel {
 
     private let stateRelay = BehaviorRelay<State>(value: .loading)
     private let sortingFieldTitleRelay: BehaviorRelay<String>
-    private let marketFieldRelay = BehaviorRelay<MarketModule.MarketField>(value: .marketCap)
+    private let marketFieldRelay = BehaviorRelay<MarketModule.MarketField>(value: .price)
 
     private var sortingField: MarketModule.SortingField = .highestCap {
         didSet {
