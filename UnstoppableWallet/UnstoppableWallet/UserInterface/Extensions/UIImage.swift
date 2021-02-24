@@ -22,7 +22,7 @@ extension UIImage {
         var image = UIImage(named: "\(coinCode.lowercased())")
 
         if image == nil {
-            image = UIImage(named: blockchainType?.lowercased() ?? "emptyCoin") ?? UIImage(named: "emptyCoin")
+            image = UIImage(named: blockchainType?.lowercased() ?? "icon_placeholder_24") ?? UIImage(named: "icon_placeholder_24")
         }
 
         return image?.tinted(with: .themeGray)
