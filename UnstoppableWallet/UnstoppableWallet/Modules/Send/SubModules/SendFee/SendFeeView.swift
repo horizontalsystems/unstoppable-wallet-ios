@@ -80,8 +80,8 @@ extension SendFeeView: ISendFeeView {
         feeValueLabel.text = "\(formattedFeeString)"
     }
 
-    func set(error: Error?) {
-        errorLabel.text = error?.convertedError.smartDescription
+    func set(error: String?) {
+        errorLabel.text = error
 
         let hide = error != nil
 

@@ -6,7 +6,7 @@ import CoinKit
 protocol ISendFeeView: class {
     func set(loading: Bool)
     func set(fee: AmountInfo, convertedFee: AmountInfo?)
-    func set(error: Error?)
+    func set(error: String?)
 }
 
 protocol ISendFeeViewDelegate {

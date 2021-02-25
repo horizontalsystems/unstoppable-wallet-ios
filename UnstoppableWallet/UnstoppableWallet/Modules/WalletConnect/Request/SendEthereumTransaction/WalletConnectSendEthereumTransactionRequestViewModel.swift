@@ -63,6 +63,13 @@ class WalletConnectSendEthereumTransactionRequestViewModel {
             return "ethereum_transaction.error.insufficient_balance".localized(amountData.formattedString)
         }
 
+        if case AppError.ethereum(let reason) = error.convertedError {
+            switch reason {
+            case .insufficientBalanceWithFee, .executionReverted: return "ethereum_transaction.error.insufficient_balance_with_fee".localized(coinService.coin.code)
+            default: ()
+            }
+        }
+
         return error.convertedError.smartDescription
     }
 
