@@ -32,9 +32,10 @@ class ChartViewController: ThemeViewController {
     private let chartIntervalAndSelectedRateCell = ChartIntervalAndSelectedRateCell()
     private let chartViewCell: ChartViewCell
     private let indicatorSelectorCell = IndicatorSelectorCell()
-    private let chartInfoCell = ChartInfoCell()
     private let ratingCell = A2Cell()
     private let priceHeaderCell = B4Cell()
+    private let marketHeaderCell = B4Cell()
+    private let marketInfoCell = MarketInfoCell()
 
     private var favoriteButtonItem: UIBarButtonItem?
     private var alertButtonItem: UIBarButtonItem?
@@ -91,6 +92,14 @@ class ChartViewController: ThemeViewController {
         priceHeaderCell.title = "price".localized
         priceHeaderCell.selectionStyle = .none
 
+        marketHeaderCell.set(backgroundStyle: .transparent)
+        marketHeaderCell.title = "chart.market.header".localized
+        marketHeaderCell.selectionStyle = .none
+
+        marketInfoCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+        //todo market data
+        marketInfoCell.bind(marketCap: "$178.3B", marketCapChange: "+34,56%", volume: "$2.32B", circulation: "18.4B BTC", totalSupply: "21B BTC")
+
         tableView.buildSections()
 
         delegate.onLoad()
@@ -99,12 +108,6 @@ class ChartViewController: ThemeViewController {
     private func updateViews(viewItem: ChartViewItem) {
         currentRateCell.bind(rate: viewItem.currentRate, diff: nil)
         updateAlertBarItem(alertMode: viewItem.priceAlertMode)
-
-        if let marketViewItem = viewItem.marketInfoStatus.data {
-            chartInfoCell.bind(marketCap: marketViewItem.marketCap, volume: marketViewItem.volume, supply: marketViewItem.supply, maxSupply: marketViewItem.maxSupply, startDate: marketViewItem.startDate, website: marketViewItem.website, onTapLink: { [weak self] in
-                self?.delegate.onTapLink()
-            })
-        }
 
         switch viewItem.chartDataStatus {
         case .loading:
@@ -242,47 +245,48 @@ extension ChartViewController: SectionsDataSource {
 
     public func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
-        sections.append(
-                Section(id: "chart", footerState: .margin(height: .margin12), rows: [
-                    StaticRow(
-                            cell: currentRateCell,
-                            id: "current_rate",
-                            height: ChartCurrentRateCell.cellHeight
-                    ),
-                    StaticRow(
-                            cell: chartIntervalAndSelectedRateCell,
-                            id: "select_interval",
-                            height: .heightSingleLineCell
-                    ),
-                    StaticRow(
-                            cell: chartViewCell,
-                            id: "chart_view",
-                            height: ChartViewCell.cellHeight
-                    ),
-                    StaticRow(
-                            cell: indicatorSelectorCell,
-                            id: "indicator_selector",
-                            height: .heightSingleLineCell
-                    ),
-                ]))
+        sections.append(contentsOf: [
+            Section(id: "chart", footerState: .margin(height: .margin12), rows: [
+                StaticRow(
+                        cell: currentRateCell,
+                        id: "current_rate",
+                        height: ChartCurrentRateCell.cellHeight
+                ),
+                StaticRow(
+                        cell: chartIntervalAndSelectedRateCell,
+                        id: "select_interval",
+                        height: .heightSingleLineCell
+                ),
+                StaticRow(
+                        cell: chartViewCell,
+                        id: "chart_view",
+                        height: ChartViewCell.cellHeight
+                ),
+                StaticRow(
+                        cell: indicatorSelectorCell,
+                        id: "indicator_selector",
+                        height: .heightSingleLineCell
+                )
+            ]),
+            Section(id: "rating", footerState: .margin(height: .margin12), rows: [
+                StaticRow(
+                        cell: ratingCell,
+                        id: "rating",
+                        height: .heightCell48,
+                        autoDeselect: true,
+                        action: {
+                            print("open rating details")
+                        }
+                ),
+            ])
+        ])
 
         if !priceIndicatorItems.isEmpty {
             sections.append(contentsOf: [
-                Section(id: "rating", footerState: .margin(height: .margin12), rows: [
-                    StaticRow(
-                            cell: ratingCell,
-                            id: "rating",
-                            height: .heightCell48,
-                            autoDeselect: true,
-                            action: {
-                                print("open rating details")
-                            }
-                    ),
-                ]),
                 Section(id: "price_header", footerState: .margin(height: .margin12), rows: [
                     StaticRow(
                             cell: priceHeaderCell,
-                            id: "wallet-connect",
+                            id: "price_header",
                             height: .heightCell48
                     ),
                 ]),
@@ -290,6 +294,22 @@ extension ChartViewController: SectionsDataSource {
             ])
         }
 
+        sections.append(contentsOf: [
+            Section(id: "market_header_section", footerState: .margin(height: .margin12), rows: [
+                StaticRow(
+                        cell: marketHeaderCell,
+                        id: "market_header",
+                        height: .heightCell48
+                )
+            ]),
+            Section(id: "market_section", footerState: .margin(height: .margin12), rows: [
+                StaticRow(
+                        cell: marketInfoCell,
+                        id: "market_cell",
+                        height: MarketInfoCell.cellHeight
+                )
+            ])
+        ])
         return sections
     }
 

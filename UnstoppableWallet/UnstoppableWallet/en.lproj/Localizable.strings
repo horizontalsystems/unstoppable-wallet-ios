@@ -658,6 +658,12 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "chart.price_indicator_range.day" = "24h Range";
 "chart.price_indicator_range.year" = "52w Range";
 
+"chart.market.header" = "Market";
+"chart.market.market_cap" = "Market Cap";
+"chart.market.volume" = "Volume (24h)";
+"chart.market.circulation" = "In Circulation";
+"chart.market.total_supply" = "Total Supply";
+
 // Create Wallet
 
 "create_wallet.title" = "New Wallet";
