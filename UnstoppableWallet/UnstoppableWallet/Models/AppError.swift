@@ -22,7 +22,8 @@ enum AppError: Error {
     }
 
     enum EthereumError: Error {
-        case insufficientBalance
+        case insufficientBalanceWithFee
+        case executionReverted(message: String)
     }
 }
 
@@ -45,7 +46,8 @@ extension AppError: LocalizedError {
             }
         case .ethereum(let reason):
             switch reason {
-            case .insufficientBalance: return "ethereum_transaction.error.insufficient_balance_with_fee".localized
+            case .insufficientBalanceWithFee: return "" // localized in modules
+            case .executionReverted(let message): return "ethereum_transaction.error.reverted".localized(message)
             }
         case .wordsChecksum:
             return "restore.checksum_error".localized

@@ -117,10 +117,22 @@ extension EthereumKit.WebSocketState.StateError: ConvertibleError {
     }
 }
 
-extension EthereumKit.Kit.EstimatedLimitError: ConvertibleError {
+extension EthereumKit.JsonRpcResponse.ResponseError: ConvertibleError {
+
     var convertedError: Error {
         switch self {
-        case .insufficientBalance: return AppError.ethereum(reason: .insufficientBalance)
+        case .rpcError(let rpcError):
+            if rpcError.message == "insufficient funds for transfer" || rpcError.message.starts(with: "gas required exceeds allowance") {
+                return AppError.ethereum(reason: .insufficientBalanceWithFee)
+            }
+
+            if rpcError.message.starts(with: "execution reverted") {
+                return AppError.ethereum(reason: .executionReverted(message: rpcError.message))
+            }
+
+            return self
+        default: return self
         }
     }
+
 }

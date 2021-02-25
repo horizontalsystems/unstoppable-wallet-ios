@@ -39,16 +39,16 @@ class SendFeePresenter {
     }
 
     private func syncError() {
-        guard externalError == nil else {
-            view?.set(error: externalError)
-            return
-        }
-
         do {
+            if let externalError = externalError {
+                throw externalError
+            }
+
             try validate()
+
             view?.set(error: nil)
         } catch {
-            view?.set(error: error)
+            view?.set(error: resolve(error: error))
         }
     }
 
@@ -64,6 +64,14 @@ class SendFeePresenter {
         if availableFeeBalance < fee {
             throw ValidationError.insufficientFeeBalance(coin: baseCoin, coinProtocol: feeCoinProtocol, feeCoin: feeCoin, fee: .coinValue(coinValue: CoinValue(coin: feeCoin, value: fee)))
         }
+    }
+
+    private func resolve(error: Error) -> String {
+        if case AppError.ethereum(let reason) = error.convertedError, case .insufficientBalanceWithFee = reason {
+            return "ethereum_transaction.error.insufficient_balance_with_fee".localized(coin.code)
+        }
+
+        return error.convertedError.smartDescription
     }
 
 }
