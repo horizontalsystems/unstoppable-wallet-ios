@@ -664,6 +664,8 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "chart.market.circulation" = "In Circulation";
 "chart.market.total_supply" = "Total Supply";
 
+"chart.market.show_markets" = "%@ Markets";
+
 // Create Wallet
 
 "create_wallet.title" = "New Wallet";

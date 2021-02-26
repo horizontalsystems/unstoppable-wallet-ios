@@ -36,6 +36,7 @@ class ChartViewController: ThemeViewController {
     private let priceHeaderCell = B4Cell()
     private let marketHeaderCell = B4Cell()
     private let marketInfoCell = MarketInfoCell()
+    private let openMarketsCell = B1Cell()
 
     private var favoriteButtonItem: UIBarButtonItem?
     private var alertButtonItem: UIBarButtonItem?
@@ -78,8 +79,10 @@ class ChartViewController: ThemeViewController {
         }
 
         ratingCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        ratingCell.title = ""
+        ratingCell.title = " "
         ratingCell.value = "chart.rating_details".localized
+        ratingCell.valueColor = .themeJacob
+        ratingCell.disclosureImageTintColor = .themeJacob
 
         ratingCell.titleImage = UIImage(named: "rating_a_24")?.tinted(with: .themeJacob)//todo get icon from view model
 
@@ -99,6 +102,10 @@ class ChartViewController: ThemeViewController {
         marketInfoCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         //todo market data
         marketInfoCell.bind(marketCap: "$178.3B", marketCapChange: "+34,56%", volume: "$2.32B", circulation: "18.4B BTC", totalSupply: "21B BTC")
+
+        openMarketsCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+        //todo get coin code
+        openMarketsCell.title = "chart.market.show_markets".localized("BTC")
 
         tableView.buildSections()
 
@@ -294,7 +301,7 @@ extension ChartViewController: SectionsDataSource {
             ])
         }
 
-        sections.append(contentsOf: [
+    sections.append(contentsOf: [
             Section(id: "market_header_section", footerState: .margin(height: .margin12), rows: [
                 StaticRow(
                         cell: marketHeaderCell,
@@ -307,6 +314,17 @@ extension ChartViewController: SectionsDataSource {
                         cell: marketInfoCell,
                         id: "market_cell",
                         height: MarketInfoCell.cellHeight
+                )
+            ]),
+            Section(id: "show_markets_section", footerState: .margin(height: .margin12), rows: [
+                StaticRow(
+                        cell: openMarketsCell,
+                        id: "show_markets_cell",
+                        height: .heightCell48,
+                        autoDeselect: true,
+                        action: {
+                            print("open markets")
+                        }
                 )
             ])
         ])
