@@ -58,13 +58,15 @@ class MarketInfoCell: BaseThemeCell {
     }
 
     func bind(marketCap: String?, marketCapChange: String?, volume: String?, circulation: String?, totalSupply: String?) {
-        marketCapValueView.value = marketCap
-        marketCapValueView.valueChange = marketCapChange
-        marketCapValueView.valueChangeColor = (marketCapChange?.contains("-") ?? true) ? .themeRedD : .themeRemus
+        marketCapValueView.metricsViewItems = [
+            MultiTextMetricsView.MetricsViewItem(
+                    value: marketCap,
+                    valueChange: marketCapChange,
+                    valueChangeColor: (marketCapChange?.contains("-") ?? true) ? .themeRedD : .themeRemus)]
 
-        volumeValueView.value = volume
-        circulationValueView.value = circulation
-        totalSupplyValueView.value = totalSupply
+        volumeValueView.metricsViewItems = [MultiTextMetricsView.MetricsViewItem(value: volume)]
+        circulationValueView.metricsViewItems = [MultiTextMetricsView.MetricsViewItem(value: circulation)]
+        totalSupplyValueView.metricsViewItems = [MultiTextMetricsView.MetricsViewItem(value: totalSupply)]
     }
 
 }
