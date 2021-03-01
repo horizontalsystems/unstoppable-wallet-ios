@@ -25,7 +25,7 @@ class SendEvmTransactionService {
         }
     }
 
-    init(transactionData: TransactionData, evmKit: EthereumKit.Kit, transactionService: EvmTransactionService) {
+    init(transactionData: TransactionData, gasPrice: Int? = nil, evmKit: EthereumKit.Kit, transactionService: EvmTransactionService) {
         self.transactionData = transactionData
         self.evmKit = evmKit
         self.transactionService = transactionService
@@ -33,6 +33,10 @@ class SendEvmTransactionService {
         subscribe(disposeBag, transactionService.transactionStatusObservable) { [weak self] _ in self?.syncState() }
 
         transactionService.set(transactionData: transactionData)
+
+        if let gasPrice = gasPrice {
+            transactionService.set(gasPriceType: .custom(gasPrice: gasPrice))
+        }
     }
 
     private var evmBalance: BigUInt {
@@ -106,16 +110,6 @@ extension SendEvmTransactionService {
     enum State {
         case ready
         case notReady(errors: [Error])
-
-//        static func ==(lhs: State, rhs: State) -> Bool {
-//            switch (lhs, rhs) {
-//            case (.ready, .ready): return true
-//            case (.notReady, .notReady): return true
-//            case (.sending, .sending): return true
-//            case (.sent, .sent): return true
-//            default: return false
-//            }
-//        }
     }
 
     enum SendState {

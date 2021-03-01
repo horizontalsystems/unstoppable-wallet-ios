@@ -58,7 +58,7 @@ class SendEvmTransactionViewModel {
     }
 
     private func convert(error: Error) -> String {
-        if case WalletConnectSendEthereumTransactionRequestService.TransactionError.insufficientBalance(let requiredBalance) = error {
+        if case SendEvmTransactionService.TransactionError.insufficientBalance(let requiredBalance) = error {
             let amountData = coinService.amountData(value: requiredBalance)
             return "ethereum_transaction.error.insufficient_balance".localized(amountData.formattedString)
         }
