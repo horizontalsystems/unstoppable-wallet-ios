@@ -206,9 +206,11 @@ extension WalletConnectService: IWalletConnectInteractorDelegate {
 
     func didRequestSession(peerId: String, peerMeta: WCPeerMeta, chainId: Int?) {
         do {
-            guard let chainId = chainId else {
-                throw SessionError.unsupportedChainId
-            }
+//            guard let chainId = chainId else {
+//                throw SessionError.unsupportedChainId
+//            }
+
+            let chainId = chainId ?? 1 // fallback to chainId = 1 (Ethereum MainNet)
 
             try initSession(peerId: peerId, peerMeta: peerMeta, chainId: chainId)
 
