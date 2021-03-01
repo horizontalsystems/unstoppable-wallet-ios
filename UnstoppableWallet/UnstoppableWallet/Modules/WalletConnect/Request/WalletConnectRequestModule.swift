@@ -12,9 +12,3 @@ struct WalletConnectTransaction {
     let value: BigUInt
     let data: Data
 }
-
-enum WalletConnectRequestViewItem {
-    case from(value: String)
-    case to(value: String)
-    case input(value: String)
-}

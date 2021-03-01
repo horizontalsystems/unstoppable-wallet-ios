@@ -20,29 +20,16 @@ struct WalletConnectSendEthereumTransactionRequestModule {
             return nil
         }
 
-        let coinService = CoinService(
-                coin: coin,
-                currencyKit: App.shared.currencyKit,
-                rateManager: App.shared.rateManager
-        )
+        let service = WalletConnectSendEthereumTransactionRequestService(request: request, baseService: baseService)
+        let coinService = CoinService(coin: coin, currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManager)
+        let transactionService = EvmTransactionService(evmKit: evmKit, feeRateProvider: feeRateProvider, gasLimitSurchargePercent: 10)
+        let sendService = SendEvmTransactionService(transactionData: service.transactionData, gasPrice: service.gasPrice, evmKit: evmKit, transactionService: transactionService)
 
-        let transactionService = EvmTransactionService(
-                evmKit: evmKit,
-                feeRateProvider: feeRateProvider,
-                gasLimitSurchargePercent: 10
-        )
-
-        let service = WalletConnectSendEthereumTransactionRequestService(
-                request: request,
-                baseService: baseService,
-                transactionService: transactionService,
-                evmKit: evmKit
-        )
-
-        let viewModel = WalletConnectSendEthereumTransactionRequestViewModel(service: service, coinService: coinService)
+        let transactionViewModel = SendEvmTransactionViewModel(service: sendService, coinService: coinService)
         let feeViewModel = EthereumFeeViewModel(service: transactionService, coinService: coinService)
+        let viewModel = WalletConnectSendEthereumTransactionRequestViewModel(service: service)
 
-        return WalletConnectRequestViewController(viewModel: viewModel, feeViewModel: feeViewModel)
+        return WalletConnectRequestViewController(viewModel: viewModel, transactionViewModel: transactionViewModel, feeViewModel: feeViewModel)
     }
 
 }
