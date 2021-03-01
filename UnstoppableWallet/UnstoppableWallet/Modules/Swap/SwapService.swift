@@ -14,7 +14,6 @@ class SwapService {
     private let tradeService: SwapTradeService
     private let allowanceService: SwapAllowanceService
     private let pendingAllowanceService: SwapPendingAllowanceService
-    private let transactionService: EvmTransactionService
     private let adapterManager: IAdapterManager
 
     private let disposeBag = DisposeBag()
@@ -27,8 +26,6 @@ class SwapService {
             }
         }
     }
-
-    private let swapEventRelay = PublishRelay<SwapEvent>()
 
     private let errorsRelay = PublishRelay<[Error]>()
     private(set) var errors: [Error] = [] {
@@ -51,13 +48,12 @@ class SwapService {
         }
     }
 
-    init(dex: SwapModule.Dex, evmKit: EthereumKit.Kit, tradeService: SwapTradeService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, transactionService: EvmTransactionService, adapterManager: IAdapterManager) {
+    init(dex: SwapModule.Dex, evmKit: EthereumKit.Kit, tradeService: SwapTradeService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, adapterManager: IAdapterManager) {
         self.dex = dex
         self.evmKit = evmKit
         self.tradeService = tradeService
         self.allowanceService = allowanceService
         self.pendingAllowanceService = pendingAllowanceService
-        self.transactionService = transactionService
         self.adapterManager = adapterManager
 
         tradeService.stateObservable
@@ -102,34 +98,9 @@ class SwapService {
                     self?.onUpdate(isAllowancePending: isPending)
                 })
                 .disposed(by: disposeBag)
-
-        transactionService.transactionStatusObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] _ in
-                    self?.syncState()
-                })
-                .disposed(by: disposeBag)
-    }
-
-    private var ethereumBalance: BigUInt {
-        evmKit.accountState?.balance ?? 0
     }
 
     private func onUpdateTrade(state: SwapTradeService.State) {
-        if case .ready(let trade) = state {
-            if let kitTransactionData = try? tradeService.transactionData(tradeData: trade.tradeData) { // todo: handle throwing function correctly
-                let transactionData = TransactionData(
-                        to: kitTransactionData.to,
-                        value: kitTransactionData.value,
-                        input: kitTransactionData.input
-                )
-
-                transactionService.set(transactionData: transactionData)
-            }
-        } else {
-            transactionService.set(transactionData: nil)
-        }
-
         syncState()
     }
 
@@ -149,15 +120,13 @@ class SwapService {
 
     private func onUpdate(isAllowancePending: Bool) {
         syncState()
-
-        if case .failed = transactionService.transactionStatus, !isAllowancePending {
-            transactionService.resync() // after required allowance is approved, transaction service state should be resynced
-        }
     }
 
     private func syncState() {
         var allErrors = [Error]()
         var loading = false
+
+        var transactionData: TransactionData?
 
         switch tradeService.state {
         case .loading:
@@ -166,6 +135,8 @@ class SwapService {
             if let impactLevel = trade.impactLevel, impactLevel == .forbidden {
                 allErrors.append(SwapError.forbiddenPriceImpactLevel)
             }
+
+            transactionData = try? tradeService.transactionData(tradeData: trade.tradeData)
         case .notReady(let errors):
             allErrors.append(contentsOf: errors)
         }
@@ -189,25 +160,6 @@ class SwapService {
             }
         }
 
-        switch transactionService.transactionStatus {
-        case .loading:
-            loading = true
-        case .completed(let transaction):
-            if transaction.totalAmount > ethereumBalance {
-                allErrors.append(TransactionError.insufficientBalance(requiredBalance: transaction.totalAmount))
-            }
-        case .failed(let error):
-            if !allErrors.contains(where: { error in
-                switch error {
-                case _ as SwapError: return true
-                case _ as TransactionError: return true
-                default: return false
-                }
-            }) {
-                allErrors.append(error)
-            }
-        }
-
         if pendingAllowanceService.isPending {
             loading = true
         }
@@ -216,8 +168,8 @@ class SwapService {
 
         if loading {
             state = .loading
-        } else if allErrors.isEmpty {
-            state = .ready
+        } else if let transactionData = transactionData, allErrors.isEmpty {
+            state = .ready(transactionData: transactionData)
         } else {
             state = .notReady
         }
@@ -237,10 +189,6 @@ extension SwapService {
 
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
-    }
-
-    var swapEventObservable: Observable<SwapEvent> {
-        swapEventRelay.asObservable()
     }
 
     var errorsObservable: Observable<[Error]> {
@@ -263,54 +211,30 @@ extension SwapService {
         return allowanceService.approveData(dex: dex, amount: amount)
     }
 
-    func swap() {
-        guard case .ready = state, let transaction = transactionService.transactionStatus.data else {
-            return
-        }
-
-        swapEventRelay.accept(.swapping)
-
-        evmKit.sendSingle(
-                        address: transaction.data.to,
-                        value: transaction.data.value,
-                        transactionInput: transaction.data.input,
-                        gasPrice: transaction.gasData.gasPrice,
-                        gasLimit: transaction.gasData.gasLimit
-                )
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .observeOn(MainScheduler.instance)
-                .subscribe(onSuccess: { [weak self] transactionWithInternal in
-                    self?.swapEventRelay.accept(.completed)
-                }, onError: { [weak self] error in
-                    self?.swapEventRelay.accept(.failed(error: error))
-                })
-                .disposed(by: disposeBag)
-    }
-
 }
 
 extension SwapService {
 
-    enum State {
+    enum State: Equatable {
         case loading
-        case ready
+        case ready(transactionData: TransactionData)
         case notReady
-    }
 
-    enum SwapEvent {
-        case swapping
-        case completed
-        case failed(error: Error)
+        static func ==(lhs: State, rhs: State) -> Bool {
+            switch (lhs, rhs) {
+            case (.loading, .loading): return true
+//            case (.ready(let lhsTransactionData), .ready(let rhsTransactionData)): return lhsTransactionData == rhsTransactionData
+            case (.ready(let lhsTransactionData), .ready(let rhsTransactionData)): return true
+            case (.notReady, .notReady): return true
+            default: return false
+            }
+        }
     }
 
     enum SwapError: Error {
         case insufficientBalanceIn
         case insufficientAllowance
         case forbiddenPriceImpactLevel
-    }
-
-    enum TransactionError: Error {
-        case insufficientBalance(requiredBalance: BigUInt)
     }
 
 }

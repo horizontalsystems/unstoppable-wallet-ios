@@ -2,9 +2,9 @@ import UIKit
 import ThemeKit
 import EthereumKit
 
-struct SwapConfirmationModule {
+struct SwapApproveConfirmationModule {
 
-    static func viewController(transactionData: TransactionData, dex: SwapModule.Dex) -> UIViewController? {
+    static func viewController(transactionData: TransactionData, dex: SwapModule.Dex, delegate: ISwapApproveDelegate?) -> UIViewController? {
         guard let coin = dex.coin, let evmKit = dex.evmKit, let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: coin.type) else {
             return nil
         }
@@ -16,7 +16,7 @@ struct SwapConfirmationModule {
         let transactionViewModel = SendEvmTransactionViewModel(service: service, coinService: coinService)
         let feeViewModel = EthereumFeeViewModel(service: transactionService, coinService: coinService)
 
-        return SwapConfirmationViewController(transactionViewModel: transactionViewModel, feeViewModel: feeViewModel)
+        return SwapApproveConfirmationViewController(transactionViewModel: transactionViewModel, feeViewModel: feeViewModel, delegate: delegate)
     }
 
 }

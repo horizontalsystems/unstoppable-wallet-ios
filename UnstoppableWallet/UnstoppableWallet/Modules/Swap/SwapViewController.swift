@@ -28,10 +28,6 @@ class SwapViewController: ThemeViewController {
     private let priceImpactCell = AdditionalDataCellNew()
     private let guaranteedAmountCell = AdditionalDataCellNew()
 
-    private let estimatedFeeCell: SendEstimatedFeeCell
-    private let maxFeeCell: SendMaxFeeCell
-    private let feePriorityCell: SendFeePriorityCell
-
     private let errorCell = SendEthereumErrorCell()
     private let buttonStackCell = StackViewCell()
     private let approveButton = ThemeButton()
@@ -39,23 +35,18 @@ class SwapViewController: ThemeViewController {
 
     private var isLoaded = false
 
-    init(viewModel: SwapViewModel, allowanceViewModel: SwapAllowanceViewModel, feeViewModel: EthereumFeeViewModel) {
+    init(viewModel: SwapViewModel, allowanceViewModel: SwapAllowanceViewModel) {
         self.viewModel = viewModel
 
         fromCoinCardCell = CoinCardModule.fromCell(service: viewModel.service, tradeService: viewModel.tradeService, fiatSwitchService: viewModel.fiatSwitchService)
         toCoinCardCell = CoinCardModule.toCell(service: viewModel.service, tradeService: viewModel.tradeService, fiatSwitchService: viewModel.fiatSwitchService)
         allowanceCell = SwapAllowanceCell(viewModel: allowanceViewModel)
 
-        estimatedFeeCell = SendEstimatedFeeCell(viewModel: feeViewModel)
-        maxFeeCell = SendMaxFeeCell(viewModel: feeViewModel)
-        feePriorityCell = SendFeePriorityCell(viewModel: feeViewModel)
-
         super.init()
 
         fromCoinCardCell.presentDelegate = self
         toCoinCardCell.presentDelegate = self
         allowanceCell.delegate = self
-        feePriorityCell.delegate = self
 
         priceCell.onSwitch = { [weak self] in
             self?.viewModel.onTapSwitch()
@@ -117,7 +108,6 @@ class SwapViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.tradeViewItemDriver) { [weak self] in self?.handle(tradeViewItem: $0) }
         subscribe(disposeBag, viewModel.tradeOptionsViewItemDriver) { [weak self] in self?.handle(tradeOptionsViewItem: $0) }
         subscribe(disposeBag, viewModel.advancedSettingsVisibleDriver) { [weak self] in self?.handle(advancedSettingsVisible: $0) }
-        subscribe(disposeBag, viewModel.feeVisibleDriver) { [weak self] in self?.handle(feeVisible: $0) }
         subscribe(disposeBag, viewModel.proceedActionDriver) { [weak self] in self?.handle(proceedActionState: $0) }
         subscribe(disposeBag, viewModel.approveActionDriver) { [weak self] in self?.handle(approveActionState: $0) }
 
@@ -201,13 +191,6 @@ class SwapViewController: ThemeViewController {
         reloadTable()
     }
 
-    private func handle(feeVisible: Bool) {
-        estimatedFeeCell.isVisible = feeVisible
-        maxFeeCell.isVisible = feeVisible
-        feePriorityCell.isVisible = feeVisible
-        reloadTable()
-    }
-
     private func handle(proceedActionState: SwapViewModel.ActionState) {
         handle(actionState: proceedActionState, button: proceedButton)
     }
@@ -236,10 +219,13 @@ class SwapViewController: ThemeViewController {
     }
 
     @objc private func onTapProceedButton() {
+        guard case .ready(let transactionData) = viewModel.service.state else {
+            return
+        }
+
         guard let viewController = SwapConfirmationModule.viewController(
-                service: viewModel.service,
-                tradeService: viewModel.tradeService,
-                transactionService: viewModel.transactionService
+                transactionData: transactionData,
+                dex: viewModel.service.dex
         ) else {
             return
         }
@@ -250,6 +236,7 @@ class SwapViewController: ThemeViewController {
         guard let viewController = SwapTradeOptionsModule.viewController(tradeService: viewModel.tradeService) else {
             return
         }
+
         present(viewController, animated: true)
     }
 
@@ -258,7 +245,7 @@ class SwapViewController: ThemeViewController {
             return
         }
 
-        self.present(viewController, animated: true)
+        present(viewController, animated: true)
     }
 
     private func reloadTable() {
@@ -351,27 +338,6 @@ extension SwapViewController: SectionsDataSource {
                             cell: guaranteedAmountCell,
                             id: "guaranteed-amount",
                             height: guaranteedAmountCell.cellHeight
-                    ),
-                    StaticRow(
-                            cell: estimatedFeeCell,
-                            id: "estimated-fee",
-                            height: estimatedFeeCell.cellHeight
-                    ),
-                    StaticRow(
-                            cell: maxFeeCell,
-                            id: "fee",
-                            height: maxFeeCell.cellHeight
-                    )
-                ]
-        ))
-
-        sections.append(Section(
-                id: "fee-priority",
-                rows: [
-                    StaticRow(
-                            cell: feePriorityCell,
-                            id: "fee-priority",
-                            height: feePriorityCell.cellHeight
                     )
                 ]
         ))
@@ -422,11 +388,7 @@ extension SwapViewController: ISwapApproveDelegate {
 
 }
 
-extension SwapViewController: ISendFeePriorityCellDelegate {
-
-    func open(viewController: UIViewController) {
-        present(viewController, animated: true)
-    }
+extension SwapViewController: IDynamicHeightCellDelegate {
 
     func onChangeHeight() {
         reloadTable()

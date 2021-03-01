@@ -10,21 +10,17 @@ class SwapApproveViewModel {
 
     private let service: SwapApproveService
     private let coinService: CoinService
-    private let ethereumCoinService: CoinService
 
     private var approveAllowedRelay = BehaviorRelay<Bool>(value: false)
-    private var approveSuccessRelay = PublishRelay<Void>()
-    private var approveErrorRelay = PublishRelay<String>()
+    private var proceedRelay = PublishRelay<TransactionData>()
 
     private let amountCautionRelay = BehaviorRelay<Caution?>(value: nil)
-    private let errorRelay = BehaviorRelay<String?>(value: nil)
 
     private let decimalParser: IAmountDecimalParser
 
-    init(service: SwapApproveService, coinService: CoinService, ethereumCoinService: CoinService, decimalParser: IAmountDecimalParser) {
+    init(service: SwapApproveService, coinService: CoinService, decimalParser: IAmountDecimalParser) {
         self.service = service
         self.coinService = coinService
-        self.ethereumCoinService = ethereumCoinService
         self.decimalParser = decimalParser
 
         service.stateObservable
@@ -36,42 +32,27 @@ class SwapApproveViewModel {
     }
 
     private func handle(approveState: SwapApproveService.State) {
-        if case .success = approveState {
-            approveSuccessRelay.accept(())
-            return
-        }
-
-        if case let .error(error) = approveState {
-            approveErrorRelay.accept(error.convertedError.smartDescription)
-            return
-        }
-
         if case .approveAllowed = approveState {
             approveAllowedRelay.accept(true)
         } else {
             approveAllowedRelay.accept(false)
         }
 
+        var amountCaution: Caution?
+
         if case .approveNotAllowed(var errors) = approveState {
             if let balanceErrorIndex = errors.firstIndex(where: { $0 is SwapApproveService.TransactionAmountError }) {
                 let errorString = convert(error: errors.remove(at: balanceErrorIndex))
-                amountCautionRelay.accept(Caution(text: errorString, type: .error))
-            } else {
-                amountCautionRelay.accept(nil)
+                amountCaution = Caution(text: errorString, type: .error)
             }
-
-            errorRelay.accept(errors.first.map { convert(error: $0) })
         }
+
+        amountCautionRelay.accept(amountCaution)
     }
 
     private func convert(error: Error) -> String {
         if case SwapApproveService.TransactionAmountError.alreadyApproved = error {
             return "swap.approve.amount_error.already_approved".localized()
-        }
-
-        if case SwapApproveService.TransactionEthereumAmountError.insufficientBalance(let requiredBalance) = error {
-            let amountData = ethereumCoinService.amountData(value: requiredBalance)
-            return "ethereum_transaction.error.insufficient_balance".localized(amountData.formattedString)
         }
 
         return error.convertedError.smartDescription
@@ -85,10 +66,6 @@ extension SwapApproveViewModel {
         service.amount.map { coinService.monetaryValue(value: $0).description }
     }
 
-    var errorDriver: Driver<String?> {
-        errorRelay.asDriver()
-    }
-
     var amountCautionDriver: Driver<Caution?> {
         amountCautionRelay.asDriver()
     }
@@ -97,12 +74,8 @@ extension SwapApproveViewModel {
         approveAllowedRelay.asDriver()
     }
 
-    var approveSuccessSignal: Signal<Void> {
-        approveSuccessRelay.asSignal()
-    }
-
-    var approveErrorSignal: Signal<String> {
-        approveErrorRelay.asSignal()
+    var proceedSignal: Signal<TransactionData> {
+        proceedRelay.asSignal()
     }
 
     func isValid(amount: String) -> Bool {
@@ -122,8 +95,12 @@ extension SwapApproveViewModel {
         service.set(amount: amount)
     }
 
-    func approve() {
-        service.approve()
+    func proceed() {
+        guard case .approveAllowed(let transactionData) = service.state else {
+            return
+        }
+
+        proceedRelay.accept(transactionData)
     }
 
 }

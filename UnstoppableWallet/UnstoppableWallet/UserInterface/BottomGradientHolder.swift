@@ -20,7 +20,7 @@ class BottomGradientHolder: GradientView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func   addSubview(_ view: UIView) {
+    override func addSubview(_ view: UIView) {
         contentView.addSubview(view)
     }
 
