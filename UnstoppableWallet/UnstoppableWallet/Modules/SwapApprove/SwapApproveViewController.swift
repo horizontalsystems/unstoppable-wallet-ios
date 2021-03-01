@@ -3,37 +3,31 @@ import ActionSheet
 import ThemeKit
 import RxSwift
 import SectionsTableView
+import EthereumKit
 
 class SwapApproveViewController: KeyboardAwareViewController {
     private let disposeBag = DisposeBag()
 
     private let viewModel: SwapApproveViewModel
-    private let feeViewModel: EthereumFeeViewModel
-    private let delegate: ISwapApproveDelegate
+    private weak var delegate: ISwapApproveDelegate?
+    private let dex: SwapModule.Dex
 
     private let tableView = SectionsTableView(style: .grouped)
 
     private let amountCell = InputCell()
     private let amountCautionCell = FormCautionCell()
-    private let feeCell: SendFeeCell
-    private let feePriorityCell: SendFeePriorityCell
-    private let errorCell = SendEthereumErrorCell()
     private let buttonCell: ButtonCell
 
     private var isLoaded = false
 
-    init(viewModel: SwapApproveViewModel, feeViewModel: EthereumFeeViewModel, delegate: ISwapApproveDelegate) {
+    init(viewModel: SwapApproveViewModel, delegate: ISwapApproveDelegate, dex: SwapModule.Dex) {
         self.viewModel = viewModel
-        self.feeViewModel = feeViewModel
         self.delegate = delegate
+        self.dex = dex
 
-        feeCell = SendFeeCell(viewModel: feeViewModel)
-        feePriorityCell = SendFeePriorityCell(viewModel: feeViewModel)
         buttonCell = ButtonCell()
 
         super.init(scrollView: tableView)
-
-        feePriorityCell.delegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -47,7 +41,6 @@ class SwapApproveViewController: KeyboardAwareViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .done, target: self, action: #selector(onTapCancel))
 
         tableView.registerCell(forClass: HighlightedDescriptionCell.self)
-        tableView.registerCell(forClass: SendEthereumErrorCell.self)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -68,7 +61,7 @@ class SwapApproveViewController: KeyboardAwareViewController {
 
         amountCautionCell.onChangeHeight = { [weak self] in self?.onChangeHeight() }
 
-        buttonCell.bind(style: .primaryYellow, title: "button.approve".localized, compact: false, onTap: { [weak self] in self?.onTapApprove() })
+        buttonCell.bind(style: .primaryYellow, title: "swap.proceed_button".localized, compact: false, onTap: { [weak self] in self?.onTapApprove() })
 
         subscribeToViewModel()
         tableView.buildSections()
@@ -77,24 +70,8 @@ class SwapApproveViewController: KeyboardAwareViewController {
     }
 
     private func subscribeToViewModel() {
-        subscribe(disposeBag, viewModel.approveSuccessSignal) { [weak self] in
-            HudHelper.instance.showSuccess()
-            self?.delegate.didApprove()
-            self?.dismiss(animated: true)
-        }
-
         subscribe(disposeBag, viewModel.approveAllowedDriver) { [weak self] approveAllowed in self?.buttonCell.set(enabled: approveAllowed) }
-        subscribe(disposeBag, viewModel.errorDriver) { [weak self] error in
-            if let error = error {
-                self?.errorCell.isVisible = true
-                self?.errorCell.bind(text: error)
-            } else {
-                self?.errorCell.isVisible = false
-            }
-
-            self?.onChangeHeight()
-        }
-        subscribe(disposeBag, viewModel.approveErrorSignal) { [weak self] error in self?.show(error: error) }
+        subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in self?.openConfirm(transactionData: $0) }
 
         subscribe(disposeBag, viewModel.amountCautionDriver) { [weak self] caution in
             self?.amountCell.set(cautionType: caution?.type)
@@ -103,12 +80,20 @@ class SwapApproveViewController: KeyboardAwareViewController {
     }
 
     private func onTapApprove() {
-        viewModel.approve()
+        viewModel.proceed()
     }
 
     @objc private func onTapCancel() {
         view.endEditing(true)
         dismiss(animated: true)
+    }
+
+    private func openConfirm(transactionData: TransactionData) {
+        guard let viewController = SwapApproveConfirmationModule.viewController(transactionData: transactionData, dex: dex, delegate: delegate) else {
+            return
+        }
+
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
 }
@@ -133,7 +118,7 @@ extension SwapApproveViewController: SectionsDataSource {
             ),
             Section(
                     id: "amount",
-                    headerState: .margin(height: CGFloat.margin4x),
+                    headerState: .margin(height: CGFloat.margin16),
                     rows: [
                         StaticRow(
                                 cell: amountCell,
@@ -152,37 +137,9 @@ extension SwapApproveViewController: SectionsDataSource {
                     ]
             ),
             Section(
-                    id: "fee",
-                    headerState: .margin(height: CGFloat.margin4x),
-                    rows: [
-                        StaticRow(
-                                cell: feeCell,
-                                id: "fee",
-                                height: feeCell.cellHeight
-                        ),
-                        StaticRow(
-                                cell: feePriorityCell,
-                                id: "fee-priority",
-                                dynamicHeight: { [weak self] _ in
-                                    self?.feePriorityCell.cellHeight ?? 0
-                                }
-                        )
-                    ]
-            ),
-            Section(
-                    id: "error",
-                    rows: [
-                        StaticRow(
-                                cell: errorCell,
-                                id: "error",
-                                dynamicHeight: { [weak self] width in
-                                    self?.errorCell.cellHeight(width: width) ?? 0
-                                }
-                        )
-                    ]
-            ),
-            Section(
                     id: "approve_button",
+                    headerState: .margin(height: .margin8),
+                    footerState: .margin(height: .margin32),
                     rows: [
                         StaticRow(
                                 cell: buttonCell,
@@ -207,22 +164,6 @@ extension SwapApproveViewController: IDynamicHeightCellDelegate {
             self?.tableView.beginUpdates()
             self?.tableView.endUpdates()
         }
-    }
-
-}
-
-extension SwapApproveViewController {
-
-    private func show(error: String) {
-        HudHelper.instance.showError(title: error)
-    }
-
-}
-
-extension SwapApproveViewController: ISendFeePriorityCellDelegate {
-
-    func open(viewController: UIViewController) {
-        present(viewController, animated: true)
     }
 
 }

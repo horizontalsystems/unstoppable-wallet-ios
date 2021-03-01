@@ -61,19 +61,8 @@ struct SwapModule {
             return nil
         }
 
-        guard let coin = dex.coin,
-              let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: coin.type) else {
-            return nil
-        }
-
         let swapKit = UniswapKit.Kit.instance(evmKit: evmKit)
         let uniswapRepository = UniswapProvider(swapKit: swapKit)
-
-        let coinService = CoinService(
-                coin: coin,
-                currencyKit: App.shared.currencyKit,
-                rateManager: App.shared.rateManager
-        )
 
         let tradeService = SwapTradeService(
                 uniswapProvider: uniswapRepository,
@@ -90,38 +79,28 @@ struct SwapModule {
                 adapterManager: App.shared.adapterManager,
                 allowanceService: allowanceService
         )
-        let transactionService = EvmTransactionService(
-                evmKit: evmKit,
-                feeRateProvider: feeRateProvider,
-                gasLimitSurchargePercent: 20
-        )
         let service = SwapService(
                 dex: dex,
                 evmKit: evmKit,
                 tradeService: tradeService,
                 allowanceService: allowanceService,
                 pendingAllowanceService: pendingAllowanceService,
-                transactionService: transactionService,
                 adapterManager: App.shared.adapterManager
         )
 
         let allowanceViewModel = SwapAllowanceViewModel(service: service, allowanceService: allowanceService, pendingAllowanceService: pendingAllowanceService)
-        let feeViewModel = EthereumFeeViewModel(service: transactionService, coinService: coinService)
         let viewModel = SwapViewModel(
                 service: service,
                 tradeService: tradeService,
                 fiatSwitchService: AmountTypeSwitchService(),
-                transactionService: transactionService,
                 allowanceService: allowanceService,
                 pendingAllowanceService: pendingAllowanceService,
-                coinService: coinService,
                 viewItemHelper: SwapViewItemHelper()
         )
 
         let viewController = SwapViewController(
                 viewModel: viewModel,
-                allowanceViewModel: allowanceViewModel,
-                feeViewModel: feeViewModel
+                allowanceViewModel: allowanceViewModel
         )
 
         return ThemeNavigationController(rootViewController: viewController)

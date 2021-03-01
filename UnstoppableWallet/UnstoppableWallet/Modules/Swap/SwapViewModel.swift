@@ -11,10 +11,8 @@ class SwapViewModel {
     public let service: SwapService
     public let tradeService: SwapTradeService
     public let fiatSwitchService: AmountTypeSwitchService
-    public let transactionService: EvmTransactionService
     public let allowanceService: SwapAllowanceService
     public let pendingAllowanceService: SwapPendingAllowanceService
-    private let coinService: CoinService
 
     public let viewItemHelper: SwapViewItemHelper
 
@@ -23,20 +21,17 @@ class SwapViewModel {
     private var tradeViewItemRelay = BehaviorRelay<TradeViewItem?>(value: nil)
     private var tradeOptionsViewItemRelay = BehaviorRelay<TradeOptionsViewItem?>(value: nil)
     private var advancedSettingsVisibleRelay = BehaviorRelay<Bool>(value: false)
-    private var feeVisibleRelay = BehaviorRelay<Bool>(value: false)
     private var proceedActionRelay = BehaviorRelay<ActionState>(value: .hidden)
     private var approveActionRelay = BehaviorRelay<ActionState>(value: .hidden)
 
     private var openApproveRelay = PublishRelay<SwapAllowanceService.ApproveData>()
 
-    init(service: SwapService, tradeService: SwapTradeService, fiatSwitchService: AmountTypeSwitchService, transactionService: EvmTransactionService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, coinService: CoinService, viewItemHelper: SwapViewItemHelper) {
+    init(service: SwapService, tradeService: SwapTradeService, fiatSwitchService: AmountTypeSwitchService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, viewItemHelper: SwapViewItemHelper) {
         self.service = service
         self.tradeService = tradeService
         self.fiatSwitchService = fiatSwitchService
-        self.transactionService = transactionService
         self.allowanceService = allowanceService
         self.pendingAllowanceService = pendingAllowanceService
-        self.coinService = coinService
         self.viewItemHelper = viewItemHelper
 
         subscribeToService()
@@ -61,22 +56,6 @@ class SwapViewModel {
         syncProceedAction()
     }
 
-    private func convert(error: Error) -> String {
-        if case SwapService.TransactionError.insufficientBalance(let requiredBalance) = error {
-            let amountData = coinService.amountData(value: requiredBalance)
-            return "ethereum_transaction.error.insufficient_balance".localized(amountData.formattedString)
-        }
-
-        if case AppError.ethereum(let reason) = error.convertedError {
-            switch reason {
-            case .insufficientBalanceWithFee, .executionReverted: return "ethereum_transaction.error.insufficient_balance_with_fee".localized(coinService.coin.code)
-            default: ()
-            }
-        }
-
-        return error.convertedError.smartDescription
-    }
-
     private func sync(errors: [Error]? = nil) {
         let errors = errors ?? service.errors
 
@@ -89,17 +68,14 @@ class SwapViewModel {
             }
         }
 
-        swapErrorRelay.accept(filtered.first.map { convert(error: $0) })
+        swapErrorRelay.accept(filtered.first?.convertedError.smartDescription)
 
         syncApproveAction()
         syncProceedAction()
-        syncFeeVisible()
     }
 
-    private func sync(tradeState: SwapTradeService.State? = nil) {
-        let state = tradeState ?? tradeService.state
-
-        switch state {
+    private func sync(tradeState: SwapTradeService.State) {
+        switch tradeState {
         case .ready(let trade):
             tradeViewItemRelay.accept(tradeViewItem(trade: trade))
             advancedSettingsVisibleRelay.accept(true)
@@ -122,7 +98,7 @@ class SwapViewModel {
     }
 
     private func syncProceedAction() {
-        if service.state == .ready {
+        if case .ready = service.state {
             proceedActionRelay.accept(.enabled(title: "swap.proceed_button".localized))
         } else if case .ready = tradeService.state {
             if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapService.SwapError }) {
@@ -152,30 +128,6 @@ class SwapViewModel {
             }
         } else {
             approveActionRelay.accept(.hidden)
-        }
-    }
-
-    private func syncFeeVisible() {
-        let allowanceReady: Bool
-
-        if let state = allowanceService.state {
-            if case .ready = state {
-                allowanceReady = true
-            } else {
-                allowanceReady = false
-            }
-        } else {
-            allowanceReady = true
-        }
-
-        if case .ready = tradeService.state,
-           allowanceReady,
-           !pendingAllowanceService.isPending,
-           !service.errors.contains(where: { $0 is SwapService.SwapError })
-        {
-            feeVisibleRelay.accept(true)
-        } else {
-            feeVisibleRelay.accept(false)
         }
     }
 
@@ -215,10 +167,6 @@ extension SwapViewModel {
 
     var advancedSettingsVisibleDriver: Driver<Bool> {
         advancedSettingsVisibleRelay.asDriver()
-    }
-
-    var feeVisibleDriver: Driver<Bool> {
-        feeVisibleRelay.asDriver()
     }
 
     var proceedActionDriver: Driver<ActionState> {
