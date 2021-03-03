@@ -3,6 +3,10 @@ import ThemeKit
 import SnapKit
 
 class MultiTextMetricsView: UIView {
+    static let titleHeight: CGFloat = MultiTextMetricsView.titleFont.lineHeight
+
+    private static let titleFont: UIFont = .caption
+
     private let titleLabel = UILabel()
     private let metricsStackView = UIStackView()
     private var metricViews = [MetricsView]()
@@ -15,7 +19,7 @@ class MultiTextMetricsView: UIView {
             maker.leading.top.equalToSuperview().inset(CGFloat.margin16)
         }
 
-        titleLabel.font = .caption
+        titleLabel.font = MultiTextMetricsView.titleFont
         titleLabel.textColor = .themeGray
 
         let separator = UIView()
@@ -79,6 +83,10 @@ class MultiTextMetricsView: UIView {
         view.valueChangeColor = viewItem.valueChangeColor
     }
 
+    static func viewHeight(viewItems: [MultiTextMetricsView.MetricsViewItem]) -> CGFloat {
+        CGFloat.margin16 + MultiTextMetricsView.titleHeight + CGFloat.margin4 + CGFloat.heightOnePixel + CGFloat.margin8 + CGFloat(viewItems.count) * MetricsView.viewHeight + CGFloat.margin8
+    }
+
 }
 
 extension MultiTextMetricsView {
@@ -102,6 +110,11 @@ extension MultiTextMetricsView {
     }
 
     class MetricsView: UIView {
+        static let viewHeight: CGFloat = valueFont.lineHeight + bottomInset
+
+        private static let bottomInset: CGFloat = CGFloat.margin8
+        private static let valueFont: UIFont = .subhead1
+
         private let valueLabel = UILabel()
         private let valueChangeLabel = UILabel()
 
@@ -112,10 +125,11 @@ extension MultiTextMetricsView {
             valueLabel.snp.makeConstraints { maker in
                 maker.leading.equalToSuperview().inset(CGFloat.margin16)
                 maker.top.equalToSuperview()
+                maker.bottom.equalToSuperview().inset(MetricsView.bottomInset)
             }
 
             valueLabel.setContentHuggingPriority(.required, for: .horizontal)
-            valueLabel.font = .subhead1
+            valueLabel.font = MetricsView.valueFont
             valueLabel.textColor = .themeBran
 
             addSubview(valueChangeLabel)

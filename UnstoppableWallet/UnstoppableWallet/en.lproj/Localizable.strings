@@ -666,6 +666,10 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 
 "chart.market.show_markets" = "%@ Markets";
 
+"chart.performance.header" = "Performance";
+"chart.performance.week_changes" = "Changes (1W)";
+"chart.performance.month_changes" = "Changes (1M)";
+
 // Create Wallet
 
 "create_wallet.title" = "New Wallet";

@@ -1084,6 +1084,7 @@
 		1A56404F706483F2CBD4115B /* ThemeSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564EA6F1CCDF88F78351F8 /* ThemeSearchViewController.swift */; };
 		1A564088605FE5AB983136AF /* MacdPointView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C297C2A9BA9B9F1AD13 /* MacdPointView.swift */; };
 		1A56409314B0AB43A48DD78E /* TransactionDataSortModeSettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F319DD6F10DDA8C617 /* TransactionDataSortModeSettingManager.swift */; };
+		1A5640BD2A9AC2C88B606894 /* ChartMarketPerformanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FAD14757D64BD8477E6 /* ChartMarketPerformanceCell.swift */; };
 		1A5640CB9DE6736043CB5C8E /* InfoSeparatorHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B9AAFAAC6DEFC3DB30B /* InfoSeparatorHeaderCell.swift */; };
 		1A5640FFF39774DC371F61E7 /* BitcoinCashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BF724C69C237E309C07 /* BitcoinCashAdapter.swift */; };
 		1A56411B659245BEDA547D06 /* AppStatusRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56446DB0696819B2ABC567 /* AppStatusRouter.swift */; };
@@ -1169,6 +1170,7 @@
 		1A564486C24108B68FAAF1D6 /* PriceChangeAlertSettingViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649DBD4A9543A8C8BF036 /* PriceChangeAlertSettingViewModelFactory.swift */; };
 		1A56449D17122EDBCDF92BD0 /* AppStatusInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A601F3F8DF2664007E3 /* AppStatusInteractor.swift */; };
 		1A5644A0C22BB90771F009BF /* IndicatorSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648E821A351EEFCF6D68B /* IndicatorSelectorCell.swift */; };
+		1A5644AEB48CEA8CBCA23906 /* ChartMarketPerformanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FAD14757D64BD8477E6 /* ChartMarketPerformanceCell.swift */; };
 		1A5644B2C50078A92C5DDC00 /* TitleManageAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56482D2289F167040EBD90 /* TitleManageAccountCell.swift */; };
 		1A5644C03B6013B16725D5FD /* TimeLockInfoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640FD4E0899F431B2BF7F /* TimeLockInfoDataSource.swift */; };
 		1A5644CAEC833EA0583556FD /* MarketDiscoveryFilterHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E7A01B2DD08CB174C10 /* MarketDiscoveryFilterHeaderView.swift */; };
@@ -1303,6 +1305,7 @@
 		1A564A7CB794B4367A87C5E2 /* FilterHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564293D88587642800717B /* FilterHeaderCell.swift */; };
 		1A564A7F1300F5308AEDAD64 /* TitleManageAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56482D2289F167040EBD90 /* TitleManageAccountCell.swift */; };
 		1A564A7FC32D071B17C1C757 /* ButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642E9B9E5592E04373C16 /* ButtonState.swift */; };
+		1A564A8BC3E3DEB01804E497 /* ChartMarketPerformanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FAD14757D64BD8477E6 /* ChartMarketPerformanceCell.swift */; };
 		1A564A905233BD9AB9241916 /* ButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642E9B9E5592E04373C16 /* ButtonState.swift */; };
 		1A564A9AE5427FF9BE806CEA /* PrivacyConnectionSelectViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640B9ED5333E033280CE3 /* PrivacyConnectionSelectViewItem.swift */; };
 		1A564AB50152BF82514BAC3C /* HighlightedDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564730E8F235240D62124B /* HighlightedDescriptionView.swift */; };
@@ -2765,6 +2768,7 @@
 		1A564F5CDA92DD8EC7EC9B0D /* ManageWalletsPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageWalletsPresenterTests.swift; sourceTree = "<group>"; };
 		1A564F627224BDD3E99C582B /* LaunchPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchPresenter.swift; sourceTree = "<group>"; };
 		1A564F9B9F89F533BC520074 /* BalanceSorterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceSorterTests.swift; sourceTree = "<group>"; };
+		1A564FAD14757D64BD8477E6 /* ChartMarketPerformanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartMarketPerformanceCell.swift; sourceTree = "<group>"; };
 		1A564FB4404656203899BED3 /* PriceAlertSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceAlertSectionViewModel.swift; sourceTree = "<group>"; };
 		1A564FD2BE42EF4AADB0372C /* ManageWalletsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageWalletsModule.swift; sourceTree = "<group>"; };
 		25748001A7D0AF250F7F2A6B /* Pods-Unstoppable Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unstoppable Tests.release.xcconfig"; path = "Target Support Files/Pods-Unstoppable Tests/Pods-Unstoppable Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -4778,6 +4782,7 @@
 				1A5647BCBC6C9C9E8A3C54A5 /* ChartViewCell.swift */,
 				1A5648E821A351EEFCF6D68B /* IndicatorSelectorCell.swift */,
 				1A564AE5BDEF448B8421743C /* PriceIndicatorCell.swift */,
+				1A564FAD14757D64BD8477E6 /* ChartMarketPerformanceCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -6238,6 +6243,7 @@
 				11B35E3AFDA917A3EFABF2B1 /* SendEvmTransactionViewModel.swift in Sources */,
 				11B35BA808EC0BD3F56349D0 /* SwapApproveConfirmationViewController.swift in Sources */,
 				11B353FE357023112FD1CDA1 /* SwapApproveConfirmationModule.swift in Sources */,
+				1A564A8BC3E3DEB01804E497 /* ChartMarketPerformanceCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6998,6 +7004,7 @@
 				11B350B7D3DDBEE4F5B6E914 /* SendEvmTransactionViewModel.swift in Sources */,
 				11B354A6D78AA69DC3B8E496 /* SwapApproveConfirmationViewController.swift in Sources */,
 				11B35B5FA3177BC9ED21B929 /* SwapApproveConfirmationModule.swift in Sources */,
+				1A5644AEB48CEA8CBCA23906 /* ChartMarketPerformanceCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7720,6 +7727,7 @@
 				11B35BC0F2171DAF7E0F06A5 /* SendEvmTransactionViewModel.swift in Sources */,
 				11B3500B2BFCC3F83C19BC4C /* SwapApproveConfirmationViewController.swift in Sources */,
 				11B35E4AEE28763AF3C3BA38 /* SwapApproveConfirmationModule.swift in Sources */,
+				1A5640BD2A9AC2C88B606894 /* ChartMarketPerformanceCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
