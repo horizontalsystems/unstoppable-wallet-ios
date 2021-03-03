@@ -37,11 +37,47 @@ class ChartViewController: ThemeViewController {
     private let marketHeaderCell = B4Cell()
     private let marketInfoCell = MarketInfoCell()
     private let openMarketsCell = B1Cell()
+    private let performanceHeaderCell = B4Cell()
 
     private var favoriteButtonItem: UIBarButtonItem?
     private var alertButtonItem: UIBarButtonItem?
 
     private var priceIndicatorItems = [PriceIndicatorViewItem]()
+
+    let weekPerformance = [
+        MultiTextMetricsView.MetricsViewItem(
+                value: "USD",
+                valueChange: "+56,62%",
+                valueChangeColor: .themeRemus
+        ),
+        MultiTextMetricsView.MetricsViewItem(
+                value: "ETH",
+                valueChange: "+9,24%",
+                valueChangeColor: .themeRemus
+        ),
+        MultiTextMetricsView.MetricsViewItem(
+                value: "BTC",
+                valueChange: "-1,03%",
+                valueChangeColor: .themeRedD
+        )
+    ]
+    let monthPerformance = [
+        MultiTextMetricsView.MetricsViewItem(
+                value: "USD",
+                valueChange: "+236,62%",
+                valueChangeColor: .themeRemus
+        ),
+        MultiTextMetricsView.MetricsViewItem(
+                value: "ETH",
+                valueChange: "+112,09%",
+                valueChangeColor: .themeRemus
+        ),
+        MultiTextMetricsView.MetricsViewItem(
+                value: "BTC",
+                valueChange: "+10,93%",
+                valueChangeColor: .themeRedD
+        )
+    ]
 
     init(delegate: IChartViewDelegate & IChartViewTouchDelegate, configuration: ChartConfiguration) {
         self.delegate = delegate
@@ -70,6 +106,7 @@ class ChartViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.registerCell(forClass: PriceIndicatorCell.self)
+        tableView.registerCell(forClass: ChartMarketPerformanceCell.self)
 
         chartIntervalAndSelectedRateCell.onSelectInterval = { [weak self] index in
             self?.delegate.onSelectType(at: index)
@@ -106,6 +143,10 @@ class ChartViewController: ThemeViewController {
         openMarketsCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         //todo get coin code
         openMarketsCell.title = "chart.market.show_markets".localized("BTC")
+
+        performanceHeaderCell.set(backgroundStyle: .transparent)
+        performanceHeaderCell.title = "chart.performance.header".localized
+        performanceHeaderCell.selectionStyle = .none
 
         tableView.buildSections()
 
@@ -279,7 +320,7 @@ extension ChartViewController: SectionsDataSource {
                 StaticRow(
                         cell: ratingCell,
                         id: "rating",
-                        height: .heightCell48,
+                        height: .heightSingleLineCell,
                         autoDeselect: true,
                         action: {
                             print("open rating details")
@@ -294,19 +335,19 @@ extension ChartViewController: SectionsDataSource {
                     StaticRow(
                             cell: priceHeaderCell,
                             id: "price_header",
-                            height: .heightCell48
+                            height: .heightSingleLineCell
                     ),
                 ]),
                 Section(id: "price_indicators", footerState: .margin(height: .margin12), rows: priceIndicatorRows())
             ])
         }
 
-    sections.append(contentsOf: [
-            Section(id: "market_header_section", footerState: .margin(height: .margin12), rows: [
+        sections.append(contentsOf: [
+            Section(id: "market_section_header", footerState: .margin(height: .margin12), rows: [
                 StaticRow(
                         cell: marketHeaderCell,
                         id: "market_header",
-                        height: .heightCell48
+                        height: .heightSingleLineCell
                 )
             ]),
             Section(id: "market_section", footerState: .margin(height: .margin12), rows: [
@@ -320,13 +361,21 @@ extension ChartViewController: SectionsDataSource {
                 StaticRow(
                         cell: openMarketsCell,
                         id: "show_markets_cell",
-                        height: .heightCell48,
+                        height: .heightSingleLineCell,
                         autoDeselect: true,
                         action: {
                             print("open markets")
                         }
                 )
-            ])
+            ]),
+            Section(id: "performance_section_header", footerState: .margin(height: .margin12), rows: [
+                StaticRow(
+                        cell: performanceHeaderCell,
+                        id: "performance_header",
+                        height: .heightSingleLineCell
+                )
+            ]),
+            Section(id: "performance_section", footerState: .margin(height: .margin12), rows: performanceRows()),
         ])
         return sections
     }
@@ -343,6 +392,26 @@ extension ChartViewController: SectionsDataSource {
                         cell.set(backgroundStyle: .lawrence, isFirst: index == 0, isLast: count - 1 == index)
                     })
         }
+    }
+
+    private func performanceRows() -> [Row<ChartMarketPerformanceCell>] {
+        let week = weekPerformance
+        let month = monthPerformance
+
+        return [
+            Row<ChartMarketPerformanceCell>(
+                    id: "performance_cell",
+                    hash: "performance_cell",
+                    dynamicHeight: { _ in
+                        ChartMarketPerformanceCell.cellHeight(weekPerformance: week, monthPerformance: month)
+                    },
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+
+                        //todo get performance
+                        cell.bind(weekPerformance: week, monthPerformance: month)
+                    })
+        ]
     }
 
 }
