@@ -10,7 +10,7 @@ enum FeeRatePriority: Equatable {
     var title: String {
         switch self {
         case .low: return "send.tx_speed_low".localized
-        case .medium: return "send.tx_speed_medium".localized
+        case .medium: return "send.tx_speed_recommended".localized
         case .recommended: return "send.tx_speed_recommended".localized
         case .high: return "send.tx_speed_high".localized
         case .custom: return "send.tx_speed_custom".localized
