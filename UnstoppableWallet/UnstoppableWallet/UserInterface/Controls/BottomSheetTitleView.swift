@@ -81,4 +81,14 @@ class BottomSheetTitleView: UIView {
         iconImageView.image = image
     }
 
+    var titleColor: UIColor {
+        get { titleLabel.textColor }
+        set { titleLabel.textColor = newValue }
+    }
+
+    var subtitleColor: UIColor {
+        get { subtitleLabel.textColor }
+        set { subtitleLabel.textColor = newValue }
+    }
+
 }
