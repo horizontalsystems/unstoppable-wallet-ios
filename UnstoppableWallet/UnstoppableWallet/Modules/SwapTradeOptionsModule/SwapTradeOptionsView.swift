@@ -7,14 +7,13 @@ class SwapTradeOptionsView: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private let viewModel: SwapTradeOptionsViewModel
-    private let recipientViewModel: RecipientAddressViewModel
     private let slippageViewModel: SwapSlippageViewModel
     private let deadlineViewModel: SwapDeadlineViewModel
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    private let recipientCell = AddressInputCell()
-    private let recipientCautionCell = FormCautionCell()
+    private let recipientCell: RecipientAddressInputCell
+    private let recipientCautionCell: RecipientAddressCautionCell
 
     private let slippageCell = ShortcutInputCell()
     private let slippageCautionCell = FormCautionCell()
@@ -25,9 +24,11 @@ class SwapTradeOptionsView: ThemeViewController {
 
     init(viewModel: SwapTradeOptionsViewModel, recipientViewModel: RecipientAddressViewModel, slippageViewModel: SwapSlippageViewModel, deadlineViewModel: SwapDeadlineViewModel) {
         self.viewModel = viewModel
-        self.recipientViewModel = recipientViewModel
         self.slippageViewModel = slippageViewModel
         self.deadlineViewModel = deadlineViewModel
+
+        recipientCell = RecipientAddressInputCell(viewModel: recipientViewModel)
+        recipientCautionCell = RecipientAddressCautionCell(viewModel: recipientViewModel)
 
         super.init()
     }
@@ -56,12 +57,7 @@ class SwapTradeOptionsView: ThemeViewController {
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
 
-        recipientCell.inputPlaceholder = "send.address_or_domain_placeholder".localized
-        recipientCell.inputText = recipientViewModel.initialValue
         recipientCell.onChangeHeight = { [weak self] in self?.reloadTable() }
-        recipientCell.onChangeText = { [weak self] in self?.recipientViewModel.onChange(text: $0) }
-        recipientCell.onFetchText = { [weak self] in self?.recipientViewModel.onFetch(text: $0) }
-        recipientCell.onChangeEditing = { [weak self] in self?.recipientViewModel.onChange(editing: $0) }
         recipientCell.onOpenViewController = { [weak self] in self?.present($0, animated: true) }
 
         recipientCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
@@ -86,17 +82,6 @@ class SwapTradeOptionsView: ThemeViewController {
 
         buttonCell.bind(style: .primaryYellow, title: "button.apply".localized) { [weak self] in
             self?.didTapApply()
-        }
-
-        subscribe(disposeBag, recipientViewModel.cautionDriver) { [weak self] in
-            self?.recipientCell.set(cautionType: $0?.type)
-            self?.recipientCautionCell.set(caution: $0)
-        }
-        subscribe(disposeBag, recipientViewModel.isLoadingDriver) { [weak self] in
-            self?.recipientCell.set(isLoading: $0)
-        }
-        subscribe(disposeBag, recipientViewModel.setTextSignal) { [weak self] in
-            self?.recipientCell.inputText = $0
         }
 
         subscribe(disposeBag, slippageViewModel.cautionDriver) { [weak self] in
