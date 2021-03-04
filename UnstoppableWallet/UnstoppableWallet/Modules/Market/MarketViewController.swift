@@ -59,6 +59,8 @@ class MarketViewController: ThemeViewController {
             self?.onSelectTab(index: index)
         }
 
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "search_24"), style: .plain, target: self, action: #selector(onTapSearch))
+
         overviewController.parentNavigationController = navigationController
         discoveryViewController.parentNavigationController = navigationController
         watchlistViewController.parentNavigationController = navigationController
@@ -89,6 +91,10 @@ class MarketViewController: ThemeViewController {
         case .discovery: return discoveryViewController
         case .watchlist: return watchlistViewController
         }
+    }
+
+    @objc private func onTapSearch() {
+        navigationController?.pushViewController(MarketSearchModule.viewController(), animated: true)
     }
 
 }

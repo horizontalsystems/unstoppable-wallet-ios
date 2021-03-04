@@ -405,15 +405,13 @@ class GrdbStorage {
             }
 
             //change coinIds for alerts
+            try PriceAlertRecord.deleteAll(db)
 
             //apply changes in database
             try db.drop(table: CoinRecord_v19.databaseTableName)
 
             try enabledWallets.forEach { try $0.delete(db) }
             try changedWallets.forEach { try $0.insert(db) }
-
-            let priceAlertRecords = try PriceAlertRecord.fetchAll(db)
-            try PriceAlertRecord.deleteAll(db)
         }
 
         return migrator

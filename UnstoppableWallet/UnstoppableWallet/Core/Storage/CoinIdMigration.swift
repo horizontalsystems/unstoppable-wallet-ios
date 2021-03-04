@@ -39,20 +39,4 @@ class CoinIdMigration {
         return nil
     }
 
-    static func new(from coinRecord: CoinRecord_v19, coins: [Coin]) -> String? {
-        if let coinId = new(from: coinRecord.id, coins: coins) {
-            return coinId
-        }
-
-        if coinRecord.tokenType == "erc20" {
-            return CoinType.erc20(address: coinRecord.id).id
-        } else if coinRecord.tokenType == "bep20" {
-            return CoinType.bep20(address: coinRecord.id).id
-        } else if coinRecord.tokenType == "bep2" {
-            return CoinType.bep2(symbol: coinRecord.id).id
-        }
-
-        return nil
-    }
-
 }
