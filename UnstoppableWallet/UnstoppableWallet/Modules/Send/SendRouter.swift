@@ -36,7 +36,7 @@ extension SendRouter {
         case let adapter as ISendDashAdapter:
             partialModule = module(coin: wallet.coin, adapter: adapter)
         case let adapter as ISendEthereumAdapter:
-            partialModule = module(coin: wallet.coin, adapter: adapter)
+            return SendEvmModule.viewController(coin: wallet.coin, adapter: adapter)
         case let adapter as ISendBinanceAdapter:
             partialModule = module(coin: wallet.coin, adapter: adapter)
         case let adapter as ISendZcashAdapter:

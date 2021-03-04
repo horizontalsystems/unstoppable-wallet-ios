@@ -7,6 +7,7 @@ import ThemeKit
 import Alamofire
 import HsToolKit
 import CoinKit
+import BigInt
 
 typealias CoinCode = String
 
@@ -138,6 +139,7 @@ protocol ISendDashAdapter {
 }
 
 protocol ISendEthereumAdapter {
+    var evmKit: EthereumKit.Kit { get }
     var balance: Decimal { get }
     func availableBalance(gasPrice: Int, gasLimit: Int) -> Decimal
     var ethereumBalance: Decimal { get }
@@ -147,6 +149,7 @@ protocol ISendEthereumAdapter {
     func estimateGasLimit(to address: String?, value: Decimal, gasPrice: Int?) -> Single<Int>
     func fee(gasPrice: Int, gasLimit: Int) -> Decimal
     func sendSingle(amount: Decimal, address: String, gasPrice: Int, gasLimit: Int, logger: Logger) -> Single<Void>
+    func transactionData(amount: BigUInt, address: EthereumKit.Address) -> TransactionData
 }
 
 protocol IErc20Adapter {

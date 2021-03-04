@@ -171,6 +171,10 @@ extension EvmAdapter: ISendEthereumAdapter {
         return evmKit.estimateGas(to: evmAddress, amount: amount, gasPrice: gasPrice)
     }
 
+    func transactionData(amount: BigUInt, address: EthereumKit.Address) -> TransactionData {
+        TransactionData(to: address, value: amount, input: Data())
+    }
+
 }
 
 extension EvmAdapter: ITransactionsAdapter {
