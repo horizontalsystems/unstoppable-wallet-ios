@@ -83,15 +83,15 @@ extension SendEvmService: IAvailableBalanceService {
 
 extension SendEvmService: IAmountInputService {
 
-    var amount: Decimal? {
-        nil
+    var initialAmount: Decimal {
+        0
     }
 
-    var coin: Coin? {
+    var initialCoin: Coin? {
         sendCoin
     }
 
-    var amountObservable: Observable<Decimal?> {
+    var amountObservable: Observable<Decimal> {
         .empty()
     }
 
@@ -99,8 +99,8 @@ extension SendEvmService: IAmountInputService {
         .empty()
     }
 
-    func onChange(amount: Decimal?) {
-        if let amount = amount, amount > 0 {
+    func onChange(amount: Decimal) {
+        if amount > 0 {
             do {
                 evmAmount = try validEvmAmount(amount: amount)
                 amountError = nil
