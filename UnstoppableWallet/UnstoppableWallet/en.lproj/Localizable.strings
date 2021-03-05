@@ -403,6 +403,7 @@ bch.horizontalsystems.xyz/apg";
 "market.advanced_search.title" = "Advanced Search";
 "market.advanced_search.show_results" = "Show Results";
 "market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
+"market.advanced_search.24h" = "24h";
 
 "market.advanced_search.coin_list" = "Coin List";
 "market.advanced_search.market_cap" = "Market Cap";

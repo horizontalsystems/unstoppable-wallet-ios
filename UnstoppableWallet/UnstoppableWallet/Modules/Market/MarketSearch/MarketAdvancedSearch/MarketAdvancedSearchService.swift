@@ -19,67 +19,76 @@ class MarketAdvancedSearchService {
 
     private var cache = [CoinMarket]()
 
-    private var filterUpdatedRelay = PublishRelay<()>()
     private var refetchRelay = PublishRelay<()>()
 
+    private var coinListUpdatedRelay = PublishRelay<CoinListCount>()
     var coinListCount: CoinListCount = .top250 {
         didSet {
             guard coinListCount != oldValue else {
                 return
             }
 
-            filterUpdatedRelay.accept(())
+            coinListUpdatedRelay.accept(coinListCount)
             refreshCounter()
         }
     }
 
+    private var periodUpdatedRelay = PublishRelay<PricePeriodFilter>()
     var period: PricePeriodFilter = .day {
         didSet {
             guard period != oldValue else {
                 return
             }
 
-            filterUpdatedRelay.accept(())
+            periodUpdatedRelay.accept(period)
             refreshCounter()
         }
     }
 
+    private var marketCapUpdatedRelay = PublishRelay<ValueFilter>()
     var marketCap: ValueFilter = .none {
         didSet {
             guard marketCap != oldValue else {
                 return
             }
 
+            marketCapUpdatedRelay.accept(marketCap)
             updateFiltersIfNeeded()
         }
     }
 
+    private var volumeUpdatedRelay = PublishRelay<ValueFilter>()
     var volume: ValueFilter = .none {
         didSet {
             guard volume != oldValue else {
                 return
             }
 
+            volumeUpdatedRelay.accept(volume)
             updateFiltersIfNeeded()
         }
     }
 
+    private var liquidityUpdatedRelay = PublishRelay<ValueFilter>()
     var liquidity: ValueFilter = .none {
         didSet {
             guard liquidity != oldValue else {
                 return
             }
 
+            liquidityUpdatedRelay.accept(liquidity)
             updateFiltersIfNeeded()
         }
     }
 
+    private var priceChangeUpdatedRelay = PublishRelay<PriceChangeFilter>()
     var priceChange: PriceChangeFilter = .none {
         didSet {
             guard priceChange != oldValue else {
                 return
             }
 
+            priceChangeUpdatedRelay.accept(priceChange)
             updateFiltersIfNeeded()
         }
     }
@@ -105,8 +114,6 @@ class MarketAdvancedSearchService {
     }
 
     private func updateFiltersIfNeeded() {
-        filterUpdatedRelay.accept(())
-
         if case .loaded = state {
             refetchRelay.accept(())
             state = .loaded(count: filtered(items: cache).count)
@@ -134,14 +141,14 @@ class MarketAdvancedSearchService {
         if cache.isEmpty {
             single = rateManager
                     .topMarketsSingle(currencyCode: currencyCode, itemCount: coinListCount.rawValue)
+                    .do { [weak self] in
+                        self?.cache = $0
+                    }
         } else {
             single = Single.just(cache)
         }
 
         return single
-                .do { [weak self] in
-                    self?.cache = $0
-                }
                 .map { [weak self] in
                     self?.filtered(items: $0) ?? []
                 }
@@ -164,8 +171,28 @@ class MarketAdvancedSearchService {
 
 extension MarketAdvancedSearchService {
 
-    var filterUpdatedObservable: Observable<()> {
-        filterUpdatedRelay.asObservable()
+    var coinListUpdatedObservable: Observable<CoinListCount> {
+        coinListUpdatedRelay.asObservable()
+    }
+
+    var periodUpdatedObservable: Observable<PricePeriodFilter> {
+        periodUpdatedRelay.asObservable()
+    }
+
+    var marketCapUpdatedObservable: Observable<ValueFilter> {
+        marketCapUpdatedRelay.asObservable()
+    }
+
+    var volumeUpdatedObservable: Observable<ValueFilter> {
+        volumeUpdatedRelay.asObservable()
+    }
+
+    var liquidityUpdatedObservable: Observable<ValueFilter> {
+        liquidityUpdatedRelay.asObservable()
+    }
+
+    var priceChangeUpdatedObservable: Observable<PriceChangeFilter> {
+        priceChangeUpdatedRelay.asObservable()
     }
 
     var stateUpdatedObservable: Observable<State> {

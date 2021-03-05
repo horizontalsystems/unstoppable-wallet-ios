@@ -8,7 +8,12 @@ class MarketAdvancedSearchViewModel {
 
     let service: MarketAdvancedSearchService
 
-    private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
+    private let coinListViewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
+    private let marketCapViewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
+    private let volumeViewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
+    private let liquidityViewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
+    private let periodViewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
+    private let priceChangeViewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
 
     private let showErrorRelay = PublishRelay<String>()
     private let itemCountRelay = BehaviorRelay<Int?>(value: nil)
@@ -18,9 +23,21 @@ class MarketAdvancedSearchViewModel {
         self.service = service
 
         subscribe(disposeBag, service.stateUpdatedObservable) { [weak self] in self?.sync(state: $0) }
-        subscribe(disposeBag, service.filterUpdatedObservable) { [weak self] in self?.syncFilters() }
 
-        syncFilters()
+        subscribe(disposeBag, service.coinListUpdatedObservable) { [weak self] in self?.sync(coinList: $0) }
+        subscribe(disposeBag, service.marketCapUpdatedObservable) { [weak self] in self?.sync(marketCap: $0) }
+        subscribe(disposeBag, service.volumeUpdatedObservable) { [weak self] in self?.sync(volume: $0) }
+        subscribe(disposeBag, service.liquidityUpdatedObservable) { [weak self] in self?.sync(liquidity: $0) }
+        subscribe(disposeBag, service.periodUpdatedObservable) { [weak self] in self?.sync(period: $0) }
+        subscribe(disposeBag, service.priceChangeUpdatedObservable) { [weak self] in self?.sync(priceChange: $0) }
+
+        sync(coinList: service.coinListCount)
+        sync(marketCap: service.marketCap)
+        sync(volume: service.volume)
+        sync(liquidity: service.liquidity)
+        sync(period: service.period)
+        sync(priceChange: service.priceChange)
+
         sync(state: service.state)
     }
 
@@ -40,47 +57,56 @@ class MarketAdvancedSearchViewModel {
         }
     }
 
-    private func syncFilters() {
-        let viewItems = [
-            ViewItem(
-                filter: .coinList,
-                value: service.coinListCount.title,
-                valueColor: .normal),
-            ViewItem(
-                filter: .marketCap,
-                value: service.marketCap.title,
-                valueColor: service.marketCap.valueColor),
-            ViewItem(
-                filter: .volume,
-                value: service.volume.title,
-                valueColor: service.volume.valueColor),
-            ViewItem(
-                filter: .liquidity,
-                value: service.liquidity.title,
-                valueColor: service.liquidity.valueColor),
-            ViewItem(
-                filter: .period,
-                value: service.period.title,
-                valueColor: service.period.valueColor),
-            ViewItem(
-                filter: .priceChange,
-                value: service.priceChange.title,
-                valueColor: service.priceChange.valueColor)
-        ]
-
-        viewItemsRelay.accept(viewItems)
+    private func sync(coinList: MarketAdvancedSearchService.CoinListCount) {
+        coinListViewItemRelay.accept(ViewItem(value: service.coinListCount.title, valueColor: .normal))
     }
 
-    private func wrappedViewItems<T: IWrappedFilterViewItem>(list: [T], selected: T) -> [FilterViewItem] {
-        list.map { FilterViewItem(title: $0.title, color: $0.valueColor, selected: selected == $0) }
+    private func sync(marketCap: MarketAdvancedSearchService.ValueFilter) {
+        marketCapViewItemRelay.accept(ViewItem(value: service.marketCap.title, valueColor: service.marketCap.valueColor))
+    }
+
+    private func sync(volume: MarketAdvancedSearchService.ValueFilter) {
+        volumeViewItemRelay.accept(ViewItem(value: service.volume.title, valueColor: service.volume.valueColor))
+    }
+
+    private func sync(liquidity: MarketAdvancedSearchService.ValueFilter) {
+        liquidityViewItemRelay.accept(ViewItem(value: service.liquidity.title, valueColor: service.liquidity.valueColor))
+    }
+
+    private func sync(period: MarketAdvancedSearchService.PricePeriodFilter) {
+        periodViewItemRelay.accept(ViewItem(value: service.period.title, valueColor: service.period.valueColor))
+    }
+
+    private func sync(priceChange: MarketAdvancedSearchService.PriceChangeFilter) {
+        priceChangeViewItemRelay.accept(ViewItem(value: service.priceChange.title, valueColor: service.priceChange.valueColor))
     }
 
 }
 
 extension MarketAdvancedSearchViewModel {
 
-    var viewItemsDriver: Driver<[ViewItem]> {
-        viewItemsRelay.asDriver()
+    var coinListViewItemDriver: Driver<ViewItem?> {
+        coinListViewItemRelay.asDriver()
+    }
+
+    var marketCapViewItemDriver: Driver<ViewItem?> {
+        marketCapViewItemRelay.asDriver()
+    }
+
+    var volumeViewItemDriver: Driver<ViewItem?> {
+        volumeViewItemRelay.asDriver()
+    }
+
+    var liquidityViewItemDriver: Driver<ViewItem?> {
+        liquidityViewItemRelay.asDriver()
+    }
+
+    var periodViewItemDriver: Driver<ViewItem?> {
+        periodViewItemRelay.asDriver()
+    }
+
+    var priceChangeViewItemDriver: Driver<ViewItem?> {
+        priceChangeViewItemRelay.asDriver()
     }
 
     var showErrorSignal: Signal<String> {
@@ -95,51 +121,84 @@ extension MarketAdvancedSearchViewModel {
         showResultEnabledRelay.asDriver()
     }
 
-    func viewItems(filter: Filter) -> [FilterViewItem] {
-        switch filter {
-        case .coinList: return wrappedViewItems(list: MarketAdvancedSearchService.CoinListCount.allCases, selected: service.coinListCount)
-        case .volume: return wrappedViewItems(list: MarketAdvancedSearchService.ValueFilter.allCases, selected: service.volume)
-        case .marketCap: return wrappedViewItems(list: MarketAdvancedSearchService.ValueFilter.allCases, selected: service.marketCap)
-        case .liquidity: return wrappedViewItems(list: MarketAdvancedSearchService.ValueFilter.allCases, selected: service.liquidity)
-        case .priceChange: return wrappedViewItems(list: MarketAdvancedSearchService.PriceChangeFilter.allCases, selected: service.priceChange)
-        case .period: return wrappedViewItems(list: MarketAdvancedSearchService.PricePeriodFilter.allCases, selected: service.period)
-        }
+    var coinListViewItems: [FilterViewItem] {
+        MarketAdvancedSearchService
+                .CoinListCount
+                .allCases
+                .map { FilterViewItem(title: $0.title, color: .normal, selected: service.coinListCount == $0) }
     }
 
-    func setField(at index: Int, filter: Filter) {
-        switch filter {
-        case .coinList: service.coinListCount = MarketAdvancedSearchService.CoinListCount.allCases[index]
-        case .volume: service.volume = MarketAdvancedSearchService.ValueFilter.allCases[index]
-        case .marketCap: service.marketCap = MarketAdvancedSearchService.ValueFilter.allCases[index]
-        case .liquidity: service.liquidity = MarketAdvancedSearchService.ValueFilter.allCases[index]
-        case .priceChange: service.priceChange = MarketAdvancedSearchService.PriceChangeFilter.allCases[index]
-        case .period: service.period = MarketAdvancedSearchService.PricePeriodFilter.allCases[index]
-        }
+    var marketCapViewItems: [FilterViewItem] {
+        MarketAdvancedSearchService
+                .ValueFilter
+                .allCases
+                .map { FilterViewItem(title: $0.title, color: $0.valueColor, selected: service.marketCap == $0) }
+    }
+
+    var volumeViewItems: [FilterViewItem] {
+        MarketAdvancedSearchService
+                .ValueFilter
+                .allCases
+                .map { FilterViewItem(title: $0.title, color: $0.valueColor, selected: service.volume == $0) }
+    }
+
+    var liquidityViewItems: [FilterViewItem] {
+        MarketAdvancedSearchService
+                .ValueFilter
+                .allCases
+                .map { FilterViewItem(title: $0.title, color: $0.valueColor, selected: service.liquidity == $0) }
+    }
+
+    var periodViewItems: [FilterViewItem] {
+        MarketAdvancedSearchService
+                .PricePeriodFilter
+                .allCases
+                .map { FilterViewItem(title: $0.title, color: $0.valueColor, selected: service.period == $0) }
+    }
+
+    var priceChangeViewItems: [FilterViewItem] {
+        MarketAdvancedSearchService
+                .PriceChangeFilter
+                .allCases
+                .map { FilterViewItem(title: $0.title, color: $0.valueColor, selected: service.priceChange == $0) }
+    }
+
+    func setCoinList(at index: Int) {
+        service.coinListCount = MarketAdvancedSearchService.CoinListCount.allCases[index]
+    }
+
+    func setMarketCap(at index: Int) {
+        service.marketCap = MarketAdvancedSearchService.ValueFilter.allCases[index]
+    }
+
+    func setVolume(at index: Int) {
+        service.volume = MarketAdvancedSearchService.ValueFilter.allCases[index]
+    }
+
+    func setLiquidity(at index: Int) {
+        service.liquidity = MarketAdvancedSearchService.ValueFilter.allCases[index]
+    }
+
+    func setPeriod(at index: Int) {
+        service.period = MarketAdvancedSearchService.PricePeriodFilter.allCases[index]
+    }
+
+    func setPriceChange(at index: Int) {
+        service.priceChange = MarketAdvancedSearchService.PriceChangeFilter.allCases[index]
     }
 
     func resetAll() {
         service.coinListCount = .top250
-        service.period = .day
         service.volume = .none
         service.marketCap = .none
         service.liquidity = .none
+        service.period = .day
         service.priceChange = .none
     }
 
 }
 
 extension MarketAdvancedSearchViewModel {
-
-    enum Filter: String, CaseIterable {
-        case coinList = "market.advanced_search.coin_list"
-        case marketCap = "market.advanced_search.market_cap"
-        case volume = "market.advanced_search.volume"
-        case liquidity = "market.advanced_search.liquidity"
-        case period = "market.advanced_search.period"
-        case priceChange = "market.advanced_search.price_change"
-
-        var title: String { self.rawValue.localized }
-    }
 
     struct FilterViewItem {
         let title: String
@@ -155,7 +214,6 @@ extension MarketAdvancedSearchViewModel {
     }
 
     struct ViewItem {
-        let filter: Filter
         let value: String
         let valueColor: ValueColor
     }
@@ -168,23 +226,15 @@ extension MarketAdvancedSearchViewModel {
 
 }
 
-
-private protocol IWrappedFilterViewItem: Equatable {
-    var title: String { get }
-    var valueColor: MarketAdvancedSearchViewModel.ValueColor { get }
-}
-
-extension MarketAdvancedSearchService.CoinListCount: IWrappedFilterViewItem {
+extension MarketAdvancedSearchService.CoinListCount {
 
     var title: String {
         "market.advanced_search.top".localized(self.rawValue)
     }
 
-    var valueColor: MarketAdvancedSearchViewModel.ValueColor { .normal }
-
 }
 
-extension MarketAdvancedSearchService.ValueFilter: IWrappedFilterViewItem {
+extension MarketAdvancedSearchService.ValueFilter {
 
     var title: String {
         switch self {
@@ -204,7 +254,7 @@ extension MarketAdvancedSearchService.ValueFilter: IWrappedFilterViewItem {
 
 }
 
-extension MarketAdvancedSearchService.PriceChangeFilter: IWrappedFilterViewItem {
+extension MarketAdvancedSearchService.PriceChangeFilter {
 
     var title: String {
         switch self {
@@ -230,7 +280,7 @@ extension MarketAdvancedSearchService.PriceChangeFilter: IWrappedFilterViewItem 
 
 }
 
-extension MarketAdvancedSearchService.PricePeriodFilter: IWrappedFilterViewItem {
+extension MarketAdvancedSearchService.PricePeriodFilter {
 
     var title: String {
         switch self {
@@ -248,4 +298,3 @@ extension MarketAdvancedSearchService.PricePeriodFilter: IWrappedFilterViewItem 
     }
 
 }
-

@@ -17,21 +17,11 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private let periodCell = B5Cell()
     private let priceChangeCell = B5Cell()
 
-    private var filters: [MarketAdvancedSearchViewModel.Filter: B5Cell]
-
     private let resetAllCell = B4Cell()
     private let showResultCell = ButtonCell()
 
     init(viewModel: MarketAdvancedSearchViewModel) {
         self.viewModel = viewModel
-        filters = [
-            .coinList: coinListCell,
-            .marketCap: marketCapCell,
-            .volume: volumeCell,
-            .liquidity: liquidityCell,
-            .period: periodCell,
-            .priceChange: priceChangeCell,
-        ]
 
         super.init()
     }
@@ -60,11 +50,29 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
         navigationItem.largeTitleDisplayMode = .always
 
-        filters.forEach { (filter, cell) in
-            cell.set(backgroundStyle: .lawrence, isFirst: filter.isFirst, isLast: filter.isLast)
-            cell.title = filter.rawValue.localized
-            cell.valueActionEnabled = false
-        }
+        coinListCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+        coinListCell.title = "market.advanced_search.coin_list".localized
+        coinListCell.valueActionEnabled = false
+
+        marketCapCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
+        marketCapCell.title = "market.advanced_search.market_cap".localized
+        marketCapCell.valueActionEnabled = false
+
+        volumeCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
+        volumeCell.title = "market.advanced_search.volume".localized
+        volumeCell.valueActionEnabled = false
+
+        liquidityCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+        liquidityCell.title = "market.advanced_search.liquidity".localized
+        liquidityCell.valueActionEnabled = false
+
+        periodCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
+        periodCell.title = "market.advanced_search.period".localized
+        periodCell.valueActionEnabled = false
+
+        priceChangeCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
+        priceChangeCell.title = "market.advanced_search.price_change".localized
+        priceChangeCell.valueActionEnabled = false
 
         resetAllCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         resetAllCell.title = "market.advanced_search.reset_all".localized
@@ -75,36 +83,101 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
         tableView.buildSections()
 
-        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
+        subscribe(disposeBag, viewModel.coinListViewItemDriver) { [weak self] in self?.syncCoinList(viewItem: $0) }
+        subscribe(disposeBag, viewModel.marketCapViewItemDriver) { [weak self] in self?.syncMarketCap(viewItem: $0) }
+        subscribe(disposeBag, viewModel.volumeViewItemDriver) { [weak self] in self?.syncVolume(viewItem: $0) }
+        subscribe(disposeBag, viewModel.liquidityViewItemDriver) { [weak self] in self?.syncLiquidity(viewItem: $0) }
+        subscribe(disposeBag, viewModel.periodViewItemDriver) { [weak self] in self?.syncPeriod(viewItem: $0) }
+        subscribe(disposeBag, viewModel.priceChangeViewItemDriver) { [weak self] in self?.syncPriceChange(viewItem: $0) }
+
         subscribe(disposeBag, viewModel.showErrorSignal) { [weak self] in self?.sync(error: $0) }
         subscribe(disposeBag, viewModel.itemCountDriver) { [weak self] in self?.sync(itemCount: $0) }
         subscribe(disposeBag, viewModel.showResultEnabledDriver) { [weak self] in self?.sync(showResultEnabled: $0) }
     }
 
-    @objc private func onTapClose() {
-        navigationController?.popViewController(animated: true)
+    private func selectorItems(viewItems: [MarketAdvancedSearchViewModel.FilterViewItem]) -> [ItemSelectorModule.Item] {
+        viewItems.map {
+            ItemSelectorModule.Item.complex(viewItem: ItemSelectorModule.ComplexViewItem(title: $0.title, titleColor: $0.color.color, selected: $0.selected))
+        }
     }
 
-    private func onTapCell(filter: MarketAdvancedSearchViewModel.Filter) {
-        let titleViewItem = ItemSelectorModule.ComplexTitleViewItem(
-                title: filter.title,
-                subtitle: filter.titleDescription,
-                image: filter.titleImage?.tinted(with: .themeJacob))
-
-        let viewItems = viewModel
-                .viewItems(filter: filter)
-                .map {
-                    ItemSelectorModule.Item.complex(viewItem: ItemSelectorModule.ComplexViewItem(title: $0.title, titleColor: $0.color.color, selected: $0.selected))
-                }
-
+    private func showAlert(titleViewItem: ItemSelectorModule.ComplexTitleViewItem, items: [ItemSelectorModule.Item], action: ((Int) -> ())?) {
         let alertController = ItemSelectorModule.viewController(title:
-                .complex(viewItem: titleViewItem),
-                items: viewItems,
-                onTap: { [weak self] selector, index in
-                    self?.onTapViewItem(itemSelector: selector, filter: filter, index: index)
+        .complex(viewItem: titleViewItem),
+                items: items,
+                onTap: { selector, index in
+                    selector.dismiss(animated: true)
+
+                    action?(index)
                 })
 
         present(alertController.toBottomSheet, animated: true)
+    }
+
+    private func onTapCoinListCell() {
+            let titleViewItem = ItemSelectorModule.ComplexTitleViewItem(
+                title: "market.advanced_search.coin_list".localized,
+                subtitle: "---------",
+                image: UIImage(named: "circle_coin_24")?.tinted(with: .themeJacob))
+
+        showAlert(titleViewItem: titleViewItem, items: selectorItems(viewItems: viewModel.coinListViewItems), action: { [weak self] index in
+            self?.viewModel.setCoinList(at: index)
+        })
+    }
+
+    private func onTapMarketCapCell() {
+            let titleViewItem = ItemSelectorModule.ComplexTitleViewItem(
+                title: "market.advanced_search.market_cap".localized,
+                subtitle: "---------",
+                image: UIImage(named: "usd_24")?.tinted(with: .themeJacob))
+
+        showAlert(titleViewItem: titleViewItem, items: selectorItems(viewItems: viewModel.marketCapViewItems), action: { [weak self] index in
+            self?.viewModel.setMarketCap(at: index)
+        })
+    }
+
+    private func onTapVolumeCell() {
+            let titleViewItem = ItemSelectorModule.ComplexTitleViewItem(
+                title: "market.advanced_search.volume".localized,
+                subtitle: "market.advanced_search.24h".localized,
+                image: UIImage(named: "chart_2_24")?.tinted(with: .themeJacob))
+
+        showAlert(titleViewItem: titleViewItem, items: selectorItems(viewItems: viewModel.volumeViewItems), action: { [weak self] index in
+            self?.viewModel.setVolume(at: index)
+        })
+    }
+
+    private func onTapLiquidityCell() {
+            let titleViewItem = ItemSelectorModule.ComplexTitleViewItem(
+                title: "market.advanced_search.liquidity".localized,
+                subtitle: "market.advanced_search.24h".localized,
+                image: UIImage(named: "circle_check_24")?.tinted(with: .themeJacob))
+
+        showAlert(titleViewItem: titleViewItem, items: selectorItems(viewItems: viewModel.liquidityViewItems), action: { [weak self] index in
+            self?.viewModel.setLiquidity(at: index)
+        })
+    }
+
+    private func onTapPeriodCell() {
+            let titleViewItem = ItemSelectorModule.ComplexTitleViewItem(
+                title: "market.advanced_search.period".localized,
+                subtitle: "---------",
+                image: UIImage(named: "circle_clock_24")?.tinted(with: .themeJacob))
+
+        showAlert(titleViewItem: titleViewItem, items: selectorItems(viewItems: viewModel.periodViewItems), action: { [weak self] index in
+            self?.viewModel.setPeriod(at: index)
+        })
+    }
+
+    private func onTapPriceChangeCell() {
+            let titleViewItem = ItemSelectorModule.ComplexTitleViewItem(
+                title: "market.advanced_search.price_change".localized,
+                subtitle: "---------",
+                image: UIImage(named: "markets_24")?.tinted(with: .themeJacob))
+
+        showAlert(titleViewItem: titleViewItem, items: selectorItems(viewItems: viewModel.priceChangeViewItems), action: { [weak self] index in
+            self?.viewModel.setPriceChange(at: index)
+        })
     }
 
     private func onTapResetAll() {
@@ -116,28 +189,38 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
-    func onTapViewItem(itemSelector: ItemSelectorViewController, filter: MarketAdvancedSearchViewModel.Filter, index: Int) {
-        itemSelector.dismiss(animated: true)
-
-        viewModel.setField(at: index, filter: filter)
-    }
-
-    private func row(filter: MarketAdvancedSearchViewModel.Filter) -> RowProtocol {
-        let cell = filters[filter] ?? B5Cell()
-        return StaticRow(
-                cell: cell,
-                id: filter.rawValue,
-                height: .heightCell48,
-                autoDeselect: true,
-                action: { [weak self] in self?.onTapCell(filter: filter) }
-        )
-    }
-
-    private func sync(viewItems: [MarketAdvancedSearchViewModel.ViewItem]) {
-        viewItems.forEach { viewItem in
-            filters[viewItem.filter]?.value = viewItem.value
-            filters[viewItem.filter]?.valueColor = viewItem.valueColor.color
+    private func set(viewItem: MarketAdvancedSearchViewModel.ViewItem?, cell: B5Cell) {
+        guard let viewItem = viewItem else {
+            cell.value = nil
+            return
         }
+
+        cell.value = viewItem.value
+        cell.valueColor = viewItem.valueColor.color
+    }
+
+    private func syncCoinList(viewItem: MarketAdvancedSearchViewModel.ViewItem?) {
+        set(viewItem: viewItem, cell: coinListCell)
+    }
+
+    private func syncMarketCap(viewItem: MarketAdvancedSearchViewModel.ViewItem?) {
+        set(viewItem: viewItem, cell: marketCapCell)
+    }
+
+    private func syncVolume(viewItem: MarketAdvancedSearchViewModel.ViewItem?) {
+        set(viewItem: viewItem, cell: volumeCell)
+    }
+
+    private func syncLiquidity(viewItem: MarketAdvancedSearchViewModel.ViewItem?) {
+        set(viewItem: viewItem, cell: liquidityCell)
+    }
+
+    private func syncPeriod(viewItem: MarketAdvancedSearchViewModel.ViewItem?) {
+        set(viewItem: viewItem, cell: periodCell)
+    }
+
+    private func syncPriceChange(viewItem: MarketAdvancedSearchViewModel.ViewItem?) {
+        set(viewItem: viewItem, cell: priceChangeCell)
     }
 
     private func sync(error: String) {
@@ -153,6 +236,16 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         showResultCell.isEnabled = showResultEnabled
     }
 
+    private func row(cell: UITableViewCell, id: String, action: (() -> ())?) -> RowProtocol {
+        StaticRow(
+                cell: cell,
+                id: id,
+                height: .heightCell48,
+                autoDeselect: true,
+                action: action
+        )
+    }
+
 }
 
 extension MarketAdvancedSearchViewController: SectionsDataSource {
@@ -164,7 +257,7 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
                 id: "coin_list",
                 headerState: .margin(height: .margin12),
                 rows: [
-                    row(filter: .coinList)
+                    row(cell: coinListCell, id: "coin_list") { [weak self] in self?.onTapCoinListCell() }
                 ])
         )
 
@@ -172,8 +265,8 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
                 id: "market_filters",
                 headerState: .margin(height: .margin32),
                 rows: [
-                    row(filter: .marketCap),
-                    row(filter: .volume),
+                    row(cell: marketCapCell, id: "market_cap") { [weak self] in self?.onTapMarketCapCell() },
+                    row(cell: volumeCell, id: "volume") { [weak self] in self?.onTapVolumeCell() }
                 ])
         )
 
@@ -187,19 +280,19 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
 
         sections.append(Section(
                 id: "liquidity",
-                headerState: .margin(height: .margin12),
+                headerState: .margin(height: .margin32),
                 footerState: footerState,
                 rows: [
-                    row(filter: .liquidity),
+                    row(cell: liquidityCell, id: "liquidity") { [weak self] in self?.onTapLiquidityCell() }
                 ])
         )
 
         sections.append(Section(
                 id: "price_filters",
-                headerState: .margin(height: .margin32),
+                headerState: .margin(height: .margin12),
                 rows: [
-                    row(filter: .period),
-                    row(filter: .priceChange),
+                    row(cell: periodCell, id: "period") { [weak self] in self?.onTapPeriodCell() },
+                    row(cell: priceChangeCell, id: "price_change") { [weak self] in self?.onTapPriceChangeCell() }
                 ])
         )
 
@@ -207,13 +300,7 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
                 id: "reset_all",
                 headerState: .margin(height: .margin32),
                 rows: [
-                    StaticRow(
-                            cell: resetAllCell,
-                            id: "reset_all",
-                            height: .heightCell48,
-                            autoDeselect: true,
-                            action: { [weak self] in self?.onTapResetAll() }
-                    )
+                    row(cell: resetAllCell, id: "reset_all") { [weak self] in self?.onTapResetAll() }
                 ])
         )
 
@@ -222,52 +309,11 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
                 headerState: .margin(height: .margin12),
                 footerState: .margin(height: .margin24),
                 rows: [
-                    StaticRow(
-                            cell: showResultCell,
-                            id: "show_result",
-                            height: .heightCell48,
-                            autoDeselect: true
-                    )
+                    row(cell: showResultCell, id: "show_result", action: nil)
                 ])
         )
 
         return sections
-    }
-
-}
-
-extension MarketAdvancedSearchViewModel.Filter {
-
-    var titleImage: UIImage? {
-        switch self {
-        case .coinList: return UIImage(named: "circle_coin_24")
-        case .marketCap: return UIImage(named: "usd_24")
-        case .volume: return UIImage(named: "chart_2_24")
-        case .liquidity: return UIImage(named: "circle_check_24")
-        case .period: return UIImage(named: "circle_clock_24")
-        case .priceChange: return UIImage(named: "markets_24")
-        }
-    }
-
-    var titleDescription: String {
-        switch self {
-        case .volume, .liquidity: return "24h"
-        default: return "---------"
-        }
-    }
-
-    var isFirst: Bool {
-        switch self {
-        case .coinList, .marketCap, .liquidity, .period: return true
-        default: return false
-        }
-    }
-
-    var isLast: Bool {
-        switch self {
-        case .coinList, .volume, .liquidity, .priceChange: return true
-        default: return false
-        }
     }
 
 }
