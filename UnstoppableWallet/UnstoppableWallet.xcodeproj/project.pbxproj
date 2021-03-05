@@ -611,6 +611,7 @@
 		11B35895DA5403AE180E8A6B /* SystemInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357BA1A6AC79F07B54FB5 /* SystemInfoManager.swift */; };
 		11B35897228706209BB05CD7 /* BinanceAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35AAAC675987369F2DA1B /* BinanceAdapter.swift */; };
 		11B35898D710EC75D922785D /* IntroPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A05B93CB243B6404C4A /* IntroPageView.swift */; };
+		11B358A0F588238E8C5D02BA /* FormAmountInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352A41EC99ADCC8F3E3E9 /* FormAmountInputView.swift */; };
 		11B358A26F55EF5DDEFBE07D /* BalanceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A0A1E69943CD3203FF9 /* BalanceItem.swift */; };
 		11B358A6F7662B69D358069A /* SelfSizedSectionsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3538D10D6256399A51F61 /* SelfSizedSectionsTableView.swift */; };
 		11B358A9A1E29D7750EC3B07 /* TransactionInfoTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DC7E04BE36B8C140BF5 /* TransactionInfoTitleView.swift */; };
@@ -945,6 +946,7 @@
 		11B35D2B17C9DEEAB15CA643 /* PBXBuildFile */ = {isa = PBXBuildFile; fileRef = 11B354950B1534AD045FDA3A /* SendEvmConfirmationViewController.swift */; };
 		11B35D32AE1BBED83069A566 /* AddErc20TokenModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35043AF2B8BE6FD50BDB3 /* AddErc20TokenModule.swift */; };
 		11B35D371DCB8BBE733BA756 /* PredefinedAccountTypeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35981A2EDBC21C82D13A5 /* PredefinedAccountTypeManager.swift */; };
+		11B35D40702B98DD14429562 /* FormAmountInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352A41EC99ADCC8F3E3E9 /* FormAmountInputView.swift */; };
 		11B35D41A0A6B20537BA55F4 /* TermsFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35994005EE82AE70CDA98 /* TermsFooterCell.swift */; };
 		11B35D47EAA2EB26D8C3D6CF /* PrivacySortModeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3519C133E4C0A28943906 /* PrivacySortModeRouter.swift */; };
 		11B35D4BA7A88A791C8F264A /* SwapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3551720C79A077888F5AE /* SwapService.swift */; };
@@ -1097,6 +1099,7 @@
 		11B35F66FCF2E3247FB39B48 /* PBXBuildFile */ = {isa = PBXBuildFile; fileRef = 11B3540BDD94203AFD41C6C7 /* SendEvmService.swift */; };
 		11B35F679540B4226EA075AA /* SendFeePriorityInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EA828E6984CEC2DB063 /* SendFeePriorityInteractor.swift */; };
 		11B35F6A4F9A0E407EBABC3C /* SendHodlerLockTimeIntervalRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352A841C7BCC1B21DF168 /* SendHodlerLockTimeIntervalRouter.swift */; };
+		11B35F6FDB8640381081A06C /* FormAmountInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352A41EC99ADCC8F3E3E9 /* FormAmountInputView.swift */; };
 		11B35F70E1E893EC6CD73080 /* PrivacyEthereumRpcModeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355F297366E6AF1549492 /* PrivacyEthereumRpcModeModule.swift */; };
 		11B35F70EA14A8CF9A8C9404 /* AlertItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35163E7C4454BBA9E2E9E /* AlertItemCell.swift */; };
 		11B35F710FE55C6DBC3292E1 /* PriceAlertStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353FED1586171A5C73554 /* PriceAlertStorage.swift */; };
@@ -2424,6 +2427,7 @@
 		11B352A09443C11A200EB72E /* BitcoinHodlingInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinHodlingInteractor.swift; sourceTree = "<group>"; };
 		11B352A3792AA46E98DDE5B6 /* SendStateViewItemFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendStateViewItemFactoryTests.swift; sourceTree = "<group>"; };
 		11B352A3AF73C303803528EF /* NotificationSettingsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettingsPresenter.swift; sourceTree = "<group>"; };
+		11B352A41EC99ADCC8F3E3E9 /* FormAmountInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormAmountInputView.swift; sourceTree = "<group>"; };
 		11B352A841C7BCC1B21DF168 /* SendHodlerLockTimeIntervalRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendHodlerLockTimeIntervalRouter.swift; sourceTree = "<group>"; };
 		11B352A8C9C3AA2AB1776F3C /* UnlinkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlinkViewController.swift; sourceTree = "<group>"; };
 		11B352ABFDEAEEA84D3FDD8B /* AddEvmTokenBlockchainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEvmTokenBlockchainService.swift; sourceTree = "<group>"; };
@@ -4229,6 +4233,7 @@
 				11B35743158763BD8E336770 /* InputPrefixWrapperView.swift */,
 				58AAA5BB11003A1862BDCEA6 /* CautionView.swift */,
 				11B3567786C2190DBD809164 /* CircleCautionView.swift */,
+				11B352A41EC99ADCC8F3E3E9 /* FormAmountInputView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -6524,6 +6529,7 @@
 				58AAA58C17B8B041C70C0B72 /* MarketAdvancedSearchResultViewController.swift in Sources */,
 				11B3536F0BA00C261E966FB5 /* AmountTypeSwitchServiceNew.swift in Sources */,
 				11B3572B096E8700446BEF81 /* FiatServiceNew.swift in Sources */,
+				11B358A0F588238E8C5D02BA /* FormAmountInputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7314,6 +7320,7 @@
 				58AAA65F52DA13121BABBB3B /* MarketAdvancedSearchResultViewController.swift in Sources */,
 				11B3500AB065E6CA0595FBDE /* AmountTypeSwitchServiceNew.swift in Sources */,
 				11B350DBF23645FE8641A193 /* FiatServiceNew.swift in Sources */,
+				11B35D40702B98DD14429562 /* FormAmountInputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8066,6 +8073,7 @@
 				58AAAA74FC5F4C1576677EDD /* MarketAdvancedSearchResultViewController.swift in Sources */,
 				11B3516FFFEA842D66C51988 /* AmountTypeSwitchServiceNew.swift in Sources */,
 				11B3558A85AE9CAD42030EAD /* FiatServiceNew.swift in Sources */,
+				11B35F6FDB8640381081A06C /* FormAmountInputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
