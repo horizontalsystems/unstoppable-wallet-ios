@@ -37,7 +37,7 @@ class TransactionInfoPresenter {
         case .bep2:
             explorerData = .init(title: "binance.org", url: testMode ? "https://testnet-explorer.binance.org/tx/" + hash : "https://explorer.binance.org/tx/" + hash)
         case .zcash:
-            explorerData = .init(title: "zcha.in", url: testMode ? nil : "https://explorer.zcha.in/transactions/" + hash)
+            explorerData = .init(title: "blockchair.com", url: testMode ? nil : "https://blockchair.com/zcash/transaction/" + hash)
         case .unsupported:
             explorerData = .init(title: "", url: nil)
         }
