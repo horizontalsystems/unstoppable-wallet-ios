@@ -151,6 +151,20 @@ enum AmountInfo {
         }
     }
 
+    var value: Decimal {
+        switch self {
+        case .currencyValue(let currencyValue): return currencyValue.value
+        case .coinValue(let coinValue): return coinValue.value
+        }
+    }
+
+    var decimal: Int {
+        switch self {
+        case .currencyValue(let currencyValue): return currencyValue.currency.decimal
+        case .coinValue(let coinValue): return coinValue.coin.decimal
+        }
+    }
+
 }
 
 struct AmountData {
