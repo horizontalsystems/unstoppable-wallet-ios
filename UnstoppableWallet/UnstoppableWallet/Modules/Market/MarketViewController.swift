@@ -94,7 +94,7 @@ class MarketViewController: ThemeViewController {
     }
 
     @objc private func onTapSearch() {
-        navigationController?.pushViewController(MarketSearchModule.viewController(), animated: true)
+        present(MarketSearchModule.viewController(), animated: true)
     }
 
 }

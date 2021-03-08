@@ -364,12 +364,6 @@ class GrdbStorage {
             }
         }
 
-        migrator.registerMigration("createFavoriteCoins") { db in
-            try db.create(table: FavoriteCoinRecord.databaseTableName) { t in
-                t.column(FavoriteCoinRecord.Columns.coinCode.name, .text).notNull()
-            }
-        }
-
         migrator.registerMigration("createWalletConnectSessions") { db in
             try db.create(table: WalletConnectSession.databaseTableName) { t in
                 t.column(WalletConnectSession.Columns.chainId.name, .integer).notNull()
@@ -387,7 +381,7 @@ class GrdbStorage {
             let coinRecords = try CoinRecord_v19.fetchAll(db)
             let coins: [Coin] = coinRecords.compactMap { record in
                 let coinId = record.migrationId
-                return CoinType(id: coinId).map { Coin(title: record.title, code: record.code, decimal: record.decimal, type: $0) }
+                return Coin(title: record.title, code: record.code, decimal: record.decimal, type: CoinType(id: coinId))
             }
 
             self?.coinMigrationRelay.accept(coins)
@@ -412,6 +406,16 @@ class GrdbStorage {
 
             try enabledWallets.forEach { try $0.delete(db) }
             try changedWallets.forEach { try $0.insert(db) }
+        }
+
+        migrator.registerMigration("recreateFavoriteCoins") { db in
+            if try db.tableExists("favorite_coins") {
+                try db.drop(table: "favorite_coins")
+            }
+
+            try db.create(table: FavoriteCoinRecord.databaseTableName) { t in
+                t.column(FavoriteCoinRecord.Columns.coinType.name, .text).notNull()
+            }
         }
 
         return migrator
@@ -569,30 +573,30 @@ extension GrdbStorage: IFavoriteCoinRecordStorage {
 
     var favoriteCoinRecords: [FavoriteCoinRecord] {
         try! dbPool.read { db in
-            try FavoriteCoinRecord.order(FavoriteCoinRecord.Columns.coinCode.asc).fetchAll(db)
+            try FavoriteCoinRecord.order(FavoriteCoinRecord.Columns.coinType.asc).fetchAll(db)
         }
     }
 
-    func save(coinCode: String) {
-        let favoriteCoinRecord = FavoriteCoinRecord(coinCode: coinCode)
+    func save(coinType: CoinType) {
+        let favoriteCoinRecord = FavoriteCoinRecord(coinType: coinType)
 
         _ = try! dbPool.write { db in
             try favoriteCoinRecord.insert(db)
         }
     }
 
-    func deleteFavoriteCoinRecord(coinCode: String) {
+    func deleteFavoriteCoinRecord(coinType: CoinType) {
         _ = try! dbPool.write { db in
             try FavoriteCoinRecord
-                    .filter(FavoriteCoinRecord.Columns.coinCode == coinCode)
+                    .filter(FavoriteCoinRecord.Columns.coinType == coinType.id)
                     .deleteAll(db)
         }
     }
 
-    func inFavorites(coinCode: String) -> Bool {
-        return try! dbPool.read { db in
+    func inFavorites(coinType: CoinType) -> Bool {
+        try! dbPool.read { db in
             try FavoriteCoinRecord
-                    .filter(FavoriteCoinRecord.Columns.coinCode == coinCode)
+                    .filter(FavoriteCoinRecord.Columns.coinType == coinType.id)
                     .fetchCount(db) > 0
         }
     }

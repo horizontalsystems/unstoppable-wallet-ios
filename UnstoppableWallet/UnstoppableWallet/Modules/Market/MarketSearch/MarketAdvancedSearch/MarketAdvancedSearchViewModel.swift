@@ -286,8 +286,8 @@ extension MarketAdvancedSearchService.PricePeriodFilter {
         switch self {
         case .day: return "market.advanced_search.day".localized
         case .week: return "market.advanced_search.week".localized
+        case .week2: return "market.advanced_search.week2".localized
         case .month: return "market.advanced_search.month".localized
-        case .month3: return "market.advanced_search.month3".localized
         case .month6: return "market.advanced_search.month6".localized
         case .year: return "market.advanced_search.year".localized
         }

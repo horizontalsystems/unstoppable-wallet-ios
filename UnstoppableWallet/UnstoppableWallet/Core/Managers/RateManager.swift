@@ -34,15 +34,6 @@ class RateManager {
                 .disposed(by: disposeBag)
     }
 
-    private func mapCoinForXRates(coins: [Coin]) -> [XRatesKit.Coin] {
-        coins.compactMap { coin in
-            let coinType = coin.type
-            return rateCoinMapper.convert(coin: coin).map {
-                XRatesKit.Coin(code: $0.code, title: $0.title, type: convertCoinTypeToXRateKitCoinType(coinType: coinType))
-            }
-        }
-    }
-
     private func onUpdate(wallets: [Wallet]) {
         let allCoins = wallets.reduce(into: [Coin]()) { result, wallet in
             result.append(wallet.coin)
@@ -51,11 +42,8 @@ class RateManager {
                 result.append(feeCoin)
             }
         }
-        let convertedCoinCodes = allCoins.compactMap { rateCoinMapper.convert(coin: $0) }
-        let uniqueCoinCodes = Array(Set(convertedCoinCodes))
-
-
-        kit.set(coins: mapCoinForXRates(coins: uniqueCoinCodes))
+        let uniqueCoinTypes = Array(Set(allCoins.map { $0.type }))
+        kit.set(coinTypes: uniqueCoinTypes)
     }
 
     private func onUpdate(baseCurrency: Currency) {
@@ -70,40 +58,8 @@ extension RateManager: IRateManager {
         kit.refresh()
     }
 
-    func convertCoinTypeToXRateKitCoinType(coinType: CoinType) -> XRatesKit.CoinType? {
-        switch coinType {
-        case .bitcoin: return .bitcoin
-        case .litecoin: return .litecoin
-        case .bitcoinCash: return .bitcoinCash
-        case .dash: return .dash
-        case .ethereum: return .ethereum
-        case .erc20(let address): return .erc20(address: address)
-        case .bep2: return .binance
-        case .zcash: return .zcash
-        default: return nil
-        }
-    }
-
-    func convertXRateCoinTypeToCoinType(coinType: XRatesKit.CoinType) -> CoinType? {
-        switch coinType {
-        case .bitcoin: return .bitcoin
-        case .litecoin: return .litecoin
-        case .bitcoinCash: return .bitcoinCash
-        case .dash: return .dash
-        case .ethereum: return .ethereum
-        case .erc20(let address): return .erc20(address: address)
-        case .binance: return .bep2(symbol: "")
-        case .zcash: return .zcash
-        case .eos: return nil
-        }
-    }
-
-    func marketInfo(coinCode: String, currencyCode: String) -> MarketInfo? {
-        guard let convertedCoinCode = rateCoinMapper.convert(coinCode: coinCode) else {
-            return nil
-        }
-
-        return kit.marketInfo(coinCode: convertedCoinCode, currencyCode: currencyCode)
+    func marketInfo(coinType: CoinType, currencyCode: String) -> MarketInfo? {
+        kit.marketInfo(coinType: coinType, currencyCode: currencyCode)
     }
 
     func globalMarketInfoSingle(currencyCode: String) -> Single<GlobalCoinMarket> {
@@ -114,62 +70,36 @@ extension RateManager: IRateManager {
         kit.topMarketsSingle(currencyCode: currencyCode, fetchDiffPeriod: .hour24, itemsCount: itemCount)
     }
 
-    func coinsMarketSingle(currencyCode: String, coinCodes: [String]) -> Single<[CoinMarket]> {
-        kit.favorites(currencyCode: currencyCode, coinCodes: coinCodes)
+    func coinsMarketSingle(currencyCode: String, coinTypes: [CoinType]) -> Single<[CoinMarket]> {
+        kit.favorites(currencyCode: currencyCode, coinTypes: coinTypes)
     }
 
-    func marketInfoObservable(coinCode: String, currencyCode: String) -> Observable<MarketInfo> {
-        guard let convertedCoinCode = rateCoinMapper.convert(coinCode: coinCode) else {
-            return Observable.error(RateError.disabledCoin)
-        }
-
-        return kit.marketInfoObservable(coinCode: convertedCoinCode, currencyCode: currencyCode)
+    func searchCoins(text: String) -> [CoinData] {
+        kit.search(text: text)
     }
 
-    func marketInfosObservable(currencyCode: String) -> Observable<[String: MarketInfo]> {
-        kit.marketInfosObservable(currencyCode: currencyCode).map { [unowned self] marketInfos in
-            var unconvertedMarketInfos = [String: MarketInfo]()
-
-            for (coinCode, marketInfo) in marketInfos {
-                for coinCode in self.rateCoinMapper.unconvert(coinCode: coinCode) {
-                    unconvertedMarketInfos[coinCode] = marketInfo
-                }
-            }
-
-            return unconvertedMarketInfos
-        }
+    func marketInfoObservable(coinType: CoinType, currencyCode: String) -> Observable<MarketInfo> {
+        kit.marketInfoObservable(coinType: coinType, currencyCode: currencyCode)
     }
 
-    func historicalRate(coinCode: String, currencyCode: String, timestamp: TimeInterval) -> Single<Decimal> {
-        guard let convertedCoinCode = rateCoinMapper.convert(coinCode: coinCode) else {
-            return Single.error(RateError.disabledCoin)
-        }
-
-        return kit.historicalRateSingle(coinCode: convertedCoinCode, currencyCode: currencyCode, timestamp: timestamp)
+    func marketInfosObservable(currencyCode: String) -> Observable<[CoinType: MarketInfo]> {
+        kit.marketInfosObservable(currencyCode: currencyCode) //todo: check!
     }
 
-    func historicalRate(coinCode: String, currencyCode: String, timestamp: TimeInterval) -> Decimal? {
-        guard let convertedCoinCode = rateCoinMapper.convert(coinCode: coinCode) else {
-            return nil
-        }
-
-        return kit.historicalRate(coinCode: convertedCoinCode, currencyCode: currencyCode, timestamp: timestamp)
+    func historicalRate(coinType: CoinType, currencyCode: String, timestamp: TimeInterval) -> Single<Decimal> {
+        kit.historicalRateSingle(coinType: coinType, currencyCode: currencyCode, timestamp: timestamp)
     }
 
-    func chartInfo(coinCode: String, currencyCode: String, chartType: ChartType) -> ChartInfo? {
-        guard let convertedCoinCode = rateCoinMapper.convert(coinCode: coinCode) else {
-            return nil
-        }
-
-        return kit.chartInfo(coinCode: convertedCoinCode, currencyCode: currencyCode, chartType: chartType)
+    func historicalRate(coinType: CoinType, currencyCode: String, timestamp: TimeInterval) -> Decimal? {
+        kit.historicalRate(coinType: coinType, currencyCode: currencyCode, timestamp: timestamp)
     }
 
-    func chartInfoObservable(coinCode: String, currencyCode: String, chartType: ChartType) -> Observable<ChartInfo> {
-        guard let convertedCoinCode = rateCoinMapper.convert(coinCode: coinCode) else {
-            return Observable.error(RateError.disabledCoin)
-        }
+    func chartInfo(coinType: CoinType, currencyCode: String, chartType: ChartType) -> ChartInfo? {
+        kit.chartInfo(coinType: coinType, currencyCode: currencyCode, chartType: chartType)
+    }
 
-        return kit.chartInfoObservable(coinCode: convertedCoinCode, currencyCode: currencyCode, chartType: chartType)
+    func chartInfoObservable(coinType: CoinType, currencyCode: String, chartType: ChartType) -> Observable<ChartInfo> {
+        kit.chartInfoObservable(coinType: coinType, currencyCode: currencyCode, chartType: chartType)
     }
 
 }
@@ -182,14 +112,6 @@ extension RateManager: IPostsManager {
 
     var postsSingle: Single<[CryptoNewsPost]> {
         kit.cryptoPostsSingle
-    }
-
-}
-
-extension RateManager {
-
-    enum RateError: Error {
-        case disabledCoin
     }
 
 }

@@ -17,8 +17,8 @@ protocol ISendFeeInteractor {
     var baseCurrency: Currency { get }
     func feeCoin(coin: Coin) -> Coin?
     func feeCoinProtocol(coin: Coin) -> String?
-    func subscribeToMarketInfo(coinCode: CoinCode?, currencyCode: String)
-    func nonExpiredRateValue(coinCode: String, currencyCode: String) -> Decimal?
+    func subscribeToMarketInfo(coinType: CoinType?, currencyCode: String)
+    func nonExpiredRateValue(coinType: CoinType, currencyCode: String) -> Decimal?
 }
 
 protocol ISendFeeInteractorDelegate: class {

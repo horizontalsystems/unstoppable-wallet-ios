@@ -20,7 +20,7 @@ extension CoinService {
     var rate: CurrencyValue? {
         let baseCurrency = currencyKit.baseCurrency
 
-        return rateManager.marketInfo(coinCode: coin.code, currencyCode: baseCurrency.code).map { marketInfo in
+        return rateManager.marketInfo(coinType: coin.type, currencyCode: baseCurrency.code).map { marketInfo in
             CurrencyValue(currency: baseCurrency, value: marketInfo.rate)
         }
     }

@@ -34,8 +34,8 @@ extension TransactionInfoInteractor: ITransactionInfoInteractor {
         appConfigProvider.testMode
     }
 
-    func rate(coinCode: String, currencyCode: String, timestamp: TimeInterval) -> Decimal? {
-        rateManager.historicalRate(coinCode: coinCode, currencyCode: currencyCode, timestamp: timestamp)
+    func rate(coinType: CoinType, currencyCode: String, timestamp: TimeInterval) -> Decimal? {
+        rateManager.historicalRate(coinType: coinType, currencyCode: currencyCode, timestamp: timestamp)
     }
 
     func rawTransaction(hash: String) -> String? {

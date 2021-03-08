@@ -400,6 +400,9 @@ bch.horizontalsystems.xyz/apg";
 
 "market_watchlist.empty.caption" = "Watchlist is empty. \nYou may add coins to watchlist using star icon on a coin page.";
 
+"market.search.title" = "Search";
+"market.search.empty_text" = "No results found";
+
 "market.advanced_search.title" = "Advanced Search";
 "market.advanced_search.show_results" = "Show Results";
 "market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
@@ -425,8 +428,8 @@ bch.horizontalsystems.xyz/apg";
 
 "market.advanced_search.day" = "1 Day";
 "market.advanced_search.week" = "1 Week";
+"market.advanced_search.week2" = "2 Month";
 "market.advanced_search.month" = "1 Month";
-"market.advanced_search.month3" = "3 Month";
 "market.advanced_search.month6" = "6 Month";
 "market.advanced_search.year" = "1 Year";
 

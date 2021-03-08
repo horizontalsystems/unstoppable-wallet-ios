@@ -1,6 +1,7 @@
 import RxSwift
 import XRatesKit
 import CurrencyKit
+import CoinKit
 
 class BalanceInteractor {
     weak var delegate: IBalanceInteractorDelegate?
@@ -80,8 +81,8 @@ extension BalanceInteractor: IBalanceInteractor {
         currencyKit.baseCurrency
     }
 
-    func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo? {
-        rateManager.marketInfo(coinCode: coinCode, currencyCode: currencyCode)
+    func marketInfo(coinType: CoinType, currencyCode: String) -> MarketInfo? {
+        rateManager.marketInfo(coinType: coinType, currencyCode: currencyCode)
     }
 
     func balance(wallet: Wallet) -> Decimal? {

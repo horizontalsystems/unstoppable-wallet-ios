@@ -50,7 +50,7 @@ class TransactionInfoPresenter {
     private var rateCurrencyValue: CurrencyValue? {
         let currency = interactor.baseCurrency
 
-        guard let rate = interactor.rate(coinCode: wallet.coin.code, currencyCode: currency.code, timestamp: transaction.date.timeIntervalSince1970) else {
+        guard let rate = interactor.rate(coinType: wallet.coin.type, currencyCode: currency.code, timestamp: transaction.date.timeIntervalSince1970) else {
             return nil
         }
 

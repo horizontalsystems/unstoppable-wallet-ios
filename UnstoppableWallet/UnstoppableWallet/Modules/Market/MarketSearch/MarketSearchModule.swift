@@ -7,7 +7,7 @@ class MarketSearchModule {
         let service = MarketSearchService(rateManager: App.shared.rateManager)
         let viewModel = MarketSearchViewModel(service: service)
 
-        return MarketSearchViewController(viewModel: viewModel)
+        return ThemeNavigationController(rootViewController: MarketSearchViewController(viewModel: viewModel))
     }
 
 }

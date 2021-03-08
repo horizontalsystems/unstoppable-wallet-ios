@@ -1,5 +1,6 @@
 import XRatesKit
 import CurrencyKit
+import CoinKit
 
 class BalancePresenter {
     private static let sortingOnThreshold: Int = 5
@@ -58,7 +59,7 @@ class BalancePresenter {
 
     private func fillLatestRates() {
         for item in items {
-            item.marketInfo = interactor.marketInfo(coinCode: item.wallet.coin.code, currencyCode: currency.code)
+            item.marketInfo = interactor.marketInfo(coinType: item.wallet.coin.type, currencyCode: currency.code)
         }
     }
 
@@ -290,11 +291,11 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         }
     }
 
-    func didUpdate(marketInfos: [CoinCode: MarketInfo]) {
+    func didUpdate(marketInfos: [CoinType: MarketInfo]) {
         queue.async {
             for (coinCode, marketInfo) in marketInfos {
                 for (index, item) in self.items.enumerated() {
-                    if item.wallet.coin.code == coinCode {
+                    if item.wallet.coin.type == coinCode {
                         item.marketInfo = marketInfo
                         self.viewItems[index] = self.viewItem(item: item)
                     }

@@ -186,6 +186,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
     private func onTapShowResult() {
         let viewController = MarketAdvancedSearchResultModule.viewController(service: viewModel.service)
+        viewController.parentNavigationController = navigationController
         navigationController?.pushViewController(viewController, animated: true)
     }
 

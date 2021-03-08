@@ -28,8 +28,8 @@ extension MarketDiscoveryService: IMarketListFetcher {
     func fetchSingle(currencyCode: String) -> Single<[MarketModule.Item]> {
         if let category = currentCategory {
 //            let coinCodes = categoriesProvider.coinCodes(for: category == .rated ? nil : category.rawValue)
-            let coinCodes = categoriesProvider.coinCodes(for: category.rawValue)
-            return rateManager.coinsMarketSingle(currencyCode: currencyCode, coinCodes: coinCodes)
+            let coinTypes = categoriesProvider.coinTypes(for: category.rawValue)
+            return rateManager.coinsMarketSingle(currencyCode: currencyCode, coinTypes: coinTypes)
                     .map { coinMarkets in
                         coinMarkets.compactMap { coinMarket in
                             let score: MarketModule.Score?

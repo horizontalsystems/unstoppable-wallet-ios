@@ -279,8 +279,9 @@ PODS:
     - Starscream (~> 3)
   - X11Kit.swift (1.0)
   - XRatesKit.swift (0.7.0):
+    - CoinKit.swift (~> 0.1)
     - GRDB.swift (~> 4.0)
-    - HsToolKit.swift (~> 1.1.0)
+    - HsToolKit.swift (~> 1.1)
     - ObjectMapper (~> 3.5.2)
     - RxSwift (~> 5.0)
     - RxSwiftExt (~> 5)
@@ -474,7 +475,7 @@ CHECKOUT OPTIONS:
     :commit: 392186c18e8df97d40ca0f4587d857259d878dd4
     :git: https://github.com/horizontalsystems/gui-kit/
   CoinKit.swift:
-    :commit: 6f2a5cf295024fb6bcc376bb0604964550ece842
+    :commit: de2cce21ac3ab6ace727132dc95fbb42b717eaa1
     :git: https://github.com/horizontalsystems/coin-kit-ios
   CurrencyKit.swift:
     :commit: 72f9ab21c4f80f199727d061eff776bcb1d7a577
@@ -540,7 +541,7 @@ CHECKOUT OPTIONS:
     :commit: 467915ce2ba7b4bb831150be911bd0b8b1d94c36
     :git: https://github.com/horizontalsystems/wallet-connect-swift
   XRatesKit.swift:
-    :commit: 75a1f23d2e557dad09c9325e349924fd3eca94db
+    :commit: 3e33aaaeee513373c931c26bd3e154efa03759a3
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
   ZcashLightClientKit:
     :commit: 231a7c8401244dcb61e8f040bab2ad95cb430d9d
@@ -626,7 +627,7 @@ SPEC CHECKSUMS:
   UnstoppableDomainsResolution: 1ddbca0988240260220b0963f8b9b6c4cec5e8f2
   WalletConnect: 7253f3c123df3bba10d71459f0d62a900fee68ac
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
-  XRatesKit.swift: 83bff92740261f9522484e611010b38c187c25c7
+  XRatesKit.swift: 0f57ebeaf82e0e0f7514291a0457ae77ea0f2e66
   ZcashLightClientKit: 2bea7cdf2ddf098795688a198916e9d4ae6c1239
 
 PODFILE CHECKSUM: 9959ea13d56e5b7c5f9a908a74d9a905a6b27213

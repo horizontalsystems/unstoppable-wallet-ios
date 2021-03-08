@@ -31,9 +31,9 @@ protocol ISendInteractor {
     var baseCurrency: Currency { get }
     var defaultInputType: SendInputType { get }
 
-    func nonExpiredRateValue(coinCode: CoinCode, currencyCode: String) -> Decimal?
+    func nonExpiredRateValue(coinType: CoinType, currencyCode: String) -> Decimal?
     func send(single: Single<Void>, logger: Logger)
-    func subscribeToMarketInfo(coinCode: CoinCode, currencyCode: String)
+    func subscribeToMarketInfo(coinType: CoinType, currencyCode: String)
 }
 
 protocol ISendInteractorDelegate: AnyObject {

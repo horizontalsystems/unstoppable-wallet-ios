@@ -42,30 +42,30 @@ extension ChartInteractor: IChartInteractor {
         localStorage.pushNotificationsOn
     }
 
-    func chartInfo(coinCode: CoinCode, currencyCode: String, chartType: ChartType) -> ChartInfo? {
-        rateManager.chartInfo(coinCode: coinCode, currencyCode: currencyCode, chartType: chartType)
+    func chartInfo(coinType: CoinType, currencyCode: String, chartType: ChartType) -> ChartInfo? {
+        rateManager.chartInfo(coinType: coinType, currencyCode: currencyCode, chartType: chartType)
     }
 
-    func subscribeToChartInfo(coinCode: CoinCode, currencyCode: String, chartType: ChartType) {
+    func subscribeToChartInfo(coinType: CoinType, currencyCode: String, chartType: ChartType) {
         chartsDisposeBag = DisposeBag()
 
-        rateManager.chartInfoObservable(coinCode: coinCode, currencyCode: currencyCode, chartType: chartType)
+        rateManager.chartInfoObservable(coinType: coinType, currencyCode: currencyCode, chartType: chartType)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] chartInfo in
-                    self?.delegate?.didReceive(chartInfo: chartInfo, coinCode: coinCode)
+                    self?.delegate?.didReceive(chartInfo: chartInfo, coinType: coinType)
                 }, onError: { [weak self] error in
                     self?.delegate?.onChartInfoError(error: error)
                 })
                 .disposed(by: chartsDisposeBag)
     }
 
-    func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo? {
-        rateManager.marketInfo(coinCode: coinCode, currencyCode: currencyCode)
+    func marketInfo(coinType: CoinType, currencyCode: String) -> MarketInfo? {
+        rateManager.marketInfo(coinType: coinType, currencyCode: currencyCode)
     }
 
-    func subscribeToMarketInfo(coinCode: CoinCode, currencyCode: String) {
-        rateManager.marketInfoObservable(coinCode: coinCode, currencyCode: currencyCode)
+    func subscribeToMarketInfo(coinType: CoinType, currencyCode: String) {
+        rateManager.marketInfoObservable(coinType: coinType, currencyCode: currencyCode)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] marketInfo in
                     self?.delegate?.didReceive(marketInfo: marketInfo)
@@ -90,20 +90,20 @@ extension ChartInteractor: IChartInteractor {
                 .disposed(by: disposeBag)
     }
 
-    func favorite(coinCode: String) {
-        favoritesManager.add(coinCode: coinCode)
+    func favorite(coinType: CoinType) {
+        favoritesManager.add(coinType: coinType)
 
         delegate?.updateFavorite()
     }
 
-    func unfavorite(coinCode: String) {
-        favoritesManager.remove(coinCode: coinCode)
+    func unfavorite(coinType: CoinType) {
+        favoritesManager.remove(coinType: coinType)
 
         delegate?.updateFavorite()
     }
 
-    func isFavorite(coinCode: String) -> Bool {
-        favoritesManager.isFavorite(coinCode: coinCode)
+    func isFavorite(coinType: CoinType) -> Bool {
+        favoritesManager.isFavorite(coinType: coinType)
     }
 
 }

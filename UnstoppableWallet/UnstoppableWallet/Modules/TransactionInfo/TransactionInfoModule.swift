@@ -26,7 +26,7 @@ protocol ITransactionInfoInteractor {
     var baseCurrency: Currency { get }
     var lastBlockInfo: LastBlockInfo? { get }
     var testMode: Bool { get }
-    func rate(coinCode: String, currencyCode: String, timestamp: TimeInterval) -> Decimal?
+    func rate(coinType: CoinType, currencyCode: String, timestamp: TimeInterval) -> Decimal?
     func rawTransaction(hash: String) -> String?
     func feeCoin(coin: Coin) -> Coin?
     func copy(value: String)

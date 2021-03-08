@@ -140,9 +140,9 @@ extension FiatServiceNew {
         marketInfoDisposeBag = DisposeBag()
 
         if let coin = coin {
-            sync(marketInfo: rateManager.marketInfo(coinCode: coin.code, currencyCode: currency.code))
+            sync(marketInfo: rateManager.marketInfo(coinType: coin.type, currencyCode: currency.code))
 
-            rateManager.marketInfoObservable(coinCode: coin.code, currencyCode: currency.code)
+            rateManager.marketInfoObservable(coinType: coin.type, currencyCode: currency.code)
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                     .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                     .subscribe(onNext: { [weak self] marketInfo in

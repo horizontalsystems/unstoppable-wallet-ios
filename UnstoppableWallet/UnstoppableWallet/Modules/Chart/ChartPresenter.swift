@@ -2,6 +2,7 @@ import UIKit
 import XRatesKit
 import CurrencyKit
 import Chart
+import CoinKit
 
 class ChartPresenter {
     private let types = ChartType.allCases
@@ -50,11 +51,11 @@ class ChartPresenter {
     }
 
     private func fetchInfo() {
-        chartDataStatus = DataStatus(data: interactor.chartInfo(coinCode: launchMode.coinCode, currencyCode: currency.code, chartType: chartType))
-        interactor.subscribeToChartInfo(coinCode: launchMode.coinCode, currencyCode: currency.code, chartType: chartType)
+        chartDataStatus = DataStatus(data: interactor.chartInfo(coinType: launchMode.coinType, currencyCode: currency.code, chartType: chartType))
+        interactor.subscribeToChartInfo(coinType: launchMode.coinType, currencyCode: currency.code, chartType: chartType)
 
-        marketInfoStatus = DataStatus(data: interactor.marketInfo(coinCode: launchMode.coinCode, currencyCode: currency.code))
-        interactor.subscribeToMarketInfo(coinCode: launchMode.coinCode, currencyCode: currency.code)
+        marketInfoStatus = DataStatus(data: interactor.marketInfo(coinType: launchMode.coinType, currencyCode: currency.code))
+        interactor.subscribeToMarketInfo(coinType: launchMode.coinType, currencyCode: currency.code)
 
         interactor.subscribeToAlertUpdates()
 
@@ -95,7 +96,7 @@ extension ChartPresenter: IChartViewDelegate {
     }
 
     func onTapLink() {
-        router.open(link: CoinInfoMap.data[launchMode.coinCode]?.website)
+        router.open(link: CoinInfoMap.data[launchMode.coinType.id]?.website)
     }
 
     func onTapAlert() {
@@ -107,21 +108,18 @@ extension ChartPresenter: IChartViewDelegate {
     }
 
     func onTapFavorite() {
-        interactor.favorite(coinCode: launchMode.coinCode)
+        interactor.favorite(coinType: launchMode.coinType)
     }
 
     func onTapUnfavorite() {
-        interactor.unfavorite(coinCode: launchMode.coinCode)
+        interactor.unfavorite(coinType: launchMode.coinType)
     }
 
 }
 
 extension ChartPresenter: IChartInteractorDelegate {
 
-    func didReceive(chartInfo: ChartInfo, coinCode: CoinCode) {
-        guard coinCode == coinCode else {
-            return
-        }
+    func didReceive(chartInfo: ChartInfo, coinType: CoinType) {
         chartDataStatus = .completed(chartInfo)
         updateChart()
     }
@@ -138,14 +136,14 @@ extension ChartPresenter: IChartInteractorDelegate {
 
     func didUpdate(alerts: [PriceAlert]) {
         alert = alerts.first {
-            $0.coin.code == launchMode.coinCode
+            $0.coin.type == launchMode.coinType
         }
 
         updateChart()
     }
 
     func updateFavorite() {
-        view?.set(favorite: interactor.isFavorite(coinCode: launchMode.coinCode))
+        view?.set(favorite: interactor.isFavorite(coinType: launchMode.coinType))
     }
 
 }

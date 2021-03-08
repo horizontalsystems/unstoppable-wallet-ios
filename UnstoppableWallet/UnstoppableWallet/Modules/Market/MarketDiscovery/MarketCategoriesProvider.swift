@@ -1,4 +1,5 @@
 import Foundation
+import CoinKit
 
 class MarketCategoriesProvider {
     private static let fileName = "MarketCategoryCoins"
@@ -29,18 +30,18 @@ class MarketCategoriesProvider {
 
 extension MarketCategoriesProvider {
 
-    func coinCodes(for category: String? = nil) -> [String] {
+    func coinTypes(for category: String? = nil) -> [CoinType] {
         guard let category = category else {
-            return coins.map { $0.code }
+            return coins.map { CoinType(id: $0.id) }
         }
 
         return coins
             .filter { coin in coin.categories.contains(category) }
-            .map { $0.code }
+            .map { CoinType(id: $0.id) }
     }
 
-    func rate(for coinCode: String) -> String? {
-        coins.first { $0.code == coinCode }?.rate
+    func rate(for coinType: CoinType) -> String? {
+        coins.first { $0.id == coinType.id }?.rate
     }
 
 }

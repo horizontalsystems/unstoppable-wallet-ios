@@ -144,8 +144,8 @@ extension SendFeePresenter: ISendFeeViewDelegate {
         syncFeeLabels()
         syncError()
 
-        interactor.subscribeToMarketInfo(coinCode: feeCoin?.code, currencyCode: interactor.baseCurrency.code)
-        rateValue = interactor.nonExpiredRateValue(coinCode: coin.code, currencyCode: interactor.baseCurrency.code)
+        interactor.subscribeToMarketInfo(coinType: feeCoin?.type, currencyCode: interactor.baseCurrency.code)
+        rateValue = interactor.nonExpiredRateValue(coinType: coin.type, currencyCode: interactor.baseCurrency.code)
     }
 
 }
