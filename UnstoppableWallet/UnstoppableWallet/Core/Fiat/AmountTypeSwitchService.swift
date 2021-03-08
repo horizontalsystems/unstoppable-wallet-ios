@@ -1,31 +1,9 @@
 import RxSwift
 import RxRelay
 
-protocol IToggleAvailableDelegate: AnyObject {
-    var toggleAvailable: Bool { get }
-    var toggleAvailableObservable: Observable<Bool> { get }
-}
-
 class AmountTypeSwitchService {
+    private var toggleAvailableObservables = [Observable<Bool>]()
     private var disposeBag = DisposeBag()
-
-    weak var fromDelegate: IToggleAvailableDelegate? {
-        didSet {
-            guard let fromDelegate = fromDelegate else {
-                return
-            }
-            subscribe(disposeBag, fromDelegate.toggleAvailableObservable) { [weak self] _ in self?.syncToggleAvailable() }
-        }
-    }
-
-    weak var toDelegate: IToggleAvailableDelegate? {
-        didSet {
-            guard let toDelegate = toDelegate else {
-                return
-            }
-            subscribe(disposeBag, toDelegate.toggleAvailableObservable) { [weak self] _ in self?.syncToggleAvailable() }
-        }
-    }
 
     private let amountTypeRelay = PublishRelay<AmountType>()
     private(set) var amountType: AmountType {
@@ -47,8 +25,19 @@ class AmountTypeSwitchService {
         amountType = `default`
     }
 
-    private func syncToggleAvailable() {
-        toggleAvailable = (fromDelegate?.toggleAvailable ?? false) && (toDelegate?.toggleAvailable ?? false)
+    private func subscribeToObservables() {
+        disposeBag = DisposeBag()
+
+        Observable.combineLatest(toggleAvailableObservables)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] array in
+                    self?.syncToggleAvailable(array: array)
+                })
+                .disposed(by: disposeBag)
+    }
+
+    private func syncToggleAvailable(array: [Bool]) {
+        toggleAvailable = array.allSatisfy { $0 }
 
         if !toggleAvailable && amountType == .currency { // reset input type if it was set to currency
             amountType = .coin
@@ -57,7 +46,7 @@ class AmountTypeSwitchService {
 
 }
 
-extension AmountTypeSwitchService: IToggleAvailableDelegate {
+extension AmountTypeSwitchService {
 
     func toggle() {
         if toggleAvailable {
@@ -71,6 +60,11 @@ extension AmountTypeSwitchService: IToggleAvailableDelegate {
 
     var toggleAvailableObservable: Observable<Bool> {
         toggleAvailableRelay.asObservable()
+    }
+
+    func add(toggleAllowedObservable: Observable<Bool>) {
+        toggleAvailableObservables.append(toggleAllowedObservable)
+        subscribeToObservables()
     }
 
 }

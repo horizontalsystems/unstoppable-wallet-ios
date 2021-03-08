@@ -38,8 +38,8 @@ class SwapViewController: ThemeViewController {
     init(viewModel: SwapViewModel, allowanceViewModel: SwapAllowanceViewModel) {
         self.viewModel = viewModel
 
-        fromCoinCardCell = CoinCardModule.fromCell(service: viewModel.service, tradeService: viewModel.tradeService, fiatSwitchService: viewModel.fiatSwitchService)
-        toCoinCardCell = CoinCardModule.toCell(service: viewModel.service, tradeService: viewModel.tradeService, fiatSwitchService: viewModel.fiatSwitchService)
+        fromCoinCardCell = CoinCardModule.fromCell(service: viewModel.service, tradeService: viewModel.tradeService, switchService: viewModel.switchService)
+        toCoinCardCell = CoinCardModule.toCell(service: viewModel.service, tradeService: viewModel.tradeService, switchService: viewModel.switchService)
         allowanceCell = SwapAllowanceCell(viewModel: allowanceViewModel)
 
         super.init()

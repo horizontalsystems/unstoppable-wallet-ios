@@ -4,9 +4,9 @@ import CurrencyKit
 import CoinKit
 
 protocol IAmountInputService {
-    var initialAmount: Decimal { get }
-    var initialCoin: Coin? { get }
-    var balance: Decimal { get }
+    var amount: Decimal { get }
+    var coin: Coin? { get }
+    var balance: Decimal? { get }
 
     var amountObservable: Observable<Decimal> { get }
     var coinObservable: Observable<Coin?> { get }
@@ -20,8 +20,8 @@ class AmountInputViewModel {
     private let disposeBag = DisposeBag()
 
     private let service: IAmountInputService
-    private let fiatService: FiatServiceNew
-    private let switchService: AmountTypeSwitchServiceNew
+    private let fiatService: FiatService
+    private let switchService: AmountTypeSwitchService
     private let decimalParser: IAmountDecimalParser
     private let isMaxSupported: Bool
 
@@ -40,7 +40,7 @@ class AmountInputViewModel {
 
     private var validDecimals = AmountInputViewModel.maxValidDecimals
 
-    init(service: IAmountInputService, fiatService: FiatServiceNew, switchService: AmountTypeSwitchServiceNew, decimalParser: IAmountDecimalParser, isMaxSupported: Bool = true) {
+    init(service: IAmountInputService, fiatService: FiatService, switchService: AmountTypeSwitchService, decimalParser: IAmountDecimalParser, isMaxSupported: Bool = true) {
         self.service = service
         self.fiatService = fiatService
         self.switchService = switchService
@@ -55,14 +55,15 @@ class AmountInputViewModel {
         subscribe(disposeBag, fiatService.secondaryAmountInfoObservable) { [weak self] in self?.syncSecondary(amountInfo: $0) }
         subscribe(disposeBag, switchService.toggleAvailableObservable) { [weak self] in self?.switchEnabledRelay.accept($0) }
 
-        sync(amount: service.initialAmount)
-        sync(coin: service.initialCoin)
+        sync(amount: service.amount)
+        sync(coin: service.coin)
         syncCoin(amount: fiatService.coinAmount)
         sync(primaryInfo: fiatService.primaryInfo)
         syncSecondary(amountInfo: fiatService.secondaryAmountInfo)
     }
 
     private func sync(amount: Decimal) {
+        fiatService.set(coinAmount: amount)
     }
 
     private func sync(coin: Coin?) {
@@ -70,14 +71,15 @@ class AmountInputViewModel {
         validDecimals = min(max, (coin?.decimal ?? max))
 
         fiatService.set(coin: coin)
-        isMaxEnabledRelay.accept(service.balance > 0)
+
+        isMaxEnabledRelay.accept(isMaxSupported && (service.balance ?? 0) > 0)
     }
 
     private func syncCoin(amount: Decimal) {
         service.onChange(amount: amount)
     }
 
-    private func prefix(primaryInfo: FiatServiceNew.PrimaryInfo) -> String? {
+    private func prefix(primaryInfo: FiatService.PrimaryInfo) -> String? {
         switch primaryInfo {
         case .amountInfo(let amountInfo):
             guard let amountInfo = amountInfo else {
@@ -92,22 +94,30 @@ class AmountInputViewModel {
         }
     }
 
-    private func amountString(primaryInfo: FiatServiceNew.PrimaryInfo) -> String? {
+    private func amountString(primaryInfo: FiatService.PrimaryInfo) -> String? {
         switch primaryInfo {
         case .amountInfo(let amountInfo):
             guard let amountInfo = amountInfo else {
                 return nil
             }
 
+            if amountInfo.value == 0 {
+                return nil
+            }
+
             decimalFormatter.maximumFractionDigits = min(amountInfo.decimal, Self.maxValidDecimals)
             return decimalFormatter.string(from: amountInfo.value as NSNumber)
         case .amount(let amount):
+            if amount == 0 {
+                return nil
+            }
+
             decimalFormatter.maximumFractionDigits = Self.maxValidDecimals
             return decimalFormatter.string(from: amount as NSNumber)
         }
     }
 
-    private func sync(primaryInfo: FiatServiceNew.PrimaryInfo) {
+    private func sync(primaryInfo: FiatService.PrimaryInfo) {
         amountRelay.accept(amountString(primaryInfo: primaryInfo))
         prefixRelay.accept(prefix(primaryInfo: primaryInfo))
     }
@@ -162,7 +172,11 @@ extension AmountInputViewModel {
     }
 
     func onTapMax() {
-        fiatService.set(coinAmount: service.balance)
+        guard let balance = service.balance else {
+            return
+        }
+
+        fiatService.set(coinAmount: balance)
     }
 
     func onSwitch() {

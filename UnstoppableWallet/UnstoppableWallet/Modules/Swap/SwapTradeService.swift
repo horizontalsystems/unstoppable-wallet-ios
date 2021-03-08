@@ -18,31 +18,41 @@ class SwapTradeService {
 
     private(set) var coinIn: Coin? {
         didSet {
-            coinInRelay.accept(coinIn)
+            if coinIn != oldValue {
+                coinInRelay.accept(coinIn)
+            }
         }
     }
 
     private(set) var coinOut: Coin? {
         didSet {
-            coinOutRelay.accept(coinOut)
+            if coinOut != oldValue {
+                coinOutRelay.accept(coinOut)
+            }
         }
     }
 
-    private(set) var amountIn: Decimal? {
+    private(set) var amountIn: Decimal = 0 {
         didSet {
-            amountInRelay.accept(amountIn)
+            if amountIn != oldValue {
+                amountInRelay.accept(amountIn)
+            }
         }
     }
 
-    private(set) var amountOut: Decimal? {
+    private(set) var amountOut: Decimal = 0 {
         didSet {
-            amountOutRelay.accept(amountOut)
+            if amountOut != oldValue {
+                amountOutRelay.accept(amountOut)
+            }
         }
     }
 
     private(set) var tradeType: TradeType = .exactIn {
         didSet {
-            tradeTypeRelay.accept(tradeType)
+            if tradeType != oldValue {
+                tradeTypeRelay.accept(tradeType)
+            }
         }
     }
 
@@ -50,8 +60,8 @@ class SwapTradeService {
     private var coinInRelay = PublishRelay<Coin?>()
     private var coinOutRelay = PublishRelay<Coin?>()
 
-    private var amountInRelay = PublishRelay<Decimal?>()
-    private var amountOutRelay = PublishRelay<Decimal?>()
+    private var amountInRelay = PublishRelay<Decimal>()
+    private var amountOutRelay = PublishRelay<Decimal>()
 
     private let stateRelay = PublishRelay<State>()
     private(set) var state: State = .notReady(errors: []) {
@@ -108,7 +118,9 @@ class SwapTradeService {
             return
         }
 
-        guard let amount = tradeType == .exactIn ? amountIn : amountOut else {
+        let amount = tradeType == .exactIn ? amountIn : amountOut
+
+        guard amount > 0 else {
             state = .notReady(errors: [])
             return
         }
@@ -126,9 +138,9 @@ class SwapTradeService {
 
         switch tradeData.type {
         case .exactIn:
-            amountOut = estimatedAmount
+            amountOut = estimatedAmount ?? 0
         case .exactOut:
-            amountIn = estimatedAmount
+            amountIn = estimatedAmount ?? 0
         }
 
         let trade = Trade(tradeData: tradeData)
@@ -155,11 +167,11 @@ extension SwapTradeService {
         coinOutRelay.asObservable()
     }
 
-    var amountInObservable: Observable<Decimal?> {
+    var amountInObservable: Observable<Decimal> {
         amountInRelay.asObservable()
     }
 
-    var amountOutObservable: Observable<Decimal?> {
+    var amountOutObservable: Observable<Decimal> {
         amountOutRelay.asObservable()
     }
 
@@ -178,12 +190,12 @@ extension SwapTradeService {
 
         self.coinIn = coinIn
         if tradeType == .exactOut {
-            amountIn = nil
+            amountIn = 0
         }
 
         if coinOut == coinIn {
             coinOut = nil
-            amountOut = nil
+            amountOut = 0
         }
 
         swapData = nil
@@ -197,40 +209,40 @@ extension SwapTradeService {
 
         self.coinOut = coinOut
         if tradeType == .exactIn {
-            amountOut = nil
+            amountOut = 0
         }
 
         if coinIn == coinOut {
             coinIn = nil
-            amountIn = nil
+            amountIn = 0
         }
 
         swapData = nil
         syncSwapData()
     }
 
-    func set(amountIn: Decimal?) {
-        tradeType = .exactIn
-
+    func set(amountIn: Decimal) {
         guard self.amountIn != amountIn else {
             return
         }
 
+        tradeType = .exactIn
+
         self.amountIn = amountIn
-        amountOut = nil
+        amountOut = 0
 
         syncTradeData()
     }
 
-    func set(amountOut: Decimal?) {
-        tradeType = .exactOut
-
+    func set(amountOut: Decimal) {
         guard self.amountOut != amountOut else {
             return
         }
 
+        tradeType = .exactOut
+
         self.amountOut = amountOut
-        amountIn = nil
+        amountIn = 0
 
         syncTradeData()
     }

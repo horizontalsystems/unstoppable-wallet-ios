@@ -75,7 +75,7 @@ extension SendEvmService {
 
 extension SendEvmService: IAvailableBalanceService {
 
-    var balance: Decimal {
+    var availableBalance: Decimal {
         adapter.balance
     }
 
@@ -83,12 +83,16 @@ extension SendEvmService: IAvailableBalanceService {
 
 extension SendEvmService: IAmountInputService {
 
-    var initialAmount: Decimal {
+    var amount: Decimal {
         0
     }
 
-    var initialCoin: Coin? {
+    var coin: Coin? {
         sendCoin
+    }
+
+    var balance: Decimal? {
+        adapter.balance
     }
 
     var amountObservable: Observable<Decimal> {
