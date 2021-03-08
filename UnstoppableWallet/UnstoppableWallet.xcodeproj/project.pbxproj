@@ -1878,7 +1878,6 @@
 		58AAA65F52DA13121BABBB3B /* MarketAdvancedSearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA111A018760DAC37BA31 /* MarketAdvancedSearchResultViewController.swift */; };
 		58AAA66F0A948A51C26A4151 /* ConnectionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA610E99CF0429135DD1D /* ConnectionError.swift */; };
 		58AAA670C62548F1A92D680B /* CoinSelectModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAACD2595FD785AEF3C379 /* CoinSelectModule.swift */; };
-		58AAA676D1BDABF2C5DEC68E /* ItemSelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6161DF62A4D7DEA6EEA /* ItemSelectorViewModel.swift */; };
 		58AAA67737676B304B9587E4 /* CoinIdMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4C71C2C4021826B3D62 /* CoinIdMigration.swift */; };
 		58AAA681DBD060BC84D56CD9 /* SendAmountModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA82DAFCCEBBC7BEBB80B /* SendAmountModule.swift */; };
 		58AAA6941C8B5140B0B5DDAE /* Evm20Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA312DD0792117182B64E /* Evm20Adapter.swift */; };
@@ -2065,7 +2064,6 @@
 		58AAAD3A237C3A2F46FD2509 /* DebugPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4022C5803D2440F43C7 /* DebugPresenter.swift */; };
 		58AAAD3AC2B87E6AAFE535D8 /* DebugLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA18F75B95ACBBAE94DF3 /* DebugLogger.swift */; };
 		58AAAD4760E8E73ACDEBA98C /* SwapTokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA32D9367A5BBA5C2EC45 /* SwapTokenManager.swift */; };
-		58AAAD59D6704E7AA73076A0 /* ItemSelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6161DF62A4D7DEA6EEA /* ItemSelectorViewModel.swift */; };
 		58AAAD67414CEB7A9F4AE166 /* AmountDecimalParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF740AE2BEBD7CEBD563 /* AmountDecimalParser.swift */; };
 		58AAAD67C6EC277349D1D384 /* SendFeePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6C29584EFCDD8209363 /* SendFeePresenter.swift */; };
 		58AAAD6E983098313872C5B8 /* MarketListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4BC2A3A101A2276F906 /* MarketListHeaderView.swift */; };
@@ -2100,7 +2098,6 @@
 		58AAAE86B7C201A1E096E78F /* ChartModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA744EE8408F5FF940B9A /* ChartModule.swift */; };
 		58AAAE86C076E1C7418874D3 /* BackupConfirmationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA2D3E1840EA8931E12D0 /* BackupConfirmationRouter.swift */; };
 		58AAAE8D8A77DE3EC9BF448E /* BackupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA04194E7E2B466F92828 /* BackupInteractor.swift */; };
-		58AAAE8D99A0AC495EE3E3C8 /* ItemSelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6161DF62A4D7DEA6EEA /* ItemSelectorViewModel.swift */; };
 		58AAAE8DBB161631F1529B9C /* SendAmountInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD6F502BE56E4FECFBA0 /* SendAmountInteractor.swift */; };
 		58AAAE9383600A15C521DBD8 /* InfoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD7AC450FEF913E5417F /* InfoModule.swift */; };
 		58AAAE97A7BA2126874E9725 /* SendAddressModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA07EAD7DFA4B9CDA00C8 /* SendAddressModule.swift */; };
@@ -3065,7 +3062,6 @@
 		58AAA5F63E9C788A68C8AF5A /* BackupPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupPresenter.swift; sourceTree = "<group>"; };
 		58AAA6021E4709D0ED818A18 /* ChartInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartInteractor.swift; sourceTree = "<group>"; };
 		58AAA610E99CF0429135DD1D /* ConnectionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionError.swift; sourceTree = "<group>"; };
-		58AAA6161DF62A4D7DEA6EEA /* ItemSelectorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemSelectorViewModel.swift; sourceTree = "<group>"; };
 		58AAA6205C47965E48E4BAC3 /* SendFeeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeeView.swift; sourceTree = "<group>"; };
 		58AAA6342DE26FA8D7900DA2 /* SwapTokenSelectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapTokenSelectCell.swift; sourceTree = "<group>"; };
 		58AAA656A81B2C12F618FB44 /* BaseEvmAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseEvmAdapter.swift; sourceTree = "<group>"; };
@@ -5068,7 +5064,6 @@
 		58AAA6FB53544C764A1D264E /* ItemSelector */ = {
 			isa = PBXGroup;
 			children = (
-				58AAA6161DF62A4D7DEA6EEA /* ItemSelectorViewModel.swift */,
 				58AAA1016E563805456AC2F7 /* ItemSelectorModule.swift */,
 				58AAACB7FAE34A043DD3F1DC /* ItemSelectorViewController.swift */,
 				58AAA0E2A105973F53166334 /* Views */,
@@ -6525,7 +6520,6 @@
 				58AAA2946ECE3F52D9749482 /* MarketAdvancedSearchViewModel.swift in Sources */,
 				58AAA7B2A2B438E3F433797E /* MarketAdvancedSearchService.swift in Sources */,
 				58AAA00D71685E3BD1106988 /* MarketAdvancedSearchModule.swift in Sources */,
-				58AAAD59D6704E7AA73076A0 /* ItemSelectorViewModel.swift in Sources */,
 				58AAA4B534C9FAC901F3A282 /* ItemSelectorModule.swift in Sources */,
 				58AAAE1714A5A1FAFBF130F8 /* ItemSelectorViewController.swift in Sources */,
 				58AAA55C7B8D4391DB3A8C01 /* SimpleSheetTitleView.swift in Sources */,
@@ -7317,7 +7311,6 @@
 				58AAAA551C559426C40E6947 /* MarketAdvancedSearchViewModel.swift in Sources */,
 				58AAAB05DF47BDD18ABB9286 /* MarketAdvancedSearchService.swift in Sources */,
 				58AAA23705C1D5B3F9331C9D /* MarketAdvancedSearchModule.swift in Sources */,
-				58AAAE8D99A0AC495EE3E3C8 /* ItemSelectorViewModel.swift in Sources */,
 				58AAA8CA5025CC238B7D202C /* ItemSelectorModule.swift in Sources */,
 				58AAAD224E1641AFF9B7EC4A /* ItemSelectorViewController.swift in Sources */,
 				58AAADB514C81DA8F0016C91 /* SimpleSheetTitleView.swift in Sources */,
@@ -8071,7 +8064,6 @@
 				58AAA7B2A0AF69FFABE4A34F /* MarketAdvancedSearchViewModel.swift in Sources */,
 				58AAABBF372214D4BF266805 /* MarketAdvancedSearchService.swift in Sources */,
 				58AAAE3B80679F4E92C31307 /* MarketAdvancedSearchModule.swift in Sources */,
-				58AAA676D1BDABF2C5DEC68E /* ItemSelectorViewModel.swift in Sources */,
 				58AAADEAADDF07F0036F8F61 /* ItemSelectorModule.swift in Sources */,
 				58AAACA0613CDC5B1951E624 /* ItemSelectorViewController.swift in Sources */,
 				58AAA8757A05F21766ED0EA5 /* SimpleSheetTitleView.swift in Sources */,

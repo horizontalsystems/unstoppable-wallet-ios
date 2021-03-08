@@ -14,13 +14,15 @@ private struct StringArrayTransform: TransformType {
 }
 
 class CategorizedCoin: ImmutableMappable {
+    public let id: String
     public let code: String
     public let title: String
     public let categories: [String]
     public let active: Bool
     public let rate: String
 
-    init(code: String, title: String, categories: [String], active: Bool, rate: String) {
+    init(id: String, code: String, title: String, categories: [String], active: Bool, rate: String) {
+        self.id = id
         self.code = code
         self.title = title
         self.categories = categories
@@ -29,6 +31,7 @@ class CategorizedCoin: ImmutableMappable {
     }
 
     required public init(map: Map) throws {
+        id = try map.value("id")
         code = try map.value("code")
         title = (try? map.value("name")) ?? ""
         active = (try? map.value("active")) ?? false

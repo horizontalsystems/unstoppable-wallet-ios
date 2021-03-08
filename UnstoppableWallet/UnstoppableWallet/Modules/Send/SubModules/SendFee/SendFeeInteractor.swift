@@ -34,12 +34,12 @@ extension SendFeeInteractor: ISendFeeInteractor {
         feeCoinProvider.feeCoinProtocol(coin: coin)
     }
 
-    func subscribeToMarketInfo(coinCode: CoinCode?, currencyCode: String) {
-        guard let coinCode = coinCode else {
+    func subscribeToMarketInfo(coinType: CoinType?, currencyCode: String) {
+        guard let coinType = coinType else {
             return
         }
 
-        rateManager.marketInfoObservable(coinCode: coinCode, currencyCode: currencyCode)
+        rateManager.marketInfoObservable(coinType: coinType, currencyCode: currencyCode)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] marketInfo in
                     self?.delegate?.didReceive(marketInfo: marketInfo)
@@ -47,8 +47,8 @@ extension SendFeeInteractor: ISendFeeInteractor {
                 .disposed(by: disposeBag)
     }
 
-    func nonExpiredRateValue(coinCode: String, currencyCode: String) -> Decimal? {
-        guard let marketInfo = rateManager.marketInfo(coinCode: coinCode, currencyCode: currencyCode), !marketInfo.expired else {
+    func nonExpiredRateValue(coinType: CoinType, currencyCode: String) -> Decimal? {
+        guard let marketInfo = rateManager.marketInfo(coinType: coinType, currencyCode: currencyCode), !marketInfo.expired else {
             return nil
         }
         return marketInfo.rate

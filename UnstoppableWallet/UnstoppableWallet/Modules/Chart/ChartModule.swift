@@ -7,7 +7,7 @@ import CoinKit
 struct ChartModule {
 
     enum LaunchMode {
-        case partial(coinCode: String, coinTitle: String, coinType: CoinType?)
+        case partial(coinCode: String, coinTitle: String, coinType: CoinType)
         case coin(coin: Coin)
 
         var coinCode: String {
@@ -16,6 +16,15 @@ struct ChartModule {
                 return coinCode
             case let .coin(coin):
                 return coin.code
+            }
+        }
+
+        var coinType: CoinType {
+            switch self {
+            case let .partial(_, _, coinType):
+                return coinType
+            case let .coin(coin):
+                return coin.type
             }
         }
 
@@ -76,21 +85,21 @@ protocol IChartInteractor {
     var defaultChartType: ChartType? { get set }
     var alertsOn: Bool { get }
 
-    func chartInfo(coinCode: CoinCode, currencyCode: String, chartType: ChartType) -> ChartInfo?
-    func subscribeToChartInfo(coinCode: CoinCode, currencyCode: String, chartType: ChartType)
+    func chartInfo(coinType: CoinType, currencyCode: String, chartType: ChartType) -> ChartInfo?
+    func subscribeToChartInfo(coinType: CoinType, currencyCode: String, chartType: ChartType)
 
-    func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo?
-    func subscribeToMarketInfo(coinCode: CoinCode, currencyCode: String)
+    func marketInfo(coinType: CoinType, currencyCode: String) -> MarketInfo?
+    func subscribeToMarketInfo(coinType: CoinType, currencyCode: String)
     func priceAlert(coin: Coin?) -> PriceAlert?
     func subscribeToAlertUpdates()
 
-    func favorite(coinCode: String)
-    func unfavorite(coinCode: String)
-    func isFavorite(coinCode: String) -> Bool
+    func favorite(coinType: CoinType)
+    func unfavorite(coinType: CoinType)
+    func isFavorite(coinType: CoinType) -> Bool
 }
 
 protocol IChartInteractorDelegate: class {
-    func didReceive(chartInfo: ChartInfo, coinCode: CoinCode)
+    func didReceive(chartInfo: ChartInfo, coinType: CoinType)
     func didReceive(marketInfo: MarketInfo)
     func onChartInfoError(error: Error)
     func didUpdate(alerts: [PriceAlert])

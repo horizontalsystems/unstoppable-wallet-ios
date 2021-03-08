@@ -227,28 +227,26 @@ protocol IBlurManager {
 protocol IRateManager {
     func refresh()
 
-    func convertCoinTypeToXRateKitCoinType(coinType: CoinType) -> XRatesKit.CoinType?
-    func convertXRateCoinTypeToCoinType(coinType: XRatesKit.CoinType) -> CoinType?
-
-    func marketInfo(coinCode: String, currencyCode: String) -> MarketInfo?
+    func marketInfo(coinType: CoinType, currencyCode: String) -> MarketInfo?
     func globalMarketInfoSingle(currencyCode: String) -> Single<GlobalCoinMarket>
     func topMarketsSingle(currencyCode: String, itemCount: Int) -> Single<[CoinMarket]>
-    func coinsMarketSingle(currencyCode: String, coinCodes: [String]) -> Single<[CoinMarket]>
-    func marketInfoObservable(coinCode: String, currencyCode: String) -> Observable<MarketInfo>
-    func marketInfosObservable(currencyCode: String) -> Observable<[String: MarketInfo]>
-    func historicalRate(coinCode: String, currencyCode: String, timestamp: TimeInterval) -> Single<Decimal>
-    func historicalRate(coinCode: String, currencyCode: String, timestamp: TimeInterval) -> Decimal?
-    func chartInfo(coinCode: String, currencyCode: String, chartType: ChartType) -> ChartInfo?
-    func chartInfoObservable(coinCode: String, currencyCode: String, chartType: ChartType) -> Observable<ChartInfo>
+    func coinsMarketSingle(currencyCode: String, coinTypes: [CoinType]) -> Single<[CoinMarket]>
+    func searchCoins(text: String) -> [CoinData]
+    func marketInfoObservable(coinType: CoinType, currencyCode: String) -> Observable<MarketInfo>
+    func marketInfosObservable(currencyCode: String) -> Observable<[CoinType: MarketInfo]>
+    func historicalRate(coinType: CoinType, currencyCode: String, timestamp: TimeInterval) -> Single<Decimal>
+    func historicalRate(coinType: CoinType, currencyCode: String, timestamp: TimeInterval) -> Decimal?
+    func chartInfo(coinType: CoinType, currencyCode: String, chartType: ChartType) -> ChartInfo?
+    func chartInfoObservable(coinType: CoinType, currencyCode: String, chartType: ChartType) -> Observable<ChartInfo>
 }
 
 protocol IFavoritesManager {
     var dataUpdatedObservable: Observable<()> { get }
     var all: [FavoriteCoinRecord] { get }
 
-    func add(coinCode: String)
-    func remove(coinCode: String)
-    func isFavorite(coinCode: String) -> Bool
+    func add(coinType: CoinType)
+    func remove(coinType: CoinType)
+    func isFavorite(coinType: CoinType) -> Bool
 }
 
 protocol IPostsManager {
@@ -544,9 +542,9 @@ protocol ICoinManager {
 
 protocol IFavoriteCoinRecordStorage {
     var favoriteCoinRecords: [FavoriteCoinRecord] { get }
-    func save(coinCode: String)
-    func deleteFavoriteCoinRecord(coinCode: String)
-    func inFavorites(coinCode: String) -> Bool
+    func save(coinType: CoinType)
+    func deleteFavoriteCoinRecord(coinType: CoinType)
+    func inFavorites(coinType: CoinType) -> Bool
 }
 
 protocol ITermsManager {

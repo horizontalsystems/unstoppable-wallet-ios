@@ -1,31 +1,32 @@
 import GRDB
+import CoinKit
 
 class FavoriteCoinRecord: Record {
-    let coinCode: String
+    let coinType: CoinType
 
-    init(coinCode: String) {
-        self.coinCode = coinCode
+    init(coinType: CoinType) {
+        self.coinType = coinType
 
         super.init()
     }
 
 
     override class var databaseTableName: String {
-        "favorite_coins"
+        "favorite_coins_v20"
     }
 
     enum Columns: String, ColumnExpression {
-        case coinCode
+        case coinType
     }
 
     required init(row: Row) {
-        coinCode = row[Columns.coinCode]
+        coinType = CoinType(id: row[Columns.coinType])
 
         super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
-        container[Columns.coinCode] = coinCode
+        container[Columns.coinType] = coinType.id
     }
 
 }

@@ -2,6 +2,7 @@ import UIKit
 import ThemeKit
 import XRatesKit
 import CurrencyKit
+import CoinKit
 
 struct MarketModule {
     static func viewController() -> UIViewController {
@@ -158,6 +159,7 @@ extension MarketModule { // Service Items
         let score: Score?
         let coinCode: String
         let coinName: String
+        let coinType: CoinType
         let marketCap: Decimal
         let liquidity: Decimal?
         let price: Decimal
@@ -167,8 +169,9 @@ extension MarketModule { // Service Items
         init(coinMarket: CoinMarket, score: Score? = nil) {
             self.score = score
 
-            coinCode = coinMarket.coin.code
-            coinName = coinMarket.coin.title
+            coinCode = coinMarket.coinData.code
+            coinName = coinMarket.coinData.name
+            coinType = coinMarket.coinData.coinType
             marketCap = coinMarket.marketInfo.marketCap
             liquidity = coinMarket.marketInfo.liquidity
             price = coinMarket.marketInfo.rate
@@ -220,6 +223,7 @@ extension MarketModule {  // ViewModel Items
         let score: ViewScore?
         let coinName: String
         let coinCode: String
+        let coinType: CoinType
         let rate: String
         let marketDataValue: MarketDataValue
 
@@ -232,6 +236,7 @@ extension MarketModule {  // ViewModel Items
 
             coinCode = item.coinCode
             coinName = item.coinName
+            coinType = item.coinType
 
             let rateValue = CurrencyValue(currency: currency, value: item.price)
             rate = ValueFormatter.instance.format(currencyValue: rateValue, fractionPolicy: .threshold(high: 1000, low: 0.000001), trimmable: false) ?? ""

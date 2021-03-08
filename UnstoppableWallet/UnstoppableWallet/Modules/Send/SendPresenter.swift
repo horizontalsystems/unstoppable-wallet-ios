@@ -47,9 +47,9 @@ extension SendPresenter: ISendViewDelegate {
         view?.set(coin: coin)
         handler.onViewDidLoad()
 
-        interactor.subscribeToMarketInfo(coinCode: coin.code, currencyCode: interactor.baseCurrency.code)
+        interactor.subscribeToMarketInfo(coinType: coin.type, currencyCode: interactor.baseCurrency.code)
 
-        let rateValue = interactor.nonExpiredRateValue(coinCode: coin.code, currencyCode: interactor.baseCurrency.code)
+        let rateValue = interactor.nonExpiredRateValue(coinType: coin.type, currencyCode: interactor.baseCurrency.code)
         handler.sync(rateValue: rateValue)
 
         var inputType: SendInputType

@@ -176,7 +176,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
 
         let currency = currencyKit.baseCurrency
 
-        rateManager.historicalRate(coinCode: coin.code, currencyCode: currency.code, timestamp: date.timeIntervalSince1970)
+        rateManager.historicalRate(coinType: coin.type, currencyCode: currency.code, timestamp: date.timeIntervalSince1970)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onSuccess: { [weak self] rateValue in

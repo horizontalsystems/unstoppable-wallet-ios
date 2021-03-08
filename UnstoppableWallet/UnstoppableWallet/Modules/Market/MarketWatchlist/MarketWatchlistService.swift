@@ -23,9 +23,9 @@ class MarketWatchlistService {
 extension MarketWatchlistService: IMarketListFetcher {
 
     func fetchSingle(currencyCode: String) -> Single<[MarketModule.Item]> {
-        let coinCodes = favoritesManager.all.map { $0.coinCode }
+        let coinTypes = favoritesManager.all.map { $0.coinType }
 
-        return rateManager.coinsMarketSingle(currencyCode: currencyCode, coinCodes: coinCodes)
+        return rateManager.coinsMarketSingle(currencyCode: currencyCode, coinTypes: coinTypes)
                 .map { coinMarkets in
                     coinMarkets.map { coinMarket in
                         MarketModule.Item(coinMarket: coinMarket)

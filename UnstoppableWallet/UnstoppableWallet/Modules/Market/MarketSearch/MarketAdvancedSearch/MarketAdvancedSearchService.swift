@@ -290,8 +290,8 @@ extension MarketAdvancedSearchService {
     enum PricePeriodFilter: CaseIterable {
         case day
         case week
+        case week2
         case month
-        case month3
         case month6
         case year
     }

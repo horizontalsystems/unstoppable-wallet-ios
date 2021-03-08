@@ -1,6 +1,7 @@
 import RxSwift
 import CurrencyKit
 import HsToolKit
+import CoinKit
 
 class SendInteractor {
     weak var delegate: ISendInteractorDelegate?
@@ -38,8 +39,8 @@ extension SendInteractor: ISendInteractor {
         localStorage.sendInputType ?? .coin
     }
 
-    func nonExpiredRateValue(coinCode: CoinCode, currencyCode: String) -> Decimal? {
-        guard let marketInfo = rateManager.marketInfo(coinCode: coinCode, currencyCode: currencyCode), !marketInfo.expired else {
+    func nonExpiredRateValue(coinType: CoinType, currencyCode: String) -> Decimal? {
+        guard let marketInfo = rateManager.marketInfo(coinType: coinType, currencyCode: currencyCode), !marketInfo.expired else {
             return nil
         }
         return marketInfo.rate
@@ -58,8 +59,8 @@ extension SendInteractor: ISendInteractor {
                 .disposed(by: disposeBag)
     }
 
-    func subscribeToMarketInfo(coinCode: CoinCode, currencyCode: String) {
-        rateManager.marketInfoObservable(coinCode: coinCode, currencyCode: currencyCode)
+    func subscribeToMarketInfo(coinType: CoinType, currencyCode: String) {
+        rateManager.marketInfoObservable(coinType: coinType, currencyCode: currencyCode)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] marketInfo in
                     self?.delegate?.didReceive(marketInfo: marketInfo)

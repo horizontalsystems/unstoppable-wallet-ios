@@ -1,5 +1,6 @@
 import RxSwift
 import RxCocoa
+import CoinKit
 
 class FavoritesManager {
     private let storage: IFavoriteCoinRecordStorage
@@ -22,20 +23,20 @@ extension FavoritesManager: IFavoritesManager {
         storage.favoriteCoinRecords
     }
 
-    public func add(coinCode: String) {
-        storage.save(coinCode: coinCode)
+    public func add(coinType: CoinType) {
+        storage.save(coinType: coinType)
 
         dataUpdatedRelay.accept(())
     }
 
-    public func remove(coinCode: String) {
-        storage.deleteFavoriteCoinRecord(coinCode: coinCode)
+    public func remove(coinType: CoinType) {
+        storage.deleteFavoriteCoinRecord(coinType: coinType)
 
         dataUpdatedRelay.accept(())
     }
 
-    public func isFavorite(coinCode: String) -> Bool {
-        return storage.inFavorites(coinCode: coinCode)
+    public func isFavorite(coinType: CoinType) -> Bool {
+        return storage.inFavorites(coinType: coinType)
     }
 
 }
