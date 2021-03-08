@@ -832,7 +832,7 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "enable_coins.enable_button" = "Enable";
 "enable_coins.enabling" = "Enabling...";
 "enable_coins.enabled_coins" = "Enabled %@ coins";
-"enable_coins.enabled_no_coins" = "No coins found with balance";
+"enable_coins.enabled_no_coins" = "Did not find any new tokens with balance";
 
 // Onboarding
 
