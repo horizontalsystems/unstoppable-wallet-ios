@@ -19,12 +19,14 @@ class SwapCoinCardCell: UITableViewCell {
     private let tokenSelectButton = UIButton()
 
     private let amountInputWrapper = UIView()
-    private let amountInput = AmountInputView()
+    private let formAmountInput: FormAmountInputView
 
     private let balanceView = AdditionalDataView()
 
-    public init(viewModel: SwapCoinCardViewModel, title: String) {
+    init(viewModel: SwapCoinCardViewModel, amountInputViewModel: AmountInputViewModel, title: String) {
         self.viewModel = viewModel
+
+        formAmountInput = FormAmountInputView(viewModel: amountInputViewModel)
 
         super.init(style: .default, reuseIdentifier: nil)
 
@@ -90,29 +92,16 @@ class SwapCoinCardCell: UITableViewCell {
         amountInputWrapper.snp.makeConstraints { maker in
             maker.top.equalTo(tokenSelectButton.snp.bottom)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin8)
-            maker.height.equalTo(amountInput.viewHeight)
+            maker.height.equalTo(formAmountInput.viewHeight)
         }
 
         amountInputWrapper.layer.cornerRadius = .cornerRadius2x
         amountInputWrapper.layer.borderWidth = CGFloat.heightOnePixel
         amountInputWrapper.layer.borderColor = UIColor.themeSteel20.cgColor
 
-        amountInputWrapper.addSubview(amountInput)
-        amountInput.snp.makeConstraints { maker in
+        amountInputWrapper.addSubview(formAmountInput)
+        formAmountInput.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
-        }
-
-        amountInput.isValidText = { [weak self] text in
-            self?.viewModel.isValid(amount: text) ?? true
-        }
-        amountInput.onChangeText = { [weak self] text in
-            self?.viewModel.onChange(amount: text)
-        }
-        amountInput.onTapMax = { [weak self] in
-            self?.viewModel.onTapMax()
-        }
-        amountInput.onTapSecondary = { [weak self] in
-            self?.viewModel.onSwitch()
         }
 
         cardView.contentView.addSubview(balanceView)
@@ -130,11 +119,6 @@ class SwapCoinCardCell: UITableViewCell {
 
     private func subscribeToViewModel() {
         subscribe(disposeBag, viewModel.isEstimated) { [weak self] in self?.setBadge(hidden: !$0) }
-        subscribe(disposeBag, viewModel.prefixDriver) { [weak self] in self?.set(prefix: $0) }
-        subscribe(disposeBag, viewModel.amountDriver) { [weak self] in self?.set(text: $0) }
-        subscribe(disposeBag, viewModel.isMaxEnabledDriver) { [weak self] in self?.amountInput.maxButtonVisible = $0 }
-        subscribe(disposeBag, viewModel.switchEnabledDriver) { [weak self] in self?.amountInput.secondaryButtonEnabled = $0 }
-        subscribe(disposeBag, viewModel.secondaryTextDriver) { [weak self] in self?.set(secondaryText: $0) }
         subscribe(disposeBag, viewModel.tokenCodeDriver) { [weak self] in self?.set(tokenCode: $0) }
         subscribe(disposeBag, viewModel.balanceDriver) { [weak self] in self?.set(balance: $0) }
         subscribe(disposeBag, viewModel.balanceErrorDriver) { [weak self] in self?.set(balanceError: $0) }
@@ -161,22 +145,6 @@ extension SwapCoinCardCell {
             tokenSelectButton.setTitle("swap.token".localized, for: .normal)
             tokenSelectButton.setTitleColor(.themeYellowD, for: .normal)
         }
-    }
-
-    private func set(text: String?) {
-        guard amountInput.inputText != text && !viewModel.equalValue(lhs: amountInput.inputText, rhs: text) else { //avoid issue with point ("1" and "1.")
-            return
-        }
-
-        amountInput.inputText = text
-    }
-
-    private func set(prefix: String?) {
-        amountInput.prefix = prefix
-    }
-
-    private func set(secondaryText: String?) {
-        amountInput.secondaryButtonText = secondaryText ?? "n/a".localized
     }
 
     private func set(balance: String?) {

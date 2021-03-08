@@ -3,7 +3,7 @@ import RxCocoa
 import BigInt
 
 protocol IAvailableBalanceService {
-    var balance: Decimal { get }
+    var availableBalance: Decimal { get }
 }
 
 class SendAvailableBalanceViewModel {
@@ -21,7 +21,7 @@ class SendAvailableBalanceViewModel {
     }
 
     private func sync() {
-        let coinValue = CoinValue(coin: coinService.coin, value: service.balance)
+        let coinValue = CoinValue(coin: coinService.coin, value: service.availableBalance)
         let value = ValueFormatter.instance.format(coinValue: coinValue)
 
         viewStateRelay.accept(.loaded(value: value))

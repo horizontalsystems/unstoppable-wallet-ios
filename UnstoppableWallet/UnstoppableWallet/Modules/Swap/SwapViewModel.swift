@@ -10,7 +10,7 @@ class SwapViewModel {
 
     public let service: SwapService
     public let tradeService: SwapTradeService
-    public let fiatSwitchService: AmountTypeSwitchService
+    public let switchService: AmountTypeSwitchService
     public let allowanceService: SwapAllowanceService
     public let pendingAllowanceService: SwapPendingAllowanceService
 
@@ -26,10 +26,10 @@ class SwapViewModel {
 
     private var openApproveRelay = PublishRelay<SwapAllowanceService.ApproveData>()
 
-    init(service: SwapService, tradeService: SwapTradeService, fiatSwitchService: AmountTypeSwitchService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, viewItemHelper: SwapViewItemHelper) {
+    init(service: SwapService, tradeService: SwapTradeService, switchService: AmountTypeSwitchService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, viewItemHelper: SwapViewItemHelper) {
         self.service = service
         self.tradeService = tradeService
-        self.fiatSwitchService = fiatSwitchService
+        self.switchService = switchService
         self.allowanceService = allowanceService
         self.pendingAllowanceService = pendingAllowanceService
         self.viewItemHelper = viewItemHelper
