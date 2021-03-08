@@ -33,11 +33,9 @@ class ChartViewController: ThemeViewController {
     private let chartViewCell: ChartViewCell
     private let indicatorSelectorCell = IndicatorSelectorCell()
     private let ratingCell = A2Cell()
-    private let priceHeaderCell = B4Cell()
-    private let marketHeaderCell = B4Cell()
     private let marketInfoCell = MarketInfoCell()
     private let openMarketsCell = B1Cell()
-    private let performanceHeaderCell = B4Cell()
+    private let descriptionTextCell = ReadMoreTextCell()
 
     private var favoriteButtonItem: UIBarButtonItem?
     private var alertButtonItem: UIBarButtonItem?
@@ -105,6 +103,7 @@ class ChartViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
+        tableView.registerCell(forClass: B4Cell.self)
         tableView.registerCell(forClass: PriceIndicatorCell.self)
         tableView.registerCell(forClass: ChartMarketPerformanceCell.self)
 
@@ -128,14 +127,6 @@ class ChartViewController: ThemeViewController {
             PriceIndicatorViewItem(low: "$5000", high: "$50000", range: .year, currentPercentage: 0.78)
         ]
 
-        priceHeaderCell.set(backgroundStyle: .transparent)
-        priceHeaderCell.title = "price".localized
-        priceHeaderCell.selectionStyle = .none
-
-        marketHeaderCell.set(backgroundStyle: .transparent)
-        marketHeaderCell.title = "chart.market.header".localized
-        marketHeaderCell.selectionStyle = .none
-
         marketInfoCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         //todo market data
         marketInfoCell.bind(marketCap: "$178.3B", marketCapChange: "+34,56%", volume: "$2.32B", circulation: "18.4B BTC", totalSupply: "21B BTC")
@@ -144,9 +135,13 @@ class ChartViewController: ThemeViewController {
         //todo get coin code
         openMarketsCell.title = "chart.market.show_markets".localized("BTC")
 
-        performanceHeaderCell.set(backgroundStyle: .transparent)
-        performanceHeaderCell.title = "chart.performance.header".localized
-        performanceHeaderCell.selectionStyle = .none
+        descriptionTextCell.set(backgroundStyle: .transparent, isFirst: true)
+        descriptionTextCell.onChangeHeight = { [weak self] in
+            self?.reloadTable()
+        }
+
+        //todo get description
+        descriptionTextCell.contentText = "Bitcoin is a cryptocurrency and worldwide payment system. It is the first decentralized digital currency, as the system works without a central bank or single administrator. Bitcoin is a cryptocurrency and worldwide payment system. It is the first decentralized digital currency, as the system works without a central bank or single administrator. \nBitcoin is a cryptocurrency and worldwide payment system. It is the first decentralized digital currency, as the system works without a central bank or single administrator. Bitcoin is a cryptocurrency and worldwide payment system. It is the first decentralized digital currency, as the system works without a central bank or single administrator. Cryptocurrencies are powered by a number of technologies, but primarily a blockchain technology. The blockchain technology used in cryptocurrencies like Bitcoin was built around a principle that 'no party can be trusted'. \nThe aim of this guide is to onboard someone with little knowledge about cryptocurrencies to the comfortable level as quickly as possible."
 
         tableView.buildSections()
 
@@ -215,6 +210,15 @@ class ChartViewController: ThemeViewController {
 
     @objc private func onUnfavoriteTap() {
         delegate.onTapUnfavorite()
+    }
+
+    private func reloadTable() {
+        tableView.buildSections()
+
+        UIView.animate(withDuration: 0.2) {
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+        }
     }
 
 }
@@ -331,25 +335,13 @@ extension ChartViewController: SectionsDataSource {
 
         if !priceIndicatorItems.isEmpty {
             sections.append(contentsOf: [
-                Section(id: "price_header", footerState: .margin(height: .margin12), rows: [
-                    StaticRow(
-                            cell: priceHeaderCell,
-                            id: "price_header",
-                            height: .heightSingleLineCell
-                    ),
-                ]),
+                Section(id: "price_header", footerState: .margin(height: .margin12), rows: [headerRow(title: "price".localized)]),
                 Section(id: "price_indicators", footerState: .margin(height: .margin12), rows: priceIndicatorRows())
             ])
         }
 
         sections.append(contentsOf: [
-            Section(id: "market_section_header", footerState: .margin(height: .margin12), rows: [
-                StaticRow(
-                        cell: marketHeaderCell,
-                        id: "market_header",
-                        height: .heightSingleLineCell
-                )
-            ]),
+            Section(id: "market_section_header", footerState: .margin(height: .margin12), rows: [headerRow(title: "chart.market.header".localized)]),
             Section(id: "market_section", footerState: .margin(height: .margin12), rows: [
                 StaticRow(
                         cell: marketInfoCell,
@@ -368,16 +360,33 @@ extension ChartViewController: SectionsDataSource {
                         }
                 )
             ]),
-            Section(id: "performance_section_header", footerState: .margin(height: .margin12), rows: [
+            Section(id: "performance_section_header", footerState: .margin(height: .margin12), rows: [headerRow(title: "chart.performance.header".localized)]),
+            Section(id: "performance_section", footerState: .margin(height: .margin12), rows: performanceRows()),
+
+            Section(id: "about_section_header", rows: [headerRow(title: "chart.about.header".localized)]),
+            Section(id: "about_section", footerState: .margin(height: .margin12), rows: [
                 StaticRow(
-                        cell: performanceHeaderCell,
-                        id: "performance_header",
-                        height: .heightSingleLineCell
+                        cell: descriptionTextCell,
+                        id: "about_cell",
+                        dynamicHeight: { [weak self] containerWidth in
+                            self?.descriptionTextCell.cellHeight(containerWidth: containerWidth) ?? 0
+                        }
                 )
             ]),
-            Section(id: "performance_section", footerState: .margin(height: .margin12), rows: performanceRows()),
         ])
         return sections
+    }
+
+    private func headerRow(title: String) -> Row<B4Cell> {
+        Row<B4Cell>(
+                id: "header_cell",
+                hash: title,
+                height: .heightSingleLineCell,
+                bind: { cell, _ in
+                    cell.set(backgroundStyle: .transparent)
+                    cell.title = title
+                    cell.selectionStyle = .none
+                })
     }
 
     private func priceIndicatorRows() -> [Row<PriceIndicatorCell>] {

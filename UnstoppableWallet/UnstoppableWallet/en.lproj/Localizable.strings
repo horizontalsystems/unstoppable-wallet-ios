@@ -700,6 +700,10 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "chart.performance.week_changes" = "Changes (1W)";
 "chart.performance.month_changes" = "Changes (1M)";
 
+"chart.about.header" = "About";
+"chart.about.read_more" = "Read More";
+"chart.about.read_less" = "Read Less";
+
 // Create Wallet
 
 "create_wallet.title" = "New Wallet";

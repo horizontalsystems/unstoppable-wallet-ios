@@ -1212,6 +1212,7 @@
 		1A5642656FA63B9E9088930F /* PrivacyModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B295DF9E48FF142E311 /* PrivacyModule.swift */; };
 		1A564269EAC8E58D82006429 /* BaseManageAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BA1E1C26E77BAFCC0A9 /* BaseManageAccountCell.swift */; };
 		1A564277ED9E400D245B0AA1 /* BalanceSorterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F9B9F89F533BC520074 /* BalanceSorterTests.swift */; };
+		1A56427D35F4EDC473A732E7 /* ReadMoreTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56485B094980B68B0A86AE /* ReadMoreTextCell.swift */; };
 		1A56427D41F16B2D9C7B5F88 /* SendModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641C2FAD616C358A319A0 /* SendModule.swift */; };
 		1A56427EE78EF70828B7539F /* BaseManageAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BA1E1C26E77BAFCC0A9 /* BaseManageAccountCell.swift */; };
 		1A56428F167A71E2102EB0DB /* MarketInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A50E93AFD3C81A6DFBA /* MarketInfoCell.swift */; };
@@ -1227,6 +1228,7 @@
 		1A564303766B1A269633A04B /* ChartIntervalAndSelectedRateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646CA5F3169AB73A16D53 /* ChartIntervalAndSelectedRateCell.swift */; };
 		1A564316C066F02129C98F03 /* PriceAlertSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FB4404656203899BED3 /* PriceAlertSectionViewModel.swift */; };
 		1A56431C0F6504DA9A5733BD /* PrivacyConnectionSelectViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640B9ED5333E033280CE3 /* PrivacyConnectionSelectViewItem.swift */; };
+		1A564326C51940CC30439BC6 /* ReadMoreTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56485B094980B68B0A86AE /* ReadMoreTextCell.swift */; };
 		1A5643443A417D608E253A50 /* TransactionDiffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F4CBE5575C4D6C40BA /* TransactionDiffer.swift */; };
 		1A56435A3F2A592E067EE5CD /* EtherscanEthereumProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56435BAABBDC9BD5E84C40 /* EtherscanEthereumProviderTests.swift */; };
 		1A56435EB26CCED1DB73B057 /* MainSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D73251DBFA0CFE34D12 /* MainSettingsService.swift */; };
@@ -1452,6 +1454,7 @@
 		1A564D3DB55C8CB8B5AED664 /* BalanceErrorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564702FB246F315983743E /* BalanceErrorPresenter.swift */; };
 		1A564D3E28163FCB324A7512 /* ChartNotificationViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DE706E6058771D4F644 /* ChartNotificationViewModelFactory.swift */; };
 		1A564D53F049C4784CAC814D /* SyncMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BE241BFC5DD59D0FB7C /* SyncMode.swift */; };
+		1A564D69A570D801AF59FF58 /* ReadMoreTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56485B094980B68B0A86AE /* ReadMoreTextCell.swift */; };
 		1A564D6D45F01524AD685246 /* PrivacyViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643D8493DC54B908C48BE /* PrivacyViewItem.swift */; };
 		1A564D6F0D01D12EBECD4C07 /* PrivacyPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F36099FED36570A41A5 /* PrivacyPresenter.swift */; };
 		1A564DA6B611CB005DC382E4 /* DerivationSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B077A9E1C96E1306DA6 /* DerivationSettingsManager.swift */; };
@@ -2852,6 +2855,7 @@
 		1A564827B8F8D94DC4D7CC0F /* AppStatusPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStatusPresenter.swift; sourceTree = "<group>"; };
 		1A56482D2289F167040EBD90 /* TitleManageAccountCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleManageAccountCell.swift; sourceTree = "<group>"; };
 		1A5648405736784435545BC4 /* InfoHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoHeaderCell.swift; sourceTree = "<group>"; };
+		1A56485B094980B68B0A86AE /* ReadMoreTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadMoreTextCell.swift; sourceTree = "<group>"; };
 		1A5648754F4509112DF492DD /* TransactionProcessingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionProcessingView.swift; sourceTree = "<group>"; };
 		1A564879AD72301AAB78F8F5 /* MainSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsViewController.swift; sourceTree = "<group>"; };
 		1A56489DE231CDDCA75CAEB3 /* AppError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
@@ -3413,6 +3417,7 @@
 				11B35C3E03A9679D4B7E0D29 /* AmountInputCell.swift */,
 				11B35DBDADDA8D4F9D88C7AA /* RecipientAddressInputCell.swift */,
 				11B358B22BAF021E8FA028BF /* RecipientAddressCautionCell.swift */,
+				1A56485B094980B68B0A86AE /* ReadMoreTextCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -6530,6 +6535,7 @@
 				11B3536F0BA00C261E966FB5 /* AmountTypeSwitchServiceNew.swift in Sources */,
 				11B3572B096E8700446BEF81 /* FiatServiceNew.swift in Sources */,
 				11B358A0F588238E8C5D02BA /* FormAmountInputView.swift in Sources */,
+				1A564326C51940CC30439BC6 /* ReadMoreTextCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7321,6 +7327,7 @@
 				11B3500AB065E6CA0595FBDE /* AmountTypeSwitchServiceNew.swift in Sources */,
 				11B350DBF23645FE8641A193 /* FiatServiceNew.swift in Sources */,
 				11B35D40702B98DD14429562 /* FormAmountInputView.swift in Sources */,
+				1A56427D35F4EDC473A732E7 /* ReadMoreTextCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8074,6 +8081,7 @@
 				11B3516FFFEA842D66C51988 /* AmountTypeSwitchServiceNew.swift in Sources */,
 				11B3558A85AE9CAD42030EAD /* FiatServiceNew.swift in Sources */,
 				11B35F6FDB8640381081A06C /* FormAmountInputView.swift in Sources */,
+				1A564D69A570D801AF59FF58 /* ReadMoreTextCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
