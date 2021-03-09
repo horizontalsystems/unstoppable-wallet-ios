@@ -1,6 +1,7 @@
 import RxSwift
 import EthereumKit
 import Erc20Kit
+import UniswapKit
 
 class EthereumKitManager {
     weak var ethereumRpcModeSettingsManager: IEthereumRpcModeSettingsManager?
@@ -37,6 +38,9 @@ class EthereumKitManager {
                 walletId: account.id,
                 minLogLevel: .error
         )
+
+        evmKit.add(decorator: Erc20Kit.Kit.getDecorator())
+        evmKit.add(decorator: UniswapKit.Kit.getDecorator())
 
         evmKit.start()
 

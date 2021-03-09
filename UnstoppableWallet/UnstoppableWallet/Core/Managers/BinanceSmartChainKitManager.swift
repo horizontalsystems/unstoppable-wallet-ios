@@ -1,6 +1,7 @@
 import RxSwift
 import EthereumKit
 import Erc20Kit
+import UniswapKit
 
 class BinanceSmartChainKitManager {
     private let appConfigProvider: IAppConfigProvider
@@ -33,6 +34,9 @@ class BinanceSmartChainKitManager {
                 walletId: account.id,
                 minLogLevel: .error
         )
+
+        evmKit.add(decorator: Erc20Kit.Kit.getDecorator())
+        evmKit.add(decorator: UniswapKit.Kit.getDecorator())
 
         evmKit.start()
 

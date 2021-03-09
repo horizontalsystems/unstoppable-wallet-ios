@@ -53,9 +53,9 @@ PODS:
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1.1)
   - CNIOAtomics (2.26.0)
-  - CNIOBoringSSL (2.10.3)
-  - CNIOBoringSSLShims (2.10.3):
-    - CNIOBoringSSL (= 2.10.3)
+  - CNIOBoringSSL (2.10.4)
+  - CNIOBoringSSLShims (2.10.4):
+    - CNIOBoringSSL (= 2.10.4)
   - CNIODarwin (2.26.0)
   - CNIOHTTPParser (2.26.0)
   - CNIOLinux (2.26.0)
@@ -87,7 +87,7 @@ PODS:
     - Secp256k1Kit.swift (~> 1.0)
     - X11Kit.swift (~> 1.0)
   - DeepDiff (2.3.1)
-  - Down (0.9.5)
+  - Down (0.10.0)
   - Erc20Kit.swift (0.12):
     - BigInt (~> 5.0)
     - EthereumKit.swift (~> 0.12)
@@ -141,7 +141,7 @@ PODS:
   - HUD.swift (1.2):
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1.1)
-  - KeychainAccess (4.2.1)
+  - KeychainAccess (4.2.2)
   - LanguageKit.swift (1.0):
     - UIExtensions.swift (~> 1.1)
   - LitecoinKit.swift (0.16.0):
@@ -189,7 +189,7 @@ PODS:
     - RxSwift (~> 5.0)
   - RxRelay (5.1.1):
     - RxSwift (~> 5)
-  - RxSwift (5.1.1)
+  - RxSwift (5.1.2)
   - RxSwiftExt (5.2.0):
     - RxSwiftExt/Core (= 5.2.0)
     - RxSwiftExt/RxCocoa (= 5.2.0)
@@ -239,9 +239,9 @@ PODS:
     - SwiftNIOHPACK (= 1.16.3)
     - SwiftNIOHTTP1 (< 3, >= 2.18.0)
     - SwiftNIOTLS (< 3, >= 2.18.0)
-  - SwiftNIOSSL (2.10.3):
-    - CNIOBoringSSL (= 2.10.3)
-    - CNIOBoringSSLShims (= 2.10.3)
+  - SwiftNIOSSL (2.10.4):
+    - CNIOBoringSSL (= 2.10.4)
+    - CNIOBoringSSLShims (= 2.10.4)
     - SwiftNIO (< 3, >= 2.15.0)
     - SwiftNIOConcurrencyHelpers (< 3, >= 2.15.0)
     - SwiftNIOTLS (< 3, >= 2.15.0)
@@ -285,7 +285,7 @@ PODS:
     - ObjectMapper (~> 3.5.2)
     - RxSwift (~> 5.0)
     - RxSwiftExt (~> 5)
-  - ZcashLightClientKit (0.9.3):
+  - ZcashLightClientKit (0.9.4):
     - gRPC-Swift (= 1.0.0-alpha.19)
     - SQLite.swift (~> 0.12.2)
 
@@ -478,19 +478,19 @@ CHECKOUT OPTIONS:
     :commit: de2cce21ac3ab6ace727132dc95fbb42b717eaa1
     :git: https://github.com/horizontalsystems/coin-kit-ios
   CurrencyKit.swift:
-    :commit: 72f9ab21c4f80f199727d061eff776bcb1d7a577
+    :commit: e98cabf6f523af6129c04521a37f9cbaf3a77f7e
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
     :commit: d11d30d4f0caa586b3e4b3fccf15048c3dd12e0a
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Erc20Kit.swift:
-    :commit: a0dee74d955856c3ab42ba852a0938038a748e7c
+    :commit: 5da27750744315656e2b26020408baba80310f01
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   EthereumABI:
     :commit: f77b49868885e9f909bd7dcf4c50c42e84f43ef7
     :git: https://github.com/horizontalsystems/EthereumABI
   EthereumKit.swift:
-    :commit: a0dee74d955856c3ab42ba852a0938038a748e7c
+    :commit: 5da27750744315656e2b26020408baba80310f01
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :commit: 57e5b21ed87634f47dbbbce7de7feb4387752b8d
@@ -508,19 +508,19 @@ CHECKOUT OPTIONS:
     :commit: 392186c18e8df97d40ca0f4587d857259d878dd4
     :git: https://github.com/horizontalsystems/gui-kit/
   LanguageKit.swift:
-    :commit: 72f9ab21c4f80f199727d061eff776bcb1d7a577
+    :commit: e98cabf6f523af6129c04521a37f9cbaf3a77f7e
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
     :commit: d11d30d4f0caa586b3e4b3fccf15048c3dd12e0a
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   ModuleKit.swift:
-    :commit: 72f9ab21c4f80f199727d061eff776bcb1d7a577
+    :commit: e98cabf6f523af6129c04521a37f9cbaf3a77f7e
     :git: https://github.com/horizontalsystems/component-kit-ios/
   PinKit.swift:
-    :commit: 72f9ab21c4f80f199727d061eff776bcb1d7a577
+    :commit: e98cabf6f523af6129c04521a37f9cbaf3a77f7e
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ScanQrKit.swift:
-    :commit: 72f9ab21c4f80f199727d061eff776bcb1d7a577
+    :commit: e98cabf6f523af6129c04521a37f9cbaf3a77f7e
     :git: https://github.com/horizontalsystems/component-kit-ios/
   SectionsTableView.swift:
     :commit: 392186c18e8df97d40ca0f4587d857259d878dd4
@@ -535,7 +535,7 @@ CHECKOUT OPTIONS:
     :commit: 392186c18e8df97d40ca0f4587d857259d878dd4
     :git: https://github.com/horizontalsystems/gui-kit/
   UniswapKit.swift:
-    :commit: a0dee74d955856c3ab42ba852a0938038a748e7c
+    :commit: 5da27750744315656e2b26020408baba80310f01
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   WalletConnect:
     :commit: 467915ce2ba7b4bb831150be911bd0b8b1d94c36
@@ -544,7 +544,7 @@ CHECKOUT OPTIONS:
     :commit: 57bc5404b6fbff6b86d8158e3faa9eef7e4dea00
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
   ZcashLightClientKit:
-    :commit: 231a7c8401244dcb61e8f040bab2ad95cb430d9d
+    :commit: ca722571d0aa6852c32d75bb3a608650411d7454
     :git: https://github.com/zcash/ZcashLightClientKit.git
 
 SPEC CHECKSUMS:
@@ -562,8 +562,8 @@ SPEC CHECKSUMS:
   CGRPCZlib: befd9b92013c647f18aa9b7d9e9231d52e1ced1b
   Chart.swift: 523ce3685ad997cbb902c5b61a3dbd5e9d33c993
   CNIOAtomics: 7599e2500f637f1e043047da52efd710d6020dd3
-  CNIOBoringSSL: 8e20acf863216a6d7b75a56fe0567a36147d8ee0
-  CNIOBoringSSLShims: 72cc9d43e6f5d8a137a2699eb08a0c67865c9797
+  CNIOBoringSSL: c639a7139a3b8fffb4dcda1e4a2d2eff66ec9090
+  CNIOBoringSSLShims: defe5c479941717c1ad1e3bdc4329686b4bb6b46
   CNIODarwin: 68f6ff440e989ef43ca6eb3335f3e5484066fab7
   CNIOHTTPParser: 26678afdbc27f24d1a3498bf87413bfc3391fbc5
   CNIOLinux: 5fd92122d58b04508074371d95a1f874310fe8e3
@@ -574,7 +574,7 @@ SPEC CHECKSUMS:
   CurrencyKit.swift: c1a37e0e43eac3828be95c8348693f192d67b376
   DashKit.swift: 1a0df55c70f3fb3adc22616cd60472b73e59b913
   DeepDiff: e5ae6c50d0321568e4508cec5930b9f10bb293fc
-  Down: 7321a72d0747ed0061dce948bcff518fcb6df2bd
+  Down: 01f155f9d7e99673c667efd2218709c3b9a8bc13
   Erc20Kit.swift: 5ddd33c285d2fa4923a96442826dbb99e74edbe1
   EthereumABI: a999809dee0ccf1f945a76fe5ed7394eaa73a27b
   EthereumAddress: 39fe8e11cf04e4e9902b55ae653dbc4e0aee5f30
@@ -586,7 +586,7 @@ SPEC CHECKSUMS:
   Hodler.swift: 2df9cbd7bb92d9eeb08663a2e79d1d208fa385c4
   HsToolKit.swift: d47ef3e8c507a6e980f2f6d819c5b0cf05845910
   HUD.swift: 0260e8e89a290380fd23d95002b0ddbea890b6c9
-  KeychainAccess: 9b07f665298d13c3a85881bd3171f6f49b8151c1
+  KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   LanguageKit.swift: 8ca8b99dd6250a13cf481b637e0d9d16f7389a74
   LitecoinKit.swift: 3e2c1cecec9233995007aa5123bdd57a4b0ff978
   Logging: beeb016c9c80cf77042d62e83495816847ef108b
@@ -600,7 +600,7 @@ SPEC CHECKSUMS:
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
   RxGRDB: 41dfd8f987aad7a7bdd7c420319d3eb23ee383f3
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
-  RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
+  RxSwift: 1e2e1f9570186967f617e49128ed26ccf1bafc8e
   RxSwiftExt: 4ca80336f43c28f11a2825cdd2fc61dd6c044697
   ScanQrKit.swift: ac548dac6dec848f20afe6afc97cd419128d1b01
   Secp256k1Kit.swift: 322a66c4b3e95e96a397d73d45ad4d79af991bab
@@ -616,7 +616,7 @@ SPEC CHECKSUMS:
   SwiftNIOHPACK: 38e855a72ae0c5176485ddd039b3933b99daa2b7
   SwiftNIOHTTP1: 7f7aa111d51d09a97ef1fddb50855074e5e42778
   SwiftNIOHTTP2: de7eff9d32fd347338f85b86c6fd0e13c3fbd1a0
-  SwiftNIOSSL: ac6e05adff65df9a3b518bbd27ff1f152fa82999
+  SwiftNIOSSL: ca33b5cfd872ef8261bab9c68e8634c54c14b9fb
   SwiftNIOTLS: 0faded6aff802c423ddee27828850a8ea4a818d0
   SwiftNIOTransportServices: 896c9a4ac98698d32aa2feea7657ade219ae80bb
   SwiftProtobuf: 3320217e9d8fb75f36b40282e78c482640fd75dd
@@ -628,7 +628,7 @@ SPEC CHECKSUMS:
   WalletConnect: 7253f3c123df3bba10d71459f0d62a900fee68ac
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: 0f57ebeaf82e0e0f7514291a0457ae77ea0f2e66
-  ZcashLightClientKit: 2bea7cdf2ddf098795688a198916e9d4ae6c1239
+  ZcashLightClientKit: 7f144177deece40fb9075bf6024028026255f75b
 
 PODFILE CHECKSUM: 9959ea13d56e5b7c5f9a908a74d9a905a6b27213
 
