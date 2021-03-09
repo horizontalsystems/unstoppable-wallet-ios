@@ -134,7 +134,7 @@ extension SendViewController: ISendView {
 
     func set(coin: Coin) {
         title = "send.title".localized(coin.code)
-        iconImageView.image = .image(coinCode: coin.code, blockchainType: coin.type.blockchainType)
+        iconImageView.image = .image(coinType: coin.type)
     }
 
     func showCopied() {

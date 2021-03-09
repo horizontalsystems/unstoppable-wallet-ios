@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 import ThemeKit
+import CoinKit
 
 class LeftCoinCellView: UIView {
     private let coinImageView = UIImageView()
@@ -50,13 +51,13 @@ class LeftCoinCellView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(coinTitle: String, coinCode: String, blockchainType: String?, showBadge: Bool = true) {
-        coinImageView.image = .image(coinCode: coinCode, blockchainType: blockchainType)
+    func bind(coinTitle: String, coinCode: String, coinType: CoinType, showBadge: Bool = true) {
+        coinImageView.image = .image(coinType: coinType)
 
         titleLabel.text = coinTitle
         coinLabel.text = coinCode
 
-        if let blockchainType = blockchainType, showBadge {
+        if let blockchainType = coinType.blockchainType, showBadge {
             blockchainBadgeView.isHidden = false
             blockchainBadgeView.text = blockchainType
         } else {

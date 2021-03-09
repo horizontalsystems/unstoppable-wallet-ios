@@ -68,7 +68,7 @@ class BalanceTopView: UIView {
     func bind(viewItem: BalanceTopViewItem, onTapRateDiff: @escaping () -> (), onTapError: (() -> ())?) {
         self.onTapRateDiff = onTapRateDiff
 
-        let coinIcon = viewItem.coinIconCode.flatMap { UIImage.image(coinCode: $0, blockchainType: viewItem.blockchainBadge) }
+        let coinIcon = viewItem.iconCoinType.flatMap { UIImage.image(coinType: $0) }
         coinIconView.bind(
                 coinIcon: coinIcon, spinnerProgress: viewItem.syncSpinnerProgress, indefiniteSearchCircle: viewItem.indefiniteSearchCircle,
                 failViewVisible: viewItem.failedImageViewVisible, onTapError: onTapError

@@ -26,7 +26,7 @@ extension DepositPresenter: IDepositViewDelegate {
         let viewItem = DepositModule.AddressViewItem(
                 coinTitle: coin.title,
                 coinCode: coin.code,
-                blockchainType: coin.type.blockchainType,
+                coinType: coin.type,
                 address: address,
                 additionalInfo: interactor.derivationSetting(coinType: coin.type)?.derivation.addressType
         )

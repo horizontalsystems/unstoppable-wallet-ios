@@ -46,7 +46,7 @@ class CoinSelectService {
         }
 
         let walletItems = balanceCoins.map { coin, balance in
-            Item(coin: coin, balance: balance, blockchainType: coin.type.blockchainType)
+            Item(coin: coin, balance: balance)
         }
 
         let remainingCoins = coinManager.coins.filter { coin in
@@ -54,7 +54,7 @@ class CoinSelectService {
         }
 
         let coinItems = remainingCoins.map { coin in
-            Item(coin: coin, balance: nil, blockchainType: coin.type.blockchainType)
+            Item(coin: coin, balance: nil)
         }
 
         items = walletItems + coinItems
@@ -67,7 +67,6 @@ extension CoinSelectService {
     struct Item {
         let coin: Coin
         let balance: Decimal?
-        let blockchainType: String?
     }
 
 }

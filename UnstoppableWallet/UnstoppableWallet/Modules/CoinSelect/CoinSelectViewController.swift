@@ -86,8 +86,7 @@ extension CoinSelectViewController: SectionsDataSource {
                                     cell.set(backgroundStyle: .claude, isLast: isLast)
                                     cell.bind(
                                             coin: viewItem.coin,
-                                            balance: viewItem.balance,
-                                            blockchainType: viewItem.blockchainType
+                                            balance: viewItem.balance
                                     )
                                 },
                                 action: { [weak self] _ in

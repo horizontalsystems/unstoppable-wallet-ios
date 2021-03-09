@@ -38,7 +38,7 @@ class BlockchainSettingsViewModel {
 
     private func derivationConfig(coin: Coin, derivations: [MnemonicDerivation], current: MnemonicDerivation) -> BottomSelectorViewController.Config {
         BottomSelectorViewController.Config(
-                icon: .image(coinCode: coin.code, blockchainType: coin.type.blockchainType),
+                icon: .image(coinType: coin.type),
                 title: "blockchain_settings.title".localized,
                 subtitle: coin.title,
                 selectedIndex: derivations.firstIndex(of: current) ?? 0,
@@ -53,7 +53,7 @@ class BlockchainSettingsViewModel {
 
     private func bitcoinCashCoinTypeConfig(coin: Coin, types: [BitcoinCashCoinType], current: BitcoinCashCoinType) -> BottomSelectorViewController.Config {
         BottomSelectorViewController.Config(
-                icon: .image(coinCode: coin.code, blockchainType: coin.type.blockchainType),
+                icon: .image(coinType: coin.type),
                 title: "blockchain_settings.title".localized,
                 subtitle: coin.title,
                 selectedIndex: types.firstIndex(of: current) ?? 0,

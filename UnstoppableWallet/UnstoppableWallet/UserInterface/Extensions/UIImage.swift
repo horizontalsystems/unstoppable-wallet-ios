@@ -1,4 +1,5 @@
 import UIKit
+import CoinKit
 
 extension UIImage {
 
@@ -18,12 +19,10 @@ extension UIImage {
         self.init(ciImage: scaledImage)
     }
 
-    static func image(coinCode: String, blockchainType: String? = nil) -> UIImage? {
-        var image = UIImage(named: "\(coinCode.lowercased())")
-
-        if image == nil {
-            image = UIImage(named: blockchainType?.lowercased() ?? "icon_placeholder_24") ?? UIImage(named: "icon_placeholder_24")
-        }
+    static func image(coinType: CoinType) -> UIImage? {
+        var image = UIImage(named: "\(coinType.id)") ??
+                coinType.blockchainType.map { UIImage(named: $0.lowercased()) } ??
+                UIImage(named: "icon_placeholder_24")
 
         return image?.tinted(with: .themeGray)
     }
