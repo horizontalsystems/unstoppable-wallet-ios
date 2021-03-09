@@ -141,21 +141,11 @@ protocol ISendDashAdapter {
 protocol ISendEthereumAdapter {
     var evmKit: EthereumKit.Kit { get }
     var balance: Decimal { get }
-    func availableBalance(gasPrice: Int, gasLimit: Int) -> Decimal
-    var ethereumBalance: Decimal { get }
-    var minimumRequiredBalance: Decimal { get }
-    var minimumSpendableAmount: Decimal? { get }
-    func validate(address: String) throws
-    func estimateGasLimit(to address: String?, value: Decimal, gasPrice: Int?) -> Single<Int>
-    func fee(gasPrice: Int, gasLimit: Int) -> Decimal
-    func sendSingle(amount: Decimal, address: String, gasPrice: Int, gasLimit: Int, logger: Logger) -> Single<Void>
     func transactionData(amount: BigUInt, address: EthereumKit.Address) -> TransactionData
 }
 
 protocol IErc20Adapter {
-    var ethereumBalance: Decimal { get }
     var pendingTransactions: [TransactionRecord] { get }
-    func fee(gasPrice: Int, gasLimit: Int) -> Decimal
     func allowanceSingle(spenderAddress: EthereumKit.Address, defaultBlockParameter: DefaultBlockParameter) -> Single<Decimal>
 }
 
@@ -297,10 +287,6 @@ protocol IAppConfigProvider {
 
     var featuredCoins: [Coin] { get }
     func defaultWords(count: Int) -> String
-
-    var smartContractFees: [CoinType: Decimal] { get }
-    var minimumBalances: [CoinType: Decimal] { get }
-    var minimumSpendableAmounts: [CoinType: Decimal] { get }
 }
 
 protocol ICoinMigration {
