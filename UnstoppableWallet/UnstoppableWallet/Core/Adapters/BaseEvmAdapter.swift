@@ -52,7 +52,7 @@ extension BaseEvmAdapter {
 extension BaseEvmAdapter: IDepositAdapter {
 
     var receiveAddress: String {
-        evmKit.receiveAddress.hex
+        evmKit.receiveAddress.eip55
     }
 
 }
