@@ -51,7 +51,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "market.advanced_search.reset_all".localized, style: .plain, target: self, action: #selector(onTapResetAll))
 
         coinListCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        coinListCell.title = "market.advanced_search.coin_list".localized
+        coinListCell.title = "market.advanced_search.choose_set".localized
         coinListCell.valueActionEnabled = false
 
         marketCapCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
@@ -125,7 +125,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
     private func onTapCoinListCell() {
             let titleViewItem = ItemSelectorModule.ComplexTitleViewItem(
-                title: "market.advanced_search.coin_list".localized,
+                title: "market.advanced_search.choose_set".localized,
                 subtitle: "---------",
                 image: UIImage(named: "circle_coin_24")?.tinted(with: .themeJacob))
 
