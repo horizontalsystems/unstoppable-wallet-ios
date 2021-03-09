@@ -22,7 +22,7 @@ class CoinSelectViewModel {
                     .flatMap { CoinValue(coin: item.coin, value: $0) }
                     .flatMap { ValueFormatter.instance.format(coinValue: $0, fractionPolicy: .threshold(high: 0.01, low: 0)) }
 
-            return ViewItem(coin: item.coin, balance: formatted, fiatBalance: nil, blockchainType: item.blockchainType)
+            return ViewItem(coin: item.coin, balance: formatted, fiatBalance: nil)
         }
 
         viewItemsRelay.accept(viewItems)
@@ -62,7 +62,6 @@ extension CoinSelectViewModel {
         let coin: Coin
         let balance: String?
         let fiatBalance: String?
-        let blockchainType: String?
     }
 
 }

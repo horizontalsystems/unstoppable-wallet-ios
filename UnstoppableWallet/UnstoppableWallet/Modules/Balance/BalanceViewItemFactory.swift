@@ -15,7 +15,7 @@ class BalanceViewItemFactory {
         let marketInfo = item.marketInfo
 
         return BalanceTopViewItem(
-                coinIconCode: coinIconCode(coin: coin, state: state),
+                iconCoinType: iconCoinType(coin: coin, state: state),
                 coinTitle: coin.title,
                 blockchainBadge: coin.type.blockchainType,
                 rateValue: rateValue(currency: currency, marketInfo: marketInfo),
@@ -76,11 +76,11 @@ class BalanceViewItemFactory {
         )
     }
 
-    private func coinIconCode(coin: Coin, state: AdapterState?) -> String? {
+    private func iconCoinType(coin: Coin, state: AdapterState?) -> CoinType? {
         if let state = state, case .notSynced = state {
             return nil
         }
-        return coin.code
+        return coin.type
     }
 
     private func syncSpinnerProgress(state: AdapterState?) -> Int? {

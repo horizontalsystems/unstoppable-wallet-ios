@@ -45,9 +45,7 @@ struct MarketModule {
     }
 
     static func bind(cell: G14Cell, viewItem: ViewItem) {
-        let image = UIImage.image(
-                coinCode: viewItem.coinCode
-        )
+        let image = UIImage.image(coinType: viewItem.coinType)
 
         cell.leftImage = image
         cell.topText = viewItem.coinName

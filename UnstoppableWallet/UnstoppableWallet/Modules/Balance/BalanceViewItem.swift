@@ -1,6 +1,7 @@
 import Foundation
 import DeepDiff
 import XRatesKit
+import CoinKit
 
 struct BalanceViewItem {
     let wallet: Wallet
@@ -13,7 +14,7 @@ struct BalanceViewItem {
 }
 
 struct BalanceTopViewItem {
-    let coinIconCode: String?
+    let iconCoinType: CoinType?
     let coinTitle: String
     let blockchainBadge: String?
 
@@ -45,7 +46,7 @@ struct BalanceButtonsViewItem {
 extension BalanceTopViewItem: Equatable {
 
     static func ==(lhs: BalanceTopViewItem, rhs: BalanceTopViewItem) -> Bool {
-        lhs.coinIconCode == rhs.coinIconCode &&
+        lhs.iconCoinType == rhs.iconCoinType &&
                 lhs.coinTitle == rhs.coinTitle &&
                 lhs.blockchainBadge == rhs.blockchainBadge &&
                 lhs.rateValue?.text == rhs.rateValue?.text &&

@@ -100,7 +100,7 @@ class MarketListViewController: ThemeViewController {
 
     private func row(viewItem: MarketModule.ViewItem, isLast: Bool) -> RowProtocol {
         Row<G14Cell>(
-                id: viewItem.coinCode,
+                id: viewItem.coinType.id,
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
                 bind: { cell, _ in

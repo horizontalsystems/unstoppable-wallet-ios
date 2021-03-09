@@ -31,7 +31,7 @@ class DepositModule {
     struct AddressViewItem {
         let coinTitle: String
         let coinCode: String
-        let blockchainType: String?
+        let coinType: CoinType
         let address: String
         let additionalInfo: String?
     }

@@ -130,7 +130,7 @@ class MarketSearchViewController: ThemeSearchViewController {
                         cell.title = viewItem.coinTitle
                         cell.subtitle = viewItem.coinCode
                         cell.leftBadgeText = viewItem.blockchainType
-                        cell.titleImage = UIImage.image(coinCode: viewItem.coinCode, blockchainType: viewItem.blockchainType)
+                        cell.titleImage = UIImage.image(coinType: viewItem.coinType)
                     },
                     action: { [weak self] _ in
                         self?.onSelect(viewItem: viewItem)

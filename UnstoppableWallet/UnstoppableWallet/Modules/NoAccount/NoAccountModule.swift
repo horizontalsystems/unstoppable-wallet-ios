@@ -1,3 +1,5 @@
+import CoinKit
+
 protocol INoAccountView: class {
     func set(viewItem: NoAccountModule.ViewItem)
     func show(error: Error)
@@ -27,7 +29,7 @@ class NoAccountModule {
     struct ViewItem {
         let coinTitle: String
         let coinCode: String
-        let blockchainType: String?
+        let coinType: CoinType
         let accountTypeTitle: String
         let coinCodes: String
         let createEnabled: Bool

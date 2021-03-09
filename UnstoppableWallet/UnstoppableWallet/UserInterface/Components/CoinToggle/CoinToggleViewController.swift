@@ -92,7 +92,7 @@ class CoinToggleViewController: ThemeSearchViewController {
                         autoDeselect: true,
                         bind: { cell, _ in
                             cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                            cell.titleImage = .image(coinCode: viewItem.coin.code, blockchainType: viewItem.coin.type.blockchainType)
+                            cell.titleImage = .image(coinType: viewItem.coin.type)
                             cell.title = viewItem.coin.title
                             cell.subtitle = viewItem.coin.code
                             cell.rightBadgeText = viewItem.coin.type.blockchainType
@@ -109,7 +109,7 @@ class CoinToggleViewController: ThemeSearchViewController {
                         height: .heightDoubleLineCell,
                         bind: { [weak self] cell, _ in
                             cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                            cell.titleImage = .image(coinCode: viewItem.coin.code, blockchainType: viewItem.coin.type.blockchainType)
+                            cell.titleImage = .image(coinType: viewItem.coin.type)
                             cell.title = viewItem.coin.title
                             cell.subtitle = viewItem.coin.code
                             cell.rightBadgeText = viewItem.coin.type.blockchainType
