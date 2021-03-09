@@ -38,6 +38,7 @@
 "offline" = "오프라인";
 "confirm" = "확인";
 "connect" = "연결";
+"price" = "Price";
 
 "version" = "버전 %@";
 
@@ -163,7 +164,6 @@
 "send.max_fee" = "최대 수수료";
 "send.tx_speed" = "거래 수수료";
 "send.tx_speed_low" = "낮음";
-"send.tx_speed_medium" = "보통";
 "send.tx_speed_recommended" = "권장";
 "send.tx_speed_high" = "높음";
 "send.tx_speed_custom" = "사용자 지정";
@@ -233,7 +233,6 @@
 "swap.button_error.insufficient_balance" = "잔액이 부족합니다";
 "swap.button_error.impact_too_high" = "높은 가격 영향";
 
-"swap.price" = "금액";
 "swap.price_impact" = "가격 영향";
 "swap.max_min" = "최대 / 최소";
 "swap.maximum_paid" = "최대 지불액";
@@ -317,7 +316,6 @@
 
 "market.market_field.mcap" = "MCap";
 "market.market_field.vol" = "Vol";
-"market.market_field.price" = "Price";
 
 "market.sort_by" = "Sort By";
 "market.changes" = "Changes";
@@ -396,6 +394,40 @@
 "market_discovery.filter_description.computing" = "Decentralized on-demand computing solutions.";
 
 "market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favorites by clicking on star icon in the asset page";
+
+"market.search.title" = "Search";
+"market.search.empty_text" = "No results found";
+
+"market.advanced_search.title" = "Advanced Search";
+"market.advanced_search.show_results" = "Show Results";
+"market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
+"market.advanced_search.24h" = "24h";
+
+"market.advanced_search.coin_list" = "Coin List";
+"market.advanced_search.market_cap" = "Market Cap";
+"market.advanced_search.volume" = "Trading Volume";
+"market.advanced_search.liquidity" = "DEX Liquidity";
+"market.advanced_search.period" = "Period";
+"market.advanced_search.price_change" = "Price Change";
+
+"market.advanced_search.top" = "Top %d";
+"market.advanced_search.reset_all" = "Reset All";
+
+"market.advanced_search.none" = "None";
+"market.advanced_search.less_5_m" = "< 5M";
+"market.advanced_search.m_5_m_10" = "5M - 20M";
+"market.advanced_search.m_20_m_100" = "20M - 100M";
+"market.advanced_search.m_100_b_1" = "100M - 1B";
+"market.advanced_search.b_1_b_5" = "1B - 5B";
+"market.advanced_search.more_5_b" = "> 5B";
+
+"market.advanced_search.day" = "1 Day";
+"market.advanced_search.week" = "1 Week";
+"market.advanced_search.week2" = "2 Month";
+"market.advanced_search.month" = "1 Month";
+"market.advanced_search.month6" = "6 Month";
+"market.advanced_search.year" = "1 Year";
+
 // Transactions
 
 "transactions.title" = "거래기록";
@@ -646,11 +678,29 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "chart.start_date" = "출시일";
 "chart.website" = "프로젝트 웹사이트";
 "chart.error.not_available" = "차트 이용불가";
-"chart.selected.price" = "금액";
 "chart.selected.volume" = "음량";
 "chart.trend_neutral" = "중립";
 "chart.trend_down" = "하향 추세";
 "chart.trend_up" = "상향 추세";
+"chart.rating_details" = "Rating Details";
+"chart.price_indicator_range.day" = "24h Range";
+"chart.price_indicator_range.year" = "52w Range";
+
+"chart.market.header" = "Market";
+"chart.market.market_cap" = "Market Cap";
+"chart.market.volume" = "Volume (24h)";
+"chart.market.circulation" = "In Circulation";
+"chart.market.total_supply" = "Total Supply";
+
+"chart.market.show_markets" = "%@ Markets";
+
+"chart.performance.header" = "Performance";
+"chart.performance.week_changes" = "Changes (1W)";
+"chart.performance.month_changes" = "Changes (1M)";
+
+"chart.about.header" = "About";
+"chart.about.read_more" = "Read More";
+"chart.about.read_less" = "Read Less";
 
 // Create Wallet
 
@@ -685,15 +735,15 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 // Intro
 
-"intro.skip" = "건너뛰기";
 "intro.next" = "다음";
+"intro.start" = "Start";
 "intro.brand.description" = "암호를 저장 및 거래합니다. 자산을 완전히 통제합니다. 익명인 상태로 유지합니다.";
 "intro.independence.title" = "독립하십시오";
 "intro.independence.description" = "Unstoppable은 사용자들이 어디서든 언제든지 자금에 접근할 수 있도록 하기 위해 설계되었습니다.";
-"intro.knowledge.title" = "현명하게 투자";
-"intro.knowledge.description" = "Unstoppable은 비교할 수 없는 최고의 거래, 모니터링 및 분석 도구를 통합시킵니다.";
 "intro.privacy.title" = "개인 정보 유지";
 "intro.privacy.description" = "이 지갑을 사용하여 신분을 숨기고 귀하의 정보를 안전하게 보호할 수 있습니다.";
+"intro.knowledge.title" = "현명하게 투자";
+"intro.knowledge.description" = "Unstoppable은 비교할 수 없는 최고의 거래, 모니터링 및 분석 도구를 통합시킵니다.";
 
 // Guides
 
@@ -705,7 +755,8 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "add_token_selector.choose_blockchain" = "블록체인 선택";
 "add_token_selector.add_token" = "토큰 추가";
 "add_token_selector.erc20_token" = "ERC 20 토큰";
-"add_token_selector.binance_token" = "BEP2 토큰";
+"add_token_selector.bep20_token" = "BEP20 Token";
+"add_token_selector.bep2_token" = "BEP2 Token";
 
 // Add Token
 
@@ -714,9 +765,12 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "add_token.decimals" = "소수점";
 "add_token.already_exists" = "이 토큰은 이미 코인 매니저 리스트에 있습니다.";
 
+"add_evm_token.contract_not_exist" = "Contract not found";
+"add_evm_token.contract_address" = "Contract Address";
+
 "add_erc20_token.title" = "ERC20 추가";
-"add_erc20_token.contract_address" = "계약 주소";
-"add_erc20_token.contract_not_exist" = "거래 발견되지 않음";
+
+"add_bep20_token.title" = "Add BEP20";
 
 "add_bep2_token.title" = "BEP2 추가";
 "add_bep2_token.token_symbol" = "토큰 심볼";
@@ -736,8 +790,6 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 // Wallet Connect
 
 "wallet_connect.title" = "Wallet Connect";
-"wallet_connect.requirement" = "요구 사항";
-"wallet_connect.requirement.description" = "브라우저와 연결하려면 밸런스 탭의 ethereum 또는 erc20 토큰을 활성화하십시오.";
 "wallet_connect.error.invalid_url" = "잘못된 주소";
 "wallet_connect.url" = "URL 주소";
 "wallet_connect.connect_description" = "승인을 눌러 이 앱이 귀하의 공공 주소를 볼 수 있도록 허용하십시오. 이것은 잠재적인 피싱 위험으로부터 데이터를 보호하기 위한 중요한 보안 단계 입니다.";
@@ -745,7 +797,11 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "wallet_connect.button_disconnect" = "연결 해제";
 "ethereum_transaction.error.insufficient_balance" = "거래에서 전송하려면 %@가 필요합니다.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "현재 ETH 잔액은 거래 수수료를 포함하여이 거래를 처리하는 데 필요한 금액보다 적습니다.";
+"ethereum_transaction.error.reverted" = "Transaction cannot be executed: %@";
 "wallet_connect.request_title" = "요청";
+
+"wallet_connect_list.title" = "Wallet Connect";
+"wallet_connect_list.new_connection" = "New Connection";
 
 // App Status
 
@@ -779,3 +835,9 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "enable_coins.enabling" = "활성화 중...";
 "enable_coins.enabled_coins" = "%@ 코인 활성화됨";
 "enable_coins.enabled_no_coins" = "잔액이 있는 코인을 찾을 수 없습니다";
+
+// Onboarding
+
+"onboarding.balance.description" = "You don't have any wallets yet. Create new or restore existing";
+"onboarding.balance.create" = "Create";
+"onboarding.balance.restore" = "Restore";
