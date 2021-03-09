@@ -38,6 +38,7 @@
 "offline" = "Offline";
 "confirm" = "Bestätigen";
 "connect" = "Verbinden";
+"price" = "Price";
 
 "version" = "Version %@";
 
@@ -163,7 +164,6 @@
 "send.max_fee" = "Max Gebühr";
 "send.tx_speed" = "Transaktionsgebühr";
 "send.tx_speed_low" = "Niedrig";
-"send.tx_speed_medium" = "Mittel";
 "send.tx_speed_recommended" = "Empfohlen";
 "send.tx_speed_high" = "Hoch";
 "send.tx_speed_custom" = "Benutzerdefiniert";
@@ -233,7 +233,6 @@
 "swap.button_error.insufficient_balance" = "Unzureichendes Guthaben";
 "swap.button_error.impact_too_high" = "Hohe Preisauswirkung";
 
-"swap.price" = "Preis";
 "swap.price_impact" = "Preisauswirkungen";
 "swap.max_min" = "Max / Min";
 "swap.maximum_paid" = "Maximal bezahlt";
@@ -317,7 +316,6 @@
 
 "market.market_field.mcap" = "MCap";
 "market.market_field.vol" = "Vol";
-"market.market_field.price" = "Price";
 
 "market.sort_by" = "Sort By";
 "market.changes" = "Changes";
@@ -396,6 +394,40 @@
 "market_discovery.filter_description.computing" = "Decentralized on-demand computing solutions.";
 
 "market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favorites by clicking on star icon in the asset page";
+
+"market.search.title" = "Search";
+"market.search.empty_text" = "No results found";
+
+"market.advanced_search.title" = "Advanced Search";
+"market.advanced_search.show_results" = "Show Results";
+"market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
+"market.advanced_search.24h" = "24h";
+
+"market.advanced_search.coin_list" = "Coin List";
+"market.advanced_search.market_cap" = "Market Cap";
+"market.advanced_search.volume" = "Trading Volume";
+"market.advanced_search.liquidity" = "DEX Liquidity";
+"market.advanced_search.period" = "Period";
+"market.advanced_search.price_change" = "Price Change";
+
+"market.advanced_search.top" = "Top %d";
+"market.advanced_search.reset_all" = "Reset All";
+
+"market.advanced_search.none" = "None";
+"market.advanced_search.less_5_m" = "< 5M";
+"market.advanced_search.m_5_m_10" = "5M - 20M";
+"market.advanced_search.m_20_m_100" = "20M - 100M";
+"market.advanced_search.m_100_b_1" = "100M - 1B";
+"market.advanced_search.b_1_b_5" = "1B - 5B";
+"market.advanced_search.more_5_b" = "> 5B";
+
+"market.advanced_search.day" = "1 Day";
+"market.advanced_search.week" = "1 Week";
+"market.advanced_search.week2" = "2 Month";
+"market.advanced_search.month" = "1 Month";
+"market.advanced_search.month6" = "6 Month";
+"market.advanced_search.year" = "1 Year";
+
 // Transactions
 
 "transactions.title" = "Transaktionen";
@@ -646,11 +678,29 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "chart.start_date" = "Startdatum";
 "chart.website" = "Projekt-Webseite";
 "chart.error.not_available" = "Diagramm nicht verfügbar";
-"chart.selected.price" = "Preis";
 "chart.selected.volume" = "Lautstärke";
 "chart.trend_neutral" = "Neutral";
 "chart.trend_down" = "Down-Trend";
 "chart.trend_up" = "Up-Trend";
+"chart.rating_details" = "Rating Details";
+"chart.price_indicator_range.day" = "24h Range";
+"chart.price_indicator_range.year" = "52w Range";
+
+"chart.market.header" = "Market";
+"chart.market.market_cap" = "Market Cap";
+"chart.market.volume" = "Volume (24h)";
+"chart.market.circulation" = "In Circulation";
+"chart.market.total_supply" = "Total Supply";
+
+"chart.market.show_markets" = "%@ Markets";
+
+"chart.performance.header" = "Performance";
+"chart.performance.week_changes" = "Changes (1W)";
+"chart.performance.month_changes" = "Changes (1M)";
+
+"chart.about.header" = "About";
+"chart.about.read_more" = "Read More";
+"chart.about.read_less" = "Read Less";
 
 // Create Wallet
 
@@ -685,15 +735,15 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 // Intro
 
-"intro.skip" = "Überspringen";
 "intro.next" = "Weiter";
+"intro.start" = "Start";
 "intro.brand.description" = "Krypto aufbewahren und handeln. Volle Kontrolle über die Vermögenswerte haben. Bleiben Sie anonym.";
 "intro.independence.title" = "Unabhängig sein";
 "intro.independence.description" = "Unstoppable wurde entwickelt, um sicherzustellen, dass Benutzer jederzeit und von überall her auf Finanzmittel zugreifen können.";
-"intro.knowledge.title" = "Klug investieren";
-"intro.knowledge.description" = "Unstoppable integriert unvergleichliche Handels-, Überwachungs- und Analyseinstrumente.";
 "intro.privacy.title" = "Privat bleiben";
 "intro.privacy.description" = "Benutzen Sie dieses Wallet, um inkognito zu bleiben und Ihre Informationen geheim halten zu können.";
+"intro.knowledge.title" = "Klug investieren";
+"intro.knowledge.description" = "Unstoppable integriert unvergleichliche Handels-, Überwachungs- und Analyseinstrumente.";
 
 // Guides
 
@@ -705,7 +755,8 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "add_token_selector.choose_blockchain" = "Blockchain auswählen";
 "add_token_selector.add_token" = "Token hinzufügen";
 "add_token_selector.erc20_token" = "ERC20 Token";
-"add_token_selector.binance_token" = "BEP2 Token";
+"add_token_selector.bep20_token" = "BEP20 Token";
+"add_token_selector.bep2_token" = "BEP2 Token";
 
 // Add Token
 
@@ -714,9 +765,12 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "add_token.decimals" = "Dezimalen";
 "add_token.already_exists" = "Dieser Token befindet sich bereits in der Coin-Verwaltungsliste.";
 
+"add_evm_token.contract_not_exist" = "Contract not found";
+"add_evm_token.contract_address" = "Contract Address";
+
 "add_erc20_token.title" = "ERC-20 hinzufügen";
-"add_erc20_token.contract_address" = "Vertragsadresse";
-"add_erc20_token.contract_not_exist" = "Vertrag nicht gefunden";
+
+"add_bep20_token.title" = "Add BEP20";
 
 "add_bep2_token.title" = "BEP2 hinzufügen";
 "add_bep2_token.token_symbol" = "Tokensymbol";
@@ -736,8 +790,6 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 // Wallet Connect
 
 "wallet_connect.title" = "Wallet Connect";
-"wallet_connect.requirement" = "Anforderung";
-"wallet_connect.requirement.description" = "Um eine Verbindung mit dem Browser herzustellen, sollten Sie Ethereum oder ein beliebiges erc20-Token auf Ihrer Registerkarte Kontostand aktivieren";
 "wallet_connect.error.invalid_url" = "Ungültige URL-Adresse";
 "wallet_connect.url" = "URL";
 "wallet_connect.connect_description" = "Indem Sie auf \"Genehmigen\" klicken, erlauben Sie dieser App, Ihre öffentliche Adresse anzuzeigen. Dies ist ein wichtiger Sicherheitsschritt, um Ihre Daten vor potenziellen Phishing-Risiken zu schützen.";
@@ -745,7 +797,11 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "wallet_connect.button_disconnect" = "Verbindung trennen";
 "ethereum_transaction.error.insufficient_balance" = "Die Transaktion erfordert %@ zum Senden.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Das aktuelle ETH-Guthaben liegt unter dem für die Abwicklung dieser Transaktion erforderlichen Betrag einschließlich der Transaktionsgebühr.";
+"ethereum_transaction.error.reverted" = "Transaction cannot be executed: %@";
 "wallet_connect.request_title" = "Anforderung";
+
+"wallet_connect_list.title" = "Wallet Connect";
+"wallet_connect_list.new_connection" = "New Connection";
 
 // App Status
 
@@ -779,3 +835,9 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "enable_coins.enabling" = "Aktivieren...";
 "enable_coins.enabled_coins" = "Aktivierte %@ Coins";
 "enable_coins.enabled_no_coins" = "Keine Coins mit Guthaben gefunden";
+
+// Onboarding
+
+"onboarding.balance.description" = "You don't have any wallets yet. Create new or restore existing";
+"onboarding.balance.create" = "Create";
+"onboarding.balance.restore" = "Restore";
