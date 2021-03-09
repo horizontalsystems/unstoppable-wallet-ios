@@ -38,6 +38,7 @@
 "offline" = "离线";
 "confirm" = "确认";
 "connect" = "连接";
+"price" = "Price";
 
 "version" = "版本%@";
 
@@ -163,7 +164,6 @@
 "send.max_fee" = "最大手续费";
 "send.tx_speed" = "交易费用";
 "send.tx_speed_low" = "低";
-"send.tx_speed_medium" = "中";
 "send.tx_speed_recommended" = "推荐";
 "send.tx_speed_high" = "高";
 "send.tx_speed_custom" = "自定义";
@@ -233,7 +233,6 @@
 "swap.button_error.insufficient_balance" = "余额不足";
 "swap.button_error.impact_too_high" = "高价格影响";
 
-"swap.price" = "价格";
 "swap.price_impact" = "价格影响";
 "swap.max_min" = "最大 / 最小";
 "swap.maximum_paid" = "最大支付金额";
@@ -317,7 +316,6 @@
 
 "market.market_field.mcap" = "市场价值";
 "market.market_field.vol" = "交易量";
-"market.market_field.price" = "价格";
 
 "market.sort_by" = "排序方式";
 "market.changes" = "更改";
@@ -396,6 +394,40 @@
 "market_discovery.filter_description.computing" = "Decentralized on-demand computing solutions.";
 
 "market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favorites by clicking on star icon in the asset page";
+
+"market.search.title" = "Search";
+"market.search.empty_text" = "No results found";
+
+"market.advanced_search.title" = "Advanced Search";
+"market.advanced_search.show_results" = "Show Results";
+"market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
+"market.advanced_search.24h" = "24h";
+
+"market.advanced_search.coin_list" = "Coin List";
+"market.advanced_search.market_cap" = "Market Cap";
+"market.advanced_search.volume" = "Trading Volume";
+"market.advanced_search.liquidity" = "DEX Liquidity";
+"market.advanced_search.period" = "Period";
+"market.advanced_search.price_change" = "Price Change";
+
+"market.advanced_search.top" = "Top %d";
+"market.advanced_search.reset_all" = "Reset All";
+
+"market.advanced_search.none" = "None";
+"market.advanced_search.less_5_m" = "< 5M";
+"market.advanced_search.m_5_m_10" = "5M - 20M";
+"market.advanced_search.m_20_m_100" = "20M - 100M";
+"market.advanced_search.m_100_b_1" = "100M - 1B";
+"market.advanced_search.b_1_b_5" = "1B - 5B";
+"market.advanced_search.more_5_b" = "> 5B";
+
+"market.advanced_search.day" = "1 Day";
+"market.advanced_search.week" = "1 Week";
+"market.advanced_search.week2" = "2 Month";
+"market.advanced_search.month" = "1 Month";
+"market.advanced_search.month6" = "6 Month";
+"market.advanced_search.year" = "1 Year";
+
 // Transactions
 
 "transactions.title" = "交易";
@@ -646,11 +678,29 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "chart.start_date" = "上市日期";
 "chart.website" = "网站项目";
 "chart.error.not_available" = "无可用图表";
-"chart.selected.price" = "价格";
 "chart.selected.volume" = "量";
 "chart.trend_neutral" = "中性";
 "chart.trend_down" = "下降";
 "chart.trend_up" = "上升";
+"chart.rating_details" = "Rating Details";
+"chart.price_indicator_range.day" = "24h Range";
+"chart.price_indicator_range.year" = "52w Range";
+
+"chart.market.header" = "Market";
+"chart.market.market_cap" = "Market Cap";
+"chart.market.volume" = "Volume (24h)";
+"chart.market.circulation" = "In Circulation";
+"chart.market.total_supply" = "Total Supply";
+
+"chart.market.show_markets" = "%@ Markets";
+
+"chart.performance.header" = "Performance";
+"chart.performance.week_changes" = "Changes (1W)";
+"chart.performance.month_changes" = "Changes (1M)";
+
+"chart.about.header" = "About";
+"chart.about.read_more" = "Read More";
+"chart.about.read_less" = "Read Less";
 
 // Create Wallet
 
@@ -685,15 +735,15 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // Intro
 
-"intro.skip" = "跳过";
 "intro.next" = "继续";
+"intro.start" = "Start";
 "intro.brand.description" = "存储和交易加密货币。完全控制资产。保持匿名。";
 "intro.independence.title" = "保持独立";
 "intro.independence.description" = "Unstoppable的建立可确保用户能够随时随地存取资金。";
-"intro.knowledge.title" = "明智投资";
-"intro.knowledge.description" = "Unstoppable整合了无与伦比的交易、监控和分析工具。";
 "intro.privacy.title" = "保持私密状态";
 "intro.privacy.description" = "使用此钱包保持隐身并能够保证您信息的私密性。";
+"intro.knowledge.title" = "明智投资";
+"intro.knowledge.description" = "Unstoppable整合了无与伦比的交易、监控和分析工具。";
 
 // Guides
 
@@ -705,7 +755,8 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "add_token_selector.choose_blockchain" = "选择区块链";
 "add_token_selector.add_token" = "添加代币";
 "add_token_selector.erc20_token" = "ERC20 Token";
-"add_token_selector.binance_token" = "BEP2 Token";
+"add_token_selector.bep20_token" = "BEP20 Token";
+"add_token_selector.bep2_token" = "BEP2 Token";
 
 // Add Token
 
@@ -714,9 +765,12 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "add_token.decimals" = "小数";
 "add_token.already_exists" = "该代币已在代币管理器列表中。";
 
+"add_evm_token.contract_not_exist" = "Contract not found";
+"add_evm_token.contract_address" = "Contract Address";
+
 "add_erc20_token.title" = "添加ERC20";
-"add_erc20_token.contract_address" = "智能合约地址";
-"add_erc20_token.contract_not_exist" = "没找到合同";
+
+"add_bep20_token.title" = "Add BEP20";
 
 "add_bep2_token.title" = "添加BEP2";
 "add_bep2_token.token_symbol" = "代币符号";
@@ -736,8 +790,6 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 // Wallet Connect
 
 "wallet_connect.title" = "Wallet Connect";
-"wallet_connect.requirement" = "要求";
-"wallet_connect.requirement.description" = "对于与浏览器连接，您应激活以太坊或您余额标签上任何的erc20代币";
 "wallet_connect.error.invalid_url" = "无效的URL地址";
 "wallet_connect.url" = "URL";
 "wallet_connect.connect_description" = "点击批准，表示您允许此应用查看您的公开地址。这是保护您的数据免受潜在钓鱼风险威胁的重要安全步骤。";
@@ -745,7 +797,11 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "wallet_connect.button_disconnect" = "断开连接";
 "ethereum_transaction.error.insufficient_balance" = "交易要求%@用于发送。";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "當前ETH餘額低於處理此交易所需的金額，包括交易費用。";
+"ethereum_transaction.error.reverted" = "Transaction cannot be executed: %@";
 "wallet_connect.request_title" = "请求";
+
+"wallet_connect_list.title" = "Wallet Connect";
+"wallet_connect_list.new_connection" = "New Connection";
 
 // App Status
 
@@ -779,3 +835,9 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "enable_coins.enabling" = "正在启用...";
 "enable_coins.enabled_coins" = "已启用%@代币";
 "enable_coins.enabled_no_coins" = "找不到有余额的代币";
+
+// Onboarding
+
+"onboarding.balance.description" = "You don't have any wallets yet. Create new or restore existing";
+"onboarding.balance.create" = "Create";
+"onboarding.balance.restore" = "Restore";
