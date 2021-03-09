@@ -38,6 +38,7 @@
 "offline" = "Не доступен";
 "confirm" = "Подтвердить";
 "connect" = "Подключиться";
+"price" = "Price";
 
 "version" = "Версия %@";
 
@@ -165,7 +166,6 @@
 "send.max_fee" = "Макс. Комиссия";
 "send.tx_speed" = "Комиссия за транзакцию";
 "send.tx_speed_low" = "Низкая";
-"send.tx_speed_medium" = "Средняя";
 "send.tx_speed_recommended" = "Рекомендовано";
 "send.tx_speed_high" = "Высокая";
 "send.tx_speed_custom" = "Индивидуальная";
@@ -235,7 +235,6 @@
 "swap.button_error.insufficient_balance" = "Недостаточный баланс";
 "swap.button_error.impact_too_high" = "Высокое отклонение цены";
 
-"swap.price" = "Цена";
 "swap.price_impact" = "Отклонение от рын. цены";
 "swap.max_min" = "Макс / Мин";
 "swap.maximum_paid" = "Максимальная Выплата";
@@ -319,7 +318,6 @@
 
 "market.market_field.mcap" = "MCap";
 "market.market_field.vol" = "Vol";
-"market.market_field.price" = "Price";
 
 "market.sort_by" = "Sort By";
 "market.changes" = "Changes";
@@ -398,6 +396,40 @@
 "market_discovery.filter_description.computing" = "Decentralized on-demand computing solutions.";
 
 "market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favorites by clicking on star icon in the asset page";
+
+"market.search.title" = "Search";
+"market.search.empty_text" = "No results found";
+
+"market.advanced_search.title" = "Advanced Search";
+"market.advanced_search.show_results" = "Show Results";
+"market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
+"market.advanced_search.24h" = "24h";
+
+"market.advanced_search.coin_list" = "Coin List";
+"market.advanced_search.market_cap" = "Market Cap";
+"market.advanced_search.volume" = "Trading Volume";
+"market.advanced_search.liquidity" = "DEX Liquidity";
+"market.advanced_search.period" = "Period";
+"market.advanced_search.price_change" = "Price Change";
+
+"market.advanced_search.top" = "Top %d";
+"market.advanced_search.reset_all" = "Reset All";
+
+"market.advanced_search.none" = "None";
+"market.advanced_search.less_5_m" = "< 5M";
+"market.advanced_search.m_5_m_10" = "5M - 20M";
+"market.advanced_search.m_20_m_100" = "20M - 100M";
+"market.advanced_search.m_100_b_1" = "100M - 1B";
+"market.advanced_search.b_1_b_5" = "1B - 5B";
+"market.advanced_search.more_5_b" = "> 5B";
+
+"market.advanced_search.day" = "1 Day";
+"market.advanced_search.week" = "1 Week";
+"market.advanced_search.week2" = "2 Month";
+"market.advanced_search.month" = "1 Month";
+"market.advanced_search.month6" = "6 Month";
+"market.advanced_search.year" = "1 Year";
+
 // Transactions
 
 "transactions.title" = "Транзакции";
@@ -648,11 +680,29 @@
 "chart.start_date" = "Дата Запуска";
 "chart.website" = "Сайт Проекта";
 "chart.error.not_available" = "График недоступен";
-"chart.selected.price" = "Цена";
 "chart.selected.volume" = "Объём";
 "chart.trend_neutral" = "Нейтральный";
 "chart.trend_down" = "Нисходящий Тренд";
 "chart.trend_up" = "Восходящий Тренд";
+"chart.rating_details" = "Rating Details";
+"chart.price_indicator_range.day" = "24h Range";
+"chart.price_indicator_range.year" = "52w Range";
+
+"chart.market.header" = "Market";
+"chart.market.market_cap" = "Market Cap";
+"chart.market.volume" = "Volume (24h)";
+"chart.market.circulation" = "In Circulation";
+"chart.market.total_supply" = "Total Supply";
+
+"chart.market.show_markets" = "%@ Markets";
+
+"chart.performance.header" = "Performance";
+"chart.performance.week_changes" = "Changes (1W)";
+"chart.performance.month_changes" = "Changes (1M)";
+
+"chart.about.header" = "About";
+"chart.about.read_more" = "Read More";
+"chart.about.read_less" = "Read Less";
 
 // Create Wallet
 
@@ -687,15 +737,15 @@
 
 // Intro
 
-"intro.skip" = "Пропустить";
 "intro.next" = "Далее";
+"intro.start" = "Start";
 "intro.brand.description" = "Храните и торгуйте криптовалютой. Полностью контролируйте свои активы. Оставайтесь анонимными.";
 "intro.independence.title" = "Будьте Независимы";
 "intro.independence.description" = "Unstoppable создан для того, чтобы пользователи могли получать доступ к средствам в любое время, в любом месте.";
-"intro.knowledge.title" = "Инвестируйте с умом";
-"intro.knowledge.description" = "В Unstoppable доступны замечательные инструменты для торговли, мониторинга и аналитики.";
 "intro.privacy.title" = "Сохраняйте Конфиденциальность";
 "intro.privacy.description" = "Используйте этот кошелек, чтобы оставаться инкогнито и иметь возможность сохранить конфиденциальность вашей информации.";
+"intro.knowledge.title" = "Инвестируйте с умом";
+"intro.knowledge.description" = "В Unstoppable доступны замечательные инструменты для торговли, мониторинга и аналитики.";
 
 // Guides
 
@@ -707,7 +757,8 @@
 "add_token_selector.choose_blockchain" = "Выбрать Блокчейн";
 "add_token_selector.add_token" = "Добавить Токен";
 "add_token_selector.erc20_token" = "Токен ERC20";
-"add_token_selector.binance_token" = "Токен BEP2";
+"add_token_selector.bep20_token" = "BEP20 Token";
+"add_token_selector.bep2_token" = "BEP2 Token";
 
 // Add Token
 
@@ -716,9 +767,12 @@
 "add_token.decimals" = "Десятичные знаки";
 "add_token.already_exists" = "Этот токен уже есть в списке поддерживаемых токенов.";
 
+"add_evm_token.contract_not_exist" = "Contract not found";
+"add_evm_token.contract_address" = "Contract Address";
+
 "add_erc20_token.title" = "Добавить ERC20";
-"add_erc20_token.contract_address" = "Адрес Контракта";
-"add_erc20_token.contract_not_exist" = "Контракт не найден";
+
+"add_bep20_token.title" = "Add BEP20";
 
 "add_bep2_token.title" = "Добавить BEP2";
 "add_bep2_token.token_symbol" = "Символ токена";
@@ -738,8 +792,6 @@
 // Wallet Connect
 
 "wallet_connect.title" = "Подключить кошелек";
-"wallet_connect.requirement" = "Требования";
-"wallet_connect.requirement.description" = "Для подключения к браузеру вам нужно активировать ethereum или любой erc20 токен во вкладке \"Баланс\"";
 "wallet_connect.error.invalid_url" = "Неверный URL-адрес";
 "wallet_connect.url" = "URL";
 "wallet_connect.connect_description" = "Нажимая \"Подтвердить\", вы разрешаете этому приложению просматривать ваш общедоступный адрес. Это важный шаг для защиты ваших данных от потенциальных рисков фишинга.";
@@ -747,7 +799,11 @@
 "wallet_connect.button_disconnect" = "Отсоединить";
 "ethereum_transaction.error.insufficient_balance" = "Для отправки транзакции требуется %@.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Текущий баланс ETH ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
+"ethereum_transaction.error.reverted" = "Transaction cannot be executed: %@";
 "wallet_connect.request_title" = "Запрос";
+
+"wallet_connect_list.title" = "Wallet Connect";
+"wallet_connect_list.new_connection" = "New Connection";
 
 // App Status
 
@@ -781,3 +837,9 @@
 "enable_coins.enabling" = "Идет активация...";
 "enable_coins.enabled_coins" = "Активировано %@ монет";
 "enable_coins.enabled_no_coins" = "На балансе нет монет";
+
+// Onboarding
+
+"onboarding.balance.description" = "You don't have any wallets yet. Create new or restore existing";
+"onboarding.balance.create" = "Create";
+"onboarding.balance.restore" = "Restore";
