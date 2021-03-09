@@ -38,6 +38,7 @@
 "offline" = "Çevrimdışı";
 "confirm" = "Onayla";
 "connect" = "Bağlan";
+"price" = "Price";
 
 "version" = "Sürüm %@";
 
@@ -163,7 +164,6 @@
 "send.max_fee" = "Maksimum Ücret";
 "send.tx_speed" = "İşlem Ücreti";
 "send.tx_speed_low" = "Düşük";
-"send.tx_speed_medium" = "Orta";
 "send.tx_speed_recommended" = "Tavsiye Edilen";
 "send.tx_speed_high" = "Yüksek";
 "send.tx_speed_custom" = "Özel";
@@ -233,7 +233,6 @@
 "swap.button_error.insufficient_balance" = "Yetersiz bakiye";
 "swap.button_error.impact_too_high" = "Yüksek fiyat etkisi";
 
-"swap.price" = "Fiyat";
 "swap.price_impact" = "Fiyat Etkisi";
 "swap.max_min" = "Max / Min";
 "swap.maximum_paid" = "Maksimum Ödenen";
@@ -317,7 +316,6 @@
 
 "market.market_field.mcap" = "MCap";
 "market.market_field.vol" = "Vol";
-"market.market_field.price" = "Price";
 
 "market.sort_by" = "Sort By";
 "market.changes" = "Changes";
@@ -396,6 +394,40 @@
 "market_discovery.filter_description.computing" = "Decentralized on-demand computing solutions.";
 
 "market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favorites by clicking on star icon in the asset page";
+
+"market.search.title" = "Search";
+"market.search.empty_text" = "No results found";
+
+"market.advanced_search.title" = "Advanced Search";
+"market.advanced_search.show_results" = "Show Results";
+"market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
+"market.advanced_search.24h" = "24h";
+
+"market.advanced_search.coin_list" = "Coin List";
+"market.advanced_search.market_cap" = "Market Cap";
+"market.advanced_search.volume" = "Trading Volume";
+"market.advanced_search.liquidity" = "DEX Liquidity";
+"market.advanced_search.period" = "Period";
+"market.advanced_search.price_change" = "Price Change";
+
+"market.advanced_search.top" = "Top %d";
+"market.advanced_search.reset_all" = "Reset All";
+
+"market.advanced_search.none" = "None";
+"market.advanced_search.less_5_m" = "< 5M";
+"market.advanced_search.m_5_m_10" = "5M - 20M";
+"market.advanced_search.m_20_m_100" = "20M - 100M";
+"market.advanced_search.m_100_b_1" = "100M - 1B";
+"market.advanced_search.b_1_b_5" = "1B - 5B";
+"market.advanced_search.more_5_b" = "> 5B";
+
+"market.advanced_search.day" = "1 Day";
+"market.advanced_search.week" = "1 Week";
+"market.advanced_search.week2" = "2 Month";
+"market.advanced_search.month" = "1 Month";
+"market.advanced_search.month6" = "6 Month";
+"market.advanced_search.year" = "1 Year";
+
 // Transactions
 
 "transactions.title" = "Hesap işlemleri";
@@ -646,11 +678,29 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "chart.start_date" = "Açılış Günü";
 "chart.website" = "Proje Web Sitesi";
 "chart.error.not_available" = "Grafik yok";
-"chart.selected.price" = "Fiyat";
 "chart.selected.volume" = "Birim";
 "chart.trend_neutral" = "Nötr";
 "chart.trend_down" = "Aşağı Eğilim";
 "chart.trend_up" = "Artış Eğilim";
+"chart.rating_details" = "Rating Details";
+"chart.price_indicator_range.day" = "24h Range";
+"chart.price_indicator_range.year" = "52w Range";
+
+"chart.market.header" = "Market";
+"chart.market.market_cap" = "Market Cap";
+"chart.market.volume" = "Volume (24h)";
+"chart.market.circulation" = "In Circulation";
+"chart.market.total_supply" = "Total Supply";
+
+"chart.market.show_markets" = "%@ Markets";
+
+"chart.performance.header" = "Performance";
+"chart.performance.week_changes" = "Changes (1W)";
+"chart.performance.month_changes" = "Changes (1M)";
+
+"chart.about.header" = "About";
+"chart.about.read_more" = "Read More";
+"chart.about.read_less" = "Read Less";
 
 // Create Wallet
 
@@ -685,15 +735,15 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 // Intro
 
-"intro.skip" = "Atla";
 "intro.next" = "İleri";
+"intro.start" = "Start";
 "intro.brand.description" = "Kripto Biriktirin ve Ticaretini Yapın. Mevduat üzerinde tam kontrole sahip olun. Anonim kalın.";
 "intro.independence.title" = "Bağımsız Olun";
 "intro.independence.description" = "Unstoppable, kullanıcıların istedikleri anda istedikleri yerde paraya erişebilmelerini sağlamak için geliştirilmiştir.";
-"intro.knowledge.title" = "Akıllıca Yatırım Yapın";
-"intro.knowledge.description" = "Unstoppable, benzersiz alım satım, izleme ve analitik araçların entegrasyonlarını sağlar.";
 "intro.privacy.title" = "Gizli Kalın";
 "intro.privacy.description" = "Gizli kalmak ve bilgilerinizi gizli tutmak için bu cüzdanı kullanın.";
+"intro.knowledge.title" = "Akıllıca Yatırım Yapın";
+"intro.knowledge.description" = "Unstoppable, benzersiz alım satım, izleme ve analitik araçların entegrasyonlarını sağlar.";
 
 // Guides
 
@@ -705,7 +755,8 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "add_token_selector.choose_blockchain" = "Blockchain Seç";
 "add_token_selector.add_token" = "Token Ekle";
 "add_token_selector.erc20_token" = "ERC20 tokenleri";
-"add_token_selector.binance_token" = "BEP2 Token";
+"add_token_selector.bep20_token" = "BEP20 Token";
+"add_token_selector.bep2_token" = "BEP2 Token";
 
 // Add Token
 
@@ -714,9 +765,12 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "add_token.decimals" = "Ondalıklar";
 "add_token.already_exists" = "Bu token zaten kripto para yöneticisi listesindedir.";
 
+"add_evm_token.contract_not_exist" = "Contract not found";
+"add_evm_token.contract_address" = "Contract Address";
+
 "add_erc20_token.title" = "ERC20 Ekle";
-"add_erc20_token.contract_address" = "Sözleşme Adresi";
-"add_erc20_token.contract_not_exist" = "Sözleşme bulunamadı";
+
+"add_bep20_token.title" = "Add BEP20";
 
 "add_bep2_token.title" = "BEP2 Ekle";
 "add_bep2_token.token_symbol" = "Token Sembolü";
@@ -736,8 +790,6 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 // Wallet Connect
 
 "wallet_connect.title" = "Wallet Connect";
-"wallet_connect.requirement" = "Gereksinim";
-"wallet_connect.requirement.description" = "Tarayıcıyla bağlanmak için, bakiye sekmenizdeki ethereum ya da herhangi erc20 jetonunu etkinleştirmeniz gerekir";
 "wallet_connect.error.invalid_url" = "Geçersiz URL Adresi";
 "wallet_connect.url" = "URL";
 "wallet_connect.connect_description" = "Onayla butonunu tıklayarak, bu uygulamanın açık adresinizi görüntülemesine izin vermiş olursunuz. Bu, verilerinizi olası kimlik hırsızlığı risklerinden korumak için önemli bir güvenlik adımıdır.";
@@ -745,7 +797,11 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "wallet_connect.button_disconnect" = "Bağlantıyı Kes";
 "ethereum_transaction.error.insufficient_balance" = "İşlem, göndermek için %@ gerektirir.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Mevcut ETH bakiyesi, işlem ücreti dahil bu işlemi gerçekleştirmek için gereken miktarın altında.";
+"ethereum_transaction.error.reverted" = "Transaction cannot be executed: %@";
 "wallet_connect.request_title" = "İstek";
+
+"wallet_connect_list.title" = "Wallet Connect";
+"wallet_connect_list.new_connection" = "New Connection";
 
 // App Status
 
@@ -779,3 +835,9 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "enable_coins.enabling" = "Etkinleştiriliyor…";
 "enable_coins.enabled_coins" = "%@ Kripto Para etkinleştirildi";
 "enable_coins.enabled_no_coins" = "Bakiyesi olan para bulunamadı";
+
+// Onboarding
+
+"onboarding.balance.description" = "You don't have any wallets yet. Create new or restore existing";
+"onboarding.balance.create" = "Create";
+"onboarding.balance.restore" = "Restore";
