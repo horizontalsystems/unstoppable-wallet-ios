@@ -16,8 +16,9 @@ class MarketAdvancedSearchViewModel {
     private let priceChangeViewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
 
     private let showErrorRelay = PublishRelay<String>()
-    private let itemCountRelay = BehaviorRelay<Int?>(value: nil)
+    private let showResultTitleRelay = BehaviorRelay<String?>(value: nil)
     private let showResultEnabledRelay = BehaviorRelay<Bool>(value: false)
+    private let loadingRelay = BehaviorRelay<Bool>(value: false)
 
     init(service: MarketAdvancedSearchService) {
         self.service = service
@@ -41,17 +42,19 @@ class MarketAdvancedSearchViewModel {
         sync(state: service.state)
     }
 
-    private func sync(state: MarketAdvancedSearchService.State) {
+    private func sync(state: DataStatus<Int>) {
+        loadingRelay.accept(state.isLoading)
+
         switch state {
         case .loading:
             showResultEnabledRelay.accept(false)
-            itemCountRelay.accept(nil)
-        case .loaded(let count):
+            showResultTitleRelay.accept(nil)
+        case .completed(let count):
             showResultEnabledRelay.accept(count > 0)
-            itemCountRelay.accept(count)
+            showResultTitleRelay.accept(["market.advanced_search.show_results".localized, "\(count)"].joined(separator: ": "))
         case .failed(let error):
             showResultEnabledRelay.accept(false)
-            itemCountRelay.accept(nil)
+            showResultTitleRelay.accept("market.advanced_search.show_results".localized)
 
             showErrorRelay.accept(error.convertedError.smartDescription)
         }
@@ -113,8 +116,12 @@ extension MarketAdvancedSearchViewModel {
         showErrorRelay.asSignal()
     }
 
-    var itemCountDriver: Driver<Int?> {
-        itemCountRelay.asDriver()
+    var loadingDriver: Driver<Bool> {
+        loadingRelay.asDriver()
+    }
+
+    var showResultTitleDriver: Driver<String?> {
+        showResultTitleRelay.asDriver()
     }
 
     var showResultEnabledDriver: Driver<Bool> {
@@ -238,7 +245,7 @@ extension MarketAdvancedSearchService.ValueFilter {
 
     var title: String {
         switch self {
-        case .none: return "market.advanced_search.none".localized
+        case .none: return "market.advanced_search.any".localized
         case .lessM5: return "market.advanced_search.less_5_m".localized
         case .m5m10: return "market.advanced_search.m_5_m_10".localized
         case .m20m100: return "market.advanced_search.m_20_m_100".localized
@@ -258,7 +265,7 @@ extension MarketAdvancedSearchService.PriceChangeFilter {
 
     var title: String {
         switch self {
-        case .none: return "market.advanced_search.none".localized
+        case .none: return "market.advanced_search.any".localized
         case .plus10: return "> +10 %"
         case .plus25: return "> +25 %"
         case .plus50: return "> +50 %"

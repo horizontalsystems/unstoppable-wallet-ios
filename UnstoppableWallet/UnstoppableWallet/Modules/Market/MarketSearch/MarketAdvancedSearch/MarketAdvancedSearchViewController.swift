@@ -4,6 +4,7 @@ import SnapKit
 import ThemeKit
 import RxSwift
 import CoinKit
+import HUD
 
 class MarketAdvancedSearchViewController: ThemeViewController {
     private let viewModel: MarketAdvancedSearchViewModel
@@ -17,8 +18,8 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private let periodCell = B5Cell()
     private let priceChangeCell = B5Cell()
 
-    private let resetAllCell = B4Cell()
-    private let showResultCell = ButtonCell()
+    private let showResultButton = ThemeButton()
+    private let spinner = HUDActivityView.create(with: .small20)
 
     init(viewModel: MarketAdvancedSearchViewModel) {
         self.viewModel = viewModel
@@ -41,14 +42,13 @@ class MarketAdvancedSearchViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        tableView.registerCell(forClass: B5Cell.self)
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
-        navigationItem.largeTitleDisplayMode = .always
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "market.advanced_search.reset_all".localized, style: .plain, target: self, action: #selector(onTapResetAll))
 
         coinListCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         coinListCell.title = "market.advanced_search.coin_list".localized
@@ -74,12 +74,20 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         priceChangeCell.title = "market.advanced_search.price_change".localized
         priceChangeCell.valueActionEnabled = false
 
-        resetAllCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        resetAllCell.title = "market.advanced_search.reset_all".localized
-        resetAllCell.titleColor = .themeLucian
-        resetAllCell.valueImage = UIImage(named: "trash_20")?.tinted(with: .themeGray)
+        view.addSubview(showResultButton)
+        showResultButton.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.height.equalTo(CGFloat.heightButton)
+            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
+        }
 
-        showResultCell.bind(style: .primaryYellow, title: "market.advanced_search.show_results".localized) { [weak self] in self?.onTapShowResult() }
+        showResultButton.apply(style: .primaryYellow)
+        showResultButton.addTarget(self, action: #selector(onTapShowResult), for: .touchUpInside)
+
+        view.addSubview(spinner)
+        spinner.snp.makeConstraints { maker in
+            maker.center.equalTo(showResultButton)
+        }
 
         tableView.buildSections()
 
@@ -91,8 +99,9 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.priceChangeViewItemDriver) { [weak self] in self?.syncPriceChange(viewItem: $0) }
 
         subscribe(disposeBag, viewModel.showErrorSignal) { [weak self] in self?.sync(error: $0) }
-        subscribe(disposeBag, viewModel.itemCountDriver) { [weak self] in self?.sync(itemCount: $0) }
+        subscribe(disposeBag, viewModel.showResultTitleDriver) { [weak self] in self?.sync(title: $0) }
         subscribe(disposeBag, viewModel.showResultEnabledDriver) { [weak self] in self?.sync(showResultEnabled: $0) }
+        subscribe(disposeBag, viewModel.loadingDriver) { [weak self] in self?.sync(loading: $0) }
     }
 
     private func selectorItems(viewItems: [MarketAdvancedSearchViewModel.FilterViewItem]) -> [ItemSelectorModule.Item] {
@@ -180,11 +189,11 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         })
     }
 
-    private func onTapResetAll() {
+    @objc private func onTapResetAll() {
         viewModel.resetAll()
     }
 
-    private func onTapShowResult() {
+    @objc private func onTapShowResult() {
         let viewController = MarketAdvancedSearchResultModule.viewController(service: viewModel.service)
         viewController.parentNavigationController = navigationController
         navigationController?.pushViewController(viewController, animated: true)
@@ -228,13 +237,22 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         HudHelper.instance.showError(title: error)
     }
 
-    private func sync(itemCount: Int?) {
-        let itemCountString = itemCount.map { "\($0)" }
-        showResultCell.title = ["market.advanced_search.show_results".localized, itemCountString].compactMap { $0 }.joined(separator: ": ")
+    private func sync(title: String?) {
+        showResultButton.setTitle(title, for: .normal)
     }
 
     private func sync(showResultEnabled: Bool) {
-        showResultCell.isEnabled = showResultEnabled
+        showResultButton.isEnabled = showResultEnabled
+    }
+
+    private func sync(loading: Bool) {
+        if loading {
+            spinner.isHidden = false
+            spinner.startAnimating()
+        } else {
+            spinner.isHidden = true
+            spinner.stopAnimating()
+        }
     }
 
     private func row(cell: UITableViewCell, id: String, action: (() -> ())?) -> RowProtocol {
@@ -291,26 +309,10 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
         sections.append(Section(
                 id: "price_filters",
                 headerState: .margin(height: .margin32),
+                footerState: .margin(height: .margin32 + .heightButton),
                 rows: [
                     row(cell: periodCell, id: "period") { [weak self] in self?.onTapPeriodCell() },
                     row(cell: priceChangeCell, id: "price_change") { [weak self] in self?.onTapPriceChangeCell() }
-                ])
-        )
-
-        sections.append(Section(
-                id: "reset_all",
-                headerState: .margin(height: .margin32),
-                rows: [
-                    row(cell: resetAllCell, id: "reset_all") { [weak self] in self?.onTapResetAll() }
-                ])
-        )
-
-        sections.append(Section(
-                id: "show_result",
-                headerState: .margin(height: .margin12),
-                footerState: .margin(height: .margin24),
-                rows: [
-                    row(cell: showResultCell, id: "show_result", action: nil)
                 ])
         )
 
