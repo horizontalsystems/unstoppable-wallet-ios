@@ -47,7 +47,7 @@ extension MarketDiscoveryService: IMarketListFetcher {
                         }
                     }
         } else {
-            return rateManager.topMarketsSingle(currencyCode: currencyCode, itemCount: 250)
+            return rateManager.topMarketsSingle(currencyCode: currencyCode, fetchDiffPeriod: .hour24, itemCount: 250)
                     .map { coinMarkets in
                         coinMarkets.enumerated().compactMap { index, coinMarket in
                             MarketModule.Item(coinMarket: coinMarket, score: .rank(index + 1))

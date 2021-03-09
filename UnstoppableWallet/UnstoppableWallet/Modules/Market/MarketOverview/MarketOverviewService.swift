@@ -31,7 +31,7 @@ class MarketOverviewService {
 
         state = .loading
 
-        rateManager.topMarketsSingle(currencyCode: currency.code, itemCount: 250)
+        rateManager.topMarketsSingle(currencyCode: currency.code, fetchDiffPeriod: .hour24, itemCount: 250)
                 .subscribe(onSuccess: { [weak self] in
                     self?.onFetchSuccess(items: $0)
                 }, onError: { [weak self] error in
