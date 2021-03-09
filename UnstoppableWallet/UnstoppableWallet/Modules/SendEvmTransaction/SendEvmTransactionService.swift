@@ -7,7 +7,7 @@ import BigInt
 class SendEvmTransactionService {
     private let disposeBag = DisposeBag()
 
-    private let transactionData: TransactionData
+    let transactionData: TransactionData
     private let evmKit: EthereumKit.Kit
     private let transactionService: EvmTransactionService
 
@@ -70,16 +70,12 @@ extension SendEvmTransactionService {
         sendStateRelay.asObservable()
     }
 
-    var toAddress: EthereumKit.Address {
-        transactionData.to
+    var ownAddress: EthereumKit.Address {
+        evmKit.receiveAddress
     }
 
-    var amount: BigUInt {
-        transactionData.value
-    }
-
-    var inputData: Data {
-        transactionData.input
+    var decoration: TransactionDecoration? {
+        evmKit.decorate(transactionData: transactionData)
     }
 
     func send() {

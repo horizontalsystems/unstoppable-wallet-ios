@@ -221,8 +221,7 @@ extension SwapService {
         static func ==(lhs: State, rhs: State) -> Bool {
             switch (lhs, rhs) {
             case (.loading, .loading): return true
-//            case (.ready(let lhsTransactionData), .ready(let rhsTransactionData)): return lhsTransactionData == rhsTransactionData
-            case (.ready(let lhsTransactionData), .ready(let rhsTransactionData)): return true
+            case (.ready(let lhsTransactionData), .ready(let rhsTransactionData)): return lhsTransactionData == rhsTransactionData
             case (.notReady, .notReady): return true
             default: return false
             }

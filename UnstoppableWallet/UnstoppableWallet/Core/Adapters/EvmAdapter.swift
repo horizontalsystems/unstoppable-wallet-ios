@@ -172,7 +172,7 @@ extension EvmAdapter: ISendEthereumAdapter {
     }
 
     func transactionData(amount: BigUInt, address: EthereumKit.Address) -> TransactionData {
-        TransactionData(to: address, value: amount, input: Data())
+        evmKit.transferTransactionData(to: address, value: amount)
     }
 
 }
