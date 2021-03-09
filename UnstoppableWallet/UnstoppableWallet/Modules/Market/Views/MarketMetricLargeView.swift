@@ -75,7 +75,7 @@ extension MarketMetricLargeView {
             return
         }
 
-        gradientCircle.set(value: diff.cgFloatValue)
+        gradientCircle.set(value: 3 * diff.cgFloatValue)
 
         diffLabel.set(value: diff)
     }
