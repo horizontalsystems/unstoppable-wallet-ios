@@ -14,10 +14,6 @@ class BaseEvmAdapter {
         self.decimal = decimal
     }
 
-    func validate(address: String) throws {
-        _ = try EthereumKit.Address(hex: address)
-    }
-
     func balanceDecimal(kitBalance: BigUInt?, decimal: Int) -> Decimal {
         guard let kitBalance = kitBalance else {
             return 0
@@ -30,29 +26,12 @@ class BaseEvmAdapter {
         return Decimal(sign: .plus, exponent: -decimal, significand: significand)
     }
 
-    func sendSingle(to address: String, value: Decimal, gasPrice: Int, gasLimit: Int, logger: Logger) -> Single<Void> {
-        fatalError("Method should be overridden in child class")
-    }
-
-    func createSendError(from error: Error) -> Error {
-        error.convertedError
-    }
-
     func convertToAdapterState(evmSyncState: EthereumKit.SyncState) -> AdapterState {
         switch evmSyncState {
             case .synced: return .synced
             case .notSynced(let error): return .notSynced(error: error.convertedError)
             case .syncing: return .syncing(progress: 50, lastBlockDate: nil)
         }
-    }
-
-}
-
-// ISendEthereumAdapter
-extension BaseEvmAdapter {
-
-    func sendSingle(amount: Decimal, address: String, gasPrice: Int, gasLimit: Int, logger: Logger) -> Single<Void> {
-        sendSingle(to: address, value: amount, gasPrice: gasPrice, gasLimit: gasLimit, logger: logger)
     }
 
 }

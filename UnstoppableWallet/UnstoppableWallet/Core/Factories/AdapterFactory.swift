@@ -39,14 +39,7 @@ class AdapterFactory: IAdapterFactory {
             }
         case let .erc20(address):
             if let evmKit = try? ethereumKitManager.evmKit(account: wallet.account) {
-                let smartContractFee = appConfigProvider.smartContractFees[wallet.coin.type] ?? 0
-                let minimumBalance = appConfigProvider.minimumBalances[wallet.coin.type] ?? 0
-                let minimumSpendableAmount = appConfigProvider.minimumSpendableAmounts[wallet.coin.type]
-
-                return try? Evm20Adapter(
-                        evmKit: evmKit, contractAddress: address, decimal: wallet.coin.decimal,
-                        fee: smartContractFee, minimumRequiredBalance: minimumBalance, minimumSpendableAmount: minimumSpendableAmount
-                )
+                return try? Evm20Adapter(evmKit: evmKit, contractAddress: address, decimal: wallet.coin.decimal)
             }
         case .binanceSmartChain:
             if let evmKit = try? binanceSmartChainKitManager.evmKit(account: wallet.account) {
@@ -54,14 +47,7 @@ class AdapterFactory: IAdapterFactory {
             }
         case let .bep20(address):
             if let evmKit = try? binanceSmartChainKitManager.evmKit(account: wallet.account) {
-                let smartContractFee = appConfigProvider.smartContractFees[wallet.coin.type] ?? 0
-                let minimumBalance = appConfigProvider.minimumBalances[wallet.coin.type] ?? 0
-                let minimumSpendableAmount = appConfigProvider.minimumSpendableAmounts[wallet.coin.type]
-
-                return try? Evm20Adapter(
-                        evmKit: evmKit, contractAddress: address, decimal: wallet.coin.decimal,
-                        fee: smartContractFee, minimumRequiredBalance: minimumBalance, minimumSpendableAmount: minimumSpendableAmount
-                )
+                return try? Evm20Adapter(evmKit: evmKit, contractAddress: address, decimal: wallet.coin.decimal)
             }
         case let .bep2(symbol):
             if let binanceKit = try? binanceKitManager.binanceKit(account: wallet.account) {

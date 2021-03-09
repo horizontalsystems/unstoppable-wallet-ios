@@ -130,30 +130,6 @@ extension SendRouter {
         return (presenter, [amountView, addressView, feeView], [addressRouter])
     }
 
-    private static func module(coin: Coin, adapter: ISendEthereumAdapter) -> (ISendHandler, [UIView], [ISendSubRouter])? {
-        let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
-        let (addressView, addressModule, addressRouter) = SendAddressRouter.module(coin: coin)
-        let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
-
-        var views: [UIView] = [amountView, addressView, feeView]
-
-        guard let (feePriorityView, feePriorityModule, feePriorityRouter) = SendFeePriorityRouter.module(coin: coin, customPriorityUnit: .gwei) else {
-            return nil
-        }
-        if let view = feePriorityView {
-            views.append(view)
-        }
-
-        let interactor = SendEthereumInteractor(adapter: adapter)
-        let presenter = SendEthereumHandler(interactor: interactor, amountModule: amountModule, addressModule: addressModule, feeModule: feeModule, feePriorityModule: feePriorityModule)
-
-        amountModule.delegate = presenter
-        addressModule.delegate = presenter
-        feePriorityModule.delegate = presenter
-
-        return (presenter, views, [addressRouter, feePriorityRouter])
-    }
-
     private static func module(coin: Coin, adapter: ISendBinanceAdapter) -> (ISendHandler, [UIView], [ISendSubRouter]) {
         let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
         let (addressView, addressModule, addressRouter) = SendAddressRouter.module(coin: coin)

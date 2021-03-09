@@ -9,17 +9,11 @@ class Evm20Adapter: BaseEvmAdapter {
     private static let approveConfirmationsThreshold: Int? = nil
     let evm20Kit: Erc20Kit.Kit
     private let contractAddress: EthereumKit.Address
-    private let fee: Decimal
-    private(set) var minimumRequiredBalance: Decimal
-    private(set) var minimumSpendableAmount: Decimal?
 
-    init(evmKit: EthereumKit.Kit, contractAddress: String, decimal: Int, fee: Decimal, minimumRequiredBalance: Decimal, minimumSpendableAmount: Decimal?) throws {
+    init(evmKit: EthereumKit.Kit, contractAddress: String, decimal: Int) throws {
         let address = try EthereumKit.Address(hex: contractAddress)
         evm20Kit = try Erc20Kit.Kit.instance(ethereumKit: evmKit, contractAddress: address)
         self.contractAddress = address
-        self.fee = fee
-        self.minimumRequiredBalance = minimumRequiredBalance
-        self.minimumSpendableAmount = minimumSpendableAmount
 
         super.init(evmKit: evmKit, decimal: decimal)
     }
@@ -68,22 +62,6 @@ class Evm20Adapter: BaseEvmAdapter {
                 showRawTransaction: false,
                 memo: nil
         )
-    }
-
-    override func sendSingle(to address: String, value: Decimal, gasPrice: Int, gasLimit: Int, logger: Logger) -> Single<Void> {
-        guard let amount = BigUInt(value.roundedString(decimal: decimal)),
-              let toAddress = try? EthereumKit.Address(hex: address) else {
-            return Single.error(SendTransactionError.wrongAmount)
-        }
-
-        let transactionInput = evm20Kit.transferTransactionData(to: toAddress, value: amount)
-
-        return evmKit.sendSingle(address: transactionInput.to, value: transactionInput.value, transactionInput: transactionInput.input, gasPrice: gasPrice, gasLimit: gasLimit)
-            .do(onSubscribe: { logger.debug("Sending to Erc20Kit", save: true) })
-            .map { _ in ()}
-            .catchError { [weak self] error in
-                Single.error(self?.createSendError(from: error) ?? error)
-            }
     }
 
 }
@@ -138,32 +116,6 @@ extension Evm20Adapter: IBalanceAdapter {
 }
 
 extension Evm20Adapter: ISendEthereumAdapter {
-
-    func availableBalance(gasPrice: Int, gasLimit: Int) -> Decimal {
-        max(0, balance - fee)
-    }
-
-    var ethereumBalance: Decimal {
-        balanceDecimal(kitBalance: evmKit.accountState?.balance, decimal: EvmAdapter.decimal)
-    }
-
-    func fee(gasPrice: Int, gasLimit: Int) -> Decimal {
-        let value = Decimal(gasPrice) * Decimal(gasLimit)
-        return value / pow(10, EvmAdapter.decimal)
-    }
-
-    func estimateGasLimit(to address: String?, value: Decimal, gasPrice: Int?) -> Single<Int> {
-        guard let amount = BigUInt(value.roundedString(decimal: decimal)) else {
-            return Single.error(SendTransactionError.wrongAmount)
-        }
-
-        guard let address = address, let toAddress = try? EthereumKit.Address(hex: address) else {
-            return Single.just(EthereumKit.Kit.defaultGasLimit)
-        }
-
-        let data = evm20Kit.transferTransactionData(to: toAddress, value: amount)
-        return evmKit.estimateGas(transactionData: data, gasPrice: gasPrice)
-    }
 
     func transactionData(amount: BigUInt, address: EthereumKit.Address) -> TransactionData {
         evm20Kit.transferTransactionData(to: address, value: amount)

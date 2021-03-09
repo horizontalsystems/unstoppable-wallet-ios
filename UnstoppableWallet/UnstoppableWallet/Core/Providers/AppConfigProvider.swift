@@ -86,9 +86,6 @@ class AppConfigProvider: IAppConfigProvider {
         Array(CoinKit.Kit.defaultCoins(testNet: testMode).prefix(8))
     }
 
-    let smartContractFees: [CoinType: Decimal] = [:]
-    let minimumBalances: [CoinType: Decimal] = [.erc20(address: "0x039B5649A59967e3e936D7471f9c3700100Ee1ab"): 0.001]
-    let minimumSpendableAmounts: [CoinType: Decimal] = [.erc20(address: "0x4f3AfEC4E5a3F2A6a1A411DEF7D7dFe50eE057bF"): 0.001]
 }
 
 

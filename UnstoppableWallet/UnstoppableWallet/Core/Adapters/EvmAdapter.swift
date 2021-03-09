@@ -67,23 +67,6 @@ class EvmAdapter: BaseEvmAdapter {
         )
     }
 
-    override func sendSingle(to address: String, value: Decimal, gasPrice: Int, gasLimit: Int, logger: Logger) -> Single<Void> {
-        guard let amount = BigUInt(value.roundedString(decimal: decimal)) else {
-            return Single.error(SendTransactionError.wrongAmount)
-        }
-        do {
-            return try evmKit.sendSingle(address: EthereumKit.Address(hex: address), value: amount, gasPrice: gasPrice, gasLimit: gasLimit)
-                    .do(onSubscribe: { logger.debug("Sending to EthereumKit", save: true) })
-                    .map { _ in ()}
-                    .catchError { [weak self] error in
-                        Single.error(self?.createSendError(from: error) ?? error)
-                    }
-        } catch {
-            return Single.error(error)
-        }
-
-    }
-
 }
 
 extension EvmAdapter {
@@ -136,40 +119,6 @@ extension EvmAdapter: IBalanceAdapter {
 }
 
 extension EvmAdapter: ISendEthereumAdapter {
-
-    func availableBalance(gasPrice: Int, gasLimit: Int) -> Decimal {
-        max(0, balance - fee(gasPrice: gasPrice, gasLimit: gasLimit))
-    }
-
-    var ethereumBalance: Decimal {
-        balance
-    }
-
-    var minimumRequiredBalance: Decimal {
-        0
-    }
-
-    var minimumSpendableAmount: Decimal? {
-        nil
-    }
-
-    func fee(gasPrice: Int, gasLimit: Int) -> Decimal {
-        let value = Decimal(gasPrice) * Decimal(gasLimit)
-        return value / pow(10, EvmAdapter.decimal)
-    }
-
-    func estimateGasLimit(to address: String?, value: Decimal, gasPrice: Int?) -> Single<Int> {
-        guard let amount = BigUInt(value.roundedString(decimal: decimal)) else {
-            return Single.error(SendTransactionError.wrongAmount)
-        }
-
-        var evmAddress: EthereumKit.Address?
-        if let address = address {
-            evmAddress = try? EthereumKit.Address(hex: address)
-        }
-
-        return evmKit.estimateGas(to: evmAddress, amount: amount, gasPrice: gasPrice)
-    }
 
     func transactionData(amount: BigUInt, address: EthereumKit.Address) -> TransactionData {
         evmKit.transferTransactionData(to: address, value: amount)
