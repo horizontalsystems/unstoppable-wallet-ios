@@ -411,9 +411,9 @@
 "market.advanced_search.price_change" = "Price Change";
 
 "market.advanced_search.top" = "Top %d";
-"market.advanced_search.reset_all" = "Reset All";
+"market.advanced_search.reset_all" = "Reset";
 
-"market.advanced_search.none" = "None";
+"market.advanced_search.any" = "Any";
 "market.advanced_search.less_5_m" = "< 5M";
 "market.advanced_search.m_5_m_10" = "5M - 20M";
 "market.advanced_search.m_20_m_100" = "20M - 100M";
