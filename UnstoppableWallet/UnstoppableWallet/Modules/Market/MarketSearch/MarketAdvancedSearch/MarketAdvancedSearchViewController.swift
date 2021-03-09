@@ -271,26 +271,26 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
                 ])
         )
 
-        let description = "market.advanced_search.dex_description".localized
-        let footerState: ViewState<BottomDescriptionHeaderFooterView> = .cellType(hash: "Dex_description", binder: { view in
-            view.bind(text: description)
-
-        }, dynamicHeight: { containerWidth in
-            BottomDescriptionHeaderFooterView.height(containerWidth: containerWidth, text: description)
-        })
-
-        sections.append(Section(
-                id: "liquidity",
-                headerState: .margin(height: .margin32),
-                footerState: footerState,
-                rows: [
-                    row(cell: liquidityCell, id: "liquidity") { [weak self] in self?.onTapLiquidityCell() }
-                ])
-        )
+//        let description = "market.advanced_search.dex_description".localized
+//        let footerState: ViewState<BottomDescriptionHeaderFooterView> = .cellType(hash: "Dex_description", binder: { view in
+//            view.bind(text: description)
+//
+//        }, dynamicHeight: { containerWidth in
+//            BottomDescriptionHeaderFooterView.height(containerWidth: containerWidth, text: description)
+//        })
+//
+//        sections.append(Section(
+//                id: "liquidity",
+//                headerState: .margin(height: .margin32),
+//                footerState: footerState,
+//                rows: [
+//                    row(cell: liquidityCell, id: "liquidity") { [weak self] in self?.onTapLiquidityCell() }
+//                ])
+//        )
 
         sections.append(Section(
                 id: "price_filters",
-                headerState: .margin(height: .margin12),
+                headerState: .margin(height: .margin32),
                 rows: [
                     row(cell: periodCell, id: "period") { [weak self] in self?.onTapPeriodCell() },
                     row(cell: priceChangeCell, id: "price_change") { [weak self] in self?.onTapPriceChangeCell() }

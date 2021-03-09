@@ -140,7 +140,7 @@ class MarketAdvancedSearchService {
         let single: Single<[CoinMarket]>
         if cache.isEmpty {
             single = rateManager
-                    .topMarketsSingle(currencyCode: currencyCode, itemCount: coinListCount.rawValue)
+                    .topMarketsSingle(currencyCode: currencyCode, fetchDiffPeriod: period.fetchDiffPeriod, itemCount: coinListCount.rawValue)
                     .do { [weak self] in
                         self?.cache = $0
                     }
@@ -294,6 +294,17 @@ extension MarketAdvancedSearchService {
         case month
         case month6
         case year
+
+        var fetchDiffPeriod: TimePeriod {
+            switch self {
+            case .day: return .hour24
+            case .week: return .day7
+            case .week2: return .day14
+            case .month: return .day30
+            case .month6: return .day200
+            case .year: return .year1
+            }
+        }
     }
 
     enum State {
