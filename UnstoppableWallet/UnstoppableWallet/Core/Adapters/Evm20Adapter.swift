@@ -44,7 +44,7 @@ class Evm20Adapter: BaseEvmAdapter {
         let txHash = transaction.hash.toHexString()
 
         return TransactionRecord(
-            uid: txHash + String(transaction.interTransactionIndex) + contractAddress.hex,
+                uid: txHash + String(transaction.interTransactionIndex) + contractAddress.hex,
                 transactionHash: txHash,
                 transactionIndex: transaction.transactionIndex ?? 0,
                 interTransactionIndex: transaction.interTransactionIndex,
@@ -55,8 +55,8 @@ class Evm20Adapter: BaseEvmAdapter {
                 fee: nil,
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
                 failed: transaction.isError,
-                from: transaction.from.hex,
-                to: transaction.to.hex,
+                from: transaction.from.eip55,
+                to: transaction.to.eip55,
                 lockInfo: nil,
                 conflictingHash: nil,
                 showRawTransaction: false,
