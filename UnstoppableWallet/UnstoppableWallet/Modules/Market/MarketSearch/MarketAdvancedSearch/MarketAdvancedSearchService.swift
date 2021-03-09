@@ -10,8 +10,8 @@ class MarketAdvancedSearchService {
     private let rateManager: IRateManager
     private let currencyKit: ICurrencyKit
 
-    private var stateUpdatedRelay = PublishRelay<State>()
-    private(set) var state: State = .loading {
+    private var stateUpdatedRelay = PublishRelay<DataStatus<Int>>()
+    private(set) var state: DataStatus<Int> = .loading {
         didSet {
             stateUpdatedRelay.accept(state)
         }
@@ -109,14 +109,14 @@ class MarketAdvancedSearchService {
         topMarketList(currencyCode: currencyKit.baseCurrency.code).subscribe(onSuccess: { [weak self] in
             self?.sync(count: $0.count)
         }, onError: { [weak self] error in
-            self?.state = .failed(error: error)
+            self?.state = .failed(error)
         }).disposed(by: disposeBag)
     }
 
     private func updateFiltersIfNeeded() {
-        if case .loaded = state {
+        if case .completed = state {
             refetchRelay.accept(())
-            state = .loaded(count: filtered(items: cache).count)
+            state = .completed(filtered(items: cache).count)
         }
     }
 
@@ -133,7 +133,7 @@ class MarketAdvancedSearchService {
 
     private func sync(count: Int) {
         refetchRelay.accept(())
-        state = .loaded(count: count)
+        state = .completed(count)
     }
 
     private func topMarketList(currencyCode: String) -> Single<[(index: Int, item: CoinMarket)]> {
@@ -195,7 +195,7 @@ extension MarketAdvancedSearchService {
         priceChangeUpdatedRelay.asObservable()
     }
 
-    var stateUpdatedObservable: Observable<State> {
+    var stateUpdatedObservable: Observable<DataStatus<Int>> {
         stateUpdatedRelay.asObservable()
     }
 
@@ -305,12 +305,6 @@ extension MarketAdvancedSearchService {
             case .year: return .year1
             }
         }
-    }
-
-    enum State {
-        case loading
-        case loaded(count: Int)
-        case failed(error: Error)
     }
 
 }
