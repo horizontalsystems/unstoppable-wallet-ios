@@ -405,7 +405,7 @@
 "market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
 "market.advanced_search.24h" = "24h";
 
-"market.advanced_search.coin_list" = "Coin List";
+"market.advanced_search.choose_set" = "Choose Set";
 "market.advanced_search.market_cap" = "Market Cap";
 "market.advanced_search.volume" = "Trading Volume";
 "market.advanced_search.liquidity" = "DEX Liquidity";
@@ -425,9 +425,9 @@
 
 "market.advanced_search.day" = "1 Day";
 "market.advanced_search.week" = "1 Week";
-"market.advanced_search.week2" = "2 Month";
+"market.advanced_search.week2" = "2 Weeks";
 "market.advanced_search.month" = "1 Month";
-"market.advanced_search.month6" = "6 Month";
+"market.advanced_search.month6" = "6 Months";
 "market.advanced_search.year" = "1 Year";
 
 // Transactions
