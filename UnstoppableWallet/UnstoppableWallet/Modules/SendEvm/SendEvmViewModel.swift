@@ -9,7 +9,7 @@ class SendEvmViewModel {
 
     private let proceedEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let amountCautionRelay = BehaviorRelay<Caution?>(value: nil)
-    private let proceedRelay = PublishRelay<TransactionData>()
+    private let proceedRelay = PublishRelay<SendEvmData>()
 
     init(service: SendEvmService) {
         self.service = service
@@ -44,7 +44,7 @@ extension SendEvmViewModel {
         amountCautionRelay.asDriver()
     }
 
-    var proceedSignal: Signal<TransactionData> {
+    var proceedSignal: Signal<SendEvmData> {
         proceedRelay.asSignal()
     }
 
@@ -53,11 +53,11 @@ extension SendEvmViewModel {
     }
 
     func didTapProceed() {
-        guard case .ready(let transactionData) = service.state else {
+        guard case .ready(let sendData) = service.state else {
             return
         }
 
-        proceedRelay.accept(transactionData)
+        proceedRelay.accept(sendData)
     }
 
 }

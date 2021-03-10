@@ -17,7 +17,7 @@ class SendEvmService {
     }
 
     private var evmAmount: BigUInt?
-    private var evmAddress: EthereumKit.Address?
+    private var addressData: AddressData?
 
     private let amountErrorRelay = PublishRelay<Error?>()
     private var amountError: Error? {
@@ -39,9 +39,17 @@ class SendEvmService {
     }
 
     private func syncState() {
-        if amountError == nil, addressError == nil, let amount = evmAmount, let address = evmAddress {
-            let transactionData = adapter.transactionData(amount: amount, address: address)
-            state = .ready(transactionData: transactionData)
+        if amountError == nil, addressError == nil, let evmAmount = evmAmount, let addressData = addressData {
+            let transactionData = adapter.transactionData(amount: evmAmount, address: addressData.evmAddress)
+
+            var additionalItems = [SendEvmData.AdditionalItem]()
+
+            if let domain = addressData.domain {
+                additionalItems.append(.domain(value: domain))
+            }
+
+            let sendData = SendEvmData(transactionData: transactionData, additionalItems: additionalItems)
+            state = .ready(sendData: sendData)
         } else {
             state = .notReady
         }
@@ -139,14 +147,14 @@ extension SendEvmService: IRecipientAddressService {
     func set(address: Address?) {
         if let address = address, !address.raw.isEmpty {
             do {
-                evmAddress = try EthereumKit.Address(hex: address.raw)
+                addressData = AddressData(evmAddress: try EthereumKit.Address(hex: address.raw), domain: address.domain)
                 addressError = nil
             } catch {
-                evmAddress = nil
+                addressData = nil
                 addressError = error
             }
         } else {
-            evmAddress = nil
+            addressData = nil
             addressError = nil
         }
 
@@ -162,13 +170,18 @@ extension SendEvmService: IRecipientAddressService {
 extension SendEvmService {
 
     enum State {
-        case ready(transactionData: TransactionData)
+        case ready(sendData: SendEvmData)
         case notReady
     }
 
     enum AmountError: Error {
         case invalidDecimal
         case insufficientBalance
+    }
+
+    private struct AddressData {
+        let evmAddress: EthereumKit.Address
+        let domain: String?
     }
 
 }

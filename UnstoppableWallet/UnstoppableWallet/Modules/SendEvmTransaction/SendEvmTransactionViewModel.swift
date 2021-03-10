@@ -100,6 +100,10 @@ class SendEvmTransactionViewModel {
             .amount(amountData: coinServiceFactory.baseCoinService.amountData(value: value))
         ]
 
+        if let domainViewItem = domainViewItem {
+            viewItems.append(domainViewItem)
+        }
+
         if let to = to {
             viewItems.append(.address(title: "Address", value: to.eip55))
         }
@@ -112,10 +116,17 @@ class SendEvmTransactionViewModel {
             return nil
         }
 
-        return [
-            .amount(amountData: coinService.amountData(value: value)),
-            .address(title: "Address", value: to.eip55)
+        var viewItems: [ViewItem] = [
+            .amount(amountData: coinService.amountData(value: value))
         ]
+
+        if let domainViewItem = domainViewItem {
+            viewItems.append(domainViewItem)
+        }
+
+        viewItems.append(.address(title: "Address", value: to.eip55))
+
+        return viewItems
     }
 
     private func eip20ApproveViewItems(spender: EthereumKit.Address, value: BigUInt, contractAddress: EthereumKit.Address) -> [ViewItem]? {
@@ -167,6 +178,15 @@ class SendEvmTransactionViewModel {
         ]
     }
 
+    private var domainViewItem: ViewItem? {
+        for item in service.additionalItems {
+            if case .domain(let value) = item {
+                return .value(title: "Domain", value: value)
+            }
+        }
+        return nil
+    }
+
 }
 
 extension SendEvmTransactionViewModel {
@@ -202,6 +222,7 @@ extension SendEvmTransactionViewModel {
     enum ViewItem {
         case amount(amountData: AmountData)
         case address(title: String, value: String)
+        case value(title: String, value: String)
         case input(value: String)
     }
 

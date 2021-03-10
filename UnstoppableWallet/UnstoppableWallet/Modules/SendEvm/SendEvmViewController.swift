@@ -84,7 +84,7 @@ class SendEvmViewController: ThemeViewController {
             self?.amountCell.set(cautionType: caution?.type)
             self?.amountCautionCell.set(caution: caution)
         }
-        subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in self?.openConfirm(transactionData: $0) }
+        subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in self?.openConfirm(sendData: $0) }
 
         tableView.buildSections()
         isLoaded = true
@@ -118,8 +118,8 @@ class SendEvmViewController: ThemeViewController {
         }
     }
 
-    private func openConfirm(transactionData: TransactionData) {
-        guard let viewController = SendEvmConfirmationModule.viewController(evmKit: evmKit, transactionData: transactionData) else {
+    private func openConfirm(sendData: SendEvmData) {
+        guard let viewController = SendEvmConfirmationModule.viewController(evmKit: evmKit, sendData: sendData) else {
             return
         }
         navigationController?.pushViewController(viewController, animated: true)

@@ -53,6 +53,7 @@ class SendEvmTransactionViewController: ThemeViewController {
         tableView.allowsSelection = false
 
         tableView.registerCell(forClass: SendConfirmationAmountCell.self)
+        tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: D9Cell.self)
         tableView.registerCell(forClass: AdditionalDataCell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
@@ -146,10 +147,24 @@ class SendEvmTransactionViewController: ThemeViewController {
         )
     }
 
+    private func valueRow(title: String, value: String, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
+        Row<D7Cell>(
+                id: "value-\(index)",
+                height: .heightCell48,
+                bind: { cell, _ in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                    cell.title = title
+                    cell.value = value
+                    cell.valueItalic = false
+                }
+        )
+    }
+
     private func row(viewItem: SendEvmTransactionViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         switch viewItem {
         case .amount(let amountData): return amountRow(amountData: amountData, index: index, isFirst: isFirst, isLast: isLast)
         case let .address(title, value): return hexRow(title: title, value: value, index: index, isFirst: isFirst, isLast: isLast)
+        case let .value(title, value): return valueRow(title: title, value: value, index: index, isFirst: isFirst, isLast: isLast)
         case .input(let value): return hexRow(title: "Input", value: value, index: index, isFirst: isFirst, isLast: isLast)
         }
     }

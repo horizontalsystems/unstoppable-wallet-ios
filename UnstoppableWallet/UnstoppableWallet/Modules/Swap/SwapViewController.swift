@@ -224,7 +224,7 @@ class SwapViewController: ThemeViewController {
         }
 
         guard let viewController = SwapConfirmationModule.viewController(
-                transactionData: transactionData,
+                sendData: SendEvmData(transactionData: transactionData, additionalItems: []),
                 dex: viewModel.service.dex
         ) else {
             return

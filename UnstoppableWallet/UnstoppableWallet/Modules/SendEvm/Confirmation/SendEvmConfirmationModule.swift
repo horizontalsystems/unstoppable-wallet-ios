@@ -3,9 +3,19 @@ import ThemeKit
 import EthereumKit
 import CoinKit
 
+struct SendEvmData {
+    let transactionData: TransactionData
+    let additionalItems: [AdditionalItem]
+
+    enum AdditionalItem {
+        case domain(value: String)
+    }
+
+}
+
 struct SendEvmConfirmationModule {
 
-    static func viewController(evmKit: EthereumKit.Kit, transactionData: TransactionData) -> UIViewController? {
+    static func viewController(evmKit: EthereumKit.Kit, sendData: SendEvmData) -> UIViewController? {
         let feeCoin: Coin?
 
         switch evmKit.networkType {
@@ -19,7 +29,7 @@ struct SendEvmConfirmationModule {
 
         let coinServiceFactory = EvmCoinServiceFactory(baseCoin: coin, coinKit: App.shared.coinKit, currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManager)
         let transactionService = EvmTransactionService(evmKit: evmKit, feeRateProvider: feeRateProvider)
-        let service = SendEvmTransactionService(transactionData: transactionData, evmKit: evmKit, transactionService: transactionService)
+        let service = SendEvmTransactionService(sendData: sendData, evmKit: evmKit, transactionService: transactionService)
 
         let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory)
         let feeViewModel = EthereumFeeViewModel(service: transactionService, coinService: coinServiceFactory.baseCoinService)
