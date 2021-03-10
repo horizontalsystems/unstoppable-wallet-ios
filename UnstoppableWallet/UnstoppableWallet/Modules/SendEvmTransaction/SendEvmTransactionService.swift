@@ -7,7 +7,7 @@ import BigInt
 class SendEvmTransactionService {
     private let disposeBag = DisposeBag()
 
-    let transactionData: TransactionData
+    private let sendData: SendEvmData
     private let evmKit: EthereumKit.Kit
     private let transactionService: EvmTransactionService
 
@@ -25,14 +25,14 @@ class SendEvmTransactionService {
         }
     }
 
-    init(transactionData: TransactionData, gasPrice: Int? = nil, evmKit: EthereumKit.Kit, transactionService: EvmTransactionService) {
-        self.transactionData = transactionData
+    init(sendData: SendEvmData, gasPrice: Int? = nil, evmKit: EthereumKit.Kit, transactionService: EvmTransactionService) {
+        self.sendData = sendData
         self.evmKit = evmKit
         self.transactionService = transactionService
 
         subscribe(disposeBag, transactionService.transactionStatusObservable) { [weak self] _ in self?.syncState() }
 
-        transactionService.set(transactionData: transactionData)
+        transactionService.set(transactionData: sendData.transactionData)
 
         if let gasPrice = gasPrice {
             transactionService.set(gasPriceType: .custom(gasPrice: gasPrice))
@@ -70,12 +70,20 @@ extension SendEvmTransactionService {
         sendStateRelay.asObservable()
     }
 
+    var transactionData: TransactionData {
+        sendData.transactionData
+    }
+
+    var additionalItems: [SendEvmData.AdditionalItem] {
+        sendData.additionalItems
+    }
+
     var ownAddress: EthereumKit.Address {
         evmKit.receiveAddress
     }
 
     var decoration: TransactionDecoration? {
-        evmKit.decorate(transactionData: transactionData)
+        evmKit.decorate(transactionData: sendData.transactionData)
     }
 
     func send() {
@@ -86,7 +94,7 @@ extension SendEvmTransactionService {
         sendState = .sending
 
         evmKit.sendSingle(
-                        transactionData: transactionData,
+                        transactionData: sendData.transactionData,
                         gasPrice: transaction.gasData.gasPrice,
                         gasLimit: transaction.gasData.gasLimit
                 )
