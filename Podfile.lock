@@ -472,10 +472,10 @@ CHECKOUT OPTIONS:
     :commit: d11d30d4f0caa586b3e4b3fccf15048c3dd12e0a
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
-    :commit: 392186c18e8df97d40ca0f4587d857259d878dd4
+    :commit: 57b8f5a25f9e77f451cbb38a56877e1db6f4d2a8
     :git: https://github.com/horizontalsystems/gui-kit/
   CoinKit.swift:
-    :commit: de2cce21ac3ab6ace727132dc95fbb42b717eaa1
+    :commit: 1719bd4b12cc30dd2f9b7571e0aeae91a80c58a3
     :git: https://github.com/horizontalsystems/coin-kit-ios
   CurrencyKit.swift:
     :commit: e98cabf6f523af6129c04521a37f9cbaf3a77f7e
@@ -541,7 +541,7 @@ CHECKOUT OPTIONS:
     :commit: 467915ce2ba7b4bb831150be911bd0b8b1d94c36
     :git: https://github.com/horizontalsystems/wallet-connect-swift
   XRatesKit.swift:
-    :commit: 57bc5404b6fbff6b86d8158e3faa9eef7e4dea00
+    :commit: b5405b5b51db40c794823c9318fbccb8e93a930a
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
   ZcashLightClientKit:
     :commit: ca722571d0aa6852c32d75bb3a608650411d7454
