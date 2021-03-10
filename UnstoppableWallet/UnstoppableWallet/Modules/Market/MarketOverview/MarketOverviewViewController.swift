@@ -67,7 +67,7 @@ class MarketOverviewViewController: ThemeViewController {
     }
 
     @objc func onRefresh() {
-        viewModel.refresh()
+        refresh()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             self?.refreshControl.endRefreshing()
