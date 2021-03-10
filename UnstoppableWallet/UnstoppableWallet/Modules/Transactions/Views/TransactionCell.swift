@@ -78,7 +78,7 @@ class TransactionCell: BaseSelectableThemeCell {
         amountLabel.snp.makeConstraints { maker in
             maker.bottom.equalToSuperview().inset(CGFloat.margin3x)
             maker.leading.equalTo(leftWrapperView.snp.trailing).offset(CGFloat.margin3x)
-            maker.trailing.equalTo(wrapperView.snp.trailingMargin)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin16)
         }
         amountLabel.font = .subhead2
         amountLabel.textAlignment = .right
