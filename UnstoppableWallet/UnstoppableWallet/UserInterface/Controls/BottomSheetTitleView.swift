@@ -23,10 +23,8 @@ class BottomSheetTitleView: UIView {
         addSubview(iconImageView)
         iconImageView.snp.makeConstraints { maker in
             maker.leading.top.equalToSuperview().offset(CGFloat.margin3x)
+            maker.size.equalTo(24)
         }
-
-        iconImageView.setContentHuggingPriority(.required, for: .horizontal)
-        iconImageView.setContentHuggingPriority(.required, for: .vertical)
 
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
@@ -41,6 +39,7 @@ class BottomSheetTitleView: UIView {
         subtitleLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(titleLabel)
             maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin1x)
+            maker.trailing.equalTo(titleLabel)
         }
 
         subtitleLabel.font = .subhead2
