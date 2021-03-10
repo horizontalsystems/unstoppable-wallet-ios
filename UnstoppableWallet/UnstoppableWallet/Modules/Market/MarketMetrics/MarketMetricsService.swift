@@ -5,6 +5,8 @@ import RxRelay
 
 class MarketMetricsService {
     private let disposeBag = DisposeBag()
+    private var marketMetricsDisposeBag = DisposeBag()
+
     private var timer: Timer?
 
     private let globalMarketInfoRelay = BehaviorRelay<DataStatus<GlobalCoinMarket>>(value: .loading)
@@ -12,22 +14,32 @@ class MarketMetricsService {
     private let rateManager: IRateManager
     private let currencyKit: ICurrencyKit
 
-    init(rateManager: IRateManager, currencyKit: ICurrencyKit) {
+    init(rateManager: IRateManager, appManager: IAppManager, currencyKit: ICurrencyKit) {
         self.rateManager = rateManager
         self.currencyKit = currencyKit
+
+        appManager.willEnterForegroundObservable
+                .subscribe(onNext: { [weak self] in
+                    self?.fetchMarketMetrics()
+                })
+                .disposed(by: disposeBag)
 
         fetchMarketMetrics()
     }
 
     private func fetchMarketMetrics() {
-        globalMarketInfoRelay.accept(.loading)
+        marketMetricsDisposeBag = DisposeBag()
+        if globalMarketInfoRelay.value.data == nil {        // show loading only when cell hasn't data
+            globalMarketInfoRelay.accept(.loading)
+        }
 
         rateManager.globalMarketInfoSingle(currencyCode: currencyKit.baseCurrency.code)
             .subscribe(onSuccess: { [weak self] info in
                 self?.globalMarketInfoRelay.accept(.completed(info))
             }, onError: { [weak self] error in
                 self?.globalMarketInfoRelay.accept(.failed(error))
-            }).disposed(by: disposeBag)
+            })
+            .disposed(by: marketMetricsDisposeBag)
     }
 
 }
