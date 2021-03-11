@@ -12,6 +12,8 @@ class CreateWalletService {
     private let derivationSettingsManager: IDerivationSettingsManager
     private let bitcoinCashCoinTypeManager: BitcoinCashCoinTypeManager
 
+    private var featuredCoins = [Coin]()
+    private var coins = [Coin]()
     private var accounts = [PredefinedAccountType: Account]()
     private var wallets = [Coin: Wallet]()
 
@@ -34,7 +36,18 @@ class CreateWalletService {
         self.derivationSettingsManager = derivationSettingsManager
         self.bitcoinCashCoinTypeManager = bitcoinCashCoinTypeManager
 
+        syncCoins()
         syncState()
+    }
+
+    private func syncCoins() {
+        let (featuredCoins, regularCoins) = coinManager.groupedCoins
+
+        self.featuredCoins = filteredCoins(coins: featuredCoins)
+
+        coins = filteredCoins(coins: regularCoins).sorted { lhsCoin, rhsCoin in
+            lhsCoin.title.lowercased() < rhsCoin.title.lowercased()
+        }
     }
 
     private func filteredCoins(coins: [Coin]) -> [Coin] {
@@ -57,9 +70,6 @@ class CreateWalletService {
     }
 
     private func syncState() {
-        let featuredCoins = filteredCoins(coins: coinManager.featuredCoins)
-        let coins = filteredCoins(coins: coinManager.coins).filter { !featuredCoins.contains($0) }
-
         state = State(
                 featuredItems: featuredCoins.compactMap { item(coin: $0) },
                 items: coins.compactMap { item(coin: $0) }

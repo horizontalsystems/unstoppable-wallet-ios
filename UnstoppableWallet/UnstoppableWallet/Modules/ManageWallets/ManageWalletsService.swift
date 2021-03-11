@@ -10,19 +10,25 @@ class ManageWalletsService {
     private let blockchainSettingsService: BlockchainSettingsService
     private let disposeBag = DisposeBag()
 
+    private var featuredCoins = [Coin]()
+    private var coins = [Coin]()
     private var wallets = [Coin: Wallet]()
 
     private let stateRelay = PublishRelay<State>()
     private let enableCoinRelay = PublishRelay<Coin>()
     private let cancelEnableCoinRelay = PublishRelay<Coin>()
 
+    private var addedCoins = [Coin]()
     private var coinToEnable: Coin?
+    private var resyncCoins = false
 
     var state = State.empty {
         didSet {
             stateRelay.accept(state)
         }
     }
+
+    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.manage-wallets-service", qos: .userInitiated)
 
     init(coinManager: ICoinManager, walletManager: IWalletManager, accountManager: IAccountManager, enableCoinsService: EnableCoinsService, blockchainSettingsService: BlockchainSettingsService) {
         self.coinManager = coinManager
@@ -34,29 +40,28 @@ class ManageWalletsService {
         accountManager.accountsObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] _ in
-                    self?.syncState()
                     self?.handleAccountsChanged()
-                })
-                .disposed(by: disposeBag)
-
-        coinManager.coinAddedObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] _ in
-                    self?.syncState()
                 })
                 .disposed(by: disposeBag)
 
         walletManager.walletsUpdatedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] wallets in
-                    self?.sync(wallets: wallets)
+                    self?.handleUpdated(wallets: wallets)
+                })
+                .disposed(by: disposeBag)
+
+        coinManager.coinAddedObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] coin in
+                    self?.handleAdded(coin: coin)
                 })
                 .disposed(by: disposeBag)
 
         enableCoinsService.enableCoinsObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] coins in
-                    self?.enable(coins: coins)
+                    self?.enable(coins: coins, resyncCoins: true)
                 })
                 .disposed(by: disposeBag)
 
@@ -75,6 +80,8 @@ class ManageWalletsService {
                 .disposed(by: disposeBag)
 
         sync(wallets: walletManager.wallets)
+        syncCoins()
+        syncState()
     }
 
     private func sync(wallets: [Wallet]) {
@@ -83,8 +90,30 @@ class ManageWalletsService {
         for wallet in wallets {
             self.wallets[wallet.coin] = wallet
         }
+    }
 
-        syncState()
+    private func syncCoins() {
+        let (featuredCoins, regularCoins) = coinManager.groupedCoins
+
+        self.featuredCoins = featuredCoins
+
+        coins = regularCoins.sorted { lhsCoin, rhsCoin in
+            let lhsAdded = addedCoins.contains(lhsCoin)
+            let rhsAdded = addedCoins.contains(rhsCoin)
+
+            if lhsAdded != rhsAdded {
+                return lhsAdded
+            }
+
+            let lhsEnabled = wallets[lhsCoin] != nil
+            let rhsEnabled = wallets[rhsCoin] != nil
+
+            if lhsEnabled != rhsEnabled {
+                return lhsEnabled
+            }
+
+            return lhsCoin.title.lowercased() < rhsCoin.title.lowercased()
+        }
     }
 
     private func item(coin: Coin) -> Item {
@@ -100,12 +129,9 @@ class ManageWalletsService {
     }
 
     private func syncState() {
-        let featuredCoins = coinManager.featuredCoins
-        let coins = coinManager.coins.filter { !featuredCoins.contains($0) }
-
         state = State(
-                featuredItems: featuredCoins.map { item(coin: $0) },
-                items: coins.map { item(coin: $0) }
+            featuredItems: featuredCoins.map { item(coin: $0) },
+            items: coins.map { item(coin: $0) }
         )
     }
 
@@ -115,6 +141,19 @@ class ManageWalletsService {
         }
 
         return Wallet(coin: coin, account: account)
+    }
+
+    private func handleUpdated(wallets: [Wallet]) {
+        queue.async {
+            self.sync(wallets: wallets)
+
+            if self.resyncCoins {
+                self.syncCoins()
+                self.resyncCoins = false
+            }
+
+            self.syncState()
+        }
     }
 
     private func handleApproveEnable(coin: Coin) {
@@ -127,15 +166,23 @@ class ManageWalletsService {
         enableCoinsService.handle(coinType: coin.type, accountType: account.type)
     }
 
-    private func enable(coins: [Coin]) {
-        let nonEnabledCoins = coins.filter { coin in
-            !wallets.keys.contains(coin)
-        }
+    private func enable(coins: [Coin], resyncCoins: Bool = false) {
+        queue.async {
+            let nonEnabledCoins = coins.filter { coin in
+                !self.wallets.keys.contains(coin)
+            }
 
-        walletManager.save(wallets: nonEnabledCoins.compactMap { wallet(coin: $0) })
+            self.walletManager.save(wallets: nonEnabledCoins.compactMap { self.wallet(coin: $0) })
+
+            self.resyncCoins = resyncCoins
+        }
     }
 
     private func handleAccountsChanged() {
+        queue.async {
+            self.syncState()
+        }
+
         guard let coinToEnable = coinToEnable else {
             return
         }
@@ -144,6 +191,14 @@ class ManageWalletsService {
         enable(coin: coinToEnable)
 
         self.coinToEnable = nil
+    }
+
+    private func handleAdded(coin: Coin) {
+        queue.async {
+            self.addedCoins.append(coin)
+            self.syncCoins()
+            self.syncState()
+        }
     }
 
 }
@@ -167,19 +222,23 @@ extension ManageWalletsService {
     }
 
     func enable(coin: Coin) {
-        guard let item = state.item(coin: coin), case .hasAccount(let account, _) = item.state else {
-            return // impossible case
-        }
+        queue.async {
+            guard let item = self.state.item(coin: coin), case .hasAccount(let account, _) = item.state else {
+                return // impossible case
+            }
 
-        blockchainSettingsService.approveEnable(coin: coin, accountOrigin: account.origin)
+            self.blockchainSettingsService.approveEnable(coin: coin, accountOrigin: account.origin)
+        }
     }
 
     func disable(coin: Coin) {
-        guard let wallet = wallets[coin] else {
-            return
-        }
+        queue.async {
+            guard let wallet = self.wallets[coin] else {
+                return
+            }
 
-        walletManager.delete(wallets: [wallet])
+            self.walletManager.delete(wallets: [wallet])
+        }
     }
 
     func storeCoinToEnable(coin: Coin) {

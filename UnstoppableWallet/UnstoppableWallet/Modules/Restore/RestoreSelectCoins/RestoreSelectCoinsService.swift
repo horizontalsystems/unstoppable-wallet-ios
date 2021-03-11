@@ -10,6 +10,8 @@ class RestoreSelectCoinsService {
     private let blockchainSettingsService: BlockchainSettingsService
     private let disposeBag = DisposeBag()
 
+    private var featuredCoins = [Coin]()
+    private var coins = [Coin]()
     private(set) var enabledCoins = Set<Coin>()
 
     private let stateRelay = PublishRelay<State>()
@@ -32,7 +34,7 @@ class RestoreSelectCoinsService {
         enableCoinsService.enableCoinsObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] coins in
-                    self?.enable(coins: coins)
+                    self?.enable(coins: coins, resyncCoins: true)
                 })
                 .disposed(by: disposeBag)
 
@@ -50,11 +52,28 @@ class RestoreSelectCoinsService {
                 })
                 .disposed(by: disposeBag)
 
+        syncCoins()
         syncState()
     }
 
-    private func filteredCoins(coins: [Coin]) -> [Coin] {
+    private func syncCoins() {
+        let (featuredCoins, regularCoins) = coinManager.groupedCoins
 
+        self.featuredCoins = filteredCoins(coins: featuredCoins)
+
+        coins = filteredCoins(coins: regularCoins).sorted { lhsCoin, rhsCoin in
+            let lhsEnabled = enabledCoins.contains(lhsCoin)
+            let rhsEnabled = enabledCoins.contains(rhsCoin)
+
+            if lhsEnabled != rhsEnabled {
+                return lhsEnabled
+            }
+
+            return lhsCoin.title.lowercased() < rhsCoin.title.lowercased()
+        }
+    }
+
+    private func filteredCoins(coins: [Coin]) -> [Coin] {
         coins.filter { $0.type.predefinedAccountType == predefinedAccountType }
     }
 
@@ -63,9 +82,6 @@ class RestoreSelectCoinsService {
     }
 
     private func syncState() {
-        let featuredCoins = filteredCoins(coins: coinManager.featuredCoins)
-        let coins = filteredCoins(coins: coinManager.coins).filter { !featuredCoins.contains($0) }
-
         state = State(
                 featuredItems: featuredCoins.compactMap { item(coin: $0) },
                 items: coins.compactMap { item(coin: $0) }
@@ -81,9 +97,13 @@ class RestoreSelectCoinsService {
         enableCoinsService.handle(coinType: coin.type, accountType: accountType)
     }
 
-    private func enable(coins: [Coin]) {
+    private func enable(coins: [Coin], resyncCoins: Bool = false) {
         for coin in coins {
             enabledCoins.insert(coin)
+        }
+
+        if resyncCoins {
+            syncCoins()
         }
 
         syncState()

@@ -126,9 +126,9 @@ class CoinToggleViewController: ThemeSearchViewController {
     func onSelect(viewItem: CoinToggleViewModel.ViewItem) {
     }
 
-      override func onUpdate(filter: String?) {
-          viewModel.onUpdate(filter: filter)
-      }
+    override func onUpdate(filter: String?) {
+        viewModel.onUpdate(filter: filter)
+    }
 
     private func onToggle(viewItem: CoinToggleViewModel.ViewItem, enabled: Bool) {
         if enabled {

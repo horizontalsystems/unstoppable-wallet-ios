@@ -24,8 +24,19 @@ extension CoinManager: ICoinManager {
         coinKit.coins
     }
 
-    var featuredCoins: [Coin] {
-        appConfigProvider.featuredCoins
+    var groupedCoins: (featured: [Coin], regular: [Coin]) {
+        var featured = [Coin]()
+        var regular = [Coin]()
+
+        var coins = coinKit.coins
+
+        for featuredCoinType in appConfigProvider.featuredCoinTypes {
+            if let index = coins.firstIndex { $0.type == featuredCoinType } {
+                featured.append(coins.remove(at: index))
+            }
+        }
+
+        return (featured: featured, regular: coins)
     }
 
     func coin(type: CoinType) -> Coin? {
