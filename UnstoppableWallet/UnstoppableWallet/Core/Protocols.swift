@@ -285,7 +285,7 @@ protocol IAppConfigProvider {
     var pnsPassword: String { get }
     var pnsUsername: String { get }
 
-    var featuredCoins: [Coin] { get }
+    var featuredCoinTypes: [CoinType] { get }
     func defaultWords(count: Int) -> String
 }
 
@@ -521,7 +521,7 @@ protocol IErc20ContractInfoProvider {
 protocol ICoinManager {
     var coinAddedObservable: Observable<Coin> { get }
     var coins: [Coin] { get }
-    var featuredCoins: [Coin] { get }
+    var groupedCoins: (featured: [Coin], regular: [Coin]) { get }
     func coin(type: CoinType) -> Coin?
     func save(coin: Coin)
 }

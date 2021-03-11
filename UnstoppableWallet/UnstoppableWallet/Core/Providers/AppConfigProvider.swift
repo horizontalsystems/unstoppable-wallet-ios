@@ -82,8 +82,14 @@ class AppConfigProvider: IAppConfigProvider {
     let currencyCodes: [String] = ["USD", "EUR", "GBP", "JPY"]
     let feeRateAdjustedForCurrencyCodes: [String] = ["USD", "EUR"]
 
-    var featuredCoins: [Coin] {
-        Array(CoinKit.Kit.defaultCoins(testNet: testMode).prefix(8))
+    var featuredCoinTypes: [CoinType] {
+        [
+            .bitcoin,
+            .bitcoinCash,
+            .ethereum,
+            .zcash,
+            .binanceSmartChain
+        ]
     }
 
 }
