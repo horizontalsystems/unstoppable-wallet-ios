@@ -39,6 +39,7 @@
 "confirm" = "확인";
 "connect" = "연결";
 "price" = "Price";
+"note" = "Note";
 
 "version" = "버전 %@";
 
