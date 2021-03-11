@@ -39,6 +39,7 @@
 "confirm" = "Confirm";
 "connect" = "Connect";
 "price" = "Price";
+"note" = "Note";
 
 "version" = "Version %@";
 

@@ -84,7 +84,7 @@ class ItemSelectorViewController: ThemeActionSheetController {
                         HighlightedDescriptionCell.height(containerWidth: width, text: text)
                     },
                     bind: { cell, _ in
-                        cell.bind(text: text)
+                        cell.descriptionText = text
                     }
             )
         case .simple(let viewItem):

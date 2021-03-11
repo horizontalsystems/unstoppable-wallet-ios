@@ -112,7 +112,7 @@ extension PrivacySyncModeViewController: IPrivacySyncModeView {
                 image: .image(coinType: coinType)
         )
 
-        descriptionView.bind(text: "settings_privacy.alert_sync.description".localized(coinTitle))
+        descriptionView.text = "settings_privacy.alert_sync.description".localized(coinTitle)
     }
 
     func set(viewItems: [PrivacySyncModeModule.ViewItem]) {

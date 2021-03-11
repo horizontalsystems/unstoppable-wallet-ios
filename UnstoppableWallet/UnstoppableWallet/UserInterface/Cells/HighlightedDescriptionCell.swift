@@ -23,8 +23,9 @@ class HighlightedDescriptionCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(text: String?) {
-        descriptionView.bind(text: text)
+    var descriptionText: String? {
+        get { descriptionView.text }
+        set { descriptionView.text = newValue }
     }
 
 }

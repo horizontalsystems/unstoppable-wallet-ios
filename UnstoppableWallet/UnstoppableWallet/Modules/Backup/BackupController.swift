@@ -32,7 +32,7 @@ class BackupController: ThemeViewController {
             maker.top.equalTo(self.view.snp.topMargin).offset(CGFloat.margin3x)
         }
 
-        descriptionView.bind(text: "backup.intro.subtitle".localized(delegate.coinCodes))
+        descriptionView.text = "backup.intro.subtitle".localized(delegate.coinCodes)
 
         view.addSubview(proceedButton)
         proceedButton.snp.makeConstraints { maker in

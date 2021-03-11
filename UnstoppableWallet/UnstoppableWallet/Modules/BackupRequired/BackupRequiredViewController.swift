@@ -34,7 +34,7 @@ class BackupRequiredViewController: ThemeActionSheetController {
             maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin3x)
         }
 
-        descriptionView.bind(text: text)
+        descriptionView.text = text
 
         view.addSubview(backupButton)
         backupButton.snp.makeConstraints { maker in

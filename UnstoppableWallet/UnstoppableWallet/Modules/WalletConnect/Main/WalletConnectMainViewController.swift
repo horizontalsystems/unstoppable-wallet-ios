@@ -281,7 +281,7 @@ extension WalletConnectMainViewController: SectionsDataSource {
                         HighlightedDescriptionCell.height(containerWidth: width, text: hint)
                     },
                     bind: { cell, _ in
-                        cell.bind(text: hint)
+                        cell.descriptionText = hint
                     }
             )
         }

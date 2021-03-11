@@ -50,7 +50,7 @@ class AddressFormatConfirmationViewController: ThemeActionSheetController {
             maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin3x)
         }
 
-        descriptionView.bind(text: "blockchain_settings.change_alert.content".localized(coinTypeTitle, coinTypeTitle))
+        descriptionView.text = "blockchain_settings.change_alert.content".localized(coinTypeTitle, coinTypeTitle)
 
         view.addSubview(confirmButton)
         confirmButton.snp.makeConstraints { maker in
