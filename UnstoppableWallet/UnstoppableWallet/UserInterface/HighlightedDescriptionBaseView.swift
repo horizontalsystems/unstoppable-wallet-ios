@@ -1,6 +1,6 @@
 import UIKit
 
-open class HighlightedDescriptionBaseView: UIView {
+class HighlightedDescriptionBaseView: UIView {
     internal static let font: UIFont = .subhead2
     internal static let sidePadding: CGFloat = .margin12
     internal static let verticalPadding: CGFloat = .margin12

@@ -78,7 +78,7 @@ class ChartViewController: ThemeViewController {
         )
     ]
     //todo get note text
-    let noteText: String = "Bitcoin is a cryptocurrency and worldwide payment system. It is the first decentralized digital currency, as the system works without a central bank or single administrator."
+    let noteText: String? = "Bitcoin is a cryptocurrency and worldwide payment system. It is the first decentralized digital currency, as the system works without a central bank or single administrator."
 
     init(delegate: IChartViewDelegate & IChartViewTouchDelegate, configuration: ChartConfiguration) {
         self.delegate = delegate
@@ -344,6 +344,20 @@ extension ChartViewController: SectionsDataSource {
             ])
         }
 
+        var aboutSectionRows: [RowProtocol] = [
+            StaticRow(
+                    cell: descriptionTextCell,
+                    id: "about_cell",
+                    dynamicHeight: { [weak self] containerWidth in
+                        self?.descriptionTextCell.cellHeight(containerWidth: containerWidth) ?? 0
+                    }
+            )
+        ]
+
+        if let noteText = noteText {
+            aboutSectionRows.append(noteRow(noteText: noteText))
+        }
+
         sections.append(contentsOf: [
             Section(id: "market_section_header", footerState: .margin(height: .margin12), rows: [headerRow(title: "chart.market.header".localized)]),
             Section(id: "market_section", footerState: .margin(height: .margin12), rows: [
@@ -365,24 +379,15 @@ extension ChartViewController: SectionsDataSource {
                 )
             ]),
             Section(id: "performance_section_header", footerState: .margin(height: .margin12), rows: [headerRow(title: "chart.performance.header".localized)]),
-            Section(id: "performance_section", footerState: .margin(height: .margin12), rows: performanceRows()),
+            Section(id: "performance_section", footerState: .margin(height: .margin12), rows: [performanceRow(weekPerformance: weekPerformance, monthPerformance: monthPerformance)]),
 
             Section(id: "about_section_header", rows: [headerRow(title: "chart.about.header".localized)]),
-            Section(id: "about_section", footerState: .margin(height: .margin12), rows: [
-                StaticRow(
-                        cell: descriptionTextCell,
-                        id: "about_cell",
-                        dynamicHeight: { [weak self] containerWidth in
-                            self?.descriptionTextCell.cellHeight(containerWidth: containerWidth) ?? 0
-                        }
-                ),
-                noteRow()
-            ]),
+            Section(id: "about_section", footerState: .margin(height: .margin12), rows: aboutSectionRows),
         ])
         return sections
     }
 
-    private func headerRow(title: String) -> Row<B4Cell> {
+    private func headerRow(title: String) -> RowProtocol {
         Row<B4Cell>(
                 id: "header_cell",
                 hash: title,
@@ -394,7 +399,7 @@ extension ChartViewController: SectionsDataSource {
                 })
     }
 
-    private func priceIndicatorRows() -> [Row<PriceIndicatorCell>] {
+    private func priceIndicatorRows() -> [RowProtocol] {
         priceIndicatorItems.enumerated().map { index, item in
             let count = priceIndicatorItems.count
             return Row<PriceIndicatorCell>(
@@ -408,28 +413,22 @@ extension ChartViewController: SectionsDataSource {
         }
     }
 
-    private func performanceRows() -> [Row<ChartMarketPerformanceCell>] {
-        let week = weekPerformance
-        let month = monthPerformance
+    private func performanceRow(weekPerformance: [MultiTextMetricsView.MetricsViewItem], monthPerformance: [MultiTextMetricsView.MetricsViewItem]) -> RowProtocol {
+        Row<ChartMarketPerformanceCell>(
+                id: "performance_cell",
+                hash: "performance_cell",
+                dynamicHeight: { _ in
+                    ChartMarketPerformanceCell.cellHeight(weekPerformance: weekPerformance, monthPerformance: monthPerformance)
+                },
+                bind: { cell, _ in
+                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
 
-        return [
-            Row<ChartMarketPerformanceCell>(
-                    id: "performance_cell",
-                    hash: "performance_cell",
-                    dynamicHeight: { _ in
-                        ChartMarketPerformanceCell.cellHeight(weekPerformance: week, monthPerformance: month)
-                    },
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-
-                        cell.bind(weekPerformance: week, monthPerformance: month)
-                    })
-        ]
+                    cell.bind(weekPerformance: weekPerformance, monthPerformance: monthPerformance)
+                })
     }
 
-    private func noteRow() -> Row<TitledHighlightedDescriptionCell> {
-        let noteText = self.noteText
-        return Row<TitledHighlightedDescriptionCell>(
+    private func noteRow(noteText: String) -> RowProtocol {
+        Row<TitledHighlightedDescriptionCell>(
                 id: "note_cell",
                 hash: "note_cell",
                 dynamicHeight: { containerWidth in

@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-open class HighlightedDescriptionView: HighlightedDescriptionBaseView {
+class HighlightedDescriptionView: HighlightedDescriptionBaseView {
 
     override public init() {
         super.init()
