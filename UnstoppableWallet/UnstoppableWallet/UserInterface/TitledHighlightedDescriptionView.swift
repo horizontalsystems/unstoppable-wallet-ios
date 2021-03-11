@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-open class TitledHighlightedDescriptionView: HighlightedDescriptionBaseView {
+class TitledHighlightedDescriptionView: HighlightedDescriptionBaseView {
     private let titleIconImageView = UIImageView()
     private let titleLabel = UILabel()
 
