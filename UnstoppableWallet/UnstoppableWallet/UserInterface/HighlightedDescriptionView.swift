@@ -1,38 +1,24 @@
 import UIKit
 import SnapKit
 
-open class HighlightedDescriptionView: UIView {
-    private static let font: UIFont = .subhead2
-    private static let sidePadding: CGFloat = .margin3x
-    private static let verticalPadding: CGFloat = .margin3x
+open class HighlightedDescriptionView: HighlightedDescriptionBaseView {
 
-    private let label = UILabel()
-
-    public init() {
-        super.init(frame: .zero)
-
-        backgroundColor = .themeLawrence
-        borderColor = .themeJacob
-        borderWidth = 1
-        cornerRadius = .cornerRadius2x
+    override public init() {
+        super.init()
 
         addSubview(label)
         label.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(HighlightedDescriptionView.sidePadding)
-            maker.top.bottom.equalToSuperview().inset(HighlightedDescriptionView.verticalPadding)
+            maker.leading.trailing.equalToSuperview().inset(HighlightedDescriptionBaseView.sidePadding)
+            maker.top.bottom.equalToSuperview().inset(HighlightedDescriptionBaseView.verticalPadding)
         }
 
         label.numberOfLines = 0
-        label.font = HighlightedDescriptionView.font
+        label.font = HighlightedDescriptionBaseView.font
         label.textColor = .themeOz
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    open func bind(text: String?) {
-        label.text = text
     }
 
 }

@@ -67,7 +67,7 @@ class PrivacyViewController: ThemeViewController {
                                 HighlightedDescriptionCell.height(containerWidth: containerWidth, text: text)
                             },
                             bind: { cell, _ in
-                                cell.bind(text: text)
+                                cell.descriptionText = text
                             }
                     )
                 ]

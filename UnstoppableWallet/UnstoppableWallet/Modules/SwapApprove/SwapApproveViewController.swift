@@ -111,7 +111,7 @@ extension SwapApproveViewController: SectionsDataSource {
                                     HighlightedDescriptionCell.height(containerWidth: width, text: "swap.approve.description".localized)
                                 },
                                 bind: { cell, _ in
-                                    cell.bind(text: "swap.approve.description".localized)
+                                    cell.descriptionText = "swap.approve.description".localized
                                 }
                         )
                     ]

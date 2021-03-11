@@ -7,8 +7,11 @@ class ReadMoreTextCell: BaseThemeCell {
     private static let collapsedNumberOfLines: Int = 8
     private static let horizontalPadding: CGFloat = .margin24
     private static let verticalPadding: CGFloat = .margin6
+    private static let gradientOffset: CGFloat = -.margin8
     private static let buttonHeight: CGFloat = 33
 
+    private let gradientView = BottomGradientHolder()
+    private let labelWrapper = UIView()
     private let readMoreTextLabel = UILabel()
     private let collapseButton = UIButton()
 
@@ -25,20 +28,31 @@ class ReadMoreTextCell: BaseThemeCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        contentView.addSubview(readMoreTextLabel)
-        readMoreTextLabel.snp.makeConstraints { maker in
+        contentView.addSubview(labelWrapper)
+        labelWrapper.snp.makeConstraints { maker in
             maker.top.equalToSuperview().inset(ReadMoreTextCell.verticalPadding)
             maker.leading.trailing.equalToSuperview().inset(ReadMoreTextCell.horizontalPadding)
         }
 
+        labelWrapper.addSubview(readMoreTextLabel)
+        readMoreTextLabel.snp.makeConstraints { maker in
+            maker.top.leading.trailing.equalToSuperview()
+        }
+
         readMoreTextLabel.font = ReadMoreTextCell.font
         readMoreTextLabel.textColor = .themeGray
-        readMoreTextLabel.numberOfLines = ReadMoreTextCell.collapsedNumberOfLines
+        readMoreTextLabel.numberOfLines = 0
         readMoreTextLabel.lineBreakMode = .byTruncatingTail
+
+        contentView.addSubview(gradientView)
+        gradientView.snp.makeConstraints { maker in
+            maker.leading.trailing.bottom.equalToSuperview()
+            maker.top.equalTo(labelWrapper.snp.bottom).offset(ReadMoreTextCell.gradientOffset)
+        }
 
         contentView.addSubview(collapseButton)
         collapseButton.snp.makeConstraints { maker in
-            maker.top.equalTo(readMoreTextLabel.snp.bottom).offset(ReadMoreTextCell.verticalPadding)
+            maker.top.equalTo(labelWrapper.snp.bottom).offset(ReadMoreTextCell.verticalPadding)
             maker.trailing.equalToSuperview()
             maker.bottom.equalToSuperview()
             maker.height.equalTo(ReadMoreTextCell.buttonHeight)
@@ -59,8 +73,6 @@ class ReadMoreTextCell: BaseThemeCell {
 
     @objc private func onTapCollapse() {
         collapsed = !collapsed
-
-        readMoreTextLabel.numberOfLines = collapsed ? ReadMoreTextCell.collapsedNumberOfLines : 0
         collapseButton.setTitle(collapsed ? "chart.about.read_more".localized : "chart.about.read_less".localized, for: .normal)
 
         onChangeHeight?()
@@ -96,26 +108,33 @@ class ReadMoreTextCell: BaseThemeCell {
 
         if textHeight < collapsedLabelHeight, expandable {
             collapseButton.snp.removeConstraints()
-            readMoreTextLabel.snp.remakeConstraints { maker in
+            gradientView.snp.removeConstraints()
+            labelWrapper.snp.remakeConstraints { maker in
                 maker.top.bottom.equalToSuperview().inset(ReadMoreTextCell.verticalPadding)
                 maker.leading.trailing.equalToSuperview().inset(ReadMoreTextCell.horizontalPadding)
             }
 
             collapseButton.isHidden = true
+            gradientView.isHidden = true
             expandable = false
         } else if textHeight > collapsedLabelHeight, !expandable {
-            readMoreTextLabel.snp.remakeConstraints { maker in
+            labelWrapper.snp.remakeConstraints { maker in
                 maker.top.equalToSuperview().inset(ReadMoreTextCell.verticalPadding)
                 maker.leading.trailing.equalToSuperview().inset(ReadMoreTextCell.horizontalPadding)
             }
             collapseButton.snp.remakeConstraints { maker in
-                maker.top.equalTo(readMoreTextLabel.snp.bottom).offset(ReadMoreTextCell.verticalPadding)
+                maker.top.equalTo(labelWrapper.snp.bottom).offset(ReadMoreTextCell.verticalPadding)
                 maker.trailing.equalToSuperview()
                 maker.bottom.equalToSuperview()
                 maker.height.equalTo(ReadMoreTextCell.buttonHeight)
             }
+            gradientView.snp.makeConstraints { maker in
+                maker.leading.trailing.bottom.equalToSuperview()
+                maker.top.equalTo(labelWrapper.snp.bottom).offset(ReadMoreTextCell.gradientOffset)
+            }
 
             collapseButton.isHidden = false
+            gradientView.isHidden = false
             expandable = true
         }
     }

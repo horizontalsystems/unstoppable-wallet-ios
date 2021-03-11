@@ -34,7 +34,7 @@ class EnableCoinsConfirmationViewController: ThemeActionSheetController {
             maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin3x)
         }
 
-        descriptionView.bind(text: "enable_coins.description".localized(tokenType))
+        descriptionView.text = "enable_coins.description".localized(tokenType)
 
         view.addSubview(enableButton)
         enableButton.snp.makeConstraints { maker in

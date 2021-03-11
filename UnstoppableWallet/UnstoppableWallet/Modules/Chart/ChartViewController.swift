@@ -42,6 +42,7 @@ class ChartViewController: ThemeViewController {
 
     private var priceIndicatorItems = [PriceIndicatorViewItem]()
 
+    //todo get performance
     let weekPerformance = [
         MultiTextMetricsView.MetricsViewItem(
                 value: "USD",
@@ -76,6 +77,8 @@ class ChartViewController: ThemeViewController {
                 valueChangeColor: .themeRedD
         )
     ]
+    //todo get note text
+    let noteText: String = "Bitcoin is a cryptocurrency and worldwide payment system. It is the first decentralized digital currency, as the system works without a central bank or single administrator."
 
     init(delegate: IChartViewDelegate & IChartViewTouchDelegate, configuration: ChartConfiguration) {
         self.delegate = delegate
@@ -106,6 +109,7 @@ class ChartViewController: ThemeViewController {
         tableView.registerCell(forClass: B4Cell.self)
         tableView.registerCell(forClass: PriceIndicatorCell.self)
         tableView.registerCell(forClass: ChartMarketPerformanceCell.self)
+        tableView.registerCell(forClass: TitledHighlightedDescriptionCell.self)
 
         chartIntervalAndSelectedRateCell.onSelectInterval = { [weak self] index in
             self?.delegate.onSelectType(at: index)
@@ -371,7 +375,8 @@ extension ChartViewController: SectionsDataSource {
                         dynamicHeight: { [weak self] containerWidth in
                             self?.descriptionTextCell.cellHeight(containerWidth: containerWidth) ?? 0
                         }
-                )
+                ),
+                noteRow()
             ]),
         ])
         return sections
@@ -417,10 +422,26 @@ extension ChartViewController: SectionsDataSource {
                     bind: { cell, _ in
                         cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
 
-                        //todo get performance
                         cell.bind(weekPerformance: week, monthPerformance: month)
                     })
         ]
+    }
+
+    private func noteRow() -> Row<TitledHighlightedDescriptionCell> {
+        let noteText = self.noteText
+        return Row<TitledHighlightedDescriptionCell>(
+                id: "note_cell",
+                hash: "note_cell",
+                dynamicHeight: { containerWidth in
+                    TitledHighlightedDescriptionCell.height(containerWidth: containerWidth, text: noteText)
+                },
+                bind: { cell, _ in
+                    cell.set(backgroundStyle: .transparent, isFirst: true)
+
+                    cell.titleIcon = UIImage(named: "warning_2_20")?.tinted(with: .themeYellowD)
+                    cell.titleText = "note".localized
+                    cell.descriptionText = noteText
+                })
     }
 
 }
