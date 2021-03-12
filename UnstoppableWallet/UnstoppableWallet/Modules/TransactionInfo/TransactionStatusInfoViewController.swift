@@ -71,10 +71,10 @@ extension TransactionStatusInfoViewController: SectionsDataSource {
                     ]
             ),
             Section(
-                    id: "receiving",
-                    headerState: header(text: "status_info.receiving.title".localized),
+                    id: "sending-receiving",
+                    headerState: header(text: "status_info.sending_receiving.title".localized),
                     rows: [
-                        row(text: "status_info.receiving.content".localized)
+                        row(text: "status_info.sending_receiving.content".localized)
                     ]
             ),
             Section(

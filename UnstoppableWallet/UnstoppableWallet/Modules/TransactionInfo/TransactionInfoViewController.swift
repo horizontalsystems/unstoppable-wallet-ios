@@ -98,7 +98,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .transparent)
                     cell.title = "status".localized
-                    cell.value = "tx_info.status.confirmed".localized
+                    cell.value = "tx_info.status.completed".localized
                     cell.valueImage = UIImage(named: "check_1_20")?.tinted(with: .themeRemus)
                 }
         )
