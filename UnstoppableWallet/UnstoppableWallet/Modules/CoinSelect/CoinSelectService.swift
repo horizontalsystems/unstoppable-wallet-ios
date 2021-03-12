@@ -41,16 +41,20 @@ class CoinSelectService {
             return (coin: wallet.coin, balance: adapter.balance)
         }
 
-        balanceCoins.sort { tuple, tuple2 in
-            tuple.balance > tuple2.balance
+        balanceCoins.sort { lhsTuple, rhsTuple in
+            lhsTuple.coin.title.lowercased() < rhsTuple.coin.title.lowercased()
         }
 
         let walletItems = balanceCoins.map { coin, balance in
             Item(coin: coin, balance: balance)
         }
 
-        let remainingCoins = coinManager.coins.filter { coin in
+        var remainingCoins = coinManager.coins.filter { coin in
             dexSupports(coin: coin) && !walletItems.contains { $0.coin == coin }
+        }
+
+        remainingCoins.sort { lhsCoin, rhsCoin in
+            lhsCoin.title.lowercased() < rhsCoin.title.lowercased()
         }
 
         let coinItems = remainingCoins.map { coin in
