@@ -446,7 +446,7 @@
 "tx_info.title" = "Transaktion";
 "tx_info.title_approval" = "Tausch-Genehmigung";
 "tx_info.status.pending" = "Anstehend";
-"tx_info.status.confirmed" = "Bestätigt";
+"tx_info.status.completed" = "Completed";
 "tx_info.status.failed" = "Fehlgeschlagen";
 "tx_info.from_hash" = "Von";
 "tx_info.transaction_id" = "Transaktion ID";
@@ -821,8 +821,8 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "status_info.title" = "Status";
 "status_info.pending.title" = "Anstehend";
 "status_info.pending.content" = "Transaktion wurde noch nicht auf der Blockchain bestätigt. Dieser Schritt kann von wenigen Minuten bis zu einigen Stunden dauern, je nach Transaktionsgebühr. Transaktionen, die mit einer sehr niedrigen Gebühr gesendet werden, werden in der Regel innerhalb weniger Tage bearbeitet oder können vom Netzwerk abgelehnt werden, d.h. es hat keine Transaktion gegeben.";
-"status_info.receiving.title" = "Empfangen";
-"status_info.receiving.content" = "Der Absender hat dir eine Transaktion geschickt, aber sie ist noch nicht endgültig. Bei größeren Zahlungen empfiehlt es sich zu warten, bis sich der Transaktionsstatus auf \"abgeschlossen\" ändert. Normalerweise sollte dies innerhalb einer Stunde geschehen, kann aber manchmal länger dauern, wenn der Absender die Transaktion mit einer geringen Gebühr verschickt.";
+"status_info.sending_receiving.title" = "Sending / Receiving";
+"status_info.sending_receiving.content" = "Transaction has been included in the blockchain but has not reached permanent finality yet. At this point, it's safe to consider transaction completed for smaller payments. For larger payments it's recommended to wait until the status changes to completed.";
 "status_info.confirmed.title" = "Bestätigt";
 "status_info.confirmed.content" = "Die Transaktion ist endgültig und unumkehrbar.";
 "status_info.failed.title" = "Fehlgeschlagen";
