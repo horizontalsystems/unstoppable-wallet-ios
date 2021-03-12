@@ -24,6 +24,9 @@ extension MarketWatchlistService: IMarketListFetcher {
 
     func fetchSingle(currencyCode: String) -> Single<[MarketModule.Item]> {
         let coinTypes = favoritesManager.all.map { $0.coinType }
+        guard !coinTypes.isEmpty else {
+            return Single.just([])
+        }
 
         return rateManager.coinsMarketSingle(currencyCode: currencyCode, coinTypes: coinTypes)
                 .map { coinMarkets in
