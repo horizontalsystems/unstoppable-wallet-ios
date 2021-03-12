@@ -446,7 +446,7 @@
 "tx_info.title" = "Hesap işlemi";
 "tx_info.title_approval" = "Swap Onaylama";
 "tx_info.status.pending" = "Devam ediyor";
-"tx_info.status.confirmed" = "Onaylandı";
+"tx_info.status.completed" = "Completed";
 "tx_info.status.failed" = "Başarısız";
 "tx_info.from_hash" = "Gönderen";
 "tx_info.transaction_id" = "İşlem ID'si";
@@ -821,8 +821,8 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "status_info.title" = "Durum";
 "status_info.pending.title" = "Devam ediyor";
 "status_info.pending.content" = "İşlem blok zincirinde henüz onaylanmadı. Bu adım, işlem ücretine bağlı olarak birkaç dakikadan birkaç saate kadar sürebilir. Çok düşük bir ücretle gönderilen işlemler genellikle birkaç gün içinde işleme alınır ya da ağ tarafından reddedilebilir, yani hiçbir işlem gerçekleşmez.";
-"status_info.receiving.title" = "Alınıyor";
-"status_info.receiving.content" = "Gönderici size bir işlem gönderdi ancak henüz sonlanmadı. Daha büyük ödemeler için işlem durumu 'tamamlandı' olarak değişene kadar beklemeniz önerilir. Bu genellikle bir saat içinde gerçekleşir, ancak gönderici işlemi düşük bir ücretle gönderirse bazen daha da uzun sürebilir.";
+"status_info.sending_receiving.title" = "Sending / Receiving";
+"status_info.sending_receiving.content" = "Transaction has been included in the blockchain but has not reached permanent finality yet. At this point, it's safe to consider transaction completed for smaller payments. For larger payments it's recommended to wait until the status changes to completed.";
 "status_info.confirmed.title" = "Onaylandı";
 "status_info.confirmed.content" = "İşlem sonlandı ve geri alınamaz.";
 "status_info.failed.title" = "Başarısız";
