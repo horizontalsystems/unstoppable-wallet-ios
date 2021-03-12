@@ -446,7 +446,7 @@
 "tx_info.title" = "거래기록";
 "tx_info.title_approval" = "스왑 승인";
 "tx_info.status.pending" = "보류 중";
-"tx_info.status.confirmed" = "확인";
+"tx_info.status.completed" = "Completed";
 "tx_info.status.failed" = "실패";
 "tx_info.from_hash" = "로 부터";
 "tx_info.transaction_id" = "거래 ID";
@@ -821,8 +821,8 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "status_info.title" = "상태";
 "status_info.pending.title" = "보류 중";
 "status_info.pending.content" = "거래가 아직 블록체인에서 확인되지 않았습니다. 거래 수수료에 따라 거래 확인에 수 분에서 수 시간까지 소요될 수 있습니다. 거래 수수료가 매우 적은 경우에는 거래 확인에 수 일이 소요되거나 네트워크에 의해 거래가 거절될 수도 있습니다. 예시: 거래가 완료되지 않았습니다.";
-"status_info.receiving.title" = "수신 중";
-"status_info.receiving.content" = "전송자가 거래를 전송했으나 거래가 아직 완료되지는 않았습니다. 거래 금액이 큰 경우 거래 상태가 '완료됨'으로 변경될 때까지 대기하는 것을 권장합니다. 거래 완료는 보통 한 시간 안에 완료되나 전송자가 낮은 수수료로 거래를 보내는 경우 더 오래 걸릴 수도 있습니다.";
+"status_info.sending_receiving.title" = "Sending / Receiving";
+"status_info.sending_receiving.content" = "Transaction has been included in the blockchain but has not reached permanent finality yet. At this point, it's safe to consider transaction completed for smaller payments. For larger payments it's recommended to wait until the status changes to completed.";
 "status_info.confirmed.title" = "확인됨";
 "status_info.confirmed.content" = "거래가 완료되었으며 취소할 수 없습니다.";
 "status_info.failed.title" = "실패";
