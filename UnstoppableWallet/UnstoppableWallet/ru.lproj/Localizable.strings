@@ -448,7 +448,7 @@
 "tx_info.title" = "Транзакция";
 "tx_info.title_approval" = "Подтверждение обмена";
 "tx_info.status.pending" = "В обработке";
-"tx_info.status.confirmed" = "Подтверждено";
+"tx_info.status.completed" = "Completed";
 "tx_info.status.failed" = "Не удалось";
 "tx_info.from_hash" = "От";
 "tx_info.transaction_id" = "ID Транзакции";
@@ -823,8 +823,8 @@
 "status_info.title" = "Статус";
 "status_info.pending.title" = "В обработке";
 "status_info.pending.content" = "Транзакция еще не подтверждена в блокчейне. Эта процедура может занять от нескольких минут до нескольких часов в зависимости от комиссии за транзакцию. Отправляемые с очень низкой комиссией транзакции обычно обрабатываются в течение нескольких дней или же могут быть отклонены сетью, отменяя это действие.";
-"status_info.receiving.title" = "Получает...";
-"status_info.receiving.content" = "Отправитель послал вам транзакцию, но она еще не завершена. В случае с крупными платежами нужно дождаться, пока статус транзакции изменится на 'обработка завершена'. Обычно этот процесс занимает около часа. Однако, может потребоваться больше времени, если отправитель послал транзакцию с низкой комиссией.";
+"status_info.sending_receiving.title" = "Sending / Receiving";
+"status_info.sending_receiving.content" = "Transaction has been included in the blockchain but has not reached permanent finality yet. At this point, it's safe to consider transaction completed for smaller payments. For larger payments it's recommended to wait until the status changes to completed.";
 "status_info.confirmed.title" = "Подтверждено";
 "status_info.confirmed.content" = "Транзакция окончательна и необратима.";
 "status_info.failed.title" = "Не удалось";
