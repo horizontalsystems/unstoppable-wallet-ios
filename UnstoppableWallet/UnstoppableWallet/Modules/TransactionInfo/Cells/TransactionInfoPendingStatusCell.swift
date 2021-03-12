@@ -40,7 +40,7 @@ class TransactionInfoPendingStatusCell: BaseThemeCell {
     }
 
     func bind(progress: Double, incoming: Bool, iconAction: (() -> ())?) {
-        statusLabel.text = incoming ? "transactions.receiving".localized : "transactions.pending".localized
+        statusLabel.text = progress == 0 ? "transactions.pending".localized : (incoming ? "transactions.receiving".localized : "transactions.sending".localized)
         leftView.imageAction = iconAction
 
         barsProgressView.set(filledColor: incoming ? .themeGreenD : .themeYellowD)

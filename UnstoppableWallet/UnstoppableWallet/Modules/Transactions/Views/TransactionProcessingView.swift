@@ -53,10 +53,10 @@ class TransactionProcessingView: UIView {
 
         switch type {
         case .incoming:
-            text = "transactions.receiving".localized
+            text = progress == 0 ? "transactions.pending".localized : "transactions.receiving".localized
             filledColor = .themeGreenD
         case .outgoing, .sentToSelf, .approve:
-            text = "transactions.pending".localized
+            text = progress == 0 ? "transactions.pending".localized : "transactions.sending".localized
             filledColor = .themeYellowD
         }
 
