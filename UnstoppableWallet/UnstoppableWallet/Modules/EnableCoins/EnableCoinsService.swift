@@ -6,8 +6,9 @@ import CoinKit
 
 class EnableCoinsService {
     private let appConfigProvider: IAppConfigProvider
-    private let ethereumProvider: EnableCoinsErc20Provider
-    private let binanceProvider: EnableCoinsBep2Provider
+    private let erc20Provider: EnableCoinsErc20Provider
+    private let bep20Provider: EnableCoinsBep20Provider
+    private let bep2Provider: EnableCoinsBep2Provider
     private let coinManager: ICoinManager
     private let disposeBag = DisposeBag()
 
@@ -20,10 +21,11 @@ class EnableCoinsService {
         }
     }
 
-    init(appConfigProvider: IAppConfigProvider, ethereumProvider: EnableCoinsErc20Provider, binanceProvider: EnableCoinsBep2Provider, coinManager: ICoinManager) {
+    init(appConfigProvider: IAppConfigProvider, erc20Provider: EnableCoinsErc20Provider, bep20Provider: EnableCoinsBep20Provider, bep2Provider: EnableCoinsBep2Provider, coinManager: ICoinManager) {
         self.appConfigProvider = appConfigProvider
-        self.ethereumProvider = ethereumProvider
-        self.binanceProvider = binanceProvider
+        self.erc20Provider = erc20Provider
+        self.bep20Provider = bep20Provider
+        self.bep2Provider = bep2Provider
         self.coinManager = coinManager
     }
 
@@ -32,6 +34,10 @@ class EnableCoinsService {
         case (.ethereum, .mnemonic(let words, _)):
             if words.count == 12 {
                 return .erc20(words: words)
+            }
+        case (.binanceSmartChain, .mnemonic(let words, _)):
+            if words.count == 24 {
+                return .bep20(words: words)
             }
         case (.bep2(let symbol), .mnemonic(let words, _)):
             if symbol == "BNB", words.count == 24 {
@@ -50,7 +56,7 @@ class EnableCoinsService {
 
             state = .loading
 
-            ethereumProvider.contractAddressesSingle(address: address.hex)
+            erc20Provider.contractAddressesSingle(address: address.hex)
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                     .subscribe(onSuccess: { [weak self] addresses in
                         self?.handleFetchErc20(addresses: addresses)
@@ -76,9 +82,41 @@ class EnableCoinsService {
         enableCoinsRelay.accept(coins)
     }
 
+    private func fetchBep20Tokens(words: [String]) {
+        do {
+            let address = try Kit.address(words: words, networkType: .bscMainNet)
+
+            state = .loading
+
+            bep20Provider.contractAddressesSingle(address: address.hex)
+                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                    .subscribe(onSuccess: { [weak self] addresses in
+                        self?.handleFetchBep20(addresses: addresses)
+                    }, onError: { [weak self] error in
+                        self?.state = .failure(error: error)
+                    })
+                    .disposed(by: disposeBag)
+        } catch {
+            state = .failure(error: error)
+        }
+    }
+
+    private func handleFetchBep20(addresses: [String]) {
+        let allCoins = coinManager.coins
+
+        let coins = addresses.compactMap { address in
+            allCoins.first { coin in
+                coin.type == .bep20(address: address)
+            }
+        }
+
+        state = .success(coins: coins)
+        enableCoinsRelay.accept(coins)
+    }
+
     private func fetchBep2Tokens(words: [String]) {
         do {
-            let single = try binanceProvider.tokenSymbolsSingle(words: words)
+            let single = try bep2Provider.tokenSymbolsSingle(words: words)
 
             state = .loading
 
@@ -140,6 +178,8 @@ extension EnableCoinsService {
         switch tokenType {
         case .erc20(let words):
             fetchErc20Tokens(words: words)
+        case .bep20(let words):
+            fetchBep20Tokens(words: words)
         case .bep2(let words):
             fetchBep2Tokens(words: words)
         }
@@ -159,11 +199,13 @@ extension EnableCoinsService {
 
     enum TokenType {
         case erc20(words: [String])
+        case bep20(words: [String])
         case bep2(words: [String])
 
         var title: String {
             switch self {
             case .erc20: return "ERC20"
+            case .bep20: return "BEP20"
             case .bep2: return "BEP2"
             }
         }

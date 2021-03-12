@@ -14,8 +14,9 @@ struct RestoreSelectCoinsModule {
 
         let enableCoinsService = EnableCoinsService(
                 appConfigProvider: App.shared.appConfigProvider,
-                ethereumProvider: EnableCoinsErc20Provider(networkManager: App.shared.networkManager),
-                binanceProvider: EnableCoinsBep2Provider(appConfigProvider: App.shared.appConfigProvider),
+                erc20Provider: EnableCoinsErc20Provider(networkManager: App.shared.networkManager),
+                bep20Provider: EnableCoinsBep20Provider(appConfigProvider: App.shared.appConfigProvider, networkManager: App.shared.networkManager),
+                bep2Provider: EnableCoinsBep2Provider(appConfigProvider: App.shared.appConfigProvider),
                 coinManager: App.shared.coinManager
         )
 
