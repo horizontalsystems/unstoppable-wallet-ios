@@ -446,7 +446,7 @@
 "tx_info.title" = "交易";
 "tx_info.title_approval" = "互兑批准";
 "tx_info.status.pending" = "待处理";
-"tx_info.status.confirmed" = "已确认";
+"tx_info.status.completed" = "Completed";
 "tx_info.status.failed" = "失败";
 "tx_info.from_hash" = "发件人";
 "tx_info.transaction_id" = "交易ID";
@@ -821,8 +821,8 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "status_info.title" = "状态";
 "status_info.pending.title" = "待处理";
 "status_info.pending.content" = "交易尚未在区块链上确认。 根据交易费用的不同，此步骤可能需要几分钟到几个小时。通过极低费用发送的交易通常会在几天内得到处理或被网络拒绝，即没有进行交易。";
-"status_info.receiving.title" = "正在接收";
-"status_info.receiving.content" = "发送者已向您发送交易，但交易尚未完成。对于较大笔的付款，建议等到交易状态更改为“已完成”。这通常应在一个小时内发生，但如果发送人以较低的费用发送交易，则可能需要更长时间。";
+"status_info.sending_receiving.title" = "Sending / Receiving";
+"status_info.sending_receiving.content" = "Transaction has been included in the blockchain but has not reached permanent finality yet. At this point, it's safe to consider transaction completed for smaller payments. For larger payments it's recommended to wait until the status changes to completed.";
 "status_info.confirmed.title" = "已确认";
 "status_info.confirmed.content" = "交易是最终且不可逆的。";
 "status_info.failed.title" = "失败";
