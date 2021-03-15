@@ -154,8 +154,12 @@ class SwapService {
             }
         }
 
-        if balanceIn == nil || tradeService.amountIn > balanceIn ?? 0 {
-            allErrors.append(SwapError.insufficientBalanceIn)
+        if let balanceIn = balanceIn {
+            if tradeService.amountIn > balanceIn {
+                allErrors.append(SwapError.insufficientBalanceIn)
+            }
+        } else {
+            allErrors.append(SwapError.noBalanceIn)
         }
 
         if pendingAllowanceService.isPending {
@@ -229,6 +233,7 @@ extension SwapService {
     }
 
     enum SwapError: Error {
+        case noBalanceIn
         case insufficientBalanceIn
         case insufficientAllowance
         case forbiddenPriceImpactLevel

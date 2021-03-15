@@ -11,10 +11,10 @@ class SwapViewModel {
     public let service: SwapService
     public let tradeService: SwapTradeService
     public let switchService: AmountTypeSwitchService
-    public let allowanceService: SwapAllowanceService
-    public let pendingAllowanceService: SwapPendingAllowanceService
+    private let allowanceService: SwapAllowanceService
+    private let pendingAllowanceService: SwapPendingAllowanceService
 
-    public let viewItemHelper: SwapViewItemHelper
+    private let viewItemHelper: SwapViewItemHelper
 
     private var isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private var swapErrorRelay = BehaviorRelay<String?>(value: nil)
@@ -23,6 +23,7 @@ class SwapViewModel {
     private var advancedSettingsVisibleRelay = BehaviorRelay<Bool>(value: false)
     private var proceedActionRelay = BehaviorRelay<ActionState>(value: .hidden)
     private var approveActionRelay = BehaviorRelay<ActionState>(value: .hidden)
+    private var openConfirmRelay = PublishRelay<SendEvmData>()
 
     private var openApproveRelay = PublishRelay<SwapAllowanceService.ApproveData>()
 
@@ -181,6 +182,10 @@ extension SwapViewModel {
         openApproveRelay.asSignal()
     }
 
+    var openConfirmSignal: Signal<SendEvmData> {
+        openConfirmRelay.asSignal()
+    }
+
     func onTapSwitch() {
         tradeService.switchCoins()
     }
@@ -195,6 +200,37 @@ extension SwapViewModel {
 
     func didApprove() {
         pendingAllowanceService.syncAllowance()
+    }
+
+    func onTapProceed() {
+        guard case .ready(let transactionData) = service.state else {
+            return
+        }
+
+        var additionalItems = [SendEvmData.ItemId: String]()
+
+        if let slippage = viewItemHelper.slippage(tradeService.swapTradeOptions.allowedSlippage) {
+            additionalItems[.swapSlippage] = slippage
+        }
+        if let deadline = viewItemHelper.deadline(tradeService.swapTradeOptions.ttl) {
+            additionalItems[.swapDeadline] = deadline
+        }
+        if let recipient = tradeService.swapTradeOptions.recipient?.domain {
+            additionalItems[.swapRecipientDomain] = recipient
+        }
+
+        guard case let .ready(trade) = tradeService.state else {
+            return
+        }
+
+        if let price = viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, coinIn: tradeService.coinIn, coinOut: tradeService.coinOut) {
+            additionalItems[.swapPrice] = price.formattedString
+        }
+        if let viewItem = viewItemHelper.priceImpactViewItem(trade: trade) {
+            additionalItems[.swapPriceImpact] = viewItem.value
+        }
+
+        openConfirmRelay.accept(SendEvmData(transactionData: transactionData, additionalItems: additionalItems))
     }
 
 }

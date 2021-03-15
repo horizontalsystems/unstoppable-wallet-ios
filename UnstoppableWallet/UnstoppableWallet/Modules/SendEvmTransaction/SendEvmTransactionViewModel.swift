@@ -100,8 +100,8 @@ class SendEvmTransactionViewModel {
             .amount(amountData: coinServiceFactory.baseCoinService.amountData(value: value))
         ]
 
-        if let domainViewItem = domainViewItem {
-            viewItems.append(domainViewItem)
+        if let domain = service.additionalItems[.domain] {
+            viewItems.append(.value(title: "Domain", value: domain))
         }
 
         if let to = to {
@@ -120,8 +120,8 @@ class SendEvmTransactionViewModel {
             .amount(amountData: coinService.amountData(value: value))
         ]
 
-        if let domainViewItem = domainViewItem {
-            viewItems.append(domainViewItem)
+        if let domain = service.additionalItems[.domain] {
+            viewItems.append(.value(title: "Domain", value: domain))
         }
 
         viewItems.append(.address(title: "Address", value: to.eip55))
@@ -156,8 +156,27 @@ class SendEvmTransactionViewModel {
             viewItems.append(.amount(amountData: coinServiceOut.amountData(value: amountOut)))
         }
 
+        let additionalItems = service.additionalItems
+
+        if let slippage = additionalItems[.swapSlippage] {
+            viewItems.append(.value(title: "swap.advanced_settings.slippage".localized, value: slippage))
+        }
+        if let deadline = additionalItems[.swapDeadline] {
+            viewItems.append(.value(title: "swap.advanced_settings.deadline".localized, value: deadline))
+        }
+        if let recipientDomain = additionalItems[.swapRecipientDomain] {
+            viewItems.append(.value(title: "swap.advanced_settings.recipient_domain".localized, value: recipientDomain))
+        }
+
         if to != service.ownAddress {
-            viewItems.append(.address(title: "Recipient", value: to.eip55))
+            viewItems.append(.address(title: "swap.advanced_settings.recipient_address".localized, value: to.eip55))
+        }
+
+        if let price = additionalItems[.swapPrice] {
+            viewItems.append(.value(title: "swap.price".localized, value: price))
+        }
+        if let priceImpact = additionalItems[.swapPriceImpact] {
+            viewItems.append(.value(title: "swap.price_impact".localized, value: priceImpact))
         }
 
         return viewItems
@@ -176,15 +195,6 @@ class SendEvmTransactionViewModel {
             .address(title: "To", value: transactionData.to.eip55),
             .input(value: transactionData.input.toHexString())
         ]
-    }
-
-    private var domainViewItem: ViewItem? {
-        for item in service.additionalItems {
-            if case .domain(let value) = item {
-                return .value(title: "Domain", value: value)
-            }
-        }
-        return nil
     }
 
 }
