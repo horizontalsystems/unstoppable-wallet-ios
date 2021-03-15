@@ -248,6 +248,7 @@
 "swap.advanced_settings.recipient.footer" = "Nach dem Umtauschvorgang wird der Betrag an die angegebene Adresse überwiesen";
 "swap.advanced_settings.deadline_minute" = "%@ Min";
 "swap.advanced_settings.recipient_address" = "Empfängeradresse";
+"swap.advanced_settings.recipient_domain" = "Recipient Domain";
 "swap.advanced_settings.error.lower_slippage" = "Ihre Transaktion wird wahrscheinlich fehlschlagen.";
 "swap.advanced_settings.error.higher_slippage" = "Max. erlaubter Wert ist %@%%.";
 "swap.advanced_settings.error.invalid_address" = "Ungültige Adresse";
