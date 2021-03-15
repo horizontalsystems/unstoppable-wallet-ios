@@ -74,7 +74,7 @@ extension SendEvmTransactionService {
         sendData.transactionData
     }
 
-    var additionalItems: [SendEvmData.AdditionalItem] {
+    var additionalItems: [SendEvmData.ItemId: String] {
         sendData.additionalItems
     }
 

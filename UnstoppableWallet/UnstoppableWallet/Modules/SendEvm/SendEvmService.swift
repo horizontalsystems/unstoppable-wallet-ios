@@ -42,10 +42,10 @@ class SendEvmService {
         if amountError == nil, addressError == nil, let evmAmount = evmAmount, let addressData = addressData {
             let transactionData = adapter.transactionData(amount: evmAmount, address: addressData.evmAddress)
 
-            var additionalItems = [SendEvmData.AdditionalItem]()
+            var additionalItems = [SendEvmData.ItemId: String]()
 
             if let domain = addressData.domain {
-                additionalItems.append(.domain(value: domain))
+                additionalItems[.domain] = domain
             }
 
             let sendData = SendEvmData(transactionData: transactionData, additionalItems: additionalItems)

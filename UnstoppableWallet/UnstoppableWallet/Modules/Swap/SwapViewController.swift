@@ -112,6 +112,7 @@ class SwapViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.approveActionDriver) { [weak self] in self?.handle(approveActionState: $0) }
 
         subscribe(disposeBag, viewModel.openApproveSignal) { [weak self] in self?.openApprove(approveData: $0) }
+        subscribe(disposeBag, viewModel.openConfirmSignal) { [weak self] in self?.openConfirm(sendData: $0) }
     }
 
     @objc func onClose() {
@@ -219,17 +220,7 @@ class SwapViewController: ThemeViewController {
     }
 
     @objc private func onTapProceedButton() {
-        guard case .ready(let transactionData) = viewModel.service.state else {
-            return
-        }
-
-        guard let viewController = SwapConfirmationModule.viewController(
-                sendData: SendEvmData(transactionData: transactionData, additionalItems: []),
-                dex: viewModel.service.dex
-        ) else {
-            return
-        }
-        navigationController?.pushViewController(viewController, animated: true)
+        viewModel.onTapProceed()
     }
 
     @objc func onTapAdvancedSettings() {
@@ -246,6 +237,14 @@ class SwapViewController: ThemeViewController {
         }
 
         present(viewController, animated: true)
+    }
+
+    private func openConfirm(sendData: SendEvmData) {
+        guard let viewController = SwapConfirmationModule.viewController(sendData: sendData, dex: viewModel.service.dex) else {
+            return
+        }
+
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
     private func reloadTable() {
