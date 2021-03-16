@@ -13,8 +13,8 @@ class SendEvmTransactionViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
     let bottomWrapper = BottomGradientHolder()
 
-    private let estimatedFeeCell: SendEstimatedFeeCell
-    private let maxFeeCell: SendMaxFeeCell
+    private let estimatedFeeCell: SendFeeCell
+    private let maxFeeCell: SendFeeCell
     private let feePriorityCell: SendFeePriorityCell
     private let errorCell = SendEthereumErrorCell()
 
@@ -24,13 +24,16 @@ class SendEvmTransactionViewController: ThemeViewController {
     init(transactionViewModel: SendEvmTransactionViewModel, feeViewModel: EthereumFeeViewModel) {
         self.transactionViewModel = transactionViewModel
 
-        estimatedFeeCell = SendEstimatedFeeCell(viewModel: feeViewModel)
-        maxFeeCell = SendMaxFeeCell(viewModel: feeViewModel)
+        estimatedFeeCell = SendFeeCell(driver: feeViewModel.estimatedFeeDriver)
+        maxFeeCell = SendFeeCell(driver: feeViewModel.feeDriver)
         feePriorityCell = SendFeePriorityCell(viewModel: feeViewModel)
 
         super.init()
 
         feePriorityCell.delegate = self
+
+        estimatedFeeCell.titleType = .estimatedFee
+        subscribe(disposeBag, feeViewModel.estimatedFeeDriver) { [weak self] in self?.maxFeeCell.titleType = $0 == nil ? .fee : .maxFee }
     }
 
     required init?(coder aDecoder: NSCoder) {

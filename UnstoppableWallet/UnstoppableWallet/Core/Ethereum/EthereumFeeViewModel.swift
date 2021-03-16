@@ -11,8 +11,8 @@ class EthereumFeeViewModel {
 
     private let disposeBag = DisposeBag()
 
-    private let estimatedFeeStatusRelay = BehaviorRelay<String>(value: "")
-    private let feeStatusRelay = BehaviorRelay<String>(value: "")
+    private let estimatedFeeStatusRelay = BehaviorRelay<String?>(value: nil)
+    private let feeStatusRelay = BehaviorRelay<String?>(value: "")
     private let priorityRelay = BehaviorRelay<String>(value: "")
     private let openSelectPriorityRelay = PublishRelay<[SendPriorityViewItem]>()
     private let feeSliderRelay = BehaviorRelay<SendFeeSliderViewItem?>(value: nil)
@@ -40,7 +40,9 @@ class EthereumFeeViewModel {
     }
 
     private func sync(transactionStatus: DataStatus<EvmTransactionService.Transaction>) {
-        estimatedFeeStatusRelay.accept(estimatedFeeStatus(transactionStatus: transactionStatus))
+        let estimatedFeeStatus = service.gasLimitSurchargePercent == 0 ? nil : self.estimatedFeeStatus(transactionStatus: transactionStatus)
+
+        estimatedFeeStatusRelay.accept(estimatedFeeStatus)
         feeStatusRelay.accept(feeStatus(transactionStatus: transactionStatus))
     }
 
@@ -98,13 +100,13 @@ class EthereumFeeViewModel {
 
 }
 
-extension EthereumFeeViewModel: ISendFeeViewModel {
+extension EthereumFeeViewModel {
 
-    var estimatedFeeDriver: Driver<String> {
+    var estimatedFeeDriver: Driver<String?> {
         estimatedFeeStatusRelay.asDriver()
     }
 
-    var feeDriver: Driver<String> {
+    var feeDriver: Driver<String?> {
         feeStatusRelay.asDriver()
     }
 
