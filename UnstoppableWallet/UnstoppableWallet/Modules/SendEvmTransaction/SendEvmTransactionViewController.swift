@@ -18,7 +18,7 @@ class SendEvmTransactionViewController: ThemeViewController {
     private let feePriorityCell: SendFeePriorityCell
     private let errorCell = SendEthereumErrorCell()
 
-    private let viewItems: [SendEvmTransactionViewModel.ViewItem]
+    private var viewItems = [SendEvmTransactionViewModel.ViewItem]()
     private var isLoaded = false
 
     init(transactionViewModel: SendEvmTransactionViewModel, feeViewModel: EthereumFeeViewModel) {
@@ -27,8 +27,6 @@ class SendEvmTransactionViewController: ThemeViewController {
         estimatedFeeCell = SendEstimatedFeeCell(viewModel: feeViewModel)
         maxFeeCell = SendMaxFeeCell(viewModel: feeViewModel)
         feePriorityCell = SendFeePriorityCell(viewModel: feeViewModel)
-
-        viewItems = transactionViewModel.viewItems
 
         super.init()
 
@@ -71,6 +69,13 @@ class SendEvmTransactionViewController: ThemeViewController {
         subscribe(disposeBag, transactionViewModel.sendSuccessSignal) { [weak self] in self?.handleSendSuccess(transactionHash: $0) }
         subscribe(disposeBag, transactionViewModel.sendFailedSignal) { [weak self] in self?.handleSendFailed(error: $0) }
 
+        subscribe(disposeBag, transactionViewModel.viewItemsDriver) { [weak self] in
+            self?.viewItems = $0
+            self?.reloadTable()
+        }
+
+        tableView.buildSections()
+
         isLoaded = true
     }
 
@@ -90,11 +95,11 @@ class SendEvmTransactionViewController: ThemeViewController {
     }
 
     private func reloadTable() {
-        tableView.buildSections()
-
         guard isLoaded else {
             return
         }
+
+        tableView.reload(animated: true)
 
         UIView.animate(withDuration: 0.2) {
             self.tableView.beginUpdates()
@@ -127,6 +132,7 @@ class SendEvmTransactionViewController: ThemeViewController {
     private func amountRow(amountData: AmountData, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         Row<SendConfirmationAmountCell>(
                 id: "amount-\(index)",
+                hash: "\(amountData.primary.value)",
                 height: SendConfirmationAmountCell.height,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)

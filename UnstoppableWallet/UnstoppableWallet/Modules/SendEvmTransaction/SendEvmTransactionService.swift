@@ -18,6 +18,13 @@ class SendEvmTransactionService {
         }
     }
 
+    private let dataStateRelay = PublishRelay<DataState>()
+    private(set) var dataState: DataState {
+        didSet {
+            dataStateRelay.accept(dataState)
+        }
+    }
+
     private let sendStateRelay = PublishRelay<SendState>()
     private(set) var sendState: SendState = .idle {
         didSet {
@@ -29,6 +36,8 @@ class SendEvmTransactionService {
         self.sendData = sendData
         self.evmKit = evmKit
         self.transactionService = transactionService
+
+        dataState = DataState(transactionData: sendData.transactionData, additionalItems: sendData.additionalItems, decoration: evmKit.decorate(transactionData: sendData.transactionData))
 
         subscribe(disposeBag, transactionService.transactionStatusObservable) { [weak self] _ in self?.syncState() }
 
@@ -49,13 +58,25 @@ class SendEvmTransactionService {
             state = .notReady(errors: [])
         case .failed(let error):
             state = .notReady(errors: [error])
+            syncDataState()
         case .completed(let transaction):
             if transaction.totalAmount > evmBalance {
                 state = .notReady(errors: [TransactionError.insufficientBalance(requiredBalance: transaction.totalAmount)])
             } else {
                 state = .ready
             }
+            syncDataState(transaction: transaction)
         }
+    }
+
+    private func syncDataState(transaction: EvmTransactionService.Transaction? = nil) {
+        let transactionData = transaction?.data ?? sendData.transactionData
+
+        dataState = DataState(
+                transactionData: transactionData,
+                additionalItems: sendData.additionalItems,
+                decoration: evmKit.decorate(transactionData: transactionData)
+        )
     }
 
 }
@@ -66,24 +87,16 @@ extension SendEvmTransactionService {
         stateRelay.asObservable()
     }
 
+    var dataStateObservable: Observable<DataState> {
+        dataStateRelay.asObservable()
+    }
+
     var sendStateObservable: Observable<SendState> {
         sendStateRelay.asObservable()
     }
 
-    var transactionData: TransactionData {
-        sendData.transactionData
-    }
-
-    var additionalItems: [SendEvmData.ItemId: String] {
-        sendData.additionalItems
-    }
-
     var ownAddress: EthereumKit.Address {
         evmKit.receiveAddress
-    }
-
-    var decoration: TransactionDecoration? {
-        evmKit.decorate(transactionData: sendData.transactionData)
     }
 
     func send() {
@@ -114,6 +127,12 @@ extension SendEvmTransactionService {
     enum State {
         case ready
         case notReady(errors: [Error])
+    }
+
+    struct DataState {
+        let transactionData: TransactionData
+        let additionalItems: [SendEvmData.ItemId: String]
+        var decoration: TransactionDecoration?
     }
 
     enum SendState {

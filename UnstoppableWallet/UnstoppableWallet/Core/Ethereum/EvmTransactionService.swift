@@ -57,24 +57,56 @@ class EvmTransactionService {
 
         gasPriceSingle(gasPriceType: gasPriceType)
                 .flatMap { [unowned self] gasPrice -> Single<Transaction> in
-                    gasLimitSingle(gasPrice: gasPrice, transactionData: transactionData)
-                            .map { [unowned self] estimatedGasLimit -> Transaction in
-                                let gasLimit = estimatedGasLimit + Int(Double(estimatedGasLimit) / 100.0 * Double(gasLimitSurchargePercent))
-
-                                return Transaction(
-                                        data: transactionData,
-                                        gasData: GasData(estimatedGasLimit: estimatedGasLimit, gasLimit: gasLimit, gasPrice: gasPrice)
-                                )
-                            }
+                    transactionSingle(gasPrice: gasPrice, transactionData: transactionData)
                 }
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .observeOn(MainScheduler.instance)
                 .subscribe(onSuccess: { [weak self] transaction in
                     self?.transactionStatus = .completed(transaction)
                 }, onError: { [weak self] error in
                      self?.transactionStatus = .failed(error)
                 })
                 .disposed(by: disposeBag)
+    }
+
+    private var evmBalance: BigUInt {
+        evmKit.accountState?.balance ?? 0
+    }
+
+    private func surchargedGasLimit(estimatedGasLimit: Int) -> Int {
+        estimatedGasLimit + Int(Double(estimatedGasLimit) / 100.0 * Double(gasLimitSurchargePercent))
+    }
+
+    private func transactionSingle(gasPrice: Int, transactionData: TransactionData) -> Single<Transaction> {
+        adjustedTransactionDataSingle(gasPrice: gasPrice, transactionData: transactionData).flatMap { [unowned self] transactionData in
+            gasLimitSingle(gasPrice: gasPrice, transactionData: transactionData).map { [unowned self] estimatedGasLimit in
+                let gasLimit = surchargedGasLimit(estimatedGasLimit: estimatedGasLimit)
+
+                return Transaction(
+                        data: transactionData,
+                        gasData: GasData(estimatedGasLimit: estimatedGasLimit, gasLimit: gasLimit, gasPrice: gasPrice)
+                )
+            }
+        }
+    }
+
+    private func adjustedTransactionDataSingle(gasPrice: Int, transactionData: TransactionData) -> Single<TransactionData> {
+        if transactionData.input.isEmpty && transactionData.value == evmBalance {
+            let stubTransactionData = TransactionData(to: transactionData.to, value: 1, input: Data())
+
+            return gasLimitSingle(gasPrice: gasPrice, transactionData: stubTransactionData).flatMap { [unowned self] estimatedGasLimit in
+                let gasLimit = surchargedGasLimit(estimatedGasLimit: estimatedGasLimit)
+                let adjustedValue = transactionData.value - BigUInt(gasLimit) * BigUInt(gasPrice)
+
+                if adjustedValue <= 0 {
+                    return Single.error(GasDataError.insufficientBalance)
+                } else {
+                    let adjustedTransactionData = TransactionData(to: transactionData.to, value: adjustedValue, input: Data())
+                    return Single.just(adjustedTransactionData)
+                }
+            }
+        } else {
+            return Single.just(transactionData)
+        }
     }
 
 }
@@ -137,6 +169,7 @@ extension EvmTransactionService {
 
     enum GasDataError: Error {
         case noTransactionData
+        case insufficientBalance
     }
 
 }
