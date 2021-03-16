@@ -87,7 +87,7 @@ class CoinToggleViewController: ThemeSearchViewController {
             case .toggleHidden:
                 return Row<G4Cell>(
                         id: "coin_\(viewItem.coin.id)",
-                        hash: "coin_\(viewItem.state)",
+                        hash: "coin_\(viewItem.state)_\(isFirst)_\(isLast)",
                         height: .heightDoubleLineCell,
                         autoDeselect: true,
                         bind: { cell, _ in
@@ -105,7 +105,7 @@ class CoinToggleViewController: ThemeSearchViewController {
             case .toggleVisible(let enabled):
                 return Row<G11Cell>(
                         id: "coin_\(viewItem.coin.id)",
-                        hash: "coin_\(viewItem.state)",
+                        hash: "coin_\(viewItem.state)_\(isFirst)_\(isLast)",
                         height: .heightDoubleLineCell,
                         bind: { [weak self] cell, _ in
                             cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
