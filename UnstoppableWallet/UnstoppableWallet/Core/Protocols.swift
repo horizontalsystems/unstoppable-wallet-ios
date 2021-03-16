@@ -228,6 +228,7 @@ protocol IRateManager {
     func historicalRate(coinType: CoinType, currencyCode: String, timestamp: TimeInterval) -> Decimal?
     func chartInfo(coinType: CoinType, currencyCode: String, chartType: ChartType) -> ChartInfo?
     func chartInfoObservable(coinType: CoinType, currencyCode: String, chartType: ChartType) -> Observable<ChartInfo>
+    func coinMarketInfoSingle(coinType: CoinType, currencyCode: String, rateDiffTimePeriods: [TimePeriod], rateDiffCoinCodes: [String]) -> Single<CoinMarketInfo>
 }
 
 protocol IFavoritesManager {

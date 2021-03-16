@@ -36,7 +36,7 @@ extension FavoritesManager: IFavoritesManager {
     }
 
     public func isFavorite(coinType: CoinType) -> Bool {
-        return storage.inFavorites(coinType: coinType)
+        storage.inFavorites(coinType: coinType)
     }
 
 }

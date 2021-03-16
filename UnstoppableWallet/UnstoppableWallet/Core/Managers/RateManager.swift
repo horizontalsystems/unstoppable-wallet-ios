@@ -102,6 +102,10 @@ extension RateManager: IRateManager {
         kit.chartInfoObservable(coinType: coinType, currencyCode: currencyCode, chartType: chartType)
     }
 
+    func coinMarketInfoSingle(coinType: CoinType, currencyCode: String, rateDiffTimePeriods: [TimePeriod], rateDiffCoinCodes: [String]) -> Single<CoinMarketInfo> {
+        kit.coinMarketInfoSingle(coinType: coinType, currencyCode: currencyCode, rateDiffTimePeriods: rateDiffTimePeriods, rateDiffCoinCodes: rateDiffCoinCodes)
+    }
+
 }
 
 extension RateManager: IPostsManager {
