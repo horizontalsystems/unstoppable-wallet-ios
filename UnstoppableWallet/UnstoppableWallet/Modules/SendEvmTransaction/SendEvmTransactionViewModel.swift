@@ -11,7 +11,7 @@ class SendEvmTransactionViewModel {
     private let service: SendEvmTransactionService
     private let coinServiceFactory: EvmCoinServiceFactory
 
-    private(set) var viewItems = [ViewItem]()
+    private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
 
     private let sendEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
@@ -25,12 +25,12 @@ class SendEvmTransactionViewModel {
         self.coinServiceFactory = coinServiceFactory
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+        subscribe(disposeBag, service.dataStateObservable) { [weak self] in self?.sync(dataState: $0) }
         subscribe(disposeBag, service.sendStateObservable) { [weak self] in self?.sync(sendState: $0) }
 
         sync(state: service.state)
+        sync(dataState: service.dataState)
         sync(sendState: service.sendState)
-
-        syncViewItems()
     }
 
     private func sync(state: SendEvmTransactionService.State) {
@@ -45,6 +45,18 @@ class SendEvmTransactionViewModel {
         } else {
             errorRelay.accept(nil)
         }
+    }
+
+    private func sync(dataState: SendEvmTransactionService.DataState) {
+        let viewItems: [ViewItem]
+
+        if let decoration = dataState.decoration, let decoratedViewItems = self.viewItems(decoration: decoration, additionalItems: dataState.additionalItems) {
+            viewItems = decoratedViewItems
+        } else {
+            viewItems = fallbackViewItems(transactionData: dataState.transactionData)
+        }
+
+        viewItemsRelay.accept(viewItems)
     }
 
     private func sync(sendState: SendEvmTransactionService.SendState) {
@@ -72,35 +84,27 @@ class SendEvmTransactionViewModel {
         return error.convertedError.smartDescription
     }
 
-    private func syncViewItems() {
-        if let decoration = service.decoration, let viewItems = viewItems(decoration: decoration) {
-            self.viewItems = viewItems
-        } else {
-            viewItems = fallbackViewItems(transactionData: service.transactionData)
-        }
-    }
-
-    private func viewItems(decoration: TransactionDecoration) -> [ViewItem]? {
+    private func viewItems(decoration: TransactionDecoration, additionalItems: [SendEvmData.ItemId: String]) -> [ViewItem]? {
         switch decoration {
         case let .transfer(from, to, value):
-            return transferViewItems(from: from, to: to, value: value)
+            return transferViewItems(from: from, to: to, value: value, additionalItems: additionalItems)
         case let .eip20Transfer(to, value, contractAddress):
-            return eip20TransferViewItems(to: to, value: value, contractAddress: contractAddress)
+            return eip20TransferViewItems(to: to, value: value, contractAddress: contractAddress, additionalItems: additionalItems)
         case let .eip20Approve(spender, value, contractAddress):
             return eip20ApproveViewItems(spender: spender, value: value, contractAddress: contractAddress)
         case let .swap(trade, tokenIn, tokenOut, to, deadline):
-            return swapViewItems(trade: trade, tokenIn: tokenIn, tokenOut: tokenOut, to: to, deadline: deadline)
+            return swapViewItems(trade: trade, tokenIn: tokenIn, tokenOut: tokenOut, to: to, deadline: deadline, additionalItems: additionalItems)
         default:
             return nil
         }
     }
 
-    private func transferViewItems(from: EthereumKit.Address, to: EthereumKit.Address?, value: BigUInt) -> [ViewItem] {
+    private func transferViewItems(from: EthereumKit.Address, to: EthereumKit.Address?, value: BigUInt, additionalItems: [SendEvmData.ItemId: String]) -> [ViewItem] {
         var viewItems: [ViewItem] = [
             .amount(amountData: coinServiceFactory.baseCoinService.amountData(value: value))
         ]
 
-        if let domain = service.additionalItems[.domain] {
+        if let domain = additionalItems[.domain] {
             viewItems.append(.value(title: "Domain", value: domain))
         }
 
@@ -111,7 +115,7 @@ class SendEvmTransactionViewModel {
         return viewItems
     }
 
-    private func eip20TransferViewItems(to: EthereumKit.Address, value: BigUInt, contractAddress: EthereumKit.Address) -> [ViewItem]? {
+    private func eip20TransferViewItems(to: EthereumKit.Address, value: BigUInt, contractAddress: EthereumKit.Address, additionalItems: [SendEvmData.ItemId: String]) -> [ViewItem]? {
         guard let coinService = coinServiceFactory.coinService(contractAddress: contractAddress) else {
             return nil
         }
@@ -120,7 +124,7 @@ class SendEvmTransactionViewModel {
             .amount(amountData: coinService.amountData(value: value))
         ]
 
-        if let domain = service.additionalItems[.domain] {
+        if let domain = additionalItems[.domain] {
             viewItems.append(.value(title: "Domain", value: domain))
         }
 
@@ -140,7 +144,7 @@ class SendEvmTransactionViewModel {
         ]
     }
 
-    private func swapViewItems(trade: TransactionDecoration.Trade, tokenIn: TransactionDecoration.Token, tokenOut: TransactionDecoration.Token, to: EthereumKit.Address, deadline: BigUInt) -> [ViewItem]? {
+    private func swapViewItems(trade: TransactionDecoration.Trade, tokenIn: TransactionDecoration.Token, tokenOut: TransactionDecoration.Token, to: EthereumKit.Address, deadline: BigUInt, additionalItems: [SendEvmData.ItemId: String]) -> [ViewItem]? {
         guard let coinServiceIn = coinService(token: tokenIn), let coinServiceOut = coinService(token: tokenOut) else {
             return nil
         }
@@ -155,8 +159,6 @@ class SendEvmTransactionViewModel {
             viewItems.append(.amount(amountData: coinServiceIn.amountData(value: amountInMax)))
             viewItems.append(.amount(amountData: coinServiceOut.amountData(value: amountOut)))
         }
-
-        let additionalItems = service.additionalItems
 
         if let slippage = additionalItems[.swapSlippage] {
             viewItems.append(.value(title: "swap.advanced_settings.slippage".localized, value: slippage))
@@ -200,6 +202,10 @@ class SendEvmTransactionViewModel {
 }
 
 extension SendEvmTransactionViewModel {
+
+    var viewItemsDriver: Driver<[ViewItem]> {
+        viewItemsRelay.asDriver()
+    }
 
     var sendEnabledDriver: Driver<Bool> {
         sendEnabledRelay.asDriver()
