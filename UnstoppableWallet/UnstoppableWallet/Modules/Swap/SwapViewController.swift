@@ -20,6 +20,7 @@ class SwapViewController: ThemeViewController {
     private let fromCoinCardCell: SwapCoinCardCell
     private let priceCell = SwapPriceCell()
     private let toCoinCardCell: SwapCoinCardCell
+    private let poweredByCell = SwapPoweredByCell()
 //    private let slippageCell = AdditionalDataCellNew()
 //    private let deadlineCell = AdditionalDataCellNew()
 //    private let recipientCell = AdditionalDataCellNew()
@@ -77,6 +78,8 @@ class SwapViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.sectionDataSource = self
         tableView.keyboardDismissMode = .onDrag
+
+        poweredByCell.set(dex: viewModel.service.dex)
 
         advancedSettingsCell.set(backgroundStyle: .transparent, isLast: true)
         advancedSettingsCell.title  = "swap.advanced_settings".localized
@@ -158,6 +161,8 @@ class SwapViewController: ThemeViewController {
         } else {
             guaranteedAmountCell.isVisible = false
         }
+
+        poweredByCell.isVisible = tradeViewItem == nil
 
         reloadTable()
     }
@@ -284,6 +289,18 @@ extension SwapViewController: SectionsDataSource {
                             cell: toCoinCardCell,
                             id: "to-card",
                             height: toCoinCardCell.cellHeight
+                    )
+                ]
+        ))
+
+        sections.append(Section(
+                id: "powered-by",
+                headerState: .margin(height: poweredByCell.isVisible ? .margin12 : 0),
+                rows: [
+                    StaticRow(
+                            cell: poweredByCell,
+                            id: "powered-by",
+                            height: poweredByCell.cellHeight
                     )
                 ]
         ))
