@@ -277,7 +277,7 @@
 "swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on %@ blockchain.\n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
 
 "swap.dex_info.header_dex_related" = "%@ Related";
-"swap.dex_info.header_allowance" = "Allowance";
+"swap.dex_info.header_allowance" = "Разрешение";
 "swap.dex_info.content_allowance" = "The amount of some currency that service can spend on your behalf when executing token swaps. Sufficient allowance is required before swap action can take place.";
 "swap.dex_info.header_price_impact" = "Price Impact";
 "swap.dex_info.content_price_impact" = "Expected price deviation from a shown price, typically increases with the swap amount.";
@@ -288,13 +288,13 @@
 "swap.dex_info.header_maximum_spend" = "Maximum Spend";
 "swap.dex_info.content_maximum_spend" = "The maximum amount a user is going to spend as a result of a swap action.";
 
-"swap.dex_info.header_other" = "Other";
-"swap.dex_info.header_transaction_fee" = "Transaction Fee";
+"swap.dex_info.header_other" = "Другое";
+"swap.dex_info.header_transaction_fee" = "Комиссия за транзакцию";
 "swap.dex_info.content_transaction_fee" = "The estimated processing cost of the given transaction on %@ blockchain. %@ related transactions will typically cost more than generic token transfer transactions.";
 "swap.dex_info.header_transaction_speed" = "Transaction Speed";
 "swap.dex_info.content_transaction_speed" = "Transactions with higher transaction fee will result in faster processing speeds. The opposite is true as well.";
 
-"swap.dex_info.link_button" = "%@ Site";
+"swap.dex_info.link_button" = "%@ Сайт";
 
 // Market
 
@@ -432,6 +432,14 @@
 "market.advanced_search.month6" = "6 Months";
 "market.advanced_search.year" = "1 Year";
 
+"coin_page.roi.hour1" = "1 Hour";
+"coin_page.roi.hour24" = "1 Day";
+"coin_page.roi.day7" = "1 Week";
+"coin_page.roi.day14" = "2 Weeks";
+"coin_page.roi.day30" = "1 Month";
+"coin_page.roi.day200" = "6 Month";
+"coin_page.roi.year1" = "1 Year";
+
 // Transactions
 
 "transactions.title" = "Транзакции";
@@ -449,7 +457,7 @@
 "tx_info.title" = "Транзакция";
 "tx_info.title_approval" = "Подтверждение обмена";
 "tx_info.status.pending" = "В обработке";
-"tx_info.status.completed" = "Completed";
+"tx_info.status.completed" = "Завершено";
 "tx_info.status.failed" = "Не удалось";
 "tx_info.from_hash" = "От";
 "tx_info.transaction_id" = "ID Транзакции";
@@ -661,9 +669,9 @@
 // Key Types
 
 "chart.title" = "%@ Цена";
-"chart.time_duration.today" = "Сегодня";
-"chart.time_duration.day" = "24ч";
-"chart.time_duration.week" = "7Д";
+"chart.time_duration.today" = "TDY";
+"chart.time_duration.day" = "24H";
+"chart.time_duration.week" = "7D";
 "chart.time_duration.week2" = "2Н";
 "chart.time_duration.month" = "1М";
 "chart.time_duration.month3" = "3М";
@@ -769,8 +777,8 @@
 "add_token.decimals" = "Десятичные знаки";
 "add_token.already_exists" = "Этот токен уже есть в списке поддерживаемых токенов.";
 
-"add_evm_token.contract_not_exist" = "Contract not found";
-"add_evm_token.contract_address" = "Contract Address";
+"add_evm_token.contract_not_exist" = "Контракт не найден";
+"add_evm_token.contract_address" = "Адрес Контракта";
 
 "add_erc20_token.title" = "Добавить ERC20";
 
@@ -843,5 +851,5 @@
 // Onboarding
 
 "onboarding.balance.description" = "You don't have any wallets yet. Create new or restore existing";
-"onboarding.balance.create" = "Create";
-"onboarding.balance.restore" = "Restore";
+"onboarding.balance.create" = "Создать";
+"onboarding.balance.restore" = "Восстановить";
