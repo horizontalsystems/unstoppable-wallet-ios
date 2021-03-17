@@ -7,7 +7,7 @@ class ReadMoreTextCell: BaseThemeCell {
     private static let collapsedNumberOfLines: Int = 8
     private static let horizontalPadding: CGFloat = .margin24
     private static let verticalPadding: CGFloat = .margin6
-    private static let gradientOffset: CGFloat = -.margin8
+    private static let gradientOffset: CGFloat = -.margin6
     private static let buttonHeight: CGFloat = 33
 
     private let gradientView = BottomGradientHolder()
