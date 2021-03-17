@@ -161,6 +161,7 @@
 "send.address_placeholder" = "Adres";
 "send.address_or_domain_placeholder" = "Adres veya Domain";
 "send.fee" = "Masraf";
+"send.network_fee" = "Network Fee";
 "send.estimated_fee" = "Tahmini Ücret";
 "send.max_fee" = "Maksimum Ücret";
 "send.tx_speed" = "İşlem Ücreti";
@@ -194,6 +195,9 @@
 "send.fee_info.content_fast" = "Önceliğin önemli olduğu işlemler için yüksek ücret ayarını kullanmanızı öneririz. İşlemin Bitcoin için 10 dakika, Ethereum için birkaç dakika içinde tamamlanması için yüksek ücret ayarının seçilmesinin yeterli olması bekleniyor.";
 "send.fee_info.content_conclusion" = "Unstoppable cüzdan, ağ etkinliğine dayalı olarak eğitimli bir tahmin yapar ve önerilen ücret değerlerinin her zaman beklenen davranışla sonuçlanacağını garanti edemez.";
 
+"send.confirmation.you_send" = "You Send";
+"send.confirmation.amount" = "Amount";
+"send.confirmation.to" = "To";
 "send.confirmation.domain" = "Domain";
 "send.confirmation.address" = "Adres";
 "send.confirmation.account" = "Account";
@@ -207,6 +211,9 @@
 "send.token.insufficient_fee_alert" = "%@ (%@) için ișlem ücreti %@ hesabından ödenir. Asgari %@ gerekiyor.";
 
 "send.lock_time" = "TimeLock";
+
+"approve.confirmation.you_approve" = "You Approve";
+"approve.confirmation.spender" = "Spender";
 
 // CoinSelector
 
@@ -234,6 +241,7 @@
 "swap.button_error.insufficient_balance" = "Yetersiz bakiye";
 "swap.button_error.impact_too_high" = "Yüksek fiyat etkisi";
 
+"swap.price" = "Price";
 "swap.price_impact" = "Fiyat Etkisi";
 "swap.max_min" = "Max / Min";
 "swap.maximum_paid" = "Maksimum Ödenen";
@@ -270,6 +278,9 @@
 "swap.confirmation.swap_button" = "Takas";
 "swap.confirmation.pay" = "Ödeyin %@";
 "swap.confirmation.get" = "%@ al";
+"swap.confirmation.guaranteed" = "Guaranteed";
+"swap.confirmation.maximum" = "Maximum";
+"swap.confirmation.estimated" = "Estimated";
 
 
 "swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on %@ blockchain.\n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
