@@ -272,27 +272,27 @@
 "swap.confirmation.get" = "%@ 지급";
 
 
-"swap.uniswap_info.title" = "Uniswap v.2";
-"swap.uniswap_info.description" = "이 거래소 서비스는 Ethereum 블록체인을 기반으로 구축된 분산형 토큰 교환 프로토콜인 Uniswap에서 운영됩니다.\n\n\Uniswap는 스마트 계약에 의해 완전히 자동화되고 관리되어 부정행위를 할 수 있는 방법 없이 토큰 교환을 신뢰할 수 있는 방법으로 가능하게 합니다.";
-"swap.uniswap_info.link_button" = "Uniswap 사이트";
+"swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on %@ blockchain.\n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
 
-"swap.uniswap_info.header_uniswap_related" = "Uniswap 관련됨";
-"swap.uniswap_info.header_allowance" = "허용량";
-"swap.uniswap_info.content_allowance" = "토큰 스왑을 실행할 때 Uniswap이 대신 사용할 수 있는 일부 통화의 금액. 스왑 행위가 일어나기 전에 충분한 허용량이 필요됩니다.";
-"swap.uniswap_info.header_price_impact" = "가격 영향";
-"swap.uniswap_info.content_price_impact" = "표시된 가격과의 예상 가격 편차는 일반적으로 스왑 금액에 따라 증가합니다.";
-"swap.uniswap_info.header_swap_fee" = "스왑 비용";
-"swap.uniswap_info.content_swap_fee" = "사용자가 판매하는 통화에 표시된 Uniswap 플랫폼의 스왑 행위에 대한 서비스 요금. 대부분의 주문의 경우 0.3% 또는 0.6%여야 합니다.";
-"swap.uniswap_info.header_guaranteed_amount" = "보증 금액";
-"swap.uniswap_info.content_guaranteed_amount" = "스왑 행위로 인해 사용자가 받을 최소 금액.";
-"swap.uniswap_info.header_maximum_spend" = "최대 속도";
-"swap.uniswap_info.content_maximum_spend" = "스왑 행위로 인해 사용자가 사용할 최대 금액.";
+"swap.dex_info.header_dex_related" = "%@ Related";
+"swap.dex_info.header_allowance" = "Allowance";
+"swap.dex_info.content_allowance" = "The amount of some currency that service can spend on your behalf when executing token swaps. Sufficient allowance is required before swap action can take place.";
+"swap.dex_info.header_price_impact" = "Price Impact";
+"swap.dex_info.content_price_impact" = "Expected price deviation from a shown price, typically increases with the swap amount.";
+"swap.dex_info.header_swap_fee" = "Swap Fee";
+"swap.dex_info.content_swap_fee" = "A service fee for the swap action on platform, shown in the currency the user sells. For most orders it should be either 0.3 % or 0.6 %.";
+"swap.dex_info.header_guaranteed_amount" = "Guaranteed Amount";
+"swap.dex_info.content_guaranteed_amount" = "The minimum amount a user is going to receive as a result of a swap action.";
+"swap.dex_info.header_maximum_spend" = "Maximum Spend";
+"swap.dex_info.content_maximum_spend" = "The maximum amount a user is going to spend as a result of a swap action.";
 
-"swap.uniswap_info.header_other" = "기타";
-"swap.uniswap_info.header_transaction_fee" = "거래 수수료";
-"swap.uniswap_info.content_transaction_fee" = "Ethereum 블록체인에 대한 해당 거래의 예상 처리 비용. Uniswap 관련 거래는 보통 일반적인 토큰 전송 거래보다 비용이 더 많이 듭니다.";
-"swap.uniswap_info.header_transaction_speed" = "거래 속도";
-"swap.uniswap_info.content_transaction_speed" = "거래 수수료가 높은 거래는 처리 속도가 빨라집니다. 반대로도 그렇습니다.";
+"swap.dex_info.header_other" = "Other";
+"swap.dex_info.header_transaction_fee" = "Transaction Fee";
+"swap.dex_info.content_transaction_fee" = "The estimated processing cost of the given transaction on %@ blockchain. %@ related transactions will typically cost more than generic token transfer transactions.";
+"swap.dex_info.header_transaction_speed" = "Transaction Speed";
+"swap.dex_info.content_transaction_speed" = "Transactions with higher transaction fee will result in faster processing speeds. The opposite is true as well.";
+
+"swap.dex_info.link_button" = "%@ Site";
 
 // Market
 
