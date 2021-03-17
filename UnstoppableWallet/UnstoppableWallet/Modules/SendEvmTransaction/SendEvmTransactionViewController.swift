@@ -18,7 +18,7 @@ class SendEvmTransactionViewController: ThemeViewController {
     private let feePriorityCell: SendFeePriorityCell
     private let errorCell = SendEthereumErrorCell()
 
-    private var viewItems = [SendEvmTransactionViewModel.ViewItem]()
+    private var sectionViewItems = [SendEvmTransactionViewModel.SectionViewItem]()
     private var isLoaded = false
 
     init(transactionViewModel: SendEvmTransactionViewModel, feeViewModel: EthereumFeeViewModel) {
@@ -53,7 +53,7 @@ class SendEvmTransactionViewController: ThemeViewController {
         tableView.delaysContentTouches = false
         tableView.allowsSelection = false
 
-        tableView.registerCell(forClass: SendConfirmationAmountCell.self)
+        tableView.registerCell(forClass: B7Cell.self)
         tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: D9Cell.self)
         tableView.registerCell(forClass: AdditionalDataCell.self)
@@ -72,8 +72,8 @@ class SendEvmTransactionViewController: ThemeViewController {
         subscribe(disposeBag, transactionViewModel.sendSuccessSignal) { [weak self] in self?.handleSendSuccess(transactionHash: $0) }
         subscribe(disposeBag, transactionViewModel.sendFailedSignal) { [weak self] in self?.handleSendFailed(error: $0) }
 
-        subscribe(disposeBag, transactionViewModel.viewItemsDriver) { [weak self] in
-            self?.viewItems = $0
+        subscribe(disposeBag, transactionViewModel.sectionViewItemsDriver) { [weak self] in
+            self?.sectionViewItems = $0
             self?.reloadTable()
         }
 
@@ -132,50 +132,70 @@ class SendEvmTransactionViewController: ThemeViewController {
         )
     }
 
-    private func amountRow(amountData: AmountData, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        Row<SendConfirmationAmountCell>(
-                id: "amount-\(index)",
-                hash: "\(amountData.primary.value)",
-                height: SendConfirmationAmountCell.height,
-                bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                    cell.bind(primaryAmountInfo: amountData.primary, secondaryAmountInfo: amountData.secondary)
-                }
-        )
-    }
-
-    private func hexRow(title: String, value: String, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
+    private func hexRow(title: String, valueTitle: String, value: String, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         Row<D9Cell>(
                 id: "address-\(index)",
                 height: .heightCell48,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                     cell.title = title
-                    cell.viewItem = .init(title: TransactionInfoAddressMapper.title(value: value), value: value)
+                    cell.viewItem = .init(title: valueTitle, value: value)
                 }
         )
     }
 
-    private func valueRow(title: String, value: String, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
+    private func subheadRow(title: String, value: String, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
+        Row<B7Cell>(
+                id: "subhead-\(index)",
+                height: .heightCell48,
+                bind: { cell, _ in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                    cell.title = title
+                    cell.value = value
+                    cell.valueColor = .themeGray
+                    cell.valueItalic = false
+                }
+        )
+    }
+
+    private func valueRow(title: String, value: String, type: SendEvmTransactionViewModel.ValueType, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         Row<D7Cell>(
                 id: "value-\(index)",
+                hash: value,
                 height: .heightCell48,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                     cell.title = title
                     cell.value = value
                     cell.valueItalic = false
+
+                    switch type {
+                    case .regular: cell.valueColor = .themeBran
+                    case .disabled: cell.valueColor = .themeGray
+                    case .outgoing: cell.valueColor = .themeJacob
+                    case .incoming: cell.valueColor = .themeRemus
+                    }
                 }
         )
     }
 
     private func row(viewItem: SendEvmTransactionViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         switch viewItem {
-        case .amount(let amountData): return amountRow(amountData: amountData, index: index, isFirst: isFirst, isLast: isLast)
-        case let .address(title, value): return hexRow(title: title, value: value, index: index, isFirst: isFirst, isLast: isLast)
-        case let .value(title, value): return valueRow(title: title, value: value, index: index, isFirst: isFirst, isLast: isLast)
-        case .input(let value): return hexRow(title: "Input", value: value, index: index, isFirst: isFirst, isLast: isLast)
+        case let .subhead(title, value): return subheadRow(title: title, value: value, index: index, isFirst: isFirst, isLast: isLast)
+        case let .value(title, value, type): return valueRow(title: title, value: value, type: type, index: index, isFirst: isFirst, isLast: isLast)
+        case let .address(title, valueTitle, value): return hexRow(title: title, valueTitle: valueTitle, value: value, index: index, isFirst: isFirst, isLast: isLast)
+        case .input(let value): return hexRow(title: "Input", valueTitle: value, value: value, index: index, isFirst: isFirst, isLast: isLast)
         }
+    }
+
+    private func section(sectionViewItem: SendEvmTransactionViewModel.SectionViewItem, index: Int) -> SectionProtocol {
+        Section(
+                id: "section_\(index)",
+                headerState: .margin(height: .margin12),
+                rows: sectionViewItem.viewItems.enumerated().map { index, viewItem in
+                    row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == sectionViewItem.viewItems.count - 1)
+                }
+        )
     }
 
 }
@@ -183,18 +203,14 @@ class SendEvmTransactionViewController: ThemeViewController {
 extension SendEvmTransactionViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        [
-            Section(
-                    id: "transaction",
-                    headerState: .margin(height: .margin16),
-                    footerState: .margin(height: .margin32),
-                    rows: viewItems.enumerated().map { index, viewItem in
-                        row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewItems.count - 1)
-                    }
-            ),
+        let transactionSections: [SectionProtocol] = sectionViewItems.enumerated().map { index, sectionViewItem in
+            section(sectionViewItem: sectionViewItem, index: index)
+        }
+
+        let feeSections: [SectionProtocol] = [
             Section(
                     id: "fee",
-                    headerState: header(text: "Network Fee".uppercased()),
+                    headerState: .margin(height: .margin12),
                     rows: [
                         StaticRow(
                                 cell: estimatedFeeCell,
@@ -228,6 +244,8 @@ extension SendEvmTransactionViewController: SectionsDataSource {
                     ]
             )
         ]
+
+        return transactionSections + feeSections
     }
 
 }

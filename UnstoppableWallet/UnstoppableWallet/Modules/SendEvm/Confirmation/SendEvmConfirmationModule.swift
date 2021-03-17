@@ -3,21 +3,35 @@ import ThemeKit
 import EthereumKit
 import CoinKit
 
-struct SendEvmData: Equatable {
+struct SendEvmData {
     let transactionData: TransactionData
-    let additionalItems: [ItemId: String]
+    let additionalInfo: AdditionInfo?
 
-    enum ItemId {
-        case domain
-        case swapSlippage
-        case swapDeadline
-        case swapRecipientDomain
-        case swapPrice
-        case swapPriceImpact
+    enum AdditionInfo {
+        case send(info: SendInfo)
+        case swap(info: SwapInfo)
+
+        var sendInfo: SendInfo? {
+            if case .send(let info) = self { return info } else { return nil }
+        }
+
+        var swapInfo: SwapInfo? {
+            if case .swap(let info) = self { return info } else { return nil }
+        }
     }
 
-    static func ==(lhs: SendEvmData, rhs: SendEvmData) -> Bool {
-        lhs.transactionData == rhs.transactionData && lhs.additionalItems == rhs.additionalItems
+    struct SendInfo {
+        let domain: String?
+    }
+
+    struct SwapInfo {
+        let estimatedOut: Decimal
+        let estimatedIn: Decimal
+        let slippage: String?
+        let deadline: String?
+        let recipientDomain: String?
+        let price: String?
+        let priceImpact: String?
     }
 
 }
