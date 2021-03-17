@@ -120,7 +120,7 @@ class SwapViewController: ThemeViewController {
     }
 
     @objc func onInfo() {
-        let module = InfoModule.viewController(dataSource: UniswapInfoDataSource())
+        let module = InfoModule.viewController(dataSource: DexInfoDataSource(dex: viewModel.service.dex))
         present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 

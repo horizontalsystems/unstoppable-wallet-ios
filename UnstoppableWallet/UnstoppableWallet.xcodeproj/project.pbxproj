@@ -1338,11 +1338,11 @@
 		1A5647632F8F5F21EF6A2479 /* PriceChangeAlertSettingViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649DBD4A9543A8C8BF036 /* PriceChangeAlertSettingViewModelFactory.swift */; };
 		1A5647709A2B63D16BF5131B /* ManageWalletsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F5CDA92DD8EC7EC9B0D /* ManageWalletsPresenterTests.swift */; };
 		1A5647793CE203B577403DDA /* ChartViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647BCBC6C9C9E8A3C54A5 /* ChartViewCell.swift */; };
-		1A5647891375347D5D8D95CD /* UniswapInfoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56451B74DB3A34DD38A236 /* UniswapInfoDataSource.swift */; };
+		1A5647891375347D5D8D95CD /* DexInfoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56451B74DB3A34DD38A236 /* DexInfoDataSource.swift */; };
 		1A5647AE1BE380F0C825FA01 /* DerivationSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564672EB7B4A88898FF848 /* DerivationSetting.swift */; };
 		1A5647D8232B287283058F99 /* TransactionProcessingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648754F4509112DF492DD /* TransactionProcessingView.swift */; };
 		1A5647EF2A5B8141F0BE4320 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56447C12D91108517ED217 /* UIDevice.swift */; };
-		1A56480A883B177CE9F66781 /* UniswapInfoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56451B74DB3A34DD38A236 /* UniswapInfoDataSource.swift */; };
+		1A56480A883B177CE9F66781 /* DexInfoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56451B74DB3A34DD38A236 /* DexInfoDataSource.swift */; };
 		1A56480B54D4F1BF3F6257EB /* PrivacyInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564EB4A7A10C5299DA6A7D /* PrivacyInteractor.swift */; };
 		1A56481FC0EAFA9FC32E1E21 /* ScanQrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A144576DB93334E1682 /* ScanQrViewController.swift */; };
 		1A5648202A8A90263ED276F3 /* TransactionDataSortMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E6A6B7E18C287A1D77D /* TransactionDataSortMode.swift */; };
@@ -1466,7 +1466,7 @@
 		1A564D6D45F01524AD685246 /* PrivacyViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643D8493DC54B908C48BE /* PrivacyViewItem.swift */; };
 		1A564D6F0D01D12EBECD4C07 /* PrivacyPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F36099FED36570A41A5 /* PrivacyPresenter.swift */; };
 		1A564DA6B611CB005DC382E4 /* DerivationSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B077A9E1C96E1306DA6 /* DerivationSettingsManager.swift */; };
-		1A564DAA83BEBD8161BF2EA7 /* UniswapInfoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56451B74DB3A34DD38A236 /* UniswapInfoDataSource.swift */; };
+		1A564DAA83BEBD8161BF2EA7 /* DexInfoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56451B74DB3A34DD38A236 /* DexInfoDataSource.swift */; };
 		1A564DC4E55C1BE1C4D4CDA9 /* HighlightedDescriptionBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BCC9DD29DB5455669A5 /* HighlightedDescriptionBaseView.swift */; };
 		1A564DD139A96047A30BD78D /* BalanceSorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564571110872DF0D85F0B4 /* BalanceSorter.swift */; };
 		1A564DDF7DB43EE160025A3F /* AppStatusModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56404C1C16B85434117DB7 /* AppStatusModule.swift */; };
@@ -2827,7 +2827,7 @@
 		1A5644C4CCD9EBD71BD69D40 /* ManageWalletsInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageWalletsInteractorTests.swift; sourceTree = "<group>"; };
 		1A564504718E7D19F379A9F7 /* AdapterError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterError.swift; sourceTree = "<group>"; };
 		1A56450DA6DF97C9E1FFE987 /* BitcoinBaseAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinBaseAdapter.swift; sourceTree = "<group>"; };
-		1A56451B74DB3A34DD38A236 /* UniswapInfoDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniswapInfoDataSource.swift; sourceTree = "<group>"; };
+		1A56451B74DB3A34DD38A236 /* DexInfoDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DexInfoDataSource.swift; sourceTree = "<group>"; };
 		1A56452E2D06913B4EDBBAE0 /* BalanceCoinIconHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceCoinIconHolder.swift; sourceTree = "<group>"; };
 		1A5645371B2FC499500DCA93 /* DepositPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositPresenter.swift; sourceTree = "<group>"; };
 		1A564565F8D170461624126B /* PrivacyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyViewController.swift; sourceTree = "<group>"; };
@@ -4723,7 +4723,7 @@
 		1A564C2FC52B00D44CF75052 /* Uniswap */ = {
 			isa = PBXGroup;
 			children = (
-				1A56451B74DB3A34DD38A236 /* UniswapInfoDataSource.swift */,
+				1A56451B74DB3A34DD38A236 /* DexInfoDataSource.swift */,
 			);
 			path = Uniswap;
 			sourceTree = "<group>";
@@ -6474,7 +6474,7 @@
 				1A56465C8E89AFBB0768154F /* InfoViewModel.swift in Sources */,
 				1A564F3BAF13C292CB7A26F0 /* TimeLockInfoDataSource.swift in Sources */,
 				1A5646FE14AC4C76F096CED7 /* FeeInfoDataSource.swift in Sources */,
-				1A56480A883B177CE9F66781 /* UniswapInfoDataSource.swift in Sources */,
+				1A56480A883B177CE9F66781 /* DexInfoDataSource.swift in Sources */,
 				1A564EB34CC5D186901B712D /* InfoHeaderView.swift in Sources */,
 				1A564541179153936A4B7DFE /* InfoHeaderCell.swift in Sources */,
 				1A5640CB9DE6736043CB5C8E /* InfoSeparatorHeaderCell.swift in Sources */,
@@ -7269,7 +7269,7 @@
 				1A5641E033EFE0D9F36EF946 /* InfoViewModel.swift in Sources */,
 				1A564647B43E831E3052E06E /* TimeLockInfoDataSource.swift in Sources */,
 				1A564F1A2BD87B531C4CAB1B /* FeeInfoDataSource.swift in Sources */,
-				1A5647891375347D5D8D95CD /* UniswapInfoDataSource.swift in Sources */,
+				1A5647891375347D5D8D95CD /* DexInfoDataSource.swift in Sources */,
 				1A564F12DDB161E6DC7B6195 /* InfoHeaderView.swift in Sources */,
 				1A564A74957D8CCD7843A7C3 /* InfoHeaderCell.swift in Sources */,
 				1A56473301F4542588ACEEFE /* InfoSeparatorHeaderCell.swift in Sources */,
@@ -8026,7 +8026,7 @@
 				1A564EFC5EE4D83BC6243E0E /* InfoViewModel.swift in Sources */,
 				1A5644C03B6013B16725D5FD /* TimeLockInfoDataSource.swift in Sources */,
 				1A5646AF03CF852F18CFAE02 /* FeeInfoDataSource.swift in Sources */,
-				1A564DAA83BEBD8161BF2EA7 /* UniswapInfoDataSource.swift in Sources */,
+				1A564DAA83BEBD8161BF2EA7 /* DexInfoDataSource.swift in Sources */,
 				1A5642DCC4358B48E8053239 /* InfoHeaderView.swift in Sources */,
 				1A5649D3FF86AC54524C45E0 /* InfoHeaderCell.swift in Sources */,
 				1A56451DF40DF9C38008919B /* InfoSeparatorHeaderCell.swift in Sources */,
