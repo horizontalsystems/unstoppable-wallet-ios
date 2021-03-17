@@ -161,6 +161,7 @@
 "send.address_placeholder" = "地址";
 "send.address_or_domain_placeholder" = "地址或域名";
 "send.fee" = "费用";
+"send.network_fee" = "Network Fee";
 "send.estimated_fee" = "预估费用";
 "send.max_fee" = "最大手续费";
 "send.tx_speed" = "交易费用";
@@ -194,6 +195,9 @@
 "send.fee_info.content_fast" = "对于优先级具有重要意义的交易，我们建议使用高费用设置。可以预期，选择高费用设置将足以使比特币（Bitcoin）交易在10分钟、以太币（Ethereum）交易在数分钟内完成。";
 "send.fee_info.content_conclusion" = "Unstoppable钱包以网络活动为基础作出有根据的猜测，但不能保证所建议费用值总能实现预期行为。";
 
+"send.confirmation.you_send" = "You Send";
+"send.confirmation.amount" = "Amount";
+"send.confirmation.to" = "To";
 "send.confirmation.domain" = "域名";
 "send.confirmation.address" = "地址";
 "send.confirmation.account" = "Account";
@@ -207,6 +211,9 @@
 "send.token.insufficient_fee_alert" = "%@（%@）的交易费用以%@支付。您需要%@。";
 
 "send.lock_time" = "TimeLock";
+
+"approve.confirmation.you_approve" = "You Approve";
+"approve.confirmation.spender" = "Spender";
 
 // CoinSelector
 
@@ -234,6 +241,7 @@
 "swap.button_error.insufficient_balance" = "余额不足";
 "swap.button_error.impact_too_high" = "高价格影响";
 
+"swap.price" = "Price";
 "swap.price_impact" = "价格影响";
 "swap.max_min" = "最大 / 最小";
 "swap.maximum_paid" = "最大支付金额";
@@ -270,6 +278,9 @@
 "swap.confirmation.swap_button" = "掉期交易";
 "swap.confirmation.pay" = "支付 %@";
 "swap.confirmation.get" = "获得 %@";
+"swap.confirmation.guaranteed" = "Guaranteed";
+"swap.confirmation.maximum" = "Maximum";
+"swap.confirmation.estimated" = "Estimated";
 
 
 "swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on %@ blockchain.\n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
