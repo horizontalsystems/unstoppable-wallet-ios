@@ -36,6 +36,7 @@ class ChartViewController: ThemeViewController {
     private let marketInfoCell = MarketInfoCell()
     private let openMarketsCell = B1Cell()
     private let descriptionTextCell = ReadMoreTextCell()
+    private let returnOfInvestmentsCell = ReturnOfInvestmentsTableViewCell()
 
     private var favoriteButtonItem: UIBarButtonItem?
     private var alertButtonItem: UIBarButtonItem?
@@ -79,6 +80,27 @@ class ChartViewController: ThemeViewController {
     ]
     //todo get note text
     let noteText: String? = "Bitcoin is a cryptocurrency and worldwide payment system. It is the first decentralized digital currency, as the system works without a central bank or single administrator."
+    //todo get roi items
+    let returnOfInvestmentsViewItems: [[ReturnOfInvestmentsTableViewCell.CellType]] = [
+        [
+            .title("ROI"),
+            .subtitle("USD"),
+            .subtitle("BTC"),
+            .subtitle("ETH"),
+        ],
+        [
+            .content("1 Week"),
+            .value(Decimal(56.62)),
+            .value(Decimal(10.93)),
+            .value(Decimal(9.24)),
+        ],
+        [
+            .content("1 Month"),
+            .value(Decimal(136.62)),
+            .value(Decimal(-1.03)),
+            .value(Decimal(112.09)),
+        ]
+    ]
 
     init(delegate: IChartViewDelegate & IChartViewTouchDelegate, configuration: ChartConfiguration) {
         self.delegate = delegate
@@ -146,6 +168,8 @@ class ChartViewController: ThemeViewController {
 
         //todo get description
         descriptionTextCell.contentText = "Bitcoin is a cryptocurrency and worldwide payment system. It is the first decentralized digital currency, as the system works without a central bank or single administrator. Bitcoin is a cryptocurrency and worldwide payment system. It is the first decentralized digital currency, as the system works without a central bank or single administrator. \nBitcoin is a cryptocurrency and worldwide payment system. It is the first decentralized digital currency, as the system works without a central bank or single administrator. Bitcoin is a cryptocurrency and worldwide payment system. It is the first decentralized digital currency, as the system works without a central bank or single administrator. Cryptocurrencies are powered by a number of technologies, but primarily a blockchain technology. The blockchain technology used in cryptocurrencies like Bitcoin was built around a principle that 'no party can be trusted'. \nThe aim of this guide is to onboard someone with little knowledge about cryptocurrencies to the comfortable level as quickly as possible."
+
+        returnOfInvestmentsCell.set(items: returnOfInvestmentsViewItems)
 
         tableView.buildSections()
 
@@ -322,6 +346,13 @@ extension ChartViewController: SectionsDataSource {
                         cell: indicatorSelectorCell,
                         id: "indicator_selector",
                         height: .heightSingleLineCell
+                )
+            ]),
+            Section(id: "return_of_investments_section", footerState: .margin(height: .margin12), rows: [
+                StaticRow(
+                        cell: returnOfInvestmentsCell,
+                        id: "return_of_investments_cell",
+                        height: returnOfInvestmentsCell.cellHeight(rowCount: returnOfInvestmentsViewItems.count)
                 )
             ]),
             Section(id: "rating", footerState: .margin(height: .margin12), rows: [
