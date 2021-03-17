@@ -161,6 +161,7 @@
 "send.address_placeholder" = "Adresse";
 "send.address_or_domain_placeholder" = "Adresse oder Domäne";
 "send.fee" = "Gebühr";
+"send.network_fee" = "Network Fee";
 "send.estimated_fee" = "Geschätzte Gebühren";
 "send.max_fee" = "Max Gebühr";
 "send.tx_speed" = "Transaktionsgebühr";
@@ -194,6 +195,9 @@
 "send.fee_info.content_fast" = "Für Transaktionen, bei denen die Priorität wichtig ist, empfehlen wir die Einstellung „Hohe Gebühr“. Es wird erwartet, dass die Einstellung „Hohe Gebühr“ ausreicht, um eine Transaktion innerhalb von 10 Minuten für Bitcoin und innerhalb von ein paar Minuten für Ethereum abzuschließen.";
 "send.fee_info.content_conclusion" = "Das Wallet von Unstoppable macht eine fundierte Vermutung basierend auf der Netzwerkaktivität und kann nicht garantieren, dass die vorgeschlagenen Gebührenwerte immer zu dem erwarteten Verhalten führen.";
 
+"send.confirmation.you_send" = "You Send";
+"send.confirmation.amount" = "Amount";
+"send.confirmation.to" = "To";
 "send.confirmation.domain" = "Domäne";
 "send.confirmation.address" = "Adresse";
 "send.confirmation.account" = "Account";
@@ -207,6 +211,9 @@
 "send.token.insufficient_fee_alert" = "Transaktionsgebühren für %@ %@ in %@ bezahlt. Du brauchst %@.";
 
 "send.lock_time" = "TimeLock";
+
+"approve.confirmation.you_approve" = "You Approve";
+"approve.confirmation.spender" = "Spender";
 
 // CoinSelector
 
@@ -234,6 +241,7 @@
 "swap.button_error.insufficient_balance" = "Unzureichendes Guthaben";
 "swap.button_error.impact_too_high" = "Hohe Preisauswirkung";
 
+"swap.price" = "Price";
 "swap.price_impact" = "Preisauswirkungen";
 "swap.max_min" = "Max / Min";
 "swap.maximum_paid" = "Maximal bezahlt";
@@ -270,6 +278,9 @@
 "swap.confirmation.swap_button" = "Tauschen";
 "swap.confirmation.pay" = "%@ bezahlen";
 "swap.confirmation.get" = "%@ erhalten";
+"swap.confirmation.guaranteed" = "Guaranteed";
+"swap.confirmation.maximum" = "Maximum";
+"swap.confirmation.estimated" = "Estimated";
 
 
 "swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on %@ blockchain.\n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
