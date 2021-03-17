@@ -38,7 +38,7 @@
 "offline" = "Не доступен";
 "confirm" = "Подтвердить";
 "connect" = "Подключиться";
-"price" = "Price";
+"price" = "Цена";
 "note" = "Note";
 
 "version" = "Версия %@";
