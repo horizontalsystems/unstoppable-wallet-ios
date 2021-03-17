@@ -272,27 +272,27 @@
 "swap.confirmation.get" = "%@ al";
 
 
-"swap.uniswap_info.title" = "Uniswap v.2";
-"swap.uniswap_info.description" = "Bu takas etme hizmeti, Ethereum blok zinciri üzerine inşa edilmiş ve merkezi olmayan jeton takas etme protokolü olan Uniswap tarafından desteklenmektedir.\n\nUniswap, tamamen otomatiktir ve hile yapmadan jeton takaslarını güvenilir bir şekilde kolaylaştıran akıllı sözleşmelerle yönetilir.";
-"swap.uniswap_info.link_button" = "Uniswap Web Sitesi";
+"swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on %@ blockchain.\n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
 
-"swap.uniswap_info.header_uniswap_related" = "Uniswap Bağlantılı";
-"swap.uniswap_info.header_allowance" = "Ödenek";
-"swap.uniswap_info.content_allowance" = "Uniswap'ın jeton swaplarını gerçekleştirirken sizin adınıza harcayabileceği bazı para birimlerindeki tutar. Swap işleminin gerçekleşebilmesi için yeterli ödeme miktarı gereklidir.";
-"swap.uniswap_info.header_price_impact" = "Fiyat Etkisi";
-"swap.uniswap_info.content_price_impact" = "Gösterilen bir fiyattan beklenen fiyat sapması, tipik olarak swap tutarı ile artar.";
-"swap.uniswap_info.header_swap_fee" = "Takas Ücreti";
-"swap.uniswap_info.content_swap_fee" = "Uniswap platformunda swap işlemi için kullanıcının sattığı para biriminde gösterilen bir hizmet ücreti. Çoğu talimatlar için % 0.3 veya % 0.6 olmalıdır.";
-"swap.uniswap_info.header_guaranteed_amount" = "Garantili Tutar";
-"swap.uniswap_info.content_guaranteed_amount" = "Bir swap işlemi sonucunda bir kullanıcının alacağı minimum tutar.";
-"swap.uniswap_info.header_maximum_spend" = "Maksimum Harcama";
-"swap.uniswap_info.content_maximum_spend" = "Bir swap işlemi sonucunda bir kullanıcının harcayacağı maksimum tutar.";
+"swap.dex_info.header_dex_related" = "%@ Related";
+"swap.dex_info.header_allowance" = "Allowance";
+"swap.dex_info.content_allowance" = "The amount of some currency that service can spend on your behalf when executing token swaps. Sufficient allowance is required before swap action can take place.";
+"swap.dex_info.header_price_impact" = "Price Impact";
+"swap.dex_info.content_price_impact" = "Expected price deviation from a shown price, typically increases with the swap amount.";
+"swap.dex_info.header_swap_fee" = "Swap Fee";
+"swap.dex_info.content_swap_fee" = "A service fee for the swap action on platform, shown in the currency the user sells. For most orders it should be either 0.3 % or 0.6 %.";
+"swap.dex_info.header_guaranteed_amount" = "Guaranteed Amount";
+"swap.dex_info.content_guaranteed_amount" = "The minimum amount a user is going to receive as a result of a swap action.";
+"swap.dex_info.header_maximum_spend" = "Maximum Spend";
+"swap.dex_info.content_maximum_spend" = "The maximum amount a user is going to spend as a result of a swap action.";
 
-"swap.uniswap_info.header_other" = "Diğer";
-"swap.uniswap_info.header_transaction_fee" = "İşlem Ücreti";
-"swap.uniswap_info.content_transaction_fee" = "Ethereum blok zincirinde verilen işlemin tahmini işleme maliyeti. Uniswap bağlantılı işlemler genellikle eşdeğer jeton transfer işlemlerinden daha pahalı olur.";
-"swap.uniswap_info.header_transaction_speed" = "İşlem hızı";
-"swap.uniswap_info.content_transaction_speed" = "Daha yüksek işlem ücretli işlemler, daha hızlı işleme hızlarıyla sonuçlanacaktır. Elbette bunun tersi de doğrudur.";
+"swap.dex_info.header_other" = "Other";
+"swap.dex_info.header_transaction_fee" = "Transaction Fee";
+"swap.dex_info.content_transaction_fee" = "The estimated processing cost of the given transaction on %@ blockchain. %@ related transactions will typically cost more than generic token transfer transactions.";
+"swap.dex_info.header_transaction_speed" = "Transaction Speed";
+"swap.dex_info.content_transaction_speed" = "Transactions with higher transaction fee will result in faster processing speeds. The opposite is true as well.";
+
+"swap.dex_info.link_button" = "%@ Site";
 
 // Market
 
