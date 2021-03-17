@@ -163,6 +163,7 @@
 "send.address_placeholder" = "Адрес";
 "send.address_or_domain_placeholder" = "Адрес или домен";
 "send.fee" = "Комиссия";
+"send.network_fee" = "Network Fee";
 "send.estimated_fee" = "Предполагаемая Комиссия";
 "send.max_fee" = "Макс. Комиссия";
 "send.tx_speed" = "Комиссия за транзакцию";
@@ -196,6 +197,9 @@
 "send.fee_info.content_fast" = "В случае с приоритетными транзакциями лучше всего использовать настройку высокой комиссии. При выборе высокой комиссии транзакция Bitcoin будет обработана в течение 10 минут, ну а транзакция Ethereum будет обработана еще быстрее.";
 "send.fee_info.content_conclusion" = "Кошелек Unstoppable делает обоснованное предположение на основе сетевой активности и не может гарантировать, что предлагаемые значения комиссии всегда будут давать желаемый результат.";
 
+"send.confirmation.you_send" = "You Send";
+"send.confirmation.amount" = "Amount";
+"send.confirmation.to" = "To";
 "send.confirmation.domain" = "Домен";
 "send.confirmation.address" = "Адрес";
 "send.confirmation.account" = "Account";
@@ -209,6 +213,9 @@
 "send.token.insufficient_fee_alert" = "Комиссии за транзакцию %@ (%@) взимаются в %@. Вам нужно %@.";
 
 "send.lock_time" = "TimeLock";
+
+"approve.confirmation.you_approve" = "You Approve";
+"approve.confirmation.spender" = "Spender";
 
 // CoinSelector
 
@@ -236,6 +243,7 @@
 "swap.button_error.insufficient_balance" = "Недостаточный баланс";
 "swap.button_error.impact_too_high" = "Высокое отклонение цены";
 
+"swap.price" = "Price";
 "swap.price_impact" = "Отклонение от рын. цены";
 "swap.max_min" = "Макс / Мин";
 "swap.maximum_paid" = "Максимальная Выплата";
@@ -272,6 +280,9 @@
 "swap.confirmation.swap_button" = "Обменять";
 "swap.confirmation.pay" = "Оплатить %@";
 "swap.confirmation.get" = "Получить %@";
+"swap.confirmation.guaranteed" = "Guaranteed";
+"swap.confirmation.maximum" = "Maximum";
+"swap.confirmation.estimated" = "Estimated";
 
 
 "swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on %@ blockchain.\n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
