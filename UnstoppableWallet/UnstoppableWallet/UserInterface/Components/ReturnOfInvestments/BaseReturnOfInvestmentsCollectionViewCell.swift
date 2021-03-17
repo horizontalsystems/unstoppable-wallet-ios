@@ -1,15 +1,6 @@
 import UIKit
 
 class BaseReturnOfInvestmentsCollectionViewCell: UICollectionViewCell {
-    enum HorizontalPosition {
-        case left, center, right
-    }
-    enum VerticalPosition {
-        case top, center, bottom
-    }
-
-    let wrapperView = UIView()
-
     private let topSeparator = UIView()
     private let leftSeparator = UIView()
 
@@ -18,11 +9,6 @@ class BaseReturnOfInvestmentsCollectionViewCell: UICollectionViewCell {
 
         contentView.backgroundColor = .clear
         backgroundColor = .clear
-
-        contentView.addSubview(wrapperView)
-        wrapperView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
-        }
 
         contentView.addSubview(topSeparator)
         topSeparator.snp.makeConstraints { maker in
