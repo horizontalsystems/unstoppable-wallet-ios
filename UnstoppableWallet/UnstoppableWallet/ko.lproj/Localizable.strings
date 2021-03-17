@@ -161,6 +161,7 @@
 "send.address_placeholder" = "주소";
 "send.address_or_domain_placeholder" = "주소 또는 도메인";
 "send.fee" = "수수료";
+"send.network_fee" = "Network Fee";
 "send.estimated_fee" = "예상 수수료";
 "send.max_fee" = "최대 수수료";
 "send.tx_speed" = "거래 수수료";
@@ -194,6 +195,9 @@
 "send.fee_info.content_fast" = "우선 순위가 중요한 거래의 경우 높은 수수료 설정을 사용하는 것이 좋습니다. 비트코인은 10분 이내, 이더리움은 몇 분 이내 거래가 완료되기에 고액 수수료 설정 선택만으로도 충분할 것으로 예상됩니다.";
 "send.fee_info.content_conclusion" = "언스타퍼블 지갑은 네트워크 활동을 기반으로 학습된 추측을 하며, 제안된 수수료 값이 항상 예상 행동을 초래한다고 보장할 수 없습니다.";
 
+"send.confirmation.you_send" = "You Send";
+"send.confirmation.amount" = "Amount";
+"send.confirmation.to" = "To";
 "send.confirmation.domain" = "도메인";
 "send.confirmation.address" = "주소";
 "send.confirmation.account" = "Account";
@@ -207,6 +211,9 @@
 "send.token.insufficient_fee_alert" = "%@ (%@) 에 대한 거래 수수료는 %@로 지불되었습니다. 귀하는 %@가 필요합니다.";
 
 "send.lock_time" = "시간 자물쇠";
+
+"approve.confirmation.you_approve" = "You Approve";
+"approve.confirmation.spender" = "Spender";
 
 // CoinSelector
 
@@ -234,6 +241,7 @@
 "swap.button_error.insufficient_balance" = "잔액이 부족합니다";
 "swap.button_error.impact_too_high" = "높은 가격 영향";
 
+"swap.price" = "Price";
 "swap.price_impact" = "가격 영향";
 "swap.max_min" = "최대 / 최소";
 "swap.maximum_paid" = "최대 지불액";
@@ -270,6 +278,9 @@
 "swap.confirmation.swap_button" = "스왑";
 "swap.confirmation.pay" = "%@ 지불";
 "swap.confirmation.get" = "%@ 지급";
+"swap.confirmation.guaranteed" = "Guaranteed";
+"swap.confirmation.maximum" = "Maximum";
+"swap.confirmation.estimated" = "Estimated";
 
 
 "swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on %@ blockchain.\n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
