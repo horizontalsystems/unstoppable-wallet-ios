@@ -100,7 +100,7 @@ class InfoViewController: ThemeViewController {
     private func linkButtonRow(title: String, url: String) -> RowProtocol {
         Row<ButtonCell>(
                 id: title,
-                height: ThemeButton.height(style: .secondaryDefault),
+                height: ButtonCell.height(style: .secondaryDefault),
                 bind: { [weak self] cell, _ in
                     cell.bind(style: .secondaryDefault, title: title, compact: true) { [weak self] in
                         self?.onTapLink(url: url)
