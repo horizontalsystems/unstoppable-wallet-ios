@@ -5,7 +5,7 @@ import XRatesKit
 import CoinKit
 import CurrencyKit
 
-class CoinMarketInfoService {
+class CoinPageService {
     private static let timePeriods: [TimePeriod] = [.day7, .day30]
 
     private var disposeBag = DisposeBag()
@@ -15,8 +15,8 @@ class CoinMarketInfoService {
     private let currencyKit: ICurrencyKit
     private let coinType: CoinType
 
-    private let stateRelay = PublishRelay<State>()
-    private(set) var state: State = .loading {
+    private let stateRelay = PublishRelay<DataStatus<CoinMarketInfo>>()
+    private(set) var state: DataStatus<CoinMarketInfo> = .loading {
         didSet {
             stateRelay.accept(state)
         }
@@ -45,9 +45,9 @@ class CoinMarketInfoService {
         coinMarketInfo
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .subscribe(onSuccess: { [weak self] coinMarketInfo in
-                    self?.state = .loaded(info: coinMarketInfo)
+                    self?.state = .completed(coinMarketInfo)
                 }, onError: { [weak self] error in
-                    self?.state = .error(error)
+                    self?.state = .failed(error)
                 })
                 .disposed(by: disposeBag)
     }
@@ -58,12 +58,10 @@ class CoinMarketInfoService {
 
 }
 
-extension CoinMarketInfoService {
+extension CoinPageService {
 
-    enum State {
-        case loading
-        case loaded(info: CoinMarketInfo)
-        case error(Error)
+    var stateObservable: Observable<DataStatus<CoinMarketInfo>> {
+        stateRelay.asObservable()
     }
 
 }
