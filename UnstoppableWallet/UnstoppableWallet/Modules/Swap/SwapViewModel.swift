@@ -207,30 +207,21 @@ extension SwapViewModel {
             return
         }
 
-        var additionalItems = [SendEvmData.ItemId: String]()
-
-        if let slippage = viewItemHelper.slippage(tradeService.swapTradeOptions.allowedSlippage) {
-            additionalItems[.swapSlippage] = slippage
-        }
-        if let deadline = viewItemHelper.deadline(tradeService.swapTradeOptions.ttl) {
-            additionalItems[.swapDeadline] = deadline
-        }
-        if let recipient = tradeService.swapTradeOptions.recipient?.domain {
-            additionalItems[.swapRecipientDomain] = recipient
-        }
-
         guard case let .ready(trade) = tradeService.state else {
             return
         }
 
-        if let price = viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, coinIn: tradeService.coinIn, coinOut: tradeService.coinOut) {
-            additionalItems[.swapPrice] = price.formattedString
-        }
-        if let viewItem = viewItemHelper.priceImpactViewItem(trade: trade) {
-            additionalItems[.swapPriceImpact] = viewItem.value
-        }
+        let swapInfo = SendEvmData.SwapInfo(
+                estimatedOut: tradeService.amountOut,
+                estimatedIn: tradeService.amountIn,
+                slippage: viewItemHelper.slippage(tradeService.swapTradeOptions.allowedSlippage),
+                deadline: viewItemHelper.deadline(tradeService.swapTradeOptions.ttl),
+                recipientDomain: tradeService.swapTradeOptions.recipient?.domain,
+                price: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, coinIn: tradeService.coinIn, coinOut: tradeService.coinOut)?.formattedString,
+                priceImpact: viewItemHelper.priceImpactViewItem(trade: trade)?.value
+        )
 
-        openConfirmRelay.accept(SendEvmData(transactionData: transactionData, additionalItems: additionalItems))
+        openConfirmRelay.accept(SendEvmData(transactionData: transactionData, additionalInfo: .swap(info: swapInfo)))
     }
 
 }

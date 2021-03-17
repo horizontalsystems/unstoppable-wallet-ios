@@ -38,7 +38,7 @@ extension SendFeeCell {
 
         var value: String {
             switch self {
-            case .fee: return "send.fee".localized
+            case .fee: return "send.network_fee".localized
             case .maxFee: return "send.max_fee".localized
             case .estimatedFee: return "send.estimated_fee".localized
             }

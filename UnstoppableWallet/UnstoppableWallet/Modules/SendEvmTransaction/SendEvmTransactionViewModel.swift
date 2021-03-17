@@ -11,7 +11,7 @@ class SendEvmTransactionViewModel {
     private let service: SendEvmTransactionService
     private let coinServiceFactory: EvmCoinServiceFactory
 
-    private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
+    private let sectionViewItemsRelay = BehaviorRelay<[SectionViewItem]>(value: [])
 
     private let sendEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
@@ -48,15 +48,15 @@ class SendEvmTransactionViewModel {
     }
 
     private func sync(dataState: SendEvmTransactionService.DataState) {
-        let viewItems: [ViewItem]
+        let items: [SectionViewItem]
 
-        if let decoration = dataState.decoration, let decoratedViewItems = self.viewItems(decoration: decoration, additionalItems: dataState.additionalItems) {
-            viewItems = decoratedViewItems
+        if let decoration = dataState.decoration, let decoratedItems = self.items(decoration: decoration, additionalInfo: dataState.additionalInfo) {
+            items = decoratedItems
         } else {
-            viewItems = fallbackViewItems(transactionData: dataState.transactionData)
+            items = fallbackItems(transactionData: dataState.transactionData)
         }
 
-        viewItemsRelay.accept(viewItems)
+        sectionViewItemsRelay.accept(items)
     }
 
     private func sync(sendState: SendEvmTransactionService.SendState) {
@@ -84,104 +84,141 @@ class SendEvmTransactionViewModel {
         return error.convertedError.smartDescription
     }
 
-    private func viewItems(decoration: TransactionDecoration, additionalItems: [SendEvmData.ItemId: String]) -> [ViewItem]? {
+    private func items(decoration: TransactionDecoration, additionalInfo: SendEvmData.AdditionInfo?) -> [SectionViewItem]? {
         switch decoration {
         case let .transfer(from, to, value):
-            return transferViewItems(from: from, to: to, value: value, additionalItems: additionalItems)
+            return transferItems(from: from, to: to, value: value, additionalInfo: additionalInfo)
         case let .eip20Transfer(to, value, contractAddress):
-            return eip20TransferViewItems(to: to, value: value, contractAddress: contractAddress, additionalItems: additionalItems)
+            return eip20TransferItems(to: to, value: value, contractAddress: contractAddress, additionalInfo: additionalInfo)
         case let .eip20Approve(spender, value, contractAddress):
-            return eip20ApproveViewItems(spender: spender, value: value, contractAddress: contractAddress)
+            return eip20ApproveItems(spender: spender, value: value, contractAddress: contractAddress)
         case let .swap(trade, tokenIn, tokenOut, to, deadline):
-            return swapViewItems(trade: trade, tokenIn: tokenIn, tokenOut: tokenOut, to: to, deadline: deadline, additionalItems: additionalItems)
+            return swapItems(trade: trade, tokenIn: tokenIn, tokenOut: tokenOut, to: to, deadline: deadline, additionalInfo: additionalInfo)
         default:
             return nil
         }
     }
 
-    private func transferViewItems(from: EthereumKit.Address, to: EthereumKit.Address?, value: BigUInt, additionalItems: [SendEvmData.ItemId: String]) -> [ViewItem] {
+    private func transferItems(from: EthereumKit.Address, to: EthereumKit.Address?, value: BigUInt, additionalInfo: SendEvmData.AdditionInfo?) -> [SectionViewItem] {
         var viewItems: [ViewItem] = [
-            .amount(amountData: coinServiceFactory.baseCoinService.amountData(value: value))
+            .subhead(title: "send.confirmation.you_send".localized, value: coinServiceFactory.baseCoinService.coin.title),
+            .value(title: "send.confirmation.amount".localized, value: coinServiceFactory.baseCoinService.amountData(value: value).formattedString, type: .outgoing)
         ]
-
-        if let domain = additionalItems[.domain] {
-            viewItems.append(.value(title: "Domain", value: domain))
-        }
 
         if let to = to {
-            viewItems.append(.address(title: "Address", value: to.eip55))
+            let addressValue = to.eip55
+            let addressTitle = additionalInfo?.sendInfo?.domain ?? TransactionInfoAddressMapper.map(addressValue)
+            viewItems.append(.address(title: "send.confirmation.to".localized, valueTitle: addressTitle, value: addressValue))
         }
 
-        return viewItems
+        return [SectionViewItem(viewItems: viewItems)]
     }
 
-    private func eip20TransferViewItems(to: EthereumKit.Address, value: BigUInt, contractAddress: EthereumKit.Address, additionalItems: [SendEvmData.ItemId: String]) -> [ViewItem]? {
+    private func eip20TransferItems(to: EthereumKit.Address, value: BigUInt, contractAddress: EthereumKit.Address, additionalInfo: SendEvmData.AdditionInfo?) -> [SectionViewItem]? {
         guard let coinService = coinServiceFactory.coinService(contractAddress: contractAddress) else {
             return nil
         }
 
         var viewItems: [ViewItem] = [
-            .amount(amountData: coinService.amountData(value: value))
+            .subhead(title: "send.confirmation.you_send".localized, value: coinService.coin.title),
+            .value(title: "send.confirmation.amount".localized, value: coinService.amountData(value: value).formattedString, type: .outgoing)
         ]
 
-        if let domain = additionalItems[.domain] {
-            viewItems.append(.value(title: "Domain", value: domain))
-        }
+        let addressValue = to.eip55
+        let addressTitle = additionalInfo?.sendInfo?.domain ?? TransactionInfoAddressMapper.map(addressValue)
+        viewItems.append(.address(title: "send.confirmation.to".localized, valueTitle: addressTitle, value: addressValue))
 
-        viewItems.append(.address(title: "Address", value: to.eip55))
-
-        return viewItems
+        return [SectionViewItem(viewItems: viewItems)]
     }
 
-    private func eip20ApproveViewItems(spender: EthereumKit.Address, value: BigUInt, contractAddress: EthereumKit.Address) -> [ViewItem]? {
+    private func eip20ApproveItems(spender: EthereumKit.Address, value: BigUInt, contractAddress: EthereumKit.Address) -> [SectionViewItem]? {
         guard let coinService = coinServiceFactory.coinService(contractAddress: contractAddress) else {
             return nil
         }
 
-        return [
-            .amount(amountData: coinService.amountData(value: value)),
-            .address(title: "Spender", value: spender.eip55)
+        let addressValue = spender.eip55
+        let addressTitle = TransactionInfoAddressMapper.map(addressValue)
+
+        let viewItems: [ViewItem] = [
+            .subhead(title: "approve.confirmation.you_approve".localized, value: coinService.coin.title),
+            .value(title: "send.confirmation.amount".localized, value: coinService.amountData(value: value).formattedString, type: .regular),
+            .address(title: "approve.confirmation.spender".localized, valueTitle: addressTitle, value: addressValue)
         ]
+
+        return [SectionViewItem(viewItems: viewItems)]
     }
 
-    private func swapViewItems(trade: TransactionDecoration.Trade, tokenIn: TransactionDecoration.Token, tokenOut: TransactionDecoration.Token, to: EthereumKit.Address, deadline: BigUInt, additionalItems: [SendEvmData.ItemId: String]) -> [ViewItem]? {
+    private func swapItems(trade: TransactionDecoration.Trade, tokenIn: TransactionDecoration.Token, tokenOut: TransactionDecoration.Token, to: EthereumKit.Address, deadline: BigUInt, additionalInfo: SendEvmData.AdditionInfo?) -> [SectionViewItem]? {
         guard let coinServiceIn = coinService(token: tokenIn), let coinServiceOut = coinService(token: tokenOut) else {
             return nil
         }
 
-        var viewItems = [ViewItem]()
+        let info = additionalInfo?.swapInfo
+
+        var sections = [SectionViewItem]()
 
         switch trade {
         case let .exactIn(amountIn, amountOutMin):
-            viewItems.append(.amount(amountData: coinServiceIn.amountData(value: amountIn)))
-            viewItems.append(.amount(amountData: coinServiceOut.amountData(value: amountOutMin)))
+            sections.append(SectionViewItem(viewItems: [
+                .subhead(title: "swap.you_pay".localized, value: coinServiceIn.coin.title),
+                .value(title: "send.confirmation.amount".localized, value: coinServiceIn.amountData(value: amountIn).formattedString, type: .outgoing)
+            ]))
+
+            sections.append(SectionViewItem(viewItems: [
+                .subhead(title: "swap.you_get".localized, value: coinServiceOut.coin.title),
+                estimatedSwapAmount(value: info.map { coinServiceOut.amountData(value: $0.estimatedOut).formattedString }, type: .incoming),
+                .value(title: "swap.confirmation.guaranteed".localized, value: coinServiceOut.amountData(value: amountOutMin).formattedString, type: .regular)
+            ]))
         case let .exactOut(amountOut, amountInMax):
-            viewItems.append(.amount(amountData: coinServiceIn.amountData(value: amountInMax)))
-            viewItems.append(.amount(amountData: coinServiceOut.amountData(value: amountOut)))
+            sections.append(SectionViewItem(viewItems: [
+                .subhead(title: "swap.you_pay".localized, value: coinServiceIn.coin.title),
+                estimatedSwapAmount(value: info.map { coinServiceIn.amountData(value: $0.estimatedIn).formattedString }, type: .outgoing),
+                .value(title: "swap.confirmation.maximum".localized, value: coinServiceIn.amountData(value: amountInMax).formattedString, type: .regular)
+            ]))
+
+            sections.append(SectionViewItem(viewItems: [
+                .subhead(title: "swap.you_get".localized, value: coinServiceOut.coin.title),
+                .value(title: "send.confirmation.amount".localized, value: coinServiceOut.amountData(value: amountOut).formattedString, type: .incoming)
+            ]))
         }
 
-        if let slippage = additionalItems[.swapSlippage] {
-            viewItems.append(.value(title: "swap.advanced_settings.slippage".localized, value: slippage))
+        var otherViewItems = [ViewItem]()
+
+        if let slippage = info?.slippage {
+            otherViewItems.append(.value(title: "swap.advanced_settings.slippage".localized, value: slippage, type: .regular))
         }
-        if let deadline = additionalItems[.swapDeadline] {
-            viewItems.append(.value(title: "swap.advanced_settings.deadline".localized, value: deadline))
-        }
-        if let recipientDomain = additionalItems[.swapRecipientDomain] {
-            viewItems.append(.value(title: "swap.advanced_settings.recipient_domain".localized, value: recipientDomain))
+        if let deadline = info?.deadline {
+            otherViewItems.append(.value(title: "swap.advanced_settings.deadline".localized, value: deadline, type: .regular))
         }
 
         if to != service.ownAddress {
-            viewItems.append(.address(title: "swap.advanced_settings.recipient_address".localized, value: to.eip55))
+            let addressValue = to.eip55
+            let addressTitle = info?.recipientDomain ?? TransactionInfoAddressMapper.map(addressValue)
+            otherViewItems.append(.address(title: "swap.advanced_settings.recipient_address".localized, valueTitle: addressTitle, value: addressValue))
         }
 
-        if let price = additionalItems[.swapPrice] {
-            viewItems.append(.value(title: "swap.price".localized, value: price))
+        if let price = info?.price {
+            otherViewItems.append(.value(title: "swap.price".localized, value: price, type: .regular))
         }
-        if let priceImpact = additionalItems[.swapPriceImpact] {
-            viewItems.append(.value(title: "swap.price_impact".localized, value: priceImpact))
+        if let priceImpact = info?.priceImpact {
+            otherViewItems.append(.value(title: "swap.price_impact".localized, value: priceImpact, type: .regular))
         }
 
-        return viewItems
+        if !otherViewItems.isEmpty {
+            sections.append(SectionViewItem(viewItems: otherViewItems))
+        }
+
+        return sections
+    }
+
+    private func estimatedSwapAmount(value: String?, type: ValueType) -> ViewItem {
+        let title = "swap.confirmation.estimated".localized
+
+        if let value = value {
+            return .value(title: title, value: value, type: type)
+        } else {
+            return .value(title: title, value: "n/a".localized, type: .disabled)
+        }
     }
 
     private func coinService(token: TransactionDecoration.Token) -> CoinService? {
@@ -191,20 +228,24 @@ class SendEvmTransactionViewModel {
         }
     }
 
-    private func fallbackViewItems(transactionData: TransactionData) -> [ViewItem] {
-        [
-            .amount(amountData: coinServiceFactory.baseCoinService.amountData(value: transactionData.value)),
-            .address(title: "To", value: transactionData.to.eip55),
+    private func fallbackItems(transactionData: TransactionData) -> [SectionViewItem] {
+        let addressValue = transactionData.to.eip55
+
+        let viewItems: [ViewItem] = [
+            .value(title: "Amount", value: coinServiceFactory.baseCoinService.amountData(value: transactionData.value).formattedString, type: .outgoing),
+            .address(title: "To", valueTitle: addressValue, value: addressValue),
             .input(value: transactionData.input.toHexString())
         ]
+
+        return [SectionViewItem(viewItems: viewItems)]
     }
 
 }
 
 extension SendEvmTransactionViewModel {
 
-    var viewItemsDriver: Driver<[ViewItem]> {
-        viewItemsRelay.asDriver()
+    var sectionViewItemsDriver: Driver<[SectionViewItem]> {
+        sectionViewItemsRelay.asDriver()
     }
 
     var sendEnabledDriver: Driver<Bool> {
@@ -235,11 +276,22 @@ extension SendEvmTransactionViewModel {
 
 extension SendEvmTransactionViewModel {
 
+    struct SectionViewItem {
+        let viewItems: [ViewItem]
+    }
+
     enum ViewItem {
-        case amount(amountData: AmountData)
-        case address(title: String, value: String)
-        case value(title: String, value: String)
+        case subhead(title: String, value: String)
+        case value(title: String, value: String, type: ValueType)
+        case address(title: String, valueTitle: String, value: String)
         case input(value: String)
+    }
+
+    enum ValueType {
+        case regular
+        case disabled
+        case outgoing
+        case incoming
     }
 
 }

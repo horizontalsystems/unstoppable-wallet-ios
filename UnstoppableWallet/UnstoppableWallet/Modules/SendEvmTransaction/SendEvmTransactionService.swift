@@ -37,7 +37,7 @@ class SendEvmTransactionService {
         self.evmKit = evmKit
         self.transactionService = transactionService
 
-        dataState = DataState(transactionData: sendData.transactionData, additionalItems: sendData.additionalItems, decoration: evmKit.decorate(transactionData: sendData.transactionData))
+        dataState = DataState(transactionData: sendData.transactionData, additionalInfo: sendData.additionalInfo, decoration: evmKit.decorate(transactionData: sendData.transactionData))
 
         subscribe(disposeBag, transactionService.transactionStatusObservable) { [weak self] _ in self?.syncState() }
 
@@ -74,7 +74,7 @@ class SendEvmTransactionService {
 
         dataState = DataState(
                 transactionData: transactionData,
-                additionalItems: sendData.additionalItems,
+                additionalInfo: sendData.additionalInfo,
                 decoration: evmKit.decorate(transactionData: transactionData)
         )
     }
@@ -131,7 +131,7 @@ extension SendEvmTransactionService {
 
     struct DataState {
         let transactionData: TransactionData
-        let additionalItems: [SendEvmData.ItemId: String]
+        let additionalInfo: SendEvmData.AdditionInfo?
         var decoration: TransactionDecoration?
     }
 

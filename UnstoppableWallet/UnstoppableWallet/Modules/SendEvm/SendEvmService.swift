@@ -41,14 +41,9 @@ class SendEvmService {
     private func syncState() {
         if amountError == nil, addressError == nil, let evmAmount = evmAmount, let addressData = addressData {
             let transactionData = adapter.transactionData(amount: evmAmount, address: addressData.evmAddress)
+            let sendInfo = SendEvmData.SendInfo(domain: addressData.domain)
 
-            var additionalItems = [SendEvmData.ItemId: String]()
-
-            if let domain = addressData.domain {
-                additionalItems[.domain] = domain
-            }
-
-            let sendData = SendEvmData(transactionData: transactionData, additionalItems: additionalItems)
+            let sendData = SendEvmData(transactionData: transactionData, additionalInfo: .send(info: sendInfo))
             state = .ready(sendData: sendData)
         } else {
             state = .notReady
