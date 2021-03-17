@@ -272,27 +272,27 @@
 "swap.confirmation.get" = "Reçoit %@";
 
 
-"swap.uniswap_info.title" = "Uniswap v.2";
-"swap.uniswap_info.description" = "Ce service d'échange est assuré par Uniswap, un protocole d'échange de tokens décentralisé basé sur la blockchain Ethereum.\n\nUniswap est entièrement automatisé et géré par des contrats intelligents qui facilitent les échanges de tokens de manière fiable sans aucun moyen de tricher.";
-"swap.uniswap_info.link_button" = "Site Uniswap";
+"swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on %@ blockchain.\n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
 
-"swap.uniswap_info.header_uniswap_related" = "Liés à Uniswap";
-"swap.uniswap_info.header_allowance" = "Provision";
-"swap.uniswap_info.content_allowance" = "Le montant d'une devise qu'Uniswap peut dépenser en votre nom lors de l'exécution d'échanges de tokens. Une provision suffisante est nécessaire avant que l'échange puisse avoir lieu.";
-"swap.uniswap_info.header_price_impact" = "Impact prix";
-"swap.uniswap_info.content_price_impact" = "L'écart de prix attendu par rapport à un prix affiché, augmente généralement avec le montant de l'échange.";
-"swap.uniswap_info.header_swap_fee" = "Frais d'échange";
-"swap.uniswap_info.content_swap_fee" = "Un frais de service pour le remplacement sur la plate-forme Uniswap, indiqué dans la devise vendue par l'utilisateur. Pour la plupart des transactions, elle devrait être de 0,3 % ou 0,6 %.";
-"swap.uniswap_info.header_guaranteed_amount" = "Montant garanti";
-"swap.uniswap_info.content_guaranteed_amount" = "Le montant minimum qu'un utilisateur va recevoir à la suite d'une action de remplacement.";
-"swap.uniswap_info.header_maximum_spend" = "Dépense maximale";
-"swap.uniswap_info.content_maximum_spend" = "Le montant maximum qu'un utilisateur va dépenser à la suite d'une action de remplacement.";
+"swap.dex_info.header_dex_related" = "%@ Related";
+"swap.dex_info.header_allowance" = "Allowance";
+"swap.dex_info.content_allowance" = "The amount of some currency that service can spend on your behalf when executing token swaps. Sufficient allowance is required before swap action can take place.";
+"swap.dex_info.header_price_impact" = "Price Impact";
+"swap.dex_info.content_price_impact" = "Expected price deviation from a shown price, typically increases with the swap amount.";
+"swap.dex_info.header_swap_fee" = "Swap Fee";
+"swap.dex_info.content_swap_fee" = "A service fee for the swap action on platform, shown in the currency the user sells. For most orders it should be either 0.3 % or 0.6 %.";
+"swap.dex_info.header_guaranteed_amount" = "Guaranteed Amount";
+"swap.dex_info.content_guaranteed_amount" = "The minimum amount a user is going to receive as a result of a swap action.";
+"swap.dex_info.header_maximum_spend" = "Maximum Spend";
+"swap.dex_info.content_maximum_spend" = "The maximum amount a user is going to spend as a result of a swap action.";
 
-"swap.uniswap_info.header_other" = "Autre";
-"swap.uniswap_info.header_transaction_fee" = "Frais de transaction";
-"swap.uniswap_info.content_transaction_fee" = "Le coût de traitement estimé de la transaction en question sur la blockchain Ethereum. Les transactions associées à Uniswap coûtent généralement plus cher que les transactions génériques de transfert de token.";
-"swap.uniswap_info.header_transaction_speed" = "Vitesse de transaction";
-"swap.uniswap_info.content_transaction_speed" = "Les transactions dont les frais de transaction sont plus élevés se traduiront par une vitesse de traitement plus rapide. L'inverse est également vrai.";
+"swap.dex_info.header_other" = "Other";
+"swap.dex_info.header_transaction_fee" = "Transaction Fee";
+"swap.dex_info.content_transaction_fee" = "The estimated processing cost of the given transaction on %@ blockchain. %@ related transactions will typically cost more than generic token transfer transactions.";
+"swap.dex_info.header_transaction_speed" = "Transaction Speed";
+"swap.dex_info.content_transaction_speed" = "Transactions with higher transaction fee will result in faster processing speeds. The opposite is true as well.";
+
+"swap.dex_info.link_button" = "%@ Site";
 
 // Market
 
