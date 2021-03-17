@@ -5,7 +5,7 @@ import XRatesKit
 import CoinKit
 import CurrencyKit
 
-class ChartService {
+class CoinChartService {
     private var disposeBag = DisposeBag()
 
     private let rateManager: IRateManager
@@ -28,8 +28,8 @@ class ChartService {
         }
     }
 
-    private let stateRelay = PublishRelay<State>()
-    private(set) var state: State = .loading {
+    private let stateRelay = PublishRelay<DataStatus<Item>>()
+    private(set) var state: DataStatus<Item> = .loading {
         didSet {
             stateRelay.accept(state)
         }
@@ -55,27 +55,29 @@ class ChartService {
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .subscribe(onNext: { [weak self] marketInfo, chartInfo in
                     let item = Item(rate: marketInfo.rate, rateDiff24h: marketInfo.rateDiff, chartInfo: chartInfo)
-                    self?.state = .loaded(item: item)
+                    self?.state = .completed(item)
                 }, onError: { [weak self] error in
-                    self?.state = .error(error)
+                    self?.state = .failed(error)
                 })
                 .disposed(by: disposeBag)
     }
 
 }
 
-extension ChartService {
+extension CoinChartService {
+
+    var stateObservable: Observable<DataStatus<Item>> {
+        stateRelay.asObservable()
+    }
+
+}
+
+extension CoinChartService {
 
     struct Item {
         let rate: Decimal
         let rateDiff24h: Decimal
         let chartInfo: ChartInfo
-    }
-
-    enum State {
-        case loading
-        case loaded(item: Item)
-        case error(Error)
     }
 
 }
