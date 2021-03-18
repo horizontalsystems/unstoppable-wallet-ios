@@ -17,12 +17,12 @@ class ReturnOfInvestmentsSideCollectionViewCell: BaseReturnOfInvestmentsCollecti
         fatalError("init(coder:) has not been implemented")
     }
 
-    func set(cellType: ReturnOfInvestmentsTableViewCell.CellType, horizontalFirst: Bool, verticalFirst: Bool) {
+    func set(viewItem: CoinReturnOfInvestmentsViewModel.ViewItem, horizontalFirst: Bool, verticalFirst: Bool) {
         super.set(horizontalFirst: horizontalFirst, verticalFirst: verticalFirst)
 
-        label.font = cellType.font
-        label.textColor = cellType.color
-        contentView.backgroundColor = cellType.backgroundColor
+        label.font = viewItem.font
+        label.textColor = viewItem.color
+        contentView.backgroundColor = viewItem.backgroundColor
     }
 
     var title: String? {

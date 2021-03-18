@@ -26,20 +26,27 @@ class CoinReturnOfInvestmentsViewModel {
         var viewItems = [[ViewItem]]()
 
         var titleRow = [ViewItem]()
-        titleRow.append(.title("ROI"))
+        var coinCodes = service.diffCoinCodes.map { $0.lowercased() }
+        titleRow.append(.title("coin_page.return_of_investments".localized))
 
-        data.rateDiffs.first?.value.forEach { subtitle, _ in
-            titleRow.append(.subtitle(subtitle))
+        if let index = coinCodes.firstIndex(of: service.coinCode.lowercased()) {
+            coinCodes.remove(at: index)
+        }
+
+        coinCodes.forEach { coinCode in
+            titleRow.append(.subtitle(coinCode.uppercased()))
         }
 
         viewItems.append(titleRow)
 
-        data.rateDiffs.forEach { timePeriod, values in
+        CoinPageService.timePeriods.forEach { timePeriod in
             var row = [ViewItem]()
             row.append(.content(timePeriod.roiTitle))
 
-            values.forEach { _, value in
-                row.append(.value(value))
+            let values = data.rateDiffs[timePeriod]
+
+            coinCodes.forEach { coinCode in
+                row.append(.value(values?[coinCode]))
             }
             viewItems.append(row)
         }
@@ -63,7 +70,7 @@ extension CoinReturnOfInvestmentsViewModel {
         case title(String)
         case subtitle(String)
         case content(String)
-        case value(Decimal)
+        case value(Decimal?)
     }
 
 }
