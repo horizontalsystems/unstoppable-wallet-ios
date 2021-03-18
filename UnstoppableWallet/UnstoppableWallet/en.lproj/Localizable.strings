@@ -446,6 +446,8 @@ bch.horizontalsystems.xyz/apg";
 "market.advanced_search.month6" = "6 Months";
 "market.advanced_search.year" = "1 Year";
 
+// Coin Page
+
 "coin_page.roi.hour1" = "1 Hour";
 "coin_page.roi.hour24" = "1 Day";
 "coin_page.roi.day7" = "1 Week";
@@ -453,6 +455,13 @@ bch.horizontalsystems.xyz/apg";
 "coin_page.roi.day30" = "1 Month";
 "coin_page.roi.day200" = "6 Month";
 "coin_page.roi.year1" = "1 Year";
+
+"coin_page.markets" = "%@ Markets";
+"coin_page.investors" = "%@ Investors";
+
+"coin_page.guide" = "Guide";
+"coin_page.website" = "Website";
+"coin_page.whitepaper" = "Whitepaper";
 
 // Transactions
 
