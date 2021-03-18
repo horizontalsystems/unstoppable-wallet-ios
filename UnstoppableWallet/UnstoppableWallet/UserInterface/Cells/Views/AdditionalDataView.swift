@@ -73,4 +73,14 @@ class AdditionalDataView: UIView {
         layoutIfNeeded()
     }
 
+    var title: String? {
+        get { titleLabel.text }
+        set { titleLabel.text = newValue }
+    }
+
+    var value: String? {
+        get { valueLabel.text }
+        set { valueLabel.text = newValue }
+    }
+
 }

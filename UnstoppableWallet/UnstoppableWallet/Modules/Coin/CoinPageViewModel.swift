@@ -2,6 +2,7 @@ import RxSwift
 import RxRelay
 import RxCocoa
 import XRatesKit
+import CoinKit
 
 class CoinPageViewModel {
     private let service: CoinPageService
@@ -18,11 +19,28 @@ class CoinPageViewModel {
 //                })
 //                .disposed(by: disposeBag)
 
+        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
         sync(state: service.state)
     }
 
     private func sync(state: DataStatus<CoinMarketInfo>) {
+        loadingRelay.accept(state.isLoading)
+    }
 
+}
+
+extension CoinPageViewModel {
+
+    var title: String {
+        service.coinCode
+    }
+
+    var subtitle: String {
+        service.coinTitle
+    }
+
+    var loadingDriver: Driver<Bool> {
+        loadingRelay.asDriver()
     }
 
 }

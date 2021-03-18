@@ -33,4 +33,14 @@ class AdditionalDataCell: UITableViewCell {
         additionalDataView.setValue(color: valueColor)
     }
 
+    var title: String? {
+        get { additionalDataView.title }
+        set { additionalDataView.title = newValue }
+    }
+
+    var value: String? {
+        get { additionalDataView.value }
+        set { additionalDataView.value = newValue }
+    }
+
 }

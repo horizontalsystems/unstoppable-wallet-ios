@@ -3,6 +3,7 @@ import RxSwift
 import RxRelay
 import RxCocoa
 import XRatesKit
+import Chart
 
 class CoinChartViewModel {
     private let service: CoinChartService
@@ -61,5 +62,23 @@ extension CoinChartViewModel {
         var errorDriver: Driver<String?> {
             errorRelay.asDriver()
         }
+
+}
+
+extension CoinChartViewModel {
+
+    struct ViewItem {
+        let chartData: ChartData
+
+        let chartTrend: MovementTrend
+        let chartDiff: Decimal?
+
+        let trends: [ChartIndicatorSet: MovementTrend]
+
+        let minValue: String?
+        let maxValue: String?
+
+        let timeline: [ChartTimelineItem]
+    }
 
 }

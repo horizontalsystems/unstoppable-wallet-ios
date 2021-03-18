@@ -15,6 +15,9 @@ class CoinPageService {
     private let currencyKit: ICurrencyKit
     private let coinType: CoinType
 
+    let coinTitle: String
+    let coinCode: String
+
     private let stateRelay = PublishRelay<DataStatus<CoinMarketInfo>>()
     private(set) var state: DataStatus<CoinMarketInfo> = .loading {
         didSet {
@@ -22,11 +25,13 @@ class CoinPageService {
         }
     }
 
-    init(coinKit: CoinKit.Kit, rateManager: IRateManager, currencyKit: ICurrencyKit, coinType: CoinType) {
+    init(coinKit: CoinKit.Kit, rateManager: IRateManager, currencyKit: ICurrencyKit, coinType: CoinType, coinTitle: String, coinCode: String) {
         self.coinKit = coinKit
         self.rateManager = rateManager
         self.currencyKit = currencyKit
         self.coinType = coinType
+        self.coinTitle = coinTitle
+        self.coinCode = coinCode
 
         fetchChartData()
     }
