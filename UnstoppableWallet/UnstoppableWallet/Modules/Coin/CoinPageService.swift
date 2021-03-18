@@ -6,7 +6,7 @@ import CoinKit
 import CurrencyKit
 
 class CoinPageService {
-    private static let timePeriods: [TimePeriod] = [.day7, .day30]
+    static let timePeriods: [TimePeriod] = [.day7, .day30]
 
     private var disposeBag = DisposeBag()
 
@@ -57,8 +57,13 @@ class CoinPageService {
                 .disposed(by: disposeBag)
     }
 
-    private var diffCoinCodes: [String] {
-        [coinKit.coin(type: .bitcoin), coinKit.coin(type: .ethereum)].compactMap { $0?.code }
+    var diffCoinCodes: [String] {
+        var codes = [String]()
+
+        codes.append(currencyKit.baseCurrency.code)
+        codes.append(contentsOf: [coinKit.coin(type: .bitcoin), coinKit.coin(type: .ethereum)].compactMap { $0?.code })
+
+        return codes
     }
 
 }
