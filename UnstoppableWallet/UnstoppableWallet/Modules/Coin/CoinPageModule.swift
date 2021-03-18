@@ -21,7 +21,12 @@ struct CoinPageModule {
         let coinPageViewModel = CoinPageViewModel(service: coinPageService)
         let coinChartViewModel = CoinChartViewModel(service: coinChartService)
 
-        return CoinPageViewController(viewModel: coinPageViewModel, chartViewModel: coinChartViewModel, configuration: ChartConfiguration.fullChart)
+        return CoinPageViewController(
+                viewModel: coinPageViewModel,
+                chartViewModel: coinChartViewModel,
+                configuration: ChartConfiguration.fullChart,
+                urlManager: UrlManager(inApp: true)
+        )
     }
 
 }
