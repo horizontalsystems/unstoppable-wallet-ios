@@ -58,10 +58,6 @@ extension RateManager: IRateManager {
         kit.refresh()
     }
 
-    func marketInfo(coinType: CoinType, currencyCode: String) -> MarketInfo? {
-        kit.marketInfo(coinType: coinType, currencyCode: currencyCode)
-    }
-
     func globalMarketInfoSingle(currencyCode: String) -> Single<GlobalCoinMarket> {
         kit.globalMarketInfoSingle(currencyCode: currencyCode)
     }
@@ -78,12 +74,12 @@ extension RateManager: IRateManager {
         kit.search(text: text)
     }
 
-    func marketInfoObservable(coinType: CoinType, currencyCode: String) -> Observable<MarketInfo> {
-        kit.marketInfoObservable(coinType: coinType, currencyCode: currencyCode)
+    func latestRate(coinType: CoinType, currencyCode: String) -> LatestRate? {
+        kit.latestRate(coinType: coinType, currencyCode: currencyCode)
     }
 
-    func marketInfosObservable(currencyCode: String) -> Observable<[CoinType: MarketInfo]> {
-        kit.marketInfosObservable(currencyCode: currencyCode) //todo: check!
+    func latestRateObservable(coinType: CoinType, currencyCode: String) -> Observable<LatestRate> {
+        kit.latestRateObservable(coinType: coinType, currencyCode: currencyCode)
     }
 
     func historicalRate(coinType: CoinType, currencyCode: String, timestamp: TimeInterval) -> Single<Decimal> {

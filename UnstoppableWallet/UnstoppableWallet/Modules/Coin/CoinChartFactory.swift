@@ -136,15 +136,18 @@ class CoinChartFactory {
         return .neutral
     }
 
-    private func convert(item: CoinChartService.Item, chartType: ChartType, currency: Currency) -> ChartDataViewItem {
+    func convert(item: CoinChartService.Item, chartType: ChartType, currency: Currency, selectedIndicator: ChartIndicatorSet) -> CoinChartViewModel.ViewItem {
         var points = item.chartInfo.points
         var endTimestamp = item.chartInfo.endTimestamp
 
         var addCurrentRate = false
-        if let lastPointTimestamp = item.chartInfo.points.last?.timestamp, item.timestamp > lastPointTimestamp {
+        if let lastPointTimestamp = item.chartInfo.points.last?.timestamp,
+           let timestamp = item.timestamp,
+           let rate = item.rate,
+           timestamp > lastPointTimestamp {
             // add current rate in data
-            endTimestamp = max(item.timestamp, endTimestamp)
-            points.append(ChartPoint(timestamp: item.timestamp, value: item.rate, volume: nil))
+            endTimestamp = max(timestamp, endTimestamp)
+            points.append(ChartPoint(timestamp: timestamp, value: rate, volume: nil))
             addCurrentRate = true
         }
         // build data with rates, volumes and indicators for points
@@ -197,8 +200,8 @@ class CoinChartFactory {
                     ChartTimelineItem(text: timelineHelper.text(timestamp: $0, separateHourlyInterval: gridInterval, dateFormatter: dateFormatter), timestamp: $0)
                 }
 
-        return ChartDataViewItem(chartData: data, chartTrend: chartTrend, chartDiff: chartDiff,
-                trends: trends, minValue: minRateString, maxValue: maxRateString, timeline: timeline)
+        return CoinChartViewModel.ViewItem(chartData: data, chartTrend: chartTrend, chartDiff: chartDiff,
+                trends: trends, minValue: minRateString, maxValue: maxRateString, timeline: timeline, selectedIndicator: selectedIndicator)
     }
 
 //    func chartViewItem(chartDataStatus: DataStatus<ChartInfo>, marketInfoStatus: DataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, selectedIndicator: ChartIndicatorSet, coin: Coin?, priceAlert: PriceAlert?, alertsOn: Bool) -> ChartViewItem {

@@ -1,5 +1,6 @@
 import UIKit
 import Chart
+import LanguageKit
 
 struct CoinPageModule {
 
@@ -18,8 +19,10 @@ struct CoinPageModule {
                 currencyKit: App.shared.currencyKit,
                 coinType: launchMode.coinType)
 
+        let chartFactory = CoinChartFactory(timelineHelper: TimelineHelper(), indicatorFactory: IndicatorFactory(), currentLocale: LanguageManager.shared.currentLocale)
+
         let coinPageViewModel = CoinPageViewModel(service: coinPageService)
-        let coinChartViewModel = CoinChartViewModel(service: coinChartService)
+        let coinChartViewModel = CoinChartViewModel(service: coinChartService, factory: chartFactory)
 
         return CoinPageViewController(
                 viewModel: coinPageViewModel,
