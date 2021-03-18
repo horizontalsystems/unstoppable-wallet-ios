@@ -10,19 +10,28 @@ class CoinChartViewModel {
     private let factory: CoinChartFactory
     private let disposeBag = DisposeBag()
 
+    private let chartTypeIndexRelay = BehaviorRelay<Int>(value: 0)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let rateRelay = BehaviorRelay<String?>(value: nil)
     private let rateDiffRelay = BehaviorRelay<Decimal?>(value: nil)
     private let chartInfoRelay = BehaviorRelay<CoinChartViewModel.ViewItem?>(value: nil)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
+    let chartTypes = ChartType.allCases.map { $0.title.uppercased() }
+
     init(service: CoinChartService, factory: CoinChartFactory) {
         self.service = service
         self.factory = factory
 
+        subscribe(disposeBag, service.chartTypeObservable) { [weak self] in self?.sync(chartType: $0) }
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
 
+        sync(chartType: service.chartType)
         sync(state: service.state)
+    }
+
+    private func sync(chartType: ChartType) {
+        chartTypeIndexRelay.accept(ChartType.allCases.firstIndex(of: chartType) ?? 0)
     }
 
     private func sync(state: DataStatus<CoinChartService.Item>) {
@@ -51,25 +60,42 @@ class CoinChartViewModel {
 
 extension CoinChartViewModel {
 
-        var loadingDriver: Driver<Bool> {
-            loadingRelay.asDriver()
+    var chartTypeIndexDriver: Driver<Int> {
+        chartTypeIndexRelay.asDriver()
+    }
+
+    var loadingDriver: Driver<Bool> {
+        loadingRelay.asDriver()
+    }
+
+    var rateDriver: Driver<String?> {
+        rateRelay.asDriver()
+    }
+
+    var rateDiffDriver: Driver<Decimal?> {
+        rateDiffRelay.asDriver()
+    }
+
+    var chartInfoDriver: Driver<CoinChartViewModel.ViewItem?> {
+        chartInfoRelay.asDriver()
+    }
+
+    var errorDriver: Driver<String?> {
+        errorRelay.asDriver()
+    }
+
+    func onSelectType(at index: Int) {
+        let chartTypes = ChartType.allCases
+        guard chartTypes.count > index else {
+            return
         }
 
-        var rateDriver: Driver<String?> {
-            rateRelay.asDriver()
-        }
+        service.chartType = chartTypes[index]
+    }
 
-        var rateDiffDriver: Driver<Decimal?> {
-            rateDiffRelay.asDriver()
-        }
-
-        var chartInfoDriver: Driver<CoinChartViewModel.ViewItem?> {
-            chartInfoRelay.asDriver()
-        }
-
-        var errorDriver: Driver<String?> {
-            errorRelay.asDriver()
-        }
+    func onTap(indicator: ChartIndicatorSet) {
+        service.selectedIndicator = service.selectedIndicator.toggle(indicator: indicator)
+    }
 
 }
 

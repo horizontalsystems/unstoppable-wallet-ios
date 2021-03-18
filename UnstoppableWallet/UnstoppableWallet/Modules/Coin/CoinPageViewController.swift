@@ -66,6 +66,15 @@ class CoinPageViewController: ThemeViewController {
         tableView.registerCell(forClass: TitledHighlightedDescriptionCell.self)
         tableView.registerCell(forClass: BrandFooterCell.self)
 
+        chartIntervalAndSelectedRateCell.bind(filters: chartViewModel.chartTypes.map { .item(title: $0) })
+        chartIntervalAndSelectedRateCell.onSelectInterval = { [weak self] index in
+            self?.chartViewModel.onSelectType(at: index)
+        }
+
+        indicatorSelectorCell.onTapIndicator = { [weak self] indicator in
+            self?.chartViewModel.onTap(indicator: indicator)
+        }
+
         subtitleCell.bind(title: viewModel.subtitle, value: nil)
         subscribeViewModels()
     }
@@ -75,6 +84,7 @@ class CoinPageViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in self?.sync(viewItem: $0) }
 
         // chart section
+        subscribe(disposeBag, chartViewModel.chartTypeIndexDriver) { [weak self] in self?.syncChart(typeIndex: $0) }
         subscribe(disposeBag, chartViewModel.loadingDriver) { [weak self] in self?.syncChart(loading: $0) }
         subscribe(disposeBag, chartViewModel.errorDriver) { [weak self] in self?.syncChart(error: $0) }
         subscribe(disposeBag, chartViewModel.chartInfoDriver) { [weak self] in self?.syncChart(viewItem: $0) }
@@ -116,14 +126,19 @@ extension CoinPageViewController {
         }
 
         chartViewCell.set(data: viewItem)
+        chartViewCell.setVolumes(hidden: viewItem.selectedIndicator.hideVolumes)
 
-//        ChartIndicatorSet.all.forEach { indicator in
-//            let show = viewItem.selectedIndicator.contains(indicator)
-//
-//            chartViewCell.bind(indicator: indicator, hidden: !show)
-//
-//            indicatorSelectorCell.bind(indicator: indicator, selected: show)
-//        }
+        ChartIndicatorSet.all.forEach { indicator in
+            let show = viewItem.selectedIndicator.contains(indicator)
+
+            chartViewCell.bind(indicator: indicator, hidden: !show)
+
+            indicatorSelectorCell.bind(indicator: indicator, selected: show)
+        }
+    }
+
+    private func syncChart(typeIndex: Int) {
+        chartIntervalAndSelectedRateCell.select(index: typeIndex)
     }
 
     private func syncChart(loading: Bool) {
