@@ -20,9 +20,10 @@ extension CoinService {
     var rate: CurrencyValue? {
         let baseCurrency = currencyKit.baseCurrency
 
-        return rateManager.marketInfo(coinType: coin.type, currencyCode: baseCurrency.code).map { marketInfo in
-            CurrencyValue(currency: baseCurrency, value: marketInfo.rate)
-        }
+        return nil//todo:
+//        return rateManager.marketInfo(coinType: coin.type, currencyCode: baseCurrency.code).map { marketInfo in
+//            CurrencyValue(currency: baseCurrency, value: marketInfo.rate)
+//        }
     }
 
     func coinValue(value: BigUInt) -> CoinValue {

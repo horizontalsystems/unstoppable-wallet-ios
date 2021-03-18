@@ -35,6 +35,11 @@ class CoinChartService {
         }
     }
 
+    private var latestRate: LatestRate?
+    private var chartInfo: ChartInfo?
+
+    var selectedIndicator = ChartIndicatorSet()
+
     init(rateManager: IRateManager, chartTypeStorage: IChartTypeStorage, currencyKit: ICurrencyKit, coinType: CoinType) {
         self.rateManager = rateManager
         self.chartTypeStorage = chartTypeStorage
@@ -48,18 +53,57 @@ class CoinChartService {
         disposeBag = DisposeBag()
         state = .loading
 
-        let marketInfo = rateManager.marketInfoObservable(coinType: coinType, currencyCode: currencyKit.baseCurrency.code)
-        let chartInfo = rateManager.chartInfoObservable(coinType: coinType, currencyCode: currencyKit.baseCurrency.code, chartType: chartType)
+        latestRate = rateManager.latestRate(coinType: coinType, currencyCode: currency.code)
+        chartInfo = rateManager.chartInfo(coinType: coinType, currencyCode: currency.code, chartType: chartType)
 
-        Observable.zip(marketInfo, chartInfo)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .subscribe(onNext: { [weak self] marketInfo, chartInfo in
-                    let item = Item(rate: marketInfo.rate, rateDiff24h: marketInfo.rateDiff, timestamp: 0, chartInfo: chartInfo)
-                    self?.state = .completed(item)
+        let latestRateObservable = rateManager.latestRateObservable(coinType: coinType, currencyCode: currency.code).delay(.seconds(3), scheduler: ConcurrentDispatchQueueScheduler(qos: .background))
+        let chartInfoObservable = rateManager.chartInfoObservable(coinType: coinType, currencyCode: currency.code, chartType: chartType).delay(.seconds(5), scheduler: ConcurrentDispatchQueueScheduler(qos: .background))
+
+        latestRateObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] latestRate in
+                    print("LATEST RATE COME!")
+                    self?.latestRate = latestRate
+                    self?.syncState()
                 }, onError: { [weak self] error in
                     self?.state = .failed(error)
                 })
                 .disposed(by: disposeBag)
+
+        chartInfoObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] chartInfo in
+                    print("CHART INFO COME!")
+                    self?.chartInfo = chartInfo
+                    self?.syncState()
+                }, onError: { [weak self] error in
+                    self?.state = .failed(error)
+                })
+                .disposed(by: disposeBag)
+
+        syncState()
+    }
+
+    private func syncState() {
+        guard let chartInfo = chartInfo else {
+            print("chartInfo is nil")
+            return
+        }
+
+        print("coming rate: \(latestRate?.rate)")
+        print("coming points: \(chartInfo.points.count)")
+        let item = Item(
+                rate: latestRate?.rate,
+                rateDiff24h: latestRate?.rateDiff24h,
+                timestamp: latestRate?.timestamp,
+                chartInfo: chartInfo
+        )
+
+        state = .completed(item)
+    }
+
+    deinit {
+        print("\(self)")
     }
 
 }
@@ -70,14 +114,18 @@ extension CoinChartService {
         stateRelay.asObservable()
     }
 
+    var currency: Currency {
+        currencyKit.baseCurrency
+    }
+
 }
 
 extension CoinChartService {
 
     struct Item {
-        let rate: Decimal
-        let rateDiff24h: Decimal
-        let timestamp: TimeInterval
+        let rate: Decimal?
+        let rateDiff24h: Decimal?
+        let timestamp: TimeInterval?
         let chartInfo: ChartInfo
     }
 

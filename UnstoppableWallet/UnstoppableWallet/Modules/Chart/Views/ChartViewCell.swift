@@ -77,7 +77,7 @@ class ChartViewCell: UITableViewCell {
         chartView.setVolumes(hidden: viewItem.selectedIndicator.showVolumes)
     }
 
-    func set(data: ChartDataViewItem) {
+    func set(data: CoinChartViewModel.ViewItem) {
         switch data.chartTrend {
         case .neutral:
             chartView.setCurve(color: .themeGray)

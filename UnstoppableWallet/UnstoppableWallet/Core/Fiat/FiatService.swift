@@ -62,26 +62,26 @@ class FiatService {
         sync()
     }
 
-    private func sync(marketInfo: MarketInfo?) {
-        if let marketInfo = marketInfo, !marketInfo.expired {
-            rate = marketInfo.rate
-
-            if coinAmountLocked {
-                syncCurrencyAmount()
-            } else {
-                switch switchService.amountType {
-                case .coin:
-                    syncCurrencyAmount()
-                case .currency:
-                    syncCoinAmount()
-                }
-            }
-        } else {
-            rate = nil
-        }
-
-        sync()
-    }
+//    private func sync(marketInfo: MarketInfo?) {
+//        if let marketInfo = marketInfo, !marketInfo.expired {
+//            rate = marketInfo.rate
+//
+//            if coinAmountLocked {
+//                syncCurrencyAmount()
+//            } else {
+//                switch switchService.amountType {
+//                case .coin:
+//                    syncCurrencyAmount()
+//                case .currency:
+//                    syncCoinAmount()
+//                }
+//            }
+//        } else {
+//            rate = nil
+//        }
+//
+//        sync()
+//    }
 
     private func sync(amountType: AmountTypeSwitchService.AmountType) {
         sync()
@@ -148,14 +148,14 @@ extension FiatService {
         marketInfoDisposeBag = DisposeBag()
 
         if let coin = coin {
-            sync(marketInfo: rateManager.marketInfo(coinType: coin.type, currencyCode: currency.code))
+//            sync(marketInfo: rateManager.marketInfo(coinType: coin.type, currencyCode: currency.code))
 
-            rateManager.marketInfoObservable(coinType: coin.type, currencyCode: currency.code)
-                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                    .subscribe(onNext: { [weak self] marketInfo in
-                        self?.sync(marketInfo: marketInfo)
-                    })
-                    .disposed(by: marketInfoDisposeBag)
+//            rateManager.marketInfoObservable(coinType: coin.type, currencyCode: currency.code)
+//                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+//                    .subscribe(onNext: { [weak self] marketInfo in
+//                        self?.sync(marketInfo: marketInfo)
+//                    })
+//                    .disposed(by: marketInfoDisposeBag)
         } else {
             rate = nil
             currencyAmount = nil

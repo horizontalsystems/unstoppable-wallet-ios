@@ -217,13 +217,12 @@ protocol IBlurManager {
 protocol IRateManager {
     func refresh()
 
-    func marketInfo(coinType: CoinType, currencyCode: String) -> MarketInfo?
     func globalMarketInfoSingle(currencyCode: String) -> Single<GlobalCoinMarket>
     func topMarketsSingle(currencyCode: String, fetchDiffPeriod: TimePeriod, itemCount: Int) -> Single<[CoinMarket]>
     func coinsMarketSingle(currencyCode: String, coinTypes: [CoinType]) -> Single<[CoinMarket]>
     func searchCoins(text: String) -> [CoinData]
-    func marketInfoObservable(coinType: CoinType, currencyCode: String) -> Observable<MarketInfo>
-    func marketInfosObservable(currencyCode: String) -> Observable<[CoinType: MarketInfo]>
+    func latestRate(coinType: CoinType, currencyCode: String) -> LatestRate?
+    func latestRateObservable(coinType: CoinType, currencyCode: String) -> Observable<LatestRate>
     func historicalRate(coinType: CoinType, currencyCode: String, timestamp: TimeInterval) -> Single<Decimal>
     func historicalRate(coinType: CoinType, currencyCode: String, timestamp: TimeInterval) -> Decimal?
     func chartInfo(coinType: CoinType, currencyCode: String, chartType: ChartType) -> ChartInfo?

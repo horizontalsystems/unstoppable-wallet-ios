@@ -77,7 +77,7 @@ class CoinPageViewController: ThemeViewController {
         // chart section
         subscribe(disposeBag, chartViewModel.loadingDriver) { [weak self] in self?.syncChart(loading: $0) }
         subscribe(disposeBag, chartViewModel.errorDriver) { [weak self] in self?.syncChart(error: $0) }
-        subscribe(disposeBag, chartViewModel.chartInfoDriver) { [weak self] in self?.syncChart(chartInfo: $0) }
+        subscribe(disposeBag, chartViewModel.chartInfoDriver) { [weak self] in self?.syncChart(viewItem: $0) }
     }
 
     private func reloadTable() {
@@ -110,20 +110,13 @@ extension CoinPageViewController {
         }
     }
 
-    private func syncChart(loading: Bool) {
-        chartViewCell.showLoading()
-        deactivateIndicators()
-    }
+    private func syncChart(viewItem: CoinChartViewModel.ViewItem?) {
+        guard let viewItem = viewItem else {
+            return
+        }
 
-    private func syncChart(error: String?) { //todo: check logic!
-        chartViewCell.hideLoading()
-        deactivateIndicators()
-    }
+        chartViewCell.set(data: viewItem)
 
-    private func syncChart(chartInfo: ChartInfo?) {
-        chartViewCell.hideLoading()
-//        chartViewCell.bind(data: data, viewItem: viewItem)
-//
 //        ChartIndicatorSet.all.forEach { indicator in
 //            let show = viewItem.selectedIndicator.contains(indicator)
 //
@@ -131,7 +124,21 @@ extension CoinPageViewController {
 //
 //            indicatorSelectorCell.bind(indicator: indicator, selected: show)
 //        }
+    }
 
+    private func syncChart(loading: Bool) {
+        if loading {
+            chartViewCell.showLoading()
+            deactivateIndicators()
+        } else {
+            chartViewCell.hideLoading()
+        }
+    }
+
+    private func syncChart(error: String?) { //todo: check logic!
+        if error != nil {
+            deactivateIndicators()
+        }
     }
 
 }

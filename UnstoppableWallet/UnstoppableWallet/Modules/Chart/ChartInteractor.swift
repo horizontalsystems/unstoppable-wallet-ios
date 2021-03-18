@@ -61,16 +61,17 @@ extension ChartInteractor: IChartInteractor {
     }
 
     func marketInfo(coinType: CoinType, currencyCode: String) -> MarketInfo? {
-        rateManager.marketInfo(coinType: coinType, currencyCode: currencyCode)
+        nil //todo:
+        //rateManager.marketInfo(coinType: coinType, currencyCode: currencyCode)
     }
 
     func subscribeToMarketInfo(coinType: CoinType, currencyCode: String) {
-        rateManager.marketInfoObservable(coinType: coinType, currencyCode: currencyCode)
-                .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] marketInfo in
-                    self?.delegate?.didReceive(marketInfo: marketInfo)
-                })
-                .disposed(by: disposeBag)
+//        rateManager.marketInfoObservable(coinType: coinType, currencyCode: currencyCode)
+//                .observeOn(MainScheduler.instance)
+//                .subscribe(onNext: { [weak self] marketInfo in
+//                    self?.delegate?.didReceive(marketInfo: marketInfo)
+//                })
+//                .disposed(by: disposeBag)
     }
 
     func priceAlert(coin: Coin?) -> PriceAlert? {

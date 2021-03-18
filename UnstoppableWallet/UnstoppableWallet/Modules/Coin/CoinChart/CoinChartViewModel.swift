@@ -7,16 +7,18 @@ import Chart
 
 class CoinChartViewModel {
     private let service: CoinChartService
+    private let factory: CoinChartFactory
     private let disposeBag = DisposeBag()
 
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let rateRelay = BehaviorRelay<String?>(value: nil)
     private let rateDiffRelay = BehaviorRelay<Decimal?>(value: nil)
-    private let chartInfoRelay = BehaviorRelay<ChartInfo?>(value: nil)
+    private let chartInfoRelay = BehaviorRelay<CoinChartViewModel.ViewItem?>(value: nil)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
-    init(service: CoinChartService) {
+    init(service: CoinChartService, factory: CoinChartFactory) {
         self.service = service
+        self.factory = factory
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
 
@@ -34,9 +36,15 @@ class CoinChartViewModel {
             return
         }
 
-        rateRelay.accept(state.data?.rate.description) //todo: Convert!
+        rateRelay.accept(state.data?.rate?.description ?? "") //todo: Convert!
         rateDiffRelay.accept(state.data?.rateDiff24h)
-        chartInfoRelay.accept(state.data?.chartInfo)
+
+        guard let item = state.data else {
+            chartInfoRelay.accept(nil)
+            return
+        }
+
+        chartInfoRelay.accept(factory.convert(item: item, chartType: service.chartType, currency: service.currency, selectedIndicator: service.selectedIndicator))
     }
 
 }
@@ -55,7 +63,7 @@ extension CoinChartViewModel {
             rateDiffRelay.asDriver()
         }
 
-        var chartInfoDriver: Driver<ChartInfo?> {
+        var chartInfoDriver: Driver<CoinChartViewModel.ViewItem?> {
             chartInfoRelay.asDriver()
         }
 
@@ -79,6 +87,8 @@ extension CoinChartViewModel {
         let maxValue: String?
 
         let timeline: [ChartTimelineItem]
+
+        let selectedIndicator: ChartIndicatorSet
     }
 
 }

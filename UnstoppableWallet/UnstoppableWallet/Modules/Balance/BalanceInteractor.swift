@@ -82,7 +82,8 @@ extension BalanceInteractor: IBalanceInteractor {
     }
 
     func marketInfo(coinType: CoinType, currencyCode: String) -> MarketInfo? {
-        rateManager.marketInfo(coinType: coinType, currencyCode: currencyCode)
+        nil //todo:
+        //rateManager.marketInfo(coinType: coinType, currencyCode: currencyCode)
     }
 
     func balance(wallet: Wallet) -> Decimal? {
@@ -140,13 +141,13 @@ extension BalanceInteractor: IBalanceInteractor {
     func subscribeToMarketInfo(currencyCode: String) {
         marketInfoDisposeBag = DisposeBag()
 
-        rateManager.marketInfosObservable(currencyCode: currencyCode)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onNext: { [weak self] marketInfos in
-                    self?.delegate?.didUpdate(marketInfos: marketInfos)
-                })
-                .disposed(by: marketInfoDisposeBag)
+//        rateManager.marketInfosObservable(currencyCode: currencyCode)
+//                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+//                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+//                .subscribe(onNext: { [weak self] marketInfos in
+//                    self?.delegate?.didUpdate(marketInfos: marketInfos)
+//                })
+//                .disposed(by: marketInfoDisposeBag)
     }
 
     var sortType: SortType {
