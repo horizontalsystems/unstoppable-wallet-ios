@@ -29,6 +29,7 @@ class CoinPageViewModel {
 
         let viewItem = state.data.map { info in
             ViewItem(
+                    fundCategories: info.meta.fundCategories,
                     links: links(linkMap: info.meta.links)
             )
         }
@@ -77,6 +78,7 @@ extension CoinPageViewModel {
 extension CoinPageViewModel {
 
     struct ViewItem {
+        let fundCategories: [CoinFundCategory]
         let links: [Link]
     }
 
