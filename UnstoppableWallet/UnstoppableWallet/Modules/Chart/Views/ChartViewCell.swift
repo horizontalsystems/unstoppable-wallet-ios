@@ -8,7 +8,16 @@ class ChartViewCell: UITableViewCell {
     private let chartView: RateChartView
     private let loadingView = HUDActivityView.create(with: .medium24)
 
-    init(delegate: IChartViewDelegate & IChartViewTouchDelegate, configuration: ChartConfiguration) {
+    var delegate: IChartViewTouchDelegate? {
+        get {
+            chartView.delegate
+        }
+        set {
+            chartView.delegate = newValue
+        }
+    }
+
+    init(delegate: IChartViewTouchDelegate? = nil, configuration: ChartConfiguration) {
         chartView = RateChartView(configuration: configuration)
         chartView.delegate = delegate
 
@@ -66,6 +75,25 @@ class ChartViewCell: UITableViewCell {
         chartView.set(highLimitText: data.maxValue, lowLimitText: data.minValue)
 
         chartView.setVolumes(hidden: viewItem.selectedIndicator.showVolumes)
+    }
+
+    func set(data: ChartDataViewItem) {
+        switch data.chartTrend {
+        case .neutral:
+            chartView.setCurve(color: .themeGray)
+        case .up:
+            chartView.setCurve(color: .themeGreenD)
+        case .down:
+            chartView.setCurve(color: .themeRedD)
+        }
+
+        chartView.set(chartData: data.chartData)
+        chartView.set(timeline: data.timeline, start: data.chartData.startWindow, end: data.chartData.endWindow)
+        chartView.set(highLimitText: data.maxValue, lowLimitText: data.minValue)
+    }
+
+    func setVolumes(hidden: Bool) {
+        chartView.setVolumes(hidden: hidden)
     }
 
 

@@ -54,7 +54,7 @@ class CoinChartService {
         Observable.zip(marketInfo, chartInfo)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .subscribe(onNext: { [weak self] marketInfo, chartInfo in
-                    let item = Item(rate: marketInfo.rate, rateDiff24h: marketInfo.rateDiff, chartInfo: chartInfo)
+                    let item = Item(rate: marketInfo.rate, rateDiff24h: marketInfo.rateDiff, timestamp: 0, chartInfo: chartInfo)
                     self?.state = .completed(item)
                 }, onError: { [weak self] error in
                     self?.state = .failed(error)
@@ -77,6 +77,7 @@ extension CoinChartService {
     struct Item {
         let rate: Decimal
         let rateDiff24h: Decimal
+        let timestamp: TimeInterval
         let chartInfo: ChartInfo
     }
 
