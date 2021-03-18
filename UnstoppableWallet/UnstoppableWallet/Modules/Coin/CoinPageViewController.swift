@@ -79,6 +79,10 @@ class CoinPageViewController: ThemeViewController {
         subscribeViewModels()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
+    }
+
     private func subscribeViewModels() {
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] in self?.sync(loading: $0) }
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in self?.sync(viewItem: $0) }
@@ -239,37 +243,56 @@ extension CoinPageViewController {
         )
     }
 
-    private func marketsSection() -> SectionProtocol {
-        let marketsTitle = "coin_page.markets".localized(viewModel.coinCode)
-        let investorsTitle = "coin_page.investors".localized(viewModel.coinCode)
+    private func marketsSection(fundCategories: [CoinFundCategory]) -> SectionProtocol? {
+        var rows = [RowProtocol]()
 
-        return Section(
-                id: "markets",
-                rows: [
-                    Row<B1Cell>(
-                            id: "markets",
-                            height: .heightCell48,
-                            autoDeselect: true,
-                            bind: { cell, _ in
-                                cell.set(backgroundStyle: .lawrence, isFirst: true)
-                                cell.title = marketsTitle
-                            },
-                            action: { [weak self] _ in
-                            }
-                    ),
-                    Row<B1Cell>(
-                            id: "investors",
-                            height: .heightCell48,
-                            autoDeselect: true,
-                            bind: { cell, _ in
-                                cell.set(backgroundStyle: .lawrence, isLast: true)
-                                cell.title = investorsTitle
-                            },
-                            action: { [weak self] _ in
-                            }
-                    )
-                ]
-        )
+        let hasMarkets = true
+        let hasInvestors = !fundCategories.isEmpty
+
+        if hasMarkets {
+            let marketsTitle = "coin_page.markets".localized(viewModel.coinCode)
+            let marketsRow = Row<B1Cell>(
+                    id: "markets",
+                    height: .heightCell48,
+                    autoDeselect: true,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !hasInvestors)
+                        cell.title = marketsTitle
+                    },
+                    action: { [weak self] _ in
+                    }
+            )
+
+            rows.append(marketsRow)
+        }
+
+        if !fundCategories.isEmpty {
+            let investorsTitle = "coin_page.investors".localized(viewModel.coinCode)
+            let investorsRow = Row<B1Cell>(
+                    id: "investors",
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: !hasMarkets, isLast: true)
+                        cell.title = investorsTitle
+                    },
+                    action: { [weak self] _ in
+                        self?.openInvestors(fundCategories: fundCategories)
+                    }
+            )
+
+            rows.append(investorsRow)
+        }
+
+        if !rows.isEmpty {
+            return Section(id: "markets", headerState: .margin(height: .margin12), rows: rows)
+        } else {
+            return nil
+        }
+    }
+
+    private func openInvestors(fundCategories: [CoinFundCategory]) {
+        let viewController = CoinInvestorsModule.viewController(coinCode: viewModel.coinCode, fundCategories: fundCategories)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
 }
@@ -283,7 +306,9 @@ extension CoinPageViewController: SectionsDataSource {
         sections.append(chartSection)
 
         if let viewItem = viewItem {
-            sections.append(marketsSection())
+            if let marketsSection = marketsSection(fundCategories: viewItem.fundCategories) {
+                sections.append(marketsSection)
+            }
 
             if !viewItem.links.isEmpty {
                 sections.append(linksSection(links: viewItem.links))
