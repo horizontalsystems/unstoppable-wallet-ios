@@ -35,6 +35,7 @@ class MarketListHeaderView: UITableViewHeaderFooterView {
         }
 
         fieldSelectionButton.apply(style: .secondaryTransparentIcon)
+        fieldSelectionButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
         let image = UIImage(named: "arrow_small_down_20")
         fieldSelectionButton.setImage(image?.tinted(with: .themeGray), for: .normal)
@@ -44,9 +45,10 @@ class MarketListHeaderView: UITableViewHeaderFooterView {
 
         contentView.addSubview(marketFieldModeView)
         marketFieldModeView.snp.makeConstraints { maker in
-            maker.leading.greaterThanOrEqualTo(fieldSelectionButton.snp.trailing).offset(CGFloat.margin8)
+            maker.leading.equalTo(fieldSelectionButton.snp.trailing).priority(.high)
             maker.trailing.equalToSuperview().inset(CGFloat.margin16)
-            maker.top.bottom.equalToSuperview().inset(10)
+            maker.top.equalToSuperview().inset(10)
+            maker.height.equalTo(24)
         }
 
         marketFieldModeView.onSelect = { [weak self] field in

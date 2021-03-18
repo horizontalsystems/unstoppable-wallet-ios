@@ -22,6 +22,7 @@ class MarketFieldModeView: UIView {
 
         stackView.spacing = .margin8
         stackView.alignment = .fill
+        stackView.distribution = .fillProportionally
 
         MarketModule.MarketField.allCases.forEach { field in
             let button = ThemeButton().apply(style: .tertiary)
@@ -29,6 +30,7 @@ class MarketFieldModeView: UIView {
 
             stackView.addArrangedSubview(button)
 
+            button.setContentCompressionResistancePriority(.required, for: .horizontal)
             button.addTarget(self, action: #selector(onTap(_:)), for: .touchUpInside)
             button.setTitle(field.title, for: .normal)
             button.tag = field.rawValue
