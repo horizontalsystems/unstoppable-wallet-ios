@@ -138,7 +138,7 @@ struct ChartIndicatorSet: OptionSet, Hashable {
         return ChartIndicatorSet(rawValue: resultValue)
     }
 
-    var showVolumes: Bool {
+    var hideVolumes: Bool {
         self.rawValue > 1
     }
 

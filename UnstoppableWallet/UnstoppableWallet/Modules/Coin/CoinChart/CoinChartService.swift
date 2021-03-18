@@ -38,7 +38,11 @@ class CoinChartService {
     private var latestRate: LatestRate?
     private var chartInfo: ChartInfo?
 
-    var selectedIndicator = ChartIndicatorSet()
+    var selectedIndicator = ChartIndicatorSet() {
+        didSet {
+            syncState()
+        }
+    }
 
     init(rateManager: IRateManager, chartTypeStorage: IChartTypeStorage, currencyKit: ICurrencyKit, coinType: CoinType) {
         self.rateManager = rateManager
@@ -109,6 +113,10 @@ class CoinChartService {
 }
 
 extension CoinChartService {
+
+    var chartTypeObservable: Observable<ChartType> {
+        chartTypeRelay.asObservable()
+    }
 
     var stateObservable: Observable<DataStatus<Item>> {
         stateRelay.asObservable()

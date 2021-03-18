@@ -74,7 +74,7 @@ class ChartViewCell: UITableViewCell {
 
         chartView.set(highLimitText: data.maxValue, lowLimitText: data.minValue)
 
-        chartView.setVolumes(hidden: viewItem.selectedIndicator.showVolumes)
+        chartView.setVolumes(hidden: viewItem.selectedIndicator.hideVolumes)
     }
 
     func set(data: CoinChartViewModel.ViewItem) {
