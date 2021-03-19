@@ -17,12 +17,6 @@ class CoinPageViewModel {
     init(service: CoinPageService) {
         self.service = service
 
-//        CoinPageService.stateObservable.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-//                .subscribe(onNext: { [weak self] state in
-//                    self?.sync(state: state)
-//                })
-//                .disposed(by: disposeBag)
-
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
         sync(state: service.state)
     }
@@ -33,7 +27,9 @@ class CoinPageViewModel {
         let viewItem = state.data.map { info in
             ViewItem(
                     fundCategories: info.meta.fundCategories,
-                    links: links(linkMap: info.meta.links),
+                    links: links(info: info),
+                    categories: categories(info: info),
+                    contractInfo: contractInfo(info: info),
                     returnOfInvestmentsViewItems: returnOfInvestmentsViewItemsFactory.viewItems(info: info, diffCoinCodes: service.diffCoinCodes, currentCoinCode: service.coinCode, timePeriods: CoinPageService.timePeriods)
             )
         }
@@ -41,7 +37,8 @@ class CoinPageViewModel {
         viewItemRelay.accept(viewItem)
     }
 
-    private func links(linkMap: [LinkType: String]) -> [Link] {
+    private func links(info: CoinMarketInfo) -> [Link] {
+        let linkMap = info.meta.links
         let linkTypes: [LinkType] = [.guide, .website, .whitepaper, .reddit, .twitter, .telegram, .github]
 
         return linkTypes.compactMap { linkType in
@@ -50,6 +47,20 @@ class CoinPageViewModel {
             }
 
             return Link(type: linkType, url: url)
+        }
+    }
+
+    private func categories(info: CoinMarketInfo) -> [String]? {
+        let categories = info.meta.categories
+        return categories.isEmpty ? nil : categories
+    }
+
+    private func contractInfo(info: CoinMarketInfo) -> ContractInfo? {
+        switch info.data.coinType {
+        case .erc20(let address): return ContractInfo(title: "coin_page.contract".localized("ETH"), value: address)
+        case .bep20(let address): return ContractInfo(title: "coin_page.contract".localized("BSC"), value: address)
+        case .bep2(let symbol): return ContractInfo(title: "coin_page.bep2_symbol".localized, value: symbol)
+        default: return nil
         }
     }
 
@@ -84,8 +95,15 @@ extension CoinPageViewModel {
     struct ViewItem {
         let fundCategories: [CoinFundCategory]
         let links: [Link]
+        let categories: [String]?
+        let contractInfo: ContractInfo?
 
         let returnOfInvestmentsViewItems: [[ReturnOfInvestmentsViewItem]]
+    }
+
+    struct ContractInfo {
+        let title: String
+        let value: String
     }
 
     enum ReturnOfInvestmentsViewItem {

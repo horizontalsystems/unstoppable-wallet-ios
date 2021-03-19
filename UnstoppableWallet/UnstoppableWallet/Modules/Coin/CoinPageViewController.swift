@@ -63,6 +63,8 @@ class CoinPageViewController: ThemeViewController {
         tableView.registerCell(forClass: A1Cell.self)
         tableView.registerCell(forClass: B1Cell.self)
         tableView.registerCell(forClass: B4Cell.self)
+        tableView.registerCell(forClass: D7Cell.self)
+        tableView.registerCell(forClass: D9Cell.self)
         tableView.registerCell(forClass: PriceIndicatorCell.self)
         tableView.registerCell(forClass: ChartMarketPerformanceCell.self)
         tableView.registerCell(forClass: TitledHighlightedDescriptionCell.self)
@@ -323,6 +325,47 @@ extension CoinPageViewController {
         ])
     }
 
+    private func categoriesSection(categories: [String]?, contractInfo: CoinPageViewModel.ContractInfo?) -> SectionProtocol? {
+        var rows = [RowProtocol]()
+
+        let hasCategories = categories != nil
+        let hasContractInfo = contractInfo != nil
+
+        if let categories = categories {
+            let categoriesRow = Row<D7Cell>(
+                    id: "categories",
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !hasContractInfo)
+                        cell.title = "coin_page.categories".localized
+                        cell.value = categories.joined(separator: ", ")
+                    }
+            )
+
+            rows.append(categoriesRow)
+        }
+
+        if let contractInfo = contractInfo {
+            let contractInfoRow = Row<D9Cell>(
+                    id: "investors",
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: !hasCategories, isLast: true)
+                        cell.title = contractInfo.title
+                        cell.viewItem = CopyableSecondaryButton.ViewItem(value: contractInfo.value)
+                    }
+            )
+
+            rows.append(contractInfoRow)
+        }
+
+        if !rows.isEmpty {
+            return Section(id: "categories-contact-info", headerState: .margin(height: .margin12), rows: rows)
+        } else {
+            return nil
+        }
+    }
+
 }
 
 extension CoinPageViewController: SectionsDataSource {
@@ -338,6 +381,10 @@ extension CoinPageViewController: SectionsDataSource {
 
             if let marketsSection = marketsSection(fundCategories: viewItem.fundCategories) {
                 sections.append(marketsSection)
+            }
+
+            if let categoriesSection = categoriesSection(categories: viewItem.categories, contractInfo: viewItem.contractInfo) {
+                sections.append(categoriesSection)
             }
 
             if !viewItem.links.isEmpty {
