@@ -9,6 +9,7 @@ struct CoinPageModule {
                 coinKit: App.shared.coinKit,
                 rateManager: App.shared.rateManager,
                 currencyKit: App.shared.currencyKit,
+                appConfigProvider: App.shared.appConfigProvider,
                 coinType: launchMode.coinType,
                 coinTitle: launchMode.coinTitle,
                 coinCode: launchMode.coinCode)

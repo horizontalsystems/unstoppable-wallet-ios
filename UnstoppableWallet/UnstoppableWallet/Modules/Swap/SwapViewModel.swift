@@ -186,6 +186,13 @@ extension SwapViewModel {
         openConfirmRelay.asSignal()
     }
 
+    var dexName: String {
+        switch service.dex {
+        case .uniswap: return "Uniswap"
+        case .pancake: return "PancakeSwap"
+        }
+    }
+
     func onTapSwitch() {
         tradeService.switchCoins()
     }

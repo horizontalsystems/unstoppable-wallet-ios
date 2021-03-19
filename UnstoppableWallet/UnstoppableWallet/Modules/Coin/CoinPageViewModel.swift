@@ -24,11 +24,13 @@ class CoinPageViewModel {
 
         let viewItem = state.data.map { info in
             ViewItem(
+                    returnOfInvestmentsViewItems: returnOfInvestmentsViewItemsFactory.viewItems(info: info, diffCoinCodes: service.diffCoinCodes, currentCoinCode: service.coinCode, timePeriods: CoinPageService.timePeriods),
+                    tickers: info.tickers,
                     fundCategories: info.meta.fundCategories,
-                    links: links(info: info),
                     categories: categories(info: info),
                     contractInfo: contractInfo(info: info),
-                    returnOfInvestmentsViewItems: returnOfInvestmentsViewItemsFactory.viewItems(info: info, diffCoinCodes: service.diffCoinCodes, currentCoinCode: service.coinCode, timePeriods: CoinPageService.timePeriods)
+                    guideUrl: service.guideUrl,
+                    links: links(info: info)
             )
         }
 
@@ -37,7 +39,7 @@ class CoinPageViewModel {
 
     private func links(info: CoinMarketInfo) -> [Link] {
         let linkMap = info.meta.links
-        let linkTypes: [LinkType] = [.guide, .website, .whitepaper, .reddit, .twitter, .telegram, .github]
+        let linkTypes: [LinkType] = [.website, .whitepaper, .reddit, .twitter, .telegram, .github]
 
         return linkTypes.compactMap { linkType in
             guard let url = linkMap[linkType], !url.isEmpty else {
@@ -91,12 +93,13 @@ extension CoinPageViewModel {
 extension CoinPageViewModel {
 
     struct ViewItem {
+        let returnOfInvestmentsViewItems: [[ReturnOfInvestmentsViewItem]]
+        let tickers: [MarketTicker]
         let fundCategories: [CoinFundCategory]
-        let links: [Link]
         let categories: [String]?
         let contractInfo: ContractInfo?
-
-        let returnOfInvestmentsViewItems: [[ReturnOfInvestmentsViewItem]]
+        let guideUrl: URL?
+        let links: [Link]
     }
 
     struct ContractInfo {
@@ -143,25 +146,25 @@ extension CoinPageViewModel {
 
         var icon: UIImage? {
             switch type {
-            case .guide: return UIImage(named: "academy_1_20")
             case .website: return UIImage(named: "globe_20")
-            case .whitepaper: return UIImage(named: "academy_1_20")
+            case .whitepaper: return UIImage(named: "academy_1_20") // todo
             case .reddit: return UIImage(named: "reddit_20")
             case .twitter: return UIImage(named: "twitter_20")
             case .telegram: return UIImage(named: "telegram_20")
             case .github: return UIImage(named: "github_20")
+            default: return nil
             }
         }
 
         var title: String {
             switch type {
-            case .guide: return "coin_page.guide".localized
             case .website: return "coin_page.website".localized
             case .whitepaper: return "coin_page.whitepaper".localized
             case .reddit: return "Reddit"
             case .twitter: return "Twitter"
             case .telegram: return "Telegram"
             case .github: return "Github"
+            default: return ""
             }
         }
     }
