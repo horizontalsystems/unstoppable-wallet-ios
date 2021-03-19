@@ -1756,7 +1756,7 @@
 		58AAA0CB63CAAE32DFB1B10C /* CategorizedCoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA3918718CE0B93BC5CE7 /* CategorizedCoin.swift */; };
 		58AAA0CD9B358E284D3BCF0F /* VerifiedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA863AE317EE16E35DA44 /* VerifiedInputCell.swift */; };
 		58AAA0D14CD9EDAE2DBF7540 /* SwapApproveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA681BF5F2CBDCD0D8898 /* SwapApproveViewController.swift */; };
-		58AAA0D957C3040DB447223A /* CoinReturnOfInvestmentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAABD6879B7A6E96620598 /* CoinReturnOfInvestmentsViewModel.swift */; };
+		58AAA0D957C3040DB447223A /* ReturnOfInvestmentsViewItemsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAABD6879B7A6E96620598 /* ReturnOfInvestmentsViewItemsFactory.swift */; };
 		58AAA0D961DFC2600E64FFC1 /* VerifiedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA863AE317EE16E35DA44 /* VerifiedInputCell.swift */; };
 		58AAA0DFCCFDF7C2620DF294 /* SwapTradeOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8F705C20A8977D1A865 /* SwapTradeOptionsView.swift */; };
 		58AAA0E0BE6C4035497B1ED4 /* MarketSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA76B0F1A25F650EF754A /* MarketSearchViewController.swift */; };
@@ -1923,7 +1923,7 @@
 		58AAA6A77A2B953931A1D7FC /* DataStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9F2F3A6F483B0D67E18 /* DataStatus.swift */; };
 		58AAA6A8512C145D27A80D41 /* RateCoinMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA02A5C8C597ABDCFB27E /* RateCoinMapper.swift */; };
 		58AAA6A986F3254E480B232E /* SendAmountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAEB485F977A3723BE738 /* SendAmountRouter.swift */; };
-		58AAA6AAA4432046ABF4FB64 /* CoinReturnOfInvestmentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAABD6879B7A6E96620598 /* CoinReturnOfInvestmentsViewModel.swift */; };
+		58AAA6AAA4432046ABF4FB64 /* ReturnOfInvestmentsViewItemsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAABD6879B7A6E96620598 /* ReturnOfInvestmentsViewItemsFactory.swift */; };
 		58AAA6ABD4F748833A6D1F09 /* SendConfirmationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7E197A27A5C394A51F9 /* SendConfirmationInteractor.swift */; };
 		58AAA6B67B8FD1ABBA513FEB /* SendAmountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAEB485F977A3723BE738 /* SendAmountRouter.swift */; };
 		58AAA6BA6516314DE5153AF1 /* ConnectionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA610E99CF0429135DD1D /* ConnectionError.swift */; };
@@ -2034,7 +2034,7 @@
 		58AAAABB2CAA7ECD416EE614 /* KeyboardAwareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAACC6B72757C7EDAA8577 /* KeyboardAwareViewController.swift */; };
 		58AAAAC1632FF0E4B2D035EE /* ItemSelectorSimpleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA1584471D0A8DD0F187B /* ItemSelectorSimpleCell.swift */; };
 		58AAAAC587B54002789A555A /* BackupModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA88D3ED8D5570474B589 /* BackupModule.swift */; };
-		58AAAAC5D077E8868A98F18D /* CoinReturnOfInvestmentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAABD6879B7A6E96620598 /* CoinReturnOfInvestmentsViewModel.swift */; };
+		58AAAAC5D077E8868A98F18D /* ReturnOfInvestmentsViewItemsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAABD6879B7A6E96620598 /* ReturnOfInvestmentsViewItemsFactory.swift */; };
 		58AAAAC61D3D8AD1AC4BEEAE /* AdditionalDataWithErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8483BC1E85730F04CA3 /* AdditionalDataWithErrorView.swift */; };
 		58AAAAD2D124AA0323629B0E /* SwapApproveModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA251C8ADF1AE43EAF65F /* SwapApproveModule.swift */; };
 		58AAAAD9049A97E8C314B09A /* TransactionInfoAddressMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD28A03FD9BF14672C9D /* TransactionInfoAddressMapper.swift */; };
@@ -3195,7 +3195,7 @@
 		58AAAB7A3593CAFEA65729C2 /* CoinInfoMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinInfoMap.swift; sourceTree = "<group>"; };
 		58AAABC50E5F6B5C466034C0 /* MarketSearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketSearchViewModel.swift; sourceTree = "<group>"; };
 		58AAABC875624B234499359D /* DoubleSpendInfoPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSpendInfoPresenter.swift; sourceTree = "<group>"; };
-		58AAABD6879B7A6E96620598 /* CoinReturnOfInvestmentsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinReturnOfInvestmentsViewModel.swift; sourceTree = "<group>"; };
+		58AAABD6879B7A6E96620598 /* ReturnOfInvestmentsViewItemsFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReturnOfInvestmentsViewItemsFactory.swift; sourceTree = "<group>"; };
 		58AAABDFE887324FC10AC290 /* MarketWatchlistService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketWatchlistService.swift; sourceTree = "<group>"; };
 		58AAAC01A1CB85BAC663F222 /* UniswapProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniswapProvider.swift; sourceTree = "<group>"; };
 		58AAAC2D03916C80C8DC5FE5 /* FeeSliderWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeSliderWrapper.swift; sourceTree = "<group>"; };
@@ -5351,7 +5351,7 @@
 				58AAA6CBFBB0EA959466977D /* CoinPageViewModel.swift */,
 				58AAA353DAC061C2123948FC /* CoinPageViewController.swift */,
 				58AAA473CE62597EBC49DBB6 /* CoinPageService.swift */,
-				58AAABD6879B7A6E96620598 /* CoinReturnOfInvestmentsViewModel.swift */,
+				58AAABD6879B7A6E96620598 /* ReturnOfInvestmentsViewItemsFactory.swift */,
 				58AAA0A849656F4B3769C5E7 /* Cells */,
 				58AAA55A4A6A97C25F84034F /* CoinChartFactory.swift */,
 				11B35043F81AA7646DFDDBBC /* CoinInvestors */,
@@ -6677,7 +6677,7 @@
 				58AAAE34277704BD76D4C751 /* CoinPageViewModel.swift in Sources */,
 				58AAA3BC4B4E587CB97A0C16 /* CoinPageViewController.swift in Sources */,
 				58AAA3930956FAC9C67F6E85 /* CoinPageService.swift in Sources */,
-				58AAAAC5D077E8868A98F18D /* CoinReturnOfInvestmentsViewModel.swift in Sources */,
+				58AAAAC5D077E8868A98F18D /* ReturnOfInvestmentsViewItemsFactory.swift in Sources */,
 				11B352EE8D6C89B0164E3E21 /* SwapPoweredByCell.swift in Sources */,
 				58AAA58C37EA1B03E5B4094E /* CoinChartRateCell.swift in Sources */,
 				58AAACB08AD69B92414B66B1 /* CoinChartFactory.swift in Sources */,
@@ -7483,7 +7483,7 @@
 				58AAA124FE17B1CDAB5689BA /* CoinPageViewModel.swift in Sources */,
 				58AAA89F6715638D3C8B3ACA /* CoinPageViewController.swift in Sources */,
 				58AAADE670B2A60FB179B4FC /* CoinPageService.swift in Sources */,
-				58AAA6AAA4432046ABF4FB64 /* CoinReturnOfInvestmentsViewModel.swift in Sources */,
+				58AAA6AAA4432046ABF4FB64 /* ReturnOfInvestmentsViewItemsFactory.swift in Sources */,
 				1A564EDED3DA0C27A223C54A /* BaseReturnOfInvestmentsCollectionViewCell.swift in Sources */,
 				1A564D209D3AFA40F808C8FB /* ReturnOfInvestmentsContentCollectionViewCell.swift in Sources */,
 				1A564E8CA0CFBE8B1E232B60 /* ReturnOfInvestmentsTableViewCell.swift in Sources */,
@@ -8255,7 +8255,7 @@
 				58AAACCD229B4D4D525A8182 /* CoinPageViewModel.swift in Sources */,
 				58AAAA2323F7CFCAB96FCF04 /* CoinPageViewController.swift in Sources */,
 				58AAA02F249C69B7B9D62B2A /* CoinPageService.swift in Sources */,
-				58AAA0D957C3040DB447223A /* CoinReturnOfInvestmentsViewModel.swift in Sources */,
+				58AAA0D957C3040DB447223A /* ReturnOfInvestmentsViewItemsFactory.swift in Sources */,
 				1A564AFAB995335885C6782C /* BaseReturnOfInvestmentsCollectionViewCell.swift in Sources */,
 				1A564D81725888B31D56F389 /* ReturnOfInvestmentsContentCollectionViewCell.swift in Sources */,
 				1A5648B6D95710939690F22A /* ReturnOfInvestmentsTableViewCell.swift in Sources */,

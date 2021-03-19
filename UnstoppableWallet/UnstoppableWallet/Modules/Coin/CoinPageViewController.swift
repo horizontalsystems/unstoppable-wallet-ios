@@ -32,13 +32,9 @@ class CoinPageViewController: ThemeViewController {
 
         currentRateCell = CoinChartRateCell(viewModel: chartViewModel)
         chartViewCell = ChartViewCell(configuration: configuration)
-        returnOfInvestmentsCell = ReturnOfInvestmentsTableViewCell(viewModel: CoinReturnOfInvestmentsViewModel(service: viewModel.service))
+        returnOfInvestmentsCell = ReturnOfInvestmentsTableViewCell()
 
         super.init()
-
-        returnOfInvestmentsCell.onChangeHeight = { [weak self] in
-            self?.tableView.reloadData()
-        }
 
         chartViewCell.delegate = chartViewModel
 
@@ -314,8 +310,9 @@ extension CoinPageViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
-    private var returnOfInvestmentsSection: SectionProtocol {
-        Section(id: "return_of_investments_section", footerState: .margin(height: .margin12), rows: [
+    private func returnOfInvestmentsSection(viewItems: [[CoinPageViewModel.ReturnOfInvestmentsViewItem]]) -> SectionProtocol {
+        returnOfInvestmentsCell.bind(viewItems: viewItems)
+        return Section(id: "return_of_investments_section", footerState: .margin(height: .margin12), rows: [
             StaticRow(
                     cell: returnOfInvestmentsCell,
                     id: "return_of_investments_cell",
@@ -335,9 +332,10 @@ extension CoinPageViewController: SectionsDataSource {
 
         sections.append(subtitleSection)
         sections.append(chartSection)
-        sections.append(returnOfInvestmentsSection)
 
         if let viewItem = viewItem {
+            sections.append(returnOfInvestmentsSection(viewItems: viewItem.returnOfInvestmentsViewItems))
+
             if let marketsSection = marketsSection(fundCategories: viewItem.fundCategories) {
                 sections.append(marketsSection)
             }
