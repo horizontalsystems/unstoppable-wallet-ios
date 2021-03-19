@@ -199,7 +199,7 @@
 
 "send.confirmation.you_send" = "You Send";
 "send.confirmation.amount" = "Amount";
-"send.confirmation.to" = "To";
+"send.confirmation.to" = "Кому";
 "send.confirmation.domain" = "Домен";
 "send.confirmation.address" = "Адрес";
 "send.confirmation.account" = "Account";
@@ -243,7 +243,7 @@
 "swap.button_error.insufficient_balance" = "Недостаточный баланс";
 "swap.button_error.impact_too_high" = "Высокое отклонение цены";
 
-"swap.price" = "Price";
+"swap.price" = "Цена";
 "swap.price_impact" = "Отклонение от рын. цены";
 "swap.max_min" = "Макс / Мин";
 "swap.maximum_paid" = "Максимальная Выплата";
@@ -287,22 +287,22 @@
 
 "swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on %@ blockchain.\n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
 
-"swap.dex_info.header_dex_related" = "%@ Related";
+"swap.dex_info.header_dex_related" = "o %@";
 "swap.dex_info.header_allowance" = "Разрешение";
-"swap.dex_info.content_allowance" = "The amount of some currency that service can spend on your behalf when executing token swaps. Sufficient allowance is required before swap action can take place.";
-"swap.dex_info.header_price_impact" = "Price Impact";
-"swap.dex_info.content_price_impact" = "Expected price deviation from a shown price, typically increases with the swap amount.";
-"swap.dex_info.header_swap_fee" = "Swap Fee";
-"swap.dex_info.content_swap_fee" = "A service fee for the swap action on platform, shown in the currency the user sells. For most orders it should be either 0.3 % or 0.6 %.";
-"swap.dex_info.header_guaranteed_amount" = "Guaranteed Amount";
-"swap.dex_info.content_guaranteed_amount" = "The minimum amount a user is going to receive as a result of a swap action.";
-"swap.dex_info.header_maximum_spend" = "Maximum Spend";
-"swap.dex_info.content_maximum_spend" = "The maximum amount a user is going to spend as a result of a swap action.";
+"swap.dex_info.content_allowance" = "Сумма в некоторых валютах, которую сервис может потратить от вашего имени при выполнении обмена токенов. Может потребоваться разрешение на использование достаточной суммы перед обменом.";
+"swap.dex_info.header_price_impact" = "Отклонение от рын. цены";
+"swap.dex_info.content_price_impact" = "Ожидаемое отклонение цены от указанной цены, обычно увеличивается при увеличении суммы обмена.";
+"swap.dex_info.header_swap_fee" = "Комиссия за обмен";
+"swap.dex_info.content_swap_fee" = "Плата за услугу обмена на платформе, показана в валюте, в которой продает пользователь. Для большинства заказов составляет или 0,3% или 0,6%.";
+"swap.dex_info.header_guaranteed_amount" = "Гарантированная Сумма";
+"swap.dex_info.content_guaranteed_amount" = "Минимальная сумма, которую получит пользователь в результате обмена.";
+"swap.dex_info.header_maximum_spend" = "Максимальная Трата";
+"swap.dex_info.content_maximum_spend" = "Максимальная сумма, которую получит пользователь в результате обмена.";
 
 "swap.dex_info.header_other" = "Другое";
 "swap.dex_info.header_transaction_fee" = "Комиссия за транзакцию";
-"swap.dex_info.content_transaction_fee" = "The estimated processing cost of the given transaction on %@ blockchain. %@ related transactions will typically cost more than generic token transfer transactions.";
-"swap.dex_info.header_transaction_speed" = "Transaction Speed";
+"swap.dex_info.content_transaction_fee" = "Примерная стоимость услуги по обработке данной транзакции на блокчейне %@. Стоимость транзакций, связанных с %@, обычно выше, чем стоимость транзакций по передаче обычных токенов.";
+"swap.dex_info.header_transaction_speed" = "Скорость Транзакции";
 "swap.dex_info.content_transaction_speed" = "Transactions with higher transaction fee will result in faster processing speeds. The opposite is true as well.";
 
 "swap.dex_info.link_button" = "%@ Сайт";
@@ -793,8 +793,8 @@
 "add_token_selector.choose_blockchain" = "Выбрать Блокчейн";
 "add_token_selector.add_token" = "Добавить Токен";
 "add_token_selector.erc20_token" = "Токен ERC20";
-"add_token_selector.bep20_token" = "BEP20 Token";
-"add_token_selector.bep2_token" = "BEP2 Token";
+"add_token_selector.bep20_token" = "Токен BEP20";
+"add_token_selector.bep2_token" = "Токен BEP2";
 
 // Add Token
 
@@ -808,7 +808,7 @@
 
 "add_erc20_token.title" = "Добавить ERC20";
 
-"add_bep20_token.title" = "Add BEP20";
+"add_bep20_token.title" = "Добавить BEP20";
 
 "add_bep2_token.title" = "Добавить BEP2";
 "add_bep2_token.token_symbol" = "Символ токена";
