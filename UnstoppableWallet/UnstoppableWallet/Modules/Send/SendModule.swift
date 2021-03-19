@@ -182,7 +182,7 @@ struct AmountData {
             parts.append(formatted)
         }
 
-        return parts.joined(separator: " | ")
+        return parts.joined(separator: "  |  ")
     }
 }
 
