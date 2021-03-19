@@ -167,7 +167,7 @@ extension CoinPageViewModel {
         var icon: UIImage? {
             switch type {
             case .website: return UIImage(named: "globe_20")
-            case .whitepaper: return UIImage(named: "academy_1_20") // todo
+            case .whitepaper: return UIImage(named: "clipboard_20")
             case .reddit: return UIImage(named: "reddit_20")
             case .twitter: return UIImage(named: "twitter_20")
             case .telegram: return UIImage(named: "telegram_20")
