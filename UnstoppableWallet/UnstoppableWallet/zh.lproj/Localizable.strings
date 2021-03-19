@@ -38,7 +38,7 @@
 "offline" = "离线";
 "confirm" = "确认";
 "connect" = "连接";
-"price" = "Price";
+"price" = "价格";
 "note" = "Note";
 
 "version" = "版本%@";
@@ -196,8 +196,8 @@
 "send.fee_info.content_conclusion" = "Unstoppable钱包以网络活动为基础作出有根据的猜测，但不能保证所建议费用值总能实现预期行为。";
 
 "send.confirmation.you_send" = "You Send";
-"send.confirmation.amount" = "Amount";
-"send.confirmation.to" = "To";
+"send.confirmation.amount" = "金额";
+"send.confirmation.to" = "接收人";
 "send.confirmation.domain" = "域名";
 "send.confirmation.address" = "地址";
 "send.confirmation.account" = "Account";
@@ -297,7 +297,7 @@
 "swap.dex_info.header_maximum_spend" = "Maximum Spend";
 "swap.dex_info.content_maximum_spend" = "The maximum amount a user is going to spend as a result of a swap action.";
 
-"swap.dex_info.header_other" = "Other";
+"swap.dex_info.header_other" = "其他";
 "swap.dex_info.header_transaction_fee" = "Transaction Fee";
 "swap.dex_info.content_transaction_fee" = "The estimated processing cost of the given transaction on %@ blockchain. %@ related transactions will typically cost more than generic token transfer transactions.";
 "swap.dex_info.header_transaction_speed" = "Transaction Speed";
