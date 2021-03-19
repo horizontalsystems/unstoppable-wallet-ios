@@ -12,14 +12,14 @@ class BalanceViewItemFactory {
     private func topViewItem(item: BalanceItem, currency: Currency) -> BalanceTopViewItem {
         let coin = item.wallet.coin
         let state = item.state
-        let marketInfo = item.marketInfo
+        let latestRate = item.latestRate
 
         return BalanceTopViewItem(
                 iconCoinType: iconCoinType(coin: coin, state: state),
                 coinTitle: coin.title,
                 blockchainBadge: coin.type.blockchainType,
-                rateValue: rateValue(currency: currency, marketInfo: marketInfo),
-                diff: diff(marketInfo: marketInfo),
+                rateValue: rateValue(currency: currency, latestRate: latestRate),
+                diff: diff(latestRate: latestRate),
                 syncSpinnerProgress: syncSpinnerProgress(state: state),
                 indefiniteSearchCircle: indefiniteSearchCircle(state: state),
                 failedImageViewVisible: failedImageViewVisible(state: state)
@@ -43,7 +43,7 @@ class BalanceViewItemFactory {
             } else {
                 return .amount(
                         coinValue: coinValue(coin: item.wallet.coin, value: balance, state: state),
-                        currencyValue: currencyValue(currency: currency, value: balance, state: state, marketInfo: item.marketInfo)
+                        currencyValue: currencyValue(currency: currency, value: balance, state: state, latestRate: item.latestRate)
                 )
             }
         } else {
@@ -58,7 +58,7 @@ class BalanceViewItemFactory {
 
         return BalanceLockedAmountViewItem(
                 lockedCoinValue: coinValue(coin: item.wallet.coin, value: balanceLocked, state: state),
-                lockedCurrencyValue: currencyValue(currency: currency, value: balanceLocked, state: state, marketInfo: item.marketInfo)
+                lockedCurrencyValue: currencyValue(currency: currency, value: balanceLocked, state: state, latestRate: item.latestRate)
         )
     }
 
@@ -104,26 +104,26 @@ class BalanceViewItemFactory {
         return false
     }
 
-    private func rateValue(currency: Currency, marketInfo: MarketInfo?) -> (text: String, dimmed: Bool)? {
-        guard let marketInfo = marketInfo else {
+    private func rateValue(currency: Currency, latestRate: LatestRate?) -> (text: String, dimmed: Bool)? {
+        guard let latestRate = latestRate else {
             return nil
         }
 
-        let exchangeValue = CurrencyValue(currency: currency, value: marketInfo.rate)
+        let exchangeValue = CurrencyValue(currency: currency, value: latestRate.rate)
 
         guard let formattedValue = ValueFormatter.instance.format(currencyValue: exchangeValue, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false) else {
             return nil
         }
 
-        return (text: formattedValue, dimmed: marketInfo.expired)
+        return (text: formattedValue, dimmed: latestRate.expired)
     }
 
-    private func diff(marketInfo: MarketInfo?) -> (value: Decimal, dimmed: Bool)? {
-        guard let marketInfo = marketInfo else {
+    private func diff(latestRate: LatestRate?) -> (value: Decimal, dimmed: Bool)? {
+        guard let latestRate = latestRate else {
             return nil
         }
 
-        return (value: marketInfo.rateDiff, dimmed: marketInfo.expired)
+        return (value: latestRate.rateDiff24h, dimmed: latestRate.expired)
     }
 
     private func coinValue(coin: Coin, value: Decimal, state: AdapterState) -> (text: String?, dimmed: Bool) {
@@ -133,11 +133,11 @@ class BalanceViewItemFactory {
         )
     }
 
-    private func currencyValue(currency: Currency, value: Decimal, state: AdapterState, marketInfo: MarketInfo?) -> (text: String?, dimmed: Bool)? {
-        marketInfo.map { marketInfo in
+    private func currencyValue(currency: Currency, value: Decimal, state: AdapterState, latestRate: LatestRate?) -> (text: String?, dimmed: Bool)? {
+        latestRate.map { latestRate in
             (
-                    text: ValueFormatter.instance.format(currencyValue: CurrencyValue(currency: currency, value: value * marketInfo.rate), fractionPolicy: .threshold(high: 1000, low: 0.01)),
-                    dimmed: state != .synced || marketInfo.expired
+                    text: ValueFormatter.instance.format(currencyValue: CurrencyValue(currency: currency, value: value * latestRate.rate), fractionPolicy: .threshold(high: 1000, low: 0.01)),
+                    dimmed: state != .synced || latestRate.expired
             )
         }
     }
@@ -162,10 +162,10 @@ extension BalanceViewItemFactory: IBalanceViewItemFactory {
         var upToDate = true
 
         items.forEach { item in
-            if let balanceTotal = item.balanceTotal, let marketInfo = item.marketInfo {
-                total += balanceTotal * marketInfo.rate
+            if let balanceTotal = item.balanceTotal, let latestRate = item.latestRate {
+                total += balanceTotal * latestRate.rate
 
-                if marketInfo.expired {
+                if latestRate.expired {
                     upToDate = false
                 }
             }

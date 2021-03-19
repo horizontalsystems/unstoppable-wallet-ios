@@ -47,7 +47,7 @@ extension SendPresenter: ISendViewDelegate {
         view?.set(coin: coin)
         handler.onViewDidLoad()
 
-        interactor.subscribeToMarketInfo(coinType: coin.type, currencyCode: interactor.baseCurrency.code)
+        interactor.subscribeToLatestRate(coinType: coin.type, currencyCode: interactor.baseCurrency.code)
 
         let rateValue = interactor.nonExpiredRateValue(coinType: coin.type, currencyCode: interactor.baseCurrency.code)
         handler.sync(rateValue: rateValue)
@@ -115,9 +115,9 @@ extension SendPresenter: ISendInteractorDelegate {
         view?.show(error: error.convertedError)
     }
 
-    func didReceive(marketInfo: MarketInfo) {
-        if !marketInfo.expired {
-            handler.sync(rateValue: marketInfo.rate)
+    func didReceive(latestRate: LatestRate) {
+        if !latestRate.expired {
+            handler.sync(rateValue: latestRate.rate)
             return
         }
         handler.sync(rateValue: nil)

@@ -33,14 +33,14 @@ protocol ISendInteractor {
 
     func nonExpiredRateValue(coinType: CoinType, currencyCode: String) -> Decimal?
     func send(single: Single<Void>, logger: Logger)
-    func subscribeToMarketInfo(coinType: CoinType, currencyCode: String)
+    func subscribeToLatestRate(coinType: CoinType, currencyCode: String)
 }
 
 protocol ISendInteractorDelegate: AnyObject {
     func sync()
     func didSend()
     func didFailToSend(error: Error)
-    func didReceive(marketInfo: MarketInfo)
+    func didReceive(latestRate: LatestRate)
 }
 
 protocol ISendHandler: AnyObject {

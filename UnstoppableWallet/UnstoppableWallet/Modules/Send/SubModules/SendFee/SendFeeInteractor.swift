@@ -34,26 +34,24 @@ extension SendFeeInteractor: ISendFeeInteractor {
         feeCoinProvider.feeCoinProtocol(coin: coin)
     }
 
-    func subscribeToMarketInfo(coinType: CoinType?, currencyCode: String) {
+    func subscribeToLatestRate(coinType: CoinType?, currencyCode: String) {
         guard let coinType = coinType else {
             return
         }
 
-        //todo:
-//        rateManager.marketInfoObservable(coinType: coinType, currencyCode: currencyCode)
-//                .observeOn(MainScheduler.instance)
-//                .subscribe(onNext: { [weak self] marketInfo in
-//                    self?.delegate?.didReceive(marketInfo: marketInfo)
-//                })
-//                .disposed(by: disposeBag)
+        rateManager.latestRateObservable(coinType: coinType, currencyCode: currencyCode)
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] latestRate in
+                    self?.delegate?.didReceive(latestRate: latestRate)
+                })
+                .disposed(by: disposeBag)
     }
 
     func nonExpiredRateValue(coinType: CoinType, currencyCode: String) -> Decimal? {
-        nil
-        //todo:
-//        guard let marketInfo = rateManager.marketInfo(coinType: coinType, currencyCode: currencyCode), !marketInfo.expired else {
-//        }
-//        return marketInfo.rate
+        guard let latestRate = rateManager.latestRate(coinType: coinType, currencyCode: currencyCode), !latestRate.expired else {
+            return nil
+        }
+        return latestRate.rate
     }
 
 }

@@ -59,7 +59,7 @@ class BalancePresenter {
 
     private func fillLatestRates() {
         for item in items {
-            item.marketInfo = interactor.marketInfo(coinType: item.wallet.coin.type, currencyCode: currency.code)
+            item.latestRate = interactor.latestRate(coinType: item.wallet.coin.type, currencyCode: currency.code)
         }
     }
 
@@ -291,12 +291,12 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         }
     }
 
-    func didUpdate(marketInfos: [CoinType: MarketInfo]) {
+    func didUpdate(latestRates: [CoinType: LatestRate]) {
         queue.async {
-            for (coinCode, marketInfo) in marketInfos {
+            for (coinCode, latestRate) in latestRates {
                 for (index, item) in self.items.enumerated() {
                     if item.wallet.coin.type == coinCode {
-                        item.marketInfo = marketInfo
+                        item.latestRate = latestRate
                         self.viewItems[index] = self.viewItem(item: item)
                     }
                 }
