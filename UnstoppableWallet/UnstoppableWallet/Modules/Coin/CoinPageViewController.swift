@@ -13,7 +13,7 @@ class CoinPageViewController: ThemeViewController {
     private var urlManager: IUrlManager
     private let disposeBag = DisposeBag()
 
-    private var viewItem: CoinPageViewModel.ViewItem?
+    private var state: CoinPageViewModel.State = .loading
 
     private let tableView = SectionsTableView(style: .grouped)
     private let subtitleCell = AdditionalDataCell()
@@ -23,7 +23,6 @@ class CoinPageViewController: ThemeViewController {
     private let chartIntervalAndSelectedRateCell = ChartIntervalAndSelectedRateCell()
     private let chartViewCell: ChartViewCell
     private let indicatorSelectorCell = IndicatorSelectorCell()
-    private let returnOfInvestmentsCell = ReturnOfInvestmentsTableViewCell()
 
     /* Description */
     private let descriptionTextCell = ReadMoreTextCell()
@@ -67,10 +66,13 @@ class CoinPageViewController: ThemeViewController {
         tableView.registerCell(forClass: B4Cell.self)
         tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: D9Cell.self)
+        tableView.registerCell(forClass: ReturnOfInvestmentsTableViewCell.self)
         tableView.registerCell(forClass: PriceIndicatorCell.self)
         tableView.registerCell(forClass: ChartMarketPerformanceCell.self)
         tableView.registerCell(forClass: TitledHighlightedDescriptionCell.self)
         tableView.registerCell(forClass: BrandFooterCell.self)
+        tableView.registerCell(forClass: SpinnerCell.self)
+        tableView.registerCell(forClass: ErrorCell.self)
 
         chartIntervalAndSelectedRateCell.bind(filters: chartViewModel.chartTypes.map {
             .item(title: $0)
@@ -97,12 +99,7 @@ class CoinPageViewController: ThemeViewController {
     }
 
     private func subscribeViewModels() {
-        subscribe(disposeBag, viewModel.loadingDriver) { [weak self] in
-            self?.sync(loading: $0)
-        }
-        subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in
-            self?.sync(viewItem: $0)
-        }
+        subscribe(disposeBag, viewModel.stateDriver) { [weak self] in self?.sync(state: $0) }
 
         // chart section
         subscribe(disposeBag, chartViewModel.pointSelectModeEnabledDriver) { [weak self] in
@@ -138,17 +135,8 @@ class CoinPageViewController: ThemeViewController {
 
 extension CoinPageViewController {
 
-    private func sync(loading: Bool) {
-//        tableView.reload()
-    }
-
-    private func sync(viewItem: CoinPageViewModel.ViewItem?) {
-        self.viewItem = viewItem
-
-        if let viewItem = viewItem {
-            returnOfInvestmentsCell.bind(viewItems: viewItem.returnOfInvestmentsViewItems)
-        }
-
+    private func sync(state: CoinPageViewModel.State) {
+        self.state = state
         tableView.reload()
     }
 
@@ -400,16 +388,18 @@ extension CoinPageViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
-    private var returnOfInvestmentsSection: SectionProtocol {
+    private func returnOfInvestmentsSection(viewItems: [[CoinPageViewModel.ReturnOfInvestmentsViewItem]]) -> SectionProtocol {
         Section(
                 id: "return_of_investments_section",
                 headerState: .margin(height: .margin12),
                 rows: [
-                    StaticRow(
-                            cell: returnOfInvestmentsCell,
+                    Row<ReturnOfInvestmentsTableViewCell>(
                             id: "return_of_investments_cell",
                             dynamicHeight: { [weak self] _ in
-                                self?.returnOfInvestmentsCell.cellHeight ?? 0
+                                ReturnOfInvestmentsTableViewCell.height(viewItems: viewItems)
+                            },
+                            bind: { cell, _ in
+                                cell.bind(viewItems: viewItems)
                             }
                     )
                 ]
@@ -500,6 +490,35 @@ extension CoinPageViewController {
         )
     }
 
+    private var spinnerSection: SectionProtocol {
+        Section(
+                id: "spinner",
+                rows: [
+                    Row<SpinnerCell>(
+                            id: "spinner",
+                            height: 100
+                    )
+                ]
+        )
+    }
+
+    private func errorSection(text: String) -> SectionProtocol {
+        Section(
+                id: "error",
+                rows: [
+                    Row<ErrorCell>(
+                            id: "error",
+                            dynamicHeight: { [weak self] _ in
+                                100 // todo: calculate height in ErrorCell
+                            },
+                            bind: { cell, _ in
+                                cell.errorText = text
+                            }
+                    )
+                ]
+        )
+    }
+
 }
 
 extension CoinPageViewController: SectionsDataSource {
@@ -510,8 +529,12 @@ extension CoinPageViewController: SectionsDataSource {
         sections.append(subtitleSection)
         sections.append(chartSection)
 
-        if let viewItem = viewItem {
-            sections.append(returnOfInvestmentsSection)
+        switch state {
+        case .loading:
+            sections.append(spinnerSection)
+
+        case .loaded(let viewItem):
+            sections.append(returnOfInvestmentsSection(viewItems: viewItem.returnOfInvestmentsViewItems))
 
             if let marketInfoSection = marketInfoSection(marketInfo: viewItem.marketInfo) {
                 sections.append(marketInfoSection)
@@ -534,6 +557,9 @@ extension CoinPageViewController: SectionsDataSource {
             }
 
             sections.append(poweredBySection(text: "Powered by CoinGecko API"))
+
+        case .failed(let error):
+            sections.append(errorSection(text: error))
         }
 
         return sections

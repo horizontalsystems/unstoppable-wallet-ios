@@ -8,19 +8,19 @@ class ReturnOfInvestmentsTableViewCell: BaseThemeCell {
     private let disposeBag = DisposeBag()
 
     private let sideMargin: CGFloat = .margin16
-    private let gridRowHeight: CGFloat = .heightSingleLineCell
+    private static let gridRowHeight: CGFloat = .heightSingleLineCell
 
     private let collectionView: UICollectionView
 
     private var viewItems = [[CoinPageViewModel.ReturnOfInvestmentsViewItem]]()
 
-    init() {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.sectionInset = .zero
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 
-        super.init(style: .default, reuseIdentifier: nil)
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
 
@@ -42,10 +42,6 @@ class ReturnOfInvestmentsTableViewCell: BaseThemeCell {
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override var cellHeight: CGFloat {
-        CGFloat(viewItems.count) * gridRowHeight
     }
 
     func bind(viewItems: [[CoinPageViewModel.ReturnOfInvestmentsViewItem]]) {
@@ -86,7 +82,7 @@ extension ReturnOfInvestmentsTableViewCell: UICollectionViewDelegateFlowLayout, 
         let minWidth = collectionView.frame.size.width / 4
         let currentWidth = collectionView.frame.size.width / CGFloat(viewItems[indexPath.section].count)
 
-        return CGSize(width: max(minWidth, currentWidth), height: gridRowHeight)
+        return CGSize(width: max(minWidth, currentWidth), height: Self.gridRowHeight)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -104,6 +100,14 @@ extension ReturnOfInvestmentsTableViewCell: UICollectionViewDelegateFlowLayout, 
         if let cell = cell as? ReturnOfInvestmentsContentCollectionViewCell {
             cell.set(value: amount, horizontalFirst: horizontalFirst, verticalFirst: verticalFirst)
         }
+    }
+
+}
+
+extension ReturnOfInvestmentsTableViewCell {
+
+    static func height(viewItems: [[CoinPageViewModel.ReturnOfInvestmentsViewItem]]) -> CGFloat {
+        CGFloat(viewItems.count) * gridRowHeight
     }
 
 }

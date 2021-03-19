@@ -10,8 +10,7 @@ class CoinPageViewModel {
     private let marketViewItemFactory = MarketViewItemFactory()
     private let disposeBag = DisposeBag()
 
-    private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
-    private let loadingRelay = BehaviorRelay<Bool>(value: false)
+    private let stateRelay = BehaviorRelay<State>(value: .loading)
 
     init(service: CoinPageService) {
         self.service = service
@@ -21,10 +20,11 @@ class CoinPageViewModel {
     }
 
     private func sync(state: DataStatus<CoinMarketInfo>) {
-        loadingRelay.accept(state.isLoading)
-
-        let viewItem = state.data.map { info in
-            ViewItem(
+        switch state {
+        case .loading:
+            stateRelay.accept(.loading)
+        case .completed(let info):
+            let viewItem = ViewItem(
                     returnOfInvestmentsViewItems: returnOfInvestmentsViewItemsFactory.viewItems(info: info, diffCoinCodes: service.diffCoinCodes, currentCoinCode: service.coinCode, timePeriods: CoinPageService.timePeriods),
                     tickers: info.tickers,
                     fundCategories: info.meta.fundCategories,
@@ -35,9 +35,10 @@ class CoinPageViewModel {
                     marketInfo: marketInfo(rate: info.rate, marketCap: info.marketCap, volume24h: info.volume24h, circulatingSupply: info.circulatingSupply, totalSupply: info.totalSupply),
                     description: info.meta.description
             )
+            stateRelay.accept(.loaded(viewItem: viewItem))
+        case .failed:
+            stateRelay.accept(.failed(error: "market.sync_error".localized))
         }
-
-        viewItemRelay.accept(viewItem)
     }
 
     private func links(info: CoinMarketInfo) -> [Link] {
@@ -91,12 +92,8 @@ extension CoinPageViewModel {
         service.coinTitle
     }
 
-    var viewItemDriver: Driver<ViewItem?> {
-        viewItemRelay.asDriver()
-    }
-
-    var loadingDriver: Driver<Bool> {
-        loadingRelay.asDriver()
+    var stateDriver: Driver<State> {
+        stateRelay.asDriver()
     }
 
     var coinCode: String {
@@ -106,6 +103,12 @@ extension CoinPageViewModel {
 }
 
 extension CoinPageViewModel {
+
+    enum State {
+        case loading
+        case loaded(viewItem: ViewItem)
+        case failed(error: String)
+    }
 
     struct ViewItem {
         let returnOfInvestmentsViewItems: [[ReturnOfInvestmentsViewItem]]
