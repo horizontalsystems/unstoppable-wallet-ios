@@ -5,14 +5,12 @@ import XRatesKit
 import CoinKit
 
 class CoinPageViewModel {
+    private let service: CoinPageService
+    private let returnOfInvestmentsViewItemsFactory = ReturnOfInvestmentsViewItemsFactory()
     private let disposeBag = DisposeBag()
 
     private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
-
-    private let service: CoinPageService
-
-    private let returnOfInvestmentsViewItemsFactory = ReturnOfInvestmentsViewItemsFactory()
 
     init(service: CoinPageService) {
         self.service = service

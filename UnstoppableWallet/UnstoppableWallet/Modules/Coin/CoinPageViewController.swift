@@ -23,7 +23,7 @@ class CoinPageViewController: ThemeViewController {
     private let chartIntervalAndSelectedRateCell = ChartIntervalAndSelectedRateCell()
     private let chartViewCell: ChartViewCell
     private let indicatorSelectorCell = IndicatorSelectorCell()
-    private let returnOfInvestmentsCell: ReturnOfInvestmentsTableViewCell
+    private let returnOfInvestmentsCell = ReturnOfInvestmentsTableViewCell()
 
     init(viewModel: CoinPageViewModel, chartViewModel: CoinChartViewModel, configuration: ChartConfiguration, urlManager: IUrlManager) {
         self.viewModel = viewModel
@@ -32,7 +32,6 @@ class CoinPageViewController: ThemeViewController {
 
         currentRateCell = CoinChartRateCell(viewModel: chartViewModel)
         chartViewCell = ChartViewCell(configuration: configuration)
-        returnOfInvestmentsCell = ReturnOfInvestmentsTableViewCell()
 
         super.init()
 
@@ -117,6 +116,11 @@ extension CoinPageViewController {
 
     private func sync(viewItem: CoinPageViewModel.ViewItem?) {
         self.viewItem = viewItem
+
+        if let viewItem = viewItem {
+            returnOfInvestmentsCell.bind(viewItems: viewItem.returnOfInvestmentsViewItems)
+        }
+
         tableView.reload()
     }
 
@@ -310,17 +314,20 @@ extension CoinPageViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
-    private func returnOfInvestmentsSection(viewItems: [[CoinPageViewModel.ReturnOfInvestmentsViewItem]]) -> SectionProtocol {
-        returnOfInvestmentsCell.bind(viewItems: viewItems)
-        return Section(id: "return_of_investments_section", footerState: .margin(height: .margin12), rows: [
-            StaticRow(
-                    cell: returnOfInvestmentsCell,
-                    id: "return_of_investments_cell",
-                    dynamicHeight: { [weak self] _ in
-                        self?.returnOfInvestmentsCell.cellHeight ?? 0
-                    }
-            )
-        ])
+    private var returnOfInvestmentsSection: SectionProtocol {
+        Section(
+                id: "return_of_investments_section",
+                footerState: .margin(height: .margin12),
+                rows: [
+                    StaticRow(
+                            cell: returnOfInvestmentsCell,
+                            id: "return_of_investments_cell",
+                            dynamicHeight: { [weak self] _ in
+                                self?.returnOfInvestmentsCell.cellHeight ?? 0
+                            }
+                    )
+                ]
+        )
     }
 
 }
@@ -334,7 +341,7 @@ extension CoinPageViewController: SectionsDataSource {
         sections.append(chartSection)
 
         if let viewItem = viewItem {
-            sections.append(returnOfInvestmentsSection(viewItems: viewItem.returnOfInvestmentsViewItems))
+            sections.append(returnOfInvestmentsSection)
 
             if let marketsSection = marketsSection(fundCategories: viewItem.fundCategories) {
                 sections.append(marketsSection)
