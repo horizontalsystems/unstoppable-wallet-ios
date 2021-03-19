@@ -6,7 +6,7 @@ import CoinKit
 
 class FiatService {
     private var disposeBag = DisposeBag()
-    private var marketInfoDisposeBag = DisposeBag()
+    private var latestRateDisposeBag = DisposeBag()
 
     private let switchService: AmountTypeSwitchService
     private let currencyKit: ICurrencyKit
@@ -46,7 +46,7 @@ class FiatService {
 
     private var toggleAvailableRelay = BehaviorRelay<Bool>(value: false)
 
-    private var currency: Currency {
+    var currency: Currency {
         currencyKit.baseCurrency
     }
 
@@ -62,26 +62,26 @@ class FiatService {
         sync()
     }
 
-//    private func sync(marketInfo: MarketInfo?) {
-//        if let marketInfo = marketInfo, !marketInfo.expired {
-//            rate = marketInfo.rate
-//
-//            if coinAmountLocked {
-//                syncCurrencyAmount()
-//            } else {
-//                switch switchService.amountType {
-//                case .coin:
-//                    syncCurrencyAmount()
-//                case .currency:
-//                    syncCoinAmount()
-//                }
-//            }
-//        } else {
-//            rate = nil
-//        }
-//
-//        sync()
-//    }
+    private func sync(latestRate: LatestRate?) {
+        if let latestRate = latestRate, !latestRate.expired {
+            rate = latestRate.rate
+
+            if coinAmountLocked {
+                syncCurrencyAmount()
+            } else {
+                switch switchService.amountType {
+                case .coin:
+                    syncCurrencyAmount()
+                case .currency:
+                    syncCoinAmount()
+                }
+            }
+        } else {
+            rate = nil
+        }
+
+        sync()
+    }
 
     private func sync(amountType: AmountTypeSwitchService.AmountType) {
         sync()
@@ -145,17 +145,17 @@ extension FiatService {
     func set(coin: Coin?) {
         self.coin = coin
 
-        marketInfoDisposeBag = DisposeBag()
+        latestRateDisposeBag = DisposeBag()
 
         if let coin = coin {
-//            sync(marketInfo: rateManager.marketInfo(coinType: coin.type, currencyCode: currency.code))
+            sync(latestRate: rateManager.latestRate(coinType: coin.type, currencyCode: currency.code))
 
-//            rateManager.marketInfoObservable(coinType: coin.type, currencyCode: currency.code)
-//                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-//                    .subscribe(onNext: { [weak self] marketInfo in
-//                        self?.sync(marketInfo: marketInfo)
-//                    })
-//                    .disposed(by: marketInfoDisposeBag)
+            rateManager.latestRateObservable(coinType: coin.type, currencyCode: currency.code)
+                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                    .subscribe(onNext: { [weak self] latestRate in
+                        self?.sync(latestRate: latestRate)
+                    })
+                    .disposed(by: latestRateDisposeBag)
         } else {
             rate = nil
             currencyAmount = nil
