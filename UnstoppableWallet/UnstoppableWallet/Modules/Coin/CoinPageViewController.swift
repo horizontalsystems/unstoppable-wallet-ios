@@ -25,6 +25,9 @@ class CoinPageViewController: ThemeViewController {
     private let indicatorSelectorCell = IndicatorSelectorCell()
     private let returnOfInvestmentsCell = ReturnOfInvestmentsTableViewCell()
 
+    /* Description */
+    private let descriptionTextCell = ReadMoreTextCell()
+
     init(viewModel: CoinPageViewModel, chartViewModel: CoinChartViewModel, configuration: ChartConfiguration, urlManager: IUrlManager) {
         self.viewModel = viewModel
         self.chartViewModel = chartViewModel
@@ -69,13 +72,20 @@ class CoinPageViewController: ThemeViewController {
         tableView.registerCell(forClass: TitledHighlightedDescriptionCell.self)
         tableView.registerCell(forClass: BrandFooterCell.self)
 
-        chartIntervalAndSelectedRateCell.bind(filters: chartViewModel.chartTypes.map { .item(title: $0) })
+        chartIntervalAndSelectedRateCell.bind(filters: chartViewModel.chartTypes.map {
+            .item(title: $0)
+        })
         chartIntervalAndSelectedRateCell.onSelectInterval = { [weak self] index in
             self?.chartViewModel.onSelectType(at: index)
         }
 
         indicatorSelectorCell.onTapIndicator = { [weak self] indicator in
             self?.chartViewModel.onTap(indicator: indicator)
+        }
+
+        descriptionTextCell.set(backgroundStyle: .transparent, isFirst: true)
+        descriptionTextCell.onChangeHeight = { [weak self] in
+            self?.reloadTable()
         }
 
         subtitleCell.bind(title: viewModel.subtitle, value: nil)
@@ -87,16 +97,32 @@ class CoinPageViewController: ThemeViewController {
     }
 
     private func subscribeViewModels() {
-        subscribe(disposeBag, viewModel.loadingDriver) { [weak self] in self?.sync(loading: $0) }
-        subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in self?.sync(viewItem: $0) }
+        subscribe(disposeBag, viewModel.loadingDriver) { [weak self] in
+            self?.sync(loading: $0)
+        }
+        subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in
+            self?.sync(viewItem: $0)
+        }
 
         // chart section
-        subscribe(disposeBag, chartViewModel.pointSelectModeEnabledDriver) { [weak self] in self?.syncChart(selected: $0) }
-        subscribe(disposeBag, chartViewModel.pointSelectedItemDriver) { [weak self] in self?.syncChart(selectedViewItem: $0) }
-        subscribe(disposeBag, chartViewModel.chartTypeIndexDriver) { [weak self] in self?.syncChart(typeIndex: $0) }
-        subscribe(disposeBag, chartViewModel.loadingDriver) { [weak self] in self?.syncChart(loading: $0) }
-        subscribe(disposeBag, chartViewModel.errorDriver) { [weak self] in self?.syncChart(error: $0) }
-        subscribe(disposeBag, chartViewModel.chartInfoDriver) { [weak self] in self?.syncChart(viewItem: $0) }
+        subscribe(disposeBag, chartViewModel.pointSelectModeEnabledDriver) { [weak self] in
+            self?.syncChart(selected: $0)
+        }
+        subscribe(disposeBag, chartViewModel.pointSelectedItemDriver) { [weak self] in
+            self?.syncChart(selectedViewItem: $0)
+        }
+        subscribe(disposeBag, chartViewModel.chartTypeIndexDriver) { [weak self] in
+            self?.syncChart(typeIndex: $0)
+        }
+        subscribe(disposeBag, chartViewModel.loadingDriver) { [weak self] in
+            self?.syncChart(loading: $0)
+        }
+        subscribe(disposeBag, chartViewModel.errorDriver) { [weak self] in
+            self?.syncChart(error: $0)
+        }
+        subscribe(disposeBag, chartViewModel.chartInfoDriver) { [weak self] in
+            self?.syncChart(viewItem: $0)
+        }
     }
 
     private func reloadTable() {
@@ -195,25 +221,55 @@ extension CoinPageViewController {
     }
 
     private var chartSection: SectionProtocol {
-        Section(id: "chart",
-                footerState: .margin(height: .margin12),
+        Section(
+                id: "chart",
                 rows: [
                     StaticRow(
-                        cell: currentRateCell,
-                        id: "currentRate",
-                        height: ChartCurrentRateCell.cellHeight),
+                            cell: currentRateCell,
+                            id: "currentRate",
+                            height: ChartCurrentRateCell.cellHeight),
                     StaticRow(
-                        cell: chartIntervalAndSelectedRateCell,
-                        id: "chartIntervalAndSelectedRate",
-                        height: .heightSingleLineCell),
+                            cell: chartIntervalAndSelectedRateCell,
+                            id: "chartIntervalAndSelectedRate",
+                            height: .heightSingleLineCell),
                     StaticRow(
-                        cell: chartViewCell,
-                        id: "chartView",
-                        height: ChartViewCell.cellHeight),
+                            cell: chartViewCell,
+                            id: "chartView",
+                            height: ChartViewCell.cellHeight),
                     StaticRow(
-                        cell: indicatorSelectorCell,
-                        id: "indicatorSelector",
-                        height: .heightSingleLineCell),
+                            cell: indicatorSelectorCell,
+                            id: "indicatorSelector",
+                            height: .heightSingleLineCell),
+                ])
+    }
+
+    private func headerRow(title: String) -> RowProtocol {
+        Row<B4Cell>(
+                id: "header_cell",
+                hash: title,
+                height: .heightSingleLineCell,
+                bind: { cell, _ in
+                    cell.set(backgroundStyle: .transparent)
+                    cell.title = title
+                    cell.selectionStyle = .none
+                })
+    }
+
+    private func descriptionSection(description: String) -> SectionProtocol {
+        descriptionTextCell.contentText = description
+
+        return Section(
+                id: "description",
+                headerState: .margin(height: .margin12),
+                rows: [
+                    headerRow(title: "chart.about.header".localized),
+                    StaticRow(
+                            cell: descriptionTextCell,
+                            id: "about_cell",
+                            dynamicHeight: { [weak self] containerWidth in
+                                self?.descriptionTextCell.cellHeight(containerWidth: containerWidth) ?? 0
+                            }
+                    )
                 ])
     }
 
@@ -347,7 +403,7 @@ extension CoinPageViewController {
     private var returnOfInvestmentsSection: SectionProtocol {
         Section(
                 id: "return_of_investments_section",
-                footerState: .margin(height: .margin12),
+                headerState: .margin(height: .margin12),
                 rows: [
                     StaticRow(
                             cell: returnOfInvestmentsCell,
@@ -401,6 +457,49 @@ extension CoinPageViewController {
         }
     }
 
+    private func marketRow(id: String, title: String, text: String, isFirst: Bool, isLast: Bool) -> RowProtocol {
+        Row<D7Cell>(
+                id: id,
+                height: .heightCell48,
+                bind: { cell, _ in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                    cell.title = title
+                    cell.value = text
+                }
+        )
+    }
+
+    private func marketInfoSection(marketInfo: CoinPageViewModel.MarketInfo) -> SectionProtocol? {
+        var datas = [
+            marketInfo.marketCap.map { (id: "market_cap", title: "coin_page.market_cap".localized, text: $0) },
+            marketInfo.volume24h.map { (id: "volume_24h", title: "coin_page.volume_24h".localized, text: $0) },
+            marketInfo.circulatingSupply.map { (id: "circulating_supply", title: "coin_page.circulating_supply".localized, text: $0) },
+            marketInfo.totalSupply.map { (id: "total_supply", title: "coin_page.total_supply".localized, text: $0) },
+            marketInfo.dillutedMarketCap.map { (id: "dilluted_m_cap", title: "coin_page.dilluted_market_cap".localized, text: $0) }
+        ].compactMap { $0 }
+
+        guard !datas.isEmpty else {
+            return nil
+        }
+
+        var rows = datas.enumerated().map { index, tuple in
+            marketRow(
+                    id: tuple.id,
+                    title: tuple.title,
+                    text: tuple.text,
+                    isFirst: index == 0,
+                    isLast: index == datas.count - 1
+            )
+        }
+
+
+        return Section(
+            id: "market_info_section",
+            headerState: .margin(height: .margin12),
+            rows: rows
+        )
+    }
+
 }
 
 extension CoinPageViewController: SectionsDataSource {
@@ -414,8 +513,16 @@ extension CoinPageViewController: SectionsDataSource {
         if let viewItem = viewItem {
             sections.append(returnOfInvestmentsSection)
 
+            if let marketInfoSection = marketInfoSection(marketInfo: viewItem.marketInfo) {
+                sections.append(marketInfoSection)
+            }
+
             if let marketsSection = marketsSection(fundCategories: viewItem.fundCategories, tickers: viewItem.tickers) {
                 sections.append(marketsSection)
+            }
+
+            if !viewItem.description.isEmpty {
+                sections.append(descriptionSection(description: viewItem.description))
             }
 
             if let categoriesSection = categoriesSection(categories: viewItem.categories, contractInfo: viewItem.contractInfo) {

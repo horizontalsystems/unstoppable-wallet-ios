@@ -92,4 +92,8 @@ extension CoinPageService {
         stateRelay.asObservable()
     }
 
+    var currency: Currency {
+        currencyKit.baseCurrency
+    }
+
 }

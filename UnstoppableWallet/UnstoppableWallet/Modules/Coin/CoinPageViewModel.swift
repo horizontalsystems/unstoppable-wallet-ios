@@ -7,6 +7,7 @@ import CoinKit
 class CoinPageViewModel {
     private let service: CoinPageService
     private let returnOfInvestmentsViewItemsFactory = ReturnOfInvestmentsViewItemsFactory()
+    private let marketViewItemFactory = MarketViewItemFactory()
     private let disposeBag = DisposeBag()
 
     private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
@@ -30,7 +31,9 @@ class CoinPageViewModel {
                     categories: categories(info: info),
                     contractInfo: contractInfo(info: info),
                     guideUrl: service.guideUrl,
-                    links: links(info: info)
+                    links: links(info: info),
+                    marketInfo: marketInfo(rate: info.rate, marketCap: info.marketCap, volume24h: info.volume24h, circulatingSupply: info.circulatingSupply, totalSupply: info.totalSupply),
+                    description: info.meta.description
             )
         }
 
@@ -62,6 +65,18 @@ class CoinPageViewModel {
         case .bep2(let symbol): return ContractInfo(title: "coin_page.bep2_symbol".localized, value: symbol)
         default: return nil
         }
+    }
+
+    private func marketInfo(rate: Decimal?, marketCap: Decimal?, volume24h: Decimal?, circulatingSupply: Decimal?, totalSupply: Decimal?) -> MarketInfo {
+        marketViewItemFactory.viewItem(
+                rate: rate,
+                marketCap: marketCap,
+                volume24h: volume24h,
+                circulatingSupply: circulatingSupply,
+                totalSupply: totalSupply,
+                currency: service.currency,
+                coinCode: service.coinCode
+        )
     }
 
 }
@@ -100,6 +115,8 @@ extension CoinPageViewModel {
         let contractInfo: ContractInfo?
         let guideUrl: URL?
         let links: [Link]
+        let marketInfo: MarketInfo
+        let description: String
     }
 
     struct ContractInfo {
@@ -167,6 +184,14 @@ extension CoinPageViewModel {
             default: return ""
             }
         }
+    }
+
+    struct MarketInfo {
+        public let marketCap: String?
+        public let volume24h: String?
+        public let circulatingSupply: String?
+        public let totalSupply: String?
+        public let dillutedMarketCap: String?
     }
 
 }
