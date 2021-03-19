@@ -146,7 +146,7 @@ extension SendEvmService: IRecipientAddressService {
                 addressError = nil
             } catch {
                 addressData = nil
-                addressError = error
+                addressError = error.convertedError
             }
         } else {
             addressData = nil
