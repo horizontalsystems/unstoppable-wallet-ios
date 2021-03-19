@@ -408,7 +408,7 @@
 
 "market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favorites by clicking on star icon in the asset page";
 
-"market.search.title" = "Search";
+"market.search.title" = "搜索​​​​";
 "market.search.empty_text" = "No results found";
 
 "market.advanced_search.title" = "Advanced Search";
@@ -427,7 +427,7 @@
 "market.advanced_search.reset_all" = "Reset";
 
 "market.advanced_search.any" = "Any";
-"market.advanced_search.less_5_m" = "< 5M";
+"market.advanced_search.less_5_m" = "<5M";
 "market.advanced_search.m_5_m_10" = "5M - 20M";
 "market.advanced_search.m_20_m_100" = "20M - 100M";
 "market.advanced_search.m_100_b_1" = "100M - 1B";
@@ -792,7 +792,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "add_token_selector.add_token" = "添加代币";
 "add_token_selector.erc20_token" = "ERC20 Token";
 "add_token_selector.bep20_token" = "BEP20 Token";
-"add_token_selector.bep2_token" = "BEP2 Token";
+"add_token_selector.bep2_token" = "BEP2 代币";
 
 // Add Token
 
@@ -801,12 +801,12 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "add_token.decimals" = "小数";
 "add_token.already_exists" = "该代币已在代币管理器列表中。";
 
-"add_evm_token.contract_not_exist" = "Contract not found";
-"add_evm_token.contract_address" = "Contract Address";
+"add_evm_token.contract_not_exist" = "没找到合同";
+"add_evm_token.contract_address" = "智能合约地址";
 
 "add_erc20_token.title" = "添加ERC20";
 
-"add_bep20_token.title" = "Add BEP20";
+"add_bep20_token.title" = "添加BEP2";
 
 "add_bep2_token.title" = "添加BEP2";
 "add_bep2_token.token_symbol" = "代币符号";
@@ -875,5 +875,5 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 // Onboarding
 
 "onboarding.balance.description" = "You don't have any wallets yet. Create new or restore existing";
-"onboarding.balance.create" = "Create";
-"onboarding.balance.restore" = "Restore";
+"onboarding.balance.create" = "创建";
+"onboarding.balance.restore" = "恢复";
