@@ -13,6 +13,7 @@ class CoinPageService {
     private let coinKit: CoinKit.Kit
     private let rateManager: IRateManager
     private let currencyKit: ICurrencyKit
+    private let appConfigProvider: IAppConfigProvider
     private let coinType: CoinType
 
     let coinTitle: String
@@ -25,10 +26,11 @@ class CoinPageService {
         }
     }
 
-    init(coinKit: CoinKit.Kit, rateManager: IRateManager, currencyKit: ICurrencyKit, coinType: CoinType, coinTitle: String, coinCode: String) {
+    init(coinKit: CoinKit.Kit, rateManager: IRateManager, currencyKit: ICurrencyKit, appConfigProvider: IAppConfigProvider, coinType: CoinType, coinTitle: String, coinCode: String) {
         self.coinKit = coinKit
         self.rateManager = rateManager
         self.currencyKit = currencyKit
+        self.appConfigProvider = appConfigProvider
         self.coinType = coinType
         self.coinTitle = coinTitle
         self.coinCode = coinCode
@@ -64,6 +66,22 @@ class CoinPageService {
         codes.append(contentsOf: [coinKit.coin(type: .bitcoin), coinKit.coin(type: .ethereum)].compactMap { $0?.code })
 
         return codes
+    }
+
+    var guideUrl: URL? {
+        guard let guideFileUrl = guideFileUrl else {
+            return nil
+        }
+
+        return URL(string: guideFileUrl, relativeTo: appConfigProvider.guidesIndexUrl)
+    }
+
+    private var guideFileUrl: String? {
+        switch coinType {
+        case .bitcoin: return "guides/token_guides/en/bitcoin.md"
+        case .ethereum: return "guides/token_guides/en/ethereum.md"
+        default: return nil
+        }
     }
 
 }

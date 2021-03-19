@@ -217,12 +217,34 @@ extension CoinPageViewController {
                 ])
     }
 
-    private func linksSection(links: [CoinPageViewModel.Link]) -> SectionProtocol {
-        Section(
+    private func linksSection(guideUrl: URL?, links: [CoinPageViewModel.Link]) -> SectionProtocol {
+        var guideRows = [RowProtocol]()
+
+        if let guideUrl = guideUrl {
+            let isLast = links.isEmpty
+
+            let guideRow = Row<A1Cell>(
+                    id: "guide",
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: isLast)
+                        cell.titleImage = UIImage(named: "academy_1_20")
+                        cell.title = "coin_page.guide".localized
+                    },
+                    action: { [weak self] _ in
+                        let module = MarkdownModule.viewController(url: guideUrl)
+                        self?.navigationController?.pushViewController(module, animated: true)
+                    }
+            )
+
+            guideRows.append(guideRow)
+        }
+
+        return Section(
                 id: "links",
                 headerState: .margin(height: .margin12),
-                rows: links.enumerated().map { index, link in
-                    let isFirst = index == 0
+                rows: guideRows + links.enumerated().map { index, link in
+                    let isFirst = guideRows.isEmpty && index == 0
                     let isLast = index == links.count - 1
 
                     return Row<A1Cell>(
@@ -264,13 +286,13 @@ extension CoinPageViewController {
         )
     }
 
-    private func marketsSection(fundCategories: [CoinFundCategory]) -> SectionProtocol? {
+    private func marketsSection(fundCategories: [CoinFundCategory], tickers: [MarketTicker]) -> SectionProtocol? {
         var rows = [RowProtocol]()
 
-        let hasMarkets = true
+        let hasMarkets = !tickers.isEmpty
         let hasInvestors = !fundCategories.isEmpty
 
-        if hasMarkets {
+        if !tickers.isEmpty {
             let marketsTitle = "coin_page.markets".localized(viewModel.coinCode)
             let marketsRow = Row<B1Cell>(
                     id: "markets",
@@ -281,6 +303,7 @@ extension CoinPageViewController {
                         cell.title = marketsTitle
                     },
                     action: { [weak self] _ in
+                        self?.openMarkets(tickers: tickers)
                     }
             )
 
@@ -309,6 +332,11 @@ extension CoinPageViewController {
         } else {
             return nil
         }
+    }
+
+    private func openMarkets(tickers: [MarketTicker]) {
+        let viewController = CoinMarketsModule.viewController(coinCode: viewModel.coinCode, tickers: tickers)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
     private func openInvestors(fundCategories: [CoinFundCategory]) {
@@ -386,7 +414,7 @@ extension CoinPageViewController: SectionsDataSource {
         if let viewItem = viewItem {
             sections.append(returnOfInvestmentsSection)
 
-            if let marketsSection = marketsSection(fundCategories: viewItem.fundCategories) {
+            if let marketsSection = marketsSection(fundCategories: viewItem.fundCategories, tickers: viewItem.tickers) {
                 sections.append(marketsSection)
             }
 
@@ -394,8 +422,8 @@ extension CoinPageViewController: SectionsDataSource {
                 sections.append(categoriesSection)
             }
 
-            if !viewItem.links.isEmpty {
-                sections.append(linksSection(links: viewItem.links))
+            if viewItem.guideUrl != nil || !viewItem.links.isEmpty {
+                sections.append(linksSection(guideUrl: viewItem.guideUrl, links: viewItem.links))
             }
 
             sections.append(poweredBySection(text: "Powered by CoinGecko API"))

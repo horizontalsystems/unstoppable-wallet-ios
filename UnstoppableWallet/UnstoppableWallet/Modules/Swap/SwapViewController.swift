@@ -16,11 +16,11 @@ class SwapViewController: ThemeViewController {
     private let viewModel: SwapViewModel
 
     private let tableView = SectionsTableView(style: .grouped)
+    private let poweredByView = BrandFooterView()
 
     private let fromCoinCardCell: SwapCoinCardCell
     private let priceCell = SwapPriceCell()
     private let toCoinCardCell: SwapCoinCardCell
-    private let poweredByCell = SwapPoweredByCell()
 //    private let slippageCell = AdditionalDataCellNew()
 //    private let deadlineCell = AdditionalDataCellNew()
 //    private let recipientCell = AdditionalDataCellNew()
@@ -79,7 +79,13 @@ class SwapViewController: ThemeViewController {
         tableView.sectionDataSource = self
         tableView.keyboardDismissMode = .onDrag
 
-        poweredByCell.set(dex: viewModel.service.dex)
+        view.addSubview(poweredByView)
+        poweredByView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        poweredByView.title = "Powered by \(viewModel.dexName)"
 
         advancedSettingsCell.set(backgroundStyle: .transparent, isLast: true)
         advancedSettingsCell.title  = "swap.advanced_settings".localized
@@ -162,7 +168,7 @@ class SwapViewController: ThemeViewController {
             guaranteedAmountCell.isVisible = false
         }
 
-        poweredByCell.isVisible = tradeViewItem == nil
+        poweredByView.isHidden = tradeViewItem != nil
 
         reloadTable()
     }
@@ -289,18 +295,6 @@ extension SwapViewController: SectionsDataSource {
                             cell: toCoinCardCell,
                             id: "to-card",
                             height: toCoinCardCell.cellHeight
-                    )
-                ]
-        ))
-
-        sections.append(Section(
-                id: "powered-by",
-                headerState: .margin(height: poweredByCell.isVisible ? .margin12 : 0),
-                rows: [
-                    StaticRow(
-                            cell: poweredByCell,
-                            id: "powered-by",
-                            height: poweredByCell.cellHeight
                     )
                 ]
         ))

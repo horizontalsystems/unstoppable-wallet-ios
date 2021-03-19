@@ -5,13 +5,7 @@ import ThemeKit
 class BrandFooterCell: UITableViewCell {
     static let brandText = "© Horizontal Systems 2021"
 
-    private static let topPadding: CGFloat = .margin12
-    private static let bottomPadding: CGFloat = .margin32
-    private static let horizontalPadding: CGFloat = .margin24
-    private static let labelFont: UIFont = .caption
-
-    private let separatorView = UIView()
-    private let label = UILabel()
+    private let brandFooterView = BrandFooterView()
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -19,25 +13,10 @@ class BrandFooterCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
 
-        contentView.addSubview(separatorView)
-        separatorView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightOneDp)
+        contentView.addSubview(brandFooterView)
+        brandFooterView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
         }
-
-        separatorView.backgroundColor = .themeSteel10
-
-        contentView.addSubview(label)
-        label.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(BrandFooterCell.horizontalPadding)
-            maker.top.equalTo(separatorView.snp.top).offset(BrandFooterCell.topPadding)
-        }
-
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.font = BrandFooterCell.labelFont
-        label.textColor = .themeGray
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -45,8 +24,8 @@ class BrandFooterCell: UITableViewCell {
     }
 
     var title: String? {
-        get { label.text }
-        set { label.text = newValue }
+        get { brandFooterView.title }
+        set { brandFooterView.title = newValue }
     }
 
 }
@@ -54,10 +33,7 @@ class BrandFooterCell: UITableViewCell {
 extension BrandFooterCell {
 
     static func height(containerWidth: CGFloat, title: String) -> CGFloat {
-        let textWidth = containerWidth - 2 * horizontalPadding
-        let textHeight = title.height(forContainerWidth: textWidth, font: labelFont)
-
-        return topPadding + textHeight + bottomPadding
+        BrandFooterView.height(containerWidth: containerWidth, title: title)
     }
 
 }
