@@ -44,4 +44,18 @@ class CurrencyCompactFormatter {
         return data.postfix?.localized(formattedValue) ?? formattedValue
     }
 
+    public func format(symbol: String, value: Decimal?, fractionMaximumFractionDigits: Int = 1) -> String? {
+        guard let value = value else {
+            return nil
+        }
+        let data = CurrencyCompactFormatter.compactData(value: value)
+
+        currencyFormatter.maximumFractionDigits = fractionMaximumFractionDigits
+
+        guard let formattedValue = currencyFormatter.string(from: data.value as NSNumber) else {
+            return nil
+        }
+        return (data.postfix?.localized(formattedValue) ?? formattedValue) + " " + symbol
+    }
+
 }
