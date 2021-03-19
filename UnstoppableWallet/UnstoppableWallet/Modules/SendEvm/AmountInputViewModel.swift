@@ -15,7 +15,7 @@ protocol IAmountInputService {
 }
 
 class AmountInputViewModel {
-    private static let maxValidDecimals = 8
+    private static let maxCoinDecimal = 8
 
     private let disposeBag = DisposeBag()
 
@@ -38,7 +38,7 @@ class AmountInputViewModel {
     private var secondaryTextRelay = BehaviorRelay<String?>(value: nil)
     private var switchEnabledRelay: BehaviorRelay<Bool>
 
-    private var validDecimals = AmountInputViewModel.maxValidDecimals
+    private var coinDecimal = AmountInputViewModel.maxCoinDecimal
 
     init(service: IAmountInputService, fiatService: FiatService, switchService: AmountTypeSwitchService, decimalParser: IAmountDecimalParser, isMaxSupported: Bool = true) {
         self.service = service
@@ -67,8 +67,8 @@ class AmountInputViewModel {
     }
 
     private func sync(coin: Coin?) {
-        let max = AmountInputViewModel.maxValidDecimals
-        validDecimals = min(max, (coin?.decimal ?? max))
+        let max = AmountInputViewModel.maxCoinDecimal
+        coinDecimal = min(max, (coin?.decimal ?? max))
 
         fiatService.set(coin: coin)
 
@@ -105,14 +105,14 @@ class AmountInputViewModel {
                 return nil
             }
 
-            decimalFormatter.maximumFractionDigits = min(amountInfo.decimal, Self.maxValidDecimals)
+            decimalFormatter.maximumFractionDigits = min(amountInfo.decimal, Self.maxCoinDecimal)
             return decimalFormatter.string(from: amountInfo.value as NSNumber)
         case .amount(let amount):
             if amount == 0 {
                 return nil
             }
 
-            decimalFormatter.maximumFractionDigits = Self.maxValidDecimals
+            decimalFormatter.maximumFractionDigits = Self.maxCoinDecimal
             return decimalFormatter.string(from: amount as NSNumber)
         }
     }
@@ -135,7 +135,10 @@ extension AmountInputViewModel {
             return false
         }
 
-        return amount.decimalCount <= validDecimals
+        switch switchService.amountType {
+        case .coin: return amount.decimalCount <= coinDecimal
+        case .currency: return amount.decimalCount <= fiatService.currency.decimal
+        }
     }
 
     func equalValue(lhs: String?, rhs: String?) -> Bool {
