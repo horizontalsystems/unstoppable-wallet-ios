@@ -17,7 +17,7 @@ class ReturnOfInvestmentsSideCollectionViewCell: BaseReturnOfInvestmentsCollecti
         fatalError("init(coder:) has not been implemented")
     }
 
-    func set(viewItem: CoinReturnOfInvestmentsViewModel.ViewItem, horizontalFirst: Bool, verticalFirst: Bool) {
+    func set(viewItem: CoinPageViewModel.ReturnOfInvestmentsViewItem, horizontalFirst: Bool, verticalFirst: Bool) {
         super.set(horizontalFirst: horizontalFirst, verticalFirst: verticalFirst)
 
         label.font = viewItem.font

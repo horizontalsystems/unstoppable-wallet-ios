@@ -10,7 +10,9 @@ class CoinPageViewModel {
     private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
 
-    let service: CoinPageService
+    private let service: CoinPageService
+
+    private let returnOfInvestmentsViewItemsFactory = ReturnOfInvestmentsViewItemsFactory()
 
     init(service: CoinPageService) {
         self.service = service
@@ -31,7 +33,8 @@ class CoinPageViewModel {
         let viewItem = state.data.map { info in
             ViewItem(
                     fundCategories: info.meta.fundCategories,
-                    links: links(linkMap: info.meta.links)
+                    links: links(linkMap: info.meta.links),
+                    returnOfInvestmentsViewItems: returnOfInvestmentsViewItemsFactory.viewItems(info: info, diffCoinCodes: service.diffCoinCodes, currentCoinCode: service.coinCode, timePeriods: CoinPageService.timePeriods)
             )
         }
 
@@ -81,6 +84,41 @@ extension CoinPageViewModel {
     struct ViewItem {
         let fundCategories: [CoinFundCategory]
         let links: [Link]
+
+        let returnOfInvestmentsViewItems: [[ReturnOfInvestmentsViewItem]]
+    }
+
+    enum ReturnOfInvestmentsViewItem {
+        case title(String)
+        case subtitle(String)
+        case content(String)
+        case value(Decimal?)
+
+        var font: UIFont? {
+            switch self {
+            case .title: return .subhead1
+            case .subtitle: return .caption
+            case .content: return .caption
+            case .value: return nil
+            }
+        }
+
+        var color: UIColor? {
+            switch self {
+            case .title: return .themeOz
+            case .subtitle: return .themeBran
+            case .content: return .themeGray
+            case .value: return nil
+            }
+        }
+
+        var backgroundColor: UIColor? {
+            switch self {
+            case .title, .subtitle: return .themeLawrence
+            case .content, .value: return .themeBlake
+            }
+        }
+
     }
 
     struct Link {

@@ -12,28 +12,15 @@ class ReturnOfInvestmentsTableViewCell: BaseThemeCell {
 
     private let collectionView: UICollectionView
 
-    private var viewModel: CoinReturnOfInvestmentsViewModel
-    private var viewItems = [[CoinReturnOfInvestmentsViewModel.ViewItem]]()
+    private var viewItems = [[CoinPageViewModel.ReturnOfInvestmentsViewItem]]()
 
-    var onChangeHeight: (() -> ())?
-
-    init(viewModel: CoinReturnOfInvestmentsViewModel) {
-        self.viewModel = viewModel
-
+    init() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.sectionInset = .zero
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 
         super.init(style: .default, reuseIdentifier: nil)
-
-        viewModel.viewItemDriver
-                .drive(onNext: { [weak self] viewItems in
-                    self?.viewItems = viewItems
-                    self?.collectionView.reloadData()
-                    self?.onChangeHeight?()
-                })
-                .disposed(by: disposeBag)
 
         set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
 
@@ -59,6 +46,11 @@ class ReturnOfInvestmentsTableViewCell: BaseThemeCell {
 
     override var cellHeight: CGFloat {
         CGFloat(viewItems.count) * gridRowHeight
+    }
+
+    func bind(viewItems: [[CoinPageViewModel.ReturnOfInvestmentsViewItem]]) {
+        self.viewItems = viewItems
+        collectionView.reloadData()
     }
 
 }
@@ -101,7 +93,7 @@ extension ReturnOfInvestmentsTableViewCell: UICollectionViewDelegateFlowLayout, 
         0
     }
 
-    func bindSideCell(title: String, type: CoinReturnOfInvestmentsViewModel.ViewItem, cell: UICollectionViewCell, horizontalFirst: Bool, verticalFirst: Bool) {
+    func bindSideCell(title: String, type: CoinPageViewModel.ReturnOfInvestmentsViewItem, cell: UICollectionViewCell, horizontalFirst: Bool, verticalFirst: Bool) {
         if let cell = cell as? ReturnOfInvestmentsSideCollectionViewCell {
             cell.set(viewItem: type, horizontalFirst: horizontalFirst, verticalFirst: verticalFirst)
             cell.title = title
@@ -111,35 +103,6 @@ extension ReturnOfInvestmentsTableViewCell: UICollectionViewDelegateFlowLayout, 
     private func bindContentCell(amount: Decimal?, cell: UICollectionViewCell, horizontalFirst: Bool, verticalFirst: Bool) {
         if let cell = cell as? ReturnOfInvestmentsContentCollectionViewCell {
             cell.set(value: amount, horizontalFirst: horizontalFirst, verticalFirst: verticalFirst)
-        }
-    }
-
-}
-
-extension CoinReturnOfInvestmentsViewModel.ViewItem {
-
-    var font: UIFont? {
-        switch self {
-        case .title: return .subhead1
-        case .subtitle: return .caption
-        case .content: return .caption
-        case .value: return nil
-        }
-    }
-
-    var color: UIColor? {
-        switch self {
-        case .title: return .themeOz
-        case .subtitle: return .themeBran
-        case .content: return .themeGray
-        case .value: return nil
-        }
-    }
-
-    var backgroundColor: UIColor? {
-        switch self {
-        case .title, .subtitle: return .themeLawrence
-        case .content, .value: return .themeBlake
         }
     }
 
