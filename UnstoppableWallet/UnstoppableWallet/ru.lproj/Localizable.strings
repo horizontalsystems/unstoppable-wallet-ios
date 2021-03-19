@@ -734,6 +734,8 @@
 "chart.about.read_more" = "Read More";
 "chart.about.read_less" = "Read Less";
 
+"coin_page.return_of_investments" = "ROI";
+
 // Create Wallet
 
 "create_wallet.title" = "Создать Кошелек";
