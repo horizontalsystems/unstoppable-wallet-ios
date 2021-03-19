@@ -20,7 +20,8 @@ class CoinMarketsViewModel {
                     market: ticker.marketName,
                     pair: "\(ticker.base)/\(ticker.target)",
                     rate: "\(ticker.rate)",
-                    volume: "\(ticker.volume) \(ticker.target)"
+                    volume: CurrencyCompactFormatter.instance.format(symbol: ticker.base, value: ticker.volume) ?? ""
+
             )
         }
     }
