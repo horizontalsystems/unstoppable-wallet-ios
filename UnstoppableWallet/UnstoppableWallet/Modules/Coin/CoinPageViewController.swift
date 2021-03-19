@@ -34,7 +34,7 @@ class CoinPageViewController: ThemeViewController {
 
         super.init()
 
-        chartViewCell.delegate = self
+        chartViewCell.delegate = chartViewModel
 
         hidesBottomBarWhenPushed = true
     }
@@ -88,6 +88,8 @@ class CoinPageViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in self?.sync(viewItem: $0) }
 
         // chart section
+        subscribe(disposeBag, chartViewModel.pointSelectModeEnabledDriver) { [weak self] in self?.syncChart(selected: $0) }
+        subscribe(disposeBag, chartViewModel.pointSelectedItemDriver) { [weak self] in self?.syncChart(selectedViewItem: $0) }
         subscribe(disposeBag, chartViewModel.chartTypeIndexDriver) { [weak self] in self?.syncChart(typeIndex: $0) }
         subscribe(disposeBag, chartViewModel.loadingDriver) { [weak self] in self?.syncChart(loading: $0) }
         subscribe(disposeBag, chartViewModel.errorDriver) { [weak self] in self?.syncChart(error: $0) }
@@ -139,6 +141,17 @@ extension CoinPageViewController {
 
             indicatorSelectorCell.bind(indicator: indicator, selected: show)
         }
+    }
+
+    private func syncChart(selected: Bool) {
+        chartIntervalAndSelectedRateCell.bind(displayMode: selected ? .selectedRate : .interval)
+    }
+
+    private func syncChart(selectedViewItem: SelectedPointViewItem?) {
+        guard let viewItem = selectedViewItem else {
+            return
+        }
+        chartIntervalAndSelectedRateCell.bind(selectedPointViewItem: viewItem)
     }
 
     private func syncChart(typeIndex: Int) {
@@ -318,19 +331,6 @@ extension CoinPageViewController: SectionsDataSource {
         }
 
         return sections
-    }
-
-}
-
-extension CoinPageViewController: IChartViewTouchDelegate {
-
-    public func touchDown() {
-    }
-
-    public func select(item: ChartItem) {
-    }
-
-    public func touchUp() {
     }
 
 }

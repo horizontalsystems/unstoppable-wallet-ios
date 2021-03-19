@@ -10,6 +10,10 @@ class CoinChartViewModel {
     private let factory: CoinChartFactory
     private let disposeBag = DisposeBag()
 
+    //todo: refactor!
+    private let pointSelectModeEnabledRelay = BehaviorRelay<Bool>(value: false)
+    private let pointSelectedItemRelay = BehaviorRelay<SelectedPointViewItem?>(value: nil)
+
     private let chartTypeIndexRelay = BehaviorRelay<Int>(value: 0)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let rateRelay = BehaviorRelay<String?>(value: nil)
@@ -60,6 +64,14 @@ class CoinChartViewModel {
 
 extension CoinChartViewModel {
 
+    var pointSelectModeEnabledDriver: Driver<Bool> {
+        pointSelectModeEnabledRelay.asDriver()
+    }
+
+    var pointSelectedItemDriver: Driver<SelectedPointViewItem?> {
+        pointSelectedItemRelay.asDriver()
+    }
+
     var chartTypeIndexDriver: Driver<Int> {
         chartTypeIndexRelay.asDriver()
     }
@@ -95,6 +107,22 @@ extension CoinChartViewModel {
 
     func onTap(indicator: ChartIndicatorSet) {
         service.selectedIndicator = service.selectedIndicator.toggle(indicator: indicator)
+    }
+
+}
+
+extension CoinChartViewModel: IChartViewTouchDelegate {
+
+    public func touchDown() {
+        pointSelectModeEnabledRelay.accept(true)
+    }
+
+    public func select(item: ChartItem) {
+        pointSelectedItemRelay.accept(factory.selectedPointViewItem(chartItem: item, type: service.chartType, currency: service.currency, macdSelected: service.selectedIndicator.contains(.macd)))
+    }
+
+    public func touchUp() {
+        pointSelectModeEnabledRelay.accept(false)
     }
 
 }
