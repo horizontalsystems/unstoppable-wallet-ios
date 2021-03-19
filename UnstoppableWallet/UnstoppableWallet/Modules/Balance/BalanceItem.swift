@@ -7,7 +7,7 @@ class BalanceItem {
     var balance: Decimal?
     var balanceLocked: Decimal?
     var state: AdapterState?
-    var marketInfo: MarketInfo?
+    var latestRate: LatestRate?
 
     var balanceTotal: Decimal? {
         guard let balance = balance else {

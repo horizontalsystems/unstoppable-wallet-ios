@@ -37,7 +37,7 @@ protocol IBalanceInteractor: AnyObject {
     var wallets: [Wallet] { get }
     var baseCurrency: Currency { get }
 
-    func marketInfo(coinType: CoinType, currencyCode: String) -> MarketInfo?
+    func latestRate(coinType: CoinType, currencyCode: String) -> LatestRate?
     func balance(wallet: Wallet) -> Decimal?
     func balanceLocked(wallet: Wallet) -> Decimal?
     func state(wallet: Wallet) -> AdapterState?
@@ -64,7 +64,7 @@ protocol IBalanceInteractorDelegate: class {
     func didUpdate(state: AdapterState, wallet: Wallet)
 
     func didUpdate(currency: Currency)
-    func didUpdate(marketInfos: [CoinType: MarketInfo])
+    func didUpdate(latestRates: [CoinType: LatestRate])
 
     func didUpdate(sortType: SortType)
 

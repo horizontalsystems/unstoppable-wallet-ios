@@ -5,11 +5,11 @@ class BalanceSorter: IBalanceSorter {
     private let descending: ((BalanceItem, BalanceItem) -> Bool) = { item, item2 in
         let balance = item.balance ?? 0
         let balance2 = item2.balance ?? 0
-        let hasRate = item.marketInfo?.rate != nil
-        let hasRate2 = item2.marketInfo?.rate != nil
+        let hasRate = item.latestRate?.rate != nil
+        let hasRate2 = item2.latestRate?.rate != nil
 
         if hasRate == hasRate2 {
-            guard let rate = item.marketInfo?.rate, let rate2 = item2.marketInfo?.rate else {
+            guard let rate = item.latestRate?.rate, let rate2 = item2.latestRate?.rate else {
                 return balance > balance2
             }
             return balance * rate > balance2 * rate2
@@ -30,8 +30,8 @@ class BalanceSorter: IBalanceSorter {
             }
         case .percentGrowth:
             return items.sorted { item, item2 in
-                guard let diff = item.marketInfo?.rateDiff, let diff2 = item2.marketInfo?.rateDiff else {
-                    return item.marketInfo?.rateDiff != nil
+                guard let diff = item.latestRate?.rateDiff24h, let diff2 = item2.latestRate?.rateDiff24h else {
+                    return item.latestRate?.rateDiff24h != nil
                 }
 
                 return diff > diff2

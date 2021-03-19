@@ -82,6 +82,10 @@ extension RateManager: IRateManager {
         kit.latestRateObservable(coinType: coinType, currencyCode: currencyCode)
     }
 
+    func latestRatesObservable(currencyCode: String) -> Observable<[CoinType: LatestRate]> {
+        kit.latestRatesObservable(currencyCode: currencyCode)
+    }
+
     func historicalRate(coinType: CoinType, currencyCode: String, timestamp: TimeInterval) -> Single<Decimal> {
         kit.historicalRateSingle(coinType: coinType, currencyCode: currencyCode, timestamp: timestamp)
     }

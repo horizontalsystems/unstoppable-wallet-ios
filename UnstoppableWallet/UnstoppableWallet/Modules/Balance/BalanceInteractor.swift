@@ -7,7 +7,7 @@ class BalanceInteractor {
     weak var delegate: IBalanceInteractorDelegate?
 
     private var disposeBag = DisposeBag()
-    private var marketInfoDisposeBag = DisposeBag()
+    private var latestRateDisposeBag = DisposeBag()
     private var adaptersDisposeBag = DisposeBag()
 
     private let walletManager: IWalletManager
@@ -81,9 +81,8 @@ extension BalanceInteractor: IBalanceInteractor {
         currencyKit.baseCurrency
     }
 
-    func marketInfo(coinType: CoinType, currencyCode: String) -> MarketInfo? {
-        nil //todo:
-        //rateManager.marketInfo(coinType: coinType, currencyCode: currencyCode)
+    func latestRate(coinType: CoinType, currencyCode: String) -> LatestRate? {
+        rateManager.latestRate(coinType: coinType, currencyCode: currencyCode)
     }
 
     func balance(wallet: Wallet) -> Decimal? {
@@ -139,15 +138,15 @@ extension BalanceInteractor: IBalanceInteractor {
     }
 
     func subscribeToMarketInfo(currencyCode: String) {
-        marketInfoDisposeBag = DisposeBag()
+        latestRateDisposeBag = DisposeBag()
 
-//        rateManager.marketInfosObservable(currencyCode: currencyCode)
-//                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-//                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-//                .subscribe(onNext: { [weak self] marketInfos in
-//                    self?.delegate?.didUpdate(marketInfos: marketInfos)
-//                })
-//                .disposed(by: marketInfoDisposeBag)
+        rateManager.latestRatesObservable(currencyCode: currencyCode)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .subscribe(onNext: { [weak self] latestRates in
+                    self?.delegate?.didUpdate(latestRates: latestRates)
+                })
+                .disposed(by: latestRateDisposeBag)
     }
 
     var sortType: SortType {
