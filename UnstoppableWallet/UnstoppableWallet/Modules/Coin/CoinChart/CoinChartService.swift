@@ -60,13 +60,10 @@ class CoinChartService {
         latestRate = rateManager.latestRate(coinType: coinType, currencyCode: currency.code)
         chartInfo = rateManager.chartInfo(coinType: coinType, currencyCode: currency.code, chartType: chartType)
 
-        let latestRateObservable = rateManager.latestRateObservable(coinType: coinType, currencyCode: currency.code).delay(.seconds(3), scheduler: ConcurrentDispatchQueueScheduler(qos: .background))
-        let chartInfoObservable = rateManager.chartInfoObservable(coinType: coinType, currencyCode: currency.code, chartType: chartType).delay(.seconds(5), scheduler: ConcurrentDispatchQueueScheduler(qos: .background))
-
-        latestRateObservable
+        rateManager
+                .latestRateObservable(coinType: coinType, currencyCode: currency.code)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] latestRate in
-                    print("LATEST RATE COME!")
                     self?.latestRate = latestRate
                     self?.syncState()
                 }, onError: { [weak self] error in
@@ -74,10 +71,10 @@ class CoinChartService {
                 })
                 .disposed(by: disposeBag)
 
-        chartInfoObservable
+        rateManager
+                .chartInfoObservable(coinType: coinType, currencyCode: currency.code, chartType: chartType)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] chartInfo in
-                    print("CHART INFO COME!")
                     self?.chartInfo = chartInfo
                     self?.syncState()
                 }, onError: { [weak self] error in
@@ -90,12 +87,9 @@ class CoinChartService {
 
     private func syncState() {
         guard let chartInfo = chartInfo else {
-            print("chartInfo is nil")
             return
         }
 
-        print("coming rate: \(latestRate?.rate)")
-        print("coming points: \(chartInfo.points.count)")
         let item = Item(
                 rate: latestRate?.rate,
                 rateDiff24h: latestRate?.rateDiff24h,

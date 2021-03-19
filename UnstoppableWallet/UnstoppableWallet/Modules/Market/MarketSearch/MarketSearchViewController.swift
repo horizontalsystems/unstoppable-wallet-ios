@@ -47,6 +47,7 @@ class MarketSearchViewController: ThemeSearchViewController {
 
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
+        tableView.keyboardDismissMode = .interactive
 
         advancedSearchCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         advancedSearchCell.titleImage = UIImage(named: "sort_6_20")?.tinted(with: .themeGray)
@@ -70,8 +71,8 @@ class MarketSearchViewController: ThemeSearchViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
 
         Driver.zip(viewModel.viewItemsDriver, viewModel.showAdvancedSearchDriver)
-            .drive(onNext: { [weak self] in self?.sync(viewItems: $0, showAdvancedSearch: $1) })
-            .disposed(by: disposeBag)
+                .drive(onNext: { [weak self] in self?.sync(viewItems: $0, showAdvancedSearch: $1) })
+                .disposed(by: disposeBag)
 
         subscribe(disposeBag, viewModel.emptyResultDriver) { [weak self] in self?.sync(emptyResults: $0) }
 
@@ -87,7 +88,7 @@ class MarketSearchViewController: ThemeSearchViewController {
     }
 
     private func onSelect(viewItem: MarketSearchViewModel.ViewItem) {
-        let viewController = ChartRouter.module(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinTitle, coinType: viewItem.coinType))
+        let viewController = CoinPageModule.viewController(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinTitle, coinType: viewItem.coinType))
         navigationController?.pushViewController(viewController, animated: true)
     }
 
@@ -158,11 +159,11 @@ extension MarketSearchViewController: SectionsDataSource {
 
         if showAdvancedSearch {
             sections.append(
-                Section(
-                        id: "advanced_search",
-                        headerState: .margin(height: .margin12),
-                        rows: [advancedSearchRow]
-                )
+                    Section(
+                            id: "advanced_search",
+                            headerState: .margin(height: .margin12),
+                            rows: [advancedSearchRow]
+                    )
             )
         }
 
