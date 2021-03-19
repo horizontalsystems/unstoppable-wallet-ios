@@ -61,3 +61,14 @@ extension SendEvmViewModel {
     }
 
 }
+
+extension SendEvmService.AmountError: LocalizedError {
+
+    var errorDescription: String? {
+        switch self {
+        case .insufficientBalance: return "send.amount_error.balance".localized
+        default: return "\(self)"
+        }
+    }
+
+}
