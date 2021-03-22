@@ -11,6 +11,7 @@ class CoinPageViewController: ThemeViewController {
     private let viewModel: CoinPageViewModel
     private let chartViewModel: CoinChartViewModel
     private let favoriteViewModel: CoinFavoriteViewModel
+    private let priceAlertViewModel: CoinPriceAlertViewModel
     private var urlManager: IUrlManager
     private let disposeBag = DisposeBag()
 
@@ -31,9 +32,10 @@ class CoinPageViewController: ThemeViewController {
     /* Description */
     private let descriptionTextCell = ReadMoreTextCell()
 
-    init(viewModel: CoinPageViewModel, favoriteViewModel: CoinFavoriteViewModel, chartViewModel: CoinChartViewModel, configuration: ChartConfiguration, urlManager: IUrlManager) {
+    init(viewModel: CoinPageViewModel, favoriteViewModel: CoinFavoriteViewModel, priceAlertViewModel: CoinPriceAlertViewModel, chartViewModel: CoinChartViewModel, configuration: ChartConfiguration, urlManager: IUrlManager) {
         self.viewModel = viewModel
         self.favoriteViewModel = favoriteViewModel
+        self.priceAlertViewModel = priceAlertViewModel
         self.chartViewModel = chartViewModel
         self.urlManager = urlManager
 
@@ -105,6 +107,7 @@ class CoinPageViewController: ThemeViewController {
 
     private func subscribeViewModels() {
         // barItems section
+        subscribe(disposeBag, priceAlertViewModel.priceAlertActiveDriver) { [weak self] in self?.sync(priceAlertEnabled: $0) }
         subscribe(disposeBag, favoriteViewModel.favoriteDriver) { [weak self] in self?.sync(favorite: $0) }
 
         // page section
@@ -121,6 +124,18 @@ class CoinPageViewController: ThemeViewController {
 
     private func syncBarButtons() {
         navigationItem.rightBarButtonItems = [favoriteButtonItem, alertButtonItem].compactMap { $0 }
+    }
+
+    @objc private func onAlertTap() {
+        guard let chartNotificationViewController = ChartNotificationRouter.module(
+                coinType: priceAlertViewModel.coinType,
+                coinTitle: viewModel.coinTitle,
+                mode: .all) else {
+
+            return
+        }
+
+        present(chartNotificationViewController, animated: true)
     }
 
     @objc private func onFavoriteTap() {
@@ -145,6 +160,26 @@ class CoinPageViewController: ThemeViewController {
 extension CoinPageViewController {
 
     // BarItems section
+
+    private func sync(priceAlertEnabled: Bool) {
+        guard priceAlertViewModel.alertNotificationEnabled == true else {
+            alertButtonItem = nil
+            syncBarButtons()
+
+            return
+        }
+
+        var image: UIImage?
+        if priceAlertEnabled {
+            image = UIImage(named: "bell_ring_24")?.tinted(with: .themeJacob)?.withRenderingMode(.alwaysOriginal)
+        } else {
+            image = UIImage(named: "bell_24")?.tinted(with: .themeGray)?.withRenderingMode(.alwaysOriginal)
+        }
+
+        alertButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(onAlertTap))
+
+        syncBarButtons()
+    }
 
     private func sync(favorite: Bool) {
         let selector = favorite ? #selector(onUnfavoriteTap) : #selector(onFavoriteTap)

@@ -1,7 +1,7 @@
 import CoinKit
 
 struct PriceAlert {
-    let coin: Coin
+    let coinType: CoinType
     var changeState: ChangeState
     var trendState: TrendState
 
@@ -39,20 +39,20 @@ struct PriceAlert {
 
     }
 
-    private var changeTopic: String {
-        "\(coin.id)_24hour_\(changeState.rawValue)percent"
+    private func changeTopic(coinCode: String) -> String {
+        "\(coinCode)_24hour_\(changeState.rawValue)percent"
     }
-    private var trendTopic: String {
-        "\(coin.id)_\(trendState.rawValue)term_trend_change"
+    private func trendTopic(coinCode: String) -> String {
+        "\(coinCode)_\(trendState.rawValue)term_trend_change"
     }
 
-    var activeTopics: Set<String> {
+    func activeTopics(coinCode: String) -> Set<String> {
         var topics = Set<String>()
         if changeState != .off {
-            topics.insert(changeTopic)
+            topics.insert(changeTopic(coinCode: coinCode))
         }
         if trendState != .off {
-            topics.insert(trendTopic)
+            topics.insert(trendTopic(coinCode: coinCode))
         }
         return topics
     }

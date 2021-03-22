@@ -78,9 +78,11 @@ protocol IWalletManager: class {
 }
 
 protocol IPriceAlertManager {
+    func alertNotificationAllowed(coinType: CoinType) -> Bool
+
     var updateObservable: Observable<[PriceAlert]> { get }
     var priceAlerts: [PriceAlert] { get }
-    func priceAlert(coin: Coin) -> PriceAlert
+    func priceAlert(coinType: CoinType) -> PriceAlert?
     func save(priceAlerts: [PriceAlert]) -> Observable<[()]>
     func deleteAllAlerts() -> Single<()>
     func updateTopics() -> Observable<[()]>
@@ -229,6 +231,7 @@ protocol IRateManager {
     func chartInfo(coinType: CoinType, currencyCode: String, chartType: ChartType) -> ChartInfo?
     func chartInfoObservable(coinType: CoinType, currencyCode: String, chartType: ChartType) -> Observable<ChartInfo>
     func coinMarketInfoSingle(coinType: CoinType, currencyCode: String, rateDiffTimePeriods: [TimePeriod], rateDiffCoinCodes: [String]) -> Single<CoinMarketInfo>
+    func cryptoCompareCoinCodes(coinTypes: [CoinType]) -> [CoinType: String]
 }
 
 protocol IFavoritesManager {
@@ -312,7 +315,7 @@ protocol IAccountStorage {
 
 protocol IPriceAlertStorage {
     var priceAlerts: [PriceAlert] { get }
-    func priceAlert(coin: Coin) -> PriceAlert?
+    func priceAlert(coinType: CoinType) -> PriceAlert?
     var activePriceAlerts: [PriceAlert] { get }
     func save(priceAlerts: [PriceAlert])
     func deleteAll()

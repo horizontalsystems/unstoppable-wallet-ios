@@ -106,6 +106,10 @@ extension RateManager: IRateManager {
         kit.coinMarketInfoSingle(coinType: coinType, currencyCode: currencyCode, rateDiffTimePeriods: rateDiffTimePeriods, rateDiffCoinCodes: rateDiffCoinCodes)
     }
 
+    func cryptoCompareCoinCodes(coinTypes: [CoinType]) -> [CoinType: String] {
+        kit.cryptoCompareCoinCodes(coinTypes: coinTypes)
+    }
+
 }
 
 extension RateManager: IPostsManager {

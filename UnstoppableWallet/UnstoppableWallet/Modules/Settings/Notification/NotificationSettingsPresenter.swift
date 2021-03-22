@@ -3,13 +3,14 @@ class NotificationSettingsPresenter {
 
     private let router: INotificationSettingsRouter
     private let interactor: INotificationSettingsInteractor
-    private let factory = NotificationSettingsViewItemFactory()
+    private let factory: NotificationSettingsViewItemFactory
 
     private var alerts: [PriceAlert] = []
 
-    init(router: INotificationSettingsRouter, interactor: INotificationSettingsInteractor) {
+    init(router: INotificationSettingsRouter, interactor: INotificationSettingsInteractor, factory: NotificationSettingsViewItemFactory) {
         self.router = router
         self.interactor = interactor
+        self.factory = factory
     }
 
     private func updateViewItems() {
@@ -17,7 +18,11 @@ class NotificationSettingsPresenter {
     }
 
     private func onTap(alert: PriceAlert, mode: NotificationSettingPresentMode) {
-        router.openSettings(alert: alert, mode: mode)
+        guard let coin = interactor.coin(coinType: alert.coinType) else {
+            return
+        }
+
+        router.openSettings(coin: coin, mode: mode)
     }
 
 }

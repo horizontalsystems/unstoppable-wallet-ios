@@ -18,14 +18,22 @@ class MarketViewItemFactory {
         return "\(formattedValue) \(coinCode)"
     }
 
-    func viewItem(rate: Decimal?, marketCap: Decimal?, volume24h: Decimal?, circulatingSupply: Decimal?, totalSupply: Decimal?, currency: Currency, coinCode: String) -> CoinPageViewModel.MarketInfo {
+    func viewItem(marketCap: Decimal?, volume24h: Decimal?, circulatingSupply: Decimal?, totalSupply: Decimal?, currency: Currency, coinCode: String) -> CoinPageViewModel.MarketInfo {
         let marketCapString = marketCap.flatMap { CurrencyCompactFormatter.instance.format(currency: currency, value: $0) }
 
         let volumeString = volume24h.flatMap { CurrencyCompactFormatter.instance.format(currency: currency, value: $0) }
         let supplyString = roundedFormat(coinCode: coinCode, value: circulatingSupply)
         let totalSupplyString = roundedFormat(coinCode: coinCode, value: totalSupply)
 
-        let dillutedMarketCap = totalSupply.flatMap { totalSupply in rate.map { $0 * totalSupply } }
+
+        var dillutedMarketCap: Decimal?
+        if let totalSupply = totalSupply,
+            let supply = circulatingSupply,
+            let marketCap = marketCap {
+
+            dillutedMarketCap = marketCap * totalSupply / supply
+        }
+
         let dillutedMarketCapString = dillutedMarketCap.flatMap { CurrencyCompactFormatter.instance.format(currency: currency, value: $0) }
 
         return CoinPageViewModel.MarketInfo(

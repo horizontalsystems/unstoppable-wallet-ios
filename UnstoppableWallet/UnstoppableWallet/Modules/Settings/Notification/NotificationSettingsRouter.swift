@@ -1,4 +1,5 @@
 import UIKit
+import CoinKit
 
 class NotificationSettingsRouter {
     weak var viewController: UIViewController?
@@ -16,8 +17,11 @@ extension NotificationSettingsRouter: INotificationSettingsRouter {
         }
     }
 
-    func openSettings(alert: PriceAlert, mode: NotificationSettingPresentMode) {
-        viewController?.present(ChartNotificationRouter.module(coin: alert.coin, mode: mode), animated: true)
+    func openSettings(coin: Coin, mode: NotificationSettingPresentMode) {
+        guard let chartNotificationViewController = ChartNotificationRouter.module(coinType: coin.type, coinTitle: coin.title, mode: mode) else {
+            return
+        }
+        viewController?.present(chartNotificationViewController, animated: true)
     }
 
 }
@@ -26,8 +30,9 @@ extension NotificationSettingsRouter {
 
     static func module() -> UIViewController {
         let router = NotificationSettingsRouter()
-        let interactor = NotificationSettingsInteractor(priceAlertManager: App.shared.priceAlertManager, notificationManager: App.shared.notificationManager, appManager: App.shared.appManager, localStorage: App.shared.localStorage)
-        let presenter = NotificationSettingsPresenter(router: router, interactor: interactor)
+        let interactor = NotificationSettingsInteractor(priceAlertManager: App.shared.priceAlertManager, notificationManager: App.shared.notificationManager, appManager: App.shared.appManager, coinManager: App.shared.coinManager, localStorage: App.shared.localStorage)
+        let factory = NotificationSettingsViewItemFactory(coinManager: App.shared.coinManager, rateManager: App.shared.rateManager)
+        let presenter = NotificationSettingsPresenter(router: router, interactor: interactor, factory: factory)
         let view = NotificationSettingsViewController(delegate: presenter)
 
         interactor.delegate = presenter
