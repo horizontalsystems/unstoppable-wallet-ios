@@ -15,12 +15,15 @@ class CoinMarketsViewModel {
     }
 
     var viewItems: [ViewItem] {
-        tickers.map { ticker in
-            ViewItem(
+        tickers.compactMap { ticker in
+            guard let base = ticker.base, let volume = ticker.volume else {
+                return nil
+            }
+            return ViewItem(
                     market: ticker.marketName,
                     pair: "\(ticker.base)/\(ticker.target)",
                     rate: "\(ticker.rate)",
-                    volume: CurrencyCompactFormatter.instance.format(symbol: ticker.base, value: ticker.volume) ?? ""
+                    volume: CurrencyCompactFormatter.instance.format(symbol: base, value: volume) ?? ""
 
             )
         }

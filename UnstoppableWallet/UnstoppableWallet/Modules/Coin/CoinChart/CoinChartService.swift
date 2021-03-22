@@ -100,10 +100,6 @@ class CoinChartService {
         state = .completed(item)
     }
 
-    deinit {
-        print("\(self)")
-    }
-
 }
 
 extension CoinChartService {
