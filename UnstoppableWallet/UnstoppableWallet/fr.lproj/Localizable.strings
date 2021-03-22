@@ -38,7 +38,7 @@
 "offline" = "Déconnecté";
 "confirm" = "Confirmer";
 "connect" = "Connecter";
-"price" = "Price";
+"price" = "Prix";
 "note" = "Note";
 
 "version" = "Version %@";
@@ -197,7 +197,7 @@
 
 "send.confirmation.you_send" = "You Send";
 "send.confirmation.amount" = "Amount";
-"send.confirmation.to" = "To";
+"send.confirmation.to" = "À";
 "send.confirmation.domain" = "Domaine";
 "send.confirmation.address" = "Adresse";
 "send.confirmation.account" = "Account";
