@@ -50,6 +50,8 @@ class CurrencyCompactFormatter {
         }
         let data = CurrencyCompactFormatter.compactData(value: value)
 
+        currencyFormatter.currencyCode = ""
+        currencyFormatter.currencySymbol = ""
         currencyFormatter.maximumFractionDigits = fractionMaximumFractionDigits
 
         guard let formattedValue = currencyFormatter.string(from: data.value as NSNumber) else {
