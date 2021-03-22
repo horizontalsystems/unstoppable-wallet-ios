@@ -17,7 +17,7 @@ class CoinSelectViewController: ThemeSearchViewController {
         self.viewModel = viewModel
         self.delegate = delegate
 
-        super.init()
+        super.init(scrollView: tableView)
     }
 
     required init?(coder aDecoder: NSCoder) {

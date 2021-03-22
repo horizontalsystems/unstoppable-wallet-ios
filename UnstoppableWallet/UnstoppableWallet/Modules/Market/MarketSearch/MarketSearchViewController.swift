@@ -22,7 +22,7 @@ class MarketSearchViewController: ThemeSearchViewController {
     init(viewModel: MarketSearchViewModel) {
         self.viewModel = viewModel
 
-        super.init()
+        super.init(scrollView: tableView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -121,12 +121,14 @@ class MarketSearchViewController: ThemeSearchViewController {
 
     private var viewItemRows: [RowProtocol] {
         viewItems.enumerated().map { index, viewItem in
-            Row<G4Cell>(
+            let isLast = index == viewItems.count - 1
+
+            return Row<G4Cell>(
                     id: "coin_\(viewItem.coinTitle)_\(viewItem.coinCode)",
                     height: .heightDoubleLineCell,
                     autoDeselect: true,
                     bind: { cell, _ in
-                        cell.set(backgroundStyle: .transparent)
+                        cell.set(backgroundStyle: .transparent, isLast: isLast)
 
                         cell.title = viewItem.coinTitle
                         cell.subtitle = viewItem.coinCode

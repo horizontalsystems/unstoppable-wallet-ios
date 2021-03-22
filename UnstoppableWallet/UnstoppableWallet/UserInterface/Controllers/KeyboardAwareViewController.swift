@@ -6,10 +6,10 @@ class KeyboardAwareViewController: ThemeViewController {
     private var translucentContentOffset: CGFloat = 0
     private var keyboardFrame: CGRect?
 
-    init(scrollView: UIScrollView) {
+    init(scrollView: UIScrollView, gradient: Bool = true) {
         self.scrollView = scrollView
 
-        super.init()
+        super.init(gradient: gradient)
     }
 
     required init?(coder aDecoder: NSCoder) {
