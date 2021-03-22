@@ -457,7 +457,7 @@
 "coin_page.volume_24h" = "Volume (24h)";
 "coin_page.circulating_supply" = "In Circulation";
 "coin_page.total_supply" = "Total Supply";
-"coin_page.dilluted_market_cap" = "Dilluted MCap";
+"coin_page.dilluted_market_cap" = "Diluted MCap";
 
 "coin_page.markets" = "%@ Markets";
 "coin_page.investors" = "%@ Investors";
