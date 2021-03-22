@@ -198,7 +198,7 @@ extension BalancePresenter: IBalanceViewDelegate {
     }
 
     func onTapFailedIcon(viewItem: BalanceViewItem) {
-        queue.async {
+        queue.sync {
             guard let item = self.items.first(where: { $0.wallet == viewItem.wallet }) else {
                 return
             }
@@ -207,10 +207,13 @@ extension BalancePresenter: IBalanceViewDelegate {
                 return
             }
 
-            if let appError = error as? AppError, case .noConnection = appError {
-                self.view?.show(error: appError)
-            } else {
-                self.router.showSyncError(error: error, wallet: item.wallet)
+
+            DispatchQueue.main.async {
+                if let appError = error as? AppError, case .noConnection = appError {
+                    self.view?.show(error: appError)
+                } else {
+                    self.router.showSyncError(error: error, wallet: item.wallet)
+                }
             }
         }
     }
