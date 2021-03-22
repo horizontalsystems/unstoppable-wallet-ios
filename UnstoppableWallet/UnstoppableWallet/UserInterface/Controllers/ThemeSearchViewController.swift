@@ -1,12 +1,12 @@
 import UIKit
 import ThemeKit
 
-class ThemeSearchViewController: ThemeViewController {
+class ThemeSearchViewController: KeyboardAwareViewController {
     private let searchController = UISearchController(searchResultsController: nil)
     private var currentFilter: String?
 
-    override public init(gradient: Bool = true) {
-        super.init(gradient: gradient)
+    override public init(scrollView: UIScrollView, gradient: Bool = true) {
+        super.init(scrollView: scrollView, gradient: gradient)
     }
 
     required init?(coder aDecoder: NSCoder) {

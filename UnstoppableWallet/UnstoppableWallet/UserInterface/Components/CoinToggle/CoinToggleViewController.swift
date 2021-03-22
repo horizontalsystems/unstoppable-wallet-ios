@@ -19,7 +19,7 @@ class CoinToggleViewController: ThemeSearchViewController {
     init(viewModel: ICoinToggleViewModel) {
         self.viewModel = viewModel
 
-        super.init()
+        super.init(scrollView: tableView)
     }
 
     required init?(coder aDecoder: NSCoder) {
