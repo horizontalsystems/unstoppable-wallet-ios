@@ -79,7 +79,7 @@ extension ChartInteractor: IChartInteractor {
             return nil
         }
 
-        return priceAlertManager.priceAlert(coin: coin)
+        return priceAlertManager.priceAlert(coinType: coin.type)
     }
 
     func subscribeToAlertUpdates() {

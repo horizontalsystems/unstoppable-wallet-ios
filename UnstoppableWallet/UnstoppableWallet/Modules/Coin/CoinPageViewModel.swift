@@ -32,7 +32,7 @@ class CoinPageViewModel {
                     contractInfo: contractInfo(info: info),
                     guideUrl: service.guideUrl,
                     links: links(info: info),
-                    marketInfo: marketInfo(rate: info.rate, marketCap: info.marketCap, volume24h: info.volume24h, circulatingSupply: info.circulatingSupply, totalSupply: info.totalSupply),
+                    marketInfo: marketInfo(marketCap: info.marketCap, volume24h: info.volume24h, circulatingSupply: info.circulatingSupply, totalSupply: info.totalSupply),
                     description: info.meta.description
             )
             stateRelay.accept(.loaded(viewItem: viewItem))
@@ -68,9 +68,8 @@ class CoinPageViewModel {
         }
     }
 
-    private func marketInfo(rate: Decimal?, marketCap: Decimal?, volume24h: Decimal?, circulatingSupply: Decimal?, totalSupply: Decimal?) -> MarketInfo {
+    private func marketInfo(marketCap: Decimal?, volume24h: Decimal?, circulatingSupply: Decimal?, totalSupply: Decimal?) -> MarketInfo {
         marketViewItemFactory.viewItem(
-                rate: rate,
                 marketCap: marketCap,
                 volume24h: volume24h,
                 circulatingSupply: circulatingSupply,
@@ -94,6 +93,10 @@ extension CoinPageViewModel {
 
     var stateDriver: Driver<State> {
         stateRelay.asDriver()
+    }
+
+    var coinTitle: String {
+        service.coinTitle
     }
 
     var coinCode: String {

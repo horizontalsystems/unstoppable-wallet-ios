@@ -16,7 +16,7 @@ protocol IChartNotificationViewDelegate {
 }
 
 protocol IChartNotificationInteractor {
-    func priceAlert(coin: Coin) -> PriceAlert
+    func priceAlert(coinType: CoinType) -> PriceAlert?
     func requestPermission()
     func save(priceAlert: PriceAlert)
 }
@@ -33,6 +33,6 @@ protocol IChartNotificationRouter {
 }
 
 protocol IChartNotificationViewModelFactory {
-    func titleViewModel(coin: Coin) -> PriceAlertTitleViewModel
+    func titleViewModel(coinTitle: String) -> PriceAlertTitleViewModel
     func sections(alert: PriceAlert, priceChangeUpdate: @escaping (Int) -> (), trendUpdate: @escaping (Int) -> ()) -> [PriceAlertSectionViewModel]
 }

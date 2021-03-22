@@ -136,7 +136,7 @@ extension ChartPresenter: IChartInteractorDelegate {
 
     func didUpdate(alerts: [PriceAlert]) {
         alert = alerts.first {
-            $0.coin.type == launchMode.coinType
+            $0.coinType == launchMode.coinType
         }
 
         updateChart()

@@ -1,3 +1,5 @@
+import CoinKit
+
 protocol INotificationSettingsView: AnyObject {
     func set(pushNotificationsOn: Bool)
     func set(viewItems: [NotificationSettingSectionViewItem], showResetAll: Bool)
@@ -18,6 +20,7 @@ protocol INotificationSettingsInteractor: AnyObject {
     var alerts: [PriceAlert] { get }
     var pushNotificationsOn: Bool { get set }
     var apnsTokenReceived: Bool { get }
+    func coin(coinType: CoinType) -> Coin?
     func updateTopics()
     func requestPermission(needUpdate: Bool)
     func deleteAllAlerts()
@@ -37,7 +40,7 @@ protocol INotificationSettingsInteractorDelegate: AnyObject {
 
 protocol INotificationSettingsRouter {
     func openSystemSettings()
-    func openSettings(alert: PriceAlert, mode: NotificationSettingPresentMode)
+    func openSettings(coin: Coin, mode: NotificationSettingPresentMode)
 }
 
 struct PriceAlertViewItem {

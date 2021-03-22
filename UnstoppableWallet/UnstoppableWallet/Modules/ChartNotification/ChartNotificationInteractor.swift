@@ -25,8 +25,8 @@ class ChartNotificationInteractor {
 
 extension ChartNotificationInteractor: IChartNotificationInteractor {
 
-    func priceAlert(coin: Coin) -> PriceAlert {
-        priceAlertManager.priceAlert(coin: coin)
+    func priceAlert(coinType: CoinType) -> PriceAlert? {
+        priceAlertManager.priceAlert(coinType: coinType)
     }
 
     func requestPermission() {

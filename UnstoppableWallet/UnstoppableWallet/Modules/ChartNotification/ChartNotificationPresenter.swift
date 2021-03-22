@@ -10,17 +10,23 @@ class ChartNotificationPresenter {
 
     private var alert: PriceAlert
 
-    private let coin: Coin
+    private let coinType: CoinType
+    private let coinTitle: String
 
-    init(router: IChartNotificationRouter, interactor: IChartNotificationInteractor, factory: IChartNotificationViewModelFactory, coin: Coin, presentMode: NotificationSettingPresentMode) {
+    init?(router: IChartNotificationRouter, interactor: IChartNotificationInteractor, factory: IChartNotificationViewModelFactory, coinType: CoinType, coinTitle: String, presentMode: NotificationSettingPresentMode) {
         self.router = router
         self.interactor = interactor
         self.factory = factory
         self.presentMode = presentMode
 
-        self.coin = coin
+        self.coinType = coinType
+        self.coinTitle = coinTitle
 
-        self.alert = interactor.priceAlert(coin: coin)
+        guard let priceAlert = interactor.priceAlert(coinType: coinType) else {
+            return nil
+        }
+
+        alert = priceAlert
     }
 
     private func updatePriceChange(index: Int) {
@@ -54,7 +60,7 @@ extension ChartNotificationPresenter: IChartNotificationViewDelegate {
     func viewDidLoad() {
         interactor.requestPermission()
 
-        view?.set(titleViewModel: factory.titleViewModel(coin: coin))
+        view?.set(titleViewModel: factory.titleViewModel(coinTitle: coinTitle))
         updateView()
         view?.set(spacerMode: presentMode)
     }
@@ -80,7 +86,9 @@ extension ChartNotificationPresenter: IChartNotificationInteractorDelegate {
     }
 
     func didFailSaveAlerts(error: Error) {
-        alert = interactor.priceAlert(coin: coin)
+        if let alert = interactor.priceAlert(coinType: coinType) {
+            self.alert = alert
+        }
 
         updateView()
 

@@ -18,7 +18,11 @@ extension ChartRouter: IChartRouter {
     }
 
     func openAlertSettings(coin: Coin) {
-        viewController?.present(ChartNotificationRouter.module(coin: coin, mode: .all), animated: true)
+        guard let chartNotificationViewController = ChartNotificationRouter.module(coinType: coin.type, coinTitle: coin.title, mode: .all) else {
+            return
+        }
+
+        viewController?.present(chartNotificationViewController, animated: true)
     }
 
 }
