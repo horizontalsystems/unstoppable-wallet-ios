@@ -57,11 +57,11 @@ extension FavoriteService {
         return relay.asObservable()
     }
 
-    func addToFavorite(coinType: CoinType) {
+    func add(coinType: CoinType) {
         favoritesManager.add(coinType: coinType)
     }
 
-    func removeFromFavorite(coinType: CoinType) {
+    func remove(coinType: CoinType) {
         favoritesManager.remove(coinType: coinType)
     }
 

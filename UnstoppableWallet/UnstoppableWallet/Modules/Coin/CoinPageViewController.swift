@@ -10,10 +10,14 @@ import Chart
 class CoinPageViewController: ThemeViewController {
     private let viewModel: CoinPageViewModel
     private let chartViewModel: CoinChartViewModel
+    private let favoriteViewModel: CoinFavoriteViewModel
     private var urlManager: IUrlManager
     private let disposeBag = DisposeBag()
 
     private var state: CoinPageViewModel.State = .loading
+
+    private var favoriteButtonItem: UIBarButtonItem?
+    private var alertButtonItem: UIBarButtonItem?
 
     private let tableView = SectionsTableView(style: .grouped)
     private let subtitleCell = AdditionalDataCell()
@@ -27,8 +31,9 @@ class CoinPageViewController: ThemeViewController {
     /* Description */
     private let descriptionTextCell = ReadMoreTextCell()
 
-    init(viewModel: CoinPageViewModel, chartViewModel: CoinChartViewModel, configuration: ChartConfiguration, urlManager: IUrlManager) {
+    init(viewModel: CoinPageViewModel, favoriteViewModel: CoinFavoriteViewModel, chartViewModel: CoinChartViewModel, configuration: ChartConfiguration, urlManager: IUrlManager) {
         self.viewModel = viewModel
+        self.favoriteViewModel = favoriteViewModel
         self.chartViewModel = chartViewModel
         self.urlManager = urlManager
 
@@ -99,27 +104,31 @@ class CoinPageViewController: ThemeViewController {
     }
 
     private func subscribeViewModels() {
+        // barItems section
+        subscribe(disposeBag, favoriteViewModel.favoriteDriver) { [weak self] in self?.sync(favorite: $0) }
+
+        // page section
         subscribe(disposeBag, viewModel.stateDriver) { [weak self] in self?.sync(state: $0) }
 
         // chart section
-        subscribe(disposeBag, chartViewModel.pointSelectModeEnabledDriver) { [weak self] in
-            self?.syncChart(selected: $0)
-        }
-        subscribe(disposeBag, chartViewModel.pointSelectedItemDriver) { [weak self] in
-            self?.syncChart(selectedViewItem: $0)
-        }
-        subscribe(disposeBag, chartViewModel.chartTypeIndexDriver) { [weak self] in
-            self?.syncChart(typeIndex: $0)
-        }
-        subscribe(disposeBag, chartViewModel.loadingDriver) { [weak self] in
-            self?.syncChart(loading: $0)
-        }
-        subscribe(disposeBag, chartViewModel.errorDriver) { [weak self] in
-            self?.syncChart(error: $0)
-        }
-        subscribe(disposeBag, chartViewModel.chartInfoDriver) { [weak self] in
-            self?.syncChart(viewItem: $0)
-        }
+        subscribe(disposeBag, chartViewModel.pointSelectModeEnabledDriver) { [weak self] in self?.syncChart(selected: $0) }
+        subscribe(disposeBag, chartViewModel.pointSelectedItemDriver) { [weak self] in self?.syncChart(selectedViewItem: $0) }
+        subscribe(disposeBag, chartViewModel.chartTypeIndexDriver) { [weak self] in self?.syncChart(typeIndex: $0) }
+        subscribe(disposeBag, chartViewModel.loadingDriver) { [weak self] in self?.syncChart(loading: $0) }
+        subscribe(disposeBag, chartViewModel.errorDriver) { [weak self] in self?.syncChart(error: $0) }
+        subscribe(disposeBag, chartViewModel.chartInfoDriver) { [weak self] in self?.syncChart(viewItem: $0) }
+    }
+
+    private func syncBarButtons() {
+        navigationItem.rightBarButtonItems = [favoriteButtonItem, alertButtonItem].compactMap { $0 }
+    }
+
+    @objc private func onFavoriteTap() {
+        favoriteViewModel.favorite()
+    }
+
+    @objc private func onUnfavoriteTap() {
+        favoriteViewModel.unfavorite()
     }
 
     private func reloadTable() {
@@ -134,6 +143,20 @@ class CoinPageViewController: ThemeViewController {
 }
 
 extension CoinPageViewController {
+
+    // BarItems section
+
+    private func sync(favorite: Bool) {
+        let selector = favorite ? #selector(onUnfavoriteTap) : #selector(onFavoriteTap)
+        let color = favorite ? UIColor.themeJacob : UIColor.themeGray
+
+        let favoriteImage = UIImage(named: "rate_24")?.tinted(with: color)?.withRenderingMode(.alwaysOriginal)
+        favoriteButtonItem = UIBarButtonItem(image: favoriteImage, style: .plain, target: self, action: selector)
+
+        syncBarButtons()
+    }
+
+    // Page section
 
     private func sync(state: CoinPageViewModel.State) {
         self.state = state
