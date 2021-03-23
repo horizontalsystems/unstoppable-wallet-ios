@@ -358,6 +358,7 @@
 "market_discovery.filter_title.prediction_markets" = "Prediction";
 "market_discovery.filter_title.yield_aggregators" = "Yield Aggregators";
 "market_discovery.filter_title.fiat_stablecoins" = "Fiat Stablecoins";
+"market_discovery.filter_title.rebase_tokens" = "Rebase Tokens";
 "market_discovery.filter_title.algo_stablecoins" = "Algo Stablecoins";
 "market_discovery.filter_title.tokenized_bitcoin" = "Tokenized Bitcoin";
 "market_discovery.filter_title.stablecoin_issuers" = "Stablecoin Issuers";
@@ -387,6 +388,7 @@
 "market_discovery.filter_description.prediction_markets" = "Markets to bet on events in the future.";
 "market_discovery.filter_description.yield_aggregators" = "Solutions for earning from idle crypto assets.";
 "market_discovery.filter_description.fiat_stablecoins" = "Crypto tokens pegged 1-1 to fiat currency.";
+"market_discovery.filter_description.rebase_tokens" = "Tokens that periodically adjust supply to achieve a target price.";
 "market_discovery.filter_description.algo_stablecoins" = "Stablecoins with algorithmic 1-1 price peg to fiat.";
 "market_discovery.filter_description.tokenized_bitcoin" = "Crypto tokens pegged 1-1 to Bitcoin price.";
 "market_discovery.filter_description.stablecoin_issuers" = "Decentralized issuers of fiat pegged stablecoin tokens.";
@@ -458,7 +460,7 @@
 "coin_page.dilluted_market_cap" = "Diluted MCap";
 
 "coin_page.markets" = "%@ Markets";
-"coin_page.investors" = "%@ Investors";
+"coin_page.funds_invested" = "Funds Invested";
 
 "coin_page.category" = "Category";
 "coin_page.contract" = "%@ Contract";
