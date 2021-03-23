@@ -233,6 +233,7 @@ protocol IRateManager {
     func coinMarketInfoSingle(coinType: CoinType, currencyCode: String, rateDiffTimePeriods: [TimePeriod], rateDiffCoinCodes: [String]) -> Single<CoinMarketInfo>
     func notificationCoinData(coinTypes: [CoinType]) -> [CoinType: ProviderCoinData]
     func notificationDataExist(coinType: CoinType) -> Bool
+    func coinTypes(for category: String) -> [CoinType]
 }
 
 protocol IFavoritesManager {

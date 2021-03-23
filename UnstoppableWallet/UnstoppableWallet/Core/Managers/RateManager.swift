@@ -114,6 +114,10 @@ extension RateManager: IRateManager {
         kit.notificationDataExist(coinType: coinType)
     }
 
+    func coinTypes(for category: String) -> [CoinType] {
+        kit.coinTypes(forCategoryId: category)
+    }
+
 }
 
 extension RateManager: IPostsManager {
