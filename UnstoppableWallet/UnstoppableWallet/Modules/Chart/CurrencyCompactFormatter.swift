@@ -48,15 +48,17 @@ class CurrencyCompactFormatter {
         guard let value = value else {
             return nil
         }
-        let data = CurrencyCompactFormatter.compactData(value: value)
 
         currencyFormatter.currencyCode = ""
         currencyFormatter.currencySymbol = ""
         currencyFormatter.maximumFractionDigits = fractionMaximumFractionDigits
 
-        guard let formattedValue = currencyFormatter.string(from: data.value as NSNumber) else {
+        let data = CurrencyCompactFormatter.compactData(value: value)
+
+        guard let formattedValue = currencyFormatter.string(from: data.value as NSNumber)?.trimmingCharacters(in: .whitespaces) else {
             return nil
         }
+
         return (data.postfix?.localized(formattedValue) ?? formattedValue) + " " + symbol
     }
 
