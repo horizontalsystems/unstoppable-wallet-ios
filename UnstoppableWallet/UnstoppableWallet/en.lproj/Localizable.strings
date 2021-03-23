@@ -463,7 +463,7 @@ bch.horizontalsystems.xyz/apg";
 "coin_page.dilluted_market_cap" = "Diluted MCap";
 
 "coin_page.markets" = "%@ Markets";
-"coin_page.investors" = "%@ Investors";
+"coin_page.funds_invested" = "Funds Invested";
 
 "coin_page.category" = "Category";
 "coin_page.contract" = "%@ Contract";

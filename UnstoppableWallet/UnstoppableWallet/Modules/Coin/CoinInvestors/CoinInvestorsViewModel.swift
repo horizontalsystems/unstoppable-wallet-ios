@@ -2,16 +2,14 @@ import XRatesKit
 import CoinKit
 
 class CoinInvestorsViewModel {
-    private let coinCode: String
     private let fundCategories: [CoinFundCategory]
 
-    init(coinCode: String, fundCategories: [CoinFundCategory]) {
-        self.coinCode = coinCode
+    init(fundCategories: [CoinFundCategory]) {
         self.fundCategories = fundCategories
     }
 
     var title: String {
-        "coin_page.investors".localized(coinCode)
+        "coin_page.funds_invested".localized
     }
 
     var sectionViewItems: [SectionViewItem] {
