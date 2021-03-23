@@ -39,7 +39,7 @@ class ChartPointInfoView: UIView {
             let volumeSubtitle = value.map { _ in "chart.selected.volume".localized }
             rightView.bind(title: value, subtitle: volumeSubtitle)
 
-            rightView.isHidden = false
+            rightView.isHidden = value == nil
             macdView.isHidden = true
         case .macd(let macdInfo):
             macdView.bind(histogram: macdInfo.histogram, signal: macdInfo.signal, macd: macdInfo.macd, histogramDown: macdInfo.histogramDown)
