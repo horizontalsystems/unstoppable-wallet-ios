@@ -82,6 +82,8 @@ class App {
     let walletConnectSessionManager: WalletConnectSessionManager
     let walletConnectManager: WalletConnectManager
 
+    let activateCoinManager: ActivateCoinManager
+
     let appManager: AppManager
     let ethereumKitManager: EthereumKitManager
     let binanceSmartChainKitManager: BinanceSmartChainKitManager
@@ -190,6 +192,8 @@ class App {
 
         walletConnectSessionManager = WalletConnectSessionManager(storage: storage, accountManager: accountManager)
         walletConnectManager = WalletConnectManager(predefinedAccountTypeManager: predefinedAccountTypeManager, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager)
+
+        activateCoinManager = ActivateCoinManager(coinKit: coinKit, walletManager: walletManager, accountManager: accountManager)
 
         appManager = AppManager(
                 accountManager: accountManager,
