@@ -414,20 +414,20 @@ extension CoinPageViewController {
         }
 
         if !fundCategories.isEmpty {
-            let investorsTitle = "coin_page.investors".localized(viewModel.coinCode)
-            let investorsRow = Row<B1Cell>(
-                    id: "investors",
+            let fundsInvestedTitle = "coin_page.funds_invested".localized
+            let fundsInvestedRow = Row<B1Cell>(
+                    id: "funds-invested",
                     height: .heightCell48,
                     bind: { cell, _ in
                         cell.set(backgroundStyle: .lawrence, isFirst: !hasMarkets, isLast: true)
-                        cell.title = investorsTitle
+                        cell.title = fundsInvestedTitle
                     },
                     action: { [weak self] _ in
-                        self?.openInvestors(fundCategories: fundCategories)
+                        self?.openFundsInvested(fundCategories: fundCategories)
                     }
             )
 
-            rows.append(investorsRow)
+            rows.append(fundsInvestedRow)
         }
 
         if !rows.isEmpty {
@@ -442,8 +442,8 @@ extension CoinPageViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
-    private func openInvestors(fundCategories: [CoinFundCategory]) {
-        let viewController = CoinInvestorsModule.viewController(coinCode: viewModel.coinCode, fundCategories: fundCategories)
+    private func openFundsInvested(fundCategories: [CoinFundCategory]) {
+        let viewController = CoinInvestorsModule.viewController(fundCategories: fundCategories)
         navigationController?.pushViewController(viewController, animated: true)
     }
 
