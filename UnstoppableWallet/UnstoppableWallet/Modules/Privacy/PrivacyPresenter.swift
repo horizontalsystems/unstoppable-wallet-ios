@@ -20,8 +20,9 @@ class PrivacyPresenter {
 
     private func updateConnection() {
         view?.set(connectionItems: [
-            PrivacyViewItem(iconName: "ETH", title: "Ethereum", value: interactor.ethereumConnection.address, changable: false),
-            PrivacyViewItem(iconName: "BNB", title: "Binance", value: "dex.binance.com", changable: false)
+            PrivacyViewItem(iconName: "ethereum", title: "Ethereum", value: interactor.ethereumConnection.address, changable: false),
+            PrivacyViewItem(iconName: "binanceSmartChain", title: "Smart Chain", value: "bsc-ws-node.nariox.org", changable: false),
+            PrivacyViewItem(iconName: "bep2|BNB", title: "Binance", value: "dex.binance.com", changable: false)
         ])
     }
 
