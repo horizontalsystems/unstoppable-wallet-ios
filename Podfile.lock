@@ -541,7 +541,7 @@ CHECKOUT OPTIONS:
     :commit: 467915ce2ba7b4bb831150be911bd0b8b1d94c36
     :git: https://github.com/horizontalsystems/wallet-connect-swift
   XRatesKit.swift:
-    :commit: 0c749645a6ad40e932ea3cf7e219d864a6c35f08
+    :commit: 59ff316d4db7e5907c33bb4c154e96025cc02801
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
   ZcashLightClientKit:
     :commit: 9488fbbf439ef675213cb202e21566b4a6311251
