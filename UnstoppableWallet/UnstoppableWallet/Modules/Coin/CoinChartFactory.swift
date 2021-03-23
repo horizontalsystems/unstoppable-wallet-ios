@@ -200,8 +200,14 @@ class CoinChartFactory {
                     ChartTimelineItem(text: timelineHelper.text(timestamp: $0, separateHourlyInterval: gridInterval, dateFormatter: dateFormatter), timestamp: $0)
                 }
 
+        // disable indicators if chart interval less than 7d
+        var correctedIndicator = selectedIndicator
+        if [ChartType.today, ChartType.day].contains(chartType) {
+            correctedIndicator = .none
+        }
+
         return CoinChartViewModel.ViewItem(chartData: data, chartTrend: chartTrend, chartDiff: chartDiff,
-                trends: trends, minValue: minRateString, maxValue: maxRateString, timeline: timeline, selectedIndicator: selectedIndicator)
+                trends: trends, minValue: minRateString, maxValue: maxRateString, timeline: timeline, selectedIndicator: correctedIndicator)
     }
 
 //    func chartViewItem(chartDataStatus: DataStatus<ChartInfo>, marketInfoStatus: DataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, selectedIndicator: ChartIndicatorSet, coin: Coin?, priceAlert: PriceAlert?, alertsOn: Bool) -> ChartViewItem {
@@ -254,7 +260,8 @@ class CoinChartFactory {
 
             rightSideMode = .macd(macdInfo: MacdInfo(macd: macd, signal: macdSignal, histogram: macdHistogram, histogramDown: histogramDown))
         } else {
-            rightSideMode = .volume(value: CurrencyCompactFormatter.instance.format(currency: currency, value: chartPoint.volume))
+
+            rightSideMode = .volume(value: CurrencyCompactFormatter.instance.format(currency: currency, value: chartPoint.volume.flatMap { $0.isZero ? nil : $0 }))
         }
 
         return SelectedPointViewItem(date: formattedDate, value: formattedValue, rightSideMode: rightSideMode)

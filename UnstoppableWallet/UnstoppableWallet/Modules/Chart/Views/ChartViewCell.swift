@@ -3,7 +3,7 @@ import Chart
 import HUD
 
 class ChartViewCell: UITableViewCell {
-    public static let cellHeight: CGFloat = 250
+    public static let cellHeight: CGFloat = 182
 
     private let chartView: RateChartView
     private let loadingView = HUDActivityView.create(with: .medium24)
@@ -29,7 +29,7 @@ class ChartViewCell: UITableViewCell {
 
         contentView.addSubview(chartView)
         chartView.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin2x)
+            maker.top.equalToSuperview()
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
@@ -94,6 +94,7 @@ class ChartViewCell: UITableViewCell {
 
     func setVolumes(hidden: Bool) {
         chartView.setVolumes(hidden: hidden)
+        chartView.setLimits(hidden: hidden)
     }
 
 

@@ -118,6 +118,8 @@ enum MovementTrend {
 }
 
 struct ChartIndicatorSet: OptionSet, Hashable {
+    static let none = ChartIndicatorSet(rawValue: 0)
+
     let rawValue: UInt8
 
     static let ema = ChartIndicatorSet(rawValue: 1 << 0)
@@ -127,19 +129,11 @@ struct ChartIndicatorSet: OptionSet, Hashable {
     static let all: [ChartIndicatorSet] = [.macd, .rsi, .ema]
 
     func toggle(indicator: ChartIndicatorSet) -> ChartIndicatorSet {
-        let oldEmaValue: UInt8 = self.rawValue % 2
-        let newEmaValue: UInt8 = indicator.rawValue % 2
-
-        guard newEmaValue == 0 else {
-            return  ChartIndicatorSet(rawValue: self.rawValue ^ 1)
-        }
-
-        let resultValue = ~self.rawValue & indicator.rawValue + oldEmaValue
-        return ChartIndicatorSet(rawValue: resultValue)
+        ChartIndicatorSet(rawValue: ~rawValue & indicator.rawValue)
     }
 
     var hideVolumes: Bool {
-        self.rawValue > 1
+        rawValue > 0
     }
 
     public func hash(into hasher: inout Hasher) {

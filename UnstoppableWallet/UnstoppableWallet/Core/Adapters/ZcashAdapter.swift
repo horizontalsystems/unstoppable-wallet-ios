@@ -448,27 +448,29 @@ private class ZcashLogger: ZcashLightClientKit.Logger {
         logger = Logger(minLogLevel: logLevel)
     }
 
-    func debug(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
+    func debug(_ message: String, file: StaticString, function: StaticString, line: Int) {
         log(level: .debug, message: message, file: file, function: function, line: line)
     }
 
-    func error(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
-        log(level: .error, message: message, file: file, function: function, line: line)
-    }
-
-    func warn(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
-        log(level: .warning, message: message, file: file, function: function, line: line)
-    }
-
-    func event(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
-        log(level: .verbose, message: message, file: file, function: function, line: line)
-    }
-
-    func info(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
+    func info(_ message: String, file: StaticString, function: StaticString, line: Int) {
         log(level: .info, message: message, file: file, function: function, line: line)
     }
 
-    private func log(level: HsToolKit.Logger.Level, message: String, file: String, function: String, line: Int) {
+    func event(_ message: String, file: StaticString, function: StaticString, line: Int) {
+        log(level: .verbose, message: message, file: file, function: function, line: line)
+    }
+
+    func warn(_ message: String, file: StaticString, function: StaticString, line: Int) {
+        log(level: .warning, message: message, file: file, function: function, line: line)
+    }
+
+    func error(_ message: String, file: StaticString, function: StaticString, line: Int) {
+        log(level: .error, message: message, file: file, function: function, line: line)
+    }
+
+    private func log(level: HsToolKit.Logger.Level, message: String, file: StaticString, function: StaticString, line: Int) {
+        let file = file.withUTF8Buffer { String(decoding: $0, as: UTF8.self) }
+        let function = function.withUTF8Buffer { String(decoding: $0, as: UTF8.self) }
         logger.log(level: level, message: message, file: file, function: function, line: line)
     }
 
