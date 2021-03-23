@@ -82,7 +82,7 @@ protocol IPriceAlertManager {
 
     var updateObservable: Observable<[PriceAlert]> { get }
     var priceAlerts: [PriceAlert] { get }
-    func priceAlert(coinType: CoinType) -> PriceAlert?
+    func priceAlert(coinType: CoinType, title: String) -> PriceAlert?
     func save(priceAlerts: [PriceAlert]) -> Observable<[()]>
     func deleteAllAlerts() -> Single<()>
     func updateTopics() -> Observable<[()]>
@@ -231,7 +231,8 @@ protocol IRateManager {
     func chartInfo(coinType: CoinType, currencyCode: String, chartType: ChartType) -> ChartInfo?
     func chartInfoObservable(coinType: CoinType, currencyCode: String, chartType: ChartType) -> Observable<ChartInfo>
     func coinMarketInfoSingle(coinType: CoinType, currencyCode: String, rateDiffTimePeriods: [TimePeriod], rateDiffCoinCodes: [String]) -> Single<CoinMarketInfo>
-    func cryptoCompareCoinCodes(coinTypes: [CoinType]) -> [CoinType: String]
+    func notificationCoinData(coinTypes: [CoinType]) -> [CoinType: ProviderCoinData]
+    func notificationDataExist(coinType: CoinType) -> Bool
 }
 
 protocol IFavoritesManager {

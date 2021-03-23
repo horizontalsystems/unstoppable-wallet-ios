@@ -2,6 +2,7 @@ import CoinKit
 
 struct PriceAlert {
     let coinType: CoinType
+    let coinTitle: String
     var changeState: ChangeState
     var trendState: TrendState
 

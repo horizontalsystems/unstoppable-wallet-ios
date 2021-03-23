@@ -398,8 +398,11 @@ class GrdbStorage {
                 return EnabledWallet(coinId: newId, accountId: wallet.accountId)
             }
 
-            //change coinIds for alerts
+            //delete all alerts and add title column
             try PriceAlertRecord.deleteAll(db)
+            try db.alter(table: PriceAlertRecord.databaseTableName) { t in
+                t.add(column: PriceAlertRecord.Columns.coinTitle.name, .text)
+            }
 
             //apply changes in database
             try db.drop(table: CoinRecord_v19.databaseTableName)

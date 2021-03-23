@@ -18,11 +18,7 @@ class NotificationSettingsPresenter {
     }
 
     private func onTap(alert: PriceAlert, mode: NotificationSettingPresentMode) {
-        guard let coin = interactor.coin(coinType: alert.coinType) else {
-            return
-        }
-
-        router.openSettings(coin: coin, mode: mode)
+        router.openSettings(coinType: alert.coinType, coinTitle: alert.coinTitle, mode: mode)
     }
 
 }

@@ -8,6 +8,7 @@ class CoinPriceAlertService {
     private let disposeBag = DisposeBag()
 
     let coinType: CoinType
+    let coinTitle: String
 
     private let priceAlertRelay = PublishRelay<PriceAlert?>()
     var priceAlert: PriceAlert? {
@@ -16,17 +17,18 @@ class CoinPriceAlertService {
         }
     }
 
-    init(priceAlertManager: IPriceAlertManager, localStorage: ILocalStorage, coinType: CoinType) {
+    init(priceAlertManager: IPriceAlertManager, localStorage: ILocalStorage, coinType: CoinType, coinTitle: String) {
         self.priceAlertManager = priceAlertManager
         self.localStorage = localStorage
         self.coinType = coinType
+        self.coinTitle = coinTitle
 
         priceAlertManager.updateObservable
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] in self?.sync(priceAlerts: $0) })
                 .disposed(by: disposeBag)
 
-        sync(priceAlerts: [priceAlertManager.priceAlert(coinType: coinType)].compactMap { $0 })
+        priceAlert = priceAlertManager.priceAlert(coinType: coinType, title: coinTitle)
     }
 
     private func sync(priceAlerts: [PriceAlert]) {
@@ -52,7 +54,7 @@ extension CoinPriceAlertService {
             return nil
         }
 
-        return priceAlertManager.priceAlert(coinType: coin.type)
+        return priceAlertManager.priceAlert(coinType: coin.type, title: coin.title)
     }
 
 

@@ -40,7 +40,7 @@ protocol INotificationSettingsInteractorDelegate: AnyObject {
 
 protocol INotificationSettingsRouter {
     func openSystemSettings()
-    func openSettings(coin: Coin, mode: NotificationSettingPresentMode)
+    func openSettings(coinType: CoinType, coinTitle: String, mode: NotificationSettingPresentMode)
 }
 
 struct PriceAlertViewItem {

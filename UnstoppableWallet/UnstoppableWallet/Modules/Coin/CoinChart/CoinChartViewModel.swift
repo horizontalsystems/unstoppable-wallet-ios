@@ -4,6 +4,7 @@ import RxRelay
 import RxCocoa
 import XRatesKit
 import Chart
+import CurrencyKit
 
 class CoinChartViewModel {
     private let service: CoinChartService
@@ -49,7 +50,8 @@ class CoinChartViewModel {
             return
         }
 
-        rateRelay.accept(state.data?.rate?.description ?? "") //todo: Convert!
+        let rateValue = state.data?.rate.map { CurrencyValue(currency: service.currency, value: $0) }
+        rateRelay.accept(rateValue.flatMap { ValueFormatter.instance.format(currencyValue: $0) })
         rateDiffRelay.accept(state.data?.rateDiff24h)
 
         guard let item = state.data else {

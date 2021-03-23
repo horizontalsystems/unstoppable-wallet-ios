@@ -17,8 +17,8 @@ extension NotificationSettingsRouter: INotificationSettingsRouter {
         }
     }
 
-    func openSettings(coin: Coin, mode: NotificationSettingPresentMode) {
-        guard let chartNotificationViewController = ChartNotificationRouter.module(coinType: coin.type, coinTitle: coin.title, mode: mode) else {
+    func openSettings(coinType: CoinType, coinTitle: String, mode: NotificationSettingPresentMode) {
+        guard let chartNotificationViewController = ChartNotificationRouter.module(coinType: coinType, coinTitle: coinTitle, mode: mode) else {
             return
         }
         viewController?.present(chartNotificationViewController, animated: true)
@@ -31,7 +31,7 @@ extension NotificationSettingsRouter {
     static func module() -> UIViewController {
         let router = NotificationSettingsRouter()
         let interactor = NotificationSettingsInteractor(priceAlertManager: App.shared.priceAlertManager, notificationManager: App.shared.notificationManager, appManager: App.shared.appManager, coinManager: App.shared.coinManager, localStorage: App.shared.localStorage)
-        let factory = NotificationSettingsViewItemFactory(coinManager: App.shared.coinManager, rateManager: App.shared.rateManager)
+        let factory = NotificationSettingsViewItemFactory(rateManager: App.shared.rateManager)
         let presenter = NotificationSettingsPresenter(router: router, interactor: interactor, factory: factory)
         let view = NotificationSettingsViewController(delegate: presenter)
 
