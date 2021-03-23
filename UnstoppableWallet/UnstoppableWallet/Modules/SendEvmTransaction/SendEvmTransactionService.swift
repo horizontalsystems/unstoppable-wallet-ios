@@ -3,6 +3,7 @@ import RxSwift
 import RxCocoa
 import EthereumKit
 import BigInt
+import CoinKit
 
 class SendEvmTransactionService {
     private let disposeBag = DisposeBag()
@@ -10,6 +11,7 @@ class SendEvmTransactionService {
     private let sendData: SendEvmData
     private let evmKit: EthereumKit.Kit
     private let transactionService: EvmTransactionService
+    private let activateCoinManager: ActivateCoinManager
 
     private let stateRelay = PublishRelay<State>()
     private(set) var state: State = .notReady(errors: []) {
@@ -32,10 +34,11 @@ class SendEvmTransactionService {
         }
     }
 
-    init(sendData: SendEvmData, gasPrice: Int? = nil, evmKit: EthereumKit.Kit, transactionService: EvmTransactionService) {
+    init(sendData: SendEvmData, gasPrice: Int? = nil, evmKit: EthereumKit.Kit, transactionService: EvmTransactionService, activateCoinManager: ActivateCoinManager) {
         self.sendData = sendData
         self.evmKit = evmKit
         self.transactionService = transactionService
+        self.activateCoinManager = activateCoinManager
 
         dataState = DataState(transactionData: sendData.transactionData, additionalInfo: sendData.additionalInfo, decoration: evmKit.decorate(transactionData: sendData.transactionData))
 
@@ -79,6 +82,31 @@ class SendEvmTransactionService {
         )
     }
 
+    private func handlePostSendActions() {
+        if let decoration = dataState.decoration, case .swap(_, _, let tokenOut, _, _) = decoration {
+            activateSwapCoinOut(tokenOut: tokenOut)
+        }
+    }
+
+    private func activateSwapCoinOut(tokenOut: TransactionDecoration.Token) {
+        let coinType: CoinType
+
+        switch tokenOut {
+        case .evmCoin:
+            switch evmKit.networkType {
+            case .ethMainNet, .kovan, .ropsten: coinType = .ethereum
+            case .bscMainNet: coinType = .binanceSmartChain
+            }
+        case .eip20Coin(let address):
+            switch evmKit.networkType {
+            case .ethMainNet, .kovan, .ropsten: coinType = .erc20(address: address.hex)
+            case .bscMainNet: coinType = .bep20(address: address.hex)
+            }
+        }
+
+        activateCoinManager.activate(coinType: coinType)
+    }
+
 }
 
 extension SendEvmTransactionService {
@@ -113,6 +141,7 @@ extension SendEvmTransactionService {
                 )
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] fullTransaction in
+                    self?.handlePostSendActions()
                     self?.sendState = .sent(transactionHash: fullTransaction.transaction.hash)
                 }, onError: { error in
                     self.sendState = .failed(error: error)
