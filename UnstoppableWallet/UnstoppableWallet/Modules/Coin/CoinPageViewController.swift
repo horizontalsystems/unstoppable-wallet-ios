@@ -80,6 +80,7 @@ class CoinPageViewController: ThemeViewController {
         tableView.registerCell(forClass: BrandFooterCell.self)
         tableView.registerCell(forClass: SpinnerCell.self)
         tableView.registerCell(forClass: ErrorCell.self)
+        tableView.registerCell(forClass: TextCell.self)
 
         chartIntervalAndSelectedRateCell.bind(filters: chartViewModel.chartTypes.map {
             .item(title: $0)
@@ -291,7 +292,7 @@ extension CoinPageViewController {
 
     private func headerRow(title: String) -> RowProtocol {
         Row<B4Cell>(
-                id: "header_cell",
+                id: "header_cell_\(title)",
                 hash: title,
                 height: .heightSingleLineCell,
                 bind: { cell, _ in
@@ -464,45 +465,43 @@ extension CoinPageViewController {
         )
     }
 
-    private func categoriesSection(categories: [String]?, contractInfo: CoinPageViewModel.ContractInfo?) -> SectionProtocol? {
-        var rows = [RowProtocol]()
+    private func categoriesSection(categories: [String]) -> SectionProtocol {
+        let text = categories.joined(separator: ", ")
 
-        let hasCategories = categories != nil
-        let hasContractInfo = contractInfo != nil
+        return Section(
+                id: "categories",
+                headerState: .margin(height: .margin12),
+                rows: [
+                    headerRow(title: "coin_page.category".localized),
+                    Row<TextCell>(
+                            id: "categories",
+                            dynamicHeight: { [weak self] width in
+                                TextCell.height(containerWidth: width, text: text)
+                            },
+                            bind: { cell, _ in
+                                cell.contentText = text
+                            }
+                    )
+                ]
+        )
+    }
 
-        if let categories = categories {
-            let categoriesRow = Row<D7Cell>(
-                    id: "categories",
-                    height: .heightCell48,
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !hasContractInfo)
-                        cell.title = "coin_page.categories".localized
-                        cell.value = categories.joined(separator: ", ")
-                    }
-            )
-
-            rows.append(categoriesRow)
-        }
-
-        if let contractInfo = contractInfo {
-            let contractInfoRow = Row<D9Cell>(
-                    id: "investors",
-                    height: .heightCell48,
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: !hasCategories, isLast: true)
-                        cell.title = contractInfo.title
-                        cell.viewItem = CopyableSecondaryButton.ViewItem(value: contractInfo.value)
-                    }
-            )
-
-            rows.append(contractInfoRow)
-        }
-
-        if !rows.isEmpty {
-            return Section(id: "categories-contact-info", headerState: .margin(height: .margin12), rows: rows)
-        } else {
-            return nil
-        }
+    private func contractInfoSection(contractInfo: CoinPageViewModel.ContractInfo) -> SectionProtocol {
+        Section(
+                id: "contract-info",
+                headerState: .margin(height: .margin12),
+                rows: [
+                    Row<D9Cell>(
+                            id: "contract-info",
+                            height: .heightCell48,
+                            bind: { cell, _ in
+                                cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                                cell.title = contractInfo.title
+                                cell.viewItem = CopyableSecondaryButton.ViewItem(value: contractInfo.value)
+                            }
+                    )
+                ]
+        )
     }
 
     private func marketRow(id: String, title: String, text: String, isFirst: Bool, isLast: Bool) -> RowProtocol {
@@ -606,8 +605,12 @@ extension CoinPageViewController: SectionsDataSource {
                 sections.append(descriptionSection(description: viewItem.description))
             }
 
-            if let categoriesSection = categoriesSection(categories: viewItem.categories, contractInfo: viewItem.contractInfo) {
-                sections.append(categoriesSection)
+            if let categories = viewItem.categories {
+                sections.append(categoriesSection(categories: categories))
+            }
+
+            if let contractInfo = viewItem.contractInfo {
+                sections.append(contractInfoSection(contractInfo: contractInfo))
             }
 
             if viewItem.guideUrl != nil || !viewItem.links.isEmpty {
