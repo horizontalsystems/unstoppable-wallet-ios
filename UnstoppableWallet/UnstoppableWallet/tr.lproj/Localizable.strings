@@ -460,7 +460,7 @@
 "coin_page.markets" = "%@ Markets";
 "coin_page.investors" = "%@ Investors";
 
-"coin_page.categories" = "Categories";
+"coin_page.category" = "Category";
 "coin_page.contract" = "%@ Contract";
 "coin_page.bep2_symbol" = "BEP2 Symbol";
 
