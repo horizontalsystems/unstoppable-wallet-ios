@@ -28,18 +28,10 @@ class CoinMarketsViewModel {
             ViewItem(
                     market: ticker.marketName,
                     pair: "\(ticker.base)/\(ticker.target)",
-                    rate: format(symbol: ticker.target, value: ticker.rate) ?? "",
+                    rate: ValueFormatter.instance.format(value: ticker.rate, decimalCount: 8, symbol: ticker.target, fractionPolicy: .threshold(high: 0.01, low: 0)) ?? "",
                     volume: CurrencyCompactFormatter.instance.format(symbol: ticker.base, value: ticker.volume) ?? ""
             )
         }
-    }
-
-    func format(symbol: String, value: Decimal?) -> String? {
-        guard let value = value, let formattedValue = coinFormatter.string(from: value as NSNumber)?.trimmingCharacters(in: .whitespaces) else {
-            return nil
-        }
-
-        return formattedValue + " " + symbol
     }
 
 }
