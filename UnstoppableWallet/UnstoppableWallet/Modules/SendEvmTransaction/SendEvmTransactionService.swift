@@ -135,7 +135,7 @@ extension SendEvmTransactionService {
         sendState = .sending
 
         evmKit.sendSingle(
-                        transactionData: sendData.transactionData,
+                        transactionData: transaction.data,
                         gasPrice: transaction.gasData.gasPrice,
                         gasLimit: transaction.gasData.gasLimit
                 )
