@@ -21,7 +21,7 @@ class PriceAlertManager {
     }
 
     func alertNotificationAllowed(coinType: CoinType) -> Bool {
-        !rateManager.cryptoCompareCoinCodes(coinTypes: [coinType]).isEmpty
+        rateManager.notificationDataExist(coinType: coinType)
     }
 
 }
@@ -33,13 +33,10 @@ extension PriceAlertManager: IPriceAlertManager {
     }
 
     var priceAlerts: [PriceAlert] {
-        var alerts = storage.priceAlerts.filter { !rateManager.cryptoCompareCoinCodes(coinTypes: [$0.coinType]).isEmpty }
+        var alerts = storage.priceAlerts.filter { rateManager.notificationDataExist(coinType: $0.coinType) }
 
         let walletAlerts = walletManager.wallets.compactMap { wallet -> PriceAlert? in
             let coin = wallet.coin
-            guard alertNotificationAllowed(coinType: coin.type) == true else {
-                return nil
-            }
 
             if let alertIndex = alerts.firstIndex(where: { $0.coinType == coin.type }) {
                 let walletAlert = alerts[alertIndex]
@@ -48,14 +45,10 @@ extension PriceAlertManager: IPriceAlertManager {
                 return walletAlert
             }
 
-            return PriceAlert(coinType: coin.type, changeState: .off, trendState: .off)
+            return PriceAlert(coinType: coin.type, coinTitle: coin.title, changeState: .off, trendState: .off)
         }
 
         let savedOtherAlerts = alerts.compactMap { alert -> PriceAlert? in
-            guard alertNotificationAllowed(coinType: alert.coinType) == true else {
-                return nil
-            }
-
             if alert.trendState == .off, alert.changeState == .off {
                 return nil
             }
@@ -66,24 +59,24 @@ extension PriceAlertManager: IPriceAlertManager {
         return walletAlerts + savedOtherAlerts
     }
 
-    func priceAlert(coinType: CoinType) -> PriceAlert? {
+    func priceAlert(coinType: CoinType, title: String) -> PriceAlert? {
         guard alertNotificationAllowed(coinType: coinType) == true else {
             return nil
         }
 
-        return storage.priceAlert(coinType: coinType) ?? PriceAlert(coinType: coinType, changeState: .off, trendState: .off)
+        return storage.priceAlert(coinType: coinType) ?? PriceAlert(coinType: coinType, coinTitle: title, changeState: .off, trendState: .off)
     }
 
     private func updateAlertsObservable(priceAlerts: [PriceAlert]) -> Observable<[()]> {
         let oldAlerts = self.priceAlerts
-        let alertCoinCodes = rateManager.cryptoCompareCoinCodes(coinTypes: priceAlerts.map { $0.coinType })
+        let alertCoinData = rateManager.notificationCoinData(coinTypes: priceAlerts.map { $0.coinType })
 
         var requests = [PriceAlertRequest]()
 
         for alert in priceAlerts {
             let oldAlert = (oldAlerts.first { $0.coinType == alert.coinType })
 
-            if let coinCode = alertCoinCodes[alert.coinType] {
+            if let coinCode = alertCoinData[alert.coinType]?.code {
                 let oldTopics = oldAlert?.activeTopics(coinCode: coinCode)
                 let activeTopics = alert.activeTopics(coinCode: coinCode)
 
@@ -114,11 +107,11 @@ extension PriceAlertManager: IPriceAlertManager {
     }
 
     func updateTopics() -> Observable<[()]> {
-        let alertCoinCodes = rateManager.cryptoCompareCoinCodes(coinTypes: priceAlerts.map { $0.coinType })
+        let alertCoinData = rateManager.notificationCoinData(coinTypes: priceAlerts.map { $0.coinType })
 
         let activeTopics = priceAlerts.reduce(Set<String>()) { set, alert in
             var set = set
-            if let coinCode = alertCoinCodes[alert.coinType] {
+            if let coinCode = alertCoinData[alert.coinType]?.code {
                 set.formUnion(alert.activeTopics(coinCode: coinCode))
             }
             return set

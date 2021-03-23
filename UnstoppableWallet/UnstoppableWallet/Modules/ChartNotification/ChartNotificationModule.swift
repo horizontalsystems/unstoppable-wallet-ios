@@ -16,7 +16,7 @@ protocol IChartNotificationViewDelegate {
 }
 
 protocol IChartNotificationInteractor {
-    func priceAlert(coinType: CoinType) -> PriceAlert?
+    func priceAlert(coinType: CoinType, coinTitle: String) -> PriceAlert?
     func requestPermission()
     func save(priceAlert: PriceAlert)
 }

@@ -53,11 +53,11 @@ extension NotificationManager: INotificationManager {
             storage.pushToken = token
 
             let priceAlerts = priceAlertManager.priceAlerts
-            let alertCoinCodes = rateManager.cryptoCompareCoinCodes(coinTypes: priceAlerts.map { $0.coinType })
+            let alertCoinData = rateManager.notificationCoinData(coinTypes: priceAlerts.map { $0.coinType })
 
             remoteAlertManager.schedule(requests: priceAlerts.reduce([PriceAlertRequest]()) { array, alert in
                 var array = array
-                if let coinCode = alertCoinCodes[alert.coinType] {
+                if let coinCode = alertCoinData[alert.coinType]?.code {
                     array.append(contentsOf: PriceAlertRequest.requests(topics: alert.activeTopics(coinCode: coinCode), method: .subscribe))
                 }
                 return array

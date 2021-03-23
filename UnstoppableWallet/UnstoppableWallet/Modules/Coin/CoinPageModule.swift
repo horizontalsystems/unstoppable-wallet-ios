@@ -22,7 +22,8 @@ struct CoinPageModule {
         let priceAlertService = CoinPriceAlertService(
                 priceAlertManager: App.shared.priceAlertManager,
                 localStorage: App.shared.localStorage,
-                coinType: launchMode.coinType)
+                coinType: launchMode.coinType,
+                coinTitle: launchMode.coinTitle)
 
         let coinChartService = CoinChartService(
                 rateManager: App.shared.rateManager,

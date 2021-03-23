@@ -22,7 +22,7 @@ class ChartNotificationPresenter {
         self.coinType = coinType
         self.coinTitle = coinTitle
 
-        guard let priceAlert = interactor.priceAlert(coinType: coinType) else {
+        guard let priceAlert = interactor.priceAlert(coinType: coinType, coinTitle: coinTitle) else {
             return nil
         }
 
@@ -86,7 +86,7 @@ extension ChartNotificationPresenter: IChartNotificationInteractorDelegate {
     }
 
     func didFailSaveAlerts(error: Error) {
-        if let alert = interactor.priceAlert(coinType: coinType) {
+        if let alert = interactor.priceAlert(coinType: coinType, coinTitle: coinTitle) {
             self.alert = alert
         }
 
