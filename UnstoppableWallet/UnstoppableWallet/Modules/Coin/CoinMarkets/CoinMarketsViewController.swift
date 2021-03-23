@@ -44,7 +44,9 @@ class CoinMarketsViewController: ThemeViewController {
                 height: .heightDoubleLineCell,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .transparent, isLast: isLast)
-                    cell.leftImage = UIImage(named: "icon_placeholder_24")?.tinted(with: .themeSteel20)
+//                    cell.leftImage = UIImage(named: "icon_placeholder_24")?.tinted(with: .themeSteel20) todo load image
+                    cell.titleImageCornerRadius = .cornerRadius4
+                    cell.titleImageBackgroundColor = .themeSteel20
                     cell.topText = viewItem.market
                     cell.bottomText = viewItem.pair
                     cell.primaryValueText = viewItem.rate
