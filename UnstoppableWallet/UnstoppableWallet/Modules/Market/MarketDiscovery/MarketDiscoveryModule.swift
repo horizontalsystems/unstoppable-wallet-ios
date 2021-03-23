@@ -1,8 +1,7 @@
 struct MarketDiscoveryModule {
 
     static func viewController(marketViewModel: MarketViewModel) -> MarketDiscoveryViewController {
-        let categoriesProvider = MarketCategoriesProvider()
-        let service = MarketDiscoveryService(rateManager: App.shared.rateManager, categoriesProvider: categoriesProvider)
+        let service = MarketDiscoveryService(rateManager: App.shared.rateManager)
         let listService = MarketListService(currencyKit: App.shared.currencyKit, fetcher: service)
 
         let viewModel = MarketDiscoveryViewModel(service: service)

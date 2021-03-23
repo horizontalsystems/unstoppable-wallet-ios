@@ -4,7 +4,6 @@ import RxRelay
 
 class MarketDiscoveryService {
     private let rateManager: IRateManager
-    private let categoriesProvider: MarketCategoriesProvider
 
     private let refetchRelay = PublishRelay<()>()
 
@@ -16,9 +15,8 @@ class MarketDiscoveryService {
         }
     }
 
-    init(rateManager: IRateManager, categoriesProvider: MarketCategoriesProvider) {
+    init(rateManager: IRateManager) {
         self.rateManager = rateManager
-        self.categoriesProvider = categoriesProvider
     }
 
 }
@@ -28,7 +26,7 @@ extension MarketDiscoveryService: IMarketListFetcher {
     func fetchSingle(currencyCode: String) -> Single<[MarketModule.Item]> {
         if let category = currentCategory {
 //            let coinCodes = categoriesProvider.coinCodes(for: category == .rated ? nil : category.rawValue)
-            let coinTypes = categoriesProvider.coinTypes(for: category.rawValue)
+            let coinTypes = rateManager.coinTypes(for: category.rawValue)
             return rateManager.coinsMarketSingle(currencyCode: currencyCode, coinTypes: coinTypes)
                     .map { coinMarkets in
                         coinMarkets.compactMap { coinMarket in
