@@ -30,14 +30,18 @@ class ValueFormatter {
     }()
 
     func format(coinValue: CoinValue, fractionPolicy: FractionPolicy = .full) -> String? {
-        let absoluteValue = abs(coinValue.value)
+        format(value: coinValue.value, decimalCount: coinValue.coin.decimal, symbol: coinValue.coin.code, fractionPolicy: fractionPolicy)
+    }
+
+    func format(value: Decimal, decimalCount: Int, symbol: String, fractionPolicy: FractionPolicy = .full) -> String? {
+        let absoluteValue = abs(value)
 
         let formatter = coinFormatter
         formatter.roundingMode = .halfUp
 
         switch fractionPolicy {
         case .full:
-            formatter.maximumFractionDigits = min(coinValue.coin.decimal, 8)
+            formatter.maximumFractionDigits = min(decimalCount, 8)
         case let .threshold(high, _):
             formatter.maximumFractionDigits = absoluteValue > high ? 4 : 8
         }
@@ -46,9 +50,9 @@ class ValueFormatter {
             return nil
         }
 
-        var result = "\(formattedValue) \(coinValue.coin.code)"
+        var result = "\(formattedValue) \(symbol)"
 
-        if coinValue.value.isSignMinus {
+        if value.isSignMinus {
             result = "- \(result)"
         }
 
