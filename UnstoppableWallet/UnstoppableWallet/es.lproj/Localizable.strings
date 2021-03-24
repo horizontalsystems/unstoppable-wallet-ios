@@ -38,7 +38,7 @@
 "offline" = "Desconectado";
 "confirm" = "Confirmar";
 "connect" = "Conectar";
-"price" = "Price";
+"price" = "Precio";
 "note" = "Note";
 
 "version" = "Versión %@";
@@ -196,8 +196,8 @@
 "send.fee_info.content_conclusion" = "El monedero Unstoppable hace una conjetura adecuada basada en la actividad de la red y no puede garantizar que los valores de comisión sugeridos siempre resulten en un comportamiento esperado.";
 
 "send.confirmation.you_send" = "You Send";
-"send.confirmation.amount" = "Amount";
-"send.confirmation.to" = "To";
+"send.confirmation.amount" = "Importe";
+"send.confirmation.to" = "Para";
 "send.confirmation.domain" = "Dominio";
 "send.confirmation.address" = "Dirección";
 "send.confirmation.account" = "Account";
@@ -450,7 +450,7 @@
 "coin_page.roi.day7" = "1 Week";
 "coin_page.roi.day14" = "2 Weeks";
 "coin_page.roi.day30" = "1 Month";
-"coin_page.roi.day200" = "6 Month";
+"coin_page.roi.day200" = "6 Months";
 "coin_page.roi.year1" = "1 Year";
 
 "coin_page.market_cap" = "Market Cap";
@@ -487,13 +487,13 @@
 "tx_info.title" = "Transacción";
 "tx_info.title_approval" = "Aprobación de intercambio";
 "tx_info.status.pending" = "Pendiente";
-"tx_info.status.completed" = "Completed";
+"tx_info.status.completed" = "Finalizado";
 "tx_info.status.failed" = "Falla";
 "tx_info.from_hash" = "Desde ";
 "tx_info.transaction_id" = "Identificación de la transacción";
 "tx_info.to_hash" = "Para";
 "tx_info.input" = "Entrada";
-"tx_info.button_explorer" = "View on %@";
+"tx_info.button_explorer" = "Ver en %@";
 "tx_info.rate" = "Tasa histórica";
 "tx_info.fee" = "Comisión";
 "tx_info.to_self_note" = "Esta transacción fue enviada a su propia dirección";
@@ -810,12 +810,12 @@ poner en peligro la seguridad de mis fondos.";
 "add_token.decimals" = "Decimales";
 "add_token.already_exists" = "Este token ya está en la lista del gestor de monedas.";
 
-"add_evm_token.contract_not_exist" = "Contract not found";
-"add_evm_token.contract_address" = "Contract Address";
+"add_evm_token.contract_not_exist" = "Contrato no encontrado";
+"add_evm_token.contract_address" = "Dirección del contrato";
 
 "add_erc20_token.title" = "Añadir ERC20";
 
-"add_bep20_token.title" = "Add BEP20";
+"add_bep20_token.title" = "Añadir BEP2";
 
 "add_bep2_token.title" = "Añadir BEP2";
 "add_bep2_token.token_symbol" = "Símbolo del token";
@@ -884,5 +884,5 @@ poner en peligro la seguridad de mis fondos.";
 // Onboarding
 
 "onboarding.balance.description" = "You don't have any wallets yet. Create new or restore existing";
-"onboarding.balance.create" = "Create";
-"onboarding.balance.restore" = "Restore";
+"onboarding.balance.create" = "Crear";
+"onboarding.balance.restore" = "Restaurar";
