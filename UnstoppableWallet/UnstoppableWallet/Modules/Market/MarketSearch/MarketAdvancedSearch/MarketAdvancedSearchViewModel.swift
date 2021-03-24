@@ -270,10 +270,10 @@ extension MarketAdvancedSearchService.PriceChangeFilter {
         case .plus25: return "> +25 %"
         case .plus50: return "> +50 %"
         case .plus100: return "> +100 %"
-        case .minus10: return "> -10 %"
-        case .minus25: return "> -25 %"
-        case .minus50: return "> -50 %"
-        case .minus100: return "> -100 %"
+        case .minus10: return "< -10 %"
+        case .minus25: return "< -25 %"
+        case .minus50: return "< -50 %"
+        case .minus100: return "< -100 %"
         }
     }
 
