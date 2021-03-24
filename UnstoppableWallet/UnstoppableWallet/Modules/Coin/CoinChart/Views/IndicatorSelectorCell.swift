@@ -80,8 +80,12 @@ class IndicatorSelectorCell: UITableViewCell {
         onTapIndicator?(indicator)
     }
 
-    public func bind(indicator: ChartIndicatorSet, selected: Bool) {
+    public func set(indicator: ChartIndicatorSet, selected: Bool) {
         indicatorViews[indicator]?.isSelected = selected
+    }
+
+    public func set(indicator: ChartIndicatorSet, disabled: Bool) {
+        indicatorViews[indicator]?.isEnabled = !disabled
     }
 
 }

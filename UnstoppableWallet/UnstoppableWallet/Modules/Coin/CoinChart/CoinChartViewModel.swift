@@ -144,7 +144,25 @@ extension CoinChartViewModel {
 
         let timeline: [ChartTimelineItem]
 
-        let selectedIndicator: ChartIndicatorSet
+        let selectedIndicator: ChartIndicatorSet?
+    }
+
+}
+
+extension ChartType {
+
+    var title: String {
+        switch self {
+        case .today: return "chart.time_duration.today".localized
+        case .day: return "chart.time_duration.day".localized
+        case .week: return "chart.time_duration.week".localized
+        case .week2: return "chart.time_duration.week2".localized
+        case .month: return "chart.time_duration.month".localized
+        case .month3: return "chart.time_duration.month3".localized
+        case .halfYear: return "chart.time_duration.halyear".localized
+        case .year: return "chart.time_duration.year".localized
+        case .year2: return "chart.time_duration.year2".localized
+        }
     }
 
 }

@@ -48,69 +48,6 @@ struct ChartModule {
 
 }
 
-protocol IChartView: class {
-    func set(title: String)
-    func set(favorite: Bool)
-
-    func set(viewItem: ChartViewItem)
-
-    func set(types: [String])
-    func setSelectedType(at: Int?)
-
-    func setSelectedState(hidden: Bool)
-    func showSelectedPoint(viewItem: SelectedPointViewItem)
-}
-
-protocol IChartRouter {
-    func open(link: String?)
-    func openAlertSettings(coin: Coin)
-}
-
-protocol IChartViewDelegate {
-    var currency: Currency { get }
-
-    func onLoad()
-
-    func onSelectType(at index: Int)
-
-    func onTap(indicator: ChartIndicatorSet)
-    func onTapLink()
-
-    func onTapAlert()
-    func onTapFavorite()
-    func onTapUnfavorite()
-}
-
-protocol IChartInteractor {
-    var defaultChartType: ChartType? { get set }
-    var alertsOn: Bool { get }
-
-    func chartInfo(coinType: CoinType, currencyCode: String, chartType: ChartType) -> ChartInfo?
-    func subscribeToChartInfo(coinType: CoinType, currencyCode: String, chartType: ChartType)
-
-    func marketInfo(coinType: CoinType, currencyCode: String) -> MarketInfo?
-    func subscribeToMarketInfo(coinType: CoinType, currencyCode: String)
-    func priceAlert(coin: Coin?) -> PriceAlert?
-    func subscribeToAlertUpdates()
-
-    func favorite(coinType: CoinType)
-    func unfavorite(coinType: CoinType)
-    func isFavorite(coinType: CoinType) -> Bool
-}
-
-protocol IChartInteractorDelegate: class {
-    func didReceive(chartInfo: ChartInfo, coinType: CoinType)
-    func didReceive(marketInfo: MarketInfo)
-    func onChartInfoError(error: Error)
-    func didUpdate(alerts: [PriceAlert])
-    func updateFavorite()
-}
-
-protocol IChartRateFactory {
-    func chartViewItem(chartDataStatus: DataStatus<ChartInfo>, marketInfoStatus: DataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, selectedIndicator: ChartIndicatorSet, coin: Coin?, priceAlert: PriceAlert?, alertsOn: Bool) -> ChartViewItem
-    func selectedPointViewItem(chartItem: ChartItem, type: ChartType, currency: Currency, macdSelected: Bool) -> SelectedPointViewItem?
-}
-
 enum MovementTrend {
     case neutral
     case down

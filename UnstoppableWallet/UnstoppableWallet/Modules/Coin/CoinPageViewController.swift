@@ -231,7 +231,8 @@ extension CoinPageViewController {
 
     private func deactivateIndicators() {
         ChartIndicatorSet.all.forEach { indicator in
-            indicatorSelectorCell.bind(indicator: indicator, selected: false)
+            indicatorSelectorCell.set(indicator: indicator, selected: false)
+            indicatorSelectorCell.set(indicator: indicator, disabled: true)
         }
     }
 
@@ -241,14 +242,24 @@ extension CoinPageViewController {
         }
 
         chartViewCell.set(data: viewItem)
-        chartViewCell.setVolumes(hidden: viewItem.selectedIndicator.hideVolumes)
+        chartViewCell.setVolumes(hidden: viewItem.selectedIndicator?.hideVolumes ?? true)
+
+        guard let selectedIndicator = viewItem.selectedIndicator else {
+            ChartIndicatorSet.all.forEach { indicator in
+                chartViewCell.bind(indicator: indicator, hidden: true)
+            }
+            deactivateIndicators()
+
+            return
+        }
 
         ChartIndicatorSet.all.forEach { indicator in
-            let show = viewItem.selectedIndicator.contains(indicator)
+            let show = selectedIndicator.contains(indicator)
 
             chartViewCell.bind(indicator: indicator, hidden: !show)
 
-            indicatorSelectorCell.bind(indicator: indicator, selected: show)
+            indicatorSelectorCell.set(indicator: indicator, disabled: false)
+            indicatorSelectorCell.set(indicator: indicator, selected: show)
         }
     }
 
