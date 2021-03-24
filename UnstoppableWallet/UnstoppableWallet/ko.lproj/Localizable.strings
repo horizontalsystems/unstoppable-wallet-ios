@@ -38,7 +38,7 @@
 "offline" = "오프라인";
 "confirm" = "확인";
 "connect" = "연결";
-"price" = "Price";
+"price" = "금액";
 "note" = "Note";
 
 "version" = "버전 %@";
@@ -196,8 +196,8 @@
 "send.fee_info.content_conclusion" = "언스타퍼블 지갑은 네트워크 활동을 기반으로 학습된 추측을 하며, 제안된 수수료 값이 항상 예상 행동을 초래한다고 보장할 수 없습니다.";
 
 "send.confirmation.you_send" = "You Send";
-"send.confirmation.amount" = "Amount";
-"send.confirmation.to" = "To";
+"send.confirmation.amount" = "양";
+"send.confirmation.to" = "에게";
 "send.confirmation.domain" = "도메인";
 "send.confirmation.address" = "주소";
 "send.confirmation.account" = "Account";
