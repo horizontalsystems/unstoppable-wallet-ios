@@ -66,13 +66,13 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         liquidityCell.title = "market.advanced_search.liquidity".localized
         liquidityCell.valueActionEnabled = false
 
-        periodCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
-        periodCell.title = "market.advanced_search.period".localized
-        periodCell.valueActionEnabled = false
-
-        priceChangeCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
+        priceChangeCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
         priceChangeCell.title = "market.advanced_search.price_change".localized
         priceChangeCell.valueActionEnabled = false
+
+        periodCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
+        periodCell.title = "market.advanced_search.price_period".localized
+        periodCell.valueActionEnabled = false
 
         view.addSubview(showResultButton)
         showResultButton.snp.makeConstraints { maker in
@@ -169,7 +169,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
     private func onTapPeriodCell() {
             let titleViewItem = ItemSelectorModule.ComplexTitleViewItem(
-                title: "market.advanced_search.period".localized,
+                title: "market.advanced_search.price_period".localized,
                 subtitle: "---------",
                 image: UIImage(named: "circle_clock_24")?.tinted(with: .themeJacob))
 
@@ -311,8 +311,8 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
                 headerState: .margin(height: .margin32),
                 footerState: .margin(height: .margin32 + .heightButton),
                 rows: [
-                    row(cell: periodCell, id: "period") { [weak self] in self?.onTapPeriodCell() },
-                    row(cell: priceChangeCell, id: "price_change") { [weak self] in self?.onTapPriceChangeCell() }
+                    row(cell: priceChangeCell, id: "price_change") { [weak self] in self?.onTapPriceChangeCell() },
+                    row(cell: periodCell, id: "price_period") { [weak self] in self?.onTapPeriodCell() },
                 ])
         )
 
