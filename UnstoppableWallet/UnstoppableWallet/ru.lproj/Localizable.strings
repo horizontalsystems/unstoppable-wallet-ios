@@ -39,7 +39,7 @@
 "confirm" = "Подтвердить";
 "connect" = "Подключиться";
 "price" = "Цена";
-"note" = "Note";
+"note" = "Комментарий";
 
 "version" = "Версия %@";
 
@@ -163,7 +163,7 @@
 "send.address_placeholder" = "Адрес";
 "send.address_or_domain_placeholder" = "Адрес или домен";
 "send.fee" = "Комиссия";
-"send.network_fee" = "Network Fee";
+"send.network_fee" = "Комиссия сети";
 "send.estimated_fee" = "Предполагаемая Комиссия";
 "send.max_fee" = "Макс. Комиссия";
 "send.tx_speed" = "Комиссия за транзакцию";
@@ -197,8 +197,8 @@
 "send.fee_info.content_fast" = "В случае с приоритетными транзакциями лучше всего использовать настройку высокой комиссии. При выборе высокой комиссии транзакция Bitcoin будет обработана в течение 10 минут, ну а транзакция Ethereum будет обработана еще быстрее.";
 "send.fee_info.content_conclusion" = "Кошелек Unstoppable делает обоснованное предположение на основе сетевой активности и не может гарантировать, что предлагаемые значения комиссии всегда будут давать желаемый результат.";
 
-"send.confirmation.you_send" = "You Send";
-"send.confirmation.amount" = "Amount";
+"send.confirmation.you_send" = "Вы отправляете";
+"send.confirmation.amount" = "Количество";
 "send.confirmation.to" = "Кому";
 "send.confirmation.domain" = "Домен";
 "send.confirmation.address" = "Адрес";
@@ -214,8 +214,8 @@
 
 "send.lock_time" = "TimeLock";
 
-"approve.confirmation.you_approve" = "You Approve";
-"approve.confirmation.spender" = "Spender";
+"approve.confirmation.you_approve" = "Вы подтверждаете";
+"approve.confirmation.spender" = "Покупатель";
 
 // CoinSelector
 
@@ -258,7 +258,7 @@
 "swap.advanced_settings.recipient.footer" = "После операции обмена сумма будет переведена на указанный адрес";
 "swap.advanced_settings.deadline_minute" = "%@ мин";
 "swap.advanced_settings.recipient_address" = "Адрес Получателя";
-"swap.advanced_settings.recipient_domain" = "Recipient Domain";
+"swap.advanced_settings.recipient_domain" = "Принимающий домен";
 "swap.advanced_settings.error.lower_slippage" = "Ваша транзакция, скорее всего, не удастся.";
 "swap.advanced_settings.error.higher_slippage" = "Макс. допустимое значение %@%%.";
 "swap.advanced_settings.error.invalid_address" = "Неверный адрес";
@@ -280,12 +280,12 @@
 "swap.confirmation.swap_button" = "Обменять";
 "swap.confirmation.pay" = "Оплатить %@";
 "swap.confirmation.get" = "Получить %@";
-"swap.confirmation.guaranteed" = "Guaranteed";
-"swap.confirmation.maximum" = "Maximum";
-"swap.confirmation.estimated" = "Estimated";
+"swap.confirmation.guaranteed" = "Гарантировано";
+"swap.confirmation.maximum" = "Максимум";
+"swap.confirmation.estimated" = "Ориентировочно";
 
 
-"swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on %@ blockchain.\n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
+"swap.dex_info.description" = "Этот обменный сервис работает при поддержке %@ - децентрализированного протокола обмена токенов, созданного в блокчейне %@.\n\n%@ полностью автоматизирован и управляется смарт-контрактами, которые надежным способом упрощают обмен токенами без осуществления каких-либо махинаций.";
 
 "swap.dex_info.header_dex_related" = "o %@";
 "swap.dex_info.header_allowance" = "Разрешение";
@@ -303,7 +303,7 @@
 "swap.dex_info.header_transaction_fee" = "Комиссия за транзакцию";
 "swap.dex_info.content_transaction_fee" = "Примерная стоимость услуги по обработке данной транзакции на блокчейне %@. Стоимость транзакций, связанных с %@, обычно выше, чем стоимость транзакций по передаче обычных токенов.";
 "swap.dex_info.header_transaction_speed" = "Скорость Транзакции";
-"swap.dex_info.content_transaction_speed" = "Transactions with higher transaction fee will result in faster processing speeds. The opposite is true as well.";
+"swap.dex_info.content_transaction_speed" = "Обработка транзакций с более высокой комиссией будет ускорена. Верно и обратное.";
 
 "swap.dex_info.link_button" = "%@ Сайт";
 
@@ -843,11 +843,11 @@
 "wallet_connect.button_disconnect" = "Отсоединить";
 "ethereum_transaction.error.insufficient_balance" = "Для отправки транзакции требуется %@.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Текущий баланс ETH ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
-"ethereum_transaction.error.reverted" = "Transaction cannot be executed: %@";
+"ethereum_transaction.error.reverted" = "Транзакция не может быть выполнена: %@";
 "wallet_connect.request_title" = "Запрос";
 
 "wallet_connect_list.title" = "Wallet Connect";
-"wallet_connect_list.new_connection" = "New Connection";
+"wallet_connect_list.new_connection" = "Новое подключение";
 
 // App Status
 
@@ -866,8 +866,8 @@
 "status_info.title" = "Статус";
 "status_info.pending.title" = "В обработке";
 "status_info.pending.content" = "Транзакция еще не подтверждена в блокчейне. Эта процедура может занять от нескольких минут до нескольких часов в зависимости от комиссии за транзакцию. Отправляемые с очень низкой комиссией транзакции обычно обрабатываются в течение нескольких дней или же могут быть отклонены сетью, отменяя это действие.";
-"status_info.sending_receiving.title" = "Sending / Receiving";
-"status_info.sending_receiving.content" = "Transaction has been included in the blockchain but has not reached permanent finality yet. At this point, it's safe to consider transaction completed for smaller payments. For larger payments it's recommended to wait until the status changes to completed.";
+"status_info.sending_receiving.title" = "Отправляется / Получает";
+"status_info.sending_receiving.content" = "Транзакция была включена в блокчейн, но пока не обработана до конца. На данном этапе до конца обработаны только транзакции для небольших платежей. Что касается более крупных транзакций, стоит дождаться смены статуса.";
 "status_info.confirmed.title" = "Подтверждено";
 "status_info.confirmed.content" = "Транзакция окончательна и необратима.";
 "status_info.failed.title" = "Не удалось";
@@ -884,6 +884,6 @@
 
 // Onboarding
 
-"onboarding.balance.description" = "You don't have any wallets yet. Create new or restore existing";
+"onboarding.balance.description" = "У вас пока нет кошельков. Создайте новый или восстановите существующий";
 "onboarding.balance.create" = "Создать";
 "onboarding.balance.restore" = "Восстановить";
