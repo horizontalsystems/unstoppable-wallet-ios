@@ -440,7 +440,7 @@
 "market.advanced_search.week" = "1 Week";
 "market.advanced_search.week2" = "2 Weeks";
 "market.advanced_search.month" = "1 Month";
-"market.advanced_search.month6" = "6 Months";
+"market.advanced_search.month6" = "6 Month";
 "market.advanced_search.year" = "1 Year";
 
 // Coin Page
@@ -454,7 +454,7 @@
 "coin_page.roi.year1" = "1 Year";
 
 "coin_page.market_cap" = "Market Cap";
-"coin_page.volume_24h" = "Volume (24h)";
+"coin_page.volume_24h" = "Volume(24h)";
 "coin_page.circulating_supply" = "In Circulation";
 "coin_page.total_supply" = "Total Supply";
 "coin_page.dilluted_market_cap" = "Diluted MCap";
@@ -809,8 +809,8 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "add_token.decimals" = "Decimales";
 "add_token.already_exists" = "Ce token figure déjà sur la liste du gestionnaire des pièces.";
 
-"add_evm_token.contract_not_exist" = "Contract not found";
-"add_evm_token.contract_address" = "Contract Address";
+"add_evm_token.contract_not_exist" = "Contrat non trouvé";
+"add_evm_token.contract_address" = "Adresse du contrat";
 
 "add_erc20_token.title" = "Ajouter ERC20";
 
@@ -883,5 +883,5 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 // Onboarding
 
 "onboarding.balance.description" = "You don't have any wallets yet. Create new or restore existing";
-"onboarding.balance.create" = "Create";
-"onboarding.balance.restore" = "Restore";
+"onboarding.balance.create" = "Créer";
+"onboarding.balance.restore" = "Restaurer";
