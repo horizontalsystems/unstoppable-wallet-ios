@@ -106,7 +106,7 @@ class ReadMoreTextCell: BaseThemeCell {
             return
         }
 
-        if textHeight < collapsedLabelHeight, expandable {
+        if textHeight <= collapsedLabelHeight, expandable {
             collapseButton.snp.removeConstraints()
             gradientView.snp.removeConstraints()
             labelWrapper.snp.remakeConstraints { maker in

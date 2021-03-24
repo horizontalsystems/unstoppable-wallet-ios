@@ -160,7 +160,7 @@ class MarketAdvancedSearchService {
                 inBounds(value: item.marketInfo.marketCap, lower: marketCap.lowerBound, upper: marketCap.upperBound) &&
                 inBounds(value: item.marketInfo.volume, lower: volume.lowerBound, upper: volume.upperBound) &&
             //          inBounds(value: item.marketInfo.liquidity, lower: liquidity.lowerBound, upper: liquidity.upperBound) &&
-                inBounds(value: item.marketInfo.rateDiffPeriod, lower: priceChange.lowerBound, upper: nil) {
+                inBounds(value: item.marketInfo.rateDiffPeriod, lower: priceChange.lowerBound, upper: priceChange.upperBound) {
                 return (index: index, item: item)
             }
             return nil
@@ -278,6 +278,20 @@ extension MarketAdvancedSearchService {
             case .plus25: return 25
             case .plus50: return 50
             case .plus100: return 100
+            case .minus10: return nil
+            case .minus25: return nil
+            case .minus50: return nil
+            case .minus100: return nil
+            }
+        }
+
+        var upperBound: Decimal? {
+            switch self {
+            case .none: return nil
+            case .plus10: return nil
+            case .plus25: return nil
+            case .plus50: return nil
+            case .plus100: return nil
             case .minus10: return -10
             case .minus25: return -25
             case .minus50: return -50
