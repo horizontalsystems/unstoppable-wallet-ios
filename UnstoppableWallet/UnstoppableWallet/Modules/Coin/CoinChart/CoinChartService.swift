@@ -86,14 +86,14 @@ class CoinChartService {
     }
 
     private func syncState() {
-        guard let chartInfo = chartInfo else {
+        guard let chartInfo = chartInfo, let latestRate = latestRate else {
             return
         }
 
         let item = Item(
-                rate: latestRate?.rate,
-                rateDiff24h: latestRate?.rateDiff24h,
-                timestamp: latestRate?.timestamp,
+                rate: latestRate.rate,
+                rateDiff24h: latestRate.rateDiff24h,
+                timestamp: latestRate.timestamp,
                 chartInfo: chartInfo
         )
 
