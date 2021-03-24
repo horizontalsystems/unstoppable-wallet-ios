@@ -283,11 +283,11 @@
 "swap.confirmation.estimated" = "估计";
 
 
-"swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on %@ blockchain.\n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
+"swap.dex_info.description" = "此兑换服务由基于%@区块链的分散式代币兑换协议%@提供。\n\n%@由不存在任何欺诈手段、以可靠方式推动代币兑换的智能合约来实现完全自动化并管理。";
 
-"swap.dex_info.header_dex_related" = "%@ Related";
+"swap.dex_info.header_dex_related" = "%@关联";
 "swap.dex_info.header_allowance" = "补贴";
-"swap.dex_info.content_allowance" = "The amount of some currency that service can spend on your behalf when executing token swaps. Sufficient allowance is required before swap action can take place.";
+"swap.dex_info.content_allowance" = "执行代币互兑时，该服务可以代表您支出某种货币的金额。执行互兑操作之前要求具备足够的限额。";
 "swap.dex_info.header_price_impact" = "价格影响";
 "swap.dex_info.content_price_impact" = "预期价格和显示价格的偏差通常会增加互兑金额。";
 "swap.dex_info.header_swap_fee" = "掉期交易费用";
@@ -299,9 +299,9 @@
 
 "swap.dex_info.header_other" = "其他";
 "swap.dex_info.header_transaction_fee" = "交易费用";
-"swap.dex_info.content_transaction_fee" = "The estimated processing cost of the given transaction on %@ blockchain. %@ related transactions will typically cost more than generic token transfer transactions.";
+"swap.dex_info.content_transaction_fee" = "%@区块链上给定交易的预计处理成本。%@相关交易的成本通常会高于通用代币转账交易。";
 "swap.dex_info.header_transaction_speed" = "交易速度";
-"swap.dex_info.content_transaction_speed" = "Transactions with higher transaction fee will result in faster processing speeds. The opposite is true as well.";
+"swap.dex_info.content_transaction_speed" = "交易费用较高的交易会实现更快的处理速度。反之亦然。";
 
 "swap.dex_info.link_button" = "%@ 站点";
 
@@ -411,14 +411,14 @@
 "market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favorites by clicking on star icon in the asset page";
 
 "market.search.title" = "搜索​​​​";
-"market.search.empty_text" = "No results found";
+"market.search.empty_text" = "未找到结果";
 
 "market.advanced_search.title" = "Advanced Search";
 "market.advanced_search.show_results" = "Show Results";
-"market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
+"market.advanced_search.dex_description" = "此设置适用于在以太坊（Uniswap DEX）和币安智能链（Pancake DEX）上交易的代币。";
 "market.advanced_search.24h" = "24h";
 
-"market.advanced_search.choose_set" = "Choose Set";
+"market.advanced_search.choose_set" = "选择集";
 "market.advanced_search.market_cap" = "Market Cap";
 "market.advanced_search.volume" = "Trading Volume";
 "market.advanced_search.liquidity" = "DEX Liquidity";
@@ -460,7 +460,7 @@
 "coin_page.dilluted_market_cap" = "Diluted MCap";
 
 "coin_page.markets" = "%@ Markets";
-"coin_page.funds_invested" = "Funds Invested";
+"coin_page.funds_invested" = "已投资资金";
 
 "coin_page.category" = "Category";
 "coin_page.contract" = "%@ Contract";
@@ -487,13 +487,13 @@
 "tx_info.title" = "交易";
 "tx_info.title_approval" = "互兑批准";
 "tx_info.status.pending" = "待处理";
-"tx_info.status.completed" = "Completed";
+"tx_info.status.completed" = "已完成";
 "tx_info.status.failed" = "失败";
 "tx_info.from_hash" = "发件人";
 "tx_info.transaction_id" = "交易ID";
 "tx_info.to_hash" = "接收人";
 "tx_info.input" = "输入";
-"tx_info.button_explorer" = "View on %@";
+"tx_info.button_explorer" = "查看于%@";
 "tx_info.rate" = "历史价格";
 "tx_info.fee" = "费用";
 "tx_info.to_self_note" = "交易已发送至自有地址";
@@ -780,7 +780,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 // Intro
 
 "intro.next" = "继续";
-"intro.start" = "Start";
+"intro.start" = "开始";
 "intro.brand.description" = "存储和交易加密货币。完全控制资产。保持匿名。";
 "intro.independence.title" = "保持独立";
 "intro.independence.description" = "Unstoppable的建立可确保用户能够随时随地存取资金。";
@@ -841,11 +841,11 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "wallet_connect.button_disconnect" = "断开连接";
 "ethereum_transaction.error.insufficient_balance" = "交易要求%@用于发送。";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "當前ETH餘額低於處理此交易所需的金額，包括交易費用。";
-"ethereum_transaction.error.reverted" = "Transaction cannot be executed: %@";
+"ethereum_transaction.error.reverted" = "无法执行交易： %@";
 "wallet_connect.request_title" = "请求";
 
 "wallet_connect_list.title" = "Wallet Connect";
-"wallet_connect_list.new_connection" = "New Connection";
+"wallet_connect_list.new_connection" = "新连接";
 
 // App Status
 
@@ -864,8 +864,8 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "status_info.title" = "状态";
 "status_info.pending.title" = "待处理";
 "status_info.pending.content" = "交易尚未在区块链上确认。 根据交易费用的不同，此步骤可能需要几分钟到几个小时。通过极低费用发送的交易通常会在几天内得到处理或被网络拒绝，即没有进行交易。";
-"status_info.sending_receiving.title" = "Sending / Receiving";
-"status_info.sending_receiving.content" = "Transaction has been included in the blockchain but has not reached permanent finality yet. At this point, it's safe to consider transaction completed for smaller payments. For larger payments it's recommended to wait until the status changes to completed.";
+"status_info.sending_receiving.title" = "发送 / 接收";
+"status_info.sending_receiving.content" = "交易已包括在区块链中，但尚未达到永久终结。此时，可以安全地考虑以较小金额完成的交易。对于较大的金额，建议等待状态变更的完成。";
 "status_info.confirmed.title" = "已确认";
 "status_info.confirmed.content" = "交易是最终且不可逆的。";
 "status_info.failed.title" = "失败";
@@ -882,6 +882,6 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // Onboarding
 
-"onboarding.balance.description" = "You don't have any wallets yet. Create new or restore existing";
+"onboarding.balance.description" = "您还没有任何钱包。创建新钱包或恢复已有钱包";
 "onboarding.balance.create" = "创建";
 "onboarding.balance.restore" = "恢复";
