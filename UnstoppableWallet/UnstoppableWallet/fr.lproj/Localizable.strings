@@ -278,20 +278,20 @@
 "swap.confirmation.swap_button" = "Échanger";
 "swap.confirmation.pay" = "Paye %@";
 "swap.confirmation.get" = "Reçoit %@";
-"swap.confirmation.guaranteed" = "Guaranteed";
+"swap.confirmation.guaranteed" = "Garanti";
 "swap.confirmation.maximum" = "Maximum";
 "swap.confirmation.estimated" = "Estimé";
 
 
-"swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on %@ blockchain.\n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
+"swap.dex_info.description" = "Ce service d'échange est assuré par %@, un protocole d'échange de tokens décentralisé construit sur la blockchain %@.\n\n%@ est entièrement automatisé et géré par des contrats intelligents qui facilitent les échanges de tokens de manière fiable sans aucune possibilité de tricher.";
 
-"swap.dex_info.header_dex_related" = "%@ Related";
+"swap.dex_info.header_dex_related" = "Relatif à %@";
 "swap.dex_info.header_allowance" = "Allocation";
-"swap.dex_info.content_allowance" = "The amount of some currency that service can spend on your behalf when executing token swaps. Sufficient allowance is required before swap action can take place.";
+"swap.dex_info.content_allowance" = "Le montant d'une certaine monnaie que le service peut dépenser en votre nom lors de l'exécution des échanges de tokens. Une allocation suffisante est requise avant que l'opération d'échange puisse avoir lieu.";
 "swap.dex_info.header_price_impact" = "Impact prix";
 "swap.dex_info.content_price_impact" = "L'écart de prix attendu par rapport à un prix affiché, augmente généralement avec le montant de l'échange.";
 "swap.dex_info.header_swap_fee" = "Frais d'échange";
-"swap.dex_info.content_swap_fee" = "A service fee for the swap action on platform, shown in the currency the user sells. For most orders it should be either 0.3 % or 0.6 %.";
+"swap.dex_info.content_swap_fee" = "Des frais de service pour l'opération d'échange sur la plateforme, indiqués dans la devise dans laquelle l'utilisateur vend. Pour la plupart des ordres, ils devraient être de 0,3 % ou 0,6 %.";
 "swap.dex_info.header_guaranteed_amount" = "Montant garanti";
 "swap.dex_info.content_guaranteed_amount" = "Le montant minimum qu'un utilisateur va recevoir à la suite d'une action de remplacement.";
 "swap.dex_info.header_maximum_spend" = "Dépense maximale";
@@ -299,11 +299,11 @@
 
 "swap.dex_info.header_other" = "Autre";
 "swap.dex_info.header_transaction_fee" = "Frais de transaction";
-"swap.dex_info.content_transaction_fee" = "The estimated processing cost of the given transaction on %@ blockchain. %@ related transactions will typically cost more than generic token transfer transactions.";
+"swap.dex_info.content_transaction_fee" = "Le coût de traitement estimé de la transaction sur la blockchain %@. Les transactions relatives à %@ coûteront généralement plus cher que les transactions génériques de transfert de tokens.";
 "swap.dex_info.header_transaction_speed" = "Vitesse de transaction ";
-"swap.dex_info.content_transaction_speed" = "Transactions with higher transaction fee will result in faster processing speeds. The opposite is true as well.";
+"swap.dex_info.content_transaction_speed" = "Les transactions dont les frais de transaction sont plus importants se traduiront par des vitesses de traitement plus rapides. L'inverse est également vrai.";
 
-"swap.dex_info.link_button" = "%@ Site";
+"swap.dex_info.link_button" = "Site%@";
 
 // Market
 
@@ -780,7 +780,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 // Intro
 
 "intro.next" = "Suivant";
-"intro.start" = "Start";
+"intro.start" = "Commencer";
 "intro.brand.description" = "Stockez et échangez des crypto-monnaies. Ayez le contrôle total sur les actifs. Restez anonyme.";
 "intro.independence.title" = "Soyez indépendant";
 "intro.independence.description" = "Unstoppable est construit pour s'assurer que les utilisateurs sont en mesure d'accéder aux fonds à tout moment depuis n'importe où.";
@@ -841,11 +841,11 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "wallet_connect.button_disconnect" = "Déconnecter";
 "ethereum_transaction.error.insufficient_balance" = "La transaction nécessite %@ pour l'envoi.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Le solde actuel des ETH est inférieur au montant requis pour traiter cette transaction, frais de transaction compris.";
-"ethereum_transaction.error.reverted" = "Transaction cannot be executed: %@";
+"ethereum_transaction.error.reverted" = "La transaction ne peut être exécutée : %@";
 "wallet_connect.request_title" = "Requête";
 
 "wallet_connect_list.title" = "Wallet Connect";
-"wallet_connect_list.new_connection" = "New Connection";
+"wallet_connect_list.new_connection" = "Nouvelle connexion";
 
 // App Status
 
@@ -864,8 +864,8 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "status_info.title" = "Statut";
 "status_info.pending.title" = "En attente";
 "status_info.pending.content" = "La transaction n'a pas encore été confirmée sur la blockchain. Cette étape peut prendre de quelques minutes à quelques heures selon les frais de transaction. Les transactions envoyées avec des frais très bas sont généralement traitées en quelques jours ou peuvent être rejetées par le réseau, ce qui signifie que la transaction n'a pas eu lieu.";
-"status_info.sending_receiving.title" = "Sending / Receiving";
-"status_info.sending_receiving.content" = "Transaction has been included in the blockchain but has not reached permanent finality yet. At this point, it's safe to consider transaction completed for smaller payments. For larger payments it's recommended to wait until the status changes to completed.";
+"status_info.sending_receiving.title" = "Envoi/Réception";
+"status_info.sending_receiving.content" = "La transaction a été incluse dans la blockchain mais n'a pas encore atteint sa finalité permanente. À ce stade, pour les petits paiements, il est prudent de considérer que la transaction est terminée. Pour les paiements plus importants, il est recommandé d'attendre que le statut passe à \"complété\".";
 "status_info.confirmed.title" = "Confirmé";
 "status_info.confirmed.content" = "La transaction est définitive et irréversible.";
 "status_info.failed.title" = "Échec";
@@ -882,6 +882,6 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 // Onboarding
 
-"onboarding.balance.description" = "You don't have any wallets yet. Create new or restore existing";
+"onboarding.balance.description" = "Vous n'avez pas encore de portefeuille. Veuillez créer un nouveau portefeuille ou restaurer un portefeuille existant";
 "onboarding.balance.create" = "Créer";
 "onboarding.balance.restore" = "Restaurer";
