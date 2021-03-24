@@ -39,7 +39,7 @@
 "confirm" = "确认";
 "connect" = "连接";
 "price" = "价格";
-"note" = "Note";
+"note" = "备注";
 
 "version" = "版本%@";
 
@@ -161,7 +161,7 @@
 "send.address_placeholder" = "地址";
 "send.address_or_domain_placeholder" = "地址或域名";
 "send.fee" = "费用";
-"send.network_fee" = "Network Fee";
+"send.network_fee" = "网络费";
 "send.estimated_fee" = "预估费用";
 "send.max_fee" = "最大手续费";
 "send.tx_speed" = "交易费用";
@@ -195,7 +195,7 @@
 "send.fee_info.content_fast" = "对于优先级具有重要意义的交易，我们建议使用高费用设置。可以预期，选择高费用设置将足以使比特币（Bitcoin）交易在10分钟、以太币（Ethereum）交易在数分钟内完成。";
 "send.fee_info.content_conclusion" = "Unstoppable钱包以网络活动为基础作出有根据的猜测，但不能保证所建议费用值总能实现预期行为。";
 
-"send.confirmation.you_send" = "You Send";
+"send.confirmation.you_send" = "您发送";
 "send.confirmation.amount" = "金额";
 "send.confirmation.to" = "接收人";
 "send.confirmation.domain" = "域名";
@@ -212,8 +212,8 @@
 
 "send.lock_time" = "TimeLock";
 
-"approve.confirmation.you_approve" = "You Approve";
-"approve.confirmation.spender" = "Spender";
+"approve.confirmation.you_approve" = "您批准";
+"approve.confirmation.spender" = "消费人";
 
 // CoinSelector
 
@@ -256,7 +256,7 @@
 "swap.advanced_settings.recipient.footer" = "在兑换操作之后，金额将转移至指定地址";
 "swap.advanced_settings.deadline_minute" = "%@分钟。";
 "swap.advanced_settings.recipient_address" = "接收人地址";
-"swap.advanced_settings.recipient_domain" = "Recipient Domain";
+"swap.advanced_settings.recipient_domain" = "收款人域";
 "swap.advanced_settings.error.lower_slippage" = "您的交易可能失败。";
 "swap.advanced_settings.error.higher_slippage" = "最大允许值是 %@%%.";
 "swap.advanced_settings.error.invalid_address" = "无效地址";
@@ -278,8 +278,8 @@
 "swap.confirmation.swap_button" = "掉期交易";
 "swap.confirmation.pay" = "支付 %@";
 "swap.confirmation.get" = "获得 %@";
-"swap.confirmation.guaranteed" = "Guaranteed";
-"swap.confirmation.maximum" = "Maximum";
+"swap.confirmation.guaranteed" = "保证";
+"swap.confirmation.maximum" = "最大金额";
 "swap.confirmation.estimated" = "估计";
 
 
