@@ -814,7 +814,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 "add_erc20_token.title" = "ERC20 Ekle";
 
-"add_bep20_token.title" = "Add BEP20";
+"add_bep20_token.title" = "BEP20 Ekle";
 
 "add_bep2_token.title" = "BEP2 Ekle";
 "add_bep2_token.token_symbol" = "Token Sembolü";
@@ -883,5 +883,5 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 // Onboarding
 
 "onboarding.balance.description" = "You don't have any wallets yet. Create new or restore existing";
-"onboarding.balance.create" = "Create";
-"onboarding.balance.restore" = "Restore";
+"onboarding.balance.create" = "Oluştur";
+"onboarding.balance.restore" = "Geri Yükle";
