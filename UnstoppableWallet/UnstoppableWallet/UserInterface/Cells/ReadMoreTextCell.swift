@@ -90,14 +90,14 @@ class ReadMoreTextCell: BaseThemeCell {
         readMoreTextLabel.text?.height(forContainerWidth: containerWidth - 2 * ReadMoreTextCell.horizontalPadding, font: ReadMoreTextCell.font) ?? 0
     }
 
-    private var collapsedLabelHeight: CGFloat {
-        ceil(CGFloat(ReadMoreTextCell.collapsedNumberOfLines) * ReadMoreTextCell.font.lineHeight)
+    private func collapsedLabelHeight(lines: Int) -> CGFloat {
+        ceil(CGFloat(lines) * ReadMoreTextCell.font.lineHeight)
     }
 
     func cellHeight(containerWidth: CGFloat) -> CGFloat {
         self.containerWidth = containerWidth
 
-        let labelHeight = collapsed ? min(collapsedLabelHeight, textHeight) : textHeight
+        let labelHeight = collapsed ? min(collapsedLabelHeight(lines: ReadMoreTextCell.collapsedNumberOfLines), textHeight) : textHeight
         return labelHeight + 2 * ReadMoreTextCell.verticalPadding + (expandable ? ReadMoreTextCell.buttonHeight : 0)
     }
 
@@ -106,7 +106,7 @@ class ReadMoreTextCell: BaseThemeCell {
             return
         }
 
-        if textHeight <= collapsedLabelHeight, expandable {
+        if textHeight <= (collapsedLabelHeight(lines: Self.collapsedNumberOfLines + 2)), expandable {
             collapseButton.snp.removeConstraints()
             gradientView.snp.removeConstraints()
             labelWrapper.snp.remakeConstraints { maker in
@@ -117,7 +117,10 @@ class ReadMoreTextCell: BaseThemeCell {
             collapseButton.isHidden = true
             gradientView.isHidden = true
             expandable = false
-        } else if textHeight > collapsedLabelHeight, !expandable {
+            if textHeight >= (collapsedLabelHeight(lines: Self.collapsedNumberOfLines)) {
+                collapsed = false
+            }
+        } else if textHeight > (collapsedLabelHeight(lines: Self.collapsedNumberOfLines + 2)), !expandable {
             labelWrapper.snp.remakeConstraints { maker in
                 maker.top.equalToSuperview().inset(ReadMoreTextCell.verticalPadding)
                 maker.leading.trailing.equalToSuperview().inset(ReadMoreTextCell.horizontalPadding)
