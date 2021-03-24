@@ -39,7 +39,7 @@
 "confirm" = "Confirmer";
 "connect" = "Connecter";
 "price" = "Prix";
-"note" = "Note";
+"note" = "Remarque";
 
 "version" = "Version %@";
 
@@ -161,7 +161,7 @@
 "send.address_placeholder" = "Adresse";
 "send.address_or_domain_placeholder" = "Adresse ou domaine";
 "send.fee" = "Frais";
-"send.network_fee" = "Network Fee";
+"send.network_fee" = "Frais de réseau";
 "send.estimated_fee" = "Frais estimés";
 "send.max_fee" = "Frais Max";
 "send.tx_speed" = "Frais de transaction";
@@ -195,7 +195,7 @@
 "send.fee_info.content_fast" = "Pour les transactions où la priorité est importante, nous recommandons de prévoir des frais élevés. Le choix d'une tarification élevée devrait suffire pour que la transaction soit effectuée dans les 10 minutes pour Bitcoin et dans les quelques minutes pour Ethereum.";
 "send.fee_info.content_conclusion" = "Le portefeuille Unstoppable fait une évaluation éclairée sur la base de l'activité du réseau et ne peut pas garantir que les frais suggérés se traduiront toujours par le comportement attendu.";
 
-"send.confirmation.you_send" = "You Send";
+"send.confirmation.you_send" = "Vous envoyez";
 "send.confirmation.amount" = "Montant";
 "send.confirmation.to" = "À";
 "send.confirmation.domain" = "Domaine";
@@ -212,7 +212,7 @@
 
 "send.lock_time" = "TimeLock";
 
-"approve.confirmation.you_approve" = "You Approve";
+"approve.confirmation.you_approve" = "Vous approuvez";
 "approve.confirmation.spender" = "Spender";
 
 // CoinSelector
@@ -256,7 +256,7 @@
 "swap.advanced_settings.recipient.footer" = "Le montant sera transféré à l'adresse indiquée après l'opération de change";
 "swap.advanced_settings.deadline_minute" = "%@ min";
 "swap.advanced_settings.recipient_address" = "Adresse du destinataire";
-"swap.advanced_settings.recipient_domain" = "Recipient Domain";
+"swap.advanced_settings.recipient_domain" = "Domaine du bénéficiaire";
 "swap.advanced_settings.error.lower_slippage" = "Votre transaction est susceptible de ne pas aboutir.";
 "swap.advanced_settings.error.higher_slippage" = "La valeur maximale autorisée est %@%%.";
 "swap.advanced_settings.error.invalid_address" = "Addresse invalide";
