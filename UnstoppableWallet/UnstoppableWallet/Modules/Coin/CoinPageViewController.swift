@@ -25,8 +25,13 @@ class CoinPageViewController: ThemeViewController {
 
     /* Chart section */
     private let currentRateCell: CoinChartRateCell
+
     private let chartIntervalAndSelectedRateCell = ChartIntervalAndSelectedRateCell()
+    private let intervalRow: StaticRow
+
     private let chartViewCell: ChartViewCell
+    private let chartRow: StaticRow
+
     private let indicatorSelectorCell = IndicatorSelectorCell()
 
     /* Description */
@@ -40,7 +45,19 @@ class CoinPageViewController: ThemeViewController {
         self.urlManager = urlManager
 
         currentRateCell = CoinChartRateCell(viewModel: chartViewModel)
+
+        intervalRow = StaticRow(
+                cell: chartIntervalAndSelectedRateCell,
+                id: "chartIntervalAndSelectedRate",
+                height: .heightSingleLineCell
+        )
+
         chartViewCell = ChartViewCell(configuration: configuration)
+        chartRow = StaticRow(
+                cell: chartViewCell,
+                id: "chartView",
+                height: ChartViewCell.cellHeight
+        )
 
         super.init()
 
@@ -99,6 +116,9 @@ class CoinPageViewController: ThemeViewController {
         }
 
         subtitleCell.bind(title: viewModel.subtitle, value: nil)
+
+        tableView.buildSections()
+
         subscribeViewModels()
     }
 
@@ -115,9 +135,17 @@ class CoinPageViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.stateDriver) { [weak self] in self?.sync(state: $0) }
 
         // chart section
+        intervalRow.onReady = { [weak self] in self?.subscribeToInterval() }
+        chartRow.onReady = { [weak self] in self?.subscribeToChart() }
+    }
+
+    private func subscribeToInterval() {
         subscribe(disposeBag, chartViewModel.pointSelectModeEnabledDriver) { [weak self] in self?.syncChart(selected: $0) }
         subscribe(disposeBag, chartViewModel.pointSelectedItemDriver) { [weak self] in self?.syncChart(selectedViewItem: $0) }
         subscribe(disposeBag, chartViewModel.chartTypeIndexDriver) { [weak self] in self?.syncChart(typeIndex: $0) }
+    }
+
+    private func subscribeToChart() {
         subscribe(disposeBag, chartViewModel.loadingDriver) { [weak self] in self?.syncChart(loading: $0) }
         subscribe(disposeBag, chartViewModel.errorDriver) { [weak self] in self?.syncChart(error: $0) }
         subscribe(disposeBag, chartViewModel.chartInfoDriver) { [weak self] in self?.syncChart(viewItem: $0) }
@@ -274,19 +302,15 @@ extension CoinPageViewController {
                     StaticRow(
                             cell: currentRateCell,
                             id: "currentRate",
-                            height: ChartCurrentRateCell.cellHeight),
-                    StaticRow(
-                            cell: chartIntervalAndSelectedRateCell,
-                            id: "chartIntervalAndSelectedRate",
-                            height: .heightSingleLineCell),
-                    StaticRow(
-                            cell: chartViewCell,
-                            id: "chartView",
-                            height: ChartViewCell.cellHeight),
+                            height: ChartCurrentRateCell.cellHeight
+                    ),
+                    intervalRow,
+                    chartRow,
                     StaticRow(
                             cell: indicatorSelectorCell,
                             id: "indicatorSelector",
-                            height: .heightSingleLineCell),
+                            height: .heightSingleLineCell
+                    )
                 ])
     }
 
@@ -299,7 +323,8 @@ extension CoinPageViewController {
                     cell.set(backgroundStyle: .transparent)
                     cell.title = title
                     cell.selectionStyle = .none
-                })
+                }
+        )
     }
 
     private func descriptionSection(description: String) -> SectionProtocol {
@@ -317,7 +342,8 @@ extension CoinPageViewController {
                                 self?.descriptionTextCell.cellHeight(containerWidth: containerWidth) ?? 0
                             }
                     )
-                ])
+                ]
+        )
     }
 
     private func linksSection(guideUrl: URL?, links: [CoinPageViewModel.Link]) -> SectionProtocol {
