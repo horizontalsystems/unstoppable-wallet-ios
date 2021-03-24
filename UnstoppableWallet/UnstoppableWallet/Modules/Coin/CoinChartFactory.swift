@@ -201,10 +201,7 @@ class CoinChartFactory {
                 }
 
         // disable indicators if chart interval less than 7d
-        var correctedIndicator = selectedIndicator
-        if [ChartType.today, ChartType.day].contains(chartType) {
-            correctedIndicator = .none
-        }
+        let correctedIndicator: ChartIndicatorSet? = [ChartType.today, ChartType.day].contains(chartType) ? nil : selectedIndicator
 
         return CoinChartViewModel.ViewItem(chartData: data, chartTrend: chartTrend, chartDiff: chartDiff,
                 trends: trends, minValue: minRateString, maxValue: maxRateString, timeline: timeline, selectedIndicator: correctedIndicator)

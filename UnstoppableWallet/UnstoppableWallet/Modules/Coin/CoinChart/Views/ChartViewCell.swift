@@ -30,7 +30,7 @@ class ChartViewCell: UITableViewCell {
         contentView.addSubview(chartView)
         chartView.snp.makeConstraints { maker in
             maker.top.equalToSuperview()
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.leading.trailing.equalToSuperview()
         }
 
         contentView.addSubview(loadingView)
