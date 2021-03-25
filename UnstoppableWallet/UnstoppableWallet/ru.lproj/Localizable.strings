@@ -782,7 +782,7 @@
 // Intro
 
 "intro.next" = "Далее";
-"intro.start" = "Start";
+"intro.start" = "Начать";
 "intro.brand.description" = "Храните и торгуйте криптовалютой. Полностью контролируйте свои активы. Оставайтесь анонимными.";
 "intro.independence.title" = "Будьте Независимы";
 "intro.independence.description" = "Unstoppable создан для того, чтобы пользователи могли получать доступ к средствам в любое время, в любом месте.";
