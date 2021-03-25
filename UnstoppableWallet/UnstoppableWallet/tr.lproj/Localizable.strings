@@ -38,8 +38,8 @@
 "offline" = "Çevrimdışı";
 "confirm" = "Onayla";
 "connect" = "Bağlan";
-"price" = "Price";
-"note" = "Note";
+"price" = "Fiyat";
+"note" = "Not";
 
 "version" = "Sürüm %@";
 
@@ -196,8 +196,8 @@
 "send.fee_info.content_conclusion" = "Unstoppable cüzdan, ağ etkinliğine dayalı olarak eğitimli bir tahmin yapar ve önerilen ücret değerlerinin her zaman beklenen davranışla sonuçlanacağını garanti edemez.";
 
 "send.confirmation.you_send" = "You Send";
-"send.confirmation.amount" = "Amount";
-"send.confirmation.to" = "To";
+"send.confirmation.amount" = "Tutar";
+"send.confirmation.to" = "Alan";
 "send.confirmation.domain" = "Domain";
 "send.confirmation.address" = "Adres";
 "send.confirmation.account" = "Account";
@@ -387,10 +387,10 @@
 "market_discovery.filter_description.oracles" = "Connecting real world data to smart contracts.";
 "market_discovery.filter_description.prediction_markets" = "Markets to bet on events in the future.";
 "market_discovery.filter_description.yield_aggregators" = "Solutions for earning from idle crypto assets.";
-"market_discovery.filter_description.fiat_stablecoins" = "Crypto tokens pegged 1-1 to fiat currency.";
+"market_discovery.filter_description.fiat_stablecoins" = "Crypto tokens pegged 1–1 to fiat currency.";
 "market_discovery.filter_description.rebase_tokens" = "Tokens that periodically adjust supply to achieve a target price.";
-"market_discovery.filter_description.algo_stablecoins" = "Stablecoins with algorithmic 1-1 price peg to fiat.";
-"market_discovery.filter_description.tokenized_bitcoin" = "Crypto tokens pegged 1-1 to Bitcoin price.";
+"market_discovery.filter_description.algo_stablecoins" = "Stablecoins with algorithmic 1–1 price peg to fiat.";
+"market_discovery.filter_description.tokenized_bitcoin" = "Crypto tokens pegged 1–1 to Bitcoin price.";
 "market_discovery.filter_description.stablecoin_issuers" = "Decentralized issuers of fiat pegged stablecoin tokens.";
 "market_discovery.filter_description.exchange_tokens" = "Tokens issued by centralized exchanges.";
 "market_discovery.filter_description.metals" = "Tokens pegged to metal prices.";
@@ -487,7 +487,7 @@
 "tx_info.title" = "Hesap işlemi";
 "tx_info.title_approval" = "Swap Onaylama";
 "tx_info.status.pending" = "Devam ediyor";
-"tx_info.status.completed" = "Completed";
+"tx_info.status.completed" = "Tamamlandı";
 "tx_info.status.failed" = "Başarısız";
 "tx_info.from_hash" = "Gönderen";
 "tx_info.transaction_id" = "İşlem ID'si";
@@ -780,7 +780,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 // Intro
 
 "intro.next" = "İleri";
-"intro.start" = "Start";
+"intro.start" = "Başlangıç";
 "intro.brand.description" = "Kripto Biriktirin ve Ticaretini Yapın. Mevduat üzerinde tam kontrole sahip olun. Anonim kalın.";
 "intro.independence.title" = "Bağımsız Olun";
 "intro.independence.description" = "Unstoppable, kullanıcıların istedikleri anda istedikleri yerde paraya erişebilmelerini sağlamak için geliştirilmiştir.";
@@ -814,7 +814,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 "add_erc20_token.title" = "ERC20 Ekle";
 
-"add_bep20_token.title" = "Add BEP20";
+"add_bep20_token.title" = "BEP20 Ekle";
 
 "add_bep2_token.title" = "BEP2 Ekle";
 "add_bep2_token.token_symbol" = "Token Sembolü";
@@ -845,7 +845,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "wallet_connect.request_title" = "İstek";
 
 "wallet_connect_list.title" = "Wallet Connect";
-"wallet_connect_list.new_connection" = "New Connection";
+"wallet_connect_list.new_connection" = "Yeni bağlantı";
 
 // App Status
 
@@ -883,5 +883,5 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 // Onboarding
 
 "onboarding.balance.description" = "You don't have any wallets yet. Create new or restore existing";
-"onboarding.balance.create" = "Create";
-"onboarding.balance.restore" = "Restore";
+"onboarding.balance.create" = "Oluştur";
+"onboarding.balance.restore" = "Geri Yükle";
