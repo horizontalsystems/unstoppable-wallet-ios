@@ -10,7 +10,7 @@ class CoinChartRateCell: ChartCurrentRateCell {
         super.init(style: .default, reuseIdentifier: nil)
 
         subscribe(disposeBag, viewModel.rateDriver) { [weak self] in self?.sync(rate: $0) }
-        subscribe(disposeBag, viewModel.rateDiffDriver) { [weak self] in self?.sync(rateDiff: $0) }
+        subscribe(disposeBag, viewModel.chartInfoDriver) { [weak self] in self?.sync(chartInfo: $0) }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -21,8 +21,8 @@ class CoinChartRateCell: ChartCurrentRateCell {
         self.rate = rate
     }
 
-    private func sync(rateDiff: Decimal?) {
-        set(diff: rateDiff)
+    private func sync(chartInfo: CoinChartViewModel.ViewItem?) {
+        set(diff: chartInfo?.chartDiff)
     }
 
 }
