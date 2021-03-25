@@ -140,6 +140,7 @@ class CoinChartFactory {
         var points = item.chartInfo.points
         var endTimestamp = item.chartInfo.endTimestamp
 
+        var extendedPoint: ChartPoint?
         var addCurrentRate = false
         if let lastPointTimestamp = item.chartInfo.points.last?.timestamp,
            let timestamp = item.timestamp,
@@ -148,10 +149,28 @@ class CoinChartFactory {
             // add current rate in data
             endTimestamp = max(timestamp, endTimestamp)
             points.append(ChartPoint(timestamp: timestamp, value: rate, volume: nil))
+
+            // create extended point for 24h ago
+            if chartType == .day, let rateDiff24 = item.rateDiff24h {
+                let firstTimestamp = timestamp - 24 * 60 * 60
+                let price24h = 100 * rate / (100 + rateDiff24)
+                extendedPoint = ChartPoint(timestamp: firstTimestamp, value: price24h, volume: nil)
+            }
+
             addCurrentRate = true
         }
         // build data with rates, volumes and indicators for points
         let data = chartData(points: points, startTimestamp: item.chartInfo.startTimestamp, endTimestamp: endTimestamp)
+
+        // calculate item for 24h back point and add to data
+        if let extendedPoint = extendedPoint {
+            let values = points.filter { $0.timestamp < extendedPoint.timestamp }.map { $0.value }
+            let extendedItem = chartItem(point: extendedPoint, previousValues: values)
+
+            data.insert(item: extendedItem)
+            // change start visible timestamp
+            data.startWindow = extendedItem.timestamp
+        }
 
         // remove non-visible items
         data.items = data.items.filter { item in item.timestamp >= data.startWindow }
@@ -206,31 +225,6 @@ class CoinChartFactory {
         return CoinChartViewModel.ViewItem(chartData: data, chartTrend: chartTrend, chartDiff: chartDiff,
                 trends: trends, minValue: minRateString, maxValue: maxRateString, timeline: timeline, selectedIndicator: correctedIndicator)
     }
-
-//    func chartViewItem(chartDataStatus: DataStatus<ChartInfo>, marketInfoStatus: DataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, selectedIndicator: ChartIndicatorSet, coin: Coin?, priceAlert: PriceAlert?, alertsOn: Bool) -> ChartViewItem {
-//        let chartDataStatusViewItem: DataStatus<ChartDataViewItem> = chartDataStatus.map {
-//            convert(chartInfo: $0, marketInfo: marketInfoStatus.data, chartType: chartType, currency: currency)
-//        }
-//
-//        let marketStatus: DataStatus<MarketInfoViewItem> = marketInfoStatus.map {
-//            viewItem(marketInfo: $0, currency: currency, coinCode: coinCode)
-//        }
-//
-//        var currentRate: String?
-//        if let rate = marketInfoStatus.data?.rate {
-//            let rateValue = CurrencyValue(currency: currency, value: rate)
-//            currentRate = ValueFormatter.instance.format(currencyValue: rateValue, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
-//        }
-//
-//        let priceAlertMode: ChartPriceAlertMode
-//        if !alertsOn || coin == nil {
-//            priceAlertMode = .hidden
-//        } else {
-//            priceAlertMode = priceAlert?.changeState != .off || priceAlert?.trendState != .off ? .on : .off
-//        }
-//
-//        return ChartViewItem(currentRate: currentRate, chartDataStatus: chartDataStatusViewItem, marketInfoStatus: marketStatus, selectedIndicator: selectedIndicator, priceAlertMode: priceAlertMode)
-//    }
 
     func selectedPointViewItem(chartItem: ChartItem, type: ChartType, currency: Currency, macdSelected: Bool) -> SelectedPointViewItem? {
         guard let rate = chartItem.indicators[.rate] else {
