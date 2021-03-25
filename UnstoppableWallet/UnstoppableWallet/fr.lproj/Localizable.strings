@@ -292,18 +292,18 @@
 "swap.dex_info.content_price_impact" = "L'écart de prix attendu par rapport à un prix affiché, augmente généralement avec le montant de l'échange.";
 "swap.dex_info.header_swap_fee" = "Frais d'échange";
 "swap.dex_info.content_swap_fee" = "Des frais de service pour l'opération d'échange sur la plateforme, indiqués dans la devise dans laquelle l'utilisateur vend. Pour la plupart des ordres, ils devraient être de 0,3 % ou 0,6 %.";
-"swap.dex_info.header_guaranteed_amount" = "Guaranteed Amount";
-"swap.dex_info.content_guaranteed_amount" = "The minimum amount a user is going to receive as a result of a swap action.";
+"swap.dex_info.header_guaranteed_amount" = "Montant garanti";
+"swap.dex_info.content_guaranteed_amount" = "Le montant minimum qu'un utilisateur va recevoir à la suite d'une action de remplacement.";
 "swap.dex_info.header_maximum_spend" = "Dépense maximale";
-"swap.dex_info.content_maximum_spend" = "The maximum amount a user is going to spend as a result of a swap action.";
+"swap.dex_info.content_maximum_spend" = "Le montant maximum qu'un utilisateur va dépenser à la suite d'une action de remplacement.";
 
-"swap.dex_info.header_other" = "Other";
-"swap.dex_info.header_transaction_fee" = "Transaction Fee";
-"swap.dex_info.content_transaction_fee" = "The estimated processing cost of the given transaction on %@ blockchain. %@ related transactions will typically cost more than generic token transfer transactions.";
-"swap.dex_info.header_transaction_speed" = "Transaction Speed";
-"swap.dex_info.content_transaction_speed" = "Transactions with higher transaction fee will result in faster processing speeds. The opposite is true as well.";
+"swap.dex_info.header_other" = "Autre";
+"swap.dex_info.header_transaction_fee" = "Frais de transaction";
+"swap.dex_info.content_transaction_fee" = "Le coût de traitement estimé de la transaction sur la blockchain %@. Les transactions relatives à %@ coûteront généralement plus cher que les transactions génériques de transfert de tokens.";
+"swap.dex_info.header_transaction_speed" = "Vitesse de transaction";
+"swap.dex_info.content_transaction_speed" = "Les transactions dont les frais de transaction sont plus importants se traduiront par des vitesses de traitement plus rapides. L'inverse est également vrai.";
 
-"swap.dex_info.link_button" = "%@ Site";
+"swap.dex_info.link_button" = "Site %@";
 
 // Market
 
