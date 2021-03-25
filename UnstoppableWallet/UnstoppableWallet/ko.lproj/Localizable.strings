@@ -290,7 +290,7 @@
 "swap.dex_info.content_allowance" = "The amount of some currency that service can spend on your behalf when executing token swaps. Sufficient allowance is required before swap action can take place.";
 "swap.dex_info.header_price_impact" = "Price Impact";
 "swap.dex_info.content_price_impact" = "Expected price deviation from a shown price, typically increases with the swap amount.";
-"swap.dex_info.header_swap_fee" = "Swap Fee";
+"swap.dex_info.header_swap_fee" = "스왑 비용";
 "swap.dex_info.content_swap_fee" = "A service fee for the swap action on platform, shown in the currency the user sells. For most orders it should be either 0.3 % or 0.6 %.";
 "swap.dex_info.header_guaranteed_amount" = "Guaranteed Amount";
 "swap.dex_info.content_guaranteed_amount" = "The minimum amount a user is going to receive as a result of a swap action.";
@@ -487,7 +487,7 @@
 "tx_info.title" = "거래기록";
 "tx_info.title_approval" = "스왑 승인";
 "tx_info.status.pending" = "보류 중";
-"tx_info.status.completed" = "Completed";
+"tx_info.status.completed" = "완료";
 "tx_info.status.failed" = "실패";
 "tx_info.from_hash" = "로 부터";
 "tx_info.transaction_id" = "거래 ID";
@@ -780,7 +780,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 // Intro
 
 "intro.next" = "다음";
-"intro.start" = "Start";
+"intro.start" = "시작";
 "intro.brand.description" = "암호를 저장 및 거래합니다. 자산을 완전히 통제합니다. 익명인 상태로 유지합니다.";
 "intro.independence.title" = "독립하십시오";
 "intro.independence.description" = "Unstoppable은 사용자들이 어디서든 언제든지 자금에 접근할 수 있도록 하기 위해 설계되었습니다.";
@@ -799,8 +799,8 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "add_token_selector.choose_blockchain" = "블록체인 선택";
 "add_token_selector.add_token" = "토큰 추가";
 "add_token_selector.erc20_token" = "ERC 20 토큰";
-"add_token_selector.bep20_token" = "BEP20 Token";
-"add_token_selector.bep2_token" = "BEP2 Token";
+"add_token_selector.bep20_token" = "BEP20 토큰";
+"add_token_selector.bep2_token" = "BEP2 토큰";
 
 // Add Token
 
@@ -809,12 +809,12 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "add_token.decimals" = "소수점";
 "add_token.already_exists" = "이 토큰은 이미 코인 매니저 리스트에 있습니다.";
 
-"add_evm_token.contract_not_exist" = "Contract not found";
-"add_evm_token.contract_address" = "Contract Address";
+"add_evm_token.contract_not_exist" = "거래 발견되지 않음";
+"add_evm_token.contract_address" = "계약 주소";
 
 "add_erc20_token.title" = "ERC20 추가";
 
-"add_bep20_token.title" = "Add BEP20";
+"add_bep20_token.title" = "BEP20 추가";
 
 "add_bep2_token.title" = "BEP2 추가";
 "add_bep2_token.token_symbol" = "토큰 심볼";
@@ -845,7 +845,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "wallet_connect.request_title" = "요청";
 
 "wallet_connect_list.title" = "Wallet Connect";
-"wallet_connect_list.new_connection" = "New Connection";
+"wallet_connect_list.new_connection" = "새로운 연결";
 
 // App Status
 
@@ -857,7 +857,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 // FAQ
 
-"faq.title" = "FAQ";
+"faq.title" = "자주 묻는 질문";
 
 // Status Info
 
@@ -883,5 +883,5 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 // Onboarding
 
 "onboarding.balance.description" = "You don't have any wallets yet. Create new or restore existing";
-"onboarding.balance.create" = "Create";
-"onboarding.balance.restore" = "Restore";
+"onboarding.balance.create" = "만들기";
+"onboarding.balance.restore" = "복구";
