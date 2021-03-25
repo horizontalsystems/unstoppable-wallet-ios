@@ -240,9 +240,9 @@ extension CoinPageViewController {
         }
 
         chartViewCell.set(data: viewItem)
-        chartViewCell.setVolumes(hidden: viewItem.selectedIndicator?.hideVolumes ?? true)
 
         guard let selectedIndicator = viewItem.selectedIndicator else {
+            chartViewCell.setVolumes(hidden: true, limitHidden: false)
             ChartIndicatorSet.all.forEach { indicator in
                 chartViewCell.bind(indicator: indicator, hidden: true)
             }
@@ -250,6 +250,8 @@ extension CoinPageViewController {
 
             return
         }
+
+        chartViewCell.setVolumes(hidden: selectedIndicator.hideVolumes, limitHidden: selectedIndicator.hideVolumes)
 
         ChartIndicatorSet.all.forEach { indicator in
             let show = selectedIndicator.contains(indicator)
