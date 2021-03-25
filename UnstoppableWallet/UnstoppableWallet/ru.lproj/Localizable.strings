@@ -867,7 +867,7 @@
 "status_info.pending.title" = "В обработке";
 "status_info.pending.content" = "Транзакция еще не подтверждена в блокчейне. Эта процедура может занять от нескольких минут до нескольких часов в зависимости от комиссии за транзакцию. Отправляемые с очень низкой комиссией транзакции обычно обрабатываются в течение нескольких дней или же могут быть отклонены сетью, отменяя это действие.";
 "status_info.sending_receiving.title" = "Отправка / Получение";
-"status_info.sending_receiving.content" = "Transaction has been included in the blockchain but has not reached permanent finality yet. At this point, it's safe to consider transaction completed for smaller payments. For larger payments it's recommended to wait until the status changes to completed.";
+"status_info.sending_receiving.content" = "Транзакция была включена в блокчейн, но пока не обработана. На данном этапе безопасно рассматривать транзакции для небольших платежей. Что касается более крупных транзакций, стоит дождаться смены статуса.";
 "status_info.confirmed.title" = "Подтверждено";
 "status_info.confirmed.content" = "Транзакция окончательна и необратима.";
 "status_info.failed.title" = "Не удалось";
