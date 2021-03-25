@@ -38,8 +38,8 @@
 "offline" = "Desconectado";
 "confirm" = "Confirmar";
 "connect" = "Conectar";
-"price" = "Price";
-"note" = "Note";
+"price" = "Precio";
+"note" = "Nota";
 
 "version" = "Versión %@";
 
@@ -161,7 +161,7 @@
 "send.address_placeholder" = "Dirección";
 "send.address_or_domain_placeholder" = "Dominio o dirección";
 "send.fee" = "Comisión";
-"send.network_fee" = "Network Fee";
+"send.network_fee" = "Cuota de transferencia";
 "send.estimated_fee" = "Tasa Estimada";
 "send.max_fee" = "Comisión Máx.";
 "send.tx_speed" = "Tarifa de Transacción";
@@ -195,9 +195,9 @@
 "send.fee_info.content_fast" = "Para las transacciones en las que la prioridad sea importante, recomendamos utilizar la configuración de una mayor tarifa. Se espera que la selección de un ajuste de una tarifa mayor sea suficiente para que la transacción se complete dentro de 10 minutos para Bitcoin y dentro de unos minutos para Ethereum.";
 "send.fee_info.content_conclusion" = "El monedero Unstoppable hace una conjetura adecuada basada en la actividad de la red y no puede garantizar que los valores de comisión sugeridos siempre resulten en un comportamiento esperado.";
 
-"send.confirmation.you_send" = "You Send";
-"send.confirmation.amount" = "Amount";
-"send.confirmation.to" = "To";
+"send.confirmation.you_send" = "Usted envía";
+"send.confirmation.amount" = "Importe";
+"send.confirmation.to" = "Para";
 "send.confirmation.domain" = "Dominio";
 "send.confirmation.address" = "Dirección";
 "send.confirmation.account" = "Account";
@@ -212,8 +212,8 @@
 
 "send.lock_time" = "TimeLock";
 
-"approve.confirmation.you_approve" = "You Approve";
-"approve.confirmation.spender" = "Spender";
+"approve.confirmation.you_approve" = "Apruebas";
+"approve.confirmation.spender" = "Gastador";
 
 // CoinSelector
 
@@ -256,7 +256,7 @@
 "swap.advanced_settings.recipient.footer" = "Después de la operación de cambio, el monto se transferirá a la dirección especificada";
 "swap.advanced_settings.deadline_minute" = "%@ min";
 "swap.advanced_settings.recipient_address" = "Dirección del destinatario";
-"swap.advanced_settings.recipient_domain" = "Recipient Domain";
+"swap.advanced_settings.recipient_domain" = "Dominio del destinatario";
 "swap.advanced_settings.error.lower_slippage" = "Es probable que su transacción falle.";
 "swap.advanced_settings.error.higher_slippage" = "Valor máximo permitido %@%%.";
 "swap.advanced_settings.error.invalid_address" = "Dirección inválida";
@@ -278,32 +278,32 @@
 "swap.confirmation.swap_button" = "Permutar";
 "swap.confirmation.pay" = "Paga %@";
 "swap.confirmation.get" = "Obtén %@";
-"swap.confirmation.guaranteed" = "Guaranteed";
-"swap.confirmation.maximum" = "Maximum";
-"swap.confirmation.estimated" = "Estimated";
+"swap.confirmation.guaranteed" = "Garantizado";
+"swap.confirmation.maximum" = "Máximo";
+"swap.confirmation.estimated" = "Estimado";
 
 
-"swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on %@ blockchain.\n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
+"swap.dex_info.description" = "Este servicio de intercambio está impulsado por %@, un intercambio de token descentralizado construido en %@ blockchain.\n\n%@ está completamente automatizado y administrado por contratos inteligentes que facilitan los intercambios de token de una manera conflaible y sin ninguna intención para hacer estafas.";
 
-"swap.dex_info.header_dex_related" = "%@ Related";
-"swap.dex_info.header_allowance" = "Allowance";
-"swap.dex_info.content_allowance" = "The amount of some currency that service can spend on your behalf when executing token swaps. Sufficient allowance is required before swap action can take place.";
-"swap.dex_info.header_price_impact" = "Price Impact";
-"swap.dex_info.content_price_impact" = "Expected price deviation from a shown price, typically increases with the swap amount.";
-"swap.dex_info.header_swap_fee" = "Swap Fee";
-"swap.dex_info.content_swap_fee" = "A service fee for the swap action on platform, shown in the currency the user sells. For most orders it should be either 0.3 % or 0.6 %.";
-"swap.dex_info.header_guaranteed_amount" = "Guaranteed Amount";
-"swap.dex_info.content_guaranteed_amount" = "The minimum amount a user is going to receive as a result of a swap action.";
-"swap.dex_info.header_maximum_spend" = "Maximum Spend";
-"swap.dex_info.content_maximum_spend" = "The maximum amount a user is going to spend as a result of a swap action.";
+"swap.dex_info.header_dex_related" = "%@ Relacionado";
+"swap.dex_info.header_allowance" = "Permiso de acceso";
+"swap.dex_info.content_allowance" = "La cantidad de alguna moneda que el servicio puede gastar en su nombre cuando al ejecutar un intercambio de token. Se requiere una asignación suficiente antes de que se pueda realizar la acción de intercambio.";
+"swap.dex_info.header_price_impact" = "Impacto en el precio";
+"swap.dex_info.content_price_impact" = "Desviación de precio esperada de un valor mostrado, normalmente aumenta con la cantidad de intercambios.";
+"swap.dex_info.header_swap_fee" = "Tarifa por intercambio";
+"swap.dex_info.content_swap_fee" = "Una tarifa de servicio para la acción de intercambio en la plataforma, mostrada en la moneda que el usuario vende. Para la mayoría de las ordenes debería ser del 0.3% o del 0.6%.";
+"swap.dex_info.header_guaranteed_amount" = "Cantidad Garantizada";
+"swap.dex_info.content_guaranteed_amount" = "La cantidad mínima que un usuario va a recibir como resultado de una acción de intercambio.";
+"swap.dex_info.header_maximum_spend" = "Gasto máximo";
+"swap.dex_info.content_maximum_spend" = "La cantidad máxima que un usuario va a recibir como resultado de una acción de intercambio.";
 
-"swap.dex_info.header_other" = "Other";
-"swap.dex_info.header_transaction_fee" = "Transaction Fee";
-"swap.dex_info.content_transaction_fee" = "The estimated processing cost of the given transaction on %@ blockchain. %@ related transactions will typically cost more than generic token transfer transactions.";
-"swap.dex_info.header_transaction_speed" = "Transaction Speed";
-"swap.dex_info.content_transaction_speed" = "Transactions with higher transaction fee will result in faster processing speeds. The opposite is true as well.";
+"swap.dex_info.header_other" = "Otro";
+"swap.dex_info.header_transaction_fee" = "Tarifa de Transacción";
+"swap.dex_info.content_transaction_fee" = "El costo estimado del proceso de la transacción dada en la %@ blockchain. %@ Las Transacciones Relacionadas normalmente costarán más que las transacciones genéricas de de token.";
+"swap.dex_info.header_transaction_speed" = "Velocidad de la transacción";
+"swap.dex_info.content_transaction_speed" = "Las transacciones con una tarifa de transacción más alta darán como resultado velocidades de procesamiento más rápidas. Lo opuesto también.";
 
-"swap.dex_info.link_button" = "%@ Site";
+"swap.dex_info.link_button" = "%@ Sitio";
 
 // Market
 
@@ -415,7 +415,7 @@
 
 "market.advanced_search.title" = "Advanced Search";
 "market.advanced_search.show_results" = "Show Results";
-"market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
+"market.advanced_search.dex_description" = "Esta opción se aplica a las fichas negociadas en Ethereum (Uniswap DEX) y Binance Smart Chain (Pancake DEX).";
 "market.advanced_search.24h" = "24h";
 
 "market.advanced_search.choose_set" = "Choose Set";
@@ -450,7 +450,7 @@
 "coin_page.roi.day7" = "1 Week";
 "coin_page.roi.day14" = "2 Weeks";
 "coin_page.roi.day30" = "1 Month";
-"coin_page.roi.day200" = "6 Month";
+"coin_page.roi.day200" = "6 Months";
 "coin_page.roi.year1" = "1 Year";
 
 "coin_page.market_cap" = "Market Cap";
@@ -487,13 +487,13 @@
 "tx_info.title" = "Transacción";
 "tx_info.title_approval" = "Aprobación de intercambio";
 "tx_info.status.pending" = "Pendiente";
-"tx_info.status.completed" = "Completed";
+"tx_info.status.completed" = "Finalizado";
 "tx_info.status.failed" = "Falla";
 "tx_info.from_hash" = "Desde ";
 "tx_info.transaction_id" = "Identificación de la transacción";
 "tx_info.to_hash" = "Para";
 "tx_info.input" = "Entrada";
-"tx_info.button_explorer" = "View on %@";
+"tx_info.button_explorer" = "Ver en %@";
 "tx_info.rate" = "Tasa histórica";
 "tx_info.fee" = "Comisión";
 "tx_info.to_self_note" = "Esta transacción fue enviada a su propia dirección";
@@ -781,7 +781,7 @@ poner en peligro la seguridad de mis fondos.";
 // Intro
 
 "intro.next" = "Siguiente";
-"intro.start" = "Start";
+"intro.start" = "Comienzo";
 "intro.brand.description" = "Almacene y comercie criptomonedas. Tenga control total sobre los activos. Permanezca anónimo.";
 "intro.independence.title" = "Sea indepentiente";
 "intro.independence.description" = "Unstoppable se construye para asegurar que los usuarios puedan acceder a los fondos en cualquier momento desde cualquier lugar.";
@@ -810,12 +810,12 @@ poner en peligro la seguridad de mis fondos.";
 "add_token.decimals" = "Decimales";
 "add_token.already_exists" = "Este token ya está en la lista del gestor de monedas.";
 
-"add_evm_token.contract_not_exist" = "Contract not found";
-"add_evm_token.contract_address" = "Contract Address";
+"add_evm_token.contract_not_exist" = "Contrato no encontrado";
+"add_evm_token.contract_address" = "Dirección del contrato";
 
 "add_erc20_token.title" = "Añadir ERC20";
 
-"add_bep20_token.title" = "Add BEP20";
+"add_bep20_token.title" = "Añadir BEP20";
 
 "add_bep2_token.title" = "Añadir BEP2";
 "add_bep2_token.token_symbol" = "Símbolo del token";
@@ -842,11 +842,11 @@ poner en peligro la seguridad de mis fondos.";
 "wallet_connect.button_disconnect" = "Desconectar";
 "ethereum_transaction.error.insufficient_balance" = "La transacción requiere %@ para enviar.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "El saldo actual de ETH es inferior al monto requerido para procesar esta transacción, incluida la tarifa de transacción.";
-"ethereum_transaction.error.reverted" = "Transaction cannot be executed: %@";
+"ethereum_transaction.error.reverted" = "La transacción no pudo ser ejecutada: %@";
 "wallet_connect.request_title" = "Pedido";
 
 "wallet_connect_list.title" = "Wallet Connect";
-"wallet_connect_list.new_connection" = "New Connection";
+"wallet_connect_list.new_connection" = "Nueva Conexión";
 
 // App Status
 
@@ -865,8 +865,8 @@ poner en peligro la seguridad de mis fondos.";
 "status_info.title" = "Estado";
 "status_info.pending.title" = "Pendiente";
 "status_info.pending.content" = "La transacción todavía no ha sido confirmada en la blockchain. Este paso puede tomar desde unos minutos hasta unas pocas horas dependiendo de la tasa de transacción. Las transacciones enviadas con una tarifa muy baja normalmente se procesan dentro de unos días o pueden ser rechazadas por la red, es decir, sin ser realizadas.";
-"status_info.sending_receiving.title" = "Sending / Receiving";
-"status_info.sending_receiving.content" = "Transaction has been included in the blockchain but has not reached permanent finality yet. At this point, it's safe to consider transaction completed for smaller payments. For larger payments it's recommended to wait until the status changes to completed.";
+"status_info.sending_receiving.title" = "Enviando / Recibiendo";
+"status_info.sending_receiving.content" = "La transacción ha sido incluida en el blockchain pero todavía no ha alcanzado la finalidad permanente. En este punto, es posible considerar que la transacción fue completada para pagos más pequeños. Para pagos más grandes se recomienda esperar hasta que el estado cambie a completar.";
 "status_info.confirmed.title" = "Confirmado";
 "status_info.confirmed.content" = "La transacción es definitiva e irreversible.";
 "status_info.failed.title" = "Falló";
@@ -883,6 +883,6 @@ poner en peligro la seguridad de mis fondos.";
 
 // Onboarding
 
-"onboarding.balance.description" = "You don't have any wallets yet. Create new or restore existing";
-"onboarding.balance.create" = "Create";
-"onboarding.balance.restore" = "Restore";
+"onboarding.balance.description" = "Aún no tienes ningún monedero. Crea nuevos o restaura existentes";
+"onboarding.balance.create" = "Crear";
+"onboarding.balance.restore" = "Restaurar";
