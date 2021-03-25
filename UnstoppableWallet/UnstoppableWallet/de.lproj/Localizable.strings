@@ -195,7 +195,7 @@
 "send.fee_info.content_fast" = "Für Transaktionen, bei denen die Priorität wichtig ist, empfehlen wir die Einstellung „Hohe Gebühr“. Es wird erwartet, dass die Einstellung „Hohe Gebühr“ ausreicht, um eine Transaktion innerhalb von 10 Minuten für Bitcoin und innerhalb von ein paar Minuten für Ethereum abzuschließen.";
 "send.fee_info.content_conclusion" = "Das Wallet von Unstoppable macht eine fundierte Vermutung basierend auf der Netzwerkaktivität und kann nicht garantieren, dass die vorgeschlagenen Gebührenwerte immer zu dem erwarteten Verhalten führen.";
 
-"send.confirmation.you_send" = "You Send";
+"send.confirmation.you_send" = "Sie Senden";
 "send.confirmation.amount" = "Betrag";
 "send.confirmation.to" = "An";
 "send.confirmation.domain" = "Domäne";
@@ -212,7 +212,7 @@
 
 "send.lock_time" = "TimeLock";
 
-"approve.confirmation.you_approve" = "You Approve";
+"approve.confirmation.you_approve" = "Sie genehmigen";
 "approve.confirmation.spender" = "Spender";
 
 // CoinSelector
@@ -256,7 +256,7 @@
 "swap.advanced_settings.recipient.footer" = "Nach dem Umtauschvorgang wird der Betrag an die angegebene Adresse überwiesen";
 "swap.advanced_settings.deadline_minute" = "%@ Min";
 "swap.advanced_settings.recipient_address" = "Empfängeradresse";
-"swap.advanced_settings.recipient_domain" = "Recipient Domain";
+"swap.advanced_settings.recipient_domain" = "Empfänger-Domäne";
 "swap.advanced_settings.error.lower_slippage" = "Ihre Transaktion wird wahrscheinlich fehlschlagen.";
 "swap.advanced_settings.error.higher_slippage" = "Max. erlaubter Wert ist %@%%.";
 "swap.advanced_settings.error.invalid_address" = "Ungültige Adresse";
@@ -278,18 +278,18 @@
 "swap.confirmation.swap_button" = "Tauschen";
 "swap.confirmation.pay" = "%@ bezahlen";
 "swap.confirmation.get" = "%@ erhalten";
-"swap.confirmation.guaranteed" = "Guaranteed";
+"swap.confirmation.guaranteed" = "Garantiert";
 "swap.confirmation.maximum" = "Maximum";
-"swap.confirmation.estimated" = "Estimated";
+"swap.confirmation.estimated" = "Geschätzt";
 
 
-"swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on %@ blockchain.\n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
+"swap.dex_info.description" = "Dieser Tauschdienst wird von %@ betrieben, einem dezentralen Token-Tauschprotokoll, das auf der %@ Blockchain basiert.\n\n%@ ist vollständig automatisiert und wird von intelligenten Verträgen verwaltet, die den Token-Tausch in einer zuverlässigen Art und Weise ermöglichen, ohne dass Betrug betrieben werden kann.";
 
-"swap.dex_info.header_dex_related" = "%@ Related";
+"swap.dex_info.header_dex_related" = "%@ zugehörige";
 "swap.dex_info.header_allowance" = "Vergütung";
-"swap.dex_info.content_allowance" = "The amount of some currency that service can spend on your behalf when executing token swaps. Sufficient allowance is required before swap action can take place.";
+"swap.dex_info.content_allowance" = "Der Betrag einer Währung, den der Dienst in Ihrem Namen ausgeben kann, wenn er Token-Täusche ausführt. Ein ausreichender Betrag ist erforderlich, bevor eine Tauschaktion stattfinden kann.";
 "swap.dex_info.header_price_impact" = "Preisauswirkungen";
-"swap.dex_info.content_price_impact" = "Expected price deviation from a shown price, typically increases with the swap amount.";
+"swap.dex_info.content_price_impact" = "Erwartete Preisabweichung von einem angezeigten Preis, steigt typischerweise mit dem Tausch-Betrag.";
 "swap.dex_info.header_swap_fee" = "Swap-Gebühr";
 "swap.dex_info.content_swap_fee" = "Eine Servicegebühr für die Tauschaktion auf der Plattform, angegeben in der Währung, die der Benutzer verkauft. Für die meisten Aufträge beträgt diese entweder 0,3 % oder 0,6 %.";
 "swap.dex_info.header_guaranteed_amount" = "Garantierter Betrag";
@@ -299,7 +299,7 @@
 
 "swap.dex_info.header_other" = "Andere";
 "swap.dex_info.header_transaction_fee" = "Transaktionsgebühr";
-"swap.dex_info.content_transaction_fee" = "The estimated processing cost of the given transaction on %@ blockchain. %@ related transactions will typically cost more than generic token transfer transactions.";
+"swap.dex_info.content_transaction_fee" = "Die geschätzten Verarbeitungskosten für die angegebene Transaktion auf der %@ Blockchain. Transaktionen, die sich auf %@ beziehen, kosten in der Regel mehr als allgemeine Token-Transaktionen.";
 "swap.dex_info.header_transaction_speed" = "Transaktionsgeschwindigkeit";
 "swap.dex_info.content_transaction_speed" = "Transaktionen mit höheren Transaktionsgebühren führen zu schnelleren Bearbeitungsgeschwindigkeiten. Auch das Gegenteil ist der Fall.";
 
@@ -493,7 +493,7 @@
 "tx_info.transaction_id" = "Transaktion ID";
 "tx_info.to_hash" = "An";
 "tx_info.input" = "Eingabe";
-"tx_info.button_explorer" = "View on %@";
+"tx_info.button_explorer" = "Auf %@ ansehen";
 "tx_info.rate" = "Historischer Rate";
 "tx_info.fee" = "Gebühr";
 "tx_info.to_self_note" = "Diese Transaktion wurde an die eigene Adresse gesendet";
@@ -841,7 +841,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "wallet_connect.button_disconnect" = "Verbindung trennen";
 "ethereum_transaction.error.insufficient_balance" = "Die Transaktion erfordert %@ zum Senden.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Das aktuelle ETH-Guthaben liegt unter dem für die Abwicklung dieser Transaktion erforderlichen Betrag einschließlich der Transaktionsgebühr.";
-"ethereum_transaction.error.reverted" = "Transaction cannot be executed: %@";
+"ethereum_transaction.error.reverted" = "Transaktion kann nicht ausgeführt werden: %@";
 "wallet_connect.request_title" = "Anforderung";
 
 "wallet_connect_list.title" = "Wallet Connect";
@@ -864,8 +864,8 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "status_info.title" = "Status";
 "status_info.pending.title" = "Anstehend";
 "status_info.pending.content" = "Transaktion wurde noch nicht auf der Blockchain bestätigt. Dieser Schritt kann von wenigen Minuten bis zu einigen Stunden dauern, je nach Transaktionsgebühr. Transaktionen, die mit einer sehr niedrigen Gebühr gesendet werden, werden in der Regel innerhalb weniger Tage bearbeitet oder können vom Netzwerk abgelehnt werden, d.h. es hat keine Transaktion gegeben.";
-"status_info.sending_receiving.title" = "Sending / Receiving";
-"status_info.sending_receiving.content" = "Transaction has been included in the blockchain but has not reached permanent finality yet. At this point, it's safe to consider transaction completed for smaller payments. For larger payments it's recommended to wait until the status changes to completed.";
+"status_info.sending_receiving.title" = "Senden / Empfangen";
+"status_info.sending_receiving.content" = "Die Transaktion wurde in die Blockchain integriert, hat aber noch keine dauerhafte Endgültigkeit erreicht. Zu diesem Zeitpunkt kann die Transaktion für kleinere Zahlungen als abgeschlossen betrachtet werden. Bei größeren Zahlungen wird empfohlen, zu warten, bis der Status auf abgeschlossen wechselt.";
 "status_info.confirmed.title" = "Bestätigt";
 "status_info.confirmed.content" = "Die Transaktion ist endgültig und unumkehrbar.";
 "status_info.failed.title" = "Fehlgeschlagen";
@@ -882,6 +882,6 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 // Onboarding
 
-"onboarding.balance.description" = "You don't have any wallets yet. Create new or restore existing";
+"onboarding.balance.description" = "Sie haben noch keine Wallets. Ein neues erstellen oder ein vorhandenes wiederherstellen";
 "onboarding.balance.create" = "Erstellen";
 "onboarding.balance.restore" = "Wiederherstellen";
