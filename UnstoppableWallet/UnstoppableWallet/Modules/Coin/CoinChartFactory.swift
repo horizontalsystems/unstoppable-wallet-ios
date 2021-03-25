@@ -207,31 +207,6 @@ class CoinChartFactory {
                 trends: trends, minValue: minRateString, maxValue: maxRateString, timeline: timeline, selectedIndicator: correctedIndicator)
     }
 
-//    func chartViewItem(chartDataStatus: DataStatus<ChartInfo>, marketInfoStatus: DataStatus<MarketInfo>, chartType: ChartType, coinCode: String, currency: Currency, selectedIndicator: ChartIndicatorSet, coin: Coin?, priceAlert: PriceAlert?, alertsOn: Bool) -> ChartViewItem {
-//        let chartDataStatusViewItem: DataStatus<ChartDataViewItem> = chartDataStatus.map {
-//            convert(chartInfo: $0, marketInfo: marketInfoStatus.data, chartType: chartType, currency: currency)
-//        }
-//
-//        let marketStatus: DataStatus<MarketInfoViewItem> = marketInfoStatus.map {
-//            viewItem(marketInfo: $0, currency: currency, coinCode: coinCode)
-//        }
-//
-//        var currentRate: String?
-//        if let rate = marketInfoStatus.data?.rate {
-//            let rateValue = CurrencyValue(currency: currency, value: rate)
-//            currentRate = ValueFormatter.instance.format(currencyValue: rateValue, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
-//        }
-//
-//        let priceAlertMode: ChartPriceAlertMode
-//        if !alertsOn || coin == nil {
-//            priceAlertMode = .hidden
-//        } else {
-//            priceAlertMode = priceAlert?.changeState != .off || priceAlert?.trendState != .off ? .on : .off
-//        }
-//
-//        return ChartViewItem(currentRate: currentRate, chartDataStatus: chartDataStatusViewItem, marketInfoStatus: marketStatus, selectedIndicator: selectedIndicator, priceAlertMode: priceAlertMode)
-//    }
-
     func selectedPointViewItem(chartItem: ChartItem, type: ChartType, currency: Currency, macdSelected: Bool) -> SelectedPointViewItem? {
         guard let rate = chartItem.indicators[.rate] else {
             return nil

@@ -92,9 +92,9 @@ class ChartViewCell: UITableViewCell {
         chartView.set(highLimitText: data.maxValue, lowLimitText: data.minValue)
     }
 
-    func setVolumes(hidden: Bool) {
+    func setVolumes(hidden: Bool, limitHidden: Bool) {
         chartView.setVolumes(hidden: hidden)
-        chartView.setLimits(hidden: hidden)
+        chartView.setLimits(hidden: limitHidden)
     }
 
 
