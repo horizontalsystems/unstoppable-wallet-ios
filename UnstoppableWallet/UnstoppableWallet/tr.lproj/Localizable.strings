@@ -160,8 +160,8 @@
 "send.amount_placeholder" = "Tutar";
 "send.address_placeholder" = "Adres";
 "send.address_or_domain_placeholder" = "Adres veya Domain";
-"send.fee" = "Masraf";
-"send.network_fee" = "Network Fee";
+"send.fee" = "Ücret";
+"send.network_fee" = "Ağ Ücreti";
 "send.estimated_fee" = "Tahmini Ücret";
 "send.max_fee" = "Maksimum Ücret";
 "send.tx_speed" = "İşlem Ücreti";
@@ -195,7 +195,7 @@
 "send.fee_info.content_fast" = "Önceliğin önemli olduğu işlemler için yüksek ücret ayarını kullanmanızı öneririz. İşlemin Bitcoin için 10 dakika, Ethereum için birkaç dakika içinde tamamlanması için yüksek ücret ayarının seçilmesinin yeterli olması bekleniyor.";
 "send.fee_info.content_conclusion" = "Unstoppable cüzdan, ağ etkinliğine dayalı olarak eğitimli bir tahmin yapar ve önerilen ücret değerlerinin her zaman beklenen davranışla sonuçlanacağını garanti edemez.";
 
-"send.confirmation.you_send" = "You Send";
+"send.confirmation.you_send" = "Gönderdiğiniz";
 "send.confirmation.amount" = "Tutar";
 "send.confirmation.to" = "Alan";
 "send.confirmation.domain" = "Domain";
@@ -212,8 +212,8 @@
 
 "send.lock_time" = "TimeLock";
 
-"approve.confirmation.you_approve" = "You Approve";
-"approve.confirmation.spender" = "Spender";
+"approve.confirmation.you_approve" = "Sen Onaylıyorsun";
+"approve.confirmation.spender" = "Harcayan";
 
 // CoinSelector
 
@@ -256,7 +256,7 @@
 "swap.advanced_settings.recipient.footer" = "Takas etme işleminden sonra, tutar belirtilen adrese transfer edilecektir";
 "swap.advanced_settings.deadline_minute" = "%@ dk";
 "swap.advanced_settings.recipient_address" = "Alıcı Adresi";
-"swap.advanced_settings.recipient_domain" = "Recipient Domain";
+"swap.advanced_settings.recipient_domain" = "Alıcı Domain";
 "swap.advanced_settings.error.lower_slippage" = "İşleminizin başarısız olması muhtemeldir.";
 "swap.advanced_settings.error.higher_slippage" = "Maksimum izin verilen değer %@%%.";
 "swap.advanced_settings.error.invalid_address" = "Geçersiz adres";
@@ -278,30 +278,30 @@
 "swap.confirmation.swap_button" = "Takas";
 "swap.confirmation.pay" = "Ödeyin %@";
 "swap.confirmation.get" = "%@ al";
-"swap.confirmation.guaranteed" = "Guaranteed";
-"swap.confirmation.maximum" = "Maximum";
-"swap.confirmation.estimated" = "Estimated";
+"swap.confirmation.guaranteed" = "Garanti";
+"swap.confirmation.maximum" = "Maksimum";
+"swap.confirmation.estimated" = "Tahmini";
 
 
-"swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on %@ blockchain.\n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
+"swap.dex_info.description" = "Bu takas etme hizmeti, %@ blok zinciri üzerine inşa edilmiş ve merkezi olmayan jeton takas etme protokolü olan %@ tarafından desteklenmektedir.\n\n%@, tamamen otomatiktir ve hile yapmadan jeton takaslarını güvenilir bir şekilde kolaylaştıran akıllı sözleşmelerle yönetilir.";
 
-"swap.dex_info.header_dex_related" = "%@ Related";
-"swap.dex_info.header_allowance" = "Allowance";
-"swap.dex_info.content_allowance" = "The amount of some currency that service can spend on your behalf when executing token swaps. Sufficient allowance is required before swap action can take place.";
-"swap.dex_info.header_price_impact" = "Price Impact";
-"swap.dex_info.content_price_impact" = "Expected price deviation from a shown price, typically increases with the swap amount.";
-"swap.dex_info.header_swap_fee" = "Swap Fee";
-"swap.dex_info.content_swap_fee" = "A service fee for the swap action on platform, shown in the currency the user sells. For most orders it should be either 0.3 % or 0.6 %.";
-"swap.dex_info.header_guaranteed_amount" = "Guaranteed Amount";
-"swap.dex_info.content_guaranteed_amount" = "The minimum amount a user is going to receive as a result of a swap action.";
-"swap.dex_info.header_maximum_spend" = "Maximum Spend";
-"swap.dex_info.content_maximum_spend" = "The maximum amount a user is going to spend as a result of a swap action.";
+"swap.dex_info.header_dex_related" = "%@";
+"swap.dex_info.header_allowance" = "Ödenek";
+"swap.dex_info.content_allowance" = "Uniswap'ın jeton swaplarını gerçekleştirirken sizin adınıza harcayabileceği bazı para birimlerindeki tutar. Swap işleminin gerçekleşebilmesi için yeterli ödeme miktarı gereklidir.";
+"swap.dex_info.header_price_impact" = "Fiyat Etkisi";
+"swap.dex_info.content_price_impact" = "Gösterilen bir fiyattan beklenen fiyat sapması, tipik olarak swap tutarı ile artar.";
+"swap.dex_info.header_swap_fee" = "Takas Ücreti";
+"swap.dex_info.content_swap_fee" = "Uniswap platformunda swap işlemi için kullanıcının sattığı para biriminde gösterilen bir hizmet ücreti. Çoğu talimatlar için % 0.3 veya % 0.6 olmalıdır.";
+"swap.dex_info.header_guaranteed_amount" = "Garantili Tutar";
+"swap.dex_info.content_guaranteed_amount" = "Bir swap işlemi sonucunda bir kullanıcının alacağı minimum tutar.";
+"swap.dex_info.header_maximum_spend" = "Maksimum Harcama";
+"swap.dex_info.content_maximum_spend" = "Bir swap işlemi sonucunda bir kullanıcının harcayacağı maksimum tutar.";
 
-"swap.dex_info.header_other" = "Other";
-"swap.dex_info.header_transaction_fee" = "Transaction Fee";
-"swap.dex_info.content_transaction_fee" = "The estimated processing cost of the given transaction on %@ blockchain. %@ related transactions will typically cost more than generic token transfer transactions.";
-"swap.dex_info.header_transaction_speed" = "Transaction Speed";
-"swap.dex_info.content_transaction_speed" = "Transactions with higher transaction fee will result in faster processing speeds. The opposite is true as well.";
+"swap.dex_info.header_other" = "Diğer";
+"swap.dex_info.header_transaction_fee" = "İşlem Ücreti";
+"swap.dex_info.content_transaction_fee" = "%@ blok zincirinde verilen işlemin tahmini işleme maliyeti. %@ bağlantılı işlemler genellikle eşdeğer jeton transfer işlemlerinden daha pahalı olur.";
+"swap.dex_info.header_transaction_speed" = "İşlem hızı";
+"swap.dex_info.content_transaction_speed" = "Daha yüksek işlem ücretli işlemler, daha hızlı işleme hızlarıyla sonuçlanacaktır. Elbette bunun tersi de doğrudur.";
 
 "swap.dex_info.link_button" = "%@ Site";
 
@@ -841,7 +841,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "wallet_connect.button_disconnect" = "Bağlantıyı Kes";
 "ethereum_transaction.error.insufficient_balance" = "İşlem, göndermek için %@ gerektirir.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Mevcut ETH bakiyesi, işlem ücreti dahil bu işlemi gerçekleştirmek için gereken miktarın altında.";
-"ethereum_transaction.error.reverted" = "Transaction cannot be executed: %@";
+"ethereum_transaction.error.reverted" = "İşlem gerçekleştirilemiyor: %@";
 "wallet_connect.request_title" = "İstek";
 
 "wallet_connect_list.title" = "Wallet Connect";
@@ -864,8 +864,8 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "status_info.title" = "Durum";
 "status_info.pending.title" = "Devam ediyor";
 "status_info.pending.content" = "İşlem blok zincirinde henüz onaylanmadı. Bu adım, işlem ücretine bağlı olarak birkaç dakikadan birkaç saate kadar sürebilir. Çok düşük bir ücretle gönderilen işlemler genellikle birkaç gün içinde işleme alınır ya da ağ tarafından reddedilebilir, yani hiçbir işlem gerçekleşmez.";
-"status_info.sending_receiving.title" = "Sending / Receiving";
-"status_info.sending_receiving.content" = "Transaction has been included in the blockchain but has not reached permanent finality yet. At this point, it's safe to consider transaction completed for smaller payments. For larger payments it's recommended to wait until the status changes to completed.";
+"status_info.sending_receiving.title" = "Gönderme / Alma";
+"status_info.sending_receiving.content" = "İşlem blok zincirine dahil edildi, ancak henüz kalıcı bir kesinliğe ulaşmadı. Bu noktada, daha küçük ödemeler için işlemin tamamlandığını düşünmek güvenlidir. Daha büyük ödemeler için, durum tamamlanana kadar beklemeniz önerilir.";
 "status_info.confirmed.title" = "Onaylandı";
 "status_info.confirmed.content" = "İşlem sonlandı ve geri alınamaz.";
 "status_info.failed.title" = "Başarısız";
@@ -882,6 +882,6 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 // Onboarding
 
-"onboarding.balance.description" = "You don't have any wallets yet. Create new or restore existing";
+"onboarding.balance.description" = "Henüz cüzdanınız yok. Yeni oluşturun veya mevcut olanı geri yükleyin";
 "onboarding.balance.create" = "Oluştur";
 "onboarding.balance.restore" = "Geri Yükle";
