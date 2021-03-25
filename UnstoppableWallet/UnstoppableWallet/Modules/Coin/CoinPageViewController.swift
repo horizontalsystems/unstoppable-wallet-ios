@@ -178,10 +178,8 @@ class CoinPageViewController: ThemeViewController {
     private func reloadTable() {
         tableView.buildSections()
 
-        UIView.animate(withDuration: 0.2) {
-            self.tableView.beginUpdates()
-            self.tableView.endUpdates()
-        }
+        tableView.beginUpdates()
+        tableView.endUpdates()
     }
 
 }
