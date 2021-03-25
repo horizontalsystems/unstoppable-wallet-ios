@@ -1,4 +1,4 @@
-platform :ios, '12'
+platform :ios, '13'
 use_modular_headers!
 
 inhibit_all_warnings!
