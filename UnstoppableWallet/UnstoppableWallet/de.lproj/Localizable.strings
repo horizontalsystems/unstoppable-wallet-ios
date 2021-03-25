@@ -38,8 +38,8 @@
 "offline" = "Offline";
 "confirm" = "Bestätigen";
 "connect" = "Verbinden";
-"price" = "Price";
-"note" = "Note";
+"price" = "Preis";
+"note" = "Hinweis";
 
 "version" = "Version %@";
 
@@ -196,8 +196,8 @@
 "send.fee_info.content_conclusion" = "Das Wallet von Unstoppable macht eine fundierte Vermutung basierend auf der Netzwerkaktivität und kann nicht garantieren, dass die vorgeschlagenen Gebührenwerte immer zu dem erwarteten Verhalten führen.";
 
 "send.confirmation.you_send" = "You Send";
-"send.confirmation.amount" = "Amount";
-"send.confirmation.to" = "To";
+"send.confirmation.amount" = "Betrag";
+"send.confirmation.to" = "An";
 "send.confirmation.domain" = "Domäne";
 "send.confirmation.address" = "Adresse";
 "send.confirmation.account" = "Account";
@@ -286,7 +286,7 @@
 "swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on %@ blockchain.\n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
 
 "swap.dex_info.header_dex_related" = "%@ Related";
-"swap.dex_info.header_allowance" = "Allowance";
+"swap.dex_info.header_allowance" = "Vergütung";
 "swap.dex_info.content_allowance" = "The amount of some currency that service can spend on your behalf when executing token swaps. Sufficient allowance is required before swap action can take place.";
 "swap.dex_info.header_price_impact" = "Price Impact";
 "swap.dex_info.content_price_impact" = "Expected price deviation from a shown price, typically increases with the swap amount.";
