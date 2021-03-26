@@ -38,7 +38,7 @@
 "offline" = "Не доступен";
 "confirm" = "Подтвердить";
 "connect" = "Подключиться";
-"price" = "Цена";
+"price" = "Price";
 "note" = "Примечание";
 
 "version" = "Версия %@";
@@ -702,14 +702,14 @@
 
 "chart.title" = "%@ Цена";
 "chart.time_duration.today" = "Сегодня";
-"chart.time_duration.day" = "24ч";
-"chart.time_duration.week" = "7Д";
-"chart.time_duration.week2" = "2Н";
+"chart.time_duration.day" = "24H";
+"chart.time_duration.week" = "7D";
+"chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "1М";
 "chart.time_duration.month3" = "3М";
 "chart.time_duration.halyear" = "6М";
-"chart.time_duration.year" = "1Г";
-"chart.time_duration.year2" = "2Г";
+"chart.time_duration.year" = "1Y";
+"chart.time_duration.year2" = "2Y";
 
 "chart.market_cap" = "Market Cap";
 "chart.market_cap.thousand" = "%@ к";
@@ -835,7 +835,7 @@
 
 // Wallet Connect
 
-"wallet_connect.title" = "Подключить кошелек";
+"wallet_connect.title" = "Wallet Connect";
 "wallet_connect.error.invalid_url" = "Неверный URL-адрес";
 "wallet_connect.url" = "URL";
 "wallet_connect.connect_description" = "Нажимая \"Подтвердить\", вы разрешаете этому приложению просматривать ваш общедоступный адрес. Это важный шаг для защиты ваших данных от потенциальных рисков фишинга.";
