@@ -294,6 +294,8 @@ protocol IAppConfigProvider {
 
     var featuredCoinTypes: [CoinType] { get }
     func defaultWords(count: Int) -> String
+
+    var defaultWords: String { get }
 }
 
 protocol ICoinMigration {

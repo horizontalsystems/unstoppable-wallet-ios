@@ -92,6 +92,10 @@ class AppConfigProvider: IAppConfigProvider {
         ]
     }
 
+    var defaultWords: String {
+        Bundle.main.object(forInfoDictionaryKey: "DefaultWords") as? String ?? ""
+    }
+
 }
 
 

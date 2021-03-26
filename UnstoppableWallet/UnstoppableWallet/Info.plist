@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>BscscanApiKey</key>
+	<string>${bscscan_api_key}</string>
 	<key>BtcCoreRpcUrl</key>
 	<string>${btc_core_rpc_url}</string>
 	<key>CFBundleDevelopmentRegion</key>
@@ -24,14 +26,14 @@
 	<string>$(coinmarketcap_com_api_key)</string>
 	<key>CryptoCompareApiKey</key>
 	<string>$(cryptocompare_com_api_key)</string>
+	<key>DefaultWords</key>
+	<string>${default_words}</string>
 	<key>DefaultWords12</key>
 	<string>${default_words_12}</string>
 	<key>DefaultWords24</key>
 	<string>${default_words_24}</string>
 	<key>EtherscanApiKey</key>
 	<string>${etherscan_api_key}</string>
-	<key>BscscanApiKey</key>
-	<string>${bscscan_api_key}</string>
 	<key>FaqIndexUrl</key>
 	<string>${faq_index_url}</string>
 	<key>GuidesIndexUrl</key>

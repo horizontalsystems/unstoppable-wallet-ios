@@ -11,5 +11,6 @@ cryptocompare_com_api_key =
 pns_username = user
 pns_password = secret
 
+default_words =
 default_words_12 =
 default_words_24 =
