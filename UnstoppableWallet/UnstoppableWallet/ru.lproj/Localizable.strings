@@ -38,6 +38,8 @@
 "offline" = "Не доступен";
 "confirm" = "Подтвердить";
 "connect" = "Подключиться";
+"price" = "Цена";
+"note" = "Примечание";
 
 "version" = "Версия %@";
 
@@ -161,11 +163,11 @@
 "send.address_placeholder" = "Адрес";
 "send.address_or_domain_placeholder" = "Адрес или домен";
 "send.fee" = "Комиссия";
+"send.network_fee" = "Комиссия Cети";
 "send.estimated_fee" = "Предполагаемая Комиссия";
 "send.max_fee" = "Макс. Комиссия";
 "send.tx_speed" = "Комиссия за транзакцию";
 "send.tx_speed_low" = "Низкая";
-"send.tx_speed_medium" = "Средняя";
 "send.tx_speed_recommended" = "Рекомендовано";
 "send.tx_speed_high" = "Высокая";
 "send.tx_speed_custom" = "Индивидуальная";
@@ -195,6 +197,9 @@
 "send.fee_info.content_fast" = "В случае с приоритетными транзакциями лучше всего использовать настройку высокой комиссии. При выборе высокой комиссии транзакция Bitcoin будет обработана в течение 10 минут, ну а транзакция Ethereum будет обработана еще быстрее.";
 "send.fee_info.content_conclusion" = "Кошелек Unstoppable делает обоснованное предположение на основе сетевой активности и не может гарантировать, что предлагаемые значения комиссии всегда будут давать желаемый результат.";
 
+"send.confirmation.you_send" = "Вы Отправляете";
+"send.confirmation.amount" = "Сумма";
+"send.confirmation.to" = "Кому";
 "send.confirmation.domain" = "Домен";
 "send.confirmation.address" = "Адрес";
 "send.confirmation.account" = "Account";
@@ -208,6 +213,9 @@
 "send.token.insufficient_fee_alert" = "Комиссии за транзакцию %@ (%@) взимаются в %@. Вам нужно %@.";
 
 "send.lock_time" = "TimeLock";
+
+"approve.confirmation.you_approve" = "Вы Подтверждаете";
+"approve.confirmation.spender" = "Покупатель";
 
 // CoinSelector
 
@@ -250,6 +258,7 @@
 "swap.advanced_settings.recipient.footer" = "После операции обмена сумма будет переведена на указанный адрес";
 "swap.advanced_settings.deadline_minute" = "%@ мин";
 "swap.advanced_settings.recipient_address" = "Адрес Получателя";
+"swap.advanced_settings.recipient_domain" = "Домен Получателя";
 "swap.advanced_settings.error.lower_slippage" = "Ваша транзакция, скорее всего, не удастся.";
 "swap.advanced_settings.error.higher_slippage" = "Макс. допустимое значение %@%%.";
 "swap.advanced_settings.error.invalid_address" = "Неверный адрес";
@@ -271,29 +280,32 @@
 "swap.confirmation.swap_button" = "Обменять";
 "swap.confirmation.pay" = "Оплатить %@";
 "swap.confirmation.get" = "Получить %@";
+"swap.confirmation.guaranteed" = "Гарантировано";
+"swap.confirmation.maximum" = "Максимум";
+"swap.confirmation.estimated" = "Ориентировочно";
 
 
-"swap.uniswap_info.title" = "Uniswap v.2";
-"swap.uniswap_info.description" = "Данный сервис обмена работает при поддержке Uniswap - децентрализированного протокола обмена токенов, основанного на блокчейне Ethereum.\n\nСервис Uniswap полностью автоматизирован и управляется смарт-контрактами, которые надежным способом упрощают обмен токенами без каких-либо средств мошенничества.";
-"swap.uniswap_info.link_button" = "Веб-сайт Uniswap";
+"swap.dex_info.description" = "Этот обменный сервис работает при поддержке %@ - децентрализованного протокола обмена токенов, созданного в блокчейне %@.\n\n%@ полностью автоматизирован и управляется смарт-контрактами, которые надежным способом упрощают обмен токенами без осуществления каких-либо махинаций.";
 
-"swap.uniswap_info.header_uniswap_related" = "О Uniswap";
-"swap.uniswap_info.header_allowance" = "Разрешение";
-"swap.uniswap_info.content_allowance" = "Сумма в некоторых валютах, которую Uniswap может потратить от вашего имени при выполнении обмена токенов. Может потребоваться разрешение на использование достаточной суммы перед обменом.";
-"swap.uniswap_info.header_price_impact" = "Отклонение от рын. цены";
-"swap.uniswap_info.content_price_impact" = "Ожидаемое отклонение цены от указанной цены, обычно увеличивается при увеличении суммы обмена.";
-"swap.uniswap_info.header_swap_fee" = "Комиссия за обмен";
-"swap.uniswap_info.content_swap_fee" = "Плата за услугу обмена на платформе Uniswap, показана в валюте, в которой продает пользователь. Для большинства заказов составляет или 0,3% или 0,6%.";
-"swap.uniswap_info.header_guaranteed_amount" = "Гарантированная Сумма";
-"swap.uniswap_info.content_guaranteed_amount" = "Минимальная сумма, которую получит пользователь в результате обмена.";
-"swap.uniswap_info.header_maximum_spend" = "Максимальная Трата";
-"swap.uniswap_info.content_maximum_spend" = "Максимальная сумма, которую получит пользователь в результате обмена.";
+"swap.dex_info.header_dex_related" = "o %@";
+"swap.dex_info.header_allowance" = "Разрешение";
+"swap.dex_info.content_allowance" = "Сумма в некоторых валютах, которую сервис может потратить от вашего имени при выполнении обмена токенов. Может потребоваться разрешение на использование достаточной суммы перед обменом.";
+"swap.dex_info.header_price_impact" = "Отклонение от рын. цены";
+"swap.dex_info.content_price_impact" = "Ожидаемое отклонение цены от указанной цены, обычно увеличивается при увеличении суммы обмена.";
+"swap.dex_info.header_swap_fee" = "Комиссия за обмен";
+"swap.dex_info.content_swap_fee" = "Плата за услугу обмена на платформе, показана в валюте, в которой продает пользователь. Для большинства заказов составляет или 0,3% или 0,6%.";
+"swap.dex_info.header_guaranteed_amount" = "Гарантированная Сумма";
+"swap.dex_info.content_guaranteed_amount" = "Минимальная сумма, которую получит пользователь в результате обмена.";
+"swap.dex_info.header_maximum_spend" = "Максимальная Трата";
+"swap.dex_info.content_maximum_spend" = "Максимальная сумма, которую получит пользователь в результате обмена.";
 
-"swap.uniswap_info.header_other" = "Другое";
-"swap.uniswap_info.header_transaction_fee" = "Комиссия за транзакцию";
-"swap.uniswap_info.content_transaction_fee" = "Примерная стоимость услуги по обработке данной транзакции на блокчейне Ethereum. Стоимость транзакций, связанных с Uniswap, обычно выше, чем стоимость транзакций по передаче обычных токенов.";
-"swap.uniswap_info.header_transaction_speed" = "Скорость Транзакции";
-"swap.uniswap_info.content_transaction_speed" = "Обработка транзакций с более высокой комиссией будет ускорена. Также вено и обратное.";
+"swap.dex_info.header_other" = "Другое";
+"swap.dex_info.header_transaction_fee" = "Комиссия за транзакцию";
+"swap.dex_info.content_transaction_fee" = "Примерная стоимость услуги по обработке данной транзакции на блокчейне %@. Стоимость транзакций, связанных с %@, обычно выше, чем стоимость транзакций по передаче обычных токенов.";
+"swap.dex_info.header_transaction_speed" = "Скорость Транзакции";
+"swap.dex_info.content_transaction_speed" = "Обработка транзакций с более высокой комиссией будет ускорена. Верно и обратное.";
+
+"swap.dex_info.link_button" = "%@ Сайт";
 
 // Market
 
@@ -319,7 +331,6 @@
 
 "market.market_field.mcap" = "MCap";
 "market.market_field.vol" = "Vol";
-"market.market_field.price" = "Price";
 
 "market.sort_by" = "Sort By";
 "market.changes" = "Changes";
@@ -349,6 +360,7 @@
 "market_discovery.filter_title.prediction_markets" = "Prediction";
 "market_discovery.filter_title.yield_aggregators" = "Yield Aggregators";
 "market_discovery.filter_title.fiat_stablecoins" = "Fiat Stablecoins";
+"market_discovery.filter_title.rebase_tokens" = "Rebase Tokens";
 "market_discovery.filter_title.algo_stablecoins" = "Algo Stablecoins";
 "market_discovery.filter_title.tokenized_bitcoin" = "Tokenized Bitcoin";
 "market_discovery.filter_title.stablecoin_issuers" = "Stablecoin Issuers";
@@ -378,6 +390,7 @@
 "market_discovery.filter_description.prediction_markets" = "Markets to bet on events in the future.";
 "market_discovery.filter_description.yield_aggregators" = "Solutions for earning from idle crypto assets.";
 "market_discovery.filter_description.fiat_stablecoins" = "Crypto tokens pegged 1-1 to fiat currency.";
+"market_discovery.filter_description.rebase_tokens" = "Tokens that periodically adjust supply to achieve a target price.";
 "market_discovery.filter_description.algo_stablecoins" = "Stablecoins with algorithmic 1-1 price peg to fiat.";
 "market_discovery.filter_description.tokenized_bitcoin" = "Crypto tokens pegged 1-1 to Bitcoin price.";
 "market_discovery.filter_description.stablecoin_issuers" = "Decentralized issuers of fiat pegged stablecoin tokens.";
@@ -398,6 +411,67 @@
 "market_discovery.filter_description.computing" = "Decentralized on-demand computing solutions.";
 
 "market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favorites by clicking on star icon in the asset page";
+
+"market.search.title" = "Search";
+"market.search.empty_text" = "No results found";
+
+"market.advanced_search.title" = "Advanced Search";
+"market.advanced_search.show_results" = "Show Results";
+"market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
+"market.advanced_search.24h" = "24h";
+
+"market.advanced_search.choose_set" = "Choose Set";
+"market.advanced_search.market_cap" = "Market Cap";
+"market.advanced_search.volume" = "Trading Volume";
+"market.advanced_search.liquidity" = "DEX Liquidity";
+"market.advanced_search.price_period" = "Price Period";
+"market.advanced_search.price_change" = "Price Change";
+
+"market.advanced_search.top" = "Top %d";
+"market.advanced_search.reset_all" = "Reset";
+
+"market.advanced_search.any" = "Any";
+"market.advanced_search.less_5_m" = "< 5М";
+"market.advanced_search.m_5_m_10" = "5М-20М";
+"market.advanced_search.m_20_m_100" = "20М - 100М";
+"market.advanced_search.m_100_b_1" = "100M - 1B";
+"market.advanced_search.b_1_b_5" = "1B - 5B";
+"market.advanced_search.more_5_b" = "> 5B";
+
+"market.advanced_search.day" = "1 Day";
+"market.advanced_search.week" = "1 Week";
+"market.advanced_search.week2" = "2 Weeks";
+"market.advanced_search.month" = "1 Month";
+"market.advanced_search.month6" = "6 Months";
+"market.advanced_search.year" = "1 Year";
+
+// Coin Page
+
+"coin_page.roi.hour1" = "1 Hour";
+"coin_page.roi.hour24" = "1 Day";
+"coin_page.roi.day7" = "1 Week";
+"coin_page.roi.day14" = "2 Weeks";
+"coin_page.roi.day30" = "1 Month";
+"coin_page.roi.day200" = "6 Month";
+"coin_page.roi.year1" = "1 Year";
+
+"coin_page.market_cap" = "Market Cap";
+"coin_page.volume_24h" = "Volume (24h)";
+"coin_page.circulating_supply" = "In Circulation";
+"coin_page.total_supply" = "Total Supply";
+"coin_page.dilluted_market_cap" = "Diluted MCap";
+
+"coin_page.markets" = "%@ Markets";
+"coin_page.funds_invested" = "Funds Invested";
+
+"coin_page.category" = "Category";
+"coin_page.contract" = "%@ Contract";
+"coin_page.bep2_symbol" = "BEP2 Symbol";
+
+"coin_page.guide" = "Guide";
+"coin_page.website" = "Веб-сайт";
+"coin_page.whitepaper" = "Whitepaper";
+
 // Transactions
 
 "transactions.title" = "Транзакции";
@@ -415,7 +489,7 @@
 "tx_info.title" = "Транзакция";
 "tx_info.title_approval" = "Подтверждение обмена";
 "tx_info.status.pending" = "В обработке";
-"tx_info.status.confirmed" = "Подтверждено";
+"tx_info.status.completed" = "Завершено";
 "tx_info.status.failed" = "Не удалось";
 "tx_info.from_hash" = "От";
 "tx_info.transaction_id" = "ID Транзакции";
@@ -648,11 +722,31 @@
 "chart.start_date" = "Дата Запуска";
 "chart.website" = "Сайт Проекта";
 "chart.error.not_available" = "График недоступен";
-"chart.selected.price" = "Цена";
 "chart.selected.volume" = "Объём";
 "chart.trend_neutral" = "Нейтральный";
 "chart.trend_down" = "Нисходящий Тренд";
 "chart.trend_up" = "Восходящий Тренд";
+"chart.rating_details" = "Rating Details";
+"chart.price_indicator_range.day" = "24h Range";
+"chart.price_indicator_range.year" = "52w Range";
+
+"chart.market.header" = "Market";
+"chart.market.market_cap" = "Market Cap";
+"chart.market.volume" = "Volume (24h)";
+"chart.market.circulation" = "In Circulation";
+"chart.market.total_supply" = "Total Supply";
+
+"chart.market.show_markets" = "%@ Markets";
+
+"chart.performance.header" = "Performance";
+"chart.performance.week_changes" = "Changes (1W)";
+"chart.performance.month_changes" = "Changes (1M)";
+
+"chart.about.header" = "About";
+"chart.about.read_more" = "Read More";
+"chart.about.read_less" = "Read Less";
+
+"coin_page.return_of_investments" = "ROI";
 
 // Create Wallet
 
@@ -687,15 +781,15 @@
 
 // Intro
 
-"intro.skip" = "Пропустить";
 "intro.next" = "Далее";
+"intro.start" = "Начать";
 "intro.brand.description" = "Храните и торгуйте криптовалютой. Полностью контролируйте свои активы. Оставайтесь анонимными.";
 "intro.independence.title" = "Будьте Независимы";
 "intro.independence.description" = "Unstoppable создан для того, чтобы пользователи могли получать доступ к средствам в любое время, в любом месте.";
-"intro.knowledge.title" = "Инвестируйте с умом";
-"intro.knowledge.description" = "В Unstoppable доступны замечательные инструменты для торговли, мониторинга и аналитики.";
 "intro.privacy.title" = "Сохраняйте Конфиденциальность";
 "intro.privacy.description" = "Используйте этот кошелек, чтобы оставаться инкогнито и иметь возможность сохранить конфиденциальность вашей информации.";
+"intro.knowledge.title" = "Инвестируйте с умом";
+"intro.knowledge.description" = "В Unstoppable доступны замечательные инструменты для торговли, мониторинга и аналитики.";
 
 // Guides
 
@@ -707,7 +801,8 @@
 "add_token_selector.choose_blockchain" = "Выбрать Блокчейн";
 "add_token_selector.add_token" = "Добавить Токен";
 "add_token_selector.erc20_token" = "Токен ERC20";
-"add_token_selector.binance_token" = "Токен BEP2";
+"add_token_selector.bep20_token" = "Токен BEP20";
+"add_token_selector.bep2_token" = "Токен BEP2";
 
 // Add Token
 
@@ -716,9 +811,12 @@
 "add_token.decimals" = "Десятичные знаки";
 "add_token.already_exists" = "Этот токен уже есть в списке поддерживаемых токенов.";
 
+"add_evm_token.contract_not_exist" = "Контракт не найден";
+"add_evm_token.contract_address" = "Адрес Контракта";
+
 "add_erc20_token.title" = "Добавить ERC20";
-"add_erc20_token.contract_address" = "Адрес Контракта";
-"add_erc20_token.contract_not_exist" = "Контракт не найден";
+
+"add_bep20_token.title" = "Добавить BEP20";
 
 "add_bep2_token.title" = "Добавить BEP2";
 "add_bep2_token.token_symbol" = "Символ токена";
@@ -738,8 +836,6 @@
 // Wallet Connect
 
 "wallet_connect.title" = "Подключить кошелек";
-"wallet_connect.requirement" = "Требования";
-"wallet_connect.requirement.description" = "Для подключения к браузеру вам нужно активировать ethereum или любой erc20 токен во вкладке \"Баланс\"";
 "wallet_connect.error.invalid_url" = "Неверный URL-адрес";
 "wallet_connect.url" = "URL";
 "wallet_connect.connect_description" = "Нажимая \"Подтвердить\", вы разрешаете этому приложению просматривать ваш общедоступный адрес. Это важный шаг для защиты ваших данных от потенциальных рисков фишинга.";
@@ -747,7 +843,11 @@
 "wallet_connect.button_disconnect" = "Отсоединить";
 "ethereum_transaction.error.insufficient_balance" = "Для отправки транзакции требуется %@.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Текущий баланс ETH ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
+"ethereum_transaction.error.reverted" = "Транзакция не может быть выполнена: %@";
 "wallet_connect.request_title" = "Запрос";
+
+"wallet_connect_list.title" = "Wallet Connect";
+"wallet_connect_list.new_connection" = "Новое Подключение";
 
 // App Status
 
@@ -766,8 +866,8 @@
 "status_info.title" = "Статус";
 "status_info.pending.title" = "В обработке";
 "status_info.pending.content" = "Транзакция еще не подтверждена в блокчейне. Эта процедура может занять от нескольких минут до нескольких часов в зависимости от комиссии за транзакцию. Отправляемые с очень низкой комиссией транзакции обычно обрабатываются в течение нескольких дней или же могут быть отклонены сетью, отменяя это действие.";
-"status_info.receiving.title" = "Получает...";
-"status_info.receiving.content" = "Отправитель послал вам транзакцию, но она еще не завершена. В случае с крупными платежами нужно дождаться, пока статус транзакции изменится на 'обработка завершена'. Обычно этот процесс занимает около часа. Однако, может потребоваться больше времени, если отправитель послал транзакцию с низкой комиссией.";
+"status_info.sending_receiving.title" = "Отправка / Получение";
+"status_info.sending_receiving.content" = "Транзакция была включена в блокчейн, но пока не обработана. На данном этапе безопасно рассматривать транзакции для небольших платежей. Что касается более крупных транзакций, стоит дождаться смены статуса.";
 "status_info.confirmed.title" = "Подтверждено";
 "status_info.confirmed.content" = "Транзакция окончательна и необратима.";
 "status_info.failed.title" = "Не удалось";
@@ -781,3 +881,9 @@
 "enable_coins.enabling" = "Идет активация...";
 "enable_coins.enabled_coins" = "Активировано %@ монет";
 "enable_coins.enabled_no_coins" = "На балансе нет монет";
+
+// Onboarding
+
+"onboarding.balance.description" = "У вас пока нет кошельков. Создайте новый или восстановите существующий";
+"onboarding.balance.create" = "Создать";
+"onboarding.balance.restore" = "Восстановить";

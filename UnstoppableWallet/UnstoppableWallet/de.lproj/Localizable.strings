@@ -38,6 +38,8 @@
 "offline" = "Offline";
 "confirm" = "Bestätigen";
 "connect" = "Verbinden";
+"price" = "Preis";
+"note" = "Hinweis";
 
 "version" = "Version %@";
 
@@ -159,11 +161,11 @@
 "send.address_placeholder" = "Adresse";
 "send.address_or_domain_placeholder" = "Adresse oder Domäne";
 "send.fee" = "Gebühr";
+"send.network_fee" = "Netzwerkgebühr";
 "send.estimated_fee" = "Geschätzte Gebühren";
 "send.max_fee" = "Max Gebühr";
 "send.tx_speed" = "Transaktionsgebühr";
 "send.tx_speed_low" = "Niedrig";
-"send.tx_speed_medium" = "Mittel";
 "send.tx_speed_recommended" = "Empfohlen";
 "send.tx_speed_high" = "Hoch";
 "send.tx_speed_custom" = "Benutzerdefiniert";
@@ -193,6 +195,9 @@
 "send.fee_info.content_fast" = "Für Transaktionen, bei denen die Priorität wichtig ist, empfehlen wir die Einstellung „Hohe Gebühr“. Es wird erwartet, dass die Einstellung „Hohe Gebühr“ ausreicht, um eine Transaktion innerhalb von 10 Minuten für Bitcoin und innerhalb von ein paar Minuten für Ethereum abzuschließen.";
 "send.fee_info.content_conclusion" = "Das Wallet von Unstoppable macht eine fundierte Vermutung basierend auf der Netzwerkaktivität und kann nicht garantieren, dass die vorgeschlagenen Gebührenwerte immer zu dem erwarteten Verhalten führen.";
 
+"send.confirmation.you_send" = "Sie Senden";
+"send.confirmation.amount" = "Betrag";
+"send.confirmation.to" = "An";
 "send.confirmation.domain" = "Domäne";
 "send.confirmation.address" = "Adresse";
 "send.confirmation.account" = "Account";
@@ -206,6 +211,9 @@
 "send.token.insufficient_fee_alert" = "Transaktionsgebühren für %@ %@ in %@ bezahlt. Du brauchst %@.";
 
 "send.lock_time" = "TimeLock";
+
+"approve.confirmation.you_approve" = "Sie genehmigen";
+"approve.confirmation.spender" = "Spender";
 
 // CoinSelector
 
@@ -248,6 +256,7 @@
 "swap.advanced_settings.recipient.footer" = "Nach dem Umtauschvorgang wird der Betrag an die angegebene Adresse überwiesen";
 "swap.advanced_settings.deadline_minute" = "%@ Min";
 "swap.advanced_settings.recipient_address" = "Empfängeradresse";
+"swap.advanced_settings.recipient_domain" = "Empfänger-Domäne";
 "swap.advanced_settings.error.lower_slippage" = "Ihre Transaktion wird wahrscheinlich fehlschlagen.";
 "swap.advanced_settings.error.higher_slippage" = "Max. erlaubter Wert ist %@%%.";
 "swap.advanced_settings.error.invalid_address" = "Ungültige Adresse";
@@ -269,29 +278,32 @@
 "swap.confirmation.swap_button" = "Tauschen";
 "swap.confirmation.pay" = "%@ bezahlen";
 "swap.confirmation.get" = "%@ erhalten";
+"swap.confirmation.guaranteed" = "Garantiert";
+"swap.confirmation.maximum" = "Maximum";
+"swap.confirmation.estimated" = "Geschätzt";
 
 
-"swap.uniswap_info.title" = "Uniswap v.2";
-"swap.uniswap_info.description" = "Dieser Tauschdienst wird von Uniswap betrieben, einem dezentralisierten und auf der Ethereum Blockchain aufbauenden Token-Austauschprotokoll.\n\nUniswap ist vollständig automatisiert und wird durch intelligente Verträge verwaltet, die den zuverlässigen Austausch von Token ohne jegliche Betrugsmöglichkeit ermöglichen.";
-"swap.uniswap_info.link_button" = "Uniswap-Seite";
+"swap.dex_info.description" = "Dieser Tauschdienst wird von %@ betrieben, einem dezentralen Token-Tauschprotokoll, das auf der %@ Blockchain basiert.\n\n%@ ist vollständig automatisiert und wird von intelligenten Verträgen verwaltet, die den Token-Tausch in einer zuverlässigen Art und Weise ermöglichen, ohne dass Betrug betrieben werden kann.";
 
-"swap.uniswap_info.header_uniswap_related" = "Uniswap-bezogen";
-"swap.uniswap_info.header_allowance" = "Vergütung";
-"swap.uniswap_info.content_allowance" = "Der Betrag einer Währung, den Uniswap bei der Durchführung von Token-Tauschgeschäften in Ihrem Namen ausgeben kann. Bevor ein Tauschgeschäft durchgeführt werden kann, ist eine entsprechende Vergütung erforderlich.";
-"swap.uniswap_info.header_price_impact" = "Preisauswirkungen";
-"swap.uniswap_info.content_price_impact" = "Erwartete Preisabweichung von einem angezeigten Preis, steigt normalerweise mit dem Tauschbetrag.";
-"swap.uniswap_info.header_swap_fee" = "Tauschgebühr";
-"swap.uniswap_info.content_swap_fee" = "Eine Servicegebühr für die Tauschaktion auf der Uniswap-Plattform, angegeben in der Währung, die der Benutzer verkauft. Für die meisten Aufträge beträgt diese entweder 0,3 % oder 0,6 %.";
-"swap.uniswap_info.header_guaranteed_amount" = "Garantierter Betrag";
-"swap.uniswap_info.content_guaranteed_amount" = "Der Mindestbetrag, den ein Benutzer als Ergebnis einer Tauschaktion erhalten wird.";
-"swap.uniswap_info.header_maximum_spend" = "Maximale Ausgaben";
-"swap.uniswap_info.content_maximum_spend" = "Der Maximalbetrag, den ein Benutzer als Ergebnis einer Tauschaktion ausgeben wird.";
+"swap.dex_info.header_dex_related" = "%@ zugehörige";
+"swap.dex_info.header_allowance" = "Vergütung";
+"swap.dex_info.content_allowance" = "Der Betrag einer Währung, den der Dienst in Ihrem Namen ausgeben kann, wenn er Token-Täusche ausführt. Ein ausreichender Betrag ist erforderlich, bevor eine Tauschaktion stattfinden kann.";
+"swap.dex_info.header_price_impact" = "Preisauswirkungen";
+"swap.dex_info.content_price_impact" = "Erwartete Preisabweichung von einem angezeigten Preis, steigt typischerweise mit dem Tausch-Betrag.";
+"swap.dex_info.header_swap_fee" = "Swap-Gebühr";
+"swap.dex_info.content_swap_fee" = "Eine Servicegebühr für die Tauschaktion auf der Plattform, angegeben in der Währung, die der Benutzer verkauft. Für die meisten Aufträge beträgt diese entweder 0,3 % oder 0,6 %.";
+"swap.dex_info.header_guaranteed_amount" = "Garantierter Betrag";
+"swap.dex_info.content_guaranteed_amount" = "Der Mindestbetrag, den ein Benutzer als Ergebnis einer Tauschaktion erhalten wird.";
+"swap.dex_info.header_maximum_spend" = "Maximale Ausgaben";
+"swap.dex_info.content_maximum_spend" = "Der Maximalbetrag, den ein Benutzer als Ergebnis einer Tauschaktion ausgeben wird.";
 
-"swap.uniswap_info.header_other" = "Andere";
-"swap.uniswap_info.header_transaction_fee" = "Transaktionsgebühr";
-"swap.uniswap_info.content_transaction_fee" = "Die geschätzten Verarbeitungskosten der gegebenen Transaktion auf der Ethereum Blockchain. Uniswap-bezogene Transaktionen kosten normalerweise mehr als generische Token-Transfer-Transaktionen.";
-"swap.uniswap_info.header_transaction_speed" = "Transaktionsgeschwindigkeit";
-"swap.uniswap_info.content_transaction_speed" = "Transaktionen mit höheren Transaktionsgebühren führen zu schnelleren Bearbeitungsgeschwindigkeiten. Auch das Gegenteil ist der Fall.";
+"swap.dex_info.header_other" = "Andere";
+"swap.dex_info.header_transaction_fee" = "Transaktionsgebühr";
+"swap.dex_info.content_transaction_fee" = "Die geschätzten Verarbeitungskosten für die angegebene Transaktion auf der %@ Blockchain. Transaktionen, die sich auf %@ beziehen, kosten in der Regel mehr als allgemeine Token-Transaktionen.";
+"swap.dex_info.header_transaction_speed" = "Transaktionsgeschwindigkeit";
+"swap.dex_info.content_transaction_speed" = "Transaktionen mit höheren Transaktionsgebühren führen zu schnelleren Bearbeitungsgeschwindigkeiten. Auch das Gegenteil ist der Fall.";
+
+"swap.dex_info.link_button" = "%@ Seite";
 
 // Market
 
@@ -317,7 +329,6 @@
 
 "market.market_field.mcap" = "MCap";
 "market.market_field.vol" = "Vol";
-"market.market_field.price" = "Price";
 
 "market.sort_by" = "Sort By";
 "market.changes" = "Changes";
@@ -347,6 +358,7 @@
 "market_discovery.filter_title.prediction_markets" = "Prediction";
 "market_discovery.filter_title.yield_aggregators" = "Yield Aggregators";
 "market_discovery.filter_title.fiat_stablecoins" = "Fiat Stablecoins";
+"market_discovery.filter_title.rebase_tokens" = "Rebase Tokens";
 "market_discovery.filter_title.algo_stablecoins" = "Algo Stablecoins";
 "market_discovery.filter_title.tokenized_bitcoin" = "Tokenized Bitcoin";
 "market_discovery.filter_title.stablecoin_issuers" = "Stablecoin Issuers";
@@ -376,8 +388,9 @@
 "market_discovery.filter_description.prediction_markets" = "Markets to bet on events in the future.";
 "market_discovery.filter_description.yield_aggregators" = "Solutions for earning from idle crypto assets.";
 "market_discovery.filter_description.fiat_stablecoins" = "Crypto tokens pegged 1-1 to fiat currency.";
-"market_discovery.filter_description.algo_stablecoins" = "Stablecoins with algorithmic 1-1 price peg to fiat.";
-"market_discovery.filter_description.tokenized_bitcoin" = "Crypto tokens pegged 1-1 to Bitcoin price.";
+"market_discovery.filter_description.rebase_tokens" = "Tokens that periodically adjust supply to achieve a target price.";
+"market_discovery.filter_description.algo_stablecoins" = "Stablecoins with algorithmic 1–1 price peg to fiat.";
+"market_discovery.filter_description.tokenized_bitcoin" = "Crypto tokens pegged 1–1 to Bitcoin price.";
 "market_discovery.filter_description.stablecoin_issuers" = "Decentralized issuers of fiat pegged stablecoin tokens.";
 "market_discovery.filter_description.exchange_tokens" = "Tokens issued by centralized exchanges.";
 "market_discovery.filter_description.metals" = "Tokens pegged to metal prices.";
@@ -396,6 +409,67 @@
 "market_discovery.filter_description.computing" = "Decentralized on-demand computing solutions.";
 
 "market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favorites by clicking on star icon in the asset page";
+
+"market.search.title" = "Search";
+"market.search.empty_text" = "No results found";
+
+"market.advanced_search.title" = "Advanced Search";
+"market.advanced_search.show_results" = "Show Results";
+"market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
+"market.advanced_search.24h" = "24h";
+
+"market.advanced_search.choose_set" = "Choose Set";
+"market.advanced_search.market_cap" = "Market Cap";
+"market.advanced_search.volume" = "Trading Volume";
+"market.advanced_search.liquidity" = "DEX Liquidity";
+"market.advanced_search.price_period" = "Price Period";
+"market.advanced_search.price_change" = "Price Change";
+
+"market.advanced_search.top" = "Top %d";
+"market.advanced_search.reset_all" = "Reset";
+
+"market.advanced_search.any" = "Any";
+"market.advanced_search.less_5_m" = "< 5M";
+"market.advanced_search.m_5_m_10" = "5M - 20M";
+"market.advanced_search.m_20_m_100" = "20M - 100M";
+"market.advanced_search.m_100_b_1" = "100M - 1B";
+"market.advanced_search.b_1_b_5" = "1B - 5B";
+"market.advanced_search.more_5_b" = "> 5B";
+
+"market.advanced_search.day" = "1 Day";
+"market.advanced_search.week" = "1 Week";
+"market.advanced_search.week2" = "2 Weeks";
+"market.advanced_search.month" = "1 Monat";
+"market.advanced_search.month6" = "6 Months";
+"market.advanced_search.year" = "1 Year";
+
+// Coin Page
+
+"coin_page.roi.hour1" = "1 Hour";
+"coin_page.roi.hour24" = "1 Day";
+"coin_page.roi.day7" = "1 Week";
+"coin_page.roi.day14" = "2 Weeks";
+"coin_page.roi.day30" = "1 Month";
+"coin_page.roi.day200" = "6 Month";
+"coin_page.roi.year1" = "1 Year";
+
+"coin_page.market_cap" = "Market Cap";
+"coin_page.volume_24h" = "Volume (24h)";
+"coin_page.circulating_supply" = "In Circulation";
+"coin_page.total_supply" = "Total Supply";
+"coin_page.dilluted_market_cap" = "Diluted MCap";
+
+"coin_page.markets" = "%@ Markets";
+"coin_page.funds_invested" = "Funds Invested";
+
+"coin_page.category" = "Category";
+"coin_page.contract" = "%@ Contract";
+"coin_page.bep2_symbol" = "BEP2 Symbol";
+
+"coin_page.guide" = "Guide";
+"coin_page.website" = "Website";
+"coin_page.whitepaper" = "Whitepaper";
+
 // Transactions
 
 "transactions.title" = "Transaktionen";
@@ -413,13 +487,13 @@
 "tx_info.title" = "Transaktion";
 "tx_info.title_approval" = "Tausch-Genehmigung";
 "tx_info.status.pending" = "Anstehend";
-"tx_info.status.confirmed" = "Bestätigt";
+"tx_info.status.completed" = "Abgeschlossen";
 "tx_info.status.failed" = "Fehlgeschlagen";
 "tx_info.from_hash" = "Von";
 "tx_info.transaction_id" = "Transaktion ID";
 "tx_info.to_hash" = "An";
 "tx_info.input" = "Eingabe";
-"tx_info.button_explorer" = "View on %@";
+"tx_info.button_explorer" = "Auf %@ ansehen";
 "tx_info.rate" = "Historischer Rate";
 "tx_info.fee" = "Gebühr";
 "tx_info.to_self_note" = "Diese Transaktion wurde an die eigene Adresse gesendet";
@@ -646,11 +720,31 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "chart.start_date" = "Startdatum";
 "chart.website" = "Projekt-Webseite";
 "chart.error.not_available" = "Diagramm nicht verfügbar";
-"chart.selected.price" = "Preis";
 "chart.selected.volume" = "Lautstärke";
 "chart.trend_neutral" = "Neutral";
 "chart.trend_down" = "Down-Trend";
 "chart.trend_up" = "Up-Trend";
+"chart.rating_details" = "Rating Details";
+"chart.price_indicator_range.day" = "24h Range";
+"chart.price_indicator_range.year" = "52w Range";
+
+"chart.market.header" = "Market";
+"chart.market.market_cap" = "Market Cap";
+"chart.market.volume" = "Volume (24h)";
+"chart.market.circulation" = "In Circulation";
+"chart.market.total_supply" = "Total Supply";
+
+"chart.market.show_markets" = "%@ Markets";
+
+"chart.performance.header" = "Performance";
+"chart.performance.week_changes" = "Changes (1W)";
+"chart.performance.month_changes" = "Changes (1M)";
+
+"chart.about.header" = "About";
+"chart.about.read_more" = "Read More";
+"chart.about.read_less" = "Read Less";
+
+"coin_page.return_of_investments" = "ROI";
 
 // Create Wallet
 
@@ -685,15 +779,15 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 // Intro
 
-"intro.skip" = "Überspringen";
 "intro.next" = "Weiter";
+"intro.start" = "Start";
 "intro.brand.description" = "Krypto aufbewahren und handeln. Volle Kontrolle über die Vermögenswerte haben. Bleiben Sie anonym.";
 "intro.independence.title" = "Unabhängig sein";
 "intro.independence.description" = "Unstoppable wurde entwickelt, um sicherzustellen, dass Benutzer jederzeit und von überall her auf Finanzmittel zugreifen können.";
-"intro.knowledge.title" = "Klug investieren";
-"intro.knowledge.description" = "Unstoppable integriert unvergleichliche Handels-, Überwachungs- und Analyseinstrumente.";
 "intro.privacy.title" = "Privat bleiben";
 "intro.privacy.description" = "Benutzen Sie dieses Wallet, um inkognito zu bleiben und Ihre Informationen geheim halten zu können.";
+"intro.knowledge.title" = "Klug investieren";
+"intro.knowledge.description" = "Unstoppable integriert unvergleichliche Handels-, Überwachungs- und Analyseinstrumente.";
 
 // Guides
 
@@ -705,7 +799,8 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "add_token_selector.choose_blockchain" = "Blockchain auswählen";
 "add_token_selector.add_token" = "Token hinzufügen";
 "add_token_selector.erc20_token" = "ERC20 Token";
-"add_token_selector.binance_token" = "BEP2 Token";
+"add_token_selector.bep20_token" = "BEP20 Token";
+"add_token_selector.bep2_token" = "BEP2 Token";
 
 // Add Token
 
@@ -714,9 +809,12 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "add_token.decimals" = "Dezimalen";
 "add_token.already_exists" = "Dieser Token befindet sich bereits in der Coin-Verwaltungsliste.";
 
+"add_evm_token.contract_not_exist" = "Vertrag nicht gefunden";
+"add_evm_token.contract_address" = "Vertragsadresse";
+
 "add_erc20_token.title" = "ERC-20 hinzufügen";
-"add_erc20_token.contract_address" = "Vertragsadresse";
-"add_erc20_token.contract_not_exist" = "Vertrag nicht gefunden";
+
+"add_bep20_token.title" = "BEP20 hinzufügen";
 
 "add_bep2_token.title" = "BEP2 hinzufügen";
 "add_bep2_token.token_symbol" = "Tokensymbol";
@@ -736,8 +834,6 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 // Wallet Connect
 
 "wallet_connect.title" = "Wallet Connect";
-"wallet_connect.requirement" = "Anforderung";
-"wallet_connect.requirement.description" = "Um eine Verbindung mit dem Browser herzustellen, sollten Sie Ethereum oder ein beliebiges erc20-Token auf Ihrer Registerkarte Kontostand aktivieren";
 "wallet_connect.error.invalid_url" = "Ungültige URL-Adresse";
 "wallet_connect.url" = "URL";
 "wallet_connect.connect_description" = "Indem Sie auf \"Genehmigen\" klicken, erlauben Sie dieser App, Ihre öffentliche Adresse anzuzeigen. Dies ist ein wichtiger Sicherheitsschritt, um Ihre Daten vor potenziellen Phishing-Risiken zu schützen.";
@@ -745,7 +841,11 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "wallet_connect.button_disconnect" = "Verbindung trennen";
 "ethereum_transaction.error.insufficient_balance" = "Die Transaktion erfordert %@ zum Senden.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Das aktuelle ETH-Guthaben liegt unter dem für die Abwicklung dieser Transaktion erforderlichen Betrag einschließlich der Transaktionsgebühr.";
+"ethereum_transaction.error.reverted" = "Transaktion kann nicht ausgeführt werden: %@";
 "wallet_connect.request_title" = "Anforderung";
+
+"wallet_connect_list.title" = "Wallet Connect";
+"wallet_connect_list.new_connection" = "Neue Verbindung";
 
 // App Status
 
@@ -764,8 +864,8 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "status_info.title" = "Status";
 "status_info.pending.title" = "Anstehend";
 "status_info.pending.content" = "Transaktion wurde noch nicht auf der Blockchain bestätigt. Dieser Schritt kann von wenigen Minuten bis zu einigen Stunden dauern, je nach Transaktionsgebühr. Transaktionen, die mit einer sehr niedrigen Gebühr gesendet werden, werden in der Regel innerhalb weniger Tage bearbeitet oder können vom Netzwerk abgelehnt werden, d.h. es hat keine Transaktion gegeben.";
-"status_info.receiving.title" = "Empfangen";
-"status_info.receiving.content" = "Der Absender hat dir eine Transaktion geschickt, aber sie ist noch nicht endgültig. Bei größeren Zahlungen empfiehlt es sich zu warten, bis sich der Transaktionsstatus auf \"abgeschlossen\" ändert. Normalerweise sollte dies innerhalb einer Stunde geschehen, kann aber manchmal länger dauern, wenn der Absender die Transaktion mit einer geringen Gebühr verschickt.";
+"status_info.sending_receiving.title" = "Senden / Empfangen";
+"status_info.sending_receiving.content" = "Die Transaktion wurde in die Blockchain integriert, hat aber noch keine dauerhafte Endgültigkeit erreicht. Zu diesem Zeitpunkt kann die Transaktion für kleinere Zahlungen als abgeschlossen betrachtet werden. Bei größeren Zahlungen wird empfohlen, zu warten, bis der Status auf abgeschlossen wechselt.";
 "status_info.confirmed.title" = "Bestätigt";
 "status_info.confirmed.content" = "Die Transaktion ist endgültig und unumkehrbar.";
 "status_info.failed.title" = "Fehlgeschlagen";
@@ -779,3 +879,9 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "enable_coins.enabling" = "Aktivieren...";
 "enable_coins.enabled_coins" = "Aktivierte %@ Coins";
 "enable_coins.enabled_no_coins" = "Keine Coins mit Guthaben gefunden";
+
+// Onboarding
+
+"onboarding.balance.description" = "Sie haben noch keine Wallets. Ein neues erstellen oder ein vorhandenes wiederherstellen";
+"onboarding.balance.create" = "Erstellen";
+"onboarding.balance.restore" = "Wiederherstellen";
