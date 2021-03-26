@@ -38,7 +38,7 @@
 "offline" = "离线";
 "confirm" = "确认";
 "connect" = "连接";
-"price" = "价格";
+"price" = "Price";
 "note" = "备注";
 
 "version" = "版本%@";
@@ -699,15 +699,15 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 // Key Types
 
 "chart.title" = "%@ 价格";
-"chart.time_duration.today" = "今天";
+"chart.time_duration.today" = "TDY";
 "chart.time_duration.day" = "24小时";
-"chart.time_duration.week" = "7天";
-"chart.time_duration.week2" = "2周";
-"chart.time_duration.month" = "1个月";
-"chart.time_duration.month3" = "3个月";
-"chart.time_duration.halyear" = "6个月";
-"chart.time_duration.year" = "1年";
-"chart.time_duration.year2" = "2年";
+"chart.time_duration.week" = "7D";
+"chart.time_duration.week2" = "2W";
+"chart.time_duration.month" = "1M";
+"chart.time_duration.month3" = "3M";
+"chart.time_duration.halyear" = "6M";
+"chart.time_duration.year" = "1Y";
+"chart.time_duration.year2" = "2Y";
 
 "chart.market_cap" = "市场价值";
 "chart.market_cap.thousand" = "%@千";
