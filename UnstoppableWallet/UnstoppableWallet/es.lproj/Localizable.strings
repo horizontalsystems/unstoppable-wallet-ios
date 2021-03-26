@@ -38,7 +38,7 @@
 "offline" = "Desconectado";
 "confirm" = "Confirmar";
 "connect" = "Conectar";
-"price" = "Precio";
+"price" = "Price";
 "note" = "Nota";
 
 "version" = "Versión %@";
@@ -700,15 +700,15 @@ poner en peligro la seguridad de mis fondos.";
 // Key Types
 
 "chart.title" = "%@ Precio";
-"chart.time_duration.today" = "Hoy";
-"chart.time_duration.day" = "24 horas";
-"chart.time_duration.week" = "7 D";
+"chart.time_duration.today" = "TDY";
+"chart.time_duration.day" = "24H";
+"chart.time_duration.week" = "7D";
 "chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "1M";
 "chart.time_duration.month3" = "3M";
 "chart.time_duration.halyear" = "6M";
-"chart.time_duration.year" = "1A";
-"chart.time_duration.year2" = "2A";
+"chart.time_duration.year" = "1Y";
+"chart.time_duration.year2" = "2Y";
 
 "chart.market_cap" = "Cap. de Mercado";
 "chart.market_cap.thousand" = "%@ k";
