@@ -38,7 +38,7 @@
 "offline" = "Déconnecté";
 "confirm" = "Confirmer";
 "connect" = "Connecter";
-"price" = "Prix";
+"price" = "Price";
 "note" = "Remarque";
 
 "version" = "Version %@";
@@ -699,15 +699,15 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 // Key Types
 
 "chart.title" = "%@ Prix";
-"chart.time_duration.today" = "Aujourd'hui";
+"chart.time_duration.today" = "TDY";
 "chart.time_duration.day" = "24 h";
 "chart.time_duration.week" = "7J";
 "chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "1M";
 "chart.time_duration.month3" = "3M";
 "chart.time_duration.halyear" = "6M";
-"chart.time_duration.year" = "1A";
-"chart.time_duration.year2" = "2A";
+"chart.time_duration.year" = "1Y";
+"chart.time_duration.year2" = "2Y";
 
 "chart.market_cap" = "Market Cap";
 "chart.market_cap.thousand" = "%@ k";
