@@ -68,6 +68,8 @@ class OnboardingBalanceViewController: ThemeViewController {
 
     @objc func didTapCreate() {
         CreateWalletModule.start(mode: .present(viewController: self))
+//        let viewController = CreateAccountModule.viewController()
+//        present(viewController, animated: true)
     }
 
     @objc func didTapRestore() {
