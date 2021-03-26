@@ -38,7 +38,7 @@
 "offline" = "오프라인";
 "confirm" = "확인";
 "connect" = "연결";
-"price" = "금액";
+"price" = "Price";
 "note" = "참고";
 
 "version" = "버전 %@";
@@ -699,15 +699,15 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 // Key Types
 
 "chart.title" = "%@ 금액";
-"chart.time_duration.today" = "오늘";
-"chart.time_duration.day" = "24시";
-"chart.time_duration.week" = "일주일";
-"chart.time_duration.week2" = "2주";
-"chart.time_duration.month" = "한 달";
-"chart.time_duration.month3" = "3개월";
-"chart.time_duration.halyear" = "6개월";
-"chart.time_duration.year" = "1년";
-"chart.time_duration.year2" = "2년";
+"chart.time_duration.today" = "TDY";
+"chart.time_duration.day" = "24H";
+"chart.time_duration.week" = "7D";
+"chart.time_duration.week2" = "2W";
+"chart.time_duration.month" = "1M";
+"chart.time_duration.month3" = "3M";
+"chart.time_duration.halyear" = "6M";
+"chart.time_duration.year" = "1Y";
+"chart.time_duration.year2" = "2Y";
 
 "chart.market_cap" = "시가총액";
 "chart.market_cap.thousand" = "%@ 천";
