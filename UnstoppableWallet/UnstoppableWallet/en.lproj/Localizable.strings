@@ -755,6 +755,8 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 
 "create_wallet.title" = "New Wallet";
 "create_wallet.create_button" = "Create";
+"create_wallet.mnemonic" = "Mnemonic";
+"create_wallet.n_words" = "%@ words";
 
 // Select Coins
 
