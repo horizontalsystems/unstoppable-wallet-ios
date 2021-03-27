@@ -85,7 +85,7 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
             HudHelper.instance.showError(title: error)
         }
         subscribe(disposeBag, viewModel.proceedSignal) { [weak self] accountType in
-            // todo
+            self?.openSelectCoins(accountType: accountType)
         }
 
         showDefaultWords()
@@ -152,6 +152,11 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
         }
 
         viewModel.onChange(text: text, cursorOffset: text.count)
+    }
+
+    private func openSelectCoins(accountType: AccountType) {
+        let viewController = RestoreSelectModule.viewController(accountType: accountType)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
 }
