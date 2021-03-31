@@ -21,6 +21,7 @@
 "button.approve" = "Genehmigen";
 "button.reject" = "Verwerfen";
 "button.connect" = "Verbinden";
+"button.save" = "Save";
 
 "alert.copied" = "Kopiert";
 "alert.no_internet" = "Kein Internet";
@@ -64,11 +65,13 @@
 "restore.enter_key" = "Schlüssel Eingeben";
 "restore.item_title" = "%@ Wallet";
 "restore.words.description" = "Geben Sie Ihren Private Key für %@ Wallet ein, der aus %@ Wörtern besteht. Die Wörter müssen in der korrekten Reihenfolge eingegeben und durch Leerzeichen getrennt werden.";
+"restore.mnemonic.description" = "Enter your mnemonic which consists of 12 or 24 words. The words needs to be entered in correct order and separated by spaces.";
 "restore.birthday_height.placeholder" = "Wallet Geburtstagsgröße (freiwillig)";
 "restore.birthday_height.description" = "Dadurch wird festgelegt, an welcher Stelle mit dem Scannen nach Transaktionen begonnen werden soll. Lassen Sie das Feld leer, um von Anfang an zu scannen, dies dauert eine Weile.";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 "restore_error.words_count" = "Falsche Wortzahl. Muss %@sein. Sie eingegeben: %@";
+"restore_error.mnemonic_word_count" = "Wrong words count. Must be 12 or 24. You entered: %@";
 "restore.checksum_error" = "Ungültige Prüfsumme";
 
 // Coin Settings
@@ -750,6 +753,8 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 "create_wallet.title" = "Neues Wallet";
 "create_wallet.create_button" = "Erstellen";
+"create_wallet.mnemonic" = "Mnemonic";
+"create_wallet.n_words" = "%@ words";
 
 // Select Coins
 
@@ -885,3 +890,9 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "onboarding.balance.description" = "Sie haben noch keine Wallets. Ein neues erstellen oder ein vorhandenes wiederherstellen";
 "onboarding.balance.create" = "Erstellen";
 "onboarding.balance.restore" = "Wiederherstellen";
+
+// Manage Account
+
+"manage_account.show_recovery_phrase" = "Show Recovery Phrase";
+"manage_account.backup_recovery_phrase" = "Backup Recovery Phrase";
+"manage_account.unlink" = "Unlink";
