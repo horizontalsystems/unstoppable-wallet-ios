@@ -21,6 +21,7 @@
 "button.approve" = "Onayla";
 "button.reject" = "Reddet";
 "button.connect" = "Bağlan";
+"button.save" = "Save";
 
 "alert.copied" = "Kopyalandı";
 "alert.no_internet" = "Internet Bağlantısı Yok";
@@ -64,11 +65,13 @@
 "restore.enter_key" = "Anahtarı girin";
 "restore.item_title" = "%@ Cüzdanı";
 "restore.words.description" = "%@ cüzdanı için gizli anahtarı gir";
+"restore.mnemonic.description" = "Enter your mnemonic which consists of 12 or 24 words. The words needs to be entered in correct order and separated by spaces.";
 "restore.birthday_height.placeholder" = "Cüzdan oluşturulma günü üst sınırı (isteğe bağlı)";
 "restore.birthday_height.description" = "Bu, işlemler için taramaya nereden başlanacağını belirler. Biraz zaman alacak olan en baştan tarama için boş bırakınız.";
 "restore.placeholder.account_name" = "Hesap Adı";
 "restore.placeholder.private_key" = "Active Private key";
 "restore_error.words_count" = "Yanlış sözcük sayısı. %@ olmalıdır. Sizin girdiğiniz: %@";
+"restore_error.mnemonic_word_count" = "Wrong words count. Must be 12 or 24. You entered: %@";
 "restore.checksum_error" = "Geçersiz sağlama toplamı";
 
 // Coin Settings
@@ -750,6 +753,8 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 "create_wallet.title" = "Yeni Cüzdan";
 "create_wallet.create_button" = "Oluştur";
+"create_wallet.mnemonic" = "Mnemonic";
+"create_wallet.n_words" = "%@ words";
 
 // Select Coins
 
@@ -885,3 +890,9 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "onboarding.balance.description" = "Henüz cüzdanınız yok. Yeni oluşturun veya mevcut olanı geri yükleyin";
 "onboarding.balance.create" = "Oluştur";
 "onboarding.balance.restore" = "Geri Yükle";
+
+// Manage Account
+
+"manage_account.show_recovery_phrase" = "Show Recovery Phrase";
+"manage_account.backup_recovery_phrase" = "Backup Recovery Phrase";
+"manage_account.unlink" = "Unlink";
