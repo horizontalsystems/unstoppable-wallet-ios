@@ -21,6 +21,7 @@
 "button.approve" = "批准";
 "button.reject" = "拒绝";
 "button.connect" = "连接";
+"button.save" = "Save";
 
 "alert.copied" = "已复制";
 "alert.no_internet" = "没有网络";
@@ -64,11 +65,13 @@
 "restore.enter_key" = "输入密钥";
 "restore.item_title" = "%@钱包";
 "restore.words.description" = "为%@钱包输入私钥，其中应包含%@个单词。这些单词必须以正确的顺序输入并用空格分隔。";
+"restore.mnemonic.description" = "Enter your mnemonic which consists of 12 or 24 words. The words needs to be entered in correct order and separated by spaces.";
 "restore.birthday_height.placeholder" = "钱包生日高度 (自主性)";
 "restore.birthday_height.description" = "这将决定从哪里开始对交易进行扫描。留空即可从开始时进行扫描，这需要一定的时间。";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 "restore_error.words_count" = "字数有误。必须为%@。您输入了：%@";
+"restore_error.mnemonic_word_count" = "Wrong words count. Must be 12 or 24. You entered: %@";
 "restore.checksum_error" = "校验和无效";
 
 // Coin Settings
@@ -750,6 +753,8 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "create_wallet.title" = "新钱包";
 "create_wallet.create_button" = "创建";
+"create_wallet.mnemonic" = "Mnemonic";
+"create_wallet.n_words" = "%@ words";
 
 // Select Coins
 
@@ -885,3 +890,9 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "onboarding.balance.description" = "您还没有任何钱包。创建新钱包或恢复已有钱包";
 "onboarding.balance.create" = "创建";
 "onboarding.balance.restore" = "恢复";
+
+// Manage Account
+
+"manage_account.show_recovery_phrase" = "Show Recovery Phrase";
+"manage_account.backup_recovery_phrase" = "Backup Recovery Phrase";
+"manage_account.unlink" = "Unlink";
