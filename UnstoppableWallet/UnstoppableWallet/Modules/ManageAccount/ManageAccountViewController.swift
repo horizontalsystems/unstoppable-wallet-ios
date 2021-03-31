@@ -73,6 +73,7 @@ class ManageAccountViewController: ThemeViewController {
             self?.keyActionState = $0
             self?.reloadTable()
         }
+        subscribe(disposeBag, viewModel.openUnlinkSignal) { [weak self] in self?.openUnlink(account: $0) }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.navigationController?.popViewController(animated: true) }
 
         tableView.buildSections()
@@ -97,8 +98,12 @@ class ManageAccountViewController: ThemeViewController {
     }
 
     private func onTapUnlink() {
-//        let viewController = UnlinkRouter.module(account: account, predefinedAccountType: predefinedAccountType)
-//        present(viewController, animated: true)
+        viewModel.onTapUnlink()
+    }
+
+    private func openUnlink(account: Account) {
+        let viewController = UnlinkModule.viewController(account: account)
+        present(viewController, animated: true)
     }
 
     private func syncTable() {
@@ -107,7 +112,7 @@ class ManageAccountViewController: ThemeViewController {
     }
 
     private func reloadTable() {
-        guard !isLoaded else {
+        guard isLoaded else {
             return
         }
 

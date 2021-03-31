@@ -1,41 +1,13 @@
-protocol IUnlinkView: class {
-    func set(accountTypeTitle: String)
-    func set(viewItems: [UnlinkModule.ViewItem])
-    func set(deleteButtonEnabled: Bool)
-    func showSuccess()
-}
+import UIKit
 
-protocol IUnlinkViewDelegate {
-    func onLoad()
-    func onTapViewItem(index: Int)
-    func onTapDelete()
-    func onTapClose()
-}
+struct UnlinkModule {
 
-protocol IUnlinkInteractor {
-    func delete(account: Account)
-}
+    static func viewController(account: Account) -> UIViewController {
+        let service = UnlinkService(account: account, accountManager: App.shared.accountManager)
+        let viewModel = UnlinkViewModel(service: service)
+        let viewController = UnlinkViewController(viewModel: viewModel)
 
-protocol IUnlinkRouter {
-    func close()
-}
-
-class UnlinkModule {
-
-    struct ViewItem {
-        let type: ItemType
-        var checked: Bool
-
-        init(type: ItemType) {
-            self.type = type
-            checked = false
-        }
-    }
-
-    enum ItemType {
-        case deleteAccount(accountTypeTitle: String)
-        case disableCoins(coinCodes: String)
-        case loseAccess
+        return viewController.toBottomSheet
     }
 
 }

@@ -104,7 +104,7 @@ extension ManageAccountsViewControllerNew: SectionsDataSource {
     private func row(viewItem: ManageAccountsViewModelNew.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         Row<G19Cell>(
                 id: viewItem.accountId,
-                hash: "\(viewItem.title)-\(viewItem.selected)-\(viewItem.alert)",
+                hash: "\(viewItem.title)-\(viewItem.selected)-\(viewItem.alert)-\(isFirst)-\(isLast)",
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
                 bind: { [weak self] cell, _ in

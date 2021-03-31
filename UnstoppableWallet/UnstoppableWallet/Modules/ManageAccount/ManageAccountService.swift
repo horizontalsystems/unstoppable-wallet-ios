@@ -19,6 +19,8 @@ class ManageAccountService {
         }
     }
 
+    private let accountDeletedRelay = PublishRelay<()>()
+
     private var newName: String
 
     init?(accountId: String, accountManager: IAccountManager) {
@@ -46,6 +48,7 @@ class ManageAccountService {
 
     private func handleUpdated(accounts: [Account]) {
         guard let account = accounts.first(where: { $0 == account }) else {
+            accountDeletedRelay.accept(())
             return
         }
 
@@ -62,6 +65,10 @@ extension ManageAccountService {
 
     var accountObservable: Observable<Account> {
         accountRelay.asObservable()
+    }
+
+    var accountDeletedObservable: Observable<()> {
+        accountDeletedRelay.asObservable()
     }
 
     func set(name: String) {
