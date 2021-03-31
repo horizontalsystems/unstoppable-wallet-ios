@@ -21,6 +21,7 @@
 "button.approve" = "Разрешить";
 "button.reject" = "Отклонить";
 "button.connect" = "Подключиться";
+"button.save" = "Save";
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет Интернета";
@@ -66,11 +67,13 @@
 "restore.enter_key" = "Введите Ключ";
 "restore.item_title" = "%@ Кошелек";
 "restore.words.description" = "Введите приватный ключ для кошелька %@, который состоит из %@ слов. Слова нужно ввести в правильном порядке и использовать пробелы между ними.";
+"restore.mnemonic.description" = "Enter your mnemonic which consists of 12 or 24 words. The words needs to be entered in correct order and separated by spaces.";
 "restore.birthday_height.placeholder" = "Блок Создания (опционально)";
 "restore.birthday_height.description" = "Это определяет, где начать сканирование транзакций. Оставьте поле пустым, чтобы сканировать с самого начала, что займет некоторое время.";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 "restore_error.words_count" = "Неправильное количество слов. Должно быть: %@. Вы указали: %@";
+"restore_error.mnemonic_word_count" = "Wrong words count. Must be 12 or 24. You entered: %@";
 "restore.checksum_error" = "Неверная контрольная сумма";
 
 // Coin Settings
@@ -752,6 +755,8 @@
 
 "create_wallet.title" = "Создать Кошелек";
 "create_wallet.create_button" = "Создать";
+"create_wallet.mnemonic" = "Mnemonic";
+"create_wallet.n_words" = "%@ words";
 
 // Select Coins
 
@@ -887,3 +892,9 @@
 "onboarding.balance.description" = "У вас пока нет кошельков. Создайте новый или восстановите существующий";
 "onboarding.balance.create" = "Создать";
 "onboarding.balance.restore" = "Восстановить";
+
+// Manage Account
+
+"manage_account.show_recovery_phrase" = "Show Recovery Phrase";
+"manage_account.backup_recovery_phrase" = "Backup Recovery Phrase";
+"manage_account.unlink" = "Unlink";
