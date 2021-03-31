@@ -1,6 +1,6 @@
 class Account {
     let id: String
-    let name: String
+    var name: String
     let type: AccountType
     let origin: AccountOrigin
     var backedUp: Bool

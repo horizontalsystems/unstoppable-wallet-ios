@@ -17,12 +17,14 @@ class ManageAccountsViewModelNew {
     }
 
     private func sync(accounts: [Account]) {
-        viewItemsRelay.accept(accounts.map { viewItem(account: $0) })
+        let sortedAccounts = accounts.sorted { $0.name < $1.name }
+        let viewItems = sortedAccounts.map { viewItem(account: $0) }
+        viewItemsRelay.accept(viewItems)
     }
 
     private func viewItem(account: Account) -> ViewItem {
         ViewItem(
-                id: account.id,
+                accountId: account.id,
                 title: account.name,
                 subtitle: description(accountType: account.type),
                 selected: false,
@@ -48,12 +50,8 @@ extension ManageAccountsViewModelNew {
         viewItemsRelay.asDriver()
     }
 
-    func onSelect(index: Int) {
-        print("Select \(index)")
-    }
-
-    func onEdit(index: Int) {
-        print("Edit \(index)")
+    func onSelect(accountId: String) {
+        print("Select \(accountId)")
     }
 
 }
@@ -61,7 +59,7 @@ extension ManageAccountsViewModelNew {
 extension ManageAccountsViewModelNew {
 
     struct ViewItem {
-        let id: String
+        let accountId: String
         let title: String
         let subtitle: String
         let selected: Bool

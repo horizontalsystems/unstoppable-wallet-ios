@@ -38,6 +38,10 @@ extension AccountManager: IAccountManager {
         }
     }
 
+    func account(id: String) -> Account? {
+        accounts.first { $0.id == id }
+    }
+
     var accountsObservable: Observable<[Account]> {
         accountsSubject.asObservable()
     }

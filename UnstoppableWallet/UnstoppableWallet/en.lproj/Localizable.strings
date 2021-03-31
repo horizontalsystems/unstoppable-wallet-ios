@@ -21,6 +21,7 @@
 "button.approve" = "Approve";
 "button.reject" = "Reject";
 "button.connect" = "Connect";
+"button.save" = "Save";
 
 "alert.copied" = "Copied";
 "alert.no_internet" = "No Internet";
@@ -894,3 +895,9 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "onboarding.balance.description" = "You don't have any wallets yet. Create new or restore existing";
 "onboarding.balance.create" = "Create";
 "onboarding.balance.restore" = "Restore";
+
+// Manage Account
+
+"manage_account.show_recovery_phrase" = "Show Recovery Phrase";
+"manage_account.backup_recovery_phrase" = "Backup Recovery Phrase";
+"manage_account.unlink" = "Unlink";

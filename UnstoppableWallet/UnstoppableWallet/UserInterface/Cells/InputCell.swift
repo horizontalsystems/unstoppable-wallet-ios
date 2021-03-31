@@ -40,6 +40,11 @@ extension InputCell {
         set { anInputView.keyboardType = newValue }
     }
 
+    var autocapitalizationType: UITextAutocapitalizationType {
+        get { anInputView.autocapitalizationType }
+        set { anInputView.autocapitalizationType = newValue }
+    }
+
     func set(cautionType: CautionType?) {
         anInputView.set(cautionType: cautionType)
     }

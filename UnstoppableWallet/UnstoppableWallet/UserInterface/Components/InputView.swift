@@ -78,6 +78,11 @@ extension InputView {
         set { inputStackView.keyboardType = newValue }
     }
 
+    var autocapitalizationType: UITextAutocapitalizationType {
+        get { inputStackView.autocapitalizationType }
+        set { inputStackView.autocapitalizationType = newValue }
+    }
+
     func set(cautionType: CautionType?) {
         formValidatedView.set(cautionType: cautionType)
     }

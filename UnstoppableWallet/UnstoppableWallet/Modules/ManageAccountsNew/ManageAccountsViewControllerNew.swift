@@ -76,6 +76,14 @@ class ManageAccountsViewControllerNew: ThemeViewController {
         present(viewController, animated: true)
     }
 
+    private func onTapEdit(accountId: String) {
+        guard let viewController = ManageAccountModule.viewController(accountId: accountId) else {
+            return
+        }
+
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+
     private func sync(viewItems: [ManageAccountsViewModelNew.ViewItem]) {
         self.viewItems = viewItems
         reloadTable()
@@ -86,7 +94,7 @@ class ManageAccountsViewControllerNew: ThemeViewController {
             return
         }
 
-        tableView.reload(animated: true)
+        tableView.reload()
     }
 
 }
@@ -95,7 +103,7 @@ extension ManageAccountsViewControllerNew: SectionsDataSource {
 
     private func row(viewItem: ManageAccountsViewModelNew.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         Row<G19Cell>(
-                id: viewItem.id,
+                id: viewItem.accountId,
                 hash: "\(viewItem.title)-\(viewItem.selected)-\(viewItem.alert)",
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
@@ -107,11 +115,11 @@ extension ManageAccountsViewControllerNew: SectionsDataSource {
                     cell.valueImage = viewItem.alert ? UIImage(named: "warning_2_20")?.tinted(with: .themeLucian) : nil
                     cell.valueButtonImage = UIImage(named: "edit_20")
                     cell.onTapValue = { [weak self] in
-                        self?.viewModel.onEdit(index: index)
+                        self?.onTapEdit(accountId: viewItem.accountId)
                     }
                 },
                 action: { [weak self] _ in
-                    self?.viewModel.onSelect(index: index)
+                    self?.viewModel.onSelect(accountId: viewItem.accountId)
                 }
         )
     }
