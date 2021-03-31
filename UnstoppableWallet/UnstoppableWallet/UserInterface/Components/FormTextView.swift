@@ -112,6 +112,11 @@ extension FormTextView {
         set { textView.keyboardType = newValue }
     }
 
+    var autocapitalizationType: UITextAutocapitalizationType {
+        get { textView.autocapitalizationType }
+        set { textView.autocapitalizationType = newValue }
+    }
+
     var textViewInset: UIEdgeInsets {
         get {
             textView.textContainerInset

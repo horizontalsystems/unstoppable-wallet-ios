@@ -179,6 +179,7 @@ protocol IAuthManager {
 protocol IAccountManager {
     var accounts: [Account] { get }
     func account(coinType: CoinType) -> Account?
+    func account(id: String) -> Account?
 
     var accountsObservable: Observable<[Account]> { get }
     var deleteAccountObservable: Observable<Account> { get }
