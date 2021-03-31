@@ -15,7 +15,7 @@ class App {
     let appConfigProvider: IAppConfigProvider
 
     let localStorage: ILocalStorage & IChartTypeStorage
-    let storage: ICoinMigration & IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage
+    let storage: ICoinMigration & IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage & IActiveAccountStorage
 
     let themeManager: ThemeManager
     let systemInfoManager: ISystemInfoManager
@@ -116,7 +116,7 @@ class App {
         wordsManager = WordsManager()
 
         let accountStorage: IAccountStorage = AccountStorage(secureStorage: keychainKit.secureStorage, storage: storage)
-        accountManager = AccountManager(storage: accountStorage)
+        accountManager = AccountManager(storage: accountStorage, activeAccountStorage: storage)
         backupManager = BackupManager(accountManager: accountManager)
 
         kitCleaner = KitCleaner(accountManager: accountManager)

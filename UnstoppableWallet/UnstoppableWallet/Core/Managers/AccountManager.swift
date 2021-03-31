@@ -4,14 +4,17 @@ import CoinKit
 
 class AccountManager {
     private let storage: IAccountStorage
+    private let activeAccountStorage: IActiveAccountStorage
     private let cache: AccountsCache = AccountsCache()
 
+    private let activeAccountRelay = PublishRelay<Account?>()
     private let accountsSubject = PublishSubject<[Account]>()
     private let deleteAccountSubject = PublishSubject<Account>()
     private let lostAccountsRelay = BehaviorRelay<Bool>(value: false)
 
-    init(storage: IAccountStorage) {
+    init(storage: IAccountStorage, activeAccountStorage: IActiveAccountStorage) {
         self.storage = storage
+        self.activeAccountStorage = activeAccountStorage
     }
 
     private func clearAccounts(ids: [String]) {
@@ -28,6 +31,20 @@ class AccountManager {
 
 extension AccountManager: IAccountManager {
 
+    var activeAccount: Account? {
+        cache.activeAccount
+    }
+
+    func set(activeAccountId: String?) {
+        guard cache.activeAccount?.id != activeAccountId else {
+            return
+        }
+
+        activeAccountStorage.activeAccountId = activeAccountId
+        cache.set(activeAccountId: activeAccountId)
+        activeAccountRelay.accept(activeAccount)
+    }
+
     var accounts: [Account] {
         cache.accounts
     }
@@ -40,6 +57,10 @@ extension AccountManager: IAccountManager {
 
     func account(id: String) -> Account? {
         accounts.first { $0.id == id }
+    }
+
+    var activeAccountObservable: Observable<Account?> {
+        activeAccountRelay.asObservable()
     }
 
     var accountsObservable: Observable<[Account]> {
@@ -56,6 +77,7 @@ extension AccountManager: IAccountManager {
 
     func preloadAccounts() {
         cache.set(accounts: storage.allAccounts)
+        cache.set(activeAccountId: activeAccountStorage.activeAccountId)
     }
 
     func update(account: Account) {
@@ -70,6 +92,10 @@ extension AccountManager: IAccountManager {
         cache.insert(account: account)
 
         accountsSubject.onNext(accounts)
+
+        if accounts.count == 1 {
+            set(activeAccountId: accounts.first?.id)
+        }
     }
 
     func delete(account: Account) {
@@ -78,6 +104,10 @@ extension AccountManager: IAccountManager {
 
         accountsSubject.onNext(accounts)
         deleteAccountSubject.onNext(account)
+
+        if account == activeAccount {
+            set(activeAccountId: accounts.first?.id)
+        }
     }
 
     func clear() {
@@ -85,6 +115,7 @@ extension AccountManager: IAccountManager {
         cache.set(accounts: [])
 
         accountsSubject.onNext(accounts)
+        set(activeAccountId: nil)
     }
 
     func handleLaunch() {
@@ -122,6 +153,7 @@ extension AccountManager {
 
     private class AccountsCache {
         private var array = [Account]()
+        var activeAccount: Account?
 
         var accounts: [Account] {
             array
@@ -143,6 +175,14 @@ extension AccountManager {
 
         func remove(account: Account) {
             array.removeAll { $0 == account }
+        }
+
+        func set(activeAccountId: String?) {
+            if let id = activeAccountId {
+                activeAccount = array.first { $0.id == activeAccountId }
+            } else {
+                activeAccount = nil
+            }
         }
     }
 
