@@ -421,6 +421,15 @@ class GrdbStorage {
             }
         }
 
+        migrator.registerMigration("createActiveAccount") { db in
+            try db.create(table: ActiveAccount.databaseTableName) { t in
+                t.column(ActiveAccount.Columns.uniqueId.name, .text).notNull()
+                t.column(ActiveAccount.Columns.accountId.name, .text).notNull()
+
+                t.primaryKey([ActiveAccount.Columns.uniqueId.name], onConflict: .replace)
+            }
+        }
+
         return migrator
     }
 
@@ -663,6 +672,27 @@ extension GrdbStorage: IWalletConnectSessionStorage {
     func deleteSession(accountId: String) {
         _ = try! dbPool.write { db in
             try WalletConnectSession.filter(WalletConnectSession.Columns.accountId == accountId).deleteAll(db)
+        }
+    }
+
+}
+
+extension GrdbStorage: IActiveAccountStorage {
+
+    var activeAccountId: String? {
+        get {
+            try! dbPool.read { db in
+                try ActiveAccount.fetchOne(db)?.accountId
+            }
+        }
+        set {
+            _ = try! dbPool.write { db in
+                if let accountId = newValue {
+                    try ActiveAccount(accountId: accountId).insert(db)
+                } else {
+                    try ActiveAccount.deleteAll(db)
+                }
+            }
         }
     }
 

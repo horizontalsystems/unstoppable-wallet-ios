@@ -94,7 +94,7 @@ class ManageAccountsViewControllerNew: ThemeViewController {
             return
         }
 
-        tableView.reload()
+        tableView.reload(animated: true)
     }
 
 }
@@ -125,50 +125,40 @@ extension ManageAccountsViewControllerNew: SectionsDataSource {
     }
 
     func buildSections() -> [SectionProtocol] {
-        var sections = [SectionProtocol]()
-
-        if !viewItems.isEmpty {
-            let viewItemsSection = Section(
+        [
+            Section(
                     id: "view-items",
                     headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin32),
+                    footerState: .margin(height: viewItems.isEmpty ? 0 : .margin32),
                     rows: viewItems.enumerated().map { index, viewItem in
                         row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewItems.count - 1)
                     }
+            ),
+            Section(
+                    id: "actions",
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        StaticRow(
+                                cell: createCell,
+                                id: "create",
+                                height: .heightCell48,
+                                autoDeselect: true,
+                                action: { [weak self] in
+                                    self?.onTapCreate()
+                                }
+                        ),
+                        StaticRow(
+                                cell: restoreCell,
+                                id: "restore",
+                                height: .heightCell48,
+                                autoDeselect: true,
+                                action: { [weak self] in
+                                    self?.onTapRestore()
+                                }
+                        )
+                    ]
             )
-
-            sections.append(viewItemsSection)
-        }
-
-        let actionsSection = Section(
-                id: "actions",
-                headerState: .margin(height: viewItems.isEmpty ? .margin12 : 0),
-                footerState: .margin(height: .margin32),
-                rows: [
-                    StaticRow(
-                            cell: createCell,
-                            id: "create",
-                            height: .heightCell48,
-                            autoDeselect: true,
-                            action: { [weak self] in
-                                self?.onTapCreate()
-                            }
-                    ),
-                    StaticRow(
-                            cell: restoreCell,
-                            id: "restore",
-                            height: .heightCell48,
-                            autoDeselect: true,
-                            action: { [weak self] in
-                                self?.onTapRestore()
-                            }
-                    )
-                ]
-        )
-
-        sections.append(actionsSection)
-
-        return sections
+        ]
     }
 
 }

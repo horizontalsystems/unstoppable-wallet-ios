@@ -11,24 +11,24 @@ class ManageAccountsViewModelNew {
     init(service: ManageAccountsServiceNew) {
         self.service = service
 
-        subscribe(disposeBag, service.accountsObservable) { [weak self] in self?.sync(accounts: $0) }
+        subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
 
-        sync(accounts: service.accounts)
+        sync(items: service.items)
     }
 
-    private func sync(accounts: [Account]) {
-        let sortedAccounts = accounts.sorted { $0.name < $1.name }
-        let viewItems = sortedAccounts.map { viewItem(account: $0) }
+    private func sync(items: [ManageAccountsServiceNew.Item]) {
+        let sortedItems = items.sorted { $0.account.name < $1.account.name }
+        let viewItems = items.map { viewItem(item: $0) }
         viewItemsRelay.accept(viewItems)
     }
 
-    private func viewItem(account: Account) -> ViewItem {
+    private func viewItem(item: ManageAccountsServiceNew.Item) -> ViewItem {
         ViewItem(
-                accountId: account.id,
-                title: account.name,
-                subtitle: description(accountType: account.type),
-                selected: false,
-                alert: !account.backedUp
+                accountId: item.account.id,
+                title: item.account.name,
+                subtitle: description(accountType: item.account.type),
+                selected: item.isActive,
+                alert: !item.account.backedUp
         )
     }
 
@@ -51,7 +51,7 @@ extension ManageAccountsViewModelNew {
     }
 
     func onSelect(accountId: String) {
-        print("Select \(accountId)")
+        service.set(activeAccountId: accountId)
     }
 
 }

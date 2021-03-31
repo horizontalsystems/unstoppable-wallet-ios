@@ -177,10 +177,14 @@ protocol IAuthManager {
 }
 
 protocol IAccountManager {
+    var activeAccount: Account? { get }
+    func set(activeAccountId: String?)
+
     var accounts: [Account] { get }
     func account(coinType: CoinType) -> Account?
     func account(id: String) -> Account?
 
+    var activeAccountObservable: Observable<Account?> { get }
     var accountsObservable: Observable<[Account]> { get }
     var deleteAccountObservable: Observable<Account> { get }
     var lostAccountsObservable: Observable<Bool> { get }
@@ -317,6 +321,10 @@ protocol IAccountStorage {
     func delete(account: Account)
     func delete(accountId: String)
     func clear()
+}
+
+protocol IActiveAccountStorage: AnyObject {
+    var activeAccountId: String? { get set }
 }
 
 protocol IPriceAlertStorage {
