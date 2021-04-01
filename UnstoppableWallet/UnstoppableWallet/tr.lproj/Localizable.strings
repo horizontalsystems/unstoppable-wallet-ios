@@ -100,6 +100,12 @@
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "Adres Formatı";
 
+// Show Key
+
+"show_key.title" = "Key";
+"show_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.";
+"show_key.button_show" = "Show";
+
 // Backup
 
 "backup.close" = "Kapat";
@@ -646,8 +652,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "settings_manage_keys.settings" = "Adres Formatı";
 "settings_manage_keys.delete.cant_delete" = "Bu cüzdanın özel anahtarını, bu telefondan silinmeden önce yedeklemeniz gerekir.";
 "settings_manage_keys.delete.title" = "Cüzdanı Sil";
-"settings_manage_keys.delete.confirmation_remove" = "Bu işlem %@ Cüzdanını bu cihazdan kaldıracak.";
-"settings_manage_keys.delete.confirmation_disable" = "Etkisizleştirilecek cüzdanlar: %@";
+"settings_manage_keys.delete.confirmation_remove" = "The action will delete this wallet from device.";
 "settings_manage_keys.delete.confirmation_loose" = "Bu cüzdanın özel anahtarını yedeklemediyseniz, fonlarınıza erişiminizi kaybedersiniz.";
 
 // Settings -> About App
