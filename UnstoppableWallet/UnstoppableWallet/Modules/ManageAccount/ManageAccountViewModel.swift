@@ -8,6 +8,8 @@ class ManageAccountViewModel {
 
     private let keyActionStateRelay = BehaviorRelay<KeyActionState>(value: .showRecoveryPhrase)
     private let saveEnabledRelay = BehaviorRelay<Bool>(value: false)
+    private let openShowKeyRelay = PublishRelay<Account>()
+    private let openBackupKeyRelay = PublishRelay<Account>()
     private let openUnlinkRelay = PublishRelay<Account>()
     private let openBackupRequiredRelay = PublishRelay<Account>()
     private let finishRelay = PublishRelay<()>()
@@ -46,6 +48,14 @@ extension ManageAccountViewModel {
         keyActionStateRelay.asDriver()
     }
 
+    var openShowKeySignal: Signal<Account> {
+        openShowKeyRelay.asSignal()
+    }
+
+    var openBackupKeySignal: Signal<Account> {
+        openBackupKeyRelay.asSignal()
+    }
+
     var openUnlinkSignal: Signal<Account> {
         openUnlinkRelay.asSignal()
     }
@@ -73,6 +83,14 @@ extension ManageAccountViewModel {
     func onSave() {
         service.saveAccount()
         finishRelay.accept(())
+    }
+
+    func onTapShowKey() {
+        openShowKeyRelay.accept(service.account)
+    }
+
+    func onTapBackupKey() {
+        openBackupKeyRelay.accept(service.account)
     }
 
     func onTapUnlink() {

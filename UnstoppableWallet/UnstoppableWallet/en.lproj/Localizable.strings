@@ -105,6 +105,12 @@ bch.horizontalsystems.xyz/apg";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "Address Format";
 
+// Show Key
+
+"show_key.title" = "Key";
+"show_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.";
+"show_key.button_show" = "Show";
+
 // Backup
 
 "backup.close" = "Close";
