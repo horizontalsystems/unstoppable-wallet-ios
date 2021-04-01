@@ -100,6 +100,12 @@
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "Formato de Dirección";
 
+// Show Key
+
+"show_key.title" = "Key";
+"show_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.";
+"show_key.button_show" = "Show";
+
 // Backup
 
 "backup.close" = "Cerrar";
@@ -647,8 +653,7 @@ poner en peligro la seguridad de mis fondos.";
 "settings_manage_keys.settings" = "Formato de Dirección";
 "settings_manage_keys.delete.cant_delete" = "Necesita respaldar esta clave privada antes de que pueda eliminarla de este teléfono.";
 "settings_manage_keys.delete.title" = "Eliminar Monedero";
-"settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará los monederos %@ de este dispositivo.";
-"settings_manage_keys.delete.confirmation_disable" = "Monedas que serán deshabilitadas: %@";
+"settings_manage_keys.delete.confirmation_remove" = "The action will delete this wallet from device.";
 "settings_manage_keys.delete.confirmation_loose" = "Si usted no respaldó la clave privada para este monedero, perderá el acceso a sus fondos.";
 
 // Settings -> About App
