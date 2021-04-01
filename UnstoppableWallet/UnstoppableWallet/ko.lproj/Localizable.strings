@@ -106,6 +106,16 @@
 "show_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.";
 "show_key.button_show" = "Show";
 
+// Backup Key
+
+"backup_key.title" = "Backup";
+"backup_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.";
+"backup_key.button_show" = "Show";
+"backup_key.button_backup" = "Backup";
+
+"backup_key.confirmation.description" = "Enter the recovery phrases in correct order to confirm";
+"backup_key.confirmation.empty_or_invalid_words" = "Entered words are empty or invalid";
+
 // Backup
 
 "backup.close" = "가까운, 닫힌";
