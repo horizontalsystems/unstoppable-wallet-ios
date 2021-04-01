@@ -73,6 +73,8 @@ class ManageAccountViewController: ThemeViewController {
             self?.keyActionState = $0
             self?.reloadTable()
         }
+        subscribe(disposeBag, viewModel.openShowKeySignal) { [weak self] in self?.openShowKey(account: $0) }
+        subscribe(disposeBag, viewModel.openBackupKeySignal) { [weak self] in self?.openBackupKey(account: $0) }
         subscribe(disposeBag, viewModel.openUnlinkSignal) { [weak self] in self?.openUnlink(account: $0) }
         subscribe(disposeBag, viewModel.openBackupRequiredSignal) { [weak self] in self?.openBackupRequired(account: $0) }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.navigationController?.popViewController(animated: true) }
@@ -90,12 +92,15 @@ class ManageAccountViewController: ThemeViewController {
         viewModel.onSave()
     }
 
-    private func onTapShowRecoveryPhrase() {
-//        let viewController = CreateAccountModule.viewController()
-//        present(viewController, animated: true)
+    private func openShowKey(account: Account) {
+        guard let viewController = ShowKeyModule.viewController(account: account) else {
+            return
+        }
+
+        present(viewController, animated: true)
     }
 
-    private func onTapBackupRecoveryPhrase() {
+    private func openBackupKey(account: Account) {
     }
 
     private func onTapUnlink() {
@@ -147,8 +152,9 @@ extension ManageAccountViewController: SectionsDataSource {
                     cell: showRecoveryPhraseCell,
                     id: "show-recovery-phrase",
                     height: .heightCell48,
+                    autoDeselect: true,
                     action: { [weak self] in
-                        self?.onTapShowRecoveryPhrase()
+                        self?.viewModel.onTapShowKey()
                     }
             )
         case .backupRecoveryPhrase:
@@ -156,8 +162,9 @@ extension ManageAccountViewController: SectionsDataSource {
                     cell: backupRecoveryPhraseCell,
                     id: "backup-recovery-phrase",
                     height: .heightCell48,
+                    autoDeselect: true,
                     action: { [weak self] in
-                        self?.onTapBackupRecoveryPhrase()
+                        self?.viewModel.onTapBackupKey()
                     }
             )
         }
