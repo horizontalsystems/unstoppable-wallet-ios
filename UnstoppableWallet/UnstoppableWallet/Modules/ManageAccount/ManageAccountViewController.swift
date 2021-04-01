@@ -101,6 +101,11 @@ class ManageAccountViewController: ThemeViewController {
     }
 
     private func openBackupKey(account: Account) {
+        guard let viewController = BackupKeyModule.viewController(account: account) else {
+            return
+        }
+
+        present(viewController, animated: true)
     }
 
     private func onTapUnlink() {
