@@ -610,7 +610,6 @@
 		11B3584FC09B4448EB4DFBFD /* CoinMarketsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353CFE743D50B049A3390 /* CoinMarketsViewModel.swift */; };
 		11B3585107E9879518281D1E /* SwapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3551720C79A077888F5AE /* SwapService.swift */; };
 		11B35854532EEA0AE6AC2010 /* RateAppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FA360A91FDE3EB0B85C /* RateAppManager.swift */; };
-		11B3585F34248DB2765865CD /* BackupRequiredRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F9BB34006CA79F6C0D1 /* BackupRequiredRouter.swift */; };
 		11B3586009D99341D46E1824 /* GuideCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EC5CADBD290DDD3DE1C /* GuideCell.swift */; };
 		11B358643EDDDE22C8FECEE9 /* DescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3515BDAF15B6F7EEAB609 /* DescriptionCell.swift */; };
 		11B35864B56A0B52695262EB /* LeftCoinCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3533BD00F0CFC12D9CAF8 /* LeftCoinCellView.swift */; };
@@ -820,7 +819,6 @@
 		11B35B24ABEDD32FB3A56837 /* AmountInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C3E03A9679D4B7E0D29 /* AmountInputCell.swift */; };
 		11B35B250DDFDB166EDEB53C /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35747FAD8381F2AD48276 /* MainViewModel.swift */; };
 		11B35B2DE07F24EC17758285 /* CoinType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35878592C2E37DA1EBE1E /* CoinType.swift */; };
-		11B35B2FFACD80CAB692D1E7 /* BackupRequiredRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F9BB34006CA79F6C0D1 /* BackupRequiredRouter.swift */; };
 		11B35B32857AF891709857BD /* RandomManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A65D7F2EADB3618DA64 /* RandomManager.swift */; };
 		11B35B33D69229C63682EF25 /* PrivacyEthereumRpcModeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354E1774092C21CCB6E78 /* PrivacyEthereumRpcModeRouter.swift */; };
 		11B35B3821C6CCB647B98F9A /* MarkdownService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35801399EA004F5A2A1F7 /* MarkdownService.swift */; };
@@ -1124,7 +1122,6 @@
 		11B35F27274120E53E2C1ADE /* Faq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35450456BE5E3EE8F7391 /* Faq.swift */; };
 		11B35F2F0553F684D1258063 /* WalletConnectInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A9F154EC84CEFA909B9 /* WalletConnectInteractor.swift */; };
 		11B35F318E009D7BCCCE1E1B /* AdapterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357F5E2BDAAAE4E5446E3 /* AdapterManager.swift */; };
-		11B35F33BC029E7CE784BAC2 /* BackupRequiredRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F9BB34006CA79F6C0D1 /* BackupRequiredRouter.swift */; };
 		11B35F3525372880BC7B47DB /* EvmCoinServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35410733A35D1558E55B2 /* EvmCoinServiceFactory.swift */; };
 		11B35F3D3F81F87F486EB997 /* SendMemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35914EC43FE3F25946BF1 /* SendMemoView.swift */; };
 		11B35F3F5CD25FA39671E1A0 /* SendFeePriorityRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D64EA4FDD339C8DC162 /* SendFeePriorityRouter.swift */; };
@@ -2864,7 +2861,6 @@
 		11B35F8EA2C040DE4BA45D99 /* Term.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Term.swift; sourceTree = "<group>"; };
 		11B35F8F4A6302C9DBDF8869 /* EnableCoinsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnableCoinsView.swift; sourceTree = "<group>"; };
 		11B35F98E89F83A30870F404 /* ActiveAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveAccount.swift; sourceTree = "<group>"; };
-		11B35F9BB34006CA79F6C0D1 /* BackupRequiredRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupRequiredRouter.swift; sourceTree = "<group>"; };
 		11B35FA360A91FDE3EB0B85C /* RateAppManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateAppManager.swift; sourceTree = "<group>"; };
 		11B35FAF942FA80752EDBFA7 /* SendInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendInteractorTests.swift; sourceTree = "<group>"; };
 		11B35FC7D295A34D8B2123AA /* NoAccountRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoAccountRouter.swift; sourceTree = "<group>"; };
@@ -4101,7 +4097,6 @@
 			isa = PBXGroup;
 			children = (
 				11B35E9C17E2A59375D250B8 /* BackupRequiredViewController.swift */,
-				11B35F9BB34006CA79F6C0D1 /* BackupRequiredRouter.swift */,
 			);
 			path = BackupRequired;
 			sourceTree = "<group>";
@@ -6409,7 +6404,6 @@
 				11B35230F3FE3A8600DBE26A /* BarPageControl.swift in Sources */,
 				11B35864B56A0B52695262EB /* LeftCoinCellView.swift in Sources */,
 				11B3520B19D0BC639C7B1678 /* BackupRequiredViewController.swift in Sources */,
-				11B3585F34248DB2765865CD /* BackupRequiredRouter.swift in Sources */,
 				11B356F871A3E0DF3265DDBA /* NoAccountViewController.swift in Sources */,
 				11B359775AFC78BEEE512003 /* NoAccountRouter.swift in Sources */,
 				11B35EEB5F85215779D22A56 /* NoAccountInteractor.swift in Sources */,
@@ -7240,7 +7234,6 @@
 				11B35D11809FB5D34D8D6D3F /* BarPageControl.swift in Sources */,
 				11B35A5462F18F7EEC33E603 /* LeftCoinCellView.swift in Sources */,
 				11B35034BEFAE3C508122BEB /* BackupRequiredViewController.swift in Sources */,
-				11B35B2FFACD80CAB692D1E7 /* BackupRequiredRouter.swift in Sources */,
 				11B3568BED326A8D78BA637C /* NoAccountViewController.swift in Sources */,
 				11B35C40A6BC96053AE6FE62 /* NoAccountRouter.swift in Sources */,
 				11B35B7E08F4B9E9025E2621 /* NoAccountInteractor.swift in Sources */,
@@ -8034,7 +8027,6 @@
 				11B3531F75BB6113B49DC088 /* BarPageControl.swift in Sources */,
 				11B35316A85CFFFF3B1539B5 /* LeftCoinCellView.swift in Sources */,
 				11B350CD8FC4151DF10C983C /* BackupRequiredViewController.swift in Sources */,
-				11B35F33BC029E7CE784BAC2 /* BackupRequiredRouter.swift in Sources */,
 				11B35C126B0199D514D27E8B /* NoAccountViewController.swift in Sources */,
 				11B356BF867C744BFFA7DB15 /* NoAccountRouter.swift in Sources */,
 				11B35C581BFE7732875A1FCA /* NoAccountInteractor.swift in Sources */,

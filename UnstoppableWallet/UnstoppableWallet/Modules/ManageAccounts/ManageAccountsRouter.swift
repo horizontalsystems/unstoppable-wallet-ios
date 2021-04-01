@@ -17,13 +17,8 @@ extension ManageAccountsRouter: IManageAccountsRouter {
     }
 
     func showBackupRequired(account: Account, predefinedAccountType: PredefinedAccountType) {
-        let module = BackupRequiredRouter.module(
-                account: account,
-                predefinedAccountType: predefinedAccountType,
-                sourceViewController: viewController,
-                text: "settings_manage_keys.delete.cant_delete".localized
-        )
-
+        let text = "settings_manage_keys.delete.cant_delete".localized
+        let module = BackupRequiredViewController(account: account, text: text, sourceViewController: viewController).toBottomSheet
         viewController?.present(module, animated: true)
     }
 
