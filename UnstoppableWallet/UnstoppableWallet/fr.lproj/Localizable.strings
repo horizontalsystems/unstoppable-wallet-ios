@@ -100,6 +100,12 @@
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "Format de l'adresse";
 
+// Show Key
+
+"show_key.title" = "Key";
+"show_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.";
+"show_key.button_show" = "Show";
+
 // Backup
 
 "backup.close" = "Fermer";
@@ -646,8 +652,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "settings_manage_keys.settings" = "Format de l'adresse";
 "settings_manage_keys.delete.cant_delete" = "Vous devez sauvegarder la clé privée avant de pouvoir la supprimer de ce téléphone.";
 "settings_manage_keys.delete.title" = "Supprimer le portefeuille";
-"settings_manage_keys.delete.confirmation_remove" = "Cette action supprimera le portefeuille %@ de cet appareil.";
-"settings_manage_keys.delete.confirmation_disable" = "Coins qui seront désactivées : %@";
+"settings_manage_keys.delete.confirmation_remove" = "The action will delete this wallet from device.";
 "settings_manage_keys.delete.confirmation_loose" = "Si vous n'avez pas sauvegardé la clé privée de ce portefeuille, vous perdrez l'accès à vos fonds.";
 
 // Settings -> About App
