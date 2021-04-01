@@ -3,14 +3,16 @@ import ThemeKit
 import SnapKit
 
 class BackupRequiredViewController: ThemeActionSheetController {
-    private let router: BackupRequiredRouter
-
     private let titleView = BottomSheetTitleView()
     private let descriptionView = HighlightedDescriptionView()
     private let backupButton = ThemeButton()
 
-    init(router: BackupRequiredRouter, subtitle: String, text: String) {
-        self.router = router
+    private let account: Account
+    private weak var sourceViewController: UIViewController?
+
+    init(account: Account, text: String, sourceViewController: UIViewController?) {
+        self.account = account
+        self.sourceViewController = sourceViewController
 
         super.init()
 
@@ -21,7 +23,7 @@ class BackupRequiredViewController: ThemeActionSheetController {
 
         titleView.bind(
                 title: "backup.backup_required".localized,
-                subtitle: subtitle,
+                subtitle: account.name,
                 image: UIImage(named: "warning_2_24")?.tinted(with: .themeLucian)
         )
         titleView.onTapClose = { [weak self] in
@@ -30,33 +32,37 @@ class BackupRequiredViewController: ThemeActionSheetController {
 
         view.addSubview(descriptionView)
         descriptionView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin3x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin12)
         }
 
         descriptionView.text = text
 
         view.addSubview(backupButton)
         backupButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(descriptionView.snp.bottom).offset(CGFloat.margin6x)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin4x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.top.equalTo(descriptionView.snp.bottom).offset(CGFloat.margin24)
+            maker.bottom.equalToSuperview().inset(CGFloat.margin16)
             maker.height.equalTo(CGFloat.heightButton)
         }
 
         backupButton.apply(style: .primaryYellow)
         backupButton.setTitle("settings_manage_keys.backup".localized, for: .normal)
-        backupButton.addTarget(self, action: #selector(_onTapBackup), for: .touchUpInside)
+        backupButton.addTarget(self, action: #selector(onTapBackupButton), for: .touchUpInside)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    @objc private func _onTapBackup() {
+    @objc private func onTapBackupButton() {
         dismiss(animated: true) { [weak self] in
-            self?.router.showBackup()
+            self?.openBackup()
         }
+    }
+
+    private func openBackup() {
+        // todo: open backup
     }
 
 }

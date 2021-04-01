@@ -36,13 +36,8 @@ extension BalanceRouter: IBalanceRouter {
     }
 
     func showBackupRequired(wallet: Wallet, predefinedAccountType: PredefinedAccountType) {
-        let module = BackupRequiredRouter.module(
-                account: wallet.account,
-                predefinedAccountType: predefinedAccountType,
-                sourceViewController: viewController,
-                text: "receive_alert.not_backed_up_description".localized(predefinedAccountType.title, wallet.coin.title)
-        )
-
+        let text = "receive_alert.not_backed_up_description".localized(predefinedAccountType.title, wallet.coin.title)
+        let module = BackupRequiredViewController(account: wallet.account, text: text, sourceViewController: viewController).toBottomSheet
         viewController?.present(module, animated: true)
     }
 
