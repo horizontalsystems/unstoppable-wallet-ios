@@ -44,11 +44,11 @@ class RateManager {
             }
         }
         let uniqueCoinTypes = Array(Set(allCoins.map { $0.type }))
-        kit.set(coinTypes: uniqueCoinTypes)
+        //        kit.set(coinTypes: uniqueCoinTypes)
     }
 
     private func onUpdate(baseCurrency: Currency) {
-        kit.set(currencyCode: baseCurrency.code)
+        // kit.set(currencyCode: baseCurrency.code)
     }
 
 }
@@ -56,7 +56,7 @@ class RateManager {
 extension RateManager: IRateManager {
 
     func refresh() {
-        kit.refresh()
+        // kit.refresh()
     }
 
     func globalMarketInfoSingle(currencyCode: String) -> Single<GlobalCoinMarket> {
@@ -84,7 +84,7 @@ extension RateManager: IRateManager {
     }
 
     func latestRatesObservable(currencyCode: String) -> Observable<[CoinType: LatestRate]> {
-        kit.latestRatesObservable(currencyCode: currencyCode)
+        kit.latestRatesObservable(coinTypes: [CoinType](), currencyCode: currencyCode)
     }
 
     func historicalRate(coinType: CoinType, currencyCode: String, timestamp: TimeInterval) -> Single<Decimal> {

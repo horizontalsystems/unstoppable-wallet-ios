@@ -109,7 +109,7 @@ extension BitcoinCoreErrors.AddressConversionErrors: ConvertibleError {
     }
 }
 
-extension EthereumKit.WebSocketState.StateError: ConvertibleError {
+extension HsToolKit.WebSocketState.StateError: ConvertibleError {
     var convertedError: Error {
         switch self {
         case .notConnected: return AppError.noConnection
