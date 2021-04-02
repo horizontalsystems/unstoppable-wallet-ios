@@ -41,12 +41,23 @@ class CreateAccountService {
     private func activateDefaultWallets(account: Account) {
         let defaultCoinTypes: [CoinType] = [.bitcoin, .ethereum, .binanceSmartChain]
 
-        let wallets: [Wallet] = defaultCoinTypes.compactMap { coinType in
+        var wallets = [Wallet]()
+
+        for coinType in defaultCoinTypes {
             guard let coin = coinKit.coin(type: coinType) else {
-                return nil
+                continue
             }
 
-            return Wallet(coin: coin, account: account)
+            let defaultSettingsArray = coinType.defaultSettingsArray
+
+            if defaultSettingsArray.isEmpty {
+                wallets.append(Wallet(coin: coin, account: account))
+            } else {
+                for coinSettings in defaultSettingsArray {
+                    let configuredCoin = ConfiguredCoin(coin: coin, settings: coinSettings)
+                    wallets.append(Wallet(configuredCoin: configuredCoin, account: account))
+                }
+            }
         }
 
         walletManager.save(wallets: wallets)

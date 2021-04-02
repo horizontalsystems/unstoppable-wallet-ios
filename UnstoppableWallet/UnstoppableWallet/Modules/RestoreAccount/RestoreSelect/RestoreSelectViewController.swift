@@ -37,8 +37,8 @@ class RestoreSelectViewController: CoinToggleViewController {
             self?.navigationItem.rightBarButtonItem?.isEnabled = enabled
         }
 
-        subscribe(disposeBag, viewModel.enabledCoinsSignal) { [weak self] coins in
-            // todo
+        subscribe(disposeBag, viewModel.successSignal) { [weak self] in
+            self?.dismiss(animated: true)
         }
 
         subscribe(disposeBag, viewModel.disableCoinSignal) { [weak self] coin in

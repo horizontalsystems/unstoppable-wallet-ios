@@ -2,18 +2,17 @@ import RxSwift
 
 class WalletStorage {
     private let coinManager: ICoinManager
-    private let walletFactory: IWalletFactory
     private let storage: IEnabledWalletStorage
 
-    init(coinManager: ICoinManager, walletFactory: IWalletFactory, storage: IEnabledWalletStorage) {
+    init(coinManager: ICoinManager, storage: IEnabledWalletStorage) {
         self.coinManager = coinManager
-        self.walletFactory = walletFactory
         self.storage = storage
     }
 
     private func enabledWallet(wallet: Wallet) -> EnabledWallet {
         EnabledWallet(
                 coinId: wallet.coin.id,
+                coinSettingsId: wallet.configuredCoin.settings.id,
                 accountId: wallet.account.id
         )
     }
@@ -34,7 +33,10 @@ extension WalletStorage: IWalletStorage {
                 return nil
             }
 
-            return walletFactory.wallet(coin: coin, account: account)
+            let settings = CoinSettings(id: enabledWallet.coinSettingsId)
+            let configuredCoin = ConfiguredCoin(coin: coin, settings: settings)
+
+            return Wallet(configuredCoin: configuredCoin, account: account)
         }
     }
 

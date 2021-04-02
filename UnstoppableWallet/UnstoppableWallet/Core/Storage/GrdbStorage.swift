@@ -395,7 +395,7 @@ class GrdbStorage {
                 guard let newId = CoinIdMigration.new(from: wallet.coinId, coins: allCoins) else {
                     return nil
                 }
-                return EnabledWallet(coinId: newId, accountId: wallet.accountId)
+                return EnabledWallet(coinId: newId, coinSettingsId: "", accountId: wallet.accountId)
             }
 
             //delete all alerts and add title column

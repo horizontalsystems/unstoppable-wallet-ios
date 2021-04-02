@@ -2,10 +2,12 @@ import GRDB
 
 class EnabledWallet: Record {
     let coinId: String
+    let coinSettingsId: String
     let accountId: String
 
-    init(coinId: String, accountId: String) {
+    init(coinId: String, coinSettingsId: String, accountId: String) {
         self.coinId = coinId
+        self.coinSettingsId = coinSettingsId
         self.accountId = accountId
 
         super.init()
@@ -16,11 +18,13 @@ class EnabledWallet: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case coinId, accountId
+        case coinId, coinSettingsId, accountId
     }
 
     required init(row: Row) {
         coinId = row[Columns.coinId]
+//        coinSettingsId = row[Columns.coinSettingsId]
+        coinSettingsId = ""
         accountId = row[Columns.accountId]
 
         super.init(row: row)
@@ -28,6 +32,7 @@ class EnabledWallet: Record {
 
     override func encode(to container: inout PersistenceContainer) {
         container[Columns.coinId] = coinId
+//        container[Columns.coinSettingsId] = coinSettingsId
         container[Columns.accountId] = accountId
     }
 

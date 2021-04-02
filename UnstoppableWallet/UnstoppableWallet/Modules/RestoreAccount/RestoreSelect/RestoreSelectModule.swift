@@ -21,6 +21,9 @@ struct RestoreSelectModule {
 
         let service = RestoreSelectService(
                 accountType: accountType,
+                accountFactory: AccountFactory(),
+                accountManager: App.shared.accountManager,
+                walletManager: App.shared.walletManager,
                 coinManager: App.shared.coinManager,
                 enableCoinsService: enableCoinsService,
                 coinSettingsService: coinSettingsService
