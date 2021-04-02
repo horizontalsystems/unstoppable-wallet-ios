@@ -66,7 +66,7 @@ extension CoinType {
         }
     }
 
-    var coinSettings: [CoinSetting] {
+    var coinSettingTypes: [CoinSettingType] {
         switch self {
         case .bitcoin, .litecoin: return [.derivation]
         case .bitcoinCash: return [.bitcoinCashCoinType]
@@ -75,7 +75,7 @@ extension CoinType {
         }
     }
 
-    var defaultSettingsData: [[CoinSetting: String]] {
+    var defaultSettingsArray: [CoinSettings] {
         switch self {
         case .bitcoin, .litecoin: return [[.derivation: MnemonicDerivation.bip49.rawValue]]
         case .bitcoinCash: return [[.bitcoinCashCoinType: BitcoinCashCoinType.type145.rawValue]]

@@ -23,9 +23,9 @@ extension CoinSettingsService {
         requestRelay.asObservable()
     }
 
-    func approveEnable(coin: Coin, settingsData: [[CoinSetting: String]]) {
-        if coin.type.coinSettings.contains(.derivation) {
-            let currentDerivations = settingsData.compactMap { $0[.derivation].flatMap { MnemonicDerivation(rawValue: $0) } }
+    func approveEnable(coin: Coin, settingsArray: [CoinSettings]) {
+        if coin.type.coinSettingTypes.contains(.derivation) {
+            let currentDerivations = settingsArray.compactMap { $0[.derivation].flatMap { MnemonicDerivation(rawValue: $0) } }
 
             let request = Request(
                     coin: coin,
@@ -36,8 +36,8 @@ extension CoinSettingsService {
             return
         }
 
-        if coin.type.coinSettings.contains(.bitcoinCashCoinType) {
-            let currentTypes = settingsData.compactMap { $0[.bitcoinCashCoinType].flatMap { BitcoinCashCoinType(rawValue: $0) } }
+        if coin.type.coinSettingTypes.contains(.bitcoinCashCoinType) {
+            let currentTypes = settingsArray.compactMap { $0[.bitcoinCashCoinType].flatMap { BitcoinCashCoinType(rawValue: $0) } }
 
             let request = Request(
                     coin: coin,
@@ -52,14 +52,14 @@ extension CoinSettingsService {
     }
 
     func select(derivations: [MnemonicDerivation], coin: Coin) {
-        let settingsData: [[CoinSetting: String]] = derivations.map { [.derivation: $0.rawValue] }
-        let coinWithSettings = CoinWithSettings(coin: coin, settingsData: settingsData)
+        let settingsArray: [CoinSettings] = derivations.map { [.derivation: $0.rawValue] }
+        let coinWithSettings = CoinWithSettings(coin: coin, settingsArray: settingsArray)
         approveEnableCoinRelay.accept(coinWithSettings)
     }
 
     func select(bitcoinCashCoinTypes: [BitcoinCashCoinType], coin: Coin) {
-        let settingsData: [[CoinSetting: String]] = bitcoinCashCoinTypes.map { [.bitcoinCashCoinType: $0.rawValue] }
-        let coinWithSettings = CoinWithSettings(coin: coin, settingsData: settingsData)
+        let settingsArray: [CoinSettings] = bitcoinCashCoinTypes.map { [.bitcoinCashCoinType: $0.rawValue] }
+        let coinWithSettings = CoinWithSettings(coin: coin, settingsArray: settingsArray)
         approveEnableCoinRelay.accept(coinWithSettings)
     }
 
@@ -73,11 +73,11 @@ extension CoinSettingsService {
 
     struct CoinWithSettings {
         let coin: Coin
-        let settingsData: [[CoinSetting: String]]
+        let settingsArray: [CoinSettings]
 
-        init(coin: Coin, settingsData: [[CoinSetting: String]] = []) {
+        init(coin: Coin, settingsArray: [CoinSettings] = []) {
             self.coin = coin
-            self.settingsData = settingsData
+            self.settingsArray = settingsArray
         }
     }
 

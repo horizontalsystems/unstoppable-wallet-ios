@@ -31,7 +31,6 @@ class App {
 
     let coinManager: ICoinManager
 
-    let walletFactory: IWalletFactory
     let walletManager: IWalletManager
 
     let accountCreator: IAccountCreator
@@ -123,9 +122,8 @@ class App {
 
         coinManager = CoinManager(appConfigProvider: appConfigProvider, coinKit: coinKit)
 
-        walletFactory = WalletFactory()
-        let walletStorage: IWalletStorage = WalletStorage(coinManager: coinManager, walletFactory: walletFactory, storage: storage)
-        walletManager = WalletManager(accountManager: accountManager, walletFactory: walletFactory, storage: walletStorage, kitCleaner: kitCleaner)
+        let walletStorage: IWalletStorage = WalletStorage(coinManager: coinManager, storage: storage)
+        walletManager = WalletManager(accountManager: accountManager, storage: walletStorage, kitCleaner: kitCleaner)
 
         accountCreator = AccountCreator(accountFactory: AccountFactory(), wordsManager: wordsManager)
         predefinedAccountTypeManager = PredefinedAccountTypeManager(appConfigProvider: appConfigProvider, accountManager: accountManager)

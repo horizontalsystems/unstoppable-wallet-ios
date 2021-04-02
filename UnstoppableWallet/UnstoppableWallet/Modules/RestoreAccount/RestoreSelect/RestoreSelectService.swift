@@ -4,6 +4,9 @@ import CoinKit
 
 class RestoreSelectService {
     private let accountType: AccountType
+    private let accountFactory: IAccountFactory
+    private let accountManager: IAccountManager
+    private let walletManager: IWalletManager
     private let coinManager: ICoinManager
     private let enableCoinsService: EnableCoinsService
     private let coinSettingsService: CoinSettingsService
@@ -24,8 +27,11 @@ class RestoreSelectService {
         }
     }
 
-    init(accountType: AccountType, coinManager: ICoinManager, enableCoinsService: EnableCoinsService, coinSettingsService: CoinSettingsService) {
+    init(accountType: AccountType, accountFactory: IAccountFactory, accountManager: IAccountManager, walletManager: IWalletManager, coinManager: ICoinManager, enableCoinsService: EnableCoinsService, coinSettingsService: CoinSettingsService) {
         self.accountType = accountType
+        self.accountFactory = accountFactory
+        self.accountManager = accountManager
+        self.walletManager = walletManager
         self.coinManager = coinManager
         self.enableCoinsService = enableCoinsService
         self.coinSettingsService = coinSettingsService
@@ -41,7 +47,7 @@ class RestoreSelectService {
         coinSettingsService.approveEnableCoinObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] coinWithSettings in
-                    self?.handleApproveEnable(coin: coinWithSettings.coin, settingsData: coinWithSettings.settingsData)
+                    self?.handleApproveEnable(coin: coinWithSettings.coin, settingsArray: coinWithSettings.settingsArray)
                 })
                 .disposed(by: disposeBag)
 
@@ -103,16 +109,16 @@ class RestoreSelectService {
         canRestoreRelay.accept(!enabledCoins.isEmpty)
     }
 
-    private func configuredCoins(coin: Coin, settingsData: [[CoinSetting: String]]) -> [ConfiguredCoin] {
-        if settingsData.isEmpty {
+    private func configuredCoins(coin: Coin, settingsArray: [CoinSettings]) -> [ConfiguredCoin] {
+        if settingsArray.isEmpty {
             return [ConfiguredCoin(coin: coin)]
         } else {
-            return settingsData.map { ConfiguredCoin(coin: coin, settings: $0) }
+            return settingsArray.map { ConfiguredCoin(coin: coin, settings: $0) }
         }
     }
 
-    private func handleApproveEnable(coin: Coin, settingsData: [[CoinSetting: String]] = []) {
-        enable(configuredCoins: configuredCoins(coin: coin, settingsData: settingsData))
+    private func handleApproveEnable(coin: Coin, settingsArray: [CoinSettings] = []) {
+        enable(configuredCoins: configuredCoins(coin: coin, settingsArray: settingsArray))
         enableCoinsService.handle(coinType: coin.type, accountType: accountType)
     }
 
@@ -153,10 +159,10 @@ extension RestoreSelectService {
     }
 
     func enable(coin: Coin) {
-        if coin.type.coinSettings.isEmpty {
+        if coin.type.coinSettingTypes.isEmpty {
             handleApproveEnable(coin: coin)
         } else {
-            coinSettingsService.approveEnable(coin: coin, settingsData: coin.type.defaultSettingsData)
+            coinSettingsService.approveEnable(coin: coin, settingsArray: coin.type.defaultSettingsArray)
         }
     }
 
@@ -165,6 +171,18 @@ extension RestoreSelectService {
 
         syncState()
         syncCanRestore()
+    }
+
+    func restore() {
+        let account = accountFactory.account(type: accountType, origin: .restored, backedUp: true)
+        accountManager.save(account: account)
+
+        guard !enabledCoins.isEmpty else {
+            return
+        }
+
+        let wallets = enabledCoins.map { Wallet(configuredCoin: $0, account: account) }
+        walletManager.save(wallets: wallets)
     }
 
 }

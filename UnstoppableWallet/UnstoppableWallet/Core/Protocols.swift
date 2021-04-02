@@ -213,10 +213,6 @@ protocol IAccountFactory {
     func account(type: AccountType, origin: AccountOrigin, backedUp: Bool) -> Account
 }
 
-protocol IWalletFactory {
-    func wallet(coin: Coin, account: Account) -> Wallet
-}
-
 protocol IBlurManager {
     func willResignActive()
     func didBecomeActive()

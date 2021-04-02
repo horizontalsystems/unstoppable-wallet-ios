@@ -2,7 +2,6 @@ import RxSwift
 
 class WalletManager {
     private let accountManager: IAccountManager
-    private let walletFactory: IWalletFactory
     private let storage: IWalletStorage
     private let kitCleaner: IKitCleaner
 
@@ -12,9 +11,8 @@ class WalletManager {
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet_manager", qos: .userInitiated)
     private var cachedWallets = [Wallet]()
 
-    init(accountManager: IAccountManager, walletFactory: IWalletFactory, storage: IWalletStorage, kitCleaner: IKitCleaner) {
+    init(accountManager: IAccountManager, storage: IWalletStorage, kitCleaner: IKitCleaner) {
         self.accountManager = accountManager
-        self.walletFactory = walletFactory
         self.storage = storage
         self.kitCleaner = kitCleaner
     }

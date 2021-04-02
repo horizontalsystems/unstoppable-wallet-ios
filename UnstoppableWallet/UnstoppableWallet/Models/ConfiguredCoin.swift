@@ -2,9 +2,9 @@ import CoinKit
 
 struct ConfiguredCoin {
     let coin: Coin
-    let settings: [CoinSetting: String]
+    let settings: CoinSettings
 
-    init(coin: Coin, settings: [CoinSetting: String] = [:]) {
+    init(coin: Coin, settings: CoinSettings = [:]) {
         self.coin = coin
         self.settings = settings
     }
