@@ -4,13 +4,9 @@ import RxSwift
 struct RestoreSelectModule {
 
     static func viewController(accountType: AccountType) -> UIViewController {
-        let blockchainSettingsService = BlockchainSettingsService(
-                derivationSettingsManager: App.shared.derivationSettingsManager,
-                bitcoinCashCoinTypeManager: App.shared.bitcoinCashCoinTypeManager
-        )
-
-        let blockchainSettingsViewModel = BlockchainSettingsViewModel(service: blockchainSettingsService)
-        let blockchainSettingsView = BlockchainSettingsView(viewModel: blockchainSettingsViewModel)
+        let coinSettingsService = CoinSettingsService()
+        let coinSettingsViewModel = CoinSettingsViewModel(service: coinSettingsService)
+        let coinSettingsView = CoinSettingsView(viewModel: coinSettingsViewModel)
 
         let enableCoinsService = EnableCoinsService(
                 appConfigProvider: App.shared.appConfigProvider,
@@ -27,14 +23,14 @@ struct RestoreSelectModule {
                 accountType: accountType,
                 coinManager: App.shared.coinManager,
                 enableCoinsService: enableCoinsService,
-                blockchainSettingsService: blockchainSettingsService
+                coinSettingsService: coinSettingsService
         )
 
         let viewModel = RestoreSelectViewModel(service: service)
 
         return RestoreSelectViewController(
                 viewModel: viewModel,
-                blockchainSettingsView: blockchainSettingsView,
+                coinSettingsView: coinSettingsView,
                 enableCoinsView: enableCoinsView
         )
     }

@@ -66,4 +66,22 @@ extension CoinType {
         }
     }
 
+    var coinSettings: [CoinSetting] {
+        switch self {
+        case .bitcoin, .litecoin: return [.derivation]
+        case .bitcoinCash: return [.bitcoinCashCoinType]
+        case .zcash: return [.birthdayHeight]
+        default: return []
+        }
+    }
+
+    var defaultSettingsData: [[CoinSetting: String]] {
+        switch self {
+        case .bitcoin, .litecoin: return [[.derivation: MnemonicDerivation.bip49.rawValue]]
+        case .bitcoinCash: return [[.bitcoinCashCoinType: BitcoinCashCoinType.type145.rawValue]]
+        case .zcash: return [[.birthdayHeight: ""]] // todo
+        default: return []
+        }
+    }
+
 }

@@ -76,7 +76,7 @@ extension RestoreSelectViewModel {
     }
 
     func onRestore() {
-        enabledCoinsRelay.accept(Array(service.enabledCoins))
+//        enabledCoinsRelay.accept(Array(service.enabledCoins))
     }
 
 }
