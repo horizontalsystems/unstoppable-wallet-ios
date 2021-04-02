@@ -6,12 +6,12 @@ class RestoreSelectService {
     private let accountType: AccountType
     private let coinManager: ICoinManager
     private let enableCoinsService: EnableCoinsService
-    private let blockchainSettingsService: BlockchainSettingsService
+    private let coinSettingsService: CoinSettingsService
     private let disposeBag = DisposeBag()
 
     private var featuredCoins = [Coin]()
     private var coins = [Coin]()
-    private(set) var enabledCoins = Set<Coin>()
+    private(set) var enabledCoins = Set<ConfiguredCoin>()
     private var filter: String?
 
     private let stateRelay = PublishRelay<State>()
@@ -24,27 +24,28 @@ class RestoreSelectService {
         }
     }
 
-    init(accountType: AccountType, coinManager: ICoinManager, enableCoinsService: EnableCoinsService, blockchainSettingsService: BlockchainSettingsService) {
+    init(accountType: AccountType, coinManager: ICoinManager, enableCoinsService: EnableCoinsService, coinSettingsService: CoinSettingsService) {
         self.accountType = accountType
         self.coinManager = coinManager
         self.enableCoinsService = enableCoinsService
-        self.blockchainSettingsService = blockchainSettingsService
+        self.coinSettingsService = coinSettingsService
 
         enableCoinsService.enableCoinsObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] coins in
-                    self?.enable(coins: coins, sortCoins: true)
+                    let configuredCoins = coins.map { ConfiguredCoin(coin: $0) }
+                    self?.enable(configuredCoins: configuredCoins, sortCoins: true)
                 })
                 .disposed(by: disposeBag)
 
-        blockchainSettingsService.approveEnableCoinObservable
+        coinSettingsService.approveEnableCoinObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] coin in
-                    self?.handleApproveEnable(coin: coin)
+                .subscribe(onNext: { [weak self] coinWithSettings in
+                    self?.handleApproveEnable(coin: coinWithSettings.coin, settingsData: coinWithSettings.settingsData)
                 })
                 .disposed(by: disposeBag)
 
-        blockchainSettingsService.rejectEnableCoinObservable
+        coinSettingsService.rejectEnableCoinObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] coin in
                     self?.cancelEnableCoinRelay.accept(coin)
@@ -57,8 +58,12 @@ class RestoreSelectService {
         syncState()
     }
 
+    private func isEnabled(coin: Coin) -> Bool {
+        enabledCoins.contains { $0.coin == coin }
+    }
+
     private func item(coin: Coin) -> Item? {
-        Item(coin: coin, enabled: enabledCoins.contains(coin))
+        Item(coin: coin, enabled: isEnabled(coin: coin))
     }
 
     private func filtered(coins: [Coin]) -> [Coin] {
@@ -73,8 +78,8 @@ class RestoreSelectService {
 
     private func sortCoins() {
         coins.sort { lhsCoin, rhsCoin in
-            let lhsEnabled = enabledCoins.contains(lhsCoin)
-            let rhsEnabled = enabledCoins.contains(rhsCoin)
+            let lhsEnabled = isEnabled(coin: lhsCoin)
+            let rhsEnabled = isEnabled(coin: rhsCoin)
 
             if lhsEnabled != rhsEnabled {
                 return lhsEnabled
@@ -98,14 +103,22 @@ class RestoreSelectService {
         canRestoreRelay.accept(!enabledCoins.isEmpty)
     }
 
-    private func handleApproveEnable(coin: Coin) {
-        enable(coins: [coin])
+    private func configuredCoins(coin: Coin, settingsData: [[CoinSetting: String]]) -> [ConfiguredCoin] {
+        if settingsData.isEmpty {
+            return [ConfiguredCoin(coin: coin)]
+        } else {
+            return settingsData.map { ConfiguredCoin(coin: coin, settings: $0) }
+        }
+    }
+
+    private func handleApproveEnable(coin: Coin, settingsData: [[CoinSetting: String]] = []) {
+        enable(configuredCoins: configuredCoins(coin: coin, settingsData: settingsData))
         enableCoinsService.handle(coinType: coin.type, accountType: accountType)
     }
 
-    private func enable(coins: [Coin], sortCoins: Bool = false) {
-        for coin in coins {
-            enabledCoins.insert(coin)
+    private func enable(configuredCoins: [ConfiguredCoin], sortCoins: Bool = false) {
+        for configuredCoin in configuredCoins {
+            enabledCoins.insert(configuredCoin)
         }
 
         if sortCoins {
@@ -140,11 +153,15 @@ extension RestoreSelectService {
     }
 
     func enable(coin: Coin) {
-        blockchainSettingsService.approveEnable(coin: coin, accountOrigin: .restored)
+        if coin.type.coinSettings.isEmpty {
+            handleApproveEnable(coin: coin)
+        } else {
+            coinSettingsService.approveEnable(coin: coin, settingsData: coin.type.defaultSettingsData)
+        }
     }
 
     func disable(coin: Coin) {
-        enabledCoins.remove(coin)
+        enabledCoins = enabledCoins.filter { $0.coin != coin }
 
         syncState()
         syncCanRestore()
