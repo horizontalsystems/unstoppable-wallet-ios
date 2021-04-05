@@ -42,22 +42,22 @@ extension WalletManager: IWalletManager {
         }
     }
 
-    func save(wallets: [Wallet]) {
-        storage.save(wallets: wallets)
+    func handle(newWallets: [Wallet], deletedWallets: [Wallet]) {
+        storage.handle(newWallets: newWallets, deletedWallets: deletedWallets)
 
         queue.async {
-            self.cachedWallets.append(contentsOf: wallets)
+            self.cachedWallets.append(contentsOf: newWallets)
+            self.cachedWallets.removeAll { deletedWallets.contains($0) }
             self.notify()
         }
     }
 
-    func delete(wallets: [Wallet]) {
-        storage.delete(wallets: wallets)
+    func save(wallets: [Wallet]) {
+        handle(newWallets: wallets, deletedWallets: [])
+    }
 
-        queue.async {
-            self.cachedWallets.removeAll { wallets.contains($0) }
-            self.notify()
-        }
+    func delete(wallets: [Wallet]) {
+        handle(newWallets: [], deletedWallets: wallets)
     }
 
     func clearWallets() {

@@ -40,14 +40,10 @@ extension WalletStorage: IWalletStorage {
         }
     }
 
-    func save(wallets: [Wallet]) {
-        let enabledWallets = wallets.map { enabledWallet(wallet: $0) }
-        storage.save(enabledWallets: enabledWallets)
-    }
-
-    func delete(wallets: [Wallet]) {
-        let enabledWallets = wallets.map { enabledWallet(wallet: $0) }
-        storage.delete(enabledWallets: enabledWallets)
+    func handle(newWallets: [Wallet], deletedWallets: [Wallet]) {
+        let newEnabledWallets = newWallets.map { enabledWallet(wallet: $0) }
+        let deletedEnabledWallets = deletedWallets.map { enabledWallet(wallet: $0) }
+        storage.handle(newEnabledWallets: newEnabledWallets, deletedEnabledWallets: deletedEnabledWallets)
     }
 
     func clearWallets() {
