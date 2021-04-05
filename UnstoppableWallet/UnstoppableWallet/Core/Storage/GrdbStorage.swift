@@ -453,11 +453,11 @@ extension GrdbStorage: IEnabledWalletStorage {
 
     func handle(newEnabledWallets: [EnabledWallet], deletedEnabledWallets: [EnabledWallet]) {
         _ = try! dbPool.write { db in
-            for enabledWallet in enabledWallets {
+            for enabledWallet in newEnabledWallets {
                 try enabledWallet.insert(db)
             }
-            for enabledWallet in enabledWallets {
-                try EnabledWallet.filter(EnabledWallet.Columns.coinId == enabledWallet.coinId && EnabledWallet.Columns.accountId == enabledWallet.accountId).deleteAll(db)
+            for enabledWallet in deletedEnabledWallets {
+                try EnabledWallet.filter(EnabledWallet.Columns.coinId == enabledWallet.coinId && EnabledWallet.Columns.coinSettingsId == enabledWallet.coinSettingsId && EnabledWallet.Columns.accountId == enabledWallet.accountId).deleteAll(db)
             }
         }
 
