@@ -7,7 +7,7 @@ class ManageWalletsViewModelNew {
     private let service: ManageWalletsServiceNew
     private let disposeBag = DisposeBag()
 
-    private let viewStateRelay = BehaviorRelay<CoinToggleViewModel.ViewState>(value: .empty)
+    private let viewStateRelay = BehaviorRelay<CoinToggleViewModelNew.ViewState>(value: .empty)
     private let disableCoinRelay = PublishRelay<Coin>()
 
     init(service: ManageWalletsServiceNew) {
@@ -23,17 +23,18 @@ class ManageWalletsViewModelNew {
         syncViewState()
     }
 
-    private func viewItem(item: ManageWalletsServiceNew.Item) -> CoinToggleViewModel.ViewItem {
-        CoinToggleViewModel.ViewItem(
+    private func viewItem(item: ManageWalletsServiceNew.Item) -> CoinToggleViewModelNew.ViewItem {
+        CoinToggleViewModelNew.ViewItem(
                 coin: item.coin,
-                state: .toggleVisible(enabled: item.enabled)
+                hasSettings: item.hasSettings,
+                enabled: item.enabled
         )
     }
 
     private func syncViewState(state: ManageWalletsServiceNew.State? = nil) {
         let state = state ?? service.state
 
-        let viewState = CoinToggleViewModel.ViewState(
+        let viewState = CoinToggleViewModelNew.ViewState(
                 featuredViewItems: state.featuredItems.map { viewItem(item: $0) },
                 viewItems: state.items.map { viewItem(item: $0) }
         )
@@ -43,9 +44,9 @@ class ManageWalletsViewModelNew {
 
 }
 
-extension ManageWalletsViewModelNew: ICoinToggleViewModel {
+extension ManageWalletsViewModelNew: ICoinToggleViewModelNew {
 
-    var viewStateDriver: Driver<CoinToggleViewModel.ViewState> {
+    var viewStateDriver: Driver<CoinToggleViewModelNew.ViewState> {
         viewStateRelay.asDriver()
     }
 
@@ -55,6 +56,10 @@ extension ManageWalletsViewModelNew: ICoinToggleViewModel {
 
     func onDisable(coin: Coin) {
         service.disable(coin: coin)
+    }
+
+    func onTapSettings(coin: Coin) {
+        service.configure(coin: coin)
     }
 
     func onUpdate(filter: String?) {

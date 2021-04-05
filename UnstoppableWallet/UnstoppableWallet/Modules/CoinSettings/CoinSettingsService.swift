@@ -3,27 +3,27 @@ import RxRelay
 import CoinKit
 
 class CoinSettingsService {
-    private let approveEnableCoinRelay = PublishRelay<CoinWithSettings>()
-    private let rejectEnableCoinRelay = PublishRelay<Coin>()
+    private let approveSettingsRelay = PublishRelay<CoinWithSettings>()
+    private let rejectApproveSettingsRelay = PublishRelay<Coin>()
 
     private let requestRelay = PublishRelay<Request>()
 }
 
 extension CoinSettingsService {
 
-    var approveEnableCoinObservable: Observable<CoinWithSettings> {
-        approveEnableCoinRelay.asObservable()
+    var approveSettingsObservable: Observable<CoinWithSettings> {
+        approveSettingsRelay.asObservable()
     }
 
-    var rejectEnableCoinObservable: Observable<Coin> {
-        rejectEnableCoinRelay.asObservable()
+    var rejectApproveSettingsObservable: Observable<Coin> {
+        rejectApproveSettingsRelay.asObservable()
     }
 
     var requestObservable: Observable<Request> {
         requestRelay.asObservable()
     }
 
-    func approveEnable(coin: Coin, settingsArray: [CoinSettings]) {
+    func approveSettings(coin: Coin, settingsArray: [CoinSettings]) {
         if coin.type.coinSettingTypes.contains(.derivation) {
             let currentDerivations = settingsArray.compactMap { $0[.derivation].flatMap { MnemonicDerivation(rawValue: $0) } }
 
@@ -48,23 +48,23 @@ extension CoinSettingsService {
             return
         }
 
-        approveEnableCoinRelay.accept(CoinWithSettings(coin: coin))
+        approveSettingsRelay.accept(CoinWithSettings(coin: coin))
     }
 
     func select(derivations: [MnemonicDerivation], coin: Coin) {
         let settingsArray: [CoinSettings] = derivations.map { [.derivation: $0.rawValue] }
         let coinWithSettings = CoinWithSettings(coin: coin, settingsArray: settingsArray)
-        approveEnableCoinRelay.accept(coinWithSettings)
+        approveSettingsRelay.accept(coinWithSettings)
     }
 
     func select(bitcoinCashCoinTypes: [BitcoinCashCoinType], coin: Coin) {
         let settingsArray: [CoinSettings] = bitcoinCashCoinTypes.map { [.bitcoinCashCoinType: $0.rawValue] }
         let coinWithSettings = CoinWithSettings(coin: coin, settingsArray: settingsArray)
-        approveEnableCoinRelay.accept(coinWithSettings)
+        approveSettingsRelay.accept(coinWithSettings)
     }
 
     func cancel(coin: Coin) {
-        rejectEnableCoinRelay.accept(coin)
+        rejectApproveSettingsRelay.accept(coin)
     }
 
 }
