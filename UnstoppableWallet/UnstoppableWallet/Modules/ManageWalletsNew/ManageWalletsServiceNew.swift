@@ -2,43 +2,44 @@ import RxSwift
 import RxRelay
 import CoinKit
 
-class RestoreSelectService {
-    private let accountType: AccountType
-    private let accountFactory: IAccountFactory
-    private let accountManager: IAccountManager
-    private let walletManager: IWalletManager
+class ManageWalletsServiceNew {
+    private let account: Account
     private let coinManager: ICoinManager
-    private let enableCoinsService: EnableCoinsService
+    private let walletManager: IWalletManager
     private let coinSettingsService: CoinSettingsService
     private let disposeBag = DisposeBag()
 
     private var featuredCoins = [Coin]()
     private var coins = [Coin]()
-    private(set) var enabledCoins = Set<ConfiguredCoin>()
+    private var wallets = Set<Wallet>()
     private var filter: String?
 
     private let stateRelay = PublishRelay<State>()
     private let cancelEnableCoinRelay = PublishRelay<Coin>()
-    private let canRestoreRelay = BehaviorRelay<Bool>(value: false)
 
-    private(set) var state = State.empty {
+    private var addedCoins = [Coin]()
+
+    var state = State.empty {
         didSet {
             stateRelay.accept(state)
         }
     }
 
-    init(accountType: AccountType, accountFactory: IAccountFactory, accountManager: IAccountManager, walletManager: IWalletManager, coinManager: ICoinManager, enableCoinsService: EnableCoinsService, coinSettingsService: CoinSettingsService) {
-        self.accountType = accountType
-        self.accountFactory = accountFactory
-        self.accountManager = accountManager
-        self.walletManager = walletManager
+    init?(coinManager: ICoinManager, walletManager: IWalletManager, accountManager: IAccountManager, coinSettingsService: CoinSettingsService) {
+        guard let account = accountManager.activeAccount else {
+            return nil
+        }
+
+        self.account = account
         self.coinManager = coinManager
-        self.enableCoinsService = enableCoinsService
+        self.walletManager = walletManager
         self.coinSettingsService = coinSettingsService
 
-        subscribe(disposeBag, enableCoinsService.enableCoinsObservable) { [weak self] coins in
-            let configuredCoins = coins.map { ConfiguredCoin(coin: $0) }
-            self?.enable(configuredCoins: configuredCoins, sortCoins: true)
+        subscribe(disposeBag, walletManager.walletsUpdatedObservable) { [weak self] wallets in
+            self?.handleUpdated(wallets: wallets)
+        }
+        subscribe(disposeBag, coinManager.coinAddedObservable) { [weak self] coin in
+            self?.handleAdded(coin: coin)
         }
         subscribe(disposeBag, coinSettingsService.approveEnableCoinObservable) { [weak self] coinWithSettings in
             self?.handleApproveEnable(coin: coinWithSettings.coin, settingsArray: coinWithSettings.settingsArray)
@@ -47,14 +48,42 @@ class RestoreSelectService {
             self?.cancelEnableCoinRelay.accept(coin)
         }
 
-        (featuredCoins, coins) = coinManager.groupedCoins
-
+        syncCoins()
+        sync(wallets: walletManager.wallets)
         sortCoins()
         syncState()
     }
 
+    private func syncCoins() {
+        (featuredCoins, coins) = coinManager.groupedCoins
+    }
+
     private func isEnabled(coin: Coin) -> Bool {
-        enabledCoins.contains { $0.coin == coin }
+        wallets.contains { $0.coin == coin }
+    }
+
+    private func sortCoins() {
+        coins.sort { lhsCoin, rhsCoin in
+            let lhsAdded = addedCoins.contains(lhsCoin)
+            let rhsAdded = addedCoins.contains(rhsCoin)
+
+            if lhsAdded != rhsAdded {
+                return lhsAdded
+            }
+
+            let lhsEnabled = isEnabled(coin: lhsCoin)
+            let rhsEnabled = isEnabled(coin: rhsCoin)
+
+            if lhsEnabled != rhsEnabled {
+                return lhsEnabled
+            }
+
+            return lhsCoin.title.lowercased() < rhsCoin.title.lowercased()
+        }
+    }
+
+    private func sync(wallets: [Wallet]) {
+        self.wallets = Set(wallets)
     }
 
     private func item(coin: Coin) -> Item {
@@ -71,19 +100,6 @@ class RestoreSelectService {
         }
     }
 
-    private func sortCoins() {
-        coins.sort { lhsCoin, rhsCoin in
-            let lhsEnabled = isEnabled(coin: lhsCoin)
-            let rhsEnabled = isEnabled(coin: rhsCoin)
-
-            if lhsEnabled != rhsEnabled {
-                return lhsEnabled
-            }
-
-            return lhsCoin.title.lowercased() < rhsCoin.title.lowercased()
-        }
-    }
-
     private func syncState() {
         let filteredFeaturedCoins = filtered(coins: featuredCoins)
         let filteredCoins = filtered(coins: coins)
@@ -94,8 +110,9 @@ class RestoreSelectService {
         )
     }
 
-    private func syncCanRestore() {
-        canRestoreRelay.accept(!enabledCoins.isEmpty)
+    private func handleUpdated(wallets: [Wallet]) {
+        sync(wallets: wallets)
+        syncState()
     }
 
     private func configuredCoins(coin: Coin, settingsArray: [CoinSettings]) -> [ConfiguredCoin] {
@@ -108,25 +125,27 @@ class RestoreSelectService {
 
     private func handleApproveEnable(coin: Coin, settingsArray: [CoinSettings] = []) {
         enable(configuredCoins: configuredCoins(coin: coin, settingsArray: settingsArray))
-        enableCoinsService.handle(coinType: coin.type, accountType: accountType)
     }
 
-    private func enable(configuredCoins: [ConfiguredCoin], sortCoins: Bool = false) {
-        for configuredCoin in configuredCoins {
-            enabledCoins.insert(configuredCoin)
+    private func enable(configuredCoins: [ConfiguredCoin]) {
+        let wallets = configuredCoins.map {
+            Wallet(configuredCoin: $0, account: account)
         }
 
-        if sortCoins {
-            self.sortCoins()
-        }
+        walletManager.save(wallets: wallets)
+    }
 
+    private func handleAdded(coin: Coin) {
+        addedCoins.append(coin)
+
+        syncCoins()
+        sortCoins()
         syncState()
-        syncCanRestore()
     }
 
 }
 
-extension RestoreSelectService {
+extension ManageWalletsServiceNew {
 
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
@@ -134,10 +153,6 @@ extension RestoreSelectService {
 
     var cancelEnableCoinObservable: Observable<Coin> {
         cancelEnableCoinRelay.asObservable()
-    }
-
-    var canRestoreObservable: Observable<Bool> {
-        canRestoreRelay.asObservable()
     }
 
     func set(filter: String?) {
@@ -156,27 +171,13 @@ extension RestoreSelectService {
     }
 
     func disable(coin: Coin) {
-        enabledCoins = enabledCoins.filter { $0.coin != coin }
-
-        syncState()
-        syncCanRestore()
-    }
-
-    func restore() {
-        let account = accountFactory.account(type: accountType, origin: .restored, backedUp: true)
-        accountManager.save(account: account)
-
-        guard !enabledCoins.isEmpty else {
-            return
-        }
-
-        let wallets = enabledCoins.map { Wallet(configuredCoin: $0, account: account) }
-        walletManager.save(wallets: wallets)
+        let walletsToDelete = wallets.filter { $0.coin == coin }
+        walletManager.delete(wallets: Array(walletsToDelete))
     }
 
 }
 
-extension RestoreSelectService {
+extension ManageWalletsServiceNew {
 
     struct State {
         let featuredItems: [Item]
@@ -189,12 +190,7 @@ extension RestoreSelectService {
 
     struct Item {
         let coin: Coin
-        var enabled: Bool
-
-        init(coin: Coin, enabled: Bool) {
-            self.coin = coin
-            self.enabled = enabled
-        }
+        let enabled: Bool
     }
 
 }
