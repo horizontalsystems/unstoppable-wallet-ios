@@ -72,9 +72,11 @@ protocol IWalletManager: class {
 
     func preloadWallets()
 
-    func save(wallets: [Wallet])
+    func handle(newWallets: [Wallet], deletedWallets: [Wallet])
 
+    func save(wallets: [Wallet])
     func delete(wallets: [Wallet])
+
     func clearWallets()
 }
 
@@ -305,8 +307,7 @@ protocol ICoinMigration {
 
 protocol IEnabledWalletStorage {
     var enabledWallets: [EnabledWallet] { get }
-    func save(enabledWallets: [EnabledWallet])
-    func delete(enabledWallets: [EnabledWallet])
+    func handle(newEnabledWallets: [EnabledWallet], deletedEnabledWallets: [EnabledWallet])
     func clearEnabledWallets()
 }
 
@@ -433,8 +434,7 @@ protocol IAppManager {
 
 protocol IWalletStorage {
     func wallets(accounts: [Account]) -> [Wallet]
-    func save(wallets: [Wallet])
-    func delete(wallets: [Wallet])
+    func handle(newWallets: [Wallet], deletedWallets: [Wallet])
     func clearWallets()
 }
 

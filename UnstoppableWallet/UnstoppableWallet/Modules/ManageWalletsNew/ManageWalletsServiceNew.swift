@@ -135,7 +135,8 @@ class ManageWalletsServiceNew {
         if isEnabled(coin: coin) {
             applySettings(coin: coin, configuredCoins: configuredCoins)
         } else {
-            enable(configuredCoins: configuredCoins)
+            let wallets = configuredCoins.map { Wallet(configuredCoin: $0, account: account) }
+            walletManager.save(wallets: wallets)
         }
     }
 
@@ -152,21 +153,11 @@ class ManageWalletsServiceNew {
         let newConfiguredCoins = configuredCoins.filter { !existingConfiguredCoins.contains($0) }
         let removedWallets = existingWallets.filter { !configuredCoins.contains($0.configuredCoin) }
 
-        if !newConfiguredCoins.isEmpty {
-            enable(configuredCoins: newConfiguredCoins)
-        }
+        let newWallets = newConfiguredCoins.map { Wallet(configuredCoin: $0, account: account) }
 
-        if !removedWallets.isEmpty {
-            walletManager.delete(wallets: Array(removedWallets))
+        if !newWallets.isEmpty || !removedWallets.isEmpty {
+            walletManager.handle(newWallets: newWallets, deletedWallets: Array(removedWallets))
         }
-    }
-
-    private func enable(configuredCoins: [ConfiguredCoin]) {
-        let wallets = configuredCoins.map {
-            Wallet(configuredCoin: $0, account: account)
-        }
-
-        walletManager.save(wallets: wallets)
     }
 
     private func handleAdded(coin: Coin) {

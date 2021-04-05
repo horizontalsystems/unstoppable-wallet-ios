@@ -451,20 +451,16 @@ extension GrdbStorage: IEnabledWalletStorage {
         }
     }
 
-    func save(enabledWallets: [EnabledWallet]) {
+    func handle(newEnabledWallets: [EnabledWallet], deletedEnabledWallets: [EnabledWallet]) {
         _ = try! dbPool.write { db in
             for enabledWallet in enabledWallets {
                 try enabledWallet.insert(db)
             }
-        }
-    }
-
-    func delete(enabledWallets: [EnabledWallet]) {
-        _ = try! dbPool.write { db in
             for enabledWallet in enabledWallets {
                 try EnabledWallet.filter(EnabledWallet.Columns.coinId == enabledWallet.coinId && EnabledWallet.Columns.accountId == enabledWallet.accountId).deleteAll(db)
             }
         }
+
     }
 
     func clearEnabledWallets() {
