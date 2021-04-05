@@ -41,11 +41,11 @@ class ManageWalletsServiceNew {
         subscribe(disposeBag, coinManager.coinAddedObservable) { [weak self] coin in
             self?.handleAdded(coin: coin)
         }
-        subscribe(disposeBag, coinSettingsService.approveEnableCoinObservable) { [weak self] coinWithSettings in
-            self?.handleApproveEnable(coin: coinWithSettings.coin, settingsArray: coinWithSettings.settingsArray)
+        subscribe(disposeBag, coinSettingsService.approveSettingsObservable) { [weak self] coinWithSettings in
+            self?.handleApproveSettings(coin: coinWithSettings.coin, settingsArray: coinWithSettings.settingsArray)
         }
-        subscribe(disposeBag, coinSettingsService.rejectEnableCoinObservable) { [weak self] coin in
-            self?.cancelEnableCoinRelay.accept(coin)
+        subscribe(disposeBag, coinSettingsService.rejectApproveSettingsObservable) { [weak self] coin in
+            self?.handleRejectApproveSettings(coin: coin)
         }
 
         syncCoins()
@@ -87,7 +87,13 @@ class ManageWalletsServiceNew {
     }
 
     private func item(coin: Coin) -> Item {
-        Item(coin: coin, enabled: isEnabled(coin: coin))
+        let enabled = isEnabled(coin: coin)
+
+        return Item(
+                coin: coin,
+                hasSettings: enabled && !coin.type.coinSettingTypes.isEmpty,
+                enabled: enabled
+        )
     }
 
     private func filtered(coins: [Coin]) -> [Coin] {
@@ -123,8 +129,36 @@ class ManageWalletsServiceNew {
         }
     }
 
-    private func handleApproveEnable(coin: Coin, settingsArray: [CoinSettings] = []) {
-        enable(configuredCoins: configuredCoins(coin: coin, settingsArray: settingsArray))
+    private func handleApproveSettings(coin: Coin, settingsArray: [CoinSettings] = []) {
+        let configuredCoins = self.configuredCoins(coin: coin, settingsArray: settingsArray)
+
+        if isEnabled(coin: coin) {
+            applySettings(coin: coin, configuredCoins: configuredCoins)
+        } else {
+            enable(configuredCoins: configuredCoins)
+        }
+    }
+
+    private func handleRejectApproveSettings(coin: Coin) {
+        if !isEnabled(coin: coin) {
+            cancelEnableCoinRelay.accept(coin)
+        }
+    }
+
+    private func applySettings(coin: Coin, configuredCoins: [ConfiguredCoin]) {
+        let existingWallets = wallets.filter { $0.coin == coin }
+        let existingConfiguredCoins = existingWallets.map { $0.configuredCoin }
+
+        let newConfiguredCoins = configuredCoins.filter { !existingConfiguredCoins.contains($0) }
+        let removedWallets = existingWallets.filter { !configuredCoins.contains($0.configuredCoin) }
+
+        if !newConfiguredCoins.isEmpty {
+            enable(configuredCoins: newConfiguredCoins)
+        }
+
+        if !removedWallets.isEmpty {
+            walletManager.delete(wallets: Array(removedWallets))
+        }
     }
 
     private func enable(configuredCoins: [ConfiguredCoin]) {
@@ -164,15 +198,26 @@ extension ManageWalletsServiceNew {
 
     func enable(coin: Coin) {
         if coin.type.coinSettingTypes.isEmpty {
-            handleApproveEnable(coin: coin)
+            handleApproveSettings(coin: coin)
         } else {
-            coinSettingsService.approveEnable(coin: coin, settingsArray: coin.type.defaultSettingsArray)
+            coinSettingsService.approveSettings(coin: coin, settingsArray: coin.type.defaultSettingsArray)
         }
     }
 
     func disable(coin: Coin) {
         let walletsToDelete = wallets.filter { $0.coin == coin }
         walletManager.delete(wallets: Array(walletsToDelete))
+    }
+
+    func configure(coin: Coin) {
+        guard !coin.type.coinSettingTypes.isEmpty else {
+            return
+        }
+
+        let coinWallets = wallets.filter { $0.coin == coin }
+        let settingsArray = coinWallets.map { $0.configuredCoin.settings }
+
+        coinSettingsService.approveSettings(coin: coin, settingsArray: settingsArray)
     }
 
 }
@@ -190,6 +235,7 @@ extension ManageWalletsServiceNew {
 
     struct Item {
         let coin: Coin
+        let hasSettings: Bool
         let enabled: Bool
     }
 

@@ -5,7 +5,7 @@ import ThemeKit
 import RxSwift
 import RxCocoa
 
-class ManageWalletsViewControllerNew: CoinToggleViewController {
+class ManageWalletsViewControllerNew: CoinToggleViewControllerNew {
     private let viewModel: ManageWalletsViewModelNew
     private let coinSettingsView: CoinSettingsView
 

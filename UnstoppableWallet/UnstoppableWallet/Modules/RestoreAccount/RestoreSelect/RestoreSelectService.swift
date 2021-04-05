@@ -40,11 +40,11 @@ class RestoreSelectService {
             let configuredCoins = coins.map { ConfiguredCoin(coin: $0) }
             self?.enable(configuredCoins: configuredCoins, sortCoins: true)
         }
-        subscribe(disposeBag, coinSettingsService.approveEnableCoinObservable) { [weak self] coinWithSettings in
-            self?.handleApproveEnable(coin: coinWithSettings.coin, settingsArray: coinWithSettings.settingsArray)
+        subscribe(disposeBag, coinSettingsService.approveSettingsObservable) { [weak self] coinWithSettings in
+            self?.handleApproveSettings(coin: coinWithSettings.coin, settingsArray: coinWithSettings.settingsArray)
         }
-        subscribe(disposeBag, coinSettingsService.rejectEnableCoinObservable) { [weak self] coin in
-            self?.cancelEnableCoinRelay.accept(coin)
+        subscribe(disposeBag, coinSettingsService.rejectApproveSettingsObservable) { [weak self] coin in
+            self?.handleRejectApproveSettings(coin: coin)
         }
 
         (featuredCoins, coins) = coinManager.groupedCoins
@@ -58,7 +58,13 @@ class RestoreSelectService {
     }
 
     private func item(coin: Coin) -> Item {
-        Item(coin: coin, enabled: isEnabled(coin: coin))
+        let enabled = isEnabled(coin: coin)
+
+        return Item(
+                coin: coin,
+                hasSettings: enabled && !coin.type.coinSettingTypes.isEmpty,
+                enabled: enabled
+        )
     }
 
     private func filtered(coins: [Coin]) -> [Coin] {
@@ -106,9 +112,36 @@ class RestoreSelectService {
         }
     }
 
-    private func handleApproveEnable(coin: Coin, settingsArray: [CoinSettings] = []) {
-        enable(configuredCoins: configuredCoins(coin: coin, settingsArray: settingsArray))
-        enableCoinsService.handle(coinType: coin.type, accountType: accountType)
+    private func handleApproveSettings(coin: Coin, settingsArray: [CoinSettings] = []) {
+        let configuredCoins = self.configuredCoins(coin: coin, settingsArray: settingsArray)
+
+        if isEnabled(coin: coin) {
+            applySettings(coin: coin, configuredCoins: configuredCoins)
+        } else {
+            enable(configuredCoins: configuredCoins)
+            enableCoinsService.handle(coinType: coin.type, accountType: accountType)
+        }
+    }
+
+    private func handleRejectApproveSettings(coin: Coin) {
+        if !isEnabled(coin: coin) {
+            cancelEnableCoinRelay.accept(coin)
+        }
+    }
+
+    private func applySettings(coin: Coin, configuredCoins: [ConfiguredCoin]) {
+        let existingConfiguredCoins = enabledCoins.filter { $0.coin == coin }
+
+        let newConfiguredCoins = configuredCoins.filter { !existingConfiguredCoins.contains($0) }
+        let removedConfiguredCoins = existingConfiguredCoins.filter { !configuredCoins.contains($0) }
+
+        for configuredCoin in newConfiguredCoins {
+            enabledCoins.insert(configuredCoin)
+        }
+
+        for configuredCoin in removedConfiguredCoins {
+            enabledCoins.remove(configuredCoin)
+        }
     }
 
     private func enable(configuredCoins: [ConfiguredCoin], sortCoins: Bool = false) {
@@ -149,9 +182,9 @@ extension RestoreSelectService {
 
     func enable(coin: Coin) {
         if coin.type.coinSettingTypes.isEmpty {
-            handleApproveEnable(coin: coin)
+            handleApproveSettings(coin: coin)
         } else {
-            coinSettingsService.approveEnable(coin: coin, settingsArray: coin.type.defaultSettingsArray)
+            coinSettingsService.approveSettings(coin: coin, settingsArray: coin.type.defaultSettingsArray)
         }
     }
 
@@ -160,6 +193,17 @@ extension RestoreSelectService {
 
         syncState()
         syncCanRestore()
+    }
+
+    func configure(coin: Coin) {
+        guard !coin.type.coinSettingTypes.isEmpty else {
+            return
+        }
+
+        let configuredCoins = enabledCoins.filter { $0.coin == coin }
+        let settingsArray = configuredCoins.map { $0.settings }
+
+        coinSettingsService.approveSettings(coin: coin, settingsArray: settingsArray)
     }
 
     func restore() {
@@ -189,12 +233,8 @@ extension RestoreSelectService {
 
     struct Item {
         let coin: Coin
-        var enabled: Bool
-
-        init(coin: Coin, enabled: Bool) {
-            self.coin = coin
-            self.enabled = enabled
-        }
+        let hasSettings: Bool
+        let enabled: Bool
     }
 
 }
