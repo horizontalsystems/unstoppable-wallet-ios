@@ -32,6 +32,7 @@ protocol ILocalStorage: class {
     var pushToken: String? { get set }
     var pushNotificationsOn: Bool { get set }
     var marketCategory: Int? { get set }
+    var zcashAlwaysPendingRewind: Bool { get set }
 }
 
 protocol ILogRecordManager {
