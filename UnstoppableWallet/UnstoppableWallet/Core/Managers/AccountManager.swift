@@ -49,12 +49,6 @@ extension AccountManager: IAccountManager {
         cache.accounts
     }
 
-    func account(coinType: CoinType) -> Account? {
-        accounts.first { account in
-            coinType.canSupport(accountType: account.type)
-        }
-    }
-
     func account(id: String) -> Account? {
         accounts.first { $0.id == id }
     }
@@ -93,9 +87,7 @@ extension AccountManager: IAccountManager {
 
         accountsSubject.onNext(accounts)
 
-        if accounts.count == 1 {
-            set(activeAccountId: accounts.first?.id)
-        }
+        set(activeAccountId: account.id)
     }
 
     func delete(account: Account) {

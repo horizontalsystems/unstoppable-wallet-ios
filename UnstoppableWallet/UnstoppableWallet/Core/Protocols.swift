@@ -67,6 +67,9 @@ protocol IAdapterFactory {
 }
 
 protocol IWalletManager: class {
+    var activeWallets: [Wallet] { get }
+    var activeWalletsUpdatedObservable: Observable<[Wallet]> { get }
+
     var wallets: [Wallet] { get }
     var walletsUpdatedObservable: Observable<[Wallet]> { get }
 
@@ -183,7 +186,6 @@ protocol IAccountManager {
     func set(activeAccountId: String?)
 
     var accounts: [Account] { get }
-    func account(coinType: CoinType) -> Account?
     func account(id: String) -> Account?
 
     var activeAccountObservable: Observable<Account?> { get }
@@ -307,6 +309,7 @@ protocol ICoinMigration {
 
 protocol IEnabledWalletStorage {
     var enabledWallets: [EnabledWallet] { get }
+    func enabledWallets(accountId: String) -> [EnabledWallet]
     func handle(newEnabledWallets: [EnabledWallet], deletedEnabledWallets: [EnabledWallet])
     func clearEnabledWallets()
 }
@@ -366,6 +369,12 @@ protocol IBlockchainSettingsStorage: AnyObject {
 
     func initialSyncSetting(coinType: CoinType) -> InitialSyncSetting?
     func save(initialSyncSetting: InitialSyncSetting)
+}
+
+protocol IRestoreSettingsStorage {
+    func restoreSettings(accountId: String, coinId: String) -> [RestoreSettingRecord]
+    func save(restoreSettingRecords: [RestoreSettingRecord])
+    func deleteAllRestoreSettings(accountId: String)
 }
 
 protocol IKitCleaner {
@@ -434,6 +443,7 @@ protocol IAppManager {
 
 protocol IWalletStorage {
     func wallets(accounts: [Account]) -> [Wallet]
+    func wallets(account: Account) -> [Wallet]
     func handle(newWallets: [Wallet], deletedWallets: [Wallet])
     func clearWallets()
 }

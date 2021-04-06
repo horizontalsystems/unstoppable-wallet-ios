@@ -24,7 +24,7 @@ class RateAppManager {
     }
 
     private func onCountdownPass() {
-        let hasBalance = walletManager.wallets.contains { wallet in
+        let hasBalance = walletManager.activeWallets.contains { wallet in
             guard let adapter = adapterManager.balanceAdapter(for: wallet) else {
                 return false
             }

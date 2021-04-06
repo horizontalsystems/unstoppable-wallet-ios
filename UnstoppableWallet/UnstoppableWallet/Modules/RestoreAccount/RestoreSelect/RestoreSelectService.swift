@@ -9,6 +9,7 @@ class RestoreSelectService {
     private let walletManager: IWalletManager
     private let coinManager: ICoinManager
     private let enableCoinsService: EnableCoinsService
+    private let restoreSettingsService: RestoreSettingsService
     private let coinSettingsService: CoinSettingsService
     private let disposeBag = DisposeBag()
 
@@ -16,6 +17,8 @@ class RestoreSelectService {
     private var coins = [Coin]()
     private(set) var enabledCoins = Set<ConfiguredCoin>()
     private var filter: String?
+
+    private var restoreSettingsMap = [Coin: RestoreSettings]()
 
     private let stateRelay = PublishRelay<State>()
     private let cancelEnableCoinRelay = PublishRelay<Coin>()
@@ -27,24 +30,31 @@ class RestoreSelectService {
         }
     }
 
-    init(accountType: AccountType, accountFactory: IAccountFactory, accountManager: IAccountManager, walletManager: IWalletManager, coinManager: ICoinManager, enableCoinsService: EnableCoinsService, coinSettingsService: CoinSettingsService) {
+    init(accountType: AccountType, accountFactory: IAccountFactory, accountManager: IAccountManager, walletManager: IWalletManager, coinManager: ICoinManager, enableCoinsService: EnableCoinsService, restoreSettingsService: RestoreSettingsService, coinSettingsService: CoinSettingsService) {
         self.accountType = accountType
         self.accountFactory = accountFactory
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.coinManager = coinManager
         self.enableCoinsService = enableCoinsService
+        self.restoreSettingsService = restoreSettingsService
         self.coinSettingsService = coinSettingsService
 
         subscribe(disposeBag, enableCoinsService.enableCoinsObservable) { [weak self] coins in
             let configuredCoins = coins.map { ConfiguredCoin(coin: $0) }
             self?.enable(configuredCoins: configuredCoins, sortCoins: true)
         }
+        subscribe(disposeBag, restoreSettingsService.approveSettingsObservable) { [weak self] coinWithSettings in
+            self?.handleApproveRestoreSettings(coin: coinWithSettings.coin, settings: coinWithSettings.settings)
+        }
+        subscribe(disposeBag, restoreSettingsService.rejectApproveSettingsObservable) { [weak self] coin in
+            self?.handleRejectApproveRestoreSettings(coin: coin)
+        }
         subscribe(disposeBag, coinSettingsService.approveSettingsObservable) { [weak self] coinWithSettings in
-            self?.handleApproveSettings(coin: coinWithSettings.coin, settingsArray: coinWithSettings.settingsArray)
+            self?.handleApproveCoinSettings(coin: coinWithSettings.coin, settingsArray: coinWithSettings.settingsArray)
         }
         subscribe(disposeBag, coinSettingsService.rejectApproveSettingsObservable) { [weak self] coin in
-            self?.handleRejectApproveSettings(coin: coin)
+            self?.handleRejectApproveCoinSettings(coin: coin)
         }
 
         (featuredCoins, coins) = coinManager.groupedCoins
@@ -112,7 +122,23 @@ class RestoreSelectService {
         }
     }
 
-    private func handleApproveSettings(coin: Coin, settingsArray: [CoinSettings] = []) {
+    private func handleApproveRestoreSettings(coin: Coin, settings: RestoreSettings = [:]) {
+        if !settings.isEmpty {
+            restoreSettingsMap[coin] = settings
+        }
+
+        if coin.type.coinSettingTypes.isEmpty {
+            handleApproveCoinSettings(coin: coin)
+        } else {
+            coinSettingsService.approveSettings(coin: coin, settingsArray: coin.type.defaultSettingsArray)
+        }
+    }
+
+    private func handleRejectApproveRestoreSettings(coin: Coin) {
+        cancelEnableCoinRelay.accept(coin)
+    }
+
+    private func handleApproveCoinSettings(coin: Coin, settingsArray: [CoinSettings] = []) {
         let configuredCoins = self.configuredCoins(coin: coin, settingsArray: settingsArray)
 
         if isEnabled(coin: coin) {
@@ -123,7 +149,7 @@ class RestoreSelectService {
         }
     }
 
-    private func handleRejectApproveSettings(coin: Coin) {
+    private func handleRejectApproveCoinSettings(coin: Coin) {
         if !isEnabled(coin: coin) {
             cancelEnableCoinRelay.accept(coin)
         }
@@ -181,10 +207,10 @@ extension RestoreSelectService {
     }
 
     func enable(coin: Coin) {
-        if coin.type.coinSettingTypes.isEmpty {
-            handleApproveSettings(coin: coin)
+        if coin.type.restoreSettingTypes.isEmpty {
+            handleApproveRestoreSettings(coin: coin)
         } else {
-            coinSettingsService.approveSettings(coin: coin, settingsArray: coin.type.defaultSettingsArray)
+            restoreSettingsService.approveSettings(coin: coin)
         }
     }
 
@@ -209,6 +235,10 @@ extension RestoreSelectService {
     func restore() {
         let account = accountFactory.account(type: accountType, origin: .restored, backedUp: true)
         accountManager.save(account: account)
+
+        for (coin, settings) in restoreSettingsMap {
+            restoreSettingsService.save(settings: settings, account: account, coin: coin)
+        }
 
         guard !enabledCoins.isEmpty else {
             return

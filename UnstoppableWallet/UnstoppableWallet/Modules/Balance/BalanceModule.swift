@@ -5,6 +5,7 @@ import CurrencyKit
 import CoinKit
 
 protocol IBalanceView: class {
+    func set(title: String?)
     func set(headerViewItem: BalanceHeaderViewItem?, viewItems: [BalanceViewItem])
     func hideRefresh()
     func show(error: Error)
@@ -34,6 +35,8 @@ protocol IBalanceViewDelegate {
 }
 
 protocol IBalanceInteractor: AnyObject {
+    var activeAccount: Account? { get }
+
     var wallets: [Wallet] { get }
     var baseCurrency: Currency { get }
 
@@ -58,6 +61,7 @@ protocol IBalanceInteractor: AnyObject {
 }
 
 protocol IBalanceInteractorDelegate: class {
+    func didUpdate(activeAccount: Account?)
     func didUpdate(wallets: [Wallet])
     func didPrepareAdapters()
     func didUpdate(balance: Decimal, balanceLocked: Decimal?, wallet: Wallet)

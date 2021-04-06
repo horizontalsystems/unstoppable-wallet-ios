@@ -25,7 +25,7 @@ class AccountCreator {
 
     private func createZcashAccountType() throws -> AccountType {
         let words = try wordsManager.generateWords(count: 24)
-        return .zcash(words: words, birthdayHeight: ZcashAdapter.newBirthdayHeight)
+        return .mnemonic(words: words, salt: nil)
     }
 
 }

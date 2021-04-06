@@ -2,22 +2,6 @@ import CoinKit
 
 extension CoinType {
 
-    func canSupport(accountType: AccountType) -> Bool {
-        switch self {
-        case .bitcoin, .litecoin, .bitcoinCash, .dash, .ethereum, .erc20:
-            if case let .mnemonic(words, salt) = accountType, words.count == 12, salt == nil { return true }
-            return false
-        case .binanceSmartChain, .bep20, .bep2:
-            if case let .mnemonic(words, salt) = accountType, words.count == 24, salt == nil { return true }
-            return false
-        case .zcash:
-            if case .zcash = accountType { return true }
-            return false
-        case .unsupported:
-            return false
-        }
-    }
-
     var predefinedAccountType: PredefinedAccountType {
         switch self {
         case .bitcoin, .litecoin, .bitcoinCash, .dash, .ethereum, .erc20, .unsupported:
@@ -70,7 +54,6 @@ extension CoinType {
         switch self {
         case .bitcoin, .litecoin: return [.derivation]
         case .bitcoinCash: return [.bitcoinCashCoinType]
-        case .zcash: return [.birthdayHeight]
         default: return []
         }
     }
@@ -79,7 +62,13 @@ extension CoinType {
         switch self {
         case .bitcoin, .litecoin: return [[.derivation: MnemonicDerivation.bip49.rawValue]]
         case .bitcoinCash: return [[.bitcoinCashCoinType: BitcoinCashCoinType.type145.rawValue]]
-        case .zcash: return [[.birthdayHeight: ""]] // todo
+        default: return []
+        }
+    }
+
+    var restoreSettingTypes: [RestoreSettingType] {
+        switch self {
+        case .zcash: return [.birthdayHeight]
         default: return []
         }
     }

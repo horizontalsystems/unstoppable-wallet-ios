@@ -20,7 +20,7 @@ class EthereumKitManager {
             return evmKit
         }
 
-        guard case let .mnemonic(words, _) = account.type, words.count == 12 else {
+        guard case let .mnemonic(words, _) = account.type else {
             throw AdapterError.unsupportedAccount
         }
 

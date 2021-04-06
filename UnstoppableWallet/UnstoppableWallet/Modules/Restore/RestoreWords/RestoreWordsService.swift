@@ -59,7 +59,8 @@ extension RestoreWordsService {
         case .mnemonic:
             return .mnemonic(words: words, salt: nil)
         case .zcash:
-            return .zcash(words: words, birthdayHeight: birthdayHeight)
+//            return .zcash(words: words, birthdayHeight: birthdayHeight)
+            return .mnemonic(words: words, salt: nil)
         }
     }
 

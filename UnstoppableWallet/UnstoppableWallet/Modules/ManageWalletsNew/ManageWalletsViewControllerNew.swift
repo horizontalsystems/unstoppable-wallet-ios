@@ -7,10 +7,12 @@ import RxCocoa
 
 class ManageWalletsViewControllerNew: CoinToggleViewControllerNew {
     private let viewModel: ManageWalletsViewModelNew
+    private let restoreSettingsView: RestoreSettingsView
     private let coinSettingsView: CoinSettingsView
 
-    init(viewModel: ManageWalletsViewModelNew, coinSettingsView: CoinSettingsView) {
+    init(viewModel: ManageWalletsViewModelNew, restoreSettingsView: RestoreSettingsView, coinSettingsView: CoinSettingsView) {
         self.viewModel = viewModel
+        self.restoreSettingsView = restoreSettingsView
         self.coinSettingsView = coinSettingsView
 
         super.init(viewModel: viewModel)
@@ -31,6 +33,9 @@ class ManageWalletsViewControllerNew: CoinToggleViewControllerNew {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(onTapDoneButton))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "manage_coins.add_token".localized, style: .plain, target: self, action: #selector(onTapAddTokenButton))
 
+        restoreSettingsView.onOpenController = { [weak self] controller in
+            self?.present(controller, animated: true)
+        }
         coinSettingsView.onOpenController = { [weak self] controller in
             self?.present(controller, animated: true)
         }

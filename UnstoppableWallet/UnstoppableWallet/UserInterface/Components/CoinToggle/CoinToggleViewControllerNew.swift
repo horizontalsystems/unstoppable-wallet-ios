@@ -109,7 +109,7 @@ class CoinToggleViewControllerNew: ThemeSearchViewController {
             return
         }
 
-        guard let cell = tableView.cellForRow(at: IndexPath(row: index, section: section)) as? G11Cell else {
+        guard let cell = tableView.cellForRow(at: IndexPath(row: index, section: section)) as? G21Cell else {
             return
         }
 

@@ -55,6 +55,29 @@ class BalanceInteractor {
                     }
                 })
                 .disposed(by: disposeBag)
+
+        accountManager.activeAccountObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .subscribe(onNext: { [weak self] activeAccount in
+                    self?.delegate?.didUpdate(activeAccount: activeAccount)
+                })
+                .disposed(by: disposeBag)
+
+        accountManager.accountsObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .subscribe(onNext: { [weak self] accounts in
+                    self?.handleUpdate(accounts: accounts)
+                })
+                .disposed(by: disposeBag)
+    }
+
+    private func handleUpdate(accounts: [Account]) {
+        let activeAccount = accountManager.activeAccount
+        guard let account = accounts.first(where: { $0 == activeAccount }) else {
+            return
+        }
+
+        delegate?.didUpdate(activeAccount: account)
     }
 
     private func onUpdate(wallets: [Wallet]) {
@@ -73,8 +96,12 @@ class BalanceInteractor {
 
 extension BalanceInteractor: IBalanceInteractor {
 
+    var activeAccount: Account? {
+        accountManager.activeAccount
+    }
+
     var wallets: [Wallet] {
-        walletManager.wallets
+        walletManager.activeWallets
     }
 
     var baseCurrency: Currency {
@@ -98,7 +125,7 @@ extension BalanceInteractor: IBalanceInteractor {
     }
 
     func subscribeToWallets() {
-        walletManager.walletsUpdatedObservable
+        walletManager.activeWalletsUpdatedObservable
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInteractive))
                 .subscribe(onNext: { [weak self] wallets in
                     self?.onUpdate(wallets: wallets)

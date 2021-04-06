@@ -218,7 +218,7 @@ extension ManageWalletsService {
     }
 
     func account(coinType: CoinType) -> Account? {
-        accountManager.account(coinType: coinType)
+        nil
     }
 
     func enable(coin: Coin) {

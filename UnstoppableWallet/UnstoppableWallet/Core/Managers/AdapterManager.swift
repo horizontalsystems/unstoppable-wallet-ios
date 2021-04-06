@@ -22,7 +22,7 @@ class AdapterManager {
         self.binanceKitManager = binanceKitManager
         self.walletManager = walletManager
 
-        walletManager.walletsUpdatedObservable
+        walletManager.activeWalletsUpdatedObservable
                 .observeOn(SerialDispatchQueueScheduler(qos: .utility))
                 .subscribe(onNext: { [weak self] wallets in
                     self?.initAdapters(wallets: wallets)
@@ -78,7 +78,7 @@ extension AdapterManager: IAdapterManager {
 
     func adapter(for coin: Coin) -> IAdapter? {
         queue.sync {
-            guard let wallet = walletManager.wallets.first(where: { $0.coin == coin } ) else {
+            guard let wallet = walletManager.activeWallets.first(where: { $0.coin == coin } ) else {
                 return nil
             }
 
@@ -118,7 +118,7 @@ extension AdapterManager: IAdapterManager {
             }
         }
 
-        initAdapters(wallets: walletManager.wallets)
+        initAdapters(wallets: walletManager.activeWallets)
     }
 
     func refresh(wallet: Wallet) {

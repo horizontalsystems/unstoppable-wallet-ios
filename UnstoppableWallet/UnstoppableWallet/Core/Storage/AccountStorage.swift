@@ -35,13 +35,6 @@ class AccountStorage {
             }
 
             type = .privateKey(data: data)
-        case .zcash:
-            guard let words = recoverStringArray(id: id, typeName: typeName, keyName: .words) else {
-                return nil
-            }
-
-            let birthdayHeight: Int? = recover(id: id, typeName: typeName, keyName: .birthdayHeight)
-            type = .zcash(words: words, birthdayHeight: birthdayHeight)
         }
 
         return Account(
@@ -59,7 +52,6 @@ class AccountStorage {
         let typeName: TypeName
         var wordsKey: String?
         var saltKey: String?
-        var birthdayHeightKey: String?
         var dataKey: String?
 
         switch account.type {
@@ -70,12 +62,6 @@ class AccountStorage {
         case .privateKey(let data):
             typeName = .privateKey
             dataKey = try store(data: data, id: id, typeName: typeName, keyName: .data)
-        case .zcash(let words, let birthdayHeight):
-            typeName = .zcash
-            wordsKey = try store(stringArray: words, id: id, typeName: typeName, keyName: .words)
-            if let height = birthdayHeight {
-                birthdayHeightKey = try store(height, id: id, typeName: typeName, keyName: .birthdayHeight)
-            }
         }
 
         return AccountRecord(
@@ -86,7 +72,6 @@ class AccountStorage {
                 backedUp: account.backedUp,
                 wordsKey: wordsKey,
                 saltKey: saltKey,
-                birthdayHeightKey: birthdayHeightKey,
                 dataKey: dataKey
         )
     }
@@ -100,9 +85,6 @@ class AccountStorage {
             try secureStorage.removeValue(for: secureKey(id: id, typeName: .mnemonic, keyName: .salt))
         case .privateKey:
             try secureStorage.removeValue(for: secureKey(id: id, typeName: .privateKey, keyName: .data))
-        case .zcash:
-            try secureStorage.removeValue(for: secureKey(id: id, typeName: .mnemonic, keyName: .words))
-            try secureStorage.removeValue(for: secureKey(id: id, typeName: .mnemonic, keyName: .birthdayHeight))
         }
     }
 
@@ -185,13 +167,11 @@ extension AccountStorage {
     private enum TypeName: String {
         case mnemonic
         case privateKey
-        case zcash
     }
 
     private enum KeyName: String {
         case words
         case salt
-        case birthdayHeight
         case data
         case privateKey
     }
