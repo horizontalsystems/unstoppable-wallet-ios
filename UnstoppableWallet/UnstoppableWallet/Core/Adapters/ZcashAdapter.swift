@@ -11,6 +11,7 @@ class ZcashAdapter {
     private static let coinRate = Decimal(ZcashSDK.ZATOSHI_PER_ZEC)
     var fee: Decimal { defaultFee() }
 
+    private let localStorage: ILocalStorage = App.shared.localStorage       //temporary decision. Will move to init
     private let saplingDownloader = DownloadService(queueLabel: "io.SaplingDownloader")
     private let synchronizer: SDKSynchronizer
     private let transactionPool: ZcashTransactionPool
@@ -230,10 +231,33 @@ class ZcashAdapter {
         return isExist
     }
 
+    func fixPendingTransactionsIfNeeded() {
+        // check if we need to perform the fix or leave
+        guard !localStorage.zcashAlwaysPendingRewind else {
+            return
+        }
+
+        do {
+            // get all the pending transactions
+            let txs = try synchronizer.allPendingTransactions()
+
+            // fetch the first one that's reported to be unmined
+            guard let firstUnmined = txs.filter({ !$0.isMined }).first?.transactionEntity else {
+                localStorage.zcashAlwaysPendingRewind = true
+                return
+            }
+
+            try synchronizer.rewind(.transaction(firstUnmined))
+            localStorage.zcashAlwaysPendingRewind = true
+        } catch {
+            loggingProxy.error("attempt to fix pending transactions failed with error: \(error)", file: #file, function: #function, line: 0)
+        }
+    }
+
     deinit {
         NotificationCenter.default.removeObserver(self)
-        self.synchronizer.blockProcessor?.stop()
-        self.synchronizer.stop()
+        synchronizer.blockProcessor?.stop()
+        synchronizer.stop()
     }
 
 }
@@ -309,6 +333,7 @@ extension ZcashAdapter: IAdapter {
 
     private func sync() {
         do {
+            fixPendingTransactionsIfNeeded()
             try synchronizer.start()
         } catch {
             balanceState = .notSynced(error: error)
