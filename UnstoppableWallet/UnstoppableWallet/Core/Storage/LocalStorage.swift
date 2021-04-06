@@ -21,6 +21,7 @@ class LocalStorage {
     private let keyPushToken = "push_token"
     private let keyPushNotificationsOn = "push_notifications_on"
     private let keyDefaultMarketCategory = "default_market_category"
+    private let keyZCashRewind = "z_cash_always_pending_rewind"
 
     private let storage: StorageKit.ILocalStorage
 
@@ -140,6 +141,11 @@ extension LocalStorage: ILocalStorage {
     var marketCategory: Int? {
         get { storage.value(for: keyDefaultMarketCategory) }
         set { storage.set(value: newValue, for: keyDefaultMarketCategory) }
+    }
+
+    var zcashAlwaysPendingRewind: Bool {
+        get { storage.value(for: keyZCashRewind) ?? false }
+        set { storage.set(value: newValue, for: keyZCashRewind) }
     }
 
 }
