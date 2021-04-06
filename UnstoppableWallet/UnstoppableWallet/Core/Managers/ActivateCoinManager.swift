@@ -17,13 +17,13 @@ class ActivateCoinManager {
             return
         }
 
-        guard !walletManager.wallets.contains(where: { $0.coin == coin }) else {
+        guard !walletManager.activeWallets.contains(where: { $0.coin == coin }) else {
             // wallet already exists
             return
         }
 
-        guard let account = accountManager.account(coinType: coin.type) else {
-            // account does not exist for this coin type
+        guard let account = accountManager.activeAccount else {
+            // active account does not exist
             return
         }
 

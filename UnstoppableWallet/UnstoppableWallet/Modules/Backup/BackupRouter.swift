@@ -46,13 +46,13 @@ extension BackupRouter {
         switch account.type {
         case let .mnemonic(words, _):
             return BackupWordsRouter.module(delegate: delegate, predefinedAccountType: predefinedAccountType, words: words, isBackedUp: account.backedUp)
-        case let .zcash(words, birthdayHeight):
-            var additionalItems = [BackupAdditionalItem]()
-            if let birthday = birthdayHeight {
-                additionalItems.append(BackupAdditionalItem(title: "backup.birthday_height", value: birthday.description))
-            }
-
-            return BackupWordsRouter.module(delegate: delegate, predefinedAccountType: predefinedAccountType, words: words, additionalItems: additionalItems, isBackedUp: account.backedUp)
+//        case let .zcash(words, birthdayHeight):
+//            var additionalItems = [BackupAdditionalItem]()
+//            if let birthday = birthdayHeight {
+//                additionalItems.append(BackupAdditionalItem(title: "backup.birthday_height", value: birthday.description))
+//            }
+//
+//            return BackupWordsRouter.module(delegate: delegate, predefinedAccountType: predefinedAccountType, words: words, additionalItems: additionalItems, isBackedUp: account.backedUp)
         default:
             return nil
         }

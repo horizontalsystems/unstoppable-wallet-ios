@@ -3,7 +3,6 @@ import Foundation
 enum AccountType {
     case mnemonic(words: [String], salt: String?)
     case privateKey(data: Data)
-    case zcash(words: [String], birthdayHeight: Int?)
 }
 
 extension AccountType: Hashable {
@@ -14,8 +13,6 @@ extension AccountType: Hashable {
             return lhsWords == rhsWords && lhsSalt == rhsSalt
         case (let .privateKey(lhsData), let .privateKey(rhsData)):
             return lhsData == rhsData
-        case (let .zcash(lhsWords, lhsHeight), let .zcash(rhsWords, rhsHeight)):
-            return lhsWords == rhsWords && (lhsHeight ?? 0) == (rhsHeight ?? 0)
         default: return false
         }
     }
@@ -27,11 +24,6 @@ extension AccountType: Hashable {
             hasher.combine(salt)
         case let .privateKey(data):
             hasher.combine(data)
-        case let .zcash(words, birthdayHeight):
-            hasher.combine(words)
-            if let height = birthdayHeight {
-                hasher.combine(height)
-            }
         }
     }
 

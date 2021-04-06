@@ -4,16 +4,16 @@ import RxSwift
 class BitcoinCashAdapter: BitcoinBaseAdapter {
     private let bitcoinCashKit: Kit
 
-    init(wallet: Wallet, syncMode: SyncMode?, bitcoinCashCoinType: BitcoinCashCoinType?, testMode: Bool) throws {
-        guard case let .mnemonic(words, _) = wallet.account.type, words.count == 12 else {
+    init(wallet: Wallet, syncMode: SyncMode?, testMode: Bool) throws {
+        guard case let .mnemonic(words, _) = wallet.account.type else {
             throw AdapterError.unsupportedAccount
         }
 
-        guard let walletSyncMode = syncMode else {
+        guard let bitcoinCashCoinType = wallet.configuredCoin.settings.bitcoinCashCoinType else {
             throw AdapterError.wrongParameters
         }
 
-        guard let bitcoinCashCoinType = bitcoinCashCoinType else {
+        guard let walletSyncMode = syncMode else {
             throw AdapterError.wrongParameters
         }
 

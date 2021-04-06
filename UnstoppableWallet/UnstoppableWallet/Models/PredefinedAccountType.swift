@@ -30,9 +30,7 @@ enum PredefinedAccountType: CaseIterable {
                 return words.count == 24
             }
         case .zcash:
-            if case .zcash = accountType {
-                return true
-            }
+            return false
         }
 
         return false

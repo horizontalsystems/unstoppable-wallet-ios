@@ -47,7 +47,7 @@ extension InitialSyncSettingsManager: IInitialSyncSettingsManager {
     func save(setting: InitialSyncSetting) {
         storage.save(initialSyncSetting: setting)
 
-        let walletsForUpdate = walletManager.wallets.filter { $0.coin.type == setting.coinType && $0.account.origin == .restored }
+        let walletsForUpdate = walletManager.activeWallets.filter { $0.coin.type == setting.coinType && $0.account.origin == .restored }
 
         if !walletsForUpdate.isEmpty {
             adapterManager.refreshAdapters(wallets: walletsForUpdate)

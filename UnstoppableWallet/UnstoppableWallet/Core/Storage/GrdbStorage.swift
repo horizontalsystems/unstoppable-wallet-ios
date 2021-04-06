@@ -54,7 +54,7 @@ class GrdbStorage {
                 t.column(EnabledWallet_v_0_10.Columns.syncMode.name, .text)
                 t.column(EnabledWallet_v_0_10.Columns.walletOrder.name, .integer).notNull()
 
-                t.primaryKey(["coinCode", EnabledWallet.Columns.accountId.name], onConflict: .replace)
+                t.primaryKey(["coinCode", EnabledWallet_v_0_10.Columns.accountId.name], onConflict: .replace)
             }
         }
 
@@ -317,7 +317,7 @@ class GrdbStorage {
         }
 
         migrator.registerMigration("addCoinTypeBlockchainSettingForBitcoinCash") { db in
-            if try EnabledWallet.filter(EnabledWallet.Columns.coinId == "BCH").fetchOne(db) != nil {
+            if try EnabledWallet_v_0_20.filter(EnabledWallet_v_0_20.Columns.coinId == "BCH").fetchOne(db) != nil {
                 let record = BlockchainSettingRecord(coinType: "bitcoinCash", key: "network_coin_type", value: "type0")
                 try record.insert(db)
             }
@@ -328,27 +328,27 @@ class GrdbStorage {
 
             try db.drop(table: AccountRecord_v_0_19.databaseTableName)
 
-            try db.create(table: AccountRecord.databaseTableName) { t in
-                t.column(AccountRecord.Columns.id.name, .text).notNull()
-                t.column(AccountRecord.Columns.name.name, .text).notNull()
-                t.column(AccountRecord.Columns.type.name, .text).notNull()
-                t.column(AccountRecord.Columns.origin.name, .text).notNull()
-                t.column(AccountRecord.Columns.backedUp.name, .boolean).notNull()
-                t.column(AccountRecord.Columns.wordsKey.name, .text)
-                t.column(AccountRecord.Columns.saltKey.name, .text)
-                t.column(AccountRecord.Columns.birthdayHeightKey.name, .text)
-                t.column(AccountRecord.Columns.dataKey.name, .text)
+            try db.create(table: AccountRecord_v_0_20.databaseTableName) { t in
+                t.column(AccountRecord_v_0_20.Columns.id.name, .text).notNull()
+                t.column(AccountRecord_v_0_20.Columns.name.name, .text).notNull()
+                t.column(AccountRecord_v_0_20.Columns.type.name, .text).notNull()
+                t.column(AccountRecord_v_0_20.Columns.origin.name, .text).notNull()
+                t.column(AccountRecord_v_0_20.Columns.backedUp.name, .boolean).notNull()
+                t.column(AccountRecord_v_0_20.Columns.wordsKey.name, .text)
+                t.column(AccountRecord_v_0_20.Columns.saltKey.name, .text)
+                t.column(AccountRecord_v_0_20.Columns.birthdayHeightKey.name, .text)
+                t.column(AccountRecord_v_0_20.Columns.dataKey.name, .text)
 
-                t.primaryKey([AccountRecord.Columns.id.name], onConflict: .replace)
+                t.primaryKey([AccountRecord_v_0_20.Columns.id.name], onConflict: .replace)
             }
 
             for oldAccount in oldAccounts {
                 if oldAccount.type == "eos" {
-                    try EnabledWallet.filter(EnabledWallet.Columns.accountId == oldAccount.id).deleteAll(db)
+                    try EnabledWallet_v_0_20.filter(EnabledWallet_v_0_20.Columns.accountId == oldAccount.id).deleteAll(db)
                     continue
                 }
 
-                let newAccount = AccountRecord(
+                let newAccount = AccountRecord_v_0_20(
                         id: oldAccount.id,
                         name: oldAccount.name,
                         type: oldAccount.type,
@@ -390,12 +390,12 @@ class GrdbStorage {
             let testNet = self?.appConfigProvider.testMode ?? false
             let allCoins = CoinKit.Kit.defaultCoins(testNet: testNet) + coins
 
-            let enabledWallets = try EnabledWallet.fetchAll(db)
-            let changedWallets: [EnabledWallet] = enabledWallets.compactMap { wallet in
+            let enabledWallets = try EnabledWallet_v_0_20.fetchAll(db)
+            let changedWallets: [EnabledWallet_v_0_20] = enabledWallets.compactMap { wallet in
                 guard let newId = CoinIdMigration.new(from: wallet.coinId, coins: allCoins) else {
                     return nil
                 }
-                return EnabledWallet(coinId: newId, coinSettingsId: "", accountId: wallet.accountId)
+                return EnabledWallet_v_0_20(coinId: newId, accountId: wallet.accountId)
             }
 
             //delete all alerts and add title column
@@ -430,6 +430,114 @@ class GrdbStorage {
             }
         }
 
+        migrator.registerMigration("createRestoreSettings") { db in
+            try db.create(table: RestoreSettingRecord.databaseTableName) { t in
+                t.column(RestoreSettingRecord.Columns.accountId.name, .text).notNull()
+                t.column(RestoreSettingRecord.Columns.coinId.name, .text).notNull()
+                t.column(RestoreSettingRecord.Columns.key.name, .text).notNull()
+                t.column(RestoreSettingRecord.Columns.value.name, .text)
+
+                t.primaryKey([RestoreSettingRecord.Columns.accountId.name, RestoreSettingRecord.Columns.coinId.name, RestoreSettingRecord.Columns.key.name], onConflict: .replace)
+            }
+        }
+
+        migrator.registerMigration("moveCoinSettingsFromBlockchainSettingsToWallet") { db in
+            let oldAccounts = try AccountRecord_v_0_20.fetchAll(db)
+
+            try db.drop(table: AccountRecord_v_0_20.databaseTableName)
+
+            try db.create(table: AccountRecord.databaseTableName) { t in
+                t.column(AccountRecord.Columns.id.name, .text).notNull()
+                t.column(AccountRecord.Columns.name.name, .text).notNull()
+                t.column(AccountRecord.Columns.type.name, .text).notNull()
+                t.column(AccountRecord.Columns.origin.name, .text).notNull()
+                t.column(AccountRecord.Columns.backedUp.name, .boolean).notNull()
+                t.column(AccountRecord.Columns.wordsKey.name, .text)
+                t.column(AccountRecord.Columns.saltKey.name, .text)
+                t.column(AccountRecord.Columns.dataKey.name, .text)
+
+                t.primaryKey([AccountRecord.Columns.id.name], onConflict: .replace)
+            }
+
+            for (index, oldAccount) in oldAccounts.enumerated() {
+                var accountType = oldAccount.type
+
+                if accountType == "zcash" {
+                    let keychain = Keychain(service: "io.horizontalsystems.bank.dev")
+
+                    let key = "zcash_\(oldAccount.id)_birthdayHeight"
+                    if let birthdayHeightString = keychain[key], let birthdayHeight = Int(birthdayHeightString) {
+                        let restoreSetting = RestoreSettingRecord(accountId: oldAccount.id, coinId: "zcash", key: "birthdayHeight", value: String(birthdayHeight))
+                        try restoreSetting.insert(db)
+                    }
+                    try? keychain.remove(key)
+
+                    let oldWordsKey = "zcash_\(oldAccount.id)_words"
+                    let newWordsKey = "mnemonic_\(oldAccount.id)_words"
+                    if let wordsValue = keychain[oldWordsKey] {
+                        try keychain.set(wordsValue, key: newWordsKey)
+                    }
+
+                    accountType = "mnemonic"
+                }
+
+                let newAccount = AccountRecord(
+                        id: oldAccount.id,
+                        name: "Wallet \(index + 1)",
+                        type: accountType,
+                        origin: oldAccount.origin,
+                        backedUp: oldAccount.backedUp,
+                        wordsKey: oldAccount.wordsKey,
+                        saltKey: oldAccount.saltKey,
+                        dataKey: oldAccount.dataKey
+                )
+
+                try newAccount.insert(db)
+
+                if index == 0 {
+                    let activeAccount = ActiveAccount(accountId: oldAccount.id)
+                    try activeAccount.insert(db)
+                }
+            }
+
+            let oldWallets = try EnabledWallet_v_0_20.fetchAll(db)
+
+            try db.drop(table: EnabledWallet_v_0_20.databaseTableName)
+
+            try db.create(table: EnabledWallet.databaseTableName) { t in
+                t.column(EnabledWallet.Columns.coinId.name, .text).notNull()
+                t.column(EnabledWallet.Columns.coinSettingsId.name, .text).notNull()
+                t.column(EnabledWallet.Columns.accountId.name, .text).notNull()
+
+                t.primaryKey([EnabledWallet.Columns.coinId.name, EnabledWallet.Columns.coinSettingsId.name, EnabledWallet.Columns.accountId.name], onConflict: .replace)
+            }
+
+            let settingRecords = try BlockchainSettingRecord.fetchAll(db)
+
+            for oldWallet in oldWallets {
+                let coinId = oldWallet.coinId
+                var coinSettingsId = ""
+
+                if coinId == "bitcoin" || coinId == "litecoin" {
+                    let oldSetting = settingRecords.first { $0.coinType == coinId && $0.key == "derivation" }
+                    let newValue = oldSetting?.value ?? "bip49"
+                    coinSettingsId = "derivation:\(newValue)"
+                } else if coinId == "bitcoinCash" {
+                    let oldSetting = settingRecords.first { $0.coinType == coinId && $0.key == "network_coin_type" }
+                    let newValue = oldSetting?.value ?? "type145"
+                    coinSettingsId = "bitcoinCashCoinType:\(newValue)"
+                }
+
+                let newWallet = EnabledWallet(
+                        coinId: oldWallet.coinId,
+                        coinSettingsId: coinSettingsId,
+                        accountId: oldWallet.accountId
+                )
+
+                try newWallet.insert(db)
+            }
+        }
+
         return migrator
     }
 
@@ -448,6 +556,12 @@ extension GrdbStorage: IEnabledWalletStorage {
     var enabledWallets: [EnabledWallet] {
         try! dbPool.read { db in
             try EnabledWallet.fetchAll(db)
+        }
+    }
+
+    func enabledWallets(accountId: String) -> [EnabledWallet] {
+        try! dbPool.read { db in
+            try EnabledWallet.filter(EnabledWallet.Columns.accountId == accountId).fetchAll(db)
         }
     }
 
@@ -689,6 +803,30 @@ extension GrdbStorage: IActiveAccountStorage {
                     try ActiveAccount.deleteAll(db)
                 }
             }
+        }
+    }
+
+}
+
+extension GrdbStorage: IRestoreSettingsStorage {
+
+    func restoreSettings(accountId: String, coinId: String) -> [RestoreSettingRecord] {
+        try! dbPool.read { db in
+            try RestoreSettingRecord.filter(RestoreSettingRecord.Columns.accountId == accountId && RestoreSettingRecord.Columns.coinId == coinId).fetchAll(db)
+        }
+    }
+
+    func save(restoreSettingRecords: [RestoreSettingRecord]) {
+        _ = try! dbPool.write { db in
+            for record in restoreSettingRecords {
+                try record.insert(db)
+            }
+        }
+    }
+
+    func deleteAllRestoreSettings(accountId: String) {
+        _ = try! dbPool.write { db in
+            try RestoreSettingRecord.filter(RestoreSettingRecord.Columns.accountId == accountId).deleteAll(db)
         }
     }
 

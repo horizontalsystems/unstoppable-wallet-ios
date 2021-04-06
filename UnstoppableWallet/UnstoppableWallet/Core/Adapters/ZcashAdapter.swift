@@ -43,8 +43,8 @@ class ZcashAdapter {
         return Decimal(fee) / Self.coinRate
     }
 
-    init(wallet: Wallet, syncMode: SyncMode?, testMode: Bool) throws {
-        guard case let .zcash(words, birthdayHeight) = wallet.account.type else {
+    init(wallet: Wallet, restoreSettings: RestoreSettings, testMode: Bool) throws {
+        guard case let .mnemonic(words, _) = wallet.account.type else {
             throw AdapterError.unsupportedAccount
         }
 
@@ -52,10 +52,10 @@ class ZcashAdapter {
 
         uniqueId = wallet.account.id
         let birthday: Int
-        switch syncMode {
-        case .new: birthday = Self.newBirthdayHeight
-        default:
-            if let height = birthdayHeight {
+        switch wallet.account.origin {
+        case .created: birthday = Self.newBirthdayHeight
+        case .restored:
+            if let height = restoreSettings.birthdayHeight {
                 birthday = WalletBirthday.birthday(with: max(height, ZcashSDK.SAPLING_ACTIVATION_HEIGHT)).height
             } else {
                 birthday = ZcashSDK.SAPLING_ACTIVATION_HEIGHT

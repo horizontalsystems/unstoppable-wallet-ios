@@ -108,12 +108,18 @@ class BalancePresenter {
         }
     }
 
+    private func updateTitle(activeAccount: Account?) {
+        view?.set(title: activeAccount?.name)
+    }
+
 }
 
 extension BalancePresenter: IBalanceViewDelegate {
 
     func onLoad() {
         queue.async {
+            self.updateTitle(activeAccount: self.interactor.activeAccount)
+
             self.interactor.subscribeToWallets()
 
             self.handleUpdate(wallets: self.interactor.wallets)
@@ -237,6 +243,12 @@ extension BalancePresenter: IBalanceViewDelegate {
 }
 
 extension BalancePresenter: IBalanceInteractorDelegate {
+
+    func didUpdate(activeAccount: Account?) {
+        queue.async {
+            self.updateTitle(activeAccount: activeAccount)
+        }
+    }
 
     func didUpdate(wallets: [Wallet]) {
         queue.async {

@@ -32,7 +32,11 @@ extension BalanceRouter: IBalanceRouter {
     }
 
     func openManageWallets() {
-        viewController?.present(ManageWalletsModule.instance(), animated: true)
+        guard let module = ManageWalletsModuleNew.viewController() else {
+            return
+        }
+
+        viewController?.present(module, animated: true)
     }
 
     func showBackupRequired(wallet: Wallet, predefinedAccountType: PredefinedAccountType) {

@@ -15,7 +15,7 @@ class App {
     let appConfigProvider: IAppConfigProvider
 
     let localStorage: ILocalStorage & IChartTypeStorage
-    let storage: ICoinMigration & IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage & IActiveAccountStorage
+    let storage: ICoinMigration & IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage & IActiveAccountStorage & IRestoreSettingsStorage
 
     let themeManager: ThemeManager
     let systemInfoManager: ISystemInfoManager
@@ -46,6 +46,7 @@ class App {
 
     let sortTypeManager: ISortTypeManager
 
+    let restoreSettingsManager: RestoreSettingsManager
     let adapterManager: IAdapterManager
 
     private let testModeIndicator: TestModeIndicator
@@ -142,7 +143,9 @@ class App {
         binanceSmartChainKitManager = BinanceSmartChainKitManager(appConfigProvider: appConfigProvider)
         let binanceKitManager = BinanceKitManager(appConfigProvider: appConfigProvider)
 
-        let adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager, binanceKitManager: binanceKitManager)
+        restoreSettingsManager = RestoreSettingsManager(storage: storage)
+
+        let adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager, binanceKitManager: binanceKitManager, restoreSettingsManager: restoreSettingsManager)
         adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager)
 
         let settingsStorage: IBlockchainSettingsStorage = BlockchainSettingsStorage(storage: storage)
@@ -153,9 +156,7 @@ class App {
 
         transactionDataSortModeSettingManager = TransactionDataSortModeSettingManager(storage: localStorage)
 
-        adapterFactory.derivationSettingsManager = derivationSettingsManager
         adapterFactory.initialSyncSettingsManager = initialSyncSettingsManager
-        adapterFactory.bitcoinCashCoinTypeManager = bitcoinCashCoinTypeManager
         ethereumKitManager.ethereumRpcModeSettingsManager = ethereumRpcModeSettingsManager
 
         pinKit = PinKit.Kit(secureStorage: keychainKit.secureStorage, localStorage: StorageKit.LocalStorage.default)

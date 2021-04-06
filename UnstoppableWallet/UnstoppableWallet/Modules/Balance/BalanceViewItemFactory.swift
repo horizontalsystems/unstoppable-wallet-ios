@@ -17,13 +17,24 @@ class BalanceViewItemFactory {
         return BalanceTopViewItem(
                 iconCoinType: iconCoinType(coin: coin, state: state),
                 coinTitle: coin.title,
-                blockchainBadge: coin.type.blockchainType,
+                blockchainBadge: badge(wallet: item.wallet),
                 rateValue: rateValue(currency: currency, latestRate: latestRate),
                 diff: diff(latestRate: latestRate),
                 syncSpinnerProgress: syncSpinnerProgress(state: state),
                 indefiniteSearchCircle: indefiniteSearchCircle(state: state),
                 failedImageViewVisible: failedImageViewVisible(state: state)
         )
+    }
+
+    private func badge(wallet: Wallet) -> String? {
+        switch wallet.coin.type {
+        case .bitcoin, .litecoin:
+            return wallet.configuredCoin.settings.derivation?.rawValue.uppercased()
+        case .bitcoinCash:
+            return wallet.configuredCoin.settings.bitcoinCashCoinType?.rawValue.uppercased()
+        default:
+            return wallet.coin.type.blockchainType
+        }
     }
 
     private func amountViewItem(item: BalanceItem, currency: Currency, balanceHidden: Bool, expanded: Bool) -> BalanceAmountViewItem? {

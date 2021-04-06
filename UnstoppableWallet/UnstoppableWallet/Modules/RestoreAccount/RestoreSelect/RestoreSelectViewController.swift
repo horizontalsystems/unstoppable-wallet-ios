@@ -5,11 +5,13 @@ import RxCocoa
 
 class RestoreSelectViewController: CoinToggleViewControllerNew {
     private let viewModel: RestoreSelectViewModel
+    private let restoreSettingsView: RestoreSettingsView
     private let coinSettingsView: CoinSettingsView
     private let enableCoinsView: EnableCoinsView
 
-    init(viewModel: RestoreSelectViewModel, coinSettingsView: CoinSettingsView, enableCoinsView: EnableCoinsView) {
+    init(viewModel: RestoreSelectViewModel, restoreSettingsView: RestoreSettingsView, coinSettingsView: CoinSettingsView, enableCoinsView: EnableCoinsView) {
         self.viewModel = viewModel
+        self.restoreSettingsView = restoreSettingsView
         self.coinSettingsView = coinSettingsView
         self.enableCoinsView = enableCoinsView
 
@@ -26,6 +28,9 @@ class RestoreSelectViewController: CoinToggleViewControllerNew {
         title = "select_coins.choose_crypto".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.restore".localized, style: .done, target: self, action: #selector(onTapRightBarButton))
 
+        restoreSettingsView.onOpenController = { [weak self] controller in
+            self?.present(controller, animated: true)
+        }
         coinSettingsView.onOpenController = { [weak self] controller in
             self?.present(controller, animated: true)
         }

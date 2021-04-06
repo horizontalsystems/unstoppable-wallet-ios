@@ -5,12 +5,12 @@ import RxSwift
 class BitcoinAdapter: BitcoinBaseAdapter {
     private let bitcoinKit: Kit
 
-    init(wallet: Wallet, syncMode: SyncMode?, derivation: MnemonicDerivation?, testMode: Bool) throws {
-        guard case let .mnemonic(words, _) = wallet.account.type, words.count == 12 else {
+    init(wallet: Wallet, syncMode: SyncMode?, testMode: Bool) throws {
+        guard case let .mnemonic(words, _) = wallet.account.type else {
             throw AdapterError.unsupportedAccount
         }
 
-        guard let walletDerivation = derivation else {
+        guard let walletDerivation = wallet.configuredCoin.settings.derivation else {
             throw AdapterError.wrongParameters
         }
 

@@ -43,8 +43,6 @@ class BalanceViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "balance.title".localized
-
         refreshControl.tintColor = .themeLeah
         refreshControl.alpha = 0.6
         refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
@@ -310,6 +308,12 @@ extension BalanceViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension BalanceViewController: IBalanceView {
+
+    func set(title: String?) {
+        DispatchQueue.main.async {
+            self.title = title ?? "balance.title".localized
+        }
+    }
 
     func set(headerViewItem: BalanceHeaderViewItem?, viewItems: [BalanceViewItem]) {
         queue.async {

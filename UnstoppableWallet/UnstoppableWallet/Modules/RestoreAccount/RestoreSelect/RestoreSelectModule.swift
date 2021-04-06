@@ -4,6 +4,10 @@ import RxSwift
 struct RestoreSelectModule {
 
     static func viewController(accountType: AccountType) -> UIViewController {
+        let restoreSettingsService = RestoreSettingsService(manager: App.shared.restoreSettingsManager)
+        let restoreSettingsViewModel = RestoreSettingsViewModel(service: restoreSettingsService)
+        let restoreSettingsView = RestoreSettingsView(viewModel: restoreSettingsViewModel)
+
         let coinSettingsService = CoinSettingsService()
         let coinSettingsViewModel = CoinSettingsViewModel(service: coinSettingsService)
         let coinSettingsView = CoinSettingsView(viewModel: coinSettingsViewModel)
@@ -26,6 +30,7 @@ struct RestoreSelectModule {
                 walletManager: App.shared.walletManager,
                 coinManager: App.shared.coinManager,
                 enableCoinsService: enableCoinsService,
+                restoreSettingsService: restoreSettingsService,
                 coinSettingsService: coinSettingsService
         )
 
@@ -33,6 +38,7 @@ struct RestoreSelectModule {
 
         return RestoreSelectViewController(
                 viewModel: viewModel,
+                restoreSettingsView: restoreSettingsView,
                 coinSettingsView: coinSettingsView,
                 enableCoinsView: enableCoinsView
         )

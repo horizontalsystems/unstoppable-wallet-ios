@@ -40,6 +40,21 @@ extension WalletStorage: IWalletStorage {
         }
     }
 
+    func wallets(account: Account) -> [Wallet] {
+        let coins = coinManager.coins
+
+        return storage.enabledWallets(accountId: account.id).compactMap { enabledWallet in
+            guard let coin = coins.first(where: { $0.id == enabledWallet.coinId }) else {
+                return nil
+            }
+
+            let settings = CoinSettings(id: enabledWallet.coinSettingsId)
+            let configuredCoin = ConfiguredCoin(coin: coin, settings: settings)
+
+            return Wallet(configuredCoin: configuredCoin, account: account)
+        }
+    }
+
     func handle(newWallets: [Wallet], deletedWallets: [Wallet]) {
         let newEnabledWallets = newWallets.map { enabledWallet(wallet: $0) }
         let deletedEnabledWallets = deletedWallets.map { enabledWallet(wallet: $0) }

@@ -29,7 +29,7 @@ class CoinSelectService {
     }
 
     private func loadItems() {
-        var balanceCoins = walletManager.wallets.compactMap { wallet -> (coin: Coin, balance: Decimal)? in
+        var balanceCoins = walletManager.activeWallets.compactMap { wallet -> (coin: Coin, balance: Decimal)? in
             guard dexSupports(coin: wallet.coin) else {
                 return nil
             }

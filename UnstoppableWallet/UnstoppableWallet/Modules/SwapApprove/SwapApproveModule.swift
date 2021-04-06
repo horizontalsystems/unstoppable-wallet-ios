@@ -6,7 +6,7 @@ import BigInt
 struct SwapApproveModule {
 
     static func instance(data: SwapAllowanceService.ApproveData, delegate: ISwapApproveDelegate) -> UIViewController? {
-        guard let wallet = App.shared.walletManager.wallets.first(where: { $0.coin == data.coin }),
+        guard let wallet = App.shared.walletManager.activeWallets.first(where: { $0.coin == data.coin }),
               let evm20Adapter = App.shared.adapterManager.adapter(for: wallet) as? Evm20Adapter else {
             return nil
         }

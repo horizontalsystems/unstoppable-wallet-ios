@@ -18,7 +18,7 @@ class BinanceSmartChainKitManager {
             return evmKit
         }
 
-        guard case let .mnemonic(words, _) = account.type, words.count == 24 else {
+        guard case let .mnemonic(words, _) = account.type else {
             throw AdapterError.unsupportedAccount
         }
 

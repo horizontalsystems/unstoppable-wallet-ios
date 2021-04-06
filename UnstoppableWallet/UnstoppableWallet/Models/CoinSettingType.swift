@@ -1,7 +1,6 @@
 public enum CoinSettingType: String, CaseIterable {
     case derivation
     case bitcoinCashCoinType
-    case birthdayHeight
 }
 
 typealias CoinSettings = [CoinSettingType: String]
@@ -41,6 +40,18 @@ extension CoinSettings: Identifiable {
         }
 
         return chunks.joined(separator: "|")
+    }
+
+}
+
+extension CoinSettings {
+
+    var derivation: MnemonicDerivation? {
+        self[.derivation].flatMap { MnemonicDerivation(rawValue: $0) }
+    }
+
+    var bitcoinCashCoinType: BitcoinCashCoinType? {
+        self[.bitcoinCashCoinType].flatMap { BitcoinCashCoinType(rawValue: $0) }
     }
 
 }
