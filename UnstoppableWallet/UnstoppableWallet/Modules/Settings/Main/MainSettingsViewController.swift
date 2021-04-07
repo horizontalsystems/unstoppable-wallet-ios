@@ -76,7 +76,7 @@ class MainSettingsViewController: ThemeViewController {
 
         themeModeCell.set(backgroundStyle: .lawrence)
         themeModeCell.titleImage = UIImage(named: "light_20")
-        themeModeCell.title = "settings.light_mode".localized
+        themeModeCell.title = "settings.theme".localized
 
         aboutCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         aboutCell.titleImage = UIImage(named: "uw_20")

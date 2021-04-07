@@ -41,7 +41,8 @@ class UnlinkViewController: ThemeActionSheetController {
         titleView.bind(
                 title: "settings_manage_keys.delete.title".localized,
                 subtitle: viewModel.accountName,
-                image: UIImage(named: "warning_2_24")?.tinted(with: .themeLucian)
+                image: UIImage(named: "warning_2_24"),
+                tintColor: .themeLucian
         )
 
         view.addSubview(tableView)
