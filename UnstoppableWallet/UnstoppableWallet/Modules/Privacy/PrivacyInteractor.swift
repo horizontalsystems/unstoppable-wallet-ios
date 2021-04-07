@@ -1,13 +1,13 @@
 import CoinKit
 
 class PrivacyInteractor {
-    private let walletManager: IWalletManager
+    private let accountManager: IAccountManager
     private let initialSyncSettingsManager: IInitialSyncSettingsManager
     private let transactionDataSortTypeSettingManager: ITransactionDataSortModeSettingManager
     private let ethereumRpcModeSettingsManager: IEthereumRpcModeSettingsManager
 
-    init(walletManager: IWalletManager, initialSyncSettingsManager: IInitialSyncSettingsManager, transactionDataSortTypeSettingManager: ITransactionDataSortModeSettingManager, ethereumRpcModeSettingsManager: IEthereumRpcModeSettingsManager) {
-        self.walletManager = walletManager
+    init(accountManager: IAccountManager, initialSyncSettingsManager: IInitialSyncSettingsManager, transactionDataSortTypeSettingManager: ITransactionDataSortModeSettingManager, ethereumRpcModeSettingsManager: IEthereumRpcModeSettingsManager) {
+        self.accountManager = accountManager
         self.initialSyncSettingsManager = initialSyncSettingsManager
         self.transactionDataSortTypeSettingManager = transactionDataSortTypeSettingManager
         self.ethereumRpcModeSettingsManager = ethereumRpcModeSettingsManager
@@ -17,8 +17,8 @@ class PrivacyInteractor {
 
 extension PrivacyInteractor: IPrivacyInteractor {
 
-    var wallets: [Wallet] {
-        walletManager.wallets
+    var activeAccount: Account? {
+        accountManager.activeAccount
     }
 
     var syncSettings: [(setting: InitialSyncSetting, coin: Coin, changeable: Bool)] {

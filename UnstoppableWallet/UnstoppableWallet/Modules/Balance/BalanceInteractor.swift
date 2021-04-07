@@ -15,18 +15,16 @@ class BalanceInteractor {
     private let currencyKit: ICurrencyKit
     private let localStorage: ILocalStorage
     private let sortTypeManager: ISortTypeManager
-    private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let rateManager: IRateManager
     private let rateAppManager: IRateAppManager
     private let accountManager: IAccountManager
 
-    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyKit: ICurrencyKit, localStorage: ILocalStorage, sortTypeManager: ISortTypeManager, predefinedAccountTypeManager: IPredefinedAccountTypeManager, rateManager: IRateManager, rateAppManager: IRateAppManager, accountManager: IAccountManager) {
+    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyKit: ICurrencyKit, localStorage: ILocalStorage, sortTypeManager: ISortTypeManager, rateManager: IRateManager, rateAppManager: IRateAppManager, accountManager: IAccountManager) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.currencyKit = currencyKit
         self.localStorage = localStorage
         self.sortTypeManager = sortTypeManager
-        self.predefinedAccountTypeManager = predefinedAccountTypeManager
         self.rateManager = rateManager
         self.rateAppManager = rateAppManager
         self.accountManager = accountManager
@@ -195,10 +193,6 @@ extension BalanceInteractor: IBalanceInteractor {
         DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + 1) {
             self.delegate?.didRefresh()
         }
-    }
-
-    func predefinedAccountType(wallet: Wallet) -> PredefinedAccountType? {
-        predefinedAccountTypeManager.predefinedAccountType(accountType: wallet.account.type)
     }
 
     func notifyAppear() {

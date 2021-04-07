@@ -54,7 +54,6 @@ protocol IBalanceInteractor: AnyObject {
     var balanceHidden: Bool { get set }
 
     func refresh()
-    func predefinedAccountType(wallet: Wallet) -> PredefinedAccountType?
 
     func notifyAppear()
     func notifyDisappear()
@@ -82,7 +81,7 @@ protocol IBalanceRouter {
     func openSwap(wallet: Wallet)
     func showChart(coin: Coin)
     func openManageWallets()
-    func showBackupRequired(wallet: Wallet, predefinedAccountType: PredefinedAccountType)
+    func showBackupRequired(wallet: Wallet)
     func showSortType()
     func showSyncError(error: Error, wallet: Wallet)
 }

@@ -39,8 +39,8 @@ extension BalanceRouter: IBalanceRouter {
         viewController?.present(module, animated: true)
     }
 
-    func showBackupRequired(wallet: Wallet, predefinedAccountType: PredefinedAccountType) {
-        let text = "receive_alert.not_backed_up_description".localized(predefinedAccountType.title, wallet.coin.title)
+    func showBackupRequired(wallet: Wallet) {
+        let text = "receive_alert.not_backed_up_description".localized(wallet.account.name, wallet.coin.title)
         let module = BackupRequiredViewController(account: wallet.account, text: text, sourceViewController: viewController).toBottomSheet
         viewController?.present(module, animated: true)
     }
@@ -59,7 +59,7 @@ extension BalanceRouter {
 
     static func module() -> UIViewController {
         let router = BalanceRouter()
-        let interactor = BalanceInteractor(walletManager: App.shared.walletManager, adapterManager: App.shared.adapterManager, currencyKit: App.shared.currencyKit, localStorage: App.shared.localStorage, sortTypeManager: App.shared.sortTypeManager, predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager, rateManager: App.shared.rateManager, rateAppManager: App.shared.rateAppManager, accountManager: App.shared.accountManager)
+        let interactor = BalanceInteractor(walletManager: App.shared.walletManager, adapterManager: App.shared.adapterManager, currencyKit: App.shared.currencyKit, localStorage: App.shared.localStorage, sortTypeManager: App.shared.sortTypeManager, rateManager: App.shared.rateManager, rateAppManager: App.shared.rateAppManager, accountManager: App.shared.accountManager)
         let presenter = BalancePresenter(interactor: interactor, router: router, factory: BalanceViewItemFactory(), sorter: BalanceSorter())
         let viewController = BalanceViewController(viewDelegate: presenter)
 

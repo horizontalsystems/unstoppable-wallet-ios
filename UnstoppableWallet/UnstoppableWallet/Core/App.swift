@@ -33,9 +33,6 @@ class App {
 
     let walletManager: IWalletManager
 
-    let accountCreator: IAccountCreator
-    let predefinedAccountTypeManager: IPredefinedAccountTypeManager
-
     let currencyKit: ICurrencyKit
 
     let rateManager: IRateManager & IPostsManager
@@ -64,8 +61,6 @@ class App {
     let appVersionManager: IAppVersionManager
 
     let initialSyncSettingsManager: IInitialSyncSettingsManager
-    let derivationSettingsManager: IDerivationSettingsManager
-    let bitcoinCashCoinTypeManager: BitcoinCashCoinTypeManager
     let ethereumRpcModeSettingsManager: IEthereumRpcModeSettingsManager
 
     let transactionDataSortModeSettingManager: ITransactionDataSortModeSettingManager
@@ -126,9 +121,6 @@ class App {
         let walletStorage: IWalletStorage = WalletStorage(coinManager: coinManager, storage: storage)
         walletManager = WalletManager(accountManager: accountManager, storage: walletStorage, kitCleaner: kitCleaner)
 
-        accountCreator = AccountCreator(accountFactory: AccountFactory(), wordsManager: wordsManager)
-        predefinedAccountTypeManager = PredefinedAccountTypeManager(appConfigProvider: appConfigProvider, accountManager: accountManager)
-
         currencyKit = CurrencyKit.Kit(localStorage: StorageKit.LocalStorage.default, currencyCodes: appConfigProvider.currencyCodes)
 
         feeCoinProvider = FeeCoinProvider(coinKit: coinKit)
@@ -149,9 +141,7 @@ class App {
         adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager)
 
         let settingsStorage: IBlockchainSettingsStorage = BlockchainSettingsStorage(storage: storage)
-        derivationSettingsManager = DerivationSettingsManager(walletManager: walletManager, adapterManager: adapterManager, storage: settingsStorage)
         initialSyncSettingsManager = InitialSyncSettingsManager(walletManager: walletManager, adapterManager: adapterManager, coinKit: coinKit, storage: settingsStorage)
-        bitcoinCashCoinTypeManager = BitcoinCashCoinTypeManager(walletManager: walletManager, adapterManager: adapterManager, storage: settingsStorage)
         ethereumRpcModeSettingsManager = EthereumRpcModeSettingsManager(ethereumKitManager: ethereumKitManager, walletManager: walletManager, adapterManager: adapterManager, localStorage: localStorage)
 
         transactionDataSortModeSettingManager = TransactionDataSortModeSettingManager(storage: localStorage)
@@ -175,7 +165,7 @@ class App {
 
         remoteAlertManager.notificationManager = notificationManager
 
-        appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage, predefinedAccountTypeManager: predefinedAccountTypeManager, walletManager: walletManager, adapterManager: adapterManager, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager, binanceKitManager: binanceKitManager, logRecordManager: logRecordManager)
+        appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage, accountManager: accountManager, walletManager: walletManager, adapterManager: adapterManager, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager, binanceKitManager: binanceKitManager, logRecordManager: logRecordManager)
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, localStorage: localStorage)
 
         keychainKitDelegate = KeychainKitDelegate(accountManager: accountManager, walletManager: walletManager)
