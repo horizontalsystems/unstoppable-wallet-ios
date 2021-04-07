@@ -43,7 +43,8 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
         titleView.bind(
                 title: config.title,
                 subtitle: config.subtitle,
-                image: config.icon
+                image: config.icon,
+                tintColor: config.iconTint
         )
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)
@@ -143,6 +144,7 @@ extension BottomMultiSelectorViewController {
 
     struct Config {
         let icon: UIImage?
+        let iconTint: UIColor
         let title: String
         let subtitle: String
         let selectedIndexes: [Int]

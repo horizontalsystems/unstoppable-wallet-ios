@@ -540,7 +540,7 @@ bch.horizontalsystems.xyz/apg";
 "settings.base_currency" = "Base Currency";
 "settings.language" = "Language";
 "settings.faq" = "FAQ";
-"settings.light_mode" = "Light Mode";
+"settings.theme" = "Theme";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
 
