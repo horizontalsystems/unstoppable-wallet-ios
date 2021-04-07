@@ -171,7 +171,7 @@
 
 "deposit.receive_coin" = "%@ al";
 "deposit.your_address" = "Adresiniz";
-"receive_alert.not_backed_up_description" = "Öncelikle %@ cüzdanınızı yedeklemeniz gerekiyor daha sonra %@ kripto parasını alabilirsiniz.";
+"receive_alert.not_backed_up_description" = "You need to backup %@ before you may receive %@.";
 
 // Send
 
