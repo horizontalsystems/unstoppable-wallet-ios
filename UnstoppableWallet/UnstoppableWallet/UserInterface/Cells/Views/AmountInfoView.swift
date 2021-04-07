@@ -39,7 +39,8 @@ class AmountInfoView: UIView {
 
         addSubview(sentToSelfImageView)
 
-        sentToSelfImageView.image = UIImage(named: "arrow_medium_main_down_left_20")?.tinted(with: .themeRemus)
+        sentToSelfImageView.image = UIImage(named: "arrow_medium_main_down_left_20")?.withRenderingMode(.alwaysTemplate)
+        sentToSelfImageView.tintColor = .themeRemus
 
         addSubview(secondaryAmountLabel)
         secondaryAmountLabel.snp.makeConstraints { maker in

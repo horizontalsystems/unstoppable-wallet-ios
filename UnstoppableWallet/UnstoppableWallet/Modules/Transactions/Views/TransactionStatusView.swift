@@ -29,8 +29,9 @@ class TransactionStatusView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(image: UIImage?, status: String) {
+    func bind(image: UIImage?, imageTintColor: UIColor, status: String) {
         imageView.image = image
+        imageView.tintColor = imageTintColor
         label.text = status
     }
 

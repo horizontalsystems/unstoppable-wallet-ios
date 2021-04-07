@@ -65,7 +65,8 @@ class MarketSectionHeaderView: UITableViewHeaderFooterView {
             maker.centerY.equalToSuperview()
         }
 
-        seeAllClosureView.image = UIImage(named: "arrow_big_forward_20")?.tinted(with: .themeGray)
+        seeAllClosureView.image = UIImage(named: "arrow_big_forward_20")?.withRenderingMode(.alwaysTemplate)
+        seeAllClosureView.tintColor = .themeGray
 
         contentView.addSubview(seeAllButton)
         seeAllButton.snp.makeConstraints { maker in

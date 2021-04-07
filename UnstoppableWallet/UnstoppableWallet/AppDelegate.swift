@@ -11,7 +11,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         App.shared.appManager.didFinishLaunching()
         Theme.updateNavigationBarTheme()
 
-        window = UIWindow(frame: UIScreen.main.bounds)
+        window = ThemeWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
 
         window?.backgroundColor = .themeTyler

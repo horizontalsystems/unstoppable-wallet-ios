@@ -197,13 +197,17 @@ extension CoinPageViewController {
         }
 
         var image: UIImage?
+        var imageTintColor: UIColor?
         if priceAlertEnabled {
-            image = UIImage(named: "bell_ring_24")?.tinted(with: .themeJacob)?.withRenderingMode(.alwaysOriginal)
+            image = UIImage(named: "bell_ring_24")?.withRenderingMode(.alwaysTemplate)
+            imageTintColor = .themeJacob
         } else {
-            image = UIImage(named: "bell_24")?.tinted(with: .themeGray)?.withRenderingMode(.alwaysOriginal)
+            image = UIImage(named: "bell_24")?.withRenderingMode(.alwaysTemplate)
+            imageTintColor = .themeGray
         }
 
         alertButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(onAlertTap))
+        alertButtonItem?.tintColor = imageTintColor
 
         syncBarButtons()
     }
@@ -212,8 +216,9 @@ extension CoinPageViewController {
         let selector = favorite ? #selector(onUnfavoriteTap) : #selector(onFavoriteTap)
         let color = favorite ? UIColor.themeJacob : UIColor.themeGray
 
-        let favoriteImage = UIImage(named: "rate_24")?.tinted(with: color)?.withRenderingMode(.alwaysOriginal)
+        let favoriteImage = UIImage(named: "rate_24")?.withRenderingMode(.alwaysTemplate)
         favoriteButtonItem = UIBarButtonItem(image: favoriteImage, style: .plain, target: self, action: selector)
+        favoriteButtonItem?.tintColor = color
 
         syncBarButtons()
     }

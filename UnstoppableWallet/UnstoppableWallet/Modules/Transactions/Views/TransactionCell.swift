@@ -72,7 +72,8 @@ class TransactionCell: BaseSelectableThemeCell {
 
         wrapperView.addSubview(sentToSelfImageView)
         sentToSelfImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        sentToSelfImageView.image = UIImage(named: "arrow_medium_main_down_left_20")?.tinted(with: .themeRemus)
+        sentToSelfImageView.image = UIImage(named: "arrow_medium_main_down_left_20")?.withRenderingMode(.alwaysTemplate)
+        sentToSelfImageView.tintColor = .themeRemus
 
         wrapperView.addSubview(amountLabel)
         amountLabel.snp.makeConstraints { maker in
@@ -95,13 +96,16 @@ class TransactionCell: BaseSelectableThemeCell {
         switch item.type {
         case .incoming:
             currencyAmountLabel.textColor = .themeGreenD
-            typeIconImageView.image = UIImage(named: "arrow_medium_main_down_left_20")?.tinted(with: .themeRemus)
+            typeIconImageView.image = UIImage(named: "arrow_medium_main_down_left_20")?.withRenderingMode(.alwaysTemplate)
+            typeIconImageView.tintColor = .themeRemus
         case .outgoing, .sentToSelf:
             currencyAmountLabel.textColor = .themeYellowD
-            typeIconImageView.image = UIImage(named: "arrow_medium_main_up_right_20")?.tinted(with: .themeJacob)
+            typeIconImageView.image = UIImage(named: "arrow_medium_main_up_right_20")?.withRenderingMode(.alwaysTemplate)
+            typeIconImageView.tintColor = .themeJacob
         case .approve:
             currencyAmountLabel.textColor = .themeLeah
-            typeIconImageView.image = UIImage(named: "arrow_swap_approval_2_20")?.tinted(with: .themeLeah)
+            typeIconImageView.image = UIImage(named: "arrow_swap_approval_2_20")//?.withRenderingMode(.alwaysTemplate)
+            typeIconImageView.tintColor = .themeLeah
         }
         amountLabel.textColor = .themeGray
 
@@ -145,7 +149,7 @@ class TransactionCell: BaseSelectableThemeCell {
 
         switch status {
         case .failed:
-            statusView.bind(image: UIImage(named: "warning_2_20")?.tinted(with: .themeLucian), status: "transactions.failed".localized)
+            statusView.bind(image: UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate), imageTintColor: .themeLucian, status: "transactions.failed".localized)
             statusView.isHidden = false
 
             processingView.stopAnimating()
@@ -166,7 +170,7 @@ class TransactionCell: BaseSelectableThemeCell {
             statusView.isHidden = true
 
         case .completed:
-            statusView.bind(image: UIImage(named: "check_1_20"), status: DateHelper.instance.formatTransactionTime(from: item.date))
+            statusView.bind(image: UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate), imageTintColor: .themeGray, status: DateHelper.instance.formatTransactionTime(from: item.date))
             statusView.isHidden = false
 
             processingView.stopAnimating()

@@ -4,6 +4,7 @@ import ThemeKit
 import CurrencyKit
 import PinKit
 import WalletConnect
+import ThemeKit
 
 class MainSettingsService {
     private let backupManager: IBackupManager
@@ -80,13 +81,12 @@ extension MainSettingsService {
         currencyKit.baseCurrencyUpdatedObservable
     }
 
-    var lightMode: Bool {
-        get {
-            themeManager.lightMode
-        }
-        set {
-            themeManager.lightMode = newValue
-        }
+    var themeModeObservable: Observable<ThemeMode> {
+        themeManager.changeThemeSignal.asObservable()
+    }
+
+    var themeMode: ThemeMode {
+        themeManager.themeMode
     }
 
     var telegramAccount: String {

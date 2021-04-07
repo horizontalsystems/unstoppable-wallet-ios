@@ -86,7 +86,8 @@ class SecuritySettingsViewController: ThemeViewController {
                         cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !editPinVisible)
                         cell.titleImage = UIImage(named: "dialpad_alt_2_20")
                         cell.title = "settings_security.passcode".localized
-                        cell.rightImage = attentionIcon?.tinted(with: .themeLucian)
+                        cell.rightImage = attentionIcon?.withRenderingMode(.alwaysTemplate)
+                        cell.rightImageTintColor = .themeLucian
                         cell.isOn = pinSet
                         cell.onToggle = { [weak self] isOn in
                             self?.delegate.didSwitch(pinSet: isOn)

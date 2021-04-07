@@ -65,7 +65,8 @@ class SwapViewController: ThemeViewController {
 
         title = "swap.title".localized
 
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "circle_information_24")?.tinted(with: .themeJacob), style: .plain, target: self, action: #selector(onInfo))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "circle_information_24")?.withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(onInfo))
+        navigationItem.leftBarButtonItem?.tintColor = .themeJacob
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onClose))
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 

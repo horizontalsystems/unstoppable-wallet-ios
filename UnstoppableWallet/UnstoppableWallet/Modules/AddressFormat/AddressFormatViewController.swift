@@ -89,7 +89,8 @@ extension AddressFormatViewController: SectionsDataSource {
                                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                                     cell.title = viewItem.title
                                     cell.subtitle = viewItem.subtitle
-                                    cell.valueImage = viewItem.selected ? UIImage(named: "check_1_20")?.tinted(with: .themeJacob) : nil
+                                    cell.valueImage = viewItem.selected ? UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate) : nil
+                                    cell.valueImageTintColor = .themeJacob
                                 },
                                 action: { [weak self] _ in
                                     self?.viewModel.onSelect(sectionIndex: sectionIndex, index: index)

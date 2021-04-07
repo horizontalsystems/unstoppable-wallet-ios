@@ -19,7 +19,7 @@ class MainSettingsViewController: ThemeViewController {
     private let walletConnectCell = A2Cell()
     private let baseCurrencyCell = A2Cell()
     private let languageCell = A2Cell()
-    private let lightModeCell = A11Cell()
+    private let themeModeCell = A2Cell()
     private let aboutCell = A3Cell()
     private let footerCell = MainSettingsFooterCell()
 
@@ -74,14 +74,9 @@ class MainSettingsViewController: ThemeViewController {
         languageCell.title = "settings.language".localized
         languageCell.value = viewModel.currentLanguage
 
-        lightModeCell.set(backgroundStyle: .lawrence)
-        lightModeCell.titleImage = UIImage(named: "light_20")
-        lightModeCell.title = "settings.light_mode".localized
-        lightModeCell.isOn = viewModel.lightMode
-        lightModeCell.onToggle = { [weak self] isOn in
-            self?.viewModel.onSwitch(lightMode: isOn)
-            UIApplication.shared.keyWindow?.set(newRootController: MainModule.instance(selectedTab: .settings))
-        }
+        themeModeCell.set(backgroundStyle: .lawrence)
+        themeModeCell.titleImage = UIImage(named: "light_20")
+        themeModeCell.title = "settings.light_mode".localized
 
         aboutCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         aboutCell.titleImage = UIImage(named: "uw_20")
@@ -93,10 +88,12 @@ class MainSettingsViewController: ThemeViewController {
         }
 
         subscribe(disposeBag, viewModel.manageWalletsAlertDriver) { [weak self] alert in
-            self?.manageAccountsCell.valueImage = alert ? UIImage(named: "warning_2_20")?.tinted(with: .themeLucian) : nil
+            self?.manageAccountsCell.valueImage = alert ? UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate) : nil
+            self?.manageAccountsCell.valueImageTintColor = .themeLucian
         }
         subscribe(disposeBag, viewModel.securityCenterAlertDriver) { [weak self] alert in
-            self?.securityCenterCell.valueImage = alert ? UIImage(named: "warning_2_20")?.tinted(with: .themeLucian) : nil
+            self?.securityCenterCell.valueImage = alert ? UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate) : nil
+            self?.securityCenterCell.valueImageTintColor = .themeLucian
         }
         subscribe(disposeBag, viewModel.walletConnectSessionCountDriver) { [weak self] count in
             self?.walletConnectCell.value = count
@@ -105,7 +102,11 @@ class MainSettingsViewController: ThemeViewController {
             self?.baseCurrencyCell.value = baseCurrency
         }
         subscribe(disposeBag, viewModel.aboutAlertDriver) { [weak self] alert in
-            self?.aboutCell.valueImage = alert ? UIImage(named: "warning_2_20")?.tinted(with: .themeLucian) : nil
+            self?.aboutCell.valueImage = alert ? UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate) : nil
+            self?.aboutCell.valueImageTintColor = .themeLucian
+        }
+        subscribe(disposeBag, viewModel.themeModeDriver) { [weak self] themeMode in
+            self?.themeModeCell.value = themeMode.description
         }
 
         subscribe(disposeBag, viewModel.openLinkSignal) { [weak self] url in
@@ -186,9 +187,12 @@ class MainSettingsViewController: ThemeViewController {
                     }
             ),
             StaticRow(
-                    cell: lightModeCell,
-                    id: "light-mode",
-                    height: .heightCell48
+                    cell: themeModeCell,
+                    id: "theme-mode",
+                    height: .heightCell48,
+                    action: { [weak self] in
+                        self?.navigationController?.pushViewController(ThemeSettingsModule.viewController(), animated: true)
+                    }
             ),
             Row<A1Cell>(
                     id: "experimental-features",
