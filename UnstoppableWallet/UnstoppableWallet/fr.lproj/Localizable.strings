@@ -171,7 +171,7 @@
 
 "deposit.receive_coin" = "Recevoir %@";
 "deposit.your_address" = "Votre address";
-"receive_alert.not_backed_up_description" = "Vous devez sauvegarder le portefeuille %@ avant de recevoir %@.";
+"receive_alert.not_backed_up_description" = "You need to backup %@ before you may receive %@.";
 
 // Send
 
