@@ -537,7 +537,7 @@
 "settings.base_currency" = "Базовая Валюта";
 "settings.language" = "Язык";
 "settings.faq" = "FAQ";
-"settings.light_mode" = "Светлый Режим";
+"settings.theme" = "Theme";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "децентрализованное приложение";
 
@@ -676,6 +676,13 @@
 "settings.about_app.rate_us" = "Оцените наше приложение";
 "settings.about_app.tell_friends" = "Рассказать Друзьям";
 "settings.about_app.email_copied" = "Адрес электронной почты скопирован";
+
+// Settings -> Theme
+
+"settings_theme.title" = "Theme";
+"settings_theme.system" = "System";
+"settings_theme.dark" = "Dark";
+"settings_theme.light" = "Light";
 
 // Set PIN
 
