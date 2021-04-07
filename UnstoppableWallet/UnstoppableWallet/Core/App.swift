@@ -27,6 +27,7 @@ class App {
     let wordsManager: IWordsManager
 
     let accountManager: IAccountManager
+    let accountFactory: AccountFactory
     let backupManager: IBackupManager
 
     let coinManager: ICoinManager
@@ -112,6 +113,7 @@ class App {
 
         let accountStorage: IAccountStorage = AccountStorage(secureStorage: keychainKit.secureStorage, storage: storage)
         accountManager = AccountManager(storage: accountStorage, activeAccountStorage: storage)
+        accountFactory = AccountFactory(accountManager: accountManager)
         backupManager = BackupManager(accountManager: accountManager)
 
         kitCleaner = KitCleaner(accountManager: accountManager)

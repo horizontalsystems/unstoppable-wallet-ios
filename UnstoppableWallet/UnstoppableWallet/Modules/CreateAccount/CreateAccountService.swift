@@ -3,7 +3,7 @@ import RxRelay
 import CoinKit
 
 class CreateAccountService {
-    private let accountFactory: IAccountFactory
+    private let accountFactory: AccountFactory
     private let wordsManager: IWordsManager
     private let accountManager: IAccountManager
     private let walletManager: IWalletManager
@@ -16,7 +16,7 @@ class CreateAccountService {
         }
     }
 
-    init(accountFactory: IAccountFactory, wordsManager: IWordsManager, accountManager: IAccountManager, walletManager: IWalletManager, coinKit: CoinKit.Kit) {
+    init(accountFactory: AccountFactory, wordsManager: IWordsManager, accountManager: IAccountManager, walletManager: IWalletManager, coinKit: CoinKit.Kit) {
         self.accountFactory = accountFactory
         self.wordsManager = wordsManager
         self.accountManager = accountManager
@@ -81,7 +81,7 @@ extension CreateAccountService {
 
     func createAccount() throws {
         let accountType = try resolveAccountType()
-        let account = accountFactory.account(type: accountType, origin: .created, backedUp: false)
+        let account = accountFactory.account(type: accountType, origin: .created)
 
         accountManager.save(account: account)
         activateDefaultWallets(account: account)
