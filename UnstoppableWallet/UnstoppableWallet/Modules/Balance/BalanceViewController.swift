@@ -43,6 +43,9 @@ class BalanceViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "wallet_24"), style: .plain, target: self, action: #selector(onTapSwitchWallet))
+        navigationItem.leftBarButtonItem?.tintColor = .themeJacob
+
         refreshControl.tintColor = .themeLeah
         refreshControl.alpha = 0.6
         refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
@@ -91,6 +94,11 @@ class BalanceViewController: ThemeViewController {
 
     @objc private func onTapShowBalance() {
         delegate.onTapShowBalance()
+    }
+
+    @objc private func onTapSwitchWallet() {
+        let viewController = ManageAccountsModule.viewController(mode: .switcher)
+        present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
     private func handle(newHeaderViewItem: BalanceHeaderViewItem?, newViewItems: [BalanceViewItem]) {
@@ -311,7 +319,7 @@ extension BalanceViewController: IBalanceView {
 
     func set(title: String?) {
         DispatchQueue.main.async {
-            self.title = title ?? "balance.title".localized
+            self.navigationItem.title = title ?? "balance.title".localized
         }
     }
 

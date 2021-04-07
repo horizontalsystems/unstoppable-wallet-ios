@@ -3,7 +3,7 @@ import SectionsTableView
 import RxSwift
 import RxCocoa
 
-class RestoreSelectViewController: CoinToggleViewControllerNew {
+class RestoreSelectViewController: CoinToggleViewController {
     private let viewModel: RestoreSelectViewModel
     private let restoreSettingsView: RestoreSettingsView
     private let coinSettingsView: CoinSettingsView

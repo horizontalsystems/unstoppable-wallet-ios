@@ -1,7 +1,7 @@
 import RxSwift
 import RxRelay
 
-class ManageAccountsServiceNew {
+class ManageAccountsService {
     private let accountManager: IAccountManager
     private let disposeBag = DisposeBag()
 
@@ -30,7 +30,7 @@ class ManageAccountsServiceNew {
 
 }
 
-extension ManageAccountsServiceNew {
+extension ManageAccountsService {
 
     var itemsObservable: Observable<[Item]> {
         itemsRelay.asObservable()
@@ -42,7 +42,7 @@ extension ManageAccountsServiceNew {
 
 }
 
-extension ManageAccountsServiceNew {
+extension ManageAccountsService {
 
     struct Item {
         let account: Account

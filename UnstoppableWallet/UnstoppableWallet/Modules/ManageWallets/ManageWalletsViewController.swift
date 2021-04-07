@@ -5,12 +5,12 @@ import ThemeKit
 import RxSwift
 import RxCocoa
 
-class ManageWalletsViewControllerNew: CoinToggleViewControllerNew {
-    private let viewModel: ManageWalletsViewModelNew
+class ManageWalletsViewController: CoinToggleViewController {
+    private let viewModel: ManageWalletsViewModel
     private let restoreSettingsView: RestoreSettingsView
     private let coinSettingsView: CoinSettingsView
 
-    init(viewModel: ManageWalletsViewModelNew, restoreSettingsView: RestoreSettingsView, coinSettingsView: CoinSettingsView) {
+    init(viewModel: ManageWalletsViewModel, restoreSettingsView: RestoreSettingsView, coinSettingsView: CoinSettingsView) {
         self.viewModel = viewModel
         self.restoreSettingsView = restoreSettingsView
         self.coinSettingsView = coinSettingsView
