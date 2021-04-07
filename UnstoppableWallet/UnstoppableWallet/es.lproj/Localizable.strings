@@ -535,7 +535,7 @@
 "settings.base_currency" = "Moneda principal";
 "settings.language" = "Idioma";
 "settings.faq" = "FAQ";
-"settings.light_mode" = "Modo ligero";
+"settings.theme" = "Theme";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "app descentralizada";
 
@@ -675,6 +675,13 @@ poner en peligro la seguridad de mis fondos.";
 "settings.about_app.rate_us" = "Califícanos";
 "settings.about_app.tell_friends" = "Recomendar a un amigo";
 "settings.about_app.email_copied" = "Dirección de correo electrónico copiada";
+
+// Settings -> Theme
+
+"settings_theme.title" = "Theme";
+"settings_theme.system" = "System";
+"settings_theme.dark" = "Dark";
+"settings_theme.light" = "Light";
 
 // Set PIN
 
