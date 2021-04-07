@@ -173,7 +173,7 @@
 
 "deposit.receive_coin" = "Получить %@";
 "deposit.your_address" = "Ваш Адрес";
-"receive_alert.not_backed_up_description" = "Вам нужно сделать резервную копию %@ Кошелька, прежде чем вы сможете получать %@.";
+"receive_alert.not_backed_up_description" = "You need to backup %@ before you may receive %@.";
 
 // Send
 
