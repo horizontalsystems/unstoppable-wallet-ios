@@ -182,8 +182,8 @@ extension BalancePresenter: IBalanceViewDelegate {
 
         if wallet.account.backedUp {
             router.showReceive(wallet: wallet)
-        } else if let predefinedAccountType = interactor.predefinedAccountType(wallet: wallet) {
-            router.showBackupRequired(wallet: wallet, predefinedAccountType: predefinedAccountType)
+        } else {
+            router.showBackupRequired(wallet: wallet)
         }
     }
 

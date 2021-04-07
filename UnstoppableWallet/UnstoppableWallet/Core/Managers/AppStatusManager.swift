@@ -7,19 +7,19 @@ class AppStatusManager {
     private let systemInfoManager: ISystemInfoManager
     private let localStorage: ILocalStorage
     private let logRecordManager: ILogRecordManager
-    private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
+    private let accountManager: IAccountManager
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
     private let ethereumKitManager: EthereumKitManager
     private let binanceSmartChainKitManager: BinanceSmartChainKitManager
     private let binanceKitManager: BinanceKitManager
 
-    init(systemInfoManager: ISystemInfoManager, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager,
+    init(systemInfoManager: ISystemInfoManager, localStorage: ILocalStorage, accountManager: IAccountManager,
          walletManager: IWalletManager, adapterManager: IAdapterManager, ethereumKitManager: EthereumKitManager, binanceSmartChainKitManager: BinanceSmartChainKitManager,
          binanceKitManager: BinanceKitManager, logRecordManager: ILogRecordManager) {
         self.systemInfoManager = systemInfoManager
         self.localStorage = localStorage
-        self.predefinedAccountTypeManager = predefinedAccountTypeManager
+        self.accountManager = accountManager
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.ethereumKitManager = ethereumKitManager
@@ -29,11 +29,7 @@ class AppStatusManager {
     }
 
     private var accountStatus: [(String, Any)] {
-        predefinedAccountTypeManager.allTypes.compactMap {
-            guard let account = predefinedAccountTypeManager.account(predefinedAccountType: $0) else {
-                return nil
-            }
-
+        accountManager.accounts.compactMap { account in
             var status = [(String, Any)]()
 
             status.append(("origin", "\(account.origin)"))
@@ -45,7 +41,7 @@ class AppStatusManager {
 //                status.append(("type", "Zcash (\(words.count) words) : \(birthdayHeight?.description  ?? "N/A") birthday"))
 //            }
 
-            return ($0.title, status)
+            return (account.name, status)
         }
     }
 

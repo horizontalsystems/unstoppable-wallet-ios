@@ -2,17 +2,6 @@ import CoinKit
 
 extension CoinType {
 
-    var predefinedAccountType: PredefinedAccountType {
-        switch self {
-        case .bitcoin, .litecoin, .bitcoinCash, .dash, .ethereum, .erc20, .unsupported:
-            return .standard
-        case .binanceSmartChain, .bep20, .bep2:
-            return .binance
-        case .zcash:
-            return .zcash
-        }
-    }
-
     var blockchainType: String? {
         switch self {
         case .erc20: return "ERC20"

@@ -14,7 +14,6 @@ protocol IDepositViewDelegate {
 
 protocol IDepositInteractor {
     var address: String { get }
-    func derivationSetting(coinType: CoinType) -> DerivationSetting?
     func copy(address: String)
 }
 

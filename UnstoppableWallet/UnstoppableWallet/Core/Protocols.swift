@@ -209,11 +209,6 @@ protocol IBackupManager {
     func setAccountBackedUp(id: String)
 }
 
-protocol IAccountCreator {
-    func newAccount(predefinedAccountType: PredefinedAccountType) throws -> Account
-    func restoredAccount(accountType: AccountType) -> Account
-}
-
 protocol IAccountFactory {
     func account(type: AccountType, origin: AccountOrigin, backedUp: Bool) -> Account
 }
@@ -362,12 +357,6 @@ protocol IBlockchainSettingsRecordStorage {
 }
 
 protocol IBlockchainSettingsStorage: AnyObject {
-    var bitcoinCashCoinType: BitcoinCashCoinType? { get set }
-
-    func derivationSetting(coinType: CoinType) -> DerivationSetting?
-    func save(derivationSetting: DerivationSetting)
-    func deleteDerivationSettings()
-
     func initialSyncSetting(coinType: CoinType) -> InitialSyncSetting?
     func save(initialSyncSetting: InitialSyncSetting)
 }
@@ -429,12 +418,6 @@ protocol IEncryptionManager {
 
 protocol IUUIDProvider {
     func generate() -> String
-}
-
-protocol IPredefinedAccountTypeManager {
-    var allTypes: [PredefinedAccountType] { get }
-    func account(predefinedAccountType: PredefinedAccountType) -> Account?
-    func predefinedAccountType(accountType: AccountType) -> PredefinedAccountType?
 }
 
 protocol IAppManager {
@@ -505,13 +488,6 @@ protocol IRemoteAlertManager {
     func unsubscribeAll() -> Single<()>
 
     func checkScheduledRequests()
-}
-
-protocol IDerivationSettingsManager: AnyObject {
-    var allActiveSettings: [(setting: DerivationSetting, coinType: CoinType)] { get }
-    func setting(coinType: CoinType) -> DerivationSetting?
-    func save(setting: DerivationSetting)
-    func resetStandardSettings()
 }
 
 protocol IInitialSyncSettingsManager: AnyObject {

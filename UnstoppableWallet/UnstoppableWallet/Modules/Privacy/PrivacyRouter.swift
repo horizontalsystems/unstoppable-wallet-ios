@@ -35,7 +35,7 @@ extension PrivacyRouter {
     static func module() -> UIViewController {
         let router = PrivacyRouter()
         let interactor = PrivacyInteractor(
-                walletManager: App.shared.walletManager,
+                accountManager: App.shared.accountManager,
                 initialSyncSettingsManager: App.shared.initialSyncSettingsManager,
                 transactionDataSortTypeSettingManager: App.shared.transactionDataSortModeSettingManager,
                 ethereumRpcModeSettingsManager: App.shared.ethereumRpcModeSettingsManager
