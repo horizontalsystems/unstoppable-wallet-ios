@@ -127,7 +127,7 @@ class MainSettingsViewController: ThemeViewController {
                     id: "manage-accounts",
                     height: .heightCell48,
                     action: { [weak self] in
-                        self?.navigationController?.pushViewController(ManageAccountsModuleNew.viewController(), animated: true)
+                        self?.navigationController?.pushViewController(ManageAccountsModule.viewController(mode: .manage), animated: true)
                     }
             ),
             StaticRow(

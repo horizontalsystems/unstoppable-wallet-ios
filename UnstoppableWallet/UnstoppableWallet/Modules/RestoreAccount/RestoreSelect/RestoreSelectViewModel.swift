@@ -6,7 +6,7 @@ class RestoreSelectViewModel {
     private let service: RestoreSelectService
     private let disposeBag = DisposeBag()
 
-    private let viewStateRelay = BehaviorRelay<CoinToggleViewModelNew.ViewState>(value: .empty)
+    private let viewStateRelay = BehaviorRelay<CoinToggleViewModel.ViewState>(value: .empty)
     private let disableCoinRelay = PublishRelay<Coin>()
     private let successRelay = PublishRelay<()>()
 
@@ -19,8 +19,8 @@ class RestoreSelectViewModel {
         syncViewState()
     }
 
-    private func viewItem(item: RestoreSelectService.Item) -> CoinToggleViewModelNew.ViewItem {
-        CoinToggleViewModelNew.ViewItem(
+    private func viewItem(item: RestoreSelectService.Item) -> CoinToggleViewModel.ViewItem {
+        CoinToggleViewModel.ViewItem(
                 coin: item.coin,
                 hasSettings: item.hasSettings,
                 enabled: item.enabled
@@ -30,7 +30,7 @@ class RestoreSelectViewModel {
     private func syncViewState(state: RestoreSelectService.State? = nil) {
         let state = state ?? service.state
 
-        let viewState = CoinToggleViewModelNew.ViewState(
+        let viewState = CoinToggleViewModel.ViewState(
                 featuredViewItems: state.featuredItems.map { viewItem(item: $0) },
                 viewItems: state.items.map { viewItem(item: $0) }
         )
@@ -40,9 +40,9 @@ class RestoreSelectViewModel {
 
 }
 
-extension RestoreSelectViewModel: ICoinToggleViewModelNew {
+extension RestoreSelectViewModel: ICoinToggleViewModel {
 
-    var viewStateDriver: Driver<CoinToggleViewModelNew.ViewState> {
+    var viewStateDriver: Driver<CoinToggleViewModel.ViewState> {
         viewStateRelay.asDriver()
     }
 

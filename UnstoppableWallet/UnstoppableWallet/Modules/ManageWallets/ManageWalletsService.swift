@@ -2,7 +2,7 @@ import RxSwift
 import RxRelay
 import CoinKit
 
-class ManageWalletsServiceNew {
+class ManageWalletsService {
     private let account: Account
     private let coinManager: ICoinManager
     private let walletManager: IWalletManager
@@ -192,7 +192,7 @@ class ManageWalletsServiceNew {
 
 }
 
-extension ManageWalletsServiceNew {
+extension ManageWalletsService {
 
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
@@ -235,7 +235,7 @@ extension ManageWalletsServiceNew {
 
 }
 
-extension ManageWalletsServiceNew {
+extension ManageWalletsService {
 
     struct State {
         let featuredItems: [Item]

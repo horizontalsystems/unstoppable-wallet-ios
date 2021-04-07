@@ -3,14 +3,14 @@ import RxRelay
 import RxCocoa
 import CoinKit
 
-class ManageWalletsViewModelNew {
-    private let service: ManageWalletsServiceNew
+class ManageWalletsViewModel {
+    private let service: ManageWalletsService
     private let disposeBag = DisposeBag()
 
-    private let viewStateRelay = BehaviorRelay<CoinToggleViewModelNew.ViewState>(value: .empty)
+    private let viewStateRelay = BehaviorRelay<CoinToggleViewModel.ViewState>(value: .empty)
     private let disableCoinRelay = PublishRelay<Coin>()
 
-    init(service: ManageWalletsServiceNew) {
+    init(service: ManageWalletsService) {
         self.service = service
 
         subscribe(disposeBag, service.stateObservable) { [weak self] state in
@@ -23,18 +23,18 @@ class ManageWalletsViewModelNew {
         syncViewState()
     }
 
-    private func viewItem(item: ManageWalletsServiceNew.Item) -> CoinToggleViewModelNew.ViewItem {
-        CoinToggleViewModelNew.ViewItem(
+    private func viewItem(item: ManageWalletsService.Item) -> CoinToggleViewModel.ViewItem {
+        CoinToggleViewModel.ViewItem(
                 coin: item.coin,
                 hasSettings: item.hasSettings,
                 enabled: item.enabled
         )
     }
 
-    private func syncViewState(state: ManageWalletsServiceNew.State? = nil) {
+    private func syncViewState(state: ManageWalletsService.State? = nil) {
         let state = state ?? service.state
 
-        let viewState = CoinToggleViewModelNew.ViewState(
+        let viewState = CoinToggleViewModel.ViewState(
                 featuredViewItems: state.featuredItems.map { viewItem(item: $0) },
                 viewItems: state.items.map { viewItem(item: $0) }
         )
@@ -44,9 +44,9 @@ class ManageWalletsViewModelNew {
 
 }
 
-extension ManageWalletsViewModelNew: ICoinToggleViewModelNew {
+extension ManageWalletsViewModel: ICoinToggleViewModel {
 
-    var viewStateDriver: Driver<CoinToggleViewModelNew.ViewState> {
+    var viewStateDriver: Driver<CoinToggleViewModel.ViewState> {
         viewStateRelay.asDriver()
     }
 
@@ -70,7 +70,7 @@ extension ManageWalletsViewModelNew: ICoinToggleViewModelNew {
 
 }
 
-extension ManageWalletsViewModelNew {
+extension ManageWalletsViewModel {
 
     var disableCoinSignal: Signal<Coin> {
         disableCoinRelay.asSignal()

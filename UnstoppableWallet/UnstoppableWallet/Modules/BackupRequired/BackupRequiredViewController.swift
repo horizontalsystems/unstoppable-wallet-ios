@@ -63,7 +63,11 @@ class BackupRequiredViewController: ThemeActionSheetController {
     }
 
     private func openBackup() {
-        // todo: open backup
+        guard let viewController = BackupKeyModule.viewController(account: account) else {
+            return
+        }
+
+        sourceViewController?.present(viewController, animated: true)
     }
 
 }

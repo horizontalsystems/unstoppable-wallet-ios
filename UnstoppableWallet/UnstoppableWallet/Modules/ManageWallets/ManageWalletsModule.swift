@@ -1,7 +1,7 @@
 import UIKit
 import ThemeKit
 
-struct ManageWalletsModuleNew {
+struct ManageWalletsModule {
 
     static func viewController() -> UIViewController? {
         let restoreSettingsService = RestoreSettingsService(manager: App.shared.restoreSettingsManager)
@@ -12,7 +12,7 @@ struct ManageWalletsModuleNew {
         let coinSettingsViewModel = CoinSettingsViewModel(service: coinSettingsService)
         let coinSettingsView = CoinSettingsView(viewModel: coinSettingsViewModel)
 
-        guard let service = ManageWalletsServiceNew(
+        guard let service = ManageWalletsService(
                 coinManager: App.shared.coinManager,
                 walletManager: App.shared.walletManager,
                 accountManager: App.shared.accountManager,
@@ -22,9 +22,9 @@ struct ManageWalletsModuleNew {
             return nil
         }
 
-        let viewModel = ManageWalletsViewModelNew(service: service)
+        let viewModel = ManageWalletsViewModel(service: service)
 
-        let viewController = ManageWalletsViewControllerNew(
+        let viewController = ManageWalletsViewController(
                 viewModel: viewModel,
                 restoreSettingsView: restoreSettingsView,
                 coinSettingsView: coinSettingsView

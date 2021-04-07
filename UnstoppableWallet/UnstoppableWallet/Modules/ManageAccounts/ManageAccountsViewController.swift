@@ -5,8 +5,8 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-class ManageAccountsViewControllerNew: ThemeViewController {
-    private let viewModel: ManageAccountsViewModelNew
+class ManageAccountsViewController: ThemeViewController {
+    private let viewModel: ManageAccountsViewModel
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
@@ -14,10 +14,10 @@ class ManageAccountsViewControllerNew: ThemeViewController {
     private let createCell = ACell()
     private let restoreCell = ACell()
 
-    private var viewItems = [ManageAccountsViewModelNew.ViewItem]()
+    private var viewItems = [ManageAccountsViewModel.ViewItem]()
     private var isLoaded = false
 
-    init(viewModel: ManageAccountsViewModelNew) {
+    init(viewModel: ManageAccountsViewModel) {
         self.viewModel = viewModel
 
         super.init()
@@ -33,6 +33,10 @@ class ManageAccountsViewControllerNew: ThemeViewController {
         super.viewDidLoad()
 
         title = "settings_manage_keys.title".localized
+
+        if viewModel.isDoneVisible {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(onTapDoneButton))
+        }
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -56,6 +60,7 @@ class ManageAccountsViewControllerNew: ThemeViewController {
         restoreCell.titleColor = .themeJacob
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
+        subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.dismiss(animated: true) }
 
         tableView.buildSections()
 
@@ -64,6 +69,10 @@ class ManageAccountsViewControllerNew: ThemeViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
+    }
+
+    @objc private func onTapDoneButton() {
+        dismiss(animated: true)
     }
 
     private func onTapCreate() {
@@ -84,7 +93,7 @@ class ManageAccountsViewControllerNew: ThemeViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
-    private func sync(viewItems: [ManageAccountsViewModelNew.ViewItem]) {
+    private func sync(viewItems: [ManageAccountsViewModel.ViewItem]) {
         self.viewItems = viewItems
         reloadTable()
     }
@@ -99,9 +108,9 @@ class ManageAccountsViewControllerNew: ThemeViewController {
 
 }
 
-extension ManageAccountsViewControllerNew: SectionsDataSource {
+extension ManageAccountsViewController: SectionsDataSource {
 
-    private func row(viewItem: ManageAccountsViewModelNew.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
+    private func row(viewItem: ManageAccountsViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         Row<G19Cell>(
                 id: viewItem.accountId,
                 hash: "\(viewItem.title)-\(viewItem.selected)-\(viewItem.alert)-\(isFirst)-\(isLast)",

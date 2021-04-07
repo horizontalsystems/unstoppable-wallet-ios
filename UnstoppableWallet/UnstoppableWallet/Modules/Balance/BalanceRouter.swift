@@ -32,7 +32,7 @@ extension BalanceRouter: IBalanceRouter {
     }
 
     func openManageWallets() {
-        guard let module = ManageWalletsModuleNew.viewController() else {
+        guard let module = ManageWalletsModule.viewController() else {
             return
         }
 
