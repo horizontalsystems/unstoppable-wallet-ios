@@ -190,7 +190,7 @@ class App {
         termsManager = TermsManager(storage: StorageKit.LocalStorage.default)
 
         walletConnectSessionManager = WalletConnectSessionManager(storage: storage, accountManager: accountManager)
-        walletConnectManager = WalletConnectManager(predefinedAccountTypeManager: predefinedAccountTypeManager, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager)
+        walletConnectManager = WalletConnectManager(accountManager: accountManager, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager)
 
         activateCoinManager = ActivateCoinManager(coinKit: coinKit, walletManager: walletManager, accountManager: accountManager)
 
