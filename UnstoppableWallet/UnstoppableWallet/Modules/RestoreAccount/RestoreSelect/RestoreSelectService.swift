@@ -4,7 +4,7 @@ import CoinKit
 
 class RestoreSelectService {
     private let accountType: AccountType
-    private let accountFactory: IAccountFactory
+    private let accountFactory: AccountFactory
     private let accountManager: IAccountManager
     private let walletManager: IWalletManager
     private let coinManager: ICoinManager
@@ -30,7 +30,7 @@ class RestoreSelectService {
         }
     }
 
-    init(accountType: AccountType, accountFactory: IAccountFactory, accountManager: IAccountManager, walletManager: IWalletManager, coinManager: ICoinManager, enableCoinsService: EnableCoinsService, restoreSettingsService: RestoreSettingsService, coinSettingsService: CoinSettingsService) {
+    init(accountType: AccountType, accountFactory: AccountFactory, accountManager: IAccountManager, walletManager: IWalletManager, coinManager: ICoinManager, enableCoinsService: EnableCoinsService, restoreSettingsService: RestoreSettingsService, coinSettingsService: CoinSettingsService) {
         self.accountType = accountType
         self.accountFactory = accountFactory
         self.accountManager = accountManager
@@ -233,7 +233,7 @@ extension RestoreSelectService {
     }
 
     func restore() {
-        let account = accountFactory.account(type: accountType, origin: .restored, backedUp: true)
+        let account = accountFactory.account(type: accountType, origin: .restored)
         accountManager.save(account: account)
 
         for (coin, settings) in restoreSettingsMap {

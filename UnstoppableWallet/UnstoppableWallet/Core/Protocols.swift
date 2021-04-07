@@ -209,10 +209,6 @@ protocol IBackupManager {
     func setAccountBackedUp(id: String)
 }
 
-protocol IAccountFactory {
-    func account(type: AccountType, origin: AccountOrigin, backedUp: Bool) -> Account
-}
-
 protocol IBlurManager {
     func willResignActive()
     func didBecomeActive()

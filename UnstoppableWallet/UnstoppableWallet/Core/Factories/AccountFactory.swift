@@ -1,17 +1,30 @@
 import Foundation
 
-class AccountFactory: IAccountFactory {
+class AccountFactory {
+    private let accountManager: IAccountManager
 
-    func account(type: AccountType, origin: AccountOrigin, backedUp: Bool) -> Account {
-        let id = UUID().uuidString
-        let name = "Wallet 1" // todo: generate localized and ordered wallet name
+    init(accountManager: IAccountManager) {
+        self.accountManager = accountManager
+    }
 
-        return Account(
-                id: id,
-                name: name,
+    private var nextWalletName: String {
+        let count = accountManager.accounts.count
+        let order = count + 1
+
+        return "Wallet \(order)"
+    }
+
+}
+
+extension AccountFactory {
+
+    func account(type: AccountType, origin: AccountOrigin) -> Account {
+        Account(
+                id: UUID().uuidString,
+                name: nextWalletName,
                 type: type,
                 origin: origin,
-                backedUp: backedUp
+                backedUp: origin == .restored
         )
     }
 
