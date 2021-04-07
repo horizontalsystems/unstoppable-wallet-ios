@@ -54,7 +54,7 @@ class BalancePresenter {
     }
 
     private func subscribeRates() {
-        interactor.subscribeToMarketInfo(currencyCode: currency.code)
+        interactor.subscribeToLatestRates()
     }
 
     private func fillLatestRates() {

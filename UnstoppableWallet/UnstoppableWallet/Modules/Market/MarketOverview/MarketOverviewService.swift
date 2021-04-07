@@ -23,6 +23,7 @@ class MarketOverviewService {
         self.currencyKit = currencyKit
         self.rateManager = rateManager
 
+        subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] baseCurrency in self?.fetch() }
         fetch()
     }
 
@@ -31,7 +32,7 @@ class MarketOverviewService {
 
         state = .loading
 
-        rateManager.topMarketsSingle(currencyCode: currency.code, fetchDiffPeriod: .hour24, itemCount: 250)
+        rateManager.topMarketsSingle(currencyCode: currencyKit.baseCurrency.code, fetchDiffPeriod: .hour24, itemCount: 250)
                 .subscribe(onSuccess: { [weak self] in
                     self?.onFetchSuccess(items: $0)
                 }, onError: { [weak self] error in
@@ -57,8 +58,7 @@ class MarketOverviewService {
 extension MarketOverviewService {
 
     var currency: Currency {
-        //todo: refactor to use current currency and handle changing
-        currencyKit.currencies.first { $0.code == "USD" } ?? currencyKit.currencies[0]
+        currencyKit.baseCurrency
     }
 
     var stateObservable: Observable<State> {

@@ -48,7 +48,7 @@ protocol IBalanceInteractor: AnyObject {
     func subscribeToWallets()
     func subscribeToAdapters(wallets: [Wallet])
 
-    func subscribeToMarketInfo(currencyCode: String)
+    func subscribeToLatestRates()
 
     var sortType: SortType { get }
     var balanceHidden: Bool { get set }

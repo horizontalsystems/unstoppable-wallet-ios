@@ -24,6 +24,7 @@ class MarketMetricsService {
                 })
                 .disposed(by: disposeBag)
 
+        subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] baseCurrency in self?.fetchMarketMetrics() }
         fetchMarketMetrics()
     }
 
@@ -47,8 +48,7 @@ class MarketMetricsService {
 extension MarketMetricsService {
 
     public var currency: Currency {
-        //todo: refactor to use current currency and handle changing
-        currencyKit.currencies.first { $0.code == "USD" } ?? currencyKit.currencies[0]
+        currencyKit.baseCurrency
     }
 
     public var globalMarketInfoObservable: Observable<DataStatus<GlobalCoinMarket>> {
