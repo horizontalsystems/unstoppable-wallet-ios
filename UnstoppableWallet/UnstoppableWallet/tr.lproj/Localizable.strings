@@ -535,7 +535,7 @@
 "settings.base_currency" = "Para birimi";
 "settings.language" = "Dil";
 "settings.faq" = "FAQ";
-"settings.light_mode" = "Aydınlık mod";
+"settings.theme" = "Theme";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized uygulama";
 
@@ -674,6 +674,13 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "settings.about_app.rate_us" = "Bizi Değerlendirin";
 "settings.about_app.tell_friends" = "Arkadaşlarına bahset";
 "settings.about_app.email_copied" = "E-posta adresi kopyalandı";
+
+// Settings -> Theme
+
+"settings_theme.title" = "Theme";
+"settings_theme.system" = "System";
+"settings_theme.dark" = "Dark";
+"settings_theme.light" = "Light";
 
 // Set PIN
 
