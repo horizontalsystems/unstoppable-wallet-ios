@@ -2,6 +2,7 @@ import WalletConnect
 import RxSwift
 import RxRelay
 import RxCocoa
+import ThemeKit
 
 class MainSettingsViewModel {
     private let service: MainSettingsService
@@ -11,6 +12,7 @@ class MainSettingsViewModel {
     private let securityCenterAlertRelay: BehaviorRelay<Bool>
     private let walletConnectSessionCountRelay: BehaviorRelay<String?>
     private let baseCurrencyRelay: BehaviorRelay<String>
+    private let themeModeRelay: BehaviorRelay<ThemeMode>
     private let aboutAlertRelay: BehaviorRelay<Bool>
     private let openLinkRelay = PublishRelay<URL>()
 
@@ -21,6 +23,7 @@ class MainSettingsViewModel {
         securityCenterAlertRelay = BehaviorRelay(value: !service.isPinSet)
         walletConnectSessionCountRelay = BehaviorRelay(value: Self.convert(walletConnectSessionCount: service.walletConnectSessionCount))
         baseCurrencyRelay = BehaviorRelay(value: service.baseCurrency.code)
+        themeModeRelay = BehaviorRelay(value: service.themeMode)
         aboutAlertRelay = BehaviorRelay(value: !service.termsAccepted)
 
         service.allBackedUpObservable
@@ -48,6 +51,13 @@ class MainSettingsViewModel {
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] currency in
                     self?.baseCurrencyRelay.accept(currency.code)
+                })
+                .disposed(by: disposeBag)
+
+        service.themeModeObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] themeMode in
+                    self?.themeModeRelay.accept(themeMode)
                 })
                 .disposed(by: disposeBag)
 
@@ -95,8 +105,12 @@ extension MainSettingsViewModel {
         service.currentLanguageDisplayName
     }
 
-    var lightMode: Bool {
-        service.lightMode
+    var themeModeDriver: Driver<ThemeMode> {
+        themeModeRelay.asDriver()
+    }
+
+    var themeMode: ThemeMode {
+        service.themeMode
     }
 
     var telegramAccount: String {
@@ -113,10 +127,6 @@ extension MainSettingsViewModel {
 
     var appVersion: String {
         service.appVersion
-    }
-
-    func onSwitch(lightMode: Bool) {
-        service.lightMode = lightMode
     }
 
     func onTapCompanyLink() {

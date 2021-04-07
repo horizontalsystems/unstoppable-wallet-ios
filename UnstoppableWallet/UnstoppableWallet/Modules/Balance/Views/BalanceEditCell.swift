@@ -1,10 +1,11 @@
 import UIKit
 import SnapKit
+import ThemeKit
 
 class BalanceEditCell: UICollectionViewCell {
     static let height: CGFloat = 72
 
-    private let button = UIButton()
+    private let button = ThemeButton()
 
     var onTap: (() -> ())?
 
@@ -23,8 +24,9 @@ class BalanceEditCell: UICollectionViewCell {
         button.contentEdgeInsets = UIEdgeInsets(top: .margin4x, left: .margin8x, bottom: .margin4x, right: .margin8x)
 
         let image = UIImage(named: "circle_plus_20")
-        button.setImage(image?.tinted(with: .themeGray), for: .normal)
-        button.setImage(image?.tinted(with: .themeGray50), for: .highlighted)
+        button.setImageTintColor(.themeGray, for: .normal)
+        button.setImageTintColor(.themeGray50, for: .highlighted)
+        button.setImage(image, for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -.margin4x, bottom: 0, right: 0)
 
         button.addTarget(self, action: #selector(didTap), for: .touchUpInside)

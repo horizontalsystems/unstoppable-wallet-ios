@@ -11,7 +11,7 @@ class TransactionInfoWarningCell: BaseThemeCell {
 
     private let iconImageView = UIImageView()
     private let label = UILabel()
-    private let button = UIButton()
+    private let button = ThemeButton()
 
     private var onTapButton: (() -> ())?
 
@@ -42,7 +42,8 @@ class TransactionInfoWarningCell: BaseThemeCell {
             maker.width.equalTo(TransactionInfoWarningCell.buttonWidth)
         }
 
-        button.setImage(UIImage(named: "circle_information_20")?.tinted(with: .themeJacob), for: .normal)
+        button.setImageTintColor(.themeJacob, for: .normal)
+        button.setImage(UIImage(named: "circle_information_20")?.withRenderingMode(.alwaysTemplate), for: .normal)
         button.addTarget(self, action: #selector(_onTapButton), for: .touchUpInside)
     }
 

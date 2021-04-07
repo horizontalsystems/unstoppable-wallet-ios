@@ -99,7 +99,8 @@ class TransactionInfoViewController: ThemeActionSheetController {
                     cell.set(backgroundStyle: .transparent)
                     cell.title = "status".localized
                     cell.value = "tx_info.status.completed".localized
-                    cell.valueImage = UIImage(named: "check_1_20")?.tinted(with: .themeRemus)
+                    cell.valueImage = UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate)
+                    cell.valueImageTintColor = .themeRemus
                 }
         )
     }
@@ -112,9 +113,11 @@ class TransactionInfoViewController: ThemeActionSheetController {
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .transparent)
                     cell.title = "status".localized
-                    cell.titleImage = UIImage(named: "circle_information_20")?.tinted(with: .themeJacob)
+                    cell.titleImage = UIImage(named: "circle_information_20")?.withRenderingMode(.alwaysTemplate)
+                    cell.titleImageTintColor = .themeJacob
                     cell.value = "tx_info.status.failed".localized
-                    cell.valueImage = UIImage(named: "warning_2_20")?.tinted(with: .themeLucian)
+                    cell.valueImage = UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate)
+                    cell.valueImageTintColor = .themeLucian
                     cell.titleImageAction = { [weak self] in
                         self?.openStatusInfo()
                     }
@@ -270,11 +273,11 @@ class TransactionInfoViewController: ThemeActionSheetController {
                 self?.delegate.onTapLockInfo()
             }
         } else {
-            return noteRow(id: id, image: image, text: "tx_info.unlocked_at".localized(formattedDate))
+            return noteRow(id: id, image: image, imageTintColor: .themeGray, text: "tx_info.unlocked_at".localized(formattedDate))
         }
     }
 
-    private func noteRow(id: String, image: UIImage?, text: String) -> RowProtocol {
+    private func noteRow(id: String, image: UIImage?, imageTintColor: UIColor?, text: String) -> RowProtocol {
         Row<TransactionInfoNoteCell>(
                 id: id,
                 hash: text,
@@ -283,7 +286,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
                 },
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .transparent)
-                    cell.bind(image: image, text: text)
+                    cell.bind(image: image, imageTintColor: imageTintColor, text: text)
                 }
         )
     }
@@ -291,7 +294,8 @@ class TransactionInfoViewController: ThemeActionSheetController {
     private func sentToSelfRow() -> RowProtocol {
         noteRow(
                 id: "sent_to_self",
-                image: UIImage(named: "arrow_medium_main_down_left_20")?.tinted(with: .themeRemus),
+                image: UIImage(named: "arrow_medium_main_down_left_20")?.withRenderingMode(.alwaysTemplate),
+                imageTintColor: .themeRemus,
                 text: "tx_info.to_self_note".localized
         )
     }
@@ -363,21 +367,25 @@ extension TransactionInfoViewController: ITransactionInfoView {
             }
         }()
 
-        let iconImage: UIImage? = {
-            switch type {
-            case .incoming:
-                return UIImage(named: "arrow_medium_3_down_left_24")?.tinted(with: .themeRemus)
-            case .outgoing, .sentToSelf:
-                return UIImage(named: "arrow_medium_3_up_right_24")?.tinted(with: .themeJacob)
-            case .approve:
-                return UIImage(named: "arrow_swap_approval_2_24")?.tinted(with: .themeLeah)
-            }
-        }()
+        let iconImage: UIImage?
+        let iconTintColor: UIColor?
+        switch type {
+        case .incoming:
+            iconImage = UIImage(named: "arrow_medium_3_down_left_24")
+            iconTintColor = .themeRemus
+        case .outgoing, .sentToSelf:
+            iconImage = UIImage(named: "arrow_medium_3_up_right_24")
+            iconTintColor = .themeJacob
+        case .approve:
+            iconImage = UIImage(named: "arrow_swap_approval_2_24")
+            iconTintColor = .themeLeah
+        }
 
         titleView.bind(
                 title: title,
                 subtitle: DateHelper.instance.formatFullTime(from: date),
-                image: iconImage
+                image: iconImage,
+                tintColor: iconTintColor
         )
 
         if secondaryAmountInfo != nil {

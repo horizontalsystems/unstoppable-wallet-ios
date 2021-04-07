@@ -38,7 +38,8 @@ class AddressFormatConfirmationViewController: ThemeActionSheetController {
         titleView.bind(
                 title: "blockchain_settings.change_alert.title".localized,
                 subtitle: settingName,
-                image: UIImage(named: "warning_2_24")?.tinted(with: .themeJacob)
+                image: UIImage(named: "warning_2_24"),
+                tintColor: .themeJacob
         )
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)

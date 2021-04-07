@@ -38,8 +38,9 @@ class MarketListHeaderView: UITableViewHeaderFooterView {
         fieldSelectionButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
         let image = UIImage(named: "arrow_small_down_20")
-        fieldSelectionButton.setImage(image?.tinted(with: .themeGray), for: .normal)
-        fieldSelectionButton.setImage(image?.tinted(with: .themeGray50), for: .highlighted)
+        fieldSelectionButton.setImageTintColor(.themeGray, for: .normal)
+        fieldSelectionButton.setImageTintColor(.themeGray50, for: .highlighted)
+        fieldSelectionButton.setImage(image, for: .normal)
 
         fieldSelectionButton.addTarget(self, action: #selector(tapSortField), for: .touchUpInside)
 

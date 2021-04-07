@@ -50,7 +50,8 @@ class MarketSearchViewController: ThemeSearchViewController {
         tableView.keyboardDismissMode = .interactive
 
         advancedSearchCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        advancedSearchCell.titleImage = UIImage(named: "sort_6_20")?.tinted(with: .themeGray)
+        advancedSearchCell.titleImage = UIImage(named: "sort_6_20")?.withRenderingMode(.alwaysTemplate)
+        advancedSearchCell.titleImageTintColor = .themeGray
         advancedSearchCell.title = "market.advanced_search.title".localized
 
         view.addSubview(emptyLabel)
@@ -134,6 +135,7 @@ class MarketSearchViewController: ThemeSearchViewController {
                         cell.subtitle = viewItem.coinCode
                         cell.leftBadgeText = viewItem.blockchainType
                         cell.titleImage = UIImage.image(coinType: viewItem.coinType)
+                        cell.titleImageTintColor = .themeGray
                     },
                     action: { [weak self] _ in
                         self?.onSelect(viewItem: viewItem)

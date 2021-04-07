@@ -47,7 +47,8 @@ class MarketMetricsCell: UITableViewCell {
             maker.size.equalTo(Self.ellipseDiameter)
         }
 
-        ellipseView.image = UIImage(named: "ellipse_111")?.tinted(with: .themeTyler)
+        ellipseView.image = UIImage(named: "ellipse_111")?.withRenderingMode(.alwaysTemplate)
+        ellipseView.tintColor = .themeTyler
 
         cardView.addSubview(marketLargeView)
         marketLargeView.snp.makeConstraints { maker in

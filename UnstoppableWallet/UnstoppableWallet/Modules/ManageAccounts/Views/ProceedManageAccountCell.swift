@@ -4,7 +4,7 @@ class ProceedManageAccountCell: BaseManageAccountCell {
     static let height: CGFloat = .heightCell48
 
     private let titleLabel = UILabel()
-    private let warningImageView = UIImageView(image: UIImage(named: "warning_2_20")?.tinted(with: .themeLucian))
+    private let warningImageView = UIImageView(image: UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate))
     private let disclosureImageView = UIImageView(image: UIImage(named: "arrow_big_forward_20"))
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -22,6 +22,8 @@ class ProceedManageAccountCell: BaseManageAccountCell {
         warningImageView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
         }
+
+        warningImageView.tintColor = .themeLucian
 
         contentHolder.addSubview(disclosureImageView)
         disclosureImageView.snp.makeConstraints { maker in

@@ -20,11 +20,9 @@ extension UIImage {
     }
 
     static func image(coinType: CoinType) -> UIImage? {
-        var image = UIImage(named: "\(coinType.id)") ??
+        UIImage(named: "\(coinType.id)") ??
                 coinType.blockchainType.map { UIImage(named: $0.lowercased()) } ??
                 UIImage(named: "icon_placeholder_24")
-
-        return image?.tinted(with: .themeGray)
     }
 
 }

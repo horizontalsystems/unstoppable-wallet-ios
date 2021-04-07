@@ -256,6 +256,7 @@ PODS:
     - AlamofireImage (~> 4.1)
     - HUD.swift (~> 1.2)
     - LanguageKit.swift (~> 1.0)
+    - RxCocoa (~> 5.0)
     - SkeletonView (~> 1.11)
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1)
@@ -474,7 +475,7 @@ CHECKOUT OPTIONS:
     :commit: eb68e6b168587901c2e88b9c9baba56fd5a65091
     :git: https://github.com/horizontalsystems/coin-kit-ios
   CurrencyKit.swift:
-    :commit: e98cabf6f523af6129c04521a37f9cbaf3a77f7e
+    :commit: 01ccca8dcfeed5fe051ff0fe0274577e99e433b5
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
     :commit: fbf60ee6ef2eaec6b13eacff8d29a155863c2586
@@ -510,25 +511,25 @@ CHECKOUT OPTIONS:
     :commit: fbf60ee6ef2eaec6b13eacff8d29a155863c2586
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   ModuleKit.swift:
-    :commit: e98cabf6f523af6129c04521a37f9cbaf3a77f7e
+    :commit: 01ccca8dcfeed5fe051ff0fe0274577e99e433b5
     :git: https://github.com/horizontalsystems/component-kit-ios/
   PinKit.swift:
-    :commit: e98cabf6f523af6129c04521a37f9cbaf3a77f7e
+    :commit: 01ccca8dcfeed5fe051ff0fe0274577e99e433b5
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ScanQrKit.swift:
-    :commit: e98cabf6f523af6129c04521a37f9cbaf3a77f7e
+    :commit: 01ccca8dcfeed5fe051ff0fe0274577e99e433b5
     :git: https://github.com/horizontalsystems/component-kit-ios/
   SectionsTableView.swift:
     :commit: 743ae6a27dda2c3b680a19c96f94486129179f6b
     :git: https://github.com/horizontalsystems/gui-kit/
   StorageKit.swift:
-    :commit: e98cabf6f523af6129c04521a37f9cbaf3a77f7e
+    :commit: 01ccca8dcfeed5fe051ff0fe0274577e99e433b5
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: 4ab1367cc57030084f3f948ad37192b58154d32f
+    :commit: 01ccca8dcfeed5fe051ff0fe0274577e99e433b5
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
-    :commit: 392186c18e8df97d40ca0f4587d857259d878dd4
+    :commit: a1dcf7d572c35cc6a3a023f01a2f7eb4a16507fe
     :git: https://github.com/horizontalsystems/gui-kit/
   UniswapKit.swift:
     :commit: 6adbde905aed41520c28c94e30232832f4e23e8e
@@ -564,7 +565,7 @@ SPEC CHECKSUMS:
   CoinKit.swift: 346a1c1d64e8664d54e8434241682a6f3bc7a0be
   CryptoSwift: 01b0f0cba1d5c212e5a335ff6c054fb75a204f00
   Cuckoo: 4625f7f54d9bb880123270e8969898d6c1d036b5
-  CurrencyKit.swift: c1a37e0e43eac3828be95c8348693f192d67b376
+  CurrencyKit.swift: 19b9e053c910003cc758689a74b312c3a809648c
   DashKit.swift: e811885ceb0c58f66630af790cba8f46881efc2b
   DeepDiff: e5ae6c50d0321568e4508cec5930b9f10bb293fc
   Down: 01f155f9d7e99673c667efd2218709c3b9a8bc13
@@ -583,11 +584,11 @@ SPEC CHECKSUMS:
   LanguageKit.swift: 8ca8b99dd6250a13cf481b637e0d9d16f7389a74
   LitecoinKit.swift: 74efd6ccf9ecb6a448cd8aeb2ce38a88c143fd46
   Logging: beeb016c9c80cf77042d62e83495816847ef108b
-  ModuleKit.swift: 60a85485efe4cab836d53a77eacc72cb98328936
+  ModuleKit.swift: be0a865fab11a0f11be3fce84da887ca537bdf13
   Nimble: 3b4ec3fd40f1dc178058e0981107721c615643d8
   ObjectMapper: 97111c97e054a6ee25917662106689f0b4127b37
   OpenSslKit.swift: 0e2194853fd9ce42006cf18c89743331406a10a9
-  PinKit.swift: 1acbf82ce5114972f1eb9a5a0c1b808dc08ad12e
+  PinKit.swift: 510fb2fac8664946dc17ce60cdbac5948c31700a
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   Quick: 60f0ea3b8e0cfc0df3259a5c06a238ad8b3c46e0
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
@@ -595,13 +596,13 @@ SPEC CHECKSUMS:
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
   RxSwift: 1e2e1f9570186967f617e49128ed26ccf1bafc8e
   RxSwiftExt: 4ca80336f43c28f11a2825cdd2fc61dd6c044697
-  ScanQrKit.swift: ac548dac6dec848f20afe6afc97cd419128d1b01
+  ScanQrKit.swift: 5cafc1b60c4a7f30daba6479a41d71261c0ae04f
   Secp256k1Kit.swift: 322a66c4b3e95e96a397d73d45ad4d79af991bab
   SectionsTableView.swift: 1541226d2cff974a131cfc2df3b8908d4902d703
   SkeletonView: 2b14cb767a7da384d17d5d7e1db0d55a6cf9566a
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
-  StorageKit.swift: 1b618d59978510ac2f32971a01f87e54cddbe0da
+  StorageKit.swift: b971dfbd82d7672a6878634e1cad3dbf77ecb3f2
   SwiftNIO: 81d33ce8c500b7e41b6cdde5f2f12330b9750219
   SwiftNIOConcurrencyHelpers: 23fc68bac541a465162d7225d2c743edd2f1012c
   SwiftNIOFoundationCompat: 0e52ac0e2c9b7b60ff9141eebb64f5a82d974118
@@ -613,7 +614,7 @@ SPEC CHECKSUMS:
   SwiftNIOTransportServices: 896c9a4ac98698d32aa2feea7657ade219ae80bb
   SwiftProtobuf: 3320217e9d8fb75f36b40282e78c482640fd75dd
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
-  ThemeKit.swift: 0420634f3f3f5a0d500912760beef7ba4bfb7bd0
+  ThemeKit.swift: 3d811f6b57daecbf87b5735b35c586bcaa1bff14
   UIExtensions.swift: 3ed084c0343ddd0f86c7c558d37759e1fd7d5778
   UniswapKit.swift: a0037722fad19c4fbfe905025468d828ebd26470
   UnstoppableDomainsResolution: 1ddbca0988240260220b0963f8b9b6c4cec5e8f2

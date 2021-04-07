@@ -48,6 +48,7 @@ struct MarketModule {
         let image = UIImage.image(coinType: viewItem.coinType)
 
         cell.leftImage = image
+        cell.leftImageTintColor = .themeGray
         cell.topText = viewItem.coinName
         cell.bottomText = viewItem.coinCode.uppercased()
 

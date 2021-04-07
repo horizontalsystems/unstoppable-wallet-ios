@@ -61,8 +61,9 @@ open class BalanceButtonsView: UIView {
         }
 
         swapButton.apply(style: swapStyle)
-        swapButton.setImage(UIImage(named: "arrow_swap_2_24")?.tinted(with: .black), for: .normal)
-        swapButton.setImage(UIImage(named: "arrow_swap_2_24")?.tinted(with: .themeGray50), for: .disabled)
+        swapButton.setImageTintColor(.black, for: .normal)
+        swapButton.setImageTintColor(.themeGray50, for: .disabled)
+        swapButton.setImage(UIImage(named: "arrow_swap_2_24"), for: .normal)
         swapButton.addTarget(self, action: #selector(onSwap), for: .touchUpInside)
     }
 
