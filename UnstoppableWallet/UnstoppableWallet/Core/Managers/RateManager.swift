@@ -18,45 +18,15 @@ class RateManager {
         self.rateCoinMapper = rateCoinMapper
         self.feeCoinProvider = feeCoinProvider
 
-        kit = XRatesKit.instance(currencyCode: currencyKit.baseCurrency.code, coinMarketCapApiKey: coinMarketCapApiKey, cryptoCompareApiKey: cryptoCompareApiKey, uniswapSubgraphUrl: uniswapSubgraphUrl, indicatorPointCount: 50, marketInfoExpirationInterval: 10 * 60, topMarketsCount: 100, minLogLevel: .error)
-
-        walletManager.activeWalletsUpdatedObservable
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .subscribe(onNext: { [weak self] wallets in
-                    self?.onUpdate(wallets: wallets)
-                })
-                .disposed(by: disposeBag)
-
-        currencyKit.baseCurrencyUpdatedObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .subscribe(onNext: { [weak self] baseCurrency in
-                    self?.onUpdate(baseCurrency: baseCurrency)
-                })
-                .disposed(by: disposeBag)
-    }
-
-    private func onUpdate(wallets: [Wallet]) {
-        let allCoins = wallets.reduce(into: [Coin]()) { result, wallet in
-            result.append(wallet.coin)
-
-            if let feeCoin = feeCoinProvider.feeCoin(coin: wallet.coin) {
-                result.append(feeCoin)
-            }
-        }
-        let uniqueCoinTypes = Array(Set(allCoins.map { $0.type }))
-        //        kit.set(coinTypes: uniqueCoinTypes)
-    }
-
-    private func onUpdate(baseCurrency: Currency) {
-        // kit.set(currencyCode: baseCurrency.code)
+        kit = XRatesKit.instance(currencyCode: currencyKit.baseCurrency.code, coinMarketCapApiKey: coinMarketCapApiKey, cryptoCompareApiKey: cryptoCompareApiKey, uniswapSubgraphUrl: uniswapSubgraphUrl, indicatorPointCount: 50, marketInfoExpirationInterval: 60, topMarketsCount: 100, minLogLevel: .error)
     }
 
 }
 
 extension RateManager: IRateManager {
 
-    func refresh() {
-        // kit.refresh()
+    func refresh(currencyCode: String) {
+        kit.refresh(currencyCode: currencyCode)
     }
 
     func globalMarketInfoSingle(currencyCode: String) -> Single<GlobalCoinMarket> {
@@ -83,8 +53,8 @@ extension RateManager: IRateManager {
         kit.latestRateObservable(coinType: coinType, currencyCode: currencyCode)
     }
 
-    func latestRatesObservable(currencyCode: String) -> Observable<[CoinType: LatestRate]> {
-        kit.latestRatesObservable(coinTypes: [CoinType](), currencyCode: currencyCode)
+    func latestRatesObservable(coinTypes: [CoinType], currencyCode: String) -> Observable<[CoinType: LatestRate]> {
+        kit.latestRatesObservable(coinTypes: coinTypes, currencyCode: currencyCode)
     }
 
     func historicalRate(coinType: CoinType, currencyCode: String, timestamp: TimeInterval) -> Single<Decimal> {

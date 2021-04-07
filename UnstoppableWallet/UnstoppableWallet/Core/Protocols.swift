@@ -224,7 +224,7 @@ protocol IBlurManager {
 }
 
 protocol IRateManager {
-    func refresh()
+    func refresh(currencyCode: String)
 
     func globalMarketInfoSingle(currencyCode: String) -> Single<GlobalCoinMarket>
     func topMarketsSingle(currencyCode: String, fetchDiffPeriod: TimePeriod, itemCount: Int) -> Single<[CoinMarket]>
@@ -232,7 +232,7 @@ protocol IRateManager {
     func searchCoins(text: String) -> [CoinData]
     func latestRate(coinType: CoinType, currencyCode: String) -> LatestRate?
     func latestRateObservable(coinType: CoinType, currencyCode: String) -> Observable<LatestRate>
-    func latestRatesObservable(currencyCode: String) -> Observable<[CoinType: LatestRate]>
+    func latestRatesObservable(coinTypes: [CoinType], currencyCode: String) -> Observable<[CoinType: LatestRate]>
     func historicalRate(coinType: CoinType, currencyCode: String, timestamp: TimeInterval) -> Single<Decimal>
     func historicalRate(coinType: CoinType, currencyCode: String, timestamp: TimeInterval) -> Decimal?
     func chartInfo(coinType: CoinType, currencyCode: String, chartType: ChartType) -> ChartInfo?
