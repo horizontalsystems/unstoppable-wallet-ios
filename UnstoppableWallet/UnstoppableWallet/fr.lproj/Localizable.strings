@@ -535,7 +535,7 @@
 "settings.base_currency" = "Devise de Base";
 "settings.language" = "Langue";
 "settings.faq" = "FAQ";
-"settings.light_mode" = "Mode lumineux";
+"settings.theme" = "Theme";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
 
@@ -674,6 +674,13 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "settings.about_app.rate_us" = "Evaluez-nous";
 "settings.about_app.tell_friends" = "Partager avec ami";
 "settings.about_app.email_copied" = "Adresse email copiée";
+
+// Settings -> Theme
+
+"settings_theme.title" = "Theme";
+"settings_theme.system" = "System";
+"settings_theme.dark" = "Dark";
+"settings_theme.light" = "Light";
 
 // Set PIN
 
