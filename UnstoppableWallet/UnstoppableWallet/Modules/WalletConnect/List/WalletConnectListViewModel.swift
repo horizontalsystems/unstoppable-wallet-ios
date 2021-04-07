@@ -19,8 +19,7 @@ class WalletConnectListViewModel {
     private func sync(items: [WalletConnectListService.Item]) {
         let sectionViewItems = items.map { item in
             SectionViewItem(
-                    title: item.predefinedAccountType.title,
-                    address: item.address.eip55,
+                    title: title(chain: item.chain),
                     viewItems: item.sessions.map { session in
                         ViewItem(
                                 session: session,
@@ -33,6 +32,13 @@ class WalletConnectListViewModel {
         }
 
         sectionViewItemsRelay.accept(sectionViewItems)
+    }
+
+    private func title(chain: WalletConnectListService.Chain) -> String {
+        switch chain {
+        case .ethereum: return "Ethereum"
+        case .binanceSmartChain: return "Binance Smart Chain"
+        }
     }
 
 }
@@ -49,7 +55,6 @@ extension WalletConnectListViewModel {
 
     struct SectionViewItem {
         let title: String
-        let address: String
         let viewItems: [ViewItem]
     }
 

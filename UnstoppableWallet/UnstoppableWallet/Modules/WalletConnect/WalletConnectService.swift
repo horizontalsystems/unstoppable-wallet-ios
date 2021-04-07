@@ -68,7 +68,7 @@ class WalletConnectService {
     }
 
     private func initSession(peerId: String, peerMeta: WCPeerMeta, chainId: Int) throws {
-        guard let account = manager.currentAccount(chainId: chainId) else {
+        guard let account = manager.activeAccount else {
             throw SessionError.noSuitableAccount
         }
 

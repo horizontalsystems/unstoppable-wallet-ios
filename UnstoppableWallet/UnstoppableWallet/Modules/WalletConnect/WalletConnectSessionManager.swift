@@ -19,10 +19,21 @@ class WalletConnectSessionManager {
                     self?.handleDeleted(account: account)
                 })
                 .disposed(by: disposeBag)
+
+        accountManager.activeAccountObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .subscribe(onNext: { [weak self] activeAccount in
+                    self?.handle(activeAccount: activeAccount)
+                })
+                .disposed(by: disposeBag)
     }
 
     private func handleDeleted(account: Account) {
-        storage.deleteSession(accountId: account.id)
+        storage.deleteSessions(accountId: account.id)
+        sessionsRelay.accept(sessions)
+    }
+
+    private func handle(activeAccount: Account?) {
         sessionsRelay.accept(sessions)
     }
 
@@ -31,7 +42,11 @@ class WalletConnectSessionManager {
 extension WalletConnectSessionManager {
 
     var sessions: [WalletConnectSession] {
-        storage.sessions
+        guard let activeAccount = accountManager.activeAccount else {
+            return []
+        }
+
+        return storage.sessions(accountId: activeAccount.id)
     }
 
     var sessionsObservable: Observable<[WalletConnectSession]> {

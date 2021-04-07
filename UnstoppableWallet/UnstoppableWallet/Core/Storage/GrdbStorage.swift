@@ -761,9 +761,9 @@ extension GrdbStorage: ILogRecordStorage {
 
 extension GrdbStorage: IWalletConnectSessionStorage {
 
-    var sessions: [WalletConnectSession] {
+    func sessions(accountId: String) -> [WalletConnectSession] {
         try! dbPool.read { db in
-            try WalletConnectSession.fetchAll(db)
+            try WalletConnectSession.filter(WalletConnectSession.Columns.accountId == accountId).fetchAll(db)
         }
     }
 
@@ -779,7 +779,7 @@ extension GrdbStorage: IWalletConnectSessionStorage {
         }
     }
 
-    func deleteSession(accountId: String) {
+    func deleteSessions(accountId: String) {
         _ = try! dbPool.write { db in
             try WalletConnectSession.filter(WalletConnectSession.Columns.accountId == accountId).deleteAll(db)
         }

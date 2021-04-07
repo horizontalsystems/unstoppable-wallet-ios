@@ -570,8 +570,8 @@ protocol IPresentDelegate: AnyObject {
 }
 
 protocol IWalletConnectSessionStorage {
-    var sessions: [WalletConnectSession] { get }
+    func sessions(accountId: String) -> [WalletConnectSession]
     func save(session: WalletConnectSession)
     func deleteSession(peerId: String)
-    func deleteSession(accountId: String)
+    func deleteSessions(accountId: String)
 }
