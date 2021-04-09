@@ -7,13 +7,17 @@ project 'UnstoppableWallet/UnstoppableWallet'
 
 def appPods
   pod 'BitcoinKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
+  # pod 'BitcoinKit.swift', path: '../bitcoin-kit-ios/'
   pod 'LitecoinKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
+  # pod 'LitecoinKit.swift', path: '../bitcoin-kit-ios/'
   pod 'BitcoinCashKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
   # pod 'BitcoinCashKit.swift', path: '../bitcoin-kit-ios/'
   pod 'DashKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
+  # pod 'DashKit.swift', path: '../bitcoin-kit-ios/'
   pod 'Hodler.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
 
   pod 'BitcoinCore.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
+  # pod 'BitcoinCore.swift', path: '../bitcoin-kit-ios/'
 
   pod 'ZcashLightClientKit', '~> 0.10.0'
 
@@ -69,7 +73,7 @@ def appPods
 
   pod 'Alamofire'
   pod 'AlamofireImage'
-  pod 'ObjectMapper'
+  pod 'ObjectMapper', '4.0'
 
   pod 'GRDB.swift'
 
