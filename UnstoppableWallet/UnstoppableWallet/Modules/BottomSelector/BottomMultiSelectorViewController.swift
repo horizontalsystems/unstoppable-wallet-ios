@@ -50,10 +50,37 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
             self?.dismiss(animated: true)
         }
 
+        var lastView: UIView = titleView
+
+        if let description = config.description {
+            let descriptionView = HighlightedDescriptionView()
+
+            view.addSubview(descriptionView)
+            descriptionView.snp.makeConstraints { maker in
+                maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+                maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin12)
+            }
+
+            descriptionView.text = description
+
+            let separatorView = UIView()
+
+            view.addSubview(separatorView)
+            separatorView.snp.makeConstraints { maker in
+                maker.leading.trailing.equalToSuperview()
+                maker.top.equalTo(descriptionView.snp.bottom).offset(CGFloat.margin12)
+                maker.height.equalTo(CGFloat.heightOneDp)
+            }
+
+            separatorView.backgroundColor = .themeSteel10
+
+            lastView = separatorView
+        }
+
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(titleView.snp.bottom)
+            maker.top.equalTo(lastView.snp.bottom)
         }
 
         tableView.registerCell(forClass: F4Cell.self)
@@ -147,6 +174,7 @@ extension BottomMultiSelectorViewController {
         let iconTint: UIColor
         let title: String
         let subtitle: String
+        let description: String?
         let selectedIndexes: [Int]
         let viewItems: [ViewItem]
     }

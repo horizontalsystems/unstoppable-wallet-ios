@@ -283,7 +283,7 @@ PODS:
     - ObjectMapper (~> 4.0)
     - RxSwift (~> 5.0)
     - RxSwiftExt (~> 5)
-  - ZcashLightClientKit (0.10.0):
+  - ZcashLightClientKit (0.10.1):
     - gRPC-Swift (= 1.0.0-alpha.19)
     - SQLite.swift (~> 0.12.2)
 
@@ -620,7 +620,7 @@ SPEC CHECKSUMS:
   WalletConnect: 1942d6ae2698cadc0b117f4f4c99bae9d821ab4d
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: 50dda0bb340cf42f000eb5039e342f6487165360
-  ZcashLightClientKit: a1a36be74ca95e2802ba3d6bcc40e9b2753eb0da
+  ZcashLightClientKit: 64e2b2632d2c1b892d3427dd3b803a041d02583a
 
 PODFILE CHECKSUM: d224a20f4184e502dc1f89f996c9a8319c7f717d
 

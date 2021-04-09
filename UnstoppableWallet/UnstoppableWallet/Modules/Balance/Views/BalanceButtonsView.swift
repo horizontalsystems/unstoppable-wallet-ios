@@ -51,7 +51,6 @@ open class BalanceButtonsView: UIView {
         swapButtonWrapper.snp.makeConstraints { maker in
             maker.leading.equalTo(sendButtonWrapper.snp.trailing).offset(CGFloat.margin2x)
             maker.top.equalTo(receiveButton.snp.top)
-            maker.trailing.equalToSuperview()
             maker.size.equalTo(CGFloat.heightButton)
         }
 

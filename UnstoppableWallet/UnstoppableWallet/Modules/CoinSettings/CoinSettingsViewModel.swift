@@ -37,6 +37,7 @@ class CoinSettingsViewModel {
                 iconTint: .themeGray,
                 title: "blockchain_settings.title".localized,
                 subtitle: coin.title,
+                description: "blockchain_settings.description".localized(coin.title),
                 selectedIndexes: current.compactMap { allDerivations.firstIndex(of: $0) },
                 viewItems: allDerivations.map { derivation in
                     BottomMultiSelectorViewController.ViewItem(
@@ -53,6 +54,7 @@ class CoinSettingsViewModel {
                 iconTint: .themeGray,
                 title: "blockchain_settings.title".localized,
                 subtitle: coin.title,
+                description: "blockchain_settings.description".localized(coin.title),
                 selectedIndexes: current.compactMap { allTypes.firstIndex(of: $0) },
                 viewItems: allTypes.map { type in
                     BottomMultiSelectorViewController.ViewItem(
