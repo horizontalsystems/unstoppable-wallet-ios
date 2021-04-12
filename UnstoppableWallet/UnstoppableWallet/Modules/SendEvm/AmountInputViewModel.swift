@@ -57,7 +57,6 @@ class AmountInputViewModel {
 
         sync(amount: service.amount)
         sync(coin: service.coin)
-        syncCoin(amount: fiatService.coinAmount)
         sync(primaryInfo: fiatService.primaryInfo)
         syncSecondary(amountInfo: fiatService.secondaryAmountInfo)
     }
@@ -179,7 +178,7 @@ extension AmountInputViewModel {
             return
         }
 
-        fiatService.set(coinAmount: balance)
+        fiatService.set(coinAmount: balance, notify: true)
     }
 
     func onSwitch() {

@@ -48,6 +48,8 @@ class SwapService {
         }
     }
 
+    private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.swap_service")
+
     init(dex: SwapModule.Dex, evmKit: EthereumKit.Kit, tradeService: SwapTradeService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, adapterManager: IAdapterManager) {
         self.dex = dex
         self.evmKit = evmKit
@@ -56,48 +58,28 @@ class SwapService {
         self.pendingAllowanceService = pendingAllowanceService
         self.adapterManager = adapterManager
 
-        tradeService.stateObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] state in
-                    self?.onUpdateTrade(state: state)
-                })
-                .disposed(by: disposeBag)
+        subscribe(scheduler, disposeBag, tradeService.stateObservable) { [weak self] state in
+            self?.onUpdateTrade(state: state)
+        }
 
-        tradeService.coinInObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] coin in
-                    self?.onUpdate(coinIn: coin)
-                })
-                .disposed(by: disposeBag)
+        subscribe(scheduler, disposeBag, tradeService.coinInObservable) { [weak self] coin in
+            self?.onUpdate(coinIn: coin)
+        }
         onUpdate(coinIn: tradeService.coinIn)
 
-        tradeService.coinOutObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] coin in
-                    self?.onUpdate(coinOut: coin)
-                })
-                .disposed(by: disposeBag)
+        subscribe(scheduler, disposeBag, tradeService.coinOutObservable) { [weak self] coin in
+            self?.onUpdate(coinOut: coin)
+        }
 
-        tradeService.amountInObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] amount in
-                    self?.onUpdate(amountIn: amount)
-                })
-                .disposed(by: disposeBag)
-
-        allowanceService.stateObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] _ in
-                    self?.syncState()
-                })
-                .disposed(by: disposeBag)
-
-        pendingAllowanceService.isPendingObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] isPending in
-                    self?.onUpdate(isAllowancePending: isPending)
-                })
-                .disposed(by: disposeBag)
+        subscribe(scheduler, disposeBag, tradeService.amountInObservable) { [weak self] amount in
+            self?.onUpdate(amountIn: amount)
+        }
+        subscribe(scheduler, disposeBag, allowanceService.stateObservable) { [weak self] _ in
+            self?.syncState()
+        }
+        subscribe(scheduler, disposeBag, pendingAllowanceService.isPendingObservable) { [weak self] isPending in
+            self?.onUpdate(isAllowancePending: isPending)
+        }
     }
 
     private func onUpdateTrade(state: SwapTradeService.State) {
