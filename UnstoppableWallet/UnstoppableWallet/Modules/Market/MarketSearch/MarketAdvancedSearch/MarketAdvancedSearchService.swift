@@ -6,6 +6,7 @@ import XRatesKit
 
 class MarketAdvancedSearchService {
     private var disposeBag = DisposeBag()
+    private let allTimeDeltaPercent: Decimal = 10
 
     private let rateManager: IRateManager
     private let currencyKit: ICurrencyKit
@@ -93,6 +94,66 @@ class MarketAdvancedSearchService {
         }
     }
 
+    private var outperformedBtcUpdatedRelay = PublishRelay<Bool>()
+    var outperformedBtc: Bool = false {
+        didSet {
+            guard outperformedBtc != oldValue else {
+                return
+            }
+
+            outperformedBtcUpdatedRelay.accept(outperformedBtc)
+            updateFiltersIfNeeded()
+        }
+    }
+
+    private var outperformedEthUpdatedRelay = PublishRelay<Bool>()
+    var outperformedEth: Bool = false {
+        didSet {
+            guard outperformedEth != oldValue else {
+                return
+            }
+
+            outperformedEthUpdatedRelay.accept(outperformedEth)
+            updateFiltersIfNeeded()
+        }
+    }
+
+    private var outperformedBnbUpdatedRelay = PublishRelay<Bool>()
+    var outperformedBnb: Bool = false {
+        didSet {
+            guard outperformedBnb != oldValue else {
+                return
+            }
+
+            outperformedBnbUpdatedRelay.accept(outperformedBnb)
+            updateFiltersIfNeeded()
+        }
+    }
+
+    private var priceCloseToATHUpdatedRelay = PublishRelay<Bool>()
+    var priceCloseToATH: Bool = false {
+        didSet {
+            guard priceCloseToATH != oldValue else {
+                return
+            }
+
+            priceCloseToATHUpdatedRelay.accept(priceCloseToATH)
+            updateFiltersIfNeeded()
+        }
+    }
+
+    private var priceCloseToATLUpdatedRelay = PublishRelay<Bool>()
+    var priceCloseToATL: Bool = false {
+        didSet {
+            guard priceCloseToATL != oldValue else {
+                return
+            }
+
+            priceCloseToATLUpdatedRelay.accept(priceCloseToATL)
+            updateFiltersIfNeeded()
+        }
+    }
+
     init(rateManager: IRateManager, currencyKit: ICurrencyKit) {
         self.rateManager = rateManager
         self.currencyKit = currencyKit
@@ -120,17 +181,6 @@ class MarketAdvancedSearchService {
         }
     }
 
-    private func inBounds(value: Decimal, lower: Decimal?, upper: Decimal?) -> Bool {
-        if let lower = lower, value < lower {
-            return false
-        }
-        if let upper = upper, value > upper {
-            return false
-        }
-
-        return true
-    }
-
     private func sync(count: Int) {
         refetchRelay.accept(())
         state = .completed(count)
@@ -154,13 +204,49 @@ class MarketAdvancedSearchService {
                 }
     }
 
+    private func coinMarket(coinType: CoinType) -> CoinMarket? {
+        cache.first(where: { $0.coinData.coinType == coinType })
+    }
+
+    private func outperformed(value: Decimal, coinType: CoinType) -> Bool {
+        guard let coinMarket = coinMarket(coinType: coinType) else {
+            return false
+        }
+
+        return coinMarket.marketInfo.rateDiffPeriod < value
+    }
+
+    private func inBounds(value: Decimal, lower: Decimal?, upper: Decimal?) -> Bool {
+        if let lower = lower, value < lower {
+            return false
+        }
+        if let upper = upper, value > upper {
+            return false
+        }
+
+        return true
+    }
+
+    private func closedToAllTime(value: Decimal?) -> Bool {
+        guard let value = value else {
+            return false
+        }
+
+        return abs(value) < allTimeDeltaPercent
+    }
+
     private func filtered(items: [CoinMarket]) -> [(index: Int, item: CoinMarket)] {
         items.enumerated().compactMap { (index, item) in
             if
+                //          inBounds(value: item.marketInfo.liquidity, lower: liquidity.lowerBound, upper: liquidity.upperBound) &&
                 inBounds(value: item.marketInfo.marketCap, lower: marketCap.lowerBound, upper: marketCap.upperBound) &&
                 inBounds(value: item.marketInfo.volume, lower: volume.lowerBound, upper: volume.upperBound) &&
-            //          inBounds(value: item.marketInfo.liquidity, lower: liquidity.lowerBound, upper: liquidity.upperBound) &&
-                inBounds(value: item.marketInfo.rateDiffPeriod, lower: priceChange.lowerBound, upper: priceChange.upperBound) {
+                inBounds(value: item.marketInfo.rateDiffPeriod, lower: priceChange.lowerBound, upper: priceChange.upperBound) &&
+                        (!priceCloseToATH || closedToAllTime(value: item.marketInfo.athChangePercentage)) &&
+                        (!priceCloseToATL || closedToAllTime(value: item.marketInfo.atlChangePercentage)) &&
+                        (!outperformedBtc || outperformed(value: item.marketInfo.rateDiffPeriod, coinType: .bitcoin)) &&
+                        (!outperformedEth || outperformed(value: item.marketInfo.rateDiffPeriod, coinType: .ethereum)) &&
+                        (!outperformedBnb || outperformed(value: item.marketInfo.rateDiffPeriod, coinType: .bep2(symbol: "BNB"))) {
                 return (index: index, item: item)
             }
             return nil
@@ -193,6 +279,26 @@ extension MarketAdvancedSearchService {
 
     var priceChangeUpdatedObservable: Observable<PriceChangeFilter> {
         priceChangeUpdatedRelay.asObservable()
+    }
+
+    var outperformedBtcUpdatedObservable: Observable<Bool> {
+        outperformedBtcUpdatedRelay.asObservable()
+    }
+
+    var outperformedEthUpdatedObservable: Observable<Bool> {
+        outperformedEthUpdatedRelay.asObservable()
+    }
+
+    var outperformedBnbUpdatedObservable: Observable<Bool> {
+        outperformedBnbUpdatedRelay.asObservable()
+    }
+
+    var priceCloseToATHUpdatedObservable: Observable<Bool> {
+        priceCloseToATHUpdatedRelay.asObservable()
+    }
+
+    var priceCloseToATLUpdatedObservable: Observable<Bool> {
+        priceCloseToATLUpdatedRelay.asObservable()
     }
 
     var stateUpdatedObservable: Observable<DataStatus<Int>> {
