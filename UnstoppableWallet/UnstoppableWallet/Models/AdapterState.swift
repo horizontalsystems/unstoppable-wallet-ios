@@ -6,6 +6,13 @@ enum AdapterState {
     case searchingTxs(count: Int)
     case notSynced(error: Error)
 
+    var isSynced: Bool {
+        switch self {
+        case .synced: return true
+        default: return false
+        }
+    }
+
 }
 
 extension AdapterState: Equatable {

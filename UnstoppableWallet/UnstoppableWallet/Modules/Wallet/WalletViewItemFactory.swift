@@ -3,23 +3,23 @@ import XRatesKit
 import CurrencyKit
 import CoinKit
 
-class BalanceViewItemFactory {
+class WalletViewItemFactory {
     private let minimumProgress = 10
 
     init() {
     }
 
-    private func topViewItem(item: BalanceItem, currency: Currency) -> BalanceTopViewItem {
+    private func topViewItem(item: WalletService.Item) -> BalanceTopViewItem {
         let coin = item.wallet.coin
         let state = item.state
-        let latestRate = item.latestRate
+        let rateItem = item.rateItem
 
         return BalanceTopViewItem(
                 iconCoinType: iconCoinType(coin: coin, state: state),
                 coinTitle: coin.title,
                 blockchainBadge: badge(wallet: item.wallet),
-                rateValue: rateValue(currency: currency, latestRate: latestRate),
-                diff: diff(latestRate: latestRate),
+                rateValue: rateValue(rateItem: rateItem),
+                diff: diff(rateItem: rateItem),
                 syncSpinnerProgress: syncSpinnerProgress(state: state),
                 indefiniteSearchCircle: indefiniteSearchCircle(state: state),
                 failedImageViewVisible: failedImageViewVisible(state: state)
@@ -37,7 +37,7 @@ class BalanceViewItemFactory {
         }
     }
 
-    private func amountViewItem(item: BalanceItem, currency: Currency, balanceHidden: Bool, expanded: Bool) -> BalanceAmountViewItem? {
+    private func amountViewItem(item: WalletService.Item, balanceHidden: Bool, expanded: Bool) -> BalanceAmountViewItem? {
         guard !balanceHidden else {
             return nil
         }
@@ -54,7 +54,7 @@ class BalanceViewItemFactory {
             } else {
                 return .amount(
                         coinValue: coinValue(coin: item.wallet.coin, value: balance, state: state),
-                        currencyValue: currencyValue(currency: currency, value: balance, state: state, latestRate: item.latestRate)
+                        currencyValue: currencyValue(value: balance, state: state, rateItem: item.rateItem)
                 )
             }
         } else {
@@ -62,18 +62,18 @@ class BalanceViewItemFactory {
         }
     }
 
-    private func lockedAmountViewItem(item: BalanceItem, currency: Currency, balanceHidden: Bool, expanded: Bool) -> BalanceLockedAmountViewItem? {
+    private func lockedAmountViewItem(item: WalletService.Item, balanceHidden: Bool, expanded: Bool) -> BalanceLockedAmountViewItem? {
         guard let state = item.state, let balanceLocked = item.balanceLocked, !balanceHidden, expanded else {
             return nil
         }
 
         return BalanceLockedAmountViewItem(
                 lockedCoinValue: coinValue(coin: item.wallet.coin, value: balanceLocked, state: state),
-                lockedCurrencyValue: currencyValue(currency: currency, value: balanceLocked, state: state, latestRate: item.latestRate)
+                lockedCurrencyValue: currencyValue(value: balanceLocked, state: state, rateItem: item.rateItem)
         )
     }
 
-    private func buttonsViewItem(item: BalanceItem, expanded: Bool) -> BalanceButtonsViewItem? {
+    private func buttonsViewItem(item: WalletService.Item, expanded: Bool) -> BalanceButtonsViewItem? {
         guard expanded else {
             return nil
         }
@@ -115,26 +115,24 @@ class BalanceViewItemFactory {
         return false
     }
 
-    private func rateValue(currency: Currency, latestRate: LatestRate?) -> (text: String, dimmed: Bool)? {
-        guard let latestRate = latestRate else {
+    private func rateValue(rateItem: WalletRateService.Item?) -> (text: String, dimmed: Bool)? {
+        guard let rateItem = rateItem else {
             return nil
         }
 
-        let exchangeValue = CurrencyValue(currency: currency, value: latestRate.rate)
-
-        guard let formattedValue = ValueFormatter.instance.format(currencyValue: exchangeValue, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false) else {
+        guard let formattedValue = ValueFormatter.instance.format(currencyValue: rateItem.rate, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false) else {
             return nil
         }
 
-        return (text: formattedValue, dimmed: latestRate.expired)
+        return (text: formattedValue, dimmed: rateItem.expired)
     }
 
-    private func diff(latestRate: LatestRate?) -> (value: Decimal, dimmed: Bool)? {
-        guard let latestRate = latestRate else {
+    private func diff(rateItem: WalletRateService.Item?) -> (value: Decimal, dimmed: Bool)? {
+        guard let rateItem = rateItem else {
             return nil
         }
 
-        return (value: latestRate.rateDiff24h, dimmed: latestRate.expired)
+        return (value: rateItem.diff24h, dimmed: rateItem.expired)
     }
 
     private func coinValue(coin: Coin, value: Decimal, state: AdapterState) -> (text: String?, dimmed: Bool) {
@@ -144,56 +142,41 @@ class BalanceViewItemFactory {
         )
     }
 
-    private func currencyValue(currency: Currency, value: Decimal, state: AdapterState, latestRate: LatestRate?) -> (text: String?, dimmed: Bool)? {
-        latestRate.map { latestRate in
-            (
-                    text: ValueFormatter.instance.format(currencyValue: CurrencyValue(currency: currency, value: value * latestRate.rate), fractionPolicy: .threshold(high: 1000, low: 0.01)),
-                    dimmed: state != .synced || latestRate.expired
-            )
+    private func currencyValue(value: Decimal, state: AdapterState, rateItem: WalletRateService.Item?) -> (text: String?, dimmed: Bool)? {
+        guard let rateItem = rateItem else {
+            return nil
         }
+
+        let rate = rateItem.rate
+
+        return (
+                text: ValueFormatter.instance.format(currencyValue: CurrencyValue(currency: rate.currency, value: value * rate.value), fractionPolicy: .threshold(high: 1000, low: 0.01)),
+                dimmed: state != .synced || rateItem.expired
+        )
     }
 
 }
 
-extension BalanceViewItemFactory: IBalanceViewItemFactory {
+extension WalletViewItemFactory {
 
-    func viewItem(item: BalanceItem, currency: Currency, balanceHidden: Bool, expanded: Bool) -> BalanceViewItem {
+    func viewItem(item: WalletService.Item, balanceHidden: Bool, expanded: Bool) -> BalanceViewItem {
         BalanceViewItem(
                 wallet: item.wallet,
-                topViewItem: topViewItem(item: item, currency: currency),
+                topViewItem: topViewItem(item: item),
                 separatorVisible: !balanceHidden || expanded,
-                amountViewItem: amountViewItem(item: item, currency: currency, balanceHidden: balanceHidden, expanded: expanded),
-                lockedAmountViewItem: lockedAmountViewItem(item: item, currency: currency, balanceHidden: balanceHidden, expanded: expanded),
+                amountViewItem: amountViewItem(item: item, balanceHidden: balanceHidden, expanded: expanded),
+                lockedAmountViewItem: lockedAmountViewItem(item: item, balanceHidden: balanceHidden, expanded: expanded),
                 buttonsViewItem: buttonsViewItem(item: item, expanded: expanded)
         )
     }
 
-    func headerViewItem(items: [BalanceItem], currency: Currency, sortingOnThreshold: Int) -> BalanceHeaderViewItem {
-        var total: Decimal = 0
-        var upToDate = true
+    func headerViewItem(totalItem: WalletService.TotalItem, balanceHidden: Bool) -> WalletViewModel.HeaderViewItem {
+        let currencyValue = CurrencyValue(currency: totalItem.currency, value: totalItem.amount)
+        let amount = balanceHidden ? "*****" : ValueFormatter.instance.format(currencyValue: currencyValue)
 
-        items.forEach { item in
-            if let balanceTotal = item.balanceTotal, let latestRate = item.latestRate {
-                total += balanceTotal * latestRate.rate
-
-                if latestRate.expired {
-                    upToDate = false
-                }
-            }
-
-            if case .synced = item.state {
-                // do nothing
-            } else {
-                upToDate = false
-            }
-        }
-
-        let currencyValue = CurrencyValue(currency: currency, value: total)
-
-        return BalanceHeaderViewItem(
-                currencyValue: currencyValue,
-                upToDate: upToDate,
-                sortIsOn: items.count >= sortingOnThreshold
+        return WalletViewModel.HeaderViewItem(
+                amount: amount,
+                amountExpired: balanceHidden ? false : totalItem.expired
         )
     }
 

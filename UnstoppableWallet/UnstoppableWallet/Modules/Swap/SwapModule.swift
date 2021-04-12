@@ -25,6 +25,13 @@ func subscribe<T>(_ disposeBag: DisposeBag, _ observable: Observable<T>, _ onNex
             .disposed(by: disposeBag)
 }
 
+func subscribe<T>(_ scheduler: ImmediateSchedulerType, _ disposeBag: DisposeBag, _ observable: Observable<T>, _ onNext: ((T) -> Void)? = nil) {
+    observable
+            .observeOn(scheduler)
+            .subscribe(onNext: onNext)
+            .disposed(by: disposeBag)
+}
+
 struct SwapModule {
 
     struct ConfirmationAdditionalViewItem {
