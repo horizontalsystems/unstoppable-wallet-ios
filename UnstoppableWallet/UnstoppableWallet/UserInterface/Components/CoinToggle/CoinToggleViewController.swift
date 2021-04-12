@@ -61,15 +61,14 @@ class CoinToggleViewController: ThemeSearchViewController {
 
     private func rows(viewItems: [CoinToggleViewModel.ViewItem]) -> [RowProtocol] {
         viewItems.enumerated().map { index, viewItem in
-            let isFirst = index == 0
             let isLast = index == viewItems.count - 1
 
             return Row<G21Cell>(
                     id: "coin_\(viewItem.coin.id)",
-                    hash: "coin_\(viewItem.enabled)_\(isFirst)_\(isLast)",
+                    hash: "coin_\(viewItem.enabled)_\(isLast)",
                     height: .heightDoubleLineCell,
                     bind: { [weak self] cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                        cell.set(backgroundStyle: .transparent, isLast: isLast)
                         cell.titleImage = .image(coinType: viewItem.coin.type)
                         cell.title = viewItem.coin.title
                         cell.subtitle = viewItem.coin.code

@@ -35,6 +35,7 @@ class MarketSearchViewController: ThemeSearchViewController {
 
         title = "market.search.title".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapClose))
+        navigationItem.searchController?.searchBar.placeholder = "placeholder.search".localized
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -66,11 +67,6 @@ class MarketSearchViewController: ThemeSearchViewController {
         emptyLabel.textColor = .themeGray
         emptyLabel.textAlignment = .center
 
-        navigationItem.searchController?.searchBar.placeholder = "placeholder.search".localized
-
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.hidesSearchBarWhenScrolling = false
-
         Driver.zip(viewModel.viewItemsDriver, viewModel.showAdvancedSearchDriver)
                 .drive(onNext: { [weak self] in self?.sync(viewItems: $0, showAdvancedSearch: $1) })
                 .disposed(by: disposeBag)
@@ -78,6 +74,12 @@ class MarketSearchViewController: ThemeSearchViewController {
         subscribe(disposeBag, viewModel.emptyResultDriver) { [weak self] in self?.sync(emptyResults: $0) }
 
         isLoaded = true
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        navigationItem.searchController?.isActive = true
     }
 
     @objc func onTapClose() {
