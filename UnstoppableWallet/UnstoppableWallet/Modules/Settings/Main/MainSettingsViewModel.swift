@@ -129,12 +129,25 @@ extension MainSettingsViewModel {
         service.appVersion
     }
 
+    var walletConnectOpenMode: WalletConnectOpenMode {
+        service.walletConnectSessionCount == 0 ? .qrScanner : .sessionList
+    }
+
     func onTapCompanyLink() {
         guard let url = URL(string: service.companyWebPageLink) else {
             return
         }
 
         openLinkRelay.accept(url)
+    }
+
+}
+
+extension MainSettingsViewModel {
+
+    enum WalletConnectOpenMode {
+        case sessionList
+        case qrScanner
     }
 
 }

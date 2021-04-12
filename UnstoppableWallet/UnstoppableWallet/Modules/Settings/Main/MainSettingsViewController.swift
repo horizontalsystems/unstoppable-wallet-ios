@@ -149,7 +149,7 @@ class MainSettingsViewController: ThemeViewController {
                     height: .heightCell48,
                     autoDeselect: true,
                     action: { [weak self] in
-                        self?.navigationController?.pushViewController(WalletConnectListModule.viewController(), animated: true)
+                        self?.openWalletConnect()
                     }
             )
         ]
@@ -328,6 +328,15 @@ class MainSettingsViewController: ThemeViewController {
     private func openReddit() {
         if let url = URL(string: "https://reddit.com/r/\(viewModel.redditAccount)") {
             UIApplication.shared.open(url)
+        }
+    }
+
+    private func openWalletConnect() {
+        switch viewModel.walletConnectOpenMode {
+        case .sessionList:
+            navigationController?.pushViewController(WalletConnectListModule.viewController(), animated: true)
+        case .qrScanner:
+            WalletConnectModule.start(sourceViewController: self)
         }
     }
 
