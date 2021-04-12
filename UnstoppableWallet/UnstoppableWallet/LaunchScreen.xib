@@ -13,22 +13,9 @@
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Launch Screen" translatesAutoresizingMaskIntoConstraints="NO" id="LpH-d0-Zcp" userLabel="Background Image View">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                </imageView>
-            </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <constraints>
-                <constraint firstItem="LpH-d0-Zcp" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="B7H-gW-eu0"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="LpH-d0-Zcp" secondAttribute="bottom" id="P0C-rJ-omc"/>
-                <constraint firstItem="LpH-d0-Zcp" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="Sco-G1-hlJ"/>
-                <constraint firstItem="LpH-d0-Zcp" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="dpA-aM-B15"/>
-            </constraints>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <point key="canvasLocation" x="136.80000000000001" y="92.203898050974516"/>
         </view>
     </objects>
-    <resources>
-        <image name="Launch Screen" width="0.5" height="0.5"/>
-    </resources>
 </document>
