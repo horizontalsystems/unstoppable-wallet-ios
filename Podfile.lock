@@ -468,7 +468,7 @@ CHECKOUT OPTIONS:
     :commit: 569e87ac53fa8d023ba2275adf01d41d6018436f
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
-    :commit: a1dcf7d572c35cc6a3a023f01a2f7eb4a16507fe
+    :commit: d9b37c1bab3b09f816fc5bb26fed9d2b469aa9ff
     :git: https://github.com/horizontalsystems/gui-kit/
   CoinKit.swift:
     :commit: 87609122f6dfc73d8f9ccfa21f9ea4cbbff2a3fb
