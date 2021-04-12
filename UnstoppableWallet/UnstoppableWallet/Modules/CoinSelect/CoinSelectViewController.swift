@@ -52,11 +52,6 @@ class CoinSelectViewController: ThemeSearchViewController {
 
     private func onSelect(coin: Coin) {
         delegate?.didSelect(coin: coin)
-
-        if navigationItem.searchController?.isActive ?? false {
-            dismiss(animated: false)
-        }
-
         dismiss(animated: true)
     }
 
