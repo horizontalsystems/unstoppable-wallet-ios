@@ -161,7 +161,8 @@
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Синхронизация... %@";
 "balance.synced_through" = "до %@";
-"balance.add_coin" = "Добавить Токены";
+"balance.add_coin" = "Add Coin";
+"balance.sort_by" = "Sort By";
 "balance.sort.header" = "Сортировать по";
 "balance.sort.valueHighToLow" = "Балансу";
 "balance.sort.az" = "Названию";
