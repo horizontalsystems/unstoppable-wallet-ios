@@ -18,6 +18,12 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private let periodCell = B5Cell()
     private let priceChangeCell = B5Cell()
 
+    private let outperformedBtcCell = B11Cell()
+    private let outperformedEthCell = B11Cell()
+    private let outperformedBnbCell = B11Cell()
+    private let priceCloseToATHCell = B11Cell()
+    private let priceCloseToATLCell = B11Cell()
+
     private let showResultButton = ThemeButton()
     private let spinner = HUDActivityView.create(with: .small20)
 
@@ -43,6 +49,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         }
 
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
+        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -70,9 +77,29 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         priceChangeCell.title = "market.advanced_search.price_change".localized
         priceChangeCell.valueActionEnabled = false
 
-        periodCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
+        periodCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
         periodCell.title = "market.advanced_search.price_period".localized
         periodCell.valueActionEnabled = false
+
+        outperformedBtcCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
+        outperformedBtcCell.title = "market.advanced_search.outperformed_btc".localized
+        outperformedBtcCell.onToggle = { [weak self] in self?.onTapOutperformedBtcCell(isOn: $0) }
+
+        outperformedEthCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
+        outperformedEthCell.title = "market.advanced_search.outperformed_eth".localized
+        outperformedEthCell.onToggle = { [weak self] in self?.onTapOutperformedEthCell(isOn: $0) }
+
+        outperformedBnbCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
+        outperformedBnbCell.title = "market.advanced_search.outperformed_bnb".localized
+        outperformedBnbCell.onToggle = { [weak self] in self?.onTapOutperformedBnbCell(isOn: $0) }
+
+        priceCloseToATHCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
+        priceCloseToATHCell.title = "market.advanced_search.price_close_to_ath".localized
+        priceCloseToATHCell.onToggle = { [weak self] in self?.onTapPriceCloseToATHCell(isOn: $0) }
+
+        priceCloseToATLCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
+        priceCloseToATLCell.title = "market.advanced_search.price_close_to_atl".localized
+        priceCloseToATLCell.onToggle = { [weak self] in self?.onTapPriceCloseToATLCell(isOn: $0) }
 
         view.addSubview(showResultButton)
         showResultButton.snp.makeConstraints { maker in
@@ -97,6 +124,12 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.liquidityViewItemDriver) { [weak self] in self?.syncLiquidity(viewItem: $0) }
         subscribe(disposeBag, viewModel.periodViewItemDriver) { [weak self] in self?.syncPeriod(viewItem: $0) }
         subscribe(disposeBag, viewModel.priceChangeViewItemDriver) { [weak self] in self?.syncPriceChange(viewItem: $0) }
+
+        subscribe(disposeBag, viewModel.outperformedBtcDriver) { [weak self] in self?.syncOutperformedBtc(isOn: $0) }
+        subscribe(disposeBag, viewModel.outperformedEthDriver) { [weak self] in self?.syncOutperformedEth(isOn: $0) }
+        subscribe(disposeBag, viewModel.outperformedBnbDriver) { [weak self] in self?.syncOutperformedBnb(isOn: $0) }
+        subscribe(disposeBag, viewModel.priceCloseToATHDriver) { [weak self] in self?.syncPriceCloseToATH(isOn: $0) }
+        subscribe(disposeBag, viewModel.priceCloseToATLDriver) { [weak self] in self?.syncPriceCloseToATL(isOn: $0) }
 
         subscribe(disposeBag, viewModel.showErrorSignal) { [weak self] in self?.sync(error: $0) }
         subscribe(disposeBag, viewModel.showResultTitleDriver) { [weak self] in self?.sync(title: $0) }
@@ -201,6 +234,26 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         })
     }
 
+    private func onTapOutperformedBtcCell(isOn: Bool) {
+        viewModel.setOutperformedBtc(isOn: isOn)
+    }
+
+    private func onTapOutperformedEthCell(isOn: Bool) {
+        viewModel.setOutperformedEth(isOn: isOn)
+    }
+
+    private func onTapOutperformedBnbCell(isOn: Bool) {
+        viewModel.setOutperformedBnb(isOn: isOn)
+    }
+
+    private func onTapPriceCloseToATHCell(isOn: Bool) {
+        viewModel.setPriceCloseToATH(isOn: isOn)
+    }
+
+    private func onTapPriceCloseToATLCell(isOn: Bool) {
+        viewModel.setPriceCloseToATL(isOn: isOn)
+    }
+
     @objc private func onTapResetAll() {
         viewModel.resetAll()
     }
@@ -245,6 +298,26 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         set(viewItem: viewItem, cell: priceChangeCell)
     }
 
+    private func syncOutperformedBtc(isOn: Bool) {
+        outperformedBtcCell.isOn = isOn
+    }
+
+    private func syncOutperformedEth(isOn: Bool) {
+        outperformedEthCell.isOn = isOn
+    }
+
+    private func syncOutperformedBnb(isOn: Bool) {
+        outperformedBnbCell.isOn = isOn
+    }
+
+    private func syncPriceCloseToATH(isOn: Bool) {
+        priceCloseToATHCell.isOn = isOn
+    }
+
+    private func syncPriceCloseToATL(isOn: Bool) {
+        priceCloseToATLCell.isOn = isOn
+    }
+
     private func sync(error: String) {
         HudHelper.instance.showError(title: error)
     }
@@ -267,13 +340,25 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         }
     }
 
-    private func row(cell: UITableViewCell, id: String, action: (() -> ())?) -> RowProtocol {
+    private func row(cell: UITableViewCell, id: String, action: (() -> ())? = nil) -> RowProtocol {
         StaticRow(
                 cell: cell,
                 id: id,
                 height: .heightCell48,
                 autoDeselect: true,
                 action: action
+        )
+    }
+
+    private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
+        .cellType(
+                hash: text,
+                binder: { view in
+                    view.bind(text: text)
+                },
+                dynamicHeight: { _ in
+                    SubtitleHeaderFooterView.height
+                }
         )
     }
 
@@ -287,6 +372,7 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
         sections.append(Section(
                 id: "coin_list",
                 headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin32),
                 rows: [
                     row(cell: coinListCell, id: "coin_list") { [weak self] in self?.onTapCoinListCell() }
                 ])
@@ -294,7 +380,8 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
 
         sections.append(Section(
                 id: "market_filters",
-                headerState: .margin(height: .margin32),
+                headerState: header(text: "market.advanced_search.market_parameters".localized.uppercased()),
+                footerState: .margin(height: .margin32),
                 rows: [
                     row(cell: marketCapCell, id: "market_cap") { [weak self] in self?.onTapMarketCapCell() },
                     row(cell: volumeCell, id: "volume") { [weak self] in self?.onTapVolumeCell() }
@@ -320,11 +407,16 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
 
         sections.append(Section(
                 id: "price_filters",
-                headerState: .margin(height: .margin32),
+                headerState: header(text: "market.advanced_search.price_parameters".localized.uppercased()),
                 footerState: .margin(height: .margin32 + .heightButton),
                 rows: [
                     row(cell: priceChangeCell, id: "price_change") { [weak self] in self?.onTapPriceChangeCell() },
                     row(cell: periodCell, id: "price_period") { [weak self] in self?.onTapPeriodCell() },
+                    row(cell: outperformedBtcCell, id: "outperformed_btc"),
+                    row(cell: outperformedEthCell, id: "outperformed_eth"),
+                    row(cell: outperformedBnbCell, id: "outperformed_bnb"),
+                    row(cell: priceCloseToATHCell, id: "price_close_to_ath"),
+                    row(cell: priceCloseToATLCell, id: "price_close_to_atl"),
                 ])
         )
 
