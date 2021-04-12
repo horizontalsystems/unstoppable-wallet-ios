@@ -27,6 +27,8 @@ class SwapViewModel {
 
     private var openApproveRelay = PublishRelay<SwapAllowanceService.ApproveData>()
 
+    private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.swap_view_model")
+
     init(service: SwapService, tradeService: SwapTradeService, switchService: AmountTypeSwitchService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, viewItemHelper: SwapViewItemHelper) {
         self.service = service
         self.tradeService = tradeService
@@ -43,11 +45,11 @@ class SwapViewModel {
     }
 
     private func subscribeToService() {
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
-        subscribe(disposeBag, service.errorsObservable) { [weak self] in self?.sync(errors: $0) }
-        subscribe(disposeBag, tradeService.stateObservable) { [weak self] in self?.sync(tradeState: $0) }
-        subscribe(disposeBag, tradeService.swapTradeOptionsObservable) { [weak self] in self?.sync(swapTradeOptions: $0) }
-        subscribe(disposeBag, pendingAllowanceService.isPendingObservable) { [weak self] in self?.sync(isApprovePending: $0) }
+        subscribe(scheduler, disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+        subscribe(scheduler, disposeBag, service.errorsObservable) { [weak self] in self?.sync(errors: $0) }
+        subscribe(scheduler, disposeBag, tradeService.stateObservable) { [weak self] in self?.sync(tradeState: $0) }
+        subscribe(scheduler, disposeBag, tradeService.swapTradeOptionsObservable) { [weak self] in self?.sync(swapTradeOptions: $0) }
+        subscribe(scheduler, disposeBag, pendingAllowanceService.isPendingObservable) { [weak self] in self?.sync(isApprovePending: $0) }
     }
 
     private func sync(state: SwapService.State? = nil) {

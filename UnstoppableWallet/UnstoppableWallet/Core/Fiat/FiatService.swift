@@ -20,13 +20,7 @@ class FiatService {
     }
 
     private let coinAmountRelay = PublishRelay<Decimal>()
-    private(set) var coinAmount: Decimal = 0 {
-        didSet {
-            if coinAmount != oldValue {
-                coinAmountRelay.accept(coinAmount)
-            }
-        }
-    }
+    private(set) var coinAmount: Decimal = 0
 
     private var currencyAmount: Decimal?
 
@@ -112,6 +106,8 @@ class FiatService {
         } else {
             coinAmount = 0
         }
+
+        coinAmountRelay.accept(coinAmount)
     }
 
     private func syncCurrencyAmount() {
@@ -167,6 +163,7 @@ extension FiatService {
         switch switchService.amountType {
         case .coin:
             coinAmount = amount
+            coinAmountRelay.accept(coinAmount)
             syncCurrencyAmount()
         case .currency:
             currencyAmount = amount
@@ -176,8 +173,17 @@ extension FiatService {
         sync()
     }
 
-    func set(coinAmount: Decimal) {
+    func set(coinAmount: Decimal, notify: Bool = false) {
+        guard self.coinAmount != coinAmount else {
+            return
+        }
+
         self.coinAmount = coinAmount
+
+        if notify {
+            coinAmountRelay.accept(coinAmount)
+        }
+
         syncCurrencyAmount()
         sync()
     }
