@@ -9,7 +9,7 @@ class MainViewController: ThemeTabBarController {
     private let viewModel: MainViewModel
 
     private let marketModule = ThemeNavigationController(rootViewController: MarketModule.viewController())
-    private let balanceModule = ThemeNavigationController(rootViewController: BalanceRouter.module())
+    private let balanceModule = ThemeNavigationController(rootViewController: WalletModule.viewController())
     private let onboardingModule = ThemeNavigationController(rootViewController: OnboardingBalanceViewController())
     private let transactionsModule = ThemeNavigationController(rootViewController: TransactionsRouter.module())
     private let settingsModule = ThemeNavigationController(rootViewController: MainSettingsModule.viewController())

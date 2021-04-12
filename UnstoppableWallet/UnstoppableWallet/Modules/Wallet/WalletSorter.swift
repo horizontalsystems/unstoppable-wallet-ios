@@ -1,15 +1,15 @@
 import Foundation
 
-class BalanceSorter: IBalanceSorter {
+class WalletSorter {
 
-    private let descending: ((BalanceItem, BalanceItem) -> Bool) = { item, item2 in
+    private let descending: (WalletService.Item, WalletService.Item) -> Bool = { item, item2 in
         let balance = item.balance ?? 0
         let balance2 = item2.balance ?? 0
-        let hasRate = item.latestRate?.rate != nil
-        let hasRate2 = item2.latestRate?.rate != nil
+        let hasRate = item.rateItem != nil
+        let hasRate2 = item2.rateItem != nil
 
         if hasRate == hasRate2 {
-            guard let rate = item.latestRate?.rate, let rate2 = item2.latestRate?.rate else {
+            guard let rate = item.rateItem?.rate.value, let rate2 = item2.rateItem?.rate.value else {
                 return balance > balance2
             }
             return balance * rate > balance2 * rate2
@@ -17,7 +17,7 @@ class BalanceSorter: IBalanceSorter {
         return hasRate
     }
 
-    func sort(items: [BalanceItem], sort: SortType) -> [BalanceItem] {
+    func sort(items: [WalletService.Item], sort: SortType) -> [WalletService.Item] {
         switch sort {
         case .value:
             let nonZeroItems = items.filter { !($0.balance ?? 0).isZero }
@@ -30,8 +30,8 @@ class BalanceSorter: IBalanceSorter {
             }
         case .percentGrowth:
             return items.sorted { item, item2 in
-                guard let diff = item.latestRate?.rateDiff24h, let diff2 = item2.latestRate?.rateDiff24h else {
-                    return item.latestRate?.rateDiff24h != nil
+                guard let diff = item.rateItem?.diff24h, let diff2 = item2.rateItem?.diff24h else {
+                    return item.rateItem?.diff24h != nil
                 }
 
                 return diff > diff2
