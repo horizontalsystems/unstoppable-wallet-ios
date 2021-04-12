@@ -159,7 +159,8 @@
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "正在同步... %@";
 "balance.synced_through" = "直到 %@";
-"balance.add_coin" = "添加代币";
+"balance.add_coin" = "Add Coin";
+"balance.sort_by" = "Sort By";
 "balance.sort.header" = "排序方式";
 "balance.sort.valueHighToLow" = "余额";
 "balance.sort.az" = "名称";
