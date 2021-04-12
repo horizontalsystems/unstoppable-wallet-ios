@@ -159,7 +159,8 @@
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Sincronizando... %@";
 "balance.synced_through" = "hasta %@";
-"balance.add_coin" = "Añadir Monedas";
+"balance.add_coin" = "Add Coin";
+"balance.sort_by" = "Sort By";
 "balance.sort.header" = "Ordenar por";
 "balance.sort.valueHighToLow" = "Saldo";
 "balance.sort.az" = "Nombre";
