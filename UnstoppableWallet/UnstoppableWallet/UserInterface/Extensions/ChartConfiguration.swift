@@ -10,6 +10,15 @@ extension ChartConfiguration {
         ChartConfiguration().applyColors()
     }
 
+    static var smallChart: ChartConfiguration {
+        var config = ChartConfiguration().applyColors()
+
+        config.mainHeight = 32
+        config.indicatorHeight = 0
+        config.timelineHeight = 0
+        return config
+    }
+
     @discardableResult private func applyColors() -> Self {
         borderColor = .themeSteel20
         backgroundColor = .clear

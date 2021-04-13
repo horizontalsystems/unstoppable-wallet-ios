@@ -312,7 +312,7 @@
 "market.category.overview" = "Overview";
 "market.category.discovery" = "Discovery";
 "market.category.watchlist" = "Watchlist";
-"market.total_market_cap" = "Total\nMarket Cap";
+"market.total_market_cap" = "Total Market Cap";
 "market.24h_volume" = "24h Volume";
 "market.btc_dominance" = "BTC Dominance";
 "market.defi_cap" = "Cap DeFi";
