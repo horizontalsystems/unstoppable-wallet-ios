@@ -10,6 +10,7 @@ class WalletViewModel {
     private let disposeBag = DisposeBag()
 
     private let titleRelay = BehaviorRelay<String?>(value: nil)
+    private let displayModeRelay = BehaviorRelay<DisplayMode>(value: .list)
     private let headerViewItemRelay = BehaviorRelay<HeaderViewItem?>(value: nil)
     private let viewItemsRelay = BehaviorRelay<[BalanceViewItem]>(value: [])
     private let openSortTypeRelay = PublishRelay<()>()
@@ -68,6 +69,8 @@ class WalletViewModel {
     private func sync(items: [WalletService.Item]) {
         viewItems = items.map { viewItem(item: $0) }
         viewItemsRelay.accept(viewItems)
+
+        displayModeRelay.accept(items.isEmpty ? .empty : .list)
     }
 
     private func viewItem(item: WalletService.Item) -> BalanceViewItem {
@@ -88,6 +91,10 @@ extension WalletViewModel {
 
     var titleDriver: Driver<String?> {
         titleRelay.asDriver()
+    }
+
+    var displayModeDriver: Driver<DisplayMode> {
+        displayModeRelay.asDriver()
     }
 
     var headerViewItemDriver: Driver<HeaderViewItem?> {
@@ -198,6 +205,11 @@ extension WalletViewModel {
 }
 
 extension WalletViewModel {
+
+    enum DisplayMode {
+        case list
+        case empty
+    }
 
     struct HeaderViewItem {
         let amount: String?

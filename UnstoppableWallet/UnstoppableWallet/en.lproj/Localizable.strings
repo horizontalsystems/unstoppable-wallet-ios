@@ -165,6 +165,8 @@ bch.horizontalsystems.xyz/apg";
 "balance.syncing_percent" = "Syncing... %@";
 "balance.synced_through" = "until %@";
 "balance.add_coin" = "Add Coin";
+"balance.empty.add_coins" = "Add Coins";
+"balance.empty.description" = "You don’t have an added coins. Add the coins you will be using.";
 "balance.sort_by" = "Sort By";
 "balance.sort.header" = "Sort by";
 "balance.sort.valueHighToLow" = "Balance";
