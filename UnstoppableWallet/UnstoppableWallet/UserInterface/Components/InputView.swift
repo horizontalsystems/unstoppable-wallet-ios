@@ -38,6 +38,10 @@ class InputView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func becomeFirstResponder() -> Bool {
+        inputStackView.becomeFirstResponder()
+    }
+
     private func onTapDelete() {
         inputStackView.text = nil
         handleChange(text: nil)
