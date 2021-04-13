@@ -38,7 +38,7 @@ class WalletHeaderView: UICollectionReusableView {
         separatorView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.top.equalTo(amountButton.snp.bottom)
-            maker.height.equalTo(CGFloat.heightOnePixel)
+            maker.height.equalTo(CGFloat.heightOneDp)
         }
 
         separatorView.backgroundColor = .themeSteel10

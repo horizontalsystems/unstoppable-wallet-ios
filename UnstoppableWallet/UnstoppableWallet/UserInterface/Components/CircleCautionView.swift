@@ -27,7 +27,7 @@ class CircleCautionView: UIView {
         }
 
         circleView.isHidden = true
-        circleView.backgroundColor = .themeJeremy
+        circleView.backgroundColor = .themeRaina
         circleView.layer.cornerRadius = 50
 
         circleView.addSubview(imageView)

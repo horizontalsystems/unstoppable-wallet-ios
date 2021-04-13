@@ -122,7 +122,7 @@ extension ManageAccountsViewController: SectionsDataSource {
                     cell.title = viewItem.title
                     cell.subtitle = viewItem.subtitle
                     cell.valueImage = viewItem.alert ? UIImage(named: "warning_2_20")?.tinted(with: .themeLucian) : nil
-                    cell.valueButtonImage = UIImage(named: "edit_20")
+                    cell.valueButtonImage = UIImage(named: "more_2_20")
                     cell.onTapValue = { [weak self] in
                         self?.onTapEdit(accountId: viewItem.accountId)
                     }

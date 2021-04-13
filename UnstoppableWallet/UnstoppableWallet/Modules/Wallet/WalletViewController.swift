@@ -19,6 +19,8 @@ class WalletViewController: ThemeViewController {
     private let collectionView: UICollectionView
     private let refreshControl = UIRefreshControl()
 
+    private let emptyView = UIView()
+
     private var viewItems = [BalanceViewItem]()
     private var headerViewItem: WalletViewModel.HeaderViewItem?
     private var isLoaded = false
@@ -62,7 +64,38 @@ class WalletViewController: ThemeViewController {
         collectionView.register(BalanceCell.self, forCellWithReuseIdentifier: String(describing: BalanceCell.self))
         collectionView.register(WalletHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: WalletHeaderView.self))
 
+        view.addSubview(emptyView)
+        emptyView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.centerY.equalToSuperview()
+        }
+
+        let cautionView = CircleCautionView()
+
+        emptyView.addSubview(cautionView)
+        cautionView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin48)
+            maker.top.equalToSuperview()
+        }
+
+        cautionView.image = UIImage(named: "add_to_wallet_2_48")
+        cautionView.text = "balance.empty.description".localized
+
+        let addCoinButton = ThemeButton()
+
+        emptyView.addSubview(addCoinButton)
+        addCoinButton.snp.makeConstraints { maker in
+            maker.centerX.equalToSuperview()
+            maker.top.equalTo(cautionView.snp.bottom).offset(CGFloat.margin32)
+            maker.bottom.equalToSuperview()
+        }
+
+        addCoinButton.apply(style: .secondaryDefault)
+        addCoinButton.setTitle("balance.empty.add_coins".localized, for: .normal)
+        addCoinButton.addTarget(self, action: #selector(onTapAddCoin), for: .touchUpInside)
+
         subscribe(disposeBag, viewModel.titleDriver) { [weak self] in self?.navigationItem.title = $0 }
+        subscribe(disposeBag, viewModel.displayModeDriver) { [weak self] in self?.sync(displayMode: $0) }
         subscribe(disposeBag, viewModel.headerViewItemDriver) { [weak self] in self?.sync(headerViewItem: $0) }
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
         subscribe(disposeBag, viewModel.openSortTypeSignal) { [weak self] in self?.openSortType() }
@@ -101,6 +134,15 @@ class WalletViewController: ThemeViewController {
     @objc private func onTapSwitchWallet() {
         let viewController = ManageAccountsModule.viewController(mode: .switcher)
         present(ThemeNavigationController(rootViewController: viewController), animated: true)
+    }
+
+    @objc private func onTapAddCoin() {
+        openManageWallets()
+    }
+
+    private func sync(displayMode: WalletViewModel.DisplayMode) {
+        collectionView.isHidden = displayMode != .list
+        emptyView.isHidden = displayMode != .empty
     }
 
     private func sync(headerViewItem: WalletViewModel.HeaderViewItem?) {
