@@ -55,9 +55,9 @@ extension RestoreSettingsService {
         manager.save(settings: settings, account: account, coinType: coin.type)
     }
 
-    func enter(birthdayHeight: String?, coin: Coin) {
+    func enter(birthdayHeight: Int, coin: Coin) {
         var settings = RestoreSettings()
-        settings[.birthdayHeight] = birthdayHeight
+        settings[.birthdayHeight] = String(birthdayHeight)
 
         let coinWithSettings = CoinWithSettings(coin: coin, settings: settings)
         approveSettingsRelay.accept(coinWithSettings)

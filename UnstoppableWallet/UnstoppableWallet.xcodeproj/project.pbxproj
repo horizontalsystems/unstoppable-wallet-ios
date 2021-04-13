@@ -369,6 +369,7 @@
 		11B3553AB8EE1BDDA3E8D696 /* SortTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C480773A445DC5A88BD /* SortTypeViewController.swift */; };
 		11B3553D410457FB50DEFAE4 /* ManageAccountsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A8342513D5834B2145A /* ManageAccountsViewModel.swift */; };
 		11B3553D8942EEE330AFCDF1 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EB6A09E7FBB70B8966B /* Wallet.swift */; };
+		11B3553ED96875D0B6E5B5C4 /* BirthdayInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35239B1D2F94B326FC703 /* BirthdayInputViewController.swift */; };
 		11B3553FE441E814B14A29F6 /* KeyboardObservingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3535FC407BA20765EBCF4 /* KeyboardObservingViewController.swift */; };
 		11B355429E85398C7DFEA819 /* PrivacyEthereumRpcModePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35255A8D7836AAC814F6E /* PrivacyEthereumRpcModePresenter.swift */; };
 		11B35542BB8470BFD140E73D /* AuthData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352D70D3A3A2851CCEDA3 /* AuthData.swift */; };
@@ -407,6 +408,7 @@
 		11B355910DDDD9B57384518A /* AddressParserFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353450DED12F9F024BAD0 /* AddressParserFactory.swift */; };
 		11B3559145F6750C5E37BEB3 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359D48FD6D82735C8969A /* Error.swift */; };
 		11B355967997A7C65B008BC7 /* SendEvmTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B31362C98B401A8F9A1 /* SendEvmTransactionViewController.swift */; };
+		11B3559805016E1869252B27 /* BirthdayInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35239B1D2F94B326FC703 /* BirthdayInputViewController.swift */; };
 		11B355984178BF117AB606F5 /* SendAvailableBalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352F8D9567E50A0DA2F67 /* SendAvailableBalanceCell.swift */; };
 		11B355A4A225681A05BFC63B /* TermsFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35994005EE82AE70CDA98 /* TermsFooterCell.swift */; };
 		11B355A68C21C9FDAA71B982 /* WalletConnectScanQrViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C5381D15FAFC0E9C39B /* WalletConnectScanQrViewModel.swift */; };
@@ -425,6 +427,7 @@
 		11B355DDFC07E67A209631A3 /* WalletConnectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354EA75308CE53FF55917 /* WalletConnectViewModel.swift */; };
 		11B355DFEF9CB72109F71058 /* PrivacySyncModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3500621E6BB91F9CE181B /* PrivacySyncModeViewController.swift */; };
 		11B355E1AD0038B222CB652A /* AddressInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35420B8191814543CBFA8 /* AddressInputCell.swift */; };
+		11B355E3AC79508BEDA18CAE /* BirthdayInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35239B1D2F94B326FC703 /* BirthdayInputViewController.swift */; };
 		11B355E97A6E5C33B7602335 /* WalletConnectMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350EE4B95D5FB59724563 /* WalletConnectMainViewController.swift */; };
 		11B355EBC83D70F2D41D9217 /* WalletViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3570624266AA63F869105 /* WalletViewItemFactory.swift */; };
 		11B355EC1ED6673F7F3E196C /* SendEvmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3540BDD94203AFD41C6C7 /* SendEvmService.swift */; };
@@ -2364,6 +2367,7 @@
 		11B3521444684873524033C6 /* AddTokenSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTokenSelectorViewController.swift; sourceTree = "<group>"; };
 		11B35216E1F4300730E08C5D /* CheckboxCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckboxCell.swift; sourceTree = "<group>"; };
 		11B3522E7181FB5F0A647944 /* Satoshi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Satoshi.swift; sourceTree = "<group>"; };
+		11B35239B1D2F94B326FC703 /* BirthdayInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BirthdayInputViewController.swift; sourceTree = "<group>"; };
 		11B3525406D0B011EB76ACE6 /* AppStatusViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStatusViewModel.swift; sourceTree = "<group>"; };
 		11B35255A8D7836AAC814F6E /* PrivacyEthereumRpcModePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyEthereumRpcModePresenter.swift; sourceTree = "<group>"; };
 		11B35269B569B8588DB9A23C /* WalletViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
@@ -3628,6 +3632,7 @@
 				11B3579127F81BF69246DB8F /* ManageWallets */,
 				11B35A52DF53F381A5B84BD4 /* RestoreSettings */,
 				1A564E0C9DB512EC92D4DAF4 /* ThemeSettings */,
+				11B3592A7B1E091728CA81B4 /* BirthdayInput */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -4016,6 +4021,14 @@
 				11B35F2DD8307A98F05D5475 /* About */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		11B3592A7B1E091728CA81B4 /* BirthdayInput */ = {
+			isa = PBXGroup;
+			children = (
+				11B35239B1D2F94B326FC703 /* BirthdayInputViewController.swift */,
+			);
+			path = BirthdayInput;
 			sourceTree = "<group>";
 		};
 		11B359AC137086F25B95B112 /* Cells */ = {
@@ -6538,6 +6551,7 @@
 				11B3592F4CE25D607C247616 /* BalanceButtonsView.swift in Sources */,
 				11B3519D276A943163F3C67A /* WalletHeaderView.swift in Sources */,
 				11B35876220D13E9C0BCBC03 /* BalanceViewItem.swift in Sources */,
+				11B3559805016E1869252B27 /* BirthdayInputViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7328,6 +7342,7 @@
 				11B35B9BCE8AF0B54BFBED42 /* BalanceButtonsView.swift in Sources */,
 				11B35F2474FF811217F48132 /* WalletHeaderView.swift in Sources */,
 				11B3532D03B0893AB8E46CD9 /* BalanceViewItem.swift in Sources */,
+				11B355E3AC79508BEDA18CAE /* BirthdayInputViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8080,6 +8095,7 @@
 				11B3592EC9C229FD531ED6B5 /* BalanceButtonsView.swift in Sources */,
 				11B35E8D7BC94103A4ABD91C /* WalletHeaderView.swift in Sources */,
 				11B3583C77D7B2BD613D6269 /* BalanceViewItem.swift in Sources */,
+				11B3553ED96875D0B6E5B5C4 /* BirthdayInputViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
