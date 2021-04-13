@@ -11,7 +11,7 @@ class MarketOverviewViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
     private let refreshControl = UIRefreshControl()
 
-    private let marketMetricsCell: MarketMetricsCell
+    private let marketMetricsCell: MarketMetricsCellNew
 
     weak var parentNavigationController: UINavigationController?
 
@@ -138,7 +138,7 @@ extension MarketOverviewViewController: SectionsDataSource {
                         StaticRow(
                                 cell: marketMetricsCell,
                                 id: "metrics",
-                                height: MarketMetricsCell.cellHeight
+                                height: MarketMetricsCellNew.cellHeight
                         )
                     ]
             )
@@ -149,7 +149,7 @@ extension MarketOverviewViewController: SectionsDataSource {
             let row = Row<SpinnerCell>(
                     id: "spinner",
                     dynamicHeight: { [weak self] _ in
-                        max(0, (self?.tableView.height ?? 0) - MarketMetricsCell.cellHeight)
+                        max(0, (self?.tableView.height ?? 0) - MarketMetricsCellNew.cellHeight)
                     }
             )
 
@@ -199,7 +199,7 @@ extension MarketOverviewViewController: SectionsDataSource {
             let row = Row<ErrorCell>(
                     id: "error",
                     dynamicHeight: { [weak self] _ in
-                        max(0, (self?.tableView.height ?? 0) - MarketMetricsCell.cellHeight)
+                        max(0, (self?.tableView.height ?? 0) - MarketMetricsCellNew.cellHeight)
                     },
                     bind: { cell, _ in
                         cell.errorText = errorDescription

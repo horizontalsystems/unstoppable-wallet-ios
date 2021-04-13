@@ -1,56 +1,51 @@
 import UIKit
 import SnapKit
+import Chart
 
 class MarketMetricView: UIView {
-    private static let formatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 2
-        formatter.groupingSeparator = ""
-        return formatter
-    }()
-
-    static let width: CGFloat = 78
+    static let height: CGFloat = 84
 
     private let titleLabel = UILabel()
-    private let gradientBar = GradientPercentBar()
     private let valueLabel = UILabel()
     private let diffLabel = RateDiffLabel()
+    private let chartView = RateChartView()
 
-    init() {
+    init(configuration: ChartConfiguration) {
         super.init(frame: .zero)
+
+        chartView.apply(configuration: configuration)
+
+        backgroundColor = .themeLawrence
+        layer.cornerRadius = .cornerRadius4x
+        clipsToBounds = true
+
+        addSubview(chartView)
+        chartView.snp.makeConstraints { maker in
+            maker.trailing.bottom.equalToSuperview().inset(CGFloat.margin12)
+            maker.height.equalTo(configuration.mainHeight)
+            maker.width.equalTo(72)
+        }
 
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
+            maker.leading.top.trailing.equalToSuperview().inset(CGFloat.margin12)
         }
 
         titleLabel.font = .micro
         titleLabel.textColor = .themeGray
 
-        addSubview(gradientBar)
-        gradientBar.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview()
-            maker.height.equalTo(GradientPercentBar.height)
-            maker.width.equalTo(GradientPercentBar.width)
-            maker.bottom.equalToSuperview()
-        }
-
         addSubview(valueLabel)
         valueLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(gradientBar.snp.trailing).offset(CGFloat.margin12)
-            maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin6)
-            maker.trailing.equalToSuperview()
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin12)
+            maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin8)
         }
 
         valueLabel.font = .subhead2
 
         addSubview(diffLabel)
         diffLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(gradientBar.snp.trailing).offset(CGFloat.margin12)
-            maker.top.equalTo(valueLabel.snp.bottom).offset(CGFloat.margin2)
-            maker.trailing.equalToSuperview()
-            maker.bottom.equalToSuperview()
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin12)
+            maker.top.equalTo(valueLabel.snp.bottom).offset(CGFloat.margin8)
         }
 
         diffLabel.font = .caption
@@ -64,26 +59,26 @@ class MarketMetricView: UIView {
 
 extension MarketMetricView {
 
-    public func set(title: String, value: String?, diff: Decimal?) {
-        titleLabel.text = title
+    var title: String? {
+        get { titleLabel.text }
+        set { titleLabel.text = newValue }
+    }
 
+    func set(value: String?, diff: Decimal?) {
         valueLabel.textColor = value == nil ? .themeGray50 : .themeBran
         valueLabel.text = value ?? "n/a".localized
 
         guard let diffValue = diff else {
             diffLabel.set(value: nil)
-            gradientBar.set(value: nil)
 
             return
         }
         let diff = diffValue
 
-        gradientBar.set(value: diff)
         diffLabel.set(value: diff)
     }
 
-    public func clear() {
-        titleLabel.text = nil
+    func clear() {
         valueLabel.text = nil
         diffLabel.clear()
     }
