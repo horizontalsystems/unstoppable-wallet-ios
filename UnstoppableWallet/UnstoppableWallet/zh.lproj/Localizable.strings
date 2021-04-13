@@ -930,3 +930,9 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "manage_account.show_recovery_phrase" = "Show Recovery Phrase";
 "manage_account.backup_recovery_phrase" = "Backup Recovery Phrase";
 "manage_account.unlink" = "Unlink";
+
+// Birthday Input
+
+"birthday_input.title" = "Birthday Height";
+"birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing";
+"birthday_input.input_placeholder" = "%@ (optional)";
