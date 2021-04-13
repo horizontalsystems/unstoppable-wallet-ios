@@ -816,6 +816,12 @@ extension GrdbStorage: IRestoreSettingsStorage {
         }
     }
 
+    func restoreSettings(accountId: String) -> [RestoreSettingRecord] {
+        try! dbPool.read { db in
+            try RestoreSettingRecord.filter(RestoreSettingRecord.Columns.accountId == accountId).fetchAll(db)
+        }
+    }
+
     func save(restoreSettingRecords: [RestoreSettingRecord]) {
         _ = try! dbPool.write { db in
             for record in restoreSettingRecords {

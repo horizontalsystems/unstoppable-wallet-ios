@@ -359,6 +359,7 @@ protocol IBlockchainSettingsStorage: AnyObject {
 
 protocol IRestoreSettingsStorage {
     func restoreSettings(accountId: String, coinId: String) -> [RestoreSettingRecord]
+    func restoreSettings(accountId: String) -> [RestoreSettingRecord]
     func save(restoreSettingRecords: [RestoreSettingRecord])
     func deleteAllRestoreSettings(accountId: String)
 }
