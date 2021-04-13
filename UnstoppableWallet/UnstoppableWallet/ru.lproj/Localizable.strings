@@ -162,6 +162,8 @@
 "balance.syncing_percent" = "Синхронизация... %@";
 "balance.synced_through" = "до %@";
 "balance.add_coin" = "Add Coin";
+"balance.empty.add_coins" = "Add Coins";
+"balance.empty.description" = "You don’t have an added coins. Add the coins you will be using.";
 "balance.sort_by" = "Sort By";
 "balance.sort.header" = "Сортировать по";
 "balance.sort.valueHighToLow" = "Балансу";
