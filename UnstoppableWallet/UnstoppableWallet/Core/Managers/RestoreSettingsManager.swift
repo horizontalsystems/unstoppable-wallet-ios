@@ -11,8 +11,8 @@ class RestoreSettingsManager {
 
 extension RestoreSettingsManager {
 
-    func settings(account: Account, coin: Coin) -> RestoreSettings {
-        let records = storage.restoreSettings(accountId: account.id, coinId: coin.id)
+    func settings(account: Account, coinType: CoinType) -> RestoreSettings {
+        let records = storage.restoreSettings(accountId: account.id, coinId: coinType.id)
 
         var settings = RestoreSettings()
 
@@ -25,9 +25,22 @@ extension RestoreSettingsManager {
         return settings
     }
 
-    func save(settings: RestoreSettings, account: Account, coin: Coin) {
+    func accountSettingsInfo(account: Account) -> [(CoinType, RestoreSettingType, String)] {
+        let records = storage.restoreSettings(accountId: account.id)
+
+        return records.compactMap { record in
+            guard let settingType = RestoreSettingType(rawValue: record.key) else {
+                return nil
+            }
+            let coinType = CoinType(id: record.coinId)
+
+            return (coinType, settingType, record.value)
+        }
+    }
+
+    func save(settings: RestoreSettings, account: Account, coinType: CoinType) {
         let records = settings.map { type, value in
-            RestoreSettingRecord(accountId: account.id, coinId: coin.id, key: type.rawValue, value: value)
+            RestoreSettingRecord(accountId: account.id, coinId: coinType.id, key: type.rawValue, value: value)
         }
 
         storage.save(restoreSettingRecords: records)

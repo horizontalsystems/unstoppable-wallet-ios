@@ -36,7 +36,7 @@ extension RestoreSettingsService {
             return
         }
 
-        let existingSettings = account.map { manager.settings(account: $0, coin: coin) } ?? [:]
+        let existingSettings = account.map { manager.settings(account: $0, coinType: coin.type) } ?? [:]
 
         if coin.type.restoreSettingTypes.contains(.birthdayHeight) && existingSettings[.birthdayHeight] == nil {
             let request = Request(
@@ -52,7 +52,7 @@ extension RestoreSettingsService {
     }
 
     func save(settings: RestoreSettings, account: Account, coin: Coin) {
-        manager.save(settings: settings, account: account, coin: coin)
+        manager.save(settings: settings, account: account, coinType: coin.type)
     }
 
     func enter(birthdayHeight: String?, coin: Coin) {

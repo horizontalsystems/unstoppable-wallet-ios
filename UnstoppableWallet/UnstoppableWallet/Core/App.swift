@@ -167,7 +167,7 @@ class App {
 
         remoteAlertManager.notificationManager = notificationManager
 
-        appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage, accountManager: accountManager, walletManager: walletManager, adapterManager: adapterManager, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager, binanceKitManager: binanceKitManager, logRecordManager: logRecordManager)
+        appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage, accountManager: accountManager, walletManager: walletManager, adapterManager: adapterManager, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager, binanceKitManager: binanceKitManager, logRecordManager: logRecordManager, restoreSettingsManager: restoreSettingsManager)
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, localStorage: localStorage)
 
         keychainKitDelegate = KeychainKitDelegate(accountManager: accountManager, walletManager: walletManager)
