@@ -160,6 +160,8 @@
 "balance.syncing_percent" = "Synchronisation... %@";
 "balance.synced_through" = "jusqu'à: %@";
 "balance.add_coin" = "Add Coin";
+"balance.empty.add_coins" = "Add Coins";
+"balance.empty.description" = "You don’t have an added coins. Add the coins you will be using.";
 "balance.sort_by" = "Sort By";
 "balance.sort.header" = "Trier par";
 "balance.sort.valueHighToLow" = "Balance";
