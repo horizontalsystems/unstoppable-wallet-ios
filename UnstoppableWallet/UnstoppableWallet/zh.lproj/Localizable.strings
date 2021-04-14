@@ -335,7 +335,7 @@
 "market.category.overview" = "Overview";
 "market.category.discovery" = "Discovery";
 "market.category.watchlist" = "Watchlist";
-"market.total_market_cap" = "总计\n市场价值";
+"market.total_market_cap" = "Total Market Cap";
 "market.24h_volume" = "24h Volume";
 "market.btc_dominance" = "BTC主导";
 "market.defi_cap" = "DeFi市场价值";
