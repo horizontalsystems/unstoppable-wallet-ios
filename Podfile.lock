@@ -59,6 +59,7 @@ PODS:
   - CNIODarwin (2.27.0)
   - CNIOHTTPParser (2.27.0)
   - CNIOLinux (2.27.0)
+  - CNIOSHA1 (2.27.0)
   - CNIOWindows (2.27.0)
   - CoinKit.swift (0.1.0):
     - GRDB.swift (~> 4.0)
@@ -137,6 +138,9 @@ PODS:
     - Alamofire (~> 5.0)
     - ObjectMapper (~> 4.0)
     - RxSwift (~> 5.0)
+    - SwiftNIOFoundationCompat
+    - SwiftNIOSSL
+    - SwiftNIOWebSocket
   - HUD.swift (1.2):
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1.1)
@@ -250,6 +254,10 @@ PODS:
     - SwiftNIOConcurrencyHelpers (< 3, >= 2.19.0)
     - SwiftNIOFoundationCompat (< 3, >= 2.19.0)
     - SwiftNIOTLS (< 3, >= 2.19.0)
+  - SwiftNIOWebSocket (2.27.0):
+    - CNIOSHA1 (= 2.27.0)
+    - SwiftNIO (= 2.27.0)
+    - SwiftNIOHTTP1 (= 2.27.0)
   - SwiftProtobuf (1.15.0)
   - SwiftyJSON (4.3.0)
   - ThemeKit.swift (1.0):
@@ -351,6 +359,7 @@ SPEC REPOS:
     - CNIODarwin
     - CNIOHTTPParser
     - CNIOLinux
+    - CNIOSHA1
     - CNIOWindows
     - CryptoSwift
     - Cuckoo
@@ -384,6 +393,7 @@ SPEC REPOS:
     - SwiftNIOSSL
     - SwiftNIOTLS
     - SwiftNIOTransportServices
+    - SwiftNIOWebSocket
     - SwiftProtobuf
     - SwiftyJSON
     - UnstoppableDomainsResolution
@@ -498,7 +508,7 @@ CHECKOUT OPTIONS:
     :commit: fbf60ee6ef2eaec6b13eacff8d29a155863c2586
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HsToolKit.swift:
-    :commit: 81a2a9efd49c88efa69bea12eb83fa13834522ff
+    :commit: 28c1fffcb32222884e9596391e53ebb960d420cf
     :git: https://github.com/horizontalsystems/hs-tool-kit-ios
   HUD.swift:
     :commit: a1dcf7d572c35cc6a3a023f01a2f7eb4a16507fe
@@ -560,6 +570,7 @@ SPEC CHECKSUMS:
   CNIODarwin: 9eb3c09e9f3fc5ed47cecdd032aad926df81e3a6
   CNIOHTTPParser: c6051552c5f332e4ec0756581e5cbd5632ca24e6
   CNIOLinux: 79227941d64216792c3c59238b0106b9e0df25bc
+  CNIOSHA1: f9ce281bdb9a1ed0792da24358ed8004761258d0
   CNIOWindows: f2baa102255e986467578337ffa2f777cb6bdf7f
   CoinKit.swift: 5fe0db6364858c95be2e328eb53c15ab8b1af0fd
   CryptoSwift: 01b0f0cba1d5c212e5a335ff6c054fb75a204f00
@@ -577,7 +588,7 @@ SPEC CHECKSUMS:
   gRPC-Swift: 75a7a8d7cd08177165ef971159afb84e5130cfc9
   HdWalletKit.swift: 30b1ab08c736422eeefe346369ced89574e2ec00
   Hodler.swift: b51336461b7e179e236a07ad0039dcaa7e55d551
-  HsToolKit.swift: 3d77e22e335b849afa9c4cca08bc965bbe32f81e
+  HsToolKit.swift: a72793d6b052cfbe36198353d57f99dac2bba948
   HUD.swift: 0260e8e89a290380fd23d95002b0ddbea890b6c9
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   LanguageKit.swift: 8ca8b99dd6250a13cf481b637e0d9d16f7389a74
@@ -611,6 +622,7 @@ SPEC CHECKSUMS:
   SwiftNIOSSL: 6a1f0499a5319e823eae0b6f053ecb502bcce3f5
   SwiftNIOTLS: 4f8df225f03393f08e0b47b4d876ae38167f8a27
   SwiftNIOTransportServices: 896c9a4ac98698d32aa2feea7657ade219ae80bb
+  SwiftNIOWebSocket: 375808226f357aaaac832ee02132ce29ec2ff5b4
   SwiftProtobuf: 3320217e9d8fb75f36b40282e78c482640fd75dd
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   ThemeKit.swift: 3d811f6b57daecbf87b5735b35c586bcaa1bff14
