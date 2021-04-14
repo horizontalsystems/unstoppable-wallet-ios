@@ -1,5 +1,7 @@
 PODS:
   - ActionSheet.swift (1.2):
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1.1)
   - Alamofire (5.4.2)
@@ -463,7 +465,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   ActionSheet.swift:
-    :commit: a1dcf7d572c35cc6a3a023f01a2f7eb4a16507fe
+    :commit: 4f475143a415d85ad96a7d527de9511d723aaf44
     :git: https://github.com/horizontalsystems/gui-kit/
   BinanceChainKit.swift:
     :commit: 5c4b83afb5b7b536d5c9f773656757449c7379f6
@@ -551,7 +553,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
 
 SPEC CHECKSUMS:
-  ActionSheet.swift: 60b3f9737bf8fff3c7b39de295291a9cd968be58
+  ActionSheet.swift: fcfca3360d0855247bdb0fcdac27f4a7a4d7d593
   Alamofire: bfbc4c2fe5909b1d94fb4ef2277c6b3727ef5dae
   AlamofireImage: 34a2d90b0e5fe6a5605f85ae4b7b01e784c60192
   Base58Swift: 53d551f0b33d9478fa63b3445e453a772d6b31a7
