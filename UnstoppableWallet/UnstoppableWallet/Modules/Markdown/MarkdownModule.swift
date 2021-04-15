@@ -3,8 +3,9 @@ import UIKit
 struct MarkdownModule {
 
     static func viewController(url: URL) -> UIViewController {
+        let provider = MarkdownPlainContentProvider(url: url, networkManager: App.shared.networkManager)
+        let service = MarkdownService(provider: provider)
         let parser = MarkdownParser()
-        let service = MarkdownService(url: url, networkManager: App.shared.networkManager)
         let viewModel = MarkdownViewModel(service: service, parser: parser)
 
         return MarkdownViewController(viewModel: viewModel)

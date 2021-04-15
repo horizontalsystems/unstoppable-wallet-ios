@@ -256,6 +256,8 @@ protocol IRateCoinMapper {
 
 protocol ISystemInfoManager {
     var appVersion: String { get }
+    var buildNumber: String { get }
+    var fullAppVersion: String { get }
     var passcodeSet: Bool { get }
     var deviceModel: String { get }
     var osVersion: String { get }
@@ -465,6 +467,7 @@ protocol IAppStatusManager {
 
 protocol IAppVersionManager {
     func checkLatestVersion()
+    var newVersionObservable: Observable<AppVersion?> { get }
 }
 
 protocol IRateAppManager {

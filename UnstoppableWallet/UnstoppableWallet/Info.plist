@@ -86,10 +86,5 @@
 	</array>
 	<key>UniswapGraphUrl</key>
 	<string>$(uniswap_graph_url)</string>
-	<key>UILaunchScreen</key>
-	<dict>
-		<key>UIColorName</key>
-		<string>Launch Screen</string>
-	</dict>
 </dict>
 </plist>

@@ -27,7 +27,7 @@ class MarkdownParser {
         return paragraphStyles
     }()
 
-    func viewItems(content: String, url: URL, fontSize: Int) -> [MarkdownBlockViewItem] {
+    func viewItems(content: String, url: URL?, fontSize: Int) -> [MarkdownBlockViewItem] {
         let fonts = StaticFontCollection(
                 heading1: .title2,
                 heading2: .title3,

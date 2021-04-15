@@ -31,7 +31,7 @@ class MarkdownViewModel {
     private func sync(content: String?) {
         loadingRelay.accept(content == nil)
 
-        viewItemsRelay.accept(content.map { parser.viewItems(content: $0, url: service.url, fontSize: fontSize) })
+        viewItemsRelay.accept(content.map { parser.viewItems(content: $0, url: service.markdownUrl, fontSize: fontSize) })
     }
 
 }
@@ -51,7 +51,7 @@ extension MarkdownViewModel {
     }
 
     func onTap(url: URL) {
-        guard let resolvedUrl = URL(string: url.absoluteString, relativeTo: service.url) else {
+        guard let resolvedUrl = URL(string: url.absoluteString, relativeTo: service.markdownUrl) else {
             return
         }
 

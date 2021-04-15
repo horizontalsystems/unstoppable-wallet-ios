@@ -92,12 +92,12 @@ extension AppStatusManager: IAppStatusManager {
         [
             ("App Info", [
                 ("Current Time", Date()),
-                ("App Version", systemInfoManager.appVersion),
+                ("App Version", systemInfoManager.fullAppVersion),
                 ("Phone Model", systemInfoManager.deviceModel),
                 ("OS Version", systemInfoManager.osVersion)
             ]),
             ("App Log", logRecordManager.logsGroupedBy(context: "Send")),
-            ("Version History", localStorage.appVersions.map { ($0.version, $0.date) }),
+            ("Version History", localStorage.appVersions.map { ($0.version, $0.build, $0.date) }),
             ("Wallets Status", accountStatus),
             ("Blockchains Status", blockchainStatus)
         ]
