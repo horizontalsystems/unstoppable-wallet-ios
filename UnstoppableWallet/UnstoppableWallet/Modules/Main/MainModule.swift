@@ -17,8 +17,11 @@ struct MainModule {
                 pinKit: App.shared.pinKit,
                 termsManager: App.shared.termsManager
         )
+        let whatsNewService = WhatsNewService(
+                appVersionManager: App.shared.appVersionManager
+        )
 
-        let viewModel = MainViewModel(service: service, badgeService: badgeService)
+        let viewModel = MainViewModel(service: service, badgeService: badgeService, whatsNewService: whatsNewService)
         let viewController = MainViewController(viewModel: viewModel, selectedIndex: selectedTab.rawValue)
 
         App.shared.pinKitDelegate.viewController = viewController

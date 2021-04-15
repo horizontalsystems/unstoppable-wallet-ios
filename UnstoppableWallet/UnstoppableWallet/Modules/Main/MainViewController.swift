@@ -33,6 +33,8 @@ class MainViewController: ThemeTabBarController {
         subscribe(disposeBag, viewModel.transactionsTabEnabledDriver) { [weak self] in self?.syncTransactionsTab(enabled: $0) }
         subscribe(disposeBag, viewModel.settingsBadgeDriver) { [weak self] in self?.setSettingsBadge(visible: $0) }
 
+        subscribe(disposeBag, viewModel.whatsNewDriver) { [weak self] appVersion in self?.showWhatsNew(appVersion: appVersion) }
+
         viewModel.onLoad()
     }
 
@@ -58,6 +60,20 @@ class MainViewController: ThemeTabBarController {
 
     private func setSettingsBadge(visible: Bool) {
         settingsModule.viewControllers.first?.tabBarItem.setDotBadge(visible: visible)
+    }
+
+    private func showWhatsNew(appVersion: AppVersion?) {
+        guard let appVersion = appVersion else {
+            return
+        }
+
+
+        let s = "https://api.github.com/repos/horizontalsystems/unstoppable-wallet-ios/releases/tags/\(appVersion.version)"
+        print("url: \(s)")
+        let module = MarkdownModule.viewController(url: URL(string: s)!)
+        present(ThemeNavigationController(rootViewController: module), animated: true)
+
+        print("showWhatsNew")
     }
 
 }

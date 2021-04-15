@@ -5,14 +5,16 @@ import RxCocoa
 class MainViewModel {
     private let service: MainService
     private let badgeService: MainBadgeService
+    private let whatsNewService: WhatsNewService
     private let disposeBag = DisposeBag()
 
     private let balanceTabStateRelay = BehaviorRelay<BalanceTabState>(value: .balance)
     private let transactionsTabEnabledRelay = BehaviorRelay<Bool>(value: true)
 
-    init(service: MainService, badgeService: MainBadgeService) {
+    init(service: MainService, badgeService: MainBadgeService, whatsNewService: WhatsNewService) {
         self.service = service
         self.badgeService = badgeService
+        self.whatsNewService = whatsNewService
 
         subscribe(disposeBag, service.hasAccountsObservable) { [weak self] in self?.sync(hasAccounts: $0) }
 
@@ -30,6 +32,10 @@ extension MainViewModel {
 
     var settingsBadgeDriver: Driver<Bool> {
         badgeService.settingsBadgeObservable.asDriver(onErrorJustReturn: false)
+    }
+
+    var whatsNewDriver: Driver<AppVersion?> {
+        whatsNewService.whatsNewObservable.asDriver(onErrorJustReturn: nil)
     }
 
     var balanceTabStateDriver: Driver<BalanceTabState> {

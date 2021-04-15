@@ -102,7 +102,7 @@ extension MainSettingsService {
     }
 
     var appVersion: String {
-        systemInfoManager.appVersion
+        systemInfoManager.fullAppVersion
     }
 
 }
