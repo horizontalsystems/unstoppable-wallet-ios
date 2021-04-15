@@ -4,7 +4,11 @@ import ThemeKit
 struct ShowKeyModule {
 
     static func viewController(account: Account) -> UIViewController? {
-        guard let service = ShowKeyService(account: account, pinKit: App.shared.pinKit) else {
+        guard let service = ShowKeyService(
+                account: account,
+                pinKit: App.shared.pinKit,
+                ethereumKitManager: App.shared.ethereumKitManager
+        ) else {
             return nil
         }
         let viewModel = ShowKeyViewModel(service: service)

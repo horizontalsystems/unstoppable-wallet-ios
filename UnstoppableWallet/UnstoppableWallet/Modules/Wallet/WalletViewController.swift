@@ -43,7 +43,7 @@ class WalletViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "wallet_24"), style: .plain, target: self, action: #selector(onTapSwitchWallet))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "switch_wallet_24"), style: .plain, target: self, action: #selector(onTapSwitchWallet))
         navigationItem.leftBarButtonItem?.tintColor = .themeJacob
 
         refreshControl.tintColor = .themeLeah
@@ -105,6 +105,7 @@ class WalletViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.showErrorSignal) { [weak self] in self?.show(error: $0) }
         subscribe(disposeBag, viewModel.openSyncErrorSignal) { [weak self] in self?.openSyncError(wallet: $0, error: $1) }
         subscribe(disposeBag, viewModel.showAccountsLostSignal) { [weak self] in self?.showAccountsLost() }
+        subscribe(disposeBag, viewModel.playHapticSignal) { [weak self] in self?.playHaptic() }
 
         isLoaded = true
     }
@@ -304,10 +305,14 @@ class WalletViewController: ThemeViewController {
         }
     }
 
-    func showAccountsLost() {
+    private func showAccountsLost() {
         let controller = UIAlertController(title: "lost_accounts.warning_title".localized, message: "lost_accounts.warning_message".localized, preferredStyle: .alert)
         controller.addAction(UIAlertAction(title: "button.ok".localized, style: .default))
         controller.show()
+    }
+
+    private func playHaptic() {
+        HapticGenerator.instance.notification(.feedback(.soft))
     }
 
 }

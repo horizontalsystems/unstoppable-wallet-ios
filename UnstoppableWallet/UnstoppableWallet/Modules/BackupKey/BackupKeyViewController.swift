@@ -4,9 +4,10 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import PinKit
+import SectionsTableView
 
 class BackupKeyViewController: ThemeViewController {
-    private let horizontalMargin: CGFloat = .margin16
+    private let animationDuration: TimeInterval = 0.2
 
     private let viewModel: BackupKeyViewModel
     private let disposeBag = DisposeBag()
@@ -14,15 +15,15 @@ class BackupKeyViewController: ThemeViewController {
     private let descriptionView = HighlightedDescriptionView()
     private let showButton = ThemeButton()
 
-    private let collectionView: UICollectionView
+    private let tableView = SectionsTableView(style: .grouped)
+
     private let backupButtonHolder = BottomGradientHolder()
     private let backupButton = ThemeButton()
 
+    private let mnemonicPhraseCell = MnemonicPhraseCell()
+
     init(viewModel: BackupKeyViewModel) {
         self.viewModel = viewModel
-
-        let layout = UICollectionViewFlowLayout()
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 
         super.init()
     }
@@ -36,6 +37,18 @@ class BackupKeyViewController: ThemeViewController {
 
         title = "backup_key.title".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapCloseButton))
+
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
+            maker.top.equalToSuperview()
+            maker.leading.trailing.equalToSuperview()
+        }
+
+        tableView.isHidden = true
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+
+        tableView.sectionDataSource = self
 
         view.addSubview(descriptionView)
         descriptionView.snp.makeConstraints { maker in
@@ -56,25 +69,9 @@ class BackupKeyViewController: ThemeViewController {
         showButton.setTitle("backup_key.button_show".localized, for: .normal)
         showButton.addTarget(self, action: #selector(onTapShowButton), for: .touchUpInside)
 
-        view.addSubview(collectionView)
-        collectionView.snp.makeConstraints { maker in
-            maker.top.equalToSuperview()
-            maker.leading.trailing.equalToSuperview()
-        }
-
-        collectionView.isHidden = true
-        collectionView.backgroundColor = .clear
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.alwaysBounceVertical = true
-        collectionView.contentInset = UIEdgeInsets(top: .margin12, left: 0, bottom: .margin32, right: 0)
-
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(BackupWordsCell.self, forCellWithReuseIdentifier: String(describing: BackupWordsCell.self))
-
         view.addSubview(backupButtonHolder)
         backupButtonHolder.snp.makeConstraints { maker in
-            maker.top.equalTo(collectionView.snp.bottom).offset(-CGFloat.margin16)
+            maker.top.equalTo(tableView.snp.bottom).offset(-CGFloat.margin16)
             maker.leading.trailing.bottom.equalToSuperview()
         }
 
@@ -93,6 +90,8 @@ class BackupKeyViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.openUnlockSignal) { [weak self] in self?.openUnlock() }
         subscribe(disposeBag, viewModel.showKeySignal) { [weak self] in self?.showKey() }
         subscribe(disposeBag, viewModel.openConfirmSignal) { [weak self] in self?.openConfirm(account: $0) }
+
+        tableView.buildSections()
     }
 
     @objc private func onTapCloseButton() {
@@ -114,11 +113,11 @@ class BackupKeyViewController: ThemeViewController {
     }
 
     private func showKey() {
-        showButton.isHidden = true
-        descriptionView.isHidden = true
+        showButton.set(hidden: true, animated: true, duration: animationDuration)
+        descriptionView.set(hidden: true, animated: true, duration: animationDuration)
 
-        collectionView.isHidden = false
-        backupButtonHolder.isHidden = false
+        tableView.set(hidden: false, animated: true, duration: animationDuration)
+        backupButtonHolder.set(hidden: false, animated: true, duration: animationDuration)
     }
 
     private func openConfirm(account: Account) {
@@ -129,8 +128,30 @@ class BackupKeyViewController: ThemeViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
-    private func words(for index: Int) -> [String] {
-        Array(viewModel.words.suffix(from: index * BackupWordsCell.maxWordsCount).prefix(BackupWordsCell.maxWordsCount))
+}
+
+extension BackupKeyViewController: SectionsDataSource {
+
+    func buildSections() -> [SectionProtocol] {
+        let words = viewModel.words
+
+        return [
+            Section(
+                    id: "main",
+                    headerState: .margin(height: .margin12),
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        StaticRow(
+                                cell: mnemonicPhraseCell,
+                                id: "mnemonic-phrase",
+                                height: MnemonicPhraseCell.height(wordCount: words.count),
+                                onReady: { [weak self] in
+                                    self?.mnemonicPhraseCell.set(words: words)
+                                }
+                        )
+                    ]
+            )
+        ]
     }
 
 }
@@ -142,52 +163,6 @@ extension BackupKeyViewController: IUnlockDelegate {
     }
 
     func onCancelUnlock() {
-    }
-
-}
-
-extension BackupKeyViewController: UICollectionViewDataSource {
-
-    public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
-    }
-
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.words.count / BackupWordsCell.maxWordsCount + (viewModel.words.count % BackupWordsCell.maxWordsCount != 0 ? 1 : 0)
-    }
-
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: BackupWordsCell.self), for: indexPath)
-    }
-
-}
-
-extension BackupKeyViewController: UICollectionViewDelegate {
-
-    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let cell = cell as? BackupWordsCell {
-            cell.bind(startIndex: indexPath.row * BackupWordsCell.maxWordsCount + 1, words: words(for: indexPath.row))
-        }
-    }
-
-}
-
-extension BackupKeyViewController: UICollectionViewDelegateFlowLayout {
-
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: collectionView.width / 2 - horizontalMargin, height: BackupWordsCell.heightFor(words: words(for: indexPath.row)))
-    }
-
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        UIEdgeInsets(top: 0, left: horizontalMargin, bottom: 0, right: horizontalMargin)
-    }
-
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        0
-    }
-
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        CGFloat.margin24
     }
 
 }

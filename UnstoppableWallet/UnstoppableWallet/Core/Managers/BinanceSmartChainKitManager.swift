@@ -28,7 +28,7 @@ class BinanceSmartChainKitManager {
 
         let evmKit = try EthereumKit.Kit.instance(
                 words: words,
-                networkType: .bscMainNet,
+                networkType: networkType,
                 syncSource: syncSource,
                 etherscanApiKey: appConfigProvider.bscscanKey,
                 walletId: account.id,
@@ -44,6 +44,10 @@ class BinanceSmartChainKitManager {
         currentAccount = account
 
         return evmKit
+    }
+
+    var networkType: NetworkType {
+        .bscMainNet
     }
 
     var statusInfo: [(String, Any)]? {
