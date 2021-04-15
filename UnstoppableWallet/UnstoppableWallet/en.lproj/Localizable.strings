@@ -111,6 +111,8 @@ bch.horizontalsystems.xyz/apg";
 "show_key.title" = "Key";
 "show_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.";
 "show_key.button_show" = "Show";
+"show_key.tab.recovery_phrase" = "Recovery Phrase";
+"show_key.tab.private_keys" = "Private Keys";
 
 // Backup Key
 

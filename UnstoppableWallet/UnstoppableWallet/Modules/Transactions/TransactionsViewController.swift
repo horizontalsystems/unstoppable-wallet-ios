@@ -12,7 +12,6 @@ class TransactionsViewController: ThemeViewController {
     let differ: IDiffer
 
     let tableView = UITableView(frame: .zero, style: .plain)
-    private var headerBackgroundTriggerOffset: CGFloat?
 
     private let cellName = String(describing: TransactionCell.self)
 
@@ -79,11 +78,6 @@ class TransactionsViewController: ThemeViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: holder)
 
         delegate.viewDidLoad()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        headerBackgroundTriggerOffset = headerBackgroundTriggerOffset == nil ? tableView.contentOffset.y : headerBackgroundTriggerOffset
     }
 
     private func bind(itemAt indexPath: IndexPath, to cell: UITableViewCell?) {
@@ -209,12 +203,6 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         filterHeaderView
-    }
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if let headerBackgroundTriggerOffset = headerBackgroundTriggerOffset {
-            filterHeaderView.backgroundColor = scrollView.contentOffset.y > headerBackgroundTriggerOffset ? .themeNavigationBarBackground : .clear
-        }
     }
 
 }

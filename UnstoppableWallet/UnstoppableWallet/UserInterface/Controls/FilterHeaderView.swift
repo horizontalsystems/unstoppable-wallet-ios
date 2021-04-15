@@ -8,7 +8,7 @@ extension FilterHeaderView {
     }
 }
 
-class FilterHeaderView: UIView {
+class FilterHeaderView: UITableViewHeaderFooterView {
     private var filters = [ViewItem]()
     private let collectionView: UICollectionView
 
@@ -24,9 +24,10 @@ class FilterHeaderView: UIView {
         layout.sectionInset = .zero
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 
-        super.init(frame: .zero)
+        super.init(reuseIdentifier: nil)
 
-        backgroundColor = .themeNavigationBarBackground
+        backgroundView = UIView()
+        backgroundView?.backgroundColor = .themeNavigationBarBackground
 
         addSubview(collectionView)
         collectionView.snp.makeConstraints { maker in

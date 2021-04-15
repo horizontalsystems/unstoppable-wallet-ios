@@ -20,8 +20,8 @@ class ManageAccountsViewModel {
     }
 
     private func sync(items: [ManageAccountsService.Item]) {
-        let sortedItems = items.sorted { $0.account.name < $1.account.name }
-        let viewItems = items.map { viewItem(item: $0) }
+        let sortedItems = items.sorted { $0.account.name.lowercased() < $1.account.name.lowercased() }
+        let viewItems = sortedItems.map { viewItem(item: $0) }
         viewItemsRelay.accept(viewItems)
     }
 

@@ -19,6 +19,7 @@ class WalletViewModel {
     private let openCoinPageRelay = PublishRelay<Coin>()
     private let showErrorRelay = PublishRelay<String>()
     private let openSyncErrorRelay = PublishRelay<(Wallet, Error)>()
+    private let playHapticRelay = PublishRelay<()>()
 
     private var viewItems = [BalanceViewItem]()
     private var expandedWallet: Wallet?
@@ -133,8 +134,13 @@ extension WalletViewModel {
         service.accountsLostObservable.asSignal(onErrorJustReturn: ())
     }
 
+    var playHapticSignal: Signal<()> {
+        playHapticRelay.asSignal()
+    }
+
     func onTapTotalAmount() {
         service.toggleBalanceHidden()
+        playHapticRelay.accept(())
     }
 
     func onTapSortBy() {

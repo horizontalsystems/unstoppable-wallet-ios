@@ -4,9 +4,10 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import PinKit
+import SectionsTableView
 
 class ShowKeyViewController: ThemeViewController {
-    private let horizontalMargin: CGFloat = .margin16
+    private let animationDuration: TimeInterval = 0.2
 
     private let viewModel: ShowKeyViewModel
     private let disposeBag = DisposeBag()
@@ -14,15 +15,17 @@ class ShowKeyViewController: ThemeViewController {
     private let descriptionView = HighlightedDescriptionView()
     private let showButton = ThemeButton()
 
-    private let collectionView: UICollectionView
+    private let tableView = SectionsTableView(style: .plain)
+    private let filterHeaderView = FilterHeaderView()
+    private let mnemonicPhraseCell = MnemonicPhraseCell()
+
     private let closeButtonHolder = BottomGradientHolder()
     private let closeButton = ThemeButton()
 
+    private var currentTab: Tab = .mnemonicPhrase
+
     init(viewModel: ShowKeyViewModel) {
         self.viewModel = viewModel
-
-        let layout = UICollectionViewFlowLayout()
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 
         super.init()
     }
@@ -36,6 +39,21 @@ class ShowKeyViewController: ThemeViewController {
 
         title = "show_key.title".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapCloseButton))
+
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
+            maker.top.equalToSuperview()
+            maker.leading.trailing.equalToSuperview()
+        }
+
+        tableView.isHidden = true
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+
+        tableView.sectionDataSource = self
+        tableView.registerCell(forClass: DCell.self)
+        tableView.registerCell(forClass: Cell9.self)
+        tableView.registerCell(forClass: EmptyCell.self)
 
         view.addSubview(descriptionView)
         descriptionView.snp.makeConstraints { maker in
@@ -56,25 +74,17 @@ class ShowKeyViewController: ThemeViewController {
         showButton.setTitle("show_key.button_show".localized, for: .normal)
         showButton.addTarget(self, action: #selector(onTapShowButton), for: .touchUpInside)
 
-        view.addSubview(collectionView)
-        collectionView.snp.makeConstraints { maker in
-            maker.top.equalToSuperview()
-            maker.leading.trailing.equalToSuperview()
+        filterHeaderView.reload(filters: Tab.allCases.map { .item(title: $0.title) })
+        filterHeaderView.onSelect = { [weak self] index in
+            if let tab = Tab(rawValue: index) {
+                self?.currentTab = tab
+                self?.tableView.reload()
+            }
         }
-
-        collectionView.isHidden = true
-        collectionView.backgroundColor = .clear
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.alwaysBounceVertical = true
-        collectionView.contentInset = UIEdgeInsets(top: .margin12, left: 0, bottom: .margin32, right: 0)
-
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(BackupWordsCell.self, forCellWithReuseIdentifier: String(describing: BackupWordsCell.self))
 
         view.addSubview(closeButtonHolder)
         closeButtonHolder.snp.makeConstraints { maker in
-            maker.top.equalTo(collectionView.snp.bottom).offset(-CGFloat.margin16)
+            maker.top.equalTo(tableView.snp.bottom).offset(-CGFloat.margin16)
             maker.leading.trailing.bottom.equalToSuperview()
         }
 
@@ -92,6 +102,8 @@ class ShowKeyViewController: ThemeViewController {
 
         subscribe(disposeBag, viewModel.openUnlockSignal) { [weak self] in self?.openUnlock() }
         subscribe(disposeBag, viewModel.showKeySignal) { [weak self] in self?.showKey() }
+
+        tableView.buildSections()
     }
 
     @objc private func onTapCloseButton() {
@@ -111,15 +123,82 @@ class ShowKeyViewController: ThemeViewController {
     private func showKey() {
         navigationItem.rightBarButtonItem = nil
 
-        showButton.isHidden = true
-        descriptionView.isHidden = true
+        showButton.set(hidden: true, animated: true, duration: animationDuration)
+        descriptionView.set(hidden: true, animated: true, duration: animationDuration)
 
-        collectionView.isHidden = false
-        closeButtonHolder.isHidden = false
+        tableView.set(hidden: false, animated: true, duration: animationDuration)
+        closeButtonHolder.set(hidden: false, animated: true, duration: animationDuration)
     }
 
-    private func words(for index: Int) -> [String] {
-        Array(viewModel.words.suffix(from: index * BackupWordsCell.maxWordsCount).prefix(BackupWordsCell.maxWordsCount))
+    private func marginRow(id: String, height: CGFloat) -> RowProtocol {
+        Row<EmptyCell>(id: id, height: height)
+    }
+
+    private func rows(privateKey: ShowKeyViewModel.PrivateKey) -> [RowProtocol] {
+        let viewItem = CopyableSecondaryButton.ViewItem(value: privateKey.value)
+
+        return [
+            marginRow(
+                    id: "\(privateKey.blockchain)-margin",
+                    height: .margin12
+            ),
+            Row<DCell>(
+                    id: "\(privateKey.blockchain)-title",
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: true)
+                        cell.title = privateKey.blockchain
+                    }
+            ),
+            Row<Cell9>(
+                    id: "\(privateKey.blockchain)-value",
+                    dynamicHeight: { width in
+                        Cell9.height(containerWidth: width, backgroundStyle: .lawrence, viewItem: viewItem)
+                    },
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isLast: true)
+                        cell.viewItem = viewItem
+                    }
+            )
+        ]
+    }
+
+}
+
+extension ShowKeyViewController: SectionsDataSource {
+
+    func buildSections() -> [SectionProtocol] {
+        var rows = [RowProtocol]()
+
+        switch currentTab {
+        case .mnemonicPhrase:
+            let words = viewModel.words
+
+            let phraseRow = StaticRow(
+                    cell: mnemonicPhraseCell,
+                    id: "mnemonic-phrase",
+                    height: MnemonicPhraseCell.height(wordCount: words.count),
+                    onReady: { [weak self] in
+                        self?.mnemonicPhraseCell.set(words: words)
+                    }
+            )
+
+            rows.append(marginRow(id: "top-margin", height: .margin12))
+            rows.append(phraseRow)
+        case .privateKeys:
+            for privateKey in viewModel.privateKeys {
+                rows.append(contentsOf: self.rows(privateKey: privateKey))
+            }
+        }
+
+        return [
+            Section(
+                    id: "main",
+                    headerState: .static(view: filterHeaderView, height: filterHeaderView.headerHeight),
+                    footerState: .marginColor(height: .margin32, color: .clear),
+                    rows: rows
+            )
+        ]
     }
 
 }
@@ -135,48 +214,18 @@ extension ShowKeyViewController: IUnlockDelegate {
 
 }
 
-extension ShowKeyViewController: UICollectionViewDataSource {
+extension ShowKeyViewController {
 
-    public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
-    }
+    enum Tab: Int, CaseIterable {
+        case mnemonicPhrase
+        case privateKeys
 
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.words.count / BackupWordsCell.maxWordsCount + (viewModel.words.count % BackupWordsCell.maxWordsCount != 0 ? 1 : 0)
-    }
-
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: BackupWordsCell.self), for: indexPath)
-    }
-
-}
-
-extension ShowKeyViewController: UICollectionViewDelegate {
-
-    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let cell = cell as? BackupWordsCell {
-            cell.bind(startIndex: indexPath.row * BackupWordsCell.maxWordsCount + 1, words: words(for: indexPath.row))
+        var title: String {
+            switch self {
+            case .mnemonicPhrase: return "show_key.tab.recovery_phrase".localized
+            case .privateKeys: return "show_key.tab.private_keys".localized
+            }
         }
-    }
-
-}
-
-extension ShowKeyViewController: UICollectionViewDelegateFlowLayout {
-
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: collectionView.width / 2 - horizontalMargin, height: BackupWordsCell.heightFor(words: words(for: indexPath.row)))
-    }
-
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        UIEdgeInsets(top: 0, left: horizontalMargin, bottom: 0, right: horizontalMargin)
-    }
-
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        0
-    }
-
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        CGFloat.margin24
     }
 
 }

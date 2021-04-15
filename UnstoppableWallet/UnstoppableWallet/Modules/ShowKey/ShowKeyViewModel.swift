@@ -33,6 +33,16 @@ extension ShowKeyViewModel {
         service.salt
     }
 
+    var privateKeys: [PrivateKey] {
+        var keys = [PrivateKey]()
+
+        if let value = service.evmPrivateKey {
+            keys.append(PrivateKey(blockchain: "Ethereum / Binance Smart Chain", value: value))
+        }
+
+        return keys
+    }
+
     func onTapShow() {
         if service.isPinSet {
             openUnlockRelay.accept(())
@@ -43,6 +53,15 @@ extension ShowKeyViewModel {
 
     func onUnlock() {
         showKeyRelay.accept(())
+    }
+
+}
+
+extension ShowKeyViewModel {
+
+    struct PrivateKey {
+        let blockchain: String
+        let value: String
     }
 
 }
