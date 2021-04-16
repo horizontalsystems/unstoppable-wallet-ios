@@ -517,11 +517,11 @@ protocol IErc20ContractInfoProvider {
 }
 
 protocol ICoinManager {
-    var coinAddedObservable: Observable<Coin> { get }
+    var coinsAddedObservable: Observable<[Coin]> { get }
     var coins: [Coin] { get }
     var groupedCoins: (featured: [Coin], regular: [Coin]) { get }
     func coin(type: CoinType) -> Coin?
-    func save(coin: Coin)
+    func save(coins: [Coin])
 }
 
 protocol IFavoriteCoinRecordStorage {

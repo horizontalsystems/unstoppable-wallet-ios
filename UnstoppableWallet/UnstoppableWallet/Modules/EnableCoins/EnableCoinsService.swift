@@ -6,8 +6,8 @@ import CoinKit
 
 class EnableCoinsService {
     private let appConfigProvider: IAppConfigProvider
-    private let erc20Provider: EnableCoinsErc20Provider
-    private let bep20Provider: EnableCoinsBep20Provider
+    private let erc20Provider: EnableCoinsEip20Provider
+    private let bep20Provider: EnableCoinsEip20Provider
     private let bep2Provider: EnableCoinsBep2Provider
     private let coinManager: ICoinManager
     private let disposeBag = DisposeBag()
@@ -21,7 +21,7 @@ class EnableCoinsService {
         }
     }
 
-    init(appConfigProvider: IAppConfigProvider, erc20Provider: EnableCoinsErc20Provider, bep20Provider: EnableCoinsBep20Provider, bep2Provider: EnableCoinsBep2Provider, coinManager: ICoinManager) {
+    init(appConfigProvider: IAppConfigProvider, erc20Provider: EnableCoinsEip20Provider, bep20Provider: EnableCoinsEip20Provider, bep2Provider: EnableCoinsBep2Provider, coinManager: ICoinManager) {
         self.appConfigProvider = appConfigProvider
         self.erc20Provider = erc20Provider
         self.bep20Provider = bep20Provider
@@ -32,15 +32,11 @@ class EnableCoinsService {
     private func resolveTokenType(coinType: CoinType, accountType: AccountType) -> TokenType? {
         switch (coinType, accountType) {
         case (.ethereum, .mnemonic(let words, _)):
-            if words.count == 12 {
-                return .erc20(words: words)
-            }
+            return .erc20(words: words)
         case (.binanceSmartChain, .mnemonic(let words, _)):
-            if words.count == 24 {
-                return .bep20(words: words)
-            }
+            return .bep20(words: words)
         case (.bep2(let symbol), .mnemonic(let words, _)):
-            if symbol == "BNB", words.count == 24 {
+            if symbol == "BNB" {
                 return .bep2(words: words)
             }
         default:
@@ -56,10 +52,11 @@ class EnableCoinsService {
 
             state = .loading
 
-            erc20Provider.contractAddressesSingle(address: address.hex)
+            erc20Provider.coinsSingle(address: address.hex)
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                    .subscribe(onSuccess: { [weak self] addresses in
-                        self?.handleFetchErc20(addresses: addresses)
+                    .subscribe(onSuccess: { [weak self] coins in
+                        self?.state = .success(coins: coins)
+                        self?.enableCoinsRelay.accept(coins)
                     }, onError: { [weak self] error in
                         self?.state = .failure(error: error)
                     })
@@ -67,19 +64,6 @@ class EnableCoinsService {
         } catch {
             state = .failure(error: error)
         }
-    }
-
-    private func handleFetchErc20(addresses: [String]) {
-        let allCoins = coinManager.coins
-
-        let coins = addresses.compactMap { address in
-            allCoins.first { coin in
-                coin.type == .erc20(address: address)
-            }
-        }
-
-        state = .success(coins: coins)
-        enableCoinsRelay.accept(coins)
     }
 
     private func fetchBep20Tokens(words: [String]) {
@@ -88,10 +72,11 @@ class EnableCoinsService {
 
             state = .loading
 
-            bep20Provider.contractAddressesSingle(address: address.hex)
+            bep20Provider.coinsSingle(address: address.hex)
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                    .subscribe(onSuccess: { [weak self] addresses in
-                        self?.handleFetchBep20(addresses: addresses)
+                    .subscribe(onSuccess: { [weak self] coins in
+                        self?.state = .success(coins: coins)
+                        self?.enableCoinsRelay.accept(coins)
                     }, onError: { [weak self] error in
                         self?.state = .failure(error: error)
                     })
@@ -99,19 +84,6 @@ class EnableCoinsService {
         } catch {
             state = .failure(error: error)
         }
-    }
-
-    private func handleFetchBep20(addresses: [String]) {
-        let allCoins = coinManager.coins
-
-        let coins = addresses.compactMap { address in
-            allCoins.first { coin in
-                coin.type == .bep20(address: address)
-            }
-        }
-
-        state = .success(coins: coins)
-        enableCoinsRelay.accept(coins)
     }
 
     private func fetchBep2Tokens(words: [String]) {

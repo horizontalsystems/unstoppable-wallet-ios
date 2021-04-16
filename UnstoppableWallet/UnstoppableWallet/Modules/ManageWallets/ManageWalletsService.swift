@@ -40,8 +40,8 @@ class ManageWalletsService {
         subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] wallets in
             self?.handleUpdated(wallets: wallets)
         }
-        subscribe(disposeBag, coinManager.coinAddedObservable) { [weak self] coin in
-            self?.handleAdded(coin: coin)
+        subscribe(disposeBag, coinManager.coinsAddedObservable) { [weak self] coins in
+            self?.handleAdded(coins: coins)
         }
         subscribe(disposeBag, restoreSettingsService.approveSettingsObservable) { [weak self] coinWithSettings in
             self?.handleApproveRestoreSettings(coin: coinWithSettings.coin, settings: coinWithSettings.settings)
@@ -182,8 +182,8 @@ class ManageWalletsService {
         }
     }
 
-    private func handleAdded(coin: Coin) {
-        addedCoins.append(coin)
+    private func handleAdded(coins: [Coin]) {
+        addedCoins.append(contentsOf: coins)
 
         syncCoins()
         sortCoins()

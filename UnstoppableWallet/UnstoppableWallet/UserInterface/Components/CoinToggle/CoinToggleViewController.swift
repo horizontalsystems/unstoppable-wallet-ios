@@ -68,7 +68,7 @@ class CoinToggleViewController: ThemeSearchViewController {
                     hash: "coin_\(viewItem.enabled)_\(isLast)",
                     height: .heightDoubleLineCell,
                     bind: { [weak self] cell, _ in
-                        cell.set(backgroundStyle: .transparent, isLast: isLast)
+                        cell.set(backgroundStyle: .claude, isLast: isLast)
                         cell.titleImage = .image(coinType: viewItem.coin.type)
                         cell.title = viewItem.coin.title
                         cell.subtitle = viewItem.coin.code

@@ -483,7 +483,7 @@ CHECKOUT OPTIONS:
     :commit: d9b37c1bab3b09f816fc5bb26fed9d2b469aa9ff
     :git: https://github.com/horizontalsystems/gui-kit/
   CoinKit.swift:
-    :commit: 87609122f6dfc73d8f9ccfa21f9ea4cbbff2a3fb
+    :commit: e60c5cfbb491216d7162eb6d93087737aa89557c
     :git: https://github.com/horizontalsystems/coin-kit-ios
   CurrencyKit.swift:
     :commit: 01ccca8dcfeed5fe051ff0fe0274577e99e433b5
