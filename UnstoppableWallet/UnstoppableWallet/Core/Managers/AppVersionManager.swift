@@ -20,10 +20,12 @@ class AppVersionManager {
             return
         }
 
-        if lastVersion.version != latestVersion.version {
+        if lastVersion.version != latestVersion.version || lastVersion.build != latestVersion.build {
             appVersions.append(latestVersion)
-            newVersionSubject.onNext(latestVersion)
             localStorage.appVersions = appVersions
+        }
+        if lastVersion.version != latestVersion.version {
+            newVersionSubject.onNext(latestVersion)
         }
     }
 

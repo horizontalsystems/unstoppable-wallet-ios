@@ -70,8 +70,8 @@ class MainViewController: ThemeTabBarController {
 
         let s = "https://api.github.com/repos/horizontalsystems/unstoppable-wallet-ios/releases/tags/\(appVersion.version)"
         print("url: \(s)")
-        let module = MarkdownModule.viewController(url: URL(string: s)!)
-        present(ThemeNavigationController(rootViewController: module), animated: true)
+//        let module = MarkdownModule.viewController(url: URL(string: s)!)
+//        present(ThemeNavigationController(rootViewController: module), animated: true)
 
         print("showWhatsNew")
     }
