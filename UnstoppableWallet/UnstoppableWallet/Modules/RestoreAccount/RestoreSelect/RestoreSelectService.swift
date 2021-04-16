@@ -41,8 +41,7 @@ class RestoreSelectService {
         self.coinSettingsService = coinSettingsService
 
         subscribe(disposeBag, enableCoinsService.enableCoinsObservable) { [weak self] coins in
-            let configuredCoins = coins.map { ConfiguredCoin(coin: $0) }
-            self?.enable(configuredCoins: configuredCoins, sortCoins: true)
+            self?.handleEnable(coins: coins)
         }
         subscribe(disposeBag, restoreSettingsService.approveSettingsObservable) { [weak self] coinWithSettings in
             self?.handleApproveRestoreSettings(coin: coinWithSettings.coin, settings: coinWithSettings.settings)
@@ -181,6 +180,29 @@ class RestoreSelectService {
 
         syncState()
         syncCanRestore()
+    }
+
+    private func handleEnable(coins: [Coin]) {
+        let allCoins = coinManager.coins
+
+        var existingCoins = [Coin]()
+        var newCoins = [Coin]()
+
+        for coin in coins {
+            if let existingCoin = allCoins.first(where: { $0.type == coin.type }) {
+                existingCoins.append(existingCoin)
+            } else {
+                newCoins.append(coin)
+            }
+        }
+
+        if !newCoins.isEmpty {
+            self.coins.append(contentsOf: newCoins)
+            coinManager.save(coins: newCoins)
+        }
+
+        let configuredCoins = (existingCoins + newCoins).map { ConfiguredCoin(coin: $0) }
+        enable(configuredCoins: configuredCoins, sortCoins: true)
     }
 
 }
