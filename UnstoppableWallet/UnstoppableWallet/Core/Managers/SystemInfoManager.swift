@@ -15,11 +15,11 @@ class SystemInfoManager: ISystemInfoManager {
     var fullAppVersion: String {
         let showBuildNumber = Bundle.main.object(forInfoDictionaryKey: "ShowBuildNumber") as? String == "true"
 
-        return showBuildNumber ? appVersion + " (\(buildNumber))" : appVersion
+        return showBuildNumber ? Self.formatFullVersion(appVersion: appVersion, buildNumber: buildNumber) : appVersion
     }
 
     var passcodeSet: Bool {
-        return LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
+        LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
     }
 
     var deviceModel: String {
@@ -28,6 +28,10 @@ class SystemInfoManager: ISystemInfoManager {
 
     var osVersion: String {
         UIDevice.current.systemVersion
+    }
+
+    static func formatFullVersion(appVersion: String, buildNumber: String) -> String {
+        appVersion + " (\(buildNumber))"
     }
 
 }
