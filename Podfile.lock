@@ -165,7 +165,7 @@ PODS:
     - ThemeKit.swift (~> 1.0)
     - UIExtensions.swift (~> 1.1)
   - Nimble (9.0.0)
-  - ObjectMapper (4.0.0)
+  - ObjectMapper (4.2.0)
   - OpenSslKit.swift (1.2.2)
   - PinKit.swift (1.0):
     - LanguageKit.swift (~> 1.0)
@@ -260,7 +260,7 @@ PODS:
     - CNIOSHA1 (= 2.27.0)
     - SwiftNIO (= 2.27.0)
     - SwiftNIOHTTP1 (= 2.27.0)
-  - SwiftProtobuf (1.15.0)
+  - SwiftProtobuf (1.16.0)
   - SwiftyJSON (4.3.0)
   - ThemeKit.swift (1.0):
     - AlamofireImage (~> 4.1)
@@ -293,7 +293,7 @@ PODS:
     - ObjectMapper (~> 4.0)
     - RxSwift (~> 5.0)
     - RxSwiftExt (~> 5)
-  - ZcashLightClientKit (0.10.1):
+  - ZcashLightClientKit (0.10.2):
     - gRPC-Swift (= 1.0.0-alpha.19)
     - SQLite.swift (~> 0.12.2)
 
@@ -510,7 +510,7 @@ CHECKOUT OPTIONS:
     :commit: fbf60ee6ef2eaec6b13eacff8d29a155863c2586
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HsToolKit.swift:
-    :commit: 28c1fffcb32222884e9596391e53ebb960d420cf
+    :commit: 7a2139d6dc005b90abf3a92fbfdd8e6d41ead5a3
     :git: https://github.com/horizontalsystems/hs-tool-kit-ios
   HUD.swift:
     :commit: a1dcf7d572c35cc6a3a023f01a2f7eb4a16507fe
@@ -598,7 +598,7 @@ SPEC CHECKSUMS:
   Logging: beeb016c9c80cf77042d62e83495816847ef108b
   ModuleKit.swift: be0a865fab11a0f11be3fce84da887ca537bdf13
   Nimble: 3b4ec3fd40f1dc178058e0981107721c615643d8
-  ObjectMapper: 11976ebce7970d09ef3dd343541ba863d13b1a73
+  ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
   OpenSslKit.swift: 0e2194853fd9ce42006cf18c89743331406a10a9
   PinKit.swift: 510fb2fac8664946dc17ce60cdbac5948c31700a
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
@@ -625,7 +625,7 @@ SPEC CHECKSUMS:
   SwiftNIOTLS: 4f8df225f03393f08e0b47b4d876ae38167f8a27
   SwiftNIOTransportServices: 896c9a4ac98698d32aa2feea7657ade219ae80bb
   SwiftNIOWebSocket: 375808226f357aaaac832ee02132ce29ec2ff5b4
-  SwiftProtobuf: 3320217e9d8fb75f36b40282e78c482640fd75dd
+  SwiftProtobuf: 4e16842b83c6fda06b10fac50d73b3f1fce8ab7b
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   ThemeKit.swift: 3d811f6b57daecbf87b5735b35c586bcaa1bff14
   UIExtensions.swift: 3ed084c0343ddd0f86c7c558d37759e1fd7d5778
@@ -634,7 +634,7 @@ SPEC CHECKSUMS:
   WalletConnect: 1942d6ae2698cadc0b117f4f4c99bae9d821ab4d
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: 50dda0bb340cf42f000eb5039e342f6487165360
-  ZcashLightClientKit: 64e2b2632d2c1b892d3427dd3b803a041d02583a
+  ZcashLightClientKit: 9294ded6505b3f8dd6e77c14cf33887aeff8d352
 
 PODFILE CHECKSUM: 091db657ef57337e3552d3613d59333c1359f81c
 
