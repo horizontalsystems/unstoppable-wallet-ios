@@ -8378,7 +8378,7 @@
 			baseConfigurationReference = 5026FFF821C3CA280023EEA2 /* Unstoppable Dev.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "UnstoppableWallet/Configuration/Unstoppable D.entitlements";
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HC4MCAXJ66;
 				MARKETING_VERSION = 0.21;
 				OfficeMode = true;
@@ -8395,7 +8395,7 @@
 			baseConfigurationReference = 5026FFF421C3CA280023EEA2 /* Unstoppable Dev.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "UnstoppableWallet/Configuration/Unstoppable D.entitlements";
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				MARKETING_VERSION = 0.21;
 				OfficeMode = true;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
