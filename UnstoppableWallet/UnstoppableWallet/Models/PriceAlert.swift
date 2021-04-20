@@ -49,18 +49,18 @@ struct PriceAlert {
 
         return [
             "type": "PRICE",
-            "data:": data
+            "data": data
         ]
     }
     private func trendTopic(coinId: String) -> [String: Any] {
         let data: [String: Any] = [
             "coin_id": coinId,
-            "term": changeState.rawValue
+            "term": trendState.rawValue
         ]
 
         return [
-            "type": "TREND",
-            "data:": data
+            "type": "TRENDS",
+            "data": data
         ]
     }
 

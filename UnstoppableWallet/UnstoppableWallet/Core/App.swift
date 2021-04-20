@@ -159,7 +159,7 @@ class App {
         walletRemover = WalletRemover(accountManager: accountManager, walletManager: walletManager)
 
         let priceAlertRequestStorage: IPriceAlertRequestStorage = PriceAlertRequestStorage(storage: storage)
-        remoteAlertManager = RemoteAlertManager(networkManager: networkManager, reachabilityManager: reachabilityManager, appConfigProvider: appConfigProvider, storage: priceAlertRequestStorage)
+        remoteAlertManager = RemoteAlertManager(networkManager: networkManager, reachabilityManager: reachabilityManager, appConfigProvider: appConfigProvider, jsonSerializer: JsonSerializer(), storage: priceAlertRequestStorage)
 
         let serializer = JsonSerializer()
         let priceAlertStorage: IPriceAlertStorage = PriceAlertStorage(storage: storage)

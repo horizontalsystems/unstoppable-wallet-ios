@@ -9,6 +9,7 @@ class RemoteAlertManager {
 
     private let networkManager: NetworkManager
     private let appConfigProvider: IAppConfigProvider
+    private let jsonSerializer: ISerializer
     private let storage: IPriceAlertRequestStorage
 
     private let authDisposeBag = DisposeBag()
@@ -17,12 +18,13 @@ class RemoteAlertManager {
     private let url: String
     private var jwtToken: String?
 
-    init(networkManager: NetworkManager, reachabilityManager: IReachabilityManager, appConfigProvider: IAppConfigProvider, storage: IPriceAlertRequestStorage) {
+    init(networkManager: NetworkManager, reachabilityManager: IReachabilityManager, appConfigProvider: IAppConfigProvider, jsonSerializer: ISerializer, storage: IPriceAlertRequestStorage) {
         self.networkManager = networkManager
         self.appConfigProvider = appConfigProvider
+        self.jsonSerializer = jsonSerializer
         self.storage = storage
 
-        self.url = appConfigProvider.pnsUrl
+        url = appConfigProvider.pnsUrl
 
         reachabilityManager.reachabilityObservable
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -55,11 +57,11 @@ class RemoteAlertManager {
 
         let path = method.rawValue
 
-        let deserializedTopics: [String: Any] = [:]      // TODO: MAX change
+        let deserializedTopics: [[String: Any]] = topics.compactMap { jsonSerializer.deserialize($0) }
 
         var params = [String: Any]()
         params["token"] = pushToken
-        params["topics"] = topics
+        params["topics"] = deserializedTopics
         params["bundle_id"] = Bundle.main.bundleIdentifier
 
         return wrapAuth(url: url + path, parameters: params, method: restMethod)
