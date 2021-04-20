@@ -36,15 +36,6 @@ extension NetworkManager.RequestError: ConvertibleError {
     }
 }
 
-extension IncubedRpcApiProvider.IncubedError: ConvertibleError {
-    var convertedError: Error {
-        switch self {
-        case .notReachable: return AppError.incubedNotReachable
-        default: return self
-        }
-    }
-}
-
 extension BinanceError: ConvertibleError {
     var convertedError: Error {
         if message.contains("requires non-empty memo in transfer transaction") {

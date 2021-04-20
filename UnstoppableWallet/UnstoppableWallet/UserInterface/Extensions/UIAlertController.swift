@@ -14,8 +14,7 @@ extension UIAlertController {
     }
 
     public func show(forView view: UIView? = nil, barButtonItem: UIBarButtonItem? = nil, fromController: UIViewController? = nil, sourceRect: CGRect? = nil) {
-
-        if fromController != nil, let keyWindow = UIApplication.shared.keyWindow {
+        if fromController != nil, let keyWindow = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
             fromController?.view.endEditing(true)
             window = keyWindow
         } else {

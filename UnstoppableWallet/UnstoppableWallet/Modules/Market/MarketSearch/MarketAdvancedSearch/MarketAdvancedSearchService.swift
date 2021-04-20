@@ -191,9 +191,9 @@ class MarketAdvancedSearchService {
         if cache.isEmpty {
             single = rateManager
                     .topMarketsSingle(currencyCode: currencyCode, fetchDiffPeriod: period.fetchDiffPeriod, itemCount: coinListCount.rawValue)
-                    .do { [weak self] in
+                    .do(onSuccess: { [weak self] in
                         self?.cache = $0
-                    }
+                    })
         } else {
             single = Single.just(cache)
         }

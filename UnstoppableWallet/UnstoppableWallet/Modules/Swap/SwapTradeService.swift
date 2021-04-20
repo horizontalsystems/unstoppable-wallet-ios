@@ -74,7 +74,7 @@ class SwapTradeService {
     var swapTradeOptions = SwapTradeOptions() {
         didSet {
             swapTradeOptionsRelay.accept(swapTradeOptions)
-            syncTradeData()
+            _ = syncTradeData()
         }
     }
 
@@ -106,7 +106,7 @@ class SwapTradeService {
                 .swapDataSingle(coinIn: coinIn, coinOut: coinOut)
                 .subscribe(onSuccess: { [weak self] swapData in
                     self?.swapData = swapData
-                    self?.syncTradeData()
+                    _ = self?.syncTradeData()
                 }, onError: { [weak self] error in
                     self?.state = .notReady(errors: [error])
                 })

@@ -498,7 +498,7 @@ CHECKOUT OPTIONS:
     :commit: f77b49868885e9f909bd7dcf4c50c42e84f43ef7
     :git: https://github.com/horizontalsystems/EthereumABI
   EthereumKit.swift:
-    :commit: b3810d57275793dd7ff10625fd1e61757436cce3
+    :commit: d6c7e27274e5e8c963e6ed81b8a2ee0e8c726fa8
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :commit: 36ef6737f47d463c4cecfcc8418ea2ed8b1db2da
@@ -584,7 +584,7 @@ SPEC CHECKSUMS:
   Erc20Kit.swift: d634b67c615613bec10e5a7b1198ebf42dbd9666
   EthereumABI: a999809dee0ccf1f945a76fe5ed7394eaa73a27b
   EthereumAddress: 39fe8e11cf04e4e9902b55ae653dbc4e0aee5f30
-  EthereumKit.swift: 44f2dfe878376eba5fa9f659eb0df6c21ff14d12
+  EthereumKit.swift: fefa1d324480c87f7fe2d4f3eb6c44ebaca757e0
   FeeRateKit.swift: 47bdde56da02b00580c70f2301814f5ada4d5d3d
   GRDB.swift: 8cc3ab7c8b8b4ac1761deb8dca4b51c1c9d429f8
   gRPC-Swift: 75a7a8d7cd08177165ef971159afb84e5130cfc9
@@ -636,6 +636,6 @@ SPEC CHECKSUMS:
   XRatesKit.swift: 50dda0bb340cf42f000eb5039e342f6487165360
   ZcashLightClientKit: 9294ded6505b3f8dd6e77c14cf33887aeff8d352
 
-PODFILE CHECKSUM: 091db657ef57337e3552d3613d59333c1359f81c
+PODFILE CHECKSUM: 382967f0469d247882bb804c77420a14c9b1ff6b
 
 COCOAPODS: 1.10.1

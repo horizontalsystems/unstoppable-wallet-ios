@@ -16,7 +16,7 @@ class BlurManager {
     private func show() {
         hideView.backgroundColor = UIColor.themeBackgroundFromGradient.withAlphaComponent(0.99)
 
-        let window = UIApplication.shared.keyWindow
+        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
         let frame = window?.frame ?? UIScreen.main.bounds
 
         if UIAccessibility.isReduceTransparencyEnabled {

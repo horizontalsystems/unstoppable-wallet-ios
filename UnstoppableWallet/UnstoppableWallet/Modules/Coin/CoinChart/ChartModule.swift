@@ -55,7 +55,7 @@ enum MovementTrend {
 }
 
 struct ChartIndicatorSet: OptionSet, Hashable {
-    static let none = ChartIndicatorSet(rawValue: 0)
+    static let none = ChartIndicatorSet([])
 
     let rawValue: UInt8
 

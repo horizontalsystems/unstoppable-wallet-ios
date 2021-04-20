@@ -170,11 +170,7 @@ extension AccountManager {
         }
 
         func set(activeAccountId: String?) {
-            if let id = activeAccountId {
-                activeAccount = array.first { $0.id == activeAccountId }
-            } else {
-                activeAccount = nil
-            }
+            activeAccount = array.first { $0.id == activeAccountId }
         }
     }
 
