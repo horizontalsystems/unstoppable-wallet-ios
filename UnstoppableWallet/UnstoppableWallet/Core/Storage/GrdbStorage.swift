@@ -1,3 +1,4 @@
+import Foundation
 import RxSwift
 import RxCocoa
 import GRDB
@@ -538,6 +539,58 @@ class GrdbStorage {
             }
         }
 
+        migrator.registerMigration("createAppVersionRecordsTable") { db in
+            try db.create(table: AppVersionRecord.databaseTableName) { t in
+                t.column(AppVersionRecord.Columns.version.name, .text).notNull()
+                t.column(AppVersionRecord.Columns.build.name, .text).notNull()
+                t.column(AppVersionRecord.Columns.date.name, .text).notNull()
+
+                t.primaryKey([AppVersionRecord.Columns.version.name, AppVersionRecord.Columns.build.name], onConflict: .replace)
+            }
+
+            guard let data: Data = UserDefaults.standard.value(forKey: "app_versions") as? Data, let oldVersions = try? JSONDecoder().decode([AppVersion_v_0_20].self, from: data) else {
+                return
+            }
+
+            try oldVersions.forEach { oldVersion in
+                let regex = try! NSRegularExpression(pattern: "\\(.*\\)")
+                let matches = regex.matches(in: oldVersion.version, range: NSRange(location: 0, length: oldVersion.version.count))
+
+                guard let match = matches.last, let range = Range(match.range, in: oldVersion.version) else {
+                    return
+                }
+                var build = String(oldVersion.version[range])
+                build.removeAll { character in character == "(" || character == ")" }
+
+                var version = oldVersion.version
+                version.removeSubrange(range)
+                version = version.trimmingCharacters(in: .whitespaces)
+
+                let versionRecord = AppVersionRecord(version: version, build: build, date: oldVersion.date)
+                try versionRecord.insert(db)
+            }
+//            var versionRecords: [AppVersionRecord] = oldVersions.compactMap { oldVersion in
+//                let regex = try! NSRegularExpression(pattern: "\\(.*\\)")
+//                let matches = regex.matches(in: oldVersion.version, range: NSRange(location: 0, length: oldVersion.version.count))
+//
+//                guard let match = matches.last, let range = Range(match.range, in: oldVersion.version) else {
+//                    return nil
+//                }
+//                var build = String(oldVersion.version[range])
+//                build.removeAll { character in character == "(" || character == ")" }
+//
+//                var version = oldVersion.version
+//                version.removeSubrange(range)
+//                version = version.trimmingCharacters(in: .whitespaces)
+//
+//                return AppVersionRecord(version: version, build: build, date: oldVersion.date)
+//            }
+
+//            for versionRecord in versionRecords {
+//                try versionRecord.insert(db)
+//            }
+        }
+
         return migrator
     }
 
@@ -663,6 +716,24 @@ extension GrdbStorage: IPriceAlertRequestRecordStorage {
         _ = try! dbPool.write { db in
             for priceAlertRequestRecord in priceAlertRequestRecords {
                 try priceAlertRequestRecord.delete(db)
+            }
+        }
+    }
+
+}
+
+extension GrdbStorage: IAppVersionRecordStorage {
+
+    var appVersionRecords: [AppVersionRecord] {
+        try! dbPool.read { db in
+            try AppVersionRecord.fetchAll(db)
+        }
+    }
+
+    func save(appVersionRecords: [AppVersionRecord]) {
+        _ = try! dbPool.write { db in
+            for record in appVersionRecords {
+                try record.insert(db)
             }
         }
     }

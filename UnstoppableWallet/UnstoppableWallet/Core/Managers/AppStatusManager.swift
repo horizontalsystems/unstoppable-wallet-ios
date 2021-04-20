@@ -5,7 +5,7 @@ class AppStatusManager {
     static let statusBitcoinCoreTypes: [CoinType] = [.bitcoin, .litecoin, .bitcoinCash, .dash]
 
     private let systemInfoManager: ISystemInfoManager
-    private let localStorage: ILocalStorage
+    private let storage: IAppVersionStorage
     private let logRecordManager: ILogRecordManager
     private let accountManager: IAccountManager
     private let walletManager: IWalletManager
@@ -15,11 +15,11 @@ class AppStatusManager {
     private let binanceKitManager: BinanceKitManager
     private let restoreSettingsManager: RestoreSettingsManager
 
-    init(systemInfoManager: ISystemInfoManager, localStorage: ILocalStorage, accountManager: IAccountManager,
+    init(systemInfoManager: ISystemInfoManager, storage: IAppVersionStorage, accountManager: IAccountManager,
          walletManager: IWalletManager, adapterManager: IAdapterManager, ethereumKitManager: EthereumKitManager, binanceSmartChainKitManager: BinanceSmartChainKitManager,
          binanceKitManager: BinanceKitManager, logRecordManager: ILogRecordManager, restoreSettingsManager: RestoreSettingsManager) {
         self.systemInfoManager = systemInfoManager
-        self.localStorage = localStorage
+        self.storage = storage
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.adapterManager = adapterManager
@@ -97,7 +97,7 @@ extension AppStatusManager: IAppStatusManager {
                 ("OS Version", systemInfoManager.osVersion)
             ]),
             ("App Log", logRecordManager.logsGroupedBy(context: "Send")),
-            ("Version History", localStorage.appVersions.map { ($0.description, $0.date) }),
+            ("Version History", storage.appVersions.map { ($0.description, $0.date) }),
             ("Wallets Status", accountStatus),
             ("Blockchains Status", blockchainStatus)
         ]

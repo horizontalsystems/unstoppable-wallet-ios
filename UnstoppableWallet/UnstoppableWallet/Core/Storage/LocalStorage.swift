@@ -11,8 +11,6 @@ class LocalStorage {
     private let keyChartType = "chart_type_key"
     private let mainShownOnceKey = "main_shown_once_key"
     private let debugLogKey = "debug_log_key"
-    private let keyAppVersionsOld = "app_versions"
-    private let keyAppVersions = "app_versions_v_0_21"
     private let keyTransactionDataSortMode = "transaction_data_sort_mode"
     private let keyLockTimeEnabled = "lock_time_enabled"
     private let keyAppLaunchCount = "app_launch_count"
@@ -71,44 +69,6 @@ extension LocalStorage: ILocalStorage {
     var mainShownOnce: Bool {
         get { storage.value(for: mainShownOnceKey) ?? false }
         set { storage.set(value: newValue, for: mainShownOnceKey) }
-    }
-
-    var appVersions: [AppVersion] {
-        get {
-            //migrate from v0.20
-            var oldVersions = [AppVersion_v_0_20]()
-            if let data: Data = storage.value(for: keyAppVersionsOld) {
-                oldVersions = (try? JSONDecoder().decode([AppVersion_v_0_20].self, from: data)) ?? []
-            }
-
-            var versions: [AppVersion] = oldVersions.compactMap { oldVersion in
-                let regex = try! NSRegularExpression(pattern: "\\(.*\\)")
-                let matches = regex.matches(in: oldVersion.version, range: NSRange(location: 0, length: oldVersion.version.count))
-
-                guard let match = matches.last, let range = Range(match.range, in: oldVersion.version) else {
-                    return nil
-                }
-                var build = String(oldVersion.version[range])
-                build.removeAll { character in character == "(" || character == ")" }
-
-                var version = oldVersion.version
-                version.removeSubrange(range)
-                version = version.trimmingCharacters(in: .whitespaces)
-
-                return AppVersion(version: version, build: build, date: oldVersion.date)
-            }
-            storage.set(value: [], for: keyAppVersionsOld)
-            //
-
-            if let data: Data = storage.value(for: keyAppVersions), let newVersions = try? JSONDecoder().decode([AppVersion].self, from: data) {
-                versions.append(contentsOf: newVersions)
-            }
-
-            return versions
-        }
-        set {
-            storage.set(value: try? JSONEncoder().encode(newValue), for: keyAppVersions)
-        }
     }
 
     var transactionDataSortMode: TransactionDataSortMode? {
