@@ -49,6 +49,7 @@ class BackupKeyViewController: ThemeViewController {
         tableView.separatorStyle = .none
 
         tableView.sectionDataSource = self
+        tableView.registerCell(forClass: C9Cell.self)
 
         view.addSubview(descriptionView)
         descriptionView.snp.makeConstraints { maker in
@@ -135,7 +136,7 @@ extension BackupKeyViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         let words = viewModel.words
 
-        return [
+        var sections: [SectionProtocol] = [
             Section(
                     id: "main",
                     headerState: .margin(height: .margin12),
@@ -152,6 +153,29 @@ extension BackupKeyViewController: SectionsDataSource {
                     ]
             )
         ]
+
+        if let passphrase = viewModel.passphrase {
+            let passphraseSection = Section(
+                    id: "passphrase",
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        Row<C9Cell>(
+                                id: "passphrase",
+                                height: .heightCell48,
+                                bind: { cell, _ in
+                                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                                    cell.title = "backup_key.passphrase".localized
+                                    cell.titleImage = UIImage(named: "key_phrase_20")
+                                    cell.viewItem = .init(value: passphrase)
+                                }
+                        )
+                    ]
+            )
+
+            sections.append(passphraseSection)
+        }
+
+        return sections
     }
 
 }

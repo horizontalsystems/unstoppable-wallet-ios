@@ -9,12 +9,11 @@ class CreateAccountService {
     private let walletManager: IWalletManager
     private let coinKit: CoinKit.Kit
 
-    private let kindRelay = PublishRelay<CreateAccountModule.Kind>()
-    private(set) var kind: CreateAccountModule.Kind = .mnemonic12 {
-        didSet {
-            kindRelay.accept(kind)
-        }
-    }
+    private let kindRelay = BehaviorRelay<CreateAccountModule.Kind>(value: .mnemonic12)
+    private let passphraseEnabledRelay = BehaviorRelay<Bool>(value: false)
+
+    var passphrase: String = ""
+    var passphraseConfirmation: String = ""
 
     init(accountFactory: AccountFactory, wordsManager: IWordsManager, accountManager: IAccountManager, walletManager: IWalletManager, coinKit: CoinKit.Kit) {
         self.accountFactory = accountFactory
@@ -35,7 +34,8 @@ class CreateAccountService {
 
     private func mnemonicAccountType(wordCount: Int) throws -> AccountType {
         let words = try wordsManager.generateWords(count: wordCount)
-        return .mnemonic(words: words, salt: nil)
+        let salt = !passphrase.isEmpty ? passphrase : nil
+        return .mnemonic(words: words, salt: salt)
     }
 
     private func activateDefaultWallets(account: Account) {
@@ -67,8 +67,20 @@ class CreateAccountService {
 
 extension CreateAccountService {
 
+    var kind: CreateAccountModule.Kind {
+        kindRelay.value
+    }
+
     var kindObservable: Observable<CreateAccountModule.Kind> {
         kindRelay.asObservable()
+    }
+
+    var passphraseEnabled: Bool {
+        passphraseEnabledRelay.value
+    }
+
+    var passphraseEnabledObservable: Observable<Bool> {
+        passphraseEnabledRelay.asObservable()
     }
 
     var allKinds: [CreateAccountModule.Kind] {
@@ -76,15 +88,38 @@ extension CreateAccountService {
     }
 
     func setKind(index: Int) {
-        kind = allKinds[index]
+        kindRelay.accept(allKinds[index])
+    }
+
+    func set(passphraseEnabled: Bool) {
+        passphraseEnabledRelay.accept(passphraseEnabled)
     }
 
     func createAccount() throws {
+        if passphraseEnabled {
+            guard !passphrase.isEmpty else {
+                throw CreateError.emptyPassphrase
+            }
+
+            guard passphrase == passphraseConfirmation else {
+                throw CreateError.invalidConfirmation
+            }
+        }
+
         let accountType = try resolveAccountType()
         let account = accountFactory.account(type: accountType, origin: .created)
 
         accountManager.save(account: account)
         activateDefaultWallets(account: account)
+    }
+
+}
+
+extension CreateAccountService {
+
+    enum CreateError: Error {
+        case emptyPassphrase
+        case invalidConfirmation
     }
 
 }
