@@ -61,11 +61,11 @@ class ChartViewCell: UITableViewCell {
     public func bind(data: ChartDataViewItem, viewItem: ChartViewItem) {
         switch data.chartTrend {
         case .neutral:
-            chartView.setCurve(color: .themeGray)
+            chartView.setCurve(colorType: .neutral)
         case .up:
-            chartView.setCurve(color: .themeGreenD)
+            chartView.setCurve(colorType: .up)
         case .down:
-            chartView.setCurve(color: .themeRedD)
+            chartView.setCurve(colorType: .down)
         }
 
         chartView.set(chartData: data.chartData)
@@ -80,11 +80,11 @@ class ChartViewCell: UITableViewCell {
     func set(data: CoinChartViewModel.ViewItem) {
         switch data.chartTrend {
         case .neutral:
-            chartView.setCurve(color: .themeGray)
+            chartView.setCurve(colorType: .neutral)
         case .up:
-            chartView.setCurve(color: .themeGreenD)
+            chartView.setCurve(colorType: .up)
         case .down:
-            chartView.setCurve(color: .themeRedD)
+            chartView.setCurve(colorType: .down)
         }
 
         chartView.set(chartData: data.chartData)

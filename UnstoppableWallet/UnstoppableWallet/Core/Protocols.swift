@@ -84,8 +84,6 @@ protocol IWalletManager: class {
 }
 
 protocol IPriceAlertManager {
-    func alertNotificationAllowed(coinType: CoinType) -> Bool
-
     var updateObservable: Observable<[PriceAlert]> { get }
     var priceAlerts: [PriceAlert] { get }
     func priceAlert(coinType: CoinType, title: String) -> PriceAlert?
@@ -216,7 +214,7 @@ protocol IBlurManager {
 protocol IRateManager {
     func refresh(currencyCode: String)
 
-    func globalMarketInfoSingle(currencyCode: String) -> Single<GlobalCoinMarket>
+    func globalMarketInfoSingle(currencyCode: String, period: TimePeriod) -> Single<GlobalCoinMarket>
     func topMarketsSingle(currencyCode: String, fetchDiffPeriod: TimePeriod, itemCount: Int) -> Single<[CoinMarket]>
     func coinsMarketSingle(currencyCode: String, coinTypes: [CoinType]) -> Single<[CoinMarket]>
     func searchCoins(text: String) -> [CoinData]
@@ -228,8 +226,6 @@ protocol IRateManager {
     func chartInfo(coinType: CoinType, currencyCode: String, chartType: ChartType) -> ChartInfo?
     func chartInfoObservable(coinType: CoinType, currencyCode: String, chartType: ChartType) -> Observable<ChartInfo>
     func coinMarketInfoSingle(coinType: CoinType, currencyCode: String, rateDiffTimePeriods: [TimePeriod], rateDiffCoinCodes: [String]) -> Single<CoinMarketInfo>
-    func notificationCoinData(coinTypes: [CoinType]) -> [CoinType: ProviderCoinData]
-    func notificationDataExist(coinType: CoinType) -> Bool
     func coinTypes(for category: String) -> [CoinType]
 }
 

@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 import Chart
+import ThemeKit
 
 class MarketMetricView: UIView {
     static let height: CGFloat = 84
@@ -9,9 +10,19 @@ class MarketMetricView: UIView {
     private let valueLabel = UILabel()
     private let diffLabel = RateDiffLabel()
     private let chartView = RateChartView()
+    private let button = ThemeButton()
 
     init(configuration: ChartConfiguration) {
         super.init(frame: .zero)
+
+
+        addSubview(button)
+        button.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        updateUI()
 
         chartView.apply(configuration: configuration)
 
@@ -25,6 +36,8 @@ class MarketMetricView: UIView {
             maker.height.equalTo(configuration.mainHeight)
             maker.width.equalTo(72)
         }
+
+        chartView.isUserInteractionEnabled = false
 
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
@@ -55,6 +68,20 @@ class MarketMetricView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private func updateUI() {
+        button.setBackgroundColor(color: UIColor.themeLawrencePressed, forState: .highlighted)
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        updateUI()
+    }
+
+    @objc private func didTapButton() {
+        print("did tapped")
+    }
+
 }
 
 extension MarketMetricView {
@@ -64,7 +91,7 @@ extension MarketMetricView {
         set { titleLabel.text = newValue }
     }
 
-    func set(value: String?, diff: Decimal?) {
+    func set(value: String?, diff: Decimal?, chartData: ChartData?, trend: MovementTrend) {
         valueLabel.textColor = value == nil ? .themeGray50 : .themeBran
         valueLabel.text = value ?? "n/a".localized
 
@@ -76,6 +103,20 @@ extension MarketMetricView {
         let diff = diffValue
 
         diffLabel.set(value: diff)
+
+        let colorType: ChartColorType
+        switch trend {
+        case .neutral: colorType = .neutral
+        case .up: colorType = .up
+        case .down: colorType = .down
+        }
+
+        chartView.setCurve(colorType: colorType)
+        if let chartData = chartData {
+            chartView.set(chartData: chartData)
+        } else {
+            // clear
+        }
     }
 
     func clear() {
