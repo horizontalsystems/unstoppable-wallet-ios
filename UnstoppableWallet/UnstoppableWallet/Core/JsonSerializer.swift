@@ -16,7 +16,9 @@ class JsonSerializer: ISerializer {
     }
 
     func deserialize(_ string: String) -> [String: Any]? {
-        nil
-        //TODO: MAX delete all
+        if let data = string.data(using: .utf8) {
+            return try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+        }
+        return nil
     }
 }
