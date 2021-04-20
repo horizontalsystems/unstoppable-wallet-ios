@@ -98,7 +98,7 @@ class BirthdayInputViewController: ThemeActionSheetController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        heightInputView.becomeFirstResponder()
+        _ = heightInputView.becomeFirstResponder()
     }
 
     override func viewWillDisappear(_ animated: Bool) {

@@ -11,7 +11,7 @@ class KeychainKitDelegate {
     }
 
     private func show(viewController: UIViewController) {
-        UIApplication.shared.keyWindow?.set(newRootController: viewController)
+        UIApplication.shared.windows.first { $0.isKeyWindow }?.set(newRootController: viewController)
     }
 
 }

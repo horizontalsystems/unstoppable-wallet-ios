@@ -27,12 +27,10 @@ extension CoinManager: ICoinManager {
 
     var groupedCoins: (featured: [Coin], regular: [Coin]) {
         var featured = [Coin]()
-        var regular = [Coin]()
-
         var coins = coinKit.coins
 
         for featuredCoinType in appConfigProvider.featuredCoinTypes {
-            if let index = coins.firstIndex { $0.type == featuredCoinType } {
+            if let index = coins.firstIndex(where: { $0.type == featuredCoinType }) {
                 featured.append(coins.remove(at: index))
             }
         }

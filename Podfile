@@ -123,6 +123,10 @@ post_install do |installer|
       if target.name == 'ZcashLightClientKit'
          config.build_settings['ZCASH_NETWORK_ENVIRONMENT'] = "MAINNET"
       end
+
+      if Gem::Version.new('9.0') > Gem::Version.new(config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'])
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
+      end
     end
   end
 end

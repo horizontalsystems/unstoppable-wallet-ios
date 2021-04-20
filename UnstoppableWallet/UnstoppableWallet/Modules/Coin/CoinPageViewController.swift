@@ -496,7 +496,7 @@ extension CoinPageViewController {
                 rows: [
                     Row<ReturnOfInvestmentsTableViewCell>(
                             id: "return_of_investments_cell",
-                            dynamicHeight: { [weak self] _ in
+                            dynamicHeight: { _ in
                                 ReturnOfInvestmentsTableViewCell.height(viewItems: viewItems)
                             },
                             bind: { cell, _ in
@@ -517,7 +517,7 @@ extension CoinPageViewController {
                     headerRow(title: "coin_page.category".localized),
                     Row<TextCell>(
                             id: "categories",
-                            dynamicHeight: { [weak self] width in
+                            dynamicHeight: { width in
                                 TextCell.height(containerWidth: width, text: text)
                             },
                             bind: { cell, _ in
@@ -559,7 +559,7 @@ extension CoinPageViewController {
     }
 
     private func marketInfoSection(marketInfo: CoinPageViewModel.MarketInfo) -> SectionProtocol? {
-        var datas = [
+        let datas = [
             marketInfo.marketCap.map { (id: "market_cap", title: "coin_page.market_cap".localized, text: $0) },
             marketInfo.volume24h.map { (id: "volume_24h", title: "coin_page.volume_24h".localized, text: $0) },
             marketInfo.circulatingSupply.map { (id: "circulating_supply", title: "coin_page.circulating_supply".localized, text: $0) },
@@ -571,7 +571,7 @@ extension CoinPageViewController {
             return nil
         }
 
-        var rows = datas.enumerated().map { index, tuple in
+        let rows = datas.enumerated().map { index, tuple in
             marketRow(
                     id: tuple.id,
                     title: tuple.title,
@@ -607,7 +607,7 @@ extension CoinPageViewController {
                 rows: [
                     Row<ErrorCell>(
                             id: "error",
-                            dynamicHeight: { [weak self] _ in
+                            dynamicHeight: { _ in
                                 100 // todo: calculate height in ErrorCell
                             },
                             bind: { cell, _ in

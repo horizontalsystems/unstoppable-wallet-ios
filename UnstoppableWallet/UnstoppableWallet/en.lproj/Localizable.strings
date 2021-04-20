@@ -147,7 +147,6 @@ bch.horizontalsystems.xyz/apg";
 "error.send_binance.memo_required" = "Receiver requires non-empty memo in transfer transaction";
 "error.send_binance.only_digits_allowed" = "Requires the memo to contain only digits";
 "error.send_z_cash.transparent_address" = "Unstoppable doesn't support payments to a transparent address";
-"error.incubed_not_reachable" = "Incubed servers not reachable";
 
 "backup.confirmation.title" = "Check ...";
 

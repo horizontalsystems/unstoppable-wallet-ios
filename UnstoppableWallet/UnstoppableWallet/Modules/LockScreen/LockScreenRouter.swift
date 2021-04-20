@@ -4,7 +4,7 @@ import PinKit
 class LockScreenRouter: ILockScreenRouter {
 
     func reloadAppInterface() {
-        UIApplication.shared.keyWindow?.set(newRootController: MainModule.instance())
+        UIApplication.shared.windows.first { $0.isKeyWindow }?.set(newRootController: MainModule.instance())
     }
 
 }

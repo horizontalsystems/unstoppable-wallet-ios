@@ -77,7 +77,6 @@ class SendEvmTransactionViewModel {
         if case AppError.ethereum(let reason) = error.convertedError {
             switch reason {
             case .insufficientBalanceWithFee, .executionReverted: return "ethereum_transaction.error.insufficient_balance_with_fee".localized(coinServiceFactory.baseCoinService.coin.code)
-            default: ()
             }
         }
 
@@ -94,8 +93,6 @@ class SendEvmTransactionViewModel {
             return eip20ApproveItems(spender: spender, value: value, contractAddress: contractAddress)
         case let .swap(trade, tokenIn, tokenOut, to, deadline):
             return swapItems(trade: trade, tokenIn: tokenIn, tokenOut: tokenOut, to: to, deadline: deadline, additionalInfo: additionalInfo)
-        default:
-            return nil
         }
     }
 

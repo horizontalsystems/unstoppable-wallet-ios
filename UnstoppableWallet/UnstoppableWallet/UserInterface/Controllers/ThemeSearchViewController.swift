@@ -18,7 +18,6 @@ class ThemeSearchViewController: KeyboardAwareViewController {
 
         navigationItem.largeTitleDisplayMode = .never
 
-        searchController.dimsBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.showsCancelButton = false
