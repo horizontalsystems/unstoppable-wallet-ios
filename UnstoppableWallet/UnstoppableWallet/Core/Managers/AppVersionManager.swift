@@ -3,29 +3,29 @@ import RxRelay
 
 class AppVersionManager {
     private let systemInfoManager: ISystemInfoManager
-    private let localStorage: ILocalStorage
+    private let storage: IAppVersionStorage
 
     private let newVersionRelay = BehaviorRelay<AppVersion?>(value: nil)
 
-    init(systemInfoManager: ISystemInfoManager, localStorage: ILocalStorage) {
+    init(systemInfoManager: ISystemInfoManager, storage: IAppVersionStorage) {
         self.systemInfoManager = systemInfoManager
-        self.localStorage = localStorage
+        self.storage = storage
     }
 
     private func addLatestVersion() {
-        let latestVersion = systemInfoManager.appVersion
-        var appVersions = localStorage.appVersions
+        let currentVersion = systemInfoManager.appVersion
+        var appVersions = storage.appVersions
         guard let lastVersion = appVersions.last else {
-            localStorage.appVersions = [latestVersion]
+            storage.save(appVersions: [currentVersion])
             return
         }
 
-        if lastVersion.version != latestVersion.version || lastVersion.build != latestVersion.build {
-            appVersions.append(latestVersion)
-            localStorage.appVersions = appVersions
+        if lastVersion.version != currentVersion.version || lastVersion.build != currentVersion.build {
+            appVersions.append(currentVersion)
+            storage.save(appVersions: appVersions)
         }
-        if lastVersion.version != latestVersion.version {
-            newVersionRelay.accept(latestVersion)
+        if lastVersion.version != currentVersion.version {
+            newVersionRelay.accept(currentVersion)
         }
     }
 

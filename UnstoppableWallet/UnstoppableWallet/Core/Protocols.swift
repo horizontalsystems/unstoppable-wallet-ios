@@ -22,7 +22,6 @@ protocol ILocalStorage: class {
     var debugLog: String? { get set }
     var sendInputType: SendInputType? { get set }
     var mainShownOnce: Bool { get set }
-    var appVersions: [AppVersion] { get set }
     var transactionDataSortMode: TransactionDataSortMode? { get set }
     var lockTimeEnabled: Bool { get set }
     var appLaunchCount: Int { get set }
@@ -344,6 +343,16 @@ protocol IPriceAlertRequestRecordStorage {
     var priceAlertRequestRecords: [PriceAlertRequestRecord] { get }
     func save(priceAlertRequestRecords: [PriceAlertRequestRecord])
     func delete(priceAlertRequestRecords: [PriceAlertRequestRecord])
+}
+
+protocol IAppVersionStorage {
+    var appVersions: [AppVersion] { get }
+    func save(appVersions: [AppVersion])
+}
+
+protocol IAppVersionRecordStorage {
+    var appVersionRecords: [AppVersionRecord] { get }
+    func save(appVersionRecords: [AppVersionRecord])
 }
 
 protocol IBlockchainSettingsRecordStorage {

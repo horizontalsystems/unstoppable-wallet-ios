@@ -4,6 +4,7 @@ import PinKit
 import CurrencyKit
 import HsToolKit
 import CoinKit
+
 class App {
     static let shared = App()
 
@@ -15,7 +16,7 @@ class App {
     let appConfigProvider: IAppConfigProvider
 
     let localStorage: ILocalStorage & IChartTypeStorage
-    let storage: ICoinMigration & IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage & IActiveAccountStorage & IRestoreSettingsStorage
+    let storage: ICoinMigration & IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage & IActiveAccountStorage & IRestoreSettingsStorage & IAppVersionRecordStorage
 
     let themeManager: ThemeManager
     let systemInfoManager: ISystemInfoManager
@@ -167,8 +168,9 @@ class App {
 
         remoteAlertManager.notificationManager = notificationManager
 
-        appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage, accountManager: accountManager, walletManager: walletManager, adapterManager: adapterManager, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager, binanceKitManager: binanceKitManager, logRecordManager: logRecordManager, restoreSettingsManager: restoreSettingsManager)
-        appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, localStorage: localStorage)
+        let appVersionStorage: IAppVersionStorage = AppVersionStorage(storage: storage)
+        appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, storage: appVersionStorage, accountManager: accountManager, walletManager: walletManager, adapterManager: adapterManager, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager, binanceKitManager: binanceKitManager, logRecordManager: logRecordManager, restoreSettingsManager: restoreSettingsManager)
+        appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, storage: appVersionStorage)
 
         keychainKitDelegate = KeychainKitDelegate(accountManager: accountManager, walletManager: walletManager)
         keychainKit.set(delegate: keychainKitDelegate)
