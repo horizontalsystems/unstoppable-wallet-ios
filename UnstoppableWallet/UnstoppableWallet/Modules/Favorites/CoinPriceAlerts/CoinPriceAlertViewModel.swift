@@ -29,7 +29,7 @@ class CoinPriceAlertViewModel {
 extension CoinPriceAlertViewModel {
 
     var alertNotificationEnabled: Bool {
-        service.alertsOn && service.alertNotificationAllowed
+        service.alertsOn
     }
 
     var priceAlertActiveDriver: Driver<Bool> {

@@ -45,10 +45,6 @@ extension CoinPriceAlertService {
         localStorage.pushNotificationsOn
     }
 
-    var alertNotificationAllowed: Bool {
-        priceAlertManager.alertNotificationAllowed(coinType: coinType)
-    }
-
     func priceAlert(coin: Coin?) -> PriceAlert? {
         guard let coin = coin else {
             return nil

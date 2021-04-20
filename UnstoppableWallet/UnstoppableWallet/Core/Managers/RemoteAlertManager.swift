@@ -55,6 +55,8 @@ class RemoteAlertManager {
 
         let path = method.rawValue
 
+        let deserializedTopics: [String: Any] = [:]      // TODO: MAX change
+
         var params = [String: Any]()
         params["token"] = pushToken
         params["topics"] = topics

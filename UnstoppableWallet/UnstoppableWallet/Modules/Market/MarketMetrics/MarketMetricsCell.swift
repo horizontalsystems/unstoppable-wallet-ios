@@ -114,20 +114,32 @@ class MarketMetricsCellNew: UITableViewCell {
                 diff: marketMetrics.totalMarketCap.diff
         )
 
-        volume24hView.set(value: marketMetrics.volume24h.value,
-                diff: marketMetrics.volume24h.diff
+        volume24hView.set(
+                value: marketMetrics.volume24h.value,
+                diff: marketMetrics.volume24h.diff,
+                chartData: marketMetrics.volume24h.chartData,
+                trend: marketMetrics.volume24h.chartTrend
         )
 
-        btcDominanceView.set(value: marketMetrics.btcDominance.value,
-                diff: marketMetrics.btcDominance.diff
+        btcDominanceView.set(
+                value: marketMetrics.btcDominance.value,
+                diff: marketMetrics.btcDominance.diff,
+                chartData: marketMetrics.btcDominance.chartData,
+                trend: marketMetrics.btcDominance.chartTrend
         )
 
-        deFiCapView.set(value: marketMetrics.defiCap.value,
-                diff: marketMetrics.defiCap.diff
+        deFiCapView.set(
+                value: marketMetrics.defiCap.value,
+                diff: marketMetrics.defiCap.diff,
+                chartData: marketMetrics.defiCap.chartData,
+                trend: marketMetrics.defiCap.chartTrend
         )
 
-        deFiTvlView.set(value: marketMetrics.defiTvl.value,
-                diff: marketMetrics.defiTvl.diff
+        deFiTvlView.set(
+                value: marketMetrics.defiTvl.value,
+                diff: marketMetrics.defiTvl.diff,
+                chartData: marketMetrics.defiTvl.chartData,
+                trend: marketMetrics.defiTvl.chartTrend
         )
     }
 

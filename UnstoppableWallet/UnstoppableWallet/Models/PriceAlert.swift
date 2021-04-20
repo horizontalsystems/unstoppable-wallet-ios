@@ -40,20 +40,37 @@ struct PriceAlert {
 
     }
 
-    private func changeTopic(coinCode: String) -> String {
-        "\(coinCode)_24hour_\(changeState.rawValue)percent"
+    private func changeTopic(coinId: String) -> [String: Any] {
+        let data: [String: Any] = [
+            "coin_id": coinId,
+            "period": "24h",
+            "percent": changeState.rawValue
+        ]
+
+        return [
+            "type": "PRICE",
+            "data:": data
+        ]
     }
-    private func trendTopic(coinCode: String) -> String {
-        "\(coinCode)_\(trendState.rawValue)term_trend_change"
+    private func trendTopic(coinId: String) -> [String: Any] {
+        let data: [String: Any] = [
+            "coin_id": coinId,
+            "term": changeState.rawValue
+        ]
+
+        return [
+            "type": "TREND",
+            "data:": data
+        ]
     }
 
-    func activeTopics(coinCode: String) -> Set<String> {
-        var topics = Set<String>()
+    var activeTopics: [[String: Any]] {
+        var topics = [[String: Any]]()
         if changeState != .off {
-            topics.insert(changeTopic(coinCode: coinCode))
+            topics.append(changeTopic(coinId: coinType.id))
         }
         if trendState != .off {
-            topics.insert(trendTopic(coinCode: coinCode))
+            topics.append(trendTopic(coinId: coinType.id))
         }
         return topics
     }

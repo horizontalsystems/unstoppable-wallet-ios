@@ -1,6 +1,7 @@
 import RxSwift
 import RxCocoa
 import XRatesKit
+import Chart
 
 class MarketMetricsViewModel {
     private let service: MarketMetricsService
@@ -22,6 +23,28 @@ class MarketMetricsViewModel {
         errorRelay.accept(marketInfo.error.map { _ in "market.sync_error".localized } )
     }
 
+    private func chartData(points: [(timestamp: TimeInterval, rate: Decimal)]) -> (data: ChartData?, trend: MovementTrend) {
+        guard let first = points.first, let last = points.last else {
+            return (data: nil, trend: .neutral)
+        }
+
+        let chartItems: [ChartItem] = points.map {
+            let item = ChartItem(timestamp: $0.timestamp)
+            item.add(name: .rate, value: $0.rate)
+            return item
+        }
+
+        var movementTrend = MovementTrend.neutral
+
+        if first.rate > last.rate {
+            movementTrend = .down
+        } else if first.rate < last.rate {
+            movementTrend = .up
+        }
+
+        return (data: ChartData(items: chartItems, startTimestamp: first.timestamp, endTimestamp: last.timestamp), trend: movementTrend)
+    }
+
     private func marketMetrics(marketInfo: GlobalCoinMarket) -> MarketMetrics? {
         let formatter = CurrencyCompactFormatter.instance
 
@@ -34,13 +57,18 @@ class MarketMetricsViewModel {
         }
 
         let btcDominance = ValueFormatter.instance.format(percentValue: marketInfo.btcDominance, signed: false)
-        return MarketMetrics(
 
+        let volumeChart = chartData(points: marketInfo.globalCoinMarketPoints.map { (timestamp: $0.timestamp, rate: $0.volume24h) })
+        let btcDominanceChart = chartData(points: marketInfo.globalCoinMarketPoints.map { (timestamp: $0.timestamp, rate: $0.dominanceBtc) })
+        let defiCapChart = chartData(points: marketInfo.globalCoinMarketPoints.map { (timestamp: $0.timestamp, rate: $0.marketCapDefi) })
+        let defiTvlChart = chartData(points: marketInfo.globalCoinMarketPoints.map { (timestamp: $0.timestamp, rate: $0.tvl) })
+
+        return MarketMetrics(
             totalMarketCap: MetricData(value: totalMarketCap, diff: marketInfo.marketCapDiff24h),
-            volume24h: MetricData(value: volume24h, diff: marketInfo.volume24hDiff24h),
-            btcDominance: MetricData(value: btcDominance, diff: marketInfo.btcDominanceDiff24h),
-            defiCap: MetricData(value: defiCap, diff: marketInfo.defiMarketCapDiff24h),
-            defiTvl: MetricData(value: defiTvl, diff: marketInfo.defiTvlDiff24h))
+            volume24h: ChartMetricData(value: volume24h, diff: marketInfo.volume24hDiff24h, chartData: volumeChart.data, chartTrend: volumeChart.trend),
+            btcDominance: ChartMetricData(value: btcDominance, diff: marketInfo.btcDominanceDiff24h, chartData: btcDominanceChart.data, chartTrend: btcDominanceChart.trend),
+            defiCap: ChartMetricData(value: defiCap, diff: marketInfo.defiMarketCapDiff24h, chartData: defiCapChart.data, chartTrend: defiCapChart.trend),
+            defiTvl: ChartMetricData(value: defiTvl, diff: marketInfo.defiTvlDiff24h, chartData: defiTvlChart.data, chartTrend: defiTvlChart.trend))
     }
 
 }
@@ -72,12 +100,19 @@ extension MarketMetricsViewModel {
         let diff: Decimal?
     }
 
+    struct ChartMetricData {
+        let value: String?
+        let diff: Decimal?
+        let chartData: ChartData?
+        let chartTrend: MovementTrend
+    }
+
     struct MarketMetrics {
         let totalMarketCap: MetricData
-        let volume24h: MetricData
-        let btcDominance: MetricData
-        let defiCap: MetricData
-        let defiTvl: MetricData
+        let volume24h: ChartMetricData
+        let btcDominance: ChartMetricData
+        let defiCap: ChartMetricData
+        let defiTvl: ChartMetricData
     }
 
 }

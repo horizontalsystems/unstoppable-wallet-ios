@@ -29,8 +29,8 @@ extension RateManager: IRateManager {
         kit.refresh(currencyCode: currencyCode)
     }
 
-    func globalMarketInfoSingle(currencyCode: String) -> Single<GlobalCoinMarket> {
-        kit.globalMarketInfoSingle(currencyCode: currencyCode)
+    func globalMarketInfoSingle(currencyCode: String, period: TimePeriod) -> Single<GlobalCoinMarket> {
+        kit.globalMarketInfoSingle(currencyCode: currencyCode, timePeriod: period)
     }
 
     func topMarketsSingle(currencyCode: String, fetchDiffPeriod: TimePeriod, itemCount: Int) -> Single<[CoinMarket]> {
@@ -75,14 +75,6 @@ extension RateManager: IRateManager {
 
     func coinMarketInfoSingle(coinType: CoinType, currencyCode: String, rateDiffTimePeriods: [TimePeriod], rateDiffCoinCodes: [String]) -> Single<CoinMarketInfo> {
         kit.coinMarketInfoSingle(coinType: coinType, currencyCode: currencyCode, rateDiffTimePeriods: rateDiffTimePeriods, rateDiffCoinCodes: rateDiffCoinCodes)
-    }
-
-    func notificationCoinData(coinTypes: [CoinType]) -> [CoinType: ProviderCoinData] {
-        kit.notificationCoinData(coinTypes: coinTypes)
-    }
-
-    func notificationDataExist(coinType: CoinType) -> Bool {
-        kit.notificationDataExist(coinType: coinType)
     }
 
     func coinTypes(for category: String) -> [CoinType] {

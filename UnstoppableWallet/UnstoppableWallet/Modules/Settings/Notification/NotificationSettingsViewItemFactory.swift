@@ -20,13 +20,9 @@ class NotificationSettingsViewItemFactory {
     }
 
     func showResetAll(notificationsOn: Bool, alerts: [PriceAlert]) -> Bool {
-        let coinData = rateManager.notificationCoinData(coinTypes: alerts.map { $0.coinType })
-        return alerts.contains {
-            if let coinCode = coinData[$0.coinType]?.code {
-                return !$0.activeTopics(coinCode: coinCode).isEmpty
-            }
-            return false
-        } && notificationsOn
+        let hasActiveTopic = alerts.contains(where: { alert in !alert.activeTopics.isEmpty })
+
+        return  hasActiveTopic && notificationsOn
     }
 
 }

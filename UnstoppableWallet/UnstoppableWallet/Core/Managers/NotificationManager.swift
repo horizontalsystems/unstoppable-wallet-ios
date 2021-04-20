@@ -3,18 +3,20 @@ import UIKit
 import RxSwift
 
 class NotificationManager {
-    let priceAlertManager: IPriceAlertManager
-    let remoteAlertManager: IRemoteAlertManager
-    let storage: ILocalStorage
-    let rateManager: IRateManager
+    private let priceAlertManager: IPriceAlertManager
+    private let remoteAlertManager: IRemoteAlertManager
+    private let storage: ILocalStorage
+    private let rateManager: IRateManager
+    private let serializer: ISerializer
 
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
 
-    init(priceAlertManager: IPriceAlertManager, remoteAlertManager: IRemoteAlertManager, rateManager: IRateManager, storage: ILocalStorage) {
+    init(priceAlertManager: IPriceAlertManager, remoteAlertManager: IRemoteAlertManager, rateManager: IRateManager, storage: ILocalStorage, serializer: ISerializer) {
         self.priceAlertManager = priceAlertManager
         self.remoteAlertManager = remoteAlertManager
         self.rateManager = rateManager
         self.storage = storage
+        self.serializer = serializer
     }
 
 }
@@ -43,7 +45,7 @@ extension NotificationManager: INotificationManager {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }
 
-    func didReceivePushToken(tokenData: Data) {
+   func didReceivePushToken(tokenData: Data) {
         var token = ""
         for i in 0..<tokenData.count {
             token = token + String(format: "%02.2hhx", arguments: [tokenData[i]])
@@ -52,15 +54,12 @@ extension NotificationManager: INotificationManager {
         if storage.pushToken != token, storage.pushNotificationsOn {
             storage.pushToken = token
 
-            let priceAlerts = priceAlertManager.priceAlerts
-            let alertCoinData = rateManager.notificationCoinData(coinTypes: priceAlerts.map { $0.coinType })
+            remoteAlertManager.schedule(requests: priceAlertManager.priceAlerts.reduce([PriceAlertRequest]()) { array, alert in
+                let topics = alert
+                        .activeTopics
+                        .compactMap { serializer.serialize($0) }
 
-            remoteAlertManager.schedule(requests: priceAlerts.reduce([PriceAlertRequest]()) { array, alert in
-                var array = array
-                if let coinCode = alertCoinData[alert.coinType]?.code {
-                    array.append(contentsOf: PriceAlertRequest.requests(topics: alert.activeTopics(coinCode: coinCode), method: .subscribe))
-                }
-                return array
+                return array + PriceAlertRequest.requests(topics: Set(topics), method: .subscribe)
             })
         }
     }

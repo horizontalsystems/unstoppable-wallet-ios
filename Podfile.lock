@@ -480,7 +480,7 @@ CHECKOUT OPTIONS:
     :commit: 569e87ac53fa8d023ba2275adf01d41d6018436f
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
-    :commit: d9b37c1bab3b09f816fc5bb26fed9d2b469aa9ff
+    :commit: 844872d726a007052811974e1f80a18d60bc4a6f
     :git: https://github.com/horizontalsystems/gui-kit/
   CoinKit.swift:
     :commit: e60c5cfbb491216d7162eb6d93087737aa89557c
@@ -513,7 +513,7 @@ CHECKOUT OPTIONS:
     :commit: 7a2139d6dc005b90abf3a92fbfdd8e6d41ead5a3
     :git: https://github.com/horizontalsystems/hs-tool-kit-ios
   HUD.swift:
-    :commit: a1dcf7d572c35cc6a3a023f01a2f7eb4a16507fe
+    :commit: 844872d726a007052811974e1f80a18d60bc4a6f
     :git: https://github.com/horizontalsystems/gui-kit/
   LanguageKit.swift:
     :commit: 01ccca8dcfeed5fe051ff0fe0274577e99e433b5
@@ -549,7 +549,7 @@ CHECKOUT OPTIONS:
     :commit: 2c46d6414b0c558919149e0e775d12349cdb2d3e
     :git: https://github.com/horizontalsystems/wallet-connect-swift
   XRatesKit.swift:
-    :commit: 6d52a54c435698477efae522096bbdfe6f371237
+    :commit: 67408bef5d8639b41feecfef26dd3a9fbb407849
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
 
 SPEC CHECKSUMS:

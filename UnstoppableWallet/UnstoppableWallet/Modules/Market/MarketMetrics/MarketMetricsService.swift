@@ -34,7 +34,7 @@ class MarketMetricsService {
             globalMarketInfoRelay.accept(.loading)
         }
 
-        rateManager.globalMarketInfoSingle(currencyCode: currencyKit.baseCurrency.code)
+        rateManager.globalMarketInfoSingle(currencyCode: currencyKit.baseCurrency.code, period: .hour24)
             .subscribe(onSuccess: { [weak self] info in
                 self?.globalMarketInfoRelay.accept(.completed(info))
             }, onError: { [weak self] error in
