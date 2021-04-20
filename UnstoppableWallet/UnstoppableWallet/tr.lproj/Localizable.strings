@@ -115,6 +115,7 @@
 "backup_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.";
 "backup_key.button_show" = "Show";
 "backup_key.button_backup" = "Backup";
+"backup_key.passphrase" = "Passphrase";
 
 "backup_key.confirmation.description" = "Enter the recovery phrases in correct order to confirm";
 "backup_key.confirmation.empty_or_invalid_words" = "Entered words are empty or invalid";
@@ -791,6 +792,12 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "create_wallet.create_button" = "Oluştur";
 "create_wallet.mnemonic" = "Mnemonic";
 "create_wallet.n_words" = "%@ words";
+"create_wallet.passphrase" = "Passphrase";
+"create_wallet.input.passphrase" = "Passphrase";
+"create_wallet.input.confirm" = "Confirm";
+"create_wallet.passphrase_description" = "Passphrases add additional security layer to the wallets enabling users to create multiple independent multi-coin wallets using a single mnemonic recovery phrase but associated with different passwords.\n\nTo restore these wallets a user will require menmonic recovery phrase as well as a password for each to be restored wallet.";
+"create_wallet.error.empty_passphrase" = "Passphrase cannot be empty";
+"create_wallet.error.invalid_confirmation" = "Passphrase confirmation does not match";
 
 // Select Coins
 
