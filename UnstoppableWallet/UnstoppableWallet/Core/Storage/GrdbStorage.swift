@@ -569,26 +569,6 @@ class GrdbStorage {
                 let versionRecord = AppVersionRecord(version: version, build: build, date: oldVersion.date)
                 try versionRecord.insert(db)
             }
-//            var versionRecords: [AppVersionRecord] = oldVersions.compactMap { oldVersion in
-//                let regex = try! NSRegularExpression(pattern: "\\(.*\\)")
-//                let matches = regex.matches(in: oldVersion.version, range: NSRange(location: 0, length: oldVersion.version.count))
-//
-//                guard let match = matches.last, let range = Range(match.range, in: oldVersion.version) else {
-//                    return nil
-//                }
-//                var build = String(oldVersion.version[range])
-//                build.removeAll { character in character == "(" || character == ")" }
-//
-//                var version = oldVersion.version
-//                version.removeSubrange(range)
-//                version = version.trimmingCharacters(in: .whitespaces)
-//
-//                return AppVersionRecord(version: version, build: build, date: oldVersion.date)
-//            }
-
-//            for versionRecord in versionRecords {
-//                try versionRecord.insert(db)
-//            }
         }
 
         return migrator

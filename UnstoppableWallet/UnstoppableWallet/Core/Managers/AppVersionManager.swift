@@ -14,15 +14,14 @@ class AppVersionManager {
 
     private func addLatestVersion() {
         let currentVersion = systemInfoManager.appVersion
-        var appVersions = storage.appVersions
-        guard let lastVersion = appVersions.last else {
+
+        guard let lastVersion = storage.appVersions.last else {
             storage.save(appVersions: [currentVersion])
             return
         }
 
         if lastVersion.version != currentVersion.version || lastVersion.build != currentVersion.build {
-            appVersions.append(currentVersion)
-            storage.save(appVersions: appVersions)
+            storage.save(appVersions: [currentVersion])
         }
         if lastVersion.version != currentVersion.version {
             newVersionRelay.accept(currentVersion)
