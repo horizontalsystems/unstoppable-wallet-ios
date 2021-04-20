@@ -34,7 +34,7 @@ extension BackupKeyViewModel {
         service.words
     }
 
-    var salt: String? {
+    var passphrase: String? {
         service.salt
     }
 
