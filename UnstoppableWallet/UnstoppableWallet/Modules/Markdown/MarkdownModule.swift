@@ -11,7 +11,7 @@ struct MarkdownModule {
         return MarkdownViewController(viewModel: viewModel)
     }
 
-    static func gitReleaseMarkdownViewController(url: URL) -> UIViewController {
+    static func gitReleaseNotesMarkdownViewController(url: URL) -> UIViewController {
         let provider = MarkdownGitReleaseContentProvider(url: url, networkManager: App.shared.networkManager)
         let service = MarkdownService(provider: provider)
         let parser = MarkdownParser()

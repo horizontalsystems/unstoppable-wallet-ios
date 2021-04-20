@@ -255,9 +255,7 @@ protocol IRateCoinMapper {
 }
 
 protocol ISystemInfoManager {
-    var appVersion: String { get }
-    var buildNumber: String { get }
-    var fullAppVersion: String { get }
+    var appVersion: AppVersion { get }
     var passcodeSet: Bool { get }
     var deviceModel: String { get }
     var osVersion: String { get }

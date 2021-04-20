@@ -4,18 +4,16 @@ import RxSwift
 
 class SystemInfoManager: ISystemInfoManager {
 
-    var appVersion: String {
+    private var version: String {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
     }
 
-    var buildNumber: String {
+    private var build: String {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
     }
 
-    var fullAppVersion: String {
-        let showBuildNumber = Bundle.main.object(forInfoDictionaryKey: "ShowBuildNumber") as? String == "true"
-
-        return showBuildNumber ? Self.formatFullVersion(appVersion: appVersion, buildNumber: buildNumber) : appVersion
+    var appVersion: AppVersion {
+        AppVersion(version: version, build: build, date: Date())
     }
 
     var passcodeSet: Bool {
@@ -28,10 +26,6 @@ class SystemInfoManager: ISystemInfoManager {
 
     var osVersion: String {
         UIDevice.current.systemVersion
-    }
-
-    static func formatFullVersion(appVersion: String, buildNumber: String) -> String {
-        appVersion + " (\(buildNumber))"
     }
 
 }

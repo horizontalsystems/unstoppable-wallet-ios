@@ -35,17 +35,8 @@ extension MainViewModel {
         badgeService.settingsBadgeObservable.asDriver(onErrorJustReturn: false)
     }
 
-    var whatsNewDriver: Driver<URL?> {
-        whatsNewService
-                .whatsNewObservable
-                .flatMap { appVersion -> Observable<URL?> in
-                    guard let version = appVersion?.version else {
-                        return Observable.just(nil)
-                    }
-
-                    return Observable.just(URL(string: "https://api.github.com/repos/horizontalsystems/unstoppable-wallet-ios/releases/tags/\(version)"))
-                }
-                .asDriver(onErrorJustReturn: nil)
+    var releaseNotesUrlDriver: Driver<URL?> {
+        whatsNewService.releaseNotesUrlObservable.asDriver(onErrorJustReturn: nil)
     }
 
     var balanceTabStateDriver: Driver<BalanceTabState> {
