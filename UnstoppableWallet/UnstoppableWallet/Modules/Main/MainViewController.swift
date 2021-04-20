@@ -33,7 +33,7 @@ class MainViewController: ThemeTabBarController {
         subscribe(disposeBag, viewModel.transactionsTabEnabledDriver) { [weak self] in self?.syncTransactionsTab(enabled: $0) }
         subscribe(disposeBag, viewModel.settingsBadgeDriver) { [weak self] in self?.setSettingsBadge(visible: $0) }
 
-        subscribe(disposeBag, viewModel.whatsNewDriver) { [weak self] url in self?.showWhatsNew(url: url) }
+        subscribe(disposeBag, viewModel.releaseNotesUrlDriver) { [weak self] url in self?.showReleaseNotes(url: url) }
 
         viewModel.onLoad()
     }
@@ -62,12 +62,12 @@ class MainViewController: ThemeTabBarController {
         settingsModule.viewControllers.first?.tabBarItem.setDotBadge(visible: visible)
     }
 
-    private func showWhatsNew(url: URL?) {
+    private func showReleaseNotes(url: URL?) {
         guard let url = url else {
             return
         }
 
-        let module = MarkdownModule.gitReleaseMarkdownViewController(url: url)
+        let module = MarkdownModule.gitReleaseNotesMarkdownViewController(url: url)
         present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 
