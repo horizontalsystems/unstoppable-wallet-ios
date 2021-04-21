@@ -63,16 +63,13 @@
 
 "restore.title" = "Cüzdan Seçin";
 "restore.enter_key" = "Anahtarı girin";
-"restore.item_title" = "%@ Cüzdanı";
-"restore.words.description" = "%@ cüzdanı için gizli anahtarı gir";
 "restore.mnemonic.description" = "Enter your mnemonic which consists of 12 or 24 words. The words needs to be entered in correct order and separated by spaces.";
-"restore.birthday_height.placeholder" = "Cüzdan oluşturulma günü üst sınırı (isteğe bağlı)";
-"restore.birthday_height.description" = "Bu, işlemler için taramaya nereden başlanacağını belirler. Biraz zaman alacak olan en baştan tarama için boş bırakınız.";
-"restore.placeholder.account_name" = "Hesap Adı";
-"restore.placeholder.private_key" = "Active Private key";
-"restore_error.words_count" = "Yanlış sözcük sayısı. %@ olmalıdır. Sizin girdiğiniz: %@";
 "restore_error.mnemonic_word_count" = "Wrong words count. Must be 12 or 24. You entered: %@";
 "restore.checksum_error" = "Geçersiz sağlama toplamı";
+"restore.passphrase" = "Passphrase";
+"restore.input.passphrase" = "Passphrase";
+"restore.passphrase_description" = "Enter your passphrase that you used when creating this mnemonic phrase";
+"restore.error.empty_passphrase" = "Passphrase cannot be empty";
 
 // Coin Settings
 
@@ -108,6 +105,7 @@
 "show_key.button_show" = "Show";
 "show_key.tab.recovery_phrase" = "Recovery Phrase";
 "show_key.tab.private_keys" = "Private Keys";
+"show_key.passphrase" = "Passphrase";
 
 // Backup Key
 
