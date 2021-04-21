@@ -76,7 +76,6 @@ class ManageAccountViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.openShowKeySignal) { [weak self] in self?.openShowKey(account: $0) }
         subscribe(disposeBag, viewModel.openBackupKeySignal) { [weak self] in self?.openBackupKey(account: $0) }
         subscribe(disposeBag, viewModel.openUnlinkSignal) { [weak self] in self?.openUnlink(account: $0) }
-        subscribe(disposeBag, viewModel.openBackupRequiredSignal) { [weak self] in self?.openBackupRequired(account: $0) }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.navigationController?.popViewController(animated: true) }
 
         tableView.buildSections()
@@ -114,12 +113,6 @@ class ManageAccountViewController: ThemeViewController {
 
     private func openUnlink(account: Account) {
         let viewController = UnlinkModule.viewController(account: account)
-        present(viewController, animated: true)
-    }
-
-    private func openBackupRequired(account: Account) {
-        let text = "settings_manage_keys.delete.cant_delete".localized
-        let viewController = BackupRequiredViewController(account: account, text: text, sourceViewController: self).toBottomSheet
         present(viewController, animated: true)
     }
 

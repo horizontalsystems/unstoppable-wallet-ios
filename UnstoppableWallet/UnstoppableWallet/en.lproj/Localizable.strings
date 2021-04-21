@@ -683,7 +683,6 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "settings_manage_keys.create" = "Create";
 "settings_manage_keys.restore" = "Restore";
 "settings_manage_keys.settings" = "Address Format";
-"settings_manage_keys.delete.cant_delete" = "You need to backup the private key for this wallet before it can be deleted from this phone.";
 "settings_manage_keys.delete.title" = "Delete Wallet";
 "settings_manage_keys.delete.confirmation_remove" = "The action will delete this wallet from device.";
 "settings_manage_keys.delete.confirmation_loose" = "If you didn't backup the private key for this wallet, you will lose access to your funds.";
