@@ -943,6 +943,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // Manage Account
 
+"manage_account.name" = "Name";
 "manage_account.show_recovery_phrase" = "Show Recovery Phrase";
 "manage_account.backup_recovery_phrase" = "Backup Recovery Phrase";
 "manage_account.unlink" = "Unlink";
