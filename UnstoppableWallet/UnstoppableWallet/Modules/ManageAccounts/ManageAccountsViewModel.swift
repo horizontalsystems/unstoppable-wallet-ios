@@ -38,8 +38,8 @@ class ManageAccountsViewModel {
     private func description(accountType: AccountType) -> String {
         switch accountType {
         case .mnemonic(let words, let salt):
-            let count = words.count
-            return salt == nil ? "\(count) words" : "\(count) words with passphrase"
+            let count = "\(words.count)"
+            return salt.isEmpty ? "manage_accounts.n_words".localized(count) : "manage_accounts.n_words_with_passphrase".localized(count)
         default:
             return ""
         }

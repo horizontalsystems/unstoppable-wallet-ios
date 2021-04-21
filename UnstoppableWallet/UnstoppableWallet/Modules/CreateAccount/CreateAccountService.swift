@@ -34,8 +34,7 @@ class CreateAccountService {
 
     private func mnemonicAccountType(wordCount: Int) throws -> AccountType {
         let words = try wordsManager.generateWords(count: wordCount)
-        let salt = !passphrase.isEmpty ? passphrase : nil
-        return .mnemonic(words: words, salt: salt)
+        return .mnemonic(words: words, salt: passphrase)
     }
 
     private func activateDefaultWallets(account: Account) {

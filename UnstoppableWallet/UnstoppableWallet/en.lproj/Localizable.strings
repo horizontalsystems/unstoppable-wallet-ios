@@ -942,6 +942,11 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "onboarding.balance.create" = "Create";
 "onboarding.balance.restore" = "Restore";
 
+// Manage Accounts
+
+"manage_accounts.n_words" = "%@ words";
+"manage_accounts.n_words_with_passphrase" = "%@ words with passphrase";
+
 // Manage Account
 
 "manage_account.show_recovery_phrase" = "Show Recovery Phrase";

@@ -571,6 +571,15 @@ class GrdbStorage {
             }
         }
 
+        migrator.registerMigration("fillSaltToAccountsKeychain") { db in
+            let keychain = Keychain(service: "io.horizontalsystems.bank.dev")
+            let records = try AccountRecord.fetchAll(db)
+
+            for record in records {
+                try keychain.set("", key: "mnemonic_\(record.id)_salt")
+            }
+        }
+
         return migrator
     }
 

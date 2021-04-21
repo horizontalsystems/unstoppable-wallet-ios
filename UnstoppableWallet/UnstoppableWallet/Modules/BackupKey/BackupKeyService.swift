@@ -3,7 +3,7 @@ import PinKit
 class BackupKeyService {
     let account: Account
     let words: [String]
-    let salt: String?
+    let salt: String
     private let pinKit: IPinKit
 
     init?(account: Account, pinKit: IPinKit) {
