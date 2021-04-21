@@ -142,7 +142,6 @@
 "error.send_binance.memo_required" = "Empfänger benötigt nicht-leeren Vermerk bei Transfer einer Transaktion";
 "error.send_binance.only_digits_allowed" = "Der Vermerk darf nur Zahlen enthalten";
 "error.send_z_cash.transparent_address" = "Unstoppable unterstützt keine Zahlungen an eine transparente Adresse";
-"error.incubed_not_reachable" = "Incubed Server nicht erreichbar";
 
 "backup.confirmation.title" = "Prüfen …";
 
