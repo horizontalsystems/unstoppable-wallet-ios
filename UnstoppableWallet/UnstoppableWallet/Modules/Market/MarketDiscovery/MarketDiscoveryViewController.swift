@@ -1,6 +1,7 @@
 import UIKit
 import RxSwift
 import ThemeKit
+import SnapKit
 import SectionsTableView
 
 class MarketDiscoveryViewController: MarketListViewController {
@@ -14,7 +15,7 @@ class MarketDiscoveryViewController: MarketListViewController {
         self.marketViewModel = marketViewModel
         self.viewModel = viewModel
 
-        super.init(listViewModel: listViewModel, topPadding: MarketDiscoveryFilterHeaderView.headerHeight)
+        super.init(listViewModel: listViewModel)
     }
 
     required init?(coder: NSCoder) {
@@ -23,6 +24,17 @@ class MarketDiscoveryViewController: MarketListViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        view.addSubview(filterHeaderView)
+        filterHeaderView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+            maker.height.equalTo(MarketDiscoveryFilterHeaderView.headerHeight)
+        }
+
+        tableView.snp.remakeConstraints { maker in
+            maker.leading.trailing.bottom.equalToSuperview()
+            maker.top.equalTo(filterHeaderView.snp.bottom)
+        }
 
         filterHeaderView.onSelect = { [weak self] filterIndex in
             self?.viewModel.setFilter(at: filterIndex)
@@ -41,15 +53,6 @@ class MarketDiscoveryViewController: MarketListViewController {
 
         listViewModel.set(listType: listType)
         viewModel.resetCategory()
-    }
-
-    override var topSections: [SectionProtocol] {
-        [
-            Section(
-                    id: "filter",
-                    headerState: .static(view: filterHeaderView, height: MarketDiscoveryFilterHeaderView.headerHeight)
-            )
-        ]
     }
 
 }

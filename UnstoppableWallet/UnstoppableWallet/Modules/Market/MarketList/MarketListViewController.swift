@@ -5,10 +5,9 @@ import SectionsTableView
 
 class MarketListViewController: ThemeViewController {
     let listViewModel: MarketListViewModel
-    private let topPadding: CGFloat
     private let disposeBag = DisposeBag()
 
-    private let tableView = SectionsTableView(style: .plain)
+    let tableView = SectionsTableView(style: .plain)
     private let headerView = MarketListHeaderView()
     private let refreshControl = UIRefreshControl()
 
@@ -16,9 +15,8 @@ class MarketListViewController: ThemeViewController {
 
     private var state: MarketListViewModel.State = .loading
 
-    init(listViewModel: MarketListViewModel, topPadding: CGFloat = 0) {
+    init(listViewModel: MarketListViewModel) {
         self.listViewModel = listViewModel
-        self.topPadding = topPadding
 
         super.init()
     }
@@ -142,7 +140,7 @@ extension MarketListViewController: SectionsDataSource {
                 Row<SpinnerCell>(
                         id: "spinner",
                         dynamicHeight: { [weak self] _ in
-                            max(0, (self?.tableView.height ?? 0) - MarketListHeaderView.height - (self?.topPadding ?? 0))
+                            max(0, (self?.tableView.height ?? 0) - MarketListHeaderView.height)
                         }
                 )
             ]
@@ -155,7 +153,7 @@ extension MarketListViewController: SectionsDataSource {
                                 cell: cell,
                                 id: "caution",
                                 dynamicHeight: { [weak self] _ in
-                                    max(0, (self?.tableView.height ?? 0) - MarketListHeaderView.height - (self?.topPadding ?? 0))
+                                    max(0, (self?.tableView.height ?? 0) - MarketListHeaderView.height)
                                 }
                         )
                     ]
@@ -172,7 +170,7 @@ extension MarketListViewController: SectionsDataSource {
                 Row<ErrorCell>(
                         id: "error",
                         dynamicHeight: { [weak self] _ in
-                            max(0, (self?.tableView.height ?? 0) - MarketListHeaderView.height - (self?.topPadding ?? 0))
+                            max(0, (self?.tableView.height ?? 0) - MarketListHeaderView.height)
                         },
                         bind: { cell, _ in
                             cell.errorText = errorDescription
