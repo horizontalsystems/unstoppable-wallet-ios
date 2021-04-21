@@ -142,7 +142,6 @@
 "error.send_binance.memo_required" = "Aktarım işleminde alıcı boş olmayan not istiyor";
 "error.send_binance.only_digits_allowed" = "Notun yalnızca rakam içermesini gerektirir";
 "error.send_z_cash.transparent_address" = "Unstoppable, bir transparan adrese yapılan ödemeleri desteklemez";
-"error.incubed_not_reachable" = "Incubed sunucularına erişilemiyor";
 
 "backup.confirmation.title" = "Kontrol etme ...";
 
