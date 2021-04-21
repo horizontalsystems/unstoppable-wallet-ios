@@ -36,8 +36,8 @@ class AppStatusManager {
 
             status.append(("origin", "\(account.origin)"))
 
-            if case let .mnemonic(words, _) = account.type {
-                status.append(("type", "mnemonic (\(words.count) words)"))
+            if case let .mnemonic(words, salt) = account.type {
+                status.append(("type", "mnemonic (\(words.count) words\(salt.isEmpty ? "" : " with passphrase"))"))
             }
 
             let restoreSettingsInfo = restoreSettingsManager.accountSettingsInfo(account: account)

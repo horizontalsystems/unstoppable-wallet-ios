@@ -6,7 +6,7 @@ class BitcoinAdapter: BitcoinBaseAdapter {
     private let bitcoinKit: Kit
 
     init(wallet: Wallet, syncMode: SyncMode?, testMode: Bool) throws {
-        guard case let .mnemonic(words, _) = wallet.account.type else {
+        guard let seed = wallet.account.type.mnemonicSeed else {
             throw AdapterError.unsupportedAccount
         }
 
@@ -23,7 +23,7 @@ class BitcoinAdapter: BitcoinBaseAdapter {
         let syncMode = BitcoinBaseAdapter.kitMode(from: walletSyncMode)
         let logger = App.shared.logger.scoped(with: "BitcoinKit")
 
-        bitcoinKit = try Kit(withWords: words, bip: bip, walletId: wallet.account.id, syncMode: syncMode, networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold, logger: logger)
+        bitcoinKit = try Kit(seed: seed, bip: bip, walletId: wallet.account.id, syncMode: syncMode, networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold, logger: logger)
 
         super.init(abstractKit: bitcoinKit)
 
