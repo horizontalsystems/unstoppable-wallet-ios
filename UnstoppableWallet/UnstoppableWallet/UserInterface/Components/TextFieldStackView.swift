@@ -7,6 +7,8 @@ class TextFieldStackView: UIView {
     private let textField = UITextField()
 
     var onChangeText: ((String?) -> ())?
+    var onReturn: (() -> ())?
+    var onSpaceKey: (() -> Bool)?
 
     init() {
         super.init(frame: .zero)
@@ -19,6 +21,7 @@ class TextFieldStackView: UIView {
         textField.textColor = .themeOz
         textField.clearButtonMode = .whileEditing
 
+        textField.delegate = self
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
 
         addSubview(stackView)
@@ -48,6 +51,24 @@ class TextFieldStackView: UIView {
 
 }
 
+extension TextFieldStackView: UITextFieldDelegate {
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        onReturn?()
+        return true
+    }
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        switch string {
+        case " ":
+            return onSpaceKey?() ?? true
+        default:
+            return true
+        }
+    }
+
+}
+
 extension TextFieldStackView {
 
     var placeholder: String? {
@@ -68,6 +89,11 @@ extension TextFieldStackView {
     var autocapitalizationType: UITextAutocapitalizationType {
         get { textField.autocapitalizationType }
         set { textField.autocapitalizationType = newValue }
+    }
+
+    var returnKeyType: UIReturnKeyType {
+        get { textField.returnKeyType }
+        set { textField.returnKeyType = newValue }
     }
 
     var isSecureTextEntry: Bool {

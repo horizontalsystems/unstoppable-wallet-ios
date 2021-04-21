@@ -121,7 +121,13 @@ bch.horizontalsystems.xyz/apg";
 "backup_key.passphrase" = "Passphrase";
 
 "backup_key.confirmation.description" = "Enter the recovery phrases in correct order to confirm";
-"backup_key.confirmation.empty_or_invalid_words" = "Entered words are empty or invalid";
+"backup_key.confirmation.passphrase" = "Passphrase";
+"backup_key.confirmation.passphrase_description" = "Enter the passphrase";
+
+"backup_key.confirmation.empty_word" = "Empty word";
+"backup_key.confirmation.invalid_word" = "Invalid word";
+"backup_key.confirmation.empty_passphrase" = "Empty passphrase";
+"backup_key.confirmation.invalid_passphrase" = "Invalid passphrase";
 
 // Backup
 
