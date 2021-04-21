@@ -1,7 +1,7 @@
 import Foundation
 
 enum AccountType {
-    case mnemonic(words: [String], salt: String?)
+    case mnemonic(words: [String], salt: String)
     case privateKey(data: Data)
 }
 

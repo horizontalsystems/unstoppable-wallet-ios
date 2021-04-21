@@ -30,7 +30,7 @@ extension ShowKeyViewModel {
     }
 
     var passphrase: String? {
-        service.salt
+        service.salt.isEmpty ? nil : service.salt
     }
 
     var privateKeys: [PrivateKey] {

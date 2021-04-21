@@ -26,7 +26,9 @@ class AccountStorage {
             guard let words = recoverStringArray(id: id, typeName: typeName, keyName: .words) else {
                 return nil
             }
-            let salt: String? = recover(id: id, typeName: typeName, keyName: .salt)
+            guard let salt: String = recover(id: id, typeName: typeName, keyName: .salt) else {
+                return nil
+            }
 
             type = .mnemonic(words: words, salt: salt)
         case .privateKey:
@@ -96,7 +98,7 @@ class AccountStorage {
         try store(stringArray.joined(separator: ","), id: id, typeName: typeName, keyName: keyName)
     }
 
-    private func store<T: LosslessStringConvertible>(_ value: T?, id: String, typeName: TypeName, keyName: KeyName) throws -> String {
+    private func store<T: LosslessStringConvertible>(_ value: T, id: String, typeName: TypeName, keyName: KeyName) throws -> String {
         let key = secureKey(id: id, typeName: typeName, keyName: keyName)
         try secureStorage.set(value: value, for: key)
         return key

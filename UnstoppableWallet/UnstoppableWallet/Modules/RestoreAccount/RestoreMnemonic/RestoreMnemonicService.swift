@@ -50,8 +50,7 @@ extension RestoreMnemonicService {
 
         try Mnemonic.validate(words: words)
 
-        let salt = !passphrase.isEmpty ? passphrase : nil
-        return .mnemonic(words: words, salt: salt)
+        return .mnemonic(words: words, salt: passphrase)
     }
 
 }

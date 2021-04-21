@@ -6,7 +6,7 @@ class BackupConfirmKeyService {
     private let account: Account
     private let accountManager: IAccountManager
     private let words: [String]
-    private let salt: String?
+    private let salt: String
     private let disposeBag = DisposeBag()
 
     var firstWord: String = ""
@@ -65,7 +65,7 @@ class BackupConfirmKeyService {
             errors.append(.invalidSecondWord)
         }
 
-        if let salt = salt {
+        if !salt.isEmpty {
             if passphrase.isEmpty {
                 errors.append(.emptyPassphrase)
             } else if passphrase != salt {
@@ -85,7 +85,7 @@ extension BackupConfirmKeyService {
     }
 
     var hasSalt: Bool {
-        salt != nil
+        !salt.isEmpty
     }
 
     func generateIndexes() {

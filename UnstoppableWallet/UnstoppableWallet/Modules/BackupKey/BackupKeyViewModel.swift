@@ -35,7 +35,7 @@ extension BackupKeyViewModel {
     }
 
     var passphrase: String? {
-        service.salt
+        service.salt.isEmpty ? nil : service.salt
     }
 
     func onTapShow() {

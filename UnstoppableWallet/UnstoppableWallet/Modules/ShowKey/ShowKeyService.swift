@@ -3,7 +3,7 @@ import EthereumKit
 
 class ShowKeyService {
     let words: [String]
-    let salt: String?
+    let salt: String
     private let pinKit: IPinKit
     private let ethereumKitManager: EthereumKitManager
 
