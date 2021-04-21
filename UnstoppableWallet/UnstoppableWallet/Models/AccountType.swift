@@ -1,8 +1,17 @@
 import Foundation
+import HdWalletKit
 
 enum AccountType {
     case mnemonic(words: [String], salt: String)
     case privateKey(data: Data)
+
+    var mnemonicSeed: Data? {
+        switch self {
+        case let .mnemonic(words, salt): return Mnemonic.seed(mnemonic: words, passphrase: salt)
+        default: return nil
+        }
+    }
+
 }
 
 extension AccountType: Hashable {

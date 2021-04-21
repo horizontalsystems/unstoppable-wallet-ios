@@ -16,12 +16,12 @@ class BinanceKitManager {
             return binanceKit
         }
 
-        guard case let .mnemonic(words, _) = account.type else {
+        guard let seed = account.type.mnemonicSeed else {
             throw AdapterError.unsupportedAccount
         }
 
         let binanceKit = try BinanceChainKit.instance(
-                words: words,
+                seed: seed,
                 networkType: appConfigProvider.testMode ? .testNet : .mainNet,
                 walletId: account.id,
                 minLogLevel: .error

@@ -20,7 +20,7 @@ class EthereumKitManager {
             return evmKit
         }
 
-        guard case let .mnemonic(words, _) = account.type else {
+        guard let seed = account.type.mnemonicSeed else {
             throw AdapterError.unsupportedAccount
         }
 
@@ -31,7 +31,7 @@ class EthereumKitManager {
         }
 
         let evmKit = try EthereumKit.Kit.instance(
-                words: words,
+                seed: seed,
                 networkType: networkType,
                 syncSource: syncSource,
                 etherscanApiKey: appConfigProvider.etherscanKey,

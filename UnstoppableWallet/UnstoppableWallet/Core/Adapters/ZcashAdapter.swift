@@ -45,7 +45,7 @@ class ZcashAdapter {
     }
 
     init(wallet: Wallet, restoreSettings: RestoreSettings, testMode: Bool) throws {
-        guard case let .mnemonic(words, _) = wallet.account.type else {
+        guard let seed = wallet.account.type.mnemonicSeed else {
             throw AdapterError.unsupportedAccount
         }
 
@@ -71,8 +71,7 @@ class ZcashAdapter {
                 outputParamsURL: try! ZcashAdapter.outputParamsURL(uniqueId: uniqueId),
                 loggerProxy: loggingProxy)
 
-
-        let seedData = [UInt8](Mnemonic.seed(mnemonic: words))
+        let seedData = [UInt8](seed)
         try initializer.initialize(viewingKeys: try DerivationTool.default.deriveViewingKeys(seed: seedData, numberOfAccounts: 1),
                 walletBirthday: BlockHeight(birthday))
 
