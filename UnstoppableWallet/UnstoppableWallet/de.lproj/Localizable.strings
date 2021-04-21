@@ -116,7 +116,13 @@
 "backup_key.passphrase" = "Passphrase";
 
 "backup_key.confirmation.description" = "Enter the recovery phrases in correct order to confirm";
-"backup_key.confirmation.empty_or_invalid_words" = "Entered words are empty or invalid";
+"backup_key.confirmation.passphrase" = "Passphrase";
+"backup_key.confirmation.passphrase_description" = "Enter the passphrase";
+
+"backup_key.confirmation.empty_word" = "Empty word";
+"backup_key.confirmation.invalid_word" = "Invalid word";
+"backup_key.confirmation.empty_passphrase" = "Empty passphrase";
+"backup_key.confirmation.invalid_passphrase" = "Invalid passphrase";
 
 // Backup
 
@@ -672,7 +678,6 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "settings_manage_keys.create" = "Erstellen";
 "settings_manage_keys.restore" = "Wiederherstellen";
 "settings_manage_keys.settings" = "Adressformatierung";
-"settings_manage_keys.delete.cant_delete" = "Sie müssen den Private Key für dieses Wallet sichern, bevor Sie es von diesem Telefon löschen können.";
 "settings_manage_keys.delete.title" = "Wallet löschen";
 "settings_manage_keys.delete.confirmation_remove" = "The action will delete this wallet from device.";
 "settings_manage_keys.delete.confirmation_loose" = "ACHTUNG: Wenn Sie den privaten Private Key für dieses Wallet nicht gesichert haben, verlieren Sie den Zugriff auf Ihr Guthaben.";
@@ -930,6 +935,11 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "onboarding.balance.description" = "Sie haben noch keine Wallets. Ein neues erstellen oder ein vorhandenes wiederherstellen";
 "onboarding.balance.create" = "Erstellen";
 "onboarding.balance.restore" = "Wiederherstellen";
+
+// Manage Accounts
+
+"manage_accounts.n_words" = "%@ words";
+"manage_accounts.n_words_with_passphrase" = "%@ words with passphrase";
 
 // Manage Account
 
