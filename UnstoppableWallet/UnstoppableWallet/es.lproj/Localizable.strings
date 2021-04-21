@@ -142,7 +142,6 @@
 "error.send_binance.memo_required" = "El receptor requiere que el memo no esté vacío en la transacción de transferencia";
 "error.send_binance.only_digits_allowed" = "Es necesario que el memo contenga únicamente dígitos";
 "error.send_z_cash.transparent_address" = "Unstoppable no soporta pagos a una dirección transparente";
-"error.incubed_not_reachable" = "No puede accederse a los servidores incubados";
 
 "backup.confirmation.title" = "Comprobar";
 
