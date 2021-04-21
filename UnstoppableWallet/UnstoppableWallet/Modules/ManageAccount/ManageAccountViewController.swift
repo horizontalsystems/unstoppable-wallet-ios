@@ -11,7 +11,7 @@ class ManageAccountViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    private let nameCell = InputCell()
+    private let nameCell = TextFieldCell()
     private let showRecoveryPhraseCell = A1Cell()
     private let backupRecoveryPhraseCell = A3Cell()
     private let unlinkCell = ACell()
@@ -50,9 +50,7 @@ class ManageAccountViewController: ThemeViewController {
 
         nameCell.inputText = viewModel.accountName
         nameCell.autocapitalizationType = .words
-        nameCell.isValidText = { [weak self] in self?.viewModel.isValid(name: $0) ?? true }
         nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0) }
-        nameCell.onChangeHeight = { [weak self] in self?.syncTable() }
 
         showRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         showRecoveryPhraseCell.titleImage = UIImage(named: "key_20")
@@ -116,11 +114,6 @@ class ManageAccountViewController: ThemeViewController {
         present(viewController, animated: true)
     }
 
-    private func syncTable() {
-        tableView.beginUpdates()
-        tableView.endUpdates()
-    }
-
     private func reloadTable() {
         guard isLoaded else {
             return
@@ -182,15 +175,13 @@ extension ManageAccountViewController: SectionsDataSource {
             ),
             Section(
                     id: "name",
-                    headerState: header(text: "Name"),
+                    headerState: header(text: "manage_account.name".localized),
                     footerState: .margin(height: .margin32),
                     rows: [
                         StaticRow(
                                 cell: nameCell,
                                 id: "name",
-                                dynamicHeight: { [weak self] width in
-                                    self?.nameCell.height(containerWidth: width) ?? 0
-                                }
+                                height: .heightSingleLineCell
                         )
                     ]
             ),
