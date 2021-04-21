@@ -17,8 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = .themeTyler
         window?.rootViewController = LaunchRouter.module()
 
-        UIApplication.shared.setMinimumBackgroundFetchInterval(3600)
-
         return true
     }
 

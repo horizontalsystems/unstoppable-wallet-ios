@@ -69,9 +69,9 @@ PODS:
     - RxSwift (~> 5.0)
     - RxSwiftExt (~> 5)
   - CryptoSwift (1.3.8)
-  - Cuckoo (1.4.1):
-    - Cuckoo/Swift (= 1.4.1)
-  - Cuckoo/Swift (1.4.1)
+  - Cuckoo (1.4.2):
+    - Cuckoo/Swift (= 1.4.2)
+  - Cuckoo/Swift (1.4.2)
   - CurrencyKit.swift (1.0):
     - LanguageKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
@@ -277,7 +277,7 @@ PODS:
     - OpenSslKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
     - Secp256k1Kit.swift (~> 1.0)
-  - UnstoppableDomainsResolution (0.3.5):
+  - UnstoppableDomainsResolution (0.3.6):
     - BigInt
     - CryptoSwift (~> 1.0)
     - EthereumAddress (~> 1.3)
@@ -465,7 +465,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   ActionSheet.swift:
-    :commit: 4f475143a415d85ad96a7d527de9511d723aaf44
+    :commit: cdd45d3d29c230c14b68dbd03fae9b7f9c42a3ab
     :git: https://github.com/horizontalsystems/gui-kit/
   BinanceChainKit.swift:
     :commit: 5c4b83afb5b7b536d5c9f773656757449c7379f6
@@ -480,19 +480,19 @@ CHECKOUT OPTIONS:
     :commit: 569e87ac53fa8d023ba2275adf01d41d6018436f
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
-    :commit: 844872d726a007052811974e1f80a18d60bc4a6f
+    :commit: cdd45d3d29c230c14b68dbd03fae9b7f9c42a3ab
     :git: https://github.com/horizontalsystems/gui-kit/
   CoinKit.swift:
     :commit: e60c5cfbb491216d7162eb6d93087737aa89557c
     :git: https://github.com/horizontalsystems/coin-kit-ios
   CurrencyKit.swift:
-    :commit: 01ccca8dcfeed5fe051ff0fe0274577e99e433b5
+    :commit: 8db95e5195871f266414298315d284ca20ae2191
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
     :commit: 569e87ac53fa8d023ba2275adf01d41d6018436f
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Erc20Kit.swift:
-    :commit: 6adbde905aed41520c28c94e30232832f4e23e8e
+    :commit: d6c7e27274e5e8c963e6ed81b8a2ee0e8c726fa8
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   EthereumABI:
     :commit: f77b49868885e9f909bd7dcf4c50c42e84f43ef7
@@ -507,43 +507,43 @@ CHECKOUT OPTIONS:
     :commit: dd560907666008fc326c1715c6437a40266cca19
     :git: https://github.com/horizontalsystems/hd-wallet-kit-ios
   Hodler.swift:
-    :commit: fbf60ee6ef2eaec6b13eacff8d29a155863c2586
+    :commit: 569e87ac53fa8d023ba2275adf01d41d6018436f
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HsToolKit.swift:
     :commit: 7a2139d6dc005b90abf3a92fbfdd8e6d41ead5a3
     :git: https://github.com/horizontalsystems/hs-tool-kit-ios
   HUD.swift:
-    :commit: 844872d726a007052811974e1f80a18d60bc4a6f
+    :commit: cdd45d3d29c230c14b68dbd03fae9b7f9c42a3ab
     :git: https://github.com/horizontalsystems/gui-kit/
   LanguageKit.swift:
-    :commit: 01ccca8dcfeed5fe051ff0fe0274577e99e433b5
+    :commit: 8db95e5195871f266414298315d284ca20ae2191
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
     :commit: 569e87ac53fa8d023ba2275adf01d41d6018436f
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   ModuleKit.swift:
-    :commit: 01ccca8dcfeed5fe051ff0fe0274577e99e433b5
+    :commit: 8db95e5195871f266414298315d284ca20ae2191
     :git: https://github.com/horizontalsystems/component-kit-ios/
   PinKit.swift:
-    :commit: 01ccca8dcfeed5fe051ff0fe0274577e99e433b5
+    :commit: 8db95e5195871f266414298315d284ca20ae2191
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ScanQrKit.swift:
-    :commit: 01ccca8dcfeed5fe051ff0fe0274577e99e433b5
+    :commit: 8db95e5195871f266414298315d284ca20ae2191
     :git: https://github.com/horizontalsystems/component-kit-ios/
   SectionsTableView.swift:
-    :commit: 081039681333c4881de2eb5dc2fddc8634285e49
+    :commit: cdd45d3d29c230c14b68dbd03fae9b7f9c42a3ab
     :git: https://github.com/horizontalsystems/gui-kit/
   StorageKit.swift:
-    :commit: 01ccca8dcfeed5fe051ff0fe0274577e99e433b5
+    :commit: 8db95e5195871f266414298315d284ca20ae2191
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
     :commit: 8db95e5195871f266414298315d284ca20ae2191
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
-    :commit: d7631027e4632823316e53b63e8c98902a95292d
+    :commit: cdd45d3d29c230c14b68dbd03fae9b7f9c42a3ab
     :git: https://github.com/horizontalsystems/gui-kit/
   UniswapKit.swift:
-    :commit: 6adbde905aed41520c28c94e30232832f4e23e8e
+    :commit: d6c7e27274e5e8c963e6ed81b8a2ee0e8c726fa8
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   WalletConnect:
     :commit: 2c46d6414b0c558919149e0e775d12349cdb2d3e
@@ -576,7 +576,7 @@ SPEC CHECKSUMS:
   CNIOWindows: f2baa102255e986467578337ffa2f777cb6bdf7f
   CoinKit.swift: 5fe0db6364858c95be2e328eb53c15ab8b1af0fd
   CryptoSwift: 01b0f0cba1d5c212e5a335ff6c054fb75a204f00
-  Cuckoo: 4625f7f54d9bb880123270e8969898d6c1d036b5
+  Cuckoo: 4a54e93502b9ad06addcbd868ed203d96a64a299
   CurrencyKit.swift: 19b9e053c910003cc758689a74b312c3a809648c
   DashKit.swift: 31914a4bf92a907f06dc3bbd7ece7d839bae5b80
   DeepDiff: e5ae6c50d0321568e4508cec5930b9f10bb293fc
@@ -630,12 +630,12 @@ SPEC CHECKSUMS:
   ThemeKit.swift: 3d811f6b57daecbf87b5735b35c586bcaa1bff14
   UIExtensions.swift: 3ed084c0343ddd0f86c7c558d37759e1fd7d5778
   UniswapKit.swift: a0037722fad19c4fbfe905025468d828ebd26470
-  UnstoppableDomainsResolution: 39f82a66c5eabe1bedffc9c9342cabec9fe71aa0
+  UnstoppableDomainsResolution: 63abb84858d3e91eb838a5bfa6f7e3c0e0593f24
   WalletConnect: 1942d6ae2698cadc0b117f4f4c99bae9d821ab4d
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: 50dda0bb340cf42f000eb5039e342f6487165360
   ZcashLightClientKit: 9294ded6505b3f8dd6e77c14cf33887aeff8d352
 
-PODFILE CHECKSUM: 382967f0469d247882bb804c77420a14c9b1ff6b
+PODFILE CHECKSUM: adb728e3d5aa5a8a8d1d193902672d9591999de7
 
 COCOAPODS: 1.10.1
