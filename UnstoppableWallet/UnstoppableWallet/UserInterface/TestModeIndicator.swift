@@ -15,7 +15,8 @@ class TestModeIndicator {
     func show() {
         window = UIWindow()
         window?.windowLevel = UIWindow.Level.statusBar + 1
-        window?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIApplication.shared.statusBarFrame.height + 5)
+        let statusBarHeight = window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        window?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: statusBarHeight + 5)
         window?.backgroundColor = .clear
         window?.isOpaque = false
         window?.isHidden = false
