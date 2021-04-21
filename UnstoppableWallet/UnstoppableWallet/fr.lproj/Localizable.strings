@@ -142,7 +142,6 @@
 "error.send_binance.memo_required" = "Le destinataire a besoin d'une note non vide pour une opération de transfert";
 "error.send_binance.only_digits_allowed" = "Nécessite que le mémo ne contienne que des chiffres";
 "error.send_z_cash.transparent_address" = "Unstoppable ne prend pas en charge les paiements à une adresse transparente";
-"error.incubed_not_reachable" = "Serveurs Incubed non joignables";
 
 "backup.confirmation.title" = "Vérification...";
 
