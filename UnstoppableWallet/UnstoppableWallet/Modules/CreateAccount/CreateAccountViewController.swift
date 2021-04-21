@@ -139,7 +139,7 @@ class CreateAccountViewController: KeyboardAwareViewController {
 
 extension CreateAccountViewController: SectionsDataSource {
 
-    private func footer(text: String, isVisible: Bool) -> ViewState<BottomDescriptionHeaderFooterView> {
+    private func footer(text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
         .cellType(
                 hash: "bottom_description",
                 binder: { view in
@@ -196,7 +196,7 @@ extension CreateAccountViewController: SectionsDataSource {
             ),
             Section(
                     id: "passphrase-confirmation",
-                    footerState: inputsVisible ? footer(text: "create_wallet.passphrase_description".localized, isVisible: inputsVisible) : .margin(height: .margin32),
+                    footerState: inputsVisible ? footer(text: "create_wallet.passphrase_description".localized) : .margin(height: .margin32),
                     rows: [
                         StaticRow(
                                 cell: passphraseConfirmationCell,

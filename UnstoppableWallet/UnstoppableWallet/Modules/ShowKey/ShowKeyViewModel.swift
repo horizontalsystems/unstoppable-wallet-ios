@@ -29,7 +29,7 @@ extension ShowKeyViewModel {
         service.words
     }
 
-    var salt: String? {
+    var passphrase: String? {
         service.salt
     }
 

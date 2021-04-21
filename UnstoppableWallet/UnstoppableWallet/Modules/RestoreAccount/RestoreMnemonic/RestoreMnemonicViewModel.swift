@@ -11,6 +11,9 @@ class RestoreMnemonicViewModel {
     private let proceedRelay = PublishRelay<AccountType>()
     private let showErrorRelay = PublishRelay<String>()
 
+    private let passphraseCautionRelay = BehaviorRelay<Caution?>(value: nil)
+    private let clearInputsRelay = PublishRelay<Void>()
+
     private let regex = try! NSRegularExpression(pattern: "\\S+")
     private var state = State(allItems: [], invalidItems: [])
 
@@ -41,6 +44,19 @@ class RestoreMnemonicViewModel {
         state = State(allItems: allItems, invalidItems: invalidItems)
     }
 
+    private func clearInputs() {
+        clearInputsRelay.accept(())
+        clearCautions()
+
+        service.passphrase = ""
+    }
+
+    private func clearCautions() {
+        if passphraseCautionRelay.value != nil {
+            passphraseCautionRelay.accept(nil)
+        }
+    }
+
 }
 
 extension RestoreMnemonicViewModel {
@@ -51,6 +67,18 @@ extension RestoreMnemonicViewModel {
 
     var proceedSignal: Signal<AccountType> {
         proceedRelay.asSignal()
+    }
+
+    var inputsVisibleDriver: Driver<Bool> {
+        service.passphraseEnabledObservable.asDriver(onErrorJustReturn: false)
+    }
+
+    var passphraseCautionDriver: Driver<Caution?> {
+        passphraseCautionRelay.asDriver()
+    }
+
+    var clearInputsSignal: Signal<Void> {
+        clearInputsRelay.asSignal()
     }
 
     func onChange(text: String, cursorOffset: Int) {
@@ -65,6 +93,16 @@ extension RestoreMnemonicViewModel {
         invalidRangesRelay.accept(nonCursorInvalidItems.map { $0.range })
     }
 
+    func onTogglePassphrase(isOn: Bool) {
+        service.set(passphraseEnabled: isOn)
+        clearInputs()
+    }
+
+    func onChange(passphrase: String) {
+        service.passphrase = passphrase
+        clearCautions()
+    }
+
     func onTapProceed() {
         guard state.invalidItems.isEmpty else {
             invalidRangesRelay.accept(state.invalidItems.map { $0.range })
@@ -76,7 +114,11 @@ extension RestoreMnemonicViewModel {
 
             proceedRelay.accept(accountType)
         } catch {
-            showErrorRelay.accept(error.convertedError.smartDescription)
+            if case RestoreMnemonicService.RestoreError.emptyPassphrase = error {
+                passphraseCautionRelay.accept(Caution(text: "restore.error.empty_passphrase".localized, type: .error))
+            } else {
+                showErrorRelay.accept(error.convertedError.smartDescription)
+            }
         }
     }
 
