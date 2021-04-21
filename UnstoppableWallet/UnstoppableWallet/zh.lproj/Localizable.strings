@@ -142,7 +142,6 @@
 "error.send_binance.memo_required" = "收款人要求在转账交易中包含非空的备注";
 "error.send_binance.only_digits_allowed" = "要求备注仅包含数字";
 "error.send_z_cash.transparent_address" = "Unstoppable不支持对透明地址付款";
-"error.incubed_not_reachable" = "无法联系Incubed服务器";
 
 "backup.confirmation.title" = "正在检查...";
 
