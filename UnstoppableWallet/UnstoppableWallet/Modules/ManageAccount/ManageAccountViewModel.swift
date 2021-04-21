@@ -67,10 +67,6 @@ extension ManageAccountViewModel {
         service.account.name
     }
 
-    func isValid(name: String?) -> Bool {
-        !(name ?? "").contains("\n")
-    }
-
     func onChange(name: String?) {
         service.set(name: name ?? "")
     }
