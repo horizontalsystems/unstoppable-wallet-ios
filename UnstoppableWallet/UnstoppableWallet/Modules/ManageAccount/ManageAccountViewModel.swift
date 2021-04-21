@@ -11,7 +11,6 @@ class ManageAccountViewModel {
     private let openShowKeyRelay = PublishRelay<Account>()
     private let openBackupKeyRelay = PublishRelay<Account>()
     private let openUnlinkRelay = PublishRelay<Account>()
-    private let openBackupRequiredRelay = PublishRelay<Account>()
     private let finishRelay = PublishRelay<()>()
 
     init(service: ManageAccountService) {
@@ -60,10 +59,6 @@ extension ManageAccountViewModel {
         openUnlinkRelay.asSignal()
     }
 
-    var openBackupRequiredSignal: Signal<Account> {
-        openBackupRequiredRelay.asSignal()
-    }
-
     var finishSignal: Signal<()> {
         finishRelay.asSignal()
     }
@@ -94,13 +89,7 @@ extension ManageAccountViewModel {
     }
 
     func onTapUnlink() {
-        let account = service.account
-
-        if account.backedUp {
-            openUnlinkRelay.accept(account)
-        } else {
-            openBackupRequiredRelay.accept(account)
-        }
+        openUnlinkRelay.accept(service.account)
     }
 
 }
