@@ -142,7 +142,6 @@
 "error.send_binance.memo_required" = "수신자는 송금 내역에 메모 기록을 필요로 합니다";
 "error.send_binance.only_digits_allowed" = "메모에는 숫자만 포함하셔야 합니다";
 "error.send_z_cash.transparent_address" = "Unstoppable은 투명 주소에 대한 지불을 지원하지 않습니다";
-"error.incubed_not_reachable" = "Incubed 서버 접근 불가";
 
 "backup.confirmation.title" = "확인 중...";
 
