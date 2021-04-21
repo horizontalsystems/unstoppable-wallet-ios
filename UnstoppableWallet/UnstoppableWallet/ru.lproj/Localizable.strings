@@ -144,7 +144,6 @@
 "error.send_binance.memo_required" = "При отправке транзакции получателю необходимо заполнить поле мемо";
 "error.send_binance.only_digits_allowed" = "Поле мемо должно содержать только цифры";
 "error.send_z_cash.transparent_address" = "Unstoppable не поддерживает платежи на публичный адрес";
-"error.incubed_not_reachable" = "Сервера Incubed недоступны";
 
 "backup.confirmation.title" = "Проверка...";
 
