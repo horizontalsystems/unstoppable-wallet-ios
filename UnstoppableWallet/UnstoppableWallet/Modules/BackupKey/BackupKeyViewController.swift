@@ -36,7 +36,7 @@ class BackupKeyViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = "backup_key.title".localized
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapCloseButton))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancelButton))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -95,7 +95,7 @@ class BackupKeyViewController: ThemeViewController {
         tableView.buildSections()
     }
 
-    @objc private func onTapCloseButton() {
+    @objc private func onTapCancelButton() {
         dismiss(animated: true)
     }
 

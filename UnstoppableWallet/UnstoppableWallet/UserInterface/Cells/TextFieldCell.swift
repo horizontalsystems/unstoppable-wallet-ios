@@ -39,6 +39,10 @@ class TextFieldCell: UITableViewCell {
         stackView.becomeFirstResponder()
     }
 
+    func prependSubview(_ view: UIView, customSpacing: CGFloat? = nil) {
+        stackView.prependSubview(view, customSpacing: customSpacing)
+    }
+
 }
 
 extension TextFieldCell {
@@ -63,6 +67,11 @@ extension TextFieldCell {
         set { stackView.autocapitalizationType = newValue }
     }
 
+    var returnKeyType: UIReturnKeyType {
+        get { stackView.returnKeyType }
+        set { stackView.returnKeyType = newValue }
+    }
+
     var isSecureTextEntry: Bool {
         get { stackView.isSecureTextEntry }
         set { stackView.isSecureTextEntry = newValue }
@@ -83,6 +92,16 @@ extension TextFieldCell {
     var onChangeText: ((String?) -> ())? {
         get { stackView.onChangeText }
         set { stackView.onChangeText = newValue }
+    }
+
+    var onReturn: (() -> ())? {
+        get { stackView.onReturn }
+        set { stackView.onReturn = newValue }
+    }
+
+    var onSpaceKey: (() -> Bool)? {
+        get { stackView.onSpaceKey }
+        set { stackView.onSpaceKey = newValue }
     }
 
 }

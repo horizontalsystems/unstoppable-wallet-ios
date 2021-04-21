@@ -9,6 +9,10 @@ class BackupConfirmKeyService {
     private let salt: String?
     private let disposeBag = DisposeBag()
 
+    var firstWord: String = ""
+    var secondWord: String = ""
+    var passphrase: String = ""
+
     private let indexItemRelay = PublishRelay<IndexItem>()
     private(set) var indexItem: IndexItem = IndexItem(first: 0, second: 1) {
         didSet {
@@ -42,10 +46,34 @@ class BackupConfirmKeyService {
         return indexes
     }
 
-    func validate(word: String, validWord: String) throws {
-        guard word.lowercased().trimmingCharacters(in: .whitespaces) == validWord else {
-            throw ValidationError.emptyOrInvalidWord
+    private func validate() -> [ValidationError] {
+        var errors = [ValidationError]()
+
+        let firstWord = self.firstWord.lowercased().trimmingCharacters(in: .whitespaces)
+
+        if firstWord.isEmpty {
+            errors.append(.emptyFirstWord)
+        } else if firstWord != words[indexItem.first] {
+            errors.append(.invalidFirstWord)
         }
+
+        let secondWord = self.secondWord.lowercased().trimmingCharacters(in: .whitespaces)
+
+        if secondWord.isEmpty {
+            errors.append(.emptySecondWord)
+        } else if secondWord != words[indexItem.second] {
+            errors.append(.invalidSecondWord)
+        }
+
+        if let salt = salt {
+            if passphrase.isEmpty {
+                errors.append(.emptyPassphrase)
+            } else if passphrase != salt {
+                errors.append(.invalidPassphrase)
+            }
+        }
+
+        return errors
     }
 
 }
@@ -56,14 +84,21 @@ extension BackupConfirmKeyService {
         indexItemRelay.asObservable()
     }
 
+    var hasSalt: Bool {
+        salt != nil
+    }
+
     func generateIndexes() {
         let indexes = generateRandomIndexes(max: words.count, count: 2)
         indexItem = IndexItem(first: indexes[0], second: indexes[1])
     }
 
-    func backup(firstWord: String, secondWord: String) throws {
-        try validate(word: firstWord, validWord: words[indexItem.first])
-        try validate(word: secondWord, validWord: words[indexItem.second])
+    func backup() throws {
+        let validationErrors = validate()
+
+        guard validationErrors.isEmpty else {
+            throw BackupError(validationErrors: validationErrors)
+        }
 
         account.backedUp = true
         accountManager.update(account: account)
@@ -78,15 +113,17 @@ extension BackupConfirmKeyService {
         let second: Int
     }
 
-    enum ValidationError: LocalizedError {
-        case emptyOrInvalidWord
+    struct BackupError: Error {
+        let validationErrors: [ValidationError]
+    }
 
-        var errorDescription: String? {
-            switch self {
-            case .emptyOrInvalidWord:
-                return "backup_key.confirmation.empty_or_invalid_words".localized
-            }
-        }
+    enum ValidationError: Error {
+        case emptyFirstWord
+        case invalidFirstWord
+        case emptySecondWord
+        case invalidSecondWord
+        case emptyPassphrase
+        case invalidPassphrase
     }
 
 }
