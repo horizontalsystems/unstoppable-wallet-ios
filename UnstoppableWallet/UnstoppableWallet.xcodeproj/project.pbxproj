@@ -65,6 +65,7 @@
 		11B350EDF233432B9A3BFF6B /* SwapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3551720C79A077888F5AE /* SwapService.swift */; };
 		11B350F12C3CA54080C16031 /* ManageWalletsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C4D645B4468F84EADB7 /* ManageWalletsViewController.swift */; };
 		11B350F8D2D09F1BD5ECF003 /* SendEvmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F6B511DA5E0C60ED156 /* SendEvmViewModel.swift */; };
+		11B350F9484020EFF74EFF1F /* MnemonicInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DB358405198CF67F11D /* MnemonicInputCell.swift */; };
 		11B350FB0BA2301455D7A0DB /* NotificationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355AE4EC2E1B56904AB13 /* NotificationSettingsViewController.swift */; };
 		11B3510476A82273C10A2FF2 /* WalletConnectMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A6882625D6646A10103 /* WalletConnectMainViewModel.swift */; };
 		11B3510BC26128273E969C7F /* TermsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B462980B0617E11FB05 /* TermsModule.swift */; };
@@ -684,6 +685,7 @@
 		11B3592F4CE25D607C247616 /* BalanceButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3585EF1DA625D906AF9B5 /* BalanceButtonsView.swift */; };
 		11B35939B9F6C6E1B0F5F3A1 /* BalanceSeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F5612A6C583EC86121A /* BalanceSeparatorView.swift */; };
 		11B3593F2D3A26D842D25D56 /* ManageAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A38C734DF3157C84678 /* ManageAccountViewController.swift */; };
+		11B359413C92A83580A130B3 /* MnemonicInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DB358405198CF67F11D /* MnemonicInputCell.swift */; };
 		11B3594EB41D1CB231DB9D8E /* MarkdownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DF08505C3A7CB1BBBB4 /* MarkdownViewController.swift */; };
 		11B35950636F7FB2C85F78FE /* SendAvailableBalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352F8D9567E50A0DA2F67 /* SendAvailableBalanceCell.swift */; };
 		11B35953404F5C8903DDA70D /* RecipientAddressCautionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358B22BAF021E8FA028BF /* RecipientAddressCautionCell.swift */; };
@@ -1073,6 +1075,7 @@
 		11B35E748FD8915CE7FC8FFB /* FormCautionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3568F6FAF721301DEC188 /* FormCautionView.swift */; };
 		11B35E7854572CFBEA11ADC5 /* RateDiffButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B5E4AD8D8F97A721363 /* RateDiffButton.swift */; };
 		11B35E81542268ACDC17502A /* AlertRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3516415E7A3217BBB1681 /* AlertRouter.swift */; };
+		11B35E8190BD63485FEBAD96 /* MnemonicInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DB358405198CF67F11D /* MnemonicInputCell.swift */; };
 		11B35E8777FC5A18BD07CF60 /* AccountRecord_v_0_10.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BBC9FB99B388F1A388F /* AccountRecord_v_0_10.swift */; };
 		11B35E8BF94FD52708DBB0E1 /* CoinRecord_v19.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B2C6C103AFF4CCC6E91 /* CoinRecord_v19.swift */; };
 		11B35E8D7BC94103A4ABD91C /* WalletHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E859456CF982321B46F /* WalletHeaderView.swift */; };
@@ -2707,6 +2710,7 @@
 		11B35D989E87FF659022FC3C /* MnemonicWordCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicWordCell.swift; sourceTree = "<group>"; };
 		11B35D9B7E135CF98F0F8259 /* CoinSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinSettingsView.swift; sourceTree = "<group>"; };
 		11B35D9DD75364F936010D3D /* BitcoinHodlingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinHodlingViewController.swift; sourceTree = "<group>"; };
+		11B35DB358405198CF67F11D /* MnemonicInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicInputCell.swift; sourceTree = "<group>"; };
 		11B35DBDADDA8D4F9D88C7AA /* RecipientAddressInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipientAddressInputCell.swift; sourceTree = "<group>"; };
 		11B35DC48EEBE1160676B269 /* ManageAccountService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAccountService.swift; sourceTree = "<group>"; };
 		11B35DC72F0D8DBBCCE2F988 /* MarkdownVisitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownVisitor.swift; sourceTree = "<group>"; };
@@ -3388,6 +3392,7 @@
 				11B35368FF9DD8600557BF07 /* TextCell.swift */,
 				11B3513049D27CB1FA264600 /* MnemonicPhraseCell.swift */,
 				11B35D989E87FF659022FC3C /* MnemonicWordCell.swift */,
+				11B35DB358405198CF67F11D /* MnemonicInputCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -6586,6 +6591,7 @@
 				11B35F89CE629E12ACC18615 /* TextFieldCell.swift in Sources */,
 				11B35F4289C58FA372AF37A3 /* TextFieldStackView.swift in Sources */,
 				11B35FA2E750C2038CF486BD /* Caution.swift in Sources */,
+				11B35E8190BD63485FEBAD96 /* MnemonicInputCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7384,6 +7390,7 @@
 				11B35D9E935C8431D6E93AA6 /* TextFieldCell.swift in Sources */,
 				11B35E165D6681B849F9A934 /* TextFieldStackView.swift in Sources */,
 				11B3560586CBAB617211F003 /* Caution.swift in Sources */,
+				11B359413C92A83580A130B3 /* MnemonicInputCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8144,6 +8151,7 @@
 				11B35AFCD30C67DCA2F4FF8B /* TextFieldCell.swift in Sources */,
 				11B35C59583AFCDFD828B9D1 /* TextFieldStackView.swift in Sources */,
 				11B356B6BEB9562F670DFAC5 /* Caution.swift in Sources */,
+				11B350F9484020EFF74EFF1F /* MnemonicInputCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

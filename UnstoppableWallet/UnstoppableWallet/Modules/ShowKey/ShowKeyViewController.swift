@@ -54,6 +54,7 @@ class ShowKeyViewController: ThemeViewController {
         tableView.registerCell(forClass: DCell.self)
         tableView.registerCell(forClass: Cell9.self)
         tableView.registerCell(forClass: EmptyCell.self)
+        tableView.registerCell(forClass: C9Cell.self)
 
         view.addSubview(descriptionView)
         descriptionView.snp.makeConstraints { maker in
@@ -185,6 +186,22 @@ extension ShowKeyViewController: SectionsDataSource {
 
             rows.append(marginRow(id: "top-margin", height: .margin12))
             rows.append(phraseRow)
+
+            if let passphrase = viewModel.passphrase {
+                let passphraseRow = Row<C9Cell>(
+                        id: "passphrase",
+                        height: .heightCell48,
+                        bind: { cell, _ in
+                            cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                            cell.title = "show_key.passphrase".localized
+                            cell.titleImage = UIImage(named: "key_phrase_20")
+                            cell.viewItem = .init(value: passphrase)
+                        }
+                )
+
+                rows.append(marginRow(id: "passphrase-margin", height: .margin32))
+                rows.append(passphraseRow)
+            }
         case .privateKeys:
             for privateKey in viewModel.privateKeys {
                 rows.append(contentsOf: self.rows(privateKey: privateKey))
