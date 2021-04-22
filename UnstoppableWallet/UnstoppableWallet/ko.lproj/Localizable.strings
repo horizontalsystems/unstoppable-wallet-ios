@@ -139,8 +139,6 @@
 
 "backup.words.confirmation_description" = "귀하의 %@암호에서 단어를 입력해 주십시오.";
 
-"backup.birthday_height" = "생일 신장";
-
 "error.send.self_transfer" = "자체로 전송이 지원되지 않음";
 "error.send_ethereum.wrong_parameters" = "잘못된 매개 변수";
 "error.send_binance.memo_required" = "수신자는 송금 내역에 메모 기록을 필요로 합니다";
@@ -953,3 +951,4 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "birthday_input.title" = "Birthday Height";
 "birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing";
 "birthday_input.input_placeholder" = "%@ (optional)";
+"restore_setting.birthday_height" = "%@ Birthday Height";
