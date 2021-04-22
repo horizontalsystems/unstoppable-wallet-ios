@@ -22,7 +22,7 @@ class BinanceSmartChainKitManager {
             throw AdapterError.unsupportedAccount
         }
 
-        guard let syncSource = EthereumKit.Kit.defaultBscWebsocketSyncSource() else {
+        guard let syncSource = EthereumKit.Kit.defaultBscHttpSyncSource() else {
             throw AdapterError.wrongParameters
         }
 
