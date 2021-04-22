@@ -355,8 +355,10 @@
 "market.top.section.header.top_volume" = "Top By Volume";
 "market.top.volume.title" = "Vol";
 "market.top.market_cap.title" = "MCap";
+"market.top.diluted_market_cap.title" = "Diluted M.Cap";
 
 "market.market_field.mcap" = "MCap";
+"market.diluted_market_field.mcap" = "Diluted M.Cap";
 "market.market_field.vol" = "Vol";
 
 "market.sort_by" = "Sort By";
@@ -479,6 +481,11 @@
 "market.advanced_search.month" = "1 Month";
 "market.advanced_search.month6" = "6 Months";
 "market.advanced_search.year" = "1 Year";
+
+"market.global.btc_dominance.title" = "Bitcoin Dominance";
+"market.global.volume_24h.title" = "Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 
 // Coin Page
 
