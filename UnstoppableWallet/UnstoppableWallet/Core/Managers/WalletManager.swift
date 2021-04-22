@@ -74,6 +74,10 @@ extension WalletManager: IWalletManager {
         }
     }
 
+    func wallets(account: Account) -> [Wallet] {
+        storage.wallets(account: account)
+    }
+
     func handle(newWallets: [Wallet], deletedWallets: [Wallet]) {
         storage.handle(newWallets: newWallets, deletedWallets: deletedWallets)
 

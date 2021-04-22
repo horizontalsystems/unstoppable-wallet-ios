@@ -62,7 +62,7 @@ class AppStatusManager {
     private var blockchainStatus: [(String, Any)] {
         var status = [(String, Any)]()
 
-        let bitcoinBaseWallets = walletManager.wallets.filter { AppStatusManager.statusBitcoinCoreTypes.contains($0.coin.type) }
+        let bitcoinBaseWallets = walletManager.activeWallets.filter { AppStatusManager.statusBitcoinCoreTypes.contains($0.coin.type) }
 
         status.append(contentsOf: bitcoinBaseWallets.compactMap {
             guard let adapter = adapterManager.adapter(for: $0) as? BitcoinBaseAdapter else {

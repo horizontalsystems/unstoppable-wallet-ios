@@ -50,6 +50,22 @@ extension RestoreSettingsManager {
 
 enum RestoreSettingType: String {
     case birthdayHeight
+
+    func createdAccountValue(coinType: CoinType) -> String? {
+        switch self {
+        case .birthdayHeight:
+            switch coinType {
+            case .zcash: return "\(ZcashAdapter.newBirthdayHeight)"
+            default: return nil
+            }
+        }
+    }
+
+    func title(coin: Coin) -> String {
+        switch self {
+        case .birthdayHeight: return "restore_setting.birthday_height".localized(coin.code)
+        }
+    }
 }
 
 typealias RestoreSettings = [RestoreSettingType: String]
