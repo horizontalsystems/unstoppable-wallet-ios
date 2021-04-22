@@ -19,7 +19,7 @@ def appPods
   pod 'BitcoinCore.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
   # pod 'BitcoinCore.swift', path: '../bitcoin-kit-ios/'
 
-  pod 'ZcashLightClientKit', '~> 0.10.0'
+  pod 'ZcashLightClientKit', git: 'https://github.com/zcash/ZcashLightClientKit.git', :branch => 'shield-funds-poc'
 
   pod 'CoinKit.swift', git: 'https://github.com/horizontalsystems/coin-kit-ios'
   # pod 'CoinKit.swift', path: '../coin-kit-ios/'
