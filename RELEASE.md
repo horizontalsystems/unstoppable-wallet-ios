@@ -58,3 +58,4 @@ $ git branch version/0.1
 
 * Create tag for current version
 * Create `Release` and add changelog
+* Attach `ipa` file to release
