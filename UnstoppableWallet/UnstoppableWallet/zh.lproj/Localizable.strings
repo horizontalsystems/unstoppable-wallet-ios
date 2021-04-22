@@ -139,8 +139,6 @@
 
 "backup.words.confirmation_description" = "输入您%@密钥中的文字";
 
-"backup.birthday_height" = "生日高度";
-
 "error.send.self_transfer" = "不支持发送给自己";
 "error.send_ethereum.wrong_parameters" = "错误参数";
 "error.send_binance.memo_required" = "收款人要求在转账交易中包含非空的备注";
@@ -953,3 +951,4 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "birthday_input.title" = "Birthday Height";
 "birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing";
 "birthday_input.input_placeholder" = "%@ (optional)";
+"restore_setting.birthday_height" = "%@ Birthday Height";
