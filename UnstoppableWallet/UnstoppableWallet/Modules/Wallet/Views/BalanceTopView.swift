@@ -80,6 +80,7 @@ class BalanceTopView: UIView {
             blockchainBadgeView.text = blockchainBadge
             blockchainBadgeView.isHidden = false
         } else {
+            blockchainBadgeView.text = nil
             blockchainBadgeView.isHidden = true
         }
 
