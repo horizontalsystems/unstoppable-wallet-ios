@@ -141,8 +141,6 @@
 
 "backup.words.confirmation_description" = "Введите слова из вашего %@ ключа";
 
-"backup.birthday_height" = "Блок создания";
-
 "error.send.self_transfer" = "Отправка самому себе невозможна";
 "error.send_ethereum.wrong_parameters" = "Неверные параметры";
 "error.send_binance.memo_required" = "При отправке транзакции получателю необходимо заполнить поле мемо";
@@ -955,3 +953,4 @@
 "birthday_input.title" = "Birthday Height";
 "birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing";
 "birthday_input.input_placeholder" = "%@ (optional)";
+"restore_setting.birthday_height" = "%@ Birthday Height";
