@@ -10,6 +10,13 @@ extension ChartConfiguration {
         ChartConfiguration().applyColors()
     }
 
+    static var chartWithoutIndicators: ChartConfiguration {
+        let configuration = ChartConfiguration().applyColors()
+        configuration.showIndicators = false
+
+        return configuration
+    }
+
     static var smallChart: ChartConfiguration {
         let config = ChartConfiguration().applyColors()
 

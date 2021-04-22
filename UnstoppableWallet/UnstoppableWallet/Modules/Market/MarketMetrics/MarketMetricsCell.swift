@@ -2,6 +2,7 @@ import UIKit
 import SnapKit
 import ThemeKit
 import RxSwift
+import RxCocoa
 import HUD
 import Chart
 
@@ -19,6 +20,8 @@ class MarketMetricsCellNew: UITableViewCell {
 
     private let spinner = HUDActivityView.create(with: .medium24)
     private let errorView = ErrorView()
+
+    private var tapMetricRelay = PublishRelay<MarketGlobalModule.MetricsType>()
 
     init(viewModel: MarketMetricsViewModel, chartConfiguration: ChartConfiguration) {
         self.viewModel = viewModel
@@ -72,6 +75,11 @@ class MarketMetricsCellNew: UITableViewCell {
             maker.height.equalTo(MarketMetricView.height)
         }
 
+        btcDominanceView.onTap = { [weak self] in self?.onTap(metricType: .btcDominance) }
+        volume24hView.onTap = { [weak self] in self?.onTap(metricType: .volume24h) }
+        deFiCapView.onTap = { [weak self] in self?.onTap(metricType: .defiCap) }
+        deFiTvlView.onTap = { [weak self] in self?.onTap(metricType: .tvlInDefi) }
+
         contentView.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().inset(CGFloat.margin16)
@@ -97,6 +105,10 @@ class MarketMetricsCellNew: UITableViewCell {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func onTap(metricType: MarketGlobalModule.MetricsType) {
+        tapMetricRelay.accept(metricType)
     }
 
     private func sync(marketMetrics: MarketMetricsViewModel.MarketMetrics?) {
@@ -161,6 +173,10 @@ class MarketMetricsCellNew: UITableViewCell {
 }
 
 extension MarketMetricsCellNew {
+
+    var onTapMetricsSignal: Signal<MarketGlobalModule.MetricsType> {
+        tapMetricRelay.asSignal()
+    }
 
     func refresh() {
         viewModel.refresh()

@@ -12,6 +12,8 @@ class MarketMetricView: UIView {
     private let chartView = RateChartView()
     private let button = ThemeButton()
 
+    var onTap: (() -> ())?
+
     init(configuration: ChartConfiguration) {
         super.init(frame: .zero)
 
@@ -27,7 +29,7 @@ class MarketMetricView: UIView {
         chartView.apply(configuration: configuration)
 
         backgroundColor = .themeLawrence
-        layer.cornerRadius = .cornerRadius4x
+        layer.cornerRadius = .cornerRadius3x
         clipsToBounds = true
 
         addSubview(chartView)
@@ -79,7 +81,7 @@ class MarketMetricView: UIView {
     }
 
     @objc private func didTapButton() {
-        print("did tapped")
+        onTap?()
     }
 
 }

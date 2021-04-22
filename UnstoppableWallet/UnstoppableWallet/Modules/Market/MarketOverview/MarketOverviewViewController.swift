@@ -58,6 +58,8 @@ class MarketOverviewViewController: ThemeViewController {
             self?.state = state
             self?.tableView.reload()
         }
+
+        subscribe(disposeBag, marketMetricsCell.onTapMetricsSignal) { [weak self] in self?.onTap(metricType: $0) }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -120,6 +122,12 @@ class MarketOverviewViewController: ThemeViewController {
     private func onSelect(viewItem: MarketModule.ViewItem) {
         let viewController = CoinPageModule.viewController(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinName, coinType: viewItem.coinType))
         parentNavigationController?.pushViewController(viewController, animated: true)
+    }
+
+    private func onTap(metricType: MarketGlobalModule.MetricsType) {
+        let viewController = MarketGlobalModule.viewController(type: metricType)
+        parentNavigationController?.pushViewController(viewController, animated: true)
+
     }
 
     private func didTapSeeAll(listType: MarketModule.ListType) {

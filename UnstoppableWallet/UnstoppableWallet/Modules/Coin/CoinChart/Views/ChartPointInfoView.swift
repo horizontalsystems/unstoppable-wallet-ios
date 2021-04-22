@@ -35,6 +35,9 @@ class ChartPointInfoView: UIView {
 
 
         switch viewItem.rightSideMode {
+        case .none:
+            rightView.isHidden = true
+            macdView.isHidden = false
         case .volume(let value):
             let volumeSubtitle = value.map { _ in "chart.selected.volume".localized }
             rightView.bind(title: value, subtitle: volumeSubtitle)
@@ -43,9 +46,6 @@ class ChartPointInfoView: UIView {
             macdView.isHidden = true
         case .macd(let macdInfo):
             macdView.bind(histogram: macdInfo.histogram, signal: macdInfo.signal, macd: macdInfo.macd, histogramDown: macdInfo.histogramDown)
-
-            rightView.isHidden = true
-            macdView.isHidden = false
         }
 
     }

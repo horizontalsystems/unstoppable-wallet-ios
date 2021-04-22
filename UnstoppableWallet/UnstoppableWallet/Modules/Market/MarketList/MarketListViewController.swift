@@ -46,6 +46,8 @@ class MarketListViewController: ThemeViewController {
 
         tableView.sectionDataSource = self
 
+        headerView.setSortingField(image: UIImage(named: "arrow_small_down_20"))
+        headerView.set(marketFields: listViewModel.allMarketFields)
         headerView.onTapSortField = { [weak self] in
             self?.onTapSortingField()
         }
@@ -61,7 +63,7 @@ class MarketListViewController: ThemeViewController {
             self?.headerView.setSortingField(title: title)
         }
         subscribe(disposeBag, listViewModel.marketFieldDriver) { [weak self] marketField in
-            self?.headerView.setMarketField(field: marketField)
+            self?.headerView.setMarket(field: marketField)
         }
     }
 
