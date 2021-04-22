@@ -4,7 +4,7 @@ PODS:
     - RxSwift (~> 5.0)
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1.1)
-  - Alamofire (5.4.2)
+  - Alamofire (5.4.3)
   - AlamofireImage (4.2.0):
     - Alamofire (~> 5.4)
   - Base58Swift (2.1.10):
@@ -487,7 +487,7 @@ CHECKOUT OPTIONS:
     :commit: e60c5cfbb491216d7162eb6d93087737aa89557c
     :git: https://github.com/horizontalsystems/coin-kit-ios
   CurrencyKit.swift:
-    :commit: 8db95e5195871f266414298315d284ca20ae2191
+    :commit: 82ae15086f4b4a4e2101f3ac5c4ae4ba23792790
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
     :commit: 260099bd8a5371c20472d00b40a0a2cb296a778e
@@ -511,31 +511,31 @@ CHECKOUT OPTIONS:
     :commit: 260099bd8a5371c20472d00b40a0a2cb296a778e
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HsToolKit.swift:
-    :commit: 7a2139d6dc005b90abf3a92fbfdd8e6d41ead5a3
+    :commit: 5c520fd43b1795c720eeb2b7e6d96d6fb2d91579
     :git: https://github.com/horizontalsystems/hs-tool-kit-ios
   HUD.swift:
     :commit: cdd45d3d29c230c14b68dbd03fae9b7f9c42a3ab
     :git: https://github.com/horizontalsystems/gui-kit/
   LanguageKit.swift:
-    :commit: 8db95e5195871f266414298315d284ca20ae2191
+    :commit: 82ae15086f4b4a4e2101f3ac5c4ae4ba23792790
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
     :commit: 260099bd8a5371c20472d00b40a0a2cb296a778e
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   ModuleKit.swift:
-    :commit: 8db95e5195871f266414298315d284ca20ae2191
+    :commit: 82ae15086f4b4a4e2101f3ac5c4ae4ba23792790
     :git: https://github.com/horizontalsystems/component-kit-ios/
   PinKit.swift:
-    :commit: 8db95e5195871f266414298315d284ca20ae2191
+    :commit: 82ae15086f4b4a4e2101f3ac5c4ae4ba23792790
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ScanQrKit.swift:
-    :commit: 8db95e5195871f266414298315d284ca20ae2191
+    :commit: 82ae15086f4b4a4e2101f3ac5c4ae4ba23792790
     :git: https://github.com/horizontalsystems/component-kit-ios/
   SectionsTableView.swift:
     :commit: cdd45d3d29c230c14b68dbd03fae9b7f9c42a3ab
     :git: https://github.com/horizontalsystems/gui-kit/
   StorageKit.swift:
-    :commit: 8db95e5195871f266414298315d284ca20ae2191
+    :commit: 82ae15086f4b4a4e2101f3ac5c4ae4ba23792790
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
     :commit: 82ae15086f4b4a4e2101f3ac5c4ae4ba23792790
@@ -555,7 +555,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   ActionSheet.swift: fcfca3360d0855247bdb0fcdac27f4a7a4d7d593
-  Alamofire: bfbc4c2fe5909b1d94fb4ef2277c6b3727ef5dae
+  Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
   AlamofireImage: 34a2d90b0e5fe6a5605f85ae4b7b01e784c60192
   Base58Swift: 53d551f0b33d9478fa63b3445e453a772d6b31a7
   BigInt: 74b4d88367b0e819d9f77393549226d36faeb0d8
