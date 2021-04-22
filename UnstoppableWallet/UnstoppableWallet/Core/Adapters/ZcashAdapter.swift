@@ -75,10 +75,11 @@ class ZcashAdapter {
                 outputParamsURL: try! ZcashAdapter.outputParamsURL(uniqueId: uniqueId),
                 loggerProxy: loggingProxy)
 
-        let seedData = [UInt8](seed)
-        try initializer.initialize(viewingKeys: try DerivationTool.default.deriveViewingKeys(seed: seedData, numberOfAccounts: 1),
-                walletBirthday: BlockHeight(birthday))
 
+        let seedData = [UInt8](Mnemonic.seed(mnemonic: words))
+//        try initializer.initialize(viewingKeys: try DerivationTool.default.deriveViewingKeys(seed: seedData, numberOfAccounts: 1),
+//                walletBirthday: BlockHeight(birthday))
+        try initializer.initialize(unifiedViewingKeys: DerivationTool.default.deriveUnifiedViewingKeysFromSeed(seedData, numberOfAccounts: 1), walletBirthday: BlockHeight(birthday))
         keys = try DerivationTool.default.deriveSpendingKeys(seed: seedData, numberOfAccounts: 1)
         synchronizer = try SDKSynchronizer(initializer: initializer)
 
@@ -289,7 +290,7 @@ class ZcashAdapter {
 
     deinit {
         NotificationCenter.default.removeObserver(self)
-        synchronizer.blockProcessor?.stop()
+        synchronizer.blockProcessor.stop()
         synchronizer.stop()
     }
 
@@ -382,11 +383,19 @@ extension ZcashAdapter: IAdapter {
     }
 
     var debugInfo: String {
-        """
-        ZcashAdapter address: \(synchronizer.getAddress(accountIndex: 0))
+        let taddress = synchronizer.getTransparentAddress(accountIndex: 0)
+        let tBalance = try? synchronizer.getTransparentBalance(address: taddress ?? "")
+        return """
+        ZcashAdapter
+        z-address: \(String(describing: synchronizer.getShieldedAddress(accountIndex: 0)))
+        t-address: \(String(describing: taddress ))
         spendingKeys: \(keys.description)
-        balance: \(synchronizer.initializer.getBalance())
-        verified balance: \(synchronizer.initializer.getVerifiedBalance())
+        shielded balance
+                  total:  \(synchronizer.initializer.getBalance())
+               verified:  \(synchronizer.initializer.getVerifiedBalance())
+        transparent balance
+                     total: \(tBalance == nil ? "failed" : String(describing: tBalance?.total))
+                  verified: \(tBalance == nil ? "failed" : String(describing: tBalance?.verified))
         """
     }
 
@@ -442,7 +451,7 @@ extension ZcashAdapter: IDepositAdapter {
 
     var receiveAddress: String {
         // only first account
-        synchronizer.getAddress(accountIndex: 0)
+        synchronizer.getShieldedAddress(accountIndex: 0) ?? "" //FIXME: address nullabilty issue
     }
 
 }
@@ -454,8 +463,8 @@ extension ZcashAdapter: ISendZcashAdapter {
     }
 
     func validate(address: String) throws {
-        guard !synchronizer.initializer.isValidTransparentAddress(address) else {
-            throw AppError.zcash(reason: .transparentAddress)
+        guard synchronizer.initializer.isValidTransparentAddress(address) else {
+            throw AppError.addressInvalid
         }
 
         guard synchronizer.initializer.isValidShieldedAddress(address) else {
