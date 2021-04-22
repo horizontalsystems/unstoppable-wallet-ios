@@ -25,7 +25,6 @@ enum MarketDiscoveryFilter: String, CaseIterable {
     case b2b = "b2b"
     case infrastructure = "infrastructure"
     case stakingEth2_0 = "staking_eth_2_0"
-    case governance = "governance"
     case crossChain = "cross_chain"
     case computing = "computing"
 }
@@ -60,7 +59,6 @@ extension MarketDiscoveryFilter {
         case .b2b: return "arrow_swap_24"
         case .infrastructure: return "settings_2_24"
         case .stakingEth2_0: return "circle_plus_24"
-        case .governance: return "sort_5_24"
         case .crossChain: return "link_24"
         case .computing: return "dialpad_alt_24"
         }
