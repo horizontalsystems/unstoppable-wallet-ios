@@ -1,5 +1,6 @@
 import RxSwift
 import RxRelay
+import CoinKit
 
 class ManageAccountService {
     private let accountRelay = PublishRelay<Account>()
@@ -10,6 +11,8 @@ class ManageAccountService {
     }
 
     private let accountManager: IAccountManager
+    private let walletManager: IWalletManager
+    private let restoreSettingsManager: RestoreSettingsManager
     private let disposeBag = DisposeBag()
 
     private let stateRelay = PublishRelay<State>()
@@ -23,13 +26,15 @@ class ManageAccountService {
 
     private var newName: String
 
-    init?(accountId: String, accountManager: IAccountManager) {
+    init?(accountId: String, accountManager: IAccountManager, walletManager: IWalletManager, restoreSettingsManager: RestoreSettingsManager) {
         guard let account = accountManager.account(id: accountId) else {
             return nil
         }
 
         self.account = account
         self.accountManager = accountManager
+        self.walletManager = walletManager
+        self.restoreSettingsManager = restoreSettingsManager
 
         newName = account.name
 
@@ -69,6 +74,23 @@ extension ManageAccountService {
 
     var accountDeletedObservable: Observable<()> {
         accountDeletedRelay.asObservable()
+    }
+
+    var accountSettingsInfo: [(Coin, RestoreSettingType, String)] {
+        let accountWallets = walletManager.wallets(account: account)
+
+        return restoreSettingsManager.accountSettingsInfo(account: account).compactMap { coinType, restoreSettingType, value in
+            guard let wallet = accountWallets.first(where: { $0.coin.type == coinType }) else {
+                return nil
+            }
+
+            // hide birthday height if it is set to 0
+            if restoreSettingType == .birthdayHeight && value == "0" {
+                return nil
+            }
+
+            return (wallet.coin, restoreSettingType, value)
+        }
     }
 
     func set(name: String) {

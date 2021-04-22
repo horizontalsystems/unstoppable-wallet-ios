@@ -46,17 +46,18 @@ class ManageAccountViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
+        tableView.registerCell(forClass: A9Cell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
 
         nameCell.inputText = viewModel.accountName
         nameCell.autocapitalizationType = .words
         nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0) }
 
-        showRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+        showRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: viewModel.additionalViewItems.isEmpty)
         showRecoveryPhraseCell.titleImage = UIImage(named: "key_20")
         showRecoveryPhraseCell.title = "manage_account.show_recovery_phrase".localized
 
-        backupRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+        backupRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: viewModel.additionalViewItems.isEmpty)
         backupRecoveryPhraseCell.titleImage = UIImage(named: "key_20")
         backupRecoveryPhraseCell.title = "manage_account.backup_recovery_phrase".localized
         backupRecoveryPhraseCell.valueImage = UIImage(named: "warning_2_20")?.tinted(with: .themeLucian)
@@ -160,10 +161,31 @@ extension ManageAccountViewController: SectionsDataSource {
             )
         }
 
+        var rows = [row]
+
+        let viewItems = viewModel.additionalViewItems
+
+        for (index, viewItem) in viewItems.enumerated() {
+            let isLast = index == viewItems.count - 1
+
+            let additionalRow = Row<A9Cell>(
+                    id: "additional-\(index)",
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isLast: isLast)
+                        cell.title = viewItem.title
+                        cell.titleImage = viewItem.icon
+                        cell.viewItem = .init(value: viewItem.value)
+                    }
+            )
+
+            rows.append(additionalRow)
+        }
+
         return Section(
                 id: "key-action",
                 footerState: .margin(height: .margin32),
-                rows: [row]
+                rows: rows
         )
     }
 

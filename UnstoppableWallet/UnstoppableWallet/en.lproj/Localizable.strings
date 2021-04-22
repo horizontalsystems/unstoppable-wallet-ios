@@ -144,8 +144,6 @@ bch.horizontalsystems.xyz/apg";
 
 "backup.words.confirmation_description" = "Enter words from your %@ Key";
 
-"backup.birthday_height" = "Birthday Height";
-
 "error.send.self_transfer" = "Sending to self is not supported";
 "error.send_ethereum.wrong_parameters" = "Wrong parameters";
 "error.send_binance.memo_required" = "Receiver requires non-empty memo in transfer transaction";
@@ -958,3 +956,4 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "birthday_input.title" = "Birthday Height";
 "birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing";
 "birthday_input.input_placeholder" = "%@ (optional)";
+"restore_setting.birthday_height" = "%@ Birthday Height";

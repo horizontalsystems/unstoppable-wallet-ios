@@ -75,6 +75,7 @@ protocol IWalletManager: class {
 
     func preloadWallets()
 
+    func wallets(account: Account) -> [Wallet]
     func handle(newWallets: [Wallet], deletedWallets: [Wallet])
 
     func save(wallets: [Wallet])

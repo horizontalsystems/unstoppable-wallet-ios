@@ -32,7 +32,13 @@ extension RestoreSettingsService {
 
     func approveSettings(coin: Coin, account: Account? = nil) {
         if let account = account, case .created = account.origin {
-            approveSettingsRelay.accept(CoinWithSettings(coin: coin, settings: [:]))
+            var settings = RestoreSettings()
+
+            for type in coin.type.restoreSettingTypes {
+                settings[type] = type.createdAccountValue(coinType: coin.type)
+            }
+
+            approveSettingsRelay.accept(CoinWithSettings(coin: coin, settings: settings))
             return
         }
 

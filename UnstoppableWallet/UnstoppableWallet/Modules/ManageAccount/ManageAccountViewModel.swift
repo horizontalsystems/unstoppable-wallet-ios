@@ -13,6 +13,8 @@ class ManageAccountViewModel {
     private let openUnlinkRelay = PublishRelay<Account>()
     private let finishRelay = PublishRelay<()>()
 
+    private(set) var additionalViewItems = [AdditionalViewItem]()
+
     init(service: ManageAccountService) {
         self.service = service
 
@@ -22,6 +24,7 @@ class ManageAccountViewModel {
 
         sync(state: service.state)
         sync(account: service.account)
+        syncAccountSettings()
     }
 
     private func sync(state: ManageAccountService.State) {
@@ -33,6 +36,16 @@ class ManageAccountViewModel {
 
     private func sync(account: Account) {
         keyActionStateRelay.accept(account.backedUp ? .showRecoveryPhrase : .backupRecoveryPhrase)
+    }
+
+    private func syncAccountSettings() {
+        additionalViewItems = service.accountSettingsInfo.map { coin, restoreSettingType, value in
+            AdditionalViewItem(
+                    icon: .image(coinType: coin.type),
+                    title: restoreSettingType.title(coin: coin),
+                    value: value
+            )
+        }
     }
 
 }
@@ -95,6 +108,12 @@ extension ManageAccountViewModel {
     enum KeyActionState {
         case showRecoveryPhrase
         case backupRecoveryPhrase
+    }
+
+    struct AdditionalViewItem {
+        let icon: UIImage?
+        let title: String
+        let value: String
     }
 
 }
