@@ -139,8 +139,6 @@
 
 "backup.words.confirmation_description" = "Entrez les mots de votre clé %@";
 
-"backup.birthday_height" = "Hauteur de l'anniversaire";
-
 "error.send.self_transfer" = "L'envoi à soi-même n'est pas pris en charge";
 "error.send_ethereum.wrong_parameters" = "Paramètres erronés";
 "error.send_binance.memo_required" = "Le destinataire a besoin d'une note non vide pour une opération de transfert";
@@ -953,3 +951,4 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "birthday_input.title" = "Birthday Height";
 "birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing";
 "birthday_input.input_placeholder" = "%@ (optional)";
+"restore_setting.birthday_height" = "%@ Birthday Height";
