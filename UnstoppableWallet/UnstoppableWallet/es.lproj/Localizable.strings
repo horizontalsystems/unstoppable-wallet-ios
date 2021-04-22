@@ -139,8 +139,6 @@
 
 "backup.words.confirmation_description" = "Insertar palabras de su clave %@";
 
-"backup.birthday_height" = "Altura de Cumpleaños";
-
 "error.send.self_transfer" = "Enviarte a vos mismo no está soportado";
 "error.send_ethereum.wrong_parameters" = "Parámetros incorrectos";
 "error.send_binance.memo_required" = "El receptor requiere que el memo no esté vacío en la transacción de transferencia";
@@ -954,3 +952,4 @@ poner en peligro la seguridad de mis fondos.";
 "birthday_input.title" = "Birthday Height";
 "birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing";
 "birthday_input.input_placeholder" = "%@ (optional)";
+"restore_setting.birthday_height" = "%@ Birthday Height";
