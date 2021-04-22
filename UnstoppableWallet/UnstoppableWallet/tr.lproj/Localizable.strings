@@ -139,8 +139,6 @@
 
 "backup.words.confirmation_description" = "%@ Anahtarınızda ki kelimeleri girin";
 
-"backup.birthday_height" = "Oluşturulma Günü Üst Sınırı";
-
 "error.send.self_transfer" = "Kendine gönderme desteklenmiyor";
 "error.send_ethereum.wrong_parameters" = "Yanlış parametreler";
 "error.send_binance.memo_required" = "Aktarım işleminde alıcı boş olmayan not istiyor";
@@ -953,3 +951,4 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "birthday_input.title" = "Birthday Height";
 "birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing";
 "birthday_input.input_placeholder" = "%@ (optional)";
+"restore_setting.birthday_height" = "%@ Birthday Height";
