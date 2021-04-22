@@ -24,7 +24,9 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private let priceCloseToATHCell = B11Cell()
     private let priceCloseToATLCell = B11Cell()
 
+    private let showResultButtonHolder = BottomGradientHolder()
     private let showResultButton = ThemeButton()
+
     private let spinner = HUDActivityView.create(with: .small20)
 
     init(viewModel: MarketAdvancedSearchViewModel) {
@@ -45,7 +47,8 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.top.equalToSuperview()
+            maker.leading.trailing.equalToSuperview()
         }
 
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
@@ -101,11 +104,16 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         priceCloseToATLCell.title = "market.advanced_search.price_close_to_atl".localized
         priceCloseToATLCell.onToggle = { [weak self] in self?.onTapPriceCloseToATLCell(isOn: $0) }
 
-        view.addSubview(showResultButton)
+        view.addSubview(showResultButtonHolder)
+        showResultButtonHolder.snp.makeConstraints { maker in
+            maker.top.equalTo(tableView.snp.bottom).offset(-CGFloat.margin16)
+            maker.leading.trailing.bottom.equalToSuperview()
+        }
+
+        showResultButtonHolder.addSubview(showResultButton)
         showResultButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.edges.equalToSuperview().inset(CGFloat.margin24)
             maker.height.equalTo(CGFloat.heightButton)
-            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
         }
 
         showResultButton.apply(style: .primaryYellow)
@@ -408,7 +416,7 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
         sections.append(Section(
                 id: "price_filters",
                 headerState: header(text: "market.advanced_search.price_parameters".localized.uppercased()),
-                footerState: .margin(height: .margin32 + .heightButton),
+                footerState: .margin(height: .margin32),
                 rows: [
                     row(cell: priceChangeCell, id: "price_change") { [weak self] in self?.onTapPriceChangeCell() },
                     row(cell: periodCell, id: "price_period") { [weak self] in self?.onTapPeriodCell() },
