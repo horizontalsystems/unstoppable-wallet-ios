@@ -7,7 +7,9 @@ class MarketListHeaderView: UITableViewHeaderFooterView {
     static let height: CGFloat = .heightSingleLineCell
 
     private let fieldSelectionButton = ThemeButton()
-    private let marketFieldModeView = MarketFieldModeView()
+    private let marketFieldModeView = SingleSelectorView()
+
+    private var marketFields = [MarketModule.MarketField]()
 
     var onTapSortField: (() -> ())?
     var onSelect: ((MarketModule.MarketField) -> ())?
@@ -37,10 +39,8 @@ class MarketListHeaderView: UITableViewHeaderFooterView {
         fieldSelectionButton.apply(style: .secondaryTransparentIcon)
         fieldSelectionButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-        let image = UIImage(named: "arrow_small_down_20")
         fieldSelectionButton.setImageTintColor(.themeGray, for: .normal)
         fieldSelectionButton.setImageTintColor(.themeGray50, for: .highlighted)
-        fieldSelectionButton.setImage(image, for: .normal)
 
         fieldSelectionButton.addTarget(self, action: #selector(tapSortField), for: .touchUpInside)
 
@@ -52,8 +52,10 @@ class MarketListHeaderView: UITableViewHeaderFooterView {
             maker.height.equalTo(24)
         }
 
-        marketFieldModeView.onSelect = { [weak self] field in
-            self?.onSelect?(field)
+        marketFieldModeView.onSelect = { [weak self] index in
+            if let marketFields = self?.marketFields, marketFields.count > index {
+                self?.onSelect?(marketFields[index])
+            }
         }
 
     }
@@ -74,8 +76,19 @@ extension MarketListHeaderView {
         fieldSelectionButton.setTitle(title, for: .normal)
     }
 
-    public func setMarketField(field: MarketModule.MarketField) {
-        marketFieldModeView.setSelected(field: field)
+    public func setSortingField(image: UIImage?) {
+        fieldSelectionButton.setImage(image, for: .normal)
+    }
+
+    public func set(marketFields: [MarketModule.MarketField]) {
+        self.marketFields = marketFields
+        marketFieldModeView.set(items: marketFields.map { $0.title })
+    }
+
+    public func setMarket(field: MarketModule.MarketField) {
+        if let index = marketFields.firstIndex(of: field) {
+            marketFieldModeView.setSelected(index: index)
+        }
     }
 
 }

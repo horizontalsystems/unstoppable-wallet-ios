@@ -115,6 +115,7 @@ struct SelectedPointViewItem {
     let rightSideMode: RightSideMode
 
     enum RightSideMode {
+        case none
         case volume(value: String?)
         case macd(macdInfo: MacdInfo)
     }

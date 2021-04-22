@@ -39,6 +39,10 @@ struct MarketModule {
             title = "market.top.market_cap.title".localized
             value = marketCap
             color = .themeGray
+        case .dilutedMarketCap(let dilutedMarketCap):
+            title = "market.top.diluted_market_cap.title".localized
+            value = dilutedMarketCap
+            color = .themeGray
         }
 
         return (title: title, value: value, color: color)
@@ -133,12 +137,14 @@ extension MarketModule {
 
     enum MarketField: Int, CaseIterable {
         case marketCap
+        case dilutedMarketCap
         case volume
         case price
 
         var title: String {
             switch self {
             case .marketCap: return "market.market_field.mcap".localized
+            case .dilutedMarketCap: return "market.market_field.mcap".localized
             case .volume: return "market.market_field.vol".localized
             case .price: return "price".localized
             }
@@ -160,6 +166,7 @@ extension MarketModule { // Service Items
         let coinName: String
         let coinType: CoinType
         let marketCap: Decimal
+        let dilutedMarketCap: Decimal?
         let liquidity: Decimal?
         let price: Decimal
         let diff: Decimal
@@ -172,6 +179,7 @@ extension MarketModule { // Service Items
             coinName = coinMarket.coinData.name
             coinType = coinMarket.coinData.coinType
             marketCap = coinMarket.marketInfo.marketCap
+            dilutedMarketCap = coinMarket.marketInfo.dilutedMarketCap
             liquidity = coinMarket.marketInfo.liquidity
             price = coinMarket.marketInfo.rate
             diff = coinMarket.marketInfo.rateDiffPeriod
@@ -216,6 +224,7 @@ extension MarketModule {  // ViewModel Items
         case diff(Decimal)
         case volume(String)
         case marketCap(String)
+        case dilutedMarketCap(String)
     }
 
     struct ViewItem {
@@ -231,6 +240,7 @@ extension MarketModule {  // ViewModel Items
             case .price: marketDataValue = .diff(item.diff)
             case .volume: marketDataValue = .volume(CurrencyCompactFormatter.instance.format(currency: currency, value: item.volume) ?? "-")
             case .marketCap: marketDataValue = .marketCap(CurrencyCompactFormatter.instance.format(currency: currency, value: item.marketCap) ?? "-")
+            case .dilutedMarketCap: marketDataValue = .dilutedMarketCap(item.dilutedMarketCap.flatMap { CurrencyCompactFormatter.instance.format(currency: currency, value: $0) } ?? "-")
             }
 
             coinCode = item.coinCode

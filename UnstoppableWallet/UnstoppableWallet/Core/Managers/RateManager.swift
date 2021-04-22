@@ -77,6 +77,10 @@ extension RateManager: IRateManager {
         kit.coinMarketInfoSingle(coinType: coinType, currencyCode: currencyCode, rateDiffTimePeriods: rateDiffTimePeriods, rateDiffCoinCodes: rateDiffCoinCodes)
     }
 
+    func globalMarketInfoPointsSingle(currencyCode: String, timePeriod: TimePeriod) -> Single<[GlobalCoinMarketPoint]> {
+        kit.globalMarketInfoPointsSingle(currencyCode: currencyCode, timePeriod: timePeriod)
+    }
+
     func coinTypes(for category: String) -> [CoinType] {
         kit.coinTypes(forCategoryId: category)
     }

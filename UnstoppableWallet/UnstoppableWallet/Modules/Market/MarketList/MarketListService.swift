@@ -54,6 +54,10 @@ class MarketListService {
 
 extension MarketListService {
 
+    var allMarketFields: [MarketModule.MarketField] {
+        [.marketCap, .volume, .price]
+    }
+
     var currency: Currency {
         currencyKit.baseCurrency
     }

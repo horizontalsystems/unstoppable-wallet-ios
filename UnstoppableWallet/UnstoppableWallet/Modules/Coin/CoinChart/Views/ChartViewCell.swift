@@ -77,8 +77,8 @@ class ChartViewCell: UITableViewCell {
         chartView.setVolumes(hidden: viewItem.selectedIndicator.hideVolumes)
     }
 
-    func set(data: CoinChartViewModel.ViewItem) {
-        switch data.chartTrend {
+    func set(data: ChartData, trend: MovementTrend, min: String?, max: String?, timeline: [ChartTimelineItem]) {
+        switch trend {
         case .neutral:
             chartView.setCurve(colorType: .neutral)
         case .up:
@@ -87,9 +87,9 @@ class ChartViewCell: UITableViewCell {
             chartView.setCurve(colorType: .down)
         }
 
-        chartView.set(chartData: data.chartData)
-        chartView.set(timeline: data.timeline, start: data.chartData.startWindow, end: data.chartData.endWindow)
-        chartView.set(highLimitText: data.maxValue, lowLimitText: data.minValue)
+        chartView.set(chartData: data)
+        chartView.set(timeline: timeline, start: data.startWindow, end: data.endWindow)
+        chartView.set(highLimitText: max, lowLimitText: min)
     }
 
     func setVolumes(hidden: Bool, limitHidden: Bool) {
