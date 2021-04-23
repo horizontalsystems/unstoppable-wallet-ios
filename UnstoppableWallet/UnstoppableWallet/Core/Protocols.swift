@@ -263,9 +263,6 @@ protocol IAppConfigProvider {
     var appWebPageLink: String { get }
     var appGitHubLink: String { get }
     var reportEmail: String { get }
-    var telegramAccount: String { get }
-    var twitterAccount: String { get }
-    var redditAccount: String { get }
     var guidesIndexUrl: URL { get }
     var faqIndexUrl: URL { get }
     var uniswapSubgraphUrl: String { get }
