@@ -89,18 +89,6 @@ extension MainSettingsService {
         themeManager.themeMode
     }
 
-    var telegramAccount: String {
-        appConfigProvider.telegramAccount
-    }
-
-    var twitterAccount: String {
-        appConfigProvider.twitterAccount
-    }
-
-    var redditAccount: String {
-        appConfigProvider.redditAccount
-    }
-
     var appVersion: String {
         systemInfoManager.appVersion.description
     }

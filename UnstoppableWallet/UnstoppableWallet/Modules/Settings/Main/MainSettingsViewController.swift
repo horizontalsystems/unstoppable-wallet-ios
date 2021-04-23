@@ -238,50 +238,6 @@ class MainSettingsViewController: ThemeViewController {
         ]
     }
 
-    private var contactRows: [RowProtocol] {
-        [
-            Row<A1Cell>(
-                    id: "telegram",
-                    height: .heightCell48,
-                    autoDeselect: true,
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: true)
-                        cell.titleImage = UIImage(named: "telegram_20")
-                        cell.title = "Telegram"
-                    },
-                    action: { [weak self] _ in
-                        self?.openTelegram()
-                    }
-            ),
-            Row<A1Cell>(
-                    id: "twitter",
-                    height: .heightCell48,
-                    autoDeselect: true,
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence)
-                        cell.titleImage = UIImage(named: "twitter_20")
-                        cell.title = "Twitter"
-                    },
-                    action: { [weak self] _ in
-                        self?.openTwitter()
-                    }
-            ),
-            Row<A1Cell>(
-                    id: "reddit",
-                    height: .heightCell48,
-                    autoDeselect: true,
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isLast: true)
-                        cell.titleImage = UIImage(named: "reddit_20")
-                        cell.title = "Reddit"
-                    },
-                    action: { [weak self] _ in
-                        self?.openReddit()
-                    }
-            )
-        ]
-    }
-
     private var aboutRows: [RowProtocol] {
         [
             StaticRow(
@@ -305,32 +261,6 @@ class MainSettingsViewController: ThemeViewController {
         ]
     }
 
-    private func openTelegram() {
-        let account = viewModel.telegramAccount
-
-        if let appUrl = URL(string: "tg://resolve?domain=\(account)"), UIApplication.shared.canOpenURL(appUrl) {
-            UIApplication.shared.open(appUrl)
-        } else if let webUrl = URL(string: "https://t.me/\(account)") {
-            UIApplication.shared.open(webUrl)
-        }
-    }
-
-    private func openTwitter() {
-        let account = viewModel.twitterAccount
-
-        if let appUrl = URL(string: "twitter://user?screen_name=\(account)"), UIApplication.shared.canOpenURL(appUrl) {
-            UIApplication.shared.open(appUrl)
-        } else if let webUrl = URL(string: "https://twitter.com/\(account)") {
-            UIApplication.shared.open(webUrl)
-        }
-    }
-
-    private func openReddit() {
-        if let url = URL(string: "https://reddit.com/r/\(viewModel.redditAccount)") {
-            UIApplication.shared.open(url)
-        }
-    }
-
     private func openWalletConnect() {
         switch viewModel.walletConnectOpenMode {
         case .sessionList:
@@ -350,7 +280,6 @@ extension MainSettingsViewController: SectionsDataSource {
             Section(id: "wallet_connect", headerState: .margin(height: .margin32), rows: walletConnectRows),
             Section(id: "appearance_settings", headerState: .margin(height: .margin32), rows: appearanceRows),
             Section(id: "knowledge", headerState: .margin(height: .margin32), rows: knowledgeRows),
-            Section(id: "contact", headerState: .margin(height: .margin32), rows: contactRows),
             Section(id: "about", headerState: .margin(height: .margin32), rows: aboutRows),
             Section(id: "footer", headerState: .margin(height: .margin32), footerState: .margin(height: .margin32), rows: footerRows)
         ]
