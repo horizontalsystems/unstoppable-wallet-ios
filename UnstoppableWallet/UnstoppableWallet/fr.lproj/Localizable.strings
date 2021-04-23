@@ -483,6 +483,16 @@
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
 
+"market.global.subtitle" = "Chart";
+"market.global.btc_dominance.title" = "Bitcoin Dominance";
+"market.global.volume_24h.title" = "Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.btc_dominance.description" = "The market dominance of bitcoin, or the largest cryptocurrency's value as a share of the overall market.";
+"market.global.volume_24h.description" = "Volume refers to the total amount of transactions that traders conducted in a  markets.";
+"market.global.defi_cap.description" = "DeFi Cap chart shows a change of DeFi tokens capitalisation.";
+"market.global.tvl_in_defi.description" = "Capital deposited into the platform in the form of loan collateral or liquidity pool.";
+
 // Coin Page
 
 "coin_page.roi.hour1" = "1 Hour";
@@ -938,6 +948,25 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "onboarding.balance.description" = "Vous n'avez pas encore de portefeuille. Veuillez créer un nouveau portefeuille ou restaurer un portefeuille existant";
 "onboarding.balance.create" = "Créer";
 "onboarding.balance.restore" = "Restaurer";
+
+// Manage Accounts
+
+"manage_accounts.n_words" = "%@ words";
+"manage_accounts.n_words_with_passphrase" = "%@ words with passphrase";
+
+// Manage Account
+
+"manage_account.name" = "Name";
+"manage_account.show_recovery_phrase" = "Show Recovery Phrase";
+"manage_account.backup_recovery_phrase" = "Backup Recovery Phrase";
+"manage_account.unlink" = "Unlink";
+
+// Birthday Input
+
+"birthday_input.title" = "Birthday Height";
+"birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing";
+"birthday_input.input_placeholder" = "%@ (optional)";
+"restore_setting.birthday_height" = "%@ Birthday Height";
 
 // Manage Accounts
 
